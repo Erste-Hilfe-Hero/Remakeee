@@ -1,0 +1,62 @@
+{
+ "librarian": [
+  "Librarian Odile: Every book here was written by someone who walked it first. Read, then go and look."
+ ],
+ "book_1": {
+  "lines": [
+   "\"Forest Ways\": In Gloamwood's upper grove, west of the old path, one stone is far too smooth. Push it."
+  ],
+  "after_flag": {
+   "flag": "pass_gloamwood",
+   "lines": [
+    "\"Forest Ways\": In Gloamwood's upper grove, west of the old path, one stone is far too smooth. Push it.",
+    "A tick in the margin: you have found this place."
+   ]
+  }
+ },
+ "book_2": {
+  "lines": [
+   "\"Brook and Stone\": Quillbrook hides a way in the west bank, halfway down the brook."
+  ],
+  "after_flag": {
+   "flag": "pass_quillbrook",
+   "lines": [
+    "\"Brook and Stone\": Quillbrook hides a way in the west bank, halfway down the brook.",
+    "A tick in the margin: you have found this place."
+   ]
+  }
+ },
+ "book_3": {
+  "lines": [
+   "\"Sea Caves of Veydal\": Sablecove's inner chamber keeps a gift. It opens only when the tide is out."
+  ],
+  "after_flag": {
+   "flag": "find_sable_inner",
+   "lines": [
+    "\"Sea Caves of Veydal\": Sablecove's inner chamber keeps a gift. It opens only when the tide is out.",
+    "A tick in the margin: you have found this place."
+   ]
+  }
+ },
+ "book_4": {
+  "lines": [
+   "\"Buried and Forgotten\": Travellers on the Saltglass road buried their spare leaves where the soil is loose."
+  ],
+  "after_flag": {
+   "flag": "dig_saltglass",
+   "lines": [
+    "\"Buried and Forgotten\": Travellers on the Saltglass road buried their spare leaves where the soil is loose.",
+    "A tick in the margin: you have found this place."
+   ]
+  }
+ },
+ "scriptorax": {
+  "lines": [
+   "After closing, the pages on the shelves begin to rustle on their own.",
+   "Ink runs up the spines and gathers into wings made of quills.",
+   "It is Scriptorax, the ink drake. It wants to see what you will write next.",
+   "Old songs say a legend only listens to someone who has tested it hard."
+  ],
+  "action": "legend Scriptorax 55"
+ }
+}

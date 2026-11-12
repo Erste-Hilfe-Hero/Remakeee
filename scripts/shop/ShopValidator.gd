@@ -57,7 +57,14 @@ static func check(offers: Array[Dictionary]) -> Array[String]:
 					errs.append(where + ": choice grant without a choice list (chosen before buying, item 4688)")
 				var gid: String = str((g as Dictionary).get("id", "")) if g is Dictionary else ""
 				if gid != "" and Database.species(gid) != null:
-					errs.append(where + ": Spirlings are never sold (rule 7)")
+					errs.append(where + ": a Spirling is sold only as a \"spirling\" grant")
+				elif g is Dictionary and str(g.t) == "spirling":
+					if Database.species(str(g.get("species", ""))) == null:
+						errs.append(where + ": spirling grant names no species in spirlings.json")
+					if int(g.get("level", 0)) < 1 or int(g.get("level", 0)) > Spirling.STORY_RING:
+						errs.append(where + ": spirling grant needs a level from 1 to the Ring cap")
+					if str(o.get("store_type", "")) != "non_consumable" or int((o.get("limit", {}) as Dictionary).get("n", 0)) != 1:
+						errs.append(where + ": a Spirling offer is non_consumable and once per account")
 				elif bool(o.get("ready", false)) and g is Dictionary and str(g.t) == "item" and Database.item(gid).is_empty():
 					errs.append(where + ": ready offer grants %s, which is no item in items.json" % gid)
 		if str(o.get("kind", "")) in ["cosmetic", "comfort"]:
@@ -69,7 +76,31 @@ static func check(offers: Array[Dictionary]) -> Array[String]:
 		if str(o.get("kind", "")) == "currency":
 			if rg != 0:
 				errs.append(where + ": Riftglass is not sold for Riftglass")
+		_check_was_price(o, where, errs)
+		_check_wording(o, where, errs)
 	return errs
+
+## A struck-through old price (item 4037, PAngV § 11) needs the dates of the higher price:
+## was_since and was_until ("YYYY-MM-DD"), at least 30 days apart, and the old price must be higher.
+static func _check_was_price(o: Dictionary, where: String, errs: Array[String]) -> void:
+	if not o.has("was_rg_price"):
+		return
+	var since: int = Time.get_unix_time_from_datetime_string(str(o.get("was_since", "")))
+	var until: int = Time.get_unix_time_from_datetime_string(str(o.get("was_until", "")))
+	if since <= 0 or until <= 0:
+		errs.append(where + ": was_rg_price needs was_since and was_until dates (item 4037)")
+	elif until - since < 30 * 86400:
+		errs.append(where + ": the old price must have been sold for at least 30 days (item 4037)")
+	if int(o.was_rg_price) <= int(o.get("rg_price", 0)):
+		errs.append(where + ": was_rg_price must be higher than rg_price")
+
+## Paid offers never sound free (item 4035): no "free", "as a gift" or "for nothing" in name or text.
+## ("gifts" alone stays allowed: it names Spirling gifts and gifts to friends, both game features.)
+static func _check_wording(o: Dictionary, where: String, errs: Array[String]) -> void:
+	var text: String = (str(o.get("name", "")) + " " + str(o.get("desc", ""))).to_lower()
+	for w: String in ["free", "for nothing", "gratis", "as a gift", "geschenkt"]:
+		if text.contains(w):
+			errs.append(where + ": paid offers never say '%s' (item 4035)" % w)
 
 static func _check_random(v: Variant, where: String, errs: Array[String]) -> void:
 	if v is Dictionary:

@@ -1,0 +1,95 @@
+{
+ "spring": {
+  "lines": [
+   "Warm water seeps up through the sand. It tastes of copper and old promises.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "sign": [
+  "THE TOWER RIFT",
+  "The wind towers breathe for the whole town. Someone stopped their breath."
+ ],
+ "shutter_1": {
+  "lines": [
+   "A shutter high on the west wall. It rattles like a cough."
+  ],
+  "action": "bell tower_rift_open 3 4 shutter"
+ },
+ "shutter_2": {
+  "lines": [
+   "A shutter on the east wall, scoured smooth by sand."
+  ],
+  "action": "bell tower_rift_open 2 4 shutter"
+ },
+ "shutter_3": {
+  "lines": [
+   "A low shutter on the west wall. Someone scratched 'not me' into it."
+  ],
+  "action": "bell tower_rift_open 4 4 shutter"
+ },
+ "shutter_4": {
+  "lines": [
+   "A shutter by the stairs, where the sand comes in first."
+  ],
+  "action": "bell tower_rift_open 1 4 shutter"
+ },
+ "hint": [
+  "Chalked on the wall: Start where the sand comes in. Then east. Then high west, then low west. Then pray."
+ ],
+ "pell": [
+  "Pell: Aurelio says the towers stopped out of grief. The towers say nothing. They're towers."
+ ],
+ "pell_intro": [
+  "Pell: Nobody climbs to Aurelio without a duel. He insists. He also insists on applause."
+ ],
+ "pell_defeat": [
+  "Pell: Go on up. Clap at the end, or he'll make you do it again."
+ ],
+ "yara": [
+  "Yara: I deliver letters across the dunes. Half of them are wills. The other half are why."
+ ],
+ "yara_intro": [
+  "Yara: Sign here. And here. And here, that's the one where you lose."
+ ],
+ "yara_defeat": [
+  "Yara: Delivered. Return to sender."
+ ],
+ "gideon": [
+  "Gideon: Open the shutters in the wrong order and the wind sulks. Like my wife. Rest her."
+ ],
+ "gideon_intro": [
+  "Gideon: I oiled these hinges for forty years. Let's see if you squeak."
+ ],
+ "gideon_defeat": [
+  "Gideon: Not a squeak. Annoying."
+ ],
+ "aurelio": {
+  "lines": [
+   "Aurelio: Silence, please. I am grieving for the wind. It has been gone a week. I've been gone longer."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_tower_sealed",
+    "lines": [
+     "Aurelio: The towers breathe. Ochrewell will cool down, and so will its tempers. Some of them.",
+     "Aurelio: Take this crystal, Squall. And a tip: Kaia at the oasis smiles too much for someone with that little water."
+    ]
+   },
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Aurelio: I wrote an elegy for the Undrawn. It's nine hours long. You're in it, briefly."
+    ]
+   }
+  ]
+ },
+ "aurelio_intro": [
+  "Aurelio: A visitor. How tragic for you. The towers stopped breathing, and so, artistically speaking, did I.",
+  "Aurelio: Someone in this town paid the wind to leave. I intend to find out who. After my nap. After this duel."
+ ],
+ "aurelio_defeat": [
+  "Aurelio: ...Ah. A draught. My Tempestrel is laughing. It hasn't laughed since my last poem.",
+  "Aurelio: Very well, mend it with me. But I'm telling everyone it was my idea."
+ ]
+}

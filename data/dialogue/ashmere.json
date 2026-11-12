@@ -407,6 +407,26 @@
   "flag": "kestra_compass"
  },
  "undrawn_gate": {
+  "if": {
+   "flag": [
+    "rift_cinder_sealed",
+    "rift_mist_sealed",
+    "rift_tide_sealed",
+    "rift_rain_sealed",
+    "rift_mirror_sealed",
+    "rift_root_sealed",
+    "rift_kiln_sealed",
+    "rift_glass_sealed",
+    "rift_shade_sealed",
+    "rift_tower_sealed",
+    "rift_oasis_sealed",
+    "rift_sun_sealed",
+    "cinder_heart_mended",
+    "mist_heart_mended",
+    "tide_heart_mended"
+   ]
+  },
+  "else": "undrawn_gate_wait",
   "lines": [
    "The air at the Rift's far end is thin as paper. With the guild seal, it gives."
   ],
@@ -668,5 +688,9 @@
    "There is room left to draw. There always will be."
   ],
   "flag": "postgame_done"
- }
+ },
+ "undrawn_gate_wait": [
+  "The far end won't give. Somewhere behind you a Rift is still open.",
+  "Mend every Rift and every Rift heart first. Your Goals list shows which."
+ ]
 }

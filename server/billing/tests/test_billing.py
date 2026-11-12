@@ -174,6 +174,17 @@ class FlowTest(unittest.TestCase):
         self.assertTrue(r["ok"])
         self.assertEqual(self.db.calls[0], ("credit", UID, "apple", "2000001", "de.chimora.game.glass.500", None))
 
+    def test_receipt_checks_are_rate_limited(self):
+        now = [1000.0]
+        app = billing.Billing(self.db, self.play, self.cfg, clock=lambda: now[0])
+        body = {"p_receipt": {"store": "nowhere"}}
+        for _ in range(app.CHECKS_PER_HOUR):
+            self.assertEqual(app.verify(UID, body)["error"], "bad_receipt")
+        self.assertEqual(app.verify(UID, body)["error"], "slow_down")
+        self.assertEqual(app.verify("20000000-0000-0000-0000-0000000000aa", body)["error"], "bad_receipt", "per account")
+        now[0] += 3601
+        self.assertEqual(app.verify(UID, body)["error"], "bad_receipt", "an hour later it works again")
+
     def test_apple_someone_elses_receipt(self):
         r = self.app.verify("20000000-0000-0000-0000-0000000000ff",
                             {"p_receipt": {"store": "apple", "jws": self.ca.sign(apple_tx())}})

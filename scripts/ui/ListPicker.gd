@@ -119,6 +119,7 @@ func _ready() -> void:
 	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	# A calm tap never counts as a swipe (item 1785).
 	_scroll.scroll_deadzone = int(TAP_SLOP)
+	_scroll.gui_input.connect(_overscroll_input)
 	root.add_child(_scroll)
 	_box = VBoxContainer.new()
 	_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -146,7 +147,10 @@ func _ready() -> void:
 	_arrows.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_arrows.draw.connect(_draw_arrows)
 	add_child(_arrows)
-	_scroll.get_v_scroll_bar().value_changed.connect(func(_v: float) -> void: _arrows.queue_redraw())
+	_scroll.get_v_scroll_bar().value_changed.connect(func(_v: float) -> void:
+		if _scroll_quiet <= 0:
+			scroll_shown = SCROLL_SHOW_TIME
+		_arrows.queue_redraw())
 	_scroll.get_v_scroll_bar().changed.connect(_arrows.queue_redraw)
 
 ## Puts Back in the top corner, or in one-hand mode at the bottom on the thumb's side
@@ -183,6 +187,8 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	_back.visible = cancellable
 	_foot.visible = one_hand and cancellable
 	last_dir = 0
+	scroll_shown = 0.0
+	_scroll_quiet = SCROLL_QUIET_FRAMES
 	_hints.clear()
 	_whys.clear()
 	_sliders.clear()
@@ -313,6 +319,14 @@ func move_focus(delta: int, wrap: bool = true) -> void:
 
 ## Gamepad hold-to-repeat; keyboards repeat on their own.
 func _process(delta: float) -> void:
+	if visible:
+		_bob_pointer(delta)
+	if _scroll_quiet > 0:
+		_scroll_quiet -= 1
+	if scroll_shown > 0.0:
+		scroll_shown = maxf(0.0, scroll_shown - delta)
+		if scroll_shown == 0.0:
+			_arrows.queue_redraw()
 	if not visible or last_device != "pad":
 		_hold_dir = 0
 		return
@@ -474,7 +488,7 @@ func show_why(i: int) -> bool:
 		return false
 	_hint.text = Loc.t(w)
 	_hint.visible = true
-	Sound.sfx("bump")
+	Sound.sfx("locked")
 	return true
 
 ## A calm tap on a greyed-out row (disabled buttons get no press of their own).
@@ -483,8 +497,22 @@ func _why_at(pos: Vector2) -> void:
 		return
 	for i: int in _buttons.size():
 		if _buttons[i].disabled and _buttons[i].get_global_rect().has_point(pos):
-			show_why(i)
+			tap_locked(i)
 			return
+
+## A tap on greyed-out row [param i]: its reason if it has one, and always a dull tap that
+## tells the row is locked (item 2511). The row shakes 2 px sideways, there and back (item 2423).
+func tap_locked(i: int) -> void:
+	if not show_why(i):
+		Sound.sfx("locked")
+	if i >= 0 and i < _buttons.size():
+		shake_row(_buttons[i])
+
+## Two quick 2 px nudges, right then left. Awaitable; nothing under reduced motion.
+static func shake_row(row: CanvasItem) -> void:
+	await Juice.nudge(row, Vector2.RIGHT)
+	if is_instance_valid(row):
+		await Juice.nudge(row, Vector2.LEFT)
 
 ## The text under the list now (tests).
 func hint_text() -> String:
@@ -508,12 +536,75 @@ func _draw_back_arrow() -> void:
 	var c := Vector2(floorf(_back.size.x / 2.0), floorf(_back.size.y / 2.0))
 	_back.draw_colored_polygon(PackedVector2Array([c + Vector2(2, -4), c + Vector2(-2, 0.5), c + Vector2(2, 5)]), col)
 
+## Pushing a list past its end springs it 4 px over and back with "settle" (item 2425).
+const OVERSCROLL_PX: float = 4.0
+const OVERSCROLL_OUT_TIME: float = 0.05
+var _bouncing: bool = false
+
+## -1 for a push past the top, 1 past the bottom, 0 while the list can still scroll that way.
+## [param push] is the way the player scrolls (1 down, -1 up).
+static func overscroll_dir(value: float, page: float, max_value: float, push: int) -> int:
+	if push > 0 and value + page >= max_value - 0.5:
+		return 1
+	if push < 0 and value <= 0.5:
+		return -1
+	return 0
+
+func _overscroll_input(ev: InputEvent) -> void:
+	# A finger dragging on past the end (taps stay with TapInput).
+	var push: int = 0
+	var drag := ev as InputEventScreenDrag
+	if drag != null and absf(drag.relative.y) >= 1.0:
+		push = 1 if drag.relative.y < 0.0 else -1
+	if push == 0:
+		return
+	var bar: VScrollBar = _scroll.get_v_scroll_bar()
+	var d: int = overscroll_dir(bar.value, bar.page, bar.max_value, push)
+	if d != 0:
+		bounce(d)
+
+## Springs the list [param dir] times OVERSCROLL_PX over (down for -1, up for 1) and back.
+## Awaitable; nothing under reduced motion or while a bounce runs.
+func bounce(dir: int) -> void:
+	if _bouncing or Juice.reduced() or _scroll == null:
+		return
+	_bouncing = true
+	var home: Vector2 = _scroll.position
+	await Juice.tween(_scroll, "position", home + Vector2(0, -dir * OVERSCROLL_PX), "impact", OVERSCROLL_OUT_TIME).finished
+	if is_instance_valid(_scroll):
+		await Juice.tween(_scroll, "position", home, "settle").finished
+	_bouncing = false
+
+## A 1 px scroll indicator at the right edge shows while the list scrolls and goes 0.8 s
+## after it stops (item 2426).
+const SCROLL_SHOW_TIME: float = 0.8
+const SCROLL_MIN_PX: float = 3.0
+## Seconds the scroll indicator still shows.
+var scroll_shown: float = 0.0
+## A list scrolls itself to the focused or remembered row as it opens; that is no scrolling
+## by the player, so the indicator stays hidden for the first frames.
+const SCROLL_QUIET_FRAMES: int = 3
+var _scroll_quiet: int = 0
+
+## Where the indicator sits in list area [param r] for a scroll bar at [param value] of
+## [param max_value] showing [param page]; an empty Rect2 when the whole list fits.
+static func indicator_rect(r: Rect2, value: float, page: float, max_value: float) -> Rect2:
+	if max_value <= 0.0 or page >= max_value:
+		return Rect2()
+	var h: float = maxf(SCROLL_MIN_PX, roundf(r.size.y * page / max_value))
+	var y: float = roundf(r.position.y + (r.size.y - h) * clampf(value / maxf(max_value - page, 1.0), 0.0, 1.0))
+	return Rect2(r.position.x + r.size.x - 1.0, y, 1.0, h)
+
 ## Small triangles at the top and bottom of the list when more rows are hidden there.
 func _draw_arrows() -> void:
 	if not visible or _scroll == null:
 		return
 	var bar: VScrollBar = _scroll.get_v_scroll_bar()
 	var r: Rect2 = Rect2(_scroll.global_position - _arrows.global_position, _scroll.size)
+	if scroll_shown > 0.0:
+		var ind: Rect2 = indicator_rect(r, bar.value, bar.page, bar.max_value)
+		if ind.size.y > 0.0:
+			_arrows.draw_rect(ind, UITheme.MID)
 	var x: float = floorf(r.position.x + r.size.x - 5)
 	var col: Color = UITheme.INK
 	if bar.value > 0.5:
@@ -588,9 +679,30 @@ var pointer_slide: float = 0.0:
 		if is_instance_valid(_pointer_row):
 			_pointer_row.queue_redraw()
 
+## While the focus rests, the pointer bobs 1 px sideways: out for half of each 0.6 s
+## (item 2417). Still under reduced motion.
+const POINTER_BOB_PERIOD: float = 0.6
+var _pointer_idle: float = 0.0
+var _pointer_bob: int = 0
+
+static func pointer_bob_at(idle: float, reduced: bool) -> int:
+	if reduced or idle < POINTER_BOB_PERIOD:
+		return 0
+	return 1 if fmod(idle, POINTER_BOB_PERIOD) >= POINTER_BOB_PERIOD * 0.5 else 0
+
+func _bob_pointer(delta: float) -> void:
+	_pointer_idle += delta
+	var bob: int = pointer_bob_at(_pointer_idle, Juice.reduced())
+	if bob != _pointer_bob:
+		_pointer_bob = bob
+		if is_instance_valid(_pointer_row):
+			_pointer_row.queue_redraw()
+
 func _slide_pointer(b: Button) -> void:
 	var from: Button = _pointer_row
 	_pointer_row = b
+	_pointer_idle = 0.0
+	_pointer_bob = 0
 	if not is_instance_valid(from) or from == b or not from.is_inside_tree() or not b.is_inside_tree():
 		pointer_slide = 0.0
 		return
@@ -601,8 +713,9 @@ func _draw_pointer(b: Button) -> void:
 	if not b.has_focus():
 		return
 	var cy: float = floorf(b.size.y / 2.0) + (roundf(pointer_slide) if b == _pointer_row else 0.0)
+	var dx: float = float(_pointer_bob) if b == _pointer_row else 0.0
 	var col: Color = b.get_theme_color("font_focus_color", "Button")
-	b.draw_colored_polygon(PackedVector2Array([Vector2(1, cy - 2), Vector2(4, cy + 0.5), Vector2(1, cy + 3)]), col)
+	b.draw_colored_polygon(PackedVector2Array([Vector2(1 + dx, cy - 2), Vector2(4 + dx, cy + 0.5), Vector2(1 + dx, cy + 3)]), col)
 
 ## Screen readers: each row says its text, state and place (item 2085).
 func _set_accessibility(title: String) -> void:

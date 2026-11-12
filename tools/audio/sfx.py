@@ -58,6 +58,12 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out.update(element_hits())
     out.update(feel_sfx())
     out.update(world_sfx())
+    out.update(rift_sfx())
+    out.update(dodge_sfx())
+    out.update(social_sfx())
+    out.update(passage_sfx())
+    out.update(grass_sfx())
+    out.update(era2_element_sfx())
     return out
 
 
@@ -167,4 +173,130 @@ def world_sfx() -> dict[str, np.ndarray]:
             env(n, attack=0.004, decay=0.02, sustain=0.4, release=0.012)
     n = secs(0.015)
     out["blip"] = pulse(freq(midi("A5")), n, 0.25) * env(n, attack=0.001, decay=0.005, sustain=0.6, release=0.004) * 0.5
+    return out
+
+
+def rift_sfx() -> dict[str, np.ndarray]:
+    """The deep rumble when a Rift opens around the Wayfarer (item 2262). Own generator, so
+    the older effects keep their noise."""
+    rng = np.random.default_rng(2262)
+    out: dict[str, np.ndarray] = {}
+    n = secs(0.7)
+    body = sweep(72, 44, n, "tri") * 0.6 + noise(n, 48, rng) * 0.45
+    wobble = 0.75 + 0.25 * np.sin(np.arange(n) / RATE * 2 * np.pi * 9)
+    out["rumble"] = body * wobble * env(n, attack=0.04, decay=0.25, sustain=0.5, release=0.2) * 0.9
+    return out
+
+
+def dodge_sfx() -> dict[str, np.ndarray]:
+    """A missed art's soft rush of air past the target (item 2531) and the quick sideways
+    swish of the dodge (item 2536). Own generator, so the older effects keep their noise."""
+    rng = np.random.default_rng(2531)
+    out: dict[str, np.ndarray] = {}
+    n = secs(0.32)
+    # Noise held longer and longer as it passes: the rush falls in pitch and fades.
+    held = np.concatenate([noise(n // 4, step, rng) for step in (2, 3, 5, 8)])[:n]
+    if len(held) < n:
+        held = np.pad(held, (0, n - len(held)))
+    swell = np.sin(np.linspace(0, np.pi, n)) ** 1.5
+    out["miss"] = held * swell * 0.5
+    n = secs(0.12)
+    out["dodge"] = (noise(n, 1, rng) * 0.5 + sweep(900, 400, n, "tri") * 0.15) * \
+        env(n, attack=0.004, decay=0.05, sustain=0.3, release=0.03) * 0.7
+    return out
+
+
+def social_sfx() -> dict[str, np.ndarray]:
+    """Small notes for menus and friends: a greyed-out row (item 2511), the toast (2512), a
+    sent gift (2514), a new friend (2515), a finished daily task (2516) and the day's rare
+    visitor (2517). Own generator, so the older effects keep their noise."""
+    rng = np.random.default_rng(2511)
+    out: dict[str, np.ndarray] = {}
+
+    def tone(nm: str, d: float, kind: str = "pulse", duty: float = 0.25) -> np.ndarray:
+        k = secs(d)
+        osc = triangle(freq(midi(nm)), k) if kind == "tri" else pulse(freq(midi(nm)), k, duty)
+        return osc * env(k, attack=0.002, sustain=0.6, release=0.015)
+
+    # Dull and short, low triangle with a muffled thud: unlike the falling "cancel" sweep.
+    n = secs(0.07)
+    out["locked"] = (triangle(freq(midi("F#3")), n) * 0.7 + noise(n, 24, rng) * 0.2) * \
+        env(n, attack=0.001, decay=0.03, sustain=0.2, release=0.02) * 0.6
+    out["toast"] = np.concatenate([tone("G5", 0.045, "tri"), tone("D6", 0.06, "tri")]) * 0.35
+    out["gift"] = np.concatenate([tone("G5", 0.07), tone("E5", 0.07), tone("C5", 0.14)]) * 0.42
+    out["friend"] = np.concatenate([tone("C5", 0.09, "pulse", 0.5), tone("G5", 0.16, "pulse", 0.5)]) * 0.4
+    n = secs(0.06)
+    stroke = noise(n, 2, rng) * np.linspace(0.2, 0.6, n) * env(n, attack=0.002, sustain=0.6, release=0.01) * 0.35
+    k = secs(0.35)
+    bell = (triangle(freq(midi("E6")), k) * 0.6 + pulse(freq(midi("B6")), k, 0.125) * 0.15) * \
+        env(k, attack=0.002, decay=0.2, sustain=0.2, release=0.1)
+    out["task_done"] = np.concatenate([stroke, bell * 0.6])
+    parts = []
+    for nm in ["E7", "B6", "G#7", "D#7", "B7"]:
+        parts.append(tone(nm, 0.04, "tri"))
+    out["sparkle"] = np.concatenate(parts) * 0.3
+    return out
+
+
+def passage_sfx() -> dict[str, np.ndarray]:
+    """Doors opening and closing in wood (item 2507), three quick steps up or down the stairs
+    (2508), the pause menu as a page turned open and folded shut (2509), the faint Energy tick
+    at round start (2537). Own generator, so the older effects keep their noise."""
+    rng = np.random.default_rng(2507)
+    out: dict[str, np.ndarray] = {}
+    # Wood: band of noise held a few samples (darker) over a low pulse thump.
+    n = secs(0.22)
+    creak = sweep(180, 260, n, "pulse", 0.125) * 0.15 * np.sin(np.linspace(0, np.pi, n))
+    out["door_open"] = (noise(n, 10, rng) * 0.35 + creak + sweep(110, 80, n, "tri") * 0.35) * \
+        env(n, attack=0.01, decay=0.1, sustain=0.4, release=0.06) * 0.8
+    n = secs(0.12)
+    out["door_close"] = (noise(n, 14, rng) * 0.4 + sweep(95, 55, n, "tri") * 0.6) * \
+        env(n, attack=0.001, decay=0.05, sustain=0.2, release=0.04) * 0.9
+    for name, notes in [("stairs_up", ["C4", "E4", "G4"]), ("stairs_down", ["G4", "E4", "C4"])]:
+        parts = []
+        for nm in notes:
+            k = secs(0.05)
+            step = triangle(freq(midi(nm)), k) * 0.5 + noise(k, 4, rng) * 0.25
+            parts.append(step * env(k, attack=0.001, decay=0.02, sustain=0.2, release=0.01))
+            parts.append(np.zeros(secs(0.025)))
+        out[name] = np.concatenate(parts) * 0.7
+    # A page: a short rush of fine noise, rising when it opens, falling and soft when it shuts.
+    n = secs(0.16)
+    out["page_open"] = (noise(n, 1, rng) * np.linspace(0.2, 0.6, n) + sweep(600, 1200, n, "tri") * 0.08) * \
+        env(n, attack=0.01, decay=0.06, sustain=0.5, release=0.04) * 0.6
+    n = secs(0.13)
+    out["page_close"] = (noise(n, 2, rng) * np.linspace(0.6, 0.15, n) + sweep(700, 300, n, "tri") * 0.1) * \
+        env(n, attack=0.002, decay=0.05, sustain=0.4, release=0.04) * 0.6
+    n = secs(0.012)
+    out["energy_tick"] = pulse(freq(midi("E7")), n, 0.125) * env(n, attack=0.001, decay=0.006, sustain=0.2, release=0.003) * 0.2
+    return out
+
+
+def grass_sfx() -> dict[str, np.ndarray]:
+    """A soft rustle when the Wayfarer walks into encounter grass (item 2519). Own generator,
+    so the older effects keep their noise."""
+    rng = np.random.default_rng(2519)
+    out: dict[str, np.ndarray] = {}
+    n = secs(0.14)
+    blades = noise(n, 1, rng) * (rng.random(n) > 0.45)
+    out["rustle"] = blades * np.sin(np.linspace(0, np.pi, n)) ** 2 * 0.35
+    return out
+
+
+def era2_element_sfx() -> dict[str, np.ndarray]:
+    """Hit and travel sounds for the Era II elements Ink and Echo (legendary Spirlings). Own
+    generator, so the older effects keep their noise."""
+    rng = np.random.default_rng(1818)
+    out: dict[str, np.ndarray] = {}
+    tt = lambda n: np.arange(n) / RATE
+    n = secs(0.22)  # Ink: a wet blot, low splat with a scratch of the nib
+    out["hit_ink"] = (sweep(200, 70, n, "pulse", 0.25) * 0.5 + noise(n, 3, rng) * 0.3 * np.linspace(1, 0, n)) * \
+        env(n, decay=0.1, sustain=0.3) * 0.85
+    n = secs(0.3)  # Echo: a struck bell with its own echo
+    bell = triangle(freq(midi("A5")), n) * 0.4 + triangle(freq(midi("E6")), n) * 0.2
+    out["hit_echo"] = (bell * np.exp(-tt(n) * 9) + np.roll(bell * np.exp(-tt(n) * 9), secs(0.09)) * 0.35) * 0.8
+    n = secs(0.25)
+    fade = np.linspace(1, 0, n)
+    out["travel_ink"] = (noise(n, 2, rng) * (np.sin(tt(n) * 2 * np.pi * 14) > 0.2) * 0.4 + sweep(140, 110, n, "tri") * 0.3) * fade * 0.5
+    out["travel_echo"] = (triangle(freq(midi("E5")), n) * 0.3 * (0.5 + 0.5 * np.sin(tt(n) * 2 * np.pi * 7))) * fade * 0.5
     return out

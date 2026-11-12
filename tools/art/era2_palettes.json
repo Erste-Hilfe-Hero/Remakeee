@@ -1,0 +1,73 @@
+{
+  "_doc": "Era II (Aquarell, Corvane) palettes. Each list is the 4 tones for the Era I shade indices 0..3 (0 = outline, darkest; 3 = lightest). Tune here, then run python3 tools/art/era2_colourise.py.",
+  "ink": ["2a1e2c", "6a4256", "c48a5e", "f2e3c2"],
+  "elements": {
+    "EMBER": ["4a2226", "a8543c", "e09a62", "f6dcb4"],
+    "TIDE":  ["1f3550", "3f78a6", "86b6d4", "e2eef0"],
+    "BLOOM": ["263a24", "4e7c42", "9cc27a", "e6efc6"],
+    "VOLT":  ["4a3a18", "a88a2e", "e6cc6a", "f8f0c8"],
+    "STONE": ["3a3230", "7a6a5c", "b4a48c", "e8e0cc"],
+    "GALE":  ["2c4040", "5e9a94", "a6d2c4", "eef4ea"],
+    "LUMEN": ["54402a", "c4a05a", "ecd69a", "fbf6e4"],
+    "UMBRA": ["2a2038", "5c4878", "9c88b0", "e2d8e8"]
+  },
+  "spirling_rules": {
+    "_doc": "Palette of a line = its first member's elements: tones 0,1,3 from the first element, tone 2 from the second element (accent). Lines sharing the same element pair are spread by line_hue_step degrees each so they stay distinct.",
+    "accent_tone": 2,
+    "line_hue_step": 9
+  },
+  "tiles": {
+    "GRASS":      ["2c4a2a", "5f8f48", "9cc46a", "d8e6a8"],
+    "TALL_GRASS": ["22401f", "4a7a38", "7fae58", "c4dc96"],
+    "PATH":       ["5a4430", "a68a60", "d8c08a", "f2e6c4"],
+    "WATER":      ["1e3a5c", "3c6e9e", "7aaed2", "e4f0f2"],
+    "TREE":       ["1c3020", "3e6a3a", "7aa45a", "c8d8a0"],
+    "WALL":       ["4a3c34", "9a8670", "d6c8a8", "f4ecd8"],
+    "ROOF":       ["4a2420", "9a4a38", "cc7a5a", "f0d0b0"],
+    "DOOR":       ["3a2418", "6e4630", "a87850", "e0c49a"],
+    "FLOOR":      ["4a3222", "8a6440", "c09868", "ecd6b0"],
+    "FENCE":      ["3e2c20", "7a5a3c", "b8946a", "ead8b8"],
+    "SIGN":       ["3e2c20", "806040", "c4a070", "f0e0c0"],
+    "FLOWER":     ["5a2a40", "c0607a", "f0a8a0", "fbeee0"],
+    "COUNTER":    ["40281c", "7c5034", "b88458", "ead0a8"],
+    "INNER_WALL": ["3e3028", "806650", "bfa47e", "efe2c6"],
+    "SPRING":     ["1e4048", "3e8088", "8ec8c4", "eaf6f0"],
+    "RIFT":       ["2e1c3c", "6a4290", "b088c4", "f0e4f4"],
+    "CLIFF":      ["3c3438", "76686a", "ae9e96", "e4dace"],
+    "STAIRS":     ["3e3634", "7c706a", "b2a69a", "e6ded0"],
+    "REEDS":      ["2e3e22", "6a7e3a", "aab468", "e4e4b0"],
+    "SCREE":      ["383640", "6e6a78", "a6a2aa", "dcdad8"],
+    "PIER":       ["3e2a1c", "7a5636", "b48a5c", "e6d0a8"],
+    "TOWER":      ["3a3440", "746c80", "aca4b4", "e8e2ea"],
+    "LAMP":       ["3a2c24", "806048", "e4b464", "faf0cc"],
+    "ROCK":       ["34323a", "68646e", "9e9aa0", "d8d4d0"],
+    "WADE":       ["24405a", "4a7ea4", "92c0d8", "e8f2f2"],
+    "BOULDER":    ["3a3430", "6e665c", "a89c8c", "e0d8c8"],
+    "PLATE":      ["3a3438", "6c6e78", "a6a8b0", "e0e2e4"],
+    "CRACKED":    ["403630", "7c6c5c", "b6a28a", "e8dcc8"],
+    "VINES":      ["22381e", "487034", "86a85a", "d0e0a8"],
+    "PLANK":      ["3e2a1a", "7c5a36", "b8905e", "eed8b0"]
+  },
+  "chars": {
+    "tamer":       ["2c2a40", "4e6a9a", "d49a74", "f4e6d0"],
+    "tamer_f":     ["3e2234", "9a4a62", "d8a07a", "f6e8d6"],
+    "villager":    ["3a2e22", "7a8a4a", "d4a47c", "f2e6cc"],
+    "ranger":      ["22362a", "4e7a52", "c89470", "ece4c8"],
+    "elder":       ["34283a", "7a6a8e", "d0a88a", "f0ece4"],
+    "warden":      ["2a2e3a", "5a5e78", "c4946e", "e8e4dc"],
+    "first_voice": ["2e2440", "6a5a9e", "b4a8d8", "f4f0fa"],
+    "stranger":        ["2e2228", "7a3e3a", "c8946a", "efe0c4"],
+    "stranger_hat":    ["262a2e", "4e5a52", "c09068", "eae2cc"],
+    "stranger_runner": ["2a2420", "6e5232", "c88e62", "f0e2c6"],
+    "stranger_kid":    ["2c2a36", "5a5a7e", "d6a07c", "f4e8d4"]
+  },
+  "fx": {
+    "spark": "EMBER", "drop": "TIDE", "leaf": "BLOOM", "zag": "VOLT",
+    "rock": "STONE", "streak": "GALE", "glint": "LUMEN", "shade": "UMBRA"
+  },
+  "landmarks": {
+    "veydal_standing_stone": "ROCK", "veydal_cairn": "BOULDER", "veydal_beacon": "LAMP", "veydal_tide_post": "PIER",
+    "corvane_heron_post": "FENCE", "corvane_drying_rack": "SPRING", "corvane_sluice_wheel": "PIER", "corvane_dye_mill": "WATER",
+    "ashmere_smelter_stack": "ROOF", "ashmere_bell_frame": "FENCE", "ashmere_salt_obelisk": "CLIFF"
+  }
+}

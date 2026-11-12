@@ -1,0 +1,21 @@
+{
+ "_comment": "ja translation of the solenne_side table, keyed by the English text.",
+ "strings": {
+  "Beat Factor Lusk in his strongroom, then go back to Bex.": "金庫室で代理人Luskを倒し、Bexのところへ戻ろう。",
+  "Corin Lusk, heir of the Brass Veil, wants to buy your team. Beat him three times.": "真鍮のベールの跡取り、Corin Luskがチームを買いたがっている。3回倒そう。",
+  "Ochrewell and the Veil Cistern": "Ochrewellとベールの貯水槽",
+  "Old Mags wants the eight brass seals the Veil nailed onto Ochrewell. She melts them into spoons.": "Magsばあさんは、ベールがOchrewellに打ちつけた真鍮の印8枚を欲しがっている。溶かしてスプーンにするらしい。",
+  "Qadir wants the five worst IOUs of Ochrewell for a bonfire.": "Qadirはたき火用に、Ochrewellで最悪の借用書5枚を欲しがっている。",
+  "The Brass Veil keeps a cistern under its counting house in Ochrewell. Find out what it counts.": "真鍮のベールはOchrewellの勘定所の下に貯水槽を持っている。何を数えているのか突き止めよう。",
+  "The Veil keeps its orders in the lowest room of its cistern. Read the order book.": "ベールは命令を貯水槽の一番下の部屋に保管している。命令簿を読もう。",
+  "The Veil prepaid three graves with Undertaker Bex. Find out who they are for.": "ベールは葬儀屋Bexに墓3つ分を前払いした。誰のための墓か突き止めよう。",
+  "The last valve turns, the cistern drains, and the stair is clear!": "最後のバルブが回り、貯水槽が空になって階段が通れる！",
+  "The pipes gurgle along happily. The stair stays dry.": "パイプが楽しげにごぼごぼ鳴る。階段は乾いたままだ。",
+  "The valve screams, and every pipe slams shut again. Start over.": "バルブが悲鳴を上げ、すべてのパイプがまた閉じた。やり直しだ。",
+  "The valve squeals round. Somewhere, water changes owner.": "バルブがきしみながら回る。どこかで水の持ち主が変わる。",
+  "Three rude headstones, paid in full.": "失礼な墓石3つ、全額支払い済み。",
+  "Veil Cistern, strongroom": "ベールの貯水槽、金庫室",
+  "Veil Guard": "ベールの衛兵",
+  "You know whose graves they are. Tell Bex.": "誰の墓か分かった。Bexに伝えよう。"
+ }
+}

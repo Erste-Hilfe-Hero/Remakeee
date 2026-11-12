@@ -114,6 +114,7 @@ func test_overworld_loads_every_map() -> void:
 		assert_eq(ow.map.id, id)
 		var live: int = 0
 		for s: Dictionary in m.secrets:
-			if not GameState.has_flag(str(s.flag)):
+			# Loose soil (item 1089) shows as a patch, not a glint.
+			if not GameState.has_flag(str(s.flag)) and not bool(s.get("soil", false)):
 				live += 1
 		assert_eq(ow._world.glint_count(), live, "%s: one glint per hidden find" % id)

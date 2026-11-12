@@ -1,17 +1,30 @@
 class_name Elements
-## 8 original elements. Each beats exactly 2 and is beaten by exactly 2.
-enum E { EMBER, TIDE, BLOOM, VOLT, STONE, GALE, LUMEN, UMBRA }
+## The 8 Era I elements plus the Era II elements Ink and Echo, appended so saved element ids keep
+## their meaning. The chart lives in data/type_chart.json (docs/BALANCE.md, Type chart): every
+## element has at least 2 real strengths and 2 real weaknesses (Lumen and Umbra beat each other,
+## which is neutral both ways). Ink and Echo sit only on legendary (ancient) Spirlings so far.
+enum E { EMBER, TIDE, BLOOM, VOLT, STONE, GALE, LUMEN, UMBRA, INK, ECHO }
 
-const STRONG := {
-	E.EMBER: [E.BLOOM, E.UMBRA],
-	E.TIDE:  [E.EMBER, E.STONE],
-	E.BLOOM: [E.TIDE, E.STONE],
-	E.VOLT:  [E.TIDE, E.GALE],
-	E.STONE: [E.EMBER, E.VOLT],
-	E.GALE:  [E.BLOOM, E.LUMEN],
-	E.LUMEN: [E.UMBRA, E.VOLT],
-	E.UMBRA: [E.LUMEN, E.GALE],
-}
+const CHART_PATH: String = "res://data/type_chart.json"
+
+## Element -> the elements it beats, read from the chart.
+static var STRONG: Dictionary = _load_strong()
+
+## The whole chart as written in data/type_chart.json (all eras, names as keys).
+static func chart() -> Dictionary:
+	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(CHART_PATH))
+	return raw if raw is Dictionary else {}
+
+static func _load_strong() -> Dictionary:
+	var types: Dictionary = chart().get("types", {})
+	var out: Dictionary = {}
+	for e: int in E.values():
+		var list: Array = []
+		for t: Variant in (types.get(E.keys()[e], {}) as Dictionary).get("strong", []):
+			if E.has(str(t)):
+				list.append(E[str(t)])
+		out[e] = list
+	return out
 
 ## Placeholder colours per element (Era I maps them to its four inks by brightness).
 const COLORS := {
@@ -23,6 +36,8 @@ const COLORS := {
 	E.GALE:  Color("9fd8e8"),
 	E.LUMEN: Color("fff4c2"),
 	E.UMBRA: Color("4b3a66"),
+	E.INK:   Color("2b2f4a"),
+	E.ECHO:  Color("c9b8e0"),
 }
 
 static func element_name(e: int) -> String:
@@ -30,6 +45,12 @@ static func element_name(e: int) -> String:
 
 static func color(e: int) -> Color:
 	return COLORS.get(e, Color.GRAY)
+
+## Display name of a chart element by its key, also for chart elements not in the enum yet
+## (Halcyra's Gilt and Zenith take their "name" from data/type_chart.json).
+static func chart_name(key: String) -> String:
+	var t: Dictionary = (chart().get("types", {}) as Dictionary).get(key, {})
+	return Loc.t(str(t.get("name", key.capitalize())))
 
 ## Multiplier for one attacking element into one defending element.
 static func single(atk: int, def: int) -> float:

@@ -1,0 +1,35 @@
+{
+ "name": "Rumour Room",
+ "region": "vellmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCCffCCW",
+  "WffffffW",
+  "WffffffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "tallowmarket",
+   "tx": 2,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "broker",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/tallowmarket_rumour_room_broker",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

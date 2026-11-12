@@ -3,6 +3,10 @@ KEEP = ["Corin", "Liora", "Mirela", "Aldo", "Kestra", "Warden Senna", "Warden Jo
 T = {
 # New game and settings
 "Who are you?": "Wer bist du?",
+"Skin tone": "Hautton", "Hair colour": "Haarfarbe", "Coat colour": "Mantelfarbe",
+"Light": "Hell", "Fair": "Zart", "Tan": "Gebräunt", "Brown": "Braun", "Deep": "Dunkel",
+"Plum": "Pflaume", "Black": "Schwarz", "Auburn": "Kupfer", "Blond": "Blond", "Silver": "Silber",
+"Teal": "Petrol", "Rust": "Rost", "Ochre": "Ocker",
 "Boy": "Junge",
 "Girl": "Mädchen",
 "Difficulty: %s": "Schwierigkeit: %s",

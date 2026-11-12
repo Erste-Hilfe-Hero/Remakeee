@@ -30,5 +30,8 @@ func test_element_chart_matches_spec() -> void:
 	assert_eq(Elements.single(E.LUMEN, E.UMBRA), 1.0, "Lumen/Umbra mirror is neutral")
 	assert_eq(Elements.single(E.UMBRA, E.LUMEN), 1.0, "Lumen/Umbra mirror is neutral")
 	assert_eq(Elements.multiplier(E.TIDE, [E.EMBER, E.STONE]), 4.0, "dual elements multiply")
+	var types: Dictionary = Elements.chart().get("types", {})
 	for atk: int in E.values():
-		assert_eq((Elements.STRONG[atk] as Array).size(), 2, "each element beats exactly 2")
+		# Chart elements not yet in the enum (Vellmarch's Rust and Mask, data/region2.json) are left out.
+		var known: Array = (types[E.keys()[atk]].strong as Array).filter(func(t: Variant) -> bool: return E.has(str(t)))
+		assert_eq((Elements.STRONG[atk] as Array).size(), known.size(), "STRONG follows the chart")

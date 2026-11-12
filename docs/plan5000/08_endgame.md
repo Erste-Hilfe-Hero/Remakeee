@@ -120,13 +120,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3217. [P2] Für jedes Fest zwei festbezogene Jackenmuster beim Festhändler für 40 Festbänder anbieten.
 3218. [P2] Für jedes Fest einen Fotorahmen beim Festhändler für 20 Festbänder anbieten.
 3219. [P2] Für jedes Fest eine eigene Festmusik als Abwandlung der Brindlewick-Melodie in audio/ anlegen und in data/music.json eintragen.
-3220. [P2] Feste, die ein Spieler schon einmal gefeiert hat, im nächsten Jahr mit einer neuen Stufe der Festaufgabe fortsetzen.
-3221. [P2] Die Festgeschenke des Ausrufers pro Jahr wechseln lassen, aus einer offenen Liste von vier Gegenständen pro Fest.
+3220. [x] [P2] Feste, die ein Spieler schon einmal gefeiert hat, im nächsten Jahr mit einer neuen Stufe der Festaufgabe fortsetzen.
+3221. [x] [P2] Die Festgeschenke des Ausrufers pro Jahr wechseln lassen, aus einer offenen Liste von vier Gegenständen pro Fest.
 3222. [x] [P2] Im Ziele-Bildschirm Festname, Restdauer in Tagen und Festbänder-Stand zeigen.
-3223. [P2] Zwischen den Festen den Ausrufer das nächste Fest mit Startmonat ankündigen lassen, wie bisher, und zusätzlich die Festelemente nennen.
+3223. [x] [P2] Zwischen den Festen den Ausrufer das nächste Fest mit Startmonat ankündigen lassen, wie bisher, und zusätzlich die Festelemente nennen.
 3224. [x] [P2] Einen Test schreiben, der für jeden Monat prüft, dass höchstens ein Fest läuft.
 3225. [P2] Während jedes Festes den Wanderhändler ein festbezogenes Angebot gegen Festbänder führen lassen.
-3226. [P2] Am ersten Festtag einen kurzen Hinweis beim Spielstart zeigen, der Fest, Elemente und Festhändler nennt.
+3226. [x] [P2] Am ersten Festtag einen kurzen Hinweis beim Spielstart zeigen, der Fest, Elemente und Festhändler nennt.
 3227. [P3] Ein fünftes Fest „Sturmtage“ im März für Gale und Volt ergänzen, mit eigenem Schmuck in Crowcrest.
 3228. [P3] Ein sechstes Fest „Erntezeit“ im September für Bloom und Stone ergänzen, mit Marktständen in Fernstair.
 3229. [P3] Am Jahrestag des Kontos ein kleines persönliches Fest mit 50 Wegmarken und einem Kuchen-Bild im Fotomodus feiern.
@@ -268,15 +268,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3355. [x] [P2] Ein Sammelziel „Jede Art auf Ring 30“ mit Stufen von 5, 10 und 21 Arten ergänzen.
 3356. [x] [P2] Ein Sammelziel „Jede Entfaltungsform gesehen“ ergänzen, das alle Stufen einer Linie zählt.
 3357. [x] [P2] Ein Sammelziel „Jede Technik einmal eingesetzt“ für alle 58 Techniken mit Stufen bei 20, 40 und 58 ergänzen.
-3358. [P2] Ein Technikbuch im Lexikon anlegen, das jede schon eingesetzte Technik markiert.
+3358. [x] [P2] Ein Technikbuch im Lexikon anlegen, das jede schon eingesetzte Technik markiert.
 3359. [x] [P2] Ein Sammelziel „Jedes Element im Team“ ergänzen: einmal einen Spirling jedes der acht Elemente gebondet.
-3360. [P2] Ein Sammelziel für Fundorte ergänzen: jede Art mindestens an jedem ihrer Fundorte einmal gesehen.
-3361. [P2] Im Spirlog für jede Art die Fundorte mit Haken zeigen, sobald man sie dort gesehen hat.
+3360. [x] [P2] Ein Sammelziel für Fundorte ergänzen: jede Art mindestens an jedem ihrer Fundorte einmal gesehen.
+3361. [x] [P2] Im Spirlog für jede Art die Fundorte mit Haken zeigen, sobald man sie dort gesehen hat.
 3362. [x] [P2] Ein Sammelziel „Lore-Seiten“ ergänzen, das alle gefundenen Lore-Seiten zählt und bei voll 100 Wegmarken zahlt.
 3363. [x] [P2] Ein Sammelziel „Andenken-Sammlung“ ergänzen, das jedes Andenken einmal gehalten zählt.
-3364. [P2] Ein Sammelziel für Prisma-Spirlings in einer eigenen Spirlog-Seite zeigen, ohne Hinweis auf eine Chance.
+3364. [x] [P2] Ein Sammelziel für Prisma-Spirlings in einer eigenen Spirlog-Seite zeigen, ohne Hinweis auf eine Chance.
 3365. [x] [P2] Ein Sammelziel „Temperamente“ ergänzen, das alle Temperamente über alle Spirlings zählt.
-3366. [P2] Für jede Art eine kleine Sammelkarte im Spirlog freischalten, wenn sie gebondet, auf Ring 30 und mit jeder Technik ihrer Linie eingesetzt wurde.
+3366. [x] [P2] Für jede Art eine kleine Sammelkarte im Spirlog freischalten, wenn sie gebondet, auf Ring 30 und mit jeder Technik ihrer Linie eingesetzt wurde.
 3367. [P3] Eine Fotowand im Leuchtturm einrichten, an die man pro Art ein Foto aus dem Fotomodus hängen kann.
 3368. [P3] Für eine volle Fotowand mit allen 21 Arten einen Rahmen in Gold und 100 Wegmarken vergeben.
 3369. [P3] Ein Sammelziel „Größte und kleinste“ ergänzen, das für jede Art Höhe oder Gewicht aus einem gebondeten Spirling festhält, falls das Spiel solche Werte bekommt.
@@ -292,14 +292,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 ### Abschlussziele und 100-Prozent-Anzeige
 3378. [x] [P1] Eine Gesamtanzeige „Reise vollendet: x Prozent“ in den Aufzeichnungen bauen, die Story, Seitenziele, Spirlog, Erfolge, Türme und Erkundung gewichtet.
 3379. [x] [P1] Die Gewichte festlegen und in docs/BALANCE.md eintragen: Story 20, Seitenziele 10, Spirlog 25, Erfolge 20, Türme 15, Erkundung 10 Prozent.
-3380. [P2] Eine Prüfliste „Was fehlt noch“ bauen, die pro Bereich die drei nächsten offenen Ziele zeigt.
-3381. [P2] Den Prozentwert auf dem Speicherslot im Titelbild anzeigen.
-3382. [P2] Bei 50, 75 und 100 Prozent eine Belohnung von 50, 100 und 300 Wegmarken auszahlen.
-3383. [P2] Bei 100 Prozent einen goldenen Rand um den Speicherslot im Titelbild zeigen.
-3384. [P2] Einen Test schreiben, der prüft, dass ein voller Test-Spielstand unter tests/fixtures genau 100 Prozent ergibt.
-3385. [P2] Ziele, die nur zu Festen oder im Wochen-Echo erreichbar sind, nicht in die 100 Prozent zählen, damit niemand auf einen Monat warten muss.
-3386. [P2] Den Prozentwert nach neuen Updates neu berechnen und erreichte Lohnstufen nie zurücknehmen.
-3387. [P2] Den Prozentwert in einer Detailansicht nach den sechs Bereichen aufschlüsseln.
+3380. [x] [P2] Eine Prüfliste „Was fehlt noch“ bauen, die pro Bereich die drei nächsten offenen Ziele zeigt.
+3381. [x] [P2] Den Prozentwert auf dem Speicherslot im Titelbild anzeigen.
+3382. [x] [P2] Bei 50, 75 und 100 Prozent eine Belohnung von 50, 100 und 300 Wegmarken auszahlen.
+3383. [x] [P2] Bei 100 Prozent einen goldenen Rand um den Speicherslot im Titelbild zeigen.
+3384. [x] [P2] Einen Test schreiben, der prüft, dass ein voller Test-Spielstand unter tests/fixtures genau 100 Prozent ergibt.
+3385. [x] [P2] Ziele, die nur zu Festen oder im Wochen-Echo erreichbar sind, nicht in die 100 Prozent zählen, damit niemand auf einen Monat warten muss.
+3386. [x] [P2] Den Prozentwert nach neuen Updates neu berechnen und erreichte Lohnstufen nie zurücknehmen.
+3387. [x] [P2] Den Prozentwert in einer Detailansicht nach den sechs Bereichen aufschlüsseln.
 3388. [P3] Bei 100 Prozent eine kurze Abspannfolge mit allen gebondeten Spirlings in Reihe zeigen.
 3389. [P3] Einen Zeitpunkt „100 Prozent erreicht am“ in den Aufzeichnungen festhalten.
 3390. [P3] Den Prozentwert auf einem teilbaren Bild aus dem Fotomodus einblenden lassen.
@@ -314,18 +314,18 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3397. [x] [P1] Ein Gedenkbuch im Refugium anlegen, das jeden ins Refugium gezogenen Spirling mit Name, Ring, Ort und Datum listet.
 3398. [x] [P1] Den Erfolg „Oathkeeper“ um Stufen erweitern: beide Risse unter Schwur auf Wanderer, Veteran und Rift-Born-Schwierigkeit.
 3399. [x] [P1] Die Wahl des Eisernen Schwurs beim neuen Spiel mit einem Satz zu Refugium und Bonus von 25 Prozent Wegmarken erklären.
-3400. [P2] Unter Schwur die Leuchtturm-Treppe als eigenen Bestwert führen, getrennt vom normalen Bestwert.
-3401. [P2] Eine Chronik der Läufe über alle drei Speicherslots anlegen, die abgeschlossene Läufe mit Starter, Schwierigkeit, Spielzeit und Schwur festhält.
-3402. [P2] Die Chronik auch nach dem Löschen eines Slots behalten, damit alte Läufe sichtbar bleiben.
-3403. [P2] Für jeden abgeschlossenen Lauf mit einem anderen Starter einen Erfolg vergeben: „Drei Wege“ bei allen drei Startern.
+3400. [x] [P2] Unter Schwur die Leuchtturm-Treppe als eigenen Bestwert führen, getrennt vom normalen Bestwert.
+3401. [x] [P2] Eine Chronik der Läufe über alle drei Speicherslots anlegen, die abgeschlossene Läufe mit Starter, Schwierigkeit, Spielzeit und Schwur festhält.
+3402. [x] [P2] Die Chronik auch nach dem Löschen eines Slots behalten, damit alte Läufe sichtbar bleiben.
+3403. [x] [P2] Für jeden abgeschlossenen Lauf mit einem anderen Starter einen Erfolg vergeben: „Drei Wege“ bei allen drei Startern.
 3404. [P2] Kosmetik aus dem Tauschstand und den Jahreszeitenpfaden kontoweit freischalten, sodass ein neuer Lauf sie behält.
 3405. [P2] Wegmarken pro Slot führen, aber freigeschaltete Kosmetik kontoweit, und das im Tauschstand erklären.
-3406. [P2] Kleine freiwillige Gelübde zu Laufbeginn anbieten, die nur Wegmarken-Bonus geben: „Ohne Laden“, „Ohne Andenken“, „Starter bleibt im Team“.
-3407. [P2] Jedes erfüllte Gelübde am Ende von Akt I mit 100 Wegmarken belohnen und in der Chronik vermerken.
-3408. [P2] Gelübde jederzeit im Menü aufgeben lassen, ohne Strafe außer dem verlorenen Bonus.
-3409. [P2] Die Gelübde in data/endgame.json festlegen und keine Regel aus dem Herausforderungs-Abschnitt des Kampf-Plans doppeln.
+3406. [x] [P2] Kleine freiwillige Gelübde zu Laufbeginn anbieten, die nur Wegmarken-Bonus geben: „Ohne Laden“, „Ohne Andenken“, „Starter bleibt im Team“.
+3407. [x] [P2] Jedes erfüllte Gelübde am Ende von Akt I mit 100 Wegmarken belohnen und in der Chronik vermerken.
+3408. [x] [P2] Gelübde jederzeit im Menü aufgeben lassen, ohne Strafe außer dem verlorenen Bonus.
+3409. [x] [P2] Die Gelübde in data/endgame.json festlegen und keine Regel aus dem Herausforderungs-Abschnitt des Kampf-Plans doppeln.
 3410. [P2] Beim Neustart eines Laufs die Tagesaufträge und den Jahreszeitenpfad kontoweit weiterlaufen lassen.
-3411. [P2] Den Eisernen Schwur und die Gelübde in der Lauf-Chronik mit eigenem Symbol zeigen.
+3411. [x] [P2] Den Eisernen Schwur und die Gelübde in der Lauf-Chronik mit eigenem Symbol zeigen.
 3412. [P3] Ein Gelübde „Fünf Elemente“ ergänzen: das Team hat bei jedem Riss-Wächter fünf verschiedene Elemente.
 3413. [P3] Ein Gelübde „Leise Reise“ ergänzen: keine Rückkämpfe gegen Wanderer bis zum Ende von Akt I.
 3414. [P3] Unter Schwur einen eigenen Abspann-Satz zeigen, der die Zahl der Spirlings im Refugium nennt.
@@ -367,13 +367,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3446. [x] [P1] Spirlings aus dem Lager auf Streifzüge schicken lassen, bis zu drei gleichzeitig, mit einer Dauer von 4, 8 oder 12 Stunden nach Server-Zeit.
 3447. [x] [P1] Jeden Streifzug nach einer festen, vorher sichtbaren Tabelle Münzen, 4, 8 oder 12 Wegmarken und einen gewöhnlichen Gegenstand mitbringen lassen.
 3448. [x] [P1] Streifzüge im Leuchtturm bei Aldo starten und abholen und Spirlings auf Streifzug im Lager mit einem Rucksack-Symbol markieren.
-3449. [P2] Als Ziel nur Karten erlauben, die der Spielstand schon kennt, und Fundstücke dieser Karte mitbringen lassen.
-3450. [P2] Einem Spirling, dessen Element zu den wilden Arten der Zielkarte passt, 50 Prozent mehr Münzen geben.
-3451. [P2] Streifzüge pro Stunde ein Viertel des Wachstums eines Wildkampfs geben, höchstens bis zum Ring-Deckel.
-3452. [P2] Streifzüge nie scheitern lassen und Spirlings auf Streifzug nie Kraft verlieren lassen.
-3453. [P2] Jedes Streifzug-Ergebnis als kurze Tagebuchzeile zeigen, etwa „Mossling fand am Bach einen Kraftsud“.
-3454. [P2] Spirlings im Refugium des Eisernen Schwurs nicht auf Streifzüge schicken lassen.
-3455. [P2] Ziele, Dauer und Belohnungstabellen der Streifzüge in data/endgame.json festlegen.
+3449. [x] [P2] Als Ziel nur Karten erlauben, die der Spielstand schon kennt, und Fundstücke dieser Karte mitbringen lassen.
+3450. [x] [P2] Einem Spirling, dessen Element zu den wilden Arten der Zielkarte passt, 50 Prozent mehr Münzen geben.
+3451. [x] [P2] Streifzüge pro Stunde ein Viertel des Wachstums eines Wildkampfs geben, höchstens bis zum Ring-Deckel.
+3452. [x] [P2] Streifzüge nie scheitern lassen und Spirlings auf Streifzug nie Kraft verlieren lassen.
+3453. [x] [P2] Jedes Streifzug-Ergebnis als kurze Tagebuchzeile zeigen, etwa „Mossling fand am Bach einen Kraftsud“.
+3454. [x] [P2] Spirlings im Refugium des Eisernen Schwurs nicht auf Streifzüge schicken lassen.
+3455. [x] [P2] Ziele, Dauer und Belohnungstabellen der Streifzüge in data/endgame.json festlegen.
 3456. [P3] Eine Wanderkarte im Tauschstand für 400 Wegmarken anbieten, die einen vierten Streifzug-Platz freischaltet.
 3457. [P3] Streifzüge selten eine Postkarte der Zielkarte mitbringen lassen, die in einem Postkartenalbum mit 12 Plätzen landet.
 3458. [P3] Einen Streifzug jederzeit abbrechen lassen und die Belohnung anteilig nach verstrichener Zeit auszahlen.
@@ -387,14 +387,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3464. [x] [P1] Jedem Raum eine Art geben: Wildkampf, Wanderer-Echo, Schatz, Rastquelle oder Rätsel.
 3465. [x] [P1] Am Ende des Pfads eine Truhe mit 40 Wegmarken beim ersten Abschluss der Woche aufstellen.
 3466. [P2] Rätselräume mit Lampen-Schalterrätseln in 6 Varianten bauen, angelehnt an das Lampenrätsel in Murk Hollow, aber mit eigener Anordnung.
-3467. [P2] Im Pfad nur im Rastquellen-Raum heilen lassen.
-3468. [P2] Beim Aufgeben alle gesammelten Dinge behalten lassen, nur die Endtruhe fehlt dann.
-3469. [P2] Wilde Spirlings im Pfad auf Ring-Deckel minus 5 setzen.
-3470. [P2] Eine Pfadkarte im Menü zeigen, die besuchte Räume und ihre Art markiert.
+3467. [x] [P2] Im Pfad nur im Rastquellen-Raum heilen lassen.
+3468. [x] [P2] Beim Aufgeben alle gesammelten Dinge behalten lassen, nur die Endtruhe fehlt dann.
+3469. [x] [P2] Wilde Spirlings im Pfad auf Ring-Deckel minus 5 setzen.
+3470. [x] [P2] Eine Pfadkarte im Menü zeigen, die besuchte Räume und ihre Art markiert.
 3471. [P2] Jeder Woche ein Motiv geben (Glut, Gezeiten, Wald, Höhle), das Kacheln und Elemente der wilden Spirlings bestimmt.
-3472. [P2] Den Nachhall-Pfad erst nach dem Kapitel „Waiting for the Ferry“ öffnen.
-3473. [P2] Einen GUT-Test schreiben, der 52 Wochen-Seeds erzeugt und prüft, dass jeder Pfad begehbar und lösbar ist.
-3474. [P2] Die beste eigene Zeit pro Woche nur lokal in GameState.records["echo_path_best"] speichern.
+3472. [x] [P2] Den Nachhall-Pfad erst nach dem Kapitel „Waiting for the Ferry“ öffnen.
+3473. [x] [P2] Einen GUT-Test schreiben, der 52 Wochen-Seeds erzeugt und prüft, dass jeder Pfad begehbar und lösbar ist.
+3474. [x] [P2] Die beste eigene Zeit pro Woche nur lokal in GameState.records["echo_path_best"] speichern.
 3475. [P3] Nach dem Sieg über alle Meister-Wanderer einen langen Pfad mit 12 Räumen und 80 Wegmarken freischalten.
 3476. [P3] In einer von zehn Wochen, fest durch den Seed bestimmt, einen geheimen Raum mit einem besonderen Fotorahmen einbauen.
 3477. [P3] Die Raumvorlagen in der Era-Grafik der jeweiligen Region zeichnen und in docs/ASSET_LOG.md eintragen.
@@ -409,9 +409,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3484. [P2] Die Album-Aufgaben pro Monat per Seed aus einer Liste in data/events.json ziehen.
 3485. [P2] Bei 4 und 8 gefüllten Stickern je 20 Wegmarken auszahlen.
 3486. [P2] Für jeden Monat ein Stickerthema festlegen (Januar Herd, April Blüten, Oktober Laternen) und 16x16-Sticker mit tools/art zeichnen.
-3487. [P2] Das Album im Reiter „Sammlung“ des Ziele-Bildschirms zeigen.
-3488. [P2] Album-Aufgaben nie mit den Tagesaufträgen desselben Tages gleichsetzen.
-3489. [P2] Album-Aufgaben nur aus Orten ziehen, die der Spielstand schon erreicht hat.
+3487. [x] [P2] Das Album im Reiter „Sammlung“ des Ziele-Bildschirms zeigen.
+3488. [x] [P2] Album-Aufgaben nie mit den Tagesaufträgen desselben Tages gleichsetzen.
+3489. [x] [P2] Album-Aufgaben nur aus Orten ziehen, die der Spielstand schon erreicht hat.
 3490. [P3] Vergangene Alben in einem Albumregal im Wanderer-Zimmer ansehen lassen.
 3491. [P3] Monatssticker im Fotomodus als Deko auf das Bild setzen lassen.
 3492. [P3] Verpasste Sticker im selben Monat des Folgejahres nachholen lassen.
@@ -423,13 +423,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3496. [x] [P1] Festschreiben und testen, dass kein Ereignis eine Serie verlangt und kein Fortschritt bei einem verpassten Tag verloren geht.
 3497. [x] [P1] Alle zeitlich begrenzten Inhalte nach Server-Zeit laufen lassen und beim Verstellen der Handy-Uhr nichts doppelt auszahlen.
 3498. [x] [P1] Belohnungen von Festen und Jahreszeitenpfad nach spätestens zwei Jahren erneut erreichbar machen, damit nichts für immer verpasst ist.
-3499. [P2] Eine Rückkehrhilfe einbauen: wer 14 Tage nicht gespielt hat, bekommt einmalig doppelte Pfadpunkte für 3 Tage.
-3500. [P2] Tagesaufträge nie per Benachrichtigung bewerben, auch wenn Push später freigeschaltet wird.
-3501. [P2] Keine Countdown-Zahlen unter einer Stunde auf dem Bildschirm zeigen, nur „endet heute“.
-3502. [P2] Für Kinderkonten (unter 16) alle Endgame-Belohnungen gleich halten und keine Hinweise auf Kaufangebote neben Wegmarken zeigen.
-3503. [P2] Eine Spielzeit-Erinnerung nach 90 Minuten anbieten, die man in den Einstellungen abschalten kann.
-3504. [P2] Belohnungen für Tagesaufträge auch nachträglich am nächsten Tag abholen lassen, wenn der Auftrag noch am alten Tag fertig wurde.
-3505. [P2] Einen Test schreiben, der einen Spielstand 30 Tage pausieren lässt und prüft, dass danach alle Ziele erreichbar und keine Belohnungen verloren sind.
+3499. [x] [P2] Eine Rückkehrhilfe einbauen: wer 14 Tage nicht gespielt hat, bekommt einmalig doppelte Pfadpunkte für 3 Tage.
+3500. [x] [P2] Tagesaufträge nie per Benachrichtigung bewerben, auch wenn Push später freigeschaltet wird.
+3501. [x] [P2] Keine Countdown-Zahlen unter einer Stunde auf dem Bildschirm zeigen, nur „endet heute“.
+3502. [x] [P2] Für Kinderkonten (unter 16) alle Endgame-Belohnungen gleich halten und keine Hinweise auf Kaufangebote neben Wegmarken zeigen.
+3503. [x] [P2] Eine Spielzeit-Erinnerung nach 90 Minuten anbieten, die man in den Einstellungen abschalten kann.
+3504. [x] [P2] Belohnungen für Tagesaufträge auch nachträglich am nächsten Tag abholen lassen, wenn der Auftrag noch am alten Tag fertig wurde.
+3505. [x] [P2] Einen Test schreiben, der einen Spielstand 30 Tage pausieren lässt und prüft, dass danach alle Ziele erreichbar und keine Belohnungen verloren sind.
 3506. [P3] Einen Urlaubsmodus anbieten, der bis zu 14 Tage den Jahreszeitenpfad pausiert, ohne Punkte zu verlieren.
 3507. [P3] Ereignisse in den Einstellungen einzeln ausblendbar machen (Weltereignisse, Festschmuck, Auftragshinweise).
 3508. [P3] In docs/BALANCE.md eine Regel festhalten, dass kein Endgame-Inhalt mehr als 30 Minuten pro Tag braucht, um alle Tagesbelohnungen zu holen.
@@ -443,8 +443,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3514. [P2] Als Ziel festlegen, dass ein Spieler nach 30 Tagen etwa 60 Prozent des Tauschstand-Angebots einmal kaufen kann.
 3515. [P2] Die Münzpreise im Wochen-Echo und in den Türmen an den Ring-Deckel binden: 20 Münzen mal Ring-Deckel pro Runde.
 3516. [P2] Echo-Kristalle als Endgame-Belohnung höchstens einmal pro Woche aus Türmen zulassen, damit der Tauschstand wichtig bleibt.
-3517. [P2] Im Datenprüfer tools/validate_data.gd prüfen, dass jeder Gegenstand in data/endgame.json und data/events.json in data/items.json existiert.
-3518. [P2] Im Datenprüfer prüfen, dass jede Ereignis-Id einmalig ist und jede Belohnung einen Betrag über 0 hat.
+3517. [x] [P2] Im Datenprüfer tools/validate_data.gd prüfen, dass jeder Gegenstand in data/endgame.json und data/events.json in data/items.json existiert.
+3518. [x] [P2] Im Datenprüfer prüfen, dass jede Ereignis-Id einmalig ist und jede Belohnung einen Betrag über 0 hat.
 3519. [P2] Den Gesamtwert aller Wegmarken-Quellen pro Woche im Test begrenzen: höchstens 700 Wegmarken für einen Spieler, der alles macht.
 3520. [P2] Gegenstände aus Endgame-Quellen nie stärker machen als Gegenstände aus dem Laden, nur seltener im Laden.
 3521. [P3] Einen Bericht in docs/BALANCE.md pflegen, der nach jedem Update die Wegmarken-Kurve über 90 Tage zeigt.
@@ -457,12 +457,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3526. [x] [P1] Den Ziele-Bildschirm in vier Reiter teilen: Story, Heute, Woche, Sammlung.
 3527. [x] [P1] Den Reiter „Heute“ mit Fund des Tages, Tagesaufträgen, Wanderhändler und Weltereignissen füllen.
 3528. [x] [P1] Den Reiter „Woche“ mit Wochen-Echo, Tauschstand-Wochenangebot, Meister-Wanderern und Endlosstrecke füllen.
-3529. [P2] Einen roten Punkt am Menüeintrag „Ziele“ zeigen, wenn eine Belohnung zum Abholen bereitliegt.
-3530. [P2] Eine Sammelabholung „Alles abholen“ für Aufträge, Pfad und Sammelziele bauen.
+3529. [x] [P2] Einen roten Punkt am Menüeintrag „Ziele“ zeigen, wenn eine Belohnung zum Abholen bereitliegt.
+3530. [x] [P2] Eine Sammelabholung „Alles abholen“ für Aufträge, Pfad und Sammelziele bauen.
 3531. [P2] Alle neuen Menüs auf 144x256 mit der bestehenden Schrift und Einhand-Bedienung prüfen und einen Screenshot je Menü in docs/screenshots ablegen.
 3532. [P2] Die Menüs mit dem Gamepad und dem Einhand-Pad bedienbar machen, wie die bestehenden Listen in ListPicker.gd.
 3533. [P2] Neue Symbole (Wegmarke, Festband, Pfadstufe, Abzeichenrahmen) mit tools/art erzeugen und in docs/ASSET_LOG.md eintragen.
-3534. [P2] Im Hochkontrast-Modus alle Fortschrittsbalken mit Zahlen statt nur Farbe zeigen.
+3534. [x] [P2] Im Hochkontrast-Modus alle Fortschrittsbalken mit Zahlen statt nur Farbe zeigen.
 3535. [P3] Einen Wochenrückblick am Montag zeigen: erledigte Aufträge, Wegmarken, neue Abzeichen.
 3536. [P3] Beim ersten Postgame-Start eine kurze Einführung in drei Bildern zeigen: Tauschstand, Türme, Aufträge.
 3537. [P3] Einen Leuchtturm-Raum „Ehrengalerie“ einrichten, in dem die Trophäen für volle Türme, Meisterrunde und 100 Prozent stehen.
@@ -474,13 +474,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3541. [x] [P1] Eine Speicherversion hochzählen und alte Stände unter tests/fixtures mit einem Lade-Test prüfen.
 3542. [P2] Die Gutschriften für Wochen-Echo und Türme vom Server über das Ergebnis und den Seed prüfen lassen, bevor der Stand angenommen wird.
 3543. [P2] Die Kosmetik-Freischaltungen kontoweit in einer eigenen Server-Tabelle in supabase/ speichern, getrennt vom Spielstand.
-3544. [P2] Einen GUT-Test für Waymarks.earn() schreiben: Obergrenze 9999, keine negativen Beträge, Log-Länge 200.
-3545. [P2] Einen GUT-Test für DailyTasks schreiben, der prüft, dass derselbe Tag immer dieselben drei Aufträge zieht.
-3546. [P2] Einen GUT-Test für den Festband-Umtausch am Festende schreiben, auch wenn der Spieler erst Wochen später wieder öffnet.
+3544. [x] [P2] Einen GUT-Test für Waymarks.earn() schreiben: Obergrenze 9999, keine negativen Beträge, Log-Länge 200.
+3545. [x] [P2] Einen GUT-Test für DailyTasks schreiben, der prüft, dass derselbe Tag immer dieselben drei Aufträge zieht.
+3546. [x] [P2] Einen GUT-Test für den Festband-Umtausch am Festende schreiben, auch wenn der Spieler erst Wochen später wieder öffnet.
 3547. [P2] Einen GUT-Test für die Turm-Rastpunkte schreiben: Lauf speichern, Spiel neu laden, am richtigen Stockwerk fortsetzen.
-3548. [P2] Einen GUT-Test für den Jahreszeitenpfad schreiben, der Saisonwechsel und Nachholfrist von 14 Tagen prüft.
-3549. [P2] Einen GUT-Test schreiben, der alle Texte der neuen Daten durch tools/ip_check.sh laufen lässt.
-3550. [P2] Den Ladebildschirm-Test mit einem Spielstand voller Endgame-Daten auf die Ladezeit unter 1 Sekunde prüfen.
+3548. [x] [P2] Einen GUT-Test für den Jahreszeitenpfad schreiben, der Saisonwechsel und Nachholfrist von 14 Tagen prüft.
+3549. [x] [P2] Einen GUT-Test schreiben, der alle Texte der neuen Daten durch tools/ip_check.sh laufen lässt.
+3550. [x] [P2] Den Ladebildschirm-Test mit einem Spielstand voller Endgame-Daten auf die Ladezeit unter 1 Sekunde prüfen.
 3551. [P3] Den Speicherumfang der neuen Daten messen und unter 20 KB pro Spielstand halten.
 3552. [P3] Einen Fuzz-Test über 365 simulierte Tage schreiben, der Aufträge, Feste und Pfad durchläuft und keinen Absturz zeigt.
 3553. [P3] Die Zeitzonen-Grenze testen: ein Spieler in Neuseeland und einer in Kalifornien bekommen am selben Server-Tag dieselben Aufträge.

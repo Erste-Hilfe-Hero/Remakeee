@@ -963,7 +963,7 @@
   },
   {
    "id": "five_at_cap",
-   "title": "Five at the Cap",
+   "title": "Five at Sixty",
    "text": "Have five Spirlings at ring 60 in your team.",
    "cat": "bond",
    "reward": 100,
@@ -1007,6 +1007,15 @@
    "reward": 50,
    "stat": "keepsakes_all",
    "n": 1
+  },
+  {
+   "id": "three_ways",
+   "title": "Three Ways",
+   "text": "Finish Act I once with each of the three starters, over any save slots.",
+   "cat": "challenge",
+   "reward": 100,
+   "stat": "starters_done",
+   "n": 3
   },
   {
    "id": "photos_25",

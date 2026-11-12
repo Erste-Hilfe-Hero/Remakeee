@@ -223,6 +223,30 @@ func test_pass_daily_riftglass() -> void:
 	s.clock_offset += 11 * 86400
 	assert_false(_call("shop_state").pass_active, "benefits end with the pass")
 
+func test_pass_page_lists_every_benefit() -> void:
+	_call("shop_set_age", {"p_year": 1990, "p_month": 3})
+	await Billing.refresh_state()
+	var o: Dictionary = ShopCatalog.offer("rg_pass")
+	var t: String = ShopMenu.detail_text(o)
+	for part: String in ["+50% growth", "30 Riftglass every day", "900 in 30 days", "11 of 10", "Rift Breath",
+			"bond try", "not in the Fair League", "echo duels", "renews automatically", "Cancel any time", "No pass right now."]:
+		assert_string_contains(t, part)
+	assert_string_contains(t, ShopCatalog.format_eur(499))
+	shop.sub_set(s.me(), "apple", "P1", "de.chimora.game.pass", s.now() + 30 * 86400, "active", true)
+	await Billing.refresh_state()
+	assert_string_contains(ShopMenu.detail_text(o), "Your pass runs until")
+
+func test_refresh_claims_the_pass_riftglass_once() -> void:
+	_call("shop_set_age", {"p_year": 1990, "p_month": 3})
+	shop.sub_set(s.me(), "apple", "P1", "de.chimora.game.pass", s.now() + 30 * 86400, "active", true)
+	watch_signals(Billing)
+	await Billing.refresh_state()
+	assert_true(ShopEffects.pass_active())
+	assert_signal_emitted_with_parameters(Billing, "pass_paid", [30])
+	assert_eq(Billing.balance(), 30, "the shown balance includes it")
+	await Billing.refresh_state()
+	assert_signal_emit_count(Billing, "pass_paid", 1, "once a day")
+
 func test_transfer_keeps_purchases() -> void:
 	_call("shop_set_age", {"p_year": 1990, "p_month": 3})
 	shop.credit(s.me(), "apple", "A1", "de.chimora.game.glass.500", 499)
@@ -249,3 +273,15 @@ func test_shop_menu_texts() -> void:
 		"status": "refunded", "at": 1793900000}]), "4,99 €  (erstattet)")
 	Loc.set_language("en")
 	Billing.state = {}
+
+## Item 4148: at most 30 Riftglass purchases per hour, like the server.
+func test_riftglass_buys_are_rate_limited() -> void:
+	_call("shop_set_age", {"p_year": 1990, "p_month": 3})
+	_ready_offer("rg_ring_tonic")
+	var st: Dictionary = shop._shop(s.me())
+	for i: int in LocalShop.BUYS_PER_HOUR:
+		st.purchases.append({"id": 900 + i, "store": "riftglass", "txn": "", "product": "", "offer": "rg_ring_tonic",
+			"eur_cents": 0, "rg": 100, "choice": null, "status": "credited", "at": s.now()})
+	assert_eq(_call("shop_buy", {"p_offer": "rg_ring_tonic", "p_expected_price": 100}).error, "slow_down")
+	s.clock_offset += 3601
+	assert_ne(str(_call("shop_buy", {"p_offer": "rg_ring_tonic", "p_expected_price": 100}).get("error", "")), "slow_down")

@@ -1,6 +1,15 @@
 # German texts for area 3 (world, maps, exploring). Written to data/i18n/de/ by tools/i18n/build.py.
 # Kept apart from de_world.py so the world thread can add maps without clashing with story edits.
 T = {
+# Dungeon hint boards (item 1027)
+"Somewhere near the entrance, someone has pinned a new note to the board.": "Irgendwo am Eingang hat jemand einen neuen Zettel an die Tafel gesteckt.",
+# Cartographer's stones (items 1084, 1085)
+"You trace the mark with your finger. Cartographer's stones found: %d/%d": "Du fährst das Zeichen mit dem Finger nach. Kartografensteine gefunden: %d/%d",
+"Tucked behind the stone lies a keepsake: %s.": "Hinter dem Stein steckt ein Andenken: %s.",
+# Cave campfires (item 992)
+"You sit by the fire for a while. Your journey is saved.": "Du sitzt eine Weile am Feuer. Deine Reise ist gespeichert.",
+"The fire smokes. Saving did not work this time.": "Das Feuer qualmt. Speichern hat diesmal nicht geklappt.",
+"The warmth is welcome, but it does not rest your team.": "Die Wärme tut gut, aber dein Team erholt sich davon nicht.",
 # Gear (data/items.json)
 "Wading Boots": "Watstiefel",
 "Wayfarer Gear. Tall leather boots: walk through shallow water, step by step.": "Wanderer-Ausrüstung. Hohe Lederstiefel: Schritt für Schritt durch seichtes Wasser waten.",
@@ -14,6 +23,29 @@ T = {
 "Plank Bundle": "Bretterbündel",
 "Wayfarer Gear. Face a gap with a chalk mark and press A to lay a plank over it. The plank stays.": "Wanderer-Ausrüstung. Stell dich vor eine Lücke mit Kreidezeichen und drück A, um ein Brett darüberzulegen. Das Brett bleibt liegen.",
 "A narrow gap with a chalk mark. A plank would bridge it.": "Eine schmale Lücke mit Kreidezeichen. Ein Brett würde sie überbrücken.",
+"Survey Glass": "Peilglas",
+"Wayfarer Gear. A brass spyglass: face open ground and press A to spot hidden finds up to 6 steps ahead on the minimap. It needs 20 seconds between looks.": "Wanderer-Ausrüstung. Ein Messingfernrohr: schau auf freien Boden und drück A, dann zeigt die Minikarte versteckte Funde bis 6 Schritte voraus. Zwischen zwei Blicken braucht es 20 Sekunden.",
+"With a Survey Glass you could look for hidden finds from here.": "Mit einem Peilglas könntest du von hier aus nach versteckten Funden suchen.",
+"The glass is still misted. %d s.": "Das Glas ist noch beschlagen. %d s.",
+"Through the glass: %d glints ahead.": "Durchs Glas: %d Glitzern voraus.",
+"Through the glass: nothing glints ahead.": "Durchs Glas: voraus glitzert nichts.",
+"Tide Chart": "Gezeitentafel",
+"Wayfarer Gear. A tidewatcher's chart: open it in the satchel to see when the next low and high tide come, by the clock of your device.": "Wanderer-Ausrüstung. Die Tafel einer Gezeitenwächterin: öffne sie in der Tasche, um zu sehen, wann die nächste Ebbe und Flut kommen, nach der Uhr deines Geräts.",
+"Now: low tide, until %02d:00.": "Jetzt: Ebbe, bis %02d:00 Uhr.",
+"Now: high tide, until %02d:00.": "Jetzt: Flut, bis %02d:00 Uhr.",
+"Next high tide: %02d:00 to %02d:00.": "Nächste Flut: %02d:00 bis %02d:00 Uhr.",
+"Next low tide: %02d:00 to %02d:00.": "Nächste Ebbe: %02d:00 bis %02d:00 Uhr.",
+"The soil here is loose. You dig with your hands and find something...": "Die Erde hier ist locker. Du gräbst mit den Händen und findest etwas...",
+"The trap is empty. Check it again tomorrow.": "Die Reuse ist leer. Schau morgen wieder nach.",
+"You haul up the trap. Something is caught in the reeds...": "Du ziehst die Reuse hoch. Im Schilf hat sich etwas verfangen...",
+"You found %d coin!": "Du hast %d Münze gefunden!",
+"You found %d coins!": "Du hast %d Münzen gefunden!",
+"Rubbing Charcoal": "Pausstift",
+"Wayfarer Gear. A stick of charcoal and a roll of thin paper: face a weathered stone and press A to take a rubbing and read its worn inscription.": "Wanderer-Ausrüstung. Ein Stück Kohle und eine Rolle dünnes Papier: stell dich vor einen verwitterten Stein und drück A, um ihn durchzupausen und die verblasste Inschrift zu lesen.",
+"The letters are too worn to read. A charcoal rubbing might bring them back.": "Die Buchstaben sind zu verwittert, um sie zu lesen. Eine Kohlepause könnte sie zurückbringen.",
+"You lay paper on the stone and rub the charcoal over it. Letters appear:": "Du legst Papier auf den Stein und reibst die Kohle darüber. Buchstaben erscheinen:",
+"Sea caves open their inner chambers at low tide.": "Meereshöhlen öffnen ihre inneren Kammern bei Ebbe.",
+"The inner chamber is open.": "Die innere Kammer ist offen.",
 # Gear page in the satchel
 "Works on: %s": "Wirkt bei: %s",
 "Always on foot: you walk, wade and climb yourself.": "Immer zu Fuß: du gehst, watest und kletterst selbst.",
@@ -25,6 +57,9 @@ T = {
 "pitch-dark passages": "stockdunklen Gängen",
 "sluice wheels, mine carts and grates": "Schleusenrädern, Loren und Gittern",
 "marked edges above a shaft": "markierten Kanten über einem Schacht",
+"open ground ahead (hidden finds up to 6 steps away)": "freiem Boden voraus (versteckte Funde bis 6 Schritte entfernt)",
+"the tides of sea caves": "den Gezeiten der Meereshöhlen",
+"weathered stones on old burial mounds": "verwitterten Steinen auf alten Grabhügeln",
 # Puzzle rooms
 "Room": "Raum",
 "Puzzle room": "Rätselraum",
@@ -47,6 +82,19 @@ T.update({
 "scree": "Geröll",
 "shallow water": "seichtes Wasser",
 "cave": "Höhle",
+# Finds by region in the records (item 1096)
+"Finds by region": "Funde nach Region",
+"Finds: %d/%d": "Funde: %d/%d",
+"Secrets: %d/%d": "Geheimnisse: %d/%d",
+# Fishing bench in Quillbrook (item 935)
+"You sit on the bench and watch the line drift. Time slips by...": "Du setzt dich auf die Bank und schaust der Angelschnur nach. Die Zeit verstreicht...",
+"Dawn breaks over the water.": "Über dem Wasser bricht der Morgen an.",
+"The sun climbs high. It is broad day now.": "Die Sonne steigt hoch. Jetzt ist heller Tag.",
+"The light turns golden. Dusk settles in.": "Das Licht wird golden. Die Dämmerung zieht auf.",
+"Stars come out over the brook. Night has fallen.": "Über dem Bach gehen die Sterne auf. Es ist Nacht geworden.",
+# Lake benches (item 1093)
+"You sit down and look out over the lake. Everything goes quiet...": "Du setzt dich und schaust über den See. Alles wird still...",
+"Somewhere out on the water, a Spirling calls.": "Irgendwo draußen auf dem Wasser ruft ein Spirling.",
 })
 
 # Secret passages (area 3 item 1082)
@@ -82,7 +130,10 @@ T.update({
 "Lake Line": "Seelinie",
 "Valley Coach": "Talkutsche",
 "Ferry to Corvane": "Fähre nach Corvane",
+"Gilt Funicular": "Gilt-Standseilbahn",
 "The coach rattles along the valley road to %s.": "Die Kutsche rumpelt die Talstraße entlang nach %s.",
+"The mountain railway climbs through the clouds to %s.": "Die Bergbahn klettert durch die Wolken nach %s.",
+"Conductor: No trains until the line is cleared. The guild will send word.": "Schaffnerin: Keine Züge, bis die Strecke frei ist. Die Gilde gibt Bescheid.",
 "The ferry crosses the grey lake to %s.": "Die Fähre überquert den grauen See nach %s.",
 "The boat rows across the lake to %s.": "Das Boot rudert über den See nach %s.",
 "Driver: I only stop where you've been on foot first. Walk the valley, then we'll drive it.": "Kutscher: Ich halte nur dort, wo du schon zu Fuß warst. Lauf das Tal ab, dann fahren wir es.",

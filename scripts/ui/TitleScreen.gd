@@ -5,6 +5,8 @@ extends Control
 const OVERWORLD: String = "res://scenes/overworld/Overworld.tscn"
 const NAME_MAX: int = 10
 const ART_HEIGHT: int = 148
+const IAP_NOTE: String = "Free, in-app purchases"
+var _iap_note: Label
 
 var _menu: MenuHost
 ## Connection state, server notice and how many Wanderers are online.
@@ -52,6 +54,17 @@ func _ready() -> void:
 	_status.add_theme_stylebox_override("normal", strip)
 	_status.visible = false
 	add_child(_status)
+	# Free to play with optional purchases, said before the game starts (shop item 4036).
+	_iap_note = Label.new()
+	_iap_note.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	_iap_note.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	_iap_note.offset_top = ART_HEIGHT - 11
+	_iap_note.offset_bottom = ART_HEIGHT
+	_iap_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_iap_note.add_theme_color_override("font_color", UITheme.BG)
+	_iap_note.add_theme_stylebox_override("normal", strip)
+	_iap_note.text = Loc.t(IAP_NOTE)
+	add_child(_iap_note)
 	_build_name_box()
 	Loc.events.language_changed.connect(_on_language_changed)
 	VirtualPad.set_wanted(false)
@@ -114,6 +127,7 @@ func _go_online() -> void:
 				Online.mark_privacy_seen()
 			if await Online.sync_down():
 				await _resolve_conflicts()
+				await _offer_update()
 				_show_status()
 				return
 			continue
@@ -121,15 +135,29 @@ func _go_online() -> void:
 			_status.text = ""
 			# A button opens the store page directly (item 2148).
 			var u: int = await _menu.pick_strings("A new version of Chimora is out. Please update it in the store to keep playing.",
-				["Open the store", "Try again"] as Array[String], false)
+				["Update", "Try again"] as Array[String], false)
 			if u == 0:
-				OS.shell_open(Online.store_url())
+				MenuHost.open_url.call(Online.store_url())
 			continue
 		_status.text = "No connection"
 		var idx: int = await _menu.pick_strings(Online.error_text() + "\n" + Loc.t("Your journeys are safe on the server."),
 			["Try again", "Settings"] as Array[String], false)
 		if idx == 1:
 			await _menu.run_settings()
+
+## Once per app start: a newer build is in the store (App Store lookup or the live content's
+## "latest" for this platform), so offer it. Below "min_client" connect_now already stopped.
+static var _update_offered: bool = false
+
+func _offer_update() -> void:
+	if _update_offered:
+		return
+	_update_offered = true
+	await Online.check_store()
+	if Online.update_state() != "optional":
+		return
+	if await _menu.pick_strings("A new version of Chimora is out.", ["Update", "Later"] as Array[String], false) == 0:
+		MenuHost.open_url.call(Online.store_url())
 
 ## "Connecting..." with moving dots, a note after 5 s and another after 15 s (item 2127).
 static func connecting_text(seconds: float) -> String:
@@ -147,6 +175,8 @@ func _process(_delta: float) -> void:
 	_status.visible = not _status.text.is_empty()
 
 func _on_language_changed(_code: String) -> void:
+	if _iap_note != null:
+		_iap_note.text = Loc.t(IAP_NOTE)
 	if not _connecting and Online.is_online():
 		_show_status()
 
@@ -180,6 +210,8 @@ func _run() -> void:
 	await _go_online()
 	if first_start:
 		await _ask_other_phone()
+		# Item 2000: once, where the comfort settings live, without a tap to dismiss.
+		_menu.toast(FIRST_START_HINT, FIRST_START_HINT_SECONDS)
 	while true:
 		if not Online.is_online():
 			await _go_online()
@@ -192,6 +224,7 @@ func _run() -> void:
 		items.append("New Game")
 		if _used_slots() > 1:
 			items.append("Load...")
+		items.append("What's new")
 		items.append("Settings")
 		_at_root = true
 		StartupLog.mark("title menu ready")
@@ -230,9 +263,12 @@ func _run() -> void:
 					continue
 				SaveManager.set_slot(slot)
 				if await _new_game():
+					SaveManager.start_fresh_slot()
 					SaveManager.save_settings()
 					_enter_game()
 					return
+			"What's new":
+				await _menu.run_news()
 			"Settings":
 				await _menu.run_settings()
 
@@ -246,6 +282,9 @@ func _pick_language() -> void:
 	GameState.language = codes[maxi(idx, 0)]
 	GameState.apply_display()
 	SaveManager.save_settings()
+
+const FIRST_START_HINT: String = "Large text, one-hand layout and more are under Settings."
+const FIRST_START_HINT_SECONDS: float = 4.0
 
 ## First start (item 1964): someone who played on another phone gets there with a code
 ## instead of starting over by mistake.
@@ -316,20 +355,32 @@ func _pick_slot(title: String, allow_empty: bool) -> int:
 			return idx + 1
 	return 0
 
-## New game (Ali, 2026-11-04): boy or girl, then a name, and the journey starts. The partner
+## New game (Ali, 2026-11-04): boy or girl, skin tone, hair and coat colour (Ali, 7 Nov), then a name, and the journey starts. The partner
 ## Spirling is picked in the story (prologue at the lighthouse). Difficulty and the Iron Oath
 ## live in the settings during the game.
 func _new_game() -> bool:
 	var look: int = -1
+	var skin: int = 0
+	var hair: int = 0
+	var coat: int = 0
 	var name: String = ""
 	while true:
 		look = await _menu.pick_strings("Who are you?", ["Boy", "Girl"] as Array[String])
 		if look < 0:
 			return false
+		skin = await _menu.pick_strings("Skin tone", GameState.SKIN_NAMES)
+		if skin < 0:
+			continue
+		hair = await _menu.pick_strings("Hair colour", GameState.HAIR_NAMES)
+		if hair < 0:
+			continue
+		coat = await _menu.pick_strings("Coat colour", GameState.COAT_NAMES)
+		if coat < 0:
+			continue
 		name = await _ask_name(GameState.DEFAULT_NAMES[look])
 		if name != NAME_BACK:
 			break
-	GameState.new_game(GameState.Difficulty.TAMER, name.strip_edges(), look, "", look)
+	GameState.new_game(GameState.Difficulty.TAMER, name.strip_edges(), coat, "", look, skin, hair)
 	GameState.iron_oath = false
 	EraManager.from_dict({})
 	return true

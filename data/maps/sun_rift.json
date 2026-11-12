@@ -1,0 +1,239 @@
+{
+ "name": "Sun Rift",
+ "region": "solenne",
+ "biome": "rift",
+ "backdrop": "ember",
+ "field": "dawn_glow",
+ "encounters": "sun_rift",
+ "heal_point": [
+  7,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^.L.....L^_^",
+  "^......o.^_^",
+  "^.S......^_^",
+  "^^^^^..^^^_^",
+  "^.P....P.^_^",
+  "^........^_^",
+  "^...B..B.^_^",
+  "^........^_^",
+  "^.S......^_^",
+  "^^^^^^==^^_^",
+  "^::.....:^_^",
+  "^::......^_^",
+  "^...LL...^_^",
+  "^.::...::^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^.::....::.^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "ochrewell",
+   "tx": 5,
+   "ty": 18,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "ochrewell",
+   "tx": 6,
+   "ty": 18,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "corwen",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "sun_rift/corwen",
+   "sprite": "warden",
+   "trainer": "Rift Acolyte Corwen",
+   "intro": "sun_rift/corwen_intro",
+   "defeat": "sun_rift/corwen_defeat",
+   "money": 1950,
+   "team": [
+    {
+     "species": "Wickit",
+     "level": 36
+    },
+    {
+     "species": "Kindlop",
+     "level": 36
+    },
+    {
+     "species": "Glimmerax",
+     "level": 37
+    }
+   ]
+  },
+  {
+   "id": "ettie",
+   "x": 2,
+   "y": 14,
+   "facing": "right",
+   "dialogue": "sun_rift/ettie",
+   "sprite": "villager",
+   "trainer": "Sundial Scholar Ettie",
+   "intro": "sun_rift/ettie_intro",
+   "defeat": "sun_rift/ettie_defeat",
+   "money": 1980,
+   "team": [
+    {
+     "species": "Lanternel",
+     "level": 36
+    },
+    {
+     "species": "Silentra",
+     "level": 37
+    },
+    {
+     "species": "Wickit",
+     "level": 37
+    }
+   ]
+  },
+  {
+   "id": "abel",
+   "x": 8,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "sun_rift/abel",
+   "sprite": "villager",
+   "trainer": "Palace Steward Abel",
+   "intro": "sun_rift/abel_intro",
+   "defeat": "sun_rift/abel_defeat",
+   "money": 2000,
+   "team": [
+    {
+     "species": "Calderox",
+     "level": 37
+    },
+    {
+     "species": "Cairnhold",
+     "level": 37
+    },
+    {
+     "species": "Smoldrake",
+     "level": 37
+    }
+   ]
+  },
+  {
+   "id": "warden_emrys",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "sun_rift/emrys",
+   "sprite": "warden",
+   "trainer": "Warden Emrys",
+   "warden": "sun",
+   "team": [
+    {
+     "species": "Solmantle",
+     "level": 37
+    },
+    {
+     "species": "Orrerine",
+     "level": 38
+    },
+    {
+     "species": "Glimmerax",
+     "level": 37
+    },
+    {
+     "species": "Cairnhold",
+     "level": 38
+    },
+    {
+     "species": "Zenithare",
+     "level": 38
+    }
+   ],
+   "intro": "sun_rift/emrys_intro",
+   "defeat": "sun_rift/emrys_defeat",
+   "ai": 2,
+   "money": 2100,
+   "rule": "high_noon",
+   "mend_items": [
+    "echo_radiant_lance"
+   ],
+   "rematch_after": "story_complete"
+  },
+  {
+   "id": "lumivane",
+   "x": 8,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "sun_rift/lumivane",
+   "sprite": "first_voice",
+   "show_flag": "lq_lumivane_ready",
+   "hide_flag": "first_voice_lumivane_away"
+  }
+ ],
+ "signs": [
+  {
+   "x": 7,
+   "y": 4,
+   "dialogue": "sun_rift/spring"
+  },
+  {
+   "x": 2,
+   "y": 5,
+   "dialogue": "sun_rift/sign"
+  },
+  {
+   "x": 2,
+   "y": 11,
+   "dialogue": "sun_rift/hint"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_sun_sealed",
+   "closed": "@"
+  },
+  {
+   "x": 5,
+   "y": 6,
+   "open_flag": "sun_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 6,
+   "y": 6,
+   "open_flag": "sun_rift_open",
+   "closed": "@"
+  }
+ ],
+ "boulder_ground": ".",
+ "puzzles": [
+  {
+   "id": "sun_dial",
+   "flag": "sun_rift_open",
+   "plates": [
+    [
+     2,
+     7
+    ],
+    [
+     7,
+     7
+    ]
+   ]
+  }
+ ]
+}

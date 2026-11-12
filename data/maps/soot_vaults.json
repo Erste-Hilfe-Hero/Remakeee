@@ -1,0 +1,1100 @@
+{
+ "name": "Soot Vaults",
+ "rows": [
+  "@@@@@==@@@@@",
+  "@.........L@",
+  "@.::.@@.::.@",
+  "@.::.@@.::.@",
+  "@S.........@",
+  "@@.@@@@@@.@@",
+  "@:.:.....:.@",
+  "@:.@@.@@.:.@",
+  "@..@....@.S@",
+  "@@@@@@..@@@@",
+  "@..........@",
+  "@.::....::.@",
+  "@.::.@@.::.@",
+  "@....@@...S@",
+  "@@@..@@@@@@@",
+  "@:........:@",
+  "@:.::..::.:@",
+  "@L.........@",
+  "@........S.@",
+  "@@@@@__@@@@@"
+ ],
+ "npcs": [
+  {
+   "id": "pike",
+   "x": 3,
+   "y": 14,
+   "facing": "down",
+   "dialogue": "soot_vaults/pike",
+   "sprite": "villager",
+   "trainer": "Wage Runner Pike",
+   "team": [
+    {
+     "species": "Cindle",
+     "level": 30
+    },
+    {
+     "species": "Mirkmole",
+     "level": 31
+    }
+   ],
+   "intro": "soot_vaults/pike_intro",
+   "defeat": "soot_vaults/pike_defeat",
+   "money": 1300,
+   "ai": 2,
+   "beaten_flag": "beat_vault_pike",
+   "leaves": true,
+   "hide_flag": "beat_vault_pike"
+  },
+  {
+   "id": "smudge",
+   "x": 6,
+   "y": 9,
+   "facing": "down",
+   "dialogue": "soot_vaults/smudge",
+   "sprite": "villager",
+   "trainer": "Ledger Boy Smudge",
+   "team": [
+    {
+     "species": "Etchling",
+     "level": 30
+    },
+    {
+     "species": "Shalebat",
+     "level": 31
+    }
+   ],
+   "intro": "soot_vaults/smudge_intro",
+   "defeat": "soot_vaults/smudge_defeat",
+   "money": 1350,
+   "ai": 2,
+   "beaten_flag": "beat_vault_smudge",
+   "leaves": true,
+   "hide_flag": "beat_vault_smudge"
+  },
+  {
+   "id": "dilly",
+   "x": 2,
+   "y": 10,
+   "facing": "down",
+   "dialogue": "soot_vaults/dilly",
+   "sprite": "villager",
+   "trainer": "Soot Sweep Dilly",
+   "team": [
+    {
+     "species": "Ashwren",
+     "level": 30
+    },
+    {
+     "species": "Cindle",
+     "level": 31
+    }
+   ],
+   "intro": "soot_vaults/dilly_intro",
+   "defeat": "soot_vaults/dilly_defeat",
+   "money": 1250,
+   "ai": 2
+  },
+  {
+   "id": "fitch",
+   "x": 2,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "soot_vaults/fitch",
+   "sprite": "villager",
+   "hide_flag": "favor_fitch_toll"
+  }
+ ],
+ "signs": [
+  {
+   "x": 1,
+   "y": 4,
+   "dialogue": "soot_vaults/plate_4"
+  },
+  {
+   "x": 10,
+   "y": 13,
+   "dialogue": "soot_vaults/ash_1"
+  },
+  {
+   "x": 10,
+   "y": 8,
+   "dialogue": "soot_vaults/mole"
+  },
+  {
+   "x": 9,
+   "y": 18,
+   "dialogue": "soot_vaults/sign"
+  },
+  {
+   "x": 11,
+   "y": 3,
+   "dialogue": "legend_quests/vorlucent_lore",
+   "show_flag": "lq_vorlucent_met",
+   "hide_flag": "lq_vorlucent_ready"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 6,
+   "item": "strong_tonic",
+   "count": 2,
+   "flag": "find_vault_0_0_6"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "remedy",
+   "count": 2,
+   "flag": "find_vault_0_11_11"
+  },
+  {
+   "x": 11,
+   "y": 16,
+   "item": "tonic",
+   "count": 1,
+   "flag": "iou_1",
+   "dialogue": "soot_vaults/iou_1"
+  }
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 19,
+   "to": "cinderfold",
+   "tx": 3,
+   "ty": 9,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "soot_vaults@1",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 19,
+   "to": "cinderfold",
+   "tx": 3,
+   "ty": 9,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "soot_vaults@1",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "region": "ashmere",
+ "biome": "dungeon",
+ "backdrop": "ember",
+ "field": "deep_murk",
+ "encounters": "soot_vaults",
+ "floors": [
+  {
+   "name": "Soot Vaults, ledger hall",
+   "rows": [
+    "@@@@@==@@@@@",
+    "@.........L@",
+    "@.::.@@.::.@",
+    "@.::.@@.::.@",
+    "@.........S@",
+    "@@.@@@@@@.@@",
+    "@:.:.....:.@",
+    "@:.@@.@@.:.@",
+    "@S.@....@..@",
+    "@@@@@@@@@..@",
+    "@..........@",
+    "@.::....::.@",
+    "@.::.@@.::.@",
+    "@S...@@....@",
+    "@@..@@@@@@@@",
+    "@:........:@",
+    "@:.::..::.:@",
+    "@L.........@",
+    "@..........@",
+    "@@@@@__@@@@@"
+   ],
+   "npcs": [
+    {
+     "id": "nettle",
+     "x": 2,
+     "y": 14,
+     "facing": "down",
+     "dialogue": "soot_vaults/nettle",
+     "sprite": "villager",
+     "trainer": "Bookkeeper Nettle",
+     "team": [
+      {
+       "species": "Cullet",
+       "level": 31
+      },
+      {
+       "species": "Etchling",
+       "level": 32
+      }
+     ],
+     "intro": "soot_vaults/nettle_intro",
+     "defeat": "soot_vaults/nettle_defeat",
+     "money": 1400,
+     "ai": 2,
+     "beaten_flag": "beat_vault_nettle",
+     "leaves": true,
+     "hide_flag": "beat_vault_nettle"
+    },
+    {
+     "id": "brask",
+     "x": 9,
+     "y": 9,
+     "facing": "down",
+     "dialogue": "soot_vaults/brask",
+     "sprite": "villager",
+     "trainer": "Debt Collector Brask",
+     "team": [
+      {
+       "species": "Smeltpup",
+       "level": 31
+      },
+      {
+       "species": "Duskdigger",
+       "level": 32
+      },
+      {
+       "species": "Talusk",
+       "level": 32
+      }
+     ],
+     "intro": "soot_vaults/brask_intro",
+     "defeat": "soot_vaults/brask_defeat",
+     "money": 1450,
+     "ai": 2,
+     "beaten_flag": "beat_vault_brask",
+     "leaves": true,
+     "hide_flag": "beat_vault_brask"
+    },
+    {
+     "id": "mabry",
+     "x": 9,
+     "y": 3,
+     "facing": "down",
+     "dialogue": "soot_vaults/mabry",
+     "sprite": "villager",
+     "trainer": "Clerk Mabry",
+     "team": [
+      {
+       "species": "Etchling",
+       "level": 31
+      },
+      {
+       "species": "Cullet",
+       "level": 32
+      }
+     ],
+     "intro": "soot_vaults/mabry_intro",
+     "defeat": "soot_vaults/mabry_defeat",
+     "money": 1350,
+     "ai": 2
+    }
+   ],
+   "signs": [
+    {
+     "x": 1,
+     "y": 8,
+     "dialogue": "soot_vaults/plate_5"
+    },
+    {
+     "x": 10,
+     "y": 4,
+     "dialogue": "soot_vaults/harl_coal_1"
+    },
+    {
+     "x": 1,
+     "y": 13,
+     "dialogue": "soot_vaults/press_part_2"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 0,
+     "y": 11,
+     "item": "max_tonic",
+     "count": 1,
+     "flag": "find_vault_1_0_11"
+    },
+    {
+     "x": 11,
+     "y": 6,
+     "item": "dash_brew",
+     "count": 2,
+     "flag": "find_vault_1_11_6"
+    },
+    {
+     "x": 0,
+     "y": 16,
+     "item": "tonic",
+     "count": 1,
+     "flag": "iou_2",
+     "dialogue": "soot_vaults/iou_2"
+    },
+    {
+     "x": 11,
+     "y": 16,
+     "item": "focus_brew",
+     "count": 1,
+     "flag": "verse_1",
+     "dialogue": "ashmere_side/verse_1"
+    }
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 19,
+     "to": "soot_vaults",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "soot_vaults@2",
+     "tx": 5,
+     "ty": 18,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 19,
+     "to": "soot_vaults",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "soot_vaults@2",
+     "tx": 6,
+     "ty": 18,
+     "facing": "up"
+    }
+   ]
+  },
+  {
+   "name": "Soot Vaults, kiln drains",
+   "rows": [
+    "@@@@@==@@@@@",
+    "@.........L@",
+    "@.::.@@.::.@",
+    "@.::.@@.::.@",
+    "@S.........@",
+    "@@.@@@@@@.@@",
+    "@:.:.....:.@",
+    "@:.@@.@@.:.@",
+    "@..@....@.S@",
+    "@..@@@@@@@@@",
+    "@..........@",
+    "@.::....::.@",
+    "@.::.@@.::.@",
+    "@....@@...S@",
+    "@@@@@@@@..@@",
+    "@:........:@",
+    "@:.::..::.:@",
+    "@L.........@",
+    "@..........@",
+    "@@@@@__@@@@@"
+   ],
+   "npcs": [
+    {
+     "id": "coll",
+     "x": 8,
+     "y": 14,
+     "facing": "down",
+     "dialogue": "soot_vaults/coll",
+     "sprite": "villager",
+     "trainer": "Drain Rat Coll",
+     "team": [
+      {
+       "species": "Bogwick",
+       "level": 32
+      },
+      {
+       "species": "Seamlet",
+       "level": 33
+      }
+     ],
+     "intro": "soot_vaults/coll_intro",
+     "defeat": "soot_vaults/coll_defeat",
+     "money": 1500,
+     "ai": 2,
+     "beaten_flag": "beat_vault_coll",
+     "leaves": true,
+     "hide_flag": "beat_vault_coll"
+    },
+    {
+     "id": "wynn",
+     "x": 1,
+     "y": 9,
+     "facing": "down",
+     "dialogue": "soot_vaults/wynn",
+     "sprite": "villager",
+     "trainer": "Stoker Wynn",
+     "team": [
+      {
+       "species": "Smoldrake",
+       "level": 32
+      },
+      {
+       "species": "Smeltpup",
+       "level": 33
+      },
+      {
+       "species": "Cindle",
+       "level": 33
+      }
+     ],
+     "intro": "soot_vaults/wynn_intro",
+     "defeat": "soot_vaults/wynn_defeat",
+     "money": 1550,
+     "ai": 2,
+     "beaten_flag": "beat_vault_wynn",
+     "leaves": true,
+     "hide_flag": "beat_vault_wynn"
+    },
+    {
+     "id": "teo",
+     "x": 2,
+     "y": 16,
+     "facing": "down",
+     "dialogue": "soot_vaults/teo",
+     "sprite": "villager",
+     "trainer": "Ash Diver Teo",
+     "team": [
+      {
+       "species": "Bogwick",
+       "level": 32
+      },
+      {
+       "species": "Blotling",
+       "level": 32
+      },
+      {
+       "species": "Hushkin",
+       "level": 33
+      }
+     ],
+     "intro": "soot_vaults/teo_intro",
+     "defeat": "soot_vaults/teo_defeat",
+     "money": 1450,
+     "ai": 2
+    }
+   ],
+   "signs": [
+    {
+     "x": 10,
+     "y": 8,
+     "dialogue": "soot_vaults/plate_6"
+    },
+    {
+     "x": 1,
+     "y": 4,
+     "dialogue": "soot_vaults/ash_2"
+    },
+    {
+     "x": 10,
+     "y": 13,
+     "dialogue": "soot_vaults/harl_coal_2"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 0,
+     "y": 6,
+     "item": "revival_leaf",
+     "count": 1,
+     "flag": "find_vault_2_0_6"
+    },
+    {
+     "x": 11,
+     "y": 16,
+     "item": "guard_brew",
+     "count": 2,
+     "flag": "find_vault_2_11_16"
+    },
+    {
+     "x": 11,
+     "y": 11,
+     "item": "tonic",
+     "count": 1,
+     "flag": "iou_3",
+     "dialogue": "soot_vaults/iou_3"
+    }
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 19,
+     "to": "soot_vaults@1",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "soot_vaults@3",
+     "tx": 5,
+     "ty": 18,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 19,
+     "to": "soot_vaults@1",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "soot_vaults@3",
+     "tx": 6,
+     "ty": 18,
+     "facing": "up"
+    }
+   ]
+  },
+  {
+   "name": "Soot Vaults, cage row",
+   "rows": [
+    "@@@@@==@@@@@",
+    "@.........L@",
+    "@.::.@@.::.@",
+    "@.::.@@.::.@",
+    "@.........S@",
+    "@@.@@@@@@.@@",
+    "@:.:.....:.@",
+    "@:.@@.@@.:.@",
+    "@S.@....@..@",
+    "@@@@@..@@@@@",
+    "@..........@",
+    "@.::....::.@",
+    "@.::.@@.::.@",
+    "@S...@@....@",
+    "@@@@@@@..@@@",
+    "@:........:@",
+    "@:.::..::.:@",
+    "@L.........@",
+    "@..........@",
+    "@@@@@__@@@@@"
+   ],
+   "npcs": [
+    {
+     "id": "ottery",
+     "x": 7,
+     "y": 14,
+     "facing": "down",
+     "dialogue": "soot_vaults/ottery",
+     "sprite": "villager",
+     "trainer": "Cage Keeper Ottery",
+     "team": [
+      {
+       "species": "Ashwren",
+       "level": 33
+      },
+      {
+       "species": "Zephlet",
+       "level": 34
+      }
+     ],
+     "intro": "soot_vaults/ottery_intro",
+     "defeat": "soot_vaults/ottery_defeat",
+     "money": 1600,
+     "ai": 2,
+     "beaten_flag": "beat_vault_ottery",
+     "leaves": true,
+     "hide_flag": "beat_vault_ottery"
+    },
+    {
+     "id": "lume",
+     "x": 5,
+     "y": 9,
+     "facing": "down",
+     "dialogue": "soot_vaults/lume",
+     "sprite": "villager",
+     "trainer": "Fixer Lume",
+     "team": [
+      {
+       "species": "Cullhorn",
+       "level": 33
+      },
+      {
+       "species": "Burinox",
+       "level": 34
+      },
+      {
+       "species": "Etchling",
+       "level": 34
+      }
+     ],
+     "intro": "soot_vaults/lume_intro",
+     "defeat": "soot_vaults/lume_defeat",
+     "money": 1650,
+     "ai": 2,
+     "beaten_flag": "beat_vault_lume",
+     "leaves": true,
+     "hide_flag": "beat_vault_lume"
+    },
+    {
+     "id": "quill",
+     "x": 9,
+     "y": 11,
+     "facing": "down",
+     "dialogue": "soot_vaults/quill",
+     "sprite": "villager",
+     "trainer": "Pawnbroker Quill",
+     "team": [
+      {
+       "species": "Glassfell",
+       "level": 34
+      },
+      {
+       "species": "Fenwarden",
+       "level": 34
+      }
+     ],
+     "intro": "soot_vaults/quill_intro",
+     "defeat": "soot_vaults/quill_defeat",
+     "money": 1550,
+     "ai": 2
+    }
+   ],
+   "signs": [
+    {
+     "x": 1,
+     "y": 8,
+     "dialogue": "soot_vaults/plate_7"
+    },
+    {
+     "x": 10,
+     "y": 4,
+     "dialogue": "soot_vaults/bats"
+    },
+    {
+     "x": 1,
+     "y": 13,
+     "dialogue": "soot_vaults/harl_coal_3"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 0,
+     "y": 16,
+     "item": "power_brew",
+     "count": 1,
+     "flag": "find_vault_3_0_16"
+    },
+    {
+     "x": 0,
+     "y": 1,
+     "item": "focus_brew",
+     "count": 2,
+     "flag": "find_vault_3_0_1"
+    },
+    {
+     "x": 0,
+     "y": 11,
+     "item": "tonic",
+     "count": 1,
+     "flag": "iou_4",
+     "dialogue": "soot_vaults/iou_4"
+    },
+    {
+     "x": 11,
+     "y": 6,
+     "item": "focus_brew",
+     "count": 1,
+     "flag": "verse_2",
+     "dialogue": "ashmere_side/verse_2"
+    }
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 19,
+     "to": "soot_vaults@2",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "soot_vaults@4",
+     "tx": 5,
+     "ty": 18,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 19,
+     "to": "soot_vaults@2",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "soot_vaults@4",
+     "tx": 6,
+     "ty": 18,
+     "facing": "up"
+    }
+   ]
+  },
+  {
+   "name": "Soot Vaults, strongroom",
+   "rows": [
+    "@@@@@=@@@@@@",
+    "@.........L@",
+    "@.::.@@.::.@",
+    "@.::.@@.::.@",
+    "@..........@",
+    "@@.@@@@@@.@@",
+    "@:.:.....:.@",
+    "@:.@@.@@.:.@",
+    "@S.@....@.S@",
+    "@@@@@@..@@@@",
+    "@..........@",
+    "@.::....::.@",
+    "@.::.@@.::.@",
+    "@....@@...S@",
+    "@..@@@@@@@@@",
+    "@:........:@",
+    "@:.::..::.:@",
+    "@L.........@",
+    "@..........@",
+    "@@@@@__@@@@@"
+   ],
+   "npcs": [
+    {
+     "id": "crake",
+     "x": 5,
+     "y": 1,
+     "facing": "down",
+     "dialogue": "soot_vaults/crake",
+     "sprite": "elder",
+     "trainer": "Paymaster Crake",
+     "team": [
+      {
+       "species": "Smeltmaw",
+       "level": 35
+      },
+      {
+       "species": "Burinox",
+       "level": 35
+      },
+      {
+       "species": "Glassfell",
+       "level": 36
+      },
+      {
+       "species": "Calderox",
+       "level": 36
+      }
+     ],
+     "intro": "soot_vaults/crake_intro",
+     "defeat": "soot_vaults/crake_defeat",
+     "beaten_flag": "beat_crake",
+     "leaves": true,
+     "hide_flag": "beat_crake",
+     "ai": 3,
+     "money": 2400
+    },
+    {
+     "id": "juno_3",
+     "x": 2,
+     "y": 4,
+     "facing": "right",
+     "dialogue": "soot_vaults/juno_3",
+     "sprite": "ranger",
+     "trainer": "Juno Sallow",
+     "team": [
+      {
+       "species": "Ashcrest",
+       "level": 35
+      },
+      {
+       "species": "Smeltmaw",
+       "level": 35
+      },
+      {
+       "species": "Glassfell",
+       "level": 36
+      },
+      {
+       "species": "Tempestrel",
+       "level": 36
+      }
+     ],
+     "intro": "soot_vaults/juno_3_intro",
+     "defeat": "soot_vaults/juno_3_defeat",
+     "beaten_flag": "beat_juno_3",
+     "win_flags": [
+      "ledger_juno_sale"
+     ],
+     "show_flag": "beat_juno_2",
+     "ai": 3,
+     "money": 2000
+    }
+   ],
+   "signs": [
+    {
+     "x": 1,
+     "y": 8,
+     "dialogue": "soot_vaults/plate_8"
+    },
+    {
+     "x": 10,
+     "y": 8,
+     "dialogue": "soot_vaults/ash_3"
+    },
+    {
+     "x": 10,
+     "y": 13,
+     "dialogue": "soot_vaults/press_part_3"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 0,
+     "y": 1,
+     "item": "max_tonic",
+     "count": 2,
+     "flag": "find_vault_4_0_1"
+    },
+    {
+     "x": 0,
+     "y": 16,
+     "item": "revival_leaf",
+     "count": 2,
+     "flag": "find_vault_4_0_16"
+    },
+    {
+     "x": 11,
+     "y": 11,
+     "item": "focus_brew",
+     "count": 1,
+     "flag": "verse_3",
+     "dialogue": "ashmere_side/verse_3"
+    }
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 19,
+     "to": "soot_vaults@3",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "soot_vaults@5",
+     "tx": 5,
+     "ty": 18,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 19,
+     "to": "soot_vaults@3",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    }
+   ]
+  },
+  {
+   "name": "Soot Vaults, Paymaster's archive",
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@.........L@",
+    "@.::.@@.::.@",
+    "@.::.@@.::.@",
+    "@..........@",
+    "@@.@@@@@@.@@",
+    "@:.:.....:.@",
+    "@:.@@.@@.:.@",
+    "@..@....@.S@",
+    "@@@@..@@@@@@",
+    "@..........@",
+    "@.::....::.@",
+    "@.::.@@.::.@",
+    "@....@@....@",
+    "@@@@@@@@@..@",
+    "@:........:@",
+    "@:.::..::.:@",
+    "@L.........@",
+    "@..........@",
+    "@@@@@__@@@@@"
+   ],
+   "npcs": [
+    {
+     "id": "auditor",
+     "x": 5,
+     "y": 1,
+     "facing": "down",
+     "dialogue": "soot_vaults/auditor",
+     "sprite": "villager",
+     "trainer": "Auditor Vey",
+     "team": [
+      {
+       "species": "Smeltmaw",
+       "level": 35
+      },
+      {
+       "species": "Burinox",
+       "level": 35
+      },
+      {
+       "species": "Calderox",
+       "level": 36
+      },
+      {
+       "species": "Obsidroth",
+       "level": 36
+      }
+     ],
+     "intro": "soot_vaults/auditor_intro",
+     "defeat": "soot_vaults/auditor_defeat",
+     "money": 2800,
+     "ai": 3,
+     "beaten_flag": "beat_auditor"
+    },
+    {
+     "id": "scribe",
+     "x": 2,
+     "y": 10,
+     "facing": "down",
+     "dialogue": "soot_vaults/scribe",
+     "sprite": "villager",
+     "trainer": "Night Scribe Orla",
+     "team": [
+      {
+       "species": "Etchling",
+       "level": 35
+      },
+      {
+       "species": "Glassfell",
+       "level": 36
+      }
+     ],
+     "intro": "soot_vaults/scribe_intro",
+     "defeat": "soot_vaults/scribe_defeat",
+     "money": 1900,
+     "ai": 3,
+     "beaten_flag": "beat_scribe"
+    },
+    {
+     "id": "tallyman",
+     "x": 9,
+     "y": 16,
+     "facing": "down",
+     "dialogue": "soot_vaults/tallyman",
+     "sprite": "villager",
+     "trainer": "Tallyman Burke",
+     "team": [
+      {
+       "species": "Fenwarden",
+       "level": 35
+      },
+      {
+       "species": "Bogwick",
+       "level": 35
+      },
+      {
+       "species": "Hushkin",
+       "level": 36
+      }
+     ],
+     "intro": "soot_vaults/tallyman_intro",
+     "defeat": "soot_vaults/tallyman_defeat",
+     "money": 1900,
+     "ai": 3,
+     "beaten_flag": "beat_tallyman"
+    }
+   ],
+   "signs": [
+    {
+     "x": 10,
+     "y": 8,
+     "dialogue": "soot_vaults/archive_shelf"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 0,
+     "y": 6,
+     "item": "spark_drop",
+     "count": 1,
+     "flag": "find_vault_5_0_6"
+    },
+    {
+     "x": 11,
+     "y": 16,
+     "item": "max_tonic",
+     "count": 2,
+     "flag": "find_vault_5_11_16"
+    },
+    {
+     "x": 0,
+     "y": 1,
+     "item": "tonic",
+     "count": 1,
+     "flag": "iou_5",
+     "dialogue": "soot_vaults/iou_5"
+    },
+    {
+     "x": 11,
+     "y": 6,
+     "item": "strong_tonic",
+     "count": 1,
+     "flag": "plate_3",
+     "dialogue": "ashmere_side/plate_3"
+    }
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 19,
+     "to": "soot_vaults@4",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 19,
+     "to": "soot_vaults@4",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    }
+   ]
+  }
+ ]
+}

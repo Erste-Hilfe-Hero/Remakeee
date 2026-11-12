@@ -52,7 +52,7 @@ func _width(text: String) -> float:
 	return PixelFont.get_font().get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x
 
 func test_menu_rows_fit_in_english_and_german() -> void:
-	for lang: String in ["en", "de"]:
+	for lang: String in Loc.LANGUAGES:
 		Loc.set_language(lang)
 		for t: String in menu_rows():
 			var shown: String = Loc.t(t)
@@ -64,7 +64,7 @@ func test_menu_rows_fit_in_english_and_german() -> void:
 const SCROLL_ROW_TEXT_WIDTH: int = 108
 
 func test_scrolling_list_rows_fit_next_to_the_scroll_bar() -> void:
-	for lang: String in ["en", "de"]:
+	for lang: String in Loc.LANGUAGES:
 		Loc.set_language(lang)
 		for r: Array in MenuHost.controls_rows():
 			var shown: String = Loc.t(str(r[1]))

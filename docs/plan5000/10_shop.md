@@ -10,21 +10,21 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4003. [x] [P1] Preis in beiden Store-Konsolen auf "kostenlos" planen und in `docs/STORE_RELEASE.md` Schritt 6 ("Preis 4,99 €") durch "kostenlos mit In-App-Käufen" ersetzen.
 4004. [x] [P1] In `docs/STORE_RELEASE.md` Schritt 4 den Apple-Vertrag "Paid Apps" als weiter nötig für In-App-Käufe kennzeichnen und die Play-Zahlungsprofil-Zeile auf "Händlerkonto für In-App-Käufe" ändern.
 4005. [x] [P1] Die Zeile "Geschäftsmodell: Einmalkauf" in der Tabelle von `docs/STORE_RELEASE.md` auf "kostenlos, Shop mit Rissglas" ändern, damit `tools/release_check.py` nicht auf alte Angaben prüft.
-4006. [P2] In `docs/MONETIZATION.md` eine Tabelle aller Angebote mit Kennung, Euro-Preis, Rissglas-Preis, Art (Vorteil, Kosmetik, Komfort) und Liga-Wirkung führen, die aus `data/shop.json` erzeugt wird.
-4007. [P2] Ein Skript `tools/shop/make_shop_table.py` schreiben, das die Angebotstabelle aus `data/shop.json` in `docs/MONETIZATION.md` zwischen zwei Markern neu einsetzt.
-4008. [P2] In `docs/MONETIZATION.md` festhalten, dass jeder Spielinhalt auch ohne Kauf erreichbar bleibt, nur langsamer, und welche Zeit ein Spieler ohne Kauf für die Story braucht (Ziel: 25 Stunden).
-4009. [P2] In `docs/MONETIZATION.md` die Umsatzziele als Planwerte notieren: Anteil zahlender Spieler 3 %, durchschnittlicher Umsatz je Zahler 12 € im Monat, nur als Rechengröße ohne Tracking.
-4010. [P2] Für beide Stores das Small Business Program (Apple) und die 15-%-Stufe (Google) als Schritt in `docs/STORE_RELEASE.md` aufnehmen, mit Hinweis, dass Ali es selbst beantragen muss.
+4006. [x] [P2] In `docs/MONETIZATION.md` eine Tabelle aller Angebote mit Kennung, Euro-Preis, Rissglas-Preis, Art (Vorteil, Kosmetik, Komfort) und Liga-Wirkung führen, die aus `data/shop.json` erzeugt wird.
+4007. [x] [P2] Ein Skript `tools/shop/make_shop_table.py` schreiben, das die Angebotstabelle aus `data/shop.json` in `docs/MONETIZATION.md` zwischen zwei Markern neu einsetzt.
+4008. [x] [P2] In `docs/MONETIZATION.md` festhalten, dass jeder Spielinhalt auch ohne Kauf erreichbar bleibt, nur langsamer, und welche Zeit ein Spieler ohne Kauf für die Story braucht (Ziel: 25 Stunden).
+4009. [x] [P2] In `docs/MONETIZATION.md` die Umsatzziele als Planwerte notieren: Anteil zahlender Spieler 3 %, durchschnittlicher Umsatz je Zahler 12 € im Monat, nur als Rechengröße ohne Tracking.
+4010. [x] [P2] Für beide Stores das Small Business Program (Apple) und die 15-%-Stufe (Google) als Schritt in `docs/STORE_RELEASE.md` aufnehmen, mit Hinweis, dass Ali es selbst beantragen muss.
 4011. [P2] In der Memory-Notiz `chimora-monetization` und in `AGENTS.md` unter Regel 4 vermerken: Billing-Plugins für Apple und Google sind freigegeben, Werbe- und Analytics-SDKs weiterhin nicht.
 4012. [x] [P2] Eine Prüfung in `tools/release_check.py` ergänzen, die fehlschlägt, wenn in `addons/` ein Plugin mit den Namen bekannter Werbe- oder Analytics-SDKs liegt.
-4013. [P3] In `docs/MONETIZATION.md` einen Abschnitt "Was nie verkauft wird" führen: Story-Kapitel, Karten, Rift-Zugang, Konto-Funktionen, Freunde, Geschenke an Freunde.
-4014. [P3] Im Titelbildschirm und in den Store-Texten keine Formulierung "gratis spielen, alles freischalten" verwenden, sondern "kostenlos spielbar, optionale In-App-Käufe".
-4015. [P3] Einen jährlichen Prüftermin (jeweils 1. November) in `docs/MONETIZATION.md` eintragen, an dem Preise, Rechtslage und Angebote neu bewertet werden.
-4016. [P3] In `docs/MONETIZATION.md` eine Regel aufnehmen, dass kein Angebot nachträglich abgeschwächt wird, ohne Käufern einen gleichwertigen Ersatz zu geben.
-4017. [P3] In `docs/MONETIZATION.md` festhalten, dass ein späterer Wechsel zurück zum Bezahlmodell auf Google Play technisch nicht möglich ist, weil kostenlose Apps dort nicht kostenpflichtig werden dürfen.
-4018. [P3] Eine Änderungsliste `docs/shop/CHANGELOG.md` anlegen, in der jede Preis- oder Angebotsänderung mit Datum steht.
-4019. [P3] In `docs/MONETIZATION.md` eine Abschaltregel festhalten: wird der Server eingestellt, bekommen Spieler 60 Tage vorher Bescheid, und der Shop schließt zuerst.
-4020. [P3] Die Alt-Tabelle "Items 80 bis 86" in `docs/MONETIZATION.md` durch eine neue Tabelle mit dem Stand jedes Unterbereichs dieses Plans ersetzen.
+4013. [x] [P3] In `docs/MONETIZATION.md` einen Abschnitt "Was nie verkauft wird" führen: Story-Kapitel, Karten, Rift-Zugang, Konto-Funktionen, Freunde, Geschenke an Freunde.
+4014. [x] [P3] Im Titelbildschirm und in den Store-Texten keine Formulierung "gratis spielen, alles freischalten" verwenden, sondern "kostenlos spielbar, optionale In-App-Käufe".
+4015. [x] [P3] Einen jährlichen Prüftermin (jeweils 1. November) in `docs/MONETIZATION.md` eintragen, an dem Preise, Rechtslage und Angebote neu bewertet werden.
+4016. [x] [P3] In `docs/MONETIZATION.md` eine Regel aufnehmen, dass kein Angebot nachträglich abgeschwächt wird, ohne Käufern einen gleichwertigen Ersatz zu geben.
+4017. [x] [P3] In `docs/MONETIZATION.md` festhalten, dass ein späterer Wechsel zurück zum Bezahlmodell auf Google Play technisch nicht möglich ist, weil kostenlose Apps dort nicht kostenpflichtig werden dürfen.
+4018. [x] [P3] Eine Änderungsliste `docs/shop/CHANGELOG.md` anlegen, in der jede Preis- oder Angebotsänderung mit Datum steht.
+4019. [x] [P3] In `docs/MONETIZATION.md` eine Abschaltregel festhalten: wird der Server eingestellt, bekommen Spieler 60 Tage vorher Bescheid, und der Shop schließt zuerst. *Umgesetzt mit 3 Monaten statt 60 Tagen, weil die Nutzungsbedingungen (5.4) 3 Monate zusagen.*
+4020. [x] [P3] Die Alt-Tabelle "Items 80 bis 86" in `docs/MONETIZATION.md` durch eine neue Tabelle mit dem Stand jedes Unterbereichs dieses Plans ersetzen. *Die Alt-Tabelle gibt es nicht mehr; der Stand steht in diesem Plan und in der Angebotstabelle von `docs/MONETIZATION.md`.*
 
 ### Rechtsrahmen DE/EU und Jugendschutz
 4021. [x] [P1] Kein Angebot enthält Zufallsinhalte: Jeder Kauf liefert genau die im Angebot genannten Gegenstände und Mengen, und ein Test in `tests/test_shop_catalog.gd` prüft, dass `data/shop.json` kein Feld für Zufall, Ziehung oder Chancen kennt.
@@ -36,37 +36,37 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4027. [x] [P1] Keine künstlichen Countdowns: Angebote mit Ende zeigen nur ein festes Enddatum, und ein abgelaufenes Angebot kommt nicht mit neuer Uhr sofort zurück.
 4028. [x] [P1] Kein Angebot wird mitten im Kampf, nach einer Niederlage oder während des Bondens als Fenster eingeblendet; der Shop öffnet sich nur, wenn der Spieler ihn selbst aufruft.
 4029. [x] [P1] Die Leitlinien des EU-Netzwerks der Verbraucherschutzbehörden (CPC) zu virtueller Währung als Prüfliste in `docs/legal/SHOP_COMPLIANCE.md` abbilden und jeden Punkt einer Datei im Code zuordnen.
-4030. [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Rechtslage zu bezahlten Zufallsinhalten in Belgien und den Niederlanden festhalten und begründen, warum Chimora keine anbietet.
-4031. [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Pflichten aus dem Jugendschutzgesetz (§ 10b, Kostenfallen als Risiko) und die USK-Hinweise "In-Game-Käufe" und "In-Game-Käufe + zufällige Objekte" erklären.
-4032. [P2] Die Datenschutzerklärung `server/site/datenschutz.html` und `privacy.html` um Kaufdaten ergänzen: Transaktionskennung, Produkt, Zeitpunkt, Store, Erstattungsstatus, Rechtsgrundlage Vertragserfüllung, Speicherdauer 10 Jahre nach Handelsrecht.
-4033. [P2] Im Impressum und in den Nutzungsbedingungen eine Kontaktadresse für Kauffragen nennen und darauf hinweisen, dass Erstattungen nur Apple oder Google entscheiden.
-4034. [P2] Den Text "Rissglas hat keinen Geldwert und kann nicht in Euro zurückgetauscht oder übertragen werden" im Shop unter jedem Rissglas-Paket in einer Zeile zeigen.
-4035. [P2] Gegenüber Spielern immer "Angebot" oder "Paket" schreiben, nie "Geschenk", wenn etwas Geld kostet, damit nichts als kostenlos erscheint.
-4036. [P2] Ein Hinweis "kostenlos spielbar, enthält In-App-Käufe" steht im Titelbildschirm unter dem Logo in kleiner Schrift, damit es vor dem Spielstart klar ist.
-4037. [P2] "Vorher/Nachher-Preise" (durchgestrichene Preise) nur zeigen, wenn das Angebot vorher mindestens 30 Tage zum höheren Preis verkauft wurde (Preisangabenverordnung § 11), und das Datum in `data/shop.json` speichern.
-4038. [P2] In der Shop-Oberfläche steht bei Angeboten mit Vorteil eine kleine Marke "Vorteil im Spiel", damit Eltern und Spieler sehen, was spielerisch wirkt.
-4039. [P2] Die Tageslimits für Käufe und die Altersstufen aus dem Bereich "Ausgabelimits" in den Nutzungsbedingungen beschreiben.
-4040. [P2] Für den Pass in den Nutzungsbedingungen die Laufzeit, die automatische Verlängerung, die Kündigung im Store und den Kündigungsbutton-Hinweis (§ 312k BGB gilt über den Store) beschreiben.
-4041. [P2] Keine "Mitspieler haben gekauft"-Meldungen und keine Rangliste nach Ausgaben anzeigen, damit kein sozialer Kaufdruck entsteht.
-4042. [P2] Kein Angebot nutzt Verknappung mit Stückzahlen wie "nur noch 3"; Mengengrenzen pro Konto sind erlaubt und werden als "einmal pro Konto" beschrieben.
-4043. [P2] Bei jedem Paket die Inhalte vollständig als Liste zeigen, nie nur ein Bild, und den Gegenwert der Einzelteile in Rissglas daneben nennen.
-4044. [P2] Eine Seite `server/site/kaeufe.html` und `purchases.html` bauen, die Rissglas, Preise, Pass, Erstattung und Ausgabelimits einfach erklärt, und in `tools/site/build_site.py` und im `Caddyfile` eintragen.
-4045. [P2] In der Shop-Oberfläche einen Link "Hilfe zu Käufen" auf `/kaeufe` setzen.
-4046. [P2] Für Spieler unter 18 alle Pass-Verlängerungen nur mit Store-Elternfreigabe zulassen und das in `docs/legal/SHOP_COMPLIANCE.md` als Regel festhalten.
+4030. [x] [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Rechtslage zu bezahlten Zufallsinhalten in Belgien und den Niederlanden festhalten und begründen, warum Chimora keine anbietet.
+4031. [x] [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Pflichten aus dem Jugendschutzgesetz (§ 10b, Kostenfallen als Risiko) und die USK-Hinweise "In-Game-Käufe" und "In-Game-Käufe + zufällige Objekte" erklären.
+4032. [x] [P2] Die Datenschutzerklärung `server/site/datenschutz.html` und `privacy.html` um Kaufdaten ergänzen: Transaktionskennung, Produkt, Zeitpunkt, Store, Erstattungsstatus, Rechtsgrundlage Vertragserfüllung, Speicherdauer 10 Jahre nach Handelsrecht. *Umgesetzt mit Abweichung: Verkäufer sind Apple und Google, sie bewahren die Rechnungen 10 Jahre auf; unsere Kaufdaten werden mit dem Konto gelöscht (so arbeitet auch der Server).*
+4033. [x] [P2] Im Impressum und in den Nutzungsbedingungen eine Kontaktadresse für Kauffragen nennen und darauf hinweisen, dass Erstattungen nur Apple oder Google entscheiden.
+4034. [x] [P2] Den Text "Rissglas hat keinen Geldwert und kann nicht in Euro zurückgetauscht oder übertragen werden" im Shop unter jedem Rissglas-Paket in einer Zeile zeigen.
+4035. [x] [P2] Gegenüber Spielern immer "Angebot" oder "Paket" schreiben, nie "Geschenk", wenn etwas Geld kostet, damit nichts als kostenlos erscheint.
+4036. [x] [P2] Ein Hinweis "kostenlos spielbar, enthält In-App-Käufe" steht im Titelbildschirm unter dem Logo in kleiner Schrift, damit es vor dem Spielstart klar ist.
+4037. [x] [P2] "Vorher/Nachher-Preise" (durchgestrichene Preise) nur zeigen, wenn das Angebot vorher mindestens 30 Tage zum höheren Preis verkauft wurde (Preisangabenverordnung § 11), und das Datum in `data/shop.json` speichern.
+4038. [x] [P2] In der Shop-Oberfläche steht bei Angeboten mit Vorteil eine kleine Marke "Vorteil im Spiel", damit Eltern und Spieler sehen, was spielerisch wirkt.
+4039. [x] [P2] Die Tageslimits für Käufe und die Altersstufen aus dem Bereich "Ausgabelimits" in den Nutzungsbedingungen beschreiben.
+4040. [x] [P2] Für den Pass in den Nutzungsbedingungen die Laufzeit, die automatische Verlängerung, die Kündigung im Store und den Kündigungsbutton-Hinweis (§ 312k BGB gilt über den Store) beschreiben.
+4041. [x] [P2] Keine "Mitspieler haben gekauft"-Meldungen und keine Rangliste nach Ausgaben anzeigen, damit kein sozialer Kaufdruck entsteht.
+4042. [x] [P2] Kein Angebot nutzt Verknappung mit Stückzahlen wie "nur noch 3"; Mengengrenzen pro Konto sind erlaubt und werden als "einmal pro Konto" beschrieben.
+4043. [x] [P2] Bei jedem Paket die Inhalte vollständig als Liste zeigen, nie nur ein Bild, und den Gegenwert der Einzelteile in Rissglas daneben nennen.
+4044. [x] [P2] Eine Seite `server/site/kaeufe.html` und `purchases.html` bauen, die Rissglas, Preise, Pass, Erstattung und Ausgabelimits einfach erklärt, und in `tools/site/build_site.py` und im `Caddyfile` eintragen.
+4045. [x] [P2] In der Shop-Oberfläche einen Link "Hilfe zu Käufen" auf `/kaeufe` setzen.
+4046. [x] [P2] Für Spieler unter 18 alle Pass-Verlängerungen nur mit Store-Elternfreigabe zulassen und das in `docs/legal/SHOP_COMPLIANCE.md` als Regel festhalten.
 4047. [P2] Den Zeitpunkt der Annahme der neuen Nutzungsbedingungen in `profiles` speichern (`terms_version`, `terms_accepted_at`) und vor dem ersten Kauf erneut abfragen, wenn die Version neuer ist.
-4048. [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Apple-Richtlinien 3.1.1 (Käufe), 3.1.2 (Abos) und 5.1.1(v) (Kontolöschung mit Abo) mit Umsetzungsort verlinken.
-4049. [P3] In `docs/legal/SHOP_COMPLIANCE.md` die Google-Richtlinien zu Zahlungen, Abos und Familien zusammenfassen und vermerken, dass die Zielgruppe "13 und älter" bleibt.
-4050. [P3] Den Digital Services Act prüfen: Händlerangaben im Store bleiben aktuell, ein Meldeweg für irreführende Angebote führt zur Support-Adresse.
-4051. [P3] Einen jährlichen Rechtscheck mit Datum in `docs/legal/SHOP_COMPLIANCE.md` eintragen und dabei den Stand des geplanten EU-Gesetzes zur digitalen Fairness nachtragen.
+4048. [x] [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Apple-Richtlinien 3.1.1 (Käufe), 3.1.2 (Abos) und 5.1.1(v) (Kontolöschung mit Abo) mit Umsetzungsort verlinken.
+4049. [x] [P3] In `docs/legal/SHOP_COMPLIANCE.md` die Google-Richtlinien zu Zahlungen, Abos und Familien zusammenfassen und vermerken, dass die Zielgruppe "13 und älter" bleibt.
+4050. [x] [P3] Den Digital Services Act prüfen: Händlerangaben im Store bleiben aktuell, ein Meldeweg für irreführende Angebote führt zur Support-Adresse.
+4051. [x] [P3] Einen jährlichen Rechtscheck mit Datum in `docs/legal/SHOP_COMPLIANCE.md` eintragen und dabei den Stand des geplanten EU-Gesetzes zur digitalen Fairness nachtragen.
 4052. [P3] Die Texte aller Shop-Angebote in einfacher Sprache halten: höchstens 2 Sätze, keine Fachwörter, und ein Test zählt die Satzlänge (höchstens 18 Wörter).
-4053. [P3] Eine Vorlage für Antworten auf Kaufbeschwerden in `docs/shop/SUPPORT_ANTWORTEN.md` schreiben (fehlender Kauf, doppelter Kauf, Kind hat gekauft, Pass kündigen).
+4053. [x] [P3] Eine Vorlage für Antworten auf Kaufbeschwerden in `docs/shop/SUPPORT_ANTWORTEN.md` schreiben (fehlender Kauf, doppelter Kauf, Kind hat gekauft, Pass kündigen).
 4054. [P3] Bei Angeboten mit Ende das Enddatum in Ortszeit Deutschland anzeigen und in den Angebotsdaten als UTC speichern.
-4055. [P3] Jede Preisänderung mindestens 7 Tage vorher in den Neuigkeiten des Spiels ankündigen, wenn ein Angebot teurer wird.
-4056. [P3] Für die Schweiz und Österreich prüfen, ob abweichende Preisangaben nötig sind, und das Ergebnis in `docs/legal/SHOP_COMPLIANCE.md` notieren.
-4057. [P3] Einen Rechtsabschnitt zur Übertragung des Kontos per Transfercode ergänzen: Käufe wandern mit, Verkauf von Konten ist untersagt.
+4055. [x] [P3] Jede Preisänderung mindestens 7 Tage vorher in den Neuigkeiten des Spiels ankündigen, wenn ein Angebot teurer wird.
+4056. [x] [P3] Für die Schweiz und Österreich prüfen, ob abweichende Preisangaben nötig sind, und das Ergebnis in `docs/legal/SHOP_COMPLIANCE.md` notieren.
+4057. [x] [P3] Einen Rechtsabschnitt zur Übertragung des Kontos per Transfercode ergänzen: Käufe wandern mit, Verkauf von Konten ist untersagt.
 4058. [P3] Ein Verbot des Kontohandels in die Nutzungsbedingungen schreiben und die Melden-Funktion um den Grund "Kontohandel" ergänzen.
 4059. [P3] Die englischen Shop-Texte auf die gleichen Regeln prüfen (keine "Buy now", "Get it now" gegenüber Kindern) und die Wortliste dafür nutzen.
-4060. [P3] In `docs/legal/SHOP_COMPLIANCE.md` festhalten, wie bei einer Anfrage einer Verbraucherzentrale reagiert wird: Antwortfrist 14 Tage, Ansprechpartner Ali.
+4060. [x] [P3] In `docs/legal/SHOP_COMPLIANCE.md` festhalten, wie bei einer Anfrage einer Verbraucherzentrale reagiert wird: Antwortfrist 14 Tage, Ansprechpartner Ali.
 
 ### Store-Einrichtung, Altersfreigabe und Datenschutz-Angaben
 4061. [x] [P1] In `docs/legal/STORE_COMPLIANCE.md` die IARC-Antwort "Digitale Käufe" von "nein" auf "ja" ändern und die erwartete Freigabe mit Zusatz "In-Game-Käufe" neu eintragen.
@@ -75,24 +75,24 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4064. [x] [P1] Das Apple-Datenschutzlabel um "Käufe, mit Identität verknüpft, App-Funktionalität, kein Tracking" ergänzen.
 4065. [x] [P1] Alle Produkte mit festen Produkt-IDs nach dem Muster `de.chimora.game.<art>.<name>` in einer Liste `store/products.json` anlegen, aus der beide Konsolen befüllt werden.
 4066. [P1] In App Store Connect und der Play Console Verbrauchsgüter (Rissglas-Pakete, Einzelteile), Nicht-Verbrauchsgüter (Team-Platz, Lager, Kosmetik) und ein Auto-Abo (Wanderer-Pass) anlegen und die Typen in `store/products.json` vermerken.
-4067. [P1] Ein Skript `tools/store/push_products.py` schreiben, das `store/products.json` über die Play Developer API (`monetization.onetimeproducts`, `monetization.subscriptions`) anlegt und aktualisiert.
+4067. [x] [P1] Ein Skript `tools/store/push_products.py` schreiben, das `store/products.json` über die Play Developer API (`monetization.onetimeproducts`, `monetization.subscriptions`) anlegt und aktualisiert.
 4068. [P2] Für Apple die Produkte über die App Store Connect API (`inAppPurchasesV2`, `subscriptionGroups`) mit demselben Skript anlegen, gesteuert durch den Schalter `--apple`.
-4069. [P2] Für jedes Produkt einen deutschen und einen englischen Anzeigenamen und eine Beschreibung in `store/products.json` pflegen, die exakt den Texten im Spiel entsprechen.
+4069. [x] [P2] Für jedes Produkt einen deutschen und einen englischen Anzeigenamen und eine Beschreibung in `store/products.json` pflegen, die exakt den Texten im Spiel entsprechen.
 4070. [P2] Für Apple pro In-App-Kauf einen Prüf-Screenshot (Shop-Ansicht des Produkts, 1320 x 2868) mit `tools/store/make_store_images.py` erzeugen.
-4071. [P2] Die Store-Beschreibungen in `store/android/*/full_description.txt` und `store/ios/metadata/*/description.txt` um einen Absatz "Kostenlos spielbar. Optionale Käufe im Spiel, auch mit Vorteilen. Keine Zufallsinhalte." ergänzen.
+4071. [x] [P2] Die Store-Beschreibungen in `store/android/*/full_description.txt` und `store/ios/metadata/*/description.txt` um einen Absatz "Kostenlos spielbar. Optionale Käufe im Spiel, auch mit Vorteilen. Keine Zufallsinhalte." ergänzen.
 4072. [P2] Die Screenshots im Store um ein Bild der Shop-Ansicht mit sichtbaren Euro-Preisen ergänzen, damit niemand einen Gratis-Eindruck ohne Käufe bekommt.
-4073. [P2] Apple Familienfreigabe für Nicht-Verbrauchsgüter und den Pass aktivieren und das Feld `family_shareable` in `store/products.json` setzen.
-4074. [P2] Die Hinweise für die Apple-Prüfung in `store/ios/review_information/notes.txt` um eine Anleitung ergänzen: Shop öffnen, Testkauf, Wiederherstellen, Ausgabelimit.
-4075. [P2] Den Play-Text `store/android/app_access_de.txt` um den Weg zum Shop und den Hinweis auf Lizenztester ergänzen.
-4076. [P2] Lizenztester in der Play Console und Testkonten für Käufe in App Store Connect in `docs/STORE_RELEASE.md` als Schritt für Ali eintragen.
-4077. [P2] In `tools/release_check.py` prüfen, dass jede Produkt-ID aus `data/shop.json` in `store/products.json` vorkommt und umgekehrt.
-4078. [P2] In `tools/release_check.py` prüfen, dass jedes Produkt einen Preis aus der festen Preisliste (0,99 € bis 99,99 €) hat.
-4079. [P2] Die Neuigkeiten-Texte (`changelogs/default.txt`, `release_notes.txt`) für die erste Version mit Shop um den Satz "Neu: Shop mit Rissglas, alle Preise in Euro" ergänzen.
-4080. [P2] Die Kategorie in den Konsolen auf "Rollenspiel" lassen und die Markierung "enthält In-App-Käufe" in beiden Konsolen prüfen.
+4073. [x] [P2] Apple Familienfreigabe für Nicht-Verbrauchsgüter und den Pass aktivieren und das Feld `family_shareable` in `store/products.json` setzen. *Entschieden: Familienfreigabe bleibt vorerst aus (`family_shareable: false`), weil der Server Apple-Käufe an das Käuferkonto bindet; Wiedervorlage mit StoreKit 2.*
+4074. [x] [P2] Die Hinweise für die Apple-Prüfung in `store/ios/review_information/notes.txt` um eine Anleitung ergänzen: Shop öffnen, Testkauf, Wiederherstellen, Ausgabelimit.
+4075. [x] [P2] Den Play-Text `store/android/app_access_de.txt` um den Weg zum Shop und den Hinweis auf Lizenztester ergänzen.
+4076. [x] [P2] Lizenztester in der Play Console und Testkonten für Käufe in App Store Connect in `docs/STORE_RELEASE.md` als Schritt für Ali eintragen.
+4077. [x] [P2] In `tools/release_check.py` prüfen, dass jede Produkt-ID aus `data/shop.json` in `store/products.json` vorkommt und umgekehrt.
+4078. [x] [P2] In `tools/release_check.py` prüfen, dass jedes Produkt einen Preis aus der festen Preisliste (0,99 € bis 99,99 €) hat.
+4079. [x] [P2] Die Neuigkeiten-Texte (`changelogs/default.txt`, `release_notes.txt`) für die erste Version mit Shop um den Satz "Neu: Shop mit Rissglas, alle Preise in Euro" ergänzen.
+4080. [x] [P2] Die Kategorie in den Konsolen auf "Rollenspiel" lassen und die Markierung "enthält In-App-Käufe" in beiden Konsolen prüfen.
 4081. [P3] In der Play Console die Länderpreise automatisch aus dem Euro-Preis ableiten und für die Eurozone feste Preise mit ",99" setzen.
 4082. [P3] In App Store Connect als Basisland Deutschland wählen, damit die Euro-Preise fest bleiben und andere Länder umgerechnet werden.
 4083. [P3] Für Apple "Promoted In-App Purchases" nicht verwenden, damit keine Käufe außerhalb des Spiels ohne Kontext beworben werden.
-4084. [P3] Einen Abo-Angebotscode (Apple Offer Codes, Google Promo Codes) für 1 Monat Pass als Support-Werkzeug in `docs/shop/SUPPORT_ANTWORTEN.md` beschreiben.
+4084. [x] [P3] Einen Abo-Angebotscode (Apple Offer Codes, Google Promo Codes) für 1 Monat Pass als Support-Werkzeug in `docs/shop/SUPPORT_ANTWORTEN.md` beschreiben.
 4085. [P3] Das Abo-Gruppen-Bild und den Abo-Anzeigenamen in App Store Connect mit eigenem Pixel-Bild aus `art/shop/` füllen.
 4086. [P3] Für Google die Abo-Grundpläne "monatlich" und "jährlich (39,99 €)" anlegen und den Jahresplan erst in der zweiten Version freigeben.
 4087. [P3] Einen Test-Track "shop-beta" in der Play Console für Shop-Änderungen vor der Produktion anlegen.
@@ -112,16 +112,16 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4099. [x] [P1] Den Kaufablauf als Zustandsmaschine in `Billing.gd` bauen: Bereit, Abfrage, Kauf läuft, Prüfung, Gutgeschrieben, Fehler, Abgebrochen.
 4100. [x] [P2] Für ausstehende Käufe (Google `PENDING`, Apple "Ask to Buy") einen Text "Kauf wartet auf Freigabe" zeigen und nichts gutschreiben, bis der Status wechselt.
 4101. [x] [P2] Eine Konto-Kennung als `obfuscatedAccountId` (Google) und `appAccountToken` (Apple, UUID aus der Konto-ID) mitschicken, damit der Server Käufe dem richtigen Konto zuordnet.
-4102. [P2] Den Button "Käufe wiederherstellen" in `scripts/ui/AccountMenu.gd` und im Shop einbauen, der `restore` aufruft und das Ergebnis in einem Satz meldet.
+4102. [x] [P2] Den Button "Käufe wiederherstellen" in `scripts/ui/AccountMenu.gd` und im Shop einbauen, der `restore` aufruft und das Ergebnis in einem Satz meldet. *Umgesetzt im Shop-Menü (nur mit Store); im Konto-Menü nicht, damit es nur einen Ort gibt.*
 4103. [x] [P2] Fehlercodes beider Stores auf 8 eigene Meldungen abbilden (abgebrochen, nicht verfügbar, schon gekauft, Netz fehlt, Zahlung abgelehnt, Store-Fehler, ausstehend, unbekannt).
-4104. [P2] Ohne Serververbindung den Kauf-Button sperren und "Shop braucht eine Verbindung" anzeigen, damit kein Kauf ohne Prüfung startet.
+4104. [x] [P2] Ohne Serververbindung den Kauf-Button sperren und "Shop braucht eine Verbindung" anzeigen, damit kein Kauf ohne Prüfung startet.
 4105. [P2] Produktdaten nach dem Laden 6 Stunden zwischenspeichern und bei Sprach- oder Landwechsel neu laden.
 4106. [x] [P2] Bei doppeltem Tippen auf "Kaufen" nur einen Kauf starten und den Button bis zum Ende des Vorgangs sperren.
 4107. [x] [P2] Den Android-Export auf die Berechtigung `com.android.vending.BILLING` prüfen und in `tools/release_check.py` sicherstellen, dass keine weiteren neuen Berechtigungen dazukommen.
 4108. [P2] Die 16-KB-Seitengrößen-Prüfung in der CI auch für die nativen Teile der Billing-Plugins laufen lassen.
 4109. [P2] Beim iOS-Build die StoreKit-Funktion "In-App Purchase" im Export-Preset setzen und in der CI prüfen.
 4110. [P2] Eine StoreKit-Konfigurationsdatei `ios/Chimora.storekit` mit allen Produkten für lokale Tests in Xcode erstellen.
-4111. [P2] Im Web-Build und in der Browser-Testversion unter `/play` den Shop ausblenden und nur "Shop nur in der App" anzeigen.
+4111. [x] [P2] Im Web-Build und in der Browser-Testversion unter `/play` den Shop ausblenden und nur "Shop nur in der App" anzeigen.
 4112. [P2] Den Pass-Status beim Start vom Server lesen und nicht aus dem Store-Cache, damit gekündigte oder erstattete Pässe sofort enden.
 4113. [P2] Signale `purchase_done`, `purchase_failed`, `wallet_changed` und `entitlements_changed` in `Billing.gd` anbieten, auf die Shop und Menüs hören.
 4114. [P3] Kaufvorgänge in einer lokalen Warteschlange `user://billing_queue.json` speichern, damit ein Absturz während der Prüfung den Kauf nicht vergisst.
@@ -157,13 +157,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4142. [P2] Für den Pass in `subscriptions` Status, Ablaufdatum, Verlängerungsstatus, Store und ursprüngliche Transaktion speichern und Ablauf mit Toleranz von 16 Tagen (Google Kulanzzeit) behandeln.
 4143. [P2] Wiederherstellen auf dem Server: Ein Beleg, der schon einem anderen Konto gehört, wird nicht doppelt vergeben, sondern nur dem ursprünglichen Konto erneut bestätigt.
 4144. [P2] Wird ein Konto per Transfercode auf ein neues Gerät gebracht, bleiben `wallets`, `entitlements` und `subscriptions` am Konto, nicht am Gerät.
-4145. [P2] Bei Kontolöschung offene Pässe nicht kündigen können: vor dem Löschen einen Hinweis zeigen, wie man das Abo im Store kündigt (Apple 5.1.1(v)), und Kaufdaten wegen Aufbewahrungspflicht pseudonymisiert behalten.
-4146. [P2] Die Kontolöschung in `scripts/ui/AccountMenu.gd` um den Hinweis "Restliches Rissglas und gekaufte Inhalte gehen verloren" ergänzen.
+4145. [x] [P2] Bei Kontolöschung offene Pässe nicht kündigen können: vor dem Löschen einen Hinweis zeigen, wie man das Abo im Store kündigt (Apple 5.1.1(v)), und Kaufdaten wegen Aufbewahrungspflicht pseudonymisiert behalten.
+4146. [x] [P2] Die Kontolöschung in `scripts/ui/AccountMenu.gd` um den Hinweis "Restliches Rissglas und gekaufte Inhalte gehen verloren" ergänzen.
 4147. [P2] Alle Store-Zugangsdaten (Apple-Schlüssel `.p8`, Google-Service-Account) nur als Docker-Secrets auf dem Server ablegen und nie ins Repo schreiben.
-4148. [P2] Eine Ratenbegrenzung für `shop_buy` (höchstens 30 Käufe pro Stunde) und für Belegprüfungen (höchstens 20 pro Stunde) über die vorhandene Tabelle `rate_events` setzen.
+4148. [x] [P2] Eine Ratenbegrenzung für `shop_buy` (höchstens 30 Käufe pro Stunde) und für Belegprüfungen (höchstens 20 pro Stunde) über die vorhandene Tabelle `rate_events` setzen.
 4149. [P2] Jede RPC-Antwort des Shops enthält das neue Guthaben und die Berechtigungen, damit der Client nie selbst rechnet.
-4150. [P2] Eine RPC-Funktion `shop_state()` liefert Guthaben, Berechtigungen, Pass-Status, Ausgabelimit und Restbetrag in einem Aufruf.
-4151. [P2] Eine RPC-Funktion `shop_history(limit)` liefert die letzten 50 Käufe mit Datum, Produkt und Euro-Preis für die Kaufliste im Spiel.
+4150. [x] [P2] Eine RPC-Funktion `shop_state()` liefert Guthaben, Berechtigungen, Pass-Status, Ausgabelimit und Restbetrag in einem Aufruf.
+4151. [x] [P2] Eine RPC-Funktion `shop_history(limit)` liefert die letzten 50 Käufe mit Datum, Produkt und Euro-Preis für die Kaufliste im Spiel. *Liefert die letzten 100 Käufe.*
 4152. [P2] Die Serverzeit für Angebotsende und Pass-Ablauf nutzen, nie die Gerätezeit.
 4153. [P2] Den Rissglas-Verbrauch und die Gutschrift so in einer Datenbank-Transaktion bündeln, dass bei Verbindungsabbruch nichts doppelt oder gar nicht passiert (Idempotenzschlüssel pro Kauf).
 4154. [P2] Den Smoke-Test `server/smoke_test.sh` um Belegprüfung mit Test-Belegen, `shop_buy`, Erstattung und `shop_state` erweitern.
@@ -297,21 +297,21 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4276. [P3] Die Limits und Altersgruppen als Werte in `server_config` halten, damit sie ohne neue App-Version änderbar sind.
 
 ### Kosmetik
-4277. [P1] Wanderer-Jacken als Kosmetik anbieten: 8 neue Jackenfarben je 200 Rissglas (≈ 1,98 €) zusätzlich zu den 4 freien Farben in `GameState.TAMER_COLORS`.
+4277. [x] [P1] Wanderer-Jacken als Kosmetik anbieten: 8 neue Jackenfarben je 200 Rissglas (≈ 1,98 €) zusätzlich zu den 4 freien Farben in `GameState.TAMER_COLORS`.
 4278. [x] [P1] Kosmetik hat nie eine Wirkung im Kampf, beim Bonden oder in der Welt, und ein Test prüft, dass Kosmetik-Angebote keine Wertefelder haben.
 4279. [P2] Spirling-Farbtöne als Kosmetik anbieten: pro Art ein alternativer Farbton für 300 Rissglas, der nur das Aussehen ändert und im Spirlog als "Farbton" vermerkt ist.
 4280. [P2] Die Farbtöne als Paletten-Tausch im Shader umsetzen, damit keine neuen Sprites pro Era nötig sind.
-4281. [P2] Kampf-Hintergründe als Kosmetik anbieten: 6 Hintergründe (Mondsee, Kupferwald, Nebelhafen, Sternwiese, Aschefeld, Glasgrotte) je 300 Rissglas.
-4282. [P2] Textrahmen für das Dialogfenster als Kosmetik anbieten: 5 Rahmen je 100 Rissglas.
-4283. [P2] Wanderer-Hüte als Kosmetik anbieten: 6 Hüte je 200 Rissglas, sichtbar in der Welt und im Kampfbild.
-4284. [P2] Profilrahmen für die Freundesliste (`FriendsMenu.gd`) anbieten: 6 Rahmen je 100 Rissglas.
-4285. [P2] Echo-Grußkarten-Motive für Geschenke an Freunde anbieten: 8 Motive je 100 Rissglas, die nur das Aussehen der Karte ändern.
+4281. [x] [P2] Kampf-Hintergründe als Kosmetik anbieten: 6 Hintergründe (Mondsee, Kupferwald, Nebelhafen, Sternwiese, Aschefeld, Glasgrotte) je 300 Rissglas.
+4282. [x] [P2] Textrahmen für das Dialogfenster als Kosmetik anbieten: 5 Rahmen je 100 Rissglas.
+4283. [x] [P2] Wanderer-Hüte als Kosmetik anbieten: 6 Hüte je 200 Rissglas, sichtbar in der Welt und im Kampfbild.
+4284. [x] [P2] Profilrahmen für die Freundesliste (`FriendsMenu.gd`) anbieten: 6 Rahmen je 100 Rissglas.
+4285. [x] [P2] Echo-Grußkarten-Motive für Geschenke an Freunde anbieten: 8 Motive je 100 Rissglas, die nur das Aussehen der Karte ändern. (Umgesetzt als ein Set aus 8 Motiven für 400 Rissglas, damit Alis 2/3-Regel im Angebot hält.)
 4286. [P2] Fotorahmen und Sticker für den Fotomodus anbieten: 10 Sticker für 200 Rissglas als festes Set.
-4287. [P2] Einen Kosmetik-Schrank im Menü "Team" und unter Einstellungen bauen, in dem gekaufte Teile an- und abgelegt werden.
+4287. [x] [P2] Einen Kosmetik-Schrank im Menü "Team" und unter Einstellungen bauen, in dem gekaufte Teile an- und abgelegt werden.
 4288. [P2] Gekaufte Kosmetik in `entitlements` speichern und beim Laden des Spielstands nur anzeigen, was der Server bestätigt.
 4289. [P2] Kosmetik-Teile als Nicht-Verbrauchsgüter im Store anlegen, damit sie über "Käufe wiederherstellen" zurückkommen.
 4290. [P2] Eigene Pixelkunst für alle Kosmetik in `art/shop/cosmetics/` anlegen und mit `tools/ip_check.sh` auf fremde Formen prüfen.
-4291. [P2] Jedes Kosmetik-Teil in der Vorschau des Shops zeigen, bevor es gekauft wird.
+4291. [x] [P2] Jedes Kosmetik-Teil in der Vorschau des Shops zeigen, bevor es gekauft wird.
 4292. [P2] Kosmetik-Sets anbieten (Jacke, Hut, Rahmen im gleichen Stil) für 400 Rissglas statt 500 einzeln, mit ehrlichem Einzelpreis daneben.
 4293. [P3] Kosmetik ist in der Gleichstand-Liga sichtbar, weil sie keinen Vorteil gibt, und wird beim Gegner im Kampfbild gezeigt.
 4294. [P3] Ein Spirlog-Einbandmotiv als Kosmetik anbieten: 4 Motive je 200 Rissglas.
@@ -368,8 +368,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4339. [x] [P1] (P2W) Den "Wachstumskristall" (`rg_growth_x2`) anlegen, der für die nächsten 20 Kämpfe das Wachstum des ganzen Teams verdoppelt, Preis 200 Rissglas (≈ 1,98 €).
 4340. [x] [P1] (P2W) Den "Großen Wachstumskristall" (`rg_growth_x3`) anlegen, der für 20 Kämpfe dreifaches Wachstum gibt, Preis 400 Rissglas (≈ 3,96 €).
 4341. [x] [P1] (P2W) Wachstums-Boosts zählen Kämpfe statt Minuten, damit keine Zeit abläuft und kein Druck entsteht, sofort zu spielen.
-4342. [P1] (P2W) Den aktiven Wachstums-Boost mit Restzahl ("Wachstum x2: noch 14 Kämpfe") in der Team-Ansicht und im Kampfende-Bildschirm zeigen.
-4343. [P1] (P2W) Ein "Team-Wachstumsband" (`rg_share_band`) anlegen, das das Wachstum gleichmäßig auf alle 5 Team-Mitglieder verteilt, auch auf nicht kämpfende, dauerhaft, Preis 1000 Rissglas oder 9,99 €.
+4342. [x] [P1] (P2W) Den aktiven Wachstums-Boost mit Restzahl ("Wachstum x2: noch 14 Kämpfe") in der Team-Ansicht und im Kampfende-Bildschirm zeigen.
+4343. [x] [P1] (P2W) Ein "Team-Wachstumsband" (`rg_share_band`) anlegen, das das Wachstum gleichmäßig auf alle 5 Team-Mitglieder verteilt, auch auf nicht kämpfende, dauerhaft, Preis 1000 Rissglas oder 9,99 €.
 4344. [P1] (P2W) Ring-Tränke und Wachstums-Boosts als Verbrauchsgüter im Store anlegen und nach dem Kauf nur über den Server in die Tasche legen.
 4345. [P1] (P2W) Ring-Trank-Fünferpack (`rg_ring_tonic_x5`) für 400 Rissglas anbieten, das 5 einzelne Ring-Tränke liefert.
 4346. [P2] (P2W) Den "Ruhe-Wachstumsstein" (`rg_rest_growth`) anlegen, der Spirlings im Lager pro echter Stunde Spielzeit 1 % des Wachstums bis zum nächsten Ring gibt, dauerhaft, Preis 800 Rissglas.
@@ -431,7 +431,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4400. [P1] (P2W) Shop-Andenken sind dauerhafte Nicht-Verbrauchsgüter je Stück; ein Kauf gibt genau 1 Stück, das einem Spirling angelegt wird.
 4401. [P1] (P2W) Shop-Andenken sind stärker als die Münz-Andenken (`swift_feather` +15 % Tempo bleibt, Shop-Wirbelglas bekommt zusätzlich +5 % Fokus), und die Werte stehen in `docs/BALANCE.md`.
 4402. [x] [P1] (P2W) Acht Element-Prismen anlegen (Ember, Tide, Bloom, Volt, Stone, Gale, Lumen, Umbra), je +20 % Schaden für Techniken des Elements, je 600 Rissglas.
-4403. [P1] (P2W) Das Andenken "Haltestein" (`rg_hold_stone`) anlegen: übersteht einmal pro Kampf einen Treffer, der bei voller Kraft besiegt hätte, mit 1 Kraft, Preis 1000 Rissglas.
+4403. [x] [P1] (P2W) Das Andenken "Haltestein" (`rg_hold_stone`) anlegen: übersteht einmal pro Kampf einen Treffer, der bei voller Kraft besiegt hätte, mit 1 Kraft, Preis 1000 Rissglas.
 4404. [x] [P1] (P2W) Das Andenken "Nachhallring" (`rg_echo_ring`) anlegen: heilt jede Runde 1/10 der Kraft, stärker als `bark_wrap` (1/12), Preis 1000 Rissglas.
 4405. [P2] (P2W) Das Andenken "Funkenspeicher" (`rg_spark_store`) anlegen: +1 Energie pro Runde und +1 Höchstenergie, Preis 1200 Rissglas.
 4406. [P2] (P2W) Das Andenken "Spiegelglas" (`rg_mirror_glass`) anlegen: wirft 20 % des erlittenen Schadens aus Wucht-Techniken zurück, Preis 1000 Rissglas.
@@ -478,19 +478,19 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4447. [P3] (P2W) Ein Andenken-Starterbündel (2 Element-Prismen nach Wahl) für 1000 Rissglas statt 1200 anbieten.
 
 ### Technik-Schriften
-4448. [P1] (P2W) Acht "Rissschriften" anlegen, je eine pro Element, die eine Shop-Technik lehren, Preis je 500 Rissglas (≈ 4,95 €) oder 4,99 € direkt.
-4449. [P1] (P2W) Die acht Shop-Techniken in `data/moves.json` mit eigenen Namen anlegen: Glutglas-Hieb (Ember), Flutglas-Welle (Tide), Rankenglas-Stich (Bloom), Blitzglas-Biss (Volt), Felsglas-Stoß (Stone), Sturmglas-Schnitt (Gale), Lichtglas-Strahl (Lumen), Schattenglas-Griff (Umbra).
-4450. [P1] (P2W) Jede Shop-Technik hat Stärke 95, Genauigkeit 100 und Energie 4, also mehr als die Echo-Kristall-Techniken bei gleichen Kosten, und die Werte stehen in `docs/BALANCE.md`.
-4451. [P1] (P2W) Rissschriften nutzen das vorhandene Feld `teaches` in `data/items.json` und lassen sich wie Echo-Kristalle anwenden.
-4452. [P1] (P2W) Eine Rissschrift ist ein Verbrauchsgut: ein Kauf lehrt genau einem Spirling einmal die Technik.
-4453. [P1] (P2W) Rissschriften nur an Spirlings des passenden Elements anwendbar machen, damit die Spielidee der Elemente bleibt.
+4448. [x] [P1] (P2W) Acht "Rissschriften" anlegen, je eine pro Element, die eine Shop-Technik lehren, Preis je 500 Rissglas (≈ 4,95 €) oder 4,99 € direkt.
+4449. [x] [P1] (P2W) Die acht Shop-Techniken in `data/moves.json` mit eigenen Namen anlegen: Glutglas-Hieb (Ember), Flutglas-Welle (Tide), Rankenglas-Stich (Bloom), Blitzglas-Biss (Volt), Felsglas-Stoß (Stone), Sturmglas-Schnitt (Gale), Lichtglas-Strahl (Lumen), Schattenglas-Griff (Umbra).
+4450. [x] [P1] (P2W) Jede Shop-Technik hat Stärke 95, Genauigkeit 100 und Energie 4, also mehr als die Echo-Kristall-Techniken bei gleichen Kosten, und die Werte stehen in `docs/BALANCE.md`.
+4451. [x] [P1] (P2W) Rissschriften nutzen das vorhandene Feld `teaches` in `data/items.json` und lassen sich wie Echo-Kristalle anwenden.
+4452. [x] [P1] (P2W) Eine Rissschrift ist ein Verbrauchsgut: ein Kauf lehrt genau einem Spirling einmal die Technik.
+4453. [x] [P1] (P2W) Rissschriften nur an Spirlings des passenden Elements anwendbar machen, damit die Spielidee der Elemente bleibt.
 4454. [P1] (P2W) Die Shop-Techniken mit eigenen Effekt-Skripten über `effect_id` anlegen, ohne Sonderfall in `BattleModel`.
 4455. [P1] (P2W) Shop-Techniken in der Gleichstand-Liga durch die Echo-Kristall-Technik des gleichen Elements ersetzen und das in der Gegnervorschau anzeigen.
-4456. [P1] (P2W) Shop-Techniken nie in der Gegner-KI für Wanderer und Wächter nutzen.
-4457. [P1] (P2W) Ein "Technik-Gedächtnis" (`rg_move_memory`) anlegen, mit dem ein Spirling vergessene Techniken jederzeit neu lernt, dauerhaft pro Konto, Preis 600 Rissglas.
-4458. [P2] (P2W) Jede Shop-Technik hat eine kleine Zusatzwirkung: Glutglas-Hieb 20 % Brand, Flutglas-Welle 20 % Nässe, Rankenglas-Stich heilt 25 % des Schadens.
-4459. [P2] (P2W) Weitere Zusatzwirkungen: Blitzglas-Biss senkt Tempo um 1 Stufe zu 30 %, Felsglas-Stoß hebt Schutz des Anwenders zu 30 %, Sturmglas-Schnitt handelt mit Vorrang +1.
-4460. [P2] (P2W) Weitere Zusatzwirkungen: Lichtglas-Strahl heilt Zustände des Anwenders, Schattenglas-Griff senkt Fokus des Gegners um 1 Stufe zu 30 %.
+4456. [x] [P1] (P2W) Shop-Techniken nie in der Gegner-KI für Wanderer und Wächter nutzen.
+4457. [x] [P1] (P2W) Ein "Technik-Gedächtnis" (`rg_move_memory`) anlegen, mit dem ein Spirling vergessene Techniken jederzeit neu lernt, dauerhaft pro Konto, Preis 600 Rissglas.
+4458. [x] [P2] (P2W) Jede Shop-Technik hat eine kleine Zusatzwirkung: Glutglas-Hieb 20 % Brand, Flutglas-Welle 20 % Nässe, Rankenglas-Stich heilt 25 % des Schadens.
+4459. [x] [P2] (P2W) Weitere Zusatzwirkungen: Blitzglas-Biss senkt Tempo um 1 Stufe zu 30 %, Felsglas-Stoß hebt Schutz des Anwenders zu 30 %, Sturmglas-Schnitt handelt mit Vorrang +1.
+4460. [x] [P2] (P2W) Weitere Zusatzwirkungen: Lichtglas-Strahl heilt Zustände des Anwenders, Schattenglas-Griff senkt Fokus des Gegners um 1 Stufe zu 30 %.
 4461. [P2] (P2W) Einen "Technik-Platz 5" (`rg_fifth_move`) anlegen, mit dem ein Spirling dauerhaft 5 statt 4 Techniken kennt, Preis 1200 Rissglas pro Spirling.
 4462. [P2] (P2W) Den Technik-Platz 5 im Kampfmenü als fünfte Zeile zeigen, ohne das eigene Kampfbild-Layout zu ändern, und in der Gleichstand-Liga sperren.
 4463. [P2] (P2W) Eine "Fremdschrift" (`rg_cross_script`) anlegen, die einem Spirling eine Technik eines anderen Elements lehrt, die er sonst nie lernt, Preis 800 Rissglas.
@@ -531,7 +531,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4496. [x] [P1] (P2W) Den "Rissatem" (`rg_rift_breath`) anlegen: belebt im Kampf einen besiegten Spirling mit 50 % Kraft wieder, höchstens 1 pro Kampf, Preis 200 Rissglas pro Stück.
 4497. [x] [P1] (P2W) Den "Großen Rissatem" (`rg_rift_breath_full`) anlegen: belebt im Kampf mit 100 % Kraft und voller Energie, höchstens 1 pro Kampf, Preis 400 Rissglas.
 4498. [P1] (P2W) Wiederbeleben im Kampf ist nur möglich, wenn der Gegenstand schon in der Tasche liegt; es erscheint nie ein Kauffenster im Kampf.
-4499. [P1] (P2W) Den "Siegeswillen" (`rg_last_stand`) anlegen: wird das ganze Team besiegt, kehrt der zuletzt besiegte Spirling einmal mit 30 % Kraft zurück, Preis 300 Rissglas, nicht gegen Rift-Wächter.
+4499. [x] [P1] (P2W) Den "Siegeswillen" (`rg_last_stand`) anlegen: wird das ganze Team besiegt, kehrt der zuletzt besiegte Spirling einmal mit 30 % Kraft zurück, Preis 300 Rissglas, nicht gegen Rift-Wächter.
 4500. [P1] (P2W) Die Kampfhilfen über die bestehende Gegenstandsaktion im Kampf (`items_allowed_in_battle`) einsetzen und in Rift-Born gesperrt lassen.
 4501. [x] [P1] (P2W) Den "Glasfunken" (`rg_glass_spark`) anlegen: füllt im Kampf sofort die Energie eines Spirlings auf und erhöht sie für 3 Runden um 1 pro Runde, Preis 100 Rissglas.
 4502. [x] [P1] (P2W) (Umgesetzt ohne "ohne Zug": der Trank braucht den Zug wie jeder Gegenstand.) Einen "Rissglas-Heiltrank" (`rg_glass_tonic`) anlegen: heilt im Kampf 100 % Kraft und alle Zustände, ohne den Zug zu verbrauchen, höchstens 2 pro Kampf, Preis 150 Rissglas.
@@ -629,7 +629,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4592. [P3] (P2W) Die Wirkung der Bond-Hilfen in einem Abschnitt in `docs/BALANCE.md` beschreiben, mit Zahlen nur für Entwickler.
 
 ### Team- und Lagerplätze
-4593. [P1] (P2W) Einen "Sechsten Team-Platz" (`rg_team_slot_6`) als dauerhaften Kauf anlegen, Preis 1500 Rissglas (≈ 14,85 €) oder 14,99 € direkt, der `GameState.MAX_PARTY` für das Konto auf 6 hebt.
+4593. [x] [P1] (P2W) Einen "Sechsten Team-Platz" (`rg_team_slot_6`) als dauerhaften Kauf anlegen, Preis 1500 Rissglas (≈ 14,85 €) oder 14,99 € direkt, der `GameState.MAX_PARTY` für das Konto auf 6 hebt.
 4594. [P1] (P2W) `MAX_PARTY` in `GameState.gd` durch eine Funktion `party_max()` ersetzen, die 5 oder mit Berechtigung 6 liefert, und alle Stellen (`party.size() < MAX_PARTY`) darauf umstellen.
 4595. [P1] (P2W) Der sechste Platz gilt in allen Kämpfen gegen die Spielwelt; in der Gleichstand-Liga und in Ligen mit Teamgröße 5 wird nur mit den ersten 5 gekämpft.
 4596. [P1] (P2W) Das Team-Menü zeigt den sechsten Platz mit Rissglas-Rand; ohne Kauf ist er nicht sichtbar, damit kein leerer Platz zum Kauf drängt.
@@ -669,14 +669,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 ### Wanderer-Pass (Abo)
 4629. [P1] (P2W) Den "Wanderer-Pass" als Auto-Abo für 4,99 € im Monat anlegen (Apple Abo-Gruppe "Pass", Google Abo `de.chimora.game.pass` mit Grundplan monatlich).
 4630. [x] [P1] (P2W) Der Pass gibt dauerhaft für seine Laufzeit +50 % Wachstum für das ganze Team, mit dem Wachstumskristall multiplizierbar.
-4631. [P1] (P2W) Der Pass gibt jeden Tag beim ersten Öffnen 30 Rissglas (in 30 Tagen 900 Rissglas, Wert ≈ 8,91 €) und das steht mit genauer Zahl auf der Pass-Seite.
-4632. [P1] (P2W) Der Pass gibt jedem Spirling im Team +1 Startenergie über die Höchstenergie (11 statt 10) in allen Kämpfen gegen die Spielwelt.
-4633. [P1] (P2W) Der Pass gibt 1 kostenlosen Rissatem pro Rift-Wächterkampf, der nicht in der Tasche liegt, sondern nur im Kampf erscheint.
-4634. [P1] (P2W) Der Pass gibt +1 Bond-Versuch pro Kampf: misslingt Bonden, flieht der Spirling nicht sofort.
-4635. [P1] (P2W) Der Pass-Status kommt nur vom Server (`subscriptions`), und alle Pass-Vorteile prüfen `ShopEffects.pass_active()`.
-4636. [P1] (P2W) Die Pass-Seite listet alle Vorteile mit Zahlen, den Preis "4,99 € pro Monat", "verlängert sich automatisch" und "jederzeit im Store kündbar".
+4631. [x] [P1] (P2W) Der Pass gibt jeden Tag beim ersten Öffnen 30 Rissglas (in 30 Tagen 900 Rissglas, Wert ≈ 8,91 €) und das steht mit genauer Zahl auf der Pass-Seite.
+4632. [x] [P1] (P2W) Der Pass gibt jedem Spirling im Team +1 Startenergie über die Höchstenergie (11 statt 10) in allen Kämpfen gegen die Spielwelt.
+4633. [x] [P1] (P2W) Der Pass gibt 1 kostenlosen Rissatem pro Rift-Wächterkampf, der nicht in der Tasche liegt, sondern nur im Kampf erscheint.
+4634. [x] [P1] (P2W) Der Pass gibt +1 Bond-Versuch pro Kampf: misslingt Bonden, flieht der Spirling nicht sofort.
+4635. [x] [P1] (P2W) Der Pass-Status kommt nur vom Server (`subscriptions`), und alle Pass-Vorteile prüfen `ShopEffects.pass_active()`.
+4636. [x] [P1] (P2W) Die Pass-Seite listet alle Vorteile mit Zahlen, den Preis "4,99 € pro Monat", "verlängert sich automatisch" und "jederzeit im Store kündbar".
 4637. [x] [P1] (P2W) Die täglichen 30 Rissglas sammeln sich nicht an, wenn man nicht spielt; verpasste Tage gehen nicht verloren, sondern werden beim nächsten Öffnen bis höchstens 7 Tage nachgezahlt.
-4638. [P1] (P2W) Mit dem Ende des Passes enden alle Vorteile sofort; schon gutgeschriebenes Rissglas und Gegenstände bleiben.
+4638. [x] [P1] (P2W) Mit dem Ende des Passes enden alle Vorteile sofort; schon gutgeschriebenes Rissglas und Gegenstände bleiben.
 4639. [P1] (P2W) Für die erste Pass-Buchung eine kostenlose Probezeit von 7 Tagen über den Store anbieten und das Datum der ersten Abbuchung deutlich zeigen.
 4640. [P2] (P2W) Einen Jahresplan für 39,99 € im Jahr (statt 59,88 €) über den Store anbieten.
 4641. [P2] (P2W) Der Pass gibt jede Woche 1 Wachstumskristall (x2, 20 Kämpfe) und 3 Echo-Düfte in die Tasche.
@@ -690,7 +690,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4649. [P2] (P2W) Der Pass gibt doppelte Belohnung beim Tagesfund (Daily Find) des Spiels.
 4650. [P2] (P2W) Ein Pass-Symbol (Rissglas-Kompass) im Wanderer-Profil zeigen, nur wenn der Spieler das in den Einstellungen will.
 4651. [P2] (P2W) Der Pass ist in der Gleichstand-Liga ohne Wirkung, und die Pass-Seite sagt das in einer eigenen Zeile.
-4652. [P2] (P2W) Pass-Vorteile in Echo-Duellen nur für Wachstum und Münzen wirken lassen, nicht für Energie und Rissatem.
+4652. [x] [P2] (P2W) Pass-Vorteile in Echo-Duellen nur für Wachstum und Münzen wirken lassen, nicht für Energie und Rissatem.
 4653. [P2] (P2W) Abo-Ereignisse vom Server (Verlängerung, Ablauf, Kulanzzeit, Kündigung) im Spiel als Satz zeigen: "Dein Pass läuft am 6. 12. ab."
 4654. [P2] (P2W) In der Kulanzzeit (Zahlung fehlgeschlagen) die Pass-Vorteile bis zu 16 Tage behalten und einen Hinweis zeigen, die Zahlungsart im Store zu prüfen.
 4655. [P2] (P2W) Für unter 18-Jährige die Probezeit nicht anbieten, damit keine überraschende Abbuchung entsteht.
@@ -725,9 +725,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 
 ### Starter- und Fortschrittspakete
 4684. [x] [P1] (P2W) Ein "Starterpaket" (`rg_starter`) für 2,99 € einmal pro Konto anlegen: 300 Rissglas, 5 Ring-Tränke, 1 Wachstumskristall x2, 3 Rissatem, 3 Echo-Düfte.
-4685. [P1] (P2W) Das Starterpaket zeigt den Einzelwert ("einzeln 1300 Rissglas, ≈ 12,87 €") und den Preis 2,99 € und ist erst nach dem ersten geschlossenen Riss sichtbar.
-4686. [P1] (P2W) Ein "Wanderer-Paket" (`rg_wayfarer_pack`) für 9,99 € einmal pro Konto anlegen: 1000 Rissglas, Rissherz, Glasschild, 2 Große Ring-Tränke, 1 Bondsiegel.
-4687. [P1] (P2W) Ein "Rift-Paket" pro geschlossenem Riss anlegen (6 Pakete, je einmal), für 4,99 €: 2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem.
+4685. [x] [P1] (P2W) Das Starterpaket zeigt den Einzelwert ("einzeln 1300 Rissglas, ≈ 12,87 €") und den Preis 2,99 € und ist erst nach dem ersten geschlossenen Riss sichtbar.
+4686. [x] [P1] (P2W) Ein "Wanderer-Paket" (`rg_wayfarer_pack`) für 9,99 € einmal pro Konto anlegen: 1000 Rissglas, Rissherz, Glasschild, 2 Große Ring-Tränke, 1 Bondsiegel.
+4687. [x] [P1] (P2W) Ein "Rift-Paket" pro geschlossenem Riss anlegen (6 Pakete, je einmal), für 4,99 €: 2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem.
 4688. [x] [P1] (P2W) Pakete liefern feste Inhalte, die vor dem Kauf vollständig gelistet sind; Wahlteile (Element-Prisma) werden vor dem Kauf ausgewählt, nicht danach zugelost.
 4689. [x] [P1] (P2W) Alle Pakete als einmalige Verbrauchsgüter im Store anlegen und das Einmal-Limit auf dem Server über `purchases` prüfen.
 4690. [P1] (P2W) Ein "Aufholpaket" für Rückkehrer (30 Tage nicht gespielt) für 4,99 € anlegen: 5 Große Ring-Tränke und 1 Wachstumskristall x3, einmal pro Konto.
@@ -785,22 +785,22 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 ### Funken und Wesensart
 4741. [x] [P1] (P2W) Eine "Funkenschmiede" (`rg_spark_forge`) anlegen, die alle Funken-Werte (`Spirling.spark`) eines Spirlings auf den Höchstwert 12 setzt, Preis 1000 Rissglas (≈ 9,90 €) oder 9,99 € direkt.
 4742. [x] [P1] (P2W) Einen "Funkensplitter" (`rg_spark_shard`) anlegen, der einen gewählten Wert um 6 Funken erhöht (bis 12), Preis 200 Rissglas, doppelt so stark wie `spark_charm` (3).
-4743. [P1] (P2W) Einen "Wesenswandel" (`rg_temper_shift`) anlegen, der die Wesensart eines Spirlings auf eine gewählte Wesensart setzt, Preis 400 Rissglas.
-4744. [P1] (P2W) Für den Wesenswandel ein gespeichertes Feld `temper_override` an `Spirling` anlegen, das `temperament_index(uid)` überschreibt, und in `SaveManager` sichern.
+4743. [x] [P1] (P2W) Einen "Wesenswandel" (`rg_temper_shift`) anlegen, der die Wesensart eines Spirlings auf eine gewählte Wesensart setzt, Preis 400 Rissglas.
+4744. [x] [P1] (P2W) Für den Wesenswandel ein gespeichertes Feld `temper_override` an `Spirling` anlegen, das `temperament_index(uid)` überschreibt, und in `SaveManager` sichern.
 4745. [P1] (P2W) Funken-Käufe zeigen vor dem Einsatz die neuen Werte (Kraft, Wucht, Schutz, Fokus, Tempo) und brauchen eine Bestätigung.
 4746. [P1] (P2W) Die Funken-Werte im Team-Menü in Worten anzeigen, wie es `GameState.SPARK_WORDS` schon tut, und Käufe nicht als Zahl ausweisen.
 4747. [P1] (P2W) Der Server prüft beim Speichern, dass Funken-Werte über dem natürlichen Bereich nur mit verbrauchten Funken-Käufen oder `spark_charm` vorkommen.
 4748. [P1] (P2W) Funken- und Wesensart-Käufe wirken in der Gleichstand-Liga nicht, weil dort Werte ausgeglichen werden, und das steht im Angebot.
 4749. [P1] (P2W) Ein Bündel "Fünf Funkensplitter" für 800 Rissglas statt 1000 anbieten.
-4750. [P1] (P2W) Ein "Kraftkern" anlegen, der den Faktor einer Wesensart von 1,1 auf 1,2 für einen Spirling hebt, dauerhaft, Preis 800 Rissglas.
+4750. [x] [P1] (P2W) Ein "Kraftkern" anlegen, der den Faktor einer Wesensart von 1,1 auf 1,2 für einen Spirling hebt, dauerhaft, Preis 800 Rissglas.
 4751. [P2] (P2W) Eine "Doppelwesen-Gabe" anlegen, mit der ein Spirling zwei Wesensart-Boni gleichzeitig hat, Preis 1500 Rissglas, höchstens 3 Spirlings pro Konto.
 4752. [P2] (P2W) Einen "Funkenrücksetzer" anlegen, der die Funken eines Spirlings auf neue feste Werte nach Wahl verteilt (insgesamt 48 Punkte), Preis 500 Rissglas.
 4753. [P2] (P2W) Den Funkenrücksetzer ohne Zufall umsetzen: der Spieler verteilt die Punkte selbst auf die 5 Werte.
 4754. [P2] (P2W) Funken-Käufe auf das Spirling-Objekt und nicht auf die Art wirken lassen, damit `Database` unverändert bleibt.
 4755. [P2] (P2W) Einen "Gabenwechsel" anlegen, der einem Spirling eine andere Gabe seiner Art gibt, falls die Art mehrere Gaben hat, Preis 500 Rissglas.
-4756. [P2] (P2W) Eine "Verborgene Gabe" für jede Art anlegen, die nur über den Shop-Kauf "Gabenschlüssel" für 1000 Rissglas freigeschaltet wird, mit Werten in `docs/BALANCE.md`.
-4757. [P2] (P2W) Die verborgenen Gaben in `data/spirlings.json` als Feld `shop_trait_id` führen und in der Gleichstand-Liga durch die normale Gabe ersetzen.
-4758. [P2] (P2W) Die 21 verborgenen Gaben mit eigenen Namen und Wirkungen in `BattleRules.trait_info` anlegen und mit `tools/ip_check.sh` prüfen.
+4756. [P2] (P2W) Eine "Verborgene Gabe" für jede Art anlegen, die nur über den Shop-Kauf "Gabenschlüssel" für 1000 Rissglas freigeschaltet wird, mit Werten in `docs/BALANCE.md`. Stand 2026-11-11: Die verborgenen Gaben gibt es jetzt pro Linie in `data/hidden_gifts.json` (`scripts/core/HiddenGifts.gd`); im Spiel deckt sie die Informantin Flüster-Moll am Corvane-Kai gegen Münzen auf. Ein Shop-Gabenschlüssel ruft nur `HiddenGifts.reveal(line_id)` auf und wäre damit ein Abkürzungsweg, kein exklusiver Zugang.
+4757. [P2] (P2W) Die verborgenen Gaben in `data/spirlings.json` als Feld `shop_trait_id` führen und in der Gleichstand-Liga durch die normale Gabe ersetzen. Umgesetzt anders: eigene Datei `data/hidden_gifts.json` (Linie -> Gabe, sonst nach erstem Element) statt eines Felds in `spirlings.json`; die Gleichstand-Liga baut frische Spirlings und nutzt nie eine verborgene Gabe.
+4758. [x] [P2] (P2W) Die 21 verborgenen Gaben mit eigenen Namen und Wirkungen in `BattleRules.trait_info` anlegen und mit `tools/ip_check.sh` prüfen. Erledigt mit 9 Gaben (eine je Element plus Linien-Ausnahmen), `BattleRules.trait_info` liest sie aus `HiddenGifts`.
 4759. [P2] (P2W) Unit-Tests in `tests/test_shop_spark.gd` für Funkenschmiede, Splitter, Wesenswandel, Rücksetzer und Speicherprüfung schreiben.
 4760. [P2] (P2W) Funken-Käufe nach dem Entfalten erhalten lassen.
 4761. [P2] (P2W) Funken-Käufe in Echo-Teams für Freunde mitnehmen.
@@ -835,14 +835,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4790. [P3] (P2W) Die verborgenen Gaben nach 6 Monaten neu bewerten und zu starke Gaben mit Ersatz abschwächen.
 
 ### Glanzformen von Spirlings
-4791. [P1] (P2W) Ein "Glanzform-Prisma" (`rg_gleam_prism`) anlegen, das einen gewählten eigenen Spirling dauerhaft in seine Glanzform verwandelt, Preis 1500 Rissglas (≈ 14,85 €) oder 14,99 € direkt.
-4792. [P1] (P2W) Eine Glanzform hat +10 % auf Kraft, Wucht, Schutz, Fokus und Tempo und eine eigene Farbpalette mit Rissglas-Schimmer.
-4793. [P1] (P2W) Der Spieler wählt vor dem Kauf genau den Spirling aus, der Glanzform wird; es gibt keine zufällige Glanzform gegen Geld.
-4794. [P1] (P2W) Die Glanzform als Feld `gleam: bool` an `Spirling` speichern und in den Wertformeln als Faktor 1,1 in `shop_mult` einrechnen.
+4791. [x] [P1] (P2W) Ein "Glanzform-Prisma" (`rg_gleam_prism`) anlegen, das einen gewählten eigenen Spirling dauerhaft in seine Glanzform verwandelt, Preis 1500 Rissglas (≈ 14,85 €) oder 14,99 € direkt.
+4792. [x] [P1] (P2W) Eine Glanzform hat +10 % auf Kraft, Wucht, Schutz, Fokus und Tempo und eine eigene Farbpalette mit Rissglas-Schimmer.
+4793. [x] [P1] (P2W) Der Spieler wählt vor dem Kauf genau den Spirling aus, der Glanzform wird; es gibt keine zufällige Glanzform gegen Geld.
+4794. [x] [P1] (P2W) Die Glanzform als Feld `gleam: bool` an `Spirling` speichern und in den Wertformeln als Faktor 1,1 in `shop_mult` einrechnen.
 4795. [P1] (P2W) Glanzformen über Paletten-Tausch im Shader zeigen, wie die Kosmetik-Farbtöne, damit pro Era keine neuen Sprites nötig sind.
-4796. [P1] (P2W) Glanzformen wirken in der Gleichstand-Liga nur als Aussehen; ihre +10 % werden dort entfernt.
+4796. [x] [P1] (P2W) Glanzformen wirken in der Gleichstand-Liga nur als Aussehen; ihre +10 % werden dort entfernt.
 4797. [P1] (P2W) Der Server prüft beim Speichern, dass jede Glanzform zu einem verbrauchten Glanzform-Prisma gehört.
-4798. [P1] (P2W) Glanzformen auf 2 Käufe pro Woche begrenzen.
+4798. [x] [P1] (P2W) Glanzformen auf 2 Käufe pro Woche begrenzen.
 4799. [P2] (P2W) Eine "Glanz-Technik" für jede Glanzform anlegen: die Signatur-Technik der Art bekommt +10 Stärke, solange der Spirling Glanzform ist.
 4800. [P2] (P2W) Die Glanzform beim Entfalten erhalten, sodass die entfaltete Form auch Glanzform ist.
 4801. [P2] (P2W) Glanzformen im Spirlog mit eigenem Bild zeigen, nur wenn der Spieler eine besitzt.
@@ -882,12 +882,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4833. [P1] (P2W) Ein "Auto-Kampf" (`rg_auto_battle`) dauerhaft für 1000 Rissglas anlegen, bei dem die Spieler-KI (Stufe "lookahead") gegen wilde Spirlings automatisch kämpft.
 4834. [P1] (P2W) Den Auto-Kampf nie gegen Rift-Wächter, Story-Kämpfe und in Ligen erlauben, und das steht in der Detailansicht.
 4835. [x] [P1] (P2W) Einen "Münzglanz" (`rg_coin_boost`) anlegen: doppelte Münzen aus Kämpfen für 20 Kämpfe, Preis 200 Rissglas, abgestimmt mit Bereich 8.
-4836. [P1] (P2W) Einen "Wegweiser" (`rg_fast_travel`) dauerhaft für 800 Rissglas anlegen, mit dem Schnellreise zu jedem besuchten Ort geht statt nur zu Rastplätzen.
-4837. [P1] (P2W) Den Wegweiser mit `GameState.travel_targets` verbinden, sodass er alle besuchten Karten zusätzlich liefert.
-4838. [P1] (P2W) Einen "Begegnungsruf" (`rg_encounter_call`) anlegen: 30 Schritte lang doppelt so viele wilde Begegnungen, Preis 100 Rissglas.
-4839. [P1] (P2W) Einen "Kampf-Überspringer" (`rg_skip_battle`) anlegen: ein wilder Kampf gegen einen Gegner mit mindestens 10 Ringen weniger wird sofort gewonnen, mit vollem Wachstum, Preis 100 Rissglas pro 10 Stück.
-4840. [P1] (P2W) Kampf-Überspringer laufen über das normale Kampfmodell mit Spieler-KI im Hintergrund und erzeugen ein Ergebnis-Ereignis, damit Wachstum und Münzen korrekt sind.
-4841. [P1] (P2W) Einen "Rematch-Schlüssel" anlegen: ein besiegter Wanderer kann am selben Tag erneut gefordert werden, Preis 100 Rissglas.
+4836. [x] [P1] (P2W) Einen "Wegweiser" (`rg_fast_travel`) dauerhaft für 800 Rissglas anlegen, mit dem Schnellreise zu jedem besuchten Ort geht statt nur zu Rastplätzen.
+4837. [x] [P1] (P2W) Den Wegweiser mit `GameState.travel_targets` verbinden, sodass er alle besuchten Karten zusätzlich liefert.
+4838. [x] [P1] (P2W) Einen "Begegnungsruf" (`rg_encounter_call`) anlegen: 30 Schritte lang doppelt so viele wilde Begegnungen, Preis 100 Rissglas.
+4839. [x] [P1] (P2W) Einen "Kampf-Überspringer" (`rg_skip_battle`) anlegen: ein wilder Kampf gegen einen Gegner mit mindestens 10 Ringen weniger wird sofort gewonnen, mit vollem Wachstum, Preis 100 Rissglas pro 10 Stück.
+4840. [x] [P1] (P2W) Kampf-Überspringer laufen über das normale Kampfmodell mit Spieler-KI im Hintergrund und erzeugen ein Ergebnis-Ereignis, damit Wachstum und Münzen korrekt sind.
+4841. [x] [P1] (P2W) Einen "Rematch-Schlüssel" anlegen: ein besiegter Wanderer kann am selben Tag erneut gefordert werden, Preis 100 Rissglas.
 4842. [P2] (P2W) Eine "Wiederholungs-Rast" anlegen: das Team heilt sich nach jedem Kampf vollständig, dauerhaft, Preis 1000 Rissglas.
 4843. [P2] (P2W) Einen "Tagesfund-Kompass" anlegen: der Tagesfund (Daily Find) zeigt seinen Ort auf der Karte, dauerhaft, Preis 400 Rissglas.
 4844. [P2] (P2W) Einen "Zweiten Tagesfund" anlegen: jeden Tag ein zusätzlicher Tagesfund mit festem Gegenstand (Tonic), dauerhaft, Preis 600 Rissglas.
@@ -931,14 +931,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4882. [P3] (P2W) Die Wirkung aller Beschleuniger in einem Abschnitt "Shop-Beschleuniger" in `docs/BALANCE.md` festhalten.
 
 ### Rift- und Wächter-Hilfen
-4883. [P1] (P2W) Eine "Wächterkunde" (`rg_warden_lore`) anlegen, die vor einem Rift-Wächterkampf dessen Team, Techniken und Gaben zeigt, dauerhaft, Preis 600 Rissglas.
-4884. [P1] (P2W) Einen "Rissanker" (`rg_rift_anchor`) anlegen: nach einer Niederlage gegen einen Wächter startet der nächste Versuch direkt vor dem Wächter mit voll geheiltem Team, Preis 100 Rissglas pro Versuch.
-4885. [P1] (P2W) Einen "Wächterschwächer" (`rg_warden_weaken`) anlegen: der Wächter startet mit 15 % weniger Kraft, Preis 300 Rissglas, höchstens 1 pro Wächterkampf.
-4886. [P1] (P2W) Wächter-Hilfen sind nur nutzbar, wenn der Spieler den Wächter mindestens einmal ohne Hilfe versucht hat, damit der erste Versuch fair bleibt.
-4887. [P1] (P2W) Die Ring-Obergrenze nach einem Riss bleibt auch mit Wächter-Hilfen bestehen; Hilfen umgehen nie die Obergrenze in Veteran und Rift-Born.
-4888. [P1] (P2W) Wächter-Hilfen in Rift-Born sperren, damit die schwerste Stufe ihren Ruf behält.
-4889. [P1] (P2W) Wächter-Hilfen im Kampfmodell als Zustände am Wächter setzen (`WardenWeakened`) und als Ereignis ausgeben, damit Wiederholungen stimmen.
-4890. [P1] (P2W) Ein "Wächter-Bündel" (Wächterkunde, 3 Wächterschwächer, 5 Rissanker) für 1500 Rissglas statt 1900 anbieten.
+4883. [x] [P1] (P2W) Eine "Wächterkunde" (`rg_warden_lore`) anlegen, die vor einem Rift-Wächterkampf dessen Team, Techniken und Gaben zeigt, dauerhaft, Preis 600 Rissglas.
+4884. [x] [P1] (P2W) Einen "Rissanker" (`rg_rift_anchor`) anlegen: nach einer Niederlage gegen einen Wächter startet der nächste Versuch direkt vor dem Wächter mit voll geheiltem Team, Preis 100 Rissglas pro Versuch.
+4885. [x] [P1] (P2W) Einen "Wächterschwächer" (`rg_warden_weaken`) anlegen: der Wächter startet mit 15 % weniger Kraft, Preis 300 Rissglas, höchstens 1 pro Wächterkampf.
+4886. [x] [P1] (P2W) Wächter-Hilfen sind nur nutzbar, wenn der Spieler den Wächter mindestens einmal ohne Hilfe versucht hat, damit der erste Versuch fair bleibt.
+4887. [x] [P1] (P2W) Die Ring-Obergrenze nach einem Riss bleibt auch mit Wächter-Hilfen bestehen; Hilfen umgehen nie die Obergrenze in Veteran und Rift-Born.
+4888. [x] [P1] (P2W) Wächter-Hilfen in Rift-Born sperren, damit die schwerste Stufe ihren Ruf behält.
+4889. [x] [P1] (P2W) Wächter-Hilfen im Kampfmodell als Zustände am Wächter setzen (`WardenWeakened`) und als Ereignis ausgeben, damit Wiederholungen stimmen.
+4890. [x] [P1] (P2W) Ein "Wächter-Bündel" (Wächterkunde, 3 Wächterschwächer, 5 Rissanker) für 1500 Rissglas statt 1900 anbieten.
 4891. [P2] (P2W) Einen "Elementblick" anlegen: im Kampf gegen Wächter zeigt jede Technik, ob sie stark, normal oder schwach wirkt, dauerhaft, Preis 400 Rissglas.
 4892. [P2] (P2W) Den Elementblick in Story-Schwierigkeit nicht anbieten, weil dort schon alle Paarungen sichtbar sind.
 4893. [P2] (P2W) Einen "Wächterruf" anlegen, mit dem besiegte Wächter einmal pro Woche erneut gefordert werden können, mit vollem Wachstum, Preis 200 Rissglas.

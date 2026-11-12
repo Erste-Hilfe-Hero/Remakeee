@@ -68,3 +68,38 @@ func test_held_direction_lights_while_sliding() -> void:
 	up.position = drag.position
 	VirtualPad._input(up)
 	assert_eq(VirtualPad.held_dir(), "")
+
+func test_leaving_the_app_lets_go_of_the_direction() -> void:
+	var r: Rect2 = VirtualPad.dpad_rect()
+	var t := InputEventScreenTouch.new()
+	t.pressed = true
+	t.index = 0
+	t.position = r.position + Vector2(r.size.x / 2.0, 2)
+	VirtualPad._input(t)
+	assert_true(Input.is_action_pressed("ui_up"))
+	VirtualPad._notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
+	assert_eq(VirtualPad.held_dir(), "", "no direction held after leaving the app")
+	assert_false(Input.is_action_pressed("ui_up"), "the Wayfarer does not walk by itself")
+	VirtualPad._input(t)
+	assert_eq(VirtualPad.held_dir(), "ui_up", "a new touch works again at once")
+	var up := InputEventScreenTouch.new()
+	up.index = 0
+	VirtualPad._input(up)
+
+func test_pad_presses_again_when_input_dropped_the_action() -> void:
+	var r: Rect2 = VirtualPad.dpad_rect()
+	var t := InputEventScreenTouch.new()
+	t.pressed = true
+	t.index = 0
+	t.position = r.position + Vector2(r.size.x / 2.0, 2)
+	VirtualPad._input(t)
+	Input.action_release("ui_up")
+	var drag := InputEventScreenDrag.new()
+	drag.index = 0
+	drag.position = t.position + Vector2(1, 0)
+	VirtualPad._input(drag)
+	assert_true(Input.is_action_pressed("ui_up"), "pad and Input agree again")
+	var up := InputEventScreenTouch.new()
+	up.index = 0
+	VirtualPad._input(up)
+	assert_false(Input.is_action_pressed("ui_up"))

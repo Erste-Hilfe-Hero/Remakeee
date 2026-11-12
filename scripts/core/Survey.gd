@@ -47,19 +47,20 @@ static func reveal(m: MapData, center: Vector2i, radius: int = RADIUS) -> int:
 	GameState.map_cells[m.id] = b
 	return added
 
-## Survey share of [param m] in percent (0-100): walkable cells seen.
-static func percent(m: MapData) -> int:
-	var total: int = 0
-	var seen: int = 0
+## Seen and all walkable cells of [param m] (item 1300: summed per region).
+static func cells(m: MapData) -> Vector2i:
+	var out := Vector2i.ZERO
 	for y: int in m.height:
 		for x: int in m.width:
 			var c := Vector2i(x, y)
-			if not m.is_walkable(c):
-				continue
-			total += 1
-			if is_seen(m, c):
-				seen += 1
-	return 100 if total == 0 else seen * 100 / total
+			if m.is_walkable(c):
+				out += Vector2i(1 if is_seen(m, c) else 0, 1)
+	return out
+
+## Survey share of [param m] in percent (0-100): walkable cells seen.
+static func percent(m: MapData) -> int:
+	var c: Vector2i = cells(m)
+	return 100 if c.y == 0 else c.x * 100 / c.y
 
 ## True if any cell of [param map_id] was seen (the map was visited).
 static func visited(map_id: String) -> bool:
@@ -68,6 +69,8 @@ static func visited(map_id: String) -> bool:
 
 ## Whether the minimap shows on [param m] for the current setting.
 static func minimap_shows(m: MapData) -> bool:
+	if not ShopEffects.owns_setting("minimap"):
+		return false
 	match GameState.minimap:
 		"off":
 			return false
@@ -100,13 +103,25 @@ static func cells_to_save(cells: Dictionary) -> Dictionary:
 			out[str(k)] = Marshalls.raw_to_base64(cells[k])
 	return out
 
+## True when [param s] is padded base64 (length a multiple of 4, only the base64 alphabet).
+static func is_base64(s: String) -> bool:
+	if s.length() % 4 != 0:
+		return false
+	var body: String = s.trim_suffix("=").trim_suffix("=")
+	for i: int in body.length():
+		var c: int = body.unicode_at(i)
+		if not ((c >= 65 and c <= 90) or (c >= 97 and c <= 122) or (c >= 48 and c <= 57) or c == 43 or c == 47):
+			return false
+	return true
+
 static func cells_from_save(raw: Variant) -> Dictionary:
 	var out: Dictionary = {}
 	if not raw is Dictionary:
 		return out
 	for k: Variant in raw:
 		var v: Variant = (raw as Dictionary)[k]
-		if v is String and (v as String).length() <= 8192:
+		# Damaged saves: only well-formed base64 is decoded (the engine errors on anything else).
+		if v is String and (v as String).length() <= 8192 and is_base64(v):
 			out[str(k)] = Marshalls.base64_to_raw(v)
 	return out
 

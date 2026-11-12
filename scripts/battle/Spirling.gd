@@ -8,7 +8,17 @@ const SPARK_MAX: int = 12
 const MAX_MOVES: int = 4
 const START_ENERGY: int = 10
 const MAX_ENERGY: int = 10
-const MAX_LEVEL: int = 60
+## Spirlings have no top ring (owner decision 2026-11-12): XP and stats follow their formulas
+## for any ring. STORY_RING is the top ring of story content (Wardens, echoes, endgame) and the
+## ring online duels and the open league normalise to; it never stops a Spirling growing.
+## Kept apart from the genre's well-known 100 (docs/legal/IP_PATENT_AUDIT.md, item 15).
+const STORY_RING: int = 60
+## Sanity bound against broken or forged save data only (same as server_config save_level_max).
+## Not a game cap: at the XP curve below it takes over 30 billion XP.
+const LEVEL_SANITY: int = 9999
+## Newest era a Spirling can come from (EraManager.NEWEST, Era V Living). Saves used to cut
+## Era V Spirlings back to Era IV (bug plan 1373).
+const MAX_ERA: int = 5
 ## Chance that a wild Spirling is a rare Prism colour variant (cosmetic only).
 const PRISM_CHANCE: float = 1.0 / 256.0
 
@@ -42,12 +52,17 @@ const TEMPERAMENTS: Array[Dictionary] = [
 ## Saves before version 4 read the temperament from the uid over the first six only.
 const LEGACY_TEMPERAMENTS: int = 6
 const TEMPER_BONUS: float = 1.05
+## Power Core (shop item 4750): the temperament's lean doubles for this Spirling.
+const TEMPER_CORE_BONUS: float = 1.10
 
 var data: SpirlingData
 var nickname: String = ""
 var level: int = 1
 var xp: int = 0
 var spark: Dictionary[String, int] = {}
+## Stat crystal points from the shop (stat key -> points, up to ShopEffects.crystal_cap()).
+## They count like Spark. League and raid rows never carry them.
+var crystal: Dictionary[String, int] = {}
 var hp: int = 1
 var energy: int = START_ENERGY
 var status: String = ""
@@ -59,6 +74,18 @@ var uid: String = ""
 var held: String = ""
 ## Rare colour variant. Cosmetic only, never stronger.
 var prism: bool = false
+## Power Core used on this Spirling (saved as "core" only when true).
+var temper_core: bool = false
+## Gleam form: the species' own alternate palette (GleamRules). Wild ones roll it at
+## data/gleam.json "wild_one_in"; the shop's Gleam Prism gives it too. Kept on unfurling and trades.
+var gleam: bool = false
+## +10 % on all five values from the shop's Gleam Prism (items 4791-4794). Saves from before wild
+## Gleams have only "gleam", which then meant this boost. The Fair League never carries it.
+var gleam_boost: bool = false
+## Bought in the shop as a Spirling offer (pay-to-win plan, points 61-80): never traded or lent.
+## Saved as "shop".
+var shop_bought: bool = false
+const GLEAM_MULT: float = 1.1
 ## Battle-only stat stages (BattleRules.STAGE_MIN..STAGE_MAX), cleared by end_battle().
 var stages: Dictionary[String, int] = {}
 ## Battle-only: turns left on an Energy tax (energy_tax effect): every move costs more meanwhile.
@@ -70,6 +97,10 @@ var energy_surge: int = 0
 var cooldowns: Dictionary[String, int] = {}
 ## Battle-only: turns left on a heal block (heal_block effect), same counting.
 var heal_block: int = 0
+## Battle-only: turns left on a sworn Ink Oath (BattleRules.oath()); the debt is collected at 0.
+var oath_turns: int = 0
+## Battle-only: turns of mending left from Root Mend (1/16 max Vigor at each turn end).
+var mend_turns: int = 0
 ## Battle-only: turns left in which an energy_burn can't take Energy again, same counting.
 var burn_guard: int = 0
 ## Temperament id (TEMPERAMENTS), stored since save version 4.
@@ -78,12 +109,16 @@ var temper: String = ""
 var variant: String = ""
 ## Where and when it was met: map id, its ring then, and the day number (days since 1970).
 var origin_map: String = ""
+## The era (1-4) of the place it was bonded. It stays the same when the Spirling is traded.
+var origin_era: int = 1
 var met_ring: int = 0
 var met_day: int = 0
 ## Storage box this Spirling rests in (GameState.storage_boxes index) and the favourite mark:
 ## favourites are never released and never moved by a multi-select (plan area 1, items 375-377).
 var box: int = 0
 var favorite: bool = false
+## True while its hidden gift is awake (HiddenGifts); it then replaces the species' gift.
+var hidden_gift: bool = false
 ## Species names of the two Spirlings that sang it into being (Echo offspring), else empty.
 var lineage: Array[String] = []
 ## Fully right Echo calls in a row while it was in the team (unfold rule "echo_streak").
@@ -94,7 +129,7 @@ func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = nu
 	if d == null:
 		return
 	data = d
-	level = clampi(lvl, 1, MAX_LEVEL)
+	level = clampi(lvl, 1, LEVEL_SANITY)
 	xp = xp_for_level(level)
 	var r: RandomNumberGenerator = rng
 	if r == null:
@@ -106,6 +141,14 @@ func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = nu
 	temper = str(TEMPERAMENTS[absi(uid.hash()) % TEMPERAMENTS.size()].id)
 	moves = data.default_moves(level, MAX_MOVES)
 	hp = max_hp()
+
+## The gift in effect: the hidden gift while awake, else the species' gift.
+func gift_id() -> String:
+	if hidden_gift:
+		var h: String = HiddenGifts.gift_id(data)
+		if not h.is_empty():
+			return h
+	return data.trait_id
 
 func display_name() -> String:
 	return nickname if not nickname.is_empty() else data.species_name
@@ -134,18 +177,22 @@ func apply_imprint(region: String) -> bool:
 	return false
 
 func _curve(base: int, key: String, offset: float, div: float) -> int:
-	var s: float = float(base) + float(spark.get(key, 0)) * SPARK_WEIGHT
+	var s: float = float(base) + float(spark.get(key, 0) + crystal.get(key, 0)) * SPARK_WEIGHT
 	return int(floor(s * (float(level) + offset) / div))
 
 ## Battle-only max HP multiplier for Rift bosses (BattleRules.BOSSES). Never saved.
 var hp_mult: float = 1.0
 
 func max_hp() -> int:
-	return maxi(1, int(_curve(data.base_hp, "hp", HP_LEVEL_OFFSET, HP_LEVEL_DIV) * _temper_mult("hp") * hp_mult
+	return maxi(1, int(_curve(data.base_hp, "hp", HP_LEVEL_OFFSET, HP_LEVEL_DIV) * _temper_mult("hp") * hp_mult * shop_mult()
 		* BattleRules.mult_key(self, "hp_mult")))
 
 func _stat(key: String) -> int:
-	return int((_curve(data.base_stat(key), key, STAT_LEVEL_OFFSET, STAT_LEVEL_DIV) + STAT_FLAT) * _temper_mult(key))
+	return int((_curve(data.base_stat(key), key, STAT_LEVEL_OFFSET, STAT_LEVEL_DIV) + STAT_FLAT) * _temper_mult(key) * shop_mult())
+
+## Factor from shop purchases on this Spirling (Gleam form, item 4794).
+func shop_mult() -> float:
+	return GLEAM_MULT if gleam_boost else 1.0
 
 ## The temperament id saves before version 4 had, read from the uid ("even" without a uid).
 static func legacy_temper(p_uid: String) -> String:
@@ -163,7 +210,9 @@ func temperament() -> Dictionary:
 	return temper_info(temper if not temper.is_empty() else legacy_temper(uid))
 
 func _temper_mult(key: String) -> float:
-	return TEMPER_BONUS if str(temperament().stat) == key else 1.0
+	if str(temperament().stat) != key:
+		return 1.0
+	return TEMPER_CORE_BONUS if temper_core else TEMPER_BONUS
 
 ## Raw stats (no status modifiers). Battle code uses the effective_* versions.
 func atk() -> int: return _stat("atk")
@@ -178,7 +227,7 @@ func stage(stat: String) -> int:
 func effective_atk() -> int:
 	var m: float = StatusRules.atk_mult(status)
 	if status == "scorch":
-		m = float(BattleRules.trait_info(data.trait_id).get("scorch_atk", m))
+		m = float(BattleRules.trait_info(gift_id()).get("scorch_atk", m))
 	return int(atk() * m * BattleRules.stage_mult(stage("atk")) * BattleRules.mult_key(self, "atk_mult"))
 
 func effective_def() -> int:
@@ -235,7 +284,9 @@ func end_battle() -> void:
 	energy_tax = 0
 	energy_surge = 0
 	heal_block = 0
+	mend_turns = 0
 	burn_guard = 0
+	oath_turns = 0
 	cooldowns.clear()
 	status = ""
 	status_turns = 0
@@ -247,7 +298,7 @@ static func xp_for_level(lvl: int) -> int:
 	return int(floor(XP_MULT * pow(float(lvl), XP_EXP)))
 
 func xp_to_next() -> int:
-	if level >= MAX_LEVEL:
+	if level >= LEVEL_SANITY:
 		return 0
 	return xp_for_level(level + 1) - xp
 
@@ -433,14 +484,21 @@ func to_dict() -> Dictionary:
 		"level": level,
 		"xp": xp,
 		"spark": spark.duplicate(),
+		"crystal": crystal.duplicate(),
 		"hp": hp,
 		"moves": move_names,
 		"uid": uid,
 		"held": held,
 		"prism": prism,
+		"hidden_gift": hidden_gift,
 		"temper": temperament().id,
+		"core": temper_core,
+		"gleam": gleam,
+		"gleam_boost": gleam_boost,
+		"shop": shop_bought,
 		"variant": variant,
 		"origin_map": origin_map,
+		"origin_era": origin_era,
 		"met_ring": met_ring,
 		"met_day": met_day,
 		"lineage": lineage.duplicate(),
@@ -457,11 +515,17 @@ static func from_dict(d: Dictionary) -> Spirling:
 	var s := Spirling.new()
 	s.data = sd
 	s.nickname = str(d.get("nickname", ""))
-	s.level = clampi(_num(d.get("level"), 1), 1, MAX_LEVEL)
+	s.level = clampi(_num(d.get("level"), 1), 1, LEVEL_SANITY)
 	s.xp = _num(d.get("xp"), xp_for_level(s.level))
 	var sp: Variant = d.get("spark", {})
 	for key: String in STAT_KEYS:
 		s.spark[key] = clampi(_num((sp as Dictionary).get(key) if sp is Dictionary else 0, 0), 0, SPARK_MAX)
+	var cr: Variant = d.get("crystal", {})
+	if cr is Dictionary:
+		for key: String in STAT_KEYS:
+			var n: int = clampi(_num((cr as Dictionary).get(key), 0), 0, ShopEffects.crystal_cap())
+			if n > 0:
+				s.crystal[key] = n
 	var mv: Variant = d.get("moves", [])
 	for move_name: Variant in (mv if mv is Array else []):
 		var md: MoveData = Database.move(str(move_name))
@@ -472,12 +536,18 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.uid = str(d.get("uid", ""))
 	s.held = str(d.get("held", ""))
 	s.prism = d.get("prism") is bool and d.get("prism")
+	s.hidden_gift = d.get("hidden_gift") is bool and d.get("hidden_gift")
 	# Saves before version 4 have no "temper": keep the one the uid gave them back then.
 	s.temper = str(d.get("temper", legacy_temper(s.uid)))
 	if not temper_info(s.temper).id == s.temper:
 		s.temper = legacy_temper(s.uid)
+	s.temper_core = d.get("core") is bool and d.get("core")
+	s.gleam = d.get("gleam") is bool and d.get("gleam")
+	s.gleam_boost = d.get("gleam_boost") is bool and d.get("gleam_boost") if d.has("gleam_boost") else s.gleam
+	s.shop_bought = d.get("shop") is bool and d.get("shop")
 	s.variant = str(d.get("variant", ""))
 	s.origin_map = str(d.get("origin_map", ""))
+	s.origin_era = clampi(_num(d.get("origin_era"), 1), 1, MAX_ERA)
 	s.met_ring = _num(d.get("met_ring"), 0)
 	s.met_day = _num(d.get("met_day"), 0)
 	var lin: Variant = d.get("lineage", [])

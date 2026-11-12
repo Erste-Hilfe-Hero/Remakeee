@@ -13,7 +13,49 @@ const STAGE_WAYMARKS: int = 30
 const TASK_RIBBONS: int = 5
 const DATA_PATH: String = "res://data/events.json"
 
+## The crier's task grows one stage per festival celebrated in an earlier year (plan 3220).
+const MAX_TASK_STAGE: int = 2
+
 static var _tasks: Array[Dictionary] = []
+
+## How many earlier years the player celebrated [param fest] (took its gift), up to MAX_TASK_STAGE.
+static func task_stage(fest: Dictionary, year: int) -> int:
+	var n: int = 0
+	var prefix: String = "season_%s_" % str(fest.get("id", ""))
+	for k: Variant in GameState.flags:
+		var key: String = str(k)
+		if key.begins_with(prefix) and GameState.has_flag(key) and key.trim_prefix(prefix).to_int() < year:
+			n += 1
+	return mini(n, MAX_TASK_STAGE)
+
+## Stage of the running festival's task (0 outside festivals or in the first year).
+static func current_stage() -> int:
+	var a: Dictionary = active()
+	if a.is_empty():
+		return 0
+	var d: Dictionary = Online.date_now()
+	return task_stage(a.fest, Season.festival_year(int(d.month), int(d.year)))
+
+## How many the task [param t] needs this year: its count times (stage + 1).
+static func task_need(t: Dictionary) -> int:
+	return int(t.get("n", 1)) * (current_stage() + 1)
+
+## Element names of [param fest] (Season stores them as Elements.E values).
+static func element_names(fest: Dictionary) -> PackedStringArray:
+	var out: PackedStringArray = []
+	for e: Variant in fest.get("elements", []):
+		var i: int = int(Elements.E.get(str(e), -1)) if e is String else int(e)
+		out.append(Loc.t(Elements.element_name(maxi(0, i))))
+	return out
+
+## A short note the first time the game starts during a festival (plan 3226), else "".
+static func start_hint() -> String:
+	var a: Dictionary = active()
+	if a.is_empty() or str(GameState.records.get("festival_hint", "")) == str(a.key):
+		return ""
+	GameState.records["festival_hint"] = str(a.key)
+	return Loc.t("The %s has begun! %s Spirlings are about, and Tilda's stand in Brindlewick trades festival goods.") % [
+		Loc.t(str(a.fest.name)), " & ".join(element_names(a.fest))]
 
 ## The running festival and its save key: {"fest": Dictionary, "key": String}, or {}.
 static func active() -> Dictionary:
@@ -141,8 +183,9 @@ static func record(event: String, info: Dictionary, amount: int = 1) -> Array[St
 		return lines
 	var t: Dictionary = task_def(str(task.id))
 	if not t.is_empty() and DailyTasks.matches(t, event, info):
-		task.n = mini(GameState.as_int(task.get("n", 0)) + amount, int(t.get("n", 1)))
-		if GameState.as_int(task.n) >= int(t.get("n", 1)):
+		var need: int = task_need(t)
+		task.n = mini(GameState.as_int(task.get("n", 0)) + amount, need)
+		if GameState.as_int(task.n) >= need:
 			task.done = true
 			lines.append(Loc.t("Festival task done: %s") % Loc.t(str(t.text)))
 			lines.append_array(add(TASK_RIBBONS))
@@ -189,13 +232,15 @@ static func goal_lines() -> Array[String]:
 	var out: Array[String] = []
 	var a: Dictionary = active()
 	if not a.is_empty():
-		out.append(Loc.t("%s: %d days left, %d ribbons") % [Loc.t(str(a.fest.name)), days_left(), ribbons()])
+		# The last day reads "ends today", never a countdown under a day (plan 3501).
+		if days_left() <= 1:
+			out.append(Loc.t("%s: ends today, %d ribbons") % [Loc.t(str(a.fest.name)), ribbons()])
+		else:
+			out.append(Loc.t("%s: %d days left, %d ribbons") % [Loc.t(str(a.fest.name)), days_left(), ribbons()])
 		return out
 	var next: Dictionary = Season.next_after(int(Online.date_now().month))
 	if not next.is_empty():
-		var els: PackedStringArray = []
-		for e: Variant in next.get("elements", []):
-			els.append(Elements.element_name(int(Elements.E.get(str(e), 0))))
+		var els: PackedStringArray = element_names(next)
 		out.append(Loc.t("Next festival: %s (%s)") % [Loc.t(str(next.name)), ", ".join(els)])
 	return out
 

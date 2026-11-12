@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """Place and map names against a block list of the inspiration's towns and regions (plan area 3,
 item 1319). Checks map file ids, every map and floor "name", the region and line names of
-data/world_layout.json and the German map names. The list is base64-encoded so this file does
+data/world_layout.json, the German map names, and every place in the data/*.json sheets: the ids,
+names and keys of entries under a place key (regions, towns, routes, lines, landmarks, ...), the
+top-level id and name of each data/region*.json, and the German region*.json names.
+Spirling names (data/spirlings.json and the names= lists of tools/art/lines/*.py) must not contain
+a block-list name anywhere, not even inside a longer word. The list is base64-encoded so this file does
 not spell the names out. Run by tools/ip_check.sh."""
 import base64
 import glob
@@ -15,6 +19,7 @@ BLOCKED = base64.b64decode(
     "cGFsbGV0fHZpcmlkaWFufHBld3RlcnxjZXJ1bGVhbnx2ZXJtaWxpb258Y2VsYWRvbnxrYW50b3xqb2h0b3xob2VubnxzaW5ub2h8dW5vdmF8a2Fsb3N8YWxvbGF8Z2FsYXJ8cGFsZGVhfGxpdHRsZXJvb3R8dHdpbmxlYWZ8Z29sZGVucm9kfGVjcnV0ZWFrfGxhdmFyaWRnZXxuaW1iYXNhfGx1bWlvc2V8aGF1Lj9vbGl8aHVsYnVyeXxtZXNhZ296YQ=="
 ).decode()
 PATTERN = re.compile(r"(?<![a-z])(%s)(?![a-z])" % BLOCKED, re.I)
+INSIDE = re.compile(r"(%s)" % BLOCKED, re.I)
 
 
 def names():
@@ -37,12 +42,68 @@ def names():
                 yield maps_de, de
 
 
+PLACE_KEYS = {"regions", "towns", "routes", "lines", "maps", "landmarks", "rifts", "dungeons",
+              "areas", "places", "zones", "cities", "districts", "stops"}
+
+
+def _places(node, under_place=False):
+    if isinstance(node, dict):
+        if under_place:
+            for f in ("id", "name", "biome"):
+                if isinstance(node.get(f), str):
+                    yield node[f]
+        for k, v in node.items():
+            if k in PLACE_KEYS and isinstance(v, dict):
+                for kk, vv in v.items():
+                    yield kk
+                    yield from _places(vv, True)
+            elif k in PLACE_KEYS and isinstance(v, list):
+                for item in v:
+                    if isinstance(item, str):
+                        yield item
+                    yield from _places(item, True)
+            else:
+                yield from _places(v, False)
+    elif isinstance(node, list):
+        for item in node:
+            yield from _places(item, False)
+
+
+def sheet_names():
+    for path in sorted(glob.glob(os.path.join(ROOT, "data", "*.json"))):
+        doc = json.load(open(path))
+        if os.path.basename(path).startswith("region") and isinstance(doc, dict):
+            for f in ("id", "name"):
+                if isinstance(doc.get(f), str):
+                    yield path, doc[f]
+        for n in _places(doc):
+            yield path, n
+    for path in sorted(glob.glob(os.path.join(ROOT, "data", "i18n", "de", "region*.json"))):
+        doc = json.load(open(path))
+        for en, de in doc.get("strings", doc).items():
+            if isinstance(de, str) and len(en) < 40:
+                yield path, de
+
+
+def creature_names():
+    for sd in json.load(open(os.path.join(ROOT, "data", "spirlings.json"))):
+        yield "data/spirlings.json", str(sd.get("name", ""))
+    for path in sorted(glob.glob(os.path.join(ROOT, "tools", "art", "lines", "*.py"))):
+        for m in re.finditer(r"names=\[([^\]]*)\]", open(path, encoding="utf-8").read()):
+            for n in re.findall(r"\"([^\"]+)\"", m.group(1)):
+                yield path, n
+
+
 def main():
-    bad = [(p, n) for p, n in names() if PATTERN.search(n.replace("_", " "))]
+    bad = [(p, n) for p, n in list(names()) + list(sheet_names()) if PATTERN.search(n.replace("_", " "))]
     for p, n in bad:
         print("%s: place name '%s' is on the block list" % (os.path.relpath(p, ROOT), n))
+    kinds = [(p, n) for p, n in creature_names() if INSIDE.search(n)]
+    for p, n in kinds:
+        print("%s: Spirling name '%s' contains a block-list name" % (os.path.relpath(p, ROOT), n))
+    bad += kinds
     if bad:
-        print("::error::A place or map name matches the inspiration's towns or regions (lines above). Pick our own name.")
+        print("::error::A place, map or Spirling name matches the inspiration's towns or regions (lines above). Pick our own name.")
         return 1
     print("Place names OK")
     return 0

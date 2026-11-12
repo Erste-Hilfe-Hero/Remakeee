@@ -1,0 +1,76 @@
+{
+ "name": "The Gilt Span",
+ "region": "halcyra",
+ "biome": "town",
+ "backdrop": "lake",
+ "outdoor": true,
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^L.L.L.L.L.^",
+  "^..........^",
+  "^.S......S.^",
+  "^..........^",
+  "^L........L^",
+  "^..T....T..^",
+  "^..........^",
+  "^..........^",
+  "^.L......L.^",
+  "_..........^",
+  "^^^^^^^^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 0,
+   "y": 10,
+   "to": "lantern_span",
+   "tx": 10,
+   "ty": 12,
+   "facing": "left"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "lamplighter",
+   "x": 6,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "gilt_span/lamplighter",
+   "sprite": "villager"
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 3,
+   "dialogue": "gilt_span/plaque"
+  },
+  {
+   "x": 9,
+   "y": 3,
+   "dialogue": "gilt_span/names"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 4,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_gilt_span_1"
+  },
+  {
+   "x": 0,
+   "y": 7,
+   "item": "guard_brew",
+   "count": 1,
+   "flag": "find_gilt_span_2"
+  },
+  {
+   "x": 5,
+   "y": 11,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_gilt_span_3"
+  }
+ ]
+}

@@ -158,6 +158,13 @@ func offer_block(uid: String, o: Dictionary, choice: Variant) -> String:
 	if req.begins_with("rifts:"):
 		if rifts_of(uid) < int(req.get_slice(":", 1)):
 			return "not_yet"
+	elif req.begins_with("tier:"):
+		if not ShopEffects.tier_ok(req, int(_shop(uid).unlocks.get(req.get_slice(":", 1), 0))):
+			return "not_yet"
+	elif req.begins_with("none:"):
+		var un: Dictionary = _shop(uid).unlocks
+		if not ShopEffects.none_ok(req, func(k: String) -> int: return int(un.get(k, 0))):
+			return "not_yet"
 	elif not req.is_empty():
 		return "not_yet"
 	if o.has("choice") and (choice == null or not str(choice) in o.choice):
@@ -173,7 +180,7 @@ func _grant(uid: String, purchase_id: int, o: Dictionary, choice: Variant) -> vo
 				_ledger_add(uid, int(g.n), "store", "purchase:%d" % purchase_id)
 			"unlock":
 				s.unlocks[str(g.id)] = int(s.unlocks.get(str(g.id), 0)) + 1
-			"item", "coins":
+			"item", "coins", "spirling":
 				bag.append(g.duplicate())
 			"choice":
 				bag.append({"t": "item", "id": str(choice), "n": int(g.get("n", 1))})
@@ -247,6 +254,16 @@ func _fn_shop_set_limit(a: Dictionary) -> Dictionary:
 	s.raise_at = b.now() + RAISE_WAIT
 	return {"ok": true, "cap_cents": cur, "raise_to_cents": want, "raise_at": s.raise_at}
 
+## Item 4148: at most 30 Riftglass purchases per hour, like shop_buy on the server.
+const BUYS_PER_HOUR: int = 30
+
+func _recent_buys(uid: String) -> int:
+	var n: int = 0
+	for p: Dictionary in _shop(uid).purchases:
+		if str(p.store) == "riftglass" and int(p.at) > b.now() - 3600:
+			n += 1
+	return n
+
 func _fn_shop_buy(a: Dictionary) -> Dictionary:
 	var uid: String = b.me()
 	var id: String = str(a.get("p_offer", ""))
@@ -258,6 +275,8 @@ func _fn_shop_buy(a: Dictionary) -> Dictionary:
 		return {"ok": false, "error": "not_for_riftglass"}
 	if price != int(a.get("p_expected_price", -1)):
 		return {"ok": false, "error": "price_changed", "price": price}
+	if _recent_buys(uid) >= BUYS_PER_HOUR:
+		return {"ok": false, "error": "slow_down"}
 	var choice: Variant = a.get("p_choice")
 	var why: String = offer_block(uid, o, choice)
 	if not why.is_empty():

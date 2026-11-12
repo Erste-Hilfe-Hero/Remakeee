@@ -39,7 +39,15 @@
   }
  ],
  "npcs": [
-  {"id": "tower_keeper", "x": 8, "y": 2, "facing": "down", "dialogue": "tide_rift/tower_keeper", "sprite": "villager", "show_flag": "rift_tide_sealed"},
+  {
+   "id": "tower_keeper",
+   "x": 8,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "tide_rift/tower_keeper",
+   "sprite": "villager",
+   "show_flag": "rift_tide_sealed"
+  },
   {
    "id": "mystic",
    "x": 3,
@@ -120,6 +128,10 @@
      {
       "species": "Kelpup",
       "level": 13
+     },
+     {
+      "species": "Zephlet",
+      "level": 13
      }
     ]
    },
@@ -134,6 +146,9 @@
    "trainer": "Warden Maelis",
    "warden": "tide",
    "money": 1200,
+   "mend_items": [
+    "echo_tide"
+   ],
    "intro": "tide_rift/maelis_intro",
    "defeat": "tide_rift/maelis_defeat",
    "items": {
@@ -255,7 +270,89 @@
     ]
    },
    "rule_by_difficulty": {
-    "story": "undertow_soft"
+    "story": "undertow_soft",
+    "veteran": [
+     "undertow",
+     "tide_turn"
+    ],
+    "rift_born": [
+     "undertow",
+     "tide_turn"
+    ]
+   },
+   "profile": "tactician",
+   "profile_from": "tamer",
+   "profile_tune": {
+    "field_w": 1.5,
+    "swap_below": 0.4
+   },
+   "lexicon": "warden_maelis",
+   "second_trial": {
+    "needs_flags": [
+     "rift_cinder_sealed",
+     "rift_tide_sealed"
+    ],
+    "rules": [
+     "undertow",
+     "tide_turn"
+    ],
+    "money": 1600,
+    "team": [
+     {
+      "species": "Leviarch",
+      "level": 31
+     },
+     {
+      "species": "Riptail",
+      "level": 29
+     },
+     {
+      "species": "Tempestrel",
+      "level": 29
+     }
+    ],
+    "teams_by_difficulty": {
+     "veteran": [
+      {
+       "species": "Leviarch",
+       "level": 31
+      },
+      {
+       "species": "Riptail",
+       "level": 29
+      },
+      {
+       "species": "Tempestrel",
+       "level": 29
+      },
+      {
+       "species": "Kelphound",
+       "level": 28
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Leviarch",
+       "level": 31
+      },
+      {
+       "species": "Riptail",
+       "level": 29
+      },
+      {
+       "species": "Tempestrel",
+       "level": 29
+      },
+      {
+       "species": "Kelphound",
+       "level": 28
+      },
+      {
+       "species": "Glimmerax",
+       "level": 28
+      }
+     ]
+    }
    }
   },
   {

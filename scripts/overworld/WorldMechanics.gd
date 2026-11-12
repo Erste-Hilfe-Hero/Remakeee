@@ -19,6 +19,9 @@ var _pressed: Dictionary = {}
 ## Hidden finds glint briefly every few seconds (area 3 item 1078).
 const GLINT_EVERY: float = 4.0
 const GLINT_TIME: float = 0.35
+## In wind, finds hidden in ferns and reeds glint every 2 seconds (area 3 item 1091).
+const GLINT_WIND: float = 2.0
+var _glint_tick: int = 0
 var _glints: Node2D
 var _glint_timer: Timer
 ## Clock flags (area 3 items 979 and 981): blocks can open on "_low_tide" (sea caves) or
@@ -204,7 +207,7 @@ func _build_glints(m: MapData) -> void:
 		_glints.z_index = 2
 		ow.add_child(_glints)
 		_glint_timer = Timer.new()
-		_glint_timer.wait_time = GLINT_EVERY
+		_glint_timer.wait_time = GLINT_WIND
 		_glint_timer.autostart = true
 		_glint_timer.timeout.connect(_glint)
 		_glints.add_child(_glint_timer)
@@ -212,13 +215,18 @@ func _build_glints(m: MapData) -> void:
 		if c != _glint_timer:
 			_glints.remove_child(c)
 			c.queue_free()
+	_build_soil(m)
 	for sc: Dictionary in m.secrets:
 		if GameState.has_flag(str(sc.get("flag", ""))):
+			continue
+		if bool(sc.get("soil", false)):
 			continue
 		var g := Node2D.new()
 		g.position = Vector2(int(sc.x), int(sc.y)) * TilesetFactory.TILE
 		g.visible = false
 		g.set_meta("flag", str(sc.flag))
+		g.set_meta("cell", Vector2i(int(sc.x), int(sc.y)))
+		g.set_meta("when", str(sc.get("when", "")))
 		for p: Vector2i in [Vector2i(7, 4), Vector2i(6, 5), Vector2i(8, 5), Vector2i(7, 6), Vector2i(7, 5)]:
 			var px := ColorRect.new()
 			px.color = UITheme.BG if p != Vector2i(7, 5) else UITheme.ACCENT
@@ -228,15 +236,74 @@ func _build_glints(m: MapData) -> void:
 			g.add_child(px)
 		_glints.add_child(g)
 
+## Seconds between glints of a find at [param cell] in [param weather]: 2 for ferns and reeds
+## in wind, else 4 (area 3 item 1091).
+static func glint_every(m: MapData, cell: Vector2i, weather: String) -> float:
+	var k: int = m.kind_at(cell)
+	if weather == "wind" and (k == TilesetFactory.Kind.TALL_GRASS or k == TilesetFactory.Kind.REEDS):
+		return GLINT_WIND
+	return GLINT_EVERY
+
 func _glint() -> void:
+	# The timer ticks every 2 s; a find with the normal 4 s rhythm shows on every second tick.
+	_glint_tick += 1
+	var m: MapData = ow.map
+	var weather: String = WeatherCycle.current(m) if m != null else "clear"
+	var live: Dictionary = flags_now(m, ow.player.cell) if m != null and ow.player != null else GameState.flags
 	for g: Node in _glints.get_children():
 		if g is Node2D and not GameState.has_flag(str(g.get_meta("flag", ""))):
-			(g as Node2D).visible = true
+			# Finds that are only there at a time (shell beds at low tide) glint only then.
+			var when: String = str(g.get_meta("when", ""))
+			if not when.is_empty() and not bool(live.get(when, false)):
+				continue
+			var every: float = glint_every(m, g.get_meta("cell", Vector2i(-1, -1)), weather) if m != null else GLINT_EVERY
+			var ticks: int = maxi(1, roundi(every / GLINT_WIND))
+			if _glint_tick % ticks == 0:
+				(g as Node2D).visible = true
 	await ow.get_tree().create_timer(GLINT_TIME).timeout
 	if is_instance_valid(_glints):
 		for g: Node in _glints.get_children():
 			if g is Node2D:
 				(g as Node2D).visible = false
+
+var _soil: Node2D = null
+
+## Loose soil over buried finds (area 3 item 1089): a dark patch with a few clods, always
+## visible until the find is dug up.
+func _build_soil(m: MapData) -> void:
+	if _soil == null:
+		_soil = Node2D.new()
+		_soil.name = "soil"
+		_soil.z_index = 1
+		ow.add_child(_soil)
+	for c: Node in _soil.get_children():
+		_soil.remove_child(c)
+		c.queue_free()
+	for sc: Dictionary in m.secrets:
+		if not bool(sc.get("soil", false)) or GameState.has_flag(str(sc.get("flag", ""))):
+			continue
+		var g := Node2D.new()
+		g.position = Vector2(int(sc.x), int(sc.y)) * TilesetFactory.TILE
+		g.set_meta("cell", Vector2i(int(sc.x), int(sc.y)))
+		for r: Rect2 in [Rect2(4, 6, 8, 5), Rect2(5, 5, 6, 1), Rect2(5, 11, 6, 1)]:
+			var px := ColorRect.new()
+			px.color = UITheme.MID
+			px.position = r.position
+			px.size = r.size
+			px.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			g.add_child(px)
+		for p: Vector2i in [Vector2i(6, 7), Vector2i(9, 8), Vector2i(7, 9)]:
+			var clod := ColorRect.new()
+			clod.color = UITheme.BG
+			clod.position = Vector2(p)
+			clod.size = Vector2.ONE
+			clod.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			g.add_child(clod)
+		_soil.add_child(g)
+
+## Loose soil patches still on the map (for tests).
+func soil_count() -> int:
+	return _soil.get_child_count() if _soil != null else 0
 
 ## Glint nodes still on the map (for tests).
 func glint_count() -> int:
@@ -330,10 +397,11 @@ func stepped(cell: Vector2i) -> bool:
 ## A on a hidden find, a secret passage, a plank gap or a ladder anchor. Returns true if handled.
 func interact(cell: Vector2i) -> bool:
 	var m: MapData = ow.map
-	var find: Dictionary = m.secret_at(cell, GameState.flags)
+	var find: Dictionary = m.secret_at(cell, flags_now(m, ow.player.cell))
 	if not find.is_empty():
 		await ow.take_find(find)
 		_build_glints(m)
+		ow.refresh_minimap()
 		return true
 	var passage: Dictionary = m.passage_at(cell)
 	if not passage.is_empty() and not GameState.has_flag(str(passage.get("flag", ""))):

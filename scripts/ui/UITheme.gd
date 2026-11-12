@@ -109,6 +109,64 @@ static func _frame_texture(bg: Color) -> ImageTexture:
 	_frames[bg] = tex
 	return tex
 
+## Shop text frames for the dialogue box (item 4282): only looks. Each kind gives the three
+## outer rings of one 3 px edge tile (outside first); the tile repeats along every edge.
+const TEXT_FRAMES: Array[String] = ["vine", "brass", "wave", "lantern", "frost"]
+static var _text_frames: Dictionary[String, StyleBoxTexture] = {}
+
+## The dialogue box style: the plain panel, or a worn shop frame by kind.
+static func text_frame_style(kind: String) -> StyleBox:
+	if not kind in TEXT_FRAMES:
+		return panel_style()
+	var key: String = kind + BG.to_html()
+	if _text_frames.has(key):
+		return _text_frames[key]
+	var rings: Array = _frame_rings(kind)
+	var img := Image.create(FRAME_SIZE, FRAME_SIZE, false, Image.FORMAT_RGBA8)
+	img.fill(BG)
+	var last: int = FRAME_SIZE - 1
+	for i: int in FRAME_SIZE:
+		for ring: int in 3:
+			var c: Color = rings[ring][i % 3]
+			if ring == 2 and (i < 2 or i > last - 2):
+				continue
+			img.set_pixel(i, ring, c)
+			img.set_pixel(i, last - ring, c)
+			img.set_pixel(ring, i, c)
+			img.set_pixel(last - ring, i, c)
+	var corner: Color = rings[3]
+	for p: Vector2i in [Vector2i(0, 0), Vector2i(last, 0), Vector2i(0, last), Vector2i(last, last)]:
+		img.set_pixel(p.x, p.y, Color(0, 0, 0, 0))
+		var inner := Vector2i(1 if p.x == 0 else last - 1, 1 if p.y == 0 else last - 1)
+		img.set_pixel(inner.x, inner.y, corner)
+		img.set_pixel(inner.x + (1 if p.x == 0 else -1), inner.y, corner)
+		img.set_pixel(inner.x, inner.y + (1 if p.y == 0 else -1), corner)
+	var sb := StyleBoxTexture.new()
+	sb.texture = ImageTexture.create_from_image(img)
+	sb.texture_margin_left = FRAME_MARGIN
+	sb.texture_margin_top = FRAME_MARGIN
+	sb.texture_margin_right = FRAME_MARGIN
+	sb.texture_margin_bottom = FRAME_MARGIN
+	sb.axis_stretch_horizontal = StyleBoxTexture.AXIS_STRETCH_MODE_TILE
+	sb.axis_stretch_vertical = StyleBoxTexture.AXIS_STRETCH_MODE_TILE
+	sb.set_content_margin_all(FRAME_MARGIN + 2)
+	_text_frames[key] = sb
+	return sb
+
+## Three rings of three pixels each, then the corner rivet colour.
+static func _frame_rings(kind: String) -> Array:
+	match kind:
+		"vine":
+			return [[INK, INK, INK], [MID, ACCENT, MID], [BG, MID, BG], MID]
+		"brass":
+			return [[INK, INK, INK], [ACCENT, ACCENT, ACCENT], [INK, BG, INK], ACCENT]
+		"wave":
+			return [[INK, INK, INK], [BG, MID, BG], [MID, BG, MID], MID]
+		"lantern":
+			return [[INK, INK, INK], [INK, ACCENT, INK], [ACCENT, BG, BG], ACCENT]
+		_:
+			return [[INK, INK, INK], [BG, BG, ACCENT], [ACCENT, BG, BG], BG]
+
 static func _build() -> Theme:
 	var t := Theme.new()
 	t.default_font_size = FONT_SIZE

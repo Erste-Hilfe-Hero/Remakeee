@@ -10,6 +10,6 @@
  "saltmarsh/neve": {"type": "win_within", "value": 5, "reward": {"shards": 1}},
  "saltmarsh/kestra_tag": {"type": "no_faint", "value": 0, "reward": {"shards": 1}},
  "tide_rift/mystic": {"type": "reaction_count", "value": 2, "reward": {"shards": 1, "lore": "rift_mystics"}},
- "tide_rift/warden_maelis": {"type": "win_within", "value": 8, "reward": {"shards": 2, "title": "Current Rider"}},
- "tide_rift/drowned_heart": {"type": "no_faint", "value": 0, "reward": {"shards": 2, "lore": "drowned_heart"}}
+ "tide_rift/warden_maelis": {"type": "win_within", "value": 8, "reward": {"shards": 2, "title": "Current Reader"}},
+ "tide_rift/drowned_heart": {"type": "win_within", "value": 6, "reward": {"shards": 2, "lore": "drowned_heart"}}
 }

@@ -10,7 +10,7 @@
   "TRRR.__.RRRT",
   "TRRR.__.RRRT",
   "THDH.__.HDHT",
-  "T._.____._.T",
+  "TS_.____._.T",
   "T.__________",
   "T.S.._.....T",
   "T*...__..,,T",
@@ -108,7 +108,7 @@
    "facing": "down",
    "dialogue": "brindlewick/kestra_dock",
    "sprite": "ranger",
-   "show_flag": "storage_remote"
+   "show_flag": "veydal_rifts_mended"
   },
   {
    "id": "ines",
@@ -145,13 +145,37 @@
   },
   {
    "id": "velahra",
-   "x": 3,
+   "x": 2,
    "y": 12,
-   "facing": "down",
+   "facing": "right",
    "dialogue": "brindlewick/velahra",
    "sprite": "first_voice",
    "show_flag": "mirela_lamp",
    "hide_flag": "first_voice_velahra_away"
+  },
+  {
+   "id": "vs_gisk",
+   "x": 6,
+   "y": 8,
+   "facing": "down",
+   "dialogue": "veydal_side/gisk",
+   "sprite": "elder"
+  },
+  {
+   "id": "vs_wicka",
+   "x": 5,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "veydal_side/wicka",
+   "sprite": "elder"
+  },
+  {
+   "id": "vs_brennick",
+   "x": 6,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "veydal_side/brennick",
+   "sprite": "villager"
   },
   {
    "id": "brin",
@@ -163,9 +187,9 @@
    "schedule": [
     {
      "phase": "dusk",
-     "x": 8,
-     "y": 10,
-     "facing": "left"
+     "x": 2,
+     "y": 9,
+     "facing": "right"
     },
     {
      "phase": [
@@ -233,9 +257,9 @@
    "schedule": [
     {
      "phase": "dusk",
-     "x": 7,
-     "y": 9,
-     "facing": "down"
+     "x": 4,
+     "y": 10,
+     "facing": "up"
     },
     {
      "phase": [
@@ -315,6 +339,42 @@
    "facing": "left",
    "dialogue": "brindlewick/coach",
    "sprite": "villager"
+  },
+  {
+   "id": "stall_fish",
+   "x": 9,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "brindlewick/stall_fish",
+   "sprite": "villager",
+   "weekdays": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "stall_herbs",
+   "x": 8,
+   "y": 10,
+   "facing": "up",
+   "dialogue": "brindlewick/stall_herbs",
+   "sprite": "elder",
+   "weekdays": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "stall_tinker",
+   "x": 2,
+   "y": 9,
+   "facing": "right",
+   "dialogue": "brindlewick/stall_tinker",
+   "sprite": "villager",
+   "weekdays": [
+    3,
+    6
+   ]
   }
  ],
  "signs": [
@@ -327,6 +387,11 @@
    "x": 9,
    "y": 18,
    "dialogue": "brindlewick/ferry"
+  },
+  {
+   "x": 1,
+   "y": 5,
+   "dialogue": "brindlewick/marker_stone"
   }
  ],
  "gear_spots": [
@@ -387,5 +452,9 @@
    "count": 1,
    "flag": "find_brindle_fern"
   }
+ ],
+ "square": [
+  3,
+  9
  ]
 }

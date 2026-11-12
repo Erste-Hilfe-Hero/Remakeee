@@ -47,7 +47,7 @@ jobs:
               echo "$del" | grep -q '"ok": *true\|"ok":true' || note "delete_account failed: ${del:0:200}"
             fi
           fi
-          for page in datenschutz privacy konto-loeschen delete-account support impressum nutzungsbedingungen terms; do
+          for page in datenschutz privacy konto-loeschen delete-account support kaeufe purchases impressum nutzungsbedingungen terms; do
             code="$(curl -sS --max-time 15 -o /dev/null -w '%{http_code}' "$SERVER/$page")"
             [ "$code" = "200" ] || note "/$page answered $code"
           done

@@ -16,6 +16,19 @@ const BASE_SIZE: int = 8
 
 static var _font: FontFile
 static var _large: FontFile
+static var _all: Dictionary[String, Array] = {}
+
+## Every glyph of the font: GLYPHS plus the accented Latin letters and Cyrillic of
+## PixelFontExtra.GLYPHS (French, Italian, Spanish, Portuguese, Polish, Turkish, Dutch, Russian).
+static func glyphs() -> Dictionary[String, Array]:
+	if _all.is_empty():
+		_all = GLYPHS.duplicate()
+		_all.merge(PixelFontExtra.GLYPHS)
+	return _all
+
+## True if the pixel font draws [param ch] itself (CJK text comes from CjkFont fallbacks).
+static func has_glyph(ch: String) -> bool:
+	return glyphs().has(ch)
 
 ## "Chimora Pixel Groß" (plan item 2042): the same glyphs drawn on a 7x12 grid, 9 px above the
 ## baseline and 3 below, for the Large text option. It answers to the same font size, so every
@@ -32,16 +45,51 @@ const LARGE_ROWS: Array[int] = [0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 7, 8]
 static func get_font() -> FontFile:
 	if _font == null:
 		_font = _build()
+		_font.fallbacks = cjk_fallbacks(_lang)
 	return _font
 
 static func get_large_font() -> FontFile:
 	if _large == null:
 		_large = _build(true)
+		_large.fallbacks = cjk_fallbacks(_lang)
 	return _large
+
+## Japanese, Korean and Chinese come from the Fusion Pixel 8px fonts in art/fonts (OFL, built by
+## tools/fonts/build_cjk.py), added as fallbacks of the pixel font. The current language's font
+## comes first, so shared characters get its regional form; the others stay behind it, because
+## the language list shows every language's own name.
+const CJK_FONT: String = "res://art/fonts/chimora_cjk_8px_%s.otf"
+static var _lang: String = "en"
+static var _cjk: Dictionary[String, Font] = {}
+
+static func cjk_fallbacks(code: String) -> Array[Font]:
+	var order: Array[String] = ["ja", "zh_CN", "zh_TW", "ko"]
+	if code in order:
+		order.erase(code)
+		order.push_front(code)
+	var out: Array[Font] = []
+	for c: String in order:
+		if not _cjk.has(c):
+			var f: Font = load(CJK_FONT % c) as Font
+			if f == null:
+				continue
+			_cjk[c] = f
+		out.append(_cjk[c])
+	return out
+
+## Called by Loc.set_language: puts the language's own CJK font first.
+static func use_language(code: String) -> void:
+	if code == _lang:
+		return
+	_lang = code
+	if _font != null:
+		_font.fallbacks = cjk_fallbacks(code)
+	if _large != null:
+		_large.fallbacks = cjk_fallbacks(code)
 
 ## One glyph of the large set, as rows of "#" and ".".
 static func large_glyph(ch: String) -> Array[String]:
-	var small: Array = GLYPHS[ch]
+	var small: Array = glyphs()[ch]
 	var out: Array[String] = []
 	for r: int in LARGE_ROWS:
 		var line: String = ""
@@ -51,7 +99,7 @@ static func large_glyph(ch: String) -> Array[String]:
 	return out
 
 static func _build(large: bool = false) -> FontFile:
-	var chars: Array = GLYPHS.keys()
+	var chars: Array = glyphs().keys()
 	var cw: int = LARGE_W if large else CELL_W
 	var chh: int = LARGE_H if large else CELL_H
 	var ascent: int = LARGE_ASCENT if large else ASCENT
@@ -74,7 +122,7 @@ static func _build(large: bool = false) -> FontFile:
 		var ch: String = chars[i]
 		var gx: int = (i % cols) * (cw + pad)
 		var gy: int = (i / cols) * (chh + pad)
-		var bitmap: Array = large_glyph(ch) if large else GLYPHS[ch]
+		var bitmap: Array = large_glyph(ch) if large else glyphs()[ch]
 		var min_x: int = cw
 		var max_x: int = -1
 		for y: int in bitmap.size():
@@ -208,6 +256,10 @@ const GLYPHS: Dictionary[String, Array] = {
 	"\ue002": [".....", "..#..", "..#..", "#####", ".###.", ".#.#.", "#...#", ".....", "....."],
 	# Backpack (U+E004): a Spirling away on a roaming trip.
 	"\ue004": [".....", ".###.", "#...#", "#####", "#.#.#", "#####", "#####", ".....", "....."],
+	# Knot (U+E005): a run in the chronicle with kept vows.
+	"\ue005": [".....", ".##..", "#..#.", ".##..", ".#.#.", "#...#", ".....", ".....", "....."],
+	# Gleam star (U+E006): a four-point sparkle beside a Gleam Spirling (GleamRules.STAR).
+	"\ue006": [".....", "..#..", "..#..", "##.##", "..#..", "..#..", ".....", ".....", "....."],
 	# Chain (U+E003): a save slot under the Iron Oath.
 	"\ue003": [".....", "##...", "#.#..", ".###.", "..#.#", "...##", ".....", ".....", "....."],
 }

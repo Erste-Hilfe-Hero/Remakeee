@@ -71,7 +71,8 @@ func test_team_mode_is_reproducible() -> void:
 
 ## Item 849: in random teams at ring 36 no species wins under 30% or over 70% of its battles.
 func test_team_mode_keeps_every_species_in_band() -> void:
-	var r: Dictionary = BalanceSim.run_team(36, 200, 7)
+	# 200 battles were sized for 81 kinds; keep about as many battles per kind as the roster grows.
+	var r: Dictionary = BalanceSim.run_team(36, maxi(200, Database.spirlings.size() * 6), 7)
 	assert_eq(int(r.draws), 0, "no team battle stalls")
 	for n: String in r.species:
 		var wr: float = BalanceSim.win_rate(r.species[n])

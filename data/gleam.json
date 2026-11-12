@@ -1,0 +1,10 @@
+{
+ "_comment": "Gleam form tuning (scripts/core/GleamRules.gd). Wild chance = (1 + min(chain, chain_max) * chain_step) / wild_one_in. Palettes: data/gleam_palettes.json.",
+ "wild_one_in": 1024,
+ "chain_step": 0.5,
+ "chain_max": 10,
+ "sfx": "sparkle",
+ "sfx_pitch": 1.25,
+ "sparkles": 6,
+ "sparkle_time": 0.6
+}

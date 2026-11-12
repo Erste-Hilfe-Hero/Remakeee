@@ -17,10 +17,11 @@ var _atlas: Texture2D
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for sp: String in STARTERS:
-		var p: String = "res://art/era1/spirlings/%s_front.png" % sp
-		_sprites.append(load(p) if ResourceLoader.exists(p) else null)
-	if ResourceLoader.exists(TilesetFactory.ATLAS_PATH):
-		_atlas = load(TilesetFactory.ATLAS_PATH)
+		var p: String = EraManager.sprite_path(sp)
+		_sprites.append(load(p) if not p.is_empty() else null)
+	var atlas: String = TilesetFactory.atlas_path()
+	if not atlas.is_empty():
+		_atlas = load(atlas)
 
 func _process(delta: float) -> void:
 	_t += delta
@@ -76,9 +77,12 @@ func _draw_lighthouse(at: Vector2, lake_y: float) -> void:
 	draw_colored_polygon(rock, UITheme.INK)
 	if _atlas == null:
 		return
-	var col: Dictionary[int, int] = {0: TilesetFactory.Kind.LAMP, 1: TilesetFactory.Kind.TOWER, 2: TilesetFactory.Kind.DOOR}
+	# Lamp, the shaft running down, the tower foot with its door (the same tiles as Brindlewick).
+	var cells: Array[Vector2i] = [Vector2i(TilesetFactory.Kind.LAMP, 0),
+		Vector2i(TilesetFactory.Kind.TOWER, TilesetFactory.LIGHTHOUSE_SHAFT_ROW),
+		Vector2i(TilesetFactory.Kind.TOWER, TilesetFactory.LIGHTHOUSE_DOOR_ROW)]
 	for row: int in 3:
-		var src := Rect2(col[row] * TILE, 0, TILE, TILE)
+		var src := Rect2(Vector2(cells[row] * TILE), Vector2(TILE, TILE))
 		var dst := Rect2(at + Vector2(0, row * TILE), Vector2(TILE, TILE))
 		if row != 1:
 			# Those tiles have a ground background; draw only the middle columns.

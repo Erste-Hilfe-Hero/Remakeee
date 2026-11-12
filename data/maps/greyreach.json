@@ -1,0 +1,287 @@
+{
+ "name": "Greyreach",
+ "region": "corvane",
+ "biome": "route",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "encounters": "greyreach",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^::*.__..::^",
+  "^::..__..::^",
+  "^^^^*__.^^^^",
+  "^.*..__*...@",
+  "^.RRR__.::*^",
+  "^.HDH__.::.^",
+  "^....__....^",
+  "^::..__..S.^",
+  "^::..__^^^^^",
+  "^::..__.*..^",
+  "^^^^^__.::.^",
+  "^....__.::.^",
+  "^*::.__...._",
+  "^.::*____..^",
+  "^.......=..^",
+  "^^^^^^^=^^^^",
+  "^::.*.*__..^",
+  "^::...__...^",
+  "^**...__.::^",
+  "@.::..__.::^",
+  "^.::..__*..^",
+  "S....*__...^",
+  "^::..*__..:^",
+  "^::...__..:^",
+  "^...*.__*..^",
+  "_______....^",
+  "_______..S*^",
+  "^^^^^^^^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 0,
+   "y": 26,
+   "to": "stillwater",
+   "tx": 9,
+   "ty": 13,
+   "facing": "left"
+  },
+  {
+   "x": 0,
+   "y": 27,
+   "to": "stillwater",
+   "tx": 9,
+   "ty": 14,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "wide_rift_edge",
+   "tx": 5,
+   "ty": 14,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "wide_rift_edge",
+   "tx": 6,
+   "ty": 14,
+   "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 13,
+   "to": "rook_vault",
+   "tx": 5,
+   "ty": 7,
+   "facing": "up"
+  },
+  {
+   "x": 3,
+   "y": 6,
+   "to": "greyreach_hut",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "conductor",
+   "x": 10,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "greyreach/conductor",
+   "sprite": "villager"
+  },
+  {
+   "id": "porter",
+   "x": 4,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "greyreach/porter",
+   "sprite": "villager",
+   "show_flag": "era3_finale_done"
+  },
+  {
+   "id": "brann",
+   "x": 2,
+   "y": 22,
+   "facing": "right",
+   "dialogue": "greyreach/brann",
+   "sprite": "villager",
+   "trainer": "Ridgewalker Brann",
+   "intro": "greyreach/brann_intro",
+   "defeat": "greyreach/brann_defeat",
+   "money": 1150,
+   "team": [
+    {
+     "species": "Mirkmole",
+     "level": 22
+    },
+    {
+     "species": "Talusk",
+     "level": 23
+    }
+   ]
+  },
+  {
+   "id": "kaja",
+   "x": 9,
+   "y": 12,
+   "facing": "left",
+   "dialogue": "greyreach/kaja",
+   "sprite": "villager",
+   "trainer": "Surveyor Kaja",
+   "intro": "greyreach/kaja_intro",
+   "defeat": "greyreach/kaja_defeat",
+   "money": 1200,
+   "team": [
+    {
+     "species": "Brinelet",
+     "level": 23
+    },
+    {
+     "species": "Mirkmole",
+     "level": 23
+    },
+    {
+     "species": "Shalebat",
+     "level": 24
+    }
+   ]
+  },
+  {
+   "id": "edrik",
+   "x": 2,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "greyreach/edrik",
+   "sprite": "villager",
+   "trainer": "Wanderer Edrik",
+   "intro": "greyreach/edrik_intro",
+   "defeat": "greyreach/edrik_defeat",
+   "money": 1250,
+   "team": [
+    {
+     "species": "Talusk",
+     "level": 24
+    },
+    {
+     "species": "Wickit",
+     "level": 24
+    },
+    {
+     "species": "Mirkmole",
+     "level": 25
+    }
+   ]
+  },
+  {
+   "id": "reserve_gate",
+   "x": 8,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "greyreach/reserve_gate",
+   "sprite": "villager"
+  },
+  {
+   "id": "lq_dessa",
+   "x": 9,
+   "y": 1,
+   "facing": "down",
+   "dialogue": "legend_quests/zephyrel_guide",
+   "sprite": "villager",
+   "show_flag": "story_complete",
+   "hide_flag": "lq_zephyrel_ready"
+  }
+ ],
+ "signs": [
+  {
+   "x": 9,
+   "y": 27,
+   "dialogue": "greyreach/sign"
+  },
+  {
+   "x": 9,
+   "y": 8,
+   "dialogue": "greyreach/sign_top"
+  },
+  {
+   "x": 2,
+   "y": 6,
+   "dialogue": "greyreach/hut"
+  },
+  {
+   "x": 0,
+   "y": 22,
+   "dialogue": "greyreach/mound_stone"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 1,
+   "open_flag": "beat_veit_1",
+   "closed": "#"
+  },
+  {
+   "x": 6,
+   "y": 1,
+   "open_flag": "beat_veit_1",
+   "closed": "#"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 10,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_grey_east"
+  },
+  {
+   "x": 0,
+   "y": 19,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_grey_west"
+  },
+  {
+   "x": 0,
+   "y": 7,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_grey_hut"
+  },
+  {
+   "x": 11,
+   "y": 25,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_grey_south"
+  },
+  {
+   "x": 3,
+   "y": 24,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_mound_5"
+  }
+ ],
+ "spots": {
+  "veit": [
+   5,
+   3
+  ],
+  "moss": [
+   8,
+   7
+  ],
+  "page_10": [
+   10,
+   1
+  ]
+ }
+}

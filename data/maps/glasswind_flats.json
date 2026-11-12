@@ -1,0 +1,354 @@
+{
+ "name": "Glasswind Flats",
+ "region": "solenne",
+ "biome": "route",
+ "backdrop": "ember",
+ "outdoor": true,
+ "encounters": "glasswind_flats",
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^::...,,,..^",
+  "^::...______",
+  "^,,...._.,S^",
+  "^,,.S.._.,,^",
+  "^...____.::^",
+  "^::._....,:^",
+  "^::.__..,,.^",
+  "^.@..___..S^",
+  "^,,,...__,,^",
+  "^,,,....__,^",
+  "^..RRRR..__^",
+  "^..HHDH.._,^",
+  "^S..._____.^",
+  "^.L.__..,,,^",
+  "^,,,_...,S,^",
+  "^,,,_..:..:^",
+  "^:..__.@..:^",
+  "^:...__...S^",
+  "^..,,,__,,.^",
+  "^..,,,._,,.^",
+  "^@....__...^",
+  "^::.___..::^",
+  "^::._....,,^",
+  "^S..__...,,^",
+  "^,,,.__....^",
+  "^,,,..__.@.^",
+  "^..:...__..^",
+  "^.:::...__.^",
+  "^.S,,,..._.^",
+  "^..,,,..__.^",
+  "^...@.___.S^",
+  "^....__S...^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 11,
+   "y": 2,
+   "to": "ochrewell",
+   "tx": 1,
+   "ty": 11,
+   "facing": "right"
+  },
+  {
+   "x": 5,
+   "y": 12,
+   "to": "caravanserai",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 5,
+   "y": 33,
+   "to": "mirage_kiln",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 33,
+   "to": "mirage_kiln",
+   "tx": 6,
+   "ty": 8,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "kesh",
+   "x": 8,
+   "y": 4,
+   "facing": "left",
+   "dialogue": "glasswind_flats/kesh",
+   "sprite": "villager",
+   "trainer": "Dune Runner Kesh",
+   "intro": "glasswind_flats/kesh_intro",
+   "defeat": "glasswind_flats/kesh_defeat",
+   "money": 2150,
+   "team": [
+    {
+     "species": "Sirocat",
+     "level": 42
+    },
+    {
+     "species": "Highhare",
+     "level": 42
+    }
+   ],
+   "beaten_flag": "ladder_rung_1"
+  },
+  {
+   "id": "mabli",
+   "x": 9,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "glasswind_flats/mabli",
+   "sprite": "villager",
+   "trainer": "Salt Trader Mabli",
+   "intro": "glasswind_flats/mabli_intro",
+   "defeat": "glasswind_flats/mabli_defeat",
+   "money": 2200,
+   "team": [
+    {
+     "species": "Saltsprig",
+     "level": 42
+    },
+    {
+     "species": "Wadishell",
+     "level": 43
+    }
+   ],
+   "beaten_flag": "ladder_rung_2",
+   "show_flag": "ladder_rung_1"
+  },
+  {
+   "id": "fennel",
+   "x": 2,
+   "y": 16,
+   "facing": "right",
+   "dialogue": "glasswind_flats/fennel",
+   "sprite": "villager",
+   "trainer": "Kiln Boy Fennel",
+   "intro": "glasswind_flats/fennel_intro",
+   "defeat": "glasswind_flats/fennel_defeat",
+   "money": 2250,
+   "team": [
+    {
+     "species": "Scaldcoil",
+     "level": 43
+    },
+    {
+     "species": "Ardlume",
+     "level": 43
+    },
+    {
+     "species": "Bakedil",
+     "level": 43
+    }
+   ],
+   "beaten_flag": "ladder_rung_3",
+   "show_flag": "ladder_rung_2"
+  },
+  {
+   "id": "old_pell",
+   "x": 8,
+   "y": 21,
+   "facing": "left",
+   "dialogue": "glasswind_flats/pell",
+   "sprite": "villager",
+   "trainer": "Old Pell",
+   "intro": "glasswind_flats/pell_intro",
+   "defeat": "glasswind_flats/pell_defeat",
+   "money": 2300,
+   "team": [
+    {
+     "species": "Obelith",
+     "level": 44
+    },
+    {
+     "species": "Rollibex",
+     "level": 44
+    }
+   ],
+   "beaten_flag": "ladder_rung_4",
+   "show_flag": "ladder_rung_3",
+   "win_flags": [
+    "c4_pell_warned"
+   ]
+  },
+  {
+   "id": "yusra",
+   "x": 3,
+   "y": 25,
+   "facing": "right",
+   "dialogue": "glasswind_flats/yusra",
+   "sprite": "villager",
+   "trainer": "Mirage Dancer Yusra",
+   "intro": "glasswind_flats/yusra_intro",
+   "defeat": "glasswind_flats/yusra_defeat",
+   "money": 2350,
+   "team": [
+    {
+     "species": "Velvessa",
+     "level": 44
+    },
+    {
+     "species": "Orrlet",
+     "level": 44
+    },
+    {
+     "species": "Hazejel",
+     "level": 45
+    }
+   ],
+   "beaten_flag": "ladder_rung_5",
+   "show_flag": "ladder_rung_4"
+  },
+  {
+   "id": "brannt",
+   "x": 8,
+   "y": 28,
+   "facing": "left",
+   "dialogue": "glasswind_flats/brannt",
+   "sprite": "villager",
+   "trainer": "Caravan Guard Brannt",
+   "intro": "glasswind_flats/brannt_intro",
+   "defeat": "glasswind_flats/brannt_defeat",
+   "money": 2400,
+   "team": [
+    {
+     "species": "Caravant",
+     "level": 45
+    },
+    {
+     "species": "Duneshrew",
+     "level": 45
+    },
+    {
+     "species": "Wadishell",
+     "level": 45
+    }
+   ],
+   "beaten_flag": "ladder_rung_6",
+   "show_flag": "ladder_rung_5"
+  },
+  {
+   "id": "varro",
+   "x": 9,
+   "y": 1,
+   "facing": "down",
+   "dialogue": "glasswind_side/varro",
+   "sprite": "ranger",
+   "color": "8a6a3a"
+  },
+  {
+   "id": "oren",
+   "x": 3,
+   "y": 5,
+   "facing": "right",
+   "dialogue": "glasswind_side/oren",
+   "sprite": "elder"
+  },
+  {
+   "id": "tamsin_door",
+   "x": 8,
+   "y": 31,
+   "facing": "left",
+   "dialogue": "glasswind_side/tamsin_door",
+   "sprite": "villager",
+   "color": "c08a5a",
+   "show_flag": "s4_twin_meet"
+  }
+ ],
+ "signs": [
+  {
+   "x": 10,
+   "y": 8,
+   "dialogue": "glasswind_flats/bell_1"
+  },
+  {
+   "x": 1,
+   "y": 13,
+   "dialogue": "glasswind_flats/bell_2"
+  },
+  {
+   "x": 10,
+   "y": 18,
+   "dialogue": "glasswind_flats/bell_3"
+  },
+  {
+   "x": 1,
+   "y": 24,
+   "dialogue": "glasswind_flats/bell_4"
+  },
+  {
+   "x": 10,
+   "y": 31,
+   "dialogue": "glasswind_flats/bell_5"
+  },
+  {
+   "x": 4,
+   "y": 4,
+   "dialogue": "glasswind_flats/helio_1"
+  },
+  {
+   "x": 9,
+   "y": 15,
+   "dialogue": "glasswind_flats/helio_2"
+  },
+  {
+   "x": 2,
+   "y": 29,
+   "dialogue": "glasswind_flats/helio_3"
+  },
+  {
+   "x": 10,
+   "y": 3,
+   "dialogue": "glasswind_flats/sign"
+  },
+  {
+   "x": 7,
+   "y": 32,
+   "dialogue": "glasswind_flats/kiln_sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "max_tonic",
+   "count": 2,
+   "flag": "find_glasswind_west"
+  },
+  {
+   "x": 11,
+   "y": 14,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_glasswind_east"
+  },
+  {
+   "x": 2,
+   "y": 8,
+   "item": "power_brew",
+   "count": 1,
+   "flag": "find_glasswind_rock"
+  },
+  {
+   "x": 0,
+   "y": 22,
+   "item": "strong_tonic",
+   "count": 3,
+   "flag": "find_glasswind_scree"
+  },
+  {
+   "x": 9,
+   "y": 26,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_glasswind_boulder"
+  }
+ ]
+}

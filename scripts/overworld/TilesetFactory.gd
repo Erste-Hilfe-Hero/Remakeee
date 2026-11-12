@@ -47,15 +47,27 @@ const COLORS: Dictionary[int, Color] = {
 	Kind.CRACKED: Color("a08868"), Kind.VINES: Color("4a7a3a"), Kind.PLANK: Color("2a1e2c"),
 }
 
+## Era I atlas; runtime code uses atlas_path() so newer eras can swap it.
 const ATLAS_PATH: String = "res://art/era1/tiles/overworld.png"
+const ATLAS_REL: String = "tiles/overworld.png"
 const VARIANT_ROWS: int = 16
 ## Kinds whose variant row is a neighbour mask (1 up, 2 right, 4 down, 8 left).
 const MASKED: Array[int] = [Kind.PATH, Kind.WATER, Kind.ROOF, Kind.WALL, Kind.FENCE, Kind.CLIFF, Kind.PIER, Kind.WADE]
 ## Kinds with cosmetic variants 0..3 picked from the cell position.
 const SCATTERED: Array[int] = [Kind.GRASS, Kind.TALL_GRASS, Kind.TREE, Kind.FLOWER, Kind.REEDS, Kind.SCREE, Kind.ROCK]
 const MASK_DIRS: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
+## DOOR variant rows: what the building is (MapData.door_roles(), buildings plan items 14, 15, 20).
+enum DoorRole { HOUSE, HEAL, SHOP, RIFT_GATE }
+## TOWER rows for the lighthouse (a lamp on a tower over a door): the shaft runs on into the
+## door tile, and the door tile is the foot of the tower with its door (tools/art/gen_tiles.py tower()).
+const LIGHTHOUSE_SHAFT_ROW: int = 1
+const LIGHTHOUSE_DOOR_ROW: int = 2
+## GRASS rows 4..7: the variants 0..3 with the cast shadow of a building to the left (item 6).
+const SHADOW_ROW: int = 4
+const SHADE_FROM: Array[int] = [Kind.WALL, Kind.ROOF, Kind.DOOR]
 
-static var _tileset: TileSet
+## One TileSet per atlas path, so each act can have its own world look.
+static var _tilesets: Dictionary[String, TileSet] = {}
 static var _has_atlas: bool = false
 
 static func kind_for(ch: String) -> int:
@@ -64,10 +76,32 @@ static func kind_for(ch: String) -> int:
 static func is_solid(kind: int) -> bool:
 	return kind in SOLID
 
-static func get_tileset() -> TileSet:
-	if _tileset == null:
-		_tileset = _build()
-	return _tileset
+## Shared atlas, or the act's own "tiles/overworld_<region>.png" when [param region] has one.
+static func atlas_path(region: String = "") -> String:
+	var shared: String = EraManager.art_path(ATLAS_REL)
+	if not region.is_empty():
+		var own: String = EraManager.art_path("tiles/overworld_%s.png" % region)
+		# Only when it is from the same era folder or a newer one: a newer era's shared atlas
+		# wins over an older act atlas, an Era IV region atlas wins over the Era II shared one.
+		if not own.is_empty() and (shared.is_empty() or _era_of(own) >= _era_of(shared)):
+			return own
+	return shared
+
+## Era number of a res://art/eraN/... path (0 when it has none).
+static func _era_of(path: String) -> int:
+	var i: int = path.find("/era")
+	return path.substr(i + 4, path.find("/", i + 1) - i - 4).to_int() if i >= 0 else 0
+
+## Drops the cached TileSets so the next get_tileset() rebuilds them for the active era.
+static func clear_cache() -> void:
+	_tilesets.clear()
+
+static func get_tileset(region: String = "") -> TileSet:
+	var atlas: String = atlas_path(region)
+	if not _tilesets.has(atlas):
+		_tilesets[atlas] = _build(atlas)
+	_has_atlas = not atlas.is_empty()
+	return _tilesets[atlas]
 
 ## Neighbours that count as "the same" when picking a masked variant.
 static func joins(kind: int, other: int) -> bool:
@@ -92,9 +126,14 @@ static func joins(kind: int, other: int) -> bool:
 
 ## Atlas coordinates for [param kind] at [param cell]; [param kind_at] returns the kind of
 ## any cell (out-of-bounds cells should return the same kind so map edges stay seamless).
-static func atlas_coords(kind: int, cell: Vector2i, kind_at: Callable) -> Vector2i:
+## [param door_role] picks the DOOR row (DoorRole).
+static func atlas_coords(kind: int, cell: Vector2i, kind_at: Callable, door_role: int = DoorRole.HOUSE) -> Vector2i:
 	if not _has_atlas:
 		return Vector2i(kind, 0)
+	if kind == Kind.DOOR and is_lighthouse_door(cell, kind_at):
+		return Vector2i(Kind.TOWER, LIGHTHOUSE_DOOR_ROW)
+	if kind == Kind.TOWER and int(kind_at.call(cell + Vector2i.DOWN)) == Kind.DOOR and is_lighthouse_door(cell + Vector2i.DOWN, kind_at):
+		return Vector2i(Kind.TOWER, LIGHTHOUSE_SHAFT_ROW)
 	if kind in MASKED:
 		var mask: int = 0
 		for i: int in MASK_DIRS.size():
@@ -102,17 +141,32 @@ static func atlas_coords(kind: int, cell: Vector2i, kind_at: Callable) -> Vector
 				mask |= 1 << i
 		return Vector2i(kind, mask)
 	if kind in SCATTERED:
-		var h: int = absi(cell.x * 7 + cell.y * 13 + (cell.x * cell.y) % 5)
-		return Vector2i(kind, h % 4)
+		var h: int = absi(cell.x * 7 + cell.y * 13 + (cell.x * cell.y) % 5) % 4
+		var left: int = int(kind_at.call(cell + Vector2i.LEFT))
+		# A slim lighthouse casts no house-wide shadow.
+		if kind == Kind.GRASS and left in SHADE_FROM and not (left == Kind.DOOR and is_lighthouse_door(cell + Vector2i.LEFT, kind_at)):
+			h += SHADOW_ROW
+		return Vector2i(kind, h)
+	if kind == Kind.DOOR:
+		return Vector2i(kind, door_role)
 	return Vector2i(kind, 0)
 
-static func _build() -> TileSet:
+## True when the door at [param cell] sits under a tower shaft topped by a lamp (a lighthouse).
+static func is_lighthouse_door(cell: Vector2i, kind_at: Callable) -> bool:
+	var c: Vector2i = cell + Vector2i.UP
+	var shaft: int = 0
+	while shaft < 8 and int(kind_at.call(c)) == Kind.TOWER:
+		shaft += 1
+		c += Vector2i.UP
+	return shaft > 0 and int(kind_at.call(c)) == Kind.LAMP
+
+static func _build(atlas: String) -> TileSet:
 	var count: int = Kind.size()
 	var tex: Texture2D
 	var rows: int = 1
-	_has_atlas = ResourceLoader.exists(ATLAS_PATH)
+	_has_atlas = not atlas.is_empty()
 	if _has_atlas:
-		tex = load(ATLAS_PATH)
+		tex = load(atlas)
 		rows = VARIANT_ROWS
 	else:
 		var img := Image.create(TILE * count, TILE, false, Image.FORMAT_RGBA8)

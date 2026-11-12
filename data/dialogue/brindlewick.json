@@ -1,6 +1,7 @@
 {
  "sign": [
   "BRINDLEWICK",
+  "Brindlewick, 61 folk.",
   "Lake village of Veydal.",
   "North: Fernstair   East: Saltmarsh"
  ],
@@ -319,7 +320,7 @@
  },
  "brin": {
   "lines": [
-   "Netmender Brin: Mornings I mend nets by the north road. Evenings I tell lies about fish."
+   "Netmender Brin: My nets have more holes than Wim's excuses, and I still catch more than he delivers."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
@@ -330,7 +331,7 @@
  },
  "lotte": {
   "lines": [
-   "Baker Lotte: First loaves at dawn, last crumbs at dusk. In between, I walk off the flour."
+   "Baker Lotte: Wim's cart is so slow the bread goes stale on the way. I've started baking it stale. Saves time."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
@@ -341,7 +342,7 @@
  },
  "tilda": {
   "lines": [
-   "Rower Tilda: I row the shallows at noon and sit by the lamp at dusk. Simple life."
+   "Rower Tilda: I'd row Wim across the lake for free. Halfway. Then I'd row back."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
@@ -352,7 +353,7 @@
  },
  "joss": {
   "lines": [
-   "Lamplighter Joss: Dawn and dusk I trim the wick. At night I keep it company."
+   "Lamplighter Joss: I keep the lamp burning all night so Lotte can see how flat her bread is."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
@@ -363,13 +364,52 @@
  },
  "wim": {
   "lines": [
-   "Carter Wim: Days here, evenings up in Thornridge. My cart knows the way better than I do."
+   "Carter Wim: Everybody laughs at my cart. Even the cart. It squeaks every time someone says my name."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
    "lines": [
     "Carter Wim: The road feels lighter since the Rift was sealed. Even the cart squeaks less."
    ]
-  }
+  },
+  "choices": [
+   {
+    "text": "Tell Wim a cart joke",
+    "next": "wim_pays"
+   },
+   {
+    "text": "Leave them be"
+   }
+  ]
+ },
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 1"
+ },
+ "stall_fish": {
+  "lines": [
+   "Fishwife Marit: Market day! Dried kelp towels and cool gel, straight off the boats."
+  ],
+  "action": "shop dry_towel cooling_gel wake_bell tonic"
+ },
+ "stall_herbs": {
+  "lines": [
+   "Herbwoman Agnes: Brews from the fen, only on market days. Smell that."
+  ],
+  "action": "shop power_brew guard_brew focus_brew dash_brew"
+ },
+ "stall_tinker": {
+  "lines": [
+   "Tinker Rasmus: Wednesday and Saturday, rain or shine. Charms and leaves, fair prices."
+  ],
+  "action": "shop kin_charm revival_leaf strong_tonic"
+ },
+ "wim_pays": {
+  "lines": [
+   "Carter Wim: Stop! Fine, take these coins, just stop squeaking about my cart."
+  ],
+  "action": "tip 80 wim"
  }
 }

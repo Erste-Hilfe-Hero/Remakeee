@@ -12,7 +12,8 @@ enum Type {
 	STAT_CHANGED, FIELD, RULE, PARTNER, BOSS,
 	FIELD_END, BOSS_PHASE, REACTION, TRAIT,
 	ENERGY_TAX, SNARE_SET, SNARE_HIT, SNARE_CLEARED, HEAL_BLOCKED, WEARY,
-	DELAYED_SET, DELAYED_HIT, FIELD_NEXT, FIELD_EXTENDED, BATTLE_LINE,
+	DELAYED_SET, DELAYED_HIT, FIELD_NEXT, FIELD_EXTENDED, BATTLE_LINE, WARDEN_WEAKENED, HELD_ENDURE,
+	OATH, SHOP_EDGE,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -36,6 +37,8 @@ func describe() -> String:
 				return "A hushed swarm of %d Spirlings closes in!" % int(data.get("count", 1))
 			if data.get("wild", false):
 				var shimmer: String = " It shimmers with odd colours!" if bool(data.get("prism", false)) else ""
+				if bool(data.get("gleam", false)):
+					shimmer = " It gleams in colours of its own!"
 				return "A hushed %s blocks your way.%s" % [data.get("foe_name", ""), shimmer]
 			if bool(data.get("boss", false)):
 				return "%s rises from the Rift!" % data.get("trainer", "")
@@ -73,6 +76,8 @@ func describe() -> String:
 				return "The %s keeps %s safe." % [data.get("field_label", ""), who]
 			if bool(data.get("clause", false)):
 				return "Calm rule: %s stays awake while an ally drowses." % who
+			if bool(data.get("ward", false)):
+				return "%s's Status Ward keeps it safe." % who
 			return "It had no effect on %s." % who
 		Type.STATUS_TICK:
 			return "%s suffers from %s." % [who, StatusRules.label(str(data.get("status", "")))]
@@ -93,7 +98,11 @@ func describe() -> String:
 		Type.BOND_ATTEMPT:
 			return "You reach out to %s..." % who
 		Type.BOND_RESULT:
-			return "%s bonded with you!" % who if data.get("success", false) else "%s broke the bond!" % who
+			if data.get("success", false):
+				return "%s bonded with you!" % who
+			if data.get("steadied", false):
+				return "%s broke the bond, but your Pass keeps it calm." % who
+			return "%s broke the bond!" % who
 		Type.FREE_ACTION:
 			return "%s seizes the moment!" % who
 		Type.FLEE_RESULT:
@@ -115,6 +124,8 @@ func describe() -> String:
 		Type.FIELD:
 			return str(data.get("text", ""))
 		Type.RULE:
+			if bool(data.get("turning", false)):
+				return "Turning point, %s: %s" % [data.get("label", ""), data.get("text", "")]
 			return "Rule, %s: %s" % [data.get("label", ""), data.get("text", "")]
 		Type.PARTNER:
 			return "%s fights at your side!" % data.get("partner", "")
@@ -128,6 +139,8 @@ func describe() -> String:
 			return "%s's gift, %s: %s" % [who, data.get("label", ""), data.get("text", "")]
 		Type.REACTION:
 			return str(data.get("text", "")) % who
+		Type.OATH:
+			return Loc.t(str(BattleRules.oath().get("due_text" if bool(data.get("due", false)) else "sworn_text", ""))) % who
 		Type.WEARY:
 			return "The long fight wears everyone out. Nobody can heal any more!"
 		Type.HEAL_BLOCKED:
@@ -142,7 +155,11 @@ func describe() -> String:
 			return "%s springs the snare!" % who
 		Type.BATTLE_LINE:
 			return "%s: %s" % [data.get("name", ""), data.get("text", "")]
+		Type.SHOP_EDGE:
+			return str(data.get("text", ""))
 		Type.FIELD_EXTENDED:
+			if bool(data.get("locked", false)):
+				return "The %s won't give way yet." % data.get("label", "")
 			if bool(data.get("failed", false)):
 				return "There is no Resonance field to hold."
 			return "The %s holds on for %d more turns!" % [data.get("label", ""), int(data.get("turns", 0))]
@@ -156,6 +173,10 @@ func describe() -> String:
 			return "%s lands on %s!" % [data.get("move", ""), who]
 		Type.SNARE_CLEARED:
 			return "The snares on your side blow away." if int(data.get("side", 0)) == 0 else "The snares on the foe's side blow away."
+		Type.HELD_ENDURE:
+			return "%s holds on with its Hold Stone!" % who
+		Type.WARDEN_WEAKENED:
+			return "A Warden Weakener dims %s's team: they start with 15%% less Vigor." % data.get("trainer", "")
 		Type.ENERGY_TAX:
 			if bool(data.get("fresh", false)):
 				return "%s is taxed: every art costs %d more Energy for %d turns!" % [who, int(data.get("cost", 1)), int(data.get("turns", 0))]

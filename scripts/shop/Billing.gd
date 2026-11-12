@@ -13,6 +13,8 @@ enum Step { READY, QUERY, PURCHASING, VERIFYING, CREDITED, FAILED, CANCELLED }
 signal step_changed(step: Step)
 ## Bag items and coins arrived from the server and went into the journey.
 signal delivered(grants: Array)
+## The Wayfarer Pass paid its daily Riftglass ([param added] includes missed days, item 4631).
+signal pass_paid(added: int)
 
 var step: Step = Step.READY
 ## The store in use, or null when this build cannot buy (web, release builds without a plugin).
@@ -29,21 +31,37 @@ func _ready() -> void:
 	if Online.has_signal("state_changed"):
 		Online.state_changed.connect(_on_online_state)
 
-## Picks the store for this build: Google Play on Android (plugins/chimora_billing), the local
-## test store in debug builds against the local server. Apple StoreKit 2 follows.
+## Picks the store for this build: Google Play on Android (plugins/chimora_billing), the App Store
+## with StoreKit 2 on iOS (plugins/chimora_storekit), the local test store in debug builds against
+## the local server.
 func make_store() -> BillingStore:
 	if GoogleBillingStore.available_here():
 		var g := GoogleBillingStore.new()
-		_connect_google(g)
+		_connect_store(g)
 		return g
+	if AppleBillingStore.available_here():
+		var a := AppleBillingStore.new()
+		a.purchase_updated.connect(_on_store_update)
+		_connect_store(a)
+		return a
 	if Online.is_local() and OS.is_debug_build():
 		return LocalBilling.new()
 	return null
 
-## Connects to Google Play in the background; open purchases go to the server once it is up.
-func _connect_google(g: GoogleBillingStore) -> void:
+## Connects to the store in the background; open purchases go to the server once it is up.
+func _connect_store(g: BillingStore) -> void:
 	if await g.connect_store() and Online.is_online():
 		resume_pending()
+
+## A purchase the store finished outside the sheet (Ask to Buy approved, bought on another device):
+## the server checks and credits it like any other.
+func _on_store_update(receipt: Dictionary) -> void:
+	if _buying or not Online.is_online():
+		return
+	if (await _verify(receipt)).get("ok", false):
+		await claim()
+		await refresh_state()
+	_set_step(Step.READY)
 
 func available() -> bool:
 	return store != null and store.is_ready()
@@ -66,7 +84,22 @@ func refresh_state() -> Dictionary:
 	if r.ok and r.data is Dictionary:
 		state = r.data
 		ShopEffects.apply_unlocks()
+		if pass_active():
+			await claim_pass_daily()
 	return r
+
+## The pass's 30 Riftglass a day, paid by the server once per Berlin calendar day and up to 7
+## missed days later (items 4631, 4637, 4659). Returns the Riftglass added (0 = already paid).
+func claim_pass_daily() -> int:
+	var r: Dictionary = await Online.call_fn("shop_pass_daily")
+	if not r.ok or not r.data is Dictionary or not bool(r.data.get("ok", false)):
+		return 0
+	var added: int = int(r.data.get("added", 0))
+	if r.data.has("balance"):
+		state["balance"] = int(r.data.balance)
+	if added > 0:
+		pass_paid.emit(added)
+	return added
 
 func band() -> Variant:
 	return state.get("band")
@@ -105,6 +138,10 @@ func block_reason(o: Dictionary, with_riftglass: bool) -> String:
 		return "offer_limit"
 	var req: String = str(o.get("requires", ""))
 	if req.begins_with("rifts:") and int(state.get("rifts", 0)) < int(req.get_slice(":", 1)):
+		return "not_yet"
+	if req.begins_with("tier:") and not ShopEffects.tier_ok(req, unlocked(req.get_slice(":", 1))):
+		return "tier_order"
+	if req.begins_with("none:") and not ShopEffects.none_ok(req, func(k: String) -> int: return unlocked(k)):
 		return "not_yet"
 	if with_riftglass:
 		if int(o.get("rg_price", 0)) <= 0:
@@ -217,14 +254,23 @@ func resume_pending() -> int:
 	_set_step(Step.READY)
 	return n
 
-## "Restore purchases": unlocks and the pass come back from the store.
+## "Restore purchases": unlocks and the pass come back from the store. Returns how many purchases
+## the server credited now (receipts it already had do not count), or -1 without a connection, so
+## the menu never says "nothing to restore" when it could not ask (bug plan 1354). Bag items and
+## coins of a restored purchase are picked up at once.
 func restore() -> int:
 	if not available():
 		return 0
+	if not Online.is_online():
+		last_error = "offline"
+		return -1
 	var n: int = 0
 	for receipt: Dictionary in await store.restore():
-		if (await _verify(receipt)).get("ok", false):
+		var r: Dictionary = await _verify(receipt)
+		if r.get("ok", false) and not bool(r.get("duplicate", false)):
 			n += 1
+	if n > 0:
+		await claim()
 	await refresh_state()
 	_set_step(Step.READY)
 	return n
@@ -251,3 +297,7 @@ static func apply_grant(g: Dictionary) -> void:
 			GameState.add_item(str(g.id), int(g.get("n", 1)))
 		"coins":
 			GameState.money = mini(GameState.money + int(g.get("n", 0)), 9999999)
+		"spirling":
+			var s: Spirling = ShopEffects.bought_spirling(g)
+			if s != null:
+				GameState.receive_spirling(s)

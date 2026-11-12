@@ -36,6 +36,8 @@ var week: String
 var rng := RandomNumberGenerator.new()
 var field: String
 var rule: String
+## The week's rule variant (item 799), from its own seed so the other draws stay as they were.
+var variant: String = ""
 var level: int
 ## The loan team of this week ({id, ring, team}), empty in a normal week.
 var loan: Dictionary = {}
@@ -48,10 +50,12 @@ func _init(week_key: String, cap_level: int) -> void:
 	var fields: Array = BattleRules.FIELDS.keys()
 	fields.sort()
 	field = str(fields[rng.randi_range(0, fields.size() - 1)])
-	var rules: Array = BattleRules.RULES.keys()
+	var rules: Array = BattleRules.RULES.keys().filter(func(r: String) -> bool: return not bool(BattleRules.RULES[r].get("warden_only", false)))
 	rules.sort()
 	rule = str(rules[rng.randi_range(0, rules.size() - 1)])
-	level = clampi(cap_level, 8, Spirling.MAX_LEVEL)
+	level = clampi(cap_level, 8, Spirling.STORY_RING)
+	var picked: Array[String] = BattleRules.draw_variants(hash("chimora-weekly-variant-" + week_key), 1)
+	variant = picked[0] if not picked.is_empty() else ""
 	if is_loan_week(week_key):
 		loan = loan_for(week_key)
 		if not loan.is_empty():
@@ -235,6 +239,8 @@ static func archive_text() -> String:
 func preview_text() -> String:
 	var out: PackedStringArray = [Loc.t("This week: %s, rule %s, ring %d.") % [Loc.t(str(BattleRules.FIELDS[field].label)), Loc.t(str(BattleRules.RULES[rule].label)), level],
 		Loc.t("Target score: %d (lower is better).") % target(week)]
+	if not variant.is_empty():
+		out.append(variant_line())
 	out.append(mode_line())
 	for i: int in 3:
 		var els: PackedStringArray = []
@@ -245,6 +251,15 @@ func preview_text() -> String:
 					els.append(nm)
 		out.append(Loc.t("Echo %d: %s") % [i + 1, ", ".join(els)])
 	return "\n".join(out)
+
+## "Rule variant: Glass Blades, Every Spirling has half its Vigor."
+func variant_line() -> String:
+	var v: Dictionary = BattleRules.variants().get(variant, {})
+	return Loc.t("Rule variant: %s. %s") % [Loc.t(str(v.get("label", variant))), Loc.t(str(v.get("text", "")))]
+
+## The variant ids for this week's battles.
+func variant_ids() -> Array[String]:
+	return [variant] as Array[String] if not variant.is_empty() else [] as Array[String]
 
 func reward_item() -> String:
 	return REWARDS[rng.randi_range(0, REWARDS.size() - 1)]

@@ -83,7 +83,7 @@ static func shade(t: Dictionary, floor_index: int) -> float:
 
 ## Echo ring on [param floor_index]: MIN_RING on the first floor, two more per floor.
 static func level_for(floor_index: int) -> int:
-	return mini(MIN_RING + 2 * floor_index, Spirling.MAX_LEVEL)
+	return mini(MIN_RING + 2 * floor_index, Spirling.STORY_RING)
 
 ## Forms that fit the ring and share one of the tower's elements.
 static func pool(t: Dictionary, level: int) -> Array[SpirlingData]:
@@ -110,6 +110,22 @@ func team(floor_index: int) -> Array[Spirling]:
 			break
 		out.append(Spirling.new(p[r.randi_range(0, p.size() - 1)], lvl, r))
 	return out
+
+## Rule variants of a floor (item 799): none in the first section, one in the second, two from
+## the third on; drawn from the run seed, so the floor card can name them before the battle.
+func variants_for(floor_index: int) -> Array[String]:
+	var count: int = clampi(floor_index / SECTION, 0, 2)
+	if count == 0:
+		return []
+	return BattleRules.draw_variants(hash([seed_value, floor_index, str(def.id), "variants"]), count)
+
+## The floor card: the floor and, when there are any, its rule variants.
+func floor_card(floor_index: int) -> String:
+	var text: String = floor_label(def, floor_index)
+	var ids: Array[String] = variants_for(floor_index)
+	if not ids.is_empty():
+		text += "\n" + Loc.t("Rule variants: %s") % BattleRules.variant_names(ids)
+	return text
 
 func prize(floor_index: int) -> int:
 	return BASE_PRIZE + PRIZE_STEP * floor_index

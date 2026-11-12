@@ -59,6 +59,10 @@ var file_id: String = ""
 ## Kind of land (fern, marsh, scree, forest, cave, town, rift, ...): steers encounters,
 ## weather and sounds together (area 3 item 898).
 var biome: String = ""
+## Puzzle rooms (area 3 item 1031): one line with the room's goal, shown on the first visit.
+var goal: String = ""
+## Meeting place of a town (area 3 item 966): spring, lamp or sign where folk gather at dusk.
+var square: Vector2i = Vector2i(-1, -1)
 ## Puzzles: {"id", "flag", "plates": [[x, y], ...]} (see PuzzleRoom).
 var puzzles: Array[Dictionary] = []
 ## Tile under a boulder drawn on the map ("f" floor by default, "_" outside).
@@ -189,19 +193,26 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 	m.beam = (raw.get("beam", {}) as Dictionary).duplicate(true)
 	m.boulder_ground = str(raw.get("boulder_ground", "f"))
 	m.biome = str(raw.get("biome", ""))
+	m.goal = str(raw.get("goal", ""))
 	m.drop_to = str(raw.get("drop_to", ""))
 	m._base_rows = m.rows.duplicate()
 	m.encounter_table = str(raw.get("encounters", ""))
 	m.backdrop = str(raw.get("backdrop", "field"))
 	m.field = str(raw.get("field", ""))
+	var sq: Array = raw.get("square", [-1, -1])
+	m.square = Vector2i(int(sq[0]), int(sq[1]))
 	var hp: Array = raw.get("heal_point", [-1, -1])
 	m.heal_point = Vector2i(int(hp[0]), int(hp[1]))
 	return m
 
 ## The hidden find on [param cell] that is still there (its flag not set), or {}.
+## A find with "when" (a clock flag such as "_low_tide", area 3 item 995) is only there while
+## that flag is set in [param flags].
 func secret_at(cell: Vector2i, flags: Dictionary = {}) -> Dictionary:
 	for sc: Dictionary in secrets:
 		if int(sc.x) == cell.x and int(sc.y) == cell.y and not bool(flags.get(str(sc.get("flag", "")), false)):
+			if sc.has("when") and not bool(flags.get(str(sc.when), false)):
+				continue
 			return sc
 	return {}
 
@@ -320,11 +331,57 @@ func apply_blocks(flags: Dictionary) -> bool:
 
 ## Fills [param layer] with this map's tiles.
 func paint(layer: TileMapLayer) -> void:
-	layer.tile_set = TilesetFactory.get_tileset()
+	layer.tile_set = TilesetFactory.get_tileset(region)
 	layer.clear()
+	var roles: Dictionary = door_roles()
 	for y: int in height:
 		for x: int in rows[y].length():
 			var c := Vector2i(x, y)
 			var k: int = kind_at(c)
 			var neighbour: Callable = func(n: Vector2i) -> int: return kind_at(n) if in_bounds(n) else k
-			layer.set_cell(c, 0, TilesetFactory.atlas_coords(k, c, neighbour))
+			layer.set_cell(c, 0, TilesetFactory.atlas_coords(k, c, neighbour, int(roles.get(c, TilesetFactory.DoorRole.HOUSE))))
+
+## What each door leads into, for its look (buildings plan items 14, 15, 20): a warp to a Rift
+## map is a Rift gate, to a spring room the healer, to a guild or shop a shop. In a town the free
+## door nearest the heal point is the healer and the first other free door the shop.
+## Same rules as tools/art/preview_map.py door_roles().
+func door_roles() -> Dictionary:
+	var doors: Array[Vector2i] = []
+	for y: int in height:
+		for x: int in rows[y].length():
+			if rows[y][x] == "D":
+				doors.append(Vector2i(x, y))
+	var roles: Dictionary = {}
+	var warped: Dictionary = {}
+	for w: Dictionary in warps:
+		var cell := Vector2i(int(w.x), int(w.y))
+		if not (cell in doors):
+			continue
+		warped[cell] = true
+		var to: String = str(w.to)
+		# Rift gates are outdoor doors; a hut on a Rift map or its way back out is a plain door.
+		if outdoor and (to.contains("rift") or to.begins_with("undrawn")):
+			roles[cell] = TilesetFactory.DoorRole.RIFT_GATE
+		elif to.contains("spring"):
+			roles[cell] = TilesetFactory.DoorRole.HEAL
+		elif to.contains("guild") or to.contains("shop") or to.contains("market") or to.contains("bazaar"):
+			roles[cell] = TilesetFactory.DoorRole.SHOP
+	if not (outdoor and biome == "town"):
+		return roles
+	var free: Array[Vector2i] = []
+	for d: Vector2i in doors:
+		if not roles.has(d) and not warped.has(d):
+			free.append(d)
+	if heal_point.x >= 0 and not (TilesetFactory.DoorRole.HEAL in roles.values()) and not free.is_empty():
+		var best: Vector2i = free[0]
+		var best_d: int = 1 << 30
+		for d: Vector2i in free:
+			var dist: int = absi(d.x - heal_point.x) + absi(d.y - heal_point.y)
+			if dist < best_d:
+				best = d
+				best_d = dist
+		roles[best] = TilesetFactory.DoorRole.HEAL
+		free.erase(best)
+	if not (TilesetFactory.DoorRole.SHOP in roles.values()) and not free.is_empty():
+		roles[free[0]] = TilesetFactory.DoorRole.SHOP
+	return roles

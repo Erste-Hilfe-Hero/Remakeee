@@ -48,6 +48,17 @@ Die Seiten gehen online, sobald dieser Stand per Workflow **Game server** auf de
    `docs/shop/ALI_TODO.md`) und **12 Tester** für den geschlossenen Test auf Google Play einladen (Pflicht
    für neue private Konten, 14 Tage).
 7. 👤 Contabo-**AV-Vertrag** unterschreiben (Kundenbereich).
+8. 👤 **Weniger Store-Gebühr beantragen** (nur selbst möglich): bei Apple das **App Store Small Business
+   Program** (15 % statt 30 % bis 1 Mio. $ Umsatz im Jahr, Antrag im Developer-Konto), bei Google die
+   **15-%-Stufe** (gilt für die erste Mio. $ im Jahr, dafür in der Play Console eine Kontogruppe anlegen).
+   Ohne Antrag zahlen beide Stores den vollen Satz.
+9. 👤 **Testkonten für Käufe** anlegen: in der Play Console unter Einstellungen → **Lizenztests** die
+   Google-Konten der Tester eintragen (ihre Käufe werden nicht berechnet), in App Store Connect unter
+   Benutzer und Zugriff → **Sandbox** → Testaccounts ein Sandbox-Konto anlegen. Damit kauft die Apple-Prüfung
+   und damit testest du selbst. Ohne diese Konten kostet jeder Testkauf echtes Geld.
+10. 👤 In beiden Konsolen prüfen: Kategorie **Rollenspiel**, Markierung **„Enthält In-App-Käufe“** gesetzt
+   (Google: App-Inhalte → In-App-Käufe; Apple erkennt das an den angelegten Produkten). Familienfreigabe bei
+   Apple für die Produkte **aus** lassen (siehe `docs/shop/ALI_TODO.md`).
 
 Die App-ID `de.chimora.game` ist ab dem ersten Upload für immer fest. Wenn du eine andere willst, sag es
 vorher.

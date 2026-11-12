@@ -5,6 +5,10 @@
  "backdrop": "field",
  "outdoor": true,
  "encounters": "gloamwood",
+ "heal_point": [
+  1,
+  22
+ ],
  "rows": [
   "TTTT_TTTTTTT",
   "T,,T.,,..,,T",
@@ -29,9 +33,9 @@
   "T,,T,_,,,,.T",
   "T,,,,____,.T",
   "T*..,,,,_,.T",
-  "T..T,,,,_..T",
+  "To.T,,,,_..T",
   "T.S.,,,,____",
-  "T..,,,TT,,,T",
+  "TS.,,,TT,,,T",
   "T,,,,,,,,,,T",
   "TT,,,TT,,,TT",
   "T,,,,,,,,,,T",
@@ -149,6 +153,24 @@
      "level": 6
     }
    ]
+  },
+  {
+   "id": "charcoaler",
+   "x": 8,
+   "y": 1,
+   "facing": "down",
+   "dialogue": "gloamwood/charcoaler",
+   "sprite": "villager"
+  },
+  {
+   "id": "lq_ambrel",
+   "x": 8,
+   "y": 13,
+   "facing": "down",
+   "dialogue": "legend_quests/hallowmur_guide",
+   "sprite": "elder",
+   "show_flag": "story_complete",
+   "hide_flag": "lq_hallowmur_ready"
   }
  ],
  "signs": [
@@ -168,6 +190,11 @@
    "dialogue": "gloamwood/smooth"
   },
   {
+   "x": 1,
+   "y": 23,
+   "dialogue": "gloamwood/spring"
+  },
+  {
    "x": 2,
    "y": 7,
    "dialogue": "gloamwood/mossmere_grotto_sign",
@@ -175,6 +202,11 @@
     "wading_boots",
     "plank_bundle"
    ]
+  },
+  {
+   "x": 1,
+   "y": 25,
+   "dialogue": "gloamwood/marker_stone"
   }
  ],
  "blocks": [

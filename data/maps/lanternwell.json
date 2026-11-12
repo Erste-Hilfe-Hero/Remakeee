@@ -11,7 +11,7 @@
   "@.......S..@",
   "@..........@",
   "@..S.......@",
-  "@:......S.:@",
+  "@:......S.S@",
   "@@@@@__@@@@@"
  ],
  "warps": [
@@ -63,6 +63,18 @@
    "x": 8,
    "y": 5,
    "dialogue": "lanternwell/crystal"
+  },
+  {
+   "x": 10,
+   "y": 5,
+   "dialogue": "lanternwell/hint_board"
+  },
+  {
+   "x": 11,
+   "y": 2,
+   "dialogue": "legend_quests/hallowmur_lore",
+   "show_flag": "lq_hallowmur_met",
+   "hide_flag": "lq_hallowmur_ready"
   }
  ],
  "blocks": [
@@ -171,6 +183,7 @@
     ],
     "flag": "beam_room_2"
    },
+   "goal": "Goal: turn the mirrors so the light reaches the crystal.",
    "blocks": [
     {
      "x": 5,
@@ -298,6 +311,7 @@
     ],
     "flag": "beam_room_3"
    },
+   "goal": "Goal: turn the mirrors so the light reaches the crystal.",
    "blocks": [
     {
      "x": 5,
@@ -425,6 +439,7 @@
     ],
     "flag": "beam_room_4"
    },
+   "goal": "Goal: turn the mirrors so the light reaches the crystal.",
    "blocks": [
     {
      "x": 5,
@@ -556,6 +571,7 @@
     ],
     "flag": "beam_room_5"
    },
+   "goal": "Goal: turn the mirrors so the light reaches the crystal.",
    "secrets": [
     {
      "x": 1,
@@ -589,5 +605,6 @@
    5
   ],
   "flag": "beam_room_1"
- }
+ },
+ "goal": "Goal: turn the mirrors so the light reaches the crystal."
 }

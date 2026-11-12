@@ -10,7 +10,7 @@
   "T,,,__,,,..T",
   "T,,,____...T",
   "T^^^^^^^=^^T",
-  "T*..,,,,_..T",
+  "TS..,,,,_..T",
   "T.S.,,,,_.@T",
   "T________..T",
   "T_^^^^^^^^^T",
@@ -26,7 +26,7 @@
   "T,,,_,,,,..T",
   "T,,,_,,,,..T",
   "T...____...T",
-  "TT.....__..T",
+  "TS.....__..T",
   "T.....,__,.T",
   "T*....,__,,T",
   "T.....S__..T",
@@ -135,6 +135,24 @@
      ]
     }
    ]
+  },
+  {
+   "id": "vs_jinks_1",
+   "x": 6,
+   "y": 19,
+   "facing": "down",
+   "dialogue": "veydal_side/jinks_1",
+   "sprite": "ranger",
+   "show_flag": "met_kestra",
+   "hide_flag": "beat_story_rival_jinks_1"
+  },
+  {
+   "id": "vs_hobb",
+   "x": 6,
+   "y": 9,
+   "facing": "down",
+   "dialogue": "veydal_side/hobb",
+   "sprite": "villager"
   }
  ],
  "signs": [
@@ -153,6 +171,16 @@
    "y": 14,
    "dialogue": "story/find_2",
    "hide_flag": "page_2"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "dialogue": "fernstair/marker_stone"
+  },
+  {
+   "x": 1,
+   "y": 20,
+   "dialogue": "fernstair/mound_stone"
   }
  ],
  "gear_spots": [
@@ -212,6 +240,13 @@
    "item": "cooling_gel",
    "count": 1,
    "flag": "find_fern_gate"
+  },
+  {
+   "x": 2,
+   "y": 22,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_mound_3"
   }
  ]
 }

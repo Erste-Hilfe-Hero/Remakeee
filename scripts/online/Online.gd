@@ -12,6 +12,11 @@ enum State { OFFLINE, CONNECTING, ONLINE, UPDATE_REQUIRED }
 ## Must match version/code in export_presets.cfg (tests check it). The server sends builds
 ## older than its "min_version" to the store.
 const CLIENT_VERSION: int = 1
+## Must match version/name in export_presets.cfg. Live content compares it with its per-platform
+## "min_client" and "latest" (docs/LIVE_CONTENT.md).
+const CLIENT_VERSION_NAME: String = "1.1.0"
+const APP_STORE_ID: String = "6831632885"
+const ITUNES_LOOKUP: String = "https://itunes.apple.com/lookup?id=6831632885"
 ## Format number of the online save (plan item 2673). The server refuses saves without it or
 ## newer than its server_config.save_schema_max. Raise both together.
 const SAVE_SCHEMA: int = 1
@@ -39,6 +44,8 @@ var last_error: String = ""
 ## Our public profile as the server returned it ({"code", "name", ...}).
 var profile: Dictionary = {}
 var motd: String = ""
+## The newest version the App Store lists (iOS only, "" until known).
+var store_version: String = ""
 var online_now: int = 0
 ## Server clock minus phone clock, in seconds.
 var clock_offset: int = 0
@@ -66,6 +73,8 @@ var _retry_wait: float = 4.0
 var _rng := RandomNumberGenerator.new()
 var _busy: bool = false
 var _overlay: ReconnectOverlay
+## Hopping dots while a server call is slow (plan item 2290).
+var wait_dots: WaitDots
 ## Slots with an upload on its way, slots saved again meanwhile (value: force), and a counter
 ## of local saves per slot (see push()).
 var _pushing: Dictionary = {}
@@ -86,6 +95,8 @@ func _ready() -> void:
 	add_child(_overlay)
 	_overlay.try_now.connect(retry_now)
 	_overlay.to_title.connect(_to_title)
+	wait_dots = WaitDots.new()
+	add_child(wait_dots)
 
 ## The real server if data/online.json names one, otherwise the local stand-in.
 func make_backend() -> OnlineBackend:
@@ -163,6 +174,13 @@ func connect_now() -> State:
 		return state
 	_take_hello(r.data)
 	_save_session()
+	if state == State.ONLINE:
+		await refresh_live_content()
+		# Sighting days (Online 100, point 65) change wild encounters, so the calendar comes along.
+		if flag_on("events"):
+			await OnlineEvents.refresh()
+		if update_state() == "required":
+			_set_state(State.UPDATE_REQUIRED)
 	if state == State.ONLINE and str(profile.get("platform", "")) != platform_name():
 		# The browser test build's accounts are deleted after 30 days unused (plan item 3765).
 		var p: Dictionary = await backend.call_fn("platform_set", {"p_platform": platform_name()})
@@ -208,16 +226,62 @@ func _take_hello(d: Variant) -> void:
 	_take_server_time(d.get("server_time"))
 	_set_state(State.UPDATE_REQUIRED if bool(d.get("update_required", false)) else State.ONLINE)
 
+# --- Live content and updates (docs/LIVE_CONTENT.md) ------------------------------------
+
+## Fetches the newest signed data patch; the cached or bundled one stays when that fails.
+func refresh_live_content() -> void:
+	LiveContent.ensure_loaded(CLIENT_VERSION_NAME)
+	var r: Dictionary = await backend.call_fn("live_content_get", {"p_have": LiveContent.version()})
+	if r.ok:
+		LiveContent.take(r.data, CLIENT_VERSION_NAME)
+
+## "required" (below this platform's min_client), "optional" (a newer build is out) or "none".
+func update_state() -> String:
+	LiveContent.ensure_loaded(CLIENT_VERSION_NAME)
+	return LiveContent.update_state(LiveContent.data, LiveContent.platform(), CLIENT_VERSION_NAME, store_version)
+
+## Asks the App Store for its current version (iOS). Android has no such lookup without the
+## Play Core library; there the patch's "latest.android" decides.
+func check_store() -> void:
+	if LiveContent.platform() != "ios" or not is_inside_tree():
+		return
+	var req := HTTPRequest.new()
+	req.timeout = 5.0
+	add_child(req)
+	if req.request(ITUNES_LOOKUP) == OK:
+		var res: Array = await req.request_completed
+		if int(res[0]) == HTTPRequest.RESULT_SUCCESS and int(res[1]) == 200:
+			store_version = LiveContent.itunes_version((res[3] as PackedByteArray).get_string_from_utf8())
+	req.queue_free()
+
+## Back from the background: new content, and a required update sends the player to the title.
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_RESUMED and state == State.ONLINE:
+		_on_resumed()
+
+func _on_resumed() -> void:
+	await refresh_live_content()
+	if update_state() == "required" and state == State.ONLINE:
+		if GameState.in_game:
+			await push_dirty()
+		_set_state(State.UPDATE_REQUIRED)
+		if GameState.in_game:
+			_to_title()
+
 ## Calls a server function. A dropped connection switches to OFFLINE (the reconnect screen
 ## takes over while playing).
 func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
 	if state != State.ONLINE:
 		return OnlineBackend.fail("offline", true)
+	if wait_dots != null:
+		wait_dots.begin()
 	var r: Dictionary = await backend.call_fn(name, args)
 	if not r.ok and r.net and r.error != "server_429" and is_inside_tree():
 		if net_retry_seconds > 0.0:
 			await get_tree().create_timer(net_retry_seconds, true).timeout
 		r = await backend.call_fn(name, args)
+	if wait_dots != null:
+		wait_dots.end()
 	if not r.ok and r.net:
 		last_error = r.error
 		_set_state(State.OFFLINE)
@@ -237,7 +301,7 @@ func store_url() -> String:
 	if not _store_url.is_empty():
 		return _store_url
 	if OS.get_name() == "iOS":
-		return "itms-apps://apps.apple.com"
+		return "itms-apps://apps.apple.com/app/id" + APP_STORE_ID
 	return "https://play.google.com/store/apps/details?id=de.chimora.game"
 
 ## Waits up to [param max_seconds] for an upload of [param slot] on its way; true when the
@@ -519,8 +583,15 @@ static func card_numbers() -> Dictionary:
 			bonded += 1 if bool(e.get("bonded", false)) else 0
 		else:
 			seen += 1
-	return {"seals": GameState.rifts_sealed.size(), "seen": seen, "bonded": bonded,
+	var out: Dictionary = {"seals": GameState.rifts_sealed.size(), "seen": seen, "bonded": bonded,
 		"hours": int(GameState.play_time / 3600.0)}
+	# The worn profile frame (item 4284); the server keeps it only with the unlock.
+	if not GameState.profile_frame().is_empty():
+		out["frame"] = GameState.profile_frame()
+	# The greeting card motif put on gifts (item 4285), checked the same way.
+	if not GameState.gift_motif().is_empty():
+		out["motif"] = GameState.gift_motif()
+	return out
 
 func _process(delta: float) -> void:
 	if state == State.ONLINE:

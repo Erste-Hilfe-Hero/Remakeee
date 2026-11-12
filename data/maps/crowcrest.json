@@ -13,17 +13,17 @@
   "_...____...@",
   "@.::_..:::.@",
   "@.::_..:::@@",
-  "@...____...@",
+  "@S..____...@",
   "@@^^^^^^=^^@",
   "@~~~...:_..@",
   "@~~~%..:_..@",
   "@~~~++++_..@",
-  "@~~~%..:_..@",
+  "@~~~%..:_..S",
   "@......::..@",
   "@^^^=^^^^D^@",
   "@:::_:::..S@",
   "@:::_::....@",
-  "@...______.@",
+  "@...______._",
   "@@........@@",
   "@.::....::.@",
   "@.::.S..::.@",
@@ -71,6 +71,14 @@
    "tx": 10,
    "ty": 2,
    "facing": "left"
+  },
+  {
+   "x": 11,
+   "y": 17,
+   "to": "mist_rift",
+   "tx": 5,
+   "ty": 20,
+   "facing": "up"
   },
   {
    "x": 9,
@@ -191,6 +199,10 @@
       "species": "Zippit",
       "level": 8,
       "held": "spark_coil"
+     },
+     {
+      "species": "Puddlet",
+      "level": 7
      }
     ]
    },
@@ -272,6 +284,32 @@
     ]
    },
    "profile": "wall"
+  },
+  {
+   "id": "vs_jinks_2",
+   "x": 7,
+   "y": 19,
+   "facing": "down",
+   "dialogue": "veydal_side/jinks_2",
+   "sprite": "ranger",
+   "show_flag": "beat_story_rival_jinks_1",
+   "hide_flag": "beat_story_rival_jinks_2"
+  },
+  {
+   "id": "vs_marl",
+   "x": 8,
+   "y": 5,
+   "facing": "down",
+   "dialogue": "veydal_side/marl",
+   "sprite": "villager"
+  },
+  {
+   "id": "vs_corr",
+   "x": 5,
+   "y": 12,
+   "facing": "down",
+   "dialogue": "veydal_side/corr",
+   "sprite": "warden"
   }
  ],
  "signs": [
@@ -294,6 +332,16 @@
     "storm_lantern",
     "climbing_pick"
    ]
+  },
+  {
+   "x": 1,
+   "y": 7,
+   "dialogue": "crowcrest/marker_stone"
+  },
+  {
+   "x": 11,
+   "y": 12,
+   "dialogue": "crowcrest/mound_stone"
   }
  ],
  "gear_spots": [
@@ -352,6 +400,13 @@
    "item": "wake_bell",
    "count": 1,
    "flag": "find_crow_door"
+  },
+  {
+   "x": 10,
+   "y": 10,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_mound_4"
   }
  ]
 }

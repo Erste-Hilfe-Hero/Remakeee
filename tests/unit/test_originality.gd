@@ -5,7 +5,9 @@ extends GutTest
 func test_team_level_and_spark_limits_are_our_own() -> void:
 	assert_eq(GameState.MAX_PARTY, 5)
 	assert_eq(BattleModel.MAX_PARTY, GameState.MAX_PARTY)
-	assert_eq(Spirling.MAX_LEVEL, 60)
+	assert_eq(Spirling.STORY_RING, 60)
+	assert_ne(Spirling.LEVEL_SANITY, 100, "no top ring; the garbage bound is not the genre's 100 either")
+	assert_eq(BattleFixtures.make("Mossling", 150).level, 150, "no level 100 ceiling")
 	assert_ne(Spirling.SPARK_MAX, 15)
 
 func test_keen_hits_and_statuses_use_our_own_numbers() -> void:

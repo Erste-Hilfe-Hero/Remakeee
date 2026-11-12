@@ -27,11 +27,34 @@ def build(world):
     shatterfloor_mine(world)
 
 
+# Item 1027: a hint board at the entrance of each dungeon; its tip shows after three failed
+# tries in one room (DungeonHints.gd, flag hint_<dungeon>).
+HINTS = {
+    "bellstone_ruins": ("Tip: each hall's order is scratched into the wall by the stairs. Ring the bells in exactly that order; a wrong bell only starts the row again.",
+                        "Tipp: Die Reihenfolge jeder Halle ist neben der Treppe in die Wand geritzt. Läute die Glocken genau so; eine falsche Glocke fängt die Reihe nur von vorn an."),
+    "lanternwell": ("Tip: follow the light from where it comes in. Turn only the mirrors it touches, one at a time, until it bends toward the crystal.",
+                    "Tipp: Folge dem Licht von dort, wo es hereinfällt. Dreh nur die Spiegel, die es trifft, einen nach dem anderen, bis es zum Kristall abbiegt."),
+    "brackwater_sluice": ("Tip: each wheel turned open raises the water one mark. Some walkways need high water, some low: count the marks before you cross.",
+                          "Tipp: Jedes geöffnete Rad hebt das Wasser um eine Marke. Manche Stege brauchen hohes Wasser, manche niedriges: Zähl die Marken, bevor du hinübergehst."),
+    "shatterfloor_mine": ("Tip: cracked floor holds you once. Plan a path that never steps on the same crack twice.",
+                          "Tipp: Rissiger Boden hält dich einmal. Plane einen Weg, der keinen Riss zweimal betritt."),
+}
+
+
+def hint_board(world, mid, room, x, y):
+    room["signs"] = [s for s in room.get("signs", []) if (s["x"], s["y"]) != (x, y)] + [{"x": x, "y": y, "dialogue": mid + "/hint_board"}]
+    room["rows"][y] = room["rows"][y][:x] + "S" + room["rows"][y][x + 1:]
+    world.add_text(mid, {"hint_board": {
+        "lines": lines(("A board for travellers' notes. Nothing useful is pinned on it yet.", "Eine Tafel für Notizen von Reisenden. Noch hängt nichts Brauchbares daran.")),
+        "after_flag": {"flag": "hint_" + mid, "lines": lines(HINTS[mid])}}})
+
+
 def rooms(world, mid, name, rooms_, base):
     """Turns a list of room dicts into one map with floors."""
     first = dict(rooms_[0])
     first.update(base)
     first["name"] = name
+    hint_board(world, mid, first, 10, len(first["rows"]) - 2)
     if len(rooms_) > 1:
         first["floors"] = rooms_[1:]
     world.add_map(mid, first)
@@ -91,6 +114,7 @@ def bellstone_ruins(world):
         check_rows(fid(mid, n), rows)
         room = {"rows": rows, "signs": signs, "warps": stair_warps(mid, n, count, ("gloamwood", 4, 1))}
         if n < count - 1:
+            room["goal"] = tr("Goal: ring the bells in the order scratched into the wall.", "Ziel: Läute die Glocken in der Reihenfolge, die in die Wand geritzt ist.")
             room["blocks"] = [{"x": 5, "y": 0, "open_flag": flag}, {"x": 6, "y": 0, "open_flag": flag}]
         else:
             room["secrets"] = [secret(5, 1, "max_tonic", "find_bell_top", 2), secret(10, 1, "kin_charm", "find_bell_corner")]
@@ -125,7 +149,8 @@ def brackwater_sluice(world):
                 "@..........@",
                 "@:........:@",
                 "@@@@@__@@@@@"]
-        room = {"rows": rows, "sluices": SLUICES, "warps": stair_warps(mid, n, count, ("brackwater_fen", 1, 13))}
+        room = {"rows": rows, "sluices": SLUICES, "warps": stair_warps(mid, n, count, ("brackwater_fen", 1, 13)),
+                "goal": tr("Goal: set the water level with the sluice wheels so the walkway is clear.", "Ziel: Stell mit den Schleusenrädern den Wasserstand so ein, dass der Steg frei wird.")}
         # The middle of the walkway is a pontoon or a low pier, open only at the right level.
         closed = "~"
         room["blocks"] = [{"x": 5, "y": 2, "open_flag": need, "closed": closed},
@@ -203,7 +228,8 @@ def lanternwell(world):
         signs.append({"x": tx, "y": ty, "dialogue": mid + "/crystal"})
         check_rows(fid(mid, n), rows)
         room = {"rows": rows, "signs": signs, "warps": stair_warps(mid, n, count, ("lighthouse", 2, 6)),
-                "beam": {"x": 0, "y": b["y"], "dir": "right", "mirrors": mirrors, "target": [tx, ty], "flag": flag}}
+                "beam": {"x": 0, "y": b["y"], "dir": "right", "mirrors": mirrors, "target": [tx, ty], "flag": flag},
+                "goal": tr("Goal: turn the mirrors so the light reaches the crystal.", "Ziel: Dreh die Spiegel so, dass das Licht den Kristall erreicht.")}
         if n < count - 1:
             room["blocks"] = [{"x": 5, "y": 0, "open_flag": flag}, {"x": 6, "y": 0, "open_flag": flag}]
         else:
@@ -243,11 +269,13 @@ def shatterfloor_mine(world):
     world.add_text(mid, {"ladder": lines(("A ladder leads back up to the mine entrance.", "Eine Leiter führt zurück hinauf zum Mineneingang."))})
     m = {"name": tr("Shatterfloor Mine", "Splitterboden-Mine"), "region": "veydal", "biome": "dungeon", "backdrop": "ridge",
          "field": "deep_murk", "encounters": mid, "rows": top, "drop_to": mid + "@1",
+         "goal": tr("Goal: cross the cracked floor without breaking through.", "Ziel: Überquere den rissigen Boden, ohne durchzubrechen."),
          "warps": [warp(5, 7, "copperfold", 6, 1, "down"), warp(6, 7, "copperfold", 6, 1, "down")],
          "secrets": [secret(10, 1, "max_tonic", "find_shatter_far", 2)],
          "floors": [{"name": tr("Shatterfloor Mine, lower gallery", "Splitterboden-Mine, untere Strecke"), "rows": low,
                      "warps": [warp(1, 6, mid, 5, 6, "up")],
                      "secrets": [secret(10, 6, "spark_drop", "find_shatter_low")]}]}
+    hint_board(world, mid, m, 10, 6)
     world.add_map(mid, m)
     c = world.load_map("copperfold")
     set_char(c, 6, 0, "_")

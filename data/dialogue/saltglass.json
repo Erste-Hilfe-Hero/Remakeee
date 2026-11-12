@@ -1,0 +1,38 @@
+{
+ "sign": [
+  "SALTGLASS FLATS",
+  "Salt flats, rings 26 to 29.",
+  "The ground cracks like a window."
+ ],
+ "sign_east": [
+  "Road to the far end of the Wide Rift.",
+  "Closed by order of the gravers' hall."
+ ],
+ "nils": [
+  "Nils: Rake the salt and it sings. Not since the lighthouse went dark, though."
+ ],
+ "nils_intro": [
+  "Nils: Careful, the flats are sharp. So is my team."
+ ],
+ "nils_defeat": [
+  "Nils: Ha, you walk the glass like a local."
+ ],
+ "ines": [
+  "Ines: I blow lenses from the salt glass. The lighthouse lens was mine."
+ ],
+ "ines_intro": [
+  "Ines: Show me how bright you burn."
+ ],
+ "ines_defeat": [
+  "Ines: Bright enough to light a lamp."
+ ],
+ "odila": [
+  "Odila: North of here the glass turns to mirrors. Don't stare."
+ ],
+ "odila_intro": [
+  "Odila: One more duel before the Rift?"
+ ],
+ "odila_defeat": [
+  "Odila: Go. Ilse hasn't said a word in a year. Maybe you'll hear her."
+ ]
+}

@@ -9,15 +9,22 @@ Open items (fail only with --strict): placeholder bundle ID, placeholders in the
 LegalInfo.gd, a site address that is not an own domain yet.
 """
 from __future__ import annotations
+import json
 
 import glob
 import os
 import re
+import subprocess
 import sys
 
 from PIL import Image
 
 LANGS = ["de-DE", "en-US"]
+# Store texts in all 14 game languages (docs/I18N.md): (Google Play folder, App Store folder).
+# Every language has its own screenshots and graphics too (tools/store/make_store_images.py).
+TEXT_LANGS = [("de-DE", "de-DE"), ("en-US", "en-US"), ("fr-FR", "fr-FR"), ("es-ES", "es-ES"), ("it-IT", "it"),
+              ("pt-BR", "pt-BR"), ("nl-NL", "nl-NL"), ("pl-PL", "pl"), ("tr-TR", "tr"), ("ru-RU", "ru"),
+              ("ja-JP", "ja"), ("ko-KR", "ko"), ("zh-CN", "zh-Hans"), ("zh-TW", "zh-Hant")]
 LIMITS_ANDROID = {"title.txt": 30, "short_description.txt": 80, "full_description.txt": 4000, "changelogs/default.txt": 500}
 LIMITS_IOS = {"name.txt": 30, "subtitle.txt": 30, "description.txt": 4000, "keywords.txt": 100,
               "promotional_text.txt": 170, "release_notes.txt": 4000, "support_url.txt": 255, "privacy_url.txt": 255}
@@ -44,8 +51,8 @@ def preset_values(key: str) -> list[str]:
 
 
 def check_texts() -> None:
-    for lang in LANGS:
-        for base, limits in (("store/android/" + lang, LIMITS_ANDROID), ("store/ios/metadata/" + lang, LIMITS_IOS)):
+    for play, ios in TEXT_LANGS:
+        for base, limits in (("store/android/" + play, LIMITS_ANDROID), ("store/ios/metadata/" + ios, LIMITS_IOS)):
             for name, limit in limits.items():
                 p = os.path.join(base, name)
                 if not os.path.exists(p):
@@ -54,13 +61,13 @@ def check_texts() -> None:
                 n = len(read(p).strip())
                 if n == 0 or n > limit:
                     errors.append("%s has %d characters (allowed 1-%d)" % (p, n, limit))
-        kw = "store/ios/metadata/%s/keywords.txt" % lang
+        kw = "store/ios/metadata/%s/keywords.txt" % ios
         if os.path.exists(kw) and "offline" in read(kw):
             errors.append(kw + ": the game is online only")
 
 
 def check_images() -> None:
-    for lang in LANGS:
+    for lang, ios_lang in TEXT_LANGS:
         for pattern, size in IMAGES.items():
             p = pattern.format(l=lang)
             if not os.path.exists(p) or Image.open(p).size != size:
@@ -72,12 +79,14 @@ def check_images() -> None:
             w, h = Image.open(p).size
             if not (320 <= min(w, h) and max(w, h) <= 3840 and max(w, h) <= 2 * min(w, h)):
                 errors.append(p + " has a size Google Play does not accept")
-        ios = sorted(glob.glob("store/ios/screenshots/%s/*_iphone69.png" % lang))
+        ios = sorted(glob.glob("store/ios/screenshots/%s/*_iphone69.png" % ios_lang))
         if not ios:
-            errors.append("App Store needs 6.9\" iPhone screenshots for " + lang)
+            errors.append("App Store needs 6.9\" iPhone screenshots for " + ios_lang)
         for p in ios:
             if Image.open(p).size not in ((1320, 2868), (1290, 2796)):
                 errors.append(p + " must be 1320x2868 or 1290x2796")
+    if not os.path.exists("store/ios/iap_review.png") or min(Image.open("store/ios/iap_review.png").size) < 640:
+        errors.append("store/ios/iap_review.png (App Review picture of the shop) missing or smaller than 640 px")
     for p, size in ICONS.items():
         if not os.path.exists(p) or Image.open(p).size != size:
             errors.append("%s must be %dx%d" % (p, *size))
@@ -181,6 +190,43 @@ def check_keys() -> None:
                     errors.append("%s mentions %s; server secrets never go into the game" % (p, w))
 
 
+# The fixed store price list (0.99 to 99.99 EUR, item 4078).
+PRICE_CENTS = {99, 199, 299, 399, 499, 599, 699, 799, 899, 999, 1199, 1299, 1499, 1999, 2499, 2999, 3999, 4999, 7999, 9999}
+
+
+def check_products() -> None:
+    """Every product ID of data/shop.json is in store/products.json and back (item 4077),
+    and every price is on the fixed price list (item 4078)."""
+    shop = json.loads(read("data/shop.json"))
+    store = json.loads(read("store/products.json"))
+    rows = store if isinstance(store, list) else store.get("products", [])
+    game = {str(o["product_id"]): o for o in shop["offers"] if o.get("product_id") and not o.get("rg_only")}
+    listed = {str(p["product_id"]): p for p in rows}
+    for pid in sorted(set(game) - set(listed)):
+        errors.append("product %s is in data/shop.json but not in store/products.json" % pid)
+    for pid in sorted(set(listed) - set(game)):
+        errors.append("product %s is in store/products.json but not in data/shop.json" % pid)
+    table = subprocess.run([sys.executable, "tools/shop/make_shop_table.py", "--check"], capture_output=True, text=True)
+    if table.returncode != 0:
+        errors.append("docs/MONETIZATION.md: shop table is out of date, run tools/shop/make_shop_table.py")
+    for pid, o in sorted(game.items()):
+        cents = int(o.get("eur_cents", 0))
+        if cents not in PRICE_CENTS:
+            errors.append("product %s costs %d cents, not a price from the fixed list" % (pid, cents))
+    # The purchases help page (docs/legal/KAEUFE.md, item 4044) lists every Riftglass pack with its price.
+    help_page = read("docs/legal/KAEUFE.md")
+    for o in shop["offers"]:
+        if o.get("kind") != "currency":
+            continue
+        n = sum(int(g.get("n", 0)) for g in o.get("grants", []) if g.get("t") == "rg")
+        c = int(o["eur_cents"])
+        de = "| %d Rissglas | %d,%02d € |" % (n, c // 100, c % 100)
+        en = "| %d Riftglass | %d.%02d EUR |" % (n, c // 100, c % 100)
+        for row in (de, en):
+            if row not in help_page:
+                errors.append("docs/legal/KAEUFE.md: row '%s' is missing or has another price" % row)
+
+
 def main() -> None:
     check_keys()
     check_texts()
@@ -189,6 +235,7 @@ def main() -> None:
     check_permissions()
     check_sdks()
     check_legal()
+    check_products()
     for e in errors:
         print("ERROR:", e)
     for t in todo:

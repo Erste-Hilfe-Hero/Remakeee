@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"min_client": {"ios": "0", "android": "0"},
+	"latest": {"ios": "1.1.0", "android": "1.1.0"},
+	"news": [
+		{
+			"date": "2026-11-11",
+			"title": {"en": "Chimora 1.1.0", "de": "Chimora 1.1.0"},
+			"body": {"en": "News and patch notes now show up here. Tell us what you think on Discord.", "de": "Neuigkeiten und Patchnotizen erscheinen jetzt hier. Sag uns auf Discord, was du denkst."},
+			"url": "https://discord.gg/e69SM39rKK"
+		}
+	]
+}

@@ -1,7 +1,49 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 6,
+ "catalog_version": 33,
+ "advantage_values": {
+  "_comment": "Pay-to-win step 1 (Ali, 10 Nov 2026). Seal tiers in percent (ShopEffects.seal_percent), crystal_cap = most crystal points per stat (twice Spirling.SPARK_MAX), growth_plus = extra growth of the Growth Seal. Step 3: ring_cap_plus = extra Rings over the Ring cap with the Ring Cap Seal. Step 4: crit_seal = extra crit chance in percentage points per tier, status_ward = percent chance a foe's status fails on your side, start_shield = percent less damage on the first hit your lead takes in each battle.",
+  "power_seal": [
+   5,
+   10,
+   15,
+   20,
+   25,
+   30,
+   35
+  ],
+  "guard_seal": [
+   5,
+   10,
+   15,
+   20,
+   25,
+   30,
+   35
+  ],
+  "speed_seal": [
+   5,
+   10,
+   15,
+   20,
+   25
+  ],
+  "crystal_cap": 24,
+  "growth_plus": 0.5,
+  "ring_cap_plus": 5,
+  "crit_seal": [
+   5,
+   10,
+   15
+  ],
+  "status_ward": [
+   50
+  ],
+  "start_shield": [
+   50
+  ]
+ },
  "offers": [
   {
    "id": "rg_glass_100",
@@ -292,7 +334,7 @@
    "duration": "permanent",
    "plan": 4343,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_ring_tonic_x5",
@@ -637,7 +679,7 @@
    "duration": "permanent",
    "plan": 4403,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_echo_ring",
@@ -667,7 +709,7 @@
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Glowglass Slash",
-   "desc": "Teaches Glowglass Slash (power 95, accuracy 100, 4 energy) to one Ember Spirling. Used up.",
+   "desc": "Teaches Glowglass Slash (power 95, accuracy 100, 4 energy, 20% chance to scorch) to one Ember Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -683,14 +725,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_tide",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Floodglass Wave",
-   "desc": "Teaches Floodglass Wave (power 95, accuracy 100, 4 energy) to one Tide Spirling. Used up.",
+   "desc": "Teaches Floodglass Wave (power 95, accuracy 100, 4 energy, 20% chance to soak) to one Tide Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -706,14 +748,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_bloom",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Vineglass Sting",
-   "desc": "Teaches Vineglass Sting (power 95, accuracy 100, 4 energy) to one Bloom Spirling. Used up.",
+   "desc": "Teaches Vineglass Sting (power 95, accuracy 100, 4 energy, heals 25% of the damage) to one Bloom Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -729,14 +771,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_volt",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Boltglass Bite",
-   "desc": "Teaches Boltglass Bite (power 95, accuracy 100, 4 energy) to one Volt Spirling. Used up.",
+   "desc": "Teaches Boltglass Bite (power 95, accuracy 100, 4 energy, 30% chance to lower Pace) to one Volt Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -752,14 +794,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_stone",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Rockglass Ram",
-   "desc": "Teaches Rockglass Ram (power 95, accuracy 100, 4 energy) to one Stone Spirling. Used up.",
+   "desc": "Teaches Rockglass Ram (power 95, accuracy 100, 4 energy, 30% chance to raise own Guard) to one Stone Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -775,14 +817,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_gale",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Stormglass Cut",
-   "desc": "Teaches Stormglass Cut (power 95, accuracy 100, 4 energy) to one Gale Spirling. Used up.",
+   "desc": "Teaches Stormglass Cut (power 95, accuracy 100, 4 energy, strikes first) to one Gale Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -798,14 +840,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_lumen",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Lightglass Beam",
-   "desc": "Teaches Lightglass Beam (power 95, accuracy 100, 4 energy) to one Lumen Spirling. Used up.",
+   "desc": "Teaches Lightglass Beam (power 95, accuracy 100, 4 energy, cures the user's own condition) to one Lumen Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -821,14 +863,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_umbra",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Duskglass Grip",
-   "desc": "Teaches Duskglass Grip (power 95, accuracy 100, 4 energy) to one Umbra Spirling. Used up.",
+   "desc": "Teaches Duskglass Grip (power 95, accuracy 100, 4 energy, 30% chance to lower Focus) to one Umbra Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -844,7 +886,7 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_move_memory",
@@ -866,7 +908,7 @@
    "duration": "permanent",
    "plan": 4457,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_overcharge",
@@ -981,7 +1023,7 @@
    "duration": "once",
    "plan": 4499,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_glass_spark",
@@ -1155,7 +1197,7 @@
    },
    "plan": 4593,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_storage_box",
@@ -1188,7 +1230,7 @@
    "kind": "advantage",
    "tab": "pass",
    "name": "Wayfarer Pass",
-   "desc": "+50% growth, 30 Riftglass every day, +1 starting energy, 1 free Rift Breath per Warden battle, +1 bond try per battle. 4,99 EUR per month, renews automatically, cancel any time in the store.",
+   "desc": "+50% growth, 30 Riftglass every day, +1 starting energy, 1 extra Rift Breath per Warden battle, +1 bond try per battle. 4,99 EUR per month, renews automatically, cancel any time in the store.",
    "rg_price": 0,
    "eur_cents": 499,
    "store_type": "subscription",
@@ -1210,7 +1252,7 @@
    "kind": "advantage",
    "tab": "packs",
    "name": "Starter Pack",
-   "desc": "300 Riftglass, 5 Ring Tonics, 1 Growth Crystal, 3 Rift Breaths, 3 Echo Scents. Single value 1300 Riftglass. Once per account.",
+   "desc": "300 Riftglass, 5 Ring Tonics, 1 Growth Crystal, 3 Rift Breaths, 3 Echo Scents. Once per account.",
    "rg_price": 0,
    "eur_cents": 299,
    "store_type": "consumable",
@@ -1296,7 +1338,7 @@
    },
    "plan": 4686,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_rift_pack_1",
@@ -1343,7 +1385,7 @@
    ],
    "plan": 4687,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_rift_pack_2",
@@ -1390,7 +1432,7 @@
    ],
    "plan": 4687,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_rift_pack_3",
@@ -1437,7 +1479,7 @@
    ],
    "plan": 4687,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_rift_pack_4",
@@ -1484,7 +1526,7 @@
    ],
    "plan": 4687,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_rift_pack_5",
@@ -1531,7 +1573,7 @@
    ],
    "plan": 4687,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_rift_pack_6",
@@ -1578,7 +1620,7 @@
    ],
    "plan": 4687,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_comeback",
@@ -1680,7 +1722,7 @@
    "duration": "once",
    "plan": 4743,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_spark_shard_x5",
@@ -1710,7 +1752,7 @@
    "kind": "advantage",
    "tab": "advantages",
    "name": "Power Core",
-   "desc": "Raises a Spirling's temperament bonus from 1.1 to 1.2. Permanent.",
+   "desc": "Doubles the lean of one Spirling's temperament: +10% instead of +5% on its stat. Permanent.",
    "rg_price": 800,
    "eur_cents": 799,
    "store_type": "consumable",
@@ -1718,7 +1760,7 @@
    "grants": [
     {
      "t": "item",
-     "id": "rg_power_core",
+     "id": "rg_temper_amp",
      "n": 1
     }
    ],
@@ -1726,7 +1768,7 @@
    "duration": "once",
    "plan": 4750,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_gleam_prism",
@@ -1753,7 +1795,7 @@
    },
    "plan": 4791,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_battle_speed",
@@ -1842,7 +1884,7 @@
    "duration": "permanent",
    "plan": 4836,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_encounter_call",
@@ -1865,7 +1907,7 @@
    "duration": "30 steps",
    "plan": 4838,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_skip_battle",
@@ -1888,14 +1930,14 @@
    "duration": "once",
    "plan": 4839,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_rematch_key",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rematch Key",
-   "desc": "A beaten Wanderer can be challenged again on the same day.",
+   "desc": "A beaten Wayfarer can be challenged again on the same day.",
    "rg_price": 100,
    "eur_cents": 99,
    "store_type": "consumable",
@@ -1911,7 +1953,7 @@
    "duration": "once",
    "plan": 4841,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_warden_lore",
@@ -1933,7 +1975,7 @@
    "duration": "permanent",
    "plan": 4883,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_rift_anchor",
@@ -1956,7 +1998,7 @@
    "duration": "once",
    "plan": 4884,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_warden_weaken",
@@ -1979,14 +2021,14 @@
    "duration": "once",
    "plan": 4885,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_warden_bundle",
    "kind": "advantage",
    "tab": "packs",
    "name": "Warden Bundle",
-   "desc": "Warden Lore, 3 Warden Weakeners, 5 Rift Anchors. Single price 1900 Riftglass.",
+   "desc": "Warden Lore, 3 Warden Weakeners and 5 Rift Anchors in one pack.",
    "rg_price": 1500,
    "eur_cents": 1499,
    "store_type": "consumable",
@@ -2011,7 +2053,7 @@
    "duration": "once",
    "plan": 4890,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_league_power",
@@ -2153,7 +2195,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "4f7a3a"
   },
   {
@@ -2177,7 +2219,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "7a3f6a"
   },
   {
@@ -2201,7 +2243,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "4a5466"
   },
   {
@@ -2225,7 +2267,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "8a4a2a"
   },
   {
@@ -2249,7 +2291,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "4a7aa2"
   },
   {
@@ -2273,7 +2315,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "b09a6a"
   },
   {
@@ -2297,7 +2339,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "2a3048"
   },
   {
@@ -2321,7 +2363,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "a25a6a"
   },
   {
@@ -2345,7 +2387,7 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_backdrop_copper_wood",
@@ -2368,7 +2410,7 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_backdrop_mist_harbour",
@@ -2391,7 +2433,7 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_backdrop_star_meadow",
@@ -2414,7 +2456,7 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_backdrop_ash_field",
@@ -2437,7 +2479,7 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_backdrop_glass_grotto",
@@ -2460,7 +2502,7 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_frame_vine",
@@ -2483,7 +2525,7 @@
    "slot": "frame",
    "plan": 4282,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_frame_brass",
@@ -2506,7 +2548,7 @@
    "slot": "frame",
    "plan": 4282,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_frame_wave",
@@ -2529,7 +2571,7 @@
    "slot": "frame",
    "plan": 4282,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_frame_lantern",
@@ -2552,7 +2594,7 @@
    "slot": "frame",
    "plan": 4282,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_frame_frost",
@@ -2575,7 +2617,7 @@
    "slot": "frame",
    "plan": 4282,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_hat_wide_brim",
@@ -2598,7 +2640,7 @@
    "slot": "hat",
    "plan": 4283,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_hat_wool_cap",
@@ -2621,7 +2663,7 @@
    "slot": "hat",
    "plan": 4283,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_hat_feather_hat",
@@ -2644,7 +2686,7 @@
    "slot": "hat",
    "plan": 4283,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_hat_lantern_hood",
@@ -2667,7 +2709,7 @@
    "slot": "hat",
    "plan": 4283,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_hat_straw_hat",
@@ -2690,7 +2732,7 @@
    "slot": "hat",
    "plan": 4283,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_hat_tricorn",
@@ -2713,7 +2755,7 @@
    "slot": "hat",
    "plan": 4283,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_card_frame_leaf",
@@ -2736,7 +2778,7 @@
    "slot": "card_frame",
    "plan": 4284,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_card_frame_shell",
@@ -2759,7 +2801,7 @@
    "slot": "card_frame",
    "plan": 4284,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_card_frame_gear",
@@ -2782,7 +2824,7 @@
    "slot": "card_frame",
    "plan": 4284,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_card_frame_star",
@@ -2805,7 +2847,7 @@
    "slot": "card_frame",
    "plan": 4284,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_card_frame_ripple",
@@ -2828,7 +2870,7 @@
    "slot": "card_frame",
    "plan": 4284,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_card_frame_ember",
@@ -2851,7 +2893,1438 @@
    "slot": "card_frame",
    "plan": 4284,
    "min_band": 13,
-   "ready": false
+   "ready": true
+  },
+  {
+   "id": "rg_gift_cards",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Gift Cards: 8 Motifs",
+   "desc": "Eight motifs for the card on your gifts to friends, as one set. Only looks, the gift stays the same.",
+   "rg_price": 400,
+   "eur_cents": 399,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.gift_cards",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "gift_card_lantern"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_moth"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_wave"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_pine"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_kite"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_moon"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_shell"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_ember"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "gift_card",
+   "plan": 4285,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_damage_preview",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Damage Preview",
+   "desc": "Before you pick an art, see how much of the foe's Vigor it takes. Switch it on or off in Settings. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.damage_preview",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "damage_preview"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_minimap",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Minimap",
+   "desc": "A small map in the top corner shows where you are and what you found. Permanent.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.minimap",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "minimap"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_fast_text",
+   "kind": "comfort",
+   "tab": "advantages",
+   "name": "Fast Text",
+   "desc": "Adds the Fast text speed: talks and battle lines appear at once. Permanent.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.fast_text",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "fast_text"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_retro_filter",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Retro Filter",
+   "desc": "Pick old-style colours for each era you reached. Only looks, no effect. Permanent.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.retro_filter",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "retro_filter"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_sky_control",
+   "kind": "comfort",
+   "tab": "advantages",
+   "name": "Sky Control",
+   "desc": "Switch weather and the day and night light on or off as you like. Only looks. Permanent.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.sky_control",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "sky_control"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_bench_lessons",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Bench Lessons",
+   "desc": "Spirlings on the bench grow along after every won battle. Switch it in Settings. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.bench_lessons",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "bench_lessons"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_power_seal_1",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Power Seal I",
+   "desc": "Your Spirlings deal 5% more damage. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.power_seal_1",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:power_seal:0",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_power_seal_2",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Power Seal II",
+   "desc": "Your Spirlings deal 10% more damage. Replaces Power Seal I (5%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.power_seal_2",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:power_seal:1",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_power_seal_3",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Power Seal III",
+   "desc": "Your Spirlings deal 15% more damage. Replaces Power Seal II (10%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.power_seal_3",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:power_seal:2",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_power_seal_4",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Power Seal IV",
+   "desc": "Your Spirlings deal 20% more damage. Replaces Power Seal III (15%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.power_seal_4",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:power_seal:3",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_power_seal_5",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Power Seal V",
+   "desc": "Your Spirlings deal 25% more damage. Replaces Power Seal IV (20%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.power_seal_5",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:power_seal:4",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_power_seal_6",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Power Seal VI",
+   "desc": "Your Spirlings deal 30% more damage. Replaces Power Seal V (25%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 2500,
+   "eur_cents": 2499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.power_seal_6",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:power_seal:5",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_power_seal_7",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Power Seal VII",
+   "desc": "Your Spirlings deal 35% more damage. Replaces Power Seal VI (30%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 3000,
+   "eur_cents": 2999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.power_seal_7",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:power_seal:6",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_guard_seal_1",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Guard Seal I",
+   "desc": "Your Spirlings take 5% less damage. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.guard_seal_1",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:guard_seal:0",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_guard_seal_2",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Guard Seal II",
+   "desc": "Your Spirlings take 10% less damage. Replaces Guard Seal I (5%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.guard_seal_2",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:guard_seal:1",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_guard_seal_3",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Guard Seal III",
+   "desc": "Your Spirlings take 15% less damage. Replaces Guard Seal II (10%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.guard_seal_3",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:guard_seal:2",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_guard_seal_4",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Guard Seal IV",
+   "desc": "Your Spirlings take 20% less damage. Replaces Guard Seal III (15%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.guard_seal_4",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:guard_seal:3",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_guard_seal_5",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Guard Seal V",
+   "desc": "Your Spirlings take 25% less damage. Replaces Guard Seal IV (20%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.guard_seal_5",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:guard_seal:4",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_guard_seal_6",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Guard Seal VI",
+   "desc": "Your Spirlings take 30% less damage. Replaces Guard Seal V (25%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 2500,
+   "eur_cents": 2499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.guard_seal_6",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:guard_seal:5",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_guard_seal_7",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Guard Seal VII",
+   "desc": "Your Spirlings take 35% less damage. Replaces Guard Seal VI (30%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 3000,
+   "eur_cents": 2999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.guard_seal_7",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:guard_seal:6",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_speed_seal_1",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Pace Seal I",
+   "desc": "Your Spirlings are 5% faster. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.speed_seal_1",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "speed_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:speed_seal:0",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_speed_seal_2",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Pace Seal II",
+   "desc": "Your Spirlings are 10% faster. Replaces Pace Seal I (5%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.speed_seal_2",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "speed_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:speed_seal:1",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_speed_seal_3",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Pace Seal III",
+   "desc": "Your Spirlings are 15% faster. Replaces Pace Seal II (10%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.speed_seal_3",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "speed_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:speed_seal:2",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_speed_seal_4",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Pace Seal IV",
+   "desc": "Your Spirlings are 20% faster. Replaces Pace Seal III (15%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.speed_seal_4",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "speed_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:speed_seal:3",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_speed_seal_5",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Pace Seal V",
+   "desc": "Your Spirlings are 25% faster. Replaces Pace Seal IV (20%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.speed_seal_5",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "speed_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:speed_seal:4",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_stat_crystal_1",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Stat Crystal +1",
+   "desc": "Adds 1 to one chosen value of one Spirling, counted like Spark. Up to 24 per value, twice the Spark cap. Story only, not in leagues.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.stat_crystal_1",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_stat_crystal_1",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_stat_crystal_5",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Stat Crystal +5",
+   "desc": "Adds 5 to one chosen value of one Spirling, counted like Spark. Up to 24 per value, twice the Spark cap. Story only, not in leagues.",
+   "rg_price": 400,
+   "eur_cents": 399,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.stat_crystal_5",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_stat_crystal_5",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_stat_crystal_10",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Stat Crystal +10",
+   "desc": "Adds 10 to one chosen value of one Spirling, counted like Spark. Up to 24 per value, twice the Spark cap. Story only, not in leagues.",
+   "rg_price": 700,
+   "eur_cents": 699,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.stat_crystal_10",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_stat_crystal_10",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_growth_x5",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Mighty Growth Crystal",
+   "desc": "Five times the growth for the whole team for the next 20 battles.",
+   "rg_price": 700,
+   "eur_cents": 699,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.growth_x5",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_growth_x5",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "20 battles",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_growth_plus",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Growth Seal",
+   "desc": "+50% growth for the whole team in every battle, together with every Growth Crystal and the pass. Does not work in leagues. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.growth_plus",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "growth_plus"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_coin_boost_x3",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Great Coin Gleam",
+   "desc": "Triple coins from battles for 20 battles.",
+   "rg_price": 400,
+   "eur_cents": 399,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.coin_boost_x3",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_coin_boost_x3",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "20 battles",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_ring_tonic_10",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Grand Ring Tonic",
+   "desc": "A Spirling gains 10 Rings at once. Never above the Ring cap.",
+   "rg_price": 700,
+   "eur_cents": 699,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.ring_tonic_10",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic_10",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_ring_crown",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Ring Crown",
+   "desc": "A Spirling jumps to Ring 50 at once. Never above the Ring cap.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.ring_crown",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_crown",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_ring_cap_plus",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Ring Cap Seal",
+   "desc": "Your Ring cap is 5 Rings higher on Veteran and above. Does not work in leagues. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.ring_cap_plus",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "ring_cap_plus"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_coins_100000",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Vault of Coins",
+   "desc": "Exactly 100000 coins for world merchants.",
+   "rg_price": 3000,
+   "eur_cents": 2999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.coins_100000",
+   "grants": [
+    {
+     "t": "coins",
+     "n": 100000
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_bond_lure_1",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Bond Lure I",
+   "desc": "Bonding gets 15% easier for one try. Tier 1 of 4. Story only, not in leagues.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.bond_lure_1",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_bond_lure_1",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_bond_lure_2",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Bond Lure II",
+   "desc": "Bonding gets 30% easier for one try. Tier 2 of 4. Story only, not in leagues.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.bond_lure_2",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_bond_lure_2",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_bond_lure_3",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Bond Lure III",
+   "desc": "Bonding gets 45% easier for one try. Tier 3 of 4. Story only, not in leagues.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.bond_lure_3",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_bond_lure_3",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_bond_lure_4",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Bond Lure IV",
+   "desc": "Bonding gets 60% easier for one try. Tier 4 of 4. Story only, not in leagues.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.bond_lure_4",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_bond_lure_4",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_seal_set",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Seal Set",
+   "desc": "Power Seal VII (+35% damage), Guard Seal VII (35% less damage taken) and Pace Seal V (+25% speed) together. One by one the tiers cost 27500 Riftglass. Only for accounts without any seal tier. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent. Once per account.",
+   "rg_price": 10000,
+   "eur_cents": 9999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.seal_set",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "power_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "guard_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "speed_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "speed_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "speed_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "speed_seal"
+    },
+    {
+     "t": "unlock",
+     "id": "speed_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "none:power_seal,guard_seal,speed_seal",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_spirling_velahra",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Velahra at Ring 40",
+   "desc": "Velahra, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent. The top Spark counts in the story; leagues and Raid Rifts build their teams from species, Ring and techniques. Once per account.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.spirling.velahra",
+   "grants": [
+    {
+     "t": "spirling",
+     "species": "Velahra",
+     "level": 40
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_spirling_hallowmur",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Hallowmur at Ring 40",
+   "desc": "Hallowmur, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent. The top Spark counts in the story; leagues and Raid Rifts build their teams from species, Ring and techniques. Once per account.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.spirling.hallowmur",
+   "grants": [
+    {
+     "t": "spirling",
+     "species": "Hallowmur",
+     "level": 40
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_spirling_scriptorax",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Scriptorax at Ring 40",
+   "desc": "Scriptorax, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent. The top Spark counts in the story; leagues and Raid Rifts build their teams from species, Ring and techniques. Once per account.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.spirling.scriptorax",
+   "grants": [
+    {
+     "t": "spirling",
+     "species": "Scriptorax",
+     "level": 40
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_spirling_lumivane",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Lumivane at Ring 40",
+   "desc": "Lumivane, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent. The top Spark counts in the story; leagues and Raid Rifts build their teams from species, Ring and techniques. Once per account.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.spirling.lumivane",
+   "grants": [
+    {
+     "t": "spirling",
+     "species": "Lumivane",
+     "level": 40
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_spirling_zephyrel",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Zephyrel at Ring 40",
+   "desc": "Zephyrel, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent. The top Spark counts in the story; leagues and Raid Rifts build their teams from species, Ring and techniques. Once per account.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.spirling.zephyrel",
+   "grants": [
+    {
+     "t": "spirling",
+     "species": "Zephyrel",
+     "level": 40
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_spirling_monolurk",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Monolurk at Ring 40",
+   "desc": "Monolurk, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent. The top Spark counts in the story; leagues and Raid Rifts build their teams from species, Ring and techniques. Once per account.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.spirling.monolurk",
+   "grants": [
+    {
+     "t": "spirling",
+     "species": "Monolurk",
+     "level": 40
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_spirling_vorlucent",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Vorlucent at Ring 40",
+   "desc": "Vorlucent, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent. The top Spark counts in the story; leagues and Raid Rifts build their teams from species, Ring and techniques. Once per account.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.spirling.vorlucent",
+   "grants": [
+    {
+     "t": "spirling",
+     "species": "Vorlucent",
+     "level": 40
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_crit_seal_1",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Crit Seal I",
+   "desc": "Your Spirlings land critical hits 5 percentage points more often. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.crit_seal_1",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "crit_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:crit_seal:0",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_crit_seal_2",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Crit Seal II",
+   "desc": "Your Spirlings land critical hits 10 percentage points more often. Replaces Crit Seal I: you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.crit_seal_2",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "crit_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:crit_seal:1",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_crit_seal_3",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Crit Seal III",
+   "desc": "Your Spirlings land critical hits 15 percentage points more often. Replaces Crit Seal II: you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.crit_seal_3",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "crit_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:crit_seal:2",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_status_ward",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Status Ward",
+   "desc": "Half of the statuses foes try to put on your Spirlings fail. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.status_ward",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "status_ward"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_start_shield",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Opening Shield",
+   "desc": "The Spirling you send out first takes half damage from the first hit in every battle. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.start_shield",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "start_shield"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
   }
  ]
 }

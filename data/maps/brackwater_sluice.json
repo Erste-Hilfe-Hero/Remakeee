@@ -11,7 +11,7 @@
   "@~~~~++~~~~@",
   "@~~~~++~~~~@",
   "@..S.......@",
-  "@:........:@",
+  "@:........S@",
   "@@@@@__@@@@@"
  ],
  "warps": [
@@ -53,6 +53,11 @@
    "x": 3,
    "y": 4,
    "dialogue": "brackwater_sluice/sluice_a"
+  },
+  {
+   "x": 10,
+   "y": 5,
+   "dialogue": "brackwater_sluice/hint_board"
   }
  ],
  "blocks": [
@@ -119,6 +124,7 @@
      "facing": "up"
     }
    ],
+   "goal": "Goal: set the water level with the sluice wheels so the walkway is clear.",
    "blocks": [
     {
      "x": 5,
@@ -184,6 +190,7 @@
      "facing": "up"
     }
    ],
+   "goal": "Goal: set the water level with the sluice wheels so the walkway is clear.",
    "blocks": [
     {
      "x": 5,
@@ -256,6 +263,7 @@
      "facing": "up"
     }
    ],
+   "goal": "Goal: set the water level with the sluice wheels so the walkway is clear.",
    "blocks": [
     {
      "x": 5,
@@ -321,6 +329,7 @@
      "facing": "up"
     }
    ],
+   "goal": "Goal: set the water level with the sluice wheels so the walkway is clear.",
    "blocks": [
     {
      "x": 5,
@@ -377,6 +386,7 @@
      "facing": "down"
     }
    ],
+   "goal": "Goal: set the water level with the sluice wheels so the walkway is clear.",
    "blocks": [
     {
      "x": 5,
@@ -414,5 +424,6 @@
   "sluice_a",
   "sluice_b",
   "sluice_c"
- ]
+ ],
+ "goal": "Goal: set the water level with the sluice wheels so the walkway is clear."
 }

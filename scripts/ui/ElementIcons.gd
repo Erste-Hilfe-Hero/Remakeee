@@ -1,6 +1,6 @@
 class_name ElementIcons
 extends RefCounted
-## Original 7x7 pixel symbols for the 8 elements, so an element never depends on colour alone
+## Original 7x7 pixel symbols for the elements, so an element never depends on colour alone
 ## (Era I shows only four greens, and some players can't tell colours apart).
 
 const SIZE: int = 7
@@ -13,6 +13,8 @@ const GLYPHS: Dictionary[int, Array] = {
 	Elements.E.GALE:  [".......", "#####..", ".....#.", "####.#.", "....#..", "######.", "......#"],  # gusts
 	Elements.E.LUMEN: ["...#...", ".#.#.#.", "..###..", "###.###", "..###..", ".#.#.#.", "...#..."],  # star
 	Elements.E.UMBRA: ["..###..", ".##....", "##.....", "##.....", "##.....", ".##....", "..###.."],  # crescent
+	Elements.E.INK:   ["......#", ".....#.", "....#..", "...#...", "..#....", ".###...", "..#...."],  # quill and drop
+	Elements.E.ECHO:  ["..###..", ".#...#.", ".#...#.", ".#...#.", "#######", "...#...", "......."],  # bell
 }
 
 static var _cache: Dictionary[String, ImageTexture] = {}

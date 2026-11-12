@@ -352,9 +352,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1659. [P2] Neue Nebenquest woad_dye: Senna braucht Färberwaid aus drei Moorstellen, um ihr verblasstes Halstuch neu zu färben.
 1660. [P2] Neue Nebenquest hushed_walkers: die zwei stillen Wanderer in Woadfen bekommen ihre Stimmen zurück, wenn die Spielfigur ihnen ihre verlorenen Spirlinge zeigt.
 1661. [P2] Neue Nebenquest guild_exam: Ysolde gibt eine Gildenprüfung in drei Teilen (Ortskunde, Elementkunde, Wegfindung), Belohnung ein Gildenrang im Tagebuch.
-1662. [P2] Neue Nebenquest press_parts: Halvard fehlen drei Teile für die alte Handpresse in Cinderfold, versteckt an Orten in Ashmere.
+1662. [x] [P2] Neue Nebenquest press_parts: Halvard fehlen drei Teile für die alte Handpresse in Cinderfold, versteckt an Orten in Ashmere.
 1663. [P2] Neue Nebenquest glass_song: Ilse lehrt nach dem Mend drei Strophen, die an drei Glasbögen in Saltglass gespielt werden müssen.
-1664. [P2] Neue Nebenquest kiln_fire: Tovan bittet, die alte Ofenflamme mit einem Ember-Spirling aus dem eigenen Team neu zu entzünden (Bedingung has_element EMBER).
+1664. [x] [P2] Neue Nebenquest kiln_fire: Tovan bittet, die alte Ofenflamme mit einem Ember-Spirling aus dem eigenen Team neu zu entzünden (Bedingung has_element EMBER).
 1665. [P2] Neue Nebenquest brann_debt: Brann schuldet einer Händlerin Geld; die Spielfigur kann zahlen oder ihm helfen, es zu verdienen, was veit_respect nicht ändert, aber Branns Ende.
 1666. [P2] Neue Nebenquest skylines: Lio braucht Skizzen von drei Aussichtspunkten in Corvane für die Gilde.
 1667. [P2] Neue Nebenquest juna_post: Juna die Botin braucht Hilfe bei fünf Zustellungen über beide Regionen, mit kleinen Szenen pro Empfänger.
@@ -362,14 +362,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1669. [P3] Neue Nebenquest dyers_feast: das Färberfest in Madderby (Festival-System aus Season.gd) bekommt eine eigene Mini-Geschichte mit drei Szenen.
 1670. [P3] Neue Nebenquest greyreach_moss: der alte Kartograf Moss will ein letztes Mal Mirelas Handschrift sehen; die Spielfigur zeigt ihm eine Seite.
 1671. [P3] Neue Nebenquest rhea_tale: Kestras Schwester Rhea will wissen, ob Kestra glücklich ist; die Antwort kommt erst nach dem Finale.
-1672. [P3] Neue Nebenquest cinder_ash: Graveure brauchen feine Asche von drei Orten, um eine Gedenkplatte für frühere Hüter zu stechen.
-1673. [P3] Neue Nebenquest station_lost: am Bahnhof von Ashmere sucht ein Kind seinen Mirkmole, der in einen Stollen gelaufen ist.
+1672. [x] [P3] Neue Nebenquest cinder_ash: Graveure brauchen feine Asche von drei Orten, um eine Gedenkplatte für frühere Hüter zu stechen.
+1673. [x] [P3] Neue Nebenquest station_lost: am Bahnhof von Ashmere sucht ein Kind seinen Mirkmole, der in einen Stollen gelaufen ist.
 1674. [P3] Neue Nebenquest nella_plate: Graveurlehrling Nella sticht mit den Antworten der Spielfigur eine Platte, die im Postgame in der Graveurhalle hängt.
 1675. [P3] Neue Nebenquest saltglass_keeper: die Leuchtturmwärterin von Saltglass will einen Brief an Aldo zustellen lassen (saltglass_letter).
-1676. [P3] Neue Nebenquest harl_story: der alte Warden Harl erzählt drei Geschichten, wenn die Spielfigur ihm Kohle aus dem Ofenriss bringt.
+1676. [x] [P3] Neue Nebenquest harl_story: der alte Warden Harl erzählt drei Geschichten, wenn die Spielfigur ihm Kohle aus dem Ofenriss bringt.
 1677. [P3] Neue Nebenquest undrawn_sketches: im Ungezeichneten liegen fünf halbe Skizzen von Spirlingen; vollständig gefunden, schreibt Mirela dazu Lore ins Kartenbuch.
 1678. [P3] Neue Nebenquest colour_tour: nach Akt II sollen alle 8 Elemente einmal am Gildenbrunnen in Madderby gezeigt werden.
-1679. [P3] Neue Nebenquest bram_ash: Bram aus Crowcrest sucht seine Shalebats im Ascheland, mit einem Wiedersehen in Cinderfold.
+1679. [x] [P3] Neue Nebenquest bram_ash: Bram aus Crowcrest sucht seine Shalebats im Ascheland, mit einem Wiedersehen in Cinderfold.
 
 ### Entscheidungen mit Folgen
 1680. [x] [P1] Entscheidungen werden in GameState.story_choices (Dictionary) gespeichert und im Online-Spielstand gesichert, mit Versionsfeld für spätere Änderungen.

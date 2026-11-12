@@ -1,0 +1,10 @@
+{
+ "_comment": "Traditional Chinese texts for the German table live. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "A new version of Chimora is out.": "Chimora出新版本了。",
+  "Later": "以後",
+  "Open the link?": "開啟連結？",
+  "Update": "更新",
+  "What's new": "新內容"
+ }
+}

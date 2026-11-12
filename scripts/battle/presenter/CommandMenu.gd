@@ -22,12 +22,15 @@ var _held_index: int = -1
 ## Set when a long press opened the card, so the release does not also pick the move.
 var _long_fired: bool = false
 var _shown_moves: Array[MoveData] = []
+## The battle the menu was last filled from (for the live info lines, item 578).
+var _model: BattleModel
 
 const LONG_PRESS: float = 0.45
 
 var _move_buttons: Array[Button] = []
 ## Element symbol at the left of each move row.
 var _move_icons: Array[TextureRect] = []
+var _move_stripes: Array[ColorRect] = []
 ## Energy cost and matchup, right-aligned in each move row.
 var _move_costs: Array[Label] = []
 var _swap: Button
@@ -64,7 +67,8 @@ func _ready() -> void:
 				_long_fired = false
 				return
 			_hold.stop()
-			Sound.sfx("confirm")
+			var el: int = _shown_moves[idx].element if idx < _shown_moves.size() else -1
+			Sound.sfx("confirm", 0.0, Sound.art_pick_pitch(el))
 			chosen.emit(BattleAction.Kind.MOVE, idx))
 		b.button_down.connect(func() -> void:
 			_held_index = idx
@@ -79,6 +83,7 @@ func _ready() -> void:
 		icon.position = Vector2(2, (MOVE_BUTTON_HEIGHT - ElementIcons.SIZE) / 2)
 		b.add_child(icon)
 		_move_icons.append(icon)
+		_move_stripes.append(_stripe(b))
 		var cost := Label.new()
 		cost.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cost.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -109,6 +114,17 @@ func _ready() -> void:
 			close_info())
 	add_child(_info_panel)
 
+## Thin colour stripe on the button's left edge (era colour code); transparent in Era I.
+func _stripe(b: Button) -> ColorRect:
+	var r := ColorRect.new()
+	r.name = "Stripe"
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	r.color = Color.TRANSPARENT
+	r.set_anchors_and_offsets_preset(Control.PRESET_LEFT_WIDE)
+	r.offset_right = float(HpBarStyle.cfg().get("command_stripe", 2))
+	b.add_child(r)
+	return r
+
 func _on_hold() -> void:
 	if _held_index < 0 or _held_index >= _shown_moves.size():
 		return
@@ -119,7 +135,7 @@ func _on_hold() -> void:
 func open_info(index: int) -> void:
 	if index < 0 or index >= _shown_moves.size():
 		return
-	_info_label.text = move_info(_shown_moves[index])
+	_info_label.text = move_info(_shown_moves[index], _model)
 	_info_panel.visible = true
 	Sound.sfx("confirm")
 
@@ -130,7 +146,9 @@ func is_info_open() -> bool:
 	return _info_panel.visible
 
 ## Info card text for [param mv]: element, kind, power, accuracy, Energy and what its effects do.
-static func move_info(mv: MoveData) -> String:
+## With [param model] a field_element art names the element it takes right now and a delayed_hit
+## art the turn it would land (item 578).
+static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 	var lines: Array[String] = [mv.move_name]
 	var kind: String = Loc.t(MoveData.Kind.keys()[mv.kind].capitalize())
 	if mv.is_damaging():
@@ -161,6 +179,8 @@ static func move_info(mv: MoveData) -> String:
 				var amt: int = int(fx.get("amount", 1))
 				if bool(fx.get("self", true)):
 					line = (Loc.t("Raises its own %s by %d.") if amt > 0 else Loc.t("Lowers its own %s by %d.")) % [stat, absi(amt)]
+					if int(fx.get("full_hp_amount", 0)) != 0:
+						line += " " + Loc.t("By %d at full Vigor.") % absi(int(fx.full_hp_amount))
 				else:
 					line = (Loc.t("Raises the foe's %s by %d.") if amt > 0 else Loc.t("Lowers the foe's %s by %d.")) % [stat, absi(amt)]
 			&"heal_self":
@@ -188,6 +208,8 @@ static func move_info(mv: MoveData) -> String:
 				line = Loc.t("The foe's arts cost %d more Energy for %d turns.") % [BattleRules.ENERGY_TAX_COST, turns if turns > 0 else BattleRules.ENERGY_TAX_TURNS]
 			&"field_element":
 				line = Loc.t("In a field it takes the field's element, power +%d.") % int(fx.get("power_bonus", BattleRules.FIELD_ELEMENT_POWER))
+				if model != null and BattleRules.FIELDS.has(model.field):
+					line += " " + Loc.t("Right now: %s.") % Elements.element_name(BattleRules.resolve_move(mv, model.field).element)
 			&"energy_burn":
 				line = Loc.t("Burns away %d of the foe's Energy.") % int(fx.get("amount", 1))
 			&"heal_block":
@@ -206,6 +228,13 @@ static func move_info(mv: MoveData) -> String:
 				line = Loc.t("Blows the snares off its own side.")
 			&"delayed_hit":
 				line = Loc.t("Lands %d turns later on whoever stands there.") % int(fx.get("turns", 2))
+				if model != null:
+					line += " " + Loc.t("Used now, it lands on turn %d.") % (model.turn + 1 + int(fx.get("turns", 2)))
+			&"mend":
+				line = Loc.t("Then mends a little at the end of the next %d turns.") % int(fx.get("turns", BattleRules.MEND_TURNS))
+			&"field_extend":
+				var fe: int = int(fx.get("amount", 0))
+				line = Loc.t("Makes the Resonance field last %d turns longer.") % (fe if fe > 0 else BattleRules.FIELD_EXTEND_TURNS)
 			&"side_snare":
 				var sn: Dictionary = fx.get("snare", {})
 				if float(sn.get("hp", 0.0)) > 0.0:
@@ -235,10 +264,24 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	b.text = text
 	b.custom_minimum_size = Vector2(0, SMALL_BUTTON_HEIGHT)
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# Four buttons share 144 px; long German words ("Tauschen") pushed the whole battle screen
+	# wider than the display (owner, 9 Nov: buttons not shown right). Clip instead of growing.
+	b.clip_text = true
+	b.text_overrun_behavior = TextServer.OVERRUN_TRIM_CHAR
+	# Width follows the drawn word, so "Binden" gets more room than "Item".
+	b.size_flags_stretch_ratio = b.get_theme_font("font").get_string_size(Loc.t(text), HORIZONTAL_ALIGNMENT_LEFT, -1, b.get_theme_font_size("font_size")).x + 8.0
+	# Thin side margins: four German words need every pixel of the 144.
+	for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
+		if UITheme.get_theme().has_stylebox(state, "Button"):
+			var sb: StyleBox = UITheme.get_theme().get_stylebox(state, "Button").duplicate()
+			sb.content_margin_left = 1
+			sb.content_margin_right = 1
+			b.add_theme_stylebox_override(state, sb)
 	Juice.press_feedback(b)
 	b.pressed.connect(func() -> void:
 		Sound.sfx("confirm")
 		chosen.emit(kind, -1))
+	_stripe(b)
 	parent.add_child(b)
 	return b
 
@@ -285,6 +328,7 @@ static func damage_pct(model: BattleModel, me: Spirling, foe: Spirling, mv: Move
 ## Fills the buttons from the model's current legal actions for the Spirling in [param slot].
 ## The matchup tag shows only when one foe stands (with several, the target is picked after).
 func refresh(model: BattleModel, slot: int = 0) -> void:
+	_model = model
 	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER, slot)
 	var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
 	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, foes[0]) if foes.size() == 1 else null
@@ -299,23 +343,40 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			var mv: MoveData = me.moves[i]
 			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
 			b.text = mv.move_name
-			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and mult >= 0.0 else -1
+			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
 			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct, me.move_cost(mv), me.cooldown_left(mv))
-			_move_icons[i].texture = ElementIcons.outlined(mv.element)
+			var era: int = EraManager.active_era()
+			_move_icons[i].texture = ElementIcons.outlined(mv.element, BattleUiStyle.badge_color(era, mv.element))
+			_move_stripes[i].color = BattleUiStyle.badge_color(era, mv.element) if BattleUiStyle.colour_on(era) else Color.TRANSPARENT
+			var shown_mult: float = mult if mv.power > 0 else -1.0
+			_move_costs[i].text = BattleUiStyle.matchup_mark(shown_mult, GameState.color_blind) + _move_costs[i].text
+			_move_costs[i].add_theme_color_override("font_color", BattleUiStyle.matchup_color(era, shown_mult))
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
 			b.disabled = not me.can_afford(mv) or model.move_locked(mv)
 		else:
 			b.text = "-"
 			_move_costs[i].text = ""
 			_move_icons[i].texture = null
+			_move_stripes[i].color = Color.TRANSPARENT
 			b.disabled = true
 	var kinds: Array[int] = []
 	for a: BattleAction in model.legal_actions(BattleModel.Side.PLAYER, slot):
 		kinds.append(a.kind)
+	var e: int = EraManager.active_era()
+	for pair: Array in [[_swap, "swap"], [_item, "item"], [_bond, "bond"], [_run, "run"]]:
+		var sb: ColorRect = (pair[0] as Button).get_node_or_null("Stripe")
+		if sb != null:
+			sb.color = BattleUiStyle.command_color(e, pair[1])
 	_swap.disabled = not BattleAction.Kind.SWAP in kinds
 	_item.disabled = not BattleAction.Kind.ITEM in kinds
-	_bond.disabled = not BattleAction.Kind.BOND in kinds
+	# Against another Wayfarer the Bond button offers the Ink Oath instead (once per battle).
+	_bond.text = "Bond" if model.is_wild else "Oath"
+	_bond.disabled = not (BattleAction.Kind.BOND in kinds or model.can_oath(BattleModel.Side.PLAYER, slot))
 	_run.disabled = not BattleAction.Kind.RUN in kinds
+	# A Trial can be restarted at any time (item 708).
+	_run.text = "Restart" if model.has_meta("puzzle_max") else "Leave"
+	if model.has_meta("puzzle_max"):
+		_run.disabled = false
 	# "Rest" stands in for the moves when none is affordable.
 	if not BattleAction.Kind.MOVE in kinds:
 		_move_buttons[0].text = "Rest (+%d)" % int(model.rules.get("rest_energy", BattleModel.REST_ENERGY))

@@ -1,0 +1,95 @@
+{
+ "_doc": "Vellmarch, the post-game Era II region (scripts/core/Region2.gd, tests/unit/test_region2.gd). Opens with the flag in unlock_flag after the finale and is drawn in Era II (limited colour, era2 art). Towns and routes carry grid cells for a later world_layout.json entry; maps are built from this sheet. Encounter slots with species null are reserved for Vellmarch's own Spirlings (they come later); until then stand_in names an existing Spirling whose Era II art is shown. Wardens hold the four Rifts; every chapter of the arc has at least one betrayal. Rust and Mask are the region's elements (data/type_chart.json). Rings 52 to 60 (Spirling.STORY_RING, the top story ring). Each Warden gives a reward item after the mend and has a rematch (six Spirlings at ring 60, own lines, money and reward) once vellmarch_done is set.",
+ "id": "vellmarch",
+ "name": "Vellmarch",
+ "era": 2,
+ "unlock_flag": "story_complete",
+ "arrival": {"line": "vellmarch_night_barge", "from": "brindlewick", "to": "cindergate_quay", "text": "The night barge takes no fare. The bargeman just says the House already paid."},
+ "elements": ["RUST", "MASK"],
+ "towns": [
+  {"id": "cindergate_quay", "name": "Cindergate Quay", "pos": [0, 3], "heal": true, "shop": true, "text": "Docks, smoke and a toll booth that charges you for looking at it."},
+  {"id": "tallowmarket", "name": "Tallowmarket", "pos": [2, 3], "heal": true, "shop": true, "text": "Candles by day, rumours by night. Both are sold by weight."},
+  {"id": "hookwick", "name": "Hookwick", "pos": [2, 0], "heal": true, "shop": false, "text": "A fishing town where every boat has two owners and one of them is lying."},
+  {"id": "larkspur_heights", "name": "Larkspur Heights", "pos": [4, 1], "heal": true, "shop": true, "text": "Clean streets, high walls. The money here never touches the ground."},
+  {"id": "lastlamp", "name": "Lastlamp", "pos": [4, 5], "heal": true, "shop": false, "text": "The last lit street before the marsh. Nobody here asks your name twice."}
+ ],
+ "routes": [
+  {"id": "tollchain_causeway", "name": "Tollchain Causeway", "pos": [1, 3], "links": ["cindergate_quay", "tallowmarket"], "ring": [52, 55], "slots": [
+   {"slot": "toll_a", "ground": "fern", "weight": 40, "species": null, "stand_in": "Siltgrove"},
+   {"slot": "toll_b", "ground": "fern", "weight": 35, "species": null, "stand_in": "Cogwright"},
+   {"slot": "toll_c", "ground": "reed", "weight": 25, "species": null, "stand_in": "Delthorn"}]},
+  {"id": "rookery_cut", "name": "Rookery Cut", "pos": [2, 2], "links": ["tallowmarket", "hookwick"], "ring": [53, 56], "slots": [
+   {"slot": "rookery_a", "ground": "fern", "weight": 40, "species": null, "stand_in": "Millvane"},
+   {"slot": "rookery_b", "ground": "fern", "weight": 35, "species": null, "stand_in": "Wickmoth"},
+   {"slot": "rookery_c", "ground": "scree", "weight": 25, "species": null, "stand_in": "Burinox"}]},
+  {"id": "weeping_locks", "name": "Weeping Locks", "pos": [2, 1], "links": ["hookwick", "larkspur_heights"], "ring": [54, 57], "slots": [
+   {"slot": "locks_a", "ground": "reed", "weight": 40, "species": null, "stand_in": "Rainmantle"},
+   {"slot": "locks_b", "ground": "reed", "weight": 35, "species": null, "stand_in": "Reedwarden"},
+   {"slot": "locks_c", "ground": "fern", "weight": 25, "species": null, "stand_in": "Saltspire"}]},
+  {"id": "smelters_drift", "name": "Smelter's Drift", "pos": [3, 3], "links": ["tallowmarket", "larkspur_heights"], "ring": [55, 58], "slots": [
+   {"slot": "drift_a", "ground": "scree", "weight": 40, "species": null, "stand_in": "Smeltmaw"},
+   {"slot": "drift_b", "ground": "scree", "weight": 35, "species": null, "stand_in": "Glassfell"},
+   {"slot": "drift_c", "ground": "fern", "weight": 25, "species": null, "stand_in": "Ashcrest"}]},
+  {"id": "tithe_road", "name": "Tithe Road", "pos": [4, 3], "links": ["larkspur_heights", "lastlamp"], "ring": [56, 59], "slots": [
+   {"slot": "tithe_a", "ground": "fern", "weight": 40, "species": null, "stand_in": "Fenwarden"},
+   {"slot": "tithe_b", "ground": "fern", "weight": 35, "species": null, "stand_in": "Mendlace"},
+   {"slot": "tithe_c", "ground": "scree", "weight": 25, "species": null, "stand_in": "Cullhorn"}]},
+  {"id": "bellrope_marsh", "name": "Bellrope Marsh", "pos": [3, 5], "links": ["lastlamp", "cindergate_quay"], "ring": [57, 60], "slots": [
+   {"slot": "marsh_a", "ground": "reed", "weight": 40, "species": null, "stand_in": "Scrivane"},
+   {"slot": "marsh_b", "ground": "reed", "weight": 35, "species": null, "stand_in": "Silentra"},
+   {"slot": "marsh_c", "ground": "fern", "weight": 25, "species": null, "stand_in": "Duskdigger"}]}
+ ],
+ "rifts": [
+  {"id": "lock_rift", "name": "Lock Rift", "near": "hookwick", "element": "TIDE", "warden": "odile", "flag": "v2_rift_lock_sealed"},
+  {"id": "foundry_rift", "name": "Foundry Rift", "near": "tallowmarket", "element": "RUST", "warden": "brannoc", "flag": "v2_rift_foundry_sealed"},
+  {"id": "masque_rift", "name": "Masque Rift", "near": "larkspur_heights", "element": "MASK", "warden": "sable", "flag": "v2_rift_masque_sealed"},
+  {"id": "vault_rift", "name": "Vault Rift", "near": "lastlamp", "element": "RUST", "warden": "corin", "flag": "v2_rift_vault_sealed"}
+ ],
+ "wardens": [
+  {"id": "odile", "name": "Warden Odile", "rift": "lock_rift", "order": 1, "ring": 57, "money": 4200, "reward": {"item": "echo_fathom_crush", "count": 1},
+   "intro": "You came all this way for a lock keeper? Sweet. The House pays me to lose slowly.",
+   "defeat": "Fine. Take the key. Just know I already sold a copy.",
+   "team": [{"species": "Rainmantle", "level": 56}, {"species": "Saltspire", "level": 56}, {"species": "Kelphound", "level": 57}, {"species": "Ferrowyn", "level": 57}, {"slot": "odile_ace", "species": null, "stand_in": "Delthorn", "level": 57}],
+   "rematch": {"after": "vellmarch_done", "money": 8000, "reward": {"item": "echo_tide", "count": 1},
+    "intro": ["Back again? The House sold me a second key. Let's see if you're worth a third."], "win": ["Two losses. I'll tell the House it was three. They pay by the bruise."], "lose": ["Wet, beaten and broke. Come back when the locks stop laughing at you."],
+    "team": [{"species": "Rainmantle", "level": 60}, {"species": "Saltspire", "level": 60}, {"species": "Kelphound", "level": 60}, {"species": "Ferrowyn", "level": 60}, {"species": "Leviarch", "level": 60}, {"slot": "odile_ace", "species": null, "stand_in": "Delthorn", "level": 60}]}},
+  {"id": "brannoc", "name": "Warden Brannoc", "rift": "foundry_rift", "order": 2, "ring": 58, "money": 5000, "reward": {"item": "echo_furnace_heart", "count": 1},
+   "intro": "My furnace, my rules. The rules say you burn.",
+   "defeat": "You beat the foundry. Now guess who told the Syndicate you were coming.",
+   "team": [{"species": "Smeltmaw", "level": 57}, {"species": "Cogwright", "level": 57}, {"species": "Smoldrake", "level": 58}, {"species": "Cairnhold", "level": 58}, {"slot": "brannoc_ace", "species": null, "stand_in": "Calderox", "level": 58}],
+   "rematch": {"after": "vellmarch_done", "money": 9000, "reward": {"item": "echo_ember", "count": 1},
+    "intro": ["I rebuilt the furnace hotter. Mostly to melt you."], "win": ["Fine. Take the slag and the prize. I already billed the Syndicate for both."], "lose": ["Cooled off already? The foundry never does."],
+    "team": [{"species": "Smeltmaw", "level": 60}, {"species": "Cogwright", "level": 60}, {"species": "Smoldrake", "level": 60}, {"species": "Cairnhold", "level": 60}, {"species": "Glassfell", "level": 60}, {"slot": "brannoc_ace", "species": null, "stand_in": "Calderox", "level": 60}]}},
+  {"id": "sable", "name": "Warden Sable", "rift": "masque_rift", "order": 3, "ring": 59, "money": 5800, "reward": {"item": "echo_night_veil", "count": 1},
+   "intro": "Everyone in this opera wears a face. Mine is the only honest one, and it is fake.",
+   "defeat": "Bravo. Now take off yours. Oh. You were never wearing one. How dull.",
+   "team": [{"species": "Silentra", "level": 58}, {"species": "Glasstarn", "level": 58}, {"species": "Lanternel", "level": 59}, {"species": "Glimmerax", "level": 59}, {"slot": "sable_ace", "species": null, "stand_in": "Scrivane", "level": 59}],
+   "rematch": {"after": "vellmarch_done", "money": 10000, "reward": {"item": "echo_umbra", "count": 1},
+    "intro": ["Encore? Darling, the second act is where somebody always dies."], "win": ["Standing ovation. I paid for half the seats, but still."], "lose": ["Curtain. Nobody claps for an understudy."],
+    "team": [{"species": "Silentra", "level": 60}, {"species": "Glasstarn", "level": 60}, {"species": "Wickmoth", "level": 60}, {"species": "Lanternel", "level": 60}, {"species": "Glimmerax", "level": 60}, {"slot": "sable_ace", "species": null, "stand_in": "Scrivane", "level": 60}]}},
+  {"id": "corin", "name": "Warden Corin", "rift": "vault_rift", "order": 4, "ring": 60, "money": 7000, "reward": {"item": "echo_graft", "count": 1},
+   "intro": "I funded the barge, the bribes and your little tour. Every coin comes home, kid.",
+   "defeat": "Keep the vault. I keep the town. Nobody wins clean in Vellmarch.",
+   "team": [{"species": "Obsidroth", "level": 59}, {"species": "Duskdigger", "level": 59}, {"species": "Zenithare", "level": 60}, {"species": "Ashcrest", "level": 60}, {"slot": "corin_ace", "species": null, "stand_in": "Cullhorn", "level": 60}],
+   "rematch": {"after": "vellmarch_done", "money": 12000, "reward": {"item": "echo_scatter_gale", "count": 1},
+    "intro": ["You owe me a vault. I take payment in rematches."], "win": ["Keep the coin. I own the mint, the bank and the man who counts it."], "lose": ["Every coin comes home. Today that includes yours."],
+    "team": [{"species": "Obsidroth", "level": 60}, {"species": "Burinox", "level": 60}, {"species": "Duskdigger", "level": 60}, {"species": "Zenithare", "level": 60}, {"species": "Ashcrest", "level": 60}, {"slot": "corin_ace", "species": null, "stand_in": "Cullhorn", "level": 60}]}}
+ ],
+ "story": [
+  {"id": "v2_ch1", "title": "Chapter 1: A Free Ride", "at": "cindergate_quay", "needs": "story_complete", "sets": "v2_ch1_done",
+   "text": "Fixer Wren Marlow meets you off the barge with a grin and a map. The House of Corin wants the Rifts closed, and they pay well.",
+   "betrayal": {"by": "The bargeman", "text": "The free barge was a delivery: you. The bargeman gets paid twice, once by each House."}},
+  {"id": "v2_ch2", "title": "Chapter 2: Wet Keys", "at": "hookwick", "needs": "v2_ch1_done", "sets": "v2_ch2_done", "rift": "lock_rift",
+   "text": "The canal locks bleed water into the street. Odile keeps the Lock Rift and the only key.",
+   "betrayal": {"by": "Warden Odile", "text": "Odile copied the key and sold it to the Tallow Syndicate before she even fought you."}},
+  {"id": "v2_ch3", "title": "Chapter 3: Hot Metal", "at": "tallowmarket", "needs": "v2_ch2_done", "sets": "v2_ch3_done", "rift": "foundry_rift",
+   "text": "Rust eats the foundry from the inside. Brannoc says the Syndicate did it. The Syndicate says Brannoc did.",
+   "betrayal": {"by": "Wren Marlow", "text": "Your fixer Wren tipped off the Syndicate. Her cut was your route, your team and your bedtime."}},
+  {"id": "v2_ch4", "title": "Chapter 4: Faces", "at": "larkspur_heights", "needs": "v2_ch3_done", "sets": "v2_ch4_done", "rift": "masque_rift",
+   "text": "At the masked opera every guest is someone else. Sable offers a truce, a drink and a lie, in that order.",
+   "betrayal": {"by": "Tallow Syndicate", "text": "The Syndicate sells Wren out in turn. She ends up at your door with nothing but a sorry and a spare key."}},
+  {"id": "v2_ch5", "title": "Chapter 5: Every Coin Comes Home", "at": "lastlamp", "needs": "v2_ch4_done", "sets": "vellmarch_done", "rift": "vault_rift",
+   "text": "The vault under Lastlamp hums with stolen colour. The man who paid for your barge waits inside.",
+   "betrayal": {"by": "Warden Corin", "text": "Corin never wanted the Rifts closed. He wanted them owned. Trust no one, least of all your sponsor."}}
+ ]
+}

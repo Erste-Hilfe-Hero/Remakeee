@@ -323,11 +323,13 @@ const SETTINGS_GROUPS: Array[Array] = [
 	["sound", "Sound..."],
 	["controls", "Controls..."],
 	["display", "Display and access..."],
+	["wardrobe", "Wardrobe..."],
 	["account", "Account..."],
 	["legal", "Legal"],
 ]
 
 const SETTING_HINTS: Dictionary[String, String] = {
+	"wardrobe": "Put on or take off the looks you got in the shop.",
 	"text_speed": "How fast text appears in talks and battles.",
 	"battle_speed": "Plays battle animations faster.",
 	"auto_battle": "Wild battles pick moves by themselves.",
@@ -335,11 +337,15 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"damage_preview": "Shows how hard a move would hit before you choose it.",
 	"bonus_goals": "Optional extra goals in Wayfarer and Warden battles.",
 	"tips": "Short hints the first time something new comes up.",
+	"play_reminder": "A short note after 90 minutes of play.",
 	"difficulty": "How strong your opponents are. You can change it any time.",
 	"iron_oath": "Spirlings that faint retire for good. Only before your first Rift.",
 	"volume": "All sound. Left and right change it in steps of 10.",
 	"music": "Music only. Left and right change it in steps of 10.",
 	"sfx": "Sound effects only. Left and right change it in steps of 10.",
+	"voice_volume": "Text voice and Spirling cries. Left and right change it in steps of 10.",
+	"ambience": "Wind, water and other sounds of a place. Left and right change it in steps of 10.",
+	"mono": "Both ears hear the same sound, for hearing on one side.",
 	"sound_test": "Listen to every tune, sound and cry you know.",
 	"text_voice": "Short blips while a line types out.",
 	"sound_captions": "Important sounds also show as a short text at the top.",
@@ -366,6 +372,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"left_handed": "Puts the pad on the right and A and B on the left.",
 	"tap_to_move": "Tap a tile and your Wayfarer walks there.",
 	"always_run": "Run without holding B. Hold B to walk.",
+	"bond_style": "Mine: tap one button fast. Echo: repeat the call.",
 	"one_hand": "Everything sits low on the screen for one thumb.",
 	"swap_ab_touch": "A and B on the touch pad change places.",
 	"swap_ab_pad": "The gamepad's A goes back and B confirms.",
@@ -384,6 +391,7 @@ func run_settings() -> void:
 			"sound": await _run_setting_group("Sound", "sound")
 			"controls": await run_controls()
 			"display": await run_display()
+			"wardrobe": await ShopMenu.run_wardrobe(self)
 			"account": await AccountMenu.run(self)
 			"legal": await run_legal()
 		if not is_inside_tree():
@@ -401,27 +409,32 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["text_speed", "Text speed: %s" % String(GameState.TextSpeed.keys()[GameState.text_speed]).capitalize()],
 				["battle_speed", "Battle speed: %dx" % int(GameState.battle_speed_scale())],
 				["auto_battle", "Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off")],
-				["bench_lessons", "Bench lessons: %s" % ("On" if GameState.bench_xp else "Off")],
-				["damage_preview", "Damage preview: %s" % ("On" if GameState.damage_preview else "Off")],
+				["bench_lessons", "Bench lessons: %s" % shop_or("bench_lessons", "On" if GameState.bench_xp else "Off")],
+				["damage_preview", "Damage preview: %s" % shop_or("damage_preview", "On" if GameState.damage_preview else "Off")],
 				["bonus_goals", "Bonus goals: %s" % ("On" if GameState.bonus_goals else "Off")],
 				["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
+				["play_reminder", "Break reminder: %s" % ("On" if GameState.play_reminder else "Off")],
 			]
 			# Difficulty and the Iron Oath only during a journey.
 			if GameState.in_game:
-				rows.append(["difficulty", "Challenge: %s" % DIFFICULTY_TEXT[GameState.difficulty]])
+				# A lowered challenge stays visible (item 746).
+				rows.append(["difficulty", "Challenge: %s" % DIFFICULTY_TEXT[GameState.difficulty] + (" " + Loc.t("(lowered)") if GameState.difficulty_lowered() else "")])
 				rows.append(["iron_oath", "Iron Oath: %s" % ("Sworn" if GameState.iron_oath else "Off")])
 		"sound":
 			rows = [
 				["volume", "Volume: %d%%" % int(round(GameState.volume * 100.0))],
 				["music", "Music: %d%%" % int(round(GameState.music_volume * 100.0))],
 				["sfx", "Sound effects: %d%%" % int(round(GameState.sfx_volume * 100.0))],
+				["voice_volume", "Voices: %d%%" % int(round(GameState.voice_volume * 100.0))],
+				["ambience", "Ambience: %d%%" % int(round(GameState.ambience_volume * 100.0))],
+				["mono", "Mono sound: %s" % ("On" if GameState.mono_audio else "Off")],
 				["text_voice", "Text voice: %s" % ("On" if GameState.text_voice else "Off")],
 				["sound_captions", "Sound captions: %s" % ("On" if GameState.sound_captions else "Off")],
 				["sound_test", "Sound test..."],
 			]
 	return rows
 
-const SLIDER_KEYS: Array[String] = ["volume", "music", "sfx"]
+const SLIDER_KEYS: Array[String] = ["volume", "music", "sfx", "voice_volume", "ambience"]
 
 static func _rows_to_entries(rows: Array) -> Array[Dictionary]:
 	var entries: Array[Dictionary] = []
@@ -441,10 +454,33 @@ func _run_setting_group(title: String, group: String) -> void:
 			return
 		SaveManager.save_settings()
 
+## Shown instead of the value while a setting still needs its shop unlock (short in every language).
+const SHOP_MARK: String = "€"
+
+## [param value] for a setting row, or SHOP_MARK while its shop unlock is missing (Ali, 7 Nov).
+static func shop_or(key: String, value: String) -> String:
+	return value if ShopEffects.owns_setting(key) else SHOP_MARK
+
+## Shows where to buy [param key] and returns true when the setting is still locked.
+func locked_setting(key: String) -> bool:
+	if ShopEffects.owns_setting(key):
+		return false
+	toast("In the shop: %s" % ShopEffects.setting_offer_name(key))
+	return true
+
+## Next text speed; Fast only with the shop's Fast Text.
+static func next_text_speed(current: int) -> GameState.TextSpeed:
+	var next: int = (current + 1) % GameState.TextSpeed.size()
+	if next == GameState.TextSpeed.FAST and not ShopEffects.owns_setting("fast_text"):
+		next = GameState.TextSpeed.SLOW
+	return next as GameState.TextSpeed
+
 func _settings_action(key: String, dir: int = 1) -> void:
+	if key in ShopEffects.SETTING_UNLOCKS and locked_setting(key):
+		return
 	match key:
 		"text_speed":
-			GameState.text_speed = ((GameState.text_speed + 1) % GameState.TextSpeed.size()) as GameState.TextSpeed
+			GameState.text_speed = next_text_speed(GameState.text_speed)
 		"battle_speed":
 			GameState.cycle_battle_speed()
 		"auto_battle":
@@ -457,6 +493,8 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.bonus_goals = not GameState.bonus_goals
 		"tips":
 			GameState.tips_enabled = not GameState.tips_enabled
+		"play_reminder":
+			GameState.play_reminder = not GameState.play_reminder
 		"volume":
 			GameState.volume = step_volume(GameState.volume, dir)
 			GameState.apply_volume()
@@ -465,6 +503,17 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.apply_volume()
 		"sfx":
 			GameState.sfx_volume = step_volume(GameState.sfx_volume, dir)
+			GameState.apply_volume()
+			Sound.sfx("confirm")
+		"voice_volume":
+			GameState.voice_volume = step_volume(GameState.voice_volume, dir)
+			GameState.apply_volume()
+			Sound.text_blip("player", "a")
+		"ambience":
+			GameState.ambience_volume = step_volume(GameState.ambience_volume, dir)
+			GameState.apply_volume()
+		"mono":
+			GameState.mono_audio = not GameState.mono_audio
 			GameState.apply_volume()
 			Sound.sfx("confirm")
 		"text_voice":
@@ -478,10 +527,10 @@ func _settings_action(key: String, dir: int = 1) -> void:
 		"difficulty":
 			var opts: Array[Dictionary] = []
 			for i: int in DIFFICULTY_TEXT.size():
-				opts.append({"text": DIFFICULTY_TEXT[i], "hint": DIFFICULTY_HINTS[i]})
+				opts.append({"text": DIFFICULTY_TEXT[i], "hint": DifficultyTable.hint(i, DIFFICULTY_HINTS[i])})
 			var d: int = await pick("Difficulty", opts, true, GameState.difficulty)
 			if d >= 0:
-				GameState.difficulty = d as GameState.Difficulty
+				GameState.set_difficulty(d)
 		"iron_oath":
 			await _iron_oath()
 
@@ -569,17 +618,28 @@ func run_display() -> void:
 		var idx: int = await pick("Display and access", _rows_to_entries(rows))
 		if idx < 0:
 			return
-		match str(rows[idx][0]):
+		var dkey: String = str(rows[idx][0])
+		if dkey in ShopEffects.SETTING_UNLOCKS and locked_setting(dkey):
+			continue
+		match dkey:
 			"battery":
 				GameState.battery_saver = not GameState.battery_saver
 			"motion":
 				GameState.reduce_motion = not GameState.reduce_motion
 			"contrast":
 				GameState.high_contrast = not GameState.high_contrast
+			"color_blind":
+				GameState.color_blind = not GameState.color_blind
 			"large_text":
 				GameState.large_text = not GameState.large_text
 			"language":
-				GameState.language = Loc.next_language()
+				var codes: Array[String] = Loc.LANGUAGES
+				var lang_rows: Array[Dictionary] = []
+				for c: String in codes:
+					lang_rows.append({"text": Loc.LANGUAGE_NAMES[c]})
+				var li: int = await pick("Language", lang_rows, true, codes.find(Loc.language()))
+				if li >= 0:
+					GameState.language = codes[li]
 			"day_night":
 				GameState.day_night = not GameState.day_night
 			"weather":
@@ -606,12 +666,13 @@ static func display_rows() -> Array[Array]:
 		["battery", "Battery saver: %s" % ("On" if GameState.battery_saver else "Off")],
 		["motion", "Less motion: %s" % ("On" if GameState.reduce_motion else "Off")],
 		["contrast", "High contrast: %s" % ("On" if GameState.high_contrast else "Off")],
+		["color_blind", "Colour-blind: %s" % ("On" if GameState.color_blind else "Off")],
 		["large_text", "Large text: %s" % ("On" if GameState.large_text else "Off")],
 		["language", "Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()]],
-		["day_night", "Day and night: %s" % ("On" if GameState.day_night else "Off")],
-		["weather", "Weather: %s" % ("On" if GameState.weather else "Off")],
-		["minimap", "Minimap: %s" % MINIMAP_NAMES[GameState.minimap]],
-		["retro", "Retro filter: %s" % retro],
+		["day_night", "Day and night: %s" % shop_or("day_night", "On" if GameState.day_night else "Off")],
+		["weather", "Weather: %s" % shop_or("weather", "On" if GameState.weather else "Off")],
+		["minimap", "Minimap: %s" % shop_or("minimap", MINIMAP_NAMES[GameState.minimap])],
+		["retro", "Retro filter: %s" % shop_or("retro", retro)],
 		["screen_shake", "Screen shake: %s" % Juice.LEVEL_NAMES[GameState.screen_shake]],
 	]
 
@@ -679,6 +740,8 @@ func run_controls() -> void:
 				GameState.tap_to_move = not GameState.tap_to_move
 			"always_run":
 				GameState.always_run = not GameState.always_run
+			"bond_style":
+				GameState.bond_style = "echo" if GameState.bond_style == "mine" else "mine"
 			"one_hand":
 				GameState.one_hand = not GameState.one_hand
 			"vibration":
@@ -707,6 +770,7 @@ static func controls_rows() -> Array[Array]:
 		["left_handed", "Left-handed: %s" % ("On" if GameState.left_handed else "Off")],
 		["tap_to_move", "Tap to walk: %s" % ("On" if GameState.tap_to_move else "Off")],
 		["always_run", "Always run: %s" % ("On" if GameState.always_run else "Off")],
+		["bond_style", "Bonding: %s" % ("Mine" if GameState.bond_style == "mine" else "Echo")],
 		["one_hand", "One-hand layout: %s" % ("On" if GameState.one_hand else "Off")],
 		["swap_ab_touch", "Touch A/B swap: %s" % ("On" if GameState.swap_ab_touch else "Off")],
 		["swap_ab_pad", "Pad A/B swap: %s" % ("On" if GameState.swap_ab_pad else "Off")],
@@ -729,7 +793,7 @@ static func summary(s: Spirling) -> String:
 	]
 	var tm: Dictionary = s.temperament()
 	lines.append("Temperament: %s. %s" % [tm.label, tm.text])
-	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	var tr: Dictionary = BattleRules.trait_info(s.gift_id())
 	if not tr.is_empty():
 		lines.append("Gift: %s. %s" % [tr.label, tr.text])
 	if not s.held.is_empty():
@@ -749,7 +813,7 @@ static func storage_card(s: Spirling) -> String:
 	]
 	var tm: Dictionary = s.temperament()
 	lines.append("Temperament: %s. %s" % [tm.label, tm.text])
-	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	var tr: Dictionary = BattleRules.trait_info(s.gift_id())
 	if not tr.is_empty():
 		lines.append("Gift: %s. %s" % [tr.label, tr.text])
 	lines.append("Keepsake: %s" % (str(Database.item(s.held).get("name", s.held)) if not s.held.is_empty() else "none"))
@@ -776,11 +840,11 @@ static func keepsake_suggestion(s: Spirling) -> String:
 ## One storage row: favourite star, name, Ring, and a keepsake mark (item 357). A Spirling on a
 ## roaming trip carries the backpack glyph (plan 3448).
 static func storage_line(s: Spirling) -> String:
-	return "%s%s%s R%d%s" % [Expeditions.GLYPH + " " if Expeditions.is_away(s.uid) else "", "* " if s.favorite else "", s.display_name(), s.level, "  +%s" % str(Database.item(s.held).get("name", s.held)) if not s.held.is_empty() else ""]
+	return "%s%s%s%s R%d%s" % [Expeditions.GLYPH + " " if Expeditions.is_away(s.uid) else "", "* " if s.favorite else "", GleamRules.mark(s), s.display_name(), s.level, "  +%s" % str(Database.item(s.held).get("name", s.held)) if not s.held.is_empty() else ""]
 
 static func party_line(s: Spirling) -> String:
 	var tag: String = " " + Loc.t("worn out") if s.is_fainted() else ""
-	return "%s R%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), tag]
+	return "%s%s R%d %d/%d%s" % [GleamRules.mark(s), s.display_name(), s.level, s.hp, s.max_hp(), tag]
 
 ## Summary in pages (item 1890): values, arts, gift and keepsake, temperament. Values are
 ## written out in full (item 1891).
@@ -799,7 +863,7 @@ static func summary_pages(s: Spirling) -> Array[String]:
 		arts.append("%s\n  %s  %s  %s" % [mv.move_name, Elements.element_name(mv.element),
 			Loc.t("Power %s" % power), Loc.t("Energy %d" % mv.energy_cost)])
 	var gift: PackedStringArray = []
-	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	var tr: Dictionary = BattleRules.trait_info(s.gift_id())
 	gift.append(Loc.t("Gift: %s" % tr.label) + "\n" + Loc.t(str(tr.text)) if not tr.is_empty() else Loc.t("No gift."))
 	gift.append("")
 	if not s.held.is_empty():
@@ -858,9 +922,14 @@ static func _draw_party_row(b: Button, s: Spirling, leader: bool = false) -> voi
 	ElementIcons.draw_row(b, els, Vector2(b.size.x - 3 - w, floorf((b.size.y - ElementIcons.SIZE) / 2.0)), ink)
 
 ## Settings -> Legal: imprint/privacy/terms links and the engine licence notice.
+## The community server, opened from Settings > Legal on the title screen and in the pause menu.
+const DISCORD_URL: String = "https://discord.gg/e69SM39rKK"
+## Opens a link outside the game; tests replace it so no browser starts.
+static var open_url: Callable = func(url: String) -> void: OS.shell_open(url)
+
 func run_legal() -> void:
 	while true:
-		var idx: int = await pick_strings("Legal", ["Imprint & privacy", "Licences"] as Array[String])
+		var idx: int = await pick_strings("Legal", ["Imprint & privacy", "Licences", "Join our Discord"] as Array[String])
 		match idx:
 			-1:
 				return
@@ -869,6 +938,31 @@ func run_legal() -> void:
 			1:
 				for page: String in LegalInfo.pages(LegalInfo.licence_text()):
 					await info(page)
+			2:
+				open_url.call(DISCORD_URL)
+				toast(DISCORD_URL)
+
+## "What's new" (docs/LIVE_CONTENT.md): patch notes and news from the live content, newest
+## first, and the Discord invite. An entry with a link offers to open it after its text.
+func run_news() -> void:
+	while true:
+		var entries: Array[Dictionary] = LiveContent.news()
+		var rows: Array[String] = []
+		for e: Dictionary in entries:
+			rows.append(str(e.title))
+		rows.append("Join our Discord")
+		var idx: int = await pick_strings("What's new", rows)
+		if idx < 0:
+			return
+		if idx == entries.size():
+			open_url.call(DISCORD_URL)
+			toast(DISCORD_URL)
+			continue
+		var e: Dictionary = entries[idx]
+		var head: String = str(e.title) if str(e.date).is_empty() else "%s  %s" % [e.title, e.date]
+		await info(head + "\n\n" + str(e.body))
+		if not str(e.url).is_empty() and await confirm("Open the link?"):
+			open_url.call(str(e.url))
 
 ## The info scroll bar: the part of the text in view, drawn in MID on the right edge.
 ## Returns the drawn rect (empty when everything fits), for tests.

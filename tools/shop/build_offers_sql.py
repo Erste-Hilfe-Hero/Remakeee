@@ -58,12 +58,17 @@ def build():
            "  select coalesce(jsonb_agg(distinct x order by x), '[]'::jsonb)\n"
            "  from jsonb_array_elements_text(case when jsonb_typeof(public.server_config.value) = 'array' then public.server_config.value else '[]'::jsonb end || excluded.value) x);\n")
     products = []
-    for o in offers:
+    # rg_only offers are sold for Riftglass only and never become store products (Ali, 10 Nov 2026).
+    for o in (o for o in offers if not o.get("rg_only")):
         apple, google = TYPES[o["store_type"]]
         products.append({"product_id": o["product_id"], "offer": o["id"], "apple_type": apple, "google_type": google,
                          "eur": "%d.%02d" % (o["eur_cents"] // 100, o["eur_cents"] % 100),
                          "name_en": o["name"], "name_de": de.get(o["name"], o["name"]),
                          "desc_en": o["desc"][:200], "desc_de": de.get(o["desc"], o["desc"])[:200],
+                         # Apple Family Sharing stays off (item 4073): the server binds every Apple
+                         # purchase to the buyer's account (appAccountToken), so a family member's copy
+                         # would be refused. Revisit with StoreKit 2 at the end (docs/shop/ALI_TODO.md).
+                         "family_shareable": False,
                          "ready": o["ready"]})
     prod = json.dumps({"_comment": "Store products for App Store Connect and the Play Console, built from data/shop.json by "
                        "tools/shop/build_offers_sql.py. Apple subscription group: Pass. Google subscription base plan: monthly.",

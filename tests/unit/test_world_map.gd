@@ -31,7 +31,8 @@ func test_places_cover_the_layout_grid() -> void:
 	assert_eq(WorldAtlas.grid_cell("corvane_quay"), Vector2i(8, 4), "Corvane right of Veydal")
 	assert_eq(WorldAtlas.place_at(Vector2i(3, 4)), "brindlewick")
 	var size: Vector2i = WorldAtlas.grid_size()
-	assert_eq(size, Vector2i(12, 7))
+	assert_eq(size, Vector2i(36, 7), "Solenne right of Ashmere, Vellmarch right of Solenne, Halcyra right of Vellmarch")
+	assert_eq(WorldAtlas.grid_cell("brightledge"), Vector2i(29, 4), "Halcyra right of Vellmarch")
 
 func test_unknown_sighted_visited() -> void:
 	# Item 1244.
@@ -121,3 +122,23 @@ func test_menu_opens_and_closes() -> void:
 	assert_true(state.done)
 	await wait_process_frames(1)
 	assert_null(host.get_node_or_null("world_map"))
+
+func test_dungeon_banner_counts_rooms() -> void:
+	# Items 993 and 1026.
+	assert_eq(WorldAtlas.room_flags("lanternwell").size(), 5)
+	var m: MapData = MapData.load_map("lanternwell@1")
+	assert_eq(WorldAtlas.banner(m, {}), "%s  0/5" % Loc.t(m.display_name))
+	assert_eq(WorldAtlas.banner(m, {"beam_room_1": true, "beam_room_2": true}), "%s  2/5" % Loc.t(m.display_name))
+	assert_true(WorldAtlas.room_flags("brackwater_sluice").is_empty(), "water levels are no rooms")
+	var g: MapData = MapData.load_map("gloamwood")
+	assert_true(WorldAtlas.banner(g, {}).ends_with("%"), "routes show the survey share")
+
+func test_gloamwood_has_a_rest_spring() -> void:
+	# Item 921.
+	var g: MapData = MapData.load_map("gloamwood")
+	assert_ne(g.heal_point, Vector2i(-1, -1))
+	var heals: bool = false
+	for s: Dictionary in g.signs:
+		if str(Dialogue.get_entry(str(s.dialogue)).get("action", "")) == "heal":
+			heals = true
+	assert_true(heals)

@@ -24,6 +24,8 @@ var echo_duel: Dictionary = {}
 var league_match: Dictionary = {}
 ## A Raid Rift attempt the server set up (RaidMenu); the overworld plays it after the menu closes.
 var raid_attempt: Dictionary = {}
+## An entry to open before the list ("Goals" for a chimora://event link, DeepLink.gd).
+var open_on: String = ""
 ## Area 3 item 1012/1014: the map has a puzzle room; "Room" offers undo and reset.
 var room_puzzle: bool = false
 var can_undo: bool = false
@@ -32,31 +34,55 @@ var room_action: String = ""
 
 ## Fixed order, the most used first (item 1869). Travel, Storage and Room only show when
 ## they can be used; they keep their place. Leagues shows only while leagues are on,
-## the Map book once Aldo gave it.
-const MENU_ORDER: Array[String] = ["Goals", "Map book", "Map", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
+## the Map book once Aldo gave it, the Ledger once it has an entry (clan intrigue, Trust.gd).
+const MENU_ORDER: Array[String] = ["Goals", "Map book", "Ledger", "Map", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
 	"Leagues", "Records", "Storage", "Save", "Save and to title", "Photo", "Settings"]
 
 static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false,
-		map_book: bool = false) -> Array[String]:
+		map_book: bool = false, ledger: bool = false) -> Array[String]:
 	var out: Array[String] = []
 	for l: String in MENU_ORDER:
 		if (l == "Storage" and not storage) or (l == "Travel" and not travel) or (l == "Room" and not room) \
-				or (l == "Leagues" and not leagues) or (l == "Map book" and not map_book):
+				or (l == "Leagues" and not leagues) or (l == "Map book" and not map_book) \
+				or (l == "Ledger" and not ledger):
 			continue
 		out.append(l)
 	return out
 
+## The Ledger (Schuldbuch): every secret the player shares with someone. Each entry is
+## leverage and a risk at once. Trust values themselves stay hidden.
+func run_ledger() -> void:
+	while true:
+		var rows: Array[Dictionary] = Trust.ledger_rows(GameState.flags)
+		var entries: Array[Dictionary] = []
+		for r: Dictionary in rows:
+			var lines: Array[String] = Trust.ledger_text(str(r.ref))
+			entries.append({"text": lines[0] if not lines.is_empty() else str(r.id)})
+		var idx: int = await pick("Ledger (%d)" % rows.size(), entries)
+		if idx < 0:
+			return
+		var body: Array[String] = Trust.ledger_text(str(rows[idx].ref))
+		var shown: PackedStringArray = []
+		for l: String in body:
+			shown.append(Loc.t(l))
+		await info("\n".join(shown))
+
 func run() -> void:
+	if open_on == "Goals":
+		open_on = ""
+		await run_goals()
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
-			GameState.has_flag("aldo_gift"))
+			GameState.has_flag("aldo_gift"), not Trust.ledger_rows(GameState.flags).is_empty())
 		labels.insert(labels.find("Satchel") + 1, "Shop (locked)" if Billing.kids_locked() else "Shop")
 		if "Travel" in labels:
 			await tip("travel")
 		var entries: Array[Dictionary] = []
+		var waiting: bool = Goals.pending() > 0
 		for l: String in labels:
-			entries.append({"text": l})
+			# A red dot on "Goals" while a reward waits (plan 3529).
+			entries.append({"text": l, "icon": Goals.dot()} if l == "Goals" and waiting else {"text": l})
 		var idx: int = await pick(menu_title(current_map), entries, true, maxi(0, labels.find(last_label)))
 		if idx < 0:
 			return
@@ -64,6 +90,7 @@ func run() -> void:
 		match labels[idx]:
 			"Goals": await run_goals()
 			"Map book": await MapBookMenu.run(self)
+			"Ledger": await run_ledger()
 			"Map": await WorldMapMenu.run(self, current_map)
 			"Team": await run_team()
 			"Friends":
@@ -121,6 +148,13 @@ func run_goals() -> void:
 			saving = rows.size()
 			var gl: String = Exchange.goal_line()
 			rows.append({"text": "Savings goal...", "hint": gl if gl != "" else Loc.t("Pick an offer of Marla's stand to save up for.")})
+		if GameState.has_flag(EchoPath.OPEN_FLAG):
+			# Plan 3470: which rooms were visited, of what kind, and which are cleared.
+			rows.append({"text": "Echo Path map...", "detail": "\n".join(EchoPath.map_lines())})
+		var collect: int = -1
+		if Goals.pending() > 0:
+			collect = rows.size()
+			rows.append({"text": "Collect all", "hint": Loc.t("Collect every waiting reward at once."), "icon": Goals.dot()})
 		var guide: int = -1
 		if not Tips.seen().is_empty():
 			guide = rows.size()
@@ -130,6 +164,9 @@ func run_goals() -> void:
 			return
 		if idx == swap:
 			await _swap_daily_task()
+			continue
+		if idx == collect:
+			await info("\n".join(Goals.collect_all()))
 			continue
 		if idx == saving:
 			await _pick_savings_goal()
@@ -150,23 +187,34 @@ static func goal_tab_rows() -> Array[Dictionary]:
 			out.append({"text": GOAL_TAB_ROWS[tab], "detail": Goals.tab_text(tab)})
 	return out
 
-## The Guide (item 1985): every tip already seen, by topic, to read again.
+const RESET_TIPS_ROW: String = "Show tips again"
+const RESET_TIPS_DONE: String = "Tips are back. Pretend it's your first day."
+
+## The Guide (item 1985): every tip already seen, by topic, to read again. The last row
+## lets every tip show once more (item 1998).
 func run_guide() -> void:
 	while true:
 		var ids: Array[String] = Tips.seen()
 		var names: Array[String] = []
 		for id: String in ids:
 			names.append(Tips.TOPICS[id])
+		names.append(RESET_TIPS_ROW)
 		var idx: int = await pick_strings("Guide", names)
 		if idx < 0:
 			return
+		if idx == ids.size():
+			if await confirm("Show every tip once more, as if you were new?"):
+				Tips.reset()
+				toast(RESET_TIPS_DONE)
+				return
+			continue
 		var lines: Array[String] = []
 		for l: String in Tips.lines_of(ids[idx]):
 			lines.append(Loc.t(l))
 		await info("\n".join(lines))
 
-## [param daily] replaces today's visitor line (tests).
-static func goal_rows(flags: Dictionary, daily: Variant = null) -> Array[Dictionary]:
+## [param daily] replaces today's visitor line, [param newcomer] GameState.is_newcomer() (tests).
+static func goal_rows(flags: Dictionary, daily: Variant = null, newcomer: Variant = null) -> Array[Dictionary]:
 	var rows: Array[Dictionary] = []
 	var g: Dictionary = QuestLog.current(flags)
 	if not g.is_empty():
@@ -180,6 +228,9 @@ static func goal_rows(flags: Dictionary, daily: Variant = null) -> Array[Diction
 		rows.append({"text": QuestLog.goal_text(g, flags), "icon": goal_mark(),
 			"hint": Loc.t("Where: %s" % where) if not where.is_empty() else "",
 			"detail": "\n".join(lines)})
+	# New players get a self-ticking "First steps" list right under the main goal (item 1995).
+	if FirstSteps.shows(flags, GameState.is_newcomer() if newcomer == null else bool(newcomer)):
+		rows.append(FirstSteps.row(flags))
 	for s: Dictionary in QuestLog.open_side_goals(flags):
 		rows.append({"text": QuestLog.side_text(s, flags), "hint": Loc.t("Side goal"),
 			"detail": QuestLog.side_text(s, flags)})
@@ -206,6 +257,8 @@ static func goal_mark() -> Texture2D:
 ## Saves without blocking the menu (item 2130) and says honestly where the save is: "Saved."
 ## only once the server has it, otherwise that the phone has it and the server follows (1868).
 func save_now() -> void:
+	# Ticked before saving so the tick is in the save itself.
+	FirstSteps.tick(FirstSteps.SAVED)
 	var ok: bool = SaveManager.save_game()
 	Sound.sfx("save" if ok else "cancel")
 	if not ok:
@@ -220,6 +273,7 @@ func save_now() -> void:
 ## Saves and, if that worked, ends the session (item 1879). Returns true when the menu
 ## should close and the game go back to the title.
 func save_and_quit() -> bool:
+	FirstSteps.tick(FirstSteps.SAVED)
 	if not SaveManager.save_game():
 		Sound.sfx("cancel")
 		toast("Saving failed.", 2.5)
@@ -276,17 +330,23 @@ func _swap_daily_task() -> void:
 func run_records() -> void:
 	Achievements.check()
 	while true:
-		var lines: Array[String] = ["Badge book", "Achievements by category", "Season path", "Personal bests"]
+		var lines: Array[String] = ["Badge book", "Achievements by category", "Season path", "Personal bests", "What is missing"]
 		if not Waymarks.history_lines(1).is_empty():
 			lines.append("Waymark history")
 		if Masters.open():
 			lines.append("Master Wayfarers")
 		if GameState.has_flag("rift_cinder_sealed") or GameState.has_flag("rift_tide_sealed"):
 			lines.append("Tower map")
+		if Vows.can_take() or not (GameState.records.get("vows", {}) as Dictionary).is_empty():
+			lines.append("Vows")
+		lines.append("Run chronicle")
+		lines.append("Finds by region")
 		if not memorial_lines().is_empty():
 			lines.append("Memorial book")
 		if not Album.stickers().is_empty():
 			lines.append("Sticker wall")
+		if not Lexicon.collected(GameState.records).is_empty():
+			lines.append("Lexicon")
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
@@ -299,15 +359,54 @@ func run_records() -> void:
 			"Achievements by category": await run_achievement_lists()
 			"Season path": await pick_strings(SeasonPath.title(), SeasonPath.lines())
 			"Personal bests": await info(records_text())
+			"What is missing": await info("\n".join(Completion.lines() + Completion.missing_lines()))
 			"Waymark history": await info(Loc.t("Waymarks: %d") % GameState.waymarks + "\n" + "\n".join(Waymarks.history_lines()))
 			"Master Wayfarers": await run_masters()
 			"Tower map": await info("\n".join(RiftTower.card_lines()))
+			"Vows": await run_vows()
+			"Run chronicle": await info("\n".join(RunChronicle.lines()))
+			"Finds by region": await info("\n".join(RegionStats.lines(GameState.flags)))
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
+			"Lexicon": await run_lexicon()
 			"Watch last battle":
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
 					return
+
+## The lexicon (plan area 2, item 680): the collected entries, each opened as a page.
+func run_lexicon() -> void:
+	var ids: Array[String] = Lexicon.collected(GameState.records)
+	# The first page counts the bonus goals met per map (item 767).
+	var titles: Array[String] = [Loc.t("Bonus goals")]
+	for id: String in ids:
+		titles.append(Lexicon.title(id))
+	while true:
+		var i: int = await pick_strings(Loc.t("Lexicon %d") % ids.size(), titles)
+		if i < 0:
+			return
+		if i == 0:
+			await info(BattleGoals.lexicon_text(GameState.records))
+		else:
+			await info(Loc.t(Lexicon.text(ids[i - 1])))
+
+## Vows (plan 3406-3408): take one before the first Rift is mended, give one up at any time.
+func run_vows() -> void:
+	while true:
+		var i: int = await pick_strings(Loc.t("Vows: each one kept to the end of Act I pays %d Waymarks.") % Vows.KEPT_WAYMARKS, Vows.lines())
+		if i < 0:
+			return
+		var v: Dictionary = Vows.list()[i]
+		var id: String = str(v.id)
+		var text: String = Loc.t(str(v.name)) + "\n" + Loc.t(str(v.text))
+		if Vows.status(id) == "" and Vows.can_take():
+			if await confirm(text + "\n\n" + Loc.t("Take this vow?")):
+				Vows.take(id)
+		elif Vows.is_active(id):
+			if await confirm(text + "\n\n" + Loc.t("Give up this vow? You only lose its bonus.")):
+				Vows.give_up(id)
+		else:
+			await info(text)
 
 ## Memorial book in the Sanctuary (plan 3397): every Spirling that retired under the Iron Oath.
 static func memorial_lines() -> Array[String]:
@@ -377,7 +476,12 @@ func run_achievement_lists() -> void:
 static func records_text() -> String:
 	var lines: PackedStringArray = []
 	lines.append_array(Completion.lines())
+	# The badge case: one seal per mended story Rift.
+	var seals: int = GameState.STORY_RIFTS.filter(func(r: String) -> bool: return GameState.has_flag("rift_%s_sealed" % r)).size()
+	lines.append(Loc.t("Rift seals: %d of %d") % [seals, GameState.STORY_RIFTS.size()])
 	lines.append("Lighthouse stair best: floor %d of %d" % [Gauntlet.best(), Gauntlet.FLOORS])
+	if GameState.iron_oath:
+		lines.append(Loc.t("Under the Iron Oath: floor %d of %d") % [int(GameState.records.get("gauntlet_best_oath", 0)), Gauntlet.FLOORS])
 	var rec: Dictionary = GameState.records.get("weekly", {})
 	var week: String = WeeklyChallenge.this_week()
 	var best: int = int(rec.get("best", 0)) if str(rec.get("week", "")) == week else 0
@@ -411,7 +515,7 @@ static func menu_title(map_id: String = "") -> String:
 		t += "\n" + Loc.t(MapData.load_map(map_id).display_name)
 	if not Festival.active().is_empty():
 		t += "   " + Loc.t("Ribbons %d") % Festival.ribbons()
-	if GameState.level_cap() < Spirling.MAX_LEVEL:
+	if GameState.has_ring_limit():
 		t += "   Ring limit %d" % GameState.level_cap()
 	return t
 
@@ -438,7 +542,7 @@ func run_travel() -> bool:
 	var names: Array[String] = []
 	for id: String in ids:
 		names.append(MapData.load_map(id).display_name if MapData.exists(id) else id)
-	var idx: int = await pick_strings("Travel to a rest spot", names)
+	var idx: int = await pick_strings("Travel to a place" if Billing.unlocked("fast_travel") > 0 else "Travel to a rest spot", names)
 	if idx < 0:
 		return false
 	# A mistap must not carry the player somewhere else (item 1878).
@@ -448,6 +552,7 @@ func run_travel() -> bool:
 	return true
 
 func run_team() -> void:
+	FirstSteps.tick(FirstSteps.TEAM)
 	if GameState.party.size() >= 2:
 		await tip("team_order")
 	while true:
@@ -455,9 +560,24 @@ func run_team() -> void:
 		for i: int in GameState.party.size():
 			rows.append(MenuHost.party_entry(GameState.party[i], i == 0))
 		# Free slots up to the limit show how much room is left (item 1898).
-		for i: int in range(GameState.party.size(), GameState.MAX_PARTY):
+		for i: int in range(GameState.party.size(), GameState.party_max()):
 			rows.append(free_slot_row())
-		var idx: int = await pick("Team", rows)
+		# The wardrobe for bought looks (item 4287), once there is something in it.
+		var wardrobe: int = -1
+		if not ShopMenu.owned_looks().is_empty():
+			wardrobe = rows.size()
+			rows.append({"text": Loc.t("Wardrobe...")})
+		# Running shop boosts with the battles left (item 4342).
+		var boosts: Array[String] = ShopEffects.boost_lines()
+		# Account power: the sum of the bought advantages that work right now.
+		var power: int = ShopEffects.account_power()
+		if power > 0:
+			boosts.push_front(Loc.t("Power %d") % power)
+		var title: String = Loc.t("Team") + ("  " + "  ".join(boosts) if not boosts.is_empty() else "")
+		var idx: int = await pick(title, rows)
+		if idx >= 0 and idx == wardrobe:
+			await ShopMenu.run_wardrobe(self)
+			continue
 		if idx < 0 or idx >= GameState.party.size():
 			return
 		var s: Spirling = GameState.party[idx]
@@ -468,7 +588,13 @@ func run_team() -> void:
 			await tip("unfurl")
 		if s.earlier_form() != null:
 			opts.append("Furl back")
+		# Move Memory (shop item 4457).
+		if Billing.unlocked("move_memory") > 0:
+			opts.append("Relearn an art")
 		var opt: int = await pick_strings(s.display_name(), opts)
+		if opt >= 0 and opts[opt] == "Relearn an art":
+			await _relearn(s)
+			continue
 		if opt >= 5:
 			await _unfurl(s, opts[opt] == "Unfurl")
 			continue
@@ -586,7 +712,7 @@ func _usable_items() -> Array[String]:
 	for id: Variant in GameState.inventory:
 		var it: Dictionary = Database.item(str(id))
 		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))
-				or int(it.get("rings", 0)) > 0 or bool(it.get("spark_all", false))):
+				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false))):
 			out.append(str(id))
 	return out
 
@@ -642,6 +768,14 @@ func run_bag() -> void:
 			await _teach_echo(item_id)
 		elif int(it.get("spark", 0)) > 0:
 			await _use_spark_charm(item_id)
+		elif int(it.get("crystal", 0)) > 0:
+			await _use_stat_crystal(item_id)
+		elif bool(it.get("temper_shift", false)):
+			await _use_temper_shift(item_id)
+		elif bool(it.get("temper_core", false)):
+			await _use_power_core(item_id)
+		elif bool(it.get("gleam", false)):
+			await _use_gleam_prism(item_id)
 		elif it.has("boost"):
 			if await confirm("%s\n%s" % [Loc.t(str(it.get("name", ""))), Loc.t(str(it.get("description", "")))], "Use", "Not now"):
 				await info(ShopEffects.start_boost(item_id))
@@ -658,6 +792,8 @@ func run_bag() -> void:
 			if who >= 0:
 				var msg: String = GameState.use_item_outside_battle(item_id, GameState.party[who])
 				await info(msg if not msg.is_empty() else "That would do nothing right now.")
+		elif item_id == TideChart.ITEM:
+			await info("\n".join(TideChart.lines()))
 		elif bool(it.get("gear", false)):
 			await info(gear_page(item_id), gear_picture(item_id))
 		else:
@@ -668,6 +804,9 @@ const GEAR_PLACES: Dictionary[String, String] = {
 	"~": "narrow water with a post on the far side", "^": "low cliffs", "v": "vine walls (v)",
 	"w": "shallow water (w)", "Y": "gaps with a chalk mark (Y)", "dark": "pitch-dark passages",
 	"wheel": "sluice wheels, mine carts and grates", "shaft": "marked edges above a shaft",
+	"look": "open ground ahead (hidden finds up to 6 steps away)",
+	"tide": "the tides of sea caves",
+	"rubbing": "weathered stones on old burial mounds",
 }
 
 ## Satchel page for a piece of Wayfarer Gear: name, short text and where it works.
@@ -688,9 +827,10 @@ static func gear_picture(id: String) -> Texture2D:
 		"w": TilesetFactory.Kind.WADE, "Y": TilesetFactory.Kind.PLANK, "dark": TilesetFactory.Kind.ROCK,
 		"wheel": TilesetFactory.Kind.ROCK, "shaft": TilesetFactory.Kind.PLANK}
 	var on: Array = Database.item(id).get("works_on", [])
-	if on.is_empty() or not ResourceLoader.exists(TilesetFactory.ATLAS_PATH):
+	var atlas: String = TilesetFactory.atlas_path()
+	if on.is_empty() or atlas.is_empty():
 		return null
-	var img: Image = (load(TilesetFactory.ATLAS_PATH) as Texture2D).get_image()
+	var img: Image = (load(atlas) as Texture2D).get_image()
 	var k: int = int(kinds.get(str(on[0]), TilesetFactory.Kind.GRASS))
 	var tile: Image = img.get_region(Rect2i(k * TilesetFactory.TILE, 0, TilesetFactory.TILE, TilesetFactory.TILE))
 	tile.resize(TilesetFactory.TILE * 2, TilesetFactory.TILE * 2, Image.INTERPOLATE_NEAREST)
@@ -710,18 +850,95 @@ func _teach_echo(id: String) -> void:
 	if not GameState.can_learn_echo(s, id):
 		await info("%s can't learn %s." % [s.display_name(), mv.move_name])
 		return
-	if s.moves.size() < Spirling.MAX_MOVES:
-		s.moves.append(mv)
-	else:
+	var forget: int = -1
+	if s.moves.size() >= Spirling.MAX_MOVES:
 		var known: Array[String] = []
 		for m: MoveData in s.moves:
 			known.append(m.move_name)
-		var forget: int = await pick_strings("Forget which art for %s?" % mv.move_name, known)
+		forget = await pick_strings("Forget which art for %s?" % mv.move_name, known)
 		if forget < 0:
 			return
-		s.moves[forget] = mv
+	if not GameState.learn_from_item(s, id, forget):
+		return
 	Sound.sfx("level_up")
 	await info("%s learned %s!" % [s.display_name(), mv.move_name])
+
+## Move Memory (item 4457): any art the Spirling could know at its Ring, at any time.
+func _relearn(s: Spirling) -> void:
+	var names: Array[String] = GameState.relearnable(s)
+	if names.is_empty():
+		await info(Loc.t("%s knows every art it can learn right now.") % s.display_name())
+		return
+	var shown: Array[String] = []
+	for n: String in names:
+		shown.append(Loc.t(n))
+	var pick: int = await pick_strings(Loc.t("Relearn which art for %s?") % s.display_name(), shown)
+	if pick < 0:
+		return
+	var forget: int = -1
+	if s.moves.size() >= Spirling.MAX_MOVES:
+		var known: Array[String] = []
+		for m: MoveData in s.moves:
+			known.append(Loc.t(m.move_name))
+		forget = await pick_strings(Loc.t("Forget which art for %s?") % shown[pick], known)
+		if forget < 0:
+			return
+	if GameState.relearn(s, names[pick], forget):
+		Sound.sfx("level_up")
+		await info(Loc.t("%s learned %s!") % [s.display_name(), shown[pick]])
+
+## Temper Shift (item 4743): pick a Spirling, then the temperament it gets.
+func _use_temper_shift(id: String) -> void:
+	var who: int = await _pick_member("Use the Temper Shift on?")
+	if who < 0:
+		return
+	var s: Spirling = GameState.party[who]
+	var names: Array[String] = []
+	for t: Dictionary in Spirling.TEMPERAMENTS:
+		var line: String = "%s: %s" % [Loc.t(str(t.label)), Loc.t(str(t.text))]
+		names.append(("> " if t.id == s.temperament().id else "") + line)
+	var pick: int = await pick_strings(Loc.t("New temperament for %s?") % s.display_name(), names)
+	if pick < 0:
+		return
+	var t: Dictionary = Spirling.TEMPERAMENTS[pick]
+	if not GameState.shift_temper(s, str(t.id), id):
+		await info(Loc.t("%s already has that temperament.") % s.display_name())
+		return
+	Sound.sfx("level_up")
+	await info(Loc.t("%s is %s now.") % [s.display_name(), Loc.t(str(t.label))])
+
+## Power Core (item 4750): doubles the lean of one Spirling's temperament.
+func _use_power_core(id: String) -> void:
+	var who: int = await _pick_member("Use the Power Core on?")
+	if who < 0:
+		return
+	var s: Spirling = GameState.party[who]
+	if not GameState.use_power_core(s, id):
+		await info(Loc.t("That would do nothing: %s has no lean to strengthen, or already has a Power Core.") % s.display_name())
+		return
+	Sound.sfx("level_up")
+	await info(Loc.t("%s's temperament grows stronger: +10%% instead of +5%%.") % s.display_name())
+
+## Gleam Prism (items 4791, 4793): the player picks exactly which Spirling gleams.
+func _use_gleam_prism(id: String) -> void:
+	var who: int = await _pick_member("Use the Gleam Prism on?")
+	if who < 0:
+		return
+	var s: Spirling = GameState.party[who]
+	if s.gleam_boost:
+		await info(Loc.t("%s already gleams.") % s.display_name())
+		return
+	if not await confirm(Loc.t("Turn %s into its Gleam form? +10%% on all values, for good.") % s.display_name(), "Gleam", "Not now"):
+		return
+	if GameState.use_gleam_prism(s, id):
+		Sound.sfx("level_up")
+		await info(Loc.t("%s gleams with Riftglass light!") % s.display_name())
+
+func _pick_member(question: String) -> int:
+	var names: Array[String] = []
+	for s: Spirling in GameState.party:
+		names.append(MenuHost.party_line(s))
+	return await pick_strings(question, names)
 
 ## Spark Charm: pick a Spirling, then the stat to brighten.
 func _use_spark_charm(id: String) -> void:
@@ -747,6 +964,31 @@ func _use_spark_charm(id: String) -> void:
 	Sound.sfx("level_up")
 	await info("%s's %s spark grew brighter!" % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()])
 
+## Stat Crystal from the shop: adds its points to one stat of one Spirling, up to twice the
+## free Spark cap per stat.
+func _use_stat_crystal(id: String) -> void:
+	var names: Array[String] = []
+	for s: Spirling in GameState.party:
+		names.append(MenuHost.party_line(s))
+	var who: int = await pick_strings("Use the Stat Crystal on?", names)
+	if who < 0:
+		return
+	var s: Spirling = GameState.party[who]
+	var stats: Array[String] = []
+	for key: String in Spirling.STAT_KEYS:
+		stats.append("%s: +%d / %d" % [key.to_upper(), int(s.crystal.get(key, 0)), ShopEffects.crystal_cap()])
+	var pick: int = await pick_strings("Which value?", stats)
+	if pick < 0:
+		return
+	var key: String = Spirling.STAT_KEYS[pick]
+	var added: int = ShopEffects.add_crystal(s, key, int(Database.item(id).crystal))
+	if added <= 0:
+		await info("That value already holds all the crystal it can.")
+		return
+	GameState.take_item(id)
+	Sound.sfx("level_up")
+	await info(Loc.t("%s's %s rose by %d.") % [s.display_name(), key.to_upper(), added])
+
 ## Spirlog filters (item 249), kept while the menu is open.
 var _log_search: String = ""
 var _log_element: int = -1
@@ -757,6 +999,7 @@ var _log_region: int = -1
 ## Spirlog: chapters per open region with their progress, search and filters, then the kinds.
 ## A seen kind opens its map-book page (SpirlogPage); unseen ones show as "???".
 func run_spirlog() -> void:
+	FirstSteps.tick(FirstSteps.SPIRLOG)
 	while true:
 		var regions: Array[String] = SpirlogBook.open_regions(GameState.flags)
 		var region: String = regions[_log_region] if _log_region >= 0 and _log_region < regions.size() else ""
@@ -768,6 +1011,8 @@ func run_spirlog() -> void:
 		for r: String in regions:
 			entries.append({"text": SpirlogBook.chapter_line(r, GameState.spirlog)})
 			actions.append("chapter")
+		entries.append({"text": SpirlogBook.gleam_line(GameState.spirlog)})
+		actions.append("gleam")
 		entries.append({"text": "Chapter: %s" % (region.capitalize() if not region.is_empty() else "all")})
 		actions.append("region")
 		entries.append({"text": "Search: %s" % (_log_search if not _log_search.is_empty() else "-")})
@@ -781,6 +1026,11 @@ func run_spirlog() -> void:
 		if not encounter_table.is_empty():
 			entries.append({"text": "Tracker: this area"})
 			actions.append("tracker")
+		entries.append({"text": Collection.art_book_lines()[0]})
+		actions.append("arts")
+		if not Collection.prism_kinds().is_empty():
+			entries.append({"text": Collection.prism_lines()[0]})
+			actions.append("prism")
 		if GameState.has_flag(EchoPath.OPEN_FLAG):
 			# Plan 3354: the Echo Path's wild kinds of the week, so missing ones can be planned.
 			entries.append({"text": EchoPath.spirlog_hint()})
@@ -808,6 +1058,13 @@ func run_spirlog() -> void:
 				_log_status = (_log_status + 1) % SpirlogBook.STATUS_NAMES.size()
 			"tracker":
 				await info(_tracker_text())
+			"gleam":
+				var names: PackedStringArray = SpirlogBook.gleam_bonded_kinds(GameState.spirlog)
+				await info(SpirlogBook.gleam_line(GameState.spirlog) + "\n\n" + (", ".join(names) if not names.is_empty() else Loc.t("No Gleam has joined you yet.")))
+			"arts":
+				await info("\n".join(Collection.art_book_lines()))
+			"prism":
+				await info("\n".join(Collection.prism_lines()))
 			"echo":
 				await info(EchoPath.spirlog_hint() + "\n" + Loc.t("They wait in the wild rooms of the Echo Path behind the Cinder Rift. A new set comes every week."))
 			"kind":
@@ -1017,6 +1274,8 @@ func _run_stored(index: int) -> void:
 				elif await confirm_danger("Release %s?" % s.display_name()) \
 						and await confirm_danger("It goes home for good. Really release it?"):
 					await info(GameState.release(i))
+					# A farewell letter follows (plan 1136).
+					await info("\n".join(Released.letter(s)))
 					return
 
 ## Party -> storage, asking whether the keepsake stays in the satchel (item 356).

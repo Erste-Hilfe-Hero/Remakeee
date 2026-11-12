@@ -12,7 +12,7 @@
   "@.k.kkk.k..@",
   "@.k.....kk.@",
   "@.kkkkk..k.@",
-  "@:....k..k:@",
+  "@:....k..kS@",
   "@@@@@__@@@@@"
  ],
  "warps": [
@@ -33,7 +33,20 @@
    "facing": "down"
   }
  ],
- "signs": [],
+ "signs": [
+  {
+   "x": 10,
+   "y": 6,
+   "dialogue": "shatterfloor_mine/hint_board"
+  },
+  {
+   "x": 0,
+   "y": 3,
+   "dialogue": "legend_quests/scriptorax_lore",
+   "show_flag": "lq_scriptorax_met",
+   "hide_flag": "lq_scriptorax_ready"
+  }
+ ],
  "secrets": [
   {
    "x": 10,
@@ -77,5 +90,6 @@
    ]
   }
  ],
- "drop_to": "shatterfloor_mine@1"
+ "drop_to": "shatterfloor_mine@1",
+ "goal": "Goal: cross the cracked floor without breaking through."
 }

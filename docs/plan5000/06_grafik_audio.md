@@ -44,14 +44,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2259. [x] [P1] Einstellung "Bildschirmwackeln" mit den Stufen Aus, Schwach (50 %) und Voll (100 %) in den Einstellungen von MenuHost.gd ergänzen und in settings_to_dict speichern.
 2260. [x] [P2] Wackel-Richtung pro Element: Stone wackelt nur senkrecht, Gale nur waagrecht, Volt mit doppelter Frequenz und halber Weite, alle anderen kreisförmig.
 2261. [x] [P2] Wackel-Frequenz als Rauschen mit 30 Hz statt Zufall pro Bild berechnen, damit es nicht flimmert, sondern rollt.
-2262. [P2] Overworld-Wackeln beim Betreten eines Rifts mit Trauma 0,35 und tiefem Grollen.
-2263. [P2] Overworld-Wackeln beim Laufen gegen eine Wand ersetzt durch einen 1-Pixel-Ruck der Spielfigur, nicht des Bildes.
+2262. [x] [P2] Overworld-Wackeln beim Betreten eines Rifts mit Trauma 0,35 und tiefem Grollen.
+2263. [x] [P2] Overworld-Wackeln beim Laufen gegen eine Wand ersetzt durch einen 1-Pixel-Ruck der Spielfigur, nicht des Bildes.
 2264. [P3] Kleines Wackeln (Trauma 0,10) beim Öffnen einer verschlossenen Tür oder eines Durchgangs nach einer Story-Bedingung.
-2265. [P2] Treffer-Stopp auch beim Bestätigen des letzten Treffers eines Kampfes, 120 ms lang, damit das Ende spürbar wird.
-2266. [P2] Treffer-Stopp wird bei Mehrfachtreffern in einem Zug nur beim ersten und letzten Treffer ausgelöst, damit es nicht stottert.
+2265. [x] [P2] Treffer-Stopp auch beim Bestätigen des letzten Treffers eines Kampfes, 120 ms lang, damit das Ende spürbar wird.
+2266. [x] [P2] Treffer-Stopp wird bei Mehrfachtreffern in einem Zug nur beim ersten und letzten Treffer ausgelöst, damit es nicht stottert.
 2267. [x] [P2] Wackeln überlagert sich nicht unbegrenzt: Trauma wird bei 1,0 gekappt und neue Ereignisse addieren höchstens bis dahin.
 2268. [x] [P2] Bei 4x Kampftempo sinkt Trauma auf 60 % und der Treffer-Stopp auf höchstens 40 ms.
-2269. [P2] Das Fotomodus-Bild (PhotoMode.gd) wird immer ohne Wackel-Versatz aufgenommen.
+2269. [x] [P2] Das Fotomodus-Bild (PhotoMode.gd) wird immer ohne Wackel-Versatz aufgenommen.
 2270. [x] [P2] GUT-Test prüft, dass ShakeRoot nach Ende des Traumas exakt auf (0, 0) zurückkehrt und kein Restversatz bleibt.
 2271. [P3] Gerichtetes Wackeln: der erste Ausschlag zeigt in die Richtung, aus der der Treffer kam, danach freies Ausschwingen.
 2272. [P3] Leichtes Dauer-Zittern (Trauma 0,05) in den Rift-Karten cinder_rift, tide_rift und murk_hollow, nur wenn Wackeln auf Voll steht.
@@ -74,9 +74,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2287. [x] [P2] Dialog-Seitenwechsel lässt den alten Text 2 Pixel nach oben rutschen und ausblenden, bevor der neue zu tippen beginnt.
 2288. [x] [P2] Der Weiter-Pfeil im Dialogfeld wippt 1 Pixel auf und ab im Takt von 0,5 s statt still zu stehen.
 2289. [P3] Freundes- und Kontomenü (FriendsMenu.gd, AccountMenu.gd) bekommen dieselben Schiebe-Übergänge wie das Pausemenü.
-2290. [P2] Ladepausen beim Server-Abruf über 200 ms zeigen drei Punkte, die nacheinander hüpfen, statt eines eingefrorenen Bildes.
-2291. [P2] Wiederverbinden-Anzeige (ReconnectOverlay.gd) blendet in 0,2 s ein und aus und dunkelt das Spiel nur auf 60 % ab.
-2292. [P2] Kampf-Ende zurück zur Welt: Spielfigur und Begleiter sind beim Aufhellen sichtbar 1 Pixel hochgesprungen, als kleine Begrüßung.
+2290. [x] [P2] Ladepausen beim Server-Abruf über 200 ms zeigen drei Punkte, die nacheinander hüpfen, statt eines eingefrorenen Bildes.
+2291. [x] [P2] Wiederverbinden-Anzeige (ReconnectOverlay.gd) blendet in 0,2 s ein und aus und dunkelt das Spiel nur auf 60 % ab.
+2292. [x] [P2] Kampf-Ende zurück zur Welt: Spielfigur und Begleiter sind beim Aufhellen sichtbar 1 Pixel hochgesprungen, als kleine Begrüßung.
 2293. [P3] Übergang ins Spirling-Lexikon: die gewählte Karte vergrößert sich vom Listenplatz auf die volle Seite in 0,2 s.
 2294. [P2] Alle Übergänge haben eine zweite, ruhige Fassung für Juice.reduced(): nur Überblenden in 0,15 s ohne Bewegung.
 2295. [P3] Nach einem neuen Speicherstand-Laden blendet die Welt von der Mitte aus kreisförmig auf, als eigener Shader shaders/iris.gdshader.
@@ -121,18 +121,18 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2330. [x] [P1] Beim Auftreten nutzt SpirlingSprite.step_out das Bewegungsprofil: hüpfen in 2 Sprüngen zu je 4 Pixeln Höhe, stampfen mit Trauma 0,1 beim Aufsetzen, schleichen mit Kurve "move".
 2331. [x] [P1] Technik-Ausholbewegung nach Art: körperliche Techniken (PHYSICAL) holen 3 Pixel nach hinten aus und schnellen vor, besondere Techniken heben den Spirling 2 Pixel an und senken ihn beim Auslösen, Status-Techniken lassen ihn kurz zweimal wippen.
 2332. [x] [P1] Getroffene Spirlings werden 3 Pixel weg vom Angreifer geschoben (Kurve "impact") und federn in 0,15 s zurück, zusätzlich zum bestehenden hit_flash.
-2333. [P2] Ring-Aufstieg im Kampf: ein Ring aus Pixeln wächst vom Spirling aus von 8 auf 40 Pixel Durchmesser in 0,4 s und blendet aus.
+2333. [x] [P2] Ring-Aufstieg im Kampf: ein Ring aus Pixeln wächst vom Spirling aus von 8 auf 40 Pixel Durchmesser in 0,4 s und blendet aus.
 2334. [P2] Ring-Aufstieg in der Welt (nach Kampf oder Gegenstand): derselbe Ring über dem Teamplatz im Pausemenü, wenn man es danach öffnet.
-2335. [P2] Spirlings mit wenig Kraft (unter 25 %) stehen 1 Pixel tiefer und wippen langsamer, sodass man Schwäche ohne Zahlen sieht.
-2336. [P2] Im Mehrfachkampf dreht sich der Angreifer vor seiner Technik zur Seite seines Ziels (Spiegelung über mirrored), wenn das Ziel auf der anderen Hälfte steht.
-2337. [P2] Ausweichen bei verfehlter Technik: der Ziel-Spirling springt 4 Pixel zur Seite und zurück in 0,2 s.
+2335. [x] [P2] Spirlings mit wenig Kraft (unter 25 %) stehen 1 Pixel tiefer und wippen langsamer, sodass man Schwäche ohne Zahlen sieht.
+2336. [x] [P2] Im Mehrfachkampf dreht sich der Angreifer vor seiner Technik zur Seite seines Ziels (Spiegelung über mirrored), wenn das Ziel auf der anderen Hälfte steht.
+2337. [x] [P2] Ausweichen bei verfehlter Technik: der Ziel-Spirling springt 4 Pixel zur Seite und zurück in 0,2 s.
 2338. [P3] Beim Rasten (Energie sammeln) sinkt der Spirling 1 Pixel ab und richtet sich mit "settle" wieder auf.
 2339. [P2] Teamliste im Pausemenü: der ausgewählte Spirling wippt 1 Pixel im Takt von 0,4 s, die anderen stehen still.
 2340. [P2] Teamliste: Spirlings mit wenig Kraft wippen langsamer (0,8 s), erschöpfte gar nicht und sind auf 60 % Helligkeit.
 2341. [P2] Beim Tauschen von zwei Plätzen in der Teamliste wandern die Symbole mit Kurve "move" aneinander vorbei, statt zu springen.
 2342. [P2] Ring-Ablage (Lagerplatz der Spirlings): beim Ablegen gleitet das Symbol in die Liste, beim Holen springt es mit Juice.pop heraus.
 2343. [P2] Spirling-Lexikon: ein gesehener, aber nicht gebondeter Spirling erscheint als Silhouette, die beim ersten Bonden in 0,6 s von unten nach oben eingefärbt wird.
-2344. [P2] Begrüßungs-Moment nach dem Bonden: der neue Spirling springt im Ergebnisbild einmal 4 Pixel hoch, bevor sein Name erscheint.
+2344. [x] [P2] Begrüßungs-Moment nach dem Bonden: der neue Spirling springt im Ergebnisbild einmal 4 Pixel hoch, bevor sein Name erscheint.
 2345. [P2] Titelbild (TitleArt.gd): die drei Starter-Silhouetten blinzeln versetzt alle 3 bis 5 Sekunden über einen 1-Pixel-Augenlid-Strich.
 2346. [P3] Sammelkarten-Ansicht (Tamer-Karte): der Lieblings-Spirling hüpft beim Öffnen einmal nach seinem Bewegungsprofil.
 2347. [P3] Geschenk-Ansicht zwischen Freunden: der geschickte Spirling hüpft beim Öffnen des Geschenks aus der Mitte heraus.
@@ -157,22 +157,22 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2364. [x] [P1] Gale: Aufladen als Strichlinien, die zum Anwender hin gezogen werden; Weg als Wirbel aus 3 Kreisbögen; Einschlag als Strichlinien, die waagrecht am Ziel vorbeistreichen.
 2365. [x] [P1] Lumen: Aufladen als Lichtpunkt über dem Anwender, der von 1 auf 5 Pixel wächst; Weg als gerader Strahl; Einschlag als Kreuz-Glanz, der in 0,2 s verblasst (ohne Blitz, höchstens 60 % Helligkeit).
 2366. [x] [P1] Umbra: Aufladen als Schatten, der sich vom Anwender löst; Weg als Schatten, der am Boden entlang kriecht; Einschlag als Schatten, der das Ziel von unten umschließt und sich zurückzieht.
-2367. [P2] Doppelelement-Techniken zeigen beim Einschlag eine kleine Beimischung des zweiten Elements (2 Partikel), wenn der Anwender zwei Elemente hat.
-2368. [P2] Effektstärke wächst mit der Stärke der Technik in drei Stufen: bis 50 Stärke 1-fache Partikelzahl, bis 90 1,5-fach, darüber 2-fach.
-2369. [P2] Status-Techniken zeigen statt eines Einschlags ein Symbol der Wirkung (Pfeil hoch, Pfeil runter, Kreis) über dem Ziel, gezeichnet in der Form des Elements.
-2370. [P2] Heil-Techniken (HealSelfEffect) zeigen aufsteigende Punkte in Elementform am Anwender, keine Einschlags-Phase.
-2371. [P2] Kraft-Entzug (DrainEffect) zeigt 4 Partikel, die vom Ziel zum Anwender zurückwandern, in der Elementform.
-2372. [P2] Energie-Entzug (EnergyDrainEffect) zeigt 3 kleine Rauten, die vom Ziel abgezogen werden und sich auflösen.
-2373. [P2] Rückstoß (RecoilEffect) zeigt am Anwender einen kleinen Einschlag in halber Größe nach dem eigentlichen Treffer.
-2374. [P2] Feld-Techniken (SetFieldEffect) zeigen eine Welle der Elementform, die einmal von links nach rechts über den ganzen Kampfbildschirm läuft.
+2367. [x] [P2] Doppelelement-Techniken zeigen beim Einschlag eine kleine Beimischung des zweiten Elements (2 Partikel), wenn der Anwender zwei Elemente hat.
+2368. [x] [P2] Effektstärke wächst mit der Stärke der Technik in drei Stufen: bis 50 Stärke 1-fache Partikelzahl, bis 90 1,5-fach, darüber 2-fach.
+2369. [x] [P2] Status-Techniken zeigen statt eines Einschlags ein Symbol der Wirkung (Pfeil hoch, Pfeil runter, Kreis) über dem Ziel, gezeichnet in der Form des Elements.
+2370. [x] [P2] Heil-Techniken (HealSelfEffect) zeigen aufsteigende Punkte in Elementform am Anwender, keine Einschlags-Phase.
+2371. [x] [P2] Kraft-Entzug (DrainEffect) zeigt 4 Partikel, die vom Ziel zum Anwender zurückwandern, in der Elementform.
+2372. [x] [P2] Energie-Entzug (EnergyDrainEffect) zeigt 3 kleine Rauten, die vom Ziel abgezogen werden und sich auflösen.
+2373. [x] [P2] Rückstoß (RecoilEffect) zeigt am Anwender einen kleinen Einschlag in halber Größe nach dem eigentlichen Treffer.
+2374. [x] [P2] Feld-Techniken (SetFieldEffect) zeigen eine Welle der Elementform, die einmal von links nach rechts über den ganzen Kampfbildschirm läuft.
 2375. [x] [P2] Bei verfehlten Techniken läuft der Weg am Ziel vorbei aus dem Bild und es gibt keinen Einschlag.
 2376. [x] [P2] Bei sehr wirksamen Treffern ist der Einschlag 1,5-mal so groß, bei schwach wirksamen nur halb so groß, ohne zusätzliche Texte.
 2377. [P2] Effekte zeichnen nur mit den 4 Paletten-Farben aus EraManager.INK_PALETTE; ein GUT-Test zeichnet jeden Effekt in ein Bild und prüft die Farben.
-2378. [P2] Jeder Effekt hält die Gesamtzeit von 0,6 s bei 1x ein und kürzt mit Juice.speed() bei 2x und 4x.
+2378. [x] [P2] Jeder Effekt hält die Gesamtzeit von 0,6 s bei 1x ein und kürzt mit Juice.speed() bei 2x und 4x.
 2379. [P2] Bei Juice.reduced() zeigt jeder Effekt nur den Einschlag als Standbild für 0,2 s, ohne Aufladen und Weg.
 2380. [P2] Jede der 58 Techniken in data/moves.json bekommt ein optionales Feld "fx_variant" (0 bis 2), das kleine Unterschiede innerhalb eines Elements wählt, etwa Bogen flach, Bogen hoch oder Doppelweg.
-2381. [P2] Kampfbildschirm-Test in tests/unit/ spielt alle 58 Techniken nacheinander ab und prüft, dass keiner einen Fehler wirft und jeder endet.
-2382. [P2] Effekte laufen in einem eigenen Control über den Spirlings, das am Ende jedes Effekts alle Partikel freigibt (keine verwaisten Nodes).
+2381. [x] [P2] Kampfbildschirm-Test in tests/unit/ spielt alle 58 Techniken nacheinander ab und prüft, dass keiner einen Fehler wirft und jeder endet.
+2382. [x] [P2] Effekte laufen in einem eigenen Control über den Spirlings, das am Ende jedes Effekts alle Partikel freigibt (keine verwaisten Nodes).
 2383. [P3] Ember-Techniken lassen nach dem Einschlag 1 Sekunde lang Rauch-Pixel vom Ziel aufsteigen.
 2384. [P3] Tide-Techniken hinterlassen am Boden unter dem Ziel einen Pfützen-Strich, der in 1,5 s versickert.
 2385. [P3] Bloom-Techniken lassen nach dem Einschlag 2 Blätter langsam zu Boden sinken.
@@ -211,18 +211,18 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 ### UI-Grafik und Rückmeldung in Menüs
 2415. [x] [P1] Jeder Knopf und jeder Listeneintrag reagiert beim Antippen sofort: 1 Pixel nach unten versetzt, solange der Finger drückt, und Juice.pop beim Loslassen.
 2416. [x] [P1] Der Auswahl-Cursor in Listen (ListPicker.gd) gleitet mit Kurve "move" in 0,06 s zum neuen Eintrag, statt zu springen.
-2417. [P2] Der Auswahl-Cursor wippt im Leerlauf 1 Pixel waagrecht im Takt von 0,6 s.
+2417. [x] [P2] Der Auswahl-Cursor wippt im Leerlauf 1 Pixel waagrecht im Takt von 0,6 s.
 2418. [x] [P1] Kurze Hinweise (Toasts) für Ereignisse wie "Geschenk erhalten" oder "Gespeichert" bauen: 12 Pixel hohe Leiste fährt von oben herein, bleibt 1,6 s und fährt hinaus.
 2419. [x] [P1] Münzanzeige zählt bei Änderungen mit Juice.count_to hoch oder runter, statt den neuen Wert sofort zu zeigen.
 2420. [P2] Erhaltene Gegenstände zeigen ein Ergebnis-Fenster mit dem Gegenstand-Symbol, das mit Juice.pop erscheint und 0,3 s bis zur Bestätigung wartet, damit man nicht versehentlich wegtippt.
 2421. [P2] Die Bildschirm-Steuerung (VirtualPad.gd) zeigt beim Drücken einer Richtung den gedrückten Pfeil 1 Pixel eingesunken und dunkler.
 2422. [P2] Die Bildschirm-Steuerung blendet sich nach 4 Sekunden ohne Berührung auf 40 % Deckkraft ab und beim Antippen in 0,1 s wieder auf.
-2423. [P2] Gesperrte Menüpunkte schütteln beim Antippen 2 Pixel waagrecht (Juice.nudge zweimal) und spielen den Abbruch-Klang.
+2423. [x] [P2] Gesperrte Menüpunkte schütteln beim Antippen 2 Pixel waagrecht (Juice.nudge zweimal) und spielen den Abbruch-Klang.
 2424. [P2] Lange Listen (Lager, Lexikon, Gegenstände) laufen beim Wischen mit Schwung nach und bremsen mit Reibung 6 pro Sekunde ab.
-2425. [P2] Am Listenende federt die Liste 4 Pixel über und mit "settle" zurück, statt hart zu stoppen.
-2426. [P2] Ein Bildlauf-Anzeiger (1 Pixel breiter Strich) erscheint am rechten Rand langer Listen beim Scrollen und verschwindet nach 0,8 s.
+2425. [x] [P2] Am Listenende federt die Liste 4 Pixel über und mit "settle" zurück, statt hart zu stoppen.
+2426. [x] [P2] Ein Bildlauf-Anzeiger (1 Pixel breiter Strich) erscheint am rechten Rand langer Listen beim Scrollen und verschwindet nach 0,8 s.
 2427. [P2] Neue Einträge (neue Geschenke, neue Aufgaben, neue Freundesanfragen) bekommen einen 3×3-Pixel-Punkt, der mit Juice.wobble alle 2 Sekunden wackelt.
-2428. [P2] Die Namens-Tastatur (NameKeyboard.gd) lässt jede gedrückte Taste kurz aufleuchten (Palettenstufe heller für 0,08 s).
+2428. [x] [P2] Die Namens-Tastatur (NameKeyboard.gd) lässt jede gedrückte Taste kurz aufleuchten (Palettenstufe heller für 0,08 s).
 2429. [P3] Die Namens-Tastatur schüttelt das Eingabefeld, wenn ein Name zu lang oder leer ist.
 2430. [P2] Freundesliste: der Online-Punkt neben einem Namen pulsiert langsam (Helligkeit 100 % und 70 %, 1,5 s Takt).
 2431. [P2] Weltziel-Leiste: neue Beiträge seit dem letzten Besuch füllen sich sichtbar mit einer helleren Spitze, die an der neuen Stelle stehen bleibt.
@@ -307,20 +307,20 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2504. [x] [P2] Text-Stimme lässt sich in den Einstellungen getrennt ausschalten und ist im Sound-Test hörbar.
 2505. [x] [P1] Eigener Klang für das "!" eines Wanderers, der jemanden entdeckt: zwei schnell steigende Töne, 0,15 s.
 2506. [x] [P1] Eigener Klang für das Aufnehmen eines Gegenstands auf der Karte, 4 aufsteigende Töne, getrennt vom Münzklang.
-2507. [P2] Tür-Klang (Öffnen) und Tür-Klang (Schließen) als zwei Klänge mit Holz-Charakter aus Rauschen und tiefem Puls.
-2508. [P2] Treppen-Klang mit 3 schnellen Schritten, die in der Tonhöhe steigen oder fallen, je nach Richtung.
-2509. [P2] Klang für das Öffnen und das Schließen des Pausemenüs, verschieden voneinander (Seite aufschlagen, Seite zuklappen).
-2510. [P2] Cursor-Klang (select) bekommt 3 leicht verschiedene Tonhöhen, die zufällig wechseln, damit langes Scrollen nicht ermüdet.
-2511. [P2] Klang für gesperrte Menüpunkte, ein dumpfer kurzer Ton, der sich klar vom Abbruch-Klang unterscheidet.
-2512. [P2] Klang für den Toast-Hinweis (kurz und leise, 2 Töne).
+2507. [x] [P2] Tür-Klang (Öffnen) und Tür-Klang (Schließen) als zwei Klänge mit Holz-Charakter aus Rauschen und tiefem Puls.
+2508. [x] [P2] Treppen-Klang mit 3 schnellen Schritten, die in der Tonhöhe steigen oder fallen, je nach Richtung.
+2509. [x] [P2] Klang für das Öffnen und das Schließen des Pausemenüs, verschieden voneinander (Seite aufschlagen, Seite zuklappen).
+2510. [x] [P2] Cursor-Klang (select) bekommt 3 leicht verschiedene Tonhöhen, die zufällig wechseln, damit langes Scrollen nicht ermüdet.
+2511. [x] [P2] Klang für gesperrte Menüpunkte, ein dumpfer kurzer Ton, der sich klar vom Abbruch-Klang unterscheidet.
+2512. [x] [P2] Klang für den Toast-Hinweis (kurz und leise, 2 Töne).
 2513. [P3] Klang für ein neu erhaltenes Geschenk von einem Freund, ein heller 3-Ton-Akkord.
-2514. [P2] Klang für das Absenden eines Geschenks, ein fallender 3-Ton-Akkord.
-2515. [P2] Klang für eine angenommene Freundesanfrage, 2 Töne im Quintabstand.
-2516. [P2] Klang für erledigte Aufgaben im Aufgabenbuch, kurzer Strich plus Glocke.
-2517. [P2] Klang für den Tagesfund beim Abholen, Glitzern aus 5 sehr hohen Tönen.
+2514. [x] [P2] Klang für das Absenden eines Geschenks, ein fallender 3-Ton-Akkord.
+2515. [x] [P2] Klang für eine angenommene Freundesanfrage, 2 Töne im Quintabstand.
+2516. [x] [P2] Klang für erledigte Aufgaben im Aufgabenbuch, kurzer Strich plus Glocke.
+2517. [x] [P2] Klang für den Tagesfund beim Abholen, Glitzern aus 5 sehr hohen Tönen.
 2518. [P3] Klang für Bestätigung am Rastplatz vor dem Heilen (Wasser-Plätschern aus gefiltertem Rauschen).
-2519. [P2] Klang für das Betreten eines Begegnungsfeldes (leises Rascheln), nur jedes 3. Feld, damit es nicht nervt.
-2520. [P2] Klang für das Laufen gegen eine Wand (bump) bekommt eine Sperre: höchstens einmal pro 0,4 s.
+2519. [x] [P2] Klang für das Betreten eines Begegnungsfeldes (leises Rascheln), nur jedes 3. Feld, damit es nicht nervt.
+2520. [x] [P2] Klang für das Laufen gegen eine Wand (bump) bekommt eine Sperre: höchstens einmal pro 0,4 s.
 2521. [P3] Klang für Gefühls-Blasen pro Symbol (Herz, Frage, Note, Schweiß, Punkte), jeweils unter 0,2 s.
 2522. [P3] Klang für die Online-Verbindung: wieder verbunden (steigend) und Verbindung verloren (fallend), leise.
 2523. [P3] Klang für Rangliste-Aufstieg, kurzer Lauf aus 5 Tönen.
@@ -333,15 +333,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 ### Soundeffekte im Kampf (ergänzend)
 2529. [x] [P1] Aufladen-Klang pro Art: körperlich (kurzes Rauschen, 0,1 s), besonders (steigender Puls, 0,15 s), Status (zwei weiche Töne), passend zur Aufladen-Phase der Element-Effekte.
 2530. [x] [P1] Weg-Klang pro Element für Techniken mit Weg-Phase, je 0,2 s, zum Beispiel Zischen für Gale, Knistern für Volt, Gluckern für Tide.
-2531. [P2] Klang für verfehlte Techniken: ein leiser Luftzug, der am Ziel vorbeizieht.
-2532. [P2] Treffer-Klänge (hit_*) werden je nach verlorener Kraft lauter: bis 10 % bei -6 dB, bis 30 % bei -3 dB, darüber bei 0 dB.
-2533. [P2] Treffer-Klänge bekommen eine zufällige Tonhöhe zwischen 0,95 und 1,05, damit Wiederholungen frischer klingen.
+2531. [x] [P2] Klang für verfehlte Techniken: ein leiser Luftzug, der am Ziel vorbeizieht.
+2532. [x] [P2] Treffer-Klänge (hit_*) werden je nach verlorener Kraft lauter: bis 10 % bei -6 dB, bis 30 % bei -3 dB, darüber bei 0 dB.
+2533. [x] [P2] Treffer-Klänge bekommen eine zufällige Tonhöhe zwischen 0,95 und 1,05, damit Wiederholungen frischer klingen.
 2534. [P2] Klang beim Auftreten eines Spirlings (step_out) passend zum Bewegungsprofil: Hüpfen, Schleichen, Stampfen, Wogen, Gleiten.
 2535. [P3] Klang beim Zurücktreten eines Spirlings (step_back), ein kurzer fallender Ton.
-2536. [P2] Klang für das Ausweichen, ein schneller seitlicher Wisch.
-2537. [P2] Klang für den Energie-Zuwachs am Rundenbeginn, ein sehr leiser Tick pro Energiepunkt, höchstens 3 Ticks.
+2536. [x] [P2] Klang für das Ausweichen, ein schneller seitlicher Wisch.
+2537. [x] [P2] Klang für den Energie-Zuwachs am Rundenbeginn, ein sehr leiser Tick pro Energiepunkt, höchstens 3 Ticks.
 2538. [P2] Klang für das Andenken, wenn es im Kampf auslöst, getrennt vom Gegenstand-Klang.
-2539. [P2] Klang für die Technik-Auswahl im Kampfmenü, der je nach Element der Technik eine andere Tonhöhe hat (8 Stufen einer Tonleiter).
+2539. [x] [P2] Klang für die Technik-Auswahl im Kampfmenü, der je nach Element der Technik eine andere Tonhöhe hat (8 Stufen einer Tonleiter).
 2540. [P3] Klang für das Erscheinen eines Rift-Wächters: tiefes Grollen über 1,2 s, passend zur Wächter-Einleitung.
 2541. [P3] Klang für Doppelelement-Einschläge mischt die Treffer-Klänge beider Elemente (zweites bei -6 dB, 30 ms versetzt).
 2542. [P3] Klang für den Ring-Aufstieg im Kampf als eigener kurzer Klang zum wachsenden Pixel-Ring, getrennt vom bisherigen Aufstiegs-Klang in der Welt.
@@ -355,17 +355,17 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2548. [x] [P1] Ein Limiter (AudioEffectHardLimiter, Decke -1 dB) auf dem Master-Bus verhindert Übersteuern bei vielen gleichzeitigen Klängen.
 2549. [x] [P1] iOS: Projekteinstellung audio/general/ios/session_category auf "Ambient" stellen, damit der Lautlos-Schalter beachtet wird und Musik anderer Apps weiterlaufen kann.
 2550. [x] [P1] Beim Wechsel der App in den Hintergrund (NOTIFICATION_APPLICATION_PAUSED) werden Musik und Klänge stumm geschaltet und beim Zurückkehren in 0,3 s wieder eingeblendet.
-2551. [P2] Die Stimmenanzahl in Sound.gd (SFX_VOICES) steigt von 6 auf 10, und jeder Klang bekommt eine Priorität (UI 1, Welt 2, Kampf 3), sodass bei voller Belegung der unwichtigste Klang weicht.
+2551. [x] [P2] Die Stimmenanzahl in Sound.gd (SFX_VOICES) steigt von 6 auf 10, und jeder Klang bekommt eine Priorität (UI 1, Welt 2, Kampf 3), sodass bei voller Belegung der unwichtigste Klang weicht.
 2552. [P2] Einstellung "Andere Musik erlauben": spielt eine andere App Musik, startet Chimora nur mit Klängen und ohne eigene Musik.
 2553. [P2] Android: bei Audio-Fokus-Verlust (Anruf, Sprachnachricht) Musik pausieren und danach an derselben Stelle fortsetzen.
 2554. [P3] Kopfhörer abgezogen: Musik wird sofort auf -30 dB gesenkt, damit es nicht laut aus dem Lautsprecher kommt.
-2555. [P2] Mono-Ausgabe als Einstellung, die den Master-Bus auf Mono mischt, für Menschen mit einseitigem Hören.
-2556. [P2] Getrennte Lautstärke-Regler für Text-Stimme und Umgebungsklänge in den Einstellungen, zusätzlich zu Musik und Klängen.
-2557. [P2] Alle Klänge werden beim Start in einem Rutsch vorgeladen (unter 2 MB), damit der erste Treffer im Kampf nicht stockt.
+2555. [x] [P2] Mono-Ausgabe als Einstellung, die den Master-Bus auf Mono mischt, für Menschen mit einseitigem Hören.
+2556. [x] [P2] Getrennte Lautstärke-Regler für Text-Stimme und Umgebungsklänge in den Einstellungen, zusätzlich zu Musik und Klängen.
+2557. [x] [P2] Alle Klänge werden beim Start in einem Rutsch vorgeladen (unter 2 MB), damit der erste Treffer im Kampf nicht stockt.
 2558. [P2] Schreie (Cry.gd) bekommen beim ersten Kampfstart des Tages einen Vorab-Aufbau im Hintergrund, damit kein Bild ruckelt.
 2559. [P2] Ogg-Schleifen nutzen in den .import-Dateien loop_offset aus den Steckbrief-Daten, damit Stücke mit Einleitung an der richtigen Stelle wiederholen.
 2560. [P2] Klang-Ausgabe unter 30 ms Verzögerung auf Android einstellen (Projekteinstellung audio/driver/output_latency auf 15).
-2561. [P2] GUT-Test prüft, dass jeder in Code genannte Klangname (Sound.sfx("...")) eine Datei in audio/sfx/ hat und umgekehrt keine ungenutzte Datei existiert.
+2561. [x] [P2] GUT-Test prüft, dass jeder in Code genannte Klangname (Sound.sfx("...")) eine Datei in audio/sfx/ hat und umgekehrt keine ungenutzte Datei existiert.
 2562. [P3] Leichter Raumklang pro Karte: Innenräume (map_house, Leuchtturm innen) mit kurzem Hall auf dem SFX-Bus, Außenkarten ohne.
 2563. [P3] Lautstärke-Ausgleich zwischen Musik und Klängen nach Ortstyp: in Rifts Musik -2 dB, damit Kampfklänge durchdringen.
 2564. [P3] Eine kleine Klang-Warteschlange für Jingles: kommen zwei Jingles gleichzeitig (Ring-Aufstieg und Gegenstand), spielt der zweite danach statt darüber.
@@ -442,7 +442,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2629. [P3] Ein Werkzeug tools/audio/spectrum.py zeichnet ein Spektrum jedes Klangs als PNG, um zu harte Höhen zu finden.
 2630. [P3] Ein Werkzeug tools/audio/cry_export.py schreibt alle zur Laufzeit erzeugten Schreie (Cry.gd-Logik in Python nachgebaut) als WAV, um sie anzuhören und zu prüfen.
 2631. [P3] gen_audio.py misst die Gesamtgröße aller Audio-Ausgaben und schreibt sie in tools/audio/sizes.json, damit Änderungen sichtbar werden.
-2632. [P3] Ein Werkzeug tools/art/anim_preview.py baut aus Frame-Streifen ein animiertes GIF zur schnellen Ansicht außerhalb von Godot.
+2632. [x] [P3] Ein Werkzeug tools/art/anim_preview.py baut aus Frame-Streifen ein animiertes GIF zur schnellen Ansicht außerhalb von Godot.
 2633. [P3] Generatoren laufen auch ohne Grafikkarte und Tonausgabe, damit sie in der CI (headless) funktionieren.
 2634. [P3] Eine kleine Formbibliothek in tools/art/px.py mit Kreis, Ring, Stern und Zacke in Pixelgenauigkeit, damit Effekte und UI-Bildchen dieselben Grundformen nutzen.
 

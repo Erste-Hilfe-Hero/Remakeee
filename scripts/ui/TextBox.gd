@@ -4,6 +4,9 @@ extends PanelContainer
 ## accept after the text is fully shown (or immediately-ish in auto mode).
 
 signal advanced
+## Fires each frame from _process. The typing loop waits on this own signal, so a box freed
+## mid-line drops the wait instead of resuming on a gone instance.
+signal _ticked
 
 ## Seconds to linger before auto-advancing when [member auto_advance] is on.
 const AUTO_DELAY: float = 0.35
@@ -121,6 +124,8 @@ func _set_rise(v: int) -> void:
 
 ## Shows [param text] with the typewriter effect and waits for the player (or the auto timer).
 func show_text(text: String, speaker: String = "") -> void:
+	# A worn shop text frame (item 4282); the plain box otherwise.
+	add_theme_stylebox_override("panel", UITheme.text_frame_style(GameState.dialogue_frame()))
 	# Story lines may address the player by name: "{name}" (after translation).
 	var shown: String = Loc.t(text).replace("{name}", GameState.tamer_name)
 	# Old lines carry the speaker as "Aldo: ..."; it moves to the name tag. A name in the
@@ -167,7 +172,7 @@ func _show_page(page: String) -> void:
 	_waiting = false
 	_arrow.visible = false
 	while _typing:
-		await get_tree().process_frame
+		await _ticked
 	if auto_advance:
 		await get_tree().create_timer(AUTO_DELAY).timeout
 		return
@@ -259,6 +264,7 @@ func start_fast_forward() -> void:
 		advanced.emit()
 
 func _process(delta: float) -> void:
+	_ticked.emit()
 	if _press_ms >= 0 and Time.get_ticks_msec() - _press_ms >= LONG_PRESS_MS:
 		start_fast_forward()
 	if _tag.visible:

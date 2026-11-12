@@ -29,7 +29,7 @@ const BLIP_DB: float = -9.0
 ## Fade back in after the app returns from the background (item 2550).
 const RESUME_FADE: float = 0.3
 ## Menu sounds that go to the UI bus.
-const UI_SOUNDS: Array[String] = ["select", "confirm", "cancel", "bump", "tick", "coin", "save"]
+const UI_SOUNDS: Array[String] = ["select", "confirm", "cancel", "bump", "tick", "coin", "save", "locked", "toast", "page_open", "page_close"]
 ## Ground per tile kind for footsteps (item 2502); "sand" is a path or grass tile next to water.
 const GROUNDS: Dictionary[int, String] = {
 	TilesetFactory.Kind.GRASS: "grass", TilesetFactory.Kind.TALL_GRASS: "grass", TilesetFactory.Kind.FLOWER: "grass",
@@ -48,9 +48,17 @@ const CAPTIONS: Dictionary[String, String] = {
 	"encounter": "[Rustling in the grass]",
 	"spot": "[Footsteps stop short]",
 	"pickup": "[Item picked up]",
+	"rumble": "[A deep rumble]",
 }
 const FADE_TIME: float = 0.4
-const SFX_VOICES: int = 6
+## Ten voices; when all are busy the least important sound gives way (item 2551).
+const SFX_VOICES: int = 10
+## Priority per kind of sound: menus 1, the world 2, battle 3 (cries and the Echo marks too).
+const PRIO_UI: int = 1
+const PRIO_WORLD: int = 2
+const PRIO_BATTLE: int = 3
+const BATTLE_SOUNDS: Array[String] = ["miss", "dodge", "faint", "status", "heal", "level_up", "energy_tick", "run"]
+const BATTLE_PREFIXES: Array[String] = ["hit", "charge_", "travel_"]
 ## Same effect within this many seconds is skipped (menus scroll fast).
 const SFX_MIN_GAP: float = 0.03
 
@@ -59,6 +67,8 @@ var _music: AudioStreamPlayer
 var _music_out: AudioStreamPlayer
 var _voices: Array[AudioStreamPlayer] = []
 var _next_voice: int = 0
+## Priority of what each voice plays now.
+var _voice_prio: Array[int] = []
 var _cache: Dictionary[String, AudioStream] = {}
 var _last_play: Dictionary[String, float] = {}
 var _map_music: Dictionary = {}
@@ -68,6 +78,8 @@ var _ambience: AudioStreamPlayer
 var _ambience_out: AudioStreamPlayer
 var _step_take: int = 0
 var _blip_count: int = 0
+## The effect asked for last, even when silent (tests).
+var last_sfx: String = ""
 ## Captions shown so far (tests).
 var captions: Array[String] = []
 ## Headless runs (CI, tests) have no audio output; the dummy driver never releases playbacks,
@@ -75,6 +87,7 @@ var captions: Array[String] = []
 var enabled: bool = DisplayServer.get_name() != "headless"
 
 func _ready() -> void:
+	_vary.randomize()
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	GameState.ensure_buses()
 	_music = _player(GameState.BUS_MUSIC)
@@ -83,8 +96,13 @@ func _ready() -> void:
 	_ambience_out = _player(GameState.BUS_AMBIENCE)
 	for i: int in SFX_VOICES:
 		_voices.append(_player(GameState.BUS_SFX))
+		_voice_prio.append(0)
+	if enabled:
+		preload_sfx()
 	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(MAP_MUSIC)) if FileAccess.file_exists(MAP_MUSIC) else null
 	_map_music = raw if raw is Dictionary else {}
+	EraManager.era_changed.connect(func(era: int) -> void: apply_era_fx(era))
+	apply_era_fx.call_deferred(EraManager.active_era())
 
 ## Drops streams on quit so nothing is reported as leaked.
 func _exit_tree() -> void:
@@ -104,7 +122,32 @@ func _load(path: String) -> AudioStream:
 		_cache[path] = load(path) if ResourceLoader.exists(path) else null
 	return _cache[path]
 
+## Sounds that need a longer gap than SFX_MIN_GAP: running into a wall at most every 0.4 s
+## (item 2520).
+const SFX_GAPS: Dictionary[String, float] = {"bump": 0.4, "locked": 0.4, "toast": 0.3}
+## The cursor sound picks one of three close pitches, so long scrolling does not tire (item 2510).
+const SELECT_PITCHES: Array[float] = [0.97, 1.0, 1.03]
+## Hit sounds vary their pitch between 0.95 and 1.05 (item 2533).
+const HIT_PITCH_SPREAD: float = 0.05
+var _vary := RandomNumberGenerator.new()
+
+## Seconds that must pass before [param sound_name] plays again.
+static func gap_for(sound_name: String) -> float:
+	return SFX_GAPS.get(sound_name, SFX_MIN_GAP)
+
+## Pitch for [param sound_name]: the cursor and hit sounds vary a little unless a caller set
+## its own pitch.
+func varied_pitch(sound_name: String, pitch: float) -> float:
+	if pitch != 1.0:
+		return pitch
+	if sound_name == "select":
+		return SELECT_PITCHES[_vary.randi_range(0, SELECT_PITCHES.size() - 1)]
+	if sound_name == "hit" or sound_name.begins_with("hit_"):
+		return 1.0 + _vary.randf_range(-HIT_PITCH_SPREAD, HIT_PITCH_SPREAD)
+	return pitch
+
 func sfx(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
+	last_sfx = sound_name
 	caption(sound_name)
 	if not enabled:
 		return
@@ -112,10 +155,10 @@ func sfx(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void
 	if stream == null:
 		return
 	var now: float = Time.get_ticks_msec() / 1000.0
-	if now - float(_last_play.get(sound_name, -1.0)) < SFX_MIN_GAP:
+	if now - float(_last_play.get(sound_name, -1.0)) < gap_for(sound_name):
 		return
 	_last_play[sound_name] = now
-	_play_voice(stream, bus_for(sound_name), volume_db, pitch)
+	_play_voice(stream, bus_for(sound_name), volume_db, varied_pitch(sound_name, pitch), priority_of(sound_name))
 
 ## Bus for an effect: menu sounds on UI, the text blip on Voice, everything else on SFX.
 static func bus_for(sound_name: String) -> StringName:
@@ -125,9 +168,53 @@ static func bus_for(sound_name: String) -> StringName:
 		return GameState.BUS_VOICE
 	return GameState.BUS_SFX
 
-func _play_voice(stream: AudioStream, bus: StringName = GameState.BUS_SFX, volume_db: float = 0.0, pitch: float = 1.0) -> void:
-	var p: AudioStreamPlayer = _voices[_next_voice]
-	_next_voice = (_next_voice + 1) % _voices.size()
+## Priority of effect [param sound_name] (item 2551).
+static func priority_of(sound_name: String) -> int:
+	if sound_name in UI_SOUNDS or sound_name == "blip":
+		return PRIO_UI
+	if sound_name in BATTLE_SOUNDS:
+		return PRIO_BATTLE
+	for p: String in BATTLE_PREFIXES:
+		if sound_name.begins_with(p):
+			return PRIO_BATTLE
+	return PRIO_WORLD
+
+## Voice for a new sound of priority [param prio], or -1 to drop it: a free voice from
+## [param start] on, else the busy voice with the lowest priority not above [param prio]
+## (the first one from [param start] among equals).
+static func pick_voice(busy: Array[bool], prios: Array[int], prio: int, start: int) -> int:
+	var n: int = busy.size()
+	for k: int in n:
+		var i: int = (start + k) % n
+		if not busy[i]:
+			return i
+	var best: int = -1
+	for k: int in n:
+		var i: int = (start + k) % n
+		if prios[i] <= prio and (best < 0 or prios[i] < prios[best]):
+			best = i
+	return best
+
+## Loads every effect up front (well under 2 MB), so the first hit in a battle does not
+## stall on a disk read (item 2557). Returns how many were loaded.
+func preload_sfx() -> int:
+	var count: int = 0
+	for f: String in ResourceLoader.list_directory(SFX_DIR.get_base_dir()):
+		if f.get_extension() == "wav":
+			if _load(SFX_DIR % f.get_basename()) != null:
+				count += 1
+	return count
+
+func _play_voice(stream: AudioStream, bus: StringName = GameState.BUS_SFX, volume_db: float = 0.0, pitch: float = 1.0, prio: int = PRIO_WORLD) -> void:
+	var busy: Array[bool] = []
+	for v: AudioStreamPlayer in _voices:
+		busy.append(v.playing)
+	var i: int = pick_voice(busy, _voice_prio, prio, _next_voice)
+	if i < 0:
+		return
+	_next_voice = (i + 1) % _voices.size()
+	_voice_prio[i] = prio
+	var p: AudioStreamPlayer = _voices[i]
 	p.stream = stream
 	p.bus = bus
 	p.volume_db = volume_db
@@ -137,7 +224,7 @@ func _play_voice(stream: AudioStream, bus: StringName = GameState.BUS_SFX, volum
 ## Plays the cry of [param sd] (item 70).
 func cry(sd: SpirlingData) -> void:
 	if enabled and sd != null:
-		_play_voice(Cry.stream_for(sd), GameState.BUS_VOICE)
+		_play_voice(Cry.stream_for(sd), GameState.BUS_VOICE, 0.0, 1.0, PRIO_BATTLE)
 
 ## Shows the caption for [param sound_name] when sound captions are on (item 2653).
 func caption(sound_name: String) -> void:
@@ -248,7 +335,7 @@ func app_resumed() -> void:
 		GameState.master_fade = v
 		GameState.apply_volume(), GameState.master_fade, 1.0, RESUME_FADE)
 
-## Eight scales, one per element (Elements.E order): the three Echo call marks play these
+## One scale per element (Elements.E order): the three Echo call marks play these
 ## notes, so every element sounds different (plan area 1, item 279).
 const ELEMENT_SCALES: Array = [
 	[60, 64, 67],  # EMBER: bright major
@@ -259,6 +346,8 @@ const ELEMENT_SCALES: Array = [
 	[67, 72, 74],  # GALE: open
 	[72, 76, 79],  # LUMEN: high and clear
 	[57, 60, 63],  # UMBRA: dark
+	[53, 56, 60],  # INK: low and blotted
+	[69, 74, 81],  # ECHO: bell fifths
 ]
 
 ## MIDI note for mark [param mark] in the scale of [param element].
@@ -270,7 +359,7 @@ static func mark_note(element: int, mark: int) -> int:
 func mark_tone(element: int, mark: int, muted: bool = false) -> void:
 	if enabled:
 		var voice: Array = Cry.ELEMENT_VOICE[clampi(element, 0, Cry.ELEMENT_VOICE.size() - 1)]
-		_play_voice(Cry.tone(mark_note(element, mark), float(voice[0]), 0.12 if muted else 0.3))
+		_play_voice(Cry.tone(mark_note(element, mark), float(voice[0]), 0.12 if muted else 0.3), GameState.BUS_SFX, 0.0, 1.0, PRIO_BATTLE)
 
 ## Sound effect name for a hit by a move of [param element] (Elements.E), "hit" if unknown.
 static func element_hit_name(element: int) -> String:
@@ -278,8 +367,40 @@ static func element_hit_name(element: int) -> String:
 		return "hit"
 	return "hit_" + String(Elements.E.keys()[element]).to_lower()
 
-func element_hit(element: int) -> void:
-	sfx(element_hit_name(element))
+## Loudness of a hit sound by the share of strength it took (item 2532): up to 10 % at
+## -6 dB, up to 30 % at -3 dB, more at full volume.
+static func hit_volume_db(share_lost: float) -> float:
+	if share_lost <= 0.10:
+		return -6.0
+	if share_lost <= 0.30:
+		return -3.0
+	return 0.0
+
+## Picking an art rings the confirm sound one step higher per element, climbing one octave
+## in Elements.E order (item 2539).
+const ART_PICK_STEPS: Array[int] = [0, 1, 2, 4, 5, 7, 8, 9, 11, 12]
+
+static func art_pick_pitch(element: int) -> float:
+	if element < 0 or element >= ART_PICK_STEPS.size():
+		return 1.0
+	return pow(2.0, ART_PICK_STEPS[element] / 12.0)
+
+## Energy gained at round start ticks once per point, at most three times (item 2537).
+const ENERGY_TICKS_MAX: int = 3
+const ENERGY_TICK_GAP: float = 0.07
+
+static func energy_ticks(gain: int) -> int:
+	return clampi(gain, 0, ENERGY_TICKS_MAX)
+
+## Plays [param count] faint Energy ticks one after another.
+func energy_tick(count: int) -> void:
+	for i: int in count:
+		sfx("energy_tick")
+		if i < count - 1 and is_inside_tree():
+			await get_tree().create_timer(ENERGY_TICK_GAP, true).timeout
+
+func element_hit(element: int, share_lost: float = 1.0) -> void:
+	sfx(element_hit_name(element), hit_volume_db(share_lost))
 
 ## Track for [param map_id] from data/music.json, in the variant for the active era.
 func track_for_map(map_id: String) -> String:
@@ -287,10 +408,65 @@ func track_for_map(map_id: String) -> String:
 	var track: String = str((entry as Dictionary).get("track", "")) if entry is Dictionary else str(entry)
 	return era_track(track, EraManager.active_era(), func(t: String) -> bool: return ResourceLoader.exists(MUSIC_DIR % t))
 
-## The data/music.json entry for [param map_id]: a track name or {"track", "ambience"}.
-func map_entry(map_id: String) -> Variant:
-	var maps: Dictionary = _map_music.get("maps", {})
-	return maps.get(map_id, maps.get(map_id.get_slice("@", 0), _map_music.get("default", "")))
+## The data/music.json entry for [param map_id]: a track name or {"track", "ambience"}, from
+## "maps" (own place songs) or "themes" (shared and single-file themes). A map in neither plays
+## its region's song (the region on screen), then "default".
+func map_entry(map_id: String, region: String = "") -> Variant:
+	return entry_in(_map_music, map_id, region if not region.is_empty() else EraManager.current_region)
+
+static func entry_in(table: Dictionary, map_id: String, region: String) -> Variant:
+	for list: String in ["maps", "themes"]:
+		var maps: Dictionary = table.get(list, {})
+		for key: String in [map_id, map_id.get_slice("@", 0)]:
+			if maps.has(key):
+				return maps[key]
+	var regions: Dictionary = table.get("regions", {})
+	return regions.get(region, table.get("default", ""))
+
+## Battle music [param track] ("battle", "warden") in the variant of the active era, so fights
+## sound like the era's hardware (battle_era2 to battle_era5).
+func battle_music(track: String) -> String:
+	return era_music(track)
+
+## [param track] in the variant of the active era ("<track>_era<N>", else the plain track).
+func era_music(track: String) -> String:
+	return era_track(track, EraManager.active_era(), func(t: String) -> bool: return ResourceLoader.exists(MUSIC_DIR % t))
+
+## Music bus effects per era from data/music.json "era_fx": chorus from Era II, a room from
+## Era III. Replaces only the effects it added before; returns how many it added.
+const ERA_FX_META: StringName = &"era_fx"
+
+func apply_era_fx(era: int) -> int:
+	var bus: int = AudioServer.get_bus_index(GameState.BUS_MUSIC)
+	if bus < 0:
+		return 0
+	for i: int in range(AudioServer.get_bus_effect_count(bus) - 1, -1, -1):
+		if AudioServer.get_bus_effect(bus, i).has_meta(ERA_FX_META):
+			AudioServer.remove_bus_effect(bus, i)
+	var added: int = 0
+	for fx: AudioEffect in era_effects((_map_music.get("era_fx", {}) as Dictionary).get(str(era), {})):
+		fx.set_meta(ERA_FX_META, era)
+		AudioServer.add_bus_effect(bus, fx)
+		added += 1
+	return added
+
+## The effects one "era_fx" entry asks for.
+static func era_effects(spec: Dictionary) -> Array[AudioEffect]:
+	var out: Array[AudioEffect] = []
+	if float(spec.get("chorus_wet", 0.0)) > 0.0:
+		var ch := AudioEffectChorus.new()
+		ch.voice_count = 2
+		ch.wet = float(spec.chorus_wet)
+		ch.dry = 1.0
+		out.append(ch)
+	if float(spec.get("reverb_wet", 0.0)) > 0.0:
+		var rv := AudioEffectReverb.new()
+		rv.room_size = float(spec.get("reverb_room", 0.4))
+		rv.wet = float(spec.reverb_wet)
+		rv.dry = 1.0
+		rv.damping = 0.6
+		out.append(rv)
+	return out
 
 ## Era music (item 66): "<track>_era<N>" for the newest era N that has its own version, so a
 ## region can rearrange a theme for its hardware generation. Falls back to the plain track.
@@ -317,6 +493,8 @@ static func list_sounds(dir: String) -> Array[String]:
 func music(track: String, keep_ambience: bool = false) -> void:
 	if track == "title":
 		ambience("")
+		# The title song follows the era like the battle music (title_era2 to title_era5).
+		track = era_music(track)
 	elif not keep_ambience:
 		duck_ambience(true)
 	if track == current_track and _music.playing:
@@ -330,6 +508,8 @@ func stop_music() -> void:
 ## Plays [param track] once (no loop), then goes back to [param then] (or the track before it).
 func jingle(track: String, then: String = "") -> void:
 	var back: String = then if not then.is_empty() else current_track
+	# Jingles follow the era too (victory_era2 to victory_era5).
+	track = era_music(track)
 	_switch(track, false)
 	_resume_track = back
 	if enabled and _music.stream != null:

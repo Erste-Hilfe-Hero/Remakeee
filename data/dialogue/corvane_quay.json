@@ -1,6 +1,7 @@
 {
  "sign": [
   "CORVANE QUAY",
+  "Corvane Quay, 23 folk.",
   "Harbour of Corvane.",
   "North: Madderby Road"
  ],
@@ -32,5 +33,43 @@
     "text": "Stay in Corvane"
    }
   ]
+ },
+ "bram": {
+  "lines": [
+   "Net-Hauler Bram: The quay empties at dusk and the little square by the spring fills up."
+  ]
+ },
+ "sina": {
+  "lines": [
+   "Sail-Mender Sina: I mend sails all day and trade stories all evening. The stories pay better."
+  ]
+ },
+ "tobin": {
+  "lines": [
+   "Harbour Elder Tobin: Fifty years I watched the ferry come in. Now I watch it from the spring, sitting down."
+  ]
+ },
+ "lake_bench": {
+  "lines": [
+   "A bench with a view over the lake. Sit and listen for a while?"
+  ],
+  "choices": [
+   {
+    "text": "Sit and listen",
+    "action": "lake_bench Kelpup corvane_quay/lake_hint"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "lake_hint": [
+  "A dockhand mutters as he passes: \"Someone dropped a tonic among the trees on the west side. Never found it.\""
+ ],
+ "informant": {
+  "lines": [
+   "Whisper Moll: Psst. Wayfarer. Every line hides a gift. Every gift has a price."
+  ],
+  "action": "informant"
  }
 }

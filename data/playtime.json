@@ -1,0 +1,88 @@
+{
+ "_comment": "Minutes per piece of content for tools/act_hours.py, a rough first-play estimate per act (owner rule: at least 20 h per act). An act is a region, and so is each post-game era region under 'regions' (its story chapters come from its 'sheet'); inside maps count for the region of the place they sit in. Side goals count when their 'where' names a map of the region or one of 'places'. Tune here, not in the script. Dialogue counts every file the region's maps talk to; a 'battle' action counts as a story duel.",
+ "acts": {
+  "1": {
+   "region": "veydal",
+   "places": [
+    "Veydal",
+    "Brindlewick",
+    "Lighthouse"
+   ]
+  },
+  "2": {
+   "region": "corvane",
+   "places": [
+    "Corvane",
+    "Madderby"
+   ]
+  },
+  "3": {
+   "region": "ashmere",
+   "places": [
+    "Ashmere",
+    "Cinderfold",
+    "Gravers' hall",
+    "Saltglass"
+   ]
+  },
+  "4": {
+   "region": "solenne",
+   "places": [
+    "Solenne",
+    "Ochrewell"
+   ]
+  }
+ },
+ "regions": {
+  "vellmarch": {
+   "name": "Vellmarch",
+   "era": 2,
+   "region": "vellmarch",
+   "sheet": "data/region2.json",
+   "places": [
+    "Vellmarch"
+   ]
+  },
+  "quillmarch": {
+   "name": "Quillmarch",
+   "era": 3,
+   "region": "quillmarch",
+   "places": [
+    "Quillmarch"
+   ]
+  },
+  "halcyra": {
+   "name": "Halcyra",
+   "era": 4,
+   "region": "halcyra",
+   "sheet": "data/region4.json",
+   "places": [
+    "Halcyra"
+   ]
+  },
+  "quivermoor": {
+   "name": "Quivermoor",
+   "era": 5,
+   "region": "quivermoor",
+   "sheet": "data/region5.json",
+   "places": [
+    "Quivermoor"
+   ]
+  }
+ },
+ "target_hours": 20,
+ "minutes": {
+  "main_goal": 25,
+  "side_goal": 18,
+  "side_progress_step": 6,
+  "side_stage": 5,
+  "wayfarer": 4,
+  "secret": 2,
+  "map": 6,
+  "map_tiles_per_minute": 40,
+  "wild_cell": 0.15,
+  "dialogue_line": 0.08,
+  "encounter_species": 4,
+  "story_duel": 6
+ }
+}

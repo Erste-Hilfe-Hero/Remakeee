@@ -68,29 +68,28 @@ T.update({
 "Current Trial 2": "Strömungsprobe 2",
 "Current Trial 3": "Strömungsprobe 3",
 "Puddlet against Smoldrake in the ash storm. Win within 4 turns.": "Puddlet gegen Smoldrake im Aschesturm. Gewinne in höchstens 4 Runden.",
-"Talusk alone against two. Win within 4 turns.": "Talusk allein gegen zwei. Gewinne in höchstens 4 Runden.",
-"Two tired Spirlings against Smoldrake. Win within 4 turns.": "Zwei müde Spirlings gegen Smoldrake. Gewinne in höchstens 4 Runden.",
+"Kindlop burns, and its Kindling gift turns the Scorch into strength. It starts with 5 Energy. Beat Shalebat and Zippit without curing the Scorch.": "Kindlop brennt, und seine Gabe Kindling macht aus dem Scorch Stärke. Es startet mit 5 Energie. Besiege Shalebat und Zippit, ohne den Scorch zu heilen.",
+"Mossling at half Vigor against Kindlop. Win within 5 turns.": "Mossling mit halber Kraft gegen Kindlop. Gewinne in höchstens 5 Runden.",
 "Zippit starts with 4 Energy against a soaked Riptail. Win within 3 turns through the Volt reaction.": "Zippit startet mit 4 Energie gegen ein durchnässtes Riptail. Gewinne in höchstens 3 Runden über die Volt-Reaktion.",
-"Mossling against Riptail in the drag of the current. Win within 4 turns.": "Mossling gegen Riptail im Sog der Strömung. Gewinne in höchstens 4 Runden.",
-"Kelpup against Riptail, tide against tide. Win within 4 turns.": "Kelpup gegen Riptail, Flut gegen Flut. Gewinne in höchstens 4 Runden.",
+"Zephlet starts with 2 Energy against Puddlet in the high tide. Win, resting exactly once.": "Zephlet startet mit 2 Energie gegen Puddlet in der Hochflut. Gewinne und raste dabei genau einmal.",
 })
 
 # Plan area 2, items 755-757: bonus goals.
 T.update({
 "Bonus goal: %s.": "Bonusziel: %s.",
 "win within %d turns": "gewinne in höchstens %d Runden",
-"win without anyone on your side fainting": "gewinne, ohne dass jemand auf deiner Seite umfällt",
+"win with nobody fainting": "gewinne, ohne dass wer umfällt",
 "win without resting": "gewinne, ohne zu rasten",
-"win using only %s arts": "gewinne nur mit %s-Techniken",
-"win sending out at most %d Spirlings": "gewinne mit höchstens %d eingesetzten Spirlings",
-"win with at least %d%% Vigor left in your team": "gewinne mit mindestens %d %% Kraft im Team",
-"win setting off at least %d reactions": "gewinne mit mindestens %d Reaktionen",
+"win with %s arts only": "gewinne nur mit %s-Techniken",
+"win using at most %d Spirlings": "gewinne mit max. %d Spirlings",
+"win with %d percent Vigor left": "gewinne mit %d Prozent Kraft",
+"win with %d+ reactions": "gewinne mit %d+ Reaktionen",
 "Bonus goal met!": "Bonusziel erreicht!",
 "You get %d Echo Crystal shard(s).": "Du erhältst %d Echo-Kristall-Splitter.",
 "%d shards join into an Echo Crystal!": "%d Splitter fügen sich zu einem Echo-Kristall!",
 "A new lexicon entry is written down.": "Ein neuer Lexikon-Eintrag wird notiert.",
 "Ember Trial Taker": "Glutprüfling",
-"Current Rider": "Strömungsreiter",
+"Current Reader": "Strömungsleser",
 })
 
 # Plan area 2, items 780-793: rule variants.
@@ -177,4 +176,152 @@ T.update({
 "Fenn: A Rift field lifts one element and dims another. Change it when it helps you.": "Fenn: Ein Riss-Feld stärkt ein Element und schwächt ein anderes. Wechsle es, wenn es dir hilft.",
 "Fenn: My lantern bends the light down here. Let's see who it favors!": "Fenn: Meine Laterne lenkt hier unten das Licht. Mal sehen, wem es hilft!",
 "Fenn: The light turned on me. Well played.": "Fenn: Das Licht hat sich gegen mich gewandt. Gut gespielt.",
+})
+
+# Plan area 2, items 492, 511, 577, 578.
+T.update({
+"Right now: %s.": "Gerade: %s.",
+"Used now, it lands on turn %d.": "Jetzt eingesetzt, schlägt sie in Runde %d ein.",
+"Then mends a little at the end of the next %d turns.": "Heilt danach am Ende der nächsten %d Runden ein wenig.",
+"Makes the Resonance field last %d turns longer.": "Lässt das Resonanz-Feld %d Runden länger halten.",
+"By %d at full Vigor.": "Bei voller Kraft um %d.",
+})
+
+# Plan area 2, items 675-677: Warden field rules.
+T.update({
+"Ash Rain": "Aschenregen", "Ash rains down: for 3 turns the Ash Storm can't be called away.": "Asche regnet herab: 3 Runden lang lässt sich der Aschesturm nicht vertreiben.",
+"Tide Turn": "Gezeitenwechsel", "The tide comes and goes: High Tide for 2 turns, then 2 turns of calm.": "Die Flut kommt und geht: 2 Runden Hochflut, dann 2 Runden Ruhe.",
+"The %s won't give way yet.": "%s weicht noch nicht.",
+})
+
+# Plan area 2, items 678-679: the Warden turning point.
+T.update({
+"Turning point, %s: %s": "Wendepunkt, %s: %s",
+"The pulse quickens: now 2 extra Energy every turn.": "Der Puls wird schneller: jetzt 2 Energie extra pro Runde.",
+"The pulse flares: the foe's Spirlings gain 1 Energy at once.": "Der Puls flackert auf: Die gegnerischen Spirlings erhalten sofort 1 Energie.",
+"One left? Then the embers burn for both of us!": "Nur noch einer? Dann brennt die Glut für uns beide!",
+"The current deepens: your next Spirling to come in loses Might.": "Die Strömung wird tiefer: Dein nächster eingewechselter Spirling verliert Wucht.",
+"The tide turns. Whoever you send next, it pulls under!": "Die Flut kippt. Wen du auch schickst, sie zieht ihn hinab!",
+})
+
+# Plan area 2, items 680-681: Warden cover in the lexicon.
+T.update({
+"Lexicon": "Lexikon", "Lexicon %d": "Lexikon %d",
+"The cartographers": "Die Kartografen",
+"Kestra's guild draws every road of Veydal again each year. A map that is not walked goes wrong, they say, and a Wayfarer who keeps all their Spirlings standing walks it best.": "Kestras Gilde zeichnet jedes Jahr alle Wege von Veydal neu. Eine Karte, die keiner abläuft, wird falsch, sagen sie, und am besten läuft sie ab, wer alle seine Spirlings auf den Beinen hält.",
+"Reactions": "Reaktionen",
+"An art can set off a status already on its target: Ember on a Soaked foe dries it with a burst, Stone shakes off a Jolt. The battle log names every reaction it sees.": "Eine Technik kann einen Zustand auslösen, der schon auf dem Ziel liegt: Glut auf einem durchnässten Gegner trocknet ihn mit einem Knall, Stein schüttelt einen Schock ab. Das Kampfprotokoll nennt jede Reaktion.",
+"Rift mystics": "Riss-Mystiker",
+"The mystics at the Tide Rift listen to the Hush instead of fighting it. They chain reactions on purpose, one status feeding the next art.": "Die Mystiker am Gezeitenriss lauschen der Stille, statt sie zu bekämpfen. Sie reihen Reaktionen mit Absicht aneinander, ein Zustand nährt die nächste Technik.",
+"The Drowned Heart": "Das Ertrunkene Herz",
+"The Hush gathered at the bottom of the Tide Rift into one heavy heart. It grows with every Spirling you field, so a full team does not crush it, it only meets it.": "Die Stille hat sich am Grund des Gezeitenrisses zu einem schweren Herzen gesammelt. Es wächst mit jedem Spirling, den du aufstellst, also erdrückt ein volles Team es nicht, es stellt sich ihm nur.",
+"Orrin's cover": "Orrins Deckung",
+"Orrin knows that Tide puts out his embers. That is why Shalebat walks with him: its Stone hide and Hunker Down take the Tide arts you answer with, while Kindlop and Smoldrake build up Energy.": "Orrin weiß, dass Flut seine Glut löscht. Darum geht Shalebat mit ihm: Seine Steinhaut und Hunker Down fangen die Flut-Techniken ab, mit denen du antwortest, während Kindlop und Smoldrake Energie sammeln.",
+"Maelis's cover": "Maelis' Deckung",
+"Maelis knows her tide fears Volt and Bloom. Zephlet's Gale cuts Bloom down, and Zippit holds against the Volt Spirlings you bring, so her Riptail can wait for its moment.": "Maelis weiß, dass ihre Flut Volt und Blüte fürchtet. Zephlets Wind schneidet Blüte nieder, und Zippit hält gegen die Volt-Spirlings, die du mitbringst, damit ihr Riptail auf seinen Moment warten kann.",
+})
+
+# Plan area 2, items 682-684: the Warden Second Trial.
+T.update({
+"%s offers the Second Trial: two rules at once, a full team. Battle?": "%s bietet die Zweite Prüfung an: zwei Regeln zugleich, ein volles Team. Kämpfen?",
+"%s: You passed the Second Trial. The Rift remembers you.": "%s: Du hast die Zweite Prüfung bestanden. Der Riss wird sich an dich erinnern.",
+})
+
+# Plan area 2, item 687: the Warden card.
+T.update({
+"No rule.": "Keine Regel.",
+"Spirlings: %d": "Spirlings: %d",
+"Elements: %s": "Elemente: %s",
+"Face the Warden now?": "Jetzt gegen den Wächter antreten?",
+"Fight": "Kämpfen",
+})
+
+# Plan area 2, items 704, 706: the tag Trial and lanterns.
+T.update({
+"Riptail and Kestra's Zephlet against Zippit and Kelpup. Win without losing a Spirling.": "Riptail und Kestras Zephlet gegen Zippit und Kelpup. Gewinne, ohne einen Spirling zu verlieren.",
+"Lanterns %d/%d": "Laternen %d/%d",
+})
+
+# Plan area 2, items 707-713: hints, restart, goal banner, results and the lantern reward.
+T.update({
+"Smoldrake fights Ember with Ember. Your Tide arts hit it hard, but Energy is short in the storm.": "Smoldrake kämpft mit Glut gegen Glut. Deine Tide-Techniken treffen es hart, aber im Sturm wird die Energie knapp.",
+"Open with Fizz Pop, call the tide once, then keep up the Fizz Pop.": "Beginne mit Fizz Pop, rufe einmal die Flut und bleib dann bei Fizz Pop.",
+"Kindlop only has 5 Energy. Plan one rest, and spend the rest of it on blows that count.": "Kindlop hat nur 5 Energie. Plane eine Rast ein und gib den Rest für Schläge aus, die zählen.",
+"Glow Knuckle twice, rest once, then Glow Knuckle and Cinder Nip.": "Zweimal Glow Knuckle, einmal rasten, dann Glow Knuckle und Cinder Nip.",
+"Kindlop wants to heat up. Hit it before it gets going, and do not wait.": "Kindlop will sich aufheizen. Triff es, bevor es loslegt, und warte nicht.",
+"Pollen Prick twice, a puff of Puffcap Haze, then finish with Pollen Prick.": "Zweimal Pollen Prick, ein Hauch Puffcap Haze, dann zum Schluss Pollen Prick.",
+"The Volt reaction needs a soaked foe and a Volt art. Riptail is already soaked.": "Die Volt-Reaktion braucht einen durchnässten Gegner und eine Volt-Technik. Riptail ist schon nass.",
+"Bite twice with Crackle Bite, then end it with Static Tag.": "Beiß zweimal mit Crackle Bite zu und beende es mit Static Tag.",
+"With 2 Energy, Zephlet cannot strike well yet. The one rest belongs at the start.": "Mit 2 Energie kann Zephlet noch nicht gut zuschlagen. Die eine Rast gehört an den Anfang.",
+"Rest first, then Crosswind twice and Draft Needle to finish.": "Erst rasten, dann zweimal Crosswind und Draft Needle zum Schluss.",
+"Kestra's Zephlet plays on its own. Keep Zippit from getting a second turn.": "Kestras Zephlet handelt selbst. Lass Zippit keine zweite Runde.",
+"Pull Zippit under with Undertow, then Rip Current, then Rip Current again.": "Zieh Zippit mit Undertow hinab, dann Rip Current und noch einmal Rip Current.",
+"Hint: %s": "Hinweis: %s",
+"Try again?": "Nochmal versuchen?",
+"Restart": "Neustart",
+"Turns left: %d": "Runden übrig: %d",
+"Win within %d turns.": "Gewinne in höchstens %d Runden.",
+"Win without losing a Spirling.": "Gewinne, ohne einen Spirling zu verlieren.",
+"Rest exactly %d times.": "Raste genau %d-mal.",
+"Rest exactly once.": "Raste genau einmal.",
+"Never cure the %s.": "Heile nie den %s.",
+"Set off a %s reaction.": "Löse eine %s-Reaktion aus.",
+"Land the last blow with %s.": "Setze den letzten Treffer mit %s.",
+"Every Trial shines with 3 lanterns! You received %s.": "Jede Prüfung leuchtet mit 3 Laternen! Du erhältst %s.",
+})
+
+# Plan area 2, items 734-739: Tamer AI, ring cap on the Warden card, Tailwind.
+T.update({
+"Ring cap: R%d. The Warden's highest: R%d.": "Ring-Obergrenze: R%d. Höchster Spirling des Wächters: R%d.",
+"This battle has beaten you a few times. Take Tailwind? Your team is fully healed and the foe starts with %d Energy less.": "Dieser Kampf hat dich schon ein paar Mal besiegt. Rückenwind nehmen? Dein Team wird voll geheilt und der Gegner startet mit %d Energie weniger.",
+"This battle has beaten you a few times. Take Tailwind? Your team is fully healed.": "Dieser Kampf hat dich schon ein paar Mal besiegt. Rückenwind nehmen? Dein Team wird voll geheilt.",
+"Take Tailwind": "Rückenwind nehmen",
+"No, thanks": "Nein, danke",
+"Tailwind helped in this battle. Used %d times so far.": "Rückenwind hat in diesem Kampf geholfen. Bisher %d-mal genutzt.",
+})
+
+# Plan area 2, item 746: a lowered difficulty stays visible.
+T.update({
+"(lowered)": "(gesenkt)",
+})
+
+# Plan area 2, item 745: the difficulty table.
+T.update({
+"Foe rings: %s": "Gegner-Ringe: %s",
+"as listed": "wie angegeben",
+"Foe Spark: %d in every stat": "Gegner-Spark: %d in jedem Wert",
+"AI tier: %d, Wardens %d": "KI-Stufe: %d, Wächter %d",
+"Keepsakes: %s": "Andenken: %s",
+"some foes": "bei manchen Gegnern",
+"on every Warden Spirling": "auf jedem Wächter-Spirling",
+"no keepsakes": "keine",
+"no cap": "keine",
+"Items in battle: %s": "Gegenstände im Kampf: %s",
+"no": "nein",
+"yes": "ja",
+"Ring cap: %s": "Ring-Obergrenze: %s",
+"rises with each sealed Rift (R%d to R%d)": "steigt mit jedem versiegelten Riss (R%d bis R%d)",
+})
+
+# Plan area 2, items 766-767: bonus goal results in the lexicon.
+T.update({
+"Bonus goals": "Bonusziele",
+"%s: %d of %d": "%s: %d von %d",
+})
+
+# Plan area 2, items 768, 796-797: goal title, variant list and replay checks.
+T.update({
+"Rule variants": "Regelvarianten",
+"This replay uses a rule variant this version doesn't know: %s.": "Diese Wiederholung nutzt eine Regelvariante, die diese Version nicht kennt: %s.",
+"This replay's rule variants don't go together.": "Die Regelvarianten dieser Wiederholung passen nicht zusammen.",
+})
+
+# Plan area 2, item 799: variants on tower floors and in the weekly challenge.
+T.update({
+"Rule variants: %s": "Regelvarianten: %s",
+"Rule variant: %s. %s": "Regelvariante: %s. %s",
+})
+# Plan area 2, item 574: Echo Crystals that teach every Spirling.
+T.update({
+"Teaches %s to any Spirling. Never used up.": "Bringt jedem Spirling %s bei. Verbraucht sich nie.",
 })

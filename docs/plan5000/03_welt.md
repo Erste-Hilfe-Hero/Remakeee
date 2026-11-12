@@ -16,13 +16,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 898. [P2] Führe pro Karte ein Feld "biome" (z. B. fern, marsh, scree, forest, cave, town) ein, das Begegnungen, Wetter und Geräusche gemeinsam steuert.
 899. [P2] Führe pro Karte ein optionales Feld "music_day" und "music_night" ein, das auf vorhandene Einträge in data/music.json zeigt.
 900. [P2] Ergänze MapData.gd um "one_way" Kanten (Felsstufen, die man nur abwärts gehen kann), die der PathFinder beachtet.
-901. [P2] Ergänze PathFinder.gd so, dass Tipp-Laufen Druckplatten nicht aus Versehen auslöst, wenn das Ziel nicht die Platte selbst ist.
+901. [x] [P2] Ergänze PathFinder.gd so, dass Tipp-Laufen Druckplatten nicht aus Versehen auslöst, wenn das Ziel nicht die Platte selbst ist.
 902. [P2] Ergänze MapData.gd um "ambient" Punkte (x, y, Geräusch-ID) für Wasserrauschen, Wind oder Glocken in der Nähe.
-903. [P2] Schreibe ein Werkzeug tools/world_stats.py, das pro Karte Größe, Anzahl Funde, Anzahl Wanderer und Begegnungsfelder ausgibt und als Tabelle in docs/WORLD.md einträgt.
-904. [P2] Lege eine Kartenvorlage tools/art/world/template.py mit 12 Kacheln Breite, Rahmen aus Fels und je einem Warp oben und unten an.
-905. [P2] Ergänze GameState.gd um ein Wörterbuch "world_state" (Karte, Schlüssel, Wert), damit geschobene Felsen und offene Schleusen nach Speichern erhalten bleiben.
+903. [x] [P2] Schreibe ein Werkzeug tools/world_stats.py, das pro Karte Größe, Anzahl Funde, Anzahl Wanderer und Begegnungsfelder ausgibt und als Tabelle in docs/WORLD.md einträgt.
+904. [x] [P2] Lege eine Kartenvorlage tools/art/world/template.py mit 12 Kacheln Breite, Rahmen aus Fels und je einem Warp oben und unten an.
+905. [x] [P2] Ergänze GameState.gd um ein Wörterbuch "world_state" (Karte, Schlüssel, Wert), damit geschobene Felsen und offene Schleusen nach Speichern erhalten bleiben.
 906. [P2] Ergänze die Speicher-Migration in SaveManager.gd für "world_state", "map_cells" und "pins" mit einem Test in tests/unit/test_save_migration.gd.
-907. [P2] Ergänze WorldValidator.gd um eine Höchstgröße von 12 Kacheln Breite und 40 Kacheln Höhe pro Karte für Außenkarten.
+907. [x] [P2] Ergänze WorldValidator.gd um eine Höchstgröße von 12 Kacheln Breite und 40 Kacheln Höhe pro Karte für Außenkarten.
 908. [P3] Baue einen einfachen Karten-Editor als Godot-Szene tools/map_editor.tscn, der ASCII-Zeilen lädt, Kacheln per Tippen setzt und zurück in JSON speichert.
 909. [P3] Ergänze das Validator-Werkzeug um eine Warnung, wenn ein Weg länger als 30 Schritte ohne Abzweig, Fund oder Wanderer ist.
 910. [P3] Gib jeder Karte ein Feld "author_note", das nur im Debug-Menü angezeigt wird, um Bauabsichten festzuhalten.
@@ -38,7 +38,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 918. [x] [P1] Verbinde Gloamwood mit Crowcrest über einen zweiten Eingang, damit Fernstair nicht der einzige Weg nach Norden bleibt.
 919. [x] [P1] Plane jede neue Route mit mindestens einer Abkürzung, die erst nach einem Rätsel oder einer Ausrüstung öffnet und den Rückweg auf unter 20 Schritte kürzt.
 920. [x] [P1] Setze auf jeder neuen Route mindestens drei Wanderer mit eigenem Team, die man nur durch Ansprechen herausfordert (sight bleibt 0).
-921. [P2] Gib Gloamwood eine Lichtung mit einer Quelle (Kachel "o") als Heilpunkt, damit lange Wege eine Pause haben.
+921. [x] [P2] Gib Gloamwood eine Lichtung mit einer Quelle (Kachel "o") als Heilpunkt, damit lange Wege eine Pause haben.
 922. [P2] Lege in Gloamwood einen umgestürzten Baumstamm als Brücke über eine Schlucht an, der nur von Süden begehbar ist.
 923. [P2] Gib Quillbrook drei Furten, die bei Regen zu tiefem Wasser werden und dann nur mit dem Enterhaken über ein gespanntes Seil zu queren sind.
 924. [P2] Lege in Quillbrook eine Mühle mit Wasserrad an, deren Rad man mit der Hebelstange anhält, um einen Durchgang unter dem Rad zu öffnen.
@@ -50,9 +50,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 930. [P2] Lass auf Copper Gulch stillgelegte Loren als Hindernisse stehen, die man mit der Hebelstange auf dem Gleis um vier Kacheln verschiebt.
 931. [P2] Baue die Route "Windmere Ridge" (de: Windseegrat) oberhalb von Crowcrest, ein schmaler Grat mit Geröll und Windfeldern, Ring 9 bis 12.
 932. [P2] Lass auf Windmere Ridge Windböen den Spieler bei Wetter "Wind" um eine Kachel zur Seite schieben, sichtbar angekündigt, ohne dass er abstürzt.
-933. [P2] Gib jeder neuen Route einen eigenen Namensschild-Text am Eingang mit Ringbereich und Biom, z. B. "Brackwater Fen, Moor, Ring 12 bis 15".
-934. [P2] Plane die neuen Routen so, dass jede in beide Richtungen spielbar ist und keine nur einen Ausgang hat.
-935. [P2] Lege auf Quillbrook einen Fischersteg mit Bank an, auf der man sitzen kann und die Uhr bis zur nächsten Tageszeit vorspult.
+933. [x] [P2] Gib jeder neuen Route einen eigenen Namensschild-Text am Eingang mit Ringbereich und Biom, z. B. "Brackwater Fen, Moor, Ring 12 bis 15".
+934. [x] [P2] Plane die neuen Routen so, dass jede in beide Richtungen spielbar ist und keine nur einen Ausgang hat.
+935. [x] [P2] Lege auf Quillbrook einen Fischersteg mit Bank an, auf der man sitzen kann und die Uhr bis zur nächsten Tageszeit vorspult.
 936. [P2] Baue zwischen Hollowmere Shore und Gloamwood einen versteckten Hohlweg, der erst nach dem Fund einer Wegskizze im Spiel auftaucht.
 937. [P3] Baue die Endspiel-Route "Coldmoor" (de: Kaltmoor) im Norden, Ring 18 bis 24, nur mit Weg- und Geländelogik; Story-Anbindung gehört Bereich 4.
 938. [P3] Gib Coldmoor Moorlöcher (Kachel "k"), die nach drei Schritten nachgeben und den Spieler zum letzten Steg zurücksetzen, ohne Schaden.
@@ -78,14 +78,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 956. [P2] Gib Copperfold eine Werkstatt, die Wanderer-Ausrüstung gegen Erze und Münzen verbessert (siehe Abschnitt Ausrüstung).
 957. [P2] Gib Reedhaven einen Bootsmann als Fährhaltestelle der Seelinie (siehe Abschnitt Schnellreise).
 958. [P2] Baue für jeden neuen Ort mindestens zwei betretbare Häuser mit eigenem Innenraum 10 x 8 Kacheln.
-959. [P2] Lege in Brindlewick einen Markt an, der an zwei Tagen pro Woche (Gerätezeit Mittwoch und Samstag) mit drei zusätzlichen Ständen erscheint.
+959. [x] [P2] Lege in Brindlewick einen Markt an, der an zwei Tagen pro Woche (Gerätezeit Mittwoch und Samstag) mit drei zusätzlichen Ständen erscheint.
 960. [P2] Erweitere Thornridge um einen Gasthof als Kutschstation, mit Wirt und schwarzem Brett für Gerüchte über Funde.
 961. [P2] Baue den Hof "Mossgate Farm" (de: Moostor-Hof) auf Hollowmere Shore, mit Feldern, die sich je nach Wochentag sichtbar verändern.
-962. [P2] Gib jedem Ort ein Ortsschild mit Name und Einwohnerzahl, z. B. "Wrenhollow, 34 Leute".
+962. [x] [P2] Gib jedem Ort ein Ortsschild mit Name und Einwohnerzahl, z. B. "Wrenhollow, 34 Leute".
 963. [P2] Lege in Copperfold einen Aufzug im Förderturm an, der zu Fuß betreten wird und zwei Ebenen der Siedlung verbindet.
-964. [P2] Gib Reedhaven einen Steg, an dem Reusen hängen, die man einmal am Tag leert und dabei einen Heiltrank oder Münzen findet.
-965. [P2] Baue in Wrenhollow eine Bibliothek, in der Bücher Hinweise auf versteckte Orte enthalten, gebunden an Flags, nicht an Questtexte.
-966. [P2] Lege in jedem Ort einen Brunnen oder Platz als Treffpunkt, an dem abends mehrere Leute stehen (siehe NPC-Leben).
+964. [x] [P2] Gib Reedhaven einen Steg, an dem Reusen hängen, die man einmal am Tag leert und dabei einen Heiltrank oder Münzen findet.
+965. [x] [P2] Baue in Wrenhollow eine Bibliothek, in der Bücher Hinweise auf versteckte Orte enthalten, gebunden an Flags, nicht an Questtexte.
+966. [x] [P2] Lege in jedem Ort einen Brunnen oder Platz als Treffpunkt, an dem abends mehrere Leute stehen (siehe NPC-Leben).
 967. [P2] Ergänze Brindlewick um einen zweiten Steg im Norden, an dem die Seelinie anlegt.
 968. [P3] Baue die Einsiedelei "Hermit's Ledge" (de: Einsiedlerkante) auf Windmere Ridge mit einer einzigen Hütte und einem Fernrohr.
 969. [P3] Baue die verlassene Siedlung "Emberlow" (de: Glutsenke) nahe Cinder Rift, nur Ruinen, mit fünf Funden zwischen eingestürzten Mauern.
@@ -106,17 +106,17 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 982. [x] [P1] Zeige in jeder Höhle am Eingang, welche Ausrüstung drinnen gebraucht wird, als Symbol auf dem Schild.
 983. [x] [P1] Gib jeder Höhle mit mehr als einer Ebene einen kurzen Rückweg (Leiter oder Seil) vom tiefsten Punkt zum Eingang, der erst von innen öffnet.
 984. [P2] Lege in Mossmere Grotto Tropfsteine an, die man mit der Hebelstange abbricht, um eine Brücke über einen Bach zu schlagen.
-985. [P2] Lass in Sablecove die Gezeiten nach Gerätezeit alle sechs Stunden wechseln und zeige die nächste Ebbe auf einem Gezeitenstein am Eingang.
+985. [x] [P2] Lass in Sablecove die Gezeiten nach Gerätezeit alle sechs Stunden wechseln und zeige die nächste Ebbe auf einem Gezeitenstein am Eingang.
 986. [P2] Lege in Echo Gallery Hall-Felder an, in denen ein Glockenschlag einen versteckten Gang als Umriss für 5 Sekunden zeigt.
 987. [P2] Gib Kindle Vents drei Schlotreihen mit verschiedenem Takt (3, 4, 5 Sekunden), die man nacheinander durchquert.
 988. [P2] Baue die Höhle "Hollowmere Geode" (de: Hohlseedruse) auf einer Seeinsel, voller Kristalle, die das Laternenlicht weiterwerfen.
 989. [P2] Lass in jeder dunklen Höhle die Laterne einen sichtbaren Radius von 2 Kacheln haben und den Rest abdunkeln (Erweiterung des bestehenden Schattens).
 990. [P2] Baue die Höhle "Copper Deep" (de: Kupfertiefe) unter Copperfold, ein Bergwerk mit vier Sohlen und Leitern dazwischen, Ring 12 bis 16.
 991. [P2] Gib Copper Deep Stützbalken, die man nicht entfernen darf, und Geröllhalden, die mit Kletterpicke begehbar werden.
-992. [P2] Lege in jeder Höhle mindestens einen Rastplatz mit Lagerfeuer an, an dem man speichert, aber nicht heilt.
-993. [P2] Zeige beim Betreten einer Höhle den Namen und die aktuelle Ebene als Banner, z. B. "Copper Deep, Sohle 2".
+992. [x] [P2] Lege in jeder Höhle mindestens einen Rastplatz mit Lagerfeuer an, an dem man speichert, aber nicht heilt.
+993. [x] [P2] Zeige beim Betreten einer Höhle den Namen und die aktuelle Ebene als Banner, z. B. "Copper Deep, Sohle 2".
 994. [P2] Gib jeder Höhle eine eigene Tabelle in data/encounters.json mit Fokus auf Stone, Umbra und Lumen.
-995. [P2] Lege in Sablecove Muschelbänke an, die bei Ebbe einen Fund freigeben und bei Flut wieder verschwinden.
+995. [x] [P2] Lege in Sablecove Muschelbänke an, die bei Ebbe einen Fund freigeben und bei Flut wieder verschwinden.
 996. [P2] Baue in Echo Gallery eine Tropfwasser-Uhr, die bei Wartezeit von 30 Sekunden einen Spalt im Fels öffnet.
 997. [P3] Baue die Endspiel-Höhle "Deeproot Hollow" (de: Tiefwurzelhöhle) unter Coldmoor, Ring 22 bis 28, mit Wurzelwänden "v".
 998. [P3] Lass in Deeproot Hollow Wurzeln je nach Tageszeit Wege öffnen (tags zurückgezogen, nachts ausgebreitet).
@@ -139,7 +139,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1013. [x] [P1] Setze Druckplatten "P" um, die gedrückt bleiben, solange ein Block oder der Spieler darauf steht, und eine Tür über open_flag steuern.
 1014. [x] [P1] Gib jedem Rätselraum einen "Raum zurücksetzen" Eintrag im Menü, der Blöcke und Schalter auf den Anfang stellt.
 1015. [P2] Gib Bellstone Ruins im letzten Raum ein Glockenrätsel mit fünf Glocken, dessen Reihenfolge auf drei Wandbildern in früheren Räumen verteilt ist.
-1016. [P2] Lass falsch geläutete Glocken in Bellstone Ruins nur die Reihe zurücksetzen und keinen Kampf auslösen.
+1016. [x] [P2] Lass falsch geläutete Glocken in Bellstone Ruins nur die Reihe zurücksetzen und keinen Kampf auslösen.
 1017. [P2] Baue in Brackwater Sluice einen Raum, in dem bei hohem Wasser Kisten schwimmen und als Trittsteine dienen.
 1018. [P2] Baue in Brackwater Sluice einen Raum, in dem bei niedrigem Wasser ein Fund am Grund erreichbar wird.
 1019. [P2] Gib Lanternwell drehbare Spiegel mit vier Stellungen, die man durch Ansprechen um 90 Grad dreht.
@@ -149,12 +149,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1023. [P2] Lass im Gloamwood Maze die Wegzeichen nachts anders stehen als tags, und nur eine der beiden Lesarten führt zum Ziel.
 1024. [P2] Baue den Dungeon "Tidebell Tower" (de: Gezeitenglockenturm) auf einer Seeinsel, vier Stockwerke, deren Treppen sich je nach Gezeitenstand anders verbinden.
 1025. [P2] Setze in jedem Dungeon am Ende einen Hüter-Raum mit einem Hüter-NPC, der ein Andenken als Belohnung gibt (Kampf mit ihm nur durch Ansprechen).
-1026. [P2] Zeige im Dungeon-Banner beim Betreten die Zahl der gelösten Räume, z. B. "Lanternwell 3/5".
-1027. [P2] Gib jedem Dungeon eine Hinweistafel am Eingang, die nach drei gescheiterten Versuchen eines Raums einen Tipp freigibt.
-1028. [P2] Lass Türen, die ein gelöstes Rätsel geöffnet hat, dauerhaft offen bleiben (gespeichert in world_state).
-1029. [P2] Gib jedem Dungeon eine eigene Tabelle in data/encounters.json mit niedriger Rate 0.06, damit Rätsel nicht ständig unterbrochen werden.
-1030. [P2] Setze in Rätselräumen keine Begegnungsfelder, nur in Fluren zwischen den Räumen.
-1031. [P2] Zeige in jedem Rätselraum beim ersten Betreten eine Zeile mit dem Ziel des Raums, z. B. "Bringe das Licht zu beiden Kristallen".
+1026. [x] [P2] Zeige im Dungeon-Banner beim Betreten die Zahl der gelösten Räume, z. B. "Lanternwell 3/5".
+1027. [x] [P2] Gib jedem Dungeon eine Hinweistafel am Eingang, die nach drei gescheiterten Versuchen eines Raums einen Tipp freigibt.
+1028. [x] [P2] Lass Türen, die ein gelöstes Rätsel geöffnet hat, dauerhaft offen bleiben (gespeichert in world_state).
+1029. [x] [P2] Gib jedem Dungeon eine eigene Tabelle in data/encounters.json mit niedriger Rate 0.06, damit Rätsel nicht ständig unterbrochen werden.
+1030. [x] [P2] Setze in Rätselräumen keine Begegnungsfelder, nur in Fluren zwischen den Räumen.
+1031. [x] [P2] Zeige in jedem Rätselraum beim ersten Betreten eine Zeile mit dem Ziel des Raums, z. B. "Bringe das Licht zu beiden Kristallen".
 1032. [P3] Baue den Endspiel-Dungeon "Inkwell Depths" (de: Tintenfasstiefe), zehn Räume, die alle vorher gelernten Rätselarten kombinieren, Ring 25 bis 32.
 1033. [P3] Gib Inkwell Depths einen Raum, in dem Blöcke, Druckplatten und Spiegel gemeinsam genutzt werden.
 1034. [P3] Lege für jeden Dungeon eine Bestzeit-Messung an, die in den Statistiken (Records) steht.
@@ -176,21 +176,21 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1048. [x] [P1] Ergänze tests/unit/test_gear.gd so, dass keine Ausrüstung den Spieler über Wasser oder Lücken ohne Bodenkontakt bewegt und keine Animation "fly", "glide" oder "ride" heißt.
 1049. [x] [P1] Ändere die Animation des Enterhakens in Overworld.gd so, dass die Figur sich Hand über Hand an einem gespannten Seil entlang zieht, die Füße am Seil, nie frei in der Luft.
 1050. [x] [P1] Gib jeder Ausrüstung im Rucksack eine Seite mit Bild, Kurztext und den Kachelzeichen, an denen sie wirkt.
-1051. [P2] Füge die Ausrüstung "Rubbing Charcoal" (de: Pausstift) hinzu, mit der man verwitterte Steintafeln durchpaust und versteckte Inschriften als Hinweis lesbar macht.
-1052. [P2] Füge die Ausrüstung "Survey Glass" (de: Peilglas) hinzu, die beim Ansehen in eine Richtung bis 6 Kacheln entfernte Funde als Punkt auf der Minikarte zeigt.
-1053. [P2] Gib dem Peilglas eine Abklingzeit von 20 Sekunden, damit es kein Dauer-Radar wird.
+1051. [x] [P2] Füge die Ausrüstung "Rubbing Charcoal" (de: Pausstift) hinzu, mit der man verwitterte Steintafeln durchpaust und versteckte Inschriften als Hinweis lesbar macht.
+1052. [x] [P2] Füge die Ausrüstung "Survey Glass" (de: Peilglas) hinzu, die beim Ansehen in eine Richtung bis 6 Kacheln entfernte Funde als Punkt auf der Minikarte zeigt.
+1053. [x] [P2] Gib dem Peilglas eine Abklingzeit von 20 Sekunden, damit es kein Dauer-Radar wird.
 1054. [P2] Baue in Copperfold eine Werkstatt, die die Laterne auf Stufe 2 (Radius 3 Kacheln) und Stufe 3 (Radius 4 Kacheln) verbessert.
 1055. [P2] Verbessere den Enterhaken in der Werkstatt auf "Long Line" (de: Langleine), die 5 statt 3 Kacheln überbrückt.
 1056. [P2] Verbessere die Kletterpicke in der Werkstatt auf "Twin Picks" (de: Doppelpicke), die auch hohe Klippen mit zwei Kacheln Höhe erlaubt.
 1057. [P2] Lege für jede Verbesserung feste Kosten in Münzen und Erzen fest, z. B. Laterne Stufe 2 für 1500 Münzen und 3 Kupfererz.
 1058. [P2] Füge die Erze "Copper Ore" (de: Kupfererz) und "Moonstone" (de: Mondstein) als Funde in Höhlen hinzu, nur nutzbar für Werkstatt-Verbesserungen.
 1059. [P2] Baue ein Ausrüstungs-Rad im Feldmenü, das per langem Druck auf A die passende Ausrüstung für das Feld vor dem Spieler vorschlägt.
-1060. [P2] Lass die passende Ausrüstung automatisch wirken, wenn der Spieler nur eine besitzt, die an dieser Stelle passt.
-1061. [P2] Zeige vor einer noch gesperrten Stelle ein graues Symbol der benötigten Ausrüstung, damit man sich die Stelle merkt.
-1062. [P2] Gib jede neue Ausrüstung an einem festen Ort im Spiel aus, nachvollziehbar in docs/WORLD.md eingetragen (Gebiet, Geber, Flag).
-1063. [P2] Füge die Ausrüstung "Tide Chart" (de: Gezeitentafel) hinzu, die im Menü die nächste Ebbe und Flut nach Gerätezeit anzeigt.
+1060. [x] [P2] Lass die passende Ausrüstung automatisch wirken, wenn der Spieler nur eine besitzt, die an dieser Stelle passt.
+1061. [x] [P2] Zeige vor einer noch gesperrten Stelle ein graues Symbol der benötigten Ausrüstung, damit man sich die Stelle merkt.
+1062. [x] [P2] Gib jede neue Ausrüstung an einem festen Ort im Spiel aus, nachvollziehbar in docs/WORLD.md eingetragen (Gebiet, Geber, Flag).
+1063. [x] [P2] Füge die Ausrüstung "Tide Chart" (de: Gezeitentafel) hinzu, die im Menü die nächste Ebbe und Flut nach Gerätezeit anzeigt.
 1064. [P2] Ergänze WorldValidator.gd um eine Prüfung, dass jede Ausrüstung vor der ersten Stelle erreichbar ist, an der sie gebraucht wird.
-1065. [P2] Halte die Gesamtzahl der Ausrüstung in Veydal bei höchstens 10 Stücken, damit das Ausrüstungs-Rad auf eine Bildschirmseite passt.
+1065. [x] [P2] Halte die Gesamtzahl der Ausrüstung in Veydal bei höchstens 10 Stücken, damit das Ausrüstungs-Rad auf eine Bildschirmseite passt.
 1066. [P3] Füge die Ausrüstung "Crampons" (de: Steigeisen) für vereiste Geröllfelder in Coldmoor hinzu, die das Rutschen auf Eis verhindern.
 1067. [P3] Baue rutschige Eisflächen in Coldmoor, auf denen der Spieler ohne Steigeisen bis zum nächsten Hindernis rutscht.
 1068. [P3] Füge die Ausrüstung "Field Easel" (de: Feldstaffelei) hinzu, mit der man an Aussichtspunkten eine Skizze anlegt, die als Bild im Kartenbuch landet.
@@ -211,20 +211,20 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1081. [x] [P1] Ersetze die bisherigen Fund-Schilder (reed_find, gallery_find, nook_find) durch Einträge im Feld "secrets" und behalte die Flags für alte Spielstände.
 1082. [x] [P1] Gib jeder neuen Route einen Geheimgang hinter einer verdächtig glatten Felswand, der beim Ansehen mit A öffnet.
 1083. [x] [P1] Ergänze WorldValidator.gd so, dass jeder Fund erreichbar ist und keine zwei Funde dieselbe Flag teilen.
-1084. [P2] Lege 12 "Waymarker Stones" (de: Kartografensteine) in Veydal an, alte Steine mit einem Symbol, die beim Ansehen gezählt werden.
-1085. [P2] Gib für 4, 8 und 12 gefundene Kartografensteine je ein Andenken.
+1084. [x] [P2] Lege 12 "Waymarker Stones" (de: Kartografensteine) in Veydal an, alte Steine mit einem Symbol, die beim Ansehen gezählt werden.
+1085. [x] [P2] Gib für 4, 8 und 12 gefundene Kartografensteine je ein Andenken.
 1086. [P2] Verstecke 8 "Lost Sketches" (de: verlorene Skizzen), die jeweils eine Ecke der Weltkarte mit einem geheimen Ort zeigen.
 1087. [P2] Lass jede verlorene Skizze genau einen versteckten Ort freischalten, der vorher nicht auf der Weltkarte stand.
-1088. [P2] Baue an fünf Stellen Grabhügel, an denen man nur mit dem Pausstift eine Inschrift liest, die auf einen vergrabenen Fund in der Nähe zeigt.
-1089. [P2] Lege vergrabene Funde an, die man an einer Stelle mit lockerem Boden durch Ansehen mit A ausgräbt, ohne Spirling-Hilfe.
+1088. [x] [P2] Baue an fünf Stellen Grabhügel, an denen man nur mit dem Pausstift eine Inschrift liest, die auf einen vergrabenen Fund in der Nähe zeigt.
+1089. [x] [P2] Lege vergrabene Funde an, die man an einer Stelle mit lockerem Boden durch Ansehen mit A ausgräbt, ohne Spirling-Hilfe.
 1090. [P2] Gib jedem Dungeon einen versteckten Raum, der auf der Raumzählung nicht erscheint.
-1091. [P2] Lass Funde in Schilf und Farn bei Wetter Wind sichtbarer werden (Glitzern alle 2 Sekunden).
+1091. [x] [P2] Lass Funde in Schilf und Farn bei Wetter Wind sichtbarer werden (Glitzern alle 2 Sekunden).
 1092. [P2] Verstecke in Orten 10 verlegte Alltagsdinge (Schlüssel, Brille, Pfeife), die man dem Besitzer zurückbringt und dafür einen kleinen Lohn bekommt.
-1093. [P2] Baue an drei Stellen eine Bank mit Blick auf den See, auf der man sitzt und nach 10 Sekunden ein Spirling-Geräusch und einen Hinweis erhält.
+1093. [x] [P2] Baue an drei Stellen eine Bank mit Blick auf den See, auf der man sitzt und nach 10 Sekunden ein Spirling-Geräusch und einen Hinweis erhält.
 1094. [P2] Lege einen geheimen Pfad hinter dem Leuchtturm an, der nur nachts bei Leuchtfeuer sichtbar ist.
 1095. [P2] Gib jeder Höhle eine Nische, die man nur mit Laterne Stufe 2 sieht.
-1096. [P2] Ergänze die Statistik um "Funde gesamt" und "Geheimnisse gesamt" pro Region.
-1097. [P2] Lass einen Fund nach dem Aufheben als ausgefülltes Kreuz auf der Minikarte stehen.
+1096. [x] [P2] Ergänze die Statistik um "Funde gesamt" und "Geheimnisse gesamt" pro Region.
+1097. [x] [P2] Lass einen Fund nach dem Aufheben als ausgefülltes Kreuz auf der Minikarte stehen.
 1098. [P3] Baue ein Geheimnis-Kapitel im Kartenbuch mit 20 Rätselbildern, die jeweils auf einen Ort zeigen, ohne Namen.
 1099. [P3] Lege einen Fund an, der nur erscheint, wenn man 100 Schritte rückwärts ohne Kampf auf Lakeloop gegangen ist.
 1100. [P3] Verstecke eine Spieluhr in Emberlow, die beim Aufziehen eine Melodie spielt, die man in der Bibliothek von Wrenhollow nachschlagen kann.
@@ -443,19 +443,19 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1297. [P2] Plane in Corvane die Ausrüstung "River Pole" (de: Staken), mit der man zu Fuß über Stelzstege balanciert, nie schwimmt oder fliegt.
 1298. [P2] Lege für Corvane eigene Wetter-Anteile in data/weather.json an (mehr Regen und Nebel, Herbst als Grundton).
 1299. [P2] Ergänze die Weltkarte so, dass ein Regionswechsel als Umblättern im Kartenbuch erscheint (Funktion hier, Stil in Bereich 6).
-1300. [P2] Trenne die Kartierquote, Funde und Kartografensteine pro Region, damit Corvane eigene Zähler hat.
+1300. [x] [P2] Trenne die Kartierquote, Funde und Kartografensteine pro Region, damit Corvane eigene Zähler hat.
 1301. [P2] Lege in docs/WORLD.md einen Abschnitt "Corvane, Kartenregeln" an: keine nummerierten Wege, Flusslauf als Leitlinie, Orte an Brücken.
 1302. [P2] Ergänze tests/unit um test_corvane_prep.gd, das prüft, dass Corvane-Karten ohne Flag nicht betretbar sind.
 1303. [P2] Bereite den Kai so vor, dass man jederzeit mit der Fähre nach Veydal zurückkommt, ohne Fortschrittsverlust.
 1304. [P2] Halte alle Corvane-Karten in der Rohfassung unter 2 MB Gesamtgröße der neuen Kacheln für das APK-Budget (tools/apk_budget.sh).
-1305. [P3] Plane die Corvane-Höhle "Rook Vault" (de: Krähengewölbe) als Rätsel-Dungeon mit Krähenfedern als Schalter.
+1305. [x] [P3] Plane die Corvane-Höhle "Rook Vault" (de: Krähengewölbe) als Rätsel-Dungeon mit Krähenfedern als Schalter.
 1306. [P3] Plane den Corvane-Ort "Saltmill" (de: Salzmühle) an der Flussmündung mit Gezeitenmühle.
 1307. [P3] Plane eine Corvane-Route mit Treidelpfad, auf dem man ein Boot an einem Seil flussaufwärts zieht, zu Fuß.
 1308. [P3] Plane die Kupferglanz-Grenze am Rand von Corvane als gesperrten Bergpass für Era III, nur als Schild und Felswand.
 1309. [P3] Lege eine Liste "Corvane-Platzhalter" in docs/WORLD.md an, die jede Platzhalter-ID mit der späteren Art-Planung verknüpft.
 1310. [P3] Plane Corvane-NPC-Tagespläne mit Marktzeiten (Markt 6 bis 14 Uhr).
 1311. [P3] Plane einen Corvane-Aussichtsturm, von dem aus man ganz Corvane auf der Weltkarte sichtet.
-1312. [P3] Plane für Corvane 15 versteckte Funde und 12 Kartografensteine nach dem Veydal-Muster.
+1312. [x] [P3] Plane für Corvane 15 versteckte Funde und 12 Kartografensteine nach dem Veydal-Muster.
 1313. [P3] Plane eine Kutschlinie in Corvane zwischen Markt und Saltmill.
 1314. [P3] Plane den Fährweg nach Corvane mit einer Zwischenstation auf einer Insel, die man beim zweiten Besuch betreten kann.
 1315. [P3] Bereite in WorldValidator.gd eine Prüfung vor, dass keine Corvane-Karte auf Veydal-Tabellen zeigt.

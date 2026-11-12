@@ -1,0 +1,242 @@
+{
+ "name": "Woadfen",
+ "region": "corvane",
+ "biome": "marsh",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "woadfen",
+ "rows": [
+  "@TTTT__@TTT@",
+  "T,,,.__.,,,T",
+  "T,%%.__.%%,T",
+  "T,%%*._.%%,T",
+  "T,,,.._..,,T",
+  "TT,,,._,,,TT",
+  "T~~~,._,~~~T",
+  "T~~~,._,~~~T",
+  "T,,,,._,,,,@",
+  "T,%%,._*.S,T",
+  "T,%%,._,,,,T",
+  "@T,,,*_,,TT@",
+  "T,,,__,,,,,T",
+  "T,,,_,,%%%,T",
+  "T~~~_~~%%%,T",
+  "T~~~_~~,,,,_",
+  "T,,,_,,,,,,T",
+  "T,%%____,,,T",
+  "T,%%,,,_,,,T",
+  "@T,,,,,_,,T@",
+  "T,,,,,,_,,,T",
+  "T...,,,_,%%T",
+  "@....,,_,%%@",
+  "T,,,,,,_,,,T",
+  "______.._,,T",
+  "______..*_.T",
+  "T,S.,,,,,,,T",
+  "T@TTTT@TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 0,
+   "y": 24,
+   "to": "madderby",
+   "tx": 8,
+   "ty": 10,
+   "facing": "left"
+  },
+  {
+   "x": 0,
+   "y": 25,
+   "to": "madderby",
+   "tx": 8,
+   "ty": 11,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "rain_rift",
+   "tx": 5,
+   "ty": 11,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "rain_rift",
+   "tx": 6,
+   "ty": 11,
+   "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 15,
+   "to": "root_rift",
+   "tx": 5,
+   "ty": 20,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "orla",
+   "x": 3,
+   "y": 12,
+   "facing": "right",
+   "dialogue": "woadfen/orla",
+   "sprite": "villager",
+   "trainer": "Peat Cutter Orla",
+   "intro": "woadfen/orla_intro",
+   "defeat": "woadfen/orla_defeat",
+   "money": 900,
+   "team": [
+    {
+     "species": "Puddlet",
+     "level": 18
+    },
+    {
+     "species": "Paddlewisp",
+     "level": 19
+    }
+   ]
+  },
+  {
+   "id": "fenn",
+   "x": 9,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "woadfen/fenn",
+   "sprite": "villager",
+   "trainer": "Reed Cutter Fenn",
+   "intro": "woadfen/fenn_intro",
+   "defeat": "woadfen/fenn_defeat",
+   "money": 950,
+   "team": [
+    {
+     "species": "Fluting",
+     "level": 19
+    },
+    {
+     "species": "Puddlet",
+     "level": 19
+    },
+    {
+     "species": "Paddlewisp",
+     "level": 20
+    }
+   ]
+  },
+  {
+   "id": "lusa",
+   "x": 2,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "woadfen/lusa",
+   "sprite": "villager",
+   "trainer": "Wanderer Lusa",
+   "intro": "woadfen/lusa_intro",
+   "defeat": "woadfen/lusa_defeat",
+   "money": 1000,
+   "team": [
+    {
+     "species": "Hushkin",
+     "level": 20
+    },
+    {
+     "species": "Paddlewisp",
+     "level": 20
+    },
+    {
+     "species": "Blotling",
+     "level": 20
+    }
+   ]
+  },
+  {
+   "id": "lq_tibbet",
+   "x": 8,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "legend_quests/zephyrel_witness",
+   "sprite": "villager",
+   "show_flag": "lq_zephyrel_met",
+   "hide_flag": "lq_zephyrel_ready"
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 26,
+   "dialogue": "woadfen/sign"
+  },
+  {
+   "x": 9,
+   "y": 9,
+   "dialogue": "woadfen/sign_top"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 11,
+   "y": 15,
+   "open_flag": "rift_mirror_sealed",
+   "closed": "#"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 8,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_woad_west"
+  },
+  {
+   "x": 11,
+   "y": 20,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_woad_east"
+  },
+  {
+   "x": 0,
+   "y": 16,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_woad_pool"
+  },
+  {
+   "x": 11,
+   "y": 2,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_woad_north"
+  },
+  {
+   "x": 3,
+   "y": 21,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "dig_woadfen",
+   "soil": true
+  }
+ ],
+ "spots": {
+  "wanderer_a": [
+   4,
+   4
+  ],
+  "wanderer_b": [
+   8,
+   9
+  ],
+  "letter_c3": [
+   1,
+   22
+  ],
+  "page_9": [
+   1,
+   1
+  ]
+ }
+}

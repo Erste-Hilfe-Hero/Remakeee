@@ -17,7 +17,7 @@
   "~%%%~~~~~+%~",
   "~~%%%%%%.+.~",
   "~~~~~~~..__~",
-  "~~%%%%.____~",
+  "~~%%%%S____~",
   "_______._%%~",
   "~S%%%~~~%%%~",
   "~~~~~~~~~~~~"
@@ -183,7 +183,7 @@
      "species": "Kelpup",
      "level": 13,
      "moves": [
-      "Deepwell Draught"
+      "Root Mend"
      ]
     },
     {
@@ -250,6 +250,11 @@
    "y": 10,
    "dialogue": "story/find_5",
    "hide_flag": "page_5"
+  },
+  {
+   "x": 6,
+   "y": 11,
+   "dialogue": "saltmarsh/marker_stone"
   }
  ],
  "secrets": [
@@ -281,6 +286,14 @@
    "item": "remedy",
    "count": 1,
    "flag": "find_marsh_post"
+  },
+  {
+   "x": 10,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "dig_saltmarsh",
+   "soil": true
   }
  ]
 }

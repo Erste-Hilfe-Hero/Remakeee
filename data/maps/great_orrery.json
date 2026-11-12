@@ -1,0 +1,46 @@
+{
+ "name": "The Great Orrery",
+ "region": "halcyra",
+ "biome": "town",
+ "backdrop": "voice",
+ "rows": [
+  "WWWWWWWWWWWW",
+  "Wf|ff||ff|fW",
+  "WffffffffffW",
+  "Wf|ffSff|ffW",
+  "WffffffffffW",
+  "WfS|ffff|SfW",
+  "WffffffffffW",
+  "Wf|ffffff|fW",
+  "WffffffffffW",
+  "WWWWWDWWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 9,
+   "to": "starwell",
+   "tx": 9,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [],
+ "signs": [
+  {
+   "x": 5,
+   "y": 3,
+   "dialogue": "great_orrery/plaque"
+  },
+  {
+   "x": 2,
+   "y": 5,
+   "dialogue": "great_orrery/gap"
+  },
+  {
+   "x": 9,
+   "y": 5,
+   "dialogue": "great_orrery/ledger"
+  }
+ ]
+}

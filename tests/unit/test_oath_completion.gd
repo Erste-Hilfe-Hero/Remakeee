@@ -65,6 +65,9 @@ func test_completion_weights_and_range() -> void:
 	for sd: SpirlingData in Database.spirlings.values():
 		GameState.spirlog[sd.species_name] = {"seen": true, "bonded": true}
 	GameState.set_flag("gauntlet_clear")
+	# Towers count the stair and both Rift towers alike.
+	for t: Dictionary in RiftTower.list():
+		GameState.records["rift_" + str(t.id)] = RiftTower.floors(t)
 	assert_gte(Completion.percent(), start + 59)
 	assert_lte(Completion.percent(), 100)
 	assert_string_contains(PauseMenu.records_text(), "Journey complete")

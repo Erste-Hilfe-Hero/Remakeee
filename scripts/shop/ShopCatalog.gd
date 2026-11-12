@@ -15,7 +15,8 @@ const TAB_NAMES: Dictionary = {"advantages": "Advantages", "packs": "Packs", "pa
 	"riftglass": "Riftglass"}
 const STORE_TYPES: Array[String] = ["consumable", "non_consumable", "subscription"]
 const LEAGUE_SCOPES: Array[String] = ["open", "none", "look"]
-const GRANT_TYPES: Array[String] = ["rg", "item", "unlock", "coins", "pass", "choice"]
+## "spirling" hands over one Spirling with fixed values (pay-to-win plan points 61-80, ShopEffects.bought_spirling).
+const GRANT_TYPES: Array[String] = ["rg", "item", "unlock", "coins", "pass", "choice", "spirling"]
 ## Fields that would mean a random or chance-based content. No offer may have one (item 4021).
 const RANDOM_FIELDS: Array[String] = ["chance", "chances", "odds", "random", "roll", "rolls", "weight", "weights", "draw",
 	"draws", "pool", "gacha", "lootbox", "rarity_table", "w"]
@@ -40,9 +41,29 @@ static func load_all() -> void:
 			_offers.append(o)
 			_by_id[str(o.get("id", ""))] = o
 
+## The whole shop.json (offers plus "advantage_values").
+static func data() -> Dictionary:
+	load_all()
+	return _data
+
 static func offers() -> Array[Dictionary]:
 	load_all()
 	return _offers
+
+## Jacket colour ("4f7a3a") of the look offer that unlocks [param key] (item 4277), or "".
+static func jacket_color(key: String) -> String:
+	if key.is_empty():
+		return ""
+	var o: Dictionary = look_offer(key)
+	return str(o.get("color", ""))
+
+## The look offer whose only grant is the unlock [param key] ({} if none).
+static func look_offer(key: String) -> Dictionary:
+	for o: Dictionary in offers():
+		var g: Array = o.get("grants", [])
+		if str(o.get("tab", "")) == "looks" and g.size() == 1 and g[0] is Dictionary and str(g[0].get("id", "")) == key:
+			return o
+	return {}
 
 static func offer(id: String) -> Dictionary:
 	load_all()
@@ -106,7 +127,37 @@ static func grant_lines(o: Dictionary) -> Array[String]:
 				out.append(Loc.t("Wayfarer Pass for %d days") % int(g.days))
 			"choice":
 				out.append(Loc.t("1 x Element Prism of your choice"))
+			"spirling":
+				out.append(Loc.t("%s at Ring %d with the highest Spark in every value") % [Loc.t(str(g.get("species", ""))), int(g.get("level", 1))])
 	return out
+
+## What a pack's contents cost one by one in Riftglass (item 4685): Riftglass counts as itself,
+## each item as its own offer's Riftglass price, a choice as the first option's price.
+## Riftglass price of the offer that sells only the unlock [param key] (0 if none does).
+static func _unlock_price(key: String) -> int:
+	for o: Dictionary in offers():
+		var g: Array = o.get("grants", [])
+		if g.size() == 1 and g[0] is Dictionary and str(g[0].get("t", "")) == "unlock" and str(g[0].get("id", "")) == key:
+			return int(o.get("rg_price", 0))
+	return 0
+
+static func single_value(o: Dictionary) -> int:
+	var v: int = 0
+	for g: Variant in o.get("grants", []):
+		if not g is Dictionary:
+			continue
+		match str(g.get("t", "")):
+			"rg":
+				v += int(g.n)
+			"item":
+				v += int(g.get("n", 1)) * int(offer(str(g.id)).get("rg_price", 0))
+			"unlock":
+				v += _unlock_price(str(g.get("id", "")))
+			"choice":
+				var opts: Variant = o.get("choice", [])
+				if opts is Array and not (opts as Array).is_empty():
+					v += int(g.get("n", 1)) * int(offer(str(opts[0])).get("rg_price", 0))
+	return v
 
 ## Problems in the catalog (empty = fine). Used by tests and tools/validate_data.gd.
 static func validate() -> Array[String]:

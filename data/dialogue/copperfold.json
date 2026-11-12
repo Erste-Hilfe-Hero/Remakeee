@@ -64,7 +64,7 @@
  },
  "cobb": {
   "lines": [
-   "Foreman Cobb: Dawn at the tower, noon at the tower, dusk at the tower. Some say I live there."
+   "Foreman Cobb: Dawn at the tower, noon at the tower, dusk at the spring. Some say I live at the tower."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
@@ -94,5 +94,11 @@
     "Pedlar Maud: Business is up since the Rift closed. People buy things when they're not scared."
    ]
   }
+ },
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 3"
  }
 }

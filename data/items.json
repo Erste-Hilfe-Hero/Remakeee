@@ -313,6 +313,98 @@
   "tradeable": true
  },
  {
+  "id": "echo_furnace_heart",
+  "name": "Echo Crystal: Furnace Heart",
+  "description": "Teaches Furnace Heart to an Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Furnace Heart",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_fathom_crush",
+  "name": "Echo Crystal: Fathom Crush",
+  "description": "Teaches Fathom Crush to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Fathom Crush",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_tailwind",
+  "name": "Echo Crystal: Tailwind",
+  "description": "Teaches Tailwind to a Gale Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Tailwind",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_root_grip",
+  "name": "Echo Crystal: Root Grip",
+  "description": "Teaches Root Grip to a Bloom Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Root Grip",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_night_veil",
+  "name": "Echo Crystal: Night Veil",
+  "description": "Teaches Night Veil to an Umbra Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Night Veil",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_squall",
+  "name": "Echo Crystal: Squall",
+  "description": "Teaches Squall to a Gale Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Squall",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_dawn_mend",
+  "name": "Echo Crystal: Dawn Mend",
+  "description": "Teaches Dawn Mend to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Dawn Mend",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_radiant_lance",
+  "name": "Echo Crystal: Radiant Lance",
+  "description": "Teaches Radiant Lance to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Radiant Lance",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_scatter_gale",
+  "name": "Echo Crystal: Scatter Gale",
+  "description": "Teaches Scatter Gale to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Scatter Gale",
+  "any_element": true,
+  "price": 4000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_graft",
+  "name": "Echo Crystal: Graft",
+  "description": "Teaches Graft to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Graft",
+  "any_element": true,
+  "price": 4000,
+  "tradeable": false
+ },
+ {
   "id": "wading_boots",
   "name": "Wading Boots",
   "description": "Wayfarer Gear. Tall leather boots: walk through shallow water, step by step.",
@@ -321,6 +413,37 @@
   "hint": "The water here is shallow, but too cold for bare feet. Wading boots would do.",
   "works_on": [
    "w"
+  ]
+ },
+ {
+  "id": "survey_glass",
+  "name": "Survey Glass",
+  "description": "Wayfarer Gear. A brass spyglass: face open ground and press A to spot hidden finds up to 6 steps ahead on the minimap. It needs 20 seconds between looks.",
+  "battle": false,
+  "gear": true,
+  "hint": "With a Survey Glass you could look for hidden finds from here.",
+  "works_on": [
+   "look"
+  ]
+ },
+ {
+  "id": "tide_chart",
+  "name": "Tide Chart",
+  "description": "Wayfarer Gear. A tidewatcher's chart: open it in the satchel to see when the next low and high tide come, by the clock of your device.",
+  "battle": false,
+  "gear": true,
+  "works_on": [
+   "tide"
+  ]
+ },
+ {
+  "id": "rubbing_charcoal",
+  "name": "Rubbing Charcoal",
+  "description": "Wayfarer Gear. A stick of charcoal and a roll of thin paper: face a weathered stone and press A to take a rubbing and read its worn inscription.",
+  "battle": false,
+  "gear": true,
+  "works_on": [
+   "rubbing"
   ]
  },
  {
@@ -506,6 +629,16 @@
   }
  },
  {
+  "id": "rg_hold_stone",
+  "name": "Hold Stone",
+  "description": "Held memento: once per battle, a hit that would knock the holder out from full Vigor leaves it with 1 Vigor. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "endure_full": true
+  }
+ },
+ {
   "id": "rg_echo_scent",
   "name": "Echo Scent",
   "description": "Bonding gets clearly easier for one try.",
@@ -590,6 +723,70 @@
   }
  },
  {
+  "id": "rg_encounter_call",
+  "name": "Encounter Call",
+  "description": "Twice as many wild encounters for the next 30 steps.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "encounters",
+   "mult": 2.0,
+   "steps": 30
+  }
+ },
+ {
+  "id": "rg_skip_battle",
+  "name": "Battle Skip",
+  "description": "Offered before a wild battle against one foe at least 10 Rings below your lead: your team wins it at once, with full growth. Used up.",
+  "battle": false,
+  "shop": true
+ },
+ {
+  "id": "rg_rematch_key",
+  "name": "Rematch Key",
+  "description": "Talk to a beaten Wayfarer who already battled you today: one more rematch. Used up.",
+  "battle": false,
+  "shop": true
+ },
+ {
+  "id": "rg_warden_weaken",
+  "name": "Warden Weakener",
+  "description": "Offered before a Rift Warden battle you lost once before: the Warden's team starts with 15% less Vigor. One per battle, not in Rift-Born. Used up.",
+  "battle": false,
+  "shop": true
+ },
+ {
+  "id": "rg_rift_anchor",
+  "name": "Rift Anchor",
+  "description": "Offered after you lose to a Rift Warden: you stay right before it with a rested team instead of going back to the spring. Not in Rift-Born. Used up.",
+  "battle": false,
+  "shop": true
+ },
+ {
+  "id": "rg_temper_shift",
+  "name": "Temper Shift",
+  "description": "Sets one Spirling's temperament to one you choose. Used up.",
+  "battle": false,
+  "shop": true,
+  "temper_shift": true
+ },
+ {
+  "id": "rg_temper_amp",
+  "name": "Power Core",
+  "description": "Doubles the lean of one Spirling's temperament: +10% instead of +5% on its stat. Permanent. Used up.",
+  "battle": false,
+  "shop": true,
+  "temper_core": true
+ },
+ {
+  "id": "rg_gleam_prism",
+  "name": "Gleam Prism",
+  "description": "Turns one Spirling you choose into its Gleam form for good: +10% on all values and a Riftglass sheen. Used up.",
+  "battle": false,
+  "shop": true,
+  "gleam": true
+ },
+ {
   "id": "rg_spark_forge",
   "name": "Spark Forge",
   "description": "Sets all Spark values of one Spirling to the top (12). Shows the new values first.",
@@ -646,5 +843,182 @@
    "mult": 1.0,
    "battles": 1
   }
+ },
+ {
+  "id": "rg_last_stand",
+  "name": "Will to Win",
+  "description": "Works by itself: if your whole team is defeated, the last one returns once with 30% Vigor. Not against Rift Wardens.",
+  "battle": false,
+  "shop": true,
+  "last_stand": 0.3,
+  "per_battle": 1
+ },
+ {
+  "id": "rg_script_ember",
+  "name": "Rift Script: Glowglass Slash",
+  "description": "Teaches Glowglass Slash (power 95, accuracy 100, 4 energy, 20% chance to scorch) to one Ember Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Glowglass Slash",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_tide",
+  "name": "Rift Script: Floodglass Wave",
+  "description": "Teaches Floodglass Wave (power 95, accuracy 100, 4 energy, 20% chance to soak) to one Tide Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Floodglass Wave",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_bloom",
+  "name": "Rift Script: Vineglass Sting",
+  "description": "Teaches Vineglass Sting (power 95, accuracy 100, 4 energy, heals 25% of the damage) to one Bloom Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Vineglass Sting",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_volt",
+  "name": "Rift Script: Boltglass Bite",
+  "description": "Teaches Boltglass Bite (power 95, accuracy 100, 4 energy, 30% chance to lower Pace) to one Volt Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Boltglass Bite",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_stone",
+  "name": "Rift Script: Rockglass Ram",
+  "description": "Teaches Rockglass Ram (power 95, accuracy 100, 4 energy, 30% chance to raise own Guard) to one Stone Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Rockglass Ram",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_gale",
+  "name": "Rift Script: Stormglass Cut",
+  "description": "Teaches Stormglass Cut (power 95, accuracy 100, 4 energy, strikes first) to one Gale Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Stormglass Cut",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_lumen",
+  "name": "Rift Script: Lightglass Beam",
+  "description": "Teaches Lightglass Beam (power 95, accuracy 100, 4 energy, cures the user's own condition) to one Lumen Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Lightglass Beam",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_umbra",
+  "name": "Rift Script: Duskglass Grip",
+  "description": "Teaches Duskglass Grip (power 95, accuracy 100, 4 energy, 30% chance to lower Focus) to one Umbra Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Duskglass Grip",
+  "used_up": true
+ },
+ {
+  "id": "rg_stat_crystal_1",
+  "name": "Stat Crystal +1",
+  "description": "Adds 1 to one chosen value of one Spirling, counted like Spark. Up to 24 per value, twice the Spark cap. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "crystal": 1
+ },
+ {
+  "id": "rg_stat_crystal_5",
+  "name": "Stat Crystal +5",
+  "description": "Adds 5 to one chosen value of one Spirling, counted like Spark. Up to 24 per value, twice the Spark cap. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "crystal": 5
+ },
+ {
+  "id": "rg_stat_crystal_10",
+  "name": "Stat Crystal +10",
+  "description": "Adds 10 to one chosen value of one Spirling, counted like Spark. Up to 24 per value, twice the Spark cap. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "crystal": 10
+ },
+ {
+  "id": "rg_growth_x5",
+  "name": "Mighty Growth Crystal",
+  "description": "Five times the growth for the whole team for the next 20 battles.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "growth",
+   "mult": 5.0,
+   "battles": 20
+  }
+ },
+ {
+  "id": "rg_coin_boost_x3",
+  "name": "Great Coin Gleam",
+  "description": "Triple coins from battles for 20 battles.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "coins",
+   "mult": 3.0,
+   "battles": 20
+  }
+ },
+ {
+  "id": "rg_ring_tonic_10",
+  "name": "Grand Ring Tonic",
+  "description": "A Spirling gains 10 Rings at once. Never above the Ring cap.",
+  "battle": false,
+  "shop": true,
+  "rings": 10
+ },
+ {
+  "id": "rg_ring_crown",
+  "name": "Ring Crown",
+  "description": "A Spirling jumps to Ring 50 at once. Never above the Ring cap.",
+  "battle": false,
+  "shop": true,
+  "rings_to": 50
+ },
+ {
+  "id": "rg_bond_lure_1",
+  "name": "Bond Lure I",
+  "description": "Bonding gets 15% easier for one try. Tier 1 of 4. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.15
+ },
+ {
+  "id": "rg_bond_lure_2",
+  "name": "Bond Lure II",
+  "description": "Bonding gets 30% easier for one try. Tier 2 of 4. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.3
+ },
+ {
+  "id": "rg_bond_lure_3",
+  "name": "Bond Lure III",
+  "description": "Bonding gets 45% easier for one try. Tier 3 of 4. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.45
+ },
+ {
+  "id": "rg_bond_lure_4",
+  "name": "Bond Lure IV",
+  "description": "Bonding gets 60% easier for one try. Tier 4 of 4. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.6
  }
 ]

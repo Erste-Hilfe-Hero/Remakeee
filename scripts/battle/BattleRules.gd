@@ -44,6 +44,9 @@ const FIELD_WEAKEN: float = 0.85
 ## A Resonance move (moves.json "field") lays its field for this many turns; then the place's
 ## own field (or none) comes back.
 const RESONANCE_TURNS: int = 5
+## Root Mend (item 492): turns of mending after the art and the share of max Vigor per turn.
+const MEND_TURNS: int = 3
+const MEND_DIV: int = 16
 ## Turns a field_extend art adds to the Resonance field in play.
 const FIELD_EXTEND_TURNS: int = 2
 
@@ -112,12 +115,79 @@ static func field_blocks(field: String, status: String) -> bool:
 ## player_stage: stat stages every player Spirling starts with.
 ## The Story forms (items 671, 674): foe_energy_every gives the extra Energy only every N-th turn,
 ## lead_only puts the player stages on the player's first Spirling alone.
+## "difficulty": the difficulties (GameState order) a rule may be used on (item 677). Field rules
+## (items 675, 676, "warden_only"): "field_opening" lays a field for the first turns, "field_cycle"
+## brings a field back every "on" + "off" turns and announces it one turn ahead.
 const RULES: Dictionary[String, Dictionary] = {
-	"ember_pulse": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every turn.", "foe_energy": 1},
-	"undertow": {"label": "Undertow", "text": "The current drags at you: your Spirlings start with less Pace.", "player_stage": {"spd": -1}},
-	"ember_pulse_soft": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every second turn.", "foe_energy": 1, "foe_energy_every": 2},
-	"undertow_soft": {"label": "Undertow", "text": "The current drags at your lead: it starts with less Pace.", "player_stage": {"spd": -1}, "lead_only": true},
+	"ember_pulse": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every turn.", "foe_energy": 1, "difficulty": [1, 2, 3],
+		"turning": {"text": "The pulse flares: the foe's Spirlings gain 1 Energy at once.", "full_text": "The pulse quickens: now 2 extra Energy every turn.",
+			"line": "One left? Then the embers burn for both of us!", "foe_energy_once": 1, "full_foe_energy": 1}},
+	"undertow": {"label": "Undertow", "text": "The current drags at you: your Spirlings start with less Pace.", "player_stage": {"spd": -1}, "difficulty": [1, 2, 3],
+		"turning": {"text": "The current deepens: your next Spirling to come in loses Might.", "line": "The tide turns. Whoever you send next, it pulls under!", "next_in_stage": {"atk": -1}}},
+	"ember_pulse_soft": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every second turn.", "foe_energy": 1, "foe_energy_every": 2, "difficulty": [0]},
+	"undertow_soft": {"label": "Undertow", "text": "The current drags at your lead: it starts with less Pace.", "player_stage": {"spd": -1}, "lead_only": true, "difficulty": [0]},
+	"ash_rain": {"label": "Ash Rain", "text": "Ash rains down: for 3 turns the Ash Storm can't be called away.",
+		"field_opening": {"field": "ash_storm", "turns": 3, "locked": true}, "difficulty": [2, 3], "warden_only": true},
+	"tide_turn": {"label": "Tide Turn", "text": "The tide comes and goes: High Tide for 2 turns, then 2 turns of calm.",
+		"field_cycle": {"field": "high_tide", "on": 2, "off": 2}, "difficulty": [2, 3], "warden_only": true},
+	# The Rifts added in 2026-11 (Mist, Root, Shade). Both sides feel these rules:
+	# "accuracy_mult" scales every art's accuracy, "vine_heal_div" mends the weakest Spirling in
+	# front by max Vigor / div after each round, "hidden_order" lets the seeded RNG instead of
+	# Pace decide who moves first among arts of the same priority.
+	"fog_bank": {"label": "Fog Bank", "text": "Thick fog: every art on both sides is less accurate.", "accuracy_mult": 0.85,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	"vine_tangle": {"label": "Vine Tangle", "text": "Vines creep in: each round they mend the weakest Spirling in front.", "vine_heal_div": 12,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	"night_dark": {"label": "Night Dark", "text": "In the dark nobody sees who moves first: Pace no longer sets the order.", "hidden_order": 1,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	# The Rifts of Solenne (Act IV). "sand_chip_div": after each round every standing Spirling in
+	# front that is not Stone loses max Vigor / div; "heal_mult" scales every heal from arts,
+	# gifts and the field; "lumen_mult" scales the damage of Lumen arts. Both sides feel them.
+	"sandstorm": {"label": "Sandstorm", "text": "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.", "sand_chip_div": 16,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	"dry_well": {"label": "Dry Well", "text": "The oasis has been sold dry: every heal on both sides is halved.", "heal_mult": 0.5,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	"high_noon": {"label": "High Noon", "text": "The sun stands straight overhead: Lumen arts on both sides hit harder.", "lumen_mult": 1.3,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
 }
+
+## The number a Warden rule key adds up to over every rule in [param rule_string] (0 when none
+## sets it). Keys ending in "_mult" multiply instead and start at 1.
+static func rule_number(rule_string: String, key: String) -> float:
+	var mult: bool = key.ends_with("_mult")
+	var out: float = 1.0 if mult else 0.0
+	for id: String in split_rules(rule_string):
+		if not RULES[id].has(key):
+			continue
+		if mult:
+			out *= float(RULES[id][key])
+		else:
+			out += float(RULES[id][key])
+	return out
+## The Warden turning point (items 678, 679): when the Warden's second-to-last Spirling drops, a
+## rule with a "turning" block grows for the rest of the battle. Only the Tamer-and-up forms carry
+## one, so Story never turns. "foe_energy_once" is Energy for the foe's Spirlings on the spot,
+## "next_in_stage" hits the next Spirling the player sends in. From Veteran on (BattleModel.
+## rule_turn_full) "full_foe_energy" adds to the rule's Energy every turn and "full_text" is shown.
+static func turning(rule_id: String) -> Dictionary:
+	return RULES.get(rule_id, {}).get("turning", {})
+
+## Several rules join with "+" in one rule string ("ember_pulse+ash_rain"); at most this many at
+## once below Veteran, RULE_STACK_HIGH from Veteran on (item 677).
+const RULE_STACK: int = 1
+const RULE_STACK_HIGH: int = 2
+
+## The known rule ids in [param rule_string] ("a+b"), in order.
+static func split_rules(rule_string: String) -> Array[String]:
+	var out: Array[String] = []
+	for id: String in rule_string.split("+", false):
+		if RULES.has(id) and not id in out:
+			out.append(id)
+	return out
+
+## How many rules may stack on [param difficulty].
+static func rule_stack(difficulty: int) -> int:
+	return RULE_STACK_HIGH if difficulty >= 2 else RULE_STACK
 
 ## Multi-Spirling battles: a sweep ("foes" move) that reaches more than one foe deals this share to each.
 const SPREAD_MULT: float = 0.75
@@ -137,7 +207,43 @@ const BOSSES: Dictionary[String, Dictionary] = {
 		"text": "The Rift's water heaves up around a drowned heart. Its guard stands beside it!",
 		"phase": {"at": 0.5, "stage": {"def": 1, "foc": 1}, "field": "high_tide",
 			"text": "The Drowned Heart pulls the tide around itself!"}},
+	"mist_heart": {"label": "Mist Heart", "hp_per_ally": 0.7, "max_actions": 2,
+		"text": "The fog knots itself into one grey heart. It drifts at you from every side!",
+		"phase": {"at": 0.5, "stage": {"spd": 1, "foc": 1}, "field": "static_veil",
+			"text": "The Mist Heart crackles! Lightning flickers in the fog."}},
 }
+
+## Foe Energy at the start per difficulty (item 749): Story foes start with 2 less (8), Rift-Born
+## foes gain 1 extra at the end of the first turn. The player always starts with the normal 10.
+const FOE_START_CUT: Array[int] = [2, 0, 0, 0]
+const FOE_TURN1_ENERGY: Array[int] = [0, 0, 0, 1]
+
+static func foe_start_cut(difficulty: int) -> int:
+	return FOE_START_CUT[difficulty] if difficulty >= 0 and difficulty < FOE_START_CUT.size() else 0
+
+static func foe_turn1_energy(difficulty: int) -> int:
+	return FOE_TURN1_ENERGY[difficulty] if difficulty >= 0 and difficulty < FOE_TURN1_ENERGY.size() else 0
+
+## Boss tuning per difficulty (Story, Tamer, Veteran, Rift-Born; plan area 2 items 747, 748):
+## the most actions a boss takes per turn (0 = as BOSSES says), extra actions once the second
+## phase starts, and the share of max HP that starts it.
+const BOSS_ACTION_CAP: Array[int] = [1, 0, 0, 0]
+const BOSS_PHASE_BONUS: Array[int] = [0, 0, 0, 1]
+const BOSS_PHASE_AT: Array[float] = [0.5, 0.5, 0.5, 0.6]
+
+## Actions per turn on [param difficulty] (-1 for none set) before the second phase.
+static func boss_actions_for(boss_id: String, fielded: int, difficulty: int) -> int:
+	var n: int = boss_actions(boss_id, fielded)
+	if difficulty >= 0 and difficulty < BOSS_ACTION_CAP.size() and BOSS_ACTION_CAP[difficulty] > 0:
+		n = mini(n, BOSS_ACTION_CAP[difficulty])
+	return n
+
+## The HP share that starts the second phase on [param difficulty].
+static func boss_phase_at(boss_id: String, difficulty: int) -> float:
+	var at: float = float(boss_phase(boss_id).get("at", 0.5))
+	if difficulty >= 0 and difficulty < BOSS_PHASE_AT.size():
+		at = maxf(at, BOSS_PHASE_AT[difficulty])
+	return at
 
 ## Second phase of a boss (BOSSES[id].phase), or {}. Once its HP falls to "at" of max HP the boss
 ## wakes up: its "stage" changes apply and its "field" (if any) takes over for the rest of the fight.
@@ -164,8 +270,17 @@ static func stage_mult(stage: int) -> float:
 	var s: int = clampi(stage, STAGE_MIN, STAGE_MAX)
 	return (2.0 + s) / 2.0 if s >= 0 else 2.0 / (2.0 - s)
 
+static var _oath: Dictionary = {}
+
+## The Ink Oath rules (data/ink_oath.json).
+static func oath() -> Dictionary:
+	if _oath.is_empty():
+		var v: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/ink_oath.json"))
+		_oath = v if v is Dictionary else {}
+	return _oath
+
 static func trait_info(id: String) -> Dictionary:
-	return TRAITS.get(id, {})
+	return TRAITS[id] if TRAITS.has(id) else HiddenGifts.gift(id)
 
 ## The "held" block of an item, or {} if it can't be held.
 static func held_info(item_id: String) -> Dictionary:
@@ -179,14 +294,14 @@ static func is_holdable(item_id: String) -> bool:
 
 ## Sum of a numeric key over a Spirling's trait and held item (for additive keys).
 static func add_key(s: Spirling, key: String) -> float:
-	return float(trait_info(s.data.trait_id).get(key, 0.0)) + float(held_info(s.held).get(key, 0.0))
+	return float(trait_info(s.gift_id()).get(key, 0.0)) + float(held_info(s.held).get(key, 0.0))
 
 ## Product of a multiplier key over trait and held item.
 static func mult_key(s: Spirling, key: String) -> float:
-	return float(trait_info(s.data.trait_id).get(key, 1.0)) * float(held_info(s.held).get(key, 1.0))
+	return float(trait_info(s.gift_id()).get(key, 1.0)) * float(held_info(s.held).get(key, 1.0))
 
 static func is_immune(s: Spirling, status: String) -> bool:
-	return status in trait_info(s.data.trait_id).get("immune", [])
+	return status in trait_info(s.gift_id()).get("immune", [])
 
 static func field_mult(field: String, element: int) -> float:
 	var f: Dictionary = FIELDS.get(field, {})
@@ -249,7 +364,7 @@ static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field:
 	var held: Dictionary = held_info(user.held)
 	if held.has("elem") and move.element == Elements.E.get(str(held.elem), -1):
 		m *= float(held.get("elem_mult", 1.0))
-	var boost: float = float(trait_info(user.data.trait_id).get("low_hp_boost", 1.0))
+	var boost: float = float(trait_info(user.gift_id()).get("low_hp_boost", 1.0))
 	if boost != 1.0 and move.element in user.elements() and user.hp * 3 < user.max_hp():
 		m *= boost
 	return m
@@ -283,6 +398,9 @@ static func stage_only(mv: MoveData) -> bool:
 	return true
 
 static var _variants: Dictionary = {}
+## Seals the rule banner can draw for a variant (item 796); each variant names its own.
+const VARIANT_SYMBOLS: Array[String] = ["spark", "full", "toll", "glass", "block", "ring", "bars", "cross",
+	"hourglass", "line", "swirl", "wedge"]
 
 ## Every variant from data/rule_variants.json (cached). Unknown keys and one-sided excludes are
 ## reported by validate_variants.
@@ -298,7 +416,14 @@ static func variants() -> Dictionary:
 static func validate_variants() -> Array[String]:
 	var out: Array[String] = []
 	var all: Dictionary = variants()
+	var seals: Dictionary = {}
 	for id: String in all:
+		var seal: String = str(all[id].get("symbol", ""))
+		if not seal in VARIANT_SYMBOLS:
+			out.append("%s: unknown symbol %s" % [id, seal])
+		elif seals.has(seal):
+			out.append("%s: symbol %s already used by %s" % [id, seal, seals[seal]])
+		seals[seal] = id
 		for k: String in (all[id].get("keys", {}) as Dictionary):
 			if not VARIANT_KEYS.has(k):
 				out.append("%s: unknown key %s" % [id, k])
@@ -321,6 +446,29 @@ static func variant_conflict(ids: Array[String]) -> String:
 			if ids[j] == ids[i] or ids[j] in (all[ids[i]].get("excludes", []) as Array):
 				return "%s and %s don't go together." % [all[ids[i]].label, all[ids[j]].get("label", ids[j])]
 	return ""
+
+## Up to [param count] variants that go together, drawn from [param seed_value] (item 799): the
+## same seed always gives the same list, in the file's sorted order of ids.
+static func draw_variants(seed_value: int, count: int) -> Array[String]:
+	var r := RandomNumberGenerator.new()
+	r.seed = seed_value
+	var pool: Array = variants().keys()
+	pool.sort()
+	var out: Array[String] = []
+	while out.size() < mini(count, MAX_VARIANTS) and not pool.is_empty():
+		var id: String = str(pool.pop_at(r.randi_range(0, pool.size() - 1)))
+		var trial: Array[String] = out.duplicate()
+		trial.append(id)
+		if variant_conflict(trial).is_empty():
+			out = trial
+	return out
+
+## "Glass Blades, Late End" for [param ids], translated.
+static func variant_names(ids: Array[String]) -> String:
+	var names: PackedStringArray = []
+	for id: String in ids:
+		names.append(Loc.t(str(variants().get(id, {}).get("label", id))))
+	return ", ".join(names)
 
 ## The merged keys of [param ids] over the normal values, or {} when they conflict.
 static func variant_values(ids: Array[String]) -> Dictionary:

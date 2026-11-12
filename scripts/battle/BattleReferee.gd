@@ -46,6 +46,8 @@ static func check(replay: Variant, claim: Variant) -> Dictionary:
 	var why: String = _shape_error(replay, claim)
 	if not why.is_empty():
 		return {"verdict": ERROR, "detail": {"reason": why}}
+	if not BattleReplay.problem(replay).is_empty():
+		return {"verdict": ERROR, "detail": {"reason": "variant"}}
 	var m: BattleModel = BattleReplay.build_model(replay)
 	if m == null:
 		return {"verdict": ERROR, "detail": {"reason": "rebuild"}}
@@ -158,4 +160,6 @@ static func from_expect(expect: Dictionary, inputs: Variant = []) -> Dictionary:
 	return {"seed": int(expect.get("seed", 0)), "wild": false, "ai": int(expect.get("ai", 2)), "teams": teams,
 		"front": front, "items_allowed": bool(expect.get("items_allowed", false)), "inventory": {},
 		"round_limit": int(expect.get("round_limit", 0)),
+		"seals": expect.get("seals", [0, 0, 0]),
+		"amulets": expect.get("amulets", [0, 0, 0]),
 		"inputs": inputs if inputs is Array else []}

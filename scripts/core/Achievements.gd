@@ -132,7 +132,7 @@ static func stat(name: String) -> int:
 			var seen: Array = GameState.records.get("maps_visited", [])
 			return int(EncounterTable.table_ids().all(func(m: String) -> bool: return m in seen))
 		"team_at_cap":
-			return GameState.party.filter(func(s: Spirling) -> bool: return s.level >= Spirling.MAX_LEVEL).size()
+			return GameState.party.filter(func(s: Spirling) -> bool: return s.level >= Spirling.STORY_RING).size()
 		"gear":
 			return int(GameState.has_gear("grapple_line")) + int(GameState.has_gear("climbing_pick")) + int(GameState.has_gear("storm_lantern"))
 		"keepsakes":
@@ -141,6 +141,8 @@ static func stat(name: String) -> int:
 			return keepsakes().filter(func(id: String) -> bool: return id in had or _holds_now(id)).size()
 		"keepsakes_all":
 			return int(stat("keepsakes") >= keepsakes().size())
+		"starters_done":
+			return RunChronicle.starters_done()
 		"festivals_all":
 			return int(stat("festival_gifts") >= festival_count())
 		"festival_gifts":
@@ -160,7 +162,7 @@ const STATS: Array[String] = ["seen", "bonded", "bonded_wild", "party_size", "st
 	"masters", "rifts_veteran", "rifts_riftborn", "oath_rifts", "oath_rifts_veteran",
 	"oath_rifts_riftborn", "side_goals", "gauntlet_best", "weekly_wins", "rematch_wins",
 	"daily_tasks_done", "waymarks_total", "money", "maps_visited", "all_fields", "wild_maps_all",
-	"team_at_cap", "gear", "keepsakes", "keepsakes_all", "festivals_all", "festival_gifts"]
+	"team_at_cap", "gear", "keepsakes", "keepsakes_all", "festivals_all", "festival_gifts", "starters_done"]
 const STAT_PREFIXES: Array[String] = ["flag:", "record:", "element_bonded:", "count_"]
 
 static func known_stat(name: String) -> bool:

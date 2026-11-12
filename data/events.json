@@ -1,5 +1,5 @@
 {
- "_comment": "Plan area 8 event data. daily_tasks: kinds for DailyTasks.gd (event = what counts, n = how many, optional map / element / wild filters, distinct = different maps (or people for talk) only). Every task must be doable in 15 minutes. festivals: the yearly festivals (elements as Elements.E names, shop = ribbon prices at the festival trader). festival_tasks: the crier's task of the day during a festival (only ones that match the festival's elements are drawn).",
+ "_comment": "Plan area 8 event data. daily_tasks: kinds for DailyTasks.gd (event = what counts, n = how many, optional map / element / wild filters, distinct = different maps (or people for talk) only). Every task must be doable in 15 minutes. festivals: the yearly festivals (elements as Elements.E names, shop = ribbon prices at the festival trader, gifts = the crier's gift, one per year in turn). festival_tasks: the crier's task of the day during a festival (only ones that match the festival's elements are drawn).",
  "daily_tasks": [
   {
    "id": "win_3",
@@ -774,6 +774,7 @@
     "GALE"
    ],
    "gift": "bark_wrap",
+   "gifts": ["bark_wrap", "echo_bloom", "swift_feather", "echo_gale"],
    "text": "The Bloom Fair is on! Bloom and Gale Spirlings are out in the spring air.",
    "shop": [
     {
@@ -810,6 +811,7 @@
     "VOLT"
    ],
    "gift": "tide_pearl",
+   "gifts": ["tide_pearl", "echo_tide", "spark_coil", "echo_volt"],
    "text": "It's the Tide Days! Tide and Volt Spirlings play in the summer storms.",
    "shop": [
     {
@@ -846,6 +848,7 @@
     "UMBRA"
    ],
    "gift": "echo_lumen",
+   "gifts": ["echo_lumen", "keen_lens", "echo_umbra", "kin_charm"],
    "text": "The Lantern Nights have begun! Lumen and Umbra Spirlings follow the lights.",
    "shop": [
     {
@@ -882,6 +885,7 @@
     "STONE"
    ],
    "gift": "spark_charm",
+   "gifts": ["spark_charm", "echo_ember", "iron_burr", "echo_stone"],
    "text": "The Hearth Weeks are here! Ember and Stone Spirlings gather where it's warm.",
    "shop": [
     {
@@ -1045,7 +1049,7 @@
   {"id": "alb_bond_3", "event": "bond", "n": 3, "text": "Bond with 3 Spirlings"},
   {"id": "alb_bond_6", "event": "bond", "n": 6, "text": "Bond with 6 Spirlings"},
   {"id": "alb_rest_5", "event": "rest", "n": 5, "text": "Rest at a Rest Spring 5 times"},
-  {"id": "alb_rest_places", "event": "rest", "n": 3, "distinct": true, "text": "Rest at 3 different Rest Springs"},
+  {"id": "alb_rest_places", "event": "rest", "n": 4, "distinct": true, "text": "Rest at 4 different Rest Springs"},
   {"id": "alb_visit_6", "event": "visit", "n": 6, "distinct": true, "text": "Visit 6 different places"},
   {"id": "alb_steps_3000", "event": "step", "n": 3000, "text": "Walk 3000 steps"},
   {"id": "alb_steps_8000", "event": "step", "n": 8000, "text": "Walk 8000 steps"},

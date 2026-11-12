@@ -8,6 +8,8 @@ const TRANSFER_CODE_LENGTH: int = 12
 
 const PRIVACY_NOTE: String = "Chimora is online only. Your journeys are stored on our server in Germany, so they are safe if your phone breaks. We store your Wayfarer name, friend code, saves, friends, Lantern Mail and league standings, nothing else. No ads, no tracking. You can download or delete everything under Settings, Account."
 const ONLINE_RULES: String = "Online rules:\n- Be kind. Greetings use set phrases, there is no free chat.\n- Never share your real name, address or passwords.\n- Spirlings stay with the Wayfarer who bonded them. They cannot be traded or gifted.\n- Report names that are not okay. Blocking works at once.\n- Cheating gets the account reset."
+## The same rules once Spirling trading is switched on (online step 1).
+const ONLINE_RULES_TRADE: String = "Online rules:\n- Be kind. Greetings use set phrases, there is no free chat.\n- Never share your real name, address or passwords.\n- Spirlings can only be traded with friends, always inside the game. Nobody can ask you to pay for one.\n- Report names that are not okay. Blocking works at once.\n- Cheating gets the account reset."
 
 static func run(menu: MenuHost) -> void:
 	while true:
@@ -26,7 +28,7 @@ static func run(menu: MenuHost) -> void:
 				if await _claim_transfer(menu):
 					return
 			2:
-				await menu.info(ONLINE_RULES)
+				await menu.info(ONLINE_RULES_TRADE if Online.flag_on("trade_spirling") else ONLINE_RULES)
 			3:
 				await menu.info(PRIVACY_NOTE)
 			4:
@@ -118,9 +120,13 @@ static func _toggle_social(menu: MenuHost) -> void:
 	if not await Online.set_social(on):
 		await menu.info(Online.error_text())
 
+const DELETE_PURCHASES_NOTE: String = "Remaining Riftglass and everything bought in the shop are lost for good. Deleting does not cancel a Wayfarer Pass: cancel it first in the App Store or Google Play (Subscriptions)."
+
 static func _delete(menu: MenuHost) -> bool:
 	if not await menu.confirm_danger("Delete your account? All journeys and friends are removed for good."):
 		return false
+	# Items 4145, 4146: what happens to purchases, and that the store subscription keeps running.
+	await menu.info(DELETE_PURCHASES_NOTE)
 	if not await menu.confirm_danger("Really delete? This cannot be undone.", "Delete", "Keep"):
 		return false
 	var r: Dictionary = await Online.delete_account()

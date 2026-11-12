@@ -55,12 +55,20 @@
   }
  ],
  "npcs": [
-  {"id": "tower_keeper", "x": 9, "y": 2, "facing": "down", "dialogue": "cinder_rift/tower_keeper", "sprite": "villager", "show_flag": "rift_cinder_sealed"},
+  {
+   "id": "tower_keeper",
+   "x": 9,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "cinder_rift/tower_keeper",
+   "sprite": "villager",
+   "show_flag": "rift_cinder_sealed"
+  },
   {
    "id": "acolyte_a",
-   "x": 1,
+   "x": 2,
    "y": 8,
-   "facing": "right",
+   "facing": "left",
    "dialogue": "cinder_rift/acolyte_a",
    "trainer": "Rift Acolyte Pell",
    "intro": "cinder_rift/acolyte_a_intro",
@@ -131,6 +139,10 @@
        "Char Mark",
        "Ash Call"
       ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 9
      }
     ]
    }
@@ -144,6 +156,9 @@
    "trainer": "Warden Orrin",
    "warden": "cinder",
    "money": 800,
+   "mend_items": [
+    "echo_ember"
+   ],
    "intro": "cinder_rift/orrin_intro",
    "defeat": "cinder_rift/orrin_defeat",
    "items": {
@@ -268,7 +283,90 @@
     ]
    },
    "rule_by_difficulty": {
-    "story": "ember_pulse_soft"
+    "story": "ember_pulse_soft",
+    "veteran": [
+     "ember_pulse",
+     "ash_rain"
+    ],
+    "rift_born": [
+     "ember_pulse",
+     "ash_rain"
+    ]
+   },
+   "profile": "hothead",
+   "profile_from": "tamer",
+   "profile_tune": {
+    "field_w": 1.5,
+    "setup_w": 0.8,
+    "status_w": 0.8
+   },
+   "lexicon": "warden_orrin",
+   "second_trial": {
+    "needs_flags": [
+     "rift_cinder_sealed",
+     "rift_tide_sealed"
+    ],
+    "rules": [
+     "ember_pulse",
+     "ash_rain"
+    ],
+    "money": 1500,
+    "team": [
+     {
+      "species": "Calderox",
+      "level": 30
+     },
+     {
+      "species": "Smoldrake",
+      "level": 28
+     },
+     {
+      "species": "Shalebat",
+      "level": 27
+     }
+    ],
+    "teams_by_difficulty": {
+     "veteran": [
+      {
+       "species": "Calderox",
+       "level": 30
+      },
+      {
+       "species": "Smoldrake",
+       "level": 28
+      },
+      {
+       "species": "Shalebat",
+       "level": 27
+      },
+      {
+       "species": "Zippit",
+       "level": 27
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Calderox",
+       "level": 30
+      },
+      {
+       "species": "Smoldrake",
+       "level": 28
+      },
+      {
+       "species": "Shalebat",
+       "level": 27
+      },
+      {
+       "species": "Zippit",
+       "level": 27
+      },
+      {
+       "species": "Kindlop",
+       "level": 26
+      }
+     ]
+    }
    }
   },
   {
@@ -316,7 +414,7 @@
   {
    "x": 7,
    "y": 1,
-   "open_flag": "rift_cinder_sealed"
+   "open_flag": "aldo_dock_told"
   }
  ]
 }

@@ -18,7 +18,7 @@ const STAT_TOTAL_BANDS: Dictionary[String, Vector2i] = {
 	"common": Vector2i(260, 470), "uncommon": Vector2i(260, 520),
 	"shy": Vector2i(260, 520), "ancient": Vector2i(520, 640),
 }
-const REGIONS: Array[String] = ["veydal", "corvane", "ashmere", "solenne"]
+const REGIONS: Array[String] = ["veydal", "corvane", "ashmere", "solenne", "quillmarch", "halcyra"]
 const ROLES: Array[String] = ["vanguard", "bulwark", "weaver", "striker", "kindler"]
 ## Unfold (unfurl) rules, see Spirling.unfold_ready().
 const UNFOLD_RULES: Array[String] = ["ring", "item", "map_pages", "mended", "time", "echo_streak"]
@@ -69,6 +69,8 @@ const UNFOLD_RULES: Array[String] = ["ring", "item", "map_pages", "mended", "tim
 ## Learnset as two parallel arrays (level, move), sorted by level.
 @export var learnset_levels: PackedInt32Array = []
 @export var learnset_moves: Array[MoveData] = []
+## Art era this species comes from; its sprite keeps that era's look in every region.
+@export var era: int = 1
 ## One sprite set per art era (era1..era4)
 @export var sprites: Dictionary = {}
 

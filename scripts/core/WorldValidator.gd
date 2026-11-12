@@ -4,8 +4,9 @@ extends RefCounted
 ## layout (data/world_layout.json) in data/.
 
 const LAYOUT_PATH: String = "res://data/world_layout.json"
-## Regions a map may belong to (Corvane is the island across the lake, area 3 item 1287).
-const REGIONS: Array[String] = ["veydal", "corvane"]
+## Regions a map may belong to (Corvane is the island across the lake, area 3 item 1287;
+## Vellmarch is the post-game Era II region, data/region2.json).
+const REGIONS: Array[String] = ["veydal", "corvane", "ashmere", "solenne", "vellmarch", "halcyra"]
 
 ## Maps per region, counted apart (item 1287): "Maps: veydal 37, corvane 1".
 static func region_counts(map_ids: PackedStringArray) -> Dictionary:
@@ -37,6 +38,10 @@ static func validate() -> PackedStringArray:
 	check_layout(errors, map_ids, load_layout())
 	check_transit(errors, map_ids, load_layout().get("lines", {}))
 	check_schedules(errors, map_ids)
+	check_shapes(errors, map_ids, load_layout())
+	check_squares(errors, map_ids, load_layout())
+	check_room_encounters(errors, map_ids)
+	check_landmarks(errors, map_ids)
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
 		if m == null:
@@ -78,10 +83,41 @@ static func validate() -> PackedStringArray:
 					errors.append("map '%s': npc '%s' lacks a team for some difficulties" % [id, n.get("id", "")])
 				if n.get("rule_by_difficulty") is Dictionary:
 					for k: String in n.rule_by_difficulty:
-						if not k in TrainerData.DIFFICULTY_KEYS or not BattleRules.RULES.has(str(n.rule_by_difficulty[k])):
+						var v: Variant = n.rule_by_difficulty[k]
+						var ids: Array = v if v is Array else [v]
+						var d: int = TrainerData.DIFFICULTY_KEYS.find(k)
+						var bad: bool = d < 0 or ids.is_empty() or ids.size() > BattleRules.rule_stack(d)
+						for r: Variant in ids:
+							bad = bad or not BattleRules.RULES.has(str(r)) or not d in BattleRules.RULES[str(r)].get("difficulty", [0, 1, 2, 3])
+						if bad:
 							errors.append("map '%s': npc '%s' has a bad difficulty rule %s" % [id, n.get("id", ""), k])
 				if n.has("profile") and not BattleAI.profiles().has(str(n.profile)):
 					errors.append("map '%s': npc '%s' has unknown AI profile '%s'" % [id, n.get("id", ""), n.profile])
+				if n.has("profile_from") and not str(n.profile_from) in TrainerData.DIFFICULTY_KEYS:
+					errors.append("map '%s': npc '%s' has unknown profile_from '%s'" % [id, n.get("id", ""), n.profile_from])
+				var tune: Variant = n.get("profile_tune", {})
+				if not tune is Dictionary:
+					errors.append("map '%s': npc '%s' profile_tune must be an object" % [id, n.get("id", "")])
+				else:
+					for k: Variant in tune:
+						if not (tune[k] is float or tune[k] is int) or not (BattleAI.profiles().get("balanced", {}) as Dictionary).has(str(k)):
+							errors.append("map '%s': npc '%s' profile_tune '%s' is not a known number weight" % [id, n.get("id", ""), k])
+				if n.has("second_trial"):
+					var st_ok: bool = TrainerData.has_second_trial(n)
+					if st_ok:
+						var rules: Array = n.second_trial.get("rules", [])
+						st_ok = rules.size() == TrainerData.SECOND_TRIAL_RULES
+						for r: Variant in rules:
+							st_ok = st_ok and BattleRules.RULES.has(str(r))
+						for d: int in TrainerData.DIFFICULTY_KEYS.size():
+							var entries: Array = TrainerData.team_entries(TrainerData.second_trial_def(n, id), "", d)
+							st_ok = st_ok and not entries.is_empty()
+							for e: Variant in entries:
+								st_ok = st_ok and e is Dictionary and Database.species(str(e.get("species", ""))) != null
+					if not st_ok:
+						errors.append("map '%s': npc '%s' has a bad second_trial (a Warden, %d known rules, known species)" % [id, n.get("id", ""), TrainerData.SECOND_TRIAL_RULES])
+				if n.has("lexicon") and not Lexicon.has_entry(str(n.lexicon)):
+					errors.append("map '%s': npc '%s' has unknown lexicon entry '%s'" % [id, n.get("id", ""), n.lexicon])
 				for t: Variant in teams:
 					if (t as Array).is_empty():
 						errors.append("map '%s': wayfarer '%s' has an empty team" % [id, n.get("id", "")])
@@ -154,16 +190,19 @@ const MIN_TABLE_WEIGHT: int = 50
 
 ## Encounter balance (items 1109, 1110, 1114): grounds are known names, weights add up to at
 ## least 50, the base rate fits the kind of place, and sorted by their lowest ring no table
-## jumps more than 4 rings past the one before it.
+## jumps more than 4 rings past the one before it. Each era is its own chain: a post-game region
+## (Vellmarch, Era II) starts high after the finale and is not compared with the story's tables.
 static func check_table_balance(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
 	var places: Dictionary = load_layout().get("maps", {})
 	var kind_of: Dictionary = {}
+	var era_of: Dictionary = {}
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
 		if m == null or m.encounter_table.is_empty():
 			continue
 		var place: String = layout_place(places, id)
 		kind_of[m.encounter_table] = str((places.get(place, {}) as Dictionary).get("kind", ""))
+		era_of[m.encounter_table] = EraManager.region_era(m.region)
 	var mins: Array = []
 	for t: String in EncounterTable.table_ids():
 		if t.begins_with("_"):
@@ -182,11 +221,11 @@ static func check_table_balance(errors: PackedStringArray, map_ids: PackedString
 		if RATES.has(kind) and not is_equal_approx(EncounterTable.rate(t), RATES[kind]):
 			errors.append("encounter table '%s': rate %.2f, a %s uses %.2f" % [t, EncounterTable.rate(t), kind, RATES[kind]])
 		if low < 999:
-			mins.append([low, t])
+			mins.append([int(era_of.get(t, EraManager.Era.INK)), low, t])
 	mins.sort()
 	for i: int in range(1, mins.size()):
-		if int(mins[i][0]) - int(mins[i - 1][0]) > MAX_RING_JUMP:
-			errors.append("encounter tables: '%s' starts at ring %d, more than %d above '%s' (ring %d)" % [mins[i][1], mins[i][0], MAX_RING_JUMP, mins[i - 1][1], mins[i - 1][0]])
+		if int(mins[i][0]) == int(mins[i - 1][0]) and int(mins[i][1]) - int(mins[i - 1][1]) > MAX_RING_JUMP:
+			errors.append("encounter tables: '%s' starts at ring %d, more than %d above '%s' (ring %d)" % [mins[i][2], mins[i][1], MAX_RING_JUMP, mins[i - 1][2], mins[i - 1][1]])
 
 ## Hidden finds (area 3 items 1080, 1083): each one is reachable, gives a real item from
 ## data/items.json and has a flag no other find uses.
@@ -231,7 +270,7 @@ static func check_secrets(errors: PackedStringArray, map_ids: PackedStringArray)
 ## puzzle has a solution (PuzzleSolver) from the first cell the player arrives on.
 ## Name prefixes and suffixes of spots that sit on an object (a sign, a desk), not on floor.
 const OBJECT_SPOT_PREFIX: Array[String] = ["letter_", "page_", "wall_", "burned_"]
-const OBJECT_SPOT_SUFFIX: Array[String] = ["_desk", "_shelf", "_stove", "_sign", "_plate", "_lamp"]
+const OBJECT_SPOT_SUFFIX: Array[String] = ["_desk", "_shelf", "_stove", "_sign", "_plate", "_lamp", "_diary"]
 
 static func is_object_spot(name: String) -> bool:
 	for p: String in OBJECT_SPOT_PREFIX:
@@ -271,6 +310,10 @@ static func check_passages(errors: PackedStringArray, map_ids: PackedStringArray
 				for ph: Variant in only:
 					if not str(ph) in DayCycle.PHASE_NAMES:
 						errors.append("map '%s': phase_only '%s' at %s,%s is not dawn, day, dusk or night" % [id, ph, def.x, def.y])
+		for def: Dictionary in m.npcs:
+			for wd: Variant in def.get("weekdays", []):
+				if int(wd) < 0 or int(wd) > 6:
+					errors.append("map '%s': npc '%s' has weekday %s (0 Sunday .. 6 Saturday)" % [id, def.get("id", ""), wd])
 		if m.passages.is_empty():
 			continue
 		var reach: Dictionary = reachable_cells(m, entries.get(id, []))
@@ -427,6 +470,156 @@ static func load_layout() -> Dictionary:
 ## World layout (area 3 item 896): every map file has a place in data/world_layout.json (or
 ## lies "inside" one, like a house in a town), every warp between two places is an edge there,
 ## and every edge is backed by a warp (the ferry and coach lines count as warps too).
+## Outdoor maps fit the portrait screen when scrolled: at most MAX_OUTDOOR_W wide and
+## MAX_OUTDOOR_H tall (item 907). Routes and marshes are walkable both ways: each has at least two
+## other places to go, by foot or by line (item 934).
+## Item 1030: puzzle rooms (the rooms with a goal line) have no wild cells in the puzzle
+## itself; wild Spirlings only wait on the landing row in front of the stairs (second row from
+## the bottom), which is the corridor between two rooms.
+static func check_room_encounters(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null or m.goal.is_empty():
+			continue
+		for c: Vector2i in wild_cells(m):
+			if c.y != m.height - 2:
+				errors.append("puzzle room '%s': wild cell %s inside the puzzle (only the landing row may have them)" % [id, c])
+
+## Cells of [param m] where wild Spirlings can appear.
+static func wild_cells(m: MapData) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	for y: int in m.height:
+		for x: int in m.width:
+			if m.kind_at(Vector2i(x, y)) in TilesetFactory.ENCOUNTER_KINDS:
+				out.append(Vector2i(x, y))
+	return out
+
+const SQUARE_FOLK: int = 3
+const SQUARE_REACH: int = 2
+
+## Item 966: every town has a meeting place (a spring, a lamp or a sign) and at dusk at least
+## SQUARE_FOLK people with a day plan stand within SQUARE_REACH cells of it.
+static func check_squares(errors: PackedStringArray, map_ids: PackedStringArray, layout: Dictionary) -> void:
+	var places: Dictionary = layout.get("maps", {})
+	for id: String in map_ids:
+		if str((places.get(id, {}) as Dictionary).get("kind", "")) != "town":
+			continue
+		var m: MapData = MapData.load_map(id)
+		if m == null:
+			continue
+		if not m.in_bounds(m.square):
+			errors.append("town '%s' has no square (meeting place)" % id)
+			continue
+		var k: int = m.kind_at(m.square)
+		if not k in [TilesetFactory.Kind.SPRING, TilesetFactory.Kind.LAMP, TilesetFactory.Kind.SIGN]:
+			errors.append("town '%s': square %s is not a spring, lamp or sign" % [id, m.square])
+		var n: int = square_folk(m, DayCycle.Phase.DUSK).size()
+		if n < SQUARE_FOLK:
+			errors.append("town '%s': only %d people at the square at dusk, at least %d" % [id, n, SQUARE_FOLK])
+
+## Ids of the people with a day plan near the square of [param m] at [param phase].
+static func square_folk(m: MapData, phase: int) -> Array[String]:
+	var out: Array[String] = []
+	for d: Dictionary in NpcSchedule.defs_for(m, phase):
+		if not NpcSchedule.has_plan(d) or not DayCycle.shows_at(d, phase):
+			continue
+		var c := Vector2i(int(d.x), int(d.y))
+		if maxi(absi(c.x - m.square.x), absi(c.y - m.square.y)) <= SQUARE_REACH:
+			out.append(str(d.get("id", "")))
+	return out
+
+## Landmarks (map design item 509): each one stands on a solid cell of an outdoor map in its
+## own act, next to a cell you can walk on, and never on a door, sign, person, find or story spot.
+static func check_landmarks(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	var names: Dictionary = {}
+	var all: Dictionary = Landmarks.all()
+	for id: String in all:
+		var lm: Dictionary = all[id]
+		if not id in map_ids:
+			errors.append("landmark on unknown map '%s'" % id)
+			continue
+		var m: MapData = MapData.load_map(id)
+		var kind: String = str(lm.get("kind", ""))
+		if not m.outdoor:
+			errors.append("landmark of '%s': the map is not outdoors" % id)
+		if Landmarks.region_of(kind) != m.region:
+			errors.append("landmark of '%s': kind '%s' is not drawn by region '%s'" % [id, kind, m.region])
+		if Landmarks.art_path(kind).is_empty():
+			errors.append("landmark of '%s': no art for '%s'" % [id, kind])
+		var n: String = str(lm.get("name", ""))
+		if n.is_empty() or str(lm.get("line", "")).is_empty():
+			errors.append("landmark of '%s' needs a name and a line" % id)
+		elif names.has(n):
+			errors.append("landmark name '%s' is used on '%s' and '%s'" % [n, names[n], id])
+		names[n] = id
+		var c: Vector2i = Landmarks.cell(lm)
+		if not m.in_bounds(c) or not m.in_bounds(c + Vector2i.UP):
+			errors.append("landmark of '%s' at %s: it and the cell above must be on the map" % [id, c])
+			continue
+		if m.is_walkable(c):
+			errors.append("landmark of '%s' at %s stands on a cell you can walk on" % [id, c])
+		var problem: String = landmark_cell_problem(m, c)
+		if not problem.is_empty():
+			errors.append("landmark of '%s' at %s: %s" % [id, c, problem])
+		var near: bool = false
+		for d: Vector2i in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+			if m.in_bounds(c + d) and m.is_walkable(c + d):
+				near = true
+		if not near:
+			errors.append("landmark of '%s' at %s: no walkable cell next to it to read it from" % [id, c])
+
+## Why [param c] cannot hold a landmark ("" when it can): warps, signs, people, finds, gates, gear and story spots keep their cell.
+static func landmark_cell_problem(m: MapData, c: Vector2i) -> String:
+	var lists: Dictionary = {"warp": m.warps, "sign": m.signs, "person": m.npcs, "hidden find": m.secrets,
+		"gate": m.blocks, "gear spot": m.gear_spots}
+	for what: String in lists:
+		for e: Dictionary in lists[what]:
+			if e.has("x") and Vector2i(int(e.x), int(e.y)) == c:
+				return "on a %s" % what
+	for k: String in m.spots:
+		var v: Variant = m.spots[k]
+		if v is Array and (v as Array).size() >= 2 and Vector2i(int(v[0]), int(v[1])) == c:
+			return "on the story spot '%s'" % k
+	return ""
+
+## Longest straight run of path tiles ("_" and piers) down one column of [param m] (map design
+## item 508: no single road straight through the middle).
+static func longest_straight_path(m: MapData) -> int:
+	var best: int = 0
+	for x: int in m.width:
+		var run: int = 0
+		for y: int in m.height:
+			var ch: String = m.rows[y].substr(x, 1)
+			run = run + 1 if ch == "_" or ch == "+" else 0
+			best = maxi(best, run)
+	return best
+
+const MAX_OUTDOOR_W: int = 12
+const MAX_OUTDOOR_H: int = 40
+const THROUGH_KINDS: Array[String] = ["route", "marsh"]
+
+static func check_shapes(errors: PackedStringArray, map_ids: PackedStringArray, layout: Dictionary) -> void:
+	var places: Dictionary = layout.get("maps", {})
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null:
+			continue
+		if m.outdoor and (m.width > MAX_OUTDOOR_W or m.height > MAX_OUTDOOR_H):
+			errors.append("map '%s' is %dx%d; outdoor maps are at most %dx%d" % [id, m.width, m.height, MAX_OUTDOOR_W, MAX_OUTDOOR_H])
+		var p: Dictionary = places.get(id, {})
+		if not str(p.get("kind", "")) in THROUGH_KINDS:
+			continue
+		var ways: Dictionary = {}
+		for w: Dictionary in m.warps:
+			ways[str(MapData.split_id(str(w.to))[0])] = true
+		for lid: String in Transit.lines():
+			if id in Transit.stops(lid):
+				for s: String in Transit.stops(lid):
+					ways[s] = true
+		ways.erase(id)
+		if ways.size() < 2:
+			errors.append("map '%s' is a %s with only one way out; give it a second exit" % [id, p.kind])
+
 static func check_layout(errors: PackedStringArray, map_ids: PackedStringArray, layout: Dictionary) -> void:
 	var places: Dictionary = layout.get("maps", {})
 	if places.is_empty():

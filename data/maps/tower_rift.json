@@ -1,0 +1,242 @@
+{
+ "name": "Tower Rift",
+ "region": "solenne",
+ "biome": "rift",
+ "backdrop": "ridge",
+ "field": "ash_storm",
+ "encounters": "tower_rift",
+ "heal_point": [
+  2,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^.::.....^_^",
+  "^.o......^_^",
+  "^......S.^_^",
+  "^^^^^..^^^_^",
+  "^|.......^_^",
+  "^..:::...^_^",
+  "^..:::..|^_^",
+  "^|.......^_^",
+  "^...S....^_^",
+  "^^^^^^..^^_^",
+  "^::.....:^_^",
+  "^::......^_^",
+  "^....|...^_^",
+  "^.::...::^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^.::....::.^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "ochrewell",
+   "tx": 1,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "ochrewell",
+   "tx": 1,
+   "ty": 9,
+   "facing": "left"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "pell",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "tower_rift/pell",
+   "sprite": "warden",
+   "trainer": "Rift Acolyte Pell",
+   "intro": "tower_rift/pell_intro",
+   "defeat": "tower_rift/pell_defeat",
+   "money": 1750,
+   "team": [
+    {
+     "species": "Zephlet",
+     "level": 35
+    },
+    {
+     "species": "Talusk",
+     "level": 35
+    },
+    {
+     "species": "Lanternel",
+     "level": 35
+    }
+   ]
+  },
+  {
+   "id": "yara",
+   "x": 2,
+   "y": 14,
+   "facing": "right",
+   "dialogue": "tower_rift/yara",
+   "sprite": "villager",
+   "trainer": "Sand Courier Yara",
+   "intro": "tower_rift/yara_intro",
+   "defeat": "tower_rift/yara_defeat",
+   "money": 1780,
+   "team": [
+    {
+     "species": "Shalebat",
+     "level": 35
+    },
+    {
+     "species": "Duskdigger",
+     "level": 36
+    },
+    {
+     "species": "Talusgard",
+     "level": 35
+    }
+   ]
+  },
+  {
+   "id": "gideon",
+   "x": 7,
+   "y": 10,
+   "facing": "left",
+   "dialogue": "tower_rift/gideon",
+   "sprite": "villager",
+   "trainer": "Shutterman Gideon",
+   "intro": "tower_rift/gideon_intro",
+   "defeat": "tower_rift/gideon_defeat",
+   "money": 1800,
+   "team": [
+    {
+     "species": "Tempestrel",
+     "level": 36
+    },
+    {
+     "species": "Zephlet",
+     "level": 36
+    },
+    {
+     "species": "Lanternel",
+     "level": 36
+    }
+   ]
+  },
+  {
+   "id": "warden_aurelio",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "tower_rift/aurelio",
+   "sprite": "warden",
+   "trainer": "Warden Aurelio",
+   "warden": "tower",
+   "team": [
+    {
+     "species": "Tempestrel",
+     "level": 36
+    },
+    {
+     "species": "Zenithare",
+     "level": 37
+    },
+    {
+     "species": "Mirassil",
+     "level": 36
+    },
+    {
+     "species": "Dunebastion",
+     "level": 37
+    },
+    {
+     "species": "Orrerine",
+     "level": 37
+    }
+   ],
+   "intro": "tower_rift/aurelio_intro",
+   "defeat": "tower_rift/aurelio_defeat",
+   "ai": 2,
+   "money": 1900,
+   "rule": "sandstorm",
+   "mend_items": [
+    "echo_squall"
+   ],
+   "rematch_after": "story_complete"
+  },
+  {
+   "id": "lq_obed",
+   "x": 6,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "legend_quests/lumivane_witness",
+   "sprite": "elder",
+   "show_flag": "lq_lumivane_met",
+   "hide_flag": "lq_lumivane_ready"
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 4,
+   "dialogue": "tower_rift/spring"
+  },
+  {
+   "x": 7,
+   "y": 5,
+   "dialogue": "tower_rift/sign"
+  },
+  {
+   "x": 1,
+   "y": 7,
+   "dialogue": "tower_rift/shutter_1"
+  },
+  {
+   "x": 8,
+   "y": 9,
+   "dialogue": "tower_rift/shutter_2"
+  },
+  {
+   "x": 1,
+   "y": 10,
+   "dialogue": "tower_rift/shutter_3"
+  },
+  {
+   "x": 5,
+   "y": 15,
+   "dialogue": "tower_rift/shutter_4"
+  },
+  {
+   "x": 4,
+   "y": 11,
+   "dialogue": "tower_rift/hint"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_tower_sealed",
+   "closed": "@"
+  },
+  {
+   "x": 5,
+   "y": 6,
+   "open_flag": "tower_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 6,
+   "y": 6,
+   "open_flag": "tower_rift_open",
+   "closed": "@"
+  }
+ ]
+}

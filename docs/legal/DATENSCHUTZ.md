@@ -83,16 +83,18 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
 Chimora ist kostenlos und hat einen Shop mit In-App-Käufen. Gekauft wird ausschließlich über den Apple App
 Store bzw. Google Play; Verkäufer und Rechnungssteller ist der jeweilige Store. Zahlungsdaten erhalten wir nie.
 
-- **Was wir speichern:** die Kaufbestätigung des Stores (Transaktions-ID, Produkt, Preis, Zeitpunkt, bei
-  Abos das Ablaufdatum), dein Rissglas-Guthaben mit allen Buchungen, freigeschaltete Inhalte, Erstattungen,
+- **Was wir speichern:** die Kaufbestätigung des Stores (Transaktions-ID, Produkt, Preis, Zeitpunkt, Store, bei
+  Abos das Ablaufdatum, bei Erstattungen deren Status), dein Rissglas-Guthaben mit allen Buchungen, freigeschaltete Inhalte, Erstattungen,
   dein Ausgabelimit und deine **Altersgruppe** (unter 13, 13 bis 15, 16 bis 17, ab 18). Dein Geburtsdatum
   speichern wir nicht, nur den Tag, an dem die nächste Altersgruppe beginnt.
 - **Wofür:** Käufe prüfen und gutschreiben, Erstattungen verarbeiten, Ausgabelimits und Jugendschutz
   einhalten, die Liste „Meine Käufe“ zeigen. Kein Tracking, keine Werbung, kein Profiling.
 - **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b DSGVO (Vertrag); für die Altersgruppe und die Limits zusätzlich
   Art. 6 Abs. 1 lit. c und f DSGVO (Jugendschutz, Schutz vor Überschuldung).
-- **Speicherdauer:** bis du dein Konto löschst; dann werden auch Käufe, Guthaben und Altersgruppe gelöscht.
-  Rechnungen bewahren Apple und Google als Verkäufer auf.
+- **Speicherdauer:** bis du dein Konto löschst; dann werden auch Käufe, Guthaben, Inhalte und Altersgruppe
+  gelöscht. Verkäufer sind Apple und Google: Sie stellen die Rechnungen aus und bewahren sie nach Handels- und
+  Steuerrecht bis zu 10 Jahre auf. Für unsere Buchhaltung nutzen wir nur die Abrechnungen der Stores, die keine
+  Spielerdaten enthalten.
 
 ### 3.5 Kontakt und Support
 

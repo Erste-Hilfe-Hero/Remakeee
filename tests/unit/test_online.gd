@@ -184,7 +184,7 @@ func test_saves_from_before_the_server_are_uploaded() -> void:
 
 func test_server_refuses_impossible_saves() -> void:
 	await Online.connect_now()
-	var bad: Dictionary = {"schema": 1, "party": [{"level": 250}], "money": 1}
+	var bad: Dictionary = {"schema": 1, "party": [{"level": 10000}], "money": 1}
 	var r: Dictionary = (await _server.call_fn("save_put", {"p_slot": 1, "p_data": bad, "p_summary": "", "p_base_rev": 0})).data
 	assert_eq(r.error, "implausible")
 	assert_false(LocalBackend.save_ok({"money": -1}))
@@ -244,6 +244,8 @@ func test_losing_the_connection_while_playing_pauses_and_recovers() -> void:
 	await wait_seconds(Online.RETRY_SECONDS + 0.5)
 	await wait_process_frames(3)
 	assert_eq(Online.state, Online.State.ONLINE)
+	# The screen fades out in 0.2 s (plan item 2291).
+	await wait_seconds(ReconnectOverlay.FADE_TIME + 0.1)
 	assert_false(Online._overlay.visible)
 	assert_false(get_tree().paused)
 	GameState.in_game = false
@@ -278,6 +280,10 @@ func test_spirlings_and_echo_cores_never_change_hands() -> void:
 		# Item trading between friends (plan area 7, item 2792) moves only bag items, checked below.
 		if fn.begins_with("trade_"):
 			banned.erase("trade")
+		# Online step 1: Spirlings move only through this trustee trade between friends
+		# (tests/unit/test_online_step1.gd checks its rules).
+		if fn == "trade_put_spirlings":
+			continue
 		for bad: String in banned:
 			assert_false(fn.contains(bad), "server function %s must not move Spirlings" % fn)
 	# Mail carries only phrases, waves and thanks; gifts are rolled by the server.

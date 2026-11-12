@@ -60,5 +60,34 @@
    "Boatman Osk: Lake Line landing. The brook runs out to the lake from here, and so do I."
   ],
   "action": "transit lake_line"
- }
+ },
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 9"
+ },
+ "bench": {
+  "lines": [
+   "A worn bench at the end of a little fishing pier. Sit for a while?"
+  ],
+  "choices": [
+   {
+    "text": "Sit and wait",
+    "action": "bench"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "mound_stone": {
+  "lines": [
+   "An old burial mound. A weathered stone stands on it, its letters worn almost away."
+  ],
+  "action": "rubbing quillbrook/mound_words"
+ },
+ "mound_words": [
+  "\"Two steps toward the setting sun, the brook keeps my gift.\""
+ ]
 }

@@ -11,6 +11,9 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"wild": model.is_wild,
 		"ai": model.ai.level,
 		"profile": model.ai.profile_id,
+		"profile_tune": model.ai.profile_tune.duplicate(),
+		"ai_spare_last": model.ai.spare_last,
+		"ai_no_double_rest": model.ai.no_double_rest,
 		"teams": [_team(model.party(BattleModel.Side.PLAYER)), _team(model.party(BattleModel.Side.FOE))],
 		"inventory": model.inventory.duplicate(),
 		"items_allowed": model.items_allowed,
@@ -19,13 +22,22 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"field": model.field,
 		"bench_share": model.bench_share,
 		"rule": model.foe_rule,
+		"rule_turn_full": model.rule_turn_full,
 		"foe_items": model.foe_items.duplicate(),
 		"front": [model.front_size[0], model.front_size[1]],
 		"partner": _partner(model),
 		"boss": model.foe_boss,
 		"foe_damage": model.foe_damage_mult,
 		"energy_bonus": model.energy_bonus[0],
+		"seals": (model.seals[0] as Array).duplicate(),
+		"amulets": (model.amulets[0] as Array).duplicate(),
+		"foe_energy_cut": model.start_energy_cut[1],
+		"foe_turn1_energy": model.foe_turn1_energy,
+		"warden_weakened": model.warden_weakened,
+		"gifts": model.gift_items.duplicate(),
+		"bond_grace": model.bond_grace,
 		"boss_hp": model.boss_hp_scale,
+		"boss_difficulty": model.boss_difficulty,
 		"variants": model.variants.duplicate(),
 		"round_limit": model.round_limit,
 		"music": music,
@@ -66,7 +78,34 @@ static func _rebuild(team_d: Array) -> Array[Spirling]:
 	return out
 
 ## A fresh model from [param snap], or null if a species no longer exists.
+## Why [param snap] cannot be played back in this version, "" when it can (item 797): a rule
+## variant this version doesn't know, or variants that don't go together.
+static func problem(snap: Dictionary) -> String:
+	var ids: Array[String] = []
+	for v: Variant in snap.get("variants", []):
+		ids.append(str(v))
+	var all: Dictionary = BattleRules.variants()
+	var unknown: Array[String] = []
+	for id: String in ids:
+		if not all.has(id):
+			unknown.append(id)
+	if not unknown.is_empty():
+		return Loc.t("This replay uses a rule variant this version doesn't know: %s.") % ", ".join(unknown)
+	if not BattleRules.variant_conflict(ids).is_empty():
+		return Loc.t("This replay's rule variants don't go together.")
+	return ""
+
+## Seal tiers [power, guard, speed] from a snapshot, clamped to the tiers the data knows.
+static func seal_row(v: Variant) -> Array:
+	var out: Array = [0, 0, 0]
+	if v is Array:
+		for i: int in mini((v as Array).size(), 3):
+			out[i] = ShopEffects.clamp_tier(ShopEffects.SEAL_KINDS[i], int(v[i]))
+	return out
+
 static func build_model(snap: Dictionary) -> BattleModel:
+	if not problem(snap).is_empty():
+		return null
 	var teams: Array = snap.get("teams", [[], []])
 	var partner: Dictionary = snap.get("partner", {})
 	if not partner.is_empty():
@@ -79,19 +118,34 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	var m := BattleModel.new(mine, foes, bool(snap.get("wild", true)), int(snap.get("seed", 0)), int(snap.get("ai", 0)))
 	m.inventory = (snap.get("inventory", {}) as Dictionary).duplicate()
 	m.items_allowed = bool(snap.get("items_allowed", true))
-	m.level_cap = int(snap.get("level_cap", Spirling.MAX_LEVEL))
+	m.level_cap = int(snap.get("level_cap", Spirling.LEVEL_SANITY))
 	m.trainer_name = str(snap.get("trainer", ""))
-	m.ai.set_profile(str(snap.get("profile", "")))
+	var tune: Variant = snap.get("profile_tune", {})
+	m.ai.set_profile(str(snap.get("profile", "")), tune if tune is Dictionary else {})
+	m.ai.spare_last = bool(snap.get("ai_spare_last", false))
+	m.ai.no_double_rest = bool(snap.get("ai_no_double_rest", false))
 	m.field = str(snap.get("field", ""))
 	m.bench_share = float(snap.get("bench_share", 0.0))
 	m.foe_rule = str(snap.get("rule", ""))
+	m.rule_turn_full = bool(snap.get("rule_turn_full", false))
 	m.foe_items = (snap.get("foe_items", {}) as Dictionary).duplicate()
 	var front: Array = snap.get("front", [1, 1])
 	m.front_size = [int(front[0]), int(front[1])]
 	m.foe_boss = str(snap.get("boss", ""))
 	m.foe_damage_mult = float(snap.get("foe_damage", 1.0))
-	m.energy_bonus = [clampi(int(snap.get("energy_bonus", 0)), 0, ShopEffects.OVERCHARGE), 0]
+	m.energy_bonus = [clampi(int(snap.get("energy_bonus", 0)), 0, ShopEffects.MAX_ENERGY_BONUS), 0]
+	m.seals = [seal_row(snap.get("seals", [])), [0, 0, 0]]
+	m.amulets = [ShopEffects.amulet_row(snap.get("amulets", [])), [0, 0, 0]]
+	m.start_energy_cut = [0, clampi(int(snap.get("foe_energy_cut", 0)), 0, Tailwind.energy_cut(0) + BattleRules.foe_start_cut(0))]
+	m.foe_turn1_energy = clampi(int(snap.get("foe_turn1_energy", 0)), 0, 1)
+	m.warden_weakened = bool(snap.get("warden_weakened", false))
+	# Only the pass's one Rift Breath can be a gift (item 4633).
+	var gifts: Variant = snap.get("gifts", {})
+	if gifts is Dictionary and int((gifts as Dictionary).get(ShopEffects.PASS_REVIVE, 0)) > 0:
+		m.gift_items = {ShopEffects.PASS_REVIVE: 1}
+	m.bond_grace = clampi(int(snap.get("bond_grace", 0)), 0, 1)
 	m.boss_hp_scale = float(snap.get("boss_hp", 1.0))
+	m.boss_difficulty = clampi(int(snap.get("boss_difficulty", -1)), -1, BattleRules.BOSS_PHASE_AT.size() - 1)
 	m.variants.assign(snap.get("variants", []))
 	m.round_limit = maxi(0, int(snap.get("round_limit", 0)))
 	if not partner.is_empty():

@@ -11,7 +11,9 @@ Last updated: November 2026
    Android) and its online services. The app store's own terms also apply to downloads and purchases.
 2. **Account.** By accepting these terms on first launch you get a game account automatically; no email is
    needed. The game is **online only** and needs an internet connection. Keep your transfer code secret.
-   One account per person; accounts are not transferable. Minors need a parent's consent for purchases.
+   It only moves your own account to a new device; purchases, Riftglass and the pass move with it.
+   One account per person; accounts are not transferable to others, and selling, buying, swapping or
+   lending accounts or transfer codes is not allowed. Minors need a parent's consent for purchases.
 3. **Licence.** We grant you a personal, non-exclusive, non-transferable, revocable right to use the game for
    private, non-commercial purposes. All rights in the game stay with us or our licensors. In-game currency,
    Spirlings and items are not property, have no cash value and cannot be exchanged for real money.
@@ -44,9 +46,18 @@ Last updated: November 2026
    the contract, sections 6 and 8 apply.
    **Shop rules.** Chimora is free; the shop is optional. Riftglass does not expire while your account exists.
    The shop is **closed under 13**; minors have fixed monthly limits (13-15: 15 EUR, 16-17: 30 EUR); adults
-   have a limit of 100 EUR they can lower, or raise to 300 EUR after 7 days. The **Wayfarer Pass** renews
-   monthly until cancelled in the store; its benefits end with it. If Apple or Google refunds a purchase, we
+   have a limit of 100 EUR they can lower, or raise to 300 EUR after 7 days. Your age group comes from the age you give when you first
+   open the shop. Some offers also have a fixed limit per account or per week (for example "once per
+   account" or "up to 3 times a week"); the offer shows it. There are no daily limits. The **Wayfarer Pass** is a store
+   subscription for one month that renews automatically for another month at the shown price until you
+   cancel it. You can cancel at any time to the end of the current month in the subscription settings of
+   Apple or Google, which also provide the legally required cancel button (section 312k German Civil Code);
+   we cannot cancel a store subscription ourselves. Its benefits end with the term; Riftglass already
+   received stays. Players under 18 need a parent's approval in the store for every renewal. If Apple or Google refunds a purchase, we
    take back the content and the Riftglass, even if spent; the shop stays locked until the balance is even.
+   **Questions about purchases:** aa.amuri@icloud.com (please add your friend code and order number). Only
+   Apple or Google decide on refunds; we cannot reverse payments ourselves. A simple explanation of
+   Riftglass, the pass, refunds and limits is under [help with purchases](/purchases).
 8. **Term.** You can end the contract at any time by deleting your account (Settings → Account →
    "Delete account"). We may end it with 4 weeks' notice, or immediately for good cause such as serious
    breaches of section 4; unused paid content is refunded pro rata if we end it with notice.

@@ -28,9 +28,9 @@ func _befriend() -> void:
 func test_saves_follow_the_real_game_limits() -> void:
 	assert_true(bool(_put(1, {"schema": 1, "party": [{"level": 60}, {"level": 1}, {}, {}, {}]}).ok), "team of 5 on Ring 60")
 	assert_eq(_put(2, {"schema": 1, "party": [{}, {}, {}, {}, {}, {}]}).error, "implausible", "six in the team")
-	assert_eq(_put(2, {"schema": 1, "party": [{"level": 61}]}).error, "implausible", "Ring 61")
+	assert_eq(_put(2, {"schema": 1, "party": [{"level": 10000}]}).error, "implausible", "Ring 10000, above the save_level_max sanity bound")
 	assert_eq(_put(2, {"schema": 1, "party": [{"level": 0}]}).error, "implausible", "Ring 0")
-	assert_eq(_put(2, {"schema": 1, "storage": [{"level": 99}]}).error, "implausible", "storage Ring 99")
+	assert_eq(_put(2, {"schema": 1, "storage": [{"level": 10000}]}).error, "implausible", "storage Ring 10000")
 	assert_eq(_put(2, {"schema": 1, "storage": {"a": 1}}).error, "implausible", "storage not a list")
 	assert_eq(LocalBackend.save_ok({"party": [{}, {}, {}, {}, {}]}), true)
 	assert_eq(LocalBackend.save_ok({"party": [{}, {}, {}, {}, {}, {}]}), false)
@@ -73,7 +73,7 @@ func test_echo_teams_follow_the_limits_and_duels_use_the_server_ring() -> void:
 	t = s.call_fn("friend_team", {"p_code": ben_code}).data
 	assert_eq(EchoTeam.duel_ring(t), 40, "Ali changes the Ring on the server, no app update")
 	assert_eq(EchoTeam.duel_ring({}), EchoTeam.DUEL_LEVEL, "fallback when an old server sends nothing")
-	assert_eq(EchoTeam.duel_ring({"duel_ring": 500}), Spirling.MAX_LEVEL, "kept inside the game's limits")
+	assert_eq(EchoTeam.duel_ring({"duel_ring": 500}), Spirling.STORY_RING, "kept inside the game's limits")
 
 func test_players_are_wanderers() -> void:
 	assert_eq(LocalBackend.clean_name("", "ABCDEFGH"), "Wanderer EFGH")

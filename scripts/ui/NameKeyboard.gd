@@ -97,10 +97,34 @@ func set_mode(m: Mode) -> void:
 	if is_inside_tree():
 		_build()
 
+## A pressed key lights up one step brighter for a moment (item 2428), also when typed on a
+## real keyboard.
+const FLASH_TIME: float = 0.08
+const FLASH_TINT: Color = Color(1.3, 1.3, 1.3)
+
+## The on-screen key labelled [param label], or null.
+func key_button(label: String) -> Button:
+	for c: Node in get_children():
+		if c is Button and (c as Button).text == label:
+			return c
+	return null
+
+## Lights up the key for [param label] for FLASH_TIME. Awaitable.
+func flash(label: String) -> void:
+	var b: Button = key_button(label)
+	if b == null:
+		return
+	b.self_modulate = FLASH_TINT
+	if is_inside_tree():
+		await get_tree().create_timer(FLASH_TIME, true).timeout
+	if is_instance_valid(b):
+		b.self_modulate = Color.WHITE
+
 ## What a key does (also used by the tests).
 func press(label: String) -> void:
 	if target == null:
 		return
+	flash(label)
 	if label == PAGE_EXTRA or label == PAGE_LETTERS:
 		_extra_page = label == PAGE_EXTRA
 		_build()

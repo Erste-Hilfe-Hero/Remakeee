@@ -14,6 +14,18 @@ const MOTIONS: Array[String] = ["hop", "creep", "sway", "stomp", "slide"]
 static var _motion: Dictionary = {}
 ## Prism variants are drawn with a warm tint over the era palette.
 const PRISM_TINT: Color = Color(1.0, 0.78, 0.5)
+## Gleam form: drawn through GleamRules.material() (the species' own palette). This tint is only
+## for the placeholder rectangle when no sprite exists.
+const GLEAM_TINT: Color = Color(0.72, 0.92, 1.0)
+## Idle bob: 1 px up for half of each period (item 2335).
+const BOB_PERIOD: float = 1.0
+## Under a quarter of its strength a Spirling sits 1 px lower and bobs at half the pace.
+const LOW_HP_SHARE: float = 0.25
+const LOW_BOB_PERIOD: float = 2.0
+const LOW_SAG_PX: float = 1.0
+## Sidestep on a missed art: 4 px aside and back in 0.2 s (item 2337).
+const DODGE_PX: float = 4.0
+const DODGE_TIME: float = 0.2
 
 var spirling: Spirling
 var facing: String = "front"
@@ -22,6 +34,16 @@ var mirrored: bool = false
 var speed_scale: float = 1.0
 var _texture: Texture2D
 var _home: Vector2
+var _bob_time: float = 0.0
+## Drawn offset of the idle bob and the low-strength sag; never moves the node itself.
+var draw_offset: Vector2 = Vector2.ZERO
+## Era V: the strip playing ("idle", "attack" or "hit") and its clock; strips are empty below Era V.
+var anim_kind: String = "idle"
+var _anim_time: float = 0.0
+var _strips: Dictionary = {}
+## Era IV: the "_b" breath frame (tools/art/gen_era4.py), swapped in for the second half of each
+## bob instead of the 1 px lift; null when the sprite has none.
+var _breath: Texture2D
 
 func setup(s: Spirling, p_facing: String) -> void:
 	spirling = s
@@ -31,8 +53,30 @@ func setup(s: Spirling, p_facing: String) -> void:
 	var path: String = EraManager.sprite_path(s.data.species_name, facing)
 	if not path.is_empty():
 		_texture = load(path)
+	# Looked up per setup, so an unfurled Gleam takes its new species' palette.
+	material = GleamRules.material(s.data.species_name) if s.gleam and _texture != null else null
+	_strips.clear()
+	_breath = null
+	var bp: String = breath_path(path)
+	if _texture != null and ResourceLoader.exists(bp):
+		_breath = load(bp)
+	if _texture != null and BattleAnim.enabled():
+		for k: String in BattleAnim.KINDS:
+			var st: Texture2D = BattleAnim.strip_texture(path, k)
+			if st != null:
+				_strips[k] = st
+	anim_kind = "idle"
+	_anim_time = 0.0
 	modulate.a = 1.0
 	queue_redraw()
+
+## Breath frame path next to an era sprite path ("x_front.png" -> "x_front_b.png").
+static func breath_path(path: String) -> String:
+	return path.get_basename() + "_b.png" if path.begins_with("res://art/era4/") else ""
+
+## True while the breath frame is shown: the lifted half of the idle bob.
+func breathing() -> bool:
+	return _breath != null and draw_offset.y < (LOW_SAG_PX if is_weak(spirling) else 0.0)
 
 ## The era sprite in use, or null while the placeholder rectangle is drawn.
 func texture() -> Texture2D:
@@ -40,6 +84,59 @@ func texture() -> Texture2D:
 
 func _ready() -> void:
 	_home = position
+
+func _process(delta: float) -> void:
+	if spirling == null or not visible:
+		return
+	_bob_time += delta
+	if not _strips.is_empty():
+		var before: int = BattleAnim.frame_at(anim_kind, _anim_time)
+		_anim_time += delta * Juice.speed() if not Juice.reduced() else 0.0
+		if BattleAnim.frame_at(anim_kind, _anim_time) != before:
+			queue_redraw()
+		return
+	var o: Vector2 = idle_offset(spirling, _bob_time, Juice.reduced())
+	if o != draw_offset:
+		draw_offset = o
+		queue_redraw()
+
+## True under a quarter of the Spirling's strength (but not fainted).
+static func is_weak(s: Spirling) -> bool:
+	return s != null and s.hp > 0 and s.hp < s.max_hp() * LOW_HP_SHARE
+
+## Idle drawing offset at time t: weak Spirlings sag 1 px and bob at half the pace; under
+## reduced motion only the sag stays.
+static func idle_offset(s: Spirling, t: float, reduced: bool) -> Vector2:
+	var weak: bool = is_weak(s)
+	var y: float = LOW_SAG_PX if weak else 0.0
+	if not reduced and s != null and s.hp > 0:
+		var period: float = LOW_BOB_PERIOD if weak else BOB_PERIOD
+		if fmod(t, period) >= period * 0.5:
+			y -= 1.0
+	return Vector2(0, y)
+
+## A newly bonded Spirling hops 4 px once before its name shows (item 2344). Skipped
+## under reduced motion. Awaitable.
+const GREET_HOP_PX: float = 4.0
+const GREET_HOP_TIME: float = 0.2
+
+func greet_hop() -> void:
+	if Juice.reduced():
+		return
+	await Juice.tween(self, "position", _home + Vector2(0, -GREET_HOP_PX), "move", GREET_HOP_TIME * 0.45).finished
+	await Juice.tween(self, "position", _home, "impact", GREET_HOP_TIME * 0.55).finished
+
+## Where a sidestep in `dir` (sign of x; 0 counts as right) lands.
+static func dodge_spot(home: Vector2, dir: float) -> Vector2:
+	return home + Vector2(-DODGE_PX if dir < 0.0 else DODGE_PX, 0)
+
+## Sidesteps a missed art: 4 px in `dir` (sign of x) and back in 0.2 s. Skipped under
+## reduced motion. Awaitable.
+func dodge(dir: float) -> void:
+	if Juice.reduced():
+		return
+	await Juice.tween(self, "position", dodge_spot(_home, dir), "move", DODGE_TIME * 0.4).finished
+	await Juice.tween(self, "position", _home, "move", DODGE_TIME * 0.6).finished
 
 ## Steps out beside the Wayfarer (slides in from the screen edge; never thrown). Awaitable.
 ## Durations come from Juice curves, so the 2x / 4x battle speed applies on its own.
@@ -114,8 +211,21 @@ func step_back(to_left: bool) -> void:
 	await Juice.tween(self, "position", _home + Vector2(-STEP_OUT_DISTANCE if to_left else STEP_OUT_DISTANCE, 0), "move", STEP_TIME).finished
 	position = _home
 
+## Era V: plays a one-shot strip and returns to idle. Awaitable.
+func play_strip(kind: String) -> void:
+	anim_kind = kind
+	_anim_time = 0.0
+	queue_redraw()
+	await get_tree().create_timer(BattleAnim.frame_count(kind) / BattleAnim.fps(kind) / Juice.speed()).timeout
+	anim_kind = "idle"
+	_anim_time = 0.0
+	queue_redraw()
+
 func lunge(toward: Vector2) -> void:
 	if Juice.reduced():
+		return
+	if _strips.has("attack"):
+		await play_strip("attack")
 		return
 	await Juice.tween(self, "position", _home + toward, "impact", 0.08).finished
 	await Juice.tween(self, "position", _home, "move", 0.12).finished
@@ -133,6 +243,9 @@ func knockback(away: Vector2) -> void:
 	await Juice.tween(self, "position", _home, "move", 0.15).finished
 
 func hit_flash() -> void:
+	if _strips.has("hit") and not Juice.reduced():
+		await play_strip("hit")
+		return
 	if Juice.reduced():
 		# One soft dim instead of blinking (no flashes).
 		modulate.a = 0.6
@@ -145,6 +258,32 @@ func hit_flash() -> void:
 		visible = true
 		await get_tree().create_timer(0.05 / Juice.speed()).timeout
 
+## Gleam entrance: glints burst from the sprite and fade (count and time in data/gleam.json).
+func gleam_sparkle() -> void:
+	var cfg: Dictionary = GleamRules.config()
+	var n: int = int(cfg.get("sparkles", 6))
+	var t: float = float(cfg.get("sparkle_time", 0.6))
+	var tex: Texture2D = ElementFx.shape("glint", 0)
+	if tex == null or n <= 0:
+		return
+	var last: Tween = null
+	for i: int in n:
+		var g := TextureRect.new()
+		g.texture = tex
+		g.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		g.use_parent_material = false
+		var c: Vector2 = size / 2.0 - tex.get_size() / 2.0
+		g.position = c
+		add_child(g)
+		var a: float = TAU * i / n
+		last = Juice.tween(g, "position", c + Vector2(cos(a), sin(a)) * size.x * 0.45, "move", t)
+		Juice.tween(g, "modulate:a", 0.0, "move", t)
+	if last != null:
+		await last.finished
+	for ch: Node in get_children():
+		if ch is TextureRect:
+			ch.queue_free()
+
 func faint() -> void:
 	Juice.tween(self, "modulate:a", 0.0, "move", 0.4)
 	await Juice.tween(self, "position", _home + Vector2(0, 12), "move", 0.4).finished
@@ -155,10 +294,24 @@ func _draw() -> void:
 	if spirling == null:
 		return
 	var r := Rect2(Vector2.ZERO, size)
-	if _texture != null:
+	draw_set_transform(draw_offset)
+	if _strips.has(anim_kind):
+		var st: Texture2D = _strips[anim_kind]
+		var fw: float = st.get_width() / float(BattleAnim.frame_count(anim_kind))
+		var src := Rect2(fw * BattleAnim.frame_at(anim_kind, _anim_time), 0, fw, st.get_height())
 		if mirrored:
 			draw_set_transform(Vector2(size.x, 0), 0.0, Vector2(-1, 1))
-		draw_texture_rect(_texture, r, false, PRISM_TINT if spirling.prism else Color.WHITE)
+		draw_texture_rect_region(st, r, src, PRISM_TINT if spirling.prism and material == null else Color.WHITE)
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		return
+	if _texture != null:
+		var tex: Texture2D = _breath if breathing() else _texture
+		# With a breath frame the frame swap replaces the lift; only the low-strength sag stays.
+		var off: Vector2 = Vector2(0, LOW_SAG_PX if is_weak(spirling) else 0.0) if _breath != null else draw_offset
+		draw_set_transform(off)
+		if mirrored:
+			draw_set_transform(Vector2(size.x, 0) + off, 0.0, Vector2(-1, 1))
+		draw_texture_rect(tex, r, false, PRISM_TINT if spirling.prism and material == null else Color.WHITE)
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		return
 	var els: Array[int] = spirling.elements()

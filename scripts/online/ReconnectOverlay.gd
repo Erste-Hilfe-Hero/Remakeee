@@ -13,8 +13,13 @@ signal to_title
 const SHORT_DROP: float = 3.0
 ## Seconds before "To title" appears.
 const TITLE_AFTER: float = 60.0
+## The big screen fades in and out in 0.2 s and leaves the game at 60 % brightness (item 2291).
+const FADE_TIME: float = 0.2
+const DIM_ALPHA: float = 0.4
 
 var _paused_by_us: bool = false
+## True while the big screen fades out.
+var _closing: bool = false
 var _root: Control
 var _label: Label
 var _mark: Label
@@ -41,7 +46,7 @@ func _ready() -> void:
 	_root.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(_root)
 	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.6)
+	dim.color = Color(0, 0, 0, DIM_ALPHA)
 	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_root.add_child(dim)
 	var panel := PanelContainer.new()
@@ -85,7 +90,14 @@ static func status_text(tries: int, next_in: float) -> String:
 func update_view(tries: int, next_in: float, offline_for: float) -> void:
 	var big: bool = offline_for >= SHORT_DROP
 	_mark.visible = not big
-	_root.visible = big
+	if big and (not _root.visible or _closing):
+		if not _root.visible:
+			_root.modulate.a = 0.0
+		_closing = false
+		_root.visible = true
+		Juice.tween(_root, "modulate:a", 1.0, "fade", FADE_TIME)
+	elif not big:
+		_root.visible = false
 	_label.text = status_text(tries, next_in)
 	_title_button.visible = offline_for >= TITLE_AFTER
 	if big:
@@ -102,9 +114,18 @@ func show_overlay() -> void:
 	visible = true
 
 func hide_overlay() -> void:
-	if not visible:
+	# Online calls this every frame while connected; one fade-out at a time.
+	if not visible or _closing:
 		return
-	visible = false
 	if _paused_by_us:
 		get_tree().paused = false
 		_paused_by_us = false
+	if _root.visible:
+		_closing = true
+		await Juice.tween(_root, "modulate:a", 0.0, "fade", FADE_TIME).finished
+		# Connection lost again while fading out: the screen stays.
+		if not _closing:
+			return
+		_closing = false
+	visible = false
+	_root.visible = false

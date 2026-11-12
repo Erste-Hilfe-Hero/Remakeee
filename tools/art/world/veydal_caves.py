@@ -1,6 +1,6 @@
 """Veydal caves (area 3 items 978 to 983): Murk Hollow with its lower level Echo Gallery,
 Mossmere Grotto under Gloamwood, the sea cave Sablecove off Brackwater Fen and Kindle Vents at
-the foot of Cinder Rift. Maps here are generated: edit this file, then run build_world.py.
+the foot of Cinder Rift. Each cave has a campfire that saves but does not heal (item 992). Maps here are generated: edit this file, then run build_world.py.
 
 Every cave entrance has a sign that shows the gear needed inside (item 982). Caves with more
 than one level have a rope back from the deepest point to the entrance that is let down from
@@ -46,11 +46,27 @@ def rope_back(world, mid, key, flag):
                                "action": "lever " + flag}})
 
 
+# Item 992: every cave has a rest place with a campfire ("L") that saves but does not heal.
+CAMPS = {"murk_hollow": (10, 10), "mossmere_grotto": (10, 9), "sablecove": (1, 5), "kindle_vents": (10, 8)}
+
+
+def campfire(world, mid, x, y):
+    m = world.load_map(mid)
+    m["signs"] = [s for s in m.get("signs", []) if (s["x"], s["y"]) != (x, y)]
+    m["signs"].append({"x": x, "y": y, "dialogue": mid + "/campfire"})
+    set_char(m, x, y, "L")
+    m["camp"] = [x, y]
+    world.add_text(mid, {"campfire": {"lines": lines(("A ring of stones with a small fire. Someone keeps it going for travellers.", "Ein Steinring mit einem kleinen Feuer. Jemand hält es für Reisende am Brennen.")),
+                                      "action": "camp"}})
+
+
 def build(world):
     murk_hollow(world)
     mossmere_grotto(world)
     sablecove(world)
     kindle_vents(world)
+    for mid, (x, y) in CAMPS.items():
+        campfire(world, mid, x, y)
 
 
 def murk_hollow(world):
@@ -144,17 +160,25 @@ def sablecove(world):
             "@.%%..@....@",
             "@.....@@@@@@",
             "@~~...~~~..@",
-            "@~~.....~..@",
+            "@~~S....~..@",
             "@@@@@__@@@@@"]
     check_rows(mid, rows)
     world.add_text(mid, {"tide": lines(("Sea water stands in the gap. At low tide it runs out.",
-                                        "Im Spalt steht Meerwasser. Bei Ebbe läuft es ab."))})
+                                        "Im Spalt steht Meerwasser. Bei Ebbe läuft es ab.")),
+                         # Item 985: the tide stone at the entrance shows the next low tide.
+                         "tide_stone": {"lines": lines(("A tide stone. Lines and hours are scratched into it by many hands.",
+                                                        "Ein Gezeitenstein. Viele Hände haben Striche und Stunden hineingeritzt.")),
+                                        "action": "tide_stone"}})
     m = {"name": tr("Sablecove", "Zobelbucht"), "region": "veydal", "biome": "cave", "backdrop": "lake",
          "field": "deep_murk", "encounters": mid, "rows": rows,
          "warps": [warp(5, 8, "brackwater_fen", 10, 16, "left"), warp(6, 8, "brackwater_fen", 10, 16, "left")],
          # Item 979: the inner chamber (right) opens at low tide only. Closed, the gap is water.
          "blocks": [{"x": 6, "y": 3, "open_flag": "_low_tide", "closed": "~"}],
-         "secrets": [secret(10, 1, "max_tonic", "find_sable_inner"), secret(1, 1, "spark_drop", "find_sable_shelf")]}
+         "signs": [{"x": 3, "y": 7, "dialogue": mid + "/tide_stone"}],
+         # Item 995: shell beds on the sand give a find at low tide; at high tide they are under water.
+         "secrets": [secret(10, 1, "max_tonic", "find_sable_inner"), secret(1, 1, "spark_drop", "find_sable_shelf"),
+                     dict(secret(4, 6, "remedy", "find_sable_shells_a"), when="_low_tide"),
+                     dict(secret(7, 7, "tonic", "find_sable_shells_b", 2), when="_low_tide")]}
     world.add_map(mid, m)
     entrance(world, "brackwater_fen", (11, 16), (10, 15), mid, (5, 7), "up",
              [("SABLECOVE", "ZOBELBUCHT"), ("Inside: Wading Boots. The inner chamber opens at low tide.",

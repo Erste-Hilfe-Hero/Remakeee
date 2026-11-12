@@ -11,9 +11,9 @@
   "@.%%..@....@",
   "@..ww......@",
   "@.%%..@....@",
-  "@.....@@@@@@",
+  "@L....@@@@@@",
   "@~~...~~~..@",
-  "@~~.....~..@",
+  "@~~S.......@",
   "@@@@@__@@@@@"
  ],
  "warps": [
@@ -34,7 +34,18 @@
    "facing": "left"
   }
  ],
- "signs": [],
+ "signs": [
+  {
+   "x": 3,
+   "y": 7,
+   "dialogue": "sablecove/tide_stone"
+  },
+  {
+   "x": 1,
+   "y": 5,
+   "dialogue": "sablecove/campfire"
+  }
+ ],
  "blocks": [
   {
    "x": 6,
@@ -57,6 +68,34 @@
    "item": "spark_drop",
    "count": 1,
    "flag": "find_sable_shelf"
+  },
+  {
+   "x": 4,
+   "y": 6,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_sable_shells_a",
+   "when": "_low_tide"
+  },
+  {
+   "x": 7,
+   "y": 7,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_sable_shells_b",
+   "when": "_low_tide"
+  },
+  {
+   "x": 2,
+   "y": 1,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "hush_coin_4",
+   "dialogue": "veydal_side/coin_4"
   }
+ ],
+ "camp": [
+  1,
+  5
  ]
 }

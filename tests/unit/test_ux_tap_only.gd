@@ -27,9 +27,14 @@ func test_every_usable_cell_is_used_on_arrival() -> void:
 				var k: int = m.kind_at(Vector2i(x, y))
 				if k == TilesetFactory.Kind.COUNTER or k == TilesetFactory.Kind.PLANK:
 					cells.append(Vector2i(x, y))
+		# Finds bound to a clock flag (shell beds at low tide, item 995) are checked while it holds.
+		var clock: Dictionary = {}
+		for sc: Dictionary in m.secrets:
+			if sc.has("when"):
+				clock[str(sc.when)] = true
 		for c: Vector2i in cells:
 			checked += 1
-			assert_true(Overworld.used_on_arrival(m, c, {}), "%s %s can be used with a tap" % [id, c])
+			assert_true(Overworld.used_on_arrival(m, c, clock), "%s %s can be used with a tap" % [id, c])
 	assert_gt(checked, 20, "the maps have usable spots to check")
 
 func test_plain_ground_is_only_walked_to() -> void:

@@ -20,6 +20,10 @@ Deutschland
 **Kontakt**
 E-Mail: aa.amuri@icloud.com
 
+**Fragen zu Käufen**
+E-Mail: aa.amuri@icloud.com (bitte Freundescode und Bestellnummer angeben). Bezahlt wird über Apple oder
+Google; über Erstattungen entscheidet nur der jeweilige Store. Mehr unter [Hilfe zu Käufen](/kaeufe).
+
 **Verbraucherstreitbeilegung**
 Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
 Verbraucherschlichtungsstelle teilzunehmen.
@@ -29,5 +33,7 @@ Verbraucherschlichtungsstelle teilzunehmen.
 # Imprint (English)
 
 Ali Amuri Alnasag, Im Vogelgesang 9, 60488 Frankfurt am Main, Germany · Email: aa.amuri@icloud.com
+Questions about purchases: the same email (please add your friend code and order number). Only Apple or Google
+decide on refunds. More under [help with purchases](/purchases).
 We are not willing or obliged to take part in dispute resolution proceedings before a consumer arbitration
 board.

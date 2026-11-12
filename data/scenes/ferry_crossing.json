@@ -1,6 +1,10 @@
 {
- "_note": "Chapter 6: Aldo rows the player across the lake to Corvane (plan item 1407, row choice 1591).",
+ "_note": "Chapter 6: Aldo rows the player across the lake to Corvane (plan item 1407, row choice 1591). Before the Act II card the Act I main-story betrayals are cashed in on the pier.",
  "steps": [
+  {"say": ["The whole village has come to the pier to watch Aldo row again. Some of them came to watch you."]},
+  {"action": "betrayal juna_post"},
+  {"action": "betrayal vash_hour"},
+  {"action": "betrayal fenrick_lantern"},
   {"fade": "out", "time": 0.4},
   {"card": "Act II: The Colours of Corvane"},
   {"fade": "out", "time": 0.01},

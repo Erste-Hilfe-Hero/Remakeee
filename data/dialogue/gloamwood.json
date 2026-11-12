@@ -56,5 +56,32 @@
  "mossmere_grotto_sign": [
   "MOSSMERE GROTTO",
   "Inside: Wading Boots, Plank Bundle."
- ]
+ ],
+ "spring": {
+  "lines": [
+   "A clear spring in a small clearing. The water is cold and tastes of moss."
+  ],
+  "action": "heal"
+ },
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 10"
+ },
+ "charcoaler": {
+  "lines": [
+   "Charcoal burner Wido: The old mounds out here have words on them, if you know how to look.",
+   "Charcoal burner Wido: Lay paper on the stone and rub this over it. The letters come back."
+  ],
+  "action": "give_item rubbing_charcoal 1",
+  "flag": "got_rubbing_charcoal",
+  "once": true,
+  "after_flag": {
+   "flag": "got_rubbing_charcoal",
+   "lines": [
+    "Charcoal burner Wido: Five mounds I know of, from the forest to the rails. Mind the dead, they don't mind you."
+   ]
+  }
+ }
 }
