@@ -186,6 +186,23 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "q5_pressed_diary_edda",
+   "x": 7,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_pressed_diary",
+   "sprite": "elder"
+  },
+  {
+   "id": "q5_named_seed_fenja",
+   "x": 4,
+   "y": 11,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_named_seed",
+   "sprite": "elder",
+   "hide_flag": "q5_named_seed_reveal"
   }
  ],
  "signs": [
