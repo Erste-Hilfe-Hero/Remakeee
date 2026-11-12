@@ -149,6 +149,15 @@ def main() -> None:
                   + ", $game$" + json.dumps(body).replace("$game$", "") + "$game$::jsonb)"
                   " on conflict (id) do update set kind = excluded.kind, starts_at = excluded.starts_at,"
                   " ends_at = excluded.ends_at, data = excluded.data;")
+    # Friends and the shared world (Online 100, area 6): data/friends_more.json as server_config.friends_more.
+    fm_path = os.path.join(folder, "friends_more.json")
+    if os.path.exists(fm_path):
+        with open(fm_path, encoding="utf-8") as f:
+            fm = json.load(f)
+        fm.pop("_comment", None)
+        print("insert into public.server_config (key, value) values ('friends_more', $game$"
+              + json.dumps(fm).replace("$game$", "") + "$game$::jsonb)"
+              " on conflict (key) do update set value = excluded.value;")
     print("commit;")
 
 
