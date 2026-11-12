@@ -12493,11 +12493,11 @@
   "line_id": "diplit",
   "era": 1,
   "base": {
-   "hp": 84,
-   "atk": 118,
-   "foc": 75,
-   "spd": 127,
-   "def": 68
+   "hp": 77,
+   "atk": 109,
+   "foc": 69,
+   "spd": 117,
+   "def": 63
   },
   "trait": "surge",
   "learnset": {
