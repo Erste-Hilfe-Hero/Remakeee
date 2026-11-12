@@ -1932,5 +1932,277 @@
     "weight": 5
    }
   ]
+ },
+ "glasswind_flats": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Duneshrew",
+    "min": 41,
+    "max": 43,
+    "weight": 30,
+    "ground": "scree"
+   },
+   {
+    "species": "Shimmerlet",
+    "min": 41,
+    "max": 43,
+    "weight": 28,
+    "ground": "fern"
+   },
+   {
+    "species": "Rollibex",
+    "min": 42,
+    "max": 44,
+    "weight": 14,
+    "ground": "scree"
+   },
+   {
+    "species": "Sirocat",
+    "min": 42,
+    "max": 44,
+    "weight": 16,
+    "ground": "fern"
+   },
+   {
+    "species": "Scaldcoil",
+    "min": 42,
+    "max": 44,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Noonwhist",
+    "min": 42,
+    "max": 44,
+    "weight": 14,
+    "ground": "fern"
+   },
+   {
+    "species": "Spinnarow",
+    "min": 42,
+    "max": 44,
+    "weight": 12,
+    "ground": "fern"
+   },
+   {
+    "species": "Ergskim",
+    "min": 42,
+    "max": 44,
+    "weight": 10,
+    "ground": "fern"
+   },
+   {
+    "species": "Ardlume",
+    "min": 42,
+    "max": 44,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Velvessa",
+    "min": 42,
+    "max": 44,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Solmantle",
+    "min": 43,
+    "max": 45,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Orrerine",
+    "min": 43,
+    "max": 45,
+    "weight": 4,
+    "ground": "fern"
+   },
+   {
+    "species": "Mirassil",
+    "min": 43,
+    "max": 45,
+    "weight": 6,
+    "ground": "fern"
+   },
+   {
+    "species": "Zenithare",
+    "min": 43,
+    "max": 45,
+    "weight": 5,
+    "ground": "scree"
+   },
+   {
+    "species": "Helirollax",
+    "min": 43,
+    "max": 45,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Noonsoral",
+    "min": 43,
+    "max": 45,
+    "weight": 4,
+    "ground": "fern"
+   },
+   {
+    "species": "Velverain",
+    "min": 43,
+    "max": 45,
+    "weight": 3,
+    "ground": "scree"
+   },
+   {
+    "species": "Habobrax",
+    "min": 43,
+    "max": 45,
+    "weight": 5,
+    "ground": "scree"
+   },
+   {
+    "species": "Hazejellith",
+    "min": 43,
+    "max": 45,
+    "weight": 4,
+    "ground": "fern"
+   },
+   {
+    "species": "Chirrikade",
+    "min": 43,
+    "max": 45,
+    "weight": 4,
+    "ground": "fern"
+   },
+   {
+    "species": "Coronarch",
+    "min": 43,
+    "max": 45,
+    "weight": 3,
+    "ground": "scree"
+   },
+   {
+    "species": "Scaldrahn",
+    "min": 43,
+    "max": 45,
+    "weight": 3,
+    "ground": "scree"
+   }
+  ]
+ },
+ "mirage_kiln": {
+  "rate": 0.06,
+  "spawns": [
+   {
+    "species": "Solkit",
+    "min": 44,
+    "max": 46,
+    "weight": 28
+   },
+   {
+    "species": "Wadishell",
+    "min": 44,
+    "max": 46,
+    "weight": 14
+   },
+   {
+    "species": "Fulgorin",
+    "min": 44,
+    "max": 46,
+    "weight": 14
+   },
+   {
+    "species": "Caravant",
+    "min": 44,
+    "max": 46,
+    "weight": 16
+   },
+   {
+    "species": "Claspirant",
+    "min": 44,
+    "max": 46,
+    "weight": 12
+   },
+   {
+    "species": "Obelith",
+    "min": 44,
+    "max": 46,
+    "weight": 14
+   },
+   {
+    "species": "Saltcrown",
+    "min": 45,
+    "max": 47,
+    "weight": 4
+   },
+   {
+    "species": "Dunebastion",
+    "min": 45,
+    "max": 47,
+    "weight": 6
+   },
+   {
+    "species": "Spinnacle",
+    "min": 45,
+    "max": 47,
+    "weight": 4
+   },
+   {
+    "species": "Wadibastion",
+    "min": 45,
+    "max": 47,
+    "weight": 4
+   },
+   {
+    "species": "Ardenthal",
+    "min": 45,
+    "max": 47,
+    "weight": 4
+   },
+   {
+    "species": "Fulgorath",
+    "min": 45,
+    "max": 47,
+    "weight": 3
+   },
+   {
+    "species": "Caravault",
+    "min": 45,
+    "max": 47,
+    "weight": 3
+   },
+   {
+    "species": "Claspreign",
+    "min": 45,
+    "max": 47,
+    "weight": 3
+   },
+   {
+    "species": "Obelordan",
+    "min": 45,
+    "max": 47,
+    "weight": 3
+   },
+   {
+    "species": "Stiltregent",
+    "min": 45,
+    "max": 47,
+    "weight": 5
+   },
+   {
+    "species": "Palmonarch",
+    "min": 45,
+    "max": 47,
+    "weight": 4
+   },
+   {
+    "species": "Bakedillon",
+    "min": 45,
+    "max": 47,
+    "weight": 5
+   }
+  ]
  }
 }
