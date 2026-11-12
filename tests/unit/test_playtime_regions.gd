@@ -10,7 +10,7 @@ func _json(path: String) -> Dictionary:
 func test_every_era_region_is_measured() -> void:
 	var regions: Dictionary = _json("res://data/playtime.json").get("regions", {})
 	assert_false(regions.is_empty(), "playtime.json lists the era regions")
-	for path: String in ["res://data/region2.json", "res://data/region4.json"]:
+	for path: String in ["res://data/region2.json", "res://data/region4.json", "res://data/region5.json"]:
 		var sheet: Dictionary = _json(path)
 		var id: String = str(sheet.get("id", ""))
 		assert_true(regions.has(id), "%s is measured" % id)
