@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "quivermoor/rootchapel_bell_cellar_ringer",
    "sprite": "villager"
+  },
+  {
+   "id": "q5_root_tithe_oskar",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/q5_root_tithe_oskar",
+   "sprite": "villager",
+   "show_flag": "q5_root_tithe_s1"
   }
  ],
  "signs": []
