@@ -83,7 +83,7 @@ func play(old_form: SpirlingData, new_form: SpirlingData) -> void:
 	_show_new = true
 	_silhouette = false
 	_sprite.queue_redraw()
-	Sound.sfx("level_up")
+	Sound.sfx("evolve")
 	await Juice.pop(_sprite)
 
 func _gui_input(event: InputEvent) -> void:
