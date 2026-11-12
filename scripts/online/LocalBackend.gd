@@ -1455,13 +1455,22 @@ func _fn_league_find(a: Dictionary) -> Dictionary:
 
 func _league_expect(m: Dictionary) -> Dictionary:
 	return {"seed": m.seed, "teams": (m.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
-		"front": [1, 1], "items_allowed": false, "seals": seals_of(str(m.user)) if str(m.league) == LeagueRules.OPEN else [0, 0, 0]}
+		"front": [1, 1], "items_allowed": false, "seals": seals_of(str(m.user)) if str(m.league) == LeagueRules.OPEN else [0, 0, 0],
+		"amulets": amulets_of(str(m.user)) if str(m.league) == LeagueRules.OPEN else [0, 0, 0]}
 
 ## Seal tiers [power, guard, speed] of [param uid] from the shop unlocks (like public._shop_seals).
 func seals_of(uid: String) -> Array:
 	var out: Array = []
 	var unlocks: Dictionary = LocalShop.of(self)._shop(uid).unlocks if LocalShop.of(self) != null else {}
 	for k: String in ShopEffects.SEAL_KINDS:
+		out.append(ShopEffects.clamp_tier(k, int(unlocks.get(k, 0))))
+	return out
+
+## Amulet tiers [crit, ward, shield] of [param uid] (like public._shop_amulets).
+func amulets_of(uid: String) -> Array:
+	var out: Array = []
+	var unlocks: Dictionary = LocalShop.of(self)._shop(uid).unlocks if LocalShop.of(self) != null else {}
+	for k: String in ShopEffects.AMULET_KINDS:
 		out.append(ShopEffects.clamp_tier(k, int(unlocks.get(k, 0))))
 	return out
 
@@ -1803,7 +1812,8 @@ func raid_hp(players: int) -> int:
 
 func _raid_expect(at: Dictionary) -> Dictionary:
 	return {"seed": at.seed, "teams": (at.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
-		"front": [1, 1], "items_allowed": false, "round_limit": config_int("raid_rounds", 10), "seals": seals_of(str(at.user))}
+		"front": [1, 1], "items_allowed": false, "round_limit": config_int("raid_rounds", 10), "seals": seals_of(str(at.user)),
+		"amulets": amulets_of(str(at.user))}
 
 ## Members of raid [param r] as uid -> row. Rows live under "raid|uid", so deleting an account
 ## removes only that player's row (like the SQL table).
