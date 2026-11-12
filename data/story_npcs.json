@@ -973,7 +973,7 @@
    },
    {
     "id": "clan_fenrick_4",
-    "x": 10,
+    "x": 9,
     "y": 4,
     "facing": "down",
     "dialogue": "clans/fenrick_4",
