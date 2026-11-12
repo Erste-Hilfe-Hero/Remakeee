@@ -14,7 +14,7 @@
   "lines": [
    "Gilt Quartermaster Rennick: Fine goods at family prices. Not your family. Ours."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear"
  },
  "lisette": {
   "lines": [

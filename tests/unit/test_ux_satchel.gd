@@ -94,3 +94,31 @@ func test_satchel_keeps_focus_on_the_used_item() -> void:
 	assert_true(state.done)
 	assert_gt(target, -1)
 	assert_eq(focus_after, mini(target, menu.last_rows.size() - 1), "focus stays on the used item")
+
+## Items 1921, 1923: Echo Crystal rows say why someone can't learn, forget rows show
+## element, power and energy.
+func test_echo_reason_names_the_cause() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, "Kindlop")
+	var s: Spirling = GameState.party[0]
+	var reasons: Array[String] = []
+	for id: String in ["echo_ember", "echo_tide", "echo_bloom"]:
+		var why: String = PauseMenu.echo_reason(s, id)
+		assert_eq(why.is_empty(), GameState.can_learn_echo(s, id), id)
+		reasons.append(why)
+	assert_true("Wrong element." in reasons, "a starter can't learn all three elements")
+
+func test_echo_reason_for_a_known_art() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, "Kindlop")
+	var s: Spirling = GameState.party[0]
+	var mv: MoveData = Database.move(str(Database.item("echo_ember").teaches))
+	s.moves.append(mv)
+	assert_eq(PauseMenu.echo_reason(s, "echo_ember"), "Already knows this art.")
+
+func test_art_rows_show_element_power_energy() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, "Kindlop")
+	var s: Spirling = GameState.party[0]
+	var rows: Array[Dictionary] = PauseMenu.art_rows(s.moves)
+	assert_eq(rows.size(), s.moves.size())
+	assert_eq(rows[0].text, s.moves[0].move_name)
+	assert_string_contains(str(rows[0].hint), "Energy %d" % s.moves[0].energy_cost)
+	assert_string_contains(str(rows[0].hint), Elements.element_name(s.moves[0].element))

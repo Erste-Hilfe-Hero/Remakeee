@@ -125,6 +125,11 @@ var ai: BattleAI
 var prize_money: int = 0
 ## Growth multiplier for the player's side (shop Growth Crystals and the pass, ShopEffects).
 var xp_mult: float = 1.0
+## Ring-scaled Growth (era function "ring_scaled_growth", Era V): each earner's share is scaled
+## by growth_scale() of the foe's ring against its own.
+var ring_scaled_growth: bool = false
+## Opening line for the field instead of the Rift line (weather in battle, WeatherCycle).
+var field_intro: String = ""
 var flee_attempts: int = 0
 ## The Spirling bonded this battle, if any.
 var bonded: Spirling = null
@@ -431,7 +436,7 @@ func start() -> Array[BattleEvent]:
 	if warden_weakened:
 		emit_event(BattleEvent.Type.WARDEN_WEAKENED, {"side": Side.FOE, "trainer": trainer_name})
 	if BattleRules.FIELDS.has(field):
-		emit_event(BattleEvent.Type.FIELD, {"field": field, "text": str(BattleRules.FIELDS[field].intro)})
+		emit_event(BattleEvent.Type.FIELD, {"field": field, "text": field_intro if not field_intro.is_empty() else str(BattleRules.FIELDS[field].intro)})
 	# Every variant in play gets its own banner with its seal (item 796).
 	var all_variants: Dictionary = BattleRules.variants()
 	for id: String in variants:
@@ -597,7 +602,40 @@ func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) 
 			_battle_line("foe_fall")
 	elif side == Side.FOE and slot == 0 and dealt > 0:
 		_check_boss_phase(s)
+	if not s.is_fainted():
+		eat_pith(side, slot)
 	return dealt
+
+## Pith Fruit (era function "pith_fruit", Era II): a held fruit the holder eats by itself, once.
+## "pith_heal": at half its Vigor or less it heals that share of its Vigor (also through a heal
+## block, like a bag item); "pith_cure": a condition is washed away at once. The fruit is gone
+## for good afterwards. Returns true when it ate one.
+func eat_pith(side: int, slot: int = 0) -> bool:
+	var index: int = active_index(side, slot)
+	if index < 0:
+		return false
+	var s: Spirling = parties[side][index]
+	if s.is_fainted() or s.held.is_empty():
+		return false
+	var h: Dictionary = BattleRules.held_info(s.held)
+	var heal_share: float = float(h.get("pith_heal", 0.0))
+	var heals: bool = heal_share > 0.0 and s.hp * 2 <= s.max_hp()
+	var cures: bool = bool(h.get("pith_cure", false)) and not s.status.is_empty()
+	if not heals and not cures:
+		return false
+	var d: Dictionary = _who(side, slot)
+	d["item_name"] = str(Database.item(s.held).get("name", s.held))
+	s.held = ""
+	emit_event(BattleEvent.Type.HELD_FRUIT, d)
+	if heals:
+		_heal_spirling(side, index, maxi(1, roundi(s.max_hp() * heal_share)))
+	else:
+		var c: Dictionary = _who(side, slot)
+		c["status"] = s.status
+		s.status = ""
+		s.status_turns = 0
+		emit_event(BattleEvent.Type.STATUS_CURED, c)
+	return true
 
 ## Shows the trait of the Spirling in [param slot] the first time it matters in a battle (TRAIT).
 func reveal_trait(side: int, slot: int = 0) -> void:
@@ -748,6 +786,7 @@ func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1)
 	emit_event(BattleEvent.Type.STATUS_APPLIED, d)
 	if status == "scorch" and ShopEffects.gift_table(s).has("scorch_atk"):
 		reveal_trait(side, slot)
+	eat_pith(side, slot)
 	return true
 
 ## Damage factor of the variants in play: the own-element bonus ("stab") and the reaction
@@ -1617,7 +1656,7 @@ func _award_xp(foe: Spirling) -> void:
 		return
 	var share: int = maxi(1, int(total / earners.size()))
 	for s: Spirling in earners:
-		_give_xp(s, share)
+		_give_xp(s, _scaled(share, foe, s))
 	if bench_share <= 0.0:
 		return
 	# Bench lessons: every healthy own Spirling that did not fight still learns a part.
@@ -1626,7 +1665,21 @@ func _award_xp(foe: Spirling) -> void:
 		var s: Spirling = parties[Side.PLAYER][i]
 		if s in earners or s in participants or is_partner_index(Side.PLAYER, i) or not is_standing(s):
 			continue
-		_give_xp(s, bench_xp, true)
+		_give_xp(s, _scaled(bench_xp, foe, s), true)
+
+func _scaled(amount: int, foe: Spirling, s: Spirling) -> int:
+	return maxi(1, roundi(amount * growth_scale(foe.level, s.level))) if ring_scaled_growth else amount
+
+const GROWTH_SCALE_POW: float = 2.5
+const GROWTH_SCALE_MIN: float = 0.25
+const GROWTH_SCALE_MAX: float = 4.0
+
+## Growth factor for beating a foe of ring [param foe_ring] with a Spirling of ring [param own_ring]:
+## ((2 * foe + 10) / (foe + own + 10)) ^ 2.5, so an even fight gives 1.0, a stronger foe more and a
+## weaker foe less, kept within GROWTH_SCALE_MIN..GROWTH_SCALE_MAX.
+static func growth_scale(foe_ring: int, own_ring: int) -> float:
+	var f: float = pow((2.0 * foe_ring + 10.0) / float(foe_ring + own_ring + 10), GROWTH_SCALE_POW)
+	return clampf(f, GROWTH_SCALE_MIN, GROWTH_SCALE_MAX)
 
 ## Adds XP up to the level cap and plays out level-ups and new moves.
 func _give_xp(s: Spirling, amount: int, bench: bool = false) -> void:

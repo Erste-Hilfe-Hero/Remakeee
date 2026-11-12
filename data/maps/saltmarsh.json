@@ -252,6 +252,12 @@
    "hide_flag": "page_5"
   },
   {
+   "x": 4,
+   "y": 2,
+   "dialogue": "veydal_more/poster_4",
+   "hide_flag": "poster_4"
+  },
+  {
    "x": 6,
    "y": 11,
    "dialogue": "saltmarsh/marker_stone"
