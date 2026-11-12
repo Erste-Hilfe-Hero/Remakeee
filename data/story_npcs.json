@@ -2020,8 +2020,8 @@
    },
    {
     "id": "kaia_town",
-    "x": 10,
-    "y": 4,
+    "x": 7,
+    "y": 5,
     "facing": "down",
     "dialogue": "solenne_side/kaia_town",
     "sprite": "warden",
