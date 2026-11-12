@@ -245,10 +245,19 @@ var _stage_cfg: Dictionary = {}
 
 ## Stage colours for [param region]: data/era4_stage.json "colors" with the region's own
 ## "stage" colours from data/region_looks.json on top (Halcyra's golden hour).
-func stage_colors(region: String) -> Dictionary:
+## [param terrain] (the battle backdrop: lake, ridge, ember ...) tints the stage between the two
+## (data/era_battle_feel.json "stage_terrain"), so a lake fight stands on water-blue ground.
+func stage_colors(region: String, terrain: String = "") -> Dictionary:
 	var out: Dictionary = (stage_config().get("colors", {}) as Dictionary).duplicate()
+	if not terrain.is_empty():
+		out.merge(EraBattleFeel.stage_terrain(terrain), true)
 	out.merge(RegionLook.look(region).get("stage", {}), true)
 	return out
+
+## Battle presentation value [param key] of the active era (data/era_battle_feel.json):
+## intro wipe, entrance, idle level, art tier, camera ... See EraBattleFeel.
+func battle_feel(key: String, fallback: Variant = null) -> Variant:
+	return EraBattleFeel.value(active_era(), key, fallback)
 
 func uses_stage_25d() -> bool:
 	return active_era() >= STAGE_25D_FROM

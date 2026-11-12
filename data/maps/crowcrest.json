@@ -326,6 +326,12 @@
   },
   {
    "x": 10,
+   "y": 21,
+   "dialogue": "veydal_more/poster_2",
+   "hide_flag": "poster_2"
+  },
+  {
+   "x": 10,
    "y": 15,
    "dialogue": "crowcrest/murk_hollow_sign",
    "gear": [

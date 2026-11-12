@@ -100,7 +100,8 @@
     },
     {
      "species": "Calderox",
-     "level": 58
+     "level": 58,
+     "held": "pith_mend"
     }
    ],
    "intro": "vellmarch/warden_brannoc_intro",

@@ -11,6 +11,14 @@
     "show_flag": "story_complete",
     "hide_flag": "lq_hallowmur_ready"
    }
+  ],
+  "signs": [
+   {
+    "x": 10,
+    "y": 26,
+    "dialogue": "veydal_more/poster_3",
+    "hide_flag": "poster_3"
+   }
   ]
  },
  "set": {

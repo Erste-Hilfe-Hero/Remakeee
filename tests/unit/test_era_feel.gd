@@ -240,3 +240,16 @@ func test_overworld_runs_every_era() -> void:
 	MusicDirector.update_world(true, false, 0.0)
 	MusicDirector.motion = MusicDirector.Motion.IDLE
 	MusicDirector.dialogue = false
+
+func test_text_box_takes_the_era_frame_in_battle_too() -> void:
+	var box := TextBox.new()
+	add_child_autofree(box)
+	await wait_process_frames(1)
+	EraManager.unlocked_era = 3
+	EraManager.set_retro_filter(0)
+	box.show_prompt("Orders?")
+	var sb: StyleBoxTexture = box.get_theme_stylebox("panel") as StyleBoxTexture
+	assert_not_null(sb)
+	if GameState.dialogue_frame() not in UITheme.TEXT_FRAMES:
+		assert_eq(sb.texture, (UITheme.frame_style_of("etched") as StyleBoxTexture).texture)
+	assert_almost_eq(box.era_speed, 1.15, 0.001)
