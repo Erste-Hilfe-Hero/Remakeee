@@ -195,6 +195,22 @@
    "dialogue": "quivermoor/nell",
    "sprite": "ranger",
    "color": "5a6a3a"
+  },
+  {
+   "id": "q5_rope_fund_hesk",
+   "x": 4,
+   "y": 11,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_rope_fund",
+   "sprite": "villager"
+  },
+  {
+   "id": "q5_nell_letters_tam",
+   "x": 7,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_nell_letters",
+   "sprite": "villager"
   }
  ],
  "signs": [

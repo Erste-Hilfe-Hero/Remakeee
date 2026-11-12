@@ -107,6 +107,15 @@
    "win_flags": [
     "rift_v5_wick_sealed"
    ]
+  },
+  {
+   "id": "q5_nell_letters_ivar",
+   "x": 2,
+   "y": 13,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_nell_letters_ivar",
+   "sprite": "elder",
+   "show_flag": "q5_nell_letters_s1"
   }
  ],
  "signs": [

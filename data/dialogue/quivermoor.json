@@ -230,6 +230,669 @@
   "The winch man cut the rope ten metres short to save the haul back up. He billed Halcyra for a Wayfarer lost to the bog. The bog was soft. His invoice was not.",
   "Nell: Don't look at me like that. The winch man cuts every rope short. I only steer."
  ],
+ "q5_choir_bell": {
+  "if": {
+   "not_flag": "q5_choir_bell_asked"
+  },
+  "else": "q5_choir_bell_reveal",
+  "lines": [
+   "Cantor Liesl: Our silver bell is gone. The choir can't start without it. Well, they can. They just start badly.",
+   "Cantor Liesl: Find it, please. Someone said they heard it ringing out on the Hymnmarsh."
+  ],
+  "action": "set_flag q5_choir_bell_asked"
+ },
+ "q5_choir_bell_bo": {
+  "if": {
+   "not_flag": "q5_choir_bell_s1"
+  },
+  "else": "q5_choir_bell_bo_after",
+  "lines": [
+   "Reed Cutter Bo: A silver bell? It rings out here at dusk. Always the same three notes. Badly.",
+   "Reed Cutter Bo: Gunne in Rootchapel buys anything that rings. Ask him who sold it."
+  ],
+  "action": "set_flag q5_choir_bell_s1; quest_stage q5_choir_bell 1"
+ },
+ "q5_choir_bell_bo_after": [
+  "Reed Cutter Bo: The reeds hum the hymns back. They're better at it than the choir."
+ ],
+ "q5_choir_bell_gunne": {
+  "if": {
+   "not_flag": "q5_choir_bell_s2"
+  },
+  "else": "q5_choir_bell_gunne_after",
+  "lines": [
+   "Bell Buyer Gunne: The silver one? A lady sold it. Choir robe, nice voice, terrible haggler.",
+   "Bell Buyer Gunne: She bought it back the next day. For twice as much. Then she rang it on the marsh."
+  ],
+  "action": "set_flag q5_choir_bell_s2; quest_stage q5_choir_bell 2"
+ },
+ "q5_choir_bell_gunne_after": [
+  "Bell Buyer Gunne: I sell bells to people who need to be found. And to people who don't want to be."
+ ],
+ "q5_choir_bell_liesl_solo": {
+  "if": {
+   "not_flag": "q5_choir_bell_paid"
+  },
+  "else": "q5_choir_bell_liesl_solo_after",
+  "lines": [
+   "You take the silver bell, and the three brews Liesl kept for her voice. Her voice won't miss them."
+  ],
+  "action": "set_flag q5_choir_bell_paid; give_item dash_brew 3; quest_stage q5_choir_bell 4"
+ },
+ "q5_choir_bell_liesl_solo_after": [
+  "Liesl: La. La. Laaa. Still better than the altos."
+ ],
+ "q5_choir_bell_liesl_solo_defeat": [
+  "Liesl: You interrupted my solo. Nobody interrupts my solo. Nobody ever stays for it, either.",
+  "Liesl: Take the bell. The choir can have it back. They won't sound any better."
+ ],
+ "q5_choir_bell_liesl_solo_intro": [
+  "Liesl: At last, an audience. Stand very still. This is the high part."
+ ],
+ "q5_choir_bell_reveal": {
+  "if": {
+   "flag": "q5_choir_bell_s2"
+  },
+  "else": "q5_choir_bell_wait",
+  "lines": [
+   "Cantor Liesl: The bell buyer in Rootchapel says I sold it? Me? Well. He has a very good memory for a fence.",
+   "Cantor Liesl: The choir never gives me a solo. Silver buys solos. Now I sing alone. On the marsh. To the reeds.",
+   "Cantor Liesl: Come and hear it. You won't hear anything after."
+  ],
+  "action": "set_flag q5_choir_bell_reveal; quest_stage q5_choir_bell 3"
+ },
+ "q5_choir_bell_wait": [
+  "Cantor Liesl: The reed cutters on the Hymnmarsh hear everything. And bell buyers sit in Rootchapel."
+ ],
+ "q5_lost_pole": {
+  "if": {
+   "not_flag": "q5_lost_pole_asked"
+  },
+  "else": "q5_lost_pole_reveal",
+  "lines": [
+   "Kari: My father was Pole Master before Ebbe. He went out on his raft one night and the town drifted on without him.",
+   "Kari: Find out what happened to him. I just want to know. Really. Just to know."
+  ],
+  "action": "set_flag q5_lost_pole_asked"
+ },
+ "q5_lost_pole_kari_pole": {
+  "if": {
+   "not_flag": "q5_lost_pole_paid"
+  },
+  "else": "q5_lost_pole_kari_pole_after",
+  "lines": [
+   "Kari throws you her father's bells to be rid of you. 'Ring them at the Rift. He never answers.'"
+  ],
+  "action": "set_flag q5_lost_pole_paid; give_item wake_bell 2; quest_stage q5_lost_pole 4"
+ },
+ "q5_lost_pole_kari_pole_after": [
+  "Kari: I vote for me. It's unanimous."
+ ],
+ "q5_lost_pole_kari_pole_defeat": [
+  "Kari: You can keep your raft. I'll keep the pole. Ebbe won't keep his seat long.",
+  "Kari: Father always said I'd go far. We both did."
+ ],
+ "q5_lost_pole_kari_pole_intro": [
+  "Kari: Passengers who ask questions get off early. Here. In the water."
+ ],
+ "q5_lost_pole_pim": {
+  "if": {
+   "not_flag": "q5_lost_pole_s2"
+  },
+  "else": "q5_lost_pole_pim_after",
+  "lines": [
+   "Chart Boy Pim: That night the town turned hard toward the Raft Rift. Somebody steered.",
+   "Chart Boy Pim: The log says who held the pole. It says 'Kari'. In her own writing. With a little heart."
+  ],
+  "action": "set_flag q5_lost_pole_s2; quest_stage q5_lost_pole 2"
+ },
+ "q5_lost_pole_pim_after": [
+  "Chart Boy Pim: Every chart in here shows a place where somebody wanted something gone."
+ ],
+ "q5_lost_pole_reveal": {
+  "if": {
+   "flag": "q5_lost_pole_s2"
+  },
+  "else": "q5_lost_pole_wait",
+  "lines": [
+   "Kari: The rope was cut, not torn. Yes. I know. I had the knife.",
+   "Kari: The longest pole steers the town. His was longer than mine. Now it's mine and it's the longest.",
+   "Kari: Ebbe is only keeping the seat warm. And you know too much for a passenger."
+  ],
+  "action": "set_flag q5_lost_pole_reveal; quest_stage q5_lost_pole 3"
+ },
+ "q5_lost_pole_sten": {
+  "if": {
+   "not_flag": "q5_lost_pole_s1"
+  },
+  "else": "q5_lost_pole_sten_after",
+  "lines": [
+   "Old Sten: The Pole Master's raft? It came by here empty. The rope was cut clean. Clean as a vote.",
+   "Old Sten: Pim marks every drift in the Chart Room. Ask where the town was that night."
+  ],
+  "action": "set_flag q5_lost_pole_s1; quest_stage q5_lost_pole 1"
+ },
+ "q5_lost_pole_sten_after": [
+  "Old Sten: The fields heave. The fish don't mind. Fish never vote."
+ ],
+ "q5_lost_pole_wait": [
+  "Kari: Old Sten fishes on the Heaving Fields. And Pim in the Chart Room keeps the drift charts. Ask them."
+ ],
+ "q5_named_seed": {
+  "if": {
+   "not_flag": "q5_named_seed_asked"
+  },
+  "else": "q5_named_seed_reveal",
+  "lines": [
+   "Gardener Fenja: Every seed in Lastbloom has a name tag. My daughter Wynn's seed is missing. Hale won't say where it went.",
+   "Gardener Fenja: Find her seed. Find out who planted it. A mother has a right to know who to thank."
+  ],
+  "action": "set_flag q5_named_seed_asked"
+ },
+ "q5_named_seed_fenja_bloom": {
+  "if": {
+   "not_flag": "q5_named_seed_paid"
+  },
+  "else": "q5_named_seed_fenja_bloom_after",
+  "lines": [
+   "You take Wynn's tag from Fenja's apron, and the revival leaves she grew in her daughter's year."
+  ],
+  "action": "set_flag q5_named_seed_paid; give_item revival_leaf 3; quest_stage q5_named_seed 4"
+ },
+ "q5_named_seed_fenja_bloom_after": [
+  "Fenja: The roses are very red this year. I wonder why."
+ ],
+ "q5_named_seed_fenja_bloom_defeat": [
+  "Fenja: Uprooted. By a stranger. Wynn would have laughed. She always laughed.",
+  "Fenja: Take her tag. Keep it watered. It's all that's left to water."
+ ],
+ "q5_named_seed_fenja_bloom_intro": [
+  "Fenja: The bloom is hungry and you are standing in my bed."
+ ],
+ "q5_named_seed_kell": {
+  "if": {
+   "not_flag": "q5_named_seed_s1"
+  },
+  "else": "q5_named_seed_kell_after",
+  "lines": [
+   "Kell: Named seeds? I net the ones that float off the Bloom Rift. This one says 'Wynn'. It's warm.",
+   "Kell: It sprouted already, then got pulled up. The pickers in the Rift know who planted it."
+  ],
+  "action": "set_flag q5_named_seed_s1; quest_stage q5_named_seed 1"
+ },
+ "q5_named_seed_kell_after": [
+  "Kell: Mum says don't net anything that whispers. I net it anyway. It pays."
+ ],
+ "q5_named_seed_reveal": {
+  "if": {
+   "flag": "q5_named_seed_s2"
+  },
+  "else": "q5_named_seed_wait",
+  "lines": [
+   "Gardener Fenja: The picker says the tag was in my writing? Of course it was. I write all the tags.",
+   "Gardener Fenja: A planted child pays the bloom in years. Her years. My garden. The best roses in Quivermoor.",
+   "Gardener Fenja: I asked you to find who to thank. Thank you. Now hold still. You have lovely years."
+  ],
+  "action": "set_flag q5_named_seed_reveal; quest_stage q5_named_seed 3"
+ },
+ "q5_named_seed_sol": {
+  "if": {
+   "not_flag": "q5_named_seed_s2"
+  },
+  "else": "q5_named_seed_sol_after",
+  "lines": [
+   "Withered Picker Sol: Wynn's bloom? I picked it. White, with a girl's laugh inside. Sabeline wanted it.",
+   "Withered Picker Sol: The planting tag was in the gardener's hand. Same hand as all the tags. Mothers plant deepest."
+  ],
+  "action": "set_flag q5_named_seed_s2; quest_stage q5_named_seed 2"
+ },
+ "q5_named_seed_sol_after": [
+  "Withered Picker Sol: I was twenty last spring. The bloom took the rest on credit."
+ ],
+ "q5_named_seed_wait": [
+  "Gardener Fenja: The net mender's boy in Driftwick trades in seeds. And the pickers work deep in the Bloom Rift."
+ ],
+ "q5_nell_letters": {
+  "if": {
+   "not_flag": "q5_nell_letters_asked"
+  },
+  "else": "q5_nell_letters_after",
+  "lines": [
+   "Tam Tallis: I'm Nell's brother. She left letters for me before she went pilot. I never got them.",
+   "Tam Tallis: Find them? I want to understand her. Family is all we have down here. That and bog."
+  ],
+  "action": "set_flag q5_nell_letters_asked"
+ },
+ "q5_nell_letters_after": {
+  "if": {
+   "flag": "q5_nell_letters_paid"
+  },
+  "else": "q5_nell_letters_reward",
+  "lines": [
+   "Tam Tallis: Nell and I write again. Short letters. Mostly threats."
+  ]
+ },
+ "q5_nell_letters_go": {
+  "if": {
+   "flag": "q5_nell_letters_reveal"
+  },
+  "else": "q5_nell_letters_reveal",
+  "lines": [
+   "Tam Tallis: My buyer waits on the Candle Causeway. Wave if you pass. Or don't."
+  ]
+ },
+ "q5_nell_letters_ivar": {
+  "if": {
+   "not_flag": "q5_nell_letters_s2"
+  },
+  "else": "q5_nell_letters_ivar_after",
+  "lines": [
+   "Burned Pilot Ivar: Nell's letters? I kept them dry. Fire is drier than water, mostly.",
+   "Burned Pilot Ivar: Give them to Tam? Tam. Hm. Well. He's family. Family always wants to know where you sleep."
+  ],
+  "action": "set_flag q5_nell_letters_s2; quest_stage q5_nell_letters 2"
+ },
+ "q5_nell_letters_ivar_after": [
+  "Burned Pilot Ivar: Maudrey lit me once. I went out on purpose. She never forgave that."
+ ],
+ "q5_nell_letters_reveal": {
+  "if": {
+   "flag": "q5_nell_letters_s2"
+  },
+  "else": "q5_nell_letters_wait",
+  "lines": [
+   "Tam Tallis: Thank you. Every letter. Every place she hides, every friend, every name.",
+   "Tam Tallis: The Wardens pay well for pilots who know the moving paths. They pay better for their families.",
+   "Tam Tallis: Don't look like that. She sold you first. I'm only catching up."
+  ],
+  "action": "set_flag q5_nell_letters_reveal; quest_stage q5_nell_letters 3"
+ },
+ "q5_nell_letters_reward": {
+  "if": {
+   "flag": "q5_nell_letters_done"
+  },
+  "else": "q5_nell_letters_go",
+  "lines": [
+   "Tam Tallis: You beat my buyer? Now I have letters and no customer. Here. Keep the change. Keep the letters too."
+  ],
+  "action": "set_flag q5_nell_letters_paid; give_item guard_brew 3; quest_stage q5_nell_letters 4"
+ },
+ "q5_nell_letters_runa": {
+  "if": {
+   "not_flag": "q5_nell_letters_s1"
+  },
+  "else": "q5_nell_letters_runa_after",
+  "lines": [
+   "Runa: Nell's room? I kept it. She never paid, so it's still technically hers.",
+   "Runa: Here are the letters she left under the moss. The rest she gave to a pilot who went into the Wick Rift."
+  ],
+  "action": "set_flag q5_nell_letters_s1; quest_stage q5_nell_letters 1"
+ },
+ "q5_nell_letters_runa_after": [
+  "Runa: The moss in her bed grew into the shape of her. Then it walked out without paying, too."
+ ],
+ "q5_nell_letters_wait": [
+  "Tam Tallis: Runa at the Moss Inn kept Nell's room. And a burned pilot in the Wick Rift knew her."
+ ],
+ "q5_nell_letters_warden_buyer": [
+  "Selk: I buy and sell. Mostly sell. Mostly people."
+ ],
+ "q5_nell_letters_warden_buyer_defeat": [
+  "Selk: The Wardens will be cross. I'll tell them Tam sold me a fake. He'll love that.",
+  "Selk: Everyone on this moor sells someone. You just haven't been offered enough."
+ ],
+ "q5_nell_letters_warden_buyer_intro": [
+  "Selk: The letters are paid for. You're not. Let's settle that."
+ ],
+ "q5_pressed_diary": {
+  "if": {
+   "not_flag": "q5_pressed_diary_asked"
+  },
+  "else": "q5_pressed_diary_after",
+  "lines": [
+   "Mourner Edda: My husband Arvid drowned in the Gloamwater. All I have left is his diary, and the presser used the pages for flowers.",
+   "Mourner Edda: Find the last pages. I want to read his final words about me. They must be lovely."
+  ],
+  "action": "set_flag q5_pressed_diary_asked"
+ },
+ "q5_pressed_diary_after": {
+  "if": {
+   "flag": "q5_pressed_diary_paid"
+  },
+  "else": "q5_pressed_diary_reward",
+  "lines": [
+   "Mourner Edda: I've had the headstone changed. It now says 'Not yet'."
+  ]
+ },
+ "q5_pressed_diary_arvid": [
+  "Arvid: Shh. I'm dead. The dead are very quiet."
+ ],
+ "q5_pressed_diary_arvid_defeat": [
+  "Arvid: Fine. Tell her you found me. Tell her I wept. I'll be gone by the time she gets here.",
+  "Arvid: Next time I drown properly. It's the only way to be sure."
+ ],
+ "q5_pressed_diary_arvid_intro": [
+  "Arvid: Edda sent you? Then you understand why I drowned."
+ ],
+ "q5_pressed_diary_go": {
+  "if": {
+   "flag": "q5_pressed_diary_reveal"
+  },
+  "else": "q5_pressed_diary_reveal",
+  "lines": [
+   "Mourner Edda: He hides on the Gloamwater, under the name of a dead man. His own."
+  ]
+ },
+ "q5_pressed_diary_jory": {
+  "if": {
+   "not_flag": "q5_pressed_diary_s2"
+  },
+  "else": "q5_pressed_diary_jory_after",
+  "lines": [
+   "Seed Boy Jory: These pages? The man who sold them was very wet and very cheerful. Odd for a drowned man.",
+   "Seed Boy Jory: Here. Take them to the widow. I'd like to see her face. From very far away."
+  ],
+  "action": "set_flag q5_pressed_diary_s2; quest_stage q5_pressed_diary 2"
+ },
+ "q5_pressed_diary_jory_after": [
+  "Seed Boy Jory: Every seed here has a name. Some of the names are still walking around."
+ ],
+ "q5_pressed_diary_mo": {
+  "if": {
+   "not_flag": "q5_pressed_diary_s1"
+  },
+  "else": "q5_pressed_diary_mo_after",
+  "lines": [
+   "Flower Child Mo: Pressed blooms, one coin. The paper has writing on it. Writing makes them sell better.",
+   "Flower Child Mo: The last pages went to Jory at the Seed Store. He wraps seeds in them. Very dead seeds."
+  ],
+  "action": "set_flag q5_pressed_diary_s1; quest_stage q5_pressed_diary 1"
+ },
+ "q5_pressed_diary_mo_after": [
+  "Flower Child Mo: This one says 'help'. That's the expensive one."
+ ],
+ "q5_pressed_diary_reveal": {
+  "if": {
+   "flag": "q5_pressed_diary_s2"
+  },
+  "else": "q5_pressed_diary_wait",
+  "lines": [
+   "Mourner Edda: 'Day 1 of freedom. Faked the drowning. The bog keeps secrets, Edda doesn't.'",
+   "Mourner Edda: Alive. He is alive and he wrote it down. I wore black for a year. Black does not suit me.",
+   "Mourner Edda: The last page says where he hides. Bring him to me. Bring him wet."
+  ],
+  "action": "set_flag q5_pressed_diary_reveal; quest_stage q5_pressed_diary 3"
+ },
+ "q5_pressed_diary_reward": {
+  "if": {
+   "flag": "q5_pressed_diary_done"
+  },
+  "else": "q5_pressed_diary_go",
+  "lines": [
+   "Mourner Edda: He ran again? Of course. He's very fast for a corpse. Take these. I bought them for the wake."
+  ],
+  "action": "set_flag q5_pressed_diary_paid; give_item remedy 4; quest_stage q5_pressed_diary 4"
+ },
+ "q5_pressed_diary_wait": [
+  "Mourner Edda: The flower children sell pressed blooms on the Gloamwater. And Jory in the Seed Store buys the paper."
+ ],
+ "q5_root_tithe": {
+  "if": {
+   "not_flag": "q5_root_tithe_asked"
+  },
+  "else": "q5_root_tithe_after",
+  "lines": [
+   "Sexton Wilm: I dig the graves at Rootchapel. Lately I dig them twice: once to fill, once to find them empty.",
+   "Sexton Wilm: Somebody is taking our dead. Find out who. The dead can't complain, so I complain for them."
+  ],
+  "action": "set_flag q5_root_tithe_asked"
+ },
+ "q5_root_tithe_ada": {
+  "if": {
+   "not_flag": "q5_root_tithe_s1"
+  },
+  "else": "q5_root_tithe_ada_after",
+  "lines": [
+   "Grave Digger Ada: The roots walk at night. They drag things. Long things. Wrapped things.",
+   "Grave Digger Ada: The tracks all go back to the chapel. Ask the choirboy what he heard."
+  ],
+  "action": "set_flag q5_root_tithe_s1; quest_stage q5_root_tithe 1"
+ },
+ "q5_root_tithe_ada_after": [
+  "Grave Digger Ada: I sleep with my boots on. Easier to run. Easier to be found."
+ ],
+ "q5_root_tithe_after": {
+  "if": {
+   "flag": "q5_root_tithe_paid"
+  },
+  "else": "q5_root_tithe_reward",
+  "lines": [
+   "Sexton Wilm: I bury them deeper now. And I bury the shovel with them."
+  ]
+ },
+ "q5_root_tithe_anselm_roots": [
+  "Curate Anselm: Amen. Now get out of my vestry."
+ ],
+ "q5_root_tithe_anselm_roots_defeat": [
+  "Curate Anselm: The roots will be hungry. They'll want a sermon. Fine. You give it.",
+  "Curate Anselm: I kept the collection box. Some things are sacred."
+ ],
+ "q5_root_tithe_anselm_roots_intro": [
+  "Curate Anselm: Wilm sent you. Wilm is next on the list. Don't spoil the order of service."
+ ],
+ "q5_root_tithe_go": {
+  "if": {
+   "flag": "q5_root_tithe_reveal"
+  },
+  "else": "q5_root_tithe_reveal",
+  "lines": [
+   "Sexton Wilm: Anselm is in the vestry, counting. Go and make him lose count."
+  ]
+ },
+ "q5_root_tithe_oskar": {
+  "if": {
+   "not_flag": "q5_root_tithe_s2"
+  },
+  "else": "q5_root_tithe_oskar_after",
+  "lines": [
+   "Choirboy Oskar: At night the curate opens the floor and sings to the roots. They sing back.",
+   "Choirboy Oskar: He feeds them the dead. Then he takes a coin from the box for each one. I counted."
+  ],
+  "action": "set_flag q5_root_tithe_s2; quest_stage q5_root_tithe 2"
+ },
+ "q5_root_tithe_oskar_after": [
+  "Choirboy Oskar: Don't tell him I told. He told me the roots like boys best."
+ ],
+ "q5_root_tithe_reveal": {
+  "if": {
+   "flag": "q5_root_tithe_s2"
+  },
+  "else": "q5_root_tithe_wait",
+  "lines": [
+   "Sexton Wilm: The curate? Our curate? He blessed my mother.",
+   "Sexton Wilm: And then he sold her to the roots for a quieter congregation. The roots don't cough during sermons."
+  ],
+  "action": "set_flag q5_root_tithe_reveal; quest_stage q5_root_tithe 3"
+ },
+ "q5_root_tithe_reward": {
+  "if": {
+   "flag": "q5_root_tithe_done"
+  },
+  "else": "q5_root_tithe_go",
+  "lines": [
+   "Sexton Wilm: The roots gave back my mother. Most of her. I'll take most. Here, for your trouble."
+  ],
+  "action": "set_flag q5_root_tithe_paid; give_item strong_tonic 3; quest_stage q5_root_tithe 4"
+ },
+ "q5_root_tithe_wait": [
+  "Sexton Wilm: Ada digs on the Wandering Wood. And the choirboy sleeps in the bell cellar. He hears the night."
+ ],
+ "q5_rope_fund": {
+  "if": {
+   "not_flag": "q5_rope_fund_asked"
+  },
+  "else": "q5_rope_fund_after",
+  "lines": [
+   "Collector Hesk: Coin for the Rope Fund? The basket rope frays. People fall. We want a new one.",
+   "Collector Hesk: Odd thing: the fund is full and the rope is still old. Can you find out where the money goes? I only collect."
+  ],
+  "action": "set_flag q5_rope_fund_asked"
+ },
+ "q5_rope_fund_after": {
+  "if": {
+   "flag": "q5_rope_fund_paid"
+  },
+  "else": "q5_rope_fund_reward",
+  "lines": [
+   "Collector Hesk: New rope next year. Or the year after. Ropes take time. So do I, with the money."
+  ]
+ },
+ "q5_rope_fund_agna_girl": {
+  "if": {
+   "not_flag": "q5_rope_fund_s1"
+  },
+  "else": "q5_rope_fund_agna_girl_after",
+  "lines": [
+   "Rope Girl Lisbet: A new basket rope? Nobody ordered one. Not this year, not last year.",
+   "Rope Girl Lisbet: The Reeve buys short lengths, though. Always short. Ask the divers what lands in the bog."
+  ],
+  "action": "set_flag q5_rope_fund_s1; quest_stage q5_rope_fund 1"
+ },
+ "q5_rope_fund_agna_girl_after": [
+  "Rope Girl Lisbet: Agna says a rope is only as strong as the man who pays for it."
+ ],
+ "q5_rope_fund_go": {
+  "if": {
+   "flag": "q5_rope_fund_reveal"
+  },
+  "else": "q5_rope_fund_reveal",
+  "lines": [
+   "Collector Hesk: The salvage man is on the Breathing Bog. Go. I'll count while you're gone."
+  ]
+ },
+ "q5_rope_fund_reveal": {
+  "if": {
+   "flag": "q5_rope_fund_s2"
+  },
+  "else": "q5_rope_fund_wait",
+  "lines": [
+   "Collector Hesk: Purses from the bottom of the bog, with the Reeve's mark? Oh no. Oh, the Reeve.",
+   "Collector Hesk: He pays the winch man to cut the rope short, then salvages the fallen. Rich people fall too. They fall with purses.",
+   "Collector Hesk: His salvage man waits on the bog tonight. Stop him. I'll keep the fund safe. Safe with me."
+  ],
+  "action": "set_flag q5_rope_fund_reveal; quest_stage q5_rope_fund 3"
+ },
+ "q5_rope_fund_reward": {
+  "if": {
+   "flag": "q5_rope_fund_done"
+  },
+  "else": "q5_rope_fund_go",
+  "lines": [
+   "Collector Hesk: You beat him? Good. The fund thanks you. Here's your share. A small share. Funds are expensive."
+  ],
+  "action": "set_flag q5_rope_fund_paid; give_item revival_leaf 2; quest_stage q5_rope_fund 4"
+ },
+ "q5_rope_fund_salvager": [
+  "Salvage Man Grubb: I'm off duty. Fall somewhere else."
+ ],
+ "q5_rope_fund_salvager_defeat": [
+  "Salvage Man Grubb: Fine. You win. Ask Hesk where the fund sleeps. Under his bed, with him.",
+  "Salvage Man Grubb: Nobody fixes the rope, friend. A broken rope is the best job on the moor."
+ ],
+ "q5_rope_fund_salvager_intro": [
+  "Salvage Man Grubb: Hesk sent you? Hesk sends me too. Hesk sends everyone. Hesk is the Reeve's nephew."
+ ],
+ "q5_rope_fund_ulla": {
+  "if": {
+   "not_flag": "q5_rope_fund_s2"
+  },
+  "else": "q5_rope_fund_ulla_after",
+  "lines": [
+   "Bog Diver Ulla: I bring up what falls from the basket. Boots, mostly. Then purses. Then the rest.",
+   "Bog Diver Ulla: Every purse has the Reeve's mark burned in, before the fall. Take one. Show your collector."
+  ],
+  "action": "set_flag q5_rope_fund_s2; quest_stage q5_rope_fund 2"
+ },
+ "q5_rope_fund_ulla_after": [
+  "Bog Diver Ulla: The bog breathes in, the bog breathes out. Sometimes it coughs up a dentist."
+ ],
+ "q5_rope_fund_wait": [
+  "Collector Hesk: Ask Agna in the Rope Loft. And the divers on the Breathing Bog see everything that falls."
+ ],
+ "q5_short_candle": {
+  "if": {
+   "not_flag": "q5_short_candle_asked"
+  },
+  "else": "q5_short_candle_reveal",
+  "lines": [
+   "Widow Aud: My boy's candle in the Hall of Names burns half as long as the others. Somebody trimmed it.",
+   "Widow Aud: A short candle is a short life. Find out who did it. Please. I have already bought the black dress."
+  ],
+  "action": "set_flag q5_short_candle_asked"
+ },
+ "q5_short_candle_aud_lit": {
+  "if": {
+   "not_flag": "q5_short_candle_paid"
+  },
+  "else": "q5_short_candle_aud_lit_after",
+  "lines": [
+   "You take Aud's purse. Inside: three tonics and the receipt for a coffin, one size too small."
+  ],
+  "action": "set_flag q5_short_candle_paid; give_item max_tonic 3; quest_stage q5_short_candle 4"
+ },
+ "q5_short_candle_aud_lit_after": [
+  "Widow Aud: My boy left on the first raft. Alive. I will never forgive him."
+ ],
+ "q5_short_candle_aud_lit_defeat": [
+  "Widow Aud: Out. Blown out. That never happens to me.",
+  "Widow Aud: Fine. Take the candle. Take the dress, too. It's very slimming."
+ ],
+ "q5_short_candle_aud_lit_intro": [
+  "Widow Aud: Hold still. Candles burn straighter when the person does."
+ ],
+ "q5_short_candle_fenn": {
+  "if": {
+   "not_flag": "q5_short_candle_s2"
+  },
+  "else": "q5_short_candle_fenn_after",
+  "lines": [
+   "Ledger Boy Fenn: The order for the short candle? Here. Signed and paid in advance.",
+   "Ledger Boy Fenn: Signed 'Aud, loving mother'. She paid extra for the loving."
+  ],
+  "action": "set_flag q5_short_candle_s2; quest_stage q5_short_candle 2"
+ },
+ "q5_short_candle_fenn_after": [
+  "Ledger Boy Fenn: I have the orders for half the town. Including yours. Don't ask. It's very short."
+ ],
+ "q5_short_candle_pell": {
+  "if": {
+   "not_flag": "q5_short_candle_s1"
+  },
+  "else": "q5_short_candle_pell_after",
+  "lines": [
+   "Wick Trimmer Pell: Trim orders? They come in sealed. I cut where the wax tells me.",
+   "Wick Trimmer Pell: The ledger boy in the Hall of Names files them. He reads everything. Nobody tells him to stop."
+  ],
+  "action": "set_flag q5_short_candle_s1; quest_stage q5_short_candle 1"
+ },
+ "q5_short_candle_pell_after": [
+  "Wick Trimmer Pell: Snip. Another year gone. Not mine, so I don't mind."
+ ],
+ "q5_short_candle_reveal": {
+  "if": {
+   "flag": "q5_short_candle_s2"
+  },
+  "else": "q5_short_candle_wait",
+  "lines": [
+   "Widow Aud: The order is in my hand? Well. It is a very neat hand.",
+   "Widow Aud: Short candle, short funeral, short bill. He was going to leave anyway. I just wanted to pick the date.",
+   "Widow Aud: And you know now. I have a second candle in my pocket. Unlit. It has your name on it."
+  ],
+  "action": "set_flag q5_short_candle_reveal; quest_stage q5_short_candle 3"
+ },
+ "q5_short_candle_wait": [
+  "Widow Aud: The wick trimmers work out on the Candle Causeway. Ask them who signs the orders."
+ ],
  "raft_rift_acolyte": [
   "Joran: Corran pays me to tell the town where it will be. I am wrong on purpose. He pays more for that."
  ],
