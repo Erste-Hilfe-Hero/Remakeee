@@ -231,8 +231,8 @@
    },
    {
     "id": "mourner_3",
-    "x": 1,
-    "y": 17,
+    "x": 9,
+    "y": 15,
     "facing": "down",
     "dialogue": "corvane_side/mourner_3",
     "sprite": "villager"
