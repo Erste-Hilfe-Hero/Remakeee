@@ -1,0 +1,132 @@
+{
+ "name": "Bloom Rift",
+ "region": "quivermoor",
+ "biome": "rift",
+ "backdrop": "field",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^........^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^..........^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "lastbloom",
+   "tx": 10,
+   "ty": 8,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "lastbloom",
+   "tx": 10,
+   "ty": 9,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "petal_keeper",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "bloom_rift/petal_keeper",
+   "sprite": "warden",
+   "trainer": "Petal Keeper Rosamund",
+   "intro": "bloom_rift/petal_keeper_intro",
+   "defeat": "bloom_rift/petal_keeper_defeat",
+   "money": 6250,
+   "team": [
+    {
+     "species": "Sablarch",
+     "level": 95
+    },
+    {
+     "species": "Fumeregent",
+     "level": 95
+    }
+   ]
+  },
+  {
+   "id": "warden_sabeline",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "bloom_rift/sabeline",
+   "sprite": "warden",
+   "trainer": "Warden Sabeline",
+   "warden": "v5_bloom",
+   "team": [
+    {
+     "species": "Sablarch",
+     "level": 95
+    },
+    {
+     "species": "Fumeregent",
+     "level": 95
+    },
+    {
+     "species": "Rookwarden",
+     "level": 95
+    },
+    {
+     "species": "Woadcastle",
+     "level": 96
+    },
+    {
+     "species": "Velverain",
+     "level": 96
+    }
+   ],
+   "intro": "bloom_rift/sabeline_intro",
+   "defeat": "bloom_rift/sabeline_defeat",
+   "ai": 2,
+   "money": 12500
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "bloom_rift/spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "bloom_rift/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v5_bloom_sealed",
+   "closed": "@"
+  }
+ ]
+}

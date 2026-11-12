@@ -1,0 +1,128 @@
+{
+ "name": "Chapel Rift",
+ "region": "quivermoor",
+ "biome": "rift",
+ "backdrop": "voice",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^........^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^..........^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "rootchapel",
+   "tx": 1,
+   "ty": 8,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "rootchapel",
+   "tx": 1,
+   "ty": 9,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "root_deacon",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "chapel_rift/root_deacon",
+   "sprite": "warden",
+   "trainer": "Root Deacon Hollis",
+   "intro": "chapel_rift/root_deacon_intro",
+   "defeat": "chapel_rift/root_deacon_defeat",
+   "money": 4600,
+   "team": [
+    {
+     "species": "Peatmonarch",
+     "level": 93
+    },
+    {
+     "species": "Fenwarden",
+     "level": 93
+    }
+   ]
+  },
+  {
+   "id": "warden_ossian",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "chapel_rift/ossian",
+   "sprite": "warden",
+   "trainer": "Warden Ossian",
+   "warden": "v5_chapel",
+   "team": [
+    {
+     "species": "Peatmonarch",
+     "level": 93
+    },
+    {
+     "species": "Fenwarden",
+     "level": 93
+    },
+    {
+     "species": "Woadcastle",
+     "level": 94
+    },
+    {
+     "species": "Rushstalker",
+     "level": 94
+    }
+   ],
+   "intro": "chapel_rift/ossian_intro",
+   "defeat": "chapel_rift/ossian_defeat",
+   "ai": 2,
+   "money": 9200
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "chapel_rift/spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "chapel_rift/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v5_chapel_sealed",
+   "closed": "@"
+  }
+ ]
+}

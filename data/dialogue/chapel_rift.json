@@ -1,0 +1,42 @@
+{
+ "spring": {
+  "lines": [
+   "Black water wells up through the peat. It is warm, like something breathed into it.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "sign": [
+  "CHAPEL RIFT",
+  "Under the chapel the roots drink from a Rift. Ossian calls it communion."
+ ],
+ "root_deacon": [
+  "Hollis: The roots eat on Tuesdays. Today is Tuesday. I checked twice."
+ ],
+ "root_deacon_intro": [
+  "Hollis: Kneel. It's easier for the roots if you're already low."
+ ],
+ "root_deacon_defeat": [
+  "Hollis: The roots will wait. They always wait."
+ ],
+ "ossian": {
+  "lines": [
+   "The moor is hungry, child. I only set the table. You came at dinner time."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_v5_chapel_sealed",
+    "lines": [
+     "Ossian: The roots have let go of the altar. They'll grow hungry. I'll grow thin. You've ruined a good sermon.",
+     "Ossian: Nell brought you here. I paid her in candles. She said it wasn't personal. Nothing on the moor is personal. It's just dinner."
+    ]
+   }
+  ]
+ },
+ "ossian_intro": [
+  "The moor is hungry, child. I only set the table. You came at dinner time."
+ ],
+ "ossian_defeat": [
+  "The roots will forgive you. I will not. Go with their blessing, they never ask mine."
+ ]
+}

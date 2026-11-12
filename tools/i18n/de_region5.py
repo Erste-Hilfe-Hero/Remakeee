@@ -21,7 +21,7 @@ T = {
 "The Raft Market": "Der Floßmarkt",
 "Stalls lashed together on rafts. By noon they have drifted apart. Pay first: your seller may be in another town before you count your change.": "Stände, auf Flößen zusammengezurrt. Bis Mittag sind sie auseinandergetrieben. Zahl zuerst: Dein Verkäufer ist vielleicht in einer anderen Stadt, bevor du dein Wechselgeld gezählt hast.",
 "Wick Rift": "Dochtriss",
-"Root Rift": "Wurzelriss",
+"Chapel Rift": "Kapellenriss",
 "Raft Rift": "Floßriss",
 "Bloom Rift": "Blütenriss",
 "I lit a candle for you this morning. Do not thank me. I lit it early so the wax would be ready for the next one.": "Ich habe heute Morgen eine Kerze für dich angezündet. Dank mir nicht. Ich habe sie früh angezündet, damit das Wachs für die nächste bereit ist.",

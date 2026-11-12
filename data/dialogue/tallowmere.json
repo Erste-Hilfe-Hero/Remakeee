@@ -1,0 +1,34 @@
+{
+ "sign": [
+  "TALLOWMERE",
+  "Seat of the Tallow Choir. A candle for every soul the moor takes. Prices on request.",
+  "West: the Breathing Bog. East: Candle Causeway. North: the Wick Rift. The Choir Loft: the waxed door."
+ ],
+ "keeper": {
+  "lines": [
+   "Chandler Nurse Ysolde: Rest by the wax. It keeps you warm, and it keeps count."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Choir Clerk Tibb: Tonics and tapers. A taper with your name on it is half price if you buy it before you need it."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
+ },
+ "aldous": {
+  "lines": [
+   "Wick Trimmer Aldous: I trim the wicks so the candles last. The Choir docks my pay for every one that lasts too long."
+  ]
+ },
+ "marisol": {
+  "lines": [
+   "Chorister Marisol: We sing one verse per candle. Some nights we are hoarse by supper."
+  ]
+ },
+ "grandam_ivy": {
+  "lines": [
+   "Grandam Ivy: My candle has been burning for sixty years. Maudrey keeps asking when I'm going to be polite and finish."
+  ]
+ }
+}

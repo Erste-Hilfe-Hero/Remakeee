@@ -1,0 +1,126 @@
+{
+ "name": "Hymnmarsh",
+ "region": "quivermoor",
+ "biome": "route",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "hymnmarsh",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^%%..__..,,^",
+  "^%%%.__.,,,^",
+  "^~~%....,~~^",
+  "^~~%%..,,~~^",
+  "^,,%%..,,%%^",
+  "^,,.....%%%^",
+  "^~~~~..~~~~^",
+  "^%%%%..,,,,^",
+  "^%%%...S,,,^",
+  "^~~......~~^",
+  "^~~~~..~~~~^",
+  "^,,,,..%%%%^",
+  "^,,,....%%%^",
+  "^~~~...~~~~^",
+  "^@@%%..%%@@^",
+  "^@.%%..%%.@^",
+  "^~~~~..~~~~^",
+  "^,,,....%%.^",
+  "^,,,....%%.^",
+  "^~~......L.^",
+  "^.....__.%%^",
+  "^.....__...^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 23,
+   "to": "rootchapel",
+   "tx": 10,
+   "ty": 8,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 23,
+   "to": "rootchapel",
+   "tx": 10,
+   "ty": 9,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "driftwick",
+   "tx": 1,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "driftwick",
+   "tx": 1,
+   "ty": 9,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "drowned_cantor",
+   "x": 6,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "hymnmarsh/drowned_cantor",
+   "sprite": "villager",
+   "trainer": "Cantor Wystan",
+   "intro": "hymnmarsh/drowned_cantor_intro",
+   "defeat": "hymnmarsh/drowned_cantor_defeat",
+   "money": 4800,
+   "team": [
+    {
+     "species": "Woadlet",
+     "level": 93
+    },
+    {
+     "species": "Drizzlet",
+     "level": 93
+    },
+    {
+     "species": "Padlet",
+     "level": 94
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 7,
+   "y": 9,
+   "dialogue": "hymnmarsh/sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 6,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_hymnmarsh_1"
+  },
+  {
+   "x": 11,
+   "y": 13,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_hymnmarsh_2"
+  },
+  {
+   "x": 11,
+   "y": 19,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_hymnmarsh_3"
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "spring": {
+  "lines": [
+   "Black water wells up through the peat. It is warm, like something breathed into it.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "sign": [
+  "RAFT RIFT",
+  "Under Driftwick the bog spins slowly. The rafts follow it. So does everything that falls off them."
+ ],
+ "position_broker": [
+  "Lucan: I sell tomorrow's position of every raft. Corran sells me tomorrow's position of the town. Everyone profits except the people on it."
+ ],
+ "position_broker_intro": [
+  "Lucan: Your position tomorrow: horizontal. Let me show you."
+ ],
+ "position_broker_defeat": [
+  "Lucan: I'll adjust the forecast."
+ ],
+ "corran": {
+  "lines": [
+   "Tomorrow's position of Driftwick costs a hundred. Yours, tonight, costs everything. Pick a raft."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_v5_raft_sealed",
+    "lines": [
+     "Corran: The bog has stopped spinning. Driftwick will stay put. Do you know what a town that stays put is worth? Nothing.",
+     "Corran: Ashby cut your anchor and bet against you. I took the other side of the bet. You're welcome."
+    ]
+   }
+  ]
+ },
+ "corran_intro": [
+  "Tomorrow's position of Driftwick costs a hundred. Yours, tonight, costs everything. Pick a raft."
+ ],
+ "corran_defeat": [
+  "Fine, the Rift is yours. The town drifts on without it. I already sold where it lands."
+ ]
+}

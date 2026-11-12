@@ -1,0 +1,15 @@
+{
+ "sign": [
+  "CANDLE CAUSEWAY",
+  "Every post holds a candle for someone who walked off the edge. Keep to the light. The light is not keen on company."
+ ],
+ "lamplighter": [
+  "Agnes: I light the posts at dusk. One of them is new every week. I don't ask. The Choir sends the name."
+ ],
+ "lamplighter_intro": [
+  "Agnes: There's a fresh post at the end with no name yet. Let's see if it's yours."
+ ],
+ "lamplighter_defeat": [
+  "Agnes: Not yours. Not today. I'll keep it dry."
+ ]
+}

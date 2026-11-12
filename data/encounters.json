@@ -2771,5 +2771,161 @@
     "ground": "reeds"
    }
   ]
+ },
+ "breathing_bog": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Peatlet",
+    "min": 89,
+    "max": 92,
+    "weight": 45,
+    "ground": "reeds"
+   },
+   {
+    "species": "Gloomgill",
+    "min": 89,
+    "max": 92,
+    "weight": 35,
+    "ground": "reeds"
+   },
+   {
+    "species": "Bogwick",
+    "min": 89,
+    "max": 92,
+    "weight": 20,
+    "ground": "fern"
+   }
+  ]
+ },
+ "wandering_wood": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Morelit",
+    "min": 90,
+    "max": 93,
+    "weight": 45,
+    "ground": "fern"
+   },
+   {
+    "species": "Rushkit",
+    "min": 90,
+    "max": 93,
+    "weight": 35,
+    "ground": "fern"
+   },
+   {
+    "species": "Rookit",
+    "min": 90,
+    "max": 93,
+    "weight": 20,
+    "ground": "scree"
+   }
+  ]
+ },
+ "candle_causeway": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Velvit",
+    "min": 91,
+    "max": 94,
+    "weight": 45,
+    "ground": "reeds"
+   },
+   {
+    "species": "Puddock",
+    "min": 91,
+    "max": 94,
+    "weight": 35,
+    "ground": "scree"
+   },
+   {
+    "species": "Glimmoth",
+    "min": 91,
+    "max": 94,
+    "weight": 20,
+    "ground": "reeds"
+   }
+  ]
+ },
+ "hymnmarsh": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Woadlet",
+    "min": 92,
+    "max": 95,
+    "weight": 45,
+    "ground": "reeds"
+   },
+   {
+    "species": "Drizzlet",
+    "min": 92,
+    "max": 95,
+    "weight": 35,
+    "ground": "reeds"
+   },
+   {
+    "species": "Padlet",
+    "min": 92,
+    "max": 95,
+    "weight": 20,
+    "ground": "fern"
+   }
+  ]
+ },
+ "heaving_fields": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Silthop",
+    "min": 93,
+    "max": 96,
+    "weight": 45,
+    "ground": "fern"
+   },
+   {
+    "species": "Nimbub",
+    "min": 93,
+    "max": 96,
+    "weight": 35,
+    "ground": "fern"
+   },
+   {
+    "species": "Rushprowl",
+    "min": 93,
+    "max": 96,
+    "weight": 20,
+    "ground": "reeds"
+   }
+  ]
+ },
+ "gloamwater": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Sablet",
+    "min": 93,
+    "max": 96,
+    "weight": 45,
+    "ground": "reeds"
+   },
+   {
+    "species": "Diplit",
+    "min": 93,
+    "max": 96,
+    "weight": 35,
+    "ground": "fern"
+   },
+   {
+    "species": "Dusktern",
+    "min": 93,
+    "max": 96,
+    "weight": 20,
+    "ground": "reeds"
+   }
+  ]
  }
 }

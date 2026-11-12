@@ -1,0 +1,34 @@
+{
+ "sign": [
+  "DRIFTWICK",
+  "A town on rafts. Where it stands tomorrow depends on the bog and on who paid Corran.",
+  "North: Candle Causeway. West: Hymnmarsh. East: the Heaving Fields. South: the Raft Rift. The Raft Market: the tarred door."
+ ],
+ "keeper": {
+  "lines": [
+   "Raft Nurse Odile: Sleep on deck. If you wake up somewhere new, that's normal. If you wake up in the water, that's Corran."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Ropewright Jory: Tonics, tar and rope. Buy rope. Everyone here ends up needing rope or being tied with it."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
+ },
+ "kit": {
+  "lines": [
+   "Pole Boy Kit: I push the rafts apart at dawn so the neighbours don't fight. Then I sell them each other's addresses."
+  ]
+ },
+ "rowena": {
+  "lines": [
+   "Widow Rowena: My husband sold the morning position to two buyers. Driftwick split in half that night. So did he."
+  ]
+ },
+ "skipper_hale": {
+  "lines": [
+   "Skipper Hale: Sixty years afloat and I've never seen the same sunrise twice. Some of them I've seen from underneath."
+  ]
+ }
+}

@@ -1,0 +1,128 @@
+{
+ "name": "Wick Rift",
+ "region": "quivermoor",
+ "biome": "rift",
+ "backdrop": "ember",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^........^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^..........^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "tallowmere",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "tallowmere",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "taper_clerk",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "wick_rift/taper_clerk",
+   "sprite": "warden",
+   "trainer": "Taper Clerk Odette",
+   "intro": "wick_rift/taper_clerk_intro",
+   "defeat": "wick_rift/taper_clerk_defeat",
+   "money": 4300,
+   "team": [
+    {
+     "species": "Sootharrow",
+     "level": 92
+    },
+    {
+     "species": "Glazeldrake",
+     "level": 92
+    }
+   ]
+  },
+  {
+   "id": "warden_maudrey",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "wick_rift/maudrey",
+   "sprite": "warden",
+   "trainer": "Warden Maudrey",
+   "warden": "v5_wick",
+   "team": [
+    {
+     "species": "Sootharrow",
+     "level": 92
+    },
+    {
+     "species": "Glazeldrake",
+     "level": 92
+    },
+    {
+     "species": "Ardenthal",
+     "level": 93
+    },
+    {
+     "species": "Duskmirrah",
+     "level": 93
+    }
+   ],
+   "intro": "wick_rift/maudrey_intro",
+   "defeat": "wick_rift/maudrey_defeat",
+   "ai": 2,
+   "money": 8600
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "wick_rift/spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "wick_rift/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v5_wick_sealed",
+   "closed": "@"
+  }
+ ]
+}

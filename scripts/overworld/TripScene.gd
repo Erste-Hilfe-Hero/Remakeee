@@ -60,7 +60,7 @@ func _draw() -> void:
 	draw_rect(Rect2(0, 0, size.x, size.y), UITheme.INK)
 	draw_rect(Rect2(0, top, size.x, STRIP_H), UITheme.BG)
 	var x: float = vehicle_x()
-	if kind == "coach" or kind == "rail":
+	if kind == "coach" or kind == "rail" or kind == "rope":
 		_draw_coach(x, top + STRIP_H - 14.0)
 	else:
 		_draw_boat(x, top + STRIP_H - 22.0)

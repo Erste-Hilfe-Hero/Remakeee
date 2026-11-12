@@ -31,8 +31,9 @@ func test_places_cover_the_layout_grid() -> void:
 	assert_eq(WorldAtlas.grid_cell("corvane_quay"), Vector2i(8, 4), "Corvane right of Veydal")
 	assert_eq(WorldAtlas.place_at(Vector2i(3, 4)), "brindlewick")
 	var size: Vector2i = WorldAtlas.grid_size()
-	assert_eq(size, Vector2i(36, 7), "Solenne right of Ashmere, Vellmarch right of Solenne, Halcyra right of Vellmarch")
+	assert_eq(size, Vector2i(44, 7), "Solenne right of Ashmere, Vellmarch right of Solenne, Halcyra right of Vellmarch, Quivermoor right of Halcyra")
 	assert_eq(WorldAtlas.grid_cell("brightledge"), Vector2i(29, 4), "Halcyra right of Vellmarch")
+	assert_eq(WorldAtlas.grid_cell("mossgate"), Vector2i(37, 2), "Quivermoor right of Halcyra")
 
 func test_unknown_sighted_visited() -> void:
 	# Item 1244.

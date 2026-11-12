@@ -1,0 +1,15 @@
+{
+ "sign": [
+  "GLOAMWATER",
+  "No bottom has been found. Three surveyors went looking. The water kept their notes."
+ ],
+ "surveyor": [
+  "Mordaunt: Fourth surveyor sent to find the bottom. The first three left me their rope. It was short."
+ ],
+ "surveyor_intro": [
+  "Mordaunt: You look heavy enough to sound the depth. Hold still."
+ ],
+ "surveyor_defeat": [
+  "Mordaunt: Fine. I'll write 'deep' and go home."
+ ]
+}

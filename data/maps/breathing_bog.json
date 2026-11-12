@@ -1,0 +1,126 @@
+{
+ "name": "The Breathing Bog",
+ "region": "quivermoor",
+ "biome": "route",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "breathing_bog",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^%%..__..%%^",
+  "^%%..__..%%^",
+  "^~~~....~~~^",
+  "^~~%%..%%~~^",
+  "^,,%%..%%,,^",
+  "^,,......,,^",
+  "^~~~..~~~~~^",
+  "^%%%..%%%..^",
+  "^%%%..%%%..^",
+  "^.....S....^",
+  "^~~~~~..~~~^",
+  "^,,....,,,.^",
+  "^,,....,,,.^",
+  "^%%~~..~~%%^",
+  "^%%~~..~~%%^",
+  "^..........^",
+  "^~~..~~~~~~^",
+  "^%%..%%%%..^",
+  "^%%..%%%%..^",
+  "^.......L..^",
+  "^,,...__.,,^",
+  "^.....__...^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 23,
+   "to": "mossgate",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 23,
+   "to": "mossgate",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "tallowmere",
+   "tx": 1,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "tallowmere",
+   "tx": 1,
+   "ty": 9,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "peat_cutter",
+   "x": 6,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "breathing_bog/peat_cutter",
+   "sprite": "villager",
+   "trainer": "Peat Cutter Brannagh",
+   "intro": "breathing_bog/peat_cutter_intro",
+   "defeat": "breathing_bog/peat_cutter_defeat",
+   "money": 4200,
+   "team": [
+    {
+     "species": "Peatlet",
+     "level": 90
+    },
+    {
+     "species": "Gloomgill",
+     "level": 90
+    },
+    {
+     "species": "Bogwick",
+     "level": 91
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 6,
+   "y": 10,
+   "dialogue": "breathing_bog/sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 6,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_breathing_bog_1"
+  },
+  {
+   "x": 11,
+   "y": 9,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_breathing_bog_2"
+  },
+  {
+   "x": 11,
+   "y": 16,
+   "item": "strong_tonic",
+   "count": 2,
+   "flag": "find_breathing_bog_3"
+  }
+ ]
+}

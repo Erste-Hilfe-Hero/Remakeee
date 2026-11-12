@@ -154,6 +154,15 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "winch",
+   "x": 9,
+   "y": 14,
+   "facing": "left",
+   "dialogue": "whitecairn/winch",
+   "sprite": "villager",
+   "show_flag": "era4_finale_done"
   }
  ],
  "signs": [

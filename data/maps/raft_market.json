@@ -1,0 +1,76 @@
+{
+ "name": "The Raft Market",
+ "region": "quivermoor",
+ "biome": "town",
+ "backdrop": "lake",
+ "outdoor": true,
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^++++~~++++^",
+  "^+..+~~+..+^",
+  "^+S.+~~+.S+^",
+  "^++++++++++^",
+  "^~~~~++~~~~^",
+  "^++++++++++^",
+  "^+..+~~+..+^",
+  "^++++++++++^",
+  "^~~~~++~~~~^",
+  "_+++++++++.^",
+  "^^^^^^^^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 0,
+   "y": 10,
+   "to": "driftwick",
+   "tx": 9,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "hawker",
+   "x": 6,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "raft_market/hawker",
+   "sprite": "villager"
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 3,
+   "dialogue": "raft_market/plaque"
+  },
+  {
+   "x": 9,
+   "y": 3,
+   "dialogue": "raft_market/scales"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 2,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_raft_market_1"
+  },
+  {
+   "x": 0,
+   "y": 7,
+   "item": "guard_brew",
+   "count": 1,
+   "flag": "find_raft_market_2"
+  },
+  {
+   "x": 11,
+   "y": 7,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_raft_market_3"
+  }
+ ]
+}

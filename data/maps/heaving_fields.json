@@ -1,0 +1,126 @@
+{
+ "name": "The Heaving Fields",
+ "region": "quivermoor",
+ "biome": "route",
+ "backdrop": "field",
+ "outdoor": true,
+ "encounters": "heaving_fields",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^,,..__..,,^",
+  "^,,,.__.,,,^",
+  "^@@,....,@@^",
+  "^,,,,..,,,,^",
+  "^,,@....@,,^",
+  "^.........,^",
+  "^@@@@..@@@@^",
+  "^%%,,..,,%%^",
+  "^%%,,..S,%%^",
+  "^.........,^",
+  "^@@@..@@@@@^",
+  "^,,,..,,,,,^",
+  "^,,,..,,@,,^",
+  "^@@@@..@@@@^",
+  "^%%,....,%%^",
+  "^%%,....,%%^",
+  "^@@,..,,@@@^",
+  "^,,,..,,,,,^",
+  "^,,@..@,,,.^",
+  "^.......L..^",
+  "^,,...__.,,^",
+  "^.....__...^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 23,
+   "to": "driftwick",
+   "tx": 10,
+   "ty": 8,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 23,
+   "to": "driftwick",
+   "tx": 10,
+   "ty": 9,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "lastbloom",
+   "tx": 5,
+   "ty": 1,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "lastbloom",
+   "tx": 6,
+   "ty": 1,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "hummock_herd",
+   "x": 6,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "heaving_fields/hummock_herd",
+   "sprite": "villager",
+   "trainer": "Hummock Herder Isolde",
+   "intro": "heaving_fields/hummock_herd_intro",
+   "defeat": "heaving_fields/hummock_herd_defeat",
+   "money": 5000,
+   "team": [
+    {
+     "species": "Silthop",
+     "level": 94
+    },
+    {
+     "species": "Nimbub",
+     "level": 94
+    },
+    {
+     "species": "Rushprowl",
+     "level": 95
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 7,
+   "y": 9,
+   "dialogue": "heaving_fields/sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 6,
+   "item": "power_brew",
+   "count": 1,
+   "flag": "find_heaving_fields_1"
+  },
+  {
+   "x": 11,
+   "y": 12,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_heaving_fields_2"
+  },
+  {
+   "x": 11,
+   "y": 19,
+   "item": "strong_tonic",
+   "count": 2,
+   "flag": "find_heaving_fields_3"
+  }
+ ]
+}

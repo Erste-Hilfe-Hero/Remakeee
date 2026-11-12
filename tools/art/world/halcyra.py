@@ -321,7 +321,13 @@ def paleshore_extra(world, m):
 
 
 def whitecairn_extra(world, m):
-    pass
+    # The winch at the edge lowers baskets to Quivermoor (data/region5.json) after Halcyra's finale.
+    mid = "whitecairn"
+    world.add_text(mid, {
+        "winch": {"lines": lines(("Winch Man Dobbs: The basket goes down to Quivermoor. Priced by the metre. The last few metres are free, the bog takes them off my hands.", "Windenmann Dobbs: Der Korb fährt hinunter nach Quivermoor. Abgerechnet pro Meter. Die letzten paar Meter sind gratis, die nimmt mir das Moor ab.")),
+                  "action": "transit quivermoor_rope"},
+    })
+    m["npcs"].append(npc("winch", 9, 14, "left", mid + "/winch", "villager", show_flag="era4_finale_done"))
 
 
 EXTRA = {"brightledge": brightledge_extra, "gildcrest": gildcrest_extra, "starwell": starwell_extra,

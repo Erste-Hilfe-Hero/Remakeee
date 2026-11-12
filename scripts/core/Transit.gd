@@ -2,7 +2,7 @@ class_name Transit
 extends RefCounted
 ## Boat and coach routes (area 3 items 1187-1191, 1289): the Lake Line, the Valley Coach and the
 ## ferry to Corvane. The routes live in data/world_layout.json under "lines":
-##   {"<line>": {"name", "kind": "boat" | "coach" | "ferry" | "rail", "story": bool,
+##   {"<line>": {"name", "kind": "boat" | "coach" | "ferry" | "rail" | "rope", "story": bool,
 ##               "open_flag": "<flag>"?, "stops": {"<map>": [x, y, facing]}}}
 ## A stop opens once the player has reached its map on foot (item 1190): arriving there sets the
 ## flag "stop_<map>". A rest spot already used there counts as well, for saves from before the
@@ -13,7 +13,7 @@ extends RefCounted
 ## and to none before.
 
 const LAYOUT_PATH: String = "res://data/world_layout.json"
-const KINDS: Array[String] = ["boat", "coach", "ferry", "rail"]
+const KINDS: Array[String] = ["boat", "coach", "ferry", "rail", "rope"]
 
 static var _cache: Dictionary = {}
 
@@ -76,6 +76,8 @@ static func trip_line(kind: String, place: String) -> String:
 			return Loc.t("The ferry crosses the grey lake to %s.") % place
 		"rail":
 			return Loc.t("The mountain railway climbs through the clouds to %s.") % place
+		"rope":
+			return Loc.t("The basket creaks down the rope to %s.") % place
 	return Loc.t("The boat rows across the lake to %s.") % place
 
 ## What the boatman or the driver says when no other stop is open yet.

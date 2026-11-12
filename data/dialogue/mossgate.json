@@ -1,0 +1,81 @@
+{
+ "sign": [
+  "MOSSGATE",
+  "Bottom of the rope. Welcome to Quivermoor. The ground is breathing. Do not hold your breath with it.",
+  "North: the Breathing Bog to Tallowmere. South: the Wandering Wood to Rootchapel."
+ ],
+ "keeper": {
+  "lines": [
+   "Moss Nurse Hedda: Lie down. The moss is soft and warm. That is how it gets you, but not tonight."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Peddler Osric Fane: Tonics, rope, candles. The candles are cheap. Having one lit for you costs more."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
+ },
+ "wilmot": {
+  "lines": [
+   "Bog Cutter Wilmot: I cut peat for the fires. Last week the peat had a ring in it. Still on the finger."
+  ]
+ },
+ "prue": {
+  "lines": [
+   "Moss Girl Prue: The gate has no wall because the moss ate it. It's still hungry. I feed it gossip."
+  ]
+ },
+ "old_cobb": {
+  "lines": [
+   "Old Cobb: I came down that rope forty years ago. I'm still waiting for my change."
+  ]
+ },
+ "ashby": {
+  "lines": [
+   "Reeve Bram Ashby of Mossgate hires you to quiet the four Rifts that make the moor breathe. He pays in candles. Everyone here does.",
+   "Reeve Ashby: Four Rifts, four Wardens, one candle a day as wages. Sign the book. Everyone who comes down the rope signs the book."
+  ],
+  "action": "set_flag v5_ch1_done",
+  "after_flag": [
+   {
+    "flag": "v5_ch1_done",
+    "lines": [
+     "Reeve Ashby: Tallowmere first, up through the bog. The Wick Rift is behind the Choir. Mind the candles, one of them is yours.",
+     "The winch man cut the rope ten metres short to save the haul back up. He billed Halcyra for a Wayfarer lost to the bog. The bog was soft. His invoice was not."
+    ]
+   },
+   {
+    "flag": "rift_v5_wick_sealed",
+    "lines": [
+     "A candle with your name was lit the day you arrived. Maudrey sold its burn time to Reeve Ashby, who opened a book on how long you would last.",
+     "Reeve Ashby: A book on how long you would last? Business. You're doing well in it. Rootchapel next, Nell will pole you there."
+    ]
+   },
+   {
+    "flag": "rift_v5_chapel_sealed",
+    "lines": [
+     "Nell, your raft pilot and only friend on the moor, steered you to the chapel on Ossian's orders. The roots are fed on a schedule. You were the schedule.",
+     "Reeve Ashby: Nell? Shocking. Driftwick next. I'll come along. I have money riding on the trip."
+    ]
+   },
+   {
+    "flag": "rift_v5_raft_sealed",
+    "lines": [
+     "Ashby cut Driftwick's anchor lines with you aboard. Your candle was still burning and he had bet against it. He hates losing money more than he hates you.",
+     "Reeve Ashby: You're still alive. That cost me a fortune. Go to Lastbloom and lose there, I'm owed."
+    ]
+   }
+  ]
+ },
+ "winch": {
+  "lines": [
+   "Winch Hand Gorm: The rope goes up to Whitecairn. Up costs double. Gravity is on my side going down, not going up."
+  ],
+  "action": "transit quivermoor_rope"
+ },
+ "rope_sign": [
+  "THE ROPE",
+  "Baskets to Whitecairn. Mended weekly. Paid for occasionally."
+ ]
+}

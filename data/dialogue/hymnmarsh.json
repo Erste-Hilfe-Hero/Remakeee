@@ -1,0 +1,15 @@
+{
+ "sign": [
+  "HYMNMARSH",
+  "The old chapel sank here with the choir inside. On still nights they are still on the second verse."
+ ],
+ "drowned_cantor": [
+  "Wystan: My choir sank with the chapel. I stayed up here to conduct. They're flat on the high notes, but they never stop."
+ ],
+ "drowned_cantor_intro": [
+  "Wystan: You're off the beat. Let me correct you."
+ ],
+ "drowned_cantor_defeat": [
+  "Wystan: Better. You can join them when you're ready."
+ ]
+}

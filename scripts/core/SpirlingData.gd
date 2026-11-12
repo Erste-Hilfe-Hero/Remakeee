@@ -18,7 +18,7 @@ const STAT_TOTAL_BANDS: Dictionary[String, Vector2i] = {
 	"common": Vector2i(260, 470), "uncommon": Vector2i(260, 520),
 	"shy": Vector2i(260, 520), "ancient": Vector2i(520, 640),
 }
-const REGIONS: Array[String] = ["veydal", "corvane", "ashmere", "solenne", "quillmarch", "halcyra"]
+const REGIONS: Array[String] = ["veydal", "corvane", "ashmere", "solenne", "quillmarch", "halcyra", "quivermoor"]
 const ROLES: Array[String] = ["vanguard", "bulwark", "weaver", "striker", "kindler"]
 ## Unfold (unfurl) rules, see Spirling.unfold_ready().
 const UNFOLD_RULES: Array[String] = ["ring", "item", "map_pages", "mended", "time", "echo_streak"]

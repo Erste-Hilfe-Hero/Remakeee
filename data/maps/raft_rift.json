@@ -1,0 +1,128 @@
+{
+ "name": "Raft Rift",
+ "region": "quivermoor",
+ "biome": "rift",
+ "backdrop": "lake",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^........^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^..........^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "driftwick",
+   "tx": 5,
+   "ty": 18,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "driftwick",
+   "tx": 6,
+   "ty": 18,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "position_broker",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "raft_rift/position_broker",
+   "sprite": "warden",
+   "trainer": "Position Broker Lucan",
+   "intro": "raft_rift/position_broker_intro",
+   "defeat": "raft_rift/position_broker_defeat",
+   "money": 4950,
+   "team": [
+    {
+     "species": "Gloomgillith",
+     "level": 94
+    },
+    {
+     "species": "Dipmonarch",
+     "level": 94
+    }
+   ]
+  },
+  {
+   "id": "warden_corran",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "raft_rift/corran",
+   "sprite": "warden",
+   "trainer": "Warden Corran",
+   "warden": "v5_raft",
+   "team": [
+    {
+     "species": "Gloomgillith",
+     "level": 94
+    },
+    {
+     "species": "Dipmonarch",
+     "level": 94
+    },
+    {
+     "species": "Ripjoltane",
+     "level": 95
+    },
+    {
+     "species": "Weirmarshal",
+     "level": 95
+    }
+   ],
+   "intro": "raft_rift/corran_intro",
+   "defeat": "raft_rift/corran_defeat",
+   "ai": 2,
+   "money": 9900
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "raft_rift/spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "raft_rift/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v5_raft_sealed",
+   "closed": "@"
+  }
+ ]
+}

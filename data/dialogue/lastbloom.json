@@ -1,0 +1,36 @@
+{
+ "sign": [
+  "LASTBLOOM",
+  "Flowers for every occasion. Every occasion is a funeral.",
+  "North: the Heaving Fields. South: Gloamwater. East: the Bloom Rift."
+ ],
+ "keeper": {
+  "lines": [
+   "Florist Nurse Sabra: Rest among the blooms. Breathe deep. Don't ask what the scent is made of."
+  ],
+  "action": "heal"
+ },
+ "linnet": {
+  "lines": [
+   "Flower Seller Linnet: Red ones grow where soldiers sank, white ones where children did. The white ones sell better."
+  ]
+ },
+ "garth": {
+  "lines": [
+   "Gardener Garth: I don't plant anything. I just wait and pick. The moor does the planting."
+  ]
+ },
+ "mother_wren": {
+  "lines": [
+   "Mother Wren: Every spring I look for my son's flower. Every spring I buy one that looks like him."
+  ]
+ },
+ "nell": {
+  "lines": [
+   "The moor flowers over everything it swallowed. Warden Sabeline waits in the bloom with Ashby's betting book and an offer to split the winnings.",
+   "Nell Tallis: The bloom's over. The moor's asleep. Here's your lamp back. Don't look at what's left in the book, it's all crossed out.",
+   "Nell comes back with a lamp and an apology and leads you out of the bloom. At the edge she blows the lamp out. You find your own way home. She had sold the book twice already."
+  ],
+  "action": "set_flag quivermoor_done"
+ }
+}

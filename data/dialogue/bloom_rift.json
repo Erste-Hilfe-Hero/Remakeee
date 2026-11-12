@@ -1,0 +1,42 @@
+{
+ "spring": {
+  "lines": [
+   "Black water wells up through the peat. It is warm, like something breathed into it.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "sign": [
+  "BLOOM RIFT",
+  "Under Lastbloom the moor flowers into a Rift. Every petal is a name the bog remembers."
+ ],
+ "petal_keeper": [
+  "Rosamund: Sabeline has Ashby's book. Every page is a bet on someone's death. Half the bets are on her."
+ ],
+ "petal_keeper_intro": [
+  "Rosamund: Your petal is still closed. Let's open it."
+ ],
+ "petal_keeper_defeat": [
+  "Rosamund: Still closed. Stubborn bud."
+ ],
+ "sabeline": {
+  "lines": [
+   "Every flower here grew out of someone who trusted the wrong person. Pick one. I will tell you whose it was."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_v5_bloom_sealed",
+    "lines": [
+     "Sabeline: The bloom is closing. The book is yours. Burn it or bet with it, both are traditions here.",
+     "Sabeline: Nell is waiting in town with a lamp. Walk beside her, not behind her."
+    ]
+   }
+  ]
+ },
+ "sabeline_intro": [
+  "Every flower here grew out of someone who trusted the wrong person. Pick one. I will tell you whose it was."
+ ],
+ "sabeline_defeat": [
+  "Take the Rift. The bloom closes tonight. Whatever is still standing in it stays for next year."
+ ]
+}

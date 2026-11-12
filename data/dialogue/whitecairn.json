@@ -24,5 +24,11 @@
   "lines": [
    "Old Barnaby: I said no to the Gilt House once. They built me a cairn anyway. I'm saving it for later."
   ]
+ },
+ "winch": {
+  "lines": [
+   "Winch Man Dobbs: The basket goes down to Quivermoor. Priced by the metre. The last few metres are free, the bog takes them off my hands."
+  ],
+  "action": "transit quivermoor_rope"
  }
 }

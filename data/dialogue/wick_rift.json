@@ -1,0 +1,42 @@
+{
+ "spring": {
+  "lines": [
+   "Black water wells up through the peat. It is warm, like something breathed into it.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "sign": [
+  "WICK RIFT",
+  "Under the Choir the wax runs down into the dark. Something down there is counting the drips."
+ ],
+ "taper_clerk": [
+  "Odette: Maudrey keeps the ledger of candles. I keep the ledger of Maudrey. Mine is shorter and much more interesting."
+ ],
+ "taper_clerk_intro": [
+  "Odette: Your candle is on page nine. Let's see if we can turn the page."
+ ],
+ "taper_clerk_defeat": [
+  "Odette: Still lit. I'll note it in pencil."
+ ],
+ "maudrey": {
+  "lines": [
+   "I lit a candle for you this morning. Do not thank me. I lit it early so the wax would be ready for the next one."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_v5_wick_sealed",
+    "lines": [
+     "Maudrey: The wax has stopped running. The Choir will have to sing for real now, not for the dead. They'll hate it.",
+     "Maudrey: Your candle? Ashby bought its burn time. Ask him how long he thinks you've got. He's betting."
+    ]
+   }
+  ]
+ },
+ "maudrey_intro": [
+  "I lit a candle for you this morning. Do not thank me. I lit it early so the wax would be ready for the next one."
+ ],
+ "maudrey_defeat": [
+  "Still burning. How tiresome. I will have to sell the candle back to myself."
+ ]
+}

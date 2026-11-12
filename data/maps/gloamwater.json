@@ -1,0 +1,126 @@
+{
+ "name": "Gloamwater",
+ "region": "quivermoor",
+ "biome": "route",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "gloamwater",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^~~..__..~~^",
+  "^~%%.__.%%~^",
+  "^~%%....%%~^",
+  "^~~~,..,~~~^",
+  "^,,,,..,,,,^",
+  "^,,........^",
+  "^~~~~..~~~~^",
+  "^%%%%..%%%%^",
+  "^%%%...S%%%^",
+  "^~~......~~^",
+  "^~~~,..,~~~^",
+  "^,,,,..,,,,^",
+  "^,,......,,^",
+  "^~~~~..~~~~^",
+  "^%%%....%%%^",
+  "^%%%....%%%^",
+  "^~~~,..,~~~^",
+  "^,,,,..,,,.^",
+  "^,,,....,,.^",
+  "^~~.......L^",
+  "^.....__.%%^",
+  "^.....__...^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 23,
+   "to": "lastbloom",
+   "tx": 5,
+   "ty": 18,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 23,
+   "to": "lastbloom",
+   "tx": 6,
+   "ty": 18,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "rootchapel",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "rootchapel",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "surveyor",
+   "x": 6,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "gloamwater/surveyor",
+   "sprite": "villager",
+   "trainer": "Surveyor Mordaunt",
+   "intro": "gloamwater/surveyor_intro",
+   "defeat": "gloamwater/surveyor_defeat",
+   "money": 5200,
+   "team": [
+    {
+     "species": "Sablet",
+     "level": 94
+    },
+    {
+     "species": "Diplit",
+     "level": 94
+    },
+    {
+     "species": "Dusktern",
+     "level": 95
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 7,
+   "y": 9,
+   "dialogue": "gloamwater/sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 5,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_gloamwater_1"
+  },
+  {
+   "x": 11,
+   "y": 13,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_gloamwater_2"
+  },
+  {
+   "x": 11,
+   "y": 19,
+   "item": "guard_brew",
+   "count": 1,
+   "flag": "find_gloamwater_3"
+  }
+ ]
+}

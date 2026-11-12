@@ -1,0 +1,55 @@
+{
+ "name": "The Choir Loft",
+ "region": "quivermoor",
+ "biome": "town",
+ "backdrop": "voice",
+ "rows": [
+  "WWWWWWWWWWWW",
+  "WLLLLLLLLLLW",
+  "WffffffffffW",
+  "WfLffSffLffW",
+  "WffffffffffW",
+  "WfSLffffLSfW",
+  "WffffffffffW",
+  "WfLffffffLfW",
+  "WffffffffffW",
+  "WWWWWDWWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 9,
+   "to": "tallowmere",
+   "tx": 9,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "precentor",
+   "x": 6,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "choir_loft/precentor",
+   "sprite": "elder"
+  }
+ ],
+ "signs": [
+  {
+   "x": 5,
+   "y": 3,
+   "dialogue": "choir_loft/plaque"
+  },
+  {
+   "x": 2,
+   "y": 5,
+   "dialogue": "choir_loft/vat"
+  },
+  {
+   "x": 9,
+   "y": 5,
+   "dialogue": "choir_loft/your_candle"
+  }
+ ]
+}

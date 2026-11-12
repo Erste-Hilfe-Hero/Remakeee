@@ -1,0 +1,15 @@
+{
+ "sign": [
+  "WANDERING WOOD",
+  "This sign was at the other end of the wood yesterday. So was the wood."
+ ],
+ "oak_guide": [
+  "Fenwick: I sell maps of the wood. Fresh every morning. Yesterday's will walk you into a pond."
+ ],
+ "oak_guide_intro": [
+  "Fenwick: No map? Then you're lost. Lost people fight. That's the rule here."
+ ],
+ "oak_guide_defeat": [
+  "Fenwick: Take a map. On the house. It's from last week."
+ ]
+}

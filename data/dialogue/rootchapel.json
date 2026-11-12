@@ -1,0 +1,28 @@
+{
+ "sign": [
+  "ROOTCHAPEL",
+  "A chapel the roots grew around. Services daily. The roots attend every one.",
+  "North: the Wandering Wood. East: Hymnmarsh. South: Gloamwater. West: the Chapel Rift."
+ ],
+ "keeper": {
+  "lines": [
+   "Sexton Aubrey: Sleep in the pews. If a root curls round your ankle, do not kick. It only wants to know you."
+  ],
+  "action": "heal"
+ },
+ "thane": {
+  "lines": [
+   "Gravedigger Thane: Nobody gets buried here any more. The roots come up and fetch them first."
+  ]
+ },
+ "bess": {
+  "lines": [
+   "Altar Girl Bess: Ossian says the moor must be fed. He never says who's on the menu, only that it's not him."
+  ]
+ },
+ "father_lorne": {
+  "lines": [
+   "Father Lorne: I preached against the roots for thirty years. Now I water them. A man learns which side the pews are on."
+  ]
+ }
+}
