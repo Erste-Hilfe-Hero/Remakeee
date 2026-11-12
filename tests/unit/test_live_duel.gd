@@ -63,11 +63,12 @@ func test_a_whole_duel_with_simultaneous_rounds_emotes_and_rematch() -> void:
 	assert_eq(int(r.round), 2)
 	assert_eq(int(r.moves["1"][1].slot), 2)
 	assert_eq(int(r.emotes[0].emote), 2)
+	# The referee plays the kept rounds (point 3): one round of rests ends nothing, whatever a phone says.
 	assert_eq(_as("ben", "live_finish", {"p_id": id, "p_winner": 1}).state, "running")
-	r = _as("ann", "live_finish", {"p_id": id, "p_winner": 1})
+	assert_eq(_as("ann", "live_finish", {"p_id": id, "p_winner": 1}).error, "not_over")
+	r = _as("ben", "live_forfeit", {"p_id": id})
 	assert_eq(r.state, "done")
-	assert_eq(r.reason, "played")
-	assert_eq(int(r.winner), 1)
+	assert_eq(int(r.winner), 0)
 	assert_eq(LiveDuel.result_text(0, 1, "played"), "You lose.")
 	assert_true(bool(_as("ann", "live_rematch", {"p_id": id}).ok))
 
@@ -92,8 +93,9 @@ func test_timeouts_and_forfeit() -> void:
 
 func test_the_menu_texts() -> void:
 	assert_eq(LiveDuelMenu.actions({"state": "invited", "side": 1}), ["Accept", "Decline"] as Array[String])
-	assert_eq(LiveDuelMenu.actions({"state": "picking", "side": 0, "picked": [false, true]}), ["Pick 3", "Give up"] as Array[String])
-	assert_eq(LiveDuelMenu.actions({"state": "done", "side": 0}), ["Rematch", "Report the rival..."] as Array[String])
+	assert_eq(LiveDuelMenu.actions({"state": "picking", "side": 0, "picked": [false, true]}),
+		["Pick 3", "Take a borrowed Spirling along", "Give up"] as Array[String])
+	assert_eq(LiveDuelMenu.actions({"state": "done", "side": 0}), ["Rematch", "Save a result picture", "Report the rival..."] as Array[String])
 	var t: String = LiveDuelMenu.state_text({"state": "running", "side": 0, "round": 3, "deadline": 1020, "emotes": [{"side": 1, "emote": 0}]}, 1000)
 	assert_string_contains(t, "20 s")
 	assert_string_contains(t, "Hello!")

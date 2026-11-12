@@ -2,6 +2,10 @@
  "_comment": "fr translation of the region_looks table, keyed by the English text.",
  "strings": {
   "The ink goes grey here. Ashmere burned once and still smells like it owes you money.": "Ici l'encre devient grise. Ashmere a brûlé un jour et sent encore comme si elle te devait de l'argent.",
-  "The ink turns blue here. Corvane dyes everything, even the truth.": "Ici l'encre devient bleue. Corvane teint tout, même la vérité."
+  "The ink turns blue here. Corvane dyes everything, even the truth.": "Ici l'encre devient bleue. Corvane teint tout, même la vérité.",
+  "The ground breathes under your boots. In Quivermoor every Spirling moves, every path wanders and every friend has a price.": "Le sol respire sous tes bottes. À Quivermoor, chaque Spirling bouge, chaque chemin vagabonde et chaque ami a un prix.",
+  "The ink bleaches here. Solenne burns everything, even the lies. Especially the lies.": "L'encre pâlit ici. Solenne brûle tout, même les mensonges. Surtout les mensonges.",
+  "The lines grow sharp here. Quillmarch engraves everything, especially what you owe.": "Les traits deviennent nets ici. Quillmarch grave tout, surtout ce que tu dois.",
+  "The map unrolls past its own edge. Up here the light is gold, the stone is white and every smile is paid for.": "La carte se déroule au-delà de son propre bord. Là-haut, la lumière est d'or, la pierre est blanche et chaque sourire est payé."
  }
 }

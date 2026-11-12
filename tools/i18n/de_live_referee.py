@@ -1,0 +1,32 @@
+# German texts for the live duel in the battle screen, the referee for live duels, borrowed
+# Spirlings in duels and raids and the result picture (Online 100, points 1, 3, 45, 73, 76).
+T = {
+"The duel is not over yet.": "Das Duell ist noch nicht vorbei.",
+"That loan has ended.": "Diese Leihgabe ist beendet.",
+"You already used a borrowed Spirling here.": "Du hast hier schon ein geliehenes Spirling eingesetzt.",
+"Your last duel": "Dein letztes Duell",
+"Take a borrowed Spirling along": "Ein geliehenes Spirling mitnehmen",
+"Save a result picture": "Ergebnisbild speichern",
+"%s Ring %d (from %s)": "%s Ring %d (von %s)",
+"No friend has lent you a Spirling right now.": "Gerade hat dir kein Freund ein Spirling geliehen.",
+"It joins this one duel. After that the loan is used up.": "Es kommt in dieses eine Duell mit. Danach ist die Leihgabe verbraucht.",
+"Take a borrowed Spirling along? It joins this one attempt, then the loan is used up.": "Ein geliehenes Spirling mitnehmen? Es kommt in diesen einen Versuch mit, danach ist die Leihgabe verbraucht.",
+"Enter the duel": "Ins Duell gehen",
+"Without a borrowed Spirling": "Ohne geliehenes Spirling",
+"(borrowed)": "(geliehen)",
+"Close": "Schließen",
+"Menu": "Menü",
+"The referee checks the duel.": "Der Schiedsrichter prüft das Duell.",
+"Stop watching": "Nicht mehr zusehen",
+"Leave (the duel goes on)": "Verlassen (das Duell läuft weiter)",
+"Live duel": "Live-Duell",
+"Top: %s  Bottom: %s": "Oben: %s  Unten: %s",
+"No winner": "Kein Sieger",
+"%s beats %s": "%s besiegt %s",
+"Rounds: %d": "Runden: %d",
+"This battle cannot be shown any more.": "Dieser Kampf kann nicht mehr gezeigt werden.",
+"Could not save the picture.": "Das Bild konnte nicht gespeichert werden.",
+"The result picture is in your downloads.": "Das Ergebnisbild liegt in deinen Downloads.",
+"Result picture saved with your photos.": "Ergebnisbild bei deinen Fotos gespeichert.",
+}
+KEEP = []

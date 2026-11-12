@@ -31,6 +31,29 @@
    "Ferryman Ivo: There's been no water to ferry for twenty years. I still charge. Habit."
   ]
  },
+ "solveig": {
+  "lines": [
+   "Solveig: Father says the white line moved again last night. He says it like the line is coming for dinner."
+  ]
+ },
+ "jost": {
+  "lines": [
+   "Bath Attendant Jost: Soak as long as you like. The brine takes the ache out. It took my brother out entirely."
+  ],
+  "action": "heal"
+ },
+ "runa": {
+  "lines": [
+   "Exchange Clerk Runa: We trade in salt and tonics. Salt keeps things from going bad. It has not worked on Halloran."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear"
+ },
+ "almut": {
+  "lines": [
+   "Debt Scribe Almut: Every grain of salt is owed to somebody. I keep the book.",
+   "Debt Scribe Almut: The book is thicker than the lake was deep."
+  ]
+ },
  "digger": {
   "lines": [
    "Old Digger Hesper: Under the salt there is more salt. Under that, things people dropped while running. One dig a day, love. The ground sulks."

@@ -5,6 +5,8 @@ Ashmere never look alike even where their maps have the same shape.
   veydal  (heath and lake):  standing_stone, cairn, beacon, tide_post
   corvane (dye fens):        heron_post, drying_rack, sluice_wheel, dye_mill
   ashmere (ash and salt):    smelter_stack, bell_frame, salt_obelisk
+  vellmarch (canal towns):   customs_crane, great_candle, lock_wheel, masked_statue, last_lamp
+                             (one per town, so no two Vellmarch towns share a landmark)
 
 Each sprite is 16 x 32: the bottom tile stands on the landmark's (solid) map cell, the top
 tile reaches over the cell above. Drawn in 4 indices and saved in the act's own inks
@@ -249,10 +251,119 @@ def salt_obelisk(c: Canvas) -> None:
     shadow(c, 1, 14)
 
 
+# --- Vellmarch: quays, canals and candle smoke --------------------------------------------------
+def customs_crane(c: Canvas) -> None:
+    # A timber quay crane: mast, slanted jib, a chained crate hanging from it.
+    c.rect(4, 6, 3, 24, 2)
+    c.vline(6, 6, 29, 1)
+    for i in range(10):
+        c.set(5 + i, 6 - i // 2, 2)
+        c.set(5 + i, 7 - i // 2, 1)
+    for i in range(6):
+        c.set(7 + i, 12 - i, 1)
+    c.vline(13, 3, 15, 0)
+    c.rect(11, 16, 5, 5, 3)
+    c.hline(11, 15, 18, 1)
+    c.vline(13, 16, 20, 1)
+    c.rect(2, 27, 7, 3, 1)
+    c.hline(2, 8, 27, 3)
+    outline(c)
+    shadow(c, 1, 12)
+
+
+def great_candle(c: Canvas) -> None:
+    # A candle as thick as a man, wax run down one side, on a stone drum.
+    c.rect(5, 8, 6, 18, 3)
+    c.vline(10, 8, 25, 2)
+    c.vline(9, 10, 25, 2)
+    c.ascii(4, 8, ["3.....", "33....", "33....", "3.....", "3....."])
+    c.ascii(10, 9, [".3", ".3", "33", "3."])
+    c.vline(8, 5, 7, 0)
+    c.ascii(6, 0, ["..3..", ".323.", ".323.", "32223", ".323."])
+    c.rect(3, 26, 10, 4, 2)
+    c.hline(3, 12, 26, 3)
+    c.hline(3, 12, 29, 1)
+    outline(c)
+    shadow(c, 2, 13)
+
+
+def lock_wheel(c: Canvas) -> None:
+    # The wheel that opens a canal lock, on a post, a boat hook hung below.
+    cx, cy, r = 8, 9, 7
+    for y in range(H):
+        for x in range(W):
+            d = ((x + 0.5 - cx) ** 2 + (y + 0.5 - cy) ** 2) ** 0.5
+            if r - 1.6 <= d <= r:
+                c.set(x, y, 2)
+    for i in range(1, r - 1):
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            c.set(cx + dx * i, cy + dy * i, 1)
+    c.rect(7, 8, 3, 3, 3)
+    c.rect(7, 16, 3, 14, 2)
+    c.vline(9, 16, 29, 1)
+    c.ascii(11, 16, ["0..", "0..", "0.0", "000"])
+    c.rect(5, 28, 7, 2, 1)
+    outline(c)
+    shadow(c, 3, 12)
+
+
+def masked_statue(c: Canvas) -> None:
+    # A robed figure on a plinth holding a blank mask where its face should be.
+    c.ascii(4, 2, ["..0000..",
+                   ".033330.",
+                   "03033030",
+                   "03333330",
+                   ".033330.",
+                   "..0330.."])
+    c.ascii(3, 8, ["...22.....",
+                   "..2222....",
+                   ".222222...",
+                   ".2222221..",
+                   "22222221..",
+                   "22222221..",
+                   "222222211.",
+                   "222222211.",
+                   "222222211.",
+                   "2222222111",
+                   "2222222111",
+                   "2222222111"])
+    c.vline(6, 12, 19, 1)
+    c.rect(2, 20, 12, 3, 3)
+    c.rect(3, 23, 10, 7, 2)
+    c.vline(12, 23, 29, 1)
+    c.hline(5, 10, 26, 1)
+    outline(c)
+    shadow(c, 2, 13)
+
+
+def last_lamp(c: Canvas) -> None:
+    # A tall iron street lamp leaning over the marsh, its glass the only bright thing.
+    c.vline(7, 10, 29, 1)
+    c.vline(8, 10, 29, 2)
+    c.ascii(4, 1, ["...00...",
+                   "..0110..",
+                   ".011110.",
+                   "02333320",
+                   "02333320",
+                   "02333320",
+                   "02333320",
+                   ".022220.",
+                   "..0110.."])
+    c.hline(5, 10, 14, 1)
+    c.set(4, 15, 1)
+    c.set(11, 15, 1)
+    c.rect(5, 26, 6, 4, 1)
+    c.hline(5, 10, 26, 2)
+    outline(c)
+    shadow(c, 3, 12)
+
+
 KINDS = {
     "veydal": {"standing_stone": standing_stone, "cairn": cairn, "beacon": beacon, "tide_post": tide_post},
     "corvane": {"heron_post": heron_post, "drying_rack": drying_rack, "sluice_wheel": sluice_wheel, "dye_mill": dye_mill},
     "ashmere": {"smelter_stack": smelter_stack, "bell_frame": bell_frame, "salt_obelisk": salt_obelisk},
+    "vellmarch": {"customs_crane": customs_crane, "great_candle": great_candle, "lock_wheel": lock_wheel,
+                  "masked_statue": masked_statue, "last_lamp": last_lamp},
 }
 
 

@@ -1,0 +1,24 @@
+{
+ "_comment": "ja translation of the fan_reserve table, keyed by the English text.",
+ "strings": {
+  "%s answers your call and pads over to you. Dorran pretends not to notice.": "%sは呼び声にこたえて、とことこ寄ってくる。Dorranは気づかないふりをしている。",
+  "%s slips through a hole in the fence. The ring will patch that hole. Someday.": "%sは柵の穴からすり抜けた。あの穴はいずれふさがれる。いつかは。",
+  "%s tilts its head at your call, but stays put.": "%sは呼び声に首をかしげるが、その場を動かない。",
+  "A whistle from the lookout tower. A rival crew bursts out of the reeds and %s bolts. Somebody got paid tonight.": "見張り塔から口笛。アシの中から商売がたきの一団が飛び出し、%sは逃げ出した。今夜、だれかが金をもらった。",
+  "A wild %s, Ring %d. Sightings left: %d": "野の%s、リング%d。残りの遭遇：%d",
+  "A woman in a velvet coat leans on a fence that is not on any map.": "ビロードのコートの女が、どの地図にもない柵にもたれている。",
+  "Echo call (%d left)": "エコーの呼び声（残り%d）",
+  "Move on": "先へ進む",
+  "Pay %d coins to slip into the reserve?": "%dコイン払って保護区にしのびこむ？",
+  "Rattle the fence": "柵をゆらす",
+  "Set bait": "えさを置く",
+  "Velvet Dorran": "ビロードのDorran",
+  "Velvet Dorran: No coins? Then you were never here.": "ビロードのDorran: コインがない？なら、あんたはここに来なかった。",
+  "Velvet Dorran: No fighting in my yard. You set bait, you rattle the fence, you call. Then you leave and forget my face.": "ビロードのDorran: あたしの庭でけんかはなし。えさを置く、柵をゆらす、呼ぶ。そして出ていって、あたしの顔を忘れる。",
+  "Velvet Dorran: Time's up. Out you go, and the gate never saw you.": "ビロードのDorran: 時間切れ。出ていきな。門はあんたを見なかった。",
+  "Velvet Dorran: Welcome to Hollowgate Reserve. Totally legal. The fence is to keep the paperwork in.": "ビロードのDorran: Hollowgate保護区へようこそ。完全に合法だよ。柵は書類が逃げないようにあるのさ。",
+  "You rattle the fence. %s's ears shoot up: curious, and very jumpy.": "柵をゆらす。%sの耳がぴんと立つ。興味しんしんで、ひどくびくついている。",
+  "You set down a twist of dried bait. %s sniffs it and calms down.": "干したえさをひとつまみ置く。%sはにおいをかいで落ち着く。",
+  "the Quiet Hands": "静かな手"
+ }
+}

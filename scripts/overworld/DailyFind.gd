@@ -15,6 +15,26 @@ static func today_key() -> String:
 	var d: Dictionary = Online.date_now()
 	return "%04d-%02d-%02d" % [d.year, d.month, d.day]
 
+## Extra visits of the day with the Triple Find of the Day, one flag each (not "daily_find_", so
+## met() skips them).
+const EXTRA_FLAG: String = "dfx_%s_%d"
+
+## Extra visits already met on [param day].
+static func extra_visits(flags: Dictionary, day: String) -> int:
+	var n: int = 0
+	while bool(flags.get(EXTRA_FLAG % [day, n + 1], false)):
+		n += 1
+	return n
+
+## True when the visitor of a day after [param day] was met.
+static func met_later(flags: Dictionary, day: String) -> bool:
+	var own: String = flag_for(day)
+	for k: Variant in flags:
+		var key: String = str(k)
+		if key.begins_with("daily_find_") and key > own and bool(flags[k]):
+			return true
+	return false
+
 static func flag_for(day: String) -> String:
 	return "daily_find_%s" % day
 
@@ -57,7 +77,12 @@ static func maybe_spawn(table: String, flags: Dictionary, rng: RandomNumberGener
 	if day.is_empty():
 		day = today_key()
 	var p: Dictionary = pick(day)
-	if p.is_empty() or str(p.table) != table or met(flags, day):
+	if p.is_empty() or str(p.table) != table:
+		return null
+	# The shop's Triple Find of the Day (pay-to-win step 6, plan point 36): up to 3 visits a day,
+	# counted in EXTRA_FLAG, never after a later day's visitor (clock turned back).
+	var extra: bool = met(flags, day)
+	if extra and (extra_visits(flags, day) >= ShopEffects.daily_find_visits() - 1 or met_later(flags, day)):
 		return null
 	if rng.randf() >= CHANCE:
 		return null
@@ -68,6 +93,9 @@ static func maybe_spawn(table: String, flags: Dictionary, rng: RandomNumberGener
 	for key: String in s.spark:
 		s.spark[key] = maxi(s.spark[key], SPARK_FLOOR)
 	s.restore()
+	if extra:
+		flags[EXTRA_FLAG % [day, extra_visits(flags, day) + 1]] = true
+		return s
 	flags[flag_for(day)] = true
 	DailyTasks.record("daily_find", {"map": table})
 	return s

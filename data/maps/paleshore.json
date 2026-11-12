@@ -5,29 +5,29 @@
  "backdrop": "field",
  "outdoor": true,
  "heal_point": [
-  6,
-  9
+  7,
+  8
  ],
  "rows": [
   "^^^^^__^^^^^",
-  "^::..__..%%^",
-  "^.~~.__.~~.^",
-  "^.~~.__.~~.^",
+  "^~~~.__.RR.^",
+  "^~~~.__.HD.^",
+  "^~~~._____.^",
   "^....__....^",
-  "^.L..__..S.^",
+  "^.RRR__~~~.^",
+  "^.HDH__~~~.^",
+  "^.._.__o.S.^",
+  "____________",
+  "____________",
+  "^...L__....^",
+  "^~~~.__RRR.^",
+  "^~~~.__HDH.^",
+  "^~~~.____..^",
   "^....__....^",
-  "^...____...^",
-  "_____.o.____",
-  "_____...____",
-  "^...____...^",
-  "^....__....^",
-  "^.~~.__.~~.^",
-  "^....__....^",
-  "^....__....^",
-  "^~~~.__.~~~^",
-  "^%%..__..%%^",
-  "^::..__..L.^",
-  "^....__....^",
+  "^.RR.__~~~.^",
+  "^.HD.__~~~.^",
+  "^.._.__~~~.^",
+  "^..____...L^",
   "^^^^^__^^^^^"
  ],
  "warps": [
@@ -94,12 +94,44 @@
    "tx": 6,
    "ty": 22,
    "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 2,
+   "to": "paleshore_home_1",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 3,
+   "y": 6,
+   "to": "paleshore_spring",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 8,
+   "y": 12,
+   "to": "paleshore_shop",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 3,
+   "y": 16,
+   "to": "paleshore_home_2",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
   }
  ],
  "npcs": [
   {
    "id": "keeper",
-   "x": 7,
+   "x": 8,
    "y": 7,
    "facing": "down",
    "dialogue": "paleshore/keeper",
@@ -107,24 +139,24 @@
   },
   {
    "id": "trader",
-   "x": 3,
-   "y": 14,
+   "x": 8,
+   "y": 10,
    "facing": "down",
    "dialogue": "paleshore/trader",
    "sprite": "villager"
   },
   {
    "id": "bertil",
-   "x": 2,
-   "y": 6,
+   "x": 4,
+   "y": 4,
    "facing": "right",
    "dialogue": "paleshore/bertil",
    "sprite": "villager",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 5,
-     "y": 9,
+     "x": 6,
+     "y": 7,
      "facing": "right"
     },
     {
@@ -137,8 +169,8 @@
   },
   {
    "id": "maren",
-   "x": 9,
-   "y": 11,
+   "x": 10,
+   "y": 14,
    "facing": "left",
    "dialogue": "paleshore/maren",
    "sprite": "villager",
@@ -147,7 +179,7 @@
      "phase": "dusk",
      "x": 7,
      "y": 9,
-     "facing": "left"
+     "facing": "up"
     },
     {
      "phase": [
@@ -160,16 +192,16 @@
   {
    "id": "ivo",
    "x": 2,
-   "y": 18,
+   "y": 14,
    "facing": "right",
    "dialogue": "paleshore/ivo",
    "sprite": "elder",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 4,
-     "y": 7,
-     "facing": "right"
+     "x": 8,
+     "y": 9,
+     "facing": "left"
     },
     {
      "phase": [
@@ -191,7 +223,7 @@
  "signs": [
   {
    "x": 9,
-   "y": 5,
+   "y": 7,
    "dialogue": "paleshore/sign"
   }
  ],
@@ -212,7 +244,7 @@
  "secrets": [
   {
    "x": 0,
-   "y": 5,
+   "y": 4,
    "item": "strong_tonic",
    "count": 2,
    "flag": "find_paleshore_1"
@@ -226,14 +258,14 @@
   },
   {
    "x": 0,
-   "y": 13,
+   "y": 14,
    "item": "wake_bell",
    "count": 1,
    "flag": "find_paleshore_3"
   }
  ],
  "square": [
-  6,
-  8
+  7,
+  7
  ]
 }
