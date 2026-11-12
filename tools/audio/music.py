@@ -593,3 +593,9 @@ _BATTLE_ERA = {
 }
 for _era, _spec in _BATTLE_ERA.items():
     EXTRA_SONGS["battle_era%d" % _era] = dict(arp_style="rolling", bass_style="pulse8", drums="battle", era=_era, **_spec)
+
+# Era versions of the warden fight and the low-HP music: the same charts and motifs as
+# "warden" and "battle_pinch", played on each era's voice set (Sound.battle_music picks them).
+for _era in range(2, 6):
+    for _base in ("warden", "battle_pinch"):
+        EXTRA_SONGS["%s_era%d" % (_base, _era)] = dict(SONGS[_base], era=_era)
