@@ -27,9 +27,26 @@ static func set_large_text(on: bool) -> void:
 	large_text = on
 	_theme = null
 
+## Era skin (data/era_feel.json via EraFeel): the menu palette, the frame kind and whether the
+## era uses the large font. Era I is the plain ink sheet above.
+static var era_palette: Array[Color] = NORMAL_PALETTE.duplicate()
+static var frame_kind: String = "ink"
+static var era_large_font: bool = false
+
+## Switches the era skin; high contrast still wins over the era palette.
+static func set_era_skin(p: Array[Color], frame: String, large_font: bool) -> void:
+	if p.size() != NORMAL_PALETTE.size():
+		p = NORMAL_PALETTE.duplicate()
+	if p == era_palette and frame == frame_kind and large_font == era_large_font:
+		return
+	era_palette = p
+	frame_kind = frame
+	era_large_font = large_font
+	set_high_contrast(high_contrast)
+
 ## The font every screen uses, small or large.
 static func font() -> FontFile:
-	return PixelFont.get_large_font() if large_text else PixelFont.get_font()
+	return PixelFont.get_large_font() if large_text or era_large_font else PixelFont.get_font()
 
 ## WCAG contrast ratio of two colours (1 to 21).
 static func contrast(a: Color, b: Color) -> float:
@@ -40,7 +57,7 @@ static func contrast(a: Color, b: Color) -> float:
 ## Switches the UI palette. Screens built afterwards use it; the theme is rebuilt on demand.
 static func set_high_contrast(on: bool) -> void:
 	high_contrast = on
-	var p: Array[Color] = HIGH_CONTRAST_PALETTE if on else NORMAL_PALETTE
+	var p: Array[Color] = HIGH_CONTRAST_PALETTE if on else era_palette
 	BG = p[0]
 	INK = p[1]
 	MID = p[2]
@@ -48,6 +65,7 @@ static func set_high_contrast(on: bool) -> void:
 	DISABLED = p[4]
 	_theme = null
 	_frames.clear()
+	_text_frames.clear()
 
 ## Frame slice size and how much of it is border.
 const FRAME_SIZE: int = 9
@@ -55,6 +73,8 @@ const FRAME_MARGIN: int = 3
 
 static var _theme: Theme
 static var _frames: Dictionary[Color, ImageTexture] = {}
+## Era II to V frames by "kind:colour".
+static var _era_frames: Dictionary[String, ImageTexture] = {}
 
 static func get_theme() -> Theme:
 	if _theme == null:
@@ -72,6 +92,15 @@ static func panel_style(bg: Color = BG, _border: Color = INK) -> StyleBox:
 	sb.set_content_margin_all(FRAME_MARGIN + 2)
 	return sb
 
+## The panel frame of era frame kind [param kind] (EraFeel.FRAMES) in the current colours,
+## whatever era is on screen (the era-change caption shows the old frame, then the new one).
+static func frame_style_of(kind: String) -> StyleBox:
+	var keep: String = frame_kind
+	frame_kind = kind
+	var sb: StyleBox = panel_style()
+	frame_kind = keep
+	return sb
+
 ## A plain flat box (buttons, bars): 1 px border, square corners.
 static func flat_style(bg: Color, border: Color) -> StyleBoxFlat:
 	var sb := StyleBoxFlat.new()
@@ -83,6 +112,8 @@ static func flat_style(bg: Color, border: Color) -> StyleBoxFlat:
 	return sb
 
 static func _frame_texture(bg: Color) -> ImageTexture:
+	if frame_kind != "ink":
+		return _era_frame_texture(frame_kind, bg)
 	if _frames.has(bg):
 		return _frames[bg]
 	var img := Image.create(FRAME_SIZE, FRAME_SIZE, false, Image.FORMAT_RGBA8)
@@ -107,6 +138,73 @@ static func _frame_texture(bg: Color) -> ImageTexture:
 		img.set_pixel(inner.x, inner.y, INK)
 	var tex := ImageTexture.create_from_image(img)
 	_frames[bg] = tex
+	return tex
+
+## Frames of the later eras, each one step further from the ink sheet: Era II a soft colour
+## wash with rounded corners, Era III an etched bevel (light top left, dark bottom right) with a
+## dotted gold rule, Era IV a clean rounded panel with a sky rule, Era V the same with a light
+## gloss band along the top.
+static func _era_frame_texture(kind: String, bg: Color) -> ImageTexture:
+	var key: String = "%s:%s:%s" % [kind, bg.to_html(), INK.to_html()]
+	if _era_frames.has(key):
+		return _era_frames[key]
+	var img := Image.create(FRAME_SIZE, FRAME_SIZE, false, Image.FORMAT_RGBA8)
+	img.fill(bg)
+	var last: int = FRAME_SIZE - 1
+	var clear := Color(0, 0, 0, 0)
+	var light: Color = bg.lerp(Color.WHITE, 0.6)
+	for i: int in FRAME_SIZE:
+		match kind:
+			"wash":
+				for ring: int in 3:
+					var c: Color = [INK, ACCENT, ACCENT.lerp(bg, 0.5)][ring]
+					img.set_pixel(i, ring, c)
+					img.set_pixel(i, last - ring, c)
+					img.set_pixel(ring, i, c)
+					img.set_pixel(last - ring, i, c)
+			"etched":
+				img.set_pixel(i, 0, INK)
+				img.set_pixel(i, last, INK)
+				img.set_pixel(0, i, INK)
+				img.set_pixel(last, i, INK)
+				if i > 0 and i < last:
+					img.set_pixel(i, 1, light)
+					img.set_pixel(1, i, light)
+					img.set_pixel(i, last - 1, MID)
+					img.set_pixel(last - 1, i, MID)
+				if i > 1 and i < last - 1:
+					var dot: Color = ACCENT if i % 2 == 0 else bg
+					img.set_pixel(i, 2, dot)
+					img.set_pixel(i, last - 2, dot)
+					img.set_pixel(2, i, dot)
+					img.set_pixel(last - 2, i, dot)
+			_:
+				img.set_pixel(i, 0, INK)
+				img.set_pixel(i, last, INK)
+				img.set_pixel(0, i, INK)
+				img.set_pixel(last, i, INK)
+				if i > 0 and i < last:
+					img.set_pixel(i, 1, ACCENT)
+					img.set_pixel(1, i, ACCENT)
+					img.set_pixel(i, last - 1, ACCENT.darkened(0.15))
+					img.set_pixel(last - 1, i, ACCENT.darkened(0.15))
+	if kind == "living":
+		for x: int in range(2, last - 1):
+			img.set_pixel(x, 2, light)
+			img.set_pixel(x, 3, bg.lerp(Color.WHITE, 0.3))
+	# Corners: Era III keeps the notch with a gold rivet, the others are rounded.
+	for p: Vector2i in [Vector2i(0, 0), Vector2i(last, 0), Vector2i(0, last), Vector2i(last, last)]:
+		var sx: int = 1 if p.x == 0 else -1
+		var sy: int = 1 if p.y == 0 else -1
+		img.set_pixel(p.x, p.y, clear)
+		if kind == "etched":
+			img.set_pixel(p.x + sx, p.y + sy, ACCENT)
+		elif kind != "wash":
+			img.set_pixel(p.x + sx, p.y, clear)
+			img.set_pixel(p.x, p.y + sy, clear)
+			img.set_pixel(p.x + sx, p.y + sy, INK)
+	var tex := ImageTexture.create_from_image(img)
+	_era_frames[key] = tex
 	return tex
 
 ## Shop text frames for the dialogue box (item 4282): only looks. Each kind gives the three
@@ -185,6 +283,10 @@ static func _build() -> Theme:
 		elif state == "disabled":
 			border = DISABLED
 		var sb: StyleBoxFlat = flat_style(bg, border)
+		if frame_kind in ["panorama", "living"]:
+			sb.set_corner_radius_all(2)
+		elif frame_kind == "etched" and state != "pressed":
+			sb.border_width_bottom = 2
 		if state == "pressed":
 			# Held buttons sink 1 px (item 2415).
 			sb.content_margin_top = 3
