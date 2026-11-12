@@ -62,6 +62,8 @@ const DOOR_WIPE_TIME: float = 0.14
 ## Edge warps slide the view this far in the walking direction while it darkens (item 2278).
 const EDGE_SLIDE: int = 16
 var _particles: PixelParticles
+## Era IV/V building depth: side walls and top faces (EraDepthLayer, data/era45_overworld.json).
+var _era_depth: EraDepthLayer
 ## Era extras on the map (water shimmer, footprints, reflection, tilt, camera lead; EraFeelLayer).
 var _era_feel: EraFeelLayer
 var _walk_steps: int = 0
@@ -175,6 +177,8 @@ func _build() -> void:
 	add_child(_ground)
 	_terrain_look = EraTerrainLook.new()
 	add_child(_terrain_look)
+	_era_depth = EraDepthLayer.new()
+	add_child(_era_depth)
 	_particles = PixelParticles.new()
 	_particles.name = "particles"
 	add_child(_particles)
@@ -381,6 +385,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_world.prepare(map, cell)
 	map.paint(_ground)
 	_terrain_look.show_map(map, _ground, _camera, _entities)
+	_era_depth.show_map(map, _ground)
 	refresh_shade()
 	_spawn_npcs()
 	_place_landmark()

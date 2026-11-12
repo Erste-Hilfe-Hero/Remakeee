@@ -1,0 +1,99 @@
+{
+ "_doc": "Look of the Era IV (Panorama) and Era V (Living) battle stage, read by scripts/battle/presenter/Era4Stage.gd (docs/ERA_FEEL_BATTLE.md, slice 5). The geometry (horizon, depth, slab places) stays in data/era4_stage.json. scenes: painted backdrop per scene in layers (sky, distant, far, mid, ground) with flat-topped turf slabs (no oval platforms, LEGAL.md layout rule). scene_rules picks the scene from the map biome and the battle terrain: biome_first, then terrain, then biome, else default. eras: per-era look. sprite: on-screen size target per side in px, snapped to a whole multiple of the art size (crisp), never above max. slabs: where the slabs of a single battle lie (x share, depth 0 horizon .. 1 bottom, width share at depth 1) on top of data/era4_stage.json, so the big back sprite stands low on the left with its slab in front and the foe stands back on the right. grade.indoor: share of the grade caves and night scenes take. shadow: offset of the slab shadow [dx, dy] (Era IV light from the upper left, Era V low sun on the right). grade: colour every scene colour is washed toward (Era V golden hour). animate: clouds drift, grass sways, water shimmers (off under reduced motion). sendout_zoom: Era V camera nudge when a Spirling steps out.",
+ "scene_rules": {
+  "biome_first": {"cave": "cave", "dungeon": "cave"},
+  "terrain": {"lake": "water", "ridge": "snow", "ember": "ember", "voice": "voice", "moon_lake": "water", "mist_harbour": "water", "glass_grotto": "cave", "ash_field": "ember"},
+  "biome": {"town": "town", "marsh": "water"},
+  "default": "meadow"
+ },
+ "eras": {
+  "4": {
+   "animate": false, "sun": false, "rays": 0, "ray_alpha": 0.0, "vignette": 0.0,
+   "grade": {"colour": "ffffff", "amount": 0.0}, "horizon_glow": {"colour": "ffffff", "amount": 0.0},
+   "shadow": [5, 3], "rim": "", "thickness": 12, "clouds": 4, "cloud_speed": 0.0,
+   "tufts": 150, "sway": 0.0, "sway_speed": 0.0, "shimmer": false, "sendout_zoom": 1.0,
+   "sprite": {"foe": 104, "player": 160, "max": 192},
+   "slabs": {"foe": {"x": 0.74, "depth": 0.28, "width": 0.62}, "player": {"x": 0.28, "depth": 0.74, "width": 0.86}}
+  },
+  "5": {
+   "animate": true, "sun": true, "rays": 4, "ray_alpha": 0.07, "vignette": 0.2,
+   "grade": {"colour": "ff9a50", "amount": 0.17, "indoor": 0.4}, "horizon_glow": {"colour": "ffcc80", "amount": 0.55},
+   "shadow": [-11, 3], "rim": "ffe2a0", "thickness": 14, "clouds": 6, "cloud_speed": 4.0,
+   "tufts": 190, "sway": 1.0, "sway_speed": 2.2, "shimmer": true, "sendout_zoom": 1.08,
+   "sprite": {"foe": 104, "player": 160, "max": 192},
+   "slabs": {"foe": {"x": 0.74, "depth": 0.28, "width": 0.62}, "player": {"x": 0.28, "depth": 0.74, "width": 0.86}}
+  }
+ },
+ "scenes": {
+  "meadow": {
+   "outdoor": true, "far_kind": "hills", "mid_kind": "trees", "ground_kind": "grass", "knoll_kind": "turf",
+   "colours": {
+    "sky_top": "4a86d0", "sky_low": "c4e6f6", "cloud": "f8fbff", "cloud_shade": "c8d8ec", "sun": "fff2c0",
+    "distant": "9fb8d8", "far": "7896bc", "far_rim": "c2d4ea", "mid": "3f7a45", "mid_dark": "2a5634", "mid_rim": "78b05a",
+    "ground_far": "a2cc66", "ground_near": "5e9a3c", "tuft": "467f30", "tuft_light": "b6de7a",
+    "top": "6cae48", "top_light": "a8d870", "top_dark": "4c8a36", "side": "8a6440", "side_dark": "5a3e28", "shadow": "1a2a1a",
+    "accent": "f6e27a", "accent2": "ec90a8"
+   }
+  },
+  "cave": {
+   "outdoor": false, "far_kind": "cave", "mid_kind": "stalagmites", "ground_kind": "pebbles", "knoll_kind": "rock",
+   "colours": {
+    "sky_top": "14121c", "sky_low": "3a3446", "cloud": "3a3446", "cloud_shade": "2a2634", "sun": "000000",
+    "distant": "2c2838", "far": "36304a", "far_rim": "6e6688", "mid": "2a2636", "mid_dark": "1c1a26", "mid_rim": "5e5878",
+    "ground_far": "5c5468", "ground_near": "3a3446", "tuft": "26222e", "tuft_light": "8e86a2",
+    "top": "7a7290", "top_light": "a8a0bc", "top_dark": "5a546c", "side": "3e3850", "side_dark": "242030", "shadow": "0a080e",
+    "accent": "7ad6e6", "accent2": "b48ae8"
+   }
+  },
+  "water": {
+   "outdoor": true, "far_kind": "hills", "mid_kind": "shore", "ground_kind": "water", "knoll_kind": "isle",
+   "colours": {
+    "sky_top": "4a8ad4", "sky_low": "cce8f6", "cloud": "f8fbff", "cloud_shade": "c4d6ea", "sun": "fff2c0",
+    "distant": "a8c0dc", "far": "86a4c4", "far_rim": "cadcee", "mid": "4a7a58", "mid_dark": "305a40", "mid_rim": "86b06a",
+    "ground_far": "9ed2ea", "ground_near": "3a86b6", "tuft": "2c6c9a", "tuft_light": "eaf8ff",
+    "top": "9aac8c", "top_light": "cad8b4", "top_dark": "6c7e66", "side": "56645e", "side_dark": "36444a", "shadow": "0e2a40",
+    "accent": "f4f0a0", "accent2": "c8f0ff"
+   }
+  },
+  "town": {
+   "outdoor": true, "far_kind": "roofs", "mid_kind": "houses", "ground_kind": "cobbles", "knoll_kind": "paving",
+   "colours": {
+    "sky_top": "4e88cc", "sky_low": "d0e6f2", "cloud": "f8fbff", "cloud_shade": "c8d6e8", "sun": "fff2c0",
+    "distant": "a8b6d0", "far": "8c90b0", "far_rim": "c8cce0", "mid": "e6d6b4", "mid_dark": "b2583c", "mid_rim": "f6ead0",
+    "ground_far": "cdbd9c", "ground_near": "8a785c", "tuft": "6e5e46", "tuft_light": "ddcfae",
+    "top": "e6dcc2", "top_light": "fbf4e2", "top_dark": "b8aa8a", "side": "7a6a54", "side_dark": "5c5244", "shadow": "2a2418",
+    "accent": "f6c45a", "accent2": "4a5a7a"
+   }
+  },
+  "snow": {
+   "outdoor": true, "far_kind": "peaks", "mid_kind": "pines", "ground_kind": "snow", "knoll_kind": "drift",
+   "colours": {
+    "sky_top": "6e9ad0", "sky_low": "e2eef8", "cloud": "ffffff", "cloud_shade": "d4e0ee", "sun": "fffae0",
+    "distant": "b6c8e0", "far": "8a9cbc", "far_rim": "f6f9ff", "mid": "2e4a4a", "mid_dark": "1e3436", "mid_rim": "f4f8ff",
+    "ground_far": "e8f0fa", "ground_near": "c2d2e8", "tuft": "a8bcd8", "tuft_light": "ffffff",
+    "top": "fbfdff", "top_light": "ffffff", "top_dark": "c4d4ea", "side": "7e96b8", "side_dark": "5c6e8c", "shadow": "34486a",
+    "accent": "ffffff", "accent2": "bcd4f0"
+   }
+  },
+  "ember": {
+   "outdoor": true, "far_kind": "volcano", "mid_kind": "spires", "ground_kind": "ash", "knoll_kind": "basalt",
+   "colours": {
+    "sky_top": "3a1a22", "sky_low": "d87a42", "cloud": "8a4a44", "cloud_shade": "5a2e30", "sun": "ffd080",
+    "distant": "7a3e3a", "far": "5a2c30", "far_rim": "c8643a", "mid": "301a1c", "mid_dark": "1e1012", "mid_rim": "f0903a",
+    "ground_far": "8e5034", "ground_near": "4a2a22", "tuft": "2a1816", "tuft_light": "ffaa48",
+    "top": "5e4842", "top_light": "8e7060", "top_dark": "3e2e2a", "side": "2e2020", "side_dark": "1a1212", "shadow": "0e0606",
+    "accent": "ffb040", "accent2": "ff6a2a"
+   }
+  },
+  "voice": {
+   "outdoor": false, "far_kind": "night", "mid_kind": "reeds", "ground_kind": "water", "knoll_kind": "isle",
+   "colours": {
+    "sky_top": "0e1028", "sky_low": "3a3a6c", "cloud": "2e3058", "cloud_shade": "22244a", "sun": "000000",
+    "distant": "262a50", "far": "1c1e3e", "far_rim": "5c5ea0", "mid": "16182e", "mid_dark": "0e1020", "mid_rim": "4a4c84",
+    "ground_far": "4a5a8e", "ground_near": "222c5a", "tuft": "1a2248", "tuft_light": "c8d4ff",
+    "top": "8a8ab8", "top_light": "babae0", "top_dark": "62628e", "side": "44466e", "side_dark": "2a2c4c", "shadow": "06061a",
+    "accent": "c8d4ff", "accent2": "f0e0a0"
+   }
+  }
+ }
+}
