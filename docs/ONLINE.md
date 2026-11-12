@@ -271,6 +271,12 @@ Attempts cost nothing; nothing is for sale. Rifts are deleted 7 days after they 
 `raids` (no account ids), `raid_members`, `raid_attempts`; menu `scripts/ui/RaidMenu.gd`
 (Friends, Raid Rifts).
 
+**Online 100, area 3** (`data/raid_rules.json`, migration `20261111000050_raid_more.sql`, `RaidRules.gd`):
+`raid_open(codes, tier)` takes a tier (Easy 70 % strength Ring 50, Normal as before, Hard 150 %). The guardian
+is the week's one (`week % pool`), and with `legendary_chance` (5) percent a legendary from `legendaries` at
+`legendary_hp` (150) percent. In `raid_claim` the member with the most damage gets `top_bonus` (1) more.
+`raid_board()` lists the fastest won Rifts without names (Raid Rifts > Fastest Rifts).
+
 ## Trading
 
 Trading (plan area 7) waits behind the flag `trade`. Friends from friendship level

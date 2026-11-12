@@ -463,6 +463,13 @@
   "not seen": "не встречен",
   "strong": "сильно",
   "wild %s": "дикий %s",
-  "Join our Discord": "Наш сервер в Discord"
+  "Join our Discord": "Наш сервер в Discord",
+  " It gleams in colours of its own!": " Он сияет собственными цветами!",
+  "Bonding step 1: Hit it with a few arts until its Vigor bar is low. Don't knock it out.": "Связь, шаг 1: бей его техниками, пока шкала Бодрости не станет низкой. Не вырубай.",
+  "Bonding step 2: Pick Bond. It calls a few marks, one after another. Watch closely.": "Связь, шаг 2: выбери Связь. Он подаст несколько знаков, один за другим. Смотри внимательно.",
+  "Bonding step 3: Press the same marks in the same order. The better your echo, the better the bond.": "Связь, шаг 3: нажми те же знаки в том же порядке. Чем лучше твоё эхо, тем крепче связь.",
+  "Bonding step 3: Tap the same marks in the same order. The better your echo, the better the bond.": "Связь, шаг 3: коснись тех же знаков в том же порядке. Чем лучше твоё эхо, тем крепче связь.",
+  "Bonding step 4: Hold out a Kin Charm when asked. It steadies the link. You start with 20 of them.": "Связь, шаг 4: протяни Амулет рода, когда попросят. Он укрепляет связь. Для начала у тебя их 20.",
+  "While you are new, a failed bond does not give the wild Spirling a free hit.": "Пока ты новичок, неудачная связь не даёт дикому Spirling бесплатного удара."
  }
 }
