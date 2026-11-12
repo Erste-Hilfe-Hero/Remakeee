@@ -1,0 +1,29 @@
+{
+ "_note": "Act IV, Ochrewell after the Tower Rift: Leith's water is cashed in (betrayal leith_water), Aurelio's vote at the well council (trust choice a4_vote), Fenrick's bailiff.",
+ "steps": [
+  {
+   "action": "betrayal leith_water"
+  },
+  {
+   "dialogue": "solenne_main/wells_open"
+  },
+  {
+   "dialogue": "solenne_main/wells_aurelio"
+  },
+  {
+   "dialogue": "solenne_main/a4_vote"
+  },
+  {
+   "dialogue": "solenne_main/wells_bailiff"
+  },
+  {
+   "battle": "well_bailiff"
+  },
+  {
+   "dialogue": "solenne_main/wells_bell"
+  },
+  {
+   "flag": "a4_council_done"
+  }
+ ]
+}

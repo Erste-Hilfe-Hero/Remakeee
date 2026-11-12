@@ -7,6 +7,7 @@
   "sandglass": {"seat": "glasswind_flats", "rule": "glass and false roads"}
  },
  "figures": {
+  "emrys": {"clan": "none", "act": 4, "role": "Sun Warden, witnessed the sale of the oasis, confesses in full", "trust": 30, "use": 50},
   "haskett": {"clan": "none", "act": 1, "role": "Copperfold mine foreman, pays in scrip", "trust": 20, "use": 60},
   "dory": {"clan": "none", "act": 1, "role": "Shatterfloor strike leader, keeps the strike fund", "trust": 40, "use": 50},
   "odette": {"clan": "none", "act": 1, "role": "Reedhaven widow, very unlucky husbands", "trust": 15, "use": 70},
@@ -146,6 +147,9 @@
   "dimsy_tip": {"npc": "dimsy", "kind": "believe_tip", "reward_chance": 0.4, "betray": {"say": "corvane_side/dimsy_betray", "battle": "ambush_vault"}, "reward": {"say": "corvane_side/dimsy_reward", "item": "max_tonic", "trust": {"dimsy": 10}}, "kept": {"say": "corvane_side/dimsy_kept"}}
  },
  "betrayals": {
+  "leith_water": {"act": 4, "npc": "leith", "rule": "warned", "warned_by": ["a4_kept_water"], "main": "a4_wells", "caught": {"ledger": "leith_water", "item": "power_brew", "trust": {"leith": -10}, "say": "solenne_main/leith_caught"}, "struck": {"ledger": "leith_water", "coins": -250, "use": {"leith": 10}, "say": "solenne_main/leith_struck"}},
+  "ottilie_vote": {"act": 4, "npc": "ottilie", "rule": "warned", "warned_by": ["a4_vote_kept"], "main": "a4_drought", "caught": {"ledger": "ottilie_vote", "coins": 250, "trust": {"ottilie": -10}, "say": "solenne_main/vote_caught"}, "struck": {"ledger": "ottilie_vote", "coins": -300, "use": {"ottilie": 10}, "say": "solenne_main/vote_struck"}},
+  "emrys_oath": {"act": 4, "npc": "emrys", "rule": "warned", "warned_by": ["a4_no_oath"], "main": "a4_north", "caught": {"ledger": "emrys_oath", "coins": 300, "trust": {"emrys": -10}, "say": "solenne_main/oath_caught"}, "struck": {"ledger": "emrys_oath", "coins": -350, "use": {"emrys": 10}, "say": "solenne_main/oath_struck"}},
   "haskett_scrip": {"act": 1, "npc": "haskett", "rule": "warned", "warned_by": ["strike_proof"], "caught": {"ledger": "haskett_scrip", "coins": 300, "trust": {"haskett": -10}, "say": "veydal_more/haskett_caught"}, "struck": {"ledger": "haskett_scrip", "coins": -100, "use": {"haskett": 10}, "say": "veydal_more/haskett_struck"}},
   "dory_sale": {"act": 1, "npc": "dory", "rule": "trust", "min": 55, "caught": {"ledger": "dory_sale", "trust": {"dory": 5}, "say": "veydal_more/dory_caught"}, "struck": {"ledger": "dory_sale", "flags": ["strike_sold"], "say": "veydal_more/dory_struck"}},
   "odette_slip": {"act": 1, "npc": "odette", "rule": "warned", "warned_by": ["widow_read_label"], "caught": {"ledger": "odette_slip", "coins": 100, "say": "veydal_more/odette_caught"}, "struck": {"ledger": "odette_slip", "coins": -150, "use": {"odette": 10}, "say": "veydal_more/odette_struck"}},
@@ -262,6 +266,9 @@
   "lq_lumivane": {"act": 4, "npc": "sevrin", "rule": "warned", "warned_by": ["lq_lumivane_kept"], "caught": {"flags": ["lq_lumivane_caught"], "ledger": "lq_lumivane", "trust": {"sevrin": -30}, "say": "legend_quests/lumivane_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_lumivane_struck"], "ledger": "lq_lumivane", "say": "legend_quests/lumivane_struck", "battle": "lq_sevrin"}}
  },
  "trust_choices": {
+  "a4_water": {"act": 4, "at": "solenne_main/a4_water", "decides": ["leith_water"]},
+  "a4_vote": {"act": 4, "at": "solenne_main/a4_vote", "decides": ["ottilie_vote"]},
+  "a4_oath": {"act": 4, "at": "solenne_main/a4_oath", "decides": ["emrys_oath"]},
   "a1_report": {"act": 1, "at": "betrayal/a1_report", "decides": ["juna_post", "juna_letter"]},
   "a1_hour": {"act": 1, "at": "betrayal/a1_hour", "decides": ["vash_hour"]},
   "a2_porter": {"act": 2, "at": "betrayal/a2_porter", "decides": ["sable_satchel"]},
@@ -272,6 +279,9 @@
   "a4_tunnel": {"act": 4, "at": "betrayal/a4_tunnel", "decides": ["lusk_tunnel"]}
  },
  "ledger": [
+  {"id": "leith_water", "act": 4, "ref": "solenne_main/ledger_leith_water"},
+  {"id": "ottilie_vote", "act": 4, "ref": "solenne_main/ledger_ottilie_vote"},
+  {"id": "emrys_oath", "act": 4, "ref": "solenne_main/ledger_emrys_oath"},
   {"id": "haskett_scrip", "act": 1, "ref": "veydal_more/ledger_haskett"},
   {"id": "dory_sale", "act": 1, "ref": "veydal_more/ledger_dory"},
   {"id": "odette_slip", "act": 1, "ref": "veydal_more/ledger_odette"},

@@ -1,0 +1,38 @@
+{
+ "_note": "Act IV, the border stone on the way north after the reckoning: Emrys's confession (betrayal emrys_oath), the guild proctor, the three Wardens and the strangers' caravan.",
+ "steps": [
+  {
+   "fade": 1.0
+  },
+  {
+   "dialogue": "solenne_main/north_open"
+  },
+  {
+   "fade": 0.0
+  },
+  {
+   "action": "betrayal emrys_oath"
+  },
+  {
+   "dialogue": "solenne_main/north_proctor"
+  },
+  {
+   "battle": "guild_proctor"
+  },
+  {
+   "dialogue": "solenne_main/north_wardens"
+  },
+  {
+   "dialogue": "solenne_main/north_clans"
+  },
+  {
+   "dialogue": "solenne_main/north_caravan_1"
+  },
+  {
+   "dialogue": "solenne_main/north_caravan_2"
+  },
+  {
+   "flag": "a4_north_done"
+  }
+ ]
+}
