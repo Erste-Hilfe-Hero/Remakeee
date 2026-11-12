@@ -56,7 +56,7 @@ static func slot_species(slot: Dictionary) -> String:
 	var own: Variant = slot.get("species")
 	return str(own) if own != null and str(own) != "" else str(slot.get("stand_in", ""))
 
-## Slots still waiting for Quillmarch's own Spirlings (its Acid and Frost kinds).
+## Slots still waiting for Quillmarch's own Spirlings (none since the Acid and Frost kinds came).
 static func open_slots() -> Array[String]:
 	var out: Array[String] = []
 	for r: Dictionary in data().get("routes", []):

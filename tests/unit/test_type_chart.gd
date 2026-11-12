@@ -54,7 +54,7 @@ func test_strengths_equal_weaknesses_per_era() -> void:
 					weak += 1
 			assert_eq(strong, weak, "%s up to Era %d" % [t, era_max])
 
-## Rust and Mask (Vellmarch, data/region2.json) are Era II and sit in the chart before the enum.
+## Rust and Mask (Vellmarch, data/region2.json) are Era II chart entries.
 func test_rust_and_mask_are_era_two_chart_entries() -> void:
 	for t: String in ["RUST", "MASK"]:
 		assert_true(_types.has(t), t)
@@ -80,12 +80,13 @@ func test_era_two_elements_stay_rare() -> void:
 	for t: String in ["INK", "ECHO"]:
 		assert_eq(int(_types[t].era), 2)
 		assert_true(Elements.E.has(t), "%s is in the enum so legendaries can use it" % t)
-	# Owner rule: Era II elements on legendaries, and sparingly on act kinds (tools/balance/type_sim.py).
-	for t: String in ["INK", "ECHO"]:
+	# Owner rule: later-era elements on legendaries and their own era's region, and sparingly on
+	# older act kinds (tools/balance/type_sim.py).
+	for t: String in Elements.E.keys().slice(8):
 		var n: int = 0
 		for sd: SpirlingData in Database.spirlings.values():
-			n += 1 if sd.rarity != "ancient" and sd.elements.has(Elements.E[t]) else 0
-		assert_between(n, 1, 6, "%s on act kinds" % t)
+			n += 1 if sd.rarity != "ancient" and sd.elements.has(Elements.E[t]) and sd.era < int(_types[t].era) else 0
+		assert_lte(n, 6, "%s on older act kinds" % t)
 
 func test_era_one_strong_matches_the_chart() -> void:
 	for e: int in Elements.E.values():
