@@ -28,7 +28,7 @@ func _befriend() -> void:
 func test_saves_follow_the_real_game_limits() -> void:
 	assert_true(bool(_put(1, {"schema": 1, "party": [{"level": 60}, {"level": 1}, {}, {}, {}]}).ok), "team of 5 on Ring 60")
 	assert_eq(_put(2, {"schema": 1, "party": [{}, {}, {}, {}, {}, {}]}).error, "implausible", "six in the team")
-	assert_eq(_put(2, {"schema": 1, "party": [{"level": 61}]}).error, "implausible", "Ring 61")
+	assert_eq(_put(2, {"schema": 1, "party": [{"level": 97}]}).error, "implausible", "Ring 97, above save_level_max")
 	assert_eq(_put(2, {"schema": 1, "party": [{"level": 0}]}).error, "implausible", "Ring 0")
 	assert_eq(_put(2, {"schema": 1, "storage": [{"level": 99}]}).error, "implausible", "storage Ring 99")
 	assert_eq(_put(2, {"schema": 1, "storage": {"a": 1}}).error, "implausible", "storage not a list")
