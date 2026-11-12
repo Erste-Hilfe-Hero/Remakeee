@@ -24,7 +24,7 @@
  },
  "gunn": {
   "lines": [
-   "Eel-Catcher Gunn: West end by day, east end by evening. The eels move, so do I."
+   "Eel-Catcher Gunn: Aart checks the stilts every morning. Sadly they keep holding him up."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
@@ -35,7 +35,7 @@
  },
  "aart": {
   "lines": [
-   "Stilt-Builder Aart: I check the stilts by the gate each morning. One wobble and I know."
+   "Stilt-Builder Aart: They say my stilts wobble. They don't wobble. I wobble. Out of sheer shame."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
@@ -55,7 +55,7 @@
  },
  "wenna": {
   "lines": [
-   "Reed-Cutter Wenna: I cut reeds from dawn to noon and sleep through the evening. Don't tell."
+   "Reed-Cutter Wenna: I sleep all evening so I don't have to listen to Hanne sell fish she found under a stilt."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
@@ -77,7 +77,7 @@
  },
  "hanne": {
   "lines": [
-   "Fishwife Hanne: Morning catch here, evening market in Brindlewick. My feet know every plank."
+   "Fishwife Hanne: My fish is fresh. Fresher than Gunn's jokes, anyway. Those died before the Rift."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
