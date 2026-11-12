@@ -66,8 +66,9 @@ def build_song(name: str, spec: dict, stems: bool) -> float:
     if stems and name in music.MAP_SONGS:
         os.makedirs(STEM_DIR, exist_ok=True)
         for stem, data in parts.items():
-            # Stems play together, so a lower Vorbis quality per stem keeps the download small.
-            write_ogg(os.path.join(STEM_DIR, "%s_%s.ogg" % (name, stem)), data * g, STEM_QUALITY)
+            # Stems play together, so 16 kHz / 16 kbit/s per stem keeps the download small
+            # (APK size budget; the full mixes are not even exported, see export_presets.cfg).
+            write_ogg(os.path.join(STEM_DIR, "%s_%s.ogg" % (name, stem)), data * g, STEM_QUALITY, small=True)
     return len(mix) / 22050.0
 
 
