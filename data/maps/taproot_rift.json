@@ -96,7 +96,8 @@
     },
     {
      "species": "Rushstalker",
-     "level": 94
+     "level": 94,
+     "held": "pith_mend"
     }
    ],
    "intro": "quivermoor/warden_ossian_intro",

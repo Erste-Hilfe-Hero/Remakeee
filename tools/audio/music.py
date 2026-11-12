@@ -626,3 +626,7 @@ for _era in range(2, 6):
         EXTRA_SONGS["%s_era%d" % (_base, _era)] = dict(SONGS[_base], era=_era)
     for _place in MAP_SONGS:
         EXTRA_SONGS["%s_era%d" % (_place, _era)] = place_era_spec(_place, _era)
+
+# Era V battle songs also get stems: the MusicDirector fades them by battle intensity
+# (data/era_audio.json "battle_layers"), the dynamic music of the fifth hardware step.
+LAYERED_SONGS = {"battle_era5", "warden_era5"}

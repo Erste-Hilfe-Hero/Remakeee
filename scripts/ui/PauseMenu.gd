@@ -101,7 +101,7 @@ func run() -> void:
 			"Friends":
 				await tip("friends")
 				await FriendsMenu.run(self)
-				if not echo_duel.is_empty() or not raid_attempt.is_empty():
+				if not echo_duel.is_empty() or not raid_attempt.is_empty() or watch_replay:
 					return
 			"Leagues":
 				await LeagueMenu.run(self)
@@ -354,6 +354,7 @@ func run_records() -> void:
 		if Vows.can_take() or not (GameState.records.get("vows", {}) as Dictionary).is_empty():
 			lines.append("Vows")
 		lines.append("Run chronicle")
+		lines.append("Era functions")
 		lines.append("Finds by region")
 		if not memorial_lines().is_empty():
 			lines.append("Memorial book")
@@ -380,6 +381,7 @@ func run_records() -> void:
 			"Tower map": await info("\n".join(RiftTower.card_lines()))
 			"Vows": await run_vows()
 			"Run chronicle": await info("\n".join(RunChronicle.lines()))
+			"Era functions": await run_era_functions()
 			"Finds by region": await info("\n".join(RegionStats.lines(GameState.flags)))
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
@@ -391,6 +393,15 @@ func run_records() -> void:
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
 					return
+
+## Era functions (data/era_functions.json): one page per open era with what it brought.
+func run_era_functions() -> void:
+	while true:
+		var titles: Array[String] = EraFeatures.era_titles(EraManager.unlocked_era)
+		var i: int = await pick_strings(Loc.t("Era functions"), titles)
+		if i < 0:
+			return
+		await info("\n".join(EraFeatures.page_lines(i + 1)))
 
 ## The lexicon (plan area 2, item 680): the collected entries, each opened as a page.
 func run_lexicon() -> void:
@@ -672,19 +683,23 @@ func _unfurl(s: Spirling, forward: bool) -> void:
 ## Give, swap or take off a keepsake.
 func _held_item(s: Spirling) -> void:
 	var ids: Array[String] = []
-	var entries: Array[String] = []
+	# Each keepsake shows what it does while focused, before it is put on (item 1900).
+	var entries: Array[Dictionary] = []
 	if not s.held.is_empty():
 		ids.append("")
-		entries.append("Take off %s" % Database.item(s.held).get("name", s.held))
+		entries.append({"text": "Take off %s" % Database.item(s.held).get("name", s.held),
+			"hint": Loc.t(str(Database.item(s.held).get("description", "")))})
 	for id: Variant in GameState.inventory:
 		if GameState.item_count(str(id)) > 0 and BattleRules.is_holdable(str(id)):
 			ids.append(str(id))
-			entries.append("%s x%d" % [Database.item(str(id)).get("name", id), GameState.item_count(str(id))])
+			var it: Dictionary = Database.item(str(id))
+			entries.append({"text": "%s x%d" % [it.get("name", id), GameState.item_count(str(id))],
+				"hint": Loc.t(str(it.get("description", "")))})
 	if ids.is_empty():
 		await info("You have nothing a Spirling can hold.\nKeepsakes are sold in Thornridge.")
 		return
 	var now: String = "Holding: %s" % (Database.item(s.held).get("name", s.held) if not s.held.is_empty() else "nothing")
-	var idx: int = await pick_strings(now, entries)
+	var idx: int = await pick(now, entries)
 	if idx < 0:
 		return
 	GameState.set_held(s, ids[idx])
@@ -779,6 +794,8 @@ func run_bag() -> void:
 			var hint: String = Loc.t(str(it0.get("description", "")))
 			if battle_only(it0):
 				hint = Loc.t(BATTLE_ONLY) + " " + hint
+			elif bool(it0.get("gear", false)):
+				hint = gear_hint(id)
 			entries.append({"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)], "hint": hint})
 		# If it was used up, the row that took its place gets the focus.
 		var focus: int = ids.find(last_id)
@@ -882,6 +899,15 @@ static func gear_page(id: String) -> String:
 		lines.append(Loc.t("Works on: %s") % ", ".join(places))
 	lines.append(Loc.t("Always on foot: you walk, wade and climb yourself."))
 	return "\n".join(lines)
+
+## One sentence on where and how a gear item is used, for the Satchel row (item 1925).
+static func gear_hint(id: String) -> String:
+	var places: PackedStringArray = []
+	for w: Variant in Database.item(id).get("works_on", []):
+		places.append(Loc.t(GEAR_PLACES.get(str(w), str(w))))
+	if places.is_empty():
+		return Loc.t(str(Database.item(id).get("description", "")))
+	return Loc.t("Works on its own at: %s") % ", ".join(places)
 
 ## The tile a gear item works on, drawn at twice its size, or null.
 static func gear_picture(id: String) -> Texture2D:

@@ -16,6 +16,8 @@ LICENCE = "Owned by the project, no third-party input"
 
 # (path pattern, generator, how it was made)
 SOURCES = [
+    ("audio/sfx/*_era[2-5].wav", "tools/audio/era_sfx.py", "era sound set: own note recipe played on that era's synthesized voice (chip, low-rate tones, room/hall), no samples"),
+    ("audio/ambience/*_era[45].ogg", "tools/audio/ambience.py", "original Era IV/V biome ambience loop from filtered noise and tone figures, room reverb, no recordings"),
     ("audio/sfx/*.wav", "tools/audio/gen_audio.py", "synthesized pulse/triangle/noise sound effect, no samples"),
     ("audio/music/stems/*.ogg", "tools/audio/gen_audio.py", "one stem of an original chiptune place song, for the layered MusicDirector"),
     ("audio/music/*.ogg", "tools/audio/gen_audio.py", "original chiptune: chord charts and motifs written for Chimora, synthesized pulse/triangle/noise, Vorbis via ffmpeg"),

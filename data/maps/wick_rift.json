@@ -96,7 +96,8 @@
     },
     {
      "species": "Duskmirrah",
-     "level": 93
+     "level": 93,
+     "held": "pith_mend"
     }
    ],
    "intro": "quivermoor/warden_maudrey_intro",

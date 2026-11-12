@@ -151,5 +151,117 @@ LOOPS: dict[str, tuple[float, int]] = {
 MAX_BYTES = 2_500_000
 
 
+def _room(x: np.ndarray, base: float, gain: float) -> np.ndarray:
+    """Small Schroeder room on a loop buffer (four combs), added to the dry signal."""
+    wet = np.zeros_like(x)
+    for k, g in zip((1.0, 1.13, 1.27, 1.41), (0.7, 0.68, 0.66, 0.64)):
+        d = max(1, int(base * k * RATE))
+        y = x.copy()
+        for i in range(d, len(y), d):
+            j = min(i + d, len(y))
+            y[i:j] += g * y[i - d:j - d]
+        wet += y - x
+    return x + lowpass(wet, 3) * 0.25 * gain
+
+
+def footfalls(rng: np.random.Generator) -> np.ndarray:
+    """A few passers-by on cobbles: soft knocks two to the second."""
+    parts = []
+    for _ in range(int(rng.integers(4, 8))):
+        k = secs(0.04)
+        parts.append(sweep(160, 90, k, "tri") * env(k, attack=0.001, decay=0.015, sustain=0.1, release=0.01))
+        parts.append(np.zeros(secs(rng.uniform(0.22, 0.3))))
+    return np.concatenate(parts)
+
+
+def far_call(rng: np.random.Generator) -> np.ndarray:
+    """A distant Spirling-like call: a slow two-part glide with vibrato (no real animal)."""
+    k = secs(rng.uniform(0.5, 0.8))
+    t = np.arange(k) / RATE
+    f0 = rng.uniform(380, 620)
+    fs = np.geomspace(f0, f0 * rng.uniform(0.7, 1.4), k) * 2 ** (0.3 * np.sin(2 * np.pi * 5 * t) / 12)
+    ph = np.cumsum(fs / RATE)
+    w = np.sin(2 * np.pi * ph) + 0.3 * np.sin(4 * np.pi * ph)
+    return w * np.sin(np.linspace(0, np.pi, k)) ** 2
+
+
+def buzz(n: int, rng: np.random.Generator) -> np.ndarray:
+    """Marsh insects: a thin whine that drifts in pitch and comes and goes."""
+    t = np.arange(n) / RATE
+    ph = np.cumsum((520 + 40 * np.sin(2 * np.pi * 0.13 * t)) / RATE)
+    gate = np.clip(np.sin(2 * np.pi * 0.07 * t + rng.uniform(0, 6)) * 2 - 0.5, 0, 1)
+    return np.sin(2 * np.pi * ph) * (0.6 + 0.4 * np.sin(2 * np.pi * 31 * t)) * gate
+
+
+def build_era(name: str, seconds: float, seed: int) -> np.ndarray:
+    """Era IV and V biome loops (town, route, marsh) for the outdoor maps of Halcyra and
+    Quivermoor (data/era_audio.json "ambience"). Era IV: the place in a room reverb. Era V: more
+    layers and events (birds, far calls, wind chimes, insects) and a wider hall."""
+    rng = np.random.default_rng(seed)
+    biome, era = name.rsplit("_era", 1)
+    era = int(era)
+    loop = secs(seconds)
+    seam = secs(0.25)
+    n = loop + seam
+    out = np.zeros(n)
+    sw = lambda period, depth: np.resize(_swell(loop, period, depth), n)
+    if biome == "town":
+        murmur = highpass(lowpass(noise(n, 1, rng), 18), 140)
+        out += murmur * sw(9.0, 0.4) * 1.1
+        for at in _events(rng, loop, 7.0):
+            _place(out, footfalls(rng) * 0.2, at)
+        for at in _events(rng, loop, 15.0):
+            _place(out, bell(rng) * 0.15, at)
+        if era >= 5:
+            for at in _events(rng, loop, 5.0):
+                _place(out, chirp(rng) * 0.12, at)
+            for at in _events(rng, loop, 11.0):  # wind chimes
+                for i, nm in enumerate(rng.choice(["E6", "G6", "B6", "D7"], size=3)):
+                    k = secs(0.6)
+                    _place(out, triangle(freq(midi(str(nm))), k) * np.exp(-np.arange(k) / RATE * 5) * 0.06, at + secs(0.15 * i))
+    elif biome == "route":
+        out += lowpass(noise(n, 1, rng), 30) * sw(6.0, 0.6) * 0.9
+        out += highpass(noise(n, 1, rng), 5) * sw(11.0, 0.5) * 0.12
+        for at in _events(rng, loop, 3.5 if era == 4 else 2.2):
+            _place(out, chirp(rng) * 0.18, at)
+        if era >= 5:
+            out += cricket(n) * 0.03
+            for at in _events(rng, loop, 9.0):
+                _place(out, far_call(rng) * 0.07, at)
+            t = 3.0
+            while t < loop / RATE - 4.0:  # gusts through leaves
+                k = secs(rng.uniform(1.5, 2.5))
+                _place(out, highpass(noise(k, 1, rng), 4) * np.sin(np.linspace(0, np.pi, k)) ** 2 * 0.5, secs(t))
+                t += rng.uniform(7.0, 12.0)
+    elif biome == "marsh":
+        out += lowpass(noise(n, 1, rng), 25) * sw(3.0, 0.5) * 0.8
+        for at in _events(rng, loop, 4.5 if era == 4 else 3.0):
+            _place(out, frog(rng) * 0.16, at)
+        for at in _events(rng, loop, 2.0):
+            k = secs(0.05)
+            _place(out, sweep(240, 640, k, "tri") * env(k, attack=0.003, decay=0.02, sustain=0.3, release=0.01) * 0.1, at)
+        if era >= 5:
+            out += buzz(n, rng) * 0.02
+            for at in _events(rng, loop, 6.0):
+                _place(out, highpass(noise(secs(0.3), 1, rng), 3) * np.sin(np.linspace(0, np.pi, secs(0.3))) * 0.18, at)
+    else:
+        raise KeyError(name)
+    out = _room(out, 0.04 if era == 4 else 0.07, 0.8 if era == 4 else 1.2)
+    fade = np.linspace(0, 1, seam)
+    out = np.tanh(out / (np.percentile(np.abs(out), 99.5) or 1.0)) * 0.5
+    head = out[:loop].copy()
+    head[:seam] = out[:seam] * fade + out[loop:] * (1 - fade)
+    return head
+
+
+## Era IV and V biome loops: name: (seconds, seed).
+ERA_LOOPS: dict[str, tuple[float, int]] = {
+    "town_era4": (30.0, 41), "route_era4": (32.0, 42), "marsh_era4": (34.0, 43),
+    "town_era5": (30.0, 51), "route_era5": (32.0, 52), "marsh_era5": (34.0, 53),
+}
+
+
 def loops() -> dict[str, np.ndarray]:
-    return {name: build(name, s, seed) for name, (s, seed) in LOOPS.items()}
+    out = {name: build(name, s, seed) for name, (s, seed) in LOOPS.items()}
+    out.update({name: build_era(name, s, seed) for name, (s, seed) in ERA_LOOPS.items()})
+    return out
