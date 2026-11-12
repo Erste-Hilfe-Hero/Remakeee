@@ -658,11 +658,11 @@
   "role": "striker",
   "line_id": "zippit",
   "base": {
-   "hp": 82,
-   "atk": 88,
-   "foc": 108,
-   "spd": 120,
-   "def": 72
+   "hp": 85,
+   "atk": 92,
+   "foc": 112,
+   "spd": 125,
+   "def": 75
   },
   "trait": "surge",
   "learnset": {
@@ -2445,16 +2445,16 @@
     "Drift Step"
    ],
    "9": [
-    "Breeze Slice"
+    "Crosswind"
    ],
    "13": [
     "Updraft"
    ],
    "17": [
-    "Updraft"
+    "Lull Breaker"
    ],
    "21": [
-    "Breeze Slice"
+    "Squall Line"
    ]
   },
   "bond_rate": 0.45,
@@ -2497,22 +2497,22 @@
    "1": [
     "Breeze Slice",
     "Drift Step",
-    "Breeze Slice"
+    "Draft Needle"
    ],
    "24": [
-    "Breeze Slice"
+    "Squall Line"
    ],
    "26": [
     "Crackle Bite"
    ],
    "28": [
-    "Breeze Slice"
-   ],
-   "32": [
     "Gale Scythe"
    ],
-   "38": [
+   "32": [
     "Squall"
+   ],
+   "38": [
+    "Cloudbreak"
    ]
   },
   "bond_rate": 0.1,
@@ -2553,16 +2553,16 @@
     "Drench"
    ],
    "9": [
-    "Fizz Pop"
+    "Salt Snap"
    ],
    "13": [
     "Chill Mist"
    ],
    "17": [
-    "Chill Mist"
+    "Rip Current"
    ],
    "21": [
-    "Salt Snap"
+    "Spindrift Shot"
    ]
   },
   "bond_rate": 0.45,
@@ -2605,7 +2605,7 @@
    "1": [
     "Fizz Pop",
     "Drench",
-    "Fizz Pop"
+    "Spout Jab"
    ],
    "24": [
     "Salt Snap"
@@ -2614,7 +2614,7 @@
     "Mirk Nip"
    ],
    "28": [
-    "Salt Snap"
+    "Bore Wave"
    ],
    "32": [
     "Spindrift Shot"
@@ -2763,7 +2763,7 @@
   "learnset": {
    "1": [
     "Pebble Toss",
-    "Pebble Toss"
+    "All-In Crash"
    ],
    "5": [
     "Hunker Down"
@@ -2875,16 +2875,16 @@
     "Drench"
    ],
    "9": [
-    "Fizz Pop"
+    "Salt Snap"
    ],
    "13": [
     "Chill Mist"
    ],
    "17": [
-    "Chill Mist"
+    "Rip Current"
    ],
    "21": [
-    "Salt Snap"
+    "Spindrift Shot"
    ]
   },
   "bond_rate": 0.45,
@@ -2927,7 +2927,7 @@
    "1": [
     "Fizz Pop",
     "Drench",
-    "Fizz Pop"
+    "Spout Jab"
    ],
    "24": [
     "Salt Snap"
@@ -2936,7 +2936,7 @@
     "Mirk Nip"
    ],
    "28": [
-    "Salt Snap"
+    "Bore Wave"
    ],
    "32": [
     "Spindrift Shot"
@@ -3043,7 +3043,7 @@
     "Dawn Mend"
    ],
    "28": [
-    "Breeze Slice"
+    "Squall Line"
    ],
    "32": [
     "Prism Ray"
@@ -3084,13 +3084,13 @@
   "learnset": {
    "1": [
     "Pebble Toss",
-    "Pebble Toss"
+    "All-In Crash"
    ],
    "5": [
     "Hunker Down"
    ],
    "9": [
-    "Pebble Toss"
+    "Pumice Pelt"
    ],
    "11": [
     "Cinder Nip"
@@ -3099,10 +3099,10 @@
     "Bowl Over"
    ],
    "17": [
-    "Bowl Over"
+    "Tunnel Strike"
    ],
    "21": [
-    "Tunnel Strike"
+    "Fault Line"
    ]
   },
   "bond_rate": 0.45,
@@ -3145,7 +3145,7 @@
    "1": [
     "Pebble Toss",
     "Hunker Down",
-    "Pebble Toss"
+    "All-In Crash"
    ],
    "24": [
     "Tunnel Strike"
@@ -3154,10 +3154,10 @@
     "Cinder Nip"
    ],
    "28": [
-    "Tunnel Strike"
+    "Tremor Thud"
    ],
    "32": [
-    "Tremor Thud"
+    "Slow Quake"
    ],
    "38": [
     "Cairn Crash"
@@ -3211,7 +3211,7 @@
     "Glint"
    ],
    "21": [
-    "Breeze Slice"
+    "Prism Ray"
    ]
   },
   "bond_rate": 0.3,
@@ -3258,7 +3258,7 @@
     "Wick Flicker"
    ],
    "24": [
-    "Breeze Slice"
+    "Squall Line"
    ],
    "28": [
     "Dawn Mend"
@@ -3308,16 +3308,16 @@
     "Heat Haze"
    ],
    "9": [
-    "Cinder Nip"
+    "Glow Knuckle"
    ],
    "13": [
     "Kindle Up"
    ],
    "17": [
-    "Kindle Up"
+    "Cinder Breath"
    ],
    "21": [
-    "Cinder Breath"
+    "Brazier Pulse"
    ]
   },
   "bond_rate": 0.45,
@@ -3360,7 +3360,7 @@
    "1": [
     "Cinder Nip",
     "Heat Haze",
-    "Cinder Nip"
+    "Cinder Dash"
    ],
    "24": [
     "Cinder Breath"
@@ -3369,13 +3369,13 @@
     "Grit Jab"
    ],
    "28": [
-    "Cinder Breath"
-   ],
-   "32": [
     "Kiln Strike"
    ],
-   "38": [
+   "32": [
     "Furnace Spiral"
+   ],
+   "38": [
+    "Bellows Blast"
    ]
   },
   "bond_rate": 0.1,
@@ -3423,7 +3423,7 @@
     "Dusk Rake"
    ],
    "17": [
-    "Bowl Over"
+    "Murmur Bite"
    ],
    "21": [
     "Night Siphon"
@@ -3533,7 +3533,7 @@
     "Kindle Up"
    ],
    "21": [
-    "Breeze Slice"
+    "Brazier Pulse"
    ]
   },
   "bond_rate": 0.3,
@@ -3580,7 +3580,7 @@
     "Cinder Nip"
    ],
    "24": [
-    "Breeze Slice"
+    "Kiln Strike"
    ],
    "28": [
     "Cinder Breath"
@@ -3732,7 +3732,7 @@
   "learnset": {
    "1": [
     "Pebble Toss",
-    "Pebble Toss"
+    "All-In Crash"
    ],
    "5": [
     "Hunker Down"
@@ -3851,10 +3851,10 @@
     "Kindle Up"
    ],
    "17": [
-    "Bowl Over"
+    "Cinder Breath"
    ],
    "21": [
-    "Cinder Breath"
+    "Brazier Pulse"
    ]
   },
   "bond_rate": 0.3,
@@ -3951,13 +3951,13 @@
     "Candle Ward"
    ],
    "9": [
-    "Wick Flicker"
+    "Glint"
    ],
    "13": [
-    "Glint"
+    "Starlit Lash"
    ],
    "17": [
-    "Glint"
+    "Prism Ray"
    ],
    "21": [
     "Dawn Mend"
@@ -4003,7 +4003,7 @@
    "1": [
     "Wick Flicker",
     "Candle Ward",
-    "Wick Flicker"
+    "Beacon Ping"
    ],
    "24": [
     "Dawn Mend"
@@ -4012,13 +4012,13 @@
     "Breeze Slice"
    ],
    "28": [
-    "Dawn Mend"
+    "Radiant Lance"
    ],
    "32": [
     "Prism Ray"
    ],
    "38": [
-    "Radiant Lance"
+    "Omen Bell"
    ]
   },
   "bond_rate": 0.1,
@@ -4226,7 +4226,7 @@
     "Dawn Mend"
    ],
    "28": [
-    "Breeze Slice"
+    "Squall Line"
    ],
    "32": [
     "Prism Ray"
@@ -4267,13 +4267,13 @@
   "learnset": {
    "1": [
     "Pebble Toss",
-    "Pebble Toss"
+    "All-In Crash"
    ],
    "5": [
     "Hunker Down"
    ],
    "9": [
-    "Pebble Toss"
+    "Pumice Pelt"
    ],
    "11": [
     "Cinder Nip"
@@ -4282,10 +4282,10 @@
     "Bowl Over"
    ],
    "17": [
-    "Bowl Over"
+    "Tunnel Strike"
    ],
    "21": [
-    "Tunnel Strike"
+    "Fault Line"
    ]
   },
   "bond_rate": 0.45,
@@ -4328,7 +4328,7 @@
    "1": [
     "Pebble Toss",
     "Hunker Down",
-    "Pebble Toss"
+    "All-In Crash"
    ],
    "24": [
     "Tunnel Strike"
@@ -4337,10 +4337,10 @@
     "Cinder Nip"
    ],
    "28": [
-    "Tunnel Strike"
+    "Tremor Thud"
    ],
    "32": [
-    "Tremor Thud"
+    "Slow Quake"
    ],
    "38": [
     "Cairn Crash"
@@ -4384,16 +4384,16 @@
     "Drift Step"
    ],
    "9": [
-    "Breeze Slice"
+    "Crosswind"
    ],
    "13": [
     "Updraft"
    ],
    "17": [
-    "Updraft"
+    "Lull Breaker"
    ],
    "21": [
-    "Breeze Slice"
+    "Squall Line"
    ]
   },
   "bond_rate": 0.45,
@@ -4436,22 +4436,22 @@
    "1": [
     "Breeze Slice",
     "Drift Step",
-    "Breeze Slice"
+    "Draft Needle"
    ],
    "24": [
-    "Breeze Slice"
+    "Squall Line"
    ],
    "26": [
     "Crackle Bite"
    ],
    "28": [
-    "Breeze Slice"
-   ],
-   "32": [
     "Gale Scythe"
    ],
-   "38": [
+   "32": [
     "Squall"
+   ],
+   "38": [
+    "Cloudbreak"
    ]
   },
   "bond_rate": 0.1,
@@ -4499,10 +4499,10 @@
     "Updraft"
    ],
    "17": [
-    "Bowl Over"
+    "Tunnel Strike"
    ],
    "21": [
-    "Breeze Slice"
+    "Fault Line"
    ]
   },
   "bond_rate": 0.3,
@@ -4549,7 +4549,7 @@
     "Pebble Toss"
    ],
    "24": [
-    "Breeze Slice"
+    "Landslip"
    ],
    "28": [
     "Tunnel Strike"
@@ -4904,5 +4904,3550 @@
    0
   ],
   "keepsake_hint": "rg_prism_umbra"
+ },
+ {
+  "dex_id": 88,
+  "name": "Rollib",
+  "elements": [
+   "LUMEN",
+   "STONE"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "rollib",
+  "era": 1,
+  "base": {
+   "hp": 82,
+   "atk": 69,
+   "foc": 50,
+   "spd": 47,
+   "def": 86
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Dawn Needle",
+    "Dawn Mend"
+   ],
+   "6": [
+    "Bowl Over"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Radiant Lance"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.3 m",
+  "habitat": "Sun-baked flats",
+  "lore": "It rolls a ball of warm sand all day and sleeps curled around it at night.",
+  "origin": "Hatched from a grain of sand that held the sun for a whole year.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Rollibex",
+    "rule": "ring",
+    "value": 17
+   }
+  ]
+ },
+ {
+  "dex_id": 89,
+  "name": "Rollibex",
+  "elements": [
+   "LUMEN",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "rollib",
+  "era": 1,
+  "base": {
+   "hp": 101,
+   "atk": 93,
+   "foc": 72,
+   "spd": 60,
+   "def": 117
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Dawn Needle",
+    "Dawn Mend"
+   ],
+   "6": [
+    "All-In Crash"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ],
+   "32": [
+    "Radiant Lance"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.6 m",
+  "habitat": "Sun-baked flats",
+  "lore": "Its ball now glows at dusk. Travellers follow it to the next well.",
+  "origin": "A Rollib that rolled its ball across the whole plateau and back.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Helirollax",
+    "rule": "ring",
+    "value": 35
+   }
+  ]
+ },
+ {
+  "dex_id": 90,
+  "name": "Helirollax",
+  "elements": [
+   "LUMEN",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "rollib",
+  "era": 1,
+  "base": {
+   "hp": 130,
+   "atk": 93,
+   "foc": 83,
+   "spd": 66,
+   "def": 127
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Dawn Needle",
+    "Still Thought"
+   ],
+   "6": [
+    "All-In Crash"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ],
+   "32": [
+    "Radiant Lance"
+   ],
+   "38": [
+    "Cairn Crash"
+   ],
+   "44": [
+    "Daybreak Strike"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.0 m",
+  "habitat": "Sun-baked flats",
+  "lore": "The ball on its back burns like a small sun. It pushes the morning over the dunes.",
+  "origin": "The old towers say it rolled the first dawn up the sky.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 91,
+  "name": "Sirocub",
+  "elements": [
+   "GALE"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "sirocub",
+  "era": 1,
+  "base": {
+   "hp": 46,
+   "atk": 63,
+   "foc": 50,
+   "spd": 79,
+   "def": 45
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Drift Step"
+   ],
+   "6": [
+    "All-In Crash"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Gale Scythe"
+   ]
+  },
+  "bond_rate": 0.53,
+  "height": "0.5 m",
+  "habitat": "Dune crests in the wind",
+  "lore": "Its big ears catch the smallest breeze. It naps where the wind is coolest.",
+  "origin": "Born in the first warm wind of a Solenne spring.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Sirocat",
+    "rule": "ring",
+    "value": 16
+   }
+  ]
+ },
+ {
+  "dex_id": 92,
+  "name": "Sirocat",
+  "elements": [
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "sirocub",
+  "era": 1,
+  "base": {
+   "hp": 67,
+   "atk": 86,
+   "foc": 71,
+   "spd": 114,
+   "def": 62
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Breeze Slice",
+    "Tailwind"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Gale Scythe"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.9 m",
+  "habitat": "Dune crests in the wind",
+  "lore": "It runs along dune crests so fast that the sand sings behind it.",
+  "origin": "A Sirocub that raced a sandstorm and won.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Siroclaw",
+    "rule": "ring",
+    "value": 36
+   }
+  ]
+ },
+ {
+  "dex_id": 93,
+  "name": "Siroclaw",
+  "elements": [
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "sirocub",
+  "era": 1,
+  "base": {
+   "hp": 90,
+   "atk": 113,
+   "foc": 82,
+   "spd": 143,
+   "def": 72
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Breeze Slice",
+    "Scatter Gale"
+   ],
+   "6": [
+    "All-In Crash"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ],
+   "38": [
+    "Cairn Crash"
+   ],
+   "44": [
+    "Downburst"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.6 m",
+  "habitat": "Dune crests in the wind",
+  "lore": "When it flicks its ears, the hot wind turns. Caravans wait for its call.",
+  "origin": "Grown in the eye of the great summer wind.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 94,
+  "name": "Scaldasp",
+  "elements": [
+   "EMBER"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "kindler",
+  "line_id": "scaldasp",
+  "era": 1,
+  "base": {
+   "hp": 65,
+   "atk": 55,
+   "foc": 77,
+   "spd": 69,
+   "def": 51
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Heat Haze"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Cinder Breath"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "26": [
+    "Fault Line"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ]
+  },
+  "bond_rate": 0.45,
+  "height": "0.9 m",
+  "habitat": "Hot rocks at noon",
+  "lore": "It basks on stones until it is too hot to touch, then hides in the shade.",
+  "origin": "Slipped out of a crack in a sun-scorched rock.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Scaldcoil",
+    "rule": "ring",
+    "value": 16
+   }
+  ]
+ },
+ {
+  "dex_id": 95,
+  "name": "Scaldcoil",
+  "elements": [
+   "EMBER"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "kindler",
+  "line_id": "scaldasp",
+  "era": 1,
+  "base": {
+   "hp": 82,
+   "atk": 81,
+   "foc": 112,
+   "spd": 101,
+   "def": 69
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Ash Call"
+   ],
+   "6": [
+    "Grit Jab"
+   ],
+   "10": [
+    "Char Mark"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Cinder Breath"
+   ],
+   "26": [
+    "Fault Line"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "1.7 m",
+  "habitat": "Hot rocks at noon",
+  "lore": "Its coils keep the noon heat long after sunset. Lizards sleep against it.",
+  "origin": "A Scaldasp that slept a whole summer on the hottest rock.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Scaldrahn",
+    "rule": "ring",
+    "value": 34
+   }
+  ]
+ },
+ {
+  "dex_id": 96,
+  "name": "Scaldrahn",
+  "elements": [
+   "EMBER"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "kindler",
+  "line_id": "scaldasp",
+  "era": 1,
+  "base": {
+   "hp": 100,
+   "atk": 91,
+   "foc": 115,
+   "spd": 120,
+   "def": 89
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Ash Call"
+   ],
+   "6": [
+    "All-In Crash"
+   ],
+   "10": [
+    "Cinder Breath"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "26": [
+    "Fault Line"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Cairn Crash"
+   ],
+   "44": [
+    "Furnace Heart"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "2.9 m",
+  "habitat": "Hot rocks at noon",
+  "lore": "Heat shimmers above its horns. It guards the road between the oases.",
+  "origin": "Grown where the sand road crosses the old lava field.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 97,
+  "name": "Noonpip",
+  "elements": [
+   "LUMEN",
+   "GALE"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "vanguard",
+  "line_id": "noonpip",
+  "era": 1,
+  "base": {
+   "hp": 64,
+   "atk": 72,
+   "foc": 51,
+   "spd": 73,
+   "def": 52
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Dawn Needle",
+    "Dawn Mend"
+   ],
+   "6": [
+    "Draft Needle"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Tailwind"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Radiant Lance"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.4 m",
+  "habitat": "Tower ledges, open sky",
+  "lore": "It sings only at noon, when the shadows are shortest.",
+  "origin": "Hatched on the top step of a sun tower.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Noonwhist",
+    "rule": "ring",
+    "value": 17
+   }
+  ]
+ },
+ {
+  "dex_id": 98,
+  "name": "Noonwhist",
+  "elements": [
+   "LUMEN",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "vanguard",
+  "line_id": "noonpip",
+  "era": 1,
+  "base": {
+   "hp": 83,
+   "atk": 105,
+   "foc": 70,
+   "spd": 93,
+   "def": 73
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Dawn Needle",
+    "Dawn Call"
+   ],
+   "6": [
+    "Draft Needle"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Drift Step"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Radiant Lance"
+   ],
+   "38": [
+    "Gale Scythe"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.8 m",
+  "habitat": "Tower ledges, open sky",
+  "lore": "A ring of light glows behind its head. Tower keepers use it as a clock.",
+  "origin": "A Noonpip that sang through a hundred noons.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Noonsoral",
+    "rule": "ring",
+    "value": 36
+   }
+  ]
+ },
+ {
+  "dex_id": 99,
+  "name": "Noonsoral",
+  "elements": [
+   "LUMEN",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "vanguard",
+  "line_id": "noonpip",
+  "era": 1,
+  "base": {
+   "hp": 98,
+   "atk": 121,
+   "foc": 78,
+   "spd": 119,
+   "def": 86
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Dawn Needle",
+    "Dawn Mend"
+   ],
+   "6": [
+    "Kite Cut"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Drift Step"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Radiant Lance"
+   ],
+   "38": [
+    "Gale Scythe"
+   ],
+   "44": [
+    "Daybreak Strike"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.3 m",
+  "habitat": "Tower ledges, open sky",
+  "lore": "Its crest flares like the sun at its height. Its song carries across the plateau.",
+  "origin": "The tower keepers say it is the noon itself, given feathers.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 100,
+  "name": "Spinnub",
+  "elements": [
+   "BLOOM",
+   "STONE"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "spinnub",
+  "era": 1,
+  "base": {
+   "hp": 79,
+   "atk": 57,
+   "foc": 48,
+   "spd": 41,
+   "def": 90
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Bloom Call"
+   ],
+   "6": [
+    "Bowl Over"
+   ],
+   "10": [
+    "Kelp Lash"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Thorn Volley"
+   ],
+   "26": [
+    "Tremor Thud"
+   ],
+   "32": [
+    "Bloom Burst"
+   ]
+  },
+  "bond_rate": 0.55,
+  "height": "0.5 m",
+  "habitat": "Dry slopes, cactus gardens",
+  "lore": "It stores water in its round body and shares it with thirsty travellers.",
+  "origin": "Sprouted from a seed buried under a waymarker stone.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Spinnarow",
+    "rule": "ring",
+    "value": 20
+   }
+  ]
+ },
+ {
+  "dex_id": 101,
+  "name": "Spinnarow",
+  "elements": [
+   "BLOOM",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "spinnub",
+  "era": 1,
+  "base": {
+   "hp": 102,
+   "atk": 71,
+   "foc": 62,
+   "spd": 57,
+   "def": 110
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Root Mend"
+   ],
+   "6": [
+    "Bowl Over"
+   ],
+   "10": [
+    "Kelp Lash"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Thorn Volley"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ],
+   "32": [
+    "Thornwake"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.9 m",
+  "habitat": "Dry slopes, cactus gardens",
+  "lore": "A crown of blossoms opens on its head after the rare rain.",
+  "origin": "A Spinnub that waited seven years for one rain.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Spinnacle",
+    "rule": "ring",
+    "value": 36
+   }
+  ]
+ },
+ {
+  "dex_id": 102,
+  "name": "Spinnacle",
+  "elements": [
+   "BLOOM",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "spinnub",
+  "era": 1,
+  "base": {
+   "hp": 115,
+   "atk": 82,
+   "foc": 73,
+   "spd": 65,
+   "def": 129
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Lichen Lash",
+    "Husk Shed"
+   ],
+   "6": [
+    "Bowl Over"
+   ],
+   "10": [
+    "Kelp Lash"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Thorn Volley"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Bloom Burst"
+   ],
+   "38": [
+    "Cairn Crash"
+   ],
+   "44": [
+    "Wildgrowth Crash"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.6 m",
+  "habitat": "Dry slopes, cactus gardens",
+  "lore": "It stands still for weeks like a stone tower. Birds nest safely among its spines.",
+  "origin": "Grown on the highest slope of the cactus gardens.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 103,
+  "name": "Wadlet",
+  "elements": [
+   "TIDE",
+   "STONE"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "wadlet",
+  "era": 1,
+  "base": {
+   "hp": 77,
+   "atk": 62,
+   "foc": 48,
+   "spd": 46,
+   "def": 81
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Chill Mist"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.53,
+  "height": "0.4 m",
+  "habitat": "Oasis pools, dry riverbeds",
+  "lore": "It sleeps in damp sand and wakes when a well fills up.",
+  "origin": "Found in a dry riverbed after the first flood in years.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Wadishell",
+    "rule": "ring",
+    "value": 18
+   }
+  ]
+ },
+ {
+  "dex_id": 104,
+  "name": "Wadishell",
+  "elements": [
+   "TIDE",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "wadlet",
+  "era": 1,
+  "base": {
+   "hp": 91,
+   "atk": 77,
+   "foc": 67,
+   "spd": 55,
+   "def": 113
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Chill Mist"
+   ],
+   "6": [
+    "Bowl Over"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.8 m",
+  "habitat": "Oasis pools, dry riverbeds",
+  "lore": "Salt crystals grow on its shell. It carries water to dry pools.",
+  "origin": "A Wadlet that crossed a salt flat to find a new pool.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Wadibastion",
+    "rule": "ring",
+    "value": 33
+   }
+  ]
+ },
+ {
+  "dex_id": 105,
+  "name": "Wadibastion",
+  "elements": [
+   "TIDE",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "wadlet",
+  "era": 1,
+  "base": {
+   "hp": 111,
+   "atk": 92,
+   "foc": 68,
+   "spd": 60,
+   "def": 126
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Tide Call"
+   ],
+   "6": [
+    "All-In Crash"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.3 m",
+  "habitat": "Oasis pools, dry riverbeds",
+  "lore": "Its shell is wide as a well cover. An oasis forms wherever it rests.",
+  "origin": "The well diggers say the first oasis grew around one.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 106,
+  "name": "Ergfin",
+  "elements": [
+   "GALE",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "ergfin",
+  "era": 1,
+  "base": {
+   "hp": 50,
+   "atk": 64,
+   "foc": 46,
+   "spd": 70,
+   "def": 40
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Drift Step"
+   ],
+   "6": [
+    "Salt Snap"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Deepwell Draught"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Rip Current"
+   ]
+  },
+  "bond_rate": 0.55,
+  "height": "0.5 m",
+  "habitat": "The open sand sea",
+  "lore": "It swims through loose sand as if it were water.",
+  "origin": "Hatched in a dune that was once a lake.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Ergskim",
+    "rule": "ring",
+    "value": 18
+   }
+  ]
+ },
+ {
+  "dex_id": 107,
+  "name": "Ergskim",
+  "elements": [
+   "GALE",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "ergfin",
+  "era": 1,
+  "base": {
+   "hp": 70,
+   "atk": 98,
+   "foc": 62,
+   "spd": 96,
+   "def": 52
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Drift Step"
+   ],
+   "6": [
+    "Salt Snap"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Deepwell Draught"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Rip Current"
+   ],
+   "32": [
+    "Gale Scythe"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.9 m",
+  "habitat": "The open sand sea",
+  "lore": "Its fins cut the sand so fast that it leaves a wake of dust.",
+  "origin": "An Ergfin that swam the whole sand sea in one night.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Ergrava",
+    "rule": "ring",
+    "value": 32
+   }
+  ]
+ },
+ {
+  "dex_id": 108,
+  "name": "Ergrava",
+  "elements": [
+   "GALE",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "ergfin",
+  "era": 1,
+  "base": {
+   "hp": 74,
+   "atk": 102,
+   "foc": 73,
+   "spd": 111,
+   "def": 61
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Breeze Slice",
+    "Tailwind"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Drench"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Undertow"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ],
+   "44": [
+    "Downburst"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.6 m",
+  "habitat": "The open sand sea",
+  "lore": "Whole dunes shift when it turns. Sailors of the sand sea greet it with a bell.",
+  "origin": "Grown in the deep sand where the old lake bed lies.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 109,
+  "name": "Ardlet",
+  "elements": [
+   "EMBER"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "kindler",
+  "line_id": "ardlet",
+  "era": 1,
+  "base": {
+   "hp": 69,
+   "atk": 53,
+   "foc": 72,
+   "spd": 67,
+   "def": 54
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Ash Call"
+   ],
+   "6": [
+    "Glint"
+   ],
+   "10": [
+    "Char Mark"
+   ],
+   "15": [
+    "Still Thought"
+   ],
+   "20": [
+    "Cinder Breath"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ]
+  },
+  "bond_rate": 0.55,
+  "height": "0.4 m",
+  "habitat": "Sun towers, warm hearths",
+  "lore": "A small flame dances on its head. It keeps tower hearths warm at night.",
+  "origin": "Sparked from the last ember of a tower beacon.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Ardlume",
+    "rule": "ring",
+    "value": 17
+   }
+  ]
+ },
+ {
+  "dex_id": 110,
+  "name": "Ardlume",
+  "elements": [
+   "EMBER"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "kindler",
+  "line_id": "ardlet",
+  "era": 1,
+  "base": {
+   "hp": 88,
+   "atk": 68,
+   "foc": 106,
+   "spd": 101,
+   "def": 72
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Kindle Up"
+   ],
+   "6": [
+    "Glint"
+   ],
+   "10": [
+    "Cinder Breath"
+   ],
+   "15": [
+    "Dawn Mend"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Prism Burst"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.8 m",
+  "habitat": "Sun towers, warm hearths",
+  "lore": "Its flame turns white when it is proud. It hums while it warms the stones.",
+  "origin": "An Ardlet that kept a beacon burning through a sandstorm.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Ardenthal",
+    "rule": "ring",
+    "value": 33
+   }
+  ]
+ },
+ {
+  "dex_id": 111,
+  "name": "Ardenthal",
+  "elements": [
+   "EMBER"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "kindler",
+  "line_id": "ardlet",
+  "era": 1,
+  "base": {
+   "hp": 103,
+   "atk": 81,
+   "foc": 127,
+   "spd": 116,
+   "def": 88
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Heat Haze"
+   ],
+   "6": [
+    "Beacon Ping"
+   ],
+   "10": [
+    "Char Mark"
+   ],
+   "15": [
+    "Dawn Mend"
+   ],
+   "20": [
+    "Cinder Breath"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Prism Burst"
+   ],
+   "44": [
+    "Furnace Heart"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.3 m",
+  "habitat": "Sun towers, warm hearths",
+  "lore": "Its crown of fire lights a whole tower. Wayfarers see it from a day away.",
+  "origin": "Grown at the top of the oldest sun tower.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 112,
+  "name": "Fulgrit",
+  "elements": [
+   "VOLT",
+   "STONE"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "vanguard",
+  "line_id": "fulgrit",
+  "era": 1,
+  "base": {
+   "hp": 61,
+   "atk": 72,
+   "foc": 49,
+   "spd": 76,
+   "def": 54
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Spark Call"
+   ],
+   "6": [
+    "Bowl Over"
+   ],
+   "10": [
+    "Pylon Snap"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Landslip"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.6 m",
+  "habitat": "Glassy dunes after storms",
+  "lore": "It licks the glassy sand where lightning struck and crackles happily.",
+  "origin": "Born where a dry storm struck a dune.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Fulgorin",
+    "rule": "ring",
+    "value": 16
+   }
+  ]
+ },
+ {
+  "dex_id": 113,
+  "name": "Fulgorin",
+  "elements": [
+   "VOLT",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "vanguard",
+  "line_id": "fulgrit",
+  "era": 1,
+  "base": {
+   "hp": 78,
+   "atk": 101,
+   "foc": 70,
+   "spd": 97,
+   "def": 69
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Charged Mist"
+   ],
+   "6": [
+    "Pebble Toss"
+   ],
+   "10": [
+    "Pylon Snap"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "1.1 m",
+  "habitat": "Glassy dunes after storms",
+  "lore": "The horn on its head draws sparks out of the dry air.",
+  "origin": "A Fulgrit that stood in a storm and caught three bolts.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Fulgorath",
+    "rule": "ring",
+    "value": 32
+   }
+  ]
+ },
+ {
+  "dex_id": 114,
+  "name": "Fulgorath",
+  "elements": [
+   "VOLT",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "vanguard",
+  "line_id": "fulgrit",
+  "era": 1,
+  "base": {
+   "hp": 96,
+   "atk": 132,
+   "foc": 80,
+   "spd": 124,
+   "def": 83
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Spark Call"
+   ],
+   "6": [
+    "Grit Jab"
+   ],
+   "10": [
+    "Pylon Snap"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "38": [
+    "Cairn Crash"
+   ],
+   "44": [
+    "Capacitor Crash"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.9 m",
+  "habitat": "Glassy dunes after storms",
+  "lore": "Its spines are tubes of lightning glass. When it roars, the sky answers.",
+  "origin": "Grown on the glass fields after the great dry storm.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 115,
+  "name": "Carabun",
+  "elements": [
+   "STONE",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "carabun",
+  "era": 1,
+  "base": {
+   "hp": 74,
+   "atk": 57,
+   "foc": 52,
+   "spd": 44,
+   "def": 88
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Hunker Down"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Landslip"
+   ],
+   "26": [
+    "Undertow"
+   ],
+   "32": [
+    "Tremor Thud"
+   ]
+  },
+  "bond_rate": 0.45,
+  "height": "0.5 m",
+  "habitat": "Caravan roads",
+  "lore": "It walks beside caravans and never gets lost. Its hump holds water.",
+  "origin": "Found asleep at a caravan stop, as if it had always been there.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Caravant",
+    "rule": "ring",
+    "value": 17
+   }
+  ]
+ },
+ {
+  "dex_id": 116,
+  "name": "Caravant",
+  "elements": [
+   "STONE",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "carabun",
+  "era": 1,
+  "base": {
+   "hp": 97,
+   "atk": 74,
+   "foc": 65,
+   "spd": 58,
+   "def": 114
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Hunker Down"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Deepwell Draught"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Undertow"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.9 m",
+  "habitat": "Caravan roads",
+  "lore": "It can walk ten days without a drink. Children play in the shade of its hump.",
+  "origin": "A Carabun that led a lost caravan home.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Caravault",
+    "rule": "ring",
+    "value": 36
+   }
+  ]
+ },
+ {
+  "dex_id": 117,
+  "name": "Caravault",
+  "elements": [
+   "STONE",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "carabun",
+  "era": 1,
+  "base": {
+   "hp": 110,
+   "atk": 89,
+   "foc": 72,
+   "spd": 63,
+   "def": 129
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Hunker Down"
+   ],
+   "6": [
+    "Salt Snap"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Landslip"
+   ],
+   "26": [
+    "Undertow"
+   ],
+   "32": [
+    "Tremor Thud"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.6 m",
+  "habitat": "Caravan roads",
+  "lore": "Its hump holds a whole well. Towns grow along the roads it walks.",
+  "origin": "The caravan folk say it walked the first road across Solenne.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 118,
+  "name": "Velvit",
+  "elements": [
+   "UMBRA",
+   "GALE"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "weaver",
+  "line_id": "velvit",
+  "era": 1,
+  "base": {
+   "hp": 58,
+   "atk": 35,
+   "foc": 68,
+   "spd": 53,
+   "def": 58
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Mirk Nip",
+    "Murk Veil"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "10": [
+    "Night Siphon"
+   ],
+   "15": [
+    "Tailwind"
+   ],
+   "20": [
+    "Gloom Ripple"
+   ],
+   "26": [
+    "Updraft"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.55,
+  "height": "0.3 m",
+  "habitat": "Desert nights, under lamps",
+  "lore": "It wakes at dusk and flutters around lamps until dawn.",
+  "origin": "Hatched from a cocoon spun in a lamp shade.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Velvessa",
+    "rule": "ring",
+    "value": 16
+   }
+  ]
+ },
+ {
+  "dex_id": 119,
+  "name": "Velvessa",
+  "elements": [
+   "UMBRA",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "weaver",
+  "line_id": "velvit",
+  "era": 1,
+  "base": {
+   "hp": 71,
+   "atk": 52,
+   "foc": 101,
+   "spd": 77,
+   "def": 70
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Cower Shade"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "10": [
+    "Night Siphon"
+   ],
+   "15": [
+    "Scatter Gale"
+   ],
+   "20": [
+    "Gloom Ripple"
+   ],
+   "26": [
+    "Updraft"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Cloudbreak"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.6 m",
+  "habitat": "Desert nights, under lamps",
+  "lore": "The eyes on its wings stare back at night hunters.",
+  "origin": "A Velvit that stayed by one lamp for a whole season.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Velverain",
+    "rule": "ring",
+    "value": 36
+   }
+  ]
+ },
+ {
+  "dex_id": 120,
+  "name": "Velverain",
+  "elements": [
+   "UMBRA",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "weaver",
+  "line_id": "velvit",
+  "era": 1,
+  "base": {
+   "hp": 90,
+   "atk": 62,
+   "foc": 105,
+   "spd": 77,
+   "def": 78
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Cower Shade"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "10": [
+    "Night Siphon"
+   ],
+   "15": [
+    "Tailwind"
+   ],
+   "20": [
+    "Gloom Ripple"
+   ],
+   "26": [
+    "Updraft"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Cloudbreak"
+   ],
+   "44": [
+    "Eclipse Crush"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "1.0 m",
+  "habitat": "Desert nights, under lamps",
+  "lore": "Its wings are soft as velvet and dark as the desert sky. Dust from them makes people dream.",
+  "origin": "Grown under the starless sky of a new moon.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 121,
+  "name": "Clasplet",
+  "elements": [
+   "UMBRA",
+   "STONE"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "clasplet",
+  "era": 1,
+  "base": {
+   "hp": 47,
+   "atk": 73,
+   "foc": 51,
+   "spd": 85,
+   "def": 46
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Hush"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Dusk Rake"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Murmur Bite"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.3 m",
+  "habitat": "Cool cracks under stones",
+  "lore": "It hides under stones in the heat and comes out to hunt beetles at night.",
+  "origin": "Crawled out from under a fallen tower stone.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Claspirant",
+    "rule": "ring",
+    "value": 17
+   }
+  ]
+ },
+ {
+  "dex_id": 122,
+  "name": "Claspirant",
+  "elements": [
+   "UMBRA",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "clasplet",
+  "era": 1,
+  "base": {
+   "hp": 66,
+   "atk": 100,
+   "foc": 63,
+   "spd": 117,
+   "def": 58
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Hush"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Dusk Rake"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Murmur Bite"
+   ],
+   "26": [
+    "Tremor Thud"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.6 m",
+  "habitat": "Cool cracks under stones",
+  "lore": "It raises its tail as a warning long before it strikes.",
+  "origin": "A Clasplet that guarded one stone for a hundred nights.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Claspreign",
+    "rule": "ring",
+    "value": 32
+   }
+  ]
+ },
+ {
+  "dex_id": 123,
+  "name": "Claspreign",
+  "elements": [
+   "UMBRA",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "clasplet",
+  "era": 1,
+  "base": {
+   "hp": 88,
+   "atk": 113,
+   "foc": 90,
+   "spd": 143,
+   "def": 72
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Cower Shade"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Murmur Bite"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Cairn Crash"
+   ],
+   "44": [
+    "Eclipse Crush"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "1.0 m",
+  "habitat": "Cool cracks under stones",
+  "lore": "Its claws can crack tower stone. Even sandstorms go around its den.",
+  "origin": "Grown in the dark under the oldest ruin of Solenne.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 124,
+  "name": "Obelit",
+  "elements": [
+   "STONE",
+   "LUMEN"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "obelit",
+  "era": 1,
+  "base": {
+   "hp": 75,
+   "atk": 67,
+   "foc": 57,
+   "spd": 47,
+   "def": 97
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Bowl Over",
+    "Hunker Down"
+   ],
+   "6": [
+    "Dawn Needle"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Dawn Mend"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Starlit Lash"
+   ]
+  },
+  "bond_rate": 0.55,
+  "height": "0.6 m",
+  "habitat": "Old sun towers",
+  "lore": "It stands still on tower steps and is often taken for a small statue.",
+  "origin": "Chipped off a sun tower when the first stone was laid.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Obelith",
+    "rule": "ring",
+    "value": 19
+   }
+  ]
+ },
+ {
+  "dex_id": 125,
+  "name": "Obelith",
+  "elements": [
+   "STONE",
+   "LUMEN"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "obelit",
+  "era": 1,
+  "base": {
+   "hp": 113,
+   "atk": 84,
+   "foc": 67,
+   "spd": 69,
+   "def": 130
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Hunker Down"
+   ],
+   "6": [
+    "Dawn Needle"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Sunwell Sip"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Starlit Lash"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Radiant Lance"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "1.1 m",
+  "habitat": "Old sun towers",
+  "lore": "The marks on its body glow in the order of the stars.",
+  "origin": "An Obelit that stood one whole year in the sun.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Obelordan",
+    "rule": "ring",
+    "value": 34
+   }
+  ]
+ },
+ {
+  "dex_id": 126,
+  "name": "Obelordan",
+  "elements": [
+   "STONE",
+   "LUMEN"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "obelit",
+  "era": 1,
+  "base": {
+   "hp": 129,
+   "atk": 100,
+   "foc": 85,
+   "spd": 74,
+   "def": 127
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Grit Jab",
+    "Hunker Down"
+   ],
+   "6": [
+    "Dawn Needle"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Dawn Call"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Starlit Lash"
+   ],
+   "32": [
+    "Tremor Thud"
+   ],
+   "38": [
+    "Radiant Lance"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "1.9 m",
+  "habitat": "Old sun towers",
+  "lore": "Its spire points at the sun all day. Its shadow tells the hour.",
+  "origin": "The tower builders say they copied its shape.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 127,
+  "name": "Haboblet",
+  "elements": [
+   "GALE",
+   "STONE"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "vanguard",
+  "line_id": "haboblet",
+  "era": 1,
+  "base": {
+   "hp": 55,
+   "atk": 77,
+   "foc": 50,
+   "spd": 69,
+   "def": 52
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Breeze Slice",
+    "Drift Step"
+   ],
+   "6": [
+    "Grit Jab"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Tremor Thud"
+   ],
+   "32": [
+    "Gale Scythe"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.9 m",
+  "habitat": "Sandstorm fronts",
+  "lore": "It curls up in dust devils and spins with them for fun.",
+  "origin": "Whirled up out of a small dust devil.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Haboborn",
+    "rule": "ring",
+    "value": 19
+   }
+  ]
+ },
+ {
+  "dex_id": 128,
+  "name": "Haboborn",
+  "elements": [
+   "GALE",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "vanguard",
+  "line_id": "haboblet",
+  "era": 1,
+  "base": {
+   "hp": 78,
+   "atk": 101,
+   "foc": 57,
+   "spd": 95,
+   "def": 69
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Breeze Slice",
+    "Drift Step"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Gale Scythe"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "1.7 m",
+  "habitat": "Sandstorm fronts",
+  "lore": "The sail on its back catches the storm. It rides the front of every sandstorm.",
+  "origin": "A Haboblet that flew inside a storm for three days.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Habobrax",
+    "rule": "ring",
+    "value": 35
+   }
+  ]
+ },
+ {
+  "dex_id": 129,
+  "name": "Habobrax",
+  "elements": [
+   "GALE",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "vanguard",
+  "line_id": "haboblet",
+  "era": 1,
+  "base": {
+   "hp": 92,
+   "atk": 117,
+   "foc": 74,
+   "spd": 108,
+   "def": 77
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Scatter Gale"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Tremor Thud"
+   ],
+   "32": [
+    "Gale Scythe"
+   ],
+   "38": [
+    "Cairn Crash"
+   ],
+   "44": [
+    "Downburst"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "2.9 m",
+  "habitat": "Sandstorm fronts",
+  "lore": "When it raises its sail, a wall of sand rises behind it.",
+  "origin": "Grown in the heart of the great sandstorm of the Tower Rift.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 130,
+  "name": "Stiltwade",
+  "elements": [
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "weaver",
+  "line_id": "stiltwade",
+  "era": 1,
+  "base": {
+   "hp": 59,
+   "atk": 35,
+   "foc": 78,
+   "spd": 48,
+   "def": 50
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Fizz Pop",
+    "Drench"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "10": [
+    "Salt Spray"
+   ],
+   "15": [
+    "Scatter Gale"
+   ],
+   "20": [
+    "Spindrift Shot"
+   ],
+   "26": [
+    "Updraft"
+   ],
+   "32": [
+    "Bore Wave"
+   ]
+  },
+  "bond_rate": 0.53,
+  "height": "0.4 m",
+  "habitat": "Salt lake shallows",
+  "lore": "It stands on one leg in the salt shallows and never seems to tire.",
+  "origin": "Hatched on a salt island in the middle of the lake.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Stiltregent",
+    "rule": "ring",
+    "value": 27
+   }
+  ]
+ },
+ {
+  "dex_id": 131,
+  "name": "Stiltregent",
+  "elements": [
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "weaver",
+  "line_id": "stiltwade",
+  "era": 1,
+  "base": {
+   "hp": 72,
+   "atk": 51,
+   "foc": 97,
+   "spd": 75,
+   "def": 79
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Fizz Pop",
+    "Chill Mist"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "10": [
+    "Salt Spray"
+   ],
+   "15": [
+    "Scatter Gale"
+   ],
+   "20": [
+    "Spindrift Shot"
+   ],
+   "26": [
+    "Updraft"
+   ],
+   "32": [
+    "Bore Wave"
+   ],
+   "38": [
+    "Squall"
+   ],
+   "44": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "0.9 m",
+  "habitat": "Salt lake shallows",
+  "lore": "Its long fan tail opens like a sunrise over the lake.",
+  "origin": "A Stiltwade that led a flock across the salt lake.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 132,
+  "name": "Palmop",
+  "elements": [
+   "BLOOM",
+   "LUMEN"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "kindler",
+  "line_id": "palmop",
+  "era": 1,
+  "base": {
+   "hp": 63,
+   "atk": 52,
+   "foc": 73,
+   "spd": 77,
+   "def": 60
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Lichen Lash",
+    "Graft"
+   ],
+   "6": [
+    "Glint"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Dawn Mend"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Prism Ray"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.5 m",
+  "habitat": "Palm groves by the wells",
+  "lore": "Its leaves give shade to anything smaller than itself.",
+  "origin": "Sprouted from a date stone dropped by a traveller.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Palmonarch",
+    "rule": "ring",
+    "value": 28
+   }
+  ]
+ },
+ {
+  "dex_id": 133,
+  "name": "Palmonarch",
+  "elements": [
+   "BLOOM",
+   "LUMEN"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "kindler",
+  "line_id": "palmop",
+  "era": 1,
+  "base": {
+   "hp": 82,
+   "atk": 79,
+   "foc": 99,
+   "spd": 91,
+   "def": 80
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Lichen Lash",
+    "Puffcap Haze"
+   ],
+   "6": [
+    "Beacon Ping"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Dawn Mend"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "38": [
+    "Prism Burst"
+   ],
+   "44": [
+    "Bloom Burst"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.1 m",
+  "habitat": "Palm groves by the wells",
+  "lore": "Its fronds glow at dawn. Whole villages rest in its shade at noon.",
+  "origin": "A Palmop that grew at the first well of Ochrewell.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "bark_wrap"
+ },
+ {
+  "dex_id": 134,
+  "name": "Bakedil",
+  "elements": [
+   "STONE",
+   "EMBER"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "bakedil",
+  "era": 1,
+  "base": {
+   "hp": 77,
+   "atk": 67,
+   "foc": 58,
+   "spd": 50,
+   "def": 89
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Bowl Over",
+    "Quarry Wall"
+   ],
+   "6": [
+    "Glow Knuckle"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Kindle Up"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Kiln Strike"
+   ],
+   "32": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.4 m",
+  "habitat": "Clay ovens, warm burrows",
+  "lore": "It sleeps in clay ovens after the bread is out. Its shell stays warm all night.",
+  "origin": "Found in a cooling oven, curled up like a loaf.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Bakedillon",
+    "rule": "ring",
+    "value": 29
+   }
+  ]
+ },
+ {
+  "dex_id": 135,
+  "name": "Bakedillon",
+  "elements": [
+   "STONE",
+   "EMBER"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "bakedil",
+  "era": 1,
+  "base": {
+   "hp": 109,
+   "atk": 89,
+   "foc": 73,
+   "spd": 65,
+   "def": 134
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Bowl Over",
+    "Quarry Wall"
+   ],
+   "6": [
+    "Glow Knuckle"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Heat Haze"
+   ],
+   "20": [
+    "Landslip"
+   ],
+   "26": [
+    "Kiln Strike"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Furnace Spiral"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "0.9 m",
+  "habitat": "Clay ovens, warm burrows",
+  "lore": "The plates on its back are hot as baking stones. Bakers ask it for help.",
+  "origin": "A Bakedil that warmed a whole village through a cold night.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 136,
+  "name": "Hazejel",
+  "elements": [
+   "GALE",
+   "LUMEN"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "weaver",
+  "line_id": "hazejel",
+  "era": 1,
+  "base": {
+   "hp": 62,
+   "atk": 45,
+   "foc": 84,
+   "spd": 61,
+   "def": 60
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Tailwind"
+   ],
+   "6": [
+    "Wick Flicker"
+   ],
+   "10": [
+    "Crosswind"
+   ],
+   "15": [
+    "Sunwell Sip"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Cloudbreak"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.4 m",
+  "habitat": "Mirage fields at noon",
+  "lore": "It floats in the noon haze and is hard to see unless you blink.",
+  "origin": "Drifted out of a mirage that did not fade.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Hazejellith",
+    "rule": "ring",
+    "value": 27
+   }
+  ]
+ },
+ {
+  "dex_id": 137,
+  "name": "Hazejellith",
+  "elements": [
+   "GALE",
+   "LUMEN"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "weaver",
+  "line_id": "hazejel",
+  "era": 1,
+  "base": {
+   "hp": 93,
+   "atk": 61,
+   "foc": 112,
+   "spd": 79,
+   "def": 90
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Scatter Gale"
+   ],
+   "6": [
+    "Beacon Ping"
+   ],
+   "10": [
+    "Updraft"
+   ],
+   "15": [
+    "Dawn Call"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Squall"
+   ],
+   "38": [
+    "Omen Bell"
+   ],
+   "44": [
+    "Downburst"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "0.9 m",
+  "habitat": "Mirage fields at noon",
+  "lore": "It shows travellers false lakes, then leads them to a real one.",
+  "origin": "A Hazejel that drifted over the whole sand sea.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 138,
+  "name": "Corocub",
+  "elements": [
+   "EMBER",
+   "LUMEN"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "vanguard",
+  "line_id": "corocub",
+  "era": 1,
+  "base": {
+   "hp": 62,
+   "atk": 78,
+   "foc": 52,
+   "spd": 81,
+   "def": 56
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Ash Call"
+   ],
+   "6": [
+    "Dawn Needle"
+   ],
+   "10": [
+    "Glow Knuckle"
+   ],
+   "15": [
+    "Sunwell Sip"
+   ],
+   "20": [
+    "Kiln Strike"
+   ],
+   "26": [
+    "Starlit Lash"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.5 m",
+  "habitat": "Sunny plateau rocks",
+  "lore": "Its mane glows like embers. It pounces on its own shadow.",
+  "origin": "Born on the hottest rock of the plateau at noon.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Coronarch",
+    "rule": "ring",
+    "value": 29
+   }
+  ]
+ },
+ {
+  "dex_id": 139,
+  "name": "Coronarch",
+  "elements": [
+   "EMBER",
+   "LUMEN"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "vanguard",
+  "line_id": "corocub",
+  "era": 1,
+  "base": {
+   "hp": 94,
+   "atk": 121,
+   "foc": 73,
+   "spd": 107,
+   "def": 73
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Heat Haze"
+   ],
+   "6": [
+    "Dawn Needle"
+   ],
+   "10": [
+    "Glow Knuckle"
+   ],
+   "15": [
+    "Still Thought"
+   ],
+   "20": [
+    "Kiln Strike"
+   ],
+   "26": [
+    "Starlit Lash"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Radiant Lance"
+   ],
+   "44": [
+    "Furnace Heart"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.1 m",
+  "habitat": "Sunny plateau rocks",
+  "lore": "Its mane blazes like the sun's corona. Its roar can be heard across the plateau.",
+  "origin": "A Corocub that stared at the sun without blinking.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 140,
+  "name": "Chirrik",
+  "elements": [
+   "GALE",
+   "BLOOM"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "chirrik",
+  "era": 1,
+  "base": {
+   "hp": 49,
+   "atk": 63,
+   "foc": 48,
+   "spd": 77,
+   "def": 39
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Breeze Slice",
+    "Scatter Gale"
+   ],
+   "6": [
+    "Pollen Prick"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Husk Shed"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Gale Scythe"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.3 m",
+  "habitat": "Dry grass, millet fields",
+  "lore": "It chirps in the dry grass from dawn to dusk.",
+  "origin": "Hatched in a millet field after a hot summer.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Chirrikade",
+    "rule": "ring",
+    "value": 27
+   }
+  ]
+ },
+ {
+  "dex_id": 141,
+  "name": "Chirrikade",
+  "elements": [
+   "GALE",
+   "BLOOM"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "chirrik",
+  "era": 1,
+  "base": {
+   "hp": 66,
+   "atk": 102,
+   "foc": 67,
+   "spd": 122,
+   "def": 69
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Drift Step"
+   ],
+   "6": [
+    "Kelp Lash"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Graft"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ],
+   "44": [
+    "Downburst"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "0.7 m",
+  "habitat": "Dry grass, millet fields",
+  "lore": "One leap carries it over a house. Farmers welcome it, it eats only weeds.",
+  "origin": "A Chirrik that jumped across a whole canyon.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "bark_wrap"
+ },
+ {
+  "dex_id": 142,
+  "name": "Brinewhorl",
+  "elements": [
+   "TIDE",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "weaver",
+  "line_id": "brinewhorl",
+  "era": 1,
+  "base": {
+   "hp": 85,
+   "atk": 63,
+   "foc": 104,
+   "spd": 83,
+   "def": 85
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Fizz Pop",
+    "Deepwell Draught"
+   ],
+   "6": [
+    "Bowl Over"
+   ],
+   "10": [
+    "Salt Spray"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Spindrift Shot"
+   ],
+   "26": [
+    "Fault Line"
+   ],
+   "32": [
+    "Bore Wave"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.6 m",
+  "habitat": "Salt crusts by the lakes",
+  "lore": "Its shell is crusted with salt. It writes slow spirals on the lake shore.",
+  "origin": "Grew from a salt crystal that was never washed away.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 143,
+  "name": "Gyrevult",
+  "elements": [
+   "UMBRA",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "gyrevult",
+  "era": 1,
+  "base": {
+   "hp": 62,
+   "atk": 95,
+   "foc": 63,
+   "spd": 100,
+   "def": 55
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Hush"
+   ],
+   "6": [
+    "Breeze Slice"
+   ],
+   "10": [
+    "Dusk Rake"
+   ],
+   "15": [
+    "Drift Step"
+   ],
+   "20": [
+    "Murmur Bite"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Gale Scythe"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.6 m",
+  "habitat": "High thermals over the canyon",
+  "lore": "It circles high over the canyon for hours without a single wing beat.",
+  "origin": "Rose out of the canyon on the first thermal of the morning.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 144,
+  "name": "Heliodrop",
+  "elements": [
+   "EMBER"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "kindler",
+  "line_id": "heliodrop",
+  "era": 1,
+  "base": {
+   "hp": 95,
+   "atk": 75,
+   "foc": 104,
+   "spd": 94,
+   "def": 69
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Heat Haze"
+   ],
+   "6": [
+    "Glint"
+   ],
+   "10": [
+    "Char Mark"
+   ],
+   "15": [
+    "Candle Ward"
+   ],
+   "20": [
+    "Cinder Breath"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Omen Bell"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.6 m",
+  "habitat": "Sunspots on bare stone",
+  "lore": "A drop of sunlight that fell and did not cool. It giggles when touched.",
+  "origin": "Fell from the sky on the longest day of the year.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 145,
+  "name": "Duskmirrah",
+  "elements": [
+   "UMBRA",
+   "LUMEN"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "weaver",
+  "line_id": "duskmirrah",
+  "era": 1,
+  "base": {
+   "hp": 77,
+   "atk": 57,
+   "foc": 104,
+   "spd": 72,
+   "def": 80
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Mirk Nip",
+    "Gloam Pact"
+   ],
+   "6": [
+    "Glint"
+   ],
+   "10": [
+    "Night Siphon"
+   ],
+   "15": [
+    "Dawn Mend"
+   ],
+   "20": [
+    "Gloom Ripple"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Omen Bell"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "1.0 m",
+  "habitat": "Where day turns to night",
+  "lore": "It is seen only in the moment the sun sets. Half of it glows, half is shadow.",
+  "origin": "Stepped out of the line between day and night.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
  }
 ]

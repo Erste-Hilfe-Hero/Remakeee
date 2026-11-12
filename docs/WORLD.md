@@ -90,6 +90,7 @@ Maps with `"outdoor": true` follow the device clock through `DayCycle`: dawn 5:0
   ways out (by foot or by line). `WorldValidator.check_shapes` checks both.
 - **Statistics:** `python3 tools/world_stats.py` writes the table below (`--check` tells if it is stale).
 - **Act I look:** Veydal maps use their own atlas `art/era1/tiles/overworld_veydal.png` (heath, bracken, firs, peat tarns, slate cliffs, dry-stone walls, waystones, cairns), made by `tools/art/gen_tiles_veydal.py`. TilesetFactory picks `tiles/overworld_<region>.png` when the map region has one; buildings and the lighthouse keep the shared tiles.
+- **Act III look:** Ashmere maps use `art/era1/tiles/overworld_ashmere.png` (ash ground, charred brush, dead snags, brine pools, salt spikes, cinder scree, slag heaps, braziers, basalt cliffs), made by `tools/art/gen_tiles_ashmere.py`, and switch the Era I filter to their own four inks from `data/region_looks.json` (RegionLook, EraManager.set_region).
 - **Overview:** `python3 tools/art/preview_map.py --region veydal` draws every map of a region
   on one sheet (`build/previews/veydal.png`).
 - **Checks:** `tools/validate_data.gd` and `tests/unit/test_world_data.gd` check tiles,
@@ -141,18 +142,23 @@ Written by `python3 tools/world_stats.py`.
 | corvane | `stillwater` | route | 12x26 | 4 | 3 | 53 |
 | corvane | `wide_rift_edge` | rift | 12x16 | 0 | 0 | 0 |
 | corvane | `woadfen` | marsh | 12x28 | 5 | 3 | 154 |
-| ashmere | `ashmere_station` | town | 12x22 | 3 | 0 | 0 |
-| ashmere | `cinderfold` | town | 12x16 | 3 | 0 | 0 |
+| ashmere | `ashmere_station` | town | 12x22 | 5 | 1 | 0 |
+| ashmere | `cinderfold` | town | 12x16 | 4 | 0 | 0 |
 | ashmere | `glass_rift` | rift | 12x13 | 0 | 0 | 20 |
 | ashmere | `gravers_hall` | inside | 10x9 | 0 | 0 | 0 |
 | ashmere | `kiln_rift` | rift | 12x13 | 0 | 0 | 20 |
-| ashmere | `saltglass` | route | 12x26 | 5 | 3 | 56 |
+| ashmere | `saltglass` | route | 12x26 | 5 | 4 | 56 |
 | ashmere | `shade_rift` | rift | 12x22 | 0 | 5 | 16 |
+| ashmere | `soot_vaults` | dungeon | 12x20 + 12x20 + 12x20 + 12x20 + 12x20 + 12x20 | 21 | 17 | 174 |
 | ashmere | `undrawn_1` | rift | 12x22 | 0 | 0 | 0 |
 | ashmere | `undrawn_2` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
-| | **49 maps** | | | **103** | **56** | **1112** |
+| solenne | `oasis_rift` | rift | 12x22 | 0 | 4 | 18 |
+| solenne | `ochrewell` | town | 12x20 | 3 | 0 | 0 |
+| solenne | `sun_rift` | rift | 12x22 | 0 | 4 | 13 |
+| solenne | `tower_rift` | rift | 12x22 | 0 | 4 | 21 |
+| | **54 maps** | | | **130** | **87** | **1338** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)

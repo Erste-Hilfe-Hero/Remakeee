@@ -54,6 +54,8 @@ static func run(menu: PauseMenu) -> void:
 			labels.append("Trades")
 		if Online.flag_on("daily_gift"):
 			labels.append("Daily gift")
+		if Online.flag_on("live_duel"):
+			labels.append("Live duels")
 		var title: String = "Friends %d   Your code %s" % [friends.size(), Online.pretty_code(Online.friend_code())]
 		var idx: int = await menu.pick_strings(title, labels)
 		if idx < 0:
@@ -74,6 +76,7 @@ static func run(menu: PauseMenu) -> void:
 			"Bund": await BundMenu.run(menu)
 			"Trades": await TradeMenu.run(menu)
 			"Daily gift": await run_daily_gift(menu)
+			"Live duels": await LiveDuelMenu.run(menu, friends)
 			"Raid Rifts":
 				await RaidMenu.run(menu)
 				if not menu.raid_attempt.is_empty():

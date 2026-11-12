@@ -15,6 +15,7 @@ import os
 import random
 
 from px import Canvas
+import buildings
 
 T = 16
 KINDS = ["GRASS", "TALL_GRASS", "PATH", "WATER", "TREE", "WALL", "ROOF", "DOOR", "FLOOR",
@@ -123,71 +124,20 @@ def tree(c: Canvas, ox: int, oy: int, variant: int) -> None:
 
 
 def wall(c: Canvas, ox: int, oy: int, mask: int) -> None:
-    c.rect(ox, oy, T, T, 3)
-    # Timber frame: posts at open ends, beam on top, plinth at the bottom.
-    c.hline(ox, ox + 15, oy, 1)
-    c.hline(ox, ox + 15, oy + 13, 1)
-    c.rect(ox, oy + 14, T, 2, 0)
-    if not mask & LEFT:
-        c.vline(ox, oy, oy + 15, 0)
-        c.vline(ox + 1, oy, oy + 13, 1)
-    if not mask & RIGHT:
-        c.vline(ox + 15, oy, oy + 15, 0)
-        c.vline(ox + 14, oy, oy + 13, 1)
-    # Round-top window (original shape, not a square grid).
-    c.ascii(ox + 4, oy + 3, ["..0000..",
-                             ".011110.",
-                             "01122110",
-                             "01200210",
-                             "01122110",
-                             "00000000",
-                             ".222222."])
+    # Veydal half-timbering; the other acts draw their own (buildings.py, gen_tiles_towns.py).
+    buildings.v_wall(c, ox, oy, mask)
+
 
 
 def roof(c: Canvas, ox: int, oy: int, mask: int) -> None:
-    # Overlapping wooden shingles: rows of 4 px, staggered every other row.
-    c.rect(ox, oy, T, T, 1)
-    for row in range(4):
-        y = oy + row * 4
-        c.hline(ox, ox + 15, y, 2)
-        c.hline(ox, ox + 15, y + 3, 0)
-        for x in range((row % 2) * 4, 16, 8):
-            c.vline(ox + x, y + 1, y + 2, 0)
-            c.set(ox + x + 1, y + 1, 2)
-    if not mask & UP:
-        c.hline(ox, ox + 15, oy, 0)
-        c.hline(ox, ox + 15, oy + 1, 2)
-        c.hline(ox, ox + 15, oy + 2, 3)
-    if not mask & DOWN:
-        # Eave casting a shadow on the wall below.
-        c.hline(ox, ox + 15, oy + 13, 2)
-        c.hline(ox, ox + 15, oy + 14, 0)
-        c.checker(ox, oy + 15, T, 1, 0, 1)
-    if not mask & LEFT:
-        c.vline(ox, oy, oy + 15, 0)
-        c.vline(ox + 1, oy + 1, oy + 13, 2)
-    if not mask & RIGHT:
-        c.vline(ox + 15, oy, oy + 15, 0)
+    buildings.v_roof(c, ox, oy, mask)
 
 
-def door(c: Canvas, ox: int, oy: int) -> None:
-    wall(c, ox, oy, LEFT | RIGHT)
-    c.rect(ox + 2, oy + 2, 12, 12, 3)
-    c.ascii(ox + 3, oy + 1, ["..000000..",
-                             ".01111110.",
-                             "0112112110",
-                             "0112112110",
-                             "0112112110",
-                             "0111111110",
-                             "0112112130",
-                             "0112112110",
-                             "0112112110",
-                             "0111111110",
-                             "0112112110",
-                             "0111111110",
-                             "0000000000"])
-    c.hline(ox + 1, ox + 14, oy + 14, 2)
-    c.hline(ox + 1, ox + 14, oy + 15, 1)
+
+def door(c: Canvas, ox: int, oy: int, role: int = 0) -> None:
+    # Row = role (TilesetFactory.DoorRole): house, healer, shop, Rift gate.
+    buildings.v_door(c, ox, oy, role)
+
 
 
 def floor(c: Canvas, ox: int, oy: int) -> None:
@@ -200,51 +150,13 @@ def floor(c: Canvas, ox: int, oy: int) -> None:
 
 
 def fence(c: Canvas, ox: int, oy: int, mask: int) -> None:
-    grass(c, ox, oy, 1)
-    # Split-rail fence: two rails, one post per tile.
-    for y in (5, 10):
-        c.hline(ox, ox + 15, oy + y, 0)
-        c.hline(ox, ox + 15, oy + y + 1, 3)
-        c.hline(ox, ox + 15, oy + y + 2, 0)
-    c.ascii(ox + 6, oy + 2, ["0000",
-                             "0330",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0220",
-                             "0000"])
-    if not mask & LEFT:
-        c.rect(ox, oy + 5, 3, 8, None)
-        grass_patch = Canvas(3, 8)
-        c.rect(ox, oy + 5, 3, 8, 2)
-    if not mask & RIGHT:
-        c.rect(ox + 13, oy + 5, 3, 8, 2)
+    buildings.v_fence(c, ox, oy, mask, grass)
+
 
 
 def sign(c: Canvas, ox: int, oy: int) -> None:
-    grass(c, ox, oy, 2)
-    # Hanging board on a crossbar post (not a plain rectangle on a stick).
-    c.ascii(ox + 1, oy + 1, ["00000000000000",
-                             "0..0......0..0",
-                             ".0000000000000",
-                             ".0333333333330",
-                             ".0311111111230",
-                             ".0333333333330",
-                             ".0311111123330",
-                             ".0333333333330",
-                             ".0222222222220",
-                             ".0000000000000",
-                             "......00......",
-                             "......00......",
-                             "......00......",
-                             ".....0110.....",
-                             "......00......"])
+    buildings.v_sign(c, ox, oy, grass)
+
 
 
 def flower(c: Canvas, ox: int, oy: int, variant: int) -> None:
@@ -277,44 +189,13 @@ def inner_wall(c: Canvas, ox: int, oy: int) -> None:
 
 
 def spring(c: Canvas, ox: int, oy: int) -> None:
-    floor(c, ox, oy)
-    c.ascii(ox, oy, ["....00000000....",
-                     "..002222222200..",
-                     ".02211111111220.",
-                     ".02111131111120.",
-                     "0211113331111120",
-                     "0211111311111120",
-                     "0211111111111120",
-                     "0211311111131120",
-                     "0211111111111120",
-                     "0211111111111120",
-                     "0211111131111120",
-                     ".02111111111120.",
-                     ".02211111111220.",
-                     "..002222222200..",
-                     "....00000000....",
-                     "................"])
+    buildings.v_spring(c, ox, oy, grass)
+
 
 
 def rift(c: Canvas, ox: int, oy: int) -> None:
-    grass(c, ox, oy, 3)
-    # A jagged tear in the ground with a bright seam.
-    c.ascii(ox, oy, ["......0.........",
-                     ".....010........",
-                     ".....0310.......",
-                     "....03310.......",
-                     "...0133310......",
-                     "...033330.......",
-                     "..01333310......",
-                     "...0333331 0....".replace(" ", "0"),
-                     "....0133330.....",
-                     "...013333310....",
-                     "....03333310....",
-                     ".....0133310....",
-                     "......033310....",
-                     ".......03310....",
-                     "........0310....",
-                     ".........00....."])
+    buildings.rift_gate(c, ox, oy, "veydal", grass)
+
 
 
 def cliff(c: Canvas, ox: int, oy: int, mask: int) -> None:
@@ -543,6 +424,11 @@ VARIANT_ROWS = 16
 
 
 def build_tiles(path_out: str) -> None:
+    make_tiles().save(path_out)
+
+
+def make_tiles() -> Canvas:
+    """The base Era I atlas as palette indices (other region looks start from it)."""
     c = Canvas(T * len(KINDS), T * VARIANT_ROWS)
     for v in range(VARIANT_ROWS):
         oy = v * T
@@ -550,6 +436,8 @@ def build_tiles(path_out: str) -> None:
             ox = k * T
             if name == "GRASS":
                 grass(c, ox, oy, v % 4)
+                if 4 <= v < 8:
+                    buildings.shade_left(c, ox, oy)
             elif name == "TALL_GRASS":
                 tall_grass(c, ox, oy, v % 4)
             elif name == "PATH":
@@ -563,7 +451,7 @@ def build_tiles(path_out: str) -> None:
             elif name == "ROOF":
                 roof(c, ox, oy, v)
             elif name == "DOOR":
-                door(c, ox, oy)
+                door(c, ox, oy, v if v < 4 else 0)
             elif name == "FLOOR":
                 floor(c, ox, oy)
             elif name == "FENCE":
@@ -608,7 +496,7 @@ def build_tiles(path_out: str) -> None:
                 vines(c, ox, oy, 15)
             elif name == "PLANK":
                 plank_gap(c, ox, oy)
-    c.save(path_out)
+    return c
 
 
 # --- Characters ------------------------------------------------------------------------

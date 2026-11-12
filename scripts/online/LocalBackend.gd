@@ -73,7 +73,9 @@ func _init(p_store_path: String = "") -> void:
 			"bund_create", "bund_info", "bund_invite", "bund_request", "bund_answer", "bund_admit", "bund_kick", "bund_role",
 			"bund_leave", "bund_dissolve", "bund_keep", "raid_open", "raid_list", "raid_start", "raid_claim",
 			"trade_open", "trade_list", "trade_put", "trade_confirm", "trade_cancel", "trade_collect",
-			"trade_put_spirlings", "rift_board", "league_board", "daily_gift_state", "daily_gift_claim",
+			"trade_put_spirlings", "rift_board", "league_board", "daily_gift_state", "daily_gift_claim", "league_reward",
+			"live_invite", "live_list", "live_answer", "live_pick", "live_move", "live_state", "live_emote", "live_forfeit",
+			"live_finish", "live_rematch",
 			"save_history_list", "save_restore", "session_claim", "action_once", "live_content_get"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
@@ -144,7 +146,7 @@ func _fn_action_once(a: Dictionary) -> Dictionary:
 
 ## Functions that change a stored save (the server checks them in a trigger on saves).
 const SAVE_WRITERS: Array[String] = ["save_put", "save_restore", "trade_put", "trade_collect", "trade_put_spirlings",
-	"daily_gift_claim"]
+	"daily_gift_claim", "league_reward"]
 
 ## Like public._other_device: this device's token is not the newest one of the account.
 func other_device() -> bool:
@@ -1355,7 +1357,11 @@ func _fn_league_info(a: Dictionary) -> Dictionary:
 		"ring": config_int("league_fair_ring", 50) if league == LeagueRules.FAIR else config_int("level_max", 60),
 		"joined": e != null, "team": (e.team as Array).duplicate(true) if e != null else [],
 		"tier": LeagueRules.tier(float(e.rating)) if e != null else null,
-		"games": int(e.games) if e != null else 0, "wins": int(e.wins) if e != null else 0}
+		"games": int(e.games) if e != null else 0, "wins": int(e.wins) if e != null else 0,
+		"rank": LeagueRules.rank(ranks_cfg(), float(e.rating), int(e.games)) if e != null else -1,
+		"placement_left": maxi(0, int(ranks_cfg().get("placement_games", 5)) - int(e.games)) if e != null else int(ranks_cfg().get("placement_games", 5)),
+		"shield": int(e.get("shield", 0)) if e != null else 0,
+		"reward_ready": _league_reward_due(league) >= 0, "titles": (_user().get("league_awards", []) as Array).duplicate(true)}
 
 func _fn_league_join(a: Dictionary) -> Dictionary:
 	var league: String = str(a.get("p_league", ""))
@@ -1391,35 +1397,52 @@ func _fn_league_find(a: Dictionary) -> Dictionary:
 		return _fail("not_joined")
 	if not _rate_ok("league_find", 240):
 		return _fail("slow_down")
+	var quits: int = 0
+	var last: int = 0
+	var grace: int = int(ranks_cfg().get("quit_grace", 30))
+	for m: Dictionary in (_table("league_matches", {}) as Dictionary).values():
+		if m.user == me() and m.state == "expired" and now() - int(m.created_at) < 86400 \
+				and int(m.get("expired_at", 0)) - int(m.created_at) >= grace:
+			quits += 1
+			last = maxi(last, int(m.expired_at))
+	var wait: int = LeagueRules.quit_wait(ranks_cfg(), quits, now() - last)
+	if wait > 0:
+		var f: Dictionary = _fail("quit_wait")
+		f["wait"] = wait
+		return f
 	var waited: int = maxi(0, int(a.get("p_waited", 0)))
 	var span: float = minf(config_int("league_search_start", 100) + config_int("league_search_step", 50) * floorf(waited / 10.0),
 		config_int("league_search_max", 400))
 	var best: String = ""
 	var best_d: float = INF
 	var t: Dictionary = _table("league_" + league, {})
+	var echo_after: int = int(ranks_cfg().get("echo_after", 45))
 	for key: String in t:
 		var parts: PackedStringArray = key.split("|")
 		if int(parts[0]) != int(sn.id) or parts[1] == me() or is_blocked(me(), parts[1]):
 			continue
 		var d: float = absf(float(t[key].rating) - float(mine.rating))
-		if d <= span and d < best_d:
+		if (d <= span or waited >= echo_after) and d < best_d:
 			best = parts[1]
 			best_d = d
-	if best.is_empty():
+	if best.is_empty() and waited < echo_after:
 		return {"ok": true, "found": false, "range": span}
 	var matches: Dictionary = _table("league_matches", {})
 	for key: String in matches:
 		if matches[key].user == me() and matches[key].state == "open":
 			matches[key].state = "expired"
-	var opp: Dictionary = t["%d|%s" % [int(sn.id), best]]
+			matches[key].expired_at = now()
+	# Nobody at all after echo_after seconds: the player's own team as an echo, not rated (point 18).
+	var opp: Dictionary = t["%d|%s" % [int(sn.id), best]] if not best.is_empty() else {"team": mine.team, "rating": mine.rating}
 	var id: int = int(db.get("league_match_seq", 0)) + 1
 	db["league_match_seq"] = id
 	var teams: Array = [(mine.team as Array).duplicate(true), (opp.team as Array).duplicate(true)]
-	var rated: bool = league_state(sn) == "running"
+	var rated: bool = league_state(sn) == "running" and not best.is_empty()
 	matches[str(id)] = {"league": league, "season": int(sn.id), "user": me(), "opponent": best, "seed": rng.randi() & 0x7fffffff,
 		"teams": teams, "created_at": now(), "state": "open", "rated": rated}
 	return {"ok": true, "found": true, "match_id": id, "seed": matches[str(id)].seed, "teams": teams.duplicate(true),
-		"ai": config_int("league_ai", 2), "opponent_tier": LeagueRules.tier(float(opp.rating)), "range": span, "rated": rated}
+		"ai": config_int("league_ai", 2), "opponent_tier": LeagueRules.tier(float(opp.rating)), "range": span, "rated": rated,
+		"echo": best_d > span or best.is_empty()}
 
 func _league_expect(m: Dictionary) -> Dictionary:
 	return {"seed": m.seed, "teams": (m.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
@@ -1446,11 +1469,53 @@ func _league_apply(m: Dictionary, detail: Variant) -> void:
 	var o: Variant = league_entry(m.league, int(m.season), str(m.opponent))
 	var nr: Dictionary = Glicko.rate(float(e.rating), float(e.rd), float(e.vol),
 		float(o.rating) if o != null else Glicko.START_RATING, float(o.rd) if o != null else Glicko.START_RD, score)
-	e.rating = nr.rating
+	var sh: Dictionary = LeagueRules.after_battle(ranks_cfg(), float(e.rating), float(nr.rating), int(e.games) + 1, int(e.get("shield", 0)))
+	e.rating = sh.rating
+	e.shield = sh.shield
 	e.rd = nr.rd
 	e.vol = nr.vol
 	e.games = int(e.games) + 1
 	e.wins = int(e.wins) + int(score)
+
+## server_config.league_ranks (data/league_ranks.json).
+func ranks_cfg() -> Dictionary:
+	var v: Variant = db.config.get("league_ranks")
+	if not v is Dictionary:
+		v = LeagueRules.ranks_config()
+		db.config["league_ranks"] = v
+	return v
+
+## Like public._league_reward_due: the final rank of the last finished season, or -1 when there is
+## none or it was claimed.
+func _league_reward_due(league: String) -> int:
+	var sn: Dictionary = league_season()
+	var prev: int = int(sn.id) - 1
+	if prev < 1:
+		return -1
+	for aw: Dictionary in _user().get("league_awards", []):
+		if int(aw.season) == prev and aw.league == league:
+			return -1
+	var e: Variant = league_entry(league, prev, me())
+	return LeagueRules.rank(ranks_cfg(), float(e.rating), int(e.games)) if e != null else -1
+
+## Season reward and title (points 13, 19): items into the bag, the title and frame kept online.
+func _fn_league_reward(a: Dictionary) -> Dictionary:
+	var league: String = str(a.get("p_league", ""))
+	var err: String = _league_check(league)
+	if not err.is_empty():
+		return _fail(err)
+	var r: int = _league_reward_due(league)
+	if r < 0:
+		return _fail("no_reward")
+	var rw: Dictionary = LeagueRules.reward(ranks_cfg(), r)
+	var res: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), {str(rw.item): int(rw.count)})
+	if not bool(res.ok):
+		return res
+	var season: int = int(league_season().id) - 1
+	var title: String = LeagueRules.rank_id(ranks_cfg(), r)
+	(_user().get_or_add("league_awards", []) as Array).append({"season": season, "league": league, "rank": r, "title": title})
+	return {"ok": true, "rev": res.rev, "item": rw.item, "count": rw.count, "rank": r, "title": title,
+		"frame": "season_%d_%s" % [season, title], "bag": {str(rw.item): int(rw.count)}}
 
 # --- Bunds (plan area 7, items 2817-2821, 2842, 2900), like 20261110000010_bunds.sql ---
 
@@ -2405,3 +2470,202 @@ func _fn_save_restore(a: Dictionary) -> Dictionary:
 	sv.saved_at = now()
 	sv.erase("request_id")
 	return {"ok": true, "rev": sv.rev}
+
+# --- Live duels (Online 100, area 1), like 20261111000040_live_duel.sql ------------------------
+
+## server_config.live_duel (data/live_duel.json).
+func live_cfg() -> Dictionary:
+	var v: Variant = db.config.get("live_duel")
+	if not v is Dictionary:
+		v = LiveDuel.config()
+		db.config["live_duel"] = v
+	return v
+
+func _live(id: Variant) -> Variant:
+	return (_table("live_duels", {}) as Dictionary).get(str(int(id)))
+
+## 0 for the inviter, 1 for the friend, -1 for anyone else.
+func _live_side(d: Dictionary) -> int:
+	return 0 if d.a == me() else (1 if d.b == me() else -1)
+
+## Like public._live_tick: invites run out, and a side that stays away longer than the turn plus
+## reconnect_seconds loses (both away: the duel ends without a winner).
+func _live_tick(d: Dictionary) -> void:
+	var c: Dictionary = live_cfg()
+	if d.state == "invited" and now() > int(d.deadline):
+		d.state = "expired"
+	elif (d.state == "picking" or d.state == "running") and now() > int(d.deadline) + int(c.reconnect_seconds):
+		var have: Array = d.pick if d.state == "picking" else (d.moves as Dictionary).get(str(d.round), [null, null])
+		var away0: bool = have[0] == null
+		var away1: bool = have[1] == null
+		d.state = "done"
+		d.reason = "timeout"
+		d.winner = -1 if away0 == away1 else (1 if away0 else 0)
+
+func _live_out(d: Dictionary) -> Dictionary:
+	var teams: Array = []
+	if d.state != "invited" and d.state != "picking" and d.pick[0] != null and d.pick[1] != null:
+		for side: int in 2:
+			var rows: Array = []
+			for i: Variant in d.pick[side]:
+				rows.append((d.show[side][int(i)] as Dictionary).duplicate(true))
+			teams.append(rows)
+	return {"ok": true, "id": int(d.id), "side": _live_side(d), "state": d.state, "show": (d.show as Array).duplicate(true),
+		"picked": [d.pick[0] != null, d.pick[1] != null], "teams": teams, "seed": d.seed, "round": d.round,
+		"moves": (d.moves as Dictionary).duplicate(true), "deadline": d.deadline, "turn_seconds": int(live_cfg().turn_seconds),
+		"winner": d.winner, "reason": d.reason, "emotes": (d.emotes as Array).duplicate(true)}
+
+func _live_new(other: String) -> Dictionary:
+	var c: Dictionary = live_cfg()
+	var show: Array = []
+	for uid: String in [me(), other]:
+		var team: Array = profile_of(uid).get("team", [])
+		show.append(team.slice(0, int(c.show)))
+	if (show[0] as Array).size() < int(c.pick) or (show[1] as Array).size() < int(c.pick):
+		return _fail("team_too_small")
+	var id: int = _next_id("live_duels")
+	var d: Dictionary = {"id": id, "a": me(), "b": other, "state": "invited", "show": show, "pick": [null, null],
+		"seed": rng.randi() & 0x7fffffff, "round": 0, "moves": {}, "deadline": now() + 60 * int(c.invite_minutes),
+		"winner": -1, "reason": "", "emotes": [], "report": [null, null]}
+	_table("live_duels", {})[str(id)] = d
+	return {"ok": true, "id": id}
+
+func _fn_live_invite(a: Dictionary) -> Dictionary:
+	if not flag_on("live_duel", 2147483647):
+		return _fail("feature_off")
+	var other: String = uid_for_code(str(a.get("p_code", "")))
+	if other.is_empty() or other == me() or is_blocked(me(), other) or not is_friend(me(), other):
+		return _fail("not_friends")
+	if not _rate_ok("live_invite", int(live_cfg().invites_per_hour)):
+		return _fail("slow_down")
+	return _live_new(other)
+
+func _fn_live_list(_a: Dictionary) -> Dictionary:
+	var out: Array = []
+	for d: Dictionary in (_table("live_duels", {}) as Dictionary).values():
+		if _live_side(d) < 0:
+			continue
+		_live_tick(d)
+		if d.state != "done" and d.state != "expired":
+			var other: String = d.b if d.a == me() else d.a
+			out.append({"id": int(d.id), "state": d.state, "side": _live_side(d), "name": str(profile_of(other).name)})
+	return {"ok": true, "duels": out}
+
+func _live_mine(a: Dictionary) -> Variant:
+	var d: Variant = _live(a.get("p_id", -1))
+	if d == null or _live_side(d) < 0:
+		return null
+	_live_tick(d)
+	return d
+
+func _fn_live_answer(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null or _live_side(d) != 1:
+		return _fail("no_such_duel")
+	if d.state != "invited":
+		return _fail("duel_closed")
+	if not bool(a.get("p_accept", false)):
+		d.state = "expired"
+		return {"ok": true, "state": d.state}
+	d.state = "picking"
+	d.deadline = now() + int(live_cfg().pick_seconds)
+	return _live_out(d)
+
+func _fn_live_pick(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	var side: int = _live_side(d)
+	if d.state != "picking" or d.pick[side] != null:
+		return _fail("duel_closed")
+	var pick: Variant = LiveDuel.check_pick(a.get("p_pick"), (d.show[side] as Array).size(), int(live_cfg().pick))
+	if pick == null:
+		return _fail("bad_pick")
+	d.pick[side] = pick
+	if d.pick[0] != null and d.pick[1] != null:
+		d.state = "running"
+		d.round = 1
+		d.deadline = now() + int(live_cfg().turn_seconds)
+	return _live_out(d)
+
+func _fn_live_move(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	var side: int = _live_side(d)
+	if d.state != "running":
+		return _fail("duel_closed")
+	if int(a.get("p_round", -1)) != int(d.round):
+		return _fail("wrong_round")
+	var mv: Variant = a.get("p_input")
+	if not mv is Dictionary or JSON.stringify(mv).length() > 400:
+		return _fail("bad_input")
+	var row: Array = (d.moves as Dictionary).get_or_add(str(d.round), [null, null])
+	if row[side] != null:
+		return _fail("already_moved")
+	row[side] = mv
+	if row[0] != null and row[1] != null:
+		d.round = int(d.round) + 1
+		d.deadline = now() + int(live_cfg().turn_seconds)
+	return _live_out(d)
+
+func _fn_live_state(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	return _live_out(d)
+
+func _fn_live_emote(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	var n: int = int(a.get("p_emote", -1))
+	if n < 0 or n >= int(live_cfg().emotes):
+		return _fail("bad_emote")
+	var side: int = _live_side(d)
+	var used: int = 0
+	for e: Dictionary in d.emotes:
+		if int(e.side) == side:
+			used += 1
+	if used >= int(live_cfg().emote_limit):
+		return _fail("slow_down")
+	(d.emotes as Array).append({"side": side, "emote": n, "at": now()})
+	return {"ok": true}
+
+func _fn_live_forfeit(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	if d.state != "picking" and d.state != "running":
+		return _fail("duel_closed")
+	d.state = "done"
+	d.reason = "forfeit"
+	d.winner = 1 - _live_side(d)
+	return _live_out(d)
+
+func _fn_live_finish(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	var w: int = int(a.get("p_winner", -2))
+	if d.state != "running" or w < -1 or w > 1:
+		return _fail("duel_closed")
+	d.report[_live_side(d)] = w
+	if d.report[0] != null and d.report[1] != null:
+		d.state = "done"
+		d.reason = "played" if int(d.report[0]) == int(d.report[1]) else "disputed"
+		d.winner = int(d.report[0]) if d.reason == "played" else -1
+	return _live_out(d)
+
+func _fn_live_rematch(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	if d.state != "done":
+		return _fail("duel_closed")
+	var other: String = d.b if d.a == me() else d.a
+	if is_blocked(me(), other) or not is_friend(me(), other):
+		return _fail("not_friends")
+	if not _rate_ok("live_invite", int(live_cfg().invites_per_hour)):
+		return _fail("slow_down")
+	return _live_new(other)

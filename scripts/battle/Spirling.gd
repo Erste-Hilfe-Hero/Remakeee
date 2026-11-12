@@ -72,6 +72,9 @@ var gleam: bool = false
 ## +10 % on all five values from the shop's Gleam Prism (items 4791-4794). Saves from before wild
 ## Gleams have only "gleam", which then meant this boost. The Fair League never carries it.
 var gleam_boost: bool = false
+## Bought in the shop as a Spirling offer (pay-to-win plan, points 61-80): never traded or lent.
+## Saved as "shop".
+var shop_bought: bool = false
 const GLEAM_MULT: float = 1.1
 ## Battle-only stat stages (BattleRules.STAGE_MIN..STAGE_MAX), cleared by end_battle().
 var stages: Dictionary[String, int] = {}
@@ -84,6 +87,8 @@ var energy_surge: int = 0
 var cooldowns: Dictionary[String, int] = {}
 ## Battle-only: turns left on a heal block (heal_block effect), same counting.
 var heal_block: int = 0
+## Battle-only: turns left on a sworn Ink Oath (BattleRules.oath()); the debt is collected at 0.
+var oath_turns: int = 0
 ## Battle-only: turns of mending left from Root Mend (1/16 max Vigor at each turn end).
 var mend_turns: int = 0
 ## Battle-only: turns left in which an energy_burn can't take Energy again, same counting.
@@ -102,6 +107,8 @@ var met_day: int = 0
 ## favourites are never released and never moved by a multi-select (plan area 1, items 375-377).
 var box: int = 0
 var favorite: bool = false
+## True while its hidden gift is awake (HiddenGifts); it then replaces the species' gift.
+var hidden_gift: bool = false
 ## Species names of the two Spirlings that sang it into being (Echo offspring), else empty.
 var lineage: Array[String] = []
 ## Fully right Echo calls in a row while it was in the team (unfold rule "echo_streak").
@@ -124,6 +131,14 @@ func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = nu
 	temper = str(TEMPERAMENTS[absi(uid.hash()) % TEMPERAMENTS.size()].id)
 	moves = data.default_moves(level, MAX_MOVES)
 	hp = max_hp()
+
+## The gift in effect: the hidden gift while awake, else the species' gift.
+func gift_id() -> String:
+	if hidden_gift:
+		var h: String = HiddenGifts.gift_id(data)
+		if not h.is_empty():
+			return h
+	return data.trait_id
 
 func display_name() -> String:
 	return nickname if not nickname.is_empty() else data.species_name
@@ -202,7 +217,7 @@ func stage(stat: String) -> int:
 func effective_atk() -> int:
 	var m: float = StatusRules.atk_mult(status)
 	if status == "scorch":
-		m = float(BattleRules.trait_info(data.trait_id).get("scorch_atk", m))
+		m = float(BattleRules.trait_info(gift_id()).get("scorch_atk", m))
 	return int(atk() * m * BattleRules.stage_mult(stage("atk")) * BattleRules.mult_key(self, "atk_mult"))
 
 func effective_def() -> int:
@@ -261,6 +276,7 @@ func end_battle() -> void:
 	heal_block = 0
 	mend_turns = 0
 	burn_guard = 0
+	oath_turns = 0
 	cooldowns.clear()
 	status = ""
 	status_turns = 0
@@ -464,10 +480,12 @@ func to_dict() -> Dictionary:
 		"uid": uid,
 		"held": held,
 		"prism": prism,
+		"hidden_gift": hidden_gift,
 		"temper": temperament().id,
 		"core": temper_core,
 		"gleam": gleam,
 		"gleam_boost": gleam_boost,
+		"shop": shop_bought,
 		"variant": variant,
 		"origin_map": origin_map,
 		"origin_era": origin_era,
@@ -508,6 +526,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.uid = str(d.get("uid", ""))
 	s.held = str(d.get("held", ""))
 	s.prism = d.get("prism") is bool and d.get("prism")
+	s.hidden_gift = d.get("hidden_gift") is bool and d.get("hidden_gift")
 	# Saves before version 4 have no "temper": keep the one the uid gave them back then.
 	s.temper = str(d.get("temper", legacy_temper(s.uid)))
 	if not temper_info(s.temper).id == s.temper:
@@ -515,6 +534,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.temper_core = d.get("core") is bool and d.get("core")
 	s.gleam = d.get("gleam") is bool and d.get("gleam")
 	s.gleam_boost = d.get("gleam_boost") is bool and d.get("gleam_boost") if d.has("gleam_boost") else s.gleam
+	s.shop_bought = d.get("shop") is bool and d.get("shop")
 	s.variant = str(d.get("variant", ""))
 	s.origin_map = str(d.get("origin_map", ""))
 	s.origin_era = clampi(_num(d.get("origin_era"), 1), 1, 4)

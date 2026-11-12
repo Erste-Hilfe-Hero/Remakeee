@@ -141,6 +141,8 @@ func block_reason(o: Dictionary, with_riftglass: bool) -> String:
 		return "not_yet"
 	if req.begins_with("tier:") and not ShopEffects.tier_ok(req, unlocked(req.get_slice(":", 1))):
 		return "tier_order"
+	if req.begins_with("none:") and not ShopEffects.none_ok(req, func(k: String) -> int: return unlocked(k)):
+		return "not_yet"
 	if with_riftglass:
 		if int(o.get("rg_price", 0)) <= 0:
 			return "not_for_riftglass"
@@ -286,3 +288,7 @@ static func apply_grant(g: Dictionary) -> void:
 			GameState.add_item(str(g.id), int(g.get("n", 1)))
 		"coins":
 			GameState.money = mini(GameState.money + int(g.get("n", 0)), 9999999)
+		"spirling":
+			var s: Spirling = ShopEffects.bought_spirling(g)
+			if s != null:
+				GameState.receive_spirling(s)

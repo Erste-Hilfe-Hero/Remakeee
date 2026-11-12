@@ -419,5 +419,172 @@
   "win_flags": [
    "veil_factor_beaten"
   ]
+ },
+ "basin_wardens": {
+  "trainer": "Chief Warden's Guard",
+  "team": [
+   {
+    "species": "Scrivane",
+    "level": 38
+   },
+   {
+    "species": "Burinox",
+    "level": 38
+   },
+   {
+    "species": "Obsidroth",
+    "level": 39
+   }
+  ],
+  "ai": 3,
+  "money": 2000,
+  "lose": "clans/basin_lose"
+ },
+ "throne_guard": {
+  "trainer": "Marrovel Guard",
+  "team": [
+   {
+    "species": "Mendlace",
+    "level": 39
+   },
+   {
+    "species": "Smoldrake",
+    "level": 39
+   },
+   {
+    "species": "Burinox",
+    "level": 40
+   }
+  ],
+  "ai": 3,
+  "money": 2400,
+  "lose": "clans/throne_lose"
+ },
+ "dune_hands": {
+  "trainer": "Ruskweber Hand",
+  "team": [
+   {
+    "species": "Calderox",
+    "level": 38
+   },
+   {
+    "species": "Duskdigger",
+    "level": 38
+   },
+   {
+    "species": "Shalebat",
+    "level": 39
+   }
+  ],
+  "ai": 2,
+  "money": 1800,
+  "lose": "clans/ambush_lose"
+ },
+ "kerr_haldane": {
+  "trainer": "Kerr Haldane",
+  "team": [
+   {
+    "species": "Obsidroth",
+    "level": 39
+   },
+   {
+    "species": "Scrivane",
+    "level": 39
+   },
+   {
+    "species": "Mendlace",
+    "level": 40
+   },
+   {
+    "species": "Calderox",
+    "level": 40
+   }
+  ],
+  "ai": 3,
+  "money": 2600,
+  "defeat": "clans/kerr_defeat",
+  "lose": "clans/kerr_lose",
+  "win_flags": [
+   "kerr_beaten"
+  ]
+ },
+ "gorse": {
+  "trainer": "Foreman Gorse",
+  "team": [
+   {
+    "species": "Smeltpup",
+    "level": 32
+   },
+   {
+    "species": "Talusk",
+    "level": 32
+   },
+   {
+    "species": "Smoldrake",
+    "level": 33
+   }
+  ],
+  "ai": 2,
+  "money": 1500,
+  "defeat": "ashmere_side/gorse_defeat",
+  "win_flags": [
+   "press_done"
+  ]
+ },
+ "dace": {
+  "trainer": "Big Brother Dace",
+  "team": [
+   {
+    "species": "Mirkmole",
+    "level": 32
+   },
+   {
+    "species": "Duskdigger",
+    "level": 33
+   }
+  ],
+  "ai": 2,
+  "money": 1300,
+  "defeat": "ashmere_side/dace_defeat"
+ },
+ "rook": {
+  "trainer": "Cousin Rook",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 33
+   },
+   {
+    "species": "Etchling",
+    "level": 33
+   },
+   {
+    "species": "Bogwick",
+    "level": 34
+   }
+  ],
+  "ai": 2,
+  "money": 1500,
+  "defeat": "ashmere_side/rook_defeat"
+ },
+ "fitch_ambush": {
+  "trainer": "Toll Man Fitch",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 31
+   },
+   {
+    "species": "Cindle",
+    "level": 31
+   },
+   {
+    "species": "Mirkmole",
+    "level": 32
+   }
+  ],
+  "ai": 2,
+  "money": 300,
+  "defeat": "soot_vaults/fitch_ambush_defeat"
  }
 }

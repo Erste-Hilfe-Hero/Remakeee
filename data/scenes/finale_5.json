@@ -5,6 +5,7 @@
   {"say": ["The Echo hums. For the first time in forty years, it sounds like listening."]},
   {"dialogue": "ashmere/ending_pick"},
   {"dialogue": "ashmere/finale_after"},
+  {"dialogue": "clans/finale_coda"},
   {"flag": "story_complete"},
   {"action": "scene credits"}
  ]

@@ -313,9 +313,21 @@ Actions: `trust <id> <change> [use change]`, `favor <id>`, `betrayal <id>`, `led
 | --- | --- | --- | --- |
 | I Veydal (`rift_cinder_sealed`) | Vash sells the blank battle record (`clan_b1`) | Fenrick's sealed letter names the player (`clan_b2`) | ash in the brooding oven |
 | II Corvane (`corvane_arrived`) | Brannoc sells the Woadfen routes (`clan_b3`) | Ottilie sacrifices Morrow; the war was ordered (`clan_b4`) | the last feast, the mercy post, the spy in the guest book, the gift of honour, the rising referee |
-| III Ashmere (`act2_end`) | Sable sells the player at the card hall (`clan_b5`) | Marlo lives or is gone by his trust (`clan_b6`) | the seal in the breeding register, the breeder who lived, the fading seal |
+| III Ashmere (`act2_end`) | Sable sells the player at the card hall (`clan_b5`) | Marlo lives or is gone by his trust (`clan_b6`) | also: Liss reports to Sable (`clan_b7`, `liss_spy`), Fenrick's fading seal turns his Spirling on you, Marlo sedates it if his trust is 50+ (`clan_b8`, `fenrick_seal`); the seal in the breeding register, the breeder who lived, the fading seal |
+| IV Solenne (`rift_shade_sealed`) | Vash drains the palace basin and finds the Act I ash (`clan_b9`, `basin`; caught if Tobs moved the urn) | Ottilie's and Fenrick's throne offers carry the same sleepwort (`clan_b10`, `clan_b11`; caught if you heard the other offer or let Marlo check the wax) | the fixer's choice (Wren), the forgotten son (Kerr Haldane), two thrones one poison, the reckoning in the Sun Palace |
 
-Act IV (Solenne) and the twists set there come later.
+**Trust choices with consequences (Acts III and IV).** Grell's breeder: keep the secret (Grell warns
+you about Kerr in Act IV) or sell it to the Marrovels. Liss: welcome her or watch her first. Wren:
+side with the clan (Wren leaves) or with her (Ottilie turns). Kerr Haldane hunts Pip: hand her over,
+fight him (`kerr_haldane`), or, with the breeding register, point him at Ottilie. Tobs moves the
+ash urn for 500 coins and stays loyal only if you asked him nicely first. Sable's dune tip in Act IV
+is a believe-tip favour that usually ends in an ambush.
+
+**The reckoning** (`data/scenes/solenne_reckoning.json`, started by Ottilie once the Sun Rift is
+mended): both throne betrayals are cashed in, Grell arrives with Brannoc (and Kerr if turned), Marlo
+or his empty chair, and the player decides what happens to the pact deeds: burn them, give them to
+the Warden guild, or keep them and betray both clans (`c4_end_burn`, `c4_end_guild`, `c4_end_keep`).
+`clans/finale_coda` closes that thread in `finale_5` before the credits.
 
 ## Spoiler flags (for store texts and screenshots)
 

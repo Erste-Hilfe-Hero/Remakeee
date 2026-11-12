@@ -988,5 +988,37 @@
   "battle": false,
   "shop": true,
   "rings_to": 50
+ },
+ {
+  "id": "rg_bond_lure_1",
+  "name": "Bond Lure I",
+  "description": "Bonding gets 15% easier for one try. Tier 1 of 4. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.15
+ },
+ {
+  "id": "rg_bond_lure_2",
+  "name": "Bond Lure II",
+  "description": "Bonding gets 30% easier for one try. Tier 2 of 4. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.3
+ },
+ {
+  "id": "rg_bond_lure_3",
+  "name": "Bond Lure III",
+  "description": "Bonding gets 45% easier for one try. Tier 3 of 4. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.45
+ },
+ {
+  "id": "rg_bond_lure_4",
+  "name": "Bond Lure IV",
+  "description": "Bonding gets 60% easier for one try. Tier 4 of 4. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.6
  }
 ]
