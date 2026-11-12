@@ -60,3 +60,9 @@ func test_nobody_stands_in_front_of_a_door() -> void:
 			var below_door: Vector2i = Vector2i(int(n.x), int(n.y)) + Vector2i.UP
 			assert_ne(m.kind_at(below_door) if m.in_bounds(below_door) else -1, TilesetFactory.Kind.DOOR,
 				"%s: %s blocks a door" % [id, n.get("id", "")])
+
+func test_woadfen_road_meets_the_west_road() -> void:
+	var m: MapData = MapData.load_map("woadfen")
+	for x: int in range(0, 8):
+		assert_eq(m.kind_at(Vector2i(x, 24)), TilesetFactory.Kind.PATH, "woadfen road at %d,24" % x)
+	assert_ne(m.kind_at(Vector2i(9, 25)), TilesetFactory.Kind.PATH, "no loose road scrap")

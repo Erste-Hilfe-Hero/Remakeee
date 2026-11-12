@@ -35,6 +35,7 @@ tools/art/preview_map.py. Kinds of finding:
   unreachable     walkable cells (or finds, NPCs) no entry of the map can reach
   no_door         an outdoor building with no door at all
   building_cut    a building only one tile wide (a sliver of a house)
+  path_stub       a scrap of road (1 to 3 cells) that joins no road, door, stairs, pier or map edge
   open_edge       a walkable border cell of an outdoor map with no warp (the path runs into void)
 """
 import json
@@ -357,6 +358,21 @@ def check_map(m: Map, maps: dict, entries_into: dict) -> list:
                     ys = [c[1] for c in comp]
                     add("unreachable", min(xs), min(ys), "%d cells %d,%d-%d,%d cannot be reached" % (
                         len(comp), min(xs), min(ys), max(xs), max(ys)))
+
+    # Scraps of road left over from road edits.
+    if m.outdoor:
+        for comp in components(m, {"PATH"}):
+            if len(comp) > 3:
+                continue
+            ends = False
+            for cx, cy in comp:
+                if cx in (0, m.w - 1) or cy in (0, m.h - 1):
+                    ends = True
+                for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                    if m.kind(cx + dx, cy + dy) in {"DOOR", "STAIRS", "PIER", "SIGN"}:
+                        ends = True
+            if not ends:
+                add("path_stub", comp[0][0], comp[0][1], "%d road cells that lead nowhere" % len(comp))
 
     # Paths that run into the border without a warp.
     if m.outdoor:
