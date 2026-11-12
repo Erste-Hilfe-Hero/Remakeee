@@ -165,6 +165,9 @@ func offer_block(uid: String, o: Dictionary, choice: Variant) -> String:
 		var un: Dictionary = _shop(uid).unlocks
 		if not ShopEffects.none_ok(req, func(k: String) -> int: return int(un.get(k, 0))):
 			return "not_yet"
+	elif req.begins_with("max:"):
+		if not ShopEffects.max_ok(req, int(_shop(uid).unlocks.get(req.get_slice(":", 1), 0))):
+			return "offer_limit"
 	elif not req.is_empty():
 		return "not_yet"
 	if o.has("choice") and (choice == null or not str(choice) in o.choice):

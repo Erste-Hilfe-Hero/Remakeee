@@ -114,6 +114,8 @@ static func parse_move(m: Dictionary) -> MoveData:
 		md.effects.append({"id": &"cure_target", "status": str(m.cure_target)})
 	md.ignore_daze = bool(m.get("ignore_daze", false))
 	md.ignore_stages = bool(m.get("ignore_stages", false))
+	md.era = int(m.get("era", 1))
+	md.description = str(m.get("desc", ""))
 	return md
 
 static func _load_spirlings() -> void:

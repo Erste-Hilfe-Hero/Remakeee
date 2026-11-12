@@ -1,0 +1,18 @@
+{
+ "_comment": "it translation of the safety table, keyed by the English text.",
+ "strings": {
+  "Battle over": "Scontro finito",
+  "Bunds": "Compagnie",
+  "For parents...": "Per i genitori...",
+  "For parents: switch off what your child should not use. Friends and saves stay.": "Per i genitori: disattivate ciò che vostro figlio non deve usare. Amici e salvataggi restano.",
+  "Open league": "Lega Aperta",
+  "Report the rival...": "Segnala il rivale...",
+  "Suggestions from league battles": "Suggerimenti dagli scontri di lega",
+  "These switches are for parents. Continue?": "Queste opzioni sono per i genitori. Continuare?",
+  "This battle was against your own echo, so there is nobody to report.": "Questo scontro era contro la tua stessa eco, quindi non c'è nessuno da segnalare.",
+  "This is switched off under Settings, Account, For parents.": "Questo è disattivato in Opzioni, Account, Per i genitori.",
+  "Under 16: open league, bunds and suggestions start switched off.": "Sotto i 16 anni: Lega Aperta, Compagnie e suggerimenti partono disattivati.",
+  "Why do you report the rival?": "Perché segnali il rivale?",
+  "You met this rival 3 times today, so this battle does not count.": "Oggi hai incontrato questo rivale 3 volte, quindi questo scontro non conta."
+ }
+}

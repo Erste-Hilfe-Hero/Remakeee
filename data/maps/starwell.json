@@ -5,29 +5,29 @@
  "backdrop": "field",
  "outdoor": true,
  "heal_point": [
-  6,
+  5,
   9
  ],
  "rows": [
   "^^^^^__^^^^^",
-  "^.L..__..L.^",
-  "^.|..__..|.^",
-  "^.|..__..|.^",
-  "^....__....^",
-  "^.L..__..S.^",
-  "^....__....^",
-  "^...____...^",
-  "^..._.o.____",
-  "^..._...____",
-  "^...____...^",
-  "^....__....^",
-  "^.TT.__.RR.^",
-  "^.**.__.HD.^",
-  "^....__....^",
-  "^.##.__.##.^",
-  "^....__....^",
-  "^::..__..L.^",
-  "^....__....^",
+  "^.L..__.RR.^",
+  "^.|..__.HD.^",
+  "^.|____.._.^",
+  "^.._______.^",
+  "^..__.RR...^",
+  "^..__.HD.L.^",
+  "^..__.._...^",
+  "^..__o______",
+  "^.._________",
+  "^..__.S....^",
+  "^RR__...RRR^",
+  "^HD__...RRR^",
+  "^..__...HDH^",
+  "^.._______.^",
+  "^RR..__....^",
+  "^HD..__.L..^",
+  "^._..__.|..^",
+  "^._____.|..^",
   "^^^^^__^^^^^"
  ],
  "warps": [
@@ -86,12 +86,44 @@
    "tx": 5,
    "ty": 8,
    "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 2,
+   "to": "starwell_home_1",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 7,
+   "y": 6,
+   "to": "starwell_spring",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 12,
+   "to": "starwell_home_2",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 16,
+   "to": "starwell_shop",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
   }
  ],
  "npcs": [
   {
    "id": "keeper",
-   "x": 7,
+   "x": 5,
    "y": 7,
    "facing": "down",
    "dialogue": "starwell/keeper",
@@ -107,9 +139,9 @@
    "schedule": [
     {
      "phase": "dusk",
-     "x": 5,
-     "y": 9,
-     "facing": "right"
+     "x": 6,
+     "y": 8,
+     "facing": "left"
     },
     {
      "phase": [
@@ -121,15 +153,15 @@
   },
   {
    "id": "quill",
-   "x": 9,
-   "y": 11,
+   "x": 10,
+   "y": 7,
    "facing": "left",
    "dialogue": "starwell/quill",
    "sprite": "villager",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 7,
+     "x": 6,
      "y": 9,
      "facing": "left"
     },
@@ -143,16 +175,16 @@
   },
   {
    "id": "serafin",
-   "x": 2,
-   "y": 18,
-   "facing": "right",
+   "x": 10,
+   "y": 5,
+   "facing": "left",
    "dialogue": "starwell/serafin",
    "sprite": "elder",
    "schedule": [
     {
      "phase": "dusk",
      "x": 4,
-     "y": 7,
+     "y": 9,
      "facing": "right"
     },
     {
@@ -166,8 +198,8 @@
  ],
  "signs": [
   {
-   "x": 9,
-   "y": 5,
+   "x": 6,
+   "y": 10,
    "dialogue": "starwell/sign"
   }
  ],
@@ -202,14 +234,14 @@
   },
   {
    "x": 0,
-   "y": 16,
+   "y": 13,
    "item": "focus_brew",
    "count": 1,
    "flag": "find_starwell_3"
   }
  ],
  "square": [
-  6,
+  5,
   8
  ]
 }

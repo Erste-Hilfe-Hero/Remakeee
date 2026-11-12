@@ -47,7 +47,7 @@ static func summary(names: Array, start_hp: Array, end_hp: Array) -> Array[Strin
 ## What the result screen says, from the duel's side, winner and reason.
 static func result_text(side: int, winner: int, reason: String) -> String:
 	if reason == "disputed":
-		return Loc.t("The two results did not match. The duel does not count.")
+		return Loc.t("The referee could not play this duel again. It does not count.")
 	if winner < 0:
 		return Loc.t("The duel ended without a winner.")
 	var won: bool = winner == side

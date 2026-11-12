@@ -1,0 +1,29 @@
+{
+ "_comment": "pt_BR translation of the bund_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s  Rank %d%s": "%d. %s  Patente %d%s",
+  "%s  Rank %d  %d/30, %d active%s": "%s  Patente %d  %d/30, %d ativos%s",
+  "Any language": "Qualquer idioma",
+  "Anyone, at once": "Qualquer pessoa, na hora",
+  "Bund board": "Ranking de Trupes",
+  "Bund rank %d (%d renown)": "Patente da Trupe %d (%d de renome)",
+  "Bund rank and week goal": "Patente da Trupe e meta da semana",
+  "Donate items...": "Doar itens...",
+  "Donated today: %d / %d": "Doado hoje: %d / %d",
+  "Find a bund...": "Procurar uma Trupe...",
+  "How many?": "Quantos?",
+  "Language and joining...": "Idioma e entrada...",
+  "Language of the bund": "Idioma da Trupe",
+  "No bund found. Found your own!": "Nenhuma Trupe encontrada. Funde a sua!",
+  "No bunds yet.": "Ainda não há Trupes.",
+  "Only after a request": "Só depois de um pedido",
+  "Take the week reward": "Pegar a recompensa da semana",
+  "Thank you! The bund has %d renown now.": "Valeu! A Trupe agora tem %d de renome.",
+  "The week goal is not reached yet.": "A meta da semana ainda não foi atingida.",
+  "Week goal: %d / %d items donated": "Meta da semana: %d / %d itens doados",
+  "Who may join?": "Quem pode entrar?",
+  "You already took this week's reward.": "Você já pegou a recompensa desta semana.",
+  "You donated all you can today. More tomorrow.": "Você doou tudo o que pode hoje. Amanhã tem mais.",
+  "open": "aberta"
+ }
+}

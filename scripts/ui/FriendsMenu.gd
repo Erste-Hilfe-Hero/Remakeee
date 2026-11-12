@@ -88,7 +88,10 @@ static func run(menu: PauseMenu) -> void:
 					return
 			"Trades": await TradeMenu.run(menu)
 			"Daily gift": await run_daily_gift(menu)
-			"Live duels": await LiveDuelMenu.run(menu, friends)
+			"Live duels":
+				await LiveDuelMenu.run(menu, friends)
+				if not menu.live_stage.is_empty():
+					return
 			"My wish list": await run_wishes(menu)
 			"Lent Spirlings": await run_loans(menu)
 			"Events": await EventsMenu.run(menu)

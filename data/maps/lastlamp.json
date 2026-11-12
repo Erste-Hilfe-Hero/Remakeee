@@ -5,35 +5,35 @@
  "backdrop": "field",
  "outdoor": true,
  "heal_point": [
-  6,
-  9
+  5,
+  8
  ],
  "rows": [
   "TTTTT__TTTTT",
+  "T.RR.__..L.T",
+  "T.HD.__....T",
+  "T..____....T",
+  "T.L.__..RR.T",
+  "T...__..HD.T",
+  "T...______.T",
+  "T....o__.L.T",
+  "____________",
+  "____________",
+  "T.L..__..L.T",
   "T....__....T",
-  "T.RRR__RRR.T",
-  "T.HDH__HHD.T",
-  "T....__....T",
-  "T.L..__..S.T",
-  "T....__....T",
-  "T...____...T",
-  "_____.o.____",
-  "_____...____",
-  "T...____...T",
-  "T....__....T",
-  "T.RR.__.RR.T",
-  "T.DH.__.DH.T",
-  "T._______..T",
-  "T.##....##.T",
-  "T..........T",
-  "T*.......L.T",
-  "T..........T",
+  "T.RR.__.~~~T",
+  "T.DH.__~~@~T",
+  "T______++.~T",
+  "T_RRR.~~~~~T",
+  "T_HDH..+++~T",
+  "T___.S.*~~~T",
+  "T....*.~~~~T",
   "TTTTTTTTTTTT"
  ],
  "warps": [
   {
    "x": 3,
-   "y": 3,
+   "y": 2,
    "to": "lastlamp_lamp_store",
    "tx": 3,
    "ty": 4,
@@ -41,7 +41,7 @@
   },
   {
    "x": 9,
-   "y": 3,
+   "y": 5,
    "to": "lastlamp_pawnshop",
    "tx": 3,
    "ty": 4,
@@ -56,8 +56,8 @@
    "facing": "up"
   },
   {
-   "x": 8,
-   "y": 13,
+   "x": 3,
+   "y": 16,
    "to": "lastlamp_name_room",
    "tx": 3,
    "ty": 4,
@@ -115,7 +115,7 @@
  "npcs": [
   {
    "id": "keeper",
-   "x": 7,
+   "x": 4,
    "y": 7,
    "facing": "down",
    "dialogue": "vellmarch/lastlamp_keeper",
@@ -123,8 +123,8 @@
   },
   {
    "id": "folk_1",
-   "x": 2,
-   "y": 6,
+   "x": 1,
+   "y": 5,
    "facing": "right",
    "dialogue": "vellmarch/lastlamp_folk_1",
    "sprite": "villager",
@@ -132,8 +132,8 @@
     {
      "phase": "dusk",
      "x": 5,
-     "y": 9,
-     "facing": "right"
+     "y": 6,
+     "facing": "down"
     },
     {
      "phase": [
@@ -145,7 +145,7 @@
   },
   {
    "id": "folk_2",
-   "x": 9,
+   "x": 8,
    "y": 11,
    "facing": "left",
    "dialogue": "vellmarch/lastlamp_folk_2",
@@ -153,8 +153,8 @@
    "schedule": [
     {
      "phase": "dusk",
-     "x": 7,
-     "y": 9,
+     "x": 6,
+     "y": 8,
      "facing": "left"
     },
     {
@@ -167,7 +167,7 @@
   },
   {
    "id": "folk_3",
-   "x": 2,
+   "x": 4,
    "y": 18,
    "facing": "right",
    "dialogue": "vellmarch/lastlamp_folk_3",
@@ -176,7 +176,7 @@
     {
      "phase": "dusk",
      "x": 4,
-     "y": 7,
+     "y": 8,
      "facing": "right"
     },
     {
@@ -189,16 +189,16 @@
   },
   {
    "id": "q2_marsh_bell_gesa",
-   "x": 4,
-   "y": 16,
+   "x": 3,
+   "y": 5,
    "facing": "down",
    "dialogue": "vellmarch/q2_marsh_bell",
    "sprite": "elder"
   },
   {
    "id": "q2_pawned_medal_varn",
-   "x": 6,
-   "y": 15,
+   "x": 2,
+   "y": 7,
    "facing": "down",
    "dialogue": "vellmarch/q2_pawned_medal",
    "sprite": "elder",
@@ -207,7 +207,7 @@
   {
    "id": "q2_pawned_medal_varn_reik",
    "x": 7,
-   "y": 11,
+   "y": 2,
    "facing": "down",
    "dialogue": "vellmarch/q2_pawned_medal_varn_reik",
    "sprite": "elder",
@@ -237,8 +237,8 @@
   },
   {
    "id": "q2_dark_lamps_nils",
-   "x": 7,
-   "y": 5,
+   "x": 4,
+   "y": 10,
    "facing": "down",
    "dialogue": "vellmarch/q2_dark_lamps",
    "sprite": "villager",
@@ -246,8 +246,8 @@
   },
   {
    "id": "q2_dark_lamps_nils_sack",
-   "x": 4,
-   "y": 5,
+   "x": 6,
+   "y": 4,
    "facing": "down",
    "dialogue": "vellmarch/q2_dark_lamps_nils_sack",
    "sprite": "villager",
@@ -278,8 +278,8 @@
  ],
  "signs": [
   {
-   "x": 9,
-   "y": 5,
+   "x": 5,
+   "y": 17,
    "dialogue": "vellmarch/lastlamp_sign"
   }
  ],
@@ -300,14 +300,14 @@
  "secrets": [
   {
    "x": 0,
-   "y": 13,
+   "y": 12,
    "item": "max_tonic",
    "count": 1,
    "flag": "find_lastlamp_1"
   },
   {
    "x": 11,
-   "y": 16,
+   "y": 11,
    "item": "revival_leaf",
    "count": 1,
    "flag": "find_lastlamp_2"
@@ -321,7 +321,7 @@
   }
  ],
  "square": [
-  6,
-  8
+  5,
+  7
  ]
 }

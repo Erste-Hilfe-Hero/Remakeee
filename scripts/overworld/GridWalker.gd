@@ -40,6 +40,8 @@ var _from: Vector2
 var _to: Vector2
 var _t: float = 0.0
 var _duration: float = WALK_TIME
+## Step speed factor (2 for the player with the shop's Swift Steps, pay-to-win step 6).
+var speed_mult: float = 1.0
 ## Dips the sprite 1 px in the middle of each step so walking has weight (item 2303).
 var bob: bool = false
 ## Drawn 1 px jolt toward a wall the walker ran into (item 2263); the node and the camera
@@ -101,7 +103,7 @@ func step(dir: String, run: bool = false) -> void:
 	cell += DIRS[dir]
 	_to = cell_to_pos(cell)
 	_t = 0.0
-	_duration = RUN_TIME if run else WALK_TIME
+	_duration = (RUN_TIME if run else WALK_TIME) / maxf(speed_mult, 0.1)
 	_stride += 1
 	running = run
 	moving = true
