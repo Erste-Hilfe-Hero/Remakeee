@@ -35,6 +35,8 @@ var _daylight: CanvasModulate
 ## Lit windows at night, on a layer the night tint does not reach (buildings plan item 8).
 var _glow_layer: CanvasLayer
 var _glow: WindowGlow
+## The place's landmark sprite (Landmarks, map design item 509), y-sorted with the people.
+var _landmark: Sprite2D
 var _npcs: Array[NPC] = []
 var _ui: CanvasLayer
 var _text: TextBox
@@ -336,6 +338,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	map.paint(_ground)
 	refresh_shade()
 	_spawn_npcs()
+	_place_landmark()
 	player.place(cell, face)
 	_place_inkshadow(cell, cell)
 	GameState.current_map = map_id
@@ -505,6 +508,25 @@ func _try_gear(target: Vector2i) -> bool:
 	return true
 
 ## NPCs of the map that are there now: flags, "phase_only" (area 3 item 1168) and "weekdays".
+## Puts the map's landmark on its cell: the 16x32 sprite stands on the cell and covers the one above.
+func _place_landmark() -> void:
+	if _landmark != null:
+		_landmark.queue_free()
+		_landmark = null
+	var lm: Dictionary = Landmarks.for_map(map.id)
+	if lm.is_empty():
+		return
+	var path: String = Landmarks.art_path(str(lm.kind))
+	if path.is_empty():
+		return
+	_landmark = Sprite2D.new()
+	_landmark.name = "landmark"
+	_landmark.texture = load(path)
+	_landmark.centered = false
+	_landmark.offset = Vector2(0, -TilesetFactory.TILE)
+	_landmark.position = GridWalker.cell_to_pos(Landmarks.cell(lm))
+	_entities.add_child(_landmark)
+
 func _spawn_npcs() -> void:
 	for n: NPC in _npcs:
 		n.queue_free()
@@ -688,6 +710,10 @@ func _on_interact(cell: Vector2i) -> void:
 		await run_dialogue(str(s.dialogue))
 		if icons != null:
 			icons.queue_free()
+		return
+	var landmark: Array[String] = Landmarks.lines_at(map.id, cell)
+	if not landmark.is_empty():
+		await _locked_say(landmark)
 		return
 	# Talk across counters.
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
