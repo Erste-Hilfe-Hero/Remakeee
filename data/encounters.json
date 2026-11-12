@@ -2615,5 +2615,161 @@
     "ground": "fern"
    }
   ]
+ },
+ "long_stair": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Highhare",
+    "min": 78,
+    "max": 81,
+    "weight": 22,
+    "ground": "fern"
+   },
+   {
+    "species": "Duneshrew",
+    "min": 78,
+    "max": 81,
+    "weight": 40,
+    "ground": "scree"
+   },
+   {
+    "species": "Noonwhist",
+    "min": 78,
+    "max": 81,
+    "weight": 22,
+    "ground": "fern"
+   }
+  ]
+ },
+ "cloudshadow_meadow": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Chirrik",
+    "min": 80,
+    "max": 83,
+    "weight": 22,
+    "ground": "fern"
+   },
+   {
+    "species": "Palmop",
+    "min": 80,
+    "max": 83,
+    "weight": 22,
+    "ground": "fern"
+   },
+   {
+    "species": "Hazejel",
+    "min": 80,
+    "max": 83,
+    "weight": 22,
+    "ground": "fern"
+   }
+  ]
+ },
+ "mirror_flats": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Saltsprig",
+    "min": 82,
+    "max": 85,
+    "weight": 22,
+    "ground": "reeds"
+   },
+   {
+    "species": "Stiltwade",
+    "min": 82,
+    "max": 85,
+    "weight": 40,
+    "ground": "reeds"
+   },
+   {
+    "species": "Wadishell",
+    "min": 82,
+    "max": 85,
+    "weight": 22,
+    "ground": "scree"
+   }
+  ]
+ },
+ "orrery_ridge": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Orrerine",
+    "min": 85,
+    "max": 88,
+    "weight": 8,
+    "ground": "scree"
+   },
+   {
+    "species": "Obelith",
+    "min": 85,
+    "max": 88,
+    "weight": 22,
+    "ground": "scree"
+   },
+   {
+    "species": "Fulgorin",
+    "min": 85,
+    "max": 88,
+    "weight": 22,
+    "ground": "fern"
+   }
+  ]
+ },
+ "sunfall_terraces": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Corocub",
+    "min": 87,
+    "max": 90,
+    "weight": 22,
+    "ground": "fern"
+   },
+   {
+    "species": "Spinnarow",
+    "min": 87,
+    "max": 90,
+    "weight": 22,
+    "ground": "fern"
+   },
+   {
+    "species": "Bakedil",
+    "min": 87,
+    "max": 90,
+    "weight": 22,
+    "ground": "scree"
+   }
+  ]
+ },
+ "lantern_span": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Gyrevult",
+    "min": 89,
+    "max": 92,
+    "weight": 22,
+    "ground": "scree"
+   },
+   {
+    "species": "Velvessa",
+    "min": 89,
+    "max": 92,
+    "weight": 22,
+    "ground": "fern"
+   },
+   {
+    "species": "Ergskim",
+    "min": 89,
+    "max": 92,
+    "weight": 22,
+    "ground": "reeds"
+   }
+  ]
  }
 }

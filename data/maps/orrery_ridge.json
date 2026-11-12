@@ -1,0 +1,126 @@
+{
+ "name": "Orrery Ridge",
+ "region": "halcyra",
+ "biome": "route",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "encounters": "orrery_ridge",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^::..__.::.^",
+  "^::..__.::.^",
+  "^^^^^..^^^^^",
+  "^::......,,^",
+  "^::..^...,,^",
+  "^..........^",
+  "^^^^^^^^..^^",
+  "^::.....:.:^",
+  "^::..@..:::^",
+  "^........::^",
+  "^..^^^^^^^^^",
+  "^.........:^",
+  "^,,..^....:^",
+  "^,,.......:^",
+  "^^^^^^^^..^^",
+  "^::......::^",
+  "^::.S....::^",
+  "^.........,^",
+  "^..^^^^^^^^^",
+  "^...::.....^",
+  "^...::__...^",
+  "^.....__.L.^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 23,
+   "to": "whitecairn",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 23,
+   "to": "whitecairn",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "starwell",
+   "tx": 10,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "starwell",
+   "tx": 10,
+   "ty": 9,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "climber",
+   "x": 6,
+   "y": 12,
+   "facing": "left",
+   "dialogue": "orrery_ridge/climber",
+   "sprite": "villager",
+   "trainer": "Ridge Climber Agathe",
+   "intro": "orrery_ridge/climber_intro",
+   "defeat": "orrery_ridge/climber_defeat",
+   "money": 3600,
+   "team": [
+    {
+     "species": "Orrerine",
+     "level": 86
+    },
+    {
+     "species": "Obelith",
+     "level": 86
+    },
+    {
+     "species": "Highhare",
+     "level": 87
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 4,
+   "y": 17,
+   "dialogue": "orrery_ridge/sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 6,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_orrery_ridge_1"
+  },
+  {
+   "x": 0,
+   "y": 10,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_orrery_ridge_2"
+  },
+  {
+   "x": 11,
+   "y": 18,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_orrery_ridge_3"
+  }
+ ]
+}
