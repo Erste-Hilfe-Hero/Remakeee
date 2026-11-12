@@ -204,6 +204,15 @@ func _build() -> void:
 	_inkshadow.centered = false
 	_inkshadow.modulate = Color(UITheme.INK, 0.85)
 	_entities.add_child(_inkshadow)
+	# Era look of the figures: poses, bubbles, head turns, the Spirling behind (EraActors).
+	var actors := EraActors.new()
+	actors.name = "era_actors"
+	actors.entities = _entities
+	actors.player = player
+	actors.follower = _inkshadow
+	actors.is_night = func() -> bool: return map != null and map.outdoor and DayCycle.current() == DayCycle.Phase.NIGHT
+	actors.is_rain = func() -> bool: return map != null and map.outdoor and WeatherCycle.current(map) in ["rain", "storm"]
+	add_child(actors)
 	var hint := InteractHint.new()
 	hint.ow = self
 	add_child(hint)
@@ -329,6 +338,9 @@ func _era_line_after_load(line: String, era_before: int = EraManager.unlocked_er
 	while busy:
 		await get_tree().process_frame
 	await get_tree().create_timer(EraManager.transition_wait()).timeout
+	# After the EraUpgrade sweep: the finale card of the era that ended, then the staged change
+	# scene (EraChangeScene, docs/ERA_LOOK_TITLE.md).
+	await EraChangeScene.play_after_finale(self, era_before, EraManager.unlocked_era)
 	var lines: Array[String] = [line]
 	# What the new era brings (EraFeatures, data/era_functions.json).
 	for e: int in range(era_before + 1, EraManager.unlocked_era + 1):
@@ -401,6 +413,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		GameState.notices.append(Loc.t(look_line))
 	EraManager.unlock_story_end(GameState.has_flag(EraManager.STORY_COMPLETE_FLAG))
 	EraManager.mark_finales(GameState.flags)
+	# The last era has no change after its finale; its finale card shows once (EraFinaleCard).
+	EraFinaleCard.play_if_owed.call_deferred(self)
 	EraManager.unlock_from_flags(GameState.has_flag)
 	if EraManager.unlocked_era > era_before and EraManager.ERA_LINES.has(EraManager.unlocked_era):
 		_era_line_after_load.call_deferred(EraManager.ERA_LINES[EraManager.unlocked_era], era_before)
@@ -553,6 +567,9 @@ func _try_gear(target: Vector2i) -> bool:
 		var half := Vector2(GridWalker.TILE / 2.0, GridWalker.TILE / 2.0 + 2.0)
 		rope.points = PackedVector2Array([from_pos + half, to_pos + half])
 		_entities.add_child(rope)
+	# From Era III the Wayfarer wades across on foot, knee-deep, without the hop (data/era_actor_look.json).
+	if EraActorLook.wades(gear):
+		player.era_anim["wade"] = true
 	var tw: Tween = create_tween()
 	if rope != null:
 		for i: int in GRAPPLE_PULLS:
@@ -561,11 +578,12 @@ func _try_gear(target: Vector2i) -> bool:
 			tw.tween_property(player, "position", b, GEAR_MOVE_TIME / GRAPPLE_PULLS).from(a).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	else:
 		tw.tween_method(func(k: float) -> void:
-			var arc: float = -10.0 * sin(k * PI)
+			var arc: float = (0.0 if player.era_anim.has("wade") else -10.0) * sin(k * PI)
 			player.position = from_pos.lerp(to_pos, k).round() + Vector2(0, round(arc)), 0.0, 1.0, GEAR_MOVE_TIME)
 	await tw.finished
 	if rope != null:
 		rope.queue_free()
+	player.era_anim.erase("wade")
 	player.place(dest, player.facing)
 	GameState.player_cell = dest
 	player.frozen = false

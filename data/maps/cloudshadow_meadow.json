@@ -132,15 +132,15 @@
    "money": 4200,
    "team": [
     {
-     "species": "Chirrik",
+     "species": "Dewstag",
      "level": 82
     },
     {
-     "species": "Palmop",
+     "species": "Gildbloom",
      "level": 83
     },
     {
-     "species": "Hazejel",
+     "species": "Dewfawn",
      "level": 84
     }
    ],
@@ -171,15 +171,15 @@
    "money": 3320,
    "team": [
     {
-     "species": "Hazejel",
+     "species": "Kitelet",
      "level": 81
     },
     {
-     "species": "Chirrik",
+     "species": "Zenkit",
      "level": 82
     },
     {
-     "species": "Palmop",
+     "species": "Orrebit",
      "level": 83
     }
    ]

@@ -157,8 +157,40 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		title = short_title(title)
 	var bottom: float = picker.offset_bottom
 	keep_above_pad(picker)
+	# The era's list layout (EraMenus): plain lists take the era's base, screens their own.
+	var lay: Dictionary = _next_layout if not _next_layout.is_empty() else EraMenus.layout(EraManager.active_era())
+	_next_layout = {}
+	picker.layout = lay
+	last_layout = lay
 	var r: int = await picker.pick(title, entries, cancellable, focus, guard_ms, tabs, tab)
 	picker.offset_bottom = bottom
+	return r
+
+var _next_layout: Dictionary = {}
+## The layout of the list shown last (tests).
+var last_layout: Dictionary = {}
+## Screens opened through pick_screen so far, newest last (tests).
+var screens_shown: Array[String] = []
+
+## Shows the list of menu screen [param screen] in the active era's layout (EraMenus).
+## [param opts]: cancellable, focus, guard_ms, tabs, tab as in pick(); "header" (a Control put
+## between title and rows, freed afterwards) and "panel_text" (what the info panel of the touch
+## eras says while no row explains itself).
+func pick_screen(screen: String, title: String, entries: Array[Dictionary], opts: Dictionary = {}) -> int:
+	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), screen)
+	for k: String in ["panel_text", "columns", "row_h", "tab_icons"]:
+		if opts.has(k):
+			lay[k] = opts[k]
+	_next_layout = lay
+	screens_shown.append(screen)
+	var head: Variant = opts.get("header")
+	picker.set_header(head as Control if head is Control else null)
+	var tabs: Array[String] = []
+	tabs.assign(opts.get("tabs", []))
+	var r: int = await pick(title, entries, bool(opts.get("cancellable", true)), int(opts.get("focus", -1)),
+		int(opts.get("guard_ms", ListPicker.TAP_GUARD_MS)), tabs, int(opts.get("tab", 0)))
+	if is_instance_valid(picker):
+		picker.set_header(null)
 	return r
 
 const TITLE_MAX_LINES: int = 3
@@ -398,7 +430,9 @@ const SETTING_HINTS: Dictionary[String, String] = {
 
 func run_settings() -> void:
 	while true:
-		var idx: int = await pick(SETTINGS_TITLE, _rows_to_entries(SETTINGS_GROUPS))
+		# Settings in the era's layout (EraMenus): symbols from Era II, info panel from Era IV.
+		var entries: Array[Dictionary] = EraMenuKit.settings_entries(_rows_to_entries(SETTINGS_GROUPS), SETTINGS_GROUPS)
+		var idx: int = await pick_screen("options", SETTINGS_TITLE, entries)
 		if idx < 0:
 			SaveManager.save_settings()
 			return

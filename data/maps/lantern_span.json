@@ -123,15 +123,15 @@
    "money": 4650,
    "team": [
     {
-     "species": "Gyrevult",
+     "species": "Spanbrute",
      "level": 91
     },
     {
-     "species": "Velvessa",
+     "species": "Eaveprowl",
      "level": 92
     },
     {
-     "species": "Ergskim",
+     "species": "Eavekit",
      "level": 93
     }
    ],
@@ -179,15 +179,15 @@
    "money": 3680,
    "team": [
     {
-     "species": "Gyrevult",
+     "species": "Eaveprowl",
      "level": 90
     },
     {
-     "species": "Velvessa",
+     "species": "Eavekit",
      "level": 91
     },
     {
-     "species": "Ergskim",
+     "species": "Coffrel",
      "level": 92
     }
    ]
