@@ -1,0 +1,141 @@
+{
+ "name": "Masque Rift",
+ "region": "vellmarch",
+ "biome": "rift",
+ "backdrop": "ridge",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^.......|^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^........^_^",
+  "^.|......^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^.|......|.^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "larkspur_heights",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "larkspur_heights",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "acolyte",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "vellmarch/masque_rift_acolyte",
+   "sprite": "warden",
+   "trainer": "Masque Acolyte Liesl",
+   "intro": "vellmarch/masque_rift_acolyte_intro",
+   "defeat": "vellmarch/masque_rift_acolyte_defeat",
+   "money": 2320,
+   "team": [
+    {
+     "species": "Silentra",
+     "level": 58
+    },
+    {
+     "species": "Glasstarn",
+     "level": 58
+    }
+   ]
+  },
+  {
+   "id": "warden_sable",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/warden_sable",
+   "sprite": "warden",
+   "trainer": "Warden Sable",
+   "warden": "masque",
+   "team": [
+    {
+     "species": "Silentra",
+     "level": 58
+    },
+    {
+     "species": "Glasstarn",
+     "level": 58
+    },
+    {
+     "species": "Lanternel",
+     "level": 59
+    },
+    {
+     "species": "Glimmerax",
+     "level": 59
+    },
+    {
+     "species": "Scrivane",
+     "level": 59
+    }
+   ],
+   "intro": "vellmarch/warden_sable_intro",
+   "defeat": "vellmarch/warden_sable_defeat",
+   "ai": 3,
+   "money": 5800,
+   "rule": "night_dark",
+   "mend_items": [
+    "echo_night_veil"
+   ],
+   "rematch_after": "vellmarch_done",
+   "win_flags": [
+    "v2_rift_masque_sealed",
+    "v2_ch4_done"
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "vellmarch/masque_rift_spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "vellmarch/masque_rift_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "v2_rift_masque_sealed",
+   "closed": "@"
+  }
+ ]
+}

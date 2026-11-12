@@ -1,0 +1,125 @@
+{
+ "name": "Rookery Cut",
+ "region": "vellmarch",
+ "biome": "route",
+ "backdrop": "field",
+ "outdoor": true,
+ "encounters": "rookery_cut",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T...._..,,,T",
+  "T,,.._...,,T",
+  "T,,..__....T",
+  "T.....__...T",
+  "T..::..__..T",
+  "T..::...__.T",
+  "T........_.T",
+  "T,,,....__.T",
+  "T,,,...__..T",
+  "T.....__...T",
+  "T....__..,,T",
+  "T...__...,,T",
+  "T..__.....,T",
+  "T.__..::...T",
+  "T._...::...T",
+  "T.__.......T",
+  "T..__..,,,.T",
+  "T...__.,,,.T",
+  "T....__....T",
+  "T.....__...T",
+  "T,,....__..T",
+  "T,,.....__.T",
+  "T......__..T",
+  "T.....__...T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "tallowmarket",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "hookwick",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "tallowmarket",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "hookwick",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "crowmonger",
+   "x": 9,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "vellmarch/rookery_cut_crowmonger",
+   "sprite": "villager",
+   "trainer": "Crowmonger Sibbe",
+   "intro": "vellmarch/rookery_cut_crowmonger_intro",
+   "defeat": "vellmarch/rookery_cut_crowmonger_defeat",
+   "money": 2240,
+   "team": [
+    {
+     "species": "Millvane",
+     "level": 56
+    },
+    {
+     "species": "Burinox",
+     "level": 56
+    }
+   ]
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 6,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_rookery_cut_1"
+  },
+  {
+   "x": 11,
+   "y": 10,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_rookery_cut_2"
+  },
+  {
+   "x": 0,
+   "y": 17,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_rookery_cut_3"
+  },
+  {
+   "x": 11,
+   "y": 21,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_rookery_cut_4"
+  }
+ ]
+}

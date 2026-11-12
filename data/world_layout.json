@@ -4,13 +4,15 @@
   "veydal": {"name": "Veydal", "origin": [0, 0], "size": [7, 7]},
   "corvane": {"name": "Corvane", "origin": [8, 0], "size": [4, 7]},
   "ashmere": {"name": "Ashmere", "origin": [13, 0], "size": [4, 7]},
-  "solenne": {"name": "Solenne", "origin": [18, 0], "size": [3, 7]}
+  "solenne": {"name": "Solenne", "origin": [18, 0], "size": [3, 7]},
+  "vellmarch": {"name": "Vellmarch", "origin": [22, 0], "size": [6, 7]}
  },
  "lines": {
   "lake_line": {"name": "Lake Line", "kind": "boat", "stops": {"brindlewick": [8, 12, "down"], "reedhaven": [3, 8, "left"], "quillbrook": [5, 26, "down"]}},
   "valley_coach": {"name": "Valley Coach", "kind": "coach", "stops": {"brindlewick": [9, 7, "right"], "thornridge": [9, 10, "right"], "copperfold": [9, 17, "right"], "wrenhollow": [9, 6, "right"]}},
   "mountain_rail": {"name": "Mountain Railway", "kind": "rail", "open_flag": "act2_end", "stops": {"greyreach": [10, 7, "down"], "ashmere_station": [6, 20, "up"]}},
-  "ferry_corvane": {"name": "Ferry to Corvane", "kind": "ferry", "story": true, "stops": {"brindlewick": [8, 18, "right"], "corvane_quay": [6, 22, "up"]}}
+  "ferry_corvane": {"name": "Ferry to Corvane", "kind": "ferry", "story": true, "stops": {"brindlewick": [8, 18, "right"], "corvane_quay": [6, 22, "up"]}},
+  "vellmarch_night_barge": {"name": "Night Barge", "kind": "ferry", "open_flag": "story_complete", "stops": {"brindlewick": [7, 18, "down"], "cindergate_quay": [3, 17, "right"]}}
  },
  "maps": {
   "cinder_rift": {"region": "veydal", "pos": [3, 0], "kind": "rift", "neighbours": ["thornridge", "kindle_vents"]},
@@ -90,6 +92,41 @@
   "madderby_spring": {"inside": "madderby", "region": "corvane"},
   "madderby_house": {"inside": "madderby", "region": "corvane"},
   "greyreach_hut": {"inside": "greyreach", "region": "corvane"},
-  "edge_watch_hut": {"inside": "wide_rift_edge", "region": "corvane"}
+  "edge_watch_hut": {"inside": "wide_rift_edge", "region": "corvane"},
+  "cindergate_quay": {"region": "vellmarch", "pos": [0, 3], "kind": "town", "neighbours": ["tollchain_causeway", "bellrope_marsh"]},
+  "tallowmarket": {"region": "vellmarch", "pos": [2, 3], "kind": "town", "neighbours": ["tollchain_causeway", "rookery_cut", "smelters_drift", "foundry_rift"]},
+  "hookwick": {"region": "vellmarch", "pos": [2, 0], "kind": "town", "neighbours": ["rookery_cut", "weeping_locks", "lock_rift"]},
+  "larkspur_heights": {"region": "vellmarch", "pos": [4, 1], "kind": "town", "neighbours": ["weeping_locks", "smelters_drift", "tithe_road", "masque_rift"]},
+  "lastlamp": {"region": "vellmarch", "pos": [4, 5], "kind": "town", "neighbours": ["tithe_road", "bellrope_marsh", "vault_rift"]},
+  "tollchain_causeway": {"region": "vellmarch", "pos": [1, 3], "kind": "route", "neighbours": ["cindergate_quay", "tallowmarket"]},
+  "rookery_cut": {"region": "vellmarch", "pos": [2, 2], "kind": "route", "neighbours": ["tallowmarket", "hookwick"]},
+  "weeping_locks": {"region": "vellmarch", "pos": [2, 1], "kind": "route", "neighbours": ["hookwick", "larkspur_heights"]},
+  "smelters_drift": {"region": "vellmarch", "pos": [3, 3], "kind": "route", "neighbours": ["tallowmarket", "larkspur_heights"]},
+  "tithe_road": {"region": "vellmarch", "pos": [4, 3], "kind": "route", "neighbours": ["larkspur_heights", "lastlamp"]},
+  "bellrope_marsh": {"region": "vellmarch", "pos": [3, 5], "kind": "marsh", "neighbours": ["lastlamp", "cindergate_quay"]},
+  "lock_rift": {"region": "vellmarch", "pos": [1, 0], "kind": "rift", "neighbours": ["hookwick"]},
+  "foundry_rift": {"region": "vellmarch", "pos": [2, 4], "kind": "rift", "neighbours": ["tallowmarket"]},
+  "masque_rift": {"region": "vellmarch", "pos": [4, 0], "kind": "rift", "neighbours": ["larkspur_heights"]},
+  "vault_rift": {"region": "vellmarch", "pos": [5, 5], "kind": "rift", "neighbours": ["lastlamp"]},
+  "cindergate_quay_tollhouse": {"inside": "cindergate_quay", "region": "vellmarch"},
+  "cindergate_quay_net_loft": {"inside": "cindergate_quay", "region": "vellmarch"},
+  "cindergate_quay_bunkhouse": {"inside": "cindergate_quay", "region": "vellmarch"},
+  "cindergate_quay_customs_store": {"inside": "cindergate_quay", "region": "vellmarch"},
+  "tallowmarket_wax_hall": {"inside": "tallowmarket", "region": "vellmarch"},
+  "tallowmarket_weigh_house": {"inside": "tallowmarket", "region": "vellmarch"},
+  "tallowmarket_rumour_room": {"inside": "tallowmarket", "region": "vellmarch"},
+  "tallowmarket_vigil_house": {"inside": "tallowmarket", "region": "vellmarch"},
+  "hookwick_boatshed": {"inside": "hookwick", "region": "vellmarch"},
+  "hookwick_eel_smokery": {"inside": "hookwick", "region": "vellmarch"},
+  "hookwick_lock_office": {"inside": "hookwick", "region": "vellmarch"},
+  "hookwick_tackle_shop": {"inside": "hookwick", "region": "vellmarch"},
+  "larkspur_heights_mask_atelier": {"inside": "larkspur_heights", "region": "vellmarch"},
+  "larkspur_heights_counting_house": {"inside": "larkspur_heights", "region": "vellmarch"},
+  "larkspur_heights_servants_hall": {"inside": "larkspur_heights", "region": "vellmarch"},
+  "larkspur_heights_salon": {"inside": "larkspur_heights", "region": "vellmarch"},
+  "lastlamp_lamp_store": {"inside": "lastlamp", "region": "vellmarch"},
+  "lastlamp_pawnshop": {"inside": "lastlamp", "region": "vellmarch"},
+  "lastlamp_bell_house": {"inside": "lastlamp", "region": "vellmarch"},
+  "lastlamp_name_room": {"inside": "lastlamp", "region": "vellmarch"}
  }
 }

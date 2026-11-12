@@ -1,0 +1,125 @@
+{
+ "name": "Smelter's Drift",
+ "region": "vellmarch",
+ "biome": "route",
+ "backdrop": "field",
+ "outdoor": true,
+ "encounters": "smelters_drift",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T...._..:::T",
+  "T::.._...::T",
+  "T::..__....T",
+  "T.....__...T",
+  "T..,,..__..T",
+  "T..,,...__.T",
+  "T........_.T",
+  "T:::....__.T",
+  "T:::...__..T",
+  "T.....__...T",
+  "T....__..::T",
+  "T...__...::T",
+  "T..__.....:T",
+  "T.__..,,...T",
+  "T._...,,...T",
+  "T.__.......T",
+  "T..__..:::.T",
+  "T...__.:::.T",
+  "T....__....T",
+  "T.....__...T",
+  "T::....__..T",
+  "T::.....__.T",
+  "T......__..T",
+  "T.....__...T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "tallowmarket",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "larkspur_heights",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "tallowmarket",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "larkspur_heights",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "slagman",
+   "x": 9,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "vellmarch/smelters_drift_slagman",
+   "sprite": "villager",
+   "trainer": "Slag Carter Hobb",
+   "intro": "vellmarch/smelters_drift_slagman_intro",
+   "defeat": "vellmarch/smelters_drift_slagman_defeat",
+   "money": 2320,
+   "team": [
+    {
+     "species": "Smeltmaw",
+     "level": 58
+    },
+    {
+     "species": "Ashcrest",
+     "level": 58
+    }
+   ]
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 6,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_smelters_drift_1"
+  },
+  {
+   "x": 11,
+   "y": 10,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_smelters_drift_2"
+  },
+  {
+   "x": 0,
+   "y": 17,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_smelters_drift_3"
+  },
+  {
+   "x": 11,
+   "y": 21,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_smelters_drift_4"
+  }
+ ]
+}
