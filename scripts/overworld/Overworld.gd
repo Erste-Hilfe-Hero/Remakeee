@@ -101,6 +101,8 @@ func _ready() -> void:
 		"tip": _action_tip,
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
+		"showcase": _action_showcase,
+		"dig": _action_dig,
 		"exchange": _action_exchange,
 		"festival_shop": _action_festival_shop,
 		"spark_read": _action_spark_read,
@@ -691,6 +693,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 		return
 	_grass_rustle(map.kind_at(cell))
 	DailyTasks.record("step", {"map": map.id})
+	Kinship.on_step(GameState.party, GameState.records)
 	_inkshadow_remark()
 	show_notices()
 	if await _world.stepped(cell):
@@ -3079,6 +3082,88 @@ func _action_spark_read(_args: PackedStringArray, _speaker: NPC) -> void:
 	await say(lines)
 
 ## Shop: "shop item_a item_b ..." sells those items for their JSON price. The bag has no limit.
+## The Showcase (Era III, Showcase.gd): pick a Spirling, show three arts, get a place.
+func _action_showcase(_args: PackedStringArray, _speaker: NPC) -> void:
+	if not EraFeatures.is_unlocked(Showcase.FEATURE):
+		await say(["The stage is still being built. Come back in a later era."] as Array[String])
+		return
+	var theme: String = Showcase.theme_for(DailyFind.today_key())
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var names: Array[String] = []
+	for s: Spirling in GameState.party:
+		names.append(MenuHost.party_line(s))
+	var pick: int = await menu.pick_strings(Loc.t("Today's theme: %s. Who goes on stage?") % Loc.t(Showcase.theme_label(theme)), names)
+	if pick < 0 or GameState.party[pick].moves.is_empty():
+		menu.queue_free()
+		return
+	var star: Spirling = GameState.party[pick]
+	var total: int = 0
+	var last: MoveData = null
+	for r: int in Showcase.rounds():
+		var arts: Array[String] = []
+		for mv: MoveData in star.moves:
+			arts.append(mv.move_name)
+		var a: int = await menu.pick_strings(Loc.t("Round %d of %d: which art?") % [r + 1, Showcase.rounds()], arts, false)
+		var mv: MoveData = star.moves[maxi(a, 0)]
+		var got: int = Showcase.appeal(star, theme, mv, last)
+		total += got
+		await menu.info(Loc.t("%s shows %s. Appeal %d.") % [star.display_name(), mv.move_name, got] + ("\n" + Loc.t("The judges have seen that one already.") if mv == last else ""))
+		last = mv
+	var rivals: Array[int] = Showcase.rivals(star, theme)
+	var place: int = Showcase.place(total, rivals)
+	var prize: int = Showcase.prize(place)
+	var lines: PackedStringArray = [Loc.t("Your total: %d") % total]
+	var rival_names: Array = Showcase.data().get("rival_names", [])
+	for i: int in rivals.size():
+		lines.append("%s: %d" % [str(rival_names[i]) if i < rival_names.size() else "?", rivals[i]])
+	lines.append(Loc.t("Place %d.") % place)
+	if prize > 0:
+		Ticker.coins(GameState.money, GameState.money + prize)
+		GameState.money += prize
+		lines.append(Loc.plural(prize, "%d coin", "%d coins"))
+	Showcase.note(GameState.records, place)
+	await menu.info("\n".join(lines))
+	menu.queue_free()
+
+## The Dig site (Era IV, DigSite.gd): once a day, swing the pick at buried cells.
+func _action_dig(_args: PackedStringArray, _speaker: NPC) -> void:
+	if not EraFeatures.is_unlocked(DigSite.FEATURE):
+		await say(["The ground here is still too hard. Come back in a later era."] as Array[String])
+		return
+	var day: String = DailyFind.today_key()
+	if not DigSite.open_today(GameState.records, day):
+		await say(["You already dug here today. The ground needs a night to settle."] as Array[String])
+		return
+	DigSite.mark_done(GameState.records, day)
+	var dig: Dictionary = DigSite.start(day)
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var found: PackedStringArray = []
+	while int(dig.picks) > 0:
+		var cells: Array[int] = DigSite.open_cells(dig)
+		var names: Array[String] = [Loc.t("Look at the field")]
+		for c: int in cells:
+			names.append(DigSite.cell_name(c))
+		var i: int = await menu.pick_strings(Loc.t("Picks left: %d") % int(dig.picks), names)
+		if i < 0:
+			break
+		if i == 0:
+			await menu.info(DigSite.grid_text(dig) + "\n" + Loc.t("# untouched, . empty, o rock, * find"))
+			continue
+		var r: Dictionary = DigSite.swing(dig, cells[i - 1])
+		if bool(r.rock):
+			Sound.sfx("bump")
+			await menu.info(Loc.t("Clang! Solid rock. That cost two swings."))
+		elif not str(r.item).is_empty():
+			GameState.add_item(str(r.item))
+			Sound.sfx("sparkle")
+			var item_name: String = str(Database.item(str(r.item)).get("name", r.item))
+			found.append(Loc.t(item_name))
+			await menu.info(Loc.t("You dig up %s!") % Loc.t(item_name))
+	await menu.info(Loc.t("The dig is over. Found: %s") % (", ".join(found) if not found.is_empty() else Loc.t("nothing")))
+	menu.queue_free()
+
 func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
@@ -3828,6 +3913,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
 	model.xp_mult = ShopEffects.growth_mult()
 	model.ring_scaled_growth = EraFeatures.is_unlocked("ring_scaled_growth")
+	model.wheel = bool(trainer.get("wheel", false)) and EraFeatures.is_unlocked("wheel_battles")
+	model.wheel_size = EraActivities.wheel_size()
 	# Weather in battle (Era III on): the sky of an outdoor map lays its field when nothing else does.
 	if model.field.is_empty() and not (own is Array and not (own as Array).is_empty()) and EraFeatures.is_unlocked("sky_battles"):
 		var sky: Dictionary = WeatherCycle.battle_field(WeatherCycle.current(map))
@@ -3872,6 +3959,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
+	Kinship.after_battle(GameState.party, model.participants, outcome == BattleModel.Outcome.WIN)
 	var had_growth: bool = ShopEffects.boost_left("growth") > 0
 	ShopEffects.battle_done()
 	# What is left of the shop boosts, right after the battle (item 4342).

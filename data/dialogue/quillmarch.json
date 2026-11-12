@@ -169,6 +169,12 @@
   ],
   "action": "heal"
  },
+ "ledgerholm_showcase_host": {
+  "lines": [
+   "Stagewright Pell: The Showcase! No blood, no Rifts, just arts and applause. The judges are honest. Mostly. One owes me money."
+  ],
+  "action": "showcase"
+ },
  "ledgerholm_sign": [
   "Ledgerholm",
   "Ledgerholm. Two banks, one street, no witnesses."

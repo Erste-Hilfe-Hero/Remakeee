@@ -827,6 +827,8 @@ static func storage_card(s: Spirling) -> String:
 	if not tr.is_empty():
 		lines.append("Gift: %s. %s" % [tr.label, tr.text])
 	lines.append("Keepsake: %s" % (str(Database.item(s.held).get("name", s.held)) if not s.held.is_empty() else "none"))
+	if EraFeatures.is_unlocked(Kinship.FEATURE):
+		lines.append(Kinship.label(s))
 	var hint: String = keepsake_suggestion(s)
 	if not hint.is_empty():
 		lines.append(hint)
