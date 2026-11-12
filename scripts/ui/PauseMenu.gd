@@ -18,6 +18,8 @@ static var last_label: String = ""
 var photo: bool = false
 ## Set when the player picks "Watch last battle" in Records.
 var watch_replay: bool = false
+## A replay picked under Records > Online replays (Online 100 plan point 71); empty = the last battle.
+var watch_snap: Dictionary = {}
 ## Set when the player picks an echo duel under Friends: {"code", "name", "team"}.
 var echo_duel: Dictionary = {}
 ## Set when the player finds a league battle under Leagues: the battle the server set up.
@@ -362,6 +364,7 @@ func run_records() -> void:
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
+		lines.append("Online replays")
 		var have: int = Achievements.unlocked().size()
 		var idx: int = await pick_strings(Loc.t("Achievements %d/%d") % [have, Achievements.list().size()], lines)
 		if idx < 0:
@@ -381,6 +384,9 @@ func run_records() -> void:
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Lexicon": await run_lexicon()
+			"Online replays":
+				if await OnlineReplaysMenu.run(self):
+					return
 			"Watch last battle":
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
