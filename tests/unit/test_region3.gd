@@ -93,6 +93,8 @@ func test_four_wardens_each_hold_a_rift() -> void:
 		ring = int(w.ring)
 		for t: Dictionary in w.team:
 			assert_true(Database.spirlings.has(Region3.slot_species(t)), str(w.id))
+			if Database.spirlings.has(Region3.slot_species(t)):
+				assert_eq(Database.species(Region3.slot_species(t)).region, "quillmarch", "%s fields only Quillmarch kinds" % w.id)
 			assert_lte(int(t.level), int(w.ring))
 
 func test_next_warden_follows_sealed_rifts() -> void:
