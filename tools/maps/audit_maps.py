@@ -13,8 +13,8 @@ list never goes stale.
 Reads data/maps/*.json (and their floors) with the same tile rules as TilesetFactory and
 tools/art/preview_map.py. Kinds of finding:
   unknown_tile    a row character that is not in the legend (drawn as plain grass at runtime)
-  blank_tile      an atlas cell used by the map is empty in the map's atlas (Era I region atlas
-                  or the shared Era II atlas)
+  blank_tile      an atlas cell used by the map is empty in the map's atlas (Era I region atlas,
+                  the shared Era II atlas, or the region's own atlas of a later era)
   ragged_row      rows of different length (the short row ends in void)
   dead_door       a door with no warp: the player walks into it and nothing happens
   warp_off_door   a warp inside the map that is not on a door, stairs, Rift, ladder or the edge
@@ -35,8 +35,10 @@ tools/art/preview_map.py. Kinds of finding:
   unreachable     walkable cells (or finds, NPCs) no entry of the map can reach
   no_door         an outdoor building with no door at all
   building_cut    a building only one tile wide (a sliver of a house)
-  tower_no_lamp   a lighthouse shaft with no lamp on top and no door below (a stray tower piece)
+  path_stub       a scrap of road (1 to 3 cells) that joins no road, door, stairs, pier or map edge
   open_edge       a walkable border cell of an outdoor map with no warp (the path runs into void)
+  road_dead_end   a straight road (1 or 2 wide) that runs into the tree, rock or cliff frame with
+                  no exit there (a town side without a way out that kept its road arm)
 """
 import json
 import os
@@ -47,7 +49,7 @@ from PIL import Image
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "tools", "art"))
-from preview_map import JOINS, LEGEND, MASKED, SCATTERED, door_roles, lighthouse_door  # noqa: E402
+from preview_map import JOINS, LEGEND, MASKED, SCATTERED, door_roles, headframe, lighthouse_door  # noqa: E402
 from gen_tiles import K  # noqa: E402
 
 SOLID = {"WATER", "TREE", "WALL", "ROOF", "FENCE", "SIGN", "COUNTER", "INNER_WALL", "SPRING", "CLIFF",
@@ -130,6 +132,11 @@ def atlas_paths(region: str) -> list:
     era2 = os.path.join(ROOT, "art", "era2", "tiles", "overworld.png")
     if os.path.exists(era2):
         out.append(era2)
+    # A later era's own region atlas (Era III Quillmarch, Era IV Halcyra, ...) is what that region draws with.
+    for n in range(3, 10):
+        later = os.path.join(ROOT, "art", "era%d" % n, "tiles", "overworld_%s.png" % region)
+        if os.path.exists(later):
+            out.append(later)
     return out
 
 
@@ -140,6 +147,8 @@ def coords(m: Map, x: int, y: int, roles: dict) -> tuple:
         return K["TOWER"], 2
     if k == "TOWER" and m.kind(x, y + 1) == "DOOR" and lighthouse_door(m.rows, x, y + 1):
         return K["TOWER"], 1
+    if k == "TOWER" and headframe(m.rows, x, y):
+        return K["TOWER"], 4 if m.kind(x, y - 1) == "TOWER" else 3
     if k in MASKED:
         v = 0
         for bit, (dx, dy) in zip((1, 2, 4, 8), ((0, -1), (1, 0), (0, 1), (-1, 0))):
@@ -216,7 +225,8 @@ def check_map(m: Map, maps: dict, entries_into: dict) -> list:
         if (x, y) not in m.warp_cells:
             add("dead_door", x, y, "door leads nowhere")
         above = m.kind(x, y - 1)
-        if above not in {"WALL", "ROOF", "TOWER", "INNER_WALL", "CLIFF"} and m.outdoor:
+        cave_mouth = "CLIFF" in (m.kind(x - 1, y), m.kind(x + 1, y))
+        if above not in {"WALL", "ROOF", "TOWER", "INNER_WALL", "CLIFF"} and not cave_mouth and m.outdoor:
             add("door_no_wall", x, y, "nothing above the door (%s)" % (above or "edge"))
         if m.outdoor and not (walkable(m, x, y + 1) or not m.inb(x, y + 1)):
             add("door_blocked", x, y, "no ground in front of the door")
@@ -305,18 +315,6 @@ def check_map(m: Map, maps: dict, entries_into: dict) -> list:
     if lm and m.kind(lm["x"], lm["y"]) == "WATER" and "tide_post" not in lm["kind"]:
         add("on_water", lm["x"], lm["y"], "landmark %s in water" % lm["kind"])
 
-    # Lighthouse tower tiles: a shaft needs its lamp on top, or it reads as a stray lighthouse
-    # piece (tower over a door without a lamp is the dark Saltglass lighthouse, see ashmere.py).
-    # Rifts use the tower as stone pillars, so only outdoor maps are checked.
-    for x, y in m.cells():
-        if not m.outdoor or m.kind(x, y) != "TOWER" or m.kind(x, y - 1) == "TOWER":
-            continue
-        yy = y
-        while m.kind(x, yy) == "TOWER":
-            yy += 1
-        if m.kind(x, y - 1) != "LAMP" and m.kind(x, yy) != "DOOR":
-            add("tower_no_lamp", x, y, "lighthouse shaft %d,%d-%d,%d with no lamp and no door" % (x, y, x, yy - 1))
-
     # Interiors: no narrower than the building that leads in, same region.
     for (x, y), w in m.warp_cells.items():
         if m.kind(x, y) != "DOOR" or not m.outdoor:
@@ -367,6 +365,45 @@ def check_map(m: Map, maps: dict, entries_into: dict) -> list:
                     ys = [c[1] for c in comp]
                     add("unreachable", min(xs), min(ys), "%d cells %d,%d-%d,%d cannot be reached" % (
                         len(comp), min(xs), min(ys), max(xs), max(ys)))
+
+    # Scraps of road left over from road edits.
+    if m.outdoor:
+        for comp in components(m, {"PATH"}):
+            if len(comp) > 3:
+                continue
+            ends = False
+            for cx, cy in comp:
+                if cx in (0, m.w - 1) or cy in (0, m.h - 1):
+                    ends = True
+                for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                    if m.kind(cx + dx, cy + dy) in {"DOOR", "STAIRS", "PIER", "SIGN"}:
+                        ends = True
+            if not ends:
+                add("path_stub", comp[0][0], comp[0][1], "%d road cells that lead nowhere" % len(comp))
+
+    # Straight roads that end at the frame: the arm is at most 2 wide and every cell of it has
+    # two road cells behind it (corners and roads running along the frame do not count).
+    if m.outdoor:
+        road = {"PATH", "PIER", "STAIRS", "DOOR"}
+        dead_ends = set()
+        for x, y in m.cells():
+            if m.kind(x, y) != "PATH" or x in (0, m.w - 1) or y in (0, m.h - 1):
+                continue
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                n = (x + dx, y + dy)
+                if not (n[0] in (0, m.w - 1) or n[1] in (0, m.h - 1)) or n in m.warp_cells or walkable(m, *n):
+                    continue
+                arm = [(x, y)]
+                for s in (1, -1):
+                    c = (x + dy * s, y + dx * s)
+                    while m.kind(*c) in road:
+                        arm.append(c)
+                        c = (c[0] + dy * s, c[1] + dx * s)
+                if len(arm) > 2 or min(arm) in dead_ends:
+                    continue
+                if all(m.kind(cx - dx, cy - dy) == "PATH" and m.kind(cx - 2 * dx, cy - 2 * dy) == "PATH" for cx, cy in arm):
+                    dead_ends.add(min(arm))
+                    add("road_dead_end", min(arm)[0], min(arm)[1], "road runs into the %s at the map edge" % m.kind(*n))
 
     # Paths that run into the border without a warp.
     if m.outdoor:

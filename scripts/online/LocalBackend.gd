@@ -20,7 +20,7 @@ const DEFAULT_CONFIG: Dictionary = {
 		{"item": "focus_brew", "w": 3}, {"item": "dash_brew", "w": 3}, {"item": "revival_leaf", "w": 1}],
 	"goal_rotation": [{"kind": "battles", "target": 5000}, {"kind": "bonds", "target": 800}, {"kind": "rests", "target": 2000}],
 	"goal_rewards": ["strong_tonic", "spark_drop", "max_tonic", "spark_charm"],
-	"party_max": 5, "level_max": 60, "save_level_max": 96, "duel_ring": 50, "save_schema_max": 1, "battle_submit_limit": 60,
+	"party_max": 5, "level_max": 60, "save_level_max": 9999, "duel_ring": 50, "save_schema_max": 1, "battle_submit_limit": 60,
 	"league_fair_ring": 50, "league_season_days": 42, "league_closing_minutes": 30, "league_search_start": 100,
 	"league_search_step": 50, "league_search_max": 400, "league_match_minutes": 30, "league_ai": 2,
 	"league_fair_blocked_sources": [],
@@ -45,7 +45,7 @@ const DEFAULT_FLAGS: Dictionary = {
 	"bund": {"enabled": false, "min_version": 1}, "raid": {"enabled": false, "min_version": 1},
 	"trade_spirling": {"enabled": false, "min_version": 1}, "rift_board": {"enabled": false, "min_version": 1},
 	"league_board": {"enabled": false, "min_version": 1}, "daily_gift": {"enabled": false, "min_version": 1},
-	"lend": {"enabled": false, "min_version": 1},
+	"lend": {"enabled": false, "min_version": 1}, "invite": {"enabled": false, "min_version": 1},
 }
 
 ## Where the fake server keeps its data between runs ("" = memory only, as in tests).
@@ -82,10 +82,16 @@ func _init(p_store_path: String = "") -> void:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
+	# Planned maintenance (Online 100 point 95, 20261112230010_maintenance.sql).
+	_fns["maintenance_info"] = Callable(self, "_fn_maintenance_info")
 	# Trading and gifting, Online 100 area 5 (20261112000050_trade_gifts.sql).
 	LocalTradeGifts.install(self)
 	# Online events (20261112000070_online_events.sql) live in their own file too.
 	LocalOnlineEvents.install(self)
+	# Friends and the shared world, Online 100 area 6 (20261112230020_friends_more.sql).
+	LocalFriendsMore.install(self)
+	# Safety and fairness, Online 100 area 9 (20261113000010_safety.sql).
+	LocalSafety.install(self)
 
 func is_local() -> bool:
 	return true
@@ -152,7 +158,8 @@ func _fn_action_once(a: Dictionary) -> Dictionary:
 
 ## Functions that change a stored save (the server checks them in a trigger on saves).
 const SAVE_WRITERS: Array[String] = ["save_put", "save_restore", "trade_put", "trade_collect", "trade_put_spirlings",
-	"daily_gift_claim", "league_reward", "bund_donate", "bund_goal_claim", "event_claim", "event_reward"]
+	"daily_gift_claim", "league_reward", "bund_donate", "bund_goal_claim", "event_claim", "event_reward",
+	"friend_level_claim", "pair_task_claim", "invite_claim"]
 
 ## Like public._other_device: this device's token is not the newest one of the account.
 func other_device() -> bool:
@@ -295,10 +302,10 @@ func party_max_of(uid: String) -> int:
 	var unlocks: Variant = shop.get("unlocks", {}) if shop is Dictionary else {}
 	return config_int("party_max", 5) + (1 if unlocks is Dictionary and int(unlocks.get("team_slot_6", 0)) > 0 else 0)
 
-## Like public._save_ok: real game limits (team of party_max, Ring 1..save_level_max). Saves have
-## their own limit up to Spirling.ERA_MAX_LEVEL (Halcyra); level_max (60) stays the echo team,
-## league and duel ring.
-static func save_ok(d: Variant, party_max: int = 5, level_max: int = Spirling.ERA_MAX_LEVEL) -> bool:
+## Like public._save_ok: real game limits (team of party_max, Ring 1..save_level_max). Spirlings
+## have no top ring, so save_level_max is only a sanity bound (Spirling.LEVEL_SANITY, 9999)
+## against garbage; level_max (60) stays the echo team, league and duel ring.
+static func save_ok(d: Variant, party_max: int = 5, level_max: int = Spirling.LEVEL_SANITY) -> bool:
 	if not d is Dictionary:
 		return false
 	if JSON.stringify(d).length() > 400000:
@@ -335,7 +342,26 @@ func _fn_hello(a: Dictionary) -> Dictionary:
 	return {"profile": profile_json(p), "server_time": now(),
 		"update_required": int(a.get("p_version", 0)) < int(db.config.get("min_version", 1)),
 		"motd": str(db.config.get("motd", "")), "online_now": online_now(),
-		"flags": active_flags(int(a.get("p_version", 0)))}
+		"flags": active_flags(int(a.get("p_version", 0))), "parent_off": parent_off_list(me())}
+
+## Like public._parent_off_list (Online 100 points 85, 86): the parent's own list, else the default
+## by the shop's age band.
+func parent_off_list(uid: String) -> Array:
+	if uid.is_empty() or not db.users.has(uid):
+		return []
+	var shop: LocalShop = LocalShop.of(self)
+	var band: Variant = shop.band_of(uid) if shop != null else null
+	return SafetyRules.off_list(safety_cfg(), profile_of(uid).get("parent_off"), band)
+
+func parent_off(uid: String, key: String) -> bool:
+	return parent_off_list(uid).has(key)
+
+## server_config.safety over data/safety.json (tests change values in db.config).
+func safety_cfg() -> Dictionary:
+	var c: Dictionary = SafetyRules.config().duplicate(true)
+	if db.config.get("safety") is Dictionary:
+		c.merge(db.config.safety, true)
+	return c
 
 ## Like public.live_content_get: the local stand-in has no patches, the bundled one is used.
 func _fn_live_content_get(_a: Dictionary) -> Dictionary:
@@ -344,8 +370,9 @@ func _fn_live_content_get(_a: Dictionary) -> Dictionary:
 ## Like hello's "flags": the feature keys that are on for [param version], sorted (item 2675).
 func active_flags(version: int) -> Array:
 	var out: Array = []
+	var off: Array = parent_off_list(me()) if not session.is_empty() else []
 	for key: String in db.flags:
-		if flag_on(key, version):
+		if flag_on(key, version) and not off.has(key):
 			out.append(key)
 	out.sort()
 	return out
@@ -426,7 +453,7 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 		return {"ok": false, "error": "too_big"}
 	if not save_schema_ok(a.get("p_data"), config_int("save_schema_max", 1)):
 		return {"ok": false, "error": "schema"}
-	if not save_ok(a.get("p_data"), party_max_of(me()), config_int("save_level_max", Spirling.ERA_MAX_LEVEL)):
+	if not save_ok(a.get("p_data"), party_max_of(me()), config_int("save_level_max", Spirling.LEVEL_SANITY)):
 		return {"ok": false, "error": "implausible"}
 	var data: Dictionary = (a.p_data as Dictionary).duplicate(true)
 	# Values the server keeps itself are dropped (item 2924).
@@ -672,8 +699,9 @@ func _today() -> String:
 func _week() -> String:
 	return WeeklyChallenge.week_key(now())
 
+## Friendship level 1-10 (Online 100 point 56, data/friends_more.json).
 static func level_for(points: int) -> int:
-	return 5 if points >= 100 else 4 if points >= 60 else 3 if points >= 30 else 2 if points >= 10 else 1
+	return FriendRules.level(FriendRules.config(), points)
 
 static func _fail(e: String) -> Dictionary:
 	return {"ok": false, "error": e}
@@ -1352,6 +1380,8 @@ func _league_check(league: String) -> String:
 		return "bad_league"
 	if not flag_on("league_" + league, 2147483647):
 		return "feature_off"
+	if not session.is_empty() and parent_off(me(), "league_" + league):
+		return "parent_off"
 	if not session.is_empty() and db.users.has(me()) and cheat_held(me()):
 		return "under_review"
 	return ""
@@ -1449,10 +1479,20 @@ func _fn_league_find(a: Dictionary) -> Dictionary:
 	db["league_match_seq"] = id
 	var teams: Array = [(mine.team as Array).duplicate(true), (opp.team as Array).duplicate(true)]
 	var rated: bool = league_state(sn) == "running" and not best.is_empty()
+	# Point 88: a pair already rated pair_rated_daily times in the last day is not rated again.
+	var pair_n: int = 0
+	for pm: Dictionary in matches.values():
+		if pm.user == me() and str(pm.opponent) == best and bool(pm.rated) and str(pm.state) in ["submitted", "done"] \
+				and now() - int(pm.created_at) < 86400:
+			pair_n += 1
+	var pair_cap: bool = rated and pair_n >= int(safety_cfg().get("pair_rated_daily", 3))
+	if pair_cap:
+		rated = false
 	matches[str(id)] = {"league": league, "season": int(sn.id), "user": me(), "opponent": best, "seed": rng.randi() & 0x7fffffff,
 		"teams": teams, "created_at": now(), "state": "open", "rated": rated}
 	return {"ok": true, "found": true, "match_id": id, "seed": matches[str(id)].seed, "teams": teams.duplicate(true),
 		"ai": config_int("league_ai", 2), "opponent_tier": LeagueRules.tier(float(opp.rating)), "range": span, "rated": rated,
+		"pair_limit": pair_cap,
 		"echo": best_d > span or best.is_empty()}
 
 func _league_expect(m: Dictionary) -> Dictionary:
@@ -1482,6 +1522,17 @@ func _league_apply(m: Dictionary, detail: Variant) -> void:
 	m.state = "done"
 	m.score = score
 	if not bool(m.rated):
+		return
+	# Point 88: a loss without any damage to the rival is sandbagged: not rated, noted.
+	if SafetyRules.sandbagged(detail):
+		m.rated = false
+		m.sandbagged = true
+		var n: int = 0
+		for x: Dictionary in (_table("league_matches", {}) as Dictionary).values():
+			if x.user == m.user and bool(x.get("sandbagged", false)) and now() - int(x.created_at) < int(safety_cfg().sandbag_days) * 86400:
+				n += 1
+		if n >= int(safety_cfg().sandbag_limit) and db.users.has(str(m.user)):
+			(db.users[m.user] as Dictionary).get_or_add("cheat_flags", []).append({"slot": 0, "reason": "league_sandbag", "at": now()})
 		return
 	var e: Variant = league_entry(m.league, int(m.season), m.user)
 	if e == null:
@@ -1579,6 +1630,8 @@ func _bund_check(uid: String) -> String:
 		return "feature_off"
 	if not _social(uid):
 		return "social_off"
+	if parent_off(uid, "bund"):
+		return "parent_off"
 	return ""
 
 func _invite_of(b: String, uid: String, kind: String) -> int:
@@ -1803,6 +1856,8 @@ func _raid_check(uid: String) -> String:
 		return "feature_off"
 	if not _social(uid):
 		return "social_off"
+	if parent_off(uid, "raid"):
+		return "parent_off"
 	if cheat_held(uid):
 		return "under_review"
 	return ""
@@ -2570,6 +2625,8 @@ func _live_out(d: Dictionary) -> Dictionary:
 		"winner": d.winner, "reason": d.reason, "emotes": (d.emotes as Array).duplicate(true)}
 
 func _live_new(other: String) -> Dictionary:
+	if parent_off(me(), "live_duel") or parent_off(other, "live_duel"):
+		return _fail("parent_off")
 	var c: Dictionary = live_cfg()
 	var show: Array = []
 	for uid: String in [me(), other]:
@@ -2621,6 +2678,8 @@ func _fn_live_answer(a: Dictionary) -> Dictionary:
 	if not bool(a.get("p_accept", false)):
 		d.state = "expired"
 		return {"ok": true, "state": d.state}
+	if parent_off(me(), "live_duel"):
+		return _fail("parent_off")
 	d.state = "picking"
 	d.deadline = now() + int(live_cfg().pick_seconds)
 	return _live_out(d)
@@ -2883,3 +2942,7 @@ func _fn_bund_board(_a: Dictionary) -> Dictionary:
 	for r: Dictionary in rows:
 		r.erase("id")
 	return {"ok": true, "rows": rows}
+
+## Planned maintenance time (Online 100 point 95), 0 = none.
+func _fn_maintenance_info(_a: Dictionary) -> Dictionary:
+	return {"at": int(db.config.get("maintenance_at", 0))}

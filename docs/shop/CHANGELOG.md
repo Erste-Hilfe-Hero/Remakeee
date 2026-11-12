@@ -13,6 +13,8 @@ Preiserhöhungen stehen mindestens 7 Tage vorher in den Neuigkeiten des Spiels. 
 | 2026-11-11 | 31 | Pay-to-win Schritt 3 (Ali, Fortschritt beschleunigen): Ring-Krone (sofort Ring 50, 2000), Ring-Grenzen-Siegel (+5 Ringe über der Veteran-Grenze, dauerhaft, 1500), Münz-Tresor (100000 Münzen, 3000), alle nur für Rissglas |
 | 2026-11-11 | 32 | Pay-to-win Schritt 2 (Ali): Bindungs-Köder I bis IV (100 bis 500 Rissglas), Siegel-Satz (10000 Rissglas), 7 uralte Spirlings auf Ring 40 mit vollen Funken (19,99 € oder 2000 Rissglas, neue Store-Produkte `de.chimora.game.spirling.*`) |
 | 2026-11-12 | 33 | Pay-to-win Schritt 4: Krit-Siegel I bis III (500, 1000, 1500 Rissglas), Status-Amulett und Eröffnungs-Schild (je 1500 Rissglas), Anzeige der Kauf-Vorteile zu Kampfbeginn; nur Rissglas, keine neuen Store-Produkte |
+| 2026-11-12 | 34 | Pay-to-win Schritt 5: Lockduft I bis III (200, 400, 700 Rissglas), Schimmerduft (500), Bindungs-Vorsprung I bis III (500, 1000, 1500), Zweitversuch-Talisman (300), Entfaltungsfunke (800), Großer Heiltrank (300); nur Rissglas, keine neuen Store-Produkte |
+| 2026-11-12 | 35 | Shop-Klarheit (Ali): jede Zeile zeigt kurz den Inhalt aus den Grants ("5x Rissatem, ..."), Dauer und ob man es wieder kaufen kann; die Detailansicht listet jedes Teil mit Menge, Wirkung und Dauer. Bondsiegel-Text korrigiert: wirkt auch bei uralten und einmaligen wilden Spirlings (so war es schon). Store-Texte enden jetzt an einem Satzende. Keine Preis- oder Inhaltsänderung |
 
 Bisher ist nichts im Store verkauft worden. Darum gab es noch keine Preiserhöhung, die angekündigt werden
 musste.

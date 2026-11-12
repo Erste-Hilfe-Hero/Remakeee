@@ -607,8 +607,8 @@
    "eur": "4.99",
    "name_en": "Bond Seal",
    "name_de": "Bondsiegel",
-   "desc_en": "The next bonding succeeds for sure. Not with Rift Wardens or one-of-a-kind Spirlings.",
-   "desc_de": "Das nächste Bonden gelingt sicher. Nicht bei Rift-Wächtern und einmaligen Spirlings.",
+   "desc_en": "The next bond with a wild Spirling succeeds for sure, also with ancient and one-of-a-kind ones. Rift Wardens and other Wayfarers' Spirlings can never be bonded.",
+   "desc_de": "Das nächste Bonden mit einem wilden Spirling gelingt sicher, auch bei uralten und einmaligen. Rift-Wächter und Spirlings anderer Wanderer lassen sich nie bonden.",
    "family_shareable": false,
    "ready": true
   },
@@ -1582,8 +1582,8 @@
    "eur": "19.99",
    "name_en": "Velahra at Ring 40",
    "name_de": "Velahra auf Ring 40",
-   "desc_en": "Velahra, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent.",
-   "desc_de": "Velahra, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getauscht o",
+   "desc_en": "Velahra, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey.",
+   "desc_de": "Velahra, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst.",
    "family_shareable": false,
    "ready": true
   },
@@ -1595,8 +1595,8 @@
    "eur": "19.99",
    "name_en": "Hallowmur at Ring 40",
    "name_de": "Hallowmur auf Ring 40",
-   "desc_en": "Hallowmur, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or len",
-   "desc_de": "Hallowmur, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getauscht",
+   "desc_en": "Hallowmur, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey.",
+   "desc_de": "Hallowmur, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst.",
    "family_shareable": false,
    "ready": true
   },
@@ -1608,8 +1608,8 @@
    "eur": "19.99",
    "name_en": "Scriptorax at Ring 40",
    "name_de": "Scriptorax auf Ring 40",
-   "desc_en": "Scriptorax, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or le",
-   "desc_de": "Scriptorax, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getausch",
+   "desc_en": "Scriptorax, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey.",
+   "desc_de": "Scriptorax, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst.",
    "family_shareable": false,
    "ready": true
   },
@@ -1621,8 +1621,8 @@
    "eur": "19.99",
    "name_en": "Lumivane at Ring 40",
    "name_de": "Lumivane auf Ring 40",
-   "desc_en": "Lumivane, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent",
-   "desc_de": "Lumivane, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getauscht ",
+   "desc_en": "Lumivane, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey.",
+   "desc_de": "Lumivane, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst.",
    "family_shareable": false,
    "ready": true
   },
@@ -1634,8 +1634,8 @@
    "eur": "19.99",
    "name_en": "Zephyrel at Ring 40",
    "name_de": "Zephyrel auf Ring 40",
-   "desc_en": "Zephyrel, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent",
-   "desc_de": "Zephyrel, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getauscht ",
+   "desc_en": "Zephyrel, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey.",
+   "desc_de": "Zephyrel, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst.",
    "family_shareable": false,
    "ready": true
   },
@@ -1647,8 +1647,8 @@
    "eur": "19.99",
    "name_en": "Monolurk at Ring 40",
    "name_de": "Monolurk auf Ring 40",
-   "desc_en": "Monolurk, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent",
-   "desc_de": "Monolurk, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getauscht ",
+   "desc_en": "Monolurk, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey.",
+   "desc_de": "Monolurk, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst.",
    "family_shareable": false,
    "ready": true
   },
@@ -1660,8 +1660,8 @@
    "eur": "19.99",
    "name_en": "Vorlucent at Ring 40",
    "name_de": "Vorlucent auf Ring 40",
-   "desc_en": "Vorlucent, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or len",
-   "desc_de": "Vorlucent, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getauscht",
+   "desc_en": "Vorlucent, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey.",
+   "desc_de": "Vorlucent, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst.",
    "family_shareable": false,
    "ready": true
   }

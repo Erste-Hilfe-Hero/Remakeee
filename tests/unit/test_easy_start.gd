@@ -37,8 +37,9 @@ func test_xp_fraction_runs_from_ring_to_next_ring() -> void:
 	var hi: int = Spirling.xp_for_level(11)
 	s.xp = lo + (hi - lo) / 2
 	assert_almost_eq(InfoStrip.xp_fraction(s), 0.5, 0.05)
-	s.level = Spirling.MAX_LEVEL
-	assert_eq(InfoStrip.xp_fraction(s), 1.0)
+	s.level = 150
+	s.xp = Spirling.xp_for_level(150) + (Spirling.xp_for_level(151) - Spirling.xp_for_level(150)) / 2
+	assert_almost_eq(InfoStrip.xp_fraction(s), 0.5, 0.05, "no full bar at an old cap")
 
 func test_player_strip_tracks_xp_and_reads_it_out() -> void:
 	var strip := InfoStrip.new()

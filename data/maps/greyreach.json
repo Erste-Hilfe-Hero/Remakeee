@@ -76,6 +76,14 @@
    "tx": 5,
    "ty": 7,
    "facing": "up"
+  },
+  {
+   "x": 3,
+   "y": 6,
+   "to": "greyreach_hut",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -86,6 +94,15 @@
    "facing": "left",
    "dialogue": "greyreach/conductor",
    "sprite": "villager"
+  },
+  {
+   "id": "porter",
+   "x": 4,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "greyreach/porter",
+   "sprite": "villager",
+   "show_flag": "era3_finale_done"
   },
   {
    "id": "brann",

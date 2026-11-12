@@ -18,7 +18,7 @@
   "^.._____...^",
   "^^^^^^=^^^^^",
   "^RRR..__RRR^",
-  "^HDH..__HHH^",
+  "^HDH..__HDH^",
   "^._.._____.^",
   "^.______...^",
   "^.S..__..*.^",
@@ -71,6 +71,14 @@
    "tx": 5,
    "ty": 7,
    "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 8,
+   "to": "thornridge_house",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -113,6 +121,31 @@
    "facing": "left",
    "dialogue": "thornridge/crystals",
    "sprite": "villager"
+  },
+  {
+   "id": "vs_brannagh",
+   "x": 6,
+   "y": 8,
+   "facing": "down",
+   "dialogue": "veydal_side/brannagh",
+   "sprite": "elder"
+  },
+  {
+   "id": "vs_gristle",
+   "x": 7,
+   "y": 15,
+   "facing": "down",
+   "dialogue": "veydal_side/gristle",
+   "sprite": "elder"
+  },
+  {
+   "id": "vs_vantry",
+   "x": 3,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "veydal_side/vantry",
+   "sprite": "villager",
+   "show_flag": "rift_cinder_sealed"
   },
   {
    "id": "ula",
@@ -253,31 +286,6 @@
    "facing": "left",
    "dialogue": "thornridge/coach",
    "sprite": "villager"
-  },
-  {
-   "id": "vs_brannagh",
-   "x": 6,
-   "y": 8,
-   "facing": "down",
-   "dialogue": "veydal_side/brannagh",
-   "sprite": "elder"
-  },
-  {
-   "id": "vs_gristle",
-   "x": 7,
-   "y": 15,
-   "facing": "down",
-   "dialogue": "veydal_side/gristle",
-   "sprite": "elder"
-  },
-  {
-   "id": "vs_vantry",
-   "x": 3,
-   "y": 4,
-   "facing": "down",
-   "dialogue": "veydal_side/vantry",
-   "sprite": "villager",
-   "show_flag": "rift_cinder_sealed"
   }
  ],
  "signs": [

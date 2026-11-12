@@ -1,0 +1,58 @@
+{
+ "add": {
+  "npcs": [
+   {
+    "id": "vs_nettie",
+    "x": 4,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "veydal_side/nettie",
+    "sprite": "villager"
+   },
+   {
+    "id": "lq_quell",
+    "x": 4,
+    "y": 6,
+    "facing": "down",
+    "dialogue": "legend_quests/scriptorax_guide",
+    "sprite": "elder",
+    "show_flag": "story_complete",
+    "hide_flag": "lq_scriptorax_ready"
+   }
+  ]
+ },
+ "set": {
+  "rows": [
+   "TTTTTTTTTTTT",
+   "T,,T..~~.___",
+   "T,,,..~~..ST",
+   "T,,...ww...T",
+   "TT,,..~~.,,T",
+   "T,,,S+~~,,,T",
+   "T..T..~~,,TT",
+   "T,,,,.~~..,T",
+   "T^^^^.~~^^^T",
+   "T,,,..~~S,,T",
+   "T,,,.,~~,,,T",
+   "T....,~~,,,T",
+   "TTT,..~~.,,T",
+   "T,,,..ww..,T",
+   "T,,,,.~~.,TT",
+   "T,,S..~~,,,T",
+   "T^^^^.~~^^^T",
+   "T,,,..~~.,,T",
+   "T,,..,~~.T,T",
+   "T..,,.~~,,,T",
+   "T,,,..~~...T",
+   "T,,,..ww..,T",
+   "T,T,..~~.,,T",
+   "T,,,..~~^^^T",
+   "T,,,..~~^D^T",
+   "T,,,..~~..,T",
+   "T__,,.~~,,,T",
+   "T_,,,.~~,,,T",
+   "T_..,.~~..,T",
+   "T_TTTT~~TTTT"
+  ]
+ }
+}

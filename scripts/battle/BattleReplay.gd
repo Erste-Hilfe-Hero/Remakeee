@@ -36,6 +36,7 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"warden_weakened": model.warden_weakened,
 		"gifts": model.gift_items.duplicate(),
 		"bond_grace": model.bond_grace,
+		"bond_edge": model.bond_edge,
 		"boss_hp": model.boss_hp_scale,
 		"boss_difficulty": model.boss_difficulty,
 		"variants": model.variants.duplicate(),
@@ -118,7 +119,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	var m := BattleModel.new(mine, foes, bool(snap.get("wild", true)), int(snap.get("seed", 0)), int(snap.get("ai", 0)))
 	m.inventory = (snap.get("inventory", {}) as Dictionary).duplicate()
 	m.items_allowed = bool(snap.get("items_allowed", true))
-	m.level_cap = int(snap.get("level_cap", Spirling.MAX_LEVEL))
+	m.level_cap = int(snap.get("level_cap", Spirling.LEVEL_SANITY))
 	m.trainer_name = str(snap.get("trainer", ""))
 	var tune: Variant = snap.get("profile_tune", {})
 	m.ai.set_profile(str(snap.get("profile", "")), tune if tune is Dictionary else {})
@@ -144,6 +145,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	if gifts is Dictionary and int((gifts as Dictionary).get(ShopEffects.PASS_REVIVE, 0)) > 0:
 		m.gift_items = {ShopEffects.PASS_REVIVE: 1}
 	m.bond_grace = clampi(int(snap.get("bond_grace", 0)), 0, 1)
+	m.bond_edge = clampf(float(snap.get("bond_edge", 0.0)), 0.0, ShopEffects.seal_percent("bond_edge", ShopEffects.seal_max("bond_edge")) / 100.0)
 	m.boss_hp_scale = float(snap.get("boss_hp", 1.0))
 	m.boss_difficulty = clampi(int(snap.get("boss_difficulty", -1)), -1, BattleRules.BOSS_PHASE_AT.size() - 1)
 	m.variants.assign(snap.get("variants", []))

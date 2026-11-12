@@ -40,8 +40,8 @@ jobs:
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
         run: tools/ip_check.sh --messages "${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
-      - name: Type chart rules, chart sim gate (elements 40-60 %, teams 30-70 %), species band reported (tools/balance/type_sim.py)
-        run: python3 tools/balance/type_sim.py
+      - name: Type chart rules, chart sim gate (elements 40-60 %, teams 30-70 %), every Spirling 40-60 % on base stats (tools/balance/type_sim.py --strict)
+        run: python3 tools/balance/type_sim.py --strict
       - name: Every player-facing text has a German translation
         run: python3 tools/i18n/build.py --check && python3 tools/i18n_extract.py de --check
       - name: Cross-file data integrity (warps, reach, flags, dialogue keys and German, species, levels, items, ids)
@@ -68,6 +68,10 @@ jobs:
         run: python3 tools/art/era2_colourise.py --check
       - name: Halcyra Era IV atlas matches the shared Era I atlas (tools/art/gen_tiles_halcyra.py)
         run: python3 tools/art/gen_tiles_halcyra.py --check
+      - name: Quivermoor Era V atlas matches the shared Era I atlas (tools/art/gen_tiles_quivermoor.py)
+        run: python3 tools/art/gen_tiles_quivermoor.py --check
+      - name: World maps match their generator and hand overlays (tools/art/build_world.py)
+        run: python3 -m unittest tools/art/world/test_hand.py && python3 tools/art/build_world.py --check
       - name: Map audit finds nothing new (tools/maps/audit_maps.py, baseline tools/maps/audit_baseline.json)
         run: python3 tools/maps/audit_maps.py --check
 
@@ -97,8 +101,8 @@ jobs:
         run: tools/headless_check.sh godot
       - name: Validate data
         run: godot --headless --path . -s res://tools/validate_data.gd
-      - name: GUT tests
-        run: godot --headless --path . -s res://addons/gut/gut_cmdln.gd
+      - name: GUT tests (fails if a test script has a parse error or is skipped)
+        run: tools/gut_strict.sh godot
 
   # Installable test APK on every push and PR: download the "android-debug-apk"
   # artifact and install it on the phone. Signed with a throwaway debug keystore

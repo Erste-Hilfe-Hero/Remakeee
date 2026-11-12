@@ -348,6 +348,12 @@ const ELEMENT_SCALES: Array = [
 	[57, 60, 63],  # UMBRA: dark
 	[53, 56, 60],  # INK: low and blotted
 	[69, 74, 81],  # ECHO: bell fifths
+	[54, 57, 61],  # RUST: grinding low
+	[61, 66, 70],  # MASK: sly
+	[63, 68, 73],  # ACID: sour fourths
+	[74, 79, 83],  # FROST: brittle and high
+	[64, 68, 71],  # GILT: rich major
+	[71, 74, 78],  # ZENITH: bright and open
 ]
 
 ## MIDI note for mark [param mark] in the scale of [param element].
@@ -378,7 +384,7 @@ static func hit_volume_db(share_lost: float) -> float:
 
 ## Picking an art rings the confirm sound one step higher per element, climbing one octave
 ## in Elements.E order (item 2539).
-const ART_PICK_STEPS: Array[int] = [0, 1, 2, 4, 5, 7, 8, 9, 11, 12]
+const ART_PICK_STEPS: Array[int] = [0, 1, 2, 4, 5, 7, 8, 9, 11, 12, 13, 14, 16, 17, 19, 21]
 
 static func art_pick_pitch(element: int) -> float:
 	if element < 0 or element >= ART_PICK_STEPS.size():

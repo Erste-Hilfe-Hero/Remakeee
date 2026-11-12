@@ -1,12 +1,61 @@
 {
-	"version": 1,
-	"min_client": {"ios": "0", "android": "0"},
-	"latest": {"ios": "1.1.0", "android": "1.1.0"},
+	"version": 3,
+	"requires": "1.2.0",
+	"min_client": {
+		"ios": "0",
+		"android": "0"
+	},
+	"latest": {
+		"ios": "1.1.0",
+		"android": "1.1.0"
+	},
 	"news": [
 		{
+			"date": "2026-11-12",
+			"title": {
+				"en": "Chimora 1.2.0",
+				"de": "Chimora 1.2.0",
+				"fr": "Chimora 1.2.0",
+				"es": "Chimora 1.2.0",
+				"it": "Chimora 1.2.0",
+				"pt_BR": "Chimora 1.2.0",
+				"nl": "Chimora 1.2.0",
+				"pl": "Chimora 1.2.0",
+				"tr": "Chimora 1.2.0",
+				"ru": "Chimora 1.2.0",
+				"ja": "Chimora 1.2.0",
+				"ko": "Chimora 1.2.0",
+				"zh_CN": "Chimora 1.2.0",
+				"zh_TW": "Chimora 1.2.0"
+			},
+			"body": {
+				"en": "Act IV: Solenne, three new Rifts and a desert that lies to you.\n- After the finale: Vellmarch, a post-game region in the Era II look, and rematches with all 12 Wardens.\n- Over 200 new Spirlings, six legendaries with lore quests, Gleam forms.\n- Clans keep a Ledger of whom you trusted. Not all of them deserved it.\n- Online: live duels, leagues, raids, Bunds, trading and events.\nFound something broken? Tell us on Discord.",
+				"de": "Akt IV: Solenne, drei neue Risse und eine Wüste, die dich anlügt.\n- Nach dem Finale: Vellmarch, eine Region im Look der Ära II, und Revanchen gegen alle 12 Wächter.\n- Über 200 neue Spirlings, sechs Legendäre mit Sagen-Quests, Glanzformen.\n- Clans führen ein Schuldbuch über dein Vertrauen. Nicht alle haben es verdient.\n- Online: Live-Duelle, Ligen, Raids, Bünde, Tausch und Events.\nEtwas kaputt? Sag es uns auf Discord.",
+				"fr": "Acte IV : Solenne, trois nouvelles Failles et un désert qui te ment.\n- Après le final : Vellmarch, une région au style de l'Ère II, et des revanches contre les 12 Gardiens.\n- Plus de 200 nouveaux Spirlings, six légendaires avec leurs quêtes, des formes Reflet.\n- Les clans tiennent un Registre de ta confiance. Tous ne la méritaient pas.\n- En ligne : duels en direct, ligues, raids, clans, échanges et événements.\nUn bug ? Dis-le-nous sur Discord.",
+				"es": "Acto IV: Solenne, tres Grietas nuevas y un desierto que te miente.\n- Tras el final: Vellmarch, una región con el estilo de la Era II, y revanchas contra los 12 Custodios.\n- Más de 200 Spirlings nuevos, seis legendarios con sus misiones, formas Fulgor.\n- Los clanes llevan un Libro de cuentas de tu confianza. No todos la merecían.\n- Online: duelos en vivo, ligas, incursiones, Cofradías, intercambios y eventos.\n¿Algo roto? Cuéntanoslo en Discord.",
+				"it": "Atto IV: Solenne, tre nuovi Squarci e un deserto che ti mente.\n- Dopo il finale: Vellmarch, una regione nello stile dell'Era II, e rivincite contro tutti i 12 Custodi.\n- Oltre 200 nuovi Spirling, sei leggendari con le loro missioni, forme Splendore.\n- I clan tengono un Registro della tua fiducia. Non tutti la meritavano.\n- Online: duelli dal vivo, leghe, raid, Compagnie, scambi ed eventi.\nQualcosa non va? Diccelo su Discord.",
+				"pt_BR": "Ato IV: Solenne, três Fendas novas e um deserto que mente para você.\n- Depois do final: Vellmarch, uma região no estilo da Era II, e revanches contra as 12 Sentinelas.\n- Mais de 200 Spirlings novos, seis lendários com missões, formas Reluzentes.\n- Os clãs mantêm um Livro-razão da sua confiança. Nem todos a mereciam.\n- Online: duelos ao vivo, ligas, raides, Trupes, trocas e eventos.\nAlgo quebrado? Conte para a gente no Discord.",
+				"nl": "Akte IV: Solenne, drie nieuwe Kloven en een woestijn die tegen je liegt.\n- Na de finale: Vellmarch, een regio in de stijl van Tijdperk II, en revanches tegen alle 12 Hoeders.\n- Meer dan 200 nieuwe Spirlings, zes legendarische met queesten, Glansvormen.\n- Clans houden een Grootboek bij van je vertrouwen. Niet iedereen verdiende het.\n- Online: live duels, competities, raids, Verbonden, ruilen en evenementen.\nIets kapot? Laat het weten op Discord.",
+				"pl": "Akt IV: Solenne, trzy nowe Szczeliny i pustynia, która cię okłamuje.\n- Po finale: Vellmarch, kraina w stylu Ery II, i rewanże ze wszystkimi 12 Strażnikami.\n- Ponad 200 nowych Spirlingów, sześć legendarnych z zadaniami, Połysk.\n- Klany prowadzą Księgę twojego zaufania. Nie wszyscy na nie zasłużyli.\n- Online: pojedynki na żywo, ligi, rajdy, Sojusze, wymiany i wydarzenia.\nCoś się zepsuło? Napisz nam na Discordzie.",
+				"tr": "IV. Perde: Solenne; üç yeni Yarık ve sana yalan söyleyen bir çöl.\n- Finalden sonra: Çağ II görünümünde Vellmarch ve 12 Muhafızın hepsiyle rövanş.\n- 200'den fazla yeni Spirling, görevleriyle altı efsanevi, Işıltı biçimleri.\n- Klanlar güvenini bir Defter'e yazıyor. Hepsi bunu hak etmedi.\n- Çevrimiçi: canlı düellolar, ligler, akınlar, Birlikler, takas ve etkinlikler.\nBozuk bir şey mi var? Discord'da bize söyle.",
+				"ru": "Акт IV: Solenne, три новых Разлома и пустыня, которая тебе лжёт.\n- После финала: Vellmarch в стиле Эпохи II и реванши со всеми 12 Стражами.\n- Более 200 новых Spirlings, шесть легендарных с заданиями, Сияние.\n- Кланы ведут Книгу долгов о твоём доверии. Не все его заслужили.\n- Онлайн: живые дуэли, лиги, рейды, Союзы, обмен и события.\nЧто-то сломалось? Напиши нам в Discord.",
+				"ja": "第IV幕：Solenne。3つの新しい裂け目と、嘘をつく砂漠。\n・フィナーレの後：時代IIの地方Vellmarch、12人の守り人全員との再戦。\n・新しいSpirlingは200種以上、伝承クエスト付きの伝説6体、輝き。\n・クランはあなたの信頼を帳簿につける。全員がそれに値したわけではない。\n・オンライン：ライブデュエル、リーグ、レイド、旅団、交換、イベント。\n不具合を見つけたら、Discordで教えてください。",
+				"ko": "4막: Solenne. 새 균열 세 개와 거짓말하는 사막.\n- 피날레 이후: II시대 지역 Vellmarch, 수호자 12명 전원과의 재대결.\n- 새로운 Spirling 200종 이상, 전승 퀘스트가 있는 전설 6종, 광채형.\n- 클랜은 당신의 신뢰를 장부에 적습니다. 모두가 그럴 자격이 있진 않았죠.\n- 온라인: 실시간 결투, 리그, 레이드, 모임, 교환, 이벤트.\n고장 난 게 있나요? Discord로 알려 주세요.",
+				"zh_CN": "第四幕：Solenne，三道新裂隙，还有一片会骗人的沙漠。\n- 结局之后：纪元II地区Vellmarch，以及与全部12位守望者的再战。\n- 超过200种新Spirling，六只带传说任务的传说Spirling，光泽形态。\n- 各个氏族会把你的信任记进账本。并不是每个人都配得上。\n- 在线：实时决斗、联赛、突袭、盟会、交换和活动。\n发现问题？请在Discord告诉我们。",
+				"zh_TW": "第四幕：Solenne，三道新裂隙，還有一片會騙人的沙漠。\n- 結局之後：時代II地區Vellmarch，以及與全部12位守境者的再戰。\n- 超過200種新Spirling，六隻附傳說任務的傳說Spirling，輝光形態。\n- 各個氏族會把你的信任記進賬本。並不是每個人都配得上。\n- 線上：實時決鬥、聯賽、突襲、旅盟、交換與活動。\n發現問題？請在Discord告訴我們。"
+			},
+			"url": "https://discord.gg/e69SM39rKK"
+		},
+		{
 			"date": "2026-11-11",
-			"title": {"en": "Chimora 1.1.0", "de": "Chimora 1.1.0"},
-			"body": {"en": "News and patch notes now show up here. Tell us what you think on Discord.", "de": "Neuigkeiten und Patchnotizen erscheinen jetzt hier. Sag uns auf Discord, was du denkst."},
+			"title": {
+				"en": "Chimora 1.1.0",
+				"de": "Chimora 1.1.0"
+			},
+			"body": {
+				"en": "News and patch notes now show up here. Tell us what you think on Discord.",
+				"de": "Neuigkeiten und Patchnotizen erscheinen jetzt hier. Sag uns auf Discord, was du denkst."
+			},
 			"url": "https://discord.gg/e69SM39rKK"
 		}
 	]

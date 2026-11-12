@@ -11,6 +11,7 @@ How the way opens:
   saltglass -> shade_rift           veit_plate_done (the silent lighthouse door, tools/art/world/rifts12.py)
   saltglass -> ochrewell            rift_shade_sealed (the sand road south to Solenne, tools/art/world/solenne.py)
   wide_rift_far -> undrawn_1        undrawn_reached (scene undrawn_enter, guild seal)
+  cinderfold -> clinker_heath       halvard_met (the south cut, tools/art/world/ashmere_more.py)
 """
 from common import check_rows, lines, npc, secret, team, tr, warp
 
@@ -116,7 +117,7 @@ def cinderfold(world):
             "^...._.L...^",
             "^L..._*....^",
             "^....___...^",
-            "^^^^^^^^^^^^"]
+            "^^^^^__^^^^^"]
     world.add_text(mid, {
         "sign": lines(("CINDERFOLD", "CINDERFOLD"), ("Cinderfold, 88 folk.", "Cinderfold, 88 Leute."), ("Town of the gravers. The hall is open to guild folk.", "Stadt der Graveure. Die Halle steht Gildenleuten offen.")),
         "keeper": {"lines": lines(("Spring Keeper Oda: The water comes up warm under the basalt. It eases tired Spirlings.", "Quellhüterin Oda: Das Wasser kommt warm unter dem Basalt hervor. Es tut müden Spirlings gut.")),
@@ -127,10 +128,12 @@ def cinderfold(world):
     m = {"name": tr("Cinderfold", "Cinderfold"), "biome": "town", "backdrop": "ember", "outdoor": True,
          "heal_point": [3, 2], "rows": rows,
          "warps": [warp(11, 2, "ashmere_station", 1, 11, "right"), warp(11, 3, "ashmere_station", 1, 12, "right"),
-                   warp(4, 5, "gravers_hall", 4, 7, "up")],
+                   warp(4, 5, "gravers_hall", 4, 7, "up"), warp(3, 8, "soot_vaults", 5, 18, "up"),
+                   warp(5, 15, "clinker_heath", 5, 1, "down"), warp(6, 15, "clinker_heath", 6, 1, "down")],
          "npcs": [npc("keeper", 2, 2, "right", mid + "/keeper", "elder"),
                   npc("trader", 9, 12, "left", mid + "/trader", "villager")],
          "signs": [{"x": 9, "y": 5, "dialogue": mid + "/sign"}],
+         "blocks": [{"x": 5, "y": 15, "open_flag": "halvard_met", "closed": "^"}, {"x": 6, "y": 15, "open_flag": "halvard_met", "closed": "^"}],
          "secrets": [secret(0, 10, "strong_tonic", "find_cinderfold_west", 2), secret(11, 12, "remedy", "find_cinderfold_east"),
                      secret(11, 6, "revival_leaf", "find_cinderfold_hall")],
          "spots": {"veit": [8, 6], "nella": [2, 6], "oswin": [9, 10], "kestra": [2, 12], "letter_a1": [10, 13]}}

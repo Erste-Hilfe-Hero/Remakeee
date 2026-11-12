@@ -37,6 +37,14 @@
    "tx": 6,
    "ty": 2,
    "facing": "down"
+  },
+  {
+   "x": 3,
+   "y": 6,
+   "to": "edge_watch_hut",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
   }
  ],
  "npcs": [

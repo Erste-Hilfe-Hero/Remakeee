@@ -39,6 +39,22 @@ def load_level(map_id: str) -> dict:
     return d
 
 
+def region_look(region) -> dict:
+    """The region's own inks from data/region_looks.json ({} = shared inks)."""
+    looks = json.load(open(os.path.join(ROOT, "data", "region_looks.json")))
+    look = looks.get("regions", {}).get(region or "", {})
+    return look if isinstance(look, dict) else {}
+
+
+def ink_swap(img: Image.Image, inks) -> Image.Image:
+    """Recolours an Era I image from the shared inks to `inks`, as the screen filter does."""
+    from px import PALETTE
+    table = {PALETTE[i]: tuple(int(h[j:j + 2], 16) for j in (0, 2, 4)) for i, h in enumerate(inks)}
+    out = img.convert("RGBA")
+    out.putdata([table.get(p[:3], p[:3]) + (p[3],) for p in out.getdata()])
+    return out
+
+
 SHADE_FROM = {"WALL", "ROOF", "DOOR"}
 
 
@@ -53,7 +69,7 @@ def door_roles(d: dict) -> dict:
             continue
         warped.add(cell)
         to = str(w["to"])
-        if "rift" in to or to.startswith("undrawn"):
+        if d.get("outdoor") and ("rift" in to or to.startswith("undrawn")):
             roles[cell] = 3
         elif "spring" in to:
             roles[cell] = 1
@@ -79,6 +95,18 @@ def lighthouse_door(rows: list, x: int, y: int) -> bool:
     while ch(yy) == "|":
         yy -= 1
     return yy < y - 1 and ch(yy) == "L"
+
+
+def headframe(rows: list, x: int, y: int) -> bool:
+    """Same rule as TilesetFactory.is_headframe: a tower with no lamp on top and no door below."""
+    def ch(yy: int) -> str:
+        return rows[yy][x] if 0 <= yy < len(rows) and x < len(rows[yy]) else ""
+    top, foot = y, y
+    while ch(top - 1) == "|":
+        top -= 1
+    while ch(foot + 1) == "|":
+        foot += 1
+    return ch(top - 1) != "L" and ch(foot + 1) != "D"
 
 
 def render(d: dict, atlas_path: str = "") -> Image.Image:
@@ -117,6 +145,8 @@ def render(d: dict, atlas_path: str = "") -> Image.Image:
                 col, v = K["TOWER"], 2
             elif k == "TOWER" and kind(x, y + 1, k) == "DOOR" and lighthouse_door(rows, x, y + 1):
                 v = 1
+            elif k == "TOWER" and headframe(rows, x, y):
+                v = 4 if kind(x, y - 1, "") == "TOWER" else 3
             img.paste(atlas.crop((col * 16, v * 16, col * 16 + 16, v * 16 + 16)), (x * 16, y * 16))
     lm = json.load(open(os.path.join(ROOT, "data", "landmarks.json")))["maps"].get(d.get("id", ""))
     if lm:
@@ -128,6 +158,9 @@ def render(d: dict, atlas_path: str = "") -> Image.Image:
         if not os.path.exists(sheet_path):
             sheet_path = os.path.join(ROOT, "art", "era1", "chars", "villager.png")
         sheet = Image.open(sheet_path)
+        look = region_look(d.get("region"))
+        if "palette" in look:
+            sheet = ink_swap(sheet, look["palette"])
         col = ["down", "up", "left", "right"].index(n.get("facing", "down"))
         fr = sheet.crop((col * 16, 0, col * 16 + 16, 16))
         img.paste(fr, (int(n["x"]) * 16, int(n["y"]) * 16), fr)

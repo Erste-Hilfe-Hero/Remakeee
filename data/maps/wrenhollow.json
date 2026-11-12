@@ -15,7 +15,7 @@
   "THDH_..HDH.T",
   "T.._____...T",
   "T^^^^^^=^^^T",
-  "T...__.__..T",
+  "T...__.___.T",
   "T.o.__..._.T",
   "T...__.#._.T",
   "T.S.__.#._.T",
@@ -41,6 +41,22 @@
    "y": 13,
    "to": "wren_library",
    "tx": 3,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 3,
+   "to": "wrenhollow_spring",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 8,
+   "y": 3,
+   "to": "wrenhollow_shop",
+   "tx": 4,
    "ty": 6,
    "facing": "up"
   }

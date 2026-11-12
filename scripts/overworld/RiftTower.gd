@@ -83,7 +83,7 @@ static func shade(t: Dictionary, floor_index: int) -> float:
 
 ## Echo ring on [param floor_index]: MIN_RING on the first floor, two more per floor.
 static func level_for(floor_index: int) -> int:
-	return mini(MIN_RING + 2 * floor_index, Spirling.MAX_LEVEL)
+	return mini(MIN_RING + 2 * floor_index, Spirling.STORY_RING)
 
 ## Forms that fit the ring and share one of the tower's elements.
 static func pool(t: Dictionary, level: int) -> Array[SpirlingData]:

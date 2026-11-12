@@ -151,6 +151,29 @@ Aus Abschnitt 1 des Plans fehlten noch Punkt 16 (Krit-Siegel in 3 Stufen), 17 (S
 - Alle fünf nur für Rissglas (`rg_only`), feste Inhalte, Euro-Gegenwert am Angebot, ab Altersstufe 13.
   **Keine neuen Store-Produkte** (`store/products.json` bleibt gleich).
 
+## Pay-to-win, Schritt 5 (Bindung und Sammeln, 12. 11. 2026)
+
+Aus Abschnitt 2 des Plans kommen Punkt 25 (Lockduft in 3 Stärken), 26 (Schimmerduft), 28 (Bindungs-Balken mit
+Vorsprung), 29 (zweiter Versuch nach Fehlschlag) und 32 (Sofort-Entwicklung), aus Abschnitt 1 Punkt 15 (volle
+Heilung im Kampf ohne Limit).
+
+| Angebot | Wirkung | Rissglas | Liga |
+| --- | --- | --- | --- |
+| Lockduft I bis III (`rg_lure_scent_1..3`) | seltene, scheue und uralte wilde Spirlings x2 / x3 / x5 so oft, 100 Schritte (`ShopEffects.rare_mult`, `EncounterTable.weight_of`) | 200, 400, 700 | nur Geschichte |
+| Schimmerduft (`rg_shimmer_scent`) | Glanzform-Chance wilder Spirlings x10, 100 Schritte (`GleamRules.chance`, ein Wurf wie vorher) | 500 | nur Geschichte |
+| Bindungs-Vorsprung I bis III (`rg_bond_edge_1..3`) | +10 / +20 / +30 Prozentpunkte auf die Zeitwertung jeder Bindung (`advantage_values.bond_edge`, `BattleModel.bond_edge`), Stufen in Reihenfolge (`tier:bond_edge:<n>`), dauerhaft | 500, 1000, 1500 (Summe 3000) | nur Geschichte |
+| Zweitversuch-Talisman (`rg_bond_retry`) | scheitert die Bindung, wird sofort ein zweites Mal gewürfelt; wird verbraucht | 300 | nur Geschichte |
+| Entfaltungsfunke (`rg_unfurl_spark`) | ein Spirling entfaltet sich sofort zur nächsten Form, ohne Ring oder andere Bedingung; nicht für Formen mit Gegenstand (sonst gäbe das Zurückfalten den Gegenstand gratis) | 800 | keine Liga-Wirkung |
+| Großer Heiltrank (`rg_grand_tonic`) | im Kampf 100 % Kraft und alle Zustände, ohne Grenze pro Kampf | 300 | wie der Rissglas-Heiltrank |
+
+- Der Bindungs-Vorsprung steht im Replay (`bond_edge`, beim Abspielen auf die höchste Stufe begrenzt) und zählt
+  in der Kontostärke mit. Wild-Kämpfe sind Geschichte, darum braucht der Server keine neue Erwartung.
+- Schon vor dem Plan da: Punkt 23/24 (Bindungs-Siegel, sichere Bindung, wirkt auch bei Legendären, Test
+  `test_bond_seal_stays_certain_on_a_legend`), Punkt 34 (Glanz-Prisma) und Punkt 33 (der einzige
+  Entwicklungs-Gegenstand, die Gezeitenmuschel, gibt es bei Händlern für Münzen).
+- Alle zehn nur für Rissglas (`rg_only`), feste Inhalte, Euro-Gegenwert am Angebot, ab Altersstufe 13.
+  **Keine neuen Store-Produkte** (`store/products.json` bleibt gleich).
+
 ## Pay-to-win, Schritt 2 (Ali, 11. 11. 2026)
 
 Nächster Block des 200-Punkte-Plans: Siegel-Satz (Punkt 7), Bindungs-Köder in 4 Stufen (Punkt 22) und
@@ -227,7 +250,7 @@ item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-167 Angebote (Katalog v33): 125 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
+177 Angebote (Katalog v35): 135 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
@@ -398,5 +421,15 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_crit_seal_3` | Crit Seal III | 14,99 € | 1500 | Vorteil | nur Offene Liga |
 | `rg_status_ward` | Status Ward | 14,99 € | 1500 | Vorteil | nur Offene Liga |
 | `rg_start_shield` | Opening Shield | 14,99 € | 1500 | Vorteil | nur Offene Liga |
+| `rg_lure_scent_1` | Lure Scent I | 1,99 € | 200 | Vorteil | keine Liga-Wirkung |
+| `rg_lure_scent_2` | Lure Scent II | 3,99 € | 400 | Vorteil | keine Liga-Wirkung |
+| `rg_lure_scent_3` | Lure Scent III | 6,99 € | 700 | Vorteil | keine Liga-Wirkung |
+| `rg_shimmer_scent` | Shimmer Scent | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
+| `rg_bond_edge_1` | Bond Head Start I | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
+| `rg_bond_edge_2` | Bond Head Start II | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
+| `rg_bond_edge_3` | Bond Head Start III | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
+| `rg_bond_retry` | Second Try Charm | 2,99 € | 300 | Vorteil | keine Liga-Wirkung |
+| `rg_unfurl_spark` | Unfurl Spark | 7,99 € | 800 | Vorteil | keine Liga-Wirkung |
+| `rg_grand_tonic` | Grand Tonic | 2,99 € | 300 | Vorteil | nur Offene Liga |
 
 <!-- shop-table:end -->

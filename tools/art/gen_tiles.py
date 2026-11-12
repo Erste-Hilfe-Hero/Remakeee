@@ -303,6 +303,9 @@ def tower(c: Canvas, ox: int, oy: int, variant: int = 0) -> None:
     if variant == 2:
         lighthouse_door(c, ox, oy)
         return
+    if variant in (3, 4):
+        headframe(c, ox, oy, variant == 3)
+        return
     grass(c, ox, oy, 0)
     for y in range(16 if variant == 1 else 13):
         _tower_row(c, ox, oy, y)
@@ -320,6 +323,38 @@ def tower(c: Canvas, ox: int, oy: int, variant: int = 0) -> None:
         c.set(ox + x, oy + 15, 1)
     c.set(ox + 13, oy + 14, 1)
     c.set(ox + 13, oy + 15, 1)
+
+
+def headframe(c: Canvas, ox: int, oy: int, top: bool) -> None:
+    # Winding tower over a mine shaft (a tower with no lamp and no door, e.g. Copperfold): a timber
+    # A-frame with cross braces; the top tile carries the sheave wheel. Rows 3 (top) and 4 (lower)
+    # tile on top of each other, so a tower of any height has no seam.
+    grass(c, ox, oy, 0)
+    legs = range(7, 16) if top else range(16)
+    for y in legs:
+        spread = (y - 7) // 3 if top else 3 + y // 6
+        lx, rx = 6 - spread, 9 + spread
+        c.set(ox + lx, oy + y, 0)
+        c.set(ox + lx + 1, oy + y, 2)
+        c.set(ox + rx - 1, oy + y, 1)
+        c.set(ox + rx, oy + y, 0)
+    for y in ((10, 14) if top else (4, 11)):
+        spread = (y - 7) // 3 if top else 3 + y // 6
+        c.hline(ox + 6 - spread + 2, ox + 9 + spread - 2, oy + y, 1)
+    if not top:
+        for i in range(5):
+            c.set(ox + 5 + i, oy + 5 + i, 0)
+            c.set(ox + 10 - i, oy + 5 + i, 0)
+        return
+    c.ascii(ox + 3, oy, ["...0000...",
+                         "..022220..",
+                         ".02100120.",
+                         "0210000120",
+                         "0210330120",
+                         "0210000120",
+                         ".02100120.",
+                         "..022220..",
+                         "...0000..."])
 
 
 def lighthouse_door(c: Canvas, ox: int, oy: int) -> None:
@@ -517,7 +552,7 @@ def make_tiles() -> Canvas:
             elif name == "PIER":
                 pier(c, ox, oy, v)
             elif name == "TOWER":
-                tower(c, ox, oy, v if v < 3 else 0)
+                tower(c, ox, oy, v if v < 5 else 0)
             elif name == "LAMP":
                 lamp(c, ox, oy)
             elif name == "ROCK":

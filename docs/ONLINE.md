@@ -245,7 +245,7 @@ Table `banned_words`: words a Wanderer name may not contain.
 Table `feature_flags` (key, `enabled`, `min_version`): switches the new online parts on one by one,
 for example `update feature_flags set enabled = true where key = 'trade';`. Keys: `league_fair`,
 `league_open`, `live_duel`, `trade`, `bund`, `raid`, `trade_spirling`, `rift_board`, `league_board`, `events`,
-`daily_gift`, `lend`. All start switched off.
+`daily_gift`, `lend`, `invite`. All start switched off.
 
 ## Bunds
 
@@ -380,6 +380,61 @@ tests `tests/unit/test_trade_gifts.gd` and `tools/online/sql_test/test_trade_gif
   do not offer the borrowed Spirling, so `lend_use` has no caller in the game yet.
 - **Spirlings stay untradeable (44)** as long as the flag `trade_spirling` stays off.
 
+### Friends and the shared world (Online 100, area 6, points 53, 55-57, 59, 60)
+
+Migration `20261112230020_friends_more.sql`, values in `data/friends_more.json` (written to
+`server_config.friends_more` by `game_data_sql.py`), the same rules in `scripts/online/LocalFriendsMore.gd`
+and `FriendRules.gd`, menu `scripts/ui/FriendsMoreMenu.gd`, tests `tests/unit/test_friends_more.gd` and
+`tools/online/sql_test/test_friends_more.sql`.
+
+- **Levels 6-10 (56):** `_level` reads the point floors from `levels` (levels 1-5 keep 0, 10, 30, 60, 100;
+  6-10 at 150, 220, 300, 400, 520). Each level with an entry in `level_rewards` gives its item once per
+  friend (`friend_level_claim(code, level, slot, rev)`, table `friend_level_claims`); `friends_list` lists
+  them as `level_ready`.
+- **Favourites (59):** `friend_favorite(code, on)`, at most `favorites_max` (10); favourites come first in
+  `friends_list` (`fav`) and carry a "+" in the list.
+- **Task of the day (57):** the kind is `pair_tasks[day % n]` (wave, greeting, gift), the same for everyone.
+  Once both friends sent each other that mail today, each takes `pair_reward` once
+  (`pair_task_claim(code, slot, rev)`, table `pair_task_claims`, kept 7 days) and the pair gets
+  `pair_points` (3) friendship points once. `friends_list` shows it as `task`.
+- **Rank on the Wanderer card (53):** `friends_list.rank` is the fair league rank of the friend's latest
+  season (-1 = none or placement).
+- **Suggestions (60):** `friend_suggestions()` lists the opponents of the player's own league battles of the
+  last `suggest_days` (14) days who are not friends, not asked, not blocked and have friends switched on,
+  at most `suggest_max` (5), without name or code. `friend_suggest_request(match)` sends the request.
+- **Invite link (55, flag `invite`):** the link is `chimora://friend/<code>` (DeepLink route `friend`,
+  asks before it sends). A journey younger than `invite_days` (7) redeems one code once
+  (`invite_redeem`, table `invites`), which sends a friend request; once accepted, both take
+  `invite_reward` with `invite_claim(slot, rev)`, the inviter for at most `invite_max` (10) friends.
+  `invite_state()` shows the counts.
+
+Not done in this area: friends as figures in your town (51), visiting a friend's camp (52) and friends
+nearby (54).
+
+### Safety and fairness (Online 100, area 9, points 83, 85, 86, 88)
+
+Migration `20261113000010_safety.sql`, values in `data/safety.json` (written to `server_config.safety` by
+`game_data_sql.py`), the same rules in `scripts/online/LocalSafety.gd`, `SafetyRules.gd` and `LocalBackend`
+(`parent_off`), menu `scripts/ui/SafetyMenu.gd`, tests `tests/unit/test_safety.gd` and
+`tools/online/sql_test/test_safety.sql`.
+
+- **Parent switches (85):** Settings, Account, For parents switches off live duels, Raid Rifts, bunds, the open
+  or fair league and suggestions from league battles (`parent_set(off, version)`, `parent_get()`,
+  `profiles.parent_off`). Switched-off keys leave `hello.flags`, so the menus hide them, and the server answers
+  `parent_off` (`_league_ok`, `_bund_check`, `_raid_check`, `_live_new`, `live_answer`). Nobody can start a live
+  duel with a player whose duels are off, and a player whose suggestions are off is never suggested.
+- **Under 16 (86):** below `young_band` (16, from the shop's age question, `shop_profiles.age_band`) the
+  default is `young_off`: open league, bunds and suggestions off, so only friends and the fair league remain.
+  A parent's own choice replaces the default. Without an answer to the age question nothing is off.
+- **No pushing points (88):** `league_find` does not rate a pair that already played `pair_rated_daily` (3)
+  rated battles in the last day (`pair_limit` in the answer). A rated loss in which the rival took no damage
+  (`foe_damage` 0 from the referee) is not rated (`league_matches.sandbagged`); from `sandbag_limit` (3) such
+  battles in `sandbag_days` (7) days each one adds a `league_sandbag` note to `cheat_flags` (3 notes put the
+  account under review as before).
+- **Report after a battle (83):** after a league battle the game offers "Report the rival...", and a finished
+  live duel has the same entry; `report_battle(kind, ref, reason)` (`league` = match id, `duel` = duel id)
+  finds the rival on the server, so the code stays hidden, and files a normal report.
+
 ## Weekly boards (online step 1)
 
 Under Friends, Weekly board. The weekly challenge board is as before. With the flag `rift_board`
@@ -509,3 +564,14 @@ checks both against the catalog. `hello` runs `_privacy_cleanup()` about once in
 recordings and league matches older than 30 days, refused-save notes older than 6 months and league
 standings of seasons that ended more than a season ago are removed. The record of processing activities is
 `docs/legal/VERARBEITUNGEN.md`; add a row there before switching on a new online feature.
+
+## Online replays and statistics (Online 100 plan, points 71, 72, 75, 78, 79, 95)
+
+- Every `battle_submit` (league, raid, echo duel, Rift board) also keeps the battle in
+  `GameState.records["online_replays"]`, newest first, at most `keep` (20) in `data/replay_library.json`
+  (`scripts/online/ReplayLibrary.gd`).
+- Records > Online replays (`scripts/ui/OnlineReplaysMenu.gd`): watch one, copy its share code to the
+  clipboard, watch a code from the clipboard, own win rate per Spirling, opponents met most often. A code is
+  `CHR1-` plus the gzip-packed replay in base64; it holds no account data. Replays play in the current look.
+- Planned maintenance: `update server_config set value = '<unix seconds>' where key = 'maintenance_at';`
+  `maintenance_info()` hands it to the game, and the title screen warns from 24 hours before.

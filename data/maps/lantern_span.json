@@ -1,0 +1,134 @@
+{
+ "name": "Lantern Span",
+ "region": "halcyra",
+ "biome": "route",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "lantern_span",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^::..__..::^",
+  "^::..__..,,^",
+  "^,,..__..,,^",
+  "~~~~L++L~~~~",
+  "~~~~|++|~~~~",
+  "~~~~L++L~~~~",
+  "~~~~|++|~~~~",
+  "~~~~L++L~~~~",
+  "~~~~|++|~~~~",
+  "~~~~L++L~~~~",
+  "^:::.++.%%%^",
+  "^:::._______",
+  "^,,..S...%%^",
+  "^,,......%%^",
+  "~~~~L++L~~~~",
+  "~~~~|++|~~~~",
+  "~~~~L++L~~~~",
+  "~~~~|++|~~~~",
+  "~~~~L++L~~~~",
+  "^::..++..,,^",
+  "^::..__..,,^",
+  "^.....__...^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 23,
+   "to": "whitecairn",
+   "tx": 5,
+   "ty": 18,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 23,
+   "to": "whitecairn",
+   "tx": 6,
+   "ty": 18,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "paleshore",
+   "tx": 10,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "paleshore",
+   "tx": 10,
+   "ty": 9,
+   "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 12,
+   "to": "gilt_span",
+   "tx": 1,
+   "ty": 10,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "toll_boy",
+   "x": 4,
+   "y": 12,
+   "facing": "right",
+   "dialogue": "lantern_span/toll_boy",
+   "sprite": "villager",
+   "trainer": "Toll Boy Kasimir",
+   "intro": "lantern_span/toll_boy_intro",
+   "defeat": "lantern_span/toll_boy_defeat",
+   "money": 4000,
+   "team": [
+    {
+     "species": "Gyrevult",
+     "level": 91
+    },
+    {
+     "species": "Velvessa",
+     "level": 91
+    },
+    {
+     "species": "Ergskim",
+     "level": 91
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 5,
+   "y": 13,
+   "dialogue": "lantern_span/sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 12,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_lantern_span_1"
+  },
+  {
+   "x": 11,
+   "y": 14,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_lantern_span_2"
+  },
+  {
+   "x": 0,
+   "y": 21,
+   "item": "guard_brew",
+   "count": 1,
+   "flag": "find_lantern_span_3"
+  }
+ ]
+}

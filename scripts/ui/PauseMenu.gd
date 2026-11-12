@@ -18,6 +18,8 @@ static var last_label: String = ""
 var photo: bool = false
 ## Set when the player picks "Watch last battle" in Records.
 var watch_replay: bool = false
+## A replay picked under Records > Online replays (Online 100 plan point 71); empty = the last battle.
+var watch_snap: Dictionary = {}
 ## Set when the player picks an echo duel under Friends: {"code", "name", "team"}.
 var echo_duel: Dictionary = {}
 ## Set when the player finds a league battle under Leagues: the battle the server set up.
@@ -71,6 +73,9 @@ func run() -> void:
 	if open_on == "Goals":
 		open_on = ""
 		await run_goals()
+	elif open_on == "Invite":
+		open_on = ""
+		await run_invite_link()
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
@@ -126,6 +131,15 @@ func run() -> void:
 			"Room":
 				if await run_room():
 					return
+
+## A chimora://friend/<code> link (Online 100 point 55): asks before the invite sends a request.
+func run_invite_link() -> void:
+	var code: String = DeepLink.friend_code
+	DeepLink.friend_code = ""
+	if code.is_empty() or not Online.is_online() or not Online.flag_on("invite"):
+		return
+	if await confirm(Loc.t("Accept the invite of friend code %s? It sends a friend request.") % Online.pretty_code(code)):
+		await FriendsMoreMenu.redeem(self, code)
 
 ## Shows a first-time tip in an info window (menus have no text box).
 func tip(id: String) -> void:
@@ -350,6 +364,7 @@ func run_records() -> void:
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
+		lines.append("Online replays")
 		var have: int = Achievements.unlocked().size()
 		var idx: int = await pick_strings(Loc.t("Achievements %d/%d") % [have, Achievements.list().size()], lines)
 		if idx < 0:
@@ -369,6 +384,9 @@ func run_records() -> void:
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Lexicon": await run_lexicon()
+			"Online replays":
+				if await OnlineReplaysMenu.run(self):
+					return
 			"Watch last battle":
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
@@ -515,7 +533,7 @@ static func menu_title(map_id: String = "") -> String:
 		t += "\n" + Loc.t(MapData.load_map(map_id).display_name)
 	if not Festival.active().is_empty():
 		t += "   " + Loc.t("Ribbons %d") % Festival.ribbons()
-	if GameState.level_cap() < GameState.ring_ceiling():
+	if GameState.has_ring_limit():
 		t += "   Ring limit %d" % GameState.level_cap()
 	return t
 
@@ -673,25 +691,47 @@ func _held_item(s: Spirling) -> void:
 	Sound.sfx("confirm")
 
 func _use_item_on(s: Spirling) -> void:
-	var ids: Array[String] = _usable_items()
-	if ids.is_empty():
-		await info("Nothing in the satchel can be used here.")
-		return
-	var entries: Array[String] = []
-	for id: String in ids:
-		entries.append("%s x%d" % [Database.item(id).get("name", id), GameState.item_count(id)])
-	var idx: int = await pick_strings("Use on %s" % s.display_name(), entries)
-	if idx < 0:
-		return
-	var msg: String = GameState.use_item_outside_battle(ids[idx], s)
-	await info(msg if not msg.is_empty() else "That would do nothing right now.")
+	# The list stays open after a use (item 1904) and keeps its place.
+	var focus: int = 0
+	while true:
+		var ids: Array[String] = _usable_items()
+		if ids.is_empty():
+			await info("Nothing in the satchel can be used here.")
+			return
+		var entries: Array[Dictionary] = []
+		for id: String in ids:
+			var row: Dictionary = {"text": "%s x%d" % [Database.item(id).get("name", id), GameState.item_count(id)]}
+			var after: String = vigor_preview(Database.item(id), s)
+			if not after.is_empty():
+				row["hint"] = after
+			entries.append(row)
+		var idx: int = await pick("Use on %s" % s.display_name(), entries, true, mini(focus, ids.size() - 1))
+		if idx < 0:
+			return
+		focus = idx
+		var msg: String = GameState.use_item_outside_battle(ids[idx], s)
+		await info(msg if not msg.is_empty() else "That would do nothing right now.")
+
+## "Vigor 12/40 to 32/40" for a healing or reviving item, empty for any other (item 1901).
+static func vigor_preview(it: Dictionary, s: Spirling) -> String:
+	var to: int = -1
+	if float(it.get("revive", 0.0)) > 0.0:
+		if s.is_fainted():
+			to = maxi(1, int(s.max_hp() * float(it.revive)))
+	elif int(it.get("heal", 0)) > 0:
+		if not s.is_fainted() and s.hp < s.max_hp():
+			to = mini(s.max_hp(), s.hp + int(it.heal))
+	if to < 0:
+		return ""
+	return Loc.t("Vigor %d/%d to %d/%d" % [s.hp, s.max_hp(), to, s.max_hp()])
 
 func _usable_items() -> Array[String]:
 	var out: Array[String] = []
 	for id: Variant in GameState.inventory:
 		var it: Dictionary = Database.item(str(id))
 		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))
-				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false))):
+				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false))
+				or bool(it.get("unfurl_any", false))):
 			out.append(str(id))
 	return out
 
@@ -713,6 +753,9 @@ static func bag_tab(it: Dictionary) -> int:
 func run_bag() -> void:
 	await tip("satchel")
 	var tab: int = -1
+	# The item used last keeps the focus when the list comes back (item 1927).
+	var last_id: String = ""
+	var last_idx: int = -1
 	while true:
 		var by_tab: Array[Array] = [[], [], [], [], []]
 		for id: Variant in GameState.inventory:
@@ -733,15 +776,24 @@ func run_bag() -> void:
 		for id: String in ids:
 			var it0: Dictionary = Database.item(id)
 			# The description stands in the line under the list (item 1915).
-			entries.append({"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)],
-				"hint": str(it0.get("description", ""))})
-		var idx: int = await pick("Satchel", entries, true, -1, ListPicker.TAP_GUARD_MS, tabs, tab)
+			var hint: String = Loc.t(str(it0.get("description", "")))
+			if battle_only(it0):
+				hint = Loc.t(BATTLE_ONLY) + " " + hint
+			entries.append({"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)], "hint": hint})
+		# If it was used up, the row that took its place gets the focus.
+		var focus: int = ids.find(last_id)
+		if focus < 0 and last_idx >= 0:
+			focus = mini(last_idx, ids.size() - 1)
+		var idx: int = await pick("Satchel", entries, true, focus, ListPicker.TAP_GUARD_MS, tabs, tab)
 		if ListPicker.tab_of(idx) >= 0:
 			tab = ListPicker.tab_of(idx)
+			last_idx = -1
 			continue
 		if idx < 0:
 			return
 		var item_id: String = ids[idx]
+		last_id = item_id
+		last_idx = idx
 		var it: Dictionary = Database.item(item_id)
 		if it.has("teaches"):
 			await _teach_echo(item_id)
@@ -759,24 +811,55 @@ func run_bag() -> void:
 			if await confirm("%s\n%s" % [Loc.t(str(it.get("name", ""))), Loc.t(str(it.get("description", "")))], "Use", "Not now"):
 				await info(ShopEffects.start_boost(item_id))
 		elif item_id in _usable_items():
-			var names: Array[String] = []
-			for s: Spirling in GameState.party:
-				names.append(MenuHost.party_line(s))
-			var who: int = await pick_strings("Use %s on?" % it.get("name", ""), names)
-			if who >= 0 and bool(it.get("spark_all", false)):
-				# The Spark Forge shows the values it will set before it is used.
-				var s: Spirling = GameState.party[who]
-				if not await confirm("%s\n%s" % [GameState.spark_reading(s), Loc.t("Afterwards every spark is at the top (12).")], "Use", "Not now"):
-					who = -1
-			if who >= 0:
-				var msg: String = GameState.use_item_outside_battle(item_id, GameState.party[who])
-				await info(msg if not msg.is_empty() else "That would do nothing right now.")
+			await _use_on_party(item_id)
 		elif item_id == TideChart.ITEM:
 			await info("\n".join(TideChart.lines()))
 		elif bool(it.get("gear", false)):
 			await info(gear_page(item_id), gear_picture(item_id))
 		else:
 			await info("%s\n%s" % [it.get("name", ""), it.get("description", "")])
+
+## Picks who gets [param item_id]. Healing items ask again for the same Spirling after
+## each use, until Back or the last one is gone (item 1919).
+func _use_on_party(item_id: String) -> void:
+	var it: Dictionary = Database.item(item_id)
+	var again: bool = int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0
+	var focus: int = -1
+	while GameState.item_count(item_id) > 0:
+		var rows: Array[Dictionary] = []
+		for s: Spirling in GameState.party:
+			var row: Dictionary = {"text": MenuHost.party_line(s)}
+			var after: String = vigor_preview(it, s)
+			if not after.is_empty():
+				row["hint"] = after
+			rows.append(row)
+		var title: String = "Use %s on?" % it.get("name", "")
+		if again:
+			title += "  x%d" % GameState.item_count(item_id)
+		var who: int = await pick(title, rows, true, focus)
+		if who < 0:
+			return
+		focus = who
+		if bool(it.get("spark_all", false)):
+			# The Spark Forge shows the values it will set before it is used.
+			var sp: Spirling = GameState.party[who]
+			if not await confirm("%s\n%s" % [GameState.spark_reading(sp), Loc.t("Afterwards every spark is at the top (12).")], "Use", "Not now"):
+				return
+		var msg: String = GameState.use_item_outside_battle(item_id, GameState.party[who])
+		await info(msg if not msg.is_empty() else "That would do nothing right now.")
+		if not again:
+			return
+
+const BATTLE_ONLY: String = "Only in battle."
+
+## Items that only work in a battle (item 1924): marked in the Satchel.
+static func battle_only(it: Dictionary) -> bool:
+	if not bool(it.get("battle", false)):
+		return false
+	for k: String in ["heal", "revive", "evolves", "rings", "spark_all", "boost", "teaches", "gear"]:
+		if it.has(k) and it[k]:
+			return false
+	return true
 
 ## What each "works_on" entry of a gear item means (area 3 item 1050).
 const GEAR_PLACES: Dictionary[String, String] = {

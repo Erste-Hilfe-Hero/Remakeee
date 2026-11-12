@@ -9,8 +9,8 @@ purpose: this run measures the chart and base stats only. The full model stays i
 tools/balance_sim.gd.
 
 Teams of 3 distinct species of the same unfold stage fight at the same ring; every battle is
-played twice with the sides swapped. Fails (exit 1) if the chart breaks its rules; the species 40-60 %
-band is reported, and fails only with --strict (the full model is the real gate).
+played twice with the sides swapped. Fails (exit 1) if the chart breaks its rules; the species and element
+40-60 % band is reported, and fails with --strict (the CI gate).
 
 Chart sim (always a gate): one equal-stat Spirling per element with a single art of its own element,
 so only the chart decides. Every element meets every element 1 on 1, and every team of 3 distinct
@@ -94,9 +94,11 @@ def chart_problems(chart, species):
             if min(off + dfn) >= 0 and max(off + dfn) > 0:
                 out.append("%s strictly dominates %s" % (a, b))
     used = {e for s in species for e in s["elements"]}
-    # Era II elements stay rare: legendaries, plus at most ERA2_KINDS act kinds each (owner: "sparingly").
+    # Later-era elements stay rare: free on legendaries and on kinds of their own era's region (or a
+    # later one), at most ERA2_KINDS older act kinds each (owner: "sparingly").
     for t, v in types.items():
-        n = sum(1 for s in species if s.get("rarity") != "ancient" and t in s["elements"])
+        n = sum(1 for s in species if s.get("rarity") != "ancient" and t in s["elements"]
+                and int(s.get("era") or 1) < v.get("era", 1))
         if v.get("era", 1) > 1 and n > ERA2_KINDS:
             out.append("Era %d element %s is on %d non-legendary Spirlings (at most %d)" % (v["era"], t, n, ERA2_KINDS))
     for e in used:

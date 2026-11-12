@@ -17,8 +17,8 @@
   "T*.*._..._*T",
   "T...*_.o._.T",
   "T.*.._..._.T",
-  "@RRR._..._R@",
-  "THDH._.*._HT",
+  "@RRR._..._.@",
+  "THDH._.*._.T",
   "T...._______",
   "@.%S%*_...._",
   "T.%%%._RRR.T",
@@ -88,6 +88,22 @@
    "tx": 6,
    "ty": 24,
    "facing": "up"
+  },
+  {
+   "x": 8,
+   "y": 13,
+   "to": "madderby_spring",
+   "tx": 4,
+   "ty": 7,
+   "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 9,
+   "to": "madderby_house",
+   "tx": 4,
+   "ty": 7,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -131,7 +147,7 @@
   },
   {
    "id": "oskar",
-   "x": 8,
+   "x": 9,
    "y": 14,
    "facing": "left",
    "dialogue": "madderby/oskar",
@@ -254,7 +270,7 @@
    10
   ],
   "dyer_2": [
-   2,
+   4,
    10
   ],
   "dyer_3": [

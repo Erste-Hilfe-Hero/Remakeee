@@ -1,0 +1,28 @@
+{
+ "sign": [
+  "WHITECAIRN",
+  "The last town before the edge. Each cairn is a person who said no to the Gilt House.",
+  "North: Orrery Ridge. South: the Lantern Span. East: the Span Rift."
+ ],
+ "keeper": {
+  "lines": [
+   "Cairn Warden Tamsa: Rest here. The dead don't mind company, as long as it's quiet."
+  ],
+  "action": "heal"
+ },
+ "mathis": {
+  "lines": [
+   "Stonestacker Mathis: I build the cairns. Business is steady. Too steady."
+  ]
+ },
+ "ilse": {
+  "lines": [
+   "Lantern Girl Ilse: I light the Span every night. Veronne says every lantern is a debt. I say every lantern is a name."
+  ]
+ },
+ "barnaby": {
+  "lines": [
+   "Old Barnaby: I said no to the Gilt House once. They built me a cairn anyway. I'm saving it for later."
+  ]
+ }
+}

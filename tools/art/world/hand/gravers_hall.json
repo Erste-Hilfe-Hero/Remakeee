@@ -1,0 +1,56 @@
+{
+ "add": {
+  "npcs": [
+   {
+    "id": "undertaker",
+    "x": 4,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "gravers_hall/undertaker",
+    "sprite": "elder"
+   },
+   {
+    "id": "brisk",
+    "x": 6,
+    "y": 5,
+    "facing": "down",
+    "dialogue": "ashmere_side/brisk",
+    "sprite": "villager"
+   },
+   {
+    "id": "pell",
+    "x": 2,
+    "y": 4,
+    "facing": "right",
+    "dialogue": "ashmere_side/pell",
+    "sprite": "villager"
+   },
+   {
+    "id": "fixer",
+    "x": 1,
+    "y": 4,
+    "facing": "right",
+    "dialogue": "gravers_hall/fixer",
+    "sprite": "villager"
+   },
+   {
+    "id": "coach",
+    "x": 8,
+    "y": 4,
+    "facing": "left",
+    "dialogue": "gravers_hall/coach",
+    "sprite": "villager"
+   },
+   {
+    "id": "lq_moll",
+    "x": 6,
+    "y": 6,
+    "facing": "down",
+    "dialogue": "legend_quests/monolurk_witness",
+    "sprite": "elder",
+    "show_flag": "lq_monolurk_met",
+    "hide_flag": "lq_monolurk_ready"
+   }
+  ]
+ }
+}

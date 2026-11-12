@@ -1,0 +1,100 @@
+{
+ "copperfold_spring_hedda": {
+  "lines": [
+   "Seam Nurse Hedda: Warm water from the deep seams. Let your team soak.",
+   "Seam Nurse Hedda: Miners come in grey and leave pink. The ones who come in at all."
+  ],
+  "action": "heal"
+ },
+ "copperfold_shop_benno": {
+  "lines": [
+   "Clerk Benno: Wilma sells outside, I sell inside. Same prices, but I have a roof."
+  ],
+  "action": "shop tonic strong_tonic max_tonic remedy cooling_gel wake_bell spark_drop revival_leaf dash_brew guard_brew"
+ },
+ "copperfold_house_fenwick": {
+  "lines": [
+   "Old Fenwick: My boy went down the Shatterfloor for copper. The mine kept him and sent back his boots.",
+   "Old Fenwick: Good boots. Wipe your feet on the way out."
+  ]
+ },
+ "reedhaven_spring_bea": {
+  "lines": [
+   "Tender Bea: Fen water, boiled twice. Once for the mud, once for the leeches.",
+   "Tender Bea: Sit. Your team can drink their fill."
+  ],
+  "action": "heal"
+ },
+ "reedhaven_shop_dirk": {
+  "lines": [
+   "Clerk Dirk: Towels, tonics, tide tables. The tables are free. They are also wrong."
+  ],
+  "action": "shop tonic strong_tonic max_tonic remedy dry_towel wake_bell revival_leaf kin_charm"
+ },
+ "reedhaven_house_grete": {
+  "lines": [
+   "Grete: The stilts creak every night. My husband says it is the wind.",
+   "Grete: He also said the stilts were new."
+  ]
+ },
+ "wrenhollow_spring_ilka": {
+  "lines": [
+   "Keeper Ilka: Brook water through a willow root. It tastes of bark and patience."
+  ],
+  "action": "heal"
+ },
+ "wrenhollow_shop_maren": {
+  "lines": [
+   "Clerk Maren: Ebbe keeps the cold stock outside. In here it is the same stock, only warmer."
+  ],
+  "action": "shop tonic strong_tonic remedy dry_towel cooling_gel kin_charm revival_leaf"
+ },
+ "corvane_quay_spring_liesl": {
+  "lines": [
+   "Harbour Nurse Liesl: Salt spring, piped in from the quay. Sit. The gulls cannot get in here."
+  ],
+  "action": "heal"
+ },
+ "corvane_quay_shop_anselm": {
+  "lines": [
+   "Clerk Anselm: Everything off the ferry, priced for people who have no way back."
+  ],
+  "action": "shop tonic strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+ },
+ "corvane_quay_house_marit": {
+  "lines": [
+   "Widow Marit: My husband rowed the ferry for thirty years. One day the ferry came back and he did not.",
+   "Widow Marit: The company sent flowers. And the bill for the oar."
+  ]
+ },
+ "madderby_spring_trudi": {
+  "lines": [
+   "Nurse Trudi: The dye works took the colour from the river. The spring kept a little. Rest."
+  ],
+  "action": "heal"
+ },
+ "madderby_house_konrad": {
+  "lines": [
+   "Dyer Konrad: Forty years I dyed cloth blue. Now my hands are blue and the cloth is grey.",
+   "Dyer Konrad: Fair trade, says the guild."
+  ]
+ },
+ "thornridge_house_brenna": {
+  "lines": [
+   "Widow Brenna: I nailed my door shut the night the Cinder Rift opened. Nobody noticed for a month.",
+   "Widow Brenna: Now it is open again and still nobody visits. At least now it is my choice."
+  ]
+ },
+ "greyreach_hut_olm": {
+  "lines": [
+   "Shepherd Olm: The fog takes a sheep a week. I stopped naming them.",
+   "Shepherd Olm: Then I stopped counting them. Now I sleep fine."
+  ]
+ },
+ "edge_watch_hut_ida": {
+  "lines": [
+   "Rift Watcher Ida: I watch the edge so you don't have to. Nobody pays me.",
+   "Rift Watcher Ida: Nobody needs to. The edge is very convincing."
+  ]
+ }
+}

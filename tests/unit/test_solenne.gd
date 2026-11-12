@@ -122,7 +122,7 @@ func test_wardens_level_past_odalys_and_caps_continue() -> void:
 		sealed += 1
 	assert_lte(last, _top(StoryBattles.get_def("echo_1").team), "the finale still tops Solenne")
 	assert_eq(GameState.LEVEL_CAPS.size(), GameState.STORY_RIFTS.size() + 1)
-	assert_eq(GameState.LEVEL_CAPS[-1], Spirling.MAX_LEVEL)
+	assert_eq(GameState.LEVEL_CAPS[-1], Spirling.STORY_RING)
 
 func test_kaia_is_revealed_after_the_fight() -> void:
 	var kaia: Dictionary = _npc("oasis_rift", "warden_kaia")

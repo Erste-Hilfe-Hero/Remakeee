@@ -143,7 +143,7 @@ func test_era_one_rematch() -> void:
 		var team: Array = e.team
 		assert_eq(team.size(), 6, str(w[2]))
 		assert_gt(_top(team), _top(TrainerData.team_entries(npc, "", -1)), str(w[2]))
-		assert_lte(_top(team), Spirling.MAX_LEVEL, str(w[2]))
+		assert_lte(_top(team), Spirling.STORY_RING, str(w[2]))
 		assert_gt(int(e.money), int(npc.get("money", 0)), "%s rematch pays more" % w[2])
 		var reward: String = str((e.reward as Dictionary).item)
 		assert_false(Database.item(reward).is_empty(), reward)
@@ -177,7 +177,7 @@ func test_vellmarch_teams_follow_the_level_curve() -> void:
 	var last_size: int = (_npc("sun_rift", "warden_emrys").team as Array).size()
 	for w: Dictionary in Region2.wardens():
 		assert_gt(int(w.ring), last_ring, "%s comes after ring %d" % [w.id, last_ring])
-		assert_lte(int(w.ring), Spirling.MAX_LEVEL, "%s ring fits Spirling.MAX_LEVEL" % w.id)
+		assert_lte(int(w.ring), Spirling.STORY_RING, "%s ring fits Spirling.STORY_RING" % w.id)
 		assert_eq(_top(w.team), int(w.ring), "%s ace is at its ring" % w.id)
 		assert_gte((w.team as Array).size(), last_size, "%s fields no fewer than the Warden before" % w.id)
 		for t: Dictionary in w.team:
@@ -185,7 +185,7 @@ func test_vellmarch_teams_follow_the_level_curve() -> void:
 		last_ring = int(w.ring)
 		last_size = (w.team as Array).size()
 	for r: Dictionary in Region2.data().routes:
-		assert_lte(int(r.ring[1]), Spirling.MAX_LEVEL, "%s ring fits Spirling.MAX_LEVEL" % r.id)
+		assert_lte(int(r.ring[1]), Spirling.STORY_RING, "%s ring fits Spirling.STORY_RING" % r.id)
 
 func test_vellmarch_rewards_dialogue_and_rematch() -> void:
 	var last_money: int = 0
@@ -205,7 +205,7 @@ func test_vellmarch_rewards_dialogue_and_rematch() -> void:
 		for t: Dictionary in re.team:
 			assert_not_null(Database.species(Region2.slot_species(t)), str(w.id))
 			assert_gte(int(t.level), _top(w.team), str(w.id))
-			assert_lte(int(t.level), Spirling.MAX_LEVEL, str(w.id))
+			assert_lte(int(t.level), Spirling.STORY_RING, str(w.id))
 		assert_gt(int(re.money), int(w.money), str(w.id))
 		var again: String = str((re.reward as Dictionary).item)
 		assert_false(Database.item(again).is_empty(), again)

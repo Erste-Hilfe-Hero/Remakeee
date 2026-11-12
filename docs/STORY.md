@@ -147,7 +147,7 @@ Area 3 builds the maps; area 4 only places figures, signs and triggers on them (
 ### Act II side content (Corvane)
 
 Text: `data/dialogue/corvane_side.json`, `data/dialogue/rook_vault.json`; German:
-`tools/i18n/de_corvane_side.py`. Rough play time per act and per post-game era region (Vellmarch, Quillmarch, Halcyra; `regions` in `data/playtime.json`): `python3 tools/act_hours.py [act or region]`.
+`tools/i18n/de_corvane_side.py`. Rough play time per act and per post-game era region (Vellmarch, Quillmarch, Halcyra, Quivermoor; `regions` in `data/playtime.json`): `python3 tools/act_hours.py [act or region]`.
 
 - **Rival Nib Wexley**, a quay rat: five story duels (`nib_1`..`nib_5`) on the quay, in Madderby,
   the Woadfen, at Stillwater and at the bottom of the Rook Vault. After the last one he admits he
@@ -271,6 +271,20 @@ kinds for Ilse, who sells her guide to a poacher), `s4_mirrors` (Oren's heliogra
 `s4_kiln` and `s4_varro`. Act IV betrayals: Sabine's purse (`sabine_purse`, caught when Old Pell
 warned you), Tamsin's twin (`tamsin_twin`, Ott) and Venn's chains (`venn_chains`, Hesper's
 ledger); favor `varro_shortcut`. `tools/act_hours.py 4` puts Act IV at 24.2 h.
+
+**Clinker Heath, the Ash Assize and the Bellows Deep (Act III, `tools/art/world/ashmere_more.py`).**
+Once Halvard is met, the south cut of Cinderfold opens onto Clinker Heath, a slag heath with the
+Ash Assize on it (a Ruskweber court that sells verdicts, and the heath's rest corner) and the
+Bellows Deep at its south end, a three-floor coal deep the clan shut eleven years ago and never
+stopped billing, with two bellows rows. 21 Ashmere kinds that had no wild home live there (Ring
+33 to 39). Side goals `ah_assize` (five jurors, Ring 33 to 35), `ah_briony` (an alibi), `ah_mourner`
+(a mourner who buries people before they die), `ah_tags` and `ah_last_shift` (eight tally tags; the
+last shift is still digging and Overman Slagg collects its wages), `ah_portraits` and `ah_deeds`
+(eight kinds for Corwin, whose portraits turn wild kinds into clan property; burn or sell the
+deeds), `ah_deep` and `ah_juno` (Juno's fourth duel). Act III betrayals: Greaves' verdict
+(`greaves_verdict`, caught when you read Clerk Tansy's docket) and Juno's partnership (`juno_split`,
+caught with her note to Slagg); favor `briony_alibi`. `tools/act_hours.py 3` puts Act III at 33.8 h
+(23.6 h before).
 
 The ring caps on Veteran and Rift-Born rise with every mended Rift (`GameState.LEVEL_CAPS`: 12, 15,
 18, 23, ... 50, then 54, 57 and 60 for Solenne); after Act I they open fully. The story battles keep a curve that never drops (checked

@@ -1,0 +1,16 @@
+{
+ "add": {
+  "npcs": [
+   {
+    "id": "lumivane",
+    "x": 8,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "sun_rift/lumivane",
+    "sprite": "first_voice",
+    "show_flag": "lq_lumivane_ready",
+    "hide_flag": "first_voice_lumivane_away"
+   }
+  ]
+ }
+}

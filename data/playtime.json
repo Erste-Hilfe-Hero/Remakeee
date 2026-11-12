@@ -47,6 +47,7 @@
    "name": "Quillmarch",
    "era": 3,
    "region": "quillmarch",
+   "sheet": "data/region3.json",
    "places": [
     "Quillmarch"
    ]
@@ -58,6 +59,15 @@
    "sheet": "data/region4.json",
    "places": [
     "Halcyra"
+   ]
+  },
+  "quivermoor": {
+   "name": "Quivermoor",
+   "era": 5,
+   "region": "quivermoor",
+   "sheet": "data/region5.json",
+   "places": [
+    "Quivermoor"
    ]
   }
  },

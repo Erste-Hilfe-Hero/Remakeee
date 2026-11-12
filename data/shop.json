@@ -1,9 +1,9 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 33,
+ "catalog_version": 35,
  "advantage_values": {
-  "_comment": "Pay-to-win step 1 (Ali, 10 Nov 2026). Seal tiers in percent (ShopEffects.seal_percent), crystal_cap = most crystal points per stat (twice Spirling.SPARK_MAX), growth_plus = extra growth of the Growth Seal. Step 3: ring_cap_plus = extra Rings over the Ring cap with the Ring Cap Seal. Step 4: crit_seal = extra crit chance in percentage points per tier, status_ward = percent chance a foe's status fails on your side, start_shield = percent less damage on the first hit your lead takes in each battle.",
+  "_comment": "Pay-to-win step 1 (Ali, 10 Nov 2026). Seal tiers in percent (ShopEffects.seal_percent), crystal_cap = most crystal points per stat (twice Spirling.SPARK_MAX), growth_plus = extra growth of the Growth Seal. Step 3: ring_cap_plus = extra Rings over the Ring cap with the Ring Cap Seal. Step 4: crit_seal = extra crit chance in percentage points per tier, status_ward = percent chance a foe's status fails on your side, start_shield = percent less damage on the first hit your lead takes in each battle. Step 5: bond_edge = percentage points added to the bond timing score per Bond Head Start tier.",
   "power_seal": [
    5,
    10,
@@ -42,6 +42,11 @@
   ],
   "start_shield": [
    50
+  ],
+  "bond_edge": [
+   10,
+   20,
+   30
   ]
  },
  "offers": [
@@ -1109,7 +1114,7 @@
    "kind": "advantage",
    "tab": "advantages",
    "name": "Bond Seal",
-   "desc": "The next bonding succeeds for sure. Not with Rift Wardens or one-of-a-kind Spirlings.",
+   "desc": "The next bond with a wild Spirling succeeds for sure, also with ancient and one-of-a-kind ones. Rift Wardens and other Wayfarers' Spirlings can never be bonded.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -4322,6 +4327,248 @@
     "per": "account",
     "n": 1
    },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_lure_scent_1",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Lure Scent I",
+   "desc": "Uncommon, shy and ancient wild Spirlings step out twice as often for 100 steps. Tier 1 of 3. Story only, not in leagues.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.lure_scent_1",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_lure_scent_1",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "100 steps",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_lure_scent_2",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Lure Scent II",
+   "desc": "Uncommon, shy and ancient wild Spirlings step out 3 times as often for 100 steps. Tier 2 of 3. Story only, not in leagues.",
+   "rg_price": 400,
+   "eur_cents": 399,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.lure_scent_2",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_lure_scent_2",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "100 steps",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_lure_scent_3",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Lure Scent III",
+   "desc": "Uncommon, shy and ancient wild Spirlings step out 5 times as often for 100 steps. Tier 3 of 3. Story only, not in leagues.",
+   "rg_price": 700,
+   "eur_cents": 699,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.lure_scent_3",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_lure_scent_3",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "100 steps",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_shimmer_scent",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Shimmer Scent",
+   "desc": "Wild Spirlings show their Gleam form 10 times as often for 100 steps. Story only, not in leagues.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.shimmer_scent",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_shimmer_scent",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "100 steps",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_bond_edge_1",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Bond Head Start I",
+   "desc": "Every bond counts as 10 percentage points better timed (the bond bar starts ahead). Story only, not in leagues. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.bond_edge_1",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "bond_edge"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:bond_edge:0",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_bond_edge_2",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Bond Head Start II",
+   "desc": "Every bond counts as 20 percentage points better timed (the bond bar starts ahead). Replaces Bond Head Start I: you pay only the difference. Story only, not in leagues. Permanent.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.bond_edge_2",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "bond_edge"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:bond_edge:1",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_bond_edge_3",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Bond Head Start III",
+   "desc": "Every bond counts as 30 percentage points better timed (the bond bar starts ahead). Replaces Bond Head Start II: you pay only the difference. Story only, not in leagues. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.bond_edge_3",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "bond_edge"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:bond_edge:2",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_bond_retry",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Second Try Charm",
+   "desc": "If a bond fails while you hold it out, you try once more at once. 1 piece, used up. Story only, not in leagues.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.bond_retry",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_bond_retry",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_unfurl_spark",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Unfurl Spark",
+   "desc": "A Spirling unfurls into its next form at once, without its Ring or other conditions. Not for forms that need an item. 1 piece, used up.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.unfurl_spark",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_unfurl_spark",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_grand_tonic",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Grand Tonic",
+   "desc": "In battle: heals 100% Vigor and all states. No limit per battle. 1 piece.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.grand_tonic",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_grand_tonic",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
    "rg_only": true,
    "min_band": 13,
    "ready": true

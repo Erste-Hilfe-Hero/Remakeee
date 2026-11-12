@@ -242,26 +242,17 @@ static func finale_flags() -> Array[String]:
 ## Story flag at the end of Act I ("Waiting for the Ferry" starts).
 const ACT1_END_FLAG: String = "aldo_dock_told"
 
+## Ring a Spirling can grow to now. No top ring (owner decision 2026-11-12): on Tamer and below,
+## and on every difficulty after Act I, Spirlings grow without limit (Spirling.LEVEL_SANITY is only
+## a guard against broken data). Veteran and Rift-Born keep their Act I Warden caps (LEVEL_CAPS).
 func level_cap() -> int:
-	if difficulty < Difficulty.VETERAN:
-		return ring_ceiling()
-	return mini(progress_cap() + ShopEffects.ring_cap_bonus(), ring_ceiling())
+	if not has_ring_limit():
+		return Spirling.LEVEL_SANITY
+	return mini(progress_cap() + ShopEffects.ring_cap_bonus(), Spirling.LEVEL_SANITY)
 
-## Highest ring a Spirling can grow to now: data/eras.json "ring_caps" of the newest era whose
-## unlock flag is set (Spirling.MAX_LEVEL until Era III opens, Spirling.ERA_MAX_LEVEL with Halcyra).
-func ring_ceiling() -> int:
-	return ring_ceiling_for(flags)
-
-static func ring_ceiling_for(f: Dictionary) -> int:
-	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(EraManager.ERAS_PATH))
-	var caps: Dictionary = (raw as Dictionary).get("ring_caps", {}) if raw is Dictionary else {}
-	var unlock: Dictionary = EraManager.unlock_flags()
-	var out: int = Spirling.MAX_LEVEL
-	for e: int in range(2, Spirling.MAX_ERA + 1):
-		if not bool(f.get(str(unlock.get(str(e), "")), false)):
-			break
-		out = maxi(out, int(caps.get(str(e), out)))
-	return mini(out, Spirling.ERA_MAX_LEVEL)
+## True while a difficulty ring limit holds (Veteran and up, before the end of Act I).
+func has_ring_limit() -> bool:
+	return difficulty >= Difficulty.VETERAN and not has_flag(ACT1_END_FLAG)
 
 ## Marks a Rift as sealed (raises the level cap on Veteran and up). Returns false if it already was.
 func seal_rift(rift_id: String) -> bool:
@@ -281,11 +272,11 @@ func seal_rift(rift_id: String) -> bool:
 
 ## Ring cap by story progress for every difficulty (the Veteran caps). Endgame echoes (weekly
 ## challenge, lighthouse climb) use it, so raising one Spirling high does not change them.
-## After Act I (ACT1_END_FLAG) the cap opens to the full ring_ceiling() (plan 3287), so
-## Master Wayfarers and the endgame use the whole ring range.
+## After Act I (ACT1_END_FLAG) it is Spirling.STORY_RING (plan 3287), so Master Wayfarers and
+## the endgame use the whole story ring range; the player's own Spirlings are not capped by it.
 func progress_cap() -> int:
 	if has_flag(ACT1_END_FLAG):
-		return ring_ceiling()
+		return Spirling.STORY_RING
 	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
 
 func items_allowed_in_battle() -> bool:
@@ -1164,13 +1155,24 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 		s.evolve()
 		mark_seen(s.data.species_name, true)
 		msg = "%s unfurls into %s!" % [old_name, s.data.species_name]
+	elif bool(it.get("unfurl_any", false)):
+		# The shop's Unfurl Spark (pay-to-win step 5, plan point 32): the next form without its
+		# Ring or other conditions, never a form that needs an item (furling back would hand one out).
+		var to: SpirlingData = ShopEffects.unfurl_spark_target(s)
+		if to == null:
+			return ""
+		var old_name: String = s.display_name()
+		s.evolve(to)
+		mark_seen(s.data.species_name, true)
+		msg = "%s unfurls into %s!" % [old_name, s.data.species_name]
 	elif it.has("teaches"):
 		# Echo Crystals are never used up; learning is handled by the menu (it may need a slot).
 		return ""
 	elif int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0:
-		# Ring Tonics and the Ring Crown from the shop: never above the Ring cap (plan item 4341).
+		# Ring Tonics and the Ring Crown from the shop: never above the Ring cap (plan item 4341)
+		# nor above the story ring, so bought rings stop at 60; past it Spirlings grow by battling.
 		var goal: int = int(it.rings_to) if int(it.get("rings_to", 0)) > 0 else s.level + int(it.rings)
-		var target: int = mini(goal, mini(level_cap(), Spirling.MAX_LEVEL))
+		var target: int = mini(goal, mini(level_cap(), Spirling.STORY_RING))
 		if s.level >= target:
 			return ""
 		var from: int = s.level
