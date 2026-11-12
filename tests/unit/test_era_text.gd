@@ -319,10 +319,14 @@ func test_bust_speaks_while_the_line_types() -> void:
 	var box: TextBox = _box()
 	await wait_process_frames(2)
 	box.set_speaker(KNOWN)
+	# A long line, so the box keeps typing while the portrait is watched.
+	box._label.text = "a ".repeat(400)
+	box._visible_chars = 0.0
 	box._typing = true
 	var seen: Dictionary[int, bool] = {}
-	for i: int in 40:
-		await wait_process_frames(1)
+	# Real time, not frames: headless frames can be far shorter than one talk step.
+	for i: int in 30:
+		await wait_seconds(0.03)
 		seen[box._portrait.frame()] = true
 	box._typing = false
 	assert_true(seen.has(2), "the mouth moved")
