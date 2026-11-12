@@ -46,7 +46,7 @@
    "facing": "down",
    "dialogue": "kiln_rift/monolurk",
    "sprite": "first_voice",
-   "show_flag": "rift_kiln_sealed",
+   "show_flag": "lq_monolurk_ready",
    "hide_flag": "first_voice_monolurk_away"
   }
  ],

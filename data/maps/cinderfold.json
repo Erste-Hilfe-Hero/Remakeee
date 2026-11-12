@@ -174,6 +174,16 @@
    "facing": "left",
    "dialogue": "ashmere_side/marn",
    "sprite": "elder"
+  },
+  {
+   "id": "lq_kesk",
+   "x": 9,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "legend_quests/vorlucent_witness",
+   "sprite": "villager",
+   "show_flag": "lq_vorlucent_met",
+   "hide_flag": "lq_vorlucent_ready"
   }
  ],
  "signs": [

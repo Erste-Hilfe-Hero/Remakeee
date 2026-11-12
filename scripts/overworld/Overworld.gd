@@ -995,9 +995,10 @@ func _fixed_meeting(sd: SpirlingData, ring: int, gone_line: String) -> void:
 	var wild := Spirling.new(sd, ring, GameState.rng)
 	_text.visible = false
 	SaveManager.save_game()
-	await start_battle([wild] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
+	var outcome: BattleModel.Outcome = await start_battle([wild] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
 	GameState.set_flag(FirstVoices.away_flag(sd.species_name))
-	if FirstVoices.is_bonded(sd.species_name):
+	# Only a bond in this meeting counts; a shop copy in storage is not the one met here.
+	if outcome == BattleModel.Outcome.BONDED:
 		GameState.set_flag(FirstVoices.bonded_flag(sd.species_name))
 	else:
 		await say([gone_line] as Array[String])
