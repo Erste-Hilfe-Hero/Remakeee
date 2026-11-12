@@ -160,6 +160,11 @@ answer: over -> `done`, reason `played`, the referee's winner; not over -> the d
 a check is open `live_state` says `judging: true`, the round clock rests, and a referee that is silent for 10
 minutes ends the duel without a winner. `battle_submit` does not accept `live_judge`. A phone that reports a
 different winner, or none, changes nothing. `LocalLiveMore.gd` does the same at once.
+`server/referee/referee.gd` now only starts `referee_runner.gd` as a node: a `-s` script is compiled before the
+autoloads exist, and since `ShopEffects` names `Billing` the old runner could not rebuild any Spirling (every
+battle came back as `error`). `tools/online/test_referee.sh` checks the three sample battles and two live duels;
+it is not part of CI yet, and its last step (fair rows) currently reports Wickit and Kelpup as different between
+game and database.
 
 **Playing the rounds (points 1-3, 10):** `scripts/online/LiveDuelSim.gd` builds the battle from the server's seed,
 the two picked teams and every finished round's two choices (kind, move, swap only), so both phones, every
