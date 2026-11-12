@@ -251,6 +251,14 @@
    "item": "max_tonic",
    "count": 1,
    "flag": "find_gloam_pocket"
+  },
+  {
+   "x": 10,
+   "y": 26,
+   "item": "tonic",
+   "count": 1,
+   "flag": "poster_3",
+   "dialogue": "veydal_more/poster_3"
   }
  ],
  "passages": [

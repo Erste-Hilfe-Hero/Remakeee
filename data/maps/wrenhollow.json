@@ -253,6 +253,22 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "vm_lemuel",
+   "x": 10,
+   "y": 11,
+   "facing": "left",
+   "dialogue": "veydal_more/lemuel",
+   "sprite": "villager"
+  },
+  {
+   "id": "vm_tibbs",
+   "x": 10,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "veydal_more/tibbs",
+   "sprite": "villager"
   }
  ],
  "signs": [

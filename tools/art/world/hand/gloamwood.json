@@ -11,6 +11,16 @@
     "show_flag": "story_complete",
     "hide_flag": "lq_hallowmur_ready"
    }
+  ],
+  "secrets": [
+   {
+    "x": 10,
+    "y": 26,
+    "item": "tonic",
+    "count": 1,
+    "flag": "poster_3",
+    "dialogue": "veydal_more/poster_3"
+   }
   ]
  }
 }

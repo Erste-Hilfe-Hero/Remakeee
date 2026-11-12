@@ -288,6 +288,14 @@
    "flag": "find_marsh_post"
   },
   {
+   "x": 4,
+   "y": 2,
+   "item": "remedy",
+   "count": 1,
+   "flag": "poster_4",
+   "dialogue": "veydal_more/poster_4"
+  },
+  {
    "x": 10,
    "y": 9,
    "item": "remedy",

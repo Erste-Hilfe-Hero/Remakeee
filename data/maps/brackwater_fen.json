@@ -243,6 +243,14 @@
    "item": "max_tonic",
    "count": 1,
    "flag": "find_fen_pocket"
+  },
+  {
+   "x": 7,
+   "y": 3,
+   "item": "remedy",
+   "count": 1,
+   "flag": "poster_6",
+   "dialogue": "veydal_more/poster_6"
   }
  ],
  "passages": [

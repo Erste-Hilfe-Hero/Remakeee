@@ -19,6 +19,16 @@
     "dialogue": "veydal_side/nettle",
     "sprite": "villager"
    }
+  ],
+  "secrets": [
+   {
+    "x": 7,
+    "y": 3,
+    "item": "remedy",
+    "count": 1,
+    "flag": "poster_6",
+    "dialogue": "veydal_more/poster_6"
+   }
   ]
  }
 }

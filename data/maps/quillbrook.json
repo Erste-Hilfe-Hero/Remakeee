@@ -175,6 +175,14 @@
    "sprite": "elder",
    "show_flag": "story_complete",
    "hide_flag": "lq_scriptorax_ready"
+  },
+  {
+   "id": "vm_fay",
+   "x": 3,
+   "y": 28,
+   "facing": "left",
+   "dialogue": "veydal_more/fay",
+   "sprite": "villager"
   }
  ],
  "signs": [
@@ -261,6 +269,14 @@
    "item": "remedy",
    "count": 1,
    "flag": "find_mound_2"
+  },
+  {
+   "x": 1,
+   "y": 19,
+   "item": "tonic",
+   "count": 1,
+   "flag": "poster_5",
+   "dialogue": "veydal_more/poster_5"
   }
  ],
  "passages": [
