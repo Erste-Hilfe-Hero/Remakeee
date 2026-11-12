@@ -91,6 +91,19 @@ Maps with `"outdoor": true` follow the device clock through `DayCycle`: dawn 5:0
 - **Statistics:** `python3 tools/world_stats.py` writes the table below (`--check` tells if it is stale).
 - **Act I look:** Veydal maps use their own atlas `art/era1/tiles/overworld_veydal.png` (heath, bracken, firs, peat tarns, slate cliffs, dry-stone walls, waystones, cairns), made by `tools/art/gen_tiles_veydal.py`. TilesetFactory picks `tiles/overworld_<region>.png` when the map region has one; buildings and the lighthouse keep the shared tiles.
 - **Act III look:** Ashmere maps use `art/era1/tiles/overworld_ashmere.png` (ash ground, charred brush, dead snags, brine pools, salt spikes, cinder scree, slag heaps, braziers, basalt cliffs), made by `tools/art/gen_tiles_ashmere.py`, and switch the Era I filter to their own four inks from `data/region_looks.json` (RegionLook, EraManager.set_region).
+- **Landmarks (map design item 509):** every outdoor place of Acts I-III has one tall thing you
+  know it by, listed in `data/landmarks.json` (kind, solid cell, name, line; German in
+  `tools/i18n/de_landmarks.py`). Each act draws its own set and no kind is shared: Veydal
+  standing stones, cairns, beacons and tide posts; Corvane heron posts, drying racks, sluice
+  wheels and dye mills; Ashmere smelter stacks, bell frames and salt needles. Art:
+  `tools/art/gen_landmarks.py` (16x32, the top half covers the cell above). Talking to it shows
+  name and line. `WorldValidator.check_landmarks` keeps them off warps, signs, people, finds,
+  gates and story spots.
+- **Winding roads (map design item 508):** Madderby, Corvane Quay, Stillwater and Saltglass no
+  longer run one straight road through the middle; the roads jog around houses, squares and
+  slag (only `_` and `.` swapped, so nothing about where you can walk changed). The generated
+  Corvane and Ashmere maps have been patched by hand since they were built, so edit their JSON,
+  not `corvane_act2.py` / `ashmere.py`, until the builders are brought back in line.
 - **Overview:** `python3 tools/art/preview_map.py --region veydal` draws every map of a region
   on one sheet (`build/previews/veydal.png`).
 - **Checks:** `tools/validate_data.gd` and `tests/unit/test_world_data.gd` check tiles,

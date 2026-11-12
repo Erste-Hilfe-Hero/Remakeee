@@ -5,7 +5,7 @@ func before_all() -> void:
 	Database.reload_data()
 
 func test_all_15_spirlings_have_learnsets_from_moves_json() -> void:
-	assert_eq(Database.spirlings.size(), 145, "87 before the act lines, 58 new Solenne kinds")
+	assert_eq(Database.spirlings.size(), 257, "87 before the act lines, 58 Solenne, 58 Ashmere and 54 Corvane kinds")
 	for sd: SpirlingData in Database.spirlings.values():
 		assert_gt(sd.learnset_moves.size(), 0, sd.species_name)
 		for mv: MoveData in sd.learnset_moves:

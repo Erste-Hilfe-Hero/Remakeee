@@ -27,6 +27,15 @@ static func apply_unlocks() -> void:
 	# A refunded sixth team slot: the last Spirling goes to storage, so saves stay valid.
 	while GameState.party.size() > GameState.party_max():
 		GameState._store(GameState.party.pop_back(), true)
+	# A refunded setting goes back to its plain state, it does not keep working (bug plan 1360).
+	if not owns_setting("retro") and EraManager.retro_filter != 0:
+		EraManager.set_retro_filter(0)
+	if not owns_setting("day_night"):
+		GameState.day_night = true
+	if not owns_setting("weather"):
+		GameState.weather = true
+	if not owns_setting("fast_text") and GameState.text_speed == GameState.TextSpeed.FAST:
+		GameState.text_speed = GameState.TextSpeed.NORMAL
 
 ## Growth with the pass (+50 %, item 4625) times a running Growth Crystal (items 4345, 4346).
 const PASS_GROWTH: float = 1.5
@@ -282,13 +291,16 @@ static func ring_cap_bonus() -> int:
 	return int(_values().get("ring_cap_plus", 0)) if Billing.unlocked("ring_cap_plus") > 0 else 0
 
 ## Account power (shown in the team view): the sum of every active bought advantage in points,
-## seal percents plus the permanent growth percent, 10 per extra Ring of the Ring Cap Seal, plus
+## seal and amulet percents plus the permanent growth percent, 10 per extra Ring of the Ring Cap Seal, plus
 ## the crystal points in the team.
 static func account_power() -> int:
 	var tiers: Array[int] = seal_tiers()
 	var n: int = 0
 	for i: int in SEAL_KINDS.size():
 		n += seal_percent(SEAL_KINDS[i], tiers[i])
+	var am: Array[int] = amulet_tiers()
+	for i: int in AMULET_KINDS.size():
+		n += seal_percent(AMULET_KINDS[i], am[i])
 	n += roundi(growth_plus() * 100.0)
 	n += ring_cap_bonus() * 10
 	for s: Spirling in GameState.party:
@@ -338,3 +350,60 @@ static func none_ok(req: String, count: Callable) -> bool:
 		if int(count.call(k)) > 0:
 			return false
 	return true
+
+## --- Pay-to-win step 4 (plan points 16 to 19): Crit Seal, Status Ward, Opening Shield. ---
+## A second tier row beside the seals, [crit, ward, shield] (BattleModel.amulets). Same rules as
+## the seals: story, raids and the Open League, never the Fair League or echo duels.
+const AMULET_KINDS: Array[String] = ["crit_seal", "status_ward", "start_shield"]
+
+## The account's amulet tiers [crit, ward, shield] from the server's unlocks.
+static func amulet_tiers() -> Array[int]:
+	var out: Array[int] = []
+	for k: String in AMULET_KINDS:
+		out.append(clamp_tier(k, Billing.unlocked(k)))
+	return out
+
+## Amulet tiers for a battle in [param context] (see seals_for).
+static func amulets_for(context: String) -> Array[int]:
+	if context in ["story", "raid", "league_open"]:
+		return amulet_tiers()
+	return [0, 0, 0] as Array[int]
+
+## Amulet tiers [crit, ward, shield] from a snapshot or expect, clamped to the tiers the data knows.
+static func amulet_row(v: Variant) -> Array:
+	var out: Array = [0, 0, 0]
+	if v is Array:
+		for i: int in mini((v as Array).size(), AMULET_KINDS.size()):
+			out[i] = clamp_tier(AMULET_KINDS[i], int(v[i]))
+	return out
+
+## Crit multiplier for DamageCalc.compute: [param base] times the normal chance plus the Crit Seal's
+## percentage points, expressed as one factor on DamageCalc.CRIT_CHANCE.
+static func crit_mult(base: float, crit_tier: int) -> float:
+	return base + seal_percent("crit_seal", crit_tier) / 100.0 / DamageCalc.CRIT_CHANCE
+
+## Chance (0..1) that a foe's status fails on a side with Status Ward [param tier].
+static func ward_chance(tier: int) -> float:
+	return seal_percent("status_ward", tier) / 100.0
+
+## Damage factor on the first hit the lead takes with Opening Shield [param tier].
+static func shield_mult(tier: int) -> float:
+	return 1.0 - seal_percent("start_shield", tier) / 100.0
+
+## Line at the start of a battle that names every bought advantage working in it (plan point 19).
+## Empty when none works. [param seal_tier_row] and [param amulet_tier_row] are the player's tiers.
+static func edge_line(seal_tier_row: Array, amulet_tier_row: Array) -> String:
+	var parts: Array[String] = []
+	var names: Array[String] = ["Power +%d%%", "Guard +%d%%", "Pace +%d%%"]
+	for i: int in mini(seal_tier_row.size(), SEAL_KINDS.size()):
+		var p: int = seal_percent(SEAL_KINDS[i], int(seal_tier_row[i]))
+		if p > 0:
+			parts.append(Loc.t(names[i]) % p)
+	var a_names: Array[String] = ["Crits +%d", "Status Ward %d%%", "Opening Shield %d%%"]
+	for i: int in mini(amulet_tier_row.size(), AMULET_KINDS.size()):
+		var q: int = seal_percent(AMULET_KINDS[i], int(amulet_tier_row[i]))
+		if q > 0:
+			parts.append(Loc.t(a_names[i]) % q)
+	if parts.is_empty():
+		return ""
+	return Loc.t("Shop advantages at work: %s") % ", ".join(parts)

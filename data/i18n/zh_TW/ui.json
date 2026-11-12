@@ -463,6 +463,13 @@
   "not seen": "未見過",
   "strong": "強",
   "wild %s": "野外的%s",
-  "Join our Discord": "加入我們的 Discord"
+  "Join our Discord": "加入我們的 Discord",
+  " It gleams in colours of its own!": " 它閃耀著獨有的色彩！",
+  "Bonding step 1: Hit it with a few arts until its Vigor bar is low. Don't knock it out.": "羈絆第1步：用幾個技藝把它的元氣條打低。別打倒它。",
+  "Bonding step 2: Pick Bond. It calls a few marks, one after another. Watch closely.": "羈絆第2步：選擇羈絆。它會一個接一個地發出幾個記號。看仔細。",
+  "Bonding step 3: Press the same marks in the same order. The better your echo, the better the bond.": "羈絆第3步：按同樣的順序按下同樣的記號。回聲越準，羈絆越好。",
+  "Bonding step 3: Tap the same marks in the same order. The better your echo, the better the bond.": "羈絆第3步：按同樣的順序點選同樣的記號。回聲越準，羈絆越好。",
+  "Bonding step 4: Hold out a Kin Charm when asked. It steadies the link. You start with 20 of them.": "羈絆第4步：需要時遞出同族護符。它能穩住連結。你一開始有20個。",
+  "While you are new, a failed bond does not give the wild Spirling a free hit.": "新手期間，羈絆失敗不會讓野生Spirling白打你一下。"
  }
 }

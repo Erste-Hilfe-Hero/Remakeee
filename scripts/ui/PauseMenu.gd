@@ -966,6 +966,8 @@ func run_spirlog() -> void:
 		for r: String in regions:
 			entries.append({"text": SpirlogBook.chapter_line(r, GameState.spirlog)})
 			actions.append("chapter")
+		entries.append({"text": SpirlogBook.gleam_line(GameState.spirlog)})
+		actions.append("gleam")
 		entries.append({"text": "Chapter: %s" % (region.capitalize() if not region.is_empty() else "all")})
 		actions.append("region")
 		entries.append({"text": "Search: %s" % (_log_search if not _log_search.is_empty() else "-")})
@@ -1011,6 +1013,9 @@ func run_spirlog() -> void:
 				_log_status = (_log_status + 1) % SpirlogBook.STATUS_NAMES.size()
 			"tracker":
 				await info(_tracker_text())
+			"gleam":
+				var names: PackedStringArray = SpirlogBook.gleam_bonded_kinds(GameState.spirlog)
+				await info(SpirlogBook.gleam_line(GameState.spirlog) + "\n\n" + (", ".join(names) if not names.is_empty() else Loc.t("No Gleam has joined you yet.")))
 			"arts":
 				await info("\n".join(Collection.art_book_lines()))
 			"prism":
@@ -1224,6 +1229,8 @@ func _run_stored(index: int) -> void:
 				elif await confirm_danger("Release %s?" % s.display_name()) \
 						and await confirm_danger("It goes home for good. Really release it?"):
 					await info(GameState.release(i))
+					# A farewell letter follows (plan 1136).
+					await info("\n".join(Released.letter(s)))
 					return
 
 ## Party -> storage, asking whether the keepsake stays in the satchel (item 356).

@@ -9,13 +9,20 @@ purpose: this run measures the chart and base stats only. The full model stays i
 tools/balance_sim.gd.
 
 Teams of 3 distinct species of the same unfold stage fight at the same ring; every battle is
-played twice with the sides swapped. Fails (exit 1) if the chart breaks its rules; the 40-60 % band is
-reported, and fails only with --strict (the full model is the real gate).
+played twice with the sides swapped. Fails (exit 1) if the chart breaks its rules; the species 40-60 %
+band is reported, and fails only with --strict (the full model is the real gate).
+
+Chart sim (always a gate): one equal-stat Spirling per element with a single art of its own element,
+so only the chart decides. Every element meets every element 1 on 1, and every team of 3 distinct
+elements meets every team it shares no element with, in several lead orders, sides swapped. Run for
+the Era I elements alone and for all eras (Rust and Mask included, which sit on no Spirling yet).
+Fails if an element leaves 40-60 % (1 on 1 or in teams) or a team of 3 leaves 30-70 %.
 
   python3 tools/balance/type_sim.py                  check, print the table
   python3 tools/balance/type_sim.py --md out.md      also write the report as Markdown
 """
 import argparse
+import itertools
 import json
 import os
 import random
@@ -26,8 +33,13 @@ LEVEL = 36
 BATTLES = 20000
 SEED = 20261111
 TEAM = 3
+ERA2_KINDS = 6
 BAND = (0.40, 0.60)
 MAX_TURNS = 100
+CHART_DUELS = 40
+CHART_ORDERS = 4
+CHART_SEED = 352
+TEAM_BAND = (0.30, 0.70)
 
 STAB = 1.25
 CRIT_MULT = 1.4
@@ -62,6 +74,14 @@ def chart_problems(chart, species):
             out.append("%s has fewer than 2 real strengths" % t)
         if sum(mult(o, t) > 1 for o in types) < 2:
             out.append("%s has fewer than 2 real weaknesses" % t)
+        # Even count, so no element is ahead on the chart alone; checked for Era I by itself too.
+        for era_max in (1, max(v.get("era", 1) for v in types.values())):
+            if types[t].get("era", 1) > era_max:
+                continue
+            pool = [o for o in types if types[o].get("era", 1) <= era_max]
+            ns, nw = sum(mult(t, o) > 1 for o in pool), sum(mult(o, t) > 1 for o in pool)
+            if ns != nw:
+                out.append("%s has %d strengths and %d weaknesses up to Era %d" % (t, ns, nw, era_max))
 
     for a in types:
         for b in types:
@@ -73,11 +93,11 @@ def chart_problems(chart, species):
             if min(off + dfn) >= 0 and max(off + dfn) > 0:
                 out.append("%s strictly dominates %s" % (a, b))
     used = {e for s in species for e in s["elements"]}
-    # Era II elements may sit on legendary (ancient) kinds only; those stay out of the sim.
-    common = {e for s in species if s.get("rarity") != "ancient" for e in s["elements"]}
+    # Era II elements stay rare: legendaries, plus at most ERA2_KINDS act kinds each (owner: "sparingly").
     for t, v in types.items():
-        if v.get("era", 1) > 1 and t in common:
-            out.append("Era %d element %s is on a non-legendary Spirling" % (v["era"], t))
+        n = sum(1 for s in species if s.get("rarity") != "ancient" and t in s["elements"])
+        if v.get("era", 1) > 1 and n > ERA2_KINDS:
+            out.append("Era %d element %s is on %d non-legendary Spirlings (at most %d)" % (v["era"], t, n, ERA2_KINDS))
     for e in used:
         if e not in types:
             out.append("Spirling element %s is not in the chart" % e)
@@ -231,6 +251,86 @@ def simulate(species, moves, mult, level=LEVEL, battles=BATTLES, seed=SEED):
     return sp, ty
 
 
+def chart_mon(e, level=LEVEL):
+    s = {"name": e, "elements": [e], "base": {k: 80 for k in ("hp", "atk", "def", "foc", "spd")}, "learnset": {}}
+    m = Mon(s, {}, level)
+    m.moves = [{"name": e, "element": e, "kind": "SPECIAL", "power": 70, "accuracy": 1.0, "energy": 0, "priority": 0}]
+    return m
+
+
+def chart_sim(pool, mult, seed=CHART_SEED):
+    """Element 1-on-1 and team-of-3 win rates where only the chart differs. Returns (duel, team_el, comps)."""
+    rng = random.Random(seed)
+    dw = {t: 0.0 for t in pool}
+    dg = {t: 0 for t in pool}
+    for a in pool:
+        for b in pool:
+            for _ in range(CHART_DUELS):
+                w = battle([chart_mon(a)], [chart_mon(b)], mult, random.Random(rng.random()))
+                dw[a] += 0.5 if w == -1 else float(w == 0)
+                dw[b] += 0.5 if w == -1 else float(w == 1)
+                dg[a] += 1
+                dg[b] += 1
+    comps = list(itertools.combinations(pool, TEAM))
+    cw = {c: 0.0 for c in comps}
+    cg = {c: 0 for c in comps}
+    for i, a in enumerate(comps):
+        for b in comps[i + 1:]:
+            if set(a) & set(b):
+                continue
+            for _ in range(CHART_ORDERS):
+                la, lb, sd = rng.sample(a, TEAM), rng.sample(b, TEAM), rng.random()
+                for flip in (0, 1):
+                    x, y = (la, lb) if flip == 0 else (lb, la)
+                    w = battle([chart_mon(e) for e in x], [chart_mon(e) for e in y], mult, random.Random(sd))
+                    a_won = 0.5 if w == -1 else float((w == 0) == (flip == 0))
+                    cw[a] += a_won
+                    cw[b] += 1.0 - a_won
+                    cg[a] += 1
+                    cg[b] += 1
+    comp_rate = {c: cw[c] / cg[c] for c in comps if cg[c]}
+    team_el = {}
+    for t in pool:
+        rs = [r for c, r in comp_rate.items() if t in c]
+        team_el[t] = sum(rs) / len(rs)
+    return {t: dw[t] / dg[t] for t in pool}, team_el, comp_rate
+
+
+def chart_report(chart, mult):
+    """Runs the chart sim for Era I and for all eras. Returns (markdown lines, band misses)."""
+    types = chart["types"]
+    pools = [("Era I", [t for t, v in types.items() if v.get("era", 1) == 1]), ("All eras", list(types))]
+    lines = ["Chart sim (equal stats, one art of the own element, seed %d): %d duels per pair, every team of %d "
+             "against every team it shares no element with, %d lead orders, sides swapped. Element band %d to %d %%, "
+             "team band %d to %d %%." % (CHART_SEED, CHART_DUELS, TEAM, CHART_ORDERS, BAND[0] * 100, BAND[1] * 100,
+                                         TEAM_BAND[0] * 100, TEAM_BAND[1] * 100), "",
+             "| Element | %s 1 on 1 | %s teams | %s 1 on 1 | %s teams |" % (pools[0][0], pools[0][0], pools[1][0], pools[1][0]),
+             "| --- | --- | --- | --- | --- |"]
+    misses, res = [], []
+    for label, pool in pools:
+        duel, team_el, comps = chart_sim(pool, mult)
+        res.append((duel, team_el))
+        for t in pool:
+            for kind, r in (("1 on 1", duel[t]), ("teams", team_el[t])):
+                if not BAND[0] <= r <= BAND[1]:
+                    misses.append("%s element %s %s at %.1f %%" % (label, t, kind, r * 100))
+        for c, r in comps.items():
+            if not TEAM_BAND[0] <= r <= TEAM_BAND[1]:
+                misses.append("%s team %s at %.1f %%" % (label, "/".join(c), r * 100))
+        lo, hi = min(comps, key=comps.get), max(comps, key=comps.get)
+        res[-1] += ("%s: %d teams, lowest %s %.1f %%, highest %s %.1f %%." % (
+            label, len(comps), "/".join(x.capitalize() for x in lo), comps[lo] * 100,
+            "/".join(x.capitalize() for x in hi), comps[hi] * 100),)
+    for t in types:
+        cells = []
+        for (label, pool), (duel, team_el, _) in zip(pools, res):
+            cells += ["%.1f %%" % (duel[t] * 100), "%.1f %%" % (team_el[t] * 100)] if t in pool else ["-", "-"]
+        lines.append("| %s | %s |" % (t.capitalize(), " | ".join(cells)))
+    lines += [""] + [r[2] for r in res]
+    lines += ["", "Chart sim outside the band: %s" % ("none" if not misses else "; ".join(misses))]
+    return lines, misses
+
+
 def report(chart, sp, ty, problems):
     lo, hi = BAND
     lines = ["Ring %d, %d team battles per stage (teams of %d, 2 in a stage of fewer than 6, sides swapped), seed %d, band %d to %d %%." % (
@@ -268,7 +368,10 @@ def main():
     for e, (r, _) in ty.items():
         if not lo <= r <= hi:
             band.append("element %s at %.1f %%" % (e, r * 100))
+    chart_lines, chart_misses = chart_report(chart, mult)
+    problems += chart_misses
     text = report(chart, sp, ty, problems) + "\nOutside the band: %s" % ("none" if not band else "; ".join(band))
+    text += "\n\n" + "\n".join(chart_lines)
     print(text)
     if args.md:
         with open(args.md, "w", encoding="utf-8") as f:
