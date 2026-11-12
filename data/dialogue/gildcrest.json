@@ -1,0 +1,42 @@
+{
+ "sign": [
+  "GILDCREST",
+  "Seat of the Gilt House. Every roof is gold. Every wall has ears.",
+  "South: the White Stair. East: Cloudshadow Meadow. West: the Sunfall Terraces."
+ ],
+ "keeper": {
+  "lines": [
+   "House Physician Velka: The Gilt House pays for your rest. The Gilt House will remember that."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Gilt Quartermaster Rennick: Fine goods at family prices. Not your family. Ours."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
+ },
+ "lisette": {
+  "lines": [
+   "Maid Lisette: I polish the roofs at dawn. The gold comes off on my hands. So does everything else in this house."
+  ]
+ },
+ "tobiah": {
+  "lines": [
+   "Footman Tobiah: Lord Aurek has five children and one chair. Dinner here is a sport."
+  ]
+ },
+ "griselda": {
+  "lines": [
+   "Nanny Griselda: I raised all five Gilt children. I taught them manners. Somebody else taught them knives."
+  ]
+ },
+ "host": {
+  "lines": [
+   "The summer feast begins under golden roofs. Aurek raises a glass to the Wayfarer who did his dirty work.",
+   "Steward Corvel: The family thanks you. The family is also, regrettably, poisoned. Please stay for dessert.",
+   "Aurek's own children poisoned the feast to take the house. You were the alibi. Trust no one, least of all a family that says you are one of them."
+  ],
+  "action": "set_flag halcyra_done"
+ }
+}
