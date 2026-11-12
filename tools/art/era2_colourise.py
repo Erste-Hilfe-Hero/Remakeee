@@ -25,6 +25,12 @@ TILE = 16
 KINDS = list(PAL["tiles"].keys())  # same order as TilesetFactory.Kind / gen_tiles.KINDS
 # Kinds drawn over a grass tile in gen_tiles.py: their grass pixels keep the grass palette.
 ON_GRASS = {"TREE", "FENCE", "SIGN", "FLOWER", "RIFT", "TOWER", "LAMP", "ROCK", "SPRING"}
+# Kinds whose grass is only what reaches the cell's sides, so shaft pixels that happen to match
+# the grass underneath keep the kind's palette.
+GRASS_FROM_EDGE = {"TOWER"}
+# The lighthouse door in TOWER row 2 (gen_tiles.lighthouse_door): x0, y0, x1, y1 in the cell,
+# coloured as wood with the DOOR palette.
+LIGHTHOUSE_DOOR = (2, 5, 4, 11, 16)
 
 
 def rgb(h: str) -> tuple:
@@ -123,11 +129,41 @@ def colour_atlas(im: Image.Image) -> Image.Image:
                 n = sum(px[ox + x, oy + y] == px[x, v * TILE + y] for y in range(TILE) for x in range(TILE))
                 if n > best_n:
                     best, best_n = v, n
-            for y in range(TILE):
-                for x in range(TILE):
-                    if px[ox + x, oy + y] == px[x, best * TILE + y]:
-                        grass_px[(ox + x, oy + y)] = True
-    return recolour(im, lambda x, y: kp["GRASS"] if (x, y) in grass_px else kp[KINDS[x // TILE]])
+            same = {(x, y) for y in range(TILE) for x in range(TILE)
+                    if px[ox + x, oy + y] == px[x, best * TILE + y]}
+            if kind in GRASS_FROM_EDGE:
+                same = from_edge(same)
+            for (x, y) in same:
+                grass_px[(ox + x, oy + y)] = True
+    return recolour(im, lambda x, y: palette_at(kp, grass_px, x, y))
+
+
+def palette_at(kp: dict, grass_px: dict, x: int, y: int) -> list:
+    if (x, y) in grass_px:
+        return kp["GRASS"]
+    kind = KINDS[x // TILE]
+    if kind == "TOWER" and in_lighthouse_door(x, y):
+        return kp["DOOR"]
+    return kp[kind]
+
+
+def in_lighthouse_door(x: int, y: int) -> bool:
+    row, x0, y0, x1, y1 = LIGHTHOUSE_DOOR
+    return y // TILE == row and x0 <= x % TILE < x1 and y0 <= y % TILE < y1
+
+
+def from_edge(cells: set) -> set:
+    """The cells of [cells] connected to the tile's left or right edge through [cells] (the
+    shaft runs through the top and bottom edges, the ground always reaches the sides)."""
+    todo = [c for c in cells if c[0] in (0, TILE - 1)]
+    seen = set(todo)
+    while todo:
+        x, y = todo.pop()
+        for n in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+            if n in cells and n not in seen:
+                seen.add(n)
+                todo.append(n)
+    return seen
 
 
 def check() -> int:
@@ -152,6 +188,8 @@ def check() -> int:
                     cell = b.crop((tx, ty, tx + TILE, ty + TILE))
                     kind = KINDS[tx // TILE]
                     allowed = {rgb(c) for c in PAL["tiles"][kind]}
+                    if kind == "TOWER":
+                        allowed |= {rgb(c) for c in PAL["tiles"]["DOOR"]}
                     if kind in ON_GRASS:
                         allowed |= {rgb(c) for c in PAL["tiles"]["GRASS"]}
                     cols = {p[:3] for p in cell.getdata() if p[3] > 0}

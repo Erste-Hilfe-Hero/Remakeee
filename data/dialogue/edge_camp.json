@@ -1,0 +1,921 @@
+{
+ "_comment": "The strangers from the map's edge in their camp at the Wide Rift (plan 2, items 141-180; docs/STORY.md 'The strangers' camp'). Root entries are '<name>'; each one switches to its closing talk once the story is complete and its own side goal is done.",
+ "arrive_say": [
+  "Tents lean into the wind at the edge of the Wide Rift. Someone has hung washing on a Rift crack."
+ ],
+ "arrive_elma": [
+  "Elma: Welcome to the camp of the strangers from the map's edge. Wipe your feet. On what, I couldn't tell you.",
+  "Elma: Eleven of us came through the Wide Rift. The valley counted us twice and charged us for three.",
+  "Elma: You think the fading is your problem? Our map is going blank too. We came here because there was still a here.",
+  "Elma: The guild says we're spies. Half of us are. I'd like to know which half before they do.",
+  "Elma: Stay, help, and keep your purse on the inside of your coat. Even around me. Especially around me."
+ ],
+ "elma": {
+  "if": {
+   "flag": [
+    "story_complete",
+    "edge_elma_done",
+    "edge_gift"
+   ]
+  },
+  "lines": [
+   "Elma: The Rift stays how it stays. We stay how we stay. Mostly in debt.",
+   "Elma: Mirela and I learned to draw at the same table, you know. She always smudged the coastlines.",
+   "Elma: Still does. From the inside. Tell her the soup's on, if you see her."
+  ],
+  "else": "elma_gift"
+ },
+ "elma_gift": {
+  "if": {
+   "flag": [
+    "edge_elma_done",
+    "edge_aldra_done",
+    "edge_amir_done",
+    "edge_farida_done",
+    "edge_heider_done",
+    "edge_kenan_done",
+    "edge_leith_done",
+    "edge_lejla_done",
+    "edge_lipka_done",
+    "edge_mirza_done",
+    "edge_nail_done"
+   ],
+   "not_flag": "edge_gift"
+  },
+  "lines": [
+   "Elma: All eleven of us owe you something. That has never happened. It's frightening.",
+   "Elma: This one came through the Rift with us. It draws maps of places it has never been. Ours, mostly.",
+   "Elma: Its last keeper sold us out at the border. It remembered. It bit him. Be nice to it."
+  ],
+  "action": "gift_spirling Scrivane 40",
+  "flag": "edge_gift",
+  "else": "elma_main"
+ },
+ "elma_main": {
+  "if": {
+   "not_flag": "edge_elma_asked"
+  },
+  "lines": [
+   "Elma: Since you're standing there being useful-looking: the camp needs three things.",
+   "Elma: Fire for the pot, water for the barrel and something heavy to sit on the tent pegs.",
+   "Elma: An Ember Spirling, a Tide one and a Stone one. Show me and I'll put them to work. Paid in soup."
+  ],
+  "flag": "edge_elma_asked",
+  "next": "elma_t1",
+  "else": "elma_t1"
+ },
+ "elma_t1": {
+  "if": {
+   "not_flag": "edge_elma_1",
+   "has_element": "EMBER"
+  },
+  "lines": [
+   "Elma: An Ember one! Light the cookfire. Careful, the last cook lit himself.",
+   "Elma: He's fine. Eyebrows are optional where we come from."
+  ],
+  "flag": "edge_elma_1",
+  "next": "elma_t2",
+  "else": "elma_t2"
+ },
+ "elma_t2": {
+  "if": {
+   "not_flag": "edge_elma_2",
+   "has_element": "TIDE"
+  },
+  "lines": [
+   "Elma: Fill the barrel, little one. Rift water tastes of Tuesday. Don't ask which Tuesday."
+  ],
+  "flag": "edge_elma_2",
+  "next": "elma_t3",
+  "else": "elma_t3"
+ },
+ "elma_t3": {
+  "if": {
+   "not_flag": "edge_elma_3",
+   "has_element": "STONE"
+  },
+  "lines": [
+   "Elma: Sit on the tent pegs, would you? Last storm we lost two tents and a husband.",
+   "Elma: The tents were new."
+  ],
+  "flag": "edge_elma_3",
+  "next": "elma_end",
+  "else": "elma_end"
+ },
+ "elma_end": {
+  "if": {
+   "flag": [
+    "edge_elma_1",
+    "edge_elma_2",
+    "edge_elma_3"
+   ],
+   "not_flag": "edge_elma_done"
+  },
+  "lines": [
+   "Elma: Fire, water, pegs. You've done more for this camp than the whole valley. Low bar. You cleared it."
+  ],
+  "action": "give_item max_tonic 2",
+  "flag": "edge_elma_done",
+  "else": "elma_idle"
+ },
+ "elma_idle": {
+  "if": {
+   "not_flag": "edge_elma_done"
+  },
+  "lines": [
+   "Elma: Still waiting on fire from an Ember Spirling, water from a Tide one and a Stone one for the pegs."
+  ],
+  "else": "elma_chat"
+ },
+ "elma_chat": [
+  "Elma: Eleven of us came. Count us now and then. If the number changes, tell me before you tell the guild.",
+  "Elma: Help every one of us and I'll give you something from the other map. It only bites people it doesn't know."
+ ],
+ "aldra": {
+  "if": {
+   "flag": [
+    "story_complete",
+    "edge_aldra_done"
+   ]
+  },
+  "lines": [
+   "Aldra: Two maps, one edge, and you walked both. I'll draw you in.",
+   "Aldra: Small. Near the margin. Where the interesting people go."
+  ],
+  "else": "aldra_main"
+ },
+ "aldra_main": {
+  "if": {
+   "not_flag": "edge_aldra_asked"
+  },
+  "lines": [
+   "Aldra: Our map and yours share an edge. I'd like to know if they share a lie too.",
+   "Aldra: Take my copy to the guild in Madderby and lay it on their survey table.",
+   "Aldra: If anyone asks, you drew it. Badly."
+  ],
+  "flag": "edge_aldra_asked",
+  "else": "aldra_wait"
+ },
+ "aldra_wait": {
+  "if": {
+   "flag": "edge_aldra_1",
+   "not_flag": "edge_aldra_done"
+  },
+  "lines": [
+   "Aldra: Same coastline. Same burned-out spot in the middle. On both maps?",
+   "Aldra: Someone on each side scratched out the same place. That's not a mistake. That's an agreement."
+  ],
+  "next": "aldra_pay",
+  "else": "aldra_idle"
+ },
+ "aldra_pay": {
+  "if": {
+   "trust_min": {
+    "aldra": 55
+   }
+  },
+  "lines": [
+   "Aldra: Here's the true copy. The one I sold Fenrick has the rivers running backwards.",
+   "Aldra: He'll drown with total confidence."
+  ],
+  "action": "give_item keen_lens 1",
+  "flag": "edge_aldra_done",
+  "else": "aldra_pay_low"
+ },
+ "aldra_pay_low": {
+  "lines": [
+   "Aldra: I'd give you the true copy, but I sold it this morning. Fenrick paid well.",
+   "Aldra: Have these. Call it a conscience. A small one, I'm still breaking it in."
+  ],
+  "action": "give_item strong_tonic 2",
+  "flag": "edge_aldra_done"
+ },
+ "aldra_idle": {
+  "if": {
+   "not_flag": "edge_aldra_done"
+  },
+  "lines": [
+   "Aldra: The survey table in the Madderby guild house. Lay my copy on it. Don't let anyone fold it into a crane."
+  ],
+  "else": "aldra_chat"
+ },
+ "aldra_chat": [
+  "Aldra: I draw borders for a living. Nobody has ever thanked a border."
+ ],
+ "guild_table": {
+  "lines": [
+   "You unfold Aldra's copy next to the guild's map.",
+   "The coastlines match. So does a burned-out patch in the middle. Someone scratched out the same place on both maps."
+  ],
+  "flag": "edge_aldra_1"
+ },
+ "amir": {
+  "if": {
+   "flag": [
+    "story_complete",
+    "edge_amir_done"
+   ]
+  },
+  "lines": [
+   "Amir: Heider brought me tea this morning. I didn't drink it.",
+   "Amir: Family is about trust. And also about not drinking the tea."
+  ],
+  "else": "amir_main"
+ },
+ "amir_main": {
+  "if": {
+   "not_flag": "edge_amir_asked"
+  },
+  "lines": [
+   "Amir: My family crossed before me. We agreed on a mark: a circle with a crack through it.",
+   "Amir: Look for it. The Greyreach first, then wherever the road goes after.",
+   "Amir: They'll have kept walking. We're good at walking. Bad at arriving."
+  ],
+  "flag": "edge_amir_asked",
+  "else": "amir_wait"
+ },
+ "amir_wait": {
+  "if": {
+   "flag": [
+    "edge_amir_1",
+    "edge_amir_2",
+    "edge_amir_3"
+   ],
+   "not_flag": "edge_amir_done"
+  },
+  "lines": [
+   "Amir: All three marks. And the last one is fresh. Someone from this camp drew it.",
+   "Amir: That's my brother's hand. Heider. He sold my family's crossing places to both clans, one mark at a time.",
+   "Amir: I'm not angry. I'm counting. When I've finished counting, I'll be angry."
+  ],
+  "action": "give_item max_tonic 2; trust heider -10",
+  "flag": "edge_amir_done",
+  "else": "amir_idle"
+ },
+ "amir_idle": {
+  "if": {
+   "not_flag": "edge_amir_done"
+  },
+  "lines": [
+   "Amir: A circle with a crack through it. The Greyreach first. Then further, as the road opens."
+  ],
+  "else": "amir_chat"
+ },
+ "amir_chat": [
+  "Amir: I hatch eggs for a living. You learn patience. And which ones to drop."
+ ],
+ "amir_mark_1": {
+  "lines": [
+   "A circle with a crack through it, chalked on a stone.",
+   "Under it, small: 'Went on. Don't trust the eggs.'"
+  ],
+  "flag": "edge_amir_1"
+ },
+ "amir_mark_2": {
+  "if": {
+   "flag": "edge_amir_1"
+  },
+  "lines": [
+   "Another cracked circle, scratched into the salt crust.",
+   "Under it: 'Still walking. Your brother says hello.'"
+  ],
+  "flag": "edge_amir_2",
+  "else": "amir_mark_wait"
+ },
+ "amir_mark_3": {
+  "if": {
+   "flag": "edge_amir_2"
+  },
+  "lines": [
+   "The cracked circle again, on the well stone. This one is fresh.",
+   "The chalk is the blue kind Heider sells. Nobody else in Solenne has any."
+  ],
+  "flag": "edge_amir_3",
+  "else": "amir_mark_wait"
+ },
+ "amir_mark_wait": [
+  "A circle with a crack through it. Someone drew it in a hurry."
+ ],
+ "farida": {
+  "if": {
+   "flag": [
+    "story_complete",
+    "edge_farida_done"
+   ]
+  },
+  "lines": [
+   "Farida: Grell stopped paying. Nobody cares who sleeps where once the world stops ending.",
+   "Farida: Shame. I was good at it."
+  ],
+  "else": "farida_main"
+ },
+ "farida_main": {
+  "lines": [
+   "Farida: Rest stop. Free beds, free soup, free advice. The advice is worth what you pay.",
+   "Farida: Lie down. I'll watch your things. Watching is what I do best."
+  ],
+  "action": "heal",
+  "flag": "edge_farida_rested",
+  "next": "farida_book"
+ },
+ "farida_book": {
+  "if": {
+   "flag": "edge_farida_1",
+   "not_flag": "edge_farida_done"
+  },
+  "lines": [
+   "Farida: You read my guest book. Rude. Accurate, but rude.",
+   "Farida: Grell pays by the name. Yours fetched a good price. You should be flattered."
+  ],
+  "choices": [
+   {
+    "text": "Burn the page",
+    "flag": "edge_farida_done",
+    "action": "trust farida -10; ledger farida_book",
+    "next": "farida_burn"
+   },
+   {
+    "text": "Write lies instead",
+    "flag": "edge_farida_done",
+    "action": "trust farida 15",
+    "next": "farida_lie"
+   }
+  ],
+  "else": "farida_idle"
+ },
+ "farida_burn": [
+  "Farida: Grell will just ask me to remember it. I have a terrible memory. For a price, it improves."
+ ],
+ "farida_lie": [
+  "Farida: Lies? I'll write lovely lies. 'Travels alone. Afraid of ducks.' Grell will believe the ducks."
+ ],
+ "farida_idle": {
+  "if": {
+   "not_flag": "edge_farida_done"
+  },
+  "lines": [
+   "Farida: My guest book is by the water barrel. Don't read it. Everyone reads it."
+  ],
+  "else": "farida_chat"
+ },
+ "farida_chat": [
+  "Farida: I patch up Spirlings and I patch up stories. Same needle."
+ ],
+ "farida_guestbook": {
+  "lines": [
+   "Farida's guest book. Every guest, every night, and which way they walked in the morning.",
+   "Your name is in it. Next to it: 'Snores. Trusts people. Worth 40 coins to Grell.'"
+  ],
+  "flag": "edge_farida_1"
+ },
+ "ledger_farida_book": [
+  "Farida's guest book: she sells every camp guest's name to Mother Grell.",
+  "You burned your page. Grell now knows you burn pages."
+ ],
+ "heider": {
+  "if": {
+   "flag": [
+    "story_complete",
+    "edge_heider_done"
+   ]
+  },
+  "lines": [
+   "Heider: Peace is terrible for business. I sell souvenirs of the feud now.",
+   "Heider: Mostly to the people who started it."
+  ],
+  "else": "heider_main"
+ },
+ "heider_main": {
+  "lines": [
+   "Heider: Wares from the far map. Everything is genuine. Genuinely from somewhere else."
+  ],
+  "action": "shop swift_feather iron_burr keen_lens revival_leaf",
+  "next": "heider_q"
+ },
+ "heider_q": {
+  "if": {
+   "not_flag": "edge_heider_asked"
+  },
+  "lines": [
+   "Heider: Errand for you. Carry this crate to the trail post in the Greyreach. Don't shake it.",
+   "Heider: Don't open it either. Opening it voids the warranty. And possibly you."
+  ],
+  "flag": "edge_heider_asked",
+  "else": "heider_wait"
+ },
+ "heider_wait": {
+  "if": {
+   "flag": "edge_heider_1",
+   "not_flag": "edge_heider_done"
+  },
+  "lines": [
+   "Heider: Delivered? Then you've met my buyers. Lovely people. Terrible losers.",
+   "Heider: Your cut. I sold them your route as well, but I'm giving you the money for it. That's practically loyalty."
+  ],
+  "action": "give_item strong_tonic 3",
+  "flag": "edge_heider_done",
+  "else": "heider_idle"
+ },
+ "heider_idle": {
+  "if": {
+   "not_flag": "edge_heider_done"
+  },
+  "lines": [
+   "Heider: The crate. The Greyreach. The trail post. I'll wait. Waiting is free, unlike everything else."
+  ],
+  "else": "heider_chat"
+ },
+ "heider_chat": [
+  "Heider: News, wares, people. I sell what's in demand. Right now that's you."
+ ],
+ "heider_drop": {
+  "lines": [
+   "You set Heider's crate down by the trail post. Something inside ticks like a pocket watch.",
+   "Two figures step out of the scree. They knew exactly when you would come."
+  ],
+  "action": "battle heider_buyers",
+  "flag": "edge_heider_1"
+ },
+ "heider_buyers_defeat": [
+  "Buyer: Heider said you'd come alone and tired. He was half right. He's always half right."
+ ],
+ "kenan": {
+  "if": {
+   "not_flag": "beat_story_kenan_duel_1"
+  },
+  "lines": [
+   "Kenan: Remember me? I borrowed your Spirling once. Or someone's. They all look alike when they're asleep.",
+   "Kenan: Fight me. I win, you forget the keepsake. You win, I forget I ever took it. Fair?"
+  ],
+  "choices": [
+   {
+    "text": "Fight",
+    "action": "battle kenan_duel_1"
+   },
+   {
+    "text": "Not now"
+   }
+  ],
+  "else": "kenan_2"
+ },
+ "kenan_2": {
+  "if": {
+   "not_flag": "beat_story_kenan_duel_2",
+   "flag": "act2_end"
+  },
+  "lines": [
+   "Kenan: Round two. I've been training. Mostly running away, but faster."
+  ],
+  "choices": [
+   {
+    "text": "Fight",
+    "action": "battle kenan_duel_2"
+   },
+   {
+    "text": "Not now"
+   }
+  ],
+  "else": "kenan_2w"
+ },
+ "kenan_2w": {
+  "if": {
+   "not_flag": "beat_story_kenan_duel_2"
+  },
+  "lines": [
+   "Kenan: Rematch when my Spirlings have grown. And my excuses. Next act, as the bards say."
+  ],
+  "else": "kenan_3"
+ },
+ "kenan_3": {
+  "if": {
+   "not_flag": "beat_story_kenan_duel_3",
+   "flag": "rift_shade_sealed"
+  },
+  "lines": [
+   "Kenan: Last round. If I lose, I'll tell you where the keepsake is. If I win, I'll tell you anyway, but smugly."
+  ],
+  "choices": [
+   {
+    "text": "Fight",
+    "action": "battle kenan_duel_3"
+   },
+   {
+    "text": "Not now"
+   }
+  ],
+  "else": "kenan_3w"
+ },
+ "kenan_3w": {
+  "if": {
+   "not_flag": "beat_story_kenan_duel_3"
+  },
+  "lines": [
+   "Kenan: One more round, once the road south is open. I'll be here. Nobody else will have me."
+  ],
+  "else": "kenan_done"
+ },
+ "kenan_done": {
+  "if": {
+   "not_flag": "edge_kenan_done"
+  },
+  "lines": [
+   "Kenan: Three times. Fine. Your keepsake was in Nail's tea tin all along. Nail doesn't know. Nail never knows.",
+   "Kenan: It's a bit stained. Everything in that tin is."
+  ],
+  "action": "give_item swift_feather 1",
+  "flag": "edge_kenan_done",
+  "else": "kenan_r"
+ },
+ "kenan_r": {
+  "if": {
+   "flag": "story_complete"
+  },
+  "lines": [
+   "Kenan: The world didn't end. Shame, I'd sold tickets.",
+   "Kenan: One more for old times? I've got nothing left to steal from you, so this one's honest."
+  ],
+  "choices": [
+   {
+    "text": "Fight",
+    "action": "battle kenan_rematch"
+   },
+   {
+    "text": "Not now"
+   }
+  ],
+  "else": "kenan_chat"
+ },
+ "kenan_chat": [
+  "Kenan: I run the Rift for whoever pays. Today that's nobody. I'm running for fun. It's awful."
+ ],
+ "kenan_d1_defeat": [
+  "Kenan: Fine. Forgotten. What were we talking about? See, it works."
+ ],
+ "kenan_d2_defeat": [
+  "Kenan: You've got worse at losing. That was a compliment. I think."
+ ],
+ "kenan_d3_defeat": [
+  "Kenan: Three for three. I'd be ashamed if I knew how."
+ ],
+ "kenan_rematch_defeat": [
+  "Kenan: Honest losing. Never tried it before. Zero stars."
+ ],
+ "leith": {
+  "if": {
+   "flag": [
+    "story_complete",
+    "edge_leith_done"
+   ]
+  },
+  "lines": [
+   "Leith: Nobody sends me anywhere any more. I go for walks.",
+   "Leith: Nobody's waiting at the end. It's strange. I think I like it."
+  ],
+  "else": "leith_main"
+ },
+ "leith_main": {
+  "if": {
+   "not_flag": "edge_leith_asked"
+  },
+  "lines": [
+   "Leith: Sable's done with me. Funny. So was everyone before her.",
+   "Leith: I know a hidden way to an old Warden stash at the far end of the Wide Rift. Chalk arrow, can't miss it.",
+   "Leith: It's real this time. Probably. Depends how much you trusted me back then."
+  ],
+  "flag": "edge_leith_asked",
+  "else": "leith_wait"
+ },
+ "leith_wait": {
+  "if": {
+   "flag": "edge_leith_1",
+   "not_flag": "edge_leith_done"
+  },
+  "lines": [
+   "Leith: You came back. So either it was the real path, or you're tougher than Sable's lot.",
+   "Leith: Either way I'm impressed. Here. I was saving it for my own escape."
+  ],
+  "action": "give_item spark_charm 1",
+  "flag": "edge_leith_done",
+  "else": "leith_idle"
+ },
+ "leith_idle": {
+  "if": {
+   "not_flag": "edge_leith_done"
+  },
+  "lines": [
+   "Leith: Far end of the Wide Rift. Chalk arrow. Go before I change my mind about which way it points."
+  ],
+  "else": "leith_chat"
+ },
+ "leith_chat": [
+  "Leith: I run messages. I don't read them. That's a lie, but a professional one."
+ ],
+ "leith_arrow": {
+  "if": {
+   "trust_min": {
+    "leith": 40
+   }
+  },
+  "lines": [
+   "Leith's chalk arrow points at a loose slab. Under it: an old Warden stash, untouched."
+  ],
+  "action": "give_item max_tonic 1",
+  "flag": "edge_leith_1",
+  "else": "leith_arrow_trap"
+ },
+ "leith_arrow_trap": {
+  "lines": [
+   "Leith's chalk arrow points at a loose slab. Under it: nothing.",
+   "Behind you: Sable's hands. Old orders travel slowly."
+  ],
+  "action": "battle leith_trap",
+  "flag": "edge_leith_1"
+ },
+ "leith_trap_defeat": [
+  "Sable's hand: Leith sent us this map a year ago. Never said it was cancelled."
+ ],
+ "lejla": {
+  "if": {
+   "flag": [
+    "story_complete",
+    "edge_lejla_done"
+   ]
+  },
+  "lines": [
+   "Lejla: I forged a peace treaty last night, just to see how it looks.",
+   "Lejla: It looks nice. Someone should sign a real one."
+  ],
+  "else": "lejla_main"
+ },
+ "lejla_main": {
+  "if": {
+   "not_flag": "edge_lejla_asked"
+  },
+  "lines": [
+   "Lejla: I forge papers, and I sing while I do it. The papers come out more convincing.",
+   "Lejla: There's a stone guard by the Rift that hasn't said a word in a hundred years. My song could wake it.",
+   "Lejla: But the wind eats my voice. Bring a Gale Spirling to carry the tune."
+  ],
+  "flag": "edge_lejla_asked",
+  "next": "lejla_song",
+  "else": "lejla_song"
+ },
+ "lejla_song": {
+  "if": {
+   "has_element": "GALE",
+   "not_flag": "edge_lejla_1"
+  },
+  "lines": [
+   "Lejla sings. Your Spirling catches the tune and throws it at the Rift.",
+   "Lejla: Hear that? The stone is humming back. Go and say hello. Politely. It hasn't forgiven anyone in a century."
+  ],
+  "flag": "edge_lejla_1",
+  "else": "lejla_wait"
+ },
+ "lejla_wait": {
+  "if": {
+   "flag": "edge_lejla_woke",
+   "not_flag": "edge_lejla_done"
+  },
+  "lines": [
+   "Lejla: It woke, it fought, it went back to sleep. Like my uncle at weddings.",
+   "Lejla: Here, a copy of its old Warden pass. My copy is better than the original."
+  ],
+  "action": "give_item kin_charm 3",
+  "flag": "edge_lejla_done",
+  "else": "lejla_idle"
+ },
+ "lejla_idle": {
+  "if": {
+   "not_flag": "edge_lejla_done"
+  },
+  "lines": [
+   "Lejla: A Gale Spirling for the tune, then the stone guard up by the Rift."
+  ],
+  "else": "lejla_chat"
+ },
+ "lejla_chat": [
+  "Lejla: Liss still sends me letters to copy. I copy them faithfully. Then I copy them for you."
+ ],
+ "lejla_stone": {
+  "lines": [
+   "The stone guard opens one eye. Then the other. Then a third one you didn't know about.",
+   "It hums Lejla's tune, badly, and attacks."
+  ],
+  "action": "battle silent_warden"
+ },
+ "silent_warden_defeat": [
+  "The stone guard nods once, slowly, and goes back to being a stone."
+ ],
+ "lipka": {
+  "if": {
+   "flag": [
+    "story_complete",
+    "edge_lipka_done"
+   ]
+  },
+  "lines": [
+   "Lipka: I'm ten now! I've stopped selling tips. I sell maps.",
+   "Lipka: They're mostly wrong. That's the fun part."
+  ],
+  "else": "lipka_main"
+ },
+ "lipka_main": {
+  "if": {
+   "not_flag": "edge_lipka_asked"
+  },
+  "lines": [
+   "Lipka: Don't tell anyone, but there's a hurt Spirling in that crate. Found it at the Rift. It bit me. We're friends now.",
+   "Lipka: It needs Waking Moss. I'd buy some, but nobody sells to me twice."
+  ],
+  "flag": "edge_lipka_asked",
+  "next": "lipka_moss",
+  "else": "lipka_moss"
+ },
+ "lipka_moss": {
+  "if": {
+   "has_item": "revival_leaf",
+   "not_flag": "edge_lipka_1"
+  },
+  "lines": [
+   "Lipka: Moss! Give it here. Hold its head. No, the other end."
+  ],
+  "action": "take_item revival_leaf 1",
+  "flag": "edge_lipka_1",
+  "next": "lipka_after",
+  "else": "lipka_after"
+ },
+ "lipka_after": {
+  "if": {
+   "flag": "edge_lipka_1",
+   "not_flag": "edge_lipka_done",
+   "trust_min": {
+    "lipka": 45
+   }
+  },
+  "lines": [
+   "Lipka: It's up! It's flapping! It's... leaving. Bye! Ungrateful. I love it.",
+   "Lipka: It left this behind. A keepsake, I think. Or it was sick on it. Either way, yours."
+  ],
+  "action": "give_item iron_burr 1",
+  "flag": "edge_lipka_done",
+  "else": "lipka_sold"
+ },
+ "lipka_sold": {
+  "if": {
+   "flag": "edge_lipka_1",
+   "not_flag": "edge_lipka_done"
+  },
+  "lines": [
+   "Lipka: It's better! So I sold it to Heider. He gave me a good price. It gave him a good bite.",
+   "Lipka: Half the money's yours. Partners. Don't look at me like that, I'm nine."
+  ],
+  "action": "give_item strong_tonic 2",
+  "flag": "edge_lipka_done",
+  "else": "lipka_idle"
+ },
+ "lipka_idle": {
+  "if": {
+   "not_flag": "edge_lipka_done"
+  },
+  "lines": [
+   "Lipka: One Waking Moss. Please. I'll owe you. I'm good for it. Ask anyone. Actually, don't ask anyone."
+  ],
+  "else": "lipka_chat"
+ },
+ "lipka_chat": [
+  "Lipka: New tip, free: never trust a kid who sells tips."
+ ],
+ "mirza": {
+  "if": {
+   "flag": [
+    "story_complete",
+    "edge_mirza_done"
+   ]
+  },
+  "lines": [
+   "Mirza: I won my last game and stopped.",
+   "Mirza: Winning is boring when you don't have to."
+  ],
+  "else": "mirza_main"
+ },
+ "mirza_main": {
+  "if": {
+   "not_flag": "edge_mirza_asked"
+  },
+  "lines": [
+   "Mirza: I play cards at night and hammer charms by day. Both need steady hands and no conscience.",
+   "Mirza: Bring me a Kin Charm. I'll beat it into something that holds a bond like a debt holds a family."
+  ],
+  "flag": "edge_mirza_asked",
+  "next": "mirza_charms",
+  "else": "mirza_charms"
+ },
+ "mirza_charms": {
+  "if": {
+   "has_item": "kin_charm",
+   "not_flag": "edge_mirza_done"
+  },
+  "lines": [
+   "Mirza: Give it here. Don't watch my hands."
+  ],
+  "action": "take_item kin_charm 1",
+  "next": "mirza_forge",
+  "else": "mirza_idle"
+ },
+ "mirza_forge": {
+  "if": {
+   "trust_min": {
+    "mirza": 40
+   }
+  },
+  "lines": [
+   "Mirza: Done. A charm that brightens a Spark. Don't tell Sable. She thinks I only cheat at cards."
+  ],
+  "action": "give_item spark_charm 1",
+  "flag": "edge_mirza_done",
+  "else": "mirza_lost"
+ },
+ "mirza_lost": {
+  "lines": [
+   "Mirza: Funny story. I bet your charm last night and lost it.",
+   "Mirza: Won two others back, though. From a man who cried. Here."
+  ],
+  "action": "give_item kin_charm 2",
+  "flag": "edge_mirza_done"
+ },
+ "mirza_idle": {
+  "if": {
+   "not_flag": "edge_mirza_done"
+  },
+  "lines": [
+   "Mirza: One Kin Charm. I'll make it better. Or lose it at cards. Usually the first."
+  ],
+  "else": "mirza_chat"
+ },
+ "mirza_chat": [
+  "Mirza: The card hall burned down. I didn't do it. I was paid not to stop it. Different thing."
+ ],
+ "nail": {
+  "if": {
+   "flag": [
+    "story_complete",
+    "edge_nail_done"
+   ]
+  },
+  "lines": [
+   "Nail: Veit came by. He bought tea. Paid in coins, not promises.",
+   "Nail: People change. Tea helps."
+  ],
+  "else": "nail_main"
+ },
+ "nail_main": {
+  "if": {
+   "not_flag": "edge_nail_asked"
+  },
+  "lines": [
+   "Nail: Tea? It's free now. Someone else pays me to be nice to you.",
+   "Nail: Veit Harrow. He wants to know how strong you are. I said I'd find out. With tea.",
+   "Nail: Or you beat me, I tell him you're terrifying, and he stays away from my stall. I prefer that one."
+  ],
+  "flag": "edge_nail_asked",
+  "next": "nail_ask",
+  "else": "nail_ask"
+ },
+ "nail_ask": {
+  "if": {
+   "not_flag": "edge_nail_1"
+  },
+  "lines": [
+   "Nail: Ready to terrify me?"
+  ],
+  "choices": [
+   {
+    "text": "Fight",
+    "action": "battle nail_duel"
+   },
+   {
+    "text": "Later"
+   }
+  ],
+  "else": "nail_end"
+ },
+ "nail_end": {
+  "if": {
+   "not_flag": "edge_nail_done"
+  },
+  "lines": [
+   "Nail: I'll tell Veit you flattened me. Which you did. Nice when lying and the truth agree.",
+   "Nail: I'm done working for him. He pays in promises, and I can't brew those."
+  ],
+  "action": "give_item max_tonic 1; trust nail 10",
+  "flag": "edge_nail_done",
+  "else": "nail_chat"
+ },
+ "nail_chat": [
+  "Nail: Tea's on the house. The house is a tent. Mind the house."
+ ],
+ "nail_duel_defeat": [
+  "Nail: Terrifying. I'll write that down for Veit. Underlined."
+ ]
+}

@@ -227,7 +227,7 @@ def root_rift(world):
                  [("Tilde: The roots remember their colours. You only have to remind them.", "Tilde: Die Wurzeln erinnern sich an ihre Farben. Du musst sie nur daran erinnern.")],
                  [("Tilde: Let's see what grows in you.", "Tilde: Mal sehen, was in dir wächst.")],
                  [("Tilde: A lot, it seems. Go to Darrow.", "Tilde: Eine Menge, wie es scheint. Geh zu Darrow.")], 1200),
-        warden(world, mid, "root", "Darrow", team(("Thornback", 25), ("Frondmere", 26), ("Reedwarden", 25), ("Marshfife", 26)), "vine_tangle", "echo_root_grip", 1250,
+        warden(world, mid, "root", "Darrow", team(("Thornback", 25), ("Frondmere", 26), ("Reedwarden", 25), ("Marshfife", 26)), "vine_tangle", "echo_root_grip", 1400,
                [("Darrow: Nothing grows here. Nothing should. It all fades.", "Darrow: Hier wächst nichts. Hier soll nichts wachsen. Alles verblasst.")],
                [("Darrow: Every leaf in Corvane went grey. Why grow new ones?", "Darrow: Jedes Blatt in Corvane wurde grau. Warum neue wachsen lassen?"),
                 ("Darrow: Turn back. Or let my roots hold you here.", "Darrow: Kehr um. Oder lass dich von meinen Wurzeln festhalten.")],

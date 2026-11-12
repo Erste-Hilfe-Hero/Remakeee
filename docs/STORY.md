@@ -323,6 +323,34 @@ The theme is "trust no one": dry humour, polite threats, violence off screen and
   (Act III). Traitors: Kenan (Act I), Farida, Heider (Act II), Leith (Act III). Lipka and Leith can
   turn either way with the hidden values.
 
+### The strangers' camp (plan 2, items 141-180)
+
+The eleven strangers keep a camp at the Edge of the Wide Rift (`data/dialogue/edge_camp.json`,
+placements in `data/story_npcs.json`). Elma leads it. The first visit in Act II plays the scene
+`edge_camp` (`edge_camp_met`): their own map is fading too. The camp grows with each act: the
+five Act I figures arrive with Act II, Amir, Farida and Heider with Act III (`act2_end`), Leith,
+Lejla and Mirza with Act IV (`rift_shade_sealed`). Each figure has an own Era I/II sheet
+(`tools/art/gen_strangers.py`: `stranger`, `stranger_hat`, `stranger_runner`, `stranger_kid`),
+also in their clan towns.
+
+| Figure | Side goal (`edge_<name>`) | Betrayal / twist | Reward |
+| --- | --- | --- | --- |
+| Elma | show an Ember, Tide and Stone Spirling | - | 2 Spring Flasks; the gift (below) |
+| Aldra | lay her map on the Madderby guild table | trust under 55: she already sold the true copy to Fenrick | Whetstone or 2 Strong Tonics |
+| Amir | three cracked-circle marks (Greyreach, Saltglass, Ochrewell) | the marks are Heider's: he sold the family's crossings (trust heider -10) | 2 Spring Flasks |
+| Farida | rest stop (heal); read her guest book | she sells guests to Grell; burn the page (ledger `farida_book`) or feed her lies | trust |
+| Heider | carry a crate to the Greyreach trail post | he sold your route to the buyers (duel `heider_buyers`) | 3 Strong Tonics |
+| Kenan | duels `kenan_duel_1..3`, one per act; `kenan_rematch` after the finale | the keepsake he stole was in Nail's tea tin | Wind Anklet |
+| Leith | chalk arrow at the far end of the Wide Rift | trust under 40: Sable's old ambush (`leith_trap`) | Spark Charm |
+| Lejla | Gale Spirling carries her song, stone guard wakes (`silent_warden`) | - | 3 Kin Charms |
+| Lipka | Waking Moss for a hurt Spirling (`take_item`) | trust under 45: she sells it to Heider | Iron Burr or 2 Strong Tonics |
+| Mirza | hand over a Kin Charm | trust under 40: he gambles it away | Spark Charm or 2 Kin Charms |
+| Nail | beat him (`nail_duel`) so he can lie to Veit Harrow | he leaves Veit's pay | Spring Flask |
+
+Six duels against the strangers: Kenan 1-3, Kenan's rematch, Nail, Leith's trap. With all eleven
+goals done Elma hands over a Scrivane from the other map (`gift_spirling`, side goal `edge_gift`).
+Once the story is complete and a figure's goal is done, that figure has a closing talk.
+
 ### Hidden trust
 
 Every figure has a hidden **trust** and **use** value (0-100, start values in the data, changes
@@ -352,6 +380,37 @@ side with the clan (Wren leaves) or with her (Ottilie turns). Kerr Haldane hunts
 fight him (`kerr_haldane`), or, with the breeding register, point him at Ottilie. Tobs moves the
 ash urn for 500 coins and stays loyal only if you asked him nicely first. Sable's dune tip in Act IV
 is a believe-tip favour that usually ends in an ambush.
+
+### Main-story betrayals (Ali 2026-11-10: several per act, "trust no one")
+
+The clan figures above wait for the player to talk to them. These betrayals sit on the critical
+path instead, in scenes every player passes (`data/scenes/`, map arrival scenes in
+`data/story_npcs.json` "on_enter"), so nobody finishes an act without being sold at least three
+times. Text: `data/dialogue/betrayal.json`, German: `tools/i18n/de_betrayal.py`. Data: the
+betrayals with `"main"` (the scene that fires them) and `"trust_choices"` in `data/clans.json`;
+`tests/unit/test_betrayal_main.gd` keeps at least three betrayals and two trust choices per act and
+checks that every choice flips its betrayal. A struck betrayal always costs coins (`"coins"` below
+zero is a bill, never below an empty purse) or the lead Spirling's keepsake; a caught one pays.
+
+| Act | Trust choice (where) | Betrayal (where it is cashed in) | Flag |
+| --- | --- | --- | --- |
+| I | Juna's report: Mirela's code or plain (`a1_report`, after Aldo's dock talk) | Juna sells your report to the clans (`juna_post`, the pier before the ferry) | `clan_b14` |
+| I | Vash asks the crossing hour: true or false (`a1_hour`, `a1_square` on entering Brindlewick) | Marrovel customs men search you at that hour (`vash_hour`, the pier) | `clan_b15` |
+| I | - (read Fenrick's letter or listen to Aldra) | Fenrick's farewell lantern hides a Ruskweber moth (`fenrick_lantern`, the pier) | `clan_b16` |
+| II | Sable's free porters (`a2_porter`, `corvane_arrival`) | your satchel comes back lighter (`sable_satchel`, `kestra_tatter_hush`) | `clan_b17` |
+| II | Brann copies Mirela's words (`a2_chalk`, `wide_rift_reveal`) | Veit reads Brann's notebook (`brann_copy`, `act2_far_side`) | `clan_b18` |
+| II | - (Pip's trust from Act I: covering his duel) | Ysolde sold Mirela's route for the guild charter; the clerk sells yours (`ysolde_charter`, `act2_far_side`) | `clan_b19` |
+| III | Nella wants the guild seal (`a3_seal`, `ashmere_arrival`) | Sable's runners draw on wax copies of it (`nella_wax`, `a3_cinderfold`) | `clan_b20` |
+| III | Grell's half-price copper (`a3_copper`, `a3_cinderfold`) | the copper goes quiet, Halvard buys again on your account (`grell_copper`, `a3_saltglass`) | `clan_b21` |
+| III | - (Pip's warning in Act II) | Ottilie walks the route the clerk sold her (`ottilie_route`, `a3_saltglass`) | `clan_b22` |
+| IV | Kaia's sealed letter: deliver or open (`a4_letter`, `a4_ochrewell`) | you become the Veil's courier of record, liable for the drought (`kaia_witness`, `a4_oasis`) | `clan_b23` |
+| IV | Lusk's free tunnel pass (`a4_tunnel`, `a4_oasis`) | the tunnel bill (`lusk_tunnel`, `a4_sun`) | `clan_b24` |
+| IV | - (Juna's trust since the Act I report) | Juna sells your lodging to the Veil (`juna_letter`, `a4_sun`) | `clan_b25` |
+
+The mandatory Act IV duels add two more: Kaia sold the oasis, and Emrys signed as her witness.
+Trusting answers raise a hidden value and are punished; the chained ones reward a secret kept
+earlier (Pip) or a code used once (Juna). Trusting Sable's porters also raises her use enough that
+her later tip (`sable_tip`) turns into an ambush.
 
 **The reckoning** (`data/scenes/solenne_reckoning.json`, started by Ottilie once the Sun Rift is
 mended): both throne betrayals are cashed in, Grell arrives with Brannoc (and Kerr if turned), Marlo
