@@ -24,6 +24,8 @@ var player: Player
 var busy: bool = false
 
 var _ground: TileMapLayer
+## Terrain look of the map's era over the ground tiles (EraTerrainLook, docs/ERA_FEEL_TILES.md).
+var _terrain_look: EraTerrainLook
 ## Shade over dark gear cells (thick without the gear, a faint dusk with it).
 var _shade: Node2D
 var _entities: Node2D
@@ -52,6 +54,8 @@ var minimap: Minimap
 ## Top-of-screen notes (badges, daily tasks).
 var toast: Toast
 var _fade: ColorRect
+## Light, weather look and transitions of the map's era (EraLightLayer, data/era_light.json).
+var _era_light: EraLightLayer
 ## Dark rectangle that grows from a door over the screen on door warps (item 2277).
 var _door_wipe: ColorRect
 const DOOR_WIPE_TIME: float = 0.14
@@ -169,6 +173,8 @@ func _build() -> void:
 	_ground = TileMapLayer.new()
 	_ground.name = "Ground"
 	add_child(_ground)
+	_terrain_look = EraTerrainLook.new()
+	add_child(_terrain_look)
 	_particles = PixelParticles.new()
 	_particles.name = "particles"
 	add_child(_particles)
@@ -205,6 +211,9 @@ func _build() -> void:
 	_camera.position_smoothing_enabled = false
 	add_child(_camera)
 	_camera.make_current()
+	_era_light = EraLightLayer.new()
+	_era_light.setup(player, _camera)
+	add_child(_era_light)
 
 	_ui = CanvasLayer.new()
 	_ui.layer = UI_LAYER
@@ -359,6 +368,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		GameState.enter_map(map_id, cell)
 	_world.prepare(map, cell)
 	map.paint(_ground)
+	_terrain_look.show_map(map, _ground, _camera, _entities)
 	refresh_shade()
 	_spawn_npcs()
 	_place_landmark()
@@ -460,6 +470,7 @@ func refresh_daylight() -> void:
 	if weather_layer != null:
 		weather_layer.show_kind(w)
 	DayCycle.poll()
+	_era_light.refresh(map, w, _daylight, _glow, weather_layer)
 
 const SHADE_DARK: float = 0.9
 const SHADE_LIT: float = 0.3
@@ -654,6 +665,8 @@ func is_edge_cell(cell: Vector2i) -> bool:
 ## Darkening for a warp: doors grow a dark rectangle from the door, map edges slide the view
 ## on in the walking direction. Plain fade under reduced motion.
 func _warp_out(edge: bool) -> void:
+	if await _era_light.warp_out(map.kind_at(player.cell), edge, player.facing, _fade):
+		return
 	if Juice.reduced():
 		await _fade_to(1.0)
 		return
@@ -3947,6 +3960,9 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		if not sky.is_empty():
 			model.field = str(sky.field)
 			model.field_intro = str(sky.intro)
+	# A windy sky lays no field and changes no rule; the battle only shows the wind.
+	if WeatherCycle.current(map) == "wind":
+		model.set_meta(BattleWeather.SKY_META, "wind")
 	# Echo duels fight a friend's echo, not the world: the pass adds no energy or Rift Breath there.
 	var world: bool = not (own is Array and not (own as Array).is_empty())
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
