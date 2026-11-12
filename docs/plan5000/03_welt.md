@@ -455,7 +455,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1309. [P3] Lege eine Liste "Corvane-Platzhalter" in docs/WORLD.md an, die jede Platzhalter-ID mit der späteren Art-Planung verknüpft.
 1310. [P3] Plane Corvane-NPC-Tagespläne mit Marktzeiten (Markt 6 bis 14 Uhr).
 1311. [P3] Plane einen Corvane-Aussichtsturm, von dem aus man ganz Corvane auf der Weltkarte sichtet.
-1312. [P3] Plane für Corvane 15 versteckte Funde und 12 Kartografensteine nach dem Veydal-Muster.
+1312. [x] [P3] Plane für Corvane 15 versteckte Funde und 12 Kartografensteine nach dem Veydal-Muster.
 1313. [P3] Plane eine Kutschlinie in Corvane zwischen Markt und Saltmill.
 1314. [P3] Plane den Fährweg nach Corvane mit einer Zwischenstation auf einer Insel, die man beim zweiten Besuch betreten kann.
 1315. [P3] Bereite in WorldValidator.gd eine Prüfung vor, dass keine Corvane-Karte auf Veydal-Tabellen zeigt.

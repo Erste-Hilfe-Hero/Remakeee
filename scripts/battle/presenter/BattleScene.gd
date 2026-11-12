@@ -1108,7 +1108,7 @@ func _update_pinch() -> void:
 		var s: Spirling = model.active_spirling(BattleModel.Side.PLAYER, slot)
 		if lowest == null or lowest.is_fainted() or s.hp_fraction() < lowest.hp_fraction():
 			lowest = s
-	var track: String = pinch_track(lowest, Sound.battle_music(music_track))
+	var track: String = Sound.battle_music(pinch_track(lowest, music_track))
 	if Sound.current_track != track:
 		Sound.music(track)
 
