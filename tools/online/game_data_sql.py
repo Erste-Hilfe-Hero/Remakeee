@@ -91,6 +91,24 @@ def main() -> None:
         print("insert into public.server_config (key, value) values ('league_ranks', $game$"
               + json.dumps(ranks).replace("$game$", "") + "$game$::jsonb)"
               " on conflict (key) do update set value = excluded.value;")
+    # Bund extras (Online 100, area 4): data/bund_rules.json as server_config.bund_rules.
+    br_path = os.path.join(folder, "bund_rules.json")
+    if os.path.exists(br_path):
+        with open(br_path, encoding="utf-8") as f:
+            br = json.load(f)
+        br.pop("_comment", None)
+        print("insert into public.server_config (key, value) values ('bund_rules', $game$"
+              + json.dumps(br).replace("$game$", "") + "$game$::jsonb)"
+              " on conflict (key) do update set value = excluded.value;")
+    # Raid extras (Online 100, area 3): data/raid_rules.json as server_config.raid_rules.
+    rr_path = os.path.join(folder, "raid_rules.json")
+    if os.path.exists(rr_path):
+        with open(rr_path, encoding="utf-8") as f:
+            rr = json.load(f)
+        rr.pop("_comment", None)
+        print("insert into public.server_config (key, value) values ('raid_rules', $game$"
+              + json.dumps(rr).replace("$game$", "") + "$game$::jsonb)"
+              " on conflict (key) do update set value = excluded.value;")
     # Live duels (Online 100, area 1): data/live_duel.json as server_config.live_duel.
     live_path = os.path.join(folder, "live_duel.json")
     if os.path.exists(live_path):
@@ -99,6 +117,15 @@ def main() -> None:
         live.pop("_comment", None)
         print("insert into public.server_config (key, value) values ('live_duel', $game$"
               + json.dumps(live).replace("$game$", "") + "$game$::jsonb)"
+              " on conflict (key) do update set value = excluded.value;")
+    # Trading and gifting (Online 100, area 5): data/trade_gifts.json as server_config.trade_gifts.
+    tg_path = os.path.join(folder, "trade_gifts.json")
+    if os.path.exists(tg_path):
+        with open(tg_path, encoding="utf-8") as f:
+            tg = json.load(f)
+        tg.pop("_comment", None)
+        print("insert into public.server_config (key, value) values ('trade_gifts', $game$"
+              + json.dumps(tg).replace("$game$", "") + "$game$::jsonb)"
               " on conflict (key) do update set value = excluded.value;")
     print("commit;")
 

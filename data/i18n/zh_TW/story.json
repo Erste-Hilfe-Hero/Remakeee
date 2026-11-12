@@ -571,6 +571,22 @@
   "Ysolde: You have Mirela's compass rose on your map case. Where did you get that?": "Ysolde：你的地圖盒上有Mirela的羅盤玫瑰。你是從哪裡拿到的？",
   "Ysolde: You've seen the Wide Rift. Sit down, apprentice. There is something in the guild files.": "Ysolde：你看過廣闊裂隙了。坐下吧，學徒。公會的檔案裡有些東西。",
   "Zippits spark brightest when a Rift is near. Wardens used them as early warnings.": "Zippit在裂隙附近時火花最亮。守境者們以前會用牠們來當預警。",
-  "{name}! Wake up!": "{name}！醒醒！"
+  "{name}! Wake up!": "{name}！醒醒！",
+  "Auburn": "赤褐",
+  "Black": "黑",
+  "Blond": "金",
+  "Brown": "棕",
+  "Coat colour": "毛色",
+  "Deep": "深",
+  "Fair": "淺",
+  "Hair colour": "髮色",
+  "Light": "淡",
+  "Ochre": "赭",
+  "Plum": "梅紫",
+  "Rust": "鏽紅",
+  "Silver": "銀",
+  "Skin tone": "膚色",
+  "Tan": "小麥",
+  "Teal": "青綠"
  }
 }

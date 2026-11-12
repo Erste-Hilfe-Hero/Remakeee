@@ -1,0 +1,30 @@
+{
+ "_comment": "Brazilian Portuguese texts for the German table fan_inkshadow. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "%s counts the fence posts. Twice. One is missing.": "%s conta as estacas da cerca. Duas vezes. Falta uma.",
+  "%s digs up a few coins and drops them at your feet. %d coins!": "%s desenterra umas moedas e larga aos seus pés. %d moedas!",
+  "%s eats something off the path. It seems fine. Probably.": "%s come alguma coisa do caminho. Parece estar bem. Provavelmente.",
+  "%s glares at a bush as if it owes money.": "%s encara um arbusto como se ele devesse dinheiro.",
+  "%s hides behind your boot from a leaf.": "%s se esconde atrás da sua bota por causa de uma folha.",
+  "%s hums a cheerful dirge.": "%s cantarola um canto fúnebre bem alegre.",
+  "%s keeps pace, calm as a closed coffin.": "%s acompanha o passo, calmo como um caixão fechado.",
+  "%s leans against your leg for a moment.": "%s se encosta na sua perna por um momento.",
+  "%s mutters the names of everyone you let fall. Yours is on the list too.": "%s murmura os nomes de todos que você deixou cair. O seu também está na lista.",
+  "%s nods at strangers as if they owe it a bow.": "%s cumprimenta estranhos como se devessem uma reverência.",
+  "%s plants its feet. Nothing is attacking. It plants them anyway.": "%s finca as patas. Nada está atacando. Finca mesmo assim.",
+  "%s practises a farewell speech. It is about you.": "%s ensaia um discurso de despedida. É sobre você.",
+  "%s practises biting the air. The air loses.": "%s treina morder o ar. O ar perde.",
+  "%s prods a puddle. The puddle prods back.": "%s cutuca uma poça. A poça cutuca de volta.",
+  "%s runs ahead, runs back, and pretends it never left.": "%s corre na frente, volta e finge que nunca saiu.",
+  "%s sighs at your walking pace.": "%s suspira com o seu ritmo de caminhada.",
+  "%s sniffs a grave marker and looks very interested.": "%s fareja uma lápide com muito interesse.",
+  "%s stares at the map ink until it smudges.": "%s encara a tinta do mapa até ela borrar.",
+  "%s steers a beetle off the path.": "%s tira um besouro do caminho.",
+  "%s steps on your heel. Twice. On purpose.": "%s pisa no seu calcanhar. Duas vezes. De propósito.",
+  "%s steps on your shadow so nobody sees it.": "%s pisa na sua sombra pra ninguém ver.",
+  "%s struts like it won the last battle alone.": "%s desfila como se tivesse vencido a última batalha sozinho.",
+  "%s walks a little too close behind you. Like a knife does.": "%s anda um pouco perto demais atrás de você. Como uma faca.",
+  "%s walks exactly in your footprints, just in case.": "%s pisa exatamente nas suas pegadas, só por garantia.",
+  "%s watches the clouds drift and judges none of them.": "%s vê as nuvens passarem e não julga nenhuma."
+ }
+}

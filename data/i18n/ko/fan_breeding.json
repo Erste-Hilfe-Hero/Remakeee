@@ -1,0 +1,23 @@
+{
+ "_comment": "Korean texts for the German table fan_breeding. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "Auntie Grisela": "Grisela 이모",
+  "Auntie Grisela's contract holds. The young one carries the best of both houses.": "Grisela 이모의 계약은 지켜졌다. 새끼는 두 집안의 장점을 다 물려받았다.",
+  "Auntie Grisela: A contract costs %d coins. Love is free, paperwork is not.": "Grisela 이모: 계약은 %d코인. 사랑은 공짜, 서류는 아니지.",
+  "Auntie Grisela: A good match is a merger with feathers.": "Grisela 이모: 좋은 짝은 깃털 달린 합병이야.",
+  "Auntie Grisela: Bring me an Echo Core and I put the dowry in writing.": "Grisela 이모: 메아리 핵을 가져오면 지참금을 문서로 써 주마.",
+  "Auntie Grisela: I put the dowry in writing. Nobody reads it, but it is written.": "Grisela 이모: 지참금을 문서로 썼다. 아무도 안 읽지만, 쓰여 있긴 해.",
+  "Auntie Grisela: No Echo Core, no wedding. Sing at a spring first, then we talk business.": "Grisela 이모: 메아리 핵 없으면 혼례도 없어. 먼저 샘에서 노래하고, 그다음에 장사 얘기하자.",
+  "Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably.": "Grisela 이모: 서명, 봉인, 그리고 아무도 모를 거야. 아마도.",
+  "Auntie Grisela: Two good families, one sweet song. I arrange the rest.": "Grisela 이모: 좋은 집안 둘, 달콤한 노래 하나. 나머진 내가 맞춰 줄게.",
+  "It already knows %s, an heirloom art of the family.": "이미 %s을(를) 안다. 집안 대대로 내려온 기술이다.",
+  "It carries the family's best Spark in %d values.": "집안 최고의 불씨를 %d가지 능력치에 물려받았다.",
+  "Seal": "맺는다",
+  "Seal a match contract for the core of %s for %d coins?": "%s의 핵으로 짝짓기 계약을 맺을까? %d코인",
+  "Turns out Auntie Grisela sold the same match to %s. The contract is void, but the song still wakes.": "알고 보니 Grisela 이모가 같은 짝을 %s에게도 팔았다. 계약은 무효지만, 노래는 여전히 깨운다.",
+  "a family she calls 'the other one'": "이모가 '딴 집'이라 부르는 집안",
+  "the Moldwick family": "Moldwick 집안",
+  "the Pellgraves": "Pellgrave 집안",
+  "the Second Cousins": "육촌들"
+ }
+}
