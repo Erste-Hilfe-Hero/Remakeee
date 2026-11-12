@@ -126,3 +126,20 @@ func test_whoever_opens_a_block_is_reached_while_it_is_shut() -> void:
 			if not _near(_reach_with_closed(m, mine, n), Vector2i(int(n.x), int(n.y))):
 				stuck.append("%s: '%s' opens %s but stands behind it" % [id, n.get("id", ""), mine])
 	assert_eq("\n".join(stuck), "")
+
+## Madderby (12 Nov 2026): Morrow stood on the cell the Woadfen road arrives on. A gate keeper
+## who only ever leaves ("hide_flag" without "show_flag", met before the way behind opens) may.
+func test_nobody_stands_where_a_way_arrives() -> void:
+	var ids: PackedStringArray = MapData.all_ids()
+	var entries: Dictionary = WorldValidator.entry_cells(ids)
+	var taken: Array[String] = []
+	for id: String in ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null:
+			continue
+		for n: Dictionary in m.npcs:
+			if WorldValidator._unplaced(n) or not n.has("x") or (n.has("hide_flag") and not n.has("show_flag")):
+				continue
+			if Vector2i(int(n.x), int(n.y)) in entries.get(id, []):
+				taken.append("%s: '%s' stands on arrival cell %s,%s" % [id, n.get("id", ""), n.x, n.y])
+	assert_eq("\n".join(taken), "")

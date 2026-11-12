@@ -477,7 +477,7 @@
    },
    {
     "id": "clan_morrow",
-    "x": 8,
+    "x": 7,
     "y": 11,
     "facing": "down",
     "dialogue": "clans/morrow",
