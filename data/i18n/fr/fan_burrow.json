@@ -1,0 +1,26 @@
+{
+ "_comment": "French texts for the German table fan_burrow. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py fr.",
+ "strings": {
+  "A crack in the rock opens into a dry hollow.": "Une fente dans la roche s'ouvre sur un creux sec.",
+  "A dry hollow in the rock. Nobody seems to live here. Claim it as your Burrow?": "Un creux sec dans la roche. Personne ne semble vivre ici. Tu en fais ton Terrier?",
+  "A jar of names. Your Spirlings wrote them. Some are yours.": "Un bocal de noms. Tes Spirlings les ont écrits. Certains sont les tiens.",
+  "A map of Veydal with every Rift crossed out in red ink.": "Une carte de Veydal avec chaque Faille barrée à l'encre rouge.",
+  "A scorched seal from the Cinder Rift. Still warm. Still angry.": "Un sceau roussi de la Faille des Braises. Encore chaud. Encore en rogne.",
+  "A seal from the Mist Rift. Half of it is missing, or hiding.": "Un sceau de la Faille de Brume. La moitié manque, ou se cache.",
+  "A seal from the Tidewater Rift. It drips on the carpet.": "Un sceau de la Faille des Marées. Il goutte sur le tapis.",
+  "Black Veil": "Voile noir",
+  "Cinder Seal": "Sceau de Braise",
+  "Claim": "Prendre",
+  "Grudge Jar": "Bocal à rancunes",
+  "Mended Veydal": "Veydal recousu",
+  "Mist Seal": "Sceau de Brume",
+  "Someone slept here. %s is gone from the wall; a pawn ticket hangs in its place.": "Quelqu'un a dormi ici. %s a disparu du mur; un ticket de prêteur sur gages pend à sa place.",
+  "The wall is full. Take something down first.": "Le mur est plein. Décroche d'abord quelque chose.",
+  "Tide Seal": "Sceau des Marées",
+  "Won at a Wake. Nobody cried harder than your Spirling.": "Gagné à une Veillée. Personne n'a pleuré plus fort que ton Spirling.",
+  "You hang it on the wall.": "Tu l'accroches au mur.",
+  "You take it down.": "Tu le décroches.",
+  "Your Burrow (%d/%d on the wall)": "Ton Terrier (%d/%d au mur)",
+  "Your Burrow. The walls are bare. Earn something worth hanging.": "Ton Terrier. Les murs sont nus. Gagne quelque chose qui mérite d'être accroché."
+ }
+}

@@ -382,6 +382,7 @@ T = {
 "Era II": "Ära II",
 "Era III": "Ära III",
 "Era IV": "Ära IV",
+"Era V": "Ära V",
 "%s R%d %s": "%s R%d %s",
 "Change my Spirlings": "Meine Spirlings ändern",
 "Which Spirlings do you give? (up to 3)": "Welche Spirlings gibst du? (bis zu 3)",

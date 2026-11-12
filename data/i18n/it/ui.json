@@ -463,6 +463,13 @@
   "not seen": "non visto",
   "strong": "forte",
   "wild %s": "%s selvaggio",
-  "Join our Discord": "Unisciti al nostro Discord"
+  "Join our Discord": "Unisciti al nostro Discord",
+  " It gleams in colours of its own!": " Brilla di colori tutti suoi!",
+  "Bonding step 1: Hit it with a few arts until its Vigor bar is low. Don't knock it out.": "Legame, passo 1: colpiscilo con qualche tecnica finché la sua barra del Vigore è bassa. Non metterlo KO.",
+  "Bonding step 2: Pick Bond. It calls a few marks, one after another. Watch closely.": "Legame, passo 2: scegli Lega. Chiama alcuni segni, uno dopo l'altro. Guarda bene.",
+  "Bonding step 3: Press the same marks in the same order. The better your echo, the better the bond.": "Legame, passo 3: premi gli stessi segni nello stesso ordine. Migliore è la tua eco, migliore è il legame.",
+  "Bonding step 3: Tap the same marks in the same order. The better your echo, the better the bond.": "Legame, passo 3: tocca gli stessi segni nello stesso ordine. Migliore è la tua eco, migliore è il legame.",
+  "Bonding step 4: Hold out a Kin Charm when asked. It steadies the link. You start with 20 of them.": "Legame, passo 4: porgi un Amuleto di stirpe quando richiesto. Stabilizza il legame. Ne hai 20 all'inizio.",
+  "While you are new, a failed bond does not give the wild Spirling a free hit.": "Finché sei alle prime armi, un legame fallito non regala un colpo allo Spirling selvatico."
  }
 }

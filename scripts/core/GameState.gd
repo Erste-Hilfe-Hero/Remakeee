@@ -196,6 +196,8 @@ var play_reminder: bool = true
 var battery_saver: bool = false
 var reduce_motion: bool = false
 var high_contrast: bool = false
+## Colour-blind mode (design items 178, 274, 479): battle bars and matchups use shapes, not colour alone.
+var color_blind: bool = false
 ## Large text with the 7x12 glyph set (item 2042).
 var large_text: bool = false
 ## Day and night tint and encounters on outdoor maps (item 43).
@@ -371,7 +373,7 @@ func set_held(s: Spirling, id: String) -> bool:
 		add_item(s.held)
 	s.held = id
 	if not id.is_empty():
-		inventory[id] = item_count(id) - 1
+		take_item(id)
 		if s in party:
 			Vows.broke("no_keepsake")
 	# Some keepsakes raise max Vigor (Core Glass); taking one off must not leave too much Vigor.
@@ -653,7 +655,7 @@ func to_dict() -> Dictionary:
 		"gleam_chain": gleam_chain.duplicate(),
 		"echo_cores": echo_cores.duplicate(true),
 		"spirlog": spirlog.duplicate(true),
-		"inventory": inventory.duplicate(),
+		"inventory": _bag_counts(),
 		"money": money,
 		"waymarks": waymarks,
 		"daily_tasks": daily_tasks.duplicate(true),
@@ -678,6 +680,17 @@ func to_dict() -> Dictionary:
 		"iron_oath": iron_oath,
 		"sanctuary": sanctuary.map(func(s: Spirling) -> Dictionary: return s.to_dict()),
 	}
+
+## The bag for the save: items used up in battle or handed to a Spirling leave no empty rows.
+func _bag_counts() -> Dictionary:
+	var out: Dictionary = {}
+	for k: Variant in inventory:
+		if int(inventory[k]) > 0:
+			out[k] = inventory[k]
+	return out
+
+## Highest boost a save may carry: the Mighty Growth Crystal's x5 (it used to load as x3, bug plan 1357).
+const MAX_BOOST_MULT: float = 5.0
 
 func from_dict(d: Dictionary) -> void:
 	reset()
@@ -710,15 +723,20 @@ func from_dict(d: Dictionary) -> void:
 	if d.get("shop_boosts") is Dictionary:
 		for k: Variant in d.shop_boosts:
 			var b: Variant = d.shop_boosts[k]
-			if str(k) in ["growth", "coins"] and b is Dictionary and int(b.get("left", 0)) > 0:
-				shop_boosts[str(k)] = {"mult": clampf(float(b.get("mult", 1.0)), 1.0, 3.0), "left": mini(int(b.left), 200)}
+			# Every boost the shop sells survives a reload, not only Growth and Coins (bug plan 1357).
+			if str(k) in ShopEffects.BOOST_NAMES and b is Dictionary and int(b.get("left", 0)) > 0:
+				shop_boosts[str(k)] = {"mult": clampf(float(b.get("mult", 1.0)), 1.0, MAX_BOOST_MULT), "left": mini(int(b.left), 200)}
 	_load_echo_cores(d.get("echo_cores", []))
 	var gc: Dictionary = _as_dict(d.get("gleam_chain", {}))
 	gleam_chain = {"species": str(gc.get("species", "")), "count": clampi(as_int(gc.get("count", 0)), 0, GleamRules.chain_max())}
 	for k: Variant in _as_dict(d.get("spirlog", {})):
 		spirlog[str(k)] = upgrade_spirlog_entry((d.spirlog[k] as Variant))
+	# Only real counts: an empty or negative entry would swallow the next item of that kind
+	# (bug plan 1380).
 	for k: Variant in _as_dict(d.get("inventory", {})):
-		inventory[str(k)] = int(d.inventory[k])
+		var n: int = as_int(d.inventory[k])
+		if n > 0:
+			inventory[str(k)] = n
 	money = int(d.get("money", 0))
 	# Saves from before plan area 8 start with no Waymarks; old achievements pay out once
 	# through the achievement reward, never here.
@@ -776,7 +794,7 @@ func settings_to_dict() -> Dictionary:
 		"one_hand": one_hand, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice,
 		"tips": tips_enabled, "play_reminder": play_reminder, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language}
+		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language}
 
 func settings_from_dict(d: Dictionary) -> void:
 	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
@@ -812,6 +830,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	battery_saver = bool(d.get("battery_saver", false))
 	reduce_motion = bool(d.get("reduce_motion", false))
 	high_contrast = bool(d.get("high_contrast", false))
+	color_blind = bool(d.get("color_blind", false))
 	large_text = bool(d.get("large_text", false))
 	day_night = bool(d.get("day_night", true))
 	weather = bool(d.get("weather", true))
