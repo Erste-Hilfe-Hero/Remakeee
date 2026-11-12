@@ -564,3 +564,14 @@ checks both against the catalog. `hello` runs `_privacy_cleanup()` about once in
 recordings and league matches older than 30 days, refused-save notes older than 6 months and league
 standings of seasons that ended more than a season ago are removed. The record of processing activities is
 `docs/legal/VERARBEITUNGEN.md`; add a row there before switching on a new online feature.
+
+## Online replays and statistics (Online 100 plan, points 71, 72, 75, 78, 79, 95)
+
+- Every `battle_submit` (league, raid, echo duel, Rift board) also keeps the battle in
+  `GameState.records["online_replays"]`, newest first, at most `keep` (20) in `data/replay_library.json`
+  (`scripts/online/ReplayLibrary.gd`).
+- Records > Online replays (`scripts/ui/OnlineReplaysMenu.gd`): watch one, copy its share code to the
+  clipboard, watch a code from the clipboard, own win rate per Spirling, opponents met most often. A code is
+  `CHR1-` plus the gzip-packed replay in base64; it holds no account data. Replays play in the current look.
+- Planned maintenance: `update server_config set value = '<unix seconds>' where key = 'maintenance_at';`
+  `maintenance_info()` hands it to the game, and the title screen warns from 24 hours before.
