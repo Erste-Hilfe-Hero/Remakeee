@@ -1,0 +1,7 @@
+{
+ "_comment": "Turkish texts for the German table gleam. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "Gleam: %d seen, %d bonded": "Işıltı: %d görüldü, %d bağ kuruldu",
+  "No Gleam has joined you yet.": "Henüz hiçbir Işıltı sana katılmadı."
+ }
+}

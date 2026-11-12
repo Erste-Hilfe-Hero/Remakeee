@@ -739,6 +739,242 @@
   "money": 900,
   "lose": "clans/ambush_lose"
  },
+ "nib_1": {
+  "trainer": "Quay Rat Nib",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 19
+   },
+   {
+    "species": "Shalebat",
+    "level": 18
+   }
+  ],
+  "ai": 2,
+  "money": 700,
+  "defeat": "corvane_side/nib_1_defeat",
+  "lose": "corvane_side/nib_lose"
+ },
+ "nib_2": {
+  "trainer": "Quay Rat Nib",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 21
+   },
+   {
+    "species": "Shalebat",
+    "level": 20
+   },
+   {
+    "species": "Drizzlet",
+    "level": 20
+   }
+  ],
+  "ai": 2,
+  "money": 800,
+  "defeat": "corvane_side/nib_2_defeat",
+  "lose": "corvane_side/nib_lose"
+ },
+ "nib_3": {
+  "trainer": "Quay Rat Nib",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 22
+   },
+   {
+    "species": "Reedquill",
+    "level": 22
+   },
+   {
+    "species": "Drizzlet",
+    "level": 22
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "defeat": "corvane_side/nib_3_defeat",
+  "lose": "corvane_side/nib_lose"
+ },
+ "nib_4": {
+  "trainer": "Quay Rat Nib",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 24
+   },
+   {
+    "species": "Reedquill",
+    "level": 23
+   },
+   {
+    "species": "Glimmoth",
+    "level": 23
+   },
+   {
+    "species": "Shalebat",
+    "level": 23
+   }
+  ],
+  "ai": 2,
+  "money": 1000,
+  "defeat": "corvane_side/nib_4_defeat",
+  "lose": "corvane_side/nib_lose"
+ },
+ "nib_5": {
+  "trainer": "Quay Rat Nib",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 27
+   },
+   {
+    "species": "Reedquill",
+    "level": 26
+   },
+   {
+    "species": "Glimmoth",
+    "level": 26
+   },
+   {
+    "species": "Shalebat",
+    "level": 26
+   },
+   {
+    "species": "Rainmantle",
+    "level": 27
+   }
+  ],
+  "ai": 3,
+  "money": 1500,
+  "defeat": "corvane_side/nib_5_defeat",
+  "lose": "corvane_side/nib_lose"
+ },
+ "fenwick": {
+  "trainer": "Lucky Fenwick",
+  "team": [
+   {
+    "species": "Silthop",
+    "level": 23
+   },
+   {
+    "species": "Millwhit",
+    "level": 23
+   },
+   {
+    "species": "Fluting",
+    "level": 24
+   }
+  ],
+  "ai": 2,
+  "money": 800,
+  "defeat": "corvane_side/fenwick_defeat",
+  "lose": "corvane_side/fenwick_lose"
+ },
+ "ambush_nib": {
+  "trainer": "Quay Book Rats",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 25
+   },
+   {
+    "species": "Riptail",
+    "level": 25
+   },
+   {
+    "species": "Drizzlet",
+    "level": 26
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "lose": "corvane_side/nib_ambush_lose"
+ },
+ "ambush_gaunt": {
+  "trainer": "Gaunt's Daughters",
+  "team": [
+   {
+    "species": "Kelphound",
+    "level": 23
+   },
+   {
+    "species": "Glimmoth",
+    "level": 23
+   },
+   {
+    "species": "Millvane",
+    "level": 24
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "lose": "corvane_side/gaunt_ambush_lose"
+ },
+ "ambush_vault": {
+  "trainer": "Vault Robbers",
+  "team": [
+   {
+    "species": "Duskdigger",
+    "level": 24
+   },
+   {
+    "species": "Wickmoth",
+    "level": 24
+   },
+   {
+    "species": "Shalebat",
+    "level": 25
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "lose": "corvane_side/vault_ambush_lose"
+ },
+ "quill": {
+  "trainer": "Harbourmaster Quill",
+  "team": [
+   {
+    "species": "Kelphound",
+    "level": 26
+   },
+   {
+    "species": "Rainmantle",
+    "level": 26
+   },
+   {
+    "species": "Riptail",
+    "level": 27
+   }
+  ],
+  "ai": 3,
+  "money": 1400,
+  "defeat": "corvane_side/quill_defeat",
+  "lose": "corvane_side/quill_lose"
+ },
+ "vetch": {
+  "trainer": "Dye Runner Vetch",
+  "team": [
+   {
+    "species": "Glimmoth",
+    "level": 23
+   },
+   {
+    "species": "Millwhit",
+    "level": 23
+   },
+   {
+    "species": "Drizzlet",
+    "level": 24
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "defeat": "corvane_side/vetch_defeat",
+  "lose": "corvane_side/vetch_lose"
+ },
  "kenan_duel_1": {
   "trainer": "Rift Runner Kenan",
   "team": [

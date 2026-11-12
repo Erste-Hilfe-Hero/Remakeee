@@ -37,7 +37,12 @@
   "mags": {"clan": "strangers", "ally": true, "act": 4, "role": "pawnbroker, melts the Veil's seals into spoons", "trust": 45, "use": 25},
   "liss": {"clan": "marrovel", "role": "Fenrick's daughter from Ashmere, Sable's informer", "trust": 25, "use": 55},
   "kerr": {"clan": "none", "role": "son of a lost Rift guard, hunts Pip", "trust": 30, "use": 40},
-  "tobs": {"clan": "none", "role": "Ochrewell gravedigger, moves things for coins", "trust": 30, "use": 35}
+  "tobs": {"clan": "none", "role": "Ochrewell gravedigger, moves things for coins", "trust": 30, "use": 35},
+  "nib": {"clan": "none", "act": 2, "role": "quay rat rival, sells route notes", "trust": 30, "use": 55},
+  "gaunt": {"clan": "none", "act": 2, "role": "loan shark, robs her own collectors", "trust": 20, "use": 60},
+  "pell": {"clan": "none", "act": 2, "role": "quay fence, borrows Spirlings", "trust": 35, "use": 40},
+  "ollie": {"clan": "none", "act": 2, "role": "tonic seller, skips town", "trust": 30, "use": 45},
+  "dimsy": {"clan": "none", "act": 2, "role": "Rook Vault guide, sells marks to robbers", "trust": 25, "use": 50}
  },
  "favors": {
   "fitch_toll": {"npc": "fitch", "kind": "lend_coins", "amount": 150, "reward_chance": 0.0, "betray": {"say": "soot_vaults/fitch_betray", "battle": "fitch_ambush", "ledger": "fitch_toll"}, "kept": {"say": "soot_vaults/fitch_kept", "item": "max_tonic"}},
@@ -92,7 +97,10 @@
   "sable_dune": {"npc": "sable", "kind": "believe_tip", "reward_chance": 0.3,
    "betray": {"say": "clans/sable_dune_betray", "battle": "dune_hands", "use": {"sable": 10}},
    "reward": {"say": "clans/sable_dune_reward", "item": "revival_leaf", "trust": {"sable": 5}},
-   "kept": {"say": "clans/sable_dune_kept", "trust": {"sable": 5}}}
+   "kept": {"say": "clans/sable_dune_kept", "trust": {"sable": 5}}},
+  "pell_lend": {"npc": "pell", "kind": "lend_spirling", "reward_chance": 0.4, "betray": {"say": "corvane_side/pell_betray", "take_keepsake": true, "use": {"pell": 10}}, "reward": {"say": "corvane_side/pell_reward", "item": "kin_charm", "trust": {"pell": 10}}, "kept": {"say": "corvane_side/pell_kept", "trust": {"pell": 5}}},
+  "ollie_stake": {"npc": "ollie", "kind": "lend_coins", "amount": 250, "reward_chance": 0.5, "betray": {"say": "corvane_side/ollie_betray", "ledger": "ollie"}, "reward": {"say": "corvane_side/ollie_reward", "coins": 450, "trust": {"ollie": 10}}, "kept": {"say": "corvane_side/ollie_kept", "coins": 250}},
+  "dimsy_tip": {"npc": "dimsy", "kind": "believe_tip", "reward_chance": 0.4, "betray": {"say": "corvane_side/dimsy_betray", "battle": "ambush_vault"}, "reward": {"say": "corvane_side/dimsy_reward", "item": "max_tonic", "trust": {"dimsy": 10}}, "kept": {"say": "corvane_side/dimsy_kept"}}
  },
  "betrayals": {
   "kaia_deed": {"act": 4, "npc": "kaia", "rule": "warned", "warned_by": ["c4_dunya_warned"],
@@ -145,7 +153,9 @@
    "struck": {"flags": ["clan_b10"], "ledger": "throne", "say": "clans/throne_o_struck", "battle": "throne_guard"}},
   "fenrick_throne": {"act": 4, "npc": "fenrick", "rule": "warned", "warned_by": ["c4_wax_checked", "c4_heard_ottilie"],
    "caught": {"flags": ["clan_b11"], "ledger": "throne", "trust": {"fenrick": -20}, "say": "clans/throne_f_caught"},
-   "struck": {"flags": ["clan_b11"], "ledger": "throne", "say": "clans/throne_f_struck", "battle": "throne_guard"}}
+   "struck": {"flags": ["clan_b11"], "ledger": "throne", "say": "clans/throne_f_struck", "battle": "throne_guard"}},
+  "nib_sale": {"act": 2, "npc": "nib", "rule": "warned", "warned_by": ["nib_warned"], "caught": {"ledger": "nib", "trust": {"nib": -20}, "say": "corvane_side/nib_caught", "item": "max_tonic"}, "struck": {"ledger": "nib", "say": "corvane_side/nib_struck", "battle": "ambush_nib"}},
+  "gaunt_cut": {"act": 2, "npc": "gaunt", "rule": "warned", "warned_by": ["brask_warned"], "caught": {"ledger": "gaunt", "coins": 600, "say": "corvane_side/gaunt_caught"}, "struck": {"ledger": "gaunt", "coins": 300, "say": "corvane_side/gaunt_struck", "battle": "ambush_gaunt"}}
  },
  "ledger": [
   {"id": "ash", "act": 1, "ref": "clans/ledger_ash"},
@@ -177,6 +187,10 @@
   {"id": "crown", "act": 4, "ref": "clans/ledger_crown"},
   {"id": "fitch_toll", "act": 3, "ref": "soot_vaults/ledger_fitch"},
   {"id": "juno_sale", "act": 3, "ref": "soot_vaults/ledger_juno"},
-  {"id": "farida_book", "act": 3, "ref": "edge_camp/ledger_farida_book"}
+  {"id": "farida_book", "act": 3, "ref": "edge_camp/ledger_farida_book"},
+  {"id": "nib", "act": 2, "ref": "corvane_side/ledger_nib"},
+  {"id": "gaunt", "act": 2, "ref": "corvane_side/ledger_gaunt"},
+  {"id": "ollie", "act": 2, "ref": "corvane_side/ledger_ollie"},
+  {"id": "quay_book", "act": 2, "ref": "corvane_side/ledger_quay_book"}
  ]
 }

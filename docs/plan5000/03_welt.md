@@ -448,7 +448,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1302. [P2] Ergänze tests/unit um test_corvane_prep.gd, das prüft, dass Corvane-Karten ohne Flag nicht betretbar sind.
 1303. [P2] Bereite den Kai so vor, dass man jederzeit mit der Fähre nach Veydal zurückkommt, ohne Fortschrittsverlust.
 1304. [P2] Halte alle Corvane-Karten in der Rohfassung unter 2 MB Gesamtgröße der neuen Kacheln für das APK-Budget (tools/apk_budget.sh).
-1305. [P3] Plane die Corvane-Höhle "Rook Vault" (de: Krähengewölbe) als Rätsel-Dungeon mit Krähenfedern als Schalter.
+1305. [x] [P3] Plane die Corvane-Höhle "Rook Vault" (de: Krähengewölbe) als Rätsel-Dungeon mit Krähenfedern als Schalter.
 1306. [P3] Plane den Corvane-Ort "Saltmill" (de: Salzmühle) an der Flussmündung mit Gezeitenmühle.
 1307. [P3] Plane eine Corvane-Route mit Treidelpfad, auf dem man ein Boot an einem Seil flussaufwärts zieht, zu Fuß.
 1308. [P3] Plane die Kupferglanz-Grenze am Rand von Corvane als gesperrten Bergpass für Era III, nur als Schild und Felswand.

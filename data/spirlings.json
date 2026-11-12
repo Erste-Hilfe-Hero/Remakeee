@@ -12009,5 +12009,3250 @@
    2
   ],
   "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 204,
+  "name": "Inkpip",
+  "elements": [
+   "INK"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "inkpip",
+  "era": 1,
+  "base": {
+   "hp": 59,
+   "atk": 40,
+   "foc": 77,
+   "spd": 60,
+   "def": 64
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Quill Flick"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "15": [
+    "Chill Mist"
+   ],
+   "20": [
+    "Blot Wave"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Margin Lash"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.5 m",
+  "habitat": "Inkwells of the cartographers' guild",
+  "lore": "It lives in inkwells and blows little black bubbles when it is happy.",
+  "origin": "Spilled from an inkwell when a young cartographer sneezed.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Inkspool",
+    "rule": "ring",
+    "value": 20
+   }
+  ]
+ },
+ {
+  "dex_id": 205,
+  "name": "Inkspool",
+  "elements": [
+   "INK"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "inkpip",
+  "era": 1,
+  "base": {
+   "hp": 81,
+   "atk": 54,
+   "foc": 109,
+   "spd": 75,
+   "def": 84
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Quill Flick"
+   ],
+   "6": [
+    "Fizz Pop"
+   ],
+   "15": [
+    "Chill Mist"
+   ],
+   "20": [
+    "Blot Wave"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Margin Lash"
+   ],
+   "38": [
+    "Bore Wave"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.9 m",
+  "habitat": "Inkwells of the cartographers' guild",
+  "lore": "Its arms draw lines on any paper it touches. Some of them are real roads.",
+  "origin": "An Inkpip that slept on a map until morning.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Inkregent",
+    "rule": "ring",
+    "value": 33
+   }
+  ]
+ },
+ {
+  "dex_id": 206,
+  "name": "Inkregent",
+  "elements": [
+   "INK"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "inkpip",
+  "era": 1,
+  "base": {
+   "hp": 95,
+   "atk": 76,
+   "foc": 128,
+   "spd": 104,
+   "def": 111
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Quill Flick"
+   ],
+   "6": [
+    "Fizz Pop"
+   ],
+   "15": [
+    "Chill Mist"
+   ],
+   "20": [
+    "Blot Wave"
+   ],
+   "26": [
+    "Bore Wave"
+   ],
+   "32": [
+    "Margin Lash"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.6 m",
+  "habitat": "Inkwells of the cartographers' guild",
+  "lore": "It can draw a map of a place it has never seen. The guild keeps its drawings under lock.",
+  "origin": "The cartographers say the first map of Corvane was its shadow.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 207,
+  "name": "Weirkit",
+  "elements": [
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "weirkit",
+  "era": 1,
+  "base": {
+   "hp": 47,
+   "atk": 70,
+   "foc": 49,
+   "spd": 83,
+   "def": 46
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Drench"
+   ],
+   "6": [
+    "Lichen Lash"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Bloom Call"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.5 m",
+  "habitat": "Weirs and mill races",
+  "lore": "It slides down mill races for fun and climbs back up again.",
+  "origin": "Washed over a weir in a spring flood and liked it.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Weirrunner",
+    "rule": "ring",
+    "value": 18
+   }
+  ]
+ },
+ {
+  "dex_id": 208,
+  "name": "Weirrunner",
+  "elements": [
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "weirkit",
+  "era": 1,
+  "base": {
+   "hp": 70,
+   "atk": 100,
+   "foc": 65,
+   "spd": 108,
+   "def": 62
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Tide Call"
+   ],
+   "6": [
+    "Lichen Lash"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Graft"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.9 m",
+  "habitat": "Weirs and mill races",
+  "lore": "It races the current and always wins. Millers set their wheels by it.",
+  "origin": "A Weirkit that swam every weir of the delta in one day.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Weirmarshal",
+    "rule": "ring",
+    "value": 33
+   }
+  ]
+ },
+ {
+  "dex_id": 209,
+  "name": "Weirmarshal",
+  "elements": [
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "weirkit",
+  "era": 1,
+  "base": {
+   "hp": 85,
+   "atk": 122,
+   "foc": 87,
+   "spd": 135,
+   "def": 67
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Tide Call"
+   ],
+   "6": [
+    "Pollen Prick"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Root Mend"
+   ],
+   "20": [
+    "Undertow"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.6 m",
+  "habitat": "Weirs and mill races",
+  "lore": "Its tail steers whole rivers. In floods it leads the water away from the towns.",
+  "origin": "Grown below the great weir where three rivers meet.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 210,
+  "name": "Diplit",
+  "elements": [
+   "VOLT",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "diplit",
+  "era": 1,
+  "base": {
+   "hp": 48,
+   "atk": 67,
+   "foc": 45,
+   "spd": 75,
+   "def": 44
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Spark Call"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Pylon Snap"
+   ],
+   "15": [
+    "Chill Mist"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Undertow"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.4 m",
+  "habitat": "Overhanging branches by the river",
+  "lore": "It sits very still on a branch, then drops into the water with a flash.",
+  "origin": "Hatched in a riverbank burrow during a thunderstorm.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Diparrow",
+    "rule": "ring",
+    "value": 18
+   }
+  ]
+ },
+ {
+  "dex_id": 211,
+  "name": "Diparrow",
+  "elements": [
+   "VOLT",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "diplit",
+  "era": 1,
+  "base": {
+   "hp": 70,
+   "atk": 100,
+   "foc": 66,
+   "spd": 108,
+   "def": 64
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Grid Lock"
+   ],
+   "6": [
+    "Salt Snap"
+   ],
+   "10": [
+    "Pylon Snap"
+   ],
+   "15": [
+    "Deepwell Draught"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Rip Current"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.8 m",
+  "habitat": "Overhanging branches by the river",
+  "lore": "Sparks fly off its beak when it dives. Fish freeze in place.",
+  "origin": "A Diplit that dived a hundred times without missing.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Dipmonarch",
+    "rule": "ring",
+    "value": 32
+   }
+  ]
+ },
+ {
+  "dex_id": 212,
+  "name": "Dipmonarch",
+  "elements": [
+   "VOLT",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "diplit",
+  "era": 1,
+  "base": {
+   "hp": 84,
+   "atk": 118,
+   "foc": 75,
+   "spd": 127,
+   "def": 68
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Spark Call"
+   ],
+   "6": [
+    "Salt Snap"
+   ],
+   "10": [
+    "Pylon Snap"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Rip Current"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ],
+   "44": [
+    "Capacitor Crash"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.3 m",
+  "habitat": "Overhanging branches by the river",
+  "lore": "It dives like a bolt of lightning. The river lights up where it strikes.",
+  "origin": "Grown on the tallest willow over the delta.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 213,
+  "name": "Woadlet",
+  "elements": [
+   "BLOOM",
+   "UMBRA"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "bulwark",
+  "line_id": "woadlet",
+  "era": 1,
+  "base": {
+   "hp": 71,
+   "atk": 59,
+   "foc": 48,
+   "spd": 45,
+   "def": 87
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Lichen Lash",
+    "Root Mend"
+   ],
+   "6": [
+    "Veil Step"
+   ],
+   "10": [
+    "Kelp Lash"
+   ],
+   "15": [
+    "Cower Shade"
+   ],
+   "20": [
+    "Thorn Volley"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Bloom Burst"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.4 m",
+  "habitat": "Woad fields, dye vats",
+  "lore": "Its shell is stained deep blue. It eats woad leaves and leaves blue trails.",
+  "origin": "Crawled out of a dye vat in the Woadfen.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Woadwhorl",
+    "rule": "ring",
+    "value": 19
+   }
+  ]
+ },
+ {
+  "dex_id": 214,
+  "name": "Woadwhorl",
+  "elements": [
+   "BLOOM",
+   "UMBRA"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "bulwark",
+  "line_id": "woadlet",
+  "era": 1,
+  "base": {
+   "hp": 94,
+   "atk": 74,
+   "foc": 64,
+   "spd": 58,
+   "def": 101
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Root Mend"
+   ],
+   "6": [
+    "Shade Pounce"
+   ],
+   "10": [
+    "Kelp Lash"
+   ],
+   "15": [
+    "Gloam Pact"
+   ],
+   "20": [
+    "Thorn Volley"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Thornwake"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.8 m",
+  "habitat": "Woad fields, dye vats",
+  "lore": "The dyers follow it to the best woad fields.",
+  "origin": "A Woadlet that crossed the whole fen in one summer.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Woadcastle",
+    "rule": "ring",
+    "value": 36
+   }
+  ]
+ },
+ {
+  "dex_id": 215,
+  "name": "Woadcastle",
+  "elements": [
+   "BLOOM",
+   "UMBRA"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "bulwark",
+  "line_id": "woadlet",
+  "era": 1,
+  "base": {
+   "hp": 122,
+   "atk": 90,
+   "foc": 71,
+   "spd": 66,
+   "def": 123
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Lichen Lash",
+    "Bloom Call"
+   ],
+   "6": [
+    "Mirk Nip"
+   ],
+   "10": [
+    "Kelp Lash"
+   ],
+   "15": [
+    "Murk Call"
+   ],
+   "20": [
+    "Thorn Volley"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Bloom Burst"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ],
+   "44": [
+    "Wildgrowth Crash"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.3 m",
+  "habitat": "Woad fields, dye vats",
+  "lore": "Its shell is big as a hut and blue as the night. Children hide under it in the rain.",
+  "origin": "Grown in the oldest dye garden of Corvane.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 216,
+  "name": "Rubrit",
+  "elements": [
+   "EMBER",
+   "BLOOM"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "vanguard",
+  "line_id": "rubrit",
+  "era": 1,
+  "base": {
+   "hp": 66,
+   "atk": 74,
+   "foc": 48,
+   "spd": 69,
+   "def": 58
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Ash Call"
+   ],
+   "6": [
+    "Pollen Prick"
+   ],
+   "10": [
+    "Glow Knuckle"
+   ],
+   "15": [
+    "Puffcap Haze"
+   ],
+   "20": [
+    "Kiln Strike"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.3 m",
+  "habitat": "Madder fields of Madderby",
+  "lore": "Its shell is madder red. It gnaws on the roots dyers want.",
+  "origin": "Dug up with madder roots in an autumn harvest.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Rubricorn",
+    "rule": "ring",
+    "value": 20
+   }
+  ]
+ },
+ {
+  "dex_id": 217,
+  "name": "Rubricorn",
+  "elements": [
+   "EMBER",
+   "BLOOM"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "vanguard",
+  "line_id": "rubrit",
+  "era": 1,
+  "base": {
+   "hp": 79,
+   "atk": 107,
+   "foc": 60,
+   "spd": 93,
+   "def": 64
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Ash Call"
+   ],
+   "6": [
+    "Lichen Lash"
+   ],
+   "10": [
+    "Glow Knuckle"
+   ],
+   "15": [
+    "Bloom Call"
+   ],
+   "20": [
+    "Kiln Strike"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.6 m",
+  "habitat": "Madder fields of Madderby",
+  "lore": "Its twin horns glow warm red. It guards the madder fields.",
+  "origin": "A Rubrit that ate a whole cart of madder roots.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Rubriclad",
+    "rule": "ring",
+    "value": 33
+   }
+  ]
+ },
+ {
+  "dex_id": 218,
+  "name": "Rubriclad",
+  "elements": [
+   "EMBER",
+   "BLOOM"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "vanguard",
+  "line_id": "rubrit",
+  "era": 1,
+  "base": {
+   "hp": 99,
+   "atk": 111,
+   "foc": 80,
+   "spd": 116,
+   "def": 80
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Kindle Up"
+   ],
+   "6": [
+    "Kelp Lash"
+   ],
+   "10": [
+    "Glow Knuckle"
+   ],
+   "15": [
+    "Bloom Call"
+   ],
+   "20": [
+    "Kiln Strike"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ],
+   "44": [
+    "Furnace Heart"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.0 m",
+  "habitat": "Madder fields of Madderby",
+  "lore": "Its armour is the deepest red in Corvane. The dye guild copies its colour.",
+  "origin": "Grown under the red mill of Madderby.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 219,
+  "name": "Nimbub",
+  "elements": [
+   "GALE",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "nimbub",
+  "era": 1,
+  "base": {
+   "hp": 62,
+   "atk": 44,
+   "foc": 89,
+   "spd": 56,
+   "def": 59
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Tailwind"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "10": [
+    "Updraft"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Bore Wave"
+   ],
+   "32": [
+    "Squall"
+   ]
+  },
+  "bond_rate": 0.53,
+  "height": "0.5 m",
+  "habitat": "Rainy meadows on the dikes",
+  "lore": "Its wool holds rain. When it shakes, a small shower falls.",
+  "origin": "Born from a low cloud that touched the dike.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Nimbuck",
+    "rule": "ring",
+    "value": 17
+   }
+  ]
+ },
+ {
+  "dex_id": 220,
+  "name": "Nimbuck",
+  "elements": [
+   "GALE",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "nimbub",
+  "era": 1,
+  "base": {
+   "hp": 78,
+   "atk": 57,
+   "foc": 108,
+   "spd": 77,
+   "def": 80
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Breeze Slice",
+    "Scatter Gale"
+   ],
+   "6": [
+    "Fizz Pop"
+   ],
+   "10": [
+    "Updraft"
+   ],
+   "15": [
+    "Drench"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Bore Wave"
+   ],
+   "32": [
+    "Squall"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.9 m",
+  "habitat": "Rainy meadows on the dikes",
+  "lore": "Cloud puffs grow on its back. Farmers lead it over dry fields.",
+  "origin": "A Nimbub that grazed in the rain for a whole week.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Nimbarch",
+    "rule": "ring",
+    "value": 35
+   }
+  ]
+ },
+ {
+  "dex_id": 221,
+  "name": "Nimbarch",
+  "elements": [
+   "GALE",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "nimbub",
+  "era": 1,
+  "base": {
+   "hp": 81,
+   "atk": 62,
+   "foc": 117,
+   "spd": 84,
+   "def": 95
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Breeze Slice",
+    "Drift Step"
+   ],
+   "6": [
+    "Fizz Pop"
+   ],
+   "10": [
+    "Updraft"
+   ],
+   "15": [
+    "Drench"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Squall"
+   ],
+   "38": [
+    "Bore Wave"
+   ],
+   "44": [
+    "Downburst"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "1.6 m",
+  "habitat": "Rainy meadows on the dikes",
+  "lore": "Where it lies down, a rain cloud gathers and stays until it leaves.",
+  "origin": "Grown in the rainiest meadow of the delta.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 222,
+  "name": "Sluicekit",
+  "elements": [
+   "STONE",
+   "BLOOM"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "bulwark",
+  "line_id": "sluicekit",
+  "era": 1,
+  "base": {
+   "hp": 68,
+   "atk": 60,
+   "foc": 45,
+   "spd": 44,
+   "def": 88
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Bowl Over",
+    "Hunker Down"
+   ],
+   "6": [
+    "Lichen Lash"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Root Mend"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.5 m",
+  "habitat": "Dikes and sluice gates",
+  "lore": "It plugs small leaks in dikes with mud and pebbles.",
+  "origin": "Found asleep in a sluice gate after a storm.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Sluicer",
+    "rule": "ring",
+    "value": 17
+   }
+  ]
+ },
+ {
+  "dex_id": 223,
+  "name": "Sluicer",
+  "elements": [
+   "STONE",
+   "BLOOM"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "bulwark",
+  "line_id": "sluicekit",
+  "era": 1,
+  "base": {
+   "hp": 99,
+   "atk": 73,
+   "foc": 64,
+   "spd": 54,
+   "def": 113
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Bowl Over",
+    "Quarry Wall"
+   ],
+   "6": [
+    "Kelp Lash"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Root Mend"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.9 m",
+  "habitat": "Dikes and sluice gates",
+  "lore": "Its flat tail slaps the water to warn of rising floods.",
+  "origin": "A Sluicekit that held a dike shut through a flood night.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Sluicewarden",
+    "rule": "ring",
+    "value": 33
+   }
+  ]
+ },
+ {
+  "dex_id": 224,
+  "name": "Sluicewarden",
+  "elements": [
+   "STONE",
+   "BLOOM"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "bulwark",
+  "line_id": "sluicekit",
+  "era": 1,
+  "base": {
+   "hp": 102,
+   "atk": 92,
+   "foc": 77,
+   "spd": 59,
+   "def": 125
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "All-In Crash",
+    "Quarry Wall"
+   ],
+   "6": [
+    "Lichen Lash"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Root Mend"
+   ],
+   "20": [
+    "Landslip"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Slow Quake"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "1.6 m",
+  "habitat": "Dikes and sluice gates",
+  "lore": "It opens and shuts the great sluices with its teeth. The delta trusts it.",
+  "origin": "The dike keepers say it built the first dike.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "bark_wrap"
+ },
+ {
+  "dex_id": 225,
+  "name": "Vanepip",
+  "elements": [
+   "GALE",
+   "VOLT"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "vanguard",
+  "line_id": "vanepip",
+  "era": 1,
+  "base": {
+   "hp": 55,
+   "atk": 76,
+   "foc": 47,
+   "spd": 69,
+   "def": 53
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Tailwind"
+   ],
+   "6": [
+    "Crackle Bite"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Grid Lock"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Pylon Snap"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.4 m",
+  "habitat": "Roof ridges, weather vanes",
+  "lore": "It perches on weather vanes and turns with the wind.",
+  "origin": "Hatched on the roof of a mill on a windy morning.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Vanecrow",
+    "rule": "ring",
+    "value": 16
+   }
+  ]
+ },
+ {
+  "dex_id": 226,
+  "name": "Vanecrow",
+  "elements": [
+   "GALE",
+   "VOLT"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "vanguard",
+  "line_id": "vanepip",
+  "era": 1,
+  "base": {
+   "hp": 74,
+   "atk": 98,
+   "foc": 63,
+   "spd": 98,
+   "def": 71
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Scatter Gale"
+   ],
+   "6": [
+    "Crackle Bite"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Charged Mist"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Storm Gnash"
+   ],
+   "38": [
+    "Short Circuit"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.8 m",
+  "habitat": "Roof ridges, weather vanes",
+  "lore": "Its feathers crackle before a storm. People take in the washing when it calls.",
+  "origin": "A Vanepip that sat out a thunderstorm on a church spire.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Vanecrest",
+    "rule": "ring",
+    "value": 33
+   }
+  ]
+ },
+ {
+  "dex_id": 227,
+  "name": "Vanecrest",
+  "elements": [
+   "GALE",
+   "VOLT"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "vanguard",
+  "line_id": "vanepip",
+  "era": 1,
+  "base": {
+   "hp": 102,
+   "atk": 128,
+   "foc": 79,
+   "spd": 111,
+   "def": 77
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Breeze Slice",
+    "Scatter Gale"
+   ],
+   "6": [
+    "Crackle Bite"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Charged Mist"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Storm Gnash"
+   ],
+   "32": [
+    "Gale Scythe"
+   ],
+   "38": [
+    "Short Circuit"
+   ],
+   "44": [
+    "Downburst"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.3 m",
+  "habitat": "Roof ridges, weather vanes",
+  "lore": "Its crest points where the wind will blow tomorrow. Sailors watch it closely.",
+  "origin": "Grown on the highest vane of Corvane.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 228,
+  "name": "Chimelet",
+  "elements": [
+   "ECHO"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "chimelet",
+  "era": 1,
+  "base": {
+   "hp": 62,
+   "atk": 48,
+   "foc": 94,
+   "spd": 59,
+   "def": 69
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Bell Tap"
+   ],
+   "6": [
+    "Glint"
+   ],
+   "15": [
+    "Dawn Call"
+   ],
+   "20": [
+    "Resound"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Toll of Ages"
+   ]
+  },
+  "bond_rate": 0.45,
+  "height": "0.4 m",
+  "habitat": "Still water, bell towers",
+  "lore": "It answers every sound with a soft echo. It loves bells.",
+  "origin": "Rang out of a bell on a still morning and stayed.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Chimewell",
+    "rule": "ring",
+    "value": 17
+   }
+  ]
+ },
+ {
+  "dex_id": 229,
+  "name": "Chimewell",
+  "elements": [
+   "ECHO"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "chimelet",
+  "era": 1,
+  "base": {
+   "hp": 87,
+   "atk": 57,
+   "foc": 112,
+   "spd": 74,
+   "def": 80
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Bell Tap"
+   ],
+   "6": [
+    "Glint"
+   ],
+   "15": [
+    "Dawn Mend"
+   ],
+   "20": [
+    "Resound"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Toll of Ages"
+   ],
+   "38": [
+    "Omen Bell"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.8 m",
+  "habitat": "Still water, bell towers",
+  "lore": "It sits by still water and repeats the words people said there long ago.",
+  "origin": "A Chimelet that listened to the Stillwater for a whole year.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Chimeward",
+    "rule": "ring",
+    "value": 33
+   }
+  ]
+ },
+ {
+  "dex_id": 230,
+  "name": "Chimeward",
+  "elements": [
+   "ECHO"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "chimelet",
+  "era": 1,
+  "base": {
+   "hp": 104,
+   "atk": 67,
+   "foc": 127,
+   "spd": 97,
+   "def": 102
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Bell Tap"
+   ],
+   "6": [
+    "Wick Flicker"
+   ],
+   "15": [
+    "Dawn Call"
+   ],
+   "20": [
+    "Resound"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Toll of Ages"
+   ],
+   "38": [
+    "Omen Bell"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.3 m",
+  "habitat": "Still water, bell towers",
+  "lore": "Its ring of light hums like a bell. Lost voices find their way back through it.",
+  "origin": "Grown in the mirror water, where every sound comes back.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 231,
+  "name": "Rushkit",
+  "elements": [
+   "UMBRA",
+   "BLOOM"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "rushkit",
+  "era": 1,
+  "base": {
+   "hp": 47,
+   "atk": 66,
+   "foc": 46,
+   "spd": 75,
+   "def": 44
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Gloom Handoff"
+   ],
+   "6": [
+    "Pollen Prick"
+   ],
+   "10": [
+    "Shade Pounce"
+   ],
+   "15": [
+    "Graft"
+   ],
+   "20": [
+    "Murmur Bite"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.5 m",
+  "habitat": "Tall rushes of the fen",
+  "lore": "It hides in the tall rushes and only its ears show.",
+  "origin": "Born in the rushes on a moonless night.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Rushprowl",
+    "rule": "ring",
+    "value": 17
+   }
+  ]
+ },
+ {
+  "dex_id": 232,
+  "name": "Rushprowl",
+  "elements": [
+   "UMBRA",
+   "BLOOM"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "rushkit",
+  "era": 1,
+  "base": {
+   "hp": 63,
+   "atk": 90,
+   "foc": 75,
+   "spd": 116,
+   "def": 56
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Mirk Nip",
+    "Hush"
+   ],
+   "6": [
+    "Kelp Lash"
+   ],
+   "10": [
+    "Dusk Rake"
+   ],
+   "15": [
+    "Bloom Call"
+   ],
+   "20": [
+    "Murmur Bite"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.9 m",
+  "habitat": "Tall rushes of the fen",
+  "lore": "Its striped coat matches the rushes. It moves without bending a stalk.",
+  "origin": "A Rushkit that hunted in the fen for a whole season.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Rushstalker",
+    "rule": "ring",
+    "value": 32
+   }
+  ]
+ },
+ {
+  "dex_id": 233,
+  "name": "Rushstalker",
+  "elements": [
+   "UMBRA",
+   "BLOOM"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "rushkit",
+  "era": 1,
+  "base": {
+   "hp": 78,
+   "atk": 123,
+   "foc": 87,
+   "spd": 143,
+   "def": 74
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Cower Shade"
+   ],
+   "6": [
+    "Kelp Lash"
+   ],
+   "10": [
+    "Murmur Bite"
+   ],
+   "15": [
+    "Husk Shed"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ],
+   "44": [
+    "Eclipse Crush"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.6 m",
+  "habitat": "Tall rushes of the fen",
+  "lore": "Its leaf tail sways like a reed. Nothing in the fen sees it coming.",
+  "origin": "Grown in the darkest corner of the Woadfen.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "bark_wrap"
+ },
+ {
+  "dex_id": 234,
+  "name": "Ripjolt",
+  "elements": [
+   "VOLT",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "kindler",
+  "line_id": "ripjolt",
+  "era": 1,
+  "base": {
+   "hp": 58,
+   "atk": 55,
+   "foc": 74,
+   "spd": 64,
+   "def": 54
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Static Tag",
+    "Grid Lock"
+   ],
+   "6": [
+    "Fizz Pop"
+   ],
+   "10": [
+    "Arc Bolt"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Short Circuit"
+   ]
+  },
+  "bond_rate": 0.55,
+  "height": "0.9 m",
+  "habitat": "Fast channels of the delta",
+  "lore": "It swims in fast water and tingles anyone who touches it.",
+  "origin": "Hatched where lightning struck a river channel.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Ripjolter",
+    "rule": "ring",
+    "value": 16
+   }
+  ]
+ },
+ {
+  "dex_id": 235,
+  "name": "Ripjolter",
+  "elements": [
+   "VOLT",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "kindler",
+  "line_id": "ripjolt",
+  "era": 1,
+  "base": {
+   "hp": 86,
+   "atk": 69,
+   "foc": 97,
+   "spd": 87,
+   "def": 69
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Siphon Spark",
+    "Charged Mist"
+   ],
+   "6": [
+    "Fizz Pop"
+   ],
+   "10": [
+    "Arc Bolt"
+   ],
+   "15": [
+    "Drench"
+   ],
+   "26": [
+    "Bore Wave"
+   ],
+   "32": [
+    "Short Circuit"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "1.7 m",
+  "habitat": "Fast channels of the delta",
+  "lore": "Sparks run down the spikes on its back when it hunts.",
+  "origin": "A Ripjolt that swam through a whole thunderstorm.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Ripjoltane",
+    "rule": "ring",
+    "value": 34
+   }
+  ]
+ },
+ {
+  "dex_id": 236,
+  "name": "Ripjoltane",
+  "elements": [
+   "VOLT",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "kindler",
+  "line_id": "ripjolt",
+  "era": 1,
+  "base": {
+   "hp": 86,
+   "atk": 78,
+   "foc": 103,
+   "spd": 107,
+   "def": 80
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Static Tag",
+    "Charged Mist"
+   ],
+   "6": [
+    "Fizz Pop"
+   ],
+   "10": [
+    "Arc Bolt"
+   ],
+   "15": [
+    "Drench"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Short Circuit"
+   ],
+   "38": [
+    "Bore Wave"
+   ],
+   "44": [
+    "Capacitor Crash"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "2.9 m",
+  "habitat": "Fast channels of the delta",
+  "lore": "It lights up the delta at night. Boatmen steer clear of its glow.",
+  "origin": "Grown in the fastest channel of the delta.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 237,
+  "name": "Grindlet",
+  "elements": [
+   "STONE",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "bulwark",
+  "line_id": "grindlet",
+  "era": 1,
+  "base": {
+   "hp": 77,
+   "atk": 62,
+   "foc": 47,
+   "spd": 46,
+   "def": 83
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Hunker Down"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Drench"
+   ],
+   "20": [
+    "Landslip"
+   ],
+   "26": [
+    "Undertow"
+   ],
+   "32": [
+    "Tremor Thud"
+   ]
+  },
+  "bond_rate": 0.53,
+  "height": "0.6 m",
+  "habitat": "River mills",
+  "lore": "It sits beside millstones and hums along with their turning.",
+  "origin": "Chipped off a millstone on its first day of work.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Grindwheel",
+    "rule": "ring",
+    "value": 18
+   }
+  ]
+ },
+ {
+  "dex_id": 238,
+  "name": "Grindwheel",
+  "elements": [
+   "STONE",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "bulwark",
+  "line_id": "grindlet",
+  "era": 1,
+  "base": {
+   "hp": 94,
+   "atk": 75,
+   "foc": 67,
+   "spd": 64,
+   "def": 122
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Hunker Down"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Undertow"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "1.1 m",
+  "habitat": "River mills",
+  "lore": "A ring of cogs grows around its head. It turns stuck wheels by hand.",
+  "origin": "A Grindlet that kept a mill turning when the river ran dry.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Grindmonolith",
+    "rule": "ring",
+    "value": 36
+   }
+  ]
+ },
+ {
+  "dex_id": 239,
+  "name": "Grindmonolith",
+  "elements": [
+   "STONE",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "bulwark",
+  "line_id": "grindlet",
+  "era": 1,
+  "base": {
+   "hp": 123,
+   "atk": 96,
+   "foc": 84,
+   "spd": 68,
+   "def": 131
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "All-In Crash",
+    "Quarry Wall"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Undertow"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.9 m",
+  "habitat": "River mills",
+  "lore": "It is heavy as a millstone and just as patient. Mills are built around it.",
+  "origin": "The millers say it was the first millstone of the delta.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 240,
+  "name": "Morelit",
+  "elements": [
+   "BLOOM",
+   "LUMEN"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "kindler",
+  "line_id": "morelit",
+  "era": 1,
+  "base": {
+   "hp": 63,
+   "atk": 53,
+   "foc": 74,
+   "spd": 69,
+   "def": 54
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Root Mend"
+   ],
+   "6": [
+    "Wick Flicker"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Dawn Mend"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Prism Ray"
+   ]
+  },
+  "bond_rate": 0.53,
+  "height": "0.5 m",
+  "habitat": "Damp woods by the river",
+  "lore": "A soft glow shines under its cap. It lights the forest floor at night.",
+  "origin": "Sprouted on a fallen log after a warm rain.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Morelamp",
+    "rule": "ring",
+    "value": 17
+   }
+  ]
+ },
+ {
+  "dex_id": 241,
+  "name": "Morelamp",
+  "elements": [
+   "BLOOM",
+   "LUMEN"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "kindler",
+  "line_id": "morelit",
+  "era": 1,
+  "base": {
+   "hp": 79,
+   "atk": 78,
+   "foc": 98,
+   "spd": 95,
+   "def": 75
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Lichen Lash",
+    "Bloom Call"
+   ],
+   "6": [
+    "Beacon Ping"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Still Thought"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Bloom Burst"
+   ],
+   "38": [
+    "Omen Bell"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.9 m",
+  "habitat": "Damp woods by the river",
+  "lore": "Its spotted cap glows brighter in the rain.",
+  "origin": "A Morelit that grew in the shade of the oldest willow.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Morelord",
+    "rule": "ring",
+    "value": 32
+   }
+  ]
+ },
+ {
+  "dex_id": 242,
+  "name": "Morelord",
+  "elements": [
+   "BLOOM",
+   "LUMEN"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "kindler",
+  "line_id": "morelit",
+  "era": 1,
+  "base": {
+   "hp": 103,
+   "atk": 82,
+   "foc": 118,
+   "spd": 106,
+   "def": 93
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Lichen Lash",
+    "Bloom Call"
+   ],
+   "6": [
+    "Wick Flicker"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Still Thought"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Bloom Burst"
+   ],
+   "38": [
+    "Omen Bell"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.6 m",
+  "habitat": "Damp woods by the river",
+  "lore": "Its cap is wide as an umbrella. Travellers wait out the rain beneath it.",
+  "origin": "Grown in a ring of mushrooms that nobody dared to step into.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 243,
+  "name": "Rookit",
+  "elements": [
+   "UMBRA",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "vanguard",
+  "line_id": "rookit",
+  "era": 1,
+  "base": {
+   "hp": 56,
+   "atk": 72,
+   "foc": 41,
+   "spd": 68,
+   "def": 50
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Mirk Nip",
+    "Cower Shade"
+   ],
+   "6": [
+    "Breeze Slice"
+   ],
+   "10": [
+    "Dusk Rake"
+   ],
+   "15": [
+    "Drift Step"
+   ],
+   "20": [
+    "Murmur Bite"
+   ],
+   "26": [
+    "Gale Scythe"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.4 m",
+  "habitat": "Rook trees over the fields",
+  "lore": "It collects shiny buttons and hides them in its nest.",
+  "origin": "Hatched in a rook tree over a busy market.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Rookwarden",
+    "rule": "ring",
+    "value": 27
+   }
+  ]
+ },
+ {
+  "dex_id": 244,
+  "name": "Rookwarden",
+  "elements": [
+   "UMBRA",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "vanguard",
+  "line_id": "rookit",
+  "era": 1,
+  "base": {
+   "hp": 84,
+   "atk": 106,
+   "foc": 72,
+   "spd": 99,
+   "def": 69
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Gloam Pact"
+   ],
+   "6": [
+    "Draft Needle"
+   ],
+   "10": [
+    "Dusk Rake"
+   ],
+   "15": [
+    "Drift Step"
+   ],
+   "20": [
+    "Murmur Bite"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Gale Scythe"
+   ],
+   "44": [
+    "Eclipse Crush"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "0.9 m",
+  "habitat": "Rook trees over the fields",
+  "lore": "It keeps watch over the fields and calls when strangers come.",
+  "origin": "A Rookit that guarded a field all through the harvest.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 245,
+  "name": "Skimmit",
+  "elements": [
+   "TIDE",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "skimmit",
+  "era": 1,
+  "base": {
+   "hp": 44,
+   "atk": 67,
+   "foc": 46,
+   "spd": 75,
+   "def": 38
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Drench"
+   ],
+   "6": [
+    "Draft Needle"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Drift Step"
+   ],
+   "20": [
+    "Undertow"
+   ],
+   "26": [
+    "Gale Scythe"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.3 m",
+  "habitat": "Calm pools and canals",
+  "lore": "It walks on water on its long legs and never gets wet.",
+  "origin": "Hatched on a lily pad in a still canal.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Skimmarch",
+    "rule": "ring",
+    "value": 25
+   }
+  ]
+ },
+ {
+  "dex_id": 246,
+  "name": "Skimmarch",
+  "elements": [
+   "TIDE",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "skimmit",
+  "era": 1,
+  "base": {
+   "hp": 73,
+   "atk": 92,
+   "foc": 71,
+   "spd": 112,
+   "def": 64
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Chill Mist"
+   ],
+   "6": [
+    "Draft Needle"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Scatter Gale"
+   ],
+   "20": [
+    "Undertow"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ],
+   "38": [
+    "Gale Scythe"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "0.7 m",
+  "habitat": "Calm pools and canals",
+  "lore": "One kick sends it across a whole canal. It races the boats for fun.",
+  "origin": "A Skimmit that crossed the widest river in Corvane.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 247,
+  "name": "Prismist",
+  "elements": [
+   "TIDE",
+   "LUMEN"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "prismist",
+  "era": 1,
+  "base": {
+   "hp": 61,
+   "atk": 42,
+   "foc": 82,
+   "spd": 62,
+   "def": 64
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Fizz Pop",
+    "Chill Mist"
+   ],
+   "6": [
+    "Wick Flicker"
+   ],
+   "10": [
+    "Salt Spray"
+   ],
+   "15": [
+    "Dawn Call"
+   ],
+   "20": [
+    "Spindrift Shot"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Bore Wave"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.4 m",
+  "habitat": "Rain showers in sunlight",
+  "lore": "It appears in rain showers when the sun comes out and paints the air in colours.",
+  "origin": "Born in the first rainbow over Madderby.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Prismistral",
+    "rule": "ring",
+    "value": 25
+   }
+  ]
+ },
+ {
+  "dex_id": 248,
+  "name": "Prismistral",
+  "elements": [
+   "TIDE",
+   "LUMEN"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "prismist",
+  "era": 1,
+  "base": {
+   "hp": 80,
+   "atk": 53,
+   "foc": 111,
+   "spd": 75,
+   "def": 74
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Fizz Pop",
+    "Tide Call"
+   ],
+   "6": [
+    "Beacon Ping"
+   ],
+   "10": [
+    "Salt Spray"
+   ],
+   "15": [
+    "Dawn Call"
+   ],
+   "20": [
+    "Spindrift Shot"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Bore Wave"
+   ],
+   "38": [
+    "Omen Bell"
+   ],
+   "44": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "0.9 m",
+  "habitat": "Rain showers in sunlight",
+  "lore": "Its colours stay in the air for an hour after it leaves. Dyers copy them.",
+  "origin": "A Prismist that followed the rain across the whole delta.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 249,
+  "name": "Canalet",
+  "elements": [
+   "TIDE",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "vanguard",
+  "line_id": "canalet",
+  "era": 1,
+  "base": {
+   "hp": 59,
+   "atk": 83,
+   "foc": 54,
+   "spd": 70,
+   "def": 56
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Deepwell Draught"
+   ],
+   "6": [
+    "Bowl Over"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.5 m",
+  "habitat": "Town canals",
+  "lore": "It nibbles moss off the canal walls and keeps them clean.",
+  "origin": "Hatched under a canal bridge in Madderby.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Canalord",
+    "rule": "ring",
+    "value": 24
+   }
+  ]
+ },
+ {
+  "dex_id": 250,
+  "name": "Canalord",
+  "elements": [
+   "TIDE",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "vanguard",
+  "line_id": "canalet",
+  "era": 1,
+  "base": {
+   "hp": 88,
+   "atk": 98,
+   "foc": 61,
+   "spd": 100,
+   "def": 67
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Drench"
+   ],
+   "6": [
+    "Pebble Toss"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "1.1 m",
+  "habitat": "Town canals",
+  "lore": "Stone plates grow along its back. It sleeps in the deepest lock.",
+  "origin": "A Canalet that swam through every canal of the town.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 251,
+  "name": "Padlet",
+  "elements": [
+   "BLOOM",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "kindler",
+  "line_id": "padlet",
+  "era": 1,
+  "base": {
+   "hp": 63,
+   "atk": 54,
+   "foc": 74,
+   "spd": 66,
+   "def": 59
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Husk Shed"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Drench"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Bore Wave"
+   ],
+   "32": [
+    "Bloom Burst"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.4 m",
+  "habitat": "Lily ponds",
+  "lore": "It carries lily leaves on its back and floats among the real ones.",
+  "origin": "Grew up on a lily pond, hidden among the leaves.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Padlotus",
+    "rule": "ring",
+    "value": 27
+   }
+  ]
+ },
+ {
+  "dex_id": 252,
+  "name": "Padlotus",
+  "elements": [
+   "BLOOM",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "kindler",
+  "line_id": "padlet",
+  "era": 1,
+  "base": {
+   "hp": 84,
+   "atk": 63,
+   "foc": 95,
+   "spd": 92,
+   "def": 66
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Lichen Lash",
+    "Bloom Call"
+   ],
+   "6": [
+    "Fizz Pop"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Bloom Burst"
+   ],
+   "38": [
+    "Bore Wave"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "0.9 m",
+  "habitat": "Lily ponds",
+  "lore": "A whole garden grows on its back. Frogs sit on it in the sun.",
+  "origin": "A Padlet that drifted on the same pond for ten summers.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "bark_wrap"
+ },
+ {
+  "dex_id": 253,
+  "name": "Thrashkin",
+  "elements": [
+   "STONE",
+   "BLOOM"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "vanguard",
+  "line_id": "thrashkin",
+  "era": 1,
+  "base": {
+   "hp": 62,
+   "atk": 81,
+   "foc": 44,
+   "spd": 69,
+   "def": 52
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "All-In Crash",
+    "Hunker Down"
+   ],
+   "6": [
+    "Lichen Lash"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Bloom Call"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.5 m",
+  "habitat": "Threshing floors, barns",
+  "lore": "It stamps on sheaves and the grain falls out. Farmers love it at harvest.",
+  "origin": "Born on a threshing floor during the harvest feast.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Threshox",
+    "rule": "ring",
+    "value": 24
+   }
+  ]
+ },
+ {
+  "dex_id": 254,
+  "name": "Threshox",
+  "elements": [
+   "STONE",
+   "BLOOM"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "vanguard",
+  "line_id": "thrashkin",
+  "era": 1,
+  "base": {
+   "hp": 83,
+   "atk": 104,
+   "foc": 64,
+   "spd": 103,
+   "def": 71
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Grit Jab",
+    "Quarry Wall"
+   ],
+   "6": [
+    "Kelp Lash"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Husk Shed"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.1 m",
+  "habitat": "Threshing floors, barns",
+  "lore": "Its shaggy mane is full of straw. It can thresh a barn in one night.",
+  "origin": "A Thrashkin that threshed a whole village's harvest.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 255,
+  "name": "Cartocoil",
+  "elements": [
+   "INK"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "kindler",
+  "line_id": "cartocoil",
+  "era": 1,
+  "base": {
+   "hp": 89,
+   "atk": 77,
+   "foc": 109,
+   "spd": 87,
+   "def": 66
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Quill Flick"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "15": [
+    "Scatter Gale"
+   ],
+   "20": [
+    "Blot Wave"
+   ],
+   "26": [
+    "Lull Breaker"
+   ],
+   "32": [
+    "Margin Lash"
+   ],
+   "38": [
+    "Cloudbreak"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "1.4 m",
+  "habitat": "The guild's map room",
+  "lore": "It curls on map tables and its body draws the coastlines. The guild calls it their oldest member.",
+  "origin": "Rose out of the ink of the first map the guild ever drew.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 256,
+  "name": "Belfrit",
+  "elements": [
+   "ECHO",
+   "UMBRA"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "belfrit",
+  "era": 1,
+  "base": {
+   "hp": 66,
+   "atk": 108,
+   "foc": 73,
+   "spd": 105,
+   "def": 69
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Bell Tap"
+   ],
+   "6": [
+    "Veil Step"
+   ],
+   "15": [
+    "Gloom Handoff"
+   ],
+   "20": [
+    "Resound"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Toll of Ages"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "1.0 m",
+  "habitat": "Belfries of Corvane",
+  "lore": "It hangs in belfries and hears every bell long before it rings.",
+  "origin": "Woke when the oldest bell of Corvane cracked.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 257,
+  "name": "Dusktern",
+  "elements": [
+   "UMBRA",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "dusktern",
+  "era": 1,
+  "base": {
+   "hp": 71,
+   "atk": 96,
+   "foc": 64,
+   "spd": 112,
+   "def": 55
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Gloam Pact"
+   ],
+   "6": [
+    "Salt Snap"
+   ],
+   "10": [
+    "Murmur Bite"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "26": [
+    "Rip Current"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.6 m",
+  "habitat": "River mouths at dusk",
+  "lore": "It fishes only at dusk, when the water turns dark.",
+  "origin": "Flew in from the sea on the evening the ferry first crossed.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
  }
 ]

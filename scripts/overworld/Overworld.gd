@@ -35,6 +35,8 @@ var _daylight: CanvasModulate
 ## Lit windows at night, on a layer the night tint does not reach (buildings plan item 8).
 var _glow_layer: CanvasLayer
 var _glow: WindowGlow
+## The place's landmark sprite (Landmarks, map design item 509), y-sorted with the people.
+var _landmark: Sprite2D
 var _npcs: Array[NPC] = []
 var _ui: CanvasLayer
 var _text: TextBox
@@ -84,6 +86,8 @@ func _ready() -> void:
 		"rubbing": _action_rubbing,
 		"fish_trap": _action_fish_trap,
 		"wake": _action_wake,
+		"bounty": _action_bounty,
+		"fine_training": _action_fine_training,
 		"matchmaker": _action_matchmaker,
 		"reserve": _action_reserve,
 		"informant": _action_informant,
@@ -101,6 +105,7 @@ func _ready() -> void:
 		"quest_show": _action_quest_show,
 		"switch": _action_switch,
 		"gauntlet": _action_gauntlet,
+		"postgame_board": _action_postgame_board,
 		"rift_tower": _action_rift_tower,
 		"weekly": _action_weekly,
 		"master": _action_master,
@@ -340,6 +345,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	map.paint(_ground)
 	refresh_shade()
 	_spawn_npcs()
+	_place_landmark()
 	player.place(cell, face)
 	_place_inkshadow(cell, cell)
 	GameState.current_map = map_id
@@ -351,6 +357,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	EchoPath.note_visit(map_id)
 	# Today's world event gives its find on the first visit (plan 3422).
 	GameState.notices.append_array(WorldEvents.on_visit(map_id))
+	# A released Spirling may show up where it came from (plan 1137).
+	GameState.notices.append_array(Released.sightings(map_id, DailyFind.today_key(), GameState.rng))
 	GameState.player_cell = cell
 	GameState.facing = face
 	var era_before: int = EraManager.unlocked_era
@@ -509,6 +517,25 @@ func _try_gear(target: Vector2i) -> bool:
 	return true
 
 ## NPCs of the map that are there now: flags, "phase_only" (area 3 item 1168) and "weekdays".
+## Puts the map's landmark on its cell: the 16x32 sprite stands on the cell and covers the one above.
+func _place_landmark() -> void:
+	if _landmark != null:
+		_landmark.queue_free()
+		_landmark = null
+	var lm: Dictionary = Landmarks.for_map(map.id)
+	if lm.is_empty():
+		return
+	var path: String = Landmarks.art_path(str(lm.kind))
+	if path.is_empty():
+		return
+	_landmark = Sprite2D.new()
+	_landmark.name = "landmark"
+	_landmark.texture = load(path)
+	_landmark.centered = false
+	_landmark.offset = Vector2(0, -TilesetFactory.TILE)
+	_landmark.position = GridWalker.cell_to_pos(Landmarks.cell(lm))
+	_entities.add_child(_landmark)
+
 func _spawn_npcs() -> void:
 	for n: NPC in _npcs:
 		n.queue_free()
@@ -692,6 +719,10 @@ func _on_interact(cell: Vector2i) -> void:
 		await run_dialogue(str(s.dialogue))
 		if icons != null:
 			icons.queue_free()
+		return
+	var landmark: Array[String] = Landmarks.lines_at(map.id, cell)
+	if not landmark.is_empty():
+		await _locked_say(landmark)
 		return
 	# Talk across counters.
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
@@ -1104,6 +1135,69 @@ func _action_wake(_args: PackedStringArray, _speaker: NPC) -> void:
 		lines.append("The Undertaker: Not today. The dead were not impressed.")
 	Wake.finish(result, day)
 	await say(lines)
+
+## "bounty": the Fixer's daily bounty board and the 100 percent certificate (scripts/core/Bounties.gd).
+func _action_bounty(_args: PackedStringArray, _speaker: NPC) -> void:
+	var cert: Array[String] = Bounties.certificate(Completion.percent(), GameState.tamer_name)
+	if not cert.is_empty():
+		await say(cert)
+	var day: String = DailyFind.today_key()
+	var cap: int = GameState.progress_cap()
+	var open: Array[Dictionary] = []
+	for m: Dictionary in Bounties.board(day, cap):
+		if not str(m.id) in Bounties.claimed(day):
+			open.append(m)
+	if open.is_empty():
+		await say(["The Fixer: Board's clean. Come back tomorrow, somebody always owes somebody."] as Array[String])
+		return
+	var names: Array[String] = []
+	for m: Dictionary in open:
+		names.append(Bounties.line(m))
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var pick: int = await menu.pick_strings(Loc.t("Which mark?"), names)
+	menu.queue_free()
+	if pick < 0:
+		return
+	var m: Dictionary = open[pick]
+	await say([Loc.t(str(m.crime))] as Array[String])
+	var foes: Array[Spirling] = []
+	for sp: Variant in m.team:
+		if Database.spirlings.has(str(sp)):
+			foes.append(Spirling.new(Database.spirlings[str(sp)], int(m.ring), GameState.rng))
+	SaveManager.save_game()
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, {"name": Loc.t(str(m.name)), "money": 0, "ai": GameState.ai_level()})
+	busy = true
+	player.frozen = true
+	if outcome == BattleModel.Outcome.WIN:
+		var paid: int = Bounties.claim(day, cap, str(m.id))
+		await say([Loc.t("The Fixer counts out %d coins. The rest is his cut. Always is.") % paid] as Array[String])
+
+## "fine_training": Coach Varro raises one spark for coins, sometimes he just keeps them (FineTraining.gd).
+func _action_fine_training(_args: PackedStringArray, _speaker: NPC) -> void:
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var names: Array[String] = []
+	for p: Spirling in GameState.party:
+		names.append(p.display_name())
+	var who: int = await menu.pick_strings(Loc.t("Who trains?"), names)
+	if who < 0:
+		menu.queue_free()
+		return
+	var s: Spirling = GameState.party[who]
+	var stats: Array[String] = []
+	for k: String in Spirling.STAT_KEYS:
+		stats.append(Loc.t("%s: %d coins") % [k.to_upper(), FineTraining.cost(s, k)])
+	var pick: int = await menu.pick_strings(Loc.t("Which value?"), stats)
+	menu.queue_free()
+	if pick < 0:
+		return
+	var stat: String = Spirling.STAT_KEYS[pick]
+	if not FineTraining.can_train(s, stat):
+		await say(["Coach Varro: Either you're broke or it's maxed. Either way, no."] as Array[String])
+		return
+	var r: Dictionary = FineTraining.train(s, stat, GameState.rng)
+	await say([str(r.line)] as Array[String])
 
 ## "burrow": the claimable hollow in Murk Hollow with a wall of trophies (scripts/core/Burrow.gd).
 func _action_burrow(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -2150,6 +2244,8 @@ const SWITCH_LINES: Dictionary[String, Array] = {
 		"The root takes the colour and glows.", "The last root glows, and the tangle pulls aside!"],
 	"shutter": ["The shutters hum in the wind. The stair stays open.", "The shutter bangs, and the wind drops dead. Every shutter swings shut again.",
 		"The shutter swings open. Sand hisses through the slats.", "The last shutter opens, the tower breathes, and the stair is clear!"],
+	"feather": ["The feathers lie still. This room is done.", "A feather twitches the wrong way, and every feather drops flat. Start again.",
+		"The feather lifts and points at the ceiling.", "The last feather rises. Stone scrapes, and the stair opens!"],
 	"valve": ["The pipes gurgle along happily. The stair stays dry.", "The valve screams, and every pipe slams shut again. Start over.",
 		"The valve squeals round. Somewhere, water changes owner.", "The last valve turns, the cistern drains, and the stair is clear!"],
 }
@@ -2245,12 +2341,19 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	while floors < Gauntlet.FLOORS:
 		await say(["Floor %d of %d: an echo steps out of the light..." % [floors + 1, Gauntlet.FLOORS]] as Array[String])
 		var info: Dictionary = {"name": run.echo_name(floors), "ai": Gauntlet.ai_for(floors), "money": run.prize(floors)}
+		var foes: Array[Spirling] = run.team(floors)
+		# Every tenth floor a Warden echo stands in the light (plan 1102).
+		if EchoTower.is_warden_floor(floors + 1):
+			foes = EchoTower.warden_team(floors + 1, run.level_for(floors), run.rng)
+			info["name"] = EchoTower.warden_name(floors + 1)
+			info["warden"] = true
+			await say([EchoTower.warden_line(floors + 1)] as Array[String])
 		if not helper.is_empty():
 			for s: Spirling in helper.partner.echo:
 				s.restore()
 			info["partner"] = helper.partner
 		busy = false
-		var outcome: BattleModel.Outcome = await start_battle(run.team(floors), false, info)
+		var outcome: BattleModel.Outcome = await start_battle(foes, false, info)
 		busy = true
 		player.frozen = true
 		if outcome != BattleModel.Outcome.WIN:
@@ -2285,6 +2388,187 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 		await say(["The echoes bow and fade. You reached the lamp room!"] as Array[String])
 	elif floors > best:
 		await say(["New best: floor %d of %d!" % [floors, Gauntlet.FLOORS]] as Array[String])
+
+## "postgame_board": Examiner Hollis's board in the map house (own ideas 200, batch 3): Master
+## Rifts (1104), the master tour (1105), the Random Rift with rentals (1107, 1108), the weekly
+## giant (1118), best times (1109) and the Cartographer's exam (1110).
+func _action_postgame_board(_args: PackedStringArray, _speaker: NPC) -> void:
+	var ways: Array[String] = []
+	var kinds: Array[String] = []
+	if not MasterRifts.open_entries().is_empty():
+		ways.append(Loc.t("Master Rifts %d/%d") % [MasterRifts.won_count(), WardenRematch.entries().size()])
+		kinds.append("rifts")
+	if MasterTour.is_open():
+		ways.append(Loc.t("Master tour (best %d of %d)") % [MasterTour.best(), MasterTour.steps()])
+		kinds.append("tour")
+	ways.append(Loc.t("Random Rift"))
+	kinds.append("random")
+	ways.append(Loc.t("Weekly giant"))
+	kinds.append("giant")
+	ways.append(Loc.t("Best times"))
+	kinds.append("times")
+	ways.append(Loc.t("Cartographer's exam"))
+	kinds.append("exam")
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var way: int = await menu.pick_strings(Loc.t("The board"), ways)
+	menu.queue_free()
+	if way < 0:
+		return
+	match kinds[way]:
+		"rifts":
+			await _run_master_rift()
+		"tour":
+			await _run_master_tour()
+		"random":
+			await _run_random_rift()
+		"giant":
+			await _run_weekly_giant()
+		"times":
+			await _show_hall_times()
+		"exam":
+			await _run_final_exam()
+
+## One timed battle for a hall; books the time on a win and says a new best.
+func _timed_battle(hall: String, foes: Array[Spirling], info: Dictionary) -> BattleModel.Outcome:
+	var t0: int = Time.get_ticks_msec()
+	busy = false
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, info)
+	busy = true
+	player.frozen = true
+	if outcome == BattleModel.Outcome.WIN and HallTimes.submit(hall, maxi(1, (Time.get_ticks_msec() - t0) / 1000)):
+		await say([Loc.t("New best time: %s") % HallTimes.fmt(HallTimes.best(hall))] as Array[String])
+	return outcome
+
+func _run_master_rift() -> void:
+	var open: Array[Dictionary] = MasterRifts.open_entries()
+	var names: Array[String] = []
+	for e: Dictionary in open:
+		names.append(("[x] " if GameState.has_flag(MasterRifts.won_flag(e)) else "[ ] ") + MasterRifts.title(e))
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var pick: int = await menu.pick_strings(Loc.t("Which Rift?"), names)
+	menu.queue_free()
+	if pick < 0:
+		return
+	var e: Dictionary = open[pick]
+	await say([Loc.t(str(MasterRifts.data().get("intro", "")))] as Array[String])
+	GameState.heal_party()
+	var info: Dictionary = {"name": Loc.t(str(e.get("name", ""))), "ai": 3, "money": int(e.get("money", 0)),
+		"profile": str(e.get("profile", "")), "rule": MasterRifts.rule(e), "warden": true}
+	var outcome: BattleModel.Outcome = await _timed_battle("rift_" + str(e.get("warden", "")), MasterRifts.team(e, GameState.rng), info)
+	if outcome == BattleModel.Outcome.WIN:
+		await say(MasterRifts.win(e))
+
+func _run_master_tour() -> void:
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var go: bool = await menu.confirm(Loc.t(str(MasterTour.data().get("intro", ""))))
+	menu.queue_free()
+	if not go:
+		return
+	GameState.heal_party()
+	var beaten: int = 0
+	var t0: int = Time.get_ticks_msec()
+	while beaten < MasterTour.steps():
+		var e: Dictionary = MasterTour.entry(beaten)
+		if beaten > 0:
+			await say([Loc.t(str(MasterTour.data().get("step_line", ""))) % [beaten + 1, MasterTour.steps()]] as Array[String])
+		busy = false
+		var outcome: BattleModel.Outcome = await start_battle(MasterTour.team(beaten, GameState.rng), false,
+			{"name": Loc.t(str(e.get("name", ""))), "ai": 3, "money": 0, "profile": str(e.get("profile", "")), "warden": true})
+		busy = true
+		player.frozen = true
+		if outcome != BattleModel.Outcome.WIN:
+			break
+		beaten += 1
+	var lines: Array[String] = [Loc.t("Master tour: %d of %d Wardens.") % [beaten, MasterTour.steps()]]
+	if beaten >= MasterTour.steps() and HallTimes.submit("tour", maxi(1, (Time.get_ticks_msec() - t0) / 1000)):
+		lines.append(Loc.t("New best time: %s") % HallTimes.fmt(HallTimes.best("tour")))
+	lines.append_array(MasterTour.finish(beaten))
+	await say(lines)
+
+func _run_random_rift() -> void:
+	var rift := RandomRift.new(DailyFind.today_key())
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	await menu.info(rift.intro())
+	var pick: int = await menu.pick_strings(Loc.t(str(RandomRift.data().get("rental_ask", ""))),
+		[Loc.t("Own team"), Loc.t("Rentals")] as Array[String])
+	menu.queue_free()
+	if pick < 0:
+		return
+	if pick == 1:
+		GameState.party_on_loan = GameState.party
+		GameState.party = rift.rentals()
+	GameState.heal_party()
+	var won: int = 0
+	var t0: int = Time.get_ticks_msec()
+	while won < rift.rounds():
+		busy = false
+		var outcome: BattleModel.Outcome = await start_battle(rift.team(won), false,
+			{"name": Loc.t("Rift echo %d") % (won + 1), "ai": 3, "money": 0, "field": rift.field, "rule": rift.rule})
+		busy = true
+		player.frozen = true
+		if outcome != BattleModel.Outcome.WIN:
+			break
+		won += 1
+	if not GameState.party_on_loan.is_empty():
+		GameState.party = GameState.party_on_loan
+		GameState.party_on_loan = []
+		GameState.heal_party()
+	var lines: Array[String] = [Loc.t("Random Rift: %d of %d rounds.") % [won, rift.rounds()]]
+	if won >= rift.rounds():
+		if HallTimes.submit("random", maxi(1, (Time.get_ticks_msec() - t0) / 1000)):
+			lines.append(Loc.t("New best time: %s") % HallTimes.fmt(HallTimes.best("random")))
+		lines.append_array(rift.clear())
+	await say(lines)
+
+func _run_weekly_giant() -> void:
+	var week: String = WeeklyChallenge.this_week()
+	var g: Dictionary = WeeklyGiant.giant(week)
+	var foes: Array[Spirling] = WeeklyGiant.foe(week, GameState.rng)
+	if foes.is_empty():
+		return
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var go: bool = await menu.confirm(Loc.t(str(WeeklyGiant.data().get("intro", ""))) % [foes[0].display_name(), int(WeeklyGiant.record(week).best)])
+	menu.queue_free()
+	if not go:
+		return
+	GameState.heal_party()
+	busy = false
+	await start_battle(foes, false, {"name": foes[0].display_name(), "ai": 3, "money": 0, "boss": str(g.get("boss", "")), "warden": true})
+	busy = true
+	player.frozen = true
+	var pct: int = WeeklyGiant.share_pct(foes[0].max_hp(), foes[0].hp)
+	var lines: Array[String] = [Loc.t(str(WeeklyGiant.data().get("result", ""))) % pct]
+	lines.append_array(WeeklyGiant.submit(week, pct))
+	await say(lines)
+
+func _show_hall_times() -> void:
+	var names: Dictionary = {"tour": Loc.t("Master tour"), "random": Loc.t("Random Rift"), "exam": Loc.t("Cartographer's exam")}
+	for e: Variant in WardenRematch.entries():
+		names["rift_" + str((e as Dictionary).get("warden", ""))] = MasterRifts.title(e)
+	var lines: Array[String] = HallTimes.lines(names)
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	await menu.info("\n".join(lines) if not lines.is_empty() else Loc.t("No times yet."))
+	menu.queue_free()
+
+func _run_final_exam() -> void:
+	if FinalExam.passed():
+		await say(FinalExam.lines("done_line"))
+		return
+	if not FinalExam.is_open():
+		await say(FinalExam.lines("locked"))
+		return
+	await say(FinalExam.lines("intro"))
+	GameState.heal_party()
+	var info: Dictionary = {"name": Loc.t(str(FinalExam.data().get("name", ""))), "ai": 3, "money": 0, "profile": "tactician", "warden": true}
+	var outcome: BattleModel.Outcome = await _timed_battle("exam", FinalExam.team(GameState.rng), info)
+	if outcome == BattleModel.Outcome.WIN:
+		await say(FinalExam.pass_exam())
 
 ## "rift_tower <id>": a Rift tower (plan 3266-3275). Up to three Spirlings at ring 30 or more
 ## climb fifteen floors; the team rests every five floors.
@@ -2383,13 +2667,25 @@ func _run_endless() -> void:
 	while true:
 		await say([Loc.t("Endless floor %d: ring %d.") % [k + 1, run.endless_level(k)]] as Array[String])
 		var info: Dictionary = {"name": run.echo_name(Gauntlet.FLOORS + k), "ai": 3, "money": run.prize(Gauntlet.FLOORS)}
+		# The stair and the endless stretch are one tower of 100 floors (plan 1101, 1102).
+		var tf: int = EchoTower.tower_floor(k)
+		var foes: Array[Spirling] = run.endless_team(k)
+		if EchoTower.is_warden_floor(tf):
+			foes = EchoTower.warden_team(tf, run.endless_level(k), run.rng)
+			info["name"] = EchoTower.warden_name(tf)
+			info["warden"] = true
+			await say([EchoTower.warden_line(tf)] as Array[String])
 		busy = false
-		var outcome: BattleModel.Outcome = await start_battle(run.endless_team(k), false, info)
+		var outcome: BattleModel.Outcome = await start_battle(foes, false, info)
 		busy = true
 		player.frozen = true
 		if outcome != BattleModel.Outcome.WIN:
 			break
 		k += 1
+		var top: Array[String] = EchoTower.pay_top(tf)
+		if not top.is_empty():
+			await say(top)
+			await _action_give_item([str(EchoTower.data().get("top_item", "max_tonic")), "1"] as PackedStringArray, null)
 		if k % Gauntlet.SECTION == 0:
 			var m := MenuHost.new()
 			_ui.add_child(m)
@@ -3241,6 +3537,7 @@ func league_battle(m: Dictionary) -> void:
 	var snap: Dictionary = BattleReferee.from_expect(m)
 	# Seals work in the Open League, never in the Fair League; the server's expect does the same.
 	snap["seals"] = ShopEffects.seals_for("league_" + str(m.get("league", LeagueRules.FAIR)))
+	snap["amulets"] = ShopEffects.amulets_for("league_" + str(m.get("league", LeagueRules.FAIR)))
 	var model: BattleModel = BattleReplay.build_model(snap)
 	if model == null:
 		await say(["The league battle could not start. Try again later."] as Array[String])
@@ -3421,6 +3718,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	var world: bool = not (own is Array and not (own as Array).is_empty())
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
 	model.seals = [ShopEffects.seals_for("story" if world else "echo"), [0, 0, 0]]
+	model.amulets = [ShopEffects.amulets_for("story" if world else "echo"), [0, 0, 0]]
 	# Story foes start with less Energy, Rift-Born foes gain more in turn 1 (item 749); echo duels stay even.
 	var d: int = GameState.difficulty if world else -1
 	model.start_energy_cut = [0, int(trainer.get("foe_energy_cut", 0)) + BattleRules.foe_start_cut(d)]

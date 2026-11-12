@@ -1,0 +1,7 @@
+{
+ "_comment": "Polish texts for the German table gleam. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "Gleam: %d seen, %d bonded": "Połysk: %d widziane, %d związane",
+  "No Gleam has joined you yet.": "Żaden Połysk jeszcze do ciebie nie dołączył."
+ }
+}
