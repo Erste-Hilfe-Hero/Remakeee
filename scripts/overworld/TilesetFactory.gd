@@ -62,6 +62,10 @@ enum DoorRole { HOUSE, HEAL, SHOP, RIFT_GATE }
 ## door tile, and the door tile is the foot of the tower with its door (tools/art/gen_tiles.py tower()).
 const LIGHTHOUSE_SHAFT_ROW: int = 1
 const LIGHTHOUSE_DOOR_ROW: int = 2
+## TOWER rows for a winding tower (a tower with no lamp on top and no door at its foot, e.g. the
+## Copperfold mine towers): row 3 is the top with the sheave wheel, row 4 the timber legs below.
+const HEADFRAME_TOP_ROW: int = 3
+const HEADFRAME_ROW: int = 4
 ## GRASS rows 4..7: the variants 0..3 with the cast shadow of a building to the left (item 6).
 const SHADOW_ROW: int = 4
 const SHADE_FROM: Array[int] = [Kind.WALL, Kind.ROOF, Kind.DOOR]
@@ -134,6 +138,8 @@ static func atlas_coords(kind: int, cell: Vector2i, kind_at: Callable, door_role
 		return Vector2i(Kind.TOWER, LIGHTHOUSE_DOOR_ROW)
 	if kind == Kind.TOWER and int(kind_at.call(cell + Vector2i.DOWN)) == Kind.DOOR and is_lighthouse_door(cell + Vector2i.DOWN, kind_at):
 		return Vector2i(Kind.TOWER, LIGHTHOUSE_SHAFT_ROW)
+	if kind == Kind.TOWER and is_headframe(cell, kind_at):
+		return Vector2i(Kind.TOWER, HEADFRAME_ROW if int(kind_at.call(cell + Vector2i.UP)) == Kind.TOWER else HEADFRAME_TOP_ROW)
 	if kind in MASKED:
 		var mask: int = 0
 		for i: int in MASK_DIRS.size():
@@ -159,6 +165,17 @@ static func is_lighthouse_door(cell: Vector2i, kind_at: Callable) -> bool:
 		shaft += 1
 		c += Vector2i.UP
 	return shaft > 0 and int(kind_at.call(c)) == Kind.LAMP
+
+## True when the tower at [param cell] has no lamp on top and no door at its foot: a winding
+## tower, not a lighthouse (the dark Saltglass lighthouse keeps its door and its stripes).
+static func is_headframe(cell: Vector2i, kind_at: Callable) -> bool:
+	var top: Vector2i = cell
+	while int(kind_at.call(top + Vector2i.UP)) == Kind.TOWER and cell.y - top.y < 8:
+		top += Vector2i.UP
+	var foot: Vector2i = cell
+	while int(kind_at.call(foot + Vector2i.DOWN)) == Kind.TOWER and foot.y - cell.y < 8:
+		foot += Vector2i.DOWN
+	return int(kind_at.call(top + Vector2i.UP)) != Kind.LAMP and int(kind_at.call(foot + Vector2i.DOWN)) != Kind.DOOR
 
 static func _build(atlas: String) -> TileSet:
 	var count: int = Kind.size()

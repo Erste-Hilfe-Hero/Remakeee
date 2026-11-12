@@ -11,10 +11,10 @@ enum State { OFFLINE, CONNECTING, ONLINE, UPDATE_REQUIRED }
 
 ## Must match version/code in export_presets.cfg (tests check it). The server sends builds
 ## older than its "min_version" to the store.
-const CLIENT_VERSION: int = 1
+const CLIENT_VERSION: int = 2
 ## Must match version/name in export_presets.cfg. Live content compares it with its per-platform
 ## "min_client" and "latest" (docs/LIVE_CONTENT.md).
-const CLIENT_VERSION_NAME: String = "1.1.0"
+const CLIENT_VERSION_NAME: String = "1.2.0"
 const APP_STORE_ID: String = "6831632885"
 const ITUNES_LOOKUP: String = "https://itunes.apple.com/lookup?id=6831632885"
 ## Format number of the online save (plan item 2673). The server refuses saves without it or
@@ -44,6 +44,8 @@ var last_error: String = ""
 ## Our public profile as the server returned it ({"code", "name", ...}).
 var profile: Dictionary = {}
 var motd: String = ""
+## Unix time of the next planned maintenance from server_config maintenance_at, 0 = none (point 95).
+var maintenance_at: int = 0
 ## The newest version the App Store lists (iOS only, "" until known).
 var store_version: String = ""
 var online_now: int = 0
@@ -175,6 +177,8 @@ func connect_now() -> State:
 	_take_hello(r.data)
 	_save_session()
 	if state == State.ONLINE:
+		var m: Dictionary = await backend.call_fn("maintenance_info", {})
+		maintenance_at = int(m.data.get("at", 0)) if m.ok and m.data is Dictionary else 0
 		await refresh_live_content()
 		# Sighting days (Online 100, point 65) change wild encounters, so the calendar comes along.
 		if flag_on("events"):
@@ -271,6 +275,9 @@ func _on_resumed() -> void:
 ## Calls a server function. A dropped connection switches to OFFLINE (the reconnect screen
 ## takes over while playing).
 func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
+	# Every online battle is kept as a replay (Online 100 plan point 71).
+	if name == "battle_submit" and args.get("p_replay") is Dictionary and args.get("p_claim") is Dictionary:
+		ReplayLibrary.add(GameState.records, str(args.get("p_kind", "")), args.p_replay, args.p_claim)
 	if state != State.ONLINE:
 		return OnlineBackend.fail("offline", true)
 	if wait_dots != null:

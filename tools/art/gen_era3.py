@@ -5,6 +5,8 @@ Quillmarch: its starting set and first batch (data/eras.json). Original designs,
     python3 tools/art/gen_era3.py              write art/era3/spirlings/<id>_front.png / _back.png
     python3 tools/art/gen_era3.py --check      only verify art/era3/spirlings/ (exit 1 on a problem)
     python3 tools/art/gen_era3.py --sheet P    also write a contact sheet to P
+    python3 tools/art/gen_era3.py --lines REGION [--sheet P]
+        draw the region's other lines (tools/art/lines/REGION.py, gen_lines.py body plans) in Era III
 
 Rules (data/eras.json "era3"): 64 x 64, at most 15 tones per sprite, light from the top left,
 coloured outline (darkest tone of the part's own material, never black), fur / scale / feather
@@ -260,5 +262,153 @@ def main(argv: list[str]) -> int:
     return 1 if bad else 0
 
 
+# --- Lines drawn from gen_lines.py body plans -----------------------------------------------
+# Each gen_lines part keeps its exact outline (sampled from 56 to 64 px) and is lit as the
+# ellipsoid of its bounding box, so the light, coloured outlines and textures match the hand-built
+# kinds above. Body parts take the first element's material ("light" parts one tone brighter),
+# "dark" parts the second element's material: 2 materials x 5 tones = 10 tones at most.
+ELEMENT_MATS = {
+    "EMBER": ["3a1214", "7a2a1c", "c4532a", "ee9a4a", "fde0a0"],
+    "TIDE": ["10243e", "1e4a74", "2f7aa8", "62b4d4", "c8eef4"],
+    "BLOOM": ["16301a", "2e5a2a", "4f8a3c", "8cc068", "dcf0b0"],
+    "VOLT": ["3a2c0c", "7a5e14", "c49a22", "eccc52", "fdf2b0"],
+    "STONE": ["2a2422", "54483e", "84745e", "b8a88a", "ece2cc"],
+    "GALE": ["1c2a3a", "35566a", "5c8c96", "93c2bc", "e4f4ec"],
+    "LUMEN": ["4a3a1e", "8a6e30", "c8a456", "eed890", "fff8dc"],
+    "UMBRA": ["1c1428", "3a2c52", "5e4a80", "9482b4", "d8cce8"],
+    "INK": ["14141e", "2a2a40", "4a4a6a", "8484a8", "d4d4e4"],
+    "ECHO": ["2a1e3a", "52406e", "8670a4", "bca8d4", "f0e8f8"],
+    "ACID": ["1a2e0e", "3a5e14", "6e9a1e", "b2d23a", "eef8a0"],
+    "FROST": ["1a2a40", "3a5878", "6e98b8", "aed2e6", "f0fafe"],
+    "RUST": ["2e160e", "6a321c", "a8582e", "d8925a", "f6d4b0"],
+    "MASK": ["24142a", "52304e", "8a5a80", "c296b4", "f2dcea"],
+}
+TEXTURE = {"EMBER": "feather", "GALE": "fur", "TIDE": "scale", "BLOOM": "fur", "VOLT": "scale",
+           "STONE": "scale", "LUMEN": "feather", "UMBRA": "fur", "ACID": "scale", "FROST": "feather"}
+
+
+def _line_parts(line):
+    sys.path[:0] = [os.path.dirname(os.path.abspath(__file__))]
+    from gen_lines import stages
+    return stages(line)
+
+
+def render_line_kind(parts, line, back: bool) -> Image.Image:
+    from gen_spirlings import Stamp
+    els = line["elements"]
+    mats = {"body": [tuple(int(h[i:i + 2], 16) for i in (0, 2, 4)) for h in ELEMENT_MATS[els[0]]],
+            "accent": [tuple(int(h[i:i + 2], 16) for i in (0, 2, 4)) for h in ELEMENT_MATS[els[-1]]]}
+    tex = TEXTURE.get(els[0], "fur")
+    k = 56.0 / S
+    grid = [[None] * S for _ in range(S)]
+    stamps = []
+    pi = 0
+    for q in parts:
+        if isinstance(q, Stamp):
+            if not back:
+                stamps.append(q)
+            continue
+        if back and q.face:
+            continue
+        pts = [(x, y) for y in range(56) for x in range(56) if q.mask(x, y)]
+        if not pts:
+            continue
+        x0, x1 = min(p[0] for p in pts), max(p[0] for p in pts) + 1
+        y0, y1 = min(p[1] for p in pts), max(p[1] for p in pts) + 1
+        cx, cy, rx, ry = (x0 + x1) / 2 / k, (y0 + y1) / 2 / k, max(1.0, (x1 - x0) / 2 / k), max(1.0, (y1 - y0) / 2 / k)
+        mat = "accent" if q.tone in ("dark", "ink") else "body"
+        lift = 1 if q.tone == "light" else 0
+        for y in range(S):
+            for x in range(S):
+                if not q.mask((x + 0.5) * k - 0.5, (y + 0.5) * k - 0.5):
+                    continue
+                u, v = (x + 0.5 - cx) / rx, (y + 0.5 - cy) / ry
+                d = min(0.97, u * u + v * v)
+                n = (u, v, math.sqrt(1.0 - d))
+                grid[y][x] = (mat, min(4, tone(n, tex, x, y, q.shade) + lift), pi)
+        pi += 1
+    out = [[None] * S for _ in range(S)]
+    for y in range(S):
+        for x in range(S):
+            g = grid[y][x]
+            if g is None:
+                continue
+            mat, t, i = g
+            edge = inner = False
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                xx, yy = x + dx, y + dy
+                o = grid[yy][xx] if 0 <= xx < S and 0 <= yy < S else None
+                if o is None:
+                    edge = True
+                elif o[2] > i and o[0] != mat and (dx, dy) in ((1, 0), (0, 1)):
+                    inner = True
+            out[y][x] = (mat, 0 if edge else max(1, t - 1) if inner else t)
+    for st in stamps:
+        for r, row in enumerate(st.rows):
+            for c, ch in enumerate(row):
+                if ch not in "0123":
+                    continue
+                for yy in range(int((st.y + r) / k), int((st.y + r + 1) / k + 0.5)):
+                    for xx in range(int((st.x + c) / k), int((st.x + c + 1) / k + 0.5)):
+                        if 0 <= xx < S and 0 <= yy < S and out[yy][xx] is not None:
+                            out[yy][xx] = (out[yy][xx][0], 0 if ch in "01" else 4)
+    img = Image.new("RGBA", (S, S))
+    px = img.load()
+    for y in range(S):
+        for x in range(S):
+            c = out[y][x]
+            sx = S - 1 - x if back else x
+            sy = y + 4 if back else y
+            if c is not None and sy < S:
+                px[sx, sy] = mats[c[0]][c[1]] + (255,)
+    return img
+
+
+def lines_main(region: str, sheet_path) -> int:
+    import importlib
+    sys.path[:0] = [os.path.join(os.path.dirname(os.path.abspath(__file__)), "lines")]
+    from gen_lines import _import_sidecar
+    mod = importlib.import_module(region)
+    hand = {sp["id"] for sp in all_sets()}
+    drawn, bad = [], 0
+    for line in mod.LINES:
+        if line["names"][0].lower() in hand:
+            continue
+        row = []
+        for name, parts in _line_parts(line):
+            imgs = [render_line_kind(parts, line, b) for b in (False, True)]
+            for img, facing in zip(imgs, ("front", "back")):
+                path = os.path.join(DST, "%s_%s.png" % (name.lower(), facing))
+                img.save(path)
+                _import_sidecar(path)
+                for p in problems(img):
+                    print("%s: %s" % (path, p))
+                    bad += 1
+            row.append((name, imgs))
+        drawn.append((line, row))
+    if sheet_path:
+        from PIL import ImageDraw
+        sc, cell = 2, S * 2
+        w = 8 + 3 * (2 * cell + 8) + 8
+        out = Image.new("RGBA", (w, 34 + len(drawn) * (cell + 16)), (238, 230, 214, 255))
+        dr = ImageDraw.Draw(out)
+        dr.text((8, 8), "%s - %d more Spirlings (Era III, 64 px)" % (
+            region.capitalize(), sum(len(l["names"]) for l, _ in drawn)), fill=(40, 30, 44, 255))
+        for r, (line, row) in enumerate(drawn):
+            y = 30 + r * (cell + 16)
+            for i, (name, imgs) in enumerate(row):
+                x = 8 + i * (2 * cell + 8)
+                dr.rectangle([x, y, x + 2 * cell - 1, y + cell - 1], fill=(222, 212, 192, 255))
+                out.alpha_composite(imgs[0].resize((cell, cell), Image.NEAREST), (x, y))
+                out.alpha_composite(imgs[1].resize((cell, cell), Image.NEAREST), (x + cell, y))
+                dr.text((x + 2, y + cell + 2), "%s  %s" % (name, "/".join(e[:3] for e in line["elements"])),
+                        fill=(40, 30, 44, 255))
+        out.save(sheet_path)
+    return 1 if bad else 0
+
+
 if __name__ == "__main__":
+    if "--lines" in sys.argv:
+        a = sys.argv
+        sys.exit(lines_main(a[a.index("--lines") + 1], a[a.index("--sheet") + 1] if "--sheet" in a else None))
     sys.exit(main(sys.argv[1:]))

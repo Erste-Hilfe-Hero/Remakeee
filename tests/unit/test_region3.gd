@@ -79,7 +79,7 @@ func test_slots_use_own_spirlings_and_rings_climb_past_vellmarch() -> void:
 				assert_eq(Database.species(sp).region, "quillmarch", "%s is a Quillmarch kind" % sp)
 		assert_eq(total, 100, r.id)
 	assert_gte(own, 12, "most slots already hold Quillmarch's own Spirlings")
-	assert_gt(Region3.open_slots().size(), 0, "slots wait for the Acid and Frost kinds")
+	assert_eq(Region3.open_slots().size(), 0, "the Acid and Frost kinds fill every slot")
 
 func test_four_wardens_each_hold_a_rift() -> void:
 	var ws: Array = Region3.wardens()
@@ -93,6 +93,8 @@ func test_four_wardens_each_hold_a_rift() -> void:
 		ring = int(w.ring)
 		for t: Dictionary in w.team:
 			assert_true(Database.spirlings.has(Region3.slot_species(t)), str(w.id))
+			if Database.spirlings.has(Region3.slot_species(t)):
+				assert_eq(Database.species(Region3.slot_species(t)).region, "quillmarch", "%s fields only Quillmarch kinds" % w.id)
 			assert_lte(int(t.level), int(w.ring))
 
 func test_next_warden_follows_sealed_rifts() -> void:
@@ -140,7 +142,10 @@ func test_first_era_three_spirlings() -> void:
 	for sd: SpirlingData in Database.spirlings.values():
 		if sd.region == "quillmarch":
 			kinds.append(sd)
-	assert_eq(kinds.size(), drawn.size(), "every drawn Era III kind is in the data")
+	assert_eq(kinds.size(), 70, "70 own kinds: the hand-built first set plus the second batch (gen_era3.py --lines)")
+	for sd: SpirlingData in kinds:
+		assert_eq(sd.era, 3, sd.species_name)
+		assert_eq(EraManager.sprite_path(sd.species_name), "res://art/era3/spirlings/%s_front.png" % sd.species_name.to_lower())
 	for sp: Dictionary in drawn:
 		var sd: SpirlingData = Database.species(str(sp.id).capitalize())
 		assert_not_null(sd, str(sp.id))

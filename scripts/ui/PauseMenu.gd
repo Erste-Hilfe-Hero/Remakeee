@@ -18,6 +18,8 @@ static var last_label: String = ""
 var photo: bool = false
 ## Set when the player picks "Watch last battle" in Records.
 var watch_replay: bool = false
+## A replay picked under Records > Online replays (Online 100 plan point 71); empty = the last battle.
+var watch_snap: Dictionary = {}
 ## Set when the player picks an echo duel under Friends: {"code", "name", "team"}.
 var echo_duel: Dictionary = {}
 ## Set when the player finds a league battle under Leagues: the battle the server set up.
@@ -71,6 +73,9 @@ func run() -> void:
 	if open_on == "Goals":
 		open_on = ""
 		await run_goals()
+	elif open_on == "Invite":
+		open_on = ""
+		await run_invite_link()
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
@@ -126,6 +131,15 @@ func run() -> void:
 			"Room":
 				if await run_room():
 					return
+
+## A chimora://friend/<code> link (Online 100 point 55): asks before the invite sends a request.
+func run_invite_link() -> void:
+	var code: String = DeepLink.friend_code
+	DeepLink.friend_code = ""
+	if code.is_empty() or not Online.is_online() or not Online.flag_on("invite"):
+		return
+	if await confirm(Loc.t("Accept the invite of friend code %s? It sends a friend request.") % Online.pretty_code(code)):
+		await FriendsMoreMenu.redeem(self, code)
 
 ## Shows a first-time tip in an info window (menus have no text box).
 func tip(id: String) -> void:
@@ -350,6 +364,7 @@ func run_records() -> void:
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
+		lines.append("Online replays")
 		var have: int = Achievements.unlocked().size()
 		var idx: int = await pick_strings(Loc.t("Achievements %d/%d") % [have, Achievements.list().size()], lines)
 		if idx < 0:
@@ -369,6 +384,9 @@ func run_records() -> void:
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Lexicon": await run_lexicon()
+			"Online replays":
+				if await OnlineReplaysMenu.run(self):
+					return
 			"Watch last battle":
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
@@ -673,25 +691,47 @@ func _held_item(s: Spirling) -> void:
 	Sound.sfx("confirm")
 
 func _use_item_on(s: Spirling) -> void:
-	var ids: Array[String] = _usable_items()
-	if ids.is_empty():
-		await info("Nothing in the satchel can be used here.")
-		return
-	var entries: Array[String] = []
-	for id: String in ids:
-		entries.append("%s x%d" % [Database.item(id).get("name", id), GameState.item_count(id)])
-	var idx: int = await pick_strings("Use on %s" % s.display_name(), entries)
-	if idx < 0:
-		return
-	var msg: String = GameState.use_item_outside_battle(ids[idx], s)
-	await info(msg if not msg.is_empty() else "That would do nothing right now.")
+	# The list stays open after a use (item 1904) and keeps its place.
+	var focus: int = 0
+	while true:
+		var ids: Array[String] = _usable_items()
+		if ids.is_empty():
+			await info("Nothing in the satchel can be used here.")
+			return
+		var entries: Array[Dictionary] = []
+		for id: String in ids:
+			var row: Dictionary = {"text": "%s x%d" % [Database.item(id).get("name", id), GameState.item_count(id)]}
+			var after: String = vigor_preview(Database.item(id), s)
+			if not after.is_empty():
+				row["hint"] = after
+			entries.append(row)
+		var idx: int = await pick("Use on %s" % s.display_name(), entries, true, mini(focus, ids.size() - 1))
+		if idx < 0:
+			return
+		focus = idx
+		var msg: String = GameState.use_item_outside_battle(ids[idx], s)
+		await info(msg if not msg.is_empty() else "That would do nothing right now.")
+
+## "Vigor 12/40 to 32/40" for a healing or reviving item, empty for any other (item 1901).
+static func vigor_preview(it: Dictionary, s: Spirling) -> String:
+	var to: int = -1
+	if float(it.get("revive", 0.0)) > 0.0:
+		if s.is_fainted():
+			to = maxi(1, int(s.max_hp() * float(it.revive)))
+	elif int(it.get("heal", 0)) > 0:
+		if not s.is_fainted() and s.hp < s.max_hp():
+			to = mini(s.max_hp(), s.hp + int(it.heal))
+	if to < 0:
+		return ""
+	return Loc.t("Vigor %d/%d to %d/%d" % [s.hp, s.max_hp(), to, s.max_hp()])
 
 func _usable_items() -> Array[String]:
 	var out: Array[String] = []
 	for id: Variant in GameState.inventory:
 		var it: Dictionary = Database.item(str(id))
 		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))
-				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false))):
+				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false))
+				or bool(it.get("unfurl_any", false))):
 			out.append(str(id))
 	return out
 

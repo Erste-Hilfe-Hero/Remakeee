@@ -17,6 +17,12 @@ const ELEMENT_VOICE: Array = [
 	[0.5, 0.04, 0.1],    # UMBRA: rough
 	[0.25, 0.0, 0.3],    # INK: scratchy, like a nib on paper
 	[0.125, 0.05, 0.0],  # ECHO: ringing, with a long shimmer
+	[0.5, 0.01, 0.3],    # RUST: grating
+	[0.25, 0.04, 0.15],  # MASK: muffled
+	[0.25, 0.02, 0.35],  # ACID: hissing
+	[0.125, 0.0, 0.05],  # FROST: glassy
+	[0.5, 0.03, 0.0],    # GILT: round and warm
+	[0.125, 0.02, 0.1],  # ZENITH: high and bright
 ]
 
 static var _cache: Dictionary[String, AudioStreamWAV] = {}

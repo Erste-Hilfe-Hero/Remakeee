@@ -35,7 +35,7 @@ func test_art_pick_climbs_a_scale() -> void:
 		assert_gt(p, last, "each element a step higher")
 		last = p
 	assert_eq(Sound.art_pick_pitch(0), 1.0)
-	assert_almost_eq(Sound.art_pick_pitch(Elements.E.size() - 1), 2.0, 0.001, "eighth step is the octave")
+	assert_almost_eq(Sound.art_pick_pitch(Elements.E.ECHO), 2.0, 0.001, "Echo, the last Era II element of the first set, is the octave")
 	assert_eq(Sound.art_pick_pitch(-1), 1.0)
 
 func test_grass_rustles_every_third_step() -> void:

@@ -1,0 +1,132 @@
+{
+ "name": "Raft Rift",
+ "region": "quivermoor",
+ "biome": "rift",
+ "backdrop": "lake",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "TTTTTTTTTTTT",
+  "TT~~.XX.~~TT",
+  "T~~.......~T",
+  "T~......T_.T",
+  "T..o.....T_T",
+  "T.......ST_T",
+  "T~~~....TT_T",
+  "T~~~....~T_T",
+  "T........T_T",
+  "T.X......T_T",
+  "T....~~..T_T",
+  "T....~~..T_T",
+  "TTTT..TTTT_T",
+  "T........T_T",
+  "T..~~....T_T",
+  "TTT..TTTTT_T",
+  "T........T_T",
+  "T........T_T",
+  "TTTT..TTTT.T",
+  "T..........T",
+  "T.X......X.T",
+  "TTTTT..TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "driftwick",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "driftwick",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "acolyte",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "quivermoor/raft_rift_acolyte",
+   "sprite": "warden",
+   "trainer": "Raft Acolyte Joran",
+   "intro": "quivermoor/raft_rift_acolyte_intro",
+   "defeat": "quivermoor/raft_rift_acolyte_defeat",
+   "money": 4230,
+   "team": [
+    {
+     "species": "Gloomgillith",
+     "level": 94
+    },
+    {
+     "species": "Dipmonarch",
+     "level": 94
+    }
+   ]
+  },
+  {
+   "id": "warden_corran",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/warden_corran",
+   "sprite": "warden",
+   "trainer": "Warden Corran",
+   "warden": "v5_raft",
+   "team": [
+    {
+     "species": "Gloomgillith",
+     "level": 94
+    },
+    {
+     "species": "Dipmonarch",
+     "level": 94
+    },
+    {
+     "species": "Ripjoltane",
+     "level": 95
+    },
+    {
+     "species": "Weirmarshal",
+     "level": 95
+    }
+   ],
+   "intro": "quivermoor/warden_corran_intro",
+   "defeat": "quivermoor/warden_corran_defeat",
+   "ai": 3,
+   "money": 9900,
+   "rule": "undertow",
+   "win_flags": [
+    "rift_v5_raft_sealed"
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "quivermoor/raft_rift_spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "quivermoor/raft_rift_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v5_raft_sealed",
+   "closed": "@"
+  }
+ ]
+}

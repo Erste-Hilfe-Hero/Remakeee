@@ -101,8 +101,8 @@ jobs:
         run: tools/headless_check.sh godot
       - name: Validate data
         run: godot --headless --path . -s res://tools/validate_data.gd
-      - name: GUT tests
-        run: godot --headless --path . -s res://addons/gut/gut_cmdln.gd
+      - name: GUT tests (fails if a test script has a parse error or is skipped)
+        run: tools/gut_strict.sh godot
 
   # Installable test APK on every push and PR: download the "android-debug-apk"
   # artifact and install it on the phone. Signed with a throwaway debug keystore

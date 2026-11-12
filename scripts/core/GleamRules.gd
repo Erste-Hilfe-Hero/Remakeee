@@ -34,13 +34,14 @@ static func chain_max() -> int:
 	return maxi(0, int(config().get("chain_max", 0)))
 
 ## Chance that a wild Spirling gleams after [param chain] earlier encounters of its kind in a row.
-static func chance(chain: int) -> float:
+## [param mult] is the shop's Shimmer Scent (ShopEffects.gleam_mult).
+static func chance(chain: int, mult: float = 1.0) -> float:
 	var steps: int = clampi(chain, 0, chain_max())
-	return minf(1.0, (1.0 + steps * float(config().get("chain_step", 0.0))) / one_in())
+	return minf(1.0, (1.0 + steps * float(config().get("chain_step", 0.0))) * maxf(mult, 1.0) / one_in())
 
 ## Rolls once on [param rng] (always one draw, so replays stay in step).
-static func roll(rng: RandomNumberGenerator, chain: int) -> bool:
-	return rng.randf() < chance(chain)
+static func roll(rng: RandomNumberGenerator, chain: int, mult: float = 1.0) -> bool:
+	return rng.randf() < chance(chain, mult)
 
 ## Chain count that applies to [param species] from the saved chain {"species", "count"}.
 static func chain_for(chain: Dictionary, species: String) -> int:

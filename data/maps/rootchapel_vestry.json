@@ -1,0 +1,66 @@
+{
+ "name": "Vestry",
+ "region": "quivermoor",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "rootchapel",
+   "tx": 3,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "priest",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/rootchapel_vestry_priest",
+   "sprite": "elder"
+  },
+  {
+   "id": "q5_root_tithe_anselm_roots",
+   "x": 1,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_root_tithe_anselm_roots",
+   "sprite": "elder",
+   "trainer": "Curate Anselm",
+   "show_flag": "q5_root_tithe_reveal",
+   "intro": "quivermoor/q5_root_tithe_anselm_roots_intro",
+   "defeat": "quivermoor/q5_root_tithe_anselm_roots_defeat",
+   "money": 4700,
+   "team": [
+    {
+     "species": "Rookit",
+     "level": 92
+    },
+    {
+     "species": "Woadwhorl",
+     "level": 93
+    },
+    {
+     "species": "Rushkit",
+     "level": 94
+    }
+   ],
+   "win_flags": [
+    "q5_root_tithe_done"
+   ],
+   "no_rematch": true
+  }
+ ],
+ "signs": []
+}

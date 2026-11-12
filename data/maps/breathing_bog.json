@@ -1,0 +1,187 @@
+{
+ "name": "The Breathing Bog",
+ "region": "quivermoor",
+ "biome": "route",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "breathing_bog",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T~~..__.,,,T",
+  "T~~...__,,,T",
+  "T.....__...T",
+  "T,,~~~~+~~.T",
+  "T,,~~~~+~~.T",
+  "T....++++..T",
+  "T~~~.+..%%%T",
+  "T~~~.+..%%%T",
+  "T....+.....T",
+  "T,,..+~~~~~T",
+  "T,,..++++..T",
+  "T~~~....+..T",
+  "T~~~.,,.+..T",
+  "T....,,.++.T",
+  "T%%%.....+.T",
+  "T%%%~~~~.+.T",
+  "T...~~~~.+.T",
+  "T..++++++..T",
+  "T..+..,,,..T",
+  "T~~+..,,,~~T",
+  "T~~+.....~~T",
+  "T..++__....T",
+  "T....__.,,.T",
+  "T.....__,,.T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "mossgate",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "tallowmere",
+   "tx": 1,
+   "ty": 8,
+   "facing": "right"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "mossgate",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "tallowmere",
+   "tx": 1,
+   "ty": 9,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "peatcutter",
+   "x": 10,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "quivermoor/breathing_bog_peatcutter",
+   "sprite": "ranger",
+   "trainer": "Peat Cutter Ragna",
+   "intro": "quivermoor/breathing_bog_peatcutter_intro",
+   "defeat": "quivermoor/breathing_bog_peatcutter_defeat",
+   "money": 4140,
+   "team": [
+    {
+     "species": "Peatlet",
+     "level": 91
+    },
+    {
+     "species": "Peatbloom",
+     "level": 92
+    }
+   ]
+  },
+  {
+   "id": "bogwalker",
+   "x": 2,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "quivermoor/breathing_bog_bogwalker",
+   "sprite": "villager",
+   "trainer": "Bog Walker Kjell",
+   "intro": "quivermoor/breathing_bog_bogwalker_intro",
+   "defeat": "quivermoor/breathing_bog_bogwalker_defeat",
+   "money": 4140,
+   "team": [
+    {
+     "species": "Gloomgill",
+     "level": 92
+    },
+    {
+     "species": "Bogwick",
+     "level": 92
+    }
+   ]
+  },
+  {
+   "id": "q5_rope_fund_ulla",
+   "x": 2,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_rope_fund_ulla",
+   "sprite": "ranger",
+   "show_flag": "q5_rope_fund_s1"
+  },
+  {
+   "id": "q5_rope_fund_salvager",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_rope_fund_salvager",
+   "sprite": "villager",
+   "trainer": "Salvage Man Grubb",
+   "show_flag": "q5_rope_fund_reveal",
+   "intro": "quivermoor/q5_rope_fund_salvager_intro",
+   "defeat": "quivermoor/q5_rope_fund_salvager_defeat",
+   "money": 4650,
+   "team": [
+    {
+     "species": "Gloomgill",
+     "level": 91
+    },
+    {
+     "species": "Bogwick",
+     "level": 92
+    },
+    {
+     "species": "Peatbloom",
+     "level": 93
+    }
+   ],
+   "win_flags": [
+    "q5_rope_fund_done"
+   ],
+   "no_rematch": true
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_breathing_bog_1"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_breathing_bog_2"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_breathing_bog_3"
+  },
+  {
+   "x": 11,
+   "y": 23,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_breathing_bog_4"
+  }
+ ]
+}

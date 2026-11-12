@@ -1,0 +1,141 @@
+{
+ "name": "Wick Rift",
+ "region": "quivermoor",
+ "biome": "rift",
+ "backdrop": "lake",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "TTTTTTTTTTTT",
+  "TT~~.XX.~~TT",
+  "T~~.......~T",
+  "T~......T_.T",
+  "T..o.....T_T",
+  "T.......ST_T",
+  "T~~~....TT_T",
+  "T~~~....~T_T",
+  "T........T_T",
+  "T.X......T_T",
+  "T....~~..T_T",
+  "T....~~..T_T",
+  "TTTT..TTTT_T",
+  "T........T_T",
+  "T..~~....T_T",
+  "TTT..TTTTT_T",
+  "T........T_T",
+  "T........T_T",
+  "TTTT..TTTT.T",
+  "T..........T",
+  "T.X......X.T",
+  "TTTTT..TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "tallowmere",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "tallowmere",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "acolyte",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "quivermoor/wick_rift_acolyte",
+   "sprite": "warden",
+   "trainer": "Wick Acolyte Brenna",
+   "intro": "quivermoor/wick_rift_acolyte_intro",
+   "defeat": "quivermoor/wick_rift_acolyte_defeat",
+   "money": 4140,
+   "team": [
+    {
+     "species": "Sootharrow",
+     "level": 92
+    },
+    {
+     "species": "Glazeldrake",
+     "level": 92
+    }
+   ]
+  },
+  {
+   "id": "warden_maudrey",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/warden_maudrey",
+   "sprite": "warden",
+   "trainer": "Warden Maudrey",
+   "warden": "v5_wick",
+   "team": [
+    {
+     "species": "Sootharrow",
+     "level": 92
+    },
+    {
+     "species": "Glazeldrake",
+     "level": 92
+    },
+    {
+     "species": "Ardenthal",
+     "level": 93
+    },
+    {
+     "species": "Duskmirrah",
+     "level": 93
+    }
+   ],
+   "intro": "quivermoor/warden_maudrey_intro",
+   "defeat": "quivermoor/warden_maudrey_defeat",
+   "ai": 3,
+   "money": 8600,
+   "rule": "ember_pulse",
+   "win_flags": [
+    "rift_v5_wick_sealed"
+   ]
+  },
+  {
+   "id": "q5_nell_letters_ivar",
+   "x": 2,
+   "y": 13,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_nell_letters_ivar",
+   "sprite": "elder",
+   "show_flag": "q5_nell_letters_s1"
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "quivermoor/wick_rift_spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "quivermoor/wick_rift_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v5_wick_sealed",
+   "closed": "@"
+  }
+ ]
+}
