@@ -193,6 +193,7 @@ T = {
 "Save and to title": "Speichern & Ende",
 "Go to the title anyway?": "Trotzdem zum Titel?",
 "Vigor %d/%d to %d/%d": "Kraft %d/%d auf %d/%d",
+"Only in battle.": "Nur im Kampf.",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).
