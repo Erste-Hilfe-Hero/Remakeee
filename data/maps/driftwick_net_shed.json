@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "quivermoor/driftwick_net_shed_netter",
    "sprite": "villager"
+  },
+  {
+   "id": "q5_named_seed_kell",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/q5_named_seed_kell",
+   "sprite": "villager",
+   "show_flag": "q5_named_seed_asked"
   }
  ],
  "signs": []

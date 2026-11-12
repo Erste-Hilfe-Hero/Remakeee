@@ -46,7 +46,7 @@ func test_ashmere_inks_are_four_and_ordered_dark_to_light() -> void:
 func test_region_ink_switches_and_falls_back() -> void:
 	assert_eq(EraManager.inks_for("ashmere")[1], Color(str(RegionLook.look("ashmere").palette[1])))
 	assert_ne(EraManager.inks_for("ashmere"), EraManager.inks_for("corvane"))
-	assert_eq(EraManager.inks_for("solenne"), EraManager.INK_PALETTE)
+	assert_eq(EraManager.inks_for("nowhere"), EraManager.INK_PALETTE)
 	assert_false(RegionLook.arrive_line("ashmere").is_empty())
 
 func test_ashmere_maps_carry_ash_props_and_stay_connected() -> void:

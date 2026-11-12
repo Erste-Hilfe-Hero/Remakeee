@@ -1,0 +1,35 @@
+{
+ "name": "Net Loft",
+ "region": "quillmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "burin_landing",
+   "tx": 3,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "netter",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/burin_landing_net_loft_netter",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

@@ -1728,5 +1728,378 @@
   "win_flags": [
    "kiln_venn_beaten"
   ]
+ },
+ "assize_bailiffs": {
+  "trainer": "Assize Bailiffs",
+  "team": [
+   {
+    "species": "Brickwarden",
+    "level": 34
+   },
+   {
+    "species": "Sootlurk",
+    "level": 34
+   },
+   {
+    "species": "Smeltmaw",
+    "level": 35
+   }
+  ],
+  "ai": 2,
+  "money": 200,
+  "defeat": "ashmere_more/bailiffs_defeat",
+  "lose": "ashmere_more/bailiffs_lose"
+ },
+ "briony_fence": {
+  "trainer": "Ruskweber Fences",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 34
+   },
+   {
+    "species": "Mirkmole",
+    "level": 34
+   },
+   {
+    "species": "Etchling",
+    "level": 35
+   }
+  ],
+  "ai": 2,
+  "money": 1200,
+  "defeat": "ashmere_more/fence_defeat",
+  "lose": "ashmere_more/fence_lose"
+ },
+ "mercer_wake": {
+  "trainer": "Mourner Mercer",
+  "team": [
+   {
+    "species": "Hushkin",
+    "level": 35
+   },
+   {
+    "species": "Fumewraith",
+    "level": 35
+   },
+   {
+    "species": "Sablarch",
+    "level": 36
+   },
+   {
+    "species": "Gloomgillar",
+    "level": 36
+   }
+  ],
+  "ai": 3,
+  "money": 2800,
+  "defeat": "ashmere_more/mercer_defeat",
+  "lose": "ashmere_more/mercer_lose",
+  "win_flags": [
+   "ah_mourner_done"
+  ]
+ },
+ "deed_hunters": {
+  "trainer": "Catch Tax Collectors",
+  "team": [
+   {
+    "species": "Brickwarden",
+    "level": 35
+   },
+   {
+    "species": "Charsylvan",
+    "level": 35
+   },
+   {
+    "species": "Ingotusk",
+    "level": 36
+   }
+  ],
+  "ai": 2,
+  "money": 600,
+  "defeat": "ashmere_more/hunters_defeat",
+  "lose": "ashmere_more/hunters_lose"
+ },
+ "juno_split_trap": {
+  "trainer": "Slagg's Pit Hands",
+  "team": [
+   {
+    "species": "Clinkshell",
+    "level": 36
+   },
+   {
+    "species": "Coalbuck",
+    "level": 36
+   },
+   {
+    "species": "Lodebrock",
+    "level": 37
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "defeat": "ashmere_more/net_defeat",
+  "lose": "ashmere_more/net_lose"
+ },
+ "deep_slagg": {
+  "trainer": "Overman Slagg",
+  "team": [
+   {
+    "species": "Coalpatriarch",
+    "level": 38
+   },
+   {
+    "species": "Brickolossus",
+    "level": 38
+   },
+   {
+    "species": "Lodemarshal",
+    "level": 38
+   },
+   {
+    "species": "Clinkerdome",
+    "level": 39
+   },
+   {
+    "species": "Ingotusk",
+    "level": 39
+   }
+  ],
+  "ai": 3,
+  "money": 4000,
+  "defeat": "ashmere_more/slagg_defeat",
+  "lose": "ashmere_more/slagg_lose",
+  "win_flags": [
+   "ah_slagg_beaten"
+  ]
+ },
+ "strike_dory": {
+  "trainer": "Dory Flint",
+  "team": [
+   {
+    "species": "Talusk",
+    "level": 15
+   },
+   {
+    "species": "Mirkmole",
+    "level": 15
+   },
+   {
+    "species": "Shalebat",
+    "level": 16
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "defeat": "veydal_more/strike_dory_defeat",
+  "lose": "veydal_more/strike_dory_lose",
+  "win_flags": [
+   "strike_broke"
+  ]
+ },
+ "strike_prawle": {
+  "trainer": "Knuckles Prawle",
+  "team": [
+   {
+    "species": "Thornback",
+    "level": 15
+   },
+   {
+    "species": "Gloamhog",
+    "level": 16
+   },
+   {
+    "species": "Talusk",
+    "level": 16
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "defeat": "veydal_more/strike_prawle_defeat",
+  "lose": "veydal_more/strike_prawle_lose"
+ },
+ "widow_odette": {
+  "trainer": "Widow Pinch",
+  "team": [
+   {
+    "species": "Hushkin",
+    "level": 14
+   },
+   {
+    "species": "Fluting",
+    "level": 14
+   },
+   {
+    "species": "Glimshell",
+    "level": 15
+   }
+  ],
+  "ai": 2,
+  "money": 800,
+  "defeat": "veydal_more/widow_odette_defeat",
+  "lose": "veydal_more/widow_odette_lose"
+ },
+ "widow_lemuel": {
+  "trainer": "Lemuel",
+  "team": [
+   {
+    "species": "Brookhop",
+    "level": 14
+   },
+   {
+    "species": "Fiddlit",
+    "level": 15
+   }
+  ],
+  "ai": 2,
+  "money": 500,
+  "defeat": "veydal_more/widow_lemuel_defeat",
+  "lose": "veydal_more/widow_lemuel_lose"
+ },
+ "rival_jinks_4": {
+  "trainer": "Rival Jinks",
+  "team": [
+   {
+    "species": "Glimmerax",
+    "level": 17
+   },
+   {
+    "species": "Smoldrake",
+    "level": 18
+   },
+   {
+    "species": "Shalebat",
+    "level": 17
+   },
+   {
+    "species": "Kelpup",
+    "level": 17
+   }
+  ],
+  "ai": 2,
+  "money": 700,
+  "defeat": "veydal_more/jinks_4_defeat",
+  "lose": "veydal_more/jinks_4_lose"
+ },
+ "jinks_ambush": {
+  "trainer": "Collector Dunmore",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 17
+   },
+   {
+    "species": "Talusk",
+    "level": 17
+   },
+   {
+    "species": "Gloamhog",
+    "level": 18
+   }
+  ],
+  "ai": 2,
+  "money": 600,
+  "defeat": "veydal_more/jinks_ambush_defeat",
+  "lose": "veydal_more/jinks_ambush_lose"
+ },
+ "bounty_b9": {
+  "trainer": "Old Gristmouth",
+  "team": [
+   {
+    "species": "Talusk",
+    "level": 13
+   }
+  ],
+  "ai": 2,
+  "money": 700,
+  "defeat": "veydal_more/bounty_b9_defeat",
+  "lose": "veydal_more/bounty_b9_lose",
+  "wild": true
+ },
+ "bounty_b10": {
+  "trainer": "Penny Dreadful",
+  "team": [
+   {
+    "species": "Pinchkin",
+    "level": 13
+   },
+   {
+    "species": "Zippit",
+    "level": 13
+   }
+  ],
+  "ai": 2,
+  "money": 750,
+  "defeat": "veydal_more/bounty_b10_defeat",
+  "lose": "veydal_more/bounty_b10_lose"
+ },
+ "bounty_b11": {
+  "trainer": "The Kettle Brothers",
+  "team": [
+   {
+    "species": "Gloamhog",
+    "level": 14
+   },
+   {
+    "species": "Gloamhog",
+    "level": 15
+   },
+   {
+    "species": "Brookhop",
+    "level": 14
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "defeat": "veydal_more/bounty_b11_defeat",
+  "lose": "veydal_more/bounty_b11_lose"
+ },
+ "bounty_b12": {
+  "trainer": "Ex-Bailiff Holloway",
+  "team": [
+   {
+    "species": "Scrivane",
+    "level": 16
+   },
+   {
+    "species": "Hushkin",
+    "level": 16
+   },
+   {
+    "species": "Lanternel",
+    "level": 17
+   }
+  ],
+  "ai": 2,
+  "money": 1100,
+  "defeat": "veydal_more/bounty_b12_defeat",
+  "lose": "veydal_more/bounty_b12_lose",
+  "win_flags": [
+   "bounty_copper_done"
+  ]
+ },
+ "ledger_crane": {
+  "trainer": "Archivist Crane",
+  "team": [
+   {
+    "species": "Blotling",
+    "level": 15
+   },
+   {
+    "species": "Scrivane",
+    "level": 16
+   },
+   {
+    "species": "Lanternel",
+    "level": 16
+   }
+  ],
+  "ai": 2,
+  "money": 1000,
+  "defeat": "veydal_more/ledger_crane_defeat",
+  "lose": "veydal_more/ledger_crane_lose",
+  "win_flags": [
+   "ledger_done"
+  ]
  }
 }

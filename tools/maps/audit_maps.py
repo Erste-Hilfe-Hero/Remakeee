@@ -13,8 +13,8 @@ list never goes stale.
 Reads data/maps/*.json (and their floors) with the same tile rules as TilesetFactory and
 tools/art/preview_map.py. Kinds of finding:
   unknown_tile    a row character that is not in the legend (drawn as plain grass at runtime)
-  blank_tile      an atlas cell used by the map is empty in the map's atlas (Era I region atlas
-                  or the shared Era II atlas)
+  blank_tile      an atlas cell used by the map is empty in the map's atlas (Era I region atlas,
+                  the shared Era II atlas, or the region's own atlas of a later era)
   ragged_row      rows of different length (the short row ends in void)
   dead_door       a door with no warp: the player walks into it and nothing happens
   warp_off_door   a warp inside the map that is not on a door, stairs, Rift, ladder or the edge
@@ -37,6 +37,8 @@ tools/art/preview_map.py. Kinds of finding:
   building_cut    a building only one tile wide (a sliver of a house)
   path_stub       a scrap of road (1 to 3 cells) that joins no road, door, stairs, pier or map edge
   open_edge       a walkable border cell of an outdoor map with no warp (the path runs into void)
+  road_dead_end   a straight road (1 or 2 wide) that runs into the tree, rock or cliff frame with
+                  no exit there (a town side without a way out that kept its road arm)
 """
 import json
 import os
@@ -130,6 +132,11 @@ def atlas_paths(region: str) -> list:
     era2 = os.path.join(ROOT, "art", "era2", "tiles", "overworld.png")
     if os.path.exists(era2):
         out.append(era2)
+    # A later era's own region atlas (Era III Quillmarch, Era IV Halcyra, ...) is what that region draws with.
+    for n in range(3, 10):
+        later = os.path.join(ROOT, "art", "era%d" % n, "tiles", "overworld_%s.png" % region)
+        if os.path.exists(later):
+            out.append(later)
     return out
 
 
@@ -373,6 +380,30 @@ def check_map(m: Map, maps: dict, entries_into: dict) -> list:
                         ends = True
             if not ends:
                 add("path_stub", comp[0][0], comp[0][1], "%d road cells that lead nowhere" % len(comp))
+
+    # Straight roads that end at the frame: the arm is at most 2 wide and every cell of it has
+    # two road cells behind it (corners and roads running along the frame do not count).
+    if m.outdoor:
+        road = {"PATH", "PIER", "STAIRS", "DOOR"}
+        dead_ends = set()
+        for x, y in m.cells():
+            if m.kind(x, y) != "PATH" or x in (0, m.w - 1) or y in (0, m.h - 1):
+                continue
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                n = (x + dx, y + dy)
+                if not (n[0] in (0, m.w - 1) or n[1] in (0, m.h - 1)) or n in m.warp_cells or walkable(m, *n):
+                    continue
+                arm = [(x, y)]
+                for s in (1, -1):
+                    c = (x + dy * s, y + dx * s)
+                    while m.kind(*c) in road:
+                        arm.append(c)
+                        c = (c[0] + dy * s, c[1] + dx * s)
+                if len(arm) > 2 or min(arm) in dead_ends:
+                    continue
+                if all(m.kind(cx - dx, cy - dy) == "PATH" and m.kind(cx - 2 * dx, cy - 2 * dy) == "PATH" for cx, cy in arm):
+                    dead_ends.add(min(arm))
+                    add("road_dead_end", min(arm)[0], min(arm)[1], "road runs into the %s at the map edge" % m.kind(*n))
 
     # Paths that run into the border without a warp.
     if m.outdoor:

@@ -18,7 +18,7 @@
   "^.._____...^",
   "^^^^^^=^^^^^",
   "^RRR..__RRR^",
-  "^HDH..__HHH^",
+  "^HDH..__HDH^",
   "^._.._____.^",
   "^.______...^",
   "^.S..__..*.^",
@@ -70,6 +70,14 @@
    "to": "pawn_vault",
    "tx": 5,
    "ty": 7,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 8,
+   "to": "thornridge_house",
+   "tx": 4,
+   "ty": 6,
    "facing": "up"
   }
  ],
@@ -291,6 +299,12 @@
    "y": 12,
    "dialogue": "story/find_4",
    "hide_flag": "page_4"
+  },
+  {
+   "x": 1,
+   "y": 10,
+   "dialogue": "veydal_more/poster_8",
+   "hide_flag": "poster_8"
   },
   {
    "x": 10,

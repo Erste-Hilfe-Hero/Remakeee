@@ -40,8 +40,8 @@ jobs:
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
         run: tools/ip_check.sh --messages "${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
-      - name: Type chart rules, chart sim gate (elements 40-60 %, teams 30-70 %), species band reported (tools/balance/type_sim.py)
-        run: python3 tools/balance/type_sim.py
+      - name: Type chart rules, chart sim gate (elements 40-60 %, teams 30-70 %), every Spirling 40-60 % on base stats (tools/balance/type_sim.py --strict)
+        run: python3 tools/balance/type_sim.py --strict
       - name: Every player-facing text has a German translation
         run: python3 tools/i18n/build.py --check && python3 tools/i18n_extract.py de --check
       - name: Cross-file data integrity (warps, reach, flags, dialogue keys and German, species, levels, items, ids)

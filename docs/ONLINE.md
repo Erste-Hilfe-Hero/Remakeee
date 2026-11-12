@@ -263,8 +263,19 @@ cannot invite or ask each other. Tables: `bunds`, `bund_members`, `bund_invites`
 bund renown (`xp_per_item` each) and week goal progress; the bund rank is 1 + renown / `xp_per_level`, at most 20.
 At `goal_target` items in a week every member takes `goal_reward` once (`bund_goal_claim`). `bund_board()` lists
 bunds by renown. The leader sets language and "open" (`bund_settings`); `bund_search(lang)` lists bunds that are
-not full, most active first, and `bund_join(bund)` joins an open bund at once or sends a request. Bund rank perks
-are not built yet.
+not full, most active first, and `bund_join(bund)` joins an open bund at once or sends a request.
+
+**Online 100, points 34, 35, 37** (migration `20261113000020_raid_bund_more.sql`, `LocalRaidBund.gd`, same file):
+- **Rank perks (34):** `perks` in `bund_rules` add up by rank: more house places (rank 3, 15), `donate_more`
+  (rank 5: +10 donations a day), `goal_more` (rank 10 and 20: +1 item from the week goal). `bund_stats` lists them.
+- **Bund house (35):** `bund_house()` shows every member the hall: rank, placed decorations, members in the house now
+  and wars won. Leader and helpers place up to `house_slots` (3) plus perks decorations from `decor` that the rank
+  opened (`bund_house_set(list)`, no repeats).
+- **Bund against bund (37):** on `war_days` (Saturday, Sunday, UTC) up to `war_size` (5) members sign up with their
+  fair-league team (`bund_war_join(pick)`). When two bunds have five, the one of nearest renown is paired
+  (`bund_wars`). Each fighter fights the team on the same place of the other bund once (`bund_war_fight()`, battle
+  kind `bund_war`, checked by the referee). When all ten are done or the weekend ends, the bund with more wins gets
+  `war_win_xp` (300) renown and a war win, the other `war_xp` (100). `bund_war_info()` shows places and score.
 
 ### Online events (Online 100, area 7, points 61, 63-66, 68-70)
 
@@ -323,6 +334,15 @@ Attempts cost nothing; nothing is for sale. Rifts are deleted 7 days after they 
 is the week's one (`week % pool`), and with `legendary_chance` (5) percent a legendary from `legendaries` at
 `legendary_hp` (150) percent. In `raid_claim` the member with the most damage gets `top_bonus` (1) more.
 `raid_board()` lists the fastest won Rifts without names (Raid Rifts > Fastest Rifts).
+
+**Online 100, points 25, 26, 27** (migration `20261113000020_raid_bund_more.sql`, `LocalRaidBund.gd`):
+`raid_find(tier, role)` puts the player in a queue per tier (Raid Rifts > Find a random group; the game asks again
+every 5 seconds). A group forms with 4 players at once, with 2 or 3 after `group_wait` (30) seconds, and after
+`echo_wait` (60) seconds Echo teams take the free places: the Rift has the strength of 4 and each Echo team deals
+`echo_share` (15) percent at once (shown as "Echo team" in the member list, no reward, no top bonus). Blocked players
+never land in one group. The others learn their Rift on their next `raid_find`; `raid_find_cancel()` leaves the queue.
+Role signs (27): attack, guard or help, chosen for the search or later with `raid_role(raid, role)`; `raid_list`
+shows them per member. They are signs only and change no numbers.
 
 ## Trading
 
@@ -410,6 +430,30 @@ and `FriendRules.gd`, menu `scripts/ui/FriendsMoreMenu.gd`, tests `tests/unit/te
 
 Not done in this area: friends as figures in your town (51), visiting a friend's camp (52) and friends
 nearby (54).
+
+### Safety and fairness (Online 100, area 9, points 83, 85, 86, 88)
+
+Migration `20261113000010_safety.sql`, values in `data/safety.json` (written to `server_config.safety` by
+`game_data_sql.py`), the same rules in `scripts/online/LocalSafety.gd`, `SafetyRules.gd` and `LocalBackend`
+(`parent_off`), menu `scripts/ui/SafetyMenu.gd`, tests `tests/unit/test_safety.gd` and
+`tools/online/sql_test/test_safety.sql`.
+
+- **Parent switches (85):** Settings, Account, For parents switches off live duels, Raid Rifts, bunds, the open
+  or fair league and suggestions from league battles (`parent_set(off, version)`, `parent_get()`,
+  `profiles.parent_off`). Switched-off keys leave `hello.flags`, so the menus hide them, and the server answers
+  `parent_off` (`_league_ok`, `_bund_check`, `_raid_check`, `_live_new`, `live_answer`). Nobody can start a live
+  duel with a player whose duels are off, and a player whose suggestions are off is never suggested.
+- **Under 16 (86):** below `young_band` (16, from the shop's age question, `shop_profiles.age_band`) the
+  default is `young_off`: open league, bunds and suggestions off, so only friends and the fair league remain.
+  A parent's own choice replaces the default. Without an answer to the age question nothing is off.
+- **No pushing points (88):** `league_find` does not rate a pair that already played `pair_rated_daily` (3)
+  rated battles in the last day (`pair_limit` in the answer). A rated loss in which the rival took no damage
+  (`foe_damage` 0 from the referee) is not rated (`league_matches.sandbagged`); from `sandbag_limit` (3) such
+  battles in `sandbag_days` (7) days each one adds a `league_sandbag` note to `cheat_flags` (3 notes put the
+  account under review as before).
+- **Report after a battle (83):** after a league battle the game offers "Report the rival...", and a finished
+  live duel has the same entry; `report_battle(kind, ref, reason)` (`league` = match id, `duel` = duel id)
+  finds the rival on the server, so the code stays hidden, and files a normal report.
 
 ## Weekly boards (online step 1)
 
@@ -540,3 +584,14 @@ checks both against the catalog. `hello` runs `_privacy_cleanup()` about once in
 recordings and league matches older than 30 days, refused-save notes older than 6 months and league
 standings of seasons that ended more than a season ago are removed. The record of processing activities is
 `docs/legal/VERARBEITUNGEN.md`; add a row there before switching on a new online feature.
+
+## Online replays and statistics (Online 100 plan, points 71, 72, 75, 78, 79, 95)
+
+- Every `battle_submit` (league, raid, echo duel, Rift board) also keeps the battle in
+  `GameState.records["online_replays"]`, newest first, at most `keep` (20) in `data/replay_library.json`
+  (`scripts/online/ReplayLibrary.gd`).
+- Records > Online replays (`scripts/ui/OnlineReplaysMenu.gd`): watch one, copy its share code to the
+  clipboard, watch a code from the clipboard, own win rate per Spirling, opponents met most often. A code is
+  `CHR1-` plus the gzip-packed replay in base64; it holds no account data. Replays play in the current look.
+- Planned maintenance: `update server_config set value = '<unix seconds>' where key = 'maintenance_at';`
+  `maintenance_info()` hands it to the game, and the title screen warns from 24 hours before.
