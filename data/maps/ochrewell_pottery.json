@@ -1,0 +1,37 @@
+{
+ "name": "Hadi's Pottery",
+ "region": "solenne",
+ "biome": "town",
+ "backdrop": "ember",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCffffCCW",
+  "WffffffffW",
+  "WfCffffCfW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "ochrewell",
+   "tx": 3,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "wenna",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "ochrewell_pottery/wenna",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}
