@@ -170,7 +170,8 @@ def brackwater_sluice(world):
     rooms(world, mid, tr("Brackwater Sluice", "Brackschleuse"), out,
           {"region": "veydal", "biome": "dungeon", "backdrop": "lake", "field": "deep_murk", "encounters": mid})
     f = world.load_map("brackwater_fen")
-    set_char(f, 0, 13, "D")
+    # A jetty off the map edge, not a lone door tile in the water (map audit).
+    set_char(f, 0, 13, "+")
     put_warp(f, warp(0, 13, mid, 5, 5, "up"))
 
 
