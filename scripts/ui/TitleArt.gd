@@ -77,9 +77,12 @@ func _draw_lighthouse(at: Vector2, lake_y: float) -> void:
 	draw_colored_polygon(rock, UITheme.INK)
 	if _atlas == null:
 		return
-	var col: Dictionary[int, int] = {0: TilesetFactory.Kind.LAMP, 1: TilesetFactory.Kind.TOWER, 2: TilesetFactory.Kind.DOOR}
+	# Lamp, the shaft running down, the tower foot with its door (the same tiles as Brindlewick).
+	var cells: Array[Vector2i] = [Vector2i(TilesetFactory.Kind.LAMP, 0),
+		Vector2i(TilesetFactory.Kind.TOWER, TilesetFactory.LIGHTHOUSE_SHAFT_ROW),
+		Vector2i(TilesetFactory.Kind.TOWER, TilesetFactory.LIGHTHOUSE_DOOR_ROW)]
 	for row: int in 3:
-		var src := Rect2(col[row] * TILE, 0, TILE, TILE)
+		var src := Rect2(Vector2(cells[row] * TILE), Vector2(TILE, TILE))
 		var dst := Rect2(at + Vector2(0, row * TILE), Vector2(TILE, TILE))
 		if row != 1:
 			# Those tiles have a ground background; draw only the middle columns.
