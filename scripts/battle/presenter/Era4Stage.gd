@@ -10,7 +10,8 @@ var _time: float = 0.0
 
 func _init() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	cfg = EraManager.stage_config()
+	cfg = EraManager.stage_config().duplicate()
+	cfg["colors"] = EraManager.stage_colors(EraManager.current_region)
 
 func _process(delta: float) -> void:
 	if Juice.reduced():
