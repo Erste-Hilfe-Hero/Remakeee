@@ -30,6 +30,8 @@ func after_each() -> void:
 	EraLight.debug_hour = -1.0
 	EraLight.debug_weather = ""
 	EraLight.debug_month = 0
+	# The overworld test stands the Wayfarer still for many frames; do not hand that idle time on.
+	MusicDirector.update_world(true, false, 0.0)
 
 func _map(raw: Dictionary) -> MapData:
 	return MapData.from_dict("t", raw)
