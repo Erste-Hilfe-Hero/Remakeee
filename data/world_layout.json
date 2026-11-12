@@ -150,6 +150,7 @@
   "great_orrery": {"inside": "starwell"},
   "gilt_span": {"inside": "lantern_span"},
   "white_stair": {"inside": "long_stair"},
+  "thornridge_house": {"inside": "thornridge"},
   "mossgate": {"region": "quivermoor", "pos": [0, 2], "kind": "town", "neighbours": ["breathing_bog", "wandering_wood"]},
   "tallowmere": {"region": "quivermoor", "pos": [2, 0], "kind": "town", "neighbours": ["breathing_bog", "candle_causeway", "wick_rift"]},
   "rootchapel": {"region": "quivermoor", "pos": [2, 4], "kind": "town", "neighbours": ["wandering_wood", "hymnmarsh", "gloamwater", "taproot_rift"]},
