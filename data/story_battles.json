@@ -586,5 +586,157 @@
   "ai": 2,
   "money": 300,
   "defeat": "soot_vaults/fitch_ambush_defeat"
+ },
+ "veil_corin_1": {
+  "trainer": "Veil Heir Corin",
+  "team": [
+   {
+    "species": "Highhare",
+    "level": 39
+   },
+   {
+    "species": "Saltspire",
+    "level": 39
+   },
+   {
+    "species": "Scrivane",
+    "level": 40
+   }
+  ],
+  "ai": 2,
+  "money": 2400,
+  "defeat": "solenne_side/corin_1_defeat",
+  "lose": "solenne_side/corin_lose",
+  "win_flags": [
+   "veil_corin_1_beaten"
+  ]
+ },
+ "veil_corin_2": {
+  "trainer": "Veil Heir Corin",
+  "team": [
+   {
+    "species": "Zenithare",
+    "level": 43
+   },
+   {
+    "species": "Glasstarn",
+    "level": 43
+   },
+   {
+    "species": "Mendlace",
+    "level": 44
+   },
+   {
+    "species": "Saltcrown",
+    "level": 44
+   }
+  ],
+  "ai": 3,
+  "money": 2800,
+  "defeat": "solenne_side/corin_2_defeat",
+  "lose": "solenne_side/corin_lose",
+  "win_flags": [
+   "veil_corin_2_beaten"
+  ]
+ },
+ "veil_corin_3": {
+  "trainer": "Veil Heir Corin",
+  "team": [
+   {
+    "species": "Zenithare",
+    "level": 48
+   },
+   {
+    "species": "Mirassil",
+    "level": 48
+   },
+   {
+    "species": "Leviarch",
+    "level": 49
+   },
+   {
+    "species": "Saltcrown",
+    "level": 49
+   },
+   {
+    "species": "Obsidroth",
+    "level": 50
+   }
+  ],
+  "ai": 3,
+  "money": 3600,
+  "defeat": "solenne_side/corin_3_defeat",
+  "lose": "solenne_side/corin_lose",
+  "win_flags": [
+   "veil_corin_3_beaten"
+  ]
+ },
+ "veil_vault": {
+  "trainer": "Brass Veil Factor Lusk",
+  "team": [
+   {
+    "species": "Mendlace",
+    "level": 46
+   },
+   {
+    "species": "Scrivane",
+    "level": 46
+   },
+   {
+    "species": "Dunebastion",
+    "level": 47
+   },
+   {
+    "species": "Obsidroth",
+    "level": 47
+   },
+   {
+    "species": "Burinox",
+    "level": 48
+   }
+  ],
+  "ai": 3,
+  "money": 4000,
+  "defeat": "veil_cistern/vault_defeat",
+  "lose": "veil_cistern/vault_lose",
+  "win_flags": [
+   "veil_vault_beaten"
+  ]
+ },
+ "veil_guards": {
+  "trainer": "Veil Guard",
+  "team": [
+   {
+    "species": "Burinox",
+    "level": 44
+   },
+   {
+    "species": "Talusgard",
+    "level": 44
+   },
+   {
+    "species": "Calderox",
+    "level": 45
+   }
+  ],
+  "ai": 2,
+  "money": 1200,
+  "lose": "veil_cistern/guards_lose"
+ },
+ "ambush_westpipe": {
+  "trainer": "Veil Guard",
+  "team": [
+   {
+    "species": "Obsidroth",
+    "level": 41
+   },
+   {
+    "species": "Duskdigger",
+    "level": 41
+   }
+  ],
+  "ai": 1,
+  "money": 900,
+  "lose": "clans/ambush_lose"
  }
 }
