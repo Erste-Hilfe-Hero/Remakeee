@@ -1,0 +1,35 @@
+{
+ "name": "First Bank",
+ "region": "quillmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "ledgerholm",
+   "tx": 3,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "banker",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/ledgerholm_bank_banker",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

@@ -7,6 +7,10 @@
   "sandglass": {"seat": "glasswind_flats", "rule": "glass and false roads"}
  },
  "figures": {
+  "haskett": {"clan": "none", "act": 1, "role": "Copperfold mine foreman, pays in scrip", "trust": 20, "use": 60},
+  "dory": {"clan": "none", "act": 1, "role": "Shatterfloor strike leader, keeps the strike fund", "trust": 40, "use": 50},
+  "odette": {"clan": "none", "act": 1, "role": "Reedhaven widow, very unlucky husbands", "trust": 15, "use": 70},
+  "jinks": {"clan": "none", "act": 1, "role": "rival Wayfarer, paid by Brennick, broke", "trust": 35, "use": 45},
   "ottilie": {"clan": "marrovel", "role": "clan mother, hidden power", "trust": 30, "use": 60},
   "fenrick": {"clan": "marrovel", "role": "clan father, loud patriarch", "trust": 35, "use": 55},
   "brannoc": {"clan": "marrovel", "role": "broken heir", "trust": 40, "use": 50},
@@ -72,6 +76,7 @@
   "ilse": {"clan": "none", "act": 4, "role": "naturalist who sells her field guide to a poacher", "trust": 35, "use": 45}
  },
  "favors": {
+  "jinks_stake": {"npc": "jinks", "kind": "lend_coins", "amount": 200, "reward_chance": 0.5, "betray": {"say": "veydal_more/jinks_betray", "battle": "jinks_ambush", "ledger": "jinks_stake", "flags": ["jinks_bet_done"], "use": {"jinks": 10}}, "reward": {"say": "veydal_more/jinks_reward", "coins": 400, "flags": ["jinks_bet_done"], "trust": {"jinks": 10}}, "kept": {"say": "veydal_more/jinks_kept", "coins": 200, "flags": ["jinks_bet_done"]}},
   "briony_alibi": {"npc": "briony", "kind": "believe_tip", "reward_chance": 0.3,
    "betray": {"say": "ashmere_more/briony_betray", "battle": "briony_fence", "ledger": "alibi", "use": {"briony": 10}},
    "reward": {"say": "ashmere_more/briony_reward", "item": "max_tonic", "trust": {"briony": 10}},
@@ -138,6 +143,9 @@
   "dimsy_tip": {"npc": "dimsy", "kind": "believe_tip", "reward_chance": 0.4, "betray": {"say": "corvane_side/dimsy_betray", "battle": "ambush_vault"}, "reward": {"say": "corvane_side/dimsy_reward", "item": "max_tonic", "trust": {"dimsy": 10}}, "kept": {"say": "corvane_side/dimsy_kept"}}
  },
  "betrayals": {
+  "haskett_scrip": {"act": 1, "npc": "haskett", "rule": "warned", "warned_by": ["strike_proof"], "caught": {"ledger": "haskett_scrip", "coins": 300, "trust": {"haskett": -10}, "say": "veydal_more/haskett_caught"}, "struck": {"ledger": "haskett_scrip", "coins": -100, "use": {"haskett": 10}, "say": "veydal_more/haskett_struck"}},
+  "dory_sale": {"act": 1, "npc": "dory", "rule": "trust", "min": 55, "caught": {"ledger": "dory_sale", "trust": {"dory": 5}, "say": "veydal_more/dory_caught"}, "struck": {"ledger": "dory_sale", "flags": ["strike_sold"], "say": "veydal_more/dory_struck"}},
+  "odette_slip": {"act": 1, "npc": "odette", "rule": "warned", "warned_by": ["widow_read_label"], "caught": {"ledger": "odette_slip", "coins": 100, "say": "veydal_more/odette_caught"}, "struck": {"ledger": "odette_slip", "coins": -150, "use": {"odette": 10}, "say": "veydal_more/odette_struck"}},
   "greaves_verdict": {"act": 3, "npc": "greaves", "rule": "warned", "warned_by": ["ah_docket_read"],
    "caught": {"ledger": "verdict", "coins": 2000, "trust": {"tansy": 10, "greaves": -10}, "say": "ashmere_more/verdict_caught"},
    "struck": {"ledger": "verdict", "say": "ashmere_more/verdict_struck", "battle": "assize_bailiffs", "coins": -200}},
@@ -260,6 +268,10 @@
   "a4_tunnel": {"act": 4, "at": "betrayal/a4_tunnel", "decides": ["lusk_tunnel"]}
  },
  "ledger": [
+  {"id": "haskett_scrip", "act": 1, "ref": "veydal_more/ledger_haskett"},
+  {"id": "dory_sale", "act": 1, "ref": "veydal_more/ledger_dory"},
+  {"id": "odette_slip", "act": 1, "ref": "veydal_more/ledger_odette"},
+  {"id": "jinks_stake", "act": 1, "ref": "veydal_more/ledger_jinks"},
   {"id": "ash", "act": 1, "ref": "clans/ledger_ash"},
   {"id": "vash_record", "act": 1, "ref": "clans/ledger_vash_record"},
   {"id": "fenrick_letter", "act": 1, "ref": "clans/ledger_fenrick_letter"},
