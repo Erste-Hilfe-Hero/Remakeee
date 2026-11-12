@@ -90,7 +90,7 @@
   "lines": [
    "Raft Trader Mott: Buy now. By noon my stall is in another town and so is your change."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts echo_last_ember echo_grid_collapse echo_solar_choir echo_bloodied_quill echo_iron_lung echo_permafrost"
  },
  "gloamwater_bloomthief": [
   "Rasmus: I steal blooms from Lastbloom and sell them back to Lastbloom. Sabeline takes a cut. Of me."
@@ -212,7 +212,7 @@
   "lines": [
    "Chandler Pim: Candles, tonics, rope. The rope is new. The last batch let someone down."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts echo_abyss_hymn echo_mountain_fall echo_void_pulse echo_last_toll echo_unmasked echo_crown_fall"
  },
  "nell": {
   "if": {
@@ -316,7 +316,7 @@
   "lines": [
    "Wax Seller Tobin: Tonics on the shelf, candles by the name. Yours is on special."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts echo_verdant_end echo_jet_stream echo_final_draft echo_thousand_bells echo_caustic_rain echo_apex_fall"
  },
  "taproot_rift_acolyte": [
   "Malte: Ossian says the moor must eat. I volunteered to help. Not to be eaten. To help."
