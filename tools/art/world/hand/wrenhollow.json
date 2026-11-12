@@ -1,0 +1,22 @@
+{
+ "add": {
+  "warps": [
+   {
+    "x": 2,
+    "y": 3,
+    "to": "wrenhollow_spring",
+    "tx": 4,
+    "ty": 6,
+    "facing": "up"
+   },
+   {
+    "x": 8,
+    "y": 3,
+    "to": "wrenhollow_shop",
+    "tx": 4,
+    "ty": 6,
+    "facing": "up"
+   }
+  ]
+ }
+}

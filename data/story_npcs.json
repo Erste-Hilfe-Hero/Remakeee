@@ -144,7 +144,7 @@
    },
    {
     "id": "clan_sable",
-    "x": 9,
+    "x": 8,
     "y": 5,
     "facing": "down",
     "dialogue": "clans/sable",
@@ -198,7 +198,7 @@
    },
    {
     "id": "debt_toft",
-    "x": 2,
+    "x": 1,
     "y": 13,
     "facing": "down",
     "dialogue": "corvane_side/debt_toft",
@@ -381,7 +381,7 @@
    },
    {
     "id": "clan_elma",
-    "x": 3,
+    "x": 2,
     "y": 4,
     "facing": "down",
     "dialogue": "clans/elma",

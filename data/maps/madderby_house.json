@@ -1,0 +1,38 @@
+{
+ "name": "Konrad's House",
+ "region": "corvane",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCffffCCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 8,
+   "to": "madderby",
+   "tx": 2,
+   "ty": 10,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "konrad",
+   "x": 2,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/madderby_house_konrad",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}
