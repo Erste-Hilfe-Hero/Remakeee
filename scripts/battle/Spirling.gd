@@ -9,6 +9,10 @@ const MAX_MOVES: int = 4
 const START_ENERGY: int = 10
 const MAX_ENERGY: int = 10
 const MAX_LEVEL: int = 60
+## Highest ring any Spirling can reach: the ring cap of the last era in data/eras.json
+## "ring_caps" (Halcyra, Era IV, rings 78 to 96). Until a later era opens, GameState.ring_ceiling()
+## keeps growth at MAX_LEVEL; foes and wild Spirlings of a later era keep their own ring.
+const ERA_MAX_LEVEL: int = 96
 ## Newest era a Spirling can come from (EraManager.NEWEST, Era V Living). Saves used to cut
 ## Era V Spirlings back to Era IV (bug plan 1373).
 const MAX_ERA: int = 5
@@ -122,7 +126,7 @@ func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = nu
 	if d == null:
 		return
 	data = d
-	level = clampi(lvl, 1, MAX_LEVEL)
+	level = clampi(lvl, 1, ERA_MAX_LEVEL)
 	xp = xp_for_level(level)
 	var r: RandomNumberGenerator = rng
 	if r == null:
@@ -291,7 +295,7 @@ static func xp_for_level(lvl: int) -> int:
 	return int(floor(XP_MULT * pow(float(lvl), XP_EXP)))
 
 func xp_to_next() -> int:
-	if level >= MAX_LEVEL:
+	if level >= ERA_MAX_LEVEL:
 		return 0
 	return xp_for_level(level + 1) - xp
 
@@ -508,7 +512,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	var s := Spirling.new()
 	s.data = sd
 	s.nickname = str(d.get("nickname", ""))
-	s.level = clampi(_num(d.get("level"), 1), 1, MAX_LEVEL)
+	s.level = clampi(_num(d.get("level"), 1), 1, ERA_MAX_LEVEL)
 	s.xp = _num(d.get("xp"), xp_for_level(s.level))
 	var sp: Variant = d.get("spark", {})
 	for key: String in STAT_KEYS:

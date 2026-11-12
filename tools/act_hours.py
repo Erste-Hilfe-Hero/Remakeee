@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Rough first-play hours per act from data (owner rule: at least 20 h per act).
-Coefficients live in data/playtime.json. Usage: python3 tools/act_hours.py [act]"""
+"""Rough first-play hours per act and per post-game era region from data (owner rule: at least
+20 h per act and per era region). Coefficients live in data/playtime.json.
+Usage: python3 tools/act_hours.py [act or region id ...]   (no argument: every act and region)"""
 import glob, json, os, sys
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
@@ -11,9 +12,11 @@ def load(p):
 
 
 def act_hours(act):
+    """Hours of story act `act` (1-4) or of the era region with id `act` ("vellmarch", ...)."""
     cfg = load("data/playtime.json")
     k = cfg["minutes"]
-    a = cfg["acts"][str(act)]
+    key = str(act)
+    a = cfg["acts"][key] if key in cfg["acts"] else cfg["regions"][key]
     layout = load("data/world_layout.json")["maps"]
     maps = {}
     for path in glob.glob(os.path.join(ROOT, "data", "maps", "*.json")):
@@ -65,7 +68,13 @@ def act_hours(act):
     parts["dialogue"] = k["dialogue_line"] * lines
     parts["duels"] = k["story_duel"] * battles
     q = load("data/quests.json")
-    parts["main"] = k["main_goal"] * sum(1 for g in q["main"] if str(g.get("act", "")).startswith("Act %s:" % roman(act)))
+    if key in cfg["acts"]:
+        main = sum(1 for g in q["main"] if str(g.get("act", "")).startswith("Act %s:" % roman(act)))
+    else:
+        # An era region's story chapters live in its sheet (data/region<N>.json "story").
+        sheet = a.get("sheet", "")
+        main = len(load(sheet).get("story", [])) if sheet and os.path.exists(os.path.join(ROOT, sheet)) else 0
+    parts["main"] = k["main_goal"] * main
     side = 0.0
     for g in q["side"]:
         where = str(g.get("where", ""))
@@ -80,7 +89,9 @@ def roman(n):
 
 
 if __name__ == "__main__":
-    acts = sys.argv[1:] or sorted(load("data/playtime.json")["acts"])
-    for act in acts:
+    cfg = load("data/playtime.json")
+    ids = sys.argv[1:] or sorted(cfg["acts"]) + list(cfg.get("regions", {}))
+    for act in ids:
         h, parts = act_hours(act)
-        print("Act %s: %.1f h  (%s)" % (act, h, ", ".join("%s %.0f min" % (p, v) for p, v in sorted(parts.items()))))
+        label = "Act %s" % act if str(act) in cfg["acts"] else "%s (Era %s)" % (cfg["regions"][act].get("name", act), cfg["regions"][act].get("era", "?"))
+        print("%s: %.1f h  (%s)" % (label, h, ", ".join("%s %.0f min" % (p, v) for p, v in sorted(parts.items()))))
