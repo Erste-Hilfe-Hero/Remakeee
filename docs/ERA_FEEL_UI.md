@@ -82,6 +82,14 @@ Described generically, from general knowledge of the genre's history; no product
 | Overworld | | season tint by month, camera looks ahead while walking, idle breathing of all figures, stronger tilt | server-set season |
 | Era change | white sweep | breathing wave runs down the screen, jingle, caption | |
 
+### Era IV/V building depth (slice 5)
+
+`scripts/overworld/EraDepthLayer.gd` (`data/era45_overworld.json`) draws every building of an
+Era IV or V map as a box seen a little from above and to the right: a side wall on its right
+edge and a lit top face above its roof ridge, 5 px deep in Era IV and 6 px with a warm edge in
+Era V, coloured from the map's own tile art. Older regions stay flat (the map's era, capped by
+the era on screen). Shots: `tools/era45_overworld_shots.gd`.
+
 ## How it works
 
 - `data/era_feel.json`: one row per era; the keys are listed in `EraFeel.KEYS`. `EraFeel.problems()` (and the GUT test) fail on a missing key, an unknown style, an extra that switches off again or a number that goes down.
