@@ -82,6 +82,11 @@ func show_save(e: int, summary: String) -> void:
 	var lines: Array[String] = card_lines(era, summary)
 	_name.text = lines[0]
 	_line.text = lines[1]
+	# A line too long for the doubled font on the wide screens keeps the plain size.
+	var k: int = EraMomentLayer.ui_scale(get_viewport_rect().size.x) if is_inside_tree() else 1
+	for l: Label in [_name, _line]:
+		var font: Font = l.get_theme_font("font")
+		l.add_theme_font_size_override("font_size", PixelFont.BASE_SIZE * EraMomentLayer.fit_scale(font, l.text, k, l.size.x))
 	var ink: Color = EraMoments.col(era, "ink")
 	_name.add_theme_color_override("font_color", EraMoments.col(era, "accent").darkened(0.35) if era > 1 else ink)
 	_line.add_theme_color_override("font_color", ink)

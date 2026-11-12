@@ -251,10 +251,10 @@
     "flyer": true,
     "layers": 4,
     "camera": true,
-    "legend": "vorlucent",
+    "legend": "moorbreath",
     "cast": [
-     "cindravax",
-     "rimesovereign"
+     "driftadmiral",
+     "lichenthrone"
     ]
    },
    "boot": {

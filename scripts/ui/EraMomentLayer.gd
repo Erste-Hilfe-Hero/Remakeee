@@ -69,6 +69,13 @@ func is_closed() -> bool:
 static func ui_scale(width: float) -> int:
 	return 2 if width >= 250.0 else 1
 
+## Pixel scale (1..[param k]) at which [param text] fits in [param max_w] px: a long line on the
+## wide screens steps down to the plain size instead of running off the edge.
+static func fit_scale(font: Font, text: String, k: int, max_w: float) -> int:
+	while k > 1 and font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, PixelFont.BASE_SIZE * k).x > max_w:
+		k -= 1
+	return k
+
 ## Children are built here (the stage exists).
 func build() -> void:
 	pass

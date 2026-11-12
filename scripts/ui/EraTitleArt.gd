@@ -115,7 +115,10 @@ func _draw_cast(r: Rect2) -> void:
 ## to the era's screen and in the era's inks. From Era III a light runs over the letters.
 func _draw_era_logo(center: Vector2) -> void:
 	var font: Font = get_theme_default_font()
+	# The wordmark keeps its size, but never runs off the screen.
 	var k: int = logo_scale(size.x)
+	while k > 1 and font.get_string_size(LOGO, HORIZONTAL_ALIGNMENT_LEFT, -1, PixelFont.BASE_SIZE * k).x + 6.0 * k / 3.0 > size.x - 4.0:
+		k -= 1
 	var fs: int = PixelFont.BASE_SIZE * k
 	var ink: Color = EraMoments.col(era, "ink")
 	var paper: Color = EraMoments.col(era, "paper")
@@ -137,9 +140,9 @@ func _draw_era_logo(center: Vector2) -> void:
 	if bool(EraMoments.title(era).get("shine", false)) and not still:
 		_draw_shine(font, pos, fs, width)
 	var sub: String = Loc.t(str(EraMoments.era(era).get("subtitle", "")))
-	var sfs: int = PixelFont.BASE_SIZE * EraMoments.font_scale(era)
+	var sfs: int = PixelFont.BASE_SIZE * EraMomentLayer.fit_scale(font, sub, EraMoments.font_scale(era), size.x - 4.0)
 	var sw: float = font.get_string_size(sub, HORIZONTAL_ALIGNMENT_LEFT, -1, sfs).x
-	var sub_pos := Vector2(roundf(center.x - sw / 2.0), pos.y + PixelFont.DESCENT * k + 3.0 * d + PixelFont.ASCENT * EraMoments.font_scale(era) + 2)
+	var sub_pos := Vector2(roundf(center.x - sw / 2.0), pos.y + PixelFont.DESCENT * k + 3.0 * d + PixelFont.ASCENT * sfs / PixelFont.BASE_SIZE + 2)
 	draw_string(font, sub_pos + Vector2(1, 1), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, sfs, ink)
 	draw_string(font, sub_pos, sub, HORIZONTAL_ALIGNMENT_LEFT, -1, sfs, EraMoments.col(era, "sun"))
 

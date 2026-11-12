@@ -61,7 +61,7 @@ static func fade_alpha(s: float, length: float) -> float:
 	var left: float = length - s
 	if left >= FADE_TIME:
 		return 1.0
-	return clampf(ceilf(left / FADE_TIME * FADE_STEPS) / FADE_STEPS, 0.0, 1.0)
+	return clampf(floorf(left / FADE_TIME * FADE_STEPS) / FADE_STEPS, 0.0, 1.0)
 
 func step() -> void:
 	if not _rang and (reduced or t >= (LAND_AT if era == 1 else 0.35)):

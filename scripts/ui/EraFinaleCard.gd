@@ -141,7 +141,7 @@ func paint(ci: Control) -> void:
 		y += h + LINE_SPACE * k
 	if s >= full_time(era):
 		var hint: String = EraMoments.text("continue")
-		ci.draw_string(font, Vector2(0, size.y - 3.0 * k), hint, HORIZONTAL_ALIGNMENT_RIGHT, size.x - 4.0 * k, fs, EraMoments.col(era, "paper"))
+		ci.draw_string(font, Vector2(0, size.y - 3.0 * k), hint, HORIZONTAL_ALIGNMENT_RIGHT, size.x - 4.0 * k, PixelFont.BASE_SIZE * fit_scale(font, hint, k, size.x - 8.0 * k), EraMoments.col(era, "paper"))
 
 func press() -> void:
 	var full: float = full_time(era)

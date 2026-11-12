@@ -46,6 +46,6 @@ The title wears the newest era any save has reached (`EraMoments.title_era`). Th
 
 ## Still missing
 
-- The Era V legend and the Era IV and V figures are stand-ins (Quillmarch figures, an Era I legend as a shape): Halcyra and Quivermoor have no own Spirling art yet. Swap the names in the data file when they exist.
+- Era V uses Quivermoor's own art (#488): Moorbreath as the legend shape, Driftadmiral and Lichenthrone as the figures. Era IV still shows Quillmarch figures; swap the names in the data file when Halcyra's own front art is in art/era4.
 - No own jingle per boot card or change step; they use the era's existing sounds.
 - The finale card is not reachable from a menu after it was shown.

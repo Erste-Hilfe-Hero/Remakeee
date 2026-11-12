@@ -177,9 +177,13 @@ func _refresh() -> void:
 	var shown: int = EraMoments.list_rows_shown(to_era, float(state.list), reduced) if on_list else 0
 	var text: String = ""
 	for i: int in mini(shown, rows.size()):
-		text += "+ %s\n" % rows[i]
+		text += "+\u00a0%s\n" % rows[i]
 	_list.text = text
+	# The rows start under the caption, however many lines it wraps to (German is longer).
+	_list.position.y = _caption.position.y + maxi(_caption.get_line_count(), 1) * _caption.get_line_height()
 	_hint.text = EraMoments.text("continue") if bool(state.done) else EraMoments.text("skip")
+	var k: int = ui_scale(stage.size.x)
+	_hint.add_theme_font_size_override("font_size", PixelFont.BASE_SIZE * fit_scale(_hint.get_theme_font("font"), _hint.text, k, _hint.size.x))
 	_hint.add_theme_color_override("font_color", EraMoments.col(to_era, "paper"))
 
 func paint(ci: Control) -> void:
@@ -191,8 +195,9 @@ func paint(ci: Control) -> void:
 	var paper: Color = EraMoments.col(to_era, "paper")
 	# Header: the era that is arriving, and the line of this change.
 	var head: String = EraMoments.era_label(to_era if float(state.palette) > 0.5 or reduced else from_era)
-	ci.draw_string(font, Vector2(0, 3 * k + PixelFont.ASCENT * k), head, HORIZONTAL_ALIGNMENT_CENTER, size.x, fs, EraMoments.col(to_era, "sun"))
-	ci.draw_string(font, Vector2(0, 14 * k + PixelFont.ASCENT * k), Loc.t(str(EraMoments.change(to_era).get("headline", ""))), HORIZONTAL_ALIGNMENT_CENTER, size.x, fs, paper)
+	var headline: String = Loc.t(str(EraMoments.change(to_era).get("headline", "")))
+	ci.draw_string(font, Vector2(0, 3 * k + PixelFont.ASCENT * k), head, HORIZONTAL_ALIGNMENT_CENTER, size.x, PixelFont.BASE_SIZE * fit_scale(font, head, k, size.x - 4), EraMoments.col(to_era, "sun"))
+	ci.draw_string(font, Vector2(0, 14 * k + PixelFont.ASCENT * k), headline, HORIZONTAL_ALIGNMENT_CENTER, size.x, PixelFont.BASE_SIZE * fit_scale(font, headline, k, size.x - 4), paper)
 	# The frame: the old era's, then the new one drawn over it from the left.
 	var pr: Rect2 = panel_rect()
 	EraBackdrop.draw_frame(ci, pr, from_era)
