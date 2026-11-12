@@ -68,7 +68,17 @@
    "bond": "blink_out",
    "level_glints": 0,
    "bond_glints": 0,
-   "unfurl": "ink"
+   "unfurl": "ink",
+   "formation_slot": 28,
+   "formation_gap": 6,
+   "formation_stagger": 0,
+   "weather_drops": 14,
+   "weather_len": 1,
+   "weather_speed": 70,
+   "weather_splash": false,
+   "weather_fog_bands": 2,
+   "weather_lightning": false,
+   "weather_colour": false
   },
   "2": {
    "intro": "spiral",
@@ -95,7 +105,17 @@
    "bond": "hop",
    "level_glints": 0,
    "bond_glints": 0,
-   "unfurl": "wash"
+   "unfurl": "wash",
+   "formation_slot": 28,
+   "formation_gap": 6,
+   "formation_stagger": 0,
+   "weather_drops": 20,
+   "weather_len": 2,
+   "weather_speed": 80,
+   "weather_splash": false,
+   "weather_fog_bands": 3,
+   "weather_lightning": false,
+   "weather_colour": true
   },
   "3": {
    "intro": "shutter",
@@ -122,7 +142,17 @@
    "bond": "hop_glint",
    "level_glints": 4,
    "bond_glints": 4,
-   "unfurl": "bands"
+   "unfurl": "bands",
+   "formation_slot": 32,
+   "formation_gap": 6,
+   "formation_stagger": 0,
+   "weather_drops": 30,
+   "weather_len": 3,
+   "weather_speed": 110,
+   "weather_splash": false,
+   "weather_fog_bands": 4,
+   "weather_lightning": false,
+   "weather_colour": true
   },
   "4": {
    "intro": "iris",
@@ -151,7 +181,17 @@
    "bond_glints": 6,
    "breath_period": 1.6,
    "breath_squash": 0.04,
-   "unfurl": "rays"
+   "unfurl": "rays",
+   "formation_slot": 40,
+   "formation_gap": 8,
+   "formation_stagger": 5,
+   "weather_drops": 44,
+   "weather_len": 4,
+   "weather_speed": 140,
+   "weather_splash": true,
+   "weather_fog_bands": 5,
+   "weather_lightning": true,
+   "weather_colour": true
   },
   "5": {
    "intro": "swoop",
@@ -180,7 +220,17 @@
    "bond_glints": 8,
    "breath_period": 1.4,
    "breath_squash": 0.04,
-   "unfurl": "rays_motes"
+   "unfurl": "rays_motes",
+   "formation_slot": 44,
+   "formation_gap": 8,
+   "formation_stagger": 6,
+   "weather_drops": 60,
+   "weather_len": 5,
+   "weather_speed": 170,
+   "weather_splash": true,
+   "weather_fog_bands": 6,
+   "weather_lightning": true,
+   "weather_colour": true
   }
  },
  "cameras": {
@@ -457,5 +507,7 @@
   "daze": "8a5a9a",
   "drowse": "6a6a8a"
  },
- "status_badge_from_era": 2
+ "status_badge_from_era": 2,
+ "weather_storm_every": 4.0,
+ "weather_flash_alpha": 0.22
 }

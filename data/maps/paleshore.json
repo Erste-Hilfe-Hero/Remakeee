@@ -210,6 +210,14 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "digger",
+   "x": 2,
+   "y": 10,
+   "facing": "right",
+   "dialogue": "paleshore/digger",
+   "sprite": "elder"
   }
  ],
  "signs": [

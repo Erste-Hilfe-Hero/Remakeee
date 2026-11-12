@@ -510,7 +510,12 @@ def starwell_extra(world, m):
 
 
 def paleshore_extra(world, m):
-    pass
+    # The Dig site (era function dig_site, Era IV, docs/ERA_FUNCTIONS.md).
+    world.add_text("paleshore", {"digger": {"lines": lines(
+        ("Old Digger Hesper: Under the salt there is more salt. Under that, things people dropped while running. One dig a day, love. The ground sulks.",
+         "Alte Gräberin Hesper: Unter dem Salz ist noch mehr Salz. Darunter Dinge, die Leute auf der Flucht verloren haben. Eine Grabung am Tag, Schätzchen. Der Boden schmollt.")),
+        "action": "dig"}})
+    m["npcs"].append(npc("digger", 2, 10, "right", "paleshore/digger", "elder"))
 
 
 def whitecairn_extra(world, m):

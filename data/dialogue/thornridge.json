@@ -32,7 +32,7 @@
   "lines": [
    "Trader: Supplies for the road! Your satchel holds as much as you like."
   ],
-  "action": "shop tonic strong_tonic max_tonic remedy cooling_gel dry_towel wake_bell spark_drop revival_leaf kin_charm"
+  "action": "shop tonic strong_tonic max_tonic remedy cooling_gel dry_towel wake_bell spark_drop revival_leaf kin_charm pruning_shears grounding_rod smelling_salts"
  },
  "sparkseer": {
   "lines": [
@@ -52,7 +52,7 @@
    "Crystal seller: Echo Crystals keep an art's echo. Teach it as often as you like!",
    "Crystal seller: And things for Spirlings to hold, brews, pearls..."
   ],
-  "action": "shop echo_ember echo_tide echo_bloom echo_volt echo_stone echo_gale echo_lumen echo_umbra echo_scatter_gale echo_graft spark_charm tide_pearl bark_wrap iron_burr swift_feather keen_lens power_brew guard_brew focus_brew dash_brew"
+  "action": "shop echo_ember echo_tide echo_bloom echo_volt echo_stone echo_gale echo_lumen echo_umbra echo_scatter_gale echo_graft spark_charm tide_pearl bark_wrap iron_burr swift_feather keen_lens power_brew guard_brew focus_brew dash_brew ink_charm echo_charm"
  },
  "elder": {
   "lines": [

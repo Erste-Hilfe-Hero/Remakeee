@@ -123,6 +123,9 @@ var hidden_gift: bool = false
 var lineage: Array[String] = []
 ## Fully right Echo calls in a row while it was in the team (unfold rule "echo_streak").
 var echo_streak: int = 0
+## Kinship 0..Kinship.max_value() (era function "kinship", Era II): grows in battle and on the
+## road (Kinship.gd); unfold rule "kinship" waits for it.
+var kinship: int = 0
 
 ## [param rng] rolls the hidden Spark values; pass the battle or game RNG for reproducibility.
 func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = null) -> void:
@@ -388,6 +391,8 @@ func unfold_ready(p: Dictionary, ctx: Dictionary) -> bool:
 			return str(ctx.get("phase", "")) == str(v)
 		"echo_streak":
 			return echo_streak >= int(v)
+		"kinship":
+			return int(v) > 0 and kinship >= int(v)
 	return false
 
 ## The Rift a "mended" rule waits for. "origin" means the Rift nearest to where it was bonded.
@@ -437,6 +442,8 @@ func unfold_hint(p: Dictionary) -> String:
 			return "Needs: %s" % phase
 		"echo_streak":
 			return "Needs: %d perfect Echo calls in the team" % int(p.value)
+		"kinship":
+			return "Needs: Kinship %d (now %d)" % [int(p.value), kinship]
 	return ""
 
 ## DayCycle.Phase index -> rule value, and the word shown in hints.
@@ -503,6 +510,7 @@ func to_dict() -> Dictionary:
 		"met_day": met_day,
 		"lineage": lineage.duplicate(),
 		"echo_streak": echo_streak,
+		"kinship": kinship,
 		"box": box,
 		"favorite": favorite,
 	}
@@ -553,6 +561,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	var lin: Variant = d.get("lineage", [])
 	s.lineage.assign((lin as Array).map(func(x: Variant) -> String: return str(x)) if lin is Array else [])
 	s.echo_streak = maxi(0, _num(d.get("echo_streak"), 0))
+	s.kinship = clampi(_num(d.get("kinship"), 0), 0, 1000)
 	s.box = maxi(0, _num(d.get("box"), 0))
 	s.favorite = d.get("favorite") is bool and d.get("favorite")
 	s.hp = clampi(_num(d.get("hp"), s.max_hp()), 0, s.max_hp())

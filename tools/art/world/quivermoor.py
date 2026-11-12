@@ -594,9 +594,11 @@ def rift(mid):
                  warden=key, team=crew, intro="%s/warden_%s_intro" % (DIA, w["id"]), defeat="%s/warden_%s_defeat" % (DIA, w["id"]),
                  ai=3, money=w["money"], rule=RULES[mid], win_flags=flags)
     acolyte_crew = check_team(mid, [dict(crew[0], level=w["ring"] - 1), dict(crew[1], level=w["ring"] - 1)])
+    # Wheel battles (era function wheel_battles, Era V): the acolytes turn a wheel of three.
+    acolyte_crew = check_team(mid, acolyte_crew + [dict(crew[2], level=w["ring"] - 1)])
     acolyte = npc("acolyte", 7, 17, "left", text(mid + "_acolyte", lines(talk)), "warden", trainer=tr(*aname),
                   intro=text(mid + "_acolyte_intro", lines(intro)), defeat=text(mid + "_acolyte_defeat", lines(defeat)),
-                  money=(w["ring"] - 1) * 45, team=acolyte_crew)
+                  money=(w["ring"] - 1) * 45, team=acolyte_crew, wheel=True)
     back, facing = town_arrival(town_id, mid)
     m = {"name": rf["name"], "biome": "rift", "backdrop": "lake", "heal_point": [3, 5], "rows": rows,
          "warps": [warp(5, RIFT_H - 1, town_id, back[0][0], back[0][1], facing), warp(6, RIFT_H - 1, town_id, back[1][0], back[1][1], facing)],

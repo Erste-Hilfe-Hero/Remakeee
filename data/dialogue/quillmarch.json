@@ -66,7 +66,7 @@
   "lines": [
    "Pier Clerk Hollis: Tonics, ink and stamps. The stamps are real. The ink is mostly real."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts acid_charm frost_charm"
  },
  "drypoint_lane_courier": [
   "Liv: I carry the Guild's letters. I read them first. It's in my contract, the part they didn't read."
@@ -169,6 +169,12 @@
   ],
   "action": "heal"
  },
+ "ledgerholm_showcase_host": {
+  "lines": [
+   "Stagewright Pell: The Showcase! No blood, no Rifts, just arts and applause. The judges are honest. Mostly. One owes me money."
+  ],
+  "action": "showcase"
+ },
  "ledgerholm_sign": [
   "Ledgerholm",
   "Ledgerholm. Two banks, one street, no witnesses."
@@ -177,7 +183,7 @@
   "lines": [
    "Counting Clerk Mads: Tonics at today's rate. Tomorrow's rate is better, but you might not be here."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts"
  },
  "mordant_row_apothecary_elder": [
   "Apothecary Gerold: Mavet's cure, three coins a bottle. The bottle is worth two of them."
@@ -263,7 +269,7 @@
   "lines": [
    "Burin Seller Pell: Tonics and tools. A sharp burin opens many doors. Some of them are locked for good reason."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts"
  },
  "press_rift_acolyte": [
   "Ylva: Grisel prints the Rifts and then sends people to seal them. Steady work for everyone."
@@ -386,7 +392,7 @@
   "lines": [
    "Fur Trader Joris: Tonics, mittens, debts. The mittens are cheap. The debts come free with them."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts"
  },
  "rimeholt_woodshed_woodcutter": [
   "Woodcutter Siv: The Guild owns the trees, the axes and the cold. I own the blisters."

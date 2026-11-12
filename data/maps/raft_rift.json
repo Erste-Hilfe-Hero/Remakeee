@@ -69,8 +69,13 @@
     {
      "species": "Dipmonarch",
      "level": 94
+    },
+    {
+     "species": "Ripjoltane",
+     "level": 94
     }
-   ]
+   ],
+   "wheel": true
   },
   {
    "id": "warden_corran",
