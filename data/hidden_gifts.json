@@ -18,7 +18,9 @@
  "by_element": {
   "EMBER": "smouldering_debt", "TIDE": "cold_ledger", "BLOOM": "family_roots", "VOLT": "hot_wire",
   "STONE": "stone_alibi", "GALE": "getaway_wind", "LUMEN": "snitch_glow", "UMBRA": "last_laugh",
-  "INK": "old_debts", "ECHO": "old_debts"
+  "INK": "old_debts", "ECHO": "old_debts",
+  "RUST": "stone_alibi", "MASK": "last_laugh", "ACID": "smouldering_debt", "FROST": "cold_ledger",
+  "GILT": "snitch_glow", "ZENITH": "getaway_wind"
  },
  "lines": {
   "shalebat": "last_laugh",

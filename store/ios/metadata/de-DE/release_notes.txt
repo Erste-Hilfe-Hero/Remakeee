@@ -1,1 +1,42 @@
-Erste Version: Veydal mit Leuchtturm-Prolog, Mirelas Kartenbuch, zwei Risse und ihre Wächter, Freunde und Weltziel online. Neu: Shop mit Rissglas, alle Preise in Euro.
+Chimora 1.2.0
+
+AKT IV: SOLENNE
+- Ein sonnengebleichter neuer Akt: Ochrewell, die Glaswindebene, eine Karawanserei-Leiter und die Spiegelbrennerei.
+- Drei neue Risse und ihre Wächter. Jetzt stehen alle zwölf Siegel zwischen dir und dem Finale.
+
+NACH DEM FINALE
+- Vellmarch: eine ganze Region für danach im Look der Ära II. 5 Städte, 6 Wege, 4 Risse und eine Geschichte mit einem Verrat in jedem Kapitel.
+- Revanchen gegen alle 12 Wächter. Sie hatten Zeit, über ihre Niederlage nachzudenken.
+- Echoturm mit 100 Etagen, Meister-Risse, der Zufalls-Riss, ein Riese der Woche, eine Abschlussprüfung und Neues Spiel+.
+- Spirlings wachsen über Ring 60 hinaus. Weiter geht's.
+
+GESCHICHTE UND VERTRAUEN
+- Zwei Clans, elf Fremde und ein Schuldbuch im Pausenmenü, das sich merkt, wem du vertraut hast. Ein Gefallen kann sich lohnen. Oder dich ausrauben lassen.
+- Sagen-Quests für sechs neue Legendäre, jede mit einer Führung, die vielleicht nicht ist, was sie scheint.
+- Nebengeschichten in jedem Akt und ein Lager der Fremden am Rand des Weiten Risses.
+
+SPIRLINGS
+- Über 200 neue Spirlings: jetzt 70 eigene in jedem Akt.
+- Glanzformen in freier Wildbahn, mit Kettenbonus und Zähler im Spirlog.
+- Spätere Stufen sehen jetzt aus wie ihre frühere Form, nur erwachsen.
+- Dein erster Spirling läuft hinter dir her. Er merkt sich, wie du ihn behandelst.
+- Der Tintenschwur, versteckte Gaben von einem Schwarzmarkt-Informanten und Nachwuchs, der das Familiengeschäft erbt.
+
+NEUE ORTE
+- Der Bau: eine Höhle, die du dir nehmen kannst. Der Hausbesetzer sieht das anders.
+- Die Totenwache: eine tägliche Trauershow in der Halle der Graveure.
+- Hollowgate-Reservat: ein Wildpark, geführt von Schmugglern.
+- Kartografensteine, Wahrzeichen und Kartenfortschritt pro Region.
+
+ONLINE (braucht eine Internetverbindung)
+- Live-Duelle mit Freunden, Ligen mit Saisons, Raids mit einem Wächter der Woche.
+- Bünde mit Spenden und Wochenzielen, Tausch, Wunschlisten, Geschenke und zeitlich begrenzte Events.
+
+LOOK, KLANG UND KOMFORT
+- Jeder Akt hat seinen eigenen Look, nachts leuchten die Fenster, und der Leuchtturm sieht endlich aus wie einer.
+- Ära-Musik für Regionen, Dungeons, Kämpfe und Wächter.
+- Kampfbildschirm: KP-Balken je Ära, farbige Typ-Abzeichen, Hinweise zur Wirkung und ein Farbschwäche-Modus.
+- Sanftere erste 15 Minuten. Neuigkeiten stehen jetzt unter „Was ist neu“ auf dem Titelbildschirm.
+- Neue optionale Angebote im Shop.
+- Viel mehr Texte in allen 14 Sprachen übersetzt.
+- Jede Menge Fehlerbehebungen: Speichern, Einstellungen, Käufe wiederherstellen. Die Handyuhr zurückdrehen zahlt die Tagesbelohnung nicht mehr doppelt aus. Netter Versuch.

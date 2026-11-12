@@ -1,0 +1,187 @@
+{
+ "name": "Gloamwater",
+ "region": "quivermoor",
+ "biome": "marsh",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "gloamwater",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T~~..__.,,,T",
+  "T~~...__,,,T",
+  "T.....__...T",
+  "T%%~~~~+~~.T",
+  "T%%~~~~+~~.T",
+  "T....++++..T",
+  "T~~~.+..,,,T",
+  "T~~~.+..,,,T",
+  "T....+.....T",
+  "T,,..+~~~~~T",
+  "T,,..++++..T",
+  "T~~~....+..T",
+  "T~~~.%%.+..T",
+  "T....%%.++.T",
+  "T,,,.....+.T",
+  "T,,,~~~~.+.T",
+  "T...~~~~.+.T",
+  "T..++++++..T",
+  "T..+..,,,..T",
+  "T~~+..,,,~~T",
+  "T~~+.....~~T",
+  "T..++__....T",
+  "T....__.%%.T",
+  "T.....__%%.T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "rootchapel",
+   "tx": 1,
+   "ty": 8,
+   "facing": "right"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "lastbloom",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "rootchapel",
+   "tx": 1,
+   "ty": 9,
+   "facing": "right"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "lastbloom",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "gloamferry",
+   "x": 10,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "quivermoor/gloamwater_gloamferry",
+   "sprite": "ranger",
+   "trainer": "Gloam Ferrywoman Una",
+   "intro": "quivermoor/gloamwater_gloamferry_intro",
+   "defeat": "quivermoor/gloamwater_gloamferry_defeat",
+   "money": 4320,
+   "team": [
+    {
+     "species": "Sablet",
+     "level": 95
+    },
+    {
+     "species": "Dusktern",
+     "level": 96
+    }
+   ]
+  },
+  {
+   "id": "bloomthief",
+   "x": 2,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "quivermoor/gloamwater_bloomthief",
+   "sprite": "villager",
+   "trainer": "Bloom Thief Rasmus",
+   "intro": "quivermoor/gloamwater_bloomthief_intro",
+   "defeat": "quivermoor/gloamwater_bloomthief_defeat",
+   "money": 4320,
+   "team": [
+    {
+     "species": "Diplit",
+     "level": 96
+    },
+    {
+     "species": "Dusktern",
+     "level": 96
+    }
+   ]
+  },
+  {
+   "id": "q5_pressed_diary_mo",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_pressed_diary_mo",
+   "sprite": "villager",
+   "show_flag": "q5_pressed_diary_asked"
+  },
+  {
+   "id": "q5_pressed_diary_arvid",
+   "x": 2,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_pressed_diary_arvid",
+   "sprite": "villager",
+   "trainer": "Not-Drowned Arvid",
+   "show_flag": "q5_pressed_diary_reveal",
+   "intro": "quivermoor/q5_pressed_diary_arvid_intro",
+   "defeat": "quivermoor/q5_pressed_diary_arvid_defeat",
+   "money": 4850,
+   "team": [
+    {
+     "species": "Fumewraith",
+     "level": 95
+    },
+    {
+     "species": "Sablet",
+     "level": 96
+    },
+    {
+     "species": "Dusktern",
+     "level": 97
+    }
+   ],
+   "win_flags": [
+    "q5_pressed_diary_done"
+   ],
+   "no_rematch": true
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_gloamwater_1"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_gloamwater_2"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_gloamwater_3"
+  },
+  {
+   "x": 11,
+   "y": 23,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_gloamwater_4"
+  }
+ ]
+}

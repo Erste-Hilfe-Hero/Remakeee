@@ -2772,6 +2772,246 @@
    }
   ]
  },
+ "breathing_bog": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Peatlet",
+    "min": 89,
+    "max": 92,
+    "weight": 45,
+    "ground": "fern"
+   },
+   {
+    "species": "Gloomgill",
+    "min": 89,
+    "max": 92,
+    "weight": 35,
+    "ground": "fern"
+   },
+   {
+    "species": "Bogwick",
+    "min": 89,
+    "max": 92,
+    "weight": 20,
+    "ground": "reeds"
+   },
+   {
+    "species": "Peatbloom",
+    "min": 89,
+    "max": 91,
+    "weight": 14,
+    "ground": "fern"
+   },
+   {
+    "species": "Gloomgillar",
+    "min": 89,
+    "max": 91,
+    "weight": 12,
+    "ground": "reeds"
+   }
+  ]
+ },
+ "wandering_wood": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Morelit",
+    "min": 90,
+    "max": 93,
+    "weight": 45,
+    "ground": "fern"
+   },
+   {
+    "species": "Rushkit",
+    "min": 90,
+    "max": 93,
+    "weight": 35,
+    "ground": "fern"
+   },
+   {
+    "species": "Rookit",
+    "min": 90,
+    "max": 93,
+    "weight": 20,
+    "ground": "fern"
+   },
+   {
+    "species": "Morelamp",
+    "min": 90,
+    "max": 92,
+    "weight": 14,
+    "ground": "fern"
+   },
+   {
+    "species": "Woadwhorl",
+    "min": 90,
+    "max": 92,
+    "weight": 12,
+    "ground": "fern"
+   }
+  ]
+ },
+ "candle_causeway": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Velvit",
+    "min": 91,
+    "max": 94,
+    "weight": 45,
+    "ground": "reeds"
+   },
+   {
+    "species": "Puddock",
+    "min": 91,
+    "max": 94,
+    "weight": 35,
+    "ground": "fern"
+   },
+   {
+    "species": "Glimmoth",
+    "min": 91,
+    "max": 94,
+    "weight": 20,
+    "ground": "reeds"
+   },
+   {
+    "species": "Sootlurk",
+    "min": 91,
+    "max": 93,
+    "weight": 14,
+    "ground": "reeds"
+   },
+   {
+    "species": "Glowflitter",
+    "min": 91,
+    "max": 93,
+    "weight": 12,
+    "ground": "reeds"
+   }
+  ]
+ },
+ "hymnmarsh": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Woadlet",
+    "min": 92,
+    "max": 95,
+    "weight": 45,
+    "ground": "reeds"
+   },
+   {
+    "species": "Drizzlet",
+    "min": 92,
+    "max": 95,
+    "weight": 35,
+    "ground": "fern"
+   },
+   {
+    "species": "Padlet",
+    "min": 92,
+    "max": 95,
+    "weight": 20,
+    "ground": "fern"
+   },
+   {
+    "species": "Skimmit",
+    "min": 92,
+    "max": 94,
+    "weight": 14,
+    "ground": "reeds"
+   },
+   {
+    "species": "Prismist",
+    "min": 92,
+    "max": 94,
+    "weight": 12,
+    "ground": "fern"
+   }
+  ]
+ },
+ "heaving_fields": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Silthop",
+    "min": 93,
+    "max": 96,
+    "weight": 45,
+    "ground": "fern"
+   },
+   {
+    "species": "Nimbub",
+    "min": 93,
+    "max": 96,
+    "weight": 35,
+    "ground": "fern"
+   },
+   {
+    "species": "Rushprowl",
+    "min": 93,
+    "max": 96,
+    "weight": 20,
+    "ground": "reeds"
+   },
+   {
+    "species": "Thrashkin",
+    "min": 93,
+    "max": 95,
+    "weight": 14,
+    "ground": "fern"
+   },
+   {
+    "species": "Nimbuck",
+    "min": 93,
+    "max": 95,
+    "weight": 12,
+    "ground": "reeds"
+   }
+  ]
+ },
+ "gloamwater": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Sablet",
+    "min": 93,
+    "max": 96,
+    "weight": 45,
+    "ground": "fern"
+   },
+   {
+    "species": "Diplit",
+    "min": 93,
+    "max": 96,
+    "weight": 35,
+    "ground": "reeds"
+   },
+   {
+    "species": "Dusktern",
+    "min": 93,
+    "max": 96,
+    "weight": 20,
+    "ground": "fern"
+   },
+   {
+    "species": "Sablowl",
+    "min": 93,
+    "max": 95,
+    "weight": 14,
+    "ground": "fern"
+   },
+   {
+    "species": "Fumewraith",
+    "min": 93,
+    "max": 95,
+    "weight": 12,
+    "ground": "fern"
+   }
+  ]
+ },
  "dyeworks": {
   "rate": 0.12,
   "spawns": [

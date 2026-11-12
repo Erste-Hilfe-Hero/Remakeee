@@ -1,0 +1,44 @@
+{
+ "name": "Moss Inn",
+ "region": "quivermoor",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "mossgate",
+   "tx": 8,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "innkeeper",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/mossgate_moss_inn_innkeeper",
+   "sprite": "villager"
+  },
+  {
+   "id": "q5_nell_letters_runa",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/q5_nell_letters_runa",
+   "sprite": "villager",
+   "show_flag": "q5_nell_letters_asked"
+  }
+ ],
+ "signs": []
+}

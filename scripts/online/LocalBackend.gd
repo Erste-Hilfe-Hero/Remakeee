@@ -45,7 +45,7 @@ const DEFAULT_FLAGS: Dictionary = {
 	"bund": {"enabled": false, "min_version": 1}, "raid": {"enabled": false, "min_version": 1},
 	"trade_spirling": {"enabled": false, "min_version": 1}, "rift_board": {"enabled": false, "min_version": 1},
 	"league_board": {"enabled": false, "min_version": 1}, "daily_gift": {"enabled": false, "min_version": 1},
-	"lend": {"enabled": false, "min_version": 1},
+	"lend": {"enabled": false, "min_version": 1}, "invite": {"enabled": false, "min_version": 1},
 }
 
 ## Where the fake server keeps its data between runs ("" = memory only, as in tests).
@@ -82,10 +82,14 @@ func _init(p_store_path: String = "") -> void:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
+	# Planned maintenance (Online 100 point 95, 20261112230010_maintenance.sql).
+	_fns["maintenance_info"] = Callable(self, "_fn_maintenance_info")
 	# Trading and gifting, Online 100 area 5 (20261112000050_trade_gifts.sql).
 	LocalTradeGifts.install(self)
 	# Online events (20261112000070_online_events.sql) live in their own file too.
 	LocalOnlineEvents.install(self)
+	# Friends and the shared world, Online 100 area 6 (20261112230020_friends_more.sql).
+	LocalFriendsMore.install(self)
 
 func is_local() -> bool:
 	return true
@@ -152,7 +156,8 @@ func _fn_action_once(a: Dictionary) -> Dictionary:
 
 ## Functions that change a stored save (the server checks them in a trigger on saves).
 const SAVE_WRITERS: Array[String] = ["save_put", "save_restore", "trade_put", "trade_collect", "trade_put_spirlings",
-	"daily_gift_claim", "league_reward", "bund_donate", "bund_goal_claim", "event_claim", "event_reward"]
+	"daily_gift_claim", "league_reward", "bund_donate", "bund_goal_claim", "event_claim", "event_reward",
+	"friend_level_claim", "pair_task_claim", "invite_claim"]
 
 ## Like public._other_device: this device's token is not the newest one of the account.
 func other_device() -> bool:
@@ -672,8 +677,9 @@ func _today() -> String:
 func _week() -> String:
 	return WeeklyChallenge.week_key(now())
 
+## Friendship level 1-10 (Online 100 point 56, data/friends_more.json).
 static func level_for(points: int) -> int:
-	return 5 if points >= 100 else 4 if points >= 60 else 3 if points >= 30 else 2 if points >= 10 else 1
+	return FriendRules.level(FriendRules.config(), points)
 
 static func _fail(e: String) -> Dictionary:
 	return {"ok": false, "error": e}
@@ -2883,3 +2889,7 @@ func _fn_bund_board(_a: Dictionary) -> Dictionary:
 	for r: Dictionary in rows:
 		r.erase("id")
 	return {"ok": true, "rows": rows}
+
+## Planned maintenance time (Online 100 point 95), 0 = none.
+func _fn_maintenance_info(_a: Dictionary) -> Dictionary:
+	return {"at": int(db.config.get("maintenance_at", 0))}

@@ -41,7 +41,7 @@ T = {
 "Rufus: Twenty years I've guarded this vat for the Larkins. It's empty. That's how good I am.": "Rufus: Zwanzig Jahre bewache ich diesen Bottich für die Larkins. Er ist leer. So gut bin ich.",
 "Rufus: Larkin vat, Larkin rules. The rule is: you lose.": "Rufus: Larkin-Bottich, Larkin-Regeln. Die Regel heißt: Du verlierst.",
 "Rufus: Don't tell my aunt. She'll stop my pay. She stopped it in spring, but she'll stop it harder.": "Rufus: Sag's nicht meiner Tante. Sie streicht mir den Lohn. Den hat sie im Frühling schon gestrichen, aber sie streicht ihn dann fester.",
-"Isolde: Rufus and I have stood twelve steps apart for twenty years. We've never spoken. It's the healthiest relationship in Madderby.": "Isolde: Rufus und ich stehen seit zwanzig Jahren zwölf Schritte auseinander. Wir haben nie geredet. Die gesündeste Beziehung in Madderby.",
+"Isolde: Rufus and I have stood twelve steps apart for twenty years. We've never once talked. It's the healthiest relationship in Madderby.": "Isolde: Rufus und ich stehen seit zwanzig Jahren zwölf Schritte auseinander. Wir haben nie geredet. Die gesündeste Beziehung in Madderby.",
 "Isolde: Fennimore vat. If you're with the Larkins, you're drowning. If you're not, you're drowning politely.": "Isolde: Fennimore-Bottich. Wenn du zu den Larkins gehörst, ertrinkst du. Wenn nicht, ertrinkst du höflich.",
 "Isolde: Blue never loses. It just takes longer to dry.": "Isolde: Blau verliert nie. Es braucht nur länger zum Trocknen.",
 "Moll: I steal dye. Old dye, new dye, the dye off your boots. Business is grey this year.": "Moll: Ich klaue Farbe. Alte Farbe, neue Farbe, die Farbe von deinen Stiefeln. Das Geschäft ist grau dieses Jahr.",

@@ -31,10 +31,11 @@ def put_sign(m, x, y, ref, gear):
     set_char(m, x, y, "S")
 
 
-def entrance(world, outside, door, sign_cell, cave, arrive, facing, text, gear):
-    """A door into [cave] on [outside] and a sign next to it with the gear icons (item 982)."""
+def entrance(world, outside, door, sign_cell, cave, arrive, facing, text, gear, tile="D"):
+    """A door into [cave] on [outside] and a sign next to it with the gear icons (item 982).
+    [tile] "+" makes it a jetty off the map edge instead of a door (map audit)."""
     m = world.load_map(outside)
-    set_char(m, door[0], door[1], "D")
+    set_char(m, door[0], door[1], tile)
     put_warp(m, warp(door[0], door[1], cave, arrive[0], arrive[1], facing))
     world.add_text(outside, {cave + "_sign": lines(*text)})
     put_sign(m, sign_cell[0], sign_cell[1], "%s/%s_sign" % (outside, cave), gear)
@@ -183,7 +184,7 @@ def sablecove(world):
     entrance(world, "brackwater_fen", (11, 16), (10, 15), mid, (5, 7), "up",
              [("SABLECOVE", "ZOBELBUCHT"), ("Inside: Wading Boots. The inner chamber opens at low tide.",
                                             "Drinnen: Watstiefel. Die innere Kammer öffnet sich bei Ebbe.")],
-             ["wading_boots"])
+             ["wading_boots"], tile="+")
 
 
 def kindle_vents(world):

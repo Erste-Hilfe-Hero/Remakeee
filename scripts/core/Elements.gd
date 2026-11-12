@@ -1,9 +1,12 @@
 class_name Elements
-## The 8 Era I elements plus the Era II elements Ink and Echo, appended so saved element ids keep
-## their meaning. The chart lives in data/type_chart.json (docs/BALANCE.md, Type chart): every
+## The 8 Era I elements, then the later eras' elements in chart order (Ink, Echo, Rust, Mask,
+## Acid, Frost, Gilt, Zenith), appended so saved element ids keep their meaning. The chart lives
+## in data/type_chart.json (docs/BALANCE.md, Type chart): every
 ## element has at least 2 real strengths and 2 real weaknesses (Lumen and Umbra beat each other,
-## which is neutral both ways). Ink and Echo sit only on legendary (ancient) Spirlings so far.
-enum E { EMBER, TIDE, BLOOM, VOLT, STONE, GALE, LUMEN, UMBRA, INK, ECHO }
+## which is neutral both ways). An element after Era I sits on legendaries, on the kinds of the
+## post-game region of its own era (Rust and Mask: Vellmarch, Acid and Frost: Quillmarch, Gilt and
+## Zenith: Halcyra) and sparingly on act kinds (tools/balance/type_sim.py).
+enum E { EMBER, TIDE, BLOOM, VOLT, STONE, GALE, LUMEN, UMBRA, INK, ECHO, RUST, MASK, ACID, FROST, GILT, ZENITH }
 
 const CHART_PATH: String = "res://data/type_chart.json"
 
@@ -38,6 +41,12 @@ const COLORS := {
 	E.UMBRA: Color("4b3a66"),
 	E.INK:   Color("2b2f4a"),
 	E.ECHO:  Color("c9b8e0"),
+	E.RUST:  Color("a8582e"),
+	E.MASK:  Color("8a5a80"),
+	E.ACID:  Color("9cc82e"),
+	E.FROST: Color("bfe4f2"),
+	E.GILT:  Color("e8c050"),
+	E.ZENITH: Color("8ab8ec"),
 }
 
 static func element_name(e: int) -> String:

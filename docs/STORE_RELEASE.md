@@ -94,7 +94,7 @@ vorher.
 ### Eine neue Version
 
 1. `version/name` und `application/short_version` in `export_presets.cfg` erhöhen.
-2. Neuigkeiten in `store/*/…/changelogs/default.txt` bzw. `release_notes.txt` schreiben.
+2. Neuigkeiten in `store/*/…/changelogs/default.txt` bzw. `release_notes.txt` schreiben. Feature-Liste und Notizen je Version: `docs/release/<version>.md`.
 3. `python3 tools/release_check.py --strict` muss grün sein.
 4. Tag `vX.Y.Z` pushen. Die Build-Nummer zählt CI selbst hoch (`1000 + run number`).
 

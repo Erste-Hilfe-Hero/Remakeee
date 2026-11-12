@@ -136,6 +136,11 @@ TOWN_ROWS = ["TTTTT__TTTTT",
              "T*...__..L.T",
              "T....__....T",
              "TTTTT__TTTTT"]
+# side -> (road cells that turn to grass when the side has no way out, lane cells to the doors)
+ROAD_ARMS = {"top": ([(x, y) for y in (1, 2, 3) for x in (5, 6)], [(x, 4) for x in range(3, 10)]),
+             "bottom": ([(x, y) for y in (15, 16, 17, 18) for x in (5, 6)], [(x, 14) for x in range(2, 9)]),
+             "left": ([(x, y) for y in (8, 9) for x in (1, 2, 3)], []),
+             "right": ([(x, y) for y in (8, 9) for x in (8, 9, 10)], [])}
 QUAY_PIER = {15: "~~~~.__.##.T", 16: "~~~~.__....T", 17: "~+++.__..L.T", 18: "~~~~.__....T"}
 BARGE_QUAY = (3, 17)
 BARGE_BRINDLEWICK = (7, 18)
@@ -277,6 +282,11 @@ def town(mid):
         if side not in gates:
             for x, y in cells:
                 rows[y] = rows[y][:x] + "T" + rows[y][x + 1:]
+            # No road runs into the trees: the arm goes, a lane joins the two house doors instead.
+            for x, y in ROAD_ARMS[side][0]:
+                rows[y] = rows[y][:x] + "." + rows[y][x + 1:]
+            for x, y in ROAD_ARMS[side][1]:
+                rows[y] = rows[y][:x] + "_" + rows[y][x + 1:]
     tt = TOWN_TEXT[mid]
     sign = text(mid + "_sign", lines((t["name"], t["name"]), tt["motto"]))
     npcs = [npc("keeper", 7, 7, "down", text(mid + "_keeper", {"lines": lines(tt["keeper"]), "action": "heal"}), "elder")]

@@ -1,0 +1,187 @@
+{
+ "name": "Hymnmarsh",
+ "region": "quivermoor",
+ "biome": "marsh",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "hymnmarsh",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T~~..__.%%%T",
+  "T~~...__%%%T",
+  "T.....__...T",
+  "T,,~~~~+~~.T",
+  "T,,~~~~+~~.T",
+  "T....++++..T",
+  "T~~~.+..,,,T",
+  "T~~~.+..,,,T",
+  "T....+.....T",
+  "T%%..+~~~~~T",
+  "T%%..++++..T",
+  "T~~~....+..T",
+  "T~~~.,,.+..T",
+  "T....,,.++.T",
+  "T,,,.....+.T",
+  "T,,,~~~~.+.T",
+  "T...~~~~.+.T",
+  "T..++++++..T",
+  "T..+..%%%..T",
+  "T~~+..%%%~~T",
+  "T~~+.....~~T",
+  "T..++__....T",
+  "T....__.,,.T",
+  "T.....__,,.T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "rootchapel",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "driftwick",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "rootchapel",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "driftwick",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "hummer",
+   "x": 10,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "quivermoor/hymnmarsh_hummer",
+   "sprite": "ranger",
+   "trainer": "Marsh Hummer Ilse",
+   "intro": "quivermoor/hymnmarsh_hummer_intro",
+   "defeat": "quivermoor/hymnmarsh_hummer_defeat",
+   "money": 4275,
+   "team": [
+    {
+     "species": "Woadlet",
+     "level": 94
+    },
+    {
+     "species": "Padlet",
+     "level": 95
+    }
+   ]
+  },
+  {
+   "id": "rootpicker",
+   "x": 2,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "quivermoor/hymnmarsh_rootpicker",
+   "sprite": "villager",
+   "trainer": "Root Picker Arvid",
+   "intro": "quivermoor/hymnmarsh_rootpicker_intro",
+   "defeat": "quivermoor/hymnmarsh_rootpicker_defeat",
+   "money": 4275,
+   "team": [
+    {
+     "species": "Drizzlet",
+     "level": 95
+    },
+    {
+     "species": "Prismist",
+     "level": 95
+    }
+   ]
+  },
+  {
+   "id": "q5_choir_bell_bo",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_choir_bell_bo",
+   "sprite": "villager",
+   "show_flag": "q5_choir_bell_asked"
+  },
+  {
+   "id": "q5_choir_bell_liesl_solo",
+   "x": 2,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_choir_bell_liesl_solo",
+   "sprite": "villager",
+   "trainer": "Cantor Liesl",
+   "show_flag": "q5_choir_bell_reveal",
+   "intro": "quivermoor/q5_choir_bell_liesl_solo_intro",
+   "defeat": "quivermoor/q5_choir_bell_liesl_solo_defeat",
+   "money": 4800,
+   "team": [
+    {
+     "species": "Woadlet",
+     "level": 94
+    },
+    {
+     "species": "Drizzlet",
+     "level": 95
+    },
+    {
+     "species": "Padlet",
+     "level": 96
+    }
+   ],
+   "win_flags": [
+    "q5_choir_bell_done"
+   ],
+   "no_rematch": true
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_hymnmarsh_1"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_hymnmarsh_2"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_hymnmarsh_3"
+  },
+  {
+   "x": 11,
+   "y": 23,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_hymnmarsh_4"
+  }
+ ]
+}
