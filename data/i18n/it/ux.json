@@ -195,6 +195,7 @@
   "Only in battle.": "Solo in scontro.",
   "Vigor %d/%d to %d/%d": "Vigore %d/%d a %d/%d",
   "Already knows this art.": "Conosce già quest'Arte.",
-  "Wrong element.": "Elemento sbagliato."
+  "Wrong element.": "Elemento sbagliato.",
+  "Works on its own at: %s": "Agisce da solo presso: %s"
  }
 }

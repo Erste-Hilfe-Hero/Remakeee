@@ -195,6 +195,7 @@
   "Only in battle.": "仅限战斗中。",
   "Vigor %d/%d to %d/%d": "元气 %d/%d 变为 %d/%d",
   "Already knows this art.": "已经会这项技艺了。",
-  "Wrong element.": "属性不符。"
+  "Wrong element.": "属性不符。",
+  "Works on its own at: %s": "会自动生效的地方：%s"
  }
 }

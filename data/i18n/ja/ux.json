@@ -195,6 +195,7 @@
   "Only in battle.": "戦闘中のみ。",
   "Vigor %d/%d to %d/%d": "活力 %d/%d から %d/%d へ",
   "Already knows this art.": "この術はもう覚えている。",
-  "Wrong element.": "属性がちがう。"
+  "Wrong element.": "属性がちがう。",
+  "Works on its own at: %s": "自動ではたらく場所：%s"
  }
 }

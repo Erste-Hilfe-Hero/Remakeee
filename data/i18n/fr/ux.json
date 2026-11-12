@@ -195,6 +195,7 @@
   "Only in battle.": "Seulement en combat.",
   "Vigor %d/%d to %d/%d": "Vigueur %d/%d vers %d/%d",
   "Already knows this art.": "Connaît déjà cette technique.",
-  "Wrong element.": "Mauvais élément."
+  "Wrong element.": "Mauvais élément.",
+  "Works on its own at: %s": "Agit tout seul ici: %s"
  }
 }

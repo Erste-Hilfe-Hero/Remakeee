@@ -195,6 +195,7 @@
   "Only in battle.": "Sadece savaşta.",
   "Vigor %d/%d to %d/%d": "Dinçlik %d/%d iken %d/%d olur",
   "Already knows this art.": "Bu hüneri zaten biliyor.",
-  "Wrong element.": "Yanlış element."
+  "Wrong element.": "Yanlış element.",
+  "Works on its own at: %s": "Kendiliğinden işe yaradığı yer: %s"
  }
 }

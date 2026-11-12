@@ -195,6 +195,7 @@
   "Only in battle.": "僅限戰鬥中。",
   "Vigor %d/%d to %d/%d": "元氣 %d/%d 變為 %d/%d",
   "Already knows this art.": "已經會這項技藝了。",
-  "Wrong element.": "屬性不符。"
+  "Wrong element.": "屬性不符。",
+  "Works on its own at: %s": "會自動生效的地方：%s"
  }
 }
