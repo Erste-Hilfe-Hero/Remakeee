@@ -35,6 +35,7 @@ var _panel: PanelContainer
 var _scene_done: bool = false
 var _choosing: bool = false
 var _busy: bool = false
+var _menu_open: bool = false
 var _finish_asked: int = 0
 var _leave: bool = false
 var _text_box: TextBox
@@ -147,7 +148,7 @@ func _run() -> void:
 			if LiveDuelMenu._ok(r):
 				state = r.data
 			continue
-		elif can_choose() and not _choosing and not _busy:
+		elif can_choose() and not _choosing and not _busy and not _menu_open:
 			_choose()
 		await get_tree().create_timer(STEP).timeout
 		since += STEP
@@ -278,8 +279,13 @@ func _choose() -> void:
 	_choosing = false
 
 func _open_menu() -> void:
-	if _busy:
+	if _busy or _menu_open:
 		return
+	_menu_open = true
+	await _menu()
+	_menu_open = false
+
+func _menu() -> void:
 	var entries: Array = ["Stop watching", "Back"] if watch else ["Send an emote", "Give up", "Leave (the duel goes on)", "Back"]
 	var idx: int = await _ask(Loc.t("Live duel"), entries)
 	if idx < 0:
