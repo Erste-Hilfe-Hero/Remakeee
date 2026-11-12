@@ -263,8 +263,19 @@ cannot invite or ask each other. Tables: `bunds`, `bund_members`, `bund_invites`
 bund renown (`xp_per_item` each) and week goal progress; the bund rank is 1 + renown / `xp_per_level`, at most 20.
 At `goal_target` items in a week every member takes `goal_reward` once (`bund_goal_claim`). `bund_board()` lists
 bunds by renown. The leader sets language and "open" (`bund_settings`); `bund_search(lang)` lists bunds that are
-not full, most active first, and `bund_join(bund)` joins an open bund at once or sends a request. Bund rank perks
-are not built yet.
+not full, most active first, and `bund_join(bund)` joins an open bund at once or sends a request.
+
+**Online 100, points 34, 35, 37** (migration `20261113000020_raid_bund_more.sql`, `LocalRaidBund.gd`, same file):
+- **Rank perks (34):** `perks` in `bund_rules` add up by rank: more house places (rank 3, 15), `donate_more`
+  (rank 5: +10 donations a day), `goal_more` (rank 10 and 20: +1 item from the week goal). `bund_stats` lists them.
+- **Bund house (35):** `bund_house()` shows every member the hall: rank, placed decorations, members in the house now
+  and wars won. Leader and helpers place up to `house_slots` (3) plus perks decorations from `decor` that the rank
+  opened (`bund_house_set(list)`, no repeats).
+- **Bund against bund (37):** on `war_days` (Saturday, Sunday, UTC) up to `war_size` (5) members sign up with their
+  fair-league team (`bund_war_join(pick)`). When two bunds have five, the one of nearest renown is paired
+  (`bund_wars`). Each fighter fights the team on the same place of the other bund once (`bund_war_fight()`, battle
+  kind `bund_war`, checked by the referee). When all ten are done or the weekend ends, the bund with more wins gets
+  `war_win_xp` (300) renown and a war win, the other `war_xp` (100). `bund_war_info()` shows places and score.
 
 ### Online events (Online 100, area 7, points 61, 63-66, 68-70)
 
@@ -323,6 +334,15 @@ Attempts cost nothing; nothing is for sale. Rifts are deleted 7 days after they 
 is the week's one (`week % pool`), and with `legendary_chance` (5) percent a legendary from `legendaries` at
 `legendary_hp` (150) percent. In `raid_claim` the member with the most damage gets `top_bonus` (1) more.
 `raid_board()` lists the fastest won Rifts without names (Raid Rifts > Fastest Rifts).
+
+**Online 100, points 25, 26, 27** (migration `20261113000020_raid_bund_more.sql`, `LocalRaidBund.gd`):
+`raid_find(tier, role)` puts the player in a queue per tier (Raid Rifts > Find a random group; the game asks again
+every 5 seconds). A group forms with 4 players at once, with 2 or 3 after `group_wait` (30) seconds, and after
+`echo_wait` (60) seconds Echo teams take the free places: the Rift has the strength of 4 and each Echo team deals
+`echo_share` (15) percent at once (shown as "Echo team" in the member list, no reward, no top bonus). Blocked players
+never land in one group. The others learn their Rift on their next `raid_find`; `raid_find_cancel()` leaves the queue.
+Role signs (27): attack, guard or help, chosen for the search or later with `raid_role(raid, role)`; `raid_list`
+shows them per member. They are signs only and change no numbers.
 
 ## Trading
 
