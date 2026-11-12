@@ -1564,6 +1564,46 @@
    }
   ]
  },
+ "veil_cistern": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Duneshrew",
+    "min": 39,
+    "max": 41,
+    "weight": 28,
+    "ground": "scree"
+   },
+   {
+    "species": "Saltsprig",
+    "min": 39,
+    "max": 41,
+    "weight": 10,
+    "ground": "scree"
+   },
+   {
+    "species": "Shimmerlet",
+    "min": 40,
+    "max": 42,
+    "weight": 26,
+    "ground": "scree"
+   },
+   {
+    "species": "Orrlet",
+    "min": 40,
+    "max": 42,
+    "weight": 10,
+    "ground": "scree"
+   },
+   {
+    "species": "Solkit",
+    "min": 42,
+    "max": 42,
+    "weight": 26,
+    "ground": "scree"
+   }
+  ]
+ },
  "rook_vault": {
   "rate": 0.12,
   "spawns": [

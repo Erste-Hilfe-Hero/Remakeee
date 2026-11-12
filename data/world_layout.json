@@ -67,6 +67,7 @@
   "ochrewell": {"region": "solenne", "pos": [1, 4], "kind": "town", "neighbours": ["saltglass", "tower_rift", "oasis_rift", "sun_rift"]},
   "tower_rift": {"region": "solenne", "pos": [0, 4], "kind": "rift", "neighbours": ["ochrewell"]},
   "oasis_rift": {"region": "solenne", "pos": [2, 4], "kind": "rift", "neighbours": ["ochrewell"]},
-  "sun_rift": {"region": "solenne", "pos": [1, 5], "kind": "rift", "neighbours": ["ochrewell"]}
+  "sun_rift": {"region": "solenne", "pos": [1, 5], "kind": "rift", "neighbours": ["ochrewell"]},
+  "veil_cistern": {"inside": "ochrewell", "region": "solenne"}
  }
 }

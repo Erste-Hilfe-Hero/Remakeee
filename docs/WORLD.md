@@ -159,7 +159,8 @@ Written by `python3 tools/world_stats.py`.
 | solenne | `ochrewell` | town | 12x20 | 3 | 0 | 0 |
 | solenne | `sun_rift` | rift | 12x22 | 0 | 4 | 13 |
 | solenne | `tower_rift` | rift | 12x22 | 0 | 4 | 21 |
-| | **55 maps** | | | **135** | **90** | **1354** |
+| solenne | `veil_cistern` | inside | 12x10 + 12x10 + 12x8 | 3 | 5 | 24 |
+| | **56 maps** | | | **138** | **95** | **1378** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)
