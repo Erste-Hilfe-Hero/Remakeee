@@ -10,8 +10,10 @@ func _scale(n: String, f: float) -> void:
 	sd.base_foc = roundi(sd.base_foc * f)
 	sd.base_spd = roundi(sd.base_spd * f)
 
-func _report(label: String) -> void:
-	var r: Dictionary = BalanceSim.run_team(36, maxi(200, Database.spirlings.size() * 6), 7)
+func _report(label: String, battles: int = 0) -> void:
+	if battles == 0:
+		battles = maxi(200, Database.spirlings.size() * 6)
+	var r: Dictionary = BalanceSim.run_team(36, battles, 7)
 	var rows: Array = []
 	for n: String in r.species:
 		var row: Dictionary = r.species[n]
@@ -24,15 +26,18 @@ func _report(label: String) -> void:
 
 func test_probe() -> void:
 	Database.reload_data()
-	_report("base")
-	for n: String in STAGE2:
-		for f: float in [0.85, 1.15]:
-			Database.reload_data()
-			_scale(n, f)
-			_report("%s*%.2f" % [n, f])
-	for f: float in [0.9, 1.1]:
+	for sd: SpirlingData in Database.spirlings.values():
+		if sd.region == "quillmarch":
+			sd.rarity = "ancient"
+	_report("no-quillmarch", (Database.spirlings.size() - 15) * 6)
+	for f: float in [0.97, 0.95, 0.92, 0.9]:
 		Database.reload_data()
-		for n: String in STAGE2:
-			_scale(n, f)
-		_report("all*%.2f" % f)
+		_scale("Sluicewarden", f)
+		_report("Sluicewarden*%.2f" % f)
+	for f: float in [0.95, 0.9]:
+		Database.reload_data()
+		_scale("Sluicewarden", f)
+		_scale("Sluicer", f)
+		_scale("Fulgorath", 0.97)
+		_report("Sluice+Fulg %.2f" % f)
 	assert_true(true)
