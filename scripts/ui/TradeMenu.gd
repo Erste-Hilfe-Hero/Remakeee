@@ -29,6 +29,8 @@ const ERRORS: Dictionary = {
 	"favorite": "Favourites stay with you. Remove the mark first.",
 	"last_one": "Your team needs at least one Spirling.",
 	"too_many_spirlings": "Up to 3 Spirlings per trade.",
+	"day_limit": "You finished all trades you can today. Confirm again tomorrow.",
+	"their_day_limit": "Your friend finished all trades they can today. Confirm again tomorrow.",
 }
 
 const ERA_NAMES: Array[String] = ["Era I", "Era II", "Era III", "Era IV", "Era V"]
@@ -152,7 +154,7 @@ static func run(menu: PauseMenu) -> void:
 		var labels: Array[String] = []
 		for t: Dictionary in trades:
 			labels.append(trade_line(t))
-		labels.append_array(["New trade...", "How trading works"] as Array[String])
+		labels.append_array(["New trade...", "Trade history", "How trading works"] as Array[String])
 		var idx: int = await menu.pick_strings("Trades", labels)
 		if idx < 0:
 			return
@@ -160,11 +162,34 @@ static func run(menu: PauseMenu) -> void:
 			await _run_trade(menu, trades[idx], r.data.get("items", []), bool(r.data.get("spirlings", false)))
 		elif idx == trades.size():
 			await open(menu)
+		elif idx == trades.size() + 1:
+			await run_history(menu)
 		else:
 			if bool(r.data.get("spirlings", false)):
 				await menu.info("Friends from friendship level 3 who have been friends for 7 days can trade items and up to 3 Spirlings. Shop items are never traded, and neither are Spirlings with a Keepsake, a shop boost or a favourite mark. A traded Spirling keeps its era and everything it learned, only the nickname stays with you. What you put in waits safely on the server. When you both confirm, you both get the other's offer. If one of you changes the offer, both have to confirm again.")
 			else:
 				await menu.info("Friends from friendship level 3 who have been friends for 7 days can trade items. Spirlings and shop items are never traded. What you put in waits safely on the server. When you both confirm, you both get the other's items. If one of you changes the offer, both have to confirm again.")
+
+## "Ben: gave Tonic x2, got Remedy" (point 50).
+static func history_line(row: Dictionary) -> String:
+	var who: String = str(row.name) if row.get("name") != null else Loc.t("a former friend")
+	return Loc.t("%s: gave %s, got %s") % [who, side_text(row.get("gave", {}), row.get("gave_mons", [])),
+		side_text(row.get("got", {}), row.get("got_mons", []))]
+
+## Finished trades of the last 30 days, newest first, and how many are left today.
+static func run_history(menu: PauseMenu) -> void:
+	var r: Dictionary = await Online.call_fn("trade_history")
+	if not _ok(r):
+		await menu.info(error_text(r))
+		return
+	var lines: Array[String] = []
+	for row: Dictionary in r.data.get("rows", []):
+		var day: String = Time.get_date_string_from_unix_time(int(row.get("at", 0)))
+		lines.append("%s  %s" % [day, history_line(row)])
+	var head: String = Loc.t("Trades today: %d of %d") % [int(r.data.get("today", 0)), int(r.data.get("per_day", 5))]
+	if lines.is_empty():
+		lines.append(Loc.t("No finished trades in the last 30 days."))
+	await menu.info(head + "\n" + "\n".join(lines))
 
 static func open(menu: PauseMenu) -> void:
 	var f: Dictionary = await Online.call_fn("friends_list")

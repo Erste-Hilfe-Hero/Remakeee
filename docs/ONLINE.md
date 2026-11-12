@@ -30,7 +30,7 @@ All under Menu, Friends. Spirlings are never gifted; they can be traded between 
 
 - **Friends:** 8-character friend code, requests, a list with online dot and in-game place, Wanderer card,
   friendship level 1-5 (points from gifts, echo help and duels). 100 friends at most. 20 requests per hour.
-- **Lantern Mail:** one gift per friend per day; the item is rolled on the server when it is opened, from the
+- **Lantern Mail:** one gift per friend per day (two from friendship level 3); the item is rolled on the server when it is opened, from the
   open table in `server_config.gift_table` (the game shows the chances). Ten opens per day. Greetings are
   set phrases (`scripts/online/Phrases.gd`, the server only stores the number), plus waves and thanks.
   Mail is deleted after 30 days.
@@ -244,7 +244,7 @@ Table `banned_words`: words a Wanderer name may not contain.
 Table `feature_flags` (key, `enabled`, `min_version`): switches the new online parts on one by one,
 for example `update feature_flags set enabled = true where key = 'trade';`. Keys: `league_fair`,
 `league_open`, `live_duel`, `trade`, `bund`, `raid`, `trade_spirling`, `rift_board`, `league_board`,
-`daily_gift`. All start switched off.
+`daily_gift`, `lend`. All start switched off.
 
 ## Bunds
 
@@ -302,6 +302,36 @@ Spirling. `trade_confirm(trade, theirs, their_mons)` must name the other side's 
 every value and the **origin era** (`origin_era` 1-4, set when bonded, 1 for older saves) and drops
 the nickname (no free text between players), the storage box and the favourite mark. Collected
 Spirlings go into storage.
+
+### Trading and gifting (Online 100, area 5)
+
+Migration `20261112000050_trade_gifts.sql`, values in `data/trade_gifts.json` (written to
+`server_config.trade_gifts` by `game_data_sql.py`), the same rules in `scripts/online/LocalTradeGifts.gd`,
+tests `tests/unit/test_trade_gifts.gd` and `tools/online/sql_test/test_trade_gifts.sql`.
+
+- **Trades per day (42):** `trade_confirm` refuses the confirm that would finish a trade once either side
+  finished `trades_per_day` (5) trades this server day (`day_limit`, `their_day_limit`).
+- **Trade history (50):** every finished trade writes one row per side into `trade_log` (items, and
+  Spirlings only as species, Ring and era). `trade_history()` lists the last `history_days` (30) days,
+  with the partner's name unless blocked; older rows are deleted. Trades, History in the menu.
+- **Wish list (46):** `wish_set(items)` keeps up to `wish_max` (3) items from the gift table or the
+  tradeable items in `profiles.wishes`; `friends_list` shows each friend's `wishes` (Wayfarer card)
+  and `gifts_left`. Friends, My wish list.
+- **Two gifts a day (47):** `gift_send` allows `gifts_per_day_close` (2) gifts to a friend of
+  friendship level `close_level` (3) or more, else `gifts_per_day` (1).
+- **Greeting cards (48):** `card_send(code, species, phrase)` sends mail kind `card`: a set phrase of
+  the post list and a species that is in the team or storage of one of the sender's stored saves, at
+  most `cards_per_day` (10). Friend, Send a card.
+- **Thanks (49):** `gift_thank(id)` thanks once for an opened gift: the friend gets a thanks note and
+  the pair `thanks_points` (2) friendship points (`mail.thanked`).
+- **Lending (45, flag `lend`):** `lend_offer(code, slot, uid)` lends a copy of a Spirling of the stored
+  save to a friend of friendship level `lend_min_level` (3): no nickname, box, favourite mark or
+  Keepsake, never a shop-boosted one; the original stays. At most `lends_per_day` (3) per lender and
+  `borrow_max` (1) open loan per borrower; a loan ends after `lend_hours` (48). `lend_use(loan, kind)`
+  (kind `raid` or `live_duel`) hands the borrower the copy once; `lend_end` ends an unused loan;
+  `lend_list` shows both sides. Table `spirling_loans`. Not done yet: the raid and live duel screens
+  do not offer the borrowed Spirling, so `lend_use` has no caller in the game yet.
+- **Spirlings stay untradeable (44)** as long as the flag `trade_spirling` stays off.
 
 ## Weekly boards (online step 1)
 
