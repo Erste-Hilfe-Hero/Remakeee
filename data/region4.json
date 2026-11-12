@@ -1,12 +1,15 @@
 {
- "_doc": "Halcyra, the post-game Era IV (Panorama) region (scripts/core/Region4.gd, tests/unit/test_region4.gd). A sunlit high plateau of terraces, white stone and golden roofs, cut by cliffs, stairs and bridges. It opens with the flag in unlock_flag, which is the Era III finale flag of data/eras.json: Era III's own region sets it when its last chapter is done (eras.json finale_flags), so Halcyra chains after Era III without code changes. Its last chapter sets finale_flag, which eras.json turns into era4_finale_done (Era V). Drawn in Era IV: 270x480, 96px sprites, the 2.5D battle stage, tiles in art/era4/tiles/overworld_halcyra.png (tools/art/gen_tiles_halcyra.py, colours in data/region_looks.json). Towns and routes carry grid cells for a later world_layout.json entry. Encounter slots with species null wait for Halcyra's own Spirlings; until then stand_in names an existing Spirling. Landmarks span several screens (design plan 309). Elements: Halcyra's own new types come with its Spirlings (empty until the chart gets them). Rings 78 to 96.",
+ "_doc": "Halcyra, the post-game Era IV (Panorama) region (scripts/core/Region4.gd, tests/unit/test_region4.gd). A sunlit high plateau of terraces, white stone and golden roofs, cut by cliffs, stairs and bridges. It opens with the flag in unlock_flag, which is the Era III finale flag of data/eras.json: Era III's own region sets it when its last chapter is done (eras.json finale_flags), so Halcyra chains after Era III without code changes. Its last chapter sets finale_flag, which eras.json turns into era4_finale_done (Era V). Drawn in Era IV: 270x480, 96px sprites, the 2.5D battle stage, tiles in art/era4/tiles/overworld_halcyra.png (tools/art/gen_tiles_halcyra.py, colours in data/region_looks.json). Towns and routes carry grid cells for a later world_layout.json entry. Encounter slots with species null wait for Halcyra's own Spirlings; until then stand_in names an existing Spirling. Landmarks span several screens (design plan 309). Elements: Halcyra's own new types Gilt and Zenith (Era IV in data/type_chart.json); they enter the Elements enum with Halcyra's Spirlings. Rings 78 to 96.",
  "id": "halcyra",
  "name": "Halcyra",
  "era": 4,
  "unlock_flag": "era3_finale_done",
  "finale_flag": "halcyra_done",
  "arrival": {"line": "halcyra_funicular", "from": "brindlewick", "to": "brightledge", "text": "The funicular climbs for an hour. Halfway up, the brakeman asks if you have written a will. He is not joking. He sells the paper."},
- "elements": [],
+ "elements": [
+  "GILT",
+  "ZENITH"
+ ],
  "towns": [
   {"id": "brightledge", "name": "Brightledge", "pos": [0, 4], "heal": true, "shop": true, "text": "The top station. The view is free, the bench costs extra and the railing is a rumour."},
   {"id": "gildcrest", "name": "Gildcrest", "pos": [2, 2], "heal": true, "shop": true, "text": "Golden roofs, white walls and a family that owns both. Smile, the windows are watching."},

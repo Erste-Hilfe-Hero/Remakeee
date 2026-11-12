@@ -60,12 +60,15 @@ def build_song(name: str, spec: dict, stems: bool) -> float:
         write_loud(os.path.join(MUSIC_DIR, name + ".ogg"), mix, 0, small=True)
         return len(mix) / 22050.0
     g = loudness.music_gain(mix)
-    write_ogg(os.path.join(MUSIC_DIR, name + ".ogg"), mix * g)
+    # A place song's full mix only plays where its stems cannot (sound test, era fallback), so
+    # it is written small; the stems carry the in-game quality.
+    write_ogg(os.path.join(MUSIC_DIR, name + ".ogg"), mix * g, small=name in music.MAP_SONGS)
     if stems and name in music.MAP_SONGS:
         os.makedirs(STEM_DIR, exist_ok=True)
         for stem, data in parts.items():
-            # Stems play together, so a lower Vorbis quality per stem keeps the download small.
-            write_ogg(os.path.join(STEM_DIR, "%s_%s.ogg" % (name, stem)), data * g, STEM_QUALITY)
+            # Stems play together, so 16 kHz / 16 kbit/s per stem keeps the download small
+            # (APK size budget; the full mixes are not even exported, see export_presets.cfg).
+            write_ogg(os.path.join(STEM_DIR, "%s_%s.ogg" % (name, stem)), data * g, STEM_QUALITY, small=True)
     return len(mix) / 22050.0
 
 
