@@ -200,3 +200,9 @@ func test_replay_keeps_the_place_field() -> void:
 	var snap: Dictionary = BattleReplay.snapshot(m, "battle", "field")
 	assert_eq(str(snap.get("field", "")), "rubble_rain")
 	assert_eq(BattleReplay.build_model(snap).field, "rubble_rain")
+
+func test_field_extras_pass_the_data_check() -> void:
+	assert_eq(KampfChecks.field_errors(), PackedStringArray(), "energy_element, energy_gain and bond_bonus are known keys")
+	var bad: Dictionary = {"x": {"label": "X", "intro": "x", "energy_element": "NOPE", "bond_bonus": 0.9}}
+	var errs: PackedStringArray = KampfChecks.field_errors(bad)
+	assert_eq(errs.size(), 2, "a wrong element and a too big bond bonus are caught")
