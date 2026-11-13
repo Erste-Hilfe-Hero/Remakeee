@@ -72,6 +72,13 @@ const WARDEN_WEAKEN_SHARE: float = 0.85
 var warden_weakened: bool = false
 ## Share of damage the foe side deals (difficulty, plan area 2 item 728).
 var foe_damage_mult: float = 1.0
+## Factor on the foe side's critical chance (Story difficulty, KAMPF plan item 497).
+var foe_crit_mult: float = 1.0
+## Challenge rules (ChallengeRules): no chosen swaps for the player, why no bond can form ("" = it
+## can), and bag items the player may not use in this battle.
+var swap_locked: bool = false
+var bond_block: String = ""
+var blocked_items: Array[String] = []
 ## Factor on a boss's "hp_per_ally" (GameState.BOSS_HP_SCALE: Story bosses are 20 % smaller).
 var boss_hp_scale: float = 1.0
 ## Rule variants in play (data/rule_variants.json, at most BattleRules.MAX_VARIANTS). Set before start().
@@ -318,18 +325,18 @@ func legal_actions(side: int, slot: int = 0) -> Array[BattleAction]:
 			any_move = true
 	if can_rest(any_move):
 		out.append(BattleAction.make_rest(side, slot))
-	if not StatusRules.blocks_swap(me.status):
+	if not StatusRules.blocks_swap(me.status) and not (swap_locked and side == Side.PLAYER):
 		for i: int in swap_candidates(side, slot):
 			out.append(BattleAction.make_swap(side, i, slot))
 	if _items_allowed_for(side, slot):
 		for id: String in bag_ids(side):
-			if _is_battle_item(id):
+			if _is_battle_item(id) and not (side == Side.PLAYER and id in blocked_items):
 				var ia := BattleAction.make_item(side, id, active_index(side, slot), slot)
 				# Revive items and spent per-battle limits do not fit the active Spirling.
 				if is_legal(ia):
 					out.append(ia)
 	if side == Side.PLAYER and is_wild and not is_partner_slot(side, slot):
-		if bonded == null:
+		if bonded == null and bond_block.is_empty():
 			out.append(BattleAction.make_bond(side, 0.0, "", slot))
 		out.append(BattleAction.make_run(side, slot))
 	return out
@@ -351,9 +358,12 @@ func is_legal(a: BattleAction) -> bool:
 				any_move = any_move or (me.can_afford(mv) and not move_locked(mv))
 			return can_rest(any_move)
 		BattleAction.Kind.SWAP:
-			return not StatusRules.blocks_swap(me.status) and a.swap_index in swap_candidates(a.side, a.slot)
+			return not StatusRules.blocks_swap(me.status) and a.swap_index in swap_candidates(a.side, a.slot) \
+				and not (swap_locked and a.side == Side.PLAYER)
 		BattleAction.Kind.ITEM:
 			if not _items_allowed_for(a.side, a.slot) or bag_count(a.side, a.item_id) <= 0 or not _is_battle_item(a.item_id):
+				return false
+			if a.side == Side.PLAYER and a.item_id in blocked_items:
 				return false
 			if is_partner_index(a.side, a.item_target):
 				return false
@@ -365,7 +375,7 @@ func is_legal(a: BattleAction) -> bool:
 			return (parties[a.side][a.item_target] as Spirling).is_fainted() == is_revive_item(a.item_id)
 		BattleAction.Kind.BOND:
 			# The Echo call reaches only wild Spirlings, never a Wayfarer's partner.
-			if a.side != Side.PLAYER or not is_wild or bonded != null or is_partner_slot(a.side, a.slot):
+			if a.side != Side.PLAYER or not is_wild or bonded != null or is_partner_slot(a.side, a.slot) or not bond_block.is_empty():
 				return false
 			if a.target_slot >= 0 and not is_standing(active_spirling(Side.FOE, a.target_slot)):
 				return false
@@ -1246,7 +1256,7 @@ func _do_move(a: BattleAction) -> void:
 			if shielded:
 				mult *= ShopEffects.shield_mult(int(amulets[target_side][2]))
 			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult,
-				ShopEffects.crit_mult(BattleRules.mult_key(me, "crit_mult"), int(amulets[side][0])))
+				ShopEffects.crit_mult(BattleRules.mult_key(me, "crit_mult"), int(amulets[side][0])) * (foe_crit_mult if side == Side.FOE else 1.0))
 			if shielded and int(r.damage) > 0:
 				_shield_on[target_side] = null
 			if mv.has_effect(&"delayed_hit"):

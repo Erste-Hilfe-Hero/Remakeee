@@ -549,46 +549,46 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Schwierigkeit und Herausforderungen
 
-481. [ ] Vier Stufen Story, Wayfarer, Veteran, Rift-Born (bestehend)
+481. [x] Vier Stufen Story, Wayfarer, Veteran, Rift-Born (bestehend) (bestehend: GameState.Difficulty, MenuHost.DIFFICULTY_TEXT)
 482. [x] Rift-Born nutzt die neue Meister-KI
-483. [ ] Level-Caps ab Veteran (bestehend)
-484. [ ] Gegenstände in Kämpfen auf Rift-Born gesperrt (bestehend)
-485. [ ] Iron Oath (bestehend) als Herausforderungsmodus
-486. [ ] Herausforderung 'Ein Spirling pro Gebiet'
-487. [ ] Herausforderung 'Nur Wild-Bonds aus erstem Kampf'
-488. [ ] Herausforderung 'Keine Heilung außer Rastquellen'
-489. [ ] Herausforderung 'Monotyp' (ein Element)
-490. [ ] Herausforderung 'Zufällige Spawns' (Zufallsmodus mit Seed)
-491. [ ] Herausforderung 'Zufällige Techniken'
-492. [ ] Herausforderungen kombinierbar beim neuen Spiel
+483. [x] Level-Caps ab Veteran (bestehend) (bestehend: GameState.LEVEL_CAPS, has_ring_limit)
+484. [x] Gegenstände in Kämpfen auf Rift-Born gesperrt (bestehend) (bestehend: GameState.items_allowed_in_battle)
+485. [x] Iron Oath (bestehend) als Herausforderungsmodus (bestehend: GameState.iron_oath, MenuHost._iron_oath)
+486. [x] Herausforderung 'Ein Spirling pro Gebiet' (ChallengeRules one_per_place)
+487. [x] Herausforderung 'Nur Wild-Bonds aus erstem Kampf' (ChallengeRules first_meeting)
+488. [x] Herausforderung 'Keine Heilung außer Rastquellen' (ChallengeRules spring_water, Kampf und Tasche)
+489. [x] Herausforderung 'Monotyp' (ein Element) (ChallengeRules one_element, jetzt bei Bindungen aktiv)
+490. [x] Herausforderung 'Zufällige Spawns' (Zufallsmodus mit Seed) (ChallengeRules wild_shuffle mit Lauf-Seed)
+491. [x] Herausforderung 'Zufällige Techniken' (ChallengeRules art_shuffle)
+492. [x] Herausforderungen kombinierbar beim neuen Spiel (TitleScreen fragt beim neuen Spiel, ChallengeMenu)
 493. [ ] Herausforderungs-Abzeichen auf der Wayfarer-Karte (online)
-494. [ ] Schwierigkeit jederzeit senkbar, nie anhebbar (Fairness für Ranglisten)
-495. [ ] Schwierigkeit pro Kampf anzeigen
+494. [x] Schwierigkeit jederzeit senkbar, nie anhebbar (Fairness für Ranglisten) (ChallengeRules.ranked_difficulty, Lauf-Chronik)
+495. [x] Schwierigkeit pro Kampf anzeigen (Kampfstart-Zeile challenge_line)
 496. [ ] Gegner-Level-Skalierung optional
-497. [ ] Story-Stufe: mehr XP, weniger Krit des Gegners
-498. [ ] Wayfarer-Stufe: Standard
-499. [ ] Veteran: Gegner mit Gegenständen
-500. [ ] Rift-Born: Gegner mit voller Technik-Auswahl
-501. [ ] Gegner-Teams pro Stufe in data/npcs.json
-502. [ ] Level-Cap-Werte dokumentieren
-503. [ ] Level-Cap-Hinweis bei Rastquellen
-504. [ ] Herausforderungs-Statistik
-505. [ ] Sieg-Bildschirm mit Schwierigkeit
-506. [ ] Neues Spiel+ mit höherem Level
+497. [x] Story-Stufe: mehr XP, weniger Krit des Gegners (ChallengeRules.FOE_CRIT und GROWTH)
+498. [x] Wayfarer-Stufe: Standard (bestehend: Wayfarer-Werte in GameState und DifficultyTable)
+499. [x] Veteran: Gegner mit Gegenständen (bestehend: TrainerData.keeps_keepsakes)
+500. [x] Rift-Born: Gegner mit voller Technik-Auswahl (ChallengeRules.fill_arts)
+501. [x] Gegner-Teams pro Stufe in data/npcs.json (bestehend: teams_by_difficulty in den Wayfarer-Daten der Karten, TrainerData.team_entries)
+502. [x] Level-Cap-Werte dokumentieren (Lexikon-Eintrag ring_caps, DifficultyTable)
+503. [x] Level-Cap-Hinweis bei Rastquellen (ChallengeRules.rest_lines)
+504. [x] Herausforderungs-Statistik (ChallengeRules.stats_lines)
+505. [x] Sieg-Bildschirm mit Schwierigkeit (RunChronicle.note nennt Schwierigkeit und Regeln)
+506. [x] Neues Spiel+ mit höherem Level (bestehend: NewGamePlus)
 507. [ ] Speedrun-Timer (Option)
-508. [ ] Seed-Anzeige für Zufallsmodi
-509. [ ] Teilen eines Seeds mit Freunden
-510. [ ] Wochen-Herausforderung (bestehend) mit Regeln
-511. [ ] Turm-Herausforderung (bestehend) mit Stufen
+508. [x] Seed-Anzeige für Zufallsmodi (ChallengeMenu)
+509. [x] Teilen eines Seeds mit Freunden (ChallengeMenu, Seed-Code kopieren und einfügen)
+510. [x] Wochen-Herausforderung (bestehend) mit Regeln (bestehend: WeeklyChallenge mit Feld, Regel und Variante)
+511. [x] Turm-Herausforderung (bestehend) mit Stufen (bestehend: EchoTower mit 100 Stockwerken)
 512. [ ] Gauntlet (bestehend) mit Rangliste
-513. [ ] Herausforderungen in eigener Wortwahl
-514. [ ] Herausforderungen ohne Bezahl-Elemente (Premium-App)
-515. [ ] Herausforderungs-Tests
-516. [ ] Herausforderungen im Lexikon
-517. [ ] Herausforderung 'Ohne Wechsel'
-518. [ ] Herausforderung 'Halbe HP'
-519. [ ] Herausforderung 'Boss zuerst'
-520. [ ] Herausforderung 'Nacht-Only'
+513. [x] Herausforderungen in eigener Wortwahl (data/challenge_modes.json)
+514. [x] Herausforderungen ohne Bezahl-Elemente (Premium-App) (Test: keine Regel in data/shop.json)
+515. [x] Herausforderungs-Tests (tests/unit/test_challenge_modes.gd)
+516. [x] Herausforderungen im Lexikon (Lexikon-Eintrag challenges)
+517. [x] Herausforderung 'Ohne Wechsel' (Halte die Stellung (stand_ground))
+518. [x] Herausforderung 'Halbe HP' (Halb erholt (half_rested))
+519. [x] Herausforderung 'Boss zuerst' (Ass voran (ace_first))
+520. [x] Herausforderung 'Nacht-Only' (Nachtbande (night_bonds))
 
 ## Wayfarer-Teams und Gegnerdesign
 
@@ -598,18 +598,18 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 524. [ ] Wayfarer mit Status-Strategie
 525. [ ] Wayfarer mit Stufen-Strategie
 526. [ ] Wayfarer mit Mehrfachkampf-Strategie
-527. [ ] Wayfarer-Dialog vor/nach dem Kampf
-528. [ ] Wayfarer-Rückkämpfe (bestehend)
+527. [x] Wayfarer-Dialog vor/nach dem Kampf (bestehend: intro und defeat in den Wayfarer-Daten)
+528. [x] Wayfarer-Rückkämpfe (bestehend) (bestehend: TrainerData.can_rematch)
 529. [ ] Wayfarer-Telefonbuch-Ersatz: Laternenpost-Einladungen
 530. [ ] Wayfarer-Rangliste lokal
 531. [ ] Wayfarer-Belohnungen variieren
-532. [ ] Wayfarer-Teamgröße bis 5 (Team 5 fix)
-533. [ ] Wayfarer-Level an Level-Cap gebunden
-534. [ ] Wayfarer mit gehaltenen Gegenständen auf Veteran
+532. [x] Wayfarer-Teamgröße bis 5 (Team 5 fix) (bestehend: GameState.MAX_PARTY, TrainerData.RIFT_BORN_MAX_TEAM)
+533. [x] Wayfarer-Level an Level-Cap gebunden (bestehend: TrainerData.build_team mit ring_cap + FOE_OVER_CAP)
+534. [x] Wayfarer mit gehaltenen Gegenständen auf Veteran (bestehend: TrainerData.keeps_keepsakes ab Veteran)
 535. [ ] Wayfarer-Teams prüfen auf Dopplungen
 536. [ ] Wayfarer-Sprites eigenständig
-537. [ ] Wayfarer-Namen eigenständig
-538. [ ] Wayfarer-Klassen eigenständig (keine bekannten Klassen übernehmen)
+537. [x] Wayfarer-Namen eigenständig (bestehend: tools/ip_check.sh)
+538. [x] Wayfarer-Klassen eigenständig (keine bekannten Klassen übernehmen) (bestehend: tools/ip_check.sh)
 539. [ ] Wayfarer-Begegnung per Blickkontakt bewusst anders lösen (Ansprechen oder Signal-Laterne)
 540. [ ] Wayfarer-Signal vor dem Kampf (Laterne blinkt)
 541. [ ] Wayfarer-Kampf überspringbar nach erstem Sieg (Rückkampf)
@@ -618,16 +618,16 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 544. [ ] Wayfarer-Echos von Freunden
 545. [ ] Wayfarer-Team-Builder für Testzwecke
 546. [ ] Wayfarer-Balancing im Simulator
-547. [ ] Wayfarer-KI-Persönlichkeiten
+547. [x] Wayfarer-KI-Persönlichkeiten (bestehend: data/ai_profiles.json)
 548. [ ] Wayfarer-Gruppen-Kämpfe (2 Wayfarer gegen Spieler + Kestra)
-549. [ ] Wayfarer mit Boss-Spirling
-550. [ ] Wayfarer-Turm mit 50 Stockwerken
-551. [ ] Wayfarer-Turm Belohnungen
-552. [ ] Wayfarer-Turm Regeln pro Stockwerk
+549. [x] Wayfarer mit Boss-Spirling (bestehend: boss-Schlüssel in TrainerData)
+550. [x] Wayfarer-Turm mit 50 Stockwerken (bestehend: EchoTower mit 100 Stockwerken)
+551. [x] Wayfarer-Turm Belohnungen (bestehend: Gauntlet.REWARDS und Waymarks)
+552. [x] Wayfarer-Turm Regeln pro Stockwerk (bestehend: Regel-Varianten pro Stockwerk)
 553. [ ] Wayfarer-Turm Rangliste online
 554. [ ] Wayfarer-Daten validieren (validate_data)
-555. [ ] Wayfarer-Texte übersetzt
-556. [ ] Wayfarer-Teams pro Schwierigkeit
+555. [x] Wayfarer-Texte übersetzt (bestehend: test_i18n)
+556. [x] Wayfarer-Teams pro Schwierigkeit (bestehend: teams_by_difficulty)
 557. [ ] Wayfarer-Geld-Belohnungen balancieren
 558. [ ] Wayfarer mit Overcharge-Strategie
 559. [ ] Wayfarer mit Bond-Lehre (Tutorial)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-34 von 1000 Punkten umgesetzt.
+83 von 1000 Punkten umgesetzt.
 
