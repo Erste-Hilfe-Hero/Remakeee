@@ -678,7 +678,7 @@
   "accuracy": 1.0,
   "energy": 3,
   "field": "rubble_rain",
-  "era": 2,
+  "era": 1,
   "desc": "Calls a rain of rubble over the field."
  },
  {
@@ -689,7 +689,7 @@
   "accuracy": 1.0,
   "energy": 3,
   "field": "gale_eye",
-  "era": 2,
+  "era": 1,
   "desc": "Calls the eye of a gale over the field."
  },
  {
