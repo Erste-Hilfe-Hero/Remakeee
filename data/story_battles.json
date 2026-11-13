@@ -495,19 +495,19 @@
    "tamer": [
     {
      "species": "Mendlace",
-     "level": 57
+     "level": 60
     },
     {
      "species": "Scrivane",
-     "level": 57
+     "level": 60
     },
     {
      "species": "Obsidroth",
-     "level": 58
+     "level": 61
     },
     {
      "species": "Burinox",
-     "level": 58
+     "level": 61
     }
    ]
   }
@@ -772,23 +772,23 @@
    "tamer": [
     {
      "species": "Fluting",
-     "level": 18
+     "level": 20
     },
     {
      "species": "Smoldrake",
-     "level": 19
+     "level": 21
     },
     {
      "species": "Shalebat",
-     "level": 18
+     "level": 20
     },
     {
      "species": "Kelpup",
-     "level": 18
+     "level": 20
     },
     {
      "species": "Gloamhog",
-     "level": 19
+     "level": 21
     }
    ]
   }
@@ -1092,19 +1092,19 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 60
+     "level": 58
     },
     {
      "species": "Glasstarn",
-     "level": 60
+     "level": 58
     },
     {
      "species": "Mendlace",
-     "level": 61
+     "level": 59
     },
     {
      "species": "Saltcrown",
-     "level": 61
+     "level": 59
     }
    ]
   }
@@ -1144,23 +1144,23 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 56
+     "level": 52
     },
     {
      "species": "Mirassil",
-     "level": 56
+     "level": 52
     },
     {
      "species": "Leviarch",
-     "level": 57
+     "level": 53
     },
     {
      "species": "Saltcrown",
-     "level": 57
+     "level": 53
     },
     {
      "species": "Obsidroth",
-     "level": 58
+     "level": 54
     }
    ]
   }

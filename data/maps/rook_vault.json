@@ -432,23 +432,23 @@
       "tamer": [
        {
         "species": "Wickmoth",
-        "level": 34
+        "level": 33
        },
        {
         "species": "Millvane",
-        "level": 35
-       },
-       {
-        "species": "Wickmoth",
         "level": 34
        },
        {
+        "species": "Wickmoth",
+        "level": 33
+       },
+       {
         "species": "Rainmantle",
-        "level": 36
+        "level": 35
        },
        {
         "species": "Ferrowyn",
-        "level": 36
+        "level": 35
        }
       ]
      }

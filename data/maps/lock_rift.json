@@ -121,23 +121,23 @@
     "tamer": [
      {
       "species": "Reedwarden",
-      "level": 59
+      "level": 65
      },
      {
       "species": "Saltspire",
-      "level": 59
+      "level": 65
      },
      {
       "species": "Kelphound",
-      "level": 60
+      "level": 66
      },
      {
       "species": "Ferrowyn",
-      "level": 60
+      "level": 66
      },
      {
       "species": "Delthorn",
-      "level": 60,
+      "level": 66,
       "held": "pith_mend"
      }
     ]
