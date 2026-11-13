@@ -69,4 +69,5 @@ T = {
 "Refill fruit: %s": "Frucht nachlegen: %s",
 "After a battle, a Spirling that ate its held fruit takes the same one from the bag.": "Nach dem Kampf nimmt ein Spirling, der seine Frucht gegessen hat, dieselbe aus der Tasche.",
 "%s takes a new %s from the bag.": "%s nimmt eine neue %s aus der Tasche.",
+"Bonus gifts: %s": "Bonus-Gaben: %s",
 }

@@ -87,6 +87,19 @@ static func bonus_options(s: Spirling) -> Array[String]:
 			out.append(str(id))
 	return out
 
+## Labels of the bonus gifts an unfolded Spirling of kind [param sd] can learn (item 275), for the
+## Spirlog page of a bonded kind. Empty for a kind that never unfolds from an earlier form.
+static func bonus_labels(sd: SpirlingData) -> Array[String]:
+	var out: Array[String] = []
+	if sd == null or Database.earlier_form(sd) == null:
+		return out
+	var lists: Dictionary = data().get("bonus_traits", {})
+	var key: String = str(Elements.E.find_key(sd.elements[0])) if not sd.elements.is_empty() else "_any"
+	for id: Variant in lists.get(key, lists.get("_any", [])):
+		if traits().has(str(id)):
+			out.append(str(traits()[str(id)].label))
+	return out
+
 static func unfolded(s: Spirling) -> bool:
 	return Database.earlier_form(s.data) != null
 

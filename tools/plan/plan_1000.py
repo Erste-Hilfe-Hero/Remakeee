@@ -295,7 +295,7 @@ AREAS = [
 "[x] Trait 'Glückspilz': Krit-Chance leicht höher ('Lucky Cap')",
 "[x] Trait 'Wendig': Wechsel ist frei (Prioritätsaktion, bestehend) ('Nimble')",
 "[x] Trait-Freischaltung durch Bond-Stufe (Bonus-Gabe erst ab Verbundenheit (min_kinship))",
-"Traits im Spirlog bei 'bonded'",
+"[x] Traits im Spirlog bei 'bonded' (SpirlogBook.page_text: die Gabe stand schon da, neu dazu die Bonus-Gaben der Art, TraitKit.bonus_labels)",
 "[x] Trait-Auswirkung im Schadensvorschau-Wert berücksichtigen (bestehend über damage_mult) (TraitKit.static_mult fließt in BattleRules.damage_mult)",
 "[x] Trait-Tests pro Trait (tests/unit/test_trait_kit.gd)",
 "[x] Trait-Kombinationen mit gehaltenen Gegenständen prüfen (Test: Echo Soul + Lantern Glass, Field Runner + Glutstein)",
