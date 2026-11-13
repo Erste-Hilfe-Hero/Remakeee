@@ -53,10 +53,17 @@ def write_loud(path: str, data: np.ndarray, quality: int, small: bool = False) -
         write_ogg(path, data * g, quality, small)
 
 
+def loops_clean(name: str) -> bool:
+    """Battle loops end on their first sample (music.close_loop, KAMPF_PLAN_1000 item 712)."""
+    return name.startswith(("battle", "warden"))
+
+
 def build_song(name: str, spec: dict, stems: bool) -> float:
     song = music.compose(name, **spec)
     parts = song.stems()
     mix = sum(parts.values())
+    if loops_clean(name):
+        mix = music.close_loop(mix)
     if name in music.EXTRA_SONGS:
         write_loud(os.path.join(MUSIC_DIR, name + ".ogg"), mix, 0, small=True)
         if stems and name in music.LAYERED_SONGS:
