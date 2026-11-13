@@ -8,8 +8,12 @@ extends Node
 ## - a hard whole-number zoom on the boss when its phase turns in Eras I-III (645);
 ## - the winners' pose (654);
 ## - the battle sounds of BattleAudio: statuses, stages, Overcharge, fields, keen hits,
-##   matchup tones, boss entrance and phase, rule seal, partner, calm rule, defeat (683-720).
-## Static helpers (night tint of the backdrop, short intro on a rematch) serve BattleScene.
+##   matchup tones, boss entrance and phase, rule seal, partner, calm rule, defeat (683-720);
+## - the ambience loop of a Resonance field under the battle (684);
+## - optional damage numbers in white with an ink rim (671, 672);
+## - the end-of-battle report card (661).
+## Static helpers (night tint of the backdrop, short intro on a rematch, the lone boss's size,
+## the effect budget) serve BattleScene and ElementFx.
 
 const PATH: String = "res://data/battle_show.json"
 ## Rematch memory in GameState.records: trainer name -> 1 once its intro played.
@@ -26,6 +30,14 @@ var stages: Dictionary = {}
 ## Banners shown so far (tests).
 var banners: Array[String] = []
 var _banner_id: int = 0
+## Ambience that played before the first field took over the loop ("" = none taken).
+var _ambience_before: String = ""
+var _field_ambience: bool = false
+## Damage numbers shown so far (tests).
+var numbers: Array[String] = []
+## The report card at the end, while it shows.
+var outro_panel: PanelContainer
+signal _outro_closed
 
 static func cfg() -> Dictionary:
 	if _cfg.is_empty():
@@ -43,6 +55,7 @@ func attach(p_scene: BattleScene) -> void:
 
 func _exit_tree() -> void:
 	Sound.music_pitch(1.0)
+	Sound.duck_music(false)
 
 # --- Pure helpers ---------------------------------------------------------------------------
 
@@ -107,6 +120,51 @@ static func note_intro(m: BattleModel) -> void:
 static func intro_share_for(m: BattleModel) -> float:
 	return intro_share(GameState.records.get(SEEN_KEY, {}) as Dictionary, intro_key(m))
 
+## A lone Rift boss in the formation stands bigger (655): its slot [param r] grows from the top
+## right corner to boss_size pixels of [param era], never below [param bottom_max] and never
+## smaller than the slot. Era IV/V (0) keep their stage.
+static func boss_rect(r: Rect2, era: int, bottom_max: float) -> Rect2:
+	var want: float = float((cfg().get("boss_size", {}) as Dictionary).get(str(era), 0))
+	var s: float = floorf(minf(minf(want, bottom_max - r.position.y), r.end.x))
+	if s <= r.size.x:
+		return r
+	return Rect2(Vector2(r.end.x - s, r.position.y), Vector2(s, s))
+
+## Redraws a second for element effects (664): fx_budget fps on a phone or in battery saver,
+## 0 (every frame) elsewhere.
+static func fx_fps(mobile: bool, battery: bool) -> int:
+	if not mobile and not battery:
+		return 0
+	return maxi(int((cfg().get("fx_budget", {}) as Dictionary).get("fps", 30)), 0)
+
+## Particles one effect draws of a kind: [param n], at most fx_budget max_particles (664).
+static func fx_particles(n: int) -> int:
+	return clampi(n, 1, maxi(int((cfg().get("fx_budget", {}) as Dictionary).get("max_particles", 16)), 1))
+
+## True when an effect at [param elapsed] seconds needs a redraw after the one at [param last]
+## with [param fps] redraws a second (0 = always).
+static func fx_redraw(elapsed: float, last: float, fps: int) -> bool:
+	return fps <= 0 or last < 0.0 or floorf(elapsed * fps) != floorf(last * fps)
+
+## Text of the damage number for [param e] (671): the amount of a hit when the option is on.
+static func damage_number(e: BattleEvent, enabled: bool) -> String:
+	if not enabled or e.type != BattleEvent.Type.DAMAGE:
+		return ""
+	var amount: int = int(e.data.get("amount", 0))
+	return str(amount) if amount > 0 else ""
+
+## Ambience loop under [param field] (684), "" for none.
+static func field_ambience(field: String) -> String:
+	return str((BattleAudio.cfg().get("field_ambience", {}) as Dictionary).get(field, ""))
+
+## Lines of the report card (661): the battle report of BattleInfo.
+static func outro_lines(report: Dictionary, turns: int) -> Array[String]:
+	return BattleInfo.report_lines(report, turns)
+
+## Seconds the report card stays at battle speed [param speed].
+static func outro_time(speed: float) -> float:
+	return float((cfg().get("outro", {}) as Dictionary).get("time", 2.4)) / maxf(speed, 1.0)
+
 ## Glints of the winners' pose in [param era].
 static func victory_glints(era: int) -> int:
 	return int((cfg().get("victory_glints", {}) as Dictionary).get(str(era), 0))
@@ -146,6 +204,7 @@ func on_event(e: BattleEvent) -> void:
 			if fa != null:
 				fa.set_state("", {})
 		BattleEvent.Type.DAMAGE:
+			show_number(side, slot, damage_number(e, GameState.damage_numbers))
 			if not bool(e.data.get("status_tick", false)):
 				if bool(e.data.get("crit", false)):
 					BattleAudio.play("crit_accent", float(BattleAudio.cfg().get("accent_db", -4.0)))
@@ -158,9 +217,11 @@ func on_event(e: BattleEvent) -> void:
 		BattleEvent.Type.FIELD:
 			BattleAudio.play(BattleAudio.field_sound(false, field_on))
 			field_on = true
+			_field_layer(field_ambience(str(e.data.get("field", ""))))
 		BattleEvent.Type.FIELD_END:
 			BattleAudio.play(BattleAudio.field_sound(true, field_on))
 			field_on = false
+			_field_layer("")
 		BattleEvent.Type.BOSS:
 			BattleAudio.play("boss_intro")
 		BattleEvent.Type.BOSS_PHASE:
@@ -206,6 +267,79 @@ func aura_at(side: int, slot: int) -> SpirlingAura:
 	a.era = EraManager.active_era()
 	sp.add_child(a)
 	return a
+
+## A Resonance field lays its ambience under the battle, kept low like the map's (684); the
+## map's loop comes back when the field ends.
+func _field_layer(loop: String) -> void:
+	if not _field_ambience:
+		if loop.is_empty():
+			return
+		_ambience_before = Sound.current_ambience
+		_field_ambience = true
+	var next: String = loop if not loop.is_empty() else _ambience_before
+	if loop.is_empty():
+		_field_ambience = false
+	Sound.ambience(next, true)
+
+## A damage number rises off the Spirling at [param side]/[param slot] and fades (671, 672):
+## white with an ink rim, on whole pixels, never waited for.
+func show_number(side: int, slot: int, text: String) -> void:
+	if text.is_empty():
+		return
+	numbers.append(text)
+	var sp: SpirlingSprite = scene._sprite(side, slot) if scene != null else null
+	if sp == null or not sp.visible or not is_inside_tree():
+		return
+	var l := Label.new()
+	l.name = "damage_number"
+	l.text = text
+	l.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	l.add_theme_color_override("font_color", Color.WHITE)
+	l.add_theme_color_override("font_outline_color", UITheme.INK)
+	l.add_theme_constant_override("outline_size", 2)
+	scene._shake_root.add_child(l)
+	l.reset_size()
+	l.position = (sp.position + Vector2((sp.size.x - l.size.x) / 2.0, sp.size.y * 0.2)).round()
+	var d: Dictionary = cfg().get("damage_numbers", {})
+	var time: float = float(d.get("time", 0.7)) / Juice.speed()
+	var tw: Tween = l.create_tween().set_parallel(true)
+	if not Juice.reduced():
+		Juice.shaped(tw.tween_property(l, "position:y", l.position.y - float(d.get("rise", 8)), time), "fade")
+	Juice.shaped(tw.tween_property(l, "modulate:a", 0.0, time * 0.4), "fade").set_delay(time * 0.6)
+	tw.chain().tween_callback(l.queue_free)
+
+## The report card at the end of the battle (661): the battle report over the field for a
+## moment; a tap or A closes it sooner.
+func play_outro(lines: Array[String]) -> void:
+	if lines.is_empty() or scene == null or scene._field == null or not is_inside_tree():
+		return
+	outro_panel = PanelContainer.new()
+	outro_panel.name = "outro"
+	outro_panel.add_theme_stylebox_override("panel", UITheme.panel_style())
+	outro_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	var l := Label.new()
+	l.text = "\n".join(lines)
+	l.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	l.custom_minimum_size = Vector2(scene._field.size.x - 16.0, 0)
+	outro_panel.add_child(l)
+	scene._field.add_child(outro_panel)
+	outro_panel.reset_size()
+	outro_panel.position = ((scene._field.size - outro_panel.size) / 2.0).round()
+	outro_panel.gui_input.connect(func(ev: InputEvent) -> void:
+		if TapInput.is_press(ev):
+			_outro_closed.emit())
+	get_tree().create_timer(outro_time(GameState.battle_speed_scale())).timeout.connect(func() -> void: _outro_closed.emit())
+	await _outro_closed
+	if is_instance_valid(outro_panel):
+		outro_panel.queue_free()
+	outro_panel = null
+
+func _unhandled_input(event: InputEvent) -> void:
+	if outro_panel != null and event.is_action_pressed("ui_accept"):
+		get_viewport().set_input_as_handled()
+		_outro_closed.emit()
 
 ## Shows [param title] on the show banner for banner_time (scaled by the battle speed).
 func show_banner(title: String) -> void:

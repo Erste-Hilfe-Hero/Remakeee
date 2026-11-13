@@ -304,6 +304,22 @@ class Song:
         return sum(self.stems().values())
 
 
+LOOP_SEAM = 64
+
+
+def close_loop(x: np.ndarray, n: int = LOOP_SEAM) -> np.ndarray:
+    """Clean loop point (docs/KAMPF_PLAN_1000.md, item 712): the first and last [n] samples
+    (3 ms) ease in from and out to silence, so the jump from the end back to the start does not
+    click, even after the lossy encoder has smeared the edges."""
+    if len(x) <= 2 * n:
+        return x
+    out = x.copy()
+    w = np.linspace(0.0, 1.0, n)
+    out[:n] *= w
+    out[-n:] *= w[::-1]
+    return out
+
+
 def write_line(song: Song, ch: str, line: str, start_bar: int, vol: float) -> None:
     pos = start_bar * song.spb
     for m, d in parse_line(line):
@@ -626,6 +642,23 @@ for _era in range(2, 6):
         EXTRA_SONGS["%s_era%d" % (_base, _era)] = dict(SONGS[_base], era=_era)
     for _place in MAP_SONGS:
         EXTRA_SONGS["%s_era%d" % (_place, _era)] = place_era_spec(_place, _era)
+
+# Battle themes by time and place (docs/KAMPF_PLAN_1000.md, items 713-717): a softer night
+# fight, a bright festival fight, the Weekly Echo on the game's leitmotif, a marching tower
+# climb and a fast online duel. Eight bars each, Era I voices, written small like the era themes.
+BATTLE_THEMES = {
+    "battle_night": dict(bpm=138, chords=["Am", "F", "G", "Em", "Am", "F", "Dm", "E7"], arp_style="pad", bass_style="pulse8", drums="walk",
+                         lead_wave="tri", seed=401, motifs=["E5:4 C5:2 A4:2 E5:4 D5:4", "C5:2 B4:2 A4:4 E4:8", "D5:2 F5:2 A5:4 G5:4 E5:4", "B4:4 G#4:4 E4:8"]),
+    "battle_fest": dict(bpm=164, chords=["C", "G", "Am", "F", "C", "G", "F", "G7"], arp_style="rolling", bass_style="pulse8", drums="drive",
+                        lead_wave="pulse50", seed=409, motifs=["C6:2 G5:2 E5:2 G5:2 C6:4 D6:4", "B5:2 G5:2 D5:4 G5:8", "A5:2 C6:2 E6:4 D6:4 C6:4", "F5:4 A5:4 G5:8"]),
+    "battle_echo": dict(bpm=150, chords=["Gm", "Eb", "F", "D7", "Gm", "Cm", "D7", "Gm"], arp_style="rolling", bass_style="pulse8", drums="battle",
+                        seed=419, motifs=leitmotif(-5, minor=True)),
+    "battle_tower": dict(bpm=144, chords=["Dm", "Dm", "Bb", "C", "Dm", "Gm", "A7", "A7"], arp_style="climb", bass_style="pulse8", drums="march",
+                         seed=421, motifs=["D5:4 A4:4 D5:2 E5:2 F5:4", "E5:4 C5:4 G4:8", "F5:2 G5:2 A5:4 Bb5:4 A5:4", "G5:4 E5:4 C#5:8"]),
+    "battle_duel": dict(bpm=168, chords=["Bm", "G", "D", "A", "Bm", "Em", "F#7", "F#7"], arp_style="rolling", bass_style="pulse8", drums="battle",
+                        seed=431, motifs=["B5:2 F#5:2 D5:2 F#5:2 B5:4 C#6:4", "D6:2 B5:2 G5:4 B5:8", "A5:2 F#5:2 D5:4 A5:4 F#5:4", "E5:4 F#5:4 A#5:8"]),
+}
+EXTRA_SONGS.update(BATTLE_THEMES)
 
 # Era V battle songs also get stems: the MusicDirector fades them by battle intensity
 # (data/era_audio.json "battle_layers"), the dynamic music of the fifth hardware step.

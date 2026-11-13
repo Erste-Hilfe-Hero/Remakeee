@@ -93,6 +93,8 @@ var _log_filter_button: Button
 var _seen_arts: Dictionary = {}
 var report: Dictionary = BattleInfo.new_report()
 var _last_art_name: String = ""
+## Name of the player's Spirling that used that art (the report's star, plan item 20).
+var _last_user_name: String = ""
 var _last_art: Dictionary = {}
 var _last_aim: int = -1
 ## Element of the player's last move, so the hit that follows teaches the matchup.
@@ -173,6 +175,7 @@ func _build() -> void:
 	_field.resized.connect(_layout_field)
 	col.add_child(_field)
 	_text = TextBox.new()
+	_text.duck_music = true
 	_text.custom_minimum_size = Vector2(0, TEXT_BOX_HEIGHT)
 	col.add_child(_text)
 	_menu = CommandMenu.new()
@@ -291,6 +294,12 @@ func _build() -> void:
 		_log_filter = BattleInfo.next_filter(_log_filter)
 		_fill_log())
 	log_box.add_child(_log_filter_button)
+	# Photo mode in battle (KAMPF_PLAN_1000 662), the overworld's own: the log closes first.
+	_photo_button = Button.new()
+	_photo_button.name = "photo_button"
+	_photo_button.text = "Take a photo"
+	_photo_button.pressed.connect(open_photo)
+	log_box.add_child(_photo_button)
 	_log_label = Label.new()
 	_log_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_log_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
@@ -433,6 +442,9 @@ func _layout_formation() -> void:
 		if _stage != null and side == BattleModel.Side.FOE and n > 0:
 			var feet: float = Era4Stage.sprite_rect(EraManager.stage_config(), "foe", Vector2(w, h), slots[0].size.x).end.y
 			slots = drop_to_floor(slots, feet, rects[BattleModel.Side.PLAYER].position.y - tag_h - 6)
+		# A lone Rift boss stands bigger (KAMPF_PLAN_1000 655), clear of the player's rank.
+		if side == BattleModel.Side.FOE and n == 1 and model != null and BattleRules.BOSSES.has(model.foe_boss):
+			slots[0] = BattleShow.boss_rect(slots[0], EraManager.active_era(), rects[BattleModel.Side.PLAYER].position.y - tag_h - 6)
 		for slot: int in n:
 			var sp: SpirlingSprite = _slot_sprites[side][slot]
 			sp.position = slots[slot].position
@@ -638,6 +650,9 @@ func _run() -> void:
 		await _play(model.submit_turn(action))
 		_refresh_goal()
 	_refresh_goal()
+	# The report card (KAMPF_PLAN_1000 661); a quick battle goes straight on.
+	if model.is_finished() and not model.has_meta("quick"):
+		await _show.play_outro(BattleShow.outro_lines(report, model.turn))
 	# Comfort tips after the first battle that was really played (item 631).
 	if not _replaying and not model.has_meta("quick") and not inputs.is_empty():
 		for line: String in Tips.take("battle_comfort"):
@@ -968,7 +983,8 @@ func record(e: BattleEvent) -> void:
 	BattleInfo.note(_seen_arts, e)
 	if e.type == BattleEvent.Type.MOVE_USED and int(e.data.get("side", -1)) == BattleModel.Side.PLAYER:
 		_last_art_name = str(e.data.get("move", ""))
-	BattleInfo.count(report, e, _last_art_name)
+		_last_user_name = str(e.data.get("name", ""))
+	BattleInfo.count(report, e, _last_art_name, _last_user_name)
 	log_entries.append(BattleInfo.entry(e))
 	if e.type == BattleEvent.Type.BATTLE_END and model != null:
 		for l: String in BattleInfo.report_lines(report, model.turn):
@@ -992,6 +1008,24 @@ static func variant_list(m: BattleModel) -> String:
 		var v: Dictionary = all.get(id, {})
 		lines.append("- %s: %s" % [Loc.t(str(v.get("label", id))), Loc.t(str(v.get("text", "")))])
 	return "\n".join(lines) + "\n\n"
+
+var _photo_button: Button
+## The open photo mode, null otherwise.
+var photo: PhotoMode
+
+## Opens the photo mode over the battle (662); B closes it and the battle goes on.
+func open_photo() -> void:
+	if photo != null:
+		return
+	_log_panel.visible = false
+	photo = PhotoMode.new()
+	photo.capture_gui = true
+	photo.place = Loc.t("Battle")
+	add_child(photo)
+	await photo.finished
+	if is_instance_valid(photo):
+		photo.queue_free()
+	photo = null
 
 func _toggle_log() -> void:
 	Sound.sfx("confirm")
