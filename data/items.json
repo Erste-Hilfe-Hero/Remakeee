@@ -2446,6 +2446,15 @@
   "tradeable": false
  },
  {
+  "id": "spark_flux",
+  "name": "Spark Flux",
+  "description": "Rolls all Spark values of one Spirling anew. Used up.",
+  "battle": false,
+  "spark_reset": true,
+  "price": 1500,
+  "tradeable": false
+ },
+ {
   "id": "growth_charm",
   "name": "Growth Charm",
   "description": "Keepsake. A knotted cord that hums after every battle: the holder gains half again as much growth.",
