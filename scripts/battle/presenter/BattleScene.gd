@@ -82,6 +82,17 @@ var _back_button: Button
 var _target_buttons: Array[Button] = []
 ## Plain-text lines of what happened so far (item 11: re-read the last turns).
 var log_lines: Array[String] = []
+## Log entries with their filter kind and side (BattleInfo, item 565), the filter in use, the
+## arts each foe showed (item 567), the end report (item 581) and the remembered art per slot
+## and target (items 603, 615).
+var log_entries: Array = []
+var _log_filter: String = "all"
+var _log_filter_button: Button
+var _seen_arts: Dictionary = {}
+var report: Dictionary = BattleInfo.new_report()
+var _last_art_name: String = ""
+var _last_art: Dictionary = {}
+var _last_aim: int = -1
 ## Element of the player's last move, so the hit that follows teaches the matchup.
 var _last_player_element: int = -1
 ## Element of the last move each side used, for the hit sound.
@@ -265,10 +276,20 @@ func _build() -> void:
 		if TapInput.is_press(ev):
 			_log_panel.visible = false)
 	add_child(_log_panel)
+	var log_box := VBoxContainer.new()
+	_log_panel.add_child(log_box)
+	_log_filter_button = Button.new()
+	_log_filter_button.clip_text = true
+	_log_filter_button.pressed.connect(func() -> void:
+		_log_filter = BattleInfo.next_filter(_log_filter)
+		_fill_log())
+	log_box.add_child(_log_filter_button)
 	_log_label = Label.new()
 	_log_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_log_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
-	_log_panel.add_child(_log_label)
+	_log_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_log_label.clip_text = true
+	log_box.add_child(_log_label)
 	_apply_speed()
 	_hud = BattleHud.new()
 	_hud.attach(self)
@@ -577,6 +598,10 @@ func _run() -> void:
 		await _play(model.submit_turn(action))
 		_refresh_goal()
 	_refresh_goal()
+	# Comfort tips after the first battle that was really played (item 631).
+	if not _replaying and not model.has_meta("quick") and not inputs.is_empty():
+		for line: String in Tips.take("battle_comfort"):
+			await _text.show_text(line)
 	battle_finished.emit(model.outcome, model)
 	if quit_on_finish:
 		get_tree().quit()
@@ -607,6 +632,7 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 		if _auto_active():
 			return _auto_ai.choose(model, BattleModel.Side.PLAYER, slot)
 	_text.show_prompt("Orders for %s? (%d Energy)" % [me.display_name(), me.energy])
+	_menu.prefer_row = int(_last_art.get(slot, -1))
 	_menu.refresh(model, slot)
 	_menu.set_enabled(true)
 	var choice: Array = await _menu.chosen
@@ -618,9 +644,11 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 			if index < me.moves.size() and me.can_afford(me.moves[index]):
 				var aim: int = -1
 				if not me.moves[index].is_area():
-					aim = await _pick_target("Aim %s at?" % me.moves[index].move_name)
+					aim = await _pick_target("Aim %s at?" % me.moves[index].move_name, me, me.moves[index])
 					if aim == -2:
 						return null
+					_last_aim = aim
+				_last_art[slot] = index
 				return BattleAction.make_move(BattleModel.Side.PLAYER, index, slot, aim)
 			return BattleAction.make_rest(BattleModel.Side.PLAYER, slot)
 		BattleAction.Kind.SWAP:
@@ -638,7 +666,7 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 
 ## Lets the player tap the foe to aim at. Returns the foe slot, -1 when there is no choice
 ## (1v1 or a single foe left), or -2 when the player backs out.
-func _pick_target(title: String) -> int:
+func _pick_target(title: String, me: Spirling = null, mv: MoveData = null) -> int:
 	var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
 	if not _multi or foes.size() <= 1:
 		return -1 if foes.is_empty() else foes[0]
@@ -657,6 +685,7 @@ func _pick_target(title: String) -> int:
 			Sound.sfx("confirm")
 			_target_picked.emit(picked))
 		b.focus_entered.connect(func() -> void:
+			_text.show_prompt(Loc.t(title) + BattleInfo.target_preview(model, me, model.active_spirling(BattleModel.Side.FOE, picked), mv))
 			_focus(BattleModel.Side.FOE, picked)
 			_point_pin(BattleModel.Side.FOE, picked, true))
 		b.mouse_entered.connect(b.grab_focus)
@@ -666,7 +695,7 @@ func _pick_target(title: String) -> int:
 		var b: Button = _target_buttons[i]
 		b.focus_neighbor_left = _target_buttons[i - 1].get_path() if i > 0 else b.get_path()
 		b.focus_neighbor_right = _target_buttons[i + 1].get_path() if i < _target_buttons.size() - 1 else b.get_path()
-	_target_buttons[0].grab_focus()
+	_target_buttons[BattleInfo.aim_start(foes, _last_aim)].grab_focus()
 	_back_button.visible = true
 	var picked_slot: int = await _target_picked
 	for b: Button in _target_buttons:
@@ -679,6 +708,8 @@ func _pick_target(title: String) -> int:
 func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[int] = []) -> int:
 	var entries: Array[Dictionary] = []
 	var party: Array = model.party(BattleModel.Side.PLAYER)
+	var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
+	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, foes[0]) if foes.size() == 1 else null
 	var candidates: Array[int] = []
 	for i: int in model.swap_candidates(BattleModel.Side.PLAYER, slot):
 		if not i in taken:
@@ -687,7 +718,7 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 		if model.is_partner_index(BattleModel.Side.PLAYER, i):
 			continue
 		var s: Spirling = party[i]
-		entries.append({"text": "%s R%d %d/%d" % [s.display_name(), s.level, s.hp, s.max_hp()], "disabled": not i in candidates})
+		entries.append({"text": "%s R%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), BattleInfo.switch_tag(s, foe)], "disabled": not i in candidates})
 	while true:
 		var idx: int = await _picker.pick(title, entries, cancellable)
 		if idx < 0 or idx in candidates:
@@ -702,7 +733,7 @@ func _pick_item(slot: int = 0, preset: String = "") -> BattleAction:
 		var it: Dictionary = Database.item(id)
 		if bool(it.get("battle", false)) and model.item_left_this_battle(BattleModel.Side.PLAYER, id):
 			ids.append(id)
-			entries.append({"text": "%s x%d" % [it.get("name", id), model.bag_count(BattleModel.Side.PLAYER, id)]})
+			entries.append({"text": "%s x%d" % [it.get("name", id), model.bag_count(BattleModel.Side.PLAYER, id)], "hint": str(it.get("description", ""))})
 	if ids.is_empty():
 		await _text.show_text("No usable items.")
 		return null
@@ -808,6 +839,11 @@ func _play(events: Array[BattleEvent]) -> void:
 	for i: int in events.size():
 		_play_index = i
 		await _play_event(events[i])
+		# Resonance fields and boss phases explain themselves the first time (item 585).
+		var tip: String = BattleInfo.tip_for(events[i])
+		if not tip.is_empty() and not _replaying:
+			for line: String in Tips.take(tip):
+				await _text.show_text(line)
 	_playing = []
 
 ## The event list being played and the current position, so an art can look ahead at how
@@ -886,6 +922,16 @@ func _name_at(side: int, slot: int) -> String:
 
 ## Remembers an event for the log. Damage gets its amount (the text box only shows the bar).
 func record(e: BattleEvent) -> void:
+	BattleInfo.note(_seen_arts, e)
+	if e.type == BattleEvent.Type.MOVE_USED and int(e.data.get("side", -1)) == BattleModel.Side.PLAYER:
+		_last_art_name = str(e.data.get("move", ""))
+	BattleInfo.count(report, e, _last_art_name)
+	log_entries.append(BattleInfo.entry(e))
+	if e.type == BattleEvent.Type.BATTLE_END and model != null:
+		for l: String in BattleInfo.report_lines(report, model.turn):
+			log_entries.append({"text": l, "kind": "other", "side": -1})
+	while log_entries.size() > BattleInfo.ENTRY_KEEP:
+		log_entries.pop_front()
 	var line: String = e.describe()
 	if line.is_empty():
 		return
@@ -906,8 +952,16 @@ static func variant_list(m: BattleModel) -> String:
 
 func _toggle_log() -> void:
 	Sound.sfx("confirm")
-	_log_label.text = variant_list(model) + "Battle log\n\n" + ("\n".join(log_lines) if not log_lines.is_empty() else "Nothing yet.") + "\n\n(tap to close)"
+	_log_filter = "all"
+	_fill_log()
 	_log_panel.visible = not _log_panel.visible
+
+## Log text for the filter in use: rule variants, the battle facts, then the matching lines.
+func _fill_log() -> void:
+	_log_filter_button.text = BattleInfo.filter_row(_log_filter)
+	var lines: Array[String] = BattleInfo.filter_lines(log_entries, _log_filter, LOG_KEEP)
+	_log_label.text = variant_list(model) + BattleInfo.facts(model, _seen_arts) + "\n\n" + Loc.t("Battle log") + "\n\n" \
+		+ ("\n".join(lines) if not lines.is_empty() else Loc.t("Nothing yet.")) + "\n\n" + Loc.t("(tap to close)")
 
 ## A Gleam steps out: the sound cue and the sparkle (data/gleam.json).
 func _gleam_entrance(sprite: SpirlingSprite) -> void:

@@ -44,6 +44,13 @@ const LINES: Dictionary[String, Array] = {
 	"friends": ["Tip: Share your friend code so friends can send gifts and meet your echo."],
 	"storage": ["Tip: Spirlings who aren't travelling with you rest in storage. Swap them any time here."],
 	"map_page": ["Tip: You found a page of Mirela's map book. Goals shows how many are still out there."],
+	# Battle plan items 585 and 631: new battle parts explain themselves once, comfort after the first fight.
+	"resonance": ["Tip: A Rift field changes which arts hit hard. The Log shows how many turns it has left."],
+	"boss_phase": ["Tip: Hurt a Rift boss enough and it changes its ways. Watch what it does next."],
+	"battle_comfort": [{"touch": "Tip: Hold an art to read it. Your last art and target are picked first next time.",
+			"buttons": "Tip: Hold A on an art to read it. Keys 1 to 4 pick arts, and your last art is picked first."},
+		"Log shows what happened and what you know of the foe. Tap its top row to filter it.",
+		"Bench lessons: Spirlings who wait on the bench still learn half. Switch it under Settings."],
 	"photo": [{"touch": "Photo mode: slide the D-pad to look around, tap the world for a photo, = changes the frame, B leaves.",
 		"buttons": "Photo mode: the D-pad looks around, A takes a photo, Start changes the frame, B leaves."}],
 }
@@ -55,6 +62,7 @@ const TOPICS: Dictionary[String, String] = {
 	"rest_spot": "Rest spots", "travel": "Travel", "satchel": "The satchel", "keepsake": "Keepsakes",
 	"unfurl": "Unfurling", "gear": "Wayfarer Gear", "friends": "Friends", "storage": "Storage",
 	"map_page": "Map pages", "photo": "Photo mode",
+	"resonance": "Rift fields", "boss_phase": "Boss phases", "battle_comfort": "Battle comfort",
 }
 
 ## Tips that show even with tips switched off, so nobody is left without a goal (item 2009).
