@@ -436,6 +436,9 @@ func _new_game() -> bool:
 	GameState.new_game(GameState.Difficulty.TAMER, name.strip_edges(), coat, "", look, skin, hair)
 	GameState.iron_oath = false
 	EraManager.from_dict({})
+	# Challenge rules combine freely at the start (KAMPF plan item 492); the normal journey is first.
+	if await _menu.pick_strings("How do you want to travel?", ["Normal journey", "With challenge rules"] as Array[String], false) == 1:
+		await ChallengeMenu.run(_menu)
 	return true
 
 ## The main save file was damaged and a backup was loaded (plan item 3609).
