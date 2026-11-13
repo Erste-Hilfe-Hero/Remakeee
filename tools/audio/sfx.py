@@ -67,6 +67,7 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out.update(later_element_sfx())
     out.update(era_feel_sfx())
     out.update(battle_show_sfx())
+    out.update(late_status_sfx())
     return out
 
 
@@ -446,4 +447,17 @@ def battle_show_sfx() -> dict[str, np.ndarray]:
         env(n, attack=0.002, decay=0.1, sustain=0.5, release=0.12) * 0.7
     # Defeat: a short falling line in minor, the last note held.
     out["defeat"] = notes([("A4", 0.14), ("F4", 0.14), ("D4", 0.14), ("C#4", 0.3)], lambda f, k: pulse(f, k, 0.5) * 0.5 + triangle(f / 2, k) * 0.5) * 0.45
+    return out
+
+
+def late_status_sfx() -> dict[str, np.ndarray]:
+    """Sounds for the statuses added later: Spent (a short fizzle down, Energy runs dry) and
+    Marked (a thin high ping, the target is singled out). Own generator, so the older effects
+    keep their noise."""
+    rng = np.random.default_rng(685)
+    out: dict[str, np.ndarray] = {}
+    n = secs(0.16)
+    out["status_spent"] = (sweep(700, 180, n, "pulse", 0.25) * 0.5 + noise(n, 4, rng) * 0.2) * env(n, decay=0.05, sustain=0.4) * 0.6
+    n = secs(0.14)
+    out["status_marked"] = (pulse(freq(midi("B6")), n, 0.125) * 0.4 + triangle(freq(midi("B5")), n) * 0.4) * env(n, attack=0.002, decay=0.04, sustain=0.4, release=0.05) * 0.6
     return out
