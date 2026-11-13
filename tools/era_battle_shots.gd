@@ -3,7 +3,7 @@ extends SceneTree
 ## the five eras: mid-intro and settled on each terrain, under each sky (rain, storm, wind), as
 ## 1v1, 2v2 and 3v3 after everyone has stepped out, each move effect, and under reduced motion.
 ##   xvfb-run -a godot --path . --rendering-driver opengl3 -s res://tools/era_battle_shots.gd -- out_dir [groups]
-## groups: "all" or a comma list of terrain, sky, formation, fx, scenes, reduced.
+## groups: "all" or a comma list of terrain, sky, formation, fx, scenes, fields, reduced.
 
 var _out: String = "user://era_shots"
 var _only: String = "all"
