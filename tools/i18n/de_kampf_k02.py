@@ -89,7 +89,7 @@ T.update({
 "Bright Lure": "Lichtköder",
 "Close Ranks": "Schulterschluss",
 "Ember Afterglow": "Nachglut",
-"Mirror Stance": "Spiegelhaltung",
+"Borrowed Stance": "Geliehene Haltung",
 "Still Point": "Ruhepunkt",
 "Ground Burst": "Druckwelle",
 "Dye Bath": "Farbbad",

@@ -190,7 +190,7 @@ static func lured_slot(model: BattleModel, side: int, target_slot: int) -> int:
 		return target_slot
 	return int(l.slot)
 
-## Watches the event stream for Counter (physical damage taken) and Mirror Stance (stage moves).
+## Watches the event stream for Counter (physical damage taken) and Borrowed Stance (stage moves).
 static func observe(model: BattleModel, e: BattleEvent) -> void:
 	if e.type == BattleEvent.Type.DAMAGE and e.data.has("move"):
 		var mv: MoveData = Database.move(str(e.data.move))

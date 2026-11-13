@@ -1,6 +1,9 @@
 class_name StatusRules
 extends RefCounted
-## The six statuses as data. Battle code reads these tables; nothing switches on status names.
+## The statuses as data. Battle code reads these tables; nothing switches on status names.
+## The numbers of the first six are Chimora's own and stay fixed (KAMPF_PLAN_1000 items 187,
+## 201-203, pinned by tests/unit/test_status_values.gd): ticks 1/12 of max Vigor, Jolt 20 %,
+## Daze x0.7 accuracy, Drowse 2 turns.
 
 const NONE: String = ""
 
@@ -11,6 +14,9 @@ const NONE: String = ""
 ##   turns:       [min, max] duration; [0, 0] = until the battle ends
 ##   blocks_swap: cannot swap out
 ##   sleeps:      cannot act while turns remain
+##   energy_every: the turn's Energy gain is split over this many turns (2 = half the gain)
+##   sure_hit:    the next damaging art aimed at it can't miss; the hit wears the status off
+##   random_target: with several foes in front its single-target arts strike a random one
 const RULES: Dictionary[String, Dictionary] = {
 	"scorch": {"label": "Scorch", "tick_div": 12, "atk_mult": 0.75, "turns": [0, 0]},
 	"soak":   {"label": "Soak",   "spd_mult": 0.5, "turns": [3, 3]},
@@ -18,6 +24,27 @@ const RULES: Dictionary[String, Dictionary] = {
 	"jolt":   {"label": "Jolt",   "skip_chance": 0.2, "turns": [0, 0]},
 	"daze":   {"label": "Daze",   "acc_mult": 0.7, "turns": [3, 3]},
 	"drowse": {"label": "Drowse", "sleeps": true, "turns": [2, 2]},
+	# Plan items 181-183: three statuses of Chimora's own.
+	"spent":  {"label": "Spent",  "energy_every": 2, "turns": [3, 3]},
+	"marked": {"label": "Marked", "sure_hit": true, "turns": [3, 3]},
+	"muddle": {"label": "Muddle", "random_target": true, "acc_mult": 0.9, "turns": [2, 2]},
+}
+
+## A boss (BattleModel.foe_boss) shrugs a status off in half the time (item 190): timed ones last
+## half as long (rounded up), open-ended ones end after this many turns.
+const BOSS_OPEN_TURNS: int = 4
+
+## Short explanation with the numbers, for the battle guide (item 188).
+const TEXTS: Dictionary[String, String] = {
+	"scorch": "Loses 1/12 of its max Vigor each turn and its Might drops to 3/4. Lasts until cured.",
+	"soak": "Its Pace is halved for 3 turns.",
+	"root": "Loses 1/12 of its max Vigor each turn and can't step back. Lasts until cured.",
+	"jolt": "Loses its turn 1 time in 5. Lasts until cured.",
+	"daze": "Its arts hit only 7 times in 10 for 3 turns.",
+	"drowse": "Can't act for 2 turns. Only one Spirling per side may drowse in a Wayfarer duel.",
+	"spent": "Gains Energy only every second turn, for 3 turns.",
+	"marked": "The next damaging art aimed at it can't miss; that hit wipes the mark off. Up to 3 turns.",
+	"muddle": "Strikes a random foe when several stand in front, and aims a little worse (9 in 10), for 2 turns.",
 }
 
 static func exists(status: String) -> bool:
@@ -42,6 +69,29 @@ static func blocks_swap(status: String) -> bool:
 
 static func sleeps(status: String) -> bool:
 	return bool(RULES.get(status, {}).get("sleeps", false))
+
+static func energy_every(status: String) -> int: return maxi(1, int(_num(status, "energy_every", 1.0)))
+
+static func sure_hit(status: String) -> bool:
+	return bool(RULES.get(status, {}).get("sure_hit", false))
+
+static func random_target(status: String) -> bool:
+	return bool(RULES.get(status, {}).get("random_target", false))
+
+## The Energy a Spirling with [param status] gains this turn out of [param gain]: with
+## energy_every 2 it gets half, the odd point on every second turn, so the sum stays exact.
+static func energy_gain(status: String, gain: int, turn: int) -> int:
+	var every: int = energy_every(status)
+	if every <= 1 or gain <= 0:
+		return gain
+	return (gain + (every - 1 if turn % every == 0 else 0)) / every
+
+## Turns a boss keeps a status that would last [param turns] (0 = open-ended).
+static func boss_turns(turns: int) -> int:
+	return BOSS_OPEN_TURNS if turns <= 0 else (turns + 1) / 2
+
+static func text(status: String) -> String:
+	return TEXTS.get(status, "")
 
 ## Rolls a duration for a newly applied status. 0 means it lasts until the battle ends.
 static func roll_turns(status: String, rng: RandomNumberGenerator) -> int:

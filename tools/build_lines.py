@@ -186,6 +186,11 @@ def pick_traits(region, lines, species):
         if s.get("region") == region:
             count.setdefault(s["trait"], set()).add(s.get("line_id", s["name"]))
     for line in lines:
+        # A line may name its trait (KAMPF_PLAN_1000 items 194, 195: glimmer_skin, unruffled).
+        if line.get("trait"):
+            line["_trait"] = line["trait"]
+            count.setdefault(line["trait"], set()).add(line["id"])
+            continue
         pref = TRAITS[line["role"]]
         best = min(count, key=lambda t: (len(count[t]), 0 if t in pref else 1, (pref.index(t) if t in pref else 9), t))
         line["_trait"] = best
