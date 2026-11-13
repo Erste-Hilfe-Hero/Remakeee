@@ -173,6 +173,11 @@ var bench_growth: int = 0
 var growth_by: Dictionary = {}
 ## Echo calls the player made this battle (WildRules bond statistics).
 var bond_tries: int = 0
+## Spark training from battle (GrowthRules.battle_spark): chance per fighter and fallen foe; 0 off.
+var battle_spark_chance: float = 0.0
+## Accuracy factor of a wild battle under a foggy sky (WildRules.sight_mult); 1 = clear.
+var sight_mult: float = 1.0
+var _spark_rng: RandomNumberGenerator = null
 ## True once the Rift boss has entered its second phase.
 var boss_phase_done: bool = false
 ## Late boss phases (BossRules.LATE_PHASES) already reached.
@@ -494,6 +499,7 @@ func start() -> Array[BattleEvent]:
 		if slot == _partner_slot:
 			emit_event(BattleEvent.Type.PARTNER, {"side": Side.PLAYER, "slot": slot, "partner": partner_name})
 		emit_event(BattleEvent.Type.SEND_OUT, _who(Side.PLAYER, slot))
+	_wild_opening(foe)
 	if ambush and is_wild:
 		emit_event(BattleEvent.Type.AMBUSH, _who(Side.FOE, 0))
 	if BattleRules.BOSSES.has(foe_boss):
@@ -1589,7 +1595,8 @@ func _do_rest(a: BattleAction) -> void:
 func hit_chance(me: Spirling, mv: MoveData, target: Spirling = null) -> float:
 	if target != null and mv.is_damaging() and StatusRules.sure_hit(target.status):
 		return 1.0
-	return clampf(mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult"), 0.0, 1.0)
+	return clampf(mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult")
+		* (sight_mult if is_wild else 1.0), 0.0, 1.0)
 
 ## Tells every Spirling of both teams which element the place's own field makes cheaper (item 75).
 ## Only the place's own field counts (a storm overhead, a map's field): a field called by an art
@@ -2016,6 +2023,15 @@ func _items_allowed_for(side: int, slot: int = 0) -> bool:
 func _is_battle_item(id: String) -> bool:
 	return bool(Database.item(id).get("battle", false))
 
+## Opening lines of a wild battle: an elder, fog (WildRules).
+func _wild_opening(foe: Spirling) -> void:
+	if not is_wild or foe == null:
+		return
+	if WildRules.is_elder(foe):
+		emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.FOE, "text": WildRules.ELDER_LINE % foe.display_name()})
+	if sight_mult < 1.0:
+		emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.FOE, "text": WildRules.FOG_LINE})
+
 func _award_xp(foe: Spirling) -> void:
 	var total: float = float(foe.data.xp_yield) * float(foe.level) / XP_LEVEL_DIV
 	if not is_wild:
@@ -2031,6 +2047,14 @@ func _award_xp(foe: Spirling) -> void:
 	var share: int = maxi(1, int(total / earners.size()))
 	for s: Spirling in earners:
 		_give_xp(s, _scaled(share, foe, s))
+	if battle_spark_chance > 0.0 and total > 0.0:
+		if _spark_rng == null:
+			_spark_rng = RandomNumberGenerator.new()
+			_spark_rng.seed = battle_seed ^ 0x59a2
+		for s: Spirling in earners:
+			var line: String = GrowthRules.battle_spark(s, foe, battle_spark_chance, _spark_rng)
+			if not line.is_empty():
+				emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.PLAYER, "text": line})
 	if bench_share <= 0.0:
 		return
 	# Bench lessons: every healthy own Spirling that did not fight still learns a part.
