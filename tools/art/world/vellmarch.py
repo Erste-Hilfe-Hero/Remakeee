@@ -254,7 +254,9 @@ TOWN_LAYOUT = {
 BARGE_QUAY = (3, 6)
 BARGE_BRINDLEWICK = (7, 18)
 WREN = (7, 4)
-SHOP = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear"
+SHOP = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear pruning_shears grounding_rod smelling_salts"
+# The port town also sells the charms of the region's own elements (#478).
+CHARMS = {"cindergate_quay": " rust_charm mask_charm"}
 FINDS = ["max_tonic", "revival_leaf", "strong_tonic", "remedy", "wake_bell"]
 
 TOWN_TEXT = {
@@ -399,7 +401,7 @@ def town(mid):
     npcs = [npc("keeper", kx, ky, "down", text(mid + "_keeper", {"lines": lines(tt["keeper"]), "action": "heal"}), "elder")]
     if t.get("shop"):
         tx, ty = lay["trader"]
-        npcs.append(npc("trader", tx, ty, "down", text(mid + "_trader", {"lines": lines(tt["trader"]), "action": SHOP}), "villager"))
+        npcs.append(npc("trader", tx, ty, "down", text(mid + "_trader", {"lines": lines(tt["trader"]), "action": SHOP + CHARMS.get(mid, "")}), "villager"))
     for i, (line, ((hx, hy), hf, (dx, dy), df)) in enumerate(zip(tt["folk"], lay["folk"])):
         npcs.append(npc("folk_%d" % (i + 1), hx, hy, hf, text("%s_folk_%d" % (mid, i + 1), lines(line)),
                         "elder" if i == 2 else "villager", schedule=[at("dusk", dx, dy, df), away("night")]))
@@ -478,9 +480,9 @@ ROUTE_ROWS = ["TTTTT__TTTTT",
               "TTTTT__TTTTT"]
 # Fill-ins beside the three slots so the table reaches the weight the validator wants:
 # (species, ground slot index) per road, uncommon kinds of the region's elements.
-FILL = {QUAY_ROAD: [("Cogmite", 0), ("Canalet", 2)], "rookery_cut": [("Rookit", 0), ("Grindwheel", 2)],
-        "weeping_locks": [("Diparrow", 0), ("Sluicer", 2)], "smelters_drift": [("Smeltpup", 0), ("Flueling", 2)],
-        "tithe_road": [("Woadwhorl", 0), ("Lodebrock", 2)], "bellrope_marsh": [("Dusktern", 0), ("Bogwick", 2)]}
+FILL = {QUAY_ROAD: [("Anchorrot", 2), ("Groatfin", 2)], "rookery_cut": [("Hushbeak", 0), ("Waxwhisk", 2)],
+        "weeping_locks": [("Snagwhisk", 0), ("Fauxscript", 2)], "smelters_drift": [("Latchet", 0), ("Knellgrim", 2)],
+        "tithe_road": [("Shivlet", 0), ("Tithshell", 2)], "bellrope_marsh": [("Moldcap", 2), ("Mirefane", 2)]}
 SLOT_WEIGHTS = [9, 7, 5]
 FILL_WEIGHTS = [16, 14]
 ROUTE_TEXT = {
@@ -547,6 +549,8 @@ def route(mid):
     lo, hi = r["ring"]
     spawns = []
     for slot, w in zip(r["slots"], SLOT_WEIGHTS):
+        if slot["species"]:
+            w = slot["weight"]  # an own common kind rolls at the sheet's share (common band 25-45)
         spawns.append({"species": slot_species(slot), "min": lo, "max": hi, "weight": w, "ground": GROUND[slot["ground"]][1]})
     for (sp, gi), w in zip(FILL[mid], FILL_WEIGHTS):
         if sp not in SPECIES or SPECIES[sp].get("rarity") != "uncommon":
