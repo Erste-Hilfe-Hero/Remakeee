@@ -148,12 +148,21 @@ func _refresh_goal() -> void:
 		_goal_label.text = str(model.get_meta("puzzle_goal", "")) + "\n" + Loc.t("Turns left: %d") % BattlePuzzle.turns_left(model)
 		_goal_label.visible = true
 		return
+	if _goal_label != null and not model.has_meta("goal_tracker") and show_turns(model):
+		# Wayfarer and boss battles count the turns top left (KAMPF_PLAN item 5).
+		_goal_label.text = Loc.t("T%d") % (model.turn + 1)
+		_goal_label.visible = not model.is_finished()
+		return
 	if _goal_label == null or not model.has_meta("goal_tracker") or not GameState.bonus_goals:
 		return
 	var t: BattleGoals.Tracker = model.get_meta("goal_tracker")
 	var mark: String = ["✗", "", "✓"][t.status() + 1]
 	_goal_label.text = (Loc.t("T%d") % (t.turns() + 1)) + ("" if mark.is_empty() else " " + mark)
 	_goal_label.visible = true
+
+## True for the battles that show the turn count without a bonus goal: Wayfarers and bosses.
+static func show_turns(m: BattleModel) -> bool:
+	return m != null and not m.is_wild and not m.has_meta("puzzle_max")
 
 func setup(p_model: BattleModel) -> void:
 	model = p_model
@@ -1330,6 +1339,11 @@ func _play_event(e: BattleEvent) -> void:
 				await _text.show_text("You received %d coins." % money)
 			elif int(e.data.outcome) == BattleModel.Outcome.LOSS:
 				await _text.show_text("Your team is worn out...")
+			# The end report for Wayfarer and boss battles (KAMPF_PLAN items 20, 76).
+			if model.has_meta("summary") and not model.is_wild and not model.has_meta("quick"):
+				var rep_lines: Array[String] = (model.get_meta("summary") as BattleSummary).lines()
+				log_lines.append_array(rep_lines)
+				await _text.show_text("\n".join(rep_lines.slice(0, 2)))
 			# Each Spirling's share and the fields go under the battle report of the log.
 			for line: String in battle_report.lines().slice(1):
 				log_entries.append({"text": line, "kind": "other", "side": -1})

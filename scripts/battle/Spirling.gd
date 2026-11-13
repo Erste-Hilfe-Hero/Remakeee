@@ -106,6 +106,15 @@ var oath_turns: int = 0
 var mend_turns: int = 0
 ## Battle-only: turns left in which an energy_burn can't take Energy again, same counting.
 var burn_guard: int = 0
+## Battle-only: the turn this Spirling last used an Overcharge art (-9 for none), so a second one
+## in the very next turn chains (KAMPF_PLAN item 59).
+var overcharge_turn: int = -9
+## Battle-only: arts of this element cost BattleRules.FIELD_COST_CUT less (the place's own field's
+## "cheap_element", set by BattleModel whenever the field changes; -1 for none, KAMPF_PLAN item 75).
+var cheap_element: int = -1
+## Battle-only: turns left in which this Spirling gains no Energy (energy_lock effect, item 47),
+## counted down at the end of each turn like the Energy tax.
+var energy_lock: int = 0
 ## Temperament id (TEMPERAMENTS), stored since save version 4.
 var temper: String = ""
 ## Regional imprint id ("" = none), see plan area 1, item 218.
@@ -269,9 +278,17 @@ func is_fainted() -> bool:
 func hp_fraction() -> float:
 	return float(hp) / float(max_hp())
 
-## Energy [param move] costs right now: its own cost plus the Energy tax while one lasts.
+## Energy [param move] costs right now: its own cost plus the Energy tax while one lasts, minus
+## the gift "cost_cut_from" (Low Flame, item 48) and the home field's cheap element (item 75).
+## A cut never takes an art below 1 Energy, and an art that is free stays free.
 func move_cost(move: MoveData) -> int:
-	return move.energy_cost + (BattleRules.ENERGY_TAX_COST if energy_tax > 0 else 0)
+	var c: int = move.energy_cost + (BattleRules.ENERGY_TAX_COST if energy_tax > 0 else 0)
+	var from: int = int(ShopEffects.gift_table(self).get("cost_cut_from", 0)) if data != null else 0
+	if from > 0 and move.energy_cost >= from:
+		c -= 1
+	if cheap_element >= 0 and move.element == cheap_element:
+		c -= BattleRules.FIELD_COST_CUT
+	return maxi(c, mini(1, move.energy_cost))
 
 ## Turns [param move] stays locked after a use ("cooldown"), 0 when it is free.
 func cooldown_left(move: MoveData) -> int:
@@ -285,6 +302,8 @@ func can_afford(move: MoveData) -> bool:
 func tick_timers() -> void:
 	if energy_tax > 0:
 		energy_tax -= 1
+	if energy_lock > 0:
+		energy_lock -= 1
 	if heal_block > 0:
 		heal_block -= 1
 	if burn_guard > 0:
@@ -317,6 +336,9 @@ func end_battle() -> void:
 	element_shift = -1
 	element_shift_turns = 0
 	oath_turns = 0
+	overcharge_turn = -9
+	cheap_element = -1
+	energy_lock = 0
 	cooldowns.clear()
 	status = ""
 	status_turns = 0
