@@ -136,6 +136,9 @@ var hidden_gift: bool = false
 ## The shop's Second Gift Slot is open (pay-to-win step 6, plan point 12): the hidden gift of its
 ## line works next to its gift (ShopEffects.gift_table). Saved as "gift_slot"; never traded.
 var gift_slot: bool = false
+## A bonus gift of the Kampf plan (TraitKit.bonus_options) it learned next to its own, or "".
+## Saved as "bonus_trait" only when set.
+var bonus_trait: String = ""
 ## Species names of the two Spirlings that sang it into being (Echo offspring), else empty.
 var lineage: Array[String] = []
 ## Fully right Echo calls in a row while it was in the team (unfold rule "echo_streak").
@@ -288,6 +291,7 @@ func move_cost(move: MoveData) -> int:
 		c -= 1
 	if cheap_element >= 0 and move.element == cheap_element:
 		c -= BattleRules.FIELD_COST_CUT
+	c -= TraitKit.cost_cut(self, move)
 	return maxi(c, mini(1, move.energy_cost))
 
 ## Turns [param move] stays locked after a use ("cooldown"), 0 when it is free.
@@ -534,7 +538,7 @@ func to_dict() -> Dictionary:
 	var move_names: Array[String] = []
 	for mv: MoveData in moves:
 		move_names.append(mv.move_name)
-	return {
+	var out: Dictionary = {
 		"species": data.species_name,
 		"nickname": nickname,
 		"level": level,
@@ -565,6 +569,9 @@ func to_dict() -> Dictionary:
 		"favorite": favorite,
 		"fav_art": fav_art,
 	}
+	if not bonus_trait.is_empty():
+		out["bonus_trait"] = bonus_trait
+	return out
 
 ## Rebuilds a Spirling from to_dict() output. Returns null if the species is unknown.
 static func from_dict(d: Dictionary) -> Spirling:
@@ -597,6 +604,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.prism = d.get("prism") is bool and d.get("prism")
 	s.hidden_gift = d.get("hidden_gift") is bool and d.get("hidden_gift")
 	s.gift_slot = d.get("gift_slot") is bool and d.get("gift_slot")
+	s.bonus_trait = str(d.get("bonus_trait", "")) if TraitKit.traits().has(str(d.get("bonus_trait", ""))) else ""
 	# Saves before version 4 have no "temper": keep the one the uid gave them back then.
 	s.temper = str(d.get("temper", legacy_temper(s.uid)))
 	if not temper_info(s.temper).id == s.temper:

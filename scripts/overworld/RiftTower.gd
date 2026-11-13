@@ -146,6 +146,8 @@ static func finish(t: Dictionary, cleared: int) -> Array[String]:
 	for id: String in GrowthRules.tower_finds(old, n, SECTION):
 		GameState.add_item(id)
 		lines.append(Loc.t("Tower find: %s") % Loc.t(str(Database.item(id).get("name", id))))
+	if n >= floors(t):
+		lines.append_array(TraitKit.tower_reward(str(t.id)))
 	return lines
 
 ## The tower card (plan 3270): every tower with its best floor and next reward.

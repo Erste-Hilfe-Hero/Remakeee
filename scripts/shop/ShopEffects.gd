@@ -460,20 +460,26 @@ static func extra_team_places() -> int:
 ## "immune" lists are joined.
 static func gift_table(s: Spirling) -> Dictionary:
 	var first: Dictionary = BattleRules.trait_info(s.gift_id())
+	var more: Array[String] = []
 	var second_id: String = second_gift_id(s)
-	if second_id.is_empty():
+	if not second_id.is_empty():
+		more.append(second_id)
+	# Boss, Prism and learned bonus gifts of the Kampf plan (TraitKit).
+	more.append_array(TraitKit.extra_ids(s))
+	if more.is_empty():
 		return first
-	var second: Dictionary = BattleRules.trait_info(second_id)
 	var out: Dictionary = first.duplicate(true)
-	for k: Variant in second:
-		if str(k) == "immune":
-			var imm: Array = (out.get("immune", []) as Array).duplicate()
-			for x: Variant in second.immune:
-				if not x in imm:
-					imm.append(x)
-			out["immune"] = imm
-		elif not out.has(k):
-			out[k] = second[k]
+	for id: String in more:
+		var second: Dictionary = BattleRules.trait_info(id)
+		for k: Variant in second:
+			if str(k) == "immune":
+				var imm: Array = (out.get("immune", []) as Array).duplicate()
+				for x: Variant in second.immune:
+					if not x in imm:
+						imm.append(x)
+				out["immune"] = imm
+			elif not out.has(k):
+				out[k] = second[k]
 	return out
 
 ## The id of the second gift working on [param s] ("" without the Second Gift Slot, or when it

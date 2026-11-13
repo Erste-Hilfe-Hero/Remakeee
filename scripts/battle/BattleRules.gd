@@ -335,7 +335,10 @@ static func oath() -> Dictionary:
 	return _oath
 
 static func trait_info(id: String) -> Dictionary:
-	return TRAITS[id] if TRAITS.has(id) else HiddenGifts.gift(id)
+	if TRAITS.has(id):
+		return TRAITS[id]
+	var kit: Dictionary = TraitKit.info(id)
+	return kit if not kit.is_empty() else HiddenGifts.gift(id)
 
 ## The "held" block of an item, or {} if it can't be held.
 static func held_info(item_id: String) -> Dictionary:
@@ -424,7 +427,7 @@ static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field:
 	var boost: float = float(ShopEffects.gift_table(user).get("low_hp_boost", 1.0))
 	if boost != 1.0 and move.element in user.elements() and user.hp * 3 < user.max_hp():
 		m *= boost
-	return m
+	return m * TraitKit.static_mult(user, target, move, field)
 
 # --- Rule variants (plan area 2, items 780, 781) ---------------------------------------------
 
