@@ -318,6 +318,9 @@ static func battle_info(def: Dictionary, team: Array[Spirling], difficulty_ai: i
 		info["partner"] = def.partner
 	if def.get("pair") is Dictionary:
 		info["name"] = pair_name(def)
+	# A map Wayfarer fights to its area's battle tune (KAMPF_PLAN_1000 item 560).
+	if not bool(info.wild) and not bool(info.warden):
+		info["area_music"] = true
 	return info
 
 ## "Hauler Tobin & Hauler Wren" for a pair battle (item 548), else the Wayfarer's name. The "&"
