@@ -16,6 +16,7 @@ enum Type {
 	OATH, SHOP_EDGE, HELD_FRUIT, WHEEL_TURN,
 	# KAMPF_PLAN items 4, 11, 59, 16, 21.
 	SPEED_TIE, BONUS_ACTION, OVERCHARGE_CHAIN, AMBUSH, ROUND_LIMIT,
+	SUPPORT,
 	STATUS_VEIL,
 }
 
@@ -152,6 +153,8 @@ func describe() -> String:
 			# How often it acts per turn stands on its own line (KAMPF_PLAN_1000 item 407).
 			var acts: int = int(data.get("actions", 1))
 			return "%s: %s" % [data.get("label", ""), data.get("text", "")] + ("\nIt acts %d times each turn." % acts if acts > 1 else "")
+		Type.SUPPORT:
+			return MultiRules.describe(data, who)
 		Type.FIELD_END:
 			if data.has("by"):
 				return "The %s gives way to the %s." % [data.get("label", ""), data.get("by", "")]
