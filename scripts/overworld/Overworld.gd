@@ -371,11 +371,36 @@ func show_walk_hint() -> void:
 		await get_tree().process_frame
 	await show_tip("menu")
 
-## Shows a first-time tip (if any) while the player waits.
+## Map changes so far, and the change on which the last tip showed (item 1990).
+var map_changes: int = 0
+var _tip_change: int = -1
+## Tips that waited for the next map change, oldest first.
+var waiting_tips: Array[String] = []
+
+## Whether a tip may show now: never before the Wayfarer walks free after the prologue
+## (item 1991), and at most one per map change (item 1990).
+static func tip_allowed(flags: Dictionary, changes: int, last_tip_change: int) -> bool:
+	return flags.has("got_starter") and changes != last_tip_change
+
+## Shows a first-time tip (if any) while the player waits. A second tip on the same map
+## waits for the next map change; tips during the prologue are dropped until later.
 func show_tip(id: String) -> void:
-	var lines: Array[String] = Tips.take(id)
-	if not lines.is_empty():
-		await _locked_say(lines)
+	if not Tips.pending(id):
+		return
+	if not tip_allowed(GameState.flags, map_changes, _tip_change):
+		if not id in waiting_tips:
+			waiting_tips.append(id)
+		return
+	_tip_change = map_changes
+	await _locked_say(Tips.take(id))
+
+## The oldest waiting tip, after a map change.
+func _waiting_tip_after_load() -> void:
+	while not waiting_tips.is_empty():
+		var id: String = waiting_tips.pop_front()
+		if Tips.pending(id):
+			await _tip_after_load(id)
+			return
 
 func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	map = MapData.load_map(map_id)
@@ -383,6 +408,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		return
 	if minimap != null:
 		minimap.spotted.clear()
+	map_changes += 1
 	_entry_cell = cell
 	if map.outdoor:
 		GameState.enter_map(map_id, cell)
@@ -448,8 +474,10 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		_arrival_scene.call_deferred(arrive)
 	refresh_daylight()
 	Sound.enter_map(map_id)
-	if not map.encounter_table.is_empty():
+	if not map.encounter_table.is_empty() and Tips.pending("wild_area"):
 		_tip_after_load.call_deferred("wild_area")
+	elif not waiting_tips.is_empty():
+		_waiting_tip_after_load.call_deferred()
 
 var _rustle: Node2D
 
