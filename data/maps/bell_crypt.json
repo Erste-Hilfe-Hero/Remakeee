@@ -47,15 +47,15 @@
    "money": 2400,
    "team": [
     {
-     "species": "Silentra",
+     "species": "Sedgel",
      "level": 59
     },
     {
-     "species": "Dusktern",
+     "species": "Moldcap",
      "level": 60
     },
     {
-     "species": "Scrivane",
+     "species": "Mirefane",
      "level": 60
     }
    ]
@@ -73,15 +73,15 @@
    "money": 2400,
    "team": [
     {
-     "species": "Duskdigger",
+     "species": "Moldcap",
      "level": 59
     },
     {
-     "species": "Dusktern",
+     "species": "Mirefane",
      "level": 60
     },
     {
-     "species": "Scrivane",
+     "species": "Sedgel",
      "level": 60
     }
    ]
@@ -99,15 +99,15 @@
    "money": 2400,
    "team": [
     {
-     "species": "Dusktern",
+     "species": "Moldcap",
      "level": 59
     },
     {
-     "species": "Bogwick",
+     "species": "Mirefane",
      "level": 60
     },
     {
-     "species": "Scrivane",
+     "species": "Sedgel",
      "level": 60
     }
    ]
@@ -135,15 +135,15 @@
    "money": 3050,
    "team": [
     {
-     "species": "Bogwick",
+     "species": "Mirefane",
      "level": 59
     },
     {
-     "species": "Scrivane",
+     "species": "Sedgel",
      "level": 60
     },
     {
-     "species": "Dusktern",
+     "species": "Moldcap",
      "level": 61
     }
    ],

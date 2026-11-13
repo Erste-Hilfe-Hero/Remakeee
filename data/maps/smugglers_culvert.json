@@ -47,15 +47,15 @@
    "money": 2280,
    "team": [
     {
-     "species": "Rainmantle",
+     "species": "Splotchet",
      "level": 56
     },
     {
-     "species": "Reedwarden",
+     "species": "Dimlure",
      "level": 57
     },
     {
-     "species": "Saltspire",
+     "species": "Snagwhisk",
      "level": 57
     }
    ]
@@ -73,15 +73,15 @@
    "money": 2280,
    "team": [
     {
-     "species": "Reedwarden",
+     "species": "Dimlure",
      "level": 56
     },
     {
-     "species": "Saltspire",
+     "species": "Tallop",
      "level": 57
     },
     {
-     "species": "Sluicer",
+     "species": "Snagwhisk",
      "level": 57
     }
    ]
@@ -99,15 +99,15 @@
    "money": 2280,
    "team": [
     {
-     "species": "Saltspire",
+     "species": "Tallop",
      "level": 56
     },
     {
-     "species": "Diparrow",
+     "species": "Snagwhisk",
      "level": 57
     },
     {
-     "species": "Rainmantle",
+     "species": "Splotchet",
      "level": 57
     }
    ]
@@ -144,15 +144,15 @@
    "money": 2900,
    "team": [
     {
-     "species": "Rainmantle",
+     "species": "Splotchet",
      "level": 56
     },
     {
-     "species": "Reedwarden",
+     "species": "Dimlure",
      "level": 57
     },
     {
-     "species": "Saltspire",
+     "species": "Snagwhisk",
      "level": 58
     }
    ],
