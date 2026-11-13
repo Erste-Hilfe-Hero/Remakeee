@@ -1,0 +1,21 @@
+{
+ "_comment": "zh_TW translation of the kampf_boss table, keyed by the English text.",
+ "strings": {
+  "%s grows restless: the longer the fight, the harder it strikes!": "%s焦躁起來：戰鬥拖得越久，它打得越狠！",
+  "%s lies open: its Guard is down for a turn!": "%s露出破綻：守護下降一回合！",
+  "Before the Hush, the Cinder Rift fed a village's forges. The smiths sold the last of its heat to the highest bidder, and what was left curled up and learned to hate. It still keeps time like a bellows: hold it under High Tide and it can't stoke its next phase.": "在沉寂之前，餘燼裂隙為一座村子的鐵匠鋪供火。鐵匠們把它剩下的熱賣給了出價最高的人，剩下的殘渣蜷縮起來，學會了憎恨。它至今仍像風箱一樣打著節拍：把它壓在大潮之下，它就無法煽起下一階段。",
+  "Ebb": "退潮",
+  "It acts %d times each turn.": "每回合行動%d次。",
+  "Mist hides things, and the people nearby paid it well to hide one thing in particular. When the payments stopped, it hid them too. Dawn Glow burns its fog thin; while the light lies, it can't pull itself into a new shape.": "霧會藏起東西，附近的人曾經出大價錢讓它藏起某一樣特別的東西。錢一斷，它把那些人也藏了起來。晨光會讓它的霧變薄；光還在的時候，它無法聚成新的形態。",
+  "Not a breath of wind: no stat stage rises or falls on either side.": "一絲風都沒有：雙方的能力等級都不會升高或降低。",
+  "Still Air": "無風",
+  "The Ashen Heart splits open. Its core burns white!": "灰燼之心裂開了！它的核心燒得發白！",
+  "The Drowned Heart sinks its weight into one last surge!": "溺水之心把全部重量壓進最後一波浪潮！",
+  "The Mist Heart pulls the fog tight around its core!": "迷霧之心把霧緊緊裹在核心周圍！",
+  "The Tide Rift sank a ferry once, and the ferryman swore he had warned everyone. He had not. The heart at the bottom remembers every name on the passenger list. Static Veil sets its water humming, and while it hums the heart can't gather its next surge.": "潮汐裂隙曾經弄沉過一艘渡船，船夫發誓說他提醒過所有人。他沒有。沉在水底的心記得乘客名單上的每一個名字。靜電帷幕會讓它的水嗡嗡作響，只要還在嗡鳴，這顆心就無法聚起下一波浪潮。",
+  "The water has run out: resting gives 1 Energy less on both sides.": "水已經乾了：雙方休息時少恢復1點能量。",
+  "What the Ashen Heart was": "灰燼之心的過去",
+  "What the Drowned Heart was": "溺水之心的過去",
+  "What the Mist Heart was": "迷霧之心的過去"
+ }
+}
