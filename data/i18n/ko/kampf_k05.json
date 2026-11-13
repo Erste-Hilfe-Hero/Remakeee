@@ -1,0 +1,33 @@
+{
+ "_comment": "ko translation of the kampf_k05 table, keyed by the English text.",
+ "strings": {
+  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns on every difficulty; then the place's own field comes back. A new field pushes the old one out at once.": "균열 필드는 한 속성을 x1.2, 다른 속성을 x0.85로 만든다. 부름 기예는 어느 난이도에서든 5턴 동안 필드를 깔고, 그 뒤 장소 본래의 필드가 돌아온다. 새 필드는 옛 필드를 바로 밀어낸다.",
+  "A Rift field never weakens its arts.": "균열 필드가 기예를 약하게 만들지 못한다.",
+  "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.": "휘도는 바람 속의 고요한 고리. Gale 기예는 더 세게 맞고, Bloom 기예는 시들며, 아무도 졸음에 빠지지 않는다.",
+  "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.": "희미한 아침 빛. Lumen 기예는 더 세게 맞고, Umbra 기예는 옅어지며, Echo 부름이 조금 더 쉽게 통한다. 새벽과 낮에는 한 턴 더 이어진다.",
+  "Ash hangs in the air. Ember arts hit harder, Tide arts sputter.": "재가 공중에 떠 있다. Ember 기예는 더 세게 맞고, Tide 기예는 힘을 잃는다.",
+  "Calls a rain of rubble over the field.": "필드에 돌무더기 비를 부른다.",
+  "Calls the eye of a gale over the field.": "필드에 폭풍의 눈을 부른다.",
+  "Echo Soul": "메아리 영혼",
+  "Every hair stands on end. Volt arts hit harder, Stone arts crumble, and Volt Spirlings gain 1 extra Energy each turn.": "털이 모두 곤두선다. Volt 기예는 더 세게 맞고, Stone 기예는 부서지며, Volt Spirling은 매 턴 에너지를 1 더 얻는다.",
+  "Field Stake": "필드 말뚝",
+  "Field Strider": "필드 나그네",
+  "Gains 2 Energy whenever a new Rift field is laid.": "새 균열 필드가 깔릴 때마다 에너지를 2 얻는다.",
+  "Gale Call": "폭풍 부름",
+  "Gale Eye": "폭풍의 눈",
+  "Grit and pebbles patter down. Stone arts land heavier, Volt arts ground out, and no charge can build.": "자갈과 조약돌이 후드득 떨어진다. Stone 기예는 더 묵직하게 맞고, Volt 기예는 땅으로 빠지며, 어떤 충전도 쌓이지 않는다.",
+  "Grit patters down without end. Stone arts hit harder, Volt arts ground out, and nobody can be Jolted.": "자갈이 끝없이 떨어진다. Stone 기예는 더 세게 맞고, Volt 기예는 땅으로 빠지며, 아무도 찌릿에 걸리지 않는다.",
+  "Keepsake. A Rift field its holder calls lasts 2 turns longer.": "애장품. 지닌 자가 부른 균열 필드가 2턴 더 이어진다.",
+  "Light drowns in the murk. Umbra arts hit harder, Lumen arts dim. At dusk and at night it holds a turn longer.": "빛이 어둠에 잠긴다. Umbra 기예는 더 세게 맞고, Lumen 기예는 흐려진다. 해 질 녘과 밤에는 한 턴 더 이어진다.",
+  "No Rift field.": "균열 필드 없음.",
+  "Pollen settles on everything. Bloom arts hit harder, Gale arts stall, and Bloom Spirlings mend a little each turn.": "꽃가루가 모든 것에 내려앉는다. Bloom 기예는 더 세게 맞고, Gale 기예는 막히며, Bloom Spirling은 매 턴 조금씩 회복한다.",
+  "Rift field %s, %d turns left.": "균열 필드 {0}, {1}턴 남음.",
+  "Rift field %s, for the whole battle.": "균열 필드 %s, 전투 내내.",
+  "Rift fields": "균열 필드",
+  "Rubble Call": "돌무더기 부름",
+  "Rubble Rain": "돌무더기 비",
+  "The %s gives way to the %s.": "{0}이(가) {1}에 자리를 내준다.",
+  "The water stands knee-deep. Tide arts hit harder, Ember arts fizzle, and nothing can catch Scorch.": "물이 무릎까지 찬다. Tide 기예는 더 세게 맞고, Ember 기예는 꺼지며, 아무도 화상을 입지 않는다.",
+  "The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off.": "바람이 균열 둘레를 돌며 한가운데서 숨을 멈춘다. Gale 기예는 더 날카롭게 베고, Bloom 기예는 시들며, 아무도 졸지 못한다."
+ }
+}

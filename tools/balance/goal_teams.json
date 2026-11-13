@@ -171,7 +171,13 @@
   "tide_rift/drowned_heart": [
    {
     "species": "Zippit",
-    "level": 24
+    "level": 24,
+    "moves": [
+     "Storm Gnash",
+     "Spark Call",
+     "Overcharge"
+    ],
+    "kit_only": true
    },
    {
     "species": "Mossling",

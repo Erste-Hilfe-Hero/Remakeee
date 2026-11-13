@@ -2,7 +2,7 @@
  "_doc": "Wild encounter and bond rules of the battle plan area 'Wild-Begegnungen und Bond' (docs/KAMPF_PLAN_1000.md). Read by scripts/overworld/WildRules.gd. bond_field: a field calms wild Spirlings, 'all' for every kind and an element name for kinds of that element; added to the bond chance like a charm and never shown as a number. prism_chain_step / prism_chain_max: each wild Spirling of the same kind met in a row (the Gleam chain) adds this share of the base Prism chance, up to max steps. night_rate: encounter rate factor outdoors at night (day and night on). weather_boost: elements that step out more often in this weather. held_chance: share of wild Spirlings that carry a keepsake (held_items, weight w); they keep it when they bond. swarm_mult: weight factor of the day's swarm (one kind on one table, WildRules.swarm). weekly_mult: weight factor of each table's kind of the week (WildRules.weekly).",
  "bond_field": {
   "pollen_drift": {"all": 0.03, "BLOOM": 0.08},
-  "dawn_glow": {"all": 0.03, "LUMEN": 0.08},
+  "dawn_glow": {"LUMEN": 0.08},
   "high_tide": {"TIDE": 0.08},
   "ash_storm": {"EMBER": 0.08},
   "deep_murk": {"UMBRA": 0.08},
