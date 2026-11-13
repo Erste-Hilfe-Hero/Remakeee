@@ -18,9 +18,10 @@ const FOE_OVER_CAP: int = 2
 const MAX_PARTY: int = 5
 
 ## Team size now: MAX_PARTY, one more with the shop's sixth team slot (plan area 10, unlock
-## team_slot_6; the server allows the same in saves).
+## team_slot_6) and one more with the seventh (pay-to-win step 6, unlock team_slot_7); the server
+## allows the same in saves.
 func party_max() -> int:
-	return MAX_PARTY + (1 if Billing.unlocked("team_slot_6") > 0 else 0)
+	return MAX_PARTY + ShopEffects.extra_team_places()
 enum TextSpeed { SLOW, NORMAL, FAST }
 const TEXT_CPS: Array[float] = [30.0, 60.0, 140.0]
 
@@ -143,6 +144,8 @@ const BATTLE_SPEEDS: Array[float] = [1.0, 2.0, 4.0]
 var auto_battle: bool = false
 ## Bench lessons: healthy team members that did not fight get BENCH_XP_SHARE of a fighter's XP.
 var bench_xp: bool = true
+## Wild Ward (shop, pay-to-win step 6, plan point 37): while on and bought, no wild Spirling steps out.
+var wild_ward: bool = false
 const BENCH_XP_SHARE: float = 0.5
 ## Damage preview: the move list shows the expected share of the foe's HP once its matchup is known.
 var damage_preview: bool = true
@@ -182,6 +185,8 @@ var swap_ab_pad: bool = false
 var tap_vibration: bool = false
 ## One-hand layout (item 79): D-pad and buttons stacked on one side of the screen.
 var one_hand: bool = false
+## Satchel order (item 1917): 0 newest first, 1 by name, 2 by kind. Kept with the settings.
+var bag_sort: int = 0
 ## Vibration on phones and gamepads (items 63, 2590): 0 Off, 1 Weak, 2 Full.
 var vibration: int = 2
 ## Screen shake in battle and the world (item 2259): 0 Off, 1 Weak, 2 Full.
@@ -795,12 +800,12 @@ func from_dict(d: Dictionary) -> void:
 
 func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
-		"bench_xp": bench_xp, "damage_preview": damage_preview, "bonus_goals": bonus_goals, "volume": volume,
+		"bench_xp": bench_xp, "wild_ward": wild_ward, "damage_preview": damage_preview, "bonus_goals": bonus_goals, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"voice_volume": voice_volume, "ambience_volume": ambience_volume, "mono_audio": mono_audio,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "pad_opacity_steps": PAD_ALPHAS.size(), "left_handed": left_handed, "tap_to_move": tap_to_move,
 		"always_run": always_run, "bond_style": bond_style, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad, "tap_vibration": tap_vibration,
-		"one_hand": one_hand, "vibration": vibration, "screen_shake": screen_shake,
+		"one_hand": one_hand, "bag_sort": bag_sort, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice,
 		"tips": tips_enabled, "play_reminder": play_reminder, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
 		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language}
@@ -812,6 +817,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	battle_speed = clampi(int(d.get("battle_speed", legacy)), 0, BATTLE_SPEEDS.size() - 1)
 	auto_battle = bool(d.get("auto_battle", false))
 	bench_xp = bool(d.get("bench_xp", true))
+	wild_ward = bool(d.get("wild_ward", false))
 	damage_preview = bool(d.get("damage_preview", true))
 	bonus_goals = bool(d.get("bonus_goals", true))
 	pad_size = clampi(int(d.get("pad_size", 1)), 0, PAD_SIZE_NAMES.size() - 1)
@@ -828,6 +834,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	tap_vibration = bool(d.get("tap_vibration", false))
 	apply_pad_swap(swap_ab_pad)
 	one_hand = bool(d.get("one_hand", false))
+	bag_sort = clampi(int(d.get("bag_sort", 0)), 0, 2)
 	# Older settings had an on/off "rumble"; on maps to Full vibration.
 	var legacy_rumble: int = 2 if bool(d.get("rumble", true)) else 0
 	vibration = clampi(int(d.get("vibration", legacy_rumble)), 0, 2)
@@ -1151,7 +1158,8 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 	var it: Dictionary = Database.item(id)
 	var msg: String = ""
 	if bool(it.get("evolves", false)):
-		if not s.can_evolve_with(id):
+		# The shop's Riftglass Tide Shell (pay-to-win step 6) unfurls like the item it names.
+		if not s.can_evolve_with(str(it.get("unfurls_as", id))):
 			return ""
 		var old_name: String = s.display_name()
 		s.evolve()
@@ -1167,6 +1175,13 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 		s.evolve(to)
 		mark_seen(s.data.species_name, true)
 		msg = "%s unfurls into %s!" % [old_name, s.data.species_name]
+	elif bool(it.get("gift_slot", false)):
+		# The shop's Second Gift Slot (pay-to-win step 6, plan point 12): the line's hidden gift works too.
+		if not ShopEffects.can_open_gift_slot(s):
+			return ""
+		s.gift_slot = true
+		msg = "%s now carries two gifts: %s and %s." % [s.display_name(), Loc.t(str(BattleRules.trait_info(s.gift_id()).get("label", ""))),
+			Loc.t(str(BattleRules.trait_info(ShopEffects.second_gift_id(s)).get("label", "")))]
 	elif it.has("teaches"):
 		# Echo Crystals are never used up; learning is handled by the menu (it may need a slot).
 		return ""
@@ -1320,7 +1335,13 @@ static func can_learn_echo(s: Spirling, item_id: String) -> bool:
 	var mv: MoveData = Database.move(str(it.get("teaches", "")))
 	if mv == null or s.moves.has(mv):
 		return false
-	return bool(it.get("any_element", false)) or mv.element in s.elements()
+	if bool(it.get("any_element", false)) or mv.element in s.elements():
+		return true
+	# "for_elements": a teacher of a later era also takes Spirlings of these elements.
+	for e: Variant in it.get("for_elements", []):
+		if Elements.E.has(str(e)) and Elements.E[str(e)] in s.elements():
+			return true
+	return false
 
 ## Moves party member [param index] into storage. Keeps at least one healthy Spirling.
 ## With [param keep_keepsake] its keepsake goes back into the satchel (item 356).
@@ -1424,7 +1445,7 @@ func _load_boxes(d: Dictionary) -> void:
 	for p: Variant in (pr if pr is Array else []):
 		if p is Dictionary and (p as Dictionary).get("uids") is Array and team_presets.size() < TEAM_PRESETS:
 			var uids: Array = ((p as Dictionary).uids as Array).map(func(x: Variant) -> String: return str(x))
-			team_presets.append({"name": str((p as Dictionary).get("name", "")), "uids": uids.slice(0, MAX_PARTY + 1)})
+			team_presets.append({"name": str((p as Dictionary).get("name", "")), "uids": uids.slice(0, MAX_PARTY + 2)})
 	# Old saves had one flat list: spread it over the boxes in order.
 	var fill: Array[int] = []
 	fill.resize(storage_boxes.size())

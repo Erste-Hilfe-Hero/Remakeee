@@ -44,6 +44,8 @@ const LINES: Dictionary[String, Array] = {
 	"friends": ["Tip: Share your friend code so friends can send gifts and meet your echo."],
 	"storage": ["Tip: Spirlings who aren't travelling with you rest in storage. Swap them any time here."],
 	"map_page": ["Tip: You found a page of Mirela's map book. Goals shows how many are still out there."],
+	"photo": [{"touch": "Photo mode: slide the D-pad to look around, tap the world for a photo, = changes the frame, B leaves.",
+		"buttons": "Photo mode: the D-pad looks around, A takes a photo, Start changes the frame, B leaves."}],
 }
 
 ## Headings for the Guide, in the order shown.
@@ -52,7 +54,7 @@ const TOPICS: Dictionary[String, String] = {
 	"battle": "Energy in battle", "bond": "Bonding", "bond_mine": "Bonding: Mine!", "bond_echo": "Bonding: Echo call", "team_order": "Team order",
 	"rest_spot": "Rest spots", "travel": "Travel", "satchel": "The satchel", "keepsake": "Keepsakes",
 	"unfurl": "Unfurling", "gear": "Wayfarer Gear", "friends": "Friends", "storage": "Storage",
-	"map_page": "Map pages",
+	"map_page": "Map pages", "photo": "Photo mode",
 }
 
 ## Tips that show even with tips switched off, so nobody is left without a goal (item 2009).

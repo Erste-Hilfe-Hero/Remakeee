@@ -81,11 +81,89 @@ colour-blind HP patterns are unchanged.
 - Era V: every Spirling moves, whatever its origin era (tested on one Spirling from each era that
   has art).
 
+## Slice 3 (follow-up PR)
+
+- Weather in battle (era function `sky_battles`, #465): when the region's sky lays the field, rain,
+  fog or a storm shows over the field (`BattleWeather.gd`). Era I has a few ink dots, and each era
+  after that adds more, longer, slanted coloured streaks. From Era IV there are splashes at the
+  ground and a rare distant flash in a storm (22 % at most, once every 4 s). Fog is drifting
+  bands. Under reduced motion the drops stand still and nothing flashes. Rift fields show nothing
+  extra.
+- Own effect art for Era III (10 px: outline, body tone, light edge) and Era IV (18 px: doubled,
+  rounded, shaded, soft glow) from `tools/art/gen_fx_era34.py`. Era V uses the Era IV set. Shapes
+  are centred by their size.
+- Formation battles per era (`BattleScene.formation_slots`): Era I/II use 28 px sprites in a flat
+  rank, Era III 32 px, Era IV 40 px and Era V 44 px. From Era IV every second Spirling stands a
+  step back, so an Era V triple bows its middle back. On the stage the slabs widen to hold the
+  whole rank.
+
+## Slice 4 (follow-up PR)
+
+- Formation shots fixed: `tools/era_battle_shots.gd` now waits until the command menu is open, so
+  every Spirling has stepped out, and renders 1v1, 2v2 and 3v3 in all five eras
+  (`-- out_dir formation`). Looking at them showed two faults, both fixed and tested
+  (`tests/unit/test_era_battle_feel4.gd`): on the short Era I/II field with the menu open the foe
+  and player ranks of a triple ran into each other (`BattleScene.formation_fit` now shrinks both
+  ranks just enough and lifts the foe rank under the strip), and on the Era IV/V stage the foe rank
+  hung in the sky above the horizon (`BattleScene.drop_to_floor` stands it on the foe slab). Tags
+  of shrunken sprites no longer overlap (`formation_step`).
+- Wind in battle: a windy sky still lays no field and changes no rule (#465), but the overworld
+  marks the battle (`BattleWeather.SKY_META`) and `BattleWeather` draws drifting wind lines: 5
+  short ink dashes moving in 2 px steps in Era I, leaves from Era II, wavy lines from Era III,
+  bigger leaves and rolling dust from Era IV and gusts in Era V ("wind_*" keys). Under reduced
+  motion the wind stands still but stays visible.
+- Move polish per era (`EraMoveFx.gd`, "move_fx" and per-era keys in `data/era_battle_feel.json`):
+
+| Feature | I Ink | II Wash | III Etched | IV Panorama | V Living |
+|---|---|---|---|---|---|
+| Send-out | ink puff, 3 steps | colour puff, 4 steps | light burst | burst + sparks | burst + sparks + ring |
+| Hit mark | ink cross | star | star + ring | star + ring + sparks | star + ring + shards |
+| Lunge | there and back in 2 hard steps | 2 hard steps | eased | stretch 10 % | stretch 14 % |
+| Stat change | text only | 2 arrows | 3 arrows | 4 arrows | 6 arrows |
+| Faint motes | none | none | 3 | 5 | 8 |
+
+  Under reduced motion send-out, hit marks and motes are off; stat arrows stay but stand still
+  (they carry information). Era I/II effects play in hard steps, later eras move smoothly.
+
+## Slice 5: Era IV and V redone (owner: "Era 4 und 5 gefallen mir nicht")
+
+Before, Era IV and V stood on a pale plain with a perspective grid and beige slabs, the
+Spirlings were small on the wide screen and the two eras looked the same in a still. Now
+(`data/era45_stage.json`, `scripts/battle/presenter/Era45Look.gd`, `Era4Stage.gd`, tests
+`tests/unit/test_era45_look.gd`, shots `tools/era_battle_shots.gd -- out_dir scenes`):
+
+| Feature | IV Panorama | V Living |
+|---|---|---|
+| Backdrop | painted scene in layers: sky in bands, distant and far ranges with a lit rim, a mid row (trees, roofs, pines, rocks, reeds), a textured floor; no grid lines | the same scene at golden hour: every colour washed warm, a glowing horizon, a low sun |
+| Scene | from the map's biome and the battle terrain: meadow, cave, water, town, snow (ridges), ember, voice | same |
+| Slabs | flat-topped turf, rock, stone, paving, snow or basalt blocks with cut corners, a side wall with strata and a ragged foot, tufts hanging over the lip and a soft shadow (never oval, LEGAL.md) | the same with a warm rim on the sun side and a long shadow away from the sun |
+| Spirling size | whole multiples of the art: player aims at 160 px, foe at 104 px, at most 192 (56 px art: 168 / 112, 64 px: 192 / 128, 96 px: 192 / 96); the foe stands back right, the player low left with its slab in front | same |
+| Motion | none (still clouds and grass) | drifting clouds, swaying grass, shimmering water, rising embers, twinkling snow; slow sun rays |
+| Light | daylight from the upper left | warm wash, sun rays and soft edges over the whole field, sprites included |
+| Camera | mild pan on arts (existing) | arts zoom (existing) and a 1.08 lean-in when a Spirling steps out |
+| HUD font | bold large font (doubled strokes, `PixelFont.get_bold_font`) | same |
+
+The player's plate keeps at least 46 % of the field width beside the big back sprite. The HP
+bars stay 5 px (1.7x Era III): a thicker bar would push the formation ledger into the foes' rank.
+Old Spirlings keep their origin-era art, only drawn bigger. Under reduced motion the stage
+stands still, there is no send-out camera, and the light holds still.
+
+## Slice 6: Era IV and V round 2 (owner 13 Nov: "era 4 und 5 sind irgendwie größer als davor")
+
+- Size (owner 13 Nov: "kleiner, etwa wie Era III"): the Spirlings take about the share of the
+  screen they had in Era III (64 of 180 px = 96 of 270), as the nearest whole multiple of their
+  art, both sides alike (`data/era45_stage.json` sprite: 96 / 96, max 112): 56 px art 112,
+  64 px art 64, 96 px art 96. The slabs shrank with them; the era upgrade is the painted scene,
+  light and effects, not size. Art rows are 28 px (the smallest Era IV touch row).
+- Command column: the commands and the item shortcut stand in a column beside the arts
+  (`data/era_battle_hud.json` commands "column"), so the arts stay one column but the panel is
+  about 50 px lower and the painted field about 300 px tall instead of 250.
+- Vigor bar: 8 px on the two plates of a one-on-one battle (`bar_h_single`); the formation
+  ledger keeps `bar_h` (5 px), so the foes' rank does not move.
+- Tests: `tests/unit/test_era45_round2.gd`, `test_era45_look.gd` (size between Era III and slice 5).
+
 ## Still missing (follow-ups)
 
 - Battle text box frame per era: shared with menus, so it belongs to the erafeel-ui slice.
-- Weather visuals in battle: wait for erafeel-func's weather rules.
-- Era III/IV fx art sheets (Era III+ load the Era II 8x8 shapes).
 - Hand-drawn Era IV/V art for the Spirlings that have none yet (they show the placeholder, so they
-  get no Era V strip).
-- Formation (multi) battles use the same sprite feel but no per-era layout change.
+  get no Era V strip). Era V art for 70 Quivermoor Spirlings exists but has no species data yet.

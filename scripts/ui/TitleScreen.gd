@@ -7,6 +7,14 @@ const NAME_MAX: int = 10
 const ART_HEIGHT: int = 148
 const IAP_NOTE: String = "Free, in-app purchases"
 var _iap_note: Label
+## Era of the title (the newest era any save reached), its art height and the save card.
+var _era: int = 1
+var _art_h: int = ART_HEIGHT
+var _card: EraSaveCard
+## True while a slot list is open: the card then follows the focused slot.
+var _slot_list: bool = false
+## True when the card has its own band under the picture (tall screens).
+var _card_band: bool = false
 
 var _menu: MenuHost
 ## Connection state, server notice and how many Wanderers are online.
@@ -31,19 +39,39 @@ func _ready() -> void:
 	bg.color = UITheme.BG
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
-	var art := TitleArt.new()
+	# The title wears the newest era a save has reached (EraMoments, docs/ERA_LOOK_TITLE.md).
+	_era = EraMoments.title_era()
+	if EraManager.unlocked_era != _era or EraManager.retro_filter != 0:
+		EraManager.from_dict({"unlocked_era": _era})
+	_art_h = EraTitleArt.art_height(EraManager.RESOLUTION[_era].x)
+	var art := EraTitleArt.new()
+	art.era = _era
 	art.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	art.offset_bottom = ART_HEIGHT
+	art.offset_bottom = _art_h
 	add_child(art)
 	_menu = MenuHost.new()
 	add_child(_menu)
-	_menu.offset_top = ART_HEIGHT + 4
+	_menu.offset_top = _art_h + 4
+	if _used_slots() > 0:
+		# The save card, in the save's own era look: between the picture and the list where the
+		# screen has the room, else over the picture's lower edge while a slot list is open.
+		var card_h: int = EraSaveCard.height_for(EraManager.RESOLUTION[_era].x)
+		_card_band = EraSaveCard.fits_band(get_viewport_rect().size)
+		_card = EraSaveCard.new()
+		_card.set_anchors_preset(Control.PRESET_TOP_WIDE)
+		_card.offset_left = 4
+		_card.offset_right = -4
+		_card.offset_top = _art_h + 2 if _card_band else _art_h - 12 - card_h
+		_card.offset_bottom = _card.offset_top + card_h
+		add_child(_card)
+		if _card_band:
+			_menu.offset_top = _art_h + 4 + card_h
 	_status = Label.new()
 	_status.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	# In the night sky above the lake, in light ink: lower down it sat on the three Spirlings
 	# in dark ink and could not be read.
-	_status.offset_top = 64
-	_status.offset_bottom = 86
+	_status.offset_top = 64 * _art_h / ART_HEIGHT
+	_status.offset_bottom = 86 * _art_h / ART_HEIGHT
 	_status.add_theme_color_override("font_color", UITheme.BG)
 	_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -58,8 +86,8 @@ func _ready() -> void:
 	_iap_note = Label.new()
 	_iap_note.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	_iap_note.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	_iap_note.offset_top = ART_HEIGHT - 11
-	_iap_note.offset_bottom = ART_HEIGHT
+	_iap_note.offset_top = _art_h - 11
+	_iap_note.offset_bottom = _art_h
 	_iap_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_iap_note.add_theme_color_override("font_color", UITheme.BG)
 	_iap_note.add_theme_stylebox_override("normal", strip)
@@ -71,6 +99,7 @@ func _ready() -> void:
 	GameState.in_game = false
 	Sound.music("title")
 	StartupLog.mark("title scene built")
+	EraBoot.start(self, _era)
 	_run.call_deferred()
 
 func _build_name_box() -> void:
@@ -173,6 +202,13 @@ func _process(_delta: float) -> void:
 	if _connecting:
 		_status.text = connecting_text((Time.get_ticks_msec() - _connect_started) / 1000.0)
 	_status.visible = not _status.text.is_empty()
+	if _card != null:
+		if _slot_list and _menu.picker.visible:
+			_card.show_slot(_menu.picker.focused_index() + 1)
+		elif _at_root and _card_band:
+			_card.show_slot(SaveManager.latest_slot())
+		else:
+			_card.visible = false
 
 func _on_language_changed(_code: String) -> void:
 	if _iap_note != null:
@@ -231,7 +267,13 @@ func _run() -> void:
 		items.append("Settings")
 		_at_root = true
 		StartupLog.mark("title menu ready")
-		var idx: int = await _menu.pick_strings("", items, false)
+		var entries: Array[Dictionary] = []
+		for it: String in items:
+			entries.append({"text": it})
+		if latest > 0:
+			# The Continue row carries the badge of the save's era.
+			entries[0]["icon"] = EraSaveCard.badge(maxi(EraMoments.slot_era(latest), 1))
+		var idx: int = await _menu.pick("", entries, false)
 		_at_root = false
 		if idx == QUIT_ASKED:
 			if await _menu.confirm("Quit Chimora?"):
@@ -346,17 +388,25 @@ func _used_slots() -> int:
 
 ## Lists the three slots. [param allow_empty]: empty slots can be picked (new game). Returns 0 on cancel.
 func _pick_slot(title: String, allow_empty: bool) -> int:
-	var labels: Array[String] = []
+	var labels: Array[Dictionary] = []
 	for i: int in range(1, SaveManager.SLOTS + 1):
 		var s: String = SaveManager.slot_summary(i)
-		labels.append("Slot %d: %s" % [i, s if not s.is_empty() else "empty"])
+		var row: Dictionary = {"text": "Slot %d: %s" % [i, s if not s.is_empty() else "empty"]}
+		# Each used slot carries the badge of its era; the card above shows the focused one.
+		if not s.is_empty():
+			row["icon"] = EraSaveCard.badge(maxi(EraMoments.slot_era(i), 1))
+		labels.append(row)
+	_slot_list = true
+	var picked: int = 0
 	while true:
-		var idx: int = await _menu.pick_strings(title, labels)
+		var idx: int = await _menu.pick(title, labels)
 		if idx < 0:
-			return 0
+			break
 		if allow_empty or not SaveManager.slot_summary(idx + 1).is_empty():
-			return idx + 1
-	return 0
+			picked = idx + 1
+			break
+	_slot_list = false
+	return picked
 
 ## New game (Ali, 2026-11-04): boy or girl, skin tone, hair and coat colour (Ali, 7 Nov), then a name, and the journey starts. The partner
 ## Spirling is picked in the story (prologue at the lighthouse). Difficulty and the Iron Oath

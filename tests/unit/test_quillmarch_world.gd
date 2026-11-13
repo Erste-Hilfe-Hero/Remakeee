@@ -155,7 +155,7 @@ func test_roads_roll_the_sheet_slots_in_their_ring() -> void:
 		for sp: Dictionary in EncounterTable.table(str(r.id)).spawns:
 			assert_between(int(sp.min), int(r.ring[0]), int(r.ring[1]), "%s %s" % [r.id, sp.species])
 			assert_between(int(sp.max), int(r.ring[0]), int(r.ring[1]), "%s %s" % [r.id, sp.species])
-		assert_eq(m.npcs.filter(func(n: Dictionary) -> bool: return n.has("trainer")).size(), 2, "%s has two Wayfarers" % r.id)
+		assert_eq(m.npcs.filter(func(n: Dictionary) -> bool: return n.has("trainer") and not str(n.id).begins_with("q3_")).size(), 2, "%s has two Wayfarers (side content apart)" % r.id)
 	var errors: PackedStringArray = []
 	WorldValidator.check_table_balance(errors, MapData.all_ids())
 	assert_eq(errors, PackedStringArray())

@@ -22,7 +22,7 @@ var spirling_name: String = ""
 
 ## Height the strip needs for its options.
 func needed_height() -> int:
-	return BAR_HEIGHT + 2 + PIP + 1 + (get_theme_default_font_size() if show_numbers else 0)
+	return BAR_HEIGHT + 2 + PIP + 1 + (EraBattleHud.ascent(EraManager.active_era()) + 1 if show_numbers else 0)
 
 func set_spirling(s: Spirling) -> void:
 	spirling_name = s.display_name()
@@ -56,15 +56,35 @@ func screen_reader_text() -> String:
 func _draw() -> void:
 	accessibility_name = screen_reader_text()
 	var w: float = size.x
+	var era: int = EraManager.active_era()
+	var look: int = EraBattleHud.rank(era, "mini")
+	var c: Dictionary = EraBattleHud.colours(era)
 	draw_rect(Rect2(-1, -1, w + 2, needed_height() + 2), UITheme.BG)
+	if look >= 2:
+		# Era III on: a thin rule in the era's colour around the tag.
+		draw_rect(Rect2(-1, -1, w + 2, needed_height() + 2), c.accent, false, 1.0)
 	var frac: float = clampf(display_hp / float(maxi(max_hp, 1)), 0.0, 1.0)
-	var col: Color = HpBarStyle.color(EraManager.active_era(), frac)
+	var col: Color = HpBarStyle.color(era, frac)
 	# A dashed frame instead of a solid one tells a status apart without colour.
 	draw_rect(Rect2(0, 0, w, BAR_HEIGHT + 2), UITheme.INK, false, 1.0)
 	if not status.is_empty():
 		for x: int in range(1, int(w) - 1, 3):
 			draw_rect(Rect2(x, 0, 1, 1), UITheme.BG)
-	draw_rect(Rect2(1, 1, floorf((w - 2) * frac), BAR_HEIGHT), col)
+	var fill_w: float = floorf((w - 2) * frac)
+	if BattleUiStyle.hp_pattern(era, GameState.color_blind):
+		var state: int = HpBarStyle.state(frac)
+		for y: int in BAR_HEIGHT:
+			for x: int in int(fill_w):
+				if HpBarStyle.pattern_ink(state, x, y):
+					draw_rect(Rect2(1 + x, 1 + y, 1, 1), col)
+	else:
+		draw_rect(Rect2(1, 1, fill_w, BAR_HEIGHT), col)
+		if look >= 2 and fill_w > 0:
+			draw_rect(Rect2(1, 1, fill_w, 1), col.lightened(0.35))
+	if look >= 3:
+		# Era IV on: both ends cut at a slant, like the big plates.
+		draw_rect(Rect2(0, BAR_HEIGHT + 1, 1, 1), UITheme.BG)
+		draw_rect(Rect2(w - 1, 0, 1, 1), UITheme.BG)
 	var y: float = BAR_HEIGHT + 3
 	for i: int in maxi(Spirling.MAX_ENERGY, energy):
 		var r := Rect2(i * (PIP + 1), y, PIP, PIP)
@@ -72,9 +92,12 @@ func _draw() -> void:
 			draw_rect(r, InfoStrip.ENERGY_ON)
 		else:
 			draw_rect(r, UITheme.MID)
+	if not status.is_empty() and look >= 1 and w >= 34:
+		# Era II on: a dot in the status colour after the Energy ticks.
+		draw_rect(Rect2(w - 3, y, 3, PIP), EraBattleFeel.status_badge(era, status))
 	if ally:
 		draw_colored_polygon(PackedVector2Array([Vector2(-4, 0), Vector2(-1, 2), Vector2(-4, 4)]), UITheme.INK)
 	if show_numbers:
 		var font: Font = get_theme_default_font()
 		var fs: int = get_theme_default_font_size()
-		draw_string(font, Vector2(0, y + PIP + fs), str(int(round(display_hp))), HORIZONTAL_ALIGNMENT_CENTER, w, fs, UITheme.INK)
+		draw_string(font, Vector2(0, y + PIP + font.get_ascent(fs) + 1), str(int(round(display_hp))), HORIZONTAL_ALIGNMENT_CENTER, w, fs, UITheme.INK)

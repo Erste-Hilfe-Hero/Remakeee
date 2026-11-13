@@ -21,9 +21,19 @@ var hat: String = "":
 		queue_redraw()
 
 const CHAR_REL: String = "chars/%s.png"
+## Era walk cycle (data/era_feel.json via EraManager): 2 = stand and step; 3 = the step frame
+## alternates left and right foot (drawn mirrored on every second step when facing up or down).
+static var walk_frames: int = 2
+## Era V: standing figures breathe, a 1 px dip every other beat.
+static var breathe: bool = false
+const BREATHE_MS: int = 700
+var _stride: int = 0
+var _breath: int = 0
 const SHEET_COLUMNS: Dictionary[String, int] = {"down": 0, "up": 1, "left": 2, "right": 3}
 static var _sheets: Dictionary[String, Texture2D] = {}
 var _step_frame: int = 0
+## Pose state kept by the era look (EraActorLook, EraActors): last pose, quarter turn, float.
+var era_anim: Dictionary = {}
 
 var cell: Vector2i = Vector2i.ZERO
 var facing: String = "down"
@@ -32,6 +42,8 @@ var _from: Vector2
 var _to: Vector2
 var _t: float = 0.0
 var _duration: float = WALK_TIME
+## Step speed factor (2 for the player with the shop's Swift Steps, pay-to-win step 6).
+var speed_mult: float = 1.0
 ## Dips the sprite 1 px in the middle of each step so walking has weight (item 2303).
 var bob: bool = false
 ## Drawn 1 px jolt toward a wall the walker ran into (item 2263); the node and the camera
@@ -93,14 +105,28 @@ func step(dir: String, run: bool = false) -> void:
 	cell += DIRS[dir]
 	_to = cell_to_pos(cell)
 	_t = 0.0
-	_duration = RUN_TIME if run else WALK_TIME
+	_duration = (RUN_TIME if run else WALK_TIME) / maxf(speed_mult, 0.1)
+	_stride += 1
 	running = run
 	moving = true
 	queue_redraw()
 	step_started.emit(dir, run)
 
+## Row of the sheet drawn now: 0 standing, 1 mid-step.
+func step_frame() -> int:
+	return _step_frame
+
+## True when this step's frame is drawn mirrored (the other foot).
+func mirrored_step() -> bool:
+	return walk_frames >= 3 and moving and _step_frame == 1 and _stride % 2 == 1 and shown_facing() in ["up", "down"]
+
 func _process(delta: float) -> void:
 	if not moving:
+		if breathe:
+			var b: int = int((Time.get_ticks_msec() + (cell.x * 97 + cell.y * 31) * 13) / BREATHE_MS) % 2
+			if b != _breath:
+				_breath = b
+				queue_redraw()
 		return
 	_t += delta
 	var k: float = clampf(_t / _duration, 0.0, 1.0)
@@ -124,11 +150,18 @@ static func clear_cache() -> void:
 	_sheets.clear()
 
 func _draw() -> void:
+	# From Era III the era look draws the figure from its own sheets (data/era_actor_look.json).
+	if EraActorLook.draw_actor(self):
+		return
 	var sheet: Texture2D = sheet_for(sprite_style)
 	var shift: Vector2 = jolt
 	if bob and moving and _step_frame == 1:
 		shift += Vector2(0, 1)
-	if shift != Vector2.ZERO:
+	if breathe and not moving and _breath == 1 and not Juice.reduced():
+		shift += Vector2(0, 1)
+	if mirrored_step():
+		draw_set_transform(shift + Vector2(TILE, 0), 0.0, Vector2(-1, 1))
+	elif shift != Vector2.ZERO:
 		draw_set_transform(shift)
 	if sheet != null:
 		var src := Rect2(SHEET_COLUMNS[shown_facing()] * TILE, _step_frame * TILE, TILE, TILE)

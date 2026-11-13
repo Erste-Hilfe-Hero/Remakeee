@@ -58,14 +58,56 @@ func _build() -> void:
 	_text.custom_minimum_size = Vector2(1, 0)
 	_text.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	_scroll.add_child(_text)
+	# Tools of the era (EraMenus "dex"): the area map from Era II, the cry button and the size
+	# compare from Era III. Earlier eras say the same in the page text and by a tap on the sprite.
+	_lay = EraMenus.layout(EraManager.active_era(), "dex")
+	var row_h: int = int(_lay.get("row_h", ListPicker.ROW_HEIGHT))
+	var tools: Array = _lay.get("tools", [])
+	if not tools.is_empty():
+		_tools = HBoxContainer.new()
+		_tools.name = "tools"
+		v.add_child(_tools)
+		for id: Variant in tools:
+			var tb := Button.new()
+			tb.name = str(id)
+			tb.text = str(TOOL_NAMES.get(str(id), id))
+			tb.icon = EraMenuKit.icon_for(str(id) if EraMenuArt.has(str(id)) else "place", _lay)
+			tb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			tb.clip_text = true
+			tb.custom_minimum_size = Vector2(0, row_h)
+			tb.pressed.connect(_tool.bind(str(id)))
+			_tools.add_child(tb)
 	var row := HBoxContainer.new()
 	v.add_child(row)
 	for b: Array in [["<", _turn.bind(-1)], ["Back", func() -> void: _closed.emit()], [">", _turn.bind(1)]]:
 		var btn := Button.new()
 		btn.text = str(b[0])
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btn.custom_minimum_size = Vector2(0, row_h)
 		btn.pressed.connect(b[1])
 		row.add_child(btn)
+
+const TOOL_NAMES: Dictionary[String, String] = {"cry": "Cry", "size": "Size", "area": "Area"}
+var _lay: Dictionary = {}
+var _tools: HBoxContainer
+var _busy: bool = false
+
+## One of the era's page tools: the kind's cry, the size compare or the area map.
+func _tool(id: String) -> void:
+	var sd: SpirlingData = current()
+	if sd == null or _busy:
+		return
+	match id:
+		"cry":
+			Sound.cry(sd)
+		"size":
+			_busy = true
+			await EraDexViews.show_size(self, sd)
+			_busy = false
+		"area":
+			_busy = true
+			await EraDexViews.show_area(self, sd)
+			_busy = false
 
 ## The kind on the page now.
 func current() -> SpirlingData:
@@ -85,16 +127,31 @@ func _show() -> void:
 		t.texture = load(sprite_path(member)) if ResourceLoader.exists(sprite_path(member)) else null
 		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		t.custom_minimum_size = Vector2(20, 20)
+		var form_px: int = int(_lay.get("form_size", 20))
+		t.custom_minimum_size = Vector2(form_px, form_px)
 		# Unseen forms show only as an outline (item 245).
 		var seen: bool = SpirlogBook.is_seen(GameState.spirlog, member.species_name)
 		t.modulate = Color(1, 1, 1) if seen else Color(0, 0, 0, 0.6)
 		if member == sd:
-			t.custom_minimum_size = Vector2(24, 24)
+			t.custom_minimum_size = Vector2(form_px + 4, form_px + 4)
+		# Era IV and later: the form's name stands with it (a tooltip for screen readers too).
+		t.tooltip_text = Loc.t(member.species_name) if seen else "???"
 		t.mouse_filter = Control.MOUSE_FILTER_STOP
 		t.gui_input.connect(_on_line_input.bind(member))
 		_line.add_child(t)
-	_text.text = Loc.t(SpirlogBook.page_text(sd, GameState.spirlog))
+	# The size compare in words takes the place of the plain height line, for the eras that
+	# draw no picture of it (and beside the picture in the others).
+	var raw: String = SpirlogBook.page_text(sd, GameState.spirlog)
+	var slot: String = "[size]"
+	if not sd.height.is_empty():
+		raw = raw.replace("Height %s" % sd.height, slot)
+	_text.text = Loc.t(raw).replace(slot, EraMenus.size_line(sd))
+	if bool(_lay.get("form_names", false)):
+		var names: PackedStringArray = []
+		for member: SpirlingData in SpirlogBook.line_of(sd):
+			names.append(Loc.t(member.species_name) if SpirlogBook.is_seen(GameState.spirlog, member.species_name) else "???")
+		if names.size() > 1:
+			_text.text = Loc.t("Forms: %s") % " > ".join(names) + "\n" + _text.text
 	_scroll.scroll_vertical = 0
 
 func _turn(step: int) -> void:
@@ -124,6 +181,8 @@ func _on_line_input(event: InputEvent, member: SpirlingData) -> void:
 	_show()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _busy:
+		return
 	if event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
 		_closed.emit()

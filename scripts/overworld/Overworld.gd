@@ -24,6 +24,8 @@ var player: Player
 var busy: bool = false
 
 var _ground: TileMapLayer
+## Terrain look of the map's era over the ground tiles (EraTerrainLook, docs/ERA_FEEL_TILES.md).
+var _terrain_look: EraTerrainLook
 ## Shade over dark gear cells (thick without the gear, a faint dusk with it).
 var _shade: Node2D
 var _entities: Node2D
@@ -52,12 +54,18 @@ var minimap: Minimap
 ## Top-of-screen notes (badges, daily tasks).
 var toast: Toast
 var _fade: ColorRect
+## Light, weather look and transitions of the map's era (EraLightLayer, data/era_light.json).
+var _era_light: EraLightLayer
 ## Dark rectangle that grows from a door over the screen on door warps (item 2277).
 var _door_wipe: ColorRect
 const DOOR_WIPE_TIME: float = 0.14
 ## Edge warps slide the view this far in the walking direction while it darkens (item 2278).
 const EDGE_SLIDE: int = 16
 var _particles: PixelParticles
+## Era IV/V building depth: side walls and top faces (EraDepthLayer, data/era45_overworld.json).
+var _era_depth: EraDepthLayer
+## Era extras on the map (water shimmer, footprints, reflection, tilt, camera lead; EraFeelLayer).
+var _era_feel: EraFeelLayer
 var _walk_steps: int = 0
 var _run_steps: int = 0
 var _battle_layer: CanvasLayer
@@ -99,6 +107,8 @@ func _ready() -> void:
 		"tip": _action_tip,
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
+		"showcase": _action_showcase,
+		"dig": _action_dig,
 		"exchange": _action_exchange,
 		"festival_shop": _action_festival_shop,
 		"spark_read": _action_spark_read,
@@ -165,9 +175,17 @@ func _build() -> void:
 	_ground = TileMapLayer.new()
 	_ground.name = "Ground"
 	add_child(_ground)
+	_terrain_look = EraTerrainLook.new()
+	# Era IV/V: the whole-number camera zoom of the wide screens (EraDepthLayer.camera_zoom).
+	_terrain_look.screen_zoom = true
+	add_child(_terrain_look)
+	_era_depth = EraDepthLayer.new()
+	add_child(_era_depth)
 	_particles = PixelParticles.new()
 	_particles.name = "particles"
 	add_child(_particles)
+	_era_feel = EraFeelLayer.new()
+	add_child(_era_feel)
 	_entities = Node2D.new()
 	_entities.name = "Entities"
 	_entities.y_sort_enabled = true
@@ -186,11 +204,21 @@ func _build() -> void:
 	player.interact.connect(_on_interact)
 	player.path_blocked.connect(_on_path_blocked)
 	_entities.add_child(player)
+	_era_feel.player = player
 	_inkshadow = Sprite2D.new()
 	_inkshadow.name = "Inkshadow"
 	_inkshadow.centered = false
 	_inkshadow.modulate = Color(UITheme.INK, 0.85)
 	_entities.add_child(_inkshadow)
+	# Era look of the figures: poses, bubbles, head turns, the Spirling behind (EraActors).
+	var actors := EraActors.new()
+	actors.name = "era_actors"
+	actors.entities = _entities
+	actors.player = player
+	actors.follower = _inkshadow
+	actors.is_night = func() -> bool: return map != null and map.outdoor and DayCycle.current() == DayCycle.Phase.NIGHT
+	actors.is_rain = func() -> bool: return map != null and map.outdoor and WeatherCycle.current(map) in ["rain", "storm"]
+	add_child(actors)
 	var hint := InteractHint.new()
 	hint.ow = self
 	add_child(hint)
@@ -198,6 +226,9 @@ func _build() -> void:
 	_camera.position_smoothing_enabled = false
 	add_child(_camera)
 	_camera.make_current()
+	_era_light = EraLightLayer.new()
+	_era_light.setup(player, _camera)
+	add_child(_era_light)
 
 	_ui = CanvasLayer.new()
 	_ui.layer = UI_LAYER
@@ -268,6 +299,7 @@ func _process(delta: float) -> void:
 	_camera.global_position = (player.global_position + Vector2(GridWalker.TILE / 2.0, GridWalker.TILE / 2.0)).round()
 	if _photo != null:
 		_camera.global_position += _photo.pan
+	_camera.global_position += _era_feel.camera_offset()
 	# Music layers follow walking, running and open text boxes (items 2477, 2478).
 	MusicDirector.update_world(player.moving, player.running, delta)
 	MusicDirector.dialogue = _text.visible
@@ -311,7 +343,10 @@ static func goal_flag(map_id: String) -> String:
 func _era_line_after_load(line: String, era_before: int = EraManager.unlocked_era) -> void:
 	while busy:
 		await get_tree().process_frame
-	await get_tree().create_timer(EraManager.TRANSITION_TIME).timeout
+	await get_tree().create_timer(EraManager.transition_wait()).timeout
+	# After the EraUpgrade sweep: the finale card of the era that ended, then the staged change
+	# scene (EraChangeScene, docs/ERA_LOOK_TITLE.md).
+	await EraChangeScene.play_after_finale(self, era_before, EraManager.unlocked_era)
 	var lines: Array[String] = [line]
 	# What the new era brings (EraFeatures, data/era_functions.json).
 	for e: int in range(era_before + 1, EraManager.unlocked_era + 1):
@@ -351,6 +386,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		GameState.enter_map(map_id, cell)
 	_world.prepare(map, cell)
 	map.paint(_ground)
+	_terrain_look.show_map(map, _ground, _camera, _entities)
+	_era_depth.show_map(map, _ground)
 	refresh_shade()
 	_spawn_npcs()
 	_place_landmark()
@@ -368,6 +405,10 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	GameState.notices.append_array(WorldEvents.on_visit(map_id))
 	# A released Spirling may show up where it came from (plan 1137).
 	GameState.notices.append_array(Released.sightings(map_id, DailyFind.today_key(), GameState.rng))
+	# Spirling Radar (shop, pay-to-win step 6): the rarer kinds of this place and their ground.
+	var radar: String = ShopEffects.radar_line(map.encounter_table)
+	if not radar.is_empty():
+		GameState.notices.append(radar)
 	GameState.player_cell = cell
 	GameState.facing = face
 	var era_before: int = EraManager.unlocked_era
@@ -379,9 +420,16 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		GameState.notices.append(Loc.t(look_line))
 	EraManager.unlock_story_end(GameState.has_flag(EraManager.STORY_COMPLETE_FLAG))
 	EraManager.mark_finales(GameState.flags)
+	# The last era has no change after its finale; its finale card shows once (EraFinaleCard).
+	EraFinaleCard.play_if_owed.call_deferred(self)
 	EraManager.unlock_from_flags(GameState.has_flag)
 	if EraManager.unlocked_era > era_before and EraManager.ERA_LINES.has(EraManager.unlocked_era):
 		_era_line_after_load.call_deferred(EraManager.ERA_LINES[EraManager.unlocked_era], era_before)
+	else:
+		# An era opened before the era-change sequence existed plays it on the first visit.
+		EraManager.upgrade_for_region(map.region)
+	_era_feel.map = map
+	_era_feel.footprints.clear()
 	_camera.limit_left = 0
 	_camera.limit_top = 0
 	_camera.limit_right = map.width * GridWalker.TILE
@@ -429,6 +477,9 @@ func refresh_daylight() -> void:
 		add_child(t)
 	var w: String = WeatherCycle.current(map)
 	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night) * WeatherCycle.tint(w)
+	# Era V shows the season on outdoor maps (data/era_feel.json "season_tint").
+	if map.outdoor and bool(EraManager.feel("season_tint")):
+		_daylight.color *= EraFeel.season_tint(int(Online.date_now().month))
 	if _glow == null:
 		_glow_layer = CanvasLayer.new()
 		_glow_layer.layer = 1
@@ -440,6 +491,7 @@ func refresh_daylight() -> void:
 	if weather_layer != null:
 		weather_layer.show_kind(w)
 	DayCycle.poll()
+	_era_light.refresh(map, w, _daylight, _glow, weather_layer)
 
 const SHADE_DARK: float = 0.9
 const SHADE_LIT: float = 0.3
@@ -522,6 +574,9 @@ func _try_gear(target: Vector2i) -> bool:
 		var half := Vector2(GridWalker.TILE / 2.0, GridWalker.TILE / 2.0 + 2.0)
 		rope.points = PackedVector2Array([from_pos + half, to_pos + half])
 		_entities.add_child(rope)
+	# From Era III the Wayfarer wades across on foot, knee-deep, without the hop (data/era_actor_look.json).
+	if EraActorLook.wades(gear):
+		player.era_anim["wade"] = true
 	var tw: Tween = create_tween()
 	if rope != null:
 		for i: int in GRAPPLE_PULLS:
@@ -530,11 +585,12 @@ func _try_gear(target: Vector2i) -> bool:
 			tw.tween_property(player, "position", b, GEAR_MOVE_TIME / GRAPPLE_PULLS).from(a).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	else:
 		tw.tween_method(func(k: float) -> void:
-			var arc: float = -10.0 * sin(k * PI)
+			var arc: float = (0.0 if player.era_anim.has("wade") else -10.0) * sin(k * PI)
 			player.position = from_pos.lerp(to_pos, k).round() + Vector2(0, round(arc)), 0.0, 1.0, GEAR_MOVE_TIME)
 	await tw.finished
 	if rope != null:
 		rope.queue_free()
+	player.era_anim.erase("wade")
 	player.place(dest, player.facing)
 	GameState.player_cell = dest
 	player.frozen = false
@@ -614,8 +670,13 @@ func _show_banner(text: String) -> void:
 	_banner.text = "    %s " % text
 	_phase_icon.phase = DayCycle.current()
 	_phase_icon.queue_redraw()
+	# The banner takes the era's place-name style (TownPopup, data/era_feel.json "town_popup").
+	var style: String = str(EraManager.feel("town_popup"))
+	TownPopup.dress(_banner, style)
 	_banner.visible = true
+	await TownPopup.slide(_banner, style, true)
 	await get_tree().create_timer(BANNER_TIME).timeout
+	await TownPopup.slide(_banner, style, false)
 	_banner.visible = false
 
 ## Darkens with the "close" curve and brightens without overshoot ("fade" curve).
@@ -629,6 +690,8 @@ func is_edge_cell(cell: Vector2i) -> bool:
 ## Darkening for a warp: doors grow a dark rectangle from the door, map edges slide the view
 ## on in the walking direction. Plain fade under reduced motion.
 func _warp_out(edge: bool) -> void:
+	if await _era_light.warp_out(map.kind_at(player.cell), edge, player.facing, _fade):
+		return
 	if Juice.reduced():
 		await _fade_to(1.0)
 		return
@@ -639,6 +702,16 @@ func _warp_out(edge: bool) -> void:
 		return
 	var vp: Vector2 = get_viewport().get_visible_rect().size
 	var door: Vector2 = (player.get_global_transform_with_canvas().origin + Vector2(8, 8)).round()
+	# Era III winds a spiral of ink in around the Wayfarer (data/era_text.json).
+	if EraText.warp(EraManager.active_era(), str(EraManager.feel("warp"))) == "spiral":
+		await EraWarp.spiral_close(_ui, door, UITheme.INK, DOOR_WIPE_TIME)
+		_fade.color.a = 1.0
+		return
+	# Eras IV and V close an iris on the Wayfarer instead of the door rectangle.
+	if str(EraManager.feel("warp")) == "iris":
+		await EraFeelLayer.iris_close(_ui, door, UITheme.INK, DOOR_WIPE_TIME * 1.5)
+		_fade.color.a = 1.0
+		return
 	var start := Rect2(door - Vector2(8, 8), Vector2(16, 16))
 	var full := Rect2(Vector2.ZERO, vp)
 	_door_wipe.visible = true
@@ -659,6 +732,7 @@ func _warp_out(edge: bool) -> void:
 func _on_player_stepped(cell: Vector2i) -> void:
 	_hinted_cell = Vector2i(-1, -1)
 	_place_inkshadow(GameState.player_cell, cell)
+	_era_feel.stepped(cell, GameState.player_cell)
 	GameState.player_cell = cell
 	GameState.facing = player.facing
 	survey_step(cell)
@@ -666,6 +740,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 		return
 	_grass_rustle(map.kind_at(cell))
 	DailyTasks.record("step", {"map": map.id})
+	Kinship.on_step(GameState.party, GameState.records)
 	_inkshadow_remark()
 	show_notices()
 	if await _world.stepped(cell):
@@ -693,7 +768,8 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	for ended: String in ShopEffects.step_kinds_done():
 		toast.show_note(Loc.t(str(ShopEffects.STEP_END_NOTES[ended])))
 	var guard_over: bool = EncounterTable.tick_guard()
-	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty() and guard_over:
+	# Wild Ward (shop, pay-to-win step 6): switched on, no wild Spirling steps out.
+	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty() and guard_over and not ShopEffects.wild_ward_on():
 		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < minf(1.0, EncounterTable.rate(map.encounter_table) * call_mult):
 			var wild: Spirling = DailyFind.maybe_spawn(map.encounter_table, GameState.flags, GameState.rng)
 			if wild != null:
@@ -701,6 +777,9 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				Sound.sfx("sparkle")
 				await _locked_say(["The grass rustles strangely... A rare visitor!"] as Array[String])
 			else:
+				# The pass holder's rare Spirling of the day (pay-to-win step 6, plan point 38).
+				wild = ShopEffects.pass_rare(map.encounter_table, GameState.flags, GameState.rng)
+			if wild == null:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
 				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain)
 				if wild != null:
@@ -1511,6 +1590,7 @@ func open_menu(start: String = "") -> void:
 	var duel: Dictionary = menu.echo_duel
 	var league: Dictionary = menu.league_match
 	var raid: Dictionary = menu.raid_attempt
+	var live: Dictionary = menu.live_stage
 	var quit: bool = menu.to_title
 	menu.queue_free()
 	if quit:
@@ -1523,6 +1603,8 @@ func open_menu(start: String = "") -> void:
 		await league_battle(league)
 	if not raid.is_empty():
 		await raid_battle(raid)
+	if not live.is_empty():
+		await live_duel(live)
 	if photo:
 		await photo_mode()
 	if watch:
@@ -1633,6 +1715,21 @@ func watch_replay(snap: Dictionary) -> void:
 	await scene.battle_finished
 	await _fade_to(1.0)
 	scene.queue_free()
+	Sound.enter_map(map.id)
+	await _fade_to(0.0)
+
+## A live duel, played or watched in the battle screen (Online 100, points 1 and 73).
+func live_duel(info: Dictionary) -> void:
+	await _fade_to(1.0)
+	var stage := LiveDuelStage.new()
+	stage.setup(info)
+	_battle_layer.add_child(stage)
+	_fade.color.a = 0.0
+	await stage.finished
+	if stage.ended and not stage.watch:
+		LiveDuelMenu.last_id = stage.duel_id
+	await _fade_to(1.0)
+	stage.queue_free()
 	Sound.enter_map(map.id)
 	await _fade_to(0.0)
 
@@ -3054,6 +3151,88 @@ func _action_spark_read(_args: PackedStringArray, _speaker: NPC) -> void:
 	await say(lines)
 
 ## Shop: "shop item_a item_b ..." sells those items for their JSON price. The bag has no limit.
+## The Showcase (Era III, Showcase.gd): pick a Spirling, show three arts, get a place.
+func _action_showcase(_args: PackedStringArray, _speaker: NPC) -> void:
+	if not EraFeatures.is_unlocked(Showcase.FEATURE):
+		await say(["The stage is still being built. Come back in a later era."] as Array[String])
+		return
+	var theme: String = Showcase.theme_for(DailyFind.today_key())
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var names: Array[String] = []
+	for s: Spirling in GameState.party:
+		names.append(MenuHost.party_line(s))
+	var pick: int = await menu.pick_strings(Loc.t("Today's theme: %s. Who goes on stage?") % Loc.t(Showcase.theme_label(theme)), names)
+	if pick < 0 or GameState.party[pick].moves.is_empty():
+		menu.queue_free()
+		return
+	var star: Spirling = GameState.party[pick]
+	var total: int = 0
+	var last: MoveData = null
+	for r: int in Showcase.rounds():
+		var arts: Array[String] = []
+		for mv: MoveData in star.moves:
+			arts.append(mv.move_name)
+		var a: int = await menu.pick_strings(Loc.t("Round %d of %d: which art?") % [r + 1, Showcase.rounds()], arts, false)
+		var mv: MoveData = star.moves[maxi(a, 0)]
+		var got: int = Showcase.appeal(star, theme, mv, last)
+		total += got
+		await menu.info(Loc.t("%s shows %s. Appeal %d.") % [star.display_name(), mv.move_name, got] + ("\n" + Loc.t("The judges have seen that one already.") if mv == last else ""))
+		last = mv
+	var rivals: Array[int] = Showcase.rivals(star, theme)
+	var place: int = Showcase.place(total, rivals)
+	var prize: int = Showcase.prize(place)
+	var lines: PackedStringArray = [Loc.t("Your total: %d") % total]
+	var rival_names: Array = Showcase.data().get("rival_names", [])
+	for i: int in rivals.size():
+		lines.append("%s: %d" % [str(rival_names[i]) if i < rival_names.size() else "?", rivals[i]])
+	lines.append(Loc.t("Place %d.") % place)
+	if prize > 0:
+		Ticker.coins(GameState.money, GameState.money + prize)
+		GameState.money += prize
+		lines.append(Loc.plural(prize, "%d coin", "%d coins"))
+	Showcase.note(GameState.records, place)
+	await menu.info("\n".join(lines))
+	menu.queue_free()
+
+## The Dig site (Era IV, DigSite.gd): once a day, swing the pick at buried cells.
+func _action_dig(_args: PackedStringArray, _speaker: NPC) -> void:
+	if not EraFeatures.is_unlocked(DigSite.FEATURE):
+		await say(["The ground here is still too hard. Come back in a later era."] as Array[String])
+		return
+	var day: String = DailyFind.today_key()
+	if not DigSite.open_today(GameState.records, day):
+		await say(["You already dug here today. The ground needs a night to settle."] as Array[String])
+		return
+	DigSite.mark_done(GameState.records, day)
+	var dig: Dictionary = DigSite.start(day)
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var found: PackedStringArray = []
+	while int(dig.picks) > 0:
+		var cells: Array[int] = DigSite.open_cells(dig)
+		var names: Array[String] = [Loc.t("Look at the field")]
+		for c: int in cells:
+			names.append(DigSite.cell_name(c))
+		var i: int = await menu.pick_strings(Loc.t("Picks left: %d") % int(dig.picks), names)
+		if i < 0:
+			break
+		if i == 0:
+			await menu.info(DigSite.grid_text(dig) + "\n" + Loc.t("# untouched, . empty, o rock, * find"))
+			continue
+		var r: Dictionary = DigSite.swing(dig, cells[i - 1])
+		if bool(r.rock):
+			Sound.sfx("bump")
+			await menu.info(Loc.t("Clang! Solid rock. That cost two swings."))
+		elif not str(r.item).is_empty():
+			GameState.add_item(str(r.item))
+			Sound.sfx("sparkle")
+			var item_name: String = str(Database.item(str(r.item)).get("name", r.item))
+			found.append(Loc.t(item_name))
+			await menu.info(Loc.t("You dig up %s!") % Loc.t(item_name))
+	await menu.info(Loc.t("The dig is over. Found: %s") % (", ".join(found) if not found.is_empty() else Loc.t("nothing")))
+	menu.queue_free()
+
 func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
@@ -3803,12 +3982,17 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
 	model.xp_mult = ShopEffects.growth_mult()
 	model.ring_scaled_growth = EraFeatures.is_unlocked("ring_scaled_growth")
+	model.wheel = bool(trainer.get("wheel", false)) and EraFeatures.is_unlocked("wheel_battles")
+	model.wheel_size = EraActivities.wheel_size()
 	# Weather in battle (Era III on): the sky of an outdoor map lays its field when nothing else does.
 	if model.field.is_empty() and not (own is Array and not (own as Array).is_empty()) and EraFeatures.is_unlocked("sky_battles"):
 		var sky: Dictionary = WeatherCycle.battle_field(WeatherCycle.current(map))
 		if not sky.is_empty():
 			model.field = str(sky.field)
 			model.field_intro = str(sky.intro)
+	# A windy sky lays no field and changes no rule; the battle only shows the wind.
+	if WeatherCycle.current(map) == "wind":
+		model.set_meta(BattleWeather.SKY_META, "wind")
 	# Echo duels fight a friend's echo, not the world: the pass adds no energy or Rift Breath there.
 	var world: bool = not (own is Array and not (own as Array).is_empty())
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
@@ -3847,6 +4031,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
+	Kinship.after_battle(GameState.party, model.participants, outcome == BattleModel.Outcome.WIN)
 	var had_growth: bool = ShopEffects.boost_left("growth") > 0
 	ShopEffects.battle_done()
 	# What is left of the shop boosts, right after the battle (item 4342).

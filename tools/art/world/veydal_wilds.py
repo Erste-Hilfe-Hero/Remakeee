@@ -177,7 +177,7 @@ def quillbrook(world):
          "warps": [warp(11, 1, "brindlewick", 1, 12, "right"), warp(1, 29, "wrenhollow", 5, 1, "down"),
                    warp(9, 24, mid, 9, 2, "down"), warp(9, 1, mid, 9, 25, "down")],
          "npcs": [
-             npc("fisher", 8, 3, "left", mid + "/fisher", "villager"),
+             npc("fisher", 8, 2, "left", mid + "/fisher", "villager"),
              # Lake Line (item 1187): Osk waits by his boat on the brook.
              npc("boatman", 5, 27, "right", mid + "/boatman", "villager"),
              wayfarer(world, mid, "brisa", 10, 10, "left", "Angler Brisa", team(("Puddlet", 9), ("Kelpup", 9)),

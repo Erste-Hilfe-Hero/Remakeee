@@ -91,6 +91,98 @@
      "level": 82
     }
    ]
+  },
+  {
+   "id": "q4_forged_will_marla",
+   "x": 5,
+   "y": 13,
+   "facing": "down",
+   "dialogue": "halcyra_side/forged_will_marla",
+   "sprite": "villager",
+   "show_flag": "q4_forged_will_s1"
+  },
+  {
+   "id": "q4_true_stars_ennis",
+   "x": 8,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "halcyra_side/true_stars",
+   "sprite": "elder"
+  },
+  {
+   "id": "q4_true_stars_liv",
+   "x": 9,
+   "y": 19,
+   "facing": "left",
+   "dialogue": "halcyra_side/true_stars_liv",
+   "sprite": "villager",
+   "show_flag": "q4_true_stars_s1"
+  },
+  {
+   "id": "q4_true_stars_wanda",
+   "x": 2,
+   "y": 7,
+   "facing": "right",
+   "dialogue": "halcyra_side/true_stars_wanda_after",
+   "sprite": "tamer_f",
+   "trainer": "Star Shawl Wanda",
+   "show_flag": "q4_true_stars_reveal",
+   "intro": "halcyra_side/true_stars_wanda_intro",
+   "defeat": "halcyra_side/true_stars_wanda_defeat",
+   "money": 4200,
+   "team": [
+    {
+     "species": "Dewstag",
+     "level": 82
+    },
+    {
+     "species": "Gildbloom",
+     "level": 83
+    },
+    {
+     "species": "Dewfawn",
+     "level": 84
+    }
+   ],
+   "win_flags": [
+    "q4_true_stars_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "q4_wedding_blades_posy",
+   "x": 7,
+   "y": 13,
+   "facing": "down",
+   "dialogue": "halcyra_side/wedding_blades_posy",
+   "sprite": "villager",
+   "show_flag": "q4_wedding_blades_asked"
+  },
+  {
+   "id": "hs_lenz",
+   "x": 2,
+   "y": 15,
+   "facing": "right",
+   "dialogue": "halcyra_side/lenz",
+   "sprite": "villager",
+   "trainer": "Shadow Painter Lenz",
+   "intro": "halcyra_side/lenz_intro",
+   "defeat": "halcyra_side/lenz_defeat",
+   "money": 3320,
+   "team": [
+    {
+     "species": "Kitelet",
+     "level": 81
+    },
+    {
+     "species": "Zenkit",
+     "level": 82
+    },
+    {
+     "species": "Orrebit",
+     "level": 83
+    }
+   ]
   }
  ],
  "signs": [

@@ -11,6 +11,13 @@ const FORMAT: int = 1
 
 ## Everything needed to rebuild [param model] as it is before start(). Call before the battle.
 static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
+	var snap: Dictionary = _snapshot(model, music, backdrop)
+	# Wheel battles (Era V) only add their key when on, so older replays stay the same.
+	if model.wheel:
+		snap["wheel"] = model.wheel_size
+	return snap
+
+static func _snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
 	return {
 		"format": FORMAT,
 		"seed": model.battle_seed,
@@ -159,6 +166,8 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	var front: Array = snap.get("front", [1, 1])
 	m.front_size = [int(front[0]), int(front[1])]
 	m.foe_boss = str(snap.get("boss", ""))
+	m.wheel = snap.has("wheel")
+	m.wheel_size = clampi(int(snap.get("wheel", 3)), 2, BattleModel.MAX_PARTY)
 	m.foe_damage_mult = float(snap.get("foe_damage", 1.0))
 	m.energy_bonus = [clampi(int(snap.get("energy_bonus", 0)), 0, ShopEffects.MAX_ENERGY_BONUS), 0]
 	m.seals = [seal_row(snap.get("seals", [])), [0, 0, 0]]

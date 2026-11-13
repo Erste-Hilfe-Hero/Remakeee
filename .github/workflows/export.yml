@@ -68,6 +68,8 @@ jobs:
         run: pip install --quiet pillow && python3 tools/release_check.py
       - name: Era II art matches its Era I source and palettes (tools/art/era2_colourise.py)
         run: python3 tools/art/era2_colourise.py --check
+      - name: Spirling icons and pose sheets match their sprites (tools/art/gen_tiers.py)
+        run: python3 tools/art/gen_tiers.py --check
       - name: Halcyra Era IV atlas matches the shared Era I atlas (tools/art/gen_tiles_halcyra.py)
         run: python3 tools/art/gen_tiles_halcyra.py --check
       - name: Quivermoor Era V atlas matches the shared Era I atlas (tools/art/gen_tiles_quivermoor.py)

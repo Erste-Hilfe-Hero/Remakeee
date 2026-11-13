@@ -3,7 +3,7 @@
   "npcs": [
    {
     "id": "undertaker",
-    "x": 4,
+    "x": 6,
     "y": 2,
     "facing": "down",
     "dialogue": "gravers_hall/undertaker",

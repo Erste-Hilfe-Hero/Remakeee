@@ -15,6 +15,8 @@ func before_all() -> void:
 
 func before_each() -> void:
 	s = LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	s.rng.seed = 1
 	for who: String in ["ann", "ben", "cid", "dan", "eve"]:
 		s.switch_user(who)
 		codes[who] = s.call_fn("hello", {"p_version": 1}).data.profile.code
@@ -198,8 +200,8 @@ func test_live_duel_rounds_play_the_same_on_both_sides() -> void:
 	assert_eq(a.played, b.played)
 	assert_eq(a.summary(0), b.summary(0))
 	assert_eq(a.summary(0).size(), 3, "one line per Spirling (point 10)")
-	_as("ann", "live_finish", {"p_id": id, "p_winner": a.winner()})
-	var done: Dictionary = _as("ben", "live_finish", {"p_id": id, "p_winner": b.winner()})
+	var done: Dictionary = _as("ann", "live_finish", {"p_id": id, "p_winner": a.winner()})
+	assert_eq(_as("ben", "live_finish", {"p_id": id, "p_winner": b.winner()}).error, "duel_closed", "the referee already closed it")
 	assert_eq(done.state, "done")
 	assert_eq(int(done.winner), a.winner())
 
@@ -264,7 +266,7 @@ func test_menu_texts() -> void:
 	assert_eq(TourneyMenu.final_line({"week": "2026-W46", "champion": true, "name": "", "won": true, "rounds": 6,
 		"teams": [["Kindlop"], ["Puddlet"]]}), "W46  Champion: Kindlop against Puddlet  (won, 6 rounds)")
 	assert_string_contains(LeagueMenu.top_team_text({"games": 12, "team": [{"species": "Kindlop", "moves": ["Ember"]}]}), "Kindlop")
-	assert_eq(LiveDuelMenu.actions({"state": "running", "side": 0, "picked": [true, true]})[0], "Choose your move")
+	assert_eq(LiveDuelMenu.actions({"state": "running", "side": 0, "picked": [true, true]})[0], "Enter the duel")
 	var id: int = _duel()
 	var st: Dictionary = _as("ann", "live_state", {"p_id": id})
 	var sim: LiveDuelSim = LiveDuelSim.of(st)

@@ -1,0 +1,24 @@
+{
+ "_comment": "it translation of the fan_reserve table, keyed by the English text.",
+ "strings": {
+  "%s answers your call and pads over to you. Dorran pretends not to notice.": "%s risponde al tuo richiamo e ti trotterella incontro. Dorran fa finta di non accorgersene.",
+  "%s slips through a hole in the fence. The ring will patch that hole. Someday.": "%s sguscia via da un buco nella recinzione. Il giro quel buco lo rattopperà. Un giorno.",
+  "%s tilts its head at your call, but stays put.": "%s piega la testa al tuo richiamo, ma resta dov'è.",
+  "A whistle from the lookout tower. A rival crew bursts out of the reeds and %s bolts. Somebody got paid tonight.": "Un fischio dalla torre di vedetta. Una banda rivale sbuca dalle canne e %s scappa via. Stasera qualcuno è stato pagato.",
+  "A wild %s, Ring %d. Sightings left: %d": "Un %s selvaggio, Rango %d. Avvistamenti rimasti: %d",
+  "A woman in a velvet coat leans on a fence that is not on any map.": "Una donna in cappotto di velluto è appoggiata a una recinzione che non compare su nessuna mappa.",
+  "Echo call (%d left)": "Richiamo d'eco (%d rimasti)",
+  "Move on": "Passa oltre",
+  "Pay %d coins to slip into the reserve?": "Pagare %d monete per sgattaiolare nella riserva?",
+  "Rattle the fence": "Scuoti la recinzione",
+  "Set bait": "Metti l'esca",
+  "Velvet Dorran": "Dorran di Velluto",
+  "Velvet Dorran: No coins? Then you were never here.": "Dorran di Velluto: Niente monete? Allora qui non hai mai messo piede.",
+  "Velvet Dorran: No fighting in my yard. You set bait, you rattle the fence, you call. Then you leave and forget my face.": "Dorran di Velluto: Niente lotte nel mio cortile. Metti l'esca, scuoti la recinzione, chiami. Poi te ne vai e ti scordi la mia faccia.",
+  "Velvet Dorran: Time's up. Out you go, and the gate never saw you.": "Dorran di Velluto: Tempo scaduto. Fuori, e il cancello non ha visto nessuno.",
+  "Velvet Dorran: Welcome to Hollowgate Reserve. Totally legal. The fence is to keep the paperwork in.": "Dorran di Velluto: Benvenuti alla Riserva di Hollowgate. Tutto legale. La recinzione serve a tenere dentro le scartoffie.",
+  "You rattle the fence. %s's ears shoot up: curious, and very jumpy.": "Scuoti la recinzione. Le orecchie di %s scattano in su: curiosità, e nervi a fior di pelle.",
+  "You set down a twist of dried bait. %s sniffs it and calms down.": "Posi a terra un pizzico di esca secca. %s l'annusa e si calma.",
+  "the Quiet Hands": "le Mani Quiete"
+ }
+}

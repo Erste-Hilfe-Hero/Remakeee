@@ -115,36 +115,148 @@ def town_arrival(town, place):
     return cells, facing
 
 
-# --- Towns ----------------------------------------------------------------------------------
-TOWN_ROWS = ["TTTTT__TTTTT",
-             "T....__....T",
-             "T.RRR__RRR.T",
-             "T.HHH__HHH.T",
-             "T....__....T",
-             "T.L..__..S.T",
-             "T....__....T",
-             "T...____...T",
-             "_____.o.____",
-             "_____...____",
-             "T...____...T",
-             "T....__....T",
-             "T.RR.__.RR.T",
-             "T.HH.__.HH.T",
-             "T....__....T",
-             "T.##.__.##.T",
-             "T....__....T",
-             "T*...__..L.T",
-             "T....__....T",
-             "TTTTT__TTTTT"]
-# side -> (road cells that turn to grass when the side has no way out, lane cells to the doors)
-ROAD_ARMS = {"top": ([(x, y) for y in (1, 2, 3) for x in (5, 6)], [(x, 4) for x in range(3, 10)]),
-             "bottom": ([(x, y) for y in (15, 16, 17, 18) for x in (5, 6)], [(x, 14) for x in range(2, 9)]),
-             "left": ([(x, y) for y in (8, 9) for x in (1, 2, 3)], []),
-             "right": ([(x, y) for y in (8, 9) for x in (8, 9, 10)], [])}
-QUAY_PIER = {15: "~~~~.__.##.T", 16: "~~~~.__....T", 17: "~+++.__..L.T", 18: "~~~~.__....T"}
-BARGE_QUAY = (3, 17)
+# --- Towns: every town has its own layout and its own landmark ---------------------------------
+# rows: the map (gates on the fixed SIDES cells, a closed side is frame). doors: the four house
+# doors in the order of HOUSES. folk: (home cell, facing, dusk cell by the square, facing).
+# "@" under "landmark" carries the town's landmark (data/landmarks.json, vellmarch set).
+TOWN_LAYOUT = {
+    # A harbour: the west half is water, the Night Barge ties up at the long pier.
+    "cindergate_quay": {
+        "rows": ["TTTTTTTTTTTT",
+                 "T~~~~..RRR.T",
+                 "T~~~~..HDH.T",
+                 "T~~+++____.T",
+                 "T~~~~._....T",
+                 "T~~~~@_.RR.T",
+                 "T+++++_.HD.T",
+                 "T~~~~.__._.T",
+                 "T~~~~.o_____",
+                 "T~~~~.._____",
+                 "T~~~..__...T",
+                 "T.RRR._....T",
+                 "T.HDH._RRR.T",
+                 "T.._.._HDH.T",
+                 "T..____._..T",
+                 "T.S.._____.T",
+                 "T....__....T",
+                 "T.#..__.#*.T",
+                 "T....__...LT",
+                 "TTTTT__TTTTT"],
+        "doors": [(8, 2), (9, 6), (3, 12), (8, 13)], "keeper": (5, 8), "trader": (2, 14), "sign": (2, 15),
+        "heal": (6, 9), "square": (6, 8), "landmark": (5, 5),
+        "folk": [((10, 2), "left", (5, 9), "right"), ((2, 16), "right", (7, 9), "left"), ((9, 16), "left", (7, 7), "left")],
+        "finds": [(0, 13), (11, 16), (11, 4)]},
+    # A market: one paved square with stalls, the houses in its four corners.
+    "tallowmarket": {
+        "rows": ["TTTTT__TTTTT",
+                 "T.RR.__.RR.T",
+                 "T.HD.__.DH.T",
+                 "T.._.__._..T",
+                 "T..______..T",
+                 "T.________.T",
+                 "T.__#__#__.T",
+                 "T.________.T",
+                 "_____o@_____",
+                 "____________",
+                 "T.________.T",
+                 "T.__#__#__.T",
+                 "T.________.T",
+                 "T..______..T",
+                 "T.RR.__.RR.T",
+                 "T.HD.__.DH.T",
+                 "T.._.__._..T",
+                 "T..______..T",
+                 "T*.S.__...LT",
+                 "TTTTT__TTTTT"],
+        "doors": [(3, 2), (8, 2), (3, 15), (8, 15)], "keeper": (5, 7), "trader": (7, 7), "sign": (3, 18),
+        "heal": (5, 9), "square": (5, 8), "landmark": (6, 8),
+        "folk": [((1, 3), "right", (4, 7), "right"), ((10, 13), "left", (4, 9), "right"), ((1, 17), "right", (6, 9), "left")],
+        "finds": [(0, 13), (11, 16), (11, 4)]},
+    # A canal town: the canal cuts it in two, a road bridge and a footbridge cross it.
+    "hookwick": {
+        "rows": ["TTTTTTTTTTTT",
+                 "T.RRR...RR.T",
+                 "T.HDH...HD.T",
+                 "T.._....._.T",
+                 "T.._..L.._.T",
+                 "T.._______.T",
+                 "T....__..S.T",
+                 "T...o__....T",
+                 "____________",
+                 "____________",
+                 "T*...__@._.T",
+                 "T~~~~++~~+~T",
+                 "T~~~~++~~+~T",
+                 "T....__.._.T",
+                 "T...._____.T",
+                 "T.RR.__.RR.T",
+                 "T.DH.__.DH.T",
+                 "T._..__._..T",
+                 "T.________.T",
+                 "TTTTT__TTTTT"],
+        "doors": [(3, 2), (9, 2), (2, 16), (8, 16)], "keeper": (3, 7), "trader": (7, 7), "sign": (9, 6),
+        "heal": (4, 8), "square": (4, 7), "landmark": (7, 10),
+        "folk": [((1, 4), "right", (4, 6), "down"), ((10, 6), "left", (5, 8), "left"), ((7, 13), "left", (3, 8), "right")],
+        "finds": [(0, 13), (11, 16), (11, 4)]},
+    # Terraces: two mansions on the top step, the square in the middle, a formal garden below.
+    "larkspur_heights": {
+        "rows": ["TTTTT__TTTTT",
+                 "T.RRR__RRR.T",
+                 "T.RRR__RRR.T",
+                 "T.HDH__HDH.T",
+                 "T*._.__._.*T",
+                 "T..______..T",
+                 "T^^^^==^^^^T",
+                 "T.L..__..S.T",
+                 "____________",
+                 "____________",
+                 "T.__.o..__.T",
+                 "T^==^^^^==^T",
+                 "T.__....__.T",
+                 "T.__*@*.__.T",
+                 "T.________.T",
+                 "T.RR.__.RR.T",
+                 "T.DH.__.HD.T",
+                 "T._..__.._.T",
+                 "T.________.T",
+                 "TTTTT__TTTTT"],
+        "doors": [(3, 3), (8, 3), (2, 16), (9, 16)], "keeper": (4, 10), "trader": (7, 7), "sign": (9, 7),
+        "heal": (5, 9), "square": (5, 10), "landmark": (5, 13),
+        "folk": [((1, 5), "right", (7, 10), "left"), ((10, 12), "left", (4, 9), "down"), ((4, 17), "right", (6, 9), "down")],
+        "finds": [(0, 13), (11, 16), (11, 4)]},
+    # One lamp-lit street that winds down to the marsh; the last lamp stands out in the water.
+    "lastlamp": {
+        "rows": ["TTTTT__TTTTT",
+                 "T.RR.__..L.T",
+                 "T.HD.__....T",
+                 "T..____....T",
+                 "T.L.__..RR.T",
+                 "T...__..HD.T",
+                 "T...______.T",
+                 "T....o__.L.T",
+                 "____________",
+                 "____________",
+                 "T.L..__..L.T",
+                 "T....__....T",
+                 "T.RR.__.~~~T",
+                 "T.DH.__~~@~T",
+                 "T______++.~T",
+                 "T_RRR.~~~~~T",
+                 "T_HDH..+++~T",
+                 "T___.S.*~~~T",
+                 "T....*.~~~~T",
+                 "TTTTTTTTTTTT"],
+        "doors": [(3, 2), (9, 5), (2, 13), (3, 16)], "keeper": (4, 7), "trader": (7, 11), "sign": (5, 17),
+        "heal": (5, 8), "square": (5, 7), "landmark": (9, 13),
+        "folk": [((1, 5), "right", (5, 6), "down"), ((8, 11), "left", (6, 8), "left"), ((4, 18), "right", (4, 8), "right")],
+        "finds": [(0, 12), (11, 11), (11, 4)]},
+}
+BARGE_QUAY = (3, 6)
 BARGE_BRINDLEWICK = (7, 18)
-SHOP = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear"
+WREN = (7, 4)
+SHOP = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear pruning_shears grounding_rod smelling_salts"
+# The port town also sells the charms of the region's own elements (#478).
+CHARMS = {"cindergate_quay": " rust_charm mask_charm"}
 FINDS = ["max_tonic", "revival_leaf", "strong_tonic", "remedy", "wake_bell"]
 
 TOWN_TEXT = {
@@ -247,12 +359,11 @@ SPRITE = {"widow": "elder", "keeper": "elder", "noble": "villager"}
 
 
 def houses(mid, rows):
-    """Puts a door on each town house and writes its room; returns the town's warps to the rooms."""
+    """Writes the room behind each town house door; returns the town's warps to the rooms."""
     out = []
-    for (dx, dy), (key, name, who, line) in zip(HOUSE_DOORS, HOUSES[mid]):
-        if rows[dy][dx] != "H" or rows[dy + 1][dx] not in "._":
-            raise SystemExit("%s: no house wall above open ground at %d,%d" % (mid, dx, dy))
-        rows[dy] = rows[dy][:dx] + "D" + rows[dy][dx + 1:]
+    for (dx, dy), (key, name, who, line) in zip(TOWN_LAYOUT[mid]["doors"], HOUSES[mid]):
+        if rows[dy][dx] != "D" or rows[dy - 1][dx] not in "RH" or rows[dy + 1][dx] not in "._":
+            raise SystemExit("%s: no house door above open ground at %d,%d" % (mid, dx, dy))
         rid = "%s_%s" % (mid, key)
         out.append(warp(dx, dy, rid, 3, 4, "up"))
         room = {"name": tr(*name), "biome": "town", "backdrop": "field", "rows": list(HOUSE_ROWS),
@@ -264,38 +375,34 @@ def houses(mid, rows):
     return out
 
 
-FOLK_PLACES = [((2, 6), "right", (5, 9), "right"), ((9, 11), "left", (7, 9), "left"), ((2, 18), "right", (4, 7), "right")]
-
-
 def gate_block(x, y, flag):
     return {"x": x, "y": y, "open_flag": flag, "closed": "#"}
 
 
 def town(mid):
     t = TOWNS[mid]
-    rows = list(TOWN_ROWS)
-    if mid == "cindergate_quay":
-        for y, r in QUAY_PIER.items():
-            rows[y] = r
+    lay = TOWN_LAYOUT[mid]
+    rows = list(lay["rows"])
     gates = GATES[mid]
-    for side, (cells, _, _) in SIDES.items():
-        if side not in gates:
-            for x, y in cells:
-                rows[y] = rows[y][:x] + "T" + rows[y][x + 1:]
-            # No road runs into the trees: the arm goes, a lane joins the two house doors instead.
-            for x, y in ROAD_ARMS[side][0]:
-                rows[y] = rows[y][:x] + "." + rows[y][x + 1:]
-            for x, y in ROAD_ARMS[side][1]:
-                rows[y] = rows[y][:x] + "_" + rows[y][x + 1:]
+    for side, (cells, inside, _) in SIDES.items():
+        for x, y in cells:
+            if (rows[y][x] == "_") != (side in gates):
+                raise SystemExit("%s: side %s does not match its gate" % (mid, side))
+        if side in gates and any(rows[y][x] not in "._" for x, y in inside):
+            raise SystemExit("%s: no open ground inside the %s gate" % (mid, side))
+    if sum(r.count("D") for r in rows) != len(lay["doors"]):
+        raise SystemExit("%s: a door that is no house door" % mid)
+    lx, ly = lay["landmark"]
+    if rows[ly][lx] != "@":
+        raise SystemExit("%s: the landmark does not stand on its rock" % mid)
     tt = TOWN_TEXT[mid]
     sign = text(mid + "_sign", lines((t["name"], t["name"]), tt["motto"]))
-    npcs = [npc("keeper", 7, 7, "down", text(mid + "_keeper", {"lines": lines(tt["keeper"]), "action": "heal"}), "elder")]
+    kx, ky = lay["keeper"]
+    npcs = [npc("keeper", kx, ky, "down", text(mid + "_keeper", {"lines": lines(tt["keeper"]), "action": "heal"}), "elder")]
     if t.get("shop"):
-        npcs.append(npc("trader", 3, 14, "down", text(mid + "_trader", {"lines": lines(tt["trader"]), "action": SHOP}), "villager"))
-    folk = list(FOLK_PLACES)
-    if mid == "cindergate_quay":
-        folk[2] = ((9, 16), "left", (4, 7), "right")
-    for i, (line, ((hx, hy), hf, (dx, dy), df)) in enumerate(zip(tt["folk"], folk)):
+        tx, ty = lay["trader"]
+        npcs.append(npc("trader", tx, ty, "down", text(mid + "_trader", {"lines": lines(tt["trader"]), "action": SHOP + CHARMS.get(mid, "")}), "villager"))
+    for i, (line, ((hx, hy), hf, (dx, dy), df)) in enumerate(zip(tt["folk"], lay["folk"])):
         npcs.append(npc("folk_%d" % (i + 1), hx, hy, hf, text("%s_folk_%d" % (mid, i + 1), lines(line)),
                         "elder" if i == 2 else "villager", schedule=[at("dusk", dx, dy, df), away("night")]))
     warps = houses(mid, rows)
@@ -310,12 +417,17 @@ def town(mid):
     if mid == "cindergate_quay":
         bx, by = BARGE_QUAY
         npcs.append(npc("bargeman", bx - 2, by, "right", barge_text(), "elder"))
-        npcs.append(npc("wren", 8, 4, "down", wren_text(), "ranger", color="8a3a5a"))
-    m = {"name": t["name"], "biome": "town", "backdrop": "field", "outdoor": True, "heal_point": [6, 9], "rows": rows,
-         "warps": warps, "npcs": npcs, "signs": [{"x": 9, "y": 5, "dialogue": sign}], "blocks": blocks,
-         "secrets": [secret(0, 13, FINDS[0], "find_%s_1" % mid), secret(11, 16, FINDS[1], "find_%s_2" % mid),
-                     secret(11, 4, FINDS[2], "find_%s_3" % mid, 2)],
-         "square": [6, 8]}
+        npcs.append(npc("wren", WREN[0], WREN[1], "down", wren_text(), "ranger", color="8a3a5a"))
+    for who in npcs:
+        if rows[who["y"]][who["x"]] not in "._+" or (who["x"], who["y"] - 1) in lay["doors"]:
+            raise SystemExit("%s: %s stands in a wall or in front of a door" % (mid, who["id"]))
+    sx, sy = lay["sign"]
+    f = lay["finds"]
+    m = {"name": t["name"], "biome": "town", "backdrop": "field", "outdoor": True, "heal_point": list(lay["heal"]), "rows": rows,
+         "warps": warps, "npcs": npcs, "signs": [{"x": sx, "y": sy, "dialogue": sign}], "blocks": blocks,
+         "secrets": [secret(f[0][0], f[0][1], FINDS[0], "find_%s_1" % mid), secret(f[1][0], f[1][1], FINDS[1], "find_%s_2" % mid),
+                     secret(f[2][0], f[2][1], FINDS[2], "find_%s_3" % mid, 2)],
+         "square": list(lay["square"])}
     add(mid, m)
 
 
@@ -368,9 +480,9 @@ ROUTE_ROWS = ["TTTTT__TTTTT",
               "TTTTT__TTTTT"]
 # Fill-ins beside the three slots so the table reaches the weight the validator wants:
 # (species, ground slot index) per road, uncommon kinds of the region's elements.
-FILL = {QUAY_ROAD: [("Cogmite", 0), ("Canalet", 2)], "rookery_cut": [("Rookit", 0), ("Grindwheel", 2)],
-        "weeping_locks": [("Diparrow", 0), ("Sluicer", 2)], "smelters_drift": [("Smeltpup", 0), ("Flueling", 2)],
-        "tithe_road": [("Woadwhorl", 0), ("Lodebrock", 2)], "bellrope_marsh": [("Dusktern", 0), ("Bogwick", 2)]}
+FILL = {QUAY_ROAD: [("Anchorrot", 2), ("Groatfin", 2)], "rookery_cut": [("Hushbeak", 0), ("Waxwhisk", 2)],
+        "weeping_locks": [("Snagwhisk", 0), ("Fauxscript", 2)], "smelters_drift": [("Latchet", 0), ("Knellgrim", 2)],
+        "tithe_road": [("Shivlet", 0), ("Tithshell", 2)], "bellrope_marsh": [("Moldcap", 2), ("Mirefane", 2)]}
 SLOT_WEIGHTS = [9, 7, 5]
 FILL_WEIGHTS = [16, 14]
 ROUTE_TEXT = {
@@ -437,6 +549,8 @@ def route(mid):
     lo, hi = r["ring"]
     spawns = []
     for slot, w in zip(r["slots"], SLOT_WEIGHTS):
+        if slot["species"]:
+            w = slot["weight"]  # an own common kind rolls at the sheet's share (common band 25-45)
         spawns.append({"species": slot_species(slot), "min": lo, "max": hi, "weight": w, "ground": GROUND[slot["ground"]][1]})
     for (sp, gi), w in zip(FILL[mid], FILL_WEIGHTS):
         if sp not in SPECIES or SPECIES[sp].get("rarity") != "uncommon":
@@ -652,6 +766,7 @@ def main():
         rift(mid)
     patch_story_npcs()
     tr("Night Barge", "Nachtkahn")
+    __import__("vellmarch_side").build(sys.modules[__name__])  # twelve side goals, three places under the roads
     # Places renamed or dropped on the sheet: their old map files and tables go.
     stale = []
     for path in glob.glob(os.path.join(ROOT, "data", "maps", "*.json")):

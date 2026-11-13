@@ -81,14 +81,45 @@
    "money": 2360,
    "team": [
     {
-     "species": "Fenwarden",
+     "species": "Guiskit",
      "level": 59
     },
     {
-     "species": "Mendlace",
+     "species": "Tithel",
      "level": 59
     }
    ]
+  },
+  {
+   "id": "alms_seller",
+   "x": 5,
+   "y": 10,
+   "facing": "down",
+   "dialogue": "vellmarch/tithe_road_alms_seller",
+   "sprite": "villager",
+   "trainer": "Alms Seller Trude",
+   "intro": "vellmarch/tithe_road_alms_seller_intro",
+   "defeat": "vellmarch/tithe_road_alms_seller_defeat",
+   "money": 2360,
+   "team": [
+    {
+     "species": "Tithel",
+     "level": 57
+    },
+    {
+     "species": "Snoblet",
+     "level": 59
+    }
+   ]
+  },
+  {
+   "id": "q2_second_face_henner",
+   "x": 9,
+   "y": 21,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_second_face_henner",
+   "sprite": "elder",
+   "show_flag": "q2_second_face_s1"
   }
  ],
  "signs": [],

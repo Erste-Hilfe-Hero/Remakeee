@@ -140,9 +140,22 @@ func unlock_era(e: int) -> void:
 			_apply()
 		era_unlocked.emit(e)
 
-## Era transition (item 48): a light sweep down the screen, the era switches while the
-## screen is covered, then the light fades. With reduced motion it is a plain fade.
-func play_transition() -> void:
+## Era transition (item 48): the era-change sequence (EraUpgrade, docs/ERA_FEEL_UI.md). The
+## screen switches to the new era at once and an overlay shows the old era's look on top that
+## gives way the era's own way (colour spreading from the Wayfarer, lines sharpening, the map
+## unrolling, the map breathing), with the era jingle and a caption. With reduced motion it is
+## the plain light fade.
+func play_transition(to_era: int = 0) -> void:
+	var to: int = to_era if to_era > 0 else active_era()
+	if not Juice.reduced() and to >= Era.WASH and get_tree() != null:
+		GameState.set_flag(EraFeel.SEEN_FLAG % to)
+		_apply()
+		var seq := EraUpgrade.new()
+		seq.setup(to - 1, to, inks_for(current_region), upgrade_center)
+		get_tree().root.add_child(seq)
+		return
+	if to >= Era.WASH:
+		GameState.set_flag(EraFeel.SEEN_FLAG % to)
 	if _wipe == null:
 		_wipe = ColorRect.new()
 		_wipe.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -163,6 +176,34 @@ func play_transition() -> void:
 	tw.tween_callback(_apply)
 	Juice.shaped(tw.tween_property(_wipe, "modulate:a", 0.0, half), "fade")
 	tw.tween_callback(func() -> void: _wipe.visible = false)
+
+## Where the era-change colour spreads from, in screen pixels (the overworld sets the
+## Wayfarer's spot); the screen centre when unset.
+var upgrade_center: Vector2 = Vector2(-1, -1)
+
+## Seconds the overworld waits before it shows an era line after a transition.
+func transition_wait() -> float:
+	return EraUpgrade.TIME if not Juice.reduced() else TRANSITION_TIME
+
+## Value of [param key] in data/era_feel.json for the active era (EraFeel).
+func feel(key: String) -> Variant:
+	return EraFeel.value(active_era(), key)
+
+## Plays the era-change sequence of the era of [param region] when it is owed (an era opened
+## by an older save, before the sequence existed). True when it starts.
+func upgrade_for_region(region: String) -> bool:
+	var e: int = region_era(region)
+	if retro_filter != 0 or not EraFeel.upgrade_due(e, active_era(), unlocked_era, GameState.has_flag):
+		return false
+	play_transition(e)
+	return true
+
+## Settings: shows the change into the era on screen once more. False on Era I.
+func replay_upgrade() -> bool:
+	if active_era() < Era.WASH or not is_inside_tree():
+		return false
+	play_transition(active_era())
+	return true
 
 func set_retro_filter(e: int) -> void:
 	retro_filter = clampi(e, 0, unlocked_era)
@@ -245,6 +286,12 @@ func _apply() -> void:
 		get_window().content_scale_size = RESOLUTION[era]
 	if _filter_rect != null:
 		_filter_rect.visible = era == Era.INK
+	EraText.set_era(era)
+	UITheme.set_era_skin(EraFeel.palette(era), str(EraFeel.value(era, "frame")), str(EraFeel.value(era, "font")) == "large")
+	GridWalker.walk_frames = int(EraFeel.value(era, "walk_frames"))
+	GridWalker.breathe = bool(EraFeel.value(era, "idle_breathe"))
+	if is_inside_tree():
+		MenuHost.refresh_all_themes(get_tree())
 	_clear_art_caches()
 	era_changed.emit(era)
 

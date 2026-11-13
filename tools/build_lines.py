@@ -15,6 +15,7 @@ import hashlib
 import importlib
 import json
 import os
+import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -57,7 +58,9 @@ def load(path):
         return json.load(f)
 
 
-def move_pools(species, moves):
+def move_pools(species, moves, era=1):
+    # Arts of a later era stay off the kinds of an earlier one (test_move_content).
+    moves = [m for m in moves if m.get("era", 1) <= max(era, 1)]
     used = set()
     for s in species:
         for v in s["learnset"].values():
@@ -189,7 +192,7 @@ def pick_traits(region, lines, species):
         count[best].add(line["id"])
 
 
-def tune(region, kept, new_names, rounds=14):
+def tune(region, kept, new_names, rounds=14, band=(0.45, 0.55)):
     """Nudges the stat totals of the new kinds until the type simulation (tools/balance/type_sim.py,
     a Python mirror of the battle core) puts each between 40 and 60 % against its own stage."""
     sys.path.insert(0, os.path.join(ROOT, "tools", "balance"))
@@ -201,15 +204,17 @@ def tune(region, kept, new_names, rounds=14):
     for r in range(rounds):
         _, mult = ts.chart_problems(chart, kept)
         sp, _ = ts.simulate(kept, moves, mult)
+        stage, _ = ts.stages(kept)
         moved = 0
         for n in new_names:
             rate = sp.get(n, (0.5,))[0]
-            if 0.45 <= rate <= 0.55:
+            lo_r, hi_r = band.get(stage[n], band["default"]) if isinstance(band, dict) else band
+            if lo_r <= rate <= hi_r:
                 continue
             s = by[n]
             total = sum(s["base"].values())
             step = 0.04 if abs(rate - 0.5) > 0.15 else 0.02
-            want = round(total * (1 - step if rate > 0.5 else 1 + step))
+            want = round(total * (1 - step if rate > hi_r else 1 + step))
             lo, hi = bands[s["rarity"]]
             want = max(lo, min(hi, want))
             if want != total:
@@ -218,6 +223,31 @@ def tune(region, kept, new_names, rounds=14):
         print("tune round %d: %d kinds moved" % (r + 1, moved))
         if not moved:
             break
+
+
+def sync_slots(mod, enc):
+    """A region sheet with route slots (data/region4.json) mirrors the tables: one slot per spawn,
+    every spawn on the route's whole ring span, Warden aces from ACES. Text edits keep its layout."""
+    path = os.path.join(ROOT, mod.SLOTS)
+    text = open(path, encoding="utf-8").read()
+    sheet = json.loads(text)
+    for r in sheet["routes"]:
+        if r["id"] not in mod.ENCOUNTERS:
+            continue
+        spawns = enc[r["id"]]["spawns"]
+        for s in spawns:
+            s["min"], s["max"] = r["ring"]
+        prefix = r["slots"][0]["slot"].rsplit("_", 1)[0]
+        rows = ['   {"slot": "%s_%s", "ground": "%s", "weight": %d, "species": "%s"}'
+                % (prefix, "abcdefghij"[i], s["ground"], s["weight"], s["species"]) for i, s in enumerate(spawns)]
+        pat = re.compile(r'(\{"id": "%s",[^\n]*\n   "slots": \[\n).*?(\]\})' % re.escape(r["id"]), re.S)
+        text = pat.sub(lambda m: m.group(1) + ",\n".join(rows) + m.group(2), text, count=1)
+    for slot, name in getattr(mod, "ACES", {}).items():
+        pat = r'\{"slot": "%s", "species": (null|"[^"]*")(, "stand_in": "[^"]*")?' % re.escape(slot)
+        text = re.sub(pat, '{"slot": "%s", "species": "%s"' % (slot, name), text, count=1)
+    json.loads(text)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(text)
 
 
 def main():
@@ -235,7 +265,7 @@ def main():
     kept.sort(key=lambda s: s["dex_id"])
     for i, s in enumerate(kept):
         s["dex_id"] = i + 1
-    pools = move_pools(kept, moves)
+    pools = move_pools(kept, moves, getattr(mod, "ERA", 1))
     pick_traits(region, mod.LINES, kept)
     nxt = len(kept) + 1
     for line in mod.LINES:
@@ -249,7 +279,10 @@ def main():
             nxt += 1
     if "--no-tune" not in sys.argv:
         # Lines with a hand-set "power" were placed by the full Godot sim and keep their totals.
-        tune(region, kept, [n for line in mod.LINES if "power" not in line for n in line["names"]])
+        # A spec may set its own window (TUNE_BAND: a pair, or {stage: pair, "default": pair}) so its
+        # kinds do not push older ones out of the 40-60 % gate.
+        tune(region, kept, [n for line in mod.LINES if "power" not in line for n in line["names"]],
+             band=getattr(mod, "TUNE_BAND", (0.45, 0.55)))
     with open(os.path.join(ROOT, "data/spirlings.json"), "w", encoding="utf-8") as f:
         json.dump(kept, f, ensure_ascii=False, indent=1)
         f.write("\n")
@@ -279,6 +312,8 @@ def main():
         hi = max(int(s["max"]) for s in old)
         used = {"common": 1, "uncommon": 1, "shy": 1}
         enc[table]["spawns"] = old + [spawn(n, g, k, lo, hi, used) for k, (n, g) in enumerate(rows)]
+    if getattr(mod, "SLOTS", None):
+        sync_slots(mod, enc)
     with open(os.path.join(ROOT, "data/encounters.json"), "w", encoding="utf-8") as f:
         json.dump(enc, f, ensure_ascii=False, indent=1)
         f.write("\n")
@@ -304,7 +339,8 @@ def main():
     era = getattr(mod, "ERA", 1)
     tool = getattr(mod, "ART_TOOL", "tools/art/gen_lines.py")
     for n in sorted(names):
-        for side in ("back", "front"):
+        # Era IV sprites have a breath frame "_b" beside each side (tools/art/gen_era4.py).
+        for side in ("back", "front") if era < 4 else ("back", "back_b", "front", "front_b"):
             p = "art/era%d/spirlings/%s_%s.png" % (era, n.lower(), side)
             if p not in log:
                 add.append("| %s | Claude (AI) for Ali | Generated by %s (original Spirling line, %s) "

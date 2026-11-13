@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "quillmarch/proofgate_map_vault_keeper",
    "sprite": "villager"
+  },
+  {
+   "id": "q3_erased_village_sten",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/q3_erased_village_sten",
+   "sprite": "villager",
+   "show_flag": "q3_erased_village_asked"
   }
  ],
  "signs": []

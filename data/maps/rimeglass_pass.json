@@ -18,8 +18,8 @@
   "T...._.....T",
   "T,,.._@@@@@T",
   "T,,..____..T",
-  "T@@@...._..T",
-  "T@@@.::._..T",
+  "TRRR...._..T",
+  "THDH.::._..T",
   "T....::.__.T",
   "T,,,....._.T",
   "T,,,@@@@._.T",
@@ -65,6 +65,14 @@
    "tx": 6,
    "ty": 1,
    "facing": "down"
+  },
+  {
+   "x": 2,
+   "y": 13,
+   "to": "debtors_icehouse",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -115,6 +123,63 @@
      "level": 83
     }
    ]
+  },
+  {
+   "id": "q3_cutter",
+   "x": 10,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_rimeglass_pass_cutter",
+   "sprite": "villager",
+   "trainer": "Ice Cutter Halla",
+   "intro": "quillmarch/q3_rimeglass_pass_cutter_intro",
+   "defeat": "quillmarch/q3_rimeglass_pass_cutter_defeat",
+   "money": 3320,
+   "team": [
+    {
+     "species": "Sleetsage",
+     "level": 80
+    },
+    {
+     "species": "Glacilisk",
+     "level": 81
+    },
+    {
+     "species": "Veskara",
+     "level": 83
+    }
+   ]
+  },
+  {
+   "id": "q3_frozen_deed_ragnvald",
+   "x": 7,
+   "y": 21,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_frozen_deed_ragnvald",
+   "sprite": "villager",
+   "trainer": "Thaw Bailiff Ragnvald",
+   "show_flag": "q3_frozen_deed_reveal",
+   "intro": "quillmarch/q3_frozen_deed_ragnvald_intro",
+   "defeat": "quillmarch/q3_frozen_deed_ragnvald_defeat",
+   "money": 4200,
+   "team": [
+    {
+     "species": "Sleetowl",
+     "level": 82
+    },
+    {
+     "species": "Gelidfin",
+     "level": 83
+    },
+    {
+     "species": "Sleetcowl",
+     "level": 84
+    }
+   ],
+   "win_flags": [
+    "q3_frozen_deed_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [],
@@ -146,6 +211,13 @@
    "item": "strong_tonic",
    "count": 1,
    "flag": "find_rimeglass_pass_4"
+  },
+  {
+   "x": 0,
+   "y": 3,
+   "item": "dash_brew",
+   "count": 1,
+   "flag": "find_rimeglass_pass_q3_0_3"
   }
  ]
 }

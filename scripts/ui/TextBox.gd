@@ -19,6 +19,9 @@ var voice: String = "player"
 var _line_voice: String = "player"
 var _blipped: int = 0
 var chars_per_second: float = 60.0
+## Typing speed factor of the era on screen (data/era_feel.json "text_cps_mult"): later eras
+## type a little faster, the way later handhelds did.
+var era_speed: float = 1.0
 ## At most this many lines per window; longer texts go on to the next window (item 2043).
 const MAX_LINES: int = 3
 ## Holding the box (or A) this long runs on to the next question (item 2013).
@@ -33,6 +36,8 @@ var _label: Label
 var _arrow: Label
 ## Name tag over the box for the one who speaks (plan item 1343).
 var _tag: Label
+## Head on the name plate (Era IV) or portrait on the box (Era V) of the one who speaks.
+var _portrait: SpeakerPortrait
 ## Right padding reserved for the continue marker.
 const ARROW_SPACE: int = 6
 var _typing: bool = false
@@ -82,6 +87,7 @@ func _ready() -> void:
 	_tag.add_theme_stylebox_override("normal", UITheme.panel_style())
 	_tag.visible = false
 	add_child(_tag)
+	_portrait = SpeakerPortrait.attach(self)
 	visibility_changed.connect(func() -> void:
 		if not visible:
 			fast_forward = false
@@ -122,10 +128,19 @@ var rise: int = 0:
 func _set_rise(v: int) -> void:
 	rise = v
 
+## The box frame of the era on screen (docs/ERA_FEEL_UI.md), on the map and in battle alike: a
+## worn shop frame when one is chosen, else the era's frame (ink, wash, etched, panorama,
+## living) for the box and the name tag, and the era's typing speed.
+func apply_era_frame() -> void:
+	add_theme_stylebox_override("panel", UITheme.text_frame_style(GameState.dialogue_frame()))
+	if _tag != null:
+		_tag.add_theme_stylebox_override("normal", UITheme.panel_style())
+	era_speed = maxf(0.1, float(EraManager.feel("text_cps_mult")))
+
 ## Shows [param text] with the typewriter effect and waits for the player (or the auto timer).
 func show_text(text: String, speaker: String = "") -> void:
 	# A worn shop text frame (item 4282); the plain box otherwise.
-	add_theme_stylebox_override("panel", UITheme.text_frame_style(GameState.dialogue_frame()))
+	apply_era_frame()
 	# Story lines may address the player by name: "{name}" (after translation).
 	var shown: String = Loc.t(text).replace("{name}", GameState.tamer_name)
 	# Old lines carry the speaker as "Aldo: ..."; it moves to the name tag. A name in the
@@ -192,6 +207,7 @@ static func voice_for_line(line: String, fallback: String) -> String:
 
 ## Shows text without waiting (prompts such as "Orders for Kindlop?").
 func show_prompt(text: String, speaker: String = "") -> void:
+	apply_era_frame()
 	var shown: String = Loc.t(text).replace("{name}", GameState.tamer_name)
 	if speaker.is_empty():
 		var parts: PackedStringArray = Dialogue.split_speaker(shown)
@@ -208,10 +224,16 @@ func show_prompt(text: String, speaker: String = "") -> void:
 func set_speaker(who: String) -> void:
 	_tag.text = who
 	_tag.visible = not who.is_empty()
+	if _portrait != null:
+		_portrait.show_for(who, _tag)
 	_place_tag()
 
 func speaker() -> String:
 	return _tag.text if _tag.visible else ""
+
+## True while a line is still being typed (the Era V portrait moves its mouth).
+func is_typing() -> bool:
+	return _typing
 
 func _place_tag() -> void:
 	if _tag.visible:
@@ -272,7 +294,7 @@ func _process(delta: float) -> void:
 	_bob_arrow(delta)
 	if not _typing:
 		return
-	_visible_chars += delta * chars_per_second
+	_visible_chars += delta * chars_per_second * era_speed
 	_label.visible_characters = int(_visible_chars)
 	var text: String = _label.text
 	while _blipped < mini(_label.visible_characters, text.length()):

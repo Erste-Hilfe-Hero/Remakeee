@@ -82,6 +82,27 @@ var _title_key: String = ""
 const FADE_IN: float = 0.08
 var _fade: Tween
 
+## Era layout of the list (EraMenus.layout): row height, columns, cursor, info panel, motion.
+## Empty is the Era I list.
+var layout: Dictionary = {}
+## Fires when the focus moves to row [param index] (previews beside the list follow it).
+signal row_focused(index: int)
+var _grid: GridContainer
+var _header: VBoxContainer
+var _backdrop: Control
+var _backdrop_t: float = 0.0
+## Era IV and V: how many lines the info panel under the list always keeps free.
+const PANEL_LINES: int = 3
+const SLIDE_PX: float = 10.0
+const SLIDE_GAP: float = 0.018
+## How often rows with a moving picture are redrawn, in seconds.
+const ROW_BEAT: float = 0.3
+var _beat_t: float = 0.0
+## Frames until the focused row is checked to be in view (_keep_focus_shown).
+var _focus_check: int = 0
+## Frames until the rows slide in (Era V), once the list has its layout.
+var _slide_wait: int = 0
+
 func _ready() -> void:
 	add_theme_stylebox_override("panel", UITheme.panel_style())
 	visible = false
@@ -114,6 +135,9 @@ func _ready() -> void:
 	_tab_row.add_theme_constant_override("separation", 1)
 	_tab_row.visible = false
 	root.add_child(_tab_row)
+	_header = VBoxContainer.new()
+	_header.visible = false
+	root.add_child(_header)
 	_scroll = ScrollContainer.new()
 	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -125,6 +149,12 @@ func _ready() -> void:
 	_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_box.add_theme_constant_override("separation", 1)
 	_scroll.add_child(_box)
+	_grid = GridContainer.new()
+	_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_grid.add_theme_constant_override("h_separation", 2)
+	_grid.add_theme_constant_override("v_separation", 2)
+	_grid.visible = false
+	_box.add_child(_grid)
 	_empty = Label.new()
 	_empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_empty.custom_minimum_size = Vector2(1, 0)
@@ -143,6 +173,12 @@ func _ready() -> void:
 	_foot.visible = false
 	root.add_child(_foot)
 	_head = head
+	_backdrop = Control.new()
+	_backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_backdrop.visible = false
+	_backdrop.draw.connect(_draw_backdrop)
+	add_child(_backdrop)
+	move_child(_backdrop, 0)
 	_arrows = Control.new()
 	_arrows.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_arrows.draw.connect(_draw_arrows)
@@ -199,6 +235,12 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	var rows: Array[Dictionary] = entries.duplicate()
 	if cancellable:
 		rows.append({"text": "Back", "cancel": true})
+	var columns: int = maxi(1, int(layout.get("columns", 1)))
+	var row_h: int = int(layout.get("row_h", ROW_HEIGHT))
+	_grid.columns = columns
+	_grid.visible = columns > 1
+	_backdrop.visible = bool(layout.get("backdrop", false))
+	_style_panel()
 	for i: int in rows.size():
 		var b := Button.new()
 		var text: String = str(rows[i].get("text", ""))
@@ -217,11 +259,20 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		if deco is Callable:
 			b.draw.connect(func() -> void: (deco as Callable).call(b))
 		b.set_meta("say", str(rows[i].get("say", "")))
+		# Rows with a moving picture (team sprites from Era II on) are redrawn on a slow beat.
+		b.set_meta("animate", bool(rows[i].get("animate", false)))
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		b.custom_minimum_size = Vector2(0, ROW_HEIGHT)
+		b.custom_minimum_size = Vector2(0, row_h)
 		b.clip_text = true
+		if columns > 1:
+			# Grid of big buttons: the symbol on top, the word under it, both centred.
+			b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			b.alignment = HORIZONTAL_ALIGNMENT_CENTER
+			b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			b.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
 		# Large text (item 2042): long rows wrap onto a second line instead of being cut.
-		if UITheme.large_text:
+		# The touch eras' big buttons do the same.
+		if UITheme.large_text or bool(layout.get("wrap", false)):
 			b.clip_text = false
 			b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			b.custom_minimum_size.x = 1
@@ -237,14 +288,21 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 				Sound.sfx("select")
 			_show_hint(i)
 			_slide_pointer(b)
+			row_focused.emit(i)
 			b.queue_redraw())
 		b.focus_exited.connect(b.queue_redraw)
 		Juice.press_feedback(b)
 		b.draw.connect(func() -> void: _draw_pointer(b))
-		_box.add_child(b)
+		if columns > 1:
+			_grid.add_child(b)
+		else:
+			_box.add_child(b)
 		_buttons.append(b)
 		_pointer_room(b)
 	_link_wrap()
+	if columns > 1:
+		_link_grid(columns)
+	_show_hint(-1)
 	_empty.visible = entries.is_empty()
 	_set_accessibility(title)
 	_opened_ms = Time.get_ticks_msec()
@@ -258,6 +316,8 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	if want < 0:
 		want = int(_remembered.get(title, -1))
 	_focus_row.call_deferred(want)
+	_slide_wait = 2
+	_focus_check = 3
 	var index: int = await picked
 	_remembered_scroll[title] = _scroll.scroll_vertical
 	visible = false
@@ -321,6 +381,24 @@ func move_focus(delta: int, wrap: bool = true) -> void:
 func _process(delta: float) -> void:
 	if visible:
 		_bob_pointer(delta)
+		if _slide_wait > 0:
+			_slide_wait -= 1
+			if _slide_wait == 0:
+				_slide_in()
+		if _focus_check > 0:
+			_focus_check -= 1
+			if _focus_check == 0:
+				_keep_focus_shown()
+		if _backdrop.visible and not Juice.reduced():
+			_backdrop_t += delta
+			_backdrop.queue_redraw()
+		if not Juice.reduced():
+			_beat_t += delta
+			if _beat_t >= ROW_BEAT:
+				_beat_t = 0.0
+				for b: Button in _buttons:
+					if is_instance_valid(b) and bool(b.get_meta("animate", false)):
+						b.queue_redraw()
 	if _scroll_quiet > 0:
 		_scroll_quiet -= 1
 	if scroll_shown > 0.0:
@@ -360,11 +438,20 @@ func _link_wrap() -> void:
 	first.focus_neighbor_top = first.get_path_to(last)
 	last.focus_neighbor_bottom = last.get_path_to(first)
 
-## Puts the list back where it was once the rows are laid out, keeping the focused row in view.
+## Puts the list back where it was once the rows are laid out (two frames later), keeping the
+## focused row in view. One-shot connections, not awaits: an await still open when the list is
+## freed logs "Resumed function after await, but class instance is gone".
 func _restore_scroll(key: String, target: Button) -> void:
-	await get_tree().process_frame
-	await get_tree().process_frame
-	if not visible or _title_key != key or not is_instance_valid(target):
+	if is_inside_tree():
+		get_tree().process_frame.connect(_restore_scroll_step.bind(key, target.get_instance_id(), 1), CONNECT_ONE_SHOT)
+
+func _restore_scroll_step(key: String, target_id: int, frames_left: int) -> void:
+	if frames_left > 0:
+		if is_inside_tree():
+			get_tree().process_frame.connect(_restore_scroll_step.bind(key, target_id, frames_left - 1), CONNECT_ONE_SHOT)
+		return
+	var target: Button = instance_from_id(target_id) as Button
+	if not visible or _title_key != key or target == null or not is_instance_valid(target):
 		return
 	_scroll.scroll_vertical = _remembered_scroll[key]
 	_scroll.ensure_control_visible(target)
@@ -446,6 +533,16 @@ func _set_tabs(tabs: Array[String], tab: int) -> void:
 		t.focus_mode = Control.FOCUS_NONE
 		t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		t.clip_text = true
+		# Era layouts: a tab can be a symbol (satchel pockets), and touch eras make tabs finger sized.
+		var icons: Array = layout.get("tab_icons", [])
+		if i < icons.size() and icons[i] is Texture2D:
+			t.icon = icons[i]
+			t.text = ""
+			t.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			t.tooltip_text = tabs[i]
+			t.accessibility_name = tabs[i]
+		if str(layout.get("cursor", "arrow")) != "arrow":
+			t.custom_minimum_size.y = int(layout.get("row_h", ROW_HEIGHT)) - 4
 		t.pressed.connect(func() -> void: _switch_tab(i))
 		_tab_row.add_child(t)
 
@@ -465,6 +562,9 @@ static func tab_of(result: int) -> int:
 
 ## Left and right move a focused slider row (gamepad and keys), or switch tabs.
 func _row_input(ev: InputEvent, i: int, result: int) -> void:
+	# In a grid of buttons left and right move between cells, not tabs.
+	if int(layout.get("columns", 1)) > 1:
+		return
 	if not _tabs.is_empty() and (i >= _sliders.size() or not _sliders[i]):
 		if ev.is_action_pressed("ui_left") or ev.is_action_pressed("ui_right"):
 			_buttons[i].accept_event()
@@ -526,9 +626,90 @@ func retranslate() -> void:
 	_set_accessibility(_title.text)
 
 func _show_hint(i: int) -> void:
-	var h: String = _hints[i] if i < _hints.size() else ""
+	var h: String = _hints[i] if i >= 0 and i < _hints.size() else ""
 	_hint.text = Loc.t(h)
 	_hint.visible = not h.is_empty()
+	# Era IV and V: the info panel under the list is always there, so the rows never jump.
+	if str(layout.get("panel", "none")) == "bottom":
+		if h.is_empty():
+			_hint.text = Loc.t(str(layout.get("panel_text", "")))
+		_hint.visible = true
+
+## The info panel's look: a framed box with room for PANEL_LINES lines in the touch eras, the
+## plain line under the list otherwise.
+func _style_panel() -> void:
+	if str(layout.get("panel", "none")) == "bottom":
+		var sb: StyleBoxFlat = UITheme.flat_style(UITheme.ACCENT.lerp(UITheme.BG, 0.5), UITheme.MID)
+		sb.set_content_margin_all(3)
+		_hint.add_theme_stylebox_override("normal", sb)
+		_hint.add_theme_color_override("font_color", UITheme.INK)
+		var f: Font = UITheme.font()
+		_hint.custom_minimum_size = Vector2(1, f.get_height(UITheme.FONT_SIZE) * PANEL_LINES + 6)
+		_hint.clip_text = false
+	else:
+		_hint.remove_theme_stylebox_override("normal")
+		_hint.add_theme_color_override("font_color", UITheme.MID)
+		_hint.custom_minimum_size = Vector2(1, 0)
+
+## Puts [param c] between the title and the rows (a clock strip, a pocket picture, a preview);
+## null takes it away again. The picker owns and frees it.
+func set_header(c: Control) -> void:
+	for old: Node in _header.get_children():
+		_header.remove_child(old)
+		old.queue_free()
+	if c != null:
+		_header.add_child(c)
+	_header.visible = c != null
+
+## The header control now shown, or null (tests).
+func header() -> Control:
+	return _header.get_child(0) as Control if _header.get_child_count() > 0 else null
+
+## Grid rows (Era IV and V start menu): up and down move a whole row, left and right one cell.
+func _link_grid(columns: int) -> void:
+	var n: int = _buttons.size()
+	for i: int in n:
+		var b: Button = _buttons[i]
+		b.focus_neighbor_left = b.get_path_to(_buttons[posmod(i - 1, n)])
+		b.focus_neighbor_right = b.get_path_to(_buttons[posmod(i + 1, n)])
+		b.focus_neighbor_top = b.get_path_to(_buttons[i - columns if i - columns >= 0 else n - 1])
+		b.focus_neighbor_bottom = b.get_path_to(_buttons[i + columns if i + columns < n else (n - 1 if i < n - 1 else 0)])
+
+## A header above the rows or a picture above the list (world map) changes the list's height
+## after the first layout: the focused row is brought back into view once the layout settled.
+func _keep_focus_shown() -> void:
+	var f: Control = get_viewport().gui_get_focus_owner()
+	if f is Button and f in _buttons and not row_fully_shown(f):
+		_scroll.ensure_control_visible(f)
+
+## Era V: the rows slide in from the right one after another. Still under reduced motion.
+func _slide_in() -> void:
+	if str(layout.get("anim", "none")) != "slide" or Juice.reduced() or not visible:
+		return
+	for i: int in _buttons.size():
+		var b: Button = _buttons[i]
+		if not is_instance_valid(b) or b.is_queued_for_deletion():
+			continue
+		var home: float = b.position.x
+		b.position.x = home + SLIDE_PX
+		b.modulate.a = 0.0
+		var tw: Tween = b.create_tween()
+		tw.tween_interval(i * SLIDE_GAP)
+		Juice.shaped(tw.tween_property(b, "position:x", home, 0.12), "move")
+		Juice.shaped(tw.parallel().tween_property(b, "modulate:a", 1.0, 0.1), "fade")
+
+## Era V: soft bands drift across the panel behind the rows. They stand still under reduced
+## motion.
+func _draw_backdrop() -> void:
+	var col: Color = UITheme.ACCENT.lerp(UITheme.BG, 0.45)
+	var w: float = _backdrop.size.x
+	var h: float = _backdrop.size.y
+	var gap: float = 24.0
+	var shift: float = fmod(_backdrop_t * 6.0, gap)
+	var y: float = -w + shift
+	while y < h:
+		_backdrop.draw_line(Vector2(0, y + w * 0.5), Vector2(w, y), col, 3.0)
+		y += gap
 
 ## "<" in the fixed back button.
 func _draw_back_arrow() -> void:
@@ -626,6 +807,7 @@ func more_below() -> bool:
 func refresh_theme() -> void:
 	add_theme_stylebox_override("panel", UITheme.panel_style())
 	_hint.add_theme_color_override("font_color", UITheme.MID)
+	_style_panel()
 	for b: Button in _buttons:
 		_pointer_room(b)
 
@@ -715,6 +897,14 @@ func _draw_pointer(b: Button) -> void:
 	var cy: float = floorf(b.size.y / 2.0) + (roundf(pointer_slide) if b == _pointer_row else 0.0)
 	var dx: float = float(_pointer_bob) if b == _pointer_row else 0.0
 	var col: Color = b.get_theme_color("font_focus_color", "Button")
+	# The touch eras frame the whole button; Era V lets the frame glow in and out.
+	var cursor: String = str(layout.get("cursor", "arrow"))
+	if cursor != "arrow":
+		var frame: Color = UITheme.ACCENT
+		if cursor == "glow" and not Juice.reduced():
+			frame = frame.lerp(UITheme.BG, 0.5 if _pointer_bob == 1 else 0.0)
+		b.draw_rect(Rect2(Vector2(1, 1), b.size - Vector2(2, 2)), frame, false, 1.0)
+		b.draw_rect(Rect2(Vector2(2, 2), b.size - Vector2(4, 4)), frame, false, 1.0)
 	b.draw_colored_polygon(PackedVector2Array([Vector2(1 + dx, cy - 2), Vector2(4 + dx, cy + 0.5), Vector2(1 + dx, cy + 3)]), col)
 
 ## Screen readers: each row says its text, state and place (item 2085).

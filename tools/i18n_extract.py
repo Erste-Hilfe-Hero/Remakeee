@@ -11,6 +11,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCRIPT_DIRS = ["scripts/ui", "scripts/overworld", "scripts/battle", "scripts/core", "scripts/online", "scripts/shop"]
 SKIP_SCRIPTS = {"BalanceSim.gd", "BalanceGroups.gd", "KampfChecks.gd", "BalanceDoc.gd", "EndgameSim.gd", "BattleTest.gd", "DataValidator.gd", "StoryValidator.gd", "WorldValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd",
                 "BundWords.gd",  # carries its own German word lists
+                "EraActorLook.gd", "EraActors.gd",  # table checks for the test log, no player text
+                "EraTerrainLook.gd",  # only developer validation messages (problems())
                 "ShopValidator.gd", "LocalBilling.gd", "LocalShop.gd", "GoogleBillingStore.gd", "AppleBillingStore.gd", "DeepLink.gd"}
 LIT = re.compile(r'"((?:[^"\\\n]|\\.)*)"')
 
@@ -87,6 +89,10 @@ def strings():
         for k in ("name", "desc", "description"):
             if isinstance(it.get(k), str):
                 found.append(it[k])
+    for mv in json.load(open(os.path.join(ROOT, "data/moves.json"))):
+        for k in ("name", "desc"):
+            if isinstance(mv.get(k), str):
+                found.append(mv[k])
     shop = json.load(open(os.path.join(ROOT, "data/shop.json"), encoding="utf-8"))
     for o in shop.get("offers", []):
         for k in ("name", "desc"):

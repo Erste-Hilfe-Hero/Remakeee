@@ -10,7 +10,7 @@
   "T...._..%%%T",
   "T%%.._...%%T",
   "T%%..__....T",
-  "T.....__...T",
+  "T=....__...T",
   "T..,,..__..T",
   "T..,,...__.T",
   "T........_.T",
@@ -65,6 +65,14 @@
    "tx": 1,
    "ty": 9,
    "facing": "right"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "to": "smugglers_culvert",
+   "tx": 5,
+   "ty": 15,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -81,14 +89,67 @@
    "money": 2280,
    "team": [
     {
-     "species": "Rainmantle",
+     "species": "Splotchet",
      "level": 57
     },
     {
-     "species": "Reedwarden",
+     "species": "Dimlure",
      "level": 57
     }
    ]
+  },
+  {
+   "id": "lock_gambler",
+   "x": 5,
+   "y": 21,
+   "facing": "down",
+   "dialogue": "vellmarch/weeping_locks_lock_gambler",
+   "sprite": "elder",
+   "trainer": "Lock Gambler Ewald",
+   "intro": "vellmarch/weeping_locks_lock_gambler_intro",
+   "defeat": "vellmarch/weeping_locks_lock_gambler_defeat",
+   "money": 2280,
+   "team": [
+    {
+     "species": "Fauxscript",
+     "level": 55
+    },
+    {
+     "species": "Splotchet",
+     "level": 57
+    }
+   ]
+  },
+  {
+   "id": "q2_two_owners_rikke",
+   "x": 3,
+   "y": 21,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_two_owners_rikke",
+   "sprite": "villager",
+   "trainer": "Second Owner Dame Rikke",
+   "show_flag": "q2_two_owners_reveal",
+   "intro": "vellmarch/q2_two_owners_rikke_intro",
+   "defeat": "vellmarch/q2_two_owners_rikke_defeat",
+   "money": 2900,
+   "team": [
+    {
+     "species": "Tallop",
+     "level": 56
+    },
+    {
+     "species": "Snagwhisk",
+     "level": 57
+    },
+    {
+     "species": "Splotchet",
+     "level": 58
+    }
+   ],
+   "win_flags": [
+    "q2_two_owners_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [],

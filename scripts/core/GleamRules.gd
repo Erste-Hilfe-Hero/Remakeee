@@ -70,7 +70,16 @@ static func material(species: String) -> ShaderMaterial:
 		return _materials[species]
 	var pal: Array[Color] = palette(species)
 	var mat: ShaderMaterial = null
-	if pal.size() == 4:
+	var sprite: String = EraManager.sprite_path(species)
+	if pal.size() == 4 and SpriteTiers.tier_of_path(sprite) > 1:
+		# Art of tiers II to V is not in the four inks: turn its hues instead.
+		mat = ShaderMaterial.new()
+		mat.shader = load(SpriteTiers.HUE_SHADER_PATH)
+		# Keyed by the line, so every stage of a line gleams in the same colours.
+		var sd: SpirlingData = Database.species(species)
+		var key: String = sd.line_id if sd != null and sd.line_id != "" else SpriteTiers.id_of_path(sprite)
+		mat.set_shader_parameter("shift", SpriteTiers.gleam_shift(key))
+	elif pal.size() == 4:
 		mat = ShaderMaterial.new()
 		mat.shader = SHADER
 		for i: int in 4:

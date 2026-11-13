@@ -10,17 +10,21 @@ L = dict  # one line
 ERA = 2
 ACT = "Era II post-game"
 ART_TOOL = "tools/art/gen_era2.py"
-# Unfold rings (3-stage first, 3-stage second, 2-stage): Vellmarch's wild rings are 52 to 70.
-RINGS = (54, 62, 58)
+# Unfold rings (3-stage first, 3-stage second, 2-stage): low enough to reach under the level cap (60), like Quillmarch.
+RINGS = (24, 40, 32)
+# Tuner window per stage (tools/build_lines.py tune): base forms a little under the middle (Rust and
+# Tide press on the older Stone base forms), second stages a little over (Gale and Ember press on
+# Rust and Mask), so the older kinds stay inside the 40-60 % gate of tools/balance/type_sim.py --strict.
+TUNE_BAND = {0: (0.43, 0.48), 1: (0.48, 0.53), "default": (0.46, 0.54)}
 
 LINES = [
     # Three-stage lines
     L(id="boltnib", names=["Boltnib", "Boltgnaw", "Boltgrimmer"], elements=["RUST", "UMBRA"], role="striker",
       art=dict(plan="quad", tones=("mid", "mid", "mid"), ears="round", ear_tone="A:mid", tail="whip", eye="small",
                mouth="fang", snout="long", size=-1, extras=("rivets",))),
-    L(id="veilmote", names=["Veilmote", "Veilmothel", "Veilmarquise"], elements=["LUMEN", "MASK"], role="weaver",
+    L(id="veilmote", names=["Veilmote", "Veilmothel", "Veilmarquise"], elements=["MASK"], role="weaver",
       art=dict(plan="bug", tones=("mid", "mid", "mid"), extras=("wings", "mask"), ears="antenna",
-               ear_tone="A:light", eye="big", size=-2, marks="stripes", marks_n=1)),
+               ear_tone="A:light", eye="big", size=-2, marks="stripes", marks_n=1, accent="LUMEN")),
     L(id="tallop", names=["Tallop", "Tallogg", "Tallowgrand"], elements=["EMBER", "TIDE"], role="kindler",
       art=dict(plan="quad", tones=("light", "light", "mid"), legs=-1, size=1, extras=("candle",), eye="sleepy",
                mouth="line", snout="short", marks="spots", marks_n=1, hue=-6)),
@@ -45,7 +49,7 @@ LINES = [
     L(id="fenglim", names=["Fenglim", "Fenglimmer", "Fenglowmarsh"], elements=["ECHO", "LUMEN"], role="weaver",
       art=dict(plan="spirit", tones=("light", "light", "mid"), extras=("halo", "lantern"), eye="big", mouth="smile",
                tail="ray")),
-    L(id="smudgel", names=["Smudgel", "Smudgeling", "Smudgeroth"], elements=["TIDE", "INK"], role="kindler",
+    L(id="splotchet", names=["Splotchet", "Splotchling", "Splotcheroth"], elements=["TIDE", "INK"], role="kindler",
       art=dict(plan="fish", tones=("mid", "light", "mid"), tail="ray", extras=("fins",), ears="fin", ear_tone="A:mid",
                eye="big", marks="spots", hue=8)),
     L(id="snaglet", names=["Snaglet", "Snagwhisk", "Snaggrave"], elements=["TIDE"], role="striker", cover="STONE",
@@ -57,9 +61,9 @@ LINES = [
     L(id="snoblet", names=["Snoblet", "Snobplume", "Snobsovereign"], elements=["GALE", "LUMEN"], role="kindler",
       art=dict(plan="bird", tones=("mid", "light", "light"), tail="plume", crest=3, crest_tone="A:mid",
                extras=("wing", "collar"), eye="sleepy", neck=True, hue=14)),
-    L(id="tithel", names=["Tithel", "Tithshell", "Tithebastion"], elements=["STONE", "UMBRA"], role="bulwark",
+    L(id="tithel", names=["Tithel", "Tithshell", "Tithebastion"], elements=["STONE"], role="bulwark", cover="UMBRA",
       art=dict(plan="shell", tones=("dark", "mid", "mid"), back="crystals", back_n=2, extras=("shellpat", "hood"),
-               eye="sleepy", mouth="line", tail="club")),
+               eye="sleepy", mouth="line", tail="club", accent="UMBRA")),
     L(id="bargit", names=["Bargit", "Bargwing", "Bargemourn"], elements=["UMBRA", "ECHO"], role="weaver",
       art=dict(plan="spirit", tones=("dark", "mid", "mid"), extras=("batwings",), ears="big", ear_tone="A:mid", eye="glow",
                mouth="fang", size=-1)),
@@ -92,15 +96,15 @@ LINES = [
     L(id="fauxscript", names=["Fauxscript"], elements=["INK", "UMBRA"], role="weaver",
       art=dict(plan="spirit", tones=("mid", "mid", "light"), extras=("hood", "arms"), eye="glow", mouth="smile",
                tail="whip", marks="stars")),
-    L(id="anchorrot", names=["Anchorrot"], elements=["RUST", "TIDE"], role="bulwark", power=0.92,
+    L(id="anchorrot", names=["Anchorrot"], elements=["RUST"], role="bulwark",
       art=dict(plan="serpent", tones=("dark", "mid", "mid"), tail="hook", back="sail", back_n=3, extras=("rivets",),
-               eye="glow", mouth="fang", horn="curl", horn_tone="A:light", size=1)),
+               eye="glow", mouth="fang", horn="curl", horn_tone="A:light", size=1, accent="TIDE")),
     L(id="knellgrim", names=["Knellgrim"], elements=["STONE", "VOLT"], role="vanguard",
       art=dict(plan="spirit", tones=("mid", "mid", "light"), extras=("bell", "arms"), eye="glow", mouth="line",
                hue=16)),
-    L(id="mirefane", names=["Mirefane"], elements=["UMBRA", "BLOOM"], role="kindler",
+    L(id="mirefane", names=["Mirefane"], elements=["UMBRA", "TIDE"], role="kindler",
       art=dict(plan="plant", tones=("dark", "mid", "light"), extras=("petals", "leafarms", "lantern"), eye="glow",
-               mouth="fang", hue=-18)),
+               mouth="fang", hue=-18, accent="BLOOM")),
 ]
 
 # Habitat per line (EN, DE).
@@ -115,7 +119,7 @@ HABITAT = {
     "sprockle": ("Broken cranes and gear sheds", "Kaputte Kräne und Zahnradschuppen"),
     "guiskit": ("Back alleys, masked balls", "Hintergassen, Maskenbälle"),
     "fenglim": ("The marsh beyond Lastlamp", "Das Moor hinter Lastlamp"),
-    "smudgel": ("Canals behind the forgers' cellars", "Kanäle hinter den Fälscherkellern"),
+    "splotchet": ("Canals behind the forgers' cellars", "Kanäle hinter den Fälscherkellern"),
     "snaglet": ("Hookwick piers and fishing nets", "Hookwick-Stege und Fischernetze"),
     "pewnib": ("Pewter roads and gravel yards", "Zinnstraßen und Kieshöfe"),
     "snoblet": ("Garden walls of Larkspur Heights", "Gartenmauern von Larkspur Heights"),
@@ -257,15 +261,15 @@ TEXTS = {
                      "The marsh folk say it is every lamp that was ever put out there, still singing.",
                      "Sein Heiligenschein klingt wie eine Glocke unter Wasser. Lastlamp schließt die Türen, wenn man es hört.",
                      "Das Moorvolk sagt, es ist jede Lampe, die dort je erlosch, und alle singen noch."),
-    "Smudgel": ("It squirts ink when scared. The forgers keep it in a jar on the desk.",
+    "Splotchet": ("It squirts ink when scared. The forgers keep it in a jar on the desk.",
                 "Hatched in a spilled inkwell that ran into the canal.",
                 "Es spritzt Tinte, wenn es sich erschreckt. Die Fälscher halten es im Glas auf dem Tisch.",
                 "Geschlüpft in einem umgekippten Tintenfass, das in den Kanal lief."),
-    "Smudgeling": ("Its ink fades in a week. Contracts signed with it are very popular with the House.",
-                   "A Smudgel that was squeezed for ink by three forgers and outlived all of them.",
+    "Splotchling": ("Its ink fades in a week. Contracts signed with it are very popular with the House.",
+                   "A Splotchet that was squeezed for ink by three forgers and outlived all of them.",
                    "Seine Tinte verblasst in einer Woche. Beim Haus sind damit unterschriebene Verträge sehr beliebt.",
-                   "Ein Smudgel, das drei Fälscher für Tinte ausdrückten und das alle drei überlebte."),
-    "Smudgeroth": ("It can blot out a whole canal. Whatever was in the canal is never found.",
+                   "Ein Splotchet, das drei Fälscher für Tinte ausdrückten und das alle drei überlebte."),
+    "Splotcheroth": ("It can blot out a whole canal. Whatever was in the canal is never found.",
                    "The forgers' guild pays it a pension. Nobody asks what for.",
                    "Es kann einen ganzen Kanal schwärzen. Was im Kanal war, wird nie gefunden.",
                    "Die Fälschergilde zahlt ihm eine Rente. Niemand fragt, wofür."),
@@ -418,3 +422,4 @@ TEXTS = {
                  "Seine Lampe leuchtet im tiefsten Tümpel des Moores. Wer nachsehen geht, meldet sich nie wieder.",
                  "Gewachsen aus dem ältesten Geheimnis des Moores, das dort mit einer Laterne obendrauf vergraben wurde."),
 }
+

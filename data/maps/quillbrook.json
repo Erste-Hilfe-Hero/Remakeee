@@ -75,7 +75,7 @@
   {
    "id": "fisher",
    "x": 8,
-   "y": 3,
+   "y": 2,
    "facing": "left",
    "dialogue": "quillbrook/fisher",
    "sprite": "villager"

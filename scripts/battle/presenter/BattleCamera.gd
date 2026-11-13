@@ -61,3 +61,17 @@ static func swoop_in(node: Control, foe: Rect2) -> void:
 	var tw: Tween = node.create_tween()
 	Juice.shaped(tw.tween_property(node, "scale", Vector2.ONE, 0.5 / Juice.speed()), "move")
 	await tw.finished
+
+## Era V: a Spirling steps out and the field leans in on it a little (data/era45_stage.json
+## "sendout_zoom"), then eases back. Off in other eras and under reduced motion.
+static func sendout(node: Control, at: Rect2) -> void:
+	var z: float = float(Era45Look.era_look(EraManager.active_era()).get("sendout_zoom", 1.0))
+	if not active() or node == null or z <= 1.0:
+		return
+	var c: Dictionary = cam_cfg("", EraManager.active_era())
+	var p: Vector2 = at.get_center()
+	node.pivot_offset = Vector2(clampf(p.x, 0.0, node.size.x), clampf(p.y, 0.0, node.size.y)).round()
+	var tw: Tween = node.create_tween()
+	Juice.shaped(tw.tween_property(node, "scale", Vector2(z, z), float(c.get("in_time", 0.18)) / Juice.speed()), "move")
+	await tw.finished
+	await release(node)

@@ -1,0 +1,18 @@
+{
+ "_comment": "es translation of the safety table, keyed by the English text.",
+ "strings": {
+  "Battle over": "Combate terminado",
+  "Bunds": "Cofradías",
+  "For parents...": "Para madres y padres...",
+  "For parents: switch off what your child should not use. Friends and saves stay.": "Para madres y padres: desactivad lo que vuestro hijo no deba usar. Las amistades y las partidas guardadas se conservan.",
+  "Open league": "Liga Abierta",
+  "Report the rival...": "Avisar sobre el rival...",
+  "Suggestions from league battles": "Sugerencias de combates de liga",
+  "These switches are for parents. Continue?": "Estos ajustes son para madres y padres. ¿Continuar?",
+  "This battle was against your own echo, so there is nobody to report.": "Este combate fue contra tu propio eco, así que no hay nadie sobre quien avisar.",
+  "This is switched off under Settings, Account, For parents.": "Esto está desactivado en Ajustes, Cuenta, Para madres y padres.",
+  "Under 16: open league, bunds and suggestions start switched off.": "Menores de 16: la Liga Abierta, las Cofradías y las sugerencias empiezan desactivadas.",
+  "Why do you report the rival?": "¿Por qué avisas sobre el rival?",
+  "You met this rival 3 times today, so this battle does not count.": "Hoy te has cruzado 3 veces con este rival, así que este combate no cuenta."
+ }
+}

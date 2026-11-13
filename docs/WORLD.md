@@ -116,6 +116,12 @@ Maps with `"outdoor": true` follow the device clock through `DayCycle`: dawn 5:0
   `python3 tools/maps/audit_maps.py` lists what makes a map look unclean (doors that lead
   nowhere, cut-off or doorless buildings, stray lighthouse pieces, people in front of doors,
   unreachable pockets, blank atlas cells, bad warps and more; the kinds are in its header).
+  Towns are checked as a set too: `town_twin` (two towns of one region whose roads, house plots,
+  water and inner cliffs agree on 60% of the built cells; owner rule: no two towns look alike) and
+  `town_few_doors` (a town with fewer than 3 buildings you can walk into). Vellmarch and Halcyra
+  towns each have their own layout in `TOWN_LAYOUT` of `vellmarch.py` / `halcyra.py`; every
+  Vellmarch town has a landmark of its own (`vellmarch_*` in `data/landmarks.json`), every Halcyra
+  town a shop, a rest house and two homes with rooms.
   CI runs `--check`: a finding that is not in `tools/maps/audit_baseline.json` fails, and so does a
   baseline line that is already fixed. After a fix run `--write-baseline`.
 
@@ -156,11 +162,11 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `rest_spring` | inside | 10x8 | 1 | 0 | 0 |
 | veydal | `sablecove` | cave | 12x9 | 5 | 0 | 10 |
 | veydal | `saltmarsh` | marsh | 12x15 | 5 | 3 | 47 |
-| veydal | `shatterfloor_mine` | inside | 12x8 + 12x8 | 2 | 0 | 9 |
+| veydal | `shatterfloor_mine` | inside | 12x8 + 12x8 | 2 | 3 | 9 |
 | veydal | `thornridge` | town | 12x20 | 5 | 0 | 6 |
 | veydal | `thornridge_house` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `tide_rift` | rift | 12x13 | 0 | 3 | 16 |
-| veydal | `wren_library` | inside | 10x8 | 1 | 0 | 0 |
+| veydal | `wren_library` | inside | 10x8 | 2 | 0 | 0 |
 | veydal | `wrenhollow` | town | 12x17 | 3 | 0 | 0 |
 | veydal | `wrenhollow_shop` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `wrenhollow_spring` | inside | 10x8 | 0 | 0 | 0 |
@@ -168,6 +174,7 @@ Written by `python3 tools/world_stats.py`.
 | corvane | `corvane_quay_house` | inside | 10x9 | 0 | 0 | 0 |
 | corvane | `corvane_quay_shop` | inside | 10x9 | 0 | 0 | 0 |
 | corvane | `corvane_quay_spring` | inside | 10x9 | 0 | 0 | 0 |
+| corvane | `dyeworks` | inside | 12x9 + 12x9 + 12x9 + 12x9 + 12x9 | 6 | 6 | 28 |
 | corvane | `edge_watch_hut` | inside | 8x6 | 0 | 0 | 0 |
 | corvane | `greyreach` | route | 12x29 | 5 | 3 | 44 |
 | corvane | `greyreach_hut` | inside | 8x6 | 0 | 0 | 0 |
@@ -182,8 +189,11 @@ Written by `python3 tools/world_stats.py`.
 | corvane | `stillwater` | route | 12x26 | 4 | 3 | 53 |
 | corvane | `wide_rift_edge` | rift | 12x16 | 0 | 0 | 0 |
 | corvane | `woadfen` | marsh | 12x28 | 5 | 3 | 154 |
+| ashmere | `ash_assize` | inside | 12x10 | 1 | 0 | 0 |
 | ashmere | `ashmere_station` | town | 12x22 | 5 | 1 | 0 |
+| ashmere | `bellows_deep` | dungeon | 12x12 + 12x12 + 12x9 | 5 | 6 | 32 |
 | ashmere | `cinderfold` | town | 12x16 | 4 | 0 | 0 |
+| ashmere | `clinker_heath` | route | 12x32 | 5 | 5 | 60 |
 | ashmere | `glass_rift` | rift | 12x13 | 0 | 0 | 20 |
 | ashmere | `gravers_hall` | inside | 10x9 | 0 | 0 | 0 |
 | ashmere | `kiln_rift` | rift | 12x13 | 0 | 0 | 20 |
@@ -194,39 +204,63 @@ Written by `python3 tools/world_stats.py`.
 | ashmere | `undrawn_2` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
-| vellmarch | `bellrope_marsh` | marsh | 12x26 | 4 | 1 | 38 |
-| quivermoor | `bloom_rift` | rift | 12x22 | 0 | 2 | 0 |
-| quivermoor | `breathing_bog` | route | 12x26 | 4 | 2 | 40 |
+| quillmarch | `bath_rift` | rift | 12x22 | 2 | 2 | 0 |
+| vellmarch | `bell_crypt` | inside | 12x18 | 4 | 4 | 0 |
+| vellmarch | `bellrope_marsh` | marsh | 12x26 | 4 | 2 | 38 |
+| quivermoor | `bloom_rift` | rift | 12x22 | 0 | 3 | 0 |
+| quivermoor | `breathing_bog` | route | 12x26 | 4 | 3 | 40 |
 | halcyra | `brightledge` | town | 12x20 | 3 | 0 | 0 |
-| quivermoor | `candle_causeway` | route | 12x26 | 4 | 2 | 40 |
+| halcyra | `brightledge_home_1` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `brightledge_home_2` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `brightledge_shop` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `brightledge_spring` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `brine_catacombs` | inside | 12x14 + 12x10 | 5 | 2 | 59 |
+| quillmarch | `burin_landing` | town | 12x20 | 3 | 1 | 0 |
+| quillmarch | `burin_landing_customs` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `burin_landing_net_loft` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `burin_landing_post_office` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `burin_landing_tavern` | inside | 8x6 | 0 | 0 | 0 |
+| quivermoor | `candle_causeway` | route | 12x26 | 4 | 3 | 40 |
 | solenne | `caravanserai` | inside | 12x10 | 1 | 2 | 0 |
 | vellmarch | `cindergate_quay` | town | 12x20 | 3 | 0 | 0 |
 | vellmarch | `cindergate_quay_bunkhouse` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `cindergate_quay_customs_store` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `cindergate_quay_net_loft` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `cindergate_quay_tollhouse` | inside | 8x6 | 0 | 0 | 0 |
-| halcyra | `cloudshadow_meadow` | route | 12x24 | 3 | 1 | 78 |
-| quivermoor | `driftwick` | town | 12x20 | 3 | 0 | 0 |
+| halcyra | `cloudshadow_meadow` | route | 12x24 | 3 | 3 | 78 |
+| quillmarch | `dead_letter_office` | inside | 12x10 | 2 | 0 | 0 |
+| quillmarch | `debtors_icehouse` | inside | 12x10 | 2 | 0 | 0 |
+| quivermoor | `driftwick` | town | 12x20 | 3 | 1 | 0 |
 | quivermoor | `driftwick_bunk_raft` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `driftwick_chart_room` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `driftwick_net_shed` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `driftwick_pole_house` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `drypoint_lane` | route | 12x26 | 5 | 3 | 40 |
+| quillmarch | `errata_chapel` | inside | 12x10 | 2 | 0 | 0 |
+| halcyra | `fallen_planet` | inside | 12x20 | 4 | 2 | 92 |
 | vellmarch | `foundry_rift` | rift | 12x22 | 0 | 2 | 0 |
 | halcyra | `gildcrest` | town | 12x20 | 3 | 0 | 0 |
+| halcyra | `gildcrest_home_1` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `gildcrest_home_2` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `gildcrest_shop` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `gildcrest_spring` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `gilt_cellars` | inside | 12x12 + 12x10 | 4 | 2 | 0 |
 | halcyra | `gilt_rift` | rift | 12x22 | 0 | 2 | 0 |
 | halcyra | `gilt_span` | inside | 12x12 | 3 | 0 | 0 |
 | solenne | `glasswind_flats` | route | 12x34 | 5 | 6 | 86 |
-| quivermoor | `gloamwater` | marsh | 12x26 | 4 | 2 | 40 |
+| quivermoor | `gloamwater` | marsh | 12x26 | 4 | 3 | 40 |
+| quillmarch | `gravers_causeway` | route | 12x26 | 5 | 5 | 40 |
 | halcyra | `great_orrery` | inside | 12x10 | 0 | 0 | 0 |
 | quivermoor | `heaving_fields` | route | 12x26 | 4 | 2 | 40 |
-| vellmarch | `hookwick` | town | 12x20 | 3 | 0 | 0 |
+| quillmarch | `hoarfrost_moor` | route | 12x26 | 5 | 3 | 40 |
+| vellmarch | `hookwick` | town | 12x20 | 3 | 1 | 0 |
 | vellmarch | `hookwick_boatshed` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `hookwick_eel_smokery` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `hookwick_lock_office` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `hookwick_tackle_shop` | inside | 8x6 | 0 | 0 | 0 |
-| quivermoor | `hymnmarsh` | marsh | 12x26 | 4 | 2 | 40 |
-| halcyra | `lantern_span` | route | 12x24 | 3 | 1 | 37 |
-| vellmarch | `larkspur_heights` | town | 12x20 | 3 | 0 | 0 |
+| quivermoor | `hymnmarsh` | marsh | 12x26 | 4 | 3 | 40 |
+| halcyra | `lantern_span` | route | 12x24 | 3 | 3 | 37 |
+| vellmarch | `larkspur_heights` | town | 12x20 | 3 | 1 | 0 |
 | vellmarch | `larkspur_heights_counting_house` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `larkspur_heights_mask_atelier` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `larkspur_heights_salon` | inside | 8x6 | 0 | 0 | 0 |
@@ -236,16 +270,28 @@ Written by `python3 tools/world_stats.py`.
 | quivermoor | `lastbloom_lamp_room` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `lastbloom_press_room` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `lastbloom_seed_store` | inside | 8x6 | 0 | 0 | 0 |
-| vellmarch | `lastlamp` | town | 12x20 | 3 | 0 | 0 |
+| vellmarch | `lastlamp` | town | 12x20 | 3 | 2 | 0 |
 | vellmarch | `lastlamp_bell_house` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `lastlamp_lamp_store` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `lastlamp_name_room` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `lastlamp_pawnshop` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `ledger_rift` | rift | 12x22 | 2 | 2 | 0 |
+| quillmarch | `ledgerholm` | town | 12x20 | 3 | 1 | 0 |
+| quillmarch | `ledgerholm_archive` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `ledgerholm_bank` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `ledgerholm_choir_loft` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `ledgerholm_forgery` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `lock_rift` | rift | 12x22 | 0 | 2 | 0 |
-| halcyra | `long_stair` | route | 12x24 | 3 | 1 | 42 |
+| halcyra | `long_stair` | route | 12x24 | 3 | 3 | 42 |
 | vellmarch | `masque_rift` | rift | 12x22 | 0 | 2 | 0 |
 | solenne | `mirage_kiln` | dungeon | 12x10 + 12x10 + 12x8 | 5 | 7 | 25 |
-| halcyra | `mirror_flats` | route | 12x24 | 3 | 1 | 58 |
+| halcyra | `mirror_flats` | route | 12x24 | 3 | 4 | 58 |
+| quillmarch | `mordant_row` | town | 12x20 | 3 | 1 | 0 |
+| quillmarch | `mordant_row_apothecary` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `mordant_row_bath_house` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `mordant_row_vat_store` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `mordant_row_well_house` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `mordant_steps` | route | 12x26 | 5 | 3 | 40 |
 | quivermoor | `mossgate` | town | 12x20 | 3 | 0 | 0 |
 | quivermoor | `mossgate_moss_inn` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `mossgate_peat_shed` | inside | 8x6 | 0 | 0 | 0 |
@@ -256,44 +302,78 @@ Written by `python3 tools/world_stats.py`.
 | solenne | `ochrewell_dome` | inside | 10x8 | 0 | 0 | 0 |
 | solenne | `ochrewell_pottery` | inside | 10x8 | 0 | 0 | 0 |
 | solenne | `ochrewell_store` | inside | 10x8 | 0 | 0 | 0 |
-| halcyra | `orrery_ridge` | route | 12x24 | 3 | 1 | 47 |
+| halcyra | `orrery_ridge` | route | 12x24 | 3 | 3 | 46 |
 | halcyra | `orrery_rift` | rift | 12x22 | 0 | 2 | 0 |
 | halcyra | `paleshore` | town | 12x20 | 3 | 0 | 0 |
+| halcyra | `paleshore_home_1` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `paleshore_home_2` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `paleshore_shop` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `paleshore_spring` | inside | 10x8 | 0 | 0 | 0 |
+| quillmarch | `platewick` | town | 12x20 | 3 | 0 | 0 |
+| quillmarch | `platewick_guild_hall` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `platewick_plate_store` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `platewick_print_shop` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `platewick_studio` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `press_rift` | rift | 12x22 | 2 | 2 | 0 |
+| quillmarch | `proofgate` | town | 12x20 | 3 | 0 | 0 |
+| quillmarch | `proofgate_last_inn` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `proofgate_map_vault` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `proofgate_proof_room` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `proofgate_stamp_hall` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `raft_rift` | rift | 12x22 | 0 | 2 | 0 |
-| vellmarch | `rookery_cut` | route | 12x26 | 4 | 1 | 38 |
+| quillmarch | `rime_rift` | rift | 12x22 | 2 | 2 | 0 |
+| quillmarch | `rimeglass_pass` | route | 12x26 | 5 | 4 | 40 |
+| quillmarch | `rimeholt` | town | 12x20 | 3 | 0 | 0 |
+| quillmarch | `rimeholt_debt_office` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `rimeholt_glass_room` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `rimeholt_hearth_hall` | inside | 8x6 | 0 | 0 | 0 |
+| quillmarch | `rimeholt_woodshed` | inside | 8x6 | 0 | 0 | 0 |
+| vellmarch | `rookery_cut` | route | 12x26 | 4 | 2 | 38 |
 | quivermoor | `rootchapel` | town | 12x20 | 3 | 0 | 0 |
 | quivermoor | `rootchapel_almshouse` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `rootchapel_bell_cellar` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `rootchapel_herb_room` | inside | 8x6 | 0 | 0 | 0 |
-| quivermoor | `rootchapel_vestry` | inside | 8x6 | 0 | 0 | 0 |
+| quivermoor | `rootchapel_vestry` | inside | 8x6 | 0 | 1 | 0 |
 | halcyra | `salt_rift` | rift | 12x22 | 0 | 2 | 0 |
-| vellmarch | `smelters_drift` | route | 12x26 | 4 | 1 | 38 |
+| vellmarch | `slag_tunnels` | inside | 12x18 | 4 | 4 | 0 |
+| vellmarch | `smelters_drift` | route | 12x26 | 4 | 3 | 38 |
+| quillmarch | `smudge_marsh` | marsh | 12x26 | 5 | 4 | 40 |
+| vellmarch | `smugglers_culvert` | inside | 12x18 | 4 | 4 | 0 |
 | halcyra | `span_rift` | rift | 12x22 | 0 | 2 | 0 |
+| quillmarch | `stamp_road` | route | 12x26 | 5 | 4 | 40 |
 | halcyra | `starwell` | town | 12x20 | 3 | 0 | 0 |
+| halcyra | `starwell_home_1` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `starwell_home_2` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `starwell_shop` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `starwell_spring` | inside | 10x8 | 0 | 0 | 0 |
 | solenne | `sun_rift` | rift | 12x22 | 0 | 4 | 13 |
-| halcyra | `sunfall_terraces` | route | 12x24 | 3 | 1 | 58 |
-| vellmarch | `tallowmarket` | town | 12x20 | 3 | 0 | 0 |
+| halcyra | `sunfall_terraces` | route | 12x24 | 3 | 2 | 57 |
+| vellmarch | `tallowmarket` | town | 12x20 | 3 | 1 | 0 |
 | vellmarch | `tallowmarket_rumour_room` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `tallowmarket_vigil_house` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `tallowmarket_wax_hall` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `tallowmarket_weigh_house` | inside | 8x6 | 0 | 0 | 0 |
-| quivermoor | `tallowmere` | town | 12x20 | 3 | 0 | 0 |
+| quivermoor | `tallowmere` | town | 12x20 | 3 | 1 | 0 |
 | quivermoor | `tallowmere_chandlery` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `tallowmere_choir_dorm` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `tallowmere_name_hall` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `tallowmere_tallow_kitchen` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `taproot_rift` | rift | 12x22 | 0 | 2 | 0 |
-| vellmarch | `tithe_road` | route | 12x26 | 4 | 1 | 38 |
-| vellmarch | `tollchain_causeway` | route | 12x26 | 4 | 1 | 38 |
+| vellmarch | `tithe_road` | route | 12x26 | 4 | 2 | 38 |
+| vellmarch | `tollchain_causeway` | route | 12x26 | 4 | 4 | 38 |
 | solenne | `tower_rift` | rift | 12x22 | 0 | 4 | 21 |
 | vellmarch | `vault_rift` | rift | 12x22 | 0 | 2 | 0 |
 | solenne | `veil_cistern` | inside | 12x10 + 12x10 + 12x8 | 3 | 5 | 24 |
 | quivermoor | `wandering_wood` | route | 12x26 | 4 | 2 | 40 |
-| vellmarch | `weeping_locks` | route | 12x26 | 4 | 1 | 38 |
+| vellmarch | `weeping_locks` | route | 12x26 | 4 | 3 | 38 |
 | halcyra | `white_stair` | inside | 12x12 | 3 | 0 | 0 |
 | halcyra | `whitecairn` | town | 12x20 | 3 | 0 | 0 |
+| halcyra | `whitecairn_home_1` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `whitecairn_home_2` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `whitecairn_shop` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `whitecairn_spring` | inside | 10x8 | 0 | 0 | 0 |
 | quivermoor | `wick_rift` | rift | 12x22 | 0 | 2 | 0 |
-| | **167 maps** | | | **279** | **164** | **2274** |
+| | **241 maps** | | | **389** | **274** | **2823** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)
@@ -312,5 +392,5 @@ Written by `python3 tools/world_stats.py`.
 | `storm_lantern` | Storm Lantern | `murk_hollow` | veydal | tamsin (3, 10) | `got_lantern` |
 | `survey_glass` | Survey Glass | `wrenhollow` | veydal | surveyor (10, 9) | `got_survey_glass` |
 | `tide_chart` | Tide Chart | `brackwater_fen` | veydal | tidewatcher (9, 15) | `got_tide_chart` |
-| `wading_boots` | Wading Boots | `quillbrook` | veydal | fisher (8, 3) | `got_boots` |
+| `wading_boots` | Wading Boots | `quillbrook` | veydal | fisher (8, 2) | `got_boots` |
 <!-- gear-givers:end -->
