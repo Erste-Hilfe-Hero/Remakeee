@@ -1,0 +1,32 @@
+{
+ "_comment": "ko translation of the live_referee table, keyed by the English text.",
+ "strings": {
+  "%s Ring %d (from %s)": "%s 링 %d (%s에게서)",
+  "%s beats %s": "%s 승리, 상대 %s",
+  "(borrowed)": "(빌림)",
+  "Close": "닫기",
+  "Could not save the picture.": "사진을 저장하지 못했다.",
+  "Enter the duel": "대결에 참가",
+  "It joins this one duel. After that the loan is used up.": "이번 대결 한 번만 함께한다. 그 뒤엔 대여가 끝난다.",
+  "Leave (the duel goes on)": "나가기 (대결은 계속된다)",
+  "Live duel": "실시간 대결",
+  "Menu": "메뉴",
+  "No friend has lent you a Spirling right now.": "지금 Spirling을 빌려준 친구가 없다.",
+  "No winner": "승자 없음",
+  "Result picture saved with your photos.": "결과 사진을 사진첩에 저장했다.",
+  "Rounds: %d": "라운드: %d",
+  "Save a result picture": "결과 사진 저장",
+  "Stop watching": "관전 그만두기",
+  "Take a borrowed Spirling along": "빌린 Spirling 데려가기",
+  "Take a borrowed Spirling along? It joins this one attempt, then the loan is used up.": "빌린 Spirling을 데려갈까? 이번 도전 한 번만 함께하고, 그 뒤엔 대여가 끝난다.",
+  "That loan has ended.": "그 대여는 끝났다.",
+  "The duel is not over yet.": "대결이 아직 끝나지 않았다.",
+  "The referee checks the duel.": "심판이 대결을 확인한다.",
+  "The result picture is in your downloads.": "결과 사진이 다운로드 폴더에 있다.",
+  "This battle cannot be shown any more.": "이 전투는 더 이상 보여 줄 수 없다.",
+  "Top: %s  Bottom: %s": "위: %s  아래: %s",
+  "Without a borrowed Spirling": "빌린 Spirling 없이",
+  "You already used a borrowed Spirling here.": "여기선 이미 빌린 Spirling을 썼다.",
+  "Your last duel": "지난 대결"
+ }
+}

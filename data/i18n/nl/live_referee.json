@@ -1,0 +1,32 @@
+{
+ "_comment": "nl translation of the live_referee table, keyed by the English text.",
+ "strings": {
+  "%s Ring %d (from %s)": "%s ring %d (van %s)",
+  "%s beats %s": "%s verslaat %s",
+  "(borrowed)": "(geleend)",
+  "Close": "Sluiten",
+  "Could not save the picture.": "Kon de afbeelding niet opslaan.",
+  "Enter the duel": "Doe mee aan het duel",
+  "It joins this one duel. After that the loan is used up.": "Hij doet mee aan dit ene duel. Daarna is de lening op.",
+  "Leave (the duel goes on)": "Verlaten (het duel gaat door)",
+  "Live duel": "Live-duel",
+  "Menu": "Menu",
+  "No friend has lent you a Spirling right now.": "Geen vriend heeft je op dit moment een Spirling geleend.",
+  "No winner": "Geen winnaar",
+  "Result picture saved with your photos.": "Resultaatafbeelding opgeslagen bij je foto's.",
+  "Rounds: %d": "Rondes: %d",
+  "Save a result picture": "Resultaatafbeelding opslaan",
+  "Stop watching": "Stoppen met kijken",
+  "Take a borrowed Spirling along": "Een geleende Spirling meenemen",
+  "Take a borrowed Spirling along? It joins this one attempt, then the loan is used up.": "Een geleende Spirling meenemen? Hij doet mee aan deze ene poging, daarna is de lening op.",
+  "That loan has ended.": "Die lening is afgelopen.",
+  "The duel is not over yet.": "Het duel is nog niet voorbij.",
+  "The referee checks the duel.": "De scheidsrechter controleert het duel.",
+  "The result picture is in your downloads.": "De resultaatafbeelding staat in je downloads.",
+  "This battle cannot be shown any more.": "Dit gevecht kan niet meer worden getoond.",
+  "Top: %s  Bottom: %s": "Boven: %s  Onder: %s",
+  "Without a borrowed Spirling": "Zonder geleende Spirling",
+  "You already used a borrowed Spirling here.": "Je hebt hier al een geleende Spirling gebruikt.",
+  "Your last duel": "Je laatste duel"
+ }
+}
