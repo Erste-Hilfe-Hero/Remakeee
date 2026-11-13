@@ -143,3 +143,33 @@ static func event_lines(day: String) -> Array[String]:
 	if sw.is_empty():
 		return []
 	return [Loc.t("Swarm today: %s near %s") % [Loc.t(str(sw.species)), Spirling.place_name(str(sw.table))]] as Array[String]
+
+## The Storm Lantern sets the encounter rate (KAMPF_PLAN "Wild-Begegnungs-Rate einstellbar"):
+## 0 dim, 1 normal, 2 bright, saved in GameState.records[LANTERN_RECORD].
+const LANTERN_ITEM: String = "storm_lantern"
+const LANTERN_RECORD: String = "lantern_rate"
+const LANTERN_WORDS: Array[String] = ["Dim: fewer wild Spirlings", "Normal", "Bright: more wild Spirlings"]
+
+static func lantern_setting(records: Dictionary) -> int:
+	return clampi(int(records.get(LANTERN_RECORD, 1)), 0, LANTERN_WORDS.size() - 1)
+
+## Encounter rate factor of the lantern setting; only with the lantern in the satchel.
+static func lantern_mult(records: Dictionary, has_lantern: bool) -> float:
+	var rates: Array = data().get("lantern_rates", [])
+	var i: int = lantern_setting(records)
+	if not has_lantern or i >= rates.size():
+		return 1.0
+	return float(rates[i])
+
+## A wild horde's leader (KAMPF_PLAN "Wild-Horde mit Anführer"): its highest-ring member, the
+## first on a tie, or null for a lone wild Spirling. When it falls the rest waver (BattleModel).
+const WAVER_LINE: String = "The swarm wavers without its leader!"
+
+static func horde_leader(foes: Array) -> Spirling:
+	if foes.size() < 2:
+		return null
+	var best: Spirling = foes[0]
+	for f: Spirling in foes:
+		if f.level > best.level:
+			best = f
+	return best
