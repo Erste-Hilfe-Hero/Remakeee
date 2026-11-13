@@ -121,23 +121,23 @@
     "tamer": [
      {
       "species": "Smeltmaw",
-      "level": 67
+      "level": 68
      },
      {
       "species": "Cogwright",
-      "level": 67
+      "level": 68
      },
      {
       "species": "Smoldrake",
-      "level": 68
+      "level": 69
      },
      {
       "species": "Cairnhold",
-      "level": 68
+      "level": 69
      },
      {
       "species": "Calderox",
-      "level": 68,
+      "level": 69,
       "held": "pith_mend"
      }
     ]

@@ -121,23 +121,23 @@
     "tamer": [
      {
       "species": "Fenwarden",
-      "level": 83
+      "level": 94
      },
      {
       "species": "Duskdigger",
-      "level": 83
+      "level": 94
      },
      {
       "species": "Zenithare",
-      "level": 84
+      "level": 95
      },
      {
       "species": "Ashcrest",
-      "level": 84
+      "level": 95
      },
      {
       "species": "Cullhorn",
-      "level": 84,
+      "level": 95,
       "held": "pith_mend"
      }
     ]

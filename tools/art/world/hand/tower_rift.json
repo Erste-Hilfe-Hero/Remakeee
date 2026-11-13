@@ -59,23 +59,23 @@
      "tamer": [
       {
        "species": "Tempestrel",
-       "level": 48
+       "level": 47
       },
       {
        "species": "Zenithare",
-       "level": 49
-      },
-      {
-       "species": "Mirassil",
        "level": 48
       },
       {
+       "species": "Mirassil",
+       "level": 47
+      },
+      {
        "species": "Dunebastion",
-       "level": 49
+       "level": 48
       },
       {
        "species": "Orrerine",
-       "level": 49
+       "level": 48
       }
      ]
     }

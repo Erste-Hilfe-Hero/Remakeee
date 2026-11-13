@@ -133,23 +133,23 @@
    "tamer": [
     {
      "species": "Tempestrel",
-     "level": 52
+     "level": 54
     },
     {
      "species": "Glimmerax",
-     "level": 51
+     "level": 53
     },
     {
      "species": "Brookbaron",
-     "level": 50
+     "level": 52
     },
     {
      "species": "Kelphound",
-     "level": 51
+     "level": 53
     },
     {
      "species": "Lumenewt",
-     "level": 50
+     "level": 52
     }
    ]
   }
@@ -1039,24 +1039,24 @@
   "teams_by_difficulty": {
    "tamer": [
     {
-     "species": "Zenithare",
-     "level": 44
+     "species": "Noonsoral",
+     "level": 43
     },
     {
      "species": "Saltspire",
-     "level": 44
+     "level": 43
     },
     {
      "species": "Scrivane",
-     "level": 45
+     "level": 44
     },
     {
      "species": "Rubriclad",
-     "level": 45
+     "level": 44
     },
     {
      "species": "Charsylvan",
-     "level": 45
+     "level": 44
     }
    ]
   }
@@ -1092,19 +1092,19 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 57
+     "level": 60
     },
     {
      "species": "Glasstarn",
-     "level": 57
+     "level": 60
     },
     {
      "species": "Mendlace",
-     "level": 58
+     "level": 61
     },
     {
      "species": "Saltcrown",
-     "level": 58
+     "level": 61
     }
    ]
   }
@@ -1144,23 +1144,23 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 52
+     "level": 54
     },
     {
      "species": "Mirassil",
-     "level": 52
+     "level": 54
     },
     {
      "species": "Leviarch",
-     "level": 53
+     "level": 55
     },
     {
      "species": "Saltcrown",
-     "level": 53
+     "level": 55
     },
     {
      "species": "Obsidroth",
-     "level": 54
+     "level": 56
     }
    ]
   }
@@ -1940,23 +1940,23 @@
    "tamer": [
     {
      "species": "Rubriclad",
-     "level": 49
+     "level": 50
     },
     {
      "species": "Obelordan",
-     "level": 50
+     "level": 51
     },
     {
      "species": "Coronarch",
-     "level": 50
+     "level": 51
     },
     {
      "species": "Fulgorath",
-     "level": 50
+     "level": 51
     },
     {
      "species": "Duskmirrah",
-     "level": 51
+     "level": 52
     }
    ]
   }
