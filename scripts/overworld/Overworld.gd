@@ -2546,6 +2546,7 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 			if not climb_on:
 				break
 	GameState.records["gauntlet_best"] = maxi(best, floors)
+	Online.climb_submit("stair", floors)
 	if GameState.iron_oath:
 		# Under the Iron Oath the stair keeps its own best as well (plan 3400).
 		GameState.records["gauntlet_best_oath"] = maxi(int(GameState.records.get("gauntlet_best_oath", 0)), floors)
@@ -2868,6 +2869,8 @@ func _run_endless() -> void:
 			m.queue_free()
 			if not on:
 				break
+	if k > 0:
+		Online.climb_submit("tower", EchoTower.tower_floor(k - 1))
 	var lines: Array[String] = [Loc.t("Endless stretch: %d floors (best %d).") % [k, maxi(k, Gauntlet.endless_best())]]
 	lines.append_array(Gauntlet.pay_endless(k))
 	await say(lines)
@@ -3334,7 +3337,7 @@ func _spotting_trainer() -> NPC:
 	if GameState.first_healthy_index() < 0:
 		return null
 	for n: NPC in _npcs:
-		if not _is_active_trainer(n):
+		if not _is_active_trainer(n) or n.has_meta("waved"):
 			continue
 		var blocked: Callable = func(c: Vector2i) -> bool: return not map.is_walkable(c) or npc_at(c) != null
 		if TrainerData.sees(n.cell, GridWalker.DIRS[n.facing], int(n.definition.get("sight", 0)), player.cell, blocked):
@@ -3351,6 +3354,22 @@ func challenge(n: NPC, spotted: bool) -> void:
 		n.alert = true
 		await get_tree().create_timer(SPOT_TIME).timeout
 		n.alert = false
+		# The signal lantern (KAMPF_PLAN_1000 items 539, 540): answer it now, or wave it off and
+		# talk to the Wayfarer later. Wardens and story Wayfarers do not wait.
+		if TrainerData.may_wave_off(def):
+			n.signal_lantern = true
+			var ask := MenuHost.new()
+			_ui.add_child(ask)
+			var answer: bool = await ask.confirm(Loc.t("%s raises a signal lantern. Battle now?") % Loc.t(str(def.get("trainer", ""))), "Answer the signal", "Not now")
+			ask.queue_free()
+			n.signal_lantern = false
+			if not answer:
+				n.set_meta("waved", true)
+				await say([Loc.t("The lantern dims. Talk to them when you are ready.")] as Array[String])
+				busy = false
+				player.frozen = false
+				VirtualPad.set_wanted(true)
+				return
 		while (player.cell - n.cell).length_squared() > 1:
 			n.step(n.facing)
 			await n.step_finished
@@ -3452,6 +3471,11 @@ func after_tamer_win(n: NPC) -> void:
 			"p_replay": BattleReplay.shareable(GameState.records.get("last_battle", {})), "p_claim": last_claim})
 	if def.has("defeat"):
 		await say(Dialogue.lines_for(Dialogue.get_entry(str(def.defeat)), GameState.flags))
+	# A first-win gift that varies by Wayfarer (KAMPF_PLAN_1000 item 531).
+	var gift: String = WayfarerRewards.grant(def, map.id, GameState.starter)
+	if not gift.is_empty():
+		Sound.sfx("coin")
+		await say([WayfarerRewards.line(def, gift)] as Array[String])
 	if def.has("warden") and GameState.seal_rift(str(def.warden)):
 		var lines: Array[String] = ["The Warden's bond wakes again.", "Together you mend the Rift. The Hush lifts!"]
 		if GameState.has_flag("storage_remote"):
@@ -3502,6 +3526,9 @@ static func _today() -> String:
 func _note_wayfarer(def: Dictionary, outcome: BattleModel.Outcome) -> void:
 	if outcome == BattleModel.Outcome.WIN or outcome == BattleModel.Outcome.LOSS:
 		WayfarerBook.note(def, map.id, outcome == BattleModel.Outcome.WIN, last_model.turn if last_model != null else 0)
+	# Wayfarer wins count for the world goal when it is this week's kind (KAMPF_PLAN_1000 item 543).
+	if outcome == BattleModel.Outcome.WIN and not TrainerData.is_wild_horde(def):
+		Online.contribute("wayfarers")
 
 func _mark_rematch(def: Dictionary) -> void:
 	var rec: Dictionary = (GameState.records.get("rematch", {}) as Dictionary).duplicate()
