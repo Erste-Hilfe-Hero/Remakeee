@@ -6,6 +6,9 @@ extends Control
 ## Shapes are the 8x8 Era I images from tools/art/gen_fx.py (Era II recoloured, Era III outlined
 ## and Era IV/V doubled with a glow from tools/art/gen_fx_era34.py); everything snaps to whole pixels.
 ## No screen flashes: the brightest effect (Lumen) stays at 60 % and fades in 0.2 s.
+## On a phone or in battery saver an effect redraws at most BattleShow.fx_fps times a second
+## and draws at most fx_budget max_particles of one kind (KAMPF_PLAN_1000 664). High contrast
+## draws every effect in the palette's ink and accent, each shape on a paper rim (669).
 
 enum Phase { NONE, CHARGE, TRAVEL, IMPACT, AFTER }
 
@@ -136,9 +139,13 @@ static func particles_for_power(power: int) -> float:
 		return 1.5
 	return 1.0
 
-## [param base] particles scaled by [member amount], at least one.
+## [param base] particles scaled by [member amount], at least one, within the budget (664).
 func _n(base: int) -> int:
-	return maxi(1, roundi(base * amount))
+	return BattleShow.fx_particles(roundi(base * amount))
+
+## High contrast colour of shade [param k] (669): ink for the dark shades, accent for the light.
+static func hc_ink(k: int) -> Color:
+	return UITheme.INK if k <= 1 else UITheme.ACCENT
 
 ## Offset of particle [param i] of [param n] around the middle, [param gap] pixels apart.
 static func _spread(i: int, n: int, gap: float) -> float:
@@ -197,9 +204,14 @@ func _run_phase(time: float) -> void:
 	if not is_inside_tree() or time <= 0.0:
 		return
 	var elapsed: float = 0.0
+	var fps: int = BattleShow.fx_fps(OS.has_feature("mobile"), GameState.battery_saver)
+	var drawn: float = -1.0
 	while elapsed < time:
 		await get_tree().process_frame
 		elapsed += get_process_delta_time()
+		if not BattleShow.fx_redraw(elapsed, drawn, fps) and elapsed < time:
+			continue
+		drawn = elapsed
 		t = clampf(elapsed / time, 0.0, 1.0)
 		if element == Elements.E.VOLT and phase == Phase.CHARGE and user_sprite != null:
 			# Volt: the user trembles 1 px while charging.
@@ -210,7 +222,9 @@ func _run_phase(time: float) -> void:
 
 func _ink(k: int, a: float = 1.0) -> Color:
 	var c: Color = EraManager.INK_PALETTE[clampi(k, 0, 3)]
-	if bool(feel.get("colour", false)):
+	if UITheme.high_contrast:
+		c = hc_ink(k)
+	elif bool(feel.get("colour", false)):
 		c = shade(Elements.color(element), k)
 	c.a = a
 	return c
@@ -230,7 +244,13 @@ func _shape(name: String, at: Vector2, k: int, a: float = 1.0) -> void:
 	var tex: Texture2D = shape(name, k)
 	if tex != null:
 		# Centred by size: Era I/II shapes are 8 px, Era III 10 px, Era IV/V 18 px.
-		draw_texture(tex, (at - tex.get_size() / 2.0).round(), Color(1, 1, 1, a))
+		var pos: Vector2 = (at - tex.get_size() / 2.0).round()
+		if UITheme.high_contrast:
+			# A paper rim one pixel down and right, the shape in solid ink over it (669).
+			draw_texture(tex, pos + Vector2.ONE, Color(UITheme.BG, a))
+			draw_texture(tex, pos, Color(UITheme.INK, a))
+		else:
+			draw_texture(tex, pos, Color(1, 1, 1, a))
 	else:
 		_px(at, k, a, 2)
 
