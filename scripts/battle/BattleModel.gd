@@ -1390,8 +1390,9 @@ func _do_move(a: BattleAction) -> void:
 	# A field_element move lands in the active field's element (a cached copy, never the data).
 	mv = BattleRules.resolve_move(mv, field)
 	var power_mult: float = 1.0
+	var extra: int = 0
 	if mv.overcharge:
-		var extra: int = mini(me.energy, BattleRules.OVERCHARGE_MAX_EXTRA)
+		extra = mini(me.energy, BattleRules.OVERCHARGE_MAX_EXTRA)
 		# Two Overcharge arts in two turns in a row chain for a bonus (item 59).
 		var chained: bool = turn > 0 and me.overcharge_turn == turn - 1
 		power_mult = BattleRules.overcharge_mult(extra, chained)
@@ -1411,6 +1412,9 @@ func _do_move(a: BattleAction) -> void:
 	var targets: Array[int] = move_targets(side, mv, aim)
 	var used: Dictionary = _who(side, slot)
 	used.merge({"move": mv.move_name, "element": mv.element, "kind": mv.kind, "area": mv.is_area() and targets.size() > 1, "targets": targets})
+	if extra > 0:
+		# The presenter pitches the Overcharge swell by the Energy poured in (plan 687).
+		used["overcharge"] = extra
 	if muddled:
 		used["muddled"] = true
 	emit_event(BattleEvent.Type.MOVE_USED, used)
