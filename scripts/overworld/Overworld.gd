@@ -282,6 +282,8 @@ func _build() -> void:
 	_text.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_text.visible = false
 	_text.allow_fast_forward = true
+	_text.world_auto = true
+	_text.place_hook = _place_text_box
 	ui_root.add_child(_text)
 	_picker = ListPicker.new()
 	_picker.set_anchors_preset(Control.PRESET_CENTER)
@@ -1023,6 +1025,31 @@ func announce_goal_if_changed(before: int) -> void:
 	var tip: Array[String] = Tips.take("goals")
 	if not tip.is_empty():
 		await say(tip)
+
+## True when the talk box belongs at the top: the Wayfarer stands in the lower half (item 2016).
+static func text_on_top(player_y: float, view_h: float) -> bool:
+	return view_h > 0.0 and player_y > view_h / 2.0
+
+## Puts the talk box at the bottom, or at the top when it would cover the Wayfarer.
+func _place_text_box() -> void:
+	var top: bool = false
+	if player != null and is_instance_valid(player) and player.is_inside_tree():
+		var y: float = player.get_global_transform_with_canvas().origin.y + TilesetFactory.TILE / 2.0
+		top = text_on_top(y, get_viewport().get_visible_rect().size.y)
+	if top:
+		_text.set_anchors_preset(Control.PRESET_TOP_WIDE)
+		_text.offset_top = 0
+		_text.offset_bottom = TEXT_BOX_HEIGHT
+		_text.grow_vertical = Control.GROW_DIRECTION_END
+	else:
+		_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+		_text.offset_top = -TEXT_BOX_HEIGHT
+		_text.offset_bottom = 0
+		_text.grow_vertical = Control.GROW_DIRECTION_BEGIN
+
+## True while the talk box sits at the top of the screen.
+func text_box_on_top() -> bool:
+	return _text.anchor_bottom < 0.5
 
 func say(lines: Array[String]) -> void:
 	if lines.is_empty():

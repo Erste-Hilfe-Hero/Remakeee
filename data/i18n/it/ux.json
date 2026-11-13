@@ -214,6 +214,8 @@
   "seen": "visto",
   "unavailable": "non disponibile",
   "worn out": "stremato",
-  "new": "nuovo"
+  "new": "nuovo",
+  "Auto text: %s": "Testo auto: %s",
+  "Talk in the world goes on by itself after a short read.": "I dialoghi nel mondo proseguono da soli dopo una breve lettura."
  }
 }
