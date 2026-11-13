@@ -58,7 +58,9 @@ def load(path):
         return json.load(f)
 
 
-def move_pools(species, moves):
+def move_pools(species, moves, era=1):
+    # Arts of a later era stay off the kinds of an earlier one (test_move_content).
+    moves = [m for m in moves if m.get("era", 1) <= max(era, 1)]
     used = set()
     for s in species:
         for v in s["learnset"].values():
@@ -190,7 +192,7 @@ def pick_traits(region, lines, species):
         count[best].add(line["id"])
 
 
-def tune(region, kept, new_names, rounds=14):
+def tune(region, kept, new_names, rounds=14, band=(0.45, 0.55)):
     """Nudges the stat totals of the new kinds until the type simulation (tools/balance/type_sim.py,
     a Python mirror of the battle core) puts each between 40 and 60 % against its own stage."""
     sys.path.insert(0, os.path.join(ROOT, "tools", "balance"))
@@ -202,15 +204,17 @@ def tune(region, kept, new_names, rounds=14):
     for r in range(rounds):
         _, mult = ts.chart_problems(chart, kept)
         sp, _ = ts.simulate(kept, moves, mult)
+        stage, _ = ts.stages(kept)
         moved = 0
         for n in new_names:
             rate = sp.get(n, (0.5,))[0]
-            if 0.45 <= rate <= 0.55:
+            lo_r, hi_r = band.get(stage[n], band["default"]) if isinstance(band, dict) else band
+            if lo_r <= rate <= hi_r:
                 continue
             s = by[n]
             total = sum(s["base"].values())
             step = 0.04 if abs(rate - 0.5) > 0.15 else 0.02
-            want = round(total * (1 - step if rate > 0.5 else 1 + step))
+            want = round(total * (1 - step if rate > hi_r else 1 + step))
             lo, hi = bands[s["rarity"]]
             want = max(lo, min(hi, want))
             if want != total:
@@ -261,7 +265,7 @@ def main():
     kept.sort(key=lambda s: s["dex_id"])
     for i, s in enumerate(kept):
         s["dex_id"] = i + 1
-    pools = move_pools(kept, moves)
+    pools = move_pools(kept, moves, getattr(mod, "ERA", 1))
     pick_traits(region, mod.LINES, kept)
     nxt = len(kept) + 1
     for line in mod.LINES:
@@ -275,7 +279,10 @@ def main():
             nxt += 1
     if "--no-tune" not in sys.argv:
         # Lines with a hand-set "power" were placed by the full Godot sim and keep their totals.
-        tune(region, kept, [n for line in mod.LINES if "power" not in line for n in line["names"]])
+        # A spec may set its own window (TUNE_BAND: a pair, or {stage: pair, "default": pair}) so its
+        # kinds do not push older ones out of the 40-60 % gate.
+        tune(region, kept, [n for line in mod.LINES if "power" not in line for n in line["names"]],
+             band=getattr(mod, "TUNE_BAND", (0.45, 0.55)))
     with open(os.path.join(ROOT, "data/spirlings.json"), "w", encoding="utf-8") as f:
         json.dump(kept, f, ensure_ascii=False, indent=1)
         f.write("\n")

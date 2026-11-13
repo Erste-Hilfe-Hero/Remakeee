@@ -149,6 +149,9 @@ static func _frame_texture(bg: Color) -> ImageTexture:
 ## wash with rounded corners, Era III an etched bevel (light top left, dark bottom right) with a
 ## dotted gold rule, Era IV a clean rounded panel with a sky rule, Era V the same with a light
 ## gloss band along the top.
+## Frame kinds drawn with a two pixel ink rule (Era IV and V).
+const BOLD_FRAMES: Array[String] = ["panorama", "living"]
+
 static func _era_frame_texture(kind: String, bg: Color) -> ImageTexture:
 	var key: String = "%s:%s:%s" % [kind, bg.to_html(), INK.to_html()]
 	if _era_frames.has(key):
@@ -184,15 +187,18 @@ static func _era_frame_texture(kind: String, bg: Color) -> ImageTexture:
 					img.set_pixel(2, i, dot)
 					img.set_pixel(last - 2, i, dot)
 			_:
-				img.set_pixel(i, 0, INK)
-				img.set_pixel(i, last, INK)
-				img.set_pixel(0, i, INK)
-				img.set_pixel(last, i, INK)
-				if i > 0 and i < last:
-					img.set_pixel(i, 1, ACCENT)
-					img.set_pixel(1, i, ACCENT)
-					img.set_pixel(i, last - 1, ACCENT.darkened(0.15))
-					img.set_pixel(last - 1, i, ACCENT.darkened(0.15))
+				# Era IV/V: a two pixel ink rule, as heavy as their bold font.
+				var ink: int = 2 if kind in BOLD_FRAMES else 1
+				for ring: int in ink:
+					img.set_pixel(i, ring, INK)
+					img.set_pixel(i, last - ring, INK)
+					img.set_pixel(ring, i, INK)
+					img.set_pixel(last - ring, i, INK)
+				if i >= ink and i <= last - ink:
+					img.set_pixel(i, ink, ACCENT)
+					img.set_pixel(ink, i, ACCENT)
+					img.set_pixel(i, last - ink, ACCENT.darkened(0.15))
+					img.set_pixel(last - ink, i, ACCENT.darkened(0.15))
 	if kind == "living":
 		for x: int in range(2, last - 1):
 			img.set_pixel(x, 2, light)
