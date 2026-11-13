@@ -22,6 +22,7 @@ enum Type {
 	STATUS_VEIL,
 	# Lines of the KAMPF_PLAN_1000 arts and element rules (TechniqueRules): "text" % "args".
 	TECHNIQUE,
+	HELD_ITEM,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -219,6 +220,10 @@ func describe() -> String:
 			return str(data.get("text", "")) % (data.get("args", [who]) as Array)
 		Type.HELD_FRUIT:
 			return "%s eats its %s!" % [who, data.get("item_name", "")]
+		Type.HELD_ITEM:
+			if str(data.get("kind", "")) == "guard":
+				return "%s's %s takes the edge off the hit!" % [who, data.get("item_name", "")]
+			return "%s's %s stirs!" % [who, data.get("item_name", "")]
 		Type.WARDEN_WEAKENED:
 			return "A Warden Weakener dims %s's team: they start with 15%% less Vigor." % data.get("trainer", "")
 		Type.ENERGY_LOCKED:

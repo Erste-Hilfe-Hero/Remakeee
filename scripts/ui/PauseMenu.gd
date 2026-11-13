@@ -463,6 +463,9 @@ func run_records() -> void:
 			lines.append("Lexicon")
 		lines.append("Battle rules")
 		lines.append("Battle guide")
+		# Every gift and keepsake with what it does (Kampf plan items 245, 295).
+		lines.append("Gift book")
+		lines.append("Keepsake book")
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
@@ -490,6 +493,8 @@ func run_records() -> void:
 			"Lexicon": await run_lexicon()
 			"Battle rules": await run_rules_book()
 			"Battle guide": await run_battle_guide()
+			"Gift book": await info("\n".join(TraitKit.all_gift_lines()))
+			"Keepsake book": await info("\n".join(TraitKit.all_keepsake_lines()))
 			"Online replays":
 				if await OnlineReplaysMenu.run(self):
 					return
@@ -773,7 +778,12 @@ func run_team() -> void:
 		# Move Memory (shop item 4457).
 		if Billing.unlocked("move_memory") > 0:
 			opts.append("Relearn an art")
+		if not TraitKit.bonus_options(s).is_empty() or not s.bonus_trait.is_empty():
+			opts.append("Bonus gift")
 		var opt: int = await pick_strings(s.display_name(), opts)
+		if opt >= 0 and opts[opt] == "Bonus gift":
+			await _bonus_gift(s)
+			continue
 		if opt >= 0 and opts[opt] == "Relearn an art":
 			await _relearn(s)
 			continue
@@ -902,6 +912,20 @@ func _unfurl(s: Spirling, forward: bool) -> void:
 		Sound.sfx("level_up")
 	await info(("%s unfurls into %s!" if forward else "%s furls back into %s.") % [old_name, s.data.species_name])
 
+## A bonus gift next to its own (Kampf plan items 243, 274): unfolded, with enough kinship.
+func _bonus_gift(s: Spirling) -> void:
+	var ids: Array[String] = TraitKit.bonus_options(s)
+	var entries: Array[Dictionary] = []
+	for id: String in ids:
+		var t: Dictionary = TraitKit.info(id)
+		entries.append({"text": str(t.label) + (" *" if id == s.bonus_trait else ""), "hint": Loc.t(str(t.text))})
+	if not s.bonus_trait.is_empty():
+		ids.append("")
+		entries.append({"text": "Forget the bonus gift"})
+	var idx: int = await pick("Bonus gift", entries)
+	if idx >= 0 and TraitKit.learn_bonus(s, ids[idx]):
+		Sound.sfx("confirm")
+
 ## Give, swap or take off a keepsake.
 func _held_item(s: Spirling) -> void:
 	var ids: Array[String] = []
@@ -916,7 +940,7 @@ func _held_item(s: Spirling) -> void:
 			ids.append(str(id))
 			var it: Dictionary = Database.item(str(id))
 			entries.append({"text": "%s x%d" % [it.get("name", id), GameState.item_count(str(id))],
-				"hint": Loc.t(str(it.get("description", "")))})
+				"hint": Loc.t(str(it.get("description", ""))) + TraitKit.rarity_line(str(id))})
 	if ids.is_empty():
 		await info("You have nothing a Spirling can hold.\nKeepsakes are sold in Thornridge.")
 		return
