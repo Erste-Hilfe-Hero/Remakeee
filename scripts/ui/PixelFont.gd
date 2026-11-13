@@ -65,6 +65,20 @@ static func get_bold_font() -> FontFile:
 		_bold.fallbacks = cjk_fallbacks(_lang)
 	return _bold
 
+## Rows of a glyph drawn bold: each lit pixel also lights the next to its right, so every row
+## is one pixel wider. The Era IV/V fonts (bold set below, EraFont "bold") share it.
+static func embolden(rows: Array) -> Array[String]:
+	var out: Array[String] = []
+	for r: Variant in rows:
+		var line: String = str(r)
+		var b: String = ""
+		for x: int in line.length() + 1:
+			var here: bool = x < line.length() and line[x] == "#"
+			var left: bool = x > 0 and line[x - 1] == "#"
+			b += "#" if here or left else "."
+		out.append(b)
+	return out
+
 ## One glyph of the bold set: [method large_glyph] with each lit pixel also lighting the next.
 static func bold_glyph(ch: String) -> Array[String]:
 	var out: Array[String] = []

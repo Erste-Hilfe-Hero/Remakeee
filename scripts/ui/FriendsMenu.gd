@@ -180,6 +180,7 @@ static func card_text(f: Dictionary) -> String:
 	var c: Dictionary = f.get("card", {}) if f.get("card") is Dictionary else {}
 	var lines: Array[String] = [
 		"%s   Code %s" % [framed_name(f), Online.pretty_code(str(f.get("code", "")))],
+		"Title: %s" % str(c.title) if c.get("title") is String else "Title: -",
 		"Favourite: %s" % (str(f.favorite) if not str(f.get("favorite", "")).is_empty() else "-"),
 		"Rifts sealed: %d" % int(c.get("seals", 0)),
 		"Spirlog: %d seen, %d bonded" % [int(c.get("seen", 0)), int(c.get("bonded", 0))],
