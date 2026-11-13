@@ -141,3 +141,25 @@ static func tower_finds(old_best: int, new_best: int, section: int) -> Array[Str
 		if f % section == 0:
 			out.append(str(items[(f / section - 1) % items.size()]))
 	return out
+
+## Arts [param s] could learn at its current ring but did not, because its move list is full.
+static func missed_arts(s: Spirling, learned: Array[MoveData]) -> Array[String]:
+	var out: Array[String] = []
+	for mv: MoveData in s.data.moves_learned_at(s.level):
+		if not s.moves.has(mv) and not learned.has(mv):
+			out.append(mv.move_name)
+	return out
+
+static func missed_line(name: String, art: String) -> String:
+	return "%s could learn %s, but already knows four arts. It can learn it later." % [name, art]
+
+## One line with the growth each Spirling got this battle, fighters and bench alike, or "".
+static func distribution_line(party: Array, growth_by: Dictionary) -> String:
+	var parts: PackedStringArray = []
+	for i: int in party.size():
+		var g: int = int(growth_by.get(i, 0))
+		if g > 0:
+			parts.append("%s +%d" % [(party[i] as Spirling).display_name(), g])
+	if parts.is_empty():
+		return ""
+	return Loc.t("Growth: %s") % ", ".join(parts)

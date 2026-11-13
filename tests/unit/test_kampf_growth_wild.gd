@@ -53,7 +53,7 @@ func test_several_rings_at_once_get_one_summary_line() -> void:
 	assert_eq(s.level, 14)
 	var lines: Array[String] = []
 	for e: BattleEvent in m._events:
-		if e.type == BattleEvent.Type.SHOP_EDGE:
+		if e.type == BattleEvent.Type.SHOP_EDGE and e.describe().contains(" rings: "):
 			lines.append(e.describe())
 	assert_eq(lines, ["Kindlop grew 4 rings: ring 10 to ring 14."] as Array[String])
 	assert_eq(m.growth_total, Spirling.xp_for_level(14) - Spirling.xp_for_level(10))
@@ -237,3 +237,57 @@ func test_tower_sections_leave_finds() -> void:
 	for id: String in finds:
 		assert_false(Database.item(id).is_empty(), id)
 	assert_eq(GrowthRules.tower_finds(5, 9, 5), [] as Array[String], "only new section ends")
+
+func test_growth_line_names_every_spirling_that_grew() -> void:
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 10), BattleFixtures.make("Puddlet", 5)]
+	var m: BattleModel = _model(mine)
+	m._give_xp(mine[0], 30)
+	m._give_xp(mine[1], 12, true)
+	assert_eq(GrowthRules.distribution_line(mine, m.growth_by), "Growth: Kindlop +30, Puddlet +12")
+	assert_eq(GrowthRules.distribution_line(mine, {}), "")
+
+func test_a_full_move_list_gives_one_line_instead_of_a_choice() -> void:
+	var s: Spirling = BattleFixtures.make("Kindlop", 1)
+	var target: int = -1
+	for lv: int in range(2, 40):
+		if not s.data.moves_learned_at(lv).is_empty():
+			target = lv
+			break
+	assert_gt(target, 0, "Kindlop learns something")
+	s = BattleFixtures.make("Kindlop", target - 1)
+	while s.moves.size() < Spirling.MAX_MOVES:
+		s.moves.append(BattleFixtures.move(Elements.E.EMBER, 40))
+	var m: BattleModel = _model([s] as Array[Spirling])
+	m._events = []
+	m._give_xp(s, Spirling.xp_for_level(target) - s.xp)
+	var lines: Array[String] = []
+	for e: BattleEvent in m._events:
+		if e.type == BattleEvent.Type.SHOP_EDGE:
+			lines.append(e.describe())
+	assert_false(lines.is_empty())
+	assert_string_contains(lines[0], "already knows four arts")
+
+func test_swarms_and_kinds_of_the_week_raise_one_kind() -> void:
+	var sw: Dictionary = WildRules.swarm("2026-11-13")
+	assert_eq(sw, WildRules.swarm("2026-11-13"), "the same all day")
+	assert_true(str(sw.species) in EncounterTable.species_on(str(sw.table)), "a native kind")
+	var mults: Dictionary = WildRules.event_mults(str(sw.table), "2026-11-13")
+	assert_gte(int(mults.get(str(sw.species), 1)), int(WildRules.data().swarm_mult))
+	assert_eq(WildRules.week_of("2026-11-13"), WildRules.week_of("2026-11-14"))
+	assert_ne(WildRules.week_of("2026-11-13"), WildRules.week_of("2026-11-25"))
+	var t: String = EncounterTable.table_ids()[0]
+	assert_true(WildRules.weekly(t, 100) in EncounterTable.species_on(t))
+	assert_false(WildRules.event_lines("2026-11-13").is_empty())
+
+func test_event_weights_steer_the_roll() -> void:
+	var t: String = EncounterTable.table_ids()[0]
+	var kinds: Array[String] = EncounterTable.species_on(t)
+	var favourite: String = kinds[kinds.size() - 1]
+	var hits: int = 0
+	for i: int in 200:
+		var rng := RandomNumberGenerator.new()
+		rng.seed = i
+		var w: Spirling = EncounterTable.roll(t, rng, [] as Array[int], "", {}, {favourite: 1000})
+		if w != null and w.data.species_name == favourite:
+			hits += 1
+	assert_gt(hits, 150)

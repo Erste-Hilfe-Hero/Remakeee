@@ -155,6 +155,8 @@ var bench_share: float = 0.0
 ## Growth the player's side gained this battle, and the bench's part of it (GrowthRules.after_battle).
 var growth_total: int = 0
 var bench_growth: int = 0
+## Growth per player team index this battle (the after-battle growth line).
+var growth_by: Dictionary = {}
 ## Echo calls the player made this battle (WildRules bond statistics).
 var bond_tries: int = 0
 ## True once the Rift boss has entered its second phase.
@@ -1743,7 +1745,11 @@ func _give_xp(s: Spirling, amount: int, bench: bool = false) -> void:
 		emit_event(BattleEvent.Type.LEVEL_UP, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "level": s.level, "hp": s.hp, "max_hp": s.max_hp()})
 		for mv: MoveData in learned:
 			emit_event(BattleEvent.Type.MOVE_LEARNED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "move": mv.move_name})
+		# A full move list never stops the battle for a choice: one line, the art waits for later.
+		for missed: String in GrowthRules.missed_arts(s, learned):
+			emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.PLAYER, "text": GrowthRules.missed_line(s.display_name(), missed)})
 	growth_total += gained
+	growth_by[index] = int(growth_by.get(index, 0)) + gained
 	if bench:
 		bench_growth += gained
 	# Several rings at once get one summary line (KAMPF_PLAN item "Level-Aufstieg-Zusammenfassung").

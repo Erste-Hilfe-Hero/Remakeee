@@ -47,3 +47,8 @@ T.update({
 T.update({
 "| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (Tamer) | Story |": "| Ring | Wachstum bis dahin | Bis zum nächsten Ring | Gleiche Wildkämpfe bis zum nächsten Ring (Tamer) | Story |",
 })
+T.update({
+"%s could learn %s, but already knows four arts. It can learn it later.": "%s könnte %s lernen, kennt aber schon vier Techniken. Es kann sie später lernen.",
+"Growth: %s": "Wachstum: %s",
+"Swarm today: %s near %s": "Schwarm heute: %s bei %s",
+})

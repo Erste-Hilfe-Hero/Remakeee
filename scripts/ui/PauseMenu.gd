@@ -478,7 +478,7 @@ func run_records() -> void:
 			"Run chronicle": await info("\n".join(RunChronicle.lines()))
 			"Era functions": await run_era_functions()
 			"Finds by region": await info("\n".join(RegionStats.lines(GameState.flags)))
-			"Growth and bonds": await info("\n".join(GrowthRules.summary_lines(GameState.records) + WildRules.bond_lines(GameState.records)))
+			"Growth and bonds": await info("\n".join(GrowthRules.summary_lines(GameState.records) + WildRules.bond_lines(GameState.records) + WildRules.event_lines(DailyFind.today_key())))
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Lexicon": await run_lexicon()

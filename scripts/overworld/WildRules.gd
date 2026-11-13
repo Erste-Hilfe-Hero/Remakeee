@@ -96,3 +96,50 @@ static func bond_lines(records: Dictionary) -> Array[String]:
 	return [Loc.t("Echo calls answered: %d") % int(st.get("tries", 0)),
 		Loc.t("Bonds formed: %d") % int(st.get("bonds", 0)),
 		Loc.t("Kinds bonded this way: %d") % (st.get("kinds", {}) as Dictionary).size()] as Array[String]
+
+## The day's swarm (KAMPF_PLAN "Wild-Schwarm-Ereignisse"): one native kind on one table steps
+## out swarm_mult times as often all day. {"table", "species"} or {} without data.
+static func swarm(day: String) -> Dictionary:
+	var tables: Array[String] = EncounterTable.table_ids()
+	tables.sort()
+	if tables.is_empty():
+		return {}
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash("chimora-swarm-" + day)
+	var table: String = tables[rng.randi_range(0, tables.size() - 1)]
+	var kinds: Array[String] = EncounterTable.species_on(table)
+	if kinds.is_empty():
+		return {}
+	return {"table": table, "species": kinds[rng.randi_range(0, kinds.size() - 1)]}
+
+## Week key of the day key "YYYY-MM-DD": weeks since 1970 (Thursday start, like unix days).
+static func week_of(day: String) -> int:
+	var unix: int = Time.get_unix_time_from_datetime_string(day + "T00:00:00")
+	return int(floor(unix / 86400.0 / 7.0))
+
+## The kind of the week on [param table] (KAMPF_PLAN "Wild-Begegnung Wochen-Spawn"), or "".
+static func weekly(table: String, week: int) -> String:
+	var kinds: Array[String] = EncounterTable.species_on(table)
+	if kinds.is_empty():
+		return ""
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash("chimora-week-%d-%s" % [week, table])
+	return kinds[rng.randi_range(0, kinds.size() - 1)]
+
+## Weight factors {species: mult} for [param table] on [param day] (swarm and kind of the week).
+static func event_mults(table: String, day: String) -> Dictionary:
+	var out: Dictionary = {}
+	var wk: String = weekly(table, week_of(day))
+	if not wk.is_empty():
+		out[wk] = int(data().get("weekly_mult", 1))
+	var sw: Dictionary = swarm(day)
+	if str(sw.get("table", "")) == table:
+		out[str(sw.species)] = int(out.get(str(sw.species), 1)) * int(data().get("swarm_mult", 1))
+	return out
+
+## Lines for the records page: today's swarm.
+static func event_lines(day: String) -> Array[String]:
+	var sw: Dictionary = swarm(day)
+	if sw.is_empty():
+		return []
+	return [Loc.t("Swarm today: %s near %s") % [Loc.t(str(sw.species)), Spirling.place_name(str(sw.table))]] as Array[String]

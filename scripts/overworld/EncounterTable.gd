@@ -109,16 +109,17 @@ static func spawns_on(id: String, ground: String) -> Array:
 
 ## Rolls a wild Spirling, or returns null if the table is empty.
 ## [param chain] is the saved Gleam chain (GameState.gleam_chain); one Gleam draw follows the Prism one.
-static func roll(id: String, rng: RandomNumberGenerator, boost: Array[int] = [], ground: String = "", chain: Dictionary = {}) -> Spirling:
+## [param events] multiplies the weight of kinds ({species: mult}, WildRules.event_mults).
+static func roll(id: String, rng: RandomNumberGenerator, boost: Array[int] = [], ground: String = "", chain: Dictionary = {}, events: Dictionary = {}) -> Spirling:
 	var spawns: Array = spawns_on(id, ground)
 	var total: int = 0
 	for s: Dictionary in spawns:
-		total += weight_of(s, boost)
+		total += weight_of(s, boost) * int(events.get(str(s.species), 1))
 	if total <= 0:
 		return null
 	var pick: int = rng.randi_range(1, total)
 	for s: Dictionary in spawns:
-		pick -= weight_of(s, boost)
+		pick -= weight_of(s, boost) * int(events.get(str(s.species), 1))
 		if pick <= 0:
 			var sd: SpirlingData = Database.species(str(s.species))
 			if sd == null:

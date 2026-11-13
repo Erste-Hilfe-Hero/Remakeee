@@ -2,6 +2,7 @@
  "_comment": "German texts from tools/i18n/de_kampf_k10.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
  "keep": [],
  "strings": {
+  "%s could learn %s, but already knows four arts. It can learn it later.": "%s könnte %s lernen, kennt aber schon vier Techniken. Es kann sie später lernen.",
   "%s grew %d rings: ring %d to ring %d.": "%s ist um %d Ringe gewachsen: von Ring %d auf Ring %d.",
   "%s's %s spark is washed out.": "Der {1}-Funke von {0} ist ausgewaschen.",
   "Ancient": "Uralt",
@@ -17,6 +18,7 @@
   "Growth and rings": "Wachstum und Ringe",
   "Growth by region": "Wachstum nach Region",
   "Growth fills a Spirling's ring; each ring needs more than the last, and there is no top ring. Wayfarers give half again as much growth as wild Spirlings. Story grows a quarter faster, rematches a fifth, a Growth Charm half again, and a Spirling that is very fond of you a little more. Before Era V, a higher ring than the foe costs nothing.": "Wachstum füllt den Ring eines Spirlings; jeder Ring braucht mehr als der letzte, und es gibt keinen höchsten Ring. Wanderer geben anderthalbmal so viel Wachstum wie wilde Spirlings. Auf Story wächst man ein Viertel schneller, in Rückkämpfen ein Fünftel, mit einem Wachstums-Glücksbringer anderthalbmal so schnell, und ein Spirling, der dir sehr verbunden ist, ein wenig mehr. Vor Ära V kostet ein höherer Ring als der des Gegners nichts.",
+  "Growth: %s": "Wachstum: %s",
   "Hold it out during a bond: the shell hums the call back and steadies the link a little more than a Kin Charm.": "Halte sie beim Binden hin: Die Muschel summt den Ruf zurück und festigt die Verbindung etwas mehr als ein Sippenamulett.",
   "Keepsake. A knotted cord that hums after every battle: the holder gains half again as much growth.": "Andenken. Eine geknotete Schnur, die nach jedem Kampf summt: Der Träger erhält anderthalbmal so viel Wachstum.",
   "Kinds bonded this way: %d": "Arten so gebunden: %d",
@@ -25,6 +27,7 @@
   "Rarity: %s": "Seltenheit: %s",
   "Spark Wash": "Funkenwäsche",
   "Spirlings in your team that stay on the bench still watch and learn: each healthy one gets half the growth of a fighter. Only the team learns, never the storage; a knocked-out Spirling learns nothing, and a ring cap holds for the bench too. Switch it in Settings.": "Spirlings deines Teams, die auf der Bank bleiben, schauen zu und lernen trotzdem: Jeder gesunde bekommt die Hälfte des Wachstums eines Kämpfers. Nur das Team lernt, nie das Lager; ein besiegter Spirling lernt nichts, und eine Ring-Grenze gilt auch für die Bank. Umschalten in den Einstellungen.",
+  "Swarm today: %s near %s": "Schwarm heute: %s bei %s",
   "That spark is already dark.": "Dieser Funke ist schon erloschen.",
   "Tower find: %s": "Fund im Turm: %s",
   "Uncommon": "Selten",

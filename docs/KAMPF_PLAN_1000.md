@@ -808,7 +808,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Fortschritt, XP und Training
 
 721. [x] Lager-Lernen: Spirlings auf der Bank erhalten die Hälfte der XP (Einstellung, Standard an)
-722. [ ] XP-Verteilung im Kampfende-Bericht
+722. [x] XP-Verteilung im Kampfende-Bericht (Wachstums-Zeile nach dem Kampf, GrowthRules.distribution_line)
 723. [x] Level-Cap blockiert XP (bestehend) (BattleModel._give_xp, Test test_kampf_growth_wild)
 724. [ ] Spark-Training (bestehend) mit Kampfquellen
 725. [x] Technik-Lehrer (Echo-Kristalle mit teaches/for_elements, GameState.can_learn_echo)
@@ -828,7 +828,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 739. [ ] Trainings-Ziele (Quests)
 740. [ ] Trainings-Statistik
 741. [x] Level-Aufstieg-Zusammenfassung bei mehreren Levels (GrowthRules.summary_line im Kampflog)
-742. [ ] Lern-Technik-Dialog überspringbar
+742. [x] Lern-Technik-Dialog überspringbar (kein Wahl-Dialog mitten im Kampf, nur eine Zeile, GrowthRules.missed_arts)
 743. [x] Lern-Technik später nachholen (GameState.relearn)
 744. [x] XP für Partner-Spirlings nie (bestehend) (BattleModel._award_xp is_partner_index)
 745. [x] XP in Online-Duellen nie (Fairness) (EchoTeam.duel_copy, Test)
@@ -860,7 +860,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 768. [ ] Bond-Erfolg-Animation eigenständig
 769. [x] Wild-Begegnungen im Farn, Schilf, Geröll (bestehend)
 770. [x] Wild-Ketten-Bonus (Prisma-Chance steigt) (WildRules.prism_chance)
-771. [ ] Wild-Schwarm-Ereignisse
+771. [x] Wild-Schwarm-Ereignisse (WildRules.swarm)
 772. [x] Wild-Spawns nach Tageszeit (bestehend)
 773. [x] Wild-Spawns nach Feld (Wetter hebt Elemente, WildRules.weather_boost)
 774. [x] Wild-Auto-Kampf (bestehend)
@@ -888,7 +888,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 796. [x] Wild-Begegnung im Riss mit Feld (Kartenfeld gilt für Wildkämpfe)
 797. [x] Wild-Begegnung als Tageshighlight (bestehend Find of the Day)
 798. [x] Wild-Begegnung Online-Echo (OnlineEvents.sighting_boost)
-799. [ ] Wild-Begegnung Wochen-Spawn
+799. [x] Wild-Begegnung Wochen-Spawn (WildRules.weekly)
 800. [x] Wild-Begegnung Fest-Spawn (Season-Boost)
 
 ## Endgame-Kampfmodi
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-97 von 1000 Punkten umgesetzt.
+101 von 1000 Punkten umgesetzt.
 

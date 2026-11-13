@@ -782,7 +782,8 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				for e: int in WildRules.weather_boost(WeatherCycle.current(map)):
 					if not e in boost:
 						boost.append(e)
-				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain)
+				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain,
+					WildRules.event_mults(map.encounter_table, DailyFind.today_key()))
 				if wild != null:
 					GameState.gleam_chain = GleamRules.next_chain(GameState.gleam_chain, wild)
 			if wild != null:
@@ -4036,6 +4037,10 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	for id: String in GrowthRules.after_battle(GameState.records, map.region, model.growth_total, model.bench_growth) + WildRules.after_battle(GameState.records, model):
 		toast.show_note(Loc.t("New lexicon entry: %s") % Loc.t(Lexicon.title(id)))
+	# Who got how much growth (KAMPF_PLAN "XP-Verteilung im Kampfende-Bericht").
+	var grown: String = GrowthRules.distribution_line(model.parties[0], model.growth_by)
+	if not grown.is_empty():
+		toast.show_note(grown, null, "")
 	Kinship.after_battle(GameState.party, model.participants, outcome == BattleModel.Outcome.WIN)
 	var had_growth: bool = ShopEffects.boost_left("growth") > 0
 	ShopEffects.battle_done()
