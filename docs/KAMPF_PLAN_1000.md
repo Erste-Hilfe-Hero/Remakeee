@@ -52,7 +52,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 17. [x] Klare Regel: Gegenstände kosten den ganzen Zug des Spirlings, der sie benutzt (RulesBook, test_kampf_k01)
 18. [x] Rückzug aus Wildkämpfen bleibt ohne Kosten, wiederholte Versuche werden leichter (bestehend, dokumentieren) (RulesBook.fleeing)
 19. [x] Endzug-Reihenfolge festlegen und im Lexikon erklären: Status, Regeneration, Energie, Feld (RulesBook.end_of_turn)
-20. [x] Kampfende-Zusammenfassung: Schaden, K.o.s, MVP-Spirling (BattleSummary)
+20. [x] Kampfende-Zusammenfassung: Schaden, K.o.s, MVP-Spirling (BattleSummary; BattleInfo.star_of)
 21. [x] Zug-Limit für Boss-Kämpfe (z. B. 30 Züge), danach Riss schließt sich erneut (BOSS_ROUND_LIMIT, ROUND_LIMIT)
 22. [ ] Optionale 'Sanfte Niederlage' auf Story: Team erwacht mit halben HP am Kampfort
 23. [x] Seed des Kampfes im Log anzeigen (für Wiederholungen und Fehlerberichte) (BattleSummary.seed_line im Log)
@@ -120,81 +120,81 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Elemente und Matchups
 
 81. [ ] Matchup-Tabelle im Lexikon, die sich mit gesehenen Treffern füllt (bestehend: gelernte Matchups)
-82. [ ] Story-Stufe zeigt alle Matchups von Anfang an (bestehend)
+82. [x] Story-Stufe zeigt alle Matchups von Anfang an (bestehend) (bestehend: GameState.known_matchups, Story zeigt alle)
 83. [ ] Matchup-Symbole mit Form statt Farbe (bestehend: Elementsymbole) auch im Lexikon
 84. [ ] Doppel-Element-Erklärung: beide Faktoren multiplizieren, im Lexikon zeigen
-85. [ ] Element-Resonanz: zwei Verbündete mit gleichem Element erhalten +5 % Schaden
-86. [ ] Element-Wechsel-Technik: Ziel wird für 3 Runden zu einem anderen Element
-87. [ ] Element-Schutz-Gegenstand: halbiert einen sehr effektiven Treffer einmal
-88. [ ] Element-Verstärker als gehaltene Gegenstände (+15 % für ein Element)
+85. [x] Element-Resonanz: zwei Verbündete mit gleichem Element erhalten +5 % Schaden (TechniqueRules.resonance_mult)
+86. [x] Element-Wechsel-Technik: Ziel wird für 3 Runden zu einem anderen Element (Farbbad (Dye Bath), Spirling.element_shift)
+87. [x] Element-Schutz-Gegenstand: halbiert einen sehr effektiven Treffer einmal (Schutzschale (Ward Shell), held super_guard)
+88. [x] Element-Verstärker als gehaltene Gegenstände (+15 % für ein Element) (bestehend: Prismen +20 %, Amulette +10 % je Element)
 89. [ ] Neutral-Techniken ohne Element für jeden Spirling
 90. [ ] Matchup-Lernen auch durch Lexikon-Einträge (Lore-Seiten)
 91. [ ] Elementsymbol am Ziel-Pin im Mehrfachkampf
 92. [ ] Effektivitäts-Hinweis im Mehrfachkampf pro Ziel bei der Zielwahl
-93. [ ] Element-Balance-Bericht: welches Element gewinnt im Simulator zu oft
+93. [x] Element-Balance-Bericht: welches Element gewinnt im Simulator zu oft (bestehend: tools/balance/type_sim.py chart_report)
 94. [ ] Neue Feld-Elemente pro Riss variieren
 95. [x] Element-Reaktion: Tide trifft Scorch-Ziel und löscht den Status
 96. [x] Element-Reaktion: Volt trifft Soak-Ziel für +20 % Schaden
-97. [ ] Element-Reaktion: Ember auf Root-Ziel befreit es, verursacht aber Scorch
+97. [x] Element-Reaktion: Ember auf Root-Ziel befreit es, verursacht aber Scorch (BattleRules.REACTIONS inflict)
 98. [ ] Element-Reaktionen im Lexikon erklären
 99. [ ] Matchup-Quiz als Minispiel im Leuchtturm
-100. [ ] Effektivitäts-Text in eigener Wortwahl (bestehend: 'overwhelming', 'barely landed')
-101. [ ] Unwirksam-Treffer (x0) gibt es nicht, nur x0.25 (Designregel festhalten)
+100. [x] Effektivitäts-Text in eigener Wortwahl (bestehend: 'overwhelming', 'barely landed') (bestehend: BattleEvent DAMAGE)
+101. [x] Unwirksam-Treffer (x0) gibt es nicht, nur x0.25 (Designregel festhalten) (Regel in docs/BALANCE.md, test_kampf_techniques)
 102. [ ] Element-Dominanz pro Region als Wild-Spawn-Tabelle
-103. [ ] Trait 'Prisma-Haut': nimmt bei x2 nur x1.5
-104. [ ] Trait 'Gegenstrom': resistiert das Element, das es zuletzt getroffen hat
+103. [x] Trait 'Prisma-Haut': nimmt bei x2 nur x1.5 (verborgene Gabe Prismenhaut (Cullet-Linie))
+104. [x] Trait 'Gegenstrom': resistiert das Element, das es zuletzt getroffen hat (verborgene Gabe Gegenstrom (Paddlewisp-Linie))
 105. [ ] Element-Statistik im Kampfende-Bericht
-106. [ ] Matchup-Kenntnis wird pro Spielstand gespeichert (bestehend)
+106. [x] Matchup-Kenntnis wird pro Spielstand gespeichert (bestehend) (bestehend: SaveManager matchups)
 107. [ ] Online: Matchup-Wissen teilt sich mit Freunden (Laternenpost-Bonus)
 108. [ ] Element-Icons im Hochkontrast-Modus größer
-109. [ ] Element-Namen bleiben in allen Sprachen gleich (bestehend)
-110. [ ] Element-Tabelle bleibt eigenständig, nie aus anderen Spielen übernehmen (Regel)
+109. [x] Element-Namen bleiben in allen Sprachen gleich (bestehend) (bestehend: Elements.element_name ohne Übersetzung)
+110. [x] Element-Tabelle bleibt eigenständig, nie aus anderen Spielen übernehmen (Regel) (Regel in docs/BALANCE.md)
 111. [ ] Ein Element pro Riss als Thema der Warden
 112. [ ] Element-Training: Spark-Werte steigen schneller im passenden Feld
 113. [ ] Element-Glyphen animieren beim sehr effektiven Treffer
 114. [ ] Element-Mischtechniken (zwei Elemente, nimmt das bessere)
-115. [ ] Element-Schild-Technik für das ganze Team (3 Runden)
-116. [ ] Elementarer Nachhall: Bonus, wenn zwei Verbündete im selben Zug dasselbe Element nutzen
+115. [x] Element-Schild-Technik für das ganze Team (3 Runden) (Schutzkreis (Ward Circle))
+116. [x] Elementarer Nachhall: Bonus, wenn zwei Verbündete im selben Zug dasselbe Element nutzen (TechniqueRules.echo_mult)
 117. [ ] Element-Rätsel in der Welt, die Kampfwissen belohnen
 118. [ ] Element-Filter im Lager
 119. [ ] Element-Schwäche-Warnung beim Einwechseln
-120. [ ] Gegner-Element im Info-Streifen (bestehend)
+120. [x] Gegner-Element im Info-Streifen (bestehend) (bestehend: InfoStrip zeichnet Elementsymbole)
 
 ## Techniken
 
 121. [x] Resonanz-Techniken: Ash Call, Tide Call und Murk Call legen 5 Runden lang ein Rift-Feld
 122. [ ] Feld-Restzüge im Log ansagen und beim Ende melden
-123. [ ] Schutz-Technik 'Brace': hält einen Treffer ab, zweimal hintereinander schlägt fehl
-124. [ ] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Wayfarer-Kämpfe)
+123. [x] Schutz-Technik 'Brace': hält einen Treffer ab, zweimal hintereinander schlägt fehl (Standhalten (Hold Fast))
+124. [x] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Wayfarer-Kämpfe) (Wegschubser (Shove Off))
 125. [ ] Mehrstufige Technik: lädt eine Runde, trifft dann doppelt
-126. [ ] Konter-Technik: wirft physischen Schaden x1.5 zurück
-127. [ ] Heil-Technik für Verbündete im Mehrfachkampf
-128. [ ] Team-Stufen-Technik (alle Verbündeten DEF +1)
-129. [ ] Wurzel-Technik, die Wechsel für 3 Runden blockiert (bestehend: Root)
+126. [x] Konter-Technik: wirft physischen Schaden x1.5 zurück (Grollrückgabe (Grudge Return))
+127. [x] Heil-Technik für Verbündete im Mehrfachkampf (Sippenbalsam (Kindred Balm))
+128. [x] Team-Stufen-Technik (alle Verbündeten DEF +1) (Reih und Glied (Rank and File))
+129. [x] Wurzel-Technik, die Wechsel für 3 Runden blockiert (bestehend: Root) (bestehend: Root blocks_swap)
 130. [ ] Technik, die Stufen des Ziels zurücksetzt
-131. [ ] Technik, die eigene negative Stufen löscht
-132. [ ] Technik mit steigender Stärke bei Wiederholung
-133. [ ] Technik, die stärker ist, wenn das Ziel zuerst gehandelt hat
-134. [ ] Technik, die stärker ist, wenn der Nutzer zuerst handelt
-135. [ ] Technik mit Treffer-Serie (2 bis 4 Treffer)
-136. [ ] Technik, die das Feld beendet
-137. [ ] Technik, die Status vom ganzen Team heilt
+131. [x] Technik, die eigene negative Stufen löscht (Abschütteln (Shake Loose))
+132. [x] Technik mit steigender Stärke bei Wiederholung (Trommelwirbel (Rolling Drum))
+133. [x] Technik, die stärker ist, wenn das Ziel zuerst gehandelt hat (Späte Antwort (Late Reply))
+134. [x] Technik, die stärker ist, wenn der Nutzer zuerst handelt (Eröffnungszug (Opening Gambit))
+135. [x] Technik mit Treffer-Serie (2 bis 4 Treffer) (Kieselhagel (Pebble Hail))
+136. [x] Technik, die das Feld beendet (Rissstille (Rift Hush))
+137. [x] Technik, die Status vom ganzen Team heilt (bestehend: Effekt cure_team)
 138. [ ] Technik-Lehrer im Leuchtturm (vergessene Techniken neu lernen)
-139. [ ] Echo-Kristalle (bestehend) als Quelle seltener Techniken ausbauen
+139. [x] Echo-Kristalle (bestehend) als Quelle seltener Techniken ausbauen (19 neue Echo-Kristalle bei Hesper im Leuchtturm)
 140. [ ] Technik-Tausch-Vorschau: alte und neue Technik nebeneinander
 141. [x] Technik-Beschreibung mit Effekt-Chancen im Lexikon
 142. [ ] Techniken mit Signatur pro Art (eine je Art, eigenständig)
-143. [ ] Keine Technik-Namen aus anderen Spielen (Prüfliste vor jedem Merge)
+143. [x] Keine Technik-Namen aus anderen Spielen (Prüfliste vor jedem Merge) (tools/ip_check.sh in CI, test_rule_checks)
 144. [ ] Status-Techniken mit Genauigkeit unter 100 % sichtbar machen
 145. [ ] Technik-Kategorie Physisch/Fokus/Status mit Symbol
-146. [ ] Mehrfachziel-Techniken zeigen 'alle' (bestehend)
-147. [ ] Technik 'Ablenkung': zieht alle Einzelziele drei Runden auf sich
-148. [ ] Technik 'Schulterschluss': schützt einen Verbündeten
-149. [ ] Technik 'Nachglut': Schaden über 3 Runden
-150. [ ] Technik 'Spiegelung': kopiert die letzte Gegner-Stufenänderung
-151. [ ] Technik 'Ruhepunkt': heilt 50 %, Nutzer schläft 1 Runde (Drowse)
-152. [ ] Technik 'Druckwelle': trifft alle, auch Verbündete, sehr stark (Risiko-Technik)
-153. [ ] Techniken mit Feld-Bedingung (stärker in passendem Feld)
+146. [x] Mehrfachziel-Techniken zeigen 'alle' (bestehend) (bestehend: Info-Karte 'Reaches every foe.')
+147. [x] Technik 'Ablenkung': zieht alle Einzelziele drei Runden auf sich (Lichtköder (Bright Lure))
+148. [x] Technik 'Schulterschluss': schützt einen Verbündeten (Schulterschluss (Close Ranks))
+149. [x] Technik 'Nachglut': Schaden über 3 Runden (Nachglut (Ember Afterglow))
+150. [x] Technik 'Spiegelung': kopiert die letzte Gegner-Stufenänderung (Geliehene Haltung (Borrowed Stance))
+151. [x] Technik 'Ruhepunkt': heilt 50 %, Nutzer schläft 1 Runde (Drowse) (Ruhepunkt (Still Point))
+152. [x] Technik 'Druckwelle': trifft alle, auch Verbündete, sehr stark (Risiko-Technik) (Druckwelle (Ground Burst))
+153. [x] Techniken mit Feld-Bedingung (stärker in passendem Feld) (bestehend: field_element-Techniken)
 154. [ ] Techniken mit Tageszeit-Bedingung (Tag/Nacht bestehend)
 155. [ ] Technik-Balancing über den Simulator pro neuer Technik
 156. [ ] Lernlisten pro Art auf Lücken prüfen (jede Art hat eine Status-Technik)
@@ -726,7 +726,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 643. [x] Weniger Bewegung (bestehend) schaltet Wackeln ab (bestehend: Juice.shake_scale ist 0 bei weniger Bewegung)
 644. [x] Treffer-Pause beim Krit (BattleShow.crit_hitstop, data/battle_show.json)
 645. [x] Kamera-Zoom beim Boss-Phasenwechsel (BattleShow._phase_zoom: harter Ganzzahl-Zoom in Ära I-III, IV/V behalten ihre Kamera)
-646. [ ] Feld-Tönung im Hintergrund
+646. [x] Feld-Tönung im Hintergrund (bestehend: FieldBadge.tint_rect mit RiftFields.tint je Feld und Ära, #525)
 647. [x] Status-Partikel (SpirlingAura: Partikel je Status aus data/battle_show.json)
 648. [x] Stufen-Aura (SpirlingAura: Punktring an den Füßen, warm bei Plus, kühl bei Minus)
 649. [x] K.o.-Animation eigenständig (Verblassen statt Umfallen) (bestehend: SpirlingSprite.faint sinkt und verblasst)
@@ -735,26 +735,26 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 652. [x] Sprite-Atmen im Leerlauf (bestehend: Atem-Frames und breath_scale ab Ära IV, Ära I-III stehen still wie damals)
 653. [x] Sprite-Reaktion auf Treffer (bestehend: knockback und hit_flash)
 654. [x] Siegespose (BattleShow._victory_pose: Hüpfer und Glanz ab Ära III)
-655. [ ] Boss-Größe
+655. [x] Boss-Größe (BattleShow.boss_rect: ein einzelner Riss-Boss steht in Ära I-III in voller Bildgröße, data/battle_show.json boss_size)
 656. [x] Mehrfachkampf-Formation (bestehend) (bestehend: BattleScene.formation_slots)
 657. [x] Kampf-Übergang pro Ära (bestehend: BattleIntro pro Ära)
 658. [x] Kampf-Hintergrund pro Gebiet (bestehend Backdrop) (bestehend: BattleBackdrop je Gebiet)
 659. [x] Kampf-Hintergrund Tag/Nacht (BattleShow.night_tint auf dem Hintergrund, nur draußen)
 660. [x] Kampf-Intro kürzer bei Rückkämpfen (BattleShow.intro_share: Rückkampf mit kurzem Intro ohne Blitze)
-661. [ ] Kampf-Outro mit Bericht
-662. [ ] Fotomodus im Kampf (bestehend)
+661. [x] Kampf-Outro mit Bericht (BattleShow.play_outro: Berichtskarte am Kampfende, Tippen schließt sie)
+662. [x] Fotomodus im Kampf (bestehend) (PhotoMode aus der Oberwelt, im Kampf über 'Foto machen' im Kampflog)
 663. [x] Replay mit Tempo-Wahl (bestehend: BattleScene spielt replay_inputs, der Tempo-Knopf gilt dabei)
-664. [ ] Animation-Budget pro Frame (Handy)
+664. [x] Animation-Budget pro Frame (Handy) (BattleShow.fx_fps/fx_particles: Effekte zeichnen auf dem Handy und im Batteriesparmodus höchstens 30-mal pro Sekunde)
 665. [x] Animation ohne Blitz-Effekte (Epilepsie-Sicherheit) (bestehend: tools/fx_flash_check.tscn, höchstens 3 Pulse pro Sekunde)
 666. [x] Animation-Tests im Screenshot-Werkzeug (bestehend: tools/fx_gallery.gd und tools/era_battle_shots.gd)
 667. [x] Pixel-Perfect bleibt bei Effekten (bestehend: Juice rundet Positionen; neue Marken auf ganzen Pixeln)
 668. [x] Effekte in Ära-Palette (bestehend: EraMoveFx in Ära-Farben; Aura in Ära I in Palettenfarben)
-669. [ ] Effekte mit Hochkontrast-Variante
-670. [ ] Effekte im Asset-Log
-671. [ ] Treffer-Zahlen optional einblenden
-672. [ ] Schadenszahl in Weiß mit Tintenrand
+669. [x] Effekte mit Hochkontrast-Variante (ElementFx.hc_ink: Tinte und Akzent, jede Form mit Papierrand; SpirlingAura bestehend)
+670. [x] Effekte im Asset-Log (docs/ASSET_LOG.md: Effekt-PNGs bestehend, Code-Effekte jetzt genannt)
+671. [x] Treffer-Zahlen optional einblenden (Einstellung Schadenszahlen, Standard aus; BattleShow.show_number)
+672. [x] Schadenszahl in Weiß mit Tintenrand (BattleShow.show_number: weiße Ziffern mit Tinten-Umriss)
 673. [x] HP-Balken-Tween (bestehend) (bestehend: InfoStrip.animate_hp)
-674. [ ] Energie-Pips-Animation
+674. [x] Energie-Pips-Animation (InfoStrip.pip_look: neue Pips springen auf, verbrauchte verblassen)
 675. [x] Feld-Banner beim Start (BattleShow-Banner mit dem Feldnamen)
 676. [x] Phasen-Banner beim Boss (BattleShow-Banner '%s erwacht')
 677. [x] Regel-Banner beim Warden (bestehend: RuleBanner beim RULE-Ereignis)
@@ -767,7 +767,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 681. [x] Treffer-Sounds pro Element (bestehend) (bestehend: Sound.element_hit)
 682. [x] Krisen-Musik bei wenig HP (bestehend) (bestehend: battle_pinch)
 683. [x] Boss-Phasen-Musik (boss_phase-Klang und Musik-Tonhöhe in Phase 2 (Sound.music_pitch))
-684. [ ] Feld-Klangteppich
+684. [x] Feld-Klangteppich (BattleShow: jedes Riss-Feld legt seine Ambiente-Schleife leise unter den Kampf, data/battle_show.json field_ambience)
 685. [x] Status-Sounds (status_<id>.wav je Status, BattleAudio.status_sound)
 686. [x] Stufen-Sounds steigend (stage_up/stage_down, Tonhöhe steigt je Stufe)
 687. [x] Overcharge-Sound steigend (overcharge.wav, Tonhöhe nach eingesetzter Energie)
@@ -778,7 +778,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 692. [x] Niederlagen-Jingle (defeat.wav, Musik blendet aus)
 693. [x] Bond-Melodie (bestehend: Echo-Ruf im BondMinigame in der Tonleiter des Elements)
 694. [x] Lautstärke Musik/SFX getrennt (bestehend) (bestehend: Busse Musik, SFX, UI, Stimme, Ambiente)
-695. [ ] Audio-Ducking bei Text
+695. [x] Audio-Ducking bei Text (TextBox.duck_music im Kampf, Sound.duck_music, text_duck_db)
 696. [x] Audio-Hinweise für Blinde (Effektivität als Ton) (eff_up/eff_down-Töne nach dem Treffer)
 697. [x] Audio-Test-Raum (bestehend Sound-Test) (bestehend: Menü Sound-Test)
 698. [x] Audio im Asset-Log (bestehend: docs/ASSET_LOG.md, neue Klänge eingetragen)
@@ -795,12 +795,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 709. [x] Audio für Schadensvorschau (kein Ton) (bestehend: die Vorschau im CommandMenu spielt keinen Ton)
 710. [x] Audio-Tests (bestehend) (bestehend: test_audio, test_sound, neu test_battle_show)
 711. [x] Audio-Fade beim Kampfende (Musik blendet bei Niederlage und Flucht aus)
-712. [ ] Audio-Loop sauber
-713. [ ] Audio-Nacht-Variante
-714. [ ] Audio-Fest-Variante
-715. [ ] Audio-Wochen-Echo-Thema
-716. [ ] Audio-Turm-Thema
-717. [ ] Audio-Online-Duell-Thema
+712. [x] Audio-Loop sauber (music.close_loop für alle Kampf-Schleifen, Prüfung tools/audio/loop_check.py)
+713. [x] Audio-Nacht-Variante (battle_night.ogg, nachts draußen; BattleAudio.theme)
+714. [x] Audio-Fest-Variante (battle_fest.ogg, solange ein Fest läuft)
+715. [x] Audio-Wochen-Echo-Thema (battle_echo.ogg auf dem Leitmotiv)
+716. [x] Audio-Turm-Thema (battle_tower.ogg im Riss-Turm und auf der Endlos-Strecke)
+717. [x] Audio-Online-Duell-Thema (battle_duel.ogg in Live-, Echo- und Liga-Duellen)
 718. [x] Audio: Treffer-Lautstärke nach Schaden (bestehend: Sound.hit_volume_db)
 719. [x] Audio: Krit-Akzent (crit_accent.wav)
 720. [x] Audio: Feld-Wechsel-Akzent (field_shift.wav, wenn ein Feld ein anderes ablöst)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-612 von 1000 Punkten umgesetzt.
+670 von 1000 Punkten umgesetzt.
 

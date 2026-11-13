@@ -470,6 +470,9 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 					var sname: String = Loc.t(BattleEvent.STAT_NAMES.get(k, ""))
 					parts.append((Loc.t("Then raises its own %s by %d.") if n > 0 else Loc.t("Then lowers its own %s by %d.")) % [sname, absi(n)])
 				line = " ".join(parts)
+			_:
+				# The KAMPF_PLAN_1000 arts describe themselves (TechniqueRules).
+				line = TechniqueRules.info_line(fx)
 		if line.is_empty():
 			continue
 		if chance < 1.0:

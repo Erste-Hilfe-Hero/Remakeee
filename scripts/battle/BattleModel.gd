@@ -594,6 +594,7 @@ func emit_event(t: BattleEvent.Type, d: Dictionary = {}) -> void:
 	var e := BattleEvent.new(t, d)
 	_events.append(e)
 	event_emitted.emit(e)
+	TechniqueRules.observe(self, e)
 
 ## The foe Wayfarer's personality line of [param kind] (items 621, 624): the motto at the start,
 ## then each fall line at most once per battle. Only for a named trainer with a profile line.
@@ -1100,6 +1101,7 @@ func _phase_execute_action() -> void:
 		BattleAction.Kind.BOND: _do_bond(a)
 		BattleAction.Kind.RUN: _do_run(a)
 		BattleAction.Kind.OATH: _do_oath(a)
+	TechniqueRules.note_acted(self, a)
 
 func _phase_end_of_turn() -> void:
 	for side: int in [Side.PLAYER, Side.FOE]:
@@ -1361,6 +1363,7 @@ func move_targets(side: int, mv: MoveData, target_slot: int = -1) -> Array[int]:
 	var standing: Array[int] = standing_slots(other(side))
 	if standing.is_empty() or mv.is_area():
 		return standing
+	target_slot = TechniqueRules.lured_slot(self, side, target_slot)
 	var out: Array[int] = [MultiRules.redirect(self, other(side), target_slot if target_slot in standing else standing[0])]
 	return out
 
@@ -1428,6 +1431,7 @@ func _do_move(a: BattleAction) -> void:
 	if muddled:
 		used["muddled"] = true
 	emit_event(BattleEvent.Type.MOVE_USED, used)
+	TechniqueRules.note_move(self, side, me, mv, slot)
 	if targets.is_empty():
 		emit_event(BattleEvent.Type.NO_TARGET, {})
 		return
@@ -1438,6 +1442,8 @@ func _do_move(a: BattleAction) -> void:
 		if me.is_fainted():
 			break
 		if not is_standing(target):
+			continue
+		if TechniqueRules.blocks_hit(self, target_side, t_slot, target, mv):
 			continue
 		var acc: float = hit_chance(me, mv, target)
 		var marked: bool = mv.is_damaging() and StatusRules.sure_hit(target.status)
@@ -1474,6 +1480,7 @@ func _do_move(a: BattleAction) -> void:
 			if mv.element == Elements.E.LUMEN:
 				mult *= BattleRules.rule_number(foe_rule, "lumen_mult")
 			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
+			mult *= TechniqueRules.hit_mult(self, side, slot, me, target_side, t_slot, target, mv)
 			mult *= MultiRules.guard_mult(self, target_side) * MultiRules.row_mult(self, side, slot, target_side, t_slot, mv)
 			var combo: Dictionary = MultiRules.combo(self, side, slot, target_side, t_slot, mv.element)
 			if not combo.is_empty():
@@ -1496,6 +1503,8 @@ func _do_move(a: BattleAction) -> void:
 				ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name}, t_slot)
 			if bool(react.get("cure", false)) and is_standing(target):
 				_cure(target_side, t_slot)
+			if react.has("inflict") and is_standing(target):
+				apply_status(target_side, str(react.inflict), t_slot, side)
 			if marked and is_standing(target) and StatusRules.sure_hit(target.status):
 				_cure(target_side, t_slot)
 			if mv.kind == MoveData.Kind.PHYSICAL and is_standing(me):

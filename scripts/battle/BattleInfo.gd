@@ -243,16 +243,21 @@ static func art_key(keycode: Key) -> int:
 # --- End-of-battle report (item 581) -------------------------------------------------------
 
 static func new_report() -> Dictionary:
-	return {"dealt": 0, "taken": 0, "downed": 0, "lost": 0, "keen": 0, "best": 0, "best_art": ""}
+	return {"dealt": 0, "taken": 0, "downed": 0, "lost": 0, "keen": 0, "best": 0, "best_art": "", "by": {}}
 
-## Counts [param e] into [param r]. [param last_art] is the player art that was used last.
-static func count(r: Dictionary, e: BattleEvent, last_art: String) -> void:
+## Counts [param e] into [param r]. [param last_art] is the player art that was used last,
+## [param last_user] the name of the Spirling that used it (damage per Spirling, plan item 20).
+static func count(r: Dictionary, e: BattleEvent, last_art: String, last_user: String = "") -> void:
 	var side: int = int(e.data.get("side", -1))
 	match e.type:
 		BattleEvent.Type.DAMAGE:
 			var amount: int = int(e.data.get("amount", 0))
 			if side == BattleModel.Side.FOE:
 				r["dealt"] += amount
+				if not last_user.is_empty() and not bool(e.data.get("status_tick", false)):
+					var by: Dictionary = r.get("by", {})
+					by[last_user] = int(by.get(last_user, 0)) + amount
+					r["by"] = by
 				if bool(e.data.get("crit", false)):
 					r["keen"] += 1
 				if amount > int(r.best) and not bool(e.data.get("status_tick", false)):
@@ -276,7 +281,22 @@ static func report_lines(r: Dictionary, turns: int) -> Array[String]:
 		out.append(Loc.t("Keen hits: %d") % int(r.keen))
 	if int(r.best) > 0:
 		out.append(Loc.t("Best hit: %d (%s)") % [int(r.best), str(r.best_art)] if not str(r.best_art).is_empty() else Loc.t("Best hit: %d") % int(r.best))
+	var star: String = star_of(r)
+	if not star.is_empty():
+		out.append(Loc.t("Star of the battle: %s") % star)
 	return out
+
+## The player's Spirling that dealt the most damage (plan item 20), "" when none hit; a tie
+## goes to the one named first.
+static func star_of(r: Dictionary) -> String:
+	var best: String = ""
+	var most: int = 0
+	var by: Dictionary = r.get("by", {})
+	for k: Variant in by:
+		if int(by[k]) > most:
+			most = int(by[k])
+			best = str(k)
+	return best
 
 # --- Tips for new battle parts (items 585, 631) ---------------------------------------------
 
