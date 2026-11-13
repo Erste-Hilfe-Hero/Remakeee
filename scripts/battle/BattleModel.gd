@@ -168,6 +168,10 @@ var _boss_weak_until: int = -1
 var _boss_weak_back: Dictionary = {}
 ## Warden rule id (BattleRules.RULES) for the foe side, or "".
 var foe_rule: String = ""
+## Turns left on each side's Calm Veil (status_veil effect, item 193): no foe status takes hold.
+var status_veil: Array[int] = [0, 0]
+## Spirlings whose Mirror Scale (held "status_reflect", item 209) was used this battle.
+var _reflected: Array[Spirling] = []
 ## Snares lying on each side (side_snare effect), oldest first. Each is {"move": name, plus
 ## "hp" (share of max Vigor), "status" or "stage"}. The next Spirling to swap in springs one.
 var snares: Array[Array] = [[], []]
@@ -437,6 +441,7 @@ func start() -> Array[BattleEvent]:
 		var boss: Spirling = active_spirling(Side.FOE)
 		boss.hp_mult = BattleRules.boss_hp_mult(foe_boss, fielded, boss_hp_scale)
 		boss.hp = boss.max_hp()
+		boss.boss_guard = true
 		_boss_actions = BattleRules.boss_actions_for(foe_boss, fielded, boss_difficulty)
 	var foe: Spirling = active_spirling(Side.FOE)
 	emit_event(BattleEvent.Type.BATTLE_START, {"wild": is_wild, "trainer": trainer_name, "foe_name": foe.display_name(),
@@ -818,7 +823,8 @@ func apply_heal_block(side: int, turns: int, slot: int = 0) -> void:
 
 ## Tries to afflict the Spirling in [param slot] of [param side]. Fails if it already has a status.
 ## [param from_side] is the side that causes it (-1 = none); a foe's status may meet a Status Ward.
-func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1) -> bool:
+## [param from_slot] is the slot of the Spirling that causes it (a Mirror Scale turns it back there).
+func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1, from_slot: int = -1) -> bool:
 	var s: Spirling = active_spirling(side, slot)
 	if s == null or s.is_fainted() or not s.status.is_empty() or not StatusRules.exists(status):
 		return false
@@ -838,6 +844,21 @@ func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1)
 		c.merge({"status": status, "clause": true})
 		emit_event(BattleEvent.Type.STATUS_FAILED, c)
 		return false
+	var block: Dictionary = status_block(side, status, from_side)
+	if not block.is_empty():
+		var sb: Dictionary = _who(side, slot)
+		sb.merge(block)
+		sb["status"] = status
+		emit_event(BattleEvent.Type.STATUS_FAILED, sb)
+		return false
+	if from_side >= 0 and from_side != side and bool(BattleRules.held_info(s.held).get("status_reflect", false)) and not s in _reflected:
+		_reflected.append(s)
+		var rf: Dictionary = _who(side, slot)
+		rf.merge({"status": status, "reflect": true, "item_name": str(Database.item(s.held).get("name", s.held))})
+		emit_event(BattleEvent.Type.STATUS_FAILED, rf)
+		if from_slot >= 0:
+			apply_status(from_side, status, from_slot)
+		return false
 	# Status Ward (pay-to-win step 4): only a foe's status, one roll only when the side owns it.
 	var ward: float = ShopEffects.ward_chance(int(amulets[side][1])) if from_side >= 0 and from_side != side else 0.0
 	if ward > 0.0 and rng.randf() < ward:
@@ -852,6 +873,10 @@ func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1)
 	var cap: int = int(rules.get("status_max_turns", 0))
 	if cap > 0:
 		s.status_turns = mini(s.status_turns, cap) if s.status_turns > 0 else cap
+	if s.boss_guard and s.status_turns <= 0:
+		s.status_turns = StatusRules.BOSS_OPEN_TURNS
+	elif s.boss_guard and not is_boss_slot(side, slot):
+		s.status_turns = StatusRules.boss_turns(s.status_turns)
 	var d: Dictionary = _who(side, slot)
 	d["status"] = status
 	emit_event(BattleEvent.Type.STATUS_APPLIED, d)
@@ -872,6 +897,33 @@ func _variant_mult(me: Spirling, target: Spirling, mv: MoveData) -> float:
 		if r > 1.0:
 			f *= (1.0 + (r - 1.0) * scale) / r
 	return f
+
+## Why a status can't reach [param side] right now, as STATUS_FAILED data, or {}: the Warden
+## rule Hushed Air (item 210, "no_status") keeps every status off both sides, and a Calm Veil
+## (item 193) keeps the foe's statuses off its side.
+func status_block(side: int, status: String, from_side: int = -1) -> Dictionary:
+	if not StatusRules.exists(status):
+		return {}
+	for rule_id: String in BattleRules.split_rules(foe_rule):
+		if float(BattleRules.RULES[rule_id].get("no_status", 0.0)) > 0.0:
+			return {"rule_label": str(BattleRules.RULES[rule_id].label)}
+	if from_side >= 0 and from_side != side and status_veil[side] > 0:
+		return {"veil": true}
+	return {}
+
+## Lays a Calm Veil over [param side] for [param turns] turns. Emits STATUS_VEIL.
+func set_status_veil(side: int, turns: int) -> void:
+	# +1 because the end of this very turn already counts one down.
+	status_veil[side] = maxi(status_veil[side], turns + 1)
+	emit_event(BattleEvent.Type.STATUS_VEIL, {"side": side, "turns": turns, "fresh": true})
+
+func _tick_status_veil() -> void:
+	for side: int in [Side.PLAYER, Side.FOE]:
+		if status_veil[side] <= 0:
+			continue
+		status_veil[side] -= 1
+		if status_veil[side] == 0:
+			emit_event(BattleEvent.Type.STATUS_VEIL, {"side": side, "turns": 0})
 
 ## Calm rule: in Wayfarer battles a side may have only one Spirling sleeping (Drowse) at a time.
 func calm_rule_blocks(side: int, s: Spirling, status: String) -> bool:
@@ -895,6 +947,9 @@ func change_stage(side: int, stat: String, delta: int, slot: int = 0) -> void:
 	var after: int = clampi(before + delta, BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
 	var d: Dictionary = _who(side, slot)
 	d.merge({"stat": stat, "delta": after - before, "stage": after, "tried": delta})
+	# Item 227: a foe whose Might climbs to +2 gets a warning line.
+	if side == Side.FOE and stat == "atk" and before < BattleRules.STAGE_WARN and after >= BattleRules.STAGE_WARN:
+		d["warn"] = true
 	s.stages[stat] = after
 	emit_event(BattleEvent.Type.STAT_CHANGED, d)
 
@@ -979,6 +1034,7 @@ func _phase_end_of_turn() -> void:
 	_vine_heal()
 	_sand_chip()
 	_tick_timers()
+	_tick_status_veil()
 	_tick_field()
 	_tick_field_swirl()
 	_tick_field_cycle()
@@ -1133,6 +1189,7 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		# The turn counter moves on after this, so 0 is the end of the first turn.
 		if turn == 0:
 			gain += foe_turn1_energy
+	gain = StatusRules.energy_gain(s.status, gain, turn)
 	change_energy(side, gain, slot)
 
 func _phase_faint_check() -> void:
@@ -1228,7 +1285,7 @@ func move_targets(side: int, mv: MoveData, target_slot: int = -1) -> Array[int]:
 ## Effects that act on the user once per move, not once per foe a sweep reaches.
 static func _is_self_effect(fx: Dictionary) -> bool:
 	var id: StringName = StringName(fx.get("id", ""))
-	return id in [&"heal_self", &"self_stage_after", &"energy_gain", &"self_cost", &"cure_team"] or (id == &"stat_change" and bool(fx.get("self", true)))
+	return id in [&"heal_self", &"self_stage_after", &"energy_gain", &"self_cost", &"cure_team", &"status_veil"] or (id == &"stat_change" and bool(fx.get("self", true)))
 
 func _do_move(a: BattleAction) -> void:
 	var side: int = a.side
@@ -1265,12 +1322,21 @@ func _do_move(a: BattleAction) -> void:
 		power_mult += BattleRules.OVERCHARGE_PER_ENERGY * extra
 		change_energy(side, -extra, slot)
 	var target_side: int = other(side)
-	var targets: Array[int] = move_targets(side, mv, a.target_slot)
+	var aim: int = a.target_slot
+	var muddled: bool = false
+	if StatusRules.random_target(me.status) and not mv.is_area():
+		var foes: Array[int] = standing_slots(target_side)
+		if foes.size() > 1:
+			aim = foes[rng.randi_range(0, foes.size() - 1)]
+			muddled = true
+	var targets: Array[int] = move_targets(side, mv, aim)
 	var used: Dictionary = _who(side, slot)
 	used.merge({"move": mv.move_name, "element": mv.element, "kind": mv.kind, "area": mv.is_area() and targets.size() > 1, "targets": targets})
 	if extra > 0:
 		# The presenter pitches the Overcharge swell by the Energy poured in (plan 687).
 		used["overcharge"] = extra
+	if muddled:
+		used["muddled"] = true
 	emit_event(BattleEvent.Type.MOVE_USED, used)
 	if targets.is_empty():
 		emit_event(BattleEvent.Type.NO_TARGET, {})
@@ -1284,6 +1350,9 @@ func _do_move(a: BattleAction) -> void:
 		if not is_standing(target):
 			continue
 		var acc: float = mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult")
+		var marked: bool = mv.is_damaging() and StatusRules.sure_hit(target.status)
+		if marked:
+			acc = 1.0
 		if acc < 1.0 and rng.randf() >= acc:
 			var miss: Dictionary = _who(side, slot)
 			miss["target_slot"] = t_slot
@@ -1330,6 +1399,10 @@ func _do_move(a: BattleAction) -> void:
 				ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name}, t_slot)
 			if bool(react.get("cure", false)) and is_standing(target):
 				_cure(target_side, t_slot)
+			if marked and is_standing(target) and StatusRules.sure_hit(target.status):
+				_cure(target_side, t_slot)
+			if mv.kind == MoveData.Kind.PHYSICAL and is_standing(me):
+				_contact_status(target_side, t_slot, side, slot)
 			if is_standing(target):
 				var rs: Dictionary = react.get("stage", {})
 				for st: String in rs:
@@ -1375,12 +1448,27 @@ func _do_rest(a: BattleAction) -> void:
 func rest_gain() -> int:
 	return maxi(0, int(rules.get("rest_energy", REST_ENERGY)) - int(BattleRules.rule_number(foe_rule, "rest_cut")))
 
+## Gift "contact_status" (Glimmer Skin, item 194): a physical hit on the Spirling in
+## [param slot] may pass its status on to the attacker.
+func _contact_status(side: int, slot: int, hitter_side: int, hitter_slot: int) -> void:
+	var s: Spirling = active_spirling(side, slot)
+	var gift: Dictionary = ShopEffects.gift_table(s)
+	var st: String = str(gift.get("contact_status", ""))
+	if st.is_empty() or s.is_fainted() or rng.randf() >= float(gift.get("contact_chance", 0.3)):
+		return
+	if apply_status(hitter_side, st, hitter_slot, side, slot):
+		reveal_trait(side, slot)
+
 func _do_swap(a: BattleAction) -> void:
 	if StatusRules.blocks_swap(a.actor.status):
 		emit_event(BattleEvent.Type.SWAP_BLOCKED, _who(a.side, a.slot))
 		return
 	if not a.swap_index in swap_candidates(a.side, a.slot):
 		return
+	# Gift "cure_on_swap" (Unruffled, item 195): its status falls away as it steps back.
+	if bool(ShopEffects.gift_table(a.actor).get("cure_on_swap", false)) and not a.actor.status.is_empty():
+		reveal_trait(a.side, a.slot)
+		_cure(a.side, a.slot)
 	emit_event(BattleEvent.Type.SWAP_OUT, _who(a.side, a.slot))
 	_swap_in(a.side, a.swap_index, a.slot)
 	if int(rules.get("swap_energy_cost", 0)) > 0:

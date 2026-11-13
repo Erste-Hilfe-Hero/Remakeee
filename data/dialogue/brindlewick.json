@@ -392,7 +392,7 @@
   "lines": [
    "Fishwife Marit: Market day! Dried kelp towels and cool gel, straight off the boats."
   ],
-  "action": "shop dry_towel cooling_gel wake_bell tonic pruning_shears grounding_rod smelling_salts"
+  "action": "shop dry_towel cooling_gel wake_bell tonic pruning_shears grounding_rod smelling_salts second_wind_tea chalk_rag clear_bell"
  },
  "stall_herbs": {
   "lines": [
