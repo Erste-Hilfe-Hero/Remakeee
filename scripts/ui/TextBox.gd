@@ -35,6 +35,8 @@ const MAX_LINES: int = 3
 const LONG_PRESS_MS: int = 600
 ## Set by the overworld: a long press fast-forwards. Battles keep every line.
 var allow_fast_forward: bool = false
+## Set by the battle: the music dips while a line shows (KAMPF_PLAN_1000 695).
+var duck_music: bool = false
 ## True after a long press, until the box hides (questions open after the box hides).
 var fast_forward: bool = false
 var _press_ms: int = -1
@@ -165,10 +167,14 @@ func show_text(text: String, speaker: String = "") -> void:
 	_line_voice = voice_for_line(speaker + ": " if not speaker.is_empty() else shown, voice)
 	var pages: Array[String] = split_lines(shown, _text_width(), _label.get_theme_font("font"),
 			_label.get_theme_font_size("font_size"), MAX_LINES)
+	if duck_music:
+		Sound.duck_music(true)
 	for i: int in pages.size():
 		if i > 0:
 			await _page_out()
 		await _show_page(pages[i])
+	if duck_music:
+		Sound.duck_music(false)
 
 ## The old page lifts PAGE_LIFT pixels and fades before the next one types (item 2287).
 func _page_out() -> void:
