@@ -646,6 +646,18 @@ FOC/SPD and Kelpup gained HP/SPD. The Lv36 guard band holds; at single levels in
 (Lv10–28) a few forms still swing between 25% and 75% because learnsets unlock at different
 levels. That is expected noise with 10 rounds per pair and worth a look when learnsets grow.
 
+## Element rules (KAMPF_PLAN_1000)
+
+- No hit ever does nothing: there is no x0 matchup. The floor is x0.25 (both elements of a dual
+  defender resist). `test_kampf_techniques.gd` checks every element against every pair.
+- The element chart is Chimora's own and is never copied from another game; new elements follow
+  the era rule in `data/type_chart.json` (one strength and one weakness per touched element).
+- Battle-side element rules live in `scripts/battle/TechniqueRules.gd`: Resonance (x1.05 while an
+  ally on the field shares an element), echo (x1.15 when an ally used the same element earlier in
+  the turn), the Ward Shell keepsake, the gifts Prism Skin and Countercurrent, Ward Circle and
+  Dye Bath. The 19 arts of the plan's "Techniken" area are taught by Echo Crystals that Hesper
+  sells in the lighthouse.
+
 ## Open observations
 
 - 1-on-1 fights last 2–3 turns (about 2–3 hits to faint). That is brisk but fine for mobile;

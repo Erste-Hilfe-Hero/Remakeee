@@ -538,6 +538,7 @@ func emit_event(t: BattleEvent.Type, d: Dictionary = {}) -> void:
 	var e := BattleEvent.new(t, d)
 	_events.append(e)
 	event_emitted.emit(e)
+	TechniqueRules.observe(self, e)
 
 ## The foe Wayfarer's personality line of [param kind] (items 621, 624): the motto at the start,
 ## then each fall line at most once per battle. Only for a named trainer with a profile line.
@@ -903,6 +904,7 @@ func _phase_execute_action() -> void:
 		BattleAction.Kind.BOND: _do_bond(a)
 		BattleAction.Kind.RUN: _do_run(a)
 		BattleAction.Kind.OATH: _do_oath(a)
+	TechniqueRules.note_acted(self, a)
 
 func _phase_end_of_turn() -> void:
 	for side: int in [Side.PLAYER, Side.FOE]:
@@ -1153,6 +1155,7 @@ func move_targets(side: int, mv: MoveData, target_slot: int = -1) -> Array[int]:
 	var standing: Array[int] = standing_slots(other(side))
 	if standing.is_empty() or mv.is_area():
 		return standing
+	target_slot = TechniqueRules.lured_slot(self, side, target_slot)
 	var out: Array[int] = [target_slot if target_slot in standing else standing[0]]
 	return out
 
@@ -1199,6 +1202,7 @@ func _do_move(a: BattleAction) -> void:
 	var used: Dictionary = _who(side, slot)
 	used.merge({"move": mv.move_name, "element": mv.element, "kind": mv.kind, "area": mv.is_area() and targets.size() > 1, "targets": targets})
 	emit_event(BattleEvent.Type.MOVE_USED, used)
+	TechniqueRules.note_move(self, side, me, mv)
 	if targets.is_empty():
 		emit_event(BattleEvent.Type.NO_TARGET, {})
 		return
@@ -1209,6 +1213,8 @@ func _do_move(a: BattleAction) -> void:
 		if me.is_fainted():
 			break
 		if not is_standing(target):
+			continue
+		if TechniqueRules.blocks_hit(self, target_side, t_slot, target, mv):
 			continue
 		var acc: float = mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult")
 		if acc < 1.0 and rng.randf() >= acc:
@@ -1242,6 +1248,7 @@ func _do_move(a: BattleAction) -> void:
 			if mv.element == Elements.E.LUMEN:
 				mult *= BattleRules.rule_number(foe_rule, "lumen_mult")
 			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
+			mult *= TechniqueRules.hit_mult(self, side, slot, me, target_side, t_slot, target, mv)
 			var shielded: bool = _shield_on[target_side] == target
 			if shielded:
 				mult *= ShopEffects.shield_mult(int(amulets[target_side][2]))
@@ -1257,6 +1264,8 @@ func _do_move(a: BattleAction) -> void:
 				ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name}, t_slot)
 			if bool(react.get("cure", false)) and is_standing(target):
 				_cure(target_side, t_slot)
+			if react.has("inflict") and is_standing(target):
+				apply_status(target_side, str(react.inflict), t_slot, side)
 			if is_standing(target):
 				var rs: Dictionary = react.get("stage", {})
 				for st: String in rs:
