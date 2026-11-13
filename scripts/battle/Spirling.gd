@@ -88,6 +88,9 @@ var shop_bought: bool = false
 const GLEAM_MULT: float = 1.1
 ## Battle-only stat stages (BattleRules.STAGE_MIN..STAGE_MAX), cleared by end_battle().
 var stages: Dictionary[String, int] = {}
+## True while it fights as a Rift boss: an open-ended status ends after StatusRules.BOSS_OPEN_TURNS
+## (timed ones and stage drops are halved by BossRules in BattleModel). Cleared by end_battle().
+var boss_guard: bool = false
 ## Battle-only: turns left on an Energy tax (energy_tax effect): every move costs more meanwhile.
 ## Counted down at the end of each turn, so a fresh tax of N holds for the next N turns.
 var energy_tax: int = 0
@@ -232,22 +235,26 @@ func spd() -> int: return _stat("spd")
 func stage(stat: String) -> int:
 	return int(stages.get(stat, 0))
 
+## Factor of the [param stat] stage (half for lowered stages on a boss).
+func stage_factor(stat: String) -> float:
+	return BattleRules.stage_mult(stage(stat))
+
 ## ATK after status (Scorch, or the Kindling trait), stages and held item.
 func effective_atk() -> int:
 	var m: float = StatusRules.atk_mult(status)
 	if status == "scorch":
 		m = float(ShopEffects.gift_table(self).get("scorch_atk", m))
-	return int(atk() * m * BattleRules.stage_mult(stage("atk")) * BattleRules.mult_key(self, "atk_mult"))
+	return int(atk() * m * stage_factor("atk") * BattleRules.mult_key(self, "atk_mult"))
 
 func effective_def() -> int:
-	return int(def() * BattleRules.stage_mult(stage("def")) * BattleRules.mult_key(self, "def_mult"))
+	return int(def() * stage_factor("def") * BattleRules.mult_key(self, "def_mult"))
 
 func effective_foc() -> int:
-	return int(foc() * BattleRules.stage_mult(stage("foc")) * BattleRules.mult_key(self, "foc_mult"))
+	return int(foc() * stage_factor("foc") * BattleRules.mult_key(self, "foc_mult"))
 
 ## SPD after status (Soak), stages and held item.
 func effective_spd() -> int:
-	return int(spd() * StatusRules.spd_mult(status) * BattleRules.stage_mult(stage("spd")) * BattleRules.mult_key(self, "spd_mult"))
+	return int(spd() * StatusRules.spd_mult(status) * stage_factor("spd") * BattleRules.mult_key(self, "spd_mult"))
 
 func is_fainted() -> bool:
 	return hp <= 0
@@ -290,6 +297,7 @@ func restore() -> void:
 ## Clears battle-only state when a battle ends. Statuses do not persist outside battle.
 func end_battle() -> void:
 	stages.clear()
+	boss_guard = false
 	energy_tax = 0
 	energy_surge = 0
 	heal_block = 0

@@ -1,0 +1,21 @@
+{
+ "_comment": "nl translation of the kampf_boss table, keyed by the English text.",
+ "strings": {
+  "%s grows restless: the longer the fight, the harder it strikes!": "%s wordt onrustig: hoe langer het gevecht, hoe harder het toeslaat!",
+  "%s lies open: its Guard is down for a turn!": "%s ligt open: een beurt lang is zijn Schild omlaag!",
+  "Before the Hush, the Cinder Rift fed a village's forges. The smiths sold the last of its heat to the highest bidder, and what was left curled up and learned to hate. It still keeps time like a bellows: hold it under High Tide and it can't stoke its next phase.": "Voor de Stilte voedde de Sintelkloof de smidsen van een dorp. De smeden verkochten zijn laatste hitte aan de hoogste bieder, en wat overbleef rolde zich op en leerde haten. Het houdt nog steeds de maat als een blaasbalg: houd het onder Springvloed en het kan zijn volgende fase niet opstoken.",
+  "Ebb": "Eb",
+  "It acts %d times each turn.": "Het handelt %d keer per beurt.",
+  "Mist hides things, and the people nearby paid it well to hide one thing in particular. When the payments stopped, it hid them too. Dawn Glow burns its fog thin; while the light lies, it can't pull itself into a new shape.": "Mist verbergt dingen, en de mensen in de buurt betaalden hem goed om één ding in het bijzonder te verbergen. Toen de betalingen stopten, verborg hij hen ook. Ochtendgloed brandt zijn mist dun; zolang het licht er ligt, kan hij zich niet in een nieuwe vorm trekken.",
+  "Not a breath of wind: no stat stage rises or falls on either side.": "Geen zuchtje wind: aan geen enkele kant stijgt of daalt een niveau.",
+  "Still Air": "Stille Lucht",
+  "The Ashen Heart splits open. Its core burns white!": "Het Assenhart splijt open. Zijn kern brandt wit!",
+  "The Drowned Heart sinks its weight into one last surge!": "Het Verdronken Hart legt al zijn gewicht in een laatste golf!",
+  "The Mist Heart pulls the fog tight around its core!": "Het Misthart trekt de mist strak om zijn kern!",
+  "The Tide Rift sank a ferry once, and the ferryman swore he had warned everyone. He had not. The heart at the bottom remembers every name on the passenger list. Static Veil sets its water humming, and while it hums the heart can't gather its next surge.": "De Getijdenkloof liet ooit een veerboot zinken, en de veerman zwoer dat hij iedereen had gewaarschuwd. Dat had hij niet. Het hart op de bodem kent elke naam op de passagierslijst. Statische Sluier laat zijn water zoemen, en zolang het zoemt, kan het hart zijn volgende golf niet verzamelen.",
+  "The water has run out: resting gives 1 Energy less on both sides.": "Het water is op: rusten geeft aan beide kanten 1 Energie minder.",
+  "What the Ashen Heart was": "Wat het Assenhart ooit was",
+  "What the Drowned Heart was": "Wat het Verdronken Hart ooit was",
+  "What the Mist Heart was": "Wat het Misthart ooit was"
+ }
+}
