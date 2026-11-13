@@ -199,6 +199,8 @@ var screen_shake: int = 2
 var sound_captions: bool = false
 ## Text voice blips while dialogue types (items 2503, 2504).
 var text_voice: bool = true
+## World talk moves on by itself after a short read (item 2015).
+var auto_text: bool = false
 ## First-time tips (see Tips.gd).
 var tips_enabled: bool = true
 ## Break reminder after PlayReminder.MINUTES of play (plan 3503).
@@ -827,7 +829,7 @@ func settings_to_dict() -> Dictionary:
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "pad_opacity_steps": PAD_ALPHAS.size(), "left_handed": left_handed, "tap_to_move": tap_to_move,
 		"always_run": always_run, "bond_style": bond_style, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad, "tap_vibration": tap_vibration,
 		"one_hand": one_hand, "bag_sort": bag_sort, "vibration": vibration, "screen_shake": screen_shake,
-		"sound_captions": sound_captions, "text_voice": text_voice,
+		"sound_captions": sound_captions, "text_voice": text_voice, "auto_text": auto_text,
 		"tips": tips_enabled, "play_reminder": play_reminder, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
 		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language}
 
@@ -862,6 +864,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	screen_shake = clampi(int(d.get("screen_shake", 2)), 0, 2)
 	sound_captions = bool(d.get("sound_captions", false))
 	text_voice = bool(d.get("text_voice", true))
+	auto_text = bool(d.get("auto_text", false))
 	tips_enabled = bool(d.get("tips", true))
 	play_reminder = bool(d.get("play_reminder", true))
 	battery_saver = bool(d.get("battery_saver", false))

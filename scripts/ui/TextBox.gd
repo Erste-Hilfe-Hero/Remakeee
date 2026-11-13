@@ -13,6 +13,13 @@ const AUTO_DELAY: float = 0.35
 const MARGIN: int = 3
 
 var auto_advance: bool = false
+## The world's talk box: with the "Auto text" setting a waiting line moves on by itself (item 2015).
+var world_auto: bool = false
+## Called right before the box opens, so its owner can move it (the map puts it on top
+## when the Wayfarer stands low, item 2016).
+var place_hook: Callable
+## Counts shown pages, so an old auto-text timer never skips a newer line.
+var _page_no: int = 0
 ## Text voice of the current speaker (Sound.VOICE_PITCH key); a line that starts with a known
 ## name and a colon ("Kestra: ...") uses that name's voice instead (item 2503).
 var voice: String = "player"
@@ -93,6 +100,9 @@ func _ready() -> void:
 			fast_forward = false
 			_press_ms = -1
 		else:
+			if place_hook.is_valid():
+				_set_rise(0)
+				place_hook.call()
 			_rise_in())
 
 ## Opening: the box comes up OPEN_RISE pixels from below with the "open" curve. Only where
@@ -193,8 +203,21 @@ func _show_page(page: String) -> void:
 		return
 	_waiting = true
 	_arrow.visible = true
+	_page_no += 1
+	if world_auto and GameState.auto_text:
+		_auto_next(_page_no, auto_text_delay(page))
 	await advanced
 	_arrow.visible = false
+
+## Seconds a world line waits under "Auto text": 1.5 s plus 0.05 s per character (item 2015).
+static func auto_text_delay(page: String) -> float:
+	return 1.5 + 0.05 * page.length()
+
+func _auto_next(page_no: int, delay: float) -> void:
+	await get_tree().create_timer(delay).timeout
+	if is_instance_valid(self) and _waiting and page_no == _page_no and GameState.auto_text:
+		_waiting = false
+		advanced.emit()
 
 ## Voice for [param line]: a known speaker name before a colon wins over [param fallback].
 static func voice_for_line(line: String, fallback: String) -> String:
@@ -235,9 +258,14 @@ func speaker() -> String:
 func is_typing() -> bool:
 	return _typing
 
+## The name tag sits on the box's top edge, or under it when a box at the top leaves no room.
+static func tag_offset_y(box_y: float, box_h: float, tag_h: float) -> float:
+	var y: float = -tag_h + 2.0
+	return y if box_y + y >= 0.0 else box_h - 2.0
+
 func _place_tag() -> void:
 	if _tag.visible:
-		_tag.global_position = global_position + Vector2(2, -_tag.size.y + 2)
+		_tag.global_position = global_position + Vector2(2, tag_offset_y(global_position.y, size.y, _tag.size.y))
 		_tag.visible = is_visible_in_tree()
 
 func _notification(what: int) -> void:
@@ -346,9 +374,10 @@ func _gui_input(event: InputEvent) -> void:
 		_press_ms = -1
 
 func _unhandled_input(event: InputEvent) -> void:
-	if (_typing or _waiting) and event.is_action_pressed("ui_accept"):
+	# B moves talk on just like A (item 2018), so nobody who presses B gets stuck.
+	if (_typing or _waiting) and (event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_cancel")):
 		_press_ms = Time.get_ticks_msec()
 		_skip_or_advance()
 		get_viewport().set_input_as_handled()
-	elif event.is_action_released("ui_accept"):
+	elif event.is_action_released("ui_accept") or event.is_action_released("ui_cancel"):
 		_press_ms = -1
