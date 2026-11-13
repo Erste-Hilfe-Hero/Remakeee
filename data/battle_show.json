@@ -1,0 +1,33 @@
+{
+ "_doc": "Battle presentation and battle audio that stay the same in every era (docs/KAMPF_PLAN_1000.md, areas 'Tempo, Animation und Praesentation' and 'Audio im Kampf'). Read by scripts/battle/presenter/BattleShow.gd and BattleAudio.gd. crit_hitstop: freeze in seconds for a keen hit. phase_zoom: per era, a hard whole-number zoom on the boss when its phase turns (0 = none; Era IV/V keep their own camera). banner_time: seconds a show banner stays (scaled by the battle speed). status_motes: per status the mote shape (spark, drop, leaf, zig, ring, z), drift (-1 up, 1 down), count and colour from Era II on; Era I and high contrast draw them in ink. aura: stage aura colours (up, down) from Era II on and the ring's dot count. lantern: the warm light at the feet of a Spirling that steps out (alpha, time). victory_glints: glints of the winners' pose per era. night: share of the day/night tint the backdrop takes, and backdrops that never get it. quick_intro: share of the intro time a rematch keeps. audio: battle sounds (see BattleAudio.gd).",
+ "crit_hitstop": 0.09,
+ "phase_zoom": {"1": 2.0, "2": 2.0, "3": 2.0, "4": 0.0, "5": 0.0},
+ "phase_zoom_hold": 0.4,
+ "banner_time": 1.1,
+ "status_motes": {
+  "scorch": {"shape": "spark", "drift": -1, "count": 3, "color": "e0603a"},
+  "soak": {"shape": "drop", "drift": 1, "count": 3, "color": "4a8ad8"},
+  "root": {"shape": "leaf", "drift": 1, "count": 2, "color": "5a9a48"},
+  "jolt": {"shape": "zig", "drift": -1, "count": 2, "color": "e8c838"},
+  "daze": {"shape": "ring", "drift": 0, "count": 3, "color": "b07ad0"},
+  "drowse": {"shape": "z", "drift": -1, "count": 2, "color": "8a8ab8"}
+ },
+ "mote_period": 1.4,
+ "aura": {"up": "f0b040", "down": "5a78c8", "dots": 10, "period": 2.0},
+ "lantern": {"alpha": 0.55, "time": 0.5, "color": "f2c870"},
+ "victory_glints": {"1": 0, "2": 0, "3": 4, "4": 4, "5": 6},
+ "night": {"mix": 0.6, "skip_backdrops": ["voice"]},
+ "quick_intro": 0.4,
+ "audio": {
+  "status": {"scorch": "status_scorch", "soak": "status_soak", "root": "status_root", "jolt": "status_jolt", "daze": "status_daze", "drowse": "status_drowse"},
+  "stage_step": 0.06,
+  "stage_max_pitch": 1.36,
+  "overcharge_step": 0.08,
+  "overcharge_max_pitch": 1.5,
+  "accent_gap": 0.25,
+  "accent_db": -4.0,
+  "phase_music_pitch": 1.06,
+  "skip_fast": ["charge_", "travel_", "dodge", "field_shift"],
+  "skip_battery": ["travel_", "crit_accent", "field_shift"]
+ }
+}
