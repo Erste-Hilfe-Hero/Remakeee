@@ -44,3 +44,69 @@ T = {
 "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.":
     "Ein stiller Ring in kreisendem Wind. Gale-Techniken treffen härter, Bloom-Techniken welken, und niemand verfällt in Schläfrigkeit.",
 }
+T.update({
+# Multi battles: support arts
+"Mending Chorus": "Heilchor",
+"A soft chord rings out. It and every ally beside it mend a fifth of their Vigor.": "Ein sanfter Akkord erklingt. Der Spirling und jeder Verbündete neben ihm heilen ein Fünftel ihrer Kraft.",
+"Kindred Balm": "Sippenbalsam",
+"Tends the most hurt ally beside it for a third of its Vigor. Alone, it tends itself.": "Pflegt den am schwersten verletzten Verbündeten neben sich um ein Drittel seiner Kraft. Allein pflegt er sich selbst.",
+"Shell Ring": "Schalenring",
+"Raises a ring of shale around its side. Everyone there takes less damage for 3 turns.": "Zieht einen Ring aus Schiefer um die eigene Seite. Alle dort nehmen 3 Runden lang weniger Schaden.",
+"Lure Dance": "Locktanz",
+"A showy, mocking dance. Every aimed art of the foes goes for it for 2 turns.": "Ein auffälliger, spöttischer Tanz. 2 Runden lang zielt jede gezielte Technik der Gegner auf ihn.",
+"Breakwater Stand": "Wellenbrecher",
+"Plants itself before its most hurt ally and takes the aimed hits meant for it for 2 turns.": "Stellt sich vor den am schwersten verletzten Verbündeten und fängt 2 Runden lang die gezielten Treffer für ihn ab.",
+"The guard over your side fades.": "Der Schutz über deiner Seite vergeht.",
+"The guard over the foe's side fades.": "Der Schutz über der Gegnerseite vergeht.",
+"%s stops drawing the foes' aim.": "%s lenkt die Gegner nicht mehr auf sich.",
+"%s stops covering its ally.": "%s deckt den Verbündeten nicht mehr.",
+"%s raises a guard over its whole side for %d turns!": "{0} schützt die ganze eigene Seite {1} Runden lang!",
+"%s draws every aimed art onto itself for %d turns!": "{0} zieht {1} Runden lang jede gezielte Technik auf sich!",
+"%s steps in front of %s!": "%s stellt sich vor %s!",
+"%s has nobody to cover.": "%s hat niemanden zu decken.",
+# Formation bonus
+"Formation, %s: %s": "Formation, %s: %s",
+"Stone Wall": "Steinwall",
+"Gale Flock": "Sturmschwarm",
+"Ember Pack": "Glutrudel",
+"Tide School": "Flutschwarm",
+# Slot lines (screen reader)
+"Foe": "Gegner",
+"Ally": "Verbündet",
+"Yours": "Deiner",
+"%s, slot %d of %d: %s, Vigor %d of %d": "%s, Platz %d von %d: %s, Kraft %d von %d",
+})
+T.update({
+"%s leads the swarm!": "%s führt den Schwarm an!",
+"With %s down, the swarm falters!": "Ohne %s gerät der Schwarm ins Wanken!",
+})
+T.update({
+"Combo, %s! The art hits %s harder.": "Kombo, %s! Die Technik trifft %s härter.",
+"Firestorm": "Feuersturm",
+"Thunder Tide": "Donnerflut",
+"Root and Rock": "Wurzel und Fels",
+"Dusk and Dawn": "Dämmer und Morgen",
+})
+T.update({
+"Tip: Several Spirlings fight at once here. Each one gets its own orders, left to right.": "Tipp: Hier kämpfen mehrere Spirlings gleichzeitig. Jeder bekommt eigene Befehle, von links nach rechts.",
+"Pick a foe to aim at; the line shows how hard the art would hit it. Arts marked all sweep every foe.": "Wähle einen Gegner als Ziel; die Zeile zeigt, wie hart die Technik ihn träfe. Techniken mit alle treffen jeden Gegner.",
+"Two allies hitting one foe with paired elements set off a combo. The back row takes softer physical hits.": "Treffen zwei Verbündete einen Gegner mit passenden Elementen, gibt es eine Kombo. Die hintere Reihe nimmt physische Treffer schwächer.",
+"Battles with several Spirlings": "Kämpfe mit mehreren Spirlings",
+})
+T.update({
+"Battle report": "Kampfbericht",
+"%s: %d damage": "%s: %d Schaden",
+"%s: %d damage, %d knocked out": "%s: %d Schaden, %d besiegt",
+"Rift fields: %s": "Riss-Felder: %s",
+"Best of the battle: %s, %d damage": "Bester des Kampfes: %s, %d Schaden",
+})
+T.update({
+"%s and %s trade places!": "%s und %s tauschen die Plätze!",
+})
+T.update({
+"Heals it and every ally beside it by %d%% of their Vigor.": "Heilt ihn und jeden Verbündeten neben ihm um %d%% ihrer Kraft.",
+"Heals the most hurt ally beside it by %d%% of its Vigor.": "Heilt den am schwersten verletzten Verbündeten neben ihm um %d%% seiner Kraft.",
+"Its side takes less damage for %d turns.": "Seine Seite nimmt %d Runden lang weniger Schaden.",
+"Draws the foes' aimed arts for %d turns.": "Zieht %d Runden lang die gezielten Techniken der Gegner auf sich.",
+"Takes the aimed hits meant for its most hurt ally for %d turns.": "Fängt %d Runden lang die gezielten Treffer für den am schwersten verletzten Verbündeten ab.",
+})

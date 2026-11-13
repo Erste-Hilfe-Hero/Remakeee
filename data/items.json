@@ -2476,7 +2476,7 @@
  {
   "id": "echo_kindred_balm",
   "name": "Echo Crystal: Kindred Balm",
-  "description": "Teaches Kindred Balm to a Bloom Spirling. Never used up.",
+  "description": "Teaches Kindred Balm to a Lumen Spirling. Never used up.",
   "battle": false,
   "teaches": "Kindred Balm",
   "price": 3000,

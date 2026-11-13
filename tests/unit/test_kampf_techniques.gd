@@ -290,7 +290,7 @@ func test_kindred_balm_heals_the_most_hurt_ally() -> void:
 	a.hp = a.max_hp() / 2
 	b.hp = b.max_hp() / 4
 	_apply(m, "Kindred Balm")
-	assert_eq(b.hp, b.max_hp() / 4 + int(b.max_hp() * 0.4), "the ally, not the user")
+	assert_eq(b.hp, b.max_hp() / 4 + roundi(b.max_hp() * 0.33), "the ally, not the user")
 	assert_eq(a.hp, a.max_hp() / 2)
 
 func test_rank_and_file_raises_guard_on_both_slots() -> void:
