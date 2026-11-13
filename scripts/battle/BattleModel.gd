@@ -663,6 +663,9 @@ func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) 
 		emit_event(BattleEvent.Type.HELD_ENDURE, _who(side, slot))
 	if s.is_fainted():
 		emit_event(BattleEvent.Type.FAINTED, _who(side, slot))
+		# A wild horde wavers once its leader falls (WildRules.horde_leader, KAMPF_PLAN).
+		if side == Side.FOE and is_wild and alive_count(Side.FOE) > 0 and WildRules.horde_leader(parties[Side.FOE]) == s:
+			_horde_wavers()
 		if side == Side.FOE:
 			# A Warden at its turning point says its fixed line instead of the profile's "last" one.
 			if not (alive_count(Side.FOE) == 1 and _turn_rules()):
@@ -674,6 +677,12 @@ func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) 
 	if not s.is_fainted():
 		eat_pith(side, slot)
 	return dealt
+
+## The horde's leader fell: every foe still standing loses one stage of Might.
+func _horde_wavers() -> void:
+	emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.FOE, "text": WildRules.WAVER_LINE})
+	for slot: int in standing_slots(Side.FOE):
+		change_stage(Side.FOE, "atk", -1, slot)
 
 ## Pith Fruit (era function "pith_fruit", Era II): a held fruit the holder eats by itself, once.
 ## "pith_heal": at half its Vigor or less it heals that share of its Vigor (also through a heal

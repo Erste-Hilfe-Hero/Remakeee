@@ -162,6 +162,13 @@
    }
   ]
  },
+ "tamsin": {
+  "lines": [
+   "Tamsin: Training ring. I carve the dummies, you knock them over, nobody gets hurt. Except the dummies. They don't complain.",
+   "Tamsin: Lose, and I patch your team up for free. Win, and I patch the dummy up for free. I'm very generous with other people's time."
+  ],
+  "action": "training"
+ },
  "hesper": {
   "lines": [
    "Hesper: I keep the arts the Rift made people forget. Most of them were forgotten on purpose.",
