@@ -1,0 +1,21 @@
+{
+ "_comment": "ko translation of the kampf_boss table, keyed by the English text.",
+ "strings": {
+  "%s grows restless: the longer the fight, the harder it strikes!": "%s이(가) 들썩인다: 싸움이 길어질수록 더 세게 친다!",
+  "%s lies open: its Guard is down for a turn!": "%s의 빈틈이 드러났다: 한 턴 동안 수비가 내려간다!",
+  "Before the Hush, the Cinder Rift fed a village's forges. The smiths sold the last of its heat to the highest bidder, and what was left curled up and learned to hate. It still keeps time like a bellows: hold it under High Tide and it can't stoke its next phase.": "고요 이전, Cinder 균열은 한 마을의 대장간들을 먹여 살렸다. 대장장이들은 그 마지막 열기를 가장 비싼 값을 부른 자에게 팔았고, 남은 것은 몸을 웅크린 채 증오를 배웠다. 지금도 풀무처럼 박자를 맞춘다: 만조 아래 붙잡아 두면 다음 단계를 지피지 못한다.",
+  "Ebb": "썰물",
+  "It acts %d times each turn.": "매 턴 %d번 행동한다.",
+  "Mist hides things, and the people nearby paid it well to hide one thing in particular. When the payments stopped, it hid them too. Dawn Glow burns its fog thin; while the light lies, it can't pull itself into a new shape.": "안개는 무언가를 숨긴다. 근처 사람들은 특히 한 가지를 숨겨 달라고 안개에게 두둑이 값을 치렀다. 돈이 끊기자, 안개는 그 사람들까지 숨겼다. 새벽빛은 안개를 얇게 태운다. 빛이 머무는 동안에는 새 모습으로 변하지 못한다.",
+  "Not a breath of wind: no stat stage rises or falls on either side.": "바람 한 점 없다: 양쪽 모두 능력 단계가 오르지도 내리지도 않는다.",
+  "Still Air": "고요한 공기",
+  "The Ashen Heart splits open. Its core burns white!": "잿빛 심장이 갈라진다. 그 핵이 하얗게 타오른다!",
+  "The Drowned Heart sinks its weight into one last surge!": "가라앉은 심장이 마지막 파도에 온 무게를 싣는다!",
+  "The Mist Heart pulls the fog tight around its core!": "안개의 심장이 핵 주위로 안개를 단단히 끌어당긴다!",
+  "The Tide Rift sank a ferry once, and the ferryman swore he had warned everyone. He had not. The heart at the bottom remembers every name on the passenger list. Static Veil sets its water humming, and while it hums the heart can't gather its next surge.": "Tide 균열은 한때 나룻배 한 척을 가라앉혔고, 뱃사공은 모두에게 경고했다고 맹세했다. 하지 않았다. 바닥의 심장은 승객 명단의 이름을 전부 기억한다. 정전기 장막은 그 물을 웅웅 울리게 하고, 웅웅거리는 동안 심장은 다음 파도를 모으지 못한다.",
+  "The water has run out: resting gives 1 Energy less on both sides.": "물이 다 빠졌다: 양쪽 모두 휴식으로 얻는 에너지가 1 줄어든다.",
+  "What the Ashen Heart was": "잿빛 심장의 옛 모습",
+  "What the Drowned Heart was": "가라앉은 심장의 옛 모습",
+  "What the Mist Heart was": "안개의 심장의 옛 모습"
+ }
+}
