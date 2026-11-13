@@ -782,6 +782,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 			if wild == null:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
 				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain)
+				wild = ChallengeRules.reroll_wild(wild, map.encounter_table, GameState.rng)
 				if wild != null:
 					GameState.gleam_chain = GleamRules.next_chain(GameState.gleam_chain, wild)
 			if wild != null:
@@ -1514,6 +1515,7 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	for s: Spirling in GameState.party:
 		Inkshadow.soothe(s)
 	GameState.heal_party()
+	ChallengeRules.after_rest(GameState.party)
 	Sound.sfx("heal")
 	if map.heal_point.x >= 0:
 		GameState.heal_map = map.id
@@ -1522,6 +1524,9 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	Online.contribute("rests")
 	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
+	var cap_lines: Array[String] = ChallengeRules.rest_lines()
+	if not cap_lines.is_empty():
+		await say(cap_lines)
 	await say(Tips.take("rest_spot"))
 	if FirstSteps.tick(FirstSteps.REST):
 		show_notices()
@@ -3241,6 +3246,9 @@ func _action_dig(_args: PackedStringArray, _speaker: NPC) -> void:
 	menu.queue_free()
 
 func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
+	if not ChallengeRules.shop_open():
+		await say(["Off the Books: you swore you would not shop on this journey."] as Array[String])
+		return
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	while true:
@@ -4019,9 +4027,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	var d: int = GameState.difficulty if world else -1
 	model.start_energy_cut = [0, int(trainer.get("foe_energy_cut", 0)) + BattleRules.foe_start_cut(d)]
 	model.foe_turn1_energy = BattleRules.foe_turn1_energy(d)
-	# Story (KAMPF_PLAN items 36, 52): foes land half as many keen hits, resting mends a little Vigor.
+	# Story (KAMPF_PLAN item 52): resting mends a little Vigor (the keen-hit cut is in ChallengeRules).
 	if d == GameState.Difficulty.STORY:
-		model.foe_crit_mult = BattleModel.STORY_FOE_CRIT
 		model.rest_heal_share = BattleModel.STORY_REST_HEAL
 	model.ambush = wild and bool(trainer.get("ambush", false))
 	# The end report: damage, knock-outs, best Spirling, Energy, seed (KAMPF_PLAN items 20, 76).
@@ -4055,9 +4062,12 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng)
 		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)),
 			int(partner.get("ai", TrainerData.PARTNER_AI)), str(partner.get("profile", "")))
+	# Challenge rules and the difficulty's crit and Growth touches (KAMPF plan area 13).
+	ChallengeRules.apply_to_model(model, trainer, map.id)
 	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
+	ChallengeRules.note_result(outcome == BattleModel.Outcome.WIN, _warden_battle)
 	Kinship.after_battle(GameState.party, model.participants, outcome == BattleModel.Outcome.WIN)
 	var had_growth: bool = ShopEffects.boost_left("growth") > 0
 	ShopEffects.battle_done()
@@ -4088,6 +4098,7 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 		Online.contribute("bonds")
 	# In a horde the bond can land before the rest of the swarm is beaten (outcome WIN or FLED).
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
+		ChallengeRules.note_bonded(model.bonded, map.id)
 		GameState.receive_spirling(model.bonded)
 		# Wild Spirlings keep their temperament to themselves until they bond (item 315).
 		var tm: Dictionary = model.bonded.temperament()
@@ -4101,6 +4112,7 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	if outcome == BattleModel.Outcome.LOSS:
 		# No coin penalty: a spring keeper simply brings the player back.
 		GameState.heal_party()
+		ChallengeRules.after_rest(GameState.party)
 		if _warden_battle and ShopEffects.can_anchor(GameState.difficulty) and await _use_rift_anchor():
 			if not oath.is_empty():
 				await say(oath)
@@ -4114,6 +4126,13 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	if not oath.is_empty():
 		await _fade_to(0.0)
 		await say(oath)
+	# Trust No One (challenge rule): after a Warden one Spirling leaves with a better offer.
+	var gone: int = ChallengeRules.walkout(GameState.party.size(), GameState.rng) if _warden_battle and outcome == BattleModel.Outcome.WIN else -1
+	if gone >= 0:
+		var leaver: Spirling = GameState.party[gone]
+		GameState.party.remove_at(gone)
+		await _fade_to(0.0)
+		await say([Loc.t("Trust No One: %s takes a better offer and walks off without looking back.") % leaver.display_name()] as Array[String])
 	# Unfurling is never automatic: the first time a Spirling could unfurl, say so once.
 	for s: Spirling in GameState.party:
 		var hint: String = "unfurl_hint_%s_%s" % [s.uid, s.data.species_name]

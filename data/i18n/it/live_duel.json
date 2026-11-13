@@ -27,6 +27,7 @@
   "Round %d": "Round %d",
   "Send an emote": "Invia un'emote",
   "The duel ended without a winner.": "Il duello è finito senza vincitore.",
+  "The referee could not play this duel again. It does not count.": "L'arbitro non ha potuto rigiocare questo duello. Non conta.",
   "The two results did not match. The duel does not count.": "I due risultati non coincidono. Il duello non conta.",
   "Their team: %s": "La loro squadra: %s",
   "This duel is over.": "Questo duello è finito.",
