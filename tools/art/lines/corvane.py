@@ -50,7 +50,7 @@ LINES = [
     L(id="skimmit", names=["Skimmit", "Skimmarch"], elements=["TIDE", "GALE"], role="striker",
       art=dict(plan="bug", tones=("light", "mid", "dark"), extras=("hindleg",), ears="antenna", ear_tone="dark",
                eye="small", size=-3, marks="rings")),
-    L(id="prismist", names=["Prismist", "Prismistral"], elements=["TIDE", "LUMEN"], role="weaver",
+    L(id="prismist", names=["Prismist", "Prismistral"], elements=["TIDE", "LUMEN"], role="weaver", trait="unruffled",
       art=dict(plan="spirit", tones=("light", "light", "dark"), tail="ray", extras=("sun", "arms"), eye="big",
                marks="stripes", size=1)),
     L(id="canalet", names=["Canalet", "Canalord"], elements=["TIDE", "STONE"], role="vanguard",
