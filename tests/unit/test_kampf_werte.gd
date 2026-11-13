@@ -149,11 +149,6 @@ func test_swap_hint_compares_with_the_one_in_front() -> void:
 	assert_string_contains(line, str(b.temperament().label))
 	assert_false(BattleGuide.compare_line(a, a).contains("("), "no difference against itself")
 
-func test_stage_sound_climbs_with_the_stage() -> void:
-	assert_gt(BattleGuide.stage_pitch(2), BattleGuide.stage_pitch(1))
-	assert_lt(BattleGuide.stage_pitch(-1), 1.0)
-	assert_eq(BattleGuide.stage_pitch(9), BattleGuide.stage_pitch(3))
-
 func test_growth_lost_to_the_ring_limit_says_so() -> void:
 	var s: Spirling = BattleFixtures.make("Kindlop", 20)
 	var m: BattleModel = BattleFixtures.model([s] as Array[Spirling], _one("Mossling"))

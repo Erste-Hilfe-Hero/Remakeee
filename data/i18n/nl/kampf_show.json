@@ -1,0 +1,11 @@
+{
+ "_comment": "nl translation of the kampf_show table, keyed by the English text.",
+ "strings": {
+  "%s awakens": "%s ontwaakt",
+  "Bonded": "Verbonden",
+  "Side by side: %s": "Zij aan zij: %s",
+  "Slipped away": "Ontglipt",
+  "Victory": "Overwinning",
+  "Worn out": "Uitgeput"
+ }
+}

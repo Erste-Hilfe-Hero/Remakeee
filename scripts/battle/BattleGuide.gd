@@ -139,6 +139,3 @@ static func first_status_tip(status: String, flags: Dictionary) -> String:
 	flags[flag] = true
 	return "%s: %s" % [Loc.t(StatusRules.label(status)), Loc.t(StatusRules.text(status))]
 
-## Pitch of the stage sound (item 248): it climbs with the stage reached, falls when lowered.
-static func stage_pitch(stage: int) -> float:
-	return 1.0 + 0.08 * float(clampi(stage, BattleRules.STAGE_MIN, BattleRules.STAGE_MAX))

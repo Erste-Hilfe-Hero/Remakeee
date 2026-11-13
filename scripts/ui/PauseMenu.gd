@@ -924,6 +924,13 @@ func _usable_items() -> Array[String]:
 
 ## Satchel tabs (item 1914) and which tab an item belongs to.
 const BAG_TABS: Array[String] = ["Care", "Keepsakes", "Crystals", "Gear", "Special"]
+## The new-thing dot at the right end of a satchel row, gone once the row had the focus.
+static func _draw_new_dot(b: Button, id: String) -> void:
+	if not GameState.new_items.has(id) or b.has_focus():
+		return
+	var ink: Color = b.get_theme_color("font_color", "Button")
+	b.draw_rect(Rect2(b.size.x - 5, floorf(b.size.y / 2.0) - 1, 3, 3), ink)
+
 ## Satchel orders (item 1917); the choice is kept in GameState.bag_sort.
 const BAG_SORTS: Array[String] = ["New", "Name", "Kind"]
 ## What a list returns when its sort switch in the title row is tapped.
@@ -1022,6 +1029,10 @@ func run_bag() -> void:
 			var pic: Texture2D = EraMenuKit.icon_for("pocket%d" % bag_tab(it0), lay)
 			if pic != null:
 				row["icon"] = pic
+			# A dot until the row has had the focus once (item 1918).
+			if GameState.new_items.has(id):
+				row["decorate"] = func(b: Button) -> void: _draw_new_dot(b, id)
+				row["say"] = "new"
 			entries.append(row)
 		# If it was used up, the row that took its place gets the focus.
 		var focus: int = ids.find(last_id)
@@ -1034,8 +1045,14 @@ func run_bag() -> void:
 			pocket.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			head.add_child(pocket)
 		head.add_child(sort_toggle())
+		var seen_new: Callable = func(i: int) -> void:
+			if i >= 0 and i < ids.size():
+				GameState.new_items.erase(str(ids[i]))
+		picker.row_focused.connect(seen_new)
 		var idx: int = await pick_screen("bag", "Satchel", entries, {"focus": focus, "tabs": ([] as Array[String]) if flat else tabs, "tab": tab, "header": head,
 			"tab_icons": EraMenuKit.pocket_tab_icons(tab_ids, lay)})
+		if picker.row_focused.is_connected(seen_new):
+			picker.row_focused.disconnect(seen_new)
 		if ListPicker.tab_of(idx) >= 0:
 			tab = ListPicker.tab_of(idx)
 			last_idx = -1

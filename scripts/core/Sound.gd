@@ -61,8 +61,9 @@ const SFX_VOICES: int = 10
 const PRIO_UI: int = 1
 const PRIO_WORLD: int = 2
 const PRIO_BATTLE: int = 3
-const BATTLE_SOUNDS: Array[String] = ["miss", "dodge", "faint", "status", "heal", "level_up", "energy_tick", "run", "low_hp", "bond"]
-const BATTLE_PREFIXES: Array[String] = ["hit", "charge_", "travel_"]
+const BATTLE_SOUNDS: Array[String] = ["miss", "dodge", "faint", "status", "heal", "level_up", "energy_tick", "run", "low_hp", "bond",
+	"overcharge", "crit_accent", "rule_seal", "partner_call", "calm_fail", "defeat"]
+const BATTLE_PREFIXES: Array[String] = ["hit", "charge_", "travel_", "status_", "stage_", "field_", "boss_", "eff_"]
 ## Same effect within this many seconds is skipped (menus scroll fast).
 const SFX_MIN_GAP: float = 0.03
 
@@ -655,11 +656,15 @@ static func list_sounds(dir: String) -> Array[String]:
 
 ## Other music lowers the map's ambience to AMBIENCE_DUCK_DB (battles) or stops it (title);
 ## enter_map() brings it back.
-## Pitch of the music players (a Rift field tunes the battle song, KAMPF_PLAN_1000 item 332).
+## Pitch of the music players (a Rift field tunes the battle song, KAMPF_PLAN_1000 item 332; a
+## boss's second phase raises it, item 683). Kept across track changes until set back to 1.0.
+var music_pitch_scale: float = 1.0
+
 func music_pitch(p: float) -> void:
+	music_pitch_scale = clampf(p, 0.5, 2.0)
 	for player: AudioStreamPlayer in [_music, _music_out]:
 		if player != null:
-			player.pitch_scale = clampf(p, 0.5, 2.0)
+			player.pitch_scale = music_pitch_scale
 
 func music(track: String, keep_ambience: bool = false) -> void:
 	if track == "title":
@@ -716,4 +721,5 @@ func _switch(track: String, loop: bool) -> void:
 		(stream as AudioStreamOggVorbis).loop = loop
 	_music.stream = stream
 	_music.volume_db = 0.0
+	_music.pitch_scale = music_pitch_scale
 	_music.play()
