@@ -80,23 +80,23 @@
    "tamer": [
     {
      "species": "Brookbaron",
-     "level": 35
+     "level": 36
     },
     {
      "species": "Duskdigger",
-     "level": 36
+     "level": 37
     },
     {
      "species": "Obsidroth",
-     "level": 37
+     "level": 38
     },
     {
      "species": "Calderox",
-     "level": 36
+     "level": 37
     },
     {
      "species": "Brookbaron",
-     "level": 37
+     "level": 38
     }
    ]
   }
@@ -494,20 +494,20 @@
   "teams_by_difficulty": {
    "tamer": [
     {
-     "species": "Mendlace",
-     "level": 60
+     "species": "Fulgorath",
+     "level": 57
     },
     {
      "species": "Scrivane",
-     "level": 60
+     "level": 57
     },
     {
      "species": "Obsidroth",
-     "level": 61
+     "level": 58
     },
     {
      "species": "Burinox",
-     "level": 61
+     "level": 58
     }
    ]
   }
@@ -772,23 +772,23 @@
    "tamer": [
     {
      "species": "Fluting",
-     "level": 20
+     "level": 18
     },
     {
      "species": "Smoldrake",
-     "level": 21
+     "level": 19
     },
     {
      "species": "Shalebat",
-     "level": 20
+     "level": 18
     },
     {
      "species": "Kelpup",
-     "level": 20
+     "level": 18
     },
     {
      "species": "Gloamhog",
-     "level": 21
+     "level": 19
     }
    ]
   }
@@ -1092,19 +1092,19 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 58
+     "level": 57
     },
     {
      "species": "Glasstarn",
-     "level": 58
+     "level": 57
     },
     {
      "species": "Mendlace",
-     "level": 59
+     "level": 58
     },
     {
      "species": "Saltcrown",
-     "level": 59
+     "level": 58
     }
    ]
   }

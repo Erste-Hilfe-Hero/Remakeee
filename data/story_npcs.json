@@ -854,15 +854,15 @@
      "tamer": [
       {
        "species": "Riptail",
-       "level": 29
+       "level": 27
       },
       {
        "species": "Tempestrel",
-       "level": 30
+       "level": 28
       },
       {
        "species": "Kelphound",
-       "level": 31
+       "level": 29
       }
      ]
     }
@@ -1204,23 +1204,23 @@
      "tamer": [
       {
        "species": "Obsidroth",
-       "level": 31
+       "level": 33
       },
       {
        "species": "Duskdigger",
-       "level": 32
+       "level": 34
       },
       {
        "species": "Obsidroth",
-       "level": 34
+       "level": 36
       },
       {
        "species": "Gloamquill",
-       "level": 34
+       "level": 36
       },
       {
        "species": "Woadwhorl",
-       "level": 34
+       "level": 36
       }
      ]
     }
@@ -1820,23 +1820,23 @@
      "tamer": [
       {
        "species": "Calderox",
-       "level": 37
+       "level": 41
       },
       {
        "species": "Obsidroth",
-       "level": 38
+       "level": 42
       },
       {
        "species": "Gloamquill",
-       "level": 36
+       "level": 40
       },
       {
        "species": "Duskdigger",
-       "level": 37
+       "level": 41
       },
       {
        "species": "Gloamquill",
-       "level": 38
+       "level": 42
       }
      ]
     }
@@ -2050,19 +2050,19 @@
      "tamer": [
       {
        "species": "Leviarch",
-       "level": 35
+       "level": 38
       },
       {
        "species": "Lumenewt",
-       "level": 34
+       "level": 37
       },
       {
        "species": "Glimmerax",
-       "level": 35
+       "level": 38
       },
       {
        "species": "Tempestrel",
-       "level": 34
+       "level": 37
       }
      ]
     }
