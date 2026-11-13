@@ -113,12 +113,28 @@ static func offer_row(o: Dictionary, lay: Dictionary) -> Dictionary:
 	var hint: String = ShopCatalog.row_hint(o)
 	var row: Dictionary = {"text": row_text(o), "hint": hint,
 		"disabled": Billing.block_reason(o, int(o.get("rg_price", 0)) > 0) in ["offer_limit", "not_yet", "tier_order"]}
+	# The name gives way to the price, never the other way round (bug sweep 2).
+	var price: String = row_price(o)
+	row["text"] = (ADVANTAGE_MARK if ShopCatalog.is_advantage(o) else "") + Loc.t(str(o.name))
+	row["say"] = price
+	row["right"] = price
 	if badge:
-		var price: String = row_price(o)
-		row["text"] = (ADVANTAGE_MARK if ShopCatalog.is_advantage(o) else "") + Loc.t(str(o.name))
-		row["say"] = price
+		row["right_pad"] = 11.0
 		row["decorate"] = func(b: Button) -> void: draw_price(b, price)
+	else:
+		row["right_pad"] = 7.0
+		row["decorate"] = func(b: Button) -> void: draw_price_plain(b, price)
 	return row
+
+## Eras I and II: the price in plain ink at the right end of the row.
+static func draw_price_plain(b: Button, price: String) -> void:
+	var font: Font = b.get_theme_font("font", "Button")
+	var fs: int = b.get_theme_font_size("font_size", "Button")
+	var w: float = font.get_string_size(price, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+	var key: String = "font_disabled_color" if b.disabled else ("font_focus_color" if b.has_focus() else "font_color")
+	var col: Color = b.get_theme_color(key, "Button")
+	b.draw_string(font, Vector2(b.size.x - w - 3.0, floorf((b.size.y - font.get_height(fs)) / 2.0) + font.get_ascent(fs)), price,
+		HORIZONTAL_ALIGNMENT_LEFT, -1, fs, col)
 
 ## The price badge at the right end of an offer row.
 static func draw_price(b: Button, price: String) -> void:
