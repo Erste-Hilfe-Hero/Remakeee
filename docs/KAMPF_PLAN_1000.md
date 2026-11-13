@@ -208,86 +208,86 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 161. [x] Ruhe-Regel: Drowse trifft keinen zweiten Spirling derselben Seite in Wayfarer-Kämpfen
 162. [ ] Status-Symbole mit Form und Kürzel (bestehend: Kürzel), Symbole ergänzen
 163. [ ] Status-Dauer als Zahl unter dem Kürzel
-164. [ ] Neuer Status 'Verwirrt' in eigener Form: Ziel wählt zufällig das Ziel im Mehrfachkampf
-165. [ ] Neuer Status 'Erschöpft': halbe Energie-Regeneration
-166. [ ] Neuer Status 'Markiert': nächster Treffer gegen das Ziel ist ein sicherer Treffer
+164. [x] Neuer Status 'Verwirrt' in eigener Form: Ziel wählt zufällig das Ziel im Mehrfachkampf (Status Muddle/Wirr, StatusRules)
+165. [x] Neuer Status 'Erschöpft': halbe Energie-Regeneration (Status Spent, StatusRules.energy_gain)
+166. [x] Neuer Status 'Markiert': nächster Treffer gegen das Ziel ist ein sicherer Treffer (Status Marked)
 167. [x] Status-Immunität durch Feld (z. B. Hohe Flut verhindert Scorch)
-168. [ ] Status-Heil-Gegenstände pro Status und ein Allheiler (bestehend prüfen)
+168. [x] Status-Heil-Gegenstände pro Status und ein Allheiler (bestehend prüfen) (je Status ein Heilmittel + Remedy, test_move_content)
 169. [ ] Status-Kombination: Soak + Jolt = länger gelähmt
-170. [ ] Status-Ticks bleiben bei 1/12 (fixe Originalitätszahl, nicht ändern)
-171. [ ] Status-Erklärung im Lexikon mit Zahlen
+170. [x] Status-Ticks bleiben bei 1/12 (fixe Originalitätszahl, nicht ändern) (test_kampf_status)
+171. [x] Status-Erklärung im Lexikon mit Zahlen (Kampfhandbuch, BattleGuide.gd)
 172. [ ] Status-Animation kurz und optional (Weniger Bewegung)
-173. [ ] Status trifft Bosse nur halb so lange
+173. [x] Status trifft Bosse nur halb so lange (StatusRules.boss_turns)
 174. [x] Status-Chance in der Technik-Info
-175. [ ] KI meidet Status gegen Ziele mit Status oder Immunität (umgesetzt in Meister-KI)
-176. [ ] Status-Schutz-Technik für das Team
-177. [ ] Status überträgt sich bei Kontakt (Trait 'Glimmhaut')
-178. [ ] Status heilt beim Wechsel auf die Bank (Trait 'Ruhig')
+175. [x] KI meidet Status gegen Ziele mit Status oder Immunität (umgesetzt in Meister-KI) (BattleAI Stufe 3)
+176. [x] Status-Schutz-Technik für das Team (Technik Calm Veil)
+177. [x] Status überträgt sich bei Kontakt (Trait 'Glimmhaut') (Gabe glimmer_skin, Forgefly-Linie)
+178. [x] Status heilt beim Wechsel auf die Bank (Trait 'Ruhig') (Gabe unruffled, Prismist-Linie)
 179. [ ] Status nach dem Kampf bleibt erhalten, außer auf Story
 180. [ ] Status-Heilung an Rastquellen (bestehend)
 181. [ ] Status-Statistik im Kampfende-Bericht
 182. [ ] Status-Sound pro Status eigenständig
 183. [ ] Status-Text in eigener Wortwahl (Liste gegen übernommene Phrasen, bestehend)
-184. [ ] Daze-Chance 1/3 überprüfen und dokumentieren
-185. [ ] Jolt 20 % bleibt fix (Originalitätszahl)
-186. [ ] Drowse 2 Runden bleibt fix (Originalitätszahl)
+184. [x] Daze-Chance 1/3 überprüfen und dokumentieren (Daze x0.7 Treffer, im Kampfhandbuch)
+185. [x] Jolt 20 % bleibt fix (Originalitätszahl) (test_kampf_status)
+186. [x] Drowse 2 Runden bleibt fix (Originalitätszahl) (test_kampf_status)
 187. [ ] Status 'Root' zeigt Kette am Sprite
 188. [ ] Status 'Soak' tropft sichtbar
 189. [ ] Status 'Scorch' glimmt sichtbar
 190. [ ] Status im Info-Streifen bei Hochkontrast fett
-191. [ ] Status gegen wilde Schwärme gilt pro Spirling
-192. [ ] Status-Reflexion als seltener gehaltener Gegenstand
-193. [ ] Warden-Regel 'Stille Luft': kein Status für beide Seiten
+191. [x] Status gegen wilde Schwärme gilt pro Spirling (test_kampf_status)
+192. [x] Status-Reflexion als seltener gehaltener Gegenstand (Mirror Scale)
+193. [x] Warden-Regel 'Stille Luft': kein Status für beide Seiten (Regel hushed_air 'Hushed Air', die Stufen-Regel still_air ist eine andere)
 194. [ ] Status-Chance in der Schadensvorschau ergänzen
-195. [ ] Status-Fehlschlag-Grund im Log (Immunität, Regel, schon betroffen)
-196. [ ] Status-Wirkung auf Bond-Chance im Lexikon erklären
+195. [x] Status-Fehlschlag-Grund im Log (Immunität, Regel, schon betroffen) (BattleEvent STATUS_FAILED)
+196. [x] Status-Wirkung auf Bond-Chance im Lexikon erklären (Kampfhandbuch)
 197. [ ] Status-Kombos in der Meister-KI nutzen
 198. [ ] Status-Clause für Online-Duelle (wie Ruhe-Regel)
-199. [ ] Status-Dauer pro Schwierigkeit gleich halten (Fairness)
+199. [x] Status-Dauer pro Schwierigkeit gleich halten (Fairness) (test_kampf_status)
 200. [ ] Status-Tutorial beim ersten Status
 
 ## Werte-Stufen und Werte
 
-201. [ ] Stufen-Pfeile im Info-Streifen (bestehend)
-202. [ ] Stufen-Grenze ±3 bleibt (eigene Zahl)
-203. [ ] Stufen-Tooltip mit Multiplikator
-204. [ ] Stufen nach Wechsel zurücksetzen (Regel prüfen und festschreiben)
-205. [ ] Stufen-Kopier-Technik
-206. [ ] Stufen-Tausch-Technik
-207. [ ] KI baut Stufen nur auf, wenn sie sicher ist (umgesetzt in Meister-KI)
-208. [ ] Stufen-Warnung, wenn ein Gegner +2 ATK hat
+201. [x] Stufen-Pfeile im Info-Streifen (bestehend) (InfoStrip)
+202. [x] Stufen-Grenze ±3 bleibt (eigene Zahl) (test_kampf_werte)
+203. [x] Stufen-Tooltip mit Multiplikator (InfoStrip.screen_reader_text, Kampfhandbuch)
+204. [x] Stufen nach Wechsel zurücksetzen (Regel prüfen und festschreiben) (Regel: Stufen bleiben am Spirling bis Kampfende, test_kampf_werte)
+205. [x] Stufen-Kopier-Technik (Mirror Stance)
+206. [x] Stufen-Tausch-Technik (Crosswind Trade)
+207. [x] KI baut Stufen nur auf, wenn sie sicher ist (umgesetzt in Meister-KI) (BattleAI Stufe 3)
+208. [x] Stufen-Warnung, wenn ein Gegner +2 ATK hat (STAT_CHANGED warn)
 209. [ ] Spark-Werte (bestehend) im Statusbildschirm als Balken
 210. [ ] Spark-Training durch Kämpfe gegen bestimmte Arten
 211. [ ] Spark-Reset-Gegenstand
 212. [ ] Temperament (bestehend) im Kampf-Info zeigen
-213. [ ] Werte-Rechner im Lexikon (Lv, Spark, Temperament)
+213. [x] Werte-Rechner im Lexikon (Lv, Spark, Temperament) (Kampfhandbuch Werte, BattleGuide.calc)
 214. [ ] Werte-Vergleich beim Einwechseln
 215. [ ] Werte-Ansicht der Gegner nach dem Kampf im Lexikon
-216. [ ] Krit-Chance 1/12 und x1.4 fix (Originalitätszahl)
-217. [ ] Krit-Stufen durch gehaltene Gegenstände (bestehend: crit_mult)
-218. [ ] Genauigkeits-Stufen als eigene Werte prüfen (vielleicht nicht nötig)
-219. [ ] Ausweich-Werte bewusst nicht einführen (Frust vermeiden)
-220. [ ] SPD-Gleichstand-Regel im Lexikon
-221. [ ] Werte-Grenzen im Datenprüfer (validate_data) festhalten
-222. [ ] Basiswert-Summen pro Entwicklungsstufe prüfen
-223. [ ] Werte-Balance über den Simulator
+216. [x] Krit-Chance 1/12 und x1.4 fix (Originalitätszahl) (test_kampf_werte)
+217. [x] Krit-Stufen durch gehaltene Gegenstände (bestehend: crit_mult) (Whetstone keen_lens)
+218. [x] Genauigkeits-Stufen als eigene Werte prüfen (vielleicht nicht nötig) (bewusst nicht, BattleRules.STAGE_STATS)
+219. [x] Ausweich-Werte bewusst nicht einführen (Frust vermeiden) (test_kampf_werte)
+220. [x] SPD-Gleichstand-Regel im Lexikon (Kampfhandbuch)
+221. [x] Werte-Grenzen im Datenprüfer (validate_data) festhalten (DataValidator._check_values)
+222. [x] Basiswert-Summen pro Entwicklungsstufe prüfen (DataValidator._check_values)
+223. [x] Werte-Balance über den Simulator (type_sim.py --strict)
 224. [ ] Stufen visuell auch am Sprite (kleine Aura)
-225. [ ] Stufen-Text in eigener Wortwahl (bestehend)
-226. [ ] Stufen auf Bosse wirken halb
-227. [ ] Phasen-Bosse erhalten Stufen beim Phasenwechsel (umgesetzt)
-228. [ ] Warden-Regel mit Startstufen (bestehend: Undertow)
+225. [x] Stufen-Text in eigener Wortwahl (bestehend) (BattleEvent)
+226. [x] Stufen auf Bosse wirken halb (Stufen-Senkungen halbiert, BossRules.stage_delta)
+227. [x] Phasen-Bosse erhalten Stufen beim Phasenwechsel (umgesetzt) (BattleRules.BOSSES phase)
+228. [x] Warden-Regel mit Startstufen (bestehend: Undertow) (BattleRules.RULES)
 229. [ ] Stufen-Sound steigt mit Stufe
 230. [ ] Werte-Ansicht als Radar-Grafik im Statusbildschirm
 231. [ ] Werte pro Level im Lexikon als Kurve
-232. [ ] Level-Cap im Menü (bestehend)
+232. [x] Level-Cap im Menü (bestehend) (PauseMenu Ring limit)
 233. [ ] Level-Cap-Hinweis beim XP-Verlust
-234. [ ] Werte beim Levelaufstieg anzeigen (Zuwachs)
+234. [x] Werte beim Levelaufstieg anzeigen (Zuwachs) (LevelPanel)
 235. [ ] Werte-Export für Fans (Teamcode)
 236. [ ] Werte-Vorschau bei Entwicklung
-237. [ ] Gleiche Werte-Formel für Spieler und Gegner (Fairness)
+237. [x] Gleiche Werte-Formel für Spieler und Gegner (Fairness) (test_kampf_werte)
 238. [ ] Werte-Skalierung im Turnier 'Gleiches Level'
-239. [ ] Werte-Prüfung im Balancing-Test (keine Art dominiert)
-240. [ ] Werte-Formel bleibt eigenständig (Regel)
+239. [x] Werte-Prüfung im Balancing-Test (keine Art dominiert) (type_sim.py --strict)
+240. [x] Werte-Formel bleibt eigenständig (Regel) (Spirling.gd, DamageCalc.gd)
 
 ## Traits
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-215 von 1000 Punkten umgesetzt.
+261 von 1000 Punkten umgesetzt.
 

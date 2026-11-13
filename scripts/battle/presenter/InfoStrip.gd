@@ -232,6 +232,10 @@ func screen_reader_text() -> String:
 		t += ", " + Loc.t(StatusRules.label(status))
 	if tax > 0:
 		t += ", " + Loc.t("Energy tax %d" % tax)
+	# Stages with their factor (KAMPF_PLAN_1000 item 222).
+	for stat: String in BattleRules.STAGE_STATS:
+		if int(stages.get(stat, 0)) != 0:
+			t += ", " + BattleRules.stage_line(Loc.t(str(BattleEvent.STAT_NAMES[stat])), int(stages[stat]))
 	if show_xp:
 		t += ", " + Loc.t("Growth to next ring %d" % xp_left)
 	return t

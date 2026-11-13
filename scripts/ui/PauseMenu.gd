@@ -456,6 +456,7 @@ func run_records() -> void:
 			lines.append("Sticker wall")
 		if not Lexicon.collected(GameState.records).is_empty() or not WayfarerBook.entries().is_empty():
 			lines.append("Lexicon")
+		lines.append("Battle guide")
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
@@ -480,6 +481,7 @@ func run_records() -> void:
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Lexicon": await run_lexicon()
+			"Battle guide": await run_battle_guide()
 			"Online replays":
 				if await OnlineReplaysMenu.run(self):
 					return
@@ -515,6 +517,15 @@ func run_lexicon() -> void:
 			await info(WayfarerBook.page(DailyFind.today_key()))
 		else:
 			await info(Loc.t(Lexicon.text(ids[i - 2])))
+
+## The battle guide (KAMPF_PLAN_1000): statuses, stages, keen hits and values with their numbers.
+func run_battle_guide() -> void:
+	var lead: Spirling = GameState.party[0] if not GameState.party.is_empty() else null
+	while true:
+		var i: int = await pick_strings(Loc.t("Battle guide"), BattleGuide.titles())
+		if i < 0:
+			return
+		await info(BattleGuide.page(i, lead))
 
 ## Vows (plan 3406-3408): take one before the first Rift is mended, give one up at any time.
 func run_vows() -> void:
