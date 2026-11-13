@@ -1271,6 +1271,7 @@ func _play_event(e: BattleEvent) -> void:
 				Sound.sfx("bond")
 				var bonded: SpirlingSprite = _sprite(BattleModel.Side.FOE, slot)
 				var bond_era: int = EraManager.active_era()
+				await bonded.bond_rings()
 				if EraBattleFeel.text(bond_era, "bond", "hop") == "blink_out":
 					await bonded.blink_out()
 				else:
