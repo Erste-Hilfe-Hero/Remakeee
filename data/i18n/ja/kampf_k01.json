@@ -4,7 +4,7 @@
   "%dE x%.1f": "%dE x%.1f",
   "%s chains its Overcharge!": "%sが過充電をつなげた！",
   "%s leaps out of the tall grass and strikes first!": "%sが草むらから飛び出して先に攻撃した！",
-  "%s was the best: %d damage, %d down": "いちばんの活躍は%s：ダメージ%d、倒した数%d",
+  "%s was the best: %d damage, %d down": "いちばん強かったのは%s：ダメージ%d、倒した数%d",
   "%s: %s arts +%d%%, %s arts -%d%%.": "%s：%sの術+%d%%、%sの術-%d%%。",
   "1. Conditions bite (Scorch, Root) and timed ones count down.": "1. 状態が効く（焦げ、根づき）。期限つきのものは数が減る。",
   "2. Mending: gifts, keepsakes, the field and Root Mend.": "2. 回復：ギフト、おまもり、フィールド、根の手当て。",
