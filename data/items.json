@@ -2355,5 +2355,14 @@
   "bond_bonus": 0.15,
   "price": 700,
   "tradeable": true
+ },
+ {
+  "id": "spark_wash",
+  "name": "Spark Wash",
+  "description": "Washes one Spark value of a Spirling back to nothing, for a slower or humbler build.",
+  "battle": false,
+  "spark_reset": true,
+  "price": 1500,
+  "tradeable": true
  }
 ]

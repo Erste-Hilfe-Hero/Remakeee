@@ -1021,6 +1021,8 @@ func run_bag() -> void:
 			await _teach_echo(item_id)
 		elif int(it.get("spark", 0)) > 0:
 			await _use_spark_charm(item_id)
+		elif bool(it.get("spark_reset", false)):
+			await _use_spark_wash(item_id)
 		elif int(it.get("crystal", 0)) > 0:
 			await _use_stat_crystal(item_id)
 		elif bool(it.get("temper_shift", false)):
@@ -1270,6 +1272,27 @@ func _use_spark_charm(id: String) -> void:
 		GameState.inventory.erase(id)
 	Sound.sfx("level_up")
 	await info("%s's %s spark grew brighter!" % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()])
+
+## Spark Wash (KAMPF_PLAN "Spark-Reset"): one spark of one Spirling back to 0.
+func _use_spark_wash(id: String) -> void:
+	var names: Array[String] = []
+	for s: Spirling in GameState.party:
+		names.append(MenuHost.party_line(s))
+	var who: int = await pick_strings(Loc.t("Use the Spark Wash on?"), names)
+	if who < 0:
+		return
+	var s: Spirling = GameState.party[who]
+	var stats: Array[String] = []
+	for key: String in Spirling.STAT_KEYS:
+		stats.append("%s: %s" % [key.to_upper(), GameState.spark_word(int(s.spark.get(key, 0)))])
+	var pick: int = await pick_strings(Loc.t("Wash out which spark?"), stats)
+	if pick < 0:
+		return
+	if not GrowthRules.reset_spark(s, Spirling.STAT_KEYS[pick]):
+		await info(Loc.t("That spark is already dark."))
+		return
+	GameState.take_item(id)
+	await info(Loc.t("%s's %s spark is washed out.") % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()])
 
 ## Stat Crystal from the shop: adds its points to one stat of one Spirling, up to twice the
 ## free Spark cap per stat.

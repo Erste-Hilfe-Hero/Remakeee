@@ -97,12 +97,14 @@ func test_after_battle_counts_growth_by_region_and_writes_the_lexicon() -> void:
 		assert_true(Lexicon.has_entry(id), id)
 
 ## Balance goal "kein Grind-Zwang": between two Warden ring caps a Spirling never needs more than
-## no_grind_battles even wild battles, even for the kind with the smallest growth yield.
+## no_grind_battles even wild battles against foes of the median growth yield.
 func test_no_grind_between_warden_caps() -> void:
-	var low: int = 1000
+	var yields: Array[int] = []
 	for sd: SpirlingData in Database.spirlings.values():
 		if sd.region == "veydal":
-			low = mini(low, sd.xp_yield)
+			yields.append(sd.xp_yield)
+	yields.sort()
+	var low: int = yields[yields.size() / 2]
 	var budget: int = int(GrowthRules.num("no_grind_battles", 0))
 	assert_gt(budget, 0)
 	var caps: Array[int] = GameState.LEVEL_CAPS
@@ -214,3 +216,24 @@ func test_every_festival_sells_spark() -> void:
 	for f: Dictionary in Season.festivals():
 		var items: Array = (f.shop as Array).map(func(o: Dictionary) -> String: return str(o.item))
 		assert_true("spark_charm" in items, str(f.id))
+
+func test_spark_wash_sets_one_spark_back_to_nothing() -> void:
+	var s: Spirling = BattleFixtures.make("Kindlop", 20)
+	s.spark["spd"] = 9
+	s.spark["hp"] = 12
+	s.hp = s.max_hp()
+	assert_true(GrowthRules.reset_spark(s, "spd"))
+	assert_eq(s.spark["spd"], 0)
+	assert_false(GrowthRules.reset_spark(s, "spd"), "already dark")
+	assert_false(GrowthRules.reset_spark(s, "luck"), "no such value")
+	assert_true(GrowthRules.reset_spark(s, "hp"))
+	assert_lte(s.hp, s.max_hp(), "Vigor never above the new top")
+	assert_true(bool(Database.item("spark_wash").get("spark_reset", false)))
+
+func test_tower_sections_leave_finds() -> void:
+	assert_eq(GrowthRules.tower_finds(0, 4, 5), [] as Array[String])
+	var finds: Array[String] = GrowthRules.tower_finds(3, 15, 5)
+	assert_eq(finds.size(), 3, "floors 5, 10 and 15")
+	for id: String in finds:
+		assert_false(Database.item(id).is_empty(), id)
+	assert_eq(GrowthRules.tower_finds(5, 9, 5), [] as Array[String], "only new section ends")

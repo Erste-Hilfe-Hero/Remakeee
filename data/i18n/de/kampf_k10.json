@@ -3,6 +3,7 @@
  "keep": [],
  "strings": {
   "%s grew %d rings: ring %d to ring %d.": "%s ist um %d Ringe gewachsen: von Ring %d auf Ring %d.",
+  "%s's %s spark is washed out.": "Der {1}-Funke von {0} ist ausgewaschen.",
   "Ancient": "Uralt",
   "Bench lessons": "Lager-Lernen",
   "Bonds formed: %d": "Bindungen geknüpft: %d",
@@ -22,9 +23,16 @@
   "New lexicon entry: %s": "Neuer Lexikon-Eintrag: %s",
   "No growth yet.": "Noch kein Wachstum.",
   "Rarity: %s": "Seltenheit: %s",
+  "Spark Wash": "Funkenwäsche",
   "Spirlings in your team that stay on the bench still watch and learn: each healthy one gets half the growth of a fighter. Only the team learns, never the storage; a knocked-out Spirling learns nothing, and a ring cap holds for the bench too. Switch it in Settings.": "Spirlings deines Teams, die auf der Bank bleiben, schauen zu und lernen trotzdem: Jeder gesunde bekommt die Hälfte des Wachstums eines Kämpfers. Nur das Team lernt, nie das Lager; ein besiegter Spirling lernt nichts, und eine Ring-Grenze gilt auch für die Bank. Umschalten in den Einstellungen.",
+  "That spark is already dark.": "Dieser Funke ist schon erloschen.",
+  "Tower find: %s": "Fund im Turm: %s",
   "Uncommon": "Selten",
+  "Use the Spark Wash on?": "Funkenwäsche bei wem benutzen?",
+  "Wash out which spark?": "Welchen Funken auswaschen?",
+  "Washes one Spark value of a Spirling back to nothing, for a slower or humbler build.": "Wäscht einen Funkenwert eines Spirlings auf null zurück, für einen langsameren oder bescheideneren Aufbau.",
   "World goal boost: %d battles left.": "Weltziel-Schub: noch %d Kämpfe.",
-  "Your Spirlings grow faster for the next %d battles.": "Deine Spirlings wachsen in den nächsten %d Kämpfen schneller."
+  "Your Spirlings grow faster for the next %d battles.": "Deine Spirlings wachsen in den nächsten %d Kämpfen schneller.",
+  "| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (Tamer) | Story |": "| Ring | Wachstum bis dahin | Bis zum nächsten Ring | Gleiche Wildkämpfe bis zum nächsten Ring (Tamer) | Story |"
  }
 }

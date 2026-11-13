@@ -120,3 +120,24 @@ static func curve_table(xp_yield: int) -> String:
 		str(num("kinship_mult", 1.0)), str(float((Database.item("growth_charm").get("held", {}) as Dictionary).get("growth_mult", 1.0))),
 		str(num("world_goal_mult", 1.0)), int(num("world_goal_battles", 0))])
 	return "\n".join(lines)
+
+## Spark Wash: sets one spark of [param s] back to 0 (for a slower or humbler build). False if it
+## already is 0.
+static func reset_spark(s: Spirling, key: String) -> bool:
+	if not key in Spirling.STAT_KEYS or int(s.spark.get(key, 0)) <= 0:
+		return false
+	s.spark[key] = 0
+	s.hp = mini(s.hp, s.max_hp())
+	return true
+
+## Items for tower floors [param old_best] + 1 .. [param new_best] reached the first time: one for
+## every floor that ends a section of [param section] floors.
+static func tower_finds(old_best: int, new_best: int, section: int) -> Array[String]:
+	var out: Array[String] = []
+	var items: Array = data().get("tower_items", [])
+	if items.is_empty() or section <= 0:
+		return out
+	for f: int in range(old_best + 1, new_best + 1):
+		if f % section == 0:
+			out.append(str(items[(f / section - 1) % items.size()]))
+	return out

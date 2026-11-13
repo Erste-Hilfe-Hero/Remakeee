@@ -815,7 +815,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 726. [x] Entwicklung nach Kampf (bestehend) (Overworld._after_battle Entfalten-Hinweis)
 727. [x] Entwicklung abbrechen (Option) (Entfalten nie automatisch, Zurückfalten jederzeit)
 728. [x] Temperament-Wechsel-Gegenstand (Temper Shift, PauseMenu)
-729. [ ] Spark-Reset
+729. [x] Spark-Reset (spark_wash, GrowthRules.reset_spark)
 730. [x] XP-Bonus für Rückkämpfe (GrowthRules rematch_mult)
 731. [x] XP-Bonus für Bond-Spirlings (GrowthRules kinship_mult ab Verbundenheit 80)
 732. [x] XP-Malus bei Überlevel bewusst nicht (kein Malus ausser Era-V-Ringskalierung, in BALANCE.md und Lexikon)
@@ -844,7 +844,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 755. [x] Lager-Lernen im Lexikon erklären (Lexikon bench_lessons)
 756. [x] Training: Wochen-Echo gibt Spark (WeeklyChallenge.REWARDS spark_charm)
 757. [x] Training: Feste geben Spark (spark_charm bei jedem Fest-Händler)
-758. [ ] Training: Turm gibt Gegenstände
+758. [x] Training: Turm gibt Gegenstände (GrowthRules.tower_finds in RiftTower.finish)
 759. [x] Training: Online-Weltziel gibt XP-Bonus (GrowthRules world_goal, FriendsMenu)
 760. [x] Training: kein Grind-Zwang (Balance-Ziel) (no_grind_battles, Test)
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-95 von 1000 Punkten umgesetzt.
+97 von 1000 Punkten umgesetzt.
 

@@ -35,3 +35,15 @@ T = {
 "Every bond is an echo of the wild Spirling's call. A low Vigor, a status and a calming field help it along; a charm or an Echo Shell steadies the link. The odds are never shown, only the result.":
 	"Jede Bindung ist ein Echo auf den Ruf des wilden Spirlings. Wenig Kraft, ein Status und ein beruhigendes Feld helfen; ein Amulett oder eine Echo-Muschel festigt die Verbindung. Die Chance wird nie gezeigt, nur das Ergebnis.",
 }
+T.update({
+"Tower find: %s": "Fund im Turm: %s",
+"Use the Spark Wash on?": "Funkenwäsche bei wem benutzen?",
+"Wash out which spark?": "Welchen Funken auswaschen?",
+"That spark is already dark.": "Dieser Funke ist schon erloschen.",
+"%s's %s spark is washed out.": "Der {1}-Funke von {0} ist ausgewaschen.",
+"Spark Wash": "Funkenwäsche",
+"Washes one Spark value of a Spirling back to nothing, for a slower or humbler build.": "Wäscht einen Funkenwert eines Spirlings auf null zurück, für einen langsameren oder bescheideneren Aufbau.",
+})
+T.update({
+"| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (Tamer) | Story |": "| Ring | Wachstum bis dahin | Bis zum nächsten Ring | Gleiche Wildkämpfe bis zum nächsten Ring (Tamer) | Story |",
+})
