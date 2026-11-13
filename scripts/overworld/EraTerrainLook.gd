@@ -54,6 +54,10 @@ var _canopy_rows: Dictionary[int, int] = {}
 var _colors: Dictionary[int, Color] = {}
 var _banners: Array[Dictionary] = []
 var _zoomed: bool = false
+## Whole-number zoom the town zoom works around (EraDepthLayer.camera_zoom); only the overworld
+## sets screen_zoom, so a bare layer keeps the camera at 1.
+var base_zoom: float = 1.0
+var screen_zoom: bool = false
 
 ## Draws through a callable, so one script owns every layer.
 class Painter extends Node2D:
@@ -275,6 +279,8 @@ func show_map(m: MapData, ground_layer: TileMapLayer, cam: Camera2D = null, over
 	_canopy_rows = _kind_ints("canopy")
 	_colors.clear()
 	_find_banners()
+	if screen_zoom:
+		base_zoom = float(EraDepthLayer.camera_zoom(EraManager.active_era()))
 	zoom_t = 0.0 if float(cfg.get("town_zoom", 0.0)) > 0.0 and m.outdoor and is_town(m.biome) and not Juice.reduced() else -1.0
 	_apply_zoom()
 	_last_cam = Vector2.INF
@@ -321,8 +327,8 @@ func _apply_zoom() -> void:
 	if camera == null:
 		return
 	var z: float = zoom_at(zoom_t, float(cfg.get("town_zoom", 0.0)), float(shared("town_zoom_time", 1.0)), Juice.reduced())
-	if z != 1.0 or _zoomed:
-		camera.zoom = Vector2(z, z)
+	if z != 1.0 or _zoomed or camera.zoom != Vector2.ONE * base_zoom:
+		camera.zoom = Vector2(z, z) * base_zoom
 		_zoomed = z != 1.0
 
 func _view_center() -> Vector2:
@@ -600,15 +606,16 @@ func _paint_canopy(ci: CanvasItem) -> void:
 				var tex: Texture2D = _raised_tex if k in CUT_KINDS else _tex
 				if tex == null:
 					continue
-				var up_px: int = lift if k == TilesetFactory.Kind.TREE else maxi(lift - 2, 1)
+				var up_px: int = EraDepthLayer.lift_of(map.region, k, lift if k == TilesetFactory.Kind.TREE else maxi(lift - 2, 1))
 				var at: Vector2 = Vector2(c * TILE) + Vector2(0, -up_px) + _lean(Vector2(c * TILE) + Vector2(TILE, TILE) / 2.0)
 				var off: int = sway_offset(frames, frame, c, bool(anim.get("wave", false))) if _anim.get(k, "") == "sway" else 0
-				_blit_shift(ci, tex, _coords(c), at, 0, _canopy_rows[k], off)
+				# A top lifted further than its canopy rows (Era IV/V roofs) still hides the feet behind it.
+				_blit_shift(ci, tex, _coords(c), at, 0, mini(maxi(_canopy_rows[k], up_px), TILE), off)
 	var colors: Array = shared("banners", [])
 	for b: Dictionary in _banners:
 		if colors.is_empty() or not area.has_point(b.cell):
 			continue
-		var base: Vector2 = Vector2(b.cell * TILE) + Vector2(7, -lift) + _lean(Vector2(b.cell * TILE))
+		var base: Vector2 = Vector2(b.cell * TILE) + Vector2(7, -EraDepthLayer.lift_of(map.region, _kind(b.cell), lift)) + _lean(Vector2(b.cell * TILE))
 		ci.draw_rect(Rect2(base + Vector2(0, -7), Vector2(1, 9)), POLE)
 		var col := Color(str(colors[int(b.color) % colors.size()]))
 		for i: int in 3:

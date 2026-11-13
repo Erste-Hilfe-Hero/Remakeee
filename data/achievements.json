@@ -1043,6 +1043,24 @@
    "reward": 50,
    "stat": "record:rift_tide_shaft",
    "n": 15
+  },
+  {
+   "id": "hall_first",
+   "title": "Hall Guest",
+   "text": "Clear any battle hall on Examiner Hollis's board.",
+   "cat": "challenge",
+   "reward": 25,
+   "stat": "record:hall_clears",
+   "n": 1
+  },
+  {
+   "id": "hall_regular",
+   "title": "Hall Regular",
+   "text": "Clear battle halls 20 times.",
+   "cat": "challenge",
+   "reward": 50,
+   "stat": "record:hall_clears",
+   "n": 20
   }
  ]
 }
