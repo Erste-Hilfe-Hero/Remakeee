@@ -1,0 +1,16 @@
+{
+ "_comment": "it translation of the era_feel table, keyed by the English text.",
+ "strings": {
+  "A map drawn in four inks.": "Una mappa disegnata con quattro inchiostri.",
+  "Era I - Ink": "Era I - Inchiostro",
+  "Era II - Wash": "Era II - Acquerello",
+  "Era III - Etching": "Era III - Incisione",
+  "Era IV - Panorama": "Era IV - Panorama",
+  "Era V - Living": "Era V - Vita",
+  "Replay era change": "Rivedi il cambio d'era",
+  "The air grows clearer. Every leaf shows more detail!": "L'aria si fa più limpida. Ogni foglia mostra più dettagli!",
+  "The ink runs. The world fills with colour!": "L'inchiostro cola. Il mondo si riempie di colori!",
+  "The map breathes. The world is alive!": "La mappa respira. Il mondo è vivo!",
+  "The map unrolls wider than ever before!": "La mappa si srotola più ampia che mai!"
+ }
+}

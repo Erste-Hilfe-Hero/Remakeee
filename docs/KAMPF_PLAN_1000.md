@@ -15,7 +15,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 - Boss-Phasen bei halber HP
 - Schadensvorschau im Technik-Menü (abschaltbar)
 - Lager-Lernen: die Bank erhält die Hälfte der XP (abschaltbar)
-- Ruhe-Regel: in Tamer-Kämpfen höchstens ein Spirling pro Seite mit Drowse
+- Ruhe-Regel: in Wayfarer-Kämpfen höchstens ein Spirling pro Seite mit Drowse
 
 ## Umgesetzt im zweiten Schritt
 
@@ -33,15 +33,15 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Zugablauf und Grundregeln
 
-1. [x] Ruhe-Regel in Tamer-Kämpfen: pro Seite darf nur ein Spirling gleichzeitig Drowse haben
+1. [x] Ruhe-Regel in Wayfarer-Kämpfen: pro Seite darf nur ein Spirling gleichzeitig Drowse haben
 2. [ ] Zugreihenfolge vor der Wahl als kleine Leiste anzeigen (wer handelt zuerst, nach SPD und Priorität)
 3. [ ] Priorität +2 für seltene Schutz-Techniken einführen, sonst bleibt +1 das Maximum
 4. [ ] Gleichstand bei SPD sichtbar als Münzwurf-Symbol im Kampflog
-5. [ ] Rundenzähler oben links, nur in Tamer- und Boss-Kämpfen
+5. [ ] Rundenzähler oben links, nur in Wayfarer- und Boss-Kämpfen
 6. [ ] Zug-Timeout für Online-Echo-Duelle (60 s, danach Rasten)
 7. [ ] Rückgängig-Knopf für die Befehlswahl im Mehrfachkampf, bevor der Zug startet
-8. [ ] Aufgeben-Option in Tamer-Kämpfen mit Bestätigung (zählt als Niederlage, kein Geldverlust auf Story)
-9. [ ] Wechsel nach einem K.o. des Gegners anbieten (Stufe Story und Tamer), auf Veteran abschaltbar
+8. [ ] Aufgeben-Option in Wayfarer-Kämpfen mit Bestätigung (zählt als Niederlage, kein Geldverlust auf Story)
+9. [ ] Wechsel nach einem K.o. des Gegners anbieten (Stufe Story und Wayfarer), auf Veteran abschaltbar
 10. [ ] Gegner kündigt seinen nächsten Spirling an, wenn er wechselt (Ankündigungs-Option)
 11. [ ] Doppelte Aktion eines Bosses klar als 'Nachhall' markieren
 12. [ ] Rasten im Mehrfachkampf: Wahl 'Alle rasten' als Abkürzung
@@ -165,7 +165,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 121. [x] Resonanz-Techniken: Ash Call, Tide Call und Murk Call legen 5 Runden lang ein Rift-Feld
 122. [ ] Feld-Restzüge im Log ansagen und beim Ende melden
 123. [ ] Schutz-Technik 'Brace': hält einen Treffer ab, zweimal hintereinander schlägt fehl
-124. [ ] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Tamer-Kämpfe)
+124. [ ] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Wayfarer-Kämpfe)
 125. [ ] Mehrstufige Technik: lädt eine Runde, trifft dann doppelt
 126. [ ] Konter-Technik: wirft physischen Schaden x1.5 zurück
 127. [ ] Heil-Technik für Verbündete im Mehrfachkampf
@@ -205,7 +205,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Status-Zustände
 
-161. [x] Ruhe-Regel: Drowse trifft keinen zweiten Spirling derselben Seite in Tamer-Kämpfen
+161. [x] Ruhe-Regel: Drowse trifft keinen zweiten Spirling derselben Seite in Wayfarer-Kämpfen
 162. [ ] Status-Symbole mit Form und Kürzel (bestehend: Kürzel), Symbole ergänzen
 163. [ ] Status-Dauer als Zahl unter dem Kürzel
 164. [ ] Neuer Status 'Verwirrt' in eigener Form: Ziel wählt zufällig das Ziel im Mehrfachkampf
@@ -347,7 +347,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 291. [ ] Gegenstand 'Riss-Splitter': Overcharge +0.05 pro Energie
 292. [ ] Gegenstand 'Wanderschuh': Wechsel ist frei
 293. [ ] Gegenstände in Turnier-Regeln einzeln sperrbar
-294. [ ] Gegner-Tamer tragen auf Veteran Gegenstände
+294. [ ] Gegner-Wayfarer tragen auf Veteran Gegenstände
 295. [ ] Gegenstand-Info im Lexikon
 296. [ ] Gegenstand-Verbrauch in Kampfende-Bericht
 297. [ ] Gegenstand nach dem Kampf automatisch wieder ausrüsten (Option)
@@ -458,7 +458,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 396. [ ] Mehrfachkampf: Einhand-Modus
 397. [ ] Mehrfachkampf-Tests (bestehend) erweitern
 398. [ ] Mehrfachkampf: Story-Kämpfe mit Ali-Wunsch (3v3, 4v1, 4v2) beibehalten
-399. [ ] Mehrfachkampf: Gegner-Formationen pro Tamer
+399. [ ] Mehrfachkampf: Gegner-Formationen pro Wayfarer
 400. [ ] Mehrfachkampf: Formation-Bonus (z. B. zwei Stone vorne +DEF)
 
 ## Bosse und Wardens
@@ -515,12 +515,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 447. [ ] KI sagt Wechsel des Spielers vorher (nur Meister)
 448. [ ] KI nutzt Heil-Techniken gezielt
 449. [ ] KI schont Spirlings mit wenig HP für später
-450. [ ] KI-Persönlichkeiten pro Tamer (vorsichtig, wild, taktisch)
+450. [ ] KI-Persönlichkeiten pro Wayfarer (vorsichtig, wild, taktisch)
 451. [ ] KI-Debug-Ansicht für Entwickler
 452. [ ] KI-Tests pro Verhalten
 453. [ ] KI liest nur, was der Spieler auch sieht (keine versteckten Werte)
 454. [ ] KI-Zufall in Stufe 0 bleibt (Wildkämpfe)
-455. [ ] KI-Stufe pro Tamer übersteuerbar (bestehend)
+455. [ ] KI-Stufe pro Wayfarer übersteuerbar (bestehend)
 456. [ ] KI für Partner (Kestra) auf Veteran Stufe 2
 457. [ ] KI für Auto-Kampf (bestehend) auf Stufe 1
 458. [ ] KI-Ausrede vermeiden: nie unmögliche Aktionen
@@ -533,7 +533,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 465. [ ] KI-Gewinnrate-Ziel pro Schwierigkeit dokumentieren
 466. [ ] KI-Laufzeit unter 5 ms pro Entscheidung (Handy)
 467. [ ] KI-Entscheidungen im Replay nachvollziehbar
-468. [ ] KI-Texte: Tamer kommentiert gute Züge
+468. [ ] KI-Texte: Wayfarer kommentiert gute Züge
 469. [ ] KI meidet Felder, die dem Spieler helfen
 470. [ ] KI erkennt eigene Feldschwäche und wechselt
 471. [ ] KI-Lernen bewusst nicht (deterministisch bleiben)
@@ -549,89 +549,89 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Schwierigkeit und Herausforderungen
 
-481. [ ] Vier Stufen Story, Tamer, Veteran, Rift-Born (bestehend)
+481. [x] Vier Stufen Story, Wayfarer, Veteran, Rift-Born (bestehend) (bestehend: GameState.Difficulty, MenuHost.DIFFICULTY_TEXT)
 482. [x] Rift-Born nutzt die neue Meister-KI
-483. [ ] Level-Caps ab Veteran (bestehend)
-484. [ ] Gegenstände in Kämpfen auf Rift-Born gesperrt (bestehend)
-485. [ ] Iron Oath (bestehend) als Herausforderungsmodus
-486. [ ] Herausforderung 'Ein Spirling pro Gebiet'
-487. [ ] Herausforderung 'Nur Wild-Bonds aus erstem Kampf'
-488. [ ] Herausforderung 'Keine Heilung außer Rastquellen'
-489. [ ] Herausforderung 'Monotyp' (ein Element)
-490. [ ] Herausforderung 'Zufällige Spawns' (Zufallsmodus mit Seed)
-491. [ ] Herausforderung 'Zufällige Techniken'
-492. [ ] Herausforderungen kombinierbar beim neuen Spiel
-493. [ ] Herausforderungs-Abzeichen auf der Tamer-Karte (online)
-494. [ ] Schwierigkeit jederzeit senkbar, nie anhebbar (Fairness für Ranglisten)
-495. [ ] Schwierigkeit pro Kampf anzeigen
+483. [x] Level-Caps ab Veteran (bestehend) (bestehend: GameState.LEVEL_CAPS, has_ring_limit)
+484. [x] Gegenstände in Kämpfen auf Rift-Born gesperrt (bestehend) (bestehend: GameState.items_allowed_in_battle)
+485. [x] Iron Oath (bestehend) als Herausforderungsmodus (bestehend: GameState.iron_oath, MenuHost._iron_oath)
+486. [x] Herausforderung 'Ein Spirling pro Gebiet' (ChallengeRules one_per_place)
+487. [x] Herausforderung 'Nur Wild-Bonds aus erstem Kampf' (ChallengeRules first_meeting)
+488. [x] Herausforderung 'Keine Heilung außer Rastquellen' (ChallengeRules spring_water, Kampf und Tasche)
+489. [x] Herausforderung 'Monotyp' (ein Element) (ChallengeRules one_element, jetzt bei Bindungen aktiv)
+490. [x] Herausforderung 'Zufällige Spawns' (Zufallsmodus mit Seed) (ChallengeRules wild_shuffle mit Lauf-Seed)
+491. [x] Herausforderung 'Zufällige Techniken' (ChallengeRules art_shuffle)
+492. [x] Herausforderungen kombinierbar beim neuen Spiel (TitleScreen fragt beim neuen Spiel, ChallengeMenu)
+493. [ ] Herausforderungs-Abzeichen auf der Wayfarer-Karte (online)
+494. [x] Schwierigkeit jederzeit senkbar, nie anhebbar (Fairness für Ranglisten) (ChallengeRules.ranked_difficulty, Lauf-Chronik)
+495. [x] Schwierigkeit pro Kampf anzeigen (Kampfstart-Zeile challenge_line)
 496. [ ] Gegner-Level-Skalierung optional
-497. [ ] Story-Stufe: mehr XP, weniger Krit des Gegners
-498. [ ] Tamer-Stufe: Standard
-499. [ ] Veteran: Gegner mit Gegenständen
-500. [ ] Rift-Born: Gegner mit voller Technik-Auswahl
-501. [ ] Gegner-Teams pro Stufe in data/npcs.json
-502. [ ] Level-Cap-Werte dokumentieren
-503. [ ] Level-Cap-Hinweis bei Rastquellen
-504. [ ] Herausforderungs-Statistik
-505. [ ] Sieg-Bildschirm mit Schwierigkeit
-506. [ ] Neues Spiel+ mit höherem Level
+497. [x] Story-Stufe: mehr XP, weniger Krit des Gegners (ChallengeRules.FOE_CRIT und GROWTH)
+498. [x] Wayfarer-Stufe: Standard (bestehend: Wayfarer-Werte in GameState und DifficultyTable)
+499. [x] Veteran: Gegner mit Gegenständen (bestehend: TrainerData.keeps_keepsakes)
+500. [x] Rift-Born: Gegner mit voller Technik-Auswahl (ChallengeRules.fill_arts)
+501. [x] Gegner-Teams pro Stufe in data/npcs.json (bestehend: teams_by_difficulty in den Wayfarer-Daten der Karten, TrainerData.team_entries)
+502. [x] Level-Cap-Werte dokumentieren (Lexikon-Eintrag ring_caps, DifficultyTable)
+503. [x] Level-Cap-Hinweis bei Rastquellen (ChallengeRules.rest_lines)
+504. [x] Herausforderungs-Statistik (ChallengeRules.stats_lines)
+505. [x] Sieg-Bildschirm mit Schwierigkeit (RunChronicle.note nennt Schwierigkeit und Regeln)
+506. [x] Neues Spiel+ mit höherem Level (bestehend: NewGamePlus)
 507. [ ] Speedrun-Timer (Option)
-508. [ ] Seed-Anzeige für Zufallsmodi
-509. [ ] Teilen eines Seeds mit Freunden
-510. [ ] Wochen-Herausforderung (bestehend) mit Regeln
-511. [ ] Turm-Herausforderung (bestehend) mit Stufen
+508. [x] Seed-Anzeige für Zufallsmodi (ChallengeMenu)
+509. [x] Teilen eines Seeds mit Freunden (ChallengeMenu, Seed-Code kopieren und einfügen)
+510. [x] Wochen-Herausforderung (bestehend) mit Regeln (bestehend: WeeklyChallenge mit Feld, Regel und Variante)
+511. [x] Turm-Herausforderung (bestehend) mit Stufen (bestehend: EchoTower mit 100 Stockwerken)
 512. [ ] Gauntlet (bestehend) mit Rangliste
-513. [ ] Herausforderungen in eigener Wortwahl
-514. [ ] Herausforderungen ohne Bezahl-Elemente (Premium-App)
-515. [ ] Herausforderungs-Tests
-516. [ ] Herausforderungen im Lexikon
-517. [ ] Herausforderung 'Ohne Wechsel'
-518. [ ] Herausforderung 'Halbe HP'
-519. [ ] Herausforderung 'Boss zuerst'
-520. [ ] Herausforderung 'Nacht-Only'
+513. [x] Herausforderungen in eigener Wortwahl (data/challenge_modes.json)
+514. [x] Herausforderungen ohne Bezahl-Elemente (Premium-App) (Test: keine Regel in data/shop.json)
+515. [x] Herausforderungs-Tests (tests/unit/test_challenge_modes.gd)
+516. [x] Herausforderungen im Lexikon (Lexikon-Eintrag challenges)
+517. [x] Herausforderung 'Ohne Wechsel' (Halte die Stellung (stand_ground))
+518. [x] Herausforderung 'Halbe HP' (Halb erholt (half_rested))
+519. [x] Herausforderung 'Boss zuerst' (Ass voran (ace_first))
+520. [x] Herausforderung 'Nacht-Only' (Nachtbande (night_bonds))
 
-## Tamer-Teams und Gegnerdesign
+## Wayfarer-Teams und Gegnerdesign
 
-521. [ ] Jeder Tamer hat ein Thema (Element, Taktik)
-522. [ ] Tamer-Teams auf Veteran mit Synergien
-523. [ ] Tamer mit Feld-Strategie (Resonanz-Techniken)
-524. [ ] Tamer mit Status-Strategie
-525. [ ] Tamer mit Stufen-Strategie
-526. [ ] Tamer mit Mehrfachkampf-Strategie
-527. [ ] Tamer-Dialog vor/nach dem Kampf
-528. [ ] Tamer-Rückkämpfe (bestehend)
-529. [ ] Tamer-Telefonbuch-Ersatz: Laternenpost-Einladungen
-530. [ ] Tamer-Rangliste lokal
-531. [ ] Tamer-Belohnungen variieren
-532. [ ] Tamer-Teamgröße bis 5 (Team 5 fix)
-533. [ ] Tamer-Level an Level-Cap gebunden
-534. [ ] Tamer mit gehaltenen Gegenständen auf Veteran
-535. [ ] Tamer-Teams prüfen auf Dopplungen
-536. [ ] Tamer-Sprites eigenständig
-537. [ ] Tamer-Namen eigenständig
-538. [ ] Tamer-Klassen eigenständig (keine bekannten Klassen übernehmen)
-539. [ ] Tamer-Begegnung per Blickkontakt bewusst anders lösen (Ansprechen oder Signal-Laterne)
-540. [ ] Tamer-Signal vor dem Kampf (Laterne blinkt)
-541. [ ] Tamer-Kampf überspringbar nach erstem Sieg (Rückkampf)
-542. [ ] Tamer-Statistik im Lexikon
-543. [ ] Tamer im Online-Weltziel
-544. [ ] Tamer-Echos von Freunden
-545. [ ] Tamer-Team-Builder für Testzwecke
-546. [ ] Tamer-Balancing im Simulator
-547. [ ] Tamer-KI-Persönlichkeiten
-548. [ ] Tamer-Gruppen-Kämpfe (2 Tamer gegen Spieler + Kestra)
-549. [ ] Tamer mit Boss-Spirling
-550. [ ] Tamer-Turm mit 50 Stockwerken
-551. [ ] Tamer-Turm Belohnungen
-552. [ ] Tamer-Turm Regeln pro Stockwerk
-553. [ ] Tamer-Turm Rangliste online
-554. [ ] Tamer-Daten validieren (validate_data)
-555. [ ] Tamer-Texte übersetzt
-556. [ ] Tamer-Teams pro Schwierigkeit
-557. [ ] Tamer-Geld-Belohnungen balancieren
-558. [ ] Tamer mit Overcharge-Strategie
-559. [ ] Tamer mit Bond-Lehre (Tutorial)
-560. [ ] Tamer-Kampfmusik pro Gebiet
+521. [ ] Jeder Wayfarer hat ein Thema (Element, Taktik)
+522. [ ] Wayfarer-Teams auf Veteran mit Synergien
+523. [ ] Wayfarer mit Feld-Strategie (Resonanz-Techniken)
+524. [ ] Wayfarer mit Status-Strategie
+525. [ ] Wayfarer mit Stufen-Strategie
+526. [ ] Wayfarer mit Mehrfachkampf-Strategie
+527. [x] Wayfarer-Dialog vor/nach dem Kampf (bestehend: intro und defeat in den Wayfarer-Daten)
+528. [x] Wayfarer-Rückkämpfe (bestehend) (bestehend: TrainerData.can_rematch)
+529. [ ] Wayfarer-Telefonbuch-Ersatz: Laternenpost-Einladungen
+530. [ ] Wayfarer-Rangliste lokal
+531. [ ] Wayfarer-Belohnungen variieren
+532. [x] Wayfarer-Teamgröße bis 5 (Team 5 fix) (bestehend: GameState.MAX_PARTY, TrainerData.RIFT_BORN_MAX_TEAM)
+533. [x] Wayfarer-Level an Level-Cap gebunden (bestehend: TrainerData.build_team mit ring_cap + FOE_OVER_CAP)
+534. [x] Wayfarer mit gehaltenen Gegenständen auf Veteran (bestehend: TrainerData.keeps_keepsakes ab Veteran)
+535. [ ] Wayfarer-Teams prüfen auf Dopplungen
+536. [ ] Wayfarer-Sprites eigenständig
+537. [x] Wayfarer-Namen eigenständig (bestehend: tools/ip_check.sh)
+538. [x] Wayfarer-Klassen eigenständig (keine bekannten Klassen übernehmen) (bestehend: tools/ip_check.sh)
+539. [ ] Wayfarer-Begegnung per Blickkontakt bewusst anders lösen (Ansprechen oder Signal-Laterne)
+540. [ ] Wayfarer-Signal vor dem Kampf (Laterne blinkt)
+541. [ ] Wayfarer-Kampf überspringbar nach erstem Sieg (Rückkampf)
+542. [ ] Wayfarer-Statistik im Lexikon
+543. [ ] Wayfarer im Online-Weltziel
+544. [ ] Wayfarer-Echos von Freunden
+545. [ ] Wayfarer-Team-Builder für Testzwecke
+546. [ ] Wayfarer-Balancing im Simulator
+547. [x] Wayfarer-KI-Persönlichkeiten (bestehend: data/ai_profiles.json)
+548. [ ] Wayfarer-Gruppen-Kämpfe (2 Wayfarer gegen Spieler + Kestra)
+549. [x] Wayfarer mit Boss-Spirling (bestehend: boss-Schlüssel in TrainerData)
+550. [x] Wayfarer-Turm mit 50 Stockwerken (bestehend: EchoTower mit 100 Stockwerken)
+551. [x] Wayfarer-Turm Belohnungen (bestehend: Gauntlet.REWARDS und Waymarks)
+552. [x] Wayfarer-Turm Regeln pro Stockwerk (bestehend: Regel-Varianten pro Stockwerk)
+553. [ ] Wayfarer-Turm Rangliste online
+554. [ ] Wayfarer-Daten validieren (validate_data)
+555. [x] Wayfarer-Texte übersetzt (bestehend: test_i18n)
+556. [x] Wayfarer-Teams pro Schwierigkeit (bestehend: teams_by_difficulty)
+557. [ ] Wayfarer-Geld-Belohnungen balancieren
+558. [ ] Wayfarer mit Overcharge-Strategie
+559. [ ] Wayfarer mit Bond-Lehre (Tutorial)
+560. [ ] Wayfarer-Kampfmusik pro Gebiet
 
 ## Info und Transparenz
 
@@ -930,7 +930,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 835. [x] Endgame: Boss-Turm (Kampfhallen: Herzstiege, ein Rissherz pro Stockwerk)
 836. [x] Endgame: Lore-Belohnungen (Hallengeschichten: eine Seite pro erster Hallen-Bezwingung)
 837. [ ] Endgame: Kosmetik-Belohnungen (Laternenfarben)
-838. [x] Endgame: Titel auf der Tamer-Karte (Titel aus Hallen und Zielen auf der Wanderer-Karte, Server nimmt nur bekannte Titel (20261113200110_card_title.sql))
+838. [x] Endgame: Titel auf der Wayfarer-Karte (Titel aus Hallen und Zielen auf der Wanderer-Karte, Server nimmt nur bekannte Titel (20261113200110_card_title.sql))
 839. [x] Endgame: Wochen-Ziel (Hallen-Wochenziel: 12 Hallensiege pro Woche)
 840. [x] Endgame: Ruhm-Halle (Ruhmeshalle: Team und Datum jeder ersten Bezwingung)
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-140 von 1000 Punkten umgesetzt.
+189 von 1000 Punkten umgesetzt.
 
