@@ -82,11 +82,11 @@
   "role": "kindler",
   "line_id": "kindlop",
   "base": {
-   "hp": 81,
-   "atk": 96,
-   "foc": 100,
-   "spd": 102,
-   "def": 76
+   "hp": 78,
+   "atk": 92,
+   "foc": 96,
+   "spd": 98,
+   "def": 73
   },
   "trait": "kindling",
   "learnset": {
@@ -119,14 +119,14 @@
    "32": [
     "Bellows Blast"
    ],
+   "34": [
+    "Ball Lightning"
+   ],
    "46": [
     "Smoulder"
    ],
    "52": [
     "Bonfire Body"
-   ],
-   "58": [
-    "Slow Quake"
    ]
   },
   "bond_rate": 0.15,
@@ -29042,11 +29042,11 @@
   "line_id": "boltnib",
   "era": 2,
   "base": {
-   "hp": 51,
-   "atk": 74,
-   "foc": 47,
-   "spd": 74,
-   "def": 44
+   "hp": 49,
+   "atk": 73,
+   "foc": 46,
+   "spd": 73,
+   "def": 43
   },
   "trait": "slick",
   "learnset": {
@@ -29061,10 +29061,10 @@
     "Hinge Snap"
    ],
    "15": [
-    "Night Toll"
+    "Hush"
    ],
    "26": [
-    "Debt Collector"
+    "Murmur Bite"
    ],
    "32": [
     "Anchor Chain"
@@ -29120,10 +29120,10 @@
     "Hinge Snap"
    ],
    "15": [
-    "Cower Shade"
+    "Night Veil"
    ],
    "26": [
-    "Murmur Bite"
+    "Backstab"
    ],
    "32": [
     "Seized Gear"
@@ -29182,7 +29182,7 @@
     "Hinge Snap"
    ],
    "15": [
-    "Murk Veil"
+    "Murk Call"
    ],
    "26": [
     "Backstab"
@@ -29239,13 +29239,13 @@
     "Two Faces"
    ],
    "15": [
-    "Sediment"
+    "Bedrock"
    ],
    "20": [
     "Charade"
    ],
    "26": [
-    "Ore Pulse"
+    "Fault Line"
    ],
    "32": [
     "Grand Farce"
@@ -29312,7 +29312,7 @@
     "Masquerade"
    ],
    "38": [
-    "Dust Devil"
+    "Strata Burst"
    ]
   },
   "bond_rate": 0.25,
@@ -29364,7 +29364,7 @@
     "Two Faces"
    ],
    "15": [
-    "Quarry Wall"
+    "Hunker Down"
    ],
    "20": [
     "Charade"
@@ -29416,7 +29416,7 @@
   "learnset": {
    "1": [
     "Tinder Flick",
-    "Heat Haze"
+    "Ash Call"
    ],
    "6": [
     "Salt Spray"
@@ -29478,7 +29478,7 @@
   "learnset": {
    "1": [
     "Tinder Flick",
-    "Charcoal Grin"
+    "Ash Call"
    ],
    "6": [
     "Brine Pellet"
@@ -29543,7 +29543,7 @@
   "learnset": {
    "1": [
     "Tinder Flick",
-    "Ash Call"
+    "Kindle Up"
    ],
    "6": [
     "Fizz Pop"
@@ -29595,10 +29595,10 @@
   "era": 2,
   "base": {
    "hp": 56,
-   "atk": 42,
-   "foc": 78,
-   "spd": 57,
-   "def": 58
+   "atk": 43,
+   "foc": 80,
+   "spd": 59,
+   "def": 59
   },
   "trait": "steady",
   "learnset": {
@@ -29613,7 +29613,7 @@
     "Salt Spray"
    ],
    "15": [
-    "Vigil Light"
+    "Dawn Mend"
    ],
    "20": [
     "Spindrift Shot"
@@ -29675,7 +29675,7 @@
     "Salt Spray"
    ],
    "15": [
-    "Vigil Light"
+    "Candle Ward"
    ],
    "20": [
     "Riptide Coil"
@@ -29718,11 +29718,11 @@
   "line_id": "dimlure",
   "era": 2,
   "base": {
-   "hp": 90,
-   "atk": 60,
-   "foc": 122,
-   "spd": 86,
-   "def": 80
+   "hp": 92,
+   "atk": 61,
+   "foc": 124,
+   "spd": 88,
+   "def": 82
   },
   "trait": "steady",
   "learnset": {
@@ -29737,7 +29737,7 @@
     "Harbour Swell"
    ],
    "15": [
-    "Still Thought"
+    "Dawn Mend"
    ],
    "20": [
     "Spindrift Shot"
@@ -29860,7 +29860,7 @@
     "Kite Cut"
    ],
    "15": [
-    "Quarry Hymn"
+    "Sediment"
    ],
    "20": [
     "Gust Ladder"
@@ -29925,7 +29925,7 @@
     "Gust Ladder"
    ],
    "15": [
-    "Bedrock"
+    "Quarry Wall"
    ],
    "20": [
     "Squall Line"
@@ -29986,13 +29986,16 @@
     "Dusk Rake"
    ],
    "15": [
-    "Ash Call"
+    "Smoulder"
    ],
    "20": [
-    "Debt Collector"
+    "Backstab"
    ],
    "26": [
     "Kiln Strike"
+   ],
+   "32": [
+    "Dusk Gnaw"
    ]
   },
   "bond_rate": 0.55,
@@ -30045,7 +30048,7 @@
     "Shade Pounce"
    ],
    "15": [
-    "Smoulder"
+    "Banked Coals"
    ],
    "20": [
     "Murmur Bite"
@@ -30054,7 +30057,7 @@
     "Kiln Rush"
    ],
    "32": [
-    "Debt Collector"
+    "Dusk Gnaw"
    ],
    "38": [
     "Bonfire Body"
@@ -30101,7 +30104,7 @@
   "learnset": {
    "1": [
     "Veil Step",
-    "Night Toll"
+    "Gloam Pact"
    ],
    "6": [
     "Cinder Dash"
@@ -30110,7 +30113,7 @@
     "Dusk Rake"
    ],
    "15": [
-    "Ash Call"
+    "Heat Haze"
    ],
    "20": [
     "Backstab"
@@ -30119,7 +30122,7 @@
     "Kiln Rush"
    ],
    "32": [
-    "Debt Collector"
+    "Dusk Gnaw"
    ],
    "38": [
     "Bonfire Body"
@@ -30239,7 +30242,7 @@
     "Seized Gear"
    ],
    "38": [
-    "Wreck Diver"
+    "Breaker Plunge"
    ]
   },
   "bond_rate": 0.28,
@@ -30273,11 +30276,11 @@
   "line_id": "flakit",
   "era": 2,
   "base": {
-   "hp": 112,
-   "atk": 84,
-   "foc": 79,
-   "spd": 66,
-   "def": 121
+   "hp": 114,
+   "atk": 85,
+   "foc": 81,
+   "spd": 67,
+   "def": 124
   },
   "trait": "thick_hide",
   "learnset": {
@@ -30301,7 +30304,7 @@
     "Seized Gear"
    ],
    "38": [
-    "Wreck Diver"
+    "Breaker Plunge"
    ],
    "44": [
     "Wrecking Hulk"
@@ -30350,7 +30353,7 @@
     "Hinge Snap"
    ],
    "15": [
-    "Fuse Box"
+    "Spark Call"
    ],
    "26": [
     "Live Wire"
@@ -30409,7 +30412,7 @@
     "Hinge Snap"
    ],
    "15": [
-    "Static Kiss"
+    "Fuse Box"
    ],
    "26": [
     "Pylon Snap"
@@ -30452,11 +30455,11 @@
   "line_id": "sprockle",
   "era": 2,
   "base": {
-   "hp": 92,
-   "atk": 113,
-   "foc": 71,
-   "spd": 101,
-   "def": 83
+   "hp": 94,
+   "atk": 115,
+   "foc": 72,
+   "spd": 103,
+   "def": 85
   },
   "trait": "deep_roots",
   "learnset": {
@@ -30471,7 +30474,7 @@
     "Hinge Snap"
    ],
    "15": [
-    "Charged Mist"
+    "Grid Lock"
    ],
    "26": [
     "Live Wire"
@@ -30535,7 +30538,7 @@
     "False Face"
    ],
    "26": [
-    "Backstab"
+    "Murmur Bite"
    ],
    "32": [
     "Jester Fall"
@@ -30591,7 +30594,7 @@
     "Two Faces"
    ],
    "15": [
-    "Cower Shade"
+    "Gloam Pact"
    ],
    "20": [
     "False Face"
@@ -30656,10 +30659,10 @@
     "Two Faces"
    ],
    "15": [
-    "Hush"
+    "Night Toll"
    ],
    "26": [
-    "Murmur Bite"
+    "Backstab"
    ],
    "32": [
     "Jester Fall"
@@ -30714,7 +30717,7 @@
     "Knell"
    ],
    "15": [
-    "Dawn Call"
+    "Still Thought"
    ],
    "20": [
     "Feedback"
@@ -30776,7 +30779,7 @@
     "Knell"
    ],
    "15": [
-    "Sunwell Sip"
+    "Candle Ward"
    ],
    "20": [
     "Feedback"
@@ -30841,7 +30844,7 @@
     "Knell"
    ],
    "15": [
-    "Sunwell Sip"
+    "Vigil Light"
    ],
    "20": [
     "Resound"
@@ -31083,7 +31086,7 @@
     "Wave Shoulder"
    ],
    "15": [
-    "Bedrock"
+    "Hunker Down"
    ],
    "20": [
     "Undertow"
@@ -31092,7 +31095,7 @@
     "Landslip"
    ],
    "32": [
-    "Wreck Diver"
+    "Breaker Plunge"
    ]
   },
   "bond_rate": 0.45,
@@ -31125,11 +31128,11 @@
   "line_id": "snaglet",
   "era": 2,
   "base": {
-   "hp": 69,
-   "atk": 97,
-   "foc": 73,
-   "spd": 119,
-   "def": 69
+   "hp": 67,
+   "atk": 96,
+   "foc": 72,
+   "spd": 117,
+   "def": 67
   },
   "trait": "surge",
   "learnset": {
@@ -31153,7 +31156,7 @@
     "Landslip"
    ],
    "32": [
-    "Wreck Diver"
+    "Breaker Plunge"
    ],
    "38": [
     "Lurking Mass"
@@ -31208,7 +31211,7 @@
     "Salt Snap"
    ],
    "15": [
-    "Bedrock"
+    "Quarry Wall"
    ],
    "20": [
     "Undertow"
@@ -31217,7 +31220,7 @@
     "Boulder Roll"
    ],
    "32": [
-    "Wreck Diver"
+    "Breaker Plunge"
    ],
    "38": [
     "Lurking Mass"
@@ -31268,7 +31271,7 @@
     "Tunnel Strike"
    ],
    "15": [
-    "Spark Call"
+    "Grid Lock"
    ],
    "26": [
     "Storm Gnash"
@@ -31326,7 +31329,7 @@
     "Boulder Roll"
    ],
    "15": [
-    "Charged Mist"
+    "Dynamo Hum"
    ],
    "20": [
     "Tunnel Strike"
@@ -31381,7 +31384,7 @@
   "learnset": {
    "1": [
     "Bowl Over",
-    "Bedrock"
+    "Sediment"
    ],
    "6": [
     "Crackle Jab"
@@ -31390,7 +31393,7 @@
     "Pumice Pelt"
    ],
    "15": [
-    "Brownout"
+    "Spark Call"
    ],
    "20": [
     "Tunnel Strike"
@@ -31451,7 +31454,7 @@
     "Crosswind"
    ],
    "15": [
-    "Sunwell Sip"
+    "Still Thought"
    ],
    "20": [
     "Weathervane"
@@ -31513,7 +31516,7 @@
     "Crosswind"
    ],
    "15": [
-    "Mirror Shine"
+    "Dawn Mend"
    ],
    "20": [
     "Weathervane"
@@ -31578,7 +31581,7 @@
     "Updraft"
    ],
    "15": [
-    "Still Thought"
+    "Vigil Light"
    ],
    "20": [
     "Weathervane"
@@ -31619,32 +31622,32 @@
   "line_id": "tithel",
   "era": 2,
   "base": {
-   "hp": 77,
-   "atk": 57,
-   "foc": 49,
-   "spd": 48,
-   "def": 95
+   "hp": 76,
+   "atk": 56,
+   "foc": 48,
+   "spd": 47,
+   "def": 93
   },
   "trait": "steady",
   "learnset": {
    "1": [
     "Grit Jab",
-    "Hunker Down"
+    "Sediment"
    ],
    "6": [
-    "Pebble Toss"
+    "Shade Pounce"
    ],
    "10": [
     "Pumice Pelt"
    ],
    "15": [
-    "Bedrock"
+    "Cower Shade"
    ],
    "20": [
     "Landslip"
    ],
    "26": [
-    "Boulder Roll"
+    "Backstab"
    ],
    "32": [
     "Cairn Crash"
@@ -31690,22 +31693,28 @@
   "learnset": {
    "1": [
     "Pebble Toss",
-    "Gravel Hum"
+    "Hunker Down"
    ],
    "6": [
-    "Bowl Over"
+    "Dusk Rake"
    ],
    "10": [
     "Pumice Pelt"
    ],
+   "15": [
+    "Gloam Pact"
+   ],
    "20": [
     "Landslip"
+   ],
+   "26": [
+    "Murmur Bite"
    ],
    "32": [
     "Cairn Crash"
    ],
    "38": [
-    "Lurking Mass"
+    "Dusk Gnaw"
    ]
   },
   "bond_rate": 0.35,
@@ -31738,32 +31747,35 @@
   "line_id": "tithel",
   "era": 2,
   "base": {
-   "hp": 118,
-   "atk": 99,
-   "foc": 78,
-   "spd": 74,
-   "def": 146
+   "hp": 115,
+   "atk": 97,
+   "foc": 77,
+   "spd": 73,
+   "def": 144
   },
   "trait": "steady",
   "learnset": {
    "1": [
     "All-In Crash",
-    "Sediment"
+    "Gravel Hum"
    ],
    "6": [
-    "Grit Jab"
+    "Shade Pounce"
    ],
    "10": [
     "Boulder Roll"
    ],
    "15": [
-    "Quarry Wall"
+    "Cower Shade"
    ],
    "20": [
     "Tremor Thud"
    ],
+   "26": [
+    "Backstab"
+   ],
    "38": [
-    "Lurking Mass"
+    "Dusk Gnaw"
    ],
    "44": [
     "Monolith Drop"
@@ -31803,7 +31815,7 @@
   "learnset": {
    "1": [
     "Shadow Whisper",
-    "Grave Dust"
+    "Murk Veil"
    ],
    "6": [
     "Hum Back"
@@ -31930,7 +31942,7 @@
   "learnset": {
    "1": [
     "Shadow Whisper",
-    "Gloom Handoff"
+    "Hush"
    ],
    "6": [
     "Bell Tap"
@@ -31991,7 +32003,7 @@
   "learnset": {
    "1": [
     "Pollen Prick",
-    "Compost Pact"
+    "Graft"
    ],
    "6": [
     "Salt Snap"
@@ -32053,7 +32065,7 @@
   "learnset": {
    "1": [
     "Seed Spit",
-    "Bloom Call"
+    "Pollen Choir"
    ],
    "6": [
     "Spout Jab"
@@ -32118,7 +32130,7 @@
   "learnset": {
    "1": [
     "Lichen Lash",
-    "Pollen Choir"
+    "Graft"
    ],
    "6": [
     "Puddle Jump"
@@ -32136,7 +32148,7 @@
     "Rip Current"
    ],
    "38": [
-    "Wreck Diver"
+    "Breaker Plunge"
    ],
    "44": [
     "Wildgrowth Crash"
@@ -32166,11 +32178,11 @@
   "line_id": "smogpup",
   "era": 2,
   "base": {
-   "hp": 60,
-   "atk": 74,
-   "foc": 47,
-   "spd": 69,
-   "def": 51
+   "hp": 59,
+   "atk": 72,
+   "foc": 46,
+   "spd": 68,
+   "def": 50
   },
   "trait": "surge",
   "learnset": {
@@ -32194,7 +32206,7 @@
     "Two Faces"
    ],
    "32": [
-    "Pitch Torch"
+    "Bonfire Body"
    ]
   },
   "bond_rate": 0.55,
@@ -32228,17 +32240,17 @@
   "line_id": "smogpup",
   "era": 2,
   "base": {
-   "hp": 85,
-   "atk": 106,
-   "foc": 64,
-   "spd": 100,
-   "def": 77
+   "hp": 82,
+   "atk": 102,
+   "foc": 62,
+   "spd": 96,
+   "def": 74
   },
   "trait": "surge",
   "learnset": {
    "1": [
     "Cinder Nip",
-    "Heat Haze"
+    "Kindle Up"
    ],
    "6": [
     "Sleight"
@@ -32256,7 +32268,7 @@
     "False Face"
    ],
    "32": [
-    "Pitch Torch"
+    "Bonfire Body"
    ],
    "38": [
     "Jester Fall"
@@ -32321,7 +32333,7 @@
     "False Face"
    ],
    "32": [
-    "Pitch Torch"
+    "Bonfire Body"
    ],
    "38": [
     "Jester Fall"
@@ -32373,7 +32385,7 @@
     "Updraft"
    ],
    "15": [
-    "Murk Call"
+    "Hush"
    ],
    "20": [
     "Weathervane"
@@ -32435,7 +32447,7 @@
     "Lull Breaker"
    ],
    "15": [
-    "Hush"
+    "Gloam Pact"
    ],
    "20": [
     "Weathervane"
@@ -32487,7 +32499,7 @@
   "learnset": {
    "1": [
     "Thistle Puff",
-    "Puffcap Haze"
+    "Bloom Call"
    ],
    "6": [
     "Shadow Whisper"
@@ -32496,7 +32508,7 @@
     "Sap Draw"
    ],
    "15": [
-    "Gloom Handoff"
+    "Murk Call"
    ],
    "20": [
     "Thornwake"
@@ -32546,7 +32558,7 @@
   "learnset": {
    "1": [
     "Thistle Puff",
-    "Pollen Choir"
+    "Overgrowth"
    ],
    "6": [
     "Shadow Whisper"
@@ -32555,7 +32567,7 @@
     "Spore Dart"
    ],
    "15": [
-    "Murk Call"
+    "Hush"
    ],
    "20": [
     "Thornwake"
@@ -32684,10 +32696,10 @@
     "Lantern Swing"
    ],
    "32": [
-    "Wreck Diver"
+    "Breaker Plunge"
    ],
    "38": [
-    "Vane of Morning"
+    "Radiant Lance"
    ],
    "44": [
     "Fathom Crush"
@@ -32727,7 +32739,7 @@
   "learnset": {
    "1": [
     "Mirk Nip",
-    "Hush"
+    "Murk Call"
    ],
    "6": [
     "Pinwheel"
@@ -32739,10 +32751,13 @@
     "Gale Mantle"
    ],
    "20": [
-    "Debt Collector"
+    "Backstab"
    ],
    "26": [
     "Squall Line"
+   ],
+   "32": [
+    "Dusk Gnaw"
    ]
   },
   "bond_rate": 0.32,
@@ -32786,7 +32801,7 @@
   "learnset": {
    "1": [
     "Veil Step",
-    "Murk Call"
+    "Night Veil"
    ],
    "6": [
     "Pinwheel"
@@ -32798,16 +32813,16 @@
     "Tailwind"
    ],
    "20": [
-    "Murmur Bite"
+    "Backstab"
    ],
    "26": [
     "Squall Line"
    ],
    "32": [
-    "Debt Collector"
+    "Dusk Gnaw"
    ],
    "38": [
-    "Shear Wind"
+    "Gale Scythe"
    ],
    "44": [
     "Eclipse Crush"
@@ -32847,7 +32862,7 @@
   "learnset": {
    "1": [
     "Grit Jab",
-    "Bedrock"
+    "Quarry Wall"
    ],
    "6": [
     "Sleight"
@@ -32899,17 +32914,17 @@
   "line_id": "latchet",
   "era": 2,
   "base": {
-   "hp": 117,
-   "atk": 93,
-   "foc": 74,
-   "spd": 65,
-   "def": 122
+   "hp": 119,
+   "atk": 95,
+   "foc": 75,
+   "spd": 66,
+   "def": 125
   },
   "trait": "thick_hide",
   "learnset": {
    "1": [
     "Pebble Toss",
-    "Sediment"
+    "Hunker Down"
    ],
    "6": [
     "Sleight"
@@ -32970,7 +32985,7 @@
   "learnset": {
    "1": [
     "Tinder Flick",
-    "Heat Haze"
+    "Ash Call"
    ],
    "6": [
     "Dread Note"
@@ -32979,7 +32994,7 @@
     "Char Mark"
    ],
    "15": [
-    "Hush"
+    "Cower Shade"
    ],
    "20": [
     "Cinder Breath"
@@ -33032,7 +33047,7 @@
   "learnset": {
    "1": [
     "Tinder Flick",
-    "Charcoal Grin"
+    "Heat Haze"
    ],
    "6": [
     "Shadow Whisper"
@@ -33041,7 +33056,7 @@
     "Char Mark"
    ],
    "15": [
-    "Hush"
+    "Night Veil"
    ],
    "20": [
     "Cinder Breath"
@@ -33102,7 +33117,7 @@
     "Errata"
    ],
    "15": [
-    "Grave Dust"
+    "Hush"
    ],
    "20": [
     "Inkwell Flood"
@@ -33156,7 +33171,7 @@
     "Hinge Snap"
    ],
    "15": [
-    "Quarry Wall"
+    "Bedrock"
    ],
    "26": [
     "Tremor Thud"
@@ -33202,7 +33217,7 @@
   "learnset": {
    "1": [
     "Pebble Toss",
-    "Hunker Down"
+    "Gravel Hum"
    ],
    "6": [
     "Spark Prod"
@@ -33211,7 +33226,7 @@
     "Tunnel Strike"
    ],
    "15": [
-    "Brownout"
+    "Grid Lock"
    ],
    "20": [
     "Landslip"
@@ -33260,7 +33275,7 @@
   "learnset": {
    "1": [
     "Shadow Whisper",
-    "Grave Dust"
+    "Night Toll"
    ],
    "6": [
     "Fizz Pop"

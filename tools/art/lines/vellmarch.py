@@ -61,7 +61,7 @@ LINES = [
     L(id="snoblet", names=["Snoblet", "Snobplume", "Snobsovereign"], elements=["GALE", "LUMEN"], role="kindler",
       art=dict(plan="bird", tones=("mid", "light", "light"), tail="plume", crest=3, crest_tone="A:mid",
                extras=("wing", "collar"), eye="sleepy", neck=True, hue=14)),
-    L(id="tithel", names=["Tithel", "Tithshell", "Tithebastion"], elements=["STONE"], role="bulwark",
+    L(id="tithel", names=["Tithel", "Tithshell", "Tithebastion"], elements=["STONE"], role="bulwark", cover="UMBRA",
       art=dict(plan="shell", tones=("dark", "mid", "mid"), back="crystals", back_n=2, extras=("shellpat", "hood"),
                eye="sleepy", mouth="line", tail="club", accent="UMBRA")),
     L(id="bargit", names=["Bargit", "Bargwing", "Bargemourn"], elements=["UMBRA", "ECHO"], role="weaver",

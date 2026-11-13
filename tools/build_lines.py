@@ -58,7 +58,9 @@ def load(path):
         return json.load(f)
 
 
-def move_pools(species, moves):
+def move_pools(species, moves, era=1):
+    # Arts of a later era stay off the kinds of an earlier one (test_move_content).
+    moves = [m for m in moves if m.get("era", 1) <= max(era, 1)]
     used = set()
     for s in species:
         for v in s["learnset"].values():
@@ -263,7 +265,7 @@ def main():
     kept.sort(key=lambda s: s["dex_id"])
     for i, s in enumerate(kept):
         s["dex_id"] = i + 1
-    pools = move_pools(kept, moves)
+    pools = move_pools(kept, moves, getattr(mod, "ERA", 1))
     pick_traits(region, mod.LINES, kept)
     nxt = len(kept) + 1
     for line in mod.LINES:
