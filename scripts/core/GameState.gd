@@ -965,6 +965,13 @@ func has_flag(flag: String) -> bool:
 func set_flag(flag: String, value: bool = true) -> void:
 	flags[flag] = value
 
+## Rolls every Spark of [param s] anew (0..SPARK_MAX), as a freshly met Spirling gets them.
+static func reroll_sparks(s: Spirling, r: RandomNumberGenerator) -> void:
+	var frac: float = s.hp_fraction()
+	for key: String in Spirling.STAT_KEYS:
+		s.spark[key] = r.randi_range(0, Spirling.SPARK_MAX)
+	s.hp = 0 if s.is_fainted() else maxi(1, roundi(frac * s.max_hp()))
+
 ## Fully restores the party (Rest Springs, after a loss).
 func heal_party() -> void:
 	for s: Spirling in party:
@@ -1218,6 +1225,10 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 			s.level_up()
 		s.xp = Spirling.xp_for_level(s.level)
 		msg = "%s grew from Ring %d to Ring %d!" % [s.display_name(), from, s.level]
+	elif bool(it.get("spark_reset", false)):
+		# Spark Flux (KAMPF_PLAN_1000 item 230): every Spark is rolled anew.
+		reroll_sparks(s, rng)
+		msg = "%s's sparks flicker and settle anew." % s.display_name()
 	elif bool(it.get("spark_all", false)):
 		var raised: bool = false
 		for key: String in Spirling.STAT_KEYS:

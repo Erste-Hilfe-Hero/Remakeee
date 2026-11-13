@@ -838,6 +838,8 @@ func _unfurl(s: Spirling, forward: bool) -> void:
 			target = ready[pick]
 	if target == null:
 		return
+	if forward:
+		await info("\n".join(BattleGuide.unfold_preview(s, target)))
 	var q: String = ("Unfurl %s into %s? You can furl it back later." if forward else "Furl %s back into %s? You can unfurl it again later.") % [old_name, target.species_name]
 	if not await confirm(q):
 		return
@@ -919,7 +921,7 @@ func _usable_items() -> Array[String]:
 	for id: Variant in GameState.inventory:
 		var it: Dictionary = Database.item(str(id))
 		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))
-				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false))
+				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false)) or bool(it.get("spark_reset", false))
 				or bool(it.get("unfurl_any", false)) or bool(it.get("gift_slot", false))):
 			out.append(str(id))
 	return out
