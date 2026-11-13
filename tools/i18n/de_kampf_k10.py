@@ -52,3 +52,38 @@ T.update({
 "Growth: %s": "Wachstum: %s",
 "Swarm today: %s near %s": "Schwarm heute: %s bei %s",
 })
+# Training ring (TrainingGround, lighthouse)
+T.update({
+"Spar with a dummy": "Mit einer Puppe üben",
+"Training goals": "Trainingsziele",
+"Training record": "Trainingsbilanz",
+"Training ring": "Trainingsring",
+"Which dummy?": "Welche Puppe?",
+"Dummy": "Puppe",
+"%s, ring %d": "%s, Ring %d",
+"The keeper patches the dummy up. Your team is rested.": "Die Hüterin flickt die Puppe. Dein Team ist ausgeruht.",
+"Training goal met: %s You received %s.": "Trainingsziel erreicht: %s Du erhältst %s.",
+"Bouts: %d": "Übungskämpfe: %d",
+"Wins: %d": "Siege: %d",
+"Growth from training: %d": "Wachstum aus dem Training: %d",
+"Straw Dummy": "Strohpuppe",
+"Oak Dummy": "Eichenpuppe",
+"Ironwood Dummy": "Eisenholzpuppe",
+"Win one bout.": "Gewinne einen Übungskampf.",
+"Win five bouts.": "Gewinne fünf Übungskämpfe.",
+"Beat the Oak Dummy three times.": "Besiege die Eichenpuppe dreimal.",
+"Beat the Ironwood Dummy.": "Besiege die Eisenholzpuppe.",
+"Win twenty bouts.": "Gewinne zwanzig Übungskämpfe.",
+"Tamsin: Training ring. I carve the dummies, you knock them over, nobody gets hurt. Except the dummies. They don't complain.":
+	"Tamsin: Trainingsring. Ich schnitze die Puppen, du wirfst sie um, keiner wird verletzt. Außer den Puppen. Die beschweren sich nicht.",
+"Tamsin: Lose, and I patch your team up for free. Win, and I patch the dummy up for free. I'm very generous with other people's time.":
+	"Tamsin: Verlierst du, flicke ich dein Team umsonst. Gewinnst du, flicke ich die Puppe umsonst. Mit der Zeit anderer Leute bin ich sehr großzügig.",
+})
+T.update({
+"Dim: fewer wild Spirlings": "Gedämpft: weniger wilde Spirlings",
+"Normal": "Normal",
+"Bright: more wild Spirlings": "Hell: mehr wilde Spirlings",
+"Storm Lantern: how bright?": "Sturmlaterne: wie hell?",
+"The lantern burns: %s": "Die Laterne brennt: %s",
+})
+T.update({"The swarm wavers without its leader!": "Der Schwarm wankt ohne seinen Anführer!"})

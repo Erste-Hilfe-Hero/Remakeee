@@ -768,7 +768,8 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	var guard_over: bool = EncounterTable.tick_guard()
 	# Wild Ward (shop, pay-to-win step 6): switched on, no wild Spirling steps out.
 	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty() and guard_over and not ShopEffects.wild_ward_on():
-		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < minf(1.0, EncounterTable.rate(map.encounter_table) * call_mult * WildRules.rate_mult(DayCycle.current(), map.outdoor, GameState.day_night)):
+		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < minf(1.0, EncounterTable.rate(map.encounter_table) * call_mult * WildRules.rate_mult(DayCycle.current(), map.outdoor, GameState.day_night)
+				* WildRules.lantern_mult(GameState.records, GameState.has_gear(WildRules.LANTERN_ITEM))):
 			var wild: Spirling = DailyFind.maybe_spawn(map.encounter_table, GameState.flags, GameState.rng)
 			if wild != null:
 				# The day's rare visitor glitters in with five very high notes (item 2517).
@@ -1316,6 +1317,51 @@ func _action_fine_training(_args: PackedStringArray, _speaker: NPC) -> void:
 		return
 	var r: Dictionary = FineTraining.train(s, stat, GameState.rng)
 	await say([str(r.line)] as Array[String])
+
+## "training": the training ring in the lighthouse (TrainingGround): bouts against carved
+## dummies without risk, training goals and the training record.
+func _action_training(_args: PackedStringArray, _speaker: NPC) -> void:
+	while true:
+		var menu := MenuHost.new()
+		_ui.add_child(menu)
+		var opts: Array[String] = [Loc.t("Spar with a dummy"), Loc.t("Training goals"), Loc.t("Training record")]
+		var pick: int = await menu.pick_strings(Loc.t("Training ring"), opts)
+		if pick == 1:
+			await menu.info("\n".join(TrainingGround.goal_lines(GameState.records)))
+		elif pick == 2:
+			await menu.info("\n".join(TrainingGround.stat_lines(GameState.records)))
+		if pick != 0:
+			menu.queue_free()
+			if pick < 0:
+				return
+			continue
+		var top: int = 1
+		for p: Spirling in GameState.party:
+			top = maxi(top, p.level)
+		var names: Array[String] = []
+		for d: Dictionary in TrainingGround.dummies():
+			names.append(Loc.t("%s, ring %d") % [Loc.t(str(d.name)), TrainingGround.ring_for(d, top)])
+		var which: int = await menu.pick_strings(Loc.t("Which dummy?"), names)
+		menu.queue_free()
+		if which < 0 or GameState.first_healthy_index() < 0:
+			return
+		var dummy: Dictionary = TrainingGround.dummies()[which]
+		var foe: Spirling = TrainingGround.make(dummy, top, GameState.rng)
+		if foe == null:
+			return
+		_text.visible = false
+		var outcome: BattleModel.Outcome = await start_battle([foe] as Array[Spirling], false, TrainingGround.bout_info(dummy))
+		# Nothing is lost in the ring: the team is rested again right away.
+		GameState.heal_party()
+		busy = true
+		player.frozen = true
+		VirtualPad.set_wanted(false)
+		var lines: Array[String] = [Loc.t("The keeper patches the dummy up. Your team is rested.")]
+		for g: Dictionary in TrainingGround.after_bout(GameState.records, str(dummy.id), outcome == BattleModel.Outcome.WIN, last_model.growth_total if last_model != null else 0):
+			GameState.add_item(str(g.reward))
+			lines.append(Loc.t("Training goal met: %s You received %s.") % [Loc.t(str(g.text)), Loc.t(str(Database.item(str(g.reward)).get("name", g.reward)))])
+		await say(lines)
+		return
 
 ## "burrow": the claimable hollow in Murk Hollow with a wall of trophies (scripts/core/Burrow.gd).
 func _action_burrow(_args: PackedStringArray, _speaker: NPC) -> void:
