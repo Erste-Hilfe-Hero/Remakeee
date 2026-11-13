@@ -52,7 +52,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 17. [ ] Klare Regel: Gegenstände kosten den ganzen Zug des Spirlings, der sie benutzt
 18. [ ] Rückzug aus Wildkämpfen bleibt ohne Kosten, wiederholte Versuche werden leichter (bestehend, dokumentieren)
 19. [ ] Endzug-Reihenfolge festlegen und im Lexikon erklären: Status, Regeneration, Energie, Feld
-20. [ ] Kampfende-Zusammenfassung: Schaden, K.o.s, MVP-Spirling
+20. [x] Kampfende-Zusammenfassung: Schaden, K.o.s, MVP-Spirling (BattleInfo.report_lines mit 'Star des Kampfes', BattleInfo.star_of)
 21. [ ] Zug-Limit für Boss-Kämpfe (z. B. 30 Züge), danach Riss schließt sich erneut
 22. [ ] Optionale 'Sanfte Niederlage' auf Story: Team erwacht mit halben HP am Kampfort
 23. [ ] Seed des Kampfes im Log anzeigen (für Wiederholungen und Fehlerberichte)
@@ -726,7 +726,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 643. [x] Weniger Bewegung (bestehend) schaltet Wackeln ab (bestehend: Juice.shake_scale ist 0 bei weniger Bewegung)
 644. [x] Treffer-Pause beim Krit (BattleShow.crit_hitstop, data/battle_show.json)
 645. [x] Kamera-Zoom beim Boss-Phasenwechsel (BattleShow._phase_zoom: harter Ganzzahl-Zoom in Ära I-III, IV/V behalten ihre Kamera)
-646. [ ] Feld-Tönung im Hintergrund
+646. [x] Feld-Tönung im Hintergrund (bestehend: FieldBadge.tint_rect mit RiftFields.tint je Feld und Ära, #525)
 647. [x] Status-Partikel (SpirlingAura: Partikel je Status aus data/battle_show.json)
 648. [x] Stufen-Aura (SpirlingAura: Punktring an den Füßen, warm bei Plus, kühl bei Minus)
 649. [x] K.o.-Animation eigenständig (Verblassen statt Umfallen) (bestehend: SpirlingSprite.faint sinkt und verblasst)
@@ -735,26 +735,26 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 652. [x] Sprite-Atmen im Leerlauf (bestehend: Atem-Frames und breath_scale ab Ära IV, Ära I-III stehen still wie damals)
 653. [x] Sprite-Reaktion auf Treffer (bestehend: knockback und hit_flash)
 654. [x] Siegespose (BattleShow._victory_pose: Hüpfer und Glanz ab Ära III)
-655. [ ] Boss-Größe
+655. [x] Boss-Größe (BattleShow.boss_rect: ein einzelner Riss-Boss steht in Ära I-III in voller Bildgröße, data/battle_show.json boss_size)
 656. [x] Mehrfachkampf-Formation (bestehend) (bestehend: BattleScene.formation_slots)
 657. [x] Kampf-Übergang pro Ära (bestehend: BattleIntro pro Ära)
 658. [x] Kampf-Hintergrund pro Gebiet (bestehend Backdrop) (bestehend: BattleBackdrop je Gebiet)
 659. [x] Kampf-Hintergrund Tag/Nacht (BattleShow.night_tint auf dem Hintergrund, nur draußen)
 660. [x] Kampf-Intro kürzer bei Rückkämpfen (BattleShow.intro_share: Rückkampf mit kurzem Intro ohne Blitze)
-661. [ ] Kampf-Outro mit Bericht
-662. [ ] Fotomodus im Kampf (bestehend)
+661. [x] Kampf-Outro mit Bericht (BattleShow.play_outro: Berichtskarte am Kampfende, Tippen schließt sie)
+662. [x] Fotomodus im Kampf (bestehend) (PhotoMode aus der Oberwelt, im Kampf über 'Foto machen' im Kampflog)
 663. [x] Replay mit Tempo-Wahl (bestehend: BattleScene spielt replay_inputs, der Tempo-Knopf gilt dabei)
-664. [ ] Animation-Budget pro Frame (Handy)
+664. [x] Animation-Budget pro Frame (Handy) (BattleShow.fx_fps/fx_particles: Effekte zeichnen auf dem Handy und im Batteriesparmodus höchstens 30-mal pro Sekunde)
 665. [x] Animation ohne Blitz-Effekte (Epilepsie-Sicherheit) (bestehend: tools/fx_flash_check.tscn, höchstens 3 Pulse pro Sekunde)
 666. [x] Animation-Tests im Screenshot-Werkzeug (bestehend: tools/fx_gallery.gd und tools/era_battle_shots.gd)
 667. [x] Pixel-Perfect bleibt bei Effekten (bestehend: Juice rundet Positionen; neue Marken auf ganzen Pixeln)
 668. [x] Effekte in Ära-Palette (bestehend: EraMoveFx in Ära-Farben; Aura in Ära I in Palettenfarben)
-669. [ ] Effekte mit Hochkontrast-Variante
-670. [ ] Effekte im Asset-Log
-671. [ ] Treffer-Zahlen optional einblenden
-672. [ ] Schadenszahl in Weiß mit Tintenrand
+669. [x] Effekte mit Hochkontrast-Variante (ElementFx.hc_ink: Tinte und Akzent, jede Form mit Papierrand; SpirlingAura bestehend)
+670. [x] Effekte im Asset-Log (docs/ASSET_LOG.md: Effekt-PNGs bestehend, Code-Effekte jetzt genannt)
+671. [x] Treffer-Zahlen optional einblenden (Einstellung Schadenszahlen, Standard aus; BattleShow.show_number)
+672. [x] Schadenszahl in Weiß mit Tintenrand (BattleShow.show_number: weiße Ziffern mit Tinten-Umriss)
 673. [x] HP-Balken-Tween (bestehend) (bestehend: InfoStrip.animate_hp)
-674. [ ] Energie-Pips-Animation
+674. [x] Energie-Pips-Animation (InfoStrip.pip_look: neue Pips springen auf, verbrauchte verblassen)
 675. [x] Feld-Banner beim Start (BattleShow-Banner mit dem Feldnamen)
 676. [x] Phasen-Banner beim Boss (BattleShow-Banner '%s erwacht')
 677. [x] Regel-Banner beim Warden (bestehend: RuleBanner beim RULE-Ereignis)
@@ -767,7 +767,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 681. [x] Treffer-Sounds pro Element (bestehend) (bestehend: Sound.element_hit)
 682. [x] Krisen-Musik bei wenig HP (bestehend) (bestehend: battle_pinch)
 683. [x] Boss-Phasen-Musik (boss_phase-Klang und Musik-Tonhöhe in Phase 2 (Sound.music_pitch))
-684. [ ] Feld-Klangteppich
+684. [x] Feld-Klangteppich (BattleShow: jedes Riss-Feld legt seine Ambiente-Schleife leise unter den Kampf, data/battle_show.json field_ambience)
 685. [x] Status-Sounds (status_<id>.wav je Status, BattleAudio.status_sound)
 686. [x] Stufen-Sounds steigend (stage_up/stage_down, Tonhöhe steigt je Stufe)
 687. [x] Overcharge-Sound steigend (overcharge.wav, Tonhöhe nach eingesetzter Energie)
@@ -778,7 +778,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 692. [x] Niederlagen-Jingle (defeat.wav, Musik blendet aus)
 693. [x] Bond-Melodie (bestehend: Echo-Ruf im BondMinigame in der Tonleiter des Elements)
 694. [x] Lautstärke Musik/SFX getrennt (bestehend) (bestehend: Busse Musik, SFX, UI, Stimme, Ambiente)
-695. [ ] Audio-Ducking bei Text
+695. [x] Audio-Ducking bei Text (TextBox.duck_music im Kampf, Sound.duck_music, text_duck_db)
 696. [x] Audio-Hinweise für Blinde (Effektivität als Ton) (eff_up/eff_down-Töne nach dem Treffer)
 697. [x] Audio-Test-Raum (bestehend Sound-Test) (bestehend: Menü Sound-Test)
 698. [x] Audio im Asset-Log (bestehend: docs/ASSET_LOG.md, neue Klänge eingetragen)
@@ -795,12 +795,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 709. [x] Audio für Schadensvorschau (kein Ton) (bestehend: die Vorschau im CommandMenu spielt keinen Ton)
 710. [x] Audio-Tests (bestehend) (bestehend: test_audio, test_sound, neu test_battle_show)
 711. [x] Audio-Fade beim Kampfende (Musik blendet bei Niederlage und Flucht aus)
-712. [ ] Audio-Loop sauber
-713. [ ] Audio-Nacht-Variante
-714. [ ] Audio-Fest-Variante
-715. [ ] Audio-Wochen-Echo-Thema
-716. [ ] Audio-Turm-Thema
-717. [ ] Audio-Online-Duell-Thema
+712. [x] Audio-Loop sauber (music.close_loop für alle Kampf-Schleifen, Prüfung tools/audio/loop_check.py)
+713. [x] Audio-Nacht-Variante (battle_night.ogg, nachts draußen; BattleAudio.theme)
+714. [x] Audio-Fest-Variante (battle_fest.ogg, solange ein Fest läuft)
+715. [x] Audio-Wochen-Echo-Thema (battle_echo.ogg auf dem Leitmotiv)
+716. [x] Audio-Turm-Thema (battle_tower.ogg im Riss-Turm und auf der Endlos-Strecke)
+717. [x] Audio-Online-Duell-Thema (battle_duel.ogg in Live-, Echo- und Liga-Duellen)
 718. [x] Audio: Treffer-Lautstärke nach Schaden (bestehend: Sound.hit_volume_db)
 719. [x] Audio: Krit-Akzent (crit_accent.wav)
 720. [x] Audio: Feld-Wechsel-Akzent (field_shift.wav, wenn ein Feld ein anderes ablöst)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-628 von 1000 Punkten umgesetzt.
+647 von 1000 Punkten umgesetzt.
 
