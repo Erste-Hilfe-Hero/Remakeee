@@ -1,0 +1,16 @@
+{
+ "_comment": "Turkish texts for the German table era_feel. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "A map drawn in four inks.": "Dört mürekkeple çizilmiş bir harita.",
+  "Era I - Ink": "Çağ I - Mürekkep",
+  "Era II - Wash": "Çağ II - Lavi",
+  "Era III - Etching": "Çağ III - Gravür",
+  "Era IV - Panorama": "Çağ IV - Panorama",
+  "Era V - Living": "Çağ V - Canlı",
+  "Replay era change": "Çağ değişimini tekrar oynat",
+  "The air grows clearer. Every leaf shows more detail!": "Hava berraklaşıyor. Her yaprak daha ayrıntılı!",
+  "The ink runs. The world fills with colour!": "Mürekkep akıyor. Dünya renkle doluyor!",
+  "The map breathes. The world is alive!": "Harita nefes alıyor. Dünya canlı!",
+  "The map unrolls wider than ever before!": "Harita hiç olmadığı kadar geniş açılıyor!"
+ }
+}
