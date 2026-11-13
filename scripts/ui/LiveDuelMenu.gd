@@ -241,6 +241,8 @@ static func watch_text(d: Dictionary) -> String:
 		lines.append(Loc.t("The duel is over."))
 		if int(d.winner) >= 0:
 			lines.append(Loc.t("%s wins!") % str(d.names[int(d.winner)]))
+		elif str(d.get("reason", "")) == "played":
+			lines.append(Loc.t("Draw"))
 	else:
 		lines.append(Loc.t("Round %d (you see it one move later)") % maxi(1, int(d.round) - 1))
 	if sim != null:
