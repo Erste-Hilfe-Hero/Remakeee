@@ -5,7 +5,7 @@ extends GutTest
 ## new content cannot make an act easy again (or put up a wall). The CI run uses few battles per
 ## measure, so the bands get a margin.
 
-const TRIALS: int = 12
+const TRIALS: int = 16
 const MARGIN: float = 0.08
 
 static var _sum: Dictionary = {}

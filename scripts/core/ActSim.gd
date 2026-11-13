@@ -345,7 +345,10 @@ static func run(starter: String, trials: int, seed_value: int, only: Array[Strin
 				if foe.is_empty():
 					push_error("ActSim: unknown boss %s" % step.boss)
 					continue
-				var row: Dictionary = _boss(owned, foe, step, trials, rng, last_table, step_n, int(act.get("moderate_grind", moderate)), grind_max, target)
+				# One draw per fight: a retuned team changes its own fight, not the dice of every later one.
+				var fight_rng := RandomNumberGenerator.new()
+				fight_rng.seed = rng.randi()
+				var row: Dictionary = _boss(owned, foe, step, trials, fight_rng, last_table, step_n, int(act.get("moderate_grind", moderate)), grind_max, target)
 				owned = row.owned
 				row.erase("owned")
 				if only.is_empty() or str(act.id) in only:
