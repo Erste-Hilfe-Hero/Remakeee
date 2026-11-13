@@ -1154,15 +1154,15 @@
      "tamer": [
       {
        "species": "Lumenewt",
-       "level": 25
+       "level": 26
       },
       {
        "species": "Glimmerax",
-       "level": 26
+       "level": 27
       },
       {
        "species": "Verdantusk",
-       "level": 26
+       "level": 27
       }
      ]
     }
@@ -2050,19 +2050,19 @@
      "tamer": [
       {
        "species": "Leviarch",
-       "level": 36
+       "level": 37
       },
       {
        "species": "Lumenewt",
-       "level": 35
-      },
-      {
-       "species": "Glimmerax",
        "level": 36
       },
       {
+       "species": "Glimmerax",
+       "level": 37
+      },
+      {
        "species": "Tempestrel",
-       "level": 35
+       "level": 36
       }
      ]
     }

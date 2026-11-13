@@ -80,23 +80,23 @@
    "tamer": [
     {
      "species": "Brookbaron",
-     "level": 33
+     "level": 40
     },
     {
      "species": "Duskdigger",
-     "level": 34
+     "level": 41
     },
     {
      "species": "Obsidroth",
-     "level": 35
+     "level": 42
     },
     {
      "species": "Calderox",
-     "level": 34
+     "level": 41
     },
     {
      "species": "Brookbaron",
-     "level": 35
+     "level": 42
     }
    ]
   }
@@ -495,19 +495,19 @@
    "tamer": [
     {
      "species": "Mendlace",
-     "level": 57
+     "level": 58
     },
     {
      "species": "Scrivane",
-     "level": 57
+     "level": 58
     },
     {
      "species": "Obsidroth",
-     "level": 58
+     "level": 59
     },
     {
      "species": "Burinox",
-     "level": 58
+     "level": 59
     }
    ]
   }
@@ -1040,23 +1040,23 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 46
+     "level": 44
     },
     {
      "species": "Saltspire",
-     "level": 46
+     "level": 44
     },
     {
      "species": "Scrivane",
-     "level": 47
+     "level": 45
     },
     {
      "species": "Rubriclad",
-     "level": 47
+     "level": 45
     },
     {
      "species": "Charsylvan",
-     "level": 47
+     "level": 45
     }
    ]
   }
@@ -1092,19 +1092,19 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 57
+     "level": 60
     },
     {
      "species": "Glasstarn",
-     "level": 57
+     "level": 60
     },
     {
      "species": "Mendlace",
-     "level": 58
+     "level": 61
     },
     {
      "species": "Saltcrown",
-     "level": 58
+     "level": 61
     }
    ]
   }
@@ -1144,23 +1144,23 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 48
+     "level": 56
     },
     {
      "species": "Mirassil",
-     "level": 48
+     "level": 56
     },
     {
      "species": "Leviarch",
-     "level": 49
+     "level": 57
     },
     {
      "species": "Saltcrown",
-     "level": 49
+     "level": 57
     },
     {
      "species": "Obsidroth",
-     "level": 50
+     "level": 58
     }
    ]
   }
