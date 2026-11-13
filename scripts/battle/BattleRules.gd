@@ -66,12 +66,18 @@ const TRAITS: Dictionary[String, Dictionary] = {
 	"slick": {"label": "Slick", "text": "Can't be Rooted.", "immune": ["root"]},
 	"light_sleeper": {"label": "Light Sleeper", "text": "Can't be Drowsed.", "immune": ["drowse"]},
 	"last_stand": {"label": "Last Stand", "text": "Its own element hits 30% harder below 1/3 Vigor.", "low_hp_boost": 1.3},
+	# Field gifts (KAMPF_PLAN_1000 item 339): field_proof keeps a field from weakening its arts,
+	# field_energy is Energy gained whenever a new Rift field is laid.
+	"field_strider": {"label": "Field Strider", "text": "A Rift field never weakens its arts.", "field_proof": true},
+	"echo_soul": {"label": "Echo Soul", "text": "Gains 2 Energy whenever a new Rift field is laid.", "field_energy": 2},
 }
 
 ## Rift fields. A map sets "field"; every battle there uses it. A Resonance move lays one for a
 ## few turns. Optional keys:
 ##   blocks:        statuses that can't take hold while the field lasts
 ##   regen_element: Spirlings of this element heal max_hp / regen_div at the end of each turn
+##   energy_element: Spirlings of this element gain energy_gain extra Energy at the end of each turn
+##   bond_bonus:    added to the bond chance of an Echo call while the field lasts
 const FIELDS: Dictionary[String, Dictionary] = {
 	"ash_storm": {"label": "Ash Storm", "boost": "EMBER", "weaken": "TIDE",
 		"intro": "Ash swirls through the Rift. Ember arts burn brighter, Tide arts sputter."},
@@ -79,12 +85,16 @@ const FIELDS: Dictionary[String, Dictionary] = {
 		"intro": "The water rises around you. Tide arts surge, Ember arts fizzle, and nothing catches fire."},
 	"deep_murk": {"label": "Deep Murk", "boost": "UMBRA", "weaken": "LUMEN",
 		"intro": "The hollow swallows the light. Umbra arts deepen, Lumen arts dim."},
-	"static_veil": {"label": "Static Veil", "boost": "VOLT", "weaken": "STONE",
+	"static_veil": {"label": "Static Veil", "boost": "VOLT", "weaken": "STONE", "energy_element": "VOLT", "energy_gain": 1,
 		"intro": "The air crackles. Volt arts snap harder, Stone arts crumble."},
 	"pollen_drift": {"label": "Pollen Drift", "boost": "BLOOM", "weaken": "GALE", "regen_element": "BLOOM", "regen_div": 16,
 		"intro": "Pollen drifts through the Rift. Bloom arts flourish and Bloom Spirlings mend, Gale arts stall."},
-	"dawn_glow": {"label": "Dawn Glow", "boost": "LUMEN", "weaken": "UMBRA",
+	"dawn_glow": {"label": "Dawn Glow", "boost": "LUMEN", "weaken": "UMBRA", "bond_bonus": 0.05,
 		"intro": "A pale dawn fills the Rift. Lumen arts shine, Umbra arts thin out."},
+	"rubble_rain": {"label": "Rubble Rain", "boost": "STONE", "weaken": "VOLT", "blocks": ["jolt"],
+		"intro": "Grit and pebbles patter down. Stone arts land heavier, Volt arts ground out, and no charge can build."},
+	"gale_eye": {"label": "Gale Eye", "boost": "GALE", "weaken": "BLOOM", "blocks": ["drowse"],
+		"intro": "The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off."},
 }
 
 ## Element reactions: a move of "element" that hits a foe with "status" hits harder ("mult"),
@@ -356,6 +366,8 @@ static func resolve_move(move: MoveData, field: String) -> MoveData:
 ## Damage multiplier from traits, held items, the field and status bonuses for one hit.
 static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field: String) -> float:
 	var m: float = field_mult(field, move.element)
+	if m < 1.0 and bool(ShopEffects.gift_table(user).get("field_proof", false)):
+		m = 1.0
 	m *= status_bonus(move, target)
 	m *= float(reaction(move, target).get("mult", 1.0))
 	if move.kind == MoveData.Kind.PHYSICAL:

@@ -779,6 +779,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				wild = ShopEffects.pass_rare(map.encounter_table, GameState.flags, GameState.rng)
 			if wild == null:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
+				boost.append_array(RiftFields.spawn_boost(map.field))
 				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain)
 				if wild != null:
 					GameState.gleam_chain = GleamRules.next_chain(GameState.gleam_chain, wild)
@@ -2502,6 +2503,10 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	while floors < Gauntlet.FLOORS:
 		await say(["Floor %d of %d: an echo steps out of the light..." % [floors + 1, Gauntlet.FLOORS]] as Array[String])
 		var info: Dictionary = {"name": run.echo_name(floors), "ai": Gauntlet.ai_for(floors), "money": run.prize(floors)}
+		# Some floors stand in a Rift field, the same one for the same climb (KAMPF_PLAN_1000 item 354).
+		var floor_field: String = RiftFields.tower_field(run_seed, floors + 1)
+		if not floor_field.is_empty():
+			info["field"] = floor_field
 		var foes: Array[Spirling] = run.team(floors)
 		# Every tenth floor a Warden echo stands in the light (plan 1102).
 		if EchoTower.is_warden_floor(floors + 1):
@@ -3971,6 +3976,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.boss_hp_scale = GameState.BOSS_HP_SCALE[GameState.difficulty]
 	model.boss_difficulty = GameState.difficulty
 	model.field = str(trainer.get("field", map.field))
+	model.day_phase = DayCycle.current() if map.outdoor and GameState.day_night else -1
 	model.foe_rule = str(trainer.get("rule", ""))
 	# Rule variants of a tower floor or the weekly challenge (item 799).
 	var vids: Variant = trainer.get("variants", [])

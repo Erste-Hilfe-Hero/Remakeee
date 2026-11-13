@@ -671,6 +671,28 @@
   "desc": "Calls the dawn glow over the field."
  },
  {
+  "name": "Rubble Call",
+  "element": "STONE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "rubble_rain",
+  "era": 2,
+  "desc": "Calls a rain of rubble over the field."
+ },
+ {
+  "name": "Gale Call",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "gale_eye",
+  "era": 2,
+  "desc": "Calls the eye of a gale over the field."
+ },
+ {
   "name": "Glow Knuckle",
   "element": "EMBER",
   "kind": "PHYSICAL",

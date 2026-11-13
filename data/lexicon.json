@@ -5,5 +5,14 @@
  "rift_mystics": {"title": "Rift mystics", "text": "The mystics at the Tide Rift listen to the Hush instead of fighting it. They chain reactions on purpose, one status feeding the next art."},
  "drowned_heart": {"title": "The Drowned Heart", "text": "The Hush gathered at the bottom of the Tide Rift into one heavy heart. It grows with every Spirling you field, so a full team does not crush it, it only meets it."},
  "warden_orrin": {"title": "Orrin's cover", "text": "Orrin knows that Tide puts out his embers. That is why Shalebat walks with him: its Stone hide and Hunker Down take the Tide arts you answer with, while Kindlop and Smoldrake build up Energy."},
- "warden_maelis": {"title": "Maelis's cover", "text": "Maelis knows her tide fears Volt and Bloom. Zephlet's Gale cuts Bloom down, and Zippit holds against the Volt Spirlings you bring, so her Riptail can wait for its moment."}
+ "warden_maelis": {"title": "Maelis's cover", "text": "Maelis knows her tide fears Volt and Bloom. Zephlet's Gale cuts Bloom down, and Zippit holds against the Volt Spirlings you bring, so her Riptail can wait for its moment."},
+ "field_rules": {"title": "Rift fields", "text": "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns on every difficulty; then the place's own field comes back. A new field pushes the old one out at once."},
+ "field_ash_storm": {"title": "Ash Storm", "text": "Ash hangs in the air. Ember arts hit harder, Tide arts sputter."},
+ "field_high_tide": {"title": "High Tide", "text": "The water stands knee-deep. Tide arts hit harder, Ember arts fizzle, and nothing can catch Scorch."},
+ "field_deep_murk": {"title": "Deep Murk", "text": "Light drowns in the murk. Umbra arts hit harder, Lumen arts dim. At dusk and at night it holds a turn longer."},
+ "field_static_veil": {"title": "Static Veil", "text": "Every hair stands on end. Volt arts hit harder, Stone arts crumble, and Volt Spirlings gain 1 extra Energy each turn."},
+ "field_pollen_drift": {"title": "Pollen Drift", "text": "Pollen settles on everything. Bloom arts hit harder, Gale arts stall, and Bloom Spirlings mend a little each turn."},
+ "field_dawn_glow": {"title": "Dawn Glow", "text": "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer."},
+ "field_rubble_rain": {"title": "Rubble Rain", "text": "Grit patters down without end. Stone arts hit harder, Volt arts ground out, and nobody can be Jolted."},
+ "field_gale_eye": {"title": "Gale Eye", "text": "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed."}
 }

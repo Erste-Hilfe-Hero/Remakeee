@@ -99,6 +99,17 @@
   "tradeable": true
  },
  {
+  "id": "field_stake",
+  "name": "Field Stake",
+  "description": "Keepsake. A Rift field its holder calls lasts 2 turns longer.",
+  "battle": false,
+  "held": {
+   "field_turns": 2
+  },
+  "price": 1500,
+  "tradeable": true
+ },
+ {
   "id": "bark_wrap",
   "name": "Bark Wrap",
   "description": "Keepsake. The holder recovers a little Vigor at the end of each turn.",
@@ -757,7 +768,7 @@
  },
  {
   "id": "rg_rift_anchor",
-  "name": "Rift Anchor",
+  "name": "Field Stake",
   "description": "Offered after you lose to a Rift Warden: you stay right before it with a rested team instead of going back to the spring. Not in Rift-Born. Used up.",
   "battle": false,
   "shop": true

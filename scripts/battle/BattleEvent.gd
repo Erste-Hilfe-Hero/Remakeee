@@ -132,6 +132,8 @@ func describe() -> String:
 		Type.BOSS:
 			return "%s: %s" % [data.get("label", ""), data.get("text", "")]
 		Type.FIELD_END:
+			if data.has("by"):
+				return "The %s gives way to the %s." % [data.get("label", ""), data.get("by", "")]
 			return "The %s fades away." % data.get("label", "")
 		Type.BOSS_PHASE:
 			return str(data.get("text", ""))
