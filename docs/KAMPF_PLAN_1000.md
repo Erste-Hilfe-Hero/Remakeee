@@ -636,88 +636,88 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Info und Transparenz
 
 561. [x] Schadensvorschau im Technik-Menü (~% HP), nur wenn das Matchup schon bekannt ist
-562. [ ] Schadensvorschau als Einstellung abschaltbar
-563. [ ] Schadensvorschau pro Ziel im Mehrfachkampf
+562. [x] Schadensvorschau als Einstellung abschaltbar (Einstellungen: damage_preview (MenuHost))
+563. [x] Schadensvorschau pro Ziel im Mehrfachkampf (BattleInfo.target_preview bei der Zielwahl)
 564. [x] Technik-Info per langem Druck
-565. [ ] Kampflog (bestehend) mit Filter
-566. [ ] Gegner-Info-Seite im Kampf (Traits, bekannte Techniken)
-567. [ ] Gegner-Techniken werden bekannt, sobald sie benutzt wurden
+565. [x] Kampflog (bestehend) mit Filter (BattleInfo.FILTERS, Filterzeile im Log)
+566. [x] Gegner-Info-Seite im Kampf (Traits, bekannte Techniken) (BattleInfo.facts oben im Log)
+567. [x] Gegner-Techniken werden bekannt, sobald sie benutzt wurden (BattleInfo.note/seen_arts)
 568. [ ] Matchup-Lexikon
 569. [ ] Werte-Rechner
 570. [ ] Kampfregeln-Seite
-571. [ ] Zugreihenfolge-Vorschau
-572. [ ] Energie-Vorschau
-573. [ ] Status-Dauer-Anzeige
-574. [ ] Feld-Restzüge-Anzeige
-575. [ ] Bank-Anzeige
+571. [x] Zugreihenfolge-Vorschau (BattleInfo.order_hint auf der Technik-Karte)
+572. [x] Energie-Vorschau (Technik-Karte: Energie danach)
+573. [x] Status-Dauer-Anzeige (BattleInfo.status_line im Log)
+574. [x] Feld-Restzüge-Anzeige (BattleInfo.field_line im Log)
+575. [x] Bank-Anzeige (TeamRow.gd, eigenes Team)
 576. [ ] Gegenstand-Anzeige
 577. [x] Trait-Anzeige nach Auslösung
 578. [ ] XP-Vorschau nach dem Kampf
-579. [ ] Level-Cap-Anzeige
-580. [ ] Bond-Chance bewusst ohne Zahlen-Anzeige (Patent-Leitplanke: keine Fang-Quote)
-581. [ ] Kampfende-Bericht
-582. [ ] Replay-Ansicht (bestehend)
+579. [x] Level-Cap-Anzeige (Ring-Obergrenze im Log und im Team-Menü)
+580. [x] Bond-Chance bewusst ohne Zahlen-Anzeige (Patent-Leitplanke: keine Fang-Quote) (tools/ip_check.sh sperrt Quoten-Anzeigen)
+581. [x] Kampfende-Bericht (BattleInfo.report_lines am Ende des Logs)
+582. [x] Replay-Ansicht (bestehend) (BattleReplay, OnlineReplaysMenu)
 583. [ ] Lexikon-Suche
-584. [ ] Tipps beim ersten Kontakt (bestehend)
-585. [ ] Tipps zu neuen Funktionen (Resonanz, Phasen)
-586. [ ] Info-Texte in eigener Wortwahl
-587. [ ] Info-Texte übersetzt
-588. [ ] Info für Screenreader
-589. [ ] Info im Hochkontrast
-590. [ ] Info-Bildschirm bei 144 px Breite lesbar
+584. [x] Tipps beim ersten Kontakt (bestehend) (Tips battle/bond)
+585. [x] Tipps zu neuen Funktionen (Resonanz, Phasen) (Tips resonance/boss_phase)
+586. [x] Info-Texte in eigener Wortwahl (tools/ip_check.sh Phrasen-Sperre)
+587. [x] Info-Texte übersetzt (tools/i18n/de_kampf_info.py, i18n_extract --check)
+588. [x] Info für Screenreader (accessibility_name an Leisten, Sprites, Zielen)
+589. [x] Info im Hochkontrast (high_contrast in CommandMenu/EraBattleHud)
+590. [x] Info-Bildschirm bei 144 px Breite lesbar (Viewport 144x256, Karte und Log umbrechen)
 591. [ ] Info-Kürzel einheitlich (ATK/DEF/FOC/SPD)
-592. [ ] Info: Krit-Treffer als 'keen hit' (bestehend, eigene Wortwahl)
-593. [ ] Info: Effektivität als x2/x.5 (bestehend)
-594. [ ] Info: Mehrfachziel als 'all' (bestehend)
-595. [ ] Info: Priorität als Pfeil
+592. [x] Info: Krit-Treffer als 'keen hit' (bestehend, eigene Wortwahl) (BattleEvent.describe)
+593. [x] Info: Effektivität als x2/x.5 (bestehend) (CommandMenu.matchup_tag)
+594. [x] Info: Mehrfachziel als 'all' (bestehend) (CommandMenu.move_line)
+595. [x] Info: Priorität als Pfeil (^ vor dem Namen der Technik)
 596. [x] Info: Genauigkeit als Prozent
 597. [ ] Info: Kategorie-Symbol
 598. [ ] Info: Boss-Phasen-Marken
-599. [ ] Info: Regel-Banner bei Warden
-600. [ ] Info: Seed im Log
+599. [x] Info: Regel-Banner bei Warden (RuleBanner.gd)
+600. [x] Info: Seed im Log (BattleInfo.facts)
 
 ## Bedienung und Komfort
 
-601. [ ] Tempo 1x/2x/4x (bestehend)
-602. [ ] Auto-Kampf für Wildkämpfe (bestehend)
-603. [ ] Letzten Zug wiederholen
+601. [x] Tempo 1x/2x/4x (bestehend) (GameState.BATTLE_SPEEDS)
+602. [x] Auto-Kampf für Wildkämpfe (bestehend) (GameState.auto_battle)
+603. [x] Letzten Zug wiederholen (Cursor steht auf der zuletzt genutzten Technik, BattleInfo.focus_row)
 604. [ ] Rückgängig vor Zugstart
 605. [ ] Technik-Favoriten
 606. [ ] Technik-Reihenfolge
 607. [ ] Schnell-Heilen nach dem Kampf (Gegenstand-Vorschlag)
-608. [ ] Schnell-Wechsel per Wischen bewusst nicht (Patent-Leitplanke: kein Swipe)
+608. [x] Schnell-Wechsel per Wischen bewusst nicht (Patent-Leitplanke: kein Swipe) (tools/ip_check.sh sperrt swipe)
 609. [x] Langer Druck für Info
-610. [ ] Gamepad-Steuerung (bestehend)
-611. [ ] Einhand-Modus (bestehend)
-612. [ ] Links-Hand-Modus (bestehend)
-613. [ ] Tastatur-Kürzel 1 bis 4 für Techniken
-614. [ ] Ziel-Wahl per Tippen auf das Sprite
-615. [ ] Ziel merken
-616. [ ] Auto-Ziel
-617. [ ] Kampf-Text per Tippen überspringen
-618. [ ] Kampf-Text automatisch weiter (Option)
-619. [ ] Batteriesparen (bestehend)
-620. [ ] Vibrations-Feedback (bestehend rumble)
+610. [x] Gamepad-Steuerung (bestehend) (SPEED_ACTION/AUTO_ACTION, Fokus)
+611. [x] Einhand-Modus (bestehend) (GameState.one_hand)
+612. [x] Links-Hand-Modus (bestehend) (GameState.left_handed)
+613. [x] Tastatur-Kürzel 1 bis 4 für Techniken (BattleInfo.art_key)
+614. [x] Ziel-Wahl per Tippen auf das Sprite (BattleScene._pick_target)
+615. [x] Ziel merken (BattleInfo.aim_start)
+616. [x] Auto-Ziel (ein Gegner: kein Zielen nötig)
+617. [x] Kampf-Text per Tippen überspringen (TextBox._skip_or_advance)
+618. [x] Kampf-Text automatisch weiter (Option) (bei 2x/4x und Auto)
+619. [x] Batteriesparen (bestehend) (GameState.battery_saver)
+620. [x] Vibrations-Feedback (bestehend rumble) (GameState.vibration)
 621. [ ] Einstellungen im Kampf erreichbar
-622. [ ] Kampf-Menü-Höhe fest (bestehend)
+622. [x] Kampf-Menü-Höhe fest (bestehend) (CommandMenu.PANEL_HEIGHT)
 623. [ ] Große Knöpfe-Option
-624. [ ] Bestätigung bei riskanten Aktionen (Rückzug in Boss-Kampf nicht möglich)
-625. [ ] Wechsel-Liste mit HP und Matchup
-626. [ ] Gegenstand-Liste mit Wirkung
-627. [ ] Lager-Lernen-Option (umgesetzt) im Kampfmenü erklärt
-628. [ ] Gegner-Bank-Punkte
+624. [x] Bestätigung bei riskanten Aktionen (Rückzug in Boss-Kampf nicht möglich) (Rückzug nur in Wildkämpfen)
+625. [x] Wechsel-Liste mit HP und Matchup (BattleInfo.switch_tag)
+626. [x] Gegenstand-Liste mit Wirkung (Beschreibung als Hinweiszeile)
+627. [x] Lager-Lernen-Option (umgesetzt) im Kampfmenü erklärt (Tipp battle_comfort, Log)
+628. [x] Gegner-Bank-Punkte (TeamRow.gd, Team des Gegners)
 629. [ ] Kampf-Wiederaufnahme nach Unterbrechung
 630. [ ] Schnellspeichern im Kampf bewusst nicht (kein Savescum auf Rift-Born)
-631. [ ] Komfort-Tipps beim ersten Kampf
+631. [x] Komfort-Tipps beim ersten Kampf (Tips battle_comfort)
 632. [ ] Kampf-Steuerung ohne Zeitdruck (keine Echtzeit-Elemente)
-633. [ ] Bond-Melodie (bestehend) mit Barrierefreiheit
-634. [ ] Kampf-UI bei 144x256 skaliert
-635. [ ] Kampf-UI im Querformat bewusst nicht
-636. [ ] Kampf-UI mit Safe-Area (bestehend)
-637. [ ] Kampf-UI Fokus-Navigation per Gamepad
-638. [ ] Kampf-UI Screenreader-Texte
-639. [ ] Kampf-UI Text-Geschwindigkeit (bestehend)
-640. [ ] Kampf-UI Testfälle
+633. [x] Bond-Melodie (bestehend) mit Barrierefreiheit (Bond-Stil Mine! statt Melodie, Hochkontrast)
+634. [x] Kampf-UI bei 144x256 skaliert (project.godot)
+635. [x] Kampf-UI im Querformat bewusst nicht (orientation=1, Hochformat)
+636. [x] Kampf-UI mit Safe-Area (bestehend) (SafeArea.apply)
+637. [x] Kampf-UI Fokus-Navigation per Gamepad (CommandMenu, Zielwahl mit Nachbarn)
+638. [x] Kampf-UI Screenreader-Texte (accessibility_name)
+639. [x] Kampf-UI Text-Geschwindigkeit (bestehend) (GameState.text_speed)
+640. [x] Kampf-UI Testfälle (test_battle_ux, test_battle_info, test_kampf_info)
 
 ## Tempo, Animation und Präsentation
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-345 von 1000 Punkten umgesetzt.
+402 von 1000 Punkten umgesetzt.
 
