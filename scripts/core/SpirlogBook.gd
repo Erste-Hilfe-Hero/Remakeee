@@ -218,7 +218,8 @@ static func page_text(sd: SpirlingData, spirlog: Dictionary) -> String:
 	for el: int in sd.elements:
 		els.append(Elements.element_name(el))
 	lines.append("#%02d %s" % [sd.dex_id, sd.species_name])
-	lines.append("/".join(els))
+	# The kind's rarity (KAMPF_PLAN "Wild-Seltenheit sichtbar im Spirlog").
+	lines.append("/".join(els) + "   " + WildRules.rarity_line(sd))
 	if not sd.height.is_empty():
 		lines.append("Height %s" % sd.height)
 	if not sd.habitat.is_empty():

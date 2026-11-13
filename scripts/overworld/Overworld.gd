@@ -768,7 +768,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	var guard_over: bool = EncounterTable.tick_guard()
 	# Wild Ward (shop, pay-to-win step 6): switched on, no wild Spirling steps out.
 	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty() and guard_over and not ShopEffects.wild_ward_on():
-		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < minf(1.0, EncounterTable.rate(map.encounter_table) * call_mult):
+		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < minf(1.0, EncounterTable.rate(map.encounter_table) * call_mult * WildRules.rate_mult(DayCycle.current(), map.outdoor, GameState.day_night)):
 			var wild: Spirling = DailyFind.maybe_spawn(map.encounter_table, GameState.flags, GameState.rng)
 			if wild != null:
 				# The day's rare visitor glitters in with five very high notes (item 2517).
@@ -779,6 +779,9 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				wild = ShopEffects.pass_rare(map.encounter_table, GameState.flags, GameState.rng)
 			if wild == null:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
+				for e: int in WildRules.weather_boost(WeatherCycle.current(map)):
+					if not e in boost:
+						boost.append(e)
 				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain)
 				if wild != null:
 					GameState.gleam_chain = GleamRules.next_chain(GameState.gleam_chain, wild)
@@ -3601,6 +3604,7 @@ func offer_warden_rematch(n: NPC) -> bool:
 		return true
 	SaveManager.save_game()
 	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
+	info["rematch"] = true
 	var outcome: BattleModel.Outcome = await start_battle(team, false, info)
 	busy = true
 	player.frozen = true
@@ -3690,6 +3694,7 @@ func offer_rematch(n: NPC) -> bool:
 		busy = false
 		return false
 	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
+	info["rematch"] = true
 	info["money"] = TrainerData.REMATCH_MONEY_PER_LEVEL * team.reduce(func(m: int, s: Spirling) -> int: return maxi(m, s.level), 0)
 	var outcome: BattleModel.Outcome = await start_battle(team, false, info)
 	if outcome == BattleModel.Outcome.WIN:
@@ -3978,7 +3983,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		model.variants.assign(vids)
 	model.rule_turn_full = GameState.difficulty >= GameState.Difficulty.VETERAN
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
-	model.xp_mult = ShopEffects.growth_mult()
+	model.xp_mult = ShopEffects.growth_mult() * GrowthRules.battle_mult(GameState.difficulty, trainer, GameState.records)
 	model.ring_scaled_growth = EraFeatures.is_unlocked("ring_scaled_growth")
 	model.wheel = bool(trainer.get("wheel", false)) and EraFeatures.is_unlocked("wheel_battles")
 	model.wheel_size = EraActivities.wheel_size()
@@ -4029,6 +4034,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
+	for id: String in GrowthRules.after_battle(GameState.records, map.region, model.growth_total, model.bench_growth) + WildRules.after_battle(GameState.records, model):
+		toast.show_note(Loc.t("New lexicon entry: %s") % Loc.t(Lexicon.title(id)))
 	Kinship.after_battle(GameState.party, model.participants, outcome == BattleModel.Outcome.WIN)
 	var had_growth: bool = ShopEffects.boost_left("growth") > 0
 	ShopEffects.battle_done()

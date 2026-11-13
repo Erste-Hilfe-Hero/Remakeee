@@ -15,7 +15,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 - Boss-Phasen bei halber HP
 - Schadensvorschau im Technik-Menü (abschaltbar)
 - Lager-Lernen: die Bank erhält die Hälfte der XP (abschaltbar)
-- Ruhe-Regel: in Wayfarer-Kämpfen höchstens ein Spirling pro Seite mit Drowse
+- Ruhe-Regel: in Tamer-Kämpfen höchstens ein Spirling pro Seite mit Drowse
 
 ## Umgesetzt im zweiten Schritt
 
@@ -33,15 +33,15 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Zugablauf und Grundregeln
 
-1. [x] Ruhe-Regel in Wayfarer-Kämpfen: pro Seite darf nur ein Spirling gleichzeitig Drowse haben
+1. [x] Ruhe-Regel in Tamer-Kämpfen: pro Seite darf nur ein Spirling gleichzeitig Drowse haben
 2. [ ] Zugreihenfolge vor der Wahl als kleine Leiste anzeigen (wer handelt zuerst, nach SPD und Priorität)
 3. [ ] Priorität +2 für seltene Schutz-Techniken einführen, sonst bleibt +1 das Maximum
 4. [ ] Gleichstand bei SPD sichtbar als Münzwurf-Symbol im Kampflog
-5. [ ] Rundenzähler oben links, nur in Wayfarer- und Boss-Kämpfen
+5. [ ] Rundenzähler oben links, nur in Tamer- und Boss-Kämpfen
 6. [ ] Zug-Timeout für Online-Echo-Duelle (60 s, danach Rasten)
 7. [ ] Rückgängig-Knopf für die Befehlswahl im Mehrfachkampf, bevor der Zug startet
-8. [ ] Aufgeben-Option in Wayfarer-Kämpfen mit Bestätigung (zählt als Niederlage, kein Geldverlust auf Story)
-9. [ ] Wechsel nach einem K.o. des Gegners anbieten (Stufe Story und Wayfarer), auf Veteran abschaltbar
+8. [ ] Aufgeben-Option in Tamer-Kämpfen mit Bestätigung (zählt als Niederlage, kein Geldverlust auf Story)
+9. [ ] Wechsel nach einem K.o. des Gegners anbieten (Stufe Story und Tamer), auf Veteran abschaltbar
 10. [ ] Gegner kündigt seinen nächsten Spirling an, wenn er wechselt (Ankündigungs-Option)
 11. [ ] Doppelte Aktion eines Bosses klar als 'Nachhall' markieren
 12. [ ] Rasten im Mehrfachkampf: Wahl 'Alle rasten' als Abkürzung
@@ -165,7 +165,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 121. [x] Resonanz-Techniken: Ash Call, Tide Call und Murk Call legen 5 Runden lang ein Rift-Feld
 122. [ ] Feld-Restzüge im Log ansagen und beim Ende melden
 123. [ ] Schutz-Technik 'Brace': hält einen Treffer ab, zweimal hintereinander schlägt fehl
-124. [ ] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Wayfarer-Kämpfe)
+124. [ ] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Tamer-Kämpfe)
 125. [ ] Mehrstufige Technik: lädt eine Runde, trifft dann doppelt
 126. [ ] Konter-Technik: wirft physischen Schaden x1.5 zurück
 127. [ ] Heil-Technik für Verbündete im Mehrfachkampf
@@ -205,7 +205,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Status-Zustände
 
-161. [x] Ruhe-Regel: Drowse trifft keinen zweiten Spirling derselben Seite in Wayfarer-Kämpfen
+161. [x] Ruhe-Regel: Drowse trifft keinen zweiten Spirling derselben Seite in Tamer-Kämpfen
 162. [ ] Status-Symbole mit Form und Kürzel (bestehend: Kürzel), Symbole ergänzen
 163. [ ] Status-Dauer als Zahl unter dem Kürzel
 164. [ ] Neuer Status 'Verwirrt' in eigener Form: Ziel wählt zufällig das Ziel im Mehrfachkampf
@@ -347,7 +347,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 291. [ ] Gegenstand 'Riss-Splitter': Overcharge +0.05 pro Energie
 292. [ ] Gegenstand 'Wanderschuh': Wechsel ist frei
 293. [ ] Gegenstände in Turnier-Regeln einzeln sperrbar
-294. [ ] Gegner-Wayfarer tragen auf Veteran Gegenstände
+294. [ ] Gegner-Tamer tragen auf Veteran Gegenstände
 295. [ ] Gegenstand-Info im Lexikon
 296. [ ] Gegenstand-Verbrauch in Kampfende-Bericht
 297. [ ] Gegenstand nach dem Kampf automatisch wieder ausrüsten (Option)
@@ -458,7 +458,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 396. [ ] Mehrfachkampf: Einhand-Modus
 397. [ ] Mehrfachkampf-Tests (bestehend) erweitern
 398. [ ] Mehrfachkampf: Story-Kämpfe mit Ali-Wunsch (3v3, 4v1, 4v2) beibehalten
-399. [ ] Mehrfachkampf: Gegner-Formationen pro Wayfarer
+399. [ ] Mehrfachkampf: Gegner-Formationen pro Tamer
 400. [ ] Mehrfachkampf: Formation-Bonus (z. B. zwei Stone vorne +DEF)
 
 ## Bosse und Wardens
@@ -515,12 +515,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 447. [ ] KI sagt Wechsel des Spielers vorher (nur Meister)
 448. [ ] KI nutzt Heil-Techniken gezielt
 449. [ ] KI schont Spirlings mit wenig HP für später
-450. [ ] KI-Persönlichkeiten pro Wayfarer (vorsichtig, wild, taktisch)
+450. [ ] KI-Persönlichkeiten pro Tamer (vorsichtig, wild, taktisch)
 451. [ ] KI-Debug-Ansicht für Entwickler
 452. [ ] KI-Tests pro Verhalten
 453. [ ] KI liest nur, was der Spieler auch sieht (keine versteckten Werte)
 454. [ ] KI-Zufall in Stufe 0 bleibt (Wildkämpfe)
-455. [ ] KI-Stufe pro Wayfarer übersteuerbar (bestehend)
+455. [ ] KI-Stufe pro Tamer übersteuerbar (bestehend)
 456. [ ] KI für Partner (Kestra) auf Veteran Stufe 2
 457. [ ] KI für Auto-Kampf (bestehend) auf Stufe 1
 458. [ ] KI-Ausrede vermeiden: nie unmögliche Aktionen
@@ -533,7 +533,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 465. [ ] KI-Gewinnrate-Ziel pro Schwierigkeit dokumentieren
 466. [ ] KI-Laufzeit unter 5 ms pro Entscheidung (Handy)
 467. [ ] KI-Entscheidungen im Replay nachvollziehbar
-468. [ ] KI-Texte: Wayfarer kommentiert gute Züge
+468. [ ] KI-Texte: Tamer kommentiert gute Züge
 469. [ ] KI meidet Felder, die dem Spieler helfen
 470. [ ] KI erkennt eigene Feldschwäche und wechselt
 471. [ ] KI-Lernen bewusst nicht (deterministisch bleiben)
@@ -549,7 +549,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Schwierigkeit und Herausforderungen
 
-481. [ ] Vier Stufen Story, Wayfarer, Veteran, Rift-Born (bestehend)
+481. [ ] Vier Stufen Story, Tamer, Veteran, Rift-Born (bestehend)
 482. [x] Rift-Born nutzt die neue Meister-KI
 483. [ ] Level-Caps ab Veteran (bestehend)
 484. [ ] Gegenstände in Kämpfen auf Rift-Born gesperrt (bestehend)
@@ -561,12 +561,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 490. [ ] Herausforderung 'Zufällige Spawns' (Zufallsmodus mit Seed)
 491. [ ] Herausforderung 'Zufällige Techniken'
 492. [ ] Herausforderungen kombinierbar beim neuen Spiel
-493. [ ] Herausforderungs-Abzeichen auf der Wayfarer-Karte (online)
+493. [ ] Herausforderungs-Abzeichen auf der Tamer-Karte (online)
 494. [ ] Schwierigkeit jederzeit senkbar, nie anhebbar (Fairness für Ranglisten)
 495. [ ] Schwierigkeit pro Kampf anzeigen
 496. [ ] Gegner-Level-Skalierung optional
 497. [ ] Story-Stufe: mehr XP, weniger Krit des Gegners
-498. [ ] Wayfarer-Stufe: Standard
+498. [ ] Tamer-Stufe: Standard
 499. [ ] Veteran: Gegner mit Gegenständen
 500. [ ] Rift-Born: Gegner mit voller Technik-Auswahl
 501. [ ] Gegner-Teams pro Stufe in data/npcs.json
@@ -590,48 +590,48 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 519. [ ] Herausforderung 'Boss zuerst'
 520. [ ] Herausforderung 'Nacht-Only'
 
-## Wayfarer-Teams und Gegnerdesign
+## Tamer-Teams und Gegnerdesign
 
-521. [ ] Jeder Wayfarer hat ein Thema (Element, Taktik)
-522. [ ] Wayfarer-Teams auf Veteran mit Synergien
-523. [ ] Wayfarer mit Feld-Strategie (Resonanz-Techniken)
-524. [ ] Wayfarer mit Status-Strategie
-525. [ ] Wayfarer mit Stufen-Strategie
-526. [ ] Wayfarer mit Mehrfachkampf-Strategie
-527. [ ] Wayfarer-Dialog vor/nach dem Kampf
-528. [ ] Wayfarer-Rückkämpfe (bestehend)
-529. [ ] Wayfarer-Telefonbuch-Ersatz: Laternenpost-Einladungen
-530. [ ] Wayfarer-Rangliste lokal
-531. [ ] Wayfarer-Belohnungen variieren
-532. [ ] Wayfarer-Teamgröße bis 5 (Team 5 fix)
-533. [ ] Wayfarer-Level an Level-Cap gebunden
-534. [ ] Wayfarer mit gehaltenen Gegenständen auf Veteran
-535. [ ] Wayfarer-Teams prüfen auf Dopplungen
-536. [ ] Wayfarer-Sprites eigenständig
-537. [ ] Wayfarer-Namen eigenständig
-538. [ ] Wayfarer-Klassen eigenständig (keine bekannten Klassen übernehmen)
-539. [ ] Wayfarer-Begegnung per Blickkontakt bewusst anders lösen (Ansprechen oder Signal-Laterne)
-540. [ ] Wayfarer-Signal vor dem Kampf (Laterne blinkt)
-541. [ ] Wayfarer-Kampf überspringbar nach erstem Sieg (Rückkampf)
-542. [ ] Wayfarer-Statistik im Lexikon
-543. [ ] Wayfarer im Online-Weltziel
-544. [ ] Wayfarer-Echos von Freunden
-545. [ ] Wayfarer-Team-Builder für Testzwecke
-546. [ ] Wayfarer-Balancing im Simulator
-547. [ ] Wayfarer-KI-Persönlichkeiten
-548. [ ] Wayfarer-Gruppen-Kämpfe (2 Wayfarer gegen Spieler + Kestra)
-549. [ ] Wayfarer mit Boss-Spirling
-550. [ ] Wayfarer-Turm mit 50 Stockwerken
-551. [ ] Wayfarer-Turm Belohnungen
-552. [ ] Wayfarer-Turm Regeln pro Stockwerk
-553. [ ] Wayfarer-Turm Rangliste online
-554. [ ] Wayfarer-Daten validieren (validate_data)
-555. [ ] Wayfarer-Texte übersetzt
-556. [ ] Wayfarer-Teams pro Schwierigkeit
-557. [ ] Wayfarer-Geld-Belohnungen balancieren
-558. [ ] Wayfarer mit Overcharge-Strategie
-559. [ ] Wayfarer mit Bond-Lehre (Tutorial)
-560. [ ] Wayfarer-Kampfmusik pro Gebiet
+521. [ ] Jeder Tamer hat ein Thema (Element, Taktik)
+522. [ ] Tamer-Teams auf Veteran mit Synergien
+523. [ ] Tamer mit Feld-Strategie (Resonanz-Techniken)
+524. [ ] Tamer mit Status-Strategie
+525. [ ] Tamer mit Stufen-Strategie
+526. [ ] Tamer mit Mehrfachkampf-Strategie
+527. [ ] Tamer-Dialog vor/nach dem Kampf
+528. [ ] Tamer-Rückkämpfe (bestehend)
+529. [ ] Tamer-Telefonbuch-Ersatz: Laternenpost-Einladungen
+530. [ ] Tamer-Rangliste lokal
+531. [ ] Tamer-Belohnungen variieren
+532. [ ] Tamer-Teamgröße bis 5 (Team 5 fix)
+533. [ ] Tamer-Level an Level-Cap gebunden
+534. [ ] Tamer mit gehaltenen Gegenständen auf Veteran
+535. [ ] Tamer-Teams prüfen auf Dopplungen
+536. [ ] Tamer-Sprites eigenständig
+537. [ ] Tamer-Namen eigenständig
+538. [ ] Tamer-Klassen eigenständig (keine bekannten Klassen übernehmen)
+539. [ ] Tamer-Begegnung per Blickkontakt bewusst anders lösen (Ansprechen oder Signal-Laterne)
+540. [ ] Tamer-Signal vor dem Kampf (Laterne blinkt)
+541. [ ] Tamer-Kampf überspringbar nach erstem Sieg (Rückkampf)
+542. [ ] Tamer-Statistik im Lexikon
+543. [ ] Tamer im Online-Weltziel
+544. [ ] Tamer-Echos von Freunden
+545. [ ] Tamer-Team-Builder für Testzwecke
+546. [ ] Tamer-Balancing im Simulator
+547. [ ] Tamer-KI-Persönlichkeiten
+548. [ ] Tamer-Gruppen-Kämpfe (2 Tamer gegen Spieler + Kestra)
+549. [ ] Tamer mit Boss-Spirling
+550. [ ] Tamer-Turm mit 50 Stockwerken
+551. [ ] Tamer-Turm Belohnungen
+552. [ ] Tamer-Turm Regeln pro Stockwerk
+553. [ ] Tamer-Turm Rangliste online
+554. [ ] Tamer-Daten validieren (validate_data)
+555. [ ] Tamer-Texte übersetzt
+556. [ ] Tamer-Teams pro Schwierigkeit
+557. [ ] Tamer-Geld-Belohnungen balancieren
+558. [ ] Tamer mit Overcharge-Strategie
+559. [ ] Tamer mit Bond-Lehre (Tutorial)
+560. [ ] Tamer-Kampfmusik pro Gebiet
 
 ## Info und Transparenz
 
@@ -809,87 +809,87 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 721. [x] Lager-Lernen: Spirlings auf der Bank erhalten die Hälfte der XP (Einstellung, Standard an)
 722. [ ] XP-Verteilung im Kampfende-Bericht
-723. [ ] Level-Cap blockiert XP (bestehend)
+723. [x] Level-Cap blockiert XP (bestehend) (BattleModel._give_xp, Test test_kampf_growth_wild)
 724. [ ] Spark-Training (bestehend) mit Kampfquellen
-725. [ ] Technik-Lehrer
-726. [ ] Entwicklung nach Kampf (bestehend)
-727. [ ] Entwicklung abbrechen (Option)
-728. [ ] Temperament-Wechsel-Gegenstand
+725. [x] Technik-Lehrer (Echo-Kristalle mit teaches/for_elements, GameState.can_learn_echo)
+726. [x] Entwicklung nach Kampf (bestehend) (Overworld._after_battle Entfalten-Hinweis)
+727. [x] Entwicklung abbrechen (Option) (Entfalten nie automatisch, Zurückfalten jederzeit)
+728. [x] Temperament-Wechsel-Gegenstand (Temper Shift, PauseMenu)
 729. [ ] Spark-Reset
-730. [ ] XP-Bonus für Rückkämpfe
-731. [ ] XP-Bonus für Bond-Spirlings
-732. [ ] XP-Malus bei Überlevel bewusst nicht
-733. [ ] XP-Kurve dokumentieren
-734. [ ] XP-Kurve im Simulator prüfen
-735. [ ] XP-Anzeige bei Bank-Spirlings
+730. [x] XP-Bonus für Rückkämpfe (GrowthRules rematch_mult)
+731. [x] XP-Bonus für Bond-Spirlings (GrowthRules kinship_mult ab Verbundenheit 80)
+732. [x] XP-Malus bei Überlevel bewusst nicht (kein Malus ausser Era-V-Ringskalierung, in BALANCE.md und Lexikon)
+733. [x] XP-Kurve dokumentieren (docs/BALANCE.md gen:growth)
+734. [x] XP-Kurve im Simulator prüfen (GrowthRules.battles_between, Test)
+735. [x] XP-Anzeige bei Bank-Spirlings (XP_GAINED bench, Team-Menü Wachstum bis zum nächsten Ring)
 736. [ ] Training-Arena im Leuchtturm
 737. [ ] Trainings-Dummies (Spirlings aus Holz) für Tests
 738. [ ] Trainings-Kämpfe ohne Risiko
 739. [ ] Trainings-Ziele (Quests)
 740. [ ] Trainings-Statistik
-741. [ ] Level-Aufstieg-Zusammenfassung bei mehreren Levels
+741. [x] Level-Aufstieg-Zusammenfassung bei mehreren Levels (GrowthRules.summary_line im Kampflog)
 742. [ ] Lern-Technik-Dialog überspringbar
-743. [ ] Lern-Technik später nachholen
-744. [ ] XP für Partner-Spirlings nie (bestehend)
-745. [ ] XP in Online-Duellen nie (Fairness)
-746. [ ] XP auf Story höher
-747. [ ] XP-Glücksbringer als gehaltener Gegenstand
-748. [ ] XP-Zusammenfassung pro Gebiet
-749. [ ] Level-Cap-Erhöhung nach Riss (bestehend)
-750. [ ] Level-Cap in Turnieren
-751. [ ] Lager-Lernen nur für das Team, nicht für das Lager
-752. [ ] Lager-Lernen respektiert Level-Cap (umgesetzt)
-753. [ ] Lager-Lernen für erschöpfte Spirlings nicht (umgesetzt)
-754. [ ] Lager-Lernen in den Einstellungen (umgesetzt)
-755. [ ] Lager-Lernen im Lexikon erklären
-756. [ ] Training: Wochen-Echo gibt Spark
-757. [ ] Training: Feste geben Spark
+743. [x] Lern-Technik später nachholen (GameState.relearn)
+744. [x] XP für Partner-Spirlings nie (bestehend) (BattleModel._award_xp is_partner_index)
+745. [x] XP in Online-Duellen nie (Fairness) (EchoTeam.duel_copy, Test)
+746. [x] XP auf Story höher (GrowthRules difficulty_mult)
+747. [x] XP-Glücksbringer als gehaltener Gegenstand (growth_charm)
+748. [x] XP-Zusammenfassung pro Gebiet (Erfolge > Wachstum und Bindungen)
+749. [x] Level-Cap-Erhöhung nach Riss (bestehend) (GameState.LEVEL_CAPS)
+750. [x] Level-Cap in Turnieren (EchoTeam.DUEL_LEVEL Ring 50)
+751. [x] Lager-Lernen nur für das Team, nicht für das Lager (BattleModel._award_xp nur parties)
+752. [x] Lager-Lernen respektiert Level-Cap (umgesetzt)
+753. [x] Lager-Lernen für erschöpfte Spirlings nicht (umgesetzt)
+754. [x] Lager-Lernen in den Einstellungen (umgesetzt)
+755. [x] Lager-Lernen im Lexikon erklären (Lexikon bench_lessons)
+756. [x] Training: Wochen-Echo gibt Spark (WeeklyChallenge.REWARDS spark_charm)
+757. [x] Training: Feste geben Spark (spark_charm bei jedem Fest-Händler)
 758. [ ] Training: Turm gibt Gegenstände
-759. [ ] Training: Online-Weltziel gibt XP-Bonus
-760. [ ] Training: kein Grind-Zwang (Balance-Ziel)
+759. [x] Training: Online-Weltziel gibt XP-Bonus (GrowthRules world_goal, FriendsMenu)
+760. [x] Training: kein Grind-Zwang (Balance-Ziel) (no_grind_battles, Test)
 
 ## Wild-Begegnungen und Bond
 
-761. [ ] Bond-Echo-Melodie (bestehend) bleibt ohne Wurf und ohne Quote
-762. [ ] Bond nur gegen Wild (bestehend)
-763. [ ] Bond im Schwarm (bestehend)
-764. [ ] Bond-Bonus durch Status (bestehend prüfen)
-765. [ ] Bond-Bonus durch Feld
-766. [ ] Bond-Bonus durch Gegenstand Echo-Muschel
-767. [ ] Bond-Fehlschlag gibt freie Aktion (bestehend)
+761. [x] Bond-Echo-Melodie (bestehend) bleibt ohne Wurf und ohne Quote (BondEcho, BondCalc)
+762. [x] Bond nur gegen Wild (bestehend)
+763. [x] Bond im Schwarm (bestehend)
+764. [x] Bond-Bonus durch Status (bestehend prüfen) (BondCalc.STATUS_BONUS)
+765. [x] Bond-Bonus durch Feld (WildRules.field_bond_bonus)
+766. [x] Bond-Bonus durch Gegenstand Echo-Muschel (echo_shell)
+767. [x] Bond-Fehlschlag gibt freie Aktion (bestehend)
 768. [ ] Bond-Erfolg-Animation eigenständig
-769. [ ] Wild-Begegnungen im Farn, Schilf, Geröll (bestehend)
-770. [ ] Wild-Ketten-Bonus (Prisma-Chance steigt)
+769. [x] Wild-Begegnungen im Farn, Schilf, Geröll (bestehend)
+770. [x] Wild-Ketten-Bonus (Prisma-Chance steigt) (WildRules.prism_chance)
 771. [ ] Wild-Schwarm-Ereignisse
-772. [ ] Wild-Spawns nach Tageszeit (bestehend)
-773. [ ] Wild-Spawns nach Feld
-774. [ ] Wild-Auto-Kampf (bestehend)
-775. [ ] Wild-Level an Gebiet
-776. [ ] Wild-KI Stufe 0 (bestehend)
+772. [x] Wild-Spawns nach Tageszeit (bestehend)
+773. [x] Wild-Spawns nach Feld (Wetter hebt Elemente, WildRules.weather_boost)
+774. [x] Wild-Auto-Kampf (bestehend)
+775. [x] Wild-Level an Gebiet (encounters.json min/max)
+776. [x] Wild-KI Stufe 0 (bestehend)
 777. [ ] Wild-Überraschung
-778. [ ] Wild-Rückzug-Regel (bestehend)
-779. [ ] Wild-Spirlings mit Gegenständen (selten)
+778. [x] Wild-Rückzug-Regel (bestehend)
+779. [x] Wild-Spirlings mit Gegenständen (selten) (WildRules.roll_held)
 780. [ ] Wild-Begegnungs-Rate einstellbar (Laterne)
-781. [ ] Wild-Abwehr-Gegenstand
-782. [ ] Wild-Lockmittel
-783. [ ] Wild-Prisma-Varianten (bestehend)
-784. [ ] Wild-Seltenheit sichtbar im Spirlog
-785. [ ] Wild-Spawn-Tabellen validieren
-786. [ ] Bond-Melodie barrierefrei (visuell + Ton)
-787. [ ] Bond-Melodie Schwierigkeit pro Art
-788. [ ] Bond-Ergebnis ohne Prozentzahl (Leitplanke)
-789. [ ] Bond-Statistik im Lexikon
-790. [ ] Bond-Tests (bestehend)
+781. [x] Wild-Abwehr-Gegenstand (Wild Ward)
+782. [x] Wild-Lockmittel (Lure Scent, Encounter Call)
+783. [x] Wild-Prisma-Varianten (bestehend)
+784. [x] Wild-Seltenheit sichtbar im Spirlog (SpirlogBook.page_text)
+785. [x] Wild-Spawn-Tabellen validieren (test_kampf_growth_wild)
+786. [x] Bond-Melodie barrierefrei (visuell + Ton) (BondMinigame Form, Licht und Ton je Marke)
+787. [x] Bond-Melodie Schwierigkeit pro Art (BondEcho.CALL_LENGTH nach Seltenheit)
+788. [x] Bond-Ergebnis ohne Prozentzahl (Leitplanke)
+789. [x] Bond-Statistik im Lexikon (Lexikon bond_stats)
+790. [x] Bond-Tests (bestehend)
 791. [ ] Wild-Horde mit Anführer
-792. [ ] Wild-Horde-Bond
+792. [x] Wild-Horde-Bond
 793. [ ] Wild-Boss (seltene alte Spirlings) im Endgame
 794. [ ] Wild-Begegnung im Nebel (Sicht begrenzt)
-795. [ ] Wild-Begegnung nachts häufiger
-796. [ ] Wild-Begegnung im Riss mit Feld
-797. [ ] Wild-Begegnung als Tageshighlight (bestehend Find of the Day)
-798. [ ] Wild-Begegnung Online-Echo
+795. [x] Wild-Begegnung nachts häufiger (WildRules.rate_mult)
+796. [x] Wild-Begegnung im Riss mit Feld (Kartenfeld gilt für Wildkämpfe)
+797. [x] Wild-Begegnung als Tageshighlight (bestehend Find of the Day)
+798. [x] Wild-Begegnung Online-Echo (OnlineEvents.sighting_boost)
 799. [ ] Wild-Begegnung Wochen-Spawn
-800. [ ] Wild-Begegnung Fest-Spawn
+800. [x] Wild-Begegnung Fest-Spawn (Season-Boost)
 
 ## Endgame-Kampfmodi
 
@@ -930,7 +930,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 835. [ ] Endgame: Boss-Turm
 836. [ ] Endgame: Lore-Belohnungen
 837. [ ] Endgame: Kosmetik-Belohnungen (Laternenfarben)
-838. [ ] Endgame: Titel auf der Wayfarer-Karte
+838. [ ] Endgame: Titel auf der Tamer-Karte
 839. [ ] Endgame: Wochen-Ziel
 840. [ ] Endgame: Ruhm-Halle
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-34 von 1000 Punkten umgesetzt.
+95 von 1000 Punkten umgesetzt.
 

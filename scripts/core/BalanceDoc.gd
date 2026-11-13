@@ -7,10 +7,12 @@ extends RefCounted
 
 const DOC_PATH: String = "res://docs/BALANCE.md"
 ## Sections built from data only (fast, checked by the test).
-const DATA_SECTIONS: Array[String] = ["difficulty", "profiles", "variants", "ref_teams"]
+const DATA_SECTIONS: Array[String] = ["difficulty", "profiles", "variants", "ref_teams", "growth"]
 ## Sections that need simulator runs (rewritten by run_all.sh only).
 const SIM_SECTIONS: Array[String] = ["changes", "report_lv36"]
 
+## Growth yield of the kind the growth curve table is drawn for (about the median kind).
+const GROWTH_DOC_YIELD: int = 80
 const DIFFICULTY_NAMES: Array[String] = ["Story", "Tamer", "Veteran", "Rift-Born"]
 
 ## Changes to existing arts (plan area 2, "Bestehende Techniken nachjustieren", items 581-608):
@@ -57,6 +59,8 @@ static func section(name: String) -> String:
 			return variants_table()
 		"ref_teams":
 			return ref_teams_table()
+		"growth":
+			return GrowthRules.curve_table(GROWTH_DOC_YIELD)
 	return ""
 
 ## Item 875: what each difficulty does to a foe.

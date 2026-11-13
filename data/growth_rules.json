@@ -1,0 +1,11 @@
+{
+ "_doc": "Growth (XP) rules of the battle plan, area 'Fortschritt, XP und Training' (docs/KAMPF_PLAN_1000.md). Read by scripts/core/GrowthRules.gd. difficulty_mult: per difficulty (Story, Tamer, Veteran, Rift-Born). rematch_mult: a Wayfarer's or Warden's rematch. kinship_min / kinship_mult: a Spirling this fond of the Wayfarer learns faster (Era II on, Kinship). world_goal_*: after the world goal of the week reaches 100 %, the next battles give more growth. no_grind_battles: balance goal, the most even wild battles one Spirling needs from one Warden ring cap to the next (Tamer). There is no top ring; caps only hold on Veteran and Rift-Born in Act I.",
+ "difficulty_mult": [1.25, 1.0, 1.0, 1.0],
+ "rematch_mult": 1.2,
+ "kinship_min": 80,
+ "kinship_mult": 1.1,
+ "world_goal_battles": 20,
+ "world_goal_mult": 1.25,
+ "no_grind_battles": 50,
+ "curve_rings": [5, 10, 15, 20, 30, 40, 50, 60, 80, 100]
+}

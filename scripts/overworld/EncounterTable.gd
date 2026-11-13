@@ -124,7 +124,9 @@ static func roll(id: String, rng: RandomNumberGenerator, boost: Array[int] = [],
 			if sd == null:
 				return null
 			var wild := Spirling.new(sd, rng.randi_range(int(s.get("min", 2)), int(s.get("max", 4))), rng)
-			wild.prism = rng.randf() < Spirling.PRISM_CHANCE
+			# Meeting the same kind again and again raises the Prism chance too (WildRules).
+			wild.prism = rng.randf() < WildRules.prism_chance(GleamRules.chain_for(chain, sd.species_name))
+			WildRules.roll_held(wild, rng)
 			wild.gleam = GleamRules.roll(rng, GleamRules.chain_for(chain, sd.species_name), ShopEffects.gleam_mult())
 			return wild
 	return null

@@ -450,6 +450,7 @@ func run_records() -> void:
 		lines.append("Run chronicle")
 		lines.append("Era functions")
 		lines.append("Finds by region")
+		lines.append("Growth and bonds")
 		if not memorial_lines().is_empty():
 			lines.append("Memorial book")
 		if not Album.stickers().is_empty():
@@ -477,6 +478,7 @@ func run_records() -> void:
 			"Run chronicle": await info("\n".join(RunChronicle.lines()))
 			"Era functions": await run_era_functions()
 			"Finds by region": await info("\n".join(RegionStats.lines(GameState.flags)))
+			"Growth and bonds": await info("\n".join(GrowthRules.summary_lines(GameState.records) + WildRules.bond_lines(GameState.records)))
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Lexicon": await run_lexicon()
@@ -511,7 +513,11 @@ func run_lexicon() -> void:
 		if i == 0:
 			await info(BattleGoals.lexicon_text(GameState.records))
 		else:
-			await info(Loc.t(Lexicon.text(ids[i - 1])))
+			var page: String = Loc.t(Lexicon.text(ids[i - 1]))
+			# The bond page carries the live counts (KAMPF_PLAN "Bond-Statistik im Lexikon").
+			if ids[i - 1] == WildRules.BOND_LEXICON:
+				page += "\n\n" + "\n".join(WildRules.bond_lines(GameState.records))
+			await info(page)
 
 ## Vows (plan 3406-3408): take one before the first Rift is mended, give one up at any time.
 func run_vows() -> void:
