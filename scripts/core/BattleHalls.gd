@@ -131,8 +131,10 @@ static func foe_team(h: Dictionary, seed_value: int, round_i: int, elements: Arr
 	var r: RandomNumberGenerator = _rng(seed_value, ["foe", str(h.id), round_i])
 	var kind: String = str(h.get("kind", ""))
 	if kind == "boss" or kind == "prism":
-		var heart: Array[String] = _draw(pool(ring()), 1, r)
-		var out: Array[Spirling] = build(heart, ring(), r)
+		# foe_ring_cut below 0 makes the heart stronger than the hall ring (balance, see the test).
+		var hl: int = ring() - int(h.get("foe_ring_cut", 0))
+		var heart: Array[String] = _draw(pool(hl), 1, r)
+		var out: Array[Spirling] = build(heart, hl, r)
 		if kind == "prism" and not out.is_empty():
 			out[0].prism = true
 		return out
@@ -425,3 +427,17 @@ static func worn_title() -> String:
 static func wear(title: String) -> void:
 	if title.is_empty() or title in wearable():
 		GameState.records[WORN_KEY] = title
+
+# --- Replay of the last hall battle ------------------------------------------------------------------
+
+const REPLAY_KEY: String = "hall_replay"
+
+## Keeps the last hall battle (a BattleReplay snapshot with its inputs).
+static func keep_replay(snap: Variant) -> void:
+	if snap is Dictionary and not (snap as Dictionary).is_empty():
+		GameState.records[REPLAY_KEY] = (snap as Dictionary).duplicate(true)
+
+## The last hall battle as a replay code (watched under Records, Online replays), or "".
+static func replay_code() -> String:
+	var snap: Variant = GameState.records.get(REPLAY_KEY, {})
+	return ReplayLibrary.share_code(snap) if snap is Dictionary and not (snap as Dictionary).is_empty() else ""

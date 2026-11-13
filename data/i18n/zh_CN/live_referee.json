@@ -1,0 +1,33 @@
+{
+ "_comment": "Simplified Chinese (Mainland China) texts for the German table live_referee. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "%s Ring %d (from %s)": "%s 第%d环（来自%s）",
+  "%s beats %s": "%s击败%s",
+  "(borrowed)": "（借来的）",
+  "Close": "关闭",
+  "Could not save the picture.": "无法保存图片。",
+  "Draw": "平局",
+  "Enter the duel": "加入对战",
+  "It joins this one duel. After that the loan is used up.": "它只参加这一场对战。之后借用就结束了。",
+  "Leave (the duel goes on)": "离开（对战继续）",
+  "Live duel": "实时对战",
+  "Menu": "菜单",
+  "No friend has lent you a Spirling right now.": "目前没有好友借给你Spirling。",
+  "No winner": "没有胜者",
+  "Result picture saved with your photos.": "结果图片已保存到相册。",
+  "Rounds: %d": "回合数：%d",
+  "Save a result picture": "保存结果图片",
+  "Stop watching": "停止观战",
+  "Take a borrowed Spirling along": "带上借来的Spirling",
+  "Take a borrowed Spirling along? It joins this one attempt, then the loan is used up.": "要带上借来的Spirling吗？它只参加这一次挑战，之后借用就结束了。",
+  "That loan has ended.": "这次借用已结束。",
+  "The duel is not over yet.": "对战还没结束。",
+  "The referee checks the duel.": "裁判正在核查对战。",
+  "The result picture is in your downloads.": "结果图片在你的下载文件夹里。",
+  "This battle cannot be shown any more.": "这场战斗已无法再显示。",
+  "Top: %s  Bottom: %s": "上方：%s  下方：%s",
+  "Without a borrowed Spirling": "不带借来的Spirling",
+  "You already used a borrowed Spirling here.": "你已经在这里用过借来的Spirling了。",
+  "Your last duel": "你上一场对战"
+ }
+}
