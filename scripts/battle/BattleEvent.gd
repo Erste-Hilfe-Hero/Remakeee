@@ -123,6 +123,8 @@ func describe() -> String:
 		Type.FLEE_RESULT:
 			return "You slipped away." if data.get("success", false) else "No way out!"
 		Type.XP_GAINED:
+			if int(data.get("cap", 0)) > 0:
+				return "%s gained %d growth. The ring limit holds it at ring %d for now." % [who, data.get("amount", 0), int(data.cap)]
 			return "%s gained %d growth." % [who, data.get("amount", 0)]
 		Type.LEVEL_UP:
 			return "%s grew ring %d!" % [who, data.get("level", 0)]

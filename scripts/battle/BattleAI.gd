@@ -335,6 +335,9 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 	var mv: MoveData = BattleRules.resolve_move(me.moves[move_index], model.field)
 	var acc: float = mv.accuracy * StatusRules.acc_mult(me.status)
 	var expected: float = DamageCalc.estimate(me, target, mv) * BattleRules.status_bonus(mv, target)
+	# Master AI plays status combos (item 214): a reaction on the target's status counts.
+	if level >= 3:
+		expected *= float(BattleRules.reaction(mv, target).get("mult", 1.0))
 	# Overcharge counts only where the leftover Energy turns the hit into a knock-out (item 460).
 	if mv.overcharge and level >= 1 and expected < float(target.hp):
 		var extra: int = clampi(me.energy - me.move_cost(mv), 0, BattleRules.OVERCHARGE_MAX_EXTRA)

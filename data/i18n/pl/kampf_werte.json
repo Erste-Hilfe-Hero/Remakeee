@@ -87,6 +87,17 @@
   "There are no stages for aim or dodging.": "Nie ma stopni celności ani uników.",
   "Trades all stages with the foe.": "Zamienia wszystkie stopnie z wrogiem.",
   "Unruffled": "Niewzruszony",
-  "Vigor = (base + spark/2) x (ring + %d) / %d": "Wigor = (baza + iskra/2) x (ranga + %d) / %d"
+  "Vigor = (base + spark/2) x (ring + %d) / %d": "Wigor = (baza + iskra/2) x (ranga + %d) / %d",
+  "%s %d -> %d": "%s %d -> %d",
+  "%s gained %d growth. The ring limit holds it at ring %d for now.": "%s zyskuje %d wzrostu. Limit rangi trzyma go na randze %d na razie.",
+  "%s's sparks flicker and settle anew.": "Iskry %s migoczą i układają się na nowo.",
+  "FOC": "SKU",
+  "GRD": "OSŁ",
+  "MGT": "MOC",
+  "PCE": "TEM",
+  "Ring %s:": "Ranga %s:",
+  "Rolls all Spark values of one Spirling anew. Used up.": "Losuje na nowo wszystkie wartości Iskry jednego Spirlinga. Zużywa się.",
+  "Spark Flux": "Wir Iskier",
+  "VIG": "WIG"
  }
 }
