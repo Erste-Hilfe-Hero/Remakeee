@@ -19,6 +19,10 @@ var pan: Vector2 = Vector2.ZERO
 var frame: int = 0
 ## Shown on the postcard frame.
 var place: String = ""
+## Over a screen of buttons (the battle, KAMPF_PLAN_1000 662): the overlay takes every tap and
+## no button keeps the focus, so A and taps reach the photo mode; the focus comes back after.
+var capture_gui: bool = false
+var _focus_before: Control
 
 var _overlay: Control
 var _hint: Label
@@ -30,14 +34,25 @@ func _init() -> void:
 func _ready() -> void:
 	_overlay = Control.new()
 	_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_overlay.mouse_filter = Control.MOUSE_FILTER_STOP if capture_gui else Control.MOUSE_FILTER_IGNORE
 	_overlay.draw.connect(_draw_frame)
 	add_child(_overlay)
+	if capture_gui:
+		_overlay.gui_input.connect(func(ev: InputEvent) -> void:
+			if not _busy and TapInput.is_press(ev):
+				_overlay.accept_event()
+				snap())
+		_focus_before = get_viewport().gui_get_focus_owner()
+		get_viewport().gui_release_focus()
 	_hint = Label.new()
 	_hint.theme = UITheme.get_theme()
 	_hint.position = Vector2(2, 2)
 	_hint.text = Loc.t("A: photo  B: done  Menu: frame")
 	add_child(_hint)
+
+func _exit_tree() -> void:
+	if capture_gui and is_instance_valid(_focus_before) and _focus_before.is_visible_in_tree():
+		_focus_before.grab_focus()
 
 func _process(delta: float) -> void:
 	if _busy:

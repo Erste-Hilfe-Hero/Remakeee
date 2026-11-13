@@ -10,6 +10,8 @@ extends RefCounted
 ##   matchup tones (696: up for an overwhelming hit, down for one that barely landed).
 ## - At 4x and in battery saver the flourish sounds stay out (701, 702); accents keep a gap
 ##   so a crowded multi-battle turn does not pile them up (704).
+## - The music dips while a battle line types (695), and a battle picks its theme: night,
+##   festival, Weekly Echo, tower or online duel (713-717).
 
 ## The status sounds of data/battle_show.json "audio.status", named here so the sound check
 ## (tests/unit/test_sfx_names.gd) finds every file in code.
@@ -85,6 +87,30 @@ static func keep(sound: String, speed: float, battery: bool) -> bool:
 ## True when an accent may play at [param now] after one at [param last].
 static func accent_ok(now: float, last: float) -> bool:
 	return now - last >= float(cfg().get("accent_gap", 0.25))
+
+## Music level in dB while a battle line types ([param on]) or not (695).
+static func text_duck_db(on: bool) -> float:
+	return minf(float(cfg().get("text_duck_db", -5.0)), 0.0) if on else 0.0
+
+## Seconds the music takes to dip and come back.
+static func text_duck_fade() -> float:
+	return maxf(float(cfg().get("text_duck_fade", 0.15)), 0.0)
+
+## Battle themes of data/battle_show.json "audio.themes", named here so the sound check finds
+## every file in code.
+const THEMES: Array[String] = ["battle_night", "battle_fest", "battle_echo", "battle_tower", "battle_duel"]
+
+## Music of a battle (713-717): a Warden keeps its own; [param kind] ("echo", "tower", "duel")
+## names a challenge theme; otherwise a running festival, then an outdoor night picks theirs,
+## else the plain battle song.
+static func theme(kind: String, warden: bool, festival: bool, night: bool) -> String:
+	if warden:
+		return "warden"
+	var t: Dictionary = cfg().get("themes", {})
+	for k: String in [kind, "fest" if festival else "", "night" if night else ""]:
+		if not k.is_empty() and t.has(k):
+			return str(t[k])
+	return "battle"
 
 ## Plays [param sound] unless the speed or battery saver keeps it out.
 static func play(sound: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
