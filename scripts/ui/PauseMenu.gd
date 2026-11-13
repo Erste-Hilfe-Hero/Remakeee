@@ -734,6 +734,10 @@ func run_team() -> void:
 		if idx < 0 or idx >= GameState.party.size():
 			return
 		var s: Spirling = GameState.party[idx]
+		# Item 1789: holding a row opens the summary straight away.
+		if picker.last_long:
+			await run_summary(s, idx == 0, idx)
+			continue
 		var opts: Array[String] = ["Summary", "Lead the team", "Move to slot...", "Use item", "Keepsake", "Nickname", "Arts order"]
 		# Every kind that can unfold shows the option; if it isn't ready yet, it says what it needs.
 		if not s.data.unfold.is_empty():
@@ -952,6 +956,19 @@ static func _draw_new_dot(b: Button, id: String) -> void:
 	var ink: Color = b.get_theme_color("font_color", "Button")
 	b.draw_rect(Rect2(b.size.x - 5, floorf(b.size.y / 2.0) - 1, 3, 3), ink)
 
+## Name, count and what a satchel thing does, for a long press on its row.
+static func item_details(id: String) -> String:
+	var it: Dictionary = Database.item(id)
+	var lines: Array[String] = ["%s x%d" % [Loc.t(str(it.get("name", id))), GameState.item_count(id)]]
+	var desc: String = str(it.get("description", ""))
+	if not desc.is_empty():
+		lines.append(Loc.t(desc))
+	if battle_only(it):
+		lines.append(Loc.t(BATTLE_ONLY))
+	elif bool(it.get("gear", false)):
+		lines.append(gear_hint(id))
+	return "\n".join(lines)
+
 ## Satchel orders (item 1917); the choice is kept in GameState.bag_sort.
 const BAG_SORTS: Array[String] = ["New", "Name", "Kind"]
 ## What a list returns when its sort switch in the title row is tapped.
@@ -1088,6 +1105,10 @@ func run_bag() -> void:
 		last_id = item_id
 		last_idx = idx
 		var it: Dictionary = Database.item(item_id)
+		# Item 1789: holding a row shows what the thing does instead of using it.
+		if picker.last_long:
+			await info(item_details(item_id))
+			continue
 		if it.has("teaches"):
 			await _teach_echo(item_id)
 		elif int(it.get("spark", 0)) > 0:

@@ -94,6 +94,7 @@ func _ready() -> void:
 	_iap_note.text = Loc.t(IAP_NOTE)
 	add_child(_iap_note)
 	_build_name_box()
+	add_child(version_label())
 	Loc.events.language_changed.connect(_on_language_changed)
 	VirtualPad.set_wanted(false)
 	GameState.in_game = false
@@ -101,6 +102,25 @@ func _ready() -> void:
 	StartupLog.mark("title scene built")
 	EraBoot.start(self, _era)
 	_run.call_deferred()
+
+## The version, small in the lower right corner (item 1972).
+static func version_label() -> Label:
+	var v := Label.new()
+	v.name = "version"
+	v.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	v.text = version_text()
+	v.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	v.offset_left = -60
+	v.offset_top = -12
+	v.offset_right = -2
+	v.offset_bottom = 0
+	v.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	v.add_theme_color_override("font_color", UITheme.MID)
+	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return v
+
+static func version_text() -> String:
+	return "v" + Online.CLIENT_VERSION_NAME
 
 func _build_name_box() -> void:
 	_name_box = PanelContainer.new()
@@ -115,11 +135,16 @@ func _build_name_box() -> void:
 	add_child(_name_box)
 	var v := VBoxContainer.new()
 	_name_box.add_child(v)
+	var head := HBoxContainer.new()
+	v.add_child(head)
 	var l := Label.new()
 	l.text = "Your name?"
-	v.add_child(l)
+	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head.add_child(l)
 	_name_edit = LineEdit.new()
 	_name_edit.max_length = NAME_MAX
+	# Characters left, "4/10" (item 1966).
+	head.add_child(CharCounter.make(_name_edit, NAME_MAX))
 	_name_edit.add_theme_stylebox_override("normal", UITheme.flat_style(UITheme.ACCENT, UITheme.INK))
 	_name_edit.add_theme_color_override("font_color", UITheme.INK)
 	_name_edit.text_submitted.connect(func(t: String) -> void: _name_done.emit(t))
