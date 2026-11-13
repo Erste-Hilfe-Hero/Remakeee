@@ -426,7 +426,7 @@ func test_story_battle_info_carries_the_format() -> void:
 	var heart: Dictionary = _npc("cinder_rift", "ashen_heart")
 	var hinfo: Dictionary = TrainerData.battle_info(heart, TrainerData.build_team(heart, "Kindlop", rng), 0)
 	assert_eq(str(hinfo.boss), "ashen_heart")
-	assert_eq(int(hinfo.ai), TrainerData.WARDEN_MIN_AI, "bosses play at least greedy")
+	assert_eq(int(hinfo.ai), TrainerData.BOSS_MIN_AI, "bosses play at least tier 2 (KAMPF_PLAN_1000 item 420)")
 	assert_true(bool(hinfo.warden), "boss fights use the Warden music")
 
 func test_format_errors_catch_bad_data() -> void:

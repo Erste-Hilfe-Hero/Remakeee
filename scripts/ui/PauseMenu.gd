@@ -737,7 +737,7 @@ func run_team() -> void:
 			await _unfurl(s, opts[opt] == "Unfurl")
 			continue
 		match opt:
-			0: await run_summary(s, idx == 0)
+			0: await run_summary(s, idx == 0, idx)
 			1: GameState.swap_party(0, idx)
 			2:
 				var slots: Array[String] = []
@@ -773,13 +773,28 @@ static func set_nickname(s: Spirling, n: String) -> bool:
 
 ## The summary in the era's layout: two text pages in Era I, three in Era II, the tabbed card
 ## from Era III on. Every era shows the same four sections (EraMenus.SECTIONS).
-func run_summary(s: Spirling, leader: bool = false) -> void:
+## With [param team_i] (the Spirling's team slot), up and down go straight to the previous or
+## next team member without the list in between (item 1893).
+func run_summary(s: Spirling, leader: bool = false, team_i: int = -1) -> void:
 	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "summary")
-	screens_shown.append("summary")
-	if bool(lay.get("tabs", false)):
-		await EraSummary.show_for(self, s, leader)
-	else:
-		await info_pages(EraMenus.summary_pages(s, EraManager.active_era(), leader), MiniSprite.of(s.data.species_name, int(lay.get("sprite", 32))))
+	var can_step: bool = team_i >= 0 and GameState.party.size() > 1
+	while true:
+		screens_shown.append("summary")
+		var step: int = 0
+		if bool(lay.get("tabs", false)):
+			step = await EraSummary.show_for(self, s, leader, can_step)
+		else:
+			summary_step_ok = can_step
+			summary_step = 0
+			await info_pages(EraMenus.summary_pages(s, EraManager.active_era(), leader), MiniSprite.of(s.data.species_name, int(lay.get("sprite", 32))))
+			summary_step_ok = false
+			step = summary_step
+		if step == 0 or not can_step or close_all:
+			return
+		team_i = posmod(team_i + step, GameState.party.size())
+		s = GameState.party[team_i]
+		leader = team_i == 0
+		Sound.sfx("select")
 
 ## A grey "free" team row; a tap says where new Spirlings go.
 static func free_slot_row() -> Dictionary:
@@ -914,16 +929,24 @@ static func sort_bag(ids: Array, mode: int) -> Array:
 				return order.find(a) < order.find(b))
 	return out
 
+## What a list returns when its filter switch in the title row is tapped (item 1945).
+const FILTER_PICKED: int = -51
+
 ## The "Sort: New" switch in the satchel's title row; a tap closes the list with SORT_PICKED.
 func sort_toggle() -> Button:
+	return title_toggle("sort_toggle", Loc.t("Sort: %s") % Loc.t(BAG_SORTS[clampi(GameState.bag_sort, 0, BAG_SORTS.size() - 1)]), SORT_PICKED)
+
+## A switch for a list's title row: a tap closes the list with [param code].
+func title_toggle(id: String, text: String, code: int) -> Button:
 	var b := Button.new()
-	b.name = "sort_toggle"
+	b.name = id
 	b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
-	b.text = Loc.t("Sort: %s") % Loc.t(BAG_SORTS[clampi(GameState.bag_sort, 0, BAG_SORTS.size() - 1)])
+	b.text = text
+	b.clip_text = true
 	b.focus_mode = Control.FOCUS_NONE
 	b.pressed.connect(func() -> void:
 		Sound.sfx("select")
-		picker.picked.emit(SORT_PICKED))
+		picker.picked.emit(code))
 	return b
 
 static func bag_tab(it: Dictionary) -> int:
@@ -1039,6 +1062,9 @@ func run_bag() -> void:
 ## each use, until Back or the last one is gone (item 1919).
 func _use_on_party(item_id: String) -> void:
 	var it: Dictionary = Database.item(item_id)
+	if not ChallengeRules.item_allowed(item_id):
+		await info("Spring Water Only: no healing items on this journey.")
+		return
 	var again: bool = int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0
 	var focus: int = -1
 	while GameState.item_count(item_id) > 0:
@@ -1587,34 +1613,51 @@ func _run_box(box: int) -> void:
 	while true:
 		var view: Array[int] = _box_view(box)
 		var bx: Dictionary = GameState.storage_boxes[box]
+		# Sort and element filter are two switches in the title row, not list rows (item 1945).
 		var names: Array[String] = [
-			"Sort: %s" % GameState.STORAGE_SORTS[_storage_sort],
-			"Show: %s" % ("all" if _storage_element < 0 else Elements.element_name(_storage_element)),
 			"Move several...",
 			"Rename box",
 			"Colour: %s" % Loc.t(str(bx.color).capitalize()),
 		]
 		for i: int in view:
 			names.append(MenuHost.storage_line(GameState.storage[i]))
+		picker.set_header(storage_toggles())
 		var w: int = await pick_strings("%s (%d)" % [bx.name, view.size()], names)
+		if is_instance_valid(picker):
+			picker.set_header(null)
 		match w:
-			-1:
-				return
-			0:
+			SORT_PICKED:
 				_storage_sort = (_storage_sort + 1) % GameState.STORAGE_SORTS.size()
-			1:
+			FILTER_PICKED:
 				_storage_element += 1
 				if _storage_element >= Elements.E.size():
 					_storage_element = -1
-			2:
+			-1:
+				return
+			0:
 				await _move_several(view)
-			3:
+			1:
 				var n: String = await TextPrompt.ask(self, "Box name", false, GameState.BOX_NAME_MAX, str(bx.name))
 				GameState.rename_box(box, n)
-			4:
+			2:
 				GameState.recolor_box(box)
 			_:
-				await _run_stored(view[w - 5])
+				if w >= STORAGE_ROWS and picker.last_long:
+					# Item 1947: holding a Spirling's row opens its summary straight away.
+					await run_summary(GameState.storage[view[w - STORAGE_ROWS]])
+				elif w >= STORAGE_ROWS:
+					await _run_stored(view[w - STORAGE_ROWS])
+
+## Rows above the Spirlings in a box: Move several, Rename, Colour.
+const STORAGE_ROWS: int = 3
+
+## The box's title row: "Sort: Caught" and "Show: all", each a switch.
+func storage_toggles() -> HBoxContainer:
+	var row := HBoxContainer.new()
+	row.alignment = BoxContainer.ALIGNMENT_END
+	row.add_child(title_toggle("sort_toggle", Loc.t("Sort: %s") % Loc.t(GameState.STORAGE_SORTS[_storage_sort]), SORT_PICKED))
+	row.add_child(title_toggle("filter_toggle", Loc.t("Show: %s") % Loc.t("all" if _storage_element < 0 else Elements.element_name(_storage_element)), FILTER_PICKED))
+	return row
 
 ## Mark up to ten Spirlings, then pick the box they move to (item 376). Favourites stay put.
 func _move_several(view: Array[int]) -> void:
@@ -1648,7 +1691,7 @@ func _move_several(view: Array[int]) -> void:
 func _run_stored(index: int) -> void:
 	var s: Spirling = GameState.storage[index]
 	while true:
-		var opts: Array[String] = ["Details", "Call back", "Move to box...", "Unmark favourite" if s.favorite else "Mark as favourite"]
+		var opts: Array[String] = ["Details", "Call back", "Swap with team...", "Move to box...", "Unmark favourite" if s.favorite else "Mark as favourite"]
 		if not s.held.is_empty():
 			opts.append("Take off keepsake")
 		opts.append("Release")
@@ -1666,6 +1709,19 @@ func _run_stored(index: int) -> void:
 				if GameState.withdraw(i):
 					return
 				await info("Your team is full.")
+			"Swap with team...":
+				# Item 1946: one step instead of sending one to rest and calling the other back.
+				var names3: Array[String] = []
+				for m: Spirling in GameState.party:
+					names3.append(MenuHost.party_line(m))
+				var d: int = await pick_strings(Loc.t("Swap %s with whom?") % s.display_name(), names3)
+				if d < 0:
+					continue
+				var why: String = swap_with_team(i, d)
+				if why.is_empty():
+					Sound.sfx("confirm")
+					return
+				await info(why)
 			"Move to box...":
 				var to: int = await pick_strings("Move to which box?", _box_names())
 				if to >= 0:
@@ -1684,6 +1740,24 @@ func _run_stored(index: int) -> void:
 					# A farewell letter follows (plan 1136).
 					await info("\n".join(Released.letter(s)))
 					return
+
+## Swaps storage Spirling [param store_i] with team member [param party_i] (item 1946): the
+## stored one takes the team slot, the team one goes into the stored one's box. Returns why it
+## can't, or "" when done.
+static func swap_with_team(store_i: int, party_i: int) -> String:
+	if store_i < 0 or store_i >= GameState.storage.size() or party_i < 0 or party_i >= GameState.party.size():
+		return "Nothing to swap."
+	var incoming: Spirling = GameState.storage[store_i]
+	if Expeditions.is_away(incoming.uid):
+		return "This Spirling is away on a trip. Aldo will tell you when it's back."
+	var outgoing: Spirling = GameState.party[party_i]
+	GameState.storage.remove_at(store_i)
+	GameState.party[party_i] = incoming
+	outgoing.restore()
+	outgoing.box = incoming.box
+	GameState.storage.append(outgoing)
+	Vows.check_team()
+	return ""
 
 ## Party -> storage, asking whether the keepsake stays in the satchel (item 356).
 func _send_to_rest() -> void:

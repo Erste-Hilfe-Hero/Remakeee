@@ -37,6 +37,8 @@ var _xp_tween: Tween
 var display_hp: float = 1.0
 ## Era whose HP bar look is drawn (HpBarStyle); set from EraManager on set_spirling.
 var era: int = 1
+## A plate of a one-on-one battle (BattleHud.layout_single): its Vigor bar takes bar_h_single.
+var single: bool = false
 ## Era V: where the soft trail behind the bar sits (lags display_hp on damage).
 var trail_hp: float = 1.0
 var _time: float = 0.0
@@ -242,7 +244,7 @@ func _draw() -> void:
 	accessibility_name = screen_reader_text()
 	var font: Font = get_theme_default_font()
 	var fs: int = get_theme_default_font_size()
-	var rows: Dictionary = EraBattleHud.plate_rows(era)
+	var rows: Dictionary = EraBattleHud.plate_rows(era, single)
 	var c: Dictionary = EraBattleHud.colours(era)
 	var w: float = size.x
 	var asc: float = float(rows.asc)

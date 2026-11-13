@@ -47,15 +47,15 @@
    "money": 2320,
    "team": [
     {
-     "species": "Smeltpup",
+     "species": "Latchet",
      "level": 57
     },
     {
-     "species": "Flueling",
+     "species": "Knellgrim",
      "level": 58
     },
     {
-     "species": "Smeltmaw",
+     "species": "Veilmote",
      "level": 58
     }
    ]
@@ -73,15 +73,15 @@
    "money": 2320,
    "team": [
     {
-     "species": "Flueling",
+     "species": "Knellgrim",
      "level": 57
     },
     {
-     "species": "Smeltmaw",
+     "species": "Veilmote",
      "level": 58
     },
     {
-     "species": "Glassfell",
+     "species": "Latchet",
      "level": 58
     }
    ]
@@ -99,15 +99,15 @@
    "money": 2320,
    "team": [
     {
-     "species": "Smeltmaw",
+     "species": "Smogpup",
      "level": 57
     },
     {
-     "species": "Glassfell",
+     "species": "Veilmote",
      "level": 58
     },
     {
-     "species": "Ashcrest",
+     "species": "Latchet",
      "level": 58
     }
    ]
@@ -135,15 +135,15 @@
    "money": 2950,
    "team": [
     {
-     "species": "Smeltmaw",
+     "species": "Smogpup",
      "level": 57
     },
     {
-     "species": "Glassfell",
+     "species": "Veilmote",
      "level": 58
     },
     {
-     "species": "Ashcrest",
+     "species": "Latchet",
      "level": 59
     }
    ],

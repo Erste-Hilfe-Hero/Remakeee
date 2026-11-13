@@ -176,6 +176,8 @@ func _build() -> void:
 	_ground.name = "Ground"
 	add_child(_ground)
 	_terrain_look = EraTerrainLook.new()
+	# Era IV/V: the whole-number camera zoom of the wide screens (EraDepthLayer.camera_zoom).
+	_terrain_look.screen_zoom = true
 	add_child(_terrain_look)
 	_era_depth = EraDepthLayer.new()
 	add_child(_era_depth)
@@ -780,6 +782,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 			if wild == null:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
 				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain)
+				wild = ChallengeRules.reroll_wild(wild, map.encounter_table, GameState.rng)
 				if wild != null:
 					GameState.gleam_chain = GleamRules.next_chain(GameState.gleam_chain, wild)
 			if wild != null:
@@ -1510,6 +1513,7 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	for s: Spirling in GameState.party:
 		Inkshadow.soothe(s)
 	GameState.heal_party()
+	ChallengeRules.after_rest(GameState.party)
 	Sound.sfx("heal")
 	if map.heal_point.x >= 0:
 		GameState.heal_map = map.id
@@ -1518,6 +1522,9 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	Online.contribute("rests")
 	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
+	var cap_lines: Array[String] = ChallengeRules.rest_lines()
+	if not cap_lines.is_empty():
+		await say(cap_lines)
 	await say(Tips.take("rest_spot"))
 	if FirstSteps.tick(FirstSteps.REST):
 		show_notices()
@@ -2570,6 +2577,9 @@ func _action_postgame_board(_args: PackedStringArray, _speaker: NPC) -> void:
 	kinds.append("times")
 	ways.append(Loc.t("Cartographer's exam"))
 	kinds.append("exam")
+	# Battle halls (KAMPF_PLAN_1000, endgame modes): scripts/overworld/HallRunner.gd.
+	ways.append(Loc.t("Battle halls"))
+	kinds.append("halls")
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	var way: int = await menu.pick_strings(Loc.t("The board"), ways)
@@ -2589,6 +2599,8 @@ func _action_postgame_board(_args: PackedStringArray, _speaker: NPC) -> void:
 			await _show_hall_times()
 		"exam":
 			await _run_final_exam()
+		"halls":
+			await HallRunner.open(self)
 
 ## One timed battle for a hall; books the time on a win and says a new best.
 func _timed_battle(hall: String, foes: Array[Spirling], info: Dictionary) -> BattleModel.Outcome:
@@ -3232,6 +3244,9 @@ func _action_dig(_args: PackedStringArray, _speaker: NPC) -> void:
 	menu.queue_free()
 
 func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
+	if not ChallengeRules.shop_open():
+		await say(["Off the Books: you swore you would not shop on this journey."] as Array[String])
+		return
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	while true:
@@ -3444,9 +3459,13 @@ func after_tamer_win(n: NPC) -> void:
 		# The Warden's thanks for the mend (the Rifts of 2026-11): an Echo Crystal with its art.
 		for it: Variant in def.get("mend_items", []):
 			await _action_give_item(PackedStringArray([str(it)]), null)
-	# A Warden explains its team's cover in the lexicon after the first win (item 680).
-	if def.has("lexicon") and Lexicon.add(GameState.records, str(def.lexicon)):
-		await say([Loc.t("A new lexicon entry is written down."), "%s: %s" % [Loc.t(Lexicon.title(str(def.lexicon))), Loc.t(Lexicon.text(str(def.lexicon)))]] as Array[String])
+	# A Warden explains its team's cover in the lexicon after the first win (item 680); a Rift
+	# boss leaves its lore page and its statistics (KAMPF_PLAN_1000 items 413, 414, 438).
+	var lore: String = str(def.get("lexicon", BossRules.LEXICON.get(str(def.get("boss", "")), "")))
+	if def.has("boss") and last_model != null:
+		BossRules.note_win(GameState.records, str(def.boss), last_model.turn)
+	if not lore.is_empty() and Lexicon.add(GameState.records, lore):
+		await say([Loc.t("A new lexicon entry is written down."), "%s: %s" % [Loc.t(Lexicon.title(lore)), Loc.t(Lexicon.text(lore))]] as Array[String])
 	for f: Variant in def.get("win_flags", []):
 		GameState.set_flag(str(f))
 	if bool(def.get("leaves", false)):
@@ -3764,12 +3783,20 @@ func echo_duel(d: Dictionary) -> void:
 		await say(["The echo flickers and fades. Try again later."] as Array[String])
 		return
 	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), ring]] as Array[String])
+	# The challenger picks the field (KAMPF_PLAN_1000); the place's own field does not count.
+	var fm := MenuHost.new()
+	_ui.add_child(fm)
+	var fi: int = await fm.pick_strings(Loc.t("Which field?"), EchoTeam.field_names())
+	fm.queue_free()
 	busy = false
+	# The rule of the week holds in echo duels too, the same for everyone (KAMPF_PLAN_1000).
 	var outcome: BattleModel.Outcome = await start_battle(foes, false,
-		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true})
+		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
+			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi)})
 	busy = true
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN
+	EchoTeam.note_duel(GameState.records, won)
 	Online.call_fn("echo_report", {"p_code": d.code, "p_kind": "duel", "p_won": won})
 	# The server's referee plays the duel again (plan area 7, item 2689).
 	Online.call_fn("battle_submit", {"p_kind": "echo_duel", "p_ref": str(d.code),
@@ -3894,7 +3921,9 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0
+	Online.in_battle = true
 	var result: Array = await scene.battle_finished
+	Online.in_battle = false
 	var outcome: BattleModel.Outcome = result[0]
 	replay["inputs"] = scene.inputs
 	GameState.records["last_battle"] = replay
@@ -4025,10 +4054,13 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		else:
 			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng)
 		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)),
-			int(partner.get("ai", TrainerData.PARTNER_AI)), str(partner.get("profile", "")))
+			int(partner.get("ai", TrainerData.partner_ai(GameState.difficulty))), str(partner.get("profile", "")))
+	# Challenge rules and the difficulty's crit and Growth touches (KAMPF plan area 13).
+	ChallengeRules.apply_to_model(model, trainer, map.id)
 	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
+	ChallengeRules.note_result(outcome == BattleModel.Outcome.WIN, _warden_battle)
 	Kinship.after_battle(GameState.party, model.participants, outcome == BattleModel.Outcome.WIN)
 	var had_growth: bool = ShopEffects.boost_left("growth") > 0
 	ShopEffects.battle_done()
@@ -4059,6 +4091,7 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 		Online.contribute("bonds")
 	# In a horde the bond can land before the rest of the swarm is beaten (outcome WIN or FLED).
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
+		ChallengeRules.note_bonded(model.bonded, map.id)
 		GameState.receive_spirling(model.bonded)
 		# Wild Spirlings keep their temperament to themselves until they bond (item 315).
 		var tm: Dictionary = model.bonded.temperament()
@@ -4072,6 +4105,7 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	if outcome == BattleModel.Outcome.LOSS:
 		# No coin penalty: a spring keeper simply brings the player back.
 		GameState.heal_party()
+		ChallengeRules.after_rest(GameState.party)
 		if _warden_battle and ShopEffects.can_anchor(GameState.difficulty) and await _use_rift_anchor():
 			if not oath.is_empty():
 				await say(oath)
@@ -4085,6 +4119,13 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	if not oath.is_empty():
 		await _fade_to(0.0)
 		await say(oath)
+	# Trust No One (challenge rule): after a Warden one Spirling leaves with a better offer.
+	var gone: int = ChallengeRules.walkout(GameState.party.size(), GameState.rng) if _warden_battle and outcome == BattleModel.Outcome.WIN else -1
+	if gone >= 0:
+		var leaver: Spirling = GameState.party[gone]
+		GameState.party.remove_at(gone)
+		await _fade_to(0.0)
+		await say([Loc.t("Trust No One: %s takes a better offer and walks off without looking back.") % leaver.display_name()] as Array[String])
 	# Unfurling is never automatic: the first time a Spirling could unfurl, say so once.
 	for s: Spirling in GameState.party:
 		var hint: String = "unfurl_hint_%s_%s" % [s.uid, s.data.species_name]

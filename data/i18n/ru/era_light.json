@@ -1,0 +1,9 @@
+{
+ "_comment": "Russian texts for the German table era_light. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "A storm rages.": "Бушует буря.",
+  "Fog hangs low.": "Низко висит туман.",
+  "Rain falls.": "Идёт дождь.",
+  "Wind blows.": "Дует ветер."
+ }
+}

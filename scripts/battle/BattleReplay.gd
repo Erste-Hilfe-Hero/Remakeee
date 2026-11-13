@@ -10,6 +10,15 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 	# Wheel battles (Era V) only add their key when on, so older replays stay the same.
 	if model.wheel:
 		snap["wheel"] = model.wheel_size
+	# Challenge rules and the Story crit factor (KAMPF plan 497, 517, 488) likewise.
+	if model.foe_crit_mult != 1.0:
+		snap["foe_crit"] = model.foe_crit_mult
+	if model.swap_locked:
+		snap["swap_locked"] = true
+	if not model.bond_block.is_empty():
+		snap["bond_block"] = model.bond_block
+	if not model.blocked_items.is_empty():
+		snap["blocked_items"] = model.blocked_items.duplicate()
 	return snap
 
 static func _snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
@@ -143,6 +152,12 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.wheel = snap.has("wheel")
 	m.wheel_size = clampi(int(snap.get("wheel", 3)), 2, BattleModel.MAX_PARTY)
 	m.foe_damage_mult = float(snap.get("foe_damage", 1.0))
+	m.foe_crit_mult = clampf(float(snap.get("foe_crit", 1.0)), 0.0, 1.0)
+	m.swap_locked = bool(snap.get("swap_locked", false))
+	m.bond_block = str(snap.get("bond_block", ""))
+	var blocked: Variant = snap.get("blocked_items", [])
+	if blocked is Array:
+		m.blocked_items.assign((blocked as Array).map(func(x: Variant) -> String: return str(x)))
 	m.energy_bonus = [clampi(int(snap.get("energy_bonus", 0)), 0, ShopEffects.MAX_ENERGY_BONUS), 0]
 	m.seals = [seal_row(snap.get("seals", [])), [0, 0, 0]]
 	m.amulets = [ShopEffects.amulet_row(snap.get("amulets", [])), [0, 0, 0]]

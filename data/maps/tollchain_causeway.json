@@ -81,11 +81,11 @@
    "money": 2200,
    "team": [
     {
-     "species": "Siltgrove",
+     "species": "Tollpip",
      "level": 55
     },
     {
-     "species": "Delthorn",
+     "species": "Snaglet",
      "level": 55
     }
    ]
@@ -103,11 +103,11 @@
    "money": 2200,
    "team": [
     {
-     "species": "Delthorn",
+     "species": "Snaglet",
      "level": 53
     },
     {
-     "species": "Cogmite",
+     "species": "Anchorrot",
      "level": 55
     }
    ]
@@ -135,15 +135,15 @@
    "money": 2800,
    "team": [
     {
-     "species": "Siltgrove",
+     "species": "Flakit",
      "level": 54
     },
     {
-     "species": "Cogwright",
+     "species": "Snaglet",
      "level": 55
     },
     {
-     "species": "Delthorn",
+     "species": "Anchorrot",
      "level": 56
     }
    ],
@@ -166,15 +166,15 @@
    "money": 2800,
    "team": [
     {
-     "species": "Delthorn",
+     "species": "Snaglet",
      "level": 54
     },
     {
-     "species": "Cogmite",
+     "species": "Anchorrot",
      "level": 55
     },
     {
-     "species": "Canalet",
+     "species": "Groatfin",
      "level": 56
     }
    ],

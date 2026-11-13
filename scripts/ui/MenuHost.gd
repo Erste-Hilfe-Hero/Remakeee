@@ -284,6 +284,10 @@ func info_pages(pages: Array[String], picture: Texture2D = null) -> void:
 	_pages = []
 
 var _pages: Array[String] = []
+## While true, up and down in the info box close it and set [member summary_step] (item 1893).
+var summary_step_ok: bool = false
+## -1 previous, 1 next team member, 0 when the summary was simply closed.
+var summary_step: int = 0
 var _page: int = 0
 ## How the last page was left: 1 next, -1 back, -2 closed, 0 tap (next).
 var _page_turn: int = 0
@@ -354,6 +358,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		_page_turn = -2
 		_close_info()
+	elif _info_wait and summary_step_ok and (event.is_action_pressed("ui_up") or (event.is_action_pressed("ui_down") and not info_has_more())):
+		# Item 1893: up and down go to the team's previous or next Spirling.
+		get_viewport().set_input_as_handled()
+		summary_step = -1 if event.is_action_pressed("ui_up") else 1
+		_page_turn = -2
+		_close_info()
 	elif _info_wait and not _pages.is_empty() and (event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right")):
 		get_viewport().set_input_as_handled()
 		_page_turn = -1 if event.is_action_pressed("ui_left") else 1
@@ -388,6 +398,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"play_reminder": "A short note after 90 minutes of play.",
 	"difficulty": "How strong your opponents are. You can change it any time.",
 	"iron_oath": "Spirlings that faint retire for good. Only before your first Rift.",
+	"challenges": "Extra rules for a harder journey. Taken before your first Rift, dropped any time.",
 	"volume": "All sound. Left and right change it in steps of 10.",
 	"music": "Music only. Left and right change it in steps of 10.",
 	"sfx": "Sound effects only. Left and right change it in steps of 10.",
@@ -471,6 +482,7 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				# A lowered challenge stays visible (item 746).
 				rows.append(["difficulty", "Challenge: %s" % DIFFICULTY_TEXT[GameState.difficulty] + (" " + Loc.t("(lowered)") if GameState.difficulty_lowered() else "")])
 				rows.append(["iron_oath", "Iron Oath: %s" % ("Sworn" if GameState.iron_oath else "Off")])
+				rows.append(["challenges", "Challenges..."])
 		"sound":
 			rows = [
 				["volume", "Volume: %d%%" % int(round(GameState.volume * 100.0))],
@@ -586,11 +598,13 @@ func _settings_action(key: String, dir: int = 1) -> void:
 				GameState.set_difficulty(d)
 		"iron_oath":
 			await _iron_oath()
+		"challenges":
+			await ChallengeMenu.run(self)
 
 ## Short names for the list rows; the line under the list explains each (items 2185, 2067).
 const DIFFICULTY_TEXT: Array[String] = ["Story", "Wayfarer", "Veteran", "Rift-Born"]
 const DIFFICULTY_HINTS: Array[String] = [
-	"Relaxed battles for enjoying the story. Foes deal 90% damage.",
+	"Relaxed battles for enjoying the story. Foes deal 90% damage, land fewer critical hits, and battles give 20% more Growth.",
 	"The normal journey.",
 	"Ring limits and smarter opponents.",
 	"No items in battle.",
