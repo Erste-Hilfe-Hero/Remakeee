@@ -1044,8 +1044,7 @@ func _play_event(e: BattleEvent) -> void:
 			await _float(side, slot, e.describe())
 			if side == BattleModel.Side.PLAYER and not _replaying:
 				var tip: String = BattleGuide.first_status_tip(str(e.data.status), GameState.flags)
-				if not tip.is_empty():
-					await _text.show_text(tip)
+				await _float(side, slot, tip)
 		BattleEvent.Type.STAT_CHANGED:
 			var who: Spirling = model.active_spirling(side, slot)
 			var st: Variant = _strip(side, slot)
