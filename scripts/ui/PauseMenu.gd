@@ -1062,6 +1062,9 @@ func run_bag() -> void:
 ## each use, until Back or the last one is gone (item 1919).
 func _use_on_party(item_id: String) -> void:
 	var it: Dictionary = Database.item(item_id)
+	if not ChallengeRules.item_allowed(item_id):
+		await info("Spring Water Only: no healing items on this journey.")
+		return
 	var again: bool = int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0
 	var focus: int = -1
 	while GameState.item_count(item_id) > 0:
@@ -1639,7 +1642,10 @@ func _run_box(box: int) -> void:
 			2:
 				GameState.recolor_box(box)
 			_:
-				if w >= STORAGE_ROWS:
+				if w >= STORAGE_ROWS and picker.last_long:
+					# Item 1947: holding a Spirling's row opens its summary straight away.
+					await run_summary(GameState.storage[view[w - STORAGE_ROWS]])
+				elif w >= STORAGE_ROWS:
 					await _run_stored(view[w - STORAGE_ROWS])
 
 ## Rows above the Spirlings in a box: Move several, Rename, Colour.
