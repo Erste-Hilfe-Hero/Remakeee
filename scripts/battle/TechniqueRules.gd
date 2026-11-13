@@ -51,6 +51,9 @@ const BLAST_ALLY_SHARE: float = 1.0
 const CHARGE_MULT: float = 2.0
 ## Time-of-day arts (item 154): default factor at their own time of day (DayCycle phase).
 const DAYTIME_MULT: float = 1.5
+## Element training (item 112): the spark chance after a win doubles for a Spirling whose element
+## the field in play boosts.
+const FIELD_SPARK_MULT: float = 2.0
 const DAYTIME_LINES: Dictionary[String, String] = {"DAWN": "x%s power at dawn.", "DAY": "x%s power by day.",
 	"DUSK": "x%s power at dusk.", "NIGHT": "x%s power at night."}
 
@@ -379,3 +382,43 @@ static func aim_tag(foe: Spirling, mv: MoveData) -> String:
 		return ""
 	var tag: String = CommandMenu.matchup_tag(GameState.known_multiplier(mv.element, foe))
 	return "" if tag.is_empty() else " " + tag
+
+# --- batch 4: matchup page, element training ----------------------------------------------------
+
+## Item 112: factor on the battle spark chance of [param s]; FIELD_SPARK_MULT when the field in
+## play boosts one of its elements, else 1.
+static func spark_field_mult(model: BattleModel, s: Spirling) -> float:
+	var boost: String = str(BattleRules.FIELDS.get(model.field, {}).get("boost", ""))
+	if boost.is_empty() or not Elements.E.has(boost):
+		return 1.0
+	return FIELD_SPARK_MULT if int(Elements.E[boost]) in s.elements() else 1.0
+
+## Items 81 and 83: the lexicon page of matchups seen in battle, from GameState.known_matchups
+## ("element:species" -> factor). One line per attacking element and direction, marked with a
+## shape ("+" strong, "-" weak) rather than a colour. Plain matchups are left out.
+static func matchup_lines(known: Dictionary) -> Array[String]:
+	var by: Dictionary = {}
+	for key: String in known:
+		var parts: PackedStringArray = key.split(":", false, 1)
+		if parts.size() < 2 or not parts[0].is_valid_int():
+			continue
+		var mult: float = float(known[key])
+		if mult < 0.0 or is_equal_approx(mult, 1.0):
+			continue
+		var mark: String = "+" if mult > 1.0 else "-"
+		var row: Array = [int(parts[0]), mark]
+		if not by.has(row):
+			by[row] = []
+		(by[row] as Array).append("%s %s" % [Loc.t(parts[1]), CommandMenu.matchup_tag(mult)])
+	var rows: Array = by.keys()
+	rows.sort_custom(func(a: Array, b: Array) -> bool: return a[0] < b[0] or (a[0] == b[0] and str(a[1]) < str(b[1])))
+	var out: Array[String] = []
+	for row: Array in rows:
+		var names: Array = by[row]
+		names.sort()
+		out.append("%s %s: %s" % [row[1], Loc.t(Elements.element_name(int(row[0]))), ", ".join(names)])
+	if out.is_empty():
+		out.append(Loc.t("No matchups seen yet. Every hit you land is written down here."))
+	else:
+		out.push_front(Loc.t("+ strong, - weak. Every hit you land is written down here."))
+	return out
