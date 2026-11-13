@@ -603,6 +603,9 @@ static func card_numbers() -> Dictionary:
 		out["title"] = BattleHalls.worn_title()
 	return out
 
+## True while a battle screen runs: a lost connection then does not pause it (KAMPF_PLAN_1000).
+var in_battle: bool = false
+
 func _process(delta: float) -> void:
 	if state == State.ONLINE:
 		_overlay.hide_overlay()

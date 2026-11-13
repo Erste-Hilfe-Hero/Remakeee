@@ -88,7 +88,9 @@ static func status_text(tries: int, next_in: float) -> String:
 
 ## Called by Online every frame while there is no connection.
 func update_view(tries: int, next_in: float, offline_for: float) -> void:
-	var big: bool = offline_for >= SHORT_DROP
+	# A running battle goes on locally with only the small mark (KAMPF_PLAN_1000); the big screen
+	# and the pause come once it is over, and its result is sent when the connection is back.
+	var big: bool = offline_for >= SHORT_DROP and not Online.in_battle
 	_mark.visible = not big
 	if big and (not _root.visible or _closing):
 		if not _root.visible:
