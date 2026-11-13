@@ -73,6 +73,8 @@ func run_ledger() -> void:
 
 func run() -> void:
 	close_all = false
+	# Unopened Lantern Mail for the Friends dot (item 1872), asked without waiting.
+	MenuDots.refresh_mail()
 	if open_on == "Goals":
 		open_on = ""
 		await run_goals()
@@ -97,7 +99,8 @@ func run() -> void:
 		var quick: Array[String] = []
 		if bool(lay.get("quick_bar", false)):
 			quick = EraMenus.quick_list(GameState.flags, labels)
-		var entries: Array[Dictionary] = EraMenuKit.pause_entries(labels, Goals.pending() > 0, lay)
+		MenuDots.baseline()
+		var entries: Array[Dictionary] = EraMenuKit.pause_entries(labels, Goals.pending() > 0, lay, MenuDots.dotted(labels))
 		var idx: int = await pick_screen("pause", menu_title(current_map), entries, {"focus": maxi(0, labels.find(last_label)),
 			"tabs": quick, "tab": -1, "tab_icons": quick.map(func(l: String) -> Texture2D: return EraMenuKit.icon_for(l, lay)), "header": EraMenuKit.clock_strip() if str(lay.get("header", "none")) == "clock" else null})
 		var chosen: String = ""
@@ -112,6 +115,7 @@ func run() -> void:
 			chosen = await run_shortcuts(labels)
 			if chosen.is_empty():
 				continue
+		MenuDots.mark_seen(chosen)
 		match chosen:
 			"Goals": await run_goals()
 			"Map book": await MapBookMenu.run(self)
