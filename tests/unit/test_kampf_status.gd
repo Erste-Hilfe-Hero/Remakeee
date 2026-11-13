@@ -192,3 +192,21 @@ func test_master_ai_does_not_throw_status_into_still_air() -> void:
 	m.start()
 	var ai := BattleAI.new(3)
 	assert_lt(ai.score_move(m, 1, 0), ai.score_move(m, 1, 1), "a status art is worth less than a hit under Still Air")
+
+func test_first_status_brings_a_tip_once() -> void:
+	var flags: Dictionary = {}
+	var tip: String = BattleGuide.first_status_tip("soak", flags)
+	assert_string_contains(tip, "Soak")
+	assert_eq(BattleGuide.first_status_tip("soak", flags), "", "only the first time")
+	assert_false(BattleGuide.first_status_tip("jolt", flags).is_empty(), "each status once")
+
+func test_master_ai_plays_status_combos() -> void:
+	var m: BattleModel = BattleFixtures.model(_one("Zippit", 20, ["Crackle Bite"]), _one("Mossling", 20))
+	var ai := BattleAI.new(3)
+	var dry: float = ai.score_move(m, 0, 0)
+	m.active_spirling(1).status = "soak"
+	assert_gt(ai.score_move(m, 0, 0), dry, "a Volt hit on a soaked foe counts its reaction")
+
+func test_online_duels_keep_the_calm_rule() -> void:
+	var snap: Dictionary = BattleReferee.from_expect({"seed": 1, "teams": [[], []]})
+	assert_false(bool(snap.wild), "a live duel is a Wayfarer duel, so the calm rule holds")

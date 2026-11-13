@@ -1810,7 +1810,11 @@ func _give_xp(s: Spirling, amount: int, bench: bool = false) -> void:
 	if bench and gained <= 0:
 		return
 	s.xp += gained
-	emit_event(BattleEvent.Type.XP_GAINED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "amount": gained, "bench": bench})
+	var xd: Dictionary = {"side": Side.PLAYER, "index": index, "name": s.display_name(), "amount": gained, "bench": bench}
+	# Item 252: growth lost to the ring limit says so.
+	if gained < amount and level_cap < Spirling.LEVEL_SANITY:
+		xd["cap"] = level_cap
+	emit_event(BattleEvent.Type.XP_GAINED, xd)
 	while s.level < mini(level_cap, Spirling.LEVEL_SANITY) and s.xp >= Spirling.xp_for_level(s.level + 1):
 		var learned: Array[MoveData] = s.level_up()
 		emit_event(BattleEvent.Type.LEVEL_UP, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "level": s.level, "hp": s.hp, "max_hp": s.max_hp()})
