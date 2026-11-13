@@ -4,6 +4,7 @@
  "strings": {
   "%s draws every aimed art onto itself for %d turns!": "{0} zieht {1} Runden lang jede gezielte Technik auf sich!",
   "%s has nobody to cover.": "%s hat niemanden zu decken.",
+  "%s leads the swarm!": "%s führt den Schwarm an!",
   "%s raises a guard over its whole side for %d turns!": "{0} schützt die ganze eigene Seite {1} Runden lang!",
   "%s steps in front of %s!": "%s stellt sich vor %s!",
   "%s stops covering its ally.": "%s deckt den Verbündeten nicht mehr.",
@@ -60,6 +61,7 @@
   "The water stands knee-deep. Tide arts hit harder, Ember arts fizzle, and nothing can catch Scorch.": "Das Wasser steht knietief. Tide-Techniken treffen härter, Ember-Techniken zischen aus, und nichts fängt Brand.",
   "The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off.": "Der Wind kreist um den Riss und hält in der Mitte den Atem an. Gale-Techniken schneiden schärfer, Bloom-Techniken welken, und niemand kann eindösen.",
   "Tide School": "Flutschwarm",
+  "With %s down, the swarm falters!": "Ohne %s gerät der Schwarm ins Wanken!",
   "Yours": "Deiner"
  }
 }

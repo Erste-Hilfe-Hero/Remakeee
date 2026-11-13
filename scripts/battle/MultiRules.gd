@@ -53,8 +53,10 @@ static func redirect(m: BattleModel, target_side: int, slot: int) -> int:
 static func guard_mult(m: BattleModel, side: int) -> float:
 	return float(data().get("guard_mult", 0.75)) if not state(m, side, "team_guard").is_empty() else 1.0
 
-## Counts every support down at the end of a turn; the ones that run out say so.
+## Counts every support down at the end of a turn; the ones that run out say so. A fallen swarm
+## leader leaves the rest of the swarm slower.
 static func tick(m: BattleModel) -> void:
+	_leader_check(m)
 	for side: int in 2:
 		var sup: Dictionary = m.support[side]
 		for kind: String in sup.keys():
@@ -96,7 +98,45 @@ static func describe(data: Dictionary, who: String) -> String:
 		"cover": return "%s steps in front of %s!" % [who, str(data.get("ally", ""))]
 		"formation": return "Formation, %s: %s" % [str(data.get("label", "")), who]
 		"no_ally": return "%s has nobody to cover." % who
+		"leader": return "%s leads the swarm!" % who
+		"leader_down": return "With %s down, the swarm falters!" % str(data.get("name", ""))
 	return ""
+
+# --- Swarm leader (item 368) ------------------------------------------------------------------
+
+## The foe slot leading a wild swarm (the highest ring, the first on ties), or -1.
+static func swarm_leader(m: BattleModel) -> int:
+	if not m.is_wild or m.slot_count(BattleModel.Side.FOE) < 2:
+		return -1
+	var best: int = -1
+	for s: int in m.slot_count(BattleModel.Side.FOE):
+		var sp: Spirling = m.active_spirling(BattleModel.Side.FOE, s)
+		if m.is_standing(sp) and (best < 0 or sp.level > m.active_spirling(BattleModel.Side.FOE, best).level):
+			best = s
+	return best
+
+static func _crown_leader(m: BattleModel) -> void:
+	var s: int = swarm_leader(m)
+	if s < 0:
+		return
+	var sw: Dictionary = data().get("swarm", {})
+	var lead: Spirling = m.active_spirling(BattleModel.Side.FOE, s)
+	lead.set_meta("swarm_leader", true)
+	var d: Dictionary = m._who(BattleModel.Side.FOE, s)
+	d["kind"] = "leader"
+	m.emit_event(BattleEvent.Type.SUPPORT, d)
+	for stat: String in sw.get("leader_stage", {"atk": 1}):
+		m.change_stage(BattleModel.Side.FOE, stat, int(sw.get("leader_stage", {"atk": 1})[stat]), s)
+
+static func _leader_check(m: BattleModel) -> void:
+	for sp: Spirling in m.party(BattleModel.Side.FOE):
+		if sp.has_meta("swarm_leader") and sp.is_fainted() and not sp.has_meta("swarm_mourned"):
+			sp.set_meta("swarm_mourned", true)
+			var sw: Dictionary = data().get("swarm", {})
+			m.emit_event(BattleEvent.Type.SUPPORT, {"side": BattleModel.Side.FOE, "slot": -1, "kind": "leader_down", "name": sp.display_name()})
+			for s: int in m.standing_slots(BattleModel.Side.FOE):
+				for stat: String in sw.get("falter_stage", {"spd": -1}):
+					m.change_stage(BattleModel.Side.FOE, stat, int(sw.get("falter_stage", {"spd": -1})[stat]), s)
 
 # --- Formation bonus (item 400) ----------------------------------------------------------------
 
@@ -118,8 +158,10 @@ static func formations(m: BattleModel, side: int) -> Array[Dictionary]:
 			out.append(row)
 	return out
 
-## Gives the player's opening formation its stages (only the Wayfarer's own Spirlings).
+## Gives the player's opening formation its stages (only the Wayfarer's own Spirlings), and a
+## wild swarm its leader (item 368).
 static func apply_formation_bonus(m: BattleModel) -> void:
+	_crown_leader(m)
 	var side: int = BattleModel.Side.PLAYER
 	for f: Dictionary in formations(m, side):
 		for s: int in f.slots:

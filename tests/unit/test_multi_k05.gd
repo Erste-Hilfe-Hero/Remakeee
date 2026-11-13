@@ -236,3 +236,23 @@ func test_partner_uses_the_master_ai_from_veteran_on() -> void:
 	assert_eq(MultiRules.partner_ai(1, GameState.Difficulty.STORY), 1)
 	assert_eq(MultiRules.partner_ai(1, GameState.Difficulty.VETERAN), 3)
 	assert_eq(MultiRules.partner_ai(1, GameState.Difficulty.RIFT_BORN), 3)
+
+func test_wild_swarm_has_a_leader_and_falters_without_it() -> void:
+	var lead: Spirling = _mk("Mossling", [], 20)
+	var a: Spirling = _mk("Zippit", [], 12)
+	var b: Spirling = _mk("Kelpup", [], 12)
+	var m := _model([_mk("Kindlop", ["Cinder Nip"], 30), _mk("Puddlet", [], 30)] as Array[Spirling], [a, lead, b] as Array[Spirling], [2, 3], true)
+	var ev: Array[BattleEvent] = m.start()
+	assert_eq(MultiRules.swarm_leader(m), 1)
+	assert_eq(lead.stage("atk"), 1)
+	assert_eq(BattleFixtures.first_of(ev, T.SUPPORT).describe(), "%s leads the swarm!" % lead.display_name())
+	lead.hp = 0
+	var ev2: Array[BattleEvent] = _turn(m, _rests(m, Side.PLAYER), [BattleAction.make_rest(Side.FOE, 0), BattleAction.make_rest(Side.FOE, 2)])
+	var falter: bool = false
+	for e: BattleEvent in ev2:
+		falter = falter or (e.type == T.SUPPORT and str(e.data.get("kind", "")) == "leader_down")
+	assert_true(falter)
+	assert_eq(a.stage("spd"), -1)
+	var tamer := _model([_mk("Kindlop")] as Array[Spirling], [_mk("Mossling"), _mk("Zippit")] as Array[Spirling], [1, 2], false)
+	tamer.start()
+	assert_eq(MultiRules.swarm_leader(tamer), -1, "only wild swarms have a leader")

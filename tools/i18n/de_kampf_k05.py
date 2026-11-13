@@ -83,3 +83,7 @@ T.update({
 "Foes": "Gegner",
 "(tap to filter)": "(tippen zum Filtern)",
 })
+T.update({
+"%s leads the swarm!": "%s führt den Schwarm an!",
+"With %s down, the swarm falters!": "Ohne %s gerät der Schwarm ins Wanken!",
+})

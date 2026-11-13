@@ -392,7 +392,7 @@ AREAS = [
 "[x] Verbündeten-Heilung (Sippenbalsam/Kindred Balm)",
 "Positionstausch zwischen eigenen Slots",
 "Vorderreihe/Hinterreihe mit Schadensmodifikator",
-"Schwarm-Kämpfe (bestehend) mit Schwarm-Anführer",
+"[x] Schwarm-Kämpfe (bestehend) mit Schwarm-Anführer (höchster Ring führt, +1 Wucht; fällt er, -1 Tempo für den Rest)",
 "Tag-Kampf mit Kestra (bestehend) mit gemeinsamer Kombi-Technik",
 "Kombi-Techniken bei passenden Elementen zweier Verbündeter",
 "Mehrfachkampf-Tutorial",
