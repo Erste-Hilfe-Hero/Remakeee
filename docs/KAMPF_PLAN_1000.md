@@ -960,7 +960,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 862. [x] Online-Fairness-Test (tests/unit/test_online_echo_k11.gd: faire Liga und Echo-Duell gleich für alle)
 863. [x] Online-Version prüfen (bestehend CLIENT_VERSION) (bestehend)
 864. [x] Online-Echos mit gehaltenen Gegenständen (EchoTeam nimmt Andenken mit, nie gekaufte; Server nur bekannte Items (20261113200120_echo_held.sql))
-865. [ ] Online-Felder wählbar
+865. [x] Online-Felder wählbar (Echo-Duell: Feld vor dem Kampf wählen, EchoTeam.DUEL_FIELDS)
 866. [x] Online-Regeln pro Woche (Echo-Duelle mit der Wochenregel der Kampfhallen)
 867. [x] Online-Statistik (ReplayLibrary: Siegquote pro Spirling, meistgesehene Gegner)
 868. [x] Online-Abzeichen (Abzeichen echo_duelist und echo_victor)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-106 von 1000 Punkten umgesetzt.
+107 von 1000 Punkten umgesetzt.
 

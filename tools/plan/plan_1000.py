@@ -913,7 +913,7 @@ AREAS = [
 "[x] Online-Fairness-Test (tests/unit/test_online_echo_k11.gd: faire Liga und Echo-Duell gleich für alle)",
 "[x] Online-Version prüfen (bestehend CLIENT_VERSION) (bestehend)",
 "[x] Online-Echos mit gehaltenen Gegenständen (EchoTeam nimmt Andenken mit, nie gekaufte; Server nur bekannte Items (20261113200120_echo_held.sql))",
-"Online-Felder wählbar",
+"[x] Online-Felder wählbar (Echo-Duell: Feld vor dem Kampf wählen, EchoTeam.DUEL_FIELDS)",
 "[x] Online-Regeln pro Woche (Echo-Duelle mit der Wochenregel der Kampfhallen)",
 "[x] Online-Statistik (ReplayLibrary: Siegquote pro Spirling, meistgesehene Gegner)",
 "[x] Online-Abzeichen (Abzeichen echo_duelist und echo_victor)",

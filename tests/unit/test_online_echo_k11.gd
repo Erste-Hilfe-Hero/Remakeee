@@ -74,3 +74,11 @@ func test_weekly_rule_is_one_valid_variant() -> void:
 	var v: Array[String] = BattleHalls.variants_for(WeeklyChallenge.this_week())
 	assert_eq(v.size(), 1)
 	assert_eq(BattleRules.variant_conflict(v), "")
+
+func test_echo_duel_fields_are_selectable() -> void:
+	assert_eq(EchoTeam.field_names().size(), EchoTeam.DUEL_FIELDS.size())
+	for f: String in EchoTeam.DUEL_FIELDS:
+		assert_true(f.is_empty() or BattleRules.FIELDS.has(f), f)
+	assert_eq(EchoTeam.duel_field(-1), "", "cancelled: no field")
+	assert_eq(EchoTeam.duel_field(1), "ash_storm")
+	assert_eq(EchoTeam.duel_field(99), "")

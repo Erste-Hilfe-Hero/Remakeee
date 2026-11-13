@@ -71,3 +71,16 @@ static func note_duel(records: Dictionary, won: bool) -> void:
 	records["echo_duels"] = int(records.get("echo_duels", 0)) + 1
 	if won:
 		records["echo_duel_wins"] = int(records.get("echo_duel_wins", 0)) + 1
+
+## Fields an echo duel can be fought on, "" for none (KAMPF_PLAN_1000, online fields).
+const DUEL_FIELDS: Array[String] = ["", "ash_storm", "high_tide", "deep_murk", "static_veil", "pollen_drift", "dawn_glow"]
+
+static func field_names() -> Array[String]:
+	var out: Array[String] = []
+	for f: String in DUEL_FIELDS:
+		out.append(Loc.t("No field") if f.is_empty() else Loc.t(str(BattleRules.FIELDS[f].label)))
+	return out
+
+## The field of pick [param i] ("" when cancelled or out of range).
+static func duel_field(i: int) -> String:
+	return DUEL_FIELDS[i] if i >= 0 and i < DUEL_FIELDS.size() else ""

@@ -3769,11 +3769,16 @@ func echo_duel(d: Dictionary) -> void:
 		await say(["The echo flickers and fades. Try again later."] as Array[String])
 		return
 	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), ring]] as Array[String])
+	# The challenger picks the field (KAMPF_PLAN_1000); the place's own field does not count.
+	var fm := MenuHost.new()
+	_ui.add_child(fm)
+	var fi: int = await fm.pick_strings(Loc.t("Which field?"), EchoTeam.field_names())
+	fm.queue_free()
 	busy = false
 	# The rule of the week holds in echo duels too, the same for everyone (KAMPF_PLAN_1000).
 	var outcome: BattleModel.Outcome = await start_battle(foes, false,
 		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
-			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week())})
+			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi)})
 	busy = true
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN

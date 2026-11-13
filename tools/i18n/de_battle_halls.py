@@ -83,4 +83,6 @@ T = {
 "Copy the last hall battle as a replay code": "Letzten Hallenkampf als Wiederholungs-Code kopieren",
 "No hall battle to share yet.": "Noch kein Hallenkampf zum Teilen.",
 "The code is on the clipboard. Anyone can watch it under Records, Online replays.": "Der Code ist in der Zwischenablage. Ansehen kann man ihn unter Rekorde, Online-Wiederholungen.",
+"Which field?": "Welches Feld?",
+"No field": "Kein Feld",
 }
