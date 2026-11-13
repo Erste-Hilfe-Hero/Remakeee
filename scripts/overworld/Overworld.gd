@@ -170,6 +170,9 @@ func _ready() -> void:
 		var hint: String = Festival.start_hint()
 		if hint != "":
 			GameState.notices.append(hint)
+		# A battle left open on Rift-Born leaves its note here (item 630).
+		if hint != "" or GameState.left_battle:
+			GameState.left_battle = false
 			show_notices.call_deferred()
 
 func _build() -> void:
@@ -4088,7 +4091,9 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0
 	Online.in_battle = true
+	GameState.battle_open = not bool(trainer.get("friendly", false))
 	var result: Array = await scene.battle_finished
+	GameState.battle_open = false
 	Online.in_battle = false
 	var outcome: BattleModel.Outcome = result[0]
 	replay["inputs"] = scene.inputs

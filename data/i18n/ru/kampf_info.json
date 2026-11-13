@@ -78,6 +78,7 @@
   "Trait: %s": "Черта: %s",
   "Turn order hidden.": "Порядок ходов скрыт.",
   "Turns: %d": "Ходов: %d",
-  "Your side": "Твоя сторона"
+  "Your side": "Твоя сторона",
+  "The battle was left open. On Rift-Born that counts as a loss, and your team wakes at the last spring.": "Бой остался незавершённым. На «Из Разлома» это считается поражением, и команда просыпается у последнего источника."
  }
 }

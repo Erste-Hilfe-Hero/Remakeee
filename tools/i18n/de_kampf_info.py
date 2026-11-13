@@ -86,4 +86,5 @@ T = {
     "Search": "Suche",
     "Search the guide": "Im Ratgeber suchen",
     "Nothing found.": "Nichts gefunden.",
+    "The battle was left open. On Rift-Born that counts as a loss, and your team wakes at the last spring.": "Der Kampf blieb offen. Auf Rissgeboren zählt das als Niederlage, und dein Team erwacht an der letzten Quelle.",
 }
