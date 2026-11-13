@@ -9,12 +9,15 @@ extends RefCounted
 var rows: Dictionary = {}
 ## The fields in play, in the order they came up (no repeats).
 var fields: Array[String] = []
+## Statuses that took hold this battle (item 181): [on the foe's side, on yours].
+var statuses: Array[int] = [0, 0]
 var _actor: Dictionary = {}
 
 ## Starts with the field already in place when the battle opens ("" for none).
 func begin(start_field: String) -> void:
 	rows.clear()
 	fields.clear()
+	statuses = [0, 0]
 	_actor = {}
 	_note_field(start_field)
 
@@ -30,6 +33,11 @@ func add(e: BattleEvent) -> void:
 		BattleEvent.Type.FAINTED:
 			if _credited(e):
 				_row().kos += 1
+		BattleEvent.Type.STATUS_APPLIED:
+			if int(e.data.get("side", -1)) == BattleModel.Side.FOE:
+				statuses[0] += 1
+			elif int(e.data.get("side", -1)) == BattleModel.Side.PLAYER:
+				statuses[1] += 1
 		BattleEvent.Type.FIELD:
 			_note_field(str(e.data.get("field", "")))
 
@@ -63,6 +71,12 @@ func field_line() -> String:
 		names.append(str(BattleRules.FIELDS[f].label))
 	return "Rift fields: %s" % ", ".join(names)
 
+## "Statuses: 2 on the foe, 1 on your team", or "" when none took hold.
+func status_line() -> String:
+	if statuses[0] + statuses[1] == 0:
+		return ""
+	return "Statuses: %d on the foe, %d on your team" % [statuses[0], statuses[1]]
+
 ## Party index of the Spirling that dealt the most (knock-outs break a tie), -1 when nobody hit.
 func best() -> int:
 	var top: int = -1
@@ -88,4 +102,7 @@ func lines() -> Array[String]:
 	var f: String = field_line()
 	if not f.is_empty():
 		out.append(f)
+	var st: String = status_line()
+	if not st.is_empty():
+		out.append(st)
 	return out if out.size() > 1 else []

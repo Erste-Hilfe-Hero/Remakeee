@@ -103,4 +103,14 @@ T = {
 "Rolls all Spark values of one Spirling anew. Used up.": "Würfelt alle Funkenwerte eines Spirlings neu aus. Wird verbraucht.",
 "Ring %s:": "Ring %s:",
 "%s's sparks flicker and settle anew.": "Die Funken von %s flackern und ordnen sich neu.",
+# Batch 3
+"Copy team values": "Teamwerte kopieren",
+"Copied to the clipboard.": "In die Zwischenablage kopiert.",
+"Team values": "Teamwerte",
+"%dE ~%d%% %s%d": "%dE ~%d%% %s%d",
+"%d turns left": "noch %d Runden",
+"The charge runs through the water: %s is jolted stiff!": "Die Ladung läuft durchs Wasser: %s erstarrt!",
+"Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Schock auf einen Spirling mit Nässe: Die Nässe wird fortgespült, und er verliert sicher seinen nächsten Zug.",
+"Statuses: %d on the foe, %d on your team": "Status: %d beim Gegner, %d in deinem Team",
+"%s %d, Spark %d of %d": "%s %d, Funke %d von %d",
 }

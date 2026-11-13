@@ -98,6 +98,15 @@
   "Ring %s:": "リング%s:",
   "Rolls all Spark values of one Spirling anew. Used up.": "Spirling1体のスパーク値をすべて振り直す。使うとなくなる。",
   "Spark Flux": "スパークのうず",
-  "VIG": "活力"
+  "VIG": "活力",
+  "%d turns left": "あと%dターン",
+  "%dE ~%d%% %s%d": "%dE ~%d%% %s%d",
+  "%s %d, Spark %d of %d": "%s %d、スパーク %d/%d",
+  "Copied to the clipboard.": "クリップボードにコピーした。",
+  "Copy team values": "チームの能力値をコピー",
+  "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "ずぶぬれのSpirlingにしびれ：ずぶぬれは流れ落ち、次のターンはかならず動けない。",
+  "Statuses: %d on the foe, %d on your team": "状態：相手に%d回、味方に%d回",
+  "Team values": "チームの能力値",
+  "The charge runs through the water: %s is jolted stiff!": "電気が水を走った：%sはしびれて固まった！"
  }
 }

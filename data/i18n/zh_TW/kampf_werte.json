@@ -98,6 +98,15 @@
   "Ring %s:": "第%s環：",
   "Rolls all Spark values of one Spirling anew. Used up.": "重新擲出一隻Spirling的全部火花值。會耗盡。",
   "Spark Flux": "火花渦流",
-  "VIG": "元氣"
+  "VIG": "元氣",
+  "%d turns left": "還剩%d回合",
+  "%dE ~%d%% %s%d": "%dE ~%d%% %s%d",
+  "%s %d, Spark %d of %d": "%s %d，火花 %d/%d",
+  "Copied to the clipboard.": "已複製到剪貼簿。",
+  "Copy team values": "複製隊伍數值",
+  "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "對濕透的Spirling施加觸電：濕透被沖掉，它下一回合必定無法行動。",
+  "Statuses: %d on the foe, %d on your team": "狀態：對手%d次，己方%d次",
+  "Team values": "隊伍數值",
+  "The charge runs through the water: %s is jolted stiff!": "電流順著水流竄過：%s全身僵住了！"
  }
 }

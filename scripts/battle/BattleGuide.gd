@@ -28,6 +28,7 @@ static func status_lines() -> Array[String]:
 	var out: Array[String] = [Loc.t("A Spirling carries one status at a time.")]
 	for st: String in StatusRules.RULES:
 		out.append("%s: %s" % [Loc.t(StatusRules.label(st)), Loc.t(StatusRules.text(st))])
+	out.append(Loc.t("Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn."))
 	out.append(Loc.t("Statuses last as long on every difficulty."))
 	out.append(Loc.t("A Rift boss shakes a status off in half the time, at most %d turns.") % StatusRules.BOSS_OPEN_TURNS)
 	out.append(Loc.t("A wild Spirling with a status is easier to bond with."))
@@ -139,3 +140,20 @@ static func first_status_tip(status: String, flags: Dictionary) -> String:
 	flags[flag] = true
 	return "%s: %s" % [Loc.t(StatusRules.label(status)), Loc.t(StatusRules.text(status))]
 
+
+## The team's values as plain text for fans to share (item 235): one line per Spirling with
+## kind, ring, the five values, the Spark values and the temperament. Nothing secret in it: no
+## save data, no account, only what the stat screen shows.
+static func team_values(party: Array) -> String:
+	var lines: PackedStringArray = [Loc.t("Team values")]
+	for s: Variant in party:
+		if not s is Spirling or (s as Spirling).data == null:
+			continue
+		var sp: Spirling = s
+		var vals: PackedStringArray = []
+		var sparks: PackedStringArray = []
+		for key: String in VALUE_KEYS:
+			vals.append("%s %d" % [Loc.t(SHORT[key]), value(sp, key)])
+			sparks.append(str(int(sp.spark.get(key, 0))))
+		lines.append("%s R%d: %s | %s %s | %s" % [Loc.t(sp.data.species_name), sp.level, " ".join(vals), Loc.t("Spark"), "/".join(sparks), Loc.t(str(sp.temperament().label))])
+	return "\n".join(lines)

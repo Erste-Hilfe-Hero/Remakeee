@@ -1,5 +1,5 @@
 {
- "_doc": "Battle presentation and battle audio that stay the same in every era (docs/KAMPF_PLAN_1000.md, areas 'Tempo, Animation und Praesentation' and 'Audio im Kampf'). Read by scripts/battle/presenter/BattleShow.gd and BattleAudio.gd. crit_hitstop: freeze in seconds for a keen hit. phase_zoom: per era, a hard whole-number zoom on the boss when its phase turns (0 = none; Era IV/V keep their own camera). banner_time: seconds a show banner stays (scaled by the battle speed). status_motes: per status the mote shape (spark, drop, leaf, zig, ring, z), drift (-1 up, 1 down), count and colour from Era II on; Era I and high contrast draw them in ink. aura: stage aura colours (up, down) from Era II on and the ring's dot count. lantern: the warm light at the feet of a Spirling that steps out (alpha, time). victory_glints: glints of the winners' pose per era. night: share of the day/night tint the backdrop takes, and backdrops that never get it. quick_intro: share of the intro time a rematch keeps. audio: battle sounds (see BattleAudio.gd).",
+ "_doc": "Battle presentation and battle audio that stay the same in every era (docs/KAMPF_PLAN_1000.md, areas 'Tempo, Animation und Praesentation' and 'Audio im Kampf'). Read by scripts/battle/presenter/BattleShow.gd and BattleAudio.gd. crit_hitstop: freeze in seconds for a keen hit. phase_zoom: per era, a hard whole-number zoom on the boss when its phase turns (0 = none; Era IV/V keep their own camera). banner_time: seconds a show banner stays (scaled by the battle speed). status_motes: per status the mote shape (spark, drop, leaf, zig, ring, z, chain), drift (-1 up, 1 down, 2 still links round the feet), count and colour from Era II on; Era I and high contrast draw them in ink. aura: stage aura colours (up, down) from Era II on and the ring's dot count. lantern: the warm light at the feet of a Spirling that steps out (alpha, time). victory_glints: glints of the winners' pose per era. night: share of the day/night tint the backdrop takes, and backdrops that never get it. quick_intro: share of the intro time a rematch keeps. audio: battle sounds (see BattleAudio.gd).",
  "crit_hitstop": 0.09,
  "phase_zoom": {
   "1": 2.0,
@@ -24,9 +24,9 @@
    "color": "4a8ad8"
   },
   "root": {
-   "shape": "leaf",
-   "drift": 1,
-   "count": 2,
+   "shape": "chain",
+   "drift": 2,
+   "count": 4,
    "color": "5a9a48"
   },
   "jolt": {

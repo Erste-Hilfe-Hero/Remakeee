@@ -74,6 +74,8 @@ func describe() -> String:
 		Type.HEAL:
 			return "%s recovered %d Vigor." % [who, data.get("amount", 0)]
 		Type.STATUS_APPLIED:
+			if not str(data.get("combo", "")).is_empty():
+				return str(data.combo) % who
 			return "%s is afflicted with %s!" % [who, StatusRules.label(str(data.get("status", "")))]
 		Type.STATUS_FAILED:
 			if not str(data.get("field_label", "")).is_empty():

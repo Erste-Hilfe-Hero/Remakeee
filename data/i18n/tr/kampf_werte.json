@@ -98,6 +98,15 @@
   "Ring %s:": "Halka %s:",
   "Rolls all Spark values of one Spirling anew. Used up.": "Bir Spirling'in tüm Kıvılcım değerlerini yeniden atar. Tükenir.",
   "Spark Flux": "Kıvılcım Girdabı",
-  "VIG": "DİN"
+  "VIG": "DİN",
+  "%d turns left": "%d tur kaldı",
+  "%dE ~%d%% %s%d": "%dE ~%d%% %s%d",
+  "%s %d, Spark %d of %d": "%s %d, Kıvılcım %d/%d",
+  "Copied to the clipboard.": "Panoya kopyalandı.",
+  "Copy team values": "Takım değerlerini kopyala",
+  "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Islak bir Spirling'e Şok: Islaklık akıp gider ve bir sonraki sırasını kesin kaybeder.",
+  "Statuses: %d on the foe, %d on your team": "Durumlar: rakipte %d, takımında %d",
+  "Team values": "Takım değerleri",
+  "The charge runs through the water: %s is jolted stiff!": "Yük suyun içinden akıyor: %s kaskatı kesildi!"
  }
 }

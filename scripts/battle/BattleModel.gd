@@ -852,7 +852,11 @@ func apply_heal_block(side: int, turns: int, slot: int = 0) -> void:
 ## [param from_slot] is the slot of the Spirling that causes it (a Mirror Scale turns it back there).
 func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1, from_slot: int = -1) -> bool:
 	var s: Spirling = active_spirling(side, slot)
-	if s == null or s.is_fainted() or not s.status.is_empty() or not StatusRules.exists(status):
+	if s == null or s.is_fainted() or not StatusRules.exists(status):
+		return false
+	# A combo (StatusRules.COMBOS, item 169) may land on top of the status it reacts with.
+	var combo: Dictionary = StatusRules.combo(s.status, status)
+	if not s.status.is_empty() and combo.is_empty():
 		return false
 	if BattleRules.is_immune(s, status):
 		reveal_trait(side, slot)
@@ -903,8 +907,11 @@ func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1,
 		s.status_turns = StatusRules.BOSS_OPEN_TURNS
 	elif s.boss_guard and not is_boss_slot(side, slot):
 		s.status_turns = StatusRules.boss_turns(s.status_turns)
+	s.sure_skip = int(combo.get("sure_skip", 0))
 	var d: Dictionary = _who(side, slot)
 	d["status"] = status
+	if not combo.is_empty():
+		d["combo"] = str(combo.text)
 	emit_event(BattleEvent.Type.STATUS_APPLIED, d)
 	if status == "scorch" and ShopEffects.gift_table(s).has("scorch_atk"):
 		reveal_trait(side, slot)
@@ -1329,6 +1336,9 @@ func _do_move(a: BattleAction) -> void:
 			return
 		_cure(side, slot)
 	var skip: float = StatusRules.skip_chance(me.status)
+	if me.sure_skip > 0 and not me.status.is_empty():
+		me.sure_skip -= 1
+		skip = 1.0
 	if skip > 0.0 and rng.randf() < skip:
 		var d2: Dictionary = _who(side, slot)
 		d2["status"] = me.status
@@ -1792,6 +1802,7 @@ func _cure(side: int, slot: int = 0) -> void:
 	d["status"] = s.status
 	s.status = ""
 	s.status_turns = 0
+	s.sure_skip = 0
 	emit_event(BattleEvent.Type.STATUS_CURED, d)
 
 ## The shop's Will to Win (plan item 4499): once per battle, when the whole team is down, the
