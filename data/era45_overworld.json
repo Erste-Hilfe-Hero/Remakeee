@@ -1,8 +1,16 @@
 {
- "_doc": "Era IV/V overworld depth (docs/ERA_FEEL_UI.md, Era IV/V slice 5), read by scripts/overworld/EraDepthLayer.gd. Buildings stand as boxes seen a little from above and to the right: a side wall on the right edge and a top face above the roof ridge, each a parallelogram 'side' px deep. Colours are taken from the map's own tile art at the building's edge, so every region keeps its stone and roof colours. shade: how much darker the side wall is, light: how much lighter the top face. warm_edge: Era V golden-hour edge along the top. A map takes the era of its region, capped by the era on screen (EraTerrainLook.tier_for), so older regions keep their flat origin look.",
+ "_doc": "Era IV/V overworld depth (docs/ERA_FEEL_UI.md, Era IV/V slices 5 and 6), read by scripts/overworld/EraDepthLayer.gd. Buildings stand as boxes seen a little from above and to the right: a side wall on the right edge and a top face above the roof ridge, each a parallelogram 'side' px deep. Colours are taken from the map's own tile art at the building's edge, so every region keeps its stone and roof colours. shade: how much darker the side wall is, light: how much lighter the top face. warm_edge: Era V golden-hour edge along the top. raise: px the whole roof of a house is lifted; the gap becomes a taller wall made of the wall tile's rows wall_band [from, to) repeated (the raised wall row). lift: px the top of a tree, the lip of a cliff and a roof stand above their cell (the canopy over the people in EraTerrainLook uses the same numbers); a tree's trunk row tree_band and a cliff's rock rows cliff_band fill the gap, so they stand taller. A map takes the era of its region, capped by the era on screen (EraTerrainLook.tier_for), so older regions keep their flat origin look. screen: per era on screen (not per region, every map shown on that screen): zoom, the whole-number camera zoom (crisp pixels; 1 on the 270 x 480 screens of Era IV and V: the owner found 2 bigger than Era III, and 1.5 would blur), and fill: what stands around a map smaller than the view, 'edge' (outdoor maps: the map's border tiles carried on) and indoor (a solid colour) instead of the grey clear colour. fill_margin: cells of fill around the map.",
  "kinds": ["WALL", "ROOF", "TOWER", "DOOR"],
+ "wall_band": [2, 3],
+ "tree_band": [12, 13],
+ "cliff_band": [4, 11],
+ "fill_margin": 16,
  "eras": {
-  "4": {"side": 5, "shade": 0.38, "light": 0.18, "warm_edge": ""},
-  "5": {"side": 6, "shade": 0.32, "light": 0.24, "warm_edge": "ffd890"}
+  "4": {"side": 5, "shade": 0.38, "light": 0.18, "warm_edge": "", "raise": 8, "lift": {"TREE": 6, "CLIFF": 6, "ROOF": 8}},
+  "5": {"side": 6, "shade": 0.32, "light": 0.24, "warm_edge": "ffd890", "raise": 10, "lift": {"TREE": 8, "CLIFF": 8, "ROOF": 10}}
+ },
+ "screen": {
+  "4": {"zoom": 1, "fill": "edge", "indoor": "120e18"},
+  "5": {"zoom": 1, "fill": "edge", "indoor": "120e18"}
  }
 }

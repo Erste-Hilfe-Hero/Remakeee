@@ -7,6 +7,11 @@ const SHOTS: Array = [
 	[3, "ledgerholm", Vector2i(5, 9), 12],
 	[4, "starwell", Vector2i(5, 9), 12], [4, "gildcrest", Vector2i(5, 9), 12],
 	[5, "driftwick", Vector2i(5, 9), 12], [5, "mossgate", Vector2i(5, 9), 17],
+	# Slice 6: trees and cliffs, a small outdoor map, a house inside, an old region on the wide screen.
+	[4, "cloudshadow_meadow", Vector2i(5, 12), 12], [4, "white_stair", Vector2i(5, 6), 12],
+	[5, "wandering_wood", Vector2i(5, 12), 12], [5, "lastbloom", Vector2i(5, 9), 12],
+	[4, "starwell_home_1", Vector2i(4, 5), 12], [5, "driftwick_net_shed", Vector2i(3, 4), 12],
+	[5, "brindlewick", Vector2i(5, 9), 12],
 ]
 var out: String = "user://era45_overworld"
 
