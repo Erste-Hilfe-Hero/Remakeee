@@ -8,7 +8,7 @@ T = {
 "%s can't brace twice in a row!": "%s kann sich nicht zweimal hintereinander festhalten!",
 "%s is rooted and holds its ground!": "%s ist verwurzelt und bleibt stehen!",
 "%s is knocked back to its bench!": "%s wird auf die Bank zurückgestoßen!",
-"%s has nothing to throw back.": "%s hat nichts, was es zurückwerfen könnte.",
+"%s has nothing to pay back.": "%s hat nichts, was es heimzahlen könnte.",
 "%s has no drops to shake off.": "%s hat keine gesenkten Werte abzuschütteln.",
 "%s is struck %d times!": "%s wird %d-mal getroffen!",
 "%s finds no field to end.": "%s findet kein Feld, das es beenden könnte.",
@@ -25,7 +25,7 @@ T = {
 # info card lines
 "Foe arts glance off it this turn. Fails if used twice in a row.": "Gegnerische Techniken prallen in dieser Runde ab. Zweimal hintereinander schlägt fehl.",
 "In a Wayfarer duel the target is knocked back to its bench.": "Im Wayfarer-Kampf wird das Ziel auf die Bank zurückgestoßen.",
-"Throws back the physical damage it took this turn, x%s.": "Wirft den physischen Schaden dieser Runde zurück, x%s.",
+"Pays back the physical damage it took this turn, x%s.": "Zahlt den physischen Schaden dieser Runde heim, x%s.",
 "Heals the most hurt ally by %d%% of its Vigor.": "Heilt den am schwersten verletzten Verbündeten um %d%% seiner Kraft.",
 "Raises the %s of its whole side on the field by %d.": "Erhöht %s der ganzen eigenen Seite im Feld um %d.",
 "Clears its own lowered stats.": "Löscht die eigenen gesenkten Werte.",
@@ -45,7 +45,7 @@ T = {
 # art descriptions
 "Plants its feet and braces. The next art glances off, but it can't hold twice in a row.": "Stemmt die Füße in den Boden. Die nächste Technik prallt ab, aber zweimal hintereinander hält es nicht.",
 "A late, rude shove. In a Wayfarer duel the target is knocked back to its bench.": "Ein später, grober Stoß. Im Wayfarer-Kampf fliegt das Ziel zurück auf die Bank.",
-"Keeps every bruise. Throws the physical damage it took this turn back, half as hard again.": "Merkt sich jeden blauen Fleck. Wirft den physischen Schaden dieser Runde anderthalbfach zurück.",
+"Keeps every bruise. Pays back the physical damage it took this turn, half as hard again.": "Merkt sich jeden blauen Fleck. Zahlt den physischen Schaden dieser Runde anderthalbfach heim.",
 "Rubs a green balm into the most hurt ally: it heals 40% of its Vigor.": "Reibt dem am schwersten verletzten Verbündeten grünen Balsam ein: er heilt 40% seiner Kraft.",
 "Everyone on its side stands shoulder to shoulder: Guard up by 1 for all.": "Alle auf seiner Seite stehen Schulter an Schulter: Schutz +1 für alle.",
 "Shakes off every drop to its stats. Raised stats stay.": "Schüttelt jede Senkung der eigenen Werte ab. Erhöhte Werte bleiben.",

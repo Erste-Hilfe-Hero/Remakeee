@@ -4989,7 +4989,7 @@
   "effect": "counter",
   "effect_amount": 1.5,
   "era": 1,
-  "desc": "Keeps every bruise. Throws the physical damage it took this turn back, half as hard again."
+  "desc": "Keeps every bruise. Pays back the physical damage it took this turn, half as hard again."
  },
  {
   "name": "Kindred Balm",

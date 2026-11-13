@@ -221,7 +221,7 @@ static func info_line(fx: Dictionary) -> String:
 		&"force_out":
 			return Loc.t("In a Wayfarer duel the target is knocked back to its bench.")
 		&"counter":
-			return Loc.t("Throws back the physical damage it took this turn, x%s.") % String.num(amount if amount > 0.0 else COUNTER_MULT, 1)
+			return Loc.t("Pays back the physical damage it took this turn, x%s.") % String.num(amount if amount > 0.0 else COUNTER_MULT, 1)
 		&"heal_ally":
 			return Loc.t("Heals the most hurt ally by %d%% of its Vigor.") % roundi((amount if amount > 0.0 else 0.4) * 100.0)
 		&"team_stage":

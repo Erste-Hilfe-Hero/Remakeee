@@ -262,7 +262,7 @@ func test_shove_off_does_not_move_a_rooted_target() -> void:
 	_apply(m, "Shove Off", 0, 10)
 	assert_eq(m.active_spirling(1), foe)
 
-func test_grudge_return_throws_back_physical_damage() -> void:
+func test_grudge_return_pays_back_physical_damage() -> void:
 	var me: Spirling = _mon("Mirkmole", "Grudge Return", 40)
 	var foe: Spirling = _mon("Talusk", "Bowl Over", 40)
 	var m: BattleModel = _duel([me] as Array[Spirling], [foe] as Array[Spirling])
