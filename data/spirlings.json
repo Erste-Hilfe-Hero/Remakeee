@@ -16817,7 +16817,7 @@
    "spd": 62,
    "def": 64
   },
-  "trait": "light_sleeper",
+  "trait": "unruffled",
   "learnset": {
    "1": [
     "Fizz Pop",
@@ -16888,7 +16888,7 @@
    "spd": 75,
    "def": 74
   },
-  "trait": "light_sleeper",
+  "trait": "unruffled",
   "learnset": {
    "1": [
     "Fizz Pop",
@@ -24514,7 +24514,7 @@
    "spd": 78,
    "def": 48
   },
-  "trait": "slick",
+  "trait": "glimmer_skin",
   "learnset": {
    "1": [
     "Cinder Nip",
@@ -24589,7 +24589,7 @@
    "spd": 121,
    "def": 67
   },
-  "trait": "slick",
+  "trait": "glimmer_skin",
   "learnset": {
    "1": [
     "Cinder Nip",

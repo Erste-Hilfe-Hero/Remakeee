@@ -14,6 +14,7 @@ enum Type {
 	ENERGY_TAX, SNARE_SET, SNARE_HIT, SNARE_CLEARED, HEAL_BLOCKED, WEARY,
 	DELAYED_SET, DELAYED_HIT, FIELD_NEXT, FIELD_EXTENDED, BATTLE_LINE, WARDEN_WEAKENED, HELD_ENDURE,
 	OATH, SHOP_EDGE, HELD_FRUIT, WHEEL_TURN,
+	STATUS_VEIL,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -52,6 +53,8 @@ func describe() -> String:
 		Type.MOVE_USED:
 			if bool(data.get("area", false)):
 				return "%s: %s! It sweeps across the foes!" % [who, data.get("move", "")]
+			if bool(data.get("muddled", false)):
+				return "%s: %s! In its muddle it lashes out at random!" % [who, data.get("move", "")]
 			return "%s: %s!" % [who, data.get("move", "")]
 		Type.MISSED:
 			return "%s missed!" % who
@@ -78,6 +81,17 @@ func describe() -> String:
 				return "Calm rule: %s stays awake while an ally drowses." % who
 			if bool(data.get("ward", false)):
 				return "%s's Status Ward keeps it safe." % who
+			# Item 212: every failed status says why.
+			if not str(data.get("rule_label", "")).is_empty():
+				return "Rule, %s: no status takes hold on %s." % [data.get("rule_label", ""), who]
+			if bool(data.get("veil", false)):
+				return "The Calm Veil keeps %s safe." % who
+			if bool(data.get("reflect", false)):
+				return "%s's %s turns the %s back!" % [who, data.get("item_name", ""), StatusRules.label(str(data.get("status", "")))]
+			if not str(data.get("already", "")).is_empty():
+				return "%s already suffers from %s." % [who, StatusRules.label(str(data.get("already", "")))]
+			if not str(data.get("status", "")).is_empty():
+				return "%s can't get %s: its gift keeps it safe." % [who, StatusRules.label(str(data.get("status", "")))]
 			return "It had no effect on %s." % who
 		Type.STATUS_TICK:
 			return "%s suffers from %s." % [who, StatusRules.label(str(data.get("status", "")))]
@@ -120,7 +134,10 @@ func describe() -> String:
 			var delta: int = int(data.get("delta", 0))
 			if delta == 0:
 				return "%s's %s is already at its %s." % [who, stat, "peak" if int(data.get("tried", 0)) > 0 else "lowest"]
-			return "%s's %s %s%s" % [who, stat, "goes up" if delta > 0 else "drops", "." if absi(delta) == 1 else " a lot."]
+			var line: String = "%s's %s %s%s" % [who, stat, "goes up" if delta > 0 else "drops", "." if absi(delta) == 1 else " a lot."]
+			if bool(data.get("warn", false)):
+				line += " " + "Careful, its hits will hurt now!"
+			return line
 		Type.FIELD:
 			return str(data.get("text", ""))
 		Type.RULE:
@@ -145,6 +162,10 @@ func describe() -> String:
 			return str(data.get("text", "")) % who
 		Type.OATH:
 			return Loc.t(str(BattleRules.oath().get("due_text" if bool(data.get("due", false)) else "sworn_text", ""))) % who
+		Type.STATUS_VEIL:
+			if int(data.get("turns", 0)) <= 0:
+				return "The Calm Veil fades."
+			return "A Calm Veil settles: no foe status takes hold for %d turns." % int(data.get("turns", 0))
 		Type.WEARY:
 			return "The long fight wears everyone out. Nobody can heal any more!"
 		Type.HEAL_BLOCKED:

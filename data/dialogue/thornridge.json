@@ -52,7 +52,7 @@
    "Crystal seller: Echo Crystals keep an art's echo. Teach it as often as you like!",
    "Crystal seller: And things for Spirlings to hold, brews, pearls..."
   ],
-  "action": "shop echo_ember echo_tide echo_bloom echo_volt echo_stone echo_gale echo_lumen echo_umbra echo_scatter_gale echo_graft spark_charm tide_pearl bark_wrap iron_burr swift_feather keen_lens power_brew guard_brew focus_brew dash_brew ink_charm echo_charm"
+  "action": "shop echo_ember echo_tide echo_bloom echo_volt echo_stone echo_gale echo_lumen echo_umbra echo_scatter_gale echo_graft echo_leaden_hum echo_chalk_mark echo_mazelight echo_mirror_stance echo_crosswind_trade echo_calm_veil mirror_scale spark_charm tide_pearl bark_wrap iron_burr swift_feather keen_lens power_brew guard_brew focus_brew dash_brew ink_charm echo_charm"
  },
  "elder": {
   "lines": [
