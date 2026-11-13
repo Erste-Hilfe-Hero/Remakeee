@@ -16,6 +16,13 @@ static func data() -> Dictionary:
 		_data = raw if raw is Dictionary else {"_empty": true}
 	return _data
 
+## Typing speed factor of the battle text box (item 372): with several Spirlings a side every
+## action's line types faster, so a turn of four actions does not drag. 1.0 in one-on-one.
+static func text_speed(m: BattleModel) -> float:
+	if m == null or not m.is_multi():
+		return 1.0
+	return maxf(1.0, float(data().get("text_speed", 1.0)))
+
 static func support_turns(kind: String) -> int:
 	return int(data().get("support_turns", {}).get(kind, 2))
 

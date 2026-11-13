@@ -118,6 +118,7 @@ func _ready() -> void:
 		model = _demo_model()
 		quit_on_finish = false
 	_multi = model.is_multi()
+	_text.chars_per_second *= MultiRules.text_speed(model)
 	_run.call_deferred()
 
 ## In a Trial "Leave" restarts it (item 708): the screen ends and the Rift starts it again.

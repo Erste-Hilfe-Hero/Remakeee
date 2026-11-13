@@ -396,7 +396,7 @@ AREAS = [
 "[x] Tag-Kampf mit Kestra (bestehend) mit gemeinsamer Kombi-Technik (Kombo gilt auch mit Partnern)",
 "[x] Kombi-Techniken bei passenden Elementen zweier Verbündeter (data/multi_rules.json combos, x1.25)",
 "[x] Mehrfachkampf-Tutorial (Tipp beim ersten Mehrfachkampf, im Leitfaden)",
-"Mehrfachkampf-Geschwindigkeit: Text pro Aktion kürzer",
+"[x] Mehrfachkampf-Geschwindigkeit: Text pro Aktion kürzer (MultiRules.text_speed: Text tippt x1.4 schneller)",
 "[x] Mehrfachkampf-Log filtern (Tippen: Alle, Deine, Gegner)",
 "[x] Mehrfachkampf im Turm (jedes 5. Stockwerk 2v2)",
 "Mehrfachkampf online (2v2 mit Freund-Echo)",

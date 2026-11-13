@@ -91,6 +91,7 @@
   }
  ],
  "combo_mult": 1.25,
+ "text_speed": 1.4,
  "rows": {
   "front_slots": 2,
   "back_phys_taken": 0.9,

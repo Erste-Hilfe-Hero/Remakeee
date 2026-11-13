@@ -374,3 +374,10 @@ func test_battle_report_follows_a_real_multi_battle() -> void:
 	assert_gt(total, 0, "your side's hits are counted")
 	assert_eq(r.rows.size(), 2, "two Spirlings of one kind keep their own rows")
 	assert_gte(r.best(), 0)
+
+func test_text_types_faster_with_several_spirlings() -> void:
+	var one := _model([_mk("Kindlop")], [_mk("Mossling")], [1, 1])
+	var two := _model([_mk("Kindlop"), _mk("Kindlop")], [_mk("Mossling"), _mk("Mossling")], [2, 2])
+	assert_eq(MultiRules.text_speed(one), 1.0, "one-on-one keeps its pace")
+	assert_gt(MultiRules.text_speed(two), 1.0)
+	assert_eq(MultiRules.text_speed(null), 1.0)
