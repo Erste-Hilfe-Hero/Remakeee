@@ -4997,7 +4997,7 @@
   "energy": 3,
   "effect": "heal_ally",
   "effect_amount": 0.33,
-  "era": 2,
+  "era": 1,
   "desc": "Tends the most hurt ally beside it for a third of its Vigor. Alone, it tends itself."
  },
  {
@@ -5030,7 +5030,7 @@
   "accuracy": 1.0,
   "energy": 2,
   "effect": "cover",
-  "era": 2,
+  "era": 1,
   "desc": "Plants itself before its most hurt ally and takes the aimed hits meant for it for 2 turns."
  }
 ]
