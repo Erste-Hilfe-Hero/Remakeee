@@ -1251,7 +1251,8 @@
   "battle": false,
   "shop": true,
   "evolves": true,
-  "unfurls_as": "tide_pearl" },
+  "unfurls_as": "tide_pearl"
+ },
  {
   "id": "pith_mend",
   "name": "Mending Pith",
@@ -2451,6 +2452,191 @@
   "description": "Rolls all Spark values of one Spirling anew. Used up.",
   "battle": false,
   "spark_reset": true,
+  "price": 1500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_hold_fast",
+  "name": "Echo Crystal: Hold Fast",
+  "description": "Teaches Hold Fast to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Hold Fast",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_shove_off",
+  "name": "Echo Crystal: Shove Off",
+  "description": "Teaches Shove Off to a Gale Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Shove Off",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_grudge_return",
+  "name": "Echo Crystal: Grudge Return",
+  "description": "Teaches Grudge Return to an Umbra Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Grudge Return",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_kindred_balm",
+  "name": "Echo Crystal: Kindred Balm",
+  "description": "Teaches Kindred Balm to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Kindred Balm",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_rank_and_file",
+  "name": "Echo Crystal: Rank and File",
+  "description": "Teaches Rank and File to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Rank and File",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_shake_loose",
+  "name": "Echo Crystal: Shake Loose",
+  "description": "Teaches Shake Loose to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Shake Loose",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_rolling_drum",
+  "name": "Echo Crystal: Rolling Drum",
+  "description": "Teaches Rolling Drum to a Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Rolling Drum",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_late_reply",
+  "name": "Echo Crystal: Late Reply",
+  "description": "Teaches Late Reply to an Umbra Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Late Reply",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_opening_gambit",
+  "name": "Echo Crystal: Opening Gambit",
+  "description": "Teaches Opening Gambit to a Gale Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Opening Gambit",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_pebble_hail",
+  "name": "Echo Crystal: Pebble Hail",
+  "description": "Teaches Pebble Hail to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Pebble Hail",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_rift_hush",
+  "name": "Echo Crystal: Rift Hush",
+  "description": "Teaches Rift Hush to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Rift Hush",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_bright_lure",
+  "name": "Echo Crystal: Bright Lure",
+  "description": "Teaches Bright Lure to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Bright Lure",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_close_ranks",
+  "name": "Echo Crystal: Close Ranks",
+  "description": "Teaches Close Ranks to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Close Ranks",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_ember_afterglow",
+  "name": "Echo Crystal: Ember Afterglow",
+  "description": "Teaches Ember Afterglow to an Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Ember Afterglow",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_borrowed_stance",
+  "name": "Echo Crystal: Borrowed Stance",
+  "description": "Teaches Borrowed Stance to an Echo Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Borrowed Stance",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_still_point",
+  "name": "Echo Crystal: Still Point",
+  "description": "Teaches Still Point to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Still Point",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_ground_burst",
+  "name": "Echo Crystal: Ground Burst",
+  "description": "Teaches Ground Burst to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Ground Burst",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_dye_bath",
+  "name": "Echo Crystal: Dye Bath",
+  "description": "Teaches Dye Bath to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Dye Bath",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_ward_circle",
+  "name": "Echo Crystal: Ward Circle",
+  "description": "Teaches Ward Circle to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Ward Circle",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "ward_shell",
+  "name": "Ward Shell",
+  "description": "Keepsake. Halves one very effective hit on the holder, then it cracks.",
+  "battle": false,
+  "held": {
+   "super_guard": true
+  },
   "price": 1500,
   "tradeable": false
  },
