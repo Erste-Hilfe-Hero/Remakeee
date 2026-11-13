@@ -271,10 +271,10 @@ func test_lexicon_and_no_paid_rules() -> void:
 
 func test_challenge_menu_rows() -> void:
 	var rows: Array[Dictionary] = ChallengeMenu.entries()
-	assert_eq(rows.size(), ChallengeRules.ids().size() + 3)
+	assert_eq(rows.size(), ChallengeRules.ids().size() + 5)
 	assert_string_contains(str(rows[ChallengeRules.ids().size()].text), ChallengeRules.seed_code(ChallengeRules.run_seed()))
 	GameState.seal_rift("cinder")
-	assert_eq(ChallengeMenu.entries().size(), ChallengeRules.ids().size() + 2, "no clipboard seed after the first Rift")
+	assert_eq(ChallengeMenu.entries().size(), ChallengeRules.ids().size() + 4, "no clipboard seed after the first Rift")
 	var keys: Array = []
 	for r: Array in MenuHost.settings_rows("game"):
 		keys.append(r[0])
