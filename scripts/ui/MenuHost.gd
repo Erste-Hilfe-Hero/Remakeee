@@ -284,6 +284,10 @@ func info_pages(pages: Array[String], picture: Texture2D = null) -> void:
 	_pages = []
 
 var _pages: Array[String] = []
+## While true, up and down in the info box close it and set [member summary_step] (item 1893).
+var summary_step_ok: bool = false
+## -1 previous, 1 next team member, 0 when the summary was simply closed.
+var summary_step: int = 0
 var _page: int = 0
 ## How the last page was left: 1 next, -1 back, -2 closed, 0 tap (next).
 var _page_turn: int = 0
@@ -352,6 +356,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		_page_or_close()
 	elif _info_wait and event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
+		_page_turn = -2
+		_close_info()
+	elif _info_wait and summary_step_ok and (event.is_action_pressed("ui_up") or (event.is_action_pressed("ui_down") and not info_has_more())):
+		# Item 1893: up and down go to the team's previous or next Spirling.
+		get_viewport().set_input_as_handled()
+		summary_step = -1 if event.is_action_pressed("ui_up") else 1
 		_page_turn = -2
 		_close_info()
 	elif _info_wait and not _pages.is_empty() and (event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right")):

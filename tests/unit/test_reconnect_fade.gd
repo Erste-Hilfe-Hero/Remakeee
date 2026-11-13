@@ -58,3 +58,17 @@ func test_lost_again_while_fading_out_stays() -> void:
 	assert_true(o.visible)
 	assert_true(o.is_big())
 	assert_almost_eq(o._root.modulate.a, 1.0, 0.01)
+
+func test_a_running_battle_goes_on_with_only_the_small_mark() -> void:
+	# KAMPF_PLAN_1000 (Online-Kämpfe): a lost connection does not stop a battle.
+	var o := ReconnectOverlay.new()
+	add_child_autofree(o)
+	o.show_overlay()
+	Online.in_battle = true
+	o.update_view(2, 3.0, ReconnectOverlay.SHORT_DROP + 10.0)
+	assert_false(o.is_big())
+	assert_false(get_tree().paused, "the battle keeps running")
+	Online.in_battle = false
+	o.update_view(2, 3.0, ReconnectOverlay.SHORT_DROP + 10.0)
+	assert_true(o.is_big(), "after the battle the big screen comes")
+	o.hide_overlay()
