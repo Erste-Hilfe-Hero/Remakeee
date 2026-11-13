@@ -2,7 +2,6 @@
  "_comment": "pl translation of the kampf_traits table, keyed by the English text.",
  "strings": {
   "%s's %s stirs!": "%s: %s budzi się!",
-  "%s's %s takes the edge off the hit!": "%s: %s łagodzi cios!",
   "A Resonance field it lays holds 2 turns longer.": "Pole Rezonansu, które tworzy, trwa o 2 tury dłużej.",
   "A Rift field gives it twice the boost, and twice the drawback.": "Pole Szczeliny daje mu podwójną premię i podwójną karę.",
   "A physical art that hits it may Scorch whoever struck it.": "Fizyczna technika, która go trafi, może zadać Oparzenie temu, kto uderzył.",

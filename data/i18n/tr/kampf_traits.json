@@ -2,7 +2,6 @@
  "_comment": "tr translation of the kampf_traits table, keyed by the English text.",
  "strings": {
   "%s's %s stirs!": "%s, %s ile kıpırdanıyor!",
-  "%s's %s takes the edge off the hit!": "%s, %s sayesinde darbenin etkisini azaltıyor!",
   "A Resonance field it lays holds 2 turns longer.": "Kurduğu bir Rezonans alanı 2 tur daha uzun sürer.",
   "A Rift field gives it twice the boost, and twice the drawback.": "Bir Yarık alanı ona iki kat avantaj ve iki kat dezavantaj verir.",
   "A physical art that hits it may Scorch whoever struck it.": "Ona isabet eden fiziksel bir teknik, vurana Yanık verebilir.",

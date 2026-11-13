@@ -54,7 +54,6 @@ T = {
 "Keepsake. While High Tide floods the Rift, the holder's arts hit 15% harder.": "Andenken. Solange die Springflut den Riss füllt, treffen die Techniken des Trägers 15% härter.",
 "Murk Stone": "Dämmerstein",
 "Keepsake. While Deep Murk fills the Rift, the holder's arts hit 15% harder.": "Andenken. Solange Tiefes Dunkel den Riss füllt, treffen die Techniken des Trägers 15% härter.",
-"%s's %s takes the edge off the hit!": "%s: %s nimmt dem Treffer die Spitze!",
 "%s's %s stirs!": "%s: %s regt sich!",
 "Bonus gift": "Bonus-Gabe",
 "Gift book": "Gabenbuch",

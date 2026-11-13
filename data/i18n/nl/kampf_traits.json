@@ -2,7 +2,6 @@
  "_comment": "nl translation of the kampf_traits table, keyed by the English text.",
  "strings": {
   "%s's %s stirs!": "De %s van %s komt in beweging!",
-  "%s's %s takes the edge off the hit!": "De %s van %s haalt de scherpte van de klap!",
   "A Resonance field it lays holds 2 turns longer.": "Een Resonantieveld dat het legt, houdt 2 beurten langer.",
   "A Rift field gives it twice the boost, and twice the drawback.": "Een Scheurveld geeft het dubbel voordeel, en dubbel nadeel.",
   "A physical art that hits it may Scorch whoever struck it.": "Een fysieke techniek die het raakt, kan wie toesloeg Brand bezorgen.",

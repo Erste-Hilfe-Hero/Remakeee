@@ -2,7 +2,6 @@
  "_comment": "ja translation of the kampf_traits table, keyed by the English text.",
  "strings": {
   "%s's %s stirs!": "%sの%sが目を覚ました!",
-  "%s's %s takes the edge off the hit!": "%sの%sが攻撃をやわらげた!",
   "A Resonance field it lays holds 2 turns longer.": "自分が張った共鳴フィールドが2ターン長く続く。",
   "A Rift field gives it twice the boost, and twice the drawback.": "裂け目のフィールドの強化も弱化も2倍になる。",
   "A physical art that hits it may Scorch whoever struck it.": "物理技で攻撃してきた相手を焦げにすることがある。",

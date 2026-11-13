@@ -2,7 +2,6 @@
  "_comment": "zh_TW translation of the kampf_traits table, keyed by the English text.",
  "strings": {
   "%s's %s stirs!": "%s的%s甦醒了!",
-  "%s's %s takes the edge off the hit!": "%s的%s削弱了這次攻擊!",
   "A Resonance field it lays holds 2 turns longer.": "它布下的共鳴場地多持續2回合。",
   "A Rift field gives it twice the boost, and twice the drawback.": "裂隙場地給它的加成和減益都加倍。",
   "A physical art that hits it may Scorch whoever struck it.": "用物理招式擊中它的對手可能會焦灼。",

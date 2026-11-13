@@ -2,7 +2,6 @@
  "_comment": "pt_BR translation of the kampf_traits table, keyed by the English text.",
  "strings": {
   "%s's %s stirs!": "O %s de %s desperta!",
-  "%s's %s takes the edge off the hit!": "O %s de %s amortece o golpe!",
   "A Resonance field it lays holds 2 turns longer.": "Um campo de Ressonância que ele cria dura 2 turnos a mais.",
   "A Rift field gives it twice the boost, and twice the drawback.": "Um campo da Fenda lhe dá o dobro do bônus, e o dobro da desvantagem.",
   "A physical art that hits it may Scorch whoever struck it.": "Uma técnica física que o acerta pode causar Chamusco em quem o atingiu.",

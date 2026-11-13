@@ -2,7 +2,6 @@
  "_comment": "ko translation of the kampf_traits table, keyed by the English text.",
  "strings": {
   "%s's %s stirs!": "%s의 %s이(가) 깨어났다!",
-  "%s's %s takes the edge off the hit!": "%s의 %s이(가) 공격을 누그러뜨렸다!",
   "A Resonance field it lays holds 2 turns longer.": "자신이 펼친 공명 필드가 2턴 더 유지된다.",
   "A Rift field gives it twice the boost, and twice the drawback.": "균열 필드의 강화와 약화를 두 배로 받는다.",
   "A physical art that hits it may Scorch whoever struck it.": "물리 기술로 공격한 상대에게 화상을 입힐 때가 있다.",

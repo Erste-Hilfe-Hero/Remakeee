@@ -2,7 +2,6 @@
  "_comment": "ru translation of the kampf_traits table, keyed by the English text.",
  "strings": {
   "%s's %s stirs!": "%s: %s оживает!",
-  "%s's %s takes the edge off the hit!": "%s: %s смягчает удар!",
   "A Resonance field it lays holds 2 turns longer.": "Поле Резонанса, которое он создаёт, держится на 2 хода дольше.",
   "A Rift field gives it twice the boost, and twice the drawback.": "Поле Разлома даёт ему двойной бонус и двойной штраф.",
   "A physical art that hits it may Scorch whoever struck it.": "Физическая техника, попавшая по нему, может наложить Ожог на ударившего.",
