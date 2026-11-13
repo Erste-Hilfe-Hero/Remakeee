@@ -10,6 +10,13 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 	# Wheel battles (Era V) only add their key when on, so older replays stay the same.
 	if model.wheel:
 		snap["wheel"] = model.wheel_size
+	# Story softening and the fern ambush (KAMPF_PLAN items 16, 36, 52), also only when on.
+	if model.foe_crit_mult != 1.0:
+		snap["foe_crit"] = model.foe_crit_mult
+	if model.rest_heal_share > 0.0:
+		snap["rest_heal"] = model.rest_heal_share
+	if model.ambush:
+		snap["ambush"] = true
 	return snap
 
 static func _snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
@@ -159,6 +166,9 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.boss_difficulty = clampi(int(snap.get("boss_difficulty", -1)), -1, BattleRules.BOSS_PHASE_AT.size() - 1)
 	m.variants.assign(snap.get("variants", []))
 	m.round_limit = maxi(0, int(snap.get("round_limit", 0)))
+	m.foe_crit_mult = clampf(float(snap.get("foe_crit", 1.0)), BattleModel.STORY_FOE_CRIT, 1.0)
+	m.rest_heal_share = clampf(float(snap.get("rest_heal", 0.0)), 0.0, BattleModel.STORY_REST_HEAL)
+	m.ambush = bool(snap.get("ambush", false)) and m.is_wild
 	if not partner.is_empty():
 		var ally: Array[Spirling] = _rebuild(partner.get("team", []))
 		if ally.size() != (partner.get("team", []) as Array).size():

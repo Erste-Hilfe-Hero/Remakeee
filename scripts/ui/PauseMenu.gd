@@ -456,6 +456,7 @@ func run_records() -> void:
 			lines.append("Sticker wall")
 		if not Lexicon.collected(GameState.records).is_empty():
 			lines.append("Lexicon")
+		lines.append("Battle rules")
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
@@ -480,6 +481,7 @@ func run_records() -> void:
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Lexicon": await run_lexicon()
+			"Battle rules": await run_rules_book()
 			"Online replays":
 				if await OnlineReplaysMenu.run(self):
 					return
@@ -512,6 +514,14 @@ func run_lexicon() -> void:
 			await info(BattleGoals.lexicon_text(GameState.records))
 		else:
 			await info(Loc.t(Lexicon.text(ids[i - 1])))
+
+## The battle rules (KAMPF_PLAN item 37): one page per topic, every number from the game itself.
+func run_rules_book() -> void:
+	while true:
+		var i: int = await pick_strings(Loc.t("Battle rules"), RulesBook.titles())
+		if i < 0:
+			return
+		await info("\n".join(RulesBook.page(i)))
 
 ## Vows (plan 3406-3408): take one before the first Rift is mended, give one up at any time.
 func run_vows() -> void:
