@@ -778,6 +778,10 @@
    "text": "The Bloom Fair is on! Bloom and Gale Spirlings are out in the spring air.",
    "shop": [
     {
+     "item": "spark_charm",
+     "price": 60
+    },
+    {
      "item": "bark_wrap",
      "price": 40
     },
@@ -815,6 +819,14 @@
    "text": "It's the Tide Days! Tide and Volt Spirlings play in the summer storms.",
    "shop": [
     {
+     "item": "spark_charm",
+     "price": 60
+    },
+    {
+     "item": "echo_shell",
+     "price": 20
+    },
+    {
      "item": "tide_pearl",
      "price": 80
     },
@@ -851,6 +863,10 @@
    "gifts": ["echo_lumen", "keen_lens", "echo_umbra", "kin_charm"],
    "text": "The Lantern Nights have begun! Lumen and Umbra Spirlings follow the lights.",
    "shop": [
+    {
+     "item": "spark_charm",
+     "price": 60
+    },
     {
      "item": "echo_lumen",
      "price": 60
