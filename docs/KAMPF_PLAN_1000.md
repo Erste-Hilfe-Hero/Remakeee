@@ -293,87 +293,87 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 241. [ ] Trait im Info-Streifen nach der ersten Auslösung zeigen
 242. [x] Trait-Auslösung als kurze Meldung im Log
-243. [ ] Zweiter Trait für entwickelte Spirlings (wählbar)
-244. [ ] Versteckter Trait selten bei Prisma-Spirlings
-245. [ ] Trait-Lexikon mit allen Traits
-246. [ ] Trait 'Sparflamme' (Energie)
-247. [ ] Trait 'Prisma-Haut' (Effektivität)
-248. [ ] Trait 'Gegenstrom' (Resistenz)
-249. [ ] Trait 'Ruhig' (Status-Heilung beim Wechsel)
-250. [ ] Trait 'Glimmhaut' (Kontakt-Scorch)
-251. [ ] Trait 'Schwarmgeist': stärker im Mehrfachkampf
-252. [ ] Trait 'Einzelgänger': stärker im 1v1
-253. [ ] Trait 'Wachposten': erster Zug immer zuerst
-254. [ ] Trait 'Feldläufer': doppelte Feld-Boni
-255. [ ] Trait 'Echo-Seele': Resonanz-Felder halten 2 Runden länger
-256. [ ] Trait 'Dickes Fell' (bestehend Thick Hide) im Lexikon
-257. [ ] Trait 'Wurzeln' (bestehend Deep Roots)
-258. [ ] Trait 'Last Stand' (bestehend) sichtbar machen, wenn aktiv
-259. [ ] Trait-Balance-Bericht
+243. [x] Zweiter Trait für entwickelte Spirlings (wählbar) (Bonus-Gabe neben der eigenen, im Team-Menü wählbar (TraitKit.bonus_options, PauseMenu 'Bonus gift'))
+244. [x] Versteckter Trait selten bei Prisma-Spirlings (jeder vierte Prisma-Spirling trägt 'Prism Skin' (TraitKit.prism_trait_id))
+245. [x] Trait-Lexikon mit allen Traits (Gabenbuch im Rekorde-Menü (TraitKit.all_gift_lines))
+246. [x] Trait 'Sparflamme' (Energie) ('Spare Flame' (data/kampf_kit.json))
+247. [x] Trait 'Prisma-Haut' (Effektivität) ('Prism Skin')
+248. [x] Trait 'Gegenstrom' (Resistenz) ('Counter Current')
+249. [x] Trait 'Ruhig' (Status-Heilung beim Wechsel) ('Quiet Heart')
+250. [x] Trait 'Glimmhaut' (Kontakt-Scorch) ('Glow Hide')
+251. [x] Trait 'Schwarmgeist': stärker im Mehrfachkampf ('Pack Sense')
+252. [x] Trait 'Einzelgänger': stärker im 1v1 ('Loner')
+253. [x] Trait 'Wachposten': erster Zug immer zuerst ('Sentinel')
+254. [x] Trait 'Feldläufer': doppelte Feld-Boni ('Field Runner')
+255. [x] Trait 'Echo-Seele': Resonanz-Felder halten 2 Runden länger ('Lingering Echo')
+256. [x] Trait 'Dickes Fell' (bestehend Thick Hide) im Lexikon (im Gabenbuch)
+257. [x] Trait 'Wurzeln' (bestehend Deep Roots) (im Gabenbuch)
+258. [x] Trait 'Last Stand' (bestehend) sichtbar machen, wenn aktiv (bestehend: BattleModel zeigt den Trait beim ersten Wirken unter 1/3 HP)
+259. [x] Trait-Balance-Bericht (tools/balance/trait_report.py)
 260. [ ] Trait-Wechsel-Gegenstand
 261. [ ] KI kennt Traits der Gegner nur, wenn sie aufgedeckt wurden (Fairness)
-262. [ ] Meister-KI meidet Status gegen immune Traits (umgesetzt)
+262. [x] Meister-KI meidet Status gegen immune Traits (umgesetzt) (bestehend: BattleAI meidet Status gegen immune Gaben (Stufe 3))
 263. [ ] Trait-Icons klein neben dem Namen
-264. [ ] Trait-Texte übersetzt (bestehend)
-265. [ ] Traits in Online-Duellen gleich
-266. [ ] Trait-Namen eigenständig prüfen
-267. [ ] Traits für Bosse (eigene Boss-Traits)
-268. [ ] Trait 'Hush-Kern' für Riss-Bosse: Status halb so lang
-269. [ ] Trait 'Laternenlicht': Verbündete erhalten +1 FOC beim Einwechseln
-270. [ ] Trait 'Kälteschlaf': Drowse heilt HP
-271. [ ] Trait 'Stoßdämpfer': kein Rückstoß
-272. [ ] Trait 'Glückspilz': Krit-Chance leicht höher
-273. [ ] Trait 'Wendig': Wechsel ist frei (Prioritätsaktion, bestehend)
-274. [ ] Trait-Freischaltung durch Bond-Stufe
+264. [x] Trait-Texte übersetzt (bestehend) (bestehend, neue Gaben in tools/i18n/de_kampf_traits.py)
+265. [x] Traits in Online-Duellen gleich (Gaben liegen im BattleModel und im Spielstand (bonus_trait), Online-Duelle nutzen dasselbe Modell)
+266. [x] Trait-Namen eigenständig prüfen (Test: keine Namensdopplung (test_trait_kit.gd), ip_check)
+267. [x] Traits für Bosse (eigene Boss-Traits) (data/kampf_kit.json boss_traits)
+268. [x] Trait 'Hush-Kern' für Riss-Bosse: Status halb so lang ('Hush Core' für alle Riss-Bosse)
+269. [x] Trait 'Laternenlicht': Verbündete erhalten +1 FOC beim Einwechseln ('Lantern Light')
+270. [x] Trait 'Kälteschlaf': Drowse heilt HP ('Cold Sleep')
+271. [x] Trait 'Stoßdämpfer': kein Rückstoß ('Shock Pad')
+272. [x] Trait 'Glückspilz': Krit-Chance leicht höher ('Lucky Cap')
+273. [x] Trait 'Wendig': Wechsel ist frei (Prioritätsaktion, bestehend) ('Nimble')
+274. [x] Trait-Freischaltung durch Bond-Stufe (Bonus-Gabe erst ab Verbundenheit (min_kinship))
 275. [ ] Traits im Spirlog bei 'bonded'
-276. [ ] Trait-Auswirkung im Schadensvorschau-Wert berücksichtigen (bestehend über damage_mult)
-277. [ ] Trait-Tests pro Trait
-278. [ ] Trait-Kombinationen mit gehaltenen Gegenständen prüfen
+276. [x] Trait-Auswirkung im Schadensvorschau-Wert berücksichtigen (bestehend über damage_mult) (TraitKit.static_mult fließt in BattleRules.damage_mult)
+277. [x] Trait-Tests pro Trait (tests/unit/test_trait_kit.gd)
+278. [x] Trait-Kombinationen mit gehaltenen Gegenständen prüfen (Test: Echo Soul + Lantern Glass, Field Runner + Glutstein)
 279. [ ] Trait 'Sturmlaterne' für den Storm-Lantern-Träger
 280. [ ] Trait-Zähler im Kampfende-Bericht
 
 ## Gehaltene Gegenstände
 
 281. [ ] Gehaltene Gegenstände (bestehend) im Info-Streifen als Symbol
-282. [ ] Element-Verstärker pro Element
-283. [ ] Energie-Kristall (+2 Start-Energie)
-284. [ ] Schutz-Talisman (einmal sehr effektiven Treffer halbieren)
-285. [ ] Fokus-Band in eigener Form: übersteht einen K.o.-Treffer bei vollen HP einmal
-286. [ ] Heilbeere-Ersatz in eigener Form: 'Moospolster' heilt 25 % unter 1/3 HP
-287. [ ] Status-Beere-Ersatz: 'Klarstein' heilt einen Status einmal
-288. [ ] Tempo-Feder: SPD +1 beim Einwechseln
-289. [ ] Wahl-Gegenstände bewusst nicht übernehmen (eigene Ideen stattdessen)
-290. [ ] Gegenstand 'Laternenglas': Feld-Dauer +2
-291. [ ] Gegenstand 'Riss-Splitter': Overcharge +0.05 pro Energie
-292. [ ] Gegenstand 'Wanderschuh': Wechsel ist frei
+282. [x] Element-Verstärker pro Element (bestehend: Prismen und Charms pro Element)
+283. [x] Energie-Kristall (+2 Start-Energie) ('Deep Crystal': +2 Energie-Maximum und Start)
+284. [x] Schutz-Talisman (einmal sehr effektiven Treffer halbieren) ('Ward Talisman')
+285. [x] Fokus-Band in eigener Form: übersteht einen K.o.-Treffer bei vollen HP einmal (bestehend: Hold Stone)
+286. [x] Heilbeere-Ersatz in eigener Form: 'Moospolster' heilt 25 % unter 1/3 HP (bestehend: Mending Pith)
+287. [x] Status-Beere-Ersatz: 'Klarstein' heilt einen Status einmal (bestehend: Clearing Pith)
+288. [x] Tempo-Feder: SPD +1 beim Einwechseln ('Pace Feather')
+289. [x] Wahl-Gegenstände bewusst nicht übernehmen (eigene Ideen stattdessen) (keine Wahl-Sperre in data/kampf_kit.json, nur eigene Effekte)
+290. [x] Gegenstand 'Laternenglas': Feld-Dauer +2 ('Lantern Glass')
+291. [x] Gegenstand 'Riss-Splitter': Overcharge +0.05 pro Energie ('Rift Splinter')
+292. [x] Gegenstand 'Wanderschuh': Wechsel ist frei ('Wander Boot')
 293. [ ] Gegenstände in Turnier-Regeln einzeln sperrbar
-294. [ ] Gegner-Wayfarer tragen auf Veteran Gegenstände
-295. [ ] Gegenstand-Info im Lexikon
+294. [x] Gegner-Wayfarer tragen auf Veteran Gegenstände (bestehend: TrainerData.keeps_keepsakes ab Veteran)
+295. [x] Gegenstand-Info im Lexikon (Andenkenbuch im Rekorde-Menü (TraitKit.all_keepsake_lines))
 296. [ ] Gegenstand-Verbrauch in Kampfende-Bericht
 297. [ ] Gegenstand nach dem Kampf automatisch wieder ausrüsten (Option)
 298. [ ] Gegenstand-Tausch im Kampf (kostet den Zug)
-299. [ ] Gegenstand-Klau-Technik bewusst nicht einführen (Frust)
-300. [ ] Gegenstand-Shop im Endgame
-301. [ ] Gegenstand als Belohnung im Turm
-302. [ ] Gegenstand-Seltenheit sichtbar
+299. [x] Gegenstand-Klau-Technik bewusst nicht einführen (Frust) (bewusst kein Klau-Effekt)
+300. [x] Gegenstand-Shop im Endgame (Marlas Stand (endgame.json exchange, Stufe full))
+301. [x] Gegenstand als Belohnung im Turm (oberste Turmetage gibt ein Andenken (TraitKit.tower_reward))
+302. [x] Gegenstand-Seltenheit sichtbar (Seltenheit im Andenken-Hinweis (items.json rarity))
 303. [ ] Gegenstand-Balance im Simulator
 304. [ ] Gegenstand-Icons eigenständig (Asset-Log)
-305. [ ] Gegenstand-Namen eigenständig prüfen
-306. [ ] Gehaltene Gegenstände in Online-Duellen gleich
+305. [x] Gegenstand-Namen eigenständig prüfen (Test: keine Namensdopplung)
+306. [x] Gehaltene Gegenstände in Online-Duellen gleich (gleiches Modell und Spielstand)
 307. [ ] Gegenstand-Sets pro Spirling speichern
-308. [ ] Gegenstand 'Echo-Muschel': Bond-Chance +5 % beim Halter
-309. [ ] Gegenstand 'Ruhekerze': +1 Energie beim Rasten
-310. [ ] Gegenstand 'Glutstein' für Ember-Felder
-311. [ ] Gegenstand 'Gezeitenstein' für Tide-Felder
-312. [ ] Gegenstand 'Dämmerstein' für Umbra-Felder
-313. [ ] Gegenstand-Effekte im Schadensvorschau-Wert
-314. [ ] Gegenstand-Hinweis beim Ausrüsten (was es tut)
+308. [x] Gegenstand 'Echo-Muschel': Bond-Chance +5 % beim Halter ('Calling Conch')
+309. [x] Gegenstand 'Ruhekerze': +1 Energie beim Rasten ('Quiet Wick')
+310. [x] Gegenstand 'Glutstein' für Ember-Felder ('Cinder Stone')
+311. [x] Gegenstand 'Gezeitenstein' für Tide-Felder ('Tide Stone')
+312. [x] Gegenstand 'Dämmerstein' für Umbra-Felder ('Murk Stone')
+313. [x] Gegenstand-Effekte im Schadensvorschau-Wert (über BattleRules.damage_mult)
+314. [x] Gegenstand-Hinweis beim Ausrüsten (was es tut) (bestehend: Hinweis im Andenken-Menü)
 315. [ ] Gegenstand-Limit: jeder Gegenstand nur einmal pro Team in Turnieren
-316. [ ] Gegenstand-Fund in versteckten Orten (bestehend)
-317. [ ] Gegenstand-Tests pro Gegenstand
+316. [x] Gegenstand-Fund in versteckten Orten (bestehend) (bestehend: Spark Coil im Versteck von Murk Hollow)
+317. [x] Gegenstand-Tests pro Gegenstand (tests/unit/test_trait_kit.gd)
 318. [ ] Gegenstand-Animation beim Auslösen
 319. [ ] Gegenstand-Sound beim Auslösen
-320. [ ] Gegenstand-Texte übersetzt
+320. [x] Gegenstand-Texte übersetzt (tools/i18n/de_kampf_traits.py)
 
 ## Rift-Felder und Umgebung
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-791 von 1000 Punkten umgesetzt.
+852 von 1000 Punkten umgesetzt.
 
