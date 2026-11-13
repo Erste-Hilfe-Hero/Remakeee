@@ -808,88 +808,88 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Fortschritt, XP und Training
 
 721. [x] Lager-Lernen: Spirlings auf der Bank erhalten die Hälfte der XP (Einstellung, Standard an)
-722. [ ] XP-Verteilung im Kampfende-Bericht
-723. [ ] Level-Cap blockiert XP (bestehend)
+722. [x] XP-Verteilung im Kampfende-Bericht (Wachstums-Zeile nach dem Kampf, GrowthRules.distribution_line)
+723. [x] Level-Cap blockiert XP (bestehend) (BattleModel._give_xp, Test test_kampf_growth_wild)
 724. [ ] Spark-Training (bestehend) mit Kampfquellen
-725. [ ] Technik-Lehrer
-726. [ ] Entwicklung nach Kampf (bestehend)
-727. [ ] Entwicklung abbrechen (Option)
-728. [ ] Temperament-Wechsel-Gegenstand
-729. [ ] Spark-Reset
-730. [ ] XP-Bonus für Rückkämpfe
-731. [ ] XP-Bonus für Bond-Spirlings
-732. [ ] XP-Malus bei Überlevel bewusst nicht
-733. [ ] XP-Kurve dokumentieren
-734. [ ] XP-Kurve im Simulator prüfen
-735. [ ] XP-Anzeige bei Bank-Spirlings
+725. [x] Technik-Lehrer (Echo-Kristalle mit teaches/for_elements, GameState.can_learn_echo)
+726. [x] Entwicklung nach Kampf (bestehend) (Overworld._after_battle Entfalten-Hinweis)
+727. [x] Entwicklung abbrechen (Option) (Entfalten nie automatisch, Zurückfalten jederzeit)
+728. [x] Temperament-Wechsel-Gegenstand (Temper Shift, PauseMenu)
+729. [x] Spark-Reset (spark_wash, GrowthRules.reset_spark)
+730. [x] XP-Bonus für Rückkämpfe (GrowthRules rematch_mult)
+731. [x] XP-Bonus für Bond-Spirlings (GrowthRules kinship_mult ab Verbundenheit 80)
+732. [x] XP-Malus bei Überlevel bewusst nicht (kein Malus ausser Era-V-Ringskalierung, in BALANCE.md und Lexikon)
+733. [x] XP-Kurve dokumentieren (docs/BALANCE.md gen:growth)
+734. [x] XP-Kurve im Simulator prüfen (GrowthRules.battles_between, Test)
+735. [x] XP-Anzeige bei Bank-Spirlings (XP_GAINED bench, Team-Menü Wachstum bis zum nächsten Ring)
 736. [ ] Training-Arena im Leuchtturm
 737. [ ] Trainings-Dummies (Spirlings aus Holz) für Tests
 738. [ ] Trainings-Kämpfe ohne Risiko
 739. [ ] Trainings-Ziele (Quests)
 740. [ ] Trainings-Statistik
-741. [ ] Level-Aufstieg-Zusammenfassung bei mehreren Levels
-742. [ ] Lern-Technik-Dialog überspringbar
-743. [ ] Lern-Technik später nachholen
-744. [ ] XP für Partner-Spirlings nie (bestehend)
-745. [ ] XP in Online-Duellen nie (Fairness)
-746. [ ] XP auf Story höher
-747. [ ] XP-Glücksbringer als gehaltener Gegenstand
-748. [ ] XP-Zusammenfassung pro Gebiet
-749. [ ] Level-Cap-Erhöhung nach Riss (bestehend)
-750. [ ] Level-Cap in Turnieren
-751. [ ] Lager-Lernen nur für das Team, nicht für das Lager
-752. [ ] Lager-Lernen respektiert Level-Cap (umgesetzt)
-753. [ ] Lager-Lernen für erschöpfte Spirlings nicht (umgesetzt)
-754. [ ] Lager-Lernen in den Einstellungen (umgesetzt)
-755. [ ] Lager-Lernen im Lexikon erklären
-756. [ ] Training: Wochen-Echo gibt Spark
-757. [ ] Training: Feste geben Spark
-758. [ ] Training: Turm gibt Gegenstände
-759. [ ] Training: Online-Weltziel gibt XP-Bonus
-760. [ ] Training: kein Grind-Zwang (Balance-Ziel)
+741. [x] Level-Aufstieg-Zusammenfassung bei mehreren Levels (GrowthRules.summary_line im Kampflog)
+742. [x] Lern-Technik-Dialog überspringbar (kein Wahl-Dialog mitten im Kampf, nur eine Zeile, GrowthRules.missed_arts)
+743. [x] Lern-Technik später nachholen (GameState.relearn)
+744. [x] XP für Partner-Spirlings nie (bestehend) (BattleModel._award_xp is_partner_index)
+745. [x] XP in Online-Duellen nie (Fairness) (EchoTeam.duel_copy, Test)
+746. [x] XP auf Story höher (GrowthRules difficulty_mult)
+747. [x] XP-Glücksbringer als gehaltener Gegenstand (growth_charm)
+748. [x] XP-Zusammenfassung pro Gebiet (Erfolge > Wachstum und Bindungen)
+749. [x] Level-Cap-Erhöhung nach Riss (bestehend) (GameState.LEVEL_CAPS)
+750. [x] Level-Cap in Turnieren (EchoTeam.DUEL_LEVEL Ring 50)
+751. [x] Lager-Lernen nur für das Team, nicht für das Lager (BattleModel._award_xp nur parties)
+752. [x] Lager-Lernen respektiert Level-Cap (umgesetzt)
+753. [x] Lager-Lernen für erschöpfte Spirlings nicht (umgesetzt)
+754. [x] Lager-Lernen in den Einstellungen (umgesetzt)
+755. [x] Lager-Lernen im Lexikon erklären (Lexikon bench_lessons)
+756. [x] Training: Wochen-Echo gibt Spark (WeeklyChallenge.REWARDS spark_charm)
+757. [x] Training: Feste geben Spark (spark_charm bei jedem Fest-Händler)
+758. [x] Training: Turm gibt Gegenstände (GrowthRules.tower_finds in RiftTower.finish)
+759. [x] Training: Online-Weltziel gibt XP-Bonus (GrowthRules world_goal, FriendsMenu)
+760. [x] Training: kein Grind-Zwang (Balance-Ziel) (no_grind_battles, Test)
 
 ## Wild-Begegnungen und Bond
 
-761. [ ] Bond-Echo-Melodie (bestehend) bleibt ohne Wurf und ohne Quote
-762. [ ] Bond nur gegen Wild (bestehend)
-763. [ ] Bond im Schwarm (bestehend)
-764. [ ] Bond-Bonus durch Status (bestehend prüfen)
-765. [ ] Bond-Bonus durch Feld
-766. [ ] Bond-Bonus durch Gegenstand Echo-Muschel
-767. [ ] Bond-Fehlschlag gibt freie Aktion (bestehend)
+761. [x] Bond-Echo-Melodie (bestehend) bleibt ohne Wurf und ohne Quote (BondEcho, BondCalc)
+762. [x] Bond nur gegen Wild (bestehend)
+763. [x] Bond im Schwarm (bestehend)
+764. [x] Bond-Bonus durch Status (bestehend prüfen) (BondCalc.STATUS_BONUS)
+765. [x] Bond-Bonus durch Feld (WildRules.field_bond_bonus)
+766. [x] Bond-Bonus durch Gegenstand Echo-Muschel (echo_shell)
+767. [x] Bond-Fehlschlag gibt freie Aktion (bestehend)
 768. [ ] Bond-Erfolg-Animation eigenständig
-769. [ ] Wild-Begegnungen im Farn, Schilf, Geröll (bestehend)
-770. [ ] Wild-Ketten-Bonus (Prisma-Chance steigt)
-771. [ ] Wild-Schwarm-Ereignisse
-772. [ ] Wild-Spawns nach Tageszeit (bestehend)
-773. [ ] Wild-Spawns nach Feld
-774. [ ] Wild-Auto-Kampf (bestehend)
-775. [ ] Wild-Level an Gebiet
-776. [ ] Wild-KI Stufe 0 (bestehend)
+769. [x] Wild-Begegnungen im Farn, Schilf, Geröll (bestehend)
+770. [x] Wild-Ketten-Bonus (Prisma-Chance steigt) (WildRules.prism_chance)
+771. [x] Wild-Schwarm-Ereignisse (WildRules.swarm)
+772. [x] Wild-Spawns nach Tageszeit (bestehend)
+773. [x] Wild-Spawns nach Feld (Wetter hebt Elemente, WildRules.weather_boost)
+774. [x] Wild-Auto-Kampf (bestehend)
+775. [x] Wild-Level an Gebiet (encounters.json min/max)
+776. [x] Wild-KI Stufe 0 (bestehend)
 777. [ ] Wild-Überraschung
-778. [ ] Wild-Rückzug-Regel (bestehend)
-779. [ ] Wild-Spirlings mit Gegenständen (selten)
+778. [x] Wild-Rückzug-Regel (bestehend)
+779. [x] Wild-Spirlings mit Gegenständen (selten) (WildRules.roll_held)
 780. [ ] Wild-Begegnungs-Rate einstellbar (Laterne)
-781. [ ] Wild-Abwehr-Gegenstand
-782. [ ] Wild-Lockmittel
-783. [ ] Wild-Prisma-Varianten (bestehend)
-784. [ ] Wild-Seltenheit sichtbar im Spirlog
-785. [ ] Wild-Spawn-Tabellen validieren
-786. [ ] Bond-Melodie barrierefrei (visuell + Ton)
-787. [ ] Bond-Melodie Schwierigkeit pro Art
-788. [ ] Bond-Ergebnis ohne Prozentzahl (Leitplanke)
-789. [ ] Bond-Statistik im Lexikon
-790. [ ] Bond-Tests (bestehend)
+781. [x] Wild-Abwehr-Gegenstand (Wild Ward)
+782. [x] Wild-Lockmittel (Lure Scent, Encounter Call)
+783. [x] Wild-Prisma-Varianten (bestehend)
+784. [x] Wild-Seltenheit sichtbar im Spirlog (SpirlogBook.page_text)
+785. [x] Wild-Spawn-Tabellen validieren (test_kampf_growth_wild)
+786. [x] Bond-Melodie barrierefrei (visuell + Ton) (BondMinigame Form, Licht und Ton je Marke)
+787. [x] Bond-Melodie Schwierigkeit pro Art (BondEcho.CALL_LENGTH nach Seltenheit)
+788. [x] Bond-Ergebnis ohne Prozentzahl (Leitplanke)
+789. [x] Bond-Statistik im Lexikon (Lexikon bond_stats)
+790. [x] Bond-Tests (bestehend)
 791. [ ] Wild-Horde mit Anführer
-792. [ ] Wild-Horde-Bond
+792. [x] Wild-Horde-Bond
 793. [ ] Wild-Boss (seltene alte Spirlings) im Endgame
 794. [ ] Wild-Begegnung im Nebel (Sicht begrenzt)
-795. [ ] Wild-Begegnung nachts häufiger
-796. [ ] Wild-Begegnung im Riss mit Feld
-797. [ ] Wild-Begegnung als Tageshighlight (bestehend Find of the Day)
-798. [ ] Wild-Begegnung Online-Echo
-799. [ ] Wild-Begegnung Wochen-Spawn
-800. [ ] Wild-Begegnung Fest-Spawn
+795. [x] Wild-Begegnung nachts häufiger (WildRules.rate_mult)
+796. [x] Wild-Begegnung im Riss mit Feld (Kartenfeld gilt für Wildkämpfe)
+797. [x] Wild-Begegnung als Tageshighlight (bestehend Find of the Day)
+798. [x] Wild-Begegnung Online-Echo (OnlineEvents.sighting_boost)
+799. [x] Wild-Begegnung Wochen-Spawn (WildRules.weekly)
+800. [x] Wild-Begegnung Fest-Spawn (Season-Boost)
 
 ## Endgame-Kampfmodi
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-680 von 1000 Punkten umgesetzt.
+747 von 1000 Punkten umgesetzt.
 
