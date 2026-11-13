@@ -27,6 +27,7 @@
   "Round %d": "ラウンド%d",
   "Send an emote": "エモートを送る",
   "The duel ended without a winner.": "デュエルは勝者なしで終わった。",
+  "The referee could not play this duel again. It does not count.": "審判はこの対戦を再生できなかった。この対戦は数えない。",
   "The two results did not match. The duel does not count.": "ふたつの結果が合わない。このデュエルは無効。",
   "Their team: %s": "相手のチーム：%s",
   "This duel is over.": "このデュエルは終わった。",

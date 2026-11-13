@@ -14,5 +14,7 @@
  "field_pollen_drift": {"title": "Pollen Drift", "text": "Pollen settles on everything. Bloom arts hit harder, Gale arts stall, and Bloom Spirlings mend a little each turn."},
  "field_dawn_glow": {"title": "Dawn Glow", "text": "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer."},
  "field_rubble_rain": {"title": "Rubble Rain", "text": "Grit patters down without end. Stone arts hit harder, Volt arts ground out, and nobody can be Jolted."},
- "field_gale_eye": {"title": "Gale Eye", "text": "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed."}
+ "field_gale_eye": {"title": "Gale Eye", "text": "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed."},
+ "challenges": {"title": "Challenge rules", "text": "Extra rules for a harder journey: One per Place, First Meeting, Spring Water Only, Shuffled Wilds and Arts, Stand Your Ground, Half Rested, Ace Up Front, Night Bonds, One Colour, Empty Pockets, Off the Books and Trust No One. Any of them combine. They are taken before the first mended Rift and can be dropped at any time; the record remembers. The shuffles follow a seed code you can share with friends."},
+ "ring_caps": {"title": "Ring caps", "text": "On Veteran and Rift-Born your Spirlings grow only to the ring cap until the end of Act I: R12 at the start, then R15, R18, R23, R28, R32, R36, R40, R44, R50, R54, R57 and R60 as Rifts are mended. Rest springs name the cap of the moment. After Act I there is no cap."}
 }

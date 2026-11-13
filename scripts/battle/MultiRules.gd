@@ -118,7 +118,8 @@ static func describe(data: Dictionary, who: String) -> String:
 ## tag partner's slots.
 static func shift_targets(m: BattleModel, side: int, slot: int) -> Array[int]:
 	var out: Array[int] = []
-	if m == null or not m.is_multi() or m.is_partner_slot(side, slot):
+	# A challenge rule that locks swaps locks trading places too.
+	if m == null or not m.is_multi() or m.is_partner_slot(side, slot) or (m.swap_locked and side == BattleModel.Side.PLAYER):
 		return out
 	for other: int in m.slot_count(side):
 		var i: int = m.active_index(side, other)
