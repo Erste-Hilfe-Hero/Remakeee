@@ -211,7 +211,9 @@ func back_button() -> Button:
 ## first enabled row). [param guard_ms]: how long taps are ignored after the list opens.
 ## Rows may also carry "icon" (Texture2D, drawn left of the text), "decorate" (a Callable
 ## that gets the row Button to draw on, e.g. a Vigor bar), "hint" (line under the list) and
-## "say" (a state only screen readers read, e.g. "worn out" when a mark shows it).
+## "say" (a state only screen readers read, e.g. "worn out" when a mark shows it) and
+## "right" (text a decoration draws at the right end, e.g. a price: the row's own text is cut
+## short with ".." so it never runs under it, "right_pad" pixels of room around it).
 ## [param tabs]: names of tabs above the list; left/right or a tap on a tab returns
 ## TAB_PICKED - tab.
 func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, focus: int = -1,
@@ -264,6 +266,13 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.custom_minimum_size = Vector2(0, row_h)
 		b.clip_text = true
+		var right: String = str(rows[i].get("right", ""))
+		if not right.is_empty() and columns == 1:
+			var full: String = b.text
+			var pad: float = float(rows[i].get("right_pad", 6.0))
+			b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+			b.text = Loc.t(full)
+			b.resized.connect(func() -> void: b.text = fit_before_right(b, Loc.t(full), right, pad))
 		if columns > 1:
 			# Grid of big buttons: the symbol on top, the word under it, both centred.
 			b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -473,6 +482,24 @@ func fade_in() -> void:
 	modulate.a = 0.0
 	_fade = create_tween()
 	Juice.shaped(_fade.tween_property(self, "modulate:a", 1.0, FADE_IN), "fade")
+
+## [param full] cut short with ".." so it ends before [param right] (and [param pad] pixels)
+## at the right end of row [param b]. Bug sweep 2: shop rows of Eras I and II wrote the price
+## after the name and the row cut the price off ("10000 Riftglass  99,9").
+static func fit_before_right(b: Button, full: String, right: String, pad: float) -> String:
+	var font: Font = b.get_theme_font("font")
+	var fs: int = b.get_theme_font_size("font_size")
+	var box: StyleBox = b.get_theme_stylebox("normal")
+	var inner: float = b.size.x - (box.get_margin(SIDE_LEFT) + box.get_margin(SIDE_RIGHT) if box != null else 0.0)
+	if b.icon != null:
+		inner -= b.icon.get_width() + b.get_theme_constant("h_separation")
+	var room: float = inner - font.get_string_size(right, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x - pad
+	if font.get_string_size(full, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x <= room:
+		return full
+	var cut: String = full
+	while cut.length() > 1 and font.get_string_size(cut + "..", HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x > room:
+		cut = cut.substr(0, cut.length() - 1)
+	return cut.strip_edges() + ".."
 
 ## Scrolls the list back to its first row (a tap on the title, item 1797).
 func scroll_to_top() -> void:
