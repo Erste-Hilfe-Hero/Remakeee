@@ -535,6 +535,11 @@ func _run() -> void:
 	await _play(intro)
 	if model.has_meta("bonus_goal") and not model.has_meta("quick"):
 		await _text.show_text(str(model.get_meta("bonus_goal")))
+	# Difficulty and challenge rules of a Warden battle or a run with rules (KAMPF plan 495).
+	if model.has_meta("challenge_line") and not model.has_meta("quick"):
+		await _text.show_text(str(model.get_meta("challenge_line")))
+	if model.is_wild and not model.bond_block.is_empty() and not model.has_meta("quick"):
+		await _text.show_text(Loc.t(model.bond_block))
 	_refresh_goal()
 	for id: String in (["battle", "bond"] if model.is_wild else ["battle"]):
 		for line: String in Tips.take(id):
