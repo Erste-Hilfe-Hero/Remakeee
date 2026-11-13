@@ -430,7 +430,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 368. [x] Schwarm-Kämpfe (bestehend) mit Schwarm-Anführer (höchster Ring führt, +1 Wucht; fällt er, -1 Tempo für den Rest)
 369. [x] Tag-Kampf mit Kestra (bestehend) mit gemeinsamer Kombi-Technik (Kombo gilt auch mit Partnern)
 370. [x] Kombi-Techniken bei passenden Elementen zweier Verbündeter (data/multi_rules.json combos, x1.25)
-371. [ ] Mehrfachkampf-Tutorial
+371. [x] Mehrfachkampf-Tutorial (Tipp beim ersten Mehrfachkampf, im Leitfaden)
 372. [ ] Mehrfachkampf-Geschwindigkeit: Text pro Aktion kürzer
 373. [x] Mehrfachkampf-Log filtern (Tippen: Alle, Deine, Gegner)
 374. [x] Mehrfachkampf im Turm (jedes 5. Stockwerk 2v2)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-95 von 1000 Punkten umgesetzt.
+96 von 1000 Punkten umgesetzt.
 

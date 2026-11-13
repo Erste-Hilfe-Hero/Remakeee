@@ -94,3 +94,9 @@ T.update({
 "Root and Rock": "Wurzel und Fels",
 "Dusk and Dawn": "Dämmer und Morgen",
 })
+T.update({
+"Tip: Several Spirlings fight at once here. Each one gets its own orders, left to right.": "Tipp: Hier kämpfen mehrere Spirlings gleichzeitig. Jeder bekommt eigene Befehle, von links nach rechts.",
+"Pick a foe to aim at; the line shows how hard the art would hit it. Arts marked all sweep every foe.": "Wähle einen Gegner als Ziel; die Zeile zeigt, wie hart die Technik ihn träfe. Techniken mit alle treffen jeden Gegner.",
+"Two allies hitting one foe with paired elements set off a combo. The back row takes softer physical hits.": "Treffen zwei Verbündete einen Gegner mit passenden Elementen, gibt es eine Kombo. Die hintere Reihe nimmt physische Treffer schwächer.",
+"Battles with several Spirlings": "Kämpfe mit mehreren Spirlings",
+})

@@ -584,7 +584,10 @@ func _run() -> void:
 	if model.has_meta("bonus_goal") and not model.has_meta("quick"):
 		await _text.show_text(str(model.get_meta("bonus_goal")))
 	_refresh_goal()
-	for id: String in (["battle", "bond"] if model.is_wild else ["battle"]):
+	var tip_ids: Array[String] = ["battle", "bond"] if model.is_wild else ["battle"]
+	if _multi:
+		tip_ids.append("multi")
+	for id: String in tip_ids:
 		for line: String in Tips.take(id):
 			await _text.show_text(line)
 	_replaying = not replay_inputs.is_empty()

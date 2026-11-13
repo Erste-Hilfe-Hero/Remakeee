@@ -21,6 +21,10 @@ const LINES: Dictionary[String, Array] = {
 	"bond_echo": ["Bonding step 3: Hold out a Kin Charm when asked. You start with 20. Friendship is cheaper in bulk.",
 		"Bonding step 4: Listen to its call, then repeat it in the same order.",
 		"While you are new, a failed bond does not give the wild Spirling a free hit."],
+	# First battle with several Spirlings per side (KAMPF_PLAN_1000 item 371).
+	"multi": ["Tip: Several Spirlings fight at once here. Each one gets its own orders, left to right.",
+		"Pick a foe to aim at; the line shows how hard the art would hit it. Arts marked all sweep every foe.",
+		"Two allies hitting one foe with paired elements set off a combo. The back row takes softer physical hits."],
 	"wild_area": ["Tip: Wild Spirlings hide in ferns, reeds and loose scree. Walk through them to meet one."],
 	"goals": [{"touch": "Tip: Lost? Tap = and pick Goals. Nobody else in this valley will tell you the truth.",
 		"buttons": "Tip: Lost? Press Start and pick Goals. Nobody else in this valley will tell you the truth."}],
@@ -52,6 +56,7 @@ const LINES: Dictionary[String, Array] = {
 const TOPICS: Dictionary[String, String] = {
 	"walk": "Walking", "menu": "The menu", "save": "Saving", "goals": "Goals", "wild_area": "Wild Spirlings",
 	"battle": "Energy in battle", "bond": "Bonding", "bond_mine": "Bonding: Mine!", "bond_echo": "Bonding: Echo call", "team_order": "Team order",
+	"multi": "Battles with several Spirlings",
 	"rest_spot": "Rest spots", "travel": "Travel", "satchel": "The satchel", "keepsake": "Keepsakes",
 	"unfurl": "Unfurling", "gear": "Wayfarer Gear", "friends": "Friends", "storage": "Storage",
 	"map_page": "Map pages", "photo": "Photo mode",

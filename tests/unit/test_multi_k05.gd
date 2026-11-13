@@ -306,3 +306,7 @@ func test_back_row_softens_physical_hits() -> void:
 	var duo := _model([_mk("Kindlop"), _mk("Puddlet")] as Array[Spirling], [_mk("Zippit"), _mk("Kelpup")] as Array[Spirling], [2, 2])
 	duo.start()
 	assert_false(MultiRules.in_back_row(duo, Side.FOE, 1), "two slots are all front")
+
+func test_multi_tip_is_short_and_in_the_guide() -> void:
+	assert_true(Tips.TOPICS.has("multi"))
+	assert_lte(Tips.LINES["multi"].size(), Tips.MAX_LINES)

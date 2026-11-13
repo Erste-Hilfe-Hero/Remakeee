@@ -21,6 +21,7 @@
   "Ally": "Verbündet",
   "Ash hangs in the air. Ember arts hit harder, Tide arts sputter.": "Asche hängt in der Luft. Ember-Techniken treffen härter, Tide-Techniken stottern.",
   "Battle log: %s": "Kampflog: %s",
+  "Battles with several Spirlings": "Kämpfe mit mehreren Spirlings",
   "Breakwater Stand": "Wellenbrecher",
   "Calls a rain of rubble over the field.": "Ruft einen Geröllregen über das Feld.",
   "Calls the eye of a gale over the field.": "Ruft das Auge eines Sturms über das Feld.",
@@ -47,6 +48,7 @@
   "Lure Dance": "Locktanz",
   "Mending Chorus": "Heilchor",
   "No Rift field.": "Kein Riss-Feld.",
+  "Pick a foe to aim at; the line shows how hard the art would hit it. Arts marked all sweep every foe.": "Wähle einen Gegner als Ziel; die Zeile zeigt, wie hart die Technik ihn träfe. Techniken mit alle treffen jeden Gegner.",
   "Plants itself before its most hurt ally and takes the aimed hits meant for it for 2 turns.": "Stellt sich vor den am schwersten verletzten Verbündeten und fängt 2 Runden lang die gezielten Treffer für ihn ab.",
   "Pollen settles on everything. Bloom arts hit harder, Gale arts stall, and Bloom Spirlings mend a little each turn.": "Blütenstaub legt sich auf alles. Bloom-Techniken treffen härter, Gale-Techniken stocken, und Bloom-Spirlings heilen jede Runde ein wenig.",
   "Raises a ring of shale around its side. Everyone there takes less damage for 3 turns.": "Zieht einen Ring aus Schiefer um die eigene Seite. Alle dort nehmen 3 Runden lang weniger Schaden.",
@@ -66,6 +68,8 @@
   "The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off.": "Der Wind kreist um den Riss und hält in der Mitte den Atem an. Gale-Techniken schneiden schärfer, Bloom-Techniken welken, und niemand kann eindösen.",
   "Thunder Tide": "Donnerflut",
   "Tide School": "Flutschwarm",
+  "Tip: Several Spirlings fight at once here. Each one gets its own orders, left to right.": "Tipp: Hier kämpfen mehrere Spirlings gleichzeitig. Jeder bekommt eigene Befehle, von links nach rechts.",
+  "Two allies hitting one foe with paired elements set off a combo. The back row takes softer physical hits.": "Treffen zwei Verbündete einen Gegner mit passenden Elementen, gibt es eine Kombo. Die hintere Reihe nimmt physische Treffer schwächer.",
   "With %s down, the swarm falters!": "Ohne %s gerät der Schwarm ins Wanken!",
   "Yours": "Deiner"
  }
