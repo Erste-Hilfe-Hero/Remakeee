@@ -27,6 +27,7 @@
   "Round %d": "Raunt %d",
   "Send an emote": "Bir ifade gönder",
   "The duel ended without a winner.": "Düello kazanansız bitti.",
+  "The referee could not play this duel again. It does not count.": "Hakem bu düelloyu yeniden oynatamadı. Sayılmaz.",
   "The two results did not match. The duel does not count.": "İki sonuç uyuşmuyor. Düello sayılmaz.",
   "Their team: %s": "Onların takımı: %s",
   "This duel is over.": "Bu düello bitti.",

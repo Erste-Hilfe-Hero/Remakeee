@@ -916,8 +916,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 821. [x] Endgame ohne Bezahl-Elemente (Hallen kämpfen als Echo-Kampf: keine Siegel, Amulette oder Pass-Energie, Belohnungen nie kaufbar (Test))
 822. [x] Endgame-Texte übersetzt (tools/i18n/de_battle_halls.py)
 823. [x] Endgame-Tests (tests/unit/test_battle_halls.gd)
-824. [ ] Endgame-Balance
-825. [ ] Endgame-Replay
+824. [x] Endgame-Balance (Hallen-Gegnerringe per Probe eingestellt, Test: erste Runde jeder Halle weder geschenkt noch hoffnungslos)
+825. [x] Endgame-Replay (letzter Hallenkampf als Wiederholungs-Code, ansehbar unter Rekorde, Online-Wiederholungen)
 826. [x] Endgame-Seed teilen (Lauf-Code: acht Zeichen für Halle und Seed, Freunde spielen denselben Lauf)
 827. [x] Endgame-Freundes-Duelle (Echo-Duell und Live-Duell unter Freunden)
 828. [x] Endgame-Team-Codes (Team-Code: drei Spirlings als acht Zeichen, Kampf gegen das Team auf Ring 50)
@@ -955,15 +955,15 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 857. [x] Online-Belohnungen ohne Geld (Wegmarken nie käuflich, Belohnungen sind Gegenstände und Titel)
 858. [x] Online-Datenschutz (bestehend) (bestehend)
 859. [x] Online-Server Contabo (bestehend) (bestehend)
-860. [ ] Online-Verbindungsabbruch: Kampf läuft lokal weiter
-861. [ ] Online-KI-Echos nutzen Meister-KI
-862. [ ] Online-Fairness-Test
+860. [x] Online-Verbindungsabbruch: Kampf läuft lokal weiter (Online.in_battle: kein Pause-Bildschirm während eines Kampfes)
+861. [x] Online-KI-Echos nutzen Meister-KI (EchoTeam.DUEL_AI = 3)
+862. [x] Online-Fairness-Test (tests/unit/test_online_echo_k11.gd: faire Liga und Echo-Duell gleich für alle)
 863. [x] Online-Version prüfen (bestehend CLIENT_VERSION) (bestehend)
-864. [ ] Online-Echos mit gehaltenen Gegenständen
-865. [ ] Online-Felder wählbar
-866. [ ] Online-Regeln pro Woche
+864. [x] Online-Echos mit gehaltenen Gegenständen (EchoTeam nimmt Andenken mit, nie gekaufte; Server nur bekannte Items (20261113200120_echo_held.sql))
+865. [x] Online-Felder wählbar (Echo-Duell: Feld vor dem Kampf wählen, EchoTeam.DUEL_FIELDS)
+866. [x] Online-Regeln pro Woche (Echo-Duelle mit der Wochenregel der Kampfhallen)
 867. [x] Online-Statistik (ReplayLibrary: Siegquote pro Spirling, meistgesehene Gegner)
-868. [ ] Online-Abzeichen
+868. [x] Online-Abzeichen (Abzeichen echo_duelist und echo_victor)
 869. [x] Online-Titel (Liga-Saisontitel und Hallen-Titel auf der Wanderer-Karte (20261113200110_card_title.sql))
 870. [x] Online-Melde-Funktion (bestehend reports) (bestehend, reports)
 871. [x] Online-Sperre bei Betrug (_cheat_held: nach cheat_flag_limit Vermerken raus aus Liga und Raids)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-136 von 1000 Punkten umgesetzt.
+145 von 1000 Punkten umgesetzt.
 

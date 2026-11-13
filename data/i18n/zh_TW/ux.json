@@ -196,6 +196,23 @@
   "Vigor %d/%d to %d/%d": "元氣 %d/%d 變為 %d/%d",
   "Already knows this art.": "已經會這項技藝了。",
   "Wrong element.": "屬性不符。",
-  "Works on its own at: %s": "會自動生效的地方：%s"
+  "Works on its own at: %s": "會自動生效的地方：%s",
+  "Bonded %d/%d": "已羈絆%d/%d",
+  "Look in: %s": "查看：%s",
+  "Nickname": "暱稱",
+  "Nickname for %s": "%s的暱稱",
+  "Photo mode": "拍照模式",
+  "Photo mode: slide the D-pad to look around, tap the world for a photo, = changes the frame, B leaves.": "拍照模式：滑動方向鍵環顧四周，點擊畫面拍照，=更換邊框，B退出。",
+  "Photo mode: the D-pad looks around, A takes a photo, Start changes the frame, B leaves.": "拍照模式：方向鍵環顧四周，A拍照，Start更換邊框，B退出。",
+  "Ready to unfurl": "可以舒展",
+  "Seen %d/%d": "已見%d/%d",
+  "That name can't be used. Letters and up to 3 digits, at most 10 characters.": "這個名字不能用。只能用字母和最多3個數字，最多10個字元。",
+  "Use it at %s: face the spot and tap it.": "在%s使用：面向該處並點擊。",
+  "Kind": "種類",
+  "New": "最新",
+  "Nothing to swap.": "沒有可替換的。",
+  "Swap %s with whom?": "把%s和誰替換？",
+  "Swap with team...": "與隊伍替換……",
+  "seen": "見過"
  }
 }
