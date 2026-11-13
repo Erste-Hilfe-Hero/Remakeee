@@ -25,7 +25,7 @@ T = {
 "Echo Soul": "Echo-Seele",
 "Gains 2 Energy whenever a new Rift field is laid.": "Erhält 2 Energie, sobald ein neues Riss-Feld entsteht.",
 # Lexicon
-"Rift fields": "Riss-Felder",
+"Rift fields": "Rift-Felder",
 "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns on every difficulty; then the place's own field comes back. A new field pushes the old one out at once.":
     "Ein Riss-Feld lässt ein Element x1.2 treffen und ein anderes x0.85. Eine Ruf-Technik legt ihr Feld auf jeder Stufe für 5 Runden; danach kehrt das Feld des Ortes zurück. Ein neues Feld verdrängt das alte sofort.",
 "Ash hangs in the air. Ember arts hit harder, Tide arts sputter.": "Asche hängt in der Luft. Ember-Techniken treffen härter, Tide-Techniken stottern.",
