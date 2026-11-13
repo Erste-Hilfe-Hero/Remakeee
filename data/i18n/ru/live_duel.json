@@ -27,6 +27,7 @@
   "Round %d": "Раунд %d",
   "Send an emote": "Отправить эмоцию",
   "The duel ended without a winner.": "Дуэль закончилась без победителя.",
+  "The referee could not play this duel again. It does not count.": "Судья не смог воспроизвести эту дуэль. Она не засчитывается.",
   "The two results did not match. The duel does not count.": "Два результата не совпали. Дуэль не засчитана.",
   "Their team: %s": "Их команда: %s",
   "This duel is over.": "Эта дуэль окончена.",
