@@ -21,7 +21,7 @@ AREAS = [
 "Gegner kündigt seinen nächsten Spirling an, wenn er wechselt (Ankündigungs-Option)",
 "[x] Doppelte Aktion eines Bosses klar als 'Nachhall' markieren (BONUS_ACTION)",
 "Rasten im Mehrfachkampf: Wahl 'Alle rasten' als Abkürzung",
-"Schnellwahl 'Letzten Zug wiederholen' für Wildkämpfe",
+"[x] Schnellwahl 'Letzten Zug wiederholen' für Wildkämpfe (CommandMenu.prefer_row, BattleInfo.focus_row: Fokus liegt auf der letzten Technik)",
 "[x] Zugvorschau: Fehlschlag-Chance bei Genauigkeit unter 100 % als Prozentwert (BattleInfo.miss_pct)",
 "Kampfbeginn mit Initiative-Bonus, wenn der Spieler den Gegner von hinten anspricht",
 "[x] Überraschungsangriff wilder Spirlings im hohen Farn: erster Zug für den Gegner (selten) (BattleModel.ambush, Overworld)",

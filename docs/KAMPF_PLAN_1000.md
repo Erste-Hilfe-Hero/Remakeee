@@ -45,7 +45,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 10. [ ] Gegner kündigt seinen nächsten Spirling an, wenn er wechselt (Ankündigungs-Option)
 11. [x] Doppelte Aktion eines Bosses klar als 'Nachhall' markieren (BONUS_ACTION)
 12. [ ] Rasten im Mehrfachkampf: Wahl 'Alle rasten' als Abkürzung
-13. [ ] Schnellwahl 'Letzten Zug wiederholen' für Wildkämpfe
+13. [x] Schnellwahl 'Letzten Zug wiederholen' für Wildkämpfe (CommandMenu.prefer_row, BattleInfo.focus_row: Fokus liegt auf der letzten Technik)
 14. [x] Zugvorschau: Fehlschlag-Chance bei Genauigkeit unter 100 % als Prozentwert (BattleInfo.miss_pct)
 15. [ ] Kampfbeginn mit Initiative-Bonus, wenn der Spieler den Gegner von hinten anspricht
 16. [x] Überraschungsangriff wilder Spirlings im hohen Farn: erster Zug für den Gegner (selten) (BattleModel.ambush, Overworld)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-562 von 1000 Punkten umgesetzt.
+563 von 1000 Punkten umgesetzt.
 
