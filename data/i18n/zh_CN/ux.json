@@ -213,6 +213,7 @@
   "Nothing to swap.": "没有可替换的。",
   "Swap %s with whom?": "把%s和谁替换？",
   "Swap with team...": "与队伍替换……",
-  "seen": "见过"
+  "seen": "见过",
+  "new": "新"
  }
 }

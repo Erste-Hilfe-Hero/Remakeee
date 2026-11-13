@@ -1,0 +1,11 @@
+{
+ "_comment": "tr translation of the kampf_show table, keyed by the English text.",
+ "strings": {
+  "%s awakens": "%s uyanıyor",
+  "Bonded": "Bağ kuruldu",
+  "Side by side: %s": "Omuz omuza: %s",
+  "Slipped away": "Sıvışıldı",
+  "Victory": "Zafer",
+  "Worn out": "Tükendi"
+ }
+}

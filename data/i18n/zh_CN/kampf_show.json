@@ -1,0 +1,11 @@
+{
+ "_comment": "zh_CN translation of the kampf_show table, keyed by the English text.",
+ "strings": {
+  "%s awakens": "%s觉醒了",
+  "Bonded": "结下羁绊",
+  "Side by side: %s": "并肩作战：%s",
+  "Slipped away": "成功脱身",
+  "Victory": "胜利",
+  "Worn out": "精疲力竭"
+ }
+}
