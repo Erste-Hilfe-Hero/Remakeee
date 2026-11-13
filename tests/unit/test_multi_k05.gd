@@ -310,3 +310,10 @@ func test_back_row_softens_physical_hits() -> void:
 func test_multi_tip_is_short_and_in_the_guide() -> void:
 	assert_true(Tips.TOPICS.has("multi"))
 	assert_lte(Tips.LINES["multi"].size(), Tips.MAX_LINES)
+
+func test_a_foe_wayfarer_can_fight_in_formation() -> void:
+	var m := _model([_mk("Kindlop"), _mk("Puddlet")] as Array[Spirling], [_mk("Plinthlet"), _mk("Shalebat")] as Array[Spirling], [2, 2])
+	m.foe_formation = true
+	m.start()
+	assert_eq(m.active_spirling(Side.FOE, 0).stage("def"), 1)
+	assert_eq(m.active_spirling(Side.FOE, 1).stage("def"), 1)

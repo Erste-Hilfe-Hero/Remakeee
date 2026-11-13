@@ -208,11 +208,15 @@ static func formations(m: BattleModel, side: int) -> Array[Dictionary]:
 			out.append(row)
 	return out
 
-## Gives the player's opening formation its stages (only the Wayfarer's own Spirlings), and a
-## wild swarm its leader (item 368).
+## Gives the player's opening formation its stages (only the Wayfarer's own Spirlings; a foe
+## Wayfarer only with "formation": true, item 399), and a wild swarm its leader (item 368).
 static func apply_formation_bonus(m: BattleModel) -> void:
 	_crown_leader(m)
-	var side: int = BattleModel.Side.PLAYER
+	_formation_for(m, BattleModel.Side.PLAYER)
+	if m.foe_formation and not m.is_wild:
+		_formation_for(m, BattleModel.Side.FOE)
+
+static func _formation_for(m: BattleModel, side: int) -> void:
 	for f: Dictionary in formations(m, side):
 		for s: int in f.slots:
 			var d: Dictionary = m._who(side, s)

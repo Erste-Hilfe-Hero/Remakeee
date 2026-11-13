@@ -154,6 +154,8 @@ var field_turns: int = 0
 var day_phase: int = -1
 ## Support arts in play per side (MultiRules): kind -> {"turns", "slot", ...}.
 var support: Array = [{}, {}]
+## True when the foe Wayfarer fights in formation too (map trainer "formation": true, item 399).
+var foe_formation: bool = false
 ## Share of the XP an earner gets that each healthy Spirling on the player's bench also gets
 ## ("Bench lessons" setting). 0 turns it off.
 var bench_share: float = 0.0

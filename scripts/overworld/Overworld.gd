@@ -4020,6 +4020,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	var front: Array = trainer.get("front", [1, 1])
 	model.front_size = [int(front[0]), int(front[1])]
 	model.foe_boss = str(trainer.get("boss", ""))
+	model.foe_formation = bool(trainer.get("formation", false))
 	var goal_key: String = str(trainer.get("goal_key", ""))
 	var goal: Dictionary = BattleGoals.all().get(goal_key, {}) if not goal_key.is_empty() and GameState.bonus_goals else {}
 	if not goal.is_empty():

@@ -423,7 +423,7 @@ AREAS = [
 "Mehrfachkampf: Einhand-Modus",
 "[x] Mehrfachkampf-Tests (bestehend) erweitern (test_multi_k05.gd)",
 "[x] Mehrfachkampf: Story-Kämpfe mit Ali-Wunsch (3v3, 4v1, 4v2) beibehalten (test_multi_battle Kartendaten)",
-"Mehrfachkampf: Gegner-Formationen pro Tamer",
+"[x] Mehrfachkampf: Gegner-Formationen pro Tamer (Tamer-Eintrag \"formation\": true)",
 "[x] Mehrfachkampf: Formation-Bonus (z. B. zwei Stone vorne +DEF) (data/multi_rules.json, nur eigene Seite)",
 ]),
 ("Bosse und Wardens", [

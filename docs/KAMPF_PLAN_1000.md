@@ -458,7 +458,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 396. [ ] Mehrfachkampf: Einhand-Modus
 397. [x] Mehrfachkampf-Tests (bestehend) erweitern (test_multi_k05.gd)
 398. [x] Mehrfachkampf: Story-Kämpfe mit Ali-Wunsch (3v3, 4v1, 4v2) beibehalten (test_multi_battle Kartendaten)
-399. [ ] Mehrfachkampf: Gegner-Formationen pro Tamer
+399. [x] Mehrfachkampf: Gegner-Formationen pro Tamer (Tamer-Eintrag "formation": true)
 400. [x] Mehrfachkampf: Formation-Bonus (z. B. zwei Stone vorne +DEF) (data/multi_rules.json, nur eigene Seite)
 
 ## Bosse und Wardens
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-96 von 1000 Punkten umgesetzt.
+97 von 1000 Punkten umgesetzt.
 
