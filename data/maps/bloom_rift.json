@@ -122,23 +122,23 @@
     "tamer": [
      {
       "species": "Sablarch",
-      "level": 117
+      "level": 112
      },
      {
       "species": "Fumeregent",
-      "level": 117
+      "level": 112
      },
      {
       "species": "Rookwarden",
-      "level": 117
+      "level": 112
      },
      {
       "species": "Woadcastle",
-      "level": 118
+      "level": 113
      },
      {
       "species": "Velverain",
-      "level": 118,
+      "level": 113,
       "held": "pith_mend"
      }
     ]
