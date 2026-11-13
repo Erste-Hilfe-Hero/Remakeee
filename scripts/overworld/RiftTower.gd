@@ -142,6 +142,10 @@ static func finish(t: Dictionary, cleared: int) -> Array[String]:
 	GameState.records["rift_" + str(t.id)] = n
 	var amount: int = (n - old) * FLOOR_WAYMARKS + (TOP_WAYMARKS if n >= floors(t) else 0)
 	var lines: Array[String] = Waymarks.reward_lines(Waymarks.earn(amount, "tower"))
+	# Every fifth floor cleared the first time also leaves a find (GrowthRules, KAMPF_PLAN).
+	for id: String in GrowthRules.tower_finds(old, n, SECTION):
+		GameState.add_item(id)
+		lines.append(Loc.t("Tower find: %s") % Loc.t(str(Database.item(id).get("name", id))))
 	if n >= floors(t):
 		lines.append_array(TraitKit.tower_reward(str(t.id)))
 	return lines

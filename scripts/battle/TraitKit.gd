@@ -146,7 +146,7 @@ static func rest_energy(s: Spirling) -> int:
 static func overcharge_bonus(s: Spirling) -> float:
 	return BattleRules.add_key(s, "overcharge_bonus")
 
-## Bond chance added by the keepsakes of the player's Spirlings in front (Echo Shell, item 308).
+## Bond chance added by the keepsakes of the player's Spirlings in front (Calling Conch, item 308).
 static func bond_bonus(model: BattleModel) -> float:
 	var out: float = 0.0
 	for slot: int in model.standing_slots(BattleModel.Side.PLAYER):

@@ -214,6 +214,8 @@
   "seen": "発見済み",
   "unavailable": "使えない",
   "worn out": "へとへと",
-  "new": "新しい"
+  "new": "新しい",
+  "Auto text: %s": "オートテキスト: %s",
+  "Talk in the world goes on by itself after a short read.": "会話は少し読む時間の後に自動で進みます。"
  }
 }

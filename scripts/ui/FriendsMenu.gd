@@ -9,6 +9,7 @@ const GOAL_TEXT: Dictionary = {
 	"battles": "Win battles",
 	"bonds": "Bond with wild Spirlings",
 	"rests": "Rest your team at rest spots",
+	"wayfarers": "Win Wayfarer battles",
 }
 
 static func run(menu: PauseMenu) -> void:
@@ -187,7 +188,12 @@ static func card_text(f: Dictionary) -> String:
 		"Play time: %d h" % int(c.get("hours", 0)),
 		"Friendship %d (%d points)" % [int(f.get("level", 1)), int(f.get("points", 0))],
 	]
-	return Loc.t("\n".join(lines)) + "\n" + FriendsMoreMenu.rank_line(f) + "\n" + wish_text(f.get("wishes", []))
+	return Loc.t("\n".join(lines)) + "\n" + rules_line(c) + FriendsMoreMenu.rank_line(f) + "\n" + wish_text(f.get("wishes", []))
+
+## "Challenge rules: 3" and a line break when the journey runs with rules (KAMPF_PLAN_1000 item 493).
+static func rules_line(card: Dictionary) -> String:
+	var n: int = int(card.get("rules", 0)) if card.get("rules") is int or card.get("rules") is float else 0
+	return Loc.t("Challenge rules: %d") % n + "\n" if n > 0 else ""
 
 ## "Wishes: Tonic, Remedy" or "Wishes: -" (point 46).
 static func wish_text(wishes: Variant) -> String:
@@ -597,6 +603,10 @@ static func run_goal(menu: MenuHost) -> void:
 			GameState.add_item(item)
 			Sound.sfx("coin")
 			await menu.info("The world reached %d%%! You received %s." % [tier * 25, item_name(item)])
+			# The full goal also lets the next battles grow faster (GrowthRules, KAMPF_PLAN).
+			if tier == 4:
+				GrowthRules.grant_world_boost(GameState.records)
+				await menu.info(Loc.t("Your Spirlings grow faster for the next %d battles.") % int(GrowthRules.num("world_goal_battles", 0)))
 	if not tiers.is_empty():
 		SaveManager.save_game()
 
@@ -624,7 +634,8 @@ static func run_board(menu: MenuHost) -> void:
 static func run_boards(menu: MenuHost) -> void:
 	var rift_on: bool = Online.flag_on("rift_board")
 	var league_on: bool = Online.flag_on("league_board")
-	if not rift_on and not league_on:
+	var climb_on: bool = Online.flag_on("climb_board")
+	if not rift_on and not league_on and not climb_on:
 		await run_board(menu)
 		return
 	while true:
@@ -633,6 +644,8 @@ static func run_boards(menu: MenuHost) -> void:
 			opts.append("Rift times")
 		if league_on:
 			opts.append_array(["Fair League wins", "Open League wins"] as Array[String])
+		if climb_on:
+			opts.append_array(["Lighthouse stair", "Echo tower"] as Array[String])
 		var idx: int = await menu.pick_strings("Weekly boards", opts)
 		if idx < 0:
 			return
@@ -641,6 +654,8 @@ static func run_boards(menu: MenuHost) -> void:
 			"Rift times": await run_rift_board(menu)
 			"Fair League wins": await run_week_board(menu, "league_board", {"p_league": "fair"}, "Fair League wins this week", "%d wins")
 			"Open League wins": await run_week_board(menu, "league_board", {"p_league": "open"}, "Open League wins this week", "%d wins")
+			"Lighthouse stair": await run_week_board(menu, "climb_board", {"p_kind": "stair"}, "Lighthouse stair, highest floor this week", "floor %d")
+			"Echo tower": await run_week_board(menu, "climb_board", {"p_kind": "tower"}, "Echo tower, highest floor this week", "floor %d")
 
 static func rift_name(id: String) -> String:
 	return Loc.t("%s Rift") % Loc.t(id.capitalize())

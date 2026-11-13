@@ -1,9 +1,12 @@
 {
  "_comment": "ru translation of the challenges table, keyed by the English text.",
  "strings": {
+  "%s also gives you: %s.": "%s также даёт тебе: %s.",
+  "%s raises a signal lantern. Battle now?": "%s поднимает сигнальный фонарь. Сразиться сейчас?",
   "%s: %d won, %d lost": "%s: побед %d, поражений %d",
   "A rule was dropped on the way.": "Одно правило потерялось по дороге.",
   "Ace Up Front": "Туз вперёд",
+  "Answer the signal": "Ответить на сигнал",
   "Battles won: %d, lost: %d": "Боёв выиграно: %d, проиграно: %d",
   "Bonds only form at night.": "Связь возникает только ночью.",
   "Challenge record": "Журнал испытаний",
@@ -14,6 +17,8 @@
   "Copies the seed. A friend who uses it gets the same shuffled wilds and arts.": "Копирует зерно. Друг, который его использует, получит тех же перемешанных диких и те же приёмы.",
   "Drop %s? Your record will remember it.": "Отказаться от правила «%s»? Журнал это запомнит.",
   "Drop it": "Отказаться",
+  "Echo tower": "Башня эха",
+  "Echo tower, highest floor this week": "Башня эха, самый высокий этаж за неделю",
   "Every Spirling that bonds with you knows arts drawn by your run seed.": "Каждый Spirling, связанный с тобой, знает приёмы, выпавшие по зерну твоего забега.",
   "Extra rules for a harder journey. Taken before your first Rift, dropped any time.": "Дополнительные правила для более тяжёлого пути. Берутся до первого Разлома, отменяются в любой момент.",
   "Extra rules for a harder journey: One per Place, First Meeting, Spring Water Only, Shuffled Wilds and Arts, Stand Your Ground, Half Rested, Ace Up Front, Night Bonds, One Colour, Empty Pockets, Off the Books and Trust No One. Any of them combine. They are taken before the first mended Rift and can be dropped at any time; the record remembers. The shuffles follow a seed code you can share with friends.": "Дополнительные правила для более тяжёлого пути: Один на место, Первая встреча, Только родниковая вода, Перемешанные дикие и приёмы, Ни шагу назад, Полуотдых, Туз вперёд, Ночные связи, Один цвет, Пустые карманы, Мимо кассы и Не верь никому. Их можно сочетать как угодно. Они берутся до первого залатанного Разлома и отменяются в любой момент; журнал это помнит. Перемешивание следует коду зерна, которым можно поделиться с друзьями.",
@@ -26,6 +31,7 @@
   "Keep it": "Оставить",
   "Lantern post: %s would battle you again today.": "Фонарная почта: %s хотят снова сразиться с тобой сегодня.",
   "Lantern post: no rematch invitations today.": "Фонарная почта: сегодня приглашений на реванш нет.",
+  "Lighthouse stair, highest floor this week": "Лестница маяка, самый высокий этаж за неделю",
   "Most battled:": "Чаще всего:",
   "New rules can only be taken before you mend your first Rift.": "Новые правила можно взять только до того, как залатаешь первый Разлом.",
   "Night Bonds": "Ночные связи",
@@ -55,6 +61,7 @@
   "Spring Water Only: no healing items on this journey.": "Только родниковая вода: никаких лечебных предметов в этом путешествии.",
   "Stand Your Ground": "Ни шагу назад",
   "Takes a seed a friend shared with you.": "Берёт зерно, которым с тобой поделился друг.",
+  "The lantern dims. Talk to them when you are ready.": "Фонарь гаснет. Заговори, когда будешь готов.",
   "The wild Spirlings of every place are shuffled by your run seed.": "Дикие Spirlings каждого места перемешиваются по зерну твоего забега.",
   "There is no seed code on the clipboard.": "В буфере обмена нет кода зерна.",
   "This journey is now in the run chronicle: %s.": "Это путешествие теперь в Летописи забега: %s.",
@@ -65,7 +72,9 @@
   "Wayfarer book": "Книга странников",
   "Wayfarers lead with their strongest Spirling.": "Странники начинают со своего сильнейшего Spirling.",
   "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "Спирлинги странников держатся близко к твоему сильнейшему, в пределах лимита кольца.",
+  "Win Wayfarer battles": "Побеждай в боях со странниками",
   "With challenge rules": "С правилами испытаний",
-  "best in %d turns": "рекорд за %d ходов"
+  "best in %d turns": "рекорд за %d ходов",
+  "floor %d": "этаж %d"
  }
 }

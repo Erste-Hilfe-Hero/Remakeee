@@ -410,6 +410,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"mono": "Both ears hear the same sound, for hearing on one side.",
 	"sound_test": "Listen to every tune, sound and cry you know.",
 	"text_voice": "Short blips while a line types out.",
+	"auto_text": "Talk in the world goes on by itself after a short read.",
 	"sound_captions": "Important sounds also show as a short text at the top.",
 	"screen_shake": "How much the screen shakes on big hits.",
 	"vibration": "How strongly the phone or gamepad vibrates.",
@@ -471,6 +472,7 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 		"game":
 			rows = [
 				["text_speed", "Text speed: %s" % String(GameState.TextSpeed.keys()[GameState.text_speed]).capitalize()],
+				["auto_text", "Auto text: %s" % ("On" if GameState.auto_text else "Off")],
 				["battle_speed", "Battle speed: %dx" % int(GameState.battle_speed_scale())],
 				["auto_battle", "Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off")],
 				["bench_lessons", "Bench lessons: %s" % shop_or("bench_lessons", "On" if GameState.bench_xp else "Off")],
@@ -548,6 +550,8 @@ func _settings_action(key: String, dir: int = 1) -> void:
 	match key:
 		"text_speed":
 			GameState.text_speed = next_text_speed(GameState.text_speed)
+		"auto_text":
+			GameState.auto_text = not GameState.auto_text
 		"battle_speed":
 			GameState.cycle_battle_speed()
 		"auto_battle":
