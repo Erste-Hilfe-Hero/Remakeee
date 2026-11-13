@@ -270,7 +270,12 @@ func _build() -> void:
 	_back_button.text = "Back"
 	_back_button.focus_mode = Control.FOCUS_NONE
 	_back_button.visible = false
-	_back_button.pressed.connect(func() -> void: _target_picked.emit(-1))
+	_back_button.pressed.connect(func() -> void:
+		# While a later Spirling of a formation chooses, Back takes the order before back (item 604).
+		if _menu.undo_ok and _target_buttons.is_empty():
+			_menu.request_undo()
+		else:
+			_target_picked.emit(-1))
 	_field.add_child(_back_button)
 
 	_bond_game = BondMinigame.new()
@@ -303,7 +308,15 @@ func _build() -> void:
 	_log_filter_button.pressed.connect(func() -> void:
 		_log_filter = BattleInfo.next_filter(_log_filter)
 		_fill_log())
-	log_box.add_child(_log_filter_button)
+	_log_filter_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var log_row := HBoxContainer.new()
+	log_box.add_child(log_row)
+	log_row.add_child(_log_filter_button)
+	# Guide and settings in battle (items 568-570, 583, 621).
+	var more := Button.new()
+	more.text = "More"
+	more.pressed.connect(_more_menu)
+	log_row.add_child(more)
 	# Photo mode in battle (KAMPF_PLAN_1000 662), the overworld's own: the log closes first.
 	_photo_button = Button.new()
 	_photo_button.name = "photo_button"
@@ -591,13 +604,23 @@ func _point_pin(side: int, slot: int, filled: bool) -> void:
 	_pin.point_at(Rect2(sp.position, sp.size))
 
 func _auto_active() -> bool:
-	return GameState.auto_battle and model != null and model.is_wild
+	return GameState.auto_battle and model != null and model.is_wild and not _away
+
+## True while the app is in the background (item 629): Auto and auto-advancing text wait.
+var _away: bool = false
+
+func _notification(what: int) -> void:
+	var step: int = BattleComfort.interruption(what)
+	if step == 0 or _text == null:
+		return
+	_away = step > 0
+	_apply_speed()
 
 ## Applies the 1x / 2x / 4x battle speed (and auto-advance while fast or on Auto).
 func _apply_speed() -> void:
 	var speed: float = GameState.battle_speed_scale()
 	_ff_button.text = "%dx" % int(speed)
-	_text.auto_advance = speed > 1.0 or _auto_active()
+	_text.auto_advance = (speed > 1.0 or _auto_active()) and not _away
 	_text.chars_per_second = GameState.text_cps() * speed
 	for n: Variant in [_foe_sprite, _player_sprite, _foe_strip, _player_strip]:
 		n.speed_scale = speed
@@ -683,6 +706,11 @@ func _run() -> void:
 	if not _replaying and not model.has_meta("quick") and not inputs.is_empty():
 		for line: String in Tips.take("battle_comfort"):
 			await _text.show_text(line)
+		# A hurt Spirling after a won battle: which item would mend it (item 607).
+		if model.outcome == BattleModel.Outcome.WIN and GameState.tips_enabled:
+			var heal: String = BattleComfort.heal_line(BattleComfort.heal_hint(model.party(BattleModel.Side.PLAYER), model.inventory))
+			if not heal.is_empty():
+				await _text.show_text(heal)
 	battle_finished.emit(model.outcome, model)
 	if quit_on_finish:
 		get_tree().quit()
@@ -691,17 +719,30 @@ func _run() -> void:
 func _choose_actions() -> Array[BattleAction]:
 	var out: Array[BattleAction] = []
 	var taken: Array[int] = []
-	for slot: int in model.player_slots():
-		var a: BattleAction = null
-		while a == null:
-			a = await _choose_action(slot, taken)
+	var slots: Array = model.player_slots()
+	var i: int = 0
+	while i < slots.size():
+		# From the second Spirling on, Back takes the order before back (item 604).
+		_menu.undo_ok = i > 0
+		_undo_asked = false
+		var a: BattleAction = await _choose_action(int(slots[i]), taken)
+		if _undo_asked:
+			if BattleComfort.undo(out, taken):
+				i -= 1
+			continue
+		if a == null:
+			continue
 		out.append(a)
 		if a.kind == BattleAction.Kind.SWAP:
 			taken.append(a.swap_index)
 		if a.kind == BattleAction.Kind.RUN:
 			break
+		i += 1
+	_menu.undo_ok = false
 	_pin.visible = false
 	return out
+
+var _undo_asked: bool = false
 
 func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER, slot)
@@ -713,13 +754,18 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 		if _auto_active():
 			return _auto_ai.choose(model, BattleModel.Side.PLAYER, slot)
 	_text.show_prompt("Orders for %s? (%d Energy)" % [me.display_name(), me.energy])
-	_menu.prefer_row = int(_last_art.get(slot, -1))
+	_menu.prefer_row = BattleComfort.first_row(int(_last_art.get(slot, -1)), me)
 	_menu.refresh(model, slot)
 	_menu.set_enabled(true)
+	_back_button.visible = _menu.undo_ok
 	var choice: Array = await _menu.chosen
+	_back_button.visible = false
 	_menu.set_enabled(false)
 	var kind: BattleAction.Kind = choice[0]
 	var index: int = choice[1]
+	if index == BattleComfort.UNDO:
+		_undo_asked = true
+		return null
 	match kind:
 		BattleAction.Kind.MOVE:
 			if index < me.moves.size() and me.can_afford(me.moves[index]):
@@ -933,6 +979,8 @@ func _play(events: Array[BattleEvent]) -> void:
 	for i: int in events.size():
 		_play_index = i
 		await _play_event(events[i])
+		if events[i].type in [BattleEvent.Type.BATTLE_START, BattleEvent.Type.SEND_OUT, BattleEvent.Type.SWAP_IN, BattleEvent.Type.BOSS, BattleEvent.Type.BOSS_PHASE]:
+			_mark_phase()
 		# Resonance fields and boss phases explain themselves the first time (item 585).
 		var tip: String = BattleInfo.tip_for(events[i])
 		if not tip.is_empty() and not _replaying:
@@ -1579,3 +1627,62 @@ static func _demo_team(rng: RandomNumberGenerator, names: Array[String], level: 
 	for n: String in names:
 		out.append(Spirling.new(Database.species(n), level, rng))
 	return out
+
+## Boss phase mark on the foe plates (item 598).
+func _mark_phase() -> void:
+	var at: float = BattleInfo.phase_mark(model)
+	for slot: int in model.slot_count(BattleModel.Side.FOE):
+		var st: Variant = _strip(BattleModel.Side.FOE, slot)
+		if st is InfoStrip:
+			(st as InfoStrip).phase_mark = at
+
+# --- More: guide and settings in battle (items 568-570, 583, 621) ---------------------------
+
+func _more_menu() -> void:
+	Sound.sfx("confirm")
+	_log_panel.visible = false
+	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER, 0)
+	var pages: Array[String] = ["Matchups", "Battle rules", "Stat calculator", "Search", "Settings"]
+	while true:
+		var rows: Array[Dictionary] = []
+		for p: String in pages:
+			rows.append({"text": p})
+		var k: int = await _picker.pick("More", rows)
+		if k < 0:
+			break
+		match pages[k]:
+			"Matchups":
+				await _show_rows("Matchups", BattleHelp.matchup_rows(GameState.known_matchups))
+			"Battle rules":
+				await _show_rows("Battle rules", BattleHelp.rule_rows())
+			"Stat calculator":
+				await _show_rows("Stat calculator", BattleHelp.stat_rows(me))
+			"Search":
+				var q: String = await TextPrompt.ask(self, Loc.t("Search the guide"), false, 20)
+				var found: Array[Dictionary] = BattleHelp.search(BattleHelp.all_rows(GameState.known_matchups, GameState.records, me), q)
+				if found.is_empty():
+					found.append({"text": Loc.t("Nothing found."), "hint": ""})
+				await _show_rows("Search", found)
+			"Settings":
+				await _battle_settings()
+
+## Shows [param rows] until the player backs out; a row's hint is its explanation.
+func _show_rows(title: String, rows: Array[Dictionary]) -> void:
+	while true:
+		var k: int = await _picker.pick(title, rows)
+		if k < 0:
+			return
+
+func _battle_settings() -> void:
+	while true:
+		var opts: Array[Array] = BattleComfort.option_rows()
+		var rows: Array[Dictionary] = []
+		for o: Array in opts:
+			rows.append({"text": str(o[1])})
+		var k: int = await _picker.pick("Settings", rows)
+		if k < 0:
+			break
+		BattleComfort.toggle_option(str(opts[k][0]))
+		SaveManager.save_settings()
+		_apply_speed()
+		_menu.apply_size()
