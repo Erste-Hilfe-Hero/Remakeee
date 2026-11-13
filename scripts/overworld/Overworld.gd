@@ -2520,6 +2520,9 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 			for s: Spirling in helper.partner.echo:
 				s.restore()
 			info["partner"] = helper.partner
+		else:
+			# Every few floors the echoes come two at a time (KAMPF_PLAN_1000 item 374).
+			info["front"] = MultiRules.tower_front(floors + 1, bool(info.get("warden", false)))
 		busy = false
 		var outcome: BattleModel.Outcome = await start_battle(foes, false, info)
 		busy = true

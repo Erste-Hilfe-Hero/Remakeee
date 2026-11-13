@@ -281,6 +281,15 @@ func _build() -> void:
 ## Era look of the HUD: plates, small buttons, team rows, text frame, ring-rise panel.
 var _hud: BattleHud
 var _field_badge: FieldBadge
+## The foe slot each player slot aimed at last (KAMPF_PLAN_1000 item 385).
+var _last_aim: Dictionary = {}
+
+## Damage preview and matchup for one target while aiming (items 362, 363).
+func _aim_line(me: Spirling, mv: MoveData, foe_slot: int) -> String:
+	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, foe_slot)
+	var mult: float = GameState.known_multiplier(mv.element, foe)
+	var pct: int = CommandMenu.damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
+	return MultiRules.aim_line(foe.display_name(), pct, mult if mv.power > 0 else -1.0)
 
 ## The field badge: in 1v1 just above the player's plate (and team row), at the plate's left
 ## edge; in a formation under the ledger and the team rows at the left edge, folded when it
@@ -647,7 +656,7 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 			if index < me.moves.size() and me.can_afford(me.moves[index]):
 				var aim: int = -1
 				if not me.moves[index].is_area():
-					aim = await _pick_target("Aim %s at?" % me.moves[index].move_name)
+					aim = await _pick_target("Aim %s at?" % me.moves[index].move_name, me, me.moves[index], slot)
 					if aim == -2:
 						return null
 				return BattleAction.make_move(BattleModel.Side.PLAYER, index, slot, aim)
@@ -667,11 +676,12 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 
 ## Lets the player tap the foe to aim at. Returns the foe slot, -1 when there is no choice
 ## (1v1 or a single foe left), or -2 when the player backs out.
-func _pick_target(title: String) -> int:
+func _pick_target(title: String, me: Spirling = null, mv: MoveData = null, from_slot: int = 0) -> int:
 	var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
 	if not _multi or foes.size() <= 1:
 		return -1 if foes.is_empty() else foes[0]
 	_text.show_prompt(title)
+	var first: int = MultiRules.default_target(int(_last_aim.get(from_slot, -1)), foes)
 	for slot: int in foes:
 		var sp: SpirlingSprite = _slot_sprites[BattleModel.Side.FOE][slot]
 		var b := Button.new()
@@ -680,14 +690,16 @@ func _pick_target(title: String) -> int:
 		b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 		b.position = sp.position - Vector2(2, 2)
 		b.size = sp.size + Vector2(4, 14)
-		b.accessibility_name = model.active_spirling(BattleModel.Side.FOE, slot).display_name()
+		b.accessibility_name = MultiRules.slot_spoken(model, BattleModel.Side.FOE, slot)
 		var picked: int = slot
 		b.pressed.connect(func() -> void:
 			Sound.sfx("confirm")
 			_target_picked.emit(picked))
 		b.focus_entered.connect(func() -> void:
 			_focus(BattleModel.Side.FOE, picked)
-			_point_pin(BattleModel.Side.FOE, picked, true))
+			_point_pin(BattleModel.Side.FOE, picked, true)
+			if me != null and mv != null:
+				_text.show_prompt(title + "\n" + _aim_line(me, mv, picked)))
 		b.mouse_entered.connect(b.grab_focus)
 		_field.add_child(b)
 		_target_buttons.append(b)
@@ -695,9 +707,11 @@ func _pick_target(title: String) -> int:
 		var b: Button = _target_buttons[i]
 		b.focus_neighbor_left = _target_buttons[i - 1].get_path() if i > 0 else b.get_path()
 		b.focus_neighbor_right = _target_buttons[i + 1].get_path() if i < _target_buttons.size() - 1 else b.get_path()
-	_target_buttons[0].grab_focus()
+	_target_buttons[maxi(foes.find(first), 0)].grab_focus()
 	_back_button.visible = true
 	var picked_slot: int = await _target_picked
+	if picked_slot >= 0:
+		_last_aim[from_slot] = picked_slot
 	for b: Button in _target_buttons:
 		b.queue_free()
 	_target_buttons.clear()

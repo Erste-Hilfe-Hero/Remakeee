@@ -375,6 +375,8 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 			for mate: Spirling in model.party(side):
 				if mate != null and not mate.is_fainted() and not mate.status.is_empty():
 					score += STATUS_BONUS * acc
+		elif fx_id in [&"heal_team", &"heal_ally", &"team_guard", &"decoy", &"cover"] and level >= 1:
+			score += MultiRules.ai_score(model, side, slot, fx) * acc
 		elif fx_id == &"self_cost":
 			score -= SELF_DROP_COST * float(fx.get("amount", 0.25)) * 4.0
 		elif fx_id == &"clear_snares":

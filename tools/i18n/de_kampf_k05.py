@@ -44,3 +44,35 @@ T = {
 "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.":
     "Ein stiller Ring in kreisendem Wind. Gale-Techniken treffen härter, Bloom-Techniken welken, und niemand verfällt in Schläfrigkeit.",
 }
+T.update({
+# Multi battles: support arts
+"Mending Chorus": "Heilchor",
+"A soft chord rings out. It and every ally beside it mend a fifth of their Vigor.": "Ein sanfter Akkord erklingt. Der Spirling und jeder Verbündete neben ihm heilen ein Fünftel ihrer Kraft.",
+"Kindred Balm": "Sippenbalsam",
+"Tends the most hurt ally beside it for a third of its Vigor. Alone, it tends itself.": "Pflegt den am schwersten verletzten Verbündeten neben sich um ein Drittel seiner Kraft. Allein pflegt er sich selbst.",
+"Shell Ring": "Schalenring",
+"Raises a ring of shale around its side. Everyone there takes less damage for 3 turns.": "Zieht einen Ring aus Schiefer um die eigene Seite. Alle dort nehmen 3 Runden lang weniger Schaden.",
+"Lure Dance": "Locktanz",
+"A showy, mocking dance. Every aimed art of the foes goes for it for 2 turns.": "Ein auffälliger, spöttischer Tanz. 2 Runden lang zielt jede gezielte Technik der Gegner auf ihn.",
+"Breakwater Stand": "Wellenbrecher",
+"Plants itself before its most hurt ally and takes the aimed hits meant for it for 2 turns.": "Stellt sich vor den am schwersten verletzten Verbündeten und fängt 2 Runden lang die gezielten Treffer für ihn ab.",
+"The guard over your side fades.": "Der Schutz über deiner Seite vergeht.",
+"The guard over the foe's side fades.": "Der Schutz über der Gegnerseite vergeht.",
+"%s stops drawing the foes' aim.": "%s lenkt die Gegner nicht mehr auf sich.",
+"%s stops covering its ally.": "%s deckt den Verbündeten nicht mehr.",
+"%s raises a guard over its whole side for %d turns!": "{0} schützt die ganze eigene Seite {1} Runden lang!",
+"%s draws every aimed art onto itself for %d turns!": "{0} zieht {1} Runden lang jede gezielte Technik auf sich!",
+"%s steps in front of %s!": "%s stellt sich vor %s!",
+"%s has nobody to cover.": "%s hat niemanden zu decken.",
+# Formation bonus
+"Formation, %s: %s": "Formation, %s: %s",
+"Stone Wall": "Steinwall",
+"Gale Flock": "Sturmschwarm",
+"Ember Pack": "Glutrudel",
+"Tide School": "Flutschwarm",
+# Slot lines (screen reader)
+"Foe": "Gegner",
+"Ally": "Verbündet",
+"Yours": "Deiner",
+"%s, slot %d of %d: %s, Vigor %d of %d": "%s, Platz %d von %d: %s, Kraft %d von %d",
+})

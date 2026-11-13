@@ -1,0 +1,12 @@
+{
+ "_doc": "Multi-Spirling battle extras (docs/KAMPF_PLAN_1000.md, Mehrfachkämpfe), read by scripts/battle/MultiRules.gd. formation: when a side fields at least 'count' Spirlings of 'element' at the start of a battle with several slots, each of them starts with these stat stages. tower: every 'every'-th lighthouse stair floor that is no Warden floor is fought 'front' against 'front'. support_turns: default turns of the support arts (team_guard, decoy, cover). guard_mult: damage taken by a side under a team guard.",
+ "formation": [
+  {"id": "stone_wall", "label": "Stone Wall", "element": "STONE", "count": 2, "stage": {"def": 1}},
+  {"id": "gale_flock", "label": "Gale Flock", "element": "GALE", "count": 2, "stage": {"spd": 1}},
+  {"id": "ember_pack", "label": "Ember Pack", "element": "EMBER", "count": 2, "stage": {"atk": 1}},
+  {"id": "tide_school", "label": "Tide School", "element": "TIDE", "count": 2, "stage": {"foc": 1}}
+ ],
+ "tower": {"every": 5, "front": 2},
+ "support_turns": {"team_guard": 3, "decoy": 2, "cover": 2},
+ "guard_mult": 0.75
+}

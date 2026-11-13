@@ -420,11 +420,11 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Mehrfachkämpfe
 
-361. [ ] Mehrfachkämpfe bis 4v4 (bestehend)
-362. [ ] Ziel-Pin mit Element-Hinweis
-363. [ ] Schadensvorschau pro Ziel bei der Zielwahl
-364. [ ] Fokus-Feuer-Logik der Meister-KI (umgesetzt: KO-Bonus pro Ziel)
-365. [ ] Verbündeten-Heilung
+361. [x] Mehrfachkämpfe bis 4v4 (bestehend) (BattleRules.MAX_FRONT)
+362. [x] Ziel-Pin mit Element-Hinweis (Zielzeile mit x2/x.5 beim Zielen)
+363. [x] Schadensvorschau pro Ziel bei der Zielwahl (~% pro Ziel, abschaltbar wie die Vorschau)
+364. [x] Fokus-Feuer-Logik der Meister-KI (umgesetzt: KO-Bonus pro Ziel) (BattleAI FOCUS_BONUS)
+365. [x] Verbündeten-Heilung (Sippenbalsam/Kindred Balm)
 366. [ ] Positionstausch zwischen eigenen Slots
 367. [ ] Vorderreihe/Hinterreihe mit Schadensmodifikator
 368. [ ] Schwarm-Kämpfe (bestehend) mit Schwarm-Anführer
@@ -433,33 +433,33 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 371. [ ] Mehrfachkampf-Tutorial
 372. [ ] Mehrfachkampf-Geschwindigkeit: Text pro Aktion kürzer
 373. [ ] Mehrfachkampf-Log filtern
-374. [ ] Mehrfachkampf im Turm
+374. [x] Mehrfachkampf im Turm (jedes 5. Stockwerk 2v2)
 375. [ ] Mehrfachkampf online (2v2 mit Freund-Echo)
-376. [ ] Ungleiche Kämpfe 3v1, 4v2 (bestehend)
-377. [ ] Boss-Kämpfe mit Wächtern (bestehend)
-378. [ ] Mehrfachziel-Techniken mit 0.75 Schaden (bestehend)
-379. [ ] Ablenkungs-Technik
-380. [ ] Schutz eines Verbündeten
-381. [ ] Team-Schild
-382. [ ] Team-Heilung
+376. [x] Ungleiche Kämpfe 3v1, 4v2 (bestehend)
+377. [x] Boss-Kämpfe mit Wächtern (bestehend) (BattleRules.BOSSES)
+378. [x] Mehrfachziel-Techniken mit 0.75 Schaden (bestehend) (SPREAD_MULT)
+379. [x] Ablenkungs-Technik (Locktanz/Lure Dance)
+380. [x] Schutz eines Verbündeten (Wellenbrecher/Breakwater Stand)
+381. [x] Team-Schild (Schalenring/Shell Ring, 3 Runden x0.75)
+382. [x] Team-Heilung (Heilchor/Mending Chorus)
 383. [ ] Mehrfachkampf-Balancing im Simulator
-384. [ ] Mehrfachkampf-Layout für 4 Sprites (bestehend)
-385. [ ] Mehrfachkampf: Ziel-Wahl merken
+384. [x] Mehrfachkampf-Layout für 4 Sprites (bestehend)
+385. [x] Mehrfachkampf: Ziel-Wahl merken
 386. [ ] Mehrfachkampf: 'Auto-Ziel' Option
 387. [ ] Mehrfachkampf: KI der Partner verbessern (Meister-KI auch für Partner auf Veteran)
-388. [ ] Mehrfachkampf: Warnung bei Treffer auf Verbündete
+388. [x] Mehrfachkampf: Warnung bei Treffer auf Verbündete (nicht nötig: Flächen-Techniken treffen nie Verbündete, Test)
 389. [ ] Mehrfachkampf: Reihenfolge-Leiste
-390. [ ] Mehrfachkampf: XP-Verteilung klar anzeigen
-391. [ ] Mehrfachkampf: Bond nur gegen Wild (bestehend)
-392. [ ] Mehrfachkampf: Rückzug nur wenn alle wild
+390. [x] Mehrfachkampf: XP-Verteilung klar anzeigen (bestehend: Wachstum-Zeile pro Spirling)
+391. [x] Mehrfachkampf: Bond nur gegen Wild (bestehend)
+392. [x] Mehrfachkampf: Rückzug nur wenn alle wild (Test)
 393. [ ] Mehrfachkampf: Kampfende-Bericht pro Spirling
 394. [ ] Mehrfachkampf: Replay
-395. [ ] Mehrfachkampf: Barrierefreiheit (Slot-Namen vorlesen)
+395. [x] Mehrfachkampf: Barrierefreiheit (Slot-Namen vorlesen) (MultiRules.slot_spoken)
 396. [ ] Mehrfachkampf: Einhand-Modus
-397. [ ] Mehrfachkampf-Tests (bestehend) erweitern
-398. [ ] Mehrfachkampf: Story-Kämpfe mit Ali-Wunsch (3v3, 4v1, 4v2) beibehalten
+397. [x] Mehrfachkampf-Tests (bestehend) erweitern (test_multi_k05.gd)
+398. [x] Mehrfachkampf: Story-Kämpfe mit Ali-Wunsch (3v3, 4v1, 4v2) beibehalten (test_multi_battle Kartendaten)
 399. [ ] Mehrfachkampf: Gegner-Formationen pro Tamer
-400. [ ] Mehrfachkampf: Formation-Bonus (z. B. zwei Stone vorne +DEF)
+400. [x] Mehrfachkampf: Formation-Bonus (z. B. zwei Stone vorne +DEF) (data/multi_rules.json, nur eigene Seite)
 
 ## Bosse und Wardens
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-65 von 1000 Punkten umgesetzt.
+88 von 1000 Punkten umgesetzt.
 

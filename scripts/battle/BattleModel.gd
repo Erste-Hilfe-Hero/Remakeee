@@ -152,6 +152,8 @@ var field_turns: int = 0
 ## Time of day of the battle (DayCycle.Phase), or -1 indoors / with the day cycle off. Some
 ## Resonance fields hold a turn longer at their own time of day (RiftFields.daytime_turns).
 var day_phase: int = -1
+## Support arts in play per side (MultiRules): kind -> {"turns", "slot", ...}.
+var support: Array = [{}, {}]
 ## Share of the XP an earner gets that each healthy Spirling on the player's bench also gets
 ## ("Bench lessons" setting). 0 turns it off.
 var bench_share: float = 0.0
@@ -415,6 +417,7 @@ func start() -> Array[BattleEvent]:
 	field_turns = 0
 	field_lock = 0
 	snares = [[], []]
+	support = [{}, {}]
 	delayed_hits = []
 	boss_phase_done = false
 	var fielded: int = slot_count(Side.PLAYER)
@@ -468,6 +471,7 @@ func start() -> Array[BattleEvent]:
 		for s: Spirling in dragged:
 			for stat: String in st:
 				s.stages[stat] = clampi(s.stage(stat) + int(st[stat]), BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
+	MultiRules.apply_formation_bonus(self)
 	participants = []
 	for slot: int in player_slots():
 		participants.append(active_spirling(Side.PLAYER, slot))
@@ -929,6 +933,7 @@ func _phase_end_of_turn() -> void:
 	_sand_chip()
 	_tick_timers()
 	_tick_field()
+	MultiRules.tick(self)
 	_tick_field_swirl()
 	_tick_field_cycle()
 	_tick_delayed_hits()
@@ -1171,7 +1176,7 @@ func move_targets(side: int, mv: MoveData, target_slot: int = -1) -> Array[int]:
 	var standing: Array[int] = standing_slots(other(side))
 	if standing.is_empty() or mv.is_area():
 		return standing
-	var out: Array[int] = [target_slot if target_slot in standing else standing[0]]
+	var out: Array[int] = [MultiRules.redirect(self, other(side), target_slot if target_slot in standing else standing[0])]
 	return out
 
 ## Effects that act on the user once per move, not once per foe a sweep reaches.
@@ -1260,6 +1265,7 @@ func _do_move(a: BattleAction) -> void:
 			if mv.element == Elements.E.LUMEN:
 				mult *= BattleRules.rule_number(foe_rule, "lumen_mult")
 			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
+			mult *= MultiRules.guard_mult(self, target_side)
 			var shielded: bool = _shield_on[target_side] == target
 			if shielded:
 				mult *= ShopEffects.shield_mult(int(amulets[target_side][2]))

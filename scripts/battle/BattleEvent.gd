@@ -14,6 +14,7 @@ enum Type {
 	ENERGY_TAX, SNARE_SET, SNARE_HIT, SNARE_CLEARED, HEAL_BLOCKED, WEARY,
 	DELAYED_SET, DELAYED_HIT, FIELD_NEXT, FIELD_EXTENDED, BATTLE_LINE, WARDEN_WEAKENED, HELD_ENDURE,
 	OATH, SHOP_EDGE, HELD_FRUIT, WHEEL_TURN,
+	SUPPORT,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -131,6 +132,8 @@ func describe() -> String:
 			return "%s fights at your side!" % data.get("partner", "")
 		Type.BOSS:
 			return "%s: %s" % [data.get("label", ""), data.get("text", "")]
+		Type.SUPPORT:
+			return MultiRules.describe(data, who)
 		Type.FIELD_END:
 			if data.has("by"):
 				return "The %s gives way to the %s." % [data.get("label", ""), data.get("by", "")]
