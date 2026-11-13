@@ -40,6 +40,8 @@ func test_no_menu_says_only_no_connection_any_more() -> void:
 
 func test_call_fn_tries_once_more_after_a_drop() -> void:
 	var server := LocalBackend.new("user://test_ux_online.json")
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	server.rng.seed = 1
 	Online.backend = server
 	Online.net_retry_seconds = 0.05
 	await Online.connect_now()

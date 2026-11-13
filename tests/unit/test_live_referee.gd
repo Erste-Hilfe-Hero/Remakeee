@@ -276,6 +276,43 @@ func test_result_card() -> void:
 	assert_eq(rf.names[0], "You")
 	assert_eq(ResultCard.facts_of_replay({"teams": [[{"species": "Nobody"}], [{"species": "Kindlop"}]]}, "x"), {})
 
+## With this server seed both sides fall in the same round: the referee keeps the draw.
+const DRAW_SEED: int = 25
+
+func test_a_drawn_duel_says_draw_everywhere() -> void:
+	s.rng.seed = DRAW_SEED
+	var id: int = _duel()
+	var st: Dictionary = _play(id)
+	var sim: LiveDuelSim = LiveDuelSim.of(st)
+	assert_true(sim.finished())
+	assert_eq(sim.winner(), -1, "nobody stands")
+	var done: Dictionary = _as("ann", "live_finish", {"p_id": id, "p_winner": 0})
+	assert_eq(done.state, "done")
+	assert_eq(done.reason, "played")
+	assert_eq(int(done.winner), -1, "a phone cannot claim a drawn duel")
+	assert_eq(LiveDuel.result_text(0, int(done.winner), str(done.reason)), "Draw")
+	assert_eq(LiveDuel.result_text(1, int(done.winner), str(done.reason)), "Draw")
+	assert_eq(LiveDuel.result_text(0, -1, "timeout"), "The duel ended without a winner.", "both away is no draw")
+	assert_eq(LiveDuelStage.result_lines(done, ["Ann", "Ben"], true), ["The duel is over.", "Draw"] as Array[String])
+	var watch: Dictionary = done.duplicate()
+	watch["names"] = ["Ann", "Ben"]
+	assert_string_contains(LiveDuelMenu.watch_text(watch), "Draw")
+	var f: Dictionary = ResultCard.facts_of_duel(done, ["You", "Ben"])
+	assert_eq(int(f.winner), -1)
+	assert_true(bool(f.draw))
+	assert_eq(ResultCard.headline(f), "Draw")
+	var card: Control = ResultCard.build(f)
+	add_child_autofree(card)
+	assert_eq((card.find_child("headline", true, false) as Label).text, "Draw")
+	assert_false((card.find_child("name0", true, false) as Label).text.contains("*"), "no winner star")
+	assert_false((card.find_child("name1", true, false) as Label).text.contains("*"))
+	assert_eq(ResultCard.headline({"winner": -1, "draw": false, "names": ["a", "b"]}), "No winner")
+	var was: String = Loc.language()
+	Loc.set_language("de")
+	assert_eq(LiveDuel.result_text(0, -1, "played"), "Unentschieden")
+	assert_eq(ResultCard.headline(f), "Unentschieden")
+	Loc.set_language(was)
+
 # --- The whole thing: a live duel in the real battle screen ----------------------------------------
 
 func _press(stage: LiveDuelStage, label: String) -> bool:

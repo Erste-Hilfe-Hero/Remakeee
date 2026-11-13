@@ -9,7 +9,9 @@ const STATUS_ALL: int = 0
 const STATUS_BONDED: int = 1
 const STATUS_SEEN_ONLY: int = 2
 const STATUS_MISSING: int = 3
-const STATUS_NAMES: Array[String] = ["all", "bonded", "only seen", "missing"]
+## Every kind met so far, bonded or not (item 1939).
+const STATUS_SEEN: int = 4
+const STATUS_NAMES: Array[String] = ["all", "bonded", "only seen", "missing", "seen"]
 ## Battles with a kind in the team before its third lore sentence opens (item 250).
 const LORE_BATTLES: int = 10
 ## Ground symbol per map (item 244): what you walked through when you met it.
@@ -131,6 +133,9 @@ static func filtered(spirlog: Dictionary, flags: Dictionary, search: String = ""
 					continue
 			STATUS_MISSING:
 				if seen:
+					continue
+			STATUS_SEEN:
+				if not seen:
 					continue
 		out.append(sd)
 	return out
