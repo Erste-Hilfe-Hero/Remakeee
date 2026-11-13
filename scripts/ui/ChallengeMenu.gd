@@ -4,7 +4,8 @@ extends RefCounted
 ## the run seed (copy it for friends, or take one from the clipboard), and the record so far.
 ## Opened at a new game and from Settings > Game during a journey.
 
-## Rows: one per rule, then the seed, the clipboard seed (only while rules can be taken), the record.
+## Rows: one per rule, then the seed, the clipboard seed (only while rules can be taken), the
+## record, the run timer (item 507) and foe scaling (item 496).
 static func entries() -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for id: String in ChallengeRules.ids():
@@ -16,6 +17,10 @@ static func entries() -> Array[Dictionary]:
 	if ChallengeRules.can_take():
 		out.append({"text": Loc.t("Use the seed on the clipboard"), "hint": Loc.t("Takes a seed a friend shared with you.")})
 	out.append({"text": Loc.t("Challenge record"), "hint": "\n".join(ChallengeRules.stats_lines())})
+	out.append({"text": "%s: %s" % [Loc.t("Run timer"), Loc.t("On") if RunTimer.is_on() else Loc.t("Off")],
+		"hint": Loc.t("Shows the journey's play time in the corner, for speed runs.")})
+	out.append({"text": "%s: %s" % [Loc.t("Foe scaling"), Loc.t("On") if ChallengeRules.scaling_on() else Loc.t("Off")],
+		"hint": Loc.t("Wayfarers' Spirlings stay close to your strongest one, within the ring cap.")})
 	return out
 
 static func run(menu: MenuHost) -> void:
@@ -34,6 +39,10 @@ static func run(menu: MenuHost) -> void:
 			var code: String = ChallengeRules.seed_code(ChallengeRules.run_seed())
 			DisplayServer.clipboard_set(code)
 			menu.toast(Loc.t("Seed copied: %s") % code)
+		elif idx == rows.size() - 2:
+			RunTimer.toggle()
+		elif idx == rows.size() - 1:
+			ChallengeRules.toggle_scaling()
 		elif idx == n + 1 and ChallengeRules.can_take():
 			var v: int = ChallengeRules.parse_code(DisplayServer.clipboard_get())
 			if v < 0:
