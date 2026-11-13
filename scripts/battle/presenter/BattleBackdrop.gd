@@ -209,14 +209,26 @@ func _ground(hy: float) -> void:
 		draw_rect(Rect2(x + 1, y + 1, 1, 1), _mid)
 
 func _hills(hy: float, amp: float, freq: float, col: Color) -> void:
-	var pts := PackedVector2Array()
-	pts.append(Vector2(0, hy))
-	for x: int in range(0, int(size.x) + 4, 4):
-		pts.append(Vector2(x, roundf(hy - amp - amp * sin(x * freq) * 0.8 - 3.0 * sin(x * freq * 3.1))))
-	pts.append(Vector2(size.x, hy))
+	if size.x < 8.0 or hy < 2.0:
+		return
+	var pts: PackedVector2Array = hill_points(size.x, hy, amp, freq)
 	draw_colored_polygon(pts, col)
 	for i: int in range(1, pts.size() - 2):
 		draw_line(pts[i], pts[i + 1], _ink, 1.0)
+
+## The hill outline closed along the horizon. A low hill (amp under 15) dipped below the
+## horizon and the last point could lie past the right edge: the outline then crossed itself,
+## "Invalid polygon data, triangulation failed" and the hill had no fill (bug sweep 2).
+static func hill_points(w: float, hy: float, amp: float, freq: float) -> PackedVector2Array:
+	var pts := PackedVector2Array()
+	pts.append(Vector2(0, hy))
+	for x: int in range(0, int(w) + 4, 4):
+		var y: float = roundf(hy - amp - amp * sin(x * freq) * 0.8 - 3.0 * sin(x * freq * 3.1))
+		pts.append(Vector2(minf(x, w), minf(y, hy - 1.0)))
+		if x >= w:
+			break
+	pts.append(Vector2(w, hy))
+	return pts
 
 func _peaks(hy: float, height: float, count: int, col: Color) -> void:
 	var step: float = size.x / float(count)

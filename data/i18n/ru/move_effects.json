@@ -1,0 +1,9 @@
+{
+ "_comment": "Russian texts for the German table move_effects. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "Costs %d%% of its own Vigor, never the last point.": "Стоит %d%% собственной Бодрости, но никогда последнее очко.",
+  "Cures the status of its whole team.": "Снимает состояния со всей своей команды.",
+  "Gains %d Energy.": "+%d Энергии.",
+  "Sets every stage on both sides back to 0.": "Возвращает все ступени у обеих сторон к 0."
+ }
+}

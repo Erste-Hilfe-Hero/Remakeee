@@ -1,0 +1,12 @@
+{
+ "_comment": "Simplified Chinese (Mainland China) texts for the German table battle_hud. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "%s: %d of %d can fight": "%s：%d/%d可战斗",
+  "Again: %s x%d": "再次：%s x%d",
+  "Again: -": "再次：-",
+  "Foe's team": "对手队伍",
+  "No effect": "无效",
+  "Strong": "效果拔群",
+  "Your team": "你的队伍"
+ }
+}
