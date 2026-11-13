@@ -128,7 +128,7 @@ static func free_swap(s: Spirling) -> bool:
 static func no_recoil(s: Spirling) -> bool:
 	return has_key(s, "no_recoil")
 
-## Turns a Resonance field laid by [param s] holds (Echo Soul, Lantern Glass; items 255, 290).
+## Turns a Resonance field laid by [param s] holds (Lingering Echo, Lantern Glass; items 255, 290).
 static func field_turns(s: Spirling) -> int:
 	return BattleRules.RESONANCE_TURNS + int(BattleRules.add_key(s, "field_extra"))
 

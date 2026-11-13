@@ -211,10 +211,10 @@ func test_prism_skin_and_counter_current() -> void:
 	target.bonus_trait = "counter_current"
 	assert_almost_eq(TraitKit.static_mult(_mon(), target, weak_mv, ""), 0.7, 0.001)
 
-func test_echo_soul_and_lantern_glass_hold_fields() -> void:
+func test_lingering_echo_and_lantern_glass_hold_fields() -> void:
 	var s: Spirling = _mon()
 	assert_eq(TraitKit.field_turns(s), BattleRules.RESONANCE_TURNS)
-	s.bonus_trait = "echo_soul"
+	s.bonus_trait = "lingering_echo"
 	assert_eq(TraitKit.field_turns(s), BattleRules.RESONANCE_TURNS + 2)
 	s.held = "kit_lantern_glass"
 	assert_eq(TraitKit.field_turns(s), BattleRules.RESONANCE_TURNS + 4)

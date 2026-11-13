@@ -305,7 +305,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 252. [x] Trait 'Einzelgänger': stärker im 1v1 ('Loner')
 253. [x] Trait 'Wachposten': erster Zug immer zuerst ('Sentinel')
 254. [x] Trait 'Feldläufer': doppelte Feld-Boni ('Field Runner')
-255. [x] Trait 'Echo-Seele': Resonanz-Felder halten 2 Runden länger ('Echo Soul')
+255. [x] Trait 'Echo-Seele': Resonanz-Felder halten 2 Runden länger ('Lingering Echo')
 256. [x] Trait 'Dickes Fell' (bestehend Thick Hide) im Lexikon (im Gabenbuch)
 257. [x] Trait 'Wurzeln' (bestehend Deep Roots) (im Gabenbuch)
 258. [x] Trait 'Last Stand' (bestehend) sichtbar machen, wenn aktiv (bestehend: BattleModel zeigt den Trait beim ersten Wirken unter 1/3 HP)

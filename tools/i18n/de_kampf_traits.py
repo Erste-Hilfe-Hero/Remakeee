@@ -18,7 +18,7 @@ T = {
 "On its first turn in front it acts before any other art.": "In seiner ersten Runde vorn handelt es vor jeder anderen Technik.",
 "Field Runner": "Feldläufer",
 "A Rift field gives it twice the boost, and twice the drawback.": "Ein Riss-Feld gibt ihm doppelten Bonus und doppelten Nachteil.",
-"Echo Soul": "Echo-Seele",
+"Lingering Echo": "Langer Nachhall",
 "A Resonance field it lays holds 2 turns longer.": "Ein Resonanz-Feld, das es legt, hält 2 Runden länger.",
 "Hush Core": "Hush-Kern",
 "Every condition on it lasts only half as long.": "Jeder Zustand hält bei ihm nur halb so lange.",

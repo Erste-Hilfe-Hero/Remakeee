@@ -275,7 +275,7 @@ AREAS = [
 "[x] Trait 'Einzelgänger': stärker im 1v1 ('Loner')",
 "[x] Trait 'Wachposten': erster Zug immer zuerst ('Sentinel')",
 "[x] Trait 'Feldläufer': doppelte Feld-Boni ('Field Runner')",
-"[x] Trait 'Echo-Seele': Resonanz-Felder halten 2 Runden länger ('Echo Soul')",
+"[x] Trait 'Echo-Seele': Resonanz-Felder halten 2 Runden länger ('Lingering Echo')",
 "[x] Trait 'Dickes Fell' (bestehend Thick Hide) im Lexikon (im Gabenbuch)",
 "[x] Trait 'Wurzeln' (bestehend Deep Roots) (im Gabenbuch)",
 "[x] Trait 'Last Stand' (bestehend) sichtbar machen, wenn aktiv (bestehend: BattleModel zeigt den Trait beim ersten Wirken unter 1/3 HP)",
