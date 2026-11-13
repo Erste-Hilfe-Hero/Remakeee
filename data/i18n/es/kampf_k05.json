@@ -1,0 +1,33 @@
+{
+ "_comment": "es translation of the kampf_k05 table, keyed by the English text.",
+ "strings": {
+  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns on every difficulty; then the place's own field comes back. A new field pushes the old one out at once.": "Un campo de la Grieta hace que un elemento golpee x1.2 y otro x0.85. Un arte de llamada tiende su campo 5 turnos en cualquier dificultad; luego vuelve el campo propio del lugar. Un campo nuevo expulsa al anterior al instante.",
+  "A Rift field never weakens its arts.": "Un campo de la Grieta nunca debilita sus artes.",
+  "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.": "Un anillo en calma dentro de un viento que gira. Las artes Gale golpean más fuerte, las Bloom se marchitan y nadie puede caer en Modorra.",
+  "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.": "Una pálida luz de mañana. Las artes Lumen golpean más fuerte, las Umbra se diluyen y una llamada Echo sale algo más fácil. Al alba y de día dura un turno más.",
+  "Ash hangs in the air. Ember arts hit harder, Tide arts sputter.": "La ceniza flota en el aire. Las artes Ember golpean más fuerte, las Tide chisporrotean.",
+  "Calls a rain of rubble over the field.": "Llama una lluvia de cascotes sobre el campo.",
+  "Calls the eye of a gale over the field.": "Llama al ojo de un vendaval sobre el campo.",
+  "Echo Soul": "Alma de eco",
+  "Every hair stands on end. Volt arts hit harder, Stone arts crumble, and Volt Spirlings gain 1 extra Energy each turn.": "Se eriza cada pelo. Las artes Volt golpean más fuerte, las Stone se desmoronan y los Spirlings Volt ganan 1 de Energía extra cada turno.",
+  "Field Stake": "Estaca de campo",
+  "Field Strider": "Andacampos",
+  "Gains 2 Energy whenever a new Rift field is laid.": "Gana 2 de Energía cada vez que se tiende un campo de la Grieta nuevo.",
+  "Gale Call": "Llamada de vendaval",
+  "Gale Eye": "Ojo del vendaval",
+  "Grit and pebbles patter down. Stone arts land heavier, Volt arts ground out, and no charge can build.": "Caen gravilla y guijarros. Las artes Stone pegan más duro, las Volt se descargan en el suelo y ninguna carga puede acumularse.",
+  "Grit patters down without end. Stone arts hit harder, Volt arts ground out, and nobody can be Jolted.": "La gravilla cae sin cesar. Las artes Stone golpean más fuerte, las Volt se descargan en el suelo y nadie puede sufrir Calambre.",
+  "Keepsake. A Rift field its holder calls lasts 2 turns longer.": "Recuerdo. Un campo de la Grieta que llame su portador dura 2 turnos más.",
+  "Light drowns in the murk. Umbra arts hit harder, Lumen arts dim. At dusk and at night it holds a turn longer.": "La luz se ahoga en la penumbra. Las artes Umbra golpean más fuerte, las Lumen se apagan. Al anochecer y de noche dura un turno más.",
+  "No Rift field.": "No hay campo de la Grieta.",
+  "Pollen settles on everything. Bloom arts hit harder, Gale arts stall, and Bloom Spirlings mend a little each turn.": "El polen se posa en todo. Las artes Bloom golpean más fuerte, las Gale se atascan y los Spirlings Bloom sanan un poco cada turno.",
+  "Rift field %s, %d turns left.": "Campo de la Grieta %s, quedan %d turnos.",
+  "Rift field %s, for the whole battle.": "Campo de la Grieta %s, durante todo el combate.",
+  "Rift fields": "Campos de la Grieta",
+  "Rubble Call": "Llamada de cascotes",
+  "Rubble Rain": "Lluvia de cascotes",
+  "The %s gives way to the %s.": "{0} cede ante {1}.",
+  "The water stands knee-deep. Tide arts hit harder, Ember arts fizzle, and nothing can catch Scorch.": "El agua llega a las rodillas. Las artes Tide golpean más fuerte, las Ember se apagan y nada puede sufrir Quemadura.",
+  "The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off.": "El viento gira alrededor de la Grieta y contiene el aliento en el centro. Las artes Gale cortan más, las Bloom se marchitan y nadie puede adormecerse."
+ }
+}

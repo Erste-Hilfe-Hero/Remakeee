@@ -1,0 +1,33 @@
+{
+ "_comment": "it translation of the kampf_k05 table, keyed by the English text.",
+ "strings": {
+  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns on every difficulty; then the place's own field comes back. A new field pushes the old one out at once.": "Un campo dello Squarcio fa colpire un elemento x1.2 e un altro x0.85. Un'Arte di richiamo stende il suo campo per 5 turni a ogni difficoltà; poi torna il campo del luogo. Un campo nuovo scaccia subito quello vecchio.",
+  "A Rift field never weakens its arts.": "Un campo dello Squarcio non indebolisce mai le sue Arti.",
+  "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.": "Un anello calmo dentro un vento che gira. Le Arti Gale colpiscono più forte, quelle Bloom appassiscono e nessuno può cadere in Sopore.",
+  "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.": "Una pallida luce del mattino. Le Arti Lumen colpiscono più forte, quelle Umbra si affievoliscono e un richiamo Echo riesce un po' meglio. All'alba e di giorno dura un turno in più.",
+  "Ash hangs in the air. Ember arts hit harder, Tide arts sputter.": "La cenere resta sospesa nell'aria. Le Arti Ember colpiscono più forte, quelle Tide sfrigolano.",
+  "Calls a rain of rubble over the field.": "Richiama una pioggia di detriti sul campo.",
+  "Calls the eye of a gale over the field.": "Richiama l'occhio di una burrasca sul campo.",
+  "Echo Soul": "Anima d'eco",
+  "Every hair stands on end. Volt arts hit harder, Stone arts crumble, and Volt Spirlings gain 1 extra Energy each turn.": "Ogni pelo si rizza. Le Arti Volt colpiscono più forte, quelle Stone si sgretolano e gli Spirling Volt ottengono 1 Energia in più ogni turno.",
+  "Field Stake": "Picchetto di campo",
+  "Field Strider": "Batticampo",
+  "Gains 2 Energy whenever a new Rift field is laid.": "Ottiene 2 Energia ogni volta che viene steso un nuovo campo dello Squarcio.",
+  "Gale Call": "Richiamo della burrasca",
+  "Gale Eye": "Occhio della burrasca",
+  "Grit and pebbles patter down. Stone arts land heavier, Volt arts ground out, and no charge can build.": "Ghiaia e sassolini picchiettano giù. Le Arti Stone colpiscono più pesanti, quelle Volt si scaricano a terra e nessuna carica può accumularsi.",
+  "Grit patters down without end. Stone arts hit harder, Volt arts ground out, and nobody can be Jolted.": "La ghiaia cade senza fine. Le Arti Stone colpiscono più forte, quelle Volt si scaricano a terra e nessuno può subire Scossa.",
+  "Keepsake. A Rift field its holder calls lasts 2 turns longer.": "Ricordo. Un campo dello Squarcio richiamato dal portatore dura 2 turni in più.",
+  "Light drowns in the murk. Umbra arts hit harder, Lumen arts dim. At dusk and at night it holds a turn longer.": "La luce annega nel buio. Le Arti Umbra colpiscono più forte, quelle Lumen si offuscano. Al tramonto e di notte dura un turno in più.",
+  "No Rift field.": "Nessun campo dello Squarcio.",
+  "Pollen settles on everything. Bloom arts hit harder, Gale arts stall, and Bloom Spirlings mend a little each turn.": "Il polline si posa su tutto. Le Arti Bloom colpiscono più forte, quelle Gale si inceppano e gli Spirling Bloom guariscono un po' ogni turno.",
+  "Rift field %s, %d turns left.": "Campo dello Squarcio %s, ancora %d turni.",
+  "Rift field %s, for the whole battle.": "Campo dello Squarcio %s, per tutta la lotta.",
+  "Rift fields": "Campi dello Squarcio",
+  "Rubble Call": "Richiamo dei detriti",
+  "Rubble Rain": "Pioggia di detriti",
+  "The %s gives way to the %s.": "{0} lascia il posto a {1}.",
+  "The water stands knee-deep. Tide arts hit harder, Ember arts fizzle, and nothing can catch Scorch.": "L'acqua arriva alle ginocchia. Le Arti Tide colpiscono più forte, quelle Ember si spengono e niente può subire Arsura.",
+  "The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off.": "Il vento gira attorno allo Squarcio e trattiene il fiato al centro. Le Arti Gale tagliano di più, quelle Bloom appassiscono e nessuno può assopirsi."
+ }
+}
