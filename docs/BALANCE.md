@@ -657,6 +657,41 @@ levels. That is expected noise with 10 rounds per pair and worth a look when lea
   in the turn; Energy, not damage, so same-element teams still leave room for combos), the Ward Shell keepsake, the gifts Prism Skin and Countercurrent, Ward Circle and
   Dye Bath. The 19 arts of the plan's "Techniken" area are taught by Echo Crystals that Hesper
   sells in the lighthouse.
+- Coiled Strike (charge) does nothing on its first use and hits x2 on the next, so per turn it is
+  a plain art of its power with a visible tell. Night Prowl and Noon Glare hit x1.5 at their own
+  time of day outdoors and are plain arts indoors.
+- Art balance check (item 155): every art Hesper teaches goes into the first slot of a lead of its
+  element, and the same battles are played with and without it. Band -10 to +8 points. Rerun with
+  `godot --headless --path . -s res://tools/balance_sim.gd -- --mode arts --level 36 --rounds 120`
+  (time-of-day arts fight at their own time). Run of the current set, ring 36, 120 battle pairs:
+
+| Art | With | Without | Gain | Flag |
+| --- | --- | --- | --- | --- |
+| Hold Fast | 42% | 43% | -1.7 |  |
+| Shove Off | 42% | 41% | +0.8 |  |
+| Grudge Return | 51% | 50% | +0.8 |  |
+| Kindred Balm | 43% | 46% | -2.5 |  |
+| Rank and File | 39% | 40% | -0.8 |  |
+| Shake Loose | 48% | 47% | +0.4 |  |
+| Rolling Drum | 33% | 31% | +1.7 |  |
+| Late Reply | 51% | 53% | -1.7 |  |
+| Opening Gambit | 48% | 46% | +1.7 |  |
+| Pebble Hail | 41% | 40% | +0.8 |  |
+| Rift Hush | 48% | 43% | +5.8 |  |
+| Bright Lure | 51% | 53% | -2.5 |  |
+| Close Ranks | 49% | 46% | +3.3 |  |
+| Ember Afterglow | 47% | 44% | +3.3 |  |
+| Borrowed Stance | 51% | 52% | -0.8 |  |
+| Still Point | 48% | 48% | +0.0 |  |
+| Ground Burst | 41% | 38% | +2.5 |  |
+| Dye Bath | 49% | 49% | +0.0 |  |
+| Ward Circle | 47% | 46% | +0.8 |  |
+| Magma Rush | 51% | 50% | +0.8 |  |
+| Tidal Gust | 50% | 50% | +0.0 |  |
+| Clean Slate | 46% | 46% | +0.0 |  |
+| Coiled Strike | 43% | 43% | +0.8 |  |
+| Night Prowl | 43% | 41% | +2.5 |  |
+| Noon Glare | 48% | 49% | -0.8 |  |
 
 ## Open observations
 

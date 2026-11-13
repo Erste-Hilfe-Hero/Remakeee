@@ -5350,5 +5350,46 @@
   "effect": "reset_target",
   "era": 1,
   "desc": "Wipes the foe clean: all its stages go back to 0. Its own stay."
+ },
+ {
+  "name": "Coiled Strike",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 65,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "charge_up",
+  "era": 1,
+  "desc": "Winds itself up on the first use and does nothing else. The next use lands twice as hard."
+ },
+ {
+  "name": "Night Prowl",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "daytime",
+  "effect_amount": 1.5,
+  "effect_params": {
+   "phase": "NIGHT"
+  },
+  "era": 1,
+  "desc": "Stalks from the dark. Out in the open at night it hits half as hard again."
+ },
+ {
+  "name": "Noon Glare",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "daytime",
+  "effect_amount": 1.5,
+  "effect_params": {
+   "phase": "DAY"
+  },
+  "era": 1,
+  "desc": "Casts the full midday sun back at the foe. Out in the open by day it hits half as hard again."
  }
 ]

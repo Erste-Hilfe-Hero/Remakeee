@@ -757,7 +757,10 @@ func _pick_target(title: String, me: Spirling = null, mv: MoveData = null, from_
 			Sound.sfx("confirm")
 			_target_picked.emit(picked))
 		b.focus_entered.connect(func() -> void:
-			_text.show_prompt(Loc.t(title) + BattleInfo.target_preview(model, me, model.active_spirling(BattleModel.Side.FOE, picked), mv))
+			var aimed: Spirling = model.active_spirling(BattleModel.Side.FOE, picked)
+			var preview: String = BattleInfo.target_preview(model, me, aimed, mv)
+			# Without the damage preview the known matchup on this foe still shows (item 92).
+			_text.show_prompt(Loc.t(title) + (preview if not preview.is_empty() else TechniqueRules.aim_tag(aimed, mv)))
 			_focus(BattleModel.Side.FOE, picked)
 			_point_pin(BattleModel.Side.FOE, picked, true)
 			# Under a team guard or against the back row the line adds the guard and row factor.

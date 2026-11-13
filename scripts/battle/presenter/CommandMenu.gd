@@ -537,6 +537,9 @@ static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = fals
 	if pct >= 0 and mv.power > 0:
 		return "%dE ~%d%%" % [c, pct]
 	var tag: String = "" if mv.power <= 0 else matchup_tag(mult)
+	# A status art that can miss shows its hit chance (KAMPF_PLAN_1000 item 144).
+	if mv.power <= 0 and mv.accuracy < 1.0:
+		tag = "%d%%" % roundi(mv.accuracy * 100.0)
 	return "%dE %s" % [c, tag] if not tag.is_empty() else "%dE" % c
 
 ## Damage preview: expected damage of [param mv] as a share (0-100) of [param foe]'s max HP,

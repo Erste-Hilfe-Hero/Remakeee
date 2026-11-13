@@ -47,11 +47,18 @@ const REST_POINT_HEAL: float = 0.5
 const SHIFT_TURNS: int = 3
 ## Blast (item 152): allies take this share of what a foe would.
 const BLAST_ALLY_SHARE: float = 1.0
+## Charged arts (item 125): the first use gathers strength, the next use hits this much harder.
+const CHARGE_MULT: float = 2.0
+## Time-of-day arts (item 154): default factor at their own time of day (DayCycle phase).
+const DAYTIME_MULT: float = 1.5
+const DAYTIME_LINES: Dictionary[String, String] = {"DAWN": "x%s power at dawn.", "DAY": "x%s power by day.",
+	"DUSK": "x%s power at dusk.", "NIGHT": "x%s power at night."}
 
 static func state(model: BattleModel) -> Dictionary:
 	if not model.has_meta(META):
 		model.set_meta(META, {"acted": {}, "streak": {}, "used": [], "last_hit": {}, "brace": {},
-			"lure": [{}, {}], "shoulder": {}, "phys": {}, "last_stage": [{}, {}], "ward": [0, 0], "hits": {}, "blast": {}})
+			"lure": [{}, {}], "shoulder": {}, "phys": {}, "last_stage": [{}, {}], "ward": [0, 0], "hits": {}, "blast": {},
+			"charge": {}, "charging": {}, "charged_hit": {}})
 	return model.get_meta(META)
 
 static func _effect(mv: MoveData, id: StringName) -> Dictionary:
@@ -81,6 +88,15 @@ static func note_move(model: BattleModel, side: int, me: Spirling, mv: MoveData,
 	if mv.is_damaging():
 		kept.append({"turn": model.turn, "side": side, "who": me, "element": mv.element})
 	st["used"] = kept
+	if not _effect(mv, &"charge_up").is_empty():
+		var charge: Dictionary = st.charge
+		if str(charge.get(me, "")) == mv.move_name:
+			charge.erase(me)
+			st.charged_hit[me] = model.turn
+		else:
+			charge[me] = mv.move_name
+			st["charging"] = {"side": side, "move": mv.move_name, "turn": model.turn}
+			say(model, side, slot, "%s gathers its strength!")
 
 ## True if [param target] was already standing and acted earlier this turn.
 static func acted_this_turn(model: BattleModel, s: Spirling) -> bool:
@@ -103,6 +119,9 @@ static func hit_mult(model: BattleModel, side: int, slot: int, me: Spirling, tar
 	if not _effect(mv, &"first_strike").is_empty() and not acted_this_turn(model, target):
 		m *= FIRST_STRIKE_MULT
 	m *= dual_ratio(mv, target)
+	m *= daytime_mult(model, mv)
+	if int((st.charged_hit as Dictionary).get(me, -1)) == model.turn:
+		m *= CHARGE_MULT
 	if not _effect(mv, &"multi_hit").is_empty():
 		var hits: int = model.rng.randi_range(HITS_MIN, HITS_MAX)
 		st.hits[me] = hits
@@ -153,6 +172,10 @@ static func echoes(model: BattleModel, side: int, me: Spirling, mv: MoveData) ->
 
 ## Brace: true when [param target] stands braced this turn; the art bounces off with a line.
 static func blocks_hit(model: BattleModel, target_side: int, t_slot: int, target: Spirling, mv: MoveData) -> bool:
+	# A charged art only gathers strength on its first use (item 125): no hit this turn.
+	var ch: Dictionary = state(model).charging
+	if int(ch.get("turn", -1)) == model.turn and int(ch.get("side", -1)) == BattleModel.other(target_side) and str(ch.get("move", "")) == mv.move_name:
+		return true
 	if not reaches_foe(mv):
 		return false
 	var b: Dictionary = (state(model).brace as Dictionary).get(target, {})
@@ -269,6 +292,11 @@ static func info_line(fx: Dictionary) -> String:
 			return Loc.t("Also counts as %s and lands with the better element.") % Elements.chart_name(str(fx.get("element", "")))
 		&"reset_target":
 			return Loc.t("Sets every stage of the target back to 0.")
+		&"charge_up":
+			return Loc.t("The first use gathers strength; the next use hits x%s.") % String.num(CHARGE_MULT, 1)
+		&"daytime":
+			var line: String = DAYTIME_LINES.get(str(fx.get("phase", "NIGHT")), "")
+			return "" if line.is_empty() else Loc.t(line) % String.num(amount if amount > 0.0 else DAYTIME_MULT, 1)
 	return ""
 
 # --- batch 2: mixed arts, field countdown, element summary ------------------------------------
@@ -326,3 +354,28 @@ static func switch_warning(model: BattleModel, side: int, s: Spirling) -> String
 		return ""
 	# Short, so it fits beside the name in the 144 px party picker: "!Ember".
 	return "!" + Elements.element_name(by)
+
+# --- batch 3: charged and time-of-day arts, aim hint ------------------------------------------
+
+## Time-of-day art (item 157, effect "daytime" with "phase"): x amount at that DayCycle phase.
+## Indoors or with the day cycle off (day_phase -1) it is a plain art.
+static func daytime_mult(model: BattleModel, mv: MoveData) -> float:
+	var fx: Dictionary = _effect(mv, &"daytime")
+	if fx.is_empty() or model.day_phase < 0 or model.day_phase >= DayCycle.Phase.size():
+		return 1.0
+	if DayCycle.Phase.keys()[model.day_phase] != str(fx.get("phase", "NIGHT")):
+		return 1.0
+	var amount: float = float(fx.get("amount", 0.0))
+	return amount if amount > 0.0 else DAYTIME_MULT
+
+## True while [param me] holds a gathered charge for [param mv] (item 125).
+static func is_charged(model: BattleModel, me: Spirling, mv: MoveData) -> bool:
+	return str((state(model).charge as Dictionary).get(me, "")) == mv.move_name
+
+## Item 92: the known matchup of [param mv] on [param foe] as a short tag (" x2") for the
+## target choice in a battle with several foes. "" for status arts, unknown or plain matchups.
+static func aim_tag(foe: Spirling, mv: MoveData) -> String:
+	if foe == null or mv == null or not mv.is_damaging():
+		return ""
+	var tag: String = CommandMenu.matchup_tag(GameState.known_multiplier(mv.element, foe))
+	return "" if tag.is_empty() else " " + tag
