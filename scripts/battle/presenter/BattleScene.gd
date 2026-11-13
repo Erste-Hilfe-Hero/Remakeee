@@ -34,6 +34,8 @@ var backdrop: String = "field"
 var backdrop_shade: float = 0.0
 ## Music for this fight ("battle" or "warden"); the overworld sets it before adding the scene.
 var music_track: String = "battle"
+## The battle started on an outdoor map: the backdrop takes the day/night tint (BattleShow).
+var outdoor: bool = false
 ## Set to true to quit the app when the battle ends (standalone demo).
 var quit_on_finish: bool = false
 ## Standalone demo format when no model is set: "" (1v1), "boss" (4v1), "duel3" (3v3),
@@ -311,9 +313,13 @@ func _build() -> void:
 	_apply_speed()
 	_hud = BattleHud.new()
 	_hud.attach(self)
+	_show = BattleShow.new()
+	_show.attach(self)
 
 ## Era look of the HUD: plates, small buttons, team rows, text frame, ring-rise panel.
 var _hud: BattleHud
+## Banners, status motes, stage aura and battle sounds of every era (data/battle_show.json).
+var _show: BattleShow
 var _field_badge: FieldBadge
 
 ## The field badge: in 1v1 just above the player's plate (and team row), at the plate's left
@@ -377,7 +383,7 @@ func _layout_field() -> void:
 	if _hud != null:
 		_hud.layout_single()
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
-	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade)
+	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade) * BattleShow.night_tint(DayCycle.current(), GameState.day_night, outdoor, backdrop)
 
 ## Width of the art [param sp] draws (Era IV/V size it in whole multiples), [param fallback] before setup.
 static func _art_px(sp: SpirlingSprite, fallback: float) -> float:
@@ -1059,6 +1065,7 @@ func _play_event(e: BattleEvent) -> void:
 	var slot: int = int(e.data.get("slot", 0))
 	record(e)
 	_hud.on_event(e)
+	_show.on_event(e)
 	_field_badge.on_event(e)
 	_place_field_badge()
 	match e.type:
@@ -1173,7 +1180,7 @@ func _play_event(e: BattleEvent) -> void:
 			if not tax_text.is_empty():
 				await _float(side, slot, tax_text)
 		BattleEvent.Type.STATUS_APPLIED:
-			Sound.sfx("status")
+			BattleAudio.play(BattleAudio.status_sound(str(e.data.status)))
 			_strip(side, slot).set_status(str(e.data.status))
 			_refresh_focus(side, slot)
 			await _float(side, slot, e.describe())
@@ -1184,7 +1191,7 @@ func _play_event(e: BattleEvent) -> void:
 				(st as InfoStrip).set_stages(who.stages)
 			_refresh_focus(side, slot)
 			if int(e.data.get("delta", 0)) != 0:
-				Sound.sfx("level_up" if int(e.data.delta) > 0 else "status")
+				BattleAudio.play(BattleAudio.stage_sound(int(e.data.delta)), 0.0, BattleAudio.stage_pitch(int(e.data.get("stage", 0))))
 				_era_fx("stat_up" if int(e.data.delta) > 0 else "stat_down", side, slot)
 			await _float(side, slot, e.describe())
 		BattleEvent.Type.STATUS_CURED:
@@ -1259,7 +1266,7 @@ func _play_event(e: BattleEvent) -> void:
 			# 2531, 2536).
 			Sound.sfx("miss")
 			if target != null and target.visible:
-				Sound.sfx("dodge")
+				BattleAudio.play("dodge")
 				target.dodge(dodge_dir(t_side))
 			var miss_text: String = e.describe()
 			if not miss_text.is_empty():
@@ -1282,7 +1289,9 @@ func _play_intro() -> void:
 	add_child(cover)
 	if EraBattleFeel.text(era, "intro") == "swoop":
 		BattleCamera.swoop_in(_shake_root, Rect2(_foe_sprite.position, _foe_sprite.size))
-	await cover.play(era)
+	# A rematch keeps only a short opening (BattleShow, plan 660).
+	await cover.play(era, BattleShow.intro_share_for(model))
+	BattleShow.note_intro(model)
 	intro_style_played = cover.style
 
 ## The intro style the last opening played (tests).
@@ -1327,7 +1336,7 @@ func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
 	var kind: int = int(e.data.get("kind", MoveData.Kind.PHYSICAL))
 	var element: int = int(e.data.get("element", -1))
 	var user: SpirlingSprite = _sprite(side, slot)
-	Sound.sfx(charge_sound(kind))
+	BattleAudio.play(charge_sound(kind))
 	await user.windup(kind, dir)
 	if element < 0:
 		return
@@ -1385,7 +1394,7 @@ static func charge_sound(kind: int) -> String:
 ## The travel sound starts with the travel phase, after the charge.
 func _fx_travel_sound(element: int) -> void:
 	await get_tree().create_timer(ElementFx.CHARGE_TIME / Juice.speed()).timeout
-	Sound.sfx(travel_sound(element))
+	BattleAudio.play(travel_sound(element))
 
 static func travel_sound(element: int) -> String:
 	return "travel_" + String(Elements.E.keys()[element]).to_lower()
@@ -1399,7 +1408,8 @@ func _hit_feedback(e: BattleEvent, side: int, slot: int, strong: bool) -> void:
 		"final":
 			await Juice.hitstop(1.0, FINAL_HITSTOP)
 		"normal":
-			await Juice.hitstop(float(e.data.get("amount", 0)) / max_hp)
+			# A keen hit holds a little longer (plan 644).
+			await Juice.hitstop(float(e.data.get("amount", 0)) / max_hp, BattleShow.crit_hitstop() if bool(e.data.get("crit", false)) else -1.0)
 	var sp: SpirlingSprite = _sprite(side, slot)
 	_era_fx("hitmark", side, slot)
 	sp.knockback(knockback_dir(side, _multi))
