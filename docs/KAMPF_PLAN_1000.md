@@ -955,7 +955,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 857. [x] Online-Belohnungen ohne Geld (Wegmarken nie käuflich, Belohnungen sind Gegenstände und Titel)
 858. [x] Online-Datenschutz (bestehend) (bestehend)
 859. [x] Online-Server Contabo (bestehend) (bestehend)
-860. [ ] Online-Verbindungsabbruch: Kampf läuft lokal weiter
+860. [x] Online-Verbindungsabbruch: Kampf läuft lokal weiter (Online.in_battle: kein Pause-Bildschirm während eines Kampfes)
 861. [x] Online-KI-Echos nutzen Meister-KI (EchoTeam.DUEL_AI = 3)
 862. [x] Online-Fairness-Test (tests/unit/test_online_echo_k11.gd: faire Liga und Echo-Duell gleich für alle)
 863. [x] Online-Version prüfen (bestehend CLIENT_VERSION) (bestehend)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-107 von 1000 Punkten umgesetzt.
+108 von 1000 Punkten umgesetzt.
 

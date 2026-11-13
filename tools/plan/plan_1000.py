@@ -908,7 +908,7 @@ AREAS = [
 "[x] Online-Belohnungen ohne Geld (Wegmarken nie käuflich, Belohnungen sind Gegenstände und Titel)",
 "[x] Online-Datenschutz (bestehend) (bestehend)",
 "[x] Online-Server Contabo (bestehend) (bestehend)",
-"Online-Verbindungsabbruch: Kampf läuft lokal weiter",
+"[x] Online-Verbindungsabbruch: Kampf läuft lokal weiter (Online.in_battle: kein Pause-Bildschirm während eines Kampfes)",
 "[x] Online-KI-Echos nutzen Meister-KI (EchoTeam.DUEL_AI = 3)",
 "[x] Online-Fairness-Test (tests/unit/test_online_echo_k11.gd: faire Liga und Echo-Duell gleich für alle)",
 "[x] Online-Version prüfen (bestehend CLIENT_VERSION) (bestehend)",
