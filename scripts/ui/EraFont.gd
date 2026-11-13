@@ -32,9 +32,15 @@ static func ascent_of(id: String) -> int:
 static func has_glyph(id: String, ch: String) -> bool:
 	return ((EraFontGlyphs.FONTS.get(id, {}) as Dictionary).get("glyphs", {}) as Dictionary).has(ch)
 
-## The pixel rows of [param ch] in font [param id] ("#" = ink), empty when it has none.
+## The pixel rows of [param ch] in font [param id] ("#" = ink), empty when it has none. A bold
+## font (data/era_text.json "bold") draws every stroke doubled, like the Era IV/V battle HUD.
 static func glyph(id: String, ch: String) -> Array:
-	return ((EraFontGlyphs.FONTS.get(id, {}) as Dictionary).get("glyphs", {}) as Dictionary).get(ch, [])
+	var rows: Array = ((EraFontGlyphs.FONTS.get(id, {}) as Dictionary).get("glyphs", {}) as Dictionary).get(ch, [])
+	return PixelFont.embolden(rows) if is_bold(id) and not rows.is_empty() else rows
+
+## True when font [param id] is drawn bold (data/era_text.json "bold": the Era IV/V font).
+static func is_bold(id: String) -> bool:
+	return id in (EraText.config().get("bold", []) as Array)
 
 ## Pixels [param text] is wide in font [param id], counting only its own glyphs.
 static func text_width(id: String, text: String) -> int:
@@ -59,7 +65,7 @@ static func get_font(id: String) -> FontFile:
 static func _build(id: String) -> FontFile:
 	var def: Dictionary = EraFontGlyphs.FONTS[id]
 	var glyphs: Dictionary = def.glyphs
-	var cw: int = int(def.cell_w)
+	var cw: int = int(def.cell_w) + (1 if is_bold(id) else 0)
 	var chh: int = int(def.cell_h)
 	var ascent: int = int(def.ascent)
 	var chars: Array = glyphs.keys()
@@ -78,7 +84,7 @@ static func _build(id: String) -> FontFile:
 	f.set_cache_descent(0, base, chh - ascent)
 	for i: int in chars.size():
 		var ch: String = chars[i]
-		var bitmap: Array = glyphs[ch]
+		var bitmap: Array = glyph(id, ch)
 		var gx: int = (i % COLS) * (cw + pad)
 		var gy: int = (i / COLS) * (chh + pad)
 		var w: int = str(bitmap[0]).length()

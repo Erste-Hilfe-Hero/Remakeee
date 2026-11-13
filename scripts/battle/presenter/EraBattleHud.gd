@@ -8,7 +8,7 @@ const PATH: String = "res://data/era_battle_hud.json"
 const ERAS: int = 5
 ## Every era entry sets every one of these.
 const KEYS: Array[String] = ["name", "font", "frame", "plate", "plate_slant", "plate_shadow", "plate_header",
-	"plate_gloss", "plate_slide", "camera_follow", "bar_h", "pip", "marks", "hp_numbers", "xp", "xp_colour",
+	"plate_gloss", "plate_slide", "camera_follow", "bar_h", "bar_h_single", "pip", "marks", "hp_numbers", "xp", "xp_colour",
 	"menu", "commands", "art_h", "command_h", "art_fill", "art_slant", "art_detail", "item_shortcut",
 	"menu_stagger", "info_card", "team_row", "team_mark", "team_shape", "team_pop", "level_panel",
 	"level_count", "bond", "bond_mark", "mini", "accent", "light", "shade"]
@@ -392,9 +392,10 @@ static func team_row_size(era: int, n: int, compact: bool = false) -> Vector2:
 ## Rows inside a name plate of [param era], in content pixels: name baseline (asc), the Vigor
 ## bar (bar_y, bar_h), the Energy row (row3_y, row3_h), the baseline of the player's extra
 ## row with the Growth bar and the Vigor numbers (row4), and the heights with and without it.
-static func plate_rows(era: int) -> Dictionary:
+## [param single]: the plates of a one-on-one battle, whose Vigor bar may be thicker (bar_h_single).
+static func plate_rows(era: int, single: bool = false) -> Dictionary:
 	var a: int = ascent(era)
-	var bar_h: int = int(num(era, "bar_h", 3))
+	var bar_h: int = int(num(era, "bar_h_single" if single else "bar_h", 3))
 	# The status tag stands from one pixel above the bar, one line high: the Energy row starts
 	# under it even when the font is taller than the bar row (Era III's 10 px font).
 	var row3: int = maxi(a + 2 + bar_h + 2 + 2, 2 * a + 2)
@@ -404,8 +405,8 @@ static func plate_rows(era: int) -> Dictionary:
 
 ## Height of a name plate's content in [param era]; [param extra_row] adds the Growth bar and
 ## Vigor numbers of the player's own plate.
-static func plate_height(era: int, extra_row: bool) -> int:
-	return int(plate_rows(era)["h_extra" if extra_row else "h"])
+static func plate_height(era: int, extra_row: bool, single: bool = false) -> int:
+	return int(plate_rows(era, single)["h_extra" if extra_row else "h"])
 
 static func side_button(era: int) -> Vector2:
 	return SIDE_BUTTON_LARGE if large_font(era) else SIDE_BUTTON
@@ -414,10 +415,22 @@ static func side_button(era: int) -> Vector2:
 static func menu_height(era: int) -> int:
 	var e: Dictionary = for_era(era)
 	var arts: int = Spirling.MAX_MOVES * int(e.get("art_h", 13)) + (Spirling.MAX_MOVES - 1)
+	var extra: int = (shortcut_height(era) + 2) if bool(e.get("item_shortcut", false)) else 0
+	if str(e.get("commands", "row")) == "column":
+		# Era IV/V: the commands and the item shortcut stand in a column beside the arts.
+		return maxi(arts, command_column_height(era)) + FRAME_PAD * 2 - 2
 	var rows: int = 2 if str(e.get("commands", "row")) == "grid" else 1
 	var cmds: int = rows * int(e.get("command_h", 16)) + (rows - 1)
-	var extra: int = (shortcut_height(era) + 2) if bool(e.get("item_shortcut", false)) else 0
 	return arts + 2 + cmds + extra + FRAME_PAD * 2 - 2
+
+## Height of the command column (commands "column"): four commands, then the item shortcut.
+static func command_column_height(era: int) -> int:
+	var e: Dictionary = for_era(era)
+	var extra: int = (shortcut_height(era) + 2) if bool(e.get("item_shortcut", false)) else 0
+	return 4 * int(e.get("command_h", 16)) + 3 + extra
+
+## Share of the panel width the arts take when the commands stand in a column beside them.
+const ART_SHARE: float = 0.7
 
 static func shortcut_height(era: int) -> int:
 	return line_h(era) + 6
@@ -433,8 +446,8 @@ static func single_layout(era: int, field: Vector2, foe_sprite: Rect2, player_sp
 	var stage: bool = era >= EraManager.STAGE_25D_FROM
 	var b: Vector2 = side_button(era)
 	var out: Dictionary = {"foe_slant_left": true}
-	var fh: float = plate_height(era, false)
-	var ph: float = plate_height(era, true)
+	var fh: float = plate_height(era, false, true)
+	var ph: float = plate_height(era, true, true)
 	var fpad: Array[int] = plate_pad(era, true)
 	var buttons: Array[Rect2] = []
 	var row: Vector2 = team_row_size(era, team)

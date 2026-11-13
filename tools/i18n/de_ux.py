@@ -210,6 +210,9 @@ T = {
 "New": "Neu",
 "Kind": "Art",
 "seen": "gesehen",
+"Swap with team...": "Mit Team tauschen...",
+"Swap %s with whom?": "%s gegen wen tauschen?",
+"Nothing to swap.": "Nichts zu tauschen.",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).
