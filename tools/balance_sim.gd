@@ -31,6 +31,8 @@ extends SceneTree
 ##                 (scripts/core/ActSim.gd): arrival rings, win rate on arrival and after a moderate
 ##                 grind, grind battles to 70 % per Warden, rival and boss; --rounds N battles per
 ##                 measure (default 40), --starter S one starter, --act ID one act
+##   --mode arts   every art Hesper teaches: win rate with it in the lead's first slot against the
+##                 same battle without (KAMPF_PLAN_1000 item 155, band -10 to +8 points); --art NAME for one
 ##   --mode mirror every species against itself (default 400 duels each, item 831): the player
 ##                 side must win 45 to 55 %
 ##   The team report also lists every new art under 1 % of its element's picks (item 833).
@@ -121,6 +123,19 @@ func _initialize() -> void:
 			_write(str(opts.out), atext)
 		if opts.has("json"):
 			_write(str(opts.json), JSON.stringify(sum, " ", true))
+		print(atext)
+		quit()
+		return
+	if mode == "arts":
+		# KAMPF_PLAN_1000 item 155: every art Hesper teaches, with and without (scripts/battle/ArtsSim.gd).
+		var arts: GDScript = load("res://scripts/battle/ArtsSim.gd")
+		var only: Array[String] = []
+		if opts.has("art"):
+			only.append(str(opts.art))
+		result = arts.call("run", level, int(opts.get("rounds", 200)), seed_value, only)
+		var atext: String = arts.call("report", result)
+		if opts.has("out"):
+			_write(str(opts.out), atext)
 		print(atext)
 		quit()
 		return

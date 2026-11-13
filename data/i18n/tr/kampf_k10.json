@@ -63,6 +63,9 @@
   "Wins: %d": "Galibiyetler: %d",
   "World goal boost: %d battles left.": "Dünya hedefi desteği: %d savaş kaldı.",
   "Your Spirlings grow faster for the next %d battles.": "Spirling'lerin sonraki %d savaşta daha hızlı gelişir.",
-  "| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (normal) | Story |": "| Halka | Ulaşmak için gelişim | Sonraki halkaya | Sonraki halkaya denk yabani savaş (normal) | Hikâye |"
+  "| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (normal) | Story |": "| Halka | Ulaşmak için gelişim | Sonraki halkaya | Sonraki halkaya denk yabani savaş (normal) | Hikâye |",
+  "%s's %s spark brightens.": "{0} adlı Spirling'in {1} kıvılcımı parlıyor.",
+  "This %s is ancient, scarred by many seasons!": "Bu %s kadim, nice mevsimin izini taşıyor!",
+  "The fog is thick: arts miss more often.": "Sis yoğun: teknikler daha sık ıskalıyor."
  }
 }

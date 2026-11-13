@@ -463,6 +463,9 @@ func run_records() -> void:
 			lines.append("Lexicon")
 		lines.append("Battle rules")
 		lines.append("Battle guide")
+		# Every gift and keepsake with what it does (Kampf plan items 245, 295).
+		lines.append("Gift book")
+		lines.append("Keepsake book")
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
@@ -490,6 +493,8 @@ func run_records() -> void:
 			"Lexicon": await run_lexicon()
 			"Battle rules": await run_rules_book()
 			"Battle guide": await run_battle_guide()
+			"Gift book": await info("\n".join(TraitKit.all_gift_lines()))
+			"Keepsake book": await info("\n".join(TraitKit.all_keepsake_lines()))
 			"Online replays":
 				if await OnlineReplaysMenu.run(self):
 					return
@@ -754,7 +759,7 @@ func run_team() -> void:
 		if picker.last_long:
 			await run_summary(s, idx == 0, idx)
 			continue
-		var opts: Array[String] = ["Summary", "Lead the team", "Move to slot...", "Use item", "Keepsake", "Nickname"]
+		var opts: Array[String] = ["Summary", "Lead the team", "Move to slot...", "Use item", "Keepsake", "Nickname", "Arts order"]
 		# Every kind that can unfold shows the option; if it isn't ready yet, it says what it needs.
 		if not s.data.unfold.is_empty():
 			opts.append("Unfurl")
@@ -764,12 +769,20 @@ func run_team() -> void:
 		# Move Memory (shop item 4457).
 		if Billing.unlocked("move_memory") > 0:
 			opts.append("Relearn an art")
+		if not TraitKit.bonus_options(s).is_empty() or not s.bonus_trait.is_empty():
+			opts.append("Bonus gift")
 		var opt: int = await pick_strings(s.display_name(), opts)
+		if opt >= 0 and opts[opt] == "Bonus gift":
+			await _bonus_gift(s)
+			continue
 		if opt >= 0 and opts[opt] == "Relearn an art":
 			await _relearn(s)
 			continue
 		if opt >= 0 and opts[opt] == "Nickname":
 			await _rename(s)
+			continue
+		if opt >= 0 and opts[opt] == "Arts order":
+			await _arts_order(s)
 			continue
 		if opt >= 0 and opts[opt] in ["Unfurl", "Furl back"]:
 			await _unfurl(s, opts[opt] == "Unfurl")
@@ -786,6 +799,20 @@ func run_team() -> void:
 					GameState.move_party(idx, to)
 			3: await _use_item_on(s)
 			4: await _held_item(s)
+
+## Art order and favourite art (KAMPF_PLAN items 605, 606): the order is the one in battle,
+## the favourite is where the battle menu starts when no art was used yet.
+func _arts_order(s: Spirling) -> void:
+	while true:
+		var row: int = await pick(Loc.t("Arts of %s") % s.display_name(), BattleComfort.art_rows(s))
+		if row < 0:
+			return
+		var acts: Array[String] = ["Move up", "Move down", "Favourite on/off"]
+		var act: int = await pick_strings(s.moves[row].move_name, acts)
+		match act:
+			0: BattleComfort.move_art(s, row, row - 1)
+			1: BattleComfort.move_art(s, row, row + 1)
+			2: BattleComfort.toggle_favourite(s, row)
 
 ## Nickname (item 1899): up to 10 letters, empty gives back the kind's name. The same rules
 ## as Wayfarer names, since friends can see a team.
@@ -876,6 +903,20 @@ func _unfurl(s: Spirling, forward: bool) -> void:
 		Sound.sfx("level_up")
 	await info(("%s unfurls into %s!" if forward else "%s furls back into %s.") % [old_name, s.data.species_name])
 
+## A bonus gift next to its own (Kampf plan items 243, 274): unfolded, with enough kinship.
+func _bonus_gift(s: Spirling) -> void:
+	var ids: Array[String] = TraitKit.bonus_options(s)
+	var entries: Array[Dictionary] = []
+	for id: String in ids:
+		var t: Dictionary = TraitKit.info(id)
+		entries.append({"text": str(t.label) + (" *" if id == s.bonus_trait else ""), "hint": Loc.t(str(t.text))})
+	if not s.bonus_trait.is_empty():
+		ids.append("")
+		entries.append({"text": "Forget the bonus gift"})
+	var idx: int = await pick("Bonus gift", entries)
+	if idx >= 0 and TraitKit.learn_bonus(s, ids[idx]):
+		Sound.sfx("confirm")
+
 ## Give, swap or take off a keepsake.
 func _held_item(s: Spirling) -> void:
 	var ids: Array[String] = []
@@ -890,7 +931,7 @@ func _held_item(s: Spirling) -> void:
 			ids.append(str(id))
 			var it: Dictionary = Database.item(str(id))
 			entries.append({"text": "%s x%d" % [it.get("name", id), GameState.item_count(str(id))],
-				"hint": Loc.t(str(it.get("description", "")))})
+				"hint": Loc.t(str(it.get("description", ""))) + TraitKit.rarity_line(str(id))})
 	if ids.is_empty():
 		await info("You have nothing a Spirling can hold.\nKeepsakes are sold in Thornridge.")
 		return

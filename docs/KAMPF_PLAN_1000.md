@@ -130,7 +130,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 89. [ ] Neutral-Techniken ohne Element für jeden Spirling
 90. [ ] Matchup-Lernen auch durch Lexikon-Einträge (Lore-Seiten)
 91. [ ] Elementsymbol am Ziel-Pin im Mehrfachkampf
-92. [ ] Effektivitäts-Hinweis im Mehrfachkampf pro Ziel bei der Zielwahl
+92. [x] Effektivitäts-Hinweis im Mehrfachkampf pro Ziel bei der Zielwahl (bekanntes x2/x.5 an der Zielwahl, TechniqueRules.aim_tag)
 93. [x] Element-Balance-Bericht: welches Element gewinnt im Simulator zu oft (bestehend: tools/balance/type_sim.py chart_report)
 94. [ ] Neue Feld-Elemente pro Riss variieren
 95. [x] Element-Reaktion: Tide trifft Scorch-Ziel und löscht den Status
@@ -166,7 +166,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 122. [x] Feld-Restzüge im Log ansagen und beim Ende melden (Ansage eine Runde vor Feldende)
 123. [x] Schutz-Technik 'Brace': hält einen Treffer ab, zweimal hintereinander schlägt fehl (Standhalten (Hold Fast))
 124. [x] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Wayfarer-Kämpfe) (Wegschubser (Shove Off))
-125. [ ] Mehrstufige Technik: lädt eine Runde, trifft dann doppelt
+125. [x] Mehrstufige Technik: lädt eine Runde, trifft dann doppelt (Federschlag (Coiled Strike))
 126. [x] Konter-Technik: wirft physischen Schaden x1.5 zurück (Grollrückgabe (Grudge Return))
 127. [x] Heil-Technik für Verbündete im Mehrfachkampf (Sippenbalsam (Kindred Balm))
 128. [x] Team-Stufen-Technik (alle Verbündeten DEF +1) (Reih und Glied (Rank and File))
@@ -185,7 +185,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 141. [x] Technik-Beschreibung mit Effekt-Chancen im Lexikon
 142. [ ] Techniken mit Signatur pro Art (eine je Art, eigenständig)
 143. [x] Keine Technik-Namen aus anderen Spielen (Prüfliste vor jedem Merge) (tools/ip_check.sh in CI, test_rule_checks)
-144. [ ] Status-Techniken mit Genauigkeit unter 100 % sichtbar machen
+144. [x] Status-Techniken mit Genauigkeit unter 100 % sichtbar machen (Trefferchance in der Technikzeile)
 145. [ ] Technik-Kategorie Physisch/Fokus/Status mit Symbol
 146. [x] Mehrfachziel-Techniken zeigen 'alle' (bestehend) (bestehend: Info-Karte 'Reaches every foe.')
 147. [x] Technik 'Ablenkung': zieht alle Einzelziele drei Runden auf sich (Lichtköder (Bright Lure))
@@ -195,8 +195,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 151. [x] Technik 'Ruhepunkt': heilt 50 %, Nutzer schläft 1 Runde (Drowse) (Ruhepunkt (Still Point))
 152. [x] Technik 'Druckwelle': trifft alle, auch Verbündete, sehr stark (Risiko-Technik) (Druckwelle (Ground Burst))
 153. [x] Techniken mit Feld-Bedingung (stärker in passendem Feld) (bestehend: field_element-Techniken)
-154. [ ] Techniken mit Tageszeit-Bedingung (Tag/Nacht bestehend)
-155. [ ] Technik-Balancing über den Simulator pro neuer Technik
+154. [x] Techniken mit Tageszeit-Bedingung (Tag/Nacht bestehend) (Nachtpirsch (Night Prowl), Mittagsglut (Noon Glare))
+155. [x] Technik-Balancing über den Simulator pro neuer Technik (balance_sim --mode arts, ArtsSim, Ergebnis in BALANCE.md)
 156. [x] Lernlisten pro Art auf Lücken prüfen (jede Art hat eine Status-Technik) (Statustechnik für jede Art per Echo-Kristall, test_kampf_techniques_b)
 157. [x] Technik-Animationen pro Element eigenständig (bestehend: ElementFx pro Element)
 158. [ ] Technik-Favoriten im Menü markieren
@@ -293,87 +293,87 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 241. [ ] Trait im Info-Streifen nach der ersten Auslösung zeigen
 242. [x] Trait-Auslösung als kurze Meldung im Log
-243. [ ] Zweiter Trait für entwickelte Spirlings (wählbar)
-244. [ ] Versteckter Trait selten bei Prisma-Spirlings
-245. [ ] Trait-Lexikon mit allen Traits
-246. [ ] Trait 'Sparflamme' (Energie)
-247. [ ] Trait 'Prisma-Haut' (Effektivität)
-248. [ ] Trait 'Gegenstrom' (Resistenz)
-249. [ ] Trait 'Ruhig' (Status-Heilung beim Wechsel)
-250. [ ] Trait 'Glimmhaut' (Kontakt-Scorch)
-251. [ ] Trait 'Schwarmgeist': stärker im Mehrfachkampf
-252. [ ] Trait 'Einzelgänger': stärker im 1v1
-253. [ ] Trait 'Wachposten': erster Zug immer zuerst
-254. [ ] Trait 'Feldläufer': doppelte Feld-Boni
-255. [ ] Trait 'Echo-Seele': Resonanz-Felder halten 2 Runden länger
-256. [ ] Trait 'Dickes Fell' (bestehend Thick Hide) im Lexikon
-257. [ ] Trait 'Wurzeln' (bestehend Deep Roots)
-258. [ ] Trait 'Last Stand' (bestehend) sichtbar machen, wenn aktiv
-259. [ ] Trait-Balance-Bericht
+243. [x] Zweiter Trait für entwickelte Spirlings (wählbar) (Bonus-Gabe neben der eigenen, im Team-Menü wählbar (TraitKit.bonus_options, PauseMenu 'Bonus gift'))
+244. [x] Versteckter Trait selten bei Prisma-Spirlings (jeder vierte Prisma-Spirling trägt 'Prism Skin' (TraitKit.prism_trait_id))
+245. [x] Trait-Lexikon mit allen Traits (Gabenbuch im Rekorde-Menü (TraitKit.all_gift_lines))
+246. [x] Trait 'Sparflamme' (Energie) ('Spare Flame' (data/kampf_kit.json))
+247. [x] Trait 'Prisma-Haut' (Effektivität) ('Prism Skin')
+248. [x] Trait 'Gegenstrom' (Resistenz) ('Counter Current')
+249. [x] Trait 'Ruhig' (Status-Heilung beim Wechsel) ('Quiet Heart')
+250. [x] Trait 'Glimmhaut' (Kontakt-Scorch) ('Glow Hide')
+251. [x] Trait 'Schwarmgeist': stärker im Mehrfachkampf ('Pack Sense')
+252. [x] Trait 'Einzelgänger': stärker im 1v1 ('Loner')
+253. [x] Trait 'Wachposten': erster Zug immer zuerst ('Sentinel')
+254. [x] Trait 'Feldläufer': doppelte Feld-Boni ('Field Runner')
+255. [x] Trait 'Echo-Seele': Resonanz-Felder halten 2 Runden länger ('Lingering Echo')
+256. [x] Trait 'Dickes Fell' (bestehend Thick Hide) im Lexikon (im Gabenbuch)
+257. [x] Trait 'Wurzeln' (bestehend Deep Roots) (im Gabenbuch)
+258. [x] Trait 'Last Stand' (bestehend) sichtbar machen, wenn aktiv (bestehend: BattleModel zeigt den Trait beim ersten Wirken unter 1/3 HP)
+259. [x] Trait-Balance-Bericht (tools/balance/trait_report.py)
 260. [ ] Trait-Wechsel-Gegenstand
 261. [ ] KI kennt Traits der Gegner nur, wenn sie aufgedeckt wurden (Fairness)
-262. [ ] Meister-KI meidet Status gegen immune Traits (umgesetzt)
+262. [x] Meister-KI meidet Status gegen immune Traits (umgesetzt) (bestehend: BattleAI meidet Status gegen immune Gaben (Stufe 3))
 263. [ ] Trait-Icons klein neben dem Namen
-264. [ ] Trait-Texte übersetzt (bestehend)
-265. [ ] Traits in Online-Duellen gleich
-266. [ ] Trait-Namen eigenständig prüfen
-267. [ ] Traits für Bosse (eigene Boss-Traits)
-268. [ ] Trait 'Hush-Kern' für Riss-Bosse: Status halb so lang
-269. [ ] Trait 'Laternenlicht': Verbündete erhalten +1 FOC beim Einwechseln
-270. [ ] Trait 'Kälteschlaf': Drowse heilt HP
-271. [ ] Trait 'Stoßdämpfer': kein Rückstoß
-272. [ ] Trait 'Glückspilz': Krit-Chance leicht höher
-273. [ ] Trait 'Wendig': Wechsel ist frei (Prioritätsaktion, bestehend)
-274. [ ] Trait-Freischaltung durch Bond-Stufe
+264. [x] Trait-Texte übersetzt (bestehend) (bestehend, neue Gaben in tools/i18n/de_kampf_traits.py)
+265. [x] Traits in Online-Duellen gleich (Gaben liegen im BattleModel und im Spielstand (bonus_trait), Online-Duelle nutzen dasselbe Modell)
+266. [x] Trait-Namen eigenständig prüfen (Test: keine Namensdopplung (test_trait_kit.gd), ip_check)
+267. [x] Traits für Bosse (eigene Boss-Traits) (data/kampf_kit.json boss_traits)
+268. [x] Trait 'Hush-Kern' für Riss-Bosse: Status halb so lang ('Hush Core' für alle Riss-Bosse)
+269. [x] Trait 'Laternenlicht': Verbündete erhalten +1 FOC beim Einwechseln ('Lantern Light')
+270. [x] Trait 'Kälteschlaf': Drowse heilt HP ('Cold Sleep')
+271. [x] Trait 'Stoßdämpfer': kein Rückstoß ('Shock Pad')
+272. [x] Trait 'Glückspilz': Krit-Chance leicht höher ('Lucky Cap')
+273. [x] Trait 'Wendig': Wechsel ist frei (Prioritätsaktion, bestehend) ('Nimble')
+274. [x] Trait-Freischaltung durch Bond-Stufe (Bonus-Gabe erst ab Verbundenheit (min_kinship))
 275. [ ] Traits im Spirlog bei 'bonded'
-276. [ ] Trait-Auswirkung im Schadensvorschau-Wert berücksichtigen (bestehend über damage_mult)
-277. [ ] Trait-Tests pro Trait
-278. [ ] Trait-Kombinationen mit gehaltenen Gegenständen prüfen
+276. [x] Trait-Auswirkung im Schadensvorschau-Wert berücksichtigen (bestehend über damage_mult) (TraitKit.static_mult fließt in BattleRules.damage_mult)
+277. [x] Trait-Tests pro Trait (tests/unit/test_trait_kit.gd)
+278. [x] Trait-Kombinationen mit gehaltenen Gegenständen prüfen (Test: Echo Soul + Lantern Glass, Field Runner + Glutstein)
 279. [ ] Trait 'Sturmlaterne' für den Storm-Lantern-Träger
 280. [ ] Trait-Zähler im Kampfende-Bericht
 
 ## Gehaltene Gegenstände
 
 281. [ ] Gehaltene Gegenstände (bestehend) im Info-Streifen als Symbol
-282. [ ] Element-Verstärker pro Element
-283. [ ] Energie-Kristall (+2 Start-Energie)
-284. [ ] Schutz-Talisman (einmal sehr effektiven Treffer halbieren)
-285. [ ] Fokus-Band in eigener Form: übersteht einen K.o.-Treffer bei vollen HP einmal
-286. [ ] Heilbeere-Ersatz in eigener Form: 'Moospolster' heilt 25 % unter 1/3 HP
-287. [ ] Status-Beere-Ersatz: 'Klarstein' heilt einen Status einmal
-288. [ ] Tempo-Feder: SPD +1 beim Einwechseln
-289. [ ] Wahl-Gegenstände bewusst nicht übernehmen (eigene Ideen stattdessen)
-290. [ ] Gegenstand 'Laternenglas': Feld-Dauer +2
-291. [ ] Gegenstand 'Riss-Splitter': Overcharge +0.05 pro Energie
-292. [ ] Gegenstand 'Wanderschuh': Wechsel ist frei
+282. [x] Element-Verstärker pro Element (bestehend: Prismen und Charms pro Element)
+283. [x] Energie-Kristall (+2 Start-Energie) ('Deep Crystal': +2 Energie-Maximum und Start)
+284. [x] Schutz-Talisman (einmal sehr effektiven Treffer halbieren) ('Ward Talisman')
+285. [x] Fokus-Band in eigener Form: übersteht einen K.o.-Treffer bei vollen HP einmal (bestehend: Hold Stone)
+286. [x] Heilbeere-Ersatz in eigener Form: 'Moospolster' heilt 25 % unter 1/3 HP (bestehend: Mending Pith)
+287. [x] Status-Beere-Ersatz: 'Klarstein' heilt einen Status einmal (bestehend: Clearing Pith)
+288. [x] Tempo-Feder: SPD +1 beim Einwechseln ('Pace Feather')
+289. [x] Wahl-Gegenstände bewusst nicht übernehmen (eigene Ideen stattdessen) (keine Wahl-Sperre in data/kampf_kit.json, nur eigene Effekte)
+290. [x] Gegenstand 'Laternenglas': Feld-Dauer +2 ('Lantern Glass')
+291. [x] Gegenstand 'Riss-Splitter': Overcharge +0.05 pro Energie ('Rift Splinter')
+292. [x] Gegenstand 'Wanderschuh': Wechsel ist frei ('Wander Boot')
 293. [ ] Gegenstände in Turnier-Regeln einzeln sperrbar
-294. [ ] Gegner-Wayfarer tragen auf Veteran Gegenstände
-295. [ ] Gegenstand-Info im Lexikon
+294. [x] Gegner-Wayfarer tragen auf Veteran Gegenstände (bestehend: TrainerData.keeps_keepsakes ab Veteran)
+295. [x] Gegenstand-Info im Lexikon (Andenkenbuch im Rekorde-Menü (TraitKit.all_keepsake_lines))
 296. [ ] Gegenstand-Verbrauch in Kampfende-Bericht
 297. [ ] Gegenstand nach dem Kampf automatisch wieder ausrüsten (Option)
 298. [ ] Gegenstand-Tausch im Kampf (kostet den Zug)
-299. [ ] Gegenstand-Klau-Technik bewusst nicht einführen (Frust)
-300. [ ] Gegenstand-Shop im Endgame
-301. [ ] Gegenstand als Belohnung im Turm
-302. [ ] Gegenstand-Seltenheit sichtbar
+299. [x] Gegenstand-Klau-Technik bewusst nicht einführen (Frust) (bewusst kein Klau-Effekt)
+300. [x] Gegenstand-Shop im Endgame (Marlas Stand (endgame.json exchange, Stufe full))
+301. [x] Gegenstand als Belohnung im Turm (oberste Turmetage gibt ein Andenken (TraitKit.tower_reward))
+302. [x] Gegenstand-Seltenheit sichtbar (Seltenheit im Andenken-Hinweis (items.json rarity))
 303. [ ] Gegenstand-Balance im Simulator
 304. [ ] Gegenstand-Icons eigenständig (Asset-Log)
-305. [ ] Gegenstand-Namen eigenständig prüfen
-306. [ ] Gehaltene Gegenstände in Online-Duellen gleich
+305. [x] Gegenstand-Namen eigenständig prüfen (Test: keine Namensdopplung)
+306. [x] Gehaltene Gegenstände in Online-Duellen gleich (gleiches Modell und Spielstand)
 307. [ ] Gegenstand-Sets pro Spirling speichern
-308. [ ] Gegenstand 'Echo-Muschel': Bond-Chance +5 % beim Halter
-309. [ ] Gegenstand 'Ruhekerze': +1 Energie beim Rasten
-310. [ ] Gegenstand 'Glutstein' für Ember-Felder
-311. [ ] Gegenstand 'Gezeitenstein' für Tide-Felder
-312. [ ] Gegenstand 'Dämmerstein' für Umbra-Felder
-313. [ ] Gegenstand-Effekte im Schadensvorschau-Wert
-314. [ ] Gegenstand-Hinweis beim Ausrüsten (was es tut)
+308. [x] Gegenstand 'Echo-Muschel': Bond-Chance +5 % beim Halter ('Calling Conch')
+309. [x] Gegenstand 'Ruhekerze': +1 Energie beim Rasten ('Quiet Wick')
+310. [x] Gegenstand 'Glutstein' für Ember-Felder ('Cinder Stone')
+311. [x] Gegenstand 'Gezeitenstein' für Tide-Felder ('Tide Stone')
+312. [x] Gegenstand 'Dämmerstein' für Umbra-Felder ('Murk Stone')
+313. [x] Gegenstand-Effekte im Schadensvorschau-Wert (über BattleRules.damage_mult)
+314. [x] Gegenstand-Hinweis beim Ausrüsten (was es tut) (bestehend: Hinweis im Andenken-Menü)
 315. [ ] Gegenstand-Limit: jeder Gegenstand nur einmal pro Team in Turnieren
-316. [ ] Gegenstand-Fund in versteckten Orten (bestehend)
-317. [ ] Gegenstand-Tests pro Gegenstand
+316. [x] Gegenstand-Fund in versteckten Orten (bestehend) (bestehend: Spark Coil im Versteck von Murk Hollow)
+317. [x] Gegenstand-Tests pro Gegenstand (tests/unit/test_trait_kit.gd)
 318. [ ] Gegenstand-Animation beim Auslösen
 319. [ ] Gegenstand-Sound beim Auslösen
-320. [ ] Gegenstand-Texte übersetzt
+320. [x] Gegenstand-Texte übersetzt (tools/i18n/de_kampf_traits.py)
 
 ## Rift-Felder und Umgebung
 
@@ -642,22 +642,22 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 565. [x] Kampflog (bestehend) mit Filter (BattleInfo.FILTERS, Filterzeile im Log)
 566. [x] Gegner-Info-Seite im Kampf (Traits, bekannte Techniken) (BattleInfo.facts oben im Log)
 567. [x] Gegner-Techniken werden bekannt, sobald sie benutzt wurden (BattleInfo.note/seen_arts)
-568. [ ] Matchup-Lexikon
-569. [ ] Werte-Rechner
-570. [ ] Kampfregeln-Seite
+568. [x] Matchup-Lexikon (BattleHelp.matchup_rows, Log > Mehr)
+569. [x] Werte-Rechner (BattleHelp.stat_rows, Log > Mehr)
+570. [x] Kampfregeln-Seite (BattleHelp.rule_rows, Log > Mehr)
 571. [x] Zugreihenfolge-Vorschau (BattleInfo.order_hint auf der Technik-Karte)
 572. [x] Energie-Vorschau (Technik-Karte: Energie danach)
 573. [x] Status-Dauer-Anzeige (BattleInfo.status_line im Log)
 574. [x] Feld-Restzüge-Anzeige (BattleInfo.field_line im Log)
 575. [x] Bank-Anzeige (TeamRow.gd, eigenes Team)
-576. [ ] Gegenstand-Anzeige
+576. [x] Gegenstand-Anzeige (BattleInfo.held_line im Log)
 577. [x] Trait-Anzeige nach Auslösung
-578. [ ] XP-Vorschau nach dem Kampf
+578. [x] XP-Vorschau nach dem Kampf (BattleInfo.growth_preview im Log)
 579. [x] Level-Cap-Anzeige (Ring-Obergrenze im Log und im Team-Menü)
 580. [x] Bond-Chance bewusst ohne Zahlen-Anzeige (Patent-Leitplanke: keine Fang-Quote) (tools/ip_check.sh sperrt Quoten-Anzeigen)
 581. [x] Kampfende-Bericht (BattleInfo.report_lines am Ende des Logs)
 582. [x] Replay-Ansicht (bestehend) (BattleReplay, OnlineReplaysMenu)
-583. [ ] Lexikon-Suche
+583. [x] Lexikon-Suche (BattleHelp.search, Log > Mehr > Suche)
 584. [x] Tipps beim ersten Kontakt (bestehend) (Tips battle/bond)
 585. [x] Tipps zu neuen Funktionen (Resonanz, Phasen) (Tips resonance/boss_phase)
 586. [x] Info-Texte in eigener Wortwahl (tools/ip_check.sh Phrasen-Sperre)
@@ -665,14 +665,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 588. [x] Info für Screenreader (accessibility_name an Leisten, Sprites, Zielen)
 589. [x] Info im Hochkontrast (high_contrast in CommandMenu/EraBattleHud)
 590. [x] Info-Bildschirm bei 144 px Breite lesbar (Viewport 144x256, Karte und Log umbrechen)
-591. [ ] Info-Kürzel einheitlich (ATK/DEF/FOC/SPD)
+591. [x] Info-Kürzel einheitlich (ATK/DEF/FOC/SPD) (BattleHelp.STAT_SHORT wie die Team-Übersicht)
 592. [x] Info: Krit-Treffer als 'keen hit' (bestehend, eigene Wortwahl) (BattleEvent.describe)
 593. [x] Info: Effektivität als x2/x.5 (bestehend) (CommandMenu.matchup_tag)
 594. [x] Info: Mehrfachziel als 'all' (bestehend) (CommandMenu.move_line)
 595. [x] Info: Priorität als Pfeil (^ vor dem Namen der Technik)
 596. [x] Info: Genauigkeit als Prozent
-597. [ ] Info: Kategorie-Symbol
-598. [ ] Info: Boss-Phasen-Marken
+597. [x] Info: Kategorie-Symbol (BattleHelp.KIND_MARK auf der Technik-Karte)
+598. [x] Info: Boss-Phasen-Marken (InfoStrip.phase_mark)
 599. [x] Info: Regel-Banner bei Warden (RuleBanner.gd)
 600. [x] Info: Seed im Log (BattleInfo.facts)
 
@@ -681,10 +681,10 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 601. [x] Tempo 1x/2x/4x (bestehend) (GameState.BATTLE_SPEEDS)
 602. [x] Auto-Kampf für Wildkämpfe (bestehend) (GameState.auto_battle)
 603. [x] Letzten Zug wiederholen (Cursor steht auf der zuletzt genutzten Technik, BattleInfo.focus_row)
-604. [ ] Rückgängig vor Zugstart
-605. [ ] Technik-Favoriten
-606. [ ] Technik-Reihenfolge
-607. [ ] Schnell-Heilen nach dem Kampf (Gegenstand-Vorschlag)
+604. [x] Rückgängig vor Zugstart (BattleComfort.undo, Zurück im Mehrfachkampf)
+605. [x] Technik-Favoriten (Spirling.fav_art, Team > Technik-Reihenfolge)
+606. [x] Technik-Reihenfolge (BattleComfort.move_art, Team > Technik-Reihenfolge)
+607. [x] Schnell-Heilen nach dem Kampf (Gegenstand-Vorschlag) (BattleComfort.heal_hint)
 608. [x] Schnell-Wechsel per Wischen bewusst nicht (Patent-Leitplanke: kein Swipe) (tools/ip_check.sh sperrt swipe)
 609. [x] Langer Druck für Info
 610. [x] Gamepad-Steuerung (bestehend) (SPEED_ACTION/AUTO_ACTION, Fokus)
@@ -698,16 +698,16 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 618. [x] Kampf-Text automatisch weiter (Option) (bei 2x/4x und Auto)
 619. [x] Batteriesparen (bestehend) (GameState.battery_saver)
 620. [x] Vibrations-Feedback (bestehend rumble) (GameState.vibration)
-621. [ ] Einstellungen im Kampf erreichbar
+621. [x] Einstellungen im Kampf erreichbar (Log > Mehr > Einstellungen)
 622. [x] Kampf-Menü-Höhe fest (bestehend) (CommandMenu.PANEL_HEIGHT)
-623. [ ] Große Knöpfe-Option
+623. [x] Große Knöpfe-Option (GameState.big_buttons, CommandMenu.apply_size)
 624. [x] Bestätigung bei riskanten Aktionen (Rückzug in Boss-Kampf nicht möglich) (Rückzug nur in Wildkämpfen)
 625. [x] Wechsel-Liste mit HP und Matchup (BattleInfo.switch_tag)
 626. [x] Gegenstand-Liste mit Wirkung (Beschreibung als Hinweiszeile)
 627. [x] Lager-Lernen-Option (umgesetzt) im Kampfmenü erklärt (Tipp battle_comfort, Log)
 628. [x] Gegner-Bank-Punkte (TeamRow.gd, Team des Gegners)
-629. [ ] Kampf-Wiederaufnahme nach Unterbrechung
-630. [ ] Schnellspeichern im Kampf bewusst nicht (kein Savescum auf Rift-Born)
+629. [x] Kampf-Wiederaufnahme nach Unterbrechung (BattleComfort.interruption: Auto und Text warten im Hintergrund)
+630. [x] Schnellspeichern im Kampf bewusst nicht (kein Savescum auf Rift-Born) (kein Speichern im Kampfmenü; GameState.battle_open: App im Kampf geschlossen zählt auf Rift-Born als Niederlage (settle_open_battle))
 631. [x] Komfort-Tipps beim ersten Kampf (Tips battle_comfort)
 632. [ ] Kampf-Steuerung ohne Zeitdruck (keine Echtzeit-Elemente)
 633. [x] Bond-Melodie (bestehend) mit Barrierefreiheit (Bond-Stil Mine! statt Melodie, Hochkontrast)
@@ -810,7 +810,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 721. [x] Lager-Lernen: Spirlings auf der Bank erhalten die Hälfte der XP (Einstellung, Standard an)
 722. [x] XP-Verteilung im Kampfende-Bericht (Wachstums-Zeile nach dem Kampf, GrowthRules.distribution_line)
 723. [x] Level-Cap blockiert XP (bestehend) (BattleModel._give_xp, Test test_kampf_growth_wild)
-724. [ ] Spark-Training (bestehend) mit Kampfquellen
+724. [x] Spark-Training (bestehend) mit Kampfquellen (GrowthRules.battle_spark: Funke im stärksten Wert des Gegners)
 725. [x] Technik-Lehrer (Echo-Kristalle mit teaches/for_elements, GameState.can_learn_echo)
 726. [x] Entwicklung nach Kampf (bestehend) (Overworld._after_battle Entfalten-Hinweis)
 727. [x] Entwicklung abbrechen (Option) (Entfalten nie automatisch, Zurückfalten jederzeit)
@@ -857,7 +857,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 765. [x] Bond-Bonus durch Feld (WildRules.field_bond_bonus)
 766. [x] Bond-Bonus durch Gegenstand Echo-Muschel (echo_shell)
 767. [x] Bond-Fehlschlag gibt freie Aktion (bestehend)
-768. [ ] Bond-Erfolg-Animation eigenständig
+768. [x] Bond-Erfolg-Animation eigenständig (BondRings, SpirlingSprite.bond_rings in jeder Ära)
 769. [x] Wild-Begegnungen im Farn, Schilf, Geröll (bestehend)
 770. [x] Wild-Ketten-Bonus (Prisma-Chance steigt) (WildRules.prism_chance)
 771. [x] Wild-Schwarm-Ereignisse (WildRules.swarm)
@@ -866,7 +866,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 774. [x] Wild-Auto-Kampf (bestehend)
 775. [x] Wild-Level an Gebiet (encounters.json min/max)
 776. [x] Wild-KI Stufe 0 (bestehend)
-777. [ ] Wild-Überraschung
+777. [x] Wild-Überraschung (Hinterhalt BattleModel.ambush aus Punkt 16, nachts doppelt so oft: WildRules.ambush_mult)
 778. [x] Wild-Rückzug-Regel (bestehend)
 779. [x] Wild-Spirlings mit Gegenständen (selten) (WildRules.roll_held)
 780. [x] Wild-Begegnungs-Rate einstellbar (Laterne) (Sturmlaterne im Beutel, WildRules.lantern_mult)
@@ -882,8 +882,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 790. [x] Bond-Tests (bestehend)
 791. [x] Wild-Horde mit Anführer (WildRules.horde_leader, BattleModel._horde_wavers)
 792. [x] Wild-Horde-Bond
-793. [ ] Wild-Boss (seltene alte Spirlings) im Endgame
-794. [ ] Wild-Begegnung im Nebel (Sicht begrenzt)
+793. [x] Wild-Boss (seltene alte Spirlings) im Endgame (WildRules.roll_elder nach Akt I)
+794. [x] Wild-Begegnung im Nebel (Sicht begrenzt) (WildRules.sight_mult: Treffer seltener bei Nebel)
 795. [x] Wild-Begegnung nachts häufiger (WildRules.rate_mult)
 796. [x] Wild-Begegnung im Riss mit Feld (Kartenfeld gilt für Wildkämpfe)
 797. [x] Wild-Begegnung als Tageshighlight (bestehend Find of the Day)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-764 von 1000 Punkten umgesetzt.
+852 von 1000 Punkten umgesetzt.
 

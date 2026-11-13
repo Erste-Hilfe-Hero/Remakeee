@@ -170,6 +170,9 @@ func _ready() -> void:
 		var hint: String = Festival.start_hint()
 		if hint != "":
 			GameState.notices.append(hint)
+		# A battle left open on Rift-Born leaves its note here (item 630).
+		if hint != "" or GameState.left_battle:
+			GameState.left_battle = false
 			show_notices.call_deferred()
 
 func _build() -> void:
@@ -822,11 +825,13 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain,
 					WildRules.event_mults(map.encounter_table, DailyFind.today_key()))
 				wild = ChallengeRules.reroll_wild(wild, map.encounter_table, GameState.rng)
+				WildRules.roll_elder(wild, GameState.has_flag(GameState.ACT1_END_FLAG), GameState.rng)
 				if wild != null:
 					GameState.gleam_chain = GleamRules.next_chain(GameState.gleam_chain, wild)
 			if wild != null:
 				# Now and then a wild Spirling ambushes from the tall grass (KAMPF_PLAN item 16).
-				var ambush: bool = not GameState.is_newcomer() and GameState.rng.randf() < BattleModel.AMBUSH_CHANCE
+				var ambush: bool = not GameState.is_newcomer() and GameState.rng.randf() < BattleModel.AMBUSH_CHANCE \
+					* WildRules.ambush_mult(DayCycle.current() if map.outdoor and GameState.day_night else -1)
 				await start_battle([wild] as Array[Spirling], true, {"ambush": true} if ambush else {})
 
 func _warp(warp: Dictionary) -> void:
@@ -4082,7 +4087,9 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0
 	Online.in_battle = true
+	GameState.battle_open = not bool(trainer.get("friendly", false))
 	var result: Array = await scene.battle_finished
+	GameState.battle_open = false
 	Online.in_battle = false
 	var outcome: BattleModel.Outcome = result[0]
 	replay["inputs"] = scene.inputs
@@ -4183,6 +4190,12 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		model.set_meta(BattleWeather.SKY_META, "wind")
 	# Echo duels fight a friend's echo, not the world: the pass adds no energy or Rift Breath there.
 	var world: bool = not (own is Array and not (own as Array).is_empty())
+	# Spark training from battle, elders and fog (GrowthRules, WildRules).
+	if world and not bool(trainer.get("practice", false)):
+		model.battle_spark_chance = GrowthRules.num("battle_spark_chance", 0.0)
+	if wild and world:
+		model.sight_mult = WildRules.sight_mult(WeatherCycle.current(map)) if map.outdoor else 1.0
+		model.xp_mult *= WildRules.elder_growth(foes)
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
 	model.seals = [ShopEffects.seals_for("story" if world else "echo"), [0, 0, 0]]
 	model.amulets = [ShopEffects.amulets_for("story" if world else "echo"), [0, 0, 0]]

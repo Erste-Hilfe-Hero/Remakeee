@@ -112,6 +112,10 @@ var facing: String = "down"
 ## Where the team wakes up after a loss (last Rest Spring used).
 var heal_map: String = "lighthouse"
 var heal_cell: Vector2i = Vector2i(4, 4)
+## Set while a battle runs (item 630): a save made then and loaded later means the app closed mid-battle.
+var battle_open: bool = false
+## True after a load settled such a battle as a loss, until the overworld shows its note (not saved).
+var left_battle: bool = false
 ## Story and world flags, e.g. "got_starter", "rift_1_sealed".
 var flags: Dictionary = {}
 ## Rest spots the player has used: map id -> [x, y] (fast travel between them).
@@ -153,6 +157,8 @@ var wild_ward: bool = false
 const BENCH_XP_SHARE: float = 0.5
 ## Damage preview: the move list shows the expected share of the foe's HP once its matchup is known.
 var damage_preview: bool = true
+## Big buttons in the battle menu (KAMPF_PLAN item 623), switched in the battle's More list.
+var big_buttons: bool = false
 ## Damage numbers over a hit Spirling (KAMPF_PLAN_1000 671), off by default.
 var damage_numbers: bool = false
 ## Bonus goals of Wayfarers and Wardens (plan area 2, item 765); off hides them and their rewards.
@@ -545,6 +551,8 @@ func reset() -> void:
 	facing = "down"
 	heal_map = "lighthouse"
 	heal_cell = Vector2i(4, 4)
+	battle_open = false
+	left_battle = false
 	flags = {}
 	visited_rests = {}
 	visited_maps = {}
@@ -694,6 +702,7 @@ func to_dict() -> Dictionary:
 		"facing": facing,
 		"heal_map": heal_map,
 		"heal_cell": [heal_cell.x, heal_cell.y],
+		"battle_open": battle_open,
 		"flags": flags.duplicate(),
 		"matchups": known_matchups.duplicate(),
 		"play_time": play_time,
@@ -821,11 +830,13 @@ func from_dict(d: Dictionary) -> void:
 		var s: Spirling = Spirling.from_dict(sd)
 		if s != null:
 			sanctuary.append(s)
+	battle_open = bool(d.get("battle_open", false))
+	settle_open_battle()
 	in_game = true
 
 func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
-		"bench_xp": bench_xp, "wild_ward": wild_ward, "damage_preview": damage_preview, "damage_numbers": damage_numbers, "bonus_goals": bonus_goals, "volume": volume,
+		"bench_xp": bench_xp, "wild_ward": wild_ward, "damage_preview": damage_preview, "big_buttons": big_buttons, "damage_numbers": damage_numbers, "bonus_goals": bonus_goals, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"voice_volume": voice_volume, "ambience_volume": ambience_volume, "mono_audio": mono_audio,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "pad_opacity_steps": PAD_ALPHAS.size(), "left_handed": left_handed, "tap_to_move": tap_to_move,
@@ -844,6 +855,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	bench_xp = bool(d.get("bench_xp", true))
 	wild_ward = bool(d.get("wild_ward", false))
 	damage_preview = bool(d.get("damage_preview", true))
+	big_buttons = bool(d.get("big_buttons", false))
 	damage_numbers = bool(d.get("damage_numbers", false))
 	bonus_goals = bool(d.get("bonus_goals", true))
 	pad_size = clampi(int(d.get("pad_size", 1)), 0, PAD_SIZE_NAMES.size() - 1)
@@ -979,6 +991,25 @@ static func reroll_sparks(s: Spirling, r: RandomNumberGenerator) -> void:
 	s.hp = 0 if s.is_fainted() else maxi(1, roundi(frac * s.max_hp()))
 
 ## Fully restores the party (Rest Springs, after a loss).
+## Item 630: on Rift-Born a battle left by closing the app counts as a loss, so it is no
+## way out. Fainted Spirlings retire under the Iron Oath, the team rests, and the Wayfarer
+## wakes at the last spring. Other difficulties just drop the flag. True when it applied.
+func settle_open_battle() -> bool:
+	var open: bool = battle_open
+	battle_open = false
+	left_battle = false
+	if not open or difficulty != Difficulty.RIFT_BORN:
+		return false
+	retire_fainted()
+	heal_party()
+	ChallengeRules.after_rest(party)
+	current_map = heal_map
+	player_cell = heal_cell
+	facing = "down"
+	left_battle = true
+	notices.append(Loc.t("The battle was left open. On Rift-Born that counts as a loss, and your team wakes at the last spring."))
+	return true
+
 func heal_party() -> void:
 	for s: Spirling in party:
 		s.restore()

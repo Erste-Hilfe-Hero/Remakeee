@@ -173,6 +173,11 @@ var bench_growth: int = 0
 var growth_by: Dictionary = {}
 ## Echo calls the player made this battle (WildRules bond statistics).
 var bond_tries: int = 0
+## Spark training from battle (GrowthRules.battle_spark): chance per fighter and fallen foe; 0 off.
+var battle_spark_chance: float = 0.0
+## Accuracy factor of a wild battle under a foggy sky (WildRules.sight_mult); 1 = clear.
+var sight_mult: float = 1.0
+var _spark_rng: RandomNumberGenerator = null
 ## True once the Rift boss has entered its second phase.
 var boss_phase_done: bool = false
 ## Late boss phases (BossRules.LATE_PHASES) already reached.
@@ -209,6 +214,8 @@ const STORY_REST_HEAL: float = 0.05
 const AMBUSH_CHANCE: float = 0.06
 
 var _queue: Array[BattleAction] = []
+## Battle state of the Kampf plan's gifts and keepsakes (TraitKit): shown gifts, used talismans.
+var kit: Dictionary = {}
 var _events: Array[BattleEvent] = []
 var _handlers: Dictionary[Phase, Callable] = {}
 
@@ -360,7 +367,7 @@ func legal_actions(side: int, slot: int = 0) -> Array[BattleAction]:
 			any_move = true
 	if can_rest(any_move):
 		out.append(BattleAction.make_rest(side, slot))
-	if not StatusRules.blocks_swap(me.status) and not (swap_locked and side == Side.PLAYER):
+	if (not StatusRules.blocks_swap(me.status) or TraitKit.free_swap(me)) and not (swap_locked and side == Side.PLAYER):
 		for i: int in swap_candidates(side, slot):
 			out.append(BattleAction.make_swap(side, i, slot))
 	if _items_allowed_for(side, slot):
@@ -396,7 +403,7 @@ func is_legal(a: BattleAction) -> bool:
 			# Trading places with an ally in another slot (item 366) is a Swap too.
 			if a.swap_index in MultiRules.shift_targets(self, a.side, a.slot):
 				return true
-			return not StatusRules.blocks_swap(me.status) and a.swap_index in swap_candidates(a.side, a.slot) \
+			return (not StatusRules.blocks_swap(me.status) or TraitKit.free_swap(me)) and a.swap_index in swap_candidates(a.side, a.slot) \
 				and not (swap_locked and a.side == Side.PLAYER)
 		BattleAction.Kind.ITEM:
 			if not _items_allowed_for(a.side, a.slot) or bag_count(a.side, a.item_id) <= 0 or not _is_battle_item(a.item_id):
@@ -451,6 +458,7 @@ func start() -> Array[BattleEvent]:
 			var head: int = int(BattleRules.add_key(s, "start_energy"))
 			if head > 0:
 				s.energy = mini(s.energy + head, max_energy_of(side))
+			s.energy = mini(s.energy + TraitKit.energy_cap(s), max_energy_of(side) + TraitKit.energy_cap(s))
 			if hp_scale != 1.0:
 				var share: float = float(s.hp) / float(s.max_hp())
 				s.hp_mult *= hp_scale
@@ -491,6 +499,7 @@ func start() -> Array[BattleEvent]:
 		if slot == _partner_slot:
 			emit_event(BattleEvent.Type.PARTNER, {"side": Side.PLAYER, "slot": slot, "partner": partner_name})
 		emit_event(BattleEvent.Type.SEND_OUT, _who(Side.PLAYER, slot))
+	_wild_opening(foe)
 	if ambush and is_wild:
 		emit_event(BattleEvent.Type.AMBUSH, _who(Side.FOE, 0))
 	if BattleRules.BOSSES.has(foe_boss):
@@ -528,6 +537,7 @@ func start() -> Array[BattleEvent]:
 			for stat: String in st:
 				s.stages[stat] = clampi(s.stage(stat) + int(st[stat]), BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
 	MultiRules.apply_formation_bonus(self)
+	TraitKit.on_start(self)
 	participants = []
 	for slot: int in player_slots():
 		participants.append(active_spirling(Side.PLAYER, slot))
@@ -938,6 +948,9 @@ func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1,
 	s.status_turns = StatusRules.roll_turns(status, rng)
 	if is_boss_slot(side, slot):
 		s.status_turns = BossRules.status_turns(s.status_turns)
+	else:
+		# Hush Core and other kit gifts (TraitKit); a boss slot already halves above.
+		s.status_turns = TraitKit.status_turns(s, s.status_turns)
 	var cap: int = int(rules.get("status_max_turns", 0))
 	if cap > 0:
 		s.status_turns = mini(s.status_turns, cap) if s.status_turns > 0 else cap
@@ -1038,7 +1051,7 @@ func change_energy(side: int, delta: int, slot: int = 0) -> void:
 	if s == null:
 		return
 	var before: int = s.energy
-	s.energy = clampi(s.energy + delta, 0, max_energy_of(side))
+	s.energy = clampi(s.energy + delta, 0, max_energy_of(side) + TraitKit.energy_cap(s))
 	if s.energy != before:
 		var d: Dictionary = _who(side, slot)
 		d["energy"] = s.energy
@@ -1083,7 +1096,7 @@ func _note_speed_ties() -> void:
 func _sort_key(a: BattleAction, tie: float) -> Vector4:
 	var prio: int = 0
 	if a.kind == BattleAction.Kind.MOVE and a.actor != null and a.move_index < a.actor.moves.size():
-		prio = a.actor.moves[a.move_index].priority
+		prio = a.actor.moves[a.move_index].priority + TraitKit.priority_bonus(self, a)
 	var spd: int = int(a.actor.effective_spd() * ShopEffects.seal_speed_mult(int(seals[a.side][2]))) if a.actor != null else 0
 	# Warden rule Night Dark: Pace stays hidden in the dark, the seeded tiebreak decides.
 	if BattleRules.rule_number(foe_rule, "hidden_order") > 0.0:
@@ -1264,6 +1277,7 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		if rdiv > 0 and s.hp < s.max_hp():
 			heal(side, maxi(1, s.max_hp() / rdiv), slot)
 	_oath_tick(side, slot, s)
+	TraitKit.end_of_turn(self, side, slot)
 	if s.mend_turns > 0:
 		s.mend_turns -= 1
 		if s.hp < s.max_hp():
@@ -1426,7 +1440,7 @@ func _do_move(a: BattleAction) -> void:
 		extra = mini(me.energy, BattleRules.OVERCHARGE_MAX_EXTRA)
 		# Two Overcharge arts in two turns in a row chain for a bonus (item 59).
 		var chained: bool = turn > 0 and me.overcharge_turn == turn - 1
-		power_mult = BattleRules.overcharge_mult(extra, chained)
+		power_mult = BattleRules.overcharge_mult(extra, chained) + TraitKit.overcharge_bonus(me) * extra
 		if extra > 0:
 			change_energy(side, -extra, slot)
 		if chained:
@@ -1499,6 +1513,7 @@ func _do_move(a: BattleAction) -> void:
 				mult *= BattleRules.rule_number(foe_rule, "lumen_mult")
 			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
 			mult *= TechniqueRules.hit_mult(self, side, slot, me, target_side, t_slot, target, mv)
+			mult *= TraitKit.hit_mult(self, side, slot, target_side, t_slot, mv)
 			mult *= MultiRules.guard_mult(self, target_side) * MultiRules.row_mult(self, side, slot, target_side, t_slot, mv)
 			var combo: Dictionary = MultiRules.combo(self, side, slot, target_side, t_slot, mv.element)
 			if not combo.is_empty():
@@ -1519,6 +1534,7 @@ func _do_move(a: BattleAction) -> void:
 				ctx.held_eff = float(r.eff)
 			else:
 				ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name}, t_slot)
+				TraitKit.after_hit(self, side, slot, target_side, t_slot, mv, ctx.damage_dealt)
 			if bool(react.get("cure", false)) and is_standing(target):
 				_cure(target_side, t_slot)
 			if react.has("inflict") and is_standing(target):
@@ -1566,7 +1582,7 @@ func _oath_tick(side: int, slot: int, s: Spirling) -> void:
 
 func _do_rest(a: BattleAction) -> void:
 	emit_event(BattleEvent.Type.REST, _who(a.side, a.slot))
-	change_energy(a.side, rest_gain(), a.slot)
+	change_energy(a.side, rest_gain() + TraitKit.rest_energy(a.actor), a.slot)
 	# Story (item 52): resting also mends a little Vigor, only for the player's own Spirlings.
 	if a.side == Side.PLAYER and rest_heal_share > 0.0 and not is_partner_slot(a.side, a.slot):
 		var me: Spirling = active_spirling(a.side, a.slot)
@@ -1579,7 +1595,8 @@ func _do_rest(a: BattleAction) -> void:
 func hit_chance(me: Spirling, mv: MoveData, target: Spirling = null) -> float:
 	if target != null and mv.is_damaging() and StatusRules.sure_hit(target.status):
 		return 1.0
-	return clampf(mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult"), 0.0, 1.0)
+	return clampf(mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult")
+		* (sight_mult if is_wild else 1.0), 0.0, 1.0)
 
 ## Tells every Spirling of both teams which element the place's own field makes cheaper (item 75).
 ## Only the place's own field counts (a storm overhead, a map's field): a field called by an art
@@ -1612,7 +1629,8 @@ func _contact_status(side: int, slot: int, hitter_side: int, hitter_slot: int) -
 func _do_swap(a: BattleAction) -> void:
 	if MultiRules.shift(self, a):
 		return
-	if StatusRules.blocks_swap(a.actor.status):
+	var free: bool = TraitKit.free_swap(a.actor)
+	if StatusRules.blocks_swap(a.actor.status) and not free:
 		emit_event(BattleEvent.Type.SWAP_BLOCKED, _who(a.side, a.slot))
 		return
 	if not a.swap_index in swap_candidates(a.side, a.slot):
@@ -1621,9 +1639,10 @@ func _do_swap(a: BattleAction) -> void:
 	if bool(ShopEffects.gift_table(a.actor).get("cure_on_swap", false)) and not a.actor.status.is_empty():
 		reveal_trait(a.side, a.slot)
 		_cure(a.side, a.slot)
+	TraitKit.on_leave(self, a.side, a.slot)
 	emit_event(BattleEvent.Type.SWAP_OUT, _who(a.side, a.slot))
 	_swap_in(a.side, a.swap_index, a.slot)
-	if int(rules.get("swap_energy_cost", 0)) > 0:
+	if int(rules.get("swap_energy_cost", 0)) > 0 and not free:
 		change_energy(a.side, -int(rules.swap_energy_cost), a.slot)
 
 func _do_item(a: BattleAction) -> void:
@@ -1689,6 +1708,7 @@ func _do_bond(a: BattleAction) -> void:
 	var who: Dictionary = _who(Side.FOE, t_slot)
 	who["timing"] = a.timing_score
 	emit_event(BattleEvent.Type.BOND_ATTEMPT, who)
+	bonus += TraitKit.bond_bonus(self)
 	var timing: float = minf(1.0, a.timing_score + clampf(bond_edge, 0.0, 1.0))
 	# Some fields make a bond a little likelier (Dawn Glow, KAMPF_PLAN_1000 item 349).
 	bonus += float(BattleRules.FIELDS.get(field, {}).get("bond_bonus", 0.0))
@@ -1789,6 +1809,7 @@ func _swap_in(side: int, index: int, slot: int = 0) -> void:
 	d.merge({"hp": s.hp, "max_hp": s.max_hp(), "level": s.level, "energy": s.energy})
 	emit_event(BattleEvent.Type.SWAP_IN, d)
 	_spring_snare(side, slot)
+	TraitKit.on_enter(self, side, slot)
 	if side == Side.PLAYER:
 		if not participants.has(s) and not is_partner_index(side, index):
 			participants.append(s)
@@ -2002,6 +2023,15 @@ func _items_allowed_for(side: int, slot: int = 0) -> bool:
 func _is_battle_item(id: String) -> bool:
 	return bool(Database.item(id).get("battle", false))
 
+## Opening lines of a wild battle: an elder, fog (WildRules).
+func _wild_opening(foe: Spirling) -> void:
+	if not is_wild or foe == null:
+		return
+	if WildRules.is_elder(foe):
+		emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.FOE, "text": WildRules.ELDER_LINE % foe.display_name()})
+	if sight_mult < 1.0:
+		emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.FOE, "text": WildRules.FOG_LINE})
+
 func _award_xp(foe: Spirling) -> void:
 	var total: float = float(foe.data.xp_yield) * float(foe.level) / XP_LEVEL_DIV
 	if not is_wild:
@@ -2017,6 +2047,14 @@ func _award_xp(foe: Spirling) -> void:
 	var share: int = maxi(1, int(total / earners.size()))
 	for s: Spirling in earners:
 		_give_xp(s, _scaled(share, foe, s))
+	if battle_spark_chance > 0.0 and total > 0.0:
+		if _spark_rng == null:
+			_spark_rng = RandomNumberGenerator.new()
+			_spark_rng.seed = battle_seed ^ 0x59a2
+		for s: Spirling in earners:
+			var line: String = GrowthRules.battle_spark(s, foe, battle_spark_chance, _spark_rng)
+			if not line.is_empty():
+				emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.PLAYER, "text": line})
 	if bench_share <= 0.0:
 		return
 	# Bench lessons: every healthy own Spirling that did not fight still learns a part.
