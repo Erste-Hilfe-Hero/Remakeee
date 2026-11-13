@@ -2,9 +2,12 @@
  "_comment": "German texts from tools/i18n/de_challenges.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
  "keep": [],
  "strings": {
+  "%s also gives you: %s.": "%s gibt dir außerdem: %s.",
+  "%s raises a signal lantern. Battle now?": "%s hebt eine Signallaterne. Jetzt kämpfen?",
   "%s: %d won, %d lost": "%s: %d gewonnen, %d verloren",
   "A rule was dropped on the way.": "Unterwegs wurde eine Regel aufgegeben.",
   "Ace Up Front": "Ass voran",
+  "Answer the signal": "Signal erwidern",
   "Battles won: %d, lost: %d": "Kämpfe gewonnen: %d, verloren: %d",
   "Bonds only form at night.": "Bindungen entstehen nur nachts.",
   "Challenge record": "Herausforderungs-Bilanz",
@@ -15,6 +18,8 @@
   "Copies the seed. A friend who uses it gets the same shuffled wilds and arts.": "Kopiert den Seed. Wer ihn nutzt, bekommt dieselbe gemischte Wildnis und dieselben Techniken.",
   "Drop %s? Your record will remember it.": "%s aufgeben? Deine Bilanz merkt es sich.",
   "Drop it": "Aufgeben",
+  "Echo tower": "Echo-Turm",
+  "Echo tower, highest floor this week": "Echo-Turm, höchstes Stockwerk dieser Woche",
   "Every Spirling that bonds with you knows arts drawn by your run seed.": "Jeder Spirling, der sich an dich bindet, kennt Techniken, die dein Lauf-Seed zieht.",
   "Extra rules for a harder journey. Taken before your first Rift, dropped any time.": "Zusatzregeln für eine härtere Reise. Vor dem ersten Riss wählbar, jederzeit aufzugeben.",
   "Extra rules for a harder journey: One per Place, First Meeting, Spring Water Only, Shuffled Wilds and Arts, Stand Your Ground, Half Rested, Ace Up Front, Night Bonds, One Colour, Empty Pockets, Off the Books and Trust No One. Any of them combine. They are taken before the first mended Rift and can be dropped at any time; the record remembers. The shuffles follow a seed code you can share with friends.": "Zusatzregeln für eine härtere Reise: Einer pro Ort, Erste Begegnung, Nur Quellwasser, Gemischte Wildnis und Techniken, Halte die Stellung, Halb erholt, Ass voran, Nachtbande, Eine Farbe, Leere Taschen, Schwarz gebucht und Trau niemandem. Alle lassen sich kombinieren. Man wählt sie vor dem ersten geheilten Riss und kann sie jederzeit aufgeben; die Bilanz merkt es sich. Das Mischen folgt einem Seed-Code, den du mit Freunden teilen kannst.",
@@ -27,6 +32,7 @@
   "Keep it": "Behalten",
   "Lantern post: %s would battle you again today.": "Laternenpost: %s würden heute wieder gegen dich kämpfen.",
   "Lantern post: no rematch invitations today.": "Laternenpost: Heute keine Einladungen zum Rückkampf.",
+  "Lighthouse stair, highest floor this week": "Leuchtturm-Treppe, höchstes Stockwerk dieser Woche",
   "Most battled:": "Am häufigsten gekämpft:",
   "New rules can only be taken before you mend your first Rift.": "Neue Regeln gehen nur, bevor du deinen ersten Riss heilst.",
   "Night Bonds": "Nachtbande",
@@ -56,6 +62,7 @@
   "Spring Water Only: no healing items on this journey.": "Nur Quellwasser: Keine Heilgegenstände auf dieser Reise.",
   "Stand Your Ground": "Halte die Stellung",
   "Takes a seed a friend shared with you.": "Übernimmt einen Seed, den dir jemand geschickt hat.",
+  "The lantern dims. Talk to them when you are ready.": "Die Laterne wird dunkel. Sprich die Person an, wenn du bereit bist.",
   "The wild Spirlings of every place are shuffled by your run seed.": "Die wilden Spirlings jedes Ortes werden nach deinem Lauf-Seed gemischt.",
   "There is no seed code on the clipboard.": "In der Zwischenablage ist kein Seed-Code.",
   "This journey is now in the run chronicle: %s.": "Diese Reise steht jetzt in der Lauf-Chronik: %s.",
@@ -66,7 +73,9 @@
   "Wayfarer book": "Wandererbuch",
   "Wayfarers lead with their strongest Spirling.": "Wanderer schicken ihren stärksten Spirling zuerst.",
   "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "Die Spirlings der Wanderer bleiben nah an deinem stärksten, innerhalb der Ring-Grenze.",
+  "Win Wayfarer battles": "Gewinne Kämpfe gegen Wanderer",
   "With challenge rules": "Mit Herausforderungs-Regeln",
-  "best in %d turns": "beste Zeit %d Runden"
+  "best in %d turns": "beste Zeit %d Runden",
+  "floor %d": "Stockwerk %d"
  }
 }
