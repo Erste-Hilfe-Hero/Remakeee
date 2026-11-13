@@ -61,6 +61,8 @@ var _bond: Button
 var _run: Button
 ## Era IV on: uses the last item again (EraBattleHud.last_item).
 var _shortcut: Button
+## Era IV/V (commands "column"): the commands and the shortcut beside the arts.
+var _column: VBoxContainer
 
 func _ready() -> void:
 	era = EraManager.active_era()
@@ -75,7 +77,21 @@ func _ready() -> void:
 	add_child(v)
 	var grid := VBoxContainer.new()
 	grid.add_theme_constant_override("separation", 1)
-	v.add_child(grid)
+	# Era IV/V: the commands stand in a column beside the arts, so the field gets taller.
+	if str(e.get("commands", "row")) == "column":
+		var split := HBoxContainer.new()
+		split.add_theme_constant_override("separation", 2)
+		v.add_child(split)
+		grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		grid.size_flags_stretch_ratio = EraBattleHud.ART_SHARE
+		split.add_child(grid)
+		_column = VBoxContainer.new()
+		_column.add_theme_constant_override("separation", 1)
+		_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_column.size_flags_stretch_ratio = 1.0 - EraBattleHud.ART_SHARE
+		split.add_child(_column)
+	else:
+		v.add_child(grid)
 	for i: int in Spirling.MAX_MOVES:
 		var b := Button.new()
 		b.custom_minimum_size = Vector2(0, art_h)
@@ -134,7 +150,9 @@ func _ready() -> void:
 		b.add_child(hint)
 		_move_hints.append(hint)
 	var row: Container
-	if str(e.get("commands", "row")) == "grid":
+	if _column != null:
+		row = _column
+	elif str(e.get("commands", "row")) == "grid":
 		var g := GridContainer.new()
 		g.columns = 2
 		g.add_theme_constant_override("h_separation", 2)
@@ -144,7 +162,8 @@ func _ready() -> void:
 		var h := HBoxContainer.new()
 		h.add_theme_constant_override("separation", 2)
 		row = h
-	v.add_child(row)
+	if row.get_parent() == null:
+		v.add_child(row)
 	_swap = _small(row, "Swap", BattleAction.Kind.SWAP)
 	_item = _small(row, "Item", BattleAction.Kind.ITEM)
 	_bond = _small(row, "Bond", BattleAction.Kind.BOND)
@@ -159,7 +178,10 @@ func _ready() -> void:
 		_shortcut.pressed.connect(func() -> void:
 			Sound.sfx("confirm")
 			chosen.emit(BattleAction.Kind.ITEM, SHORTCUT))
-		v.add_child(_shortcut)
+		if _column != null:
+			_column.add_child(_shortcut)
+		else:
+			v.add_child(_shortcut)
 	_hold.one_shot = true
 	_hold.timeout.connect(_on_hold)
 	add_child(_hold)
@@ -607,7 +629,10 @@ func _refresh_shortcut(model: BattleModel, items_ok: bool) -> void:
 	if id.is_empty():
 		_shortcut.text = Loc.t("Again: -")
 	else:
-		_shortcut.text = Loc.t("Again: %s x%d") % [Loc.t(str(Database.item(id).get("name", id))), model.bag_count(BattleModel.Side.PLAYER, id)]
+		var item_name: String = Loc.t(str(Database.item(id).get("name", id)))
+		var n: int = model.bag_count(BattleModel.Side.PLAYER, id)
+		# In the narrow command column (Era IV/V) the item and its count stand alone.
+		_shortcut.text = ("%s x%d" % [item_name, n]) if _column != null else Loc.t("Again: %s x%d") % [item_name, n]
 	_shortcut.disabled = id.is_empty() or not items_ok
 
 ## Element-coloured row (Era III on): the element's colour washed toward paper, so ink text

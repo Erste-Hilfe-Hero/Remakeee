@@ -176,6 +176,8 @@ func _build() -> void:
 	_ground.name = "Ground"
 	add_child(_ground)
 	_terrain_look = EraTerrainLook.new()
+	# Era IV/V: the whole-number camera zoom of the wide screens (EraDepthLayer.camera_zoom).
+	_terrain_look.screen_zoom = true
 	add_child(_terrain_look)
 	_era_depth = EraDepthLayer.new()
 	add_child(_era_depth)
