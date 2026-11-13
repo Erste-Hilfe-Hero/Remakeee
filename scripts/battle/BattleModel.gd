@@ -166,6 +166,13 @@ var foe_formation: bool = false
 ## Share of the XP an earner gets that each healthy Spirling on the player's bench also gets
 ## ("Bench lessons" setting). 0 turns it off.
 var bench_share: float = 0.0
+## Growth the player's side gained this battle, and the bench's part of it (GrowthRules.after_battle).
+var growth_total: int = 0
+var bench_growth: int = 0
+## Growth per player team index this battle (the after-battle growth line).
+var growth_by: Dictionary = {}
+## Echo calls the player made this battle (WildRules bond statistics).
+var bond_tries: int = 0
 ## True once the Rift boss has entered its second phase.
 var boss_phase_done: bool = false
 ## Late boss phases (BossRules.LATE_PHASES) already reached.
@@ -1585,6 +1592,9 @@ func _do_bond(a: BattleAction) -> void:
 	var timing: float = minf(1.0, a.timing_score + clampf(bond_edge, 0.0, 1.0))
 	# Some fields make a bond a little likelier (Dawn Glow, KAMPF_PLAN_1000 item 349).
 	bonus += float(BattleRules.FIELDS.get(field, {}).get("bond_bonus", 0.0))
+	# A field calms wild Spirlings of its element (WildRules, data/wild_rules.json); never shown.
+	bonus += WildRules.field_bond_bonus(field, target)
+	bond_tries += 1
 	var success: bool = rng.randf() < BondCalc.chance(target, timing, bonus) or sure
 	if not success and retry:
 		success = rng.randf() < BondCalc.chance(target, timing, bonus)
@@ -1934,6 +1944,11 @@ static func growth_scale(foe_ring: int, own_ring: int) -> float:
 ## Adds XP up to the level cap and plays out level-ups and new moves.
 func _give_xp(s: Spirling, amount: int, bench: bool = false) -> void:
 	var index: int = parties[Side.PLAYER].find(s)
+	# Growth Charm keepsake and high kinship (GrowthRules, data/growth_rules.json).
+	var own_mult: float = GrowthRules.spirling_mult(s)
+	if own_mult != 1.0:
+		amount = maxi(1, roundi(amount * own_mult))
+	var from_ring: int = s.level
 	var cap_xp: int = Spirling.xp_for_level(mini(level_cap, Spirling.LEVEL_SANITY))
 	var gained: int = clampi(amount, 0, maxi(0, cap_xp - s.xp)) if s.level < level_cap else 0
 	if bench and gained <= 0:
@@ -1949,3 +1964,14 @@ func _give_xp(s: Spirling, amount: int, bench: bool = false) -> void:
 		emit_event(BattleEvent.Type.LEVEL_UP, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "level": s.level, "hp": s.hp, "max_hp": s.max_hp()})
 		for mv: MoveData in learned:
 			emit_event(BattleEvent.Type.MOVE_LEARNED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "move": mv.move_name})
+		# A full move list never stops the battle for a choice: one line, the art waits for later.
+		for missed: String in GrowthRules.missed_arts(s, learned):
+			emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.PLAYER, "text": GrowthRules.missed_line(s.display_name(), missed)})
+	growth_total += gained
+	growth_by[index] = int(growth_by.get(index, 0)) + gained
+	if bench:
+		bench_growth += gained
+	# Several rings at once get one summary line (KAMPF_PLAN item "Level-Aufstieg-Zusammenfassung").
+	var summary: String = GrowthRules.summary_line(s.display_name(), from_ring, s.level)
+	if not summary.is_empty():
+		emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.PLAYER, "text": summary})

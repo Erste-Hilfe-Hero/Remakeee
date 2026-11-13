@@ -699,6 +699,31 @@ Generated from `GameState`, `BattleRules` and `TrainerData` (item 875).
 Foe ring: the shift of a shared Wayfarer team (teams with their own block for the difficulty keep their rings), never more than 2 above the ring cap.
 <!-- /gen:difficulty -->
 
+## Wachstum (growth curve)
+
+Generated from `Spirling.xp_for_level`, `BattleModel` and `data/growth_rules.json`
+(docs/KAMPF_PLAN_1000.md, "XP-Kurve dokumentieren"). `test_kampf_growth_wild.gd` checks the
+balance goal: between two Warden ring caps no Spirling needs more than `no_grind_battles` even
+wild battles.
+
+<!-- gen:growth -->
+| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (normal) | Story |
+| --- | --- | --- | --- | --- |
+| 5 | 78 | 48 | 3 | 2 |
+| 10 | 477 | 135 | 4 | 3 |
+| 15 | 1370 | 251 | 5 | 4 |
+| 20 | 2896 | 392 | 5 | 4 |
+| 30 | 8311 | 740 | 7 | 5 |
+| 40 | 17560 | 1164 | 8 | 6 |
+| 50 | 31369 | 1657 | 9 | 7 |
+| 60 | 50393 | 2213 | 10 | 8 |
+| 80 | 106467 | 3494 | 11 | 9 |
+| 100 | 190187 | 4984 | 13 | 10 |
+
+Growth to reach ring L = floor(1.2 x L ^ 2.6). There is no top ring. One battle gives yield x foe ring / 20 (x1.5 against a Wayfarer), shared by the Spirlings that fought; the bench gets 50 % with Bench lessons. Table for a kind of yield 80.
+Factors: Story x1.25, rematch x1.2, kinship 80+ x1.1, Growth Charm x1.5, world goal x1.25 for 20 battles. No penalty for a higher ring than the foe (only Era V scales by ring).
+<!-- /gen:growth -->
+
 ## KI-Profile (AI profiles)
 
 Generated from `data/ai_profiles.json`, the mottos in `data/dialogue/battle_lines.json` and the
