@@ -117,24 +117,24 @@
     "tamer": [
      {
       "species": "Rookwarden",
-      "level": 114
+      "level": 113
      },
      {
       "species": "Dipmonarch",
-      "level": 114
+      "level": 113
      },
      {
       "species": "Ripjoltane",
-      "level": 115
+      "level": 114
      },
      {
       "species": "Weirmarshal",
-      "level": 115,
+      "level": 114,
       "held": "pith_mend"
      },
      {
-      "species": "Rookwarden",
-      "level": 115
+      "species": "Glazeldrake",
+      "level": 114
      }
     ]
    }
