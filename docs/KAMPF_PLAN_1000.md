@@ -391,7 +391,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 332. [x] Feld-Musik-Variation (Tonhöhe pro Feld, Sound.music_pitch)
 333. [x] Feld-Tageszeit-Kombination (Morgenschein am Tag, Tiefes Dunkel nachts +1 Runde)
 334. [x] Feld-Wechsel-Animation (ElementFx-Welle, Badge blinkt)
-335. [ ] Feld im Kampfende-Bericht
+335. [x] Feld im Kampfende-Bericht (BattleReport: Riss-Felder im Kampflog)
 336. [x] Feld-Lexikon (Lexikon-Eintrag pro Feld beim ersten Betreten)
 337. [x] Meister-KI nutzt Felder, die ihr nützen (umgesetzt) (BattleAI set_field)
 338. [x] Feld-Gegenstände verlängern Dauer (Andenken Feldpflock, +2 Runden)
@@ -420,46 +420,46 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Mehrfachkämpfe
 
-361. [ ] Mehrfachkämpfe bis 4v4 (bestehend)
-362. [ ] Ziel-Pin mit Element-Hinweis
-363. [ ] Schadensvorschau pro Ziel bei der Zielwahl
-364. [ ] Fokus-Feuer-Logik der Meister-KI (umgesetzt: KO-Bonus pro Ziel)
-365. [ ] Verbündeten-Heilung
-366. [ ] Positionstausch zwischen eigenen Slots
-367. [ ] Vorderreihe/Hinterreihe mit Schadensmodifikator
-368. [ ] Schwarm-Kämpfe (bestehend) mit Schwarm-Anführer
-369. [ ] Tag-Kampf mit Kestra (bestehend) mit gemeinsamer Kombi-Technik
-370. [ ] Kombi-Techniken bei passenden Elementen zweier Verbündeter
-371. [ ] Mehrfachkampf-Tutorial
-372. [ ] Mehrfachkampf-Geschwindigkeit: Text pro Aktion kürzer
-373. [ ] Mehrfachkampf-Log filtern
-374. [ ] Mehrfachkampf im Turm
+361. [x] Mehrfachkämpfe bis 4v4 (bestehend) (BattleRules.MAX_FRONT)
+362. [x] Ziel-Pin mit Element-Hinweis (Zielzeile mit x2/x.5 beim Zielen)
+363. [x] Schadensvorschau pro Ziel bei der Zielwahl (~% pro Ziel, abschaltbar wie die Vorschau)
+364. [x] Fokus-Feuer-Logik der Meister-KI (umgesetzt: KO-Bonus pro Ziel) (BattleAI FOCUS_BONUS)
+365. [x] Verbündeten-Heilung (Sippenbalsam/Kindred Balm)
+366. [x] Positionstausch zwischen eigenen Slots (Swap auf einen Verbündeten im anderen Slot: MultiRules.shift)
+367. [x] Vorderreihe/Hinterreihe mit Schadensmodifikator (ab 3 Plätzen: hintere Reihe x0.9 bei physischen Einzeltreffern)
+368. [x] Schwarm-Kämpfe (bestehend) mit Schwarm-Anführer (höchster Ring führt, +1 Wucht; fällt er, -1 Tempo für den Rest)
+369. [x] Tag-Kampf mit Kestra (bestehend) mit gemeinsamer Kombi-Technik (Kombo gilt auch mit Partnern)
+370. [x] Kombi-Techniken bei passenden Elementen zweier Verbündeter (data/multi_rules.json combos, x1.25)
+371. [x] Mehrfachkampf-Tutorial (Tipp beim ersten Mehrfachkampf, im Leitfaden)
+372. [x] Mehrfachkampf-Geschwindigkeit: Text pro Aktion kürzer (MultiRules.text_speed: Text tippt x1.4 schneller)
+373. [x] Mehrfachkampf-Log filtern (Tippen: Alle, Deine, Gegner)
+374. [x] Mehrfachkampf im Turm (jedes 5. Stockwerk 2v2)
 375. [ ] Mehrfachkampf online (2v2 mit Freund-Echo)
-376. [ ] Ungleiche Kämpfe 3v1, 4v2 (bestehend)
-377. [ ] Boss-Kämpfe mit Wächtern (bestehend)
-378. [ ] Mehrfachziel-Techniken mit 0.75 Schaden (bestehend)
-379. [ ] Ablenkungs-Technik
-380. [ ] Schutz eines Verbündeten
-381. [ ] Team-Schild
-382. [ ] Team-Heilung
-383. [ ] Mehrfachkampf-Balancing im Simulator
-384. [ ] Mehrfachkampf-Layout für 4 Sprites (bestehend)
-385. [ ] Mehrfachkampf: Ziel-Wahl merken
+376. [x] Ungleiche Kämpfe 3v1, 4v2 (bestehend)
+377. [x] Boss-Kämpfe mit Wächtern (bestehend) (BattleRules.BOSSES)
+378. [x] Mehrfachziel-Techniken mit 0.75 Schaden (bestehend) (SPREAD_MULT)
+379. [x] Ablenkungs-Technik (Locktanz/Lure Dance)
+380. [x] Schutz eines Verbündeten (Wellenbrecher/Breakwater Stand)
+381. [x] Team-Schild (Schalenring/Shell Ring, 3 Runden x0.75)
+382. [x] Team-Heilung (Heilchor/Mending Chorus)
+383. [x] Mehrfachkampf-Balancing im Simulator (MultiSim: 2v2-Spiegel mit Hilfstechnik, Band 30-70 %, KI wartet mit Köder und Schutz)
+384. [x] Mehrfachkampf-Layout für 4 Sprites (bestehend)
+385. [x] Mehrfachkampf: Ziel-Wahl merken
 386. [ ] Mehrfachkampf: 'Auto-Ziel' Option
-387. [ ] Mehrfachkampf: KI der Partner verbessern (Meister-KI auch für Partner auf Veteran)
-388. [ ] Mehrfachkampf: Warnung bei Treffer auf Verbündete
+387. [x] Mehrfachkampf: KI der Partner verbessern (Meister-KI auch für Partner auf Veteran)
+388. [x] Mehrfachkampf: Warnung bei Treffer auf Verbündete (nicht nötig: Flächen-Techniken treffen nie Verbündete, Test)
 389. [ ] Mehrfachkampf: Reihenfolge-Leiste
-390. [ ] Mehrfachkampf: XP-Verteilung klar anzeigen
-391. [ ] Mehrfachkampf: Bond nur gegen Wild (bestehend)
-392. [ ] Mehrfachkampf: Rückzug nur wenn alle wild
-393. [ ] Mehrfachkampf: Kampfende-Bericht pro Spirling
-394. [ ] Mehrfachkampf: Replay
-395. [ ] Mehrfachkampf: Barrierefreiheit (Slot-Namen vorlesen)
+390. [x] Mehrfachkampf: XP-Verteilung klar anzeigen (bestehend: Wachstum-Zeile pro Spirling)
+391. [x] Mehrfachkampf: Bond nur gegen Wild (bestehend)
+392. [x] Mehrfachkampf: Rückzug nur wenn alle wild (Test)
+393. [x] Mehrfachkampf: Kampfende-Bericht pro Spirling (BattleReport: Schaden und K.o. je Spirling, Bester des Kampfes)
+394. [x] Mehrfachkampf: Replay (BattleReplay mit front und Zügen, test_multi_battle)
+395. [x] Mehrfachkampf: Barrierefreiheit (Slot-Namen vorlesen) (MultiRules.slot_spoken)
 396. [ ] Mehrfachkampf: Einhand-Modus
-397. [ ] Mehrfachkampf-Tests (bestehend) erweitern
-398. [ ] Mehrfachkampf: Story-Kämpfe mit Ali-Wunsch (3v3, 4v1, 4v2) beibehalten
-399. [ ] Mehrfachkampf: Gegner-Formationen pro Wayfarer
-400. [ ] Mehrfachkampf: Formation-Bonus (z. B. zwei Stone vorne +DEF)
+397. [x] Mehrfachkampf-Tests (bestehend) erweitern (test_multi_k05.gd)
+398. [x] Mehrfachkampf: Story-Kämpfe mit Ali-Wunsch (3v3, 4v1, 4v2) beibehalten (test_multi_battle Kartendaten)
+399. [x] Mehrfachkampf: Gegner-Formationen pro Wayfarer (Wayfarer-Eintrag "formation": true)
+400. [x] Mehrfachkampf: Formation-Bonus (z. B. zwei Stone vorne +DEF) (data/multi_rules.json, nur eigene Seite)
 
 ## Bosse und Wardens
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-517 von 1000 Punkten umgesetzt.
+554 von 1000 Punkten umgesetzt.
 
