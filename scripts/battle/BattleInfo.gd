@@ -120,7 +120,7 @@ static func facts(model: BattleModel, seen: Dictionary) -> String:
 	if model.level_cap < Spirling.LEVEL_SANITY:
 		lines.append(Loc.t("Ring limit %d") % model.level_cap)
 	if model.bench_share > 0.0:
-		lines.append(Loc.t("Bench lessons: the bench gets %d%% of the XP.") % roundi(model.bench_share * 100.0))
+		lines.append(Loc.t("Bench lessons: the bench learns %d%% as much.") % roundi(model.bench_share * 100.0))
 	lines.append(Loc.t("Seed %d") % model.battle_seed)
 	return "\n".join(lines)
 

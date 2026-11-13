@@ -12,7 +12,7 @@ T = {
     "Arts seen: %s": "Gesehene Techniken: %s",
     "Arts seen: none yet": "Gesehene Techniken: noch keine",
     "Ring limit %d": "Ring-Obergrenze %d",
-    "Bench lessons: the bench gets %d%% of the XP.": "Lager-Lernen: die Bank bekommt %d%% der EP.",
+    "Bench lessons: the bench learns %d%% as much.": "Lager-Lernen: die Bank lernt %d%% so viel.",
     "Seed %d": "Seed %d",
     "Field: %s, %d turns left": "Feld: %s, noch %d Runden",
     "Field: %s": "Feld: %s",

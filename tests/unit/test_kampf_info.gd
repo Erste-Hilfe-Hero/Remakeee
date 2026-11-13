@@ -81,7 +81,7 @@ func test_field_status_cap_and_bench_lines() -> void:
 	m.bench_share = 0.5
 	var facts: String = BattleInfo.facts(m, {})
 	assert_string_contains(facts, "Ring limit 20")
-	assert_string_contains(facts, "50% of the XP")
+	assert_string_contains(facts, "learns 50% as much")
 	assert_string_contains(facts, "Field: ")
 
 # --- Art card (571, 572) ---
