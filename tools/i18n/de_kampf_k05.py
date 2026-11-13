@@ -103,3 +103,10 @@ T.update({
 T.update({
 "%s and %s trade places!": "%s und %s tauschen die Plätze!",
 })
+T.update({
+"Heals it and every ally beside it by %d%% of their Vigor.": "Heilt ihn und jeden Verbündeten neben ihm um %d%% ihrer Kraft.",
+"Heals the most hurt ally beside it by %d%% of its Vigor.": "Heilt den am schwersten verletzten Verbündeten neben ihm um %d%% seiner Kraft.",
+"Its side takes less damage for %d turns.": "Seine Seite nimmt %d Runden lang weniger Schaden.",
+"Draws the foes' aimed arts for %d turns.": "Zieht %d Runden lang die gezielten Techniken der Gegner auf sich.",
+"Takes the aimed hits meant for its most hurt ally for %d turns.": "Fängt %d Runden lang die gezielten Treffer für den am schwersten verletzten Verbündeten ab.",
+})

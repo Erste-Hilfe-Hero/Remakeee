@@ -416,6 +416,17 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 				line = Loc.t("No foe status takes hold on its side for %d turns.") % (sv if sv > 0 else BattleRules.STATUS_VEIL_TURNS)
 			&"energy_gain":
 				line = Loc.t("Gains %d Energy.") % int(fx.get("amount", 1))
+			# Multi-battle support arts (KAMPF_PLAN_1000, Mehrfachkämpfe).
+			&"heal_team":
+				line = Loc.t("Heals it and every ally beside it by %d%% of their Vigor.") % roundi(float(fx.get("amount", 0.2)) * 100.0)
+			&"heal_ally":
+				line = Loc.t("Heals the most hurt ally beside it by %d%% of its Vigor.") % roundi(float(fx.get("amount", 0.33)) * 100.0)
+			&"team_guard":
+				line = Loc.t("Its side takes less damage for %d turns.") % MultiRules.support_turns("team_guard")
+			&"decoy":
+				line = Loc.t("Draws the foes' aimed arts for %d turns.") % MultiRules.support_turns("decoy")
+			&"cover":
+				line = Loc.t("Takes the aimed hits meant for its most hurt ally for %d turns.") % MultiRules.support_turns("cover")
 			&"stage_reset":
 				line = Loc.t("Sets every stage on both sides back to 0.")
 			&"cure_team":
