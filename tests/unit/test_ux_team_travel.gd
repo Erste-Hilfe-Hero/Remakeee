@@ -224,3 +224,23 @@ func test_menu_button_closes_from_a_deep_level() -> void:
 	assert_true(state.done, "one press closed every level")
 	assert_eq(menu.picks, seen, "no list opened again after the press")
 	PauseMenu.last_label = ""
+
+## Items 1899 (nickname) and 1905 (unfurl mark in the team row).
+func test_nickname_rules() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, "Kindlop")
+	var s: Spirling = GameState.party[0]
+	assert_true(PauseMenu.set_nickname(s, "  Pip  "))
+	assert_eq(s.display_name(), "Pip")
+	assert_false(PauseMenu.set_nickname(s, "Elevenchars"), "at most 10 characters")
+	assert_false(PauseMenu.set_nickname(s, "Call 01234"), "no phone numbers")
+	assert_eq(s.nickname, "Pip", "a refused name keeps the old one")
+	assert_true(PauseMenu.set_nickname(s, ""))
+	assert_eq(s.display_name(), s.data.species_name, "empty gives back the kind's name")
+
+func test_unfurl_mark_follows_readiness() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, "Kindlop")
+	var s: Spirling = GameState.party[0]
+	var row: Dictionary = MenuHost.party_entry(s)
+	assert_eq(bool(row.unfurl), MenuHost.can_unfurl_now(s))
+	assert_false(bool(row.unfurl), "a fresh starter can't unfurl yet")
+	assert_false(str(row.hint).contains("Ready to unfurl"))

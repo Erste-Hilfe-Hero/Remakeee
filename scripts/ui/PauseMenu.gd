@@ -716,7 +716,7 @@ func run_team() -> void:
 		if idx < 0 or idx >= GameState.party.size():
 			return
 		var s: Spirling = GameState.party[idx]
-		var opts: Array[String] = ["Summary", "Lead the team", "Move to slot...", "Use item", "Keepsake"]
+		var opts: Array[String] = ["Summary", "Lead the team", "Move to slot...", "Use item", "Keepsake", "Nickname"]
 		# Every kind that can unfold shows the option; if it isn't ready yet, it says what it needs.
 		if not s.data.unfold.is_empty():
 			opts.append("Unfurl")
@@ -730,7 +730,10 @@ func run_team() -> void:
 		if opt >= 0 and opts[opt] == "Relearn an art":
 			await _relearn(s)
 			continue
-		if opt >= 5:
+		if opt >= 0 and opts[opt] == "Nickname":
+			await _rename(s)
+			continue
+		if opt >= 0 and opts[opt] in ["Unfurl", "Furl back"]:
 			await _unfurl(s, opts[opt] == "Unfurl")
 			continue
 		match opt:
@@ -745,6 +748,28 @@ func run_team() -> void:
 					GameState.move_party(idx, to)
 			3: await _use_item_on(s)
 			4: await _held_item(s)
+
+## Nickname (item 1899): up to 10 letters, empty gives back the kind's name. The same rules
+## as Wayfarer names, since friends can see a team.
+const NICK_MAX: int = 10
+
+func _rename(s: Spirling) -> void:
+	var n: String = await TextPrompt.ask(self, Loc.t("Nickname for %s") % s.data.species_name, false, NICK_MAX, s.nickname)
+	if not set_nickname(s, n):
+		await info("That name can't be used. Letters and up to 3 digits, at most 10 characters.")
+		return
+	Sound.sfx("confirm")
+
+## Sets [param n] as the nickname if it is allowed; empty clears it. Returns false if refused.
+static func set_nickname(s: Spirling, n: String) -> bool:
+	var clean: String = " ".join(n.strip_edges().split(" ", false))
+	if clean.is_empty() or clean == s.data.species_name:
+		s.nickname = ""
+		return true
+	if clean.length() > NICK_MAX or LocalBackend.clean_name(clean, "0000") != clean:
+		return false
+	s.nickname = clean
+	return true
 
 ## The summary in the era's layout: two text pages in Era I, three in Era II, the tabbed card
 ## from Era III on. Every era shows the same four sections (EraMenus.SECTIONS).
@@ -868,6 +893,38 @@ func _usable_items() -> Array[String]:
 
 ## Satchel tabs (item 1914) and which tab an item belongs to.
 const BAG_TABS: Array[String] = ["Care", "Keepsakes", "Crystals", "Gear", "Special"]
+## Satchel orders (item 1917); the choice is kept in GameState.bag_sort.
+const BAG_SORTS: Array[String] = ["New", "Name", "Kind"]
+## What a list returns when its sort switch in the title row is tapped.
+const SORT_PICKED: int = -50
+
+## [param ids] in satchel order [param mode]: newest first (the bag keeps the order things
+## came in, and a used-up entry goes away), by shown name, or by kind as the item list has them.
+static func sort_bag(ids: Array, mode: int) -> Array:
+	var out: Array = ids.duplicate()
+	match mode:
+		0:
+			out.reverse()
+		1:
+			out.sort_custom(func(a: Variant, b: Variant) -> bool:
+				return Loc.t(str(Database.item(str(a)).get("name", a))).naturalnocasecmp_to(Loc.t(str(Database.item(str(b)).get("name", b)))) < 0)
+		2:
+			var order: Array = Database.items.keys()
+			out.sort_custom(func(a: Variant, b: Variant) -> bool:
+				return order.find(a) < order.find(b))
+	return out
+
+## The "Sort: New" switch in the satchel's title row; a tap closes the list with SORT_PICKED.
+func sort_toggle() -> Button:
+	var b := Button.new()
+	b.name = "sort_toggle"
+	b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	b.text = Loc.t("Sort: %s") % Loc.t(BAG_SORTS[clampi(GameState.bag_sort, 0, BAG_SORTS.size() - 1)])
+	b.focus_mode = Control.FOCUS_NONE
+	b.pressed.connect(func() -> void:
+		Sound.sfx("select")
+		picker.picked.emit(SORT_PICKED))
+	return b
 
 static func bag_tab(it: Dictionary) -> int:
 	if bool(it.get("gear", false)):
@@ -912,6 +969,7 @@ func run_bag() -> void:
 			ids = []
 			for t: int in tab_ids:
 				ids.append_array(by_tab[t])
+		ids = sort_bag(ids, GameState.bag_sort)
 		var entries: Array[Dictionary] = []
 		for id: String in ids:
 			var it0: Dictionary = Database.item(id)
@@ -930,14 +988,22 @@ func run_bag() -> void:
 		var focus: int = ids.find(last_id)
 		if focus < 0 and last_idx >= 0:
 			focus = mini(last_idx, ids.size() - 1)
-		var head: Control = null
+		var head := HBoxContainer.new()
+		head.alignment = BoxContainer.ALIGNMENT_END
 		if not flat:
-			head = EraMenuKit.pocket_header(tab_ids[tab], BAG_TABS[tab_ids[tab]], ids.size(), lay)
+			var pocket: Control = EraMenuKit.pocket_header(tab_ids[tab], BAG_TABS[tab_ids[tab]], ids.size(), lay)
+			pocket.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			head.add_child(pocket)
+		head.add_child(sort_toggle())
 		var idx: int = await pick_screen("bag", "Satchel", entries, {"focus": focus, "tabs": ([] as Array[String]) if flat else tabs, "tab": tab, "header": head,
 			"tab_icons": EraMenuKit.pocket_tab_icons(tab_ids, lay)})
 		if ListPicker.tab_of(idx) >= 0:
 			tab = ListPicker.tab_of(idx)
 			last_idx = -1
+			continue
+		if idx == SORT_PICKED:
+			GameState.bag_sort = (GameState.bag_sort + 1) % BAG_SORTS.size()
+			SaveManager.save_settings()
 			continue
 		if idx < 0:
 			return

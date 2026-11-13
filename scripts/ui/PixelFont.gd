@@ -54,6 +54,29 @@ static func get_large_font() -> FontFile:
 		_large.fallbacks = cjk_fallbacks(_lang)
 	return _large
 
+## Bold large font (Era IV/V battle HUD): the large glyphs with every stroke doubled to the
+## right, so text reads heavy on the 270 px screens. One pixel wider than the large set.
+static var _bold: FontFile
+const BOLD_W: int = LARGE_W + 1
+
+static func get_bold_font() -> FontFile:
+	if _bold == null:
+		_bold = _build(true, true)
+		_bold.fallbacks = cjk_fallbacks(_lang)
+	return _bold
+
+## One glyph of the bold set: [method large_glyph] with each lit pixel also lighting the next.
+static func bold_glyph(ch: String) -> Array[String]:
+	var out: Array[String] = []
+	for line: String in large_glyph(ch):
+		var b: String = ""
+		for x: int in BOLD_W:
+			var here: bool = x < line.length() and line[x] == "#"
+			var left: bool = x > 0 and x - 1 < line.length() and line[x - 1] == "#"
+			b += "#" if here or left else "."
+		out.append(b)
+	return out
+
 ## Japanese, Korean and Chinese come from the Fusion Pixel 8px fonts in art/fonts (OFL, built by
 ## tools/fonts/build_cjk.py), added as fallbacks of the pixel font. The current language's font
 ## comes first, so shared characters get its regional form; the others stay behind it, because
@@ -86,6 +109,8 @@ static func use_language(code: String) -> void:
 		_font.fallbacks = cjk_fallbacks(code)
 	if _large != null:
 		_large.fallbacks = cjk_fallbacks(code)
+	if _bold != null:
+		_bold.fallbacks = cjk_fallbacks(code)
 
 ## One glyph of the large set, as rows of "#" and ".".
 static func large_glyph(ch: String) -> Array[String]:
@@ -98,9 +123,9 @@ static func large_glyph(ch: String) -> Array[String]:
 		out.append(line)
 	return out
 
-static func _build(large: bool = false) -> FontFile:
+static func _build(large: bool = false, bold: bool = false) -> FontFile:
 	var chars: Array = glyphs().keys()
-	var cw: int = LARGE_W if large else CELL_W
+	var cw: int = (BOLD_W if bold else LARGE_W) if large else CELL_W
 	var chh: int = LARGE_H if large else CELL_H
 	var ascent: int = LARGE_ASCENT if large else ASCENT
 	var descent: int = LARGE_DESCENT if large else DESCENT
@@ -114,7 +139,7 @@ static func _build(large: bool = false) -> FontFile:
 	f.fixed_size_scale_mode = TextServer.FIXED_SIZE_SCALE_INTEGER_ONLY
 	f.antialiasing = TextServer.FONT_ANTIALIASING_NONE
 	f.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED
-	f.font_name = "Chimora Pixel Groß" if large else "Chimora Pixel"
+	f.font_name = ("Chimora Pixel Fett" if bold else "Chimora Pixel Groß") if large else "Chimora Pixel"
 	var size := Vector2i(BASE_SIZE, 0)
 	f.set_cache_ascent(0, BASE_SIZE, ascent)
 	f.set_cache_descent(0, BASE_SIZE, descent)
@@ -122,7 +147,7 @@ static func _build(large: bool = false) -> FontFile:
 		var ch: String = chars[i]
 		var gx: int = (i % cols) * (cw + pad)
 		var gy: int = (i / cols) * (chh + pad)
-		var bitmap: Array = large_glyph(ch) if large else glyphs()[ch]
+		var bitmap: Array = (bold_glyph(ch) if bold else large_glyph(ch)) if large else glyphs()[ch]
 		var min_x: int = cw
 		var max_x: int = -1
 		for y: int in bitmap.size():

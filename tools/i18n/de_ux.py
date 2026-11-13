@@ -203,6 +203,13 @@ T = {
 "Photo mode: slide the D-pad to look around, tap the world for a photo, = changes the frame, B leaves.": "Foto-Modus: Mit dem Steuerkreuz schaust du dich um, ein Tipp auf die Welt macht ein Foto, = wechselt den Rahmen, B beendet.",
 "Photo mode: the D-pad looks around, A takes a photo, Start changes the frame, B leaves.": "Foto-Modus: Das Steuerkreuz schaut sich um, A macht ein Foto, Start wechselt den Rahmen, B beendet.",
 "Photo mode": "Foto-Modus",
+"Nickname": "Spitzname",
+"Nickname for %s": "Spitzname für %s",
+"That name can't be used. Letters and up to 3 digits, at most 10 characters.": "Dieser Name geht nicht. Buchstaben und bis zu 3 Ziffern, höchstens 10 Zeichen.",
+"Ready to unfurl": "Kann sich entfalten",
+"New": "Neu",
+"Kind": "Art",
+"seen": "gesehen",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).

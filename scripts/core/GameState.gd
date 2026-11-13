@@ -183,6 +183,8 @@ var swap_ab_pad: bool = false
 var tap_vibration: bool = false
 ## One-hand layout (item 79): D-pad and buttons stacked on one side of the screen.
 var one_hand: bool = false
+## Satchel order (item 1917): 0 newest first, 1 by name, 2 by kind. Kept with the settings.
+var bag_sort: int = 0
 ## Vibration on phones and gamepads (items 63, 2590): 0 Off, 1 Weak, 2 Full.
 var vibration: int = 2
 ## Screen shake in battle and the world (item 2259): 0 Off, 1 Weak, 2 Full.
@@ -801,7 +803,7 @@ func settings_to_dict() -> Dictionary:
 		"voice_volume": voice_volume, "ambience_volume": ambience_volume, "mono_audio": mono_audio,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "pad_opacity_steps": PAD_ALPHAS.size(), "left_handed": left_handed, "tap_to_move": tap_to_move,
 		"always_run": always_run, "bond_style": bond_style, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad, "tap_vibration": tap_vibration,
-		"one_hand": one_hand, "vibration": vibration, "screen_shake": screen_shake,
+		"one_hand": one_hand, "bag_sort": bag_sort, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice,
 		"tips": tips_enabled, "play_reminder": play_reminder, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
 		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language}
@@ -830,6 +832,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	tap_vibration = bool(d.get("tap_vibration", false))
 	apply_pad_swap(swap_ab_pad)
 	one_hand = bool(d.get("one_hand", false))
+	bag_sort = clampi(int(d.get("bag_sort", 0)), 0, 2)
 	# Older settings had an on/off "rumble"; on maps to Full vibration.
 	var legacy_rumble: int = 2 if bool(d.get("rumble", true)) else 0
 	vibration = clampi(int(d.get("vibration", legacy_rumble)), 0, 2)
