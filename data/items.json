@@ -109,6 +109,17 @@
   "tradeable": true
  },
  {
+  "id": "field_stake",
+  "name": "Field Stake",
+  "description": "Keepsake. A Rift field its holder calls lasts 2 turns longer.",
+  "battle": false,
+  "held": {
+   "field_turns": 2
+  },
+  "price": 1500,
+  "tradeable": false
+ },
+ {
   "id": "bark_wrap",
   "name": "Bark Wrap",
   "description": "Keepsake. The holder recovers a little Vigor at the end of each turn.",

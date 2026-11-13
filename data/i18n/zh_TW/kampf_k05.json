@@ -1,0 +1,33 @@
+{
+ "_comment": "zh_TW translation of the kampf_k05 table, keyed by the English text.",
+ "strings": {
+  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns on every difficulty; then the place's own field comes back. A new field pushes the old one out at once.": "裂隙場地讓一種屬性的傷害變為 x1.2，另一種變為 x0.85。召喚技藝在任何難度下都會鋪開場地 5 回合，之後恢復該地原本的場地。新場地會立刻擠走舊場地。",
+  "A Rift field never weakens its arts.": "裂隙場地永遠不會削弱它的技藝。",
+  "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.": "盤旋的風中有一圈寧靜。Gale技藝打得更重，Bloom技藝枯萎，誰也不會陷入睏倦。",
+  "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.": "淡淡的晨光。Lumen技藝打得更重，Umbra技藝變淡，Echo呼喚也更容易成功一些。黎明和白天會多持續 1 回合。",
+  "Ash hangs in the air. Ember arts hit harder, Tide arts sputter.": "灰燼懸在空中。Ember技藝打得更重，Tide技藝時斷時續。",
+  "Calls a rain of rubble over the field.": "在場上召來一場碎石雨。",
+  "Calls the eye of a gale over the field.": "在場上召來風暴之眼。",
+  "Echo Soul": "回聲之魂",
+  "Every hair stands on end. Volt arts hit harder, Stone arts crumble, and Volt Spirlings gain 1 extra Energy each turn.": "每根毛都豎了起來。Volt技藝打得更重，Stone技藝碎裂，Volt屬性的Spirling每回合多得 1 點能量。",
+  "Field Stake": "場地木樁",
+  "Field Strider": "場地行者",
+  "Gains 2 Energy whenever a new Rift field is laid.": "每當鋪開新的裂隙場地時獲得 2 點能量。",
+  "Gale Call": "風暴召喚",
+  "Gale Eye": "風暴之眼",
+  "Grit and pebbles patter down. Stone arts land heavier, Volt arts ground out, and no charge can build.": "砂礫和石子劈啪落下。Stone技藝打得更沉，Volt技藝流入地面，任何蓄力都無法累積。",
+  "Grit patters down without end. Stone arts hit harder, Volt arts ground out, and nobody can be Jolted.": "砂礫不停落下。Stone技藝打得更重，Volt技藝流入地面，誰也不會觸電。",
+  "Keepsake. A Rift field its holder calls lasts 2 turns longer.": "信物。攜帶者召喚的裂隙場地多持續 2 回合。",
+  "Light drowns in the murk. Umbra arts hit harder, Lumen arts dim. At dusk and at night it holds a turn longer.": "光被幽暗吞沒。Umbra技藝打得更重，Lumen技藝黯淡。黃昏和夜晚會多持續 1 回合。",
+  "No Rift field.": "沒有裂隙場地。",
+  "Pollen settles on everything. Bloom arts hit harder, Gale arts stall, and Bloom Spirlings mend a little each turn.": "花粉落滿一切。Bloom技藝打得更重，Gale技藝受阻，Bloom屬性的Spirling每回合恢復一點。",
+  "Rift field %s, %d turns left.": "裂隙場地 {0}，還剩 {1} 回合。",
+  "Rift field %s, for the whole battle.": "裂隙場地 %s，持續整場戰鬥。",
+  "Rift fields": "裂隙場地",
+  "Rubble Call": "碎石召喚",
+  "Rubble Rain": "碎石雨",
+  "The %s gives way to the %s.": "{0} 讓位給 {1}。",
+  "The water stands knee-deep. Tide arts hit harder, Ember arts fizzle, and nothing can catch Scorch.": "水深及膝。Tide技藝打得更重，Ember技藝熄滅，什麼都不會焦灼。",
+  "The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off.": "風繞著裂隙打轉，在中心屏住呼吸。Gale技藝切得更利，Bloom技藝枯萎，誰也無法打盹。"
+ }
+}

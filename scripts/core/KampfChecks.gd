@@ -6,7 +6,8 @@ extends RefCounted
 
 const BOSS_KEYS: Array[String] = ["label", "hp_per_ally", "max_actions", "text", "phase"]
 const PHASE_KEYS: Array[String] = ["at", "stage", "field", "text"]
-const FIELD_KEYS: Array[String] = ["label", "boost", "weaken", "intro", "blocks", "regen_element", "regen_div", "rest_bonus"]
+const FIELD_KEYS: Array[String] = ["label", "boost", "weaken", "intro", "blocks", "regen_element", "regen_div",
+	"rest_bonus", "energy_element", "energy_gain", "bond_bonus"]
 ## Maps and tables that name a boss by id.
 const BOSS_SOURCES: Array[String] = ["res://data/ideas200c.json"]
 const MAP_DIR: String = "res://data/maps"
@@ -21,7 +22,7 @@ static func field_errors(fields: Dictionary = BattleRules.FIELDS) -> PackedStrin
 				out.append("field '%s': unknown key '%s'" % [id, k])
 		if str(f.get("label", "")).is_empty() or str(f.get("intro", "")).is_empty():
 			out.append("field '%s': needs a label and an intro text" % id)
-		for k: String in ["boost", "weaken", "regen_element"]:
+		for k: String in ["boost", "weaken", "regen_element", "energy_element"]:
 			if f.has(k) and not Elements.E.has(str(f[k])):
 				out.append("field '%s': %s '%s' is not an element" % [id, k, f[k]])
 		if f.has("boost") and str(f.get("boost")) == str(f.get("weaken", "")):
@@ -31,6 +32,11 @@ static func field_errors(fields: Dictionary = BattleRules.FIELDS) -> PackedStrin
 				out.append("field '%s': blocks unknown status '%s'" % [id, st])
 		if f.has("regen_element") and int(f.get("regen_div", 0)) <= 0:
 			out.append("field '%s': regen_element needs a regen_div above 0" % id)
+		# Field extras of RiftFields (KAMPF_PLAN_1000 items 345, 349).
+		if f.has("energy_element") and int(f.get("energy_gain", 1)) <= 0:
+			out.append("field '%s': energy_element needs an energy_gain above 0" % id)
+		if f.has("bond_bonus") and (float(f.bond_bonus) <= 0.0 or float(f.bond_bonus) > 0.5):
+			out.append("field '%s': bond_bonus must lie in (0, 0.5]" % id)
 	return out
 
 ## Problems of BattleRules.BOSSES and its phases.
