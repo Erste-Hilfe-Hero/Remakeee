@@ -151,6 +151,8 @@ func describe() -> String:
 			var acts: int = int(data.get("actions", 1))
 			return "%s: %s" % [data.get("label", ""), data.get("text", "")] + ("\nIt acts %d times each turn." % acts if acts > 1 else "")
 		Type.FIELD_END:
+			if data.has("by"):
+				return "The %s gives way to the %s." % [data.get("label", ""), data.get("by", "")]
 			return "The %s fades away." % data.get("label", "")
 		Type.BOSS_PHASE:
 			return str(data.get("text", ""))
