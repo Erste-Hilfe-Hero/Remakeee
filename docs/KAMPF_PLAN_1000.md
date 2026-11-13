@@ -120,81 +120,81 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Elemente und Matchups
 
 81. [ ] Matchup-Tabelle im Lexikon, die sich mit gesehenen Treffern füllt (bestehend: gelernte Matchups)
-82. [ ] Story-Stufe zeigt alle Matchups von Anfang an (bestehend)
+82. [x] Story-Stufe zeigt alle Matchups von Anfang an (bestehend) (bestehend: GameState.known_matchups, Story zeigt alle)
 83. [ ] Matchup-Symbole mit Form statt Farbe (bestehend: Elementsymbole) auch im Lexikon
 84. [ ] Doppel-Element-Erklärung: beide Faktoren multiplizieren, im Lexikon zeigen
-85. [ ] Element-Resonanz: zwei Verbündete mit gleichem Element erhalten +5 % Schaden
-86. [ ] Element-Wechsel-Technik: Ziel wird für 3 Runden zu einem anderen Element
-87. [ ] Element-Schutz-Gegenstand: halbiert einen sehr effektiven Treffer einmal
-88. [ ] Element-Verstärker als gehaltene Gegenstände (+15 % für ein Element)
+85. [x] Element-Resonanz: zwei Verbündete mit gleichem Element erhalten +5 % Schaden (TechniqueRules.resonance_mult)
+86. [x] Element-Wechsel-Technik: Ziel wird für 3 Runden zu einem anderen Element (Farbbad (Dye Bath), Spirling.element_shift)
+87. [x] Element-Schutz-Gegenstand: halbiert einen sehr effektiven Treffer einmal (Schutzschale (Ward Shell), held super_guard)
+88. [x] Element-Verstärker als gehaltene Gegenstände (+15 % für ein Element) (bestehend: Prismen +20 %, Amulette +10 % je Element)
 89. [ ] Neutral-Techniken ohne Element für jeden Spirling
 90. [ ] Matchup-Lernen auch durch Lexikon-Einträge (Lore-Seiten)
 91. [ ] Elementsymbol am Ziel-Pin im Mehrfachkampf
 92. [ ] Effektivitäts-Hinweis im Mehrfachkampf pro Ziel bei der Zielwahl
-93. [ ] Element-Balance-Bericht: welches Element gewinnt im Simulator zu oft
+93. [x] Element-Balance-Bericht: welches Element gewinnt im Simulator zu oft (bestehend: tools/balance/type_sim.py chart_report)
 94. [ ] Neue Feld-Elemente pro Riss variieren
 95. [x] Element-Reaktion: Tide trifft Scorch-Ziel und löscht den Status
 96. [x] Element-Reaktion: Volt trifft Soak-Ziel für +20 % Schaden
-97. [ ] Element-Reaktion: Ember auf Root-Ziel befreit es, verursacht aber Scorch
+97. [x] Element-Reaktion: Ember auf Root-Ziel befreit es, verursacht aber Scorch (BattleRules.REACTIONS inflict)
 98. [ ] Element-Reaktionen im Lexikon erklären
 99. [ ] Matchup-Quiz als Minispiel im Leuchtturm
-100. [ ] Effektivitäts-Text in eigener Wortwahl (bestehend: 'overwhelming', 'barely landed')
-101. [ ] Unwirksam-Treffer (x0) gibt es nicht, nur x0.25 (Designregel festhalten)
+100. [x] Effektivitäts-Text in eigener Wortwahl (bestehend: 'overwhelming', 'barely landed') (bestehend: BattleEvent DAMAGE)
+101. [x] Unwirksam-Treffer (x0) gibt es nicht, nur x0.25 (Designregel festhalten) (Regel in docs/BALANCE.md, test_kampf_techniques)
 102. [ ] Element-Dominanz pro Region als Wild-Spawn-Tabelle
-103. [ ] Trait 'Prisma-Haut': nimmt bei x2 nur x1.5
-104. [ ] Trait 'Gegenstrom': resistiert das Element, das es zuletzt getroffen hat
+103. [x] Trait 'Prisma-Haut': nimmt bei x2 nur x1.5 (verborgene Gabe Prismenhaut (Cullet-Linie))
+104. [x] Trait 'Gegenstrom': resistiert das Element, das es zuletzt getroffen hat (verborgene Gabe Gegenstrom (Paddlewisp-Linie))
 105. [ ] Element-Statistik im Kampfende-Bericht
-106. [ ] Matchup-Kenntnis wird pro Spielstand gespeichert (bestehend)
+106. [x] Matchup-Kenntnis wird pro Spielstand gespeichert (bestehend) (bestehend: SaveManager matchups)
 107. [ ] Online: Matchup-Wissen teilt sich mit Freunden (Laternenpost-Bonus)
 108. [ ] Element-Icons im Hochkontrast-Modus größer
-109. [ ] Element-Namen bleiben in allen Sprachen gleich (bestehend)
-110. [ ] Element-Tabelle bleibt eigenständig, nie aus anderen Spielen übernehmen (Regel)
+109. [x] Element-Namen bleiben in allen Sprachen gleich (bestehend) (bestehend: Elements.element_name ohne Übersetzung)
+110. [x] Element-Tabelle bleibt eigenständig, nie aus anderen Spielen übernehmen (Regel) (Regel in docs/BALANCE.md)
 111. [ ] Ein Element pro Riss als Thema der Warden
 112. [ ] Element-Training: Spark-Werte steigen schneller im passenden Feld
 113. [ ] Element-Glyphen animieren beim sehr effektiven Treffer
 114. [ ] Element-Mischtechniken (zwei Elemente, nimmt das bessere)
-115. [ ] Element-Schild-Technik für das ganze Team (3 Runden)
-116. [ ] Elementarer Nachhall: Bonus, wenn zwei Verbündete im selben Zug dasselbe Element nutzen
+115. [x] Element-Schild-Technik für das ganze Team (3 Runden) (Schutzkreis (Ward Circle))
+116. [x] Elementarer Nachhall: Bonus, wenn zwei Verbündete im selben Zug dasselbe Element nutzen (TechniqueRules.echo_mult)
 117. [ ] Element-Rätsel in der Welt, die Kampfwissen belohnen
 118. [ ] Element-Filter im Lager
 119. [ ] Element-Schwäche-Warnung beim Einwechseln
-120. [ ] Gegner-Element im Info-Streifen (bestehend)
+120. [x] Gegner-Element im Info-Streifen (bestehend) (bestehend: InfoStrip zeichnet Elementsymbole)
 
 ## Techniken
 
 121. [x] Resonanz-Techniken: Ash Call, Tide Call und Murk Call legen 5 Runden lang ein Rift-Feld
 122. [ ] Feld-Restzüge im Log ansagen und beim Ende melden
-123. [ ] Schutz-Technik 'Brace': hält einen Treffer ab, zweimal hintereinander schlägt fehl
-124. [ ] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Wayfarer-Kämpfe)
+123. [x] Schutz-Technik 'Brace': hält einen Treffer ab, zweimal hintereinander schlägt fehl (Standhalten (Hold Fast))
+124. [x] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Wayfarer-Kämpfe) (Wegschubser (Shove Off))
 125. [ ] Mehrstufige Technik: lädt eine Runde, trifft dann doppelt
-126. [ ] Konter-Technik: wirft physischen Schaden x1.5 zurück
-127. [ ] Heil-Technik für Verbündete im Mehrfachkampf
-128. [ ] Team-Stufen-Technik (alle Verbündeten DEF +1)
-129. [ ] Wurzel-Technik, die Wechsel für 3 Runden blockiert (bestehend: Root)
+126. [x] Konter-Technik: wirft physischen Schaden x1.5 zurück (Grollrückgabe (Grudge Return))
+127. [x] Heil-Technik für Verbündete im Mehrfachkampf (Sippenbalsam (Kindred Balm))
+128. [x] Team-Stufen-Technik (alle Verbündeten DEF +1) (Reih und Glied (Rank and File))
+129. [x] Wurzel-Technik, die Wechsel für 3 Runden blockiert (bestehend: Root) (bestehend: Root blocks_swap)
 130. [ ] Technik, die Stufen des Ziels zurücksetzt
-131. [ ] Technik, die eigene negative Stufen löscht
-132. [ ] Technik mit steigender Stärke bei Wiederholung
-133. [ ] Technik, die stärker ist, wenn das Ziel zuerst gehandelt hat
-134. [ ] Technik, die stärker ist, wenn der Nutzer zuerst handelt
-135. [ ] Technik mit Treffer-Serie (2 bis 4 Treffer)
-136. [ ] Technik, die das Feld beendet
-137. [ ] Technik, die Status vom ganzen Team heilt
+131. [x] Technik, die eigene negative Stufen löscht (Abschütteln (Shake Loose))
+132. [x] Technik mit steigender Stärke bei Wiederholung (Trommelwirbel (Rolling Drum))
+133. [x] Technik, die stärker ist, wenn das Ziel zuerst gehandelt hat (Späte Antwort (Late Reply))
+134. [x] Technik, die stärker ist, wenn der Nutzer zuerst handelt (Eröffnungszug (Opening Gambit))
+135. [x] Technik mit Treffer-Serie (2 bis 4 Treffer) (Kieselhagel (Pebble Hail))
+136. [x] Technik, die das Feld beendet (Rissstille (Rift Hush))
+137. [x] Technik, die Status vom ganzen Team heilt (bestehend: Effekt cure_team)
 138. [ ] Technik-Lehrer im Leuchtturm (vergessene Techniken neu lernen)
-139. [ ] Echo-Kristalle (bestehend) als Quelle seltener Techniken ausbauen
+139. [x] Echo-Kristalle (bestehend) als Quelle seltener Techniken ausbauen (19 neue Echo-Kristalle bei Hesper im Leuchtturm)
 140. [ ] Technik-Tausch-Vorschau: alte und neue Technik nebeneinander
 141. [x] Technik-Beschreibung mit Effekt-Chancen im Lexikon
 142. [ ] Techniken mit Signatur pro Art (eine je Art, eigenständig)
-143. [ ] Keine Technik-Namen aus anderen Spielen (Prüfliste vor jedem Merge)
+143. [x] Keine Technik-Namen aus anderen Spielen (Prüfliste vor jedem Merge) (tools/ip_check.sh in CI, test_rule_checks)
 144. [ ] Status-Techniken mit Genauigkeit unter 100 % sichtbar machen
 145. [ ] Technik-Kategorie Physisch/Fokus/Status mit Symbol
-146. [ ] Mehrfachziel-Techniken zeigen 'alle' (bestehend)
-147. [ ] Technik 'Ablenkung': zieht alle Einzelziele drei Runden auf sich
-148. [ ] Technik 'Schulterschluss': schützt einen Verbündeten
-149. [ ] Technik 'Nachglut': Schaden über 3 Runden
-150. [ ] Technik 'Spiegelung': kopiert die letzte Gegner-Stufenänderung
-151. [ ] Technik 'Ruhepunkt': heilt 50 %, Nutzer schläft 1 Runde (Drowse)
-152. [ ] Technik 'Druckwelle': trifft alle, auch Verbündete, sehr stark (Risiko-Technik)
-153. [ ] Techniken mit Feld-Bedingung (stärker in passendem Feld)
+146. [x] Mehrfachziel-Techniken zeigen 'alle' (bestehend) (bestehend: Info-Karte 'Reaches every foe.')
+147. [x] Technik 'Ablenkung': zieht alle Einzelziele drei Runden auf sich (Lichtköder (Bright Lure))
+148. [x] Technik 'Schulterschluss': schützt einen Verbündeten (Schulterschluss (Close Ranks))
+149. [x] Technik 'Nachglut': Schaden über 3 Runden (Nachglut (Ember Afterglow))
+150. [x] Technik 'Spiegelung': kopiert die letzte Gegner-Stufenänderung (Geliehene Haltung (Borrowed Stance))
+151. [x] Technik 'Ruhepunkt': heilt 50 %, Nutzer schläft 1 Runde (Drowse) (Ruhepunkt (Still Point))
+152. [x] Technik 'Druckwelle': trifft alle, auch Verbündete, sehr stark (Risiko-Technik) (Druckwelle (Ground Burst))
+153. [x] Techniken mit Feld-Bedingung (stärker in passendem Feld) (bestehend: field_element-Techniken)
 154. [ ] Techniken mit Tageszeit-Bedingung (Tag/Nacht bestehend)
 155. [ ] Technik-Balancing über den Simulator pro neuer Technik
 156. [ ] Lernlisten pro Art auf Lücken prüfen (jede Art hat eine Status-Technik)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-583 von 1000 Punkten umgesetzt.
+623 von 1000 Punkten umgesetzt.
 
