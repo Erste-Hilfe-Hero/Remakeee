@@ -291,3 +291,76 @@ func test_event_weights_steer_the_roll() -> void:
 		if w != null and w.data.species_name == favourite:
 			hits += 1
 	assert_gt(hits, 150)
+
+# --- Training ring -----------------------------------------------------------------------
+
+func test_dummies_are_real_kinds_at_the_teams_ring() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 3
+	assert_eq(TrainingGround.dummies().size(), 3)
+	for d: Dictionary in TrainingGround.dummies():
+		var s: Spirling = TrainingGround.make(d, 20, rng)
+		assert_not_null(s, str(d.id))
+		assert_eq(s.level, 20 + int(d.ring_offset))
+		assert_eq(s.display_name(), str(d.name))
+		var info: Dictionary = TrainingGround.bout_info(d)
+		assert_true(bool(info.friendly), "a friendly bout: nothing lost")
+		assert_eq(int(info.money), 0)
+	assert_eq(TrainingGround.ring_for(TrainingGround.dummies()[0], 1), TrainingGround.MIN_RING)
+
+func test_training_grows_slower_than_the_road() -> void:
+	assert_lt(GrowthRules.battle_mult(GameState.Difficulty.TAMER, {"practice": true}, {}), 1.0)
+
+func test_training_goals_pay_once_and_the_record_counts() -> void:
+	var rec: Dictionary = {}
+	var met: Array[Dictionary] = TrainingGround.after_bout(rec, "straw", true, 40)
+	assert_eq(met.map(func(g: Dictionary) -> String: return str(g.id)), ["first_bout"])
+	assert_eq(TrainingGround.after_bout(rec, "straw", false, 5), [] as Array[Dictionary], "a lost bout meets nothing")
+	for i: int in 2:
+		TrainingGround.after_bout(rec, "oak", true, 10)
+	met = TrainingGround.after_bout(rec, "oak", true, 10)
+	var ids: Array = met.map(func(g: Dictionary) -> String: return str(g.id))
+	assert_true("oak_three" in ids)
+	met = TrainingGround.after_bout(rec, "oak", true, 10)
+	assert_false(met.map(func(g: Dictionary) -> String: return str(g.id)).has("oak_three"), "never twice")
+	var st: Dictionary = TrainingGround.state(rec)
+	assert_eq(int(st.bouts), 6)
+	assert_eq(int(st.wins), 5)
+	assert_eq(int(st.growth), 85)
+	assert_string_contains("\n".join(TrainingGround.stat_lines(rec)), "Oak Dummy: 4")
+	assert_string_contains("\n".join(TrainingGround.goal_lines(rec)), "[x] Win one bout.")
+	for g: Dictionary in TrainingGround.goals():
+		assert_false(Database.item(str(g.reward)).is_empty(), str(g.reward))
+
+func test_the_lighthouse_has_the_training_keeper() -> void:
+	var m: MapData = MapData.load_map("lighthouse")
+	var found: bool = false
+	for n: Dictionary in m.npcs:
+		if str(n.get("id", "")) == "tamsin":
+			found = true
+	assert_true(found)
+	assert_true(Dialogue.exists("lighthouse/tamsin"))
+
+func test_the_storm_lantern_sets_the_encounter_rate() -> void:
+	var rec: Dictionary = {}
+	assert_eq(WildRules.lantern_mult(rec, true), 1.0, "normal by default")
+	rec[WildRules.LANTERN_RECORD] = 0
+	assert_lt(WildRules.lantern_mult(rec, true), 1.0)
+	assert_eq(WildRules.lantern_mult(rec, false), 1.0, "only with the lantern")
+	rec[WildRules.LANTERN_RECORD] = 2
+	assert_gt(WildRules.lantern_mult(rec, true), 1.0)
+	rec[WildRules.LANTERN_RECORD] = 9
+	assert_eq(WildRules.lantern_setting(rec), 2)
+	assert_true(Database.item(WildRules.LANTERN_ITEM).get("gear", false))
+
+func test_a_horde_has_a_leader_and_wavers_without_it() -> void:
+	var a: Spirling = BattleFixtures.make("Mossling", 5)
+	var b: Spirling = BattleFixtures.make("Mossling", 9)
+	assert_null(WildRules.horde_leader([a]), "a lone wild Spirling leads nothing")
+	assert_eq(WildRules.horde_leader([a, b]), b)
+	assert_eq(WildRules.horde_leader([b, BattleFixtures.make("Mossling", 9)]), b, "the first on a tie")
+	var m: BattleModel = BattleFixtures.model([BattleFixtures.make("Kindlop", 10)] as Array[Spirling], [a, b] as Array[Spirling], true)
+	m._events = []
+	m._horde_wavers()
+	assert_eq(m.active_spirling(BattleModel.Side.FOE, 0).stage("atk"), -1)
+	assert_not_null(BattleFixtures.first_of(m._events, BattleEvent.Type.SHOP_EDGE))
