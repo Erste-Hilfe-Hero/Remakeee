@@ -108,7 +108,8 @@ const FIELDS: Dictionary[String, Dictionary] = {
 }
 
 ## Element reactions: a move of "element" that hits a foe with "status" hits harder ("mult"),
-## washes the status away after the hit ("cure") and/or moves a stage of the foe ("stage").
+## washes the status away after the hit ("cure"), then may give it a new one ("inflict"),
+## and/or moves a stage of the foe ("stage").
 ## At most one reaction per hit: the first row that fits wins, and no two rows share a pair.
 const REACTIONS: Array[Dictionary] = [
 	{"element": "VOLT", "status": "soak", "mult": 1.2, "text": "The charge races through the soaked %s!"},
@@ -116,6 +117,8 @@ const REACTIONS: Array[Dictionary] = [
 	{"element": "STONE", "status": "jolt", "mult": 1.1, "cure": true, "text": "The stone grounds the charge in %s!"},
 	{"element": "GALE", "status": "soak", "cure": true, "stage": {"spd": -1}, "text": "The gust blows %s dry, and it slows down!"},
 	{"element": "LUMEN", "status": "drowse", "mult": 1.3, "cure": true, "text": "The light startles %s awake!"},
+	# KAMPF_PLAN_1000 item 97: fire frees a Rooted foe, but sets it alight ("inflict" after the cure).
+	{"element": "EMBER", "status": "root", "cure": true, "inflict": "scorch", "text": "The flames burn the roots off %s, and it catches fire!"},
 ]
 
 ## The reaction a [param move] sets off on [param target], or {}.
