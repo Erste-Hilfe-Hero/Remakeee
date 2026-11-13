@@ -2796,7 +2796,7 @@ func _action_rift_tower(args: PackedStringArray, _speaker: NPC) -> void:
 	while cleared < RiftTower.floors(t):
 		await say([run.floor_card(cleared)] as Array[String])
 		var info: Dictionary = {"name": Gauntlet.new(run.seed_value, 1).echo_name(cleared), "ai": RiftTower.ai_for(cleared),
-			"money": run.prize(cleared), "shade": RiftTower.shade(t, cleared), "variants": run.variants_for(cleared)}
+			"money": run.prize(cleared), "shade": RiftTower.shade(t, cleared), "variants": run.variants_for(cleared), "theme": "tower"}
 		busy = false
 		var outcome: BattleModel.Outcome = await start_battle(run.team(cleared), false, info)
 		busy = true
@@ -2849,7 +2849,7 @@ func _run_endless() -> void:
 	var k: int = 0
 	while true:
 		await say([Loc.t("Endless floor %d: ring %d.") % [k + 1, run.endless_level(k)]] as Array[String])
-		var info: Dictionary = {"name": run.echo_name(Gauntlet.FLOORS + k), "ai": 3, "money": run.prize(Gauntlet.FLOORS)}
+		var info: Dictionary = {"name": run.echo_name(Gauntlet.FLOORS + k), "ai": 3, "money": run.prize(Gauntlet.FLOORS), "theme": "tower"}
 		# The stair and the endless stretch are one tower of 100 floors (plan 1101, 1102).
 		var tf: int = EchoTower.tower_floor(k)
 		var foes: Array[Spirling] = run.endless_team(k)
@@ -2919,7 +2919,7 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	var wins: int = 0
 	var turns_total: int = 0
 	while wins < WeeklyChallenge.ROUNDS:
-		var info: Dictionary = {"name": "Weekly Echo %d" % (wins + 1), "ai": 3, "rule": ch.rule, "field": ch.field, "variants": ch.variant_ids()}
+		var info: Dictionary = {"name": "Weekly Echo %d" % (wins + 1), "ai": 3, "rule": ch.rule, "field": ch.field, "variants": ch.variant_ids(), "theme": "echo"}
 		busy = false
 		var outcome: BattleModel.Outcome = await start_battle(ch.team(wins), false, info)
 		busy = true
@@ -3809,7 +3809,7 @@ func echo_duel(d: Dictionary) -> void:
 	# The rule of the week holds in echo duels too, the same for everyone (KAMPF_PLAN_1000).
 	var outcome: BattleModel.Outcome = await start_battle(foes, false,
 		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
-			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi)})
+			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi), "theme": "duel"})
 	busy = true
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN
@@ -3838,7 +3838,7 @@ func league_battle(m: Dictionary) -> void:
 	foes.assign(model.parties[1])
 	await say(["A rival's echo steps into the league ring."] as Array[String])
 	busy = false
-	var outcome: BattleModel.Outcome = await start_battle(foes, false, {"name": "League rival", "model": model, "friendly": true})
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, {"name": "League rival", "model": model, "friendly": true, "theme": "duel"})
 	busy = true
 	player.frozen = true
 	var kind: String = "league_" + str(m.get("league", LeagueRules.FAIR))
@@ -3935,7 +3935,9 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	scene.backdrop = str(trainer.get("backdrop", worn if not worn.is_empty() else map.backdrop))
 	scene.backdrop_shade = float(trainer.get("shade", 0.0))
 	scene.outdoor = map.outdoor
-	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
+	# Night, festival and challenge themes (KAMPF_PLAN_1000 713-717); a Warden keeps its own.
+	scene.music_track = BattleAudio.theme(str(trainer.get("theme", "")), bool(trainer.get("warden", false)), not Festival.active().is_empty(),
+		map.outdoor and GameState.day_night and DayCycle.current() == DayCycle.Phase.NIGHT)
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0

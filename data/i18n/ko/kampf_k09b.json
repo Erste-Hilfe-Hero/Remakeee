@@ -1,0 +1,9 @@
+{
+ "_comment": "ko translation of the kampf_k09b table, keyed by the English text.",
+ "strings": {
+  "Damage numbers: %s": "피해 숫자: %s",
+  "Shows the damage of each hit as a number over the Spirling.": "공격마다 피해를 Spirling 위에 숫자로 보여 줍니다.",
+  "Star of the battle: %s": "이번 전투의 스타: %s",
+  "Take a photo": "사진 찍기"
+ }
+}

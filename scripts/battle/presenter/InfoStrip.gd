@@ -46,6 +46,11 @@ var _time: float = 0.0
 var color_blind: bool = false
 var max_hp: int = 1
 var energy: int = 0
+## Energy pip animation (KAMPF_PLAN_1000 674): the pips before the last change and how far the
+## pop (gain) or fade (spend) still has to go, 1 -> 0.
+var pip_from: int = 0
+var pip_pulse: float = 0.0
+var _pip_tween: Tween
 var spirling_name: String = ""
 ## Element symbols drawn after the name (shape, not colour, tells them apart).
 var elements: Array[int] = []
@@ -177,8 +182,26 @@ func animate_hp(hp: int, new_max: int = -1) -> void:
 	await tw.finished
 
 func set_energy(value: int) -> void:
+	if value != energy and is_inside_tree() and not Juice.reduced():
+		pip_from = energy
+		if _pip_tween != null and _pip_tween.is_valid():
+			_pip_tween.kill()
+		_pip_tween = create_tween()
+		_pip_tween.tween_method(func(v: float) -> void:
+			pip_pulse = v
+			queue_redraw(), 1.0, 0.0, float((BattleShow.cfg().get("energy_pips", {}) as Dictionary).get("time", 0.35)) / speed_scale)
 	energy = value
 	queue_redraw()
+
+## Look of pip [param i] (674): {"fill": filled, "alpha": fill strength, "grow": extra pixels}.
+## A gained pip pops one pixel bigger and settles, a spent one fades out from full.
+static func pip_look(i: int, now: int, from: int, pulse: float) -> Dictionary:
+	if i < now:
+		var gained: bool = i >= from and pulse > 0.0
+		return {"fill": true, "alpha": 1.0, "grow": 1 if gained and pulse > 0.5 else 0}
+	if i < from and pulse > 0.0:
+		return {"fill": true, "alpha": pulse, "grow": 0}
+	return {"fill": false, "alpha": 1.0, "grow": 0}
 
 func set_status(value: String) -> void:
 	status = value
@@ -309,8 +332,11 @@ func _draw() -> void:
 	var pips: int = maxi(Spirling.MAX_ENERGY, energy)
 	for i: int in pips:
 		var r := Rect2(i * (pip + 1.0), row3 + floorf((row3_h - pip) / 2.0), pip, pip)
-		if i < energy:
-			draw_rect(r, ENERGY_ON)
+		var look: Dictionary = pip_look(i, energy, pip_from, pip_pulse)
+		if bool(look.fill):
+			if float(look.alpha) < 1.0:
+				draw_rect(r, UITheme.MID, false, 1.0)
+			draw_rect(r.grow(float(look.grow)), Color(ENERGY_ON, float(look.alpha)))
 		else:
 			draw_rect(r, UITheme.MID, false, 1.0)
 	var limit: float = w
