@@ -173,3 +173,55 @@ static func horde_leader(foes: Array) -> Spirling:
 		if f.level > best.level:
 			best = f
 	return best
+
+## Wild surprise: now and then a wild Spirling gets the jump and strikes before your arts in the
+## first turn (more often at night). Seeded from the battle seed, so it uses no game RNG.
+const SURPRISE_LINE: String = "The wild %s takes you by surprise!"
+
+static func surprise(battle_seed: int, phase: int) -> bool:
+	var r := RandomNumberGenerator.new()
+	r.seed = battle_seed ^ 0x5a17
+	var chance: float = float(data().get("surprise_chance", 0.0))
+	if phase == DayCycle.Phase.NIGHT:
+		chance *= float(data().get("surprise_night_mult", 1.0))
+	return r.randf() < chance
+
+## Elder wild Spirlings (endgame, after Act I): rare old ones of their kind with more rings and
+## bright sparks, and more growth. Marked with ELDER_META for the battle's opening line.
+const ELDER_META: StringName = &"wild_elder"
+const ELDER_LINE: String = "This %s is ancient, scarred by many seasons!"
+
+static func roll_elder(wild: Spirling, act1_done: bool, rng: RandomNumberGenerator) -> bool:
+	if wild == null or not act1_done:
+		return false
+	var r := RandomNumberGenerator.new()
+	r.seed = rng.state ^ 0xe1de
+	if r.randf() >= float(data().get("elder_chance", 0.0)):
+		return false
+	make_elder(wild)
+	return true
+
+static func make_elder(wild: Spirling) -> void:
+	wild.level = mini(Spirling.LEVEL_SANITY, wild.level + int(data().get("elder_rings", 0)))
+	wild.xp = Spirling.xp_for_level(wild.level)
+	var floor_spark: int = int(data().get("elder_spark", 0))
+	for key: String in Spirling.STAT_KEYS:
+		wild.spark[key] = clampi(maxi(int(wild.spark.get(key, 0)), floor_spark), 0, Spirling.SPARK_MAX)
+	wild.hp = wild.max_hp()
+	wild.set_meta(ELDER_META, true)
+
+static func is_elder(s: Spirling) -> bool:
+	return s != null and s.has_meta(ELDER_META)
+
+## Growth factor of a battle against an elder.
+static func elder_growth(foes: Array) -> float:
+	for s: Variant in foes:
+		if s is Spirling and is_elder(s):
+			return float(data().get("elder_growth_mult", 1.0))
+	return 1.0
+
+## Fog limits sight: wild battles under a foggy sky miss more often (both sides).
+const FOG_LINE: String = "The fog is thick: arts miss more often."
+
+static func sight_mult(sky: String) -> float:
+	return float((data().get("sight", {}) as Dictionary).get(sky, 1.0))

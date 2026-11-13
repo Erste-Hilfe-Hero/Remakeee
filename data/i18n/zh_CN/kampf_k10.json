@@ -63,6 +63,10 @@
   "Wins: %d": "胜利：%d",
   "World goal boost: %d battles left.": "世界目标加成：还剩%d场战斗。",
   "Your Spirlings grow faster for the next %d battles.": "接下来%d场战斗中，你的Spirling成长更快。",
-  "| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (normal) | Story |": "| 环 | 到达所需成长 | 到下一环 | 到下一环的同级野生战斗（普通） | 故事 |"
+  "| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (normal) | Story |": "| 环 | 到达所需成长 | 到下一环 | 到下一环的同级野生战斗（普通） | 故事 |",
+  "%s's %s spark brightens.": "{0}的{1}火花变亮了。",
+  "The wild %s takes you by surprise!": "野生的%s突然袭来！",
+  "This %s is ancient, scarred by many seasons!": "这只%s历经无数季节，古老而沧桑！",
+  "The fog is thick: arts miss more often.": "大雾弥漫：招式更容易落空。"
  }
 }

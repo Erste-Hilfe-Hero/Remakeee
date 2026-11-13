@@ -173,6 +173,15 @@ var bench_growth: int = 0
 var growth_by: Dictionary = {}
 ## Echo calls the player made this battle (WildRules bond statistics).
 var bond_tries: int = 0
+## Spark training from battle (GrowthRules.battle_spark): chance per fighter and fallen foe; 0 off.
+var battle_spark_chance: float = 0.0
+## Wild surprise (WildRules.surprise): the wild side's arts go first in the first turn.
+var wild_surprise: bool = false
+## Accuracy factor of a wild battle under a foggy sky (WildRules.sight_mult); 1 = clear.
+var sight_mult: float = 1.0
+## Priority the surprising wild side gains in the first turn.
+const SURPRISE_PRIORITY: int = 10
+var _spark_rng: RandomNumberGenerator = null
 ## True once the Rift boss has entered its second phase.
 var boss_phase_done: bool = false
 ## Late boss phases (BossRules.LATE_PHASES) already reached.
@@ -472,6 +481,7 @@ func start() -> Array[BattleEvent]:
 		if slot == _partner_slot:
 			emit_event(BattleEvent.Type.PARTNER, {"side": Side.PLAYER, "slot": slot, "partner": partner_name})
 		emit_event(BattleEvent.Type.SEND_OUT, _who(Side.PLAYER, slot))
+	_wild_opening(foe)
 	if BattleRules.BOSSES.has(foe_boss):
 		var b: Dictionary = BattleRules.BOSSES[foe_boss]
 		emit_event(BattleEvent.Type.BOSS, {"side": Side.FOE, "slot": 0, "boss": foe_boss, "label": str(b.label), "text": str(b.text),
@@ -1042,6 +1052,8 @@ func _sort_key(a: BattleAction, tie: float) -> Vector4:
 	if a.kind == BattleAction.Kind.MOVE and a.actor != null and a.move_index < a.actor.moves.size():
 		prio = a.actor.moves[a.move_index].priority
 	var spd: int = int(a.actor.effective_spd() * ShopEffects.seal_speed_mult(int(seals[a.side][2]))) if a.actor != null else 0
+	if wild_surprise and is_wild and turn == 0 and a.side == Side.FOE and a.kind == BattleAction.Kind.MOVE:
+		prio += SURPRISE_PRIORITY
 	# Warden rule Night Dark: Pace stays hidden in the dark, the seeded tiebreak decides.
 	if BattleRules.rule_number(foe_rule, "hidden_order") > 0.0:
 		spd = 0
@@ -1399,7 +1411,7 @@ func _do_move(a: BattleAction) -> void:
 			continue
 		if TechniqueRules.blocks_hit(self, target_side, t_slot, target, mv):
 			continue
-		var acc: float = mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult")
+		var acc: float = mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult") * (sight_mult if is_wild else 1.0)
 		var marked: bool = mv.is_damaging() and StatusRules.sure_hit(target.status)
 		if marked:
 			acc = 1.0
@@ -1909,6 +1921,17 @@ func _items_allowed_for(side: int, slot: int = 0) -> bool:
 func _is_battle_item(id: String) -> bool:
 	return bool(Database.item(id).get("battle", false))
 
+## Opening lines of a wild battle: an elder, a surprise, fog (WildRules).
+func _wild_opening(foe: Spirling) -> void:
+	if not is_wild or foe == null:
+		return
+	if WildRules.is_elder(foe):
+		emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.FOE, "text": WildRules.ELDER_LINE % foe.display_name()})
+	if wild_surprise:
+		emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.FOE, "text": WildRules.SURPRISE_LINE % foe.display_name()})
+	if sight_mult < 1.0:
+		emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.FOE, "text": WildRules.FOG_LINE})
+
 func _award_xp(foe: Spirling) -> void:
 	var total: float = float(foe.data.xp_yield) * float(foe.level) / XP_LEVEL_DIV
 	if not is_wild:
@@ -1924,6 +1947,14 @@ func _award_xp(foe: Spirling) -> void:
 	var share: int = maxi(1, int(total / earners.size()))
 	for s: Spirling in earners:
 		_give_xp(s, _scaled(share, foe, s))
+	if battle_spark_chance > 0.0 and total > 0.0:
+		if _spark_rng == null:
+			_spark_rng = RandomNumberGenerator.new()
+			_spark_rng.seed = battle_seed ^ 0x59a2
+		for s: Spirling in earners:
+			var line: String = GrowthRules.battle_spark(s, foe, battle_spark_chance, _spark_rng)
+			if not line.is_empty():
+				emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.PLAYER, "text": line})
 	if bench_share <= 0.0:
 		return
 	# Bench lessons: every healthy own Spirling that did not fight still learns a part.

@@ -822,6 +822,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain,
 					WildRules.event_mults(map.encounter_table, DailyFind.today_key()))
 				wild = ChallengeRules.reroll_wild(wild, map.encounter_table, GameState.rng)
+				WildRules.roll_elder(wild, GameState.has_flag(GameState.ACT1_END_FLAG), GameState.rng)
 				if wild != null:
 					GameState.gleam_chain = GleamRules.next_chain(GameState.gleam_chain, wild)
 			if wild != null:
@@ -4178,6 +4179,13 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		model.set_meta(BattleWeather.SKY_META, "wind")
 	# Echo duels fight a friend's echo, not the world: the pass adds no energy or Rift Breath there.
 	var world: bool = not (own is Array and not (own as Array).is_empty())
+	# Spark training from battle, wild surprises, elders and fog (GrowthRules, WildRules).
+	if world and not bool(trainer.get("practice", false)):
+		model.battle_spark_chance = GrowthRules.num("battle_spark_chance", 0.0)
+	if wild and world:
+		model.wild_surprise = WildRules.surprise(model.battle_seed, model.day_phase)
+		model.sight_mult = WildRules.sight_mult(WeatherCycle.current(map)) if map.outdoor else 1.0
+		model.xp_mult *= WildRules.elder_growth(foes)
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
 	model.seals = [ShopEffects.seals_for("story" if world else "echo"), [0, 0, 0]]
 	model.amulets = [ShopEffects.amulets_for("story" if world else "echo"), [0, 0, 0]]

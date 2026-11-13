@@ -63,6 +63,10 @@
   "Wins: %d": "Vittorie: %d",
   "World goal boost: %d battles left.": "Spinta dell'obiettivo mondiale: ancora %d lotte.",
   "Your Spirlings grow faster for the next %d battles.": "I tuoi Spirling crescono più in fretta nelle prossime %d lotte.",
-  "| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (normal) | Story |": "| Rango | Crescita per raggiungerlo | Fino al rango successivo | Lotte selvatiche pari fino al rango successivo (normale) | Storia |"
+  "| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (normal) | Story |": "| Rango | Crescita per raggiungerlo | Fino al rango successivo | Lotte selvatiche pari fino al rango successivo (normale) | Storia |",
+  "%s's %s spark brightens.": "La scintilla {1} di {0} si ravviva.",
+  "The wild %s takes you by surprise!": "%s selvatico ti coglie di sorpresa!",
+  "This %s is ancient, scarred by many seasons!": "Questo %s è antichissimo, segnato da molte stagioni!",
+  "The fog is thick: arts miss more often.": "La nebbia è fitta: le tecniche mancano più spesso."
  }
 }

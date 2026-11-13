@@ -1,5 +1,5 @@
 {
- "_doc": "Wild encounter and bond rules of the battle plan area 'Wild-Begegnungen und Bond' (docs/KAMPF_PLAN_1000.md). Read by scripts/overworld/WildRules.gd. bond_field: a field calms wild Spirlings, 'all' for every kind and an element name for kinds of that element; added to the bond chance like a charm and never shown as a number. prism_chain_step / prism_chain_max: each wild Spirling of the same kind met in a row (the Gleam chain) adds this share of the base Prism chance, up to max steps. night_rate: encounter rate factor outdoors at night (day and night on). weather_boost: elements that step out more often in this weather. held_chance: share of wild Spirlings that carry a keepsake (held_items, weight w); they keep it when they bond. lantern_rates: encounter rate for the Storm Lantern's setting dim / normal / bright (open it in the satchel, WildRules.lantern_mult). swarm_mult: weight factor of the day's swarm (one kind on one table, WildRules.swarm). weekly_mult: weight factor of each table's kind of the week (WildRules.weekly).",
+ "_doc": "Wild encounter and bond rules of the battle plan area 'Wild-Begegnungen und Bond' (docs/KAMPF_PLAN_1000.md). Read by scripts/overworld/WildRules.gd. bond_field: a field calms wild Spirlings, 'all' for every kind and an element name for kinds of that element; added to the bond chance like a charm and never shown as a number. prism_chain_step / prism_chain_max: each wild Spirling of the same kind met in a row (the Gleam chain) adds this share of the base Prism chance, up to max steps. night_rate: encounter rate factor outdoors at night (day and night on). weather_boost: elements that step out more often in this weather. held_chance: share of wild Spirlings that carry a keepsake (held_items, weight w); they keep it when they bond. lantern_rates: encounter rate for the Storm Lantern's setting dim / normal / bright (open it in the satchel, WildRules.lantern_mult). swarm_mult: weight factor of the day's swarm (one kind on one table, WildRules.swarm). weekly_mult: weight factor of each table's kind of the week (WildRules.weekly). surprise_chance / surprise_night_mult: share of wild battles where the wild Spirling strikes first in turn 1 (WildRules.surprise). elder_*: after Act I, a wild Spirling is now and then an elder: more rings, sparks at least elder_spark, growth x elder_growth_mult (WildRules.roll_elder). sight: accuracy factor of wild battles under that sky (fog limits sight).",
  "bond_field": {
   "pollen_drift": {"all": 0.03, "BLOOM": 0.08},
   "dawn_glow": {"LUMEN": 0.08},
@@ -15,6 +15,13 @@
  "lantern_rates": [0.5, 1.0, 1.5],
  "swarm_mult": 5,
  "weekly_mult": 3,
+ "surprise_chance": 0.06,
+ "surprise_night_mult": 2,
+ "elder_chance": 0.03,
+ "elder_rings": 8,
+ "elder_spark": 10,
+ "elder_growth_mult": 1.5,
+ "sight": {"fog": 0.9},
  "held_chance": 0.04,
  "held_items": [
   {"item": "pith_mend", "w": 4},

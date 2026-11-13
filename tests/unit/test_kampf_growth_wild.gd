@@ -364,3 +364,118 @@ func test_a_horde_has_a_leader_and_wavers_without_it() -> void:
 	m._horde_wavers()
 	assert_eq(m.active_spirling(BattleModel.Side.FOE, 0).stage("atk"), -1)
 	assert_not_null(BattleFixtures.first_of(m._events, BattleEvent.Type.SHOP_EDGE))
+
+# --- Batch 3: battle sparks, bond rings, wild surprise, elders, fog -----------------------
+
+func test_a_won_battle_can_raise_a_spark_in_the_foes_strongest_value() -> void:
+	var foe: Spirling = BattleFixtures.make("Mossling", 5)
+	var key: String = GrowthRules.spark_source(foe)
+	for k: String in Spirling.STAT_KEYS:
+		assert_true(foe.data.base_stat(key) >= foe.data.base_stat(k), "the strongest value")
+	var s: Spirling = BattleFixtures.make("Kindlop", 10)
+	s.spark[key] = 3
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 1
+	assert_eq(GrowthRules.battle_spark(s, foe, 0.0, rng), "", "no chance, no spark")
+	var line: String = GrowthRules.battle_spark(s, foe, 1.0, rng)
+	assert_eq(s.spark[key], 4)
+	assert_eq(line, "Kindlop's %s spark brightens." % key.to_upper())
+	s.spark[key] = Spirling.SPARK_MAX
+	assert_eq(GrowthRules.battle_spark(s, foe, 1.0, rng), "", "a full spark stays")
+	assert_eq(s.spark[key], Spirling.SPARK_MAX)
+	assert_between(GrowthRules.num("battle_spark_chance", 0.0), 0.01, 0.5)
+
+func test_battle_sparks_only_where_the_overworld_turns_them_on() -> void:
+	var foe: Spirling = BattleFixtures.make("Mossling", 5)
+	var key: String = GrowthRules.spark_source(foe)
+	var s: Spirling = BattleFixtures.make("Kindlop", 10)
+	s.spark[key] = 0
+	var m: BattleModel = BattleFixtures.model([s] as Array[Spirling], [foe] as Array[Spirling], true)
+	m.participants = [s] as Array[Spirling]
+	m._events = []
+	m._award_xp(foe)
+	assert_eq(s.spark[key], 0, "off by default (duels, sims, training ring)")
+	m.battle_spark_chance = 1.0
+	m._award_xp(foe)
+	assert_eq(s.spark[key], 1)
+	var lines: Array[String] = []
+	for e: BattleEvent in m._events:
+		if e.type == BattleEvent.Type.SHOP_EDGE and e.describe().contains("spark brightens"):
+			lines.append(e.describe())
+	assert_eq(lines.size(), 1)
+
+func test_bond_rings_swell_and_fade() -> void:
+	for i: int in BondRings.RINGS:
+		assert_eq(BondRings.ring_at(i, 0.0, 40.0).y, 0.0, "nothing before the start")
+		assert_eq(BondRings.ring_at(i, 1.0, 40.0).y, 0.0, "all faded at the end")
+	var early: Vector2 = BondRings.ring_at(0, 0.2, 40.0)
+	var later: Vector2 = BondRings.ring_at(0, 0.4, 40.0)
+	assert_gt(early.y, 0.0)
+	assert_gt(later.x, early.x, "the ring swells")
+	assert_true(SpirlingSprite.new().has_method("bond_rings"))
+
+func test_a_wild_surprise_strikes_first_in_the_first_turn() -> void:
+	var day: int = 0
+	var night: int = 0
+	for seed_value: int in 3000:
+		if WildRules.surprise(seed_value, DayCycle.Phase.DAY):
+			day += 1
+		if WildRules.surprise(seed_value, DayCycle.Phase.NIGHT):
+			night += 1
+	var chance: float = float(WildRules.data().get("surprise_chance", 0.0))
+	assert_between(day / 3000.0, chance * 0.6, chance * 1.4)
+	assert_gt(night, day, "more surprises at night")
+	assert_eq(WildRules.surprise(42, DayCycle.Phase.DAY), WildRules.surprise(42, DayCycle.Phase.DAY), "seeded")
+	var fast: Spirling = BattleFixtures.make("Kindlop", 40)
+	var slow: Spirling = BattleFixtures.make("Mossling", 2)
+	var m: BattleModel = BattleFixtures.model([fast] as Array[Spirling], [slow] as Array[Spirling], true)
+	m.start()
+	var mine: BattleAction = BattleAction.make_move(BattleModel.Side.PLAYER, 0)
+	var theirs: BattleAction = BattleAction.make_move(BattleModel.Side.FOE, 0)
+	mine.actor = fast
+	theirs.actor = slow
+	assert_gt(m._sort_key(mine, 0.5), m._sort_key(theirs, 0.5), "the faster side goes first")
+	m.wild_surprise = true
+	assert_gt(m._sort_key(theirs, 0.5), m._sort_key(mine, 0.5), "the surprising wild Spirling goes first")
+	m.turn = 1
+	assert_gt(m._sort_key(mine, 0.5), m._sort_key(theirs, 0.5), "only in the first turn")
+
+func test_elders_appear_only_after_act_one() -> void:
+	var rng := RandomNumberGenerator.new()
+	var found: int = 0
+	for i: int in 2000:
+		rng.seed = i
+		var w: Spirling = BattleFixtures.make("Mossling", 30)
+		assert_false(WildRules.roll_elder(w, false, rng), "never before the end of Act I")
+		if WildRules.roll_elder(w, true, rng):
+			found += 1
+	assert_between(found, 1, 300, "rare, but they come")
+	var e: Spirling = BattleFixtures.make("Mossling", 30)
+	WildRules.make_elder(e)
+	assert_true(WildRules.is_elder(e))
+	assert_eq(e.level, 30 + int(WildRules.data().get("elder_rings", 0)))
+	for k: String in Spirling.STAT_KEYS:
+		assert_true(int(e.spark[k]) >= int(WildRules.data().get("elder_spark", 0)))
+	assert_eq(e.hp, e.max_hp())
+	assert_gt(WildRules.elder_growth([e]), 1.0)
+	assert_eq(WildRules.elder_growth([BattleFixtures.make("Mossling", 30)]), 1.0)
+	var m: BattleModel = BattleFixtures.model([BattleFixtures.make("Kindlop", 40)] as Array[Spirling], [e] as Array[Spirling], true)
+	var lines: Array[String] = []
+	for ev: BattleEvent in m.start():
+		if ev.type == BattleEvent.Type.SHOP_EDGE:
+			lines.append(ev.describe())
+	assert_has(lines, WildRules.ELDER_LINE % e.display_name())
+
+func test_fog_limits_sight_in_wild_battles() -> void:
+	assert_lt(WildRules.sight_mult("fog"), 1.0)
+	assert_eq(WildRules.sight_mult(""), 1.0)
+	assert_eq(WildRules.sight_mult("rain"), 1.0)
+	var m: BattleModel = BattleFixtures.model([BattleFixtures.make("Kindlop", 10)] as Array[Spirling], [BattleFixtures.make("Mossling", 5)] as Array[Spirling], true)
+	m.sight_mult = WildRules.sight_mult("fog")
+	var lines: Array[String] = []
+	for ev: BattleEvent in m.start():
+		if ev.type == BattleEvent.Type.SHOP_EDGE:
+			lines.append(ev.describe())
+	assert_has(lines, WildRules.FOG_LINE)
+	var clear: BattleModel = BattleFixtures.model([BattleFixtures.make("Kindlop", 10)] as Array[Spirling], [BattleFixtures.make("Mossling", 5)] as Array[Spirling], true)
+	assert_null(BattleFixtures.first_of(clear.start(), BattleEvent.Type.SHOP_EDGE), "no opening line on a clear day")

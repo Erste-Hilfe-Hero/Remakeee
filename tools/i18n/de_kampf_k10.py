@@ -87,3 +87,10 @@ T.update({
 "The lantern burns: %s": "Die Laterne brennt: %s",
 })
 T.update({"The swarm wavers without its leader!": "Der Schwarm wankt ohne seinen Anführer!"})
+# Battle sparks, wild surprise, elders and fog (GrowthRules.battle_spark, WildRules)
+T.update({
+"%s's %s spark brightens.": "Der {1}-Funke von {0} wird heller.",
+"The wild %s takes you by surprise!": "%s springt dich überraschend an!",
+"This %s is ancient, scarred by many seasons!": "%s ist uralt und von vielen Jahreszeiten gezeichnet!",
+"The fog is thick: arts miss more often.": "Dichter Nebel: Techniken gehen öfter daneben.",
+})
