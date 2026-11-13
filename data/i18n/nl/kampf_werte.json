@@ -107,6 +107,9 @@
   "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Schok op een natte Spirling: het Nat spoelt weg en hij verliest zeker zijn volgende beurt.",
   "Statuses: %d on the foe, %d on your team": "Statussen: %d bij de tegenstander, %d in je team",
   "Team values": "Teamwaarden",
-  "The charge runs through the water: %s is jolted stiff!": "De lading loopt door het water: %s verstijft!"
+  "The charge runs through the water: %s is jolted stiff!": "De lading loopt door het water: %s verstijft!",
+  "Foe values": "Waarden van tegenstanders",
+  "No foe values yet. Every battle writes the foes down here.": "Nog geen waarden van tegenstanders. Elk gevecht schrijft ze hier op.",
+  "%s Ring %d: VIG %d  MGT %d  GRD %d  FOC %d  PCE %d": "%s Ring %d: KRA %d  MCH %d  SCH %d  FOC %d  TMP %d"
  }
 }

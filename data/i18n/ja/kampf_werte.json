@@ -107,6 +107,9 @@
   "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "ずぶぬれのSpirlingにしびれ：ずぶぬれは流れ落ち、次のターンはかならず動けない。",
   "Statuses: %d on the foe, %d on your team": "状態：相手に%d回、味方に%d回",
   "Team values": "チームの能力値",
-  "The charge runs through the water: %s is jolted stiff!": "電気が水を走った：%sはしびれて固まった！"
+  "The charge runs through the water: %s is jolted stiff!": "電気が水を走った：%sはしびれて固まった！",
+  "Foe values": "相手の能力値",
+  "No foe values yet. Every battle writes the foes down here.": "まだ相手の能力値はない。バトルのたびにここへ書きこまれる。",
+  "%s Ring %d: VIG %d  MGT %d  GRD %d  FOC %d  PCE %d": "%s リング%d: 活力 %d  腕%d  守%d  集%d  速%d"
  }
 }

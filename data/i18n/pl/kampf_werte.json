@@ -107,6 +107,9 @@
   "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Wstrząs na Spirlinga z Przemoczeniem: Przemoczenie znika, a on na pewno traci następną turę.",
   "Statuses: %d on the foe, %d on your team": "Stany: %d u wroga, %d w twojej drużynie",
   "Team values": "Wartości drużyny",
-  "The charge runs through the water: %s is jolted stiff!": "Ładunek biegnie przez wodę: %s sztywnieje!"
+  "The charge runs through the water: %s is jolted stiff!": "Ładunek biegnie przez wodę: %s sztywnieje!",
+  "Foe values": "Wartości wrogów",
+  "No foe values yet. Every battle writes the foes down here.": "Brak jeszcze wartości wrogów. Każda walka zapisuje je tutaj.",
+  "%s Ring %d: VIG %d  MGT %d  GRD %d  FOC %d  PCE %d": "%s Ranga %d: WIG %d  MOC %d  OSŁ %d  SKU %d  TEM %d"
  }
 }

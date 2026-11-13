@@ -113,4 +113,8 @@ T = {
 "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Schock auf einen Spirling mit Nässe: Die Nässe wird fortgespült, und er verliert sicher seinen nächsten Zug.",
 "Statuses: %d on the foe, %d on your team": "Status: %d beim Gegner, %d in deinem Team",
 "%s %d, Spark %d of %d": "%s %d, Funke %d von %d",
+# Batch 4
+"Foe values": "Gegnerwerte",
+"%s Ring %d: VIG %d  MGT %d  GRD %d  FOC %d  PCE %d": "%s Ring %d: KRA %d  WUC %d  SCH %d  FOK %d  TMP %d",
+"No foe values yet. Every battle writes the foes down here.": "Noch keine Gegnerwerte. Jeder Kampf trägt die Gegner hier ein.",
 }

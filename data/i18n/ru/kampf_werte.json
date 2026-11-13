@@ -107,6 +107,9 @@
   "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Разряд по промокшему Spirling: Промокание смывается, и он точно пропускает следующий ход.",
   "Statuses: %d on the foe, %d on your team": "Состояния: у врага %d, в твоей команде %d",
   "Team values": "Показатели команды",
-  "The charge runs through the water: %s is jolted stiff!": "Заряд бежит по воде: %s цепенеет!"
+  "The charge runs through the water: %s is jolted stiff!": "Заряд бежит по воде: %s цепенеет!",
+  "Foe values": "Показатели врагов",
+  "No foe values yet. Every battle writes the foes down here.": "Показателей врагов пока нет. Каждый бой записывает их сюда.",
+  "%s Ring %d: VIG %d  MGT %d  GRD %d  FOC %d  PCE %d": "%s Круг %d: БОД %d  МОЩ %d  СТК %d  ФОК %d  ТМП %d"
  }
 }

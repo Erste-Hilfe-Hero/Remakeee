@@ -107,6 +107,9 @@
   "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "젖은 Spirling에게 찌릿: 젖음은 씻겨 나가고 다음 턴은 반드시 쉰다.",
   "Statuses: %d on the foe, %d on your team": "상태: 상대에게 %d번, 우리 팀에 %d번",
   "Team values": "팀 능력치",
-  "The charge runs through the water: %s is jolted stiff!": "전기가 물을 타고 흐른다: %s은(는) 굳어 버렸다!"
+  "The charge runs through the water: %s is jolted stiff!": "전기가 물을 타고 흐른다: %s은(는) 굳어 버렸다!",
+  "Foe values": "상대 능력치",
+  "No foe values yet. Every battle writes the foes down here.": "아직 상대 능력치가 없다. 배틀마다 여기에 기록된다.",
+  "%s Ring %d: VIG %d  MGT %d  GRD %d  FOC %d  PCE %d": "%s 링 %d: 기력 %d  완력 %d 수비 %d 집중 %d 민첩 %d"
  }
 }
