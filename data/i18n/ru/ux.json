@@ -207,6 +207,12 @@
   "Ready to unfurl": "Готов раскрыться",
   "Seen %d/%d": "Видено %d/%d",
   "That name can't be used. Letters and up to 3 digits, at most 10 characters.": "Это имя нельзя использовать. Буквы и до 3 цифр, не больше 10 символов.",
-  "Use it at %s: face the spot and tap it.": "Используй в месте %s: повернись к точке и нажми на неё."
+  "Use it at %s: face the spot and tap it.": "Используй в месте %s: повернись к точке и нажми на неё.",
+  "Kind": "Вид",
+  "New": "Новые",
+  "Nothing to swap.": "Менять нечего.",
+  "Swap %s with whom?": "Кем заменить %s?",
+  "Swap with team...": "Сменить с командой...",
+  "seen": "встречен"
  }
 }
