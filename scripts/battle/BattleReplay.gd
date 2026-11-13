@@ -4,6 +4,11 @@ extends RefCounted
 ## player's inputs, so a replay stores only those and plays them back through a fresh model.
 ## The last battle is kept in GameState.records["last_battle"]; watching it changes nothing.
 
+## Version of the replay format (Kampf-Plan: replay format versioned). Raise it when a field is
+## added that changes how an old replay plays back; snapshots without "format" are format 1.
+## A replay from a newer format is refused with a message instead of playing out wrong.
+const FORMAT: int = 1
+
 ## Everything needed to rebuild [param model] as it is before start(). Call before the battle.
 static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
 	var snap: Dictionary = _snapshot(model, music, backdrop)
@@ -28,6 +33,7 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 
 static func _snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
 	return {
+		"format": FORMAT,
 		"seed": model.battle_seed,
 		"wild": model.is_wild,
 		"ai": model.ai.level,
@@ -103,6 +109,8 @@ static func _rebuild(team_d: Array) -> Array[Spirling]:
 ## Why [param snap] cannot be played back in this version, "" when it can (item 797): a rule
 ## variant this version doesn't know, or variants that don't go together.
 static func problem(snap: Dictionary) -> String:
+	if int(snap.get("format", 1)) > FORMAT:
+		return Loc.t("This replay comes from a newer version of the game.")
 	var ids: Array[String] = []
 	for v: Variant in snap.get("variants", []):
 		ids.append(str(v))
@@ -116,6 +124,24 @@ static func problem(snap: Dictionary) -> String:
 	if not BattleRules.variant_conflict(ids).is_empty():
 		return Loc.t("This replay's rule variants don't go together.")
 	return ""
+
+## Fields of a Spirling that are the player's own words or habits, not battle facts. They never
+## leave the device inside a shared replay (Kampf-Plan: battle logs without personal data).
+const PRIVATE_KEYS: Array[String] = ["nickname", "box", "favorite", "met_day"]
+
+## A copy of [param snap] to share: the same battle, without the PRIVATE_KEYS of any Spirling.
+static func shareable(snap: Dictionary) -> Dictionary:
+	var out: Dictionary = snap.duplicate(true)
+	var teams: Array = out.get("teams", [])
+	var partner: Dictionary = out.get("partner", {})
+	teams = teams + [partner.get("team", [])]
+	for team: Variant in teams:
+		if team is Array:
+			for s: Variant in team:
+				if s is Dictionary:
+					for k: String in PRIVATE_KEYS:
+						(s as Dictionary).erase(k)
+	return out
 
 ## Seal tiers [power, guard, speed] from a snapshot, clamped to the tiers the data knows.
 static func seal_row(v: Variant) -> Array:

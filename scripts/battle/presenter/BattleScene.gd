@@ -804,6 +804,7 @@ func _bond(slot: int = 0) -> BattleAction:
 		var state: String = BondEcho.rift_state(GameState.current_map, GameState.rifts_sealed)
 		_bond_plans[key] = BondEcho.make_plan(rng, foe.data, state)
 	var score: float = 0.0
+	_bond_game.calm = GameState.bond_style == "calm"
 	if mine:
 		score = await _bond_game.run_mine(_bond_plans[key])
 	else:

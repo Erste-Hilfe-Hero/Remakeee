@@ -3448,7 +3448,7 @@ func after_tamer_win(n: NPC) -> void:
 	# count once the referee replayed it.
 	if def.has("warden") and Online.flag_on("rift_board"):
 		Online.call_fn("battle_submit", {"p_kind": "rift", "p_ref": str(def.warden),
-			"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
+			"p_replay": BattleReplay.shareable(GameState.records.get("last_battle", {})), "p_claim": last_claim})
 	if def.has("defeat"):
 		await say(Dialogue.lines_for(Dialogue.get_entry(str(def.defeat)), GameState.flags))
 	if def.has("warden") and GameState.seal_rift(str(def.warden)):
@@ -3802,7 +3802,7 @@ func echo_duel(d: Dictionary) -> void:
 	Online.call_fn("echo_report", {"p_code": d.code, "p_kind": "duel", "p_won": won})
 	# The server's referee plays the duel again (plan area 7, item 2689).
 	Online.call_fn("battle_submit", {"p_kind": "echo_duel", "p_ref": str(d.code),
-		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
+		"p_replay": BattleReplay.shareable(GameState.records.get("last_battle", {})), "p_claim": last_claim})
 	await say(["You won the echo duel against %s!" % str(d.name) if won else "%s's echo won this time. Your team is fine." % str(d.name)] as Array[String])
 	busy = false
 	player.frozen = false
@@ -3828,7 +3828,7 @@ func league_battle(m: Dictionary) -> void:
 	player.frozen = true
 	var kind: String = "league_" + str(m.get("league", LeagueRules.FAIR))
 	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": kind, "p_ref": str(m.get("match_id", "")),
-		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
+		"p_replay": BattleReplay.shareable(GameState.records.get("last_battle", {})), "p_claim": last_claim})
 	var lines: Array[String] = ["You won the league battle!" if outcome == BattleModel.Outcome.WIN else "The rival won this league battle."]
 	if bool(m.get("pair_limit", false)):
 		lines.append("You met this rival 3 times today, so this battle does not count.")
@@ -3877,7 +3877,7 @@ func raid_battle(at: Dictionary) -> void:
 	for s: Spirling in model.parties[1]:
 		dealt += maxi(0, s.max_hp() - s.hp)
 	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": kind,
-		"p_ref": str(at.get("attempt_id", "")), "p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
+		"p_ref": str(at.get("attempt_id", "")), "p_replay": BattleReplay.shareable(GameState.records.get("last_battle", {})), "p_claim": last_claim})
 	var lines: Array[String] = [Loc.t("You dealt %d damage to the guardian.") % dealt]
 	if war:
 		lines = ["The tournament battle is over." if kind == "tourney" else "The war battle is over."]
