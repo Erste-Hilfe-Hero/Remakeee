@@ -131,7 +131,9 @@ func describe() -> String:
 		Type.PARTNER:
 			return "%s fights at your side!" % data.get("partner", "")
 		Type.BOSS:
-			return "%s: %s" % [data.get("label", ""), data.get("text", "")]
+			# How often it acts per turn stands on its own line (KAMPF_PLAN_1000 item 407).
+			var acts: int = int(data.get("actions", 1))
+			return "%s: %s" % [data.get("label", ""), data.get("text", "")] + ("\nIt acts %d times each turn." % acts if acts > 1 else "")
 		Type.SUPPORT:
 			return MultiRules.describe(data, who)
 		Type.FIELD_END:

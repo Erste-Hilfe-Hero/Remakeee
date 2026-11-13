@@ -267,7 +267,17 @@ static func ai_tier(def: Dictionary, difficulty_ai: int, difficulty: int = -1) -
 		tier = TAMER_WARDEN_AI if warden else TAMER_AI
 	if warden:
 		tier = maxi(tier, WARDEN_MIN_AI)
+	if def.has("boss"):
+		tier = maxi(tier, BOSS_MIN_AI)
 	return tier
+
+## Rift bosses never play below tier 2 (KAMPF_PLAN_1000 item 420).
+const BOSS_MIN_AI: int = 2
+## An ally Wayfarer plays tier 2 from Veteran on (item 456), PARTNER_AI below.
+const PARTNER_AI_VETERAN: int = 2
+
+static func partner_ai(difficulty: int) -> int:
+	return PARTNER_AI_VETERAN if difficulty >= GameState.Difficulty.VETERAN else PARTNER_AI
 
 const TAMER_AI: int = 1
 const TAMER_WARDEN_AI: int = 2
