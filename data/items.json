@@ -36,6 +36,16 @@
   "tradeable": true
  },
  {
+  "id": "rest_candle",
+  "name": "Rest Candle",
+  "description": "Restores 3 Energy to any Spirling of the team, also one waiting on the bench.",
+  "battle": true,
+  "energy": 3,
+  "energy_bench": true,
+  "price": 250,
+  "tradeable": false
+ },
+ {
   "id": "revival_leaf",
   "name": "Waking Moss",
   "description": "Wakes a fainted Spirling outside battle with a third of its Vigor.",
@@ -2406,6 +2416,67 @@
   "teaches": "Calm Veil",
   "any_element": true,
   "price": 4000,
+  "tradeable": false
+ },
+ {
+  "id": "energy_crystal",
+  "name": "Energy Crystal",
+  "description": "Keepsake. The holder starts every battle with 2 extra Energy.",
+  "battle": false,
+  "held": {
+   "start_energy": 2
+  },
+  "price": 1500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_long_breath",
+  "name": "Echo Crystal: Long Breath",
+  "description": "Teaches Long Breath to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Long Breath",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_spark_share",
+  "name": "Echo Crystal: Spark Share",
+  "description": "Teaches Spark Share to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Spark Share",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_charge_mirror",
+  "name": "Echo Crystal: Charge Mirror",
+  "description": "Teaches Charge Mirror to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Charge Mirror",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_fuse_snap",
+  "name": "Echo Crystal: Fuse Snap",
+  "description": "Teaches Fuse Snap to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Fuse Snap",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_scrap_swipe",
+  "name": "Echo Crystal: Scrap Swipe",
+  "description": "Teaches Scrap Swipe to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Scrap Swipe",
+  "any_element": true,
+  "price": 3000,
   "tradeable": false
  },
  {

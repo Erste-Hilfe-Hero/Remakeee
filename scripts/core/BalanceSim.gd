@@ -235,7 +235,7 @@ static func run_team(level: int, battles: int, seed_value: int, ai_level: int = 
 	var double_kos: int = 0
 	var total_turns: int = 0
 	# Lambdas capture ints by value, so the counters live in a Dictionary.
-	var tally: Dictionary = {"rests": 0, "actions": 0}
+	var tally: Dictionary = {"rests": 0, "actions": 0, "arts": 0, "spent": 0}
 	var fx: Dictionary = new_effects()
 	# Arts used per side in the current battle, booked as wins once the winner is known (item 816).
 	var uses: Array[Dictionary] = [{}, {}]
@@ -266,6 +266,11 @@ static func run_team(level: int, battles: int, seed_value: int, ai_level: int = 
 				var el: String = Elements.element_name(int(e.data.get("element", 0)))
 				elements[el] = int(elements.get(el, 0)) + 1
 				tally.actions += 1
+				# Energy the art costs on its own (KAMPF_PLAN items 61, 80).
+				var paid: MoveData = Database.move(mv)
+				if paid != null:
+					tally.arts += 1
+					tally.spent += paid.energy_cost
 			elif e.type == BattleEvent.Type.REST:
 				tally.rests += 1
 				tally.actions += 1)
@@ -303,12 +308,16 @@ static func run_team(level: int, battles: int, seed_value: int, ai_level: int = 
 	return {"species": species, "moves": moves, "elements": elements, "battles": battles, "draws": draws, "double_kos": double_kos,
 		"avg_turns": float(total_turns) / maxf(battles, 1), "level": level, "mode": "team", "ai": ai_level,
 		"rest_share": float(tally.rests) / maxf(int(tally.actions), 1),
+		"energy_per_art": float(tally.spent) / maxf(int(tally.arts), 1),
 		"status_hits": fx.hits, "status_turns": fx.lasts, "reactions": fx.reactions}
 
 # --- Status and reaction tallies (plan area 2, items 825, 826) ------------------------------
 
 ## Target band of the rest share in team mode (item 823).
 const REST_BAND: Vector2 = Vector2(0.10, 0.25)
+## Target band of the mean Energy cost of the arts picked in team mode (KAMPF_PLAN item 61): below
+## it only cheap arts are worth it, above it Rest crowds out play.
+const ENERGY_PER_ART_BAND: Vector2 = Vector2(1.5, 4.0)
 
 ## Empty tallies: hits {art: {tries, landed}}, lasts {status: {count, turns}},
 ## reactions {"Volt on soak": count}, open {"side:index": [status, turn]} (statuses still on).
@@ -361,6 +370,11 @@ static func _close_status(fx: Dictionary, key: String, turn: int) -> void:
 	row.count += 1
 	row.turns += maxi(1, turn - int(on[1]))
 	fx.lasts[str(on[0])] = row
+
+## The Energy line of a team report (KAMPF_PLAN items 61, 80), flagged outside ENERGY_PER_ART_BAND.
+static func energy_line(per_art: float) -> String:
+	var inside: bool = per_art >= ENERGY_PER_ART_BAND.x and per_art <= ENERGY_PER_ART_BAND.y
+	return "Energy per art picked: %.1f%s." % [per_art, "" if inside else " (outside the target band %.1f to %.1f)" % [ENERGY_PER_ART_BAND.x, ENERGY_PER_ART_BAND.y]]
 
 ## The status, reaction and rest sections of a team report (items 823, 825, 826).
 static func effects_report(result: Dictionary) -> PackedStringArray:
@@ -442,6 +456,9 @@ static func report(result: Dictionary, high: float = 0.65, low: float = 0.35) ->
 		var rs: float = float(result.rest_share)
 		lines.append("Rest share of all actions: %d%%%s." % [roundi(rs * 100.0), "" if rs >= REST_BAND.x and rs <= REST_BAND.y
 			else " (outside the target band %d%% to %d%%)" % [roundi(REST_BAND.x * 100.0), roundi(REST_BAND.y * 100.0)]])
+		lines.append("")
+	if result.has("energy_per_art"):
+		lines.append(energy_line(float(result.energy_per_art)))
 		lines.append("")
 	lines.append_array(effects_report(result))
 	if result.has("elements"):
