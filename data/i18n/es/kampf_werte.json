@@ -107,6 +107,9 @@
   "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Calambre sobre un Spirling Empapado: el Empapado se va y pierde seguro su siguiente turno.",
   "Statuses: %d on the foe, %d on your team": "Estados: %d en el rival, %d en tu equipo",
   "Team values": "Valores del equipo",
-  "The charge runs through the water: %s is jolted stiff!": "¡La carga corre por el agua: %s se queda rígido!"
+  "The charge runs through the water: %s is jolted stiff!": "¡La carga corre por el agua: %s se queda rígido!",
+  "Foe values": "Valores de los rivales",
+  "No foe values yet. Every battle writes the foes down here.": "Aún no hay valores de rivales. Cada combate los anota aquí.",
+  "%s Ring %d: VIG %d  MGT %d  GRD %d  FOC %d  PCE %d": "%s Rango %d: VIG %d  FUE %d  GUA %d  ENF %d  RIT %d"
  }
 }

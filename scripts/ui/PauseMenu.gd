@@ -518,7 +518,8 @@ func run_lexicon() -> void:
 	# The first page counts the bonus goals met per map (item 767).
 	# The second page is the Wayfarer book: rankings and the lantern post (KAMPF plan 529-542).
 	# The third page lists the matchups seen in battle (KAMPF_PLAN_1000 items 81, 83).
-	var titles: Array[String] = [Loc.t("Bonus goals"), Loc.t("Wayfarer book"), Loc.t("Matchups seen")]
+	# The fourth page lists the foes' values from past battles (KAMPF_PLAN_1000 item 215).
+	var titles: Array[String] = [Loc.t("Bonus goals"), Loc.t("Wayfarer book"), Loc.t("Matchups seen"), Loc.t("Foe values")]
 	for id: String in ids:
 		titles.append(Lexicon.title(id))
 	while true:
@@ -531,10 +532,12 @@ func run_lexicon() -> void:
 			await info(WayfarerBook.page(DailyFind.today_key()))
 		elif i == 2:
 			await info("\n".join(TechniqueRules.matchup_lines(GameState.known_matchups)))
+		elif i == 3:
+			await info("\n".join(Lexicon.foe_lines(GameState.records)))
 		else:
-			var page: String = Loc.t(Lexicon.text(ids[i - 3]))
+			var page: String = Loc.t(Lexicon.text(ids[i - 4]))
 			# The bond page carries the live counts (KAMPF_PLAN "Bond-Statistik im Lexikon").
-			if ids[i - 3] == WildRules.BOND_LEXICON:
+			if ids[i - 4] == WildRules.BOND_LEXICON:
 				page += "\n\n" + "\n".join(WildRules.bond_lines(GameState.records))
 			await info(page)
 

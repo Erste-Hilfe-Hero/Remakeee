@@ -4249,6 +4249,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	ChallengeRules.note_result(outcome == BattleModel.Outcome.WIN, _warden_battle)
+	Lexicon.note_foes(GameState.records, model.parties[1])
 	for id: String in GrowthRules.after_battle(GameState.records, map.region, model.growth_total, model.bench_growth) + WildRules.after_battle(GameState.records, model):
 		toast.show_note(Loc.t("New lexicon entry: %s") % Loc.t(Lexicon.title(id)))
 	# Who got how much growth (KAMPF_PLAN "XP-Verteilung im Kampfende-Bericht").

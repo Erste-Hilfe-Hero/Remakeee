@@ -257,12 +257,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 207. [x] KI baut Stufen nur auf, wenn sie sicher ist (umgesetzt in Meister-KI) (BattleAI Stufe 3)
 208. [x] Stufen-Warnung, wenn ein Gegner +2 ATK hat (STAT_CHANGED warn)
 209. [x] Spark-Werte (bestehend) im Statusbildschirm als Balken (ValueChart im Werte-Reiter (ab Ära III))
-210. [ ] Spark-Training durch Kämpfe gegen bestimmte Arten
+210. [x] Spark-Training durch Kämpfe gegen bestimmte Arten (bestehend: GrowthRules.battle_spark, Funke im stärksten Wert der besiegten Art)
 211. [x] Spark-Reset-Gegenstand (Spark Flux, GameState.reroll_sparks)
 212. [x] Temperament (bestehend) im Kampf-Info zeigen (Wechsel-Liste, BattleGuide.compare_line)
 213. [x] Werte-Rechner im Lexikon (Lv, Spark, Temperament) (Kampfhandbuch Werte, BattleGuide.calc)
 214. [x] Werte-Vergleich beim Einwechseln (BattleGuide.compare_line)
-215. [ ] Werte-Ansicht der Gegner nach dem Kampf im Lexikon
+215. [x] Werte-Ansicht der Gegner nach dem Kampf im Lexikon (Lexikon-Seite Gegnerwerte, Lexicon.note_foes)
 216. [x] Krit-Chance 1/12 und x1.4 fix (Originalitätszahl) (test_kampf_werte)
 217. [x] Krit-Stufen durch gehaltene Gegenstände (bestehend: crit_mult) (Whetstone keen_lens)
 218. [x] Genauigkeits-Stufen als eigene Werte prüfen (vielleicht nicht nötig) (bewusst nicht, BattleRules.STAGE_STATS)
@@ -285,7 +285,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 235. [x] Werte-Export für Fans (Teamcode) (Kampfhandbuch: Teamwerte kopieren (BattleGuide.team_values))
 236. [x] Werte-Vorschau bei Entwicklung (BattleGuide.unfold_preview)
 237. [x] Gleiche Werte-Formel für Spieler und Gegner (Fairness) (test_kampf_werte)
-238. [ ] Werte-Skalierung im Turnier 'Gleiches Level'
+238. [x] Werte-Skalierung im Turnier 'Gleiches Level' (bestehend: LeagueRules.fair_row skaliert jede Art auf Ring 50)
 239. [x] Werte-Prüfung im Balancing-Test (keine Art dominiert) (type_sim.py --strict)
 240. [x] Werte-Formel bleibt eigenständig (Regel) (Spirling.gd, DamageCalc.gd)
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-878 von 1000 Punkten umgesetzt.
+881 von 1000 Punkten umgesetzt.
 

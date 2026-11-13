@@ -208,3 +208,21 @@ func test_team_values_export() -> void:
 	assert_string_contains(lines[1], "Kindlop R30")
 	assert_string_contains(lines[1], "MGT %d" % a.atk())
 	assert_string_contains(lines[2], "Mossling R12")
+
+func test_foe_values_go_into_the_lexicon() -> void:
+	var rec: Dictionary = {}
+	assert_eq(Lexicon.foe_lines(rec).size(), 1, "a hint while nothing is noted")
+	var low: Spirling = BattleFixtures.make("Kindlop", 12)
+	var high: Spirling = BattleFixtures.make("Kindlop", 30)
+	var moss: Spirling = BattleFixtures.make("Mossling", 8)
+	Lexicon.note_foes(rec, [high, moss])
+	Lexicon.note_foes(rec, [low])
+	var book: Dictionary = rec[Lexicon.FOE_VALUES]
+	assert_eq(int(book["Kindlop"].level), 30, "the highest Ring stays")
+	assert_eq(int(book["Kindlop"].atk), high.atk())
+	assert_eq(int(book["Mossling"].hp), moss.max_hp())
+	var lines: Array[String] = Lexicon.foe_lines(rec)
+	assert_eq(lines.size(), 2)
+	assert_string_contains(lines[0], "Kindlop Ring 30")
+	assert_string_contains(lines[0], "MGT %d" % high.atk())
+	assert_string_contains(lines[1], "Mossling Ring 8")
