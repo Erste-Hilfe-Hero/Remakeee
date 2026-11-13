@@ -6,6 +6,10 @@ extends RefCounted
 const STAGE_MIN: int = -3
 const STAGE_MAX: int = 3
 const STAGE_STATS: Array[String] = ["atk", "def", "foc", "spd"]
+## Chimora keeps stages to these four on purpose (items 237, 238): no accuracy or evasion stages,
+## because a dodge stack only makes a fight long and frustrating. Pinned by test_stage_values.gd.
+## A foe whose Might reaches this stage gets a warning line (item 227).
+const STAGE_WARN: int = 2
 
 ## Overcharge moves: each leftover Energy point adds this much to the power multiplier.
 const OVERCHARGE_PER_ENERGY: float = 0.12
@@ -26,6 +30,8 @@ const WEARY_TURN: int = 40
 const HEAL_BLOCK_TURNS: int = 3
 ## After an energy_burn the target can't be burned again for this many turns.
 const BURN_GUARD_TURNS: int = 1
+## Turns a Calm Veil (status_veil effect, item 193) holds by default.
+const STATUS_VEIL_TURNS: int = 5
 
 ## Short tag for a snare, shown under the bench row: "SC" for a Scorch snare, "-SP" for a Pace
 ## drop, "HP" for a Vigor cut.
@@ -66,12 +72,22 @@ const TRAITS: Dictionary[String, Dictionary] = {
 	"slick": {"label": "Slick", "text": "Can't be Rooted.", "immune": ["root"]},
 	"light_sleeper": {"label": "Light Sleeper", "text": "Can't be Drowsed.", "immune": ["drowse"]},
 	"last_stand": {"label": "Last Stand", "text": "Its own element hits 30% harder below 1/3 Vigor.", "low_hp_boost": 1.3},
+	# Field gifts (KAMPF_PLAN_1000 item 339): field_proof keeps a field from weakening its arts,
+	# field_energy is Energy gained whenever a new Rift field is laid.
+	"field_strider": {"label": "Field Strider", "text": "A Rift field never weakens its arts.", "field_proof": true},
+	"echo_soul": {"label": "Echo Soul", "text": "Gains 2 Energy whenever a new Rift field is laid.", "field_energy": 2},
+	# Items 194, 195: contact_status/contact_chance pass a status on to a physical attacker,
+	# cure_on_swap drops its status when it steps back to the bench.
+	"glimmer_skin": {"label": "Glimmer Skin", "text": "A physical hit on it may Scorch whoever struck it (3 in 10).", "contact_status": "scorch", "contact_chance": 0.3},
+	"unruffled": {"label": "Unruffled", "text": "Its status falls away when it steps back to your side.", "cure_on_swap": true},
 }
 
 ## Rift fields. A map sets "field"; every battle there uses it. A Resonance move lays one for a
 ## few turns. Optional keys:
 ##   blocks:        statuses that can't take hold while the field lasts
 ##   regen_element: Spirlings of this element heal max_hp / regen_div at the end of each turn
+##   energy_element: Spirlings of this element gain energy_gain extra Energy at the end of each turn
+##   bond_bonus:    added to the bond chance of an Echo call while the field lasts
 const FIELDS: Dictionary[String, Dictionary] = {
 	"ash_storm": {"label": "Ash Storm", "boost": "EMBER", "weaken": "TIDE",
 		"intro": "Ash swirls through the Rift. Ember arts burn brighter, Tide arts sputter."},
@@ -79,12 +95,16 @@ const FIELDS: Dictionary[String, Dictionary] = {
 		"intro": "The water rises around you. Tide arts surge, Ember arts fizzle, and nothing catches fire."},
 	"deep_murk": {"label": "Deep Murk", "boost": "UMBRA", "weaken": "LUMEN",
 		"intro": "The hollow swallows the light. Umbra arts deepen, Lumen arts dim."},
-	"static_veil": {"label": "Static Veil", "boost": "VOLT", "weaken": "STONE",
+	"static_veil": {"label": "Static Veil", "boost": "VOLT", "weaken": "STONE", "energy_element": "VOLT", "energy_gain": 1,
 		"intro": "The air crackles. Volt arts snap harder, Stone arts crumble."},
 	"pollen_drift": {"label": "Pollen Drift", "boost": "BLOOM", "weaken": "GALE", "regen_element": "BLOOM", "regen_div": 16,
 		"intro": "Pollen drifts through the Rift. Bloom arts flourish and Bloom Spirlings mend, Gale arts stall."},
-	"dawn_glow": {"label": "Dawn Glow", "boost": "LUMEN", "weaken": "UMBRA",
+	"dawn_glow": {"label": "Dawn Glow", "boost": "LUMEN", "weaken": "UMBRA", "bond_bonus": 0.05,
 		"intro": "A pale dawn fills the Rift. Lumen arts shine, Umbra arts thin out."},
+	"rubble_rain": {"label": "Rubble Rain", "boost": "STONE", "weaken": "VOLT", "blocks": ["jolt"],
+		"intro": "Grit and pebbles patter down. Stone arts land heavier, Volt arts ground out, and no charge can build."},
+	"gale_eye": {"label": "Gale Eye", "boost": "GALE", "weaken": "BLOOM", "blocks": ["drowse"],
+		"intro": "The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off."},
 }
 
 ## Element reactions: a move of "element" that hits a foe with "status" hits harder ("mult"),
@@ -151,6 +171,15 @@ const RULES: Dictionary[String, Dictionary] = {
 	"dry_well": {"label": "Dry Well", "text": "The oasis has been sold dry: every heal on both sides is halved.", "heal_mult": 0.5,
 		"difficulty": [0, 1, 2, 3], "warden_only": true},
 	"high_noon": {"label": "High Noon", "text": "The sun stands straight overhead: Lumen arts on both sides hit harder.", "lumen_mult": 1.3,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	# KAMPF_PLAN_1000 item 409. "stages_locked": no stat stage moves on either side; "rest_cut":
+	# resting gives that much less Energy on both sides.
+	"still_air": {"label": "Still Air", "text": "Not a breath of wind: no stat stage rises or falls on either side.", "stages_locked": 1,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	"ebb": {"label": "Ebb", "text": "The water has run out: resting gives 1 Energy less on both sides.", "rest_cut": 1,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	# Item 210: "no_status" keeps every status off both sides (BattleModel.status_block).
+	"hushed_air": {"label": "Hushed Air", "text": "The air hangs dead still: no status takes hold on either side.", "no_status": 1,
 		"difficulty": [0, 1, 2, 3], "warden_only": true},
 }
 
@@ -273,6 +302,10 @@ static func stage_mult(stage: int) -> float:
 	var s: int = clampi(stage, STAGE_MIN, STAGE_MAX)
 	return (2.0 + s) / 2.0 if s >= 0 else 2.0 / (2.0 - s)
 
+## "Might +2: x2.00" (item 222): a stage and the factor it puts on the stat.
+static func stage_line(stat_label: String, stage: int) -> String:
+	return "%s %s%d: x%.2f" % [stat_label, "+" if stage > 0 else "", stage, stage_mult(stage)]
+
 static var _oath: Dictionary = {}
 
 ## The Ink Oath rules (data/ink_oath.json).
@@ -359,6 +392,8 @@ static func resolve_move(move: MoveData, field: String) -> MoveData:
 ## Damage multiplier from traits, held items, the field and status bonuses for one hit.
 static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field: String) -> float:
 	var m: float = field_mult(field, move.element)
+	if m < 1.0 and bool(ShopEffects.gift_table(user).get("field_proof", false)):
+		m = 1.0
 	m *= status_bonus(move, target)
 	m *= float(reaction(move, target).get("mult", 1.0))
 	if move.kind == MoveData.Kind.PHYSICAL:
@@ -396,7 +431,7 @@ static func stage_only(mv: MoveData) -> bool:
 	if mv.is_damaging() or mv.effects.is_empty():
 		return false
 	for fx: Dictionary in mv.effects:
-		if not StringName(fx.get("id", "")) in [&"stat_change", &"self_stage_after", &"stage_steal"]:
+		if not StringName(fx.get("id", "")) in [&"stat_change", &"self_stage_after", &"stage_steal", &"stage_copy", &"stage_swap"]:
 			return false
 	return true
 

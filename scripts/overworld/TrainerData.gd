@@ -9,6 +9,7 @@ extends RefCounted
 ##   "front": [player, foe]   how many fight at once on each side (e.g. [4, 1], [3, 3]; max 4)
 ##   "partner": {"name": "Cartographer Kestra", "team": [...], "front": 1}   an ally Wayfarer beside you
 ##   "boss": "ashen_heart"    the foe in front is a Rift boss (BattleRules.BOSSES)
+##   "formation": true        the foe side gets the formation bonus too (MultiRules, data/multi_rules.json)
 ##   "wild": true             a wild horde: no Wayfarer, so the Echo call (Bond) and Run work
 ## Battles always start from the overworld and cut to the separate battle screen.
 ## Plan area 2 (items 612, 638, 639) adds:
@@ -266,7 +267,17 @@ static func ai_tier(def: Dictionary, difficulty_ai: int, difficulty: int = -1) -
 		tier = TAMER_WARDEN_AI if warden else TAMER_AI
 	if warden:
 		tier = maxi(tier, WARDEN_MIN_AI)
+	if def.has("boss"):
+		tier = maxi(tier, BOSS_MIN_AI)
 	return tier
+
+## Rift bosses never play below tier 2 (KAMPF_PLAN_1000 item 420).
+const BOSS_MIN_AI: int = 2
+## An ally Wayfarer plays tier 2 from Veteran on (item 456), PARTNER_AI below.
+const PARTNER_AI_VETERAN: int = 2
+
+static func partner_ai(difficulty: int) -> int:
+	return PARTNER_AI_VETERAN if difficulty >= GameState.Difficulty.VETERAN else PARTNER_AI
 
 const TAMER_AI: int = 1
 const TAMER_WARDEN_AI: int = 2

@@ -5,7 +5,7 @@ extends GutTest
 const T := BattleEvent.Type
 const ARTS: Array[String] = ["Hold Fast", "Shove Off", "Grudge Return", "Kindred Balm", "Rank and File",
 	"Shake Loose", "Rolling Drum", "Late Reply", "Opening Gambit", "Pebble Hail", "Rift Hush", "Bright Lure",
-	"Close Ranks", "Ember Afterglow", "Mirror Stance", "Still Point", "Ground Burst", "Dye Bath", "Ward Circle"]
+	"Close Ranks", "Ember Afterglow", "Borrowed Stance", "Still Point", "Ground Burst", "Dye Bath", "Ward Circle"]
 
 func before_all() -> void:
 	Database.load_all()
@@ -290,7 +290,7 @@ func test_kindred_balm_heals_the_most_hurt_ally() -> void:
 	a.hp = a.max_hp() / 2
 	b.hp = b.max_hp() / 4
 	_apply(m, "Kindred Balm")
-	assert_eq(b.hp, b.max_hp() / 4 + int(b.max_hp() * 0.4), "the ally, not the user")
+	assert_eq(b.hp, b.max_hp() / 4 + roundi(b.max_hp() * 0.33), "the ally, not the user")
 	assert_eq(a.hp, a.max_hp() / 2)
 
 func test_rank_and_file_raises_guard_on_both_slots() -> void:
@@ -409,12 +409,12 @@ func test_ember_afterglow_needs_a_hit() -> void:
 	_apply(m, "Ember Afterglow", 0, 0)
 	assert_eq(m.delayed_hits.size(), 0)
 
-func test_mirror_stance_copies_the_foes_last_stage_change() -> void:
-	var m: BattleModel = _duel([_mon("Hushkin", "Mirror Stance")] as Array[Spirling], [_mon("Talusk")] as Array[Spirling])
-	_apply(m, "Mirror Stance")
+func test_borrowed_stance_copies_the_foes_last_stage_change() -> void:
+	var m: BattleModel = _duel([_mon("Hushkin", "Borrowed Stance")] as Array[Spirling], [_mon("Talusk")] as Array[Spirling])
+	_apply(m, "Borrowed Stance")
 	assert_eq(_lines(m).size(), 1, "nothing to mirror yet")
 	m.change_stage(1, "atk", 2)
-	_apply(m, "Mirror Stance")
+	_apply(m, "Borrowed Stance")
 	assert_eq(m.active_spirling(0).stage("atk"), 2)
 
 func test_still_point_heals_half_then_dozes_one_turn() -> void:

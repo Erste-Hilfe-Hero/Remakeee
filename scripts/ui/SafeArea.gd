@@ -30,8 +30,10 @@ static func rect(vp: Vector2) -> Rect2:
 	return full.intersection(r) if full.intersects(r) else full
 
 ## Insets the offsets of a full-rect [param c] so its content stays inside the safe area.
-## [param extra] is added on every side (the control's own margin).
+## [param extra] is added on every side (the control's own margin). The insets follow the
+## screen when it changes size while the game runs (a foldable opening or closing).
 static func apply(c: Control, extra: float = 0.0) -> void:
+	_follow_resizes(c, extra)
 	var vp: Vector2 = c.get_viewport().get_visible_rect().size if c.is_inside_tree() else Vector2.ZERO
 	var r: Rect2 = rect(vp) if vp != Vector2.ZERO else Rect2()
 	var top: float = r.position.y if vp != Vector2.ZERO else 0.0
@@ -42,3 +44,19 @@ static func apply(c: Control, extra: float = 0.0) -> void:
 	c.offset_top = top + extra
 	c.offset_right = -(right + extra)
 	c.offset_bottom = -(bottom + extra)
+
+## Re-applies the insets to [param c] whenever its viewport changes size, until it leaves the tree.
+static func _follow_resizes(c: Control, extra: float) -> void:
+	c.set_meta(&"safe_area_extra", extra)
+	if not c.is_inside_tree() or c.has_meta(&"safe_area_vp"):
+		return
+	var vp: Viewport = c.get_viewport()
+	var cb := func() -> void:
+		if is_instance_valid(c):
+			apply(c, float(c.get_meta(&"safe_area_extra", 0.0)))
+	vp.size_changed.connect(cb)
+	c.set_meta(&"safe_area_vp", true)
+	c.tree_exiting.connect(func() -> void:
+		if is_instance_valid(vp) and vp.size_changed.is_connected(cb):
+			vp.size_changed.disconnect(cb)
+		c.remove_meta(&"safe_area_vp"), CONNECT_ONE_SHOT)

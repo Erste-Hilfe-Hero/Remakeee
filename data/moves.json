@@ -671,6 +671,28 @@
   "desc": "Calls the dawn glow over the field."
  },
  {
+  "name": "Rubble Call",
+  "element": "STONE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "rubble_rain",
+  "era": 1,
+  "desc": "Calls a rain of rubble over the field."
+ },
+ {
+  "name": "Gale Call",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "gale_eye",
+  "era": 1,
+  "desc": "Calls the eye of a gale over the field."
+ },
+ {
   "name": "Glow Knuckle",
   "element": "EMBER",
   "kind": "PHYSICAL",
@@ -4955,6 +4977,133 @@
   "desc": "A master technique from the shop: power 115, no drawback."
  },
  {
+  "name": "Leaden Hum",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 2,
+  "status": "spent",
+  "status_chance": 1.0,
+  "era": 1,
+  "desc": "A low hum that weighs on the foe: its Energy trickles back at half pace."
+ },
+ {
+  "name": "Chalk Mark",
+  "element": "STONE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 1,
+  "status": "marked",
+  "status_chance": 1.0,
+  "era": 1,
+  "desc": "Chalks a cross on the foe. The next blow finds it for sure."
+ },
+ {
+  "name": "Mazelight",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.85,
+  "energy": 2,
+  "status": "muddle",
+  "status_chance": 1.0,
+  "era": 1,
+  "desc": "Lights flicker like a maze, and the foe loses track of who is who."
+ },
+ {
+  "name": "Mirror Stance",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "stage_copy",
+  "era": 1,
+  "desc": "Mirrors the foe's stance: its raised and lowered stages alike."
+ },
+ {
+  "name": "Crosswind Trade",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "stage_swap",
+  "era": 1,
+  "desc": "A crosswind that trades every stage between the user and the foe."
+ },
+ {
+  "name": "Calm Veil",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "status_veil",
+  "effect_amount": 5,
+  "era": 1,
+  "desc": "A soft veil over the whole side: no foe status takes hold for 5 turns."
+ },
+ {
+  "name": "Mending Chorus",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "heal_team",
+  "effect_amount": 0.2,
+  "era": 2,
+  "desc": "A soft chord rings out. It and every ally beside it mend a fifth of their Vigor."
+ },
+ {
+  "name": "Kindred Balm",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "heal_ally",
+  "effect_amount": 0.33,
+  "era": 1,
+  "desc": "Tends the most hurt ally beside it for a third of its Vigor. Alone, it tends itself."
+ },
+ {
+  "name": "Shell Ring",
+  "element": "STONE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "team_guard",
+  "era": 2,
+  "desc": "Raises a ring of shale around its side. Everyone there takes less damage for 3 turns."
+ },
+ {
+  "name": "Lure Dance",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "decoy",
+  "era": 2,
+  "desc": "A showy, mocking dance. Every aimed art of the foes goes for it for 2 turns."
+ },
+ {
+  "name": "Breakwater Stand",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "cover",
+  "era": 1,
+  "desc": "Plants itself before its most hurt ally and takes the aimed hits meant for it for 2 turns."
+ },
+ {
   "name": "Hold Fast",
   "element": "STONE",
   "kind": "STATUS",
@@ -4990,18 +5139,6 @@
   "effect_amount": 1.5,
   "era": 1,
   "desc": "Keeps every bruise. Pays back the physical damage it took this turn, half as hard again."
- },
- {
-  "name": "Kindred Balm",
-  "element": "BLOOM",
-  "kind": "STATUS",
-  "power": 0,
-  "accuracy": 1.0,
-  "energy": 3,
-  "effect": "heal_ally",
-  "effect_amount": 0.4,
-  "era": 1,
-  "desc": "Rubs a green balm into the most hurt ally: it heals 40% of its Vigor."
  },
  {
   "name": "Rank and File",
@@ -5120,7 +5257,7 @@
   "desc": "The hit fades, the glow does not. The target keeps burning for 3 turns."
  },
  {
-  "name": "Mirror Stance",
+  "name": "Borrowed Stance",
   "element": "ECHO",
   "kind": "STATUS",
   "power": 0,

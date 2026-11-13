@@ -61,8 +61,9 @@ const SFX_VOICES: int = 10
 const PRIO_UI: int = 1
 const PRIO_WORLD: int = 2
 const PRIO_BATTLE: int = 3
-const BATTLE_SOUNDS: Array[String] = ["miss", "dodge", "faint", "status", "heal", "level_up", "energy_tick", "run", "low_hp", "bond"]
-const BATTLE_PREFIXES: Array[String] = ["hit", "charge_", "travel_"]
+const BATTLE_SOUNDS: Array[String] = ["miss", "dodge", "faint", "status", "heal", "level_up", "energy_tick", "run", "low_hp", "bond",
+	"overcharge", "crit_accent", "rule_seal", "partner_call", "calm_fail", "defeat"]
+const BATTLE_PREFIXES: Array[String] = ["hit", "charge_", "travel_", "status_", "stage_", "field_", "boss_", "eff_"]
 ## Same effect within this many seconds is skipped (menus scroll fast).
 const SFX_MIN_GAP: float = 0.03
 
@@ -246,6 +247,8 @@ func cry(sd: SpirlingData, era: int = 0) -> void:
 	var e: int = era if era > 0 else EraManager.active_era()
 	if enabled and sd != null:
 		_play_voice(Cry.stream_for(sd, e, cry_spec(e)), GameState.BUS_VOICE, 0.0, 1.0, PRIO_BATTLE)
+	if sd != null:
+		cry_caption(sd.species_name)
 
 ## Era a Spirling's cry is played in: its origin era when it is the player's own, else the
 ## era on screen (wild Spirlings and rivals' teams sound like the place).
@@ -340,10 +343,21 @@ func _alarm_beep() -> void:
 func caption(sound_name: String) -> void:
 	if not GameState.sound_captions or not CAPTIONS.has(sound_name):
 		return
-	captions.append(CAPTIONS[sound_name])
+	_show_caption(CAPTIONS[sound_name])
+
+## Caption for a Spirling's cry (Kampf-Plan, Barrierefreiheit: subtitles for cries), so the cry
+## that opens a battle or marks a knock-out is seen too when the sound is off.
+func cry_caption(species: String) -> void:
+	if GameState.sound_captions and not species.is_empty():
+		_show_caption(CRY_CAPTION % species)
+
+const CRY_CAPTION: String = "[%s cries out]"
+
+func _show_caption(text: String) -> void:
+	captions.append(text)
 	if captions.size() > 8:
 		captions.pop_front()
-	Ticker.show_text(CAPTIONS[sound_name])
+	Ticker.show_text(text)
 
 ## Ground name for footsteps on a tile of [param kind]; [param wet] when water is next to it.
 static func ground_for(kind: int, wet: bool) -> String:
@@ -429,13 +443,14 @@ func duck_ambience(on: bool) -> void:
 	if enabled and _ambience.playing:
 		create_tween().tween_property(_ambience, "volume_db", AMBIENCE_DUCK_DB if on else AMBIENCE_DB, FADE_TIME)
 
-## Loops audio/ambience/<name>.ogg on the Ambience bus, crossfading; "" stops it.
-func ambience(loop_name: String) -> void:
+## Loops audio/ambience/<name>.ogg on the Ambience bus, crossfading; "" stops it. [param ducked]
+## keeps it at AMBIENCE_DUCK_DB (a Resonance field's loop under a battle, KAMPF_PLAN_1000 684).
+func ambience(loop_name: String, ducked: bool = false) -> void:
 	if loop_name == current_ambience:
-		if ambience_ducked:
-			duck_ambience(false)
+		if ambience_ducked != ducked:
+			duck_ambience(ducked)
 		return
-	ambience_ducked = false
+	ambience_ducked = ducked
 	current_ambience = loop_name
 	if not enabled:
 		return
@@ -456,7 +471,7 @@ func ambience(loop_name: String) -> void:
 	_ambience.stream = stream
 	_ambience.volume_db = -60.0
 	_ambience.play()
-	create_tween().tween_property(_ambience, "volume_db", AMBIENCE_DB, AMBIENCE_FADE)
+	create_tween().tween_property(_ambience, "volume_db", AMBIENCE_DUCK_DB if ducked else AMBIENCE_DB, AMBIENCE_FADE)
 
 ## Background: silence everything; back in front: fade in over RESUME_FADE (item 2550).
 func _notification(what: int) -> void:
@@ -642,6 +657,33 @@ static func list_sounds(dir: String) -> Array[String]:
 
 ## Other music lowers the map's ambience to AMBIENCE_DUCK_DB (battles) or stops it (title);
 ## enter_map() brings it back.
+## Pitch of the music players (a Rift field tunes the battle song, KAMPF_PLAN_1000 item 332; a
+## boss's second phase raises it, item 683). Kept across track changes until set back to 1.0.
+var music_pitch_scale: float = 1.0
+
+func music_pitch(p: float) -> void:
+	music_pitch_scale = clampf(p, 0.5, 2.0)
+	for player: AudioStreamPlayer in [_music, _music_out]:
+		if player != null:
+			player.pitch_scale = music_pitch_scale
+
+## Dip of the music while a battle line types (KAMPF_PLAN_1000 695), 0 when none.
+var music_duck_db: float = 0.0
+var _duck_tween: Tween
+
+## Lowers the music by BattleAudio's text_duck_db while [param on], back to full otherwise.
+func duck_music(on: bool) -> void:
+	var db: float = BattleAudio.text_duck_db(on)
+	if is_equal_approx(db, music_duck_db):
+		return
+	music_duck_db = db
+	if not enabled or _music == null or not _music.playing:
+		return
+	if _duck_tween != null and _duck_tween.is_valid():
+		_duck_tween.kill()
+	_duck_tween = create_tween()
+	_duck_tween.tween_property(_music, "volume_db", music_duck_db, BattleAudio.text_duck_fade())
+
 func music(track: String, keep_ambience: bool = false) -> void:
 	if track == "title":
 		ambience("")
@@ -696,5 +738,6 @@ func _switch(track: String, loop: bool) -> void:
 		stream = stream.duplicate()
 		(stream as AudioStreamOggVorbis).loop = loop
 	_music.stream = stream
-	_music.volume_db = 0.0
+	_music.volume_db = music_duck_db
+	_music.pitch_scale = music_pitch_scale
 	_music.play()

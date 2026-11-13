@@ -72,6 +72,13 @@ const WARDEN_WEAKEN_SHARE: float = 0.85
 var warden_weakened: bool = false
 ## Share of damage the foe side deals (difficulty, plan area 2 item 728).
 var foe_damage_mult: float = 1.0
+## Factor on the foe side's critical chance (Story difficulty, KAMPF plan item 497).
+var foe_crit_mult: float = 1.0
+## Challenge rules (ChallengeRules): no chosen swaps for the player, why no bond can form ("" = it
+## can), and bag items the player may not use in this battle.
+var swap_locked: bool = false
+var bond_block: String = ""
+var blocked_items: Array[String] = []
 ## Factor on a boss's "hp_per_ally" (GameState.BOSS_HP_SCALE: Story bosses are 20 % smaller).
 var boss_hp_scale: float = 1.0
 ## Rule variants in play (data/rule_variants.json, at most BattleRules.MAX_VARIANTS). Set before start().
@@ -149,13 +156,29 @@ var base_field: String = ""
 var field_lock: int = 0
 ## Turns left on a Resonance field (0 = the field holds for the whole battle).
 var field_turns: int = 0
+## Time of day of the battle (DayCycle.Phase), or -1 indoors / with the day cycle off. Some
+## Resonance fields hold a turn longer at their own time of day (RiftFields.daytime_turns).
+var day_phase: int = -1
+## Support arts in play per side (MultiRules): kind -> {"turns", "slot", ...}.
+var support: Array = [{}, {}]
+## True when the foe Wayfarer fights in formation too (map trainer "formation": true, item 399).
+var foe_formation: bool = false
 ## Share of the XP an earner gets that each healthy Spirling on the player's bench also gets
 ## ("Bench lessons" setting). 0 turns it off.
 var bench_share: float = 0.0
 ## True once the Rift boss has entered its second phase.
 var boss_phase_done: bool = false
+## Late boss phases (BossRules.LATE_PHASES) already reached.
+var boss_late_done: int = 0
+## Weak point after a phase change (BossRules, item 431): turn it ends on and the stages to give back.
+var _boss_weak_until: int = -1
+var _boss_weak_back: Dictionary = {}
 ## Warden rule id (BattleRules.RULES) for the foe side, or "".
 var foe_rule: String = ""
+## Turns left on each side's Calm Veil (status_veil effect, item 193): no foe status takes hold.
+var status_veil: Array[int] = [0, 0]
+## Spirlings whose Mirror Scale (held "status_reflect", item 209) was used this battle.
+var _reflected: Array[Spirling] = []
 ## Snares lying on each side (side_snare effect), oldest first. Each is {"move": name, plus
 ## "hp" (share of max Vigor), "status" or "stage"}. The next Spirling to swap in springs one.
 var snares: Array[Array] = [[], []]
@@ -318,18 +341,18 @@ func legal_actions(side: int, slot: int = 0) -> Array[BattleAction]:
 			any_move = true
 	if can_rest(any_move):
 		out.append(BattleAction.make_rest(side, slot))
-	if not StatusRules.blocks_swap(me.status):
+	if not StatusRules.blocks_swap(me.status) and not (swap_locked and side == Side.PLAYER):
 		for i: int in swap_candidates(side, slot):
 			out.append(BattleAction.make_swap(side, i, slot))
 	if _items_allowed_for(side, slot):
 		for id: String in bag_ids(side):
-			if _is_battle_item(id):
+			if _is_battle_item(id) and not (side == Side.PLAYER and id in blocked_items):
 				var ia := BattleAction.make_item(side, id, active_index(side, slot), slot)
 				# Revive items and spent per-battle limits do not fit the active Spirling.
 				if is_legal(ia):
 					out.append(ia)
 	if side == Side.PLAYER and is_wild and not is_partner_slot(side, slot):
-		if bonded == null:
+		if bonded == null and bond_block.is_empty():
 			out.append(BattleAction.make_bond(side, 0.0, "", slot))
 		out.append(BattleAction.make_run(side, slot))
 	return out
@@ -351,9 +374,15 @@ func is_legal(a: BattleAction) -> bool:
 				any_move = any_move or (me.can_afford(mv) and not move_locked(mv))
 			return can_rest(any_move)
 		BattleAction.Kind.SWAP:
-			return not StatusRules.blocks_swap(me.status) and a.swap_index in swap_candidates(a.side, a.slot)
+			# Trading places with an ally in another slot (item 366) is a Swap too.
+			if a.swap_index in MultiRules.shift_targets(self, a.side, a.slot):
+				return true
+			return not StatusRules.blocks_swap(me.status) and a.swap_index in swap_candidates(a.side, a.slot) \
+				and not (swap_locked and a.side == Side.PLAYER)
 		BattleAction.Kind.ITEM:
 			if not _items_allowed_for(a.side, a.slot) or bag_count(a.side, a.item_id) <= 0 or not _is_battle_item(a.item_id):
+				return false
+			if a.side == Side.PLAYER and a.item_id in blocked_items:
 				return false
 			if is_partner_index(a.side, a.item_target):
 				return false
@@ -365,7 +394,7 @@ func is_legal(a: BattleAction) -> bool:
 			return (parties[a.side][a.item_target] as Spirling).is_fainted() == is_revive_item(a.item_id)
 		BattleAction.Kind.BOND:
 			# The Echo call reaches only wild Spirlings, never a Wayfarer's partner.
-			if a.side != Side.PLAYER or not is_wild or bonded != null or is_partner_slot(a.side, a.slot):
+			if a.side != Side.PLAYER or not is_wild or bonded != null or is_partner_slot(a.side, a.slot) or not bond_block.is_empty():
 				return false
 			if a.target_slot >= 0 and not is_standing(active_spirling(Side.FOE, a.target_slot)):
 				return false
@@ -412,13 +441,18 @@ func start() -> Array[BattleEvent]:
 	field_turns = 0
 	field_lock = 0
 	snares = [[], []]
+	support = [{}, {}]
 	delayed_hits = []
 	boss_phase_done = false
+	boss_late_done = 0
+	_boss_weak_until = -1
+	_boss_weak_back = {}
 	var fielded: int = slot_count(Side.PLAYER)
 	if BattleRules.BOSSES.has(foe_boss):
 		var boss: Spirling = active_spirling(Side.FOE)
 		boss.hp_mult = BattleRules.boss_hp_mult(foe_boss, fielded, boss_hp_scale)
 		boss.hp = boss.max_hp()
+		boss.boss_guard = true
 		_boss_actions = BattleRules.boss_actions_for(foe_boss, fielded, boss_difficulty)
 	var foe: Spirling = active_spirling(Side.FOE)
 	emit_event(BattleEvent.Type.BATTLE_START, {"wild": is_wild, "trainer": trainer_name, "foe_name": foe.display_name(),
@@ -465,6 +499,7 @@ func start() -> Array[BattleEvent]:
 		for s: Spirling in dragged:
 			for stat: String in st:
 				s.stages[stat] = clampi(s.stage(stat) + int(st[stat]), BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
+	MultiRules.apply_formation_bonus(self)
 	participants = []
 	for slot: int in player_slots():
 		participants.append(active_spirling(Side.PLAYER, slot))
@@ -660,10 +695,24 @@ func reveal_trait(side: int, slot: int = 0) -> void:
 func set_field(id: String, turns: int = BattleRules.RESONANCE_TURNS) -> bool:
 	if not BattleRules.FIELDS.has(id):
 		return false
+	# A new field pushes the old one out, and the log says so (KAMPF_PLAN_1000 item 344).
+	if not field.is_empty() and field != id:
+		emit_event(BattleEvent.Type.FIELD_END, {"field": field, "label": str(BattleRules.FIELDS.get(field, {}).get("label", "")), "by": str(BattleRules.FIELDS[id].label)})
+	var fresh: bool = field != id
 	field = id
+	if turns > 0:
+		turns += RiftFields.daytime_turns(id, day_phase)
 	field_turns = maxi(turns, 0)
 	var f: Dictionary = BattleRules.FIELDS[id]
 	emit_event(BattleEvent.Type.FIELD, {"field": id, "label": str(f.label), "text": str(f.intro), "turns": field_turns})
+	if fresh and phase != Phase.INTRO:
+		for side: int in [Side.PLAYER, Side.FOE]:
+			for slot: int in slot_count(side):
+				var s: Spirling = active_spirling(side, slot)
+				var gain: int = int(ShopEffects.gift_table(s).get("field_energy", 0)) if is_standing(s) else 0
+				if gain > 0:
+					reveal_trait(side, slot)
+					change_energy(side, gain, slot)
 	return true
 
 ## Stretches the Resonance field in play by [param turns]. Fails (FIELD_EXTENDED "failed") when
@@ -708,15 +757,29 @@ func _tick_timers() -> void:
 				emit_event(BattleEvent.Type.ENERGY_TAX, d)
 
 ## Second boss phase: once the boss in foe slot 0 drops to the phase threshold, it wakes up once.
+## Later phases (BossRules.LATE_PHASES) follow the same way, one per hit at most. While the boss's
+## hold field lies, no phase starts (item 430).
 func _check_boss_phase(boss: Spirling) -> void:
-	if boss_phase_done or not BattleRules.BOSSES.has(foe_boss) or boss != parties[Side.FOE][active_index(Side.FOE)]:
+	if not BattleRules.BOSSES.has(foe_boss) or boss != parties[Side.FOE][active_index(Side.FOE)]:
 		return
-	var p: Dictionary = BattleRules.boss_phase(foe_boss)
-	if p.is_empty() or float(boss.hp) > float(boss.max_hp()) * BattleRules.boss_phase_at(foe_boss, boss_difficulty):
+	if BossRules.held_by(foe_boss, field):
 		return
-	boss_phase_done = true
-	if boss_difficulty >= 0 and boss_difficulty < BattleRules.BOSS_PHASE_BONUS.size():
-		_boss_actions += BattleRules.BOSS_PHASE_BONUS[boss_difficulty]
+	if not boss_phase_done:
+		var p: Dictionary = BattleRules.boss_phase(foe_boss)
+		if p.is_empty() or float(boss.hp) > float(boss.max_hp()) * BattleRules.boss_phase_at(foe_boss, boss_difficulty):
+			return
+		boss_phase_done = true
+		if boss_difficulty >= 0 and boss_difficulty < BattleRules.BOSS_PHASE_BONUS.size():
+			_boss_actions += BattleRules.BOSS_PHASE_BONUS[boss_difficulty]
+		_enter_boss_phase(boss, p)
+		return
+	var late: Array = BossRules.late_phases(foe_boss)
+	if boss_late_done < late.size() and float(boss.hp) <= float(boss.max_hp()) * float(late[boss_late_done].get("at", 0.0)):
+		boss_late_done += 1
+		_enter_boss_phase(boss, late[boss_late_done - 1])
+
+## Announces phase [param p], applies its stages and field, then opens the weak point (item 431).
+func _enter_boss_phase(boss: Spirling, p: Dictionary) -> void:
 	emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "text": str(p.get("text", ""))})
 	var st: Dictionary = p.get("stage", {})
 	for stat: String in st:
@@ -724,6 +787,38 @@ func _check_boss_phase(boss: Spirling) -> void:
 	if BattleRules.FIELDS.has(str(p.get("field", ""))):
 		base_field = str(p.field)
 		set_field(base_field, 0)
+	_boss_weak_back = {}
+	for stat: String in BossRules.WEAK_STAGE:
+		var before: int = boss.stage(stat)
+		change_stage(Side.FOE, stat, BossRules.WEAK_STAGE[stat], 0)
+		if boss.stage(stat) != before:
+			_boss_weak_back[stat] = before - boss.stage(stat)
+	if not _boss_weak_back.is_empty():
+		_boss_weak_until = turn + BossRules.WEAK_TURNS
+		emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss,
+			"text": "%s lies open: its Guard is down for a turn!" % boss.display_name()})
+
+## End of turn for a Rift boss: the weak point closes, and a long fight enrages it (item 432).
+func _boss_end_of_turn() -> void:
+	if not BattleRules.BOSSES.has(foe_boss) or active_index(Side.FOE) < 0:
+		return
+	var boss: Spirling = parties[Side.FOE][active_index(Side.FOE)]
+	if boss.is_fainted():
+		return
+	if _boss_weak_until >= 0 and turn >= _boss_weak_until:
+		for stat: String in _boss_weak_back:
+			change_stage(Side.FOE, stat, int(_boss_weak_back[stat]), 0)
+		_boss_weak_back = {}
+		_boss_weak_until = -1
+	if BossRules.rage_due(turn):
+		emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "rage": true,
+			"text": "%s grows restless: the longer the fight, the harder it strikes!" % boss.display_name()})
+		for stat: String in BossRules.RAGE_STAGE:
+			change_stage(Side.FOE, stat, BossRules.RAGE_STAGE[stat], 0)
+
+## True for the Rift boss in foe slot 0.
+func is_boss_slot(side: int, slot: int) -> bool:
+	return side == Side.FOE and slot == 0 and BattleRules.BOSSES.has(foe_boss)
 
 ## Heals the Spirling in [param slot] from an art, its gift, the field or a keepsake. A heal
 ## block stops all of these (bag items heal through _heal_spirling and still work).
@@ -757,7 +852,8 @@ func apply_heal_block(side: int, turns: int, slot: int = 0) -> void:
 
 ## Tries to afflict the Spirling in [param slot] of [param side]. Fails if it already has a status.
 ## [param from_side] is the side that causes it (-1 = none); a foe's status may meet a Status Ward.
-func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1) -> bool:
+## [param from_slot] is the slot of the Spirling that causes it (a Mirror Scale turns it back there).
+func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1, from_slot: int = -1) -> bool:
 	var s: Spirling = active_spirling(side, slot)
 	if s == null or s.is_fainted() or not s.status.is_empty() or not StatusRules.exists(status):
 		return false
@@ -777,6 +873,21 @@ func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1)
 		c.merge({"status": status, "clause": true})
 		emit_event(BattleEvent.Type.STATUS_FAILED, c)
 		return false
+	var block: Dictionary = status_block(side, status, from_side)
+	if not block.is_empty():
+		var sb: Dictionary = _who(side, slot)
+		sb.merge(block)
+		sb["status"] = status
+		emit_event(BattleEvent.Type.STATUS_FAILED, sb)
+		return false
+	if from_side >= 0 and from_side != side and bool(BattleRules.held_info(s.held).get("status_reflect", false)) and not s in _reflected:
+		_reflected.append(s)
+		var rf: Dictionary = _who(side, slot)
+		rf.merge({"status": status, "reflect": true, "item_name": str(Database.item(s.held).get("name", s.held))})
+		emit_event(BattleEvent.Type.STATUS_FAILED, rf)
+		if from_slot >= 0:
+			apply_status(from_side, status, from_slot)
+		return false
 	# Status Ward (pay-to-win step 4): only a foe's status, one roll only when the side owns it.
 	var ward: float = ShopEffects.ward_chance(int(amulets[side][1])) if from_side >= 0 and from_side != side else 0.0
 	if ward > 0.0 and rng.randf() < ward:
@@ -786,9 +897,15 @@ func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1)
 		return false
 	s.status = status
 	s.status_turns = StatusRules.roll_turns(status, rng)
+	if is_boss_slot(side, slot):
+		s.status_turns = BossRules.status_turns(s.status_turns)
 	var cap: int = int(rules.get("status_max_turns", 0))
 	if cap > 0:
 		s.status_turns = mini(s.status_turns, cap) if s.status_turns > 0 else cap
+	if s.boss_guard and s.status_turns <= 0:
+		s.status_turns = StatusRules.BOSS_OPEN_TURNS
+	elif s.boss_guard and not is_boss_slot(side, slot):
+		s.status_turns = StatusRules.boss_turns(s.status_turns)
 	var d: Dictionary = _who(side, slot)
 	d["status"] = status
 	emit_event(BattleEvent.Type.STATUS_APPLIED, d)
@@ -810,6 +927,33 @@ func _variant_mult(me: Spirling, target: Spirling, mv: MoveData) -> float:
 			f *= (1.0 + (r - 1.0) * scale) / r
 	return f
 
+## Why a status can't reach [param side] right now, as STATUS_FAILED data, or {}: the Warden
+## rule Hushed Air (item 210, "no_status") keeps every status off both sides, and a Calm Veil
+## (item 193) keeps the foe's statuses off its side.
+func status_block(side: int, status: String, from_side: int = -1) -> Dictionary:
+	if not StatusRules.exists(status):
+		return {}
+	for rule_id: String in BattleRules.split_rules(foe_rule):
+		if float(BattleRules.RULES[rule_id].get("no_status", 0.0)) > 0.0:
+			return {"rule_label": str(BattleRules.RULES[rule_id].label)}
+	if from_side >= 0 and from_side != side and status_veil[side] > 0:
+		return {"veil": true}
+	return {}
+
+## Lays a Calm Veil over [param side] for [param turns] turns. Emits STATUS_VEIL.
+func set_status_veil(side: int, turns: int) -> void:
+	# +1 because the end of this very turn already counts one down.
+	status_veil[side] = maxi(status_veil[side], turns + 1)
+	emit_event(BattleEvent.Type.STATUS_VEIL, {"side": side, "turns": turns, "fresh": true})
+
+func _tick_status_veil() -> void:
+	for side: int in [Side.PLAYER, Side.FOE]:
+		if status_veil[side] <= 0:
+			continue
+		status_veil[side] -= 1
+		if status_veil[side] == 0:
+			emit_event(BattleEvent.Type.STATUS_VEIL, {"side": side, "turns": 0})
+
 ## Calm rule: in Wayfarer battles a side may have only one Spirling sleeping (Drowse) at a time.
 func calm_rule_blocks(side: int, s: Spirling, status: String) -> bool:
 	if is_wild or not StatusRules.sleeps(status):
@@ -824,12 +968,17 @@ func change_stage(side: int, stat: String, delta: int, slot: int = 0) -> void:
 	var s: Spirling = active_spirling(side, slot)
 	if s == null or s.is_fainted() or delta == 0 or not stat in BattleRules.STAGE_STATS:
 		return
-	if float(rules.get("stages_locked", 0.0)) > 0.0:
+	if float(rules.get("stages_locked", 0.0)) > 0.0 or BattleRules.rule_number(foe_rule, "stages_locked") > 0.0:
 		return
+	if is_boss_slot(side, slot):
+		delta = BossRules.stage_delta(delta)
 	var before: int = s.stage(stat)
 	var after: int = clampi(before + delta, BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
 	var d: Dictionary = _who(side, slot)
 	d.merge({"stat": stat, "delta": after - before, "stage": after, "tried": delta})
+	# Item 227: a foe whose Might climbs to +2 gets a warning line.
+	if side == Side.FOE and stat == "atk" and before < BattleRules.STAGE_WARN and after >= BattleRules.STAGE_WARN:
+		d["warn"] = true
 	s.stages[stat] = after
 	emit_event(BattleEvent.Type.STAT_CHANGED, d)
 
@@ -915,10 +1064,13 @@ func _phase_end_of_turn() -> void:
 	_vine_heal()
 	_sand_chip()
 	_tick_timers()
+	_tick_status_veil()
 	_tick_field()
+	MultiRules.tick(self)
 	_tick_field_swirl()
 	_tick_field_cycle()
 	_tick_delayed_hits()
+	_boss_end_of_turn()
 	_turn_wheel()
 	if turn == BattleRules.WEARY_TURN:
 		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
@@ -1068,6 +1220,8 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		# The turn counter moves on after this, so 0 is the end of the first turn.
 		if turn == 0:
 			gain += foe_turn1_energy
+	gain += RiftFields.energy_bonus(field, s)
+	gain = StatusRules.energy_gain(s.status, gain, turn)
 	change_energy(side, gain, slot)
 
 func _phase_faint_check() -> void:
@@ -1158,13 +1312,13 @@ func move_targets(side: int, mv: MoveData, target_slot: int = -1) -> Array[int]:
 	if standing.is_empty() or mv.is_area():
 		return standing
 	target_slot = TechniqueRules.lured_slot(self, side, target_slot)
-	var out: Array[int] = [target_slot if target_slot in standing else standing[0]]
+	var out: Array[int] = [MultiRules.redirect(self, other(side), target_slot if target_slot in standing else standing[0])]
 	return out
 
 ## Effects that act on the user once per move, not once per foe a sweep reaches.
 static func _is_self_effect(fx: Dictionary) -> bool:
 	var id: StringName = StringName(fx.get("id", ""))
-	return id in [&"heal_self", &"self_stage_after", &"energy_gain", &"self_cost", &"cure_team"] or (id == &"stat_change" and bool(fx.get("self", true)))
+	return id in [&"heal_self", &"self_stage_after", &"energy_gain", &"self_cost", &"cure_team", &"status_veil"] or (id == &"stat_change" and bool(fx.get("self", true)))
 
 func _do_move(a: BattleAction) -> void:
 	var side: int = a.side
@@ -1195,14 +1349,27 @@ func _do_move(a: BattleAction) -> void:
 	# A field_element move lands in the active field's element (a cached copy, never the data).
 	mv = BattleRules.resolve_move(mv, field)
 	var power_mult: float = 1.0
+	var extra: int = 0
 	if mv.overcharge and me.energy > 0:
-		var extra: int = mini(me.energy, BattleRules.OVERCHARGE_MAX_EXTRA)
+		extra = mini(me.energy, BattleRules.OVERCHARGE_MAX_EXTRA)
 		power_mult += BattleRules.OVERCHARGE_PER_ENERGY * extra
 		change_energy(side, -extra, slot)
 	var target_side: int = other(side)
-	var targets: Array[int] = move_targets(side, mv, a.target_slot)
+	var aim: int = a.target_slot
+	var muddled: bool = false
+	if StatusRules.random_target(me.status) and not mv.is_area():
+		var foes: Array[int] = standing_slots(target_side)
+		if foes.size() > 1:
+			aim = foes[rng.randi_range(0, foes.size() - 1)]
+			muddled = true
+	var targets: Array[int] = move_targets(side, mv, aim)
 	var used: Dictionary = _who(side, slot)
 	used.merge({"move": mv.move_name, "element": mv.element, "kind": mv.kind, "area": mv.is_area() and targets.size() > 1, "targets": targets})
+	if extra > 0:
+		# The presenter pitches the Overcharge swell by the Energy poured in (plan 687).
+		used["overcharge"] = extra
+	if muddled:
+		used["muddled"] = true
 	emit_event(BattleEvent.Type.MOVE_USED, used)
 	TechniqueRules.note_move(self, side, me, mv, slot)
 	if targets.is_empty():
@@ -1219,6 +1386,9 @@ func _do_move(a: BattleAction) -> void:
 		if TechniqueRules.blocks_hit(self, target_side, t_slot, target, mv):
 			continue
 		var acc: float = mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult")
+		var marked: bool = mv.is_damaging() and StatusRules.sure_hit(target.status)
+		if marked:
+			acc = 1.0
 		if acc < 1.0 and rng.randf() >= acc:
 			var miss: Dictionary = _who(side, slot)
 			miss["target_slot"] = t_slot
@@ -1251,11 +1421,18 @@ func _do_move(a: BattleAction) -> void:
 				mult *= BattleRules.rule_number(foe_rule, "lumen_mult")
 			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
 			mult *= TechniqueRules.hit_mult(self, side, slot, me, target_side, t_slot, target, mv)
+			mult *= MultiRules.guard_mult(self, target_side) * MultiRules.row_mult(self, side, slot, target_side, t_slot, mv)
+			var combo: Dictionary = MultiRules.combo(self, side, slot, target_side, t_slot, mv.element)
+			if not combo.is_empty():
+				mult *= MultiRules.combo_mult()
+				var cd: Dictionary = _who(target_side, t_slot)
+				cd.merge({"kind": "combo", "label": str(combo.label)})
+				emit_event(BattleEvent.Type.SUPPORT, cd)
 			var shielded: bool = _shield_on[target_side] == target
 			if shielded:
 				mult *= ShopEffects.shield_mult(int(amulets[target_side][2]))
 			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult,
-				ShopEffects.crit_mult(BattleRules.mult_key(me, "crit_mult"), int(amulets[side][0])))
+				ShopEffects.crit_mult(BattleRules.mult_key(me, "crit_mult"), int(amulets[side][0])) * (foe_crit_mult if side == Side.FOE else 1.0))
 			if shielded and int(r.damage) > 0:
 				_shield_on[target_side] = null
 			if mv.has_effect(&"delayed_hit"):
@@ -1268,6 +1445,10 @@ func _do_move(a: BattleAction) -> void:
 				_cure(target_side, t_slot)
 			if react.has("inflict") and is_standing(target):
 				apply_status(target_side, str(react.inflict), t_slot, side)
+			if marked and is_standing(target) and StatusRules.sure_hit(target.status):
+				_cure(target_side, t_slot)
+			if mv.kind == MoveData.Kind.PHYSICAL and is_standing(me):
+				_contact_status(target_side, t_slot, side, slot)
 			if is_standing(target):
 				var rs: Dictionary = react.get("stage", {})
 				for st: String in rs:
@@ -1307,14 +1488,35 @@ func _oath_tick(side: int, slot: int, s: Spirling) -> void:
 
 func _do_rest(a: BattleAction) -> void:
 	emit_event(BattleEvent.Type.REST, _who(a.side, a.slot))
-	change_energy(a.side, int(rules.get("rest_energy", REST_ENERGY)), a.slot)
+	change_energy(a.side, rest_gain(), a.slot)
+
+## Energy one rest gives: REST_ENERGY or the variant's "rest_energy", minus the Warden rule Ebb's "rest_cut".
+func rest_gain() -> int:
+	return maxi(0, int(rules.get("rest_energy", REST_ENERGY)) - int(BattleRules.rule_number(foe_rule, "rest_cut")))
+
+## Gift "contact_status" (Glimmer Skin, item 194): a physical hit on the Spirling in
+## [param slot] may pass its status on to the attacker.
+func _contact_status(side: int, slot: int, hitter_side: int, hitter_slot: int) -> void:
+	var s: Spirling = active_spirling(side, slot)
+	var gift: Dictionary = ShopEffects.gift_table(s)
+	var st: String = str(gift.get("contact_status", ""))
+	if st.is_empty() or s.is_fainted() or rng.randf() >= float(gift.get("contact_chance", 0.3)):
+		return
+	if apply_status(hitter_side, st, hitter_slot, side, slot):
+		reveal_trait(side, slot)
 
 func _do_swap(a: BattleAction) -> void:
+	if MultiRules.shift(self, a):
+		return
 	if StatusRules.blocks_swap(a.actor.status):
 		emit_event(BattleEvent.Type.SWAP_BLOCKED, _who(a.side, a.slot))
 		return
 	if not a.swap_index in swap_candidates(a.side, a.slot):
 		return
+	# Gift "cure_on_swap" (Unruffled, item 195): its status falls away as it steps back.
+	if bool(ShopEffects.gift_table(a.actor).get("cure_on_swap", false)) and not a.actor.status.is_empty():
+		reveal_trait(a.side, a.slot)
+		_cure(a.side, a.slot)
 	emit_event(BattleEvent.Type.SWAP_OUT, _who(a.side, a.slot))
 	_swap_in(a.side, a.swap_index, a.slot)
 	if int(rules.get("swap_energy_cost", 0)) > 0:
@@ -1381,6 +1583,8 @@ func _do_bond(a: BattleAction) -> void:
 	who["timing"] = a.timing_score
 	emit_event(BattleEvent.Type.BOND_ATTEMPT, who)
 	var timing: float = minf(1.0, a.timing_score + clampf(bond_edge, 0.0, 1.0))
+	# Some fields make a bond a little likelier (Dawn Glow, KAMPF_PLAN_1000 item 349).
+	bonus += float(BattleRules.FIELDS.get(field, {}).get("bond_bonus", 0.0))
 	var success: bool = rng.randf() < BondCalc.chance(target, timing, bonus) or sure
 	if not success and retry:
 		success = rng.randf() < BondCalc.chance(target, timing, bonus)
@@ -1735,7 +1939,11 @@ func _give_xp(s: Spirling, amount: int, bench: bool = false) -> void:
 	if bench and gained <= 0:
 		return
 	s.xp += gained
-	emit_event(BattleEvent.Type.XP_GAINED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "amount": gained, "bench": bench})
+	var xd: Dictionary = {"side": Side.PLAYER, "index": index, "name": s.display_name(), "amount": gained, "bench": bench}
+	# Item 252: growth lost to the ring limit says so.
+	if gained < amount and level_cap < Spirling.LEVEL_SANITY:
+		xd["cap"] = level_cap
+	emit_event(BattleEvent.Type.XP_GAINED, xd)
 	while s.level < mini(level_cap, Spirling.LEVEL_SANITY) and s.xp >= Spirling.xp_for_level(s.level + 1):
 		var learned: Array[MoveData] = s.level_up()
 		emit_event(BattleEvent.Type.LEVEL_UP, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "level": s.level, "hp": s.hp, "max_hp": s.max_hp()})

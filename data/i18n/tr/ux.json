@@ -213,6 +213,7 @@
   "Nothing to swap.": "Değiştirecek bir şey yok.",
   "Swap %s with whom?": "%s kiminle değişsin?",
   "Swap with team...": "Takımla değiştir...",
-  "seen": "görüldü"
+  "seen": "görüldü",
+  "new": "yeni"
  }
 }

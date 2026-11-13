@@ -4,16 +4,31 @@ extends RefCounted
 ## player's inputs, so a replay stores only those and plays them back through a fresh model.
 ## The last battle is kept in GameState.records["last_battle"]; watching it changes nothing.
 
+## Version of the replay format (Kampf-Plan: replay format versioned). Raise it when a field is
+## added that changes how an old replay plays back; snapshots without "format" are format 1.
+## A replay from a newer format is refused with a message instead of playing out wrong.
+const FORMAT: int = 1
+
 ## Everything needed to rebuild [param model] as it is before start(). Call before the battle.
 static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
 	var snap: Dictionary = _snapshot(model, music, backdrop)
 	# Wheel battles (Era V) only add their key when on, so older replays stay the same.
 	if model.wheel:
 		snap["wheel"] = model.wheel_size
+	# Challenge rules and the Story crit factor (KAMPF plan 497, 517, 488) likewise.
+	if model.foe_crit_mult != 1.0:
+		snap["foe_crit"] = model.foe_crit_mult
+	if model.swap_locked:
+		snap["swap_locked"] = true
+	if not model.bond_block.is_empty():
+		snap["bond_block"] = model.bond_block
+	if not model.blocked_items.is_empty():
+		snap["blocked_items"] = model.blocked_items.duplicate()
 	return snap
 
 static func _snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
 	return {
+		"format": FORMAT,
 		"seed": model.battle_seed,
 		"wild": model.is_wild,
 		"ai": model.ai.level,
@@ -89,6 +104,8 @@ static func _rebuild(team_d: Array) -> Array[Spirling]:
 ## Why [param snap] cannot be played back in this version, "" when it can (item 797): a rule
 ## variant this version doesn't know, or variants that don't go together.
 static func problem(snap: Dictionary) -> String:
+	if int(snap.get("format", 1)) > FORMAT:
+		return Loc.t("This replay comes from a newer version of the game.")
 	var ids: Array[String] = []
 	for v: Variant in snap.get("variants", []):
 		ids.append(str(v))
@@ -102,6 +119,24 @@ static func problem(snap: Dictionary) -> String:
 	if not BattleRules.variant_conflict(ids).is_empty():
 		return Loc.t("This replay's rule variants don't go together.")
 	return ""
+
+## Fields of a Spirling that are the player's own words or habits, not battle facts. They never
+## leave the device inside a shared replay (Kampf-Plan: battle logs without personal data).
+const PRIVATE_KEYS: Array[String] = ["nickname", "box", "favorite", "met_day"]
+
+## A copy of [param snap] to share: the same battle, without the PRIVATE_KEYS of any Spirling.
+static func shareable(snap: Dictionary) -> Dictionary:
+	var out: Dictionary = snap.duplicate(true)
+	var teams: Array = out.get("teams", [])
+	var partner: Dictionary = out.get("partner", {})
+	teams = teams + [partner.get("team", [])]
+	for team: Variant in teams:
+		if team is Array:
+			for s: Variant in team:
+				if s is Dictionary:
+					for k: String in PRIVATE_KEYS:
+						(s as Dictionary).erase(k)
+	return out
 
 ## Seal tiers [power, guard, speed] from a snapshot, clamped to the tiers the data knows.
 static func seal_row(v: Variant) -> Array:
@@ -143,6 +178,12 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.wheel = snap.has("wheel")
 	m.wheel_size = clampi(int(snap.get("wheel", 3)), 2, BattleModel.MAX_PARTY)
 	m.foe_damage_mult = float(snap.get("foe_damage", 1.0))
+	m.foe_crit_mult = clampf(float(snap.get("foe_crit", 1.0)), 0.0, 1.0)
+	m.swap_locked = bool(snap.get("swap_locked", false))
+	m.bond_block = str(snap.get("bond_block", ""))
+	var blocked: Variant = snap.get("blocked_items", [])
+	if blocked is Array:
+		m.blocked_items.assign((blocked as Array).map(func(x: Variant) -> String: return str(x)))
 	m.energy_bonus = [clampi(int(snap.get("energy_bonus", 0)), 0, ShopEffects.MAX_ENERGY_BONUS), 0]
 	m.seals = [seal_row(snap.get("seals", [])), [0, 0, 0]]
 	m.amulets = [ShopEffects.amulet_row(snap.get("amulets", [])), [0, 0, 0]]

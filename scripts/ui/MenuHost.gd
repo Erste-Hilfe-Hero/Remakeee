@@ -36,6 +36,8 @@ func _ready() -> void:
 	Loc.events.language_changed.connect(_on_language_changed)
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Deferred, so it runs after SafeArea has moved the panels for the new screen size.
+	get_viewport().size_changed.connect(apply_hand_layout, CONNECT_DEFERRED)
 	picker = ListPicker.new()
 	_fill(picker)
 	add_child(picker)
@@ -120,9 +122,9 @@ func apply_hand_layout() -> void:
 		return
 	var vp_h: float = get_viewport_rect().size.y
 	for c: Control in [picker, _info_panel] as Array[Control]:
-		if not c.has_meta("top"):
-			c.set_meta("top", c.offset_top)
-		var top: float = float(c.get_meta("top"))
+		# The top SafeArea.apply gives the panel (see _fill), worked out again because the
+		# screen can change size while the game runs (a foldable opening or closing).
+		var top: float = SafeArea.rect(get_viewport_rect().size).position.y + PANEL_MARGIN
 		if GameState.one_hand:
 			var low: float = vp_h * ONE_HAND_TOP
 			# With the pad on screen the list ends above it; keep room for a few rows.
@@ -393,11 +395,13 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"bench_lessons": "Spirlings on the bench grow too.",
 	"wild_ward": "No wild Spirlings step out while it is on.",
 	"damage_preview": "Shows how hard a move would hit before you choose it.",
+	"damage_numbers": "Shows the damage of each hit as a number over the Spirling.",
 	"bonus_goals": "Optional extra goals in Wayfarer and Warden battles.",
 	"tips": "Short hints the first time something new comes up.",
 	"play_reminder": "A short note after 90 minutes of play.",
 	"difficulty": "How strong your opponents are. You can change it any time.",
 	"iron_oath": "Spirlings that faint retire for good. Only before your first Rift.",
+	"challenges": "Extra rules for a harder journey. Taken before your first Rift, dropped any time.",
 	"volume": "All sound. Left and right change it in steps of 10.",
 	"music": "Music only. Left and right change it in steps of 10.",
 	"sfx": "Sound effects only. Left and right change it in steps of 10.",
@@ -430,7 +434,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"left_handed": "Puts the pad on the right and A and B on the left.",
 	"tap_to_move": "Tap a tile and your Wayfarer walks there.",
 	"always_run": "Run without holding B. Hold B to walk.",
-	"bond_style": "Mine: tap one button fast. Echo: repeat the call.",
+	"bond_style": "Mine: tap one button fast. Echo: repeat the call. Calm: echo with no time limit.",
 	"one_hand": "Everything sits low on the screen for one thumb.",
 	"swap_ab_touch": "A and B on the touch pad change places.",
 	"swap_ab_pad": "The gamepad's A goes back and B confirms.",
@@ -472,6 +476,7 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["bench_lessons", "Bench lessons: %s" % shop_or("bench_lessons", "On" if GameState.bench_xp else "Off")],
 				["wild_ward", "Wild Ward: %s" % shop_or("wild_ward", "On" if GameState.wild_ward else "Off")],
 				["damage_preview", "Damage preview: %s" % shop_or("damage_preview", "On" if GameState.damage_preview else "Off")],
+				["damage_numbers", "Damage numbers: %s" % ("On" if GameState.damage_numbers else "Off")],
 				["bonus_goals", "Bonus goals: %s" % ("On" if GameState.bonus_goals else "Off")],
 				["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
 				["play_reminder", "Break reminder: %s" % ("On" if GameState.play_reminder else "Off")],
@@ -481,6 +486,7 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				# A lowered challenge stays visible (item 746).
 				rows.append(["difficulty", "Challenge: %s" % DIFFICULTY_TEXT[GameState.difficulty] + (" " + Loc.t("(lowered)") if GameState.difficulty_lowered() else "")])
 				rows.append(["iron_oath", "Iron Oath: %s" % ("Sworn" if GameState.iron_oath else "Off")])
+				rows.append(["challenges", "Challenges..."])
 		"sound":
 			rows = [
 				["volume", "Volume: %d%%" % int(round(GameState.volume * 100.0))],
@@ -552,6 +558,8 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.wild_ward = not GameState.wild_ward
 		"damage_preview":
 			GameState.damage_preview = not GameState.damage_preview
+		"damage_numbers":
+			GameState.damage_numbers = not GameState.damage_numbers
 		"bonus_goals":
 			GameState.bonus_goals = not GameState.bonus_goals
 		"tips":
@@ -596,11 +604,13 @@ func _settings_action(key: String, dir: int = 1) -> void:
 				GameState.set_difficulty(d)
 		"iron_oath":
 			await _iron_oath()
+		"challenges":
+			await ChallengeMenu.run(self)
 
 ## Short names for the list rows; the line under the list explains each (items 2185, 2067).
 const DIFFICULTY_TEXT: Array[String] = ["Story", "Wayfarer", "Veteran", "Rift-Born"]
 const DIFFICULTY_HINTS: Array[String] = [
-	"Relaxed battles for enjoying the story. Foes deal 90% damage.",
+	"Relaxed battles for enjoying the story. Foes deal 90% damage, land fewer critical hits, and battles give 20% more Growth.",
 	"The normal journey.",
 	"Ring limits and smarter opponents.",
 	"No items in battle.",
@@ -814,7 +824,7 @@ func run_controls() -> void:
 			"always_run":
 				GameState.always_run = not GameState.always_run
 			"bond_style":
-				GameState.bond_style = "echo" if GameState.bond_style == "mine" else "mine"
+				GameState.bond_style = next_bond_style(GameState.bond_style)
 			"one_hand":
 				GameState.one_hand = not GameState.one_hand
 			"vibration":
@@ -836,6 +846,13 @@ func run_controls() -> void:
 		VirtualPad.apply_settings()
 		SaveManager.save_settings()
 
+const BOND_STYLE_NAMES: Dictionary = {"mine": "Mine", "echo": "Echo", "calm": "Calm"}
+
+## Mine, Echo, Calm, then Mine again.
+static func next_bond_style(current: String) -> String:
+	var i: int = GameState.BOND_STYLES.find(current)
+	return GameState.BOND_STYLES[(i + 1) % GameState.BOND_STYLES.size()]
+
 static func controls_rows() -> Array[Array]:
 	return [
 		["pad_size", "Pad size: %s" % GameState.PAD_SIZE_NAMES[GameState.pad_size]],
@@ -843,7 +860,7 @@ static func controls_rows() -> Array[Array]:
 		["left_handed", "Left-handed: %s" % ("On" if GameState.left_handed else "Off")],
 		["tap_to_move", "Tap to walk: %s" % ("On" if GameState.tap_to_move else "Off")],
 		["always_run", "Always run: %s" % ("On" if GameState.always_run else "Off")],
-		["bond_style", "Bonding: %s" % ("Mine" if GameState.bond_style == "mine" else "Echo")],
+		["bond_style", "Bonding: %s" % BOND_STYLE_NAMES.get(GameState.bond_style, "Mine")],
 		["one_hand", "One-hand layout: %s" % ("On" if GameState.one_hand else "Off")],
 		["swap_ab_touch", "Touch A/B swap: %s" % ("On" if GameState.swap_ab_touch else "Off")],
 		["swap_ab_pad", "Pad A/B swap: %s" % ("On" if GameState.swap_ab_pad else "Off")],
