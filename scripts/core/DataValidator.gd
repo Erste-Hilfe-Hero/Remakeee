@@ -129,6 +129,8 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 	_check_ai_profiles(errors)
 	for problem: String in BattleRules.validate_variants():
 		errors.append("rule_variants.json: " + problem)
+	errors.append_array(KampfChecks.field_errors())
+	errors.append_array(KampfChecks.boss_errors())
 	return errors
 
 ## KAMPF_PLAN_1000 items 240, 241: every base value stays in BASE_MIN..BASE_MAX, and unfolding
