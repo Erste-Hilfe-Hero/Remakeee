@@ -27,6 +27,7 @@
   "Round %d": "%d라운드",
   "Send an emote": "이모트 보내기",
   "The duel ended without a winner.": "결투가 승자 없이 끝났다.",
+  "The referee could not play this duel again. It does not count.": "심판이 이 대결을 다시 재생하지 못했다. 이 대결은 무효다.",
   "The two results did not match. The duel does not count.": "두 결과가 맞지 않는다. 이 결투는 무효다.",
   "Their team: %s": "상대 팀: %s",
   "This duel is over.": "이 결투는 끝났다.",

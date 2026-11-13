@@ -1,0 +1,12 @@
+{
+ "_comment": "nl translation of the battle_hud table, keyed by the English text.",
+ "strings": {
+  "%s: %d of %d can fight": "%s: %d van %d kunnen vechten",
+  "Again: %s x%d": "Opnieuw: %s x%d",
+  "Again: -": "Opnieuw: -",
+  "Foe's team": "Team van de tegenstander",
+  "No effect": "Geen effect",
+  "Strong": "Sterk",
+  "Your team": "Jouw team"
+ }
+}
