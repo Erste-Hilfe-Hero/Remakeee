@@ -138,7 +138,7 @@ static func status_turns(s: Spirling, turns: int) -> int:
 		return turns
 	return maxi(1, ceili(turns / 2.0))
 
-## Extra Energy a rest gives [param s] (Rest Candle, item 309).
+## Extra Energy a rest gives [param s] (Quiet Wick, item 309).
 static func rest_energy(s: Spirling) -> int:
 	return int(BattleRules.add_key(s, "rest_energy"))
 

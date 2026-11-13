@@ -15,6 +15,15 @@ const STAGE_WARN: int = 2
 const OVERCHARGE_PER_ENERGY: float = 0.12
 ## At most this much leftover Energy goes into one Overcharge (the rest stays).
 const OVERCHARGE_MAX_EXTRA: int = 5
+## Overcharge chain (KAMPF_PLAN item 59): an Overcharge art in the turn right after the same
+## Spirling's last one adds this much to the power multiplier.
+const OVERCHARGE_CHAIN_BONUS: float = 0.15
+## Energy a home field's "cheap_element" takes off arts of that element (never below 1, item 75).
+const FIELD_COST_CUT: int = 1
+
+## Power multiplier of an Overcharge art that has [param left] Energy left after its own cost.
+static func overcharge_mult(left: int, chained: bool = false) -> float:
+	return 1.0 + OVERCHARGE_PER_ENERGY * clampi(left, 0, OVERCHARGE_MAX_EXTRA) + (OVERCHARGE_CHAIN_BONUS if chained else 0.0)
 
 ## Energy tax (energy_tax effect): extra Energy per move, and how many turns a tax holds by default.
 const ENERGY_TAX_COST: int = 1
@@ -80,22 +89,29 @@ const TRAITS: Dictionary[String, Dictionary] = {
 	# cure_on_swap drops its status when it steps back to the bench.
 	"glimmer_skin": {"label": "Glimmer Skin", "text": "A physical hit on it may Scorch whoever struck it (3 in 10).", "contact_status": "scorch", "contact_chance": 0.3},
 	"unruffled": {"label": "Unruffled", "text": "Its status falls away when it steps back to your side.", "cure_on_swap": true},
+	# KAMPF_PLAN items 48, 49: cost_cut_from takes 1 Energy off every art that costs at least that
+	# much; full_energy_mult multiplies the damage of an art used with a full Energy bar.
+	"low_flame": {"label": "Low Flame", "text": "Arts that cost 5 Energy or more cost 1 less.", "cost_cut_from": 5},
+	"overflow": {"label": "Overflow", "text": "Hits 10% harder while its Energy is full.", "full_energy_mult": 1.1},
 }
 
 ## Rift fields. A map sets "field"; every battle there uses it. A Resonance move lays one for a
 ## few turns. Optional keys:
 ##   blocks:        statuses that can't take hold while the field lasts
 ##   regen_element: Spirlings of this element heal max_hp / regen_div at the end of each turn
+##   rest_bonus:    extra Energy for every Rest while the field lasts (KAMPF_PLAN item 42)
 ##   energy_element: Spirlings of this element gain energy_gain extra Energy at the end of each turn
 ##   bond_bonus:    added to the bond chance of an Echo call while the field lasts
+##   cheap_element: arts of this element cost FIELD_COST_CUT less, only while the field is the
+##                  place's own (a storm, a map's field), never a called one (KAMPF_PLAN item 75)
 const FIELDS: Dictionary[String, Dictionary] = {
 	"ash_storm": {"label": "Ash Storm", "boost": "EMBER", "weaken": "TIDE",
 		"intro": "Ash swirls through the Rift. Ember arts burn brighter, Tide arts sputter."},
-	"high_tide": {"label": "High Tide", "boost": "TIDE", "weaken": "EMBER", "blocks": ["scorch"],
+	"high_tide": {"label": "High Tide", "boost": "TIDE", "weaken": "EMBER", "blocks": ["scorch"], "rest_bonus": 1,
 		"intro": "The water rises around you. Tide arts surge, Ember arts fizzle, and nothing catches fire."},
 	"deep_murk": {"label": "Deep Murk", "boost": "UMBRA", "weaken": "LUMEN",
 		"intro": "The hollow swallows the light. Umbra arts deepen, Lumen arts dim."},
-	"static_veil": {"label": "Static Veil", "boost": "VOLT", "weaken": "STONE", "energy_element": "VOLT", "energy_gain": 1,
+	"static_veil": {"label": "Static Veil", "boost": "VOLT", "weaken": "STONE", "energy_element": "VOLT", "energy_gain": 1, "cheap_element": "VOLT",
 		"intro": "The air crackles. Volt arts snap harder, Stone arts crumble."},
 	"pollen_drift": {"label": "Pollen Drift", "boost": "BLOOM", "weaken": "GALE", "regen_element": "BLOOM", "regen_div": 16,
 		"intro": "Pollen drifts through the Rift. Bloom arts flourish and Bloom Spirlings mend, Gale arts stall."},
@@ -172,6 +188,9 @@ const RULES: Dictionary[String, Dictionary] = {
 		"difficulty": [0, 1, 2, 3], "warden_only": true},
 	"high_noon": {"label": "High Noon", "text": "The sun stands straight overhead: Lumen arts on both sides hit harder.", "lumen_mult": 1.3,
 		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	# KAMPF_PLAN item 54. "player_energy_cut": Energy every player Spirling starts without.
+	"low_tide": {"label": "Low Tide", "text": "The water has drawn back: your Spirlings start with 1 Energy less.", "player_energy_cut": 1,
+		"difficulty": [1, 2, 3]},
 	# KAMPF_PLAN_1000 item 409. "stages_locked": no stat stage moves on either side; "rest_cut":
 	# resting gives that much less Energy on both sides.
 	"still_air": {"label": "Still Air", "text": "Not a breath of wind: no stat stage rises or falls on either side.", "stages_locked": 1,

@@ -24,6 +24,11 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		snap["bond_block"] = model.bond_block
 	if not model.blocked_items.is_empty():
 		snap["blocked_items"] = model.blocked_items.duplicate()
+	# Story Rest and the tall-grass ambush (KAMPF_PLAN items 16, 52), also only when on.
+	if model.rest_heal_share > 0.0:
+		snap["rest_heal"] = model.rest_heal_share
+	if model.ambush:
+		snap["ambush"] = true
 	return snap
 
 static func _snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
@@ -200,6 +205,8 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.boss_difficulty = clampi(int(snap.get("boss_difficulty", -1)), -1, BattleRules.BOSS_PHASE_AT.size() - 1)
 	m.variants.assign(snap.get("variants", []))
 	m.round_limit = maxi(0, int(snap.get("round_limit", 0)))
+	m.rest_heal_share = clampf(float(snap.get("rest_heal", 0.0)), 0.0, BattleModel.STORY_REST_HEAL)
+	m.ambush = bool(snap.get("ambush", false)) and m.is_wild
 	if not partner.is_empty():
 		var ally: Array[Spirling] = _rebuild(partner.get("team", []))
 		if ally.size() != (partner.get("team", []) as Array).size():
