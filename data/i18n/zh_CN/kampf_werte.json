@@ -87,6 +87,17 @@
   "There are no stages for aim or dodging.": "没有命中或闪避的能力阶段。",
   "Trades all stages with the foe.": "与对手交换全部能力阶段。",
   "Unruffled": "泰然自若",
-  "Vigor = (base + spark/2) x (ring + %d) / %d": "元气 = (基础 + 火花/2) x (环 + %d) / %d"
+  "Vigor = (base + spark/2) x (ring + %d) / %d": "元气 = (基础 + 火花/2) x (环 + %d) / %d",
+  "%s %d -> %d": "%s %d -> %d",
+  "%s gained %d growth. The ring limit holds it at ring %d for now.": "%s获得%d点成长。环之上限暂时让它停在第%d环。",
+  "%s's sparks flicker and settle anew.": "%s的火花闪烁后重新排定。",
+  "FOC": "专注",
+  "GRD": "守御",
+  "MGT": "劲力",
+  "PCE": "步速",
+  "Ring %s:": "第%s环：",
+  "Rolls all Spark values of one Spirling anew. Used up.": "重新掷出一只Spirling的全部火花值。会消耗。",
+  "Spark Flux": "火花涡流",
+  "VIG": "元气"
  }
 }

@@ -133,3 +133,52 @@ func test_info_strip_reads_out_stages_with_their_factor() -> void:
 	strip.stages = {"atk": 2} as Dictionary[String, int]
 	assert_string_contains(strip.screen_reader_text(), "Might +2: x2.00")
 	strip.free()
+
+func test_unfurl_preview_shows_every_value_before_and_after() -> void:
+	var s: Spirling = BattleFixtures.make("Kindlop", 20)
+	var lines: Array[String] = BattleGuide.unfold_preview(s, Database.species("Smoldrake"))
+	assert_eq(lines.size(), 5)
+	assert_string_contains(lines[1], "Might %d -> " % s.atk())
+	assert_eq(s.data.species_name, "Kindlop", "the preview leaves the Spirling as it is")
+
+func test_swap_hint_compares_with_the_one_in_front() -> void:
+	var a: Spirling = BattleFixtures.make("Kindlop", 20)
+	var b: Spirling = BattleFixtures.make("Kindlop", 25)
+	var line: String = BattleGuide.compare_line(b, a)
+	assert_string_contains(line, "MGT %d (%+d)" % [b.atk(), b.atk() - a.atk()])
+	assert_string_contains(line, str(b.temperament().label))
+	assert_false(BattleGuide.compare_line(a, a).contains("("), "no difference against itself")
+
+func test_growth_lost_to_the_ring_limit_says_so() -> void:
+	var s: Spirling = BattleFixtures.make("Kindlop", 20)
+	var m: BattleModel = BattleFixtures.model([s] as Array[Spirling], _one("Mossling"))
+	m.level_cap = 20
+	m._events = []
+	m._give_xp(s, 500)
+	var e: BattleEvent = BattleFixtures.first_of(m._events, T.XP_GAINED)
+	assert_string_contains(e.describe(), "ring limit holds it at ring 20")
+	m.level_cap = Spirling.LEVEL_SANITY
+	m._events = []
+	m._give_xp(s, 5)
+	assert_false(BattleFixtures.first_of(m._events, T.XP_GAINED).describe().contains("ring limit"))
+
+func test_spark_flux_rolls_every_spark_anew() -> void:
+	var s: Spirling = BattleFixtures.make("Kindlop", 20)
+	var r := RandomNumberGenerator.new()
+	r.seed = 3
+	GameState.reroll_sparks(s, r)
+	var all_eight: bool = true
+	for key: String in Spirling.STAT_KEYS:
+		assert_between(int(s.spark[key]), 0, Spirling.SPARK_MAX)
+		all_eight = all_eight and int(s.spark[key]) == 8
+	assert_false(all_eight, "the fixture's even 8s were rolled anew")
+	assert_eq(s.hp, s.max_hp(), "a healthy Spirling stays at full Vigor")
+	assert_true(bool(Database.item("spark_flux").get("spark_reset", false)))
+
+func test_value_curve_grows_with_the_ring() -> void:
+	var s: Spirling = BattleFixtures.make("Kindlop", 30)
+	var c: Array[int] = BattleGuide.curve(s, "atk")
+	assert_eq(c.size(), BattleGuide.CURVE_RINGS.size())
+	for i: int in range(1, c.size()):
+		assert_gt(c[i], c[i - 1])
+	assert_eq(c[1], BattleGuide.value(s, "atk"), "ring 30 on the curve is today's value")
