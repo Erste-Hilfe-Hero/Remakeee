@@ -178,6 +178,8 @@ var tap_to_move: bool = true
 var always_run: bool = false
 ## How a bond is made: "mine" taps one big button fast (owner, 9 Nov), "echo" repeats the call.
 var bond_style: String = "mine"
+## "calm" is the echo without a time limit (Kampf-Plan, Barrierefreiheit).
+const BOND_STYLES: Array[String] = ["mine", "echo", "calm"]
 ## A and B change places (item 2111), apart for the touch pad and for gamepads.
 var swap_ab_touch: bool = false
 var swap_ab_pad: bool = false
@@ -838,7 +840,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	left_handed = bool(d.get("left_handed", false))
 	tap_to_move = bool(d.get("tap_to_move", true))
 	always_run = bool(d.get("always_run", false))
-	bond_style = "echo" if str(d.get("bond_style", "mine")) == "echo" else "mine"
+	bond_style = str(d.get("bond_style", "mine")) if str(d.get("bond_style", "mine")) in BOND_STYLES else "mine"
 	swap_ab_touch = bool(d.get("swap_ab_touch", false))
 	swap_ab_pad = bool(d.get("swap_ab_pad", false))
 	tap_vibration = bool(d.get("tap_vibration", false))

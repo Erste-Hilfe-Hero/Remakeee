@@ -49,7 +49,7 @@ static func _kind_name(kind: String) -> String:
 
 ## A text code for [param snap] that a friend can paste to watch the same battle.
 static func share_code(snap: Dictionary) -> String:
-	var raw: PackedByteArray = JSON.stringify(snap).to_utf8_buffer()
+	var raw: PackedByteArray = JSON.stringify(BattleReplay.shareable(snap)).to_utf8_buffer()
 	return str(cfg().code_prefix) + Marshalls.raw_to_base64(raw.compress(FileAccess.COMPRESSION_GZIP))
 
 ## The snapshot inside [param code], or {} when the code is broken.

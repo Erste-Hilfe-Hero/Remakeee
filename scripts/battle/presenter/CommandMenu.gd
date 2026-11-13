@@ -37,6 +37,9 @@ var _long_fired: bool = false
 var _shown_moves: Array[MoveData] = []
 ## The battle the menu was last filled from (for the live info lines, item 578).
 var _model: BattleModel
+var _slot: int = 0
+## Row to focus first on the next refresh: the art this Spirling used last (item 603), -1 none.
+var prefer_row: int = -1
 
 const LONG_PRESS: float = 0.45
 
@@ -296,6 +299,13 @@ func open_info(index: int) -> void:
 		return
 	var mv: MoveData = _shown_moves[index]
 	var text: String = move_info(mv, _model)
+	# Live lines (items 571, 572): likely turn order and the Energy left, above the close hint.
+	var live: Array[String] = BattleInfo.card_lines(_model, _slot, mv)
+	if not live.is_empty():
+		var parts: PackedStringArray = text.split("\n")
+		var close: String = parts[parts.size() - 1]
+		parts.remove_at(parts.size() - 1)
+		text = "\n".join(parts) + "\n" + "\n".join(live) + "\n" + close
 	var rich: bool = EraBattleHud.text(era, "info_card", "plain") == "rich"
 	_info_head.visible = rich
 	if rich:
@@ -397,6 +407,13 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 				line = Loc.t("Ends the foe's %s.") % Loc.t(StatusRules.label(ct)) if not ct.is_empty() else Loc.t("Ends the foe's status.")
 			&"stage_steal":
 				line = Loc.t("Steals one raised stage from the foe.")
+			&"stage_copy":
+				line = Loc.t("Copies every stage of the foe onto itself.")
+			&"stage_swap":
+				line = Loc.t("Trades all stages with the foe.")
+			&"status_veil":
+				var sv: int = int(fx.get("amount", 0))
+				line = Loc.t("No foe status takes hold on its side for %d turns.") % (sv if sv > 0 else BattleRules.STATUS_VEIL_TURNS)
 			&"energy_gain":
 				line = Loc.t("Gains %d Energy.") % int(fx.get("amount", 1))
 			&"stage_reset":
@@ -521,6 +538,7 @@ static func damage_pct(model: BattleModel, me: Spirling, foe: Spirling, mv: Move
 ## The matchup tag shows only when one foe stands (with several, the target is picked after).
 func refresh(model: BattleModel, slot: int = 0) -> void:
 	_model = model
+	_slot = slot
 	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER, slot)
 	var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
 	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, foes[0]) if foes.size() == 1 else null
@@ -534,7 +552,8 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 		if i < me.moves.size():
 			var mv: MoveData = me.moves[i]
 			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
-			b.text = mv.move_name
+			# An art that acts first carries an arrow (item 595).
+			b.text = ("^" if mv.priority > 0 else "") + mv.move_name
 			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
 			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct, me.move_cost(mv), me.cooldown_left(mv))
 			var filled: bool = EraBattleHud.flag(era, "art_fill")
@@ -547,15 +566,18 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			_row_colors[i] = BattleUiStyle.matchup_color(era, shown_mult)
 			if EraBattleHud.flag(era, "art_detail"):
 				# Era IV on: the element's name under the art's name, the matchup word under the cost.
-				b.text = Loc.t(mv.move_name) + "\n" + Loc.t(Elements.element_name(mv.element))
+				b.text = ("^" if mv.priority > 0 else "") + Loc.t(mv.move_name) + "\n" + Loc.t(Elements.element_name(mv.element))
 				_move_hints[i].text = Loc.t(EraBattleHud.effect_hint(era, shown_mult))
 			_style_row(b, _row_left())
 			if filled:
 				_fill_row(b, mv.element)
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
+			# Screen readers read the whole info card, no long press needed.
+			b.accessibility_description = move_info(mv, model)
 			b.disabled = not me.can_afford(mv) or model.move_locked(mv)
 		else:
 			b.text = "-"
+			b.accessibility_description = ""
 			_move_costs[i].text = ""
 			_move_hints[i].text = ""
 			_move_icons[i].texture = null
@@ -596,10 +618,55 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 		_move_buttons[0].disabled = false
 		_tint_row(0)
 	_refresh_shortcut(model, BattleAction.Kind.ITEM in kinds)
-	for b: Button in _move_buttons + [_swap, _item, _bond, _run]:
+	var usable: Array[bool] = []
+	for b: Button in _move_buttons:
+		usable.append(not b.disabled)
+	var row: int = BattleInfo.focus_row(usable, prefer_row)
+	if row >= 0:
+		_move_buttons[row].grab_focus.call_deferred()
+		return
+	for b: Button in [_swap, _item, _bond, _run]:
 		if not b.disabled:
 			b.grab_focus.call_deferred()
 			break
+
+## Keys 1 to 4 pick the art in that row while the menu is open (item 613).
+func _unhandled_key_input(event: InputEvent) -> void:
+	var k := event as InputEventKey
+	if k == null or not k.pressed or k.echo or not _content.visible or is_info_open():
+		return
+	var row: int = BattleInfo.art_key(k.keycode)
+	if row < 0 or row >= _move_buttons.size() or _move_buttons[row].disabled:
+		return
+	get_viewport().set_input_as_handled()
+	_move_buttons[row].pressed.emit()
+
+## Long presses are optional (Kampf-Plan, Barrierefreiheit): on a keyboard I or F1, on a gamepad
+## the top face button opens or closes the info card of the focused art.
+static func is_info_key(event: InputEvent) -> bool:
+	if not event.is_pressed() or event.is_echo():
+		return false
+	if event is InputEventKey:
+		return (event as InputEventKey).keycode in [KEY_I, KEY_F1]
+	if event is InputEventJoypadButton:
+		return (event as InputEventJoypadButton).button_index == JOY_BUTTON_Y
+	return false
+
+## Toggles the info card of the art in row [param index].
+func toggle_info(index: int) -> void:
+	if is_info_open():
+		close_info()
+	else:
+		open_info(index)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not is_visible_in_tree() or not _content.visible or not is_info_key(event):
+		return
+	var index: int = _move_buttons.find(get_viewport().gui_get_focus_owner())
+	if index < 0 and not is_info_open():
+		return
+	toggle_info(index)
+	get_viewport().set_input_as_handled()
 
 ## A command's share of the row follows its word, so a longer word ("Schwur") gets more room.
 func _fit_command(b: Button) -> void:
