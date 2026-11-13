@@ -78,6 +78,7 @@
   "Trait: %s": "Rasgo: %s",
   "Turn order hidden.": "Orden de turnos oculto.",
   "Turns: %d": "Turnos: %d",
-  "Your side": "Tu lado"
+  "Your side": "Tu lado",
+  "The battle was left open. On Rift-Born that counts as a loss, and your team wakes at the last spring.": "La batalla quedó abierta. En Nacido de Grieta eso cuenta como derrota, y tu equipo despierta en el último manantial."
  }
 }

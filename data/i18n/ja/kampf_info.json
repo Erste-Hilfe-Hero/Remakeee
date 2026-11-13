@@ -78,6 +78,7 @@
   "Trait: %s": "特性：%s",
   "Turn order hidden.": "行動順は不明。",
   "Turns: %d": "ターン：%d",
-  "Your side": "味方"
+  "Your side": "味方",
+  "The battle was left open. On Rift-Born that counts as a loss, and your team wakes at the last spring.": "バトルが終わらないまま中断された。裂け目生まれでは負けとなり、チームは最後の泉で目をさます。"
  }
 }
