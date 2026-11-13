@@ -603,7 +603,9 @@ func _run() -> void:
 	if model.is_wild and not model.bond_block.is_empty() and not model.has_meta("quick"):
 		await _text.show_text(Loc.t(model.bond_block))
 	_refresh_goal()
-	var tip_ids: Array[String] = ["battle", "bond"] if model.is_wild else ["battle"]
+	var tip_ids: Array[String] = ["battle"]
+	if model.is_wild:
+		tip_ids.append("bond")
 	if _multi:
 		tip_ids.append("multi")
 	for id: String in tip_ids:
