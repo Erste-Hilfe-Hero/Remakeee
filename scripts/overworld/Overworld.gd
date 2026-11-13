@@ -2527,6 +2527,9 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 			for s: Spirling in helper.partner.echo:
 				s.restore()
 			info["partner"] = helper.partner
+		else:
+			# Every few floors the echoes come two at a time (KAMPF_PLAN_1000 item 374).
+			info["front"] = MultiRules.tower_front(floors + 1, bool(info.get("warden", false)))
 		busy = false
 		var outcome: BattleModel.Outcome = await start_battle(foes, false, info)
 		busy = true
@@ -4054,6 +4057,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	var front: Array = trainer.get("front", [1, 1])
 	model.front_size = [int(front[0]), int(front[1])]
 	model.foe_boss = str(trainer.get("boss", ""))
+	model.foe_formation = bool(trainer.get("formation", false))
 	var goal_key: String = str(trainer.get("goal_key", ""))
 	var goal: Dictionary = BattleGoals.all().get(goal_key, {}) if not goal_key.is_empty() and GameState.bonus_goals else {}
 	if not goal.is_empty():
@@ -4070,7 +4074,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		else:
 			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng)
 		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)),
-			int(partner.get("ai", TrainerData.partner_ai(GameState.difficulty))), str(partner.get("profile", "")))
+			MultiRules.partner_ai(int(partner.get("ai", TrainerData.partner_ai(GameState.difficulty))), GameState.difficulty), str(partner.get("profile", "")))
 	# Challenge rules and the difficulty's crit and Growth touches (KAMPF plan area 13).
 	ChallengeRules.apply_to_model(model, trainer, map.id)
 	return model
