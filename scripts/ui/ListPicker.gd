@@ -43,6 +43,9 @@ var _hints: Array[String] = []
 var _sliders: Array[bool] = []
 ## How a slider row was moved when pick() returned its index: -1 lower, +1 higher (item 2064).
 var last_dir: int = 0
+## True when the row just picked was held down at least LONG_PRESS_MS (item 1947).
+var last_long: bool = false
+const LONG_PRESS_MS: int = 500
 
 const BACK_SIZE: int = 16
 ## pick() returns TAB_PICKED - n when the player switches to tab n (item 1914).
@@ -225,6 +228,7 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	_back.visible = cancellable
 	_foot.visible = one_hand and cancellable
 	last_dir = 0
+	last_long = false
 	scroll_shown = 0.0
 	_scroll_quiet = SCROLL_QUIET_FRAMES
 	_hints.clear()
@@ -535,6 +539,7 @@ func _on_row(result: int, dir: int = 0, b: Button = null) -> void:
 		_scroll.ensure_control_visible(b)
 		return
 	last_dir = dir
+	last_long = pointer_used and result >= 0 and _press_ms >= 0 and Time.get_ticks_msec() - _press_ms >= LONG_PRESS_MS
 	Sound.sfx("cancel" if result < 0 else "confirm")
 	if GameState.tap_vibration and pointer_used:
 		Haptics.play(TAP_BUZZ)
