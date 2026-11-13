@@ -30,8 +30,10 @@ func _init() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
-## Plays the opening of [param era]. Awaitable; frees itself when done.
-func play(era: int) -> void:
+## Plays the opening of [param era]. Awaitable; frees itself when done. [param share] below 1
+## (a rematch, BattleShow.intro_share) skips the flashes and clears the cover in that share of
+## the time.
+func play(era: int, share: float = 1.0) -> void:
 	style = EraBattleFeel.text(era, "intro", "blinds")
 	cell = CELL_OLD if era <= 2 else CELL_NEW
 	cover_color = UITheme.INK
@@ -44,7 +46,7 @@ func play(era: int) -> void:
 		await tw0.finished
 		queue_free()
 		return
-	var flashes: int = int(EraBattleFeel.num(era, "intro_flashes", 0))
+	var flashes: int = int(EraBattleFeel.num(era, "intro_flashes", 0)) if share >= 1.0 else 0
 	var peak: float = float(EraBattleFeel.cfg().get("intro_flash_alpha", 0.5))
 	for i: int in flashes:
 		flash_alpha = peak
@@ -54,7 +56,7 @@ func play(era: int) -> void:
 		queue_redraw()
 		await get_tree().create_timer(FLASH_PERIOD / 2.0 / Juice.speed()).timeout
 	var tw: Tween = create_tween()
-	tw.tween_method(_set_progress, 0.0, 1.0, EraBattleFeel.num(era, "intro_time", 0.6) / Juice.speed()).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_method(_set_progress, 0.0, 1.0, EraBattleFeel.num(era, "intro_time", 0.6) * clampf(share, 0.05, 1.0) / Juice.speed()).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	await tw.finished
 	queue_free()
 
