@@ -1,0 +1,21 @@
+{
+ "_comment": "pl translation of the kampf_boss table, keyed by the English text.",
+ "strings": {
+  "%s grows restless: the longer the fight, the harder it strikes!": "%s się niecierpliwi: im dłuższa walka, tym mocniej uderza!",
+  "%s lies open: its Guard is down for a turn!": "%s się odsłania: przez turę jego Osłona jest obniżona!",
+  "Before the Hush, the Cinder Rift fed a village's forges. The smiths sold the last of its heat to the highest bidder, and what was left curled up and learned to hate. It still keeps time like a bellows: hold it under High Tide and it can't stoke its next phase.": "Przed Ciszą Cinder Rift karmił kuźnie pewnej wioski. Kowale sprzedali resztę jego żaru temu, kto dał najwięcej, a to, co zostało, zwinęło się w kłębek i nauczyło nienawiści. Wciąż oddycha w rytmie miecha: trzymaj go pod Wysoką Wodą, a nie rozdmucha następnej fazy.",
+  "Ebb": "Odpływ",
+  "It acts %d times each turn.": "Działa %d razy w każdej turze.",
+  "Mist hides things, and the people nearby paid it well to hide one thing in particular. When the payments stopped, it hid them too. Dawn Glow burns its fog thin; while the light lies, it can't pull itself into a new shape.": "Mgła ukrywa rzeczy, a ludzie z okolicy dobrze jej płacili, by ukryła jedną konkretną. Kiedy płatności ustały, ukryła i ich. Blask Świtu wypala jej mgłę na cienko; dopóki światło leży, nie może przybrać nowego kształtu.",
+  "Not a breath of wind: no stat stage rises or falls on either side.": "Ani podmuchu: po żadnej stronie żaden stopień nie rośnie ani nie spada.",
+  "Still Air": "Martwe Powietrze",
+  "The Ashen Heart splits open. Its core burns white!": "Popielne Serce pęka. Jego rdzeń płonie na biało!",
+  "The Drowned Heart sinks its weight into one last surge!": "Utopione Serce wkłada cały swój ciężar w ostatnią falę!",
+  "The Mist Heart pulls the fog tight around its core!": "Serce Mgły zaciska mgłę wokół swojego rdzenia!",
+  "The Tide Rift sank a ferry once, and the ferryman swore he had warned everyone. He had not. The heart at the bottom remembers every name on the passenger list. Static Veil sets its water humming, and while it hums the heart can't gather its next surge.": "Tide Rift zatopił kiedyś prom, a przewoźnik przysięgał, że wszystkich ostrzegał. Nie ostrzegał. Serce na dnie pamięta każde nazwisko z listy pasażerów. Zasłona statyki sprawia, że jego woda brzęczy, a dopóki brzęczy, serce nie zbierze następnej fali.",
+  "The water has run out: resting gives 1 Energy less on both sides.": "Woda się skończyła: odpoczynek daje obu stronom o 1 Energię mniej.",
+  "What the Ashen Heart was": "Czym było Popielne Serce",
+  "What the Drowned Heart was": "Czym było Utopione Serce",
+  "What the Mist Heart was": "Czym było Serce Mgły"
+ }
+}
