@@ -160,6 +160,12 @@ const RULES: Dictionary[String, Dictionary] = {
 	# KAMPF_PLAN item 54. "player_energy_cut": Energy every player Spirling starts without.
 	"low_tide": {"label": "Low Tide", "text": "The water has drawn back: your Spirlings start with 1 Energy less.", "player_energy_cut": 1,
 		"difficulty": [1, 2, 3]},
+	# KAMPF_PLAN_1000 item 409. "stages_locked": no stat stage moves on either side; "rest_cut":
+	# resting gives that much less Energy on both sides.
+	"still_air": {"label": "Still Air", "text": "Not a breath of wind: no stat stage rises or falls on either side.", "stages_locked": 1,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	"ebb": {"label": "Ebb", "text": "The water has run out: resting gives 1 Energy less on both sides.", "rest_cut": 1,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
 }
 
 ## The number a Warden rule key adds up to over every rule in [param rule_string] (0 when none

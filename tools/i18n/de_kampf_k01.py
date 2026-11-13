@@ -18,7 +18,7 @@ T = {
     # Items and rules
     "Rest Candle": "Ruhekerze",
     "Restores 3 Energy to any Spirling of the team, also one waiting on the bench.": "Gibt einem Spirling des Teams 3 Energie zurück, auch einem auf der Bank.",
-    "Low Tide": "Ebbe",
+    "Low Tide": "Niedrigwasser",
     "The water has drawn back: your Spirlings start with 1 Energy less.": "Das Wasser ist zurückgewichen: Deine Spirlings starten mit 1 Energie weniger.",
     # Rules book
     "Battle rules": "Kampfregeln",
