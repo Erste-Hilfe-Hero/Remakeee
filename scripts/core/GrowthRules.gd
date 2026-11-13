@@ -33,6 +33,9 @@ static func battle_mult(difficulty: int, trainer: Dictionary, records: Dictionar
 		m *= num("rematch_mult", 1.0)
 	if int(records.get(WORLD_RECORD, 0)) > 0:
 		m *= num("world_goal_mult", 1.0)
+	# Bouts in the training ring grow at their own rate (data/training.json).
+	if bool(trainer.get("practice", false)):
+		m *= float(TrainingGround.data().get("growth_mult", 1.0))
 	return m
 
 ## Growth factor of one Spirling: its keepsake ("held": {"growth_mult"}) and its kinship.
