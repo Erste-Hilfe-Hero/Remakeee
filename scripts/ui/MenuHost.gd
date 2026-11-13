@@ -395,6 +395,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"bench_lessons": "Spirlings on the bench grow too.",
 	"wild_ward": "No wild Spirlings step out while it is on.",
 	"damage_preview": "Shows how hard a move would hit before you choose it.",
+	"damage_numbers": "Shows the damage of each hit as a number over the Spirling.",
 	"bonus_goals": "Optional extra goals in Wayfarer and Warden battles.",
 	"tips": "Short hints the first time something new comes up.",
 	"play_reminder": "A short note after 90 minutes of play.",
@@ -475,6 +476,7 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["bench_lessons", "Bench lessons: %s" % shop_or("bench_lessons", "On" if GameState.bench_xp else "Off")],
 				["wild_ward", "Wild Ward: %s" % shop_or("wild_ward", "On" if GameState.wild_ward else "Off")],
 				["damage_preview", "Damage preview: %s" % shop_or("damage_preview", "On" if GameState.damage_preview else "Off")],
+				["damage_numbers", "Damage numbers: %s" % ("On" if GameState.damage_numbers else "Off")],
 				["bonus_goals", "Bonus goals: %s" % ("On" if GameState.bonus_goals else "Off")],
 				["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
 				["play_reminder", "Break reminder: %s" % ("On" if GameState.play_reminder else "Off")],
@@ -556,6 +558,8 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.wild_ward = not GameState.wild_ward
 		"damage_preview":
 			GameState.damage_preview = not GameState.damage_preview
+		"damage_numbers":
+			GameState.damage_numbers = not GameState.damage_numbers
 		"bonus_goals":
 			GameState.bonus_goals = not GameState.bonus_goals
 		"tips":

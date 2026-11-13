@@ -1,0 +1,9 @@
+{
+ "_comment": "ru translation of the kampf_k09b table, keyed by the English text.",
+ "strings": {
+  "Damage numbers: %s": "Числа урона: %s",
+  "Shows the damage of each hit as a number over the Spirling.": "Показывает урон каждого удара числом над Spirling.",
+  "Star of the battle: %s": "Звезда боя: %s",
+  "Take a photo": "Сделать фото"
+ }
+}
