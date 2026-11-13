@@ -36,6 +36,8 @@ func _ready() -> void:
 	Loc.events.language_changed.connect(_on_language_changed)
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Deferred, so it runs after SafeArea has moved the panels for the new screen size.
+	get_viewport().size_changed.connect(apply_hand_layout, CONNECT_DEFERRED)
 	picker = ListPicker.new()
 	_fill(picker)
 	add_child(picker)
@@ -120,9 +122,9 @@ func apply_hand_layout() -> void:
 		return
 	var vp_h: float = get_viewport_rect().size.y
 	for c: Control in [picker, _info_panel] as Array[Control]:
-		if not c.has_meta("top"):
-			c.set_meta("top", c.offset_top)
-		var top: float = float(c.get_meta("top"))
+		# The top SafeArea.apply gives the panel (see _fill), worked out again because the
+		# screen can change size while the game runs (a foldable opening or closing).
+		var top: float = SafeArea.rect(get_viewport_rect().size).position.y + PANEL_MARGIN
 		if GameState.one_hand:
 			var low: float = vp_h * ONE_HAND_TOP
 			# With the pad on screen the list ends above it; keep room for a few rows.
