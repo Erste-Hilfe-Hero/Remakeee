@@ -86,6 +86,8 @@ func test_broken_uploads_are_errors_not_crashes() -> void:
 
 func test_local_server_judges_like_the_real_one() -> void:
 	var s := LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	s.rng.seed = 1
 	s.switch_user("ann")
 	s.call_fn("hello", {"p_version": 1})
 	var b: Array = _battle()
@@ -113,6 +115,8 @@ func test_local_server_judges_like_the_real_one() -> void:
 
 func test_submit_limit_per_hour() -> void:
 	var s := LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	s.rng.seed = 1
 	s.switch_user("ann")
 	s.db.config.battle_submit_limit = 2
 	var replay: Dictionary = {"teams": [[{}], [{}]]}

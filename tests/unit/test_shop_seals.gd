@@ -57,6 +57,8 @@ func test_seals_never_in_fair_league() -> void:
 	for ctx: String in ["league_fair", "echo"]:
 		assert_eq(ShopEffects.seals_for(ctx), [0, 0, 0] as Array[int], ctx)
 	var be := LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	be.rng.seed = 1
 	be.switch_user("ann")
 	LocalShop.of(be)._shop(be.me()).unlocks["power_seal"] = 4
 	assert_eq(be._league_expect({"seed": 1, "teams": [[], []], "league": LeagueRules.FAIR, "user": be.me()}).seals, [0, 0, 0])
@@ -134,6 +136,8 @@ func test_account_power() -> void:
 
 func test_local_server_sells_tiers_in_order() -> void:
 	var be := LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	be.rng.seed = 1
 	var shop: LocalShop = LocalShop.of(be)
 	be.switch_user("ann")
 	be.call_fn("hello", {"p_version": 1})

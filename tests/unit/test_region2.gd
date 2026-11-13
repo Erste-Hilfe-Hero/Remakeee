@@ -45,7 +45,7 @@ func test_slots_have_stand_ins_and_rings_climb() -> void:
 			total += int(s.weight)
 			assert_true(Database.spirlings.has(Region2.slot_species(s)), str(s.slot))
 		assert_eq(total, 100, r.id)
-	assert_gt(Region2.open_slots().size(), 0, "slots wait for the region's own Spirlings")
+	assert_eq(Region2.open_slots().size(), 0, "Vellmarch's own Spirlings fill every road and Warden slot")
 	assert_eq(Region2.slot_species({"species": "Siltgrove", "stand_in": "Cogwright"}), "Siltgrove")
 
 func test_four_wardens_each_hold_a_rift() -> void:

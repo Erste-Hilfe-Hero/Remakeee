@@ -2280,15 +2280,15 @@
   "trainer": "Culvert Rats",
   "team": [
    {
-    "species": "Diparrow",
+    "species": "Snagwhisk",
     "level": 56
    },
    {
-    "species": "Rainmantle",
+    "species": "Fauxscript",
     "level": 56
    },
    {
-    "species": "Reedwarden",
+    "species": "Splotchet",
     "level": 57
    }
   ],
@@ -2303,15 +2303,15 @@
   "trainer": "Tunnel Bruisers",
   "team": [
    {
-    "species": "Glassfell",
+    "species": "Veilmote",
     "level": 57
    },
    {
-    "species": "Ashcrest",
+    "species": "Latchet",
     "level": 57
    },
    {
-    "species": "Smeltpup",
+    "species": "Knellgrim",
     "level": 58
    }
   ],
@@ -2326,15 +2326,15 @@
   "trainer": "The Claque",
   "team": [
    {
-    "species": "Smeltmaw",
+    "species": "Smogpup",
     "level": 57
    },
    {
-    "species": "Glassfell",
+    "species": "Veilmote",
     "level": 57
    },
    {
-    "species": "Ashcrest",
+    "species": "Latchet",
     "level": 58
    }
   ],
