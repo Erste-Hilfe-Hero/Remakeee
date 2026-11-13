@@ -1,0 +1,17 @@
+{
+ "_comment": "pt_BR translation of the challenges table, keyed by the English text.",
+ "strings": {
+  "%s: %d won, %d lost": "%s: %d vencidas, %d perdidas",
+  "Foe scaling": "Ajuste de rivais",
+  "Lantern post: %s would battle you again today.": "Correio-lanterna: %s querem lutar com você de novo hoje.",
+  "Lantern post: no rematch invitations today.": "Correio-lanterna: nenhum convite para revanche hoje.",
+  "Most battled:": "Mais enfrentados:",
+  "No Wayfarer battles yet.": "Ainda nenhuma batalha contra Viajantes.",
+  "Run timer": "Cronômetro",
+  "Shows the journey's play time in the corner, for speed runs.": "Mostra o tempo de jogo da jornada no canto, para speedruns.",
+  "Toughest:": "Mais difíceis:",
+  "Wayfarer book": "Livro dos Viajantes",
+  "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "Os Spirlings dos Viajantes ficam perto do seu mais forte, dentro do limite de anel.",
+  "best in %d turns": "recorde em %d turnos"
+ }
+}

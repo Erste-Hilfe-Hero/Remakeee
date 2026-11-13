@@ -1,0 +1,17 @@
+{
+ "_comment": "nl translation of the challenges table, keyed by the English text.",
+ "strings": {
+  "%s: %d won, %d lost": "%s: %d gewonnen, %d verloren",
+  "Foe scaling": "Tegenstander-aanpassing",
+  "Lantern post: %s would battle you again today.": "Lantaarnpost: %s willen vandaag weer tegen je vechten.",
+  "Lantern post: no rematch invitations today.": "Lantaarnpost: vandaag geen uitnodigingen voor een revanche.",
+  "Most battled:": "Vaakst bevochten:",
+  "No Wayfarer battles yet.": "Nog geen gevechten tegen Zwervers.",
+  "Run timer": "Looptimer",
+  "Shows the journey's play time in the corner, for speed runs.": "Toont de speeltijd van de reis in de hoek, voor speedruns.",
+  "Toughest:": "Taaiste:",
+  "Wayfarer book": "Zwerversboek",
+  "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "De Spirlings van Zwervers blijven dicht bij je sterkste, binnen de ringgrens.",
+  "best in %d turns": "record in %d beurten"
+ }
+}

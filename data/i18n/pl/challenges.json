@@ -1,0 +1,17 @@
+{
+ "_comment": "pl translation of the challenges table, keyed by the English text.",
+ "strings": {
+  "%s: %d won, %d lost": "%s: %d wygranych, %d przegranych",
+  "Foe scaling": "Dopasowanie rywali",
+  "Lantern post: %s would battle you again today.": "Poczta latarniowa: %s chcą dziś znów z tobą walczyć.",
+  "Lantern post: no rematch invitations today.": "Poczta latarniowa: dziś brak zaproszeń na rewanż.",
+  "Most battled:": "Najczęściej:",
+  "No Wayfarer battles yet.": "Jeszcze żadnej walki z Wędrowcami.",
+  "Run timer": "Stoper",
+  "Shows the journey's play time in the corner, for speed runs.": "Pokazuje czas gry w rogu ekranu, do speedrunów.",
+  "Toughest:": "Najtrudniejsi:",
+  "Wayfarer book": "Księga Wędrowców",
+  "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "Spirlingi Wędrowców trzymają się blisko twojego najsilniejszego, w granicy pierścienia.",
+  "best in %d turns": "rekord w %d tur"
+ }
+}
