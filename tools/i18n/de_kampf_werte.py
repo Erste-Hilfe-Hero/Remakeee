@@ -1,5 +1,5 @@
 """German texts for KAMPF_PLAN_1000 areas "Status-Zustände" and "Werte-Stufen und Werte":
-new statuses, gifts, arts, items, the Still Air rule and the battle guide."""
+new statuses, gifts, arts, items, the Hushed Air rule and the battle guide."""
 T = {
 # Statuses
 "Spent": "Erschöpft",
@@ -29,7 +29,7 @@ T = {
 "A physical hit on it may Scorch whoever struck it (3 in 10).": "Wer es körperlich trifft, kann dabei Brand fangen (3 von 10).",
 "Unruffled": "Ruhig",
 "Its status falls away when it steps back to your side.": "Sein Status fällt ab, sobald es an deine Seite zurücktritt.",
-"Still Air": "Stille Luft",
+"Hushed Air": "Gedämpfte Luft",
 "The air hangs dead still: no status takes hold on either side.": "Die Luft steht still: Auf keiner Seite haftet ein Status.",
 # Arts
 "Leaden Hum": "Bleisummen",

@@ -65,15 +65,17 @@ func test_stage_arts_count_as_stage_only_when_stages_are_locked() -> void:
 	assert_true(BattleRules.stage_only(Database.move("Crosswind Trade")))
 
 func test_a_boss_takes_lowered_stages_half() -> void:
-	var s: Spirling = BattleFixtures.make("Smoldrake", 20)
+	var m := BattleModel.new(_one("Kindlop", 20), _one("Smoldrake", 20), false, 6, 0)
+	m.foe_boss = "ashen_heart"
+	m.start()
+	var s: Spirling = m.active_spirling(1)
+	assert_true(s.boss_guard)
 	var plain: int = s.atk()
-	s.stages["atk"] = -2
-	var low: int = s.effective_atk()
-	s.boss_guard = true
+	m.change_stage(1, "atk", -2)
 	var boss_low: int = s.effective_atk()
-	assert_gt(boss_low, low, "a lowered boss keeps more Might")
+	assert_gt(boss_low, int(plain * BattleRules.stage_mult(-2)), "a lowered boss keeps more Might")
 	assert_almost_eq(float(boss_low), float(plain) * 4.0 / 6.0, 1.5)
-	s.stages["atk"] = 2
+	m.change_stage(1, "atk", 3)
 	assert_eq(s.effective_atk(), int(plain * 2.0), "raised stages work in full")
 
 func test_a_foe_at_plus_two_might_brings_a_warning() -> void:

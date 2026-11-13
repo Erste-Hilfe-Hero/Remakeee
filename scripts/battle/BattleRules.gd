@@ -159,8 +159,14 @@ const RULES: Dictionary[String, Dictionary] = {
 		"difficulty": [0, 1, 2, 3], "warden_only": true},
 	"high_noon": {"label": "High Noon", "text": "The sun stands straight overhead: Lumen arts on both sides hit harder.", "lumen_mult": 1.3,
 		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	# KAMPF_PLAN_1000 item 409. "stages_locked": no stat stage moves on either side; "rest_cut":
+	# resting gives that much less Energy on both sides.
+	"still_air": {"label": "Still Air", "text": "Not a breath of wind: no stat stage rises or falls on either side.", "stages_locked": 1,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	"ebb": {"label": "Ebb", "text": "The water has run out: resting gives 1 Energy less on both sides.", "rest_cut": 1,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
 	# Item 210: "no_status" keeps every status off both sides (BattleModel.status_block).
-	"still_air": {"label": "Still Air", "text": "The air hangs dead still: no status takes hold on either side.", "no_status": 1,
+	"hushed_air": {"label": "Hushed Air", "text": "The air hangs dead still: no status takes hold on either side.", "no_status": 1,
 		"difficulty": [0, 1, 2, 3], "warden_only": true},
 }
 
@@ -282,12 +288,6 @@ static func boss_actions(boss_id: String, fielded: int) -> int:
 static func stage_mult(stage: int) -> float:
 	var s: int = clampi(stage, STAGE_MIN, STAGE_MAX)
 	return (2.0 + s) / 2.0 if s >= 0 else 2.0 / (2.0 - s)
-
-## Stage factor on a boss (item 245): lowered stages count half (-1 = x0.8, -3 = x0.57), so a
-## pile of drops can't melt a Rift heart; its own raised stages work in full.
-static func boss_stage_mult(stage: int) -> float:
-	var s: int = clampi(stage, STAGE_MIN, STAGE_MAX)
-	return stage_mult(s) if s >= 0 else 4.0 / (4.0 - s)
 
 ## "Might +2: x2.00" (item 222): a stage and the factor it puts on the stat.
 static func stage_line(stat_label: String, stage: int) -> String:

@@ -1,6 +1,6 @@
 extends GutTest
 ## KAMPF_PLAN_1000 area "Status-Zustände": the fixed status numbers, the three new statuses
-## (Spent, Marked, Muddle), bosses, Still Air, the Calm Veil, Glimmer Skin, Unruffled, the
+## (Spent, Marked, Muddle), bosses, Hushed Air, the Calm Veil, Glimmer Skin, Unruffled, the
 ## Mirror Scale and why a status fails.
 
 const T := BattleEvent.Type
@@ -102,16 +102,16 @@ func test_a_boss_keeps_a_status_half_as_long() -> void:
 	boss.end_battle()
 	assert_false(boss.boss_guard, "end_battle clears the boss mark")
 
-func test_still_air_keeps_every_status_off_both_sides() -> void:
+func test_hushed_air_keeps_every_status_off_both_sides() -> void:
 	var m := BattleModel.new(_one("Kindlop"), _one("Mossling"), false, 3, 0)
-	m.foe_rule = "still_air"
+	m.foe_rule = "hushed_air"
 	m.start()
 	m._events = []
 	assert_false(m.apply_status(1, "scorch", 0, 0))
 	assert_false(m.apply_status(0, "soak", 0, 1))
 	var lines: Array[String] = _texts(m._events, T.STATUS_FAILED)
 	assert_eq(lines.size(), 2)
-	assert_string_contains(lines[0], "Still Air")
+	assert_string_contains(lines[0], "Hushed Air")
 
 func test_calm_veil_keeps_foe_statuses_off_for_five_turns() -> void:
 	var m: BattleModel = BattleFixtures.model(_one("Mossling", 20, ["Calm Veil"]), _one("Kindlop"))
@@ -186,9 +186,9 @@ func test_a_swarm_takes_status_one_spirling_at_a_time() -> void:
 	assert_true(m.apply_status(1, "soak", 0))
 	assert_eq(m.active_spirling(1, 1).status, "", "the other swarm member stays clean")
 
-func test_master_ai_does_not_throw_status_into_still_air() -> void:
+func test_master_ai_does_not_throw_status_into_hushed_air() -> void:
 	var m := BattleModel.new(_one("Kindlop", 20, ["Cinder Nip"]), _one("Mossling", 20, ["Puffcap Haze", "Bowl Over"]), false, 9, 3)
-	m.foe_rule = "still_air"
+	m.foe_rule = "hushed_air"
 	m.start()
 	var ai := BattleAI.new(3)
-	assert_lt(ai.score_move(m, 1, 0), ai.score_move(m, 1, 1), "a status art is worth less than a hit under Still Air")
+	assert_lt(ai.score_move(m, 1, 0), ai.score_move(m, 1, 1), "a status art is worth less than a hit under Hushed Air")

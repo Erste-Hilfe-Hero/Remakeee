@@ -88,8 +88,8 @@ var shop_bought: bool = false
 const GLEAM_MULT: float = 1.1
 ## Battle-only stat stages (BattleRules.STAGE_MIN..STAGE_MAX), cleared by end_battle().
 var stages: Dictionary[String, int] = {}
-## True while it fights as a Rift boss: lowered stages count half (BattleRules.boss_stage_mult)
-## and statuses wear off sooner (StatusRules.boss_turns). Cleared by end_battle().
+## True while it fights as a Rift boss: an open-ended status ends after StatusRules.BOSS_OPEN_TURNS
+## (timed ones and stage drops are halved by BossRules in BattleModel). Cleared by end_battle().
 var boss_guard: bool = false
 ## Battle-only: turns left on an Energy tax (energy_tax effect): every move costs more meanwhile.
 ## Counted down at the end of each turn, so a fresh tax of N holds for the next N turns.
@@ -234,7 +234,7 @@ func stage(stat: String) -> int:
 
 ## Factor of the [param stat] stage (half for lowered stages on a boss).
 func stage_factor(stat: String) -> float:
-	return BattleRules.boss_stage_mult(stage(stat)) if boss_guard else BattleRules.stage_mult(stage(stat))
+	return BattleRules.stage_mult(stage(stat))
 
 ## ATK after status (Scorch, or the Kindling trait), stages and held item.
 func effective_atk() -> int:

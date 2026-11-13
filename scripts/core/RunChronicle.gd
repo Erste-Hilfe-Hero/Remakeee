@@ -38,7 +38,8 @@ static func entry() -> Dictionary:
 	for v: Dictionary in Vows.list():
 		if Vows.status(str(v.id)) == "kept":
 			kept.append(str(v.id))
-	return {"name": GameState.tamer_name, "starter": GameState.starter, "difficulty": int(GameState.difficulty),
+	return {"name": GameState.tamer_name, "starter": GameState.starter, "difficulty": ChallengeRules.ranked_difficulty(),
+		"challenges": ChallengeRules.active_ids(),
 		"play_time": int(GameState.play_time), "oath": GameState.iron_oath, "vows": kept, "lowered": GameState.difficulty_lowered(),
 		"date": Time.get_date_string_from_unix_time(Online.unix_now())}
 
@@ -50,7 +51,11 @@ static func note() -> Array[String]:
 	var list: Array[Dictionary] = runs()
 	list.append(entry())
 	_write(list)
-	return [Loc.t("This journey is now in the run chronicle.")]
+	var e: Dictionary = list[-1]
+	var rules: String = ChallengeRules.names()
+	# The victory note names the difficulty and the rules kept (KAMPF plan item 505).
+	return [Loc.t("This journey is now in the run chronicle: %s.") % (difficulty_name(int(e.difficulty))
+		+ (", " + rules if not rules.is_empty() else ""))]
 
 ## Starters with a finished run, over every slot.
 static func starters_done() -> int:
@@ -77,6 +82,8 @@ static func line(r: Dictionary) -> String:
 		sd.species_name if sd != null else "?", difficulty_name(int(r.get("difficulty", 0))) + (" " + Loc.t("(lowered)") if bool(r.get("lowered", false)) else ""), secs / 3600, (secs / 60) % 60]
 	if r.get("vows") is Array and not (r.vows as Array).is_empty():
 		text += "  " + Loc.t("Vows kept: %d") % (r.vows as Array).size()
+	if r.get("challenges") is Array and not (r.challenges as Array).is_empty():
+		text += "  " + Loc.t("Challenge rules: %d") % (r.challenges as Array).size()
 	return (mark + " " if not mark.is_empty() else "") + text + "  " + str(r.get("date", ""))
 
 static func lines() -> Array[String]:
