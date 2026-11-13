@@ -2345,7 +2345,7 @@
    "growth_mult": 1.5
   },
   "price": 3000,
-  "tradeable": true
+  "tradeable": false
  },
  {
   "id": "echo_shell",
@@ -2354,7 +2354,7 @@
   "battle": false,
   "bond_bonus": 0.15,
   "price": 700,
-  "tradeable": true
+  "tradeable": false
  },
  {
   "id": "spark_wash",
@@ -2363,6 +2363,6 @@
   "battle": false,
   "spark_reset": true,
   "price": 1500,
-  "tradeable": true
+  "tradeable": false
  }
 ]

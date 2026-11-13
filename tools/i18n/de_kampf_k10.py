@@ -45,7 +45,7 @@ T.update({
 "Washes one Spark value of a Spirling back to nothing, for a slower or humbler build.": "Wäscht einen Funkenwert eines Spirlings auf null zurück, für einen langsameren oder bescheideneren Aufbau.",
 })
 T.update({
-"| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (Tamer) | Story |": "| Ring | Wachstum bis dahin | Bis zum nächsten Ring | Gleiche Wildkämpfe bis zum nächsten Ring (Tamer) | Story |",
+"| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (normal) | Story |": "| Ring | Wachstum bis dahin | Bis zum nächsten Ring | Gleiche Wildkämpfe bis zum nächsten Ring (normal) | Story |",
 })
 T.update({
 "%s could learn %s, but already knows four arts. It can learn it later.": "%s könnte %s lernen, kennt aber schon vier Techniken. Es kann sie später lernen.",
