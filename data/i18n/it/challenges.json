@@ -1,9 +1,12 @@
 {
  "_comment": "it translation of the challenges table, keyed by the English text.",
  "strings": {
+  "%s also gives you: %s.": "%s ti dà anche: %s.",
+  "%s raises a signal lantern. Battle now?": "%s alza una lanterna di segnale. Lottare ora?",
   "%s: %d won, %d lost": "%s: %d vinte, %d perse",
   "A rule was dropped on the way.": "Una regola si è persa per strada.",
   "Ace Up Front": "L'asso davanti",
+  "Answer the signal": "Rispondi al segnale",
   "Battles won: %d, lost: %d": "Lotte vinte: %d, perse: %d",
   "Bonds only form at night.": "I legami si formano solo di notte.",
   "Challenge record": "Registro delle sfide",
@@ -14,6 +17,8 @@
   "Copies the seed. A friend who uses it gets the same shuffled wilds and arts.": "Copia il seme. Un amico che lo usa ottiene gli stessi selvatici e le stesse arti rimescolati.",
   "Drop %s? Your record will remember it.": "Abbandonare %s? Il tuo registro se ne ricorderà.",
   "Drop it": "Abbandonala",
+  "Echo tower": "Torre Eco",
+  "Echo tower, highest floor this week": "Torre Eco, piano più alto questa settimana",
   "Every Spirling that bonds with you knows arts drawn by your run seed.": "Ogni Spirling che si lega a te conosce arti estratte dal seme della tua partita.",
   "Extra rules for a harder journey. Taken before your first Rift, dropped any time.": "Regole extra per un viaggio più duro. Si prendono prima del tuo primo Squarcio e si abbandonano quando vuoi.",
   "Extra rules for a harder journey: One per Place, First Meeting, Spring Water Only, Shuffled Wilds and Arts, Stand Your Ground, Half Rested, Ace Up Front, Night Bonds, One Colour, Empty Pockets, Off the Books and Trust No One. Any of them combine. They are taken before the first mended Rift and can be dropped at any time; the record remembers. The shuffles follow a seed code you can share with friends.": "Regole extra per un viaggio più duro: Uno per luogo, Primo incontro, Solo acqua di sorgente, Selvatici e arti rimescolati, Tieni duro, Riposo a metà, L'asso davanti, Legami notturni, Un solo colore, Tasche vuote, In nero e Non fidarti di nessuno. Si possono combinare tutte. Si prendono prima di ricucire il primo Squarcio e si possono abbandonare in qualsiasi momento; il registro se ne ricorda. I rimescolamenti seguono un codice seme che puoi condividere con gli amici.",
@@ -26,6 +31,7 @@
   "Keep it": "Tienila",
   "Lantern post: %s would battle you again today.": "Posta lanterna: %s vorrebbero sfidarti di nuovo oggi.",
   "Lantern post: no rematch invitations today.": "Posta lanterna: nessun invito alla rivincita oggi.",
+  "Lighthouse stair, highest floor this week": "Scala del faro, piano più alto questa settimana",
   "Most battled:": "Più affrontati:",
   "New rules can only be taken before you mend your first Rift.": "Le nuove regole si possono prendere solo prima di ricucire il primo Squarcio.",
   "Night Bonds": "Legami notturni",
@@ -55,6 +61,7 @@
   "Spring Water Only: no healing items on this journey.": "Solo acqua di sorgente: niente oggetti curativi in questo viaggio.",
   "Stand Your Ground": "Tieni duro",
   "Takes a seed a friend shared with you.": "Usa un seme che ti ha passato un amico.",
+  "The lantern dims. Talk to them when you are ready.": "La lanterna si spegne. Parlagli quando sei pronto.",
   "The wild Spirlings of every place are shuffled by your run seed.": "Gli Spirling selvatici di ogni luogo vengono rimescolati dal seme della tua partita.",
   "There is no seed code on the clipboard.": "Negli appunti non c'è nessun codice seme.",
   "This journey is now in the run chronicle: %s.": "Questo viaggio ora è nella cronaca della corsa: %s.",
@@ -65,7 +72,9 @@
   "Wayfarer book": "Libro dei Viandanti",
   "Wayfarers lead with their strongest Spirling.": "I viandanti partono col loro Spirling più forte.",
   "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "Gli Spirling dei Viandanti restano vicini al tuo più forte, entro il limite di anello.",
+  "Win Wayfarer battles": "Vinci lotte contro i Viandanti",
   "With challenge rules": "Con regole della sfida",
-  "best in %d turns": "record in %d turni"
+  "best in %d turns": "record in %d turni",
+  "floor %d": "piano %d"
  }
 }

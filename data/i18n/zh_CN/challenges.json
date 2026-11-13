@@ -1,9 +1,12 @@
 {
  "_comment": "zh_CN translation of the challenges table, keyed by the English text.",
  "strings": {
+  "%s also gives you: %s.": "%s还给了你：%s。",
+  "%s raises a signal lantern. Battle now?": "%s举起了信号灯笼。现在对战吗？",
   "%s: %d won, %d lost": "%s：%d胜 %d负",
   "A rule was dropped on the way.": "有一条规则在路上掉了。",
   "Ace Up Front": "王牌先发",
+  "Answer the signal": "回应信号",
   "Battles won: %d, lost: %d": "战斗胜：%d，负：%d",
   "Bonds only form at night.": "只有在夜里才能结缘。",
   "Challenge record": "挑战纪录",
@@ -14,6 +17,8 @@
   "Copies the seed. A friend who uses it gets the same shuffled wilds and arts.": "复制种子。好友使用后，会遇到同样打乱的野生Spirling和技艺。",
   "Drop %s? Your record will remember it.": "要放弃%s吗？纪录会记住这件事。",
   "Drop it": "放弃",
+  "Echo tower": "回声之塔",
+  "Echo tower, highest floor this week": "回声之塔，本周最高层",
   "Every Spirling that bonds with you knows arts drawn by your run seed.": "每只与你结缘的Spirling，都会掌握由你的挑战种子抽出的技艺。",
   "Extra rules for a harder journey. Taken before your first Rift, dropped any time.": "为更艰难的旅程准备的额外规则。在第一个裂隙之前选择，随时可以放弃。",
   "Extra rules for a harder journey: One per Place, First Meeting, Spring Water Only, Shuffled Wilds and Arts, Stand Your Ground, Half Rested, Ace Up Front, Night Bonds, One Colour, Empty Pockets, Off the Books and Trust No One. Any of them combine. They are taken before the first mended Rift and can be dropped at any time; the record remembers. The shuffles follow a seed code you can share with friends.": "为更艰难的旅程准备的额外规则：一地一只、初次相遇、只喝泉水、打乱野生与技艺、寸步不让、半休、王牌先发、夜之结缘、单一颜色、口袋空空、不入账、谁也别信。全部可以任意组合。它们要在修补第一个裂隙之前选择，随时可以放弃；纪录会记住。打乱的结果取决于一个可以和好友分享的种子码。",
@@ -26,6 +31,7 @@
   "Keep it": "保留",
   "Lantern post: %s would battle you again today.": "灯笼信：%s今天想再和你对战。",
   "Lantern post: no rematch invitations today.": "灯笼信：今天没有再战邀请。",
+  "Lighthouse stair, highest floor this week": "灯塔阶梯，本周最高层",
   "Most battled:": "交手最多：",
   "New rules can only be taken before you mend your first Rift.": "只有在修补第一个裂隙之前才能选择新规则。",
   "Night Bonds": "夜之结缘",
@@ -55,6 +61,7 @@
   "Spring Water Only: no healing items on this journey.": "只喝泉水：这趟旅程不能使用回复道具。",
   "Stand Your Ground": "寸步不让",
   "Takes a seed a friend shared with you.": "使用好友分享给你的种子。",
+  "The lantern dims. Talk to them when you are ready.": "灯笼暗了下去。准备好了再去搭话吧。",
   "The wild Spirlings of every place are shuffled by your run seed.": "每个地方的野生Spirling都会按你的挑战种子打乱。",
   "There is no seed code on the clipboard.": "剪贴板里没有种子码。",
   "This journey is now in the run chronicle: %s.": "这趟旅程已记入挑战记录：%s。",
@@ -65,7 +72,9 @@
   "Wayfarer book": "旅人名册",
   "Wayfarers lead with their strongest Spirling.": "旅人们会先派出自己最强的Spirling。",
   "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "旅人的灵宠会贴近你最强的一只，但不超过等环上限。",
+  "Win Wayfarer battles": "在对战中赢过旅人",
   "With challenge rules": "附带挑战规则",
-  "best in %d turns": "最快%d回合"
+  "best in %d turns": "最快%d回合",
+  "floor %d": "第%d层"
  }
 }

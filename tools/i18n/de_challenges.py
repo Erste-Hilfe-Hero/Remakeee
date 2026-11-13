@@ -67,4 +67,14 @@ T = {
 "Shows the journey's play time in the corner, for speed runs.": "Zeigt die Spielzeit der Reise in der Ecke, für Speedruns.",
 "Foe scaling": "Gegner-Anpassung",
 "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "Die Spirlings der Wanderer bleiben nah an deinem stärksten, innerhalb der Ring-Grenze.",
+# Batch 3 (KAMPF_PLAN_1000 items 493, 512, 531, 539, 540, 543, 548, 553).
+"Win Wayfarer battles": "Gewinne Kämpfe gegen Wanderer",
+"Echo tower": "Echo-Turm",
+"floor %d": "Stockwerk %d",
+"Lighthouse stair, highest floor this week": "Leuchtturm-Treppe, höchstes Stockwerk dieser Woche",
+"Echo tower, highest floor this week": "Echo-Turm, höchstes Stockwerk dieser Woche",
+"%s also gives you: %s.": "%s gibt dir außerdem: %s.",
+"%s raises a signal lantern. Battle now?": "%s hebt eine Signallaterne. Jetzt kämpfen?",
+"Answer the signal": "Signal erwidern",
+"The lantern dims. Talk to them when you are ready.": "Die Laterne wird dunkel. Sprich die Person an, wenn du bereit bist.",
 }
