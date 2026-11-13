@@ -1,0 +1,10 @@
+{
+ "_comment": "Korean texts for the German table kampf_a11y. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "[%s cries out]": "[%s의 울음소리]",
+  "Echo it back, no hurry.": "서두르지 말고 따라 해.",
+  "Mine: tap one button fast. Echo: repeat the call. Calm: echo with no time limit.": "내 거: 버튼 하나를 빠르게 연타. 메아리: 부름을 따라 한다. 느긋하게: 시간 제한 없는 메아리.",
+  "Calm": "느긋하게",
+  "This replay comes from a newer version of the game.": "이 리플레이는 더 새로운 버전의 게임에서 왔습니다."
+ }
+}
