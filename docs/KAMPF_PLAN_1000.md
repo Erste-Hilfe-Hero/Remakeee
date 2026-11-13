@@ -330,7 +330,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 277. [x] Trait-Tests pro Trait (tests/unit/test_trait_kit.gd)
 278. [x] Trait-Kombinationen mit gehaltenen Gegenständen prüfen (Test: Echo Soul + Lantern Glass, Field Runner + Glutstein)
 279. [ ] Trait 'Sturmlaterne' für den Storm-Lantern-Träger
-280. [ ] Trait-Zähler im Kampfende-Bericht
+280. [x] Trait-Zähler im Kampfende-Bericht (TraitKit.count_gift/gift_report: jede Auslösung deiner Gaben, 'Gifts at work: ... x3' im Kampflog)
 
 ## Gehaltene Gegenstände
 
@@ -346,17 +346,17 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 290. [x] Gegenstand 'Laternenglas': Feld-Dauer +2 ('Lantern Glass')
 291. [x] Gegenstand 'Riss-Splitter': Overcharge +0.05 pro Energie ('Rift Splinter')
 292. [x] Gegenstand 'Wanderschuh': Wechsel ist frei ('Wander Boot')
-293. [ ] Gegenstände in Turnier-Regeln einzeln sperrbar
+293. [x] Gegenstände in Turnier-Regeln einzeln sperrbar (TraitKit.apply_duel_rules mit der Liste tourney_bans in data/kampf_kit.json, in Echo-Duellen für beide Teams; das Wochenend-Turnier nimmt keine gehaltenen Gegenstände mit)
 294. [x] Gegner-Wayfarer tragen auf Veteran Gegenstände (bestehend: TrainerData.keeps_keepsakes ab Veteran)
 295. [x] Gegenstand-Info im Lexikon (Andenkenbuch im Rekorde-Menü (TraitKit.all_keepsake_lines))
-296. [ ] Gegenstand-Verbrauch in Kampfende-Bericht
-297. [ ] Gegenstand nach dem Kampf automatisch wieder ausrüsten (Option)
+296. [x] Gegenstand-Verbrauch in Kampfende-Bericht (BattleReport.item_line: 'Items used: Max Tonic x2', Taschen-Gegenstände und gegessene Früchte deiner Seite)
+297. [x] Gegenstand nach dem Kampf automatisch wieder ausrüsten (Option) (Einstellung 'Refill fruit', TraitKit.refill_held: eine gegessene Frucht kommt aus der Tasche wieder an denselben Spirling)
 298. [ ] Gegenstand-Tausch im Kampf (kostet den Zug)
 299. [x] Gegenstand-Klau-Technik bewusst nicht einführen (Frust) (bewusst kein Klau-Effekt)
 300. [x] Gegenstand-Shop im Endgame (Marlas Stand (endgame.json exchange, Stufe full))
 301. [x] Gegenstand als Belohnung im Turm (oberste Turmetage gibt ein Andenken (TraitKit.tower_reward))
 302. [x] Gegenstand-Seltenheit sichtbar (Seltenheit im Andenken-Hinweis (items.json rarity))
-303. [ ] Gegenstand-Balance im Simulator
+303. [x] Gegenstand-Balance im Simulator (gab es schon: BalanceSim.run_keepsakes, balance_sim --mode keepsakes, prüft jeden haltbaren Gegenstand, die kit_*-Andenken eingeschlossen; Test test_balance_sim_covers_every_keepsake)
 304. [ ] Gegenstand-Icons eigenständig (Asset-Log)
 305. [x] Gegenstand-Namen eigenständig prüfen (Test: keine Namensdopplung)
 306. [x] Gehaltene Gegenstände in Online-Duellen gleich (gleiches Modell und Spielstand)
@@ -368,7 +368,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 312. [x] Gegenstand 'Dämmerstein' für Umbra-Felder ('Murk Stone')
 313. [x] Gegenstand-Effekte im Schadensvorschau-Wert (über BattleRules.damage_mult)
 314. [x] Gegenstand-Hinweis beim Ausrüsten (was es tut) (bestehend: Hinweis im Andenken-Menü)
-315. [ ] Gegenstand-Limit: jeder Gegenstand nur einmal pro Team in Turnieren
+315. [x] Gegenstand-Limit: jeder Gegenstand nur einmal pro Team in Turnieren (TraitKit.apply_duel_rules: ein doppeltes Andenken bleibt nur beim ersten Spirling, in Echo-Duellen)
 316. [x] Gegenstand-Fund in versteckten Orten (bestehend) (bestehend: Spark Coil im Versteck von Murk Hollow)
 317. [x] Gegenstand-Tests pro Gegenstand (tests/unit/test_trait_kit.gd)
 318. [ ] Gegenstand-Animation beim Auslösen
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-867 von 1000 Punkten umgesetzt.
+873 von 1000 Punkten umgesetzt.
 

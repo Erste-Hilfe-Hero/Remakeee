@@ -61,4 +61,12 @@ T = {
 "Forget the bonus gift": "Bonus-Gabe vergessen",
 "Rare": "Rar",
 "Atop the tower lies a keepsake: %s.": "Oben im Turm liegt ein Andenken: %s.",
+"Duel rule: %s's %s is locked.": "Duell-Regel: %s legt %s ab, es ist gesperrt.",
+"Duel rule: each keepsake once per team, %s leaves its %s behind.": "Duell-Regel: jedes Andenken nur einmal pro Team, %s lässt %s zurück.",
+"%s's %s x%d": "%s: %s x%d",
+"Gifts at work: %s": "Gaben im Einsatz: %s",
+"Items used: %s": "Benutzte Gegenstände: %s",
+"Refill fruit: %s": "Frucht nachlegen: %s",
+"After a battle, a Spirling that ate its held fruit takes the same one from the bag.": "Nach dem Kampf nimmt ein Spirling, der seine Frucht gegessen hat, dieselbe aus der Tasche.",
+"%s takes a new %s from the bag.": "%s nimmt eine neue %s aus der Tasche.",
 }

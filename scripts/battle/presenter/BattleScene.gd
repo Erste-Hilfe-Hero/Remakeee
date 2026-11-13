@@ -1361,6 +1361,9 @@ func _play_event(e: BattleEvent) -> void:
 			# Each Spirling's share and the fields go under the battle report of the log.
 			for line: String in battle_report.lines().slice(1):
 				log_entries.append({"text": line, "kind": "other", "side": -1})
+			# How often each of your gifts worked (KAMPF_PLAN_1000 item 280).
+			for line: String in TraitKit.gift_report(model):
+				log_entries.append({"text": line, "kind": "other", "side": -1})
 			if _multi and outcome == BattleModel.Outcome.WIN and battle_report.best() >= 0:
 				await _text.show_text(battle_report.best_line())
 		BattleEvent.Type.MISSED:
