@@ -825,7 +825,9 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				if wild != null:
 					GameState.gleam_chain = GleamRules.next_chain(GameState.gleam_chain, wild)
 			if wild != null:
-				await start_battle([wild] as Array[Spirling], true)
+				# Now and then a wild Spirling ambushes from the tall grass (KAMPF_PLAN item 16).
+				var ambush: bool = not GameState.is_newcomer() and GameState.rng.randf() < BattleModel.AMBUSH_CHANCE
+				await start_battle([wild] as Array[Spirling], true, {"ambush": true} if ambush else {})
 
 func _warp(warp: Dictionary) -> void:
 	busy = true
@@ -4188,6 +4190,15 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	var d: int = GameState.difficulty if world else -1
 	model.start_energy_cut = [0, int(trainer.get("foe_energy_cut", 0)) + BattleRules.foe_start_cut(d)]
 	model.foe_turn1_energy = BattleRules.foe_turn1_energy(d)
+	# Story (KAMPF_PLAN item 52): resting mends a little Vigor (the keen-hit cut is in ChallengeRules).
+	if d == GameState.Difficulty.STORY:
+		model.rest_heal_share = BattleModel.STORY_REST_HEAL
+	model.ambush = wild and bool(trainer.get("ambush", false))
+	# The end report: damage, knock-outs, best Spirling, Energy, seed (KAMPF_PLAN items 20, 76).
+	model.set_meta("summary", BattleSummary.new(model))
+	# A boss fight ends after BOSS_ROUND_LIMIT turns: the Rift closes again (item 21).
+	if not str(trainer.get("boss", "")).is_empty() and model.round_limit <= 0:
+		model.round_limit = BattleModel.BOSS_ROUND_LIMIT
 	model.warden_weakened = bool(trainer.get("warden_weakened", false))
 	model.gift_items = ShopEffects.battle_gifts(bool(trainer.get("warden", false)), world)
 	model.bond_grace = maxi(ShopEffects.bond_grace(), 1 if GameState.is_newcomer() else 0) if wild else 0

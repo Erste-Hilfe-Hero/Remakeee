@@ -179,7 +179,17 @@ static func card_lines(model: BattleModel, slot: int, mv: MoveData) -> Array[Str
 	out.append(Loc.t(ORDER_TEXT[order_hint(model, me, foe, mv)]))
 	if me.can_afford(mv):
 		out.append(Loc.t("Energy after: %d") % energy_after(me, mv))
+	# Miss chance with Daze and the Warden rule, when it is not a sure hit (KAMPF_PLAN item 14).
+	var miss: int = miss_pct(model, me, mv, foe)
+	if miss > 0:
+		out.append(Loc.t("Misses %d%% of the time.") % miss)
 	return out
+
+## Chance in percent that [param mv] misses [param foe] right now (0 for a sure hit).
+static func miss_pct(model: BattleModel, me: Spirling, mv: MoveData, foe: Spirling = null) -> int:
+	if model == null or me == null or mv == null or (not mv.is_damaging() and mv.accuracy >= 1.0):
+		return 0
+	return roundi((1.0 - model.hit_chance(me, mv, foe)) * 100.0)
 
 # --- Previews in lists (items 563, 625) --------------------------------------------------
 
