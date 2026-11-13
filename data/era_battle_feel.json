@@ -580,7 +580,10 @@
   "root": "4c8a3a",
   "jolt": "c8a020",
   "daze": "8a5a9a",
-  "drowse": "6a6a8a"
+  "drowse": "6a6a8a",
+  "spent": "8a6a3a",
+  "marked": "b03a6a",
+  "muddle": "3a8a8a"
  },
  "status_badge_from_era": 2,
  "weather_storm_every": 4.0,
