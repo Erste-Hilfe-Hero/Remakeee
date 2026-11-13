@@ -1,0 +1,11 @@
+{
+ "_comment": "pl translation of the kampf_show table, keyed by the English text.",
+ "strings": {
+  "%s awakens": "%s budzi się",
+  "Bonded": "Więź",
+  "Side by side: %s": "Ramię w ramię: %s",
+  "Slipped away": "Wymknięto się",
+  "Victory": "Zwycięstwo",
+  "Worn out": "Wyczerpani"
+ }
+}
