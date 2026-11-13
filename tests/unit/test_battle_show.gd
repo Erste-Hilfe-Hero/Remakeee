@@ -249,3 +249,12 @@ func test_scene_backdrop_stays_untinted_indoors() -> void:
 	b._layout_field()
 	assert_eq(b._backdrop.modulate, Color.WHITE)
 	_free(b)
+
+func test_status_sound_list_matches_the_data() -> void:
+	var from_data: Array[String] = []
+	for st: String in StatusRules.RULES:
+		from_data.append(BattleAudio.status_sound(st))
+	from_data.sort()
+	var listed: Array[String] = BattleAudio.STATUS_SOUNDS.duplicate()
+	listed.sort()
+	assert_eq(listed, from_data)

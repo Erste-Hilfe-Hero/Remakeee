@@ -11,6 +11,10 @@ extends RefCounted
 ## - At 4x and in battery saver the flourish sounds stay out (701, 702); accents keep a gap
 ##   so a crowded multi-battle turn does not pile them up (704).
 
+## The status sounds of data/battle_show.json "audio.status", named here so the sound check
+## (tests/unit/test_sfx_names.gd) finds every file in code.
+const STATUS_SOUNDS: Array[String] = ["status_scorch", "status_soak", "status_root", "status_jolt", "status_daze", "status_drowse"]
+
 ## Last time (seconds) an accent played, for the accent gap.
 static var _last_accent: float = -100.0
 

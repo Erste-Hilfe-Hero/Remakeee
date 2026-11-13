@@ -43,7 +43,7 @@ func glow_lantern() -> void:
 	var tw: Tween = create_tween()
 	tw.tween_method(func(v: float) -> void:
 		lantern = v
-		queue_redraw(), lantern, 0.0, float(cfg.get("time", 0.5)) / Juice.speed())
+		queue_redraw(), lantern, 0.0, float(cfg.get("time", 0.5)) / Juice.speed()).set_trans(Tween.TRANS_SINE)
 
 func _process(delta: float) -> void:
 	if Juice.reduced():

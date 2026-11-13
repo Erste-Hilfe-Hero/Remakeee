@@ -418,10 +418,10 @@ def battle_show_sfx() -> dict[str, np.ndarray]:
     out["overcharge"] = (sweep(220, 660, n, "pulse", 0.125) * 0.5 + noise(n, 3, rng) * np.linspace(0.0, 0.25, n)) * \
         env(n, attack=0.03, sustain=0.7, release=0.04) * 0.7
     # Resonance fields: a soft chord that blooms (rise), folds away (fade) or turns (shift).
-    n = secs(0.6)
+    n = secs(0.45)
     chord = sum(triangle(freq(midi(nm)), n) for nm in ("C4", "G4", "D5")) / 3.0
     out["field_rise"] = chord * env(n, attack=0.25, decay=0.1, sustain=0.7, release=0.2) * 0.9
-    n = secs(0.5)
+    n = secs(0.4)
     out["field_fade"] = (sweep(freq(midi("D5")), freq(midi("G3")), n, "tri") * 0.6 + triangle(freq(midi("C4")), n) * 0.3) * \
         np.linspace(1.0, 0.0, n) * 0.8
     out["field_shift"] = notes([("G4", 0.06), ("D5", 0.06), ("A5", 0.14)], tri) * 0.7
@@ -438,12 +438,12 @@ def battle_show_sfx() -> dict[str, np.ndarray]:
     out["partner_call"] = notes([("D5", 0.06), ("F#5", 0.06), ("A5", 0.06), ("D6", 0.12)], sq) * 0.4
     out["calm_fail"] = notes([("F4", 0.08), ("F4", 0.12)], tri, 0.04) * 0.6
     # Boss: a deep swell for the entrance and a sharp stinger when its phase turns.
-    n = secs(0.9)
+    n = secs(0.6)
     out["boss_intro"] = (sweep(55, 110, n, "tri") * 0.6 + pulse(freq(midi("A2")), n, 0.5) * 0.25 + noise(n, 40, rng) * 0.2) * \
         env(n, attack=0.15, decay=0.2, sustain=0.6, release=0.25) * 0.9
     n = secs(0.4)
     out["boss_phase"] = (pulse(freq(midi("D5")), n, 0.5) * 0.3 + pulse(freq(midi("G#5")), n, 0.5) * 0.3 + noise(n, 2, rng) * 0.2) * \
         env(n, attack=0.002, decay=0.1, sustain=0.5, release=0.12) * 0.7
     # Defeat: a short falling line in minor, the last note held.
-    out["defeat"] = notes([("A4", 0.14), ("F4", 0.14), ("D4", 0.14), ("C#4", 0.5)], lambda f, k: pulse(f, k, 0.5) * 0.5 + triangle(f / 2, k) * 0.5) * 0.45
+    out["defeat"] = notes([("A4", 0.14), ("F4", 0.14), ("D4", 0.14), ("C#4", 0.3)], lambda f, k: pulse(f, k, 0.5) * 0.5 + triangle(f / 2, k) * 0.5) * 0.45
     return out
