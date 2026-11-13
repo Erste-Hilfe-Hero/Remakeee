@@ -1,0 +1,21 @@
+{
+ "_comment": "ja translation of the kampf_boss table, keyed by the English text.",
+ "strings": {
+  "%s grows restless: the longer the fight, the harder it strikes!": "%sがいらだっている。戦いが長引くほど、強く打ってくる！",
+  "%s lies open: its Guard is down for a turn!": "%sにすきができた。1ターンのあいだ守備が下がる！",
+  "Before the Hush, the Cinder Rift fed a village's forges. The smiths sold the last of its heat to the highest bidder, and what was left curled up and learned to hate. It still keeps time like a bellows: hold it under High Tide and it can't stoke its next phase.": "静寂の前、Cinder Riftはある村の鍛冶場を燃やしていた。鍛冶屋たちは残った熱をいちばん高い値をつけた者に売り、残りかすは丸くなって憎むことをおぼえた。今もふいごのように拍子をとっている。満ち潮の下におさえておけば、次の段階に火をくべられない。",
+  "Ebb": "引き潮",
+  "It acts %d times each turn.": "1ターンに%d回行動する。",
+  "Mist hides things, and the people nearby paid it well to hide one thing in particular. When the payments stopped, it hid them too. Dawn Glow burns its fog thin; while the light lies, it can't pull itself into a new shape.": "霧はものをかくす。近くの人々は、ある特定のものをかくしてもらうために、たっぷり払っていた。払いが止まると、霧は人々もかくしてしまった。夜明けの光は霧をうすくする。光が続くあいだ、霧は新しい形にまとまれない。",
+  "Not a breath of wind: no stat stage rises or falls on either side.": "風ひとつない。どちらの側も、能力の段階が上がりも下がりもしない。",
+  "Still Air": "無風",
+  "The Ashen Heart splits open. Its core burns white!": "灰の心臓がまっぷたつに割れる！ その芯が白く燃えている！",
+  "The Drowned Heart sinks its weight into one last surge!": "おぼれた心臓が、最後の大波に全体重をかける！",
+  "The Mist Heart pulls the fog tight around its core!": "霧の心臓が、芯のまわりに霧をきつく引き寄せる！",
+  "The Tide Rift sank a ferry once, and the ferryman swore he had warned everyone. He had not. The heart at the bottom remembers every name on the passenger list. Static Veil sets its water humming, and while it hums the heart can't gather its next surge.": "潮の裂け目はかつて渡し船をしずめた。船頭はみんなに警告したと誓った。していなかった。底にいる心臓は、乗客名簿のすべての名前をおぼえている。静電気のベールはその水をうならせる。うなっているあいだ、心臓は次の大波を集められない。",
+  "The water has run out: resting gives 1 Energy less on both sides.": "水が尽きた。休むと、両方とも気力が1少なくなる。",
+  "What the Ashen Heart was": "灰の心臓のむかし",
+  "What the Drowned Heart was": "おぼれた心臓のむかし",
+  "What the Mist Heart was": "霧の心臓のむかし"
+ }
+}
