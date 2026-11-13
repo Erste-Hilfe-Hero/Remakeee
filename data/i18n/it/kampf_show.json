@@ -1,0 +1,11 @@
+{
+ "_comment": "it translation of the kampf_show table, keyed by the English text.",
+ "strings": {
+  "%s awakens": "%s si risveglia",
+  "Bonded": "Legato",
+  "Side by side: %s": "Fianco a fianco: %s",
+  "Slipped away": "Sfuggito",
+  "Victory": "Vittoria",
+  "Worn out": "Sfinito"
+ }
+}
