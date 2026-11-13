@@ -98,6 +98,15 @@
   "Ring %s:": "Rango %s:",
   "Rolls all Spark values of one Spirling anew. Used up.": "Vuelve a tirar todos los valores de Chispa de un Spirling. Se gasta.",
   "Spark Flux": "Flujo de Chispas",
-  "VIG": "VIG"
+  "VIG": "VIG",
+  "%d turns left": "quedan %d turnos",
+  "%dE ~%d%% %s%d": "%dE ~%d%% %s%d",
+  "%s %d, Spark %d of %d": "%s %d, Chispa %d de %d",
+  "Copied to the clipboard.": "Copiado al portapapeles.",
+  "Copy team values": "Copiar valores del equipo",
+  "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Calambre sobre un Spirling Empapado: el Empapado se va y pierde seguro su siguiente turno.",
+  "Statuses: %d on the foe, %d on your team": "Estados: %d en el rival, %d en tu equipo",
+  "Team values": "Valores del equipo",
+  "The charge runs through the water: %s is jolted stiff!": "¡La carga corre por el agua: %s se queda rígido!"
  }
 }

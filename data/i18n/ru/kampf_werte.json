@@ -98,6 +98,15 @@
   "Ring %s:": "Круг %s:",
   "Rolls all Spark values of one Spirling anew. Used up.": "Заново бросает все значения Искры одного Spirling. Расходуется.",
   "Spark Flux": "Вихрь Искр",
-  "VIG": "БОД"
+  "VIG": "БОД",
+  "%d turns left": "осталось ходов: %d",
+  "%dE ~%d%% %s%d": "%dE ~%d%% %s%d",
+  "%s %d, Spark %d of %d": "%s %d, Искра %d из %d",
+  "Copied to the clipboard.": "Скопировано в буфер обмена.",
+  "Copy team values": "Скопировать показатели команды",
+  "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Разряд по промокшему Spirling: Промокание смывается, и он точно пропускает следующий ход.",
+  "Statuses: %d on the foe, %d on your team": "Состояния: у врага %d, в твоей команде %d",
+  "Team values": "Показатели команды",
+  "The charge runs through the water: %s is jolted stiff!": "Заряд бежит по воде: %s цепенеет!"
  }
 }

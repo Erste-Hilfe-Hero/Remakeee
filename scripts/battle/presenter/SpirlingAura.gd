@@ -1,8 +1,8 @@
 class_name SpirlingAura
 extends Control
 ## Small marks around a battle Spirling, drawn in whole pixels (docs/KAMPF_PLAN_1000.md):
-## - status motes (647): sparks rise off a Scorched Spirling, drops fall off a Soaked one, and
-##   so on (data/battle_show.json "status_motes");
+## - status motes (647): sparks rise off a Scorched Spirling, drops fall off a Soaked one, a
+##   Rooted one stands in still chain links (item 187), and so on (data/battle_show.json "status_motes");
 ## - the stage aura (648): a dotted ring at the feet, warm while its stages add up above zero,
 ##   cool below; it turns slowly and never blinks;
 ## - the lantern light (650): a warm glow at the feet as it steps out, no ball, no throw.
@@ -93,6 +93,11 @@ static func mote_points(drift: int, count: int, q: float, box: Vector2) -> Packe
 	for i: int in count:
 		var k: float = fposmod(q + float(i) / maxf(count, 1), 1.0)
 		var p := Vector2.ZERO
+		if drift == 2:
+			# Still links round the feet (Root, item 187): they do not move, so motion never matters.
+			var x2: float = box.x * (0.2 + 0.6 * float(i) / maxf(count - 1, 1))
+			out.append(Vector2(x2, box.y - 3.0 + (i % 2)).round())
+			continue
 		if drift == 0:
 			var a: float = TAU * k
 			p = Vector2(box.x / 2.0 + cos(a) * box.x * 0.3, box.y * 0.08 + sin(a) * 2.0)
@@ -150,6 +155,7 @@ func _draw_mote(shape: String, p: Vector2, c: Color) -> void:
 		"zig": dots = [[-1, -1], [0, -1], [0, 0], [0, 1], [1, 1]]
 		"ring": dots = [[0, -1], [-1, 0], [1, 0], [0, 1]]
 		"z": dots = [[-1, -1], [0, -1], [1, -1], [0, 0], [-1, 1], [0, 1], [1, 1]]
+		"chain": dots = [[-1, -1], [0, -1], [1, -1], [-2, 0], [2, 0], [-1, 1], [0, 1], [1, 1], [3, 0]]
 		_: dots = [[0, 0]]
 	for d: Array in dots:
 		draw_rect(Rect2(p + Vector2(d[0], d[1]), Vector2(1, 1)), c)

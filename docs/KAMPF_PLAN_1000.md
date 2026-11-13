@@ -206,17 +206,17 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Status-Zustände
 
 161. [x] Ruhe-Regel: Drowse trifft keinen zweiten Spirling derselben Seite in Wayfarer-Kämpfen
-162. [ ] Status-Symbole mit Form und Kürzel (bestehend: Kürzel), Symbole ergänzen
-163. [ ] Status-Dauer als Zahl unter dem Kürzel
+162. [x] Status-Symbole mit Form und Kürzel (bestehend: Kürzel), Symbole ergänzen (StatusRules.SYMBOLS, 5x5-Pixelzeichen im Status-Abzeichen (InfoStrip))
+163. [x] Status-Dauer als Zahl unter dem Kürzel (InfoStrip.status_turns, vor jeder Befehlswahl abgeglichen)
 164. [x] Neuer Status 'Verwirrt' in eigener Form: Ziel wählt zufällig das Ziel im Mehrfachkampf (Status Muddle/Wirr, StatusRules)
 165. [x] Neuer Status 'Erschöpft': halbe Energie-Regeneration (Status Spent, StatusRules.energy_gain)
 166. [x] Neuer Status 'Markiert': nächster Treffer gegen das Ziel ist ein sicherer Treffer (Status Marked)
 167. [x] Status-Immunität durch Feld (z. B. Hohe Flut verhindert Scorch)
 168. [x] Status-Heil-Gegenstände pro Status und ein Allheiler (bestehend prüfen) (je Status ein Heilmittel + Remedy, test_move_content)
-169. [ ] Status-Kombination: Soak + Jolt = länger gelähmt
+169. [x] Status-Kombination: Soak + Jolt = länger gelähmt (StatusRules.COMBOS: Jolt spült Soak fort, nächster Zug sicher verloren)
 170. [x] Status-Ticks bleiben bei 1/12 (fixe Originalitätszahl, nicht ändern) (test_kampf_status)
 171. [x] Status-Erklärung im Lexikon mit Zahlen (Kampfhandbuch, BattleGuide.gd)
-172. [ ] Status-Animation kurz und optional (Weniger Bewegung)
+172. [x] Status-Animation kurz und optional (Weniger Bewegung) (bestehend: SpirlingAura, steht bei Weniger Bewegung still)
 173. [x] Status trifft Bosse nur halb so lange (StatusRules.boss_turns)
 174. [x] Status-Chance in der Technik-Info
 175. [x] KI meidet Status gegen Ziele mit Status oder Immunität (umgesetzt in Meister-KI) (BattleAI Stufe 3)
@@ -225,20 +225,20 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 178. [x] Status heilt beim Wechsel auf die Bank (Trait 'Ruhig') (Gabe unruffled, Prismist-Linie)
 179. [ ] Status nach dem Kampf bleibt erhalten, außer auf Story
 180. [x] Status-Heilung an Rastquellen (bestehend) (GameState.heal_party, Spirling.restore)
-181. [ ] Status-Statistik im Kampfende-Bericht
-182. [ ] Status-Sound pro Status eigenständig
+181. [x] Status-Statistik im Kampfende-Bericht (BattleReport.status_line)
+182. [x] Status-Sound pro Status eigenständig (bestehend: BattleAudio.status_sound)
 183. [x] Status-Text in eigener Wortwahl (Liste gegen übernommene Phrasen, bestehend) (tools/ip_check.sh)
 184. [x] Daze-Chance 1/3 überprüfen und dokumentieren (Daze x0.7 Treffer, im Kampfhandbuch)
 185. [x] Jolt 20 % bleibt fix (Originalitätszahl) (test_kampf_status)
 186. [x] Drowse 2 Runden bleibt fix (Originalitätszahl) (test_kampf_status)
-187. [ ] Status 'Root' zeigt Kette am Sprite
-188. [ ] Status 'Soak' tropft sichtbar
-189. [ ] Status 'Scorch' glimmt sichtbar
-190. [ ] Status im Info-Streifen bei Hochkontrast fett
+187. [x] Status 'Root' zeigt Kette am Sprite (SpirlingAura-Form chain, feste Kettenglieder an den Füßen)
+188. [x] Status 'Soak' tropft sichtbar (bestehend: SpirlingAura-Tropfen)
+189. [x] Status 'Scorch' glimmt sichtbar (bestehend: SpirlingAura-Funken)
+190. [x] Status im Info-Streifen bei Hochkontrast fett (InfoStrip: Rahmen und doppelte Striche bei Hochkontrast)
 191. [x] Status gegen wilde Schwärme gilt pro Spirling (test_kampf_status)
 192. [x] Status-Reflexion als seltener gehaltener Gegenstand (Mirror Scale)
 193. [x] Warden-Regel 'Stille Luft': kein Status für beide Seiten (Regel hushed_air 'Hushed Air', die Stufen-Regel still_air ist eine andere)
-194. [ ] Status-Chance in der Schadensvorschau ergänzen
+194. [x] Status-Chance in der Schadensvorschau ergänzen (CommandMenu.status_chance, z. B. 3E ~40% SCO30)
 195. [x] Status-Fehlschlag-Grund im Log (Immunität, Regel, schon betroffen) (BattleEvent STATUS_FAILED)
 196. [x] Status-Wirkung auf Bond-Chance im Lexikon erklären (Kampfhandbuch)
 197. [x] Status-Kombos in der Meister-KI nutzen (BattleAI Stufe 3 zählt Reaktionen)
@@ -256,7 +256,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 206. [x] Stufen-Tausch-Technik (Crosswind Trade)
 207. [x] KI baut Stufen nur auf, wenn sie sicher ist (umgesetzt in Meister-KI) (BattleAI Stufe 3)
 208. [x] Stufen-Warnung, wenn ein Gegner +2 ATK hat (STAT_CHANGED warn)
-209. [ ] Spark-Werte (bestehend) im Statusbildschirm als Balken
+209. [x] Spark-Werte (bestehend) im Statusbildschirm als Balken (ValueChart im Werte-Reiter (ab Ära III))
 210. [ ] Spark-Training durch Kämpfe gegen bestimmte Arten
 211. [x] Spark-Reset-Gegenstand (Spark Flux, GameState.reroll_sparks)
 212. [x] Temperament (bestehend) im Kampf-Info zeigen (Wechsel-Liste, BattleGuide.compare_line)
@@ -271,18 +271,18 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 221. [x] Werte-Grenzen im Datenprüfer (validate_data) festhalten (DataValidator._check_values)
 222. [x] Basiswert-Summen pro Entwicklungsstufe prüfen (DataValidator._check_values)
 223. [x] Werte-Balance über den Simulator (type_sim.py --strict)
-224. [ ] Stufen visuell auch am Sprite (kleine Aura)
+224. [x] Stufen visuell auch am Sprite (kleine Aura) (bestehend: SpirlingAura-Stufenring)
 225. [x] Stufen-Text in eigener Wortwahl (bestehend) (BattleEvent)
 226. [x] Stufen auf Bosse wirken halb (Stufen-Senkungen halbiert, BossRules.stage_delta)
 227. [x] Phasen-Bosse erhalten Stufen beim Phasenwechsel (umgesetzt) (BattleRules.BOSSES phase)
 228. [x] Warden-Regel mit Startstufen (bestehend: Undertow) (BattleRules.RULES)
 229. [x] Stufen-Sound steigt mit Stufe (BattleAudio.stage_pitch)
-230. [ ] Werte-Ansicht als Radar-Grafik im Statusbildschirm
+230. [x] Werte-Ansicht als Radar-Grafik im Statusbildschirm (ValueChart.radar_points im Werte-Reiter)
 231. [x] Werte pro Level im Lexikon als Kurve (Kampfhandbuch Werte, BattleGuide.curve)
 232. [x] Level-Cap im Menü (bestehend) (PauseMenu Ring limit)
 233. [x] Level-Cap-Hinweis beim XP-Verlust (XP_GAINED cap)
 234. [x] Werte beim Levelaufstieg anzeigen (Zuwachs) (LevelPanel)
-235. [ ] Werte-Export für Fans (Teamcode)
+235. [x] Werte-Export für Fans (Teamcode) (Kampfhandbuch: Teamwerte kopieren (BattleGuide.team_values))
 236. [x] Werte-Vorschau bei Entwicklung (BattleGuide.unfold_preview)
 237. [x] Gleiche Werte-Formel für Spieler und Gegner (Fairness) (test_kampf_werte)
 238. [ ] Werte-Skalierung im Turnier 'Gleiches Level'
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-858 von 1000 Punkten umgesetzt.
+873 von 1000 Punkten umgesetzt.
 

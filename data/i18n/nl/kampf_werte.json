@@ -98,6 +98,15 @@
   "Ring %s:": "Ring %s:",
   "Rolls all Spark values of one Spirling anew. Used up.": "Gooit alle Vonkwaarden van één Spirling opnieuw. Raakt op.",
   "Spark Flux": "Vonkwervel",
-  "VIG": "KRA"
+  "VIG": "KRA",
+  "%d turns left": "nog %d beurten",
+  "%dE ~%d%% %s%d": "%dE ~%d%% %s%d",
+  "%s %d, Spark %d of %d": "%s %d, Vonk %d van %d",
+  "Copied to the clipboard.": "Naar het klembord gekopieerd.",
+  "Copy team values": "Teamwaarden kopiëren",
+  "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Schok op een natte Spirling: het Nat spoelt weg en hij verliest zeker zijn volgende beurt.",
+  "Statuses: %d on the foe, %d on your team": "Statussen: %d bij de tegenstander, %d in je team",
+  "Team values": "Teamwaarden",
+  "The charge runs through the water: %s is jolted stiff!": "De lading loopt door het water: %s verstijft!"
  }
 }
