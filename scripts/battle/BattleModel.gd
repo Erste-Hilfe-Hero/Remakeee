@@ -2038,7 +2038,7 @@ func _award_xp(foe: Spirling) -> void:
 			_spark_rng = RandomNumberGenerator.new()
 			_spark_rng.seed = battle_seed ^ 0x59a2
 		for s: Spirling in earners:
-			var line: String = GrowthRules.battle_spark(s, foe, battle_spark_chance, _spark_rng)
+			var line: String = GrowthRules.battle_spark(s, foe, battle_spark_chance * TechniqueRules.spark_field_mult(self, s), _spark_rng)
 			if not line.is_empty():
 				emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.PLAYER, "text": line})
 	if bench_share <= 0.0:

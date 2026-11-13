@@ -129,3 +129,12 @@ T.update({
 "x%s power at dusk.": "x%s Stärke in der Dämmerung.",
 "x%s power at night.": "x%s Stärke in der Nacht.",
 })
+
+# Batch 4: matchup page in the lexicon, swap preview.
+T.update({
+"Matchups seen": "Gesehene Matchups",
+"No matchups seen yet. Every hit you land is written down here.": "Noch keine Matchups gesehen. Jeder Treffer, den du landest, wird hier notiert.",
+"+ strong, - weak. Every hit you land is written down here.": "+ stark, - schwach. Jeder Treffer, den du landest, wird hier notiert.",
+"Power %s > %s": "Stärke %s > %s",
+"Energy %d > %d": "Energie %d > %d",
+})

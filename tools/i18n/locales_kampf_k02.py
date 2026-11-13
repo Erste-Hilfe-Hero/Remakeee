@@ -272,6 +272,39 @@ B3 = {
 }
 R.update(B3)
 
+B4 = {
+"Matchups seen": ["見てきた相性", "Affinités vues", "Affinità viste", "Afinidades vistas", "본 상성", "见过的相性", "見過的相性", "Afinidades vistas", "Увиденные соотношения", "Widziane zależności", "Görülen eşleşmeler", "Geziene matchups"],
+"No matchups seen yet. Every hit you land is written down here.": [
+ "まだ相性を見ていない。当てた攻撃はすべてここに記される。",
+ "Aucune affinité vue pour l'instant. Chaque coup porté est noté ici.",
+ "Nessuna affinità vista finora. Ogni colpo che metti a segno viene annotato qui.",
+ "Aún no has visto afinidades. Cada golpe que aciertes se anota aquí.",
+ "아직 본 상성이 없다. 맞힌 공격은 모두 여기에 적힌다.",
+ "还没有见过相性。你命中的每一击都会记在这里。",
+ "還沒有見過相性。你命中的每一擊都會記在這裡。",
+ "Nenhuma afinidade vista ainda. Cada golpe que você acerta é anotado aqui.",
+ "Соотношений пока не видно. Каждый ваш удар записывается здесь.",
+ "Nie widziano jeszcze zależności. Każde trafienie jest tu zapisywane.",
+ "Henüz görülen eşleşme yok. İsabet ettirdiğin her vuruş buraya yazılır.",
+ "Nog geen matchups gezien. Elke treffer die je landt wordt hier genoteerd."],
+"+ strong, - weak. Every hit you land is written down here.": [
+ "+ 強い、- 弱い。当てた攻撃はすべてここに記される。",
+ "+ fort, - faible. Chaque coup porté est noté ici.",
+ "+ forte, - debole. Ogni colpo che metti a segno viene annotato qui.",
+ "+ fuerte, - débil. Cada golpe que aciertes se anota aquí.",
+ "+ 강함, - 약함. 맞힌 공격은 모두 여기에 적힌다.",
+ "+ 强，- 弱。你命中的每一击都会记在这里。",
+ "+ 強，- 弱。你命中的每一擊都會記在這裡。",
+ "+ forte, - fraco. Cada golpe que você acerta é anotado aqui.",
+ "+ сильно, - слабо. Каждый ваш удар записывается здесь.",
+ "+ silny, - słaby. Każde trafienie jest tu zapisywane.",
+ "+ güçlü, - zayıf. İsabet ettirdiğin her vuruş buraya yazılır.",
+ "+ sterk, - zwak. Elke treffer die je landt wordt hier genoteerd."],
+"Power %s > %s": ["威力 %s > %s", "Puissance %s > %s", "Potenza %s > %s", "Potencia %s > %s", "위력 %s > %s", "威力 %s > %s", "威力 %s > %s", "Poder %s > %s", "Сила %s > %s", "Moc %s > %s", "Güç %s > %s", "Kracht %s > %s"],
+"Energy %d > %d": ["エネルギー %d > %d", "Énergie %d > %d", "Energia %d > %d", "Energía %d > %d", "에너지 %d > %d", "能量 %d > %d", "能量 %d > %d", "Energia %d > %d", "Энергия %d > %d", "Energia %d > %d", "Enerji %d > %d", "Energie %d > %d"],
+}
+R.update(B4)
+
 
 def main():
     for i, code in enumerate(LANGS):
