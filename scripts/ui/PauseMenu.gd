@@ -1070,6 +1070,9 @@ func run_bag() -> void:
 ## each use, until Back or the last one is gone (item 1919).
 func _use_on_party(item_id: String) -> void:
 	var it: Dictionary = Database.item(item_id)
+	if not ChallengeRules.item_allowed(item_id):
+		await info("Spring Water Only: no healing items on this journey.")
+		return
 	var again: bool = int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0
 	var focus: int = -1
 	while GameState.item_count(item_id) > 0:
