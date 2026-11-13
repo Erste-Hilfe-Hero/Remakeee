@@ -361,6 +361,21 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 				if target.stage(st_name) > 0 and me.stage(st_name) < 2:
 					setup += STAGE_BONUS * acc * me.hp_fraction()
 					break
+		elif fx_id == &"stage_copy" or fx_id == &"stage_swap":
+			# Worth it when the foe's stages beat our own (items 224, 225); a swap also takes theirs away.
+			var gap: int = 0
+			for st_name: String in BattleRules.STAGE_STATS:
+				gap += target.stage(st_name) - me.stage(st_name)
+			if gap > 0:
+				setup += STAGE_BONUS * float(gap) * acc * me.hp_fraction()
+				if fx_id == &"stage_swap":
+					spoil += STAGE_BONUS * float(gap) * acc
+		elif fx_id == &"status_veil" and model.status_veil[side] <= 1:
+			# A veil pays off while the foe still has status arts to throw (item 193).
+			for foe_mv: MoveData in target.moves:
+				if foe_mv.has_effect(&"inflict_status"):
+					score += STATUS_BONUS * acc
+					break
 		elif fx_id == &"cure_self" and not me.status.is_empty():
 			score += STATUS_BONUS * acc
 		elif fx_id == &"energy_gain" and me.energy < model.max_energy_of(side):
@@ -392,7 +407,8 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 		for fx: Dictionary in mv.effects:
 			if StringName(fx.get("id", "")) == &"inflict_status":
 				var st: String = str(fx.get("status", ""))
-				if level >= 3 and (BattleRules.is_immune(target, st) or model.calm_rule_blocks(BattleModel.other(side), target, st)):
+				if level >= 3 and (BattleRules.is_immune(target, st) or model.calm_rule_blocks(BattleModel.other(side), target, st) \
+						or not model.status_block(BattleModel.other(side), st, side).is_empty()):
 					continue
 				spoil += STATUS_BONUS * float(fx.get("chance", 1.0)) * acc
 	return score + hit * damage_w + spoil * weight("status_w") + setup * weight("setup_w") + fld * weight("field_w")

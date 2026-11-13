@@ -15,7 +15,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 - Boss-Phasen bei halber HP
 - Schadensvorschau im Technik-Menü (abschaltbar)
 - Lager-Lernen: die Bank erhält die Hälfte der XP (abschaltbar)
-- Ruhe-Regel: in Wayfarer-Kämpfen höchstens ein Spirling pro Seite mit Drowse
+- Ruhe-Regel: in Tamer-Kämpfen höchstens ein Spirling pro Seite mit Drowse
 
 ## Umgesetzt im zweiten Schritt
 
@@ -33,15 +33,15 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Zugablauf und Grundregeln
 
-1. [x] Ruhe-Regel in Wayfarer-Kämpfen: pro Seite darf nur ein Spirling gleichzeitig Drowse haben
+1. [x] Ruhe-Regel in Tamer-Kämpfen: pro Seite darf nur ein Spirling gleichzeitig Drowse haben
 2. [ ] Zugreihenfolge vor der Wahl als kleine Leiste anzeigen (wer handelt zuerst, nach SPD und Priorität)
 3. [ ] Priorität +2 für seltene Schutz-Techniken einführen, sonst bleibt +1 das Maximum
 4. [ ] Gleichstand bei SPD sichtbar als Münzwurf-Symbol im Kampflog
-5. [ ] Rundenzähler oben links, nur in Wayfarer- und Boss-Kämpfen
+5. [ ] Rundenzähler oben links, nur in Tamer- und Boss-Kämpfen
 6. [ ] Zug-Timeout für Online-Echo-Duelle (60 s, danach Rasten)
 7. [ ] Rückgängig-Knopf für die Befehlswahl im Mehrfachkampf, bevor der Zug startet
-8. [ ] Aufgeben-Option in Wayfarer-Kämpfen mit Bestätigung (zählt als Niederlage, kein Geldverlust auf Story)
-9. [ ] Wechsel nach einem K.o. des Gegners anbieten (Stufe Story und Wayfarer), auf Veteran abschaltbar
+8. [ ] Aufgeben-Option in Tamer-Kämpfen mit Bestätigung (zählt als Niederlage, kein Geldverlust auf Story)
+9. [ ] Wechsel nach einem K.o. des Gegners anbieten (Stufe Story und Tamer), auf Veteran abschaltbar
 10. [ ] Gegner kündigt seinen nächsten Spirling an, wenn er wechselt (Ankündigungs-Option)
 11. [ ] Doppelte Aktion eines Bosses klar als 'Nachhall' markieren
 12. [ ] Rasten im Mehrfachkampf: Wahl 'Alle rasten' als Abkürzung
@@ -165,7 +165,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 121. [x] Resonanz-Techniken: Ash Call, Tide Call und Murk Call legen 5 Runden lang ein Rift-Feld
 122. [ ] Feld-Restzüge im Log ansagen und beim Ende melden
 123. [ ] Schutz-Technik 'Brace': hält einen Treffer ab, zweimal hintereinander schlägt fehl
-124. [ ] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Wayfarer-Kämpfe)
+124. [ ] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Tamer-Kämpfe)
 125. [ ] Mehrstufige Technik: lädt eine Runde, trifft dann doppelt
 126. [ ] Konter-Technik: wirft physischen Schaden x1.5 zurück
 127. [ ] Heil-Technik für Verbündete im Mehrfachkampf
@@ -205,89 +205,89 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Status-Zustände
 
-161. [x] Ruhe-Regel: Drowse trifft keinen zweiten Spirling derselben Seite in Wayfarer-Kämpfen
+161. [x] Ruhe-Regel: Drowse trifft keinen zweiten Spirling derselben Seite in Tamer-Kämpfen
 162. [ ] Status-Symbole mit Form und Kürzel (bestehend: Kürzel), Symbole ergänzen
 163. [ ] Status-Dauer als Zahl unter dem Kürzel
-164. [ ] Neuer Status 'Verwirrt' in eigener Form: Ziel wählt zufällig das Ziel im Mehrfachkampf
-165. [ ] Neuer Status 'Erschöpft': halbe Energie-Regeneration
-166. [ ] Neuer Status 'Markiert': nächster Treffer gegen das Ziel ist ein sicherer Treffer
+164. [x] Neuer Status 'Verwirrt' in eigener Form: Ziel wählt zufällig das Ziel im Mehrfachkampf (Status Muddle/Wirr, StatusRules)
+165. [x] Neuer Status 'Erschöpft': halbe Energie-Regeneration (Status Spent, StatusRules.energy_gain)
+166. [x] Neuer Status 'Markiert': nächster Treffer gegen das Ziel ist ein sicherer Treffer (Status Marked)
 167. [x] Status-Immunität durch Feld (z. B. Hohe Flut verhindert Scorch)
-168. [ ] Status-Heil-Gegenstände pro Status und ein Allheiler (bestehend prüfen)
+168. [x] Status-Heil-Gegenstände pro Status und ein Allheiler (bestehend prüfen) (je Status ein Heilmittel + Remedy, test_move_content)
 169. [ ] Status-Kombination: Soak + Jolt = länger gelähmt
-170. [ ] Status-Ticks bleiben bei 1/12 (fixe Originalitätszahl, nicht ändern)
-171. [ ] Status-Erklärung im Lexikon mit Zahlen
+170. [x] Status-Ticks bleiben bei 1/12 (fixe Originalitätszahl, nicht ändern) (test_kampf_status)
+171. [x] Status-Erklärung im Lexikon mit Zahlen (Kampfhandbuch, BattleGuide.gd)
 172. [ ] Status-Animation kurz und optional (Weniger Bewegung)
-173. [ ] Status trifft Bosse nur halb so lange
+173. [x] Status trifft Bosse nur halb so lange (StatusRules.boss_turns)
 174. [x] Status-Chance in der Technik-Info
-175. [ ] KI meidet Status gegen Ziele mit Status oder Immunität (umgesetzt in Meister-KI)
-176. [ ] Status-Schutz-Technik für das Team
-177. [ ] Status überträgt sich bei Kontakt (Trait 'Glimmhaut')
-178. [ ] Status heilt beim Wechsel auf die Bank (Trait 'Ruhig')
+175. [x] KI meidet Status gegen Ziele mit Status oder Immunität (umgesetzt in Meister-KI) (BattleAI Stufe 3)
+176. [x] Status-Schutz-Technik für das Team (Technik Calm Veil)
+177. [x] Status überträgt sich bei Kontakt (Trait 'Glimmhaut') (Gabe glimmer_skin, Forgefly-Linie)
+178. [x] Status heilt beim Wechsel auf die Bank (Trait 'Ruhig') (Gabe unruffled, Prismist-Linie)
 179. [ ] Status nach dem Kampf bleibt erhalten, außer auf Story
 180. [ ] Status-Heilung an Rastquellen (bestehend)
 181. [ ] Status-Statistik im Kampfende-Bericht
 182. [ ] Status-Sound pro Status eigenständig
 183. [ ] Status-Text in eigener Wortwahl (Liste gegen übernommene Phrasen, bestehend)
-184. [ ] Daze-Chance 1/3 überprüfen und dokumentieren
-185. [ ] Jolt 20 % bleibt fix (Originalitätszahl)
-186. [ ] Drowse 2 Runden bleibt fix (Originalitätszahl)
+184. [x] Daze-Chance 1/3 überprüfen und dokumentieren (Daze x0.7 Treffer, im Kampfhandbuch)
+185. [x] Jolt 20 % bleibt fix (Originalitätszahl) (test_kampf_status)
+186. [x] Drowse 2 Runden bleibt fix (Originalitätszahl) (test_kampf_status)
 187. [ ] Status 'Root' zeigt Kette am Sprite
 188. [ ] Status 'Soak' tropft sichtbar
 189. [ ] Status 'Scorch' glimmt sichtbar
 190. [ ] Status im Info-Streifen bei Hochkontrast fett
-191. [ ] Status gegen wilde Schwärme gilt pro Spirling
-192. [ ] Status-Reflexion als seltener gehaltener Gegenstand
-193. [ ] Warden-Regel 'Stille Luft': kein Status für beide Seiten
+191. [x] Status gegen wilde Schwärme gilt pro Spirling (test_kampf_status)
+192. [x] Status-Reflexion als seltener gehaltener Gegenstand (Mirror Scale)
+193. [x] Warden-Regel 'Stille Luft': kein Status für beide Seiten (Regel still_air)
 194. [ ] Status-Chance in der Schadensvorschau ergänzen
-195. [ ] Status-Fehlschlag-Grund im Log (Immunität, Regel, schon betroffen)
-196. [ ] Status-Wirkung auf Bond-Chance im Lexikon erklären
+195. [x] Status-Fehlschlag-Grund im Log (Immunität, Regel, schon betroffen) (BattleEvent STATUS_FAILED)
+196. [x] Status-Wirkung auf Bond-Chance im Lexikon erklären (Kampfhandbuch)
 197. [ ] Status-Kombos in der Meister-KI nutzen
 198. [ ] Status-Clause für Online-Duelle (wie Ruhe-Regel)
-199. [ ] Status-Dauer pro Schwierigkeit gleich halten (Fairness)
+199. [x] Status-Dauer pro Schwierigkeit gleich halten (Fairness) (test_kampf_status)
 200. [ ] Status-Tutorial beim ersten Status
 
 ## Werte-Stufen und Werte
 
-201. [ ] Stufen-Pfeile im Info-Streifen (bestehend)
-202. [ ] Stufen-Grenze ±3 bleibt (eigene Zahl)
-203. [ ] Stufen-Tooltip mit Multiplikator
-204. [ ] Stufen nach Wechsel zurücksetzen (Regel prüfen und festschreiben)
-205. [ ] Stufen-Kopier-Technik
-206. [ ] Stufen-Tausch-Technik
-207. [ ] KI baut Stufen nur auf, wenn sie sicher ist (umgesetzt in Meister-KI)
-208. [ ] Stufen-Warnung, wenn ein Gegner +2 ATK hat
+201. [x] Stufen-Pfeile im Info-Streifen (bestehend) (InfoStrip)
+202. [x] Stufen-Grenze ±3 bleibt (eigene Zahl) (test_kampf_werte)
+203. [x] Stufen-Tooltip mit Multiplikator (InfoStrip.screen_reader_text, Kampfhandbuch)
+204. [x] Stufen nach Wechsel zurücksetzen (Regel prüfen und festschreiben) (Regel: Stufen bleiben am Spirling bis Kampfende, test_kampf_werte)
+205. [x] Stufen-Kopier-Technik (Mirror Stance)
+206. [x] Stufen-Tausch-Technik (Crosswind Trade)
+207. [x] KI baut Stufen nur auf, wenn sie sicher ist (umgesetzt in Meister-KI) (BattleAI Stufe 3)
+208. [x] Stufen-Warnung, wenn ein Gegner +2 ATK hat (STAT_CHANGED warn)
 209. [ ] Spark-Werte (bestehend) im Statusbildschirm als Balken
 210. [ ] Spark-Training durch Kämpfe gegen bestimmte Arten
 211. [ ] Spark-Reset-Gegenstand
 212. [ ] Temperament (bestehend) im Kampf-Info zeigen
-213. [ ] Werte-Rechner im Lexikon (Lv, Spark, Temperament)
+213. [x] Werte-Rechner im Lexikon (Lv, Spark, Temperament) (Kampfhandbuch Werte, BattleGuide.calc)
 214. [ ] Werte-Vergleich beim Einwechseln
 215. [ ] Werte-Ansicht der Gegner nach dem Kampf im Lexikon
-216. [ ] Krit-Chance 1/12 und x1.4 fix (Originalitätszahl)
-217. [ ] Krit-Stufen durch gehaltene Gegenstände (bestehend: crit_mult)
-218. [ ] Genauigkeits-Stufen als eigene Werte prüfen (vielleicht nicht nötig)
-219. [ ] Ausweich-Werte bewusst nicht einführen (Frust vermeiden)
-220. [ ] SPD-Gleichstand-Regel im Lexikon
-221. [ ] Werte-Grenzen im Datenprüfer (validate_data) festhalten
-222. [ ] Basiswert-Summen pro Entwicklungsstufe prüfen
-223. [ ] Werte-Balance über den Simulator
+216. [x] Krit-Chance 1/12 und x1.4 fix (Originalitätszahl) (test_kampf_werte)
+217. [x] Krit-Stufen durch gehaltene Gegenstände (bestehend: crit_mult) (Whetstone keen_lens)
+218. [x] Genauigkeits-Stufen als eigene Werte prüfen (vielleicht nicht nötig) (bewusst nicht, BattleRules.STAGE_STATS)
+219. [x] Ausweich-Werte bewusst nicht einführen (Frust vermeiden) (test_kampf_werte)
+220. [x] SPD-Gleichstand-Regel im Lexikon (Kampfhandbuch)
+221. [x] Werte-Grenzen im Datenprüfer (validate_data) festhalten (DataValidator._check_values)
+222. [x] Basiswert-Summen pro Entwicklungsstufe prüfen (DataValidator._check_values)
+223. [x] Werte-Balance über den Simulator (type_sim.py --strict)
 224. [ ] Stufen visuell auch am Sprite (kleine Aura)
-225. [ ] Stufen-Text in eigener Wortwahl (bestehend)
-226. [ ] Stufen auf Bosse wirken halb
-227. [ ] Phasen-Bosse erhalten Stufen beim Phasenwechsel (umgesetzt)
-228. [ ] Warden-Regel mit Startstufen (bestehend: Undertow)
+225. [x] Stufen-Text in eigener Wortwahl (bestehend) (BattleEvent)
+226. [x] Stufen auf Bosse wirken halb (gesenkte Stufen halb, BattleRules.boss_stage_mult)
+227. [x] Phasen-Bosse erhalten Stufen beim Phasenwechsel (umgesetzt) (BattleRules.BOSSES phase)
+228. [x] Warden-Regel mit Startstufen (bestehend: Undertow) (BattleRules.RULES)
 229. [ ] Stufen-Sound steigt mit Stufe
 230. [ ] Werte-Ansicht als Radar-Grafik im Statusbildschirm
 231. [ ] Werte pro Level im Lexikon als Kurve
-232. [ ] Level-Cap im Menü (bestehend)
+232. [x] Level-Cap im Menü (bestehend) (PauseMenu Ring limit)
 233. [ ] Level-Cap-Hinweis beim XP-Verlust
-234. [ ] Werte beim Levelaufstieg anzeigen (Zuwachs)
+234. [x] Werte beim Levelaufstieg anzeigen (Zuwachs) (LevelPanel)
 235. [ ] Werte-Export für Fans (Teamcode)
 236. [ ] Werte-Vorschau bei Entwicklung
-237. [ ] Gleiche Werte-Formel für Spieler und Gegner (Fairness)
+237. [x] Gleiche Werte-Formel für Spieler und Gegner (Fairness) (test_kampf_werte)
 238. [ ] Werte-Skalierung im Turnier 'Gleiches Level'
-239. [ ] Werte-Prüfung im Balancing-Test (keine Art dominiert)
-240. [ ] Werte-Formel bleibt eigenständig (Regel)
+239. [x] Werte-Prüfung im Balancing-Test (keine Art dominiert) (type_sim.py --strict)
+240. [x] Werte-Formel bleibt eigenständig (Regel) (Spirling.gd, DamageCalc.gd)
 
 ## Traits
 
@@ -347,7 +347,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 291. [ ] Gegenstand 'Riss-Splitter': Overcharge +0.05 pro Energie
 292. [ ] Gegenstand 'Wanderschuh': Wechsel ist frei
 293. [ ] Gegenstände in Turnier-Regeln einzeln sperrbar
-294. [ ] Gegner-Wayfarer tragen auf Veteran Gegenstände
+294. [ ] Gegner-Tamer tragen auf Veteran Gegenstände
 295. [ ] Gegenstand-Info im Lexikon
 296. [ ] Gegenstand-Verbrauch in Kampfende-Bericht
 297. [ ] Gegenstand nach dem Kampf automatisch wieder ausrüsten (Option)
@@ -458,7 +458,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 396. [ ] Mehrfachkampf: Einhand-Modus
 397. [ ] Mehrfachkampf-Tests (bestehend) erweitern
 398. [ ] Mehrfachkampf: Story-Kämpfe mit Ali-Wunsch (3v3, 4v1, 4v2) beibehalten
-399. [ ] Mehrfachkampf: Gegner-Formationen pro Wayfarer
+399. [ ] Mehrfachkampf: Gegner-Formationen pro Tamer
 400. [ ] Mehrfachkampf: Formation-Bonus (z. B. zwei Stone vorne +DEF)
 
 ## Bosse und Wardens
@@ -515,12 +515,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 447. [ ] KI sagt Wechsel des Spielers vorher (nur Meister)
 448. [ ] KI nutzt Heil-Techniken gezielt
 449. [ ] KI schont Spirlings mit wenig HP für später
-450. [ ] KI-Persönlichkeiten pro Wayfarer (vorsichtig, wild, taktisch)
+450. [ ] KI-Persönlichkeiten pro Tamer (vorsichtig, wild, taktisch)
 451. [ ] KI-Debug-Ansicht für Entwickler
 452. [ ] KI-Tests pro Verhalten
 453. [ ] KI liest nur, was der Spieler auch sieht (keine versteckten Werte)
 454. [ ] KI-Zufall in Stufe 0 bleibt (Wildkämpfe)
-455. [ ] KI-Stufe pro Wayfarer übersteuerbar (bestehend)
+455. [ ] KI-Stufe pro Tamer übersteuerbar (bestehend)
 456. [ ] KI für Partner (Kestra) auf Veteran Stufe 2
 457. [ ] KI für Auto-Kampf (bestehend) auf Stufe 1
 458. [ ] KI-Ausrede vermeiden: nie unmögliche Aktionen
@@ -533,7 +533,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 465. [ ] KI-Gewinnrate-Ziel pro Schwierigkeit dokumentieren
 466. [ ] KI-Laufzeit unter 5 ms pro Entscheidung (Handy)
 467. [ ] KI-Entscheidungen im Replay nachvollziehbar
-468. [ ] KI-Texte: Wayfarer kommentiert gute Züge
+468. [ ] KI-Texte: Tamer kommentiert gute Züge
 469. [ ] KI meidet Felder, die dem Spieler helfen
 470. [ ] KI erkennt eigene Feldschwäche und wechselt
 471. [ ] KI-Lernen bewusst nicht (deterministisch bleiben)
@@ -549,7 +549,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Schwierigkeit und Herausforderungen
 
-481. [ ] Vier Stufen Story, Wayfarer, Veteran, Rift-Born (bestehend)
+481. [ ] Vier Stufen Story, Tamer, Veteran, Rift-Born (bestehend)
 482. [x] Rift-Born nutzt die neue Meister-KI
 483. [ ] Level-Caps ab Veteran (bestehend)
 484. [ ] Gegenstände in Kämpfen auf Rift-Born gesperrt (bestehend)
@@ -561,12 +561,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 490. [ ] Herausforderung 'Zufällige Spawns' (Zufallsmodus mit Seed)
 491. [ ] Herausforderung 'Zufällige Techniken'
 492. [ ] Herausforderungen kombinierbar beim neuen Spiel
-493. [ ] Herausforderungs-Abzeichen auf der Wayfarer-Karte (online)
+493. [ ] Herausforderungs-Abzeichen auf der Tamer-Karte (online)
 494. [ ] Schwierigkeit jederzeit senkbar, nie anhebbar (Fairness für Ranglisten)
 495. [ ] Schwierigkeit pro Kampf anzeigen
 496. [ ] Gegner-Level-Skalierung optional
 497. [ ] Story-Stufe: mehr XP, weniger Krit des Gegners
-498. [ ] Wayfarer-Stufe: Standard
+498. [ ] Tamer-Stufe: Standard
 499. [ ] Veteran: Gegner mit Gegenständen
 500. [ ] Rift-Born: Gegner mit voller Technik-Auswahl
 501. [ ] Gegner-Teams pro Stufe in data/npcs.json
@@ -590,48 +590,48 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 519. [ ] Herausforderung 'Boss zuerst'
 520. [ ] Herausforderung 'Nacht-Only'
 
-## Wayfarer-Teams und Gegnerdesign
+## Tamer-Teams und Gegnerdesign
 
-521. [ ] Jeder Wayfarer hat ein Thema (Element, Taktik)
-522. [ ] Wayfarer-Teams auf Veteran mit Synergien
-523. [ ] Wayfarer mit Feld-Strategie (Resonanz-Techniken)
-524. [ ] Wayfarer mit Status-Strategie
-525. [ ] Wayfarer mit Stufen-Strategie
-526. [ ] Wayfarer mit Mehrfachkampf-Strategie
-527. [ ] Wayfarer-Dialog vor/nach dem Kampf
-528. [ ] Wayfarer-Rückkämpfe (bestehend)
-529. [ ] Wayfarer-Telefonbuch-Ersatz: Laternenpost-Einladungen
-530. [ ] Wayfarer-Rangliste lokal
-531. [ ] Wayfarer-Belohnungen variieren
-532. [ ] Wayfarer-Teamgröße bis 5 (Team 5 fix)
-533. [ ] Wayfarer-Level an Level-Cap gebunden
-534. [ ] Wayfarer mit gehaltenen Gegenständen auf Veteran
-535. [ ] Wayfarer-Teams prüfen auf Dopplungen
-536. [ ] Wayfarer-Sprites eigenständig
-537. [ ] Wayfarer-Namen eigenständig
-538. [ ] Wayfarer-Klassen eigenständig (keine bekannten Klassen übernehmen)
-539. [ ] Wayfarer-Begegnung per Blickkontakt bewusst anders lösen (Ansprechen oder Signal-Laterne)
-540. [ ] Wayfarer-Signal vor dem Kampf (Laterne blinkt)
-541. [ ] Wayfarer-Kampf überspringbar nach erstem Sieg (Rückkampf)
-542. [ ] Wayfarer-Statistik im Lexikon
-543. [ ] Wayfarer im Online-Weltziel
-544. [ ] Wayfarer-Echos von Freunden
-545. [ ] Wayfarer-Team-Builder für Testzwecke
-546. [ ] Wayfarer-Balancing im Simulator
-547. [ ] Wayfarer-KI-Persönlichkeiten
-548. [ ] Wayfarer-Gruppen-Kämpfe (2 Wayfarer gegen Spieler + Kestra)
-549. [ ] Wayfarer mit Boss-Spirling
-550. [ ] Wayfarer-Turm mit 50 Stockwerken
-551. [ ] Wayfarer-Turm Belohnungen
-552. [ ] Wayfarer-Turm Regeln pro Stockwerk
-553. [ ] Wayfarer-Turm Rangliste online
-554. [ ] Wayfarer-Daten validieren (validate_data)
-555. [ ] Wayfarer-Texte übersetzt
-556. [ ] Wayfarer-Teams pro Schwierigkeit
-557. [ ] Wayfarer-Geld-Belohnungen balancieren
-558. [ ] Wayfarer mit Overcharge-Strategie
-559. [ ] Wayfarer mit Bond-Lehre (Tutorial)
-560. [ ] Wayfarer-Kampfmusik pro Gebiet
+521. [ ] Jeder Tamer hat ein Thema (Element, Taktik)
+522. [ ] Tamer-Teams auf Veteran mit Synergien
+523. [ ] Tamer mit Feld-Strategie (Resonanz-Techniken)
+524. [ ] Tamer mit Status-Strategie
+525. [ ] Tamer mit Stufen-Strategie
+526. [ ] Tamer mit Mehrfachkampf-Strategie
+527. [ ] Tamer-Dialog vor/nach dem Kampf
+528. [ ] Tamer-Rückkämpfe (bestehend)
+529. [ ] Tamer-Telefonbuch-Ersatz: Laternenpost-Einladungen
+530. [ ] Tamer-Rangliste lokal
+531. [ ] Tamer-Belohnungen variieren
+532. [ ] Tamer-Teamgröße bis 5 (Team 5 fix)
+533. [ ] Tamer-Level an Level-Cap gebunden
+534. [ ] Tamer mit gehaltenen Gegenständen auf Veteran
+535. [ ] Tamer-Teams prüfen auf Dopplungen
+536. [ ] Tamer-Sprites eigenständig
+537. [ ] Tamer-Namen eigenständig
+538. [ ] Tamer-Klassen eigenständig (keine bekannten Klassen übernehmen)
+539. [ ] Tamer-Begegnung per Blickkontakt bewusst anders lösen (Ansprechen oder Signal-Laterne)
+540. [ ] Tamer-Signal vor dem Kampf (Laterne blinkt)
+541. [ ] Tamer-Kampf überspringbar nach erstem Sieg (Rückkampf)
+542. [ ] Tamer-Statistik im Lexikon
+543. [ ] Tamer im Online-Weltziel
+544. [ ] Tamer-Echos von Freunden
+545. [ ] Tamer-Team-Builder für Testzwecke
+546. [ ] Tamer-Balancing im Simulator
+547. [ ] Tamer-KI-Persönlichkeiten
+548. [ ] Tamer-Gruppen-Kämpfe (2 Tamer gegen Spieler + Kestra)
+549. [ ] Tamer mit Boss-Spirling
+550. [ ] Tamer-Turm mit 50 Stockwerken
+551. [ ] Tamer-Turm Belohnungen
+552. [ ] Tamer-Turm Regeln pro Stockwerk
+553. [ ] Tamer-Turm Rangliste online
+554. [ ] Tamer-Daten validieren (validate_data)
+555. [ ] Tamer-Texte übersetzt
+556. [ ] Tamer-Teams pro Schwierigkeit
+557. [ ] Tamer-Geld-Belohnungen balancieren
+558. [ ] Tamer mit Overcharge-Strategie
+559. [ ] Tamer mit Bond-Lehre (Tutorial)
+560. [ ] Tamer-Kampfmusik pro Gebiet
 
 ## Info und Transparenz
 
@@ -930,7 +930,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 835. [ ] Endgame: Boss-Turm
 836. [ ] Endgame: Lore-Belohnungen
 837. [ ] Endgame: Kosmetik-Belohnungen (Laternenfarben)
-838. [ ] Endgame: Titel auf der Wayfarer-Karte
+838. [ ] Endgame: Titel auf der Tamer-Karte
 839. [ ] Endgame: Wochen-Ziel
 840. [ ] Endgame: Ruhm-Halle
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-34 von 1000 Punkten umgesetzt.
+80 von 1000 Punkten umgesetzt.
 
