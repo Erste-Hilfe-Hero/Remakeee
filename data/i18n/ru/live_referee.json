@@ -1,0 +1,32 @@
+{
+ "_comment": "Russian texts for the German table live_referee. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "%s Ring %d (from %s)": "%s Круг %d (от %s)",
+  "%s beats %s": "%s побеждает %s",
+  "(borrowed)": "(заём)",
+  "Close": "Закрыть",
+  "Could not save the picture.": "Не удалось сохранить картинку.",
+  "Enter the duel": "Войти в дуэль",
+  "It joins this one duel. After that the loan is used up.": "Он участвует только в этой дуэли. После этого заём исчерпан.",
+  "Leave (the duel goes on)": "Уйти (дуэль продолжится)",
+  "Live duel": "Живая дуэль",
+  "Menu": "Меню",
+  "No friend has lent you a Spirling right now.": "Сейчас ни один друг не одолжил тебе Spirling.",
+  "No winner": "Нет победителя",
+  "Result picture saved with your photos.": "Картинка с результатом сохранена в твоих фото.",
+  "Rounds: %d": "Раунды: %d",
+  "Save a result picture": "Сохранить картинку с результатом",
+  "Stop watching": "Перестать смотреть",
+  "Take a borrowed Spirling along": "Взять с собой одолженного Spirling",
+  "Take a borrowed Spirling along? It joins this one attempt, then the loan is used up.": "Взять с собой одолженного Spirling? Он участвует в этой попытке, после чего заём исчерпан.",
+  "That loan has ended.": "Этот заём закончился.",
+  "The duel is not over yet.": "Дуэль ещё не окончена.",
+  "The referee checks the duel.": "Судья проверяет дуэль.",
+  "The result picture is in your downloads.": "Картинка с результатом в твоих загрузках.",
+  "This battle cannot be shown any more.": "Этот бой больше нельзя показать.",
+  "Top: %s  Bottom: %s": "Сверху: %s  Снизу: %s",
+  "Without a borrowed Spirling": "Без одолженного Spirling",
+  "You already used a borrowed Spirling here.": "Ты уже использовал здесь одолженного Spirling.",
+  "Your last duel": "Твоя последняя дуэль"
+ }
+}

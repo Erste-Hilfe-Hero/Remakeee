@@ -196,6 +196,17 @@
   "Vigor %d/%d to %d/%d": "Dinçlik %d/%d iken %d/%d olur",
   "Already knows this art.": "Bu hüneri zaten biliyor.",
   "Wrong element.": "Yanlış element.",
-  "Works on its own at: %s": "Kendiliğinden işe yaradığı yer: %s"
+  "Works on its own at: %s": "Kendiliğinden işe yaradığı yer: %s",
+  "Bonded %d/%d": "Bağ %d/%d",
+  "Look in: %s": "Bak: %s",
+  "Nickname": "Takma ad",
+  "Nickname for %s": "%s için takma ad",
+  "Photo mode": "Fotoğraf modu",
+  "Photo mode: slide the D-pad to look around, tap the world for a photo, = changes the frame, B leaves.": "Fotoğraf modu: etrafa bakmak için yön tuşlarını kaydır, fotoğraf için dünyaya dokun, = çerçeveyi değiştirir, B çıkar.",
+  "Photo mode: the D-pad looks around, A takes a photo, Start changes the frame, B leaves.": "Fotoğraf modu: yön tuşları etrafa bakar, A fotoğraf çeker, Start çerçeveyi değiştirir, B çıkar.",
+  "Ready to unfurl": "Açılmaya hazır",
+  "Seen %d/%d": "Görülen %d/%d",
+  "That name can't be used. Letters and up to 3 digits, at most 10 characters.": "Bu ad kullanılamaz. Harfler ve en fazla 3 rakam, en çok 10 karakter.",
+  "Use it at %s: face the spot and tap it.": "%s konumunda kullan: noktaya dön ve dokun."
  }
 }

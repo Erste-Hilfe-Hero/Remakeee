@@ -196,6 +196,17 @@
   "Vigor %d/%d to %d/%d": "Бодрость %d/%d до %d/%d",
   "Already knows this art.": "Уже знает этот приём.",
   "Wrong element.": "Не та стихия.",
-  "Works on its own at: %s": "Срабатывает само: %s"
+  "Works on its own at: %s": "Срабатывает само: %s",
+  "Bonded %d/%d": "Связь %d/%d",
+  "Look in: %s": "Посмотреть: %s",
+  "Nickname": "Прозвище",
+  "Nickname for %s": "Прозвище для %s",
+  "Photo mode": "Фоторежим",
+  "Photo mode: slide the D-pad to look around, tap the world for a photo, = changes the frame, B leaves.": "Фоторежим: двигай крестовину, чтобы осмотреться, нажми на мир для снимка, = меняет рамку, B - выход.",
+  "Photo mode: the D-pad looks around, A takes a photo, Start changes the frame, B leaves.": "Фоторежим: крестовина - осмотреться, A - снимок, Start меняет рамку, B - выход.",
+  "Ready to unfurl": "Готов раскрыться",
+  "Seen %d/%d": "Видено %d/%d",
+  "That name can't be used. Letters and up to 3 digits, at most 10 characters.": "Это имя нельзя использовать. Буквы и до 3 цифр, не больше 10 символов.",
+  "Use it at %s: face the spot and tap it.": "Используй в месте %s: повернись к точке и нажми на неё."
  }
 }

@@ -27,6 +27,7 @@
   "Round %d": "第%d回合",
   "Send an emote": "傳送表情",
   "The duel ended without a winner.": "決鬥沒有分出勝負。",
+  "The referee could not play this duel again. It does not count.": "裁判無法重播這場對戰。不計入成績。",
   "The two results did not match. The duel does not count.": "兩邊的結果對不上。本場決鬥不計。",
   "Their team: %s": "對方隊伍：%s",
   "This duel is over.": "這場決鬥結束了。",
