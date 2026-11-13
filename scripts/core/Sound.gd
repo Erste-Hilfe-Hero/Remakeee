@@ -247,6 +247,8 @@ func cry(sd: SpirlingData, era: int = 0) -> void:
 	var e: int = era if era > 0 else EraManager.active_era()
 	if enabled and sd != null:
 		_play_voice(Cry.stream_for(sd, e, cry_spec(e)), GameState.BUS_VOICE, 0.0, 1.0, PRIO_BATTLE)
+	if sd != null:
+		cry_caption(sd.species_name)
 
 ## Era a Spirling's cry is played in: its origin era when it is the player's own, else the
 ## era on screen (wild Spirlings and rivals' teams sound like the place).
@@ -341,10 +343,21 @@ func _alarm_beep() -> void:
 func caption(sound_name: String) -> void:
 	if not GameState.sound_captions or not CAPTIONS.has(sound_name):
 		return
-	captions.append(CAPTIONS[sound_name])
+	_show_caption(CAPTIONS[sound_name])
+
+## Caption for a Spirling's cry (Kampf-Plan, Barrierefreiheit: subtitles for cries), so the cry
+## that opens a battle or marks a knock-out is seen too when the sound is off.
+func cry_caption(species: String) -> void:
+	if GameState.sound_captions and not species.is_empty():
+		_show_caption(CRY_CAPTION % species)
+
+const CRY_CAPTION: String = "[%s cries out]"
+
+func _show_caption(text: String) -> void:
+	captions.append(text)
 	if captions.size() > 8:
 		captions.pop_front()
-	Ticker.show_text(CAPTIONS[sound_name])
+	Ticker.show_text(text)
 
 ## Ground name for footsteps on a tile of [param kind]; [param wet] when water is next to it.
 static func ground_for(kind: int, wet: bool) -> String:
