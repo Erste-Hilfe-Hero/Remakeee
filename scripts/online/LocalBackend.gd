@@ -411,6 +411,10 @@ func _fn_profile_set(a: Dictionary) -> Dictionary:
 		var mo: Variant = given.get("motif")
 		if mo is String and FriendsMenu.GIFT_CARDS.has(mo) and int(_unlocks(me()).get("gift_card_" + mo, 0)) > 0:
 			card["motif"] = mo
+		# A title only from the game's list (20261113200010_card_title.sql), never free text.
+		var ti: Variant = given.get("title")
+		if ti is String and ti in BattleHalls.card_titles():
+			card["title"] = ti
 	p.name = clean_name(str(a.get("p_name", "")), p.code)
 	p.color = clampi(int(a.get("p_color", 0)), 0, 3)
 	var fav: String = ""
