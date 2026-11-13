@@ -407,6 +407,13 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 				line = Loc.t("Ends the foe's %s.") % Loc.t(StatusRules.label(ct)) if not ct.is_empty() else Loc.t("Ends the foe's status.")
 			&"stage_steal":
 				line = Loc.t("Steals one raised stage from the foe.")
+			&"stage_copy":
+				line = Loc.t("Copies every stage of the foe onto itself.")
+			&"stage_swap":
+				line = Loc.t("Trades all stages with the foe.")
+			&"status_veil":
+				var sv: int = int(fx.get("amount", 0))
+				line = Loc.t("No foe status takes hold on its side for %d turns.") % (sv if sv > 0 else BattleRules.STATUS_VEIL_TURNS)
 			&"energy_gain":
 				line = Loc.t("Gains %d Energy.") % int(fx.get("amount", 1))
 			&"stage_reset":
