@@ -1,0 +1,31 @@
+{
+ "_doc": "Rift field extras (docs/KAMPF_PLAN_1000.md, Rift-Felder und Umgebung), read by scripts/battle/RiftFields.gd. The rules of each field stay in BattleRules.FIELDS; this file holds how a field looks and sounds and where it turns up. tint: colour laid over the backdrop per field; tint_alpha per era (Era I is a 4-ink handheld, so every field gets the same dark ink there, only stronger or weaker). music_pitch: the battle song plays a touch lower or higher while the field lasts. daytime: a Resonance field laid at its own time of day (DayCycle phase names) holds extra turns. tower: share of lighthouse stair floors (from from_floor on) that stand in a random field. spawn: wild Spirlings of the boosted element come out more often on a map with that field.",
+ "tint": {
+  "ash_storm": "#c0583a",
+  "high_tide": "#3a78c0",
+  "deep_murk": "#3a2a5a",
+  "static_veil": "#d8c040",
+  "pollen_drift": "#70b048",
+  "dawn_glow": "#f0d890",
+  "rubble_rain": "#8a7458",
+  "gale_eye": "#a8d0d8"
+ },
+ "era_ink": {"1": "#2b2620"},
+ "tint_alpha": {"1": 0.1, "2": 0.12, "3": 0.14, "4": 0.16, "5": 0.18},
+ "music_pitch": {
+  "ash_storm": 1.0,
+  "high_tide": 0.97,
+  "deep_murk": 0.94,
+  "static_veil": 1.04,
+  "pollen_drift": 1.02,
+  "dawn_glow": 1.03,
+  "rubble_rain": 0.96,
+  "gale_eye": 1.05
+ },
+ "daytime": {
+  "dawn_glow": {"phases": ["dawn", "day"], "turns": 1},
+  "deep_murk": {"phases": ["dusk", "night"], "turns": 1}
+ },
+ "tower": {"share": 0.5, "from_floor": 3},
+ "spawn": true
+}

@@ -194,6 +194,10 @@ func _build() -> void:
 		_stage.set_terrain(backdrop)
 		_backdrop.visible = false
 
+	# Rift field badge and backdrop tint (KAMPF_PLAN_1000 items 322, 331).
+	_field_badge = FieldBadge.new()
+	_field_badge.era = EraManager.active_era()
+	_shake_root.add_child(_field_badge.tint_rect)
 	_foe_sprite = SpirlingSprite.new()
 	_player_sprite = SpirlingSprite.new()
 	_foe_strip = InfoStrip.new()
@@ -239,6 +243,7 @@ func _build() -> void:
 	_field.add_child(_goal_label)
 	_rule_banner = RuleBanner.new()
 	_field.add_child(_rule_banner)
+	_field.add_child(_field_badge)
 	_log_button = Button.new()
 	_log_button.text = "Log"
 	_log_button.focus_mode = Control.FOCUS_NONE
@@ -309,6 +314,30 @@ func _build() -> void:
 
 ## Era look of the HUD: plates, small buttons, team rows, text frame, ring-rise panel.
 var _hud: BattleHud
+var _field_badge: FieldBadge
+
+## The field badge: in 1v1 just above the player's plate (and team row), at the plate's left
+## edge; in a formation under the ledger and the team rows at the left edge, folded when it
+## would run into the foe rank.
+func _place_field_badge() -> void:
+	if _field_badge == null or _player_strip == null:
+		return
+	if not _multi or _slot_sprites[BattleModel.Side.FOE].is_empty():
+		var plate: Rect2 = _player_strip.plate_rect()
+		var top: float = plate.position.y
+		if _hud != null and _hud.player_team != null and _hud.player_team.visible:
+			top = minf(top, _hud.player_team.position.y)
+		_field_badge.place(Vector2(maxf(plate.position.x, MARGIN), top - FieldBadge.HEIGHT - 2))
+		return
+	var below: float = _foe_strip.plate_rect().end.y
+	var room: float = _field.size.x
+	for row: Control in ([_hud.player_team, _hud.foe_team] if _hud != null else []):
+		if row != null and row.visible and row.position.x < _field.size.x / 2.0:
+			below = maxf(below, row.position.y + row.size.y)
+	for sp: SpirlingSprite in _slot_sprites[BattleModel.Side.FOE]:
+		if sp.position.y + sp.size.y > below:
+			room = minf(room, sp.position.x - MARGIN - 2)
+	_field_badge.place(Vector2(MARGIN, below + 2), room)
 
 func _layout_field() -> void:
 	if _multi and not _slot_sprites[BattleModel.Side.FOE].is_empty():
@@ -899,6 +928,8 @@ func _play(events: Array[BattleEvent]) -> void:
 			for line: String in Tips.take(tip):
 				await _text.show_text(line)
 	_playing = []
+	_field_badge.sync(model)
+	_place_field_badge()
 
 ## The event list being played and the current position, so an art can look ahead at how
 ## its first hit turns out (items 2375, 2376).
@@ -1028,6 +1059,8 @@ func _play_event(e: BattleEvent) -> void:
 	var slot: int = int(e.data.get("slot", 0))
 	record(e)
 	_hud.on_event(e)
+	_field_badge.on_event(e)
+	_place_field_badge()
 	match e.type:
 		BattleEvent.Type.BATTLE_START:
 			var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)

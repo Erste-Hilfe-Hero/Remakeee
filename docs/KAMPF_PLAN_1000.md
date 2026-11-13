@@ -378,45 +378,45 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Rift-Felder und Umgebung
 
 321. [x] Felder per Technik für 5 Runden, danach kehrt das Feld des Ortes zurück
-322. [ ] Feld-Anzeige mit Restrunden am oberen Rand
+322. [x] Feld-Anzeige mit Restrunden am oberen Rand (FieldBadge: Symbol, Name, Restrunden)
 323. [x] Neues Feld 'Statischer Schleier' (Volt)
 324. [x] Neues Feld 'Blütenstaub' (Bloom)
 325. [x] Neues Feld 'Morgenschein' (Lumen)
-326. [ ] Neues Feld 'Steinregen' (Stone)
-327. [ ] Neues Feld 'Sturmauge' (Gale)
+326. [x] Neues Feld 'Steinregen' (Stone) (Geröllregen/Rubble Rain, Rubble Call)
+327. [x] Neues Feld 'Sturmauge' (Gale) (Gale Eye, Gale Call)
 328. [x] Feld beeinflusst Status (Hohe Flut löscht Scorch)
-329. [ ] Feld beeinflusst Energie (Statischer Schleier)
+329. [x] Feld beeinflusst Energie (Statischer Schleier) (Volt-Spirlings +1 Energie pro Runde)
 330. [x] Feld beeinflusst Heilung (Blütenstaub heilt 1/16)
-331. [ ] Feld-Hintergrund färbt sich (Backdrop-Tönung)
-332. [ ] Feld-Musik-Variation
-333. [ ] Feld-Tageszeit-Kombination
-334. [ ] Feld-Wechsel-Animation
+331. [x] Feld-Hintergrund färbt sich (Backdrop-Tönung) (data/rift_fields.json tint)
+332. [x] Feld-Musik-Variation (Tonhöhe pro Feld, Sound.music_pitch)
+333. [x] Feld-Tageszeit-Kombination (Morgenschein am Tag, Tiefes Dunkel nachts +1 Runde)
+334. [x] Feld-Wechsel-Animation (ElementFx-Welle, Badge blinkt)
 335. [ ] Feld im Kampfende-Bericht
-336. [ ] Feld-Lexikon
-337. [ ] Meister-KI nutzt Felder, die ihr nützen (umgesetzt)
-338. [ ] Feld-Gegenstände verlängern Dauer
-339. [ ] Trait 'Feldläufer' und 'Echo-Seele'
+336. [x] Feld-Lexikon (Lexikon-Eintrag pro Feld beim ersten Betreten)
+337. [x] Meister-KI nutzt Felder, die ihr nützen (umgesetzt) (BattleAI set_field)
+338. [x] Feld-Gegenstände verlängern Dauer (Andenken Feldpflock, +2 Runden)
+339. [x] Trait 'Feldläufer' und 'Echo-Seele' (Grindlet- und Vanepip-Linie)
 340. [ ] Feld in Online-Duellen wählbar
-341. [ ] Feld als Wochen-Herausforderung (bestehend)
-342. [ ] Feld-Beschreibung in eigener Wortwahl
-343. [ ] Feld-Boost 1.2 und Schwächung 0.85 (bestehend) dokumentieren
-344. [ ] Feld-Konflikt: neues Feld ersetzt altes, Ansage im Log
-345. [ ] Feld-Ende-Meldung (umgesetzt)
-346. [ ] Feld-Statistik im Simulator
-347. [ ] Feld-abhängige Wild-Spawns
-348. [ ] Feld-Rätsel im Riss
-349. [ ] Feld-Effekt auf Bond-Chance (z. B. Lichtflut +5 %)
-350. [ ] Feld-Symbol für Screenreader
-351. [ ] Feld bei 'Weniger Bewegung' ohne Partikel
-352. [ ] Feld-Wechsel durch Wetter in der Welt (optional, später)
-353. [ ] Feld-Unterschiede pro Ära-Grafik
-354. [ ] Feld-Regel im Turm zufällig pro Stockwerk
-355. [ ] Feld im Replay gespeichert (bestehend über Seed prüfen)
+341. [x] Feld als Wochen-Herausforderung (bestehend) (WeeklyChallenge.field)
+342. [x] Feld-Beschreibung in eigener Wortwahl (BattleRules.FIELDS intro, Lexikon)
+343. [x] Feld-Boost 1.2 und Schwächung 0.85 (bestehend) dokumentieren (Lexikon 'Riss-Felder', Test prüft die Zahlen)
+344. [x] Feld-Konflikt: neues Feld ersetzt altes, Ansage im Log
+345. [x] Feld-Ende-Meldung (umgesetzt)
+346. [x] Feld-Statistik im Simulator (BalanceSim run_fields, balance_sim fields)
+347. [x] Feld-abhängige Wild-Spawns (Element des Ortsfelds häufiger)
+348. [x] Feld-Rätsel im Riss (Prüfungen in data/puzzles.json mit Feld)
+349. [x] Feld-Effekt auf Bond-Chance (z. B. Lichtflut +5 %) (Morgenschein +5 %)
+350. [x] Feld-Symbol für Screenreader
+351. [x] Feld bei 'Weniger Bewegung' ohne Partikel (ElementFx ohne Welle, Badge ohne Blinken)
+352. [x] Feld-Wechsel durch Wetter in der Welt (optional, später) (data/weather.json, WeatherCycle)
+353. [x] Feld-Unterschiede pro Ära-Grafik (Tönung pro Ära, Ära I eine Tinte)
+354. [x] Feld-Regel im Turm zufällig pro Stockwerk (RiftFields.tower_field)
+355. [x] Feld im Replay gespeichert (bestehend über Seed prüfen) (BattleReplay field, Test)
 356. [x] Feld-Tests pro Feld
-357. [ ] Feld-Dauer pro Schwierigkeit gleich
-358. [ ] Feld-Kombination aus Ort und Technik (Technik gewinnt)
-359. [ ] Feld-Wirkung im Schadensvorschau-Wert (bestehend über damage_mult)
-360. [ ] Feld-Namen eigenständig prüfen
+357. [x] Feld-Dauer pro Schwierigkeit gleich (Test)
+358. [x] Feld-Kombination aus Ort und Technik (Technik gewinnt) (Test)
+359. [x] Feld-Wirkung im Schadensvorschau-Wert (bestehend über damage_mult) (CommandMenu.damage_pct)
+360. [x] Feld-Namen eigenständig prüfen (tools/ip_check.sh)
 
 ## Mehrfachkämpfe
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-428 von 1000 Punkten umgesetzt.
+459 von 1000 Punkten umgesetzt.
 
