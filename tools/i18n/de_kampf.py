@@ -210,7 +210,6 @@ T.update({
 "The cartographers": "Die Kartografen",
 "Kestra's guild draws every road of Veydal again each year. A map that is not walked goes wrong, they say, and a Wayfarer who keeps all their Spirlings standing walks it best.": "Kestras Gilde zeichnet jedes Jahr alle Wege von Veydal neu. Eine Karte, die keiner abläuft, wird falsch, sagen sie, und am besten läuft sie ab, wer alle seine Spirlings auf den Beinen hält.",
 "Reactions": "Reaktionen",
-"An art can set off a status already on its target: Ember on a Soaked foe dries it with a burst, Stone shakes off a Jolt. The battle log names every reaction it sees.": "Eine Technik kann einen Zustand auslösen, der schon auf dem Ziel liegt: Glut auf einem durchnässten Gegner trocknet ihn mit einem Knall, Stein schüttelt einen Schock ab. Das Kampfprotokoll nennt jede Reaktion.",
 "Rift mystics": "Riss-Mystiker",
 "The mystics at the Tide Rift listen to the Hush instead of fighting it. They chain reactions on purpose, one status feeding the next art.": "Die Mystiker am Gezeitenriss lauschen der Stille, statt sie zu bekämpfen. Sie reihen Reaktionen mit Absicht aneinander, ein Zustand nährt die nächste Technik.",
 "The Drowned Heart": "Das Ertrunkene Herz",

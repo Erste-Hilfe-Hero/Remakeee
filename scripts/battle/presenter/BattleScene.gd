@@ -799,7 +799,9 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 		if model.is_partner_index(BattleModel.Side.PLAYER, i):
 			continue
 		var s: Spirling = party[i]
-		entries.append({"text": "%s R%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), BattleInfo.switch_tag(s, foe)], "disabled": not i in candidates,
+		# KAMPF_PLAN_1000 item 119: a stepping-in warning against the foe's own elements.
+		var warn: String = TechniqueRules.switch_warning(model, BattleModel.Side.PLAYER, s) if i in candidates else ""
+		entries.append({"text": "%s R%d %d/%d%s%s" % [s.display_name(), s.level, s.hp, s.max_hp(), BattleInfo.switch_tag(s, foe), (" " + warn if not warn.is_empty() else "")], "disabled": not i in candidates,
 			"hint": BattleGuide.compare_line(s, model.active_spirling(BattleModel.Side.PLAYER, slot))})
 	while true:
 		var idx: int = await _picker.pick(title, entries, cancellable)
@@ -1064,7 +1066,8 @@ func _toggle_log() -> void:
 func _fill_log() -> void:
 	_log_filter_button.text = BattleInfo.filter_row(_log_filter)
 	var lines: Array[String] = BattleInfo.filter_lines(log_entries, _log_filter, LOG_KEEP)
-	_log_label.text = variant_list(model) + BattleInfo.facts(model, _seen_arts) + "\n\n" + Loc.t("Battle log") + "\n\n" \
+	var elem: String = TechniqueRules.element_summary(model)
+	_log_label.text = variant_list(model) + (elem + "\n\n" if not elem.is_empty() else "") + BattleInfo.facts(model, _seen_arts) + "\n\n" + Loc.t("Battle log") + "\n\n" \
 		+ ("\n".join(lines) if not lines.is_empty() else Loc.t("Nothing yet.")) + "\n\n" + Loc.t("(tap to close)")
 
 ## A Gleam steps out: the sound cue and the sparkle (data/gleam.json).
@@ -1164,6 +1167,9 @@ func _play_event(e: BattleEvent) -> void:
 				var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, slot)
 				if foe != null:
 					GameState.learn_matchup(_last_player_element, foe.data.species_name, float(e.data.eff))
+					# KAMPF_PLAN_1000 item 84: the first hit on a two-element foe writes down how factors multiply.
+					if foe.elements().size() > 1:
+						Lexicon.add(GameState.records, "dual_elements")
 			if not bool(e.data.get("status_tick", false)):
 				await _hit_feedback(e, side, slot, hit == "hit_strong")
 			await _strip(side, slot).animate_hp(int(e.data.hp), int(e.data.max_hp))
