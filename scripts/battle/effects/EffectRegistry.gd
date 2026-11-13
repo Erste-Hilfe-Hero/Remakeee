@@ -40,6 +40,9 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"stage_copy": preload("res://scripts/battle/effects/StageCopyEffect.gd"),
 	&"stage_swap": preload("res://scripts/battle/effects/StageSwapEffect.gd"),
 	&"status_veil": preload("res://scripts/battle/effects/StatusVeilEffect.gd"),
+	&"energy_lock": preload("res://scripts/battle/effects/EnergyLockEffect.gd"),
+	&"energy_give": preload("res://scripts/battle/effects/EnergyGiveEffect.gd"),
+	&"energy_swap": preload("res://scripts/battle/effects/EnergySwapEffect.gd"),
 	# KAMPF_PLAN_1000, "Elemente und Matchups" and "Techniken" (TechniqueRules).
 	&"brace": preload("res://scripts/battle/effects/BraceEffect.gd"),
 	&"force_out": preload("res://scripts/battle/effects/ForceOutEffect.gd"),
@@ -59,6 +62,8 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"blast_allies": preload("res://scripts/battle/effects/BlastAlliesEffect.gd"),
 	&"element_shift": preload("res://scripts/battle/effects/ElementShiftEffect.gd"),
 	&"elem_ward": preload("res://scripts/battle/effects/ElementWardEffect.gd"),
+	&"dual_element": preload("res://scripts/battle/effects/PassiveEffect.gd"),
+	&"reset_target": preload("res://scripts/battle/effects/ResetTargetEffect.gd"),
 }
 
 static var _cache: Dictionary[StringName, MoveEffect] = {}

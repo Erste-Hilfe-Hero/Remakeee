@@ -34,95 +34,95 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Zugablauf und Grundregeln
 
 1. [x] Ruhe-Regel in Wayfarer-Kämpfen: pro Seite darf nur ein Spirling gleichzeitig Drowse haben
-2. [ ] Zugreihenfolge vor der Wahl als kleine Leiste anzeigen (wer handelt zuerst, nach SPD und Priorität)
-3. [ ] Priorität +2 für seltene Schutz-Techniken einführen, sonst bleibt +1 das Maximum
-4. [ ] Gleichstand bei SPD sichtbar als Münzwurf-Symbol im Kampflog
-5. [ ] Rundenzähler oben links, nur in Wayfarer- und Boss-Kämpfen
+2. [x] Zugreihenfolge vor der Wahl als kleine Leiste anzeigen (wer handelt zuerst, nach SPD und Priorität) (BattleInfo.order_hint auf der Technik-Karte)
+3. [x] Priorität +2 für seltene Schutz-Techniken einführen, sonst bleibt +1 das Maximum (Calm Veil +2, test_kampf_k01b)
+4. [x] Gleichstand bei SPD sichtbar als Münzwurf-Symbol im Kampflog (BattleModel._note_speed_ties, SPEED_TIE)
+5. [x] Rundenzähler oben links, nur in Wayfarer- und Boss-Kämpfen (BattleScene.show_turns)
 6. [ ] Zug-Timeout für Online-Echo-Duelle (60 s, danach Rasten)
 7. [ ] Rückgängig-Knopf für die Befehlswahl im Mehrfachkampf, bevor der Zug startet
 8. [ ] Aufgeben-Option in Wayfarer-Kämpfen mit Bestätigung (zählt als Niederlage, kein Geldverlust auf Story)
 9. [ ] Wechsel nach einem K.o. des Gegners anbieten (Stufe Story und Wayfarer), auf Veteran abschaltbar
 10. [ ] Gegner kündigt seinen nächsten Spirling an, wenn er wechselt (Ankündigungs-Option)
-11. [ ] Doppelte Aktion eines Bosses klar als 'Nachhall' markieren
+11. [x] Doppelte Aktion eines Bosses klar als 'Nachhall' markieren (BONUS_ACTION)
 12. [ ] Rasten im Mehrfachkampf: Wahl 'Alle rasten' als Abkürzung
-13. [ ] Schnellwahl 'Letzten Zug wiederholen' für Wildkämpfe
-14. [ ] Zugvorschau: Fehlschlag-Chance bei Genauigkeit unter 100 % als Prozentwert
+13. [x] Schnellwahl 'Letzten Zug wiederholen' für Wildkämpfe (CommandMenu.prefer_row, BattleInfo.focus_row: Fokus liegt auf der letzten Technik)
+14. [x] Zugvorschau: Fehlschlag-Chance bei Genauigkeit unter 100 % als Prozentwert (BattleInfo.miss_pct)
 15. [ ] Kampfbeginn mit Initiative-Bonus, wenn der Spieler den Gegner von hinten anspricht
-16. [ ] Überraschungsangriff wilder Spirlings im hohen Farn: erster Zug für den Gegner (selten)
-17. [ ] Klare Regel: Gegenstände kosten den ganzen Zug des Spirlings, der sie benutzt
-18. [ ] Rückzug aus Wildkämpfen bleibt ohne Kosten, wiederholte Versuche werden leichter (bestehend, dokumentieren)
-19. [ ] Endzug-Reihenfolge festlegen und im Lexikon erklären: Status, Regeneration, Energie, Feld
-20. [x] Kampfende-Zusammenfassung: Schaden, K.o.s, MVP-Spirling (BattleInfo.report_lines mit 'Star des Kampfes', BattleInfo.star_of)
-21. [ ] Zug-Limit für Boss-Kämpfe (z. B. 30 Züge), danach Riss schließt sich erneut
+16. [x] Überraschungsangriff wilder Spirlings im hohen Farn: erster Zug für den Gegner (selten) (BattleModel.ambush, Overworld)
+17. [x] Klare Regel: Gegenstände kosten den ganzen Zug des Spirlings, der sie benutzt (RulesBook, test_kampf_k01)
+18. [x] Rückzug aus Wildkämpfen bleibt ohne Kosten, wiederholte Versuche werden leichter (bestehend, dokumentieren) (RulesBook.fleeing)
+19. [x] Endzug-Reihenfolge festlegen und im Lexikon erklären: Status, Regeneration, Energie, Feld (RulesBook.end_of_turn)
+20. [x] Kampfende-Zusammenfassung: Schaden, K.o.s, MVP-Spirling (BattleSummary; BattleInfo.star_of)
+21. [x] Zug-Limit für Boss-Kämpfe (z. B. 30 Züge), danach Riss schließt sich erneut (BOSS_ROUND_LIMIT, ROUND_LIMIT)
 22. [ ] Optionale 'Sanfte Niederlage' auf Story: Team erwacht mit halben HP am Kampfort
-23. [ ] Seed des Kampfes im Log anzeigen (für Wiederholungen und Fehlerberichte)
+23. [x] Seed des Kampfes im Log anzeigen (für Wiederholungen und Fehlerberichte) (BattleSummary.seed_line im Log)
 24. [ ] Pause-Menü im Kampf mit Einstellungen, ohne den Kampf zu verlassen
-25. [ ] Mehrfachziel-Techniken treffen Verbündete nie (bestehende Regel festschreiben)
-26. [ ] Fehlende Aktionen eines Slots werden zu Rasten, nie zu Zufallszügen (bestehend, testen)
+25. [x] Mehrfachziel-Techniken treffen Verbündete nie (bestehende Regel festschreiben) (RulesBook, test_kampf_k01)
+26. [x] Fehlende Aktionen eines Slots werden zu Rasten, nie zu Zufallszügen (bestehend, testen) (test_kampf_k01)
 27. [ ] Gegner-Bank-Anzahl als Punkte am Rand (wie viele Spirlings noch kommen)
 28. [ ] Spieler-Bank-Anzahl ebenfalls als Punkte
 29. [ ] Kampfstart-Text kürzer bei 2x/4x Tempo
 30. [ ] Zwischenspeichern vor Boss-Kämpfen automatisch
 31. [ ] Kampf fortsetzen nach App-Neustart (Zustand pro Zug sichern)
-32. [ ] Wechsel kostet keine Energie, aber der neue Spirling startet mit seiner gespeicherten Energie
-33. [ ] Energie bleibt pro Spirling beim Wechsel erhalten (bestehend, sichtbar machen)
-34. [ ] Zufallszahlen fair: gleicher Seed erzeugt denselben Kampf (bestehend, Regressionstest)
-35. [ ] Keine versteckten Gummiband-Effekte: Gegner betrügt nie bei Würfen
-36. [ ] Treffer-Glück der Gegner auf Story leicht senken (Krit-Chance halbiert)
-37. [ ] Kampfregeln-Seite im Lexikon mit allen Zahlen
-38. [ ] Turnierregel 'Gleiches Level': alle Spirlings auf Lv 50 skaliert
-39. [ ] Turnierregel 'Ohne Gegenstände'
-40. [ ] Turnierregel 'Nur ein Element pro Team'
+32. [x] Wechsel kostet keine Energie, aber der neue Spirling startet mit seiner gespeicherten Energie (test_kampf_k01)
+33. [x] Energie bleibt pro Spirling beim Wechsel erhalten (bestehend, sichtbar machen) (RulesBook.energy)
+34. [x] Zufallszahlen fair: gleicher Seed erzeugt denselben Kampf (bestehend, Regressionstest) (test_battle_model.test_same_seed_same_battle)
+35. [x] Keine versteckten Gummiband-Effekte: Gegner betrügt nie bei Würfen (BattleModel.hit_chance, test_kampf_k01b)
+36. [x] Treffer-Glück der Gegner auf Story leicht senken (Krit-Chance halbiert) (foe_crit_mult)
+37. [x] Kampfregeln-Seite im Lexikon mit allen Zahlen (RulesBook, Menü Kampfregeln)
+38. [x] Turnierregel 'Gleiches Level': alle Spirlings auf Lv 50 skaliert (Fair League, LeagueRules.FAIR_RING)
+39. [x] Turnierregel 'Ohne Gegenstände' (Herausforderung Empty Pockets)
+40. [x] Turnierregel 'Nur ein Element pro Team' (Herausforderung One Colour)
 
 ## Energie und Overcharge
 
-41. [ ] Energie-Vorschau: nach Wahl einer Technik zeigen, wie viel Energie danach bleibt
-42. [ ] Rasten im Feld 'Hohe Flut' gibt +1 Energie extra (Feldbonus)
-43. [ ] Energie-Kristall als gehaltener Gegenstand: Start mit +2 Energie
-44. [ ] Techniken mit 0 Energiekosten, aber halber Stärke (Notfall-Techniken)
-45. [ ] Overcharge-Techniken zeigen den aktuellen Multiplikator im Menü
-46. [ ] Energie-Diebstahl-Techniken klarer kennzeichnen (Symbol)
-47. [ ] Energie-Sperre-Status: eine Runde kein Energiegewinn
-48. [ ] Trait 'Sparflamme': Techniken ab 5 Energie kosten 1 weniger
-49. [ ] Trait 'Überladen': bei voller Energie +10 % Schaden
+41. [x] Energie-Vorschau: nach Wahl einer Technik zeigen, wie viel Energie danach bleibt (BattleInfo.energy_after)
+42. [x] Rasten im Feld 'Hohe Flut' gibt +1 Energie extra (Feldbonus) (FIELDS.high_tide rest_bonus)
+43. [x] Energie-Kristall als gehaltener Gegenstand: Start mit +2 Energie (Item energy_crystal, start_energy)
+44. [x] Techniken mit 0 Energiekosten, aber halber Stärke (Notfall-Techniken) (Scrap Swipe)
+45. [x] Overcharge-Techniken zeigen den aktuellen Multiplikator im Menü (CommandMenu.overcharge_now)
+46. [x] Energie-Diebstahl-Techniken klarer kennzeichnen (Symbol) (CommandMenu.art_marks)
+47. [x] Energie-Sperre-Status: eine Runde kein Energiegewinn (Effekt energy_lock, Fuse Snap)
+48. [x] Trait 'Sparflamme': Techniken ab 5 Energie kosten 1 weniger (Trait low_flame)
+49. [x] Trait 'Überladen': bei voller Energie +10 % Schaden (Trait overflow)
 50. [ ] Maximale Energie pro Art leicht variieren (10 bis 12)
-51. [ ] Energie-Leiste als Ziffer für Screenreader
-52. [ ] Rasten heilt auf Story-Stufe zusätzlich 5 % HP
-53. [ ] Gegner-Energie im Info-Streifen anzeigen (bestehend, Lexikon erwähnen)
-54. [ ] Warden-Regel 'Ebbe': Spieler startet mit 1 Energie weniger
-55. [ ] Warden-Regel 'Glutpuls' (bestehend) im Lexikon erklären
-56. [ ] Technik 'Atemzug': +3 Energie, aber SPD -1
-57. [ ] Energie-Übertragung an einen Verbündeten im Mehrfachkampf
-58. [ ] Energie-Spiegel: Technik, die die Energie beider Seiten tauscht
-59. [ ] Overcharge-Kette: zwei Overcharge-Techniken hintereinander geben Bonus
-60. [ ] Overcharge-Sound steigt mit eingesetzter Energie
-61. [ ] Energie-Kosten-Balance über den Balancing-Simulator prüfen
-62. [ ] KI berücksichtigt Energie für den nächsten Zug (zwei Züge vorausplanen)
-63. [ ] KI rastet gezielt, wenn eine starke Technik bald bezahlbar ist
+51. [x] Energie-Leiste als Ziffer für Screenreader (InfoStrip.screen_reader_text)
+52. [x] Rasten heilt auf Story-Stufe zusätzlich 5 % HP (BattleModel.rest_heal_share)
+53. [x] Gegner-Energie im Info-Streifen anzeigen (bestehend, Lexikon erwähnen) (InfoStrip, RulesBook.energy)
+54. [x] Warden-Regel 'Ebbe': Spieler startet mit 1 Energie weniger (RULES.low_tide)
+55. [x] Warden-Regel 'Glutpuls' (bestehend) im Lexikon erklären (RulesBook.warden_rules)
+56. [x] Technik 'Atemzug': +3 Energie, aber SPD -1 (Long Breath)
+57. [x] Energie-Übertragung an einen Verbündeten im Mehrfachkampf (Spark Share, energy_give)
+58. [x] Energie-Spiegel: Technik, die die Energie beider Seiten tauscht (Charge Mirror, energy_swap)
+59. [x] Overcharge-Kette: zwei Overcharge-Techniken hintereinander geben Bonus (OVERCHARGE_CHAIN_BONUS)
+60. [x] Overcharge-Sound steigt mit eingesetzter Energie (BattleAudio.overcharge_pitch, Plan 687)
+61. [x] Energie-Kosten-Balance über den Balancing-Simulator prüfen (BalanceSim.ENERGY_PER_ART_BAND)
+62. [x] KI berücksichtigt Energie für den nächsten Zug (zwei Züge vorausplanen) (BattleAI plan_energy)
+63. [x] KI rastet gezielt, wenn eine starke Technik bald bezahlbar ist (BattleAI plan_energy, PLAN_MARGIN)
 64. [ ] Energie-Tutorial im ersten Wildkampf
-65. [ ] Hinweis, wenn eine Technik nie bezahlbar ist (Energie-Max zu klein)
-66. [ ] Gegenstand 'Funkentrank' gibt +3 Energie (prüfen, ob bestehend)
+65. [x] Hinweis, wenn eine Technik nie bezahlbar ist (Energie-Max zu klein) (CommandMenu.move_line 'never')
+66. [x] Gegenstand 'Funkentrank' gibt +3 Energie (prüfen, ob bestehend) (Spark Drop +5)
 67. [ ] Energie-Regeneration bei Wechsel auf die Bank: +1 pro Runde auf der Bank
-68. [ ] Energie-Startwert pro Schwierigkeit anpassen
-69. [ ] Overcharge in Bosskämpfen begrenzen (max. +5)
-70. [ ] Energie-Kosten im Lexikon jeder Technik
-71. [ ] Energie-Symbol farbenblind-sicher mit Form statt Farbe
+68. [x] Energie-Startwert pro Schwierigkeit anpassen (BattleRules.FOE_START_CUT)
+69. [x] Overcharge in Bosskämpfen begrenzen (max. +5) (OVERCHARGE_MAX_EXTRA gilt überall)
+70. [x] Energie-Kosten im Lexikon jeder Technik (CommandMenu.move_info)
+71. [x] Energie-Symbol farbenblind-sicher mit Form statt Farbe (InfoStrip: volle Pips gefüllt, leere als Umriss)
 72. [ ] Energie-Pips größer im Einhand-Modus
 73. [ ] Animation: Energie fließt beim Rasten sichtbar zurück
 74. [ ] Energieverlust durch Status 'Soak' als Option prüfen
-75. [ ] Feld 'Statischer Schleier' (neu): Volt-Techniken kosten 1 weniger
-76. [ ] Energie-Statistik im Kampfende-Bericht
+75. [x] Feld 'Statischer Schleier' (neu): Volt-Techniken kosten 1 weniger (cheap_element, nur als Feld des Ortes)
+76. [x] Energie-Statistik im Kampfende-Bericht (BattleSummary.energy_spent)
 77. [ ] Techniken mit variabler Stärke nach verbrauchter Energie (bestehend: Overcharge) erweitern
-78. [ ] Energie als Ziel für Gegenstand 'Ruhekerze'
-79. [ ] Online-Duelle: gleiche Energie-Regeln, keine Ausnahmen
-80. [ ] Energie-Werte in den Balancing-Bericht aufnehmen
+78. [x] Energie als Ziel für Gegenstand 'Ruhekerze' (Item rest_candle)
+79. [x] Online-Duelle: gleiche Energie-Regeln, keine Ausnahmen (LiveBattleModel nutzt BattleModel, RulesBook)
+80. [x] Energie-Werte in den Balancing-Bericht aufnehmen (BalanceSim.energy_line)
 
 ## Elemente und Matchups
 
 81. [ ] Matchup-Tabelle im Lexikon, die sich mit gesehenen Treffern füllt (bestehend: gelernte Matchups)
 82. [x] Story-Stufe zeigt alle Matchups von Anfang an (bestehend) (bestehend: GameState.known_matchups, Story zeigt alle)
 83. [ ] Matchup-Symbole mit Form statt Farbe (bestehend: Elementsymbole) auch im Lexikon
-84. [ ] Doppel-Element-Erklärung: beide Faktoren multiplizieren, im Lexikon zeigen
+84. [x] Doppel-Element-Erklärung: beide Faktoren multiplizieren, im Lexikon zeigen (Lexikon-Eintrag 'Zwei Elemente' beim ersten Treffer auf Doppel-Element)
 85. [x] Element-Resonanz: zwei Verbündete mit gleichem Element erhalten +5 % Schaden (TechniqueRules.resonance_mult)
 86. [x] Element-Wechsel-Technik: Ziel wird für 3 Runden zu einem anderen Element (Farbbad (Dye Bath), Spirling.element_shift)
 87. [x] Element-Schutz-Gegenstand: halbiert einen sehr effektiven Treffer einmal (Schutzschale (Ward Shell), held super_guard)
@@ -136,14 +136,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 95. [x] Element-Reaktion: Tide trifft Scorch-Ziel und löscht den Status
 96. [x] Element-Reaktion: Volt trifft Soak-Ziel für +20 % Schaden
 97. [x] Element-Reaktion: Ember auf Root-Ziel befreit es, verursacht aber Scorch (BattleRules.REACTIONS inflict)
-98. [ ] Element-Reaktionen im Lexikon erklären
+98. [x] Element-Reaktionen im Lexikon erklären (Lexikon-Eintrag 'Reactions' nennt alle Reaktionen)
 99. [ ] Matchup-Quiz als Minispiel im Leuchtturm
 100. [x] Effektivitäts-Text in eigener Wortwahl (bestehend: 'overwhelming', 'barely landed') (bestehend: BattleEvent DAMAGE)
 101. [x] Unwirksam-Treffer (x0) gibt es nicht, nur x0.25 (Designregel festhalten) (Regel in docs/BALANCE.md, test_kampf_techniques)
 102. [ ] Element-Dominanz pro Region als Wild-Spawn-Tabelle
 103. [x] Trait 'Prisma-Haut': nimmt bei x2 nur x1.5 (verborgene Gabe Prismenhaut (Cullet-Linie))
 104. [x] Trait 'Gegenstrom': resistiert das Element, das es zuletzt getroffen hat (verborgene Gabe Gegenstrom (Paddlewisp-Linie))
-105. [ ] Element-Statistik im Kampfende-Bericht
+105. [x] Element-Statistik im Kampfende-Bericht (Schaden nach Element im Kampflog, TechniqueRules.element_summary)
 106. [x] Matchup-Kenntnis wird pro Spielstand gespeichert (bestehend) (bestehend: SaveManager matchups)
 107. [ ] Online: Matchup-Wissen teilt sich mit Freunden (Laternenpost-Bonus)
 108. [ ] Element-Icons im Hochkontrast-Modus größer
@@ -152,18 +152,18 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 111. [ ] Ein Element pro Riss als Thema der Warden
 112. [ ] Element-Training: Spark-Werte steigen schneller im passenden Feld
 113. [ ] Element-Glyphen animieren beim sehr effektiven Treffer
-114. [ ] Element-Mischtechniken (zwei Elemente, nimmt das bessere)
+114. [x] Element-Mischtechniken (zwei Elemente, nimmt das bessere) (Magmasturm, Gischtböe (dual_element))
 115. [x] Element-Schild-Technik für das ganze Team (3 Runden) (Schutzkreis (Ward Circle))
 116. [x] Elementarer Nachhall: Bonus, wenn zwei Verbündete im selben Zug dasselbe Element nutzen (TechniqueRules.echo_mult)
 117. [ ] Element-Rätsel in der Welt, die Kampfwissen belohnen
 118. [ ] Element-Filter im Lager
-119. [ ] Element-Schwäche-Warnung beim Einwechseln
+119. [x] Element-Schwäche-Warnung beim Einwechseln (Warnung '!Element' in der Tauschauswahl)
 120. [x] Gegner-Element im Info-Streifen (bestehend) (bestehend: InfoStrip zeichnet Elementsymbole)
 
 ## Techniken
 
 121. [x] Resonanz-Techniken: Ash Call, Tide Call und Murk Call legen 5 Runden lang ein Rift-Feld
-122. [ ] Feld-Restzüge im Log ansagen und beim Ende melden
+122. [x] Feld-Restzüge im Log ansagen und beim Ende melden (Ansage eine Runde vor Feldende)
 123. [x] Schutz-Technik 'Brace': hält einen Treffer ab, zweimal hintereinander schlägt fehl (Standhalten (Hold Fast))
 124. [x] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Wayfarer-Kämpfe) (Wegschubser (Shove Off))
 125. [ ] Mehrstufige Technik: lädt eine Runde, trifft dann doppelt
@@ -171,7 +171,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 127. [x] Heil-Technik für Verbündete im Mehrfachkampf (Sippenbalsam (Kindred Balm))
 128. [x] Team-Stufen-Technik (alle Verbündeten DEF +1) (Reih und Glied (Rank and File))
 129. [x] Wurzel-Technik, die Wechsel für 3 Runden blockiert (bestehend: Root) (bestehend: Root blocks_swap)
-130. [ ] Technik, die Stufen des Ziels zurücksetzt
+130. [x] Technik, die Stufen des Ziels zurücksetzt (Reiner Tisch (Clean Slate))
 131. [x] Technik, die eigene negative Stufen löscht (Abschütteln (Shake Loose))
 132. [x] Technik mit steigender Stärke bei Wiederholung (Trommelwirbel (Rolling Drum))
 133. [x] Technik, die stärker ist, wenn das Ziel zuerst gehandelt hat (Späte Antwort (Late Reply))
@@ -197,8 +197,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 153. [x] Techniken mit Feld-Bedingung (stärker in passendem Feld) (bestehend: field_element-Techniken)
 154. [ ] Techniken mit Tageszeit-Bedingung (Tag/Nacht bestehend)
 155. [ ] Technik-Balancing über den Simulator pro neuer Technik
-156. [ ] Lernlisten pro Art auf Lücken prüfen (jede Art hat eine Status-Technik)
-157. [ ] Technik-Animationen pro Element eigenständig
+156. [x] Lernlisten pro Art auf Lücken prüfen (jede Art hat eine Status-Technik) (Statustechnik für jede Art per Echo-Kristall, test_kampf_techniques_b)
+157. [x] Technik-Animationen pro Element eigenständig (bestehend: ElementFx pro Element)
 158. [ ] Technik-Favoriten im Menü markieren
 159. [ ] Technik-Reihenfolge im Menü umsortieren
 160. [x] Technik-Info-Bildschirm per langem Druck
@@ -631,7 +631,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 557. [x] Wayfarer-Geld-Belohnungen balancieren (Test: Rematch < Wayfarer < Warden pro Ring, Standardpreis steigt mit dem Ring, auf jeder Karte zahlt kein Wayfarer mehr als der Warden)
 558. [ ] Wayfarer mit Overcharge-Strategie
 559. [ ] Wayfarer mit Bond-Lehre (Tutorial)
-560. [ ] Wayfarer-Kampfmusik pro Gebiet
+560. [x] Wayfarer-Kampfmusik pro Gebiet (Eigene synthetisierte Kampfmusik fuer Kartenwayfarer pro Gebiet (battle_wf_<region>, je ca. 28 KB, data/music.json wayfarer); nur in der Aera des Gebiets, nach Warden-, Herausforderungs-, Fest- und Nacht-Themen (BattleAudio.theme))
 
 ## Info und Transparenz
 
@@ -808,88 +808,88 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Fortschritt, XP und Training
 
 721. [x] Lager-Lernen: Spirlings auf der Bank erhalten die Hälfte der XP (Einstellung, Standard an)
-722. [ ] XP-Verteilung im Kampfende-Bericht
-723. [ ] Level-Cap blockiert XP (bestehend)
+722. [x] XP-Verteilung im Kampfende-Bericht (Wachstums-Zeile nach dem Kampf, GrowthRules.distribution_line)
+723. [x] Level-Cap blockiert XP (bestehend) (BattleModel._give_xp, Test test_kampf_growth_wild)
 724. [ ] Spark-Training (bestehend) mit Kampfquellen
-725. [ ] Technik-Lehrer
-726. [ ] Entwicklung nach Kampf (bestehend)
-727. [ ] Entwicklung abbrechen (Option)
-728. [ ] Temperament-Wechsel-Gegenstand
-729. [ ] Spark-Reset
-730. [ ] XP-Bonus für Rückkämpfe
-731. [ ] XP-Bonus für Bond-Spirlings
-732. [ ] XP-Malus bei Überlevel bewusst nicht
-733. [ ] XP-Kurve dokumentieren
-734. [ ] XP-Kurve im Simulator prüfen
-735. [ ] XP-Anzeige bei Bank-Spirlings
-736. [ ] Training-Arena im Leuchtturm
-737. [ ] Trainings-Dummies (Spirlings aus Holz) für Tests
-738. [ ] Trainings-Kämpfe ohne Risiko
-739. [ ] Trainings-Ziele (Quests)
-740. [ ] Trainings-Statistik
-741. [ ] Level-Aufstieg-Zusammenfassung bei mehreren Levels
-742. [ ] Lern-Technik-Dialog überspringbar
-743. [ ] Lern-Technik später nachholen
-744. [ ] XP für Partner-Spirlings nie (bestehend)
-745. [ ] XP in Online-Duellen nie (Fairness)
-746. [ ] XP auf Story höher
-747. [ ] XP-Glücksbringer als gehaltener Gegenstand
-748. [ ] XP-Zusammenfassung pro Gebiet
-749. [ ] Level-Cap-Erhöhung nach Riss (bestehend)
-750. [ ] Level-Cap in Turnieren
-751. [ ] Lager-Lernen nur für das Team, nicht für das Lager
-752. [ ] Lager-Lernen respektiert Level-Cap (umgesetzt)
-753. [ ] Lager-Lernen für erschöpfte Spirlings nicht (umgesetzt)
-754. [ ] Lager-Lernen in den Einstellungen (umgesetzt)
-755. [ ] Lager-Lernen im Lexikon erklären
-756. [ ] Training: Wochen-Echo gibt Spark
-757. [ ] Training: Feste geben Spark
-758. [ ] Training: Turm gibt Gegenstände
-759. [ ] Training: Online-Weltziel gibt XP-Bonus
-760. [ ] Training: kein Grind-Zwang (Balance-Ziel)
+725. [x] Technik-Lehrer (Echo-Kristalle mit teaches/for_elements, GameState.can_learn_echo)
+726. [x] Entwicklung nach Kampf (bestehend) (Overworld._after_battle Entfalten-Hinweis)
+727. [x] Entwicklung abbrechen (Option) (Entfalten nie automatisch, Zurückfalten jederzeit)
+728. [x] Temperament-Wechsel-Gegenstand (Temper Shift, PauseMenu)
+729. [x] Spark-Reset (spark_wash, GrowthRules.reset_spark)
+730. [x] XP-Bonus für Rückkämpfe (GrowthRules rematch_mult)
+731. [x] XP-Bonus für Bond-Spirlings (GrowthRules kinship_mult ab Verbundenheit 80)
+732. [x] XP-Malus bei Überlevel bewusst nicht (kein Malus ausser Era-V-Ringskalierung, in BALANCE.md und Lexikon)
+733. [x] XP-Kurve dokumentieren (docs/BALANCE.md gen:growth)
+734. [x] XP-Kurve im Simulator prüfen (GrowthRules.battles_between, Test)
+735. [x] XP-Anzeige bei Bank-Spirlings (XP_GAINED bench, Team-Menü Wachstum bis zum nächsten Ring)
+736. [x] Training-Arena im Leuchtturm (Tamsin im Leuchtturm, TrainingGround)
+737. [x] Trainings-Dummies (Spirlings aus Holz) für Tests (data/training.json dummies)
+738. [x] Trainings-Kämpfe ohne Risiko (friendly-Kampf, Team danach ausgeruht)
+739. [x] Trainings-Ziele (Quests) (TrainingGround goals)
+740. [x] Trainings-Statistik (TrainingGround.stat_lines)
+741. [x] Level-Aufstieg-Zusammenfassung bei mehreren Levels (GrowthRules.summary_line im Kampflog)
+742. [x] Lern-Technik-Dialog überspringbar (kein Wahl-Dialog mitten im Kampf, nur eine Zeile, GrowthRules.missed_arts)
+743. [x] Lern-Technik später nachholen (GameState.relearn)
+744. [x] XP für Partner-Spirlings nie (bestehend) (BattleModel._award_xp is_partner_index)
+745. [x] XP in Online-Duellen nie (Fairness) (EchoTeam.duel_copy, Test)
+746. [x] XP auf Story höher (GrowthRules difficulty_mult)
+747. [x] XP-Glücksbringer als gehaltener Gegenstand (growth_charm)
+748. [x] XP-Zusammenfassung pro Gebiet (Erfolge > Wachstum und Bindungen)
+749. [x] Level-Cap-Erhöhung nach Riss (bestehend) (GameState.LEVEL_CAPS)
+750. [x] Level-Cap in Turnieren (EchoTeam.DUEL_LEVEL Ring 50)
+751. [x] Lager-Lernen nur für das Team, nicht für das Lager (BattleModel._award_xp nur parties)
+752. [x] Lager-Lernen respektiert Level-Cap (umgesetzt)
+753. [x] Lager-Lernen für erschöpfte Spirlings nicht (umgesetzt)
+754. [x] Lager-Lernen in den Einstellungen (umgesetzt)
+755. [x] Lager-Lernen im Lexikon erklären (Lexikon bench_lessons)
+756. [x] Training: Wochen-Echo gibt Spark (WeeklyChallenge.REWARDS spark_charm)
+757. [x] Training: Feste geben Spark (spark_charm bei jedem Fest-Händler)
+758. [x] Training: Turm gibt Gegenstände (GrowthRules.tower_finds in RiftTower.finish)
+759. [x] Training: Online-Weltziel gibt XP-Bonus (GrowthRules world_goal, FriendsMenu)
+760. [x] Training: kein Grind-Zwang (Balance-Ziel) (no_grind_battles, Test)
 
 ## Wild-Begegnungen und Bond
 
-761. [ ] Bond-Echo-Melodie (bestehend) bleibt ohne Wurf und ohne Quote
-762. [ ] Bond nur gegen Wild (bestehend)
-763. [ ] Bond im Schwarm (bestehend)
-764. [ ] Bond-Bonus durch Status (bestehend prüfen)
-765. [ ] Bond-Bonus durch Feld
-766. [ ] Bond-Bonus durch Gegenstand Echo-Muschel
-767. [ ] Bond-Fehlschlag gibt freie Aktion (bestehend)
+761. [x] Bond-Echo-Melodie (bestehend) bleibt ohne Wurf und ohne Quote (BondEcho, BondCalc)
+762. [x] Bond nur gegen Wild (bestehend)
+763. [x] Bond im Schwarm (bestehend)
+764. [x] Bond-Bonus durch Status (bestehend prüfen) (BondCalc.STATUS_BONUS)
+765. [x] Bond-Bonus durch Feld (WildRules.field_bond_bonus)
+766. [x] Bond-Bonus durch Gegenstand Echo-Muschel (echo_shell)
+767. [x] Bond-Fehlschlag gibt freie Aktion (bestehend)
 768. [ ] Bond-Erfolg-Animation eigenständig
-769. [ ] Wild-Begegnungen im Farn, Schilf, Geröll (bestehend)
-770. [ ] Wild-Ketten-Bonus (Prisma-Chance steigt)
-771. [ ] Wild-Schwarm-Ereignisse
-772. [ ] Wild-Spawns nach Tageszeit (bestehend)
-773. [ ] Wild-Spawns nach Feld
-774. [ ] Wild-Auto-Kampf (bestehend)
-775. [ ] Wild-Level an Gebiet
-776. [ ] Wild-KI Stufe 0 (bestehend)
+769. [x] Wild-Begegnungen im Farn, Schilf, Geröll (bestehend)
+770. [x] Wild-Ketten-Bonus (Prisma-Chance steigt) (WildRules.prism_chance)
+771. [x] Wild-Schwarm-Ereignisse (WildRules.swarm)
+772. [x] Wild-Spawns nach Tageszeit (bestehend)
+773. [x] Wild-Spawns nach Feld (Wetter hebt Elemente, WildRules.weather_boost)
+774. [x] Wild-Auto-Kampf (bestehend)
+775. [x] Wild-Level an Gebiet (encounters.json min/max)
+776. [x] Wild-KI Stufe 0 (bestehend)
 777. [ ] Wild-Überraschung
-778. [ ] Wild-Rückzug-Regel (bestehend)
-779. [ ] Wild-Spirlings mit Gegenständen (selten)
-780. [ ] Wild-Begegnungs-Rate einstellbar (Laterne)
-781. [ ] Wild-Abwehr-Gegenstand
-782. [ ] Wild-Lockmittel
-783. [ ] Wild-Prisma-Varianten (bestehend)
-784. [ ] Wild-Seltenheit sichtbar im Spirlog
-785. [ ] Wild-Spawn-Tabellen validieren
-786. [ ] Bond-Melodie barrierefrei (visuell + Ton)
-787. [ ] Bond-Melodie Schwierigkeit pro Art
-788. [ ] Bond-Ergebnis ohne Prozentzahl (Leitplanke)
-789. [ ] Bond-Statistik im Lexikon
-790. [ ] Bond-Tests (bestehend)
-791. [ ] Wild-Horde mit Anführer
-792. [ ] Wild-Horde-Bond
+778. [x] Wild-Rückzug-Regel (bestehend)
+779. [x] Wild-Spirlings mit Gegenständen (selten) (WildRules.roll_held)
+780. [x] Wild-Begegnungs-Rate einstellbar (Laterne) (Sturmlaterne im Beutel, WildRules.lantern_mult)
+781. [x] Wild-Abwehr-Gegenstand (Wild Ward)
+782. [x] Wild-Lockmittel (Lure Scent, Encounter Call)
+783. [x] Wild-Prisma-Varianten (bestehend)
+784. [x] Wild-Seltenheit sichtbar im Spirlog (SpirlogBook.page_text)
+785. [x] Wild-Spawn-Tabellen validieren (test_kampf_growth_wild)
+786. [x] Bond-Melodie barrierefrei (visuell + Ton) (BondMinigame Form, Licht und Ton je Marke)
+787. [x] Bond-Melodie Schwierigkeit pro Art (BondEcho.CALL_LENGTH nach Seltenheit)
+788. [x] Bond-Ergebnis ohne Prozentzahl (Leitplanke)
+789. [x] Bond-Statistik im Lexikon (Lexikon bond_stats)
+790. [x] Bond-Tests (bestehend)
+791. [x] Wild-Horde mit Anführer (WildRules.horde_leader, BattleModel._horde_wavers)
+792. [x] Wild-Horde-Bond
 793. [ ] Wild-Boss (seltene alte Spirlings) im Endgame
 794. [ ] Wild-Begegnung im Nebel (Sicht begrenzt)
-795. [ ] Wild-Begegnung nachts häufiger
-796. [ ] Wild-Begegnung im Riss mit Feld
-797. [ ] Wild-Begegnung als Tageshighlight (bestehend Find of the Day)
-798. [ ] Wild-Begegnung Online-Echo
-799. [ ] Wild-Begegnung Wochen-Spawn
-800. [ ] Wild-Begegnung Fest-Spawn
+795. [x] Wild-Begegnung nachts häufiger (WildRules.rate_mult)
+796. [x] Wild-Begegnung im Riss mit Feld (Kartenfeld gilt für Wildkämpfe)
+797. [x] Wild-Begegnung als Tageshighlight (bestehend Find of the Day)
+798. [x] Wild-Begegnung Online-Echo (OnlineEvents.sighting_boost)
+799. [x] Wild-Begegnung Wochen-Spawn (WildRules.weekly)
+800. [x] Wild-Begegnung Fest-Spawn (Season-Boost)
 
 ## Endgame-Kampfmodi
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-623 von 1000 Punkten umgesetzt.
+764 von 1000 Punkten umgesetzt.
 

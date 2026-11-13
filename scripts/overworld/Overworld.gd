@@ -96,6 +96,7 @@ func _ready() -> void:
 		"wake": _action_wake,
 		"bounty": _action_bounty,
 		"fine_training": _action_fine_training,
+		"training": _action_training,
 		"matchmaker": _action_matchmaker,
 		"reserve": _action_reserve,
 		"informant": _action_informant,
@@ -373,11 +374,36 @@ func show_walk_hint() -> void:
 		await get_tree().process_frame
 	await show_tip("menu")
 
-## Shows a first-time tip (if any) while the player waits.
+## Map changes so far, and the change on which the last tip showed (item 1990).
+var map_changes: int = 0
+var _tip_change: int = -1
+## Tips that waited for the next map change, oldest first.
+var waiting_tips: Array[String] = []
+
+## Whether a tip may show now: never before the Wayfarer walks free after the prologue
+## (item 1991), and at most one per map change (item 1990).
+static func tip_allowed(flags: Dictionary, changes: int, last_tip_change: int) -> bool:
+	return flags.has("got_starter") and changes != last_tip_change
+
+## Shows a first-time tip (if any) while the player waits. A second tip on the same map
+## waits for the next map change; tips during the prologue are dropped until later.
 func show_tip(id: String) -> void:
-	var lines: Array[String] = Tips.take(id)
-	if not lines.is_empty():
-		await _locked_say(lines)
+	if not Tips.pending(id):
+		return
+	if not tip_allowed(GameState.flags, map_changes, _tip_change):
+		if not id in waiting_tips:
+			waiting_tips.append(id)
+		return
+	_tip_change = map_changes
+	await _locked_say(Tips.take(id))
+
+## The oldest waiting tip, after a map change.
+func _waiting_tip_after_load() -> void:
+	while not waiting_tips.is_empty():
+		var id: String = waiting_tips.pop_front()
+		if Tips.pending(id):
+			await _tip_after_load(id)
+			return
 
 func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	map = MapData.load_map(map_id)
@@ -385,6 +411,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		return
 	if minimap != null:
 		minimap.spotted.clear()
+	map_changes += 1
 	_entry_cell = cell
 	if map.outdoor:
 		GameState.enter_map(map_id, cell)
@@ -450,8 +477,10 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		_arrival_scene.call_deferred(arrive)
 	refresh_daylight()
 	Sound.enter_map(map_id)
-	if not map.encounter_table.is_empty():
+	if not map.encounter_table.is_empty() and Tips.pending("wild_area"):
 		_tip_after_load.call_deferred("wild_area")
+	elif not waiting_tips.is_empty():
+		_waiting_tip_after_load.call_deferred()
 
 var _rustle: Node2D
 
@@ -774,7 +803,8 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	var guard_over: bool = EncounterTable.tick_guard()
 	# Wild Ward (shop, pay-to-win step 6): switched on, no wild Spirling steps out.
 	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty() and guard_over and not ShopEffects.wild_ward_on():
-		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < minf(1.0, EncounterTable.rate(map.encounter_table) * call_mult):
+		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < minf(1.0, EncounterTable.rate(map.encounter_table) * call_mult * WildRules.rate_mult(DayCycle.current(), map.outdoor, GameState.day_night)
+				* WildRules.lantern_mult(GameState.records, GameState.has_gear(WildRules.LANTERN_ITEM))):
 			var wild: Spirling = DailyFind.maybe_spawn(map.encounter_table, GameState.flags, GameState.rng)
 			if wild != null:
 				# The day's rare visitor glitters in with five very high notes (item 2517).
@@ -785,13 +815,19 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				wild = ShopEffects.pass_rare(map.encounter_table, GameState.flags, GameState.rng)
 			if wild == null:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
+				for e: int in WildRules.weather_boost(WeatherCycle.current(map)):
+					if not e in boost:
+						boost.append(e)
 				boost.append_array(RiftFields.spawn_boost(map.field))
-				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain)
+				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain,
+					WildRules.event_mults(map.encounter_table, DailyFind.today_key()))
 				wild = ChallengeRules.reroll_wild(wild, map.encounter_table, GameState.rng)
 				if wild != null:
 					GameState.gleam_chain = GleamRules.next_chain(GameState.gleam_chain, wild)
 			if wild != null:
-				await start_battle([wild] as Array[Spirling], true)
+				# Now and then a wild Spirling ambushes from the tall grass (KAMPF_PLAN item 16).
+				var ambush: bool = not GameState.is_newcomer() and GameState.rng.randf() < BattleModel.AMBUSH_CHANCE
+				await start_battle([wild] as Array[Spirling], true, {"ambush": true} if ambush else {})
 
 func _warp(warp: Dictionary) -> void:
 	busy = true
@@ -1345,6 +1381,51 @@ func _action_fine_training(_args: PackedStringArray, _speaker: NPC) -> void:
 		return
 	var r: Dictionary = FineTraining.train(s, stat, GameState.rng)
 	await say([str(r.line)] as Array[String])
+
+## "training": the training ring in the lighthouse (TrainingGround): bouts against carved
+## dummies without risk, training goals and the training record.
+func _action_training(_args: PackedStringArray, _speaker: NPC) -> void:
+	while true:
+		var menu := MenuHost.new()
+		_ui.add_child(menu)
+		var opts: Array[String] = [Loc.t("Spar with a dummy"), Loc.t("Training goals"), Loc.t("Training record")]
+		var pick: int = await menu.pick_strings(Loc.t("Training ring"), opts)
+		if pick == 1:
+			await menu.info("\n".join(TrainingGround.goal_lines(GameState.records)))
+		elif pick == 2:
+			await menu.info("\n".join(TrainingGround.stat_lines(GameState.records)))
+		if pick != 0:
+			menu.queue_free()
+			if pick < 0:
+				return
+			continue
+		var top: int = 1
+		for p: Spirling in GameState.party:
+			top = maxi(top, p.level)
+		var names: Array[String] = []
+		for d: Dictionary in TrainingGround.dummies():
+			names.append(Loc.t("%s, ring %d") % [Loc.t(str(d.name)), TrainingGround.ring_for(d, top)])
+		var which: int = await menu.pick_strings(Loc.t("Which dummy?"), names)
+		menu.queue_free()
+		if which < 0 or GameState.first_healthy_index() < 0:
+			return
+		var dummy: Dictionary = TrainingGround.dummies()[which]
+		var foe: Spirling = TrainingGround.make(dummy, top, GameState.rng)
+		if foe == null:
+			return
+		_text.visible = false
+		var outcome: BattleModel.Outcome = await start_battle([foe] as Array[Spirling], false, TrainingGround.bout_info(dummy))
+		# Nothing is lost in the ring: the team is rested again right away.
+		GameState.heal_party()
+		busy = true
+		player.frozen = true
+		VirtualPad.set_wanted(false)
+		var lines: Array[String] = [Loc.t("The keeper patches the dummy up. Your team is rested.")]
+		for g: Dictionary in TrainingGround.after_bout(GameState.records, str(dummy.id), outcome == BattleModel.Outcome.WIN, last_model.growth_total if last_model != null else 0):
+			GameState.add_item(str(g.reward))
+			lines.append(Loc.t("Training goal met: %s You received %s.") % [Loc.t(str(g.text)), Loc.t(str(Database.item(str(g.reward)).get("name", g.reward)))])
+		await say(lines)
+		return
 
 ## "burrow": the claimable hollow in Murk Hollow with a wall of trophies (scripts/core/Burrow.gd).
 func _action_burrow(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -3690,6 +3771,7 @@ func offer_warden_rematch(n: NPC) -> bool:
 		return true
 	SaveManager.save_game()
 	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
+	info["rematch"] = true
 	var outcome: BattleModel.Outcome = await start_battle(team, false, info)
 	busy = true
 	player.frozen = true
@@ -3779,6 +3861,7 @@ func offer_rematch(n: NPC) -> bool:
 		busy = false
 		return false
 	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
+	info["rematch"] = true
 	info["money"] = TrainerData.REMATCH_MONEY_PER_LEVEL * team.reduce(func(m: int, s: Spirling) -> int: return maxi(m, s.level), 0)
 	var outcome: BattleModel.Outcome = await start_battle(team, false, info)
 	_note_wayfarer(def, outcome)
@@ -3990,8 +4073,11 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	scene.backdrop_shade = float(trainer.get("shade", 0.0))
 	scene.outdoor = map.outdoor
 	# Night, festival and challenge themes (KAMPF_PLAN_1000 713-717); a Warden keeps its own.
+	var area: String = ""
+	if bool(trainer.get("area_music", false)):
+		area = Sound.area_theme(map.region if not map.region.is_empty() else EraManager.current_region)
 	scene.music_track = BattleAudio.theme(str(trainer.get("theme", "")), bool(trainer.get("warden", false)), not Festival.active().is_empty(),
-		map.outdoor and GameState.day_night and DayCycle.current() == DayCycle.Phase.NIGHT)
+		map.outdoor and GameState.day_night and DayCycle.current() == DayCycle.Phase.NIGHT, area)
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0
@@ -4082,7 +4168,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		model.variants.assign(vids)
 	model.rule_turn_full = GameState.difficulty >= GameState.Difficulty.VETERAN
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
-	model.xp_mult = ShopEffects.growth_mult()
+	model.xp_mult = ShopEffects.growth_mult() * GrowthRules.battle_mult(GameState.difficulty, trainer, GameState.records)
 	model.ring_scaled_growth = EraFeatures.is_unlocked("ring_scaled_growth")
 	model.wheel = bool(trainer.get("wheel", false)) and EraFeatures.is_unlocked("wheel_battles")
 	model.wheel_size = EraActivities.wheel_size()
@@ -4104,6 +4190,15 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	var d: int = GameState.difficulty if world else -1
 	model.start_energy_cut = [0, int(trainer.get("foe_energy_cut", 0)) + BattleRules.foe_start_cut(d)]
 	model.foe_turn1_energy = BattleRules.foe_turn1_energy(d)
+	# Story (KAMPF_PLAN item 52): resting mends a little Vigor (the keen-hit cut is in ChallengeRules).
+	if d == GameState.Difficulty.STORY:
+		model.rest_heal_share = BattleModel.STORY_REST_HEAL
+	model.ambush = wild and bool(trainer.get("ambush", false))
+	# The end report: damage, knock-outs, best Spirling, Energy, seed (KAMPF_PLAN items 20, 76).
+	model.set_meta("summary", BattleSummary.new(model))
+	# A boss fight ends after BOSS_ROUND_LIMIT turns: the Rift closes again (item 21).
+	if not str(trainer.get("boss", "")).is_empty() and model.round_limit <= 0:
+		model.round_limit = BattleModel.BOSS_ROUND_LIMIT
 	model.warden_weakened = bool(trainer.get("warden_weakened", false))
 	model.gift_items = ShopEffects.battle_gifts(bool(trainer.get("warden", false)), world)
 	model.bond_grace = maxi(ShopEffects.bond_grace(), 1 if GameState.is_newcomer() else 0) if wild else 0
@@ -4137,6 +4232,12 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	ChallengeRules.note_result(outcome == BattleModel.Outcome.WIN, _warden_battle)
+	for id: String in GrowthRules.after_battle(GameState.records, map.region, model.growth_total, model.bench_growth) + WildRules.after_battle(GameState.records, model):
+		toast.show_note(Loc.t("New lexicon entry: %s") % Loc.t(Lexicon.title(id)))
+	# Who got how much growth (KAMPF_PLAN "XP-Verteilung im Kampfende-Bericht").
+	var grown: String = GrowthRules.distribution_line(model.parties[0], model.growth_by)
+	if not grown.is_empty():
+		toast.show_note(grown, null, "")
 	Kinship.after_battle(GameState.party, model.participants, outcome == BattleModel.Outcome.WIN)
 	var had_growth: bool = ShopEffects.boost_left("growth") > 0
 	ShopEffects.battle_done()

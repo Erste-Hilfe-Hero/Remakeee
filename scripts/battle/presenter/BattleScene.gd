@@ -148,12 +148,21 @@ func _refresh_goal() -> void:
 		_goal_label.text = str(model.get_meta("puzzle_goal", "")) + "\n" + Loc.t("Turns left: %d") % BattlePuzzle.turns_left(model)
 		_goal_label.visible = true
 		return
+	if _goal_label != null and not model.has_meta("goal_tracker") and show_turns(model):
+		# Wayfarer and boss battles count the turns top left (KAMPF_PLAN item 5).
+		_goal_label.text = Loc.t("T%d") % (model.turn + 1)
+		_goal_label.visible = not model.is_finished()
+		return
 	if _goal_label == null or not model.has_meta("goal_tracker") or not GameState.bonus_goals:
 		return
 	var t: BattleGoals.Tracker = model.get_meta("goal_tracker")
 	var mark: String = ["✗", "", "✓"][t.status() + 1]
 	_goal_label.text = (Loc.t("T%d") % (t.turns() + 1)) + ("" if mark.is_empty() else " " + mark)
 	_goal_label.visible = true
+
+## True for the battles that show the turn count without a bonus goal: Wayfarers and bosses.
+static func show_turns(m: BattleModel) -> bool:
+	return m != null and not m.is_wild and not m.has_meta("puzzle_max")
 
 func setup(p_model: BattleModel) -> void:
 	model = p_model
@@ -799,7 +808,9 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 		if model.is_partner_index(BattleModel.Side.PLAYER, i):
 			continue
 		var s: Spirling = party[i]
-		entries.append({"text": "%s R%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), BattleInfo.switch_tag(s, foe)], "disabled": not i in candidates,
+		# KAMPF_PLAN_1000 item 119: a stepping-in warning against the foe's own elements.
+		var warn: String = TechniqueRules.switch_warning(model, BattleModel.Side.PLAYER, s) if i in candidates else ""
+		entries.append({"text": "%s R%d %d/%d%s%s" % [s.display_name(), s.level, s.hp, s.max_hp(), BattleInfo.switch_tag(s, foe), (" " + warn if not warn.is_empty() else "")], "disabled": not i in candidates,
 			"hint": BattleGuide.compare_line(s, model.active_spirling(BattleModel.Side.PLAYER, slot))})
 	while true:
 		var idx: int = await _picker.pick(title, entries, cancellable)
@@ -1064,7 +1075,8 @@ func _toggle_log() -> void:
 func _fill_log() -> void:
 	_log_filter_button.text = BattleInfo.filter_row(_log_filter)
 	var lines: Array[String] = BattleInfo.filter_lines(log_entries, _log_filter, LOG_KEEP)
-	_log_label.text = variant_list(model) + BattleInfo.facts(model, _seen_arts) + "\n\n" + Loc.t("Battle log") + "\n\n" \
+	var elem: String = TechniqueRules.element_summary(model)
+	_log_label.text = variant_list(model) + (elem + "\n\n" if not elem.is_empty() else "") + BattleInfo.facts(model, _seen_arts) + "\n\n" + Loc.t("Battle log") + "\n\n" \
 		+ ("\n".join(lines) if not lines.is_empty() else Loc.t("Nothing yet.")) + "\n\n" + Loc.t("(tap to close)")
 
 ## A Gleam steps out: the sound cue and the sparkle (data/gleam.json).
@@ -1164,6 +1176,9 @@ func _play_event(e: BattleEvent) -> void:
 				var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, slot)
 				if foe != null:
 					GameState.learn_matchup(_last_player_element, foe.data.species_name, float(e.data.eff))
+					# KAMPF_PLAN_1000 item 84: the first hit on a two-element foe writes down how factors multiply.
+					if foe.elements().size() > 1:
+						Lexicon.add(GameState.records, "dual_elements")
 			if not bool(e.data.get("status_tick", false)):
 				await _hit_feedback(e, side, slot, hit == "hit_strong")
 			await _strip(side, slot).animate_hp(int(e.data.hp), int(e.data.max_hp))
@@ -1276,6 +1291,11 @@ func _play_event(e: BattleEvent) -> void:
 				await _text.show_text("You received %d coins." % money)
 			elif int(e.data.outcome) == BattleModel.Outcome.LOSS:
 				await _text.show_text("Your team is worn out...")
+			# The end report for Wayfarer and boss battles (KAMPF_PLAN items 20, 76).
+			if model.has_meta("summary") and not model.is_wild and not model.has_meta("quick"):
+				var rep_lines: Array[String] = (model.get_meta("summary") as BattleSummary).lines()
+				log_lines.append_array(rep_lines)
+				await _text.show_text("\n".join(rep_lines.slice(0, 2)))
 			# Each Spirling's share and the fields go under the battle report of the log.
 			for line: String in battle_report.lines().slice(1):
 				log_entries.append({"text": line, "kind": "other", "side": -1})

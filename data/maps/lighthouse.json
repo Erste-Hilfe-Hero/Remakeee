@@ -69,6 +69,14 @@
    "sprite": "villager"
   },
   {
+   "id": "tamsin",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "lighthouse/tamsin",
+   "sprite": "villager"
+  },
+  {
    "id": "hesper",
    "x": 6,
    "y": 2,

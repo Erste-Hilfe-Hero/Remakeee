@@ -36,6 +36,16 @@
   "tradeable": true
  },
  {
+  "id": "rest_candle",
+  "name": "Rest Candle",
+  "description": "Restores 3 Energy to any Spirling of the team, also one waiting on the bench.",
+  "battle": true,
+  "energy": 3,
+  "energy_bench": true,
+  "price": 250,
+  "tradeable": false
+ },
+ {
   "id": "revival_leaf",
   "name": "Waking Moss",
   "description": "Wakes a fainted Spirling outside battle with a third of its Vigor.",
@@ -2409,6 +2419,67 @@
   "tradeable": false
  },
  {
+  "id": "energy_crystal",
+  "name": "Energy Crystal",
+  "description": "Keepsake. The holder starts every battle with 2 extra Energy.",
+  "battle": false,
+  "held": {
+   "start_energy": 2
+  },
+  "price": 1500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_long_breath",
+  "name": "Echo Crystal: Long Breath",
+  "description": "Teaches Long Breath to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Long Breath",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_spark_share",
+  "name": "Echo Crystal: Spark Share",
+  "description": "Teaches Spark Share to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Spark Share",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_charge_mirror",
+  "name": "Echo Crystal: Charge Mirror",
+  "description": "Teaches Charge Mirror to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Charge Mirror",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_fuse_snap",
+  "name": "Echo Crystal: Fuse Snap",
+  "description": "Teaches Fuse Snap to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Fuse Snap",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_scrap_swipe",
+  "name": "Echo Crystal: Scrap Swipe",
+  "description": "Teaches Scrap Swipe to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Scrap Swipe",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
   "id": "second_wind_tea",
   "name": "Second Wind Tea",
   "description": "Cures Spent.",
@@ -2638,6 +2709,62 @@
    "super_guard": true
   },
   "price": 1500,
+  "tradeable": false
+ },
+ {
+  "id": "growth_charm",
+  "name": "Growth Charm",
+  "description": "Keepsake. A knotted cord that hums after every battle: the holder gains half again as much growth.",
+  "battle": false,
+  "held": {
+   "growth_mult": 1.5
+  },
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_shell",
+  "name": "Echo Shell",
+  "description": "Hold it out during a bond: the shell hums the call back and steadies the link a little more than a Kin Charm.",
+  "battle": false,
+  "bond_bonus": 0.15,
+  "price": 700,
+  "tradeable": false
+ },
+ {
+  "id": "spark_wash",
+  "name": "Spark Wash",
+  "description": "Washes one Spark value of a Spirling back to nothing, for a slower or humbler build.",
+  "battle": false,
+  "spark_reset": true,
+  "price": 1500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_magma_rush",
+  "name": "Echo Crystal: Magma Rush",
+  "description": "Teaches Magma Rush to an Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Magma Rush",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_tidal_gust",
+  "name": "Echo Crystal: Tidal Gust",
+  "description": "Teaches Tidal Gust to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Tidal Gust",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_clean_slate",
+  "name": "Echo Crystal: Clean Slate",
+  "description": "Teaches Clean Slate to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Clean Slate",
+  "price": 3000,
   "tradeable": false
  }
 ]

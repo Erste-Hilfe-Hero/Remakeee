@@ -20232,7 +20232,7 @@
    "spd": 102,
    "def": 71
   },
-  "trait": "kindling",
+  "trait": "low_flame",
   "learnset": {
    "1": [
     "Cinder Dash",
@@ -21129,7 +21129,7 @@
    "spd": 126,
    "def": 67
   },
-  "trait": "last_stand",
+  "trait": "overflow",
   "learnset": {
    "1": [
     "Rime Nip",
@@ -26497,7 +26497,7 @@
   "line_id": "noonfox",
   "era": 4,
   "base": {
-   "hp": 54,
+   "hp": 57,
    "atk": 71,
    "foc": 48,
    "spd": 72,
@@ -29229,7 +29229,7 @@
    "spd": 132,
    "def": 81
   },
-  "trait": "slick",
+  "trait": "overflow",
   "learnset": {
    "1": [
     "Flake Rasp",
@@ -29599,7 +29599,7 @@
    "spd": 96,
    "def": 83
   },
-  "trait": "kindling",
+  "trait": "low_flame",
   "learnset": {
    "1": [
     "Tinder Flick",
