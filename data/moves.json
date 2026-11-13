@@ -5416,7 +5416,7 @@
   "name": "Coiled Strike",
   "element": "STONE",
   "kind": "PHYSICAL",
-  "power": 65,
+  "power": 50,
   "accuracy": 1.0,
   "energy": 2,
   "effect": "charge_up",

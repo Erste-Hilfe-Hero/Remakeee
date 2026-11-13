@@ -657,7 +657,7 @@ levels. That is expected noise with 10 rounds per pair and worth a look when lea
   in the turn; Energy, not damage, so same-element teams still leave room for combos), the Ward Shell keepsake, the gifts Prism Skin and Countercurrent, Ward Circle and
   Dye Bath. The 19 arts of the plan's "Techniken" area are taught by Echo Crystals that Hesper
   sells in the lighthouse.
-- Coiled Strike (charge) does nothing on its first use and hits x2 on the next, so per turn it is
+- Coiled Strike (charge, power 50 to stay on the art curve) does nothing on its first use and hits x2 on the next, so per turn it is
   a plain art of its power with a visible tell. Night Prowl and Noon Glare hit x1.5 at their own
   time of day outdoors and are plain arts indoors.
 - Art balance check (item 155): every art Hesper teaches goes into the first slot of a lead of its
@@ -689,7 +689,7 @@ levels. That is expected noise with 10 rounds per pair and worth a look when lea
 | Magma Rush | 51% | 50% | +0.8 |  |
 | Tidal Gust | 50% | 50% | +0.0 |  |
 | Clean Slate | 46% | 46% | +0.0 |  |
-| Coiled Strike | 43% | 43% | +0.8 |  |
+| Coiled Strike | 41% | 43% | -1.7 |  |
 | Night Prowl | 43% | 41% | +2.5 |  |
 | Noon Glare | 48% | 49% | -0.8 |  |
 
