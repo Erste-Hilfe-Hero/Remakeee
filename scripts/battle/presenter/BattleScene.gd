@@ -793,7 +793,8 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 		if model.is_partner_index(BattleModel.Side.PLAYER, i):
 			continue
 		var s: Spirling = party[i]
-		entries.append({"text": "%s R%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), BattleInfo.switch_tag(s, foe)], "disabled": not i in candidates})
+		entries.append({"text": "%s R%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), BattleInfo.switch_tag(s, foe)], "disabled": not i in candidates,
+			"hint": BattleGuide.compare_line(s, model.active_spirling(BattleModel.Side.PLAYER, slot))})
 	while true:
 		var idx: int = await _picker.pick(title, entries, cancellable)
 		if idx < 0 or idx in candidates:
@@ -1174,6 +1175,9 @@ func _play_event(e: BattleEvent) -> void:
 			_strip(side, slot).set_status(str(e.data.status))
 			_refresh_focus(side, slot)
 			await _float(side, slot, e.describe())
+			if side == BattleModel.Side.PLAYER and not _replaying:
+				var tip: String = BattleGuide.first_status_tip(str(e.data.status), GameState.flags)
+				await _float(side, slot, tip)
 		BattleEvent.Type.STAT_CHANGED:
 			var who: Spirling = model.active_spirling(side, slot)
 			var st: Variant = _strip(side, slot)

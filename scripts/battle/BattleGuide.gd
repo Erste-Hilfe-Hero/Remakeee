@@ -69,6 +69,21 @@ static func value_lines(lead: Spirling = null) -> Array[String]:
 		out.append(Loc.t("%s at ring %d:") % [lead.display_name(), lead.level])
 		for key: String in ["hp", "atk", "def", "foc", "spd"]:
 			out.append(Loc.t("%s: base %d, spark %d = %d") % [Loc.t(stat_label(key)), base_of(lead, key), int(lead.spark.get(key, 0)), value(lead, key)])
+		# The value curve (item 250): the same Spirling at later rings.
+		out.append("")
+		out.append(Loc.t("Ring %s:") % "/".join(CURVE_RINGS.map(func(r: int) -> String: return str(r))))
+		for key: String in ["hp", "atk", "def", "foc", "spd"]:
+			out.append("%s %s" % [Loc.t(SHORT[key]), "/".join(curve(lead, key).map(func(v: int) -> String: return str(v)))])
+	return out
+
+const CURVE_RINGS: Array[int] = [10, 30, 50, 70, 100]
+
+## The value of [param key] for [param s] at each of CURVE_RINGS (before shop boosts).
+static func curve(s: Spirling, key: String) -> Array[int]:
+	var out: Array[int] = []
+	var lean: bool = str(s.temperament().stat) == key
+	for r: int in CURVE_RINGS:
+		out.append(calc(key, base_of(s, key), r, int(s.spark.get(key, 0)), lean))
 	return out
 
 static func stat_label(key: String) -> String:
@@ -89,3 +104,38 @@ static func calc(key: String, base: int, ring: int, spark: int, lean: bool = fal
 	if key == "hp":
 		return maxi(1, int(int(floor(b * (float(ring) + Spirling.HP_LEVEL_OFFSET) / Spirling.HP_LEVEL_DIV)) * m))
 	return int((int(floor(b * (float(ring) + Spirling.STAT_LEVEL_OFFSET) / Spirling.STAT_LEVEL_DIV)) + Spirling.STAT_FLAT) * m)
+
+const VALUE_KEYS: Array[String] = ["hp", "atk", "def", "foc", "spd"]
+const SHORT: Dictionary[String, String] = {"hp": "VIG", "atk": "MGT", "def": "GRD", "foc": "FOC", "spd": "PCE"}
+
+## Values of [param s] if it were [param to] (same ring, sparks, temperament): "Might 50 -> 62"
+## per stat, for the unfurl question (item 255).
+static func unfold_preview(s: Spirling, to: SpirlingData) -> Array[String]:
+	var out: Array[String] = []
+	if to == null:
+		return out
+	var copy: Spirling = Spirling.from_dict(s.to_dict())
+	copy.data = to
+	for key: String in VALUE_KEYS:
+		out.append("%s %d -> %d" % [Loc.t(stat_label(key)), value(s, key), value(copy, key)])
+	return out
+
+## Hint for a swap row (items 231, 233): the bench Spirling's values against [param front]
+## (+ more, - less) and its temperament.
+static func compare_line(s: Spirling, front: Spirling) -> String:
+	var parts: PackedStringArray = []
+	for key: String in VALUE_KEYS:
+		var v: int = value(s, key)
+		var d: int = v - (value(front, key) if front != null and front != s else v)
+		parts.append("%s %d%s" % [Loc.t(SHORT[key]), v, "" if d == 0 else " (%+d)" % d])
+	return "  ".join(parts) + "  " + Loc.t(str(s.temperament().label))
+
+## The first time the player's own Spirling gets [param status] (item 217): a short explanation,
+## once per status, remembered in [param flags]. "" when it was shown before.
+static func first_status_tip(status: String, flags: Dictionary) -> String:
+	var flag: String = "tip_status_" + status
+	if status.is_empty() or not StatusRules.exists(status) or bool(flags.get(flag, false)):
+		return ""
+	flags[flag] = true
+	return "%s: %s" % [Loc.t(StatusRules.label(status)), Loc.t(StatusRules.text(status))]
+

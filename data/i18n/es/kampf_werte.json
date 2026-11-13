@@ -87,6 +87,17 @@
   "There are no stages for aim or dodging.": "No hay niveles de puntería ni de esquiva.",
   "Trades all stages with the foe.": "Intercambia todos los niveles con el rival.",
   "Unruffled": "Impasible",
-  "Vigor = (base + spark/2) x (ring + %d) / %d": "Vigor = (base + chispa/2) x (rango + %d) / %d"
+  "Vigor = (base + spark/2) x (ring + %d) / %d": "Vigor = (base + chispa/2) x (rango + %d) / %d",
+  "%s %d -> %d": "%s %d -> %d",
+  "%s gained %d growth. The ring limit holds it at ring %d for now.": "%s gana %d de crecimiento. El límite de rango lo mantiene en el rango %d por ahora.",
+  "%s's sparks flicker and settle anew.": "Las chispas de %s parpadean y se asientan de nuevo.",
+  "FOC": "ENF",
+  "GRD": "GUA",
+  "MGT": "FUE",
+  "PCE": "RIT",
+  "Ring %s:": "Rango %s:",
+  "Rolls all Spark values of one Spirling anew. Used up.": "Vuelve a tirar todos los valores de Chispa de un Spirling. Se gasta.",
+  "Spark Flux": "Flujo de Chispas",
+  "VIG": "VIG"
  }
 }

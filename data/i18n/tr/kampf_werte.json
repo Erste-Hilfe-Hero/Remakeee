@@ -87,6 +87,17 @@
   "There are no stages for aim or dodging.": "İsabet ya da kaçınma için kademe yoktur.",
   "Trades all stages with the foe.": "Tüm kademeleri rakiple takas eder.",
   "Unruffled": "İstifini Bozmaz",
-  "Vigor = (base + spark/2) x (ring + %d) / %d": "Dinçlik = (taban + kıvılcım/2) x (halka + %d) / %d"
+  "Vigor = (base + spark/2) x (ring + %d) / %d": "Dinçlik = (taban + kıvılcım/2) x (halka + %d) / %d",
+  "%s %d -> %d": "%s %d -> %d",
+  "%s gained %d growth. The ring limit holds it at ring %d for now.": "%s %d büyüme kazandı. Halka sınırı onu şimdilik %d. halkada tutuyor.",
+  "%s's sparks flicker and settle anew.": "%s kıvılcımları titreyip yeniden yerine oturuyor.",
+  "FOC": "ODK",
+  "GRD": "SİP",
+  "MGT": "KUV",
+  "PCE": "TMP",
+  "Ring %s:": "Halka %s:",
+  "Rolls all Spark values of one Spirling anew. Used up.": "Bir Spirling'in tüm Kıvılcım değerlerini yeniden atar. Tükenir.",
+  "Spark Flux": "Kıvılcım Girdabı",
+  "VIG": "DİN"
  }
 }
