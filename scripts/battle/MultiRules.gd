@@ -103,6 +103,26 @@ static func describe(data: Dictionary, who: String) -> String:
 		"leader_down": return "With %s down, the swarm falters!" % str(data.get("name", ""))
 	return ""
 
+# --- Front and back row (item 367) -----------------------------------------------------------
+
+## True when [param slot] of [param side] stands in the back row (a side of 3 or 4).
+static func in_back_row(m: BattleModel, side: int, slot: int) -> bool:
+	var front: int = int(data().get("rows", {}).get("front_slots", 2))
+	return m.slot_count(side) > front and slot >= front
+
+## Damage multiplier of the rows for one hit of [param mv]: a single-target physical art reaches
+## the back row weaker, and an art from the back row hits weaker.
+static func row_mult(m: BattleModel, user_side: int, user_slot: int, target_side: int, t_slot: int, mv: MoveData) -> float:
+	if mv.kind != MoveData.Kind.PHYSICAL or mv.is_area():
+		return 1.0
+	var r: Dictionary = data().get("rows", {})
+	var x: float = 1.0
+	if in_back_row(m, target_side, t_slot):
+		x *= float(r.get("back_phys_taken", 1.0))
+	if in_back_row(m, user_side, user_slot):
+		x *= float(r.get("back_phys_dealt", 1.0))
+	return x
+
 # --- Combo arts (items 369, 370) -------------------------------------------------------------
 
 ## The combo a hit of [param element] on [param target_side]/[param t_slot] completes this turn

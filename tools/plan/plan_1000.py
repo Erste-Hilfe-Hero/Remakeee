@@ -391,7 +391,7 @@ AREAS = [
 "[x] Fokus-Feuer-Logik der Meister-KI (umgesetzt: KO-Bonus pro Ziel) (BattleAI FOCUS_BONUS)",
 "[x] Verbündeten-Heilung (Sippenbalsam/Kindred Balm)",
 "Positionstausch zwischen eigenen Slots",
-"Vorderreihe/Hinterreihe mit Schadensmodifikator",
+"[x] Vorderreihe/Hinterreihe mit Schadensmodifikator (ab 3 Plätzen: hintere Reihe x0.9 bei physischen Einzeltreffern)",
 "[x] Schwarm-Kämpfe (bestehend) mit Schwarm-Anführer (höchster Ring führt, +1 Wucht; fällt er, -1 Tempo für den Rest)",
 "[x] Tag-Kampf mit Kestra (bestehend) mit gemeinsamer Kombi-Technik (Kombo gilt auch mit Partnern)",
 "[x] Kombi-Techniken bei passenden Elementen zweier Verbündeter (data/multi_rules.json combos, x1.25)",

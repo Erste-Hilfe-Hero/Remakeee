@@ -1265,7 +1265,7 @@ func _do_move(a: BattleAction) -> void:
 			if mv.element == Elements.E.LUMEN:
 				mult *= BattleRules.rule_number(foe_rule, "lumen_mult")
 			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
-			mult *= MultiRules.guard_mult(self, target_side)
+			mult *= MultiRules.guard_mult(self, target_side) * MultiRules.row_mult(self, side, slot, target_side, t_slot, mv)
 			var combo: Dictionary = MultiRules.combo(self, side, slot, target_side, t_slot, mv.element)
 			if not combo.is_empty():
 				mult *= MultiRules.combo_mult()

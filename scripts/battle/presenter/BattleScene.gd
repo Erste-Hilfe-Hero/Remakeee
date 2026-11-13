@@ -293,10 +293,12 @@ var _field_badge: FieldBadge
 var _last_aim: Dictionary = {}
 
 ## Damage preview and matchup for one target while aiming (items 362, 363).
-func _aim_line(me: Spirling, mv: MoveData, foe_slot: int) -> String:
+func _aim_line(me: Spirling, mv: MoveData, foe_slot: int, from_slot: int = 0) -> String:
 	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, foe_slot)
 	var mult: float = GameState.known_multiplier(mv.element, foe)
 	var pct: int = CommandMenu.damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
+	if pct > 0:
+		pct = maxi(1, roundi(pct * MultiRules.guard_mult(model, BattleModel.Side.FOE) * MultiRules.row_mult(model, BattleModel.Side.PLAYER, from_slot, BattleModel.Side.FOE, foe_slot, mv)))
 	return MultiRules.aim_line(foe.display_name(), pct, mult if mv.power > 0 else -1.0)
 
 ## The field badge: in 1v1 just above the player's plate (and team row), at the plate's left
@@ -707,7 +709,7 @@ func _pick_target(title: String, me: Spirling = null, mv: MoveData = null, from_
 			_focus(BattleModel.Side.FOE, picked)
 			_point_pin(BattleModel.Side.FOE, picked, true)
 			if me != null and mv != null:
-				_text.show_prompt(title + "\n" + _aim_line(me, mv, picked)))
+				_text.show_prompt(title + "\n" + _aim_line(me, mv, picked, from_slot)))
 		b.mouse_entered.connect(b.grab_focus)
 		_field.add_child(b)
 		_target_buttons.append(b)

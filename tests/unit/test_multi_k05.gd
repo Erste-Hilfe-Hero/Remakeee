@@ -289,3 +289,20 @@ func test_combo_shows_in_a_played_turn() -> void:
 		assert_string_contains(c.describe(), "Firestorm")
 	else:
 		pass_test("a miss left no combo to show")
+
+func test_back_row_softens_physical_hits() -> void:
+	var m := _model([_mk("Kindlop"), _mk("Puddlet"), _mk("Mossling")] as Array[Spirling], [_mk("Zippit"), _mk("Kelpup"), _mk("Shalebat")] as Array[Spirling], [3, 3])
+	m.start()
+	assert_false(MultiRules.in_back_row(m, Side.FOE, 1))
+	assert_true(MultiRules.in_back_row(m, Side.FOE, 2))
+	var phys := MoveData.new()
+	phys.kind = MoveData.Kind.PHYSICAL
+	var focus := MoveData.new()
+	focus.kind = MoveData.Kind.FOCUS
+	assert_eq(MultiRules.row_mult(m, Side.PLAYER, 0, Side.FOE, 0, phys), 1.0)
+	assert_almost_eq(MultiRules.row_mult(m, Side.PLAYER, 0, Side.FOE, 2, phys), 0.9, 0.0001)
+	assert_almost_eq(MultiRules.row_mult(m, Side.PLAYER, 2, Side.FOE, 2, phys), 0.81, 0.0001)
+	assert_eq(MultiRules.row_mult(m, Side.PLAYER, 2, Side.FOE, 2, focus), 1.0, "Focus arts reach every row")
+	var duo := _model([_mk("Kindlop"), _mk("Puddlet")] as Array[Spirling], [_mk("Zippit"), _mk("Kelpup")] as Array[Spirling], [2, 2])
+	duo.start()
+	assert_false(MultiRules.in_back_row(duo, Side.FOE, 1), "two slots are all front")
