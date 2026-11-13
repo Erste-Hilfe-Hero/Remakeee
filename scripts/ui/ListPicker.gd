@@ -442,13 +442,20 @@ func _link_wrap() -> void:
 ## focused row in view. One-shot connections, not awaits: an await still open when the list is
 ## freed logs "Resumed function after await, but class instance is gone".
 func _restore_scroll(key: String, target: Button) -> void:
-	if is_inside_tree():
-		get_tree().process_frame.connect(_restore_scroll_step.bind(key, target.get_instance_id(), 1), CONNECT_ONE_SHOT)
+	_queue_restore_step(key, target.get_instance_id(), 1)
+
+## The same row focused twice in one frame asks for the same step: connect it once, not twice
+## ("Signal 'process_frame' is already connected", bug sweep 2).
+func _queue_restore_step(key: String, target_id: int, frames_left: int) -> void:
+	if not is_inside_tree():
+		return
+	var step: Callable = _restore_scroll_step.bind(key, target_id, frames_left)
+	if not get_tree().process_frame.is_connected(step):
+		get_tree().process_frame.connect(step, CONNECT_ONE_SHOT)
 
 func _restore_scroll_step(key: String, target_id: int, frames_left: int) -> void:
 	if frames_left > 0:
-		if is_inside_tree():
-			get_tree().process_frame.connect(_restore_scroll_step.bind(key, target_id, frames_left - 1), CONNECT_ONE_SHOT)
+		_queue_restore_step(key, target_id, frames_left - 1)
 		return
 	var target: Button = instance_from_id(target_id) as Button
 	if not visible or _title_key != key or target == null or not is_instance_valid(target):

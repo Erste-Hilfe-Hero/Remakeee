@@ -24,6 +24,10 @@ static func ids() -> Array[String]:
 static func cell_height(id: String) -> int:
 	return int((EraFontGlyphs.FONTS.get(id, {}) as Dictionary).get("cell_h", 0))
 
+## Pixels from the top of a line of font [param id] to its baseline (0 when unknown).
+static func ascent_of(id: String) -> int:
+	return int((EraFontGlyphs.FONTS.get(id, {}) as Dictionary).get("ascent", 0))
+
 ## True if font [param id] draws [param ch] itself.
 static func has_glyph(id: String, ch: String) -> bool:
 	return ((EraFontGlyphs.FONTS.get(id, {}) as Dictionary).get("glyphs", {}) as Dictionary).has(ch)
