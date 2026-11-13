@@ -98,6 +98,15 @@
   "Ring %s:": "Ranga %s:",
   "Rolls all Spark values of one Spirling anew. Used up.": "Losuje na nowo wszystkie wartości Iskry jednego Spirlinga. Zużywa się.",
   "Spark Flux": "Wir Iskier",
-  "VIG": "WIG"
+  "VIG": "WIG",
+  "%d turns left": "zostało tur: %d",
+  "%dE ~%d%% %s%d": "%dE ~%d%% %s%d",
+  "%s %d, Spark %d of %d": "%s %d, Iskra %d z %d",
+  "Copied to the clipboard.": "Skopiowano do schowka.",
+  "Copy team values": "Kopiuj wartości drużyny",
+  "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Wstrząs na Spirlinga z Przemoczeniem: Przemoczenie znika, a on na pewno traci następną turę.",
+  "Statuses: %d on the foe, %d on your team": "Stany: %d u wroga, %d w twojej drużynie",
+  "Team values": "Wartości drużyny",
+  "The charge runs through the water: %s is jolted stiff!": "Ładunek biegnie przez wodę: %s sztywnieje!"
  }
 }

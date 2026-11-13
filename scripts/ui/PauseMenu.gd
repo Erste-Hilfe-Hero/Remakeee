@@ -550,9 +550,18 @@ func run_rules_book() -> void:
 func run_battle_guide() -> void:
 	var lead: Spirling = GameState.party[0] if not GameState.party.is_empty() else null
 	while true:
-		var i: int = await pick_strings(Loc.t("Battle guide"), BattleGuide.titles())
+		var titles: Array[String] = BattleGuide.titles()
+		if not GameState.party.is_empty():
+			titles.append(Loc.t("Copy team values"))
+		var i: int = await pick_strings(Loc.t("Battle guide"), titles)
 		if i < 0:
 			return
+		if i >= BattleGuide.PAGES.size():
+			# Values export for fans (item 235): the text goes to the clipboard and is shown.
+			var text: String = BattleGuide.team_values(GameState.party)
+			DisplayServer.clipboard_set(text)
+			await info(text + "\n\n" + Loc.t("Copied to the clipboard."))
+			continue
 		await info(BattleGuide.page(i, lead))
 
 ## Vows (plan 3406-3408): take one before the first Rift is mended, give one up at any time.

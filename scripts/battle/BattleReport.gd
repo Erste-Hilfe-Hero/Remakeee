@@ -9,6 +9,8 @@ extends RefCounted
 var rows: Dictionary = {}
 ## The fields in play, in the order they came up (no repeats).
 var fields: Array[String] = []
+## Statuses that took hold this battle (item 181): [on the foe's side, on yours].
+var statuses: Array[int] = [0, 0]
 ## Items your side used up, by name (item 296): bag items and eaten held fruit.
 var items: Dictionary = {}
 var _actor: Dictionary = {}
@@ -17,6 +19,7 @@ var _actor: Dictionary = {}
 func begin(start_field: String) -> void:
 	rows.clear()
 	fields.clear()
+	statuses = [0, 0]
 	items.clear()
 	_actor = {}
 	_note_field(start_field)
@@ -33,6 +36,11 @@ func add(e: BattleEvent) -> void:
 		BattleEvent.Type.FAINTED:
 			if _credited(e):
 				_row().kos += 1
+		BattleEvent.Type.STATUS_APPLIED:
+			if int(e.data.get("side", -1)) == BattleModel.Side.FOE:
+				statuses[0] += 1
+			elif int(e.data.get("side", -1)) == BattleModel.Side.PLAYER:
+				statuses[1] += 1
 		BattleEvent.Type.FIELD:
 			_note_field(str(e.data.get("field", "")))
 		BattleEvent.Type.ITEM_USED, BattleEvent.Type.HELD_FRUIT:
@@ -70,6 +78,12 @@ func field_line() -> String:
 		names.append(str(BattleRules.FIELDS[f].label))
 	return "Rift fields: %s" % ", ".join(names)
 
+## "Statuses: 2 on the foe, 1 on your team", or "" when none took hold.
+func status_line() -> String:
+	if statuses[0] + statuses[1] == 0:
+		return ""
+	return "Statuses: %d on the foe, %d on your team" % [statuses[0], statuses[1]]
+
 ## "Items used: Max Tonic x2, Ember Pith x1", or "" when none was used (item 296).
 func item_line() -> String:
 	if items.is_empty():
@@ -104,6 +118,9 @@ func lines() -> Array[String]:
 	var f: String = field_line()
 	if not f.is_empty():
 		out.append(f)
+	var st: String = status_line()
+	if not st.is_empty():
+		out.append(st)
 	var it: String = item_line()
 	if not it.is_empty():
 		out.append(it)

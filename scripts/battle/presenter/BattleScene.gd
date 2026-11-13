@@ -755,6 +755,7 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 			return _auto_ai.choose(model, BattleModel.Side.PLAYER, slot)
 	_text.show_prompt("Orders for %s? (%d Energy)" % [me.display_name(), me.energy])
 	_menu.prefer_row = BattleComfort.first_row(int(_last_art.get(slot, -1)), me)
+	_sync_status_turns()
 	_menu.refresh(model, slot)
 	_menu.set_enabled(true)
 	_back_button.visible = _menu.undo_ok
@@ -1053,6 +1054,15 @@ func _sprite(side: int, slot: int = 0) -> SpirlingSprite:
 	return _player_sprite if side == BattleModel.Side.PLAYER else _foe_sprite
 
 ## The status strip for a slot: an InfoStrip in 1v1, a MiniStrip in the formation layout.
+## Brings the turns left on every status to the info strips (item 163), before orders are given.
+func _sync_status_turns() -> void:
+	for side: int in [BattleModel.Side.PLAYER, BattleModel.Side.FOE]:
+		for slot: int in model.slot_count(side):
+			var s: Spirling = model.active_spirling(side, slot)
+			var st: Variant = _strip(side, slot)
+			if s != null and st is InfoStrip:
+				(st as InfoStrip).set_status_turns(s.status_turns if not s.status.is_empty() else 0)
+
 func _strip(side: int, slot: int = 0) -> Variant:
 	if _multi and slot >= 0 and slot < _slot_strips[side].size():
 		return _slot_strips[side][slot]

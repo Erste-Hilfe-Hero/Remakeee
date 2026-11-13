@@ -210,3 +210,75 @@ func test_master_ai_plays_status_combos() -> void:
 func test_online_duels_keep_the_calm_rule() -> void:
 	var snap: Dictionary = BattleReferee.from_expect({"seed": 1, "teams": [[], []]})
 	assert_false(bool(snap.wild), "a live duel is a Wayfarer duel, so the calm rule holds")
+
+func test_every_status_has_its_own_symbol() -> void:
+	var seen: Dictionary = {}
+	for st: String in StatusRules.RULES:
+		var sym: Array = StatusRules.symbol(st)
+		assert_gt(sym.size(), 4, st)
+		for d: Array in sym:
+			assert_true(int(d[0]) >= 0 and int(d[0]) < InfoStrip.SYMBOL_SIZE and int(d[1]) >= 0 and int(d[1]) < InfoStrip.SYMBOL_SIZE, st)
+		var key: String = str(sym)
+		assert_false(seen.has(key), "%s has a shape of its own" % st)
+		seen[key] = true
+
+func test_status_turns_show_under_the_tag() -> void:
+	assert_eq(StatusRules.turns_tag(2), "2")
+	assert_eq(StatusRules.turns_tag(0), "", "an open-ended status shows no number")
+	var strip := InfoStrip.new()
+	strip.spirling_name = "Kindlop"
+	strip.status = "soak"
+	strip.set_status_turns(2)
+	assert_string_contains(strip.screen_reader_text(), "2 turns left")
+	strip.set_status("")
+	assert_eq(strip.status_turns, 0, "a cured status takes its number along")
+	strip.free()
+
+func test_soak_and_jolt_make_a_combo() -> void:
+	var m: BattleModel = BattleFixtures.model(_one("Kindlop"), _one("Mossling"))
+	var foe: Spirling = m.active_spirling(1)
+	assert_true(m.apply_status(1, "soak"))
+	assert_false(m.apply_status(1, "daze"), "no combo: one status at a time")
+	m._events = []
+	assert_true(m.apply_status(1, "jolt"))
+	assert_eq(foe.status, "jolt", "the Soak washed off")
+	assert_eq(foe.sure_skip, 1)
+	assert_string_contains(BattleFixtures.first_of(m._events, T.STATUS_APPLIED).describe(), "jolted stiff")
+	foe.moves = [BattleFixtures.move(Elements.E.STONE, 40)] as Array[MoveData]
+	var ev: Array[BattleEvent] = m.submit_turn(BattleAction.make_rest(0), BattleAction.make_move(1, 0))
+	assert_not_null(BattleFixtures.first_of(ev, T.STATUS_PREVENTED), "it surely loses its next turn")
+	assert_eq(foe.sure_skip, 0)
+	foe.end_battle()
+	assert_eq(foe.sure_skip, 0)
+
+func test_battle_report_counts_statuses() -> void:
+	var r := BattleReport.new()
+	r.begin("")
+	r.add(BattleEvent.new(T.STATUS_APPLIED, {"side": 1, "slot": 0, "status": "soak"}))
+	r.add(BattleEvent.new(T.STATUS_APPLIED, {"side": 1, "slot": 0, "status": "jolt"}))
+	r.add(BattleEvent.new(T.STATUS_APPLIED, {"side": 0, "slot": 0, "status": "daze"}))
+	assert_eq(r.status_line(), "Statuses: 2 on the foe, 1 on your team")
+	assert_true(r.lines().has(r.status_line()))
+
+func test_damage_preview_names_the_status_chance() -> void:
+	var m: BattleModel = BattleFixtures.model(_one("Kindlop"), _one("Mossling"))
+	var mv: MoveData = BattleFixtures.move(Elements.E.EMBER, 40)
+	mv.effects = [{"id": "inflict_status", "status": "scorch", "chance": 0.3}] as Array[Dictionary]
+	var foe: Spirling = m.active_spirling(1)
+	var sc: Dictionary = CommandMenu.status_chance(m, foe, mv)
+	assert_eq(sc, {"status": "scorch", "pct": 30})
+	assert_eq(CommandMenu.move_line(mv, 9, 1.0, false, 40, -1, 0, 99, 0.0, 30, "scorch"), "%dE ~40%% SCO30" % mv.energy_cost)
+	foe.status = "daze"
+	assert_true(CommandMenu.status_chance(m, foe, mv).is_empty(), "no chance while another status sits there")
+	foe.status = ""
+	m.foe_rule = "hushed_air"
+	assert_true(CommandMenu.status_chance(m, foe, mv).is_empty(), "nor where a rule keeps it off")
+
+func test_root_shows_still_chain_links_at_the_feet() -> void:
+	var spec: Dictionary = SpirlingAura.mote_spec("root")
+	assert_eq(str(spec.shape), "chain")
+	var box := Vector2(32, 32)
+	var a: PackedVector2Array = SpirlingAura.mote_points(int(spec.drift), int(spec.count), 0.1, box)
+	assert_eq(a, SpirlingAura.mote_points(int(spec.drift), int(spec.count), 0.7, box), "the links never move")
+	for p: Vector2 in a:
+		assert_gt(p.y, box.y * 0.8, "at the feet")
