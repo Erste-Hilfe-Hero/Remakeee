@@ -1,0 +1,9 @@
+{
+ "_comment": "pl translation of the era_light table, keyed by the English text.",
+ "strings": {
+  "A storm rages.": "Szaleje burza.",
+  "Fog hangs low.": "Nisko wisi mgła.",
+  "Rain falls.": "Pada deszcz.",
+  "Wind blows.": "Wieje wiatr."
+ }
+}

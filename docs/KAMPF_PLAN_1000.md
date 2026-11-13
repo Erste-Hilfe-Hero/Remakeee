@@ -464,43 +464,43 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Bosse und Wardens
 
 401. [x] Boss-Phasen: bei der Hälfte der HP erwacht der Boss, Stufen steigen, neue Ansage
-402. [ ] Mehrere Phasen pro Boss (z. B. 66 % und 33 %)
-403. [ ] Boss-Phase wechselt das Feld
+402. [x] Mehrere Phasen pro Boss (z. B. 66 % und 33 %) (erledigt: dritte Phase bei 25 %, BossRules.LATE_PHASES)
+403. [x] Boss-Phase wechselt das Feld (erledigt: BattleRules.BOSSES[id].phase.field)
 404. [ ] Boss-Phase ruft einen Wächter
 405. [ ] Boss-HP-Leiste mit Phasen-Markierungen
 406. [ ] Boss-Musik wechselt mit der Phase
-407. [ ] Boss-Aktionen pro Zug (bestehend) sichtbar
-408. [ ] Boss-Schwächen als Rätsel (z. B. Feld nutzen)
-409. [ ] Warden-Regeln (bestehend) erweitern: 'Stille Luft', 'Ebbe'
-410. [ ] Warden-Kämpfe auf Veteran mit gehaltenen Gegenständen
-411. [ ] Warden-Rückkämpfe mit höherem Level (bestehend: Rematches)
-412. [ ] Warden-Texte nach dem Kampf
-413. [ ] Boss-Lexikon
-414. [ ] Boss-Statistik (Züge, Schaden)
+407. [x] Boss-Aktionen pro Zug (bestehend) sichtbar (erledigt: Boss-Ansage nennt 'It acts %d times each turn.')
+408. [x] Boss-Schwächen als Rätsel (z. B. Feld nutzen) (erledigt: Halte-Feld pro Boss, BossRules.HOLD_FIELD, Hinweis auf der Lexikon-Seite)
+409. [x] Warden-Regeln (bestehend) erweitern: 'Stille Luft', 'Ebbe' (erledigt: Regeln still_air und ebb in BattleRules.RULES)
+410. [x] Warden-Kämpfe auf Veteran mit gehaltenen Gegenständen (bestand: teams_by_difficulty mit held, Plan 5000 Punkte 670, 673)
+411. [x] Warden-Rückkämpfe mit höherem Level (bestehend: Rematches) (bestand: second_trial und data/warden_rematch.json)
+412. [x] Warden-Texte nach dem Kampf (bestand: npc-Schlüssel defeat, z. B. cinder_rift/orrin_defeat)
+413. [x] Boss-Lexikon (erledigt: Lexikon-Seiten boss_*, BossRules.LEXICON)
+414. [x] Boss-Statistik (Züge, Schaden) (erledigt: records.boss_stats (Siege, beste und letzte Rundenzahl), BossRules.note_win)
 415. [ ] Boss-Belohnungen pro Schwierigkeit
 416. [ ] Boss-Kampf-Speicherpunkt
 417. [ ] Boss-Wiederholung im Endgame
 418. [ ] Boss-Rush-Modus
 419. [ ] Boss im Online-Weltziel (bestehend) mit Phasen
-420. [ ] Boss-KI immer mindestens Stufe 2
-421. [ ] Boss-Status-Dauer halbiert
-422. [ ] Boss-Stufen halbiert
+420. [x] Boss-KI immer mindestens Stufe 2 (erledigt: TrainerData.BOSS_MIN_AI)
+421. [x] Boss-Status-Dauer halbiert (erledigt: BossRules.status_turns)
+422. [x] Boss-Stufen halbiert (erledigt: Stufen-Senkungen am Boss halbiert, BossRules.stage_delta)
 423. [ ] Boss-Animation größer
 424. [ ] Boss-Intro kurz bei 4x
-425. [ ] Boss-Phasen-Test (umgesetzt)
-426. [ ] Boss-HP-Skalierung nach Team-Größe (bestehend)
-427. [ ] Boss-Namen eigenständig
-428. [ ] Boss-Design ohne Ähnlichkeit zu bekannten Legenden
-429. [ ] Boss-Phasen-Text in eigener Wortwahl
-430. [ ] Boss: Spieler kann Phase durch Feld-Technik verzögern
-431. [ ] Boss: Schwachpunkt-Runde nach Phasenwechsel (DEF -1)
-432. [ ] Boss: Wut-Zähler bei zu langer Kampfdauer
-433. [ ] Boss: Gnade auf Story (eine Aktion weniger)
+425. [x] Boss-Phasen-Test (umgesetzt) (bestand: test_difficulty_bosses.gd, test_kampf_boss_ai.gd)
+426. [x] Boss-HP-Skalierung nach Team-Größe (bestehend) (bestand: BattleRules.boss_hp_mult)
+427. [x] Boss-Namen eigenständig (bestand: Ashen, Drowned, Mist Heart, tools/ip_check.sh)
+428. [x] Boss-Design ohne Ähnlichkeit zu bekannten Legenden (bestand: Hush-Herzen aus eigener Welt, tools/ip_check.sh)
+429. [x] Boss-Phasen-Text in eigener Wortwahl (bestand und neue Phasen-Texte in eigener Wortwahl)
+430. [x] Boss: Spieler kann Phase durch Feld-Technik verzögern (erledigt: BossRules.HOLD_FIELD)
+431. [x] Boss: Schwachpunkt-Runde nach Phasenwechsel (DEF -1) (erledigt: BossRules.WEAK_STAGE für eine Runde)
+432. [x] Boss: Wut-Zähler bei zu langer Kampfdauer (erledigt: ab Runde 15 alle 5 Runden Wucht und Fokus +1)
+433. [x] Boss: Gnade auf Story (eine Aktion weniger) (bestand: BattleRules.BOSS_ACTION_CAP Story 1)
 434. [ ] Boss: Prisma-Variante im Endgame
 435. [ ] Boss: Online-Rangliste nach Zügen
 436. [ ] Boss: Wochen-Boss
 437. [ ] Boss: Saison-Boss zu Festen (bestehend: Feste)
-438. [ ] Boss: Nach dem Sieg Lore-Seite
+438. [x] Boss: Nach dem Sieg Lore-Seite (erledigt: Lexikon-Seite nach dem ersten Sieg (Overworld.after_tamer_win))
 439. [ ] Boss: Achievement pro Boss
 440. [ ] Boss: Replay speichern
 
@@ -511,41 +511,41 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 443. [x] Meister-KI nutzt Resonanz-Felder, die ihren eigenen Techniken helfen
 444. [x] Meister-KI bevorzugt sichere K.o.s und schwache Ziele im Mehrfachkampf
 445. [ ] KI plant Energie zwei Züge voraus
-446. [ ] KI wechselt bei schlechter Stufe (z. B. -2 ATK)
+446. [x] KI wechselt bei schlechter Stufe (z. B. -2 ATK) (erledigt: BattleAI.BAD_STAGE)
 447. [ ] KI sagt Wechsel des Spielers vorher (nur Meister)
-448. [ ] KI nutzt Heil-Techniken gezielt
-449. [ ] KI schont Spirlings mit wenig HP für später
-450. [ ] KI-Persönlichkeiten pro Wayfarer (vorsichtig, wild, taktisch)
+448. [x] KI nutzt Heil-Techniken gezielt (bestand: heal_self und mend unter heal_below)
+449. [x] KI schont Spirlings mit wenig HP für später (erledigt: BattleAI.SPARE_HP bei der Ersatzwahl)
+450. [x] KI-Persönlichkeiten pro Wayfarer (vorsichtig, wild, taktisch) (bestand: data/ai_profiles.json)
 451. [ ] KI-Debug-Ansicht für Entwickler
-452. [ ] KI-Tests pro Verhalten
+452. [x] KI-Tests pro Verhalten (bestand: test_ai*.gd, neu test_kampf_boss_ai.gd)
 453. [ ] KI liest nur, was der Spieler auch sieht (keine versteckten Werte)
-454. [ ] KI-Zufall in Stufe 0 bleibt (Wildkämpfe)
-455. [ ] KI-Stufe pro Wayfarer übersteuerbar (bestehend)
-456. [ ] KI für Partner (Kestra) auf Veteran Stufe 2
-457. [ ] KI für Auto-Kampf (bestehend) auf Stufe 1
-458. [ ] KI-Ausrede vermeiden: nie unmögliche Aktionen
-459. [ ] KI-Gegenstand-Nutzung begrenzen (max. 2 pro Kampf)
-460. [ ] KI nutzt Overcharge, wenn es zum K.o. reicht
-461. [ ] KI vermeidet Rückstoß-Techniken bei wenig HP
+454. [x] KI-Zufall in Stufe 0 bleibt (Wildkämpfe) (bestand: Plan 5000 Punkt 625)
+455. [x] KI-Stufe pro Wayfarer übersteuerbar (bestehend) (bestand: npc-Schlüssel ai)
+456. [x] KI für Partner (Kestra) auf Veteran Stufe 2 (erledigt: TrainerData.partner_ai)
+457. [x] KI für Auto-Kampf (bestehend) auf Stufe 1 (bestand: BattleScene._auto_ai)
+458. [x] KI-Ausrede vermeiden: nie unmögliche Aktionen (erledigt: Fuzz-Test aller Stufen)
+459. [x] KI-Gegenstand-Nutzung begrenzen (max. 2 pro Kampf) (erledigt: BattleAI.ITEM_LIMIT)
+460. [x] KI nutzt Overcharge, wenn es zum K.o. reicht (erledigt: BattleAI.score_move)
+461. [x] KI vermeidet Rückstoß-Techniken bei wenig HP (erledigt: BattleAI.RECOIL_W unter 35 %)
 462. [ ] KI im Boss-Kampf mit Phasen-Logik
-463. [ ] KI im Schwarm koordiniert (verschiedene Ziele)
-464. [ ] KI-Balance: Gewinnrate im Simulator pro Stufe messen
-465. [ ] KI-Gewinnrate-Ziel pro Schwierigkeit dokumentieren
+463. [x] KI im Schwarm koordiniert (verschiedene Ziele) (erledigt: sichere K.o.-Ziele werden pro Runde vergeben)
+464. [x] KI-Balance: Gewinnrate im Simulator pro Stufe messen (bestand: BalanceSim Modus ladder)
+465. [x] KI-Gewinnrate-Ziel pro Schwierigkeit dokumentieren (bestand: tools/balance/targets.json, BalanceDoc)
 466. [ ] KI-Laufzeit unter 5 ms pro Entscheidung (Handy)
 467. [ ] KI-Entscheidungen im Replay nachvollziehbar
-468. [ ] KI-Texte: Wayfarer kommentiert gute Züge
-469. [ ] KI meidet Felder, die dem Spieler helfen
+468. [x] KI-Texte: Wayfarer kommentiert gute Züge (bestand: data/dialogue/battle_lines.json)
+469. [x] KI meidet Felder, die dem Spieler helfen (bestand: BattleAI.field_value)
 470. [ ] KI erkennt eigene Feldschwäche und wechselt
-471. [ ] KI-Lernen bewusst nicht (deterministisch bleiben)
+471. [x] KI-Lernen bewusst nicht (deterministisch bleiben) (erledigt: Test gleicher Seed, gleiche Wahl)
 472. [ ] KI-Stufen im Lexikon erklären
 473. [x] KI-Stufe im Wochen-Echo (bestehend 2) auf 3 heben
-474. [ ] KI in Online-Echos nutzt das gespeicherte Team
-475. [ ] KI-Fairness-Test: gleiche Regeln wie der Spieler
+474. [x] KI in Online-Echos nutzt das gespeicherte Team (bestand: EchoTeam.build)
+475. [x] KI-Fairness-Test: gleiche Regeln wie der Spieler (erledigt: KI wählt nur aus legal_actions, Fuzz-Test prüft is_legal)
 476. [ ] KI-Schadensschätzung nutzt dieselbe Formel wie die Vorschau
 477. [ ] KI-Tie-Breaker deterministisch über den Kampf-Seed
-478. [ ] KI: Zielwahl bei gleicher Wertung nach niedrigsten HP
-479. [ ] KI: Nie zwei Spirlings auf dasselbe sichere K.o.-Ziel (Overkill vermeiden)
-480. [ ] KI: Wechsel-Strafe bei Root beachten
+478. [x] KI: Zielwahl bei gleicher Wertung nach niedrigsten HP (erledigt: BattleAI._choose)
+479. [x] KI: Nie zwei Spirlings auf dasselbe sichere K.o.-Ziel (Overkill vermeiden) (erledigt: BattleAI._claims)
+480. [x] KI: Wechsel-Strafe bei Root beachten (bestand: legal_actions ohne Wechsel bei Root, Test)
 
 ## Schwierigkeit und Herausforderungen
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-220 von 1000 Punkten umgesetzt.
+267 von 1000 Punkten umgesetzt.
 

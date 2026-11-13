@@ -161,6 +161,11 @@ var field_turns: int = 0
 var bench_share: float = 0.0
 ## True once the Rift boss has entered its second phase.
 var boss_phase_done: bool = false
+## Late boss phases (BossRules.LATE_PHASES) already reached.
+var boss_late_done: int = 0
+## Weak point after a phase change (BossRules, item 431): turn it ends on and the stages to give back.
+var _boss_weak_until: int = -1
+var _boss_weak_back: Dictionary = {}
 ## Warden rule id (BattleRules.RULES) for the foe side, or "".
 var foe_rule: String = ""
 ## Snares lying on each side (side_snare effect), oldest first. Each is {"move": name, plus
@@ -424,6 +429,9 @@ func start() -> Array[BattleEvent]:
 	snares = [[], []]
 	delayed_hits = []
 	boss_phase_done = false
+	boss_late_done = 0
+	_boss_weak_until = -1
+	_boss_weak_back = {}
 	var fielded: int = slot_count(Side.PLAYER)
 	if BattleRules.BOSSES.has(foe_boss):
 		var boss: Spirling = active_spirling(Side.FOE)
@@ -715,15 +723,29 @@ func _tick_timers() -> void:
 				emit_event(BattleEvent.Type.ENERGY_TAX, d)
 
 ## Second boss phase: once the boss in foe slot 0 drops to the phase threshold, it wakes up once.
+## Later phases (BossRules.LATE_PHASES) follow the same way, one per hit at most. While the boss's
+## hold field lies, no phase starts (item 430).
 func _check_boss_phase(boss: Spirling) -> void:
-	if boss_phase_done or not BattleRules.BOSSES.has(foe_boss) or boss != parties[Side.FOE][active_index(Side.FOE)]:
+	if not BattleRules.BOSSES.has(foe_boss) or boss != parties[Side.FOE][active_index(Side.FOE)]:
 		return
-	var p: Dictionary = BattleRules.boss_phase(foe_boss)
-	if p.is_empty() or float(boss.hp) > float(boss.max_hp()) * BattleRules.boss_phase_at(foe_boss, boss_difficulty):
+	if BossRules.held_by(foe_boss, field):
 		return
-	boss_phase_done = true
-	if boss_difficulty >= 0 and boss_difficulty < BattleRules.BOSS_PHASE_BONUS.size():
-		_boss_actions += BattleRules.BOSS_PHASE_BONUS[boss_difficulty]
+	if not boss_phase_done:
+		var p: Dictionary = BattleRules.boss_phase(foe_boss)
+		if p.is_empty() or float(boss.hp) > float(boss.max_hp()) * BattleRules.boss_phase_at(foe_boss, boss_difficulty):
+			return
+		boss_phase_done = true
+		if boss_difficulty >= 0 and boss_difficulty < BattleRules.BOSS_PHASE_BONUS.size():
+			_boss_actions += BattleRules.BOSS_PHASE_BONUS[boss_difficulty]
+		_enter_boss_phase(boss, p)
+		return
+	var late: Array = BossRules.late_phases(foe_boss)
+	if boss_late_done < late.size() and float(boss.hp) <= float(boss.max_hp()) * float(late[boss_late_done].get("at", 0.0)):
+		boss_late_done += 1
+		_enter_boss_phase(boss, late[boss_late_done - 1])
+
+## Announces phase [param p], applies its stages and field, then opens the weak point (item 431).
+func _enter_boss_phase(boss: Spirling, p: Dictionary) -> void:
 	emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "text": str(p.get("text", ""))})
 	var st: Dictionary = p.get("stage", {})
 	for stat: String in st:
@@ -731,6 +753,38 @@ func _check_boss_phase(boss: Spirling) -> void:
 	if BattleRules.FIELDS.has(str(p.get("field", ""))):
 		base_field = str(p.field)
 		set_field(base_field, 0)
+	_boss_weak_back = {}
+	for stat: String in BossRules.WEAK_STAGE:
+		var before: int = boss.stage(stat)
+		change_stage(Side.FOE, stat, BossRules.WEAK_STAGE[stat], 0)
+		if boss.stage(stat) != before:
+			_boss_weak_back[stat] = before - boss.stage(stat)
+	if not _boss_weak_back.is_empty():
+		_boss_weak_until = turn + BossRules.WEAK_TURNS
+		emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss,
+			"text": "%s lies open: its Guard is down for a turn!" % boss.display_name()})
+
+## End of turn for a Rift boss: the weak point closes, and a long fight enrages it (item 432).
+func _boss_end_of_turn() -> void:
+	if not BattleRules.BOSSES.has(foe_boss) or active_index(Side.FOE) < 0:
+		return
+	var boss: Spirling = parties[Side.FOE][active_index(Side.FOE)]
+	if boss.is_fainted():
+		return
+	if _boss_weak_until >= 0 and turn >= _boss_weak_until:
+		for stat: String in _boss_weak_back:
+			change_stage(Side.FOE, stat, int(_boss_weak_back[stat]), 0)
+		_boss_weak_back = {}
+		_boss_weak_until = -1
+	if BossRules.rage_due(turn):
+		emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "rage": true,
+			"text": "%s grows restless: the longer the fight, the harder it strikes!" % boss.display_name()})
+		for stat: String in BossRules.RAGE_STAGE:
+			change_stage(Side.FOE, stat, BossRules.RAGE_STAGE[stat], 0)
+
+## True for the Rift boss in foe slot 0.
+func is_boss_slot(side: int, slot: int) -> bool:
+	return side == Side.FOE and slot == 0 and BattleRules.BOSSES.has(foe_boss)
 
 ## Heals the Spirling in [param slot] from an art, its gift, the field or a keepsake. A heal
 ## block stops all of these (bag items heal through _heal_spirling and still work).
@@ -793,6 +847,8 @@ func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1)
 		return false
 	s.status = status
 	s.status_turns = StatusRules.roll_turns(status, rng)
+	if is_boss_slot(side, slot):
+		s.status_turns = BossRules.status_turns(s.status_turns)
 	var cap: int = int(rules.get("status_max_turns", 0))
 	if cap > 0:
 		s.status_turns = mini(s.status_turns, cap) if s.status_turns > 0 else cap
@@ -831,8 +887,10 @@ func change_stage(side: int, stat: String, delta: int, slot: int = 0) -> void:
 	var s: Spirling = active_spirling(side, slot)
 	if s == null or s.is_fainted() or delta == 0 or not stat in BattleRules.STAGE_STATS:
 		return
-	if float(rules.get("stages_locked", 0.0)) > 0.0:
+	if float(rules.get("stages_locked", 0.0)) > 0.0 or BattleRules.rule_number(foe_rule, "stages_locked") > 0.0:
 		return
+	if is_boss_slot(side, slot):
+		delta = BossRules.stage_delta(delta)
 	var before: int = s.stage(stat)
 	var after: int = clampi(before + delta, BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
 	var d: Dictionary = _who(side, slot)
@@ -925,6 +983,7 @@ func _phase_end_of_turn() -> void:
 	_tick_field_swirl()
 	_tick_field_cycle()
 	_tick_delayed_hits()
+	_boss_end_of_turn()
 	_turn_wheel()
 	if turn == BattleRules.WEARY_TURN:
 		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
@@ -1310,7 +1369,11 @@ func _oath_tick(side: int, slot: int, s: Spirling) -> void:
 
 func _do_rest(a: BattleAction) -> void:
 	emit_event(BattleEvent.Type.REST, _who(a.side, a.slot))
-	change_energy(a.side, int(rules.get("rest_energy", REST_ENERGY)), a.slot)
+	change_energy(a.side, rest_gain(), a.slot)
+
+## Energy one rest gives: REST_ENERGY or the variant's "rest_energy", minus the Warden rule Ebb's "rest_cut".
+func rest_gain() -> int:
+	return maxi(0, int(rules.get("rest_energy", REST_ENERGY)) - int(BattleRules.rule_number(foe_rule, "rest_cut")))
 
 func _do_swap(a: BattleAction) -> void:
 	if StatusRules.blocks_swap(a.actor.status):
