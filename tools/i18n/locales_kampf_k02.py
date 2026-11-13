@@ -208,6 +208,70 @@ B2 = {
 }
 R.update(B2)
 
+B3 = {
+"Coiled Strike": ["ためうち", "Frappe Bandée", "Colpo Caricato", "Golpe Tenso", "응축 일격", "蓄力一击", "蓄力一擊", "Golpe Tenso", "Сжатый удар", "Napięty Cios", "Gergin Darbe", "Gespannde Slag"],
+"Night Prowl": ["よるのしのび", "Rôde Nocturne", "Agguato Notturno", "Acecho Nocturno", "밤의 사냥", "夜间潜行", "夜間潛行", "Espreita Noturna", "Ночная охота", "Nocny Łów", "Gece Avı", "Nachtsluip"],
+"Noon Glare": ["まひるのひかり", "Éclat de Midi", "Bagliore di Mezzodì", "Fulgor del Mediodía", "한낮의 빛", "正午强光", "正午強光", "Clarão do Meio-Dia", "Полуденный блеск", "Południowy Blask", "Öğle Parıltısı", "Middaggloed"],
+"Winds itself up on the first use and does nothing else. The next use lands twice as hard.": [
+ "最初に使うと力をためるだけで何もしない。次に使うと2倍の強さで当たる。",
+ "Se bande au premier usage et ne fait rien d'autre. L'usage suivant frappe deux fois plus fort.",
+ "Al primo uso si carica e non fa altro. L'uso successivo colpisce il doppio.",
+ "En el primer uso se tensa y no hace nada más. El siguiente uso golpea el doble de fuerte.",
+ "처음 쓰면 힘을 모으기만 하고 아무것도 하지 않는다. 다음에 쓰면 두 배로 맞힌다.",
+ "第一次使用只会蓄力，什么也不做。下一次使用威力翻倍。",
+ "第一次使用只會蓄力，什麼也不做。下一次使用威力翻倍。",
+ "No primeiro uso se prepara e não faz mais nada. O uso seguinte acerta com o dobro da força.",
+ "При первом применении только собирается с силами. Следующее применение бьёт вдвое сильнее.",
+ "Przy pierwszym użyciu tylko się napina. Następne użycie trafia dwa razy mocniej.",
+ "İlk kullanışta yalnızca gerilir, başka bir şey yapmaz. Sonraki kullanış iki kat sert vurur.",
+ "Spant zich bij het eerste gebruik en doet verder niets. Het volgende gebruik raakt twee keer zo hard."],
+"Stalks from the dark. Out in the open at night it hits half as hard again.": [
+ "やみからしのびよる。夜の屋外では1.5倍の強さで当たる。",
+ "Rôde depuis l'ombre. Dehors, la nuit, elle frappe moitié plus fort.",
+ "Si avvicina dal buio. All'aperto di notte colpisce una volta e mezza più forte.",
+ "Acecha desde la oscuridad. Al aire libre de noche golpea la mitad más fuerte.",
+ "어둠 속에서 다가온다. 밤에 바깥에서는 1.5배로 맞힌다.",
+ "从黑暗中潜行而来。夜晚在户外时威力为1.5倍。",
+ "從黑暗中潛行而來。夜晚在戶外時威力為1.5倍。",
+ "Espreita no escuro. Ao ar livre à noite acerta com metade a mais de força.",
+ "Подкрадывается из темноты. Ночью под открытым небом бьёт в полтора раза сильнее.",
+ "Skrada się z ciemności. Nocą pod gołym niebem trafia półtora raza mocniej.",
+ "Karanlıktan sinsice yaklaşır. Gece açık havada bir buçuk kat sert vurur.",
+ "Sluipt uit het donker. 's Nachts in de open lucht raakt het anderhalf keer zo hard."],
+"Casts the full midday sun back at the foe. Out in the open by day it hits half as hard again.": [
+ "真昼の日ざしを相手にはね返す。昼の屋外では1.5倍の強さで当たる。",
+ "Renvoie tout le soleil de midi sur l'adversaire. Dehors, le jour, elle frappe moitié plus fort.",
+ "Rimanda all'avversario tutto il sole di mezzogiorno. All'aperto di giorno colpisce una volta e mezza più forte.",
+ "Devuelve al rival todo el sol del mediodía. Al aire libre de día golpea la mitad más fuerte.",
+ "한낮의 햇빛을 상대에게 되돌려 보낸다. 낮에 바깥에서는 1.5배로 맞힌다.",
+ "把正午的阳光反射给对手。白天在户外时威力为1.5倍。",
+ "把正午的陽光反射給對手。白天在戶外時威力為1.5倍。",
+ "Devolve ao rival todo o sol do meio-dia. Ao ar livre de dia acerta com metade a mais de força.",
+ "Возвращает противнику весь полуденный свет. Днём под открытым небом бьёт в полтора раза сильнее.",
+ "Odbija na przeciwnika całe południowe słońce. Za dnia pod gołym niebem trafia półtora raza mocniej.",
+ "Öğle güneşinin tamamını rakibe geri yansıtır. Gündüz açık havada bir buçuk kat sert vurur.",
+ "Kaatst de volle middagzon terug naar de tegenstander. Overdag in de open lucht raakt het anderhalf keer zo hard."],
+"%s gathers its strength!": ["%sは力をためている！", "%s rassemble ses forces !", "%s raccoglie le forze!", "¡%s reúne sus fuerzas!", "%s은(는) 힘을 모으고 있다!", "%s正在蓄力！", "%s正在蓄力！", "%s reúne suas forças!", "%s собирается с силами!", "%s zbiera siły!", "%s gücünü topluyor!", "%s verzamelt zijn kracht!"],
+"The first use gathers strength; the next use hits x%s.": [
+ "最初の使用で力をため、次の使用でx%sで当たる。",
+ "Le premier usage rassemble ses forces ; le suivant frappe x%s.",
+ "Il primo uso raccoglie le forze; il successivo colpisce x%s.",
+ "El primer uso reúne fuerzas; el siguiente golpea x%s.",
+ "첫 사용에 힘을 모으고, 다음 사용에 x%s로 맞힌다.",
+ "第一次使用蓄力，下一次使用以x%s命中。",
+ "第一次使用蓄力，下一次使用以x%s命中。",
+ "O primeiro uso reúne forças; o seguinte acerta x%s.",
+ "Первое применение собирает силы, следующее бьёт x%s.",
+ "Pierwsze użycie zbiera siły, następne trafia x%s.",
+ "İlk kullanış güç toplar, sonraki x%s vurur.",
+ "Het eerste gebruik verzamelt kracht, het volgende raakt x%s."],
+"x%s power at dawn.": ["夜明けに威力x%s。", "Puissance x%s à l'aube.", "Potenza x%s all'alba.", "Potencia x%s al amanecer.", "새벽에 위력 x%s.", "黎明时威力x%s。", "黎明時威力x%s。", "Poder x%s ao amanhecer.", "Сила x%s на рассвете.", "Moc x%s o świcie.", "Şafakta güç x%s.", "Kracht x%s bij dageraad."],
+"x%s power by day.": ["昼に威力x%s。", "Puissance x%s le jour.", "Potenza x%s di giorno.", "Potencia x%s de día.", "낮에 위력 x%s.", "白天威力x%s。", "白天威力x%s。", "Poder x%s de dia.", "Сила x%s днём.", "Moc x%s za dnia.", "Gündüz güç x%s.", "Kracht x%s overdag."],
+"x%s power at dusk.": ["夕暮れに威力x%s。", "Puissance x%s au crépuscule.", "Potenza x%s al tramonto.", "Potencia x%s al anochecer.", "해 질 녘에 위력 x%s.", "黄昏时威力x%s。", "黃昏時威力x%s。", "Poder x%s ao entardecer.", "Сила x%s в сумерках.", "Moc x%s o zmierzchu.", "Alacakaranlıkta güç x%s.", "Kracht x%s bij schemering."],
+"x%s power at night.": ["夜に威力x%s。", "Puissance x%s la nuit.", "Potenza x%s di notte.", "Potencia x%s de noche.", "밤에 위력 x%s.", "夜晚威力x%s。", "夜晚威力x%s。", "Poder x%s à noite.", "Сила x%s ночью.", "Moc x%s nocą.", "Gece güç x%s.", "Kracht x%s 's nachts."],
+}
+R.update(B3)
+
 
 def main():
     for i, code in enumerate(LANGS):

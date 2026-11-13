@@ -2766,5 +2766,32 @@
   "teaches": "Clean Slate",
   "price": 3000,
   "tradeable": false
+ },
+ {
+  "id": "echo_coiled_strike",
+  "name": "Echo Crystal: Coiled Strike",
+  "description": "Teaches Coiled Strike to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Coiled Strike",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_night_prowl",
+  "name": "Echo Crystal: Night Prowl",
+  "description": "Teaches Night Prowl to an Umbra Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Night Prowl",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_noon_glare",
+  "name": "Echo Crystal: Noon Glare",
+  "description": "Teaches Noon Glare to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Noon Glare",
+  "price": 3000,
+  "tradeable": false
  }
 ]

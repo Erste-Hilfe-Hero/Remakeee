@@ -130,7 +130,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 89. [ ] Neutral-Techniken ohne Element für jeden Spirling
 90. [ ] Matchup-Lernen auch durch Lexikon-Einträge (Lore-Seiten)
 91. [ ] Elementsymbol am Ziel-Pin im Mehrfachkampf
-92. [ ] Effektivitäts-Hinweis im Mehrfachkampf pro Ziel bei der Zielwahl
+92. [x] Effektivitäts-Hinweis im Mehrfachkampf pro Ziel bei der Zielwahl (bekanntes x2/x.5 an der Zielwahl, TechniqueRules.aim_tag)
 93. [x] Element-Balance-Bericht: welches Element gewinnt im Simulator zu oft (bestehend: tools/balance/type_sim.py chart_report)
 94. [ ] Neue Feld-Elemente pro Riss variieren
 95. [x] Element-Reaktion: Tide trifft Scorch-Ziel und löscht den Status
@@ -166,7 +166,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 122. [x] Feld-Restzüge im Log ansagen und beim Ende melden (Ansage eine Runde vor Feldende)
 123. [x] Schutz-Technik 'Brace': hält einen Treffer ab, zweimal hintereinander schlägt fehl (Standhalten (Hold Fast))
 124. [x] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Wayfarer-Kämpfe) (Wegschubser (Shove Off))
-125. [ ] Mehrstufige Technik: lädt eine Runde, trifft dann doppelt
+125. [x] Mehrstufige Technik: lädt eine Runde, trifft dann doppelt (Federschlag (Coiled Strike))
 126. [x] Konter-Technik: wirft physischen Schaden x1.5 zurück (Grollrückgabe (Grudge Return))
 127. [x] Heil-Technik für Verbündete im Mehrfachkampf (Sippenbalsam (Kindred Balm))
 128. [x] Team-Stufen-Technik (alle Verbündeten DEF +1) (Reih und Glied (Rank and File))
@@ -185,7 +185,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 141. [x] Technik-Beschreibung mit Effekt-Chancen im Lexikon
 142. [ ] Techniken mit Signatur pro Art (eine je Art, eigenständig)
 143. [x] Keine Technik-Namen aus anderen Spielen (Prüfliste vor jedem Merge) (tools/ip_check.sh in CI, test_rule_checks)
-144. [ ] Status-Techniken mit Genauigkeit unter 100 % sichtbar machen
+144. [x] Status-Techniken mit Genauigkeit unter 100 % sichtbar machen (Trefferchance in der Technikzeile)
 145. [ ] Technik-Kategorie Physisch/Fokus/Status mit Symbol
 146. [x] Mehrfachziel-Techniken zeigen 'alle' (bestehend) (bestehend: Info-Karte 'Reaches every foe.')
 147. [x] Technik 'Ablenkung': zieht alle Einzelziele drei Runden auf sich (Lichtköder (Bright Lure))
@@ -195,8 +195,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 151. [x] Technik 'Ruhepunkt': heilt 50 %, Nutzer schläft 1 Runde (Drowse) (Ruhepunkt (Still Point))
 152. [x] Technik 'Druckwelle': trifft alle, auch Verbündete, sehr stark (Risiko-Technik) (Druckwelle (Ground Burst))
 153. [x] Techniken mit Feld-Bedingung (stärker in passendem Feld) (bestehend: field_element-Techniken)
-154. [ ] Techniken mit Tageszeit-Bedingung (Tag/Nacht bestehend)
-155. [ ] Technik-Balancing über den Simulator pro neuer Technik
+154. [x] Techniken mit Tageszeit-Bedingung (Tag/Nacht bestehend) (Nachtpirsch (Night Prowl), Mittagsglut (Noon Glare))
+155. [x] Technik-Balancing über den Simulator pro neuer Technik (balance_sim --mode arts, ArtsSim, Ergebnis in BALANCE.md)
 156. [x] Lernlisten pro Art auf Lücken prüfen (jede Art hat eine Status-Technik) (Statustechnik für jede Art per Echo-Kristall, test_kampf_techniques_b)
 157. [x] Technik-Animationen pro Element eigenständig (bestehend: ElementFx pro Element)
 158. [ ] Technik-Favoriten im Menü markieren
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-786 von 1000 Punkten umgesetzt.
+791 von 1000 Punkten umgesetzt.
 
