@@ -2403,7 +2403,7 @@
   "battle": true,
   "cure": "spent",
   "price": 90,
-  "tradeable": true
+  "tradeable": false
  },
  {
   "id": "chalk_rag",
@@ -2412,7 +2412,7 @@
   "battle": true,
   "cure": "marked",
   "price": 90,
-  "tradeable": true
+  "tradeable": false
  },
  {
   "id": "clear_bell",
@@ -2421,7 +2421,7 @@
   "battle": true,
   "cure": "muddle",
   "price": 90,
-  "tradeable": true
+  "tradeable": false
  },
  {
   "id": "mirror_scale",
@@ -2432,6 +2432,6 @@
    "status_reflect": true
   },
   "price": 1800,
-  "tradeable": true
+  "tradeable": false
  }
 ]
