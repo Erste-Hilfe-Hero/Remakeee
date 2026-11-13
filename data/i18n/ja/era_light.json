@@ -1,0 +1,9 @@
+{
+ "_comment": "ja translation of the era_light table, keyed by the English text.",
+ "strings": {
+  "A storm rages.": "嵐が吹き荒れている。",
+  "Fog hangs low.": "霧が低く垂れこめている。",
+  "Rain falls.": "雨が降っている。",
+  "Wind blows.": "風が吹いている。"
+ }
+}

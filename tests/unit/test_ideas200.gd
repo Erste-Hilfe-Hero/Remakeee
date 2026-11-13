@@ -55,7 +55,7 @@ func test_fine_training_needs_money() -> void:
 	assert_false(bool(FineTraining.train(_mon(), "hp", GameState.rng).ok))
 
 func test_challenge_rules() -> void:
-	assert_eq(ChallengeRules.ids().size(), 4)
+	assert_eq(ChallengeRules.ids().size(), 13, "4 from ideas200.json, 9 from challenge_modes.json")
 	assert_true(ChallengeRules.items_allowed())
 	ChallengeRules.toggle("no_items")
 	assert_false(ChallengeRules.items_allowed())

@@ -1,0 +1,16 @@
+{
+ "_comment": "nl translation of the era_feel table, keyed by the English text.",
+ "strings": {
+  "A map drawn in four inks.": "Een kaart getekend in vier inkten.",
+  "Era I - Ink": "Tijdperk I - Inkt",
+  "Era II - Wash": "Tijdperk II - Aquarel",
+  "Era III - Etching": "Tijdperk III - Ets",
+  "Era IV - Panorama": "Tijdperk IV - Panorama",
+  "Era V - Living": "Tijdperk V - Levend",
+  "Replay era change": "Tijdperkwissel opnieuw bekijken",
+  "The air grows clearer. Every leaf shows more detail!": "De lucht wordt helderder. Elk blad toont meer detail!",
+  "The ink runs. The world fills with colour!": "De inkt loopt uit. De wereld vult zich met kleur!",
+  "The map breathes. The world is alive!": "De kaart ademt. De wereld leeft!",
+  "The map unrolls wider than ever before!": "De kaart rolt verder uit dan ooit!"
+ }
+}
