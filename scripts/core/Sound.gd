@@ -656,11 +656,15 @@ static func list_sounds(dir: String) -> Array[String]:
 
 ## Other music lowers the map's ambience to AMBIENCE_DUCK_DB (battles) or stops it (title);
 ## enter_map() brings it back.
-## Pitch of the music players (a Rift field tunes the battle song, KAMPF_PLAN_1000 item 332).
+## Pitch of the music players (a Rift field tunes the battle song, KAMPF_PLAN_1000 item 332; a
+## boss's second phase raises it, item 683). Kept across track changes until set back to 1.0.
+var music_pitch_scale: float = 1.0
+
 func music_pitch(p: float) -> void:
+	music_pitch_scale = clampf(p, 0.5, 2.0)
 	for player: AudioStreamPlayer in [_music, _music_out]:
 		if player != null:
-			player.pitch_scale = clampf(p, 0.5, 2.0)
+			player.pitch_scale = music_pitch_scale
 
 func music(track: String, keep_ambience: bool = false) -> void:
 	if track == "title":
@@ -676,15 +680,6 @@ func music(track: String, keep_ambience: bool = false) -> void:
 
 func stop_music() -> void:
 	_switch("", true)
-
-## Pitch the music plays at (a boss's second phase, docs/KAMPF_PLAN_1000.md 683); kept across
-## track changes until set back to 1.0.
-var music_pitch_scale: float = 1.0
-
-func music_pitch(p: float) -> void:
-	music_pitch_scale = p
-	if enabled and _music != null:
-		create_tween().tween_property(_music, "pitch_scale", p, 0.5)
 
 ## Plays [param track] once (no loop), then goes back to [param then] (or the track before it).
 func jingle(track: String, then: String = "") -> void:
