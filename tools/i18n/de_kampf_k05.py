@@ -87,3 +87,10 @@ T.update({
 "%s leads the swarm!": "%s führt den Schwarm an!",
 "With %s down, the swarm falters!": "Ohne %s gerät der Schwarm ins Wanken!",
 })
+T.update({
+"Combo, %s! The art hits %s harder.": "Kombo, %s! Die Technik trifft %s härter.",
+"Firestorm": "Feuersturm",
+"Thunder Tide": "Donnerflut",
+"Root and Rock": "Wurzel und Fels",
+"Dusk and Dawn": "Dämmer und Morgen",
+})

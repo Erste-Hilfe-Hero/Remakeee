@@ -99,8 +99,38 @@ static func describe(data: Dictionary, who: String) -> String:
 		"formation": return "Formation, %s: %s" % [str(data.get("label", "")), who]
 		"no_ally": return "%s has nobody to cover." % who
 		"leader": return "%s leads the swarm!" % who
+		"combo": return "Combo, %s! The art hits %s harder." % [str(data.get("label", "")), who]
 		"leader_down": return "With %s down, the swarm falters!" % str(data.get("name", ""))
 	return ""
+
+# --- Combo arts (items 369, 370) -------------------------------------------------------------
+
+## The combo a hit of [param element] on [param target_side]/[param t_slot] completes this turn
+## (an ally of the user hit the same foe with the paired element), or {}. Remembers the hit.
+static func combo(m: BattleModel, user_side: int, user_slot: int, target_side: int, t_slot: int, element: int) -> Dictionary:
+	if m.slot_count(user_side) < 2:
+		return {}
+	if int(m.get_meta("combo_turn", -1)) != m.turn:
+		m.set_meta("combo_turn", m.turn)
+		m.set_meta("combo_hits", {})
+	var hits: Dictionary = m.get_meta("combo_hits")
+	var key: String = "%d:%d" % [target_side, t_slot]
+	var before: Array = hits.get(key, [])
+	var found: Dictionary = {}
+	for h: Variant in before:
+		if int(h[0]) == user_side and int(h[1]) != user_slot:
+			for c: Variant in data().get("combos", []):
+				var els: Array = (c as Dictionary).get("elements", [])
+				var mine: String = Elements.E.find_key(element) if Elements.E.values().has(element) else ""
+				var theirs: String = Elements.E.find_key(int(h[2])) if Elements.E.values().has(int(h[2])) else ""
+				if mine != theirs and mine in els and theirs in els:
+					found = c
+	before.append([user_side, user_slot, element])
+	hits[key] = before
+	return found
+
+static func combo_mult() -> float:
+	return float(data().get("combo_mult", 1.25))
 
 # --- Swarm leader (item 368) ------------------------------------------------------------------
 

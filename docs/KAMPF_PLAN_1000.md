@@ -428,8 +428,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 366. [ ] Positionstausch zwischen eigenen Slots
 367. [ ] Vorderreihe/Hinterreihe mit Schadensmodifikator
 368. [x] Schwarm-Kämpfe (bestehend) mit Schwarm-Anführer (höchster Ring führt, +1 Wucht; fällt er, -1 Tempo für den Rest)
-369. [ ] Tag-Kampf mit Kestra (bestehend) mit gemeinsamer Kombi-Technik
-370. [ ] Kombi-Techniken bei passenden Elementen zweier Verbündeter
+369. [x] Tag-Kampf mit Kestra (bestehend) mit gemeinsamer Kombi-Technik (Kombo gilt auch mit Partnern)
+370. [x] Kombi-Techniken bei passenden Elementen zweier Verbündeter (data/multi_rules.json combos, x1.25)
 371. [ ] Mehrfachkampf-Tutorial
 372. [ ] Mehrfachkampf-Geschwindigkeit: Text pro Aktion kürzer
 373. [x] Mehrfachkampf-Log filtern (Tippen: Alle, Deine, Gegner)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-92 von 1000 Punkten umgesetzt.
+94 von 1000 Punkten umgesetzt.
 

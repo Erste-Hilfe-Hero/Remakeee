@@ -1266,6 +1266,12 @@ func _do_move(a: BattleAction) -> void:
 				mult *= BattleRules.rule_number(foe_rule, "lumen_mult")
 			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
 			mult *= MultiRules.guard_mult(self, target_side)
+			var combo: Dictionary = MultiRules.combo(self, side, slot, target_side, t_slot, mv.element)
+			if not combo.is_empty():
+				mult *= MultiRules.combo_mult()
+				var cd: Dictionary = _who(target_side, t_slot)
+				cd.merge({"kind": "combo", "label": str(combo.label)})
+				emit_event(BattleEvent.Type.SUPPORT, cd)
 			var shielded: bool = _shield_on[target_side] == target
 			if shielded:
 				mult *= ShopEffects.shield_mult(int(amulets[target_side][2]))

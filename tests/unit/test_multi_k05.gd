@@ -256,3 +256,36 @@ func test_wild_swarm_has_a_leader_and_falters_without_it() -> void:
 	var tamer := _model([_mk("Kindlop")] as Array[Spirling], [_mk("Mossling"), _mk("Zippit")] as Array[Spirling], [1, 2], false)
 	tamer.start()
 	assert_eq(MultiRules.swarm_leader(tamer), -1, "only wild swarms have a leader")
+
+func test_allies_set_off_a_combo_on_the_same_foe() -> void:
+	var m := _model([_mk("Kindlop"), _mk("Zephlet")] as Array[Spirling], [_mk("Mossling"), _mk("Puddlet")] as Array[Spirling], [2, 2])
+	m.start()
+	m.turn = 3
+	assert_true(MultiRules.combo(m, Side.PLAYER, 0, Side.FOE, 0, Elements.E.EMBER).is_empty(), "the first hit sets it up")
+	assert_true(MultiRules.combo(m, Side.PLAYER, 1, Side.FOE, 1, Elements.E.GALE).is_empty(), "another foe does not count")
+	assert_eq(str(MultiRules.combo(m, Side.PLAYER, 1, Side.FOE, 0, Elements.E.GALE).get("id", "")), "firestorm")
+	m.turn = 4
+	assert_true(MultiRules.combo(m, Side.PLAYER, 1, Side.FOE, 0, Elements.E.GALE).is_empty(), "a new turn starts fresh")
+	assert_true(MultiRules.combo(m, Side.PLAYER, 0, Side.FOE, 1, Elements.E.EMBER).is_empty())
+	assert_true(MultiRules.combo(m, Side.PLAYER, 0, Side.FOE, 1, Elements.E.GALE).is_empty(), "one Spirling alone makes no combo")
+
+func test_combo_shows_in_a_played_turn() -> void:
+	var k: Spirling = _mk("Kindlop", ["Cinder Nip"], 40)
+	var z: Spirling = _mk("Zephlet", ["Kite Cut"], 40)
+	var big: Spirling = _mk("Shalebat", [], 60)
+	var m := _model([k, z] as Array[Spirling], [big, _mk("Puddlet", [], 60)] as Array[Spirling], [2, 2])
+	m.start()
+	var ev: Array[BattleEvent] = _turn(m, [BattleAction.make_move(Side.PLAYER, 0, 0, 0), BattleAction.make_move(Side.PLAYER, 0, 1, 0)], _rests(m, Side.FOE))
+	var hit_both: int = 0
+	for e: BattleEvent in ev:
+		if e.type == T.DAMAGE and int(e.data.get("slot", -1)) == 0 and int(e.data.get("side", -1)) == Side.FOE:
+			hit_both += 1
+	var c: BattleEvent = null
+	for e: BattleEvent in ev:
+		if e.type == T.SUPPORT and str(e.data.get("kind", "")) == "combo":
+			c = e
+	if hit_both >= 2:
+		assert_not_null(c, "two hits of Ember and Gale on one foe make a combo")
+		assert_string_contains(c.describe(), "Firestorm")
+	else:
+		pass_test("a miss left no combo to show")
