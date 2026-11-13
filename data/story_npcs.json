@@ -1153,16 +1153,16 @@
     "teams_by_difficulty": {
      "tamer": [
       {
-       "species": "Lumenewt",
-       "level": 26
+       "species": "Gloamquill",
+       "level": 24
       },
       {
        "species": "Glimmerax",
-       "level": 27
+       "level": 25
       },
       {
        "species": "Verdantusk",
-       "level": 27
+       "level": 25
       }
      ]
     }
@@ -1204,23 +1204,23 @@
      "tamer": [
       {
        "species": "Obsidroth",
-       "level": 33
+       "level": 32
       },
       {
        "species": "Duskdigger",
-       "level": 34
+       "level": 33
       },
       {
        "species": "Obsidroth",
-       "level": 36
+       "level": 35
       },
       {
        "species": "Gloamquill",
-       "level": 36
+       "level": 35
       },
       {
        "species": "Woadwhorl",
-       "level": 36
+       "level": 35
       }
      ]
     }
@@ -1820,23 +1820,23 @@
      "tamer": [
       {
        "species": "Calderox",
-       "level": 41
+       "level": 35
       },
       {
        "species": "Obsidroth",
-       "level": 42
+       "level": 36
       },
       {
        "species": "Gloamquill",
-       "level": 40
+       "level": 34
       },
       {
        "species": "Duskdigger",
-       "level": 41
+       "level": 35
       },
       {
        "species": "Gloamquill",
-       "level": 42
+       "level": 36
       }
      ]
     }
@@ -2050,19 +2050,19 @@
      "tamer": [
       {
        "species": "Leviarch",
-       "level": 37
+       "level": 35
       },
       {
        "species": "Lumenewt",
-       "level": 36
+       "level": 34
       },
       {
        "species": "Glimmerax",
-       "level": 37
+       "level": 35
       },
       {
        "species": "Tempestrel",
-       "level": 36
+       "level": 34
       }
      ]
     }
