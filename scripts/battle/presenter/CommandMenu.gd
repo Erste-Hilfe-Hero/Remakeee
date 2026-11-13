@@ -565,8 +565,10 @@ static func matchup_tag(mult: float) -> String:
 ## [param wait] the turns a cooldown still locks it.
 ## [param max_energy]: an art that costs more can never be paid in this battle (KAMPF_PLAN item 65).
 ## [param oc_mult]: an Overcharge art's power multiplier right now, shown when there is no preview (item 45).
+## [param status_pct] (item 194) adds the art's status chance on the foe to the preview, as the
+## status tag and the chance ("SCO30"), -1 for none.
 static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = false, pct: int = -1, cost: int = -1, wait: int = 0,
-		max_energy: int = 99, oc_mult: float = 0.0) -> String:
+		max_energy: int = 99, oc_mult: float = 0.0, status_pct: int = -1, status: String = "") -> String:
 	var c: int = cost if cost >= 0 else mv.energy_cost
 	if wait > 0:
 		return "wait %d" % wait
@@ -580,6 +582,8 @@ static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = fals
 		return "%dE all" % c
 	# The preview already carries the matchup, so it replaces the x2/x.5 tag (short rows on 144 px).
 	if pct >= 0 and mv.power > 0:
+		if status_pct > 0 and StatusRules.exists(status):
+			return "%dE ~%d%% %s%d" % [c, pct, StatusRules.label(status).substr(0, 3).to_upper(), status_pct]
 		return "%dE ~%d%%" % [c, pct]
 	var tag: String = "" if mv.power <= 0 else matchup_tag(mult)
 	# A status art that can miss shows its hit chance (KAMPF_PLAN_1000 item 144).
@@ -603,6 +607,27 @@ static func overcharge_now(model: BattleModel, me: Spirling, mv: MoveData) -> fl
 		return 0.0
 	var chained: bool = model.turn > 0 and me.overcharge_turn == model.turn - 1
 	return BattleRules.overcharge_mult(mini(me.energy - me.move_cost(mv), BattleRules.OVERCHARGE_MAX_EXTRA), chained)
+
+## The status [param mv] may put on [param foe] and its chance in percent (item 194), or {} when
+## it inflicts none or the status can't take hold now (one already sits there, a gift, field,
+## rule or veil keeps it off).
+static func status_chance(model: BattleModel, foe: Spirling, mv: MoveData) -> Dictionary:
+	if foe == null:
+		return {}
+	for fx: Dictionary in mv.effects:
+		if StringName(fx.get("id", "")) != &"inflict_status" or bool(fx.get("self", false)):
+			continue
+		var st: String = str(fx.get("status", ""))
+		if not StatusRules.exists(st) or BattleRules.is_immune(foe, st) or BattleRules.field_blocks(model.field, st):
+			return {}
+		if not foe.status.is_empty() and StatusRules.combo(foe.status, st).is_empty():
+			return {}
+		var foe_side: int = BattleModel.Side.FOE
+		if not model.status_block(foe_side, st, BattleModel.Side.PLAYER).is_empty():
+			return {}
+		var acc: float = 1.0 if mv.is_damaging() else mv.accuracy
+		return {"status": st, "pct": clampi(roundi(float(fx.get("chance", 1.0)) * acc * 100.0), 1, 100)}
+	return {}
 
 ## Fills the buttons from the model's current legal actions for the Spirling in [param slot].
 ## The matchup tag shows only when one foe stands (with several, the target is picked after).
@@ -628,8 +653,9 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			var oc: float = overcharge_now(model, me, mv)
 			if pct > 0 and oc > 1.0:
 				pct = mini(100, roundi(pct * oc))
+			var sc: Dictionary = status_chance(model, foe, mv) if pct >= 0 else {}
 			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct, me.move_cost(mv), me.cooldown_left(mv),
-				model.max_energy_of(BattleModel.Side.PLAYER), oc)
+				model.max_energy_of(BattleModel.Side.PLAYER), oc, int(sc.get("pct", -1)), str(sc.get("status", "")))
 			var filled: bool = EraBattleHud.flag(era, "art_fill")
 			_row_elements[i] = mv.element
 			# On the element chip (Era III on) the symbol stands in ink on paper, else in its colour.

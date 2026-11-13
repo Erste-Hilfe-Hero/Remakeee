@@ -91,6 +91,8 @@ var stages: Dictionary[String, int] = {}
 ## True while it fights as a Rift boss: an open-ended status ends after StatusRules.BOSS_OPEN_TURNS
 ## (timed ones and stage drops are halved by BossRules in BattleModel). Cleared by end_battle().
 var boss_guard: bool = false
+## Battle-only: turns it surely loses to a status combo (StatusRules.COMBOS). Cleared by end_battle().
+var sure_skip: int = 0
 ## Battle-only: turns left on an Energy tax (energy_tax effect): every move costs more meanwhile.
 ## Counted down at the end of each turn, so a fresh tax of N holds for the next N turns.
 var energy_tax: int = 0
@@ -332,6 +334,7 @@ func restore() -> void:
 func end_battle() -> void:
 	stages.clear()
 	boss_guard = false
+	sure_skip = 0
 	energy_tax = 0
 	energy_surge = 0
 	heal_block = 0

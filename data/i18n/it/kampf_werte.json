@@ -98,6 +98,15 @@
   "Ring %s:": "Rango %s:",
   "Rolls all Spark values of one Spirling anew. Used up.": "Rilancia tutti i valori Scintilla di uno Spirling. Si consuma.",
   "Spark Flux": "Flusso di Scintille",
-  "VIG": "VIG"
+  "VIG": "VIG",
+  "%d turns left": "ancora %d turni",
+  "%dE ~%d%% %s%d": "%dE ~%d%% %s%d",
+  "%s %d, Spark %d of %d": "%s %d, Scintilla %d su %d",
+  "Copied to the clipboard.": "Copiato negli appunti.",
+  "Copy team values": "Copia i valori della squadra",
+  "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Scossa su uno Spirling Zuppo: lo Zuppo se ne va e perde di sicuro il turno successivo.",
+  "Statuses: %d on the foe, %d on your team": "Stati: %d sul nemico, %d sulla tua squadra",
+  "Team values": "Valori della squadra",
+  "The charge runs through the water: %s is jolted stiff!": "La carica corre nell'acqua: %s resta irrigidito!"
  }
 }

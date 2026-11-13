@@ -56,6 +56,8 @@ var spirling_name: String = ""
 var elements: Array[int] = []
 var level: int = 1
 var status: String = ""
+## Turns left on [member status], shown as a small number under its tag (0 = open-ended, no number).
+var status_turns: int = 0
 ## Share of Vigor where a boss changes phase (BattleInfo.phase_mark), -1 for no mark.
 var phase_mark: float = -1.0:
 	set(v):
@@ -98,6 +100,7 @@ func set_spirling(s: Spirling) -> void:
 	color_blind = GameState.color_blind
 	energy = s.energy
 	status = s.status
+	status_turns = s.status_turns
 	stages = s.stages.duplicate()
 	tax = s.energy_tax
 	caught = not show_xp and s.data != null and Collection._bonded(s.data.species_name)
@@ -205,7 +208,15 @@ static func pip_look(i: int, now: int, from: int, pulse: float) -> Dictionary:
 
 func set_status(value: String) -> void:
 	status = value
+	if value.is_empty():
+		status_turns = 0
 	queue_redraw()
+
+## Turns left on the status (item 163), refreshed each time orders are asked for.
+func set_status_turns(turns: int) -> void:
+	if turns != status_turns:
+		status_turns = turns
+		queue_redraw()
 
 func set_level(value: int) -> void:
 	level = value
@@ -258,6 +269,8 @@ func screen_reader_text() -> String:
 	var t: String = Loc.t("%s ring %d, Vigor %d of %d, Energy %d" % [spirling_name, level, int(round(display_hp)), max_hp, energy])
 	if not status.is_empty():
 		t += ", " + Loc.t(StatusRules.label(status))
+		if status_turns > 0:
+			t += ", " + Loc.t("%d turns left") % status_turns
 	if tax > 0:
 		t += ", " + Loc.t("Energy tax %d" % tax)
 	# Stages with their factor (KAMPF_PLAN_1000 item 222).
@@ -306,17 +319,30 @@ func _draw() -> void:
 	var bar_y: float = float(rows.bar_y)
 	var bar_h: int = int(rows.bar_h)
 	var bar_w: float = w
+	var tag_right: float = w
 	if not status.is_empty():
 		var tag: String = StatusRules.label(status).substr(0, 3).to_upper()
-		var tw: float = font.get_string_size(tag, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
-		var box := Rect2(roundf(w - tw - 3.0), bar_y - 1.0, roundf(tw + 3.0), asc + 1.0)
+		var bold: bool = UITheme.high_contrast
+		var tw: float = font.get_string_size(tag, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + (1.0 if bold else 0.0)
+		# The status symbol (item 162) sits left of the letters, so the tag reads by shape too.
+		var sym_w: float = SYMBOL_SIZE + 1.0 if not StatusRules.symbol(status).is_empty() else 0.0
+		var box := Rect2(roundf(w - tw - sym_w - 3.0), bar_y - 1.0, roundf(tw + sym_w + 3.0), asc + 1.0)
 		var badge: Color = EraBattleFeel.status_badge(era, status)
 		if badge.a > 0.0:
 			# Era II+: the status as a coloured badge; Era I keeps plain ink letters.
 			draw_rect(box, badge)
-		draw_string(font, Vector2(box.position.x + 2.0, box.position.y + asc), tag, HORIZONTAL_ALIGNMENT_LEFT, -1, fs,
-			badge_text(badge))
+		var ink: Color = badge_text(badge)
+		if bold:
+			# High contrast (item 190): an ink frame and doubled strokes, so the tag reads bold.
+			draw_rect(box.grow(1.0), UITheme.INK, false, 1.0)
+		var sym_at := Vector2(box.position.x + 1.0, box.position.y + floorf((box.size.y - SYMBOL_SIZE) / 2.0))
+		draw_symbol(self, status, sym_at, ink)
+		var text_at := Vector2(box.position.x + 2.0 + sym_w, box.position.y + asc)
+		draw_string(font, text_at, tag, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, ink)
+		if bold:
+			draw_string(font, text_at + Vector2(1, 0), tag, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, ink)
 		bar_w = box.position.x - 2.0
+		tag_right = box.end.x
 	var frac: float = clampf(display_hp / float(maxi(max_hp, 1)), 0.0, 1.0)
 	_draw_hp_bar(bar_y, bar_w, frac, bar_h)
 	# Notches every few pixels make the bar read as a measured scale, like a map ruler.
@@ -346,6 +372,13 @@ func _draw() -> void:
 		limit -= 2.0
 		if marked:
 			limit = _draw_marks(limit, row3 + floorf(row3_h / 2.0), c.ink, Color(XP_ON))
+	# The turns left on the status, under its tag (item 163): only for a status that runs out.
+	var turns: String = StatusRules.turns_tag(status_turns) if not status.is_empty() else ""
+	if not turns.is_empty():
+		var nw: float = font.get_string_size(turns, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+		var nx: float = minf(tag_right, limit) - nw
+		draw_string(font, Vector2(nx, row3 + minf(font.get_ascent(fs), row3_h)), turns, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UITheme.INK)
+		limit = nx - 2.0
 	if tax > 0:
 		limit = _draw_tax(limit, row3, row3_h) - 2.0
 	_draw_stages(pips * (pip + 1.0) + 2.0, limit, row3, row3_h)
@@ -356,6 +389,14 @@ func _draw() -> void:
 	if show_xp:
 		_draw_xp(float(rows.row4), x_num - 3.0)
 	draw_set_transform(Vector2.ZERO)
+
+## Side of the status symbol grid (StatusRules.SYMBOLS), in pixels.
+const SYMBOL_SIZE: int = 5
+
+## Draws the symbol of [param p_status] with its top-left at [param at] on [param ci].
+static func draw_symbol(ci: CanvasItem, p_status: String, at: Vector2, col: Color) -> void:
+	for d: Array in StatusRules.symbol(p_status):
+		ci.draw_rect(Rect2(at + Vector2(int(d[0]), int(d[1])), Vector2(1, 1)), col)
 
 ## Letters on a status badge: light or ink, whichever stands out more on [param badge]
 ## (plain ink where there is no badge, Era I).

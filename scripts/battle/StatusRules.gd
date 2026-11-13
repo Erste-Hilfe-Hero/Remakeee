@@ -99,3 +99,35 @@ static func roll_turns(status: String, rng: RandomNumberGenerator) -> int:
 	if int(t[1]) <= 0:
 		return 0
 	return rng.randi_range(int(t[0]), int(t[1]))
+
+## A small symbol per status beside its three-letter tag (item 162), so the tag reads by shape too,
+## not by colour alone: whole pixels on a 5x5 grid, drawn in the tag's ink. Chimora's own marks.
+const SYMBOLS: Dictionary[String, Array] = {
+	"scorch": [[2, 0], [1, 1], [2, 1], [1, 2], [2, 2], [3, 2], [0, 3], [1, 3], [3, 3], [4, 3], [1, 4], [2, 4], [3, 4]],
+	"soak": [[2, 0], [2, 1], [1, 2], [2, 2], [3, 2], [0, 3], [1, 3], [3, 3], [4, 3], [1, 4], [2, 4], [3, 4]],
+	"root": [[0, 0], [1, 0], [0, 1], [2, 1], [1, 2], [3, 2], [2, 3], [4, 3], [3, 4], [4, 4]],
+	"jolt": [[3, 0], [4, 0], [2, 1], [3, 1], [1, 2], [2, 2], [3, 2], [1, 3], [2, 3], [0, 4], [1, 4]],
+	"daze": [[1, 0], [2, 0], [3, 0], [0, 1], [4, 1], [0, 2], [2, 2], [4, 2], [0, 3], [3, 3], [1, 4], [2, 4]],
+	"drowse": [[0, 0], [1, 0], [2, 0], [3, 0], [2, 1], [1, 2], [0, 3], [1, 3], [2, 3], [3, 3], [4, 4]],
+	"spent": [[0, 1], [1, 1], [2, 1], [3, 1], [4, 2], [0, 2], [0, 3], [1, 3], [2, 3], [3, 3], [4, 3]],
+	"marked": [[0, 0], [4, 0], [1, 1], [3, 1], [2, 2], [1, 3], [3, 3], [0, 4], [4, 4]],
+	"muddle": [[1, 0], [2, 0], [3, 0], [4, 1], [3, 2], [2, 2], [2, 4], [1, 2]],
+}
+
+## Status combinations (item 169). Only one status sits on a Spirling at a time, so a combo
+## replaces the first status: Jolt on a Soaked Spirling washes the Soak off, takes hold anyway
+## and the charge running through the water costs it its next turn for sure ("sure_skip").
+const COMBOS: Dictionary[String, Dictionary] = {
+	"soak>jolt": {"sure_skip": 1, "text": "The charge runs through the water: %s is jolted stiff!"},
+}
+
+static func symbol(status: String) -> Array:
+	return SYMBOLS.get(status, [])
+
+## The combo of [param status] landing on a Spirling that has [param had], or {}.
+static func combo(had: String, status: String) -> Dictionary:
+	return COMBOS.get("%s>%s" % [had, status], {})
+
+## Turns left on a status as the info strip shows it under the tag: "" for an open-ended one.
+static func turns_tag(turns: int) -> String:
+	return str(turns) if turns > 0 else ""
