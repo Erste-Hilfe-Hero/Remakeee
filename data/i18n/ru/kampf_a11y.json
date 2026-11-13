@@ -1,0 +1,10 @@
+{
+ "_comment": "Russian texts for the German table kampf_a11y. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "[%s cries out]": "[%s издаёт крик]",
+  "Echo it back, no hurry.": "Повтори, не спеша.",
+  "Mine: tap one button fast. Echo: repeat the call. Calm: echo with no time limit.": "Мой: быстро жми одну кнопку. Эхо: повтори зов. Спокойно: эхо без ограничения времени.",
+  "Calm": "Спокойно",
+  "This replay comes from a newer version of the game.": "Этот повтор из более новой версии игры."
+ }
+}
