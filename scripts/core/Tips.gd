@@ -72,7 +72,7 @@ const MAX_LINES: int = 3
 
 ## The bonding how-to for the style in use (Settings, Controls, Bonding).
 static func bond_how_id(style: String = GameState.bond_style) -> String:
-	return "bond_echo" if style == "echo" else "bond_mine"
+	return "bond_echo" if style == "echo" or style == "calm" else "bond_mine"
 
 ## True when the player uses the touch screen (no gamepad connected).
 static func touch_mode() -> bool:

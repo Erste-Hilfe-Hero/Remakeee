@@ -13,7 +13,7 @@ braucht Alis Domain).
 
 | # | Bereich | Befund (erste Fassung) | Risiko vorher | Status |
 | --- | --- | --- | --- | --- |
-| 1 | Bonding-Minispiel | Schrumpfende Ringe + Tipp im richtigen Moment erhöht die Chance: ähnelt dem bekannten Fangkreis | Mittel–hoch | **Behoben.** Ersetzt durch „Echo-Ruf“ (`scripts/battle/BondEcho.gd`, `BondMinigame.gd`): Der Spirling ruft eine Folge auf Raute/Quadrat/Dreieck, der Spieler wiederholt sie. Bewertet wird nur die Reihenfolge, kein Timing gegen ein schrumpfendes Ziel, keine Quote während des Spiels. Regel in LEGAL.md/AGENTS.md festgeschrieben. |
+| 1 | Bonding-Minispiel | Schrumpfende Ringe + Tipp im richtigen Moment erhöht die Chance: ähnelt dem bekannten Fangkreis | Mittel–hoch | **Behoben.** Ersetzt durch „Echo-Ruf“ (`scripts/battle/BondEcho.gd`, `BondMinigame.gd`): Der Spirling ruft eine Folge auf Raute/Quadrat/Dreieck, der Spieler wiederholt sie. Bewertet wird nur die Reihenfolge, kein Timing gegen ein schrumpfendes Ziel, keine Quote während des Spiels. Regel in LEGAL.md/AGENTS.md festgeschrieben. Stil „Ruhig“ (Kampf-Plan, Nov. 2026): derselbe Echo-Ruf ganz ohne Zeitlimit, damit bleibt nur die Reihenfolge; kein neues Risiko. |
 | 2 | Kernmechaniken | Kein Werfen/Zielen, keine Live-Quote, kein Reiten/Fliegen, kein Wurf-Beschwören, separater Kampfbildschirm | Niedrig | Unverändert gut. |
 | 3 | Menü-Kampf, Typen, Status, Entwicklungen | Genre-Standard, eigene Formel, 8 eigene Elemente, Energie statt AP | Niedrig | Unverändert gut. |
 | 4 | Kampf-Layout | Eigene Kreatur unten links, Gegner oben rechts wie im Vorbild | Niedrig–mittel | **Behoben.** Gespiegelt: Gegner oben links, eigene Kreatur unten rechts, Infostreifen auf den Gegenseiten (`BattleScene._layout_field`). Sprites werden passend gespiegelt. |

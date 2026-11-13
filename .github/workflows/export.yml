@@ -50,6 +50,8 @@ jobs:
         run: python3 tools/art/gen_gleam_palettes.py --check
       - name: The other 12 languages keep their placeholders (missing keys are counted, advisory)
         run: python3 tools/i18n/check_lang.py
+      - name: Battle plan matches its generator (tools/plan/plan_1000.py, ticks only via the tool)
+        run: python3 tools/plan/plan_1000.py --check
       - name: Live content is data only (tools/live/publish.py, docs/LIVE_CONTENT.md)
         run: python3 tools/live/publish.py check live/content.json data/live_content.json
       - name: Version name and code agree everywhere (tools/bump_version.py)
