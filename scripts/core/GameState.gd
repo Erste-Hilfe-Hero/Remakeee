@@ -91,6 +91,8 @@ var starter: String = ""
 var difficulty: Difficulty = Difficulty.TAMER
 ## Item id -> count.
 var inventory: Dictionary = {}
+## Things gained since the satchel last had them in focus: id -> true (item 1918).
+var new_items: Dictionary = {}
 var money: int = 0
 ## Waymarks (plan area 8): earned only by playing, never bought or traded. Change through Waymarks.earn().
 var waymarks: int = 0
@@ -338,6 +340,8 @@ func known_multiplier(element: int, foe: Spirling) -> float:
 
 func add_item(id: String, count: int = 1) -> void:
 	inventory[id] = int(inventory.get(id, 0)) + count
+	if count > 0:
+		new_items[id] = true
 	if count > 0 and BattleRules.is_holdable(id):
 		Achievements.note_keepsake(id)
 
@@ -521,6 +525,7 @@ func reset() -> void:
 	starter = ""
 	difficulty = Difficulty.TAMER
 	inventory = {}
+	new_items = {}
 	money = 0
 	waymarks = 0
 	daily_tasks = {}
@@ -669,6 +674,7 @@ func to_dict() -> Dictionary:
 		"echo_cores": echo_cores.duplicate(true),
 		"spirlog": spirlog.duplicate(true),
 		"inventory": _bag_counts(),
+		"new_items": new_items.keys().filter(func(k: Variant) -> bool: return int(inventory.get(k, 0)) > 0),
 		"money": money,
 		"waymarks": waymarks,
 		"daily_tasks": daily_tasks.duplicate(true),
@@ -750,6 +756,11 @@ func from_dict(d: Dictionary) -> void:
 		var n: int = as_int(d.inventory[k])
 		if n > 0:
 			inventory[str(k)] = n
+	new_items = {}
+	var fresh: Variant = d.get("new_items", [])
+	for k: Variant in (fresh as Array if fresh is Array else []):
+		if inventory.has(str(k)):
+			new_items[str(k)] = true
 	money = int(d.get("money", 0))
 	# Saves from before plan area 8 start with no Waymarks; old achievements pay out once
 	# through the achievement reward, never here.
