@@ -397,6 +397,13 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 				line = Loc.t("Ends the foe's %s.") % Loc.t(StatusRules.label(ct)) if not ct.is_empty() else Loc.t("Ends the foe's status.")
 			&"stage_steal":
 				line = Loc.t("Steals one raised stage from the foe.")
+			&"stage_copy":
+				line = Loc.t("Copies every stage of the foe onto itself.")
+			&"stage_swap":
+				line = Loc.t("Trades all stages with the foe.")
+			&"status_veil":
+				var sv: int = int(fx.get("amount", 0))
+				line = Loc.t("No foe status takes hold on its side for %d turns.") % (sv if sv > 0 else BattleRules.STATUS_VEIL_TURNS)
 			&"energy_gain":
 				line = Loc.t("Gains %d Energy.") % int(fx.get("amount", 1))
 			&"stage_reset":
@@ -553,9 +560,12 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			if filled:
 				_fill_row(b, mv.element)
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
+			# Screen readers read the whole info card, no long press needed.
+			b.accessibility_description = move_info(mv, model)
 			b.disabled = not me.can_afford(mv) or model.move_locked(mv)
 		else:
 			b.text = "-"
+			b.accessibility_description = ""
 			_move_costs[i].text = ""
 			_move_hints[i].text = ""
 			_move_icons[i].texture = null
@@ -600,6 +610,33 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 		if not b.disabled:
 			b.grab_focus.call_deferred()
 			break
+
+## Long presses are optional (Kampf-Plan, Barrierefreiheit): on a keyboard I or F1, on a gamepad
+## the top face button opens or closes the info card of the focused art.
+static func is_info_key(event: InputEvent) -> bool:
+	if not event.is_pressed() or event.is_echo():
+		return false
+	if event is InputEventKey:
+		return (event as InputEventKey).keycode in [KEY_I, KEY_F1]
+	if event is InputEventJoypadButton:
+		return (event as InputEventJoypadButton).button_index == JOY_BUTTON_Y
+	return false
+
+## Toggles the info card of the art in row [param index].
+func toggle_info(index: int) -> void:
+	if is_info_open():
+		close_info()
+	else:
+		open_info(index)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not is_visible_in_tree() or not _content.visible or not is_info_key(event):
+		return
+	var index: int = _move_buttons.find(get_viewport().gui_get_focus_owner())
+	if index < 0 and not is_info_open():
+		return
+	toggle_info(index)
+	get_viewport().set_input_as_handled()
 
 ## A command's share of the row follows its word, so a longer word ("Schwur") gets more room.
 func _fit_command(b: Button) -> void:

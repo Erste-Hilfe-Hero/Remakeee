@@ -208,86 +208,86 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 161. [x] Ruhe-Regel: Drowse trifft keinen zweiten Spirling derselben Seite in Wayfarer-Kämpfen
 162. [ ] Status-Symbole mit Form und Kürzel (bestehend: Kürzel), Symbole ergänzen
 163. [ ] Status-Dauer als Zahl unter dem Kürzel
-164. [ ] Neuer Status 'Verwirrt' in eigener Form: Ziel wählt zufällig das Ziel im Mehrfachkampf
-165. [ ] Neuer Status 'Erschöpft': halbe Energie-Regeneration
-166. [ ] Neuer Status 'Markiert': nächster Treffer gegen das Ziel ist ein sicherer Treffer
+164. [x] Neuer Status 'Verwirrt' in eigener Form: Ziel wählt zufällig das Ziel im Mehrfachkampf (Status Muddle/Wirr, StatusRules)
+165. [x] Neuer Status 'Erschöpft': halbe Energie-Regeneration (Status Spent, StatusRules.energy_gain)
+166. [x] Neuer Status 'Markiert': nächster Treffer gegen das Ziel ist ein sicherer Treffer (Status Marked)
 167. [x] Status-Immunität durch Feld (z. B. Hohe Flut verhindert Scorch)
-168. [ ] Status-Heil-Gegenstände pro Status und ein Allheiler (bestehend prüfen)
+168. [x] Status-Heil-Gegenstände pro Status und ein Allheiler (bestehend prüfen) (je Status ein Heilmittel + Remedy, test_move_content)
 169. [ ] Status-Kombination: Soak + Jolt = länger gelähmt
-170. [ ] Status-Ticks bleiben bei 1/12 (fixe Originalitätszahl, nicht ändern)
-171. [ ] Status-Erklärung im Lexikon mit Zahlen
+170. [x] Status-Ticks bleiben bei 1/12 (fixe Originalitätszahl, nicht ändern) (test_kampf_status)
+171. [x] Status-Erklärung im Lexikon mit Zahlen (Kampfhandbuch, BattleGuide.gd)
 172. [ ] Status-Animation kurz und optional (Weniger Bewegung)
-173. [ ] Status trifft Bosse nur halb so lange
+173. [x] Status trifft Bosse nur halb so lange (StatusRules.boss_turns)
 174. [x] Status-Chance in der Technik-Info
-175. [ ] KI meidet Status gegen Ziele mit Status oder Immunität (umgesetzt in Meister-KI)
-176. [ ] Status-Schutz-Technik für das Team
-177. [ ] Status überträgt sich bei Kontakt (Trait 'Glimmhaut')
-178. [ ] Status heilt beim Wechsel auf die Bank (Trait 'Ruhig')
+175. [x] KI meidet Status gegen Ziele mit Status oder Immunität (umgesetzt in Meister-KI) (BattleAI Stufe 3)
+176. [x] Status-Schutz-Technik für das Team (Technik Calm Veil)
+177. [x] Status überträgt sich bei Kontakt (Trait 'Glimmhaut') (Gabe glimmer_skin, Forgefly-Linie)
+178. [x] Status heilt beim Wechsel auf die Bank (Trait 'Ruhig') (Gabe unruffled, Prismist-Linie)
 179. [ ] Status nach dem Kampf bleibt erhalten, außer auf Story
 180. [ ] Status-Heilung an Rastquellen (bestehend)
 181. [ ] Status-Statistik im Kampfende-Bericht
 182. [ ] Status-Sound pro Status eigenständig
 183. [ ] Status-Text in eigener Wortwahl (Liste gegen übernommene Phrasen, bestehend)
-184. [ ] Daze-Chance 1/3 überprüfen und dokumentieren
-185. [ ] Jolt 20 % bleibt fix (Originalitätszahl)
-186. [ ] Drowse 2 Runden bleibt fix (Originalitätszahl)
+184. [x] Daze-Chance 1/3 überprüfen und dokumentieren (Daze x0.7 Treffer, im Kampfhandbuch)
+185. [x] Jolt 20 % bleibt fix (Originalitätszahl) (test_kampf_status)
+186. [x] Drowse 2 Runden bleibt fix (Originalitätszahl) (test_kampf_status)
 187. [ ] Status 'Root' zeigt Kette am Sprite
 188. [ ] Status 'Soak' tropft sichtbar
 189. [ ] Status 'Scorch' glimmt sichtbar
 190. [ ] Status im Info-Streifen bei Hochkontrast fett
-191. [ ] Status gegen wilde Schwärme gilt pro Spirling
-192. [ ] Status-Reflexion als seltener gehaltener Gegenstand
-193. [ ] Warden-Regel 'Stille Luft': kein Status für beide Seiten
+191. [x] Status gegen wilde Schwärme gilt pro Spirling (test_kampf_status)
+192. [x] Status-Reflexion als seltener gehaltener Gegenstand (Mirror Scale)
+193. [x] Warden-Regel 'Stille Luft': kein Status für beide Seiten (Regel hushed_air 'Hushed Air', die Stufen-Regel still_air ist eine andere)
 194. [ ] Status-Chance in der Schadensvorschau ergänzen
-195. [ ] Status-Fehlschlag-Grund im Log (Immunität, Regel, schon betroffen)
-196. [ ] Status-Wirkung auf Bond-Chance im Lexikon erklären
+195. [x] Status-Fehlschlag-Grund im Log (Immunität, Regel, schon betroffen) (BattleEvent STATUS_FAILED)
+196. [x] Status-Wirkung auf Bond-Chance im Lexikon erklären (Kampfhandbuch)
 197. [ ] Status-Kombos in der Meister-KI nutzen
 198. [ ] Status-Clause für Online-Duelle (wie Ruhe-Regel)
-199. [ ] Status-Dauer pro Schwierigkeit gleich halten (Fairness)
+199. [x] Status-Dauer pro Schwierigkeit gleich halten (Fairness) (test_kampf_status)
 200. [ ] Status-Tutorial beim ersten Status
 
 ## Werte-Stufen und Werte
 
-201. [ ] Stufen-Pfeile im Info-Streifen (bestehend)
-202. [ ] Stufen-Grenze ±3 bleibt (eigene Zahl)
-203. [ ] Stufen-Tooltip mit Multiplikator
-204. [ ] Stufen nach Wechsel zurücksetzen (Regel prüfen und festschreiben)
-205. [ ] Stufen-Kopier-Technik
-206. [ ] Stufen-Tausch-Technik
-207. [ ] KI baut Stufen nur auf, wenn sie sicher ist (umgesetzt in Meister-KI)
-208. [ ] Stufen-Warnung, wenn ein Gegner +2 ATK hat
+201. [x] Stufen-Pfeile im Info-Streifen (bestehend) (InfoStrip)
+202. [x] Stufen-Grenze ±3 bleibt (eigene Zahl) (test_kampf_werte)
+203. [x] Stufen-Tooltip mit Multiplikator (InfoStrip.screen_reader_text, Kampfhandbuch)
+204. [x] Stufen nach Wechsel zurücksetzen (Regel prüfen und festschreiben) (Regel: Stufen bleiben am Spirling bis Kampfende, test_kampf_werte)
+205. [x] Stufen-Kopier-Technik (Mirror Stance)
+206. [x] Stufen-Tausch-Technik (Crosswind Trade)
+207. [x] KI baut Stufen nur auf, wenn sie sicher ist (umgesetzt in Meister-KI) (BattleAI Stufe 3)
+208. [x] Stufen-Warnung, wenn ein Gegner +2 ATK hat (STAT_CHANGED warn)
 209. [ ] Spark-Werte (bestehend) im Statusbildschirm als Balken
 210. [ ] Spark-Training durch Kämpfe gegen bestimmte Arten
 211. [ ] Spark-Reset-Gegenstand
 212. [ ] Temperament (bestehend) im Kampf-Info zeigen
-213. [ ] Werte-Rechner im Lexikon (Lv, Spark, Temperament)
+213. [x] Werte-Rechner im Lexikon (Lv, Spark, Temperament) (Kampfhandbuch Werte, BattleGuide.calc)
 214. [ ] Werte-Vergleich beim Einwechseln
 215. [ ] Werte-Ansicht der Gegner nach dem Kampf im Lexikon
-216. [ ] Krit-Chance 1/12 und x1.4 fix (Originalitätszahl)
-217. [ ] Krit-Stufen durch gehaltene Gegenstände (bestehend: crit_mult)
-218. [ ] Genauigkeits-Stufen als eigene Werte prüfen (vielleicht nicht nötig)
-219. [ ] Ausweich-Werte bewusst nicht einführen (Frust vermeiden)
-220. [ ] SPD-Gleichstand-Regel im Lexikon
-221. [ ] Werte-Grenzen im Datenprüfer (validate_data) festhalten
-222. [ ] Basiswert-Summen pro Entwicklungsstufe prüfen
-223. [ ] Werte-Balance über den Simulator
+216. [x] Krit-Chance 1/12 und x1.4 fix (Originalitätszahl) (test_kampf_werte)
+217. [x] Krit-Stufen durch gehaltene Gegenstände (bestehend: crit_mult) (Whetstone keen_lens)
+218. [x] Genauigkeits-Stufen als eigene Werte prüfen (vielleicht nicht nötig) (bewusst nicht, BattleRules.STAGE_STATS)
+219. [x] Ausweich-Werte bewusst nicht einführen (Frust vermeiden) (test_kampf_werte)
+220. [x] SPD-Gleichstand-Regel im Lexikon (Kampfhandbuch)
+221. [x] Werte-Grenzen im Datenprüfer (validate_data) festhalten (DataValidator._check_values)
+222. [x] Basiswert-Summen pro Entwicklungsstufe prüfen (DataValidator._check_values)
+223. [x] Werte-Balance über den Simulator (type_sim.py --strict)
 224. [ ] Stufen visuell auch am Sprite (kleine Aura)
-225. [ ] Stufen-Text in eigener Wortwahl (bestehend)
-226. [ ] Stufen auf Bosse wirken halb
-227. [ ] Phasen-Bosse erhalten Stufen beim Phasenwechsel (umgesetzt)
-228. [ ] Warden-Regel mit Startstufen (bestehend: Undertow)
+225. [x] Stufen-Text in eigener Wortwahl (bestehend) (BattleEvent)
+226. [x] Stufen auf Bosse wirken halb (Stufen-Senkungen halbiert, BossRules.stage_delta)
+227. [x] Phasen-Bosse erhalten Stufen beim Phasenwechsel (umgesetzt) (BattleRules.BOSSES phase)
+228. [x] Warden-Regel mit Startstufen (bestehend: Undertow) (BattleRules.RULES)
 229. [ ] Stufen-Sound steigt mit Stufe
 230. [ ] Werte-Ansicht als Radar-Grafik im Statusbildschirm
 231. [ ] Werte pro Level im Lexikon als Kurve
-232. [ ] Level-Cap im Menü (bestehend)
+232. [x] Level-Cap im Menü (bestehend) (PauseMenu Ring limit)
 233. [ ] Level-Cap-Hinweis beim XP-Verlust
-234. [ ] Werte beim Levelaufstieg anzeigen (Zuwachs)
+234. [x] Werte beim Levelaufstieg anzeigen (Zuwachs) (LevelPanel)
 235. [ ] Werte-Export für Fans (Teamcode)
 236. [ ] Werte-Vorschau bei Entwicklung
-237. [ ] Gleiche Werte-Formel für Spieler und Gegner (Fairness)
+237. [x] Gleiche Werte-Formel für Spieler und Gegner (Fairness) (test_kampf_werte)
 238. [ ] Werte-Skalierung im Turnier 'Gleiches Level'
-239. [ ] Werte-Prüfung im Balancing-Test (keine Art dominiert)
-240. [ ] Werte-Formel bleibt eigenständig (Regel)
+239. [x] Werte-Prüfung im Balancing-Test (keine Art dominiert) (type_sim.py --strict)
+240. [x] Werte-Formel bleibt eigenständig (Regel) (Spirling.gd, DamageCalc.gd)
 
 ## Traits
 
@@ -979,133 +979,133 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Barrierefreiheit
 
-881. [ ] Screenreader-Texte im Kampf (bestehend Grundlagen)
-882. [ ] Hochkontrast (bestehend)
-883. [ ] Weniger Bewegung (bestehend)
-884. [ ] Große Schrift-Option
-885. [ ] Farbenblind-sichere Symbole (bestehend Formen)
-886. [ ] Ton-Hinweise für Effektivität
-887. [ ] Vibrations-Hinweise
-888. [ ] Einhand-Modus (bestehend)
-889. [ ] Keine Zeitlimits offline
-890. [ ] Text-Geschwindigkeit (bestehend)
-891. [ ] Auto-Text weiter
-892. [ ] Bond-Melodie ohne Rhythmus-Zwang (Option 'Ruhig')
-893. [ ] Schadensvorschau hilft beim Planen
-894. [ ] Kampflog vorlesen
-895. [ ] Fokus-Navigation
+881. [x] Screenreader-Texte im Kampf (bestehend Grundlagen) (InfoStrip/MiniStrip/SpirlingSprite, Technik-Knöpfe mit Info als Beschreibung)
+882. [x] Hochkontrast (bestehend) (UITheme.high_contrast)
+883. [x] Weniger Bewegung (bestehend) (GameState.reduce_motion)
+884. [x] Große Schrift-Option (GameState.large_text, UITheme)
+885. [x] Farbenblind-sichere Symbole (bestehend Formen) (GameState.color_blind, BattleUiStyle.matchup_mark)
+886. [x] Ton-Hinweise für Effektivität (BattleScene._hit_sound: hit_strong/hit/hit_weak)
+887. [x] Vibrations-Hinweise (Haptics hit/heavy)
+888. [x] Einhand-Modus (bestehend) (GameState.one_hand)
+889. [x] Keine Zeitlimits offline (Züge warten, Bindestil Ruhig ohne Zeitlimit)
+890. [x] Text-Geschwindigkeit (bestehend) (GameState.text_speed)
+891. [x] Auto-Text weiter (BattleScene: auto_advance bei 2x/4x und Auto-Kampf)
+892. [x] Bond-Melodie ohne Rhythmus-Zwang (Option 'Ruhig') (Bindestil Ruhig, BondMinigame.calm)
+893. [x] Schadensvorschau hilft beim Planen (GameState.damage_preview)
+894. [x] Kampflog vorlesen (TextBox als Live-Region)
+895. [x] Fokus-Navigation (CommandMenu grab_focus, ui-Aktionen)
 896. [ ] Knopfgrößen
 897. [ ] Kontrast der HP-Leiste
 898. [ ] Status-Kürzel lesbar
 899. [ ] Feld-Banner lesbar
 900. [ ] Boss-Phasen-Banner lesbar
-901. [ ] Untertitel für Schreie
+901. [x] Untertitel für Schreie (Sound.cry_caption)
 902. [ ] Leichte Sprache-Option für Kampftexte
-903. [ ] Deutsch und Englisch (bestehend)
-904. [ ] Weitere Sprachen vorbereiten
-905. [ ] Barrierefreiheit-Tests
-906. [ ] Barrierefreiheit-Dokumentation
+903. [x] Deutsch und Englisch (bestehend) (docs/I18N.md)
+904. [x] Weitere Sprachen vorbereiten (14 Sprachen, docs/I18N.md)
+905. [x] Barrierefreiheit-Tests (tests/unit/test_kampf_a11y_tech.gd)
+906. [x] Barrierefreiheit-Dokumentation (docs/KAMPF_TECHNIK.md Abschnitt 4)
 907. [ ] Barrierefreiheit im Store-Text
 908. [ ] Eingabe-Verzögerung einstellbar
-909. [ ] Doppeltipp vermeiden
-910. [ ] Wisch-Gesten vermeiden (Leitplanke und Zugänglichkeit)
-911. [ ] Lange Drücke optional
+909. [x] Doppeltipp vermeiden (keine Doppeltipp-Aktion, test_ux)
+910. [x] Wisch-Gesten vermeiden (Leitplanke und Zugänglichkeit) (Wischen nur zum Listen-Scrollen)
+911. [x] Lange Drücke optional (Info per I/F1/Gamepad-Y und Screenreader, CommandMenu)
 912. [ ] Pausen jederzeit
-913. [ ] Blitzfreie Effekte
-914. [ ] Audio-Mono-Option
-915. [ ] Lautstärke pro Kanal
-916. [ ] Kampf ohne Ton spielbar
-917. [ ] Kampf ohne Farbe spielbar
-918. [ ] Kampf mit Gamepad spielbar
-919. [ ] Kampf mit Tastatur spielbar
+913. [x] Blitzfreie Effekte (tools/fx_flash_check.gd)
+914. [x] Audio-Mono-Option (GameState.mono_audio)
+915. [x] Lautstärke pro Kanal (Musik, Effekte, Stimme, Umgebung)
+916. [x] Kampf ohne Ton spielbar (Texte, Untertitel, Schrei-Untertitel)
+917. [x] Kampf ohne Farbe spielbar (Farbenblind-Formen, Era I in vier Graustufen)
+918. [x] Kampf mit Gamepad spielbar (Joypad-Eingabe, Info per Y)
+919. [x] Kampf mit Tastatur spielbar (ui-Aktionen, Info per I/F1)
 920. [ ] Kampf mit Screenreader spielbar
 
 ## Balance-Werkzeuge und Tests
 
 921. [x] Tests für Meister-KI, Resonanz-Felder, Boss-Phasen, Ruhe-Regel, Lager-Lernen, Schadensvorschau
-922. [ ] Balancing-Simulator (bestehend) mit Meister-KI
-923. [ ] Simulator-Bericht pro Element
-924. [ ] Simulator-Bericht pro Technik
-925. [ ] Simulator-Bericht pro Trait
-926. [ ] Simulator-Bericht pro Gegenstand
-927. [ ] Simulator-Bericht pro Feld
-928. [ ] Simulator-Bericht pro Schwierigkeit
-929. [ ] CI-Wächter für Gewinnraten (bestehend)
-930. [ ] Daten-Validierung (bestehend) für neue Felder
-931. [ ] Daten-Validierung für Boss-Phasen
-932. [ ] Replay-Regressionstests
-933. [ ] Seed-Determinismus-Test
-934. [ ] Speicherstand-Migration (bestehend) für neue Einstellungen
-935. [ ] Einstellungs-Migration (Lager-Lernen Standard an)
+922. [x] Balancing-Simulator (bestehend) mit Meister-KI (balance_sim --ai 3)
+923. [x] Simulator-Bericht pro Element (--mode mono, BalanceGroups)
+924. [x] Simulator-Bericht pro Technik (Moves-Tabelle im Bericht)
+925. [x] Simulator-Bericht pro Trait (BalanceGroups.by_trait)
+926. [x] Simulator-Bericht pro Gegenstand (--mode keepsakes)
+927. [x] Simulator-Bericht pro Feld (--mode fields)
+928. [x] Simulator-Bericht pro Schwierigkeit (--difficulty, --mode warden)
+929. [x] CI-Wächter für Gewinnraten (bestehend) (test_balance, type_sim --strict)
+930. [x] Daten-Validierung (bestehend) für neue Felder (KampfChecks.field_errors)
+931. [x] Daten-Validierung für Boss-Phasen (KampfChecks.boss_errors)
+932. [x] Replay-Regressionstests (test_p3_extras, test_move_curve, test_fuzz_battle_turns)
+933. [x] Seed-Determinismus-Test (test_balance test_same_seed_same_result)
+934. [x] Speicherstand-Migration (bestehend) für neue Einstellungen (settings_from_dict mit Standardwerten)
+935. [x] Einstellungs-Migration (Lager-Lernen Standard an) (test_kampf_a11y_tech)
 936. [ ] Leistungs-Test der KI
 937. [ ] Screenshot-Tests für Kampf-UI
-938. [ ] i18n-Prüfung (bestehend) für neue Texte
-939. [ ] IP-Prüfung (bestehend) für neue Namen
-940. [ ] Originalitäts-Zahlen (bestehend) nicht verändern
-941. [ ] Balance-Dokumentation aktualisieren
+938. [x] i18n-Prüfung (bestehend) für neue Texte (i18n_extract --check)
+939. [x] IP-Prüfung (bestehend) für neue Namen (tools/ip_check.sh)
+940. [x] Originalitäts-Zahlen (bestehend) nicht verändern (test_originality)
+941. [x] Balance-Dokumentation aktualisieren (tools/balance/run_all.sh)
 942. [ ] Balancing-Ziele pro Gebiet
 943. [ ] Balancing: Anfänger-Spirlings gleich stark
-944. [ ] Balancing: keine Pflicht-Spirlings
-945. [ ] Balancing: jede Technik hat einen Zweck
-946. [ ] Balancing: Status nicht zu stark
-947. [ ] Balancing: Felder nicht zu stark
+944. [x] Balancing: keine Pflicht-Spirlings (Band 30-70 % je Art, test_balance)
+945. [x] Balancing: jede Technik hat einen Zweck (seltene Techniken im Team-Bericht)
+946. [x] Balancing: Status nicht zu stark (test_move_curve, Status höchstens 30 %)
+947. [x] Balancing: Felder nicht zu stark (Feld-Band +8 bis +15, tests/slow)
 948. [ ] Balancing: Bosse fair
-949. [ ] Balancing: Meister-KI fordernd, nicht unfair
-950. [ ] Balancing: Story leicht
-951. [ ] Balancing: Veteran fordernd
-952. [ ] Balancing: Rift-Born hart
-953. [ ] Balancing: Online fair
-954. [ ] Balancing: Endgame lang
-955. [ ] Balancing-Tests in CI
-956. [ ] Fuzz-Test: zufällige Aktionen 10.000 Züge ohne Fehler
+949. [x] Balancing: Meister-KI fordernd, nicht unfair (KI-Leiter, tests/slow)
+950. [x] Balancing: Story leicht (targets.json, test_warden_sim)
+951. [x] Balancing: Veteran fordernd (targets.json, test_warden_sim)
+952. [x] Balancing: Rift-Born hart (targets.json, test_warden_sim)
+953. [x] Balancing: Online fair (gleicher Ring im Echo-Duell und in der fairen Liga)
+954. [x] Balancing: Endgame lang (EndgameSim 90 Tage)
+955. [x] Balancing-Tests in CI (test_balance, test_warden_sim, type_sim)
+956. [x] Fuzz-Test: zufällige Aktionen 10.000 Züge ohne Fehler (tests/fuzz/test_fuzz_battle_turns.gd)
 957. [x] Fuzz-Test für Mehrfachkämpfe
 958. [x] Fuzz-Test für Bosse
 959. [x] Fuzz-Test für Felder
-960. [ ] Fuzz-Test für Online-Echos
+960. [x] Fuzz-Test für Online-Echos (tests/fuzz/test_fuzz_battle_turns.gd)
 
 ## Originalität, Recht und Technik
 
-961. [ ] Keine Namen, Texte, Typentabellen, Techniken oder Formeln anderer Spiele übernehmen
-962. [ ] Kein Ball, kein Wurf, kein Gleiten, kein Reiten (Patent-Leitplanken, bestehend)
-963. [ ] Keine sichtbare Fang-Quote (Leitplanke)
-964. [ ] Keine Wisch-Geste zum Fangen (Leitplanke)
+961. [x] Keine Namen, Texte, Typentabellen, Techniken oder Formeln anderer Spiele übernehmen (ip_check, docs/IP_HYGIENE.md)
+962. [x] Kein Ball, kein Wurf, kein Gleiten, kein Reiten (Patent-Leitplanken, bestehend) (LEGAL.md, IP_PATENT_AUDIT)
+963. [x] Keine sichtbare Fang-Quote (Leitplanke) (BondMinigame zeigt nur Worte)
+964. [x] Keine Wisch-Geste zum Fangen (Leitplanke) (Tippen oder Tasten)
 965. [ ] Neue Namen gegen bekannte Technik-Listen prüfen
-966. [ ] IP-Check (bestehend) in CI
-967. [ ] Kampf-Phrasen in eigener Wortwahl (bestehend Liste)
-968. [ ] Kampf-Layout eigenständig (bestehend: Liste statt 2x2)
-969. [ ] Originalitäts-Zahlen fix (bestehend Test)
-970. [ ] Rechtliche Doku aktualisieren bei neuen Mechaniken
-971. [ ] Mods nur als Inspiration für Genre-Komfort, nie als Quelle
-972. [ ] Ideen-Herkunft im Plan nicht mit fremden Marken benennen
-973. [ ] Kampf-Code bleibt reines Modell ohne Nodes (bestehend)
-974. [ ] Ereignis-basierte Darstellung (bestehend)
-975. [ ] Neue Effekte über EffectRegistry (bestehend)
+966. [x] IP-Check (bestehend) in CI (ip-check-Job)
+967. [x] Kampf-Phrasen in eigener Wortwahl (bestehend Liste) (ip_check-Phrasen, test_ux_text)
+968. [x] Kampf-Layout eigenständig (bestehend: Liste statt 2x2) (CommandMenu)
+969. [x] Originalitäts-Zahlen fix (bestehend Test) (test_originality)
+970. [x] Rechtliche Doku aktualisieren bei neuen Mechaniken (IP_PATENT_AUDIT um Stil Ruhig ergänzt)
+971. [x] Mods nur als Inspiration für Genre-Komfort, nie als Quelle (Kopf von KAMPF_PLAN_1000)
+972. [x] Ideen-Herkunft im Plan nicht mit fremden Marken benennen (ip_check prüft docs)
+973. [x] Kampf-Code bleibt reines Modell ohne Nodes (bestehend) (test_kampf_a11y_tech)
+974. [x] Ereignis-basierte Darstellung (bestehend) (BattleEvent, BattleScene)
+975. [x] Neue Effekte über EffectRegistry (bestehend) (scripts/battle/effects)
 976. [ ] Daten in JSON, nicht im Code
-977. [ ] Godot 4.7.2 bleibt
+977. [x] Godot 4.7.2 bleibt (test_engine_stays_on_godot_4_7)
 978. [ ] Leistung auf älteren Handys prüfen
-979. [ ] APK-Budget (bestehend)
+979. [x] APK-Budget (bestehend) (tools/apk_budget.sh)
 980. [ ] Speicher-Budget
-981. [ ] Kampf-Zustand serialisierbar
-982. [ ] Kampf-Replay-Format versioniert
-983. [ ] Kampf-API dokumentiert
-984. [ ] Kampf-Code-Review vor jedem Merge
-985. [ ] Kampf-Tests vor jedem Merge (GUT)
-986. [ ] Kampf-Logs ohne personenbezogene Daten
-987. [ ] Kampf-Daten nicht an Dritte
-988. [ ] Kampf-Online-Server nur eigener Server
-989. [ ] Kampf-Fehlerberichte mit Seed
-990. [ ] Kampf-Code ohne Debug-Ausgaben in Release
+981. [x] Kampf-Zustand serialisierbar (BattleReplay.snapshot)
+982. [x] Kampf-Replay-Format versioniert (BattleReplay.FORMAT)
+983. [x] Kampf-API dokumentiert (docs/KAMPF_TECHNIK.md)
+984. [x] Kampf-Code-Review vor jedem Merge (PR-Pflicht, Merge nur grün)
+985. [x] Kampf-Tests vor jedem Merge (GUT) (tools/gut_strict.sh in CI)
+986. [x] Kampf-Logs ohne personenbezogene Daten (BattleReplay.shareable)
+987. [x] Kampf-Daten nicht an Dritte (keine Analyse-SDKs, AGENTS.md)
+988. [x] Kampf-Online-Server nur eigener Server (docs/ONLINE.md)
+989. [x] Kampf-Fehlerberichte mit Seed (Seed in Replay und Teilcode)
+990. [x] Kampf-Code ohne Debug-Ausgaben in Release (test_battle_code_prints_nothing_in_release)
 991. [ ] Kampf-Mods der Community später über Datenpakete (kein Code)
 992. [ ] Kampf-Datenpakete signiert
 993. [ ] Kampf-Editor für Entwickler
-994. [ ] Kampf-Doku für neue Mitwirkende
-995. [ ] Kampf-Roadmap in docs/ROADMAP.md
-996. [ ] Kampf-Plan regelmäßig aktualisieren
-997. [ ] Kampf-Plan Haken setzen bei Umsetzung
-998. [ ] Kampf-Plan als Quelle für PRs
-999. [ ] Kampf-Plan in Deutsch
-1000. [ ] Kampf-Plan im Projektordner gespiegelt
+994. [x] Kampf-Doku für neue Mitwirkende (docs/KAMPF_TECHNIK.md)
+995. [x] Kampf-Roadmap in docs/ROADMAP.md (Abschnitt Kampfsystem)
+996. [x] Kampf-Plan regelmäßig aktualisieren (plan_1000.py --check in CI)
+997. [x] Kampf-Plan Haken setzen bei Umsetzung (plan_1000.py --check in CI)
+998. [x] Kampf-Plan als Quelle für PRs (PRs nennen die Punkte)
+999. [x] Kampf-Plan in Deutsch (docs/KAMPF_PLAN_1000.md)
+1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-205 von 1000 Punkten umgesetzt.
+345 von 1000 Punkten umgesetzt.
 

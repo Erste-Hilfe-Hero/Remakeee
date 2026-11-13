@@ -34,6 +34,7 @@ extends SceneTree
 ##   --mode mirror every species against itself (default 400 duels each, item 831): the player
 ##                 side must win 45 to 55 %
 ##   The team report also lists every new art under 1 % of its element's picks (item 833).
+##   Duel and team reports end with win rates pooled per trait and per element (BalanceGroups).
 ##   --out PATH    also write the Markdown report there
 ##   --json PATH   also write every number as JSON there
 ## The old positional form "[level] [rounds] [out.md]" still works.
@@ -144,6 +145,7 @@ func _initialize() -> void:
 	else:
 		result = bs.call("run", level, int(opts.get("rounds", 10)), seed_value, [] as Array[String], int(opts.get("ai", 1)))
 	var text: String = bs.call("report", result)
+	text += (load("res://scripts/core/BalanceGroups.gd") as GDScript).call("report", result)
 	if not seeds.is_empty():
 		text += bs.call("seeds_report", seeds)
 	if opts.has("compare"):
