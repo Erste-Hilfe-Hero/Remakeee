@@ -1009,4 +1009,15 @@ static func format_errors(def: Dictionary, map_id: String = "?") -> PackedString
 					errors.append("map '%s': npc '%s' partner has unknown species %s" % [map_id, who, entry])
 	if TrainerData.is_wild_horde(def) and def.has("partner"):
 		errors.append("map '%s': npc '%s' is a wild horde and can't have a partner" % [map_id, who])
+	# A second foe Wayfarer (KAMPF_PLAN_1000 item 548): a name and a team, two foes at the front.
+	if def.has("pair"):
+		var q: Variant = def.pair
+		if not (q is Dictionary and (q as Dictionary).get("name") is String and (q.get("team", []) as Array).size() > 0):
+			errors.append("map '%s': npc '%s' pair needs a name and a team" % [map_id, who])
+		else:
+			for entry: Variant in q.team:
+				if Database.species(str((entry as Dictionary).get("species", ""))) == null:
+					errors.append("map '%s': npc '%s' pair has unknown species %s" % [map_id, who, entry])
+		if TrainerData.is_wild_horde(def) or TrainerData.front(def)[1] < 2:
+			errors.append("map '%s': npc '%s' pair needs two foes at the front" % [map_id, who])
 	return errors

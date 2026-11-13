@@ -18,7 +18,8 @@ const DEFAULT_CONFIG: Dictionary = {
 		{"item": "spark_drop", "w": 12}, {"item": "cooling_gel", "w": 5}, {"item": "dry_towel", "w": 5},
 		{"item": "wake_bell", "w": 5}, {"item": "power_brew", "w": 3}, {"item": "guard_brew", "w": 3},
 		{"item": "focus_brew", "w": 3}, {"item": "dash_brew", "w": 3}, {"item": "revival_leaf", "w": 1}],
-	"goal_rotation": [{"kind": "battles", "target": 5000}, {"kind": "bonds", "target": 800}, {"kind": "rests", "target": 2000}],
+	"goal_rotation": [{"kind": "battles", "target": 5000}, {"kind": "bonds", "target": 800}, {"kind": "rests", "target": 2000},
+		{"kind": "wayfarers", "target": 1500}],
 	"goal_rewards": ["strong_tonic", "spark_drop", "max_tonic", "spark_charm"],
 	"party_max": 5, "level_max": 60, "save_level_max": 9999, "duel_ring": 50, "save_schema_max": 1, "battle_submit_limit": 60,
 	"league_fair_ring": 50, "league_season_days": 42, "league_closing_minutes": 30, "league_search_start": 100,
@@ -46,6 +47,7 @@ const DEFAULT_FLAGS: Dictionary = {
 	"trade_spirling": {"enabled": false, "min_version": 1}, "rift_board": {"enabled": false, "min_version": 1},
 	"league_board": {"enabled": false, "min_version": 1}, "daily_gift": {"enabled": false, "min_version": 1},
 	"lend": {"enabled": false, "min_version": 1}, "invite": {"enabled": false, "min_version": 1},
+	"climb_board": {"enabled": false, "min_version": 1},
 }
 
 ## Where the fake server keeps its data between runs ("" = memory only, as in tests).
@@ -98,6 +100,8 @@ func _init(p_store_path: String = "") -> void:
 	LocalTourney.install(self)
 	# The referee for live duels, borrowed Spirlings in duels and raids (20261113000040_live_referee.sql).
 	LocalLiveMore.install(self)
+	# Climb boards for the lighthouse stair and the echo tower (20261113207070_climb_boards.sql).
+	LocalClimb.install(self)
 
 func is_local() -> bool:
 	return true
@@ -403,6 +407,10 @@ func _fn_profile_set(a: Dictionary) -> Dictionary:
 			var v: Variant = given.get(k)
 			if v is int or v is float:
 				card[k] = clampi(int(v), 0, 99999)
+		# Challenge rules of the journey (20261113207070_climb_boards.sql): a count from 1 to 20.
+		var ru: Variant = given.get("rules")
+		if (ru is int or ru is float) and float(ru) >= 1.0:
+			card["rules"] = mini(int(ru), 20)
 		# A bought profile frame only with its unlock (20261110000024_shop_card_frames.sql).
 		var fr: Variant = given.get("frame")
 		if fr is String and fr in FriendsMenu.CARD_FRAMES and int(_unlocks(me()).get("card_frame_" + fr, 0)) > 0:
