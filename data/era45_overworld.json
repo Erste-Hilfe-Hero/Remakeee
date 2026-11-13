@@ -1,0 +1,8 @@
+{
+ "_doc": "Era IV/V overworld depth (docs/ERA_FEEL_UI.md, Era IV/V slice 5), read by scripts/overworld/EraDepthLayer.gd. Buildings stand as boxes seen a little from above and to the right: a side wall on the right edge and a top face above the roof ridge, each a parallelogram 'side' px deep. Colours are taken from the map's own tile art at the building's edge, so every region keeps its stone and roof colours. shade: how much darker the side wall is, light: how much lighter the top face. warm_edge: Era V golden-hour edge along the top. A map takes the era of its region, capped by the era on screen (EraTerrainLook.tier_for), so older regions keep their flat origin look.",
+ "kinds": ["WALL", "ROOF", "TOWER", "DOOR"],
+ "eras": {
+  "4": {"side": 5, "shade": 0.38, "light": 0.18, "warm_edge": ""},
+  "5": {"side": 6, "shade": 0.32, "light": 0.24, "warm_edge": "ffd890"}
+ }
+}

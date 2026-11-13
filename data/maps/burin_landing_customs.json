@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "quillmarch/burin_landing_customs_customs",
    "sprite": "villager"
+  },
+  {
+   "id": "q3_widow_post_timo",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/q3_widow_post_timo",
+   "sprite": "villager",
+   "show_flag": "q3_widow_post_s1"
   }
  ],
  "signs": []

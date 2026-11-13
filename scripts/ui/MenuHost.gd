@@ -12,6 +12,10 @@ var _info_label: Label
 var _info_picture: TextureRect
 var _info_scroll: ScrollContainer
 var _info_wait: bool = false
+## Set while the whole menu closes at once (item 1874): every pick answers Back at once.
+var close_all: bool = false
+var _close_steps: int = 0
+const CLOSE_ALL_MAX: int = 40
 var _info_bar: Control
 const INFO_BAR_W: int = 2
 ## Where the finger went down while an info text is open (NAN = no press yet), so a drag
@@ -132,6 +136,14 @@ func apply_hand_layout() -> void:
 ## Shows a list; returns the index or -1 (Back / cancel).
 func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, focus: int = -1,
 		guard_ms: int = ListPicker.TAP_GUARD_MS, tabs: Array[String] = [], tab: int = 0) -> int:
+	if close_all:
+		# Item 1874: every open level answers Back until the menu is closed. One frame per
+		# level, and a cap, so a list that ignores Back cannot spin forever.
+		_close_steps += 1
+		if _close_steps > CLOSE_ALL_MAX:
+			close_all = false
+		await get_tree().process_frame
+		return -1
 	picks += 1
 	last_title = title
 	last_rows.clear()
@@ -145,8 +157,40 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		title = short_title(title)
 	var bottom: float = picker.offset_bottom
 	keep_above_pad(picker)
+	# The era's list layout (EraMenus): plain lists take the era's base, screens their own.
+	var lay: Dictionary = _next_layout if not _next_layout.is_empty() else EraMenus.layout(EraManager.active_era())
+	_next_layout = {}
+	picker.layout = lay
+	last_layout = lay
 	var r: int = await picker.pick(title, entries, cancellable, focus, guard_ms, tabs, tab)
 	picker.offset_bottom = bottom
+	return r
+
+var _next_layout: Dictionary = {}
+## The layout of the list shown last (tests).
+var last_layout: Dictionary = {}
+## Screens opened through pick_screen so far, newest last (tests).
+var screens_shown: Array[String] = []
+
+## Shows the list of menu screen [param screen] in the active era's layout (EraMenus).
+## [param opts]: cancellable, focus, guard_ms, tabs, tab as in pick(); "header" (a Control put
+## between title and rows, freed afterwards) and "panel_text" (what the info panel of the touch
+## eras says while no row explains itself).
+func pick_screen(screen: String, title: String, entries: Array[Dictionary], opts: Dictionary = {}) -> int:
+	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), screen)
+	for k: String in ["panel_text", "columns", "row_h", "tab_icons"]:
+		if opts.has(k):
+			lay[k] = opts[k]
+	_next_layout = lay
+	screens_shown.append(screen)
+	var head: Variant = opts.get("header")
+	picker.set_header(head as Control if head is Control else null)
+	var tabs: Array[String] = []
+	tabs.assign(opts.get("tabs", []))
+	var r: int = await pick(title, entries, bool(opts.get("cancellable", true)), int(opts.get("focus", -1)),
+		int(opts.get("guard_ms", ListPicker.TAP_GUARD_MS)), tabs, int(opts.get("tab", 0)))
+	if is_instance_valid(picker):
+		picker.set_header(null)
 	return r
 
 const TITLE_MAX_LINES: int = 3
@@ -205,6 +249,9 @@ func confirm_danger(question: String, yes_text: String = "Yes", no_text: String 
 ## Shows a block of text until the player taps or presses accept/cancel, with an optional
 ## [param picture] above it.
 func info(text: String, picture: Texture2D = null) -> void:
+	if close_all:
+		await get_tree().process_frame
+		return
 	apply_hand_layout()
 	_info_picture.texture = picture
 	_info_picture.visible = picture != null
@@ -383,7 +430,9 @@ const SETTING_HINTS: Dictionary[String, String] = {
 
 func run_settings() -> void:
 	while true:
-		var idx: int = await pick(SETTINGS_TITLE, _rows_to_entries(SETTINGS_GROUPS))
+		# Settings in the era's layout (EraMenus): symbols from Era II, info panel from Era IV.
+		var entries: Array[Dictionary] = EraMenuKit.settings_entries(_rows_to_entries(SETTINGS_GROUPS), SETTINGS_GROUPS)
+		var idx: int = await pick_screen("options", SETTINGS_TITLE, entries)
 		if idx < 0:
 			SaveManager.save_settings()
 			return
@@ -903,12 +952,27 @@ static func party_entry(s: Spirling, leader: bool = false) -> Dictionary:
 	# The leader on slot 1 carries a small flag (item 1903).
 	if leader:
 		hint = Loc.t("Leads the team") + "  " + hint
+	# A Spirling that can unfurl now carries an arrow mark (item 1905).
+	var ready: bool = can_unfurl_now(s)
+	if ready:
+		hint += "  " + Loc.t("Ready to unfurl")
 	return {"text": "%s R%d" % [s.display_name(), s.level], "icon": MiniSprite.of(s.data.species_name, 14),
-		"decorate": func(b: Button) -> void: _draw_party_row(b, s, leader),
+		"decorate": func(b: Button) -> void: _draw_party_row(b, s, leader, ready), "unfurl": ready,
 		"hint": hint, "say": (("leads the team, worn out" if s.is_fainted() else "leads the team") if leader else worn), "leader": leader}
 
 const BAR_WIDTH: int = 40
 const FLAG_INSET: int = 8
+
+## True when [param s] could unfurl right now (outside any special place).
+static func can_unfurl_now(s: Spirling) -> bool:
+	return not s.data.unfold.is_empty() and not s.unfurl_targets().is_empty()
+
+## A small up arrow left of the leader flag: this Spirling can unfurl now.
+static func _draw_unfurl_mark(b: Button, ink: Color) -> void:
+	var x: float = b.size.x - FLAG_INSET - 8.0
+	var top: float = 3.0
+	b.draw_colored_polygon(PackedVector2Array([Vector2(x, top), Vector2(x + 3, top + 3), Vector2(x - 3, top + 3)]), ink)
+	b.draw_rect(Rect2(x - 1, top + 3, 2, 4), ink)
 
 ## A small pennant at the right end of the leader's row.
 static func _draw_leader_flag(b: Button, ink: Color) -> void:
@@ -918,10 +982,12 @@ static func _draw_leader_flag(b: Button, ink: Color) -> void:
 	b.draw_line(Vector2(x, top), Vector2(x, bottom), ink)
 	b.draw_colored_polygon(PackedVector2Array([Vector2(x + 1, top), Vector2(x + 6, top + 2.5), Vector2(x + 1, top + 5)]), ink)
 
-static func _draw_party_row(b: Button, s: Spirling, leader: bool = false) -> void:
+static func _draw_party_row(b: Button, s: Spirling, leader: bool = false, ready: bool = false) -> void:
 	var ink: Color = b.get_theme_color("font_focus_color" if b.has_focus() else "font_color", "Button")
 	if leader:
 		_draw_leader_flag(b, ink)
+	if ready:
+		_draw_unfurl_mark(b, ink)
 	var x0: float = ListPicker.POINTER_SPACE + 16
 	var y: float = b.size.y - 3
 	var ratio: float = clampf(float(s.hp) / maxf(1.0, float(s.max_hp())), 0.0, 1.0)

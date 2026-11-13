@@ -1,6 +1,6 @@
 extends GutTest
 ## Halcyra (Era IV, data/region4.json) brings two elements of its own: Gilt and Zenith
-## (data/type_chart.json). They wait in the chart for Halcyra's Spirlings, like Rust and Mask.
+## (data/type_chart.json), carried by 15 of Halcyra's own lines (tools/art/lines/halcyra.py).
 
 const NEW: Array[String] = ["GILT", "ZENITH"]
 

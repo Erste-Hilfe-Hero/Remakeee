@@ -18,8 +18,8 @@
   "T...._.....T",
   "T%%.._@@@@@T",
   "T%%..____..T",
-  "T@@@...._..T",
-  "T@@@.::._..T",
+  "TRRR...._..T",
+  "THDH.::._..T",
   "T....::.__.T",
   "T,,,....._.T",
   "T,,,@@@@._.T",
@@ -65,6 +65,14 @@
    "tx": 1,
    "ty": 9,
    "facing": "right"
+  },
+  {
+   "x": 2,
+   "y": 13,
+   "to": "errata_chapel",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -115,6 +123,103 @@
      "level": 80
     }
    ]
+  },
+  {
+   "id": "q3_toller",
+   "x": 10,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_gravers_causeway_toller",
+   "sprite": "ranger",
+   "trainer": "Toll Graver Sixten",
+   "intro": "quillmarch/q3_gravers_causeway_toller_intro",
+   "defeat": "quillmarch/q3_gravers_causeway_toller_defeat",
+   "money": 3200,
+   "team": [
+    {
+     "species": "Canalurk",
+     "level": 77
+    },
+    {
+     "species": "Siltaroth",
+     "level": 78
+    },
+    {
+     "species": "Siltby",
+     "level": 80
+    }
+   ]
+  },
+  {
+   "id": "q3_wanted_face_mette",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_wanted_face_mette",
+   "sprite": "ranger",
+   "show_flag": "q3_wanted_face_s1"
+  },
+  {
+   "id": "q3_wanted_face_sture",
+   "x": 7,
+   "y": 21,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_wanted_face_sture",
+   "sprite": "villager",
+   "trainer": "Bounty Cutter Sture",
+   "show_flag": "q3_wanted_face_reveal",
+   "intro": "quillmarch/q3_wanted_face_sture_intro",
+   "defeat": "quillmarch/q3_wanted_face_sture_defeat",
+   "money": 4050,
+   "team": [
+    {
+     "species": "Nibquill",
+     "level": 79
+    },
+    {
+     "species": "Cindrel",
+     "level": 80
+    },
+    {
+     "species": "Nibravure",
+     "level": 81
+    }
+   ],
+   "win_flags": [
+    "q3_wanted_face_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "q3_early_epitaph_brand_stone",
+   "x": 2,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "quillmarch/q3_early_epitaph_brand_stone",
+   "sprite": "elder",
+   "trainer": "Corrector Brand",
+   "show_flag": "q3_early_epitaph_reveal",
+   "intro": "quillmarch/q3_early_epitaph_brand_stone_intro",
+   "defeat": "quillmarch/q3_early_epitaph_brand_stone_defeat",
+   "money": 4050,
+   "team": [
+    {
+     "species": "Canalurk",
+     "level": 79
+    },
+    {
+     "species": "Siltaroth",
+     "level": 80
+    },
+    {
+     "species": "Siltby",
+     "level": 81
+    }
+   ],
+   "win_flags": [
+    "q3_early_epitaph_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [],
@@ -146,6 +251,13 @@
    "item": "strong_tonic",
    "count": 1,
    "flag": "find_gravers_causeway_4"
+  },
+  {
+   "x": 0,
+   "y": 3,
+   "item": "dash_brew",
+   "count": 1,
+   "flag": "find_gravers_causeway_q3_0_3"
   }
  ]
 }

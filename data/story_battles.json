@@ -2576,5 +2576,392 @@
   "win_flags": [
    "q2_bought_boos_s2"
   ]
+ },
+ "hs_brass_planet": {
+  "trainer": "Gilt Collector Ambrose",
+  "team": [
+   {
+    "species": "Hazejellith",
+    "level": 88
+   },
+   {
+    "species": "Noonsoral",
+    "level": 89
+   },
+   {
+    "species": "Siroclaw",
+    "level": 90
+   },
+   {
+    "species": "Habobrax",
+    "level": 91
+   }
+  ],
+  "ai": 2,
+  "money": 5460,
+  "defeat": "halcyra_side/brass_planet_ambrose_defeat",
+  "lose": "halcyra_side/brass_planet_ambrose_lose",
+  "win_flags": [
+   "q4_brass_planet_done"
+  ]
+ },
+ "hs_planet_buyers": {
+  "trainer": "Planet Buyers",
+  "team": [
+   {
+    "species": "Habobrax",
+    "level": 89
+   },
+   {
+    "species": "Obelordan",
+    "level": 90
+   },
+   {
+    "species": "Helirollax",
+    "level": 91
+   }
+  ],
+  "ai": 2,
+  "money": 3640,
+  "defeat": "halcyra_side/planet_buyers_defeat",
+  "lose": "halcyra_side/planet_buyers_lose"
+ },
+ "hs_jost_guards": {
+  "trainer": "Salt Guards",
+  "team": [
+   {
+    "species": "Caravault",
+    "level": 87
+   },
+   {
+    "species": "Claspreign",
+    "level": 88
+   },
+   {
+    "species": "Stiltwade",
+    "level": 89
+   }
+  ],
+  "ai": 2,
+  "money": 3560,
+  "defeat": "halcyra_side/jost_guards_defeat",
+  "lose": "halcyra_side/jost_guards_lose"
+ },
+ "hs_plate_pushers": {
+  "trainer": "Hired Pushers",
+  "team": [
+   {
+    "species": "Gyrevult",
+    "level": 92
+   },
+   {
+    "species": "Velvessa",
+    "level": 93
+   },
+   {
+    "species": "Ergskim",
+    "level": 94
+   }
+  ],
+  "ai": 2,
+  "money": 3760,
+  "defeat": "halcyra_side/plate_pushers_defeat",
+  "lose": "halcyra_side/plate_pushers_lose"
+ },
+ "hs_forged_will": {
+  "trainer": "Gilt Heir Philippa",
+  "team": [
+   {
+    "species": "Rollibex",
+    "level": 90
+   },
+   {
+    "species": "Obelith",
+    "level": 91
+   },
+   {
+    "species": "Corocub",
+    "level": 92
+   },
+   {
+    "species": "Bakedil",
+    "level": 93
+   }
+  ],
+  "ai": 2,
+  "money": 5580,
+  "defeat": "halcyra_side/forged_will_philippa_will_defeat",
+  "lose": "halcyra_side/forged_will_philippa_will_lose",
+  "win_flags": [
+   "q4_forged_will_done"
+  ]
+ },
+ "hs_cask_41": {
+  "trainer": "Uncle Bertrand",
+  "team": [
+   {
+    "species": "Obelith",
+    "level": 90
+   },
+   {
+    "species": "Corocub",
+    "level": 91
+   },
+   {
+    "species": "Bakedil",
+    "level": 92
+   },
+   {
+    "species": "Coronarch",
+    "level": 93
+   }
+  ],
+  "ai": 2,
+  "money": 5580,
+  "defeat": "halcyra_side/cask_41_bertrand_defeat",
+  "lose": "halcyra_side/cask_41_bertrand_lose",
+  "win_flags": [
+   "q4_cask_41_done"
+  ]
+ },
+ "hs_cask_cousins": {
+  "trainer": "Gilt Cousins",
+  "team": [
+   {
+    "species": "Bakedil",
+    "level": 91
+   },
+   {
+    "species": "Coronarch",
+    "level": 92
+   },
+   {
+    "species": "Rollibex",
+    "level": 93
+   }
+  ],
+  "ai": 2,
+  "money": 3720,
+  "defeat": "halcyra_side/cask_cousins_defeat",
+  "lose": "halcyra_side/cask_cousins_lose"
+ },
+ "hs_arno_watchers": {
+  "trainer": "Shawl Watchers",
+  "team": [
+   {
+    "species": "Orrerine",
+    "level": 88
+   },
+   {
+    "species": "Obelith",
+    "level": 89
+   },
+   {
+    "species": "Highhare",
+    "level": 90
+   }
+  ],
+  "ai": 2,
+  "money": 3600,
+  "defeat": "halcyra_side/arno_watchers_defeat",
+  "lose": "halcyra_side/arno_watchers_lose"
+ },
+ "hs_red_column": {
+  "trainer": "Span Collector Ruprecht",
+  "team": [
+   {
+    "species": "Ergskim",
+    "level": 91
+   },
+   {
+    "species": "Gyrevult",
+    "level": 92
+   },
+   {
+    "species": "Velvessa",
+    "level": 93
+   },
+   {
+    "species": "Stiltwade",
+    "level": 94
+   }
+  ],
+  "ai": 2,
+  "money": 5640,
+  "defeat": "halcyra_side/red_column_ruprecht_defeat",
+  "lose": "halcyra_side/red_column_ruprecht_lose",
+  "win_flags": [
+   "q4_red_column_done"
+  ]
+ },
+ "hs_redline_collectors": {
+  "trainer": "Span Collectors",
+  "team": [
+   {
+    "species": "Ergskim",
+    "level": 92
+   },
+   {
+    "species": "Gyrevult",
+    "level": 93
+   },
+   {
+    "species": "Velvessa",
+    "level": 94
+   }
+  ],
+  "ai": 2,
+  "money": 3760,
+  "defeat": "halcyra_side/redline_collectors_defeat",
+  "lose": "halcyra_side/redline_collectors_lose"
+ },
+ "hs_brake_file": {
+  "trainer": "Brake Mechanic Ulf",
+  "team": [
+   {
+    "species": "Highhare",
+    "level": 80
+   },
+   {
+    "species": "Duneshrew",
+    "level": 81
+   },
+   {
+    "species": "Noonwhist",
+    "level": 82
+   },
+   {
+    "species": "Hazejel",
+    "level": 83
+   }
+  ],
+  "ai": 2,
+  "money": 4980,
+  "defeat": "halcyra_side/brake_file_ulf_file_defeat",
+  "lose": "halcyra_side/brake_file_ulf_file_lose",
+  "win_flags": [
+   "q4_brake_file_done"
+  ]
+ },
+ "hs_posy_guards": {
+  "trainer": "Bridal Guards",
+  "team": [
+   {
+    "species": "Palmop",
+    "level": 83
+   },
+   {
+    "species": "Hazejel",
+    "level": 84
+   },
+   {
+    "species": "Chirrik",
+    "level": 85
+   }
+  ],
+  "ai": 2,
+  "money": 3400,
+  "defeat": "halcyra_side/posy_guards_defeat",
+  "lose": "halcyra_side/posy_guards_lose"
+ },
+ "hs_salt_saint": {
+  "trainer": "Relic Seller Kaspar",
+  "team": [
+   {
+    "species": "Ergrava",
+    "level": 86
+   },
+   {
+    "species": "Velverain",
+    "level": 87
+   },
+   {
+    "species": "Stiltwade",
+    "level": 88
+   },
+   {
+    "species": "Stiltregent",
+    "level": 89
+   }
+  ],
+  "ai": 2,
+  "money": 5340,
+  "defeat": "halcyra_side/salt_saint_kaspar_salt_defeat",
+  "lose": "halcyra_side/salt_saint_kaspar_salt_lose",
+  "win_flags": [
+   "q4_salt_saint_done"
+  ]
+ },
+ "q3_dead_letter_office": {
+  "trainer": "Dead Letter Clerk Osvald",
+  "team": [
+   {
+    "species": "Drypup",
+    "level": 73
+   },
+   {
+    "species": "Veskarion",
+    "level": 73
+   },
+   {
+    "species": "Dryhound",
+    "level": 74
+   }
+  ],
+  "ai": 2,
+  "money": 4380,
+  "defeat": "quillmarch/q3_dead_letter_office_defeat",
+  "lose": "quillmarch/q3_dead_letter_office_lose",
+  "win_flags": [
+   "q3_dead_letter_office_won"
+  ]
+ },
+ "q3_errata_chapel": {
+  "trainer": "Epitaph Cutter Runhild",
+  "team": [
+   {
+    "species": "Siltaroth",
+    "level": 80
+   },
+   {
+    "species": "Siltby",
+    "level": 80
+   },
+   {
+    "species": "Canalurk",
+    "level": 81
+   }
+  ],
+  "ai": 2,
+  "money": 4800,
+  "defeat": "quillmarch/q3_errata_chapel_defeat",
+  "lose": "quillmarch/q3_errata_chapel_lose",
+  "win_flags": [
+   "q3_errata_chapel_won"
+  ]
+ },
+ "q3_debtors_icehouse": {
+  "trainer": "Icehouse Bailiff Stig",
+  "team": [
+   {
+    "species": "Gelidmonarch",
+    "level": 83
+   },
+   {
+    "species": "Veskara",
+    "level": 83
+   },
+   {
+    "species": "Sleetowl",
+    "level": 84
+   }
+  ],
+  "ai": 2,
+  "money": 4980,
+  "defeat": "quillmarch/q3_debtors_icehouse_defeat",
+  "lose": "quillmarch/q3_debtors_icehouse_lose",
+  "win_flags": [
+   "q3_debtors_icehouse_won"
+  ]
  }
 }

@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "quillmarch/ledgerholm_archive_elder",
    "sprite": "elder"
+  },
+  {
+   "id": "q3_early_epitaph_pim",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/q3_early_epitaph_pim",
+   "sprite": "villager",
+   "show_flag": "q3_early_epitaph_asked"
   }
  ],
  "signs": []

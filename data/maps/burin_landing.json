@@ -14,13 +14,13 @@
   "T.RRR..RRR.T",
   "T.HDH..HDH.T",
   "T..........T",
-  "T##.....L##T",
-  "T....____..T",
-  "T.:......:.T",
-  "T....o._____",
-  "T......_____",
-  "T.:......:.T",
-  "T##..__..##T",
+  "T~~.....L##T",
+  "T~...____..T",
+  "T~~......:.T",
+  "T++++o._____",
+  "T++++.._____",
+  "T~~......:.T",
+  "T~~..__..##T",
   "T:.RR__RR.:T",
   "T..DH__HD..T",
   "T....__....T",
@@ -194,6 +194,46 @@
    "facing": "down",
    "dialogue": "quillmarch/wren",
    "sprite": "tamer_f"
+  },
+  {
+   "id": "q3_widow_post_maren",
+   "x": 9,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_widow_post",
+   "sprite": "elder",
+   "hide_flag": "q3_widow_post_reveal"
+  },
+  {
+   "id": "q3_widow_post_maren_ink",
+   "x": 3,
+   "y": 6,
+   "facing": "right",
+   "dialogue": "quillmarch/q3_widow_post_maren_ink",
+   "sprite": "elder",
+   "trainer": "Widow Maren",
+   "show_flag": "q3_widow_post_reveal",
+   "intro": "quillmarch/q3_widow_post_maren_ink_intro",
+   "defeat": "quillmarch/q3_widow_post_maren_ink_defeat",
+   "money": 3700,
+   "team": [
+    {
+     "species": "Vesk",
+     "level": 72
+    },
+    {
+     "species": "Nibbet",
+     "level": 73
+    },
+    {
+     "species": "Veskarion",
+     "level": 74
+    }
+   ],
+   "win_flags": [
+    "q3_widow_post_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [

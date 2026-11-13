@@ -16,12 +16,20 @@ LICENCE = "Owned by the project, no third-party input"
 
 # (path pattern, generator, how it was made)
 SOURCES = [
+    ("art/era5/portraits/*.png", "tools/art/gen_portraits.py", "own speaker portrait for the Era V dialogue box: three 32 px busts (resting, blink, speaking) from hand-written shapes and a colour recipe per speaker"),
+    ("art/era4/portraits/*.png", "tools/art/gen_portraits.py", "own 12 px speaker head for the Era IV name plate, from hand-written shapes and a colour recipe per speaker"),
+    ("art/fonts/chimora_etch10.png", "tools/fonts/build_era_fonts.py", "specimen sheet of Chimora Etch, the own 10 px text font of Era III; every glyph hand-drawn in tools/fonts/src/etch10.txt"),
+    ("art/fonts/chimora_pano12.png", "tools/fonts/build_era_fonts.py", "specimen sheet of Chimora Panorama, the own 12 px text font of Eras IV and V; every glyph hand-drawn in tools/fonts/src/pano12.txt"),
     ("audio/sfx/*_era[2-5].wav", "tools/audio/era_sfx.py", "era sound set: own note recipe played on that era's synthesized voice (chip, low-rate tones, room/hall), no samples"),
     ("audio/ambience/*_era[45].ogg", "tools/audio/ambience.py", "original Era IV/V biome ambience loop from filtered noise and tone figures, room reverb, no recordings"),
     ("audio/sfx/*.wav", "tools/audio/gen_audio.py", "synthesized pulse/triangle/noise sound effect, no samples"),
     ("audio/music/stems/*.ogg", "tools/audio/gen_audio.py", "one stem of an original chiptune place song, for the layered MusicDirector"),
     ("audio/music/*.ogg", "tools/audio/gen_audio.py", "original chiptune: chord charts and motifs written for Chimora, synthesized pulse/triangle/noise, Vorbis via ffmpeg"),
     ("audio/ambience/*.ogg", "tools/audio/gen_audio.py", "original ambience loop built from filtered noise and tone patterns, no recordings"),
+    ("art/era[2-5]/actors/emotes.png", "tools/art/gen_era_chars.py", "original 16 px emote bubbles (alert, question, dots, heart, note, sleep, drop) for that era's overworld"),
+    ("art/era3/actors/*.png", "tools/art/gen_era_chars.py", "own Era I overworld figure repainted in zone colours with shading, both feet, running and wading poses, Era III"),
+    ("art/era4/actors/*.png", "tools/art/gen_era_chars.py", "own Era I overworld figure redrawn 16x24 with a longer body and legs, coloured outlines, half steps and head-turn frames, Era IV"),
+    ("art/era5/actors/*.png", "tools/art/gen_era_chars.py", "own 16x24 overworld figure with rim light, breathing and blinking frames and four season outfits, Era V"),
     ("art/era1/fx/*.png", "tools/art/gen_fx.py", "original 8x8 effect shape for battle arts, Era I ink"),
     ("art/era5/spirlings/*.png", "tools/art/gen_era5.py", "original Spirling line drawn from its line spec with the project's body plans, lit part by part at 96x96, Era V Living"),
     ("art/era1/chars/stranger*.png", "tools/art/gen_strangers.py", "original 16 px overworld sheet of a stranger from the map's edge, Era I ink"),

@@ -20,6 +20,13 @@ const AFTER_ECHO_TIME: float = 2.5
 
 ## The wild Spirling being reached out to, drawn above the marks.
 var target: Texture2D
+## Its name, shown on the plate under it from Era III on.
+var target_name: String = ""
+## Era whose look the screen is drawn in (EraBattleHud "bond", docs/ERA_FEEL_HUD.md): plain ink
+## (I), coloured marks (II), a framed screen with a name plate (III), bigger marks for touch
+## and a slanted plate (IV), and softly breathing marks (V, not under reduced motion). Only the
+## look changes: still no odds, no aiming and no shrinking shapes (LEGAL.md).
+var era: int = 1
 ## Set for reproducible calls (tests, screenshots); otherwise randomized per run.
 var rng: RandomNumberGenerator
 
@@ -45,9 +52,31 @@ func _ready() -> void:
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_hint.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	_hint.offset_top = 4
+	_hint.offset_top = 6
+	_hint.offset_left = 8
+	_hint.offset_right = -8
 	add_child(_hint)
 	visible = false
+	visibility_changed.connect(func() -> void:
+		if visible:
+			era = EraManager.active_era())
+
+## Size of one mark in the era on screen (bigger on the 270 px wide screens).
+func mark_size() -> float:
+	return EraBattleHud.num(era, "bond_mark", MARK_SIZE)
+
+## Size the Spirling is drawn at above the marks.
+func target_size() -> float:
+	return TARGET_SIZE * mark_size() / MARK_SIZE
+
+## Fill of mark [param i]: Era I ink on paper; from Era II each mark has its own colour, pale
+## while it rests and full while it sounds.
+static func mark_fill(p_era: int, i: int, lit: bool) -> Color:
+	if EraBattleHud.rank(p_era, "bond") < 1 or UITheme.high_contrast:
+		return UITheme.INK if lit else UITheme.ACCENT
+	var cols: Array = EraBattleHud.cfg().get("bond_mark_colours", [])
+	var c: Color = Color(str(cols[i % cols.size()])) if not cols.is_empty() else UITheme.ACCENT
+	return c if lit else c.lerp(UITheme.BG, 0.6)
 
 ## "Mine!" (owner, 9 Nov): one big button, just tap it fast. Each tap fills the bar; a full bar
 ## inside MINE_TIME bonds best, otherwise the fill reached is the score. Nothing pulls back.
@@ -218,7 +247,7 @@ func _mark_center(i: int) -> Vector2:
 
 func _mark_at_point(p: Vector2) -> int:
 	for i: int in BondEcho.MARKS:
-		if p.distance_to(_mark_center(i)) <= MARK_SIZE * 0.75:
+		if p.distance_to(_mark_center(i)) <= mark_size() * 0.75:
 			return i
 	return -1
 
@@ -258,7 +287,13 @@ func _lit_mark() -> int:
 	return -1
 
 func _draw() -> void:
-	draw_rect(Rect2(Vector2.ZERO, size), Color(UITheme.BG, 0.9))
+	# Opaque paper: the battle HUD behind would show through the marks in the colour eras.
+	draw_rect(Rect2(Vector2.ZERO, size), UITheme.BG)
+	var look: int = EraBattleHud.rank(era, "bond")
+	var c: Dictionary = EraBattleHud.colours(era)
+	if look >= 2:
+		# Era III on: the whole screen in the era's frame.
+		draw_style_box(EraBattleHud.frame_style(era, Color(UITheme.BG, 0.0)), Rect2(Vector2.ZERO, size))
 	var state: String = str(_plan.get("state", ""))
 	if state == "mended":
 		# A glowing frame: the reward for mending the Rift nearby (item 281).
@@ -266,9 +301,23 @@ func _draw() -> void:
 		for k: int in 3:
 			draw_rect(Rect2(Vector2(2 + k * 2, 2 + k * 2), size - Vector2(4 + k * 4, 4 + k * 4)), Color(UITheme.ACCENT, pulse * (1.0 - k * 0.3)), false, 1.0)
 	if target != null:
-		var half := Vector2(TARGET_SIZE, TARGET_SIZE) / 2.0
+		var half := Vector2(target_size(), target_size()) / 2.0
 		var at := Vector2(size.x / 2.0, size.y * 0.3)
-		draw_texture_rect(target, Rect2((at - half).round(), half * 2.0), false)
+		var box := Rect2((at - half).round(), half * 2.0)
+		if look >= 1:
+			# Era II on: the Spirling stands in a box of its own.
+			draw_rect(box.grow(3), c.light)
+			draw_rect(box.grow(3), UITheme.INK, false, 1.0)
+		draw_texture_rect(target, box, false)
+		if look >= 2 and not target_name.is_empty():
+			var font: Font = get_theme_default_font()
+			var fs: int = get_theme_default_font_size()
+			var nw: float = font.get_string_size(target_name, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+			var lh: int = EraBattleHud.line_h(era)
+			var plate := Rect2(roundf(at.x - nw / 2.0 - 8.0), box.end.y + 6.0, roundf(nw + 16.0), lh + 4)
+			EraBattleHud.draw_plate(self, plate, era, true, lh + 4)
+			draw_string(font, Vector2(plate.position.x + 9.0, plate.position.y + 2.0 + EraBattleHud.ascent(era)), target_name,
+				HORIZONTAL_ALIGNMENT_LEFT, -1, fs, c.paper)
 	if _phase == Phase.MINE or (_phase == Phase.RESULT and _plan.has("phases") and _mine_needed > 0):
 		_draw_mine()
 		return
@@ -277,7 +326,7 @@ func _draw() -> void:
 		_draw_mark(i, _mark_center(i).round(), i == lit, state == "muted")
 	# Progress pips for the echo (how many taps so far), never odds.
 	if _phase == Phase.ECHO:
-		var y: float = size.y * 0.62 + MARK_SIZE
+		var y: float = size.y * 0.62 + mark_size()
 		var x0: float = size.x / 2.0 - (_sequence.size() * 6) / 2.0
 		for i: int in _sequence.size():
 			var filled: bool = i < _taps.size()
@@ -316,15 +365,19 @@ static func mark_points(i: int, c: Vector2, r: float, sky: bool) -> PackedVector
 	return pts
 
 func _draw_mark(i: int, c: Vector2, lit: bool, muted: bool = false) -> void:
-	var fill: Color = UITheme.INK if lit else UITheme.ACCENT
+	var fill: Color = mark_fill(era, i, lit)
 	if muted:
 		# Pale lights next to an open Rift (item 280).
 		fill = Color(fill, 0.45)
-	var pts: PackedVector2Array = mark_points(i, c, MARK_SIZE / 2.0, bool(_plan.get("sky", false)))
+	var r: float = mark_size() / 2.0
+	if EraBattleHud.rank(era, "bond") >= 4 and not Juice.reduced() and not lit:
+		# Era V: the resting marks breathe by a pixel, each a little after the other.
+		r += roundf(sin(Time.get_ticks_msec() / 400.0 + i * 1.3))
+	var pts: PackedVector2Array = mark_points(i, c, r, bool(_plan.get("sky", false)))
 	draw_colored_polygon(pts, fill)
 	var outline := pts.duplicate()
 	outline.append(pts[0])
-	draw_polyline(outline, Color(UITheme.INK, 0.5) if muted else UITheme.INK, 1.0)
+	draw_polyline(outline, Color(UITheme.INK, 0.5) if muted else UITheme.INK, 2.0 if lit and EraBattleHud.rank(era, "bond") >= 3 else 1.0)
 
 ## The bar (how close the bond is, a picture not odds) and the big "Mine!" button.
 func _draw_mine() -> void:

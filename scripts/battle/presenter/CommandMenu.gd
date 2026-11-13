@@ -1,8 +1,14 @@
 class_name CommandMenu
 extends PanelContainer
-## Bottom command panel: the moves as a one-column list (element symbol, name, Energy cost on the
-## right) and a row with Swap / Item / Bond / Leave. Deliberately not a 2x2 move grid.
-## Holding a move for LONG_PRESS seconds opens its info card (move_info); a tap closes it.
+## Bottom command panel: the arts as a one-column list (element symbol, name, Energy cost on the
+## right) and Swap / Item / Bond / Leave. Deliberately not a 2x2 art grid.
+## Holding an art for LONG_PRESS seconds opens its info card (move_info); a tap closes it.
+##
+## The look follows the era on screen (EraBattleHud "menu", docs/ERA_FEEL_HUD.md): Era I a plain
+## text list with a cursor and the four commands as words in two rows; Era II framed buttons
+## with colour stripes; Era III element-coloured art buttons with a slanted chip; Era IV large
+## touch buttons with the element's name and a matchup word, and a button that uses the last
+## item again; Era V the same, coming in one after another, with a richer info card.
 
 signal chosen(kind: BattleAction.Kind, index: int)
 
@@ -10,13 +16,20 @@ const MOVE_BUTTON_HEIGHT: int = 13
 ## Room on the left of a move row for its element symbol.
 const ICON_PAD: int = 11
 const SMALL_BUTTON_HEIGHT: int = 16
-## Fixed height so the field above never jumps when the buttons hide.
+## Fixed height so the field above never jumps when the buttons hide (the Era II panel; each
+## era's own height is EraBattleHud.menu_height).
 const PANEL_HEIGHT: int = Spirling.MAX_MOVES * MOVE_BUTTON_HEIGHT + (Spirling.MAX_MOVES - 1) + SMALL_BUTTON_HEIGHT + 2 + 6
+## Era I text menu: room for the cursor in front of a row.
+const CURSOR_PAD: int = 6
+## chosen(ITEM, SHORTCUT) asks for the last item again; chosen(ITEM, -1) opens the list.
+const SHORTCUT: int = 0
 
 var _content: VBoxContainer
 ## Info card over the panel (long press on a move).
 var _info_panel: PanelContainer
 var _info_label: Label
+## Era V: the name of the art on a band in its element's colour.
+var _info_head: Label
 var _hold := Timer.new()
 var _held_index: int = -1
 ## Set when a long press opened the card, so the release does not also pick the move.
@@ -27,20 +40,35 @@ var _model: BattleModel
 
 const LONG_PRESS: float = 0.45
 
+## Era whose look the panel was built in, and its menu style (text, buttons, typed, touch).
+var era: int = 1
+var mode: String = "buttons"
 var _move_buttons: Array[Button] = []
 ## Element symbol at the left of each move row.
 var _move_icons: Array[TextureRect] = []
 var _move_stripes: Array[ColorRect] = []
 ## Energy cost and matchup, right-aligned in each move row.
 var _move_costs: Array[Label] = []
+## Era IV on: the matchup word under the cost ("Strong", "Weak", "No effect").
+var _move_hints: Array[Label] = []
+## Colour of each row's cost and hint text while the row is not focused.
+var _row_colors: Array[Color] = []
+## Element of each row (-1 none), for the slanted chip of the element-coloured buttons.
+var _row_elements: Array[int] = []
 var _swap: Button
 var _item: Button
 var _bond: Button
 var _run: Button
+## Era IV on: uses the last item again (EraBattleHud.last_item).
+var _shortcut: Button
 
 func _ready() -> void:
-	add_theme_stylebox_override("panel", UITheme.panel_style(UITheme.ACCENT))
-	custom_minimum_size = Vector2(0, PANEL_HEIGHT)
+	era = EraManager.active_era()
+	var e: Dictionary = EraBattleHud.for_era(era)
+	mode = str(e.get("menu", "buttons"))
+	add_theme_stylebox_override("panel", EraBattleHud.frame_style(era, panel_bg(era)))
+	custom_minimum_size = Vector2(0, EraBattleHud.menu_height(era))
+	var art_h: int = int(e.get("art_h", MOVE_BUTTON_HEIGHT))
 	var v := VBoxContainer.new()
 	_content = v
 	v.add_theme_constant_override("separation", 2)
@@ -50,17 +78,12 @@ func _ready() -> void:
 	v.add_child(grid)
 	for i: int in Spirling.MAX_MOVES:
 		var b := Button.new()
-		b.custom_minimum_size = Vector2(0, MOVE_BUTTON_HEIGHT)
+		b.custom_minimum_size = Vector2(0, art_h)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.clip_text = true
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		Juice.press_feedback(b)
-		for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
-			var sb: StyleBox = b.get_theme_stylebox(state)
-			if sb != null:
-				sb = sb.duplicate()
-				sb.content_margin_left = ICON_PAD
-				b.add_theme_stylebox_override(state, sb)
+		_style_row(b, _row_left())
 		var idx: int = i
 		b.pressed.connect(func() -> void:
 			if _long_fired:
@@ -76,43 +99,156 @@ func _ready() -> void:
 			_hold.start(LONG_PRESS))
 		b.button_up.connect(func() -> void:
 			_hold.stop())
+		b.draw.connect(_draw_row.bind(b, idx))
+		for sig: Signal in [b.focus_entered, b.focus_exited, b.button_down, b.button_up]:
+			sig.connect(_tint_row.bind(idx))
 		grid.add_child(b)
 		_move_buttons.append(b)
+		_row_colors.append(UITheme.INK)
+		_row_elements.append(-1)
 		var icon := TextureRect.new()
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		icon.position = Vector2(2, (MOVE_BUTTON_HEIGHT - ElementIcons.SIZE) / 2)
+		icon.position = Vector2(2 + (CURSOR_PAD if mode == "text" else 0), (art_h - ElementIcons.SIZE - 2) / 2)
 		b.add_child(icon)
 		_move_icons.append(icon)
 		_move_stripes.append(_stripe(b))
+		var two_lines: bool = bool(e.get("art_detail", false))
 		var cost := Label.new()
 		cost.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cost.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		cost.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		cost.vertical_alignment = VERTICAL_ALIGNMENT_TOP if two_lines else VERTICAL_ALIGNMENT_CENTER
 		cost.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		cost.offset_right = -3
+		cost.offset_top = 2 if two_lines else 0
 		b.add_child(cost)
 		_move_costs.append(cost)
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 2)
+		var hint := Label.new()
+		hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		hint.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+		hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		hint.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+		hint.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		hint.offset_right = -3
+		hint.offset_bottom = -1
+		hint.visible = two_lines
+		b.add_child(hint)
+		_move_hints.append(hint)
+	var row: Container
+	if str(e.get("commands", "row")) == "grid":
+		var g := GridContainer.new()
+		g.columns = 2
+		g.add_theme_constant_override("h_separation", 2)
+		g.add_theme_constant_override("v_separation", 1)
+		row = g
+	else:
+		var h := HBoxContainer.new()
+		h.add_theme_constant_override("separation", 2)
+		row = h
 	v.add_child(row)
 	_swap = _small(row, "Swap", BattleAction.Kind.SWAP)
 	_item = _small(row, "Item", BattleAction.Kind.ITEM)
 	_bond = _small(row, "Bond", BattleAction.Kind.BOND)
 	_run = _small(row, "Leave", BattleAction.Kind.RUN)
+	if bool(e.get("item_shortcut", false)):
+		_shortcut = Button.new()
+		_shortcut.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+		_shortcut.custom_minimum_size = Vector2(0, EraBattleHud.shortcut_height(era))
+		_shortcut.clip_text = true
+		_shortcut.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		Juice.press_feedback(_shortcut)
+		_shortcut.pressed.connect(func() -> void:
+			Sound.sfx("confirm")
+			chosen.emit(BattleAction.Kind.ITEM, SHORTCUT))
+		v.add_child(_shortcut)
 	_hold.one_shot = true
 	_hold.timeout.connect(_on_hold)
 	add_child(_hold)
 	_info_panel = PanelContainer.new()
-	_info_panel.add_theme_stylebox_override("panel", UITheme.panel_style(UITheme.ACCENT))
+	_info_panel.add_theme_stylebox_override("panel", EraBattleHud.frame_style(era, panel_bg(era)))
 	_info_panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	_info_panel.visible = false
+	var card := VBoxContainer.new()
+	card.add_theme_constant_override("separation", 1)
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_info_panel.add_child(card)
+	_info_head = Label.new()
+	_info_head.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	_info_head.visible = false
+	card.add_child(_info_head)
 	_info_label = Label.new()
 	_info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_info_panel.add_child(_info_label)
+	_info_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	card.add_child(_info_label)
 	_info_panel.gui_input.connect(func(ev: InputEvent) -> void:
 		if TapInput.is_release(ev):
 			close_info())
 	add_child(_info_panel)
+
+## Fill of the command panel: plain paper in Era I, the era's light colour washed into paper
+## later (the shared accent once the menu skin frames the panel).
+static func panel_bg(p_era: int) -> Color:
+	if EraBattleHud.skin_api() or UITheme.high_contrast:
+		return UITheme.ACCENT
+	if p_era <= 1:
+		return UITheme.BG
+	return (EraBattleHud.colours(p_era).light as Color).lerp(UITheme.BG, 0.55)
+
+## Room on the left of an art row: the symbol, plus the cursor (text menu) or the chip's slant.
+func _row_left() -> int:
+	return ICON_PAD + (CURSOR_PAD if mode == "text" else int(EraBattleHud.num(era, "art_slant")))
+
+## Styles of a row button: [param left] pixels of room for the cursor, chip or symbol. The
+## text menu (Era I) has no button boxes at all. In every era the row in focus keeps its own
+## look and dark text, and _draw_row marks it (a cursor, or an ink frame), so the cost and the
+## matchup colour stay readable on it and the mark survives the 4-ink filter.
+func _style_row(b: Button, left: int) -> void:
+	_plain_focus(b)
+	for state: String in ["normal", "hover", "pressed", "disabled"]:
+		var sb: StyleBox
+		if mode == "text":
+			sb = StyleBoxEmpty.new()
+			sb.set_content_margin_all(1)
+		else:
+			# From the shared theme, not from the button: a button outside the tree only knows
+			# the engine's grey default boxes.
+			sb = UITheme.get_theme().get_stylebox("normal" if state == "hover" else state, "Button").duplicate()
+		sb.content_margin_left = left
+		b.add_theme_stylebox_override(state, sb)
+
+## No dark focus box and no light focus text on [param b]; _draw_row draws the focus mark.
+func _plain_focus(b: Button) -> void:
+	b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	for key: String in ["font_hover_color", "font_focus_color"] + (["font_pressed_color", "font_hover_pressed_color"] if mode == "text" else []):
+		b.add_theme_color_override(key, UITheme.INK)
+
+## Cost and hint text in the row's matchup colour (paper while the row is pressed dark).
+func _tint_row(i: int) -> void:
+	var b: Button = _move_buttons[i]
+	var col: Color = UITheme.BG if mode != "text" and b.is_pressed() and not b.disabled else _row_colors[i]
+	if not b.is_pressed() and EraBattleHud.flag(era, "art_fill") and _row_elements[i] >= 0 and UITheme.contrast(col, EraBattleHud.art_fill(_row_elements[i])) < 4.5:
+		# On an element-coloured row a matchup colour that fades into the fill turns to ink.
+		col = UITheme.INK
+	_move_costs[i].add_theme_color_override("font_color", col)
+	_move_hints[i].add_theme_color_override("font_color", col)
+	b.queue_redraw()
+
+## Drawn over a row button: the slanted element chip of the element-coloured buttons (Era III
+## on) and the focus mark: the cursor of the text menu, an ink frame in the button eras.
+func _draw_row(b: Button, i: int) -> void:
+	var focused: bool = b.has_focus() and not b.disabled
+	if mode == "text":
+		if focused:
+			var cy: float = floorf(b.size.y / 2.0)
+			b.draw_colored_polygon(PackedVector2Array([Vector2(1, cy - 3), Vector2(5, cy), Vector2(1, cy + 3)]), UITheme.INK)
+		return
+	var el: int = _row_elements[i] if i >= 0 and i < _row_elements.size() else -1
+	if el >= 0 and EraBattleHud.flag(era, "art_fill"):
+		var slant: float = EraBattleHud.num(era, "art_slant")
+		var col: Color = UITheme.DISABLED if b.disabled else Elements.color(el)
+		b.draw_colored_polygon(PackedVector2Array([Vector2(1, 1), Vector2(ICON_PAD + slant, 1), Vector2(ICON_PAD, b.size.y - 1), Vector2(1, b.size.y - 1)]), col)
+	if focused:
+		b.draw_rect(Rect2(Vector2.ZERO, b.size), UITheme.INK, false, 1.0)
+		b.draw_rect(Rect2(Vector2.ONE, b.size - Vector2(2, 2)), UITheme.INK, false, 1.0)
 
 ## Thin colour stripe on the button's left edge (era colour code); transparent in Era I.
 func _stripe(b: Button) -> ColorRect:
@@ -131,12 +267,31 @@ func _on_hold() -> void:
 	_long_fired = true
 	open_info(_held_index)
 
-## Shows the info card for the move in row [param index].
+## Shows the info card for the move in row [param index]. Era V sets the art's name on a band
+## in its element's colour and lets the card rise into place (not under reduced motion).
 func open_info(index: int) -> void:
 	if index < 0 or index >= _shown_moves.size():
 		return
-	_info_label.text = move_info(_shown_moves[index], _model)
+	var mv: MoveData = _shown_moves[index]
+	var text: String = move_info(mv, _model)
+	var rich: bool = EraBattleHud.text(era, "info_card", "plain") == "rich"
+	_info_head.visible = rich
+	if rich:
+		var lines: PackedStringArray = text.split("\n")
+		_info_head.text = lines[0]
+		var band := StyleBoxFlat.new()
+		band.bg_color = EraBattleHud.art_fill(mv.element)
+		band.border_color = UITheme.INK
+		band.border_width_bottom = 1
+		band.set_content_margin_all(2)
+		_info_head.add_theme_stylebox_override("normal", band)
+		lines.remove_at(0)
+		text = "\n".join(lines)
+	_info_label.text = text
 	_info_panel.visible = true
+	if rich and not Juice.reduced():
+		_info_panel.modulate.a = 0.0
+		Juice.tween(_info_panel, "modulate:a", 1.0, "open")
 	Sound.sfx("confirm")
 
 func close_info() -> void:
@@ -270,21 +425,28 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	var b := Button.new()
 	b.text = text
-	b.custom_minimum_size = Vector2(0, SMALL_BUTTON_HEIGHT)
+	b.custom_minimum_size = Vector2(0, EraBattleHud.num(era, "command_h", SMALL_BUTTON_HEIGHT))
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	# Four buttons share 144 px; long German words ("Tauschen") pushed the whole battle screen
 	# wider than the display (owner, 9 Nov: buttons not shown right). Clip instead of growing.
 	b.clip_text = true
 	b.text_overrun_behavior = TextServer.OVERRUN_TRIM_CHAR
-	# Width follows the drawn word, so "Binden" gets more room than "Item".
-	b.size_flags_stretch_ratio = b.get_theme_font("font").get_string_size(Loc.t(text), HORIZONTAL_ALIGNMENT_LEFT, -1, b.get_theme_font_size("font_size")).x + 8.0
-	# Thin side margins: four German words need every pixel of the 144.
-	for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
-		if UITheme.get_theme().has_stylebox(state, "Button"):
-			var sb: StyleBox = UITheme.get_theme().get_stylebox(state, "Button").duplicate()
+	if mode == "text":
+		# Era I: plain words in two rows of two, a cursor in front of the one in focus.
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		_style_row(b, CURSOR_PAD + 1)
+		b.draw.connect(_draw_row.bind(b, -1))
+	else:
+		# Width follows the drawn word, so "Binden" gets more room than "Item".
+		_fit_command(b)
+		# Thin side margins: four German words need every pixel of the 144.
+		for state: String in ["normal", "hover", "pressed", "disabled"]:
+			var sb: StyleBox = UITheme.get_theme().get_stylebox("normal" if state == "hover" else state, "Button").duplicate()
 			sb.content_margin_left = 1
 			sb.content_margin_right = 1
 			b.add_theme_stylebox_override(state, sb)
+		_plain_focus(b)
+		b.draw.connect(_draw_row.bind(b, -1))
 	Juice.press_feedback(b)
 	b.pressed.connect(func() -> void:
 		Sound.sfx("confirm")
@@ -353,50 +515,111 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			b.text = mv.move_name
 			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
 			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct, me.move_cost(mv), me.cooldown_left(mv))
-			var era: int = EraManager.active_era()
-			_move_icons[i].texture = ElementIcons.outlined(mv.element, BattleUiStyle.badge_color(era, mv.element))
-			_move_stripes[i].color = BattleUiStyle.badge_color(era, mv.element) if BattleUiStyle.colour_on(era) else Color.TRANSPARENT
+			var filled: bool = EraBattleHud.flag(era, "art_fill")
+			_row_elements[i] = mv.element
+			# On the element chip (Era III on) the symbol stands in ink on paper, else in its colour.
+			_move_icons[i].texture = ElementIcons.outlined(mv.element, UITheme.INK if filled else BattleUiStyle.badge_color(era, mv.element))
+			_move_stripes[i].color = BattleUiStyle.badge_color(era, mv.element) if BattleUiStyle.colour_on(era) and not filled else Color.TRANSPARENT
 			var shown_mult: float = mult if mv.power > 0 else -1.0
 			_move_costs[i].text = BattleUiStyle.matchup_mark(shown_mult, GameState.color_blind) + _move_costs[i].text
-			_move_costs[i].add_theme_color_override("font_color", BattleUiStyle.matchup_color(era, shown_mult))
+			_row_colors[i] = BattleUiStyle.matchup_color(era, shown_mult)
+			if EraBattleHud.flag(era, "art_detail"):
+				# Era IV on: the element's name under the art's name, the matchup word under the cost.
+				b.text = Loc.t(mv.move_name) + "\n" + Loc.t(Elements.element_name(mv.element))
+				_move_hints[i].text = Loc.t(EraBattleHud.effect_hint(era, shown_mult))
+			_style_row(b, _row_left())
+			if filled:
+				_fill_row(b, mv.element)
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
 			b.disabled = not me.can_afford(mv) or model.move_locked(mv)
 		else:
 			b.text = "-"
 			_move_costs[i].text = ""
+			_move_hints[i].text = ""
 			_move_icons[i].texture = null
 			_move_stripes[i].color = Color.TRANSPARENT
+			_row_elements[i] = -1
+			_row_colors[i] = UITheme.INK
+			_style_row(b, _row_left())
 			b.disabled = true
+		_tint_row(i)
 	var kinds: Array[int] = []
 	for a: BattleAction in model.legal_actions(BattleModel.Side.PLAYER, slot):
 		kinds.append(a.kind)
-	var e: int = EraManager.active_era()
 	for pair: Array in [[_swap, "swap"], [_item, "item"], [_bond, "bond"], [_run, "run"]]:
 		var sb: ColorRect = (pair[0] as Button).get_node_or_null("Stripe")
 		if sb != null:
-			sb.color = BattleUiStyle.command_color(e, pair[1])
+			sb.color = BattleUiStyle.command_color(era, pair[1])
 	_swap.disabled = not BattleAction.Kind.SWAP in kinds
 	_item.disabled = not BattleAction.Kind.ITEM in kinds
 	# Against another Wayfarer the Bond button offers the Ink Oath instead (once per battle).
 	_bond.text = "Bond" if model.is_wild else "Oath"
+	_fit_command(_bond)
 	_bond.disabled = not (BattleAction.Kind.BOND in kinds or model.can_oath(BattleModel.Side.PLAYER, slot))
 	_run.disabled = not BattleAction.Kind.RUN in kinds
 	# A Trial can be restarted at any time (item 708).
 	_run.text = "Restart" if model.has_meta("puzzle_max") else "Leave"
+	_fit_command(_run)
 	if model.has_meta("puzzle_max"):
 		_run.disabled = false
 	# "Rest" stands in for the moves when none is affordable.
 	if not BattleAction.Kind.MOVE in kinds:
 		_move_buttons[0].text = "Rest (+%d)" % int(model.rules.get("rest_energy", BattleModel.REST_ENERGY))
 		_move_costs[0].text = ""
+		_move_hints[0].text = ""
 		_move_icons[0].texture = null
+		_row_elements[0] = -1
+		_row_colors[0] = UITheme.INK
+		_style_row(_move_buttons[0], _row_left())
 		_move_buttons[0].disabled = false
+		_tint_row(0)
+	_refresh_shortcut(model, BattleAction.Kind.ITEM in kinds)
 	for b: Button in _move_buttons + [_swap, _item, _bond, _run]:
 		if not b.disabled:
 			b.grab_focus.call_deferred()
 			break
 
+## A command's share of the row follows its word, so a longer word ("Schwur") gets more room.
+func _fit_command(b: Button) -> void:
+	if mode != "text":
+		b.size_flags_stretch_ratio = EraBattleHud.font(era).get_string_size(Loc.t(b.text), HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x + 8.0
+
+## The item the shortcut would use: the last one used, while it is still in the bag, usable in
+## battle and allowed again this battle; "" otherwise.
+static func shortcut_item(model: BattleModel, last: String) -> String:
+	if model == null or last.is_empty() or not bool(Database.item(last).get("battle", false)):
+		return ""
+	if model.bag_count(BattleModel.Side.PLAYER, last) <= 0 or not model.item_left_this_battle(BattleModel.Side.PLAYER, last):
+		return ""
+	return last
+
+func _refresh_shortcut(model: BattleModel, items_ok: bool) -> void:
+	if _shortcut == null:
+		return
+	var id: String = shortcut_item(model, EraBattleHud.last_item)
+	if id.is_empty():
+		_shortcut.text = Loc.t("Again: -")
+	else:
+		_shortcut.text = Loc.t("Again: %s x%d") % [Loc.t(str(Database.item(id).get("name", id))), model.bag_count(BattleModel.Side.PLAYER, id)]
+	_shortcut.disabled = id.is_empty() or not items_ok
+
+## Element-coloured row (Era III on): the element's colour washed toward paper, so ink text
+## keeps its contrast; focus and press keep the theme's dark box.
+func _fill_row(b: Button, element: int) -> void:
+	var sb: StyleBoxFlat = UITheme.flat_style(EraBattleHud.art_fill(element), UITheme.INK)
+	# Two pixels of paper between the element chip and the art's name.
+	sb.content_margin_left = _row_left() + 2
+	sb.border_width_bottom = 2
+	b.add_theme_stylebox_override("normal", sb)
+
 func set_enabled(on: bool) -> void:
+	var was: bool = _content.visible
 	_content.visible = on
 	if not on:
 		close_info()
+	elif not was and EraBattleHud.flag(era, "menu_stagger"):
+		# Era V: the rows come in one after another (all at once under reduced motion).
+		var rows: Array = []
+		rows.append_array(_move_buttons)
+		rows.append_array([_swap, _item, _bond, _run])
+		Juice.stagger(rows, 0.02)

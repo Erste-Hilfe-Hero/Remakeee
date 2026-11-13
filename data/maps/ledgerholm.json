@@ -10,24 +10,24 @@
  ],
  "rows": [
   "TTTTT__TTTTT",
-  "T::..__..::T",
+  "T**..__..**T",
   "T.RRR__RRR.T",
   "T.HDH__HDH.T",
   "T....__....T",
   "T##..__.L##T",
   "T....____..T",
-  "T.:......:.T",
+  "T##.....L:.T",
   "_____o._____",
   "_____.._____",
-  "T.:......:.T",
+  "T.:L.....##T",
   "T##..__..##T",
-  "T:.RR__RR.:T",
-  "T..DH__HD..T",
+  "T:.RR__RRR:T",
+  "T..DH__HDH.T",
   "T....__....T",
   "T.:.S__..:.T",
   "T....__....T",
   "T*:..__.L:.T",
-  "T:...__...:T",
+  "T*...__...*T",
   "TTTTT__TTTTT"
  ],
  "warps": [
@@ -218,6 +218,46 @@
    "facing": "down",
    "dialogue": "quillmarch/ledgerholm_showcase_host",
    "sprite": "villager"
+  },
+  {
+   "id": "q3_short_till_nils",
+   "x": 9,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_short_till",
+   "sprite": "villager",
+   "hide_flag": "q3_short_till_reveal"
+  },
+  {
+   "id": "q3_short_till_nils_till",
+   "x": 3,
+   "y": 6,
+   "facing": "right",
+   "dialogue": "quillmarch/q3_short_till_nils_till",
+   "sprite": "villager",
+   "trainer": "Teller Nils",
+   "show_flag": "q3_short_till_reveal",
+   "intro": "quillmarch/q3_short_till_nils_till_intro",
+   "defeat": "quillmarch/q3_short_till_nils_till_defeat",
+   "money": 4350,
+   "team": [
+    {
+     "species": "Quilmoth",
+     "level": 85
+    },
+    {
+     "species": "Stamphorn",
+     "level": 86
+    },
+    {
+     "species": "Quilmothra",
+     "level": 87
+    }
+   ],
+   "win_flags": [
+    "q3_short_till_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [

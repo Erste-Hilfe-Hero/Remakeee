@@ -24,6 +24,8 @@ var player: Player
 var busy: bool = false
 
 var _ground: TileMapLayer
+## Terrain look of the map's era over the ground tiles (EraTerrainLook, docs/ERA_FEEL_TILES.md).
+var _terrain_look: EraTerrainLook
 ## Shade over dark gear cells (thick without the gear, a faint dusk with it).
 var _shade: Node2D
 var _entities: Node2D
@@ -52,12 +54,16 @@ var minimap: Minimap
 ## Top-of-screen notes (badges, daily tasks).
 var toast: Toast
 var _fade: ColorRect
+## Light, weather look and transitions of the map's era (EraLightLayer, data/era_light.json).
+var _era_light: EraLightLayer
 ## Dark rectangle that grows from a door over the screen on door warps (item 2277).
 var _door_wipe: ColorRect
 const DOOR_WIPE_TIME: float = 0.14
 ## Edge warps slide the view this far in the walking direction while it darkens (item 2278).
 const EDGE_SLIDE: int = 16
 var _particles: PixelParticles
+## Era IV/V building depth: side walls and top faces (EraDepthLayer, data/era45_overworld.json).
+var _era_depth: EraDepthLayer
 ## Era extras on the map (water shimmer, footprints, reflection, tilt, camera lead; EraFeelLayer).
 var _era_feel: EraFeelLayer
 var _walk_steps: int = 0
@@ -169,6 +175,10 @@ func _build() -> void:
 	_ground = TileMapLayer.new()
 	_ground.name = "Ground"
 	add_child(_ground)
+	_terrain_look = EraTerrainLook.new()
+	add_child(_terrain_look)
+	_era_depth = EraDepthLayer.new()
+	add_child(_era_depth)
 	_particles = PixelParticles.new()
 	_particles.name = "particles"
 	add_child(_particles)
@@ -198,6 +208,15 @@ func _build() -> void:
 	_inkshadow.centered = false
 	_inkshadow.modulate = Color(UITheme.INK, 0.85)
 	_entities.add_child(_inkshadow)
+	# Era look of the figures: poses, bubbles, head turns, the Spirling behind (EraActors).
+	var actors := EraActors.new()
+	actors.name = "era_actors"
+	actors.entities = _entities
+	actors.player = player
+	actors.follower = _inkshadow
+	actors.is_night = func() -> bool: return map != null and map.outdoor and DayCycle.current() == DayCycle.Phase.NIGHT
+	actors.is_rain = func() -> bool: return map != null and map.outdoor and WeatherCycle.current(map) in ["rain", "storm"]
+	add_child(actors)
 	var hint := InteractHint.new()
 	hint.ow = self
 	add_child(hint)
@@ -205,6 +224,9 @@ func _build() -> void:
 	_camera.position_smoothing_enabled = false
 	add_child(_camera)
 	_camera.make_current()
+	_era_light = EraLightLayer.new()
+	_era_light.setup(player, _camera)
+	add_child(_era_light)
 
 	_ui = CanvasLayer.new()
 	_ui.layer = UI_LAYER
@@ -320,6 +342,9 @@ func _era_line_after_load(line: String, era_before: int = EraManager.unlocked_er
 	while busy:
 		await get_tree().process_frame
 	await get_tree().create_timer(EraManager.transition_wait()).timeout
+	# After the EraUpgrade sweep: the finale card of the era that ended, then the staged change
+	# scene (EraChangeScene, docs/ERA_LOOK_TITLE.md).
+	await EraChangeScene.play_after_finale(self, era_before, EraManager.unlocked_era)
 	var lines: Array[String] = [line]
 	# What the new era brings (EraFeatures, data/era_functions.json).
 	for e: int in range(era_before + 1, EraManager.unlocked_era + 1):
@@ -359,6 +384,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		GameState.enter_map(map_id, cell)
 	_world.prepare(map, cell)
 	map.paint(_ground)
+	_terrain_look.show_map(map, _ground, _camera, _entities)
+	_era_depth.show_map(map, _ground)
 	refresh_shade()
 	_spawn_npcs()
 	_place_landmark()
@@ -391,6 +418,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		GameState.notices.append(Loc.t(look_line))
 	EraManager.unlock_story_end(GameState.has_flag(EraManager.STORY_COMPLETE_FLAG))
 	EraManager.mark_finales(GameState.flags)
+	# The last era has no change after its finale; its finale card shows once (EraFinaleCard).
+	EraFinaleCard.play_if_owed.call_deferred(self)
 	EraManager.unlock_from_flags(GameState.has_flag)
 	if EraManager.unlocked_era > era_before and EraManager.ERA_LINES.has(EraManager.unlocked_era):
 		_era_line_after_load.call_deferred(EraManager.ERA_LINES[EraManager.unlocked_era], era_before)
@@ -460,6 +489,7 @@ func refresh_daylight() -> void:
 	if weather_layer != null:
 		weather_layer.show_kind(w)
 	DayCycle.poll()
+	_era_light.refresh(map, w, _daylight, _glow, weather_layer)
 
 const SHADE_DARK: float = 0.9
 const SHADE_LIT: float = 0.3
@@ -542,6 +572,9 @@ func _try_gear(target: Vector2i) -> bool:
 		var half := Vector2(GridWalker.TILE / 2.0, GridWalker.TILE / 2.0 + 2.0)
 		rope.points = PackedVector2Array([from_pos + half, to_pos + half])
 		_entities.add_child(rope)
+	# From Era III the Wayfarer wades across on foot, knee-deep, without the hop (data/era_actor_look.json).
+	if EraActorLook.wades(gear):
+		player.era_anim["wade"] = true
 	var tw: Tween = create_tween()
 	if rope != null:
 		for i: int in GRAPPLE_PULLS:
@@ -550,11 +583,12 @@ func _try_gear(target: Vector2i) -> bool:
 			tw.tween_property(player, "position", b, GEAR_MOVE_TIME / GRAPPLE_PULLS).from(a).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	else:
 		tw.tween_method(func(k: float) -> void:
-			var arc: float = -10.0 * sin(k * PI)
+			var arc: float = (0.0 if player.era_anim.has("wade") else -10.0) * sin(k * PI)
 			player.position = from_pos.lerp(to_pos, k).round() + Vector2(0, round(arc)), 0.0, 1.0, GEAR_MOVE_TIME)
 	await tw.finished
 	if rope != null:
 		rope.queue_free()
+	player.era_anim.erase("wade")
 	player.place(dest, player.facing)
 	GameState.player_cell = dest
 	player.frozen = false
@@ -654,6 +688,8 @@ func is_edge_cell(cell: Vector2i) -> bool:
 ## Darkening for a warp: doors grow a dark rectangle from the door, map edges slide the view
 ## on in the walking direction. Plain fade under reduced motion.
 func _warp_out(edge: bool) -> void:
+	if await _era_light.warp_out(map.kind_at(player.cell), edge, player.facing, _fade):
+		return
 	if Juice.reduced():
 		await _fade_to(1.0)
 		return
@@ -664,6 +700,11 @@ func _warp_out(edge: bool) -> void:
 		return
 	var vp: Vector2 = get_viewport().get_visible_rect().size
 	var door: Vector2 = (player.get_global_transform_with_canvas().origin + Vector2(8, 8)).round()
+	# Era III winds a spiral of ink in around the Wayfarer (data/era_text.json).
+	if EraText.warp(EraManager.active_era(), str(EraManager.feel("warp"))) == "spiral":
+		await EraWarp.spiral_close(_ui, door, UITheme.INK, DOOR_WIPE_TIME)
+		_fade.color.a = 1.0
+		return
 	# Eras IV and V close an iris on the Wayfarer instead of the door rectangle.
 	if str(EraManager.feel("warp")) == "iris":
 		await EraFeelLayer.iris_close(_ui, door, UITheme.INK, DOOR_WIPE_TIME * 1.5)
@@ -3947,6 +3988,9 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		if not sky.is_empty():
 			model.field = str(sky.field)
 			model.field_intro = str(sky.intro)
+	# A windy sky lays no field and changes no rule; the battle only shows the wind.
+	if WeatherCycle.current(map) == "wind":
+		model.set_meta(BattleWeather.SKY_META, "wind")
 	# Echo duels fight a friend's echo, not the world: the pass adds no energy or Rift Breath there.
 	var world: bool = not (own is Array and not (own as Array).is_empty())
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]

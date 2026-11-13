@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "quillmarch/ledgerholm_choir_loft_singer",
    "sprite": "villager"
+  },
+  {
+   "id": "q3_short_till_jens",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/q3_short_till_jens",
+   "sprite": "villager",
+   "show_flag": "q3_short_till_asked"
   }
  ],
  "signs": []

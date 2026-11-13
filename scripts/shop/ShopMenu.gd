@@ -41,7 +41,9 @@ static func run(menu: MenuHost) -> void:
 		# Apple guideline 3.1.1: bought unlocks and the pass can be restored (only with a store).
 		if Billing.available():
 			entries.append("Restore purchases")
-		var idx: int = await menu.pick_strings(title(), entries)
+		# The shop list in the era's layout (EraMenus): plain rows in Era I, symbols from
+		# Era II, big buttons from Era IV.
+		var idx: int = await menu.pick_screen("shop", title(), list_rows(entries, EraMenus.layout(EraManager.active_era(), "shop")), {"panel_text": RG_NO_VALUE})
 		if idx < 0:
 			return
 		if idx < ShopCatalog.TABS.size():
@@ -91,6 +93,44 @@ static func row_price(o: Dictionary) -> String:
 static func row_text(o: Dictionary) -> String:
 	return (ADVANTAGE_MARK if ShopCatalog.is_advantage(o) else "") + Loc.t(str(o.name)) + "  " + row_price(o)
 
+## The rows of the shop's first list: the tabs carry the shop symbol from Era II on, the
+## pages behind them (purchases, limit, about) a dot.
+static func list_rows(entries: Array[String], lay: Dictionary) -> Array[Dictionary]:
+	var rows: Array[Dictionary] = []
+	for i: int in entries.size():
+		var row: Dictionary = {"text": entries[i]}
+		var pic: Texture2D = EraMenuKit.icon_for("Shop" if i < ShopCatalog.TABS.size() else "dot", lay)
+		if pic != null:
+			row["icon"] = pic
+		rows.append(row)
+	return rows
+
+## One offer row in the era's layout (EraMenus "shop"): name and price as text in Era I and
+## II; from Era III the price stands in a badge at the right end, and the touch eras show the
+## offer's first detail lines in the info panel.
+static func offer_row(o: Dictionary, lay: Dictionary) -> Dictionary:
+	var badge: bool = EraMenus.presents(int(lay.get("era", 1)), "shop", "price") == "badge"
+	var hint: String = ShopCatalog.row_hint(o)
+	var row: Dictionary = {"text": row_text(o), "hint": hint,
+		"disabled": Billing.block_reason(o, int(o.get("rg_price", 0)) > 0) in ["offer_limit", "not_yet", "tier_order"]}
+	if badge:
+		var price: String = row_price(o)
+		row["text"] = (ADVANTAGE_MARK if ShopCatalog.is_advantage(o) else "") + Loc.t(str(o.name))
+		row["say"] = price
+		row["decorate"] = func(b: Button) -> void: draw_price(b, price)
+	return row
+
+## The price badge at the right end of an offer row.
+static func draw_price(b: Button, price: String) -> void:
+	var font: Font = b.get_theme_font("font", "Button")
+	var fs: int = b.get_theme_font_size("font_size", "Button")
+	var w: float = font.get_string_size(price, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + 6.0
+	var h: float = font.get_height(fs) + 2.0
+	var r := Rect2(b.size.x - w - 3.0, floorf((b.size.y - h) / 2.0), w, h)
+	b.draw_rect(r, UITheme.ACCENT)
+	b.draw_rect(r, UITheme.INK, false, 1.0)
+	b.draw_string(font, r.position + Vector2(3, 1 + font.get_ascent(fs)), price, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UITheme.INK)
+
 static func _run_tab(menu: MenuHost, tab: String) -> void:
 	while true:
 		var list: Array[Dictionary] = ShopCatalog.in_tab(tab)
@@ -99,8 +139,8 @@ static func _run_tab(menu: MenuHost, tab: String) -> void:
 			return
 		var entries: Array[Dictionary] = []
 		for o: Dictionary in list:
-			entries.append({"text": row_text(o), "hint": ShopCatalog.row_hint(o), "disabled": Billing.block_reason(o, int(o.rg_price) > 0) in ["offer_limit", "not_yet", "tier_order"]})
-		var idx: int = await menu.pick(Loc.t(ShopCatalog.TAB_NAMES[tab]) + "  " + ShopCatalog.rg_text(Billing.balance()), entries)
+			entries.append(offer_row(o, EraMenus.layout(EraManager.active_era(), "shop")))
+		var idx: int = await menu.pick_screen("shop", Loc.t(ShopCatalog.TAB_NAMES[tab]) + "  " + ShopCatalog.rg_text(Billing.balance()), entries)
 		if idx < 0:
 			return
 		await _run_offer(menu, list[idx])

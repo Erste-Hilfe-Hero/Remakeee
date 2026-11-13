@@ -14,6 +14,9 @@ on:
       - "scripts/core/**"
       - "tools/i18n/**"
       - "tools/ui_golden*.gd"
+      - "tools/era_text_shots*.gd"
+      - "data/era_text.json"
+      - "data/era_feel.json"
       - "tools/fx_flash_check.*"
       - "scripts/battle/presenter/**"
       - "tests/golden/**"
@@ -55,6 +58,16 @@ jobs:
             echo "::warning title=UI golden images::$line Check the diff images (artifact ui-golden) and refresh with tools/ui_golden.gd -- update if the change is wanted."
           fi
           exit $code
+      - name: Compare the era dialogue box and place banner with tests/golden/era_text
+        if: always()
+        run: |
+          # Eras II to V, English and German (docs/ERA_FEEL_TEXT.md). Like the menu screens a
+          # difference warns; refresh with tools/era_text_shots.gd -- update if it is wanted.
+          xvfb-run -a godot --path . --rendering-driver opengl3 -s res://tools/era_text_shots.gd -- compare 2>&1 | tee /tmp/era_text.log || true
+          line=$(grep "Era text golden:" /tmp/era_text.log | tail -1)
+          echo "$line" >> "$GITHUB_STEP_SUMMARY"
+          [ -n "$line" ] || { echo "::error::tools/era_text_shots.gd did not finish"; exit 1; }
+          case "$line" in *"all screens match"*) ;; *) echo "::warning title=Era text golden images::$line";; esac
       - name: Battle effects never flash more than 3 times a second (plan item 2656)
         if: always()
         run: |

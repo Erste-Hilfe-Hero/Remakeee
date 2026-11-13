@@ -9,7 +9,9 @@ const STATUS_ALL: int = 0
 const STATUS_BONDED: int = 1
 const STATUS_SEEN_ONLY: int = 2
 const STATUS_MISSING: int = 3
-const STATUS_NAMES: Array[String] = ["all", "bonded", "only seen", "missing"]
+## Every kind met so far, bonded or not (item 1939).
+const STATUS_SEEN: int = 4
+const STATUS_NAMES: Array[String] = ["all", "bonded", "only seen", "missing", "seen"]
 ## Battles with a kind in the team before its third lore sentence opens (item 250).
 const LORE_BATTLES: int = 10
 ## Ground symbol per map (item 244): what you walked through when you met it.
@@ -23,10 +25,11 @@ const GROUND_WORDS: Dictionary[String, String] = {
 
 ## Story flag that opens a region's chapter once the act reaches it: the ferry to Corvane, the
 ## mountain railway to Ashmere, the sand road to Solenne (its wild tables use its own kinds),
-## the Era II finale for the Era III post-game region Quillmarch (data/region3.json).
+## the Era II finale for the Era III post-game region Quillmarch (data/region3.json), the Era III
+## finale for the Era IV post-game region Halcyra (data/region4.json).
 const REGION_STORY_FLAGS: Dictionary[String, String] = {
 	"corvane": "ferry_crossed", "ashmere": "act2_end", "solenne": "rift_shade_sealed",
-	"quillmarch": "era2_finale_done",
+	"quillmarch": "era2_finale_done", "halcyra": "era3_finale_done",
 }
 
 ## Veydal is always open; the others once GameState has the flag "region_open_<id>" or the
@@ -130,6 +133,9 @@ static func filtered(spirlog: Dictionary, flags: Dictionary, search: String = ""
 					continue
 			STATUS_MISSING:
 				if seen:
+					continue
+			STATUS_SEEN:
+				if not seen:
 					continue
 		out.append(sd)
 	return out

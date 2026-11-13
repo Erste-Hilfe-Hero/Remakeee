@@ -4,7 +4,8 @@
   "marrovel": {"seat": "veydal", "rule": "etiquette and debt"},
   "ruskweber": {"seat": "ashmere", "rule": "fear and wages"},
   "brass_veil": {"seat": "ochrewell", "rule": "water and contracts"},
-  "sandglass": {"seat": "glasswind_flats", "rule": "glass and false roads"}
+  "sandglass": {"seat": "glasswind_flats", "rule": "glass and false roads"},
+  "gilt": {"seat": "gildcrest", "rule": "gold and family"}
  },
  "figures": {
   "emrys": {"clan": "none", "act": 4, "role": "Sun Warden, witnessed the sale of the oasis, confesses in full", "trust": 30, "use": 50},
@@ -76,7 +77,14 @@
   "varro": {"clan": "none", "act": 4, "role": "desert guide who sells shortcuts", "trust": 20, "use": 55},
   "ott": {"clan": "none", "act": 4, "role": "caravan driver, warns about Tamsin", "trust": 55, "use": 15},
   "old_pell": {"clan": "none", "act": 4, "role": "old ladder climber, warns about the purse", "trust": 50, "use": 20},
-  "ilse": {"clan": "none", "act": 4, "role": "naturalist who sells her field guide to a poacher", "trust": 35, "use": 45}
+  "ilse": {"clan": "none", "act": 4, "role": "naturalist who sells her field guide to a poacher", "trust": 35, "use": 45},
+  "hs_lio": {"clan": "gilt", "role": "orrery apprentice who sells one planet three times", "trust": 20, "use": 70},
+  "hs_jost": {"clan": "gilt", "role": "barrel boy in the Brine Catacombs", "trust": 40, "use": 50},
+  "hs_sabeth": {"clan": "gilt", "role": "lantern engraver who books two falls at once", "trust": 25, "use": 65},
+  "hs_gerti": {"clan": "gilt", "role": "vineyard hand, Bertrand's daughter, sells intruders by the head", "trust": 30, "use": 60},
+  "hs_arno": {"clan": "gilt", "role": "telescope boy on Orrery Ridge who sells what he sees", "trust": 45, "use": 50},
+  "hs_wido": {"clan": "gilt", "role": "clerk's boy who moves his red line onto his rescuer", "trust": 35, "use": 55},
+  "hs_posy": {"clan": "gilt", "role": "florist of the Gilt weddings who arranges more than flowers", "trust": 40, "use": 50}
  },
  "favors": {
   "jinks_stake": {"npc": "jinks", "kind": "lend_coins", "amount": 200, "reward_chance": 0.5, "betray": {"say": "veydal_more/jinks_betray", "battle": "jinks_ambush", "ledger": "jinks_stake", "flags": ["jinks_bet_done"], "use": {"jinks": 10}}, "reward": {"say": "veydal_more/jinks_reward", "coins": 400, "flags": ["jinks_bet_done"], "trust": {"jinks": 10}}, "kept": {"say": "veydal_more/jinks_kept", "coins": 200, "flags": ["jinks_bet_done"]}},
@@ -144,7 +152,10 @@
   "pell_lend": {"npc": "pell", "kind": "lend_spirling", "reward_chance": 0.4, "betray": {"say": "corvane_side/pell_betray", "take_keepsake": true, "use": {"pell": 10}}, "reward": {"say": "corvane_side/pell_reward", "item": "kin_charm", "trust": {"pell": 10}}, "kept": {"say": "corvane_side/pell_kept", "trust": {"pell": 5}}},
   "ollie_stake": {"npc": "ollie", "kind": "lend_coins", "amount": 250, "reward_chance": 0.5, "betray": {"say": "corvane_side/ollie_betray", "ledger": "ollie"}, "reward": {"say": "corvane_side/ollie_reward", "coins": 450, "trust": {"ollie": 10}}, "kept": {"say": "corvane_side/ollie_kept", "coins": 250}},
   "wenna_ledger": {"npc": "wenna", "kind": "believe_tip", "reward_chance": 0.5, "betray": {"say": "dyeworks/wenna_betray", "ledger": "wenna", "battle": "ambush_wenna"}, "reward": {"say": "dyeworks/wenna_reward", "item": "max_tonic", "coins": 1200, "trust": {"wenna": 10}}, "kept": {"say": "dyeworks/wenna_kept", "item": "strong_tonic"}},
-  "dimsy_tip": {"npc": "dimsy", "kind": "believe_tip", "reward_chance": 0.4, "betray": {"say": "corvane_side/dimsy_betray", "battle": "ambush_vault"}, "reward": {"say": "corvane_side/dimsy_reward", "item": "max_tonic", "trust": {"dimsy": 10}}, "kept": {"say": "corvane_side/dimsy_kept"}}
+  "dimsy_tip": {"npc": "dimsy", "kind": "believe_tip", "reward_chance": 0.4, "betray": {"say": "corvane_side/dimsy_betray", "battle": "ambush_vault"}, "reward": {"say": "corvane_side/dimsy_reward", "item": "max_tonic", "trust": {"dimsy": 10}}, "kept": {"say": "corvane_side/dimsy_kept"}},
+  "hs_salt_skim": {"npc": "hs_jost", "kind": "believe_tip", "reward_chance": 0.3, "betray": {"say": "halcyra_side/salt_skim_betray", "battle": "hs_jost_guards", "ledger": "hs_salt_skim", "use": {"hs_jost": 10}}, "reward": {"say": "halcyra_side/salt_skim_rewarded", "trust": {"hs_jost": 10}, "item": "revival_leaf"}, "kept": {"say": "halcyra_side/salt_skim_kept", "trust": {"hs_jost": 5}}},
+  "hs_true_stars": {"npc": "hs_arno", "kind": "lend_coins", "reward_chance": 0.3, "amount": 800, "betray": {"say": "halcyra_side/true_stars_betray", "battle": "hs_arno_watchers", "ledger": "hs_true_stars", "use": {"hs_arno": 10}}, "reward": {"say": "halcyra_side/true_stars_rewarded", "trust": {"hs_arno": 10}, "coins": 1200}, "kept": {"say": "halcyra_side/true_stars_kept", "trust": {"hs_arno": 5}, "coins": 800}},
+  "hs_wedding_blades": {"npc": "hs_posy", "kind": "believe_tip", "reward_chance": 0.3, "betray": {"say": "halcyra_side/wedding_blades_betray", "battle": "hs_posy_guards", "ledger": "hs_wedding_blades", "use": {"hs_posy": 10}}, "reward": {"say": "halcyra_side/wedding_blades_rewarded", "trust": {"hs_posy": 10}, "item": "wake_bell"}, "kept": {"say": "halcyra_side/wedding_blades_kept", "trust": {"hs_posy": 5}}}
  },
  "betrayals": {
   "leith_water": {"act": 4, "npc": "leith", "rule": "warned", "warned_by": ["a4_kept_water"], "main": "a4_wells", "caught": {"ledger": "leith_water", "item": "power_brew", "trust": {"leith": -10}, "say": "solenne_main/leith_caught"}, "struck": {"ledger": "leith_water", "coins": -250, "use": {"leith": 10}, "say": "solenne_main/leith_struck"}},
@@ -263,7 +274,11 @@
   "lq_zephyrel": {"act": 5, "npc": "dessa", "rule": "warned", "warned_by": ["lq_zephyrel_kept"], "caught": {"flags": ["lq_zephyrel_caught"], "ledger": "lq_zephyrel", "trust": {"dessa": -30}, "say": "legend_quests/zephyrel_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_zephyrel_struck"], "ledger": "lq_zephyrel", "say": "legend_quests/zephyrel_struck", "battle": "lq_dessa"}},
   "lq_monolurk": {"act": 3, "npc": "dorran", "rule": "warned", "warned_by": ["lq_monolurk_kept"], "caught": {"flags": ["lq_monolurk_caught"], "ledger": "lq_monolurk", "trust": {"dorran": -30}, "say": "legend_quests/monolurk_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_monolurk_struck"], "ledger": "lq_monolurk", "say": "legend_quests/monolurk_struck", "battle": "lq_dorran"}},
   "lq_vorlucent": {"act": 3, "npc": "corla", "rule": "warned", "warned_by": ["lq_vorlucent_kept"], "caught": {"flags": ["lq_vorlucent_caught"], "ledger": "lq_vorlucent", "trust": {"corla": -30}, "say": "legend_quests/vorlucent_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_vorlucent_struck"], "ledger": "lq_vorlucent", "say": "legend_quests/vorlucent_struck", "battle": "lq_corla"}},
-  "lq_lumivane": {"act": 4, "npc": "sevrin", "rule": "warned", "warned_by": ["lq_lumivane_kept"], "caught": {"flags": ["lq_lumivane_caught"], "ledger": "lq_lumivane", "trust": {"sevrin": -30}, "say": "legend_quests/lumivane_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_lumivane_struck"], "ledger": "lq_lumivane", "say": "legend_quests/lumivane_struck", "battle": "lq_sevrin"}}
+  "lq_lumivane": {"act": 4, "npc": "sevrin", "rule": "warned", "warned_by": ["lq_lumivane_kept"], "caught": {"flags": ["lq_lumivane_caught"], "ledger": "lq_lumivane", "trust": {"sevrin": -30}, "say": "legend_quests/lumivane_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_lumivane_struck"], "ledger": "lq_lumivane", "say": "legend_quests/lumivane_struck", "battle": "lq_sevrin"}},
+  "hs_brass_planet": {"act": 4, "region": "halcyra", "npc": "hs_lio", "rule": "warned", "warned_by": ["q4_brass_planet_clue"], "caught": {"ledger": "hs_brass_planet", "say": "halcyra_side/brass_planet_caught", "coins": 2500, "trust": {"hs_lio": -10}}, "struck": {"ledger": "hs_brass_planet", "say": "halcyra_side/brass_planet_struck", "battle": "hs_planet_buyers", "coins": -500}},
+  "hs_two_lanterns": {"act": 4, "region": "halcyra", "npc": "hs_sabeth", "rule": "warned", "warned_by": ["q4_two_lanterns_clue"], "caught": {"ledger": "hs_two_lanterns", "say": "halcyra_side/two_lanterns_caught", "coins": 2000, "trust": {"hs_sabeth": -10}}, "struck": {"ledger": "hs_two_lanterns", "say": "halcyra_side/two_lanterns_struck", "battle": "hs_plate_pushers", "coins": -400}},
+  "hs_cask_41": {"act": 4, "region": "halcyra", "npc": "hs_gerti", "rule": "warned", "warned_by": ["q4_cask_41_clue"], "caught": {"ledger": "hs_cask_41", "say": "halcyra_side/cask_41_caught", "item": "max_tonic", "trust": {"hs_gerti": 10}}, "struck": {"ledger": "hs_cask_41", "say": "halcyra_side/cask_41_struck", "battle": "hs_cask_cousins", "coins": -300}},
+  "hs_red_column": {"act": 4, "region": "halcyra", "npc": "hs_wido", "rule": "warned", "warned_by": ["q4_red_column_clue"], "caught": {"ledger": "hs_red_column", "say": "halcyra_side/red_column_caught", "coins": 1500, "trust": {"hs_wido": 10}}, "struck": {"ledger": "hs_red_column", "say": "halcyra_side/red_column_struck", "battle": "hs_redline_collectors", "coins": -300}}
  },
  "trust_choices": {
   "a4_water": {"act": 4, "at": "solenne_main/a4_water", "decides": ["leith_water"]},
@@ -345,6 +360,13 @@
   {"id": "lq_zephyrel", "act": 5, "ref": "legend_quests/zephyrel_ledger"},
   {"id": "lq_monolurk", "act": 3, "ref": "legend_quests/monolurk_ledger"},
   {"id": "lq_vorlucent", "act": 3, "ref": "legend_quests/vorlucent_ledger"},
-  {"id": "lq_lumivane", "act": 4, "ref": "legend_quests/lumivane_ledger"}
+  {"id": "lq_lumivane", "act": 4, "ref": "legend_quests/lumivane_ledger"},
+  {"id": "hs_brass_planet", "act": 4, "ref": "halcyra_side/ledger_brass_planet"},
+  {"id": "hs_salt_skim", "act": 4, "ref": "halcyra_side/ledger_salt_skim"},
+  {"id": "hs_two_lanterns", "act": 4, "ref": "halcyra_side/ledger_two_lanterns"},
+  {"id": "hs_cask_41", "act": 4, "ref": "halcyra_side/ledger_cask_41"},
+  {"id": "hs_true_stars", "act": 4, "ref": "halcyra_side/ledger_true_stars"},
+  {"id": "hs_red_column", "act": 4, "ref": "halcyra_side/ledger_red_column"},
+  {"id": "hs_wedding_blades", "act": 4, "ref": "halcyra_side/ledger_wedding_blades"}
  ]
 }

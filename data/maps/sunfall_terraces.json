@@ -19,7 +19,7 @@
   "^...,,,,,..^",
   "^^^^^^^^==^^",
   "^T.......,,^",
-  "^.:::....,,^",
+  "^.:::....,__",
   "^.:::.S....^",
   "^^^==^^^^^^^",
   "^,,,.....,,^",
@@ -63,6 +63,14 @@
    "tx": 1,
    "ty": 9,
    "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 13,
+   "to": "gilt_cellars",
+   "tx": 5,
+   "ty": 10,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -89,6 +97,75 @@
     {
      "species": "Bakedil",
      "level": 89
+    }
+   ]
+  },
+  {
+   "id": "q4_forged_will_philippa",
+   "x": 8,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "halcyra_side/forged_will",
+   "sprite": "tamer_f",
+   "hide_flag": "q4_forged_will_reveal"
+  },
+  {
+   "id": "q4_cask_41_gerti",
+   "x": 2,
+   "y": 18,
+   "facing": "right",
+   "dialogue": "halcyra_side/cask_41",
+   "sprite": "villager"
+  },
+  {
+   "id": "q4_cask_41_fenna",
+   "x": 3,
+   "y": 12,
+   "facing": "right",
+   "dialogue": "halcyra_side/cask_41_fenna",
+   "sprite": "villager",
+   "show_flag": "q4_cask_41_asked"
+  },
+  {
+   "id": "q4_red_column_hal",
+   "x": 8,
+   "y": 20,
+   "facing": "left",
+   "dialogue": "halcyra_side/red_column_hal",
+   "sprite": "villager",
+   "show_flag": "q4_red_column_asked"
+  },
+  {
+   "id": "q4_wedding_blades_leonore",
+   "x": 6,
+   "y": 16,
+   "facing": "down",
+   "dialogue": "halcyra_side/wedding_blades",
+   "sprite": "tamer_f"
+  },
+  {
+   "id": "hs_bruna",
+   "x": 9,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "halcyra_side/bruna",
+   "sprite": "villager",
+   "trainer": "Grape Treader Bruna",
+   "intro": "halcyra_side/bruna_intro",
+   "defeat": "halcyra_side/bruna_defeat",
+   "money": 3600,
+   "team": [
+    {
+     "species": "Rillshell",
+     "level": 88
+    },
+    {
+     "species": "Vinestair",
+     "level": 89
+    },
+    {
+     "species": "Vinestep",
+     "level": 90
     }
    ]
   }
