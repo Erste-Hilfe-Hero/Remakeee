@@ -56,6 +56,11 @@ var spirling_name: String = ""
 var elements: Array[int] = []
 var level: int = 1
 var status: String = ""
+## Share of Vigor where a boss changes phase (BattleInfo.phase_mark), -1 for no mark.
+var phase_mark: float = -1.0:
+	set(v):
+		phase_mark = v
+		queue_redraw()
 var speed_scale: float = 1.0
 ## Stat stages shown as small up/down arrows after the Energy pips.
 var stages: Dictionary[String, int] = {}
@@ -317,6 +322,9 @@ func _draw() -> void:
 	# Notches every few pixels make the bar read as a measured scale, like a map ruler.
 	for x: int in range(TICK_STEP, int(bar_w) - 1, TICK_STEP):
 		draw_rect(Rect2(x, bar_y + 1, 1, 1), UITheme.INK)
+	# Boss phase mark (KAMPF_PLAN item 598): a tall notch where the second phase starts.
+	if phase_mark > 0.0 and phase_mark < 1.0:
+		draw_rect(Rect2(roundf(bar_w * phase_mark), bar_y - 1, 1, bar_h + 2), UITheme.INK)
 	# Row 3: Energy pips, stat arrows, the Energy tax and (narrow plate) the element symbols.
 	var row3: float = float(rows.row3_y)
 	var row3_h: float = float(rows.row3_h)

@@ -129,6 +129,8 @@ var met_day: int = 0
 ## favourites are never released and never moved by a multi-select (plan area 1, items 375-377).
 var box: int = 0
 var favorite: bool = false
+## Favourite art (KAMPF_PLAN item 605): the battle menu starts on it when no art was used yet.
+var fav_art: String = ""
 ## True while its hidden gift is awake (HiddenGifts); it then replaces the species' gift.
 var hidden_gift: bool = false
 ## The shop's Second Gift Slot is open (pay-to-win step 6, plan point 12): the hidden gift of its
@@ -565,6 +567,7 @@ func to_dict() -> Dictionary:
 		"kinship": kinship,
 		"box": box,
 		"favorite": favorite,
+		"fav_art": fav_art,
 	}
 	if not bonus_trait.is_empty():
 		out["bonus_trait"] = bonus_trait
@@ -621,6 +624,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.kinship = clampi(_num(d.get("kinship"), 0), 0, 1000)
 	s.box = maxi(0, _num(d.get("box"), 0))
 	s.favorite = d.get("favorite") is bool and d.get("favorite")
+	s.fav_art = str(d.get("fav_art", ""))
 	s.hp = clampi(_num(d.get("hp"), s.max_hp()), 0, s.max_hp())
 	return s
 
