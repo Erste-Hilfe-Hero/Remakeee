@@ -25,6 +25,10 @@ const CODE_LENGTH: int = 7
 ## Story difficulty (item 497): foes land critical hits half as often, battles give 20% more Growth.
 const FOE_CRIT: Array[float] = [0.5, 1.0, 1.0, 1.0]
 const GROWTH: Array[float] = [1.2, 1.0, 1.0, 1.0]
+## Foe scaling (item 496, an option per journey): Wayfarer Spirlings stand at least this many
+## rings below the party's strongest, never above the ring cap plus GameState.FOE_OVER_CAP.
+const SCALING_KEY: String = "foe_scaling"
+const SCALING_GAP: int = 2
 ## Rift-Born foes (item 500) know arts up to this many rings ahead to fill all four slots.
 const RIFT_BORN_ART_REACH: int = 10
 
@@ -312,6 +316,9 @@ static func rest_lines() -> Array[String]:
 		Lexicon.add(GameState.records, "ring_caps")
 	if active("half_rested"):
 		out.append(Loc.t("Half Rested: the spring mends only half."))
+	# Lantern post (item 529): beaten Wayfarers who would battle again today.
+	if not WayfarerBook.invitations(DailyFind.today_key()).is_empty():
+		out.append(WayfarerBook.lantern_line(DailyFind.today_key()))
 	return out
 
 ## Trust No One: the party index that walks off after a Warden, -1 when the rule is off or one is left.
@@ -342,6 +349,26 @@ static func fill_arts(s: Spirling) -> void:
 		if s.moves.size() < Spirling.MAX_MOVES and mv != null and not s.moves.has(mv) and s.data.learnset_levels[i] <= s.level + RIFT_BORN_ART_REACH:
 			s.moves.append(mv)
 
+static func scaling_on() -> bool:
+	return bool(GameState.records.get(SCALING_KEY, false))
+
+static func toggle_scaling() -> void:
+	GameState.records[SCALING_KEY] = not scaling_on()
+
+## Foe scaling: lifts every foe below (party top - SCALING_GAP) up to it, within the cap.
+static func scale_foes(foes: Array, party: Array[Spirling]) -> void:
+	if not scaling_on() or party.is_empty():
+		return
+	var top: int = 1
+	for s: Spirling in party:
+		top = maxi(top, s.level)
+	var to: int = mini(top - SCALING_GAP, mini(Spirling.STORY_RING, GameState.progress_cap() + GameState.FOE_OVER_CAP))
+	for f: Variant in foes:
+		var s: Spirling = f
+		if s.level < to:
+			s.level = to
+			s.hp = s.max_hp()
+
 ## "Veteran. Rules: Night Bonds" - the line a battle shows at its start (item 495).
 static func battle_line(difficulty: int) -> String:
 	var line: String = Loc.t("Difficulty: %s") % RunChronicle.difficulty_name(difficulty)
@@ -368,6 +395,7 @@ static func apply_to_model(model: BattleModel, trainer: Dictionary, map_id: Stri
 		return
 	if str(trainer.get("boss", "")).is_empty():
 		order_foes(model.parties[1])
+		scale_foes(model.parties[1], model.parties[0])
 	if d == GameState.Difficulty.RIFT_BORN:
 		for s: Variant in model.parties[1]:
 			fill_arts(s)

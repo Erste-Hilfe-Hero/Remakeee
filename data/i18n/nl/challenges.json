@@ -1,6 +1,7 @@
 {
  "_comment": "nl translation of the challenges table, keyed by the English text.",
  "strings": {
+  "%s: %d won, %d lost": "%s: %d gewonnen, %d verloren",
   "A rule was dropped on the way.": "Onderweg is er een regel opgegeven.",
   "Ace Up Front": "Aas Voorop",
   "Battles won: %d, lost: %d": "Gevechten gewonnen: %d, verloren: %d",
@@ -18,13 +19,18 @@
   "Extra rules for a harder journey: One per Place, First Meeting, Spring Water Only, Shuffled Wilds and Arts, Stand Your Ground, Half Rested, Ace Up Front, Night Bonds, One Colour, Empty Pockets, Off the Books and Trust No One. Any of them combine. They are taken before the first mended Rift and can be dropped at any time; the record remembers. The shuffles follow a seed code you can share with friends.": "Extra regels voor een zwaardere reis: Eén per Plek, Eerste Ontmoeting, Alleen Bronwater, Gehusselde Wildernis en Technieken, Houd Stand, Half Uitgerust, Aas Voorop, Nachtbanden, Eén Kleur, Lege zakken, Buiten de boeken en Vertrouw niemand. Ze zijn allemaal te combineren. Je kiest ze vóór de eerste herstelde Kloof en kunt ze op elk moment opgeven; de balans onthoudt het. Het husselen volgt een seedcode die je met vrienden kunt delen.",
   "First Meeting": "Eerste Ontmoeting",
   "First Meeting: only the first wild battle here could end in a bond.": "Eerste Ontmoeting: alleen het eerste wilde gevecht hier kon in een band eindigen.",
+  "Foe scaling": "Tegenstander-aanpassing",
   "Half Rested": "Half Uitgerust",
   "Half Rested: the spring mends only half.": "Half Uitgerust: de bron herstelt maar de helft.",
   "How do you want to travel?": "Hoe wil je reizen?",
   "Keep it": "Houden",
+  "Lantern post: %s would battle you again today.": "Lantaarnpost: %s willen vandaag weer tegen je vechten.",
+  "Lantern post: no rematch invitations today.": "Lantaarnpost: vandaag geen uitnodigingen voor een revanche.",
+  "Most battled:": "Vaakst bevochten:",
   "New rules can only be taken before you mend your first Rift.": "Nieuwe regels kun je alleen kiezen voordat je je eerste Kloof herstelt.",
   "Night Bonds": "Nachtbanden",
   "Night Bonds: no bond forms before dark.": "Nachtbanden: voor het donker ontstaat er geen band.",
+  "No Wayfarer battles yet.": "Nog geen gevechten tegen Zwervers.",
   "No healing items, in battle or out. Only rest springs mend your team.": "Geen geneesvoorwerpen, in gevecht of daarbuiten. Alleen rustbronnen herstellen je team.",
   "No swapping in battle. A Spirling only leaves the field when it falls.": "Niet wisselen in gevechten. Een Spirling verlaat het veld pas als hij valt.",
   "Off the Books: you swore you would not shop on this journey.": "Buiten de boeken: je hebt gezworen op deze reis niets te kopen.",
@@ -39,8 +45,10 @@
   "Ring cap now: R%d. Each mended Rift raises it.": "Ringgrens nu: R%d. Elke herstelde Kloof verhoogt hem.",
   "Ring caps": "Ringgrenzen",
   "Run seed: %s": "Tocht-seed: %s",
+  "Run timer": "Looptimer",
   "Seed copied: %s": "Seed gekopieerd: %s",
   "Seed set: %s": "Seed ingesteld: %s",
+  "Shows the journey's play time in the corner, for speed runs.": "Toont de speeltijd van de reis in de hoek, voor speedruns.",
   "Shuffled Arts": "Gehusselde Technieken",
   "Shuffled Wilds": "Gehusselde Wildernis",
   "Spring Water Only": "Alleen Bronwater",
@@ -50,10 +58,14 @@
   "The wild Spirlings of every place are shuffled by your run seed.": "De wilde Spirlings van elke plek worden gehusseld volgens je tocht-seed.",
   "There is no seed code on the clipboard.": "Er staat geen seedcode op het klembord.",
   "This journey is now in the run chronicle: %s.": "Deze reis staat nu in de kroniek van de tocht: %s.",
+  "Toughest:": "Taaiste:",
   "Trust No One: %s takes a better offer and walks off without looking back.": "Vertrouw niemand: %s neemt een beter aanbod aan en loopt weg zonder om te kijken.",
   "Use the seed on the clipboard": "Seed van het klembord gebruiken",
   "Wardens beaten under the rules: %d": "Hoeders verslagen onder de regels: %d",
+  "Wayfarer book": "Zwerversboek",
   "Wayfarers lead with their strongest Spirling.": "Reizigers sturen hun sterkste Spirling eerst.",
-  "With challenge rules": "Met uitdagingsregels"
+  "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "De Spirlings van Zwervers blijven dicht bij je sterkste, binnen de ringgrens.",
+  "With challenge rules": "Met uitdagingsregels",
+  "best in %d turns": "record in %d beurten"
  }
 }
