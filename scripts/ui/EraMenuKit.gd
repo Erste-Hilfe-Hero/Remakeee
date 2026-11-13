@@ -62,7 +62,8 @@ static func icon_for(id: String, lay: Dictionary) -> Texture2D:
 
 ## Rows of the start menu: the label, from Era II its symbol, in the touch eras what it does
 ## for the info panel. A waiting reward keeps its dot on "Goals" (in Era I as "!" text).
-static func pause_entries(labels: Array[String], waiting: bool, lay: Dictionary) -> Array[Dictionary]:
+## Rows in [param dots] have something new (MenuDots, item 1872) and carry the same dot.
+static func pause_entries(labels: Array[String], waiting: bool, lay: Dictionary, dots: Array[String] = []) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var panel: bool = str(lay.get("panel", "none")) != "none"
 	for l: String in labels:
@@ -76,6 +77,12 @@ static func pause_entries(labels: Array[String], waiting: bool, lay: Dictionary)
 			else:
 				e["text"] = Loc.t(l) + " !"
 			e["say"] = "reward waiting"
+		elif l in dots:
+			if bool(lay.get("icons", false)):
+				e["icon"] = Goals.dot()
+			else:
+				e["text"] = Loc.t(l) + " !"
+			e["say"] = "new"
 		elif ic != null:
 			e["icon"] = ic
 		if panel and PAUSE_HINTS.has(l):

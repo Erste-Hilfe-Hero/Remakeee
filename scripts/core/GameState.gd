@@ -93,6 +93,8 @@ var difficulty: Difficulty = Difficulty.TAMER
 var inventory: Dictionary = {}
 ## Things gained since the satchel last had them in focus: id -> true (item 1918).
 var new_items: Dictionary = {}
+## What the player last saw behind a start menu row (MenuDots, item 1872): label -> value.
+var menu_seen: Dictionary = {}
 var money: int = 0
 ## Waymarks (plan area 8): earned only by playing, never bought or traded. Change through Waymarks.earn().
 var waymarks: int = 0
@@ -528,6 +530,7 @@ func reset() -> void:
 	difficulty = Difficulty.TAMER
 	inventory = {}
 	new_items = {}
+	menu_seen = {}
 	money = 0
 	waymarks = 0
 	daily_tasks = {}
@@ -676,6 +679,7 @@ func to_dict() -> Dictionary:
 		"echo_cores": echo_cores.duplicate(true),
 		"spirlog": spirlog.duplicate(true),
 		"inventory": _bag_counts(),
+		"menu_seen": menu_seen.duplicate(),
 		"new_items": new_items.keys().filter(func(k: Variant) -> bool: return int(inventory.get(k, 0)) > 0),
 		"money": money,
 		"waymarks": waymarks,
@@ -759,6 +763,11 @@ func from_dict(d: Dictionary) -> void:
 		if n > 0:
 			inventory[str(k)] = n
 	new_items = {}
+	menu_seen = {}
+	var seen_rows: Variant = d.get("menu_seen", {})
+	if seen_rows is Dictionary:
+		for k: Variant in seen_rows:
+			menu_seen[str(k)] = as_int(seen_rows[k])
 	var fresh: Variant = d.get("new_items", [])
 	for k: Variant in (fresh as Array if fresh is Array else []):
 		if inventory.has(str(k)):
@@ -955,6 +964,13 @@ func has_flag(flag: String) -> bool:
 
 func set_flag(flag: String, value: bool = true) -> void:
 	flags[flag] = value
+
+## Rolls every Spark of [param s] anew (0..SPARK_MAX), as a freshly met Spirling gets them.
+static func reroll_sparks(s: Spirling, r: RandomNumberGenerator) -> void:
+	var frac: float = s.hp_fraction()
+	for key: String in Spirling.STAT_KEYS:
+		s.spark[key] = r.randi_range(0, Spirling.SPARK_MAX)
+	s.hp = 0 if s.is_fainted() else maxi(1, roundi(frac * s.max_hp()))
 
 ## Fully restores the party (Rest Springs, after a loss).
 func heal_party() -> void:
@@ -1209,6 +1225,10 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 			s.level_up()
 		s.xp = Spirling.xp_for_level(s.level)
 		msg = "%s grew from Ring %d to Ring %d!" % [s.display_name(), from, s.level]
+	elif bool(it.get("spark_reset", false)):
+		# Spark Flux (KAMPF_PLAN_1000 item 230): every Spark is rolled anew.
+		reroll_sparks(s, rng)
+		msg = "%s's sparks flicker and settle anew." % s.display_name()
 	elif bool(it.get("spark_all", false)):
 		var raised: bool = false
 		for key: String in Spirling.STAT_KEYS:

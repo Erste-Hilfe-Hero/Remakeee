@@ -87,6 +87,17 @@
   "There are no stages for aim or dodging.": "Ступеней меткости и уклонения нет.",
   "Trades all stages with the foe.": "Меняется всеми ступенями с врагом.",
   "Unruffled": "Невозмутимый",
-  "Vigor = (base + spark/2) x (ring + %d) / %d": "Бодрость = (база + искра/2) x (круг + %d) / %d"
+  "Vigor = (base + spark/2) x (ring + %d) / %d": "Бодрость = (база + искра/2) x (круг + %d) / %d",
+  "%s %d -> %d": "%s %d -> %d",
+  "%s gained %d growth. The ring limit holds it at ring %d for now.": "%s получает %d роста. Предел круга пока держит его на круге %d.",
+  "%s's sparks flicker and settle anew.": "Искры %s мерцают и ложатся заново.",
+  "FOC": "ФОК",
+  "GRD": "СТК",
+  "MGT": "МОЩ",
+  "PCE": "ТМП",
+  "Ring %s:": "Круг %s:",
+  "Rolls all Spark values of one Spirling anew. Used up.": "Заново бросает все значения Искры одного Spirling. Расходуется.",
+  "Spark Flux": "Вихрь Искр",
+  "VIG": "БОД"
  }
 }
