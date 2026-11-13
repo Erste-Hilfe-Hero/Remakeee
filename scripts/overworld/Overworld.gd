@@ -282,6 +282,8 @@ func _build() -> void:
 	_text.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_text.visible = false
 	_text.allow_fast_forward = true
+	_text.world_auto = true
+	_text.place_hook = _place_text_box
 	ui_root.add_child(_text)
 	_picker = ListPicker.new()
 	_picker.set_anchors_preset(Control.PRESET_CENTER)
@@ -371,11 +373,36 @@ func show_walk_hint() -> void:
 		await get_tree().process_frame
 	await show_tip("menu")
 
-## Shows a first-time tip (if any) while the player waits.
+## Map changes so far, and the change on which the last tip showed (item 1990).
+var map_changes: int = 0
+var _tip_change: int = -1
+## Tips that waited for the next map change, oldest first.
+var waiting_tips: Array[String] = []
+
+## Whether a tip may show now: never before the Wayfarer walks free after the prologue
+## (item 1991), and at most one per map change (item 1990).
+static func tip_allowed(flags: Dictionary, changes: int, last_tip_change: int) -> bool:
+	return flags.has("got_starter") and changes != last_tip_change
+
+## Shows a first-time tip (if any) while the player waits. A second tip on the same map
+## waits for the next map change; tips during the prologue are dropped until later.
 func show_tip(id: String) -> void:
-	var lines: Array[String] = Tips.take(id)
-	if not lines.is_empty():
-		await _locked_say(lines)
+	if not Tips.pending(id):
+		return
+	if not tip_allowed(GameState.flags, map_changes, _tip_change):
+		if not id in waiting_tips:
+			waiting_tips.append(id)
+		return
+	_tip_change = map_changes
+	await _locked_say(Tips.take(id))
+
+## The oldest waiting tip, after a map change.
+func _waiting_tip_after_load() -> void:
+	while not waiting_tips.is_empty():
+		var id: String = waiting_tips.pop_front()
+		if Tips.pending(id):
+			await _tip_after_load(id)
+			return
 
 func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	map = MapData.load_map(map_id)
@@ -383,6 +410,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		return
 	if minimap != null:
 		minimap.spotted.clear()
+	map_changes += 1
 	_entry_cell = cell
 	if map.outdoor:
 		GameState.enter_map(map_id, cell)
@@ -448,8 +476,10 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		_arrival_scene.call_deferred(arrive)
 	refresh_daylight()
 	Sound.enter_map(map_id)
-	if not map.encounter_table.is_empty():
+	if not map.encounter_table.is_empty() and Tips.pending("wild_area"):
 		_tip_after_load.call_deferred("wild_area")
+	elif not waiting_tips.is_empty():
+		_waiting_tip_after_load.call_deferred()
 
 var _rustle: Node2D
 
@@ -1023,6 +1053,31 @@ func announce_goal_if_changed(before: int) -> void:
 	var tip: Array[String] = Tips.take("goals")
 	if not tip.is_empty():
 		await say(tip)
+
+## True when the talk box belongs at the top: the Wayfarer stands in the lower half (item 2016).
+static func text_on_top(player_y: float, view_h: float) -> bool:
+	return view_h > 0.0 and player_y > view_h / 2.0
+
+## Puts the talk box at the bottom, or at the top when it would cover the Wayfarer.
+func _place_text_box() -> void:
+	var top: bool = false
+	if player != null and is_instance_valid(player) and player.is_inside_tree():
+		var y: float = player.get_global_transform_with_canvas().origin.y + TilesetFactory.TILE / 2.0
+		top = text_on_top(y, get_viewport().get_visible_rect().size.y)
+	if top:
+		_text.set_anchors_preset(Control.PRESET_TOP_WIDE)
+		_text.offset_top = 0
+		_text.offset_bottom = TEXT_BOX_HEIGHT
+		_text.grow_vertical = Control.GROW_DIRECTION_END
+	else:
+		_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+		_text.offset_top = -TEXT_BOX_HEIGHT
+		_text.offset_bottom = 0
+		_text.grow_vertical = Control.GROW_DIRECTION_BEGIN
+
+## True while the talk box sits at the top of the screen.
+func text_box_on_top() -> bool:
+	return _text.anchor_bottom < 0.5
 
 func say(lines: Array[String]) -> void:
 	if lines.is_empty():
@@ -2554,6 +2609,7 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 			if not climb_on:
 				break
 	GameState.records["gauntlet_best"] = maxi(best, floors)
+	Online.climb_submit("stair", floors)
 	if GameState.iron_oath:
 		# Under the Iron Oath the stair keeps its own best as well (plan 3400).
 		GameState.records["gauntlet_best_oath"] = maxi(int(GameState.records.get("gauntlet_best_oath", 0)), floors)
@@ -2876,6 +2932,8 @@ func _run_endless() -> void:
 			m.queue_free()
 			if not on:
 				break
+	if k > 0:
+		Online.climb_submit("tower", EchoTower.tower_floor(k - 1))
 	var lines: Array[String] = [Loc.t("Endless stretch: %d floors (best %d).") % [k, maxi(k, Gauntlet.endless_best())]]
 	lines.append_array(Gauntlet.pay_endless(k))
 	await say(lines)
@@ -3342,7 +3400,7 @@ func _spotting_trainer() -> NPC:
 	if GameState.first_healthy_index() < 0:
 		return null
 	for n: NPC in _npcs:
-		if not _is_active_trainer(n):
+		if not _is_active_trainer(n) or n.has_meta("waved"):
 			continue
 		var blocked: Callable = func(c: Vector2i) -> bool: return not map.is_walkable(c) or npc_at(c) != null
 		if TrainerData.sees(n.cell, GridWalker.DIRS[n.facing], int(n.definition.get("sight", 0)), player.cell, blocked):
@@ -3359,6 +3417,22 @@ func challenge(n: NPC, spotted: bool) -> void:
 		n.alert = true
 		await get_tree().create_timer(SPOT_TIME).timeout
 		n.alert = false
+		# The signal lantern (KAMPF_PLAN_1000 items 539, 540): answer it now, or wave it off and
+		# talk to the Wayfarer later. Wardens and story Wayfarers do not wait.
+		if TrainerData.may_wave_off(def):
+			n.signal_lantern = true
+			var ask := MenuHost.new()
+			_ui.add_child(ask)
+			var answer: bool = await ask.confirm(Loc.t("%s raises a signal lantern. Battle now?") % Loc.t(str(def.get("trainer", ""))), "Answer the signal", "Not now")
+			ask.queue_free()
+			n.signal_lantern = false
+			if not answer:
+				n.set_meta("waved", true)
+				await say([Loc.t("The lantern dims. Talk to them when you are ready.")] as Array[String])
+				busy = false
+				player.frozen = false
+				VirtualPad.set_wanted(true)
+				return
 		while (player.cell - n.cell).length_squared() > 1:
 			n.step(n.facing)
 			await n.step_finished
@@ -3460,6 +3534,11 @@ func after_tamer_win(n: NPC) -> void:
 			"p_replay": BattleReplay.shareable(GameState.records.get("last_battle", {})), "p_claim": last_claim})
 	if def.has("defeat"):
 		await say(Dialogue.lines_for(Dialogue.get_entry(str(def.defeat)), GameState.flags))
+	# A first-win gift that varies by Wayfarer (KAMPF_PLAN_1000 item 531).
+	var gift: String = WayfarerRewards.grant(def, map.id, GameState.starter)
+	if not gift.is_empty():
+		Sound.sfx("coin")
+		await say([WayfarerRewards.line(def, gift)] as Array[String])
 	if def.has("warden") and GameState.seal_rift(str(def.warden)):
 		var lines: Array[String] = ["The Warden's bond wakes again.", "Together you mend the Rift. The Hush lifts!"]
 		if GameState.has_flag("storage_remote"):
@@ -3510,6 +3589,9 @@ static func _today() -> String:
 func _note_wayfarer(def: Dictionary, outcome: BattleModel.Outcome) -> void:
 	if outcome == BattleModel.Outcome.WIN or outcome == BattleModel.Outcome.LOSS:
 		WayfarerBook.note(def, map.id, outcome == BattleModel.Outcome.WIN, last_model.turn if last_model != null else 0)
+	# Wayfarer wins count for the world goal when it is this week's kind (KAMPF_PLAN_1000 item 543).
+	if outcome == BattleModel.Outcome.WIN and not TrainerData.is_wild_horde(def):
+		Online.contribute("wayfarers")
 
 func _mark_rematch(def: Dictionary) -> void:
 	var rec: Dictionary = (GameState.records.get("rematch", {}) as Dictionary).duplicate()

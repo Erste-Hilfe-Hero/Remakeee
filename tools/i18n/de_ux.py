@@ -214,6 +214,8 @@ T = {
 "Swap %s with whom?": "%s gegen wen tauschen?",
 "Nothing to swap.": "Nichts zu tauschen.",
 "new": "neu",
+"Auto text: %s": "Auto-Text: %s",
+"Talk in the world goes on by itself after a short read.": "Gespräche in der Welt gehen nach kurzer Lesezeit von selbst weiter.",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).

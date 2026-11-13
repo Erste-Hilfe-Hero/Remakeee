@@ -64,6 +64,19 @@ var alert: bool = false:
 var _alert_pop: bool = false
 const ALERT_POP_TIME: float = 0.06
 
+## The signal lantern a Wayfarer raises after spotting the player (KAMPF_PLAN_1000 items 539, 540).
+## It blinks every LANTERN_BLINK_MS, and stays lit with reduced motion.
+var signal_lantern: bool = false:
+	set(v):
+		signal_lantern = v
+		queue_redraw()
+const LANTERN_BLINK_MS: int = 250
+const LANTERN_COLOR: Color = Color("f2c14e")
+
+## True while the lantern shows at [param msec]; always true with [param reduced] motion.
+static func lantern_lit(msec: int, reduced: bool) -> bool:
+	return reduced or (msec / LANTERN_BLINK_MS) % 2 == 0
+
 func _draw() -> void:
 	super._draw()
 	# From Era II the "!" is a bubble drawn by EraActors (data/era_actor_look.json).
@@ -73,6 +86,11 @@ func _draw() -> void:
 		draw_rect(Rect2(6 - g, -9 - g, 4 + g * 2, 8 + g * 2), UITheme.INK, false, 1.0)
 		draw_rect(Rect2(7, -8, 2, 4), UITheme.INK)
 		draw_rect(Rect2(7, -3, 2, 1), UITheme.INK)
+	if signal_lantern:
+		draw_line(Vector2(14, 2), Vector2(14, 5), UITheme.INK, 1.0)
+		draw_rect(Rect2(12, 5, 5, 5), UITheme.INK)
+		if lantern_lit(Time.get_ticks_msec(), Juice.reduced()):
+			draw_rect(Rect2(13, 6, 3, 3), LANTERN_COLOR)
 
 ## When talked to, a villager pauses this long before turning (item 2307).
 const TURN_PAUSE: float = 0.1
@@ -97,6 +115,8 @@ func may_glance() -> bool:
 
 func _process(delta: float) -> void:
 	super._process(delta)
+	if signal_lantern and not Juice.reduced():
+		queue_redraw()
 	if moving or not may_glance():
 		return
 	_glance_in -= delta

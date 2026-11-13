@@ -1,9 +1,12 @@
 {
  "_comment": "es translation of the challenges table, keyed by the English text.",
  "strings": {
+  "%s also gives you: %s.": "%s también te da: %s.",
+  "%s raises a signal lantern. Battle now?": "%s alza un farol de señal. ¿Luchar ahora?",
   "%s: %d won, %d lost": "%s: %d ganados, %d perdidos",
   "A rule was dropped on the way.": "Una regla se quedó por el camino.",
   "Ace Up Front": "As por delante",
+  "Answer the signal": "Responder a la señal",
   "Battles won: %d, lost: %d": "Combates ganados: %d, perdidos: %d",
   "Bonds only form at night.": "Los vínculos solo se forman de noche.",
   "Challenge record": "Historial de desafíos",
@@ -14,6 +17,8 @@
   "Copies the seed. A friend who uses it gets the same shuffled wilds and arts.": "Copia la semilla. Un amigo que la use tendrá los mismos salvajes y artes barajados.",
   "Drop %s? Your record will remember it.": "¿Abandonar %s? Tu historial lo recordará.",
   "Drop it": "Abandonarla",
+  "Echo tower": "Torre Eco",
+  "Echo tower, highest floor this week": "Torre Eco, piso más alto esta semana",
   "Every Spirling that bonds with you knows arts drawn by your run seed.": "Cada Spirling que se vincula contigo conoce artes sorteadas por la semilla de tu partida.",
   "Extra rules for a harder journey. Taken before your first Rift, dropped any time.": "Reglas extra para un viaje más duro. Se eligen antes de tu primera Grieta y se abandonan cuando quieras.",
   "Extra rules for a harder journey: One per Place, First Meeting, Spring Water Only, Shuffled Wilds and Arts, Stand Your Ground, Half Rested, Ace Up Front, Night Bonds, One Colour, Empty Pockets, Off the Books and Trust No One. Any of them combine. They are taken before the first mended Rift and can be dropped at any time; the record remembers. The shuffles follow a seed code you can share with friends.": "Reglas extra para un viaje más duro: Uno por lugar, Primer encuentro, Solo agua de manantial, Salvajes y artes barajados, Mantente firme, Medio descanso, As por delante, Vínculos nocturnos, Un solo color, Bolsillos vacíos, En negro y No te fíes de nadie. Se pueden combinar todas. Se eligen antes de remendar la primera Grieta y se pueden abandonar en cualquier momento; el historial lo recuerda. Los barajados siguen un código de semilla que puedes compartir con amigos.",
@@ -26,6 +31,7 @@
   "Keep it": "Conservarla",
   "Lantern post: %s would battle you again today.": "Correo farol: %s quieren volver a luchar contigo hoy.",
   "Lantern post: no rematch invitations today.": "Correo farol: hoy no hay invitaciones a revancha.",
+  "Lighthouse stair, highest floor this week": "Escalera del faro, piso más alto esta semana",
   "Most battled:": "Más enfrentados:",
   "New rules can only be taken before you mend your first Rift.": "Solo puedes elegir reglas nuevas antes de remendar tu primera Grieta.",
   "Night Bonds": "Vínculos nocturnos",
@@ -55,6 +61,7 @@
   "Spring Water Only: no healing items on this journey.": "Solo agua de manantial: nada de objetos curativos en este viaje.",
   "Stand Your Ground": "Mantente firme",
   "Takes a seed a friend shared with you.": "Usa una semilla que te ha pasado un amigo.",
+  "The lantern dims. Talk to them when you are ready.": "El farol se apaga. Habla con esa persona cuando estés listo.",
   "The wild Spirlings of every place are shuffled by your run seed.": "Los Spirlings salvajes de cada lugar se barajan según la semilla de tu partida.",
   "There is no seed code on the clipboard.": "No hay ningún código de semilla en el portapapeles.",
   "This journey is now in the run chronicle: %s.": "Este viaje ya está en la crónica de partidas: %s.",
@@ -65,7 +72,9 @@
   "Wayfarer book": "Libro de Viajeros",
   "Wayfarers lead with their strongest Spirling.": "Los caminantes empiezan con su Spirling más fuerte.",
   "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "Los Spirlings de los Viajeros se mantienen cerca de tu más fuerte, dentro del límite de anillo.",
+  "Win Wayfarer battles": "Gana combates contra Viajeros",
   "With challenge rules": "Con reglas de desafío",
-  "best in %d turns": "récord en %d turnos"
+  "best in %d turns": "récord en %d turnos",
+  "floor %d": "piso %d"
  }
 }
