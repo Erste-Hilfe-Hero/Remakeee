@@ -87,6 +87,17 @@
   "There are no stages for aim or dodging.": "Não há níveis de mira nem de esquiva.",
   "Trades all stages with the foe.": "Troca todos os níveis com o inimigo.",
   "Unruffled": "Imperturbável",
-  "Vigor = (base + spark/2) x (ring + %d) / %d": "Vigor = (base + centelha/2) x (anel + %d) / %d"
+  "Vigor = (base + spark/2) x (ring + %d) / %d": "Vigor = (base + centelha/2) x (anel + %d) / %d",
+  "%s %d -> %d": "%s %d -> %d",
+  "%s gained %d growth. The ring limit holds it at ring %d for now.": "%s ganha %d de crescimento. O limite de anel o mantém no anel %d por enquanto.",
+  "%s's sparks flicker and settle anew.": "As centelhas de %s piscam e se assentam de novo.",
+  "FOC": "FOC",
+  "GRD": "PRO",
+  "MGT": "FOR",
+  "PCE": "RIT",
+  "Ring %s:": "Anel %s:",
+  "Rolls all Spark values of one Spirling anew. Used up.": "Sorteia de novo todos os valores de Centelha de um Spirling. Se gasta.",
+  "Spark Flux": "Fluxo de Centelhas",
+  "VIG": "VIG"
  }
 }

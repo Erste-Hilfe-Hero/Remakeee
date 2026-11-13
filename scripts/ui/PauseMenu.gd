@@ -73,6 +73,8 @@ func run_ledger() -> void:
 
 func run() -> void:
 	close_all = false
+	# Unopened Lantern Mail for the Friends dot (item 1872), asked without waiting.
+	MenuDots.refresh_mail()
 	if open_on == "Goals":
 		open_on = ""
 		await run_goals()
@@ -97,7 +99,8 @@ func run() -> void:
 		var quick: Array[String] = []
 		if bool(lay.get("quick_bar", false)):
 			quick = EraMenus.quick_list(GameState.flags, labels)
-		var entries: Array[Dictionary] = EraMenuKit.pause_entries(labels, Goals.pending() > 0, lay)
+		MenuDots.baseline()
+		var entries: Array[Dictionary] = EraMenuKit.pause_entries(labels, Goals.pending() > 0, lay, MenuDots.dotted(labels))
 		var idx: int = await pick_screen("pause", menu_title(current_map), entries, {"focus": maxi(0, labels.find(last_label)),
 			"tabs": quick, "tab": -1, "tab_icons": quick.map(func(l: String) -> Texture2D: return EraMenuKit.icon_for(l, lay)), "header": EraMenuKit.clock_strip() if str(lay.get("header", "none")) == "clock" else null})
 		var chosen: String = ""
@@ -112,6 +115,7 @@ func run() -> void:
 			chosen = await run_shortcuts(labels)
 			if chosen.is_empty():
 				continue
+		MenuDots.mark_seen(chosen)
 		match chosen:
 			"Goals": await run_goals()
 			"Map book": await MapBookMenu.run(self)
@@ -834,6 +838,8 @@ func _unfurl(s: Spirling, forward: bool) -> void:
 			target = ready[pick]
 	if target == null:
 		return
+	if forward:
+		await info("\n".join(BattleGuide.unfold_preview(s, target)))
 	var q: String = ("Unfurl %s into %s? You can furl it back later." if forward else "Furl %s back into %s? You can unfurl it again later.") % [old_name, target.species_name]
 	if not await confirm(q):
 		return
@@ -915,7 +921,7 @@ func _usable_items() -> Array[String]:
 	for id: Variant in GameState.inventory:
 		var it: Dictionary = Database.item(str(id))
 		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))
-				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false))
+				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false)) or bool(it.get("spark_reset", false))
 				or bool(it.get("unfurl_any", false)) or bool(it.get("gift_slot", false))):
 			out.append(str(id))
 	return out

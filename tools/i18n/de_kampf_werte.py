@@ -95,4 +95,12 @@ T = {
 "Foes use the very same formula.": "Gegner nutzen genau dieselbe Formel.",
 "%s at ring %d:": "%s auf Ring %d:",
 "%s: base %d, spark %d = %d": "%s: Basis %d, Funke %d = %d",
+# Batch 2
+"%s gained %d growth. The ring limit holds it at ring %d for now.": "%s erhält %d Wachstum. Die Ring-Grenze hält es vorerst bei Ring %d.",
+"%s %d -> %d": "%s %d -> %d",
+"VIG": "KRA", "MGT": "WUC", "GRD": "SCH", "FOC": "FOK", "PCE": "TMP",
+"Spark Flux": "Funkenwirbel",
+"Rolls all Spark values of one Spirling anew. Used up.": "Würfelt alle Funkenwerte eines Spirlings neu aus. Wird verbraucht.",
+"Ring %s:": "Ring %s:",
+"%s's sparks flicker and settle anew.": "Die Funken von %s flackern und ordnen sich neu.",
 }
