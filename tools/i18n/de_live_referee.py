@@ -22,6 +22,7 @@ T = {
 "Live duel": "Live-Duell",
 "Top: %s  Bottom: %s": "Oben: %s  Unten: %s",
 "No winner": "Kein Sieger",
+"Draw": "Unentschieden",
 "%s beats %s": "%s besiegt %s",
 "Rounds: %d": "Runden: %d",
 "This battle cannot be shown any more.": "Dieser Kampf kann nicht mehr gezeigt werden.",
