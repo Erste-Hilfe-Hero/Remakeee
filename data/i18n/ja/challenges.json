@@ -1,6 +1,7 @@
 {
  "_comment": "ja translation of the challenges table, keyed by the English text.",
  "strings": {
+  "%s: %d won, %d lost": "%s：%d勝 %d敗",
   "A rule was dropped on the way.": "ルールがひとつ、途中で外れた。",
   "Ace Up Front": "エース先発",
   "Battles won: %d, lost: %d": "勝ったバトル: %d、負けたバトル: %d",
@@ -18,13 +19,18 @@
   "Extra rules for a harder journey: One per Place, First Meeting, Spring Water Only, Shuffled Wilds and Arts, Stand Your Ground, Half Rested, Ace Up Front, Night Bonds, One Colour, Empty Pockets, Off the Books and Trust No One. Any of them combine. They are taken before the first mended Rift and can be dropped at any time; the record remembers. The shuffles follow a seed code you can share with friends.": "もっときびしい旅のための追加ルール：ひとつの場所に1匹、最初の出会い、湧き水だけ、野生と術のシャッフル、ふみとどまれ、半分の休息、エース先発、夜の絆、一色、からっぽの財布、帳簿外、だれも信じるな。どれでも組み合わせられる。最初の裂け目を繕う前に選び、いつでも外せる。記録には残る。シャッフルは、友だちと共有できるシードコードにしたがう。",
   "First Meeting": "最初の出会い",
   "First Meeting: only the first wild battle here could end in a bond.": "最初の出会い：ここで仲間にできたのは、最初の野生バトルだけだった。",
+  "Foe scaling": "相手の強さ調整",
   "Half Rested": "半分の休息",
   "Half Rested: the spring mends only half.": "半分の休息：泉は半分しか回復しない。",
   "How do you want to travel?": "どんなふうに旅したい？",
   "Keep it": "そのままにする",
+  "Lantern post: %s would battle you again today.": "ランタン便：%sが今日また戦いたがっている。",
+  "Lantern post: no rematch invitations today.": "ランタン便：今日の再戦の誘いはない。",
+  "Most battled:": "よく戦った相手：",
   "New rules can only be taken before you mend your first Rift.": "新しいルールを選べるのは、最初の裂け目を繕う前だけ。",
   "Night Bonds": "夜の絆",
   "Night Bonds: no bond forms before dark.": "夜の絆：暗くなる前には絆は結ばれない。",
+  "No Wayfarer battles yet.": "まだ旅人と戦っていない。",
   "No healing items, in battle or out. Only rest springs mend your team.": "回復アイテムは使えない。バトル中もバトル外も。チームを回復できるのは休息の泉だけ。",
   "No swapping in battle. A Spirling only leaves the field when it falls.": "バトル中の交代はなし。Spirlingが場を離れるのは、たおれたときだけ。",
   "Off the Books: you swore you would not shop on this journey.": "帳簿外：この旅では買い物をしないと誓った。",
@@ -39,8 +45,10 @@
   "Ring cap now: R%d. Each mended Rift raises it.": "今のリング上限: R%d。裂け目を繕うたびに上がる。",
   "Ring caps": "リング上限",
   "Run seed: %s": "挑戦のシード: %s",
+  "Run timer": "ランタイマー",
   "Seed copied: %s": "シードをコピーした: %s",
   "Seed set: %s": "シードを設定した: %s",
+  "Shows the journey's play time in the corner, for speed runs.": "旅のプレイ時間を隅に表示する。スピードラン向け。",
   "Shuffled Arts": "術のシャッフル",
   "Shuffled Wilds": "野生のシャッフル",
   "Spring Water Only": "湧き水だけ",
@@ -50,10 +58,14 @@
   "The wild Spirlings of every place are shuffled by your run seed.": "それぞれの場所の野生のSpirlingが、挑戦のシードでシャッフルされる。",
   "There is no seed code on the clipboard.": "クリップボードにシードコードがない。",
   "This journey is now in the run chronicle: %s.": "この旅は挑戦の記録に残った: %s。",
+  "Toughest:": "手ごわい相手：",
   "Trust No One: %s takes a better offer and walks off without looking back.": "だれも信じるな：%sはもっといい話に乗って、ふり返らずに去っていく。",
   "Use the seed on the clipboard": "クリップボードのシードを使う",
   "Wardens beaten under the rules: %d": "ルールの下で倒した守り人: %d",
+  "Wayfarer book": "旅人の記録",
   "Wayfarers lead with their strongest Spirling.": "旅人たちは、いちばん強いSpirlingから出してくる。",
-  "With challenge rules": "チャレンジルールあり"
+  "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "旅人のスピリングがリング上限内で君の最強の一体に近づく。",
+  "With challenge rules": "チャレンジルールあり",
+  "best in %d turns": "最短%dターン"
  }
 }
