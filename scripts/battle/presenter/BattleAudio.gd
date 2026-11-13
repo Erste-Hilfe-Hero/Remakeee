@@ -14,7 +14,7 @@ extends RefCounted
 ## The status sounds of data/battle_show.json "audio.status", named here so the sound check
 ## (tests/unit/test_sfx_names.gd) finds every file in code.
 const STATUS_SOUNDS: Array[String] = ["status_scorch", "status_soak", "status_root", "status_jolt", "status_daze", "status_drowse",
-	"status_spent", "status_marked"]
+	"status_spent", "status_marked", "status_muddle"]
 
 ## Last time (seconds) an accent played, for the accent gap.
 static var _last_accent: float = -100.0

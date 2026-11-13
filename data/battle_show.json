@@ -58,6 +58,12 @@
    "drift": 0,
    "count": 2,
    "color": "e04848"
+  },
+  "muddle": {
+   "shape": "zig",
+   "drift": 0,
+   "count": 2,
+   "color": "70a8a0"
   }
  },
  "mote_period": 1.4,
@@ -95,7 +101,8 @@
    "daze": "status_daze",
    "drowse": "status_drowse",
    "spent": "status_spent",
-   "marked": "status_marked"
+   "marked": "status_marked",
+   "muddle": "status_muddle"
   },
   "stage_step": 0.06,
   "stage_max_pitch": 1.36,

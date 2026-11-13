@@ -419,7 +419,7 @@ def battle_show_sfx() -> dict[str, np.ndarray]:
     out["overcharge"] = (sweep(220, 660, n, "pulse", 0.125) * 0.5 + noise(n, 3, rng) * np.linspace(0.0, 0.25, n)) * \
         env(n, attack=0.03, sustain=0.7, release=0.04) * 0.7
     # Resonance fields: a soft chord that blooms (rise), folds away (fade) or turns (shift).
-    n = secs(0.45)
+    n = secs(0.35)
     chord = sum(triangle(freq(midi(nm)), n) for nm in ("C4", "G4", "D5")) / 3.0
     out["field_rise"] = chord * env(n, attack=0.25, decay=0.1, sustain=0.7, release=0.2) * 0.9
     n = secs(0.4)
@@ -439,14 +439,14 @@ def battle_show_sfx() -> dict[str, np.ndarray]:
     out["partner_call"] = notes([("D5", 0.06), ("F#5", 0.06), ("A5", 0.06), ("D6", 0.12)], sq) * 0.4
     out["calm_fail"] = notes([("F4", 0.08), ("F4", 0.12)], tri, 0.04) * 0.6
     # Boss: a deep swell for the entrance and a sharp stinger when its phase turns.
-    n = secs(0.6)
+    n = secs(0.45)
     out["boss_intro"] = (sweep(55, 110, n, "tri") * 0.6 + pulse(freq(midi("A2")), n, 0.5) * 0.25 + noise(n, 40, rng) * 0.2) * \
         env(n, attack=0.15, decay=0.2, sustain=0.6, release=0.25) * 0.9
     n = secs(0.4)
     out["boss_phase"] = (pulse(freq(midi("D5")), n, 0.5) * 0.3 + pulse(freq(midi("G#5")), n, 0.5) * 0.3 + noise(n, 2, rng) * 0.2) * \
         env(n, attack=0.002, decay=0.1, sustain=0.5, release=0.12) * 0.7
     # Defeat: a short falling line in minor, the last note held.
-    out["defeat"] = notes([("A4", 0.14), ("F4", 0.14), ("D4", 0.14), ("C#4", 0.3)], lambda f, k: pulse(f, k, 0.5) * 0.5 + triangle(f / 2, k) * 0.5) * 0.45
+    out["defeat"] = notes([("A4", 0.11), ("F4", 0.11), ("D4", 0.11), ("C#4", 0.3)], lambda f, k: pulse(f, k, 0.5) * 0.5 + triangle(f / 2, k) * 0.5) * 0.45
     return out
 
 
@@ -460,4 +460,7 @@ def late_status_sfx() -> dict[str, np.ndarray]:
     out["status_spent"] = (sweep(700, 180, n, "pulse", 0.25) * 0.5 + noise(n, 4, rng) * 0.2) * env(n, decay=0.05, sustain=0.4) * 0.6
     n = secs(0.14)
     out["status_marked"] = (pulse(freq(midi("B6")), n, 0.125) * 0.4 + triangle(freq(midi("B5")), n) * 0.4) * env(n, attack=0.002, decay=0.04, sustain=0.4, release=0.05) * 0.6
+    # Muddle: two notes that wander off each other, the art may hit the wrong target.
+    n = secs(0.16)
+    out["status_muddle"] = (pulse(freq(midi("E5")), n, 0.25) * 0.35 + sweep(freq(midi("F5")), freq(midi("C5")), n, "tri") * 0.4) * env(n, sustain=0.5, release=0.04) * 0.6
     return out
