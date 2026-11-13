@@ -114,6 +114,12 @@ static func facts(model: BattleModel, seen: Dictionary) -> String:
 		var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER, slot)
 		if me != null and not me.status.is_empty():
 			lines.append(status_line(me))
+		var held: String = held_line(me)
+		if not held.is_empty():
+			lines.append(held)
+	var growth: int = growth_preview(model)
+	if growth > 0:
+		lines.append(Loc.t("A win now: about %d growth each.") % growth)
 	var f: String = field_line(model)
 	if not f.is_empty():
 		lines.append(f)
@@ -139,6 +145,39 @@ static func status_line(s: Spirling) -> String:
 	if s.status_turns > 0:
 		return Loc.t("%s: %s, %d turns left") % [s.display_name(), label, s.status_turns]
 	return "%s: %s" % [s.display_name(), label]
+
+## "Kindlop holds: Ember Charm" for a Spirling with a keepsake (item 576), "" without one.
+static func held_line(s: Spirling) -> String:
+	if s == null or s.held.is_empty():
+		return ""
+	return Loc.t("%s holds: %s") % [s.display_name(), Loc.t(str(Database.item(s.held).get("name", s.held)))]
+
+## Growth each fighter would get for the foes still standing (item 578), the same sum as
+## BattleModel._award_xp before ring scaling. 0 when nobody earns any.
+static func growth_preview(model: BattleModel) -> int:
+	var earners: int = 0
+	for s: Spirling in model.participants:
+		var i: int = model.parties[BattleModel.Side.PLAYER].find(s)
+		if not s.is_fainted() and i >= 0 and not model.is_partner_index(BattleModel.Side.PLAYER, i):
+			earners += 1
+	if earners == 0:
+		return 0
+	var total: float = 0.0
+	for slot: int in model.standing_slots(BattleModel.Side.FOE):
+		var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, slot)
+		if foe != null:
+			total += float(foe.data.xp_yield) * float(foe.level) / BattleModel.XP_LEVEL_DIV
+	if not model.is_wild:
+		total *= BattleModel.TRAINER_XP_MULT
+	total *= model.xp_mult
+	return int(total / earners) if total > 0.0 else 0
+
+## Share of the boss's Vigor where its second phase starts, for a mark on its bar (item 598),
+## -1 when there is no phase still to come.
+static func phase_mark(model: BattleModel) -> float:
+	if model == null or model.foe_boss.is_empty() or model.boss_phase_done or BattleRules.boss_phase(model.foe_boss).is_empty():
+		return -1.0
+	return BattleRules.boss_phase_at(model.foe_boss, model.boss_difficulty)
 
 # --- Art card lines (items 571, 572) -----------------------------------------------------
 

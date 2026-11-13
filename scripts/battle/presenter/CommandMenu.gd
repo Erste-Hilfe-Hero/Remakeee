@@ -40,6 +40,12 @@ var _model: BattleModel
 var _slot: int = 0
 ## Row to focus first on the next refresh: the art this Spirling used last (item 603), -1 none.
 var prefer_row: int = -1
+## True while a later Spirling of a formation chooses, so Back can take the order before back.
+var undo_ok: bool = false
+
+func request_undo() -> void:
+	Sound.sfx("cancel")
+	chosen.emit(BattleAction.Kind.RUN, BattleComfort.UNDO)
 
 const LONG_PRESS: float = 0.45
 
@@ -208,6 +214,19 @@ func _ready() -> void:
 		if TapInput.is_release(ev):
 			close_info())
 	add_child(_info_panel)
+	apply_size()
+
+## Big buttons (KAMPF_PLAN item 623): every art row and command grows by BattleComfort.big_extra,
+## the panel with them. Called again when the setting changes in the battle's More list.
+func apply_size() -> void:
+	var e: Dictionary = EraBattleHud.for_era(era)
+	var extra: int = BattleComfort.big_extra()
+	custom_minimum_size = Vector2(0, BattleComfort.menu_height(era))
+	for b: Button in _move_buttons:
+		b.custom_minimum_size.y = int(e.get("art_h", MOVE_BUTTON_HEIGHT)) + extra
+	for b: Button in [_swap, _item, _bond, _run]:
+		if b != null:
+			b.custom_minimum_size.y = EraBattleHud.num(era, "command_h", SMALL_BUTTON_HEIGHT) + extra
 
 ## Fill of the command panel: plain paper in Era I, the era's light colour washed into paper
 ## later (the shared accent once the menu skin frames the panel).
@@ -337,7 +356,8 @@ func is_info_open() -> bool:
 ## art the turn it would land (item 578).
 static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 	var lines: Array[String] = [mv.move_name]
-	var kind: String = Loc.t(MoveData.Kind.keys()[mv.kind].capitalize())
+	# The kind's symbol (item 597): ! physical, * focus, ~ status, as in the rules page.
+	var kind: String = BattleHelp.kind_mark(mv.kind) + " " + Loc.t(MoveData.Kind.keys()[mv.kind].capitalize())
 	if mv.is_damaging():
 		lines.append(Loc.t("%s, %s, power %d") % [Elements.element_name(mv.element), kind, mv.power])
 	else:
@@ -715,6 +735,11 @@ func toggle_info(index: int) -> void:
 		open_info(index)
 
 func _unhandled_input(event: InputEvent) -> void:
+	# Back takes the order of the Spirling before back (KAMPF_PLAN item 604).
+	if undo_ok and is_visible_in_tree() and _content.visible and not is_info_open() and event.is_action_pressed("ui_cancel"):
+		get_viewport().set_input_as_handled()
+		request_undo()
+		return
 	if not is_visible_in_tree() or not _content.visible or not is_info_key(event):
 		return
 	var index: int = _move_buttons.find(get_viewport().gui_get_focus_owner())

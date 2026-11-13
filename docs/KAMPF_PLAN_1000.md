@@ -642,22 +642,22 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 565. [x] Kampflog (bestehend) mit Filter (BattleInfo.FILTERS, Filterzeile im Log)
 566. [x] Gegner-Info-Seite im Kampf (Traits, bekannte Techniken) (BattleInfo.facts oben im Log)
 567. [x] Gegner-Techniken werden bekannt, sobald sie benutzt wurden (BattleInfo.note/seen_arts)
-568. [ ] Matchup-Lexikon
-569. [ ] Werte-Rechner
-570. [ ] Kampfregeln-Seite
+568. [x] Matchup-Lexikon (BattleHelp.matchup_rows, Log > Mehr)
+569. [x] Werte-Rechner (BattleHelp.stat_rows, Log > Mehr)
+570. [x] Kampfregeln-Seite (BattleHelp.rule_rows, Log > Mehr)
 571. [x] Zugreihenfolge-Vorschau (BattleInfo.order_hint auf der Technik-Karte)
 572. [x] Energie-Vorschau (Technik-Karte: Energie danach)
 573. [x] Status-Dauer-Anzeige (BattleInfo.status_line im Log)
 574. [x] Feld-Restzüge-Anzeige (BattleInfo.field_line im Log)
 575. [x] Bank-Anzeige (TeamRow.gd, eigenes Team)
-576. [ ] Gegenstand-Anzeige
+576. [x] Gegenstand-Anzeige (BattleInfo.held_line im Log)
 577. [x] Trait-Anzeige nach Auslösung
-578. [ ] XP-Vorschau nach dem Kampf
+578. [x] XP-Vorschau nach dem Kampf (BattleInfo.growth_preview im Log)
 579. [x] Level-Cap-Anzeige (Ring-Obergrenze im Log und im Team-Menü)
 580. [x] Bond-Chance bewusst ohne Zahlen-Anzeige (Patent-Leitplanke: keine Fang-Quote) (tools/ip_check.sh sperrt Quoten-Anzeigen)
 581. [x] Kampfende-Bericht (BattleInfo.report_lines am Ende des Logs)
 582. [x] Replay-Ansicht (bestehend) (BattleReplay, OnlineReplaysMenu)
-583. [ ] Lexikon-Suche
+583. [x] Lexikon-Suche (BattleHelp.search, Log > Mehr > Suche)
 584. [x] Tipps beim ersten Kontakt (bestehend) (Tips battle/bond)
 585. [x] Tipps zu neuen Funktionen (Resonanz, Phasen) (Tips resonance/boss_phase)
 586. [x] Info-Texte in eigener Wortwahl (tools/ip_check.sh Phrasen-Sperre)
@@ -665,14 +665,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 588. [x] Info für Screenreader (accessibility_name an Leisten, Sprites, Zielen)
 589. [x] Info im Hochkontrast (high_contrast in CommandMenu/EraBattleHud)
 590. [x] Info-Bildschirm bei 144 px Breite lesbar (Viewport 144x256, Karte und Log umbrechen)
-591. [ ] Info-Kürzel einheitlich (ATK/DEF/FOC/SPD)
+591. [x] Info-Kürzel einheitlich (ATK/DEF/FOC/SPD) (BattleHelp.STAT_SHORT wie die Team-Übersicht)
 592. [x] Info: Krit-Treffer als 'keen hit' (bestehend, eigene Wortwahl) (BattleEvent.describe)
 593. [x] Info: Effektivität als x2/x.5 (bestehend) (CommandMenu.matchup_tag)
 594. [x] Info: Mehrfachziel als 'all' (bestehend) (CommandMenu.move_line)
 595. [x] Info: Priorität als Pfeil (^ vor dem Namen der Technik)
 596. [x] Info: Genauigkeit als Prozent
-597. [ ] Info: Kategorie-Symbol
-598. [ ] Info: Boss-Phasen-Marken
+597. [x] Info: Kategorie-Symbol (BattleHelp.KIND_MARK auf der Technik-Karte)
+598. [x] Info: Boss-Phasen-Marken (InfoStrip.phase_mark)
 599. [x] Info: Regel-Banner bei Warden (RuleBanner.gd)
 600. [x] Info: Seed im Log (BattleInfo.facts)
 
@@ -681,10 +681,10 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 601. [x] Tempo 1x/2x/4x (bestehend) (GameState.BATTLE_SPEEDS)
 602. [x] Auto-Kampf für Wildkämpfe (bestehend) (GameState.auto_battle)
 603. [x] Letzten Zug wiederholen (Cursor steht auf der zuletzt genutzten Technik, BattleInfo.focus_row)
-604. [ ] Rückgängig vor Zugstart
-605. [ ] Technik-Favoriten
-606. [ ] Technik-Reihenfolge
-607. [ ] Schnell-Heilen nach dem Kampf (Gegenstand-Vorschlag)
+604. [x] Rückgängig vor Zugstart (BattleComfort.undo, Zurück im Mehrfachkampf)
+605. [x] Technik-Favoriten (Spirling.fav_art, Team > Technik-Reihenfolge)
+606. [x] Technik-Reihenfolge (BattleComfort.move_art, Team > Technik-Reihenfolge)
+607. [x] Schnell-Heilen nach dem Kampf (Gegenstand-Vorschlag) (BattleComfort.heal_hint)
 608. [x] Schnell-Wechsel per Wischen bewusst nicht (Patent-Leitplanke: kein Swipe) (tools/ip_check.sh sperrt swipe)
 609. [x] Langer Druck für Info
 610. [x] Gamepad-Steuerung (bestehend) (SPEED_ACTION/AUTO_ACTION, Fokus)
@@ -698,15 +698,15 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 618. [x] Kampf-Text automatisch weiter (Option) (bei 2x/4x und Auto)
 619. [x] Batteriesparen (bestehend) (GameState.battery_saver)
 620. [x] Vibrations-Feedback (bestehend rumble) (GameState.vibration)
-621. [ ] Einstellungen im Kampf erreichbar
+621. [x] Einstellungen im Kampf erreichbar (Log > Mehr > Einstellungen)
 622. [x] Kampf-Menü-Höhe fest (bestehend) (CommandMenu.PANEL_HEIGHT)
-623. [ ] Große Knöpfe-Option
+623. [x] Große Knöpfe-Option (GameState.big_buttons, CommandMenu.apply_size)
 624. [x] Bestätigung bei riskanten Aktionen (Rückzug in Boss-Kampf nicht möglich) (Rückzug nur in Wildkämpfen)
 625. [x] Wechsel-Liste mit HP und Matchup (BattleInfo.switch_tag)
 626. [x] Gegenstand-Liste mit Wirkung (Beschreibung als Hinweiszeile)
 627. [x] Lager-Lernen-Option (umgesetzt) im Kampfmenü erklärt (Tipp battle_comfort, Log)
 628. [x] Gegner-Bank-Punkte (TeamRow.gd, Team des Gegners)
-629. [ ] Kampf-Wiederaufnahme nach Unterbrechung
+629. [x] Kampf-Wiederaufnahme nach Unterbrechung (BattleComfort.interruption: Auto und Text warten im Hintergrund)
 630. [ ] Schnellspeichern im Kampf bewusst nicht (kein Savescum auf Rift-Born)
 631. [x] Komfort-Tipps beim ersten Kampf (Tips battle_comfort)
 632. [ ] Kampf-Steuerung ohne Zeitdruck (keine Echtzeit-Elemente)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-774 von 1000 Punkten umgesetzt.
+790 von 1000 Punkten umgesetzt.
 
