@@ -320,7 +320,7 @@ func legal_actions(side: int, slot: int = 0) -> Array[BattleAction]:
 			any_move = true
 	if can_rest(any_move):
 		out.append(BattleAction.make_rest(side, slot))
-	if not StatusRules.blocks_swap(me.status):
+	if not StatusRules.blocks_swap(me.status) or TraitKit.free_swap(me):
 		for i: int in swap_candidates(side, slot):
 			out.append(BattleAction.make_swap(side, i, slot))
 	if _items_allowed_for(side, slot):
@@ -353,7 +353,7 @@ func is_legal(a: BattleAction) -> bool:
 				any_move = any_move or (me.can_afford(mv) and not move_locked(mv))
 			return can_rest(any_move)
 		BattleAction.Kind.SWAP:
-			return not StatusRules.blocks_swap(me.status) and a.swap_index in swap_candidates(a.side, a.slot)
+			return (not StatusRules.blocks_swap(me.status) or TraitKit.free_swap(me)) and a.swap_index in swap_candidates(a.side, a.slot)
 		BattleAction.Kind.ITEM:
 			if not _items_allowed_for(a.side, a.slot) or bag_count(a.side, a.item_id) <= 0 or not _is_battle_item(a.item_id):
 				return false

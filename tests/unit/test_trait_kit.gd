@@ -295,7 +295,11 @@ func test_same_seed_same_battle_without_kit() -> void:
 	# Hooks roll nothing unless a kit gift or keepsake is in play: two runs stay identical.
 	var logs: Array[String] = []
 	for run: int in 2:
-		var m: BattleModel = _model(_mon(), _mon(), 11)
+		var r := RandomNumberGenerator.new()
+		r.seed = 77
+		var a := Spirling.new(Database.species("Mossling"), 20, r)
+		var b := Spirling.new(Database.species("Mossling"), 20, r)
+		var m: BattleModel = _model(a, b, 11)
 		var lines: Array[String] = []
 		for t: int in 6:
 			for ev: BattleEvent in m.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_move(1, 0)):
