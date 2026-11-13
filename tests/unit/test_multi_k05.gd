@@ -406,3 +406,17 @@ func test_no_trading_places_in_one_on_one() -> void:
 	var m := _model([_mk("Kindlop"), _mk("Covepup")], [_mk("Mossling")], [1, 1])
 	m.start()
 	assert_true(MultiRules.shift_targets(m, Side.PLAYER, 0).is_empty())
+
+func test_support_arts_are_balanced_in_the_simulator() -> void:
+	var r: Dictionary = MultiSim.support_rate(40, 7)
+	assert_true(bool(r.ok), "support side wins %.0f %% of 2v2 mirror matches (band %s)" % [float(r.rate) * 100.0, str(r.band)])
+
+func test_decoy_and_guard_wait_until_they_help() -> void:
+	var m := _model([_mk("Cloudmop", ["Lure Dance"]), _mk("Plinthlet", ["Shell Ring"])], [_mk("Mossling"), _mk("Mossling")], [2, 2])
+	m.start()
+	assert_eq(MultiRules.ai_score(m, Side.PLAYER, 0, {"id": "decoy"}), 0.0, "nobody to shield at full Vigor")
+	assert_eq(MultiRules.ai_score(m, Side.PLAYER, 1, {"id": "team_guard"}), 0.0, "no guard before the first hits")
+	var hurt: Spirling = m.active_spirling(Side.PLAYER, 1)
+	hurt.hp = hurt.max_hp() / 3
+	assert_gt(MultiRules.ai_score(m, Side.PLAYER, 0, {"id": "decoy"}), 0.0)
+	assert_gt(MultiRules.ai_score(m, Side.PLAYER, 1, {"id": "team_guard"}), 0.0)

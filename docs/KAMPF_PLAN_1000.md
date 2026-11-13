@@ -442,7 +442,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 380. [x] Schutz eines Verbündeten (Wellenbrecher/Breakwater Stand)
 381. [x] Team-Schild (Schalenring/Shell Ring, 3 Runden x0.75)
 382. [x] Team-Heilung (Heilchor/Mending Chorus)
-383. [ ] Mehrfachkampf-Balancing im Simulator
+383. [x] Mehrfachkampf-Balancing im Simulator (MultiSim: 2v2-Spiegel mit Hilfstechnik, Band 30-70 %, KI wartet mit Köder und Schutz)
 384. [x] Mehrfachkampf-Layout für 4 Sprites (bestehend)
 385. [x] Mehrfachkampf: Ziel-Wahl merken
 386. [ ] Mehrfachkampf: 'Auto-Ziel' Option
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-167 von 1000 Punkten umgesetzt.
+168 von 1000 Punkten umgesetzt.
 

@@ -407,7 +407,7 @@ AREAS = [
 "[x] Schutz eines Verbündeten (Wellenbrecher/Breakwater Stand)",
 "[x] Team-Schild (Schalenring/Shell Ring, 3 Runden x0.75)",
 "[x] Team-Heilung (Heilchor/Mending Chorus)",
-"Mehrfachkampf-Balancing im Simulator",
+"[x] Mehrfachkampf-Balancing im Simulator (MultiSim: 2v2-Spiegel mit Hilfstechnik, Band 30-70 %, KI wartet mit Köder und Schutz)",
 "[x] Mehrfachkampf-Layout für 4 Sprites (bestehend)",
 "[x] Mehrfachkampf: Ziel-Wahl merken",
 "Mehrfachkampf: 'Auto-Ziel' Option",

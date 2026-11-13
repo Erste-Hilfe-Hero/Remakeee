@@ -359,15 +359,26 @@ static func ai_score(m: BattleModel, side: int, slot: int, fx: Dictionary) -> fl
 			var lost: float = 0.0
 			for s: int in mates:
 				lost += minf(float(fx.get("amount", 0.2)), 1.0 - m.active_spirling(side, s).hp_fraction())
-			return 40.0 * lost
+			# One small heal is worth it only once the side has lost a fair share.
+			return 40.0 * lost if lost >= 0.3 else 0.0
 		&"heal_ally":
 			var w: int = weakest_ally(m, side, slot)
 			var f: float = m.active_spirling(side, w).hp_fraction() if w >= 0 else me.hp_fraction()
 			return 40.0 * minf(float(fx.get("amount", 0.33)), 1.0 - f) if f < 0.6 else 0.0
 		&"team_guard":
-			return 6.0 * float(mates.size()) if state(m, side, "team_guard").is_empty() and mates.size() > 1 else 0.0
+			# A guard pays off once the foes have started to hurt the side.
+			if not state(m, side, "team_guard").is_empty() or mates.size() < 2:
+				return 0.0
+			var hurt: float = 0.0
+			for s2: int in mates:
+				hurt += 1.0 - m.active_spirling(side, s2).hp_fraction()
+			return 12.0 * hurt if hurt >= 0.25 else 0.0
 		&"decoy":
-			return 8.0 * me.hp_fraction() if state(m, side, "decoy").is_empty() and mates.size() > 1 else 0.0
+			# Drawing the hits is only worth a turn when it shields an ally worse off than itself.
+			var w3: int = weakest_ally(m, side, slot)
+			if w3 < 0 or not state(m, side, "decoy").is_empty():
+				return 0.0
+			return 12.0 * maxf(0.0, me.hp_fraction() - m.active_spirling(side, w3).hp_fraction())
 		&"cover":
 			var w2: int = weakest_ally(m, side, slot)
 			if w2 < 0 or not state(m, side, "cover").is_empty():
