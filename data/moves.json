@@ -5044,7 +5044,8 @@
   "effect": "status_veil",
   "effect_amount": 5,
   "era": 1,
-  "desc": "A soft veil over the whole side: no foe status takes hold for 5 turns."
+  "desc": "A soft veil over the whole side: no foe status takes hold for 5 turns.",
+  "priority": 2
  },
  {
   "name": "Mending Chorus",
@@ -5350,5 +5351,65 @@
   "effect": "reset_target",
   "era": 1,
   "desc": "Wipes the foe clean: all its stages go back to 0. Its own stay."
+ },
+ {
+  "name": "Long Breath",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 0,
+  "stat": "spd",
+  "stages": -1,
+  "self": true,
+  "effect": "energy_gain",
+  "effect_amount": 3,
+  "era": 1,
+  "desc": "Draws one long, slow breath: gains 3 Energy, but its Pace drops by 1."
+ },
+ {
+  "name": "Spark Share",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 1,
+  "effect": "energy_give",
+  "effect_amount": 3,
+  "era": 1,
+  "desc": "Passes up to 3 of its own Energy to the ally beside it."
+ },
+ {
+  "name": "Charge Mirror",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "energy_swap",
+  "era": 1,
+  "desc": "Holds up a mirror to the foe's charge: the two trade their Energy."
+ },
+ {
+  "name": "Fuse Snap",
+  "element": "VOLT",
+  "kind": "PHYSICAL",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "energy_lock",
+  "effect_amount": 1,
+  "era": 1,
+  "desc": "Snaps the foe's fuse: it gains no Energy at the end of this turn."
+ },
+ {
+  "name": "Scrap Swipe",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 20,
+  "accuracy": 0.9,
+  "energy": 0,
+  "era": 1,
+  "desc": "A swipe with whatever lies around. Weak, but it costs nothing."
  }
 ]

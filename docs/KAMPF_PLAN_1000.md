@@ -34,88 +34,88 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Zugablauf und Grundregeln
 
 1. [x] Ruhe-Regel in Wayfarer-Kämpfen: pro Seite darf nur ein Spirling gleichzeitig Drowse haben
-2. [ ] Zugreihenfolge vor der Wahl als kleine Leiste anzeigen (wer handelt zuerst, nach SPD und Priorität)
-3. [ ] Priorität +2 für seltene Schutz-Techniken einführen, sonst bleibt +1 das Maximum
-4. [ ] Gleichstand bei SPD sichtbar als Münzwurf-Symbol im Kampflog
-5. [ ] Rundenzähler oben links, nur in Wayfarer- und Boss-Kämpfen
+2. [x] Zugreihenfolge vor der Wahl als kleine Leiste anzeigen (wer handelt zuerst, nach SPD und Priorität) (BattleInfo.order_hint auf der Technik-Karte)
+3. [x] Priorität +2 für seltene Schutz-Techniken einführen, sonst bleibt +1 das Maximum (Calm Veil +2, test_kampf_k01b)
+4. [x] Gleichstand bei SPD sichtbar als Münzwurf-Symbol im Kampflog (BattleModel._note_speed_ties, SPEED_TIE)
+5. [x] Rundenzähler oben links, nur in Wayfarer- und Boss-Kämpfen (BattleScene.show_turns)
 6. [ ] Zug-Timeout für Online-Echo-Duelle (60 s, danach Rasten)
 7. [ ] Rückgängig-Knopf für die Befehlswahl im Mehrfachkampf, bevor der Zug startet
 8. [ ] Aufgeben-Option in Wayfarer-Kämpfen mit Bestätigung (zählt als Niederlage, kein Geldverlust auf Story)
 9. [ ] Wechsel nach einem K.o. des Gegners anbieten (Stufe Story und Wayfarer), auf Veteran abschaltbar
 10. [ ] Gegner kündigt seinen nächsten Spirling an, wenn er wechselt (Ankündigungs-Option)
-11. [ ] Doppelte Aktion eines Bosses klar als 'Nachhall' markieren
+11. [x] Doppelte Aktion eines Bosses klar als 'Nachhall' markieren (BONUS_ACTION)
 12. [ ] Rasten im Mehrfachkampf: Wahl 'Alle rasten' als Abkürzung
-13. [ ] Schnellwahl 'Letzten Zug wiederholen' für Wildkämpfe
-14. [ ] Zugvorschau: Fehlschlag-Chance bei Genauigkeit unter 100 % als Prozentwert
+13. [x] Schnellwahl 'Letzten Zug wiederholen' für Wildkämpfe (CommandMenu.prefer_row, BattleInfo.focus_row: Fokus liegt auf der letzten Technik)
+14. [x] Zugvorschau: Fehlschlag-Chance bei Genauigkeit unter 100 % als Prozentwert (BattleInfo.miss_pct)
 15. [ ] Kampfbeginn mit Initiative-Bonus, wenn der Spieler den Gegner von hinten anspricht
-16. [ ] Überraschungsangriff wilder Spirlings im hohen Farn: erster Zug für den Gegner (selten)
-17. [ ] Klare Regel: Gegenstände kosten den ganzen Zug des Spirlings, der sie benutzt
-18. [ ] Rückzug aus Wildkämpfen bleibt ohne Kosten, wiederholte Versuche werden leichter (bestehend, dokumentieren)
-19. [ ] Endzug-Reihenfolge festlegen und im Lexikon erklären: Status, Regeneration, Energie, Feld
-20. [x] Kampfende-Zusammenfassung: Schaden, K.o.s, MVP-Spirling (BattleInfo.report_lines mit 'Star des Kampfes', BattleInfo.star_of)
-21. [ ] Zug-Limit für Boss-Kämpfe (z. B. 30 Züge), danach Riss schließt sich erneut
+16. [x] Überraschungsangriff wilder Spirlings im hohen Farn: erster Zug für den Gegner (selten) (BattleModel.ambush, Overworld)
+17. [x] Klare Regel: Gegenstände kosten den ganzen Zug des Spirlings, der sie benutzt (RulesBook, test_kampf_k01)
+18. [x] Rückzug aus Wildkämpfen bleibt ohne Kosten, wiederholte Versuche werden leichter (bestehend, dokumentieren) (RulesBook.fleeing)
+19. [x] Endzug-Reihenfolge festlegen und im Lexikon erklären: Status, Regeneration, Energie, Feld (RulesBook.end_of_turn)
+20. [x] Kampfende-Zusammenfassung: Schaden, K.o.s, MVP-Spirling (BattleSummary; BattleInfo.star_of)
+21. [x] Zug-Limit für Boss-Kämpfe (z. B. 30 Züge), danach Riss schließt sich erneut (BOSS_ROUND_LIMIT, ROUND_LIMIT)
 22. [ ] Optionale 'Sanfte Niederlage' auf Story: Team erwacht mit halben HP am Kampfort
-23. [ ] Seed des Kampfes im Log anzeigen (für Wiederholungen und Fehlerberichte)
+23. [x] Seed des Kampfes im Log anzeigen (für Wiederholungen und Fehlerberichte) (BattleSummary.seed_line im Log)
 24. [ ] Pause-Menü im Kampf mit Einstellungen, ohne den Kampf zu verlassen
-25. [ ] Mehrfachziel-Techniken treffen Verbündete nie (bestehende Regel festschreiben)
-26. [ ] Fehlende Aktionen eines Slots werden zu Rasten, nie zu Zufallszügen (bestehend, testen)
+25. [x] Mehrfachziel-Techniken treffen Verbündete nie (bestehende Regel festschreiben) (RulesBook, test_kampf_k01)
+26. [x] Fehlende Aktionen eines Slots werden zu Rasten, nie zu Zufallszügen (bestehend, testen) (test_kampf_k01)
 27. [ ] Gegner-Bank-Anzahl als Punkte am Rand (wie viele Spirlings noch kommen)
 28. [ ] Spieler-Bank-Anzahl ebenfalls als Punkte
 29. [ ] Kampfstart-Text kürzer bei 2x/4x Tempo
 30. [ ] Zwischenspeichern vor Boss-Kämpfen automatisch
 31. [ ] Kampf fortsetzen nach App-Neustart (Zustand pro Zug sichern)
-32. [ ] Wechsel kostet keine Energie, aber der neue Spirling startet mit seiner gespeicherten Energie
-33. [ ] Energie bleibt pro Spirling beim Wechsel erhalten (bestehend, sichtbar machen)
-34. [ ] Zufallszahlen fair: gleicher Seed erzeugt denselben Kampf (bestehend, Regressionstest)
-35. [ ] Keine versteckten Gummiband-Effekte: Gegner betrügt nie bei Würfen
-36. [ ] Treffer-Glück der Gegner auf Story leicht senken (Krit-Chance halbiert)
-37. [ ] Kampfregeln-Seite im Lexikon mit allen Zahlen
-38. [ ] Turnierregel 'Gleiches Level': alle Spirlings auf Lv 50 skaliert
-39. [ ] Turnierregel 'Ohne Gegenstände'
-40. [ ] Turnierregel 'Nur ein Element pro Team'
+32. [x] Wechsel kostet keine Energie, aber der neue Spirling startet mit seiner gespeicherten Energie (test_kampf_k01)
+33. [x] Energie bleibt pro Spirling beim Wechsel erhalten (bestehend, sichtbar machen) (RulesBook.energy)
+34. [x] Zufallszahlen fair: gleicher Seed erzeugt denselben Kampf (bestehend, Regressionstest) (test_battle_model.test_same_seed_same_battle)
+35. [x] Keine versteckten Gummiband-Effekte: Gegner betrügt nie bei Würfen (BattleModel.hit_chance, test_kampf_k01b)
+36. [x] Treffer-Glück der Gegner auf Story leicht senken (Krit-Chance halbiert) (foe_crit_mult)
+37. [x] Kampfregeln-Seite im Lexikon mit allen Zahlen (RulesBook, Menü Kampfregeln)
+38. [x] Turnierregel 'Gleiches Level': alle Spirlings auf Lv 50 skaliert (Fair League, LeagueRules.FAIR_RING)
+39. [x] Turnierregel 'Ohne Gegenstände' (Herausforderung Empty Pockets)
+40. [x] Turnierregel 'Nur ein Element pro Team' (Herausforderung One Colour)
 
 ## Energie und Overcharge
 
-41. [ ] Energie-Vorschau: nach Wahl einer Technik zeigen, wie viel Energie danach bleibt
-42. [ ] Rasten im Feld 'Hohe Flut' gibt +1 Energie extra (Feldbonus)
-43. [ ] Energie-Kristall als gehaltener Gegenstand: Start mit +2 Energie
-44. [ ] Techniken mit 0 Energiekosten, aber halber Stärke (Notfall-Techniken)
-45. [ ] Overcharge-Techniken zeigen den aktuellen Multiplikator im Menü
-46. [ ] Energie-Diebstahl-Techniken klarer kennzeichnen (Symbol)
-47. [ ] Energie-Sperre-Status: eine Runde kein Energiegewinn
-48. [ ] Trait 'Sparflamme': Techniken ab 5 Energie kosten 1 weniger
-49. [ ] Trait 'Überladen': bei voller Energie +10 % Schaden
+41. [x] Energie-Vorschau: nach Wahl einer Technik zeigen, wie viel Energie danach bleibt (BattleInfo.energy_after)
+42. [x] Rasten im Feld 'Hohe Flut' gibt +1 Energie extra (Feldbonus) (FIELDS.high_tide rest_bonus)
+43. [x] Energie-Kristall als gehaltener Gegenstand: Start mit +2 Energie (Item energy_crystal, start_energy)
+44. [x] Techniken mit 0 Energiekosten, aber halber Stärke (Notfall-Techniken) (Scrap Swipe)
+45. [x] Overcharge-Techniken zeigen den aktuellen Multiplikator im Menü (CommandMenu.overcharge_now)
+46. [x] Energie-Diebstahl-Techniken klarer kennzeichnen (Symbol) (CommandMenu.art_marks)
+47. [x] Energie-Sperre-Status: eine Runde kein Energiegewinn (Effekt energy_lock, Fuse Snap)
+48. [x] Trait 'Sparflamme': Techniken ab 5 Energie kosten 1 weniger (Trait low_flame)
+49. [x] Trait 'Überladen': bei voller Energie +10 % Schaden (Trait overflow)
 50. [ ] Maximale Energie pro Art leicht variieren (10 bis 12)
-51. [ ] Energie-Leiste als Ziffer für Screenreader
-52. [ ] Rasten heilt auf Story-Stufe zusätzlich 5 % HP
-53. [ ] Gegner-Energie im Info-Streifen anzeigen (bestehend, Lexikon erwähnen)
-54. [ ] Warden-Regel 'Ebbe': Spieler startet mit 1 Energie weniger
-55. [ ] Warden-Regel 'Glutpuls' (bestehend) im Lexikon erklären
-56. [ ] Technik 'Atemzug': +3 Energie, aber SPD -1
-57. [ ] Energie-Übertragung an einen Verbündeten im Mehrfachkampf
-58. [ ] Energie-Spiegel: Technik, die die Energie beider Seiten tauscht
-59. [ ] Overcharge-Kette: zwei Overcharge-Techniken hintereinander geben Bonus
-60. [ ] Overcharge-Sound steigt mit eingesetzter Energie
-61. [ ] Energie-Kosten-Balance über den Balancing-Simulator prüfen
-62. [ ] KI berücksichtigt Energie für den nächsten Zug (zwei Züge vorausplanen)
-63. [ ] KI rastet gezielt, wenn eine starke Technik bald bezahlbar ist
+51. [x] Energie-Leiste als Ziffer für Screenreader (InfoStrip.screen_reader_text)
+52. [x] Rasten heilt auf Story-Stufe zusätzlich 5 % HP (BattleModel.rest_heal_share)
+53. [x] Gegner-Energie im Info-Streifen anzeigen (bestehend, Lexikon erwähnen) (InfoStrip, RulesBook.energy)
+54. [x] Warden-Regel 'Ebbe': Spieler startet mit 1 Energie weniger (RULES.low_tide)
+55. [x] Warden-Regel 'Glutpuls' (bestehend) im Lexikon erklären (RulesBook.warden_rules)
+56. [x] Technik 'Atemzug': +3 Energie, aber SPD -1 (Long Breath)
+57. [x] Energie-Übertragung an einen Verbündeten im Mehrfachkampf (Spark Share, energy_give)
+58. [x] Energie-Spiegel: Technik, die die Energie beider Seiten tauscht (Charge Mirror, energy_swap)
+59. [x] Overcharge-Kette: zwei Overcharge-Techniken hintereinander geben Bonus (OVERCHARGE_CHAIN_BONUS)
+60. [x] Overcharge-Sound steigt mit eingesetzter Energie (BattleAudio.overcharge_pitch, Plan 687)
+61. [x] Energie-Kosten-Balance über den Balancing-Simulator prüfen (BalanceSim.ENERGY_PER_ART_BAND)
+62. [x] KI berücksichtigt Energie für den nächsten Zug (zwei Züge vorausplanen) (BattleAI plan_energy)
+63. [x] KI rastet gezielt, wenn eine starke Technik bald bezahlbar ist (BattleAI plan_energy, PLAN_MARGIN)
 64. [ ] Energie-Tutorial im ersten Wildkampf
-65. [ ] Hinweis, wenn eine Technik nie bezahlbar ist (Energie-Max zu klein)
-66. [ ] Gegenstand 'Funkentrank' gibt +3 Energie (prüfen, ob bestehend)
+65. [x] Hinweis, wenn eine Technik nie bezahlbar ist (Energie-Max zu klein) (CommandMenu.move_line 'never')
+66. [x] Gegenstand 'Funkentrank' gibt +3 Energie (prüfen, ob bestehend) (Spark Drop +5)
 67. [ ] Energie-Regeneration bei Wechsel auf die Bank: +1 pro Runde auf der Bank
-68. [ ] Energie-Startwert pro Schwierigkeit anpassen
-69. [ ] Overcharge in Bosskämpfen begrenzen (max. +5)
-70. [ ] Energie-Kosten im Lexikon jeder Technik
-71. [ ] Energie-Symbol farbenblind-sicher mit Form statt Farbe
+68. [x] Energie-Startwert pro Schwierigkeit anpassen (BattleRules.FOE_START_CUT)
+69. [x] Overcharge in Bosskämpfen begrenzen (max. +5) (OVERCHARGE_MAX_EXTRA gilt überall)
+70. [x] Energie-Kosten im Lexikon jeder Technik (CommandMenu.move_info)
+71. [x] Energie-Symbol farbenblind-sicher mit Form statt Farbe (InfoStrip: volle Pips gefüllt, leere als Umriss)
 72. [ ] Energie-Pips größer im Einhand-Modus
 73. [ ] Animation: Energie fließt beim Rasten sichtbar zurück
 74. [ ] Energieverlust durch Status 'Soak' als Option prüfen
-75. [ ] Feld 'Statischer Schleier' (neu): Volt-Techniken kosten 1 weniger
-76. [ ] Energie-Statistik im Kampfende-Bericht
+75. [x] Feld 'Statischer Schleier' (neu): Volt-Techniken kosten 1 weniger (cheap_element, nur als Feld des Ortes)
+76. [x] Energie-Statistik im Kampfende-Bericht (BattleSummary.energy_spent)
 77. [ ] Techniken mit variabler Stärke nach verbrauchter Energie (bestehend: Overcharge) erweitern
-78. [ ] Energie als Ziel für Gegenstand 'Ruhekerze'
-79. [ ] Online-Duelle: gleiche Energie-Regeln, keine Ausnahmen
-80. [ ] Energie-Werte in den Balancing-Bericht aufnehmen
+78. [x] Energie als Ziel für Gegenstand 'Ruhekerze' (Item rest_candle)
+79. [x] Online-Duelle: gleiche Energie-Regeln, keine Ausnahmen (LiveBattleModel nutzt BattleModel, RulesBook)
+80. [x] Energie-Werte in den Balancing-Bericht aufnehmen (BalanceSim.energy_line)
 
 ## Elemente und Matchups
 
@@ -866,7 +866,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 774. [x] Wild-Auto-Kampf (bestehend)
 775. [x] Wild-Level an Gebiet (encounters.json min/max)
 776. [x] Wild-KI Stufe 0 (bestehend)
-777. [x] Wild-Überraschung (WildRules.surprise: Wildes greift in Runde 1 zuerst an, nachts öfter)
+777. [x] Wild-Überraschung (Hinterhalt BattleModel.ambush aus Punkt 16, nachts doppelt so oft: WildRules.ambush_mult)
 778. [x] Wild-Rückzug-Regel (bestehend)
 779. [x] Wild-Spirlings mit Gegenständen (selten) (WildRules.roll_held)
 780. [x] Wild-Begegnungs-Rate einstellbar (Laterne) (Sturmlaterne im Beutel, WildRules.lantern_mult)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-711 von 1000 Punkten umgesetzt.
+768 von 1000 Punkten umgesetzt.
 
