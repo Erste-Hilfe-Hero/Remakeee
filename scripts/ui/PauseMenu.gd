@@ -454,6 +454,7 @@ func run_records() -> void:
 		lines.append("Run chronicle")
 		lines.append("Era functions")
 		lines.append("Finds by region")
+		lines.append("Growth and bonds")
 		if not memorial_lines().is_empty():
 			lines.append("Memorial book")
 		if not Album.stickers().is_empty():
@@ -482,6 +483,7 @@ func run_records() -> void:
 			"Run chronicle": await info("\n".join(RunChronicle.lines()))
 			"Era functions": await run_era_functions()
 			"Finds by region": await info("\n".join(RegionStats.lines(GameState.flags)))
+			"Growth and bonds": await info("\n".join(GrowthRules.summary_lines(GameState.records) + WildRules.bond_lines(GameState.records) + WildRules.event_lines(DailyFind.today_key())))
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Lexicon": await run_lexicon()
@@ -520,7 +522,11 @@ func run_lexicon() -> void:
 		elif i == 1:
 			await info(WayfarerBook.page(DailyFind.today_key()))
 		else:
-			await info(Loc.t(Lexicon.text(ids[i - 2])))
+			var page: String = Loc.t(Lexicon.text(ids[i - 2]))
+			# The bond page carries the live counts (KAMPF_PLAN "Bond-Statistik im Lexikon").
+			if ids[i - 2] == WildRules.BOND_LEXICON:
+				page += "\n\n" + "\n".join(WildRules.bond_lines(GameState.records))
+			await info(page)
 
 ## The battle guide (KAMPF_PLAN_1000): statuses, stages, keen hits and values with their numbers.
 func run_battle_guide() -> void:
@@ -1113,6 +1119,8 @@ func run_bag() -> void:
 			await _teach_echo(item_id)
 		elif int(it.get("spark", 0)) > 0:
 			await _use_spark_charm(item_id)
+		elif bool(it.get("spark_reset", false)):
+			await _use_spark_wash(item_id)
 		elif int(it.get("crystal", 0)) > 0:
 			await _use_stat_crystal(item_id)
 		elif bool(it.get("temper_shift", false)):
@@ -1128,6 +1136,8 @@ func run_bag() -> void:
 			await _use_on_party(item_id)
 		elif item_id == TideChart.ITEM:
 			await info("\n".join(TideChart.lines()))
+		elif item_id == WildRules.LANTERN_ITEM:
+			await _lantern_setting()
 		elif bool(it.get("gear", false)):
 			await info(gear_page(item_id), gear_picture(item_id))
 		else:
@@ -1365,6 +1375,37 @@ func _use_spark_charm(id: String) -> void:
 		GameState.inventory.erase(id)
 	Sound.sfx("level_up")
 	await info("%s's %s spark grew brighter!" % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()])
+
+## The Storm Lantern's flame: how many wild Spirlings step out (WildRules.lantern_mult).
+func _lantern_setting() -> void:
+	var opts: Array[String] = []
+	for i: int in WildRules.LANTERN_WORDS.size():
+		opts.append(("> " if i == WildRules.lantern_setting(GameState.records) else "") + Loc.t(WildRules.LANTERN_WORDS[i]))
+	var pick: int = await pick_strings(Loc.t("Storm Lantern: how bright?"), opts)
+	if pick >= 0:
+		GameState.records[WildRules.LANTERN_RECORD] = pick
+		await info(Loc.t("The lantern burns: %s") % Loc.t(WildRules.LANTERN_WORDS[pick]))
+
+## Spark Wash (KAMPF_PLAN "Spark-Reset"): one spark of one Spirling back to 0.
+func _use_spark_wash(id: String) -> void:
+	var names: Array[String] = []
+	for s: Spirling in GameState.party:
+		names.append(MenuHost.party_line(s))
+	var who: int = await pick_strings(Loc.t("Use the Spark Wash on?"), names)
+	if who < 0:
+		return
+	var s: Spirling = GameState.party[who]
+	var stats: Array[String] = []
+	for key: String in Spirling.STAT_KEYS:
+		stats.append("%s: %s" % [key.to_upper(), GameState.spark_word(int(s.spark.get(key, 0)))])
+	var pick: int = await pick_strings(Loc.t("Wash out which spark?"), stats)
+	if pick < 0:
+		return
+	if not GrowthRules.reset_spark(s, Spirling.STAT_KEYS[pick]):
+		await info(Loc.t("That spark is already dark."))
+		return
+	GameState.take_item(id)
+	await info(Loc.t("%s's %s spark is washed out.") % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()])
 
 ## Stat Crystal from the shop: adds its points to one stat of one Spirling, up to twice the
 ## free Spark cap per stat.
