@@ -103,9 +103,6 @@ var oath_turns: int = 0
 var mend_turns: int = 0
 ## Battle-only: turns left in which an energy_burn can't take Energy again, same counting.
 var burn_guard: int = 0
-## Battle-only: arts of this element cost 1 Energy less (the field's "cheap_element", set by
-## BattleModel whenever the field changes; -1 for none, KAMPF_PLAN item 75).
-var cheap_element: int = -1
 ## Battle-only: the turn this Spirling last used an Overcharge art (-9 for none), so a second one
 ## in the very next turn chains (KAMPF_PLAN item 59).
 var overcharge_turn: int = -9
@@ -259,12 +256,8 @@ func hp_fraction() -> float:
 	return float(hp) / float(max_hp())
 
 ## Energy [param move] costs right now: its own cost plus the Energy tax while one lasts.
-## A field that favours the art's element takes 1 off, but never below 1 (KAMPF_PLAN item 75).
 func move_cost(move: MoveData) -> int:
-	var c: int = move.energy_cost + (BattleRules.ENERGY_TAX_COST if energy_tax > 0 else 0)
-	if cheap_element >= 0 and move.element == cheap_element and c > 1:
-		c -= BattleRules.FIELD_COST_CUT
-	return c
+	return move.energy_cost + (BattleRules.ENERGY_TAX_COST if energy_tax > 0 else 0)
 
 ## Turns [param move] stays locked after a use ("cooldown"), 0 when it is free.
 func cooldown_left(move: MoveData) -> int:
@@ -303,7 +296,6 @@ func end_battle() -> void:
 	mend_turns = 0
 	burn_guard = 0
 	oath_turns = 0
-	cheap_element = -1
 	overcharge_turn = -9
 	cooldowns.clear()
 	status = ""

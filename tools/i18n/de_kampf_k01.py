@@ -53,7 +53,6 @@ T = {
     "Live duels and leagues use the very same Energy rules.": "Live-Duelle und Ligen nutzen genau dieselben Energie-Regeln.",
     "%s: %s arts +%d%%, %s arts -%d%%.": "%s: %s-Techniken +%d%%, %s-Techniken -%d%%.",
     "Rest gives +%d Energy more.": "Rasten gibt +%d Energie mehr.",
-    "%s arts cost %d Energy less.": "%s-Techniken kosten %d Energie weniger.",
     "Nobody catches %s.": "Niemand bekommt %s.",
     "A called field holds for %d turns.": "Ein gerufenes Feld hält %d Runden.",
     "Leaving a wild battle costs nothing.": "Ein Wildkampf lässt sich ohne Kosten verlassen.",

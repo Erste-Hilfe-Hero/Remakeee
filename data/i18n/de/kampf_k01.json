@@ -3,7 +3,6 @@
  "keep": [],
  "strings": {
   "%dE x%.1f": "%dE x%.1f",
-  "%s arts cost %d Energy less.": "%s-Techniken kosten %d Energie weniger.",
   "%s chains its Overcharge!": "%s verkettet die Überladung!",
   "%s leaps out of the tall grass and strikes first!": "%s springt aus dem hohen Gras und greift zuerst an!",
   "%s was the best: %d damage, %d down": "%s war am stärksten: %d Schaden, %d besiegt",

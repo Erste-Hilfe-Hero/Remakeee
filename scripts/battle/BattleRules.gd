@@ -14,8 +14,6 @@ const OVERCHARGE_MAX_EXTRA: int = 5
 ## Overcharge chain (KAMPF_PLAN item 59): an Overcharge art in the turn right after the same
 ## Spirling's last one adds this much to the power multiplier.
 const OVERCHARGE_CHAIN_BONUS: float = 0.15
-## Energy a field's "cheap_element" takes off arts of that element (never below 1, item 75).
-const FIELD_COST_CUT: int = 1
 
 ## Power multiplier of an Overcharge art that has [param left] Energy left after its own cost.
 static func overcharge_mult(left: int, chained: bool = false) -> float:
@@ -82,7 +80,6 @@ const TRAITS: Dictionary[String, Dictionary] = {
 ##   blocks:        statuses that can't take hold while the field lasts
 ##   regen_element: Spirlings of this element heal max_hp / regen_div at the end of each turn
 ##   rest_bonus:    extra Energy for every Rest while the field lasts (KAMPF_PLAN item 42)
-##   cheap_element: arts of this element cost FIELD_COST_CUT less Energy (item 75)
 const FIELDS: Dictionary[String, Dictionary] = {
 	"ash_storm": {"label": "Ash Storm", "boost": "EMBER", "weaken": "TIDE",
 		"intro": "Ash swirls through the Rift. Ember arts burn brighter, Tide arts sputter."},
@@ -90,7 +87,7 @@ const FIELDS: Dictionary[String, Dictionary] = {
 		"intro": "The water rises around you. Tide arts surge, Ember arts fizzle, and nothing catches fire."},
 	"deep_murk": {"label": "Deep Murk", "boost": "UMBRA", "weaken": "LUMEN",
 		"intro": "The hollow swallows the light. Umbra arts deepen, Lumen arts dim."},
-	"static_veil": {"label": "Static Veil", "boost": "VOLT", "weaken": "STONE", "cheap_element": "VOLT",
+	"static_veil": {"label": "Static Veil", "boost": "VOLT", "weaken": "STONE",
 		"intro": "The air crackles. Volt arts snap harder, Stone arts crumble."},
 	"pollen_drift": {"label": "Pollen Drift", "boost": "BLOOM", "weaken": "GALE", "regen_element": "BLOOM", "regen_div": 16,
 		"intro": "Pollen drifts through the Rift. Bloom arts flourish and Bloom Spirlings mend, Gale arts stall."},

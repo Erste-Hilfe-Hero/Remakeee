@@ -83,7 +83,7 @@ AREAS = [
 "Energie-Pips größer im Einhand-Modus",
 "Animation: Energie fließt beim Rasten sichtbar zurück",
 "Energieverlust durch Status 'Soak' als Option prüfen",
-"[x] Feld 'Statischer Schleier' (neu): Volt-Techniken kosten 1 weniger (FIELDS.static_veil cheap_element)",
+"Feld 'Statischer Schleier' (neu): Volt-Techniken kosten 1 weniger",
 "[x] Energie-Statistik im Kampfende-Bericht (BattleSummary.energy_spent)",
 "Techniken mit variabler Stärke nach verbrauchter Energie (bestehend: Overcharge) erweitern",
 "[x] Energie als Ziel für Gegenstand 'Ruhekerze' (Item rest_candle)",

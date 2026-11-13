@@ -43,7 +43,7 @@
   "energy": 3,
   "energy_bench": true,
   "price": 250,
-  "tradeable": true
+  "tradeable": false
  },
  {
   "id": "revival_leaf",

@@ -1,6 +1,6 @@
 extends GutTest
 ## KAMPF_PLAN_1000, areas "Zugablauf und Grundregeln" and "Energie und Overcharge": coin toss,
-## reverb, ambush, boss turn limit, Story softening, field Energy rules, Overcharge chain,
+## reverb, ambush, boss turn limit, Story softening, High Tide Rest, Overcharge chain,
 ## Low Tide, Rest Candle, end report, rules book and the rules already in place.
 
 const Side := BattleModel.Side
@@ -130,21 +130,6 @@ func test_high_tide_rest_gives_more_energy() -> void:
 	a.energy = 2
 	m.submit_turn(BattleAction.make_rest(Side.PLAYER), BattleAction.make_rest(Side.FOE))
 	assert_eq(a.energy, 2 + BattleModel.REST_ENERGY + 1 + BattleModel.ENERGY_PER_TURN)
-
-func test_static_veil_makes_volt_cheaper() -> void:
-	var z := _mk("Zippit", ["Overcharge", "Cinder Nip"] as Array[String])
-	var m := BattleModel.new([z] as Array[Spirling], [_mk("Mossling", ["Cinder Nip"] as Array[String])] as Array[Spirling], true, 7, 0)
-	var volt: MoveData = z.moves[0]
-	var ember: MoveData = z.moves[1]
-	m.field = "static_veil"
-	m.start()
-	assert_eq(z.move_cost(volt), maxi(1, volt.energy_cost - BattleRules.FIELD_COST_CUT))
-	assert_eq(z.move_cost(ember), ember.energy_cost)
-	m.field = ""
-	assert_eq(z.move_cost(volt), volt.energy_cost, "gone with the field")
-	m.field = "static_veil"
-	z.end_battle()
-	assert_eq(z.move_cost(volt), volt.energy_cost, "never outlives the battle")
 
 func test_overcharge_chain() -> void:
 	var z := _mk("Zippit", ["Overcharge"] as Array[String], 20)

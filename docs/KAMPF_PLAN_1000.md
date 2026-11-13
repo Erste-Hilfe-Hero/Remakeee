@@ -110,7 +110,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 72. [ ] Energie-Pips größer im Einhand-Modus
 73. [ ] Animation: Energie fließt beim Rasten sichtbar zurück
 74. [ ] Energieverlust durch Status 'Soak' als Option prüfen
-75. [x] Feld 'Statischer Schleier' (neu): Volt-Techniken kosten 1 weniger (FIELDS.static_veil cheap_element)
+75. [ ] Feld 'Statischer Schleier' (neu): Volt-Techniken kosten 1 weniger
 76. [x] Energie-Statistik im Kampfende-Bericht (BattleSummary.energy_spent)
 77. [ ] Techniken mit variabler Stärke nach verbrauchter Energie (bestehend: Overcharge) erweitern
 78. [x] Energie als Ziel für Gegenstand 'Ruhekerze' (Item rest_candle)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-71 von 1000 Punkten umgesetzt.
+70 von 1000 Punkten umgesetzt.
 

@@ -142,11 +142,7 @@ var bonded: Spirling = null
 var participants: Array[Spirling] = []
 ## Rift field id (BattleRules.FIELDS) active right now, or "". Set it before start() for the
 ## place's own field; a Resonance move (set_field) lays another one for a few turns.
-## Every change tells the Spirlings which element the field makes cheaper (item 75).
-var field: String = "":
-	set(v):
-		field = v
-		_sync_field_costs()
+var field: String = ""
 ## The place's own field, restored when a Resonance field runs out (copied from field at start()).
 var base_field: String = ""
 ## Turns left in which Resonance arts can't replace the field (Warden rule Ash Rain).
@@ -428,7 +424,6 @@ func start() -> Array[BattleEvent]:
 	for side: int in [Side.PLAYER, Side.FOE]:
 		_shield_on[side] = active_spirling(side) if int(amulets[side][2]) > 0 else null
 	base_field = field
-	_sync_field_costs()
 	field_turns = 0
 	field_lock = 0
 	snares = [[], []]
@@ -1361,13 +1356,6 @@ func _do_rest(a: BattleAction) -> void:
 ## Energy one Rest gives right now: the rule's amount plus the field's "rest_bonus" (item 42).
 func rest_gain() -> int:
 	return int(rules.get("rest_energy", REST_ENERGY)) + int(BattleRules.FIELDS.get(field, {}).get("rest_bonus", 0))
-
-## Tells every Spirling of both teams which element the field makes cheaper (item 75).
-func _sync_field_costs() -> void:
-	var cheap: int = Elements.E.get(str(BattleRules.FIELDS.get(field, {}).get("cheap_element", "")), -1)
-	for team: Array in parties:
-		for s: Spirling in team:
-			s.cheap_element = cheap
 
 func _do_swap(a: BattleAction) -> void:
 	if StatusRules.blocks_swap(a.actor.status):
