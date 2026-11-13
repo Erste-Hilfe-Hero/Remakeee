@@ -7,7 +7,7 @@ extends RefCounted
 const BOSS_KEYS: Array[String] = ["label", "hp_per_ally", "max_actions", "text", "phase"]
 const PHASE_KEYS: Array[String] = ["at", "stage", "field", "text"]
 const FIELD_KEYS: Array[String] = ["label", "boost", "weaken", "intro", "blocks", "regen_element", "regen_div",
-	"rest_bonus", "energy_element", "energy_gain", "bond_bonus"]
+	"rest_bonus", "energy_element", "energy_gain", "bond_bonus", "cheap_element"]
 ## Maps and tables that name a boss by id.
 const BOSS_SOURCES: Array[String] = ["res://data/ideas200c.json"]
 const MAP_DIR: String = "res://data/maps"
@@ -22,7 +22,7 @@ static func field_errors(fields: Dictionary = BattleRules.FIELDS) -> PackedStrin
 				out.append("field '%s': unknown key '%s'" % [id, k])
 		if str(f.get("label", "")).is_empty() or str(f.get("intro", "")).is_empty():
 			out.append("field '%s': needs a label and an intro text" % id)
-		for k: String in ["boost", "weaken", "regen_element", "energy_element"]:
+		for k: String in ["boost", "weaken", "regen_element", "energy_element", "cheap_element"]:
 			if f.has(k) and not Elements.E.has(str(f[k])):
 				out.append("field '%s': %s '%s' is not an element" % [id, k, f[k]])
 		if f.has("boost") and str(f.get("boost")) == str(f.get("weaken", "")):

@@ -34,6 +34,9 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"stage_copy": preload("res://scripts/battle/effects/StageCopyEffect.gd"),
 	&"stage_swap": preload("res://scripts/battle/effects/StageSwapEffect.gd"),
 	&"status_veil": preload("res://scripts/battle/effects/StatusVeilEffect.gd"),
+	&"energy_lock": preload("res://scripts/battle/effects/EnergyLockEffect.gd"),
+	&"energy_give": preload("res://scripts/battle/effects/EnergyGiveEffect.gd"),
+	&"energy_swap": preload("res://scripts/battle/effects/EnergySwapEffect.gd"),
 }
 
 static var _cache: Dictionary[StringName, MoveEffect] = {}

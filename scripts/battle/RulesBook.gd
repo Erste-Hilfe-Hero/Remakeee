@@ -74,6 +74,9 @@ static func fields() -> Array[String]:
 			Loc.t(Elements.element_name(int(Elements.E[str(f.weaken)]))), roundi((1.0 - BattleRules.FIELD_WEAKEN) * 100.0)]]
 		if int(f.get("rest_bonus", 0)) > 0:
 			parts.append(Loc.t("Rest gives +%d Energy more.") % int(f.rest_bonus))
+		if f.has("cheap_element"):
+			parts.append(Loc.t("Where it is the place's own field, %s arts cost %d Energy less.") % [
+				Loc.t(Elements.element_name(int(Elements.E[str(f.cheap_element)]))), BattleRules.FIELD_COST_CUT])
 		for st: Variant in f.get("blocks", []):
 			parts.append(Loc.t("Nobody catches %s.") % StatusRules.label(str(st)))
 		out.append(" ".join(parts))

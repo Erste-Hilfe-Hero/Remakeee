@@ -416,6 +416,12 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 				line = Loc.t("No foe status takes hold on its side for %d turns.") % (sv if sv > 0 else BattleRules.STATUS_VEIL_TURNS)
 			&"energy_gain":
 				line = Loc.t("Gains %d Energy.") % int(fx.get("amount", 1))
+			&"energy_lock":
+				line = Loc.t("The foe gains no Energy for %d turns.") % maxi(1, int(fx.get("amount", 1)))
+			&"energy_give":
+				line = Loc.t("Hands up to %d of its Energy to the ally beside it.") % maxi(1, int(fx.get("amount", 1)))
+			&"energy_swap":
+				line = Loc.t("Trades its Energy with the foe's.")
 			&"stage_reset":
 				line = Loc.t("Sets every stage on both sides back to 0.")
 			&"cure_team":
@@ -495,6 +501,18 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	return b
 
 ## Short matchup tag for a known multiplier ("" when unknown or neutral).
+## Effects that take Energy from the foe (KAMPF_PLAN item 46): such arts carry ENERGY_THIEF_MARK.
+const ENERGY_THIEF_FX: Array[StringName] = [&"energy_drain", &"energy_burn", &"energy_swap", &"energy_lock"]
+const ENERGY_THIEF_MARK: String = "<"
+
+## Marks in front of an art's name: "^" acts first (item 595), "<" takes the foe's Energy (item 46).
+static func art_marks(mv: MoveData) -> String:
+	var out: String = "^" if mv.priority > 0 else ""
+	for id: StringName in ENERGY_THIEF_FX:
+		if mv.has_effect(id):
+			return out + ENERGY_THIEF_MARK
+	return out
+
 static func matchup_tag(mult: float) -> String:
 	if mult < 0.0 or is_equal_approx(mult, 1.0):
 		return ""
@@ -568,7 +586,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			var mv: MoveData = me.moves[i]
 			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
 			# An art that acts first carries an arrow (item 595).
-			b.text = ("^" if mv.priority > 0 else "") + mv.move_name
+			b.text = art_marks(mv) + mv.move_name
 			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
 			var oc: float = overcharge_now(model, me, mv)
 			if pct > 0 and oc > 1.0:
@@ -585,7 +603,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			_row_colors[i] = BattleUiStyle.matchup_color(era, shown_mult)
 			if EraBattleHud.flag(era, "art_detail"):
 				# Era IV on: the element's name under the art's name, the matchup word under the cost.
-				b.text = ("^" if mv.priority > 0 else "") + Loc.t(mv.move_name) + "\n" + Loc.t(Elements.element_name(mv.element))
+				b.text = art_marks(mv) + Loc.t(mv.move_name) + "\n" + Loc.t(Elements.element_name(mv.element))
 				_move_hints[i].text = Loc.t(EraBattleHud.effect_hint(era, shown_mult))
 			_style_row(b, _row_left())
 			if filled:

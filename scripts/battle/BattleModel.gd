@@ -433,6 +433,10 @@ func start() -> Array[BattleEvent]:
 		var cut: int = start_energy_cut[side] + (int(BattleRules.rule_number(foe_rule, "player_energy_cut")) if side == Side.PLAYER else 0)
 		for s: Spirling in parties[side]:
 			s.energy = maxi(0, mini(int(rules.start_energy), max_energy()) + energy_bonus[side] - cut)
+			# An Energy Crystal (item 43) or any gift with "start_energy" adds to the start, up to the cap.
+			var head: int = int(BattleRules.add_key(s, "start_energy"))
+			if head > 0:
+				s.energy = mini(s.energy + head, max_energy_of(side))
 			if hp_scale != 1.0:
 				var share: float = float(s.hp) / float(s.max_hp())
 				s.hp_mult *= hp_scale
@@ -445,6 +449,7 @@ func start() -> Array[BattleEvent]:
 	for side: int in [Side.PLAYER, Side.FOE]:
 		_shield_on[side] = active_spirling(side) if int(amulets[side][2]) > 0 else null
 	base_field = field
+	_sync_field_costs()
 	field_turns = 0
 	field_lock = 0
 	snares = [[], []]
@@ -710,6 +715,7 @@ func set_field(id: String, turns: int = BattleRules.RESONANCE_TURNS) -> bool:
 		turns += RiftFields.daytime_turns(id, day_phase)
 	field_turns = maxi(turns, 0)
 	var f: Dictionary = BattleRules.FIELDS[id]
+	_sync_field_costs()
 	emit_event(BattleEvent.Type.FIELD, {"field": id, "label": str(f.label), "text": str(f.intro), "turns": field_turns})
 	if fresh and phase != Phase.INTRO:
 		for side: int in [Side.PLAYER, Side.FOE]:
@@ -742,6 +748,7 @@ func _tick_field() -> void:
 		return
 	var gone: String = field
 	field = ""
+	_sync_field_costs()
 	emit_event(BattleEvent.Type.FIELD_END, {"field": gone, "label": str(BattleRules.FIELDS.get(gone, {}).get("label", ""))})
 	if BattleRules.FIELDS.has(base_field):
 		set_field(base_field, 0)
@@ -1249,6 +1256,10 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 			gain += foe_turn1_energy
 	gain += RiftFields.energy_bonus(field, s)
 	gain = StatusRules.energy_gain(s.status, gain, turn)
+	# An Energy lock (item 47) holds back the whole turn's gain.
+	if s.energy_lock > 0 and gain > 0:
+		emit_event(BattleEvent.Type.ENERGY_LOCKED, _who(side, slot))
+		return
 	change_energy(side, gain, slot)
 
 func _phase_faint_check() -> void:
@@ -1346,7 +1357,7 @@ func move_targets(side: int, mv: MoveData, target_slot: int = -1) -> Array[int]:
 ## Effects that act on the user once per move, not once per foe a sweep reaches.
 static func _is_self_effect(fx: Dictionary) -> bool:
 	var id: StringName = StringName(fx.get("id", ""))
-	return id in [&"heal_self", &"self_stage_after", &"energy_gain", &"self_cost", &"cure_team", &"status_veil"] or (id == &"stat_change" and bool(fx.get("self", true)))
+	return id in [&"heal_self", &"self_stage_after", &"energy_gain", &"self_cost", &"cure_team", &"status_veil", &"energy_give"] or (id == &"stat_change" and bool(fx.get("self", true)))
 
 func _do_move(a: BattleAction) -> void:
 	var side: int = a.side
@@ -1370,6 +1381,8 @@ func _do_move(a: BattleAction) -> void:
 	if not me.can_afford(mv):
 		emit_event(BattleEvent.Type.NOT_ENOUGH_ENERGY, _who(side, slot))
 		return
+	# Overflow (item 49) counts the Energy before the art is paid.
+	var brimming: bool = me.energy >= max_energy_of(side)
 	change_energy(side, -me.move_cost(mv), slot)
 	if mv.cooldown > 0:
 		# +1 because the end of this very turn already counts one down.
@@ -1412,10 +1425,8 @@ func _do_move(a: BattleAction) -> void:
 			break
 		if not is_standing(target):
 			continue
-		var acc: float = mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult")
+		var acc: float = hit_chance(me, mv, target)
 		var marked: bool = mv.is_damaging() and StatusRules.sure_hit(target.status)
-		if marked:
-			acc = 1.0
 		if acc < 1.0 and rng.randf() >= acc:
 			var miss: Dictionary = _who(side, slot)
 			miss["target_slot"] = t_slot
@@ -1441,6 +1452,8 @@ func _do_move(a: BattleAction) -> void:
 			if ShopEffects.gift_table(me).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
 				reveal_trait(side, slot)
 			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field) * _variant_mult(me, target, mv)
+			if brimming:
+				mult *= float(ShopEffects.gift_table(me).get("full_energy_mult", 1.0))
 			if side == Side.FOE:
 				mult *= foe_damage_mult
 			# Warden rule High Noon: Lumen arts on both sides hit harder.
@@ -1511,6 +1524,25 @@ func _do_rest(a: BattleAction) -> void:
 		var me: Spirling = active_spirling(a.side, a.slot)
 		if me != null and me.hp < me.max_hp():
 			heal(a.side, maxi(1, roundi(me.max_hp() * rest_heal_share)), a.slot)
+
+## Chance that [param mv] of [param me] lands on [param target]: its accuracy with Daze and the
+## Warden rule's accuracy factor; a Marked target is always hit. The same for both sides: no side
+## gets kinder rolls (KAMPF_PLAN item 35). The art card shows it as a miss chance (item 14).
+func hit_chance(me: Spirling, mv: MoveData, target: Spirling = null) -> float:
+	if target != null and mv.is_damaging() and StatusRules.sure_hit(target.status):
+		return 1.0
+	return clampf(mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult"), 0.0, 1.0)
+
+## Tells every Spirling of both teams which element the place's own field makes cheaper (item 75).
+## Only the place's own field counts (a storm overhead, a map's field): a field called by an art
+## or a boss phase never cuts costs, it already brings its Energy gift.
+func _sync_field_costs() -> void:
+	var cheap: int = -1
+	if not field.is_empty() and field == base_field:
+		cheap = Elements.E.get(str(BattleRules.FIELDS.get(field, {}).get("cheap_element", "")), -1)
+	for team: Array in parties:
+		for s: Spirling in team:
+			s.cheap_element = cheap
 
 ## Energy one Rest gives right now: the rule's amount plus the field's "rest_bonus" (item 42), minus
 ## the Warden rule Ebb's "rest_cut".

@@ -16,6 +16,8 @@ enum Type {
 	OATH, SHOP_EDGE, HELD_FRUIT, WHEEL_TURN,
 	# KAMPF_PLAN items 4, 11, 59, 16, 21.
 	SPEED_TIE, BONUS_ACTION, OVERCHARGE_CHAIN, AMBUSH, ROUND_LIMIT,
+	# KAMPF_PLAN items 47, 57, 58.
+	ENERGY_LOCKED, ENERGY_SHARED, ENERGY_SWAPPED,
 	STATUS_VEIL,
 }
 
@@ -208,6 +210,12 @@ func describe() -> String:
 			return "%s eats its %s!" % [who, data.get("item_name", "")]
 		Type.WARDEN_WEAKENED:
 			return "A Warden Weakener dims %s's team: they start with 15%% less Vigor." % data.get("trainer", "")
+		Type.ENERGY_LOCKED:
+			return "%s's Energy is locked: it gains none this turn." % who
+		Type.ENERGY_SHARED:
+			return "%s hands %d Energy to %s." % [who, int(data.get("amount", 0)), data.get("to", "")]
+		Type.ENERGY_SWAPPED:
+			return "%s trades Energy with %s!" % [who, data.get("other", "")]
 		Type.SPEED_TIE:
 			return "Coin toss! Same Pace, %s moves first." % who
 		Type.BONUS_ACTION:
