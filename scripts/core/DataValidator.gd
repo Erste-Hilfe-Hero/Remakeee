@@ -40,7 +40,7 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 			errors.append("move '%s': unknown element '%s'" % [name, m.get("element", "")])
 		if not str(m.get("kind", "")) in VALID_KINDS:
 			errors.append("move '%s': unknown kind '%s'" % [name, m.get("kind", "")])
-		if not str(m.get("status", "")) in VALID_STATUSES:
+		if not (str(m.get("status", "")) in VALID_STATUSES or StatusRules.exists(str(m.get("status", "")))):
 			errors.append("move '%s': unknown status '%s'" % [name, m.get("status", "")])
 		if int(m.get("energy", -1)) < 0:
 			errors.append("move '%s': missing or negative energy cost" % name)
@@ -125,12 +125,43 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 		else:
 			errors.append("spirling '%s': learnset must be an object (level -> move)" % sname)
 	_check_reachable(spirlings_raw, encounters_path, errors)
+	_check_values(spirlings_raw, errors)
 	_check_ai_profiles(errors)
 	for problem: String in BattleRules.validate_variants():
 		errors.append("rule_variants.json: " + problem)
 	errors.append_array(KampfChecks.field_errors())
 	errors.append_array(KampfChecks.boss_errors())
 	return errors
+
+## KAMPF_PLAN_1000 items 240, 241: every base value stays in BASE_MIN..BASE_MAX, and unfolding
+## always raises the base value sum.
+const BASE_MIN: int = 20
+const BASE_MAX: int = 160
+const BASE_KEYS: Array[String] = ["hp", "atk", "def", "foc", "spd"]
+static func _check_values(spirlings_raw: Array, errors: PackedStringArray) -> void:
+	var sums: Dictionary[String, int] = {}
+	for s: Variant in spirlings_raw:
+		if not s is Dictionary:
+			continue
+		var sname: String = str(s.get("name", ""))
+		var base: Variant = s.get("base", {})
+		if not base is Dictionary:
+			errors.append("spirling '%s': base must be an object" % sname)
+			continue
+		var sum: int = 0
+		for k: String in BASE_KEYS:
+			var v: int = int((base as Dictionary).get(k, 0))
+			sum += v
+			if v < BASE_MIN or v > BASE_MAX:
+				errors.append("spirling '%s': base %s %d outside %d-%d" % [sname, k, v, BASE_MIN, BASE_MAX])
+		sums[sname] = sum
+	for s: Variant in spirlings_raw:
+		if not s is Dictionary or not s.get("unfold", []) is Array:
+			continue
+		for p: Variant in s.get("unfold", []):
+			var to: String = str(p.get("to", "")) if p is Dictionary else ""
+			if sums.has(to) and sums[to] <= int(sums.get(str(s.get("name", "")), 0)):
+				errors.append("spirling '%s': unfolds into '%s' without a higher base sum" % [s.get("name", ""), to])
 
 ## Plan area 2, items 611 and 629: every AI profile weight stays between 0.2 and 2.0.
 const PROFILE_WEIGHTS: Array[String] = ["damage_w", "status_w", "setup_w", "field_w", "drain_w"]

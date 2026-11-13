@@ -159,7 +159,7 @@ LINES += [
     L(id="canalurk", names=["Canalurk", "Canalurker"], elements=["TIDE", "UMBRA"], role="vanguard",
       art=dict(plan="fish", tones=("dark", "mid", "light"), tail="fin", eye="glow", mouth="fang",
                back="spikes", back_n=2)),
-    L(id="forgefly", names=["Forgefly", "Forgeflare"], elements=["EMBER", "GALE"], role="striker",
+    L(id="forgefly", names=["Forgefly", "Forgeflare"], elements=["EMBER", "GALE"], role="striker", trait="glimmer_skin",
       art=dict(plan="bug", tones=("mid", "light", "dark"), extras=("wings",), ears="antenna", ear_tone="dark",
                eye="big", tail="sting")),
     # Singles
