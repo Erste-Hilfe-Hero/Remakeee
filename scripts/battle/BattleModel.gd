@@ -728,10 +728,13 @@ func eat_pith(side: int, slot: int = 0) -> bool:
 ## Shows the trait of the Spirling in [param slot] the first time it matters in a battle (TRAIT).
 func reveal_trait(side: int, slot: int = 0) -> void:
 	var s: Spirling = active_spirling(side, slot)
-	if s == null or s.has_meta("trait_shown"):
+	if s == null:
 		return
 	var t: Dictionary = BattleRules.trait_info(s.gift_id())
 	if t.is_empty():
+		return
+	TraitKit.count_gift(self, side, slot, str(t.label))
+	if s.has_meta("trait_shown"):
 		return
 	s.set_meta("trait_shown", true)
 	var d: Dictionary = _who(side, slot)

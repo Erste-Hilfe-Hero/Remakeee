@@ -9,12 +9,15 @@ extends RefCounted
 var rows: Dictionary = {}
 ## The fields in play, in the order they came up (no repeats).
 var fields: Array[String] = []
+## Items your side used up, by name (item 296): bag items and eaten held fruit.
+var items: Dictionary = {}
 var _actor: Dictionary = {}
 
 ## Starts with the field already in place when the battle opens ("" for none).
 func begin(start_field: String) -> void:
 	rows.clear()
 	fields.clear()
+	items.clear()
 	_actor = {}
 	_note_field(start_field)
 
@@ -32,6 +35,10 @@ func add(e: BattleEvent) -> void:
 				_row().kos += 1
 		BattleEvent.Type.FIELD:
 			_note_field(str(e.data.get("field", "")))
+		BattleEvent.Type.ITEM_USED, BattleEvent.Type.HELD_FRUIT:
+			if int(e.data.get("side", -1)) == BattleModel.Side.PLAYER:
+				var n: String = str(e.data.get("item_name", ""))
+				items[n] = int(items.get(n, 0)) + 1
 
 func _credited(e: BattleEvent) -> bool:
 	return int(_actor.get("side", -1)) == BattleModel.Side.PLAYER and not str(_actor.get("name", "")).is_empty() \
@@ -63,6 +70,15 @@ func field_line() -> String:
 		names.append(str(BattleRules.FIELDS[f].label))
 	return "Rift fields: %s" % ", ".join(names)
 
+## "Items used: Max Tonic x2, Ember Pith x1", or "" when none was used (item 296).
+func item_line() -> String:
+	if items.is_empty():
+		return ""
+	var parts: PackedStringArray = []
+	for n: String in items:
+		parts.append("%s x%d" % [n, int(items[n])])
+	return "Items used: %s" % ", ".join(parts)
+
 ## Party index of the Spirling that dealt the most (knock-outs break a tie), -1 when nobody hit.
 func best() -> int:
 	var top: int = -1
@@ -88,4 +104,7 @@ func lines() -> Array[String]:
 	var f: String = field_line()
 	if not f.is_empty():
 		out.append(f)
+	var it: String = item_line()
+	if not it.is_empty():
+		out.append(it)
 	return out if out.size() > 1 else []
