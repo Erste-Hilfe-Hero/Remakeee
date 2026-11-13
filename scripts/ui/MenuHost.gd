@@ -372,7 +372,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"left_handed": "Puts the pad on the right and A and B on the left.",
 	"tap_to_move": "Tap a tile and your Wayfarer walks there.",
 	"always_run": "Run without holding B. Hold B to walk.",
-	"bond_style": "Mine: tap one button fast. Echo: repeat the call.",
+	"bond_style": "Mine: tap one button fast. Echo: repeat the call. Calm: echo with no time limit.",
 	"one_hand": "Everything sits low on the screen for one thumb.",
 	"swap_ab_touch": "A and B on the touch pad change places.",
 	"swap_ab_pad": "The gamepad's A goes back and B confirms.",
@@ -741,7 +741,7 @@ func run_controls() -> void:
 			"always_run":
 				GameState.always_run = not GameState.always_run
 			"bond_style":
-				GameState.bond_style = "echo" if GameState.bond_style == "mine" else "mine"
+				GameState.bond_style = next_bond_style(GameState.bond_style)
 			"one_hand":
 				GameState.one_hand = not GameState.one_hand
 			"vibration":
@@ -763,6 +763,13 @@ func run_controls() -> void:
 		VirtualPad.apply_settings()
 		SaveManager.save_settings()
 
+const BOND_STYLE_NAMES: Dictionary = {"mine": "Mine", "echo": "Echo", "calm": "Calm"}
+
+## Mine, Echo, Calm, then Mine again.
+static func next_bond_style(current: String) -> String:
+	var i: int = GameState.BOND_STYLES.find(current)
+	return GameState.BOND_STYLES[(i + 1) % GameState.BOND_STYLES.size()]
+
 static func controls_rows() -> Array[Array]:
 	return [
 		["pad_size", "Pad size: %s" % GameState.PAD_SIZE_NAMES[GameState.pad_size]],
@@ -770,7 +777,7 @@ static func controls_rows() -> Array[Array]:
 		["left_handed", "Left-handed: %s" % ("On" if GameState.left_handed else "Off")],
 		["tap_to_move", "Tap to walk: %s" % ("On" if GameState.tap_to_move else "Off")],
 		["always_run", "Always run: %s" % ("On" if GameState.always_run else "Off")],
-		["bond_style", "Bonding: %s" % ("Mine" if GameState.bond_style == "mine" else "Echo")],
+		["bond_style", "Bonding: %s" % BOND_STYLE_NAMES.get(GameState.bond_style, "Mine")],
 		["one_hand", "One-hand layout: %s" % ("On" if GameState.one_hand else "Off")],
 		["swap_ab_touch", "Touch A/B swap: %s" % ("On" if GameState.swap_ab_touch else "Off")],
 		["swap_ab_pad", "Pad A/B swap: %s" % ("On" if GameState.swap_ab_pad else "Off")],

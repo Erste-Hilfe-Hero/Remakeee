@@ -22,6 +22,9 @@ const AFTER_ECHO_TIME: float = 2.5
 var target: Texture2D
 ## Set for reproducible calls (tests, screenshots); otherwise randomized per run.
 var rng: RandomNumberGenerator
+## Bonding style "Calm" (Kampf-Plan, Barrierefreiheit): the echo has no time limit, so nobody
+## has to keep a rhythm. The afterglow waits too; Back or a tap beside the marks skips it.
+var calm: bool = false
 
 var _phase: Phase = Phase.IDLE
 var _time: float = 0.0
@@ -146,14 +149,14 @@ func _process(delta: float) -> void:
 	if _phase == Phase.CALL and _time >= BondEcho.call_duration(_sequence.size()) + BondEcho.GAP_TIME:
 		_phase = Phase.ECHO
 		_time = 0.0
-		_hint.text = "Now echo it back!"
-	elif _phase == Phase.ECHO and _time >= _echo_time():
+		_hint.text = "Echo it back, no hurry." if calm else "Now echo it back!"
+	elif _phase == Phase.ECHO and not calm and _time >= _echo_time():
 		_end_phase()
 	elif _phase == Phase.AFTER_CALL and _time >= BondEcho.SHOW_TIME + BondEcho.GAP_TIME:
 		_phase = Phase.AFTER_ECHO
 		_time = 0.0
 		_hint.text = "One more?"
-	elif _phase == Phase.AFTER_ECHO and _time >= AFTER_ECHO_TIME:
+	elif _phase == Phase.AFTER_ECHO and not calm and _time >= AFTER_ECHO_TIME:
 		_finish()
 	elif _phase == Phase.RESULT and _time >= RESULT_TIME:
 		_phase = Phase.IDLE
@@ -162,6 +165,8 @@ func _process(delta: float) -> void:
 
 func _tap(mark: int) -> void:
 	if mark < 0:
+		if calm and _phase == Phase.AFTER_ECHO:
+			_finish()
 		return
 	if _phase == Phase.AFTER_ECHO:
 		_afterglow_tap = mark
@@ -238,6 +243,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 	if _phase != Phase.ECHO and _phase != Phase.AFTER_ECHO:
+		return
+	if calm and _phase == Phase.AFTER_ECHO and event.is_action_pressed("ui_cancel"):
+		_finish()
+		get_viewport().set_input_as_handled()
 		return
 	var mark: int = -1
 	if event.is_action_pressed("ui_left"):

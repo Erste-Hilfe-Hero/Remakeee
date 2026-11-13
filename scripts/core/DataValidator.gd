@@ -126,6 +126,8 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 	_check_ai_profiles(errors)
 	for problem: String in BattleRules.validate_variants():
 		errors.append("rule_variants.json: " + problem)
+	errors.append_array(KampfChecks.field_errors())
+	errors.append_array(KampfChecks.boss_errors())
 	return errors
 
 ## Plan area 2, items 611 and 629: every AI profile weight stays between 0.2 and 2.0.
