@@ -823,7 +823,7 @@ AREAS = [
 "[x] Wild-Auto-Kampf (bestehend)",
 "[x] Wild-Level an Gebiet (encounters.json min/max)",
 "[x] Wild-KI Stufe 0 (bestehend)",
-"[x] Wild-Überraschung (WildRules.surprise: Wildes greift in Runde 1 zuerst an, nachts öfter)",
+"[x] Wild-Überraschung (Hinterhalt BattleModel.ambush aus Punkt 16, nachts doppelt so oft: WildRules.ambush_mult)",
 "[x] Wild-Rückzug-Regel (bestehend)",
 "[x] Wild-Spirlings mit Gegenständen (selten) (WildRules.roll_held)",
 "[x] Wild-Begegnungs-Rate einstellbar (Laterne) (Sturmlaterne im Beutel, WildRules.lantern_mult)",

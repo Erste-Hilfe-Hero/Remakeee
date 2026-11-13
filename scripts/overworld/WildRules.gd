@@ -174,17 +174,10 @@ static func horde_leader(foes: Array) -> Spirling:
 			best = f
 	return best
 
-## Wild surprise: now and then a wild Spirling gets the jump and strikes before your arts in the
-## first turn (more often at night). Seeded from the battle seed, so it uses no game RNG.
-const SURPRISE_LINE: String = "The wild %s takes you by surprise!"
-
-static func surprise(battle_seed: int, phase: int) -> bool:
-	var r := RandomNumberGenerator.new()
-	r.seed = battle_seed ^ 0x5a17
-	var chance: float = float(data().get("surprise_chance", 0.0))
-	if phase == DayCycle.Phase.NIGHT:
-		chance *= float(data().get("surprise_night_mult", 1.0))
-	return r.randf() < chance
+## Wild surprise: the ambush from the tall fern (BattleModel.ambush, plan item 16) comes more
+## often at night. Factor on BattleModel.AMBUSH_CHANCE for the day phase [param phase].
+static func ambush_mult(phase: int) -> float:
+	return float(data().get("ambush_night_mult", 1.0)) if phase == DayCycle.Phase.NIGHT else 1.0
 
 ## Elder wild Spirlings (endgame, after Act I): rare old ones of their kind with more rings and
 ## bright sparks, and more growth. Marked with ELDER_META for the battle's opening line.

@@ -414,31 +414,11 @@ func test_bond_rings_swell_and_fade() -> void:
 	assert_gt(later.x, early.x, "the ring swells")
 	assert_true(SpirlingSprite.new().has_method("bond_rings"))
 
-func test_a_wild_surprise_strikes_first_in_the_first_turn() -> void:
-	var day: int = 0
-	var night: int = 0
-	for seed_value: int in 3000:
-		if WildRules.surprise(seed_value, DayCycle.Phase.DAY):
-			day += 1
-		if WildRules.surprise(seed_value, DayCycle.Phase.NIGHT):
-			night += 1
-	var chance: float = float(WildRules.data().get("surprise_chance", 0.0))
-	assert_between(day / 3000.0, chance * 0.6, chance * 1.4)
-	assert_gt(night, day, "more surprises at night")
-	assert_eq(WildRules.surprise(42, DayCycle.Phase.DAY), WildRules.surprise(42, DayCycle.Phase.DAY), "seeded")
-	var fast: Spirling = BattleFixtures.make("Kindlop", 40)
-	var slow: Spirling = BattleFixtures.make("Mossling", 2)
-	var m: BattleModel = BattleFixtures.model([fast] as Array[Spirling], [slow] as Array[Spirling], true)
-	m.start()
-	var mine: BattleAction = BattleAction.make_move(BattleModel.Side.PLAYER, 0)
-	var theirs: BattleAction = BattleAction.make_move(BattleModel.Side.FOE, 0)
-	mine.actor = fast
-	theirs.actor = slow
-	assert_gt(m._sort_key(mine, 0.5), m._sort_key(theirs, 0.5), "the faster side goes first")
-	m.wild_surprise = true
-	assert_gt(m._sort_key(theirs, 0.5), m._sort_key(mine, 0.5), "the surprising wild Spirling goes first")
-	m.turn = 1
-	assert_gt(m._sort_key(mine, 0.5), m._sort_key(theirs, 0.5), "only in the first turn")
+func test_the_wild_ambush_comes_more_often_at_night() -> void:
+	assert_eq(WildRules.ambush_mult(DayCycle.Phase.DAY), 1.0)
+	assert_eq(WildRules.ambush_mult(-1), 1.0, "indoors or without day and night")
+	assert_gt(WildRules.ambush_mult(DayCycle.Phase.NIGHT), 1.0)
+	assert_lt(BattleModel.AMBUSH_CHANCE * WildRules.ambush_mult(DayCycle.Phase.NIGHT), 0.5, "still rare")
 
 func test_elders_appear_only_after_act_one() -> void:
 	var rng := RandomNumberGenerator.new()
