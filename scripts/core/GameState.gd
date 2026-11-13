@@ -294,6 +294,7 @@ func items_allowed_in_battle() -> bool:
 ## menu cannot open mid-battle); a step down marks records["difficulty_lowered"] for good.
 func set_difficulty(d: int) -> void:
 	d = clampi(d, 0, Difficulty.size() - 1)
+	ChallengeRules.note_difficulty(d)
 	if d < int(difficulty):
 		records["difficulty_lowered"] = true
 	difficulty = d as Difficulty
