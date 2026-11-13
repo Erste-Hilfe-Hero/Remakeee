@@ -258,3 +258,19 @@ func test_server_keeps_only_known_titles() -> void:
 	assert_false(p.card.has("title"), "no free text on the card")
 	assert_string_contains(FriendsMenu.card_text({"name": "Ann", "code": "ABCDEFGH", "card": {"title": "First Pick"}}), "Title: First Pick")
 	assert_string_contains(FriendsMenu.card_text({"name": "Ann", "code": "ABCDEFGH", "card": {}}), "Title: -")
+
+func test_last_hall_battle_as_replay_code() -> void:
+	assert_eq(BattleHalls.replay_code(), "")
+	var h: Dictionary = BattleHalls.by_id("lottery")
+	var mine: Array[Spirling] = BattleHalls.lottery_team(3)
+	var info: Dictionary = BattleHalls.battle_info(h, 3, 0, WEEK, mine)
+	var m := BattleModel.new(mine, BattleHalls.foe_team(h, 3, 0), false, 3, 3)
+	m.variants.assign(info.variants)
+	var snap: Dictionary = BattleReplay.snapshot(m, "battle", "")
+	snap["inputs"] = []
+	BattleHalls.keep_replay(snap)
+	var code: String = BattleHalls.replay_code()
+	assert_ne(code, "")
+	var back: Dictionary = ReplayLibrary.from_code(code)
+	assert_false(back.is_empty())
+	assert_eq(BattleReplay.problem(back), "", "the code plays back in this version")

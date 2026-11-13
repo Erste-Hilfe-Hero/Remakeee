@@ -35,7 +35,8 @@ static func open(ow: Overworld) -> void:
 		for h: Dictionary in halls:
 			items.append(Loc.t("%s (best %d of %d)") % [BattleHalls.label(h), int(BattleHalls.stats(str(h.id)).best), BattleHalls.rounds(h)])
 		var extra: Array[String] = [Loc.t("Enter a run code"), Loc.t("Fight a team code"), Loc.t("Show my team code"),
-			Loc.t("Hall statistics"), Loc.t("Hall of Fame"), Loc.t("Hall stories"), Loc.t("Title on my card")]
+			Loc.t("Hall statistics"), Loc.t("Hall of Fame"), Loc.t("Hall stories"), Loc.t("Title on my card"),
+			Loc.t("Copy the last hall battle as a replay code")]
 		items.append_array(extra)
 		var head: String = "%s\n%s" % [Loc.t("This week's rule: %s") % BattleRules.variant_names(BattleHalls.variants_for(week)),
 			BattleHalls.week_goal_line(week)]
@@ -69,6 +70,13 @@ static func open(ow: Overworld) -> void:
 				m.queue_free()
 			6:
 				await _pick_title(ow)
+			7:
+				var code: String = BattleHalls.replay_code()
+				if code.is_empty():
+					await _info(ow, Loc.t("No hall battle to share yet."))
+				else:
+					DisplayServer.clipboard_set(code)
+					await _info(ow, Loc.t("The code is on the clipboard. Anyone can watch it under Records, Online replays."))
 
 static func _enter_run_code(ow: Overworld, week: String, fest: Dictionary) -> void:
 	var c: Dictionary = BattleHalls.parse_run_code(await CodePrompt.ask(ow._ui, Loc.t("Run code"), BattleHalls.CODE_LEN))
@@ -156,6 +164,7 @@ static func play(ow: Overworld, h: Dictionary, seed_value: int, week: String, fe
 		var outcome: BattleModel.Outcome = await ow.start_battle(foes, false, BattleHalls.battle_info(h, seed_value, r, week, mine))
 		ow.busy = true
 		ow.player.frozen = true
+		BattleHalls.keep_replay(GameState.records.get("last_battle", {}))
 		if outcome != BattleModel.Outcome.WIN:
 			break
 		won += 1

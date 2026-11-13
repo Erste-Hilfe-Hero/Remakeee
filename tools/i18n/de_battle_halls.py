@@ -80,4 +80,7 @@ T = {
 "Fight five echo duels against friends.": "Bestreite fünf Echo-Duelle gegen Freunde.",
 "Echo Victor": "Echo-Sieger",
 "Win 25 echo duels against friends.": "Gewinne 25 Echo-Duelle gegen Freunde.",
+"Copy the last hall battle as a replay code": "Letzten Hallenkampf als Wiederholungs-Code kopieren",
+"No hall battle to share yet.": "Noch kein Hallenkampf zum Teilen.",
+"The code is on the clipboard. Anyone can watch it under Records, Online replays.": "Der Code ist in der Zwischenablage. Ansehen kann man ihn unter Rekorde, Online-Wiederholungen.",
 }

@@ -917,7 +917,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 822. [x] Endgame-Texte übersetzt (tools/i18n/de_battle_halls.py)
 823. [x] Endgame-Tests (tests/unit/test_battle_halls.gd)
 824. [ ] Endgame-Balance
-825. [ ] Endgame-Replay
+825. [x] Endgame-Replay (letzter Hallenkampf als Wiederholungs-Code, ansehbar unter Rekorde, Online-Wiederholungen)
 826. [x] Endgame-Seed teilen (Lauf-Code: acht Zeichen für Halle und Seed, Freunde spielen denselben Lauf)
 827. [x] Endgame-Freundes-Duelle (Echo-Duell und Live-Duell unter Freunden)
 828. [x] Endgame-Team-Codes (Team-Code: drei Spirlings als acht Zeichen, Kampf gegen das Team auf Ring 50)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-105 von 1000 Punkten umgesetzt.
+106 von 1000 Punkten umgesetzt.
 

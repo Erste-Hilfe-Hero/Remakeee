@@ -871,7 +871,7 @@ AREAS = [
 "[x] Endgame-Texte übersetzt (tools/i18n/de_battle_halls.py)",
 "[x] Endgame-Tests (tests/unit/test_battle_halls.gd)",
 "Endgame-Balance",
-"Endgame-Replay",
+"[x] Endgame-Replay (letzter Hallenkampf als Wiederholungs-Code, ansehbar unter Rekorde, Online-Wiederholungen)",
 "[x] Endgame-Seed teilen (Lauf-Code: acht Zeichen für Halle und Seed, Freunde spielen denselben Lauf)",
 "[x] Endgame-Freundes-Duelle (Echo-Duell und Live-Duell unter Freunden)",
 "[x] Endgame-Team-Codes (Team-Code: drei Spirlings als acht Zeichen, Kampf gegen das Team auf Ring 50)",

@@ -425,3 +425,17 @@ static func worn_title() -> String:
 static func wear(title: String) -> void:
 	if title.is_empty() or title in wearable():
 		GameState.records[WORN_KEY] = title
+
+# --- Replay of the last hall battle ------------------------------------------------------------------
+
+const REPLAY_KEY: String = "hall_replay"
+
+## Keeps the last hall battle (a BattleReplay snapshot with its inputs).
+static func keep_replay(snap: Variant) -> void:
+	if snap is Dictionary and not (snap as Dictionary).is_empty():
+		GameState.records[REPLAY_KEY] = (snap as Dictionary).duplicate(true)
+
+## The last hall battle as a replay code (watched under Records, Online replays), or "".
+static func replay_code() -> String:
+	var snap: Variant = GameState.records.get(REPLAY_KEY, {})
+	return ReplayLibrary.share_code(snap) if snap is Dictionary and not (snap as Dictionary).is_empty() else ""
