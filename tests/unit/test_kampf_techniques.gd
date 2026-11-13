@@ -122,18 +122,21 @@ func test_resonance_needs_an_ally_of_a_shared_element() -> void:
 	var m3: BattleModel = _duel([a] as Array[Spirling], [_mon("Mossling")] as Array[Spirling])
 	assert_eq(TechniqueRules.resonance_mult(m3, 0, a), 1.0, "no ally in a duel")
 
-func test_echo_rewards_the_second_ally_using_the_same_element() -> void:
+func test_echo_gives_the_second_ally_energy_for_the_same_element() -> void:
 	var a: Spirling = _mon("Kindlop", "Cinder Nip")
 	var b: Spirling = _mon("Puddlet", "Cinder Nip")
 	var m: BattleModel = _doubles([a, b] as Array[Spirling], [_mon("Mossling"), _mon("Zippit")] as Array[Spirling])
 	var mv: MoveData = Database.move("Cinder Nip")
-	assert_eq(TechniqueRules.echo_mult(m, 0, b, mv), 1.0, "nobody used Ember yet")
-	TechniqueRules.note_move(m, 0, a, mv)
-	assert_almost_eq(TechniqueRules.echo_mult(m, 0, b, mv), TechniqueRules.ECHO_MULT, 0.0001)
-	assert_eq(TechniqueRules.echo_mult(m, 0, a, mv), 1.0, "not for its own art")
-	assert_eq(TechniqueRules.echo_mult(m, 1, m.active_spirling(1), mv), 1.0, "not for the other side")
+	assert_false(TechniqueRules.echoes(m, 0, b, mv), "nobody used Ember yet")
+	TechniqueRules.note_move(m, 0, a, mv, 0)
+	assert_true(TechniqueRules.echoes(m, 0, b, mv))
+	assert_false(TechniqueRules.echoes(m, 0, a, mv), "not for its own art")
+	assert_false(TechniqueRules.echoes(m, 1, m.active_spirling(1), mv), "not for the other side")
+	b.energy = 3
+	TechniqueRules.note_move(m, 0, b, mv, 1)
+	assert_eq(b.energy, 3 + TechniqueRules.ECHO_ENERGY, "the echo pays Energy back")
 	m.turn += 1
-	assert_eq(TechniqueRules.echo_mult(m, 0, b, mv), 1.0, "only within the same turn")
+	assert_false(TechniqueRules.echoes(m, 0, b, mv), "only within the same turn")
 
 # --- items 87, 103, 104, 115: softer strong hits -----------------------------------------------
 

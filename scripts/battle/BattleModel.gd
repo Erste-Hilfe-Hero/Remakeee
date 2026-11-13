@@ -1204,7 +1204,7 @@ func _do_move(a: BattleAction) -> void:
 	var used: Dictionary = _who(side, slot)
 	used.merge({"move": mv.move_name, "element": mv.element, "kind": mv.kind, "area": mv.is_area() and targets.size() > 1, "targets": targets})
 	emit_event(BattleEvent.Type.MOVE_USED, used)
-	TechniqueRules.note_move(self, side, me, mv)
+	TechniqueRules.note_move(self, side, me, mv, slot)
 	if targets.is_empty():
 		emit_event(BattleEvent.Type.NO_TARGET, {})
 		return

@@ -16,6 +16,7 @@
   "%s is shielded by an ally this turn!": "%s wird in dieser Runde von einem Verbündeten gedeckt!",
   "%s is struck %d times!": "%s wird %d-mal getroffen!",
   "%s keeps glowing for %d turns!": "%s glüht noch %d Runden lang nach!",
+  "%s picks up the echo and gains %d Energy!": "%s nimmt den Nachhall auf und erhält %d Energie!",
   "%s turns %s for %d turns!": "%s wird zu %s, für %d Runden!",
   "%s's %s takes the edge off the hit!": "%s: %s nimmt dem Treffer die Wucht!",
   "A Spirling of two elements takes both factors at once: they multiply. Strong into both is x4, strong into one and resisted by the other is x1, resisted by both is x0.25. No hit ever does nothing.": "Ein Spirling mit zwei Elementen nimmt beide Faktoren zugleich: sie werden multipliziert. Stark gegen beide ist x4, stark gegen eines und vom anderen abgewehrt ist x1, von beiden abgewehrt ist x0,25. Kein Treffer bleibt je ganz ohne Wirkung.",

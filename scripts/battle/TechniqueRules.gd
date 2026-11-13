@@ -9,8 +9,10 @@ const META: StringName = &"tech_state"
 
 ## Element Resonance (item 85): an ally on the field shares an element with the attacker.
 const RESONANCE_MULT: float = 1.05
-## Elemental echo (item 116): an ally used a damaging art of the same element earlier this turn.
-const ECHO_MULT: float = 1.15
+## Elemental echo (item 116): an ally used a damaging art of the same element earlier this turn,
+## so this one gets Energy back. Energy, not damage: a damage bonus on top of Resonance made
+## same-element teams end fights before any combo could happen (test_goal_sim, reaction goals).
+const ECHO_ENERGY: int = 1
 ## Prism Skin gift (item 103): a hit of x2 or more lands at three quarters (x2 becomes x1.5).
 const PRISM_SKIN_MULT: float = 0.75
 ## Countercurrent gift (item 104): the element that hit it last now lands at half.
@@ -67,8 +69,11 @@ static func note_acted(model: BattleModel, a: BattleAction) -> void:
 
 ## An art was used (after its cost was paid): the streak for rolling arts and the elements the
 ## side has used this turn (elemental echo).
-static func note_move(model: BattleModel, side: int, me: Spirling, mv: MoveData) -> void:
+static func note_move(model: BattleModel, side: int, me: Spirling, mv: MoveData, slot: int = 0) -> void:
 	var st: Dictionary = state(model)
+	if echoes(model, side, me, mv):
+		model.change_energy(side, ECHO_ENERGY, slot)
+		say(model, side, slot, "%s picks up the echo and gains %d Energy!", [ECHO_ENERGY])
 	var prev: Array = (st.streak as Dictionary).get(me, ["", 0, -9])
 	var n: int = int(prev[1]) + 1 if str(prev[0]) == mv.move_name and int(prev[2]) == model.turn - 1 else 0
 	st.streak[me] = [mv.move_name, n, model.turn]
@@ -91,7 +96,6 @@ static func streak(model: BattleModel, me: Spirling, mv: MoveData) -> int:
 static func hit_mult(model: BattleModel, side: int, slot: int, me: Spirling, target_side: int, t_slot: int, target: Spirling, mv: MoveData) -> float:
 	var st: Dictionary = state(model)
 	var m: float = resonance_mult(model, side, me)
-	m *= echo_mult(model, side, me, mv)
 	if not _effect(mv, &"build_up").is_empty():
 		m *= 1.0 + BUILD_STEP * float(streak(model, me, mv))
 	if not _effect(mv, &"payback").is_empty() and acted_this_turn(model, target):
@@ -138,14 +142,14 @@ static func resonance_mult(model: BattleModel, side: int, me: Spirling) -> float
 				return RESONANCE_MULT
 	return 1.0
 
-## Elemental echo: x1.15 when an ally already used a damaging art of the same element this turn.
-static func echo_mult(model: BattleModel, side: int, me: Spirling, mv: MoveData) -> float:
+## Elemental echo: true when an ally already used a damaging art of the same element this turn.
+static func echoes(model: BattleModel, side: int, me: Spirling, mv: MoveData) -> bool:
 	if not mv.is_damaging():
-		return 1.0
+		return false
 	for u: Dictionary in state(model).used:
 		if int(u.turn) == model.turn and int(u.side) == side and u.who != me and int(u.element) == mv.element:
-			return ECHO_MULT
-	return 1.0
+			return true
+	return false
 
 ## Brace: true when [param target] stands braced this turn; the art bounces off with a line.
 static func blocks_hit(model: BattleModel, target_side: int, t_slot: int, target: Spirling, mv: MoveData) -> bool:

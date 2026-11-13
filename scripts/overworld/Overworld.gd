@@ -2572,6 +2572,9 @@ func _action_postgame_board(_args: PackedStringArray, _speaker: NPC) -> void:
 	kinds.append("times")
 	ways.append(Loc.t("Cartographer's exam"))
 	kinds.append("exam")
+	# Battle halls (KAMPF_PLAN_1000, endgame modes): scripts/overworld/HallRunner.gd.
+	ways.append(Loc.t("Battle halls"))
+	kinds.append("halls")
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	var way: int = await menu.pick_strings(Loc.t("The board"), ways)
@@ -2591,6 +2594,8 @@ func _action_postgame_board(_args: PackedStringArray, _speaker: NPC) -> void:
 			await _show_hall_times()
 		"exam":
 			await _run_final_exam()
+		"halls":
+			await HallRunner.open(self)
 
 ## One timed battle for a hall; books the time on a win and says a new best.
 func _timed_battle(hall: String, foes: Array[Spirling], info: Dictionary) -> BattleModel.Outcome:
@@ -3766,12 +3771,20 @@ func echo_duel(d: Dictionary) -> void:
 		await say(["The echo flickers and fades. Try again later."] as Array[String])
 		return
 	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), ring]] as Array[String])
+	# The challenger picks the field (KAMPF_PLAN_1000); the place's own field does not count.
+	var fm := MenuHost.new()
+	_ui.add_child(fm)
+	var fi: int = await fm.pick_strings(Loc.t("Which field?"), EchoTeam.field_names())
+	fm.queue_free()
 	busy = false
+	# The rule of the week holds in echo duels too, the same for everyone (KAMPF_PLAN_1000).
 	var outcome: BattleModel.Outcome = await start_battle(foes, false,
-		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true})
+		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
+			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi)})
 	busy = true
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN
+	EchoTeam.note_duel(GameState.records, won)
 	Online.call_fn("echo_report", {"p_code": d.code, "p_kind": "duel", "p_won": won})
 	# The server's referee plays the duel again (plan area 7, item 2689).
 	Online.call_fn("battle_submit", {"p_kind": "echo_duel", "p_ref": str(d.code),
@@ -3896,7 +3909,9 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0
+	Online.in_battle = true
 	var result: Array = await scene.battle_finished
+	Online.in_battle = false
 	var outcome: BattleModel.Outcome = result[0]
 	replay["inputs"] = scene.inputs
 	GameState.records["last_battle"] = replay

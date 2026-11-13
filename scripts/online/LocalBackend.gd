@@ -411,6 +411,10 @@ func _fn_profile_set(a: Dictionary) -> Dictionary:
 		var mo: Variant = given.get("motif")
 		if mo is String and FriendsMenu.GIFT_CARDS.has(mo) and int(_unlocks(me()).get("gift_card_" + mo, 0)) > 0:
 			card["motif"] = mo
+		# A title only from the game's list (20261113200010_card_title.sql), never free text.
+		var ti: Variant = given.get("title")
+		if ti is String and ti in BattleHalls.card_titles():
+			card["title"] = ti
 	p.name = clean_name(str(a.get("p_name", "")), p.code)
 	p.color = clampi(int(a.get("p_color", 0)), 0, 3)
 	var fav: String = ""
@@ -1060,8 +1064,13 @@ func _fn_team_set(a: Dictionary) -> Dictionary:
 		for mv: Variant in (mv_list as Array if mv_list is Array else []).slice(0, 4):
 			moves.append(_keep(str(mv), " '-").left(24))
 		var lvl: Variant = d.get("level", 1)
-		clean.append({"species": _keep(str(d.get("species", "")), "").left(20),
-			"level": clampi(int(lvl) if (lvl is int or lvl is float) else 1, 1, level_max), "moves": moves})
+		var row: Dictionary = {"species": _keep(str(d.get("species", "")), "").left(20),
+			"level": clampi(int(lvl) if (lvl is int or lvl is float) else 1, 1, level_max), "moves": moves}
+		# A held item only when the game knows it (20261113200120_echo_held.sql).
+		var held: Variant = d.get("held")
+		if held is String and Database.items.has(held):
+			row["held"] = held
+		clean.append(row)
 	profile_of(me())["team"] = clean
 	return {"ok": true, "size": clean.size()}
 

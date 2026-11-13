@@ -1043,6 +1043,42 @@
    "reward": 50,
    "stat": "record:rift_tide_shaft",
    "n": 15
+  },
+  {
+   "id": "hall_first",
+   "title": "Hall Guest",
+   "text": "Clear any battle hall on Examiner Hollis's board.",
+   "cat": "challenge",
+   "reward": 25,
+   "stat": "record:hall_clears",
+   "n": 1
+  },
+  {
+   "id": "hall_regular",
+   "title": "Hall Regular",
+   "text": "Clear battle halls 20 times.",
+   "cat": "challenge",
+   "reward": 50,
+   "stat": "record:hall_clears",
+   "n": 20
+  },
+  {
+   "id": "echo_duelist",
+   "title": "Echo Duelist",
+   "text": "Fight five echo duels against friends.",
+   "cat": "battle",
+   "reward": 25,
+   "stat": "record:echo_duels",
+   "n": 5
+  },
+  {
+   "id": "echo_victor",
+   "title": "Echo Victor",
+   "text": "Win 25 echo duels against friends.",
+   "cat": "battle",
+   "reward": 50,
+   "stat": "record:echo_duel_wins",
+   "n": 25
   }
  ]
 }

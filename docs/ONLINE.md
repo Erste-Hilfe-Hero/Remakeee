@@ -16,7 +16,8 @@ ideas list behind this is the "Chimora online: 200 ideas" artifact in the projec
   asks which journey to keep. The server also refuses impossible saves (level over 100, more than 6 in the
   party, negative money).
 - **Connection lost while playing:** the game pauses behind a "Reconnecting" screen and retries every 4 seconds.
-  Unsent saves go up as soon as it is back.
+  Unsent saves go up as soon as it is back. A battle that is running goes on with only the small mark (`Online.in_battle`); the
+  big screen comes when it is over, and its result is sent once the connection is back.
 - **Server clock:** the daily find, the weekly challenge and the festivals use the server's time, so changing
   the phone's clock does nothing.
 - **Old builds:** `server_config.min_version` sends older builds to the store. `Online.CLIENT_VERSION` is
@@ -43,6 +44,10 @@ All under Menu, Friends. Spirlings are never gifted; they can be traded between 
   and 100 percent.
 - **Weekly board:** the weekly challenge sends rounds won * 100 + health left. Friends board by default;
   the world board shows strangers without names.
+- **Title on the card:** a title earned in the battle halls or from goals can be worn on the Wanderer card
+  (Battle halls > Title on my card). `profile_set` keeps `card.title` only when it is one of
+  `data/battle_halls.json` `card_titles`, loaded into `known_ids` (kind `title`) by `tools/online/game_data_sql.py`
+  (migration `20261113200110_card_title.sql`, same rule in `LocalBackend`). No free text.
 - **Safety:** blocking ends the friendship and removes their mail at once and makes your code look unknown
   to them. Reports go to table `reports`. Parents can switch friends, greetings and gifts off under
   Settings, Account (the journey stays online).
