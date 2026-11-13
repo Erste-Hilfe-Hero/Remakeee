@@ -106,6 +106,9 @@ var oath_turns: int = 0
 var mend_turns: int = 0
 ## Battle-only: turns left in which an energy_burn can't take Energy again, same counting.
 var burn_guard: int = 0
+## Battle-only: the turn this Spirling last used an Overcharge art (-9 for none), so a second one
+## in the very next turn chains (KAMPF_PLAN item 59).
+var overcharge_turn: int = -9
 ## Temperament id (TEMPERAMENTS), stored since save version 4.
 var temper: String = ""
 ## Regional imprint id ("" = none), see plan area 1, item 218.
@@ -301,6 +304,7 @@ func end_battle() -> void:
 	mend_turns = 0
 	burn_guard = 0
 	oath_turns = 0
+	overcharge_turn = -9
 	cooldowns.clear()
 	status = ""
 	status_turns = 0

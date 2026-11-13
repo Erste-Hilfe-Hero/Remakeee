@@ -15,6 +15,13 @@ const STAGE_WARN: int = 2
 const OVERCHARGE_PER_ENERGY: float = 0.12
 ## At most this much leftover Energy goes into one Overcharge (the rest stays).
 const OVERCHARGE_MAX_EXTRA: int = 5
+## Overcharge chain (KAMPF_PLAN item 59): an Overcharge art in the turn right after the same
+## Spirling's last one adds this much to the power multiplier.
+const OVERCHARGE_CHAIN_BONUS: float = 0.15
+
+## Power multiplier of an Overcharge art that has [param left] Energy left after its own cost.
+static func overcharge_mult(left: int, chained: bool = false) -> float:
+	return 1.0 + OVERCHARGE_PER_ENERGY * clampi(left, 0, OVERCHARGE_MAX_EXTRA) + (OVERCHARGE_CHAIN_BONUS if chained else 0.0)
 
 ## Energy tax (energy_tax effect): extra Energy per move, and how many turns a tax holds by default.
 const ENERGY_TAX_COST: int = 1
@@ -86,12 +93,13 @@ const TRAITS: Dictionary[String, Dictionary] = {
 ## few turns. Optional keys:
 ##   blocks:        statuses that can't take hold while the field lasts
 ##   regen_element: Spirlings of this element heal max_hp / regen_div at the end of each turn
+##   rest_bonus:    extra Energy for every Rest while the field lasts (KAMPF_PLAN item 42)
 ##   energy_element: Spirlings of this element gain energy_gain extra Energy at the end of each turn
 ##   bond_bonus:    added to the bond chance of an Echo call while the field lasts
 const FIELDS: Dictionary[String, Dictionary] = {
 	"ash_storm": {"label": "Ash Storm", "boost": "EMBER", "weaken": "TIDE",
 		"intro": "Ash swirls through the Rift. Ember arts burn brighter, Tide arts sputter."},
-	"high_tide": {"label": "High Tide", "boost": "TIDE", "weaken": "EMBER", "blocks": ["scorch"],
+	"high_tide": {"label": "High Tide", "boost": "TIDE", "weaken": "EMBER", "blocks": ["scorch"], "rest_bonus": 1,
 		"intro": "The water rises around you. Tide arts surge, Ember arts fizzle, and nothing catches fire."},
 	"deep_murk": {"label": "Deep Murk", "boost": "UMBRA", "weaken": "LUMEN",
 		"intro": "The hollow swallows the light. Umbra arts deepen, Lumen arts dim."},
@@ -169,6 +177,9 @@ const RULES: Dictionary[String, Dictionary] = {
 		"difficulty": [0, 1, 2, 3], "warden_only": true},
 	"high_noon": {"label": "High Noon", "text": "The sun stands straight overhead: Lumen arts on both sides hit harder.", "lumen_mult": 1.3,
 		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	# KAMPF_PLAN item 54. "player_energy_cut": Energy every player Spirling starts without.
+	"low_tide": {"label": "Low Tide", "text": "The water has drawn back: your Spirlings start with 1 Energy less.", "player_energy_cut": 1,
+		"difficulty": [1, 2, 3]},
 	# KAMPF_PLAN_1000 item 409. "stages_locked": no stat stage moves on either side; "rest_cut":
 	# resting gives that much less Energy on both sides.
 	"still_air": {"label": "Still Air", "text": "Not a breath of wind: no stat stage rises or falls on either side.", "stages_locked": 1,

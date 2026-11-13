@@ -188,6 +188,18 @@ var delayed_hits: Array[Dictionary] = []
 ## Turn each Spirling last stepped onto the field (by swap or after a faint). The AI uses it to
 ## stop two sides from swapping back and forth forever.
 var entered_turn: Dictionary = {}
+## KAMPF_PLAN (Zugablauf, Energie).
+## Share of max Vigor a player Spirling mends when it rests (Story, item 52); 0 = none.
+var rest_heal_share: float = 0.0
+## Wild ambush from the tall fern (item 16): in the first turn the foe acts before everything.
+var ambush: bool = false
+## Bosses only (item 21): after this many turns the Rift closes and the fight ends as FLED.
+const BOSS_ROUND_LIMIT: int = 30
+## Story values for foe_crit_mult (set by ChallengeRules) and rest_heal_share (items 36, 52).
+const STORY_FOE_CRIT: float = 0.5
+const STORY_REST_HEAL: float = 0.05
+## Chance that a wild encounter in tall fern opens with an ambush (item 16).
+const AMBUSH_CHANCE: float = 0.06
 
 var _queue: Array[BattleAction] = []
 var _events: Array[BattleEvent] = []
@@ -424,8 +436,10 @@ func start() -> Array[BattleEvent]:
 		rules = BattleRules.VARIANT_KEYS.duplicate()
 	var hp_scale: float = float(rules.hp_mult)
 	for side: int in [Side.PLAYER, Side.FOE]:
+		# Warden rule Low Tide (item 54) costs the player's side Energy at the start.
+		var cut: int = start_energy_cut[side] + (int(BattleRules.rule_number(foe_rule, "player_energy_cut")) if side == Side.PLAYER else 0)
 		for s: Spirling in parties[side]:
-			s.energy = maxi(0, mini(int(rules.start_energy), max_energy()) + energy_bonus[side] - start_energy_cut[side])
+			s.energy = maxi(0, mini(int(rules.start_energy), max_energy()) + energy_bonus[side] - cut)
 			if hp_scale != 1.0:
 				var share: float = float(s.hp) / float(s.max_hp())
 				s.hp_mult *= hp_scale
@@ -465,6 +479,8 @@ func start() -> Array[BattleEvent]:
 		if slot == _partner_slot:
 			emit_event(BattleEvent.Type.PARTNER, {"side": Side.PLAYER, "slot": slot, "partner": partner_name})
 		emit_event(BattleEvent.Type.SEND_OUT, _who(Side.PLAYER, slot))
+	if ambush and is_wild:
+		emit_event(BattleEvent.Type.AMBUSH, _who(Side.FOE, 0))
 	if BattleRules.BOSSES.has(foe_boss):
 		var b: Dictionary = BattleRules.BOSSES[foe_boss]
 		emit_event(BattleEvent.Type.BOSS, {"side": Side.FOE, "slot": 0, "boss": foe_boss, "label": str(b.label), "text": str(b.text),
@@ -1017,7 +1033,25 @@ func _phase_resolve_order() -> void:
 		tiebreak[a] = rng.randf()
 	_queue.sort_custom(func(x: BattleAction, y: BattleAction) -> bool:
 		return _sort_key(x, tiebreak[x]) > _sort_key(y, tiebreak[y]))
+	_note_speed_ties()
 	phase = Phase.EXECUTE_ACTION
+
+## Item 4: when two arts of different sides meet with the same class, priority and Pace, the
+## seeded coin decided; the log says so (SPEED_TIE names the one that won). Not in the dark
+## (Warden rule Night Dark), where nobody sees the Pace anyway.
+func _note_speed_ties() -> void:
+	if BattleRules.rule_number(foe_rule, "hidden_order") > 0.0:
+		return
+	for i: int in _queue.size() - 1:
+		var x: BattleAction = _queue[i]
+		var y: BattleAction = _queue[i + 1]
+		if x.side == y.side or x.kind != BattleAction.Kind.MOVE or y.kind != BattleAction.Kind.MOVE:
+			continue
+		var kx: Vector4 = _sort_key(x, 0.0)
+		if kx == _sort_key(y, 0.0) and not x.is_bonus and not y.is_bonus:
+			var d: Dictionary = _who(x.side, x.slot)
+			d["other"] = y.actor.display_name() if y.actor != null else ""
+			emit_event(BattleEvent.Type.SPEED_TIE, d)
 
 ## Larger key acts first: lower action class, then higher priority, then higher SPD, then RNG.
 func _sort_key(a: BattleAction, tie: float) -> Vector4:
@@ -1028,7 +1062,11 @@ func _sort_key(a: BattleAction, tie: float) -> Vector4:
 	# Warden rule Night Dark: Pace stays hidden in the dark, the seeded tiebreak decides.
 	if BattleRules.rule_number(foe_rule, "hidden_order") > 0.0:
 		spd = 0
-	return Vector4(-a.order_class(), prio, spd, tie)
+	var cls: float = -a.order_class()
+	# An ambush (item 16): in the first turn the wild foe moves before any action of the player.
+	if ambush and turn == 0 and a.side == Side.FOE:
+		cls = 1.0
+	return Vector4(cls, prio, spd, tie)
 
 func _phase_execute_action() -> void:
 	if outcome != Outcome.NONE:
@@ -1044,6 +1082,9 @@ func _phase_execute_action() -> void:
 		return
 	if a.is_free:
 		emit_event(BattleEvent.Type.FREE_ACTION, _who(a.side, a.slot))
+	elif a.is_bonus:
+		# A boss's extra action is marked as its reverb (item 11).
+		emit_event(BattleEvent.Type.BONUS_ACTION, _who(a.side, a.slot))
 	match a.kind:
 		BattleAction.Kind.MOVE: _do_move(a)
 		BattleAction.Kind.REST: _do_rest(a)
@@ -1239,6 +1280,8 @@ func _phase_victory_check() -> void:
 		outcome = Outcome.LOSS
 		phase = Phase.REWARDS
 	elif round_limit > 0 and turn >= round_limit:
+		if not foe_boss.is_empty():
+			emit_event(BattleEvent.Type.ROUND_LIMIT, {"turns": round_limit, "boss": foe_boss})
 		outcome = Outcome.FLED
 		phase = Phase.REWARDS
 	else:
@@ -1345,10 +1388,16 @@ func _do_move(a: BattleAction) -> void:
 	mv = BattleRules.resolve_move(mv, field)
 	var power_mult: float = 1.0
 	var extra: int = 0
-	if mv.overcharge and me.energy > 0:
+	if mv.overcharge:
 		extra = mini(me.energy, BattleRules.OVERCHARGE_MAX_EXTRA)
-		power_mult += BattleRules.OVERCHARGE_PER_ENERGY * extra
-		change_energy(side, -extra, slot)
+		# Two Overcharge arts in two turns in a row chain for a bonus (item 59).
+		var chained: bool = turn > 0 and me.overcharge_turn == turn - 1
+		power_mult = BattleRules.overcharge_mult(extra, chained)
+		if extra > 0:
+			change_energy(side, -extra, slot)
+		if chained:
+			emit_event(BattleEvent.Type.OVERCHARGE_CHAIN, _who(side, slot))
+		me.overcharge_turn = turn
 	var target_side: int = other(side)
 	var aim: int = a.target_slot
 	var muddled: bool = false
@@ -1478,10 +1527,17 @@ func _oath_tick(side: int, slot: int, s: Spirling) -> void:
 func _do_rest(a: BattleAction) -> void:
 	emit_event(BattleEvent.Type.REST, _who(a.side, a.slot))
 	change_energy(a.side, rest_gain(), a.slot)
+	# Story (item 52): resting also mends a little Vigor, only for the player's own Spirlings.
+	if a.side == Side.PLAYER and rest_heal_share > 0.0 and not is_partner_slot(a.side, a.slot):
+		var me: Spirling = active_spirling(a.side, a.slot)
+		if me != null and me.hp < me.max_hp():
+			heal(a.side, maxi(1, roundi(me.max_hp() * rest_heal_share)), a.slot)
 
-## Energy one rest gives: REST_ENERGY or the variant's "rest_energy", minus the Warden rule Ebb's "rest_cut".
+## Energy one Rest gives right now: the rule's amount plus the field's "rest_bonus" (item 42), minus
+## the Warden rule Ebb's "rest_cut".
 func rest_gain() -> int:
-	return maxi(0, int(rules.get("rest_energy", REST_ENERGY)) - int(BattleRules.rule_number(foe_rule, "rest_cut")))
+	return maxi(0, int(rules.get("rest_energy", REST_ENERGY)) + int(BattleRules.FIELDS.get(field, {}).get("rest_bonus", 0)) \
+			- int(BattleRules.rule_number(foe_rule, "rest_cut")))
 
 ## Gift "contact_status" (Glimmer Skin, item 194): a physical hit on the Spirling in
 ## [param slot] may pass its status on to the attacker.
@@ -1540,6 +1596,9 @@ func _do_item(a: BattleAction) -> void:
 			target.status_turns = 0
 	if int(it.get("energy", 0)) > 0 and t_slot >= 0:
 		change_energy(a.side, int(it.energy), t_slot)
+	elif int(it.get("energy", 0)) > 0 and bool(it.get("energy_bench", false)):
+		# The Rest Candle (KAMPF_PLAN item 78) also reaches a Spirling waiting on the bench.
+		target.energy = mini(target.energy + int(it.energy), max_energy_of(a.side))
 	if int(it.get("energy_surge", 0)) > 0 and t_slot >= 0:
 		change_energy(a.side, max_energy_of(a.side), t_slot)
 		target.energy_surge = int(it.energy_surge)

@@ -36,6 +36,16 @@
   "tradeable": true
  },
  {
+  "id": "rest_candle",
+  "name": "Rest Candle",
+  "description": "Restores 3 Energy to any Spirling of the team, also one waiting on the bench.",
+  "battle": true,
+  "energy": 3,
+  "energy_bench": true,
+  "price": 250,
+  "tradeable": false
+ },
+ {
   "id": "revival_leaf",
   "name": "Waking Moss",
   "description": "Wakes a fainted Spirling outside battle with a third of its Vigor.",

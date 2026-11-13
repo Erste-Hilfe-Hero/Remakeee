@@ -522,12 +522,19 @@ static func matchup_tag(mult: float) -> String:
 ## preview (expected share of the foe's max HP, -1 for none).
 ## [param cost] is what the move costs now (-1: its own cost; more under an Energy tax) and
 ## [param wait] the turns a cooldown still locks it.
-static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = false, pct: int = -1, cost: int = -1, wait: int = 0) -> String:
+## [param max_energy]: an art that costs more can never be paid in this battle (KAMPF_PLAN item 65).
+## [param oc_mult]: an Overcharge art's power multiplier right now, shown when there is no preview (item 45).
+static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = false, pct: int = -1, cost: int = -1, wait: int = 0,
+		max_energy: int = 99, oc_mult: float = 0.0) -> String:
 	var c: int = cost if cost >= 0 else mv.energy_cost
 	if wait > 0:
 		return "wait %d" % wait
+	if c > max_energy:
+		return "never"
 	if energy < c:
 		return "need %dE" % c
+	if oc_mult > 1.0 and pct < 0 and not (multi and mv.is_area()):
+		return "%dE x%.1f" % [c, oc_mult]
 	if multi and mv.is_area():
 		return "%dE all" % c
 	# The preview already carries the matchup, so it replaces the x2/x.5 tag (short rows on 144 px).
@@ -544,6 +551,14 @@ static func damage_pct(model: BattleModel, me: Spirling, foe: Spirling, mv: Move
 	var hit: MoveData = BattleRules.resolve_move(mv, model.field)
 	var dmg: float = DamageCalc.estimate(me, foe, hit) * BattleRules.damage_mult(me, foe, hit, model.field)
 	return clampi(roundi(dmg * 100.0 / float(maxi(foe.max_hp(), 1))), 1, 100)
+
+## Power multiplier an Overcharge art [param mv] of [param me] would have if used now (the
+## Energy left after its cost, plus the chain bonus); 0.0 for any other art (KAMPF_PLAN item 45).
+static func overcharge_now(model: BattleModel, me: Spirling, mv: MoveData) -> float:
+	if not mv.overcharge or me == null:
+		return 0.0
+	var chained: bool = model.turn > 0 and me.overcharge_turn == model.turn - 1
+	return BattleRules.overcharge_mult(mini(me.energy - me.move_cost(mv), BattleRules.OVERCHARGE_MAX_EXTRA), chained)
 
 ## Fills the buttons from the model's current legal actions for the Spirling in [param slot].
 ## The matchup tag shows only when one foe stands (with several, the target is picked after).
@@ -566,7 +581,11 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			# An art that acts first carries an arrow (item 595).
 			b.text = ("^" if mv.priority > 0 else "") + mv.move_name
 			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
-			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct, me.move_cost(mv), me.cooldown_left(mv))
+			var oc: float = overcharge_now(model, me, mv)
+			if pct > 0 and oc > 1.0:
+				pct = mini(100, roundi(pct * oc))
+			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct, me.move_cost(mv), me.cooldown_left(mv),
+				model.max_energy_of(BattleModel.Side.PLAYER), oc)
 			var filled: bool = EraBattleHud.flag(era, "art_fill")
 			_row_elements[i] = mv.element
 			# On the element chip (Era III on) the symbol stands in ink on paper, else in its colour.
@@ -620,7 +639,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 		_run.disabled = false
 	# "Rest" stands in for the moves when none is affordable.
 	if not BattleAction.Kind.MOVE in kinds:
-		_move_buttons[0].text = "Rest (+%d)" % int(model.rules.get("rest_energy", BattleModel.REST_ENERGY))
+		_move_buttons[0].text = "Rest (+%d)" % model.rest_gain()
 		_move_costs[0].text = ""
 		_move_hints[0].text = ""
 		_move_icons[0].texture = null

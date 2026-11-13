@@ -7,7 +7,7 @@ extends RefCounted
 const BOSS_KEYS: Array[String] = ["label", "hp_per_ally", "max_actions", "text", "phase"]
 const PHASE_KEYS: Array[String] = ["at", "stage", "field", "text"]
 const FIELD_KEYS: Array[String] = ["label", "boost", "weaken", "intro", "blocks", "regen_element", "regen_div",
-	"energy_element", "energy_gain", "bond_bonus"]
+	"rest_bonus", "energy_element", "energy_gain", "bond_bonus"]
 ## Maps and tables that name a boss by id.
 const BOSS_SOURCES: Array[String] = ["res://data/ideas200c.json"]
 const MAP_DIR: String = "res://data/maps"

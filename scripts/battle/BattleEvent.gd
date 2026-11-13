@@ -14,6 +14,8 @@ enum Type {
 	ENERGY_TAX, SNARE_SET, SNARE_HIT, SNARE_CLEARED, HEAL_BLOCKED, WEARY,
 	DELAYED_SET, DELAYED_HIT, FIELD_NEXT, FIELD_EXTENDED, BATTLE_LINE, WARDEN_WEAKENED, HELD_ENDURE,
 	OATH, SHOP_EDGE, HELD_FRUIT, WHEEL_TURN,
+	# KAMPF_PLAN items 4, 11, 59, 16, 21.
+	SPEED_TIE, BONUS_ACTION, OVERCHARGE_CHAIN, AMBUSH, ROUND_LIMIT,
 	SUPPORT,
 	STATUS_VEIL,
 }
@@ -209,6 +211,16 @@ func describe() -> String:
 			return "%s eats its %s!" % [who, data.get("item_name", "")]
 		Type.WARDEN_WEAKENED:
 			return "A Warden Weakener dims %s's team: they start with 15%% less Vigor." % data.get("trainer", "")
+		Type.SPEED_TIE:
+			return "Coin toss! Same Pace, %s moves first." % who
+		Type.BONUS_ACTION:
+			return "Reverb! %s acts once more." % who
+		Type.OVERCHARGE_CHAIN:
+			return "%s chains its Overcharge!" % who
+		Type.AMBUSH:
+			return "%s leaps out of the tall grass and strikes first!" % who
+		Type.ROUND_LIMIT:
+			return "The Rift closes again after %d turns. The fight is over for now." % int(data.get("turns", 0))
 		Type.ENERGY_TAX:
 			if bool(data.get("fresh", false)):
 				return "%s is taxed: every art costs %d more Energy for %d turns!" % [who, int(data.get("cost", 1)), int(data.get("turns", 0))]
