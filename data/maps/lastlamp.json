@@ -218,15 +218,15 @@
    "money": 3000,
    "team": [
     {
-     "species": "Mendlace",
+     "species": "Tithel",
      "level": 58
     },
     {
-     "species": "Woadwhorl",
+     "species": "Snoblet",
      "level": 59
     },
     {
-     "species": "Fenwarden",
+     "species": "Tithshell",
      "level": 60
     }
    ],
@@ -258,15 +258,15 @@
    "money": 3050,
    "team": [
     {
-     "species": "Silentra",
+     "species": "Sedgel",
      "level": 59
     },
     {
-     "species": "Dusktern",
+     "species": "Moldcap",
      "level": 60
     },
     {
-     "species": "Scrivane",
+     "species": "Mirefane",
      "level": 61
     }
    ],
