@@ -631,7 +631,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 557. [x] Wayfarer-Geld-Belohnungen balancieren (Test: Rematch < Wayfarer < Warden pro Ring, Standardpreis steigt mit dem Ring, auf jeder Karte zahlt kein Wayfarer mehr als der Warden)
 558. [ ] Wayfarer mit Overcharge-Strategie
 559. [ ] Wayfarer mit Bond-Lehre (Tutorial)
-560. [ ] Wayfarer-Kampfmusik pro Gebiet
+560. [x] Wayfarer-Kampfmusik pro Gebiet (Eigene synthetisierte Kampfmusik fuer Kartenwayfarer pro Gebiet (battle_wf_<region>, je ca. 28 KB, data/music.json wayfarer); nur in der Aera des Gebiets, nach Warden-, Herausforderungs-, Fest- und Nacht-Themen (BattleAudio.theme))
 
 ## Info und Transparenz
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-824 von 1000 Punkten umgesetzt.
+825 von 1000 Punkten umgesetzt.
 

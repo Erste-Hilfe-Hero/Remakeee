@@ -103,14 +103,25 @@ const THEMES: Array[String] = ["battle_night", "battle_fest", "battle_echo", "ba
 ## Music of a battle (713-717): a Warden keeps its own; [param kind] ("echo", "tower", "duel")
 ## names a challenge theme; otherwise a running festival, then an outdoor night picks theirs,
 ## else the plain battle song.
-static func theme(kind: String, warden: bool, festival: bool, night: bool) -> String:
+## [param area] is a map Wayfarer's area theme (item 560, [method area_theme]); it comes after
+## all of those and before the plain battle song.
+static func theme(kind: String, warden: bool, festival: bool, night: bool, area: String = "") -> String:
 	if warden:
 		return "warden"
 	var t: Dictionary = cfg().get("themes", {})
 	for k: String in [kind, "fest" if festival else "", "night" if night else ""]:
 		if not k.is_empty() and t.has(k):
 			return str(t[k])
-	return "battle"
+	return area if not area.is_empty() else "battle"
+
+## The Wayfarer battle tune of [param region] from data/music.json "wayfarer" (item 560), or ""
+## when the region has none or [param era] is not the region's own era (other eras keep their
+## era battle song, so no Era I tune plays on Era V hardware).
+static func area_theme(table: Dictionary, region: String, era: int) -> String:
+	var track: String = str((table.get("wayfarer", {}) as Dictionary).get(region, ""))
+	if track.is_empty() or EraManager.region_era(region) != era:
+		return ""
+	return track
 
 ## Plays [param sound] unless the speed or battery saver keeps it out.
 static func play(sound: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:

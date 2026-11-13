@@ -590,6 +590,11 @@ static func entry_in(table: Dictionary, map_id: String, region: String) -> Varia
 	var regions: Dictionary = table.get("regions", {})
 	return regions.get(region, table.get("default", ""))
 
+## The map Wayfarer battle tune of [param region] in the active era (KAMPF_PLAN_1000 item 560).
+func area_theme(region: String) -> String:
+	var t: String = BattleAudio.area_theme(_map_music, region, EraManager.active_era())
+	return t if not t.is_empty() and ResourceLoader.exists(MUSIC_DIR % t) else ""
+
 ## Battle music [param track] ("battle", "warden") in the variant of the active era, so fights
 ## sound like the era's hardware (battle_era2 to battle_era5).
 func battle_music(track: String) -> String:

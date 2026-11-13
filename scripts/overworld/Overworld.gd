@@ -4073,8 +4073,11 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	scene.backdrop_shade = float(trainer.get("shade", 0.0))
 	scene.outdoor = map.outdoor
 	# Night, festival and challenge themes (KAMPF_PLAN_1000 713-717); a Warden keeps its own.
+	var area: String = ""
+	if bool(trainer.get("area_music", false)):
+		area = Sound.area_theme(map.region if not map.region.is_empty() else EraManager.current_region)
 	scene.music_track = BattleAudio.theme(str(trainer.get("theme", "")), bool(trainer.get("warden", false)), not Festival.active().is_empty(),
-		map.outdoor and GameState.day_night and DayCycle.current() == DayCycle.Phase.NIGHT)
+		map.outdoor and GameState.day_night and DayCycle.current() == DayCycle.Phase.NIGHT, area)
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0
