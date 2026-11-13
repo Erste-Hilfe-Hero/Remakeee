@@ -61,8 +61,9 @@ const SFX_VOICES: int = 10
 const PRIO_UI: int = 1
 const PRIO_WORLD: int = 2
 const PRIO_BATTLE: int = 3
-const BATTLE_SOUNDS: Array[String] = ["miss", "dodge", "faint", "status", "heal", "level_up", "energy_tick", "run", "low_hp", "bond"]
-const BATTLE_PREFIXES: Array[String] = ["hit", "charge_", "travel_"]
+const BATTLE_SOUNDS: Array[String] = ["miss", "dodge", "faint", "status", "heal", "level_up", "energy_tick", "run", "low_hp", "bond",
+	"overcharge", "crit_accent", "rule_seal", "partner_call", "calm_fail", "defeat"]
+const BATTLE_PREFIXES: Array[String] = ["hit", "charge_", "travel_", "status_", "stage_", "field_", "boss_", "eff_"]
 ## Same effect within this many seconds is skipped (menus scroll fast).
 const SFX_MIN_GAP: float = 0.03
 
@@ -657,6 +658,15 @@ func music(track: String, keep_ambience: bool = false) -> void:
 func stop_music() -> void:
 	_switch("", true)
 
+## Pitch the music plays at (a boss's second phase, docs/KAMPF_PLAN_1000.md 683); kept across
+## track changes until set back to 1.0.
+var music_pitch_scale: float = 1.0
+
+func music_pitch(p: float) -> void:
+	music_pitch_scale = p
+	if enabled and _music != null:
+		create_tween().tween_property(_music, "pitch_scale", p, 0.5)
+
 ## Plays [param track] once (no loop), then goes back to [param then] (or the track before it).
 func jingle(track: String, then: String = "") -> void:
 	var back: String = then if not then.is_empty() else current_track
@@ -697,4 +707,5 @@ func _switch(track: String, loop: bool) -> void:
 		(stream as AudioStreamOggVorbis).loop = loop
 	_music.stream = stream
 	_music.volume_db = 0.0
+	_music.pitch_scale = music_pitch_scale
 	_music.play()

@@ -66,6 +66,7 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out.update(era2_element_sfx())
     out.update(later_element_sfx())
     out.update(era_feel_sfx())
+    out.update(battle_show_sfx())
     return out
 
 
@@ -369,4 +370,80 @@ def era_feel_sfx() -> dict[str, np.ndarray]:
     echo[:len(dry)] += dry
     echo[secs(0.18):] += dry * 0.35
     out["era_up_5"] = echo * 0.5
+    return out
+
+
+def battle_show_sfx() -> dict[str, np.ndarray]:
+    """Battle audio (docs/KAMPF_PLAN_1000.md, "Audio im Kampf"): one short sound per status
+    (685), stage up/down notes the game pitches by stage (686), the Overcharge swell (687),
+    Resonance field rise, fade and shift (688, 689, 720), the keen-hit accent (719), the
+    matchup tones for players who cannot see the screen (696), the Warden rule seal (706), the
+    partner's call (707), the calm-rule refusal (708), the boss's entrance and phase stinger
+    (683, 705) and the defeat jingle (692). Own generator, so the older effects keep their noise."""
+    rng = np.random.default_rng(681)
+    out: dict[str, np.ndarray] = {}
+
+    def notes(seq, voice, gap: float = 0.0) -> np.ndarray:
+        parts = []
+        for nm, d in seq:
+            k = secs(d)
+            parts.append(voice(freq(midi(nm)), k) * env(k, attack=0.003, decay=0.04, sustain=0.6, release=0.02))
+            if gap > 0.0:
+                parts.append(np.zeros(secs(gap)))
+        return np.concatenate(parts)
+
+    sq = lambda f, k: pulse(f, k, 0.25)
+    tri = lambda f, k: triangle(f, k)
+    # Statuses: a crackle that falls (scorch), a drip pair (soak), a low creak (root), a buzz
+    # (jolt), a wobble (daze) and a slow sigh down (drowse).
+    n = secs(0.28)
+    out["status_scorch"] = (noise(n, 2, rng) * 0.45 + sweep(900, 300, n, "pulse", 0.125) * 0.35) * env(n, decay=0.08, sustain=0.4) * 0.7
+    out["status_soak"] = notes([("E6", 0.05), ("B5", 0.07)], tri, 0.03) * 0.7
+    n = secs(0.3)
+    out["status_root"] = (sweep(110, 70, n, "tri") * 0.7 + noise(n, 24, rng) * 0.2) * env(n, attack=0.02, sustain=0.6) * 0.8
+    n = secs(0.22)
+    buzz = pulse(freq(midi("A4")), n, 0.5) * (0.5 + 0.5 * np.sign(np.sin(np.arange(n) / RATE * 2 * np.pi * 30)))
+    out["status_jolt"] = buzz * env(n, decay=0.05, sustain=0.5) * 0.45
+    n = secs(0.34)
+    t = np.arange(n) / RATE
+    wob = np.sin(np.cumsum(freq(midi("D5")) * (1 + 0.04 * np.sin(t * 2 * np.pi * 7)) / RATE) * 2 * np.pi)
+    out["status_daze"] = np.sign(wob) * 0.4 * env(n, sustain=0.6, release=0.08)
+    n = secs(0.45)
+    out["status_drowse"] = sweep(freq(midi("A4")), freq(midi("D4")), n, "tri") * env(n, attack=0.05, sustain=0.6, release=0.15) * 0.7
+    # Stage notes: one rising and one falling pair; the game raises the pitch per stage.
+    out["stage_up"] = notes([("C5", 0.05), ("G5", 0.09)], sq) * 0.45
+    out["stage_down"] = notes([("G4", 0.05), ("C4", 0.09)], sq) * 0.45
+    # Overcharge: a held rising swell; the game pitches it by the Energy poured in.
+    n = secs(0.32)
+    out["overcharge"] = (sweep(220, 660, n, "pulse", 0.125) * 0.5 + noise(n, 3, rng) * np.linspace(0.0, 0.25, n)) * \
+        env(n, attack=0.03, sustain=0.7, release=0.04) * 0.7
+    # Resonance fields: a soft chord that blooms (rise), folds away (fade) or turns (shift).
+    n = secs(0.6)
+    chord = sum(triangle(freq(midi(nm)), n) for nm in ("C4", "G4", "D5")) / 3.0
+    out["field_rise"] = chord * env(n, attack=0.25, decay=0.1, sustain=0.7, release=0.2) * 0.9
+    n = secs(0.5)
+    out["field_fade"] = (sweep(freq(midi("D5")), freq(midi("G3")), n, "tri") * 0.6 + triangle(freq(midi("C4")), n) * 0.3) * \
+        np.linspace(1.0, 0.0, n) * 0.8
+    out["field_shift"] = notes([("G4", 0.06), ("D5", 0.06), ("A5", 0.14)], tri) * 0.7
+    # Keen hit: a bright click on top of the hit.
+    n = secs(0.07)
+    out["crit_accent"] = (pulse(freq(midi("E7")), n, 0.125) * 0.5 + noise(n, 1, rng) * 0.3) * env(n, attack=0.001, decay=0.02, sustain=0.2, release=0.02) * 0.7
+    # Matchup tones (696): up for an overwhelming hit, down for a hit that barely landed.
+    out["eff_up"] = notes([("E5", 0.05), ("A5", 0.07)], tri) * 0.55
+    out["eff_down"] = notes([("A4", 0.05), ("E4", 0.07)], tri) * 0.55
+    # Warden rule seal: two low strokes like a stamp.
+    n = secs(0.12)
+    stamp = (triangle(freq(midi("C3")), n) * 0.7 + noise(n, 12, rng) * 0.3) * env(n, attack=0.002, decay=0.04, sustain=0.3, release=0.03)
+    out["rule_seal"] = np.concatenate([stamp * 0.6, np.zeros(secs(0.05)), stamp]) * 0.85
+    out["partner_call"] = notes([("D5", 0.06), ("F#5", 0.06), ("A5", 0.06), ("D6", 0.12)], sq) * 0.4
+    out["calm_fail"] = notes([("F4", 0.08), ("F4", 0.12)], tri, 0.04) * 0.6
+    # Boss: a deep swell for the entrance and a sharp stinger when its phase turns.
+    n = secs(0.9)
+    out["boss_intro"] = (sweep(55, 110, n, "tri") * 0.6 + pulse(freq(midi("A2")), n, 0.5) * 0.25 + noise(n, 40, rng) * 0.2) * \
+        env(n, attack=0.15, decay=0.2, sustain=0.6, release=0.25) * 0.9
+    n = secs(0.4)
+    out["boss_phase"] = (pulse(freq(midi("D5")), n, 0.5) * 0.3 + pulse(freq(midi("G#5")), n, 0.5) * 0.3 + noise(n, 2, rng) * 0.2) * \
+        env(n, attack=0.002, decay=0.1, sustain=0.5, release=0.12) * 0.7
+    # Defeat: a short falling line in minor, the last note held.
+    out["defeat"] = notes([("A4", 0.14), ("F4", 0.14), ("D4", 0.14), ("C#4", 0.5)], lambda f, k: pulse(f, k, 0.5) * 0.5 + triangle(f / 2, k) * 0.5) * 0.45
     return out

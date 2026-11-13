@@ -1190,14 +1190,18 @@ func _do_move(a: BattleAction) -> void:
 	# A field_element move lands in the active field's element (a cached copy, never the data).
 	mv = BattleRules.resolve_move(mv, field)
 	var power_mult: float = 1.0
+	var extra: int = 0
 	if mv.overcharge and me.energy > 0:
-		var extra: int = mini(me.energy, BattleRules.OVERCHARGE_MAX_EXTRA)
+		extra = mini(me.energy, BattleRules.OVERCHARGE_MAX_EXTRA)
 		power_mult += BattleRules.OVERCHARGE_PER_ENERGY * extra
 		change_energy(side, -extra, slot)
 	var target_side: int = other(side)
 	var targets: Array[int] = move_targets(side, mv, a.target_slot)
 	var used: Dictionary = _who(side, slot)
 	used.merge({"move": mv.move_name, "element": mv.element, "kind": mv.kind, "area": mv.is_area() and targets.size() > 1, "targets": targets})
+	if extra > 0:
+		# The presenter pitches the Overcharge swell by the Energy poured in (plan 687).
+		used["overcharge"] = extra
 	emit_event(BattleEvent.Type.MOVE_USED, used)
 	if targets.is_empty():
 		emit_event(BattleEvent.Type.NO_TARGET, {})

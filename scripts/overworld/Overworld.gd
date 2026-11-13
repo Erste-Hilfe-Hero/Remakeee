@@ -3890,6 +3890,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var worn: String = GameState.battle_backdrop()
 	scene.backdrop = str(trainer.get("backdrop", worn if not worn.is_empty() else map.backdrop))
 	scene.backdrop_shade = float(trainer.get("shade", 0.0))
+	scene.outdoor = map.outdoor
 	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)
