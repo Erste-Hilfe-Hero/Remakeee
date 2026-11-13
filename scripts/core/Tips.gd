@@ -112,6 +112,10 @@ static func reset() -> int:
 static func flag(id: String) -> String:
 	return "tip_" + id
 
+## True when [param id] would show now, without marking it seen.
+static func pending(id: String) -> bool:
+	return (GameState.tips_enabled or id in ALWAYS) and LINES.has(id) and not GameState.has_flag(flag(id))
+
 ## The lines for [param id] if it should show now (and marks it seen), else [].
 static func take(id: String) -> Array[String]:
 	var out: Array[String] = []
