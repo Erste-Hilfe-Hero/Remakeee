@@ -111,6 +111,17 @@
     "halcyra": "halcyra",
     "quivermoor": "quivermoor"
   },
+  "_wayfarer": "KAMPF_PLAN_1000 item 560: battle music of a map Wayfarer per region (tools/audio/music.py WAYFARER_THEMES). Played only in the region's own era; a Warden, a challenge theme, a festival or an outdoor night keep their own music first (BattleAudio.theme).",
+  "wayfarer": {
+    "veydal": "battle_wf_veydal",
+    "corvane": "battle_wf_corvane",
+    "ashmere": "battle_wf_ashmere",
+    "solenne": "battle_wf_solenne",
+    "vellmarch": "battle_wf_vellmarch",
+    "quillmarch": "battle_wf_quillmarch",
+    "halcyra": "battle_wf_halcyra",
+    "quivermoor": "battle_wf_quivermoor"
+  },
   "era_fx": {
     "1": {},
     "2": {
