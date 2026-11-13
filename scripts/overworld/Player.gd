@@ -37,9 +37,9 @@ func cancel_path() -> void:
 	path_target = NO_TARGET
 
 ## Leaving the app drops a tap-to-move walk, so the Wayfarer never walks on by itself
-## after coming back (bug plan item 1311).
+## after coming back (bug plan item 1311). The reconnect screen pausing the game does the same.
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_APPLICATION_PAUSED:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_APPLICATION_PAUSED or what == NOTIFICATION_PAUSED:
 		cancel_path()
 
 func _ready() -> void:

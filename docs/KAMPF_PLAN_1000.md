@@ -325,7 +325,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 272. [x] Trait 'Glückspilz': Krit-Chance leicht höher ('Lucky Cap')
 273. [x] Trait 'Wendig': Wechsel ist frei (Prioritätsaktion, bestehend) ('Nimble')
 274. [x] Trait-Freischaltung durch Bond-Stufe (Bonus-Gabe erst ab Verbundenheit (min_kinship))
-275. [ ] Traits im Spirlog bei 'bonded'
+275. [x] Traits im Spirlog bei 'bonded' (SpirlogBook.page_text: die Gabe stand schon da, neu dazu die Bonus-Gaben der Art, TraitKit.bonus_labels)
 276. [x] Trait-Auswirkung im Schadensvorschau-Wert berücksichtigen (bestehend über damage_mult) (TraitKit.static_mult fließt in BattleRules.damage_mult)
 277. [x] Trait-Tests pro Trait (tests/unit/test_trait_kit.gd)
 278. [x] Trait-Kombinationen mit gehaltenen Gegenständen prüfen (Test: Echo Soul + Lantern Glass, Field Runner + Glutstein)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-877 von 1000 Punkten umgesetzt.
+878 von 1000 Punkten umgesetzt.
 
