@@ -416,6 +416,12 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 				line = Loc.t("No foe status takes hold on its side for %d turns.") % (sv if sv > 0 else BattleRules.STATUS_VEIL_TURNS)
 			&"energy_gain":
 				line = Loc.t("Gains %d Energy.") % int(fx.get("amount", 1))
+			&"energy_lock":
+				line = Loc.t("The foe gains no Energy for %d turns.") % maxi(1, int(fx.get("amount", 1)))
+			&"energy_give":
+				line = Loc.t("Hands up to %d of its Energy to the ally beside it.") % maxi(1, int(fx.get("amount", 1)))
+			&"energy_swap":
+				line = Loc.t("Trades its Energy with the foe's.")
 			# Multi-battle support arts (KAMPF_PLAN_1000, Mehrfachkämpfe).
 			&"heal_team":
 				line = Loc.t("Heals it and every ally beside it by %d%% of their Vigor.") % roundi(float(fx.get("amount", 0.2)) * 100.0)
@@ -509,6 +515,18 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	return b
 
 ## Short matchup tag for a known multiplier ("" when unknown or neutral).
+## Effects that take Energy from the foe (KAMPF_PLAN item 46): such arts carry ENERGY_THIEF_MARK.
+const ENERGY_THIEF_FX: Array[StringName] = [&"energy_drain", &"energy_burn", &"energy_swap", &"energy_lock"]
+const ENERGY_THIEF_MARK: String = "<"
+
+## Marks in front of an art's name: "^" acts first (item 595), "<" takes the foe's Energy (item 46).
+static func art_marks(mv: MoveData) -> String:
+	var out: String = "^" if mv.priority > 0 else ""
+	for id: StringName in ENERGY_THIEF_FX:
+		if mv.has_effect(id):
+			return out + ENERGY_THIEF_MARK
+	return out
+
 static func matchup_tag(mult: float) -> String:
 	if mult < 0.0 or is_equal_approx(mult, 1.0):
 		return ""
@@ -525,14 +543,21 @@ static func matchup_tag(mult: float) -> String:
 ## preview (expected share of the foe's max HP, -1 for none).
 ## [param cost] is what the move costs now (-1: its own cost; more under an Energy tax) and
 ## [param wait] the turns a cooldown still locks it.
+## [param max_energy]: an art that costs more can never be paid in this battle (KAMPF_PLAN item 65).
+## [param oc_mult]: an Overcharge art's power multiplier right now, shown when there is no preview (item 45).
 ## [param status_pct] (item 194) adds the art's status chance on the foe to the preview, as the
 ## status tag and the chance ("SCO30"), -1 for none.
-static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = false, pct: int = -1, cost: int = -1, wait: int = 0, status_pct: int = -1, status: String = "") -> String:
+static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = false, pct: int = -1, cost: int = -1, wait: int = 0,
+		max_energy: int = 99, oc_mult: float = 0.0, status_pct: int = -1, status: String = "") -> String:
 	var c: int = cost if cost >= 0 else mv.energy_cost
 	if wait > 0:
 		return "wait %d" % wait
+	if c > max_energy:
+		return "never"
 	if energy < c:
 		return "need %dE" % c
+	if oc_mult > 1.0 and pct < 0 and not (multi and mv.is_area()):
+		return "%dE x%.1f" % [c, oc_mult]
 	if multi and mv.is_area():
 		return "%dE all" % c
 	# The preview already carries the matchup, so it replaces the x2/x.5 tag (short rows on 144 px).
@@ -551,6 +576,14 @@ static func damage_pct(model: BattleModel, me: Spirling, foe: Spirling, mv: Move
 	var hit: MoveData = BattleRules.resolve_move(mv, model.field)
 	var dmg: float = DamageCalc.estimate(me, foe, hit) * BattleRules.damage_mult(me, foe, hit, model.field)
 	return clampi(roundi(dmg * 100.0 / float(maxi(foe.max_hp(), 1))), 1, 100)
+
+## Power multiplier an Overcharge art [param mv] of [param me] would have if used now (the
+## Energy left after its cost, plus the chain bonus); 0.0 for any other art (KAMPF_PLAN item 45).
+static func overcharge_now(model: BattleModel, me: Spirling, mv: MoveData) -> float:
+	if not mv.overcharge or me == null:
+		return 0.0
+	var chained: bool = model.turn > 0 and me.overcharge_turn == model.turn - 1
+	return BattleRules.overcharge_mult(mini(me.energy - me.move_cost(mv), BattleRules.OVERCHARGE_MAX_EXTRA), chained)
 
 ## The status [param mv] may put on [param foe] and its chance in percent (item 194), or {} when
 ## it inflicts none or the status can't take hold now (one already sits there, a gift, field,
@@ -592,10 +625,14 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			var mv: MoveData = me.moves[i]
 			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
 			# An art that acts first carries an arrow (item 595).
-			b.text = ("^" if mv.priority > 0 else "") + mv.move_name
+			b.text = art_marks(mv) + mv.move_name
 			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
+			var oc: float = overcharge_now(model, me, mv)
+			if pct > 0 and oc > 1.0:
+				pct = mini(100, roundi(pct * oc))
 			var sc: Dictionary = status_chance(model, foe, mv) if pct >= 0 else {}
-			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct, me.move_cost(mv), me.cooldown_left(mv), int(sc.get("pct", -1)), str(sc.get("status", "")))
+			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct, me.move_cost(mv), me.cooldown_left(mv),
+				model.max_energy_of(BattleModel.Side.PLAYER), oc, int(sc.get("pct", -1)), str(sc.get("status", "")))
 			var filled: bool = EraBattleHud.flag(era, "art_fill")
 			_row_elements[i] = mv.element
 			# On the element chip (Era III on) the symbol stands in ink on paper, else in its colour.
@@ -606,7 +643,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			_row_colors[i] = BattleUiStyle.matchup_color(era, shown_mult)
 			if EraBattleHud.flag(era, "art_detail"):
 				# Era IV on: the element's name under the art's name, the matchup word under the cost.
-				b.text = ("^" if mv.priority > 0 else "") + Loc.t(mv.move_name) + "\n" + Loc.t(Elements.element_name(mv.element))
+				b.text = art_marks(mv) + Loc.t(mv.move_name) + "\n" + Loc.t(Elements.element_name(mv.element))
 				_move_hints[i].text = Loc.t(EraBattleHud.effect_hint(era, shown_mult))
 			_style_row(b, _row_left())
 			if filled:
@@ -649,7 +686,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 		_run.disabled = false
 	# "Rest" stands in for the moves when none is affordable.
 	if not BattleAction.Kind.MOVE in kinds:
-		_move_buttons[0].text = "Rest (+%d)" % int(model.rules.get("rest_energy", BattleModel.REST_ENERGY))
+		_move_buttons[0].text = "Rest (+%d)" % model.rest_gain()
 		_move_costs[0].text = ""
 		_move_hints[0].text = ""
 		_move_icons[0].texture = null

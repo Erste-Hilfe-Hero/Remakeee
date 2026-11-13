@@ -267,7 +267,7 @@ func test_damage_preview_names_the_status_chance() -> void:
 	var foe: Spirling = m.active_spirling(1)
 	var sc: Dictionary = CommandMenu.status_chance(m, foe, mv)
 	assert_eq(sc, {"status": "scorch", "pct": 30})
-	assert_eq(CommandMenu.move_line(mv, 9, 1.0, false, 40, -1, 0, 30, "scorch"), "%dE ~40%% SCO30" % mv.energy_cost)
+	assert_eq(CommandMenu.move_line(mv, 9, 1.0, false, 40, -1, 0, 99, 0.0, 30, "scorch"), "%dE ~40%% SCO30" % mv.energy_cost)
 	foe.status = "daze"
 	assert_true(CommandMenu.status_chance(m, foe, mv).is_empty(), "no chance while another status sits there")
 	foe.status = ""

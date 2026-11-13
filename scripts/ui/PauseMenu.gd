@@ -461,6 +461,7 @@ func run_records() -> void:
 			lines.append("Sticker wall")
 		if not Lexicon.collected(GameState.records).is_empty() or not WayfarerBook.entries().is_empty():
 			lines.append("Lexicon")
+		lines.append("Battle rules")
 		lines.append("Battle guide")
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
@@ -487,6 +488,7 @@ func run_records() -> void:
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Lexicon": await run_lexicon()
+			"Battle rules": await run_rules_book()
 			"Battle guide": await run_battle_guide()
 			"Online replays":
 				if await OnlineReplaysMenu.run(self):
@@ -527,6 +529,14 @@ func run_lexicon() -> void:
 			if ids[i - 2] == WildRules.BOND_LEXICON:
 				page += "\n\n" + "\n".join(WildRules.bond_lines(GameState.records))
 			await info(page)
+
+## The battle rules (KAMPF_PLAN item 37): one page per topic, every number from the game itself.
+func run_rules_book() -> void:
+	while true:
+		var i: int = await pick_strings(Loc.t("Battle rules"), RulesBook.titles())
+		if i < 0:
+			return
+		await info("\n".join(RulesBook.page(i)))
 
 ## The battle guide (KAMPF_PLAN_1000): statuses, stages, keen hits and values with their numbers.
 func run_battle_guide() -> void:
