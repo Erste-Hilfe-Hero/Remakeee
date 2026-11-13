@@ -92,6 +92,23 @@ edge and a lit top face above its roof ridge, 5 px deep in Era IV and 6 px with 
 Era V, coloured from the map's own tile art. Older regions stay flat (the map's era, capped by
 the era on screen). Shots: `tools/era45_overworld_shots.gd`.
 
+### Era IV/V 2.5D overworld, font and frames (slice 6)
+
+`data/era45_overworld.json`, `scripts/overworld/EraDepthLayer.gd`:
+
+- Houses: the whole roof is lifted (8 px Era IV, 10 px Era V) and a raised wall row, made of
+  the wall tile's plaster row, fills the gap; side wall and top face follow the lifted roof.
+- Trees stand on a longer trunk (crown lifted 6 / 8 px), cliff lips rise over a taller rock
+  face (6 / 8 px); the canopy over the people (EraTerrainLook) uses the same lifts, and the
+  drop shadows of `data/era_overworld_look.json` grew with the heights.
+- Screen: maps smaller than the 270 x 480 view get their border carried on (outdoor) or a dark
+  surround (rooms) instead of the grey clear colour. The camera zoom is a whole number from the
+  data (1: the owner found 2 bigger than Era III, 1.5 would blur); the town zoom works around it.
+- Text: the Era IV/V font `pano12` is drawn bold (`data/era_text.json` "bold", the stroke
+  doubling of the battle HUD font, `PixelFont.embolden`), and the Era IV/V frames have a two
+  pixel ink rule. Era I-III are unchanged; old regions keep their flat look.
+- Shots: `tools/era45_overworld_shots.gd`. Tests: `tests/unit/test_era45_round2.gd`.
+
 ## How it works
 
 - `data/era_feel.json`: one row per era; the keys are listed in `EraFeel.KEYS`. `EraFeel.problems()` (and the GUT test) fail on a missing key, an unknown style, an extra that switches off again or a number that goes down.

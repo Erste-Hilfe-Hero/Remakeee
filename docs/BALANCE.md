@@ -695,7 +695,7 @@ balance goal: between two Warden ring caps no Spirling needs more than `no_grind
 wild battles.
 
 <!-- gen:growth -->
-| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (Tamer) | Story |
+| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (normal) | Story |
 | --- | --- | --- | --- | --- |
 | 5 | 78 | 48 | 3 | 2 |
 | 10 | 477 | 135 | 4 | 3 |

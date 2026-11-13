@@ -76,6 +76,8 @@ func layout_single() -> void:
 	scene._player_sprite.position = (l.player_sprite as Rect2).position
 	scene._foe_strip.slant_left = bool(l.foe_slant_left)
 	scene._player_strip.slant_left = bool(l.player_slant_left)
+	scene._foe_strip.single = true
+	scene._player_strip.single = true
 	_place(scene._foe_strip, l.foe_plate)
 	_place(scene._player_strip, l.player_plate)
 	var buttons: Array = l.buttons
@@ -93,6 +95,7 @@ func layout_formation() -> void:
 	var f: Vector2 = scene._field.size
 	var l: Dictionary = EraBattleHud.formation_layout(era, f.x, _team_size())
 	scene._foe_strip.slant_left = false
+	scene._foe_strip.single = false
 	_place(scene._foe_strip, l.ledger)
 	var buttons: Array = l.buttons
 	_place(scene._ff_button, buttons[0])

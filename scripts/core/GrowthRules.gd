@@ -109,7 +109,7 @@ static func battles_between(from_ring: int, to_ring: int, xp_yield: int, difficu
 
 ## The growth curve as a markdown table (docs/BALANCE.md, section "growth").
 static func curve_table(xp_yield: int) -> String:
-	var lines: PackedStringArray = ["| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (Tamer) | Story |",
+	var lines: PackedStringArray = ["| Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (normal) | Story |",
 		"| --- | --- | --- | --- | --- |"]
 	for r: Variant in data().get("curve_rings", []):
 		var ring: int = int(r)
