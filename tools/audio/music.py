@@ -660,6 +660,38 @@ BATTLE_THEMES = {
 }
 EXTRA_SONGS.update(BATTLE_THEMES)
 
+# Wayfarer battle music per area (docs/KAMPF_PLAN_1000.md, item 560): a map Wayfarer's fight
+# in a region plays that region's own battle tune, in the region's era voices, in the key and
+# mood of its place song. Eight bars each like the themes above. data/music.json "wayfarer"
+# maps region -> track; Overworld only picks it in the region's own era (BattleAudio.area_theme).
+WAYFARER_THEMES = {
+    # Veydal (Era I): bright A major road fight, the route song's key.
+    "battle_wf_veydal": dict(bpm=148, era=1, chords=["A", "F#m", "D", "E", "A", "Bm", "E7", "A"], arp_style="up", bass_style="pulse8",
+                             drums="battle", seed=503, motifs=["E5:2 A5:2 C#6:4 B5:2 A5:2 E5:4", "F#5:2 A5:2 F#5:4 C#5:8", "D5:2 F#5:2 A5:4 B5:4 A5:4", "G#5:4 B5:4 E6:8"]),
+    # Corvane (Era I): dye-works G minor, a driving stab.
+    "battle_wf_corvane": dict(bpm=150, era=1, chords=["Gm", "Eb", "Bb", "F", "Gm", "Cm", "D7", "Gm"], arp_style="stab", bass_style="pulse8",
+                              drums="drive", seed=509, motifs=["G5:2 D5:2 G5:2 Bb5:2 A5:4 G5:4", "Eb5:4 G5:4 Bb5:8", "D6:2 C6:2 Bb5:4 F5:8", "F5:4 A5:4 C6:8"]),
+    # Ashmere (Era I): smelter E minor, a marching climb.
+    "battle_wf_ashmere": dict(bpm=152, era=1, chords=["Em", "D", "C", "B7", "Em", "G", "Am", "B7"], arp_style="climb", bass_style="pulse8",
+                              drums="march", seed=521, motifs=["B4:2 E5:2 G5:2 B5:2 A5:4 G5:4", "F#5:4 D5:4 A4:8", "E5:2 G5:2 C6:4 B5:4 G5:4", "D#5:4 F#5:4 B5:8"]),
+    # Solenne (Era I): the old town's A minor, rolling and a little dusky.
+    "battle_wf_solenne": dict(bpm=140, era=1, chords=["Am", "Bb", "Am", "G", "F", "Bb", "Am", "E7"], arp_style="rolling", bass_style="walk",
+                              drums="walk", seed=523, lead_wave="tri", motifs=["A5:4 E5:2 C5:2 A4:4 B4:4", "Bb4:4 D5:4 F5:8", "E5:2 A5:2 C6:4 B5:2 A5:2 G5:4", "G#5:4 B5:4 E5:8"]),
+    # Vellmarch (Era II): the lantern city, A minor on the wash voices.
+    "battle_wf_vellmarch": dict(bpm=154, era=2, chords=["Am", "F", "C", "G", "Am", "Dm", "E7", "Am"], arp_style="rolling", bass_style="pulse8",
+                                drums="battle", seed=541, motifs=["C6:2 A5:2 E5:2 A5:2 C6:4 E6:4", "F5:2 A5:2 C6:4 F6:8", "E6:2 D6:2 C6:4 G5:8", "G#5:4 B5:4 E6:8"]),
+    # Quillmarch (Era III): ink and paper, D major with a soft pad.
+    "battle_wf_quillmarch": dict(bpm=146, era=3, chords=["D", "Bm", "G", "A", "F#m", "Bm", "Em7", "A"], arp_style="climb", bass_style="pulse8",
+                                 drums="drive", seed=547, motifs=["A5:2 D6:2 F#6:4 E6:2 D6:2 A5:4", "B5:4 D6:4 F#6:8", "G5:2 B5:2 D6:4 E6:4 D6:4", "C#6:4 E6:4 A5:8"]),
+    # Halcyra (Era IV): the high plateau, E major, wide and quick.
+    "battle_wf_halcyra": dict(bpm=158, era=4, chords=["E", "C#m", "A", "B", "E", "G#m", "A", "B7"], arp_style="rolling", bass_style="pulse8",
+                              drums="battle", seed=557, motifs=["B5:2 E6:2 G#6:4 F#6:2 E6:2 B5:4", "C#6:4 E6:4 G#5:8", "A5:2 C#6:2 E6:4 F#6:4 E6:4", "D#6:4 F#6:4 B5:8"]),
+    # Quivermoor (Era V): the breathing moor, F minor, swaying even in a fight.
+    "battle_wf_quivermoor": dict(bpm=144, era=5, chords=["Fm", "Db", "Ab", "C7", "Fm", "Bbm", "C7", "Fm"], arp_style="rolling", bass_style="pulse8",
+                                 drums="walk", seed=563, motifs=["C6:2 Ab5:2 F5:4 C6:4 Db6:4", "Db6:4 F5:4 Ab5:8", "Eb6:2 C6:2 Ab5:4 Eb5:8", "E5:4 G5:4 C6:8"]),
+}
+EXTRA_SONGS.update(WAYFARER_THEMES)
+
 # Era V battle songs also get stems: the MusicDirector fades them by battle intensity
 # (data/era_audio.json "battle_layers"), the dynamic music of the fifth hardware step.
 LAYERED_SONGS = {"battle_era5", "warden_era5"}
