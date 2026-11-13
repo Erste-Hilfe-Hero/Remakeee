@@ -69,6 +69,21 @@ static func value_lines(lead: Spirling = null) -> Array[String]:
 		out.append(Loc.t("%s at ring %d:") % [lead.display_name(), lead.level])
 		for key: String in ["hp", "atk", "def", "foc", "spd"]:
 			out.append(Loc.t("%s: base %d, spark %d = %d") % [Loc.t(stat_label(key)), base_of(lead, key), int(lead.spark.get(key, 0)), value(lead, key)])
+		# The value curve (item 250): the same Spirling at later rings.
+		out.append("")
+		out.append(Loc.t("Ring %s:") % "/".join(CURVE_RINGS.map(func(r: int) -> String: return str(r))))
+		for key: String in ["hp", "atk", "def", "foc", "spd"]:
+			out.append("%s %s" % [Loc.t(SHORT[key]), "/".join(curve(lead, key).map(func(v: int) -> String: return str(v)))])
+	return out
+
+const CURVE_RINGS: Array[int] = [10, 30, 50, 70, 100]
+
+## The value of [param key] for [param s] at each of CURVE_RINGS (before shop boosts).
+static func curve(s: Spirling, key: String) -> Array[int]:
+	var out: Array[int] = []
+	var lean: bool = str(s.temperament().stat) == key
+	for r: int in CURVE_RINGS:
+		out.append(calc(key, base_of(s, key), r, int(s.spark.get(key, 0)), lean))
 	return out
 
 static func stat_label(key: String) -> String:

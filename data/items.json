@@ -2433,5 +2433,14 @@
   },
   "price": 1800,
   "tradeable": true
+ },
+ {
+  "id": "spark_flux",
+  "name": "Spark Flux",
+  "description": "Rolls all Spark values of one Spirling anew. Used up.",
+  "battle": false,
+  "spark_reset": true,
+  "price": 1500,
+  "tradeable": true
  }
 ]

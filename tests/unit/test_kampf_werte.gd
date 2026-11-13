@@ -164,3 +164,24 @@ func test_growth_lost_to_the_ring_limit_says_so() -> void:
 	m._events = []
 	m._give_xp(s, 5)
 	assert_false(BattleFixtures.first_of(m._events, T.XP_GAINED).describe().contains("ring limit"))
+
+func test_spark_flux_rolls_every_spark_anew() -> void:
+	var s: Spirling = BattleFixtures.make("Kindlop", 20)
+	var r := RandomNumberGenerator.new()
+	r.seed = 3
+	GameState.reroll_sparks(s, r)
+	var all_eight: bool = true
+	for key: String in Spirling.STAT_KEYS:
+		assert_between(int(s.spark[key]), 0, Spirling.SPARK_MAX)
+		all_eight = all_eight and int(s.spark[key]) == 8
+	assert_false(all_eight, "the fixture's even 8s were rolled anew")
+	assert_eq(s.hp, s.max_hp(), "a healthy Spirling stays at full Vigor")
+	assert_true(bool(Database.item("spark_flux").get("spark_reset", false)))
+
+func test_value_curve_grows_with_the_ring() -> void:
+	var s: Spirling = BattleFixtures.make("Kindlop", 30)
+	var c: Array[int] = BattleGuide.curve(s, "atk")
+	assert_eq(c.size(), BattleGuide.CURVE_RINGS.size())
+	for i: int in range(1, c.size()):
+		assert_gt(c[i], c[i - 1])
+	assert_eq(c[1], BattleGuide.value(s, "atk"), "ring 30 on the curve is today's value")

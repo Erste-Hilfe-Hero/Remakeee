@@ -258,7 +258,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 208. [x] Stufen-Warnung, wenn ein Gegner +2 ATK hat (STAT_CHANGED warn)
 209. [ ] Spark-Werte (bestehend) im Statusbildschirm als Balken
 210. [ ] Spark-Training durch Kämpfe gegen bestimmte Arten
-211. [ ] Spark-Reset-Gegenstand
+211. [x] Spark-Reset-Gegenstand (Spark Flux, GameState.reroll_sparks)
 212. [x] Temperament (bestehend) im Kampf-Info zeigen (Wechsel-Liste, BattleGuide.compare_line)
 213. [x] Werte-Rechner im Lexikon (Lv, Spark, Temperament) (Kampfhandbuch Werte, BattleGuide.calc)
 214. [x] Werte-Vergleich beim Einwechseln (BattleGuide.compare_line)
@@ -278,7 +278,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 228. [x] Warden-Regel mit Startstufen (bestehend: Undertow) (BattleRules.RULES)
 229. [x] Stufen-Sound steigt mit Stufe (BattleGuide.stage_pitch)
 230. [ ] Werte-Ansicht als Radar-Grafik im Statusbildschirm
-231. [ ] Werte pro Level im Lexikon als Kurve
+231. [x] Werte pro Level im Lexikon als Kurve (Kampfhandbuch Werte, BattleGuide.curve)
 232. [x] Level-Cap im Menü (bestehend) (PauseMenu Ring limit)
 233. [x] Level-Cap-Hinweis beim XP-Verlust (XP_GAINED cap)
 234. [x] Werte beim Levelaufstieg anzeigen (Zuwachs) (LevelPanel)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-90 von 1000 Punkten umgesetzt.
+92 von 1000 Punkten umgesetzt.
 
