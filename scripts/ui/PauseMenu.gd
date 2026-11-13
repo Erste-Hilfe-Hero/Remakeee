@@ -727,7 +727,7 @@ func run_team() -> void:
 		if idx < 0 or idx >= GameState.party.size():
 			return
 		var s: Spirling = GameState.party[idx]
-		var opts: Array[String] = ["Summary", "Lead the team", "Move to slot...", "Use item", "Keepsake", "Nickname"]
+		var opts: Array[String] = ["Summary", "Lead the team", "Move to slot...", "Use item", "Keepsake", "Nickname", "Arts order"]
 		# Every kind that can unfold shows the option; if it isn't ready yet, it says what it needs.
 		if not s.data.unfold.is_empty():
 			opts.append("Unfurl")
@@ -744,6 +744,9 @@ func run_team() -> void:
 		if opt >= 0 and opts[opt] == "Nickname":
 			await _rename(s)
 			continue
+		if opt >= 0 and opts[opt] == "Arts order":
+			await _arts_order(s)
+			continue
 		if opt >= 0 and opts[opt] in ["Unfurl", "Furl back"]:
 			await _unfurl(s, opts[opt] == "Unfurl")
 			continue
@@ -759,6 +762,20 @@ func run_team() -> void:
 					GameState.move_party(idx, to)
 			3: await _use_item_on(s)
 			4: await _held_item(s)
+
+## Art order and favourite art (KAMPF_PLAN items 605, 606): the order is the one in battle,
+## the favourite is where the battle menu starts when no art was used yet.
+func _arts_order(s: Spirling) -> void:
+	while true:
+		var row: int = await pick(Loc.t("Arts of %s") % s.display_name(), BattleComfort.art_rows(s))
+		if row < 0:
+			return
+		var acts: Array[String] = ["Move up", "Move down", "Favourite on/off"]
+		var act: int = await pick_strings(s.moves[row].move_name, acts)
+		match act:
+			0: BattleComfort.move_art(s, row, row - 1)
+			1: BattleComfort.move_art(s, row, row + 1)
+			2: BattleComfort.toggle_favourite(s, row)
 
 ## Nickname (item 1899): up to 10 letters, empty gives back the kind's name. The same rules
 ## as Wayfarer names, since friends can see a team.
