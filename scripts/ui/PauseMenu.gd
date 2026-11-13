@@ -1143,6 +1143,8 @@ func run_bag() -> void:
 			await _use_on_party(item_id)
 		elif item_id == TideChart.ITEM:
 			await info("\n".join(TideChart.lines()))
+		elif item_id == WildRules.LANTERN_ITEM:
+			await _lantern_setting()
 		elif bool(it.get("gear", false)):
 			await info(gear_page(item_id), gear_picture(item_id))
 		else:
@@ -1380,6 +1382,16 @@ func _use_spark_charm(id: String) -> void:
 		GameState.inventory.erase(id)
 	Sound.sfx("level_up")
 	await info("%s's %s spark grew brighter!" % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()])
+
+## The Storm Lantern's flame: how many wild Spirlings step out (WildRules.lantern_mult).
+func _lantern_setting() -> void:
+	var opts: Array[String] = []
+	for i: int in WildRules.LANTERN_WORDS.size():
+		opts.append(("> " if i == WildRules.lantern_setting(GameState.records) else "") + Loc.t(WildRules.LANTERN_WORDS[i]))
+	var pick: int = await pick_strings(Loc.t("Storm Lantern: how bright?"), opts)
+	if pick >= 0:
+		GameState.records[WildRules.LANTERN_RECORD] = pick
+		await info(Loc.t("The lantern burns: %s") % Loc.t(WildRules.LANTERN_WORDS[pick]))
 
 ## Spark Wash (KAMPF_PLAN "Spark-Reset"): one spark of one Spirling back to 0.
 func _use_spark_wash(id: String) -> void:
