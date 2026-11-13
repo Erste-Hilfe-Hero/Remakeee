@@ -1,0 +1,33 @@
+{
+ "_comment": "ja translation of the kampf_k05 table, keyed by the English text.",
+ "strings": {
+  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns on every difficulty; then the place's own field comes back. A new field pushes the old one out at once.": "裂け目フィールドは、ある属性を x1.2、別の属性を x0.85 にする。呼びの術はどの難易度でも 5 ターンのあいだ場を敷き、そのあと土地本来の場がもどる。新しい場は古い場をすぐに追い出す。",
+  "A Rift field never weakens its arts.": "裂け目フィールドで術が弱まらない。",
+  "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.": "渦まく風の中の静かな輪。Galeの術は強く当たり、Bloomの術はしおれ、だれもねむけにならない。",
+  "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.": "淡い朝の光。Lumenの術は強く当たり、Umbraの術は薄れ、Echoの呼びかけが少し決まりやすい。夜明けと昼は 1 ターン長く続く。",
+  "Ash hangs in the air. Ember arts hit harder, Tide arts sputter.": "灰が宙にただよう。Emberの術は強く当たり、Tideの術はとぎれがちになる。",
+  "Calls a rain of rubble over the field.": "場にがれきの雨を呼ぶ。",
+  "Calls the eye of a gale over the field.": "場に嵐の目を呼ぶ。",
+  "Echo Soul": "こだまの魂",
+  "Every hair stands on end. Volt arts hit harder, Stone arts crumble, and Volt Spirlings gain 1 extra Energy each turn.": "毛という毛が逆立つ。Voltの術は強く当たり、Stoneの術はくずれ、VoltのSpirlingは毎ターン エネルギーを 1 多く得る。",
+  "Field Stake": "場の杭",
+  "Field Strider": "場渡り",
+  "Gains 2 Energy whenever a new Rift field is laid.": "新しい裂け目フィールドが敷かれるたびに エネルギーを 2 得る。",
+  "Gale Call": "嵐呼び",
+  "Gale Eye": "嵐の目",
+  "Grit and pebbles patter down. Stone arts land heavier, Volt arts ground out, and no charge can build.": "砂利と小石がぱらぱら降る。Stoneの術は重く当たり、Voltの術は地面に逃げ、ためは一切できない。",
+  "Grit patters down without end. Stone arts hit harder, Volt arts ground out, and nobody can be Jolted.": "砂利が絶え間なく降る。Stoneの術は強く当たり、Voltの術は地面に逃げ、だれもしびれにならない。",
+  "Keepsake. A Rift field its holder calls lasts 2 turns longer.": "愛用品。持ち主が呼んだ裂け目フィールドが 2 ターン長く続く。",
+  "Light drowns in the murk. Umbra arts hit harder, Lumen arts dim. At dusk and at night it holds a turn longer.": "光が暗やみにおぼれる。Umbraの術は強く当たり、Lumenの術はかすむ。夕暮れと夜は 1 ターン長く続く。",
+  "No Rift field.": "裂け目フィールドなし。",
+  "Pollen settles on everything. Bloom arts hit harder, Gale arts stall, and Bloom Spirlings mend a little each turn.": "花粉があらゆるものに積もる。Bloomの術は強く当たり、Galeの術はとどこおり、BloomのSpirlingは毎ターン少し回復する。",
+  "Rift field %s, %d turns left.": "裂け目フィールド {0}、残り {1} ターン。",
+  "Rift field %s, for the whole battle.": "裂け目フィールド %s、戦いのあいだずっと。",
+  "Rift fields": "裂け目フィールド",
+  "Rubble Call": "がれき呼び",
+  "Rubble Rain": "がれきの雨",
+  "The %s gives way to the %s.": "{0} が {1} に場をゆずる。",
+  "The water stands knee-deep. Tide arts hit harder, Ember arts fizzle, and nothing can catch Scorch.": "水がひざまで満ちる。Tideの術は強く当たり、Emberの術は消えかかり、だれも焦げにならない。",
+  "The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off.": "風が裂け目のまわりを回り、中心で息をひそめる。Galeの術は鋭く切り、Bloomの術はしおれ、だれもうとうとできない。"
+ }
+}
