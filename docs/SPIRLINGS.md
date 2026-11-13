@@ -484,7 +484,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era4.py
 | 391 | Plinthlet | Stone/Tide | common | bulwark | thick_hide | 306 | Plinthshell (ring 82) |
 | 392 | Plinthshell | Stone/Tide | uncommon | bulwark | thick_hide | 409 | Plinthcastle (ring 88) |
 | 393 | Plinthcastle | Stone/Tide | shy | bulwark | thick_hide | 504 | - |
-| 394 | Kitelet | Gale/Volt | common | vanguard | steady | 316 | Kitewhip (ring 80) |
+| 394 | Kitelet | Gale/Volt | common | vanguard | steady | 306 | Kitewhip (ring 80) |
 | 395 | Kitewhip | Gale/Volt | uncommon | vanguard | steady | 416 | Kitemonarch (ring 88) |
 | 396 | Kitemonarch | Gale/Volt | shy | vanguard | steady | 510 | - |
 | 397 | Coffrel | Umbra/Gilt | common | weaver | light_sleeper | 294 | Coffrake (ring 82) |
@@ -519,6 +519,85 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era4.py
 | 426 | Gnomonk | Stone/Zenith | uncommon | weaver | light_sleeper | 426 | - |
 | 427 | Gildbloom | Bloom/Gilt | uncommon | kindler | kindling | 426 | - |
 <!-- /lines:halcyra -->
+
+<!-- lines:vellmarch -->
+## Vellmarch lines (Era II post-game, tools/art/lines/vellmarch.py)
+
+Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era2.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 428 | Boltnib | Rust/Umbra | common | striker | slick | 284 | Boltgnaw (ring 23) |
+| 429 | Boltgnaw | Rust/Umbra | uncommon | striker | slick | 424 | Boltgrimmer (ring 42) |
+| 430 | Boltgrimmer | Rust/Umbra | shy | striker | slick | 495 | - |
+| 431 | Veilmote | Mask | common | weaver | light_sleeper | 311 | Veilmothel (ring 23) |
+| 432 | Veilmothel | Mask | uncommon | weaver | light_sleeper | 475 | Veilmarquise (ring 42) |
+| 433 | Veilmarquise | Mask | shy | weaver | light_sleeper | 515 | - |
+| 434 | Tallop | Ember/Tide | common | kindler | kindling | 305 | Tallogg (ring 24) |
+| 435 | Tallogg | Ember/Tide | uncommon | kindler | kindling | 393 | Tallowgrand (ring 42) |
+| 436 | Tallowgrand | Ember/Tide | shy | kindler | kindling | 454 | - |
+| 437 | Dimlure | Tide/Lumen | common | weaver | steady | 297 | Dimlurker (ring 24) |
+| 438 | Dimlurker | Tide/Lumen | uncommon | weaver | steady | 386 | Dimluminor (ring 38) |
+| 439 | Dimluminor | Tide/Lumen | shy | weaver | steady | 447 | - |
+| 440 | Tollpip | Gale/Stone | common | striker | surge | 280 | Tollgull (ring 23) |
+| 441 | Tollgull | Gale/Stone | uncommon | striker | surge | 408 | Tollbaron (ring 40) |
+| 442 | Tollbaron | Gale/Stone | shy | striker | surge | 500 | - |
+| 443 | Sootkin | Umbra/Ember | common | vanguard | last_stand | 303 | Sootrook (ring 24) |
+| 444 | Sootrook | Umbra/Ember | uncommon | vanguard | last_stand | 424 | Sootregent (ring 41) |
+| 445 | Sootregent | Umbra/Ember | shy | vanguard | last_stand | 515 | - |
+| 446 | Flakit | Rust/Tide | common | bulwark | thick_hide | 276 | Flakeshell (ring 23) |
+| 447 | Flakeshell | Rust/Tide | uncommon | bulwark | thick_hide | 407 | Flakebastion (ring 40) |
+| 448 | Flakebastion | Rust/Tide | shy | bulwark | thick_hide | 471 | - |
+| 449 | Sprockle | Rust/Volt | common | vanguard | deep_roots | 270 | Sprocklen (ring 22) |
+| 450 | Sprocklen | Rust/Volt | uncommon | vanguard | deep_roots | 402 | Sprockmaul (ring 38) |
+| 451 | Sprockmaul | Rust/Volt | shy | vanguard | deep_roots | 469 | - |
+| 452 | Guiskit | Mask/Umbra | common | striker | slick | 297 | Guisvix (ring 26) |
+| 453 | Guisvix | Mask/Umbra | uncommon | striker | slick | 428 | Guisdame (ring 40) |
+| 454 | Guisdame | Mask/Umbra | shy | striker | slick | 505 | - |
+| 455 | Fenglim | Echo/Lumen | common | weaver | light_sleeper | 319 | Fenglimmer (ring 25) |
+| 456 | Fenglimmer | Echo/Lumen | uncommon | weaver | light_sleeper | 466 | Fenglowmarsh (ring 42) |
+| 457 | Fenglowmarsh | Echo/Lumen | shy | weaver | light_sleeper | 515 | - |
+| 458 | Splotchet | Tide/Ink | common | kindler | kindling | 276 | Splotchling (ring 26) |
+| 459 | Splotchling | Tide/Ink | uncommon | kindler | kindling | 408 | Splotcheroth (ring 38) |
+| 460 | Splotcheroth | Tide/Ink | shy | kindler | kindling | 493 | - |
+| 461 | Snaglet | Tide | common | striker | surge | 281 | Snagwhisk (ring 25) |
+| 462 | Snagwhisk | Tide | uncommon | striker | surge | 419 | Snaggrave (ring 39) |
+| 463 | Snaggrave | Tide | shy | striker | surge | 504 | - |
+| 464 | Pewnib | Stone | common | bulwark | thick_hide | 308 | Pewspine (ring 25) |
+| 465 | Pewspine | Stone | uncommon | bulwark | thick_hide | 410 | Pewrampart (ring 38) |
+| 466 | Pewrampart | Stone | shy | bulwark | thick_hide | 504 | - |
+| 467 | Snoblet | Gale/Lumen | common | kindler | deep_roots | 296 | Snobplume (ring 25) |
+| 468 | Snobplume | Gale/Lumen | uncommon | kindler | deep_roots | 411 | Snobsovereign (ring 39) |
+| 469 | Snobsovereign | Gale/Lumen | shy | kindler | deep_roots | 479 | - |
+| 470 | Tithel | Stone | common | bulwark | steady | 320 | Tithshell (ring 23) |
+| 471 | Tithshell | Stone | uncommon | bulwark | steady | 463 | Tithebastion (ring 38) |
+| 472 | Tithebastion | Stone | shy | bulwark | steady | 506 | - |
+| 473 | Bargit | Umbra/Echo | common | weaver | last_stand | 293 | Bargwing (ring 22) |
+| 474 | Bargwing | Umbra/Echo | uncommon | weaver | last_stand | 414 | Bargemourn (ring 40) |
+| 475 | Bargemourn | Umbra/Echo | shy | weaver | last_stand | 504 | - |
+| 476 | Sedgel | Bloom/Tide | common | striker | slick | 279 | Sedgecoil (ring 26) |
+| 477 | Sedgecoil | Bloom/Tide | uncommon | striker | slick | 419 | Sedgemire (ring 40) |
+| 478 | Sedgemire | Bloom/Tide | shy | striker | slick | 500 | - |
+| 479 | Smogpup | Ember/Mask | common | vanguard | surge | 295 | Smoglurcher (ring 26) |
+| 480 | Smoglurcher | Ember/Mask | uncommon | vanguard | surge | 416 | Smogcapo (ring 40) |
+| 481 | Smogcapo | Ember/Mask | shy | vanguard | surge | 502 | - |
+| 482 | Hushbeak | Gale/Umbra | uncommon | weaver | light_sleeper | 270 | Hushmonger (ring 34) |
+| 483 | Hushmonger | Gale/Umbra | shy | weaver | light_sleeper | 384 | - |
+| 484 | Moldcap | Bloom/Umbra | uncommon | kindler | kindling | 287 | Moldmagnate (ring 34) |
+| 485 | Moldmagnate | Bloom/Umbra | shy | kindler | kindling | 394 | - |
+| 486 | Groatfin | Tide/Lumen | uncommon | striker | last_stand | 291 | Groatgrand (ring 32) |
+| 487 | Groatgrand | Tide/Lumen | shy | striker | last_stand | 426 | - |
+| 488 | Shivlet | Umbra/Gale | uncommon | striker | deep_roots | 290 | Shivreaper (ring 33) |
+| 489 | Shivreaper | Umbra/Gale | shy | striker | deep_roots | 444 | - |
+| 490 | Latchet | Stone/Mask | uncommon | bulwark | thick_hide | 336 | Latchgrim (ring 30) |
+| 491 | Latchgrim | Stone/Mask | shy | bulwark | thick_hide | 480 | - |
+| 492 | Waxwhisk | Ember/Umbra | uncommon | kindler | steady | 305 | Waxwidow (ring 33) |
+| 493 | Waxwidow | Ember/Umbra | shy | kindler | steady | 408 | - |
+| 494 | Fauxscript | Ink/Umbra | uncommon | weaver | light_sleeper | 420 | - |
+| 495 | Anchorrot | Rust | uncommon | bulwark | thick_hide | 423 | - |
+| 496 | Knellgrim | Stone/Volt | uncommon | vanguard | surge | 423 | - |
+| 497 | Mirefane | Umbra/Tide | uncommon | kindler | kindling | 394 | - |
+<!-- /lines:vellmarch -->
 
 ## Regional imprints (Ortsprägung, items 218-219)
 

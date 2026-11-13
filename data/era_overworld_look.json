@@ -48,11 +48,11 @@
   "reflect_alpha": 0.4,
   "flat": ["GRASS", "TALL_GRASS", "PATH", "FLOWER", "SCREE", "STAIRS", "PIER", "FLOOR", "PLATE", "CRACKED"],
   "contact_alpha": 0.22,
-  "casters": {"TREE": 14, "WALL": 12, "ROOF": 12, "DOOR": 12, "TOWER": 16, "LAMP": 12, "CLIFF": 10, "SIGN": 6, "FENCE": 5, "ROCK": 4},
+  "casters": {"TREE": 20, "WALL": 20, "ROOF": 20, "DOOR": 20, "TOWER": 22, "LAMP": 14, "CLIFF": 16, "SIGN": 6, "FENCE": 5, "ROCK": 5},
   "canopy": {"TREE": 9, "ROOF": 6, "CLIFF": 5},
   "sun": {
    "dawn": {"dir": [-0.75, 0.3], "alpha": 0.26},
-   "day": {"dir": [0.3, 0.35], "alpha": 0.3},
+   "day": {"dir": [0.3, 0.35], "alpha": 0.34},
    "dusk": {"dir": [0.8, 0.3], "alpha": 0.28},
    "night": {"dir": [0.2, 0.25], "alpha": 0.14}
   },
