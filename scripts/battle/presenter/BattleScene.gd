@@ -82,9 +82,17 @@ var _back_button: Button
 var _target_buttons: Array[Button] = []
 ## Plain-text lines of what happened so far (item 11: re-read the last turns).
 var log_lines: Array[String] = []
-## Side of each log line (-1: both or none), for the log filter in multi battles (item 373).
-var log_sides: Array[int] = []
-var _log_mode: int = 0
+## Log entries with their filter kind and side (BattleInfo, item 565), the filter in use, the
+## arts each foe showed (item 567), the end report (item 581) and the remembered art per slot
+## and target (items 603, 615).
+var log_entries: Array = []
+var _log_filter: String = "all"
+var _log_filter_button: Button
+var _seen_arts: Dictionary = {}
+var report: Dictionary = BattleInfo.new_report()
+var _last_art_name: String = ""
+var _last_art: Dictionary = {}
+var _last_aim: int = -1
 ## Element of the player's last move, so the hit that follows teaches the matchup.
 var _last_player_element: int = -1
 ## Element of the last move each side used, for the hit sound.
@@ -272,17 +280,22 @@ func _build() -> void:
 	_log_panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	_log_panel.gui_input.connect(func(ev: InputEvent) -> void:
 		if TapInput.is_press(ev):
-			# Multi battles: a tap shows only yours, then only the foes', then closes (item 373).
-			_log_mode = _log_mode + 1 if _multi else MultiRules.LOG_MODES.size()
-			if _log_mode >= MultiRules.LOG_MODES.size():
-				_log_panel.visible = false
-			else:
-				_fill_log())
+			_log_panel.visible = false)
 	add_child(_log_panel)
+	var log_box := VBoxContainer.new()
+	_log_panel.add_child(log_box)
+	_log_filter_button = Button.new()
+	_log_filter_button.clip_text = true
+	_log_filter_button.pressed.connect(func() -> void:
+		_log_filter = BattleInfo.next_filter(_log_filter)
+		_fill_log())
+	log_box.add_child(_log_filter_button)
 	_log_label = Label.new()
 	_log_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_log_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
-	_log_panel.add_child(_log_label)
+	_log_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_log_label.clip_text = true
+	log_box.add_child(_log_label)
 	_apply_speed()
 	_hud = BattleHud.new()
 	_hud.attach(self)
@@ -290,12 +303,10 @@ func _build() -> void:
 ## Era look of the HUD: plates, small buttons, team rows, text frame, ring-rise panel.
 var _hud: BattleHud
 var _field_badge: FieldBadge
-## The end-of-battle report (items 335, 393), built from the played events.
-var report: BattleReport = BattleReport.new()
-## The foe slot each player slot aimed at last (KAMPF_PLAN_1000 item 385).
-var _last_aim: Dictionary = {}
+## Each Spirling's share and the Rift fields for the end report (items 335, 393).
+var battle_report: BattleReport = BattleReport.new()
 
-## Damage preview and matchup for one target while aiming (items 362, 363).
+## Damage preview for one target with the team guard and back row factored in (items 362, 367).
 func _aim_line(me: Spirling, mv: MoveData, foe_slot: int, from_slot: int = 0) -> String:
 	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, foe_slot)
 	var mult: float = GameState.known_multiplier(mv.element, foe)
@@ -636,6 +647,10 @@ func _run() -> void:
 		await _play(model.submit_turn(action))
 		_refresh_goal()
 	_refresh_goal()
+	# Comfort tips after the first battle that was really played (item 631).
+	if not _replaying and not model.has_meta("quick") and not inputs.is_empty():
+		for line: String in Tips.take("battle_comfort"):
+			await _text.show_text(line)
 	battle_finished.emit(model.outcome, model)
 	if quit_on_finish:
 		get_tree().quit()
@@ -666,6 +681,7 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 		if _auto_active():
 			return _auto_ai.choose(model, BattleModel.Side.PLAYER, slot)
 	_text.show_prompt("Orders for %s? (%d Energy)" % [me.display_name(), me.energy])
+	_menu.prefer_row = int(_last_art.get(slot, -1))
 	_menu.refresh(model, slot)
 	_menu.set_enabled(true)
 	var choice: Array = await _menu.chosen
@@ -680,6 +696,8 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 					aim = await _pick_target("Aim %s at?" % me.moves[index].move_name, me, me.moves[index], slot)
 					if aim == -2:
 						return null
+					_last_aim = aim
+				_last_art[slot] = index
 				return BattleAction.make_move(BattleModel.Side.PLAYER, index, slot, aim)
 			return BattleAction.make_rest(BattleModel.Side.PLAYER, slot)
 		BattleAction.Kind.SWAP:
@@ -702,7 +720,6 @@ func _pick_target(title: String, me: Spirling = null, mv: MoveData = null, from_
 	if not _multi or foes.size() <= 1:
 		return -1 if foes.is_empty() else foes[0]
 	_text.show_prompt(title)
-	var first: int = MultiRules.default_target(int(_last_aim.get(from_slot, -1)), foes)
 	for slot: int in foes:
 		var sp: SpirlingSprite = _slot_sprites[BattleModel.Side.FOE][slot]
 		var b := Button.new()
@@ -717,9 +734,12 @@ func _pick_target(title: String, me: Spirling = null, mv: MoveData = null, from_
 			Sound.sfx("confirm")
 			_target_picked.emit(picked))
 		b.focus_entered.connect(func() -> void:
+			_text.show_prompt(Loc.t(title) + BattleInfo.target_preview(model, me, model.active_spirling(BattleModel.Side.FOE, picked), mv))
 			_focus(BattleModel.Side.FOE, picked)
 			_point_pin(BattleModel.Side.FOE, picked, true)
-			if me != null and mv != null:
+			# Under a team guard or against the back row the line adds the guard and row factor.
+			var extra: float = MultiRules.guard_mult(model, BattleModel.Side.FOE) * MultiRules.row_mult(model, BattleModel.Side.PLAYER, from_slot, BattleModel.Side.FOE, picked, mv) if mv != null else 1.0
+			if me != null and extra < 0.999:
 				_text.show_prompt(title + "\n" + _aim_line(me, mv, picked, from_slot)))
 		b.mouse_entered.connect(b.grab_focus)
 		_field.add_child(b)
@@ -728,11 +748,9 @@ func _pick_target(title: String, me: Spirling = null, mv: MoveData = null, from_
 		var b: Button = _target_buttons[i]
 		b.focus_neighbor_left = _target_buttons[i - 1].get_path() if i > 0 else b.get_path()
 		b.focus_neighbor_right = _target_buttons[i + 1].get_path() if i < _target_buttons.size() - 1 else b.get_path()
-	_target_buttons[maxi(foes.find(first), 0)].grab_focus()
+	_target_buttons[BattleInfo.aim_start(foes, _last_aim)].grab_focus()
 	_back_button.visible = true
 	var picked_slot: int = await _target_picked
-	if picked_slot >= 0:
-		_last_aim[from_slot] = picked_slot
 	for b: Button in _target_buttons:
 		b.queue_free()
 	_target_buttons.clear()
@@ -743,6 +761,8 @@ func _pick_target(title: String, me: Spirling = null, mv: MoveData = null, from_
 func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[int] = []) -> int:
 	var entries: Array[Dictionary] = []
 	var party: Array = model.party(BattleModel.Side.PLAYER)
+	var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
+	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, foes[0]) if foes.size() == 1 else null
 	var candidates: Array[int] = []
 	for i: int in model.swap_candidates(BattleModel.Side.PLAYER, slot):
 		if not i in taken:
@@ -756,7 +776,7 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 		if model.is_partner_index(BattleModel.Side.PLAYER, i):
 			continue
 		var s: Spirling = party[i]
-		entries.append({"text": "%s R%d %d/%d" % [s.display_name(), s.level, s.hp, s.max_hp()], "disabled": not i in candidates})
+		entries.append({"text": "%s R%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), BattleInfo.switch_tag(s, foe)], "disabled": not i in candidates})
 	while true:
 		var idx: int = await _picker.pick(title, entries, cancellable)
 		if idx < 0 or idx in candidates:
@@ -771,7 +791,7 @@ func _pick_item(slot: int = 0, preset: String = "") -> BattleAction:
 		var it: Dictionary = Database.item(id)
 		if bool(it.get("battle", false)) and model.item_left_this_battle(BattleModel.Side.PLAYER, id):
 			ids.append(id)
-			entries.append({"text": "%s x%d" % [it.get("name", id), model.bag_count(BattleModel.Side.PLAYER, id)]})
+			entries.append({"text": "%s x%d" % [it.get("name", id), model.bag_count(BattleModel.Side.PLAYER, id)], "hint": str(it.get("description", ""))})
 	if ids.is_empty():
 		await _text.show_text("No usable items.")
 		return null
@@ -878,6 +898,11 @@ func _play(events: Array[BattleEvent]) -> void:
 	for i: int in events.size():
 		_play_index = i
 		await _play_event(events[i])
+		# Resonance fields and boss phases explain themselves the first time (item 585).
+		var tip: String = BattleInfo.tip_for(events[i])
+		if not tip.is_empty() and not _replaying:
+			for line: String in Tips.take(tip):
+				await _text.show_text(line)
 	_playing = []
 	_field_badge.sync(model)
 	_place_field_badge()
@@ -958,14 +983,22 @@ func _name_at(side: int, slot: int) -> String:
 
 ## Remembers an event for the log. Damage gets its amount (the text box only shows the bar).
 func record(e: BattleEvent) -> void:
+	BattleInfo.note(_seen_arts, e)
+	if e.type == BattleEvent.Type.MOVE_USED and int(e.data.get("side", -1)) == BattleModel.Side.PLAYER:
+		_last_art_name = str(e.data.get("move", ""))
+	BattleInfo.count(report, e, _last_art_name)
+	log_entries.append(BattleInfo.entry(e))
+	if e.type == BattleEvent.Type.BATTLE_END and model != null:
+		for l: String in BattleInfo.report_lines(report, model.turn):
+			log_entries.append({"text": l, "kind": "other", "side": -1})
+	while log_entries.size() > BattleInfo.ENTRY_KEEP:
+		log_entries.pop_front()
 	var line: String = e.describe()
 	if line.is_empty():
 		return
 	log_lines.append(line)
-	log_sides.append(int(e.data.get("side", -1)) if e.data.has("side") else -1)
 	while log_lines.size() > LOG_KEEP:
 		log_lines.pop_front()
-		log_sides.pop_front()
 
 ## The rule variants in play as a list for the top of the log panel (item 796), "" without any.
 static func variant_list(m: BattleModel) -> String:
@@ -980,15 +1013,16 @@ static func variant_list(m: BattleModel) -> String:
 
 func _toggle_log() -> void:
 	Sound.sfx("confirm")
-	_log_mode = 0
+	_log_filter = "all"
 	_fill_log()
 	_log_panel.visible = not _log_panel.visible
 
+## Log text for the filter in use: rule variants, the battle facts, then the matching lines.
 func _fill_log() -> void:
-	var lines: Array[String] = MultiRules.filter_log(log_lines, log_sides, _log_mode)
-	var head: String = "Battle log" if _log_mode == 0 else Loc.t("Battle log: %s") % Loc.t(MultiRules.LOG_MODES[_log_mode])
-	var foot: String = "(tap to close)" if not _multi or _log_mode == MultiRules.LOG_MODES.size() - 1 else "(tap to filter)"
-	_log_label.text = variant_list(model) + head + "\n\n" + ("\n".join(lines) if not lines.is_empty() else "Nothing yet.") + "\n\n" + foot
+	_log_filter_button.text = BattleInfo.filter_row(_log_filter)
+	var lines: Array[String] = BattleInfo.filter_lines(log_entries, _log_filter, LOG_KEEP)
+	_log_label.text = variant_list(model) + BattleInfo.facts(model, _seen_arts) + "\n\n" + Loc.t("Battle log") + "\n\n" \
+		+ ("\n".join(lines) if not lines.is_empty() else Loc.t("Nothing yet.")) + "\n\n" + Loc.t("(tap to close)")
 
 ## A Gleam steps out: the sound cue and the sparkle (data/gleam.json).
 func _gleam_entrance(sprite: SpirlingSprite) -> void:
@@ -1004,8 +1038,8 @@ func _play_event(e: BattleEvent) -> void:
 	_field_badge.on_event(e)
 	_place_field_badge()
 	if e.type == BattleEvent.Type.BATTLE_START:
-		report.begin(model.field)
-	report.add(e)
+		battle_report.begin(model.field)
+	battle_report.add(e)
 	match e.type:
 		BattleEvent.Type.BATTLE_START:
 			var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
@@ -1195,11 +1229,11 @@ func _play_event(e: BattleEvent) -> void:
 				await _text.show_text("You received %d coins." % money)
 			elif int(e.data.outcome) == BattleModel.Outcome.LOSS:
 				await _text.show_text("Your team is worn out...")
-			for line: String in report.lines():
-				log_lines.append(line)
-				log_sides.append(-1)
-			if _multi and outcome == BattleModel.Outcome.WIN and report.best() >= 0:
-				await _text.show_text(report.best_line())
+			# Each Spirling's share and the fields go under the battle report of the log.
+			for line: String in battle_report.lines().slice(1):
+				log_entries.append({"text": line, "kind": "other", "side": -1})
+			if _multi and outcome == BattleModel.Outcome.WIN and battle_report.best() >= 0:
+				await _text.show_text(battle_report.best_line())
 		BattleEvent.Type.MISSED:
 			# The target sidesteps while the line shows (item 2337).
 			var t_side: int = BattleModel.other(side)

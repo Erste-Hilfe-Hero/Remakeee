@@ -225,13 +225,6 @@ func test_supports_survive_a_full_auto_battle() -> void:
 			m.submit_actions(acts)
 		assert_true(m.is_finished(), "seed %d ends" % sd)
 
-func test_log_filter_keeps_one_side_and_shared_lines() -> void:
-	var lines: Array[String] = ["a mine", "b foe", "c both", "d mine"]
-	var sides: Array[int] = [Side.PLAYER, Side.FOE, -1, Side.PLAYER]
-	assert_eq(MultiRules.filter_log(lines, sides, 0), lines)
-	assert_eq(MultiRules.filter_log(lines, sides, 1), ["a mine", "c both", "d mine"] as Array[String])
-	assert_eq(MultiRules.filter_log(lines, sides, 2), ["b foe", "c both"] as Array[String])
-
 func test_partner_uses_the_master_ai_from_veteran_on() -> void:
 	assert_eq(MultiRules.partner_ai(1, GameState.Difficulty.STORY), 1)
 	assert_eq(MultiRules.partner_ai(1, GameState.Difficulty.VETERAN), 3)

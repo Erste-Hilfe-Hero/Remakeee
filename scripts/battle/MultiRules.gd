@@ -317,21 +317,6 @@ static func slot_spoken(m: BattleModel, side: int, slot: int) -> String:
 	var whose: String = Loc.t("Foe") if side == BattleModel.Side.FOE else (Loc.t("Ally") if m.is_partner_slot(side, slot) else Loc.t("Yours"))
 	return Loc.t("%s, slot %d of %d: %s, Vigor %d of %d") % [whose, slot + 1, m.slot_count(side), s.display_name(), s.hp, s.max_hp()]
 
-# --- Log filter (item 373) ---------------------------------------------------------------------
-
-## Filter steps of the battle log in multi battles: everything, the player's side, the foes'.
-const LOG_MODES: Array[String] = ["All", "Yours", "Foes"]
-
-## The lines of [param lines] (side of each in [param sides], -1 for both) that filter [param mode]
-## keeps; lines that belong to no side always stay.
-static func filter_log(lines: Array[String], sides: Array[int], mode: int) -> Array[String]:
-	var out: Array[String] = []
-	for i: int in lines.size():
-		var s: int = sides[i] if i < sides.size() else -1
-		if mode <= 0 or s < 0 or (mode == 1 and s == BattleModel.Side.PLAYER) or (mode == 2 and s == BattleModel.Side.FOE):
-			out.append(lines[i])
-	return out
-
 ## AI level of a story partner: from Veteran on the partner fights with the master AI (item 387).
 static func partner_ai(base: int, difficulty: int) -> int:
 	return maxi(base, 3) if difficulty >= GameState.Difficulty.VETERAN else base
