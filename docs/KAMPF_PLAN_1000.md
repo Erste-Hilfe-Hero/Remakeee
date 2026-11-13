@@ -122,7 +122,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 81. [ ] Matchup-Tabelle im Lexikon, die sich mit gesehenen Treffern füllt (bestehend: gelernte Matchups)
 82. [x] Story-Stufe zeigt alle Matchups von Anfang an (bestehend) (bestehend: GameState.known_matchups, Story zeigt alle)
 83. [ ] Matchup-Symbole mit Form statt Farbe (bestehend: Elementsymbole) auch im Lexikon
-84. [ ] Doppel-Element-Erklärung: beide Faktoren multiplizieren, im Lexikon zeigen
+84. [x] Doppel-Element-Erklärung: beide Faktoren multiplizieren, im Lexikon zeigen (Lexikon-Eintrag 'Zwei Elemente' beim ersten Treffer auf Doppel-Element)
 85. [x] Element-Resonanz: zwei Verbündete mit gleichem Element erhalten +5 % Schaden (TechniqueRules.resonance_mult)
 86. [x] Element-Wechsel-Technik: Ziel wird für 3 Runden zu einem anderen Element (Farbbad (Dye Bath), Spirling.element_shift)
 87. [x] Element-Schutz-Gegenstand: halbiert einen sehr effektiven Treffer einmal (Schutzschale (Ward Shell), held super_guard)
@@ -136,14 +136,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 95. [x] Element-Reaktion: Tide trifft Scorch-Ziel und löscht den Status
 96. [x] Element-Reaktion: Volt trifft Soak-Ziel für +20 % Schaden
 97. [x] Element-Reaktion: Ember auf Root-Ziel befreit es, verursacht aber Scorch (BattleRules.REACTIONS inflict)
-98. [ ] Element-Reaktionen im Lexikon erklären
+98. [x] Element-Reaktionen im Lexikon erklären (Lexikon-Eintrag 'Reactions' nennt alle Reaktionen)
 99. [ ] Matchup-Quiz als Minispiel im Leuchtturm
 100. [x] Effektivitäts-Text in eigener Wortwahl (bestehend: 'overwhelming', 'barely landed') (bestehend: BattleEvent DAMAGE)
 101. [x] Unwirksam-Treffer (x0) gibt es nicht, nur x0.25 (Designregel festhalten) (Regel in docs/BALANCE.md, test_kampf_techniques)
 102. [ ] Element-Dominanz pro Region als Wild-Spawn-Tabelle
 103. [x] Trait 'Prisma-Haut': nimmt bei x2 nur x1.5 (verborgene Gabe Prismenhaut (Cullet-Linie))
 104. [x] Trait 'Gegenstrom': resistiert das Element, das es zuletzt getroffen hat (verborgene Gabe Gegenstrom (Paddlewisp-Linie))
-105. [ ] Element-Statistik im Kampfende-Bericht
+105. [x] Element-Statistik im Kampfende-Bericht (Schaden nach Element im Kampflog, TechniqueRules.element_summary)
 106. [x] Matchup-Kenntnis wird pro Spielstand gespeichert (bestehend) (bestehend: SaveManager matchups)
 107. [ ] Online: Matchup-Wissen teilt sich mit Freunden (Laternenpost-Bonus)
 108. [ ] Element-Icons im Hochkontrast-Modus größer
@@ -152,18 +152,18 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 111. [ ] Ein Element pro Riss als Thema der Warden
 112. [ ] Element-Training: Spark-Werte steigen schneller im passenden Feld
 113. [ ] Element-Glyphen animieren beim sehr effektiven Treffer
-114. [ ] Element-Mischtechniken (zwei Elemente, nimmt das bessere)
+114. [x] Element-Mischtechniken (zwei Elemente, nimmt das bessere) (Magmasturm, Gischtböe (dual_element))
 115. [x] Element-Schild-Technik für das ganze Team (3 Runden) (Schutzkreis (Ward Circle))
 116. [x] Elementarer Nachhall: Bonus, wenn zwei Verbündete im selben Zug dasselbe Element nutzen (TechniqueRules.echo_mult)
 117. [ ] Element-Rätsel in der Welt, die Kampfwissen belohnen
 118. [ ] Element-Filter im Lager
-119. [ ] Element-Schwäche-Warnung beim Einwechseln
+119. [x] Element-Schwäche-Warnung beim Einwechseln (Warnung '!Element' in der Tauschauswahl)
 120. [x] Gegner-Element im Info-Streifen (bestehend) (bestehend: InfoStrip zeichnet Elementsymbole)
 
 ## Techniken
 
 121. [x] Resonanz-Techniken: Ash Call, Tide Call und Murk Call legen 5 Runden lang ein Rift-Feld
-122. [ ] Feld-Restzüge im Log ansagen und beim Ende melden
+122. [x] Feld-Restzüge im Log ansagen und beim Ende melden (Ansage eine Runde vor Feldende)
 123. [x] Schutz-Technik 'Brace': hält einen Treffer ab, zweimal hintereinander schlägt fehl (Standhalten (Hold Fast))
 124. [x] Technik mit Rückstoß, die das Ziel auf die Bank zwingt (nur Wayfarer-Kämpfe) (Wegschubser (Shove Off))
 125. [ ] Mehrstufige Technik: lädt eine Runde, trifft dann doppelt
@@ -171,7 +171,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 127. [x] Heil-Technik für Verbündete im Mehrfachkampf (Sippenbalsam (Kindred Balm))
 128. [x] Team-Stufen-Technik (alle Verbündeten DEF +1) (Reih und Glied (Rank and File))
 129. [x] Wurzel-Technik, die Wechsel für 3 Runden blockiert (bestehend: Root) (bestehend: Root blocks_swap)
-130. [ ] Technik, die Stufen des Ziels zurücksetzt
+130. [x] Technik, die Stufen des Ziels zurücksetzt (Reiner Tisch (Clean Slate))
 131. [x] Technik, die eigene negative Stufen löscht (Abschütteln (Shake Loose))
 132. [x] Technik mit steigender Stärke bei Wiederholung (Trommelwirbel (Rolling Drum))
 133. [x] Technik, die stärker ist, wenn das Ziel zuerst gehandelt hat (Späte Antwort (Late Reply))
@@ -197,8 +197,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 153. [x] Techniken mit Feld-Bedingung (stärker in passendem Feld) (bestehend: field_element-Techniken)
 154. [ ] Techniken mit Tageszeit-Bedingung (Tag/Nacht bestehend)
 155. [ ] Technik-Balancing über den Simulator pro neuer Technik
-156. [ ] Lernlisten pro Art auf Lücken prüfen (jede Art hat eine Status-Technik)
-157. [ ] Technik-Animationen pro Element eigenständig
+156. [x] Lernlisten pro Art auf Lücken prüfen (jede Art hat eine Status-Technik) (Statustechnik für jede Art per Echo-Kristall, test_kampf_techniques_b)
+157. [x] Technik-Animationen pro Element eigenständig (bestehend: ElementFx pro Element)
 158. [ ] Technik-Favoriten im Menü markieren
 159. [ ] Technik-Reihenfolge im Menü umsortieren
 160. [x] Technik-Info-Bildschirm per langem Druck
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-754 von 1000 Punkten umgesetzt.
+763 von 1000 Punkten umgesetzt.
 

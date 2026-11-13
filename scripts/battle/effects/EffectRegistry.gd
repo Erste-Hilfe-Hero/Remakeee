@@ -62,6 +62,8 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"blast_allies": preload("res://scripts/battle/effects/BlastAlliesEffect.gd"),
 	&"element_shift": preload("res://scripts/battle/effects/ElementShiftEffect.gd"),
 	&"elem_ward": preload("res://scripts/battle/effects/ElementWardEffect.gd"),
+	&"dual_element": preload("res://scripts/battle/effects/PassiveEffect.gd"),
+	&"reset_target": preload("res://scripts/battle/effects/ResetTargetEffect.gd"),
 }
 
 static var _cache: Dictionary[StringName, MoveEffect] = {}

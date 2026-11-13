@@ -5314,6 +5314,45 @@
   "desc": "Draws a circle around its side: for 3 turns very effective hits land softer."
  },
  {
+  "name": "Magma Rush",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "dual_element",
+  "effect_params": {
+   "element": "STONE"
+  },
+  "era": 1,
+  "desc": "Half fire, half rock. It lands as Ember or Stone, whichever hurts more."
+ },
+ {
+  "name": "Tidal Gust",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "dual_element",
+  "effect_params": {
+   "element": "GALE"
+  },
+  "era": 1,
+  "desc": "Wind full of sea spray. It lands as Tide or Gale, whichever hurts more."
+ },
+ {
+  "name": "Clean Slate",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "reset_target",
+  "era": 1,
+  "desc": "Wipes the foe clean: all its stages go back to 0. Its own stay."
+ },
+ {
   "name": "Long Breath",
   "element": "GALE",
   "kind": "STATUS",

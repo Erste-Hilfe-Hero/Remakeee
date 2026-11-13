@@ -770,6 +770,8 @@ func _tick_field() -> void:
 	if field_turns <= 0:
 		return
 	field_turns -= 1
+	if field_turns == 1:
+		TechniqueRules.field_last_turn(self)
 	if field_turns > 0:
 		return
 	var gone: String = field
