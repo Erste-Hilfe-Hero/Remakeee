@@ -150,9 +150,11 @@ stands still, there is no send-out camera, and the light holds still.
 
 ## Slice 6: Era IV and V round 2 (owner 13 Nov: "era 4 und 5 sind irgendwie größer als davor")
 
-- Size: the Spirlings stand about halfway between Era III and slice 5, still whole multiples of
-  their art (`data/era45_stage.json` sprite: player 128, foe 72, max 128). 56 px art: player
-  112 (2x), foe 56 (1x); 64 px: 128 / 64; 96 px: 96 / 96. The slabs shrank with them.
+- Size (owner 13 Nov: "kleiner, etwa wie Era III"): the Spirlings take about the share of the
+  screen they had in Era III (64 of 180 px = 96 of 270), as the nearest whole multiple of their
+  art, both sides alike (`data/era45_stage.json` sprite: 96 / 96, max 112): 56 px art 112,
+  64 px art 64, 96 px art 96. The slabs shrank with them; the era upgrade is the painted scene,
+  light and effects, not size. Art rows are 28 px (the smallest Era IV touch row).
 - Command column: the commands and the item shortcut stand in a column beside the arts
   (`data/era_battle_hud.json` commands "column"), so the arts stay one column but the panel is
   about 50 px lower and the painted field about 300 px tall instead of 250.
