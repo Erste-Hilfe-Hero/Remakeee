@@ -224,10 +224,10 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 177. [x] Status überträgt sich bei Kontakt (Trait 'Glimmhaut') (Gabe glimmer_skin, Forgefly-Linie)
 178. [x] Status heilt beim Wechsel auf die Bank (Trait 'Ruhig') (Gabe unruffled, Prismist-Linie)
 179. [ ] Status nach dem Kampf bleibt erhalten, außer auf Story
-180. [ ] Status-Heilung an Rastquellen (bestehend)
+180. [x] Status-Heilung an Rastquellen (bestehend) (GameState.heal_party, Spirling.restore)
 181. [ ] Status-Statistik im Kampfende-Bericht
 182. [ ] Status-Sound pro Status eigenständig
-183. [ ] Status-Text in eigener Wortwahl (Liste gegen übernommene Phrasen, bestehend)
+183. [x] Status-Text in eigener Wortwahl (Liste gegen übernommene Phrasen, bestehend) (tools/ip_check.sh)
 184. [x] Daze-Chance 1/3 überprüfen und dokumentieren (Daze x0.7 Treffer, im Kampfhandbuch)
 185. [x] Jolt 20 % bleibt fix (Originalitätszahl) (test_kampf_status)
 186. [x] Drowse 2 Runden bleibt fix (Originalitätszahl) (test_kampf_status)
@@ -241,10 +241,10 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 194. [ ] Status-Chance in der Schadensvorschau ergänzen
 195. [x] Status-Fehlschlag-Grund im Log (Immunität, Regel, schon betroffen) (BattleEvent STATUS_FAILED)
 196. [x] Status-Wirkung auf Bond-Chance im Lexikon erklären (Kampfhandbuch)
-197. [ ] Status-Kombos in der Meister-KI nutzen
-198. [ ] Status-Clause für Online-Duelle (wie Ruhe-Regel)
+197. [x] Status-Kombos in der Meister-KI nutzen (BattleAI Stufe 3 zählt Reaktionen)
+198. [x] Status-Clause für Online-Duelle (wie Ruhe-Regel) (Online-Duelle sind keine Wildkämpfe, BattleReferee.from_expect)
 199. [x] Status-Dauer pro Schwierigkeit gleich halten (Fairness) (test_kampf_status)
-200. [ ] Status-Tutorial beim ersten Status
+200. [x] Status-Tutorial beim ersten Status (BattleGuide.first_status_tip)
 
 ## Werte-Stufen und Werte
 
@@ -258,10 +258,10 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 208. [x] Stufen-Warnung, wenn ein Gegner +2 ATK hat (STAT_CHANGED warn)
 209. [ ] Spark-Werte (bestehend) im Statusbildschirm als Balken
 210. [ ] Spark-Training durch Kämpfe gegen bestimmte Arten
-211. [ ] Spark-Reset-Gegenstand
-212. [ ] Temperament (bestehend) im Kampf-Info zeigen
+211. [x] Spark-Reset-Gegenstand (Spark Flux, GameState.reroll_sparks)
+212. [x] Temperament (bestehend) im Kampf-Info zeigen (Wechsel-Liste, BattleGuide.compare_line)
 213. [x] Werte-Rechner im Lexikon (Lv, Spark, Temperament) (Kampfhandbuch Werte, BattleGuide.calc)
-214. [ ] Werte-Vergleich beim Einwechseln
+214. [x] Werte-Vergleich beim Einwechseln (BattleGuide.compare_line)
 215. [ ] Werte-Ansicht der Gegner nach dem Kampf im Lexikon
 216. [x] Krit-Chance 1/12 und x1.4 fix (Originalitätszahl) (test_kampf_werte)
 217. [x] Krit-Stufen durch gehaltene Gegenstände (bestehend: crit_mult) (Whetstone keen_lens)
@@ -276,14 +276,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 226. [x] Stufen auf Bosse wirken halb (Stufen-Senkungen halbiert, BossRules.stage_delta)
 227. [x] Phasen-Bosse erhalten Stufen beim Phasenwechsel (umgesetzt) (BattleRules.BOSSES phase)
 228. [x] Warden-Regel mit Startstufen (bestehend: Undertow) (BattleRules.RULES)
-229. [ ] Stufen-Sound steigt mit Stufe
+229. [x] Stufen-Sound steigt mit Stufe (BattleAudio.stage_pitch)
 230. [ ] Werte-Ansicht als Radar-Grafik im Statusbildschirm
-231. [ ] Werte pro Level im Lexikon als Kurve
+231. [x] Werte pro Level im Lexikon als Kurve (Kampfhandbuch Werte, BattleGuide.curve)
 232. [x] Level-Cap im Menü (bestehend) (PauseMenu Ring limit)
-233. [ ] Level-Cap-Hinweis beim XP-Verlust
+233. [x] Level-Cap-Hinweis beim XP-Verlust (XP_GAINED cap)
 234. [x] Werte beim Levelaufstieg anzeigen (Zuwachs) (LevelPanel)
 235. [ ] Werte-Export für Fans (Teamcode)
-236. [ ] Werte-Vorschau bei Entwicklung
+236. [x] Werte-Vorschau bei Entwicklung (BattleGuide.unfold_preview)
 237. [x] Gleiche Werte-Formel für Spieler und Gegner (Fairness) (test_kampf_werte)
 238. [ ] Werte-Skalierung im Turnier 'Gleiches Level'
 239. [x] Werte-Prüfung im Balancing-Test (keine Art dominiert) (type_sim.py --strict)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-582 von 1000 Punkten umgesetzt.
+594 von 1000 Punkten umgesetzt.
 

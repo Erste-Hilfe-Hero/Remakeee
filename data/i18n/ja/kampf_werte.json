@@ -87,6 +87,17 @@
   "There are no stages for aim or dodging.": "命中や回避の段階はない。",
   "Trades all stages with the foe.": "相手と段階をすべて入れ替える。",
   "Unruffled": "動じない",
-  "Vigor = (base + spark/2) x (ring + %d) / %d": "活力 = (基礎 + スパーク/2) x (リング + %d) / %d"
+  "Vigor = (base + spark/2) x (ring + %d) / %d": "活力 = (基礎 + スパーク/2) x (リング + %d) / %d",
+  "%s %d -> %d": "%s %d -> %d",
+  "%s gained %d growth. The ring limit holds it at ring %d for now.": "%sは%dの成長を得た。リングの上限で今はリング%dのまま。",
+  "%s's sparks flicker and settle anew.": "%sのスパークがゆらめき、新しく落ち着いた。",
+  "FOC": "集中",
+  "GRD": "守備",
+  "MGT": "腕力",
+  "PCE": "速さ",
+  "Ring %s:": "リング%s:",
+  "Rolls all Spark values of one Spirling anew. Used up.": "Spirling1体のスパーク値をすべて振り直す。使うとなくなる。",
+  "Spark Flux": "スパークのうず",
+  "VIG": "活力"
  }
 }

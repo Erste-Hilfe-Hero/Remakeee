@@ -87,6 +87,17 @@
   "There are no stages for aim or dodging.": "Non esistono livelli per mira o schivata.",
   "Trades all stages with the foe.": "Scambia tutti i livelli con il nemico.",
   "Unruffled": "Imperturbabile",
-  "Vigor = (base + spark/2) x (ring + %d) / %d": "Vigore = (base + scintilla/2) x (rango + %d) / %d"
+  "Vigor = (base + spark/2) x (ring + %d) / %d": "Vigore = (base + scintilla/2) x (rango + %d) / %d",
+  "%s %d -> %d": "%s %d -> %d",
+  "%s gained %d growth. The ring limit holds it at ring %d for now.": "%s ottiene %d di crescita. Il limite di rango lo tiene al rango %d per ora.",
+  "%s's sparks flicker and settle anew.": "Le scintille di %s tremolano e si riassestano.",
+  "FOC": "ACU",
+  "GRD": "GUA",
+  "MGT": "POT",
+  "PCE": "PAS",
+  "Ring %s:": "Rango %s:",
+  "Rolls all Spark values of one Spirling anew. Used up.": "Rilancia tutti i valori Scintilla di uno Spirling. Si consuma.",
+  "Spark Flux": "Flusso di Scintille",
+  "VIG": "VIG"
  }
 }

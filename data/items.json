@@ -2447,6 +2447,15 @@
   "tradeable": false
  },
  {
+  "id": "spark_flux",
+  "name": "Spark Flux",
+  "description": "Rolls all Spark values of one Spirling anew. Used up.",
+  "battle": false,
+  "spark_reset": true,
+  "price": 1500,
+  "tradeable": false
+ },
+ {
   "id": "echo_hold_fast",
   "name": "Echo Crystal: Hold Fast",
   "description": "Teaches Hold Fast to a Stone Spirling. Never used up.",
