@@ -1,9 +1,12 @@
 {
  "_comment": "nl translation of the challenges table, keyed by the English text.",
  "strings": {
+  "%s also gives you: %s.": "%s geeft je ook: %s.",
+  "%s raises a signal lantern. Battle now?": "%s heft een seinlantaarn. Nu vechten?",
   "%s: %d won, %d lost": "%s: %d gewonnen, %d verloren",
   "A rule was dropped on the way.": "Onderweg is er een regel opgegeven.",
   "Ace Up Front": "Aas Voorop",
+  "Answer the signal": "Beantwoord het sein",
   "Battles won: %d, lost: %d": "Gevechten gewonnen: %d, verloren: %d",
   "Bonds only form at night.": "Banden ontstaan alleen 's nachts.",
   "Challenge record": "Uitdagingsbalans",
@@ -14,6 +17,8 @@
   "Copies the seed. A friend who uses it gets the same shuffled wilds and arts.": "Kopieert de seed. Een vriend die hem gebruikt, krijgt dezelfde gehusselde wildernis en technieken.",
   "Drop %s? Your record will remember it.": "%s opgeven? Je balans onthoudt het.",
   "Drop it": "Opgeven",
+  "Echo tower": "Echotoren",
+  "Echo tower, highest floor this week": "Echotoren, hoogste verdieping deze week",
   "Every Spirling that bonds with you knows arts drawn by your run seed.": "Elke Spirling die een band met je aangaat, kent technieken die je tocht-seed trekt.",
   "Extra rules for a harder journey. Taken before your first Rift, dropped any time.": "Extra regels voor een zwaardere reis. Te kiezen vóór je eerste Kloof, op elk moment op te geven.",
   "Extra rules for a harder journey: One per Place, First Meeting, Spring Water Only, Shuffled Wilds and Arts, Stand Your Ground, Half Rested, Ace Up Front, Night Bonds, One Colour, Empty Pockets, Off the Books and Trust No One. Any of them combine. They are taken before the first mended Rift and can be dropped at any time; the record remembers. The shuffles follow a seed code you can share with friends.": "Extra regels voor een zwaardere reis: Eén per Plek, Eerste Ontmoeting, Alleen Bronwater, Gehusselde Wildernis en Technieken, Houd Stand, Half Uitgerust, Aas Voorop, Nachtbanden, Eén Kleur, Lege zakken, Buiten de boeken en Vertrouw niemand. Ze zijn allemaal te combineren. Je kiest ze vóór de eerste herstelde Kloof en kunt ze op elk moment opgeven; de balans onthoudt het. Het husselen volgt een seedcode die je met vrienden kunt delen.",
@@ -26,6 +31,7 @@
   "Keep it": "Houden",
   "Lantern post: %s would battle you again today.": "Lantaarnpost: %s willen vandaag weer tegen je vechten.",
   "Lantern post: no rematch invitations today.": "Lantaarnpost: vandaag geen uitnodigingen voor een revanche.",
+  "Lighthouse stair, highest floor this week": "Vuurtorentrap, hoogste verdieping deze week",
   "Most battled:": "Vaakst bevochten:",
   "New rules can only be taken before you mend your first Rift.": "Nieuwe regels kun je alleen kiezen voordat je je eerste Kloof herstelt.",
   "Night Bonds": "Nachtbanden",
@@ -55,6 +61,7 @@
   "Spring Water Only: no healing items on this journey.": "Alleen Bronwater: geen geneesvoorwerpen op deze reis.",
   "Stand Your Ground": "Houd Stand",
   "Takes a seed a friend shared with you.": "Neemt een seed over die een vriend met je deelde.",
+  "The lantern dims. Talk to them when you are ready.": "De lantaarn dooft. Spreek hen aan als je klaar bent.",
   "The wild Spirlings of every place are shuffled by your run seed.": "De wilde Spirlings van elke plek worden gehusseld volgens je tocht-seed.",
   "There is no seed code on the clipboard.": "Er staat geen seedcode op het klembord.",
   "This journey is now in the run chronicle: %s.": "Deze reis staat nu in de kroniek van de tocht: %s.",
@@ -65,7 +72,9 @@
   "Wayfarer book": "Zwerversboek",
   "Wayfarers lead with their strongest Spirling.": "Reizigers sturen hun sterkste Spirling eerst.",
   "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "De Spirlings van Zwervers blijven dicht bij je sterkste, binnen de ringgrens.",
+  "Win Wayfarer battles": "Win gevechten tegen Zwervers",
   "With challenge rules": "Met uitdagingsregels",
-  "best in %d turns": "record in %d beurten"
+  "best in %d turns": "record in %d beurten",
+  "floor %d": "verdieping %d"
  }
 }

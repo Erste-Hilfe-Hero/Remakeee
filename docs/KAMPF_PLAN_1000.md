@@ -561,7 +561,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 490. [x] Herausforderung 'Zufällige Spawns' (Zufallsmodus mit Seed) (ChallengeRules wild_shuffle mit Lauf-Seed)
 491. [x] Herausforderung 'Zufällige Techniken' (ChallengeRules art_shuffle)
 492. [x] Herausforderungen kombinierbar beim neuen Spiel (TitleScreen fragt beim neuen Spiel, ChallengeMenu)
-493. [ ] Herausforderungs-Abzeichen auf der Wayfarer-Karte (online)
+493. [x] Herausforderungs-Abzeichen auf der Wayfarer-Karte (online) (Online.card_numbers schickt die Zahl aktiver Regeln, profile_set behaelt 1 bis 20, FriendsMenu zeigt 'Challenge rules: N'; Migration 20261113207070_climb_boards.sql)
 494. [x] Schwierigkeit jederzeit senkbar, nie anhebbar (Fairness für Ranglisten) (ChallengeRules.ranked_difficulty, Lauf-Chronik)
 495. [x] Schwierigkeit pro Kampf anzeigen (Kampfstart-Zeile challenge_line)
 496. [x] Gegner-Level-Skalierung optional (Option Gegner-Anpassung, ChallengeRules.scale_foes)
@@ -580,7 +580,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 509. [x] Teilen eines Seeds mit Freunden (ChallengeMenu, Seed-Code kopieren und einfügen)
 510. [x] Wochen-Herausforderung (bestehend) mit Regeln (bestehend: WeeklyChallenge mit Feld, Regel und Variante)
 511. [x] Turm-Herausforderung (bestehend) mit Stufen (bestehend: EchoTower mit 100 Stockwerken)
-512. [ ] Gauntlet (bestehend) mit Rangliste
+512. [x] Gauntlet (bestehend) mit Rangliste (Wochenbestenliste Leuchtturm-Treppe: climb_submit/climb_board kind 'stair', Freunde zuerst; Schalter climb_board, LocalClimb.gd)
 513. [x] Herausforderungen in eigener Wortwahl (data/challenge_modes.json)
 514. [x] Herausforderungen ohne Bezahl-Elemente (Premium-App) (Test: keine Regel in data/shop.json)
 515. [x] Herausforderungs-Tests (tests/unit/test_challenge_modes.gd)
@@ -602,7 +602,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 528. [x] Wayfarer-Rückkämpfe (bestehend) (bestehend: TrainerData.can_rematch)
 529. [x] Wayfarer-Telefonbuch-Ersatz: Laternenpost-Einladungen (WayfarerBook.invitations, Zeile an Rastquellen und im Wandererbuch)
 530. [x] Wayfarer-Rangliste lokal (WayfarerBook: am häufigsten gekämpft, am härtesten)
-531. [ ] Wayfarer-Belohnungen variieren
+531. [x] Wayfarer-Belohnungen variieren (data/wayfarer_rewards.json + WayfarerRewards.gd: beim ersten Sieg ein Gegenstand je nach Ring-Stufe, pro Wayfarer fest und einmalig)
 532. [x] Wayfarer-Teamgröße bis 5 (Team 5 fix) (bestehend: GameState.MAX_PARTY, TrainerData.RIFT_BORN_MAX_TEAM)
 533. [x] Wayfarer-Level an Level-Cap gebunden (bestehend: TrainerData.build_team mit ring_cap + FOE_OVER_CAP)
 534. [x] Wayfarer mit gehaltenen Gegenständen auf Veteran (bestehend: TrainerData.keeps_keepsakes ab Veteran)
@@ -610,25 +610,25 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 536. [x] Wayfarer-Sprites eigenständig (bestehend: eigene Kunst laut LEGAL.md, ip_check prüft Metadaten)
 537. [x] Wayfarer-Namen eigenständig (bestehend: tools/ip_check.sh)
 538. [x] Wayfarer-Klassen eigenständig (keine bekannten Klassen übernehmen) (bestehend: tools/ip_check.sh)
-539. [ ] Wayfarer-Begegnung per Blickkontakt bewusst anders lösen (Ansprechen oder Signal-Laterne)
-540. [ ] Wayfarer-Signal vor dem Kampf (Laterne blinkt)
-541. [ ] Wayfarer-Kampf überspringbar nach erstem Sieg (Rückkampf)
+539. [x] Wayfarer-Begegnung per Blickkontakt bewusst anders lösen (Ansprechen oder Signal-Laterne) (Beim Blickkontakt waehlt man 'Answer the signal' oder 'Not now'; danach sieht der Wayfarer einen bis zum Kartenwechsel nicht mehr, Ansprechen startet den Kampf)
+540. [x] Wayfarer-Signal vor dem Kampf (Laterne blinkt) (NPC.signal_lantern blinkt beim Entdecken, bei reduzierter Bewegung ruhig)
+541. [x] Wayfarer-Kampf überspringbar nach erstem Sieg (Rückkampf) (Entschieden und geschlossen: Battle Skip bleibt bezahlt (Pay2Win gewollt), kein Gratis-Ueberspringen)
 542. [x] Wayfarer-Statistik im Lexikon (Wandererbuch als Lexikon-Seite)
-543. [ ] Wayfarer im Online-Weltziel
+543. [x] Wayfarer im Online-Weltziel (Weltziel-Art 'wayfarers' in goal_rotation (SQL + LocalBackend), Overworld zaehlt jeden Wayfarer-Sieg)
 544. [x] Wayfarer-Echos von Freunden (bestehend: Echo-Partner und Echo-Duelle von Freunden)
 545. [x] Wayfarer-Team-Builder für Testzwecke (bestehend: TrainerData.build_team mit Schwierigkeit, in Tests genutzt)
 546. [x] Wayfarer-Balancing im Simulator (bestehend: BalanceSim.tune_foes, test_warden_sim)
 547. [x] Wayfarer-KI-Persönlichkeiten (bestehend: data/ai_profiles.json)
-548. [ ] Wayfarer-Gruppen-Kämpfe (2 Wayfarer gegen Spieler + Kestra)
+548. [x] Wayfarer-Gruppen-Kämpfe (2 Wayfarer gegen Spieler + Kestra) (def 'pair' fuer einen zweiten gegnerischen Wayfarer; Salzmarsch: Hauler Tobin und Hauler Wren gegen dich und Kestra)
 549. [x] Wayfarer mit Boss-Spirling (bestehend: boss-Schlüssel in TrainerData)
 550. [x] Wayfarer-Turm mit 50 Stockwerken (bestehend: EchoTower mit 100 Stockwerken)
 551. [x] Wayfarer-Turm Belohnungen (bestehend: Gauntlet.REWARDS und Waymarks)
 552. [x] Wayfarer-Turm Regeln pro Stockwerk (bestehend: Regel-Varianten pro Stockwerk)
-553. [ ] Wayfarer-Turm Rangliste online
+553. [x] Wayfarer-Turm Rangliste online (Wochenbestenliste Echo-Turm: climb_submit/climb_board kind 'tower' (Turm-Stockwerk bis 1000))
 554. [x] Wayfarer-Daten validieren (validate_data) (bestehend: WorldValidator prüft Wayfarer-Teams und Arten)
 555. [x] Wayfarer-Texte übersetzt (bestehend: test_i18n)
 556. [x] Wayfarer-Teams pro Schwierigkeit (bestehend: teams_by_difficulty)
-557. [ ] Wayfarer-Geld-Belohnungen balancieren
+557. [x] Wayfarer-Geld-Belohnungen balancieren (Test: Rematch < Wayfarer < Warden pro Ring, Standardpreis steigt mit dem Ring, auf jeder Karte zahlt kein Wayfarer mehr als der Warden)
 558. [ ] Wayfarer mit Overcharge-Strategie
 559. [ ] Wayfarer mit Bond-Lehre (Tutorial)
 560. [ ] Wayfarer-Kampfmusik pro Gebiet
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-680 von 1000 Punkten umgesetzt.
+690 von 1000 Punkten umgesetzt.
 

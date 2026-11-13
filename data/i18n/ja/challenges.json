@@ -1,9 +1,12 @@
 {
  "_comment": "ja translation of the challenges table, keyed by the English text.",
  "strings": {
+  "%s also gives you: %s.": "%sから %sも受け取った。",
+  "%s raises a signal lantern. Battle now?": "%sが合図のランタンを掲げた。今すぐ戦う？",
   "%s: %d won, %d lost": "%s：%d勝 %d敗",
   "A rule was dropped on the way.": "ルールがひとつ、途中で外れた。",
   "Ace Up Front": "エース先発",
+  "Answer the signal": "合図に応える",
   "Battles won: %d, lost: %d": "勝ったバトル: %d、負けたバトル: %d",
   "Bonds only form at night.": "絆は夜にしか結ばれない。",
   "Challenge record": "チャレンジの記録",
@@ -14,6 +17,8 @@
   "Copies the seed. A friend who uses it gets the same shuffled wilds and arts.": "シードをコピーする。それを使った友だちには、同じようにシャッフルされた野生と術が出る。",
   "Drop %s? Your record will remember it.": "%sを外す？ 記録には残るよ。",
   "Drop it": "外す",
+  "Echo tower": "エコーの塔",
+  "Echo tower, highest floor this week": "エコーの塔、今週の最高階",
   "Every Spirling that bonds with you knows arts drawn by your run seed.": "キミと絆を結んだSpirlingは、どれも挑戦のシードで引かれた術をおぼえている。",
   "Extra rules for a harder journey. Taken before your first Rift, dropped any time.": "もっときびしい旅のための追加ルール。最初の裂け目より前に選び、いつでも外せる。",
   "Extra rules for a harder journey: One per Place, First Meeting, Spring Water Only, Shuffled Wilds and Arts, Stand Your Ground, Half Rested, Ace Up Front, Night Bonds, One Colour, Empty Pockets, Off the Books and Trust No One. Any of them combine. They are taken before the first mended Rift and can be dropped at any time; the record remembers. The shuffles follow a seed code you can share with friends.": "もっときびしい旅のための追加ルール：ひとつの場所に1匹、最初の出会い、湧き水だけ、野生と術のシャッフル、ふみとどまれ、半分の休息、エース先発、夜の絆、一色、からっぽの財布、帳簿外、だれも信じるな。どれでも組み合わせられる。最初の裂け目を繕う前に選び、いつでも外せる。記録には残る。シャッフルは、友だちと共有できるシードコードにしたがう。",
@@ -26,6 +31,7 @@
   "Keep it": "そのままにする",
   "Lantern post: %s would battle you again today.": "ランタン便：%sが今日また戦いたがっている。",
   "Lantern post: no rematch invitations today.": "ランタン便：今日の再戦の誘いはない。",
+  "Lighthouse stair, highest floor this week": "灯台の階段、今週の最高階",
   "Most battled:": "よく戦った相手：",
   "New rules can only be taken before you mend your first Rift.": "新しいルールを選べるのは、最初の裂け目を繕う前だけ。",
   "Night Bonds": "夜の絆",
@@ -55,6 +61,7 @@
   "Spring Water Only: no healing items on this journey.": "湧き水だけ：この旅では回復アイテムを使えない。",
   "Stand Your Ground": "ふみとどまれ",
   "Takes a seed a friend shared with you.": "友だちが共有してくれたシードを使う。",
+  "The lantern dims. Talk to them when you are ready.": "ランタンの灯りが消えた。準備ができたら話しかけよう。",
   "The wild Spirlings of every place are shuffled by your run seed.": "それぞれの場所の野生のSpirlingが、挑戦のシードでシャッフルされる。",
   "There is no seed code on the clipboard.": "クリップボードにシードコードがない。",
   "This journey is now in the run chronicle: %s.": "この旅は挑戦の記録に残った: %s。",
@@ -65,7 +72,9 @@
   "Wayfarer book": "旅人の記録",
   "Wayfarers lead with their strongest Spirling.": "旅人たちは、いちばん強いSpirlingから出してくる。",
   "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "旅人のスピリングがリング上限内で君の最強の一体に近づく。",
+  "Win Wayfarer battles": "旅人とのバトルに勝つ",
   "With challenge rules": "チャレンジルールあり",
-  "best in %d turns": "最短%dターン"
+  "best in %d turns": "最短%dターン",
+  "floor %d": "%d階"
  }
 }
