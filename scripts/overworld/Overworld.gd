@@ -4036,7 +4036,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		else:
 			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng)
 		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)),
-			int(partner.get("ai", TrainerData.PARTNER_AI)), str(partner.get("profile", "")))
+			MultiRules.partner_ai(int(partner.get("ai", TrainerData.PARTNER_AI)), GameState.difficulty), str(partner.get("profile", "")))
 	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:

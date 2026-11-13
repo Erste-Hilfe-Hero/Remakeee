@@ -82,6 +82,9 @@ var _back_button: Button
 var _target_buttons: Array[Button] = []
 ## Plain-text lines of what happened so far (item 11: re-read the last turns).
 var log_lines: Array[String] = []
+## Side of each log line (-1: both or none), for the log filter in multi battles (item 373).
+var log_sides: Array[int] = []
+var _log_mode: int = 0
 ## Element of the player's last move, so the hit that follows teaches the matchup.
 var _last_player_element: int = -1
 ## Element of the last move each side used, for the hit sound.
@@ -268,7 +271,12 @@ func _build() -> void:
 	_log_panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	_log_panel.gui_input.connect(func(ev: InputEvent) -> void:
 		if TapInput.is_press(ev):
-			_log_panel.visible = false)
+			# Multi battles: a tap shows only yours, then only the foes', then closes (item 373).
+			_log_mode = _log_mode + 1 if _multi else MultiRules.LOG_MODES.size()
+			if _log_mode >= MultiRules.LOG_MODES.size():
+				_log_panel.visible = false
+			else:
+				_fill_log())
 	add_child(_log_panel)
 	_log_label = Label.new()
 	_log_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -935,8 +943,10 @@ func record(e: BattleEvent) -> void:
 	if line.is_empty():
 		return
 	log_lines.append(line)
+	log_sides.append(int(e.data.get("side", -1)) if e.data.has("side") else -1)
 	while log_lines.size() > LOG_KEEP:
 		log_lines.pop_front()
+		log_sides.pop_front()
 
 ## The rule variants in play as a list for the top of the log panel (item 796), "" without any.
 static func variant_list(m: BattleModel) -> String:
@@ -951,8 +961,15 @@ static func variant_list(m: BattleModel) -> String:
 
 func _toggle_log() -> void:
 	Sound.sfx("confirm")
-	_log_label.text = variant_list(model) + "Battle log\n\n" + ("\n".join(log_lines) if not log_lines.is_empty() else "Nothing yet.") + "\n\n(tap to close)"
+	_log_mode = 0
+	_fill_log()
 	_log_panel.visible = not _log_panel.visible
+
+func _fill_log() -> void:
+	var lines: Array[String] = MultiRules.filter_log(log_lines, log_sides, _log_mode)
+	var head: String = "Battle log" if _log_mode == 0 else Loc.t("Battle log: %s") % Loc.t(MultiRules.LOG_MODES[_log_mode])
+	var foot: String = "(tap to close)" if not _multi or _log_mode == MultiRules.LOG_MODES.size() - 1 else "(tap to filter)"
+	_log_label.text = variant_list(model) + head + "\n\n" + ("\n".join(lines) if not lines.is_empty() else "Nothing yet.") + "\n\n" + foot
 
 ## A Gleam steps out: the sound cue and the sparkle (data/gleam.json).
 func _gleam_entrance(sprite: SpirlingSprite) -> void:

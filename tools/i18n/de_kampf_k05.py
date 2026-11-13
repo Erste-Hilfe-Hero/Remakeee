@@ -76,3 +76,10 @@ T.update({
 "Yours": "Deiner",
 "%s, slot %d of %d: %s, Vigor %d of %d": "%s, Platz %d von %d: %s, Kraft %d von %d",
 })
+T.update({
+"Battle log: %s": "Kampflog: %s",
+"All": "Alle",
+"Yours": "Deiner",
+"Foes": "Gegner",
+"(tap to filter)": "(tippen zum Filtern)",
+})

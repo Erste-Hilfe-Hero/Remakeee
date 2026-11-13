@@ -432,7 +432,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 370. [ ] Kombi-Techniken bei passenden Elementen zweier Verbündeter
 371. [ ] Mehrfachkampf-Tutorial
 372. [ ] Mehrfachkampf-Geschwindigkeit: Text pro Aktion kürzer
-373. [ ] Mehrfachkampf-Log filtern
+373. [x] Mehrfachkampf-Log filtern (Tippen: Alle, Deine, Gegner)
 374. [x] Mehrfachkampf im Turm (jedes 5. Stockwerk 2v2)
 375. [ ] Mehrfachkampf online (2v2 mit Freund-Echo)
 376. [x] Ungleiche Kämpfe 3v1, 4v2 (bestehend)
@@ -446,14 +446,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 384. [x] Mehrfachkampf-Layout für 4 Sprites (bestehend)
 385. [x] Mehrfachkampf: Ziel-Wahl merken
 386. [ ] Mehrfachkampf: 'Auto-Ziel' Option
-387. [ ] Mehrfachkampf: KI der Partner verbessern (Meister-KI auch für Partner auf Veteran)
+387. [x] Mehrfachkampf: KI der Partner verbessern (Meister-KI auch für Partner auf Veteran)
 388. [x] Mehrfachkampf: Warnung bei Treffer auf Verbündete (nicht nötig: Flächen-Techniken treffen nie Verbündete, Test)
 389. [ ] Mehrfachkampf: Reihenfolge-Leiste
 390. [x] Mehrfachkampf: XP-Verteilung klar anzeigen (bestehend: Wachstum-Zeile pro Spirling)
 391. [x] Mehrfachkampf: Bond nur gegen Wild (bestehend)
 392. [x] Mehrfachkampf: Rückzug nur wenn alle wild (Test)
 393. [ ] Mehrfachkampf: Kampfende-Bericht pro Spirling
-394. [ ] Mehrfachkampf: Replay
+394. [x] Mehrfachkampf: Replay (BattleReplay mit front und Zügen, test_multi_battle)
 395. [x] Mehrfachkampf: Barrierefreiheit (Slot-Namen vorlesen) (MultiRules.slot_spoken)
 396. [ ] Mehrfachkampf: Einhand-Modus
 397. [x] Mehrfachkampf-Tests (bestehend) erweitern (test_multi_k05.gd)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-88 von 1000 Punkten umgesetzt.
+91 von 1000 Punkten umgesetzt.
 
