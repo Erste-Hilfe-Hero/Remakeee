@@ -2335,5 +2335,16 @@
    "LUMEN",
    "VOLT"
   ]
- }
+ },
+ {"id": "kit_energy_crystal", "name": "Energy Crystal", "description": "Keepsake. The holder can store 2 more Energy and starts every battle with them.", "battle": false, "held": {"energy_cap": 2}, "price": 1800, "tradeable": true, "rarity": "rare"},
+ {"id": "kit_ward_talisman", "name": "Ward Talisman", "description": "Keepsake. Once per battle, a very effective hit on the holder loses half its force.", "battle": false, "held": {"super_guard": 0.5}, "price": 1600, "tradeable": true, "rarity": "rare"},
+ {"id": "kit_pace_feather", "name": "Pace Feather", "description": "Keepsake. Each time the holder steps in, its Pace rises by one stage.", "battle": false, "held": {"enter_stage": {"spd": 1}}, "price": 1400, "tradeable": true, "rarity": "uncommon"},
+ {"id": "kit_lantern_glass", "name": "Lantern Glass", "description": "Keepsake. A Resonance field the holder lays holds 2 turns longer.", "battle": false, "held": {"field_extra": 2}, "price": 1200, "tradeable": true, "rarity": "uncommon"},
+ {"id": "kit_rift_splinter", "name": "Rift Splinter", "description": "Keepsake. Each Energy poured into an Overcharge adds a little more force.", "battle": false, "held": {"overcharge_bonus": 0.05}, "price": 1500, "tradeable": true, "rarity": "rare"},
+ {"id": "kit_wander_boot", "name": "Wander Boot", "description": "Keepsake. The holder steps back for free: no Energy cost, and nothing roots it in place.", "battle": false, "held": {"free_swap": true}, "price": 1300, "tradeable": true, "rarity": "uncommon"},
+ {"id": "kit_echo_shell", "name": "Echo Shell", "description": "Keepsake. While the holder stands in front, bonds work 5% more often.", "battle": false, "held": {"bond_bonus": 0.05}, "price": 900, "tradeable": true, "rarity": "common"},
+ {"id": "kit_rest_candle", "name": "Rest Candle", "description": "Keepsake. The holder gains 1 more Energy when it rests.", "battle": false, "held": {"rest_energy": 1}, "price": 900, "tradeable": true, "rarity": "common"},
+ {"id": "kit_cinder_stone", "name": "Cinder Stone", "description": "Keepsake. While the Ash Storm rages, the holder's arts hit 15% harder.", "battle": false, "held": {"field_mult_in": {"field": "ash_storm", "mult": 1.15}}, "price": 1100, "tradeable": true, "rarity": "uncommon"},
+ {"id": "kit_tide_stone", "name": "Tide Stone", "description": "Keepsake. While High Tide floods the Rift, the holder's arts hit 15% harder.", "battle": false, "held": {"field_mult_in": {"field": "high_tide", "mult": 1.15}}, "price": 1100, "tradeable": true, "rarity": "uncommon"},
+ {"id": "kit_murk_stone", "name": "Murk Stone", "description": "Keepsake. While Deep Murk fills the Rift, the holder's arts hit 15% harder.", "battle": false, "held": {"field_mult_in": {"field": "deep_murk", "mult": 1.15}}, "price": 1100, "tradeable": true, "rarity": "uncommon"}
 ]

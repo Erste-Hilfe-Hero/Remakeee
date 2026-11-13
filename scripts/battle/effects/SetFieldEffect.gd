@@ -8,4 +8,5 @@ func apply(ctx: EffectContext, params: Dictionary) -> void:
 	if ctx.model.field_lock > 0:
 		ctx.model.emit_event(BattleEvent.Type.FIELD_EXTENDED, {"failed": true, "locked": true, "label": str(BattleRules.FIELDS.get(ctx.model.field, {}).get("label", ""))})
 		return
-	ctx.model.set_field(str(params.get("field", "")))
+	# Echo Soul and Lantern Glass hold the field longer (TraitKit).
+	ctx.model.set_field(str(params.get("field", "")), TraitKit.field_turns(ctx.user))

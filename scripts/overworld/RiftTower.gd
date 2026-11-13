@@ -141,7 +141,10 @@ static func finish(t: Dictionary, cleared: int) -> Array[String]:
 		return []
 	GameState.records["rift_" + str(t.id)] = n
 	var amount: int = (n - old) * FLOOR_WAYMARKS + (TOP_WAYMARKS if n >= floors(t) else 0)
-	return Waymarks.reward_lines(Waymarks.earn(amount, "tower"))
+	var lines: Array[String] = Waymarks.reward_lines(Waymarks.earn(amount, "tower"))
+	if n >= floors(t):
+		lines.append_array(TraitKit.tower_reward(str(t.id)))
+	return lines
 
 ## The tower card (plan 3270): every tower with its best floor and next reward.
 static func card_lines() -> Array[String]:

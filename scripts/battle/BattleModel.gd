@@ -167,6 +167,8 @@ var delayed_hits: Array[Dictionary] = []
 var entered_turn: Dictionary = {}
 
 var _queue: Array[BattleAction] = []
+## Battle state of the Kampf plan's gifts and keepsakes (TraitKit): shown gifts, used talismans.
+var kit: Dictionary = {}
 var _events: Array[BattleEvent] = []
 var _handlers: Dictionary[Phase, Callable] = {}
 
@@ -397,6 +399,7 @@ func start() -> Array[BattleEvent]:
 	for side: int in [Side.PLAYER, Side.FOE]:
 		for s: Spirling in parties[side]:
 			s.energy = maxi(0, mini(int(rules.start_energy), max_energy()) + energy_bonus[side] - start_energy_cut[side])
+			s.energy = mini(s.energy + TraitKit.energy_cap(s), max_energy_of(side) + TraitKit.energy_cap(s))
 			if hp_scale != 1.0:
 				var share: float = float(s.hp) / float(s.max_hp())
 				s.hp_mult *= hp_scale
@@ -465,6 +468,7 @@ func start() -> Array[BattleEvent]:
 		for s: Spirling in dragged:
 			for stat: String in st:
 				s.stages[stat] = clampi(s.stage(stat) + int(st[stat]), BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
+	TraitKit.on_start(self)
 	participants = []
 	for slot: int in player_slots():
 		participants.append(active_spirling(Side.PLAYER, slot))
@@ -782,7 +786,7 @@ func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1)
 		emit_event(BattleEvent.Type.STATUS_FAILED, w)
 		return false
 	s.status = status
-	s.status_turns = StatusRules.roll_turns(status, rng)
+	s.status_turns = TraitKit.status_turns(s, StatusRules.roll_turns(status, rng))
 	var cap: int = int(rules.get("status_max_turns", 0))
 	if cap > 0:
 		s.status_turns = mini(s.status_turns, cap) if s.status_turns > 0 else cap
@@ -847,7 +851,7 @@ func change_energy(side: int, delta: int, slot: int = 0) -> void:
 	if s == null:
 		return
 	var before: int = s.energy
-	s.energy = clampi(s.energy + delta, 0, max_energy_of(side))
+	s.energy = clampi(s.energy + delta, 0, max_energy_of(side) + TraitKit.energy_cap(s))
 	if s.energy != before:
 		var d: Dictionary = _who(side, slot)
 		d["energy"] = s.energy
@@ -874,7 +878,7 @@ func _phase_resolve_order() -> void:
 func _sort_key(a: BattleAction, tie: float) -> Vector4:
 	var prio: int = 0
 	if a.kind == BattleAction.Kind.MOVE and a.actor != null and a.move_index < a.actor.moves.size():
-		prio = a.actor.moves[a.move_index].priority
+		prio = a.actor.moves[a.move_index].priority + TraitKit.priority_bonus(self, a)
 	var spd: int = int(a.actor.effective_spd() * ShopEffects.seal_speed_mult(int(seals[a.side][2]))) if a.actor != null else 0
 	# Warden rule Night Dark: Pace stays hidden in the dark, the seeded tiebreak decides.
 	if BattleRules.rule_number(foe_rule, "hidden_order") > 0.0:
@@ -1044,6 +1048,7 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		if rdiv > 0 and s.hp < s.max_hp():
 			heal(side, maxi(1, s.max_hp() / rdiv), slot)
 	_oath_tick(side, slot, s)
+	TraitKit.end_of_turn(self, side, slot)
 	if s.mend_turns > 0:
 		s.mend_turns -= 1
 		if s.hp < s.max_hp():
@@ -1192,7 +1197,7 @@ func _do_move(a: BattleAction) -> void:
 	var power_mult: float = 1.0
 	if mv.overcharge and me.energy > 0:
 		var extra: int = mini(me.energy, BattleRules.OVERCHARGE_MAX_EXTRA)
-		power_mult += BattleRules.OVERCHARGE_PER_ENERGY * extra
+		power_mult += (BattleRules.OVERCHARGE_PER_ENERGY + TraitKit.overcharge_bonus(me)) * extra
 		change_energy(side, -extra, slot)
 	var target_side: int = other(side)
 	var targets: Array[int] = move_targets(side, mv, a.target_slot)
@@ -1242,6 +1247,7 @@ func _do_move(a: BattleAction) -> void:
 			if mv.element == Elements.E.LUMEN:
 				mult *= BattleRules.rule_number(foe_rule, "lumen_mult")
 			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
+			mult *= TraitKit.hit_mult(self, side, slot, target_side, t_slot, mv)
 			var shielded: bool = _shield_on[target_side] == target
 			if shielded:
 				mult *= ShopEffects.shield_mult(int(amulets[target_side][2]))
@@ -1255,6 +1261,7 @@ func _do_move(a: BattleAction) -> void:
 				ctx.held_eff = float(r.eff)
 			else:
 				ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name}, t_slot)
+				TraitKit.after_hit(self, side, slot, target_side, t_slot, mv, ctx.damage_dealt)
 			if bool(react.get("cure", false)) and is_standing(target):
 				_cure(target_side, t_slot)
 			if is_standing(target):
@@ -1296,17 +1303,19 @@ func _oath_tick(side: int, slot: int, s: Spirling) -> void:
 
 func _do_rest(a: BattleAction) -> void:
 	emit_event(BattleEvent.Type.REST, _who(a.side, a.slot))
-	change_energy(a.side, int(rules.get("rest_energy", REST_ENERGY)), a.slot)
+	change_energy(a.side, int(rules.get("rest_energy", REST_ENERGY)) + TraitKit.rest_energy(a.actor), a.slot)
 
 func _do_swap(a: BattleAction) -> void:
-	if StatusRules.blocks_swap(a.actor.status):
+	var free: bool = TraitKit.free_swap(a.actor)
+	if StatusRules.blocks_swap(a.actor.status) and not free:
 		emit_event(BattleEvent.Type.SWAP_BLOCKED, _who(a.side, a.slot))
 		return
 	if not a.swap_index in swap_candidates(a.side, a.slot):
 		return
+	TraitKit.on_leave(self, a.side, a.slot)
 	emit_event(BattleEvent.Type.SWAP_OUT, _who(a.side, a.slot))
 	_swap_in(a.side, a.swap_index, a.slot)
-	if int(rules.get("swap_energy_cost", 0)) > 0:
+	if int(rules.get("swap_energy_cost", 0)) > 0 and not free:
 		change_energy(a.side, -int(rules.swap_energy_cost), a.slot)
 
 func _do_item(a: BattleAction) -> void:
@@ -1369,6 +1378,7 @@ func _do_bond(a: BattleAction) -> void:
 	var who: Dictionary = _who(Side.FOE, t_slot)
 	who["timing"] = a.timing_score
 	emit_event(BattleEvent.Type.BOND_ATTEMPT, who)
+	bonus += TraitKit.bond_bonus(self)
 	var timing: float = minf(1.0, a.timing_score + clampf(bond_edge, 0.0, 1.0))
 	var success: bool = rng.randf() < BondCalc.chance(target, timing, bonus) or sure
 	if not success and retry:
@@ -1464,6 +1474,7 @@ func _swap_in(side: int, index: int, slot: int = 0) -> void:
 	d.merge({"hp": s.hp, "max_hp": s.max_hp(), "level": s.level, "energy": s.energy})
 	emit_event(BattleEvent.Type.SWAP_IN, d)
 	_spring_snare(side, slot)
+	TraitKit.on_enter(self, side, slot)
 	if side == Side.PLAYER:
 		if not participants.has(s) and not is_partner_index(side, index):
 			participants.append(s)

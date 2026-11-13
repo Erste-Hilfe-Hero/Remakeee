@@ -143,6 +143,42 @@
    "price": 200,
    "stock": 1,
    "tier": "full"
+  },
+  {
+   "item": "kit_energy_crystal",
+   "price": 160,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "kit_ward_talisman",
+   "price": 140,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "kit_rift_splinter",
+   "price": 140,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "kit_pace_feather",
+   "price": 110,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "kit_wander_boot",
+   "price": 110,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "kit_lantern_glass",
+   "price": 100,
+   "stock": 1,
+   "tier": "full"
   }
  ],
  "season_path": {

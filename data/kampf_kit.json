@@ -1,0 +1,39 @@
+{
+ "_doc": "Kampf plan 1000, areas Traits (241-280) and Keepsakes (281-320). Read by scripts/battle/TraitKit.gd. 'traits' are gifts with the same effect keys as BattleRules.TRAITS plus the keys TraitKit handles (see its header). A Spirling gets one of them only as an extra gift next to its own: a Rift boss through 'boss_traits', a Prism Spirling through 'prism_trait' (every 'share'-th uid), an unfolded Spirling through 'bonus_traits' once its kinship reaches 'min_kinship'. 'keepsakes' lists the ids of the held items of this plan (data/items.json) and 'tourney_bans' the ones a tournament rule may lock.",
+ "traits": {
+  "spare_flame": {"label": "Spare Flame", "text": "Arts that cost 5 Energy or more cost 1 less.", "cost_cut": 1, "cost_from": 5},
+  "prism_skin": {"label": "Prism Skin", "text": "Very effective hits on it lose a quarter of their force.", "super_taken": 0.75},
+  "counter_current": {"label": "Counter Current", "text": "Hits it already shrugs off lose even more force.", "resist_taken": 0.7},
+  "quiet_heart": {"label": "Quiet Heart", "text": "Shakes off its condition when it steps back to the bench.", "swap_cure": true},
+  "glow_hide": {"label": "Glow Hide", "text": "A physical art that hits it may Scorch the attacker.", "contact_scorch": 0.3},
+  "pack_sense": {"label": "Pack Sense", "text": "Hits 15% harder while more than one Spirling stands on each side.", "multi_mult": 1.15},
+  "loner": {"label": "Loner", "text": "Hits 10% harder in a battle of one against one.", "solo_mult": 1.1},
+  "sentinel": {"label": "Sentinel", "text": "On its first turn in front it acts before any other art.", "first_act": true},
+  "field_runner": {"label": "Field Runner", "text": "A Rift field gives it twice the boost, and twice the drawback.", "field_double": true},
+  "echo_soul": {"label": "Echo Soul", "text": "A Resonance field it lays holds 2 turns longer.", "field_extra": 2},
+  "hush_core": {"label": "Hush Core", "text": "Every condition on it lasts only half as long.", "status_half": true},
+  "lantern_light": {"label": "Lantern Light", "text": "When it steps in, it and every ally in front gain Focus.", "enter_team_stage": {"foc": 1}},
+  "cold_sleep": {"label": "Cold Sleep", "text": "While Drowsed it mends an eighth of its Vigor each turn.", "drowse_heal_div": 8},
+  "shock_pad": {"label": "Shock Pad", "text": "Takes no recoil from its own arts.", "no_recoil": true},
+  "lucky_cap": {"label": "Lucky Cap", "text": "Lands critical hits a little more often.", "crit_mult": 1.5},
+  "nimble": {"label": "Nimble", "text": "Steps back for free: no Energy cost, and nothing roots it in place.", "free_swap": true}
+ },
+ "boss_traits": {"ashen_heart": "hush_core", "drowned_heart": "hush_core", "mist_heart": "hush_core"},
+ "prism_trait": {"id": "prism_skin", "share": 4},
+ "min_kinship": 60,
+ "bonus_traits": {
+  "EMBER": ["spare_flame", "glow_hide", "loner"],
+  "TIDE": ["counter_current", "quiet_heart", "cold_sleep"],
+  "BLOOM": ["quiet_heart", "pack_sense", "cold_sleep"],
+  "VOLT": ["spare_flame", "sentinel", "lucky_cap"],
+  "STONE": ["shock_pad", "counter_current", "loner"],
+  "GALE": ["nimble", "sentinel", "field_runner"],
+  "LUMEN": ["lantern_light", "prism_skin", "echo_soul"],
+  "UMBRA": ["lucky_cap", "loner", "echo_soul"],
+  "_any": ["quiet_heart", "pack_sense", "field_runner"]
+ },
+ "keepsakes": ["kit_energy_crystal", "kit_ward_talisman", "kit_pace_feather", "kit_lantern_glass", "kit_rift_splinter",
+  "kit_wander_boot", "kit_echo_shell", "kit_rest_candle", "kit_cinder_stone", "kit_tide_stone", "kit_murk_stone"],
+ "tower_rewards": {"cinder_stair": "kit_cinder_stone", "tide_shaft": "kit_tide_stone"},
+ "tourney_bans": ["kit_energy_crystal", "kit_ward_talisman", "kit_wander_boot", "rg_hold_stone"]
+}
