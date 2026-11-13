@@ -75,6 +75,14 @@
    "facing": "down",
    "dialogue": "lighthouse/tamsin",
    "sprite": "villager"
+  },
+  {
+   "id": "hesper",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "lighthouse/hesper",
+   "sprite": "elder"
   }
  ],
  "signs": [
