@@ -603,6 +603,10 @@ static func run_goal(menu: MenuHost) -> void:
 			GameState.add_item(item)
 			Sound.sfx("coin")
 			await menu.info("The world reached %d%%! You received %s." % [tier * 25, item_name(item)])
+			# The full goal also lets the next battles grow faster (GrowthRules, KAMPF_PLAN).
+			if tier == 4:
+				GrowthRules.grant_world_boost(GameState.records)
+				await menu.info(Loc.t("Your Spirlings grow faster for the next %d battles.") % int(GrowthRules.num("world_goal_battles", 0)))
 	if not tiers.is_empty():
 		SaveManager.save_game()
 

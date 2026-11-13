@@ -2639,5 +2639,34 @@
   },
   "price": 1500,
   "tradeable": false
+ },
+ {
+  "id": "growth_charm",
+  "name": "Growth Charm",
+  "description": "Keepsake. A knotted cord that hums after every battle: the holder gains half again as much growth.",
+  "battle": false,
+  "held": {
+   "growth_mult": 1.5
+  },
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_shell",
+  "name": "Echo Shell",
+  "description": "Hold it out during a bond: the shell hums the call back and steadies the link a little more than a Kin Charm.",
+  "battle": false,
+  "bond_bonus": 0.15,
+  "price": 700,
+  "tradeable": false
+ },
+ {
+  "id": "spark_wash",
+  "name": "Spark Wash",
+  "description": "Washes one Spark value of a Spirling back to nothing, for a slower or humbler build.",
+  "battle": false,
+  "spark_reset": true,
+  "price": 1500,
+  "tradeable": false
  }
 ]
