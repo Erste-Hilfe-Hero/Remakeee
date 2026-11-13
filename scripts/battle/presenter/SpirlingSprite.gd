@@ -476,6 +476,20 @@ func blink_out() -> void:
 		visible = true
 		await get_tree().create_timer(0.08 / Juice.speed()).timeout
 
+## The bond's own animation: echo rings swell out of the sprite and fade (BondRings).
+func bond_rings() -> void:
+	if Juice.reduced():
+		return
+	var rings := BondRings.new()
+	rings.size = size
+	rings.use_parent_material = false
+	add_child(rings)
+	var t: Tween = Juice.tween(rings, "progress", 1.0, "move", BondRings.TIME)
+	if t != null:
+		await t.finished
+	if is_instance_valid(rings):
+		rings.queue_free()
+
 ## Glints burst from the sprite and fade ([param n] of them), for level-ups and bonds from Era III.
 func glints(n: int, t: float = 0.5) -> void:
 	var tex: Texture2D = ElementFx.shape("glint", 0)

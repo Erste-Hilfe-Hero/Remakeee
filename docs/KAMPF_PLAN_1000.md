@@ -810,7 +810,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 721. [x] Lager-Lernen: Spirlings auf der Bank erhalten die Hälfte der XP (Einstellung, Standard an)
 722. [x] XP-Verteilung im Kampfende-Bericht (Wachstums-Zeile nach dem Kampf, GrowthRules.distribution_line)
 723. [x] Level-Cap blockiert XP (bestehend) (BattleModel._give_xp, Test test_kampf_growth_wild)
-724. [ ] Spark-Training (bestehend) mit Kampfquellen
+724. [x] Spark-Training (bestehend) mit Kampfquellen (GrowthRules.battle_spark: Funke im stärksten Wert des Gegners)
 725. [x] Technik-Lehrer (Echo-Kristalle mit teaches/for_elements, GameState.can_learn_echo)
 726. [x] Entwicklung nach Kampf (bestehend) (Overworld._after_battle Entfalten-Hinweis)
 727. [x] Entwicklung abbrechen (Option) (Entfalten nie automatisch, Zurückfalten jederzeit)
@@ -857,7 +857,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 765. [x] Bond-Bonus durch Feld (WildRules.field_bond_bonus)
 766. [x] Bond-Bonus durch Gegenstand Echo-Muschel (echo_shell)
 767. [x] Bond-Fehlschlag gibt freie Aktion (bestehend)
-768. [ ] Bond-Erfolg-Animation eigenständig
+768. [x] Bond-Erfolg-Animation eigenständig (BondRings, SpirlingSprite.bond_rings in jeder Ära)
 769. [x] Wild-Begegnungen im Farn, Schilf, Geröll (bestehend)
 770. [x] Wild-Ketten-Bonus (Prisma-Chance steigt) (WildRules.prism_chance)
 771. [x] Wild-Schwarm-Ereignisse (WildRules.swarm)
@@ -866,7 +866,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 774. [x] Wild-Auto-Kampf (bestehend)
 775. [x] Wild-Level an Gebiet (encounters.json min/max)
 776. [x] Wild-KI Stufe 0 (bestehend)
-777. [ ] Wild-Überraschung
+777. [x] Wild-Überraschung (Hinterhalt BattleModel.ambush aus Punkt 16, nachts doppelt so oft: WildRules.ambush_mult)
 778. [x] Wild-Rückzug-Regel (bestehend)
 779. [x] Wild-Spirlings mit Gegenständen (selten) (WildRules.roll_held)
 780. [x] Wild-Begegnungs-Rate einstellbar (Laterne) (Sturmlaterne im Beutel, WildRules.lantern_mult)
@@ -882,8 +882,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 790. [x] Bond-Tests (bestehend)
 791. [x] Wild-Horde mit Anführer (WildRules.horde_leader, BattleModel._horde_wavers)
 792. [x] Wild-Horde-Bond
-793. [ ] Wild-Boss (seltene alte Spirlings) im Endgame
-794. [ ] Wild-Begegnung im Nebel (Sicht begrenzt)
+793. [x] Wild-Boss (seltene alte Spirlings) im Endgame (WildRules.roll_elder nach Akt I)
+794. [x] Wild-Begegnung im Nebel (Sicht begrenzt) (WildRules.sight_mult: Treffer seltener bei Nebel)
 795. [x] Wild-Begegnung nachts häufiger (WildRules.rate_mult)
 796. [x] Wild-Begegnung im Riss mit Feld (Kartenfeld gilt für Wildkämpfe)
 797. [x] Wild-Begegnung als Tageshighlight (bestehend Find of the Day)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-780 von 1000 Punkten umgesetzt.
+785 von 1000 Punkten umgesetzt.
 

@@ -166,3 +166,26 @@ static func distribution_line(party: Array, growth_by: Dictionary) -> String:
 	if parts.is_empty():
 		return ""
 	return Loc.t("Growth: %s") % ", ".join(parts)
+
+## Spark training from battle: the value in which [param foe] is strongest (its base stats).
+static func spark_source(foe: Spirling) -> String:
+	var best: String = Spirling.STAT_KEYS[0]
+	for key: String in Spirling.STAT_KEYS:
+		if foe.data.base_stat(key) > foe.data.base_stat(best):
+			best = key
+	return best
+
+## After [param foe] fell: with [param chance], [param s] raises its spark in the foe's strongest
+## value by 1 (up to Spirling.SPARK_MAX). Returns the line for the log, or "".
+static func battle_spark(s: Spirling, foe: Spirling, chance: float, rng: RandomNumberGenerator) -> String:
+	if chance <= 0.0 or rng.randf() >= chance:
+		return ""
+	var key: String = spark_source(foe)
+	var v: int = int(s.spark.get(key, 0))
+	if v >= Spirling.SPARK_MAX:
+		return ""
+	var old_max: int = s.max_hp()
+	s.spark[key] = v + 1
+	if key == "hp":
+		s.hp = mini(s.max_hp(), s.hp + s.max_hp() - old_max)
+	return "%s's %s spark brightens." % [s.display_name(), key.to_upper()]
