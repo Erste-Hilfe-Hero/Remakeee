@@ -128,6 +128,7 @@ func _ready() -> void:
 		model = _demo_model()
 		quit_on_finish = false
 	_multi = model.is_multi()
+	_text.chars_per_second *= MultiRules.text_speed(model)
 	_run.call_deferred()
 
 ## In a Trial "Leave" restarts it (item 708): the screen ends and the Rift starts it again.
@@ -308,6 +309,17 @@ var _hud: BattleHud
 ## Banners, status motes, stage aura and battle sounds of every era (data/battle_show.json).
 var _show: BattleShow
 var _field_badge: FieldBadge
+## Each Spirling's share and the Rift fields for the end report (items 335, 393).
+var battle_report: BattleReport = BattleReport.new()
+
+## Damage preview for one target with the team guard and back row factored in (items 362, 367).
+func _aim_line(me: Spirling, mv: MoveData, foe_slot: int, from_slot: int = 0) -> String:
+	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, foe_slot)
+	var mult: float = GameState.known_multiplier(mv.element, foe)
+	var pct: int = CommandMenu.damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
+	if pct > 0:
+		pct = maxi(1, roundi(pct * MultiRules.guard_mult(model, BattleModel.Side.FOE) * MultiRules.row_mult(model, BattleModel.Side.PLAYER, from_slot, BattleModel.Side.FOE, foe_slot, mv)))
+	return MultiRules.aim_line(foe.display_name(), pct, mult if mv.power > 0 else -1.0)
 
 ## The field badge: in 1v1 just above the player's plate (and team row), at the plate's left
 ## edge; in a formation under the ledger and the team rows at the left edge, folded when it
@@ -597,7 +609,12 @@ func _run() -> void:
 	if model.is_wild and not model.bond_block.is_empty() and not model.has_meta("quick"):
 		await _text.show_text(Loc.t(model.bond_block))
 	_refresh_goal()
-	for id: String in (["battle", "bond"] if model.is_wild else ["battle"]):
+	var tip_ids: Array[String] = ["battle"]
+	if model.is_wild:
+		tip_ids.append("bond")
+	if _multi:
+		tip_ids.append("multi")
+	for id: String in tip_ids:
 		for line: String in Tips.take(id):
 			await _text.show_text(line)
 	_replaying = not replay_inputs.is_empty()
@@ -684,7 +701,7 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 			if index < me.moves.size() and me.can_afford(me.moves[index]):
 				var aim: int = -1
 				if not me.moves[index].is_area():
-					aim = await _pick_target("Aim %s at?" % me.moves[index].move_name, me, me.moves[index])
+					aim = await _pick_target("Aim %s at?" % me.moves[index].move_name, me, me.moves[index], slot)
 					if aim == -2:
 						return null
 					_last_aim = aim
@@ -706,7 +723,7 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 
 ## Lets the player tap the foe to aim at. Returns the foe slot, -1 when there is no choice
 ## (1v1 or a single foe left), or -2 when the player backs out.
-func _pick_target(title: String, me: Spirling = null, mv: MoveData = null) -> int:
+func _pick_target(title: String, me: Spirling = null, mv: MoveData = null, from_slot: int = 0) -> int:
 	var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
 	if not _multi or foes.size() <= 1:
 		return -1 if foes.is_empty() else foes[0]
@@ -719,7 +736,7 @@ func _pick_target(title: String, me: Spirling = null, mv: MoveData = null) -> in
 		b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 		b.position = sp.position - Vector2(2, 2)
 		b.size = sp.size + Vector2(4, 14)
-		b.accessibility_name = model.active_spirling(BattleModel.Side.FOE, slot).display_name()
+		b.accessibility_name = MultiRules.slot_spoken(model, BattleModel.Side.FOE, slot)
 		var picked: int = slot
 		b.pressed.connect(func() -> void:
 			Sound.sfx("confirm")
@@ -727,7 +744,11 @@ func _pick_target(title: String, me: Spirling = null, mv: MoveData = null) -> in
 		b.focus_entered.connect(func() -> void:
 			_text.show_prompt(Loc.t(title) + BattleInfo.target_preview(model, me, model.active_spirling(BattleModel.Side.FOE, picked), mv))
 			_focus(BattleModel.Side.FOE, picked)
-			_point_pin(BattleModel.Side.FOE, picked, true))
+			_point_pin(BattleModel.Side.FOE, picked, true)
+			# Under a team guard or against the back row the line adds the guard and row factor.
+			var extra: float = MultiRules.guard_mult(model, BattleModel.Side.FOE) * MultiRules.row_mult(model, BattleModel.Side.PLAYER, from_slot, BattleModel.Side.FOE, picked, mv) if mv != null else 1.0
+			if me != null and extra < 0.999:
+				_text.show_prompt(title + "\n" + _aim_line(me, mv, picked, from_slot)))
 		b.mouse_entered.connect(b.grab_focus)
 		_field.add_child(b)
 		_target_buttons.append(b)
@@ -754,6 +775,11 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 	for i: int in model.swap_candidates(BattleModel.Side.PLAYER, slot):
 		if not i in taken:
 			candidates.append(i)
+	# Outside a forced switch an ally in another slot can trade places (item 366).
+	if cancellable:
+		for i: int in MultiRules.shift_targets(model, BattleModel.Side.PLAYER, slot):
+			if not i in taken:
+				candidates.append(i)
 	for i: int in party.size():
 		if model.is_partner_index(BattleModel.Side.PLAYER, i):
 			continue
@@ -1020,6 +1046,9 @@ func _play_event(e: BattleEvent) -> void:
 	_show.on_event(e)
 	_field_badge.on_event(e)
 	_place_field_badge()
+	if e.type == BattleEvent.Type.BATTLE_START:
+		battle_report.begin(model.field)
+	battle_report.add(e)
 	match e.type:
 		BattleEvent.Type.BATTLE_START:
 			var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
@@ -1209,6 +1238,11 @@ func _play_event(e: BattleEvent) -> void:
 				await _text.show_text("You received %d coins." % money)
 			elif int(e.data.outcome) == BattleModel.Outcome.LOSS:
 				await _text.show_text("Your team is worn out...")
+			# Each Spirling's share and the fields go under the battle report of the log.
+			for line: String in battle_report.lines().slice(1):
+				log_entries.append({"text": line, "kind": "other", "side": -1})
+			if _multi and outcome == BattleModel.Outcome.WIN and battle_report.best() >= 0:
+				await _text.show_text(battle_report.best_line())
 		BattleEvent.Type.MISSED:
 			# The target sidesteps while the line shows (item 2337).
 			var t_side: int = BattleModel.other(side)
@@ -1228,6 +1262,16 @@ func _play_event(e: BattleEvent) -> void:
 			if xp_slot >= 0:
 				_refresh_xp(xp_slot, int(e.data.get("index", -1)))
 			await _float(BattleModel.Side.PLAYER, maxi(xp_slot, 0), e.describe())
+		BattleEvent.Type.SUPPORT when str(e.data.get("kind", "")) == "shift":
+			# Two of your Spirlings trade places (item 366): both slots show their new Spirling.
+			for at: int in [slot, int(e.data.get("other", slot))]:
+				var sp: Spirling = model.active_spirling(side, at)
+				if sp != null:
+					_sprite(side, at).setup(sp, "back" if side == BattleModel.Side.PLAYER else "front")
+					_strip(side, at).set_spirling(sp)
+			_restage()
+			Sound.sfx("run")
+			await _text.show_text(e.describe())
 		_:
 			var text: String = e.describe()
 			if not text.is_empty():
