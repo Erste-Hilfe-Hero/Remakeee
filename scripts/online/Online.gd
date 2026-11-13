@@ -598,6 +598,9 @@ static func card_numbers() -> Dictionary:
 	# The greeting card motif put on gifts (item 4285), checked the same way.
 	if not GameState.gift_motif().is_empty():
 		out["motif"] = GameState.gift_motif()
+	# A worn title from the battle halls or goals (KAMPF_PLAN_1000); the server keeps known titles only.
+	if not BattleHalls.worn_title().is_empty():
+		out["title"] = BattleHalls.worn_title()
 	return out
 
 func _process(delta: float) -> void:
