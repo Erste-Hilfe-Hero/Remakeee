@@ -748,7 +748,7 @@ func run_team() -> void:
 			await _unfurl(s, opts[opt] == "Unfurl")
 			continue
 		match opt:
-			0: await run_summary(s, idx == 0)
+			0: await run_summary(s, idx == 0, idx)
 			1: GameState.swap_party(0, idx)
 			2:
 				var slots: Array[String] = []
@@ -784,13 +784,28 @@ static func set_nickname(s: Spirling, n: String) -> bool:
 
 ## The summary in the era's layout: two text pages in Era I, three in Era II, the tabbed card
 ## from Era III on. Every era shows the same four sections (EraMenus.SECTIONS).
-func run_summary(s: Spirling, leader: bool = false) -> void:
+## With [param team_i] (the Spirling's team slot), up and down go straight to the previous or
+## next team member without the list in between (item 1893).
+func run_summary(s: Spirling, leader: bool = false, team_i: int = -1) -> void:
 	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "summary")
-	screens_shown.append("summary")
-	if bool(lay.get("tabs", false)):
-		await EraSummary.show_for(self, s, leader)
-	else:
-		await info_pages(EraMenus.summary_pages(s, EraManager.active_era(), leader), MiniSprite.of(s.data.species_name, int(lay.get("sprite", 32))))
+	var can_step: bool = team_i >= 0 and GameState.party.size() > 1
+	while true:
+		screens_shown.append("summary")
+		var step: int = 0
+		if bool(lay.get("tabs", false)):
+			step = await EraSummary.show_for(self, s, leader, can_step)
+		else:
+			summary_step_ok = can_step
+			summary_step = 0
+			await info_pages(EraMenus.summary_pages(s, EraManager.active_era(), leader), MiniSprite.of(s.data.species_name, int(lay.get("sprite", 32))))
+			summary_step_ok = false
+			step = summary_step
+		if step == 0 or not can_step or close_all:
+			return
+		team_i = posmod(team_i + step, GameState.party.size())
+		s = GameState.party[team_i]
+		leader = team_i == 0
+		Sound.sfx("select")
 
 ## A grey "free" team row; a tap says where new Spirlings go.
 static func free_slot_row() -> Dictionary:
