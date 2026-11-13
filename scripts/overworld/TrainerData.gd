@@ -9,6 +9,7 @@ extends RefCounted
 ##   "front": [player, foe]   how many fight at once on each side (e.g. [4, 1], [3, 3]; max 4)
 ##   "partner": {"name": "Cartographer Kestra", "team": [...], "front": 1}   an ally Wayfarer beside you
 ##   "boss": "ashen_heart"    the foe in front is a Rift boss (BattleRules.BOSSES)
+##   "formation": true        the foe side gets the formation bonus too (MultiRules, data/multi_rules.json)
 ##   "wild": true             a wild horde: no Wayfarer, so the Echo call (Bond) and Run work
 ##   "pair": {"name": "Hauler Wren", "team": [...]}   a second foe Wayfarer (needs front [x, 2+])
 ## Battles always start from the overworld and cut to the separate battle screen.
