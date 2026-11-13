@@ -9,8 +9,8 @@ extends RefCounted
 const DUEL_LEVEL: int = 50
 ## AI tier of a friend's echo beside you.
 const PARTNER_AI: int = 1
-## AI tier of a friend's echo in a duel.
-const DUEL_AI: int = 2
+## AI tier of a friend's echo in a duel: the master tier (KAMPF_PLAN_1000, online echoes).
+const DUEL_AI: int = 3
 
 ## The team that goes online: species, level, move names.
 static func snapshot(party: Array[Spirling]) -> Array:
@@ -19,7 +19,11 @@ static func snapshot(party: Array[Spirling]) -> Array:
 		var moves: Array = []
 		for mv: MoveData in s.moves:
 			moves.append(mv.move_name)
-		out.append({"species": s.data.species_name, "level": s.level, "moves": moves})
+		var row: Dictionary = {"species": s.data.species_name, "level": s.level, "moves": moves}
+		# A held keepsake goes along (KAMPF_PLAN_1000); shop keepsakes never do.
+		if s.held in Achievements.keepsakes():
+			row["held"] = s.held
+		out.append(row)
 	return out
 
 ## Builds Spirlings from a friend's snapshot. Levels are clamped to [param max_level] (item 76).
@@ -36,6 +40,9 @@ static func build(rows: Array, max_level: int, fixed_level: int = 0) -> Array[Sp
 			continue
 		if fixed_level > 0:
 			s.moves = s.data.default_moves(s.level, Spirling.MAX_MOVES)
+		var held: Variant = r.get("held", "")
+		if held is String and held in Achievements.keepsakes():
+			s.held = held
 		s.restore()
 		out.append(s)
 		if out.size() >= GameState.MAX_PARTY:
@@ -58,3 +65,9 @@ static func weekly_score(wins: int, party: Array[Spirling]) -> int:
 		hp += s.hp_fraction()
 	var pct: int = int(round(100.0 * hp / maxf(1.0, float(party.size())))) if wins >= WeeklyChallenge.ROUNDS else 0
 	return clampi(wins * WeeklyChallenge.POINTS_PER_ROUND + pct, 0, 400)
+
+## Counts echo duels for the online badges (records "echo_duels", "echo_duel_wins").
+static func note_duel(records: Dictionary, won: bool) -> void:
+	records["echo_duels"] = int(records.get("echo_duels", 0)) + 1
+	if won:
+		records["echo_duel_wins"] = int(records.get("echo_duel_wins", 0)) + 1

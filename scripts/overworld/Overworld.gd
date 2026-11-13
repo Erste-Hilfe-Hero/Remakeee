@@ -3770,11 +3770,14 @@ func echo_duel(d: Dictionary) -> void:
 		return
 	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), ring]] as Array[String])
 	busy = false
+	# The rule of the week holds in echo duels too, the same for everyone (KAMPF_PLAN_1000).
 	var outcome: BattleModel.Outcome = await start_battle(foes, false,
-		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true})
+		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
+			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week())})
 	busy = true
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN
+	EchoTeam.note_duel(GameState.records, won)
 	Online.call_fn("echo_report", {"p_code": d.code, "p_kind": "duel", "p_won": won})
 	# The server's referee plays the duel again (plan area 7, item 2689).
 	Online.call_fn("battle_submit", {"p_kind": "echo_duel", "p_ref": str(d.code),
