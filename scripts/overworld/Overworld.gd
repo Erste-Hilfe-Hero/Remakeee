@@ -255,6 +255,8 @@ func _build() -> void:
 	DayCycle.events.phase_changed.connect(_on_phase_changed)
 	minimap = Minimap.new()
 	_ui_root.add_child(minimap)
+	# Speed-run clock, only when switched on for the journey (KAMPF plan 507).
+	_ui_root.add_child(RunTimer.new())
 	_door_wipe = ColorRect.new()
 	_door_wipe.color = UITheme.INK
 	_door_wipe.mouse_filter = Control.MOUSE_FILTER_IGNORE
