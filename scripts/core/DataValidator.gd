@@ -54,8 +54,10 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 			errors.append("move '%s': unknown target '%s'" % [name, m.target])
 		if m.has("vs_status") and not (str(m.vs_status) in ["*", "stage_down"] or StatusRules.exists(str(m.vs_status))):
 			errors.append("move '%s': unknown vs_status '%s'" % [name, m.vs_status])
-		if int(m.get("priority", 0)) < -1 or int(m.get("priority", 0)) > 1:
-			errors.append("move '%s': priority must be -1, 0 or +1" % name)
+		# +2 is kept for rare guard arts (KAMPF_PLAN item 3): a status art that veils its side.
+		var guard: bool = str(m.get("kind", "")) == "STATUS" and str(m.get("effect", "")) == "status_veil"
+		if int(m.get("priority", 0)) < -1 or int(m.get("priority", 0)) > (2 if guard else 1):
+			errors.append("move '%s': priority must be -1, 0 or +1 (+2 only for a guard art with status_veil)" % name)
 		if m.has("stats"):
 			if not m.stats is Dictionary:
 				errors.append("move '%s': stats must be an object (stat -> amount)" % name)
