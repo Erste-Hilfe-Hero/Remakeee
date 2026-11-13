@@ -238,6 +238,10 @@ static func page_text(sd: SpirlingData, spirlog: Dictionary) -> String:
 		var tr: Dictionary = BattleRules.trait_info(sd.trait_id)
 		if not tr.is_empty():
 			lines.append("Gift: %s" % tr.label)
+		# The bonus gifts it can learn once unfolded (KAMPF_PLAN_1000 item 275).
+		var extra: Array[String] = TraitKit.bonus_labels(sd)
+		if not extra.is_empty():
+			lines.append("Bonus gifts: %s" % ", ".join(PackedStringArray(extra)))
 	lines.append("")
 	for s: String in lore_sentences(sd, spirlog):
 		lines.append(s)

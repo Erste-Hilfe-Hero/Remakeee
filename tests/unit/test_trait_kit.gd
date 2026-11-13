@@ -418,3 +418,24 @@ func test_refill_fruit_takes_the_same_fruit_from_the_bag() -> void:
 		GameState.flags.erase(TraitKit.REFILL_FLAG)
 	else:
 		GameState.flags[TraitKit.REFILL_FLAG] = flag_was
+
+func test_spirlog_page_shows_gifts_once_bonded() -> void:
+	var sd: SpirlingData = null
+	for n: String in Database.spirlings:
+		var cand: SpirlingData = Database.spirlings[n]
+		if Database.earlier_form(cand) != null and BattleRules.TRAITS.has(cand.trait_id):
+			sd = cand
+			break
+	assert_not_null(sd)
+	var labels: Array[String] = TraitKit.bonus_labels(sd)
+	assert_false(labels.is_empty(), "an unfolded kind has bonus gifts")
+	var seen: String = SpirlogBook.page_text(sd, {sd.species_name: {"seen": true}})
+	assert_false(seen.contains("Bonus gifts: "), "only once bonded")
+	assert_false(seen.contains("Gift: "))
+	var bonded: String = SpirlogBook.page_text(sd, {sd.species_name: {"seen": true, "bonded": true}})
+	assert_string_contains(bonded, "Gift: %s" % BattleRules.TRAITS[sd.trait_id].label)
+	assert_string_contains(bonded, "Bonus gifts: %s" % ", ".join(PackedStringArray(labels)))
+	var first: SpirlingData = Database.earlier_form(sd)
+	while Database.earlier_form(first) != null:
+		first = Database.earlier_form(first)
+	assert_eq(TraitKit.bonus_labels(first), [] as Array[String], "a first form never unfolds")
