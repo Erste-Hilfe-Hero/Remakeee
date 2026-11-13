@@ -216,6 +216,9 @@
   "seen": "見過",
   "new": "新",
   "Auto text: %s": "自動文字: %s",
-  "Talk in the world goes on by itself after a short read.": "世界中的對話在短暫閱讀後自動繼續。"
+  "Talk in the world goes on by itself after a short read.": "世界中的對話在短暫閱讀後自動繼續。",
+  "Tap a Spirling for details.": "點擊Spirling查看詳情。",
+  "Tap a thing to use it.": "點擊物品來使用。",
+  "Tap a Spirling to read its page.": "點擊Spirling閱讀它的頁面。"
  }
 }

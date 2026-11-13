@@ -216,6 +216,9 @@
   "worn out": "지침",
   "new": "새로움",
   "Auto text: %s": "자동 텍스트: %s",
-  "Talk in the world goes on by itself after a short read.": "대화가 잠시 후 저절로 넘어갑니다."
+  "Talk in the world goes on by itself after a short read.": "대화가 잠시 후 저절로 넘어갑니다.",
+  "Tap a Spirling for details.": "Spirling을 탭하면 상세 정보.",
+  "Tap a thing to use it.": "물건을 탭하면 사용합니다.",
+  "Tap a Spirling to read its page.": "Spirling을 탭하면 페이지를 봅니다."
  }
 }

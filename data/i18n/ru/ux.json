@@ -216,6 +216,9 @@
   "seen": "встречен",
   "new": "новое",
   "Auto text: %s": "Автотекст: %s",
-  "Talk in the world goes on by itself after a short read.": "Диалоги в мире сами идут дальше после короткой паузы."
+  "Talk in the world goes on by itself after a short read.": "Диалоги в мире сами идут дальше после короткой паузы.",
+  "Tap a Spirling for details.": "Нажми на Spirling для подробностей.",
+  "Tap a thing to use it.": "Нажми на предмет, чтобы использовать.",
+  "Tap a Spirling to read its page.": "Нажми на Spirling, чтобы открыть его страницу."
  }
 }

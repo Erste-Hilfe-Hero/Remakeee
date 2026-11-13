@@ -216,6 +216,9 @@
   "seen": "görüldü",
   "new": "yeni",
   "Auto text: %s": "Otomatik metin: %s",
-  "Talk in the world goes on by itself after a short read.": "Dünyadaki konuşmalar kısa bir okumadan sonra kendiliğinden ilerler."
+  "Talk in the world goes on by itself after a short read.": "Dünyadaki konuşmalar kısa bir okumadan sonra kendiliğinden ilerler.",
+  "Tap a Spirling for details.": "Ayrıntılar için bir Spirling'e dokun.",
+  "Tap a thing to use it.": "Kullanmak için bir şeye dokun.",
+  "Tap a Spirling to read its page.": "Sayfasını okumak için bir Spirling'e dokun."
  }
 }

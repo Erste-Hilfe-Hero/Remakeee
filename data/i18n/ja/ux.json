@@ -216,6 +216,9 @@
   "worn out": "へとへと",
   "new": "新しい",
   "Auto text: %s": "オートテキスト: %s",
-  "Talk in the world goes on by itself after a short read.": "会話は少し読む時間の後に自動で進みます。"
+  "Talk in the world goes on by itself after a short read.": "会話は少し読む時間の後に自動で進みます。",
+  "Tap a Spirling for details.": "Spirlingをタップでくわしく見る。",
+  "Tap a thing to use it.": "アイテムをタップで使う。",
+  "Tap a Spirling to read its page.": "Spirlingをタップでページを読む。"
  }
 }

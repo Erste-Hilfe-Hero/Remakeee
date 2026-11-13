@@ -186,6 +186,9 @@ func pick_screen(screen: String, title: String, entries: Array[Dictionary], opts
 	_next_layout = lay
 	screens_shown.append(screen)
 	var head: Variant = opts.get("header")
+	var help: String = first_help(screen) if GameState.in_game else ""
+	if not help.is_empty():
+		head = help_header(help, head as Control if head is Control else null)
 	picker.set_header(head as Control if head is Control else null)
 	var tabs: Array[String] = []
 	tabs.assign(opts.get("tabs", []))
@@ -194,6 +197,39 @@ func pick_screen(screen: String, title: String, entries: Array[Dictionary], opts
 	if is_instance_valid(picker):
 		picker.set_header(null)
 	return r
+
+## One line of help under the title the first time a screen opens (item 1992).
+const FIRST_HELP: Dictionary[String, String] = {
+	"party": "Tap a Spirling for details.",
+	"bag": "Tap a thing to use it.",
+	"dex": "Tap a Spirling to read its page.",
+}
+
+## The help line for [param screen] if it was never opened before (and marks it seen), else "".
+static func first_help(screen: String) -> String:
+	if not FIRST_HELP.has(screen):
+		return ""
+	var flag: String = "help_seen_" + screen
+	if GameState.has_flag(flag):
+		return ""
+	GameState.set_flag(flag)
+	return FIRST_HELP[screen]
+
+## The help line in MID, above [param below] (the screen's own header) when there is one.
+static func help_header(help: String, below: Control) -> Control:
+	var box := VBoxContainer.new()
+	box.name = "first_help"
+	box.add_theme_constant_override("separation", 1)
+	var l := Label.new()
+	l.name = "help_line"
+	l.text = help
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	l.custom_minimum_size = Vector2(1, 0)
+	l.add_theme_color_override("font_color", UITheme.MID)
+	box.add_child(l)
+	if below != null:
+		box.add_child(below)
+	return box
 
 const TITLE_MAX_LINES: int = 3
 const SHORT_TITLE: String = "Your choice:"

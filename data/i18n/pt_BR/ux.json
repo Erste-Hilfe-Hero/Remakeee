@@ -216,6 +216,9 @@
   "worn out": "esgotado",
   "new": "novo",
   "Auto text: %s": "Texto automático: %s",
-  "Talk in the world goes on by itself after a short read.": "As conversas no mundo avançam sozinhas após uma breve leitura."
+  "Talk in the world goes on by itself after a short read.": "As conversas no mundo avançam sozinhas após uma breve leitura.",
+  "Tap a Spirling for details.": "Toque num Spirling para ver detalhes.",
+  "Tap a thing to use it.": "Toque num item para usá-lo.",
+  "Tap a Spirling to read its page.": "Toque num Spirling para ler a página dele."
  }
 }

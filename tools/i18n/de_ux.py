@@ -216,6 +216,9 @@ T = {
 "new": "neu",
 "Auto text: %s": "Auto-Text: %s",
 "Talk in the world goes on by itself after a short read.": "Gespräche in der Welt gehen nach kurzer Lesezeit von selbst weiter.",
+"Tap a Spirling for details.": "Tippe ein Spirling für Details.",
+"Tap a thing to use it.": "Tippe etwas an, um es zu nutzen.",
+"Tap a Spirling to read its page.": "Tippe ein Spirling für seine Seite.",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).
