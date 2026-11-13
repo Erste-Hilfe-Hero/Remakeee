@@ -107,7 +107,7 @@
    "field_turns": 2
   },
   "price": 1500,
-  "tradeable": true
+  "tradeable": false
  },
  {
   "id": "bark_wrap",
@@ -768,7 +768,7 @@
  },
  {
   "id": "rg_rift_anchor",
-  "name": "Field Stake",
+  "name": "Rift Anchor",
   "description": "Offered after you lose to a Rift Warden: you stay right before it with a rested team instead of going back to the spring. Not in Rift-Born. Used up.",
   "battle": false,
   "shop": true

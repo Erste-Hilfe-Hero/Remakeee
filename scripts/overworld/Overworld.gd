@@ -2580,6 +2580,9 @@ func _action_postgame_board(_args: PackedStringArray, _speaker: NPC) -> void:
 	kinds.append("times")
 	ways.append(Loc.t("Cartographer's exam"))
 	kinds.append("exam")
+	# Battle halls (KAMPF_PLAN_1000, endgame modes): scripts/overworld/HallRunner.gd.
+	ways.append(Loc.t("Battle halls"))
+	kinds.append("halls")
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	var way: int = await menu.pick_strings(Loc.t("The board"), ways)
@@ -2599,6 +2602,8 @@ func _action_postgame_board(_args: PackedStringArray, _speaker: NPC) -> void:
 			await _show_hall_times()
 		"exam":
 			await _run_final_exam()
+		"halls":
+			await HallRunner.open(self)
 
 ## One timed battle for a hall; books the time on a win and says a new best.
 func _timed_battle(hall: String, foes: Array[Spirling], info: Dictionary) -> BattleModel.Outcome:

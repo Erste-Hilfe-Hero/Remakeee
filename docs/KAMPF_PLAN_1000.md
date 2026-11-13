@@ -893,89 +893,89 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Endgame-Kampfmodi
 
-801. [ ] Turm (bestehend) mit 50 Stockwerken
+801. [x] Turm (bestehend) mit 50 Stockwerken (EchoTower.gd: 30 Stockwerke Leuchtturm-Treppe plus Endlos-Strecke bis Stockwerk 100)
 802. [ ] Gauntlet (bestehend) mit Rangliste
-803. [ ] Wochen-Echo (bestehend) mit Meister-KI
-804. [ ] Boss-Rush
-805. [ ] Turnier mit Regeln
-806. [ ] Zufalls-Team-Modus
-807. [ ] Leih-Team-Modus
-808. [ ] Draft-Modus (Spirlings abwechselnd wählen)
-809. [ ] Überlebens-Modus (keine Heilung)
-810. [ ] Zeitangriff
-811. [ ] Puzzle-Kämpfe (Sieg in einem Zug)
+803. [x] Wochen-Echo (bestehend) mit Meister-KI (Overworld Wochen-Echo mit ai 3)
+804. [x] Boss-Rush (MasterTour.gd: alle Wardens am Stück ohne Heilung; dazu die Herzstiege der Kampfhallen)
+805. [x] Turnier mit Regeln (Wochenend-Turnier TourneyRules.gd, K.o. mit festen Regeln)
+806. [x] Zufalls-Team-Modus (Kampfhallen: Los-Halle mit drei Zufalls-Spirlings auf Ring 50 (BattleHalls.gd))
+807. [x] Leih-Team-Modus (RandomRift.gd Leih-Team und Leih-Wochen im Wochen-Echo)
+808. [x] Draft-Modus (Spirlings abwechselnd wählen) (Kampfhallen: Wahl-Halle, abwechselnd mit dem Echo wählen)
+809. [x] Überlebens-Modus (keine Heilung) (Kampfhallen: Lange Nacht, zwölf Runden ohne Heilung)
+810. [x] Zeitangriff (HallTimes.gd: Bestzeiten je Halle, auch für die Kampfhallen)
+811. [x] Puzzle-Kämpfe (Sieg in einem Zug) (BattlePuzzle.gd: Prüfungen mit Ziel und Zuglimit)
 812. [ ] Lehr-Kämpfe (Tutorial-Rätsel)
-813. [ ] Herausforderungs-Kämpfe gegen Warden-Echos
-814. [ ] Prisma-Boss-Kämpfe
-815. [ ] Endgame-Belohnungen
-816. [ ] Endgame-Ranglisten
-817. [ ] Endgame-Abzeichen
-818. [ ] Endgame-Statistik
-819. [ ] Endgame-Saisonregeln
-820. [ ] Endgame-Fest-Turniere
-821. [ ] Endgame ohne Bezahl-Elemente
-822. [ ] Endgame-Texte übersetzt
-823. [ ] Endgame-Tests
+813. [x] Herausforderungs-Kämpfe gegen Warden-Echos (EchoTower Warden-Stockwerke, WardenRematch, Meister-Risse)
+814. [x] Prisma-Boss-Kämpfe (Kampfhallen: Prisma-Herz, ein Prisma-Rissherz pro Woche)
+815. [x] Endgame-Belohnungen (Wegmarken pro Halle und Woche, Titel, Geschichten, Ruhmeshalle)
+816. [x] Endgame-Ranglisten (Wochen-Rangliste (Freunde und Welt), Liga-Ränge)
+817. [x] Endgame-Abzeichen (Abzeichen hall_first und hall_regular)
+818. [x] Endgame-Statistik (Hallen-Statistik: Läufe, Siege, geschafft, Bestwert)
+819. [x] Endgame-Saisonregeln (Festpokal nur während eines Fests, Gegner nur aus dessen Elementen)
+820. [x] Endgame-Fest-Turniere (Kampfhallen: Festpokal)
+821. [x] Endgame ohne Bezahl-Elemente (Hallen kämpfen als Echo-Kampf: keine Siegel, Amulette oder Pass-Energie, Belohnungen nie kaufbar (Test))
+822. [x] Endgame-Texte übersetzt (tools/i18n/de_battle_halls.py)
+823. [x] Endgame-Tests (tests/unit/test_battle_halls.gd)
 824. [ ] Endgame-Balance
 825. [ ] Endgame-Replay
-826. [ ] Endgame-Seed teilen
-827. [ ] Endgame-Freundes-Duelle
-828. [ ] Endgame-Team-Codes
-829. [ ] Endgame-Level-Skalierung
-830. [ ] Endgame-Feldrotation
-831. [ ] Endgame-Regelrotation
-832. [ ] Endgame: Iron-Oath-Turm
-833. [ ] Endgame: Mehrfachkampf-Turm
-834. [ ] Endgame: Schwarm-Turm
-835. [ ] Endgame: Boss-Turm
-836. [ ] Endgame: Lore-Belohnungen
+826. [x] Endgame-Seed teilen (Lauf-Code: acht Zeichen für Halle und Seed, Freunde spielen denselben Lauf)
+827. [x] Endgame-Freundes-Duelle (Echo-Duell und Live-Duell unter Freunden)
+828. [x] Endgame-Team-Codes (Team-Code: drei Spirlings als acht Zeichen, Kampf gegen das Team auf Ring 50)
+829. [x] Endgame-Level-Skalierung (Hallen: alle Spirlings als Kopien auf Ring 50)
+830. [x] Endgame-Feldrotation (Hallen: das Feld wechselt jede Runde)
+831. [x] Endgame-Regelrotation (TowerWeek.gd und Hallen-Regelvariante pro Woche)
+832. [x] Endgame: Iron-Oath-Turm (Leuchtturm-Treppe unter dem Eisernen Schwur mit eigenem Bestwert (gauntlet_best_oath))
+833. [x] Endgame: Mehrfachkampf-Turm (Kampfhallen: Zwillingsstiege 2 gegen 2)
+834. [x] Endgame: Schwarm-Turm (Kampfhallen: Schwarmstiege gegen sechs schwächere Spirlings)
+835. [x] Endgame: Boss-Turm (Kampfhallen: Herzstiege, ein Rissherz pro Stockwerk)
+836. [x] Endgame: Lore-Belohnungen (Hallengeschichten: eine Seite pro erster Hallen-Bezwingung)
 837. [ ] Endgame: Kosmetik-Belohnungen (Laternenfarben)
-838. [ ] Endgame: Titel auf der Tamer-Karte
-839. [ ] Endgame: Wochen-Ziel
-840. [ ] Endgame: Ruhm-Halle
+838. [x] Endgame: Titel auf der Tamer-Karte (Titel aus Hallen und Zielen auf der Wanderer-Karte, Server nimmt nur bekannte Titel (20261113200110_card_title.sql))
+839. [x] Endgame: Wochen-Ziel (Hallen-Wochenziel: 12 Hallensiege pro Woche)
+840. [x] Endgame: Ruhm-Halle (Ruhmeshalle: Team und Datum jeder ersten Bezwingung)
 
 ## Online-Kämpfe
 
-841. [ ] Echo-Duelle (bestehend) asynchron
-842. [ ] Echo-Partner (bestehend) im Mehrfachkampf
-843. [ ] Online-Regeln gleich für alle
-844. [ ] Online-Level-Skalierung auf 50
-845. [ ] Online-Ruhe-Regel
-846. [ ] Online-Zug-Timeout
-847. [ ] Online ohne Chat (bestehend: nur Phrasen)
-848. [ ] Online-Phrasen im Kampf
-849. [ ] Online-Rangliste wöchentlich (bestehend)
-850. [ ] Online-Betrugsschutz: Server prüft Teams
-851. [ ] Online-Replay-Seed
-852. [ ] Online-Freundes-Duell
-853. [ ] Online-Weltziel-Boss
-854. [ ] Online-Turnier asynchron
+841. [x] Echo-Duelle (bestehend) asynchron (bestehend, EchoTeam.gd)
+842. [x] Echo-Partner (bestehend) im Mehrfachkampf (bestehend, pick_echo_partner)
+843. [x] Online-Regeln gleich für alle (Faire Liga: Grundwerte, gleiche Regeln)
+844. [x] Online-Level-Skalierung auf 50 (Faire Liga auf Ring 50 (league_fair_ring))
+845. [x] Online-Ruhe-Regel (BattleModel.calm_rule_blocks gilt in jedem Nicht-Wildkampf, auch online)
+846. [x] Online-Zug-Timeout (Live-Duell turn_seconds 30)
+847. [x] Online ohne Chat (bestehend: nur Phrasen) (bestehend)
+848. [x] Online-Phrasen im Kampf (live_emote mit festen Phrasen)
+849. [x] Online-Rangliste wöchentlich (bestehend) (bestehend)
+850. [x] Online-Betrugsschutz: Server prüft Teams (Liga baut Teams aus dem gespeicherten Team neu, _save_cheat prüft Spielstände)
+851. [x] Online-Replay-Seed (BattleReplay-Seed, ReplayLibrary-Code)
+852. [x] Online-Freundes-Duell (Live-Duell und Echo-Duell)
+853. [x] Online-Weltziel-Boss (Raid-Risse (RaidRules.gd) mit gemeinsamer Rangliste)
+854. [x] Online-Turnier asynchron (Wochenend-Turnier TourneyRules.gd)
 855. [ ] Online-Teamcode
-856. [ ] Online-Spirling-Tausch nie (bestehend Leitplanke)
-857. [ ] Online-Belohnungen ohne Geld
-858. [ ] Online-Datenschutz (bestehend)
-859. [ ] Online-Server Contabo (bestehend)
+856. [x] Online-Spirling-Tausch nie (bestehend Leitplanke) (Spirlings werden nie verschenkt; Tausch nur unter Freunden hinter Flag trade_spirling)
+857. [x] Online-Belohnungen ohne Geld (Wegmarken nie käuflich, Belohnungen sind Gegenstände und Titel)
+858. [x] Online-Datenschutz (bestehend) (bestehend)
+859. [x] Online-Server Contabo (bestehend) (bestehend)
 860. [ ] Online-Verbindungsabbruch: Kampf läuft lokal weiter
 861. [ ] Online-KI-Echos nutzen Meister-KI
 862. [ ] Online-Fairness-Test
-863. [ ] Online-Version prüfen (bestehend CLIENT_VERSION)
+863. [x] Online-Version prüfen (bestehend CLIENT_VERSION) (bestehend)
 864. [ ] Online-Echos mit gehaltenen Gegenständen
 865. [ ] Online-Felder wählbar
 866. [ ] Online-Regeln pro Woche
-867. [ ] Online-Statistik
+867. [x] Online-Statistik (ReplayLibrary: Siegquote pro Spirling, meistgesehene Gegner)
 868. [ ] Online-Abzeichen
-869. [ ] Online-Titel
-870. [ ] Online-Melde-Funktion (bestehend reports)
-871. [ ] Online-Sperre bei Betrug
-872. [ ] Online-Server-Validierung der Kampfergebnisse
-873. [ ] Online-Ergebnis-Replay prüfen
-874. [ ] Online-Tests in LocalBackend (bestehend)
-875. [ ] Online-SQL-Tests (bestehend)
+869. [x] Online-Titel (Liga-Saisontitel und Hallen-Titel auf der Wanderer-Karte (20261113200110_card_title.sql))
+870. [x] Online-Melde-Funktion (bestehend reports) (bestehend, reports)
+871. [x] Online-Sperre bei Betrug (_cheat_held: nach cheat_flag_limit Vermerken raus aus Liga und Raids)
+872. [x] Online-Server-Validierung der Kampfergebnisse (Schiedsrichter-Dienst (BattleReferee, battle_submit))
+873. [x] Online-Ergebnis-Replay prüfen (Schiedsrichter spielt jedes Ergebnis nach)
+874. [x] Online-Tests in LocalBackend (bestehend) (bestehend)
+875. [x] Online-SQL-Tests (bestehend) (bestehend)
 876. [ ] Online-Echo-KI-Stufe pro Rang
-877. [ ] Online-Matchmaking nach Rang bewusst einfach
-878. [ ] Online-Saison-Reset
-879. [ ] Online-Belohnung kosmetisch
-880. [ ] Online-Texte übersetzt
+877. [x] Online-Matchmaking nach Rang bewusst einfach (league_find: 100 Punkte Spanne, wächst langsam)
+878. [x] Online-Saison-Reset (Liga-Saisons (league_seasons), Neustart von selbst)
+879. [x] Online-Belohnung kosmetisch (Saison-Rahmen season_<n>_<rank>)
+880. [x] Online-Texte übersetzt (tools/i18n/de_online*.py)
 
 ## Barrierefreiheit
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-97 von 1000 Punkten umgesetzt.
+163 von 1000 Punkten umgesetzt.
 

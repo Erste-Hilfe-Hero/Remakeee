@@ -70,6 +70,11 @@ def main() -> None:
                     except ValueError:
                         pass
     known += [{"kind": "rift", "id": r} for r in sorted(rifts)]
+    # Titles a Wanderer card may show (KAMPF_PLAN_1000): data/battle_halls.json "card_titles".
+    halls_path = os.path.join(folder, "battle_halls.json")
+    if os.path.exists(halls_path):
+        with open(halls_path, encoding="utf-8") as f:
+            known += [{"kind": "title", "id": str(t)} for t in json.load(f).get("card_titles", [])]
     ids = json.dumps(known).replace("$game$", "")
     print("delete from public.known_ids;")
     print("insert into public.known_ids (kind, id) select x->>'kind', x->>'id' from jsonb_array_elements($game$"
