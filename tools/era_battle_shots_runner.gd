@@ -57,6 +57,11 @@ func _run() -> void:
 				await _shot(era, str(sc[0]), "scene_" + str(sc[2]))
 				await _shot(era, str(sc[0]), "scene_" + str(sc[2]) + "_e3", {"team": NATIVE})
 			Era45Look.biome_override = "route"
+		if _want("fields"):
+			# Rift field badge and tint (KAMPF_PLAN_1000 items 322, 331): a place field, and a
+			# Resonance field with turns left in a 3v3.
+			await _shot(era, "field", "field_place", {"field": "pollen_drift"})
+			await _shot(era, "field", "field_3v3", {"front": FORMATIONS["3v3"], "resonance": "gale_eye"})
 		if _want("reduced"):
 			GameState.reduce_motion = true
 			await _shot(era, "field", "wind_reduced", {"sky": "wind"})
@@ -95,6 +100,8 @@ func _shot(era: int, terrain: String, tag: String, opt: Dictionary = {}) -> void
 		var f: Dictionary = WeatherCycle.battle_field(sky)
 		m.field = str(f.field)
 		m.field_intro = str(f.intro)
+	if opt.has("field"):
+		m.field = str(opt.field)
 	inst.setup(m)
 	get_tree().root.add_child(inst)
 	if opt.has("frames"):
@@ -112,6 +119,12 @@ func _shot(era: int, terrain: String, tag: String, opt: Dictionary = {}) -> void
 		if left <= 0:
 			push_error("era%d %s %s: the command menu never opened" % [era, terrain, tag])
 		for i: int in SETTLE_FRAMES:
+			await get_tree().process_frame
+	if opt.has("resonance"):
+		inst.model.set_field(str(opt.resonance), BattleRules.RESONANCE_TURNS)
+		inst._field_badge.sync(inst.model)
+		inst._place_field_badge()
+		for i: int in 3:
 			await get_tree().process_frame
 	if opt.has("fx"):
 		var sp: SpirlingSprite = inst._sprite(BattleModel.Side.FOE, 0)

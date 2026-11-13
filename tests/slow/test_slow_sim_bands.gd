@@ -41,7 +41,7 @@ func test_slow_no_keepsake_lifts_the_win_rate_by_more_than_six_points() -> void:
 ## Item 854 (ring 36).
 func test_slow_every_field_lifts_its_element_by_eight_to_fifteen_points() -> void:
 	var r: Dictionary = BalanceSim.run_fields(36, 200, 1234)
-	assert_eq(r.fields.size(), 6)
+	assert_eq(r.fields.size(), BattleRules.FIELDS.size())
 	for fid: String in r.fields:
 		var g: float = float(r.fields[fid].gain)
 		_check("field:" + fid, g >= BalanceSim.FIELD_GAIN_BAND.x and g <= BalanceSim.FIELD_GAIN_BAND.y, "%s %+.1f" % [fid, g * 100.0])
