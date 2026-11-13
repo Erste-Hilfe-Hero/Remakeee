@@ -2767,6 +2767,33 @@
   "price": 3000,
   "tradeable": false
  },
+ {
+  "id": "echo_coiled_strike",
+  "name": "Echo Crystal: Coiled Strike",
+  "description": "Teaches Coiled Strike to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Coiled Strike",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_night_prowl",
+  "name": "Echo Crystal: Night Prowl",
+  "description": "Teaches Night Prowl to an Umbra Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Night Prowl",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_noon_glare",
+  "name": "Echo Crystal: Noon Glare",
+  "description": "Teaches Noon Glare to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Noon Glare",
+  "price": 3000,
+  "tradeable": false
+ },
  {"id": "kit_energy_crystal", "name": "Deep Crystal", "description": "Keepsake. The holder can store 2 more Energy and starts every battle with them.", "battle": false, "held": {"energy_cap": 2}, "price": 1800, "tradeable": false, "rarity": "rare"},
  {"id": "kit_ward_talisman", "name": "Ward Talisman", "description": "Keepsake. Once per battle, a very effective hit on the holder loses half its force.", "battle": false, "held": {"super_guard": 0.5}, "price": 1600, "tradeable": false, "rarity": "rare"},
  {"id": "kit_pace_feather", "name": "Pace Feather", "description": "Keepsake. Each time the holder steps in, its Pace rises by one stage.", "battle": false, "held": {"enter_stage": {"spd": 1}}, "price": 1400, "tradeable": false, "rarity": "uncommon"},

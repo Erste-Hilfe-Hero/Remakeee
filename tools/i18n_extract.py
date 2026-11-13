@@ -9,7 +9,7 @@ import json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCRIPT_DIRS = ["scripts/ui", "scripts/overworld", "scripts/battle", "scripts/core", "scripts/online", "scripts/shop"]
-SKIP_SCRIPTS = {"BalanceSim.gd", "BalanceGroups.gd", "KampfChecks.gd", "BalanceDoc.gd", "EndgameSim.gd", "BattleTest.gd", "DataValidator.gd", "StoryValidator.gd", "WorldValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd",
+SKIP_SCRIPTS = {"BalanceSim.gd", "ArtsSim.gd", "BalanceGroups.gd", "KampfChecks.gd", "BalanceDoc.gd", "EndgameSim.gd", "BattleTest.gd", "DataValidator.gd", "StoryValidator.gd", "WorldValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd",
                 "BundWords.gd",  # carries its own German word lists
                 "EraActorLook.gd", "EraActors.gd",  # table checks for the test log, no player text
                 "EraTerrainLook.gd",  # only developer validation messages (problems())

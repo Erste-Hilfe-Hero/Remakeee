@@ -113,3 +113,19 @@ T.update({
 "An art can set off a status already on its target. Volt races through a Soaked foe, Gale blows it dry and slows it, Tide douses Scorch, Stone grounds a Jolt, Lumen startles a Drowsing foe awake, and Ember burns the roots off a Rooted foe but sets it alight. The battle log names every reaction it sees.": "Eine Technik kann einen Status auslösen, den ihr Ziel schon trägt. Volt jagt durch einen durchnässten Gegner, Gale bläst ihn trocken und bremst ihn, Tide löscht Brand, Stone erdet einen Schock, Lumen schreckt einen Dösenden auf, und Ember brennt einem Verwurzelten die Wurzeln weg, setzt ihn aber in Brand. Das Kampflog nennt jede Reaktion, die es sieht.",
 })
 T["%s picks up the echo and gains %d Energy!"] = "%s nimmt den Nachhall auf und erhält %d Energie!"
+
+# Batch 3: charged and time-of-day arts.
+T.update({
+"Coiled Strike": "Federschlag",
+"Night Prowl": "Nachtpirsch",
+"Noon Glare": "Mittagsglut",
+"Winds itself up on the first use and does nothing else. The next use lands twice as hard.": "Spannt sich beim ersten Einsatz an und tut sonst nichts. Der nächste Einsatz trifft doppelt so hart.",
+"Stalks from the dark. Out in the open at night it hits half as hard again.": "Pirscht aus dem Dunkel. Nachts unter freiem Himmel trifft sie anderthalbmal so hart.",
+"Casts the full midday sun back at the foe. Out in the open by day it hits half as hard again.": "Wirft die volle Mittagssonne auf den Gegner zurück. Tagsüber unter freiem Himmel trifft sie anderthalbmal so hart.",
+"%s gathers its strength!": "%s sammelt seine Kraft!",
+"The first use gathers strength; the next use hits x%s.": "Der erste Einsatz sammelt Kraft, der nächste trifft x%s.",
+"x%s power at dawn.": "x%s Stärke im Morgengrauen.",
+"x%s power by day.": "x%s Stärke am Tag.",
+"x%s power at dusk.": "x%s Stärke in der Dämmerung.",
+"x%s power at night.": "x%s Stärke in der Nacht.",
+})
