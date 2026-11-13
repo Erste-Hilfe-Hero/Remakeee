@@ -2669,6 +2669,33 @@
   "price": 1500,
   "tradeable": false
  },
+ {
+  "id": "echo_magma_rush",
+  "name": "Echo Crystal: Magma Rush",
+  "description": "Teaches Magma Rush to an Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Magma Rush",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_tidal_gust",
+  "name": "Echo Crystal: Tidal Gust",
+  "description": "Teaches Tidal Gust to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Tidal Gust",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_clean_slate",
+  "name": "Echo Crystal: Clean Slate",
+  "description": "Teaches Clean Slate to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Clean Slate",
+  "price": 3000,
+  "tradeable": false
+ },
  {"id": "kit_energy_crystal", "name": "Energy Crystal", "description": "Keepsake. The holder can store 2 more Energy and starts every battle with them.", "battle": false, "held": {"energy_cap": 2}, "price": 1800, "tradeable": false, "rarity": "rare"},
  {"id": "kit_ward_talisman", "name": "Ward Talisman", "description": "Keepsake. Once per battle, a very effective hit on the holder loses half its force.", "battle": false, "held": {"super_guard": 0.5}, "price": 1600, "tradeable": false, "rarity": "rare"},
  {"id": "kit_pace_feather", "name": "Pace Feather", "description": "Keepsake. Each time the holder steps in, its Pace rises by one stage.", "battle": false, "held": {"enter_stage": {"spd": 1}}, "price": 1400, "tradeable": false, "rarity": "uncommon"},

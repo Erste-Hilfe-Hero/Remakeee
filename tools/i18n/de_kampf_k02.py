@@ -95,4 +95,21 @@ T.update({
 # Crystal names and lines use the patterns in de_data.py and de_kampf.py; Echo had none yet.
 "Teaches %s to an Echo Spirling. Never used up.": "Bringt einem Echo-Spirling %s bei. Verbraucht sich nie.",
 })
+
+# Batch 2: mixed arts, target reset, field countdown, element summary, lexicon.
+T.update({
+"Magma Rush": "Magmasturm",
+"Tidal Gust": "Gischtböe",
+"Clean Slate": "Reiner Tisch",
+"Half fire, half rock. It lands as Ember or Stone, whichever hurts more.": "Halb Feuer, halb Fels. Sie trifft als Ember oder Stone, je nachdem, was mehr schmerzt.",
+"Wind full of sea spray. It lands as Tide or Gale, whichever hurts more.": "Wind voller Gischt. Sie trifft als Tide oder Gale, je nachdem, was mehr schmerzt.",
+"Wipes the foe clean: all its stages go back to 0. Its own stay.": "Wischt den Gegner blank: alle seine Stufen gehen auf 0. Die eigenen bleiben.",
+"Also counts as %s and lands with the better element.": "Zählt auch als %s und trifft mit dem besseren Element.",
+"Sets every stage of the target back to 0.": "Setzt alle Stufen des Ziels auf 0 zurück.",
+"The %s will fade after the next turn.": "%s vergeht nach der nächsten Runde.",
+"Damage by element": "Schaden nach Element",
+"Two elements": "Zwei Elemente",
+"A Spirling of two elements takes both factors at once: they multiply. Strong into both is x4, strong into one and resisted by the other is x1, resisted by both is x0.25. No hit ever does nothing.": "Ein Spirling mit zwei Elementen nimmt beide Faktoren zugleich: sie werden multipliziert. Stark gegen beide ist x4, stark gegen eines und vom anderen abgewehrt ist x1, von beiden abgewehrt ist x0,25. Kein Treffer bleibt je ganz ohne Wirkung.",
+"An art can set off a status already on its target. Volt races through a Soaked foe, Gale blows it dry and slows it, Tide douses Scorch, Stone grounds a Jolt, Lumen startles a Drowsing foe awake, and Ember burns the roots off a Rooted foe but sets it alight. The battle log names every reaction it sees.": "Eine Technik kann einen Status auslösen, den ihr Ziel schon trägt. Volt jagt durch einen durchnässten Gegner, Gale bläst ihn trocken und bremst ihn, Tide löscht Brand, Stone erdet einen Schock, Lumen schreckt einen Dösenden auf, und Ember brennt einem Verwurzelten die Wurzeln weg, setzt ihn aber in Brand. Das Kampflog nennt jede Reaktion, die es sieht.",
+})
 T["%s picks up the echo and gains %d Energy!"] = "%s nimmt den Nachhall auf und erhält %d Energie!"

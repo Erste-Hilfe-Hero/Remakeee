@@ -102,6 +102,7 @@ static func hit_mult(model: BattleModel, side: int, slot: int, me: Spirling, tar
 		m *= PAYBACK_MULT
 	if not _effect(mv, &"first_strike").is_empty() and not acted_this_turn(model, target):
 		m *= FIRST_STRIKE_MULT
+	m *= dual_ratio(mv, target)
 	if not _effect(mv, &"multi_hit").is_empty():
 		var hits: int = model.rng.randi_range(HITS_MIN, HITS_MAX)
 		st.hits[me] = hits
@@ -199,6 +200,11 @@ static func observe(model: BattleModel, e: BattleEvent) -> void:
 			var p: Dictionary = (state(model).phys as Dictionary).get(who, {})
 			var before: int = int(p.get("amount", 0)) if int(p.get("turn", -1)) == model.turn else 0
 			state(model).phys[who] = {"turn": model.turn, "amount": before + int(e.data.get("amount", 0))}
+		if mv != null:
+			var key: String = "%d:%d" % [1 - int(e.data.get("side", 0)), mv.element]
+			var es: Dictionary = state(model).get("elem_dmg", {})
+			es[key] = int(es.get(key, 0)) + int(e.data.get("amount", 0))
+			state(model)["elem_dmg"] = es
 	elif e.type == BattleEvent.Type.STAT_CHANGED and int(e.data.get("delta", 0)) != 0:
 		(state(model).last_stage as Array)[int(e.data.get("side", 0))] = {"stat": str(e.data.stat), "delta": int(e.data.delta)}
 
@@ -259,4 +265,64 @@ static func info_line(fx: Dictionary) -> String:
 			return Loc.t("The target counts as the user's element for %d turns.") % SHIFT_TURNS
 		&"elem_ward":
 			return Loc.t("Very effective hits on its side land softer for %d turns.") % WARD_TURNS
+		&"dual_element":
+			return Loc.t("Also counts as %s and lands with the better element.") % Elements.chart_name(str(fx.get("element", "")))
+		&"reset_target":
+			return Loc.t("Sets every stage of the target back to 0.")
 	return ""
+
+# --- batch 2: mixed arts, field countdown, element summary ------------------------------------
+
+## A mixed art (item 114, effect "dual_element" with "element"): it lands with whichever of its two
+## elements works better on [param target]; this is the factor on top of its first element.
+static func dual_ratio(mv: MoveData, target: Spirling) -> float:
+	var fx: Dictionary = _effect(mv, &"dual_element")
+	if fx.is_empty() or target == null or not Elements.E.has(str(fx.get("element", ""))):
+		return 1.0
+	var first: float = Elements.multiplier(mv.element, target.elements())
+	var second: float = Elements.multiplier(int(Elements.E[str(fx.element)]), target.elements())
+	return second / first if second > first and first > 0.0 else 1.0
+
+## Item 122: one turn before a Resonance field runs out, the log says so.
+static func field_last_turn(model: BattleModel) -> void:
+	var label: String = str(BattleRules.FIELDS.get(model.field, {}).get("label", ""))
+	if label.is_empty():
+		return
+	model.emit_event(BattleEvent.Type.TECHNIQUE, {"side": 0, "slot": 0, "name": "", "text": "The %s will fade after the next turn.", "args": [label]})
+
+## Item 105: damage per element and side so far, "side:element" -> damage.
+static func element_damage(model: BattleModel) -> Dictionary:
+	return state(model).get("elem_dmg", {})
+
+## Item 105: the element lines for the end of a battle, strongest element first, for [param side].
+static func element_summary(model: BattleModel, side: int = 0) -> String:
+	var rows: Array = []
+	var dmg: Dictionary = element_damage(model)
+	for k: String in dmg:
+		var parts: PackedStringArray = k.split(":")
+		if int(parts[0]) == side and int(dmg[k]) > 0:
+			rows.append([int(parts[1]), int(dmg[k])])
+	if rows.is_empty():
+		return ""
+	rows.sort_custom(func(a: Array, b: Array) -> bool: return a[1] > b[1] or (a[1] == b[1] and a[0] < b[0]))
+	var out: PackedStringArray = [Loc.t("Damage by element")]
+	for r: Array in rows:
+		out.append("%s: %d" % [Elements.element_name(int(r[0])), int(r[1])])
+	return "\n".join(out)
+
+## Item 119: a warning tag when [param s] would step in against an element it is weak to: the
+## standing foe element with the strongest multiplier on it ("" when nothing beats x1).
+static func switch_warning(model: BattleModel, side: int, s: Spirling) -> String:
+	var worst: float = 1.0
+	var by: int = -1
+	var foe: int = BattleModel.other(side)
+	for slot: int in model.standing_slots(foe):
+		for e: int in model.active_spirling(foe, slot).elements():
+			var m: float = Elements.multiplier(e, s.elements())
+			if m > worst:
+				worst = m
+				by = e
+	if by < 0:
+		return ""
+	# Short, so it fits beside the name in the 144 px party picker: "!Ember".
+	return "!" + Elements.element_name(by)
