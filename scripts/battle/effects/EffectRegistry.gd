@@ -64,6 +64,8 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"elem_ward": preload("res://scripts/battle/effects/ElementWardEffect.gd"),
 	&"dual_element": preload("res://scripts/battle/effects/PassiveEffect.gd"),
 	&"reset_target": preload("res://scripts/battle/effects/ResetTargetEffect.gd"),
+	&"charge_up": preload("res://scripts/battle/effects/PassiveEffect.gd"),
+	&"daytime": preload("res://scripts/battle/effects/PassiveEffect.gd"),
 }
 
 static var _cache: Dictionary[StringName, MoveEffect] = {}
