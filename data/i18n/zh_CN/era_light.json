@@ -1,0 +1,9 @@
+{
+ "_comment": "Simplified Chinese (Mainland China) texts for the German table era_light. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "A storm rages.": "暴风肆虐。",
+  "Fog hangs low.": "雾气低垂。",
+  "Rain falls.": "下着雨。",
+  "Wind blows.": "刮着风。"
+ }
+}
