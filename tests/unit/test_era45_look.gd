@@ -70,11 +70,15 @@ func test_sprites_are_whole_multiples_of_their_art() -> void:
 				assert_gte(px, art)
 				assert_lte(px, 192.0)
 
-func test_spirlings_stand_bigger_than_in_era_three() -> void:
-	# Era III draws 64 px on a 180 px screen; Era IV/V on 270 px.
-	for art: float in [56.0, 64.0, 96.0]:
-		assert_gte(Era45Look.sprite_px(4, "player", art) / 270.0, ERA3_SHARE * 1.5, "player art %d at least 1.5x" % art)
-		assert_gte(Era45Look.sprite_px(4, "foe", art) / 270.0, ERA3_SHARE, "foe art %d no smaller" % art)
+func test_spirlings_stand_about_as_big_as_in_era_three() -> void:
+	# Era III draws 64 px on a 180 px screen; Era IV/V on 270 px. The owner found the first redo
+	# too big (13 Nov, "kleiner, etwa wie Era III"): the whole multiple nearest the Era III share.
+	for e: int in [4, 5]:
+		for art: float in [56.0, 64.0, 96.0]:
+			var player: float = Era45Look.sprite_px(e, "player", art)
+			assert_lte(absf(player / 270.0 - ERA3_SHARE), 0.13, "player art %d about the Era III size" % art)
+			assert_lte(Era45Look.sprite_px(e, "foe", art), player, "the foe never outgrows the player")
+		assert_eq(Era45Look.sprite_px(e, "player", 96.0), roundf(270.0 * ERA3_SHARE), "new art exactly as big as in Era III")
 
 func test_snap_keeps_the_cap() -> void:
 	assert_eq(Era45Look.snap_px(160.0, 96.0, 192.0), 192.0)

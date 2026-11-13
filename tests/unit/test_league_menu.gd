@@ -22,6 +22,8 @@ func after_all() -> void:
 
 func before_each() -> void:
 	_server = LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	_server.rng.seed = 1
 	Online.backend = _server
 	Online.state = Online.State.ONLINE
 	GameState.party = [Spirling.new(Database.species("Kindlop"), 60), Spirling.new(Database.species("Puddlet"), 9),

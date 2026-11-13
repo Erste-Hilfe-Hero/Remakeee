@@ -63,6 +63,8 @@ func test_maintenance_notice_window() -> void:
 
 func test_local_server_gives_maintenance_time() -> void:
 	var s := LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	s.rng.seed = 1
 	s.switch_user("ann")
 	s.call_fn("hello", {"p_version": 1})
 	assert_eq(int(s.call_fn("maintenance_info").data.at), 0)

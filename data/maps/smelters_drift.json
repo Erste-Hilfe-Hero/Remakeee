@@ -89,11 +89,11 @@
    "money": 2320,
    "team": [
     {
-     "species": "Smeltmaw",
+     "species": "Smogpup",
      "level": 58
     },
     {
-     "species": "Ashcrest",
+     "species": "Veilmote",
      "level": 58
     }
    ]
@@ -111,11 +111,11 @@
    "money": 2320,
    "team": [
     {
-     "species": "Smeltmaw",
+     "species": "Smogpup",
      "level": 56
     },
     {
-     "species": "Glassfell",
+     "species": "Veilmote",
      "level": 58
     }
    ]
@@ -152,15 +152,15 @@
    "money": 2950,
    "team": [
     {
-     "species": "Flueling",
+     "species": "Knellgrim",
      "level": 57
     },
     {
-     "species": "Smeltmaw",
+     "species": "Veilmote",
      "level": 58
     },
     {
-     "species": "Glassfell",
+     "species": "Latchet",
      "level": 59
     }
    ],

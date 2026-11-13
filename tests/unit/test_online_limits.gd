@@ -11,6 +11,8 @@ func before_all() -> void:
 
 func before_each() -> void:
 	s = LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	s.rng.seed = 1
 	for who: String in ["ann", "ben"]:
 		s.switch_user(who)
 		codes[who] = s.call_fn("hello", {"p_version": 1}).data.profile.code
