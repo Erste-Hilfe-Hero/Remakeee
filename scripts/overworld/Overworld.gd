@@ -96,6 +96,7 @@ func _ready() -> void:
 		"wake": _action_wake,
 		"bounty": _action_bounty,
 		"fine_training": _action_fine_training,
+		"training": _action_training,
 		"matchmaker": _action_matchmaker,
 		"reserve": _action_reserve,
 		"informant": _action_informant,
