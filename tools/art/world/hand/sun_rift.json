@@ -58,24 +58,24 @@
     "teams_by_difficulty": {
      "tamer": [
       {
-       "species": "Solmantle",
-       "level": 50
+       "species": "Tempestrel",
+       "level": 48
       },
       {
        "species": "Orrerine",
-       "level": 51
+       "level": 49
       },
       {
        "species": "Glimmerax",
-       "level": 50
+       "level": 48
       },
       {
        "species": "Cairnhold",
-       "level": 51
+       "level": 49
       },
       {
        "species": "Zenithare",
-       "level": 51
+       "level": 49
       }
      ]
     }

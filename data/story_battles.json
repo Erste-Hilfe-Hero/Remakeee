@@ -133,23 +133,23 @@
    "tamer": [
     {
      "species": "Tempestrel",
-     "level": 54
+     "level": 50
     },
     {
      "species": "Glimmerax",
-     "level": 53
+     "level": 49
     },
     {
      "species": "Brookbaron",
-     "level": 52
+     "level": 48
     },
     {
      "species": "Kelphound",
-     "level": 53
+     "level": 49
     },
     {
      "species": "Lumenewt",
-     "level": 52
+     "level": 48
     }
    ]
   }
@@ -1040,23 +1040,23 @@
    "tamer": [
     {
      "species": "Noonsoral",
-     "level": 43
+     "level": 42
     },
     {
      "species": "Saltspire",
-     "level": 43
+     "level": 42
     },
     {
      "species": "Scrivane",
-     "level": 44
+     "level": 43
     },
     {
      "species": "Rubriclad",
-     "level": 44
+     "level": 43
     },
     {
      "species": "Charsylvan",
-     "level": 44
+     "level": 43
     }
    ]
   }
@@ -1092,19 +1092,19 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 60
+     "level": 57
     },
     {
      "species": "Glasstarn",
-     "level": 60
+     "level": 57
     },
     {
      "species": "Mendlace",
-     "level": 61
+     "level": 58
     },
     {
      "species": "Saltcrown",
-     "level": 61
+     "level": 58
     }
    ]
   }
@@ -1144,23 +1144,23 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 54
+     "level": 55
     },
     {
      "species": "Mirassil",
-     "level": 54
+     "level": 55
     },
     {
      "species": "Leviarch",
-     "level": 55
+     "level": 56
     },
     {
      "species": "Saltcrown",
-     "level": 55
+     "level": 56
     },
     {
      "species": "Obsidroth",
-     "level": 56
+     "level": 57
     }
    ]
   }

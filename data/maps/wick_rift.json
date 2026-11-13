@@ -117,19 +117,19 @@
     "tamer": [
      {
       "species": "Sootharrow",
-      "level": 113
+      "level": 115
      },
      {
       "species": "Glazeldrake",
-      "level": 113
+      "level": 115
      },
      {
       "species": "Ardenthal",
-      "level": 114
+      "level": 116
      },
      {
       "species": "Duskmirrah",
-      "level": 114,
+      "level": 116,
       "held": "pith_mend"
      }
     ]

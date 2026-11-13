@@ -862,23 +862,23 @@
       "tamer": [
        {
         "species": "Millvane",
-        "level": 49
+        "level": 47
        },
        {
         "species": "Smeltmaw",
-        "level": 49
+        "level": 47
        },
        {
         "species": "Glassfell",
-        "level": 50
+        "level": 48
        },
        {
         "species": "Tempestrel",
-        "level": 50
+        "level": 48
        },
        {
         "species": "Millvane",
-        "level": 50
+        "level": 48
        }
       ]
      }
@@ -1012,23 +1012,23 @@
       "tamer": [
        {
         "species": "Duskdigger",
-        "level": 49
+        "level": 41
        },
        {
         "species": "Burinox",
-        "level": 49
+        "level": 41
        },
        {
         "species": "Calderox",
-        "level": 50
+        "level": 42
        },
        {
         "species": "Obsidroth",
-        "level": 50
+        "level": 42
        },
        {
         "species": "Duskdigger",
-        "level": 50
+        "level": 42
        }
       ]
      }

@@ -121,23 +121,23 @@
     "tamer": [
      {
       "species": "Fenwarden",
-      "level": 78
+      "level": 75
      },
      {
       "species": "Glasstarn",
-      "level": 78
+      "level": 75
      },
      {
       "species": "Lanternel",
-      "level": 79
+      "level": 76
      },
      {
       "species": "Glimmerax",
-      "level": 79
+      "level": 76
      },
      {
       "species": "Scrivane",
-      "level": 79,
+      "level": 76,
       "held": "pith_mend"
      }
     ]
