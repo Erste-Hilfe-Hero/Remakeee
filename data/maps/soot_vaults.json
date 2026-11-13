@@ -880,6 +880,28 @@
         "species": "Millvane",
         "level": 48
        }
+      ],
+      "rift_born": [
+       {
+        "species": "Ashcrest",
+        "level": 37
+       },
+       {
+        "species": "Smeltmaw",
+        "level": 37
+       },
+       {
+        "species": "Glassfell",
+        "level": 38
+       },
+       {
+        "species": "Tempestrel",
+        "level": 38
+       },
+       {
+        "species": "Ashcrest",
+        "level": 33
+       }
       ]
      }
     }
@@ -1029,6 +1051,28 @@
        {
         "species": "Duskdigger",
         "level": 42
+       }
+      ],
+      "rift_born": [
+       {
+        "species": "Smeltmaw",
+        "level": 37
+       },
+       {
+        "species": "Burinox",
+        "level": 37
+       },
+       {
+        "species": "Calderox",
+        "level": 38
+       },
+       {
+        "species": "Obsidroth",
+        "level": 38
+       },
+       {
+        "species": "Smeltmaw",
+        "level": 33
        }
       ]
      }

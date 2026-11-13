@@ -99,7 +99,7 @@
      "level": 88
     },
     {
-     "species": "Ergrava",
+     "species": "Flatsovereign",
      "level": 88
     }
    ],
@@ -128,6 +128,28 @@
      {
       "species": "Fulgorath",
       "level": 101
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Saltcrown",
+      "level": 89
+     },
+     {
+      "species": "Stiltregent",
+      "level": 89
+     },
+     {
+      "species": "Wadibastion",
+      "level": 90
+     },
+     {
+      "species": "Flatsovereign",
+      "level": 90
+     },
+     {
+      "species": "Saltcrown",
+      "level": 85
      }
     ]
    }

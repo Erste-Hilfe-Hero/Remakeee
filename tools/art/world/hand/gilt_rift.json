@@ -28,7 +28,7 @@
       "level": 96
      },
      {
-      "species": "Claspreign",
+      "species": "Coffrendrake",
       "level": 96
      }
     ],
@@ -57,6 +57,28 @@
       {
        "species": "Claspreign",
        "level": 85
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Obelordan",
+       "level": 97
+      },
+      {
+       "species": "Coronarch",
+       "level": 97
+      },
+      {
+       "species": "Caravault",
+       "level": 97
+      },
+      {
+       "species": "Helirollax",
+       "level": 98
+      },
+      {
+       "species": "Coffrendrake",
+       "level": 98
       }
      ]
     }

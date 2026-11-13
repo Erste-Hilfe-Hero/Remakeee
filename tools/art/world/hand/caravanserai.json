@@ -50,6 +50,28 @@
        "species": "Siltgrove",
        "level": 55
       }
+     ],
+     "rift_born": [
+      {
+       "species": "Zenithare",
+       "level": 49
+      },
+      {
+       "species": "Habobrax",
+       "level": 49
+      },
+      {
+       "species": "Noonsoral",
+       "level": 50
+      },
+      {
+       "species": "Zenithare",
+       "level": 45
+      },
+      {
+       "species": "Zenithare",
+       "level": 41
+      }
      ]
     }
    }

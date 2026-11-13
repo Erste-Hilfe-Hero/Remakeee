@@ -205,35 +205,15 @@
     "tamer": [
      {
       "species": "Zephlet",
-      "level": 15,
-      "moves": [
-       "Kite Cut",
-       "Crosswind"
-      ]
+      "level": 17
      },
      {
       "species": "Zippit",
-      "level": 16,
-      "moves": [
-       "Static Tag"
-      ]
+      "level": 18
      },
      {
       "species": "Riptail",
-      "level": 18,
-      "moves": [
-       "Rip Current",
-       "Undertow",
-       "Tide Call"
-      ]
-     },
-     {
-      "species": "Gloamhog",
-      "level": 18
-     },
-     {
-      "species": "Fluting",
-      "level": 18
+      "level": 20
      }
     ],
     "veteran": [

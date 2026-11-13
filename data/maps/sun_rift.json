@@ -192,6 +192,28 @@
       "species": "Zenithare",
       "level": 49
      }
+    ],
+    "rift_born": [
+     {
+      "species": "Solmantle",
+      "level": 39
+     },
+     {
+      "species": "Orrerine",
+      "level": 40
+     },
+     {
+      "species": "Glimmerax",
+      "level": 39
+     },
+     {
+      "species": "Cairnhold",
+      "level": 40
+     },
+     {
+      "species": "Zenithare",
+      "level": 40
+     }
     ]
    }
   },

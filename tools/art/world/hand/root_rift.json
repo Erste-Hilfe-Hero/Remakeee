@@ -55,6 +55,28 @@
        "species": "Marshfife",
        "level": 26
       }
+     ],
+     "rift_born": [
+      {
+       "species": "Thornback",
+       "level": 27
+      },
+      {
+       "species": "Frondmere",
+       "level": 28
+      },
+      {
+       "species": "Reedwarden",
+       "level": 27
+      },
+      {
+       "species": "Marshfife",
+       "level": 28
+      },
+      {
+       "species": "Thornback",
+       "level": 23
+      }
      ]
     }
    }

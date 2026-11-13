@@ -450,6 +450,28 @@
         "species": "Ferrowyn",
         "level": 35
        }
+      ],
+      "rift_born": [
+       {
+        "species": "Wickmoth",
+        "level": 28
+       },
+       {
+        "species": "Millvane",
+        "level": 29
+       },
+       {
+        "species": "Glimmoth",
+        "level": 28
+       },
+       {
+        "species": "Rainmantle",
+        "level": 30
+       },
+       {
+        "species": "Wickmoth",
+        "level": 24
+       }
       ]
      }
     },

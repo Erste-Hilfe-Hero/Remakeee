@@ -132,6 +132,30 @@
       "level": 116,
       "held": "pith_mend"
      }
+    ],
+    "rift_born": [
+     {
+      "species": "Sootharrow",
+      "level": 94
+     },
+     {
+      "species": "Glazeldrake",
+      "level": 94
+     },
+     {
+      "species": "Ardenthal",
+      "level": 95
+     },
+     {
+      "species": "Duskmirrah",
+      "level": 95,
+      "held": "pith_mend"
+     },
+     {
+      "species": "Sootharrow",
+      "level": 90,
+      "held": "pith_mend"
+     }
     ]
    }
   },

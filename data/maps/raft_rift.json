@@ -136,6 +136,30 @@
       "species": "Glazeldrake",
       "level": 110
      }
+    ],
+    "rift_born": [
+     {
+      "species": "Gloomgillith",
+      "level": 96
+     },
+     {
+      "species": "Dipmonarch",
+      "level": 96
+     },
+     {
+      "species": "Ripjoltane",
+      "level": 97
+     },
+     {
+      "species": "Weirmarshal",
+      "level": 97,
+      "held": "pith_mend"
+     },
+     {
+      "species": "Gloomgillith",
+      "level": 92,
+      "held": "pith_mend"
+     }
     ]
    }
   }

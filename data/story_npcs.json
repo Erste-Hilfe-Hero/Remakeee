@@ -864,6 +864,24 @@
        "species": "Kelphound",
        "level": 29
       }
+     ],
+     "rift_born": [
+      {
+       "species": "Riptail",
+       "level": 22
+      },
+      {
+       "species": "Tempestrel",
+       "level": 23
+      },
+      {
+       "species": "Kelphound",
+       "level": 24
+      },
+      {
+       "species": "Riptail",
+       "level": 18
+      }
      ]
     }
    }
@@ -1164,6 +1182,24 @@
        "species": "Verdantusk",
        "level": 25
       }
+     ],
+     "rift_born": [
+      {
+       "species": "Lumenewt",
+       "level": 24
+      },
+      {
+       "species": "Glimmerax",
+       "level": 25
+      },
+      {
+       "species": "Verdantusk",
+       "level": 25
+      },
+      {
+       "species": "Lumenewt",
+       "level": 20
+      }
      ]
     }
    }
@@ -1221,6 +1257,28 @@
       {
        "species": "Woadwhorl",
        "level": 35
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Shalebat",
+       "level": 26
+      },
+      {
+       "species": "Duskdigger",
+       "level": 27
+      },
+      {
+       "species": "Obsidroth",
+       "level": 29
+      },
+      {
+       "species": "Shalebat",
+       "level": 22
+      },
+      {
+       "species": "Shalebat",
+       "level": 18
       }
      ]
     }
@@ -1838,6 +1896,28 @@
        "species": "Gloamquill",
        "level": 37
       }
+     ],
+     "rift_born": [
+      {
+       "species": "Calderox",
+       "level": 34
+      },
+      {
+       "species": "Obsidroth",
+       "level": 35
+      },
+      {
+       "species": "Smoldrake",
+       "level": 33
+      },
+      {
+       "species": "Duskdigger",
+       "level": 34
+      },
+      {
+       "species": "Smoldrake",
+       "level": 29
+      }
      ]
     }
    }
@@ -2063,6 +2143,28 @@
       {
        "species": "Tempestrel",
        "level": 37
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Leviarch",
+       "level": 36
+      },
+      {
+       "species": "Lumenewt",
+       "level": 35
+      },
+      {
+       "species": "Glimmerax",
+       "level": 36
+      },
+      {
+       "species": "Tempestrel",
+       "level": 35
+      },
+      {
+       "species": "Lumenewt",
+       "level": 31
       }
      ]
     }

@@ -99,7 +99,7 @@
      "level": 92
     },
     {
-     "species": "Habobrax",
+     "species": "Spanwarden",
      "level": 92
     }
    ],
@@ -128,6 +128,28 @@
      {
       "species": "Fulgorath",
       "level": 79
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Velverain",
+      "level": 93
+     },
+     {
+      "species": "Siroclaw",
+      "level": 93
+     },
+     {
+      "species": "Gyrevult",
+      "level": 94
+     },
+     {
+      "species": "Spanwarden",
+      "level": 94
+     },
+     {
+      "species": "Velverain",
+      "level": 89
      }
     ]
    }

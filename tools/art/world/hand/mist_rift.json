@@ -55,6 +55,28 @@
        "species": "Lichub",
        "level": 17
       }
+     ],
+     "rift_born": [
+      {
+       "species": "Zephlet",
+       "level": 14
+      },
+      {
+       "species": "Millwhit",
+       "level": 14
+      },
+      {
+       "species": "Tempestrel",
+       "level": 15
+      },
+      {
+       "species": "Zephlet",
+       "level": 10
+      },
+      {
+       "species": "Zephlet",
+       "level": 6
+      }
      ]
     }
    }

@@ -141,6 +141,29 @@
       "level": 116,
       "held": "pith_mend"
      }
+    ],
+    "rift_born": [
+     {
+      "species": "Sablarch",
+      "level": 97
+     },
+     {
+      "species": "Fumeregent",
+      "level": 97
+     },
+     {
+      "species": "Rookwarden",
+      "level": 97
+     },
+     {
+      "species": "Woadcastle",
+      "level": 98
+     },
+     {
+      "species": "Velverain",
+      "level": 98,
+      "held": "pith_mend"
+     }
     ]
    }
   },

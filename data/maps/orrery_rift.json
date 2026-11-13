@@ -99,7 +99,7 @@
      "level": 84
     },
     {
-     "species": "Noonsoral",
+     "species": "Orremarch",
      "level": 84
     }
    ],
@@ -124,6 +124,28 @@
      {
       "species": "Noonsoral",
       "level": 101
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Orrerine",
+      "level": 85
+     },
+     {
+      "species": "Solmantle",
+      "level": 85
+     },
+     {
+      "species": "Hazejellith",
+      "level": 86
+     },
+     {
+      "species": "Orremarch",
+      "level": 86
+     },
+     {
+      "species": "Orrerine",
+      "level": 81
      }
     ]
    }

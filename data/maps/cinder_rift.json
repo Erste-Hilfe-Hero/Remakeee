@@ -216,7 +216,7 @@
     "tamer": [
      {
       "species": "Shalebat",
-      "level": 13,
+      "level": 14,
       "moves": [
        "Grit Jab",
        "Hunker Down"
@@ -224,7 +224,7 @@
      },
      {
       "species": "Kindlop",
-      "level": 13,
+      "level": 14,
       "moves": [
        "Glow Knuckle",
        "Kindle Up"
@@ -232,16 +232,12 @@
      },
      {
       "species": "Smoldrake",
-      "level": 14,
+      "level": 15,
       "moves": [
        "Char Mark",
        "Cinder Breath",
        "Ash Call"
       ]
-     },
-     {
-      "species": "Gloamhog",
-      "level": 14
      }
     ],
     "veteran": [

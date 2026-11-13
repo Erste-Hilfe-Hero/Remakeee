@@ -71,6 +71,28 @@
        "species": "Clinkshell",
        "level": 64
       }
+     ],
+     "rift_born": [
+      {
+       "species": "Shalebat",
+       "level": 37
+      },
+      {
+       "species": "Duskdigger",
+       "level": 37
+      },
+      {
+       "species": "Obsidroth",
+       "level": 38
+      },
+      {
+       "species": "Calderox",
+       "level": 38
+      },
+      {
+       "species": "Shalebat",
+       "level": 33
+      }
      ]
     }
    },
@@ -135,6 +157,28 @@
       {
        "species": "Scrivane",
        "level": 50
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Silentra",
+       "level": 37
+      },
+      {
+       "species": "Fenwarden",
+       "level": 38
+      },
+      {
+       "species": "Burinox",
+       "level": 37
+      },
+      {
+       "species": "Mendlace",
+       "level": 37
+      },
+      {
+       "species": "Scrivane",
+       "level": 38
       }
      ]
     }

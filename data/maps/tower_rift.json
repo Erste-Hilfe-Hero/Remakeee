@@ -192,6 +192,28 @@
       "species": "Orrerine",
       "level": 47
      }
+    ],
+    "rift_born": [
+     {
+      "species": "Tempestrel",
+      "level": 38
+     },
+     {
+      "species": "Zenithare",
+      "level": 39
+     },
+     {
+      "species": "Mirassil",
+      "level": 38
+     },
+     {
+      "species": "Dunebastion",
+      "level": 39
+     },
+     {
+      "species": "Orrerine",
+      "level": 39
+     }
     ]
    }
   },

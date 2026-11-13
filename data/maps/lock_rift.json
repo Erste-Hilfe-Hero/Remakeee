@@ -140,6 +140,29 @@
       "level": 68,
       "held": "pith_mend"
      }
+    ],
+    "rift_born": [
+     {
+      "species": "Rainmantle",
+      "level": 58
+     },
+     {
+      "species": "Saltspire",
+      "level": 58
+     },
+     {
+      "species": "Kelphound",
+      "level": 59
+     },
+     {
+      "species": "Ferrowyn",
+      "level": 59
+     },
+     {
+      "species": "Flakebastion",
+      "level": 59,
+      "held": "pith_mend"
+     }
     ]
    }
   }

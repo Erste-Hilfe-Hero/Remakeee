@@ -126,6 +126,28 @@
       "species": "Mordantyrant",
       "level": 76
      }
+    ],
+    "rift_born": [
+     {
+      "species": "Cindrel",
+      "level": 77
+     },
+     {
+      "species": "Nibquill",
+      "level": 77
+     },
+     {
+      "species": "Burringrand",
+      "level": 78
+     },
+     {
+      "species": "Mordantyrant",
+      "level": 78
+     },
+     {
+      "species": "Cindrel",
+      "level": 73
+     }
     ]
    }
   }

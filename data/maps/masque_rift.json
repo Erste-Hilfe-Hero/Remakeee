@@ -140,6 +140,29 @@
       "level": 76,
       "held": "pith_mend"
      }
+    ],
+    "rift_born": [
+     {
+      "species": "Silentra",
+      "level": 60
+     },
+     {
+      "species": "Glasstarn",
+      "level": 60
+     },
+     {
+      "species": "Lanternel",
+      "level": 61
+     },
+     {
+      "species": "Glimmerax",
+      "level": 61
+     },
+     {
+      "species": "Guisdame",
+      "level": 61,
+      "held": "pith_mend"
+     }
     ]
    }
   }

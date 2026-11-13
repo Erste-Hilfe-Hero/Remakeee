@@ -237,6 +237,28 @@
       "species": "Millvane",
       "level": 36
      }
+    ],
+    "rift_born": [
+     {
+      "species": "Ashwren",
+      "level": 31
+     },
+     {
+      "species": "Cindle",
+      "level": 31
+     },
+     {
+      "species": "Smeltpup",
+      "level": 32
+     },
+     {
+      "species": "Ashwren",
+      "level": 27
+     },
+     {
+      "species": "Ashwren",
+      "level": 23
+     }
     ]
    }
   },

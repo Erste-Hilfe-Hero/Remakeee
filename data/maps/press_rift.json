@@ -134,6 +134,28 @@
       "species": "Corrodrake",
       "level": 83
      }
+    ],
+    "rift_born": [
+     {
+      "species": "Nibravure",
+      "level": 89
+     },
+     {
+      "species": "Cindravax",
+      "level": 89
+     },
+     {
+      "species": "Siltaroth",
+      "level": 89
+     },
+     {
+      "species": "Veskarion",
+      "level": 90
+     },
+     {
+      "species": "Corrodrake",
+      "level": 90
+     }
     ]
    }
   }
