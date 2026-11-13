@@ -43,6 +43,9 @@ var _hints: Array[String] = []
 var _sliders: Array[bool] = []
 ## How a slider row was moved when pick() returned its index: -1 lower, +1 higher (item 2064).
 var last_dir: int = 0
+## True when the row just picked was held down at least LONG_PRESS_MS (item 1947).
+var last_long: bool = false
+const LONG_PRESS_MS: int = 500
 
 const BACK_SIZE: int = 16
 ## pick() returns TAB_PICKED - n when the player switches to tab n (item 1914).
@@ -211,7 +214,9 @@ func back_button() -> Button:
 ## first enabled row). [param guard_ms]: how long taps are ignored after the list opens.
 ## Rows may also carry "icon" (Texture2D, drawn left of the text), "decorate" (a Callable
 ## that gets the row Button to draw on, e.g. a Vigor bar), "hint" (line under the list) and
-## "say" (a state only screen readers read, e.g. "worn out" when a mark shows it).
+## "say" (a state only screen readers read, e.g. "worn out" when a mark shows it) and
+## "right" (text a decoration draws at the right end, e.g. a price: the row's own text is cut
+## short with ".." so it never runs under it, "right_pad" pixels of room around it).
 ## [param tabs]: names of tabs above the list; left/right or a tap on a tab returns
 ## TAB_PICKED - tab.
 func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, focus: int = -1,
@@ -223,6 +228,7 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	_back.visible = cancellable
 	_foot.visible = one_hand and cancellable
 	last_dir = 0
+	last_long = false
 	scroll_shown = 0.0
 	_scroll_quiet = SCROLL_QUIET_FRAMES
 	_hints.clear()
@@ -264,6 +270,13 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.custom_minimum_size = Vector2(0, row_h)
 		b.clip_text = true
+		var right: String = str(rows[i].get("right", ""))
+		if not right.is_empty() and columns == 1:
+			var full: String = b.text
+			var pad: float = float(rows[i].get("right_pad", 6.0))
+			b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+			b.text = Loc.t(full)
+			b.resized.connect(func() -> void: b.text = fit_before_right(b, Loc.t(full), right, pad))
 		if columns > 1:
 			# Grid of big buttons: the symbol on top, the word under it, both centred.
 			b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -442,13 +455,20 @@ func _link_wrap() -> void:
 ## focused row in view. One-shot connections, not awaits: an await still open when the list is
 ## freed logs "Resumed function after await, but class instance is gone".
 func _restore_scroll(key: String, target: Button) -> void:
-	if is_inside_tree():
-		get_tree().process_frame.connect(_restore_scroll_step.bind(key, target.get_instance_id(), 1), CONNECT_ONE_SHOT)
+	_queue_restore_step(key, target.get_instance_id(), 1)
+
+## The same row focused twice in one frame asks for the same step: connect it once, not twice
+## ("Signal 'process_frame' is already connected", bug sweep 2).
+func _queue_restore_step(key: String, target_id: int, frames_left: int) -> void:
+	if not is_inside_tree():
+		return
+	var step: Callable = _restore_scroll_step.bind(key, target_id, frames_left)
+	if not get_tree().process_frame.is_connected(step):
+		get_tree().process_frame.connect(step, CONNECT_ONE_SHOT)
 
 func _restore_scroll_step(key: String, target_id: int, frames_left: int) -> void:
 	if frames_left > 0:
-		if is_inside_tree():
-			get_tree().process_frame.connect(_restore_scroll_step.bind(key, target_id, frames_left - 1), CONNECT_ONE_SHOT)
+		_queue_restore_step(key, target_id, frames_left - 1)
 		return
 	var target: Button = instance_from_id(target_id) as Button
 	if not visible or _title_key != key or target == null or not is_instance_valid(target):
@@ -466,6 +486,24 @@ func fade_in() -> void:
 	modulate.a = 0.0
 	_fade = create_tween()
 	Juice.shaped(_fade.tween_property(self, "modulate:a", 1.0, FADE_IN), "fade")
+
+## [param full] cut short with ".." so it ends before [param right] (and [param pad] pixels)
+## at the right end of row [param b]. Bug sweep 2: shop rows of Eras I and II wrote the price
+## after the name and the row cut the price off ("10000 Riftglass  99,9").
+static func fit_before_right(b: Button, full: String, right: String, pad: float) -> String:
+	var font: Font = b.get_theme_font("font")
+	var fs: int = b.get_theme_font_size("font_size")
+	var box: StyleBox = b.get_theme_stylebox("normal")
+	var inner: float = b.size.x - (box.get_margin(SIDE_LEFT) + box.get_margin(SIDE_RIGHT) if box != null else 0.0)
+	if b.icon != null:
+		inner -= b.icon.get_width() + b.get_theme_constant("h_separation")
+	var room: float = inner - font.get_string_size(right, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x - pad
+	if font.get_string_size(full, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x <= room:
+		return full
+	var cut: String = full
+	while cut.length() > 1 and font.get_string_size(cut + "..", HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x > room:
+		cut = cut.substr(0, cut.length() - 1)
+	return cut.strip_edges() + ".."
 
 ## Scrolls the list back to its first row (a tap on the title, item 1797).
 func scroll_to_top() -> void:
@@ -501,6 +539,7 @@ func _on_row(result: int, dir: int = 0, b: Button = null) -> void:
 		_scroll.ensure_control_visible(b)
 		return
 	last_dir = dir
+	last_long = pointer_used and result >= 0 and _press_ms >= 0 and Time.get_ticks_msec() - _press_ms >= LONG_PRESS_MS
 	Sound.sfx("cancel" if result < 0 else "confirm")
 	if GameState.tap_vibration and pointer_used:
 		Haptics.play(TAP_BUZZ)
