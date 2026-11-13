@@ -131,6 +131,7 @@ func _run() -> void:
 	scene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
 	scene.replay_inputs = model.feed
+	scene.music_track = BattleAudio.theme("duel", false, false, false)
 	scene.battle_finished.connect(func(_o: BattleModel.Outcome, _m: BattleModel) -> void: _scene_done = true)
 	add_child(scene)
 	_build_overlay()
