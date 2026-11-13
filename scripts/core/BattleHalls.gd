@@ -131,8 +131,10 @@ static func foe_team(h: Dictionary, seed_value: int, round_i: int, elements: Arr
 	var r: RandomNumberGenerator = _rng(seed_value, ["foe", str(h.id), round_i])
 	var kind: String = str(h.get("kind", ""))
 	if kind == "boss" or kind == "prism":
-		var heart: Array[String] = _draw(pool(ring()), 1, r)
-		var out: Array[Spirling] = build(heart, ring(), r)
+		# foe_ring_cut below 0 makes the heart stronger than the hall ring (balance, see the test).
+		var hl: int = ring() - int(h.get("foe_ring_cut", 0))
+		var heart: Array[String] = _draw(pool(hl), 1, r)
+		var out: Array[Spirling] = build(heart, hl, r)
 		if kind == "prism" and not out.is_empty():
 			out[0].prism = true
 		return out

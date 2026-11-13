@@ -916,7 +916,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 821. [x] Endgame ohne Bezahl-Elemente (Hallen kämpfen als Echo-Kampf: keine Siegel, Amulette oder Pass-Energie, Belohnungen nie kaufbar (Test))
 822. [x] Endgame-Texte übersetzt (tools/i18n/de_battle_halls.py)
 823. [x] Endgame-Tests (tests/unit/test_battle_halls.gd)
-824. [ ] Endgame-Balance
+824. [x] Endgame-Balance (Hallen-Gegnerringe per Probe eingestellt, Test: erste Runde jeder Halle weder geschenkt noch hoffnungslos)
 825. [x] Endgame-Replay (letzter Hallenkampf als Wiederholungs-Code, ansehbar unter Rekorde, Online-Wiederholungen)
 826. [x] Endgame-Seed teilen (Lauf-Code: acht Zeichen für Halle und Seed, Freunde spielen denselben Lauf)
 827. [x] Endgame-Freundes-Duelle (Echo-Duell und Live-Duell unter Freunden)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-108 von 1000 Punkten umgesetzt.
+109 von 1000 Punkten umgesetzt.
 

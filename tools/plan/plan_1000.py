@@ -870,7 +870,7 @@ AREAS = [
 "[x] Endgame ohne Bezahl-Elemente (Hallen kämpfen als Echo-Kampf: keine Siegel, Amulette oder Pass-Energie, Belohnungen nie kaufbar (Test))",
 "[x] Endgame-Texte übersetzt (tools/i18n/de_battle_halls.py)",
 "[x] Endgame-Tests (tests/unit/test_battle_halls.gd)",
-"Endgame-Balance",
+"[x] Endgame-Balance (Hallen-Gegnerringe per Probe eingestellt, Test: erste Runde jeder Halle weder geschenkt noch hoffnungslos)",
 "[x] Endgame-Replay (letzter Hallenkampf als Wiederholungs-Code, ansehbar unter Rekorde, Online-Wiederholungen)",
 "[x] Endgame-Seed teilen (Lauf-Code: acht Zeichen für Halle und Seed, Freunde spielen denselben Lauf)",
 "[x] Endgame-Freundes-Duelle (Echo-Duell und Live-Duell unter Freunden)",

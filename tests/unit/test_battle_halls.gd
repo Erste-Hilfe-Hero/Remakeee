@@ -274,3 +274,21 @@ func test_last_hall_battle_as_replay_code() -> void:
 	var back: Dictionary = ReplayLibrary.from_code(code)
 	assert_false(back.is_empty())
 	assert_eq(BattleReplay.problem(back), "", "the code plays back in this version")
+
+## Endgame balance: a random team at the hall ring, master AI on both sides, wins the first round
+## of every hall now and then but not always (deterministic seeds; values from a 30-run probe:
+## 30-65 %, heart floors easier alone but fought without healing).
+func test_balance_first_round_is_neither_free_nor_hopeless() -> void:
+	var n: int = 12
+	for h: Dictionary in BattleHalls.all():
+		var wins: int = 0
+		for k: int in n:
+			var seed_value: int = 1000 + k * 37
+			var mine: Array[Spirling] = BattleHalls.scaled(BattleHalls.lottery_team(seed_value + 5), 3)
+			while mine.size() < BattleHalls.team_size(h):
+				mine.append_array(BattleHalls.scaled(BattleHalls.lottery_team(seed_value + 9 + mine.size()), 1))
+			var info: Dictionary = BattleHalls.battle_info(h, seed_value, 0, WEEK, mine)
+			var m: BattleModel = _play(mine, BattleHalls.foe_team(h, seed_value, 0, Season.festivals()[0].elements), info, seed_value)
+			if m.outcome == BattleModel.Outcome.WIN:
+				wins += 1
+		assert_between(wins, 1, n - 1, "%s: %d of %d" % [h.id, wins, n])
