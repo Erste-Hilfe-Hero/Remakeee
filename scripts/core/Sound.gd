@@ -656,6 +656,12 @@ static func list_sounds(dir: String) -> Array[String]:
 
 ## Other music lowers the map's ambience to AMBIENCE_DUCK_DB (battles) or stops it (title);
 ## enter_map() brings it back.
+## Pitch of the music players (a Rift field tunes the battle song, KAMPF_PLAN_1000 item 332).
+func music_pitch(p: float) -> void:
+	for player: AudioStreamPlayer in [_music, _music_out]:
+		if player != null:
+			player.pitch_scale = clampf(p, 0.5, 2.0)
+
 func music(track: String, keep_ambience: bool = false) -> void:
 	if track == "title":
 		ambience("")

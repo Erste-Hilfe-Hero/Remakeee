@@ -156,6 +156,9 @@ var base_field: String = ""
 var field_lock: int = 0
 ## Turns left on a Resonance field (0 = the field holds for the whole battle).
 var field_turns: int = 0
+## Time of day of the battle (DayCycle.Phase), or -1 indoors / with the day cycle off. Some
+## Resonance fields hold a turn longer at their own time of day (RiftFields.daytime_turns).
+var day_phase: int = -1
 ## Share of the XP an earner gets that each healthy Spirling on the player's bench also gets
 ## ("Bench lessons" setting). 0 turns it off.
 var bench_share: float = 0.0
@@ -682,10 +685,24 @@ func reveal_trait(side: int, slot: int = 0) -> void:
 func set_field(id: String, turns: int = BattleRules.RESONANCE_TURNS) -> bool:
 	if not BattleRules.FIELDS.has(id):
 		return false
+	# A new field pushes the old one out, and the log says so (KAMPF_PLAN_1000 item 344).
+	if not field.is_empty() and field != id:
+		emit_event(BattleEvent.Type.FIELD_END, {"field": field, "label": str(BattleRules.FIELDS.get(field, {}).get("label", "")), "by": str(BattleRules.FIELDS[id].label)})
+	var fresh: bool = field != id
 	field = id
+	if turns > 0:
+		turns += RiftFields.daytime_turns(id, day_phase)
 	field_turns = maxi(turns, 0)
 	var f: Dictionary = BattleRules.FIELDS[id]
 	emit_event(BattleEvent.Type.FIELD, {"field": id, "label": str(f.label), "text": str(f.intro), "turns": field_turns})
+	if fresh and phase != Phase.INTRO:
+		for side: int in [Side.PLAYER, Side.FOE]:
+			for slot: int in slot_count(side):
+				var s: Spirling = active_spirling(side, slot)
+				var gain: int = int(ShopEffects.gift_table(s).get("field_energy", 0)) if is_standing(s) else 0
+				if gain > 0:
+					reveal_trait(side, slot)
+					change_energy(side, gain, slot)
 	return true
 
 ## Stretches the Resonance field in play by [param turns]. Fails (FIELD_EXTENDED "failed") when
@@ -1189,6 +1206,7 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		# The turn counter moves on after this, so 0 is the end of the first turn.
 		if turn == 0:
 			gain += foe_turn1_energy
+	gain += RiftFields.energy_bonus(field, s)
 	gain = StatusRules.energy_gain(s.status, gain, turn)
 	change_energy(side, gain, slot)
 
@@ -1535,6 +1553,8 @@ func _do_bond(a: BattleAction) -> void:
 	who["timing"] = a.timing_score
 	emit_event(BattleEvent.Type.BOND_ATTEMPT, who)
 	var timing: float = minf(1.0, a.timing_score + clampf(bond_edge, 0.0, 1.0))
+	# Some fields make a bond a little likelier (Dawn Glow, KAMPF_PLAN_1000 item 349).
+	bonus += float(BattleRules.FIELDS.get(field, {}).get("bond_bonus", 0.0))
 	var success: bool = rng.randf() < BondCalc.chance(target, timing, bonus) or sure
 	if not success and retry:
 		success = rng.randf() < BondCalc.chance(target, timing, bonus)
