@@ -1,0 +1,12 @@
+{
+ "_comment": "Russian texts for the German table battle_hud. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "%s: %d of %d can fight": "%s: в строю %d из %d",
+  "Again: %s x%d": "Снова: %s x%d",
+  "Again: -": "Снова: -",
+  "Foe's team": "Команда противника",
+  "No effect": "Нет эффекта",
+  "Strong": "Сильно",
+  "Your team": "Твоя команда"
+ }
+}
