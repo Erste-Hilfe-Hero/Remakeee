@@ -391,7 +391,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 332. [x] Feld-Musik-Variation (Tonhöhe pro Feld, Sound.music_pitch)
 333. [x] Feld-Tageszeit-Kombination (Morgenschein am Tag, Tiefes Dunkel nachts +1 Runde)
 334. [x] Feld-Wechsel-Animation (ElementFx-Welle, Badge blinkt)
-335. [ ] Feld im Kampfende-Bericht
+335. [x] Feld im Kampfende-Bericht (BattleReport: Riss-Felder im Kampflog)
 336. [x] Feld-Lexikon (Lexikon-Eintrag pro Feld beim ersten Betreten)
 337. [x] Meister-KI nutzt Felder, die ihr nützen (umgesetzt) (BattleAI set_field)
 338. [x] Feld-Gegenstände verlängern Dauer (Andenken Feldpflock, +2 Runden)
@@ -452,7 +452,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 390. [x] Mehrfachkampf: XP-Verteilung klar anzeigen (bestehend: Wachstum-Zeile pro Spirling)
 391. [x] Mehrfachkampf: Bond nur gegen Wild (bestehend)
 392. [x] Mehrfachkampf: Rückzug nur wenn alle wild (Test)
-393. [ ] Mehrfachkampf: Kampfende-Bericht pro Spirling
+393. [x] Mehrfachkampf: Kampfende-Bericht pro Spirling (BattleReport: Schaden und K.o. je Spirling, Bester des Kampfes)
 394. [x] Mehrfachkampf: Replay (BattleReplay mit front und Zügen, test_multi_battle)
 395. [x] Mehrfachkampf: Barrierefreiheit (Slot-Namen vorlesen) (MultiRules.slot_spoken)
 396. [ ] Mehrfachkampf: Einhand-Modus
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-163 von 1000 Punkten umgesetzt.
+165 von 1000 Punkten umgesetzt.
 

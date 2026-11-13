@@ -289,6 +289,8 @@ func _build() -> void:
 ## Era look of the HUD: plates, small buttons, team rows, text frame, ring-rise panel.
 var _hud: BattleHud
 var _field_badge: FieldBadge
+## The end-of-battle report (items 335, 393), built from the played events.
+var report: BattleReport = BattleReport.new()
 ## The foe slot each player slot aimed at last (KAMPF_PLAN_1000 item 385).
 var _last_aim: Dictionary = {}
 
@@ -989,6 +991,9 @@ func _play_event(e: BattleEvent) -> void:
 	_hud.on_event(e)
 	_field_badge.on_event(e)
 	_place_field_badge()
+	if e.type == BattleEvent.Type.BATTLE_START:
+		report.begin(model.field)
+	report.add(e)
 	match e.type:
 		BattleEvent.Type.BATTLE_START:
 			var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
@@ -1178,6 +1183,11 @@ func _play_event(e: BattleEvent) -> void:
 				await _text.show_text("You received %d coins." % money)
 			elif int(e.data.outcome) == BattleModel.Outcome.LOSS:
 				await _text.show_text("Your team is worn out...")
+			for line: String in report.lines():
+				log_lines.append(line)
+				log_sides.append(-1)
+			if _multi and outcome == BattleModel.Outcome.WIN and report.best() >= 0:
+				await _text.show_text(report.best_line())
 		BattleEvent.Type.MISSED:
 			# The target sidesteps while the line shows (item 2337).
 			var t_side: int = BattleModel.other(side)

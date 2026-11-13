@@ -317,3 +317,60 @@ func test_a_foe_wayfarer_can_fight_in_formation() -> void:
 	m.start()
 	assert_eq(m.active_spirling(Side.FOE, 0).stage("def"), 1)
 	assert_eq(m.active_spirling(Side.FOE, 1).stage("def"), 1)
+
+func _ev(type: int, data: Dictionary) -> BattleEvent:
+	return BattleEvent.new(type, data)
+
+func test_battle_report_credits_hits_and_knockouts() -> void:
+	var r := BattleReport.new()
+	r.begin("high_tide")
+	r.add(_ev(T.MOVE_USED, {"side": Side.PLAYER, "slot": 0, "index": 0, "name": "Zippit", "move": "Storm Gnash"}))
+	r.add(_ev(T.DAMAGE, {"side": Side.FOE, "slot": 0, "amount": 40, "move": "Storm Gnash"}))
+	r.add(_ev(T.DAMAGE, {"side": Side.FOE, "slot": 1, "amount": 25, "move": "Storm Gnash"}))
+	r.add(_ev(T.FAINTED, {"side": Side.FOE, "slot": 1}))
+	r.add(_ev(T.MOVE_USED, {"side": Side.FOE, "slot": 0, "index": 0, "name": "Riptail", "move": "Splash"}))
+	r.add(_ev(T.DAMAGE, {"side": Side.PLAYER, "slot": 0, "amount": 30, "move": "Splash"}))
+	r.add(_ev(T.MOVE_USED, {"side": Side.PLAYER, "slot": 1, "index": 1, "name": "Mossling", "move": "Sap Draw"}))
+	r.add(_ev(T.DAMAGE, {"side": Side.FOE, "slot": 0, "amount": 20, "move": "Sap Draw"}))
+	r.add(_ev(T.DAMAGE, {"side": Side.FOE, "slot": 0, "amount": 5, "status_tick": true}))
+	r.add(_ev(T.FIELD, {"field": "static_veil", "turns": 5}))
+	r.add(_ev(T.FIELD, {"field": "high_tide", "turns": 0}))
+	assert_eq(r.rows.keys(), [0, 1], "only your Spirlings, in the order they hit")
+	assert_eq(r.spirling_line(0), "Zippit: 65 damage, 1 knocked out")
+	assert_eq(r.spirling_line(1), "Mossling: 20 damage", "a status tick is no hit")
+	assert_eq(r.field_line(), "Rift fields: High Tide, Static Veil", "each field once, in order")
+	assert_eq(r.best_line(), "Best of the battle: Zippit, 65 damage")
+	assert_eq(r.lines().size(), 4)
+
+func test_battle_report_is_empty_without_hits_or_fields() -> void:
+	var r := BattleReport.new()
+	r.begin("")
+	assert_eq(r.lines(), [] as Array[String])
+	assert_eq(r.best_line(), "")
+	assert_eq(r.field_line(), "")
+
+func test_battle_report_follows_a_real_multi_battle() -> void:
+	var m := BattleModel.new([_mk("Kindlop"), _mk("Kindlop")] as Array[Spirling], [_mk("Mossling", [], 20), _mk("Mossling", [], 20)] as Array[Spirling], false, 5, 2)
+	m.front_size = [2, 2]
+	var r := BattleReport.new()
+	r.begin(m.field)
+	for e: BattleEvent in m.start():
+		r.add(e)
+	var brain := BattleAI.new(2)
+	var guard: int = 0
+	while not m.is_finished() and guard < 100:
+		guard += 1
+		if m.needs_player_switch():
+			m.submit_switch(m.swap_candidates(Side.PLAYER, m.switch_slot())[0])
+			continue
+		var acts: Array[BattleAction] = []
+		for slot: int in m.player_slots():
+			acts.append(brain.choose(m, Side.PLAYER, slot))
+		for e: BattleEvent in m.submit_actions(acts):
+			r.add(e)
+	var total: int = 0
+	for k: int in r.rows:
+		total += int(r.rows[k].damage)
+	assert_gt(total, 0, "your side's hits are counted")
+	assert_eq(r.rows.size(), 2, "two Spirlings of one kind keep their own rows")
+	assert_gte(r.best(), 0)

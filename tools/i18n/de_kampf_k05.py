@@ -100,3 +100,10 @@ T.update({
 "Two allies hitting one foe with paired elements set off a combo. The back row takes softer physical hits.": "Treffen zwei Verbündete einen Gegner mit passenden Elementen, gibt es eine Kombo. Die hintere Reihe nimmt physische Treffer schwächer.",
 "Battles with several Spirlings": "Kämpfe mit mehreren Spirlings",
 })
+T.update({
+"Battle report": "Kampfbericht",
+"%s: %d damage": "%s: %d Schaden",
+"%s: %d damage, %d knocked out": "%s: %d Schaden, %d besiegt",
+"Rift fields: %s": "Riss-Felder: %s",
+"Best of the battle: %s, %d damage": "Bester des Kampfes: %s, %d Schaden",
+})
