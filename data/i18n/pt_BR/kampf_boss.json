@@ -1,0 +1,21 @@
+{
+ "_comment": "Brazilian Portuguese texts for the German table kampf_boss. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "%s grows restless: the longer the fight, the harder it strikes!": "%s fica inquieto: quanto mais longa a luta, mais forte ele ataca!",
+  "%s lies open: its Guard is down for a turn!": "%s fica exposto: sua Proteção cai por um turno!",
+  "Before the Hush, the Cinder Rift fed a village's forges. The smiths sold the last of its heat to the highest bidder, and what was left curled up and learned to hate. It still keeps time like a bellows: hold it under High Tide and it can't stoke its next phase.": "Antes do Silêncio, a Fenda da Brasa alimentava as forjas de uma vila. Os ferreiros venderam o último de seu calor a quem pagou mais, e o que sobrou se encolheu e aprendeu a odiar. Ainda marca o tempo como um fole: mantenha-o sob Maré Alta e ele não consegue atiçar sua próxima fase.",
+  "Ebb": "Vazante",
+  "It acts %d times each turn.": "Age %d vezes por turno.",
+  "Mist hides things, and the people nearby paid it well to hide one thing in particular. When the payments stopped, it hid them too. Dawn Glow burns its fog thin; while the light lies, it can't pull itself into a new shape.": "A névoa esconde coisas, e o povo das redondezas pagava bem para ela esconder uma coisa em especial. Quando os pagamentos pararam, ela os escondeu também. Brilho da Aurora afina sua névoa; enquanto a luz durar, ele não consegue assumir uma nova forma.",
+  "Not a breath of wind: no stat stage rises or falls on either side.": "Nem um sopro de vento: nenhum grau sobe ou desce em nenhum dos lados.",
+  "Still Air": "Ar Parado",
+  "The Ashen Heart splits open. Its core burns white!": "O Coração de Cinzas se parte. Seu núcleo arde em branco!",
+  "The Drowned Heart sinks its weight into one last surge!": "O Coração Afogado joga todo o seu peso numa última onda!",
+  "The Mist Heart pulls the fog tight around its core!": "O Coração da Névoa aperta a névoa em volta do seu núcleo!",
+  "The Tide Rift sank a ferry once, and the ferryman swore he had warned everyone. He had not. The heart at the bottom remembers every name on the passenger list. Static Veil sets its water humming, and while it hums the heart can't gather its next surge.": "A Fenda da Maré afundou uma balsa certa vez, e o balseiro jurou que tinha avisado todo mundo. Não tinha. O coração no fundo lembra cada nome da lista de passageiros. Véu Estático faz sua água zumbir, e enquanto ela zumbe o coração não consegue juntar uma nova onda.",
+  "The water has run out: resting gives 1 Energy less on both sides.": "A água acabou: descansar dá 1 de Energia a menos para os dois lados.",
+  "What the Ashen Heart was": "O que o Coração de Cinzas foi",
+  "What the Drowned Heart was": "O que o Coração Afogado foi",
+  "What the Mist Heart was": "O que o Coração da Névoa foi"
+ }
+}
