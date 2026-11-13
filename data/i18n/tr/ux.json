@@ -214,6 +214,8 @@
   "Swap %s with whom?": "%s kiminle değişsin?",
   "Swap with team...": "Takımla değiştir...",
   "seen": "görüldü",
-  "new": "yeni"
+  "new": "yeni",
+  "Auto text: %s": "Otomatik metin: %s",
+  "Talk in the world goes on by itself after a short read.": "Dünyadaki konuşmalar kısa bir okumadan sonra kendiliğinden ilerler."
  }
 }
