@@ -13,7 +13,7 @@
   "%s: %d damage": "%s：ダメージ %d",
   "%s: %d damage, %d knocked out": "{0}：ダメージ {1}、たおした数 {2}",
   "(tap to filter)": "（タップで絞りこみ）",
-  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns on every difficulty; then the place's own field comes back. A new field pushes the old one out at once.": "裂け目フィールドは、ある属性を x1.2、別の属性を x0.85 にする。呼びの術はどの難易度でも 5 ターンのあいだ場を敷き、そのあと土地本来の場がもどる。新しい場は古い場をすぐに追い出す。",
+  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns on every difficulty; then the place's own field comes back. A new field pushes the old one out at once.": "裂け目フィールドは、ある属性を x1.2、別の属性を x0.85 にする。呼びの術はどのむずかしさでも 5 ターンのあいだ場を敷き、そのあと土地本来の場がもどる。新しい場は古い場をすぐに追い出す。",
   "A Rift field never weakens its arts.": "裂け目フィールドで術が弱まらない。",
   "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.": "渦まく風の中の静かな輪。Galeの術は強く当たり、Bloomの術はしおれ、だれもねむけにならない。",
   "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.": "淡い朝の光。Lumenの術は強く当たり、Umbraの術は薄れ、Echoの呼びかけが少し決まりやすい。夜明けと昼は 1 ターン長く続く。",
