@@ -78,6 +78,7 @@
   "Trait: %s": "특성: %s",
   "Turn order hidden.": "행동 순서를 알 수 없다.",
   "Turns: %d": "턴: %d",
-  "Your side": "우리 편"
+  "Your side": "우리 편",
+  "The battle was left open. On Rift-Born that counts as a loss, and your team wakes at the last spring.": "배틀이 끝나지 않은 채 중단되었다. 균열 태생에서는 패배로 치며, 팀은 마지막 샘에서 깨어난다."
  }
 }

@@ -668,7 +668,7 @@ AREAS = [
 "[x] Lager-Lernen-Option (umgesetzt) im Kampfmenü erklärt (Tipp battle_comfort, Log)",
 "[x] Gegner-Bank-Punkte (TeamRow.gd, Team des Gegners)",
 "[x] Kampf-Wiederaufnahme nach Unterbrechung (BattleComfort.interruption: Auto und Text warten im Hintergrund)",
-"Schnellspeichern im Kampf bewusst nicht (kein Savescum auf Rift-Born)",
+"[x] Schnellspeichern im Kampf bewusst nicht (kein Savescum auf Rift-Born) (kein Speichern im Kampfmenü; GameState.battle_open: App im Kampf geschlossen zählt auf Rift-Born als Niederlage (settle_open_battle))",
 "[x] Komfort-Tipps beim ersten Kampf (Tips battle_comfort)",
 "Kampf-Steuerung ohne Zeitdruck (keine Echtzeit-Elemente)",
 "[x] Bond-Melodie (bestehend) mit Barrierefreiheit (Bond-Stil Mine! statt Melodie, Hochkontrast)",

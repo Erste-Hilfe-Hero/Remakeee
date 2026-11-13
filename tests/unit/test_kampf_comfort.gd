@@ -197,3 +197,41 @@ func test_interruption_signals() -> void:
 	assert_eq(BattleComfort.interruption(Node.NOTIFICATION_APPLICATION_RESUMED), -1)
 	assert_eq(BattleComfort.interruption(Node.NOTIFICATION_APPLICATION_FOCUS_IN), -1)
 	assert_eq(BattleComfort.interruption(Node.NOTIFICATION_READY), 0)
+
+# --- Closing the app mid-battle (630) ---
+
+func _save_mid_battle(difficulty: GameState.Difficulty) -> Dictionary:
+	GameState.new_game(difficulty, "Tess", 0, "Kindlop")
+	GameState.heal_map = "lighthouse"
+	GameState.heal_cell = Vector2i(4, 4)
+	GameState.current_map = "route_1"
+	GameState.player_cell = Vector2i(7, 9)
+	GameState.party[0].hp = 0
+	GameState.battle_open = true
+	return GameState.to_dict()
+
+func test_rift_born_counts_a_battle_left_open_as_a_loss() -> void:
+	GameState.from_dict(_save_mid_battle(GameState.Difficulty.RIFT_BORN))
+	assert_false(GameState.battle_open)
+	assert_true(GameState.left_battle)
+	assert_eq(GameState.current_map, "lighthouse", "wakes at the last spring")
+	assert_eq(GameState.player_cell, Vector2i(4, 4))
+	assert_eq(GameState.party[0].hp, GameState.party[0].max_hp(), "the team is rested")
+	assert_eq(GameState.notices.size(), 1)
+	assert_string_contains(GameState.notices[0], "counts as a loss")
+
+func test_other_difficulties_only_drop_the_flag() -> void:
+	GameState.from_dict(_save_mid_battle(GameState.Difficulty.TAMER))
+	assert_false(GameState.battle_open)
+	assert_false(GameState.left_battle)
+	assert_eq(GameState.current_map, "route_1")
+	assert_eq(GameState.party[0].hp, 0)
+	assert_true(GameState.notices.is_empty())
+
+func test_save_outside_battle_and_old_saves_load_unchanged() -> void:
+	var d: Dictionary = _save_mid_battle(GameState.Difficulty.RIFT_BORN)
+	d.erase("battle_open")
+	GameState.from_dict(d)
+	assert_false(GameState.left_battle)
+	assert_eq(GameState.current_map, "route_1")
+	assert_eq(GameState.party[0].hp, 0)
