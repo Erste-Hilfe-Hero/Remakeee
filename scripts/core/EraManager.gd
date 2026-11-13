@@ -29,6 +29,8 @@ var retro_filter: int = 0   # 0 = use newest unlocked era
 
 var _filter_layer: CanvasLayer
 var _filter_rect: ColorRect
+## Window size and safe area last fitted (ScreenFit); a change means a fold, unfold or turn.
+var _screen_seen: Array = []
 
 func _ready() -> void:
 	_filter_layer = CanvasLayer.new()
@@ -43,6 +45,23 @@ func _ready() -> void:
 	_apply_inks()
 	_filter_layer.add_child(_filter_rect)
 	_apply()
+
+## Watches the window: a foldable opening or closing changes its size and safe area while
+## the game runs. In "keep" mode the view's size may not change with it, so the UI is told
+## through the root's size_changed all the same (SafeArea, VirtualPad, MenuHost listen).
+func _process(_delta: float) -> void:
+	var w: Window = get_window()
+	var seen: Array = [w.size, DisplayServer.get_display_safe_area()]
+	if seen == _screen_seen:
+		return
+	var first: bool = _screen_seen.is_empty()
+	_screen_seen = seen
+	if first:
+		return
+	var vp_before: Vector2 = w.get_visible_rect().size
+	ScreenFit.apply(w, RESOLUTION[active_era()])
+	if w.get_visible_rect().size == vp_before:
+		w.size_changed.emit()
 
 func active_era() -> int:
 	return retro_filter if retro_filter > 0 else unlocked_era
@@ -283,7 +302,7 @@ func from_dict(d: Dictionary) -> void:
 func _apply() -> void:
 	var era: int = active_era()
 	if is_inside_tree():
-		get_window().content_scale_size = RESOLUTION[era]
+		ScreenFit.apply(get_window(), RESOLUTION[era])
 	if _filter_rect != null:
 		_filter_rect.visible = era == Era.INK
 	EraText.set_era(era)
