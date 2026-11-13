@@ -78,6 +78,7 @@
   "Trait: %s": "Trait: %s",
   "Turn order hidden.": "Ordre des tours caché.",
   "Turns: %d": "Tours: %d",
-  "Your side": "Ton camp"
+  "Your side": "Ton camp",
+  "The battle was left open. On Rift-Born that counts as a loss, and your team wakes at the last spring.": "Le combat est resté ouvert. En Enfant de Faille, cela compte comme une défaite, et ton équipe se réveille à la dernière source."
  }
 }

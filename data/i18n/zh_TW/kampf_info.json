@@ -78,6 +78,7 @@
   "Trait: %s": "特性：%s",
   "Turn order hidden.": "行動順序未知。",
   "Turns: %d": "回合：%d",
-  "Your side": "我方"
+  "Your side": "我方",
+  "The battle was left open. On Rift-Born that counts as a loss, and your team wakes at the last spring.": "戰鬥中途被關閉。在裂隙之子難度下這算作失敗，你的隊伍會在最後的泉水處醒來。"
  }
 }

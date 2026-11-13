@@ -78,6 +78,7 @@
   "Trait: %s": "Cecha: %s",
   "Turn order hidden.": "Kolejność tur ukryta.",
   "Turns: %d": "Tury: %d",
-  "Your side": "Twoja strona"
+  "Your side": "Twoja strona",
+  "The battle was left open. On Rift-Born that counts as a loss, and your team wakes at the last spring.": "Walka została przerwana. Na poziomie Zrodzeni liczy się to jako porażka, a twoja drużyna budzi się przy ostatnim źródle."
  }
 }

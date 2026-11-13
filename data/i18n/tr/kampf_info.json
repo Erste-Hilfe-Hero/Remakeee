@@ -78,6 +78,7 @@
   "Trait: %s": "Özellik: %s",
   "Turn order hidden.": "Tur sırası gizli.",
   "Turns: %d": "Tur: %d",
-  "Your side": "Senin tarafın"
+  "Your side": "Senin tarafın",
+  "The battle was left open. On Rift-Born that counts as a loss, and your team wakes at the last spring.": "Savaş yarım kaldı. Yarık Doğumlu'da bu bir yenilgi sayılır ve takımın son pınarda uyanır."
  }
 }
