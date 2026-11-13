@@ -594,7 +594,7 @@ AREAS = [
 "[x] Wayfarer-Geld-Belohnungen balancieren (Test: Rematch < Wayfarer < Warden pro Ring, Standardpreis steigt mit dem Ring, auf jeder Karte zahlt kein Wayfarer mehr als der Warden)",
 "Wayfarer mit Overcharge-Strategie",
 "Wayfarer mit Bond-Lehre (Tutorial)",
-"Wayfarer-Kampfmusik pro Gebiet",
+"[x] Wayfarer-Kampfmusik pro Gebiet (Eigene synthetisierte Kampfmusik fuer Kartenwayfarer pro Gebiet (battle_wf_<region>, je ca. 28 KB, data/music.json wayfarer); nur in der Aera des Gebiets, nach Warden-, Herausforderungs-, Fest- und Nacht-Themen (BattleAudio.theme))",
 ]),
 ("Info und Transparenz", [
 "[x] Schadensvorschau im Technik-Menü (~% HP), nur wenn das Matchup schon bekannt ist",
