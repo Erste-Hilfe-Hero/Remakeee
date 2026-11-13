@@ -179,6 +179,7 @@ static func show(model: BattleModel, side: int, slot: int, id: String) -> void:
 	var t: Dictionary = info(id)
 	if s == null or t.is_empty():
 		return
+	count_gift(model, side, slot, str(t.label))
 	var shown: Dictionary = model.kit.get_or_add("shown", {})
 	var key: String = "%d:%s" % [s.get_instance_id(), id]
 	if shown.has(key):
@@ -211,6 +212,11 @@ static func on_start(model: BattleModel) -> void:
 	for side: int in [BattleModel.Side.PLAYER, BattleModel.Side.FOE]:
 		for slot: int in model.standing_slots(side):
 			on_enter(model, side, slot)
+	var held_at_start: Dictionary = {}
+	for s: Spirling in model.parties[BattleModel.Side.PLAYER]:
+		if not s.held.is_empty():
+			held_at_start[s] = s.held
+	model.kit["held_at_start"] = held_at_start
 
 ## A Spirling steps in: Pace Feather (item 288), Lantern Light (item 269), Sentinel's first turn.
 static func on_enter(model: BattleModel, side: int, slot: int) -> void:
@@ -315,6 +321,71 @@ static func keepsakes_unique(team: Array) -> bool:
 			return false
 		seen[h] = true
 	return true
+
+## The duel rules for keepsakes (items 293 and 315): each keepsake in [param bans] is locked one by
+## one, and a keepsake the team holds twice stays only with the first Spirling. Echo duels are the
+## tournaments that carry keepsakes (the weekend tournament takes no held items at all), so they
+## apply this to both teams; the teams are copies. Takes the items off and returns the lines.
+static func apply_duel_rules(team: Array[Spirling], bans: Array = tourney_bans()) -> Array[String]:
+	var out: Array[String] = []
+	var seen: Dictionary = {}
+	for s: Spirling in team:
+		if s.held.is_empty():
+			continue
+		var item: String = Loc.t(str(Database.item(s.held).get("name", s.held)))
+		if s.held in bans:
+			out.append(Loc.t("Duel rule: %s's %s is locked.") % [s.display_name(), item])
+			s.held = ""
+		elif seen.has(s.held):
+			out.append(Loc.t("Duel rule: each keepsake once per team, %s leaves its %s behind.") % [s.display_name(), item])
+			s.held = ""
+		else:
+			seen[s.held] = true
+	return out
+
+## Counts one working of a gift for the end-of-battle report (item 280).
+static func count_gift(model: BattleModel, side: int, slot: int, label: String) -> void:
+	var s: Spirling = model.active_spirling(side, slot)
+	if s == null or side != BattleModel.Side.PLAYER or label.is_empty():
+		return
+	var counts: Dictionary = model.kit.get_or_add("gift_counts", {})
+	var key: String = "%s|%s" % [s.display_name(), label]
+	counts[key] = int(counts.get(key, 0)) + 1
+
+## "Gifts at work: Mossling's Sentinel x3, ..." for the end-of-battle report (item 280), or [].
+static func gift_report(model: BattleModel) -> Array[String]:
+	var counts: Dictionary = model.kit.get("gift_counts", {})
+	if counts.is_empty():
+		return []
+	var parts: PackedStringArray = []
+	for key: String in counts:
+		var bits: PackedStringArray = key.split("|")
+		parts.append(Loc.t("%s's %s x%d") % [bits[0], Loc.t(bits[1]), int(counts[key])])
+	return [Loc.t("Gifts at work: %s") % ", ".join(parts)]
+
+## The journey option "Refill fruit" (item 297), kept in the save's flags.
+const REFILL_FLAG: String = "kit_refill_fruit"
+
+static func refill_on() -> bool:
+	return bool(GameState.flags.get(REFILL_FLAG, false))
+
+static func set_refill(on: bool) -> void:
+	GameState.flags[REFILL_FLAG] = on
+
+## After a battle, with "Refill fruit" on: each of your Spirlings whose held item was used up takes
+## the same one from the bag again (item 297). Returns the lines.
+static func refill_held(model: BattleModel) -> Array[String]:
+	var out: Array[String] = []
+	if not refill_on():
+		return out
+	var before: Dictionary = model.kit.get("held_at_start", {})
+	for s: Variant in before:
+		var id: String = str(before[s])
+		if not GameState.party.has(s) or not (s as Spirling).held.is_empty() or GameState.item_count(id) <= 0:
+			continue
+		if GameState.set_held(s, id):
+			out.append(Loc.t("%s takes a new %s from the bag.") % [(s as Spirling).display_name(), Loc.t(str(Database.item(id).get("name", id)))])
+	return out
 
 ## The top floor of a Rift tower hands out its keepsake once (item 301). Returns the lines.
 static func tower_reward(tower_id: String) -> Array[String]:
