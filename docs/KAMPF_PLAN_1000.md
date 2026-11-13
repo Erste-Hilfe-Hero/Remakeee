@@ -119,9 +119,9 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Elemente und Matchups
 
-81. [ ] Matchup-Tabelle im Lexikon, die sich mit gesehenen Treffern füllt (bestehend: gelernte Matchups)
+81. [x] Matchup-Tabelle im Lexikon, die sich mit gesehenen Treffern füllt (bestehend: gelernte Matchups) (Lexikon-Seite Gesehene Matchups)
 82. [x] Story-Stufe zeigt alle Matchups von Anfang an (bestehend) (bestehend: GameState.known_matchups, Story zeigt alle)
-83. [ ] Matchup-Symbole mit Form statt Farbe (bestehend: Elementsymbole) auch im Lexikon
+83. [x] Matchup-Symbole mit Form statt Farbe (bestehend: Elementsymbole) auch im Lexikon (+ und - auf der Matchup-Seite)
 84. [x] Doppel-Element-Erklärung: beide Faktoren multiplizieren, im Lexikon zeigen (Lexikon-Eintrag 'Zwei Elemente' beim ersten Treffer auf Doppel-Element)
 85. [x] Element-Resonanz: zwei Verbündete mit gleichem Element erhalten +5 % Schaden (TechniqueRules.resonance_mult)
 86. [x] Element-Wechsel-Technik: Ziel wird für 3 Runden zu einem anderen Element (Farbbad (Dye Bath), Spirling.element_shift)
@@ -150,7 +150,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 109. [x] Element-Namen bleiben in allen Sprachen gleich (bestehend) (bestehend: Elements.element_name ohne Übersetzung)
 110. [x] Element-Tabelle bleibt eigenständig, nie aus anderen Spielen übernehmen (Regel) (Regel in docs/BALANCE.md)
 111. [ ] Ein Element pro Riss als Thema der Warden
-112. [ ] Element-Training: Spark-Werte steigen schneller im passenden Feld
+112. [x] Element-Training: Spark-Werte steigen schneller im passenden Feld (doppelte Spark-Chance, TechniqueRules.spark_field_mult)
 113. [ ] Element-Glyphen animieren beim sehr effektiven Treffer
 114. [x] Element-Mischtechniken (zwei Elemente, nimmt das bessere) (Magmasturm, Gischtböe (dual_element))
 115. [x] Element-Schild-Technik für das ganze Team (3 Runden) (Schutzkreis (Ward Circle))
@@ -181,7 +181,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 137. [x] Technik, die Status vom ganzen Team heilt (bestehend: Effekt cure_team)
 138. [ ] Technik-Lehrer im Leuchtturm (vergessene Techniken neu lernen)
 139. [x] Echo-Kristalle (bestehend) als Quelle seltener Techniken ausbauen (19 neue Echo-Kristalle bei Hesper im Leuchtturm)
-140. [ ] Technik-Tausch-Vorschau: alte und neue Technik nebeneinander
+140. [x] Technik-Tausch-Vorschau: alte und neue Technik nebeneinander (Vergessen-Liste zeigt alt > neu)
 141. [x] Technik-Beschreibung mit Effekt-Chancen im Lexikon
 142. [ ] Techniken mit Signatur pro Art (eine je Art, eigenständig)
 143. [x] Keine Technik-Namen aus anderen Spielen (Prüfliste vor jedem Merge) (tools/ip_check.sh in CI, test_rule_checks)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-877 von 1000 Punkten umgesetzt.
+881 von 1000 Punkten umgesetzt.
 
