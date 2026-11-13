@@ -159,6 +159,10 @@ var field_turns: int = 0
 ## Time of day of the battle (DayCycle.Phase), or -1 indoors / with the day cycle off. Some
 ## Resonance fields hold a turn longer at their own time of day (RiftFields.daytime_turns).
 var day_phase: int = -1
+## Support arts in play per side (MultiRules): kind -> {"turns", "slot", ...}.
+var support: Array = [{}, {}]
+## True when the foe Wayfarer fights in formation too (map trainer "formation": true, item 399).
+var foe_formation: bool = false
 ## Share of the XP an earner gets that each healthy Spirling on the player's bench also gets
 ## ("Bench lessons" setting). 0 turns it off.
 var bench_share: float = 0.0
@@ -372,6 +376,9 @@ func is_legal(a: BattleAction) -> bool:
 				any_move = any_move or (me.can_afford(mv) and not move_locked(mv))
 			return can_rest(any_move)
 		BattleAction.Kind.SWAP:
+			# Trading places with an ally in another slot (item 366) is a Swap too.
+			if a.swap_index in MultiRules.shift_targets(self, a.side, a.slot):
+				return true
 			return (not StatusRules.blocks_swap(me.status) or TraitKit.free_swap(me)) and a.swap_index in swap_candidates(a.side, a.slot) \
 				and not (swap_locked and a.side == Side.PLAYER)
 		BattleAction.Kind.ITEM:
@@ -437,6 +444,7 @@ func start() -> Array[BattleEvent]:
 	field_turns = 0
 	field_lock = 0
 	snares = [[], []]
+	support = [{}, {}]
 	delayed_hits = []
 	boss_phase_done = false
 	boss_late_done = 0
@@ -494,6 +502,7 @@ func start() -> Array[BattleEvent]:
 		for s: Spirling in dragged:
 			for stat: String in st:
 				s.stages[stat] = clampi(s.stage(stat) + int(st[stat]), BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
+	MultiRules.apply_formation_bonus(self)
 	TraitKit.on_start(self)
 	participants = []
 	for slot: int in player_slots():
@@ -1060,6 +1069,7 @@ func _phase_end_of_turn() -> void:
 	_tick_timers()
 	_tick_status_veil()
 	_tick_field()
+	MultiRules.tick(self)
 	_tick_field_swirl()
 	_tick_field_cycle()
 	_tick_delayed_hits()
@@ -1305,7 +1315,7 @@ func move_targets(side: int, mv: MoveData, target_slot: int = -1) -> Array[int]:
 	var standing: Array[int] = standing_slots(other(side))
 	if standing.is_empty() or mv.is_area():
 		return standing
-	var out: Array[int] = [target_slot if target_slot in standing else standing[0]]
+	var out: Array[int] = [MultiRules.redirect(self, other(side), target_slot if target_slot in standing else standing[0])]
 	return out
 
 ## Effects that act on the user once per move, not once per foe a sweep reaches.
@@ -1342,8 +1352,9 @@ func _do_move(a: BattleAction) -> void:
 	# A field_element move lands in the active field's element (a cached copy, never the data).
 	mv = BattleRules.resolve_move(mv, field)
 	var power_mult: float = 1.0
+	var extra: int = 0
 	if mv.overcharge and me.energy > 0:
-		var extra: int = mini(me.energy, BattleRules.OVERCHARGE_MAX_EXTRA)
+		extra = mini(me.energy, BattleRules.OVERCHARGE_MAX_EXTRA)
 		power_mult += (BattleRules.OVERCHARGE_PER_ENERGY + TraitKit.overcharge_bonus(me)) * extra
 		change_energy(side, -extra, slot)
 	var target_side: int = other(side)
@@ -1357,6 +1368,9 @@ func _do_move(a: BattleAction) -> void:
 	var targets: Array[int] = move_targets(side, mv, aim)
 	var used: Dictionary = _who(side, slot)
 	used.merge({"move": mv.move_name, "element": mv.element, "kind": mv.kind, "area": mv.is_area() and targets.size() > 1, "targets": targets})
+	if extra > 0:
+		# The presenter pitches the Overcharge swell by the Energy poured in (plan 687).
+		used["overcharge"] = extra
 	if muddled:
 		used["muddled"] = true
 	emit_event(BattleEvent.Type.MOVE_USED, used)
@@ -1407,6 +1421,13 @@ func _do_move(a: BattleAction) -> void:
 				mult *= BattleRules.rule_number(foe_rule, "lumen_mult")
 			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
 			mult *= TraitKit.hit_mult(self, side, slot, target_side, t_slot, mv)
+			mult *= MultiRules.guard_mult(self, target_side) * MultiRules.row_mult(self, side, slot, target_side, t_slot, mv)
+			var combo: Dictionary = MultiRules.combo(self, side, slot, target_side, t_slot, mv.element)
+			if not combo.is_empty():
+				mult *= MultiRules.combo_mult()
+				var cd: Dictionary = _who(target_side, t_slot)
+				cd.merge({"kind": "combo", "label": str(combo.label)})
+				emit_event(BattleEvent.Type.SUPPORT, cd)
 			var shielded: bool = _shield_on[target_side] == target
 			if shielded:
 				mult *= ShopEffects.shield_mult(int(amulets[target_side][2]))
@@ -1484,6 +1505,8 @@ func _contact_status(side: int, slot: int, hitter_side: int, hitter_slot: int) -
 		reveal_trait(side, slot)
 
 func _do_swap(a: BattleAction) -> void:
+	if MultiRules.shift(self, a):
+		return
 	var free: bool = TraitKit.free_swap(a.actor)
 	if StatusRules.blocks_swap(a.actor.status) and not free:
 		emit_event(BattleEvent.Type.SWAP_BLOCKED, _who(a.side, a.slot))

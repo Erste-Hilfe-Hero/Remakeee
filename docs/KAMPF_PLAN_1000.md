@@ -391,7 +391,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 332. [x] Feld-Musik-Variation (Tonhöhe pro Feld, Sound.music_pitch)
 333. [x] Feld-Tageszeit-Kombination (Morgenschein am Tag, Tiefes Dunkel nachts +1 Runde)
 334. [x] Feld-Wechsel-Animation (ElementFx-Welle, Badge blinkt)
-335. [ ] Feld im Kampfende-Bericht
+335. [x] Feld im Kampfende-Bericht (BattleReport: Riss-Felder im Kampflog)
 336. [x] Feld-Lexikon (Lexikon-Eintrag pro Feld beim ersten Betreten)
 337. [x] Meister-KI nutzt Felder, die ihr nützen (umgesetzt) (BattleAI set_field)
 338. [x] Feld-Gegenstände verlängern Dauer (Andenken Feldpflock, +2 Runden)
@@ -420,46 +420,46 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Mehrfachkämpfe
 
-361. [ ] Mehrfachkämpfe bis 4v4 (bestehend)
-362. [ ] Ziel-Pin mit Element-Hinweis
-363. [ ] Schadensvorschau pro Ziel bei der Zielwahl
-364. [ ] Fokus-Feuer-Logik der Meister-KI (umgesetzt: KO-Bonus pro Ziel)
-365. [ ] Verbündeten-Heilung
-366. [ ] Positionstausch zwischen eigenen Slots
-367. [ ] Vorderreihe/Hinterreihe mit Schadensmodifikator
-368. [ ] Schwarm-Kämpfe (bestehend) mit Schwarm-Anführer
-369. [ ] Tag-Kampf mit Kestra (bestehend) mit gemeinsamer Kombi-Technik
-370. [ ] Kombi-Techniken bei passenden Elementen zweier Verbündeter
-371. [ ] Mehrfachkampf-Tutorial
-372. [ ] Mehrfachkampf-Geschwindigkeit: Text pro Aktion kürzer
-373. [ ] Mehrfachkampf-Log filtern
-374. [ ] Mehrfachkampf im Turm
+361. [x] Mehrfachkämpfe bis 4v4 (bestehend) (BattleRules.MAX_FRONT)
+362. [x] Ziel-Pin mit Element-Hinweis (Zielzeile mit x2/x.5 beim Zielen)
+363. [x] Schadensvorschau pro Ziel bei der Zielwahl (~% pro Ziel, abschaltbar wie die Vorschau)
+364. [x] Fokus-Feuer-Logik der Meister-KI (umgesetzt: KO-Bonus pro Ziel) (BattleAI FOCUS_BONUS)
+365. [x] Verbündeten-Heilung (Sippenbalsam/Kindred Balm)
+366. [x] Positionstausch zwischen eigenen Slots (Swap auf einen Verbündeten im anderen Slot: MultiRules.shift)
+367. [x] Vorderreihe/Hinterreihe mit Schadensmodifikator (ab 3 Plätzen: hintere Reihe x0.9 bei physischen Einzeltreffern)
+368. [x] Schwarm-Kämpfe (bestehend) mit Schwarm-Anführer (höchster Ring führt, +1 Wucht; fällt er, -1 Tempo für den Rest)
+369. [x] Tag-Kampf mit Kestra (bestehend) mit gemeinsamer Kombi-Technik (Kombo gilt auch mit Partnern)
+370. [x] Kombi-Techniken bei passenden Elementen zweier Verbündeter (data/multi_rules.json combos, x1.25)
+371. [x] Mehrfachkampf-Tutorial (Tipp beim ersten Mehrfachkampf, im Leitfaden)
+372. [x] Mehrfachkampf-Geschwindigkeit: Text pro Aktion kürzer (MultiRules.text_speed: Text tippt x1.4 schneller)
+373. [x] Mehrfachkampf-Log filtern (Tippen: Alle, Deine, Gegner)
+374. [x] Mehrfachkampf im Turm (jedes 5. Stockwerk 2v2)
 375. [ ] Mehrfachkampf online (2v2 mit Freund-Echo)
-376. [ ] Ungleiche Kämpfe 3v1, 4v2 (bestehend)
-377. [ ] Boss-Kämpfe mit Wächtern (bestehend)
-378. [ ] Mehrfachziel-Techniken mit 0.75 Schaden (bestehend)
-379. [ ] Ablenkungs-Technik
-380. [ ] Schutz eines Verbündeten
-381. [ ] Team-Schild
-382. [ ] Team-Heilung
-383. [ ] Mehrfachkampf-Balancing im Simulator
-384. [ ] Mehrfachkampf-Layout für 4 Sprites (bestehend)
-385. [ ] Mehrfachkampf: Ziel-Wahl merken
+376. [x] Ungleiche Kämpfe 3v1, 4v2 (bestehend)
+377. [x] Boss-Kämpfe mit Wächtern (bestehend) (BattleRules.BOSSES)
+378. [x] Mehrfachziel-Techniken mit 0.75 Schaden (bestehend) (SPREAD_MULT)
+379. [x] Ablenkungs-Technik (Locktanz/Lure Dance)
+380. [x] Schutz eines Verbündeten (Wellenbrecher/Breakwater Stand)
+381. [x] Team-Schild (Schalenring/Shell Ring, 3 Runden x0.75)
+382. [x] Team-Heilung (Heilchor/Mending Chorus)
+383. [x] Mehrfachkampf-Balancing im Simulator (MultiSim: 2v2-Spiegel mit Hilfstechnik, Band 30-70 %, KI wartet mit Köder und Schutz)
+384. [x] Mehrfachkampf-Layout für 4 Sprites (bestehend)
+385. [x] Mehrfachkampf: Ziel-Wahl merken
 386. [ ] Mehrfachkampf: 'Auto-Ziel' Option
-387. [ ] Mehrfachkampf: KI der Partner verbessern (Meister-KI auch für Partner auf Veteran)
-388. [ ] Mehrfachkampf: Warnung bei Treffer auf Verbündete
+387. [x] Mehrfachkampf: KI der Partner verbessern (Meister-KI auch für Partner auf Veteran)
+388. [x] Mehrfachkampf: Warnung bei Treffer auf Verbündete (nicht nötig: Flächen-Techniken treffen nie Verbündete, Test)
 389. [ ] Mehrfachkampf: Reihenfolge-Leiste
-390. [ ] Mehrfachkampf: XP-Verteilung klar anzeigen
-391. [ ] Mehrfachkampf: Bond nur gegen Wild (bestehend)
-392. [ ] Mehrfachkampf: Rückzug nur wenn alle wild
-393. [ ] Mehrfachkampf: Kampfende-Bericht pro Spirling
-394. [ ] Mehrfachkampf: Replay
-395. [ ] Mehrfachkampf: Barrierefreiheit (Slot-Namen vorlesen)
+390. [x] Mehrfachkampf: XP-Verteilung klar anzeigen (bestehend: Wachstum-Zeile pro Spirling)
+391. [x] Mehrfachkampf: Bond nur gegen Wild (bestehend)
+392. [x] Mehrfachkampf: Rückzug nur wenn alle wild (Test)
+393. [x] Mehrfachkampf: Kampfende-Bericht pro Spirling (BattleReport: Schaden und K.o. je Spirling, Bester des Kampfes)
+394. [x] Mehrfachkampf: Replay (BattleReplay mit front und Zügen, test_multi_battle)
+395. [x] Mehrfachkampf: Barrierefreiheit (Slot-Namen vorlesen) (MultiRules.slot_spoken)
 396. [ ] Mehrfachkampf: Einhand-Modus
-397. [ ] Mehrfachkampf-Tests (bestehend) erweitern
-398. [ ] Mehrfachkampf: Story-Kämpfe mit Ali-Wunsch (3v3, 4v1, 4v2) beibehalten
-399. [ ] Mehrfachkampf: Gegner-Formationen pro Wayfarer
-400. [ ] Mehrfachkampf: Formation-Bonus (z. B. zwei Stone vorne +DEF)
+397. [x] Mehrfachkampf-Tests (bestehend) erweitern (test_multi_k05.gd)
+398. [x] Mehrfachkampf: Story-Kämpfe mit Ali-Wunsch (3v3, 4v1, 4v2) beibehalten (test_multi_battle Kartendaten)
+399. [x] Mehrfachkampf: Gegner-Formationen pro Wayfarer (Wayfarer-Eintrag "formation": true)
+400. [x] Mehrfachkampf: Formation-Bonus (z. B. zwei Stone vorne +DEF) (data/multi_rules.json, nur eigene Seite)
 
 ## Bosse und Wardens
 
@@ -721,89 +721,89 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Tempo, Animation und Präsentation
 
-641. [ ] Animationen pro Element eigenständig
-642. [ ] Animationen kürzer bei 2x/4x (bestehend Speed-Scale)
-643. [ ] Weniger Bewegung (bestehend) schaltet Wackeln ab
-644. [ ] Treffer-Pause beim Krit
-645. [ ] Kamera-Zoom beim Boss-Phasenwechsel
+641. [x] Animationen pro Element eigenständig (bestehend: ElementFx zeichnet je Element eigene Formen)
+642. [x] Animationen kürzer bei 2x/4x (bestehend Speed-Scale) (bestehend: Juice.speed teilt jede Kampf-Dauer)
+643. [x] Weniger Bewegung (bestehend) schaltet Wackeln ab (bestehend: Juice.shake_scale ist 0 bei weniger Bewegung)
+644. [x] Treffer-Pause beim Krit (BattleShow.crit_hitstop, data/battle_show.json)
+645. [x] Kamera-Zoom beim Boss-Phasenwechsel (BattleShow._phase_zoom: harter Ganzzahl-Zoom in Ära I-III, IV/V behalten ihre Kamera)
 646. [ ] Feld-Tönung im Hintergrund
-647. [ ] Status-Partikel
-648. [ ] Stufen-Aura
-649. [ ] K.o.-Animation eigenständig (Verblassen statt Umfallen)
-650. [ ] Einwechsel-Animation eigenständig (Laternenlicht statt Ball)
-651. [ ] Kein Ball, kein Wurf (Leitplanke)
-652. [ ] Sprite-Atmen im Leerlauf
-653. [ ] Sprite-Reaktion auf Treffer
-654. [ ] Siegespose
+647. [x] Status-Partikel (SpirlingAura: Partikel je Status aus data/battle_show.json)
+648. [x] Stufen-Aura (SpirlingAura: Punktring an den Füßen, warm bei Plus, kühl bei Minus)
+649. [x] K.o.-Animation eigenständig (Verblassen statt Umfallen) (bestehend: SpirlingSprite.faint sinkt und verblasst)
+650. [x] Einwechsel-Animation eigenständig (Laternenlicht statt Ball) (SpirlingAura.glow_lantern beim Einwechseln, Spirling gleitet herein)
+651. [x] Kein Ball, kein Wurf (Leitplanke) (bestehend: step_out gleitet, nie geworfen; ip_check sperrt die Begriffe)
+652. [x] Sprite-Atmen im Leerlauf (bestehend: Atem-Frames und breath_scale ab Ära IV, Ära I-III stehen still wie damals)
+653. [x] Sprite-Reaktion auf Treffer (bestehend: knockback und hit_flash)
+654. [x] Siegespose (BattleShow._victory_pose: Hüpfer und Glanz ab Ära III)
 655. [ ] Boss-Größe
-656. [ ] Mehrfachkampf-Formation (bestehend)
-657. [ ] Kampf-Übergang pro Ära
-658. [ ] Kampf-Hintergrund pro Gebiet (bestehend Backdrop)
-659. [ ] Kampf-Hintergrund Tag/Nacht
-660. [ ] Kampf-Intro kürzer bei Rückkämpfen
+656. [x] Mehrfachkampf-Formation (bestehend) (bestehend: BattleScene.formation_slots)
+657. [x] Kampf-Übergang pro Ära (bestehend: BattleIntro pro Ära)
+658. [x] Kampf-Hintergrund pro Gebiet (bestehend Backdrop) (bestehend: BattleBackdrop je Gebiet)
+659. [x] Kampf-Hintergrund Tag/Nacht (BattleShow.night_tint auf dem Hintergrund, nur draußen)
+660. [x] Kampf-Intro kürzer bei Rückkämpfen (BattleShow.intro_share: Rückkampf mit kurzem Intro ohne Blitze)
 661. [ ] Kampf-Outro mit Bericht
 662. [ ] Fotomodus im Kampf (bestehend)
-663. [ ] Replay mit Tempo-Wahl
+663. [x] Replay mit Tempo-Wahl (bestehend: BattleScene spielt replay_inputs, der Tempo-Knopf gilt dabei)
 664. [ ] Animation-Budget pro Frame (Handy)
-665. [ ] Animation ohne Blitz-Effekte (Epilepsie-Sicherheit)
-666. [ ] Animation-Tests im Screenshot-Werkzeug
-667. [ ] Pixel-Perfect bleibt bei Effekten
-668. [ ] Effekte in Ära-Palette
+665. [x] Animation ohne Blitz-Effekte (Epilepsie-Sicherheit) (bestehend: tools/fx_flash_check.tscn, höchstens 3 Pulse pro Sekunde)
+666. [x] Animation-Tests im Screenshot-Werkzeug (bestehend: tools/fx_gallery.gd und tools/era_battle_shots.gd)
+667. [x] Pixel-Perfect bleibt bei Effekten (bestehend: Juice rundet Positionen; neue Marken auf ganzen Pixeln)
+668. [x] Effekte in Ära-Palette (bestehend: EraMoveFx in Ära-Farben; Aura in Ära I in Palettenfarben)
 669. [ ] Effekte mit Hochkontrast-Variante
 670. [ ] Effekte im Asset-Log
 671. [ ] Treffer-Zahlen optional einblenden
 672. [ ] Schadenszahl in Weiß mit Tintenrand
-673. [ ] HP-Balken-Tween (bestehend)
+673. [x] HP-Balken-Tween (bestehend) (bestehend: InfoStrip.animate_hp)
 674. [ ] Energie-Pips-Animation
-675. [ ] Feld-Banner beim Start
-676. [ ] Phasen-Banner beim Boss
-677. [ ] Regel-Banner beim Warden
-678. [ ] Partner-Banner bei Kestra
-679. [ ] Kampf-Ende-Banner
-680. [ ] Präsentation bleibt eigenständig (kein bekanntes Layout)
+675. [x] Feld-Banner beim Start (BattleShow-Banner mit dem Feldnamen)
+676. [x] Phasen-Banner beim Boss (BattleShow-Banner '%s erwacht')
+677. [x] Regel-Banner beim Warden (bestehend: RuleBanner beim RULE-Ereignis)
+678. [x] Partner-Banner bei Kestra (BattleShow-Banner 'Seite an Seite')
+679. [x] Kampf-Ende-Banner (BattleShow-Banner Sieg, Verbunden, Entwischt, Erschöpft)
+680. [x] Präsentation bleibt eigenständig (kein bekanntes Layout) (bestehend: eigene Anordnung, docs/legal/IP_PATENT_AUDIT.md)
 
 ## Audio im Kampf
 
-681. [ ] Treffer-Sounds pro Element (bestehend)
-682. [ ] Krisen-Musik bei wenig HP (bestehend)
-683. [ ] Boss-Phasen-Musik
+681. [x] Treffer-Sounds pro Element (bestehend) (bestehend: Sound.element_hit)
+682. [x] Krisen-Musik bei wenig HP (bestehend) (bestehend: battle_pinch)
+683. [x] Boss-Phasen-Musik (boss_phase-Klang und Musik-Tonhöhe in Phase 2 (Sound.music_pitch))
 684. [ ] Feld-Klangteppich
-685. [ ] Status-Sounds
-686. [ ] Stufen-Sounds steigend
-687. [ ] Overcharge-Sound steigend
-688. [ ] Resonanz-Klang beim Feld-Start
-689. [ ] Feld-Ende-Klang
-690. [ ] Schrei pro Spirling (bestehend)
-691. [ ] Sieges-Jingle
-692. [ ] Niederlagen-Jingle
-693. [ ] Bond-Melodie
-694. [ ] Lautstärke Musik/SFX getrennt (bestehend)
+685. [x] Status-Sounds (status_<id>.wav je Status, BattleAudio.status_sound)
+686. [x] Stufen-Sounds steigend (stage_up/stage_down, Tonhöhe steigt je Stufe)
+687. [x] Overcharge-Sound steigend (overcharge.wav, Tonhöhe nach eingesetzter Energie)
+688. [x] Resonanz-Klang beim Feld-Start (field_rise.wav)
+689. [x] Feld-Ende-Klang (field_fade.wav)
+690. [x] Schrei pro Spirling (bestehend) (bestehend: Sound.cry)
+691. [x] Sieges-Jingle (bestehend: Sound.jingle victory)
+692. [x] Niederlagen-Jingle (defeat.wav, Musik blendet aus)
+693. [x] Bond-Melodie (bestehend: Echo-Ruf im BondMinigame in der Tonleiter des Elements)
+694. [x] Lautstärke Musik/SFX getrennt (bestehend) (bestehend: Busse Musik, SFX, UI, Stimme, Ambiente)
 695. [ ] Audio-Ducking bei Text
-696. [ ] Audio-Hinweise für Blinde (Effektivität als Ton)
-697. [ ] Audio-Test-Raum (bestehend Sound-Test)
-698. [ ] Audio im Asset-Log
-699. [ ] Audio eigenständig komponiert
-700. [ ] Audio-Budget für APK
-701. [ ] Audio bei 4x kürzer
-702. [ ] Audio im Batteriesparmodus reduziert
-703. [ ] Audio-Variation pro Ära
-704. [ ] Audio für Mehrfachkampf nicht überladen
-705. [ ] Audio für Boss-Intro
-706. [ ] Audio für Warden-Regel
-707. [ ] Audio für Partner
-708. [ ] Audio für Ruhe-Regel-Fehlschlag
-709. [ ] Audio für Schadensvorschau (kein Ton)
-710. [ ] Audio-Tests (bestehend)
-711. [ ] Audio-Fade beim Kampfende
+696. [x] Audio-Hinweise für Blinde (Effektivität als Ton) (eff_up/eff_down-Töne nach dem Treffer)
+697. [x] Audio-Test-Raum (bestehend Sound-Test) (bestehend: Menü Sound-Test)
+698. [x] Audio im Asset-Log (bestehend: docs/ASSET_LOG.md, neue Klänge eingetragen)
+699. [x] Audio eigenständig komponiert (bestehend: tools/audio/gen_audio.py, neue Klänge in sfx.py battle_show_sfx)
+700. [x] Audio-Budget für APK (bestehend: tools/apk_budget.sh)
+701. [x] Audio bei 4x kürzer (BattleAudio.keep: Auflade-, Flug- und Ausweich-Klänge entfallen bei 4x)
+702. [x] Audio im Batteriesparmodus reduziert (BattleAudio.keep: Flug-, Krit- und Feldwechsel-Akzente entfallen im Batteriesparmodus)
+703. [x] Audio-Variation pro Ära (bestehend: data/era_audio.json)
+704. [x] Audio für Mehrfachkampf nicht überladen (bestehend: 10 Stimmen mit Priorität; Akzente mit Mindestabstand)
+705. [x] Audio für Boss-Intro (boss_intro.wav)
+706. [x] Audio für Warden-Regel (rule_seal.wav)
+707. [x] Audio für Partner (partner_call.wav)
+708. [x] Audio für Ruhe-Regel-Fehlschlag (calm_fail.wav)
+709. [x] Audio für Schadensvorschau (kein Ton) (bestehend: die Vorschau im CommandMenu spielt keinen Ton)
+710. [x] Audio-Tests (bestehend) (bestehend: test_audio, test_sound, neu test_battle_show)
+711. [x] Audio-Fade beim Kampfende (Musik blendet bei Niederlage und Flucht aus)
 712. [ ] Audio-Loop sauber
 713. [ ] Audio-Nacht-Variante
 714. [ ] Audio-Fest-Variante
 715. [ ] Audio-Wochen-Echo-Thema
 716. [ ] Audio-Turm-Thema
 717. [ ] Audio-Online-Duell-Thema
-718. [ ] Audio: Treffer-Lautstärke nach Schaden
-719. [ ] Audio: Krit-Akzent
-720. [ ] Audio: Feld-Wechsel-Akzent
+718. [x] Audio: Treffer-Lautstärke nach Schaden (bestehend: Sound.hit_volume_db)
+719. [x] Audio: Krit-Akzent (crit_accent.wav)
+720. [x] Audio: Feld-Wechsel-Akzent (field_shift.wav, wenn ein Feld ein anderes ablöst)
 
 ## Fortschritt, XP und Training
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-504 von 1000 Punkten umgesetzt.
+603 von 1000 Punkten umgesetzt.
 

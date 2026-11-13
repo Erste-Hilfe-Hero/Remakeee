@@ -1,0 +1,11 @@
+{
+ "_comment": "ko translation of the kampf_show table, keyed by the English text.",
+ "strings": {
+  "%s awakens": "%s 각성",
+  "Bonded": "유대 맺음",
+  "Side by side: %s": "나란히: %s",
+  "Slipped away": "빠져나감",
+  "Victory": "승리",
+  "Worn out": "지침"
+ }
+}
