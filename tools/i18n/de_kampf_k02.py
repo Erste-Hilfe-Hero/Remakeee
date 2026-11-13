@@ -97,3 +97,4 @@ T.update({
 # Crystal names and lines use the patterns in de_data.py and de_kampf.py; Echo had none yet.
 "Teaches %s to an Echo Spirling. Never used up.": "Bringt einem Echo-Spirling %s bei. Verbraucht sich nie.",
 })
+T["%s picks up the echo and gains %d Energy!"] = "%s nimmt den Nachhall auf und erhält %d Energie!"

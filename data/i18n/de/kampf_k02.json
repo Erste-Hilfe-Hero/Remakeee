@@ -16,6 +16,7 @@
   "%s is shielded by an ally this turn!": "%s wird in dieser Runde von einem Verbündeten gedeckt!",
   "%s is struck %d times!": "%s wird %d-mal getroffen!",
   "%s keeps glowing for %d turns!": "%s glüht noch %d Runden lang nach!",
+  "%s picks up the echo and gains %d Energy!": "%s nimmt den Nachhall auf und erhält %d Energie!",
   "%s turns %s for %d turns!": "%s wird zu %s, für %d Runden!",
   "%s's %s takes the edge off the hit!": "%s: %s nimmt dem Treffer die Wucht!",
   "A drumroll that never stops. Used again and again, each blow lands harder.": "Ein Trommelwirbel, der nie aufhört. Immer wieder benutzt, trifft jeder Schlag härter.",
