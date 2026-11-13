@@ -161,5 +161,12 @@
     ]
    }
   ]
+ },
+ "hesper": {
+  "lines": [
+   "Hesper: I keep the arts the Rift made people forget. Most of them were forgotten on purpose.",
+   "Hesper: An Echo Crystal never runs out. The ones who use it do. Pick one."
+  ],
+  "action": "shop echo_hold_fast echo_shove_off echo_grudge_return echo_kindred_balm echo_rank_and_file echo_shake_loose echo_rolling_drum echo_late_reply echo_opening_gambit echo_pebble_hail echo_rift_hush echo_bright_lure echo_close_ranks echo_ember_afterglow echo_borrowed_stance echo_still_point echo_ground_burst echo_dye_bath echo_ward_circle ward_shell"
  }
 }

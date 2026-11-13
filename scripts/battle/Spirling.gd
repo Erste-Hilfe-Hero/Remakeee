@@ -165,7 +165,15 @@ func gift_id() -> String:
 func display_name() -> String:
 	return nickname if not nickname.is_empty() else data.species_name
 
+## Element shift (Dye Bath, KAMPF_PLAN_1000 item 86): for a few turns of one battle the
+## Spirling counts as this one element (-1 = its own elements).
+var element_shift: int = -1
+var element_shift_turns: int = 0
+
 func elements() -> Array[int]:
+	if element_shift >= 0:
+		var shifted: Array[int] = [element_shift]
+		return shifted
 	var v: Dictionary = variant_info()
 	if not v.is_empty() and not (v.elements as Array).is_empty():
 		return v.elements
@@ -282,6 +290,10 @@ func tick_timers() -> void:
 		heal_block -= 1
 	if burn_guard > 0:
 		burn_guard -= 1
+	if element_shift_turns > 0:
+		element_shift_turns -= 1
+		if element_shift_turns <= 0:
+			element_shift = -1
 	for k: String in cooldowns.keys():
 		cooldowns[k] = int(cooldowns[k]) - 1
 		if int(cooldowns[k]) <= 0:
@@ -303,6 +315,8 @@ func end_battle() -> void:
 	heal_block = 0
 	mend_turns = 0
 	burn_guard = 0
+	element_shift = -1
+	element_shift_turns = 0
 	oath_turns = 0
 	cooldowns.clear()
 	status = ""

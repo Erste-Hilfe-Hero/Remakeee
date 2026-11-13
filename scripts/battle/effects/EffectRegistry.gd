@@ -40,6 +40,25 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"stage_copy": preload("res://scripts/battle/effects/StageCopyEffect.gd"),
 	&"stage_swap": preload("res://scripts/battle/effects/StageSwapEffect.gd"),
 	&"status_veil": preload("res://scripts/battle/effects/StatusVeilEffect.gd"),
+	# KAMPF_PLAN_1000, "Elemente und Matchups" and "Techniken" (TechniqueRules).
+	&"brace": preload("res://scripts/battle/effects/BraceEffect.gd"),
+	&"force_out": preload("res://scripts/battle/effects/ForceOutEffect.gd"),
+	&"counter": preload("res://scripts/battle/effects/CounterEffect.gd"),
+	&"team_stage": preload("res://scripts/battle/effects/TeamStageEffect.gd"),
+	&"clear_drops": preload("res://scripts/battle/effects/ClearDropsEffect.gd"),
+	&"build_up": preload("res://scripts/battle/effects/PassiveEffect.gd"),
+	&"payback": preload("res://scripts/battle/effects/PassiveEffect.gd"),
+	&"first_strike": preload("res://scripts/battle/effects/PassiveEffect.gd"),
+	&"multi_hit": preload("res://scripts/battle/effects/MultiHitEffect.gd"),
+	&"clear_field": preload("res://scripts/battle/effects/ClearFieldEffect.gd"),
+	&"lure": preload("res://scripts/battle/effects/LureEffect.gd"),
+	&"shoulder": preload("res://scripts/battle/effects/ShoulderEffect.gd"),
+	&"afterglow": preload("res://scripts/battle/effects/AfterglowEffect.gd"),
+	&"mirror_stage": preload("res://scripts/battle/effects/MirrorStageEffect.gd"),
+	&"rest_point": preload("res://scripts/battle/effects/RestPointEffect.gd"),
+	&"blast_allies": preload("res://scripts/battle/effects/BlastAlliesEffect.gd"),
+	&"element_shift": preload("res://scripts/battle/effects/ElementShiftEffect.gd"),
+	&"elem_ward": preload("res://scripts/battle/effects/ElementWardEffect.gd"),
 }
 
 static var _cache: Dictionary[StringName, MoveEffect] = {}

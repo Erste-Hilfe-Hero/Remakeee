@@ -15,7 +15,10 @@ enum Type {
 	DELAYED_SET, DELAYED_HIT, FIELD_NEXT, FIELD_EXTENDED, BATTLE_LINE, WARDEN_WEAKENED, HELD_ENDURE,
 	OATH, SHOP_EDGE, HELD_FRUIT, WHEEL_TURN,
 	SUPPORT,
-	STATUS_VEIL, HELD_ITEM,
+	STATUS_VEIL,
+	# Lines of the KAMPF_PLAN_1000 arts and element rules (TechniqueRules): "text" % "args".
+	TECHNIQUE,
+	HELD_ITEM,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -207,6 +210,8 @@ func describe() -> String:
 			return "%s holds on with its Hold Stone!" % who
 		Type.WHEEL_TURN:
 			return "The wheel turns! The next Spirlings step up."
+		Type.TECHNIQUE:
+			return str(data.get("text", "")) % (data.get("args", [who]) as Array)
 		Type.HELD_FRUIT:
 			return "%s eats its %s!" % [who, data.get("item_name", "")]
 		Type.HELD_ITEM:
