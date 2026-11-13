@@ -11,6 +11,9 @@ signal closed
 
 var spirling: Spirling
 var leader: bool = false
+## Up and down step through the team (item 1893); [member step] says which way it was left.
+var can_step: bool = false
+var step: int = 0
 var lay: Dictionary = {}
 var tab: int = 0
 var tabs: Array[String] = []
@@ -20,16 +23,21 @@ var _scroll: ScrollContainer
 var _sprite: Control
 var _t: float = 0.0
 
-static func show_for(parent: Node, s: Spirling, is_leader: bool = false) -> void:
+## With [param can_step], up and down close the card and the result says where to go:
+## -1 the team's previous Spirling, 1 the next, 0 closed (item 1893).
+static func show_for(parent: Node, s: Spirling, is_leader: bool = false, can_step: bool = false) -> int:
 	var view := EraSummary.new()
 	view.name = "era_summary"
 	view.spirling = s
 	view.leader = is_leader
+	view.can_step = can_step
 	view.lay = EraMenus.layout(EraManager.active_era(), "summary")
 	parent.add_child(view)
 	view.build()
 	await view.closed
+	var out: int = view.step
 	view.queue_free()
+	return out
 
 func build() -> void:
 	theme = UITheme.get_theme()
@@ -224,6 +232,10 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
+		closed.emit()
+	elif can_step and (event.is_action_pressed("ui_up") or event.is_action_pressed("ui_down")):
+		get_viewport().set_input_as_handled()
+		step = -1 if event.is_action_pressed("ui_up") else 1
 		closed.emit()
 	elif event.is_action_pressed("ui_left"):
 		get_viewport().set_input_as_handled()
