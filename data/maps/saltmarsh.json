@@ -167,6 +167,18 @@
     "front": 1,
     "profile": "tactician"
    },
+   "pair": {
+    "name": "Hauler Wren",
+    "team": [
+     {
+      "species": "Mirkmole",
+      "level": 14,
+      "moves": [
+       "Night Toll"
+      ]
+     }
+    ]
+   },
    "show_flag": "kestra_spar",
    "hide_flag": "kestra_marsh_tag",
    "intro": "saltmarsh/kestra_tag_intro",
@@ -184,13 +196,6 @@
      "level": 13,
      "moves": [
       "Root Mend"
-     ]
-    },
-    {
-     "species": "Mirkmole",
-     "level": 14,
-     "moves": [
-      "Night Toll"
      ]
     }
    ],

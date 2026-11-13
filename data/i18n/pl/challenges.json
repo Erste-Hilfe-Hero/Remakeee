@@ -1,9 +1,12 @@
 {
  "_comment": "pl translation of the challenges table, keyed by the English text.",
  "strings": {
+  "%s also gives you: %s.": "%s daje ci też: %s.",
+  "%s raises a signal lantern. Battle now?": "%s unosi latarnię sygnałową. Walczyć teraz?",
   "%s: %d won, %d lost": "%s: %d wygranych, %d przegranych",
   "A rule was dropped on the way.": "Po drodze porzucono jedną zasadę.",
   "Ace Up Front": "As na Przedzie",
+  "Answer the signal": "Odpowiedz na sygnał",
   "Battles won: %d, lost: %d": "Walki wygrane: %d, przegrane: %d",
   "Bonds only form at night.": "Więzi powstają tylko nocą.",
   "Challenge record": "Bilans wyzwań",
@@ -14,6 +17,8 @@
   "Copies the seed. A friend who uses it gets the same shuffled wilds and arts.": "Kopiuje seed. Znajomy, który go użyje, dostanie te same wymieszane dzikie Spirlingi i techniki.",
   "Drop %s? Your record will remember it.": "Porzucić %s? Bilans to zapamięta.",
   "Drop it": "Porzuć",
+  "Echo tower": "Wieża Echa",
+  "Echo tower, highest floor this week": "Wieża Echa, najwyższe piętro w tym tygodniu",
   "Every Spirling that bonds with you knows arts drawn by your run seed.": "Każdy Spirling, który zawiąże z tobą Więź, zna techniki wylosowane przez seed podejścia.",
   "Extra rules for a harder journey. Taken before your first Rift, dropped any time.": "Dodatkowe zasady na trudniejszą podróż. Do wybrania przed pierwszą Szczeliną, do porzucenia w każdej chwili.",
   "Extra rules for a harder journey: One per Place, First Meeting, Spring Water Only, Shuffled Wilds and Arts, Stand Your Ground, Half Rested, Ace Up Front, Night Bonds, One Colour, Empty Pockets, Off the Books and Trust No One. Any of them combine. They are taken before the first mended Rift and can be dropped at any time; the record remembers. The shuffles follow a seed code you can share with friends.": "Dodatkowe zasady na trudniejszą podróż: Jeden na Miejsce, Pierwsze Spotkanie, Tylko Woda Źródlana, Wymieszana Dzicz i Techniki, Nie Ustępuj, Pół Odpoczynku, As na Przedzie, Nocne Więzi, Jeden Kolor, Puste kieszenie, Poza księgami i Nie ufaj nikomu. Wszystkie można łączyć. Wybiera się je przed pierwszą naprawioną Szczeliną i można je porzucić w każdej chwili; bilans to pamięta. Mieszanie opiera się na kodzie seeda, którym można podzielić się ze znajomymi.",
@@ -26,6 +31,7 @@
   "Keep it": "Zostaw",
   "Lantern post: %s would battle you again today.": "Poczta latarniowa: %s chcą dziś znów z tobą walczyć.",
   "Lantern post: no rematch invitations today.": "Poczta latarniowa: dziś brak zaproszeń na rewanż.",
+  "Lighthouse stair, highest floor this week": "Schody latarni, najwyższe piętro w tym tygodniu",
   "Most battled:": "Najczęściej:",
   "New rules can only be taken before you mend your first Rift.": "Nowe zasady można wybrać tylko przed naprawą pierwszej Szczeliny.",
   "Night Bonds": "Nocne Więzi",
@@ -55,6 +61,7 @@
   "Spring Water Only: no healing items on this journey.": "Tylko Woda Źródlana: żadnych przedmiotów leczniczych w tej podróży.",
   "Stand Your Ground": "Nie Ustępuj",
   "Takes a seed a friend shared with you.": "Przejmuje seed udostępniony przez znajomego.",
+  "The lantern dims. Talk to them when you are ready.": "Latarnia gaśnie. Porozmawiaj, gdy będziesz gotów.",
   "The wild Spirlings of every place are shuffled by your run seed.": "Dzikie Spirlingi każdego miejsca są mieszane według seeda podejścia.",
   "There is no seed code on the clipboard.": "W schowku nie ma kodu seeda.",
   "This journey is now in the run chronicle: %s.": "Ta podróż jest teraz w kronice podejścia: %s.",
@@ -65,7 +72,9 @@
   "Wayfarer book": "Księga Wędrowców",
   "Wayfarers lead with their strongest Spirling.": "Wędrowcy wystawiają najpierw najsilniejszego Spirlinga.",
   "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "Spirlingi Wędrowców trzymają się blisko twojego najsilniejszego, w granicy pierścienia.",
+  "Win Wayfarer battles": "Wygrywaj walki z Wędrowcami",
   "With challenge rules": "Z zasadami wyzwań",
-  "best in %d turns": "rekord w %d tur"
+  "best in %d turns": "rekord w %d tur",
+  "floor %d": "piętro %d"
  }
 }

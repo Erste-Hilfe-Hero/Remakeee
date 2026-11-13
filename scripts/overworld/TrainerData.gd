@@ -9,7 +9,9 @@ extends RefCounted
 ##   "front": [player, foe]   how many fight at once on each side (e.g. [4, 1], [3, 3]; max 4)
 ##   "partner": {"name": "Cartographer Kestra", "team": [...], "front": 1}   an ally Wayfarer beside you
 ##   "boss": "ashen_heart"    the foe in front is a Rift boss (BattleRules.BOSSES)
+##   "formation": true        the foe side gets the formation bonus too (MultiRules, data/multi_rules.json)
 ##   "wild": true             a wild horde: no Wayfarer, so the Echo call (Bond) and Run work
+##   "pair": {"name": "Hauler Wren", "team": [...]}   a second foe Wayfarer (needs front [x, 2+])
 ## Battles always start from the overworld and cut to the separate battle screen.
 ## Plan area 2 (items 612, 638, 639) adds:
 ##   "profile": "hothead"     personality from data/ai_profiles.json (default "balanced")
@@ -167,6 +169,9 @@ static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenera
 	var entries: Array = team_entries(def, starter, difficulty)
 	if difficulty == GameState.Difficulty.RIFT_BORN and not has_block(def, difficulty):
 		entries = rift_born_entries(def, entries)
+	# A pair battle (item 548): the second Wayfarer's Spirlings join the foe side.
+	if def.get("pair") is Dictionary:
+		entries = entries + ((def.pair as Dictionary).get("team", []) as Array)
 	for e: Variant in entries:
 		var entry: Dictionary = e
 		var sd: SpirlingData = Database.species(str(entry.get("species", "")))
@@ -311,7 +316,22 @@ static func battle_info(def: Dictionary, team: Array[Spirling], difficulty_ai: i
 	}
 	if def.has("partner"):
 		info["partner"] = def.partner
+	if def.get("pair") is Dictionary:
+		info["name"] = pair_name(def)
 	return info
+
+## "Hauler Tobin & Hauler Wren" for a pair battle (item 548), else the Wayfarer's name. The "&"
+## needs no translation, so no loose "%s and %s" pattern swallows other lines.
+static func pair_name(def: Dictionary) -> String:
+	var first: String = str(def.get("trainer", def.get("id", "Wayfarer")))
+	if not def.get("pair") is Dictionary:
+		return first
+	return "%s & %s" % [first, str((def.pair as Dictionary).get("name", ""))]
+
+## True if the player may wave off this Wayfarer's signal lantern when spotted (items 539, 540):
+## not for Wardens, Rift bosses, wild hordes or Wayfarers whose win moves the story on.
+static func may_wave_off(def: Dictionary) -> bool:
+	return not def.has("warden") and not def.has("boss") and not is_wild_horde(def) and not def.has("win_flags")
 
 ## How many Spirlings fight at once: [player, foe] (1v1 unless the Wayfarer sets "front").
 static func front(def: Dictionary) -> Array[int]:

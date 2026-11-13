@@ -87,6 +87,17 @@
   "There are no stages for aim or dodging.": "명중이나 회피 단계는 없다.",
   "Trades all stages with the foe.": "상대와 모든 단계를 맞바꾼다.",
   "Unruffled": "태연함",
-  "Vigor = (base + spark/2) x (ring + %d) / %d": "기력 = (기본 + 불씨/2) x (링 + %d) / %d"
+  "Vigor = (base + spark/2) x (ring + %d) / %d": "기력 = (기본 + 불씨/2) x (링 + %d) / %d",
+  "%s %d -> %d": "%s %d -> %d",
+  "%s gained %d growth. The ring limit holds it at ring %d for now.": "%s은(는) 성장 %d을(를) 얻었다. 링 한계로 당분간 링 %d에 머문다.",
+  "%s's sparks flicker and settle anew.": "%s의 불씨가 깜빡이며 새로 자리 잡았다.",
+  "FOC": "집중",
+  "GRD": "수비",
+  "MGT": "완력",
+  "PCE": "민첩",
+  "Ring %s:": "링 %s:",
+  "Rolls all Spark values of one Spirling anew. Used up.": "Spirling 하나의 불씨 값을 모두 다시 굴린다. 쓰면 없어진다.",
+  "Spark Flux": "불씨 소용돌이",
+  "VIG": "기력"
  }
 }

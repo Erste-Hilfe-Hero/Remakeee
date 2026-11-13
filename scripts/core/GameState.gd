@@ -91,6 +91,10 @@ var starter: String = ""
 var difficulty: Difficulty = Difficulty.TAMER
 ## Item id -> count.
 var inventory: Dictionary = {}
+## Things gained since the satchel last had them in focus: id -> true (item 1918).
+var new_items: Dictionary = {}
+## What the player last saw behind a start menu row (MenuDots, item 1872): label -> value.
+var menu_seen: Dictionary = {}
 var money: int = 0
 ## Waymarks (plan area 8): earned only by playing, never bought or traded. Change through Waymarks.earn().
 var waymarks: int = 0
@@ -149,6 +153,8 @@ var wild_ward: bool = false
 const BENCH_XP_SHARE: float = 0.5
 ## Damage preview: the move list shows the expected share of the foe's HP once its matchup is known.
 var damage_preview: bool = true
+## Damage numbers over a hit Spirling (KAMPF_PLAN_1000 671), off by default.
+var damage_numbers: bool = false
 ## Bonus goals of Wayfarers and Wardens (plan area 2, item 765); off hides them and their rewards.
 var bonus_goals: bool = true
 var volume: float = 0.8
@@ -195,6 +201,8 @@ var screen_shake: int = 2
 var sound_captions: bool = false
 ## Text voice blips while dialogue types (items 2503, 2504).
 var text_voice: bool = true
+## World talk moves on by itself after a short read (item 2015).
+var auto_text: bool = false
 ## First-time tips (see Tips.gd).
 var tips_enabled: bool = true
 ## Break reminder after PlayReminder.MINUTES of play (plan 3503).
@@ -340,6 +348,8 @@ func known_multiplier(element: int, foe: Spirling) -> float:
 
 func add_item(id: String, count: int = 1) -> void:
 	inventory[id] = int(inventory.get(id, 0)) + count
+	if count > 0:
+		new_items[id] = true
 	if count > 0 and BattleRules.is_holdable(id):
 		Achievements.note_keepsake(id)
 
@@ -523,6 +533,8 @@ func reset() -> void:
 	starter = ""
 	difficulty = Difficulty.TAMER
 	inventory = {}
+	new_items = {}
+	menu_seen = {}
 	money = 0
 	waymarks = 0
 	daily_tasks = {}
@@ -671,6 +683,8 @@ func to_dict() -> Dictionary:
 		"echo_cores": echo_cores.duplicate(true),
 		"spirlog": spirlog.duplicate(true),
 		"inventory": _bag_counts(),
+		"menu_seen": menu_seen.duplicate(),
+		"new_items": new_items.keys().filter(func(k: Variant) -> bool: return int(inventory.get(k, 0)) > 0),
 		"money": money,
 		"waymarks": waymarks,
 		"daily_tasks": daily_tasks.duplicate(true),
@@ -752,6 +766,16 @@ func from_dict(d: Dictionary) -> void:
 		var n: int = as_int(d.inventory[k])
 		if n > 0:
 			inventory[str(k)] = n
+	new_items = {}
+	menu_seen = {}
+	var seen_rows: Variant = d.get("menu_seen", {})
+	if seen_rows is Dictionary:
+		for k: Variant in seen_rows:
+			menu_seen[str(k)] = as_int(seen_rows[k])
+	var fresh: Variant = d.get("new_items", [])
+	for k: Variant in (fresh as Array if fresh is Array else []):
+		if inventory.has(str(k)):
+			new_items[str(k)] = true
 	money = int(d.get("money", 0))
 	# Saves from before plan area 8 start with no Waymarks; old achievements pay out once
 	# through the achievement reward, never here.
@@ -801,13 +825,13 @@ func from_dict(d: Dictionary) -> void:
 
 func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
-		"bench_xp": bench_xp, "wild_ward": wild_ward, "damage_preview": damage_preview, "bonus_goals": bonus_goals, "volume": volume,
+		"bench_xp": bench_xp, "wild_ward": wild_ward, "damage_preview": damage_preview, "damage_numbers": damage_numbers, "bonus_goals": bonus_goals, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"voice_volume": voice_volume, "ambience_volume": ambience_volume, "mono_audio": mono_audio,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "pad_opacity_steps": PAD_ALPHAS.size(), "left_handed": left_handed, "tap_to_move": tap_to_move,
 		"always_run": always_run, "bond_style": bond_style, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad, "tap_vibration": tap_vibration,
 		"one_hand": one_hand, "bag_sort": bag_sort, "vibration": vibration, "screen_shake": screen_shake,
-		"sound_captions": sound_captions, "text_voice": text_voice,
+		"sound_captions": sound_captions, "text_voice": text_voice, "auto_text": auto_text,
 		"tips": tips_enabled, "play_reminder": play_reminder, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
 		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language}
 
@@ -820,6 +844,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	bench_xp = bool(d.get("bench_xp", true))
 	wild_ward = bool(d.get("wild_ward", false))
 	damage_preview = bool(d.get("damage_preview", true))
+	damage_numbers = bool(d.get("damage_numbers", false))
 	bonus_goals = bool(d.get("bonus_goals", true))
 	pad_size = clampi(int(d.get("pad_size", 1)), 0, PAD_SIZE_NAMES.size() - 1)
 	if d.has("pad_opacity") and not d.has("pad_opacity_steps"):
@@ -842,6 +867,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	screen_shake = clampi(int(d.get("screen_shake", 2)), 0, 2)
 	sound_captions = bool(d.get("sound_captions", false))
 	text_voice = bool(d.get("text_voice", true))
+	auto_text = bool(d.get("auto_text", false))
 	tips_enabled = bool(d.get("tips", true))
 	play_reminder = bool(d.get("play_reminder", true))
 	battery_saver = bool(d.get("battery_saver", false))
@@ -944,6 +970,13 @@ func has_flag(flag: String) -> bool:
 
 func set_flag(flag: String, value: bool = true) -> void:
 	flags[flag] = value
+
+## Rolls every Spark of [param s] anew (0..SPARK_MAX), as a freshly met Spirling gets them.
+static func reroll_sparks(s: Spirling, r: RandomNumberGenerator) -> void:
+	var frac: float = s.hp_fraction()
+	for key: String in Spirling.STAT_KEYS:
+		s.spark[key] = r.randi_range(0, Spirling.SPARK_MAX)
+	s.hp = 0 if s.is_fainted() else maxi(1, roundi(frac * s.max_hp()))
 
 ## Fully restores the party (Rest Springs, after a loss).
 func heal_party() -> void:
@@ -1198,6 +1231,10 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 			s.level_up()
 		s.xp = Spirling.xp_for_level(s.level)
 		msg = "%s grew from Ring %d to Ring %d!" % [s.display_name(), from, s.level]
+	elif bool(it.get("spark_reset", false)):
+		# Spark Flux (KAMPF_PLAN_1000 item 230): every Spark is rolled anew.
+		reroll_sparks(s, rng)
+		msg = "%s's sparks flicker and settle anew." % s.display_name()
 	elif bool(it.get("spark_all", false)):
 		var raised: bool = false
 		for key: String in Spirling.STAT_KEYS:

@@ -213,6 +213,9 @@
   "Nothing to swap.": "没有可替换的。",
   "Swap %s with whom?": "把%s和谁替换？",
   "Swap with team...": "与队伍替换……",
-  "seen": "见过"
+  "seen": "见过",
+  "new": "新",
+  "Auto text: %s": "自动文本: %s",
+  "Talk in the world goes on by itself after a short read.": "世界中的对话在短暂阅读后自动继续。"
  }
 }

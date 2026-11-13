@@ -9981,6 +9981,9 @@
    "20": [
     "Prism Ray"
    ],
+   "24": [
+    "Kindred Balm"
+   ],
    "26": [
     "Tunnel Strike"
    ],
@@ -10051,6 +10054,9 @@
    ],
    "20": [
     "Prism Ray"
+   ],
+   "24": [
+    "Kindred Balm"
    ],
    "26": [
     "Tremor Thud"
@@ -10125,6 +10131,9 @@
    ],
    "20": [
     "Prism Ray"
+   ],
+   "24": [
+    "Kindred Balm"
    ],
    "26": [
     "Tunnel Strike"
@@ -15276,7 +15285,7 @@
    "spd": 69,
    "def": 53
   },
-  "trait": "surge",
+  "trait": "echo_soul",
   "learnset": {
    "1": [
     "Draft Needle",
@@ -15296,6 +15305,9 @@
    ],
    "26": [
     "Pylon Snap"
+   ],
+   "29": [
+    "Gale Call"
    ],
    "46": [
     "Chaff Feint"
@@ -15344,7 +15356,7 @@
    "spd": 98,
    "def": 71
   },
-  "trait": "surge",
+  "trait": "echo_soul",
   "learnset": {
    "1": [
     "Draft Needle",
@@ -15364,6 +15376,9 @@
    ],
    "26": [
     "Storm Gnash"
+   ],
+   "29": [
+    "Gale Call"
    ],
    "38": [
     "Short Circuit"
@@ -15415,7 +15430,7 @@
    "spd": 111,
    "def": 77
   },
-  "trait": "surge",
+  "trait": "echo_soul",
   "learnset": {
    "1": [
     "Breeze Slice",
@@ -15435,6 +15450,9 @@
    ],
    "26": [
     "Storm Gnash"
+   ],
+   "29": [
+    "Gale Call"
    ],
    "32": [
     "Gale Scythe"
@@ -16102,7 +16120,7 @@
    "spd": 46,
    "def": 83
   },
-  "trait": "thick_hide",
+  "trait": "field_strider",
   "learnset": {
    "1": [
     "Pebble Toss",
@@ -16122,6 +16140,9 @@
    ],
    "26": [
     "Undertow"
+   ],
+   "29": [
+    "Rubble Call"
    ],
    "32": [
     "Tremor Thud"
@@ -16173,7 +16194,7 @@
    "spd": 64,
    "def": 122
   },
-  "trait": "thick_hide",
+  "trait": "field_strider",
   "learnset": {
    "1": [
     "Pebble Toss",
@@ -16193,6 +16214,9 @@
    ],
    "26": [
     "Undertow"
+   ],
+   "29": [
+    "Rubble Call"
    ],
    "32": [
     "Cairn Crash"
@@ -16247,7 +16271,7 @@
    "spd": 68,
    "def": 131
   },
-  "trait": "thick_hide",
+  "trait": "field_strider",
   "learnset": {
    "1": [
     "All-In Crash",
@@ -16267,6 +16291,9 @@
    ],
    "26": [
     "Undertow"
+   ],
+   "29": [
+    "Rubble Call"
    ],
    "38": [
     "Breaker Plunge"
@@ -18750,6 +18777,9 @@
    "20": [
     "Rip Current"
    ],
+   "24": [
+    "Breakwater Stand"
+   ],
    "26": [
     "Murmur Bite"
    ],
@@ -18820,6 +18850,9 @@
    ],
    "20": [
     "Undertow"
+   ],
+   "24": [
+    "Breakwater Stand"
    ],
    "26": [
     "Murmur Bite"
@@ -25724,6 +25757,9 @@
    "20": [
     "Squall Line"
    ],
+   "24": [
+    "Lure Dance"
+   ],
    "26": [
     "Thorn Volley"
    ],
@@ -25785,6 +25821,9 @@
    ],
    "20": [
     "Squall Line"
+   ],
+   "24": [
+    "Lure Dance"
    ],
    "26": [
     "Thorn Volley"
@@ -25848,6 +25887,9 @@
    "20": [
     "Squall Line"
    ],
+   "24": [
+    "Lure Dance"
+   ],
    "26": [
     "Thorn Volley"
    ],
@@ -25905,6 +25947,9 @@
    ],
    "20": [
     "Prism Ray"
+   ],
+   "24": [
+    "Mending Chorus"
    ],
    "26": [
     "Sunpeak Beam"
@@ -25967,6 +26012,9 @@
    ],
    "20": [
     "Prism Ray"
+   ],
+   "24": [
+    "Mending Chorus"
    ],
    "26": [
     "Sunpeak Beam"
@@ -26032,6 +26080,9 @@
    ],
    "20": [
     "Prism Ray"
+   ],
+   "24": [
+    "Mending Chorus"
    ],
    "26": [
     "Apex Ray"
@@ -26834,6 +26885,9 @@
    "15": [
     "Drench"
    ],
+   "24": [
+    "Shell Ring"
+   ],
    "26": [
     "Rip Current"
    ],
@@ -26895,6 +26949,9 @@
    ],
    "20": [
     "Landslip"
+   ],
+   "24": [
+    "Shell Ring"
    ],
    "26": [
     "Rip Current"
@@ -26960,6 +27017,9 @@
    ],
    "20": [
     "Tremor Thud"
+   ],
+   "24": [
+    "Shell Ring"
    ],
    "26": [
     "Rip Current"

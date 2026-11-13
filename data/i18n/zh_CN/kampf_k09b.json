@@ -1,0 +1,9 @@
+{
+ "_comment": "zh_CN translation of the kampf_k09b table, keyed by the English text.",
+ "strings": {
+  "Damage numbers: %s": "伤害数字：%s",
+  "Shows the damage of each hit as a number over the Spirling.": "每次命中时在Spirling上方用数字显示伤害。",
+  "Star of the battle: %s": "本场之星：%s",
+  "Take a photo": "拍照"
+ }
+}

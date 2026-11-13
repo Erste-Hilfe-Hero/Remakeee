@@ -282,6 +282,8 @@ func _build() -> void:
 	_text.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_text.visible = false
 	_text.allow_fast_forward = true
+	_text.world_auto = true
+	_text.place_hook = _place_text_box
 	ui_root.add_child(_text)
 	_picker = ListPicker.new()
 	_picker.set_anchors_preset(Control.PRESET_CENTER)
@@ -783,6 +785,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				wild = ShopEffects.pass_rare(map.encounter_table, GameState.flags, GameState.rng)
 			if wild == null:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
+				boost.append_array(RiftFields.spawn_boost(map.field))
 				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain)
 				wild = ChallengeRules.reroll_wild(wild, map.encounter_table, GameState.rng)
 				if wild != null:
@@ -1022,6 +1025,31 @@ func announce_goal_if_changed(before: int) -> void:
 	var tip: Array[String] = Tips.take("goals")
 	if not tip.is_empty():
 		await say(tip)
+
+## True when the talk box belongs at the top: the Wayfarer stands in the lower half (item 2016).
+static func text_on_top(player_y: float, view_h: float) -> bool:
+	return view_h > 0.0 and player_y > view_h / 2.0
+
+## Puts the talk box at the bottom, or at the top when it would cover the Wayfarer.
+func _place_text_box() -> void:
+	var top: bool = false
+	if player != null and is_instance_valid(player) and player.is_inside_tree():
+		var y: float = player.get_global_transform_with_canvas().origin.y + TilesetFactory.TILE / 2.0
+		top = text_on_top(y, get_viewport().get_visible_rect().size.y)
+	if top:
+		_text.set_anchors_preset(Control.PRESET_TOP_WIDE)
+		_text.offset_top = 0
+		_text.offset_bottom = TEXT_BOX_HEIGHT
+		_text.grow_vertical = Control.GROW_DIRECTION_END
+	else:
+		_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+		_text.offset_top = -TEXT_BOX_HEIGHT
+		_text.offset_bottom = 0
+		_text.grow_vertical = Control.GROW_DIRECTION_BEGIN
+
+## True while the talk box sits at the top of the screen.
+func text_box_on_top() -> bool:
+	return _text.anchor_bottom < 0.5
 
 func say(lines: Array[String]) -> void:
 	if lines.is_empty():
@@ -2511,6 +2539,10 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	while floors < Gauntlet.FLOORS:
 		await say(["Floor %d of %d: an echo steps out of the light..." % [floors + 1, Gauntlet.FLOORS]] as Array[String])
 		var info: Dictionary = {"name": run.echo_name(floors), "ai": Gauntlet.ai_for(floors), "money": run.prize(floors)}
+		# Some floors stand in a Rift field, the same one for the same climb (KAMPF_PLAN_1000 item 354).
+		var floor_field: String = RiftFields.tower_field(run_seed, floors + 1)
+		if not floor_field.is_empty():
+			info["field"] = floor_field
 		var foes: Array[Spirling] = run.team(floors)
 		# Every tenth floor a Warden echo stands in the light (plan 1102).
 		if EchoTower.is_warden_floor(floors + 1):
@@ -2522,6 +2554,9 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 			for s: Spirling in helper.partner.echo:
 				s.restore()
 			info["partner"] = helper.partner
+		else:
+			# Every few floors the echoes come two at a time (KAMPF_PLAN_1000 item 374).
+			info["front"] = MultiRules.tower_front(floors + 1, bool(info.get("warden", false)))
 		busy = false
 		var outcome: BattleModel.Outcome = await start_battle(foes, false, info)
 		busy = true
@@ -2546,6 +2581,7 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 			if not climb_on:
 				break
 	GameState.records["gauntlet_best"] = maxi(best, floors)
+	Online.climb_submit("stair", floors)
 	if GameState.iron_oath:
 		# Under the Iron Oath the stair keeps its own best as well (plan 3400).
 		GameState.records["gauntlet_best_oath"] = maxi(int(GameState.records.get("gauntlet_best_oath", 0)), floors)
@@ -2788,7 +2824,7 @@ func _action_rift_tower(args: PackedStringArray, _speaker: NPC) -> void:
 	while cleared < RiftTower.floors(t):
 		await say([run.floor_card(cleared)] as Array[String])
 		var info: Dictionary = {"name": Gauntlet.new(run.seed_value, 1).echo_name(cleared), "ai": RiftTower.ai_for(cleared),
-			"money": run.prize(cleared), "shade": RiftTower.shade(t, cleared), "variants": run.variants_for(cleared)}
+			"money": run.prize(cleared), "shade": RiftTower.shade(t, cleared), "variants": run.variants_for(cleared), "theme": "tower"}
 		busy = false
 		var outcome: BattleModel.Outcome = await start_battle(run.team(cleared), false, info)
 		busy = true
@@ -2841,7 +2877,7 @@ func _run_endless() -> void:
 	var k: int = 0
 	while true:
 		await say([Loc.t("Endless floor %d: ring %d.") % [k + 1, run.endless_level(k)]] as Array[String])
-		var info: Dictionary = {"name": run.echo_name(Gauntlet.FLOORS + k), "ai": 3, "money": run.prize(Gauntlet.FLOORS)}
+		var info: Dictionary = {"name": run.echo_name(Gauntlet.FLOORS + k), "ai": 3, "money": run.prize(Gauntlet.FLOORS), "theme": "tower"}
 		# The stair and the endless stretch are one tower of 100 floors (plan 1101, 1102).
 		var tf: int = EchoTower.tower_floor(k)
 		var foes: Array[Spirling] = run.endless_team(k)
@@ -2868,6 +2904,8 @@ func _run_endless() -> void:
 			m.queue_free()
 			if not on:
 				break
+	if k > 0:
+		Online.climb_submit("tower", EchoTower.tower_floor(k - 1))
 	var lines: Array[String] = [Loc.t("Endless stretch: %d floors (best %d).") % [k, maxi(k, Gauntlet.endless_best())]]
 	lines.append_array(Gauntlet.pay_endless(k))
 	await say(lines)
@@ -2911,7 +2949,7 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	var wins: int = 0
 	var turns_total: int = 0
 	while wins < WeeklyChallenge.ROUNDS:
-		var info: Dictionary = {"name": "Weekly Echo %d" % (wins + 1), "ai": 3, "rule": ch.rule, "field": ch.field, "variants": ch.variant_ids()}
+		var info: Dictionary = {"name": "Weekly Echo %d" % (wins + 1), "ai": 3, "rule": ch.rule, "field": ch.field, "variants": ch.variant_ids(), "theme": "echo"}
 		busy = false
 		var outcome: BattleModel.Outcome = await start_battle(ch.team(wins), false, info)
 		busy = true
@@ -3334,7 +3372,7 @@ func _spotting_trainer() -> NPC:
 	if GameState.first_healthy_index() < 0:
 		return null
 	for n: NPC in _npcs:
-		if not _is_active_trainer(n):
+		if not _is_active_trainer(n) or n.has_meta("waved"):
 			continue
 		var blocked: Callable = func(c: Vector2i) -> bool: return not map.is_walkable(c) or npc_at(c) != null
 		if TrainerData.sees(n.cell, GridWalker.DIRS[n.facing], int(n.definition.get("sight", 0)), player.cell, blocked):
@@ -3351,6 +3389,22 @@ func challenge(n: NPC, spotted: bool) -> void:
 		n.alert = true
 		await get_tree().create_timer(SPOT_TIME).timeout
 		n.alert = false
+		# The signal lantern (KAMPF_PLAN_1000 items 539, 540): answer it now, or wave it off and
+		# talk to the Wayfarer later. Wardens and story Wayfarers do not wait.
+		if TrainerData.may_wave_off(def):
+			n.signal_lantern = true
+			var ask := MenuHost.new()
+			_ui.add_child(ask)
+			var answer: bool = await ask.confirm(Loc.t("%s raises a signal lantern. Battle now?") % Loc.t(str(def.get("trainer", ""))), "Answer the signal", "Not now")
+			ask.queue_free()
+			n.signal_lantern = false
+			if not answer:
+				n.set_meta("waved", true)
+				await say([Loc.t("The lantern dims. Talk to them when you are ready.")] as Array[String])
+				busy = false
+				player.frozen = false
+				VirtualPad.set_wanted(true)
+				return
 		while (player.cell - n.cell).length_squared() > 1:
 			n.step(n.facing)
 			await n.step_finished
@@ -3452,6 +3506,11 @@ func after_tamer_win(n: NPC) -> void:
 			"p_replay": BattleReplay.shareable(GameState.records.get("last_battle", {})), "p_claim": last_claim})
 	if def.has("defeat"):
 		await say(Dialogue.lines_for(Dialogue.get_entry(str(def.defeat)), GameState.flags))
+	# A first-win gift that varies by Wayfarer (KAMPF_PLAN_1000 item 531).
+	var gift: String = WayfarerRewards.grant(def, map.id, GameState.starter)
+	if not gift.is_empty():
+		Sound.sfx("coin")
+		await say([WayfarerRewards.line(def, gift)] as Array[String])
 	if def.has("warden") and GameState.seal_rift(str(def.warden)):
 		var lines: Array[String] = ["The Warden's bond wakes again.", "Together you mend the Rift. The Hush lifts!"]
 		if GameState.has_flag("storage_remote"):
@@ -3502,6 +3561,9 @@ static func _today() -> String:
 func _note_wayfarer(def: Dictionary, outcome: BattleModel.Outcome) -> void:
 	if outcome == BattleModel.Outcome.WIN or outcome == BattleModel.Outcome.LOSS:
 		WayfarerBook.note(def, map.id, outcome == BattleModel.Outcome.WIN, last_model.turn if last_model != null else 0)
+	# Wayfarer wins count for the world goal when it is this week's kind (KAMPF_PLAN_1000 item 543).
+	if outcome == BattleModel.Outcome.WIN and not TrainerData.is_wild_horde(def):
+		Online.contribute("wayfarers")
 
 func _mark_rematch(def: Dictionary) -> void:
 	var rec: Dictionary = (GameState.records.get("rematch", {}) as Dictionary).duplicate()
@@ -3801,7 +3863,7 @@ func echo_duel(d: Dictionary) -> void:
 	# The rule of the week holds in echo duels too, the same for everyone (KAMPF_PLAN_1000).
 	var outcome: BattleModel.Outcome = await start_battle(foes, false,
 		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
-			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi)})
+			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi), "theme": "duel"})
 	busy = true
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN
@@ -3830,7 +3892,7 @@ func league_battle(m: Dictionary) -> void:
 	foes.assign(model.parties[1])
 	await say(["A rival's echo steps into the league ring."] as Array[String])
 	busy = false
-	var outcome: BattleModel.Outcome = await start_battle(foes, false, {"name": "League rival", "model": model, "friendly": true})
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, {"name": "League rival", "model": model, "friendly": true, "theme": "duel"})
 	busy = true
 	player.frozen = true
 	var kind: String = "league_" + str(m.get("league", LeagueRules.FAIR))
@@ -3926,7 +3988,10 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var worn: String = GameState.battle_backdrop()
 	scene.backdrop = str(trainer.get("backdrop", worn if not worn.is_empty() else map.backdrop))
 	scene.backdrop_shade = float(trainer.get("shade", 0.0))
-	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
+	scene.outdoor = map.outdoor
+	# Night, festival and challenge themes (KAMPF_PLAN_1000 713-717); a Warden keeps its own.
+	scene.music_track = BattleAudio.theme(str(trainer.get("theme", "")), bool(trainer.get("warden", false)), not Festival.active().is_empty(),
+		map.outdoor and GameState.day_night and DayCycle.current() == DayCycle.Phase.NIGHT)
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0
@@ -4009,6 +4074,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.boss_hp_scale = GameState.BOSS_HP_SCALE[GameState.difficulty]
 	model.boss_difficulty = GameState.difficulty
 	model.field = str(trainer.get("field", map.field))
+	model.day_phase = DayCycle.current() if map.outdoor and GameState.day_night else -1
 	model.foe_rule = str(trainer.get("rule", ""))
 	# Rule variants of a tower floor or the weekly challenge (item 799).
 	var vids: Variant = trainer.get("variants", [])
@@ -4047,6 +4113,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	var front: Array = trainer.get("front", [1, 1])
 	model.front_size = [int(front[0]), int(front[1])]
 	model.foe_boss = str(trainer.get("boss", ""))
+	model.foe_formation = bool(trainer.get("formation", false))
 	var goal_key: String = str(trainer.get("goal_key", ""))
 	var goal: Dictionary = BattleGoals.all().get(goal_key, {}) if not goal_key.is_empty() and GameState.bonus_goals else {}
 	if not goal.is_empty():
@@ -4063,7 +4130,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		else:
 			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng)
 		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)),
-			int(partner.get("ai", TrainerData.partner_ai(GameState.difficulty))), str(partner.get("profile", "")))
+			MultiRules.partner_ai(int(partner.get("ai", TrainerData.partner_ai(GameState.difficulty))), GameState.difficulty), str(partner.get("profile", "")))
 	# Challenge rules and the difficulty's crit and Growth touches (KAMPF plan area 13).
 	ChallengeRules.apply_to_model(model, trainer, map.id)
 	return model

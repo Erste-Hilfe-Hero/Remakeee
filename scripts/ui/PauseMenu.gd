@@ -73,6 +73,8 @@ func run_ledger() -> void:
 
 func run() -> void:
 	close_all = false
+	# Unopened Lantern Mail for the Friends dot (item 1872), asked without waiting.
+	MenuDots.refresh_mail()
 	if open_on == "Goals":
 		open_on = ""
 		await run_goals()
@@ -97,7 +99,8 @@ func run() -> void:
 		var quick: Array[String] = []
 		if bool(lay.get("quick_bar", false)):
 			quick = EraMenus.quick_list(GameState.flags, labels)
-		var entries: Array[Dictionary] = EraMenuKit.pause_entries(labels, Goals.pending() > 0, lay)
+		MenuDots.baseline()
+		var entries: Array[Dictionary] = EraMenuKit.pause_entries(labels, Goals.pending() > 0, lay, MenuDots.dotted(labels))
 		var idx: int = await pick_screen("pause", menu_title(current_map), entries, {"focus": maxi(0, labels.find(last_label)),
 			"tabs": quick, "tab": -1, "tab_icons": quick.map(func(l: String) -> Texture2D: return EraMenuKit.icon_for(l, lay)), "header": EraMenuKit.clock_strip() if str(lay.get("header", "none")) == "clock" else null})
 		var chosen: String = ""
@@ -112,6 +115,7 @@ func run() -> void:
 			chosen = await run_shortcuts(labels)
 			if chosen.is_empty():
 				continue
+		MenuDots.mark_seen(chosen)
 		match chosen:
 			"Goals": await run_goals()
 			"Map book": await MapBookMenu.run(self)
@@ -730,6 +734,10 @@ func run_team() -> void:
 		if idx < 0 or idx >= GameState.party.size():
 			return
 		var s: Spirling = GameState.party[idx]
+		# Item 1789: holding a row opens the summary straight away.
+		if picker.last_long:
+			await run_summary(s, idx == 0, idx)
+			continue
 		var opts: Array[String] = ["Summary", "Lead the team", "Move to slot...", "Use item", "Keepsake", "Nickname"]
 		# Every kind that can unfold shows the option; if it isn't ready yet, it says what it needs.
 		if not s.data.unfold.is_empty():
@@ -834,6 +842,8 @@ func _unfurl(s: Spirling, forward: bool) -> void:
 			target = ready[pick]
 	if target == null:
 		return
+	if forward:
+		await info("\n".join(BattleGuide.unfold_preview(s, target)))
 	var q: String = ("Unfurl %s into %s? You can furl it back later." if forward else "Furl %s back into %s? You can unfurl it again later.") % [old_name, target.species_name]
 	if not await confirm(q):
 		return
@@ -915,13 +925,33 @@ func _usable_items() -> Array[String]:
 	for id: Variant in GameState.inventory:
 		var it: Dictionary = Database.item(str(id))
 		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))
-				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false))
+				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false)) or bool(it.get("spark_reset", false))
 				or bool(it.get("unfurl_any", false)) or bool(it.get("gift_slot", false))):
 			out.append(str(id))
 	return out
 
 ## Satchel tabs (item 1914) and which tab an item belongs to.
 const BAG_TABS: Array[String] = ["Care", "Keepsakes", "Crystals", "Gear", "Special"]
+## The new-thing dot at the right end of a satchel row, gone once the row had the focus.
+static func _draw_new_dot(b: Button, id: String) -> void:
+	if not GameState.new_items.has(id) or b.has_focus():
+		return
+	var ink: Color = b.get_theme_color("font_color", "Button")
+	b.draw_rect(Rect2(b.size.x - 5, floorf(b.size.y / 2.0) - 1, 3, 3), ink)
+
+## Name, count and what a satchel thing does, for a long press on its row.
+static func item_details(id: String) -> String:
+	var it: Dictionary = Database.item(id)
+	var lines: Array[String] = ["%s x%d" % [Loc.t(str(it.get("name", id))), GameState.item_count(id)]]
+	var desc: String = str(it.get("description", ""))
+	if not desc.is_empty():
+		lines.append(Loc.t(desc))
+	if battle_only(it):
+		lines.append(Loc.t(BATTLE_ONLY))
+	elif bool(it.get("gear", false)):
+		lines.append(gear_hint(id))
+	return "\n".join(lines)
+
 ## Satchel orders (item 1917); the choice is kept in GameState.bag_sort.
 const BAG_SORTS: Array[String] = ["New", "Name", "Kind"]
 ## What a list returns when its sort switch in the title row is tapped.
@@ -1020,6 +1050,10 @@ func run_bag() -> void:
 			var pic: Texture2D = EraMenuKit.icon_for("pocket%d" % bag_tab(it0), lay)
 			if pic != null:
 				row["icon"] = pic
+			# A dot until the row has had the focus once (item 1918).
+			if GameState.new_items.has(id):
+				row["decorate"] = func(b: Button) -> void: _draw_new_dot(b, id)
+				row["say"] = "new"
 			entries.append(row)
 		# If it was used up, the row that took its place gets the focus.
 		var focus: int = ids.find(last_id)
@@ -1032,8 +1066,14 @@ func run_bag() -> void:
 			pocket.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			head.add_child(pocket)
 		head.add_child(sort_toggle())
+		var seen_new: Callable = func(i: int) -> void:
+			if i >= 0 and i < ids.size():
+				GameState.new_items.erase(str(ids[i]))
+		picker.row_focused.connect(seen_new)
 		var idx: int = await pick_screen("bag", "Satchel", entries, {"focus": focus, "tabs": ([] as Array[String]) if flat else tabs, "tab": tab, "header": head,
 			"tab_icons": EraMenuKit.pocket_tab_icons(tab_ids, lay)})
+		if picker.row_focused.is_connected(seen_new):
+			picker.row_focused.disconnect(seen_new)
 		if ListPicker.tab_of(idx) >= 0:
 			tab = ListPicker.tab_of(idx)
 			last_idx = -1
@@ -1048,6 +1088,10 @@ func run_bag() -> void:
 		last_id = item_id
 		last_idx = idx
 		var it: Dictionary = Database.item(item_id)
+		# Item 1789: holding a row shows what the thing does instead of using it.
+		if picker.last_long:
+			await info(item_details(item_id))
+			continue
 		if it.has("teaches"):
 			await _teach_echo(item_id)
 		elif int(it.get("spark", 0)) > 0:

@@ -514,6 +514,12 @@ func push_team() -> void:
 func contribute(kind: String, amount: int = 1) -> void:
 	await send_small("community_add", {"p_kind": kind, "p_amount": amount})
 
+## Sends the floor reached on the lighthouse stair ("stair") or in the echo tower ("tower") to
+## this week's climb board (KAMPF_PLAN_1000 items 512, 553), when that board is switched on.
+func climb_submit(kind: String, floor_no: int) -> void:
+	if state == State.ONLINE and flag_on("climb_board") and floor_no > 0:
+		await call_fn("climb_submit", {"p_kind": kind, "p_floor": floor_no})
+
 # --- Small actions (plan item 3011) -------------------------------------------------------
 
 ## Sends a set phrase, wave, thanks or world goal step. With a weak connection it waits in
@@ -601,6 +607,9 @@ static func card_numbers() -> Dictionary:
 	# A worn title from the battle halls or goals (KAMPF_PLAN_1000); the server keeps known titles only.
 	if not BattleHalls.worn_title().is_empty():
 		out["title"] = BattleHalls.worn_title()
+	# How many challenge rules this journey runs with (KAMPF_PLAN_1000 item 493).
+	if ChallengeRules.any_active():
+		out["rules"] = ChallengeRules.active_ids().size()
 	return out
 
 ## True while a battle screen runs: a lost connection then does not pause it (KAMPF_PLAN_1000).

@@ -213,6 +213,9 @@
   "leads the team, worn out": "lidera a equipe, esgotado",
   "seen": "visto",
   "unavailable": "indisponível",
-  "worn out": "esgotado"
+  "worn out": "esgotado",
+  "new": "novo",
+  "Auto text: %s": "Texto automático: %s",
+  "Talk in the world goes on by itself after a short read.": "As conversas no mundo avançam sozinhas após uma breve leitura."
  }
 }

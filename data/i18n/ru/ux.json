@@ -213,6 +213,9 @@
   "Nothing to swap.": "Менять нечего.",
   "Swap %s with whom?": "Кем заменить %s?",
   "Swap with team...": "Сменить с командой...",
-  "seen": "встречен"
+  "seen": "встречен",
+  "new": "новое",
+  "Auto text: %s": "Автотекст: %s",
+  "Talk in the world goes on by itself after a short read.": "Диалоги в мире сами идут дальше после короткой паузы."
  }
 }

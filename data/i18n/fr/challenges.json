@@ -1,9 +1,12 @@
 {
  "_comment": "fr translation of the challenges table, keyed by the English text.",
  "strings": {
+  "%s also gives you: %s.": "%s vous donne aussi : %s.",
+  "%s raises a signal lantern. Battle now?": "%s lève une lanterne de signal. Combattre maintenant ?",
   "%s: %d won, %d lost": "%s : %d gagnés, %d perdus",
   "A rule was dropped on the way.": "Une règle s'est perdue en route.",
   "Ace Up Front": "L'as en tête",
+  "Answer the signal": "Répondre au signal",
   "Battles won: %d, lost: %d": "Combats gagnés: %d, perdus: %d",
   "Bonds only form at night.": "Les liens ne se forment que la nuit.",
   "Challenge record": "Bilan des défis",
@@ -14,6 +17,8 @@
   "Copies the seed. A friend who uses it gets the same shuffled wilds and arts.": "Copie la graine. Un ami qui l'utilise obtient les mêmes sauvages et techniques mélangés.",
   "Drop %s? Your record will remember it.": "Abandonner %s? Ton bilan s'en souviendra.",
   "Drop it": "L'abandonner",
+  "Echo tower": "Tour écho",
+  "Echo tower, highest floor this week": "Tour écho, étage le plus haut cette semaine",
   "Every Spirling that bonds with you knows arts drawn by your run seed.": "Chaque Spirling qui se lie à toi connaît des techniques tirées par la graine de ta partie.",
   "Extra rules for a harder journey. Taken before your first Rift, dropped any time.": "Des règles en plus pour un voyage plus rude. À prendre avant ta première Faille, à abandonner quand tu veux.",
   "Extra rules for a harder journey: One per Place, First Meeting, Spring Water Only, Shuffled Wilds and Arts, Stand Your Ground, Half Rested, Ace Up Front, Night Bonds, One Colour, Empty Pockets, Off the Books and Trust No One. Any of them combine. They are taken before the first mended Rift and can be dropped at any time; the record remembers. The shuffles follow a seed code you can share with friends.": "Des règles en plus pour un voyage plus rude: Un par lieu, Première rencontre, Eau de source seulement, Sauvages et techniques mélangés, Tiens bon, Repos à moitié, L'as en tête, Liens nocturnes, Une seule couleur, Poches vides, Au noir et Ne te fie à personne. Toutes se combinent. Elles se prennent avant de raccommoder la première Faille et s'abandonnent à tout moment; le bilan s'en souvient. Les mélanges suivent un code de graine que tu peux partager avec tes amis.",
@@ -26,6 +31,7 @@
   "Keep it": "La garder",
   "Lantern post: %s would battle you again today.": "Poste-lanterne : %s veulent vous affronter à nouveau aujourd'hui.",
   "Lantern post: no rematch invitations today.": "Poste-lanterne : aucune invitation à une revanche aujourd'hui.",
+  "Lighthouse stair, highest floor this week": "Escalier du phare, étage le plus haut cette semaine",
   "Most battled:": "Les plus affrontés :",
   "New rules can only be taken before you mend your first Rift.": "On ne peut prendre de nouvelles règles qu'avant de raccommoder sa première Faille.",
   "Night Bonds": "Liens nocturnes",
@@ -55,6 +61,7 @@
   "Spring Water Only: no healing items on this journey.": "Eau de source seulement: aucun objet de soin pendant ce voyage.",
   "Stand Your Ground": "Tiens bon",
   "Takes a seed a friend shared with you.": "Utilise une graine qu'un ami t'a partagée.",
+  "The lantern dims. Talk to them when you are ready.": "La lanterne s'éteint. Parlez-lui quand vous serez prêt.",
   "The wild Spirlings of every place are shuffled by your run seed.": "Les Spirlings sauvages de chaque lieu sont mélangés selon la graine de ta partie.",
   "There is no seed code on the clipboard.": "Il n'y a pas de code de graine dans le presse-papiers.",
   "This journey is now in the run chronicle: %s.": "Ce voyage figure maintenant dans la chronique des parties: %s.",
@@ -65,7 +72,9 @@
   "Wayfarer book": "Carnet des Voyageurs",
   "Wayfarers lead with their strongest Spirling.": "Les voyageurs commencent avec leur Spirling le plus fort.",
   "Wayfarers' Spirlings stay close to your strongest one, within the ring cap.": "Les Spirlings des Voyageurs restent proches de votre plus fort, dans la limite d'anneau.",
+  "Win Wayfarer battles": "Gagner des combats contre des Voyageurs",
   "With challenge rules": "Avec règles de défi",
-  "best in %d turns": "record en %d tours"
+  "best in %d turns": "record en %d tours",
+  "floor %d": "étage %d"
  }
 }
