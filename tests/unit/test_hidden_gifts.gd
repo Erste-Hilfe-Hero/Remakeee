@@ -28,7 +28,7 @@ func test_whole_line_shares_one_gift() -> void:
 		assert_eq(HiddenGifts.gift_id(sd), HiddenGifts.gift_id(GameState.first_form(sd)), sd.species_name)
 
 func test_gift_effects_use_known_keys() -> void:
-	var keys: Array[String] = ["label", "text", "scorch_atk", "phys_taken", "regen_div", "energy_per_turn", "immune", "low_hp_boost"]
+	var keys: Array[String] = ["label", "text", "scorch_atk", "phys_taken", "regen_div", "energy_per_turn", "immune", "low_hp_boost", "super_taken", "countercurrent"]
 	for id: String in HiddenGifts.data().gifts:
 		for k: String in HiddenGifts.gift(id):
 			assert_true(k in keys, id + " uses " + k)

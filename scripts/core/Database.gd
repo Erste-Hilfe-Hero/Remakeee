@@ -88,7 +88,11 @@ static func parse_move(m: Dictionary) -> MoveData:
 	if m.has("field"):
 		md.effects.append({"id": &"set_field", "field": str(m.field)})
 	if m.has("effect"):
-		md.effects.append({"id": StringName(m.effect), "amount": float(m.get("effect_amount", 0.0))})
+		var fx: Dictionary = {"id": StringName(m.effect), "amount": float(m.get("effect_amount", 0.0))}
+		# "effect_params": extra keys for the effect, e.g. {"stat": "def"} (TechniqueRules arts).
+		if m.get("effect_params", null) is Dictionary:
+			fx.merge(m.effect_params)
+		md.effects.append(fx)
 	md.cooldown = int(m.get("cooldown", 0))
 	if m.has("vs_status"):
 		md.effects.append({"id": &"bonus_vs_status", "vs_status": str(m.vs_status), "vs_mult": float(m.get("vs_mult", 1.5))})
