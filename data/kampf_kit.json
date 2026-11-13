@@ -5,7 +5,7 @@
   "prism_skin": {"label": "Prism Skin", "text": "Very effective hits on it lose a quarter of their force.", "super_taken": 0.75},
   "counter_current": {"label": "Counter Current", "text": "Hits it already shrugs off lose even more force.", "resist_taken": 0.7},
   "quiet_heart": {"label": "Quiet Heart", "text": "Shakes off its condition when it steps back to the bench.", "swap_cure": true},
-  "glow_hide": {"label": "Glow Hide", "text": "A physical art that hits it may Scorch the attacker.", "contact_scorch": 0.3},
+  "glow_hide": {"label": "Glow Hide", "text": "A physical art that hits it may Scorch whoever struck it.", "contact_scorch": 0.3},
   "pack_sense": {"label": "Pack Sense", "text": "Hits 15% harder while more than one Spirling stands on each side.", "multi_mult": 1.15},
   "loner": {"label": "Loner", "text": "Hits 10% harder in a battle of one against one.", "solo_mult": 1.1},
   "sentinel": {"label": "Sentinel", "text": "On its first turn in front it acts before any other art.", "first_act": true},

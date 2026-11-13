@@ -9,7 +9,7 @@ T = {
 "Quiet Heart": "Ruhiges Herz",
 "Shakes off its condition when it steps back to the bench.": "Schüttelt seinen Zustand ab, wenn es auf die Bank zurücktritt.",
 "Glow Hide": "Glimmhaut",
-"A physical art that hits it may Scorch the attacker.": "Eine physische Technik, die es trifft, kann dem Angreifer Brand zufügen.",
+"A physical art that hits it may Scorch whoever struck it.": "Eine physische Technik, die es trifft, kann dem Angreifer Brand zufügen.",
 "Pack Sense": "Rudelsinn",
 "Hits 15% harder while more than one Spirling stands on each side.": "Trifft 15% härter, solange auf jeder Seite mehr als ein Spirling steht.",
 "Loner": "Einzelgänger",
