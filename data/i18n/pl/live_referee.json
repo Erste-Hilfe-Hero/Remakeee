@@ -1,0 +1,33 @@
+{
+ "_comment": "pl translation of the live_referee table, keyed by the English text.",
+ "strings": {
+  "%s Ring %d (from %s)": "%s Ranga %d (od: %s)",
+  "%s beats %s": "%s pokonuje: %s",
+  "(borrowed)": "(pożyczony)",
+  "Close": "Zamknij",
+  "Could not save the picture.": "Nie udało się zapisać obrazka.",
+  "Draw": "Remis",
+  "Enter the duel": "Dołącz do pojedynku",
+  "It joins this one duel. After that the loan is used up.": "Dołącza do tego jednego pojedynku. Potem pożyczka się kończy.",
+  "Leave (the duel goes on)": "Wyjdź (pojedynek trwa dalej)",
+  "Live duel": "Pojedynek na żywo",
+  "Menu": "Menu",
+  "No friend has lent you a Spirling right now.": "Żaden przyjaciel nie pożyczył ci teraz Spirlinga.",
+  "No winner": "Brak zwycięzcy",
+  "Result picture saved with your photos.": "Obrazek z wynikiem zapisany w twoich zdjęciach.",
+  "Rounds: %d": "Rundy: %d",
+  "Save a result picture": "Zapisz obrazek z wynikiem",
+  "Stop watching": "Przestań oglądać",
+  "Take a borrowed Spirling along": "Weź pożyczonego Spirlinga",
+  "Take a borrowed Spirling along? It joins this one attempt, then the loan is used up.": "Wziąć pożyczonego Spirlinga? Dołączy do tej jednej próby, potem pożyczka się kończy.",
+  "That loan has ended.": "Ta pożyczka się skończyła.",
+  "The duel is not over yet.": "Pojedynek jeszcze się nie skończył.",
+  "The referee checks the duel.": "Sędzia sprawdza pojedynek.",
+  "The result picture is in your downloads.": "Obrazek z wynikiem jest w twoich pobranych plikach.",
+  "This battle cannot be shown any more.": "Tej walki nie da się już pokazać.",
+  "Top: %s  Bottom: %s": "Góra: %s  Dół: %s",
+  "Without a borrowed Spirling": "Bez pożyczonego Spirlinga",
+  "You already used a borrowed Spirling here.": "Pożyczony Spirling był tu już użyty.",
+  "Your last duel": "Twój ostatni pojedynek"
+ }
+}

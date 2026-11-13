@@ -1,0 +1,9 @@
+{
+ "_comment": "ko translation of the move_effects table, keyed by the English text.",
+ "strings": {
+  "Costs %d%% of its own Vigor, never the last point.": "자기 기력의 %d%%를 소모한다. 마지막 1은 남긴다.",
+  "Cures the status of its whole team.": "팀 전체의 상태 이상을 치료한다.",
+  "Gains %d Energy.": "에너지를 %d 얻는다.",
+  "Sets every stage on both sides back to 0.": "양쪽의 모든 단계를 0으로 되돌린다."
+ }
+}
