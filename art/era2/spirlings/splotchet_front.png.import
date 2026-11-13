@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b45ngnltp52g3"
-path="res://.godot/imported/smudgeroth.png-1a6e1196d4d5fd98cf5f8e1bd5c5b7ba.ctex"
+uid="uid://dok3wiw6y66py"
+path="res://.godot/imported/splotchet_front.png-50b114213cee4d1901da7d77102083b0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/era2/spirling_icons/smudgeroth.png"
-dest_files=["res://.godot/imported/smudgeroth.png-1a6e1196d4d5fd98cf5f8e1bd5c5b7ba.ctex"]
+source_file="res://art/era2/spirlings/splotchet_front.png"
+dest_files=["res://.godot/imported/splotchet_front.png-50b114213cee4d1901da7d77102083b0.ctex"]
 
 [params]
 
