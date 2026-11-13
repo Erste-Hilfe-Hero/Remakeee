@@ -1,5 +1,5 @@
 {
- "_doc": "Look of the Era IV (Panorama) and Era V (Living) battle stage, read by scripts/battle/presenter/Era4Stage.gd (docs/ERA_FEEL_BATTLE.md, slice 5). The geometry (horizon, depth, slab places) stays in data/era4_stage.json. scenes: painted backdrop per scene in layers (sky, distant, far, mid, ground) with flat-topped turf slabs (no oval platforms, LEGAL.md layout rule). scene_rules picks the scene from the map biome and the battle terrain: biome_first, then terrain, then biome, else default. eras: per-era look. sprite: on-screen size target per side in px, snapped to a whole multiple of the art size (crisp), never above max. slabs: where the slabs of a single battle lie (x share, depth 0 horizon .. 1 bottom, width share at depth 1) on top of data/era4_stage.json, so the big back sprite stands low on the left with its slab in front and the foe stands back on the right. grade.indoor: share of the grade caves and night scenes take. shadow: offset of the slab shadow [dx, dy] (Era IV light from the upper left, Era V low sun on the right). grade: colour every scene colour is washed toward (Era V golden hour). animate: clouds drift, grass sways, water shimmers (off under reduced motion). sendout_zoom: Era V camera nudge when a Spirling steps out.",
+ "_doc": "Look of the Era IV (Panorama) and Era V (Living) battle stage, read by scripts/battle/presenter/Era4Stage.gd (docs/ERA_FEEL_BATTLE.md, slice 5). The geometry (horizon, depth, slab places) stays in data/era4_stage.json. scenes: painted backdrop per scene in layers (sky, distant, far, mid, ground) with flat-topped turf slabs (no oval platforms, LEGAL.md layout rule). scene_rules picks the scene from the map biome and the battle terrain: biome_first, then terrain, then biome, else default. eras: per-era look. sprite: on-screen size target per side in px, snapped to a whole multiple of the art size (crisp), never above max (round 2, owner 13 Nov: about halfway between Era III and the first redo, so 56 px art stands 112 px as the player and 56 px as the foe). slabs: where the slabs of a single battle lie (x share, depth 0 horizon .. 1 bottom, width share at depth 1) on top of data/era4_stage.json, so the big back sprite stands low on the left with its slab in front and the foe stands back on the right. grade.indoor: share of the grade caves and night scenes take. shadow: offset of the slab shadow [dx, dy] (Era IV light from the upper left, Era V low sun on the right). grade: colour every scene colour is washed toward (Era V golden hour). animate: clouds drift, grass sways, water shimmers (off under reduced motion). sendout_zoom: Era V camera nudge when a Spirling steps out.",
  "scene_rules": {
   "biome_first": {"cave": "cave", "dungeon": "cave"},
   "terrain": {"lake": "water", "ridge": "snow", "ember": "ember", "voice": "voice", "moon_lake": "water", "mist_harbour": "water", "glass_grotto": "cave", "ash_field": "ember"},
@@ -12,16 +12,16 @@
    "grade": {"colour": "ffffff", "amount": 0.0}, "horizon_glow": {"colour": "ffffff", "amount": 0.0},
    "shadow": [5, 3], "rim": "", "thickness": 12, "clouds": 4, "cloud_speed": 0.0,
    "tufts": 150, "sway": 0.0, "sway_speed": 0.0, "shimmer": false, "sendout_zoom": 1.0,
-   "sprite": {"foe": 104, "player": 160, "max": 192},
-   "slabs": {"foe": {"x": 0.74, "depth": 0.28, "width": 0.62}, "player": {"x": 0.28, "depth": 0.74, "width": 0.86}}
+   "sprite": {"foe": 72, "player": 128, "max": 128},
+   "slabs": {"foe": {"x": 0.72, "depth": 0.32, "width": 0.42}, "player": {"x": 0.3, "depth": 0.72, "width": 0.62}}
   },
   "5": {
    "animate": true, "sun": true, "rays": 4, "ray_alpha": 0.07, "vignette": 0.2,
    "grade": {"colour": "ff9a50", "amount": 0.17, "indoor": 0.4}, "horizon_glow": {"colour": "ffcc80", "amount": 0.55},
    "shadow": [-11, 3], "rim": "ffe2a0", "thickness": 14, "clouds": 6, "cloud_speed": 4.0,
    "tufts": 190, "sway": 1.0, "sway_speed": 2.2, "shimmer": true, "sendout_zoom": 1.08,
-   "sprite": {"foe": 104, "player": 160, "max": 192},
-   "slabs": {"foe": {"x": 0.74, "depth": 0.28, "width": 0.62}, "player": {"x": 0.28, "depth": 0.74, "width": 0.86}}
+   "sprite": {"foe": 72, "player": 128, "max": 128},
+   "slabs": {"foe": {"x": 0.72, "depth": 0.32, "width": 0.42}, "player": {"x": 0.3, "depth": 0.72, "width": 0.62}}
   }
  },
  "scenes": {

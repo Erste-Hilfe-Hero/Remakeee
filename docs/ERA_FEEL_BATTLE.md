@@ -148,9 +148,20 @@ bars stay 5 px (1.7x Era III): a thicker bar would push the formation ledger int
 Old Spirlings keep their origin-era art, only drawn bigger. Under reduced motion the stage
 stands still, there is no send-out camera, and the light holds still.
 
+## Slice 6: Era IV and V round 2 (owner 13 Nov: "era 4 und 5 sind irgendwie größer als davor")
+
+- Size: the Spirlings stand about halfway between Era III and slice 5, still whole multiples of
+  their art (`data/era45_stage.json` sprite: player 128, foe 72, max 128). 56 px art: player
+  112 (2x), foe 56 (1x); 64 px: 128 / 64; 96 px: 96 / 96. The slabs shrank with them.
+- Command column: the commands and the item shortcut stand in a column beside the arts
+  (`data/era_battle_hud.json` commands "column"), so the arts stay one column but the panel is
+  about 50 px lower and the painted field about 300 px tall instead of 250.
+- Vigor bar: 8 px on the two plates of a one-on-one battle (`bar_h_single`); the formation
+  ledger keeps `bar_h` (5 px), so the foes' rank does not move.
+- Tests: `tests/unit/test_era45_round2.gd`, `test_era45_look.gd` (size between Era III and slice 5).
+
 ## Still missing (follow-ups)
 
 - Battle text box frame per era: shared with menus, so it belongs to the erafeel-ui slice.
 - Hand-drawn Era IV/V art for the Spirlings that have none yet (they show the placeholder, so they
   get no Era V strip). Era V art for 70 Quivermoor Spirlings exists but has no species data yet.
-- Era IV/V battle menu: the two-line art buttons leave the field about 250 px tall.

@@ -70,11 +70,15 @@ func test_sprites_are_whole_multiples_of_their_art() -> void:
 				assert_gte(px, art)
 				assert_lte(px, 192.0)
 
-func test_spirlings_stand_bigger_than_in_era_three() -> void:
-	# Era III draws 64 px on a 180 px screen; Era IV/V on 270 px.
-	for art: float in [56.0, 64.0, 96.0]:
-		assert_gte(Era45Look.sprite_px(4, "player", art) / 270.0, ERA3_SHARE * 1.5, "player art %d at least 1.5x" % art)
-		assert_gte(Era45Look.sprite_px(4, "foe", art) / 270.0, ERA3_SHARE, "foe art %d no smaller" % art)
+func test_spirlings_stand_between_era_three_and_the_first_redo() -> void:
+	# Era III draws 64 px on a 180 px screen; Era IV/V on 270 px. The owner found the first redo
+	# (player up to 1.5x the Era III share) too big (13 Nov), so the player stands about halfway.
+	for e: int in [4, 5]:
+		for art: float in [56.0, 64.0, 96.0]:
+			var player: float = Era45Look.sprite_px(e, "player", art)
+			assert_gte(player / 270.0, ERA3_SHARE, "player art %d no smaller than Era III" % art)
+			assert_lt(player / 270.0, ERA3_SHARE * 1.5, "player art %d below the first redo" % art)
+			assert_lte(Era45Look.sprite_px(e, "foe", art), player, "the foe never outgrows the player")
 
 func test_snap_keeps_the_cap() -> void:
 	assert_eq(Era45Look.snap_px(160.0, 96.0, 192.0), 192.0)
