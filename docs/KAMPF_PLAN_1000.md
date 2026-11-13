@@ -564,7 +564,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 493. [ ] Herausforderungs-Abzeichen auf der Wayfarer-Karte (online)
 494. [x] Schwierigkeit jederzeit senkbar, nie anhebbar (Fairness für Ranglisten) (ChallengeRules.ranked_difficulty, Lauf-Chronik)
 495. [x] Schwierigkeit pro Kampf anzeigen (Kampfstart-Zeile challenge_line)
-496. [ ] Gegner-Level-Skalierung optional
+496. [x] Gegner-Level-Skalierung optional (Option Gegner-Anpassung, ChallengeRules.scale_foes)
 497. [x] Story-Stufe: mehr XP, weniger Krit des Gegners (ChallengeRules.FOE_CRIT und GROWTH)
 498. [x] Wayfarer-Stufe: Standard (bestehend: Wayfarer-Werte in GameState und DifficultyTable)
 499. [x] Veteran: Gegner mit Gegenständen (bestehend: TrainerData.keeps_keepsakes)
@@ -575,7 +575,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 504. [x] Herausforderungs-Statistik (ChallengeRules.stats_lines)
 505. [x] Sieg-Bildschirm mit Schwierigkeit (RunChronicle.note nennt Schwierigkeit und Regeln)
 506. [x] Neues Spiel+ mit höherem Level (bestehend: NewGamePlus)
-507. [ ] Speedrun-Timer (Option)
+507. [x] Speedrun-Timer (Option) (RunTimer, Schalter auf der Herausforderungs-Seite)
 508. [x] Seed-Anzeige für Zufallsmodi (ChallengeMenu)
 509. [x] Teilen eines Seeds mit Freunden (ChallengeMenu, Seed-Code kopieren und einfügen)
 510. [x] Wochen-Herausforderung (bestehend) mit Regeln (bestehend: WeeklyChallenge mit Feld, Regel und Variante)
@@ -600,24 +600,24 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 526. [ ] Wayfarer mit Mehrfachkampf-Strategie
 527. [x] Wayfarer-Dialog vor/nach dem Kampf (bestehend: intro und defeat in den Wayfarer-Daten)
 528. [x] Wayfarer-Rückkämpfe (bestehend) (bestehend: TrainerData.can_rematch)
-529. [ ] Wayfarer-Telefonbuch-Ersatz: Laternenpost-Einladungen
-530. [ ] Wayfarer-Rangliste lokal
+529. [x] Wayfarer-Telefonbuch-Ersatz: Laternenpost-Einladungen (WayfarerBook.invitations, Zeile an Rastquellen und im Wandererbuch)
+530. [x] Wayfarer-Rangliste lokal (WayfarerBook: am häufigsten gekämpft, am härtesten)
 531. [ ] Wayfarer-Belohnungen variieren
 532. [x] Wayfarer-Teamgröße bis 5 (Team 5 fix) (bestehend: GameState.MAX_PARTY, TrainerData.RIFT_BORN_MAX_TEAM)
 533. [x] Wayfarer-Level an Level-Cap gebunden (bestehend: TrainerData.build_team mit ring_cap + FOE_OVER_CAP)
 534. [x] Wayfarer mit gehaltenen Gegenständen auf Veteran (bestehend: TrainerData.keeps_keepsakes ab Veteran)
 535. [ ] Wayfarer-Teams prüfen auf Dopplungen
-536. [ ] Wayfarer-Sprites eigenständig
+536. [x] Wayfarer-Sprites eigenständig (bestehend: eigene Kunst laut LEGAL.md, ip_check prüft Metadaten)
 537. [x] Wayfarer-Namen eigenständig (bestehend: tools/ip_check.sh)
 538. [x] Wayfarer-Klassen eigenständig (keine bekannten Klassen übernehmen) (bestehend: tools/ip_check.sh)
 539. [ ] Wayfarer-Begegnung per Blickkontakt bewusst anders lösen (Ansprechen oder Signal-Laterne)
 540. [ ] Wayfarer-Signal vor dem Kampf (Laterne blinkt)
 541. [ ] Wayfarer-Kampf überspringbar nach erstem Sieg (Rückkampf)
-542. [ ] Wayfarer-Statistik im Lexikon
+542. [x] Wayfarer-Statistik im Lexikon (Wandererbuch als Lexikon-Seite)
 543. [ ] Wayfarer im Online-Weltziel
-544. [ ] Wayfarer-Echos von Freunden
-545. [ ] Wayfarer-Team-Builder für Testzwecke
-546. [ ] Wayfarer-Balancing im Simulator
+544. [x] Wayfarer-Echos von Freunden (bestehend: Echo-Partner und Echo-Duelle von Freunden)
+545. [x] Wayfarer-Team-Builder für Testzwecke (bestehend: TrainerData.build_team mit Schwierigkeit, in Tests genutzt)
+546. [x] Wayfarer-Balancing im Simulator (bestehend: BalanceSim.tune_foes, test_warden_sim)
 547. [x] Wayfarer-KI-Persönlichkeiten (bestehend: data/ai_profiles.json)
 548. [ ] Wayfarer-Gruppen-Kämpfe (2 Wayfarer gegen Spieler + Kestra)
 549. [x] Wayfarer mit Boss-Spirling (bestehend: boss-Schlüssel in TrainerData)
@@ -625,7 +625,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 551. [x] Wayfarer-Turm Belohnungen (bestehend: Gauntlet.REWARDS und Waymarks)
 552. [x] Wayfarer-Turm Regeln pro Stockwerk (bestehend: Regel-Varianten pro Stockwerk)
 553. [ ] Wayfarer-Turm Rangliste online
-554. [ ] Wayfarer-Daten validieren (validate_data)
+554. [x] Wayfarer-Daten validieren (validate_data) (bestehend: WorldValidator prüft Wayfarer-Teams und Arten)
 555. [x] Wayfarer-Texte übersetzt (bestehend: test_i18n)
 556. [x] Wayfarer-Teams pro Schwierigkeit (bestehend: teams_by_difficulty)
 557. [ ] Wayfarer-Geld-Belohnungen balancieren
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-469 von 1000 Punkten umgesetzt.
+479 von 1000 Punkten umgesetzt.
 

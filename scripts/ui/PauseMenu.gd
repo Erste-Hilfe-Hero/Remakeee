@@ -455,7 +455,7 @@ func run_records() -> void:
 			lines.append("Memorial book")
 		if not Album.stickers().is_empty():
 			lines.append("Sticker wall")
-		if not Lexicon.collected(GameState.records).is_empty():
+		if not Lexicon.collected(GameState.records).is_empty() or not WayfarerBook.entries().is_empty():
 			lines.append("Lexicon")
 		lines.append("Battle guide")
 		var last: Dictionary = GameState.records.get("last_battle", {})
@@ -505,7 +505,8 @@ func run_era_functions() -> void:
 func run_lexicon() -> void:
 	var ids: Array[String] = Lexicon.collected(GameState.records)
 	# The first page counts the bonus goals met per map (item 767).
-	var titles: Array[String] = [Loc.t("Bonus goals")]
+	# The second page is the Wayfarer book: rankings and the lantern post (KAMPF plan 529-542).
+	var titles: Array[String] = [Loc.t("Bonus goals"), Loc.t("Wayfarer book")]
 	for id: String in ids:
 		titles.append(Lexicon.title(id))
 	while true:
@@ -514,10 +515,12 @@ func run_lexicon() -> void:
 			return
 		if i == 0:
 			await info(BattleGoals.lexicon_text(GameState.records))
+		elif i == 1:
+			await info(WayfarerBook.page(DailyFind.today_key()))
 		else:
-			var page: String = Loc.t(Lexicon.text(ids[i - 1]))
+			var page: String = Loc.t(Lexicon.text(ids[i - 2]))
 			# The bond page carries the live counts (KAMPF_PLAN "Bond-Statistik im Lexikon").
-			if ids[i - 1] == WildRules.BOND_LEXICON:
+			if ids[i - 2] == WildRules.BOND_LEXICON:
 				page += "\n\n" + "\n".join(WildRules.bond_lines(GameState.records))
 			await info(page)
 

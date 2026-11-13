@@ -255,6 +255,8 @@ func _build() -> void:
 	DayCycle.events.phase_changed.connect(_on_phase_changed)
 	minimap = Minimap.new()
 	_ui_root.add_child(minimap)
+	# Speed-run clock, only when switched on for the journey (KAMPF plan 507).
+	_ui_root.add_child(RunTimer.new())
 	_door_wipe = ColorRect.new()
 	_door_wipe.color = UITheme.INK
 	_door_wipe.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -3405,6 +3407,7 @@ func challenge(n: NPC, spotted: bool) -> void:
 	_warden_battle = def.has("warden")
 	var outcome: BattleModel.Outcome = await start_battle(team, bool(info.wild), info)
 	_warden_battle = false
+	_note_wayfarer(def, outcome)
 	if not bool(info.wild) and outcome != BattleModel.Outcome.FLED:
 		Tailwind.note_outcome(GameState.records, lost_key, outcome == BattleModel.Outcome.WIN)
 	if tailwind:
@@ -3498,6 +3501,11 @@ static func oath_lines(retired: Array[String]) -> Array[String]:
 
 static func _today() -> String:
 	return DailyFind.today_key()
+
+## Books a Wayfarer battle in the Wayfarer book (KAMPF plan 530, 542); a battle left early is not booked.
+func _note_wayfarer(def: Dictionary, outcome: BattleModel.Outcome) -> void:
+	if outcome == BattleModel.Outcome.WIN or outcome == BattleModel.Outcome.LOSS:
+		WayfarerBook.note(def, map.id, outcome == BattleModel.Outcome.WIN, last_model.turn if last_model != null else 0)
 
 func _mark_rematch(def: Dictionary) -> void:
 	var rec: Dictionary = (GameState.records.get("rematch", {}) as Dictionary).duplicate()
@@ -3717,6 +3725,7 @@ func offer_rematch(n: NPC) -> bool:
 	info["rematch"] = true
 	info["money"] = TrainerData.REMATCH_MONEY_PER_LEVEL * team.reduce(func(m: int, s: Spirling) -> int: return maxi(m, s.level), 0)
 	var outcome: BattleModel.Outcome = await start_battle(team, false, info)
+	_note_wayfarer(def, outcome)
 	if outcome == BattleModel.Outcome.WIN:
 		_mark_rematch(def)
 		GameState.records["rematch_wins"] = int(GameState.records.get("rematch_wins", 0)) + 1
