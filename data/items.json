@@ -2521,5 +2521,32 @@
   },
   "price": 1500,
   "tradeable": false
+ },
+ {
+  "id": "echo_magma_rush",
+  "name": "Echo Crystal: Magma Rush",
+  "description": "Teaches Magma Rush to an Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Magma Rush",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_tidal_gust",
+  "name": "Echo Crystal: Tidal Gust",
+  "description": "Teaches Tidal Gust to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Tidal Gust",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_clean_slate",
+  "name": "Echo Crystal: Clean Slate",
+  "description": "Teaches Clean Slate to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Clean Slate",
+  "price": 3000,
+  "tradeable": false
  }
 ]

@@ -1,7 +1,8 @@
 {
  "_doc": "Lexicon entries (plan area 2, items 680, 759). Key: entry id as stored in GameState.records[\"lexicon\"]. Granted by bonus goals (battle_goals.json \"lore\") or by a Wayfarer's \"lexicon\" key after a win.",
  "cartographers": {"title": "The cartographers", "text": "Kestra's guild draws every road of Veydal again each year. A map that is not walked goes wrong, they say, and a Wayfarer who keeps all their Spirlings standing walks it best."},
- "reactions": {"title": "Reactions", "text": "An art can set off a status already on its target: Ember on a Soaked foe dries it with a burst, Stone shakes off a Jolt. The battle log names every reaction it sees."},
+ "reactions": {"title": "Reactions", "text": "An art can set off a status already on its target. Volt races through a Soaked foe, Gale blows it dry and slows it, Tide douses Scorch, Stone grounds a Jolt, Lumen startles a Drowsing foe awake, and Ember burns the roots off a Rooted foe but sets it alight. The battle log names every reaction it sees."},
+ "dual_elements": {"title": "Two elements", "text": "A Spirling of two elements takes both factors at once: they multiply. Strong into both is x4, strong into one and resisted by the other is x1, resisted by both is x0.25. No hit ever does nothing."},
  "rift_mystics": {"title": "Rift mystics", "text": "The mystics at the Tide Rift listen to the Hush instead of fighting it. They chain reactions on purpose, one status feeding the next art."},
  "drowned_heart": {"title": "The Drowned Heart", "text": "The Hush gathered at the bottom of the Tide Rift into one heavy heart. It grows with every Spirling you field, so a full team does not crush it, it only meets it."},
  "warden_orrin": {"title": "Orrin's cover", "text": "Orrin knows that Tide puts out his embers. That is why Shalebat walks with him: its Stone hide and Hunker Down take the Tide arts you answer with, while Kindlop and Smoldrake build up Energy."},

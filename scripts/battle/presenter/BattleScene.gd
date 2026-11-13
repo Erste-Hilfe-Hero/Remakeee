@@ -687,7 +687,10 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 		if model.is_partner_index(BattleModel.Side.PLAYER, i):
 			continue
 		var s: Spirling = party[i]
-		entries.append({"text": "%s R%d %d/%d" % [s.display_name(), s.level, s.hp, s.max_hp()], "disabled": not i in candidates})
+		var row: String = "%s R%d %d/%d" % [s.display_name(), s.level, s.hp, s.max_hp()]
+		# KAMPF_PLAN_1000 item 119: a stepping-in warning against the foe's own elements.
+		var warn: String = TechniqueRules.switch_warning(model, BattleModel.Side.PLAYER, s) if i in candidates else ""
+		entries.append({"text": row + (" " + warn if not warn.is_empty() else ""), "disabled": not i in candidates})
 	while true:
 		var idx: int = await _picker.pick(title, entries, cancellable)
 		if idx < 0 or idx in candidates:
@@ -906,7 +909,8 @@ static func variant_list(m: BattleModel) -> String:
 
 func _toggle_log() -> void:
 	Sound.sfx("confirm")
-	_log_label.text = variant_list(model) + "Battle log\n\n" + ("\n".join(log_lines) if not log_lines.is_empty() else "Nothing yet.") + "\n\n(tap to close)"
+	var elem: String = TechniqueRules.element_summary(model)
+	_log_label.text = variant_list(model) + (elem + "\n\n" if not elem.is_empty() else "") + "Battle log\n\n" + ("\n".join(log_lines) if not log_lines.is_empty() else "Nothing yet.") + "\n\n(tap to close)"
 	_log_panel.visible = not _log_panel.visible
 
 ## A Gleam steps out: the sound cue and the sparkle (data/gleam.json).
@@ -1000,6 +1004,9 @@ func _play_event(e: BattleEvent) -> void:
 				var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, slot)
 				if foe != null:
 					GameState.learn_matchup(_last_player_element, foe.data.species_name, float(e.data.eff))
+					# KAMPF_PLAN_1000 item 84: the first hit on a two-element foe writes down how factors multiply.
+					if foe.elements().size() > 1:
+						Lexicon.add(GameState.records, "dual_elements")
 			if not bool(e.data.get("status_tick", false)):
 				await _hit_feedback(e, side, slot, hit == "hit_strong")
 			await _strip(side, slot).animate_hp(int(e.data.hp), int(e.data.max_hp))
