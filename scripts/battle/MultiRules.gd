@@ -108,7 +108,51 @@ static func describe(data: Dictionary, who: String) -> String:
 		"leader": return "%s leads the swarm!" % who
 		"combo": return "Combo, %s! The art hits %s harder." % [str(data.get("label", "")), who]
 		"leader_down": return "With %s down, the swarm falters!" % str(data.get("name", ""))
+		"shift": return "%s and %s trade places!" % [who, str(data.get("ally", ""))]
 	return ""
+
+# --- Trading places (item 366) ----------------------------------------------------------------
+
+## Party indices of the own Spirlings in the other slots of [param side] that the one in
+## [param slot] can trade places with (a Swap onto one of them). None in one-on-one or for a
+## tag partner's slots.
+static func shift_targets(m: BattleModel, side: int, slot: int) -> Array[int]:
+	var out: Array[int] = []
+	if m == null or not m.is_multi() or m.is_partner_slot(side, slot):
+		return out
+	for other: int in m.slot_count(side):
+		var i: int = m.active_index(side, other)
+		if other != slot and i >= 0 and m.is_standing(m.party(side)[i]) and not m.is_partner_index(side, i):
+			out.append(i)
+	return out
+
+## Plays a Swap onto an own Spirling in another slot: the two trade places. Their queued
+## actions, support entries and the slot each covers follow them. False for a normal Swap.
+static func shift(m: BattleModel, a: BattleAction) -> bool:
+	if not a.swap_index in shift_targets(m, a.side, a.slot):
+		return false
+	var row: Array = m.slots[a.side]
+	var other: int = row.find(a.swap_index)
+	var mover: Spirling = m.active_spirling(a.side, a.slot)
+	var ally: Spirling = m.active_spirling(a.side, other)
+	row[other] = row[a.slot]
+	row[a.slot] = a.swap_index
+	for q: BattleAction in m._queue:
+		if q.side == a.side and q.actor == ally:
+			q.slot = a.slot
+		elif q.side == a.side and q.actor == mover:
+			q.slot = other
+	for kind: String in m.support[a.side]:
+		var e: Dictionary = m.support[a.side][kind]
+		for key: String in ["slot", "covered"]:
+			if e.has(key) and int(e[key]) == a.slot:
+				e[key] = other
+			elif e.has(key) and int(e[key]) == other:
+				e[key] = a.slot
+	var d: Dictionary = m._who(a.side, other)
+	d.merge({"kind": "shift", "ally": ally.display_name(), "other": a.slot})
+	m.emit_event(BattleEvent.Type.SUPPORT, d)
+	return true
 
 # --- Front and back row (item 367) -----------------------------------------------------------
 

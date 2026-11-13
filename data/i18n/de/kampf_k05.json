@@ -2,6 +2,7 @@
  "_comment": "German texts from tools/i18n/de_kampf_k05.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
  "keep": [],
  "strings": {
+  "%s and %s trade places!": "%s und %s tauschen die Plätze!",
   "%s draws every aimed art onto itself for %d turns!": "{0} zieht {1} Runden lang jede gezielte Technik auf sich!",
   "%s has nobody to cover.": "%s hat niemanden zu decken.",
   "%s leads the swarm!": "%s führt den Schwarm an!",

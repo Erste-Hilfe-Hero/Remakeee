@@ -107,3 +107,6 @@ T.update({
 "Rift fields: %s": "Riss-Felder: %s",
 "Best of the battle: %s, %d damage": "Bester des Kampfes: %s, %d Schaden",
 })
+T.update({
+"%s and %s trade places!": "%s und %s tauschen die Plätze!",
+})

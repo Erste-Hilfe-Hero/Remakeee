@@ -358,6 +358,9 @@ func is_legal(a: BattleAction) -> bool:
 				any_move = any_move or (me.can_afford(mv) and not move_locked(mv))
 			return can_rest(any_move)
 		BattleAction.Kind.SWAP:
+			# Trading places with an ally in another slot (item 366) is a Swap too.
+			if a.swap_index in MultiRules.shift_targets(self, a.side, a.slot):
+				return true
 			return not StatusRules.blocks_swap(me.status) and a.swap_index in swap_candidates(a.side, a.slot)
 		BattleAction.Kind.ITEM:
 			if not _items_allowed_for(a.side, a.slot) or bag_count(a.side, a.item_id) <= 0 or not _is_battle_item(a.item_id):
@@ -1331,6 +1334,8 @@ func _do_rest(a: BattleAction) -> void:
 	change_energy(a.side, int(rules.get("rest_energy", REST_ENERGY)), a.slot)
 
 func _do_swap(a: BattleAction) -> void:
+	if MultiRules.shift(self, a):
+		return
 	if StatusRules.blocks_swap(a.actor.status):
 		emit_event(BattleEvent.Type.SWAP_BLOCKED, _who(a.side, a.slot))
 		return

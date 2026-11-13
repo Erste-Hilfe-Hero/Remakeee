@@ -572,7 +572,8 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 		var sb: ColorRect = (pair[0] as Button).get_node_or_null("Stripe")
 		if sb != null:
 			sb.color = BattleUiStyle.command_color(era, pair[1])
-	_swap.disabled = not BattleAction.Kind.SWAP in kinds
+	# An ally in another slot to trade places with also opens Swap (item 366).
+	_swap.disabled = not BattleAction.Kind.SWAP in kinds and MultiRules.shift_targets(model, BattleModel.Side.PLAYER, slot).is_empty()
 	_item.disabled = not BattleAction.Kind.ITEM in kinds
 	# Against another Wayfarer the Bond button offers the Ink Oath instead (once per battle).
 	_bond.text = "Bond" if model.is_wild else "Oath"

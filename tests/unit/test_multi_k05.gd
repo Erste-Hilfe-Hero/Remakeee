@@ -381,3 +381,28 @@ func test_text_types_faster_with_several_spirlings() -> void:
 	assert_eq(MultiRules.text_speed(one), 1.0, "one-on-one keeps its pace")
 	assert_gt(MultiRules.text_speed(two), 1.0)
 	assert_eq(MultiRules.text_speed(null), 1.0)
+
+func test_allies_trade_places_and_keep_their_orders() -> void:
+	var a := _mk("Kindlop", ["Cinder Nip"])
+	var b := _mk("Covepup", ["Fizz Pop"])
+	var m := _model([a, b], [_mk("Mossling", [], 10), _mk("Mossling", [], 10)], [2, 2])
+	m.start()
+	assert_eq(MultiRules.shift_targets(m, Side.PLAYER, 0), [1] as Array[int])
+	var shift := BattleAction.make_swap(Side.PLAYER, 1, 0)
+	assert_true(m.is_legal(shift), "a Swap onto the ally beside is legal")
+	var ev: Array[BattleEvent] = _turn(m, [shift, BattleAction.make_move(Side.PLAYER, 0, 1, 0)], _rests(m, Side.FOE))
+	assert_eq(m.active_spirling(Side.PLAYER, 0), b, "they traded places")
+	assert_eq(m.active_spirling(Side.PLAYER, 1), a)
+	var lines: Array[String] = []
+	var moved: bool = false
+	for e: BattleEvent in ev:
+		lines.append(e.describe())
+		if e.type == T.MOVE_USED and str(e.data.get("name", "")) == b.display_name():
+			moved = true
+	assert_true(lines.has("%s and %s trade places!" % [a.display_name(), b.display_name()]))
+	assert_true(moved, "the ally's queued art still goes off from its new slot")
+
+func test_no_trading_places_in_one_on_one() -> void:
+	var m := _model([_mk("Kindlop"), _mk("Covepup")], [_mk("Mossling")], [1, 1])
+	m.start()
+	assert_true(MultiRules.shift_targets(m, Side.PLAYER, 0).is_empty())

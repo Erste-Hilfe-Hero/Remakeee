@@ -742,6 +742,11 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 	for i: int in model.swap_candidates(BattleModel.Side.PLAYER, slot):
 		if not i in taken:
 			candidates.append(i)
+	# Outside a forced switch an ally in another slot can trade places (item 366).
+	if cancellable:
+		for i: int in MultiRules.shift_targets(model, BattleModel.Side.PLAYER, slot):
+			if not i in taken:
+				candidates.append(i)
 	for i: int in party.size():
 		if model.is_partner_index(BattleModel.Side.PLAYER, i):
 			continue
@@ -1208,6 +1213,16 @@ func _play_event(e: BattleEvent) -> void:
 			if xp_slot >= 0:
 				_refresh_xp(xp_slot, int(e.data.get("index", -1)))
 			await _float(BattleModel.Side.PLAYER, maxi(xp_slot, 0), e.describe())
+		BattleEvent.Type.SUPPORT when str(e.data.get("kind", "")) == "shift":
+			# Two of your Spirlings trade places (item 366): both slots show their new Spirling.
+			for at: int in [slot, int(e.data.get("other", slot))]:
+				var sp: Spirling = model.active_spirling(side, at)
+				if sp != null:
+					_sprite(side, at).setup(sp, "back" if side == BattleModel.Side.PLAYER else "front")
+					_strip(side, at).set_spirling(sp)
+			_restage()
+			Sound.sfx("run")
+			await _text.show_text(e.describe())
 		_:
 			var text: String = e.describe()
 			if not text.is_empty():
