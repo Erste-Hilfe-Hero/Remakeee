@@ -1,0 +1,6 @@
+{
+ "_comment": "Simplified Chinese (Mainland China) texts for the German table era_text. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "Portrait of %s": "%s的肖像"
+ }
+}

@@ -16,7 +16,8 @@ ideas list behind this is the "Chimora online: 200 ideas" artifact in the projec
   asks which journey to keep. The server also refuses impossible saves (level over 100, more than 6 in the
   party, negative money).
 - **Connection lost while playing:** the game pauses behind a "Reconnecting" screen and retries every 4 seconds.
-  Unsent saves go up as soon as it is back.
+  Unsent saves go up as soon as it is back. A battle that is running goes on with only the small mark (`Online.in_battle`); the
+  big screen comes when it is over, and its result is sent once the connection is back.
 - **Server clock:** the daily find, the weekly challenge and the festivals use the server's time, so changing
   the phone's clock does nothing.
 - **Old builds:** `server_config.min_version` sends older builds to the store. `Online.CLIENT_VERSION` is

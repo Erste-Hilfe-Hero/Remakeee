@@ -129,11 +129,23 @@ static func font(era: int) -> Font:
 	return PixelFont.get_large_font() if large_font(era) else PixelFont.get_font()
 
 static func ascent(era: int) -> int:
-	return PixelFont.LARGE_ASCENT if large_font(era) else PixelFont.ASCENT
+	if large_font(era):
+		return PixelFont.LARGE_ASCENT
+	var own: String = _own_font(era)
+	return EraFont.ascent_of(own) if not own.is_empty() else PixelFont.ASCENT
 
 ## Height of one text line of [param era]'s font.
 static func line_h(era: int) -> int:
-	return PixelFont.LARGE_H if large_font(era) else PixelFont.CELL_H
+	if large_font(era):
+		return PixelFont.LARGE_H
+	var own: String = _own_font(era)
+	return EraFont.cell_height(own) if not own.is_empty() else PixelFont.CELL_H
+
+## The era's own text font the battle theme carries in the current language (Era III writes
+## English and German in the 10 px etching font, ascent 8, not the pixel font's 7: the plate
+## rows were a pixel short and the status badge and stat marks ran into the next row).
+static func _own_font(era: int) -> String:
+	return EraText.font_id(era, Loc.language(), UITheme.large_text)
 
 ## The UI theme for a battle in [param era]: the shared theme, with the large font from the
 ## era that uses it (270 x 480 screens).
@@ -384,7 +396,9 @@ static func team_row_size(era: int, n: int, compact: bool = false) -> Vector2:
 static func plate_rows(era: int, single: bool = false) -> Dictionary:
 	var a: int = ascent(era)
 	var bar_h: int = int(num(era, "bar_h_single" if single else "bar_h", 3))
-	var row3: int = a + 2 + bar_h + 2 + 2
+	# The status tag stands from one pixel above the bar, one line high: the Energy row starts
+	# under it even when the font is taller than the bar row (Era III's 10 px font).
+	var row3: int = maxi(a + 2 + bar_h + 2 + 2, 2 * a + 2)
 	var row3_h: int = maxi(8, a)
 	return {"asc": a, "bar_y": a + 2, "bar_h": bar_h, "row3_y": row3, "row3_h": row3_h, "row4": row3 + row3_h + a,
 		"h": row3 + row3_h, "h_extra": row3 + row3_h + a + 1}
