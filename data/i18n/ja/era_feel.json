@@ -1,0 +1,16 @@
+{
+ "_comment": "ja translation of the era_feel table, keyed by the English text.",
+ "strings": {
+  "A map drawn in four inks.": "4色のインクでえがいた地図。",
+  "Era I - Ink": "第I時代 - インク",
+  "Era II - Wash": "第II時代 - 淡彩",
+  "Era III - Etching": "第III時代 - 銅版画",
+  "Era IV - Panorama": "第IV時代 - パノラマ",
+  "Era V - Living": "第V時代 - 息づく世界",
+  "Replay era change": "時代の移り変わりをもう一度見る",
+  "The air grows clearer. Every leaf shows more detail!": "空気が澄んでいく。葉の一枚一枚がくっきり見える！",
+  "The ink runs. The world fills with colour!": "インクがにじむ。世界が色で満ちていく！",
+  "The map breathes. The world is alive!": "地図が息をする。世界が生きている！",
+  "The map unrolls wider than ever before!": "地図がかつてないほど広がっていく！"
+ }
+}

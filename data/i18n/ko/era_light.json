@@ -1,0 +1,9 @@
+{
+ "_comment": "ko translation of the era_light table, keyed by the English text.",
+ "strings": {
+  "A storm rages.": "폭풍이 몰아친다.",
+  "Fog hangs low.": "안개가 낮게 깔렸다.",
+  "Rain falls.": "비가 내린다.",
+  "Wind blows.": "바람이 분다."
+ }
+}
