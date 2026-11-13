@@ -1,0 +1,9 @@
+{
+ "_comment": "it translation of the era_light table, keyed by the English text.",
+ "strings": {
+  "A storm rages.": "Infuria una tempesta.",
+  "Fog hangs low.": "La nebbia è bassa.",
+  "Rain falls.": "Piove.",
+  "Wind blows.": "Tira vento."
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "_comment": "ko translation of the battle_hud table, keyed by the English text.",
+ "strings": {
+  "%s: %d of %d can fight": "%s: %d/%d 싸울 수 있음",
+  "Again: %s x%d": "다시: %s x%d",
+  "Again: -": "다시: -",
+  "Foe's team": "상대 팀",
+  "No effect": "효과 없음",
+  "Strong": "강함",
+  "Your team": "우리 팀"
+ }
+}

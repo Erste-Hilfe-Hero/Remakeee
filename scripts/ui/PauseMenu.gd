@@ -1683,7 +1683,10 @@ func _run_box(box: int) -> void:
 			2:
 				GameState.recolor_box(box)
 			_:
-				if w >= STORAGE_ROWS:
+				if w >= STORAGE_ROWS and picker.last_long:
+					# Item 1947: holding a Spirling's row opens its summary straight away.
+					await run_summary(GameState.storage[view[w - STORAGE_ROWS]])
+				elif w >= STORAGE_ROWS:
 					await _run_stored(view[w - STORAGE_ROWS])
 
 ## Rows above the Spirlings in a box: Move several, Rename, Colour.
