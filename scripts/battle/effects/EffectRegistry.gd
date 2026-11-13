@@ -37,6 +37,9 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"team_guard": preload("res://scripts/battle/effects/TeamGuardEffect.gd"),
 	&"decoy": preload("res://scripts/battle/effects/DecoyEffect.gd"),
 	&"cover": preload("res://scripts/battle/effects/CoverEffect.gd"),
+	&"stage_copy": preload("res://scripts/battle/effects/StageCopyEffect.gd"),
+	&"stage_swap": preload("res://scripts/battle/effects/StageSwapEffect.gd"),
+	&"status_veil": preload("res://scripts/battle/effects/StatusVeilEffect.gd"),
 }
 
 static var _cache: Dictionary[StringName, MoveEffect] = {}

@@ -2346,5 +2346,103 @@
    "LUMEN",
    "VOLT"
   ]
+ },
+ {
+  "id": "echo_leaden_hum",
+  "name": "Echo Crystal: Leaden Hum",
+  "description": "Teaches Leaden Hum to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Leaden Hum",
+  "any_element": true,
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_chalk_mark",
+  "name": "Echo Crystal: Chalk Mark",
+  "description": "Teaches Chalk Mark to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Chalk Mark",
+  "any_element": true,
+  "price": 2000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_mazelight",
+  "name": "Echo Crystal: Mazelight",
+  "description": "Teaches Mazelight to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Mazelight",
+  "any_element": true,
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_mirror_stance",
+  "name": "Echo Crystal: Mirror Stance",
+  "description": "Teaches Mirror Stance to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Mirror Stance",
+  "any_element": true,
+  "price": 3500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_crosswind_trade",
+  "name": "Echo Crystal: Crosswind Trade",
+  "description": "Teaches Crosswind Trade to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Crosswind Trade",
+  "any_element": true,
+  "price": 3500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_calm_veil",
+  "name": "Echo Crystal: Calm Veil",
+  "description": "Teaches Calm Veil to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Calm Veil",
+  "any_element": true,
+  "price": 4000,
+  "tradeable": false
+ },
+ {
+  "id": "second_wind_tea",
+  "name": "Second Wind Tea",
+  "description": "Cures Spent.",
+  "battle": true,
+  "cure": "spent",
+  "price": 90,
+  "tradeable": false
+ },
+ {
+  "id": "chalk_rag",
+  "name": "Chalk Rag",
+  "description": "Cures Marked.",
+  "battle": true,
+  "cure": "marked",
+  "price": 90,
+  "tradeable": false
+ },
+ {
+  "id": "clear_bell",
+  "name": "Clear Chime",
+  "description": "Cures Muddle.",
+  "battle": true,
+  "cure": "muddle",
+  "price": 90,
+  "tradeable": false
+ },
+ {
+  "id": "mirror_scale",
+  "name": "Mirror Scale",
+  "description": "Keepsake. Once per battle, the first status a foe casts on the holder is turned back on the caster.",
+  "battle": false,
+  "held": {
+   "status_reflect": true
+  },
+  "price": 1800,
+  "tradeable": false
  }
 ]
