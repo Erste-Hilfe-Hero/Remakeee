@@ -5048,6 +5048,63 @@
   "priority": 2
  },
  {
+  "name": "Mending Chorus",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "heal_team",
+  "effect_amount": 0.2,
+  "era": 2,
+  "desc": "A soft chord rings out. It and every ally beside it mend a fifth of their Vigor."
+ },
+ {
+  "name": "Kindred Balm",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "heal_ally",
+  "effect_amount": 0.33,
+  "era": 1,
+  "desc": "Tends the most hurt ally beside it for a third of its Vigor. Alone, it tends itself."
+ },
+ {
+  "name": "Shell Ring",
+  "element": "STONE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "team_guard",
+  "era": 2,
+  "desc": "Raises a ring of shale around its side. Everyone there takes less damage for 3 turns."
+ },
+ {
+  "name": "Lure Dance",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "decoy",
+  "era": 2,
+  "desc": "A showy, mocking dance. Every aimed art of the foes goes for it for 2 turns."
+ },
+ {
+  "name": "Breakwater Stand",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "cover",
+  "era": 1,
+  "desc": "Plants itself before its most hurt ally and takes the aimed hits meant for it for 2 turns."
+ },
+ {
   "name": "Long Breath",
   "element": "GALE",
   "kind": "STATUS",

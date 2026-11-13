@@ -31,6 +31,12 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"stage_reset": preload("res://scripts/battle/effects/StageResetEffect.gd"),
 	&"cure_team": preload("res://scripts/battle/effects/CureTeamEffect.gd"),
 	&"self_cost": preload("res://scripts/battle/effects/SelfCostEffect.gd"),
+	# Multi-battle support arts (KAMPF_PLAN_1000, Mehrfachkämpfe).
+	&"heal_team": preload("res://scripts/battle/effects/HealTeamEffect.gd"),
+	&"heal_ally": preload("res://scripts/battle/effects/HealAllyEffect.gd"),
+	&"team_guard": preload("res://scripts/battle/effects/TeamGuardEffect.gd"),
+	&"decoy": preload("res://scripts/battle/effects/DecoyEffect.gd"),
+	&"cover": preload("res://scripts/battle/effects/CoverEffect.gd"),
 	&"stage_copy": preload("res://scripts/battle/effects/StageCopyEffect.gd"),
 	&"stage_swap": preload("res://scripts/battle/effects/StageSwapEffect.gd"),
 	&"status_veil": preload("res://scripts/battle/effects/StatusVeilEffect.gd"),
