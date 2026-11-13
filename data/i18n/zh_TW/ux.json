@@ -214,6 +214,8 @@
   "Swap %s with whom?": "把%s和誰替換？",
   "Swap with team...": "與隊伍替換……",
   "seen": "見過",
-  "new": "新"
+  "new": "新",
+  "Auto text: %s": "自動文字: %s",
+  "Talk in the world goes on by itself after a short read.": "世界中的對話在短暫閱讀後自動繼續。"
  }
 }
