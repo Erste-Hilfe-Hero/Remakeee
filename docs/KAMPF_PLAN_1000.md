@@ -607,7 +607,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 533. [x] Wayfarer-Level an Level-Cap gebunden (bestehend: TrainerData.build_team mit ring_cap + FOE_OVER_CAP)
 534. [x] Wayfarer mit gehaltenen Gegenständen auf Veteran (bestehend: TrainerData.keeps_keepsakes ab Veteran)
 535. [ ] Wayfarer-Teams prüfen auf Dopplungen
-536. [ ] Wayfarer-Sprites eigenständig
+536. [x] Wayfarer-Sprites eigenständig (bestehend: eigene Kunst laut LEGAL.md, ip_check prüft Metadaten)
 537. [x] Wayfarer-Namen eigenständig (bestehend: tools/ip_check.sh)
 538. [x] Wayfarer-Klassen eigenständig (keine bekannten Klassen übernehmen) (bestehend: tools/ip_check.sh)
 539. [ ] Wayfarer-Begegnung per Blickkontakt bewusst anders lösen (Ansprechen oder Signal-Laterne)
@@ -625,7 +625,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 551. [x] Wayfarer-Turm Belohnungen (bestehend: Gauntlet.REWARDS und Waymarks)
 552. [x] Wayfarer-Turm Regeln pro Stockwerk (bestehend: Regel-Varianten pro Stockwerk)
 553. [ ] Wayfarer-Turm Rangliste online
-554. [ ] Wayfarer-Daten validieren (validate_data)
+554. [x] Wayfarer-Daten validieren (validate_data) (bestehend: WorldValidator prüft Wayfarer-Teams und Arten)
 555. [x] Wayfarer-Texte übersetzt (bestehend: test_i18n)
 556. [x] Wayfarer-Teams pro Schwierigkeit (bestehend: teams_by_difficulty)
 557. [ ] Wayfarer-Geld-Belohnungen balancieren
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-91 von 1000 Punkten umgesetzt.
+93 von 1000 Punkten umgesetzt.
 
