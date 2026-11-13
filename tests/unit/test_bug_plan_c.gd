@@ -151,6 +151,8 @@ func test_damaged_settings_load_the_backup() -> void:
 
 func _shop_online() -> LocalBilling:
 	var s := LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	s.rng.seed = 1
 	Online.backend = s
 	Online.state = Online.State.ONLINE
 	s.switch_user("ann")

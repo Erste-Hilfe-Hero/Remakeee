@@ -325,4 +325,6 @@ static func result_lines(d: Dictionary, p_names: Array, watching: bool) -> Array
 	var out: Array[String] = [Loc.t("The duel is over.")]
 	if int(d.get("winner", -1)) >= 0:
 		out.append(Loc.t("%s wins!") % str(p_names[int(d.winner)]))
+	elif str(d.get("reason", "")) == "played":
+		out.append(Loc.t("Draw"))
 	return out

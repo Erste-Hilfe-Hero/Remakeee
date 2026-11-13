@@ -9,7 +9,7 @@ const ICON: int = 20
 const FILE: String = "chimora_result.png"
 
 ## What the card shows for [param model] after its battle: {title, names, winner (0, 1 or -1),
-## rounds, teams: [[{species, name, left, full}]]}. [param names] are the two sides, lower side first.
+## draw (over and nobody stands), rounds, teams: [[{species, name, left, full}]]}. [param names] are the two sides, lower side first.
 static func facts_of_model(model: BattleModel, title: String, names: Array) -> Dictionary:
 	var teams: Array = []
 	for side: int in 2:
@@ -26,7 +26,8 @@ static func facts_of_model(model: BattleModel, title: String, names: Array) -> D
 			won = 0
 		elif model.outcome == BattleModel.Outcome.LOSS:
 			won = 1
-	return {"title": title, "names": [str(names[0]), str(names[1])], "winner": won, "rounds": model.turn, "teams": teams}
+	return {"title": title, "names": [str(names[0]), str(names[1])], "winner": won, "draw": model.is_finished() and a == 0 and b == 0,
+		"rounds": model.turn, "teams": teams}
 
 ## The facts of a kept replay: the battle is played again from its seed, teams and inputs.
 ## {} when it cannot be played in this version.
@@ -64,13 +65,14 @@ static func facts_of_duel(d: Dictionary, names: Array) -> Dictionary:
 	# Given up or out of time: the server's winner counts, not the Spirlings left.
 	if str(d.get("state", "")) == "done":
 		f["winner"] = int(d.get("winner", -1))
+		f["draw"] = f.winner < 0 and str(d.get("reason", "")) == "played"
 	return f
 
-## "Mira beats Tom" / "No winner".
+## "Mira beats Tom" / "Draw" / "No winner".
 static func headline(f: Dictionary) -> String:
 	var w: int = int(f.get("winner", -1))
 	if w < 0:
-		return Loc.t("No winner")
+		return Loc.t("Draw") if bool(f.get("draw", false)) else Loc.t("No winner")
 	return Loc.t("%s beats %s") % [str(f.names[w]), str(f.names[1 - w])]
 
 ## The card as a node tree of [constant SIZE].

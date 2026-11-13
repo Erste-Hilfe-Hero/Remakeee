@@ -11,6 +11,8 @@ func before_all() -> void:
 
 func before_each() -> void:
 	s = LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	s.rng.seed = 1
 	s.switch_user("ann")
 	s.call_fn("hello", {"p_version": 1})
 	s.call_fn("team_set", {"p_team": [{"species": "Kindlop", "level": 12, "moves": ["Bowl Over"]}]})

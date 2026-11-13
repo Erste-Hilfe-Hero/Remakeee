@@ -10,6 +10,8 @@ func before_all() -> void:
 
 func before_each() -> void:
 	s = LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	s.rng.seed = 1
 	for who: String in ["ann", "ben", "cid"]:
 		s.switch_user(who)
 		codes[who] = s.call_fn("hello", {"p_version": 1}).data.profile.code
@@ -131,6 +133,8 @@ func test_lending_a_copy_for_one_raid_or_live_duel() -> void:
 
 func test_lend_flag_starts_off_and_config_matches_the_server() -> void:
 	var fresh := LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	fresh.rng.seed = 1
 	assert_false(fresh.flag_on("lend", 99))
 	var sql: String = FileAccess.get_file_as_string("res://supabase/migrations/20261112000050_trade_gifts.sql")
 	var cfg: Dictionary = LocalTradeGifts.config()
