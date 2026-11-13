@@ -111,7 +111,31 @@
    "win_flags": [
     "rift_v3_press_sealed",
     "quillmarch_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Nibravure",
+      "level": 85
+     },
+     {
+      "species": "Cindravax",
+      "level": 85
+     },
+     {
+      "species": "Siltaroth",
+      "level": 85
+     },
+     {
+      "species": "Veskarion",
+      "level": 86
+     },
+     {
+      "species": "Corrodrake",
+      "level": 86
+     }
+    ]
+   }
   }
  ],
  "signs": [

@@ -116,25 +116,25 @@
    "teams_by_difficulty": {
     "tamer": [
      {
-      "species": "Rookwarden",
-      "level": 113
+      "species": "Sootharrow",
+      "level": 112
      },
      {
       "species": "Dipmonarch",
-      "level": 113
+      "level": 112
      },
      {
       "species": "Ripjoltane",
-      "level": 114
+      "level": 113
      },
      {
       "species": "Weirmarshal",
-      "level": 114,
+      "level": 113,
       "held": "pith_mend"
      },
      {
       "species": "Glazeldrake",
-      "level": 114
+      "level": 113
      }
     ]
    }
