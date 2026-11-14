@@ -49,6 +49,8 @@ static func friend_entries(f: Dictionary) -> Array[String]:
 	var out: Array[String] = []
 	out.append("Remove from favourites" if bool(f.get("fav", false)) else "Add to favourites")
 	out.append("Task of the day")
+	if bool(f.get("has_team", false)):
+		out.append("Their team code")
 	for lvl: Variant in f.get("level_ready", []):
 		out.append(Loc.t("Friendship reward (level %d)") % int(lvl))
 	return out
@@ -68,6 +70,9 @@ static func run_entry(menu: MenuHost, f: Dictionary, label: String) -> bool:
 	if label == "Task of the day":
 		await run_task(menu, f)
 		return true
+	if label == "Their team code":
+		await run_team_code(menu, f)
+		return true
 	for lvl: Variant in (f.get("level_ready", []) as Array).duplicate():
 		if label == Loc.t("Friendship reward (level %d)") % int(lvl):
 			var r: Dictionary = await TradeMenu.bag_call("friend_level_claim", {"p_code": code, "p_level": int(lvl)})
@@ -79,6 +84,24 @@ static func run_entry(menu: MenuHost, f: Dictionary, label: String) -> bool:
 				await menu.info(error_text(r))
 			return true
 	return false
+
+## A friend's echo team as a team code (KAMPF_PLAN_1000 item 855): copied, to fight in the
+## Battle Halls under "Fight a team code" or to pass on.
+static func run_team_code(menu: MenuHost, f: Dictionary) -> void:
+	var t: Dictionary = await Online.call_fn("friend_team", {"p_code": str(f.code)})
+	if not _ok(t):
+		await menu.info(error_text(t))
+		return
+	var code: String = EchoTeam.team_code(t.data.get("team", []) if t.data.get("team") is Array else [])
+	if code.is_empty():
+		await menu.info(Loc.t("%s needs three Spirlings in their echo team for a team code.") % str(f.get("name", "")))
+		return
+	DisplayServer.clipboard_set(NameKeyboard.pretty(code))
+	await menu.info(team_code_text(str(f.get("name", "")), code))
+
+static func team_code_text(name: String, code: String) -> String:
+	return Loc.t("%s's team code: %s") % [name, NameKeyboard.pretty(code)] + "\n" \
+		+ Loc.t("It is on the clipboard. Fight it in the Battle Halls under Fight a team code, or pass it on.")
 
 static func reward_text(d: Dictionary) -> String:
 	var n: int = int(d.get("count", 1))
