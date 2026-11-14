@@ -828,8 +828,10 @@ func _refresh_shortcut(model: BattleModel, items_ok: bool) -> void:
 ## them. In the bold Era IV/V font a name that still does not fit takes the plain large font,
 ## and one that is still too long ends in "...".
 func _fit_art_name(i: int) -> void:
-	if i >= _move_hints.size():
+	# Changing a row's font or margin resizes it, and resized calls this again.
+	if i >= _move_hints.size() or _fitting:
 		return
+	_fitting = true
 	var b: Button = _move_buttons[i]
 	var f: Font = _move_costs[i].get_theme_font("font")
 	var fs: int = _move_costs[i].get_theme_font_size("font_size")
@@ -837,14 +839,21 @@ func _fit_art_name(i: int) -> void:
 		f.get_string_size(_move_hints[i].text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x if _move_hints[i].visible else 0.0)
 	var right: int = (int(ceilf(tail)) + ART_COST_GAP) if tail > 0.0 else 1
 	for state: String in ["normal", "hover", "pressed", "disabled"]:
-		if b.has_theme_stylebox_override(state):
+		if b.has_theme_stylebox_override(state) and b.get_theme_stylebox(state).content_margin_right != right:
 			b.get_theme_stylebox(state).content_margin_right = right
-	b.remove_theme_font_override("font")
-	if not EraBattleHud.bold_font(era) or b.size.x <= 0.0:
-		return
-	var room: float = b.size.x - b.get_theme_stylebox("normal").content_margin_left - right
-	if art_name_width(b.text, b.get_theme_font("font"), b.get_theme_font_size("font_size")) > room:
+	# The plain large font only when the era's bold font does not fit (measured with the bold
+	# font, so the choice never flips back and forth).
+	var large: bool = false
+	if EraBattleHud.bold_font(era) and b.size.x > 0.0:
+		var room: float = b.size.x - b.get_theme_stylebox("normal").content_margin_left - right
+		large = art_name_width(b.text, EraBattleHud.font(era), b.get_theme_font_size("font_size")) > room
+	if large and not b.has_theme_font_override("font"):
 		b.add_theme_font_override("font", PixelFont.get_large_font())
+	elif not large and b.has_theme_font_override("font"):
+		b.remove_theme_font_override("font")
+	_fitting = false
+
+var _fitting: bool = false
 
 ## Pixels between an art's name and its cost: the cost's own right offset (3) plus a gap of 5.
 const ART_COST_GAP: int = 8
