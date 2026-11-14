@@ -4049,7 +4049,8 @@ func echo_duel(d: Dictionary) -> void:
 	# The rule of the week holds in echo duels too, the same for everyone (KAMPF_PLAN_1000).
 	var outcome: BattleModel.Outcome = await start_battle(foes, false,
 		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
-			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi), "theme": "duel"})
+			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi), "theme": "duel",
+			TurnFlow.CLOCK_META: TurnFlow.echo_seconds()})
 	busy = true
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN
@@ -4171,6 +4172,9 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	# A league battle comes ready-made from the server's seed and teams (plan area 7).
 	var preset: Variant = trainer.get("model")
 	var model: BattleModel = preset if preset is BattleModel else _new_model(foes, wild, trainer)
+	# Friendly and server-checked battles cannot be given up (KAMPF_PLAN_1000 item 8).
+	if bool(trainer.get("friendly", false)):
+		model.set_meta(TurnFlow.NO_FORFEIT_META, true)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
 	# A worn shop backdrop (item 4281) replaces the place's own, never a fixed one.
@@ -4338,6 +4342,13 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	# Scorch, Root and Jolt stay on after a world battle, except on Story (KAMPF_PLAN item 179).
 	model.keep_status = world and not bool(trainer.get("practice", false)) and not d in StatusRules.CLEARS_AFTER_BATTLE
 	model.ambush = wild and bool(trainer.get("ambush", false))
+	# 1v1 Wayfarer battles: swap offer and the foe's announcement (KAMPF_PLAN_1000 items 9, 10);
+	# echo duels: a clock per turn (item 6).
+	var story_foe: bool = not wild and not bool(trainer.get("friendly", false))
+	model.shift_offer = story_foe and TurnFlow.shift_on()
+	model.foe_announce = story_foe and TurnFlow.announce_on()
+	if trainer.has(TurnFlow.CLOCK_META):
+		model.set_meta(TurnFlow.CLOCK_META, int(trainer[TurnFlow.CLOCK_META]))
 	# The end report: damage, knock-outs, best Spirling, Energy, seed (KAMPF_PLAN items 20, 76).
 	model.set_meta("summary", BattleSummary.new(model))
 	# A boss fight ends after BOSS_ROUND_LIMIT turns: the Rift closes again (item 21).

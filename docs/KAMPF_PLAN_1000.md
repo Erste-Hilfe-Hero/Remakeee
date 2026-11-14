@@ -38,13 +38,13 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 3. [x] Priorität +2 für seltene Schutz-Techniken einführen, sonst bleibt +1 das Maximum (Calm Veil +2, test_kampf_k01b)
 4. [x] Gleichstand bei SPD sichtbar als Münzwurf-Symbol im Kampflog (BattleModel._note_speed_ties, SPEED_TIE)
 5. [x] Rundenzähler oben links, nur in Wayfarer- und Boss-Kämpfen (BattleScene.show_turns)
-6. [ ] Zug-Timeout für Online-Echo-Duelle (60 s, danach Rasten)
-7. [ ] Rückgängig-Knopf für die Befehlswahl im Mehrfachkampf, bevor der Zug startet
-8. [ ] Aufgeben-Option in Wayfarer-Kämpfen mit Bestätigung (zählt als Niederlage, kein Geldverlust auf Story)
-9. [ ] Wechsel nach einem K.o. des Gegners anbieten (Stufe Story und Wayfarer), auf Veteran abschaltbar
-10. [ ] Gegner kündigt seinen nächsten Spirling an, wenn er wechselt (Ankündigungs-Option)
+6. [x] Zug-Timeout für Online-Echo-Duelle (60 s, danach Rasten) (TurnFlow, data/turn_flow.json echo_turn_seconds; BattleScene-Uhr, Warnung bei 10 s)
+7. [x] Rückgängig-Knopf für die Befehlswahl im Mehrfachkampf, bevor der Zug startet (bestehend: BattleComfort.undo, Zurück ab dem zweiten Spirling, Punkt 604)
+8. [x] Aufgeben-Option in Wayfarer-Kämpfen mit Bestätigung (zählt als Niederlage, kein Geldverlust auf Story) (BattleModel.forfeit, Knopf Aufgeben statt Fliehen, nie in Echo-Duellen und Turnieren)
+9. [x] Wechsel nach einem K.o. des Gegners anbieten (Stufe Story und Wayfarer), auf Veteran abschaltbar (BattleModel AWAIT_SHIFT/submit_shift, data/turn_flow.json shift_offer, Einstellung Wechselangebot)
+10. [x] Gegner kündigt seinen nächsten Spirling an, wenn er wechselt (Ankündigungs-Option) (BattleModel.foe_announce, Einstellung Ankündigung)
 11. [x] Doppelte Aktion eines Bosses klar als 'Nachhall' markieren (BONUS_ACTION)
-12. [ ] Rasten im Mehrfachkampf: Wahl 'Alle rasten' als Abkürzung
+12. [x] Rasten im Mehrfachkampf: Wahl 'Alle rasten' als Abkürzung (Knopf Alle rasten, TurnFlow.fill_rest)
 13. [x] Schnellwahl 'Letzten Zug wiederholen' für Wildkämpfe (CommandMenu.prefer_row, BattleInfo.focus_row: Fokus liegt auf der letzten Technik)
 14. [x] Zugvorschau: Fehlschlag-Chance bei Genauigkeit unter 100 % als Prozentwert (BattleInfo.miss_pct)
 15. [ ] Kampfbeginn mit Initiative-Bonus, wenn der Spieler den Gegner von hinten anspricht
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-947 von 1000 Punkten umgesetzt.
+953 von 1000 Punkten umgesetzt.
 
