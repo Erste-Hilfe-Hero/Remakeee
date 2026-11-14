@@ -198,8 +198,7 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 	m._base_rows = m.rows.duplicate()
 	m.encounter_table = str(raw.get("encounters", ""))
 	m.backdrop = str(raw.get("backdrop", "field"))
-	# A Rift without a field of its own takes the one data/rift_fields.json gives it (item 94).
-	m.field = str(raw.get("field", RiftFields.home_field(file)))
+	m.field = str(raw.get("field", ""))
 	var sq: Array = raw.get("square", [-1, -1])
 	m.square = Vector2i(int(sq[0]), int(sq[1]))
 	var hp: Array = raw.get("heal_point", [-1, -1])

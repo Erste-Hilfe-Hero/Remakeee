@@ -2480,6 +2480,42 @@
   "tradeable": false
  },
  {
+  "id": "echo_rust_call",
+  "name": "Echo Crystal: Rust Call",
+  "description": "Teaches Rust Call to a Spirling of its element. Never used up.",
+  "battle": false,
+  "teaches": "Rust Call",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_ink_call",
+  "name": "Echo Crystal: Ink Call",
+  "description": "Teaches Ink Call to a Spirling of its element. Never used up.",
+  "battle": false,
+  "teaches": "Ink Call",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_rime_call",
+  "name": "Echo Crystal: Rime Call",
+  "description": "Teaches Rime Call to a Spirling of its element. Never used up.",
+  "battle": false,
+  "teaches": "Rime Call",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_gilt_call",
+  "name": "Echo Crystal: Gilt Call",
+  "description": "Teaches Gilt Call to a Spirling of its element. Never used up.",
+  "battle": false,
+  "teaches": "Gilt Call",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
   "id": "echo_plain_shove",
   "name": "Echo Crystal: Plain Shove",
   "description": "Teaches Plain Shove to any Spirling. Never used up.",

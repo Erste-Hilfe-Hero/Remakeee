@@ -62,3 +62,13 @@ T = {
     "The keeper: The Hush will not be this patient with you.":
         "Die Hüterin: Die Stille wird nicht so geduldig mit dir sein.",
 }
+T.update({
+    "Echo Crystal: Rust Call": "Echo-Kristall: Rostruf",
+    "Echo Crystal: Ink Call": "Echo-Kristall: Tintenruf",
+    "Echo Crystal: Rime Call": "Echo-Kristall: Raureifruf",
+    "Echo Crystal: Gilt Call": "Echo-Kristall: Goldruf",
+    "Teaches Rust Call to a Spirling of its element. Never used up.": "Lehrt einen Spirling seines Elements Rostruf. Wird nie verbraucht.",
+    "Teaches Ink Call to a Spirling of its element. Never used up.": "Lehrt einen Spirling seines Elements Tintenruf. Wird nie verbraucht.",
+    "Teaches Rime Call to a Spirling of its element. Never used up.": "Lehrt einen Spirling seines Elements Raureifruf. Wird nie verbraucht.",
+    "Teaches Gilt Call to a Spirling of its element. Never used up.": "Lehrt einen Spirling seines Elements Goldruf. Wird nie verbraucht.",
+})

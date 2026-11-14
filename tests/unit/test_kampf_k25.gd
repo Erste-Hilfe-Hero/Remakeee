@@ -125,11 +125,19 @@ func test_rifts_vary_their_fields() -> void:
 		assert_true(BattleRules.FIELDS.has(str(maps[file])), file)
 		var m: MapData = MapData.load_map(file)
 		assert_not_null(m, file)
-		assert_eq(m.field, RiftFields.home_field(file), file)
+		assert_eq(m.field, "", "%s has no field of its own" % file)
+		assert_eq(RiftFields.battle_field(m.field, file, true), str(maps[file]), file)
+		assert_eq(RiftFields.battle_field(m.field, file, false), "", "%s: the Warden keeps the place as it is" % file)
 		kinds[str(maps[file])] = true
-	assert_gte(kinds.size(), 6, "the Rifts do not all stand in one field")
-	assert_eq(MapData.load_map("cinder_rift").field, "ash_storm", "a map's own field wins")
+	assert_gte(kinds.size(), 8, "the Rifts do not all stand in one field")
+	assert_eq(RiftFields.battle_field("ash_storm", "cinder_rift", true), "ash_storm", "a map's own field wins")
 	assert_eq(RiftFields.home_field("brightledge"), "")
+
+func test_the_new_calls_are_taught_by_crystals() -> void:
+	for n: String in ["Rust Call", "Ink Call", "Rime Call", "Gilt Call"]:
+		var it: Dictionary = Database.item("echo_" + n.to_snake_case())
+		assert_eq(str(it.get("teaches", "")), n)
+		assert_true(Database.move(n).has_effect(&"set_field"), n)
 
 # --- 99 matchup quiz ---------------------------------------------------------------------------
 

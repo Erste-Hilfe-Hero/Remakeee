@@ -247,6 +247,24 @@ func _choose(model: BattleModel, side: int, slot: int = 0) -> BattleAction:
 		return second
 	return best
 
+## Every art [param side]/[param slot] can pay, scored the way the AI scores them, best first:
+## [{"move", "aim", "score"}] (items 451, 467). Reads the model only and draws no random numbers.
+func explain(model: BattleModel, side: int, slot: int = 0) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var me: Spirling = model.active_spirling(side, slot)
+	if me == null:
+		return out
+	var foes: Array[int] = model.standing_slots(BattleModel.other(side))
+	for a: BattleAction in _arts(model, side, slot):
+		var mv: MoveData = me.moves[a.move_index]
+		var aims: Array[int] = [-1]
+		if not mv.is_area() and not foes.is_empty():
+			aims = foes
+		for aim: int in aims:
+			out.append({"move": mv.move_name, "aim": aim, "score": score_action(model, side, slot, a.move_index, aim)})
+	out.sort_custom(func(x: Dictionary, y: Dictionary) -> bool: return float(x.score) > float(y.score))
+	return out
+
 ## Sure knock-outs already planned this turn (items 463, 479): "<side>:<turn>" -> foe slots.
 var _claims: Dictionary = {}
 
@@ -476,6 +494,14 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 						or not model.status_block(BattleModel.other(side), st, side).is_empty()):
 					continue
 				spoil += STATUS_BONUS * float(fx.get("chance", 1.0)) * acc
+	# A Rift boss plays its phases (item 462, BossRules.AI_PHASE).
+	var bp: Dictionary = BossRules.ai_tune(model, side, slot) if level >= 1 else {}
+	if not bp.is_empty():
+		damage_w *= float(bp.get("damage_w", 1.0))
+		setup *= float(bp.get("setup_w", 1.0))
+		for fx: Dictionary in mv.effects:
+			if StringName(fx.get("id", "")) == &"set_field" and str(fx.get("field", "")) != model.field and model.field_lock <= 0:
+				score += float(bp.get("field_break", 0.0)) * acc
 	return score + hit * damage_w + spoil * weight("status_w") + setup * weight("setup_w") + fld * weight("field_w")
 
 ## Energy cost of the cheapest damage art [param s] knows (99 if none).

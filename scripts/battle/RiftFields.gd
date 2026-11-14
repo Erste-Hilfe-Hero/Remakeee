@@ -68,11 +68,16 @@ static func spawn_boost(field: String) -> Array[int]:
 		out.append(int(Elements.E.get(str(f.boost), -1)))
 	return out
 
-## The field Rift map [param file] stands in when the map sets no "field" of its own (item 94):
-## data/rift_fields.json "rift_maps". "" for any other map.
+## The field the wild battles of Rift map [param file] stand in when the map sets no "field" of
+## its own (item 94): data/rift_fields.json "rift_maps". "" for any other map.
 static func home_field(file: String) -> String:
 	var f: String = str((data().get("rift_maps", {}) as Dictionary).get(file, ""))
 	return f if BattleRules.FIELDS.has(f) else ""
+
+## The field a battle starts in: [param own] (the trainer's or the map's), or for a wild battle on
+## a field-less Rift the Rift's home field (item 94). Wardens and Tamers keep the place as it is.
+static func battle_field(own: String, file: String, wild: bool) -> String:
+	return own if not own.is_empty() or not wild else home_field(file)
 
 static func lexicon_id(field: String) -> String:
 	return LEXICON_PREFIX + field

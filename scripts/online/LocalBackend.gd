@@ -102,6 +102,8 @@ func _init(p_store_path: String = "") -> void:
 	LocalLiveMore.install(self)
 	# Climb boards for the lighthouse stair and the echo tower (20261113207070_climb_boards.sql).
 	LocalClimb.install(self)
+	# Matchup notes by Lantern Mail (KAMPF_PLAN_1000 item 107, 20261114120260_matchup_notes.sql).
+	MatchupNotes.install(self)
 
 func is_local() -> bool:
 	return true

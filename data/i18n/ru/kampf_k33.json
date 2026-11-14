@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table kampf_k33, written by tools/i18n/locales_kampf_k33.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s picks %s (%d) over %s (%d).": "%s выбирает %s (%d), а не %s (%d).",
+  "%s picks %s (%d): nothing else is in reach.": "%s выбирает %s (%d): больше ничего не остаётся.",
+  "%s picks %s at random, as wild ones do.": "%s выбирает %s наугад, как все дикие.",
+  "%s rests: nothing it can pay is worth it now.": "%s отдыхает: ничто из доступного сейчас того не стоит.",
+  "%s swaps to %s: it doesn't like its odds.": "%s уступает место %s: шансы ему не нравятся.",
+  "%s uses %s: it is running low.": "%s использует %s: силы на исходе.",
+  "%s, won in %d turns": "%s, победа за %d ходов",
+  "Banked Embers": "Угли под проценты",
+  "Beat the Ashen Heart. The smiths still want their cut.": "Победи Пепельное сердце. Кузнецы всё равно хотят свою долю.",
+  "Beat the Drowned Heart. Nobody reads the passenger list twice.": "Победи Утонувшее сердце. Список пассажиров дважды никто не читает.",
+  "Beat the Mist Heart. What it hid is everyone's problem now.": "Победи Туманное сердце. То, что оно скрывало, теперь общая беда.",
+  "Boss replays": "Повторы боёв с боссами",
+  "Clear Weather": "Ясная погода",
+  "Crier: An echo of the %s has crashed the festival in the shape of a %s. Nobody invited it. Will you see it out?": "Глашатай: Эхо сердца «%s» ворвалось на праздник в облике %s. Его никто не звал. Выпроводишь?",
+  "Crier: Something from the Rifts keeps trying to get in. Seal a Rift heart first, then we'll talk.": "Глашатай: Что-то из Разломов всё пытается пролезть сюда. Сначала запечатай сердце Разлома, потом поговорим.",
+  "Crier: You saw the echo out already. It sulks somewhere behind the stands until next year.": "Глашатай: Эхо ты уже выпроводил. Теперь оно дуется за прилавками до следующего года.",
+  "It lies open and stops building up.": "Оно открыто и перестаёт копить силы.",
+  "It wants that field gone, so it can wake.": "Оно хочет избавиться от этого поля, чтобы пробудиться.",
+  "Kept in your boss replays (Records).": "Сохранено в повторах боёв с боссами (Рекорды).",
+  "Last Passenger": "Последний пассажир",
+  "Last phase: it holds nothing back.": "Последняя фаза: оно больше ничего не сдерживает.",
+  "The echo comes apart like old bunting. The crowd claps as if it had helped.": "Эхо расползается, как старые флажки. Толпа хлопает, будто сама помогала.",
+  "The echo keeps dancing. The crowd decides it is part of the show.": "Эхо продолжает плясать. Толпа решает, что так задумано."
+ }
+}

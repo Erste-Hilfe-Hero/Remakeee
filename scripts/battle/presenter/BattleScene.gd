@@ -166,6 +166,8 @@ static func show_turns(m: BattleModel) -> bool:
 
 func setup(p_model: BattleModel) -> void:
 	model = p_model
+	# The AI developer view (KAMPF_PLAN_1000 item 451): "-- --ai-debug" shows every foe score.
+	model.explain_ai = AiNotes.level_for(model.explain_ai)
 
 # --- Layout -------------------------------------------------------------------
 
@@ -363,7 +365,7 @@ func _place_field_badge() -> void:
 		var top: float = plate.position.y
 		if _hud != null and _hud.player_team != null and _hud.player_team.visible:
 			top = minf(top, _hud.player_team.position.y)
-		_field_badge.place(Vector2(maxf(plate.position.x, MARGIN), top - FieldBadge.HEIGHT - 2))
+		_field_badge.place(Vector2(maxf(plate.position.x, MARGIN), top - _field_badge.size.y - 2))
 		return
 	var below: float = _foe_strip.plate_rect().end.y
 	var room: float = _field.size.x
@@ -1244,6 +1246,11 @@ func _play_event(e: BattleEvent) -> void:
 					# KAMPF_PLAN_1000 item 84: the first hit on a two-element foe writes down how factors multiply.
 					if foe.elements().size() > 1:
 						Lexicon.add(GameState.records, "dual_elements")
+			# KAMPF_PLAN_1000 item 113: the struck element symbols hop on a very effective hit.
+			if float(e.data.get("eff", 1.0)) > 1.0 and not bool(e.data.get("status_tick", false)):
+				var ks: Variant = _strip(side, slot)
+				if ks != null and ks.has_method("kick_glyphs"):
+					ks.kick_glyphs(_last_element[BattleModel.other(side)])
 			if not bool(e.data.get("status_tick", false)):
 				await _hit_feedback(e, side, slot, hit == "hit_strong")
 			await _strip(side, slot).animate_hp(int(e.data.hp), int(e.data.max_hp))
