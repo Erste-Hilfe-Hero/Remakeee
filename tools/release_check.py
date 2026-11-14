@@ -118,12 +118,20 @@ AD_SDKS = re.compile(r"admob|applovin|unityads|unity_ads|ironsource|levelplay|fi
                      r"|facebook|chartboost|vungle|mopub|tapjoy|gameanalytics|amplitude|mixpanel|flurry", re.I)
 
 
+# The itch.io build (custom feature "itch") downloads a new APK and hands it to the system installer
+# (docs/LIVE_CONTENT.md). Only that preset may ask for it: Play builds update through Google Play.
+ITCH_PERMISSIONS = {"request_install_packages"}
+
+
 def check_permissions() -> None:
     text = read("export_presets.cfg")
-    on = set(re.findall(r"^permissions/([a-z_]+)=true$", text, re.M))
-    extra = sorted(on - ALLOWED_PERMISSIONS)
-    if extra:
-        errors.append("new Android permissions in export_presets.cfg: " + ", ".join(extra))
+    for name, features, body in re.findall(r'^\[preset\.\d+\]\n+name="([^"]*)"\n.*?^custom_features="([^"]*)"$(.*?)(?=^\[preset\.\d+\]$|\Z)',
+                                           text, re.M | re.S):
+        on = set(re.findall(r"^permissions/([a-z_]+)=true$", body, re.M))
+        allowed = ALLOWED_PERMISSIONS | (ITCH_PERMISSIONS if "itch" in features.split(",") else set())
+        extra = sorted(on - allowed)
+        if extra:
+            errors.append("new Android permissions in export_presets.cfg (%s): %s" % (name, ", ".join(extra)))
     for custom in re.findall(r"^permissions/custom_permissions=PackedStringArray\((.*)\)$", text, re.M):
         if custom.strip():
             errors.append("custom Android permissions in export_presets.cfg: " + custom)
