@@ -91,6 +91,9 @@ static func phase_music(phase: int) -> String:
 			best = k
 	return PHASE_MUSIC.get(best, "")
 
+## Lowest difficulty (BattleModel.boss_difficulty) on which a phase calls its guard: Veteran.
+const GUARD_FROM: int = 2
+
 ## First foe slot beside the boss whose Spirling has fallen or is gone, or -1 (item 404).
 static func guard_slot(model: BattleModel) -> int:
 	for slot: int in range(1, model.slot_count(BattleModel.Side.FOE)):
@@ -98,12 +101,14 @@ static func guard_slot(model: BattleModel) -> int:
 			return slot
 	return -1
 
-## A phase's "guard" ({"species", "below"}: levels under the boss) joins the foe side in a
-## free slot beside the boss. Returns the new Spirling, or null when no slot is free.
+## A phase's "guard" ({"species", "below": levels under the boss, "from": lowest difficulty,
+## Veteran by default}) joins the foe side in a free slot beside the boss. Story and Tamer hearts
+## keep their tuned fight (tools/balance/act_route.json measures them on Tamer).
+## Returns the new Spirling, or null when no slot is free or the difficulty is too low.
 static func call_guard(model: BattleModel, boss: Spirling, guard: Dictionary) -> Spirling:
 	var sd: SpirlingData = Database.species(str(guard.get("species", "")))
 	var slot: int = guard_slot(model)
-	if sd == null or slot < 0:
+	if sd == null or slot < 0 or model.boss_difficulty < int(guard.get("from", GUARD_FROM)):
 		return null
 	var s := Spirling.new(sd, maxi(1, boss.level - int(guard.get("below", 2))), model.rng)
 	model.parties[BattleModel.Side.FOE].append(s)

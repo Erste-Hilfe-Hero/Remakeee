@@ -101,6 +101,7 @@ static func rematch_team(def: Dictionary, starter: String, rng: RandomNumberGene
 		up.moves = kit
 		up.held = s.held
 		out.append(up)
+	WayfarerThemes.apply(def, out, difficulty)
 	return out
 
 ## Warden "Second Trial" (items 682-684): a one-time rematch once every Rift in "needs_flags" is
@@ -202,6 +203,8 @@ static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenera
 			s.spark[main] = maxi(int(s.spark.get(main, 0)), WARDEN_MAIN_SPARK)
 			s.hp = s.max_hp()
 		out.append(s)
+	# Items 521-525: the team's theme arts (own tactic, or the Veteran synergy).
+	WayfarerThemes.apply(def, out, difficulty)
 	return out
 
 ## Rift-Born teams (item 743) have one Spirling more than on Tamer, at most RIFT_BORN_MAX_TEAM.
@@ -314,6 +317,14 @@ static func battle_info(def: Dictionary, team: Array[Spirling], difficulty_ai: i
 		"profile": profile_for(def, difficulty),
 		"profile_tune": profile_tune(def, difficulty),
 	}
+	# Items 523-525: a Wayfarer with its own tactic plays it (its own "profile_tune" wins).
+	var theme_tune: Dictionary = WayfarerThemes.tune(def)
+	if not theme_tune.is_empty():
+		theme_tune.merge(info.profile_tune, true)
+		info["profile_tune"] = theme_tune
+	var theme_line: String = WayfarerThemes.line(def, difficulty)
+	if not theme_line.is_empty():
+		info["theme_line"] = theme_line
 	if def.has("partner"):
 		info["partner"] = def.partner
 	if def.get("pair") is Dictionary:
