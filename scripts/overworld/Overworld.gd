@@ -886,6 +886,13 @@ func _on_interact(cell: Vector2i) -> void:
 	var landmark: Array[String] = Landmarks.lines_at(map.id, cell)
 	if not landmark.is_empty():
 		await _locked_say(landmark)
+		# KAMPF_PLAN_1000 item 117: an element seal under the landmark.
+		if not ElementSeals.seal_for(map.id).is_empty() and not GameState.has_flag(ElementSeals.flag(map.id)):
+			busy = true
+			player.frozen = true
+			await ElementSeals.run(_ui, map.id)
+			player.frozen = false
+			busy = false
 		return
 	# Talk across counters.
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:

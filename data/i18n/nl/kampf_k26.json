@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_k26, written by tools/i18n/locales_kampf_k26.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s sent you matchup notes.": "%s heeft je matchup-notities gestuurd.",
+  "%s's notes: %d matchups you did not know yet. The move list shows them now.": "Notities van %s: %d matchups die je nog niet kende. De techniekenlijst toont ze nu.",
+  "%s's notes: nothing you did not know already. Flattering, in a way.": "Notities van %s: niets wat je nog niet wist. Vleiend, in zekere zin.",
+  "A seal is cut into the base: %s. Which element breaks it?": "In de voet is een zegel gekerfd: %s. Welk element breekt het?",
+  "Rift theme: %s": "Thema van de Scheur: %s",
+  "Send %d matchup notes to %s? You both get %d friendship points.": "%d matchup-notities naar %s sturen? Jullie krijgen allebei %d vriendschapspunten.",
+  "Share matchup notes": "Matchup-notities delen",
+  "The seal cracks. Someone hid %s behind it and never came back for it.": "Het zegel barst. Iemand verstopte er %s achter en kwam het nooit meer halen.",
+  "The seal hums, smug and whole. It has met your kind before.": "Het zegel zoemt, heel en zelfvoldaan. Het heeft jouw soort al eerder gezien.",
+  "Those notes are smudged. Try again after your next battle.": "Die notities zijn uitgelopen. Probeer het na je volgende gevecht opnieuw.",
+  "You already sent notes to this friend today. Tomorrow again!": "Je hebt deze vriend vandaag al notities gestuurd. Morgen weer!",
+  "Your notes are empty. Land a few hits first, then share what you learned.": "Je notities zijn leeg. Deel eerst een paar klappen uit en deel daarna wat je hebt geleerd.",
+  "Your notes are on their way to %s. Knowledge shared is knowledge you can't sell. Oh well.": "Je notities zijn onderweg naar %s. Gedeelde kennis kun je niet meer verkopen. Jammer dan."
+ }
+}

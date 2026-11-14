@@ -146,9 +146,36 @@ static func toggle_option(key: String) -> bool:
 static func big_extra(on: bool = GameState.big_buttons) -> int:
 	return BIG_EXTRA if on else 0
 
-## Height of the command panel: the era's own, plus every row's extra with Big buttons on.
+## Button sizes (896): with Big buttons every art row and command grows by BIG_EXTRA and is at
+## least as tall as data/battle_ui.json "big_button_min" says, so Era I's small rows reach a
+## finger-sized target too.
+static func big_min(kind: String) -> int:
+	return int((HpBarStyle.cfg().get("big_button_min", {}) as Dictionary).get(kind, 0))
+
+## Height of an art row in [param era].
+static func art_h(era: int, on: bool = GameState.big_buttons) -> int:
+	var base: int = int(EraBattleHud.num(era, "art_h", 13))
+	return maxi(base + BIG_EXTRA, big_min("art")) if on else base
+
+## Height of a command button (Swap, Item, Bond, Leave) in [param era].
+static func command_h(era: int, on: bool = GameState.big_buttons) -> int:
+	var base: int = int(EraBattleHud.num(era, "command_h", 16))
+	return maxi(base + BIG_EXTRA, big_min("command")) if on else base
+
+## Height of the command panel: the era's own, plus what the art rows and commands grew by.
 static func menu_height(era: int, on: bool = GameState.big_buttons) -> int:
-	return EraBattleHud.menu_height(era) + (Spirling.MAX_MOVES + 1) * big_extra(on)
+	var base: int = EraBattleHud.menu_height(era)
+	if not on:
+		return base
+	var art_grow: int = art_h(era, true) - art_h(era, false)
+	var cmd_grow: int = command_h(era, true) - command_h(era, false)
+	var arts: int = Spirling.MAX_MOVES * art_h(era, false) + Spirling.MAX_MOVES - 1
+	var commands: String = EraBattleHud.text(era, "commands", "row")
+	if commands == "column":
+		var col: int = EraBattleHud.command_column_height(era)
+		return base - maxi(arts, col) + maxi(arts + Spirling.MAX_MOVES * art_grow, col + 4 * cmd_grow)
+	var rows: int = 2 if commands == "grid" else 1
+	return base + Spirling.MAX_MOVES * art_grow + rows * cmd_grow
 
 # --- Interruption (629) --------------------------------------------------------------------------
 
