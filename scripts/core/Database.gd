@@ -84,6 +84,7 @@ static func parse_move(m: Dictionary) -> MoveData:
 	if m.has("stat"):
 		md.effects.append({"id": &"stat_change", "stat": str(m.stat), "amount": int(m.get("stages", 1)), "self": bool(m.get("self", true)), "chance": float(m.get("stage_chance", m.get("stat_chance", 1.0))), "full_hp_amount": int(m.get("stages_full_hp", 0))})
 	md.overcharge = bool(m.get("overcharge", false))
+	md.spent_scale = bool(m.get("spent_scale", false))
 	md.target = str(m.get("target", "single"))
 	if m.has("field"):
 		md.effects.append({"id": &"set_field", "field": str(m.field)})

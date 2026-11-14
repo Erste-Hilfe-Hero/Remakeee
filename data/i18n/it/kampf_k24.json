@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_k24, written by tools/i18n/locales_kampf_k24.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s kinds hold %d more Energy (%d in all).": "Le specie %s accumulano %d Energia in più (%d in tutto).",
+  "+%d%% power for each Energy spent on arts this battle, up to %d.": "+%d%% di potenza per ogni Energia spesa in tecniche in questa lotta, fino a %d.",
+  "A Soaked Spirling loses 2 Energy at the end of each turn.": "Uno Spirling fradicio perde 2 Energia alla fine di ogni turno.",
+  "A Spirling that has fought gains %d Energy each turn while it waits on the bench.": "Uno Spirling che ha già combattuto ottiene %d Energia a turno mentre aspetta in panchina.",
+  "Damp Sparks": "Scintille Umide",
+  "It has paid too much to stop now. Every Energy it spent on arts this battle makes it hit harder.": "Ha pagato troppo per fermarsi ora. Ogni Energia spesa in tecniche in questa lotta lo fa colpire più forte.",
+  "Low on Energy": "Poca Energia",
+  "Pick Rest: it skips its art but gains 2 Energy on top of the turn's 1. The foe will not wait politely.": "Scegli Riposo: salta la tecnica ma ottiene 2 Energia oltre all'1 del turno. L'avversario non aspetterà educatamente.",
+  "Resting": "Riposo",
+  "Sunk Cost": "Costo Affondato",
+  "The water seeps into %s: it loses %d Energy!": "L'acqua penetra in %s: perde %d Energia!",
+  "Tip: Watch the pips fill back up. Resting is how Energy comes home.": "Consiglio: guarda le tacche riempirsi. Riposando l'Energia torna a casa.",
+  "Tip: Your Spirling is running low on Energy. An art it can't pay won't go off.": "Consiglio: il tuo Spirling è a corto di Energia. Una tecnica che non può pagare non parte."
+ }
+}

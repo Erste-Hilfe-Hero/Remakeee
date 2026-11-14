@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_k24, written by tools/i18n/locales_kampf_k24.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s kinds hold %d more Energy (%d in all).": "%sタイプはエネルギーを%d多くためられる（合計%d）。",
+  "+%d%% power for each Energy spent on arts this battle, up to %d.": "この戦いでわざに使ったエネルギー1につき威力+%d%%（最大%d）。",
+  "A Soaked Spirling loses 2 Energy at the end of each turn.": "ずぶぬれのSpirlingは毎ターンの終わりにエネルギーを2失う。",
+  "A Spirling that has fought gains %d Energy each turn while it waits on the bench.": "一度戦ったSpirlingは、ベンチで待つあいだ毎ターン%dエネルギーを得る。",
+  "Damp Sparks": "しめった火花",
+  "It has paid too much to stop now. Every Energy it spent on arts this battle makes it hit harder.": "もう引き返すには払いすぎた。この戦いでわざに使ったエネルギーの分だけ強く当たる。",
+  "Low on Energy": "エネルギー不足",
+  "Pick Rest: it skips its art but gains 2 Energy on top of the turn's 1. The foe will not wait politely.": "「休む」を選ぼう。わざは出さないが、ターンの1に加えてエネルギーを2得る。相手は礼儀正しく待ってはくれない。",
+  "Resting": "休む",
+  "Sunk Cost": "もったいない",
+  "The water seeps into %s: it loses %d Energy!": "水が%sにしみこむ。エネルギーを%d失った！",
+  "Tip: Watch the pips fill back up. Resting is how Energy comes home.": "ヒント：目もりがまた埋まっていくのを見よう。休むことでエネルギーは帰ってくる。",
+  "Tip: Your Spirling is running low on Energy. An art it can't pay won't go off.": "ヒント：Spirlingのエネルギーが少なくなってきた。払えないわざは出せない。"
+ }
+}

@@ -63,6 +63,9 @@ var _turn_drag: Dictionary = {}
 var _partner_slot: int = -1
 ## Rift boss id (BattleRules.BOSSES) for the foe in slot 0, or "".
 var foe_boss: String = ""
+## Raid guardian phase fixed by the server when the attempt started (KAMPF_PLAN_1000 item 419):
+## the first raid_phase phases of RaidRules.phases apply to the foe in slot 0 from the start.
+var raid_phase: int = 0
 ## Extra Energy the foe side gains at the end of the first turn (Rift-Born, item 749).
 var foe_turn1_energy: int = 0
 ## Ink Oath sworn this battle, per side (once per battle each).
@@ -533,6 +536,8 @@ func start() -> Array[BattleEvent]:
 		var b: Dictionary = BattleRules.BOSSES[foe_boss]
 		emit_event(BattleEvent.Type.BOSS, {"side": Side.FOE, "slot": 0, "boss": foe_boss, "label": str(b.label), "text": str(b.text),
 			"actions": _boss_actions, "hp": foe.hp, "max_hp": foe.max_hp()})
+	if raid_phase > 0:
+		_raid_phases(foe)
 	var edge: String = ShopEffects.edge_line(seals[Side.PLAYER], amulets[Side.PLAYER])
 	if not edge.is_empty():
 		emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.PLAYER, "text": edge})
@@ -927,6 +932,15 @@ func _check_boss_phase(boss: Spirling) -> void:
 		boss_late_done += 1
 		_enter_boss_phase(boss, late[boss_late_done - 1])
 
+## The raid guardian's phases reached before this attempt: each is announced, its stages apply.
+func _raid_phases(guardian: Spirling) -> void:
+	for p: Dictionary in RaidRules.phases(RaidRules.config()).slice(0, raid_phase):
+		emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": guardian.display_name(), "boss": "",
+			"raid": true, "text": str(p.get("text", "%s")) % guardian.display_name()})
+		var st: Dictionary = p.get("stage", {})
+		for stat: String in st:
+			change_stage(Side.FOE, stat, int(st[stat]), 0)
+
 ## Announces phase [param p], applies its stages and field, then opens the weak point (item 431).
 func _enter_boss_phase(boss: Spirling, p: Dictionary) -> void:
 	# "phase" (2, then 3 and on) lets the scene change the music (item 406).
@@ -1162,7 +1176,7 @@ func change_energy(side: int, delta: int, slot: int = 0) -> void:
 	if s == null:
 		return
 	var before: int = s.energy
-	s.energy = clampi(s.energy + delta, 0, max_energy_of(side) + TraitKit.energy_cap(s))
+	s.energy = clampi(s.energy + delta, 0, energy_cap_of(side, s))
 	if s.energy != before:
 		var d: Dictionary = _who(side, slot)
 		d["energy"] = s.energy
@@ -1251,6 +1265,9 @@ func _phase_end_of_turn() -> void:
 	for side: int in [Side.PLAYER, Side.FOE]:
 		for slot: int in slot_count(side):
 			_end_of_turn_for(side, slot)
+	# Damp Sparks drains the Soaked, the bench catches its breath (KAMPF_PLAN items 74, 67).
+	EnergyKit.soak_tick(self)
+	EnergyKit.bench_tick(self)
 	_vine_heal()
 	_sand_chip()
 	_tick_timers()
@@ -1309,6 +1326,11 @@ func can_rest(any_move: bool) -> bool:
 ## The energy maximum of [param side]'s Spirlings, with an Overcharge Core.
 func max_energy_of(side: int) -> int:
 	return max_energy() + energy_bonus[side]
+
+## The most Energy [param s] on [param side] can hold: the side's maximum, a keepsake's extra and
+## its kind's role (EnergyKit, KAMPF_PLAN item 50).
+func energy_cap_of(side: int, s: Spirling) -> int:
+	return max_energy_of(side) + TraitKit.energy_cap(s) + EnergyKit.role_cap(s)
 
 func max_energy() -> int:
 	return mini(int(rules.get("max_energy", Spirling.MAX_ENERGY)), Spirling.MAX_ENERGY)
@@ -1547,6 +1569,8 @@ func _do_move(a: BattleAction) -> void:
 		return
 	# Overflow (item 49) counts the Energy before the art is paid.
 	var brimming: bool = me.energy >= max_energy_of(side)
+	var spent_before: int = EnergyKit.spent_of(self, me)
+	EnergyKit.note_spent(self, me, mini(me.energy, me.move_cost(mv)))
 	change_energy(side, -me.move_cost(mv), slot)
 	if mv.cooldown > 0:
 		# +1 because the end of this very turn already counts one down.
@@ -1561,10 +1585,14 @@ func _do_move(a: BattleAction) -> void:
 		var chained: bool = turn > 0 and me.overcharge_turn == turn - 1
 		power_mult = BattleRules.overcharge_mult(extra, chained) + TraitKit.overcharge_bonus(me) * extra
 		if extra > 0:
+			EnergyKit.note_spent(self, me, extra)
 			change_energy(side, -extra, slot)
 		if chained:
 			emit_event(BattleEvent.Type.OVERCHARGE_CHAIN, _who(side, slot))
 		me.overcharge_turn = turn
+	# A spent_scale art grows with the Energy paid for arts before it (item 77).
+	if mv.spent_scale:
+		power_mult *= EnergyKit.spent_mult(spent_before)
 	var target_side: int = other(side)
 	var aim: int = a.target_slot
 	var muddled: bool = false
@@ -1802,7 +1830,7 @@ func _do_item(a: BattleAction) -> void:
 		change_energy(a.side, int(it.energy), t_slot)
 	elif int(it.get("energy", 0)) > 0 and bool(it.get("energy_bench", false)):
 		# The Rest Candle (KAMPF_PLAN item 78) also reaches a Spirling waiting on the bench.
-		target.energy = mini(target.energy + int(it.energy), max_energy_of(a.side))
+		target.energy = maxi(target.energy, mini(target.energy + int(it.energy), energy_cap_of(a.side, target)))
 	if int(it.get("energy_surge", 0)) > 0 and t_slot >= 0:
 		change_energy(a.side, max_energy_of(a.side), t_slot)
 		target.energy_surge = int(it.energy_surge)

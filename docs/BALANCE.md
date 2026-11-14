@@ -840,6 +840,7 @@ Generated from `data/rule_variants.json` (item 878).
 <!-- gen:variants -->
 | Variant | Label | Numbers | Can't go with | Seal | Text |
 | --- | --- | --- | --- | --- | --- |
+| `damp_sparks` | Damp Sparks | soak_drain 2 (normal 0) | - | drop | A Soaked Spirling loses 2 Energy at the end of each turn. |
 | `field_swirl` | Field Swirl | field_swirl_every 3 (normal 0) | - | swirl | Every 3 turns a random field takes over, announced a turn early. |
 | `full_charge` | Full Charge | energy_per_turn 0 (normal 1), rest_energy 3 (normal 2), start_energy 10 (normal 10) | no_rest, spark_poor | full | Everyone starts full, gains no Energy per turn, and resting gives 3. |
 | `glass_blades` | Glass Blades | hp_mult 0.5 (normal 1) | tough_round | glass | Every Spirling has half its Vigor. |

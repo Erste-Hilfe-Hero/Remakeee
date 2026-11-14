@@ -11,7 +11,7 @@ const MOVE_KEYS: Array[String] = ["name", "element", "kind", "power", "accuracy"
 	"target", "status", "status_chance", "stat", "stages", "self", "stats", "stat_chance", "stage_chance",
 	"stages_full_hp", "self_stages", "effect", "effect_amount", "field", "field_element", "field_power",
 	"overcharge", "cooldown", "vs_status", "vs_mult", "cure_self", "cure_target", "snare", "clear_snares",
-	"delay", "ignore_daze", "ignore_stages", "mend", "era", "desc", "effect_params"]
+	"delay", "ignore_daze", "ignore_stages", "mend", "era", "desc", "effect_params", "spent_scale"]
 
 ## Returns a list of human-readable problems. Empty means the data is valid.
 static func validate(spirlings_path: String = "res://data/spirlings.json", moves_path: String = "res://data/moves.json", encounters_path: String = "res://data/encounters.json") -> PackedStringArray:

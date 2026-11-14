@@ -9,6 +9,10 @@ extends RefCounted
 const LINES: Dictionary[String, Array] = {
 	"battle": ["Tip: Each art costs Energy (E). Your Spirling starts with 10 and gains 1 every turn.",
 		"If it runs dry, it rests a turn to recover."],
+	# The Energy lesson of the first battles goes on when it is needed (KAMPF_PLAN_1000 item 64).
+	"energy_low": ["Tip: Your Spirling is running low on Energy. An art it can't pay won't go off.",
+		"Pick Rest: it skips its art but gains 2 Energy on top of the turn's 1. The foe will not wait politely."],
+	"energy_rest": ["Tip: Watch the pips fill back up. Resting is how Energy comes home."],
 	# Paced (onboarding pass): only steps 1 and 2 at the start of the first wild battle, the
 	# rest when Bond is first picked, in the words of the bonding style in use.
 	"bond": ["Tip: A wild Spirling can join your team, if it trusts you. Trust is easier when it is tired.",
@@ -62,7 +66,7 @@ const LINES: Dictionary[String, Array] = {
 ## Headings for the Guide, in the order shown.
 const TOPICS: Dictionary[String, String] = {
 	"walk": "Walking", "menu": "The menu", "save": "Saving", "goals": "Goals", "wild_area": "Wild Spirlings",
-	"battle": "Energy in battle", "bond": "Bonding", "bond_mine": "Bonding: Mine!", "bond_echo": "Bonding: Echo call", "team_order": "Team order",
+	"battle": "Energy in battle", "energy_low": "Low on Energy", "energy_rest": "Resting", "bond": "Bonding", "bond_mine": "Bonding: Mine!", "bond_echo": "Bonding: Echo call", "team_order": "Team order",
 	"multi": "Battles with several Spirlings",
 	"rest_spot": "Rest spots", "travel": "Travel", "satchel": "The satchel", "keepsake": "Keepsakes",
 	"unfurl": "Unfurling", "gear": "Wayfarer Gear", "friends": "Friends", "storage": "Storage",
