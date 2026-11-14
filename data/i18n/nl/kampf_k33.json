@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table kampf_k33, written by tools/i18n/locales_kampf_k33.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s picks %s (%d) over %s (%d).": "%s kiest %s (%d) boven %s (%d).",
+  "%s picks %s (%d): nothing else is in reach.": "%s kiest %s (%d): iets anders zit er niet in.",
+  "%s picks %s at random, as wild ones do.": "%s kiest %s op goed geluk, zoals wilde dat doen.",
+  "%s rests: nothing it can pay is worth it now.": "%s rust: niets wat het kan betalen is het nu waard.",
+  "%s swaps to %s: it doesn't like its odds.": "%s wisselt naar %s: het vertrouwt zijn kansen niet.",
+  "%s uses %s: it is running low.": "%s gebruikt %s: het zit bijna op zijn laatste adem.",
+  "%s, won in %d turns": "%s, gewonnen in %d beurten",
+  "Banked Embers": "Gloed op rente",
+  "Beat the Ashen Heart. The smiths still want their cut.": "Versla het Asgrauwe Hart. De smeden willen nog steeds hun deel.",
+  "Beat the Drowned Heart. Nobody reads the passenger list twice.": "Versla het Verdronken Hart. Niemand leest de passagierslijst twee keer.",
+  "Beat the Mist Heart. What it hid is everyone's problem now.": "Versla het Nevelhart. Wat het verborg, is nu ieders probleem.",
+  "Boss replays": "Baas-herhalingen",
+  "Clear Weather": "Helder weer",
+  "Crier: An echo of the %s has crashed the festival in the shape of a %s. Nobody invited it. Will you see it out?": "Omroeper: Een echo van het %s is het feest binnengevallen in de gedaante van een %s. Niemand heeft het uitgenodigd. Werk je het naar buiten?",
+  "Crier: Something from the Rifts keeps trying to get in. Seal a Rift heart first, then we'll talk.": "Omroeper: Iets uit de Scheuren probeert steeds binnen te komen. Verzegel eerst een Scheurhart, dan praten we verder.",
+  "Crier: You saw the echo out already. It sulks somewhere behind the stands until next year.": "Omroeper: Je hebt de echo al naar buiten gewerkt. Het mokt tot volgend jaar ergens achter de kraampjes.",
+  "It lies open and stops building up.": "Het ligt open en bouwt niets meer op.",
+  "It wants that field gone, so it can wake.": "Het wil dat veld kwijt, zodat het kan ontwaken.",
+  "Kept in your boss replays (Records).": "Bewaard in je baas-herhalingen (Records).",
+  "Last Passenger": "Laatste passagier",
+  "Last phase: it holds nothing back.": "Laatste fase: het houdt niets meer in.",
+  "The echo comes apart like old bunting. The crowd claps as if it had helped.": "De echo valt uit elkaar als oude vlaggetjes. Het publiek klapt alsof het geholpen heeft.",
+  "The echo keeps dancing. The crowd decides it is part of the show.": "De echo blijft dansen. Het publiek besluit dat het bij de show hoort."
+ }
+}
