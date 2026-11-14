@@ -23,7 +23,7 @@ func _count(events: Array[BattleEvent], t: BattleEvent.Type) -> int:
 func _plain_arts(element: int) -> Array[MoveData]:
 	var out: Array[MoveData] = []
 	for md: MoveData in Database.moves.values():
-		if md.element == element and md.is_damaging() and md.effects.is_empty() and md.priority == 0 \
+		if md.element == element and not md.neutral and md.is_damaging() and md.effects.is_empty() and md.priority == 0 \
 				and md.cooldown == 0 and not md.overcharge and md.target == "single":
 			var c: MoveData = md.duplicate()
 			c.accuracy = 1.0

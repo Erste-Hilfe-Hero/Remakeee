@@ -81,7 +81,7 @@ static var REACTIONS: Array[Dictionary] = _rows("reactions")
 
 ## The reaction a [param move] sets off on [param target], or {}.
 static func reaction(move: MoveData, target: Spirling) -> Dictionary:
-	if target == null or target.status.is_empty() or not move.is_damaging():
+	if target == null or target.status.is_empty() or not move.is_damaging() or move.neutral:
 		return {}
 	for r: Dictionary in REACTIONS:
 		if move.element == Elements.E.get(str(r.element), -1) and target.status == str(r.status):
@@ -297,7 +297,7 @@ static func expected_damage(user: Spirling, target: Spirling, move: MoveData, fi
 	return DamageCalc.estimate(user, target, hit) * damage_mult(user, target, hit, field)
 
 static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field: String) -> float:
-	var m: float = field_mult(field, move.element)
+	var m: float = 1.0 if move.neutral else field_mult(field, move.element)
 	if m < 1.0 and bool(ShopEffects.gift_table(user).get("field_proof", false)):
 		m = 1.0
 	m *= status_bonus(move, target)
@@ -306,10 +306,10 @@ static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field:
 		m *= mult_key(target, "phys_taken")
 	# Element Prisms from the shop: one element hits harder (plan item 4402).
 	var held: Dictionary = held_info(user.held)
-	if held.has("elem") and move.element == Elements.E.get(str(held.elem), -1):
+	if held.has("elem") and not move.neutral and move.element == Elements.E.get(str(held.elem), -1):
 		m *= float(held.get("elem_mult", 1.0))
 	var boost: float = float(ShopEffects.gift_table(user).get("low_hp_boost", 1.0))
-	if boost != 1.0 and move.element in user.elements() and user.hp * 3 < user.max_hp():
+	if boost != 1.0 and not move.neutral and move.element in user.elements() and user.hp * 3 < user.max_hp():
 		m *= boost
 	return m * TraitKit.static_mult(user, target, move, field)
 

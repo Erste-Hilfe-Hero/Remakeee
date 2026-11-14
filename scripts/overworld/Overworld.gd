@@ -825,6 +825,8 @@ func _on_player_stepped(cell: Vector2i) -> void:
 					if not e in boost:
 						boost.append(e)
 				boost.append_array(RiftFields.spawn_boost(map.field))
+				# The region's dominant elements (KAMPF_PLAN_1000 item 102).
+				boost.append_array(ElementDominance.boost(map.region))
 				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain,
 					WildRules.event_mults(map.encounter_table, DailyFind.today_key()))
 				wild = ChallengeRules.reroll_wild(wild, map.encounter_table, GameState.rng)
@@ -1410,12 +1412,17 @@ func _action_training(_args: PackedStringArray, _speaker: NPC) -> void:
 	while true:
 		var menu := MenuHost.new()
 		_ui.add_child(menu)
-		var opts: Array[String] = [Loc.t("Spar with a dummy"), Loc.t("Training goals"), Loc.t("Training record")]
+		var opts: Array[String] = [Loc.t("Spar with a dummy"), Loc.t("Training goals"), Loc.t("Training record"), Loc.t("Matchup quiz")]
 		var pick: int = await menu.pick_strings(Loc.t("Training ring"), opts)
 		if pick == 1:
 			await menu.info("\n".join(TrainingGround.goal_lines(GameState.records)))
 		elif pick == 2:
 			await menu.info("\n".join(TrainingGround.stat_lines(GameState.records)))
+		elif pick == 3:
+			# The matchup quiz (KAMPF_PLAN_1000 item 99).
+			var prize: String = await MatchupQuiz.play(menu, GameState.records, GameState.rng, EraManager.unlocked_era)
+			if not prize.is_empty():
+				GameState.add_item(prize)
 		if pick != 0:
 			menu.queue_free()
 			if pick < 0:
@@ -3689,7 +3696,10 @@ func after_tamer_win(n: NPC) -> void:
 		if BossRules.keep_replay(GameState.records, str(def.boss), last_model.turn, GameState.records.get("last_battle", {})):
 			toast.show_note(Loc.t("Kept in your boss replays (Records)."))
 	if not lore.is_empty() and Lexicon.add(GameState.records, lore):
-		await say([Loc.t("A new lexicon entry is written down."), "%s: %s" % [Loc.t(Lexicon.title(lore)), Loc.t(Lexicon.text(lore))]] as Array[String])
+		var said: Array[String] = [Loc.t("A new lexicon entry is written down."), "%s: %s" % [Loc.t(Lexicon.title(lore)), Loc.t(Lexicon.text(lore))]]
+		# The matchups the page teaches (KAMPF_PLAN_1000 item 90).
+		said.append_array(Lexicon.lesson_lines(lore))
+		await say(said)
 	for f: Variant in def.get("win_flags", []):
 		GameState.set_flag(str(f))
 	if bool(def.get("leaves", false)):
@@ -4320,7 +4330,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.foe_damage_mult = GameState.foe_damage_mult()
 	model.boss_hp_scale = GameState.BOSS_HP_SCALE[GameState.difficulty]
 	model.boss_difficulty = GameState.difficulty
-	model.field = str(trainer.get("field", map.field))
+	# A field-less Rift lays its own field over its wild battles (KAMPF_PLAN_1000 item 94).
+	model.field = RiftFields.battle_field(str(trainer.get("field", map.field)), map.file_id, wild)
 	model.day_phase = DayCycle.current() if map.outdoor and GameState.day_night else -1
 	model.foe_rule = str(trainer.get("rule", ""))
 	# Rule variants of a tower floor or the weekly challenge (item 799).

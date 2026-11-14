@@ -189,6 +189,7 @@ func _ready() -> void:
 		_shortcut.custom_minimum_size = Vector2(0, EraBattleHud.shortcut_height(era))
 		_shortcut.clip_text = true
 		_shortcut.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		_shortcut.resized.connect(_fit_shortcut)
 		Juice.press_feedback(_shortcut)
 		_shortcut.pressed.connect(func() -> void:
 			if not ready_for_input():
@@ -380,9 +381,9 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 	# The kind's symbol (item 597): ! physical, * focus, ~ status, as in the rules page.
 	var kind: String = BattleHelp.kind_mark(mv.kind) + " " + Loc.t(MoveData.Kind.keys()[mv.kind].capitalize())
 	if mv.is_damaging():
-		lines.append(Loc.t("%s, %s, power %d") % [Elements.element_name(mv.element), kind, mv.power])
+		lines.append(Loc.t("%s, %s, power %d") % [Loc.t(mv.element_label()), kind, mv.power])
 	else:
-		lines.append(Loc.t("%s, %s") % [Elements.element_name(mv.element), kind])
+		lines.append(Loc.t("%s, %s") % [Loc.t(mv.element_label()), kind])
 	lines.append(Loc.t("Accuracy %d%%, %d Energy") % [roundi(mv.accuracy * 100.0), mv.energy_cost])
 	if mv.priority > 0:
 		lines.append(Loc.t("Acts before other arts."))
@@ -687,7 +688,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 		var b: Button = _move_buttons[i]
 		if i < me.moves.size():
 			var mv: MoveData = me.moves[i]
-			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
+			var mult: float = GameState.known_art_multiplier(mv, foe) if foe != null else -1.0
 			# An art that acts first carries an arrow (item 595).
 			b.text = BattleComfort.fav_mark(me, mv) + art_marks(mv) + mv.move_name
 			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
@@ -702,17 +703,21 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			# On the element chip (Era III on) the symbol stands in ink on paper, else in its colour.
 			_move_icons[i].texture = ElementIcons.outlined(mv.element, UITheme.INK if filled else BattleUiStyle.badge_color(era, mv.element))
 			_move_stripes[i].color = BattleUiStyle.badge_color(era, mv.element) if BattleUiStyle.colour_on(era) and not filled else Color.TRANSPARENT
+			# A neutral art (item 89) carries no element symbol and no element stripe.
+			if mv.neutral:
+				_move_icons[i].texture = null
+				_move_stripes[i].color = Color.TRANSPARENT
 			var shown_mult: float = mult if mv.power > 0 else -1.0
 			_move_costs[i].text = BattleUiStyle.matchup_mark(shown_mult, GameState.color_blind) + _move_costs[i].text
 			_row_colors[i] = BattleUiStyle.matchup_color(era, shown_mult)
 			if EraBattleHud.flag(era, "art_detail"):
 				# Era IV on: the element's name under the art's name, the matchup word under the cost.
-				b.text = BattleComfort.fav_mark(me, mv) + art_marks(mv) + Loc.t(mv.move_name) + "\n" + Loc.t(Elements.element_name(mv.element))
+				b.text = BattleComfort.fav_mark(me, mv) + art_marks(mv) + Loc.t(mv.move_name) + "\n" + Loc.t(mv.element_label())
 				_move_hints[i].text = Loc.t(EraBattleHud.effect_hint(era, shown_mult))
 			_style_row(b, _row_left())
 			if filled:
 				_fill_row(b, mv.element)
-			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
+			b.tooltip_text = "%s %s, power %d" % [mv.element_label(), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
 			# Screen readers read the whole info card, no long press needed.
 			b.accessibility_description = move_info(mv, model)
 			b.disabled = not me.can_afford(mv) or model.move_locked(mv)
@@ -845,13 +850,69 @@ func _refresh_shortcut(model: BattleModel, items_ok: bool) -> void:
 		return
 	var id: String = shortcut_item(model, EraBattleHud.last_item)
 	if id.is_empty():
-		_shortcut.text = Loc.t("Again: -")
+		_shortcut_name = ""
+		_shortcut_tail = command_label("Again: -")
 	else:
-		var item_name: String = Loc.t(str(Database.item(id).get("name", id)))
-		var n: int = model.bag_count(BattleModel.Side.PLAYER, id)
-		# In the narrow command column (Era IV/V) the item and its count stand alone.
-		_shortcut.text = ("%s x%d" % [item_name, n]) if _column != null else Loc.t("Again: %s x%d") % [item_name, n]
+		# The item and its count stand alone in the narrow command column (Era IV/V).
+		_shortcut_name = Loc.t(str(Database.item(id).get("name", id)))
+		_shortcut_tail = " x%d" % model.bag_count(BattleModel.Side.PLAYER, id)
+	_shortcut.tooltip_text = _shortcut_name
+	_fit_shortcut()
 	_shortcut.disabled = id.is_empty() or not items_ok
+
+## Item name and the rest of the shortcut's text ("Again: -" alone, or " x3" after the name).
+var _shortcut_name: String = ""
+var _shortcut_tail: String = ""
+
+## The shortcut's text fits its 74 px in the command column (1.2.0 store shots: "Nochmal: -" and
+## every item name were cut off): a text too wide for the era's bold font takes the plain large
+## font, and an item name still too long ends in "..." before its count, which always shows.
+func _fit_shortcut() -> void:
+	if _shortcut == null or _fitting_shortcut:
+		return
+	_fitting_shortcut = true
+	# Setting the text can resize the button under the fit; measure again until it holds.
+	for _pass: int in 3:
+		var w: float = _shortcut.size.x
+		_fit_shortcut_once()
+		if is_equal_approx(_shortcut.size.x, w):
+			break
+	_fitting_shortcut = false
+
+func _fit_shortcut_once() -> void:
+	var full: String = _shortcut_name + _shortcut_tail
+	var sb: StyleBox = _shortcut.get_theme_stylebox("normal")
+	var room: float = _shortcut.size.x - sb.content_margin_left - sb.content_margin_right
+	var fs: int = _shortcut.get_theme_font_size("font_size")
+	var text: String = full
+	var large: bool = false
+	if room > 0.0:
+		var bold: Font = EraBattleHud.font(era)
+		large = EraBattleHud.bold_font(era) and bold.get_string_size(full, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x > room
+		var f: Font = PixelFont.get_large_font() if large else bold
+		text = fit_name(_shortcut_name, _shortcut_tail, f, fs, room)
+	if large and not _shortcut.has_theme_font_override("font"):
+		_shortcut.add_theme_font_override("font", PixelFont.get_large_font())
+	elif not large and _shortcut.has_theme_font_override("font"):
+		_shortcut.remove_theme_font_override("font")
+	if _shortcut.text != text:
+		_shortcut.text = text
+
+var _fitting_shortcut: bool = false
+
+## [param item_name] followed by [param tail] in [param room] pixels: the name loses letters
+## from its end and gets "..." until both fit; the tail always stays whole.
+static func fit_name(item_name: String, tail: String, f: Font, fs: int, room: float) -> String:
+	var full: String = item_name + tail
+	if item_name.is_empty() or f.get_string_size(full, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x <= room:
+		return full
+	var n: int = item_name.length() - 1
+	while n > 0:
+		var t: String = item_name.left(n).strip_edges() + "..." + tail
+		if f.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x <= room:
+			return t
+		n -= 1
+	return tail.strip_edges()
 
 ## Keeps an art's name clear of the Energy cost and the matchup word drawn over the right of
 ## its row (1.2.0 store shots: "Souffle de Cendres" ran into "4E"): the row's text stops before

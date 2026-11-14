@@ -164,6 +164,8 @@ func test_command_menu_puts_the_commands_beside_the_arts() -> void:
 	EraBattleHud.last_item = "tonic"
 	_era(4)
 	var menu := CommandMenu.new()
+	# The battle screen's era theme, as BattleScene gives it (the shortcut fits its text to it).
+	menu.theme = EraBattleHud.theme(4)
 	add_child_autofree(menu)
 	menu.size = Vector2(270, 0)
 	menu.refresh(m, 0)

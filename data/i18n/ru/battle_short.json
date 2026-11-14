@@ -1,6 +1,7 @@
 {
  "_comment": "ru short words for the battle screen (German table battle_short), keyed by the English text. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
  "strings": {
+  "Again: - (battle button)": "Снова: -",
   "Bond (battle button)": "Связь",
   "Give up (battle button)": "Сдача",
   "Growth (bar label)": "Рост",

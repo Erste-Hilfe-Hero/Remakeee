@@ -77,6 +77,7 @@ static func parse_move(m: Dictionary) -> MoveData:
 	md.accuracy = float(m.accuracy)
 	md.energy_cost = int(m.energy)
 	md.priority = int(m.get("priority", 0))
+	md.neutral = bool(m.get("neutral", false))
 	md.status_effect = str(m.get("status", ""))
 	md.status_chance = float(m.get("status_chance", 0.0))
 	if not md.status_effect.is_empty():

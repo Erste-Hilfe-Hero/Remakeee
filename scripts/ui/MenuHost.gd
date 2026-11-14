@@ -930,7 +930,7 @@ static func summary(s: Spirling) -> String:
 	lines.append("")
 	for mv: MoveData in s.moves:
 		var power: String = "-" if mv.power <= 0 else str(mv.power)
-		lines.append("%s  %s  P%s  E%d" % [mv.move_name, Elements.element_name(mv.element).substr(0, 3), power, mv.energy_cost])
+		lines.append("%s  %s  P%s  E%d" % [mv.move_name, mv.element_label().substr(0, 3), power, mv.energy_cost])
 	return "\n".join(lines)
 
 ## Storage detail card (plan area 1, item 380): Ring, temperament, gift, keepsake and a
@@ -991,7 +991,7 @@ static func summary_pages(s: Spirling) -> Array[String]:
 	var arts: PackedStringArray = [Loc.t("Arts of %s" % s.display_name()), ""]
 	for mv: MoveData in s.moves:
 		var power: String = "-" if mv.power <= 0 else str(mv.power)
-		arts.append("%s\n  %s  %s  %s" % [mv.move_name, Elements.element_name(mv.element),
+		arts.append("%s\n  %s  %s  %s" % [mv.move_name, mv.element_label(),
 			Loc.t("Power %s" % power), Loc.t("Energy %d" % mv.energy_cost)])
 	var gift: PackedStringArray = []
 	var tr: Dictionary = BattleRules.trait_info(s.gift_id())

@@ -375,7 +375,7 @@ var battle_report: BattleReport = BattleReport.new()
 ## Damage preview for one target with the team guard and back row factored in (items 362, 367).
 func _aim_line(me: Spirling, mv: MoveData, foe_slot: int, from_slot: int = 0) -> String:
 	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, foe_slot)
-	var mult: float = GameState.known_multiplier(mv.element, foe)
+	var mult: float = GameState.known_art_multiplier(mv, foe)
 	var pct: int = CommandMenu.damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
 	if pct > 0:
 		pct = maxi(1, roundi(pct * MultiRules.guard_mult(model, BattleModel.Side.FOE) * MultiRules.row_mult(model, BattleModel.Side.PLAYER, from_slot, BattleModel.Side.FOE, foe_slot, mv)))
@@ -650,6 +650,9 @@ func _point_pin(side: int, slot: int, filled: bool) -> void:
 		return
 	var sp: SpirlingSprite = _slot_sprites[side][slot]
 	_pin.filled = filled
+	# An aimed foe shows its element symbols at the pin (KAMPF_PLAN_1000 item 91).
+	var aimed: Spirling = model.active_spirling(side, slot) if filled and side == BattleModel.Side.FOE else null
+	_pin.elements = aimed.elements() if aimed != null else ([] as Array[int])
 	_pin.point_at(Rect2(sp.position, sp.size))
 
 func _auto_active() -> bool:
@@ -1456,7 +1459,8 @@ func _play_event(e: BattleEvent) -> void:
 				await _text.show_text(e.describe())
 			_pin.visible = false
 		BattleEvent.Type.MOVE_USED:
-			_last_player_element = int(e.data.get("element", -1)) if side == BattleModel.Side.PLAYER else -1
+			# A neutral art (item 89) teaches no matchup.
+			_last_player_element = int(e.data.get("element", -1)) if side == BattleModel.Side.PLAYER and not bool(e.data.get("neutral", false)) else -1
 			if side == BattleModel.Side.PLAYER:
 				Collection.note_art(str(e.data.get("move", "")))
 			_last_element[side] = int(e.data.get("element", -1))

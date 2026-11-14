@@ -693,6 +693,50 @@
   "desc": "Calls the eye of a gale over the field."
  },
  {
+  "name": "Rust Call",
+  "element": "RUST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "rust_haze",
+  "era": 2,
+  "desc": "Calls a rust haze over the field."
+ },
+ {
+  "name": "Ink Call",
+  "element": "INK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "ink_flood",
+  "era": 2,
+  "desc": "Calls an ink flood over the field."
+ },
+ {
+  "name": "Rime Call",
+  "element": "FROST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "rime_fall",
+  "era": 3,
+  "desc": "Calls a fall of rime over the field."
+ },
+ {
+  "name": "Gilt Call",
+  "element": "GILT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "gilt_glare",
+  "era": 4,
+  "desc": "Calls a gilt glare over the field."
+ },
+ {
   "name": "Glow Knuckle",
   "element": "EMBER",
   "kind": "PHYSICAL",
@@ -5410,7 +5454,30 @@
   "accuracy": 0.9,
   "energy": 0,
   "era": 1,
-  "desc": "A swipe with whatever lies around. Weak, but it costs nothing."
+  "desc": "A swipe with whatever lies around. Weak, but it costs nothing.",
+  "neutral": true
+ },
+ {
+  "name": "Plain Shove",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "neutral": true,
+  "era": 1,
+  "desc": "A shove with no element behind it. Nothing resists it, and nothing fears it."
+ },
+ {
+  "name": "Old Grudge",
+  "element": "UMBRA",
+  "kind": "FOCUS",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "neutral": true,
+  "era": 1,
+  "desc": "A grudge older than the elements. It lands on every foe the same, like a debt."
  },
  {
   "name": "Coiled Strike",

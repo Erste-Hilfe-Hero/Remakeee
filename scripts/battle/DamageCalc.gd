@@ -31,10 +31,10 @@ static func _guarded(target: Spirling, stat: String, value: int, move: MoveData)
 	return float(value)
 
 static func stab_for(user: Spirling, move: MoveData) -> float:
-	return STAB if move.element in user.elements() else 1.0
+	return STAB if not move.neutral and move.element in user.elements() else 1.0
 
 static func effectiveness(target: Spirling, move: MoveData) -> float:
-	return Elements.multiplier(move.element, target.elements())
+	return 1.0 if move.neutral else Elements.multiplier(move.element, target.elements())
 
 ## Deterministic core of the formula, exposed for tests and the AI.
 static func raw(user: Spirling, target: Spirling, move: MoveData, roll: float, crit: bool) -> float:
