@@ -1,5 +1,5 @@
 {
- "_doc": "Rift field extras (docs/KAMPF_PLAN_1000.md, Rift-Felder und Umgebung), read by scripts/battle/RiftFields.gd. The rules of each field stay in BattleRules.FIELDS; this file holds how a field looks and sounds and where it turns up. tint: colour laid over the backdrop per field; tint_alpha per era (Era I is a 4-ink handheld, so every field gets the same dark ink there, only stronger or weaker). music_pitch: the battle song plays a touch lower or higher while the field lasts. daytime: a Resonance field laid at its own time of day (DayCycle phase names) holds extra turns. tower: share of lighthouse stair floors (from from_floor on) that stand in a random field. spawn: wild Spirlings of the boosted element come out more often on a map with that field.",
+ "_doc": "Rift field extras (docs/KAMPF_PLAN_1000.md, Rift-Felder und Umgebung), read by scripts/battle/RiftFields.gd. The rules of each field stay in BattleRules.FIELDS; this file holds how a field looks and sounds and where it turns up. tint: colour laid over the backdrop per field; tint_alpha per era (Era I is a 4-ink handheld, so every field gets the same dark ink there, only stronger or weaker). music_pitch: the battle song plays a touch lower or higher while the field lasts. daytime: a Resonance field laid at its own time of day (DayCycle phase names) holds extra turns. tower: share of lighthouse stair floors (from from_floor on) that stand in a random field. spawn: wild Spirlings of the boosted element come out more often on a map with that field. rift_maps: the field the wild battles of a Rift map without its own \"field\" stand in (a Warden keeps the place as it is), so the Rifts vary their fields, the later elements' fields among them (KAMPF_PLAN_1000 item 94).",
  "tint": {
   "ash_storm": "#c0583a",
   "high_tide": "#3a78c0",
@@ -8,7 +8,11 @@
   "pollen_drift": "#70b048",
   "dawn_glow": "#f0d890",
   "rubble_rain": "#8a7458",
-  "gale_eye": "#a8d0d8"
+  "gale_eye": "#a8d0d8",
+  "rust_haze": "#9a4a28",
+  "ink_flood": "#2b2f4a",
+  "rime_fall": "#a8d8ec",
+  "gilt_glare": "#e0b848"
  },
  "era_ink": {"1": "#2b2620"},
  "tint_alpha": {"1": 0.1, "2": 0.12, "3": 0.14, "4": 0.16, "5": 0.18},
@@ -20,12 +24,34 @@
   "pollen_drift": 1.02,
   "dawn_glow": 1.03,
   "rubble_rain": 0.96,
-  "gale_eye": 1.05
+  "gale_eye": 1.05,
+  "rust_haze": 0.95,
+  "ink_flood": 0.95,
+  "rime_fall": 0.98,
+  "gilt_glare": 1.03
  },
  "daytime": {
   "dawn_glow": {"phases": ["dawn", "day"], "turns": 1},
   "deep_murk": {"phases": ["dusk", "night"], "turns": 1}
  },
  "tower": {"share": 0.5, "from_floor": 3},
- "spawn": true
+ "spawn": true,
+ "rift_maps": {
+  "foundry_rift": "rust_haze",
+  "lock_rift": "rubble_rain",
+  "masque_rift": "deep_murk",
+  "vault_rift": "gilt_glare",
+  "bath_rift": "high_tide",
+  "ledger_rift": "ink_flood",
+  "press_rift": "ink_flood",
+  "rime_rift": "rime_fall",
+  "gilt_rift": "gilt_glare",
+  "orrery_rift": "dawn_glow",
+  "salt_rift": "gale_eye",
+  "span_rift": "rust_haze",
+  "raft_rift": "high_tide",
+  "taproot_rift": "pollen_drift",
+  "wick_rift": "ash_storm",
+  "bloom_rift": "pollen_drift"
+ }
 }

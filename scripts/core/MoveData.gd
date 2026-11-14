@@ -33,6 +33,10 @@ enum Kind { PHYSICAL, FOCUS, STATUS }
 @export var era: int = 1
 ## One line of flavour for the art (moves.json "desc", English key for Loc).
 @export var description: String = ""
+## A neutral art (moves.json "neutral", KAMPF_PLAN_1000 item 89) has no element: x1 into every
+## foe, no own-element bonus, and no field, prism or reaction touches it. "element" stays only
+## for the look of the hit.
+@export var neutral: bool = false
 
 const TARGETS: Array[String] = ["single", "foes"]
 
@@ -46,6 +50,10 @@ func has_effect(id: StringName) -> bool:
 		if StringName(fx.get("id", "")) == id:
 			return true
 	return false
+
+## The element name shown on the art, "Neutral" for a neutral art.
+func element_label() -> String:
+	return "Neutral" if neutral else Elements.element_name(element)
 
 ## True if the move deals direct damage.
 func is_damaging() -> bool:

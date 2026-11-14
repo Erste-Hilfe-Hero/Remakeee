@@ -363,6 +363,10 @@ func known_multiplier(element: int, foe: Spirling) -> float:
 		return Elements.multiplier(element, foe.elements())
 	return float(known_matchups.get(_matchup_key(element, foe.data.species_name), -1.0))
 
+## The known multiplier of art [param mv] into [param foe]: a neutral art (item 89) is always x1.
+func known_art_multiplier(mv: MoveData, foe: Spirling) -> float:
+	return 1.0 if mv.neutral else known_multiplier(mv.element, foe)
+
 func add_item(id: String, count: int = 1) -> void:
 	inventory[id] = int(inventory.get(id, 0)) + count
 	if count > 0:

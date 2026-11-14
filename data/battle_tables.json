@@ -148,6 +148,30 @@
     "drowse"
    ],
    "intro": "The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off."
+  },
+  "rust_haze": {
+   "label": "Rust Haze",
+   "boost": "RUST",
+   "weaken": "GILT",
+   "intro": "Red flakes hang in the damp air. Rust arts bite deeper, Gilt arts tarnish."
+  },
+  "ink_flood": {
+   "label": "Ink Flood",
+   "boost": "INK",
+   "weaken": "LUMEN",
+   "intro": "Ink seeps up from the ground and swallows every shape. Ink arts spread, Lumen arts drown."
+  },
+  "rime_fall": {
+   "label": "Rime Fall",
+   "boost": "FROST",
+   "weaken": "EMBER",
+   "intro": "Rime drifts down and settles on every edge. Frost arts cut colder, Ember arts gutter out."
+  },
+  "gilt_glare": {
+   "label": "Gilt Glare",
+   "boost": "GILT",
+   "weaken": "RUST",
+   "intro": "Light bounces off gilded stone. Gilt arts gleam, Rust arts flake away."
   }
  },
  "reactions": [

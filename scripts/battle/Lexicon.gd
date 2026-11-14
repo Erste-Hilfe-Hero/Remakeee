@@ -43,7 +43,48 @@ static func add(records: Dictionary, id: String) -> bool:
 		return false
 	l.append(id)
 	records["lexicon"] = l
+	# A lore page that names matchups teaches them to the Wayfarer (item 90).
+	if is_same(records, GameState.records):
+		teach_matchups(GameState.known_matchups, id)
 	return true
+
+# --- Matchups from lore pages (KAMPF_PLAN_1000 item 90) --------------------------------------------
+# lexicon.json "matchups": [element, species] pairs. Writing the page down teaches them as if a hit
+# had shown them; the factor always comes from the type chart, so a page can never lie.
+
+## The matchups page [param id] teaches: {"element": int, "species": String, "mult": float}.
+static func lessons(id: String) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for row: Variant in (all().get(id, {}) as Dictionary).get("matchups", []):
+		if not row is Array or (row as Array).size() < 2 or not Elements.E.has(str(row[0])):
+			continue
+		var sd: SpirlingData = Database.species(str(row[1]))
+		if sd == null:
+			continue
+		var e: int = Elements.E[str(row[0])]
+		out.append({"element": e, "species": sd.species_name, "mult": Elements.multiplier(e, sd.elements)})
+	return out
+
+## Writes the matchups of page [param id] into [param known] (keys as GameState.known_matchups).
+## Returns how many of them were new.
+static func teach_matchups(known: Dictionary, id: String) -> int:
+	var fresh: int = 0
+	for l: Dictionary in lessons(id):
+		var key: String = "%d:%s" % [int(l.element), str(l.species)]
+		if not known.has(key):
+			fresh += 1
+		known[key] = float(l.mult)
+	return fresh
+
+## Lines under the page text: the matchups it teaches ("Tide into Kindlop x2"); empty without any.
+static func lesson_lines(id: String) -> Array[String]:
+	var out: Array[String] = []
+	for l: Dictionary in lessons(id):
+		var tag: String = CommandMenu.matchup_tag(float(l.mult))
+		out.append(Loc.t("%s into %s %s") % [Loc.t(Elements.element_name(int(l.element))), Loc.t(str(l.species)), tag if not tag.is_empty() else "x1"])
+	if not out.is_empty():
+		out.push_front(Loc.t("Matchups this page teaches:"))
+	return out
 
 # --- Foe values (KAMPF_PLAN_1000 item 215) --------------------------------------------------------
 # After every battle the foes' values go into records["foe_values"]: per species the highest Ring

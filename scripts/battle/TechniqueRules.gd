@@ -380,7 +380,7 @@ static func is_charged(model: BattleModel, me: Spirling, mv: MoveData) -> bool:
 static func aim_tag(foe: Spirling, mv: MoveData) -> String:
 	if foe == null or mv == null or not mv.is_damaging():
 		return ""
-	var tag: String = CommandMenu.matchup_tag(GameState.known_multiplier(mv.element, foe))
+	var tag: String = CommandMenu.matchup_tag(GameState.known_art_multiplier(mv, foe))
 	return "" if tag.is_empty() else " " + tag
 
 # --- batch 4: matchup page, element training ----------------------------------------------------
