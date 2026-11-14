@@ -1,0 +1,16 @@
+{
+ "_comment": "zh_TW translation of the kampf_k22 table, keyed by the English text.",
+ "strings": {
+  "%d still to come": "還有%d隻",
+  "%s rises!": "%s現身了！",
+  "A hushed %s!": "沉寂的%s！",
+  "A swarm of %d!": "%d隻的群體！",
+  "Battle paused": "戰鬥已暫停",
+  "Duel with %s!": "與%s對決！",
+  "Everything goes dark... and then, somehow, it doesn't. Your team stirs right where it fell, bruised but breathing.": "一切都黑了下來……然後不知怎的，又沒有。你的隊伍在倒下的地方動了動，傷痕累累，但還在呼吸。",
+  "Resume": "繼續",
+  "Soft Defeat: %s": "溫和戰敗：%s",
+  "Story only: after a lost battle your team wakes where it fell, with half its Vigor.": "僅限故事難度：戰鬥失敗後，你的隊伍會在倒下的地方醒來，元氣剩一半。",
+  "You caught %s from behind! Your side moves first.": "你從背後逮住了%s！你方先行動。"
+ }
+}

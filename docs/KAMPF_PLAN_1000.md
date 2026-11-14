@@ -47,21 +47,21 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 12. [x] Rasten im Mehrfachkampf: Wahl 'Alle rasten' als Abkürzung (Knopf Alle rasten, TurnFlow.fill_rest)
 13. [x] Schnellwahl 'Letzten Zug wiederholen' für Wildkämpfe (CommandMenu.prefer_row, BattleInfo.focus_row: Fokus liegt auf der letzten Technik)
 14. [x] Zugvorschau: Fehlschlag-Chance bei Genauigkeit unter 100 % als Prozentwert (BattleInfo.miss_pct)
-15. [ ] Kampfbeginn mit Initiative-Bonus, wenn der Spieler den Gegner von hinten anspricht
+15. [x] Kampfbeginn mit Initiative-Bonus, wenn der Spieler den Gegner von hinten anspricht (BattleOpening.from_behind, BattleModel.initiative, test_kampf_k22)
 16. [x] Überraschungsangriff wilder Spirlings im hohen Farn: erster Zug für den Gegner (selten) (BattleModel.ambush, Overworld)
 17. [x] Klare Regel: Gegenstände kosten den ganzen Zug des Spirlings, der sie benutzt (RulesBook, test_kampf_k01)
 18. [x] Rückzug aus Wildkämpfen bleibt ohne Kosten, wiederholte Versuche werden leichter (bestehend, dokumentieren) (RulesBook.fleeing)
 19. [x] Endzug-Reihenfolge festlegen und im Lexikon erklären: Status, Regeneration, Energie, Feld (RulesBook.end_of_turn)
 20. [x] Kampfende-Zusammenfassung: Schaden, K.o.s, MVP-Spirling (BattleSummary; BattleInfo.star_of)
 21. [x] Zug-Limit für Boss-Kämpfe (z. B. 30 Züge), danach Riss schließt sich erneut (BOSS_ROUND_LIMIT, ROUND_LIMIT)
-22. [ ] Optionale 'Sanfte Niederlage' auf Story: Team erwacht mit halben HP am Kampfort
+22. [x] Optionale 'Sanfte Niederlage' auf Story: Team erwacht mit halben HP am Kampfort (SoftDefeat, Einstellung 'Soft Defeat', data/battle_flow.json)
 23. [x] Seed des Kampfes im Log anzeigen (für Wiederholungen und Fehlerberichte) (BattleSummary.seed_line im Log)
-24. [ ] Pause-Menü im Kampf mit Einstellungen, ohne den Kampf zu verlassen
+24. [x] Pause-Menü im Kampf mit Einstellungen, ohne den Kampf zu verlassen (BattlePause: Knopf Settings öffnet BattleComfort.PAUSE_TITLE; Auto, Text und nächstes Ereignis warten)
 25. [x] Mehrfachziel-Techniken treffen Verbündete nie (bestehende Regel festschreiben) (RulesBook, test_kampf_k01)
 26. [x] Fehlende Aktionen eines Slots werden zu Rasten, nie zu Zufallszügen (bestehend, testen) (test_kampf_k01)
-27. [ ] Gegner-Bank-Anzahl als Punkte am Rand (wie viele Spirlings noch kommen)
-28. [ ] Spieler-Bank-Anzahl ebenfalls als Punkte
-29. [ ] Kampfstart-Text kürzer bei 2x/4x Tempo
+27. [x] Gegner-Bank-Anzahl als Punkte am Rand (wie viele Spirlings noch kommen) (TeamRow: Feld-Marke unterstrichen, TeamRow.bench, keine runden Marken)
+28. [x] Spieler-Bank-Anzahl ebenfalls als Punkte (TeamRow.bench, BattleHud.fielded)
+29. [x] Kampfstart-Text kürzer bei 2x/4x Tempo (BattleOpening.start_line)
 30. [x] Zwischenspeichern vor Boss-Kämpfen automatisch (BattleCheckpoint.save_point_due, Overworld.start_battle)
 31. [x] Kampf fortsetzen nach App-Neustart (Zustand pro Zug sichern) (Wildkämpfe: BattleCheckpoint, records.open_battle, Overworld._resume_open_battle; Rift-Born bleibt Niederlage)
 32. [x] Wechsel kostet keine Energie, aber der neue Spirling startet mit seiner gespeicherten Energie (test_kampf_k01)
@@ -99,7 +99,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 61. [x] Energie-Kosten-Balance über den Balancing-Simulator prüfen (BalanceSim.ENERGY_PER_ART_BAND)
 62. [x] KI berücksichtigt Energie für den nächsten Zug (zwei Züge vorausplanen) (BattleAI plan_energy)
 63. [x] KI rastet gezielt, wenn eine starke Technik bald bezahlbar ist (BattleAI plan_energy, PLAN_MARGIN)
-64. [ ] Energie-Tutorial im ersten Wildkampf
+64. [x] Energie-Tutorial im ersten Wildkampf (Tips energy_low, energy_rest, EnergyKit.tip_for)
 65. [x] Hinweis, wenn eine Technik nie bezahlbar ist (Energie-Max zu klein) (CommandMenu.move_line 'never')
 66. [x] Gegenstand 'Funkentrank' gibt +3 Energie (prüfen, ob bestehend) (Spark Drop +5)
 67. [ ] Energie-Regeneration bei Wechsel auf die Bank: +1 pro Runde auf der Bank
@@ -107,12 +107,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 69. [x] Overcharge in Bosskämpfen begrenzen (max. +5) (OVERCHARGE_MAX_EXTRA gilt überall)
 70. [x] Energie-Kosten im Lexikon jeder Technik (CommandMenu.move_info)
 71. [x] Energie-Symbol farbenblind-sicher mit Form statt Farbe (InfoStrip: volle Pips gefüllt, leere als Umriss)
-72. [ ] Energie-Pips größer im Einhand-Modus
-73. [ ] Animation: Energie fließt beim Rasten sichtbar zurück
-74. [ ] Energieverlust durch Status 'Soak' als Option prüfen
+72. [x] Energie-Pips größer im Einhand-Modus (EnergyKit.pip_size, InfoStrip)
+73. [x] Animation: Energie fließt beim Rasten sichtbar zurück (InfoStrip.flow_look, EnergyKit.flow_lit)
+74. [x] Energieverlust durch Status 'Soak' als Option prüfen (Regelvariante Damp Sparks, soak_drain)
 75. [x] Feld 'Statischer Schleier' (neu): Volt-Techniken kosten 1 weniger (cheap_element, nur als Feld des Ortes)
 76. [x] Energie-Statistik im Kampfende-Bericht (BattleSummary.energy_spent)
-77. [ ] Techniken mit variabler Stärke nach verbrauchter Energie (bestehend: Overcharge) erweitern
+77. [x] Techniken mit variabler Stärke nach verbrauchter Energie (bestehend: Overcharge) erweitern (Sunk Cost, spent_scale)
 78. [x] Energie als Ziel für Gegenstand 'Ruhekerze' (Item rest_candle)
 79. [x] Online-Duelle: gleiche Energie-Regeln, keine Ausnahmen (LiveBattleModel nutzt BattleModel, RulesBook)
 80. [x] Energie-Werte in den Balancing-Bericht aufnehmen (BalanceSim.energy_line)
@@ -481,12 +481,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 416. [x] Boss-Kampf-Speicherpunkt (BattleCheckpoint.save_point_line)
 417. [x] Boss-Wiederholung im Endgame (Rissherzen auf Hollis' Brett nach Akt I, BossRunner.echo)
 418. [x] Boss-Rush-Modus (Herzenhatz: alle geflickten Herzen ohne Rast, BossHall.note_rush, BossRunner.rush)
-419. [ ] Boss im Online-Weltziel (bestehend) mit Phasen
+419. [x] Boss im Online-Weltziel (bestehend) mit Phasen (Raid-Wächter: RaidRules.phases in data/raid_rules.json bei 50 % und 25 % Reststärke, Phase fest pro Versuch (raid_attempts.phase, 20261114032010_kampf_k32.sql), BattleModel.raid_phase)
 420. [x] Boss-KI immer mindestens Stufe 2 (erledigt: TrainerData.BOSS_MIN_AI)
 421. [x] Boss-Status-Dauer halbiert (erledigt: BossRules.status_turns)
 422. [x] Boss-Stufen halbiert (erledigt: Stufen-Senkungen am Boss halbiert, BossRules.stage_delta)
-423. [ ] Boss-Animation größer
-424. [ ] Boss-Intro kurz bei 4x
+423. [x] Boss-Animation größer (Rift-Boss holt weiter aus, springt weiter vor und wird weiter zurückgestoßen: battle_show.json boss_motion, SpirlingSprite.motion_scale)
+424. [x] Boss-Intro kurz bei 4x (BattleShow.short_boss_intro: kurze Eröffnung und eine kurze Zeile mit dem Namen auf dem Schild)
 425. [x] Boss-Phasen-Test (umgesetzt) (bestand: test_difficulty_bosses.gd, test_kampf_boss_ai.gd)
 426. [x] Boss-HP-Skalierung nach Team-Größe (bestehend) (bestand: BattleRules.boss_hp_mult)
 427. [x] Boss-Namen eigenständig (bestand: Ashen, Drowned, Mist Heart, tools/ip_check.sh)
@@ -496,9 +496,9 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 431. [x] Boss: Schwachpunkt-Runde nach Phasenwechsel (DEF -1) (erledigt: BossRules.WEAK_STAGE für eine Runde)
 432. [x] Boss: Wut-Zähler bei zu langer Kampfdauer (erledigt: ab Runde 15 alle 5 Runden Wucht und Fokus +1)
 433. [x] Boss: Gnade auf Story (eine Aktion weniger) (bestand: BattleRules.BOSS_ACTION_CAP Story 1)
-434. [ ] Boss: Prisma-Variante im Endgame
-435. [ ] Boss: Online-Rangliste nach Zügen
-436. [ ] Boss: Wochen-Boss
+434. [x] Boss: Prisma-Variante im Endgame (bestand: Kampfhalle Prisma-Herz, BattleHalls kind prism, test_battle_halls und test_kampf_k32)
+435. [x] Boss: Online-Rangliste nach Zügen (Wochenbestenliste Herzstiege und Prisma-Herz nach Runden: boss_submit/boss_board, Schalter boss_board, LocalBossBoard.gd)
+436. [x] Boss: Wochen-Boss (bestand: Wochenriese WeeklyGiant als Rift-Boss am Brett, dazu das wöchentliche Prisma-Herz)
 437. [x] Boss: Saison-Boss zu Festen (bestehend: Feste) (FestivalBoss: Echo eines besiegten Rissherzens beim Ausrufer, data/festival_bosses.json)
 438. [x] Boss: Nach dem Sieg Lore-Seite (erledigt: Lexikon-Seite nach dem ersten Sieg (Overworld.after_tamer_win))
 439. [x] Boss: Achievement pro Boss (Erfolge boss_<id>, Stat boss_wins:)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-975 von 1000 Punkten umgesetzt.
+992 von 1000 Punkten umgesetzt.
 

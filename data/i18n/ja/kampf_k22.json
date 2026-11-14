@@ -1,0 +1,16 @@
+{
+ "_comment": "ja translation of the kampf_k22 table, keyed by the English text.",
+ "strings": {
+  "%d still to come": "あと%d体",
+  "%s rises!": "%sが現れた！",
+  "A hushed %s!": "静寂の%s！",
+  "A swarm of %d!": "%d体の群れ！",
+  "Battle paused": "バトル一時停止",
+  "Duel with %s!": "%sと勝負！",
+  "Everything goes dark... and then, somehow, it doesn't. Your team stirs right where it fell, bruised but breathing.": "すべてが暗くなる…はずが、なぜかそうならない。チームは倒れたその場で、傷だらけでも息をして目を覚ます。",
+  "Resume": "再開",
+  "Soft Defeat: %s": "やさしい敗北：%s",
+  "Story only: after a lost battle your team wakes where it fell, with half its Vigor.": "物語のみ：負けたあと、チームは倒れた場所で活力が半分の状態で目を覚ます。",
+  "You caught %s from behind! Your side moves first.": "%sの背後をとった！こちらが先に動く。"
+ }
+}

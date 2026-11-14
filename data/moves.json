@@ -5519,5 +5519,16 @@
   },
   "era": 1,
   "desc": "Casts the full midday sun back at the foe. Out in the open by day it hits half as hard again."
+ },
+ {
+  "name": "Sunk Cost",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 3,
+  "spent_scale": true,
+  "era": 1,
+  "desc": "It has paid too much to stop now. Every Energy it spent on arts this battle makes it hit harder."
  }
 ]

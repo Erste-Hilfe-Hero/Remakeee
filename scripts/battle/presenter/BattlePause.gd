@@ -5,6 +5,8 @@ extends Control
 ## this panel runs, and a tap, confirm, back or the menu button again lets the battle go on.
 
 signal changed(on: bool)
+## The Settings button (KAMPF_PLAN item 24): BattleScene opens its pause list with the settings.
+signal settings_wanted
 
 var _paused_by_us: bool = false
 
@@ -30,6 +32,14 @@ func _init() -> void:
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.custom_minimum_size = Vector2(110, 0)
 		box.add_child(l)
+	var settings := Button.new()
+	settings.name = "settings_button"
+	settings.text = "Settings"
+	settings.focus_mode = Control.FOCUS_NONE
+	settings.pressed.connect(func() -> void:
+		close()
+		settings_wanted.emit())
+	box.add_child(settings)
 	add_child(panel)
 
 func is_paused() -> bool:

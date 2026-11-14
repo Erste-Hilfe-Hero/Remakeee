@@ -10,7 +10,7 @@ extends RefCounted
 const ARTS: Array[String] = ["Hold Fast", "Shove Off", "Grudge Return", "Kindred Balm", "Rank and File",
 	"Shake Loose", "Rolling Drum", "Late Reply", "Opening Gambit", "Pebble Hail", "Rift Hush", "Bright Lure",
 	"Close Ranks", "Ember Afterglow", "Borrowed Stance", "Still Point", "Ground Burst", "Dye Bath", "Ward Circle",
-	"Magma Rush", "Tidal Gust", "Clean Slate", "Coiled Strike", "Night Prowl", "Noon Glare"]
+	"Magma Rush", "Tidal Gust", "Clean Slate", "Coiled Strike", "Night Prowl", "Noon Glare", "Sunk Cost"]
 ## An art may move its side's win rate by at most this much up, and this much down (a dead slot).
 const GAIN_MAX: float = 0.08
 const LOSS_MAX: float = -0.10

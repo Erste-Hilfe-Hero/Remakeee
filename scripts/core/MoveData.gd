@@ -17,6 +17,8 @@ enum Kind { PHYSICAL, FOCUS, STATUS }
 @export var effects: Array[Dictionary] = []
 ## Overcharge: spends all leftover Energy after the cost; each point adds power (BattleRules).
 @export var overcharge: bool = false
+## Grows with the Energy its user has paid for arts this battle (moves.json "spent_scale", EnergyKit).
+@export var spent_scale: bool = false
 ## Who the move reaches: "single" (one foe, picked by the player) or "foes" (every foe on the
 ## field at once, a sweep). In 1v1 both hit the one foe the same way.
 @export var target: String = "single"

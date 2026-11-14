@@ -135,6 +135,6 @@ func test_fuzz_random_battles_stay_sound() -> void:
 			for side: int in 2:
 				for s: Spirling in m.party(side):
 					assert_between(s.hp, 0, s.max_hp(), "battle %d: HP in range" % b)
-					assert_between(s.energy, 0, Spirling.MAX_ENERGY, "battle %d: Energy in range" % b)
+					assert_between(s.energy, 0, m.energy_cap_of(side, s), "battle %d: Energy in range" % b)
 			assert_true(m.field.is_empty() or BattleRules.FIELDS.has(m.field), "battle %d: known field" % b)
 		assert_true(m.is_finished(), "battle %d ends" % b)

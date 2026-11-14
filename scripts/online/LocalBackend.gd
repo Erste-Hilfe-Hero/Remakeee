@@ -48,6 +48,7 @@ const DEFAULT_FLAGS: Dictionary = {
 	"league_board": {"enabled": false, "min_version": 1}, "daily_gift": {"enabled": false, "min_version": 1},
 	"lend": {"enabled": false, "min_version": 1}, "invite": {"enabled": false, "min_version": 1},
 	"climb_board": {"enabled": false, "min_version": 1},
+	"boss_board": {"enabled": false, "min_version": 1},
 }
 
 ## Where the fake server keeps its data between runs ("" = memory only, as in tests).
@@ -102,6 +103,8 @@ func _init(p_store_path: String = "") -> void:
 	LocalLiveMore.install(self)
 	# Climb boards for the lighthouse stair and the echo tower (20261113207070_climb_boards.sql).
 	LocalClimb.install(self)
+	# Weekly boss boards by rounds for the heart stair and the prism heart (20261114032010_kampf_k32.sql).
+	LocalBossBoard.install(self)
 	# Matchup notes by Lantern Mail (KAMPF_PLAN_1000 item 107, 20261114120260_matchup_notes.sql).
 	MatchupNotes.install(self)
 
@@ -1931,7 +1934,7 @@ func raid_hp(players: int) -> int:
 func _raid_expect(at: Dictionary) -> Dictionary:
 	return {"seed": at.seed, "teams": (at.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
 		"front": [1, 1], "items_allowed": false, "round_limit": config_int("raid_rounds", 10), "seals": seals_of(str(at.user)),
-		"amulets": amulets_of(str(at.user))}
+		"amulets": amulets_of(str(at.user)), "raid_phase": int(at.get("phase", 0))}
 
 ## Members of raid [param r] as uid -> row. Rows live under "raid|uid", so deleting an account
 ## removes only that player's row (like the SQL table).
@@ -2085,7 +2088,8 @@ func _fn_raid_start(a: Dictionary) -> Dictionary:
 		moves.append(md.move_name)
 	var aid: String = str(_next_id("raid_attempt"))
 	attempts[aid] = {"raid": id, "user": u, "seed": rng.randi() & 0x7fffffff, "state": "open", "damage": 0, "created_at": now(),
-		"teams": [built.team, [{"species": r.guardian, "level": r.level, "moves": moves}]]}
+		"teams": [built.team, [{"species": r.guardian, "level": r.level, "moves": moves}]],
+		"phase": RaidRules.phase_of(raid_cfg(), int(r.hp_left), int(r.hp_total))}
 	var out: Dictionary = _raid_expect(attempts[aid])
 	out.merge({"ok": true, "attempt_id": int(aid)})
 	return out

@@ -681,7 +681,8 @@ static func run_boards(menu: MenuHost) -> void:
 	var rift_on: bool = Online.flag_on("rift_board")
 	var league_on: bool = Online.flag_on("league_board")
 	var climb_on: bool = Online.flag_on("climb_board")
-	if not rift_on and not league_on and not climb_on:
+	var boss_on: bool = Online.flag_on("boss_board")
+	if not rift_on and not league_on and not climb_on and not boss_on:
 		await run_board(menu)
 		return
 	while true:
@@ -692,6 +693,8 @@ static func run_boards(menu: MenuHost) -> void:
 			opts.append_array(["Fair League wins", "Open League wins"] as Array[String])
 		if climb_on:
 			opts.append_array(["Lighthouse stair", "Echo tower"] as Array[String])
+		if boss_on:
+			opts.append_array(["Heart Stair", "Prism Heart"] as Array[String])
 		var idx: int = await menu.pick_strings("Weekly boards", opts)
 		if idx < 0:
 			return
@@ -702,6 +705,8 @@ static func run_boards(menu: MenuHost) -> void:
 			"Open League wins": await run_week_board(menu, "league_board", {"p_league": "open"}, "Open League wins this week", "%d wins")
 			"Lighthouse stair": await run_week_board(menu, "climb_board", {"p_kind": "stair"}, "Lighthouse stair, highest floor this week", "floor %d")
 			"Echo tower": await run_week_board(menu, "climb_board", {"p_kind": "tower"}, "Echo tower, highest floor this week", "floor %d")
+			"Heart Stair": await run_week_board(menu, "boss_board", {"p_kind": "boss_tower"}, Loc.t("%s, fewest rounds this week") % Loc.t("Heart Stair"), "%d rounds")
+			"Prism Heart": await run_week_board(menu, "boss_board", {"p_kind": "prism_boss"}, Loc.t("%s, fewest rounds this week") % Loc.t("Prism Heart"), "%d rounds")
 
 static func rift_name(id: String) -> String:
 	return Loc.t("%s Rift") % Loc.t(id.capitalize())

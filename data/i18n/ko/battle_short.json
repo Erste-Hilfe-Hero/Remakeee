@@ -1,0 +1,13 @@
+{
+ "_comment": "ko short words for the battle screen (German table battle_short), keyed by the English text. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "Bond (battle button)": "유대",
+  "Give up (battle button)": "항복",
+  "Growth (bar label)": "성장",
+  "Item (battle button)": "도구",
+  "Leave (battle button)": "도망",
+  "Oath (battle button)": "맹세",
+  "Restart (battle button)": "재시작",
+  "Swap (battle button)": "교체"
+ }
+}
