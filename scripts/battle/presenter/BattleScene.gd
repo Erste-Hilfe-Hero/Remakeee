@@ -363,7 +363,7 @@ func _place_field_badge() -> void:
 		var top: float = plate.position.y
 		if _hud != null and _hud.player_team != null and _hud.player_team.visible:
 			top = minf(top, _hud.player_team.position.y)
-		_field_badge.place(Vector2(maxf(plate.position.x, MARGIN), top - FieldBadge.HEIGHT - 2))
+		_field_badge.place(Vector2(maxf(plate.position.x, MARGIN), top - _field_badge.size.y - 2))
 		return
 	var below: float = _foe_strip.plate_rect().end.y
 	var room: float = _field.size.x

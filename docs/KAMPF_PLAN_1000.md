@@ -994,13 +994,13 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 893. [x] Schadensvorschau hilft beim Planen (GameState.damage_preview)
 894. [x] Kampflog vorlesen (TextBox als Live-Region)
 895. [x] Fokus-Navigation (CommandMenu grab_focus, ui-Aktionen)
-896. [ ] Knopfgrößen
-897. [ ] Kontrast der HP-Leiste
-898. [ ] Status-Kürzel lesbar
-899. [ ] Feld-Banner lesbar
-900. [ ] Boss-Phasen-Banner lesbar
+896. [x] Knopfgrößen (BattleComfort.art_h/command_h: Große Knöpfe heben jede Zeile auf big_button_min, auch unter Einstellungen, Spiel)
+897. [x] Kontrast der HP-Leiste (jede Füllfarbe 3:1 auf dem Papier jeder Ära und Hochkontrast, test_kampf_a11y_k38)
+898. [x] Status-Kürzel lesbar (StatusRules.tag pro Sprache eindeutig, Plakettenschrift 4,5:1)
+899. [x] Feld-Banner lesbar (BattleShow.banner_seconds Mindest-Lesezeit, RuleBanner bricht um, FieldBadge wächst mit großer Schrift)
+900. [x] Boss-Phasen-Banner lesbar (eigene Titel für Phase, Blöße und Wut, geteiltes Siegel, Mindest-Lesezeit)
 901. [x] Untertitel für Schreie (Sound.cry_caption)
-902. [ ] Leichte Sprache-Option für Kampftexte
+902. [x] Leichte Sprache-Option für Kampftexte (GameState.easy_battle_text, EasyText)
 903. [x] Deutsch und Englisch (bestehend) (docs/I18N.md)
 904. [x] Weitere Sprachen vorbereiten (14 Sprachen, docs/I18N.md)
 905. [x] Barrierefreiheit-Tests (tests/unit/test_kampf_a11y_tech.gd)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-881 von 1000 Punkten umgesetzt.
+887 von 1000 Punkten umgesetzt.
 

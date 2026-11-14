@@ -321,7 +321,7 @@ func _draw() -> void:
 	var bar_w: float = w
 	var tag_right: float = w
 	if not status.is_empty():
-		var tag: String = StatusRules.label(status).substr(0, 3).to_upper()
+		var tag: String = StatusRules.tag(status)
 		var bold: bool = UITheme.high_contrast
 		var tw: float = font.get_string_size(tag, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + (1.0 if bold else 0.0)
 		# The status symbol (item 162) sits left of the letters, so the tag reads by shape too.
