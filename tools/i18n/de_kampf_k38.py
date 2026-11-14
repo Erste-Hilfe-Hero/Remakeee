@@ -15,7 +15,7 @@ T = {
 "%s rages": "%s tobt",
 "Taller arts and commands in battle, easier to tap.": "Höhere Knöpfe für Künste und Befehle im Kampf, leichter zu tippen.",
 "Battle lines in short, plain words.": "Kampftexte in kurzen, einfachen Worten.",
-"Simple battle text: %s": "Leichte Sprache: %s",
+"Easy text: %s": "Klartext: %s",
 "%s loses %d Vigor.": "%s verliert %d Kraft.",
 "Lucky hit!": "Glücks-Treffer!",
 "Very strong hit!": "Sehr starker Treffer!",

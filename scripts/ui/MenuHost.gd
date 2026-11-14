@@ -483,7 +483,7 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["damage_preview", "Damage preview: %s" % shop_or("damage_preview", "On" if GameState.damage_preview else "Off")],
 				["damage_numbers", "Damage numbers: %s" % ("On" if GameState.damage_numbers else "Off")],
 				["big_buttons", "Big buttons: %s" % ("On" if GameState.big_buttons else "Off")],
-				["easy_battle_text", "Simple battle text: %s" % ("On" if GameState.easy_battle_text else "Off")],
+				["easy_battle_text", "Easy text: %s" % ("On" if GameState.easy_battle_text else "Off")],
 				["bonus_goals", "Bonus goals: %s" % ("On" if GameState.bonus_goals else "Off")],
 				["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
 				["play_reminder", "Break reminder: %s" % ("On" if GameState.play_reminder else "Off")],
