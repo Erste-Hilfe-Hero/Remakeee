@@ -894,7 +894,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Endgame-Kampfmodi
 
 801. [x] Turm (bestehend) mit 50 Stockwerken (EchoTower.gd: 30 Stockwerke Leuchtturm-Treppe plus Endlos-Strecke bis Stockwerk 100)
-802. [ ] Gauntlet (bestehend) mit Rangliste
+802. [x] Gauntlet (bestehend) mit Rangliste (wie Punkt 512: Wochenbestenliste der Leuchtturm-Treppe, climb_board kind 'stair')
 803. [x] Wochen-Echo (bestehend) mit Meister-KI (Overworld Wochen-Echo mit ai 3)
 804. [x] Boss-Rush (MasterTour.gd: alle Wardens am Stück ohne Heilung; dazu die Herzstiege der Kampfhallen)
 805. [x] Turnier mit Regeln (Wochenend-Turnier TourneyRules.gd, K.o. mit festen Regeln)
@@ -929,7 +929,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 834. [x] Endgame: Schwarm-Turm (Kampfhallen: Schwarmstiege gegen sechs schwächere Spirlings)
 835. [x] Endgame: Boss-Turm (Kampfhallen: Herzstiege, ein Rissherz pro Stockwerk)
 836. [x] Endgame: Lore-Belohnungen (Hallengeschichten: eine Seite pro erster Hallen-Bezwingung)
-837. [ ] Endgame: Kosmetik-Belohnungen (Laternenfarben)
+837. [x] Endgame: Kosmetik-Belohnungen (Laternenfarben) (data/lantern_colors.json, LanternColors.gd: fünf Flammenfarben aus Treppe, Endlosstrecke, Kampfhallen und Meister-Rundgang; Wahl an der Sturmlaterne, färbt das Höhlenlicht ab Ära III)
 838. [x] Endgame: Titel auf der Wayfarer-Karte (Titel aus Hallen und Zielen auf der Wanderer-Karte, Server nimmt nur bekannte Titel (20261113200110_card_title.sql))
 839. [x] Endgame: Wochen-Ziel (Hallen-Wochenziel: 12 Hallensiege pro Woche)
 840. [x] Endgame: Ruhm-Halle (Ruhmeshalle: Team und Datum jeder ersten Bezwingung)
@@ -950,7 +950,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 852. [x] Online-Freundes-Duell (Live-Duell und Echo-Duell)
 853. [x] Online-Weltziel-Boss (Raid-Risse (RaidRules.gd) mit gemeinsamer Rangliste)
 854. [x] Online-Turnier asynchron (Wochenend-Turnier TourneyRules.gd)
-855. [ ] Online-Teamcode
+855. [x] Online-Teamcode (Freundesmenü 'Ihr Team-Code': das Echo-Team eines Freundes als Team-Code, EchoTeam.team_code, in den Kampfhallen bekämpfbar)
 856. [x] Online-Spirling-Tausch nie (bestehend Leitplanke) (Spirlings werden nie verschenkt; Tausch nur unter Freunden hinter Flag trade_spirling)
 857. [x] Online-Belohnungen ohne Geld (Wegmarken nie käuflich, Belohnungen sind Gegenstände und Titel)
 858. [x] Online-Datenschutz (bestehend) (bestehend)
@@ -971,7 +971,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 873. [x] Online-Ergebnis-Replay prüfen (Schiedsrichter spielt jedes Ergebnis nach)
 874. [x] Online-Tests in LocalBackend (bestehend) (bestehend)
 875. [x] Online-SQL-Tests (bestehend) (bestehend)
-876. [ ] Online-Echo-KI-Stufe pro Rang
+876. [x] Online-Echo-KI-Stufe pro Rang (league_ranks.json echo_ai 1-3, LeagueRules.echo_ai, league_find speichert die Stufe am Match (20261114120370_league_echo_ai.sql))
 877. [x] Online-Matchmaking nach Rang bewusst einfach (league_find: 100 Punkte Spanne, wächst langsam)
 878. [x] Online-Saison-Reset (Liga-Saisons (league_seasons), Neustart von selbst)
 879. [x] Online-Belohnung kosmetisch (Saison-Rahmen season_<n>_<rank>)
@@ -1049,7 +1049,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 945. [x] Balancing: jede Technik hat einen Zweck (seltene Techniken im Team-Bericht)
 946. [x] Balancing: Status nicht zu stark (test_move_curve, Status höchstens 30 %)
 947. [x] Balancing: Felder nicht zu stark (Feld-Band +8 bis +15, tests/slow)
-948. [ ] Balancing: Bosse fair
+948. [x] Balancing: Bosse fair (KampfChecks: höchstens 2 Aktionen, Lebenskraft höchstens 1,0-fach pro Spirling des Spielers, Phase höchstens +2 Stufen; Story-Bosse handeln einmal; keine Wand bei Wächtern, Rivalen und Bossen (test_act_difficulty))
 949. [x] Balancing: Meister-KI fordernd, nicht unfair (KI-Leiter, tests/slow)
 950. [x] Balancing: Story leicht (targets.json, test_warden_sim)
 951. [x] Balancing: Veteran fordernd (targets.json, test_warden_sim)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-887 von 1000 Punkten umgesetzt.
+892 von 1000 Punkten umgesetzt.
 
