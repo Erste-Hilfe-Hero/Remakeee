@@ -1,0 +1,22 @@
+{
+ "_comment": "Translations of the German table kampf_k37, written by tools/i18n/locales_kampf_k37.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s needs three Spirlings in their echo team for a team code.": "%s的迴響隊伍需要三隻Spirling才能產生隊伍碼。",
+  "%s's team code: %s": "%s的隊伍碼：%s",
+  "Always lit.": "一直亮著。",
+  "Beat every Warden in one master tour.": "在一次大師巡迴中擊敗所有守境者。",
+  "Clear the Battle Halls 10 times.": "通關戰鬥大廳10次。",
+  "Climb the whole lighthouse stair.": "登完整座燈塔階梯。",
+  "Drowned Blue": "溺水藍",
+  "Ember Red": "餘燼紅",
+  "Flame colour (caves, from the third era on)": "火焰顏色（洞穴中，第三時代起）",
+  "Flame colour: %s": "火焰顏色：%s",
+  "Hall Violet": "大廳紫",
+  "It is on the clipboard. Fight it in the Battle Halls under Fight a team code, or pass it on.": "已複製到剪貼簿。在戰鬥大廳的「挑戰隊伍碼」中與它對戰，或者轉給別人。",
+  "Lamp Gold": "燈火金",
+  "Reach floor 20 of the endless stretch.": "抵達無盡路段的第20層。",
+  "The flame turns %s.": "火焰變成了%s。",
+  "Their team code": "對方的隊伍碼",
+  "Wardens' Ash": "守境者之灰"
+ }
+}

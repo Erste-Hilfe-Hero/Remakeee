@@ -1,0 +1,23 @@
+{
+ "_comment": "German texts from tools/i18n/de_kampf_k37.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%s needs three Spirlings in their echo team for a team code.": "%s braucht drei Spirlings im Echo-Team für einen Team-Code.",
+  "%s's team code: %s": "Team-Code von %s: %s",
+  "Always lit.": "Brennt immer.",
+  "Beat every Warden in one master tour.": "Besiege alle Wächter in einem Meister-Rundgang.",
+  "Clear the Battle Halls 10 times.": "Bezwinge die Kampfhallen 10-mal.",
+  "Climb the whole lighthouse stair.": "Steige die ganze Leuchtturmtreppe hinauf.",
+  "Drowned Blue": "Ertrunkenenblau",
+  "Ember Red": "Glutrot",
+  "Flame colour (caves, from the third era on)": "Flammenfarbe (in Höhlen, ab der dritten Ära)",
+  "Flame colour: %s": "Flammenfarbe: %s",
+  "Hall Violet": "Hallenviolett",
+  "It is on the clipboard. Fight it in the Battle Halls under Fight a team code, or pass it on.": "Er liegt in der Zwischenablage. Kämpfe in den Kampfhallen unter \"Gegen einen Team-Code kämpfen\" dagegen oder gib ihn weiter.",
+  "Lamp Gold": "Lampengold",
+  "Reach floor 20 of the endless stretch.": "Erreiche Stockwerk 20 der Endlosstrecke.",
+  "The flame turns %s.": "Die Flamme wird %s.",
+  "Their team code": "Ihr Team-Code",
+  "Wardens' Ash": "Wächterasche"
+ }
+}

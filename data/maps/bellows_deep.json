@@ -99,7 +99,8 @@
      "species": "Sootlurk",
      "level": 36
     }
-   ]
+   ],
+   "tactic": "field"
   },
   {
    "id": "weighman",
@@ -121,7 +122,8 @@
      "species": "Lodebrock",
      "level": 36
     }
-   ]
+   ],
+   "tactic": "stages"
   }
  ],
  "signs": [

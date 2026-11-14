@@ -1,0 +1,21 @@
+"""German texts for KAMPF_PLAN_1000 items 837 (lantern flame colours, data/lantern_colors.json,
+LanternColors.gd, PauseMenu) and 855 (a friend's echo team as a team code, FriendsMoreMenu)."""
+T = {
+"Their team code": "Ihr Team-Code",
+"%s needs three Spirlings in their echo team for a team code.": "%s braucht drei Spirlings im Echo-Team für einen Team-Code.",
+"%s's team code: %s": "Team-Code von %s: %s",
+"It is on the clipboard. Fight it in the Battle Halls under Fight a team code, or pass it on.": "Er liegt in der Zwischenablage. Kämpfe in den Kampfhallen unter \"Gegen einen Team-Code kämpfen\" dagegen oder gib ihn weiter.",
+"Flame colour: %s": "Flammenfarbe: %s",
+"Flame colour (caves, from the third era on)": "Flammenfarbe (in Höhlen, ab der dritten Ära)",
+"The flame turns %s.": "Die Flamme wird %s.",
+"Lamp Gold": "Lampengold",
+"Ember Red": "Glutrot",
+"Drowned Blue": "Ertrunkenenblau",
+"Hall Violet": "Hallenviolett",
+"Wardens' Ash": "Wächterasche",
+"Always lit.": "Brennt immer.",
+"Climb the whole lighthouse stair.": "Steige die ganze Leuchtturmtreppe hinauf.",
+"Reach floor 20 of the endless stretch.": "Erreiche Stockwerk 20 der Endlosstrecke.",
+"Clear the Battle Halls 10 times.": "Bezwinge die Kampfhallen 10-mal.",
+"Beat every Warden in one master tour.": "Besiege alle Wächter in einem Meister-Rundgang.",
+}
