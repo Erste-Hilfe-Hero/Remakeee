@@ -27,6 +27,12 @@ func _all_wayfarers() -> Array:
 			for n: Variant in (lv as Dictionary).get("npcs", []):
 				if n is Dictionary and TrainerData.is_trainer(n):
 					out.append(["%s:%s" % [f.get_basename(), n.get("id", "")], n])
+	var placed: Dictionary = _read(StoryPlacements.PATH)
+	for map_id: String in placed:
+		if placed[map_id] is Dictionary:
+			for n: Variant in (placed[map_id] as Dictionary).get("npcs", []):
+				if n is Dictionary and TrainerData.is_trainer(n):
+					out.append(["placed %s:%s" % [map_id, n.get("id", "")], n])
 	var story: Dictionary = _read(StoryBattles.PATH)
 	for k: String in story:
 		if story[k] is Dictionary and TrainerData.is_trainer(story[k]):
