@@ -197,9 +197,7 @@ def report():
     prism = sorted({it["held"]["elem"] for it in items if isinstance(it.get("held"), dict) and it["held"].get("elem")})
     coin_prism = sorted({it["held"]["elem"] for it in items if isinstance(it.get("held"), dict) and it["held"].get("elem") and it.get("price")})
     out.append("Element keepsakes: %d elements (%d bought with coins)." % (len(prism), len(coin_prism)))
-    rules = open(os.path.join(ROOT, "scripts/battle/BattleRules.gd"), encoding="utf-8").read()
-    block = rules.split("const TRAITS", 1)[1].split("\n}\n", 1)[0]
-    traits = re.findall(r'^\t"([a-z_]+)": \{', block, re.M)
+    traits = list(load("battle_tables.json").get("traits", {}))
     used = collections.Counter(s.get("trait") for s in species)
     hidden = len(load("hidden_gifts.json").get("gifts", {}))
     out.append("Gifts (passive abilities): %d traits in BattleRules.TRAITS (%d in use on Spirlings) and %d hidden gifts (data/hidden_gifts.json)." % (

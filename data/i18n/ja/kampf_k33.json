@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table kampf_k33, written by tools/i18n/locales_kampf_k33.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s picks %s (%d) over %s (%d).": "{0}は{3}（{4}）より{1}（{2}）を選んだ。",
+  "%s picks %s (%d): nothing else is in reach.": "{0}は{1}（{2}）を選んだ。ほかに手はない。",
+  "%s picks %s at random, as wild ones do.": "{0}は野生らしく、でたらめに{1}を選んだ。",
+  "%s rests: nothing it can pay is worth it now.": "{0}は休んだ。今払えるわざに価値はない。",
+  "%s swaps to %s: it doesn't like its odds.": "{0}は{1}に交代した。分が悪いと見たらしい。",
+  "%s uses %s: it is running low.": "{0}は{1}を使った。もう後がない。",
+  "%s, won in %d turns": "{0}、{1}ターンで勝利",
+  "Banked Embers": "利子つきの残り火",
+  "Beat the Ashen Heart. The smiths still want their cut.": "灰の心臓を倒す。鍛冶屋たちはそれでも分け前を欲しがる。",
+  "Beat the Drowned Heart. Nobody reads the passenger list twice.": "溺れた心臓を倒す。乗客名簿を二度読む者はいない。",
+  "Beat the Mist Heart. What it hid is everyone's problem now.": "霧の心臓を倒す。隠されていたものは、今やみんなの問題だ。",
+  "Boss replays": "ボス戦の再生",
+  "Clear Weather": "晴れ渡る空",
+  "Crier: An echo of the %s has crashed the festival in the shape of a %s. Nobody invited it. Will you see it out?": "触れ役: {0}の残響が、{1}の姿でお祭りに押しかけてきた。誰も呼んでないのに。追い出してくれる？",
+  "Crier: Something from the Rifts keeps trying to get in. Seal a Rift heart first, then we'll talk.": "触れ役: 裂け目から何かが入りこもうとしてるんだ。まず裂け目の心臓を封じておいで。話はそれからだよ。",
+  "Crier: You saw the echo out already. It sulks somewhere behind the stands until next year.": "触れ役: あの残響はもう追い出してくれたね。来年まで屋台の裏ですねてるよ。",
+  "It lies open and stops building up.": "すきだらけなので、力をためるのをやめた。",
+  "It wants that field gone, so it can wake.": "目覚めるために、あのフィールドを消したがっている。",
+  "Kept in your boss replays (Records).": "ボス戦の再生に保存した（記録）。",
+  "Last Passenger": "最後の乗客",
+  "Last phase: it holds nothing back.": "最終段階：もう何も出し惜しみしない。",
+  "The echo comes apart like old bunting. The crowd claps as if it had helped.": "残響は古い飾り旗のようにほどけた。観客はまるで自分が手伝ったかのように拍手している。",
+  "The echo keeps dancing. The crowd decides it is part of the show.": "残響は踊り続けている。観客は、これも出し物の一部だと決めこんだ。"
+ }
+}

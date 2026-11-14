@@ -78,7 +78,7 @@ func build() -> void:
 	head.add_child(name_label)
 	var badges := Control.new()
 	badges.name = "badges"
-	badges.custom_minimum_size = Vector2(1, EraMenuArt.BADGE_H + 1)
+	badges.custom_minimum_size = Vector2(1, EraMenuArt.badge_h() + 1)
 	badges.draw.connect(_draw_badges.bind(badges))
 	head.add_child(badges)
 	var bar := Control.new()
@@ -189,7 +189,7 @@ func _add_row(left: Control, text: String) -> void:
 
 func _badge(element: int) -> Control:
 	var c := Control.new()
-	c.custom_minimum_size = Vector2(ElementIcons.SIZE + 5, EraMenuArt.BADGE_H + 1)
+	c.custom_minimum_size = Vector2(ElementIcons.size() + 5, EraMenuArt.badge_h() + 1)
 	c.draw.connect(func() -> void: EraMenuArt.draw_badge(c, element, Vector2.ZERO, str(lay.get("badges", "colour")), UITheme.INK))
 	return c
 

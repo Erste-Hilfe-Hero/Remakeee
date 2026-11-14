@@ -40,7 +40,7 @@ var room_action: String = ""
 ## they can be used; they keep their place. Leagues shows only while leagues are on,
 ## the Map book once Aldo gave it, the Ledger once it has an entry (clan intrigue, Trust.gd).
 const MENU_ORDER: Array[String] = ["Goals", "Map book", "Ledger", "Map", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
-	"Leagues", "Records", "Storage", "Save", "Save and to title", "Photo", "Settings"]
+	"Leagues", "Records", "Storage", "Save", "Save and to title", "Photo", "Join our Discord", "Settings"]
 
 static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false,
 		map_book: bool = false, ledger: bool = false) -> Array[String]:
@@ -151,6 +151,7 @@ func run() -> void:
 				if await save_and_quit():
 					return
 			"Settings": await run_settings()
+			"Join our Discord": open_discord()
 			"Photo":
 				# The first time, a line on how photo mode works (item 1880).
 				await tip("photo")
@@ -469,6 +470,8 @@ func run_records() -> void:
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
+		if not BossRules.replays(GameState.records).is_empty():
+			lines.append("Boss replays")
 		lines.append("Online replays")
 		var have: int = Achievements.unlocked().size()
 		var idx: int = await pick_strings(Loc.t("Achievements %d/%d") % [have, Achievements.list().size()], lines)
@@ -502,6 +505,21 @@ func run_records() -> void:
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
 					return
+			"Boss replays":
+				if await run_boss_replays():
+					return
+
+## The kept fastest win against each Rift boss (KAMPF_PLAN_1000 item 440). True once one is
+## picked to watch (watch_replay and watch_snap are set).
+func run_boss_replays() -> bool:
+	var kept: Array[Dictionary] = BossRules.replays(GameState.records)
+	var labels: Array[String] = []
+	for r: Dictionary in kept:
+		labels.append(Loc.t("%s, won in %d turns") % [Loc.t(str(r.label)), int(r.turns)])
+	var i: int = await pick_strings(Loc.t("Boss replays"), labels)
+	if i < 0:
+		return false
+	return await OnlineReplaysMenu._watch(self, kept[i].replay)
 
 ## Era functions (data/era_functions.json): one page per open era with what it brought.
 func run_era_functions() -> void:

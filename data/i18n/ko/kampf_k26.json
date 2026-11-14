@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_k26, written by tools/i18n/locales_kampf_k26.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s sent you matchup notes.": "%s이(가) 상성 메모를 보냈다.",
+  "%s's notes: %d matchups you did not know yet. The move list shows them now.": "{0}의 메모: 아직 몰랐던 상성 {1}개. 이제 기술 목록에 표시된다.",
+  "%s's notes: nothing you did not know already. Flattering, in a way.": "%s의 메모: 이미 아는 것뿐이다. 어떤 의미로는 칭찬이다.",
+  "A seal is cut into the base: %s. Which element breaks it?": "받침대에 봉인이 새겨져 있다: %s. 어떤 속성이 깨뜨릴까?",
+  "Rift theme: %s": "균열의 테마: %s",
+  "Send %d matchup notes to %s? You both get %d friendship points.": "{1}에게 상성 메모 {0}개를 보낼까? 둘 다 우정 포인트 {2}점을 받는다.",
+  "Share matchup notes": "상성 메모 공유",
+  "The seal cracks. Someone hid %s behind it and never came back for it.": "봉인이 갈라졌다. 누군가 %s을(를) 숨겨 두고 다시는 찾으러 오지 않았다.",
+  "The seal hums, smug and whole. It has met your kind before.": "봉인은 멀쩡한 채로 우쭐하게 웅웅거린다. 너 같은 부류는 전에도 봤다는 듯이.",
+  "Those notes are smudged. Try again after your next battle.": "메모가 번져 있다. 다음 배틀 뒤에 다시 해 보자.",
+  "You already sent notes to this friend today. Tomorrow again!": "오늘은 이미 이 친구에게 메모를 보냈다. 내일 다시!",
+  "Your notes are empty. Land a few hits first, then share what you learned.": "메모가 비어 있다. 먼저 몇 번 맞힌 뒤 알게 된 것을 공유하자.",
+  "Your notes are on their way to %s. Knowledge shared is knowledge you can't sell. Oh well.": "메모가 %s에게 가는 중이다. 나눈 지식은 이제 팔 수 없다. 뭐, 어쩔 수 없지."
+ }
+}
