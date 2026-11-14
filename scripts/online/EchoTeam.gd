@@ -26,6 +26,15 @@ static func snapshot(party: Array[Spirling]) -> Array:
 		out.append(row)
 	return out
 
+## The team code (BattleHalls.team_code) of the first three Spirlings of a friend's echo team
+## (KAMPF_PLAN_1000 item 855), or "" with fewer than three known species.
+static func team_code(rows: Array) -> String:
+	var names: Array[String] = []
+	for r: Variant in rows:
+		if r is Dictionary and Database.spirlings.has(str(r.get("species", ""))) and names.size() < 3:
+			names.append(str(r.species))
+	return BattleHalls.team_code(names)
+
 ## Builds Spirlings from a friend's snapshot. Levels are clamped to [param max_level] (item 76).
 ## [param fixed_level] > 0 puts every Spirling on that level (duels). Unknown species are skipped.
 static func build(rows: Array, max_level: int, fixed_level: int = 0) -> Array[Spirling]:
