@@ -15,6 +15,25 @@ const CALC_STEPS: Array[int] = [1, 5]
 static func kind_mark(kind: int) -> String:
 	return KIND_MARK.get(kind, "")
 
+## The kind as a 5x5 pixel symbol in front of the cost on every art row in battle (item 145):
+## physical a burst, focus a ringed dot, status a hollow diamond. Chimora's own marks, readable by
+## shape alone, drawn in the row's ink.
+const KIND_ICON_SIZE: int = 5
+const KIND_ICONS: Dictionary[int, Array] = {
+	MoveData.Kind.PHYSICAL: [[0, 0], [2, 0], [4, 0], [1, 1], [2, 1], [3, 1], [0, 2], [1, 2], [2, 2], [3, 2], [4, 2],
+		[1, 3], [2, 3], [3, 3], [0, 4], [2, 4], [4, 4]],
+	MoveData.Kind.FOCUS: [[1, 0], [2, 0], [3, 0], [0, 1], [4, 1], [0, 2], [2, 2], [4, 2], [0, 3], [4, 3], [1, 4], [2, 4], [3, 4]],
+	MoveData.Kind.STATUS: [[2, 0], [1, 1], [3, 1], [0, 2], [4, 2], [1, 3], [3, 3], [2, 4]],
+}
+
+static func kind_icon(kind: int) -> Array:
+	return KIND_ICONS.get(kind, [])
+
+## Draws the kind symbol of [param kind] on [param ci] with its top left at [param at].
+static func draw_kind_icon(ci: CanvasItem, kind: int, at: Vector2, ink: Color) -> void:
+	for px: Variant in kind_icon(kind):
+		ci.draw_rect(Rect2(at.x + int(px[0]), at.y + int(px[1]), 1, 1), ink)
+
 # --- Matchups (568) -----------------------------------------------------------------------
 
 ## Every matchup learned so far, sorted by element then kind: "Ember on Mossling: x2".

@@ -1284,6 +1284,12 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 			return ""
 		s.hp = maxi(1, int(s.max_hp() * float(it.revive)))
 		msg = "%s is back on its feet!" % s.display_name()
+	elif cures_outside_battle(it, s):
+		# A status that lingers after a battle (item 179); an item that also heals mends too.
+		s.status = ""
+		s.status_turns = 0
+		s.hp = mini(s.max_hp(), s.hp + int(it.get("heal", 0)))
+		msg = "%s is cured." % s.display_name()
 	elif int(it.get("heal", 0)) > 0:
 		if s.is_fainted() or s.hp >= s.max_hp():
 			return ""
@@ -1296,6 +1302,13 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 	if inventory[id] <= 0:
 		inventory.erase(id)
 	return msg
+
+## True when item [param it] ("cure": true or a status name) takes the status off [param s].
+static func cures_outside_battle(it: Dictionary, s: Spirling) -> bool:
+	var cure: Variant = it.get("cure", false)
+	if s.is_fainted() or s.status.is_empty() or cure == null:
+		return false
+	return (cure is bool and cure) or (cure is String and cure == s.status)
 
 func visit_rest(map_id: String, cell: Vector2i) -> void:
 	visited_rests[map_id] = [cell.x, cell.y]
@@ -1390,7 +1403,24 @@ static func relearnable(s: Spirling) -> Array[String]:
 
 ## Relearns [param move_name] with the Move Memory unlock, in place of [param forget] when full.
 func relearn(s: Spirling, move_name: String, forget: int = -1) -> bool:
-	if Billing.unlocked("move_memory") <= 0 or not move_name in relearnable(s):
+	if Billing.unlocked("move_memory") <= 0:
+		return false
+	return _put_art(s, move_name, forget)
+
+## Coins Hesper in the lighthouse takes to dig up one forgotten art (KAMPF_PLAN item 138). The
+## Move Memory unlock does the same anywhere and for free.
+const TEACHER_FEE: int = 500
+
+## Hesper's lesson: relearns [param move_name] for TEACHER_FEE coins, in place of [param forget]
+## when full. No coins change hands when nothing is learned.
+func relearn_at_teacher(s: Spirling, move_name: String, forget: int = -1) -> bool:
+	if money < TEACHER_FEE or not _put_art(s, move_name, forget):
+		return false
+	money -= TEACHER_FEE
+	return true
+
+func _put_art(s: Spirling, move_name: String, forget: int) -> bool:
+	if not move_name in relearnable(s):
 		return false
 	var mv: MoveData = Database.move(move_name)
 	if mv == null:
