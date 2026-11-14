@@ -97,6 +97,7 @@ func _ready() -> void:
 		"bounty": _action_bounty,
 		"fine_training": _action_fine_training,
 		"training": _action_training,
+		"relearn": _action_relearn,
 		"matchmaker": _action_matchmaker,
 		"reserve": _action_reserve,
 		"informant": _action_informant,
@@ -1386,6 +1387,13 @@ func _action_fine_training(_args: PackedStringArray, _speaker: NPC) -> void:
 		return
 	var r: Dictionary = FineTraining.train(s, stat, GameState.rng)
 	await say([str(r.line)] as Array[String])
+
+## "relearn": Hesper digs up forgotten arts for coins (ArtTeacher, KAMPF_PLAN item 138).
+func _action_relearn(_args: PackedStringArray, _speaker: NPC) -> void:
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	await ArtTeacher.run(menu)
+	menu.queue_free()
 
 ## "training": the training ring in the lighthouse (TrainingGround): bouts against carved
 ## dummies without risk, training goals and the training record.
@@ -4210,6 +4218,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	# Story (KAMPF_PLAN item 52): resting mends a little Vigor (the keen-hit cut is in ChallengeRules).
 	if d == GameState.Difficulty.STORY:
 		model.rest_heal_share = BattleModel.STORY_REST_HEAL
+	# Scorch, Root and Jolt stay on after a world battle, except on Story (KAMPF_PLAN item 179).
+	model.keep_status = world and not bool(trainer.get("practice", false)) and not d in StatusRules.CLEARS_AFTER_BATTLE
 	model.ambush = wild and bool(trainer.get("ambush", false))
 	# The end report: damage, knock-outs, best Spirling, Energy, seed (KAMPF_PLAN items 20, 76).
 	model.set_meta("summary", BattleSummary.new(model))
