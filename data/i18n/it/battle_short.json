@@ -1,0 +1,13 @@
+{
+ "_comment": "it short words for the battle screen (German table battle_short), keyed by the English text. Kept by hand; check with python3 tools/i18n/check_lang.py it.",
+ "strings": {
+  "Bond (battle button)": "Lega",
+  "Give up (battle button)": "Resa",
+  "Growth (bar label)": "Cresc.",
+  "Item (battle button)": "Zaino",
+  "Leave (battle button)": "Fuga",
+  "Oath (battle button)": "Patto",
+  "Restart (battle button)": "Rifai",
+  "Swap (battle button)": "Cambio"
+ }
+}

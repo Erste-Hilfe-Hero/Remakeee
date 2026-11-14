@@ -74,6 +74,10 @@ func _lookup_line(s: String) -> String:
 	var p: String = _match_pattern(s)
 	if p != "":
 		return p
+	# Several lines go line by line (lookup), so a line break after a full stop stays a line
+	# break and is not joined into a space (French shop details, 1.2.0 store shots).
+	if s.contains("\n"):
+		return ""
 	var sentences: PackedStringArray = _split_sentences(s)
 	if sentences.size() < 2:
 		return ""

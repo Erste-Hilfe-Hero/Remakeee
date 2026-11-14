@@ -212,27 +212,39 @@ static func detail_text(o: Dictionary) -> String:
 	var parts: Array[Dictionary] = ShopCatalog.contents(o)
 	var dur: String = ShopCatalog.duration_line(o)
 	for e: Dictionary in parts:
-		lines.append("- " + ShopCatalog.entry_line(e))
-		# A bundle says what each part does and, when they differ, how long each lasts.
+		var line: String = "- " + ShopCatalog.entry_line(e)
+		# A bundle says what each part does and, when they differ, how long each lasts, in one
+		# paragraph per part so a pack of five still fits the box (Starter Pack, 1.2.0 store shots).
+		# An item that is used up when used is the usual case and says nothing more; Riftglass
+		# and coins need no words on what they are, only how long they stay.
 		if parts.size() > 1:
-			var eff: String = ShopCatalog.entry_effect(e, o)
+			var money: bool = str(e.t) in ["rg", "coins"]
+			var eff: String = "" if money else ShopCatalog.entry_effect(e, o)
 			if not eff.is_empty():
-				lines.append("  " + eff)
-			if dur.is_empty():
-				lines.append("  " + Loc.t("Duration: %s") % ShopCatalog.entry_duration(e, o))
+				line += ": " + eff
+			var part_dur: String = ShopCatalog.entry_duration(e, o)
+			if dur.is_empty() and part_dur != Loc.t("used up when used"):
+				var said: String = Loc.t("Duration: %s") % part_dur
+				line += (" (" + said + ")") if money else (" " + said)
+		lines.append(line)
 	lines.append("")
-	lines.append(Loc.t("What it does:"))
-	lines.append(Loc.t(str(o.desc)))
+	var rule: String = ShopCatalog.repeat_line(o)
+	# A bundle whose text only lists its parts says nothing the contents above do not (Starter
+	# Pack, 1.2.0 store shots: the box overflowed), so the text is left out there.
+	if parts.size() <= 1 or not lists_only_amounts(str(o.desc)):
+		lines.append(Loc.t("What it does:"))
+		# A once-only pack's text ends in "Once per account." itself; the rule line below says it once.
+		lines.append(Loc.t(str(o.desc)).replace(rule, "").strip_edges())
 	if not dur.is_empty():
 		lines.append(dur)
-	lines.append(ShopCatalog.repeat_line(o))
+	# How often and where it works, in one paragraph.
 	match str(o.get("league_scope", "none")):
 		"open":
-			lines.append(Loc.t("Works in the Open League, not in the Fair League."))
+			lines.append(rule + " " + Loc.t("Works in the Open League, not in the Fair League."))
 		"look":
-			lines.append(Loc.t("Only looks. Visible everywhere, no effect."))
+			lines.append(rule + " " + Loc.t("Only looks. Visible everywhere, no effect."))
 		_:
-			lines.append(Loc.t("Does not work in leagues."))
+			lines.append(rule + " " + Loc.t("Does not work in leagues."))
 	lines.append("")
 	if str(o.get("tab", "")) == "packs" and ShopCatalog.single_value(o) > 0:
 		lines.append(Loc.t("Worth one by one: %s") % ShopCatalog.rg_text(ShopCatalog.single_value(o)))
@@ -245,6 +257,21 @@ static func detail_text(o: Dictionary) -> String:
 	if not p.is_empty():
 		lines.append(Loc.t("Price in the store: %s") % p)
 	return "\n".join(lines)
+
+## True when the English [param desc] is only a list of amounts ("300 Riftglass, 5 Ring Tonics."),
+## besides how often it can be bought ("Once per account.").
+static func lists_only_amounts(desc: String) -> bool:
+	var amount := RegEx.create_from_string("^\\d+ \\S")
+	var per_account := RegEx.create_from_string("per\\saccount")
+	var listed: bool = false
+	for sentence: String in desc.strip_edges().trim_suffix(".").split(". "):
+		if per_account.search(sentence) != null:
+			continue
+		for piece: String in sentence.split(", "):
+			if amount.search(piece.strip_edges()) == null:
+				return false
+		listed = true
+	return listed
 
 ## How often an offer can be bought, as a plain rule, never as a countdown like "only 3 left" (item 4042).
 static func limit_line(o: Dictionary) -> String:

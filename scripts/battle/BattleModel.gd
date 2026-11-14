@@ -63,6 +63,9 @@ var _turn_drag: Dictionary = {}
 var _partner_slot: int = -1
 ## Rift boss id (BattleRules.BOSSES) for the foe in slot 0, or "".
 var foe_boss: String = ""
+## Raid guardian phase fixed by the server when the attempt started (KAMPF_PLAN_1000 item 419):
+## the first raid_phase phases of RaidRules.phases apply to the foe in slot 0 from the start.
+var raid_phase: int = 0
 ## Extra Energy the foe side gains at the end of the first turn (Rift-Born, item 749).
 var foe_turn1_energy: int = 0
 ## Ink Oath sworn this battle, per side (once per battle each).
@@ -215,6 +218,8 @@ var rest_heal_share: float = 0.0
 var keep_status: bool = false
 ## Wild ambush from the tall fern (item 16): in the first turn the foe acts before everything.
 var ambush: bool = false
+## Caught from behind (item 15, BattleOpening): the player's side acts first in the first turn.
+var initiative: bool = false
 ## KAMPF_PLAN_1000 items 9, 10 (TurnFlow): in a 1v1 Wayfarer battle the foe names its next
 ## Spirling after a knock-out (foe_announce), and with shift_offer the player may swap first.
 var shift_offer: bool = false
@@ -525,10 +530,14 @@ func start() -> Array[BattleEvent]:
 	_wild_opening(foe)
 	if ambush and is_wild:
 		emit_event(BattleEvent.Type.AMBUSH, _who(Side.FOE, 0))
+	if initiative and not is_wild:
+		emit_event(BattleEvent.Type.TECHNIQUE, BattleOpening.initiative_event(self))
 	if BattleRules.BOSSES.has(foe_boss):
 		var b: Dictionary = BattleRules.BOSSES[foe_boss]
 		emit_event(BattleEvent.Type.BOSS, {"side": Side.FOE, "slot": 0, "boss": foe_boss, "label": str(b.label), "text": str(b.text),
 			"actions": _boss_actions, "hp": foe.hp, "max_hp": foe.max_hp()})
+	if raid_phase > 0:
+		_raid_phases(foe)
 	var edge: String = ShopEffects.edge_line(seals[Side.PLAYER], amulets[Side.PLAYER])
 	if not edge.is_empty():
 		emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.PLAYER, "text": edge})
@@ -923,6 +932,15 @@ func _check_boss_phase(boss: Spirling) -> void:
 		boss_late_done += 1
 		_enter_boss_phase(boss, late[boss_late_done - 1])
 
+## The raid guardian's phases reached before this attempt: each is announced, its stages apply.
+func _raid_phases(guardian: Spirling) -> void:
+	for p: Dictionary in RaidRules.phases(RaidRules.config()).slice(0, raid_phase):
+		emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": guardian.display_name(), "boss": "",
+			"raid": true, "text": str(p.get("text", "%s")) % guardian.display_name()})
+		var st: Dictionary = p.get("stage", {})
+		for stat: String in st:
+			change_stage(Side.FOE, stat, int(st[stat]), 0)
+
 ## Announces phase [param p], applies its stages and field, then opens the weak point (item 431).
 func _enter_boss_phase(boss: Spirling, p: Dictionary) -> void:
 	# "phase" (2, then 3 and on) lets the scene change the music (item 406).
@@ -1211,6 +1229,8 @@ func _sort_key(a: BattleAction, tie: float) -> Vector4:
 	var cls: float = -a.order_class()
 	# An ambush (item 16): in the first turn the wild foe moves before any action of the player.
 	if ambush and turn == 0 and a.side == Side.FOE:
+		cls = 1.0
+	elif BattleOpening.player_first(self, a.side):
 		cls = 1.0
 	return Vector4(cls, prio, spd, tie)
 
