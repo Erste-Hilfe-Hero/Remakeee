@@ -68,6 +68,7 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out.update(era_feel_sfx())
     out.update(battle_show_sfx())
     out.update(late_status_sfx())
+    out.update(keepsake_sfx())
     return out
 
 
@@ -463,4 +464,19 @@ def late_status_sfx() -> dict[str, np.ndarray]:
     # Muddle: two notes that wander off each other, the art may hit the wrong target.
     n = secs(0.16)
     out["status_muddle"] = (pulse(freq(midi("E5")), n, 0.25) * 0.35 + sweep(freq(midi("F5")), freq(midi("C5")), n, "tri") * 0.4) * env(n, sustain=0.5, release=0.04) * 0.6
+    return out
+
+
+def keepsake_sfx() -> dict[str, np.ndarray]:
+    """Keepsake sound (KAMPF_PLAN_1000 319): a short glassy two-note glint when a held keepsake
+    works. One file to keep audio/sfx under its size budget; the game pitches it per cue (a lower
+    knock for a guard, a deep ring for the Hold Stone, a bright one for a fruit). Own generator,
+    so the older effects keep their noise."""
+    out: dict[str, np.ndarray] = {}
+    parts = []
+    for nm, d in [("B5", 0.04), ("F#6", 0.08)]:
+        k = secs(d)
+        parts.append((triangle(freq(midi(nm)), k) * 0.6 + pulse(freq(midi(nm)) * 2, k, 0.125) * 0.25) *
+                     env(k, attack=0.002, decay=0.03, sustain=0.5, release=0.03))
+    out["keepsake_stir"] = np.concatenate(parts) * 0.6
     return out

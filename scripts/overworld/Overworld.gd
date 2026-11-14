@@ -175,6 +175,8 @@ func _ready() -> void:
 		if hint != "" or GameState.left_battle:
 			GameState.left_battle = false
 			show_notices.call_deferred()
+		elif BattleCheckpoint.is_open(GameState.records):
+			_resume_open_battle.call_deferred()
 
 func _build() -> void:
 	_ground = TileMapLayer.new()
@@ -872,7 +874,7 @@ func _on_interact(cell: Vector2i) -> void:
 		await n.turn_toward(player.cell)
 		if _is_active_trainer(n):
 			await challenge(n, false)
-		elif not await offer_warden_rematch(n) and not await offer_second_trial(n) and not await offer_rematch(n) and not await offer_trials(n):
+		elif not await offer_warden_rematch(n) and not await offer_second_trial(n) and not await offer_lessons(n) and not await offer_rematch(n) and not await offer_trials(n):
 			await run_dialogue(n.dialogue_ref, n)
 		return
 	var s: Dictionary = map.sign_at(cell, GameState.flags)
@@ -3748,6 +3750,36 @@ func offer_trials(n: NPC) -> bool:
 	await _play_trial(trials[idx], str(def.warden))
 	return true
 
+## A beaten Wayfarer with a "lessons" group teaches its lesson battles (KAMPF_PLAN_1000 items 559,
+## 812): Trials with borrowed Spirlings, no rings, no rewards. Leaving the menu returns false, so
+## the rematch offer and the usual talk still follow.
+func offer_lessons(n: NPC) -> bool:
+	var def: Dictionary = n.definition
+	if not def.has("lessons") or not TrainerData.is_beaten(def, map.id, GameState.flags):
+		return false
+	var list: Array[Dictionary] = BattlePuzzle.for_teacher(str(def.lessons))
+	if list.is_empty():
+		return false
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	var entries: Array[Dictionary] = []
+	for p: Dictionary in list:
+		var got: int = BattlePuzzle.best_lanterns(GameState.records, str(p.id))
+		var mark: String = (" " + Loc.t("Lanterns %d/%d") % [got, BattlePuzzle.MAX_LANTERNS]) if got > 0 else ""
+		entries.append({"text": Loc.t(str(p.get("name", p.id))) + mark, "hint": Loc.t(str(p.get("text", "")))})
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var idx: int = await menu.pick(Loc.t(BattlePuzzle.teacher_title(str(def.lessons))), entries, true)
+	menu.queue_free()
+	if idx < 0 or idx >= list.size():
+		VirtualPad.set_wanted(true)
+		player.frozen = false
+		busy = false
+		return false
+	await _play_trial(list[idx], "")
+	return true
+
 ## Plays one Trial until it is solved or the player stops (items 707, 708, 710, 712). "Restart"
 ## in the battle and "Try again" after a miss start it at once with the same seed and no text
 ## before the fight; every miss counts towards the hints.
@@ -4131,6 +4163,9 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 		ask.queue_free()
 		if skip:
 			return await _skipped_battle(foes)
+	# Boss save point (KAMPF_PLAN_1000 items 30, 416); a Warden met on the map was saved already.
+	if BattleCheckpoint.save_point_due(trainer) and not _warden_battle:
+		toast.show_note(BattleCheckpoint.save_point_line(SaveManager.save_game()))
 	Sound.sfx("encounter")
 	await _fade_to(1.0)
 	# A league battle comes ready-made from the server's seed and teams (plan area 7).
@@ -4150,12 +4185,20 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	scene.music_track = BattleAudio.theme(str(trainer.get("theme", "")), bool(trainer.get("warden", false)), not Festival.active().is_empty(),
 		map.outdoor and GameState.day_night and DayCycle.current() == DayCycle.Phase.NIGHT, area)
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
+	# A wild battle left by closing the app goes on after the restart (item 31).
+	if trainer.get("resume") is Array:
+		scene.resume = true
+		scene.replay_inputs = (trainer.resume as Array).duplicate()
+		scene.inputs = (trainer.resume as Array).duplicate()
+	if BattleCheckpoint.resumable(wild, trainer, GameState.difficulty):
+		BattleCheckpoint.open(GameState.records, replay, scene.inputs, model)
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0
 	Online.in_battle = true
 	GameState.battle_open = not bool(trainer.get("friendly", false))
 	var result: Array = await scene.battle_finished
 	GameState.battle_open = false
+	BattleCheckpoint.close(GameState.records)
 	Online.in_battle = false
 	var outcome: BattleModel.Outcome = result[0]
 	replay["inputs"] = scene.inputs
@@ -4182,6 +4225,23 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	busy = false
 	battle_ended.emit(outcome)
 	return outcome
+
+## A wild battle left open when the app closed goes on where it stopped (KAMPF_PLAN_1000 item 31):
+## the team and satchel get their state from before it back, and its turns play again on screen.
+func _resume_open_battle() -> void:
+	var rec: Dictionary = BattleCheckpoint.take(GameState.records, GameState.difficulty)
+	var model: BattleModel = BattleCheckpoint.restore(rec, GameState.party, GameState.inventory) if not rec.is_empty() else null
+	if model == null or busy:
+		return
+	model.set_meta("summary", BattleSummary.new(model))
+	last_model = model
+	busy = true
+	player.frozen = true
+	await say([BattleCheckpoint.resume_line()] as Array[String])
+	busy = false
+	var foes: Array[Spirling] = []
+	foes.assign(model.parties[1])
+	await start_battle(foes, true, {"model": model, "resume": rec.get("inputs", [])})
 
 ## A wild battle settled by a Battle Skip: the same model and aftermath, no battle screen.
 func _skipped_battle(foes: Array[Spirling]) -> BattleModel.Outcome:
@@ -4222,6 +4282,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	last_model = model
 	model.inventory = GameState.inventory
 	model.items_allowed = GameState.items_allowed_in_battle()
+	# Keepsakes go on in battle only with the real team (KAMPF_PLAN_1000 298).
+	model.held_swap = mine == GameState.party
 	model.level_cap = GameState.level_cap()
 	model.bench_share = GameState.bench_share()
 	model.trainer_name = str(trainer.get("name", ""))

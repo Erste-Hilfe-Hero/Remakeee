@@ -120,6 +120,8 @@ static func option_rows() -> Array[Array]:
 		["big", Loc.t("Big buttons: %s") % Loc.t("On" if GameState.big_buttons else "Off")],
 		["motion", Loc.t("Less motion: %s") % Loc.t("On" if GameState.reduce_motion else "Off")],
 		["shake", Loc.t("Screen shake: %s") % Loc.t(["Off", "Weak", "Full"][clampi(GameState.screen_shake, 0, 2)])],
+		["no_rush", Loc.t("No rush: %s") % Loc.t("On" if GameState.no_rush else "Off")],
+		["input_delay", Loc.t("Tap guard: %s") % Loc.t(BattleCalm.delay_name())],
 	]
 	if ShopEffects.owns_setting("damage_preview"):
 		rows.insert(1, ["preview", Loc.t("Damage preview: %s") % Loc.t("On" if GameState.damage_preview else "Off")])
@@ -140,6 +142,10 @@ static func toggle_option(key: String) -> bool:
 			GameState.reduce_motion = not GameState.reduce_motion
 		"shake":
 			GameState.screen_shake = (GameState.screen_shake + 1) % 3
+		"no_rush":
+			GameState.no_rush = not GameState.no_rush
+		"input_delay":
+			GameState.input_delay = BattleCalm.next_delay(GameState.input_delay)
 		_:
 			return false
 	return true

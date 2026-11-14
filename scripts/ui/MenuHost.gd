@@ -439,6 +439,8 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"tap_to_move": "Tap a tile and your Wayfarer walks there.",
 	"always_run": "Run without holding B. Hold B to walk.",
 	"bond_style": "Mine: tap one button fast. Echo: repeat the call. Calm: echo with no time limit.",
+	"no_rush": "Battle text waits for your tap at any speed, and every bond is the calm echo. Nothing in battle runs on a clock.",
+	"input_delay": "How long menus ignore taps after they appear, so a shaky or late tap picks nothing by mistake.",
 	"one_hand": "Everything sits low on the screen for one thumb.",
 	"swap_ab_touch": "A and B on the touch pad change places.",
 	"swap_ab_pad": "The gamepad's A goes back and B confirms.",
@@ -841,6 +843,10 @@ func run_controls() -> void:
 				GameState.always_run = not GameState.always_run
 			"bond_style":
 				GameState.bond_style = next_bond_style(GameState.bond_style)
+			"no_rush":
+				GameState.no_rush = not GameState.no_rush
+			"input_delay":
+				GameState.input_delay = BattleCalm.next_delay(GameState.input_delay)
 			"one_hand":
 				GameState.one_hand = not GameState.one_hand
 			"vibration":
@@ -877,6 +883,8 @@ static func controls_rows() -> Array[Array]:
 		["tap_to_move", "Tap to walk: %s" % ("On" if GameState.tap_to_move else "Off")],
 		["always_run", "Always run: %s" % ("On" if GameState.always_run else "Off")],
 		["bond_style", "Bonding: %s" % BOND_STYLE_NAMES.get(GameState.bond_style, "Mine")],
+		["no_rush", "No rush: %s" % ("On" if GameState.no_rush else "Off")],
+		["input_delay", "Tap guard: %s" % BattleCalm.delay_name()],
 		["one_hand", "One-hand layout: %s" % ("On" if GameState.one_hand else "Off")],
 		["swap_ab_touch", "Touch A/B swap: %s" % ("On" if GameState.swap_ab_touch else "Off")],
 		["swap_ab_pad", "Pad A/B swap: %s" % ("On" if GameState.swap_ab_pad else "Off")],
