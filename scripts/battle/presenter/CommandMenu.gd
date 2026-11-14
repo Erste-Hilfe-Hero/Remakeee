@@ -125,6 +125,8 @@ func _ready() -> void:
 		b.button_up.connect(func() -> void:
 			_hold.stop())
 		b.draw.connect(_draw_row.bind(b, idx))
+		b.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		b.resized.connect(_fit_art_name.bind(idx))
 		for sig: Signal in [b.focus_entered, b.focus_exited, b.button_down, b.button_up]:
 			sig.connect(_tint_row.bind(idx))
 		grid.add_child(b)
@@ -501,9 +503,21 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 	lines.append(Loc.t("(tap to close)"))
 	return "\n".join(lines)
 
+## Battle-only short words for the four commands (data/i18n/<code>/battle_cmd.json, key
+## "Swap (battle button)"): in Era II and III all four share one row of 144 or 180 px, and the
+## general words ("Changer", "Przedmiot") were cut off there (1.2.0 store shots). English and a
+## language without its own short word use the general word.
+const CMD_KEY: String = "%s (battle button)"
+
+static func command_label(word: String) -> String:
+	var key: String = CMD_KEY % word
+	var t: String = Loc.t(key)
+	return Loc.t(word) if t == key else t
+
 func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	var b := Button.new()
-	b.text = text
+	b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	b.text = command_label(text)
 	b.custom_minimum_size = Vector2(0, EraBattleHud.num(era, "command_h", SMALL_BUTTON_HEIGHT))
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	# Four buttons share 144 px; long German words ("Tauschen") pushed the whole battle screen
@@ -518,11 +532,12 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	else:
 		# Width follows the drawn word, so "Binden" gets more room than "Item".
 		_fit_command(b)
-		# Thin side margins: four German words need every pixel of the 144.
+		# Thin side margins: four words need every pixel of the 144. The left one is the colour
+		# stripe, so a word that just fits starts after it, not under it.
 		for state: String in ["normal", "hover", "pressed", "disabled"]:
 			var sb: StyleBox = UITheme.get_theme().get_stylebox("normal" if state == "hover" else state, "Button").duplicate()
-			sb.content_margin_left = 1
-			sb.content_margin_right = 1
+			sb.content_margin_left = float(HpBarStyle.cfg().get("command_stripe", 2))
+			sb.content_margin_right = 0
 			b.add_theme_stylebox_override(state, sb)
 		_plain_focus(b)
 		b.draw.connect(_draw_row.bind(b, -1))
@@ -687,6 +702,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			_style_row(b, _row_left())
 			b.disabled = true
 		_tint_row(i)
+		_fit_art_name(i)
 	var kinds: Array[int] = []
 	for a: BattleAction in model.legal_actions(BattleModel.Side.PLAYER, slot):
 		kinds.append(a.kind)
@@ -698,12 +714,12 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 	_swap.disabled = not BattleAction.Kind.SWAP in kinds and MultiRules.shift_targets(model, BattleModel.Side.PLAYER, slot).is_empty()
 	_item.disabled = not BattleAction.Kind.ITEM in kinds
 	# Against another Wayfarer the Bond button offers the Ink Oath instead (once per battle).
-	_bond.text = "Bond" if model.is_wild else "Oath"
+	_bond.text = command_label("Bond" if model.is_wild else "Oath")
 	_fit_command(_bond)
 	_bond.disabled = not (BattleAction.Kind.BOND in kinds or model.can_oath(BattleModel.Side.PLAYER, slot))
 	_run.disabled = not BattleAction.Kind.RUN in kinds
 	# A Trial can be restarted at any time (item 708).
-	_run.text = "Restart" if model.has_meta("puzzle_max") else "Leave"
+	_run.text = command_label("Restart" if model.has_meta("puzzle_max") else "Leave")
 	_fit_command(_run)
 	if model.has_meta("puzzle_max"):
 		_run.disabled = false
@@ -717,6 +733,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 		_row_colors[0] = UITheme.INK
 		_style_row(_move_buttons[0], _row_left())
 		_move_buttons[0].disabled = false
+		_fit_art_name(0)
 		_tint_row(0)
 	_refresh_shortcut(model, BattleAction.Kind.ITEM in kinds)
 	var usable: Array[bool] = []
@@ -774,10 +791,14 @@ func _unhandled_input(event: InputEvent) -> void:
 	toggle_info(index)
 	get_viewport().set_input_as_handled()
 
+## Added to each command's word width for its share of the row: small, so the share is close to
+## the word itself and the row's spare pixels are not spread evenly over short words.
+const COMMAND_PAD: float = 2.0
+
 ## A command's share of the row follows its word, so a longer word ("Schwur") gets more room.
 func _fit_command(b: Button) -> void:
 	if mode != "text":
-		b.size_flags_stretch_ratio = EraBattleHud.font(era).get_string_size(Loc.t(b.text), HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x + 8.0
+		b.size_flags_stretch_ratio = EraBattleHud.font(era).get_string_size(b.text, HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x + COMMAND_PAD
 
 ## The item the shortcut would use: the last one used, while it is still in the bag, usable in
 ## battle and allowed again this battle; "" otherwise.
@@ -800,6 +821,39 @@ func _refresh_shortcut(model: BattleModel, items_ok: bool) -> void:
 		# In the narrow command column (Era IV/V) the item and its count stand alone.
 		_shortcut.text = ("%s x%d" % [item_name, n]) if _column != null else Loc.t("Again: %s x%d") % [item_name, n]
 	_shortcut.disabled = id.is_empty() or not items_ok
+
+## Keeps an art's name clear of the Energy cost and the matchup word drawn over the right of
+## its row (1.2.0 store shots: "Souffle de Cendres" ran into "4E"): the row's text stops before
+## them. In the bold Era IV/V font a name that still does not fit takes the plain large font,
+## and one that is still too long ends in "...".
+func _fit_art_name(i: int) -> void:
+	if i >= _move_hints.size():
+		return
+	var b: Button = _move_buttons[i]
+	var f: Font = _move_costs[i].get_theme_font("font")
+	var fs: int = _move_costs[i].get_theme_font_size("font_size")
+	var tail: float = maxf(f.get_string_size(_move_costs[i].text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x,
+		f.get_string_size(_move_hints[i].text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x if _move_hints[i].visible else 0.0)
+	var right: int = (int(ceilf(tail)) + ART_COST_GAP) if tail > 0.0 else 1
+	for state: String in ["normal", "hover", "pressed", "disabled"]:
+		if b.has_theme_stylebox_override(state):
+			b.get_theme_stylebox(state).content_margin_right = right
+	b.remove_theme_font_override("font")
+	if not EraBattleHud.bold_font(era) or b.size.x <= 0.0:
+		return
+	var room: float = b.size.x - b.get_theme_stylebox("normal").content_margin_left - right
+	if art_name_width(b.text, b.get_theme_font("font"), b.get_theme_font_size("font_size")) > room:
+		b.add_theme_font_override("font", PixelFont.get_large_font())
+
+## Pixels between an art's name and its cost: the cost's own right offset (3) plus a gap of 5.
+const ART_COST_GAP: int = 8
+
+## Width of the widest line of an art row's text.
+static func art_name_width(text: String, f: Font, fs: int) -> float:
+	var w: float = 0.0
+	for line: String in text.split("\n"):
+		w = maxf(w, f.get_string_size(line, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x)
+	return w
 
 ## Element-coloured row (Era III on): the element's colour washed toward paper, so ink text
 ## keeps its contrast; focus and press keep the theme's dark box.

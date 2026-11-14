@@ -1,0 +1,12 @@
+{
+ "_comment": "fr short words for the battle screen (German table battle_short), keyed by the English text. Kept by hand; check with python3 tools/i18n/check_lang.py fr.",
+ "strings": {
+  "Bond (battle button)": "Lien",
+  "Growth (bar label)": "Croiss.",
+  "Item (battle button)": "Sac",
+  "Leave (battle button)": "Fuite",
+  "Oath (battle button)": "Pacte",
+  "Restart (battle button)": "Reset",
+  "Swap (battle button)": "Relais"
+ }
+}

@@ -21,10 +21,18 @@ const ROLL_PX: float = 4.0
 
 ## Show the numeric HP (player side only).
 @export var show_numbers: bool = false
-## Show the growth (EXP) bar towards the next ring (player side only).
+## Show the Growth bar towards the next ring (player side only).
 @export var show_xp: bool = false
 const XP_ON: Color = Color("c9a227")
-const XP_LABEL: String = "EXP"
+## The bar carries the game's own word for it, "Growth" ("Growth to next ring" in the menus), in
+## every language; a short form where the word is long (key "Growth (bar label)").
+const XP_LABEL: String = "Growth"
+const XP_LABEL_KEY: String = "Growth (bar label)"
+
+## The label in front of the Growth bar in the current language.
+static func xp_label() -> String:
+	var t: String = Loc.t(XP_LABEL_KEY)
+	return Loc.t(XP_LABEL) if t == XP_LABEL_KEY else t
 
 ## Share of the way from this ring to the next, 0 to 1 (1 at the top ring).
 var xp_frac: float = 0.0
@@ -502,15 +510,16 @@ func _draw_numbers(baseline: float, right: float) -> float:
 			draw_string(font, Vector2(x, baseline + roundf((1.0 - shift) * ROLL_PX)), str(int(d.next)), HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color(UITheme.INK, shift))
 	return x0
 
-## "EXP" and a thin bar on the bottom line, from the left edge to [param right]. The label is
+## "Growth" and a thin bar on the bottom line, from the left edge to [param right]. The label is
 ## left out when the bar would get too short. Era I draws it in ink, later eras in gold.
 func _draw_xp(baseline: float, right: float) -> void:
 	var font: Font = get_theme_default_font()
 	var fs: int = get_theme_default_font_size()
 	var x0: float = 0.0
-	var label_w: float = font.get_string_size(XP_LABEL, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + 2.0
+	var label: String = xp_label()
+	var label_w: float = font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + 2.0
 	if right - label_w >= 14.0:
-		draw_string(font, Vector2(0, baseline), XP_LABEL, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UITheme.INK)
+		draw_string(font, Vector2(0, baseline), label, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UITheme.INK)
 		x0 = label_w
 	var bw: float = right - x0
 	if bw < 6.0:

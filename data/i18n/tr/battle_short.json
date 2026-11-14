@@ -1,0 +1,12 @@
+{
+ "_comment": "tr short words for the battle screen (German table battle_short), keyed by the English text. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "Bond (battle button)": "Bağ",
+  "Growth (bar label)": "Gelişim",
+  "Item (battle button)": "Eşya",
+  "Leave (battle button)": "Kaç",
+  "Oath (battle button)": "Yemin",
+  "Restart (battle button)": "Baştan",
+  "Swap (battle button)": "Değiş"
+ }
+}
