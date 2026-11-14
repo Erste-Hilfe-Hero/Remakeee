@@ -28,6 +28,12 @@ TEXT_LANGS = [("de-DE", "de-DE"), ("en-US", "en-US"), ("fr-FR", "fr-FR"), ("es-E
 LIMITS_ANDROID = {"title.txt": 30, "short_description.txt": 80, "full_description.txt": 4000, "changelogs/default.txt": 500}
 LIMITS_IOS = {"name.txt": 30, "subtitle.txt": 30, "description.txt": 4000, "keywords.txt": 100,
               "promotional_text.txt": 170, "release_notes.txt": 4000, "support_url.txt": 255, "privacy_url.txt": 255}
+# Heading of the accessibility block every store description carries (KAMPF_PLAN_1000 item 907).
+A11Y_HEADINGS = {"de-DE": "SPIELBAR, WIE DU WILLST", "en-US": "PLAYABLE YOUR WAY", "fr-FR": "JOUER À TA FAÇON",
+                 "es-ES": "JUEGA A TU MANERA", "it-IT": "GIOCA A MODO TUO", "pt-BR": "JOGUE DO SEU JEITO",
+                 "nl-NL": "SPEEL ZOALS JIJ WILT", "pl-PL": "GRAJ PO SWOJEMU", "tr-TR": "İSTEDİĞİN GİBİ OYNA",
+                 "ru-RU": "ИГРАЙ ПО-СВОЕМУ", "ja-JP": "自分に合ったあそび方", "ko-KR": "원하는 방식으로 플레이",
+                 "zh-CN": "按你的方式来玩", "zh-TW": "用你的方式來玩"}
 IMAGES = {
     "store/android/{l}/images/featureGraphic.png": (1024, 500),
     "store/android/{l}/images/icon.png": (512, 512),
@@ -61,6 +67,9 @@ def check_texts() -> None:
                 n = len(read(p).strip())
                 if n == 0 or n > limit:
                     errors.append("%s has %d characters (allowed 1-%d)" % (p, n, limit))
+        for desc in ("store/android/%s/full_description.txt" % play, "store/ios/metadata/%s/description.txt" % ios):
+            if os.path.exists(desc) and A11Y_HEADINGS[play] not in read(desc):
+                errors.append(desc + ": the accessibility block is missing (heading %s)" % A11Y_HEADINGS[play])
         kw = "store/ios/metadata/%s/keywords.txt" % ios
         if os.path.exists(kw) and "offline" in read(kw):
             errors.append(kw + ": the game is online only")

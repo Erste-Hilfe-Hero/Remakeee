@@ -83,6 +83,11 @@ file that does not load fails the job. No battle change is merged with a red che
 | Mono sound and a level per channel | Settings, Sound |
 | No time limit in offline battles: turns wait for the player, and with Calm bonding the bond waits too | `BattleScene`, `BondMinigame.calm` |
 | No flashes over three per second | `tools/fx_flash_check.gd` (UI golden job) |
+| Bonding with a screen reader: the hint is a live region and says the called marks in words and which key answers which mark; "Mine!" says that any tap or the accept key counts | `BondMinigame._say`, `spoken_call`, `spoken_keys` |
+| Every control the battle screen lets a player reach has a spoken name (1v1 and 2v2) | `tests/unit/test_kampf_k39.gd` |
+| The store descriptions name these features in all 14 languages | `store/`, `A11Y_HEADINGS` in `tools/release_check.py` |
+| Golden images of the battle screen (command menu and art info, 1v1 and 2v2, Era I and V, EN and DE) | `tools/battle_ui_golden.gd`, `tests/golden/battle_ui/` (UI golden job) |
+| Foe AI speed: the slowest single decision stays under `BattleAI.THINK_BUDGET_MS` for every tier, 1v1 and 3v3 | `tests/unit/test_kampf_k39.gd` |
 
 ## 5. Guardrails (LEGAL.md)
 
