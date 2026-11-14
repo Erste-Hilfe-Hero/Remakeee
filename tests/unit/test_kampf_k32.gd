@@ -90,7 +90,7 @@ func test_boss_intro_is_short_at_4x() -> void:
 	assert_false(BattleShow.short_boss_intro(false, 4.0), "only bosses")
 	var e := BattleEvent.new(BattleEvent.Type.BOSS, {"label": "Ashen Heart", "text": "long", "actions": 2})
 	assert_eq(BattleShow.boss_short_line(e), "It acts 2 times each turn.")
-	e = BattleEvent.new(BattleEvent.Type.BOSS, {"label": "Ashen Heart", "text": "long", "actions": 1})
+	e = BattleEvent.new(BattleEvent.Type.BOSS, {"label": "Ashen Heart", "text": str(BattleRules.BOSSES.ashen_heart.text), "actions": 1})
 	assert_eq(BattleShow.boss_short_line(e), "It acts once each turn.")
 	assert_lt(BattleShow.boss_short_line(e).length(), e.describe().length())
 	var rng := RandomNumberGenerator.new()
