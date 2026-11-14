@@ -6,6 +6,7 @@ ATTO IV: SOLENNE
 
 DOPO IL FINALE
 - Vellmarch: un'intera regione post-gioco nello stile dell'Era II. 5 città, 6 strade, 4 Squarci e una storia con un tradimento in ogni capitolo.
+- Oltre Vellmarch: Quillmarch, Halcyra e Quivermoor, altre tre regioni nello stile delle ere successive.
 - Rivincite contro tutti i 12 Custodi. Hanno avuto tempo per rimuginare sulla sconfitta.
 - Torre Eco da 100 piani, Squarci da maestro, lo Squarcio casuale, un gigante della settimana, un esame finale e Nuova partita+.
 - Gli Spirling continuano a crescere oltre l'anello 60. Avanti.
@@ -16,7 +17,7 @@ STORIA E FIDUCIA
 - Storie secondarie in ogni atto e un accampamento di sconosciuti sul bordo dello Squarcio Ampio.
 
 SPIRLING
-- Oltre 200 nuovi Spirling: ora 70 tutti suoi in ogni atto.
+- Oltre 400 nuovi Spirling, 497 in tutto: 70 tutti loro in ogni atto e in ogni regione dopo la storia.
 - Forme Splendore allo stato brado, con bonus catena e contatore nello Spirlog.
 - Gli stadi successivi ora somigliano alla forma precedente, solo cresciuta.
 - Il tuo Spirling in testa cammina dietro di te. Si ricorda come lo tratti.
@@ -35,8 +36,11 @@ ONLINE (serve una connessione a Internet)
 STILE, SUONO E COMODITÀ
 - Ogni atto ha il suo stile, di notte le finestre si accendono e il faro finalmente sembra un faro.
 - Musica per era per regioni, dungeon, scontri e Custodi.
-- Schermata di scontro: barre PS per era, badge dei tipi colorati, indicazioni sull'efficacia e una modalità daltonici.
+- Schermata di scontro: barre del Vigore per era, badge dei tipi colorati, indicazioni sull'efficacia e una modalità daltonici.
 - Primi 15 minuti più morbidi. Le notizie compaiono sotto «Novità» nella schermata del titolo.
+- Il tuo viaggio viene salvato subito dopo aver scelto il nome.
+- Telefoni pieghevoli: l'immagine si adatta appena pieghi o apri il telefono.
 - Nuove offerte facoltative nel negozio.
 - Molti più testi tradotti in tutte le 14 lingue.
 - Un mucchio di correzioni: salvataggi, impostazioni, ripristino acquisti. Spostare indietro l'orologio del telefono non paga più due volte la ricompensa del giorno. Bel tentativo.
+- Corretto: il tuo Viandante non continua più a camminare da solo dopo uno scontro.

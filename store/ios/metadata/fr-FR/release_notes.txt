@@ -6,6 +6,7 @@ ACTE IV : SOLENNE
 
 APRÈS LE FINAL
 - Vellmarch : une région entière d'après-jeu au style de l'Ère II. 5 villes, 6 routes, 4 Failles et une histoire avec une trahison à chaque chapitre.
+- Au-delà de Vellmarch : Quillmarch, Halcyra et Quivermoor, trois régions de plus dans le style des ères suivantes.
 - Revanches contre les 12 Gardiens. Ils ont eu le temps de ruminer leur défaite.
 - La Tour Écho et ses 100 étages, les Failles de maître, la Faille aléatoire, un géant de la semaine, un examen final et une Nouvelle partie+.
 - Les Spirlings continuent de grandir au-delà du cercle 60. Continue.
@@ -16,7 +17,7 @@ HISTOIRE ET CONFIANCE
 - Des histoires secondaires dans chaque acte et un camp d'inconnus au bord de la Grande Faille.
 
 SPIRLINGS
-- Plus de 200 nouveaux Spirlings : désormais 70 rien qu'à lui dans chaque acte.
+- Plus de 400 nouveaux Spirlings, 497 en tout : 70 rien qu'à eux dans chaque acte et chaque région d'après l'histoire.
 - Des formes Reflet à l'état sauvage, avec bonus de chaîne et compteur dans le Spirlog.
 - Les stades suivants ressemblent enfin à leur forme d'avant, en plus grand.
 - Ton Spirling de tête marche derrière toi. Il se souvient de la façon dont tu le traites.
@@ -35,8 +36,11 @@ EN LIGNE (connexion Internet requise)
 STYLE, SON ET CONFORT
 - Chaque acte a son propre style, les fenêtres s'allument la nuit, et le phare ressemble enfin à un phare.
 - Musique des ères pour les régions, donjons, combats et Gardiens.
-- Écran de combat : barres de PV par ère, badges de type colorés, indications d'efficacité et un mode daltonien.
+- Écran de combat : barres de Vigueur par ère, badges de type colorés, indications d'efficacité et un mode daltonien.
 - Des 15 premières minutes plus douces. Les nouvelles apparaissent sous « Nouveautés » sur l'écran titre.
+- Ton voyage est sauvegardé dès que tu as choisi ton nom.
+- Téléphones pliables : l'image s'ajuste dès que tu plies ou déplies.
 - Nouvelles offres facultatives dans la boutique.
 - Beaucoup plus de textes traduits dans les 14 langues.
 - Plein de correctifs : sauvegardes, paramètres, restauration des achats. Reculer l'horloge du téléphone ne double plus les récompenses du jour. Bien essayé.
+- Corrigé : ton Voyageur ne continue plus à marcher tout seul après un combat.

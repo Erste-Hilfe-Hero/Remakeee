@@ -6,6 +6,7 @@ ACTO IV: SOLENNE
 
 TRAS EL FINAL
 - Vellmarch: toda una región de posjuego con el estilo de la Era II. 5 pueblos, 6 caminos, 4 Grietas y una historia con una traición en cada capítulo.
+- Más allá de Vellmarch: Quillmarch, Halcyra y Quivermoor, tres regiones más con el estilo de eras posteriores.
 - Revanchas contra los 12 Custodios. Han tenido tiempo de pensar en su derrota.
 - Torre Eco de 100 pisos, Grietas de maestría, la Grieta aleatoria, un gigante de la semana, un examen final y Nueva partida+.
 - Los Spirlings siguen creciendo más allá del anillo 60. Sigue adelante.
@@ -16,7 +17,7 @@ HISTORIA Y CONFIANZA
 - Historias secundarias en cada acto y un campamento de desconocidos al borde de la Grieta Ancha.
 
 SPIRLINGS
-- Más de 200 Spirlings nuevos: ahora 70 propios en cada acto.
+- Más de 400 Spirlings nuevos, 497 en total: 70 propios en cada acto y en cada región tras la historia.
 - Formas Fulgor en libertad, con bonificación de cadena y contador en el Spirlog.
 - Las etapas posteriores ahora se parecen a su forma anterior, ya crecida.
 - Tu Spirling líder camina detrás de ti. Recuerda cómo lo tratas.
@@ -35,8 +36,11 @@ ONLINE (requiere conexión a internet)
 ASPECTO, SONIDO Y COMODIDAD
 - Cada acto tiene su propio estilo, las ventanas se iluminan de noche y el faro por fin parece un faro.
 - Música por era para regiones, mazmorras, combates y Custodios.
-- Pantalla de combate: barras de PS por era, insignias de tipo de colores, pistas de eficacia y un modo daltónico.
+- Pantalla de combate: barras de Vigor por era, insignias de tipo de colores, pistas de eficacia y un modo daltónico.
 - Unos primeros 15 minutos más suaves. Las noticias aparecen en «Novedades» en la pantalla de título.
+- Tu viaje se guarda justo después de elegir tu nombre.
+- Móviles plegables: la imagen se ajusta en cuanto pliegas o despliegas.
 - Nuevas ofertas opcionales en la tienda.
 - Muchos más textos traducidos a los 14 idiomas.
 - Montones de correcciones: guardado, ajustes, restaurar compras. Atrasar el reloj del móvil ya no paga dos veces la recompensa diaria. Buen intento.
+- Corregido: tu Caminante ya no sigue andando solo después de un combate.
