@@ -1,0 +1,7 @@
+{
+  "_comment": "Turn flow rules of docs/KAMPF_PLAN_1000.md items 6, 8, 9, 10, 12 (scripts/battle/TurnFlow.gd). echo_turn_seconds: time per turn in an echo duel, then every Spirling without orders rests. warn_seconds: the prompt warns this long before. shift_offer per difficulty (GameState.Difficulty order STORY, TAMER, VETERAN, RIFT_BORN): on, setting (on unless switched off) or off.",
+  "echo_turn_seconds": 60,
+  "warn_seconds": 10,
+  "shift_offer": ["on", "on", "setting", "off"],
+  "announce_line": "%s, you're up. Last longer than the last one."
+}

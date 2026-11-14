@@ -64,3 +64,20 @@ static func toggle(s: Spirling) -> bool:
 		return false
 	s.hidden_gift = not s.hidden_gift
 	return s.hidden_gift
+
+## True when a Turncoat Seed (KAMPF_PLAN_1000 item 260) can swap [param s]'s gift: its line has a
+## hidden gift other than its own, and no Second Gift Slot already lets both work.
+static func can_swap(s: Spirling) -> bool:
+	if s == null or s.gift_slot:
+		return false
+	var h: String = gift_id(s.data)
+	return not h.is_empty() and h != s.data.trait_id
+
+## Turncoat Seed: swaps [param s]'s gift between its own and its line's hidden one at any ring, and
+## the line's gift counts as revealed from then on. Returns the gift id now working, or "".
+static func swap(s: Spirling) -> String:
+	if not can_swap(s):
+		return ""
+	reveal(s.data.line_id)
+	s.hidden_gift = not s.hidden_gift
+	return s.gift_id()

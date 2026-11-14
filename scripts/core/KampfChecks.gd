@@ -5,7 +5,7 @@ extends RefCounted
 ## these errors, so the data job fails on a broken table before a battle ever meets it.
 
 const BOSS_KEYS: Array[String] = ["label", "hp_per_ally", "max_actions", "text", "phase"]
-const PHASE_KEYS: Array[String] = ["at", "stage", "field", "text"]
+const PHASE_KEYS: Array[String] = ["at", "stage", "field", "text", "guard"]
 const FIELD_KEYS: Array[String] = ["label", "boost", "weaken", "intro", "blocks", "regen_element", "regen_div",
 	"rest_bonus", "energy_element", "energy_gain", "bond_bonus", "cheap_element"]
 ## Fair bosses (KAMPF_PLAN_1000 item 948): at most this many actions per turn before the second
@@ -78,6 +78,9 @@ static func boss_errors(bosses: Dictionary = BattleRules.BOSSES, fields: Diction
 			out.append("boss '%s': phase 'at' must lie between 0 and 1" % id)
 		if str(ph.get("text", "")).is_empty():
 			out.append("boss '%s': phase needs a text" % id)
+		# A called guard (KAMPF_PLAN_1000 item 404, BossRules.call_guard) must be a real species.
+		if ph.has("guard") and (not ph.guard is Dictionary or Database.species(str((ph.guard as Dictionary).get("species", ""))) == null):
+			out.append("boss '%s': phase guard needs a known species" % id)
 		var st: Variant = ph.get("stage", {})
 		if st is Dictionary:
 			var gained: int = 0

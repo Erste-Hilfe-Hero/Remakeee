@@ -1,0 +1,14 @@
+{
+ "_comment": "Translations of the German table kampf_k31, written by tools/i18n/locales_kampf_k31.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s (won %d times)": "%s (побед: %d)",
+  "%s calls %s to its side. Nobody asked the guard.": "%s зовёт %s к себе. Стража никто не спрашивал.",
+  "Every mended heart, one after another. No rest in between: your team keeps its wounds. Begin?": "Все залатанные сердца, одно за другим. Без отдыха: команда сохраняет раны. Начинаем?",
+  "Heart %d of %d is next. It heard the last one stop.": "Следующее сердце: %d из %d. Оно слышало, как остановилось прошлое.",
+  "Heart rush (best %d of %d)": "Гонка сердец (рекорд %d из %d)",
+  "Heart rush: %d of %d hearts.": "Гонка сердец: %d из %d.",
+  "Rift hearts": "Сердца Разлома",
+  "The mended heart still beats in the Rift's echo. It remembers you, and it is not grateful.": "Залатанное сердце всё ещё бьётся в эхе Разлома. Оно помнит тебя, и благодарности в нём нет.",
+  "Which heart?": "Какое сердце?"
+ }
+}

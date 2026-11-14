@@ -1,0 +1,9 @@
+{
+ "_comment": "Translations of the German table kampf_k28, written by tools/i18n/locales_kampf_k28.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s turns its coat: its gift is now %s.": "%s은(는) 편을 바꿨다. 이제 재능은 %s.",
+  "Its flame burns in any wind: fog, Daze and Muddle never spoil its aim.": "그 불꽃은 어떤 바람에도 꺼지지 않는다. 안개도 멍함도 혼란도 조준을 흐트러뜨리지 못한다.",
+  "Swaps one Spirling's gift for the hidden gift of its line, or back again, at any ring. Loyalty was never part of the deal. Used up.": "Spirling의 재능을 그 계통의 숨겨진 재능과 바꾸거나 다시 되돌린다. 링은 상관없다. 충성은 애초에 거래 조건이 아니었다. 사용하면 사라진다.",
+  "Turncoat Seed": "배신자의 씨앗"
+ }
+}

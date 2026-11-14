@@ -463,6 +463,11 @@ SONGS = {
     # Battle music once your Spirling is low on HP (item 69): faster, tenser, same key as "battle".
     "battle_pinch": dict(bpm=176, chords=["Em", "F", "Em", "F", "C", "B7", "Em", "B7"], arp_style="rolling",
                          bass_style="pulse8", drums="battle", seed=59, motifs=["B5:2 C6:2 B5:2 G5:2 E5:4 F5:4", "E5:2 G5:2 B5:4 D#5:8", "C6:2 B5:2 A5:2 G5:2 E5:8", "D#5:4 F#5:4 B5:8"]),
+    # A Rift heart's last phase (KAMPF_PLAN_1000 item 406, BossRules.PHASE_MUSIC): F minor, the
+    # fastest battle song, a falling line that never resolves.
+    "battle_heart": dict(bpm=184, chords=["Fm", "Db", "Fm", "C7", "Fm", "Gb", "Ebm", "C7", "Db", "Eb", "Cm", "Fm", "Db", "Gb", "C7", "C7"],
+                         arp_style="rolling", bass_style="pulse8", drums="battle", seed=79,
+                         motifs=["F5:2 Ab5:2 C6:4 Bb5:2 Ab5:2 G5:4", "Ab5:2 G5:2 F5:4 C5:8", "Db6:2 C6:2 Bb5:2 Ab5:2 Gb5:4 F5:4", "E5:4 G5:4 C6:8"]),
     "victory": dict(bpm=140, chords=["C", "F", "G", "C"], arp_style="stab", bass_style="root-fifth", drums="march", seed=71, variation=False,
                     motifs=["C5:2 E5:2 G5:2 C6:6 -:4", "A5:2 C6:2 A5:2 F5:6 -:4", "G5:2 B5:2 D6:2 B5:2 G5:4 F5:4", "E5:8 C5:8"]),
 }
@@ -617,7 +622,7 @@ for _era, _spec in _BATTLE_ERA.items():
 # Era versions of the warden fight and the low-HP music: the same charts and motifs as
 # "warden" and "battle_pinch", played on each era's voice set (Sound.battle_music picks them).
 for _era in range(2, 6):
-    for _base in ("warden", "battle_pinch"):
+    for _base in ("warden", "battle_pinch", "battle_heart"):
         EXTRA_SONGS["%s_era%d" % (_base, _era)] = dict(SONGS[_base], era=_era)
 
 # Era versions of the title song and the victory jingle, and of the 12 Era I place songs.

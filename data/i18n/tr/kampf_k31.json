@@ -1,0 +1,14 @@
+{
+ "_comment": "Translations of the German table kampf_k31, written by tools/i18n/locales_kampf_k31.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s (won %d times)": "%s (%d kez yenildi)",
+  "%s calls %s to its side. Nobody asked the guard.": "{0}, {1} adlı Spirling'i yanına çağırıyor. Muhafıza soran olmadı.",
+  "Every mended heart, one after another. No rest in between: your team keeps its wounds. Begin?": "Onarılan her kalp, art arda. Arada dinlenme yok: takımın yaralarını taşır. Başlayalım mı?",
+  "Heart %d of %d is next. It heard the last one stop.": "Sıradaki kalp %d/%d. Bir öncekinin durduğunu duydu.",
+  "Heart rush (best %d of %d)": "Kalp koşusu (en iyi %d/%d)",
+  "Heart rush: %d of %d hearts.": "Kalp koşusu: %d/%d kalp.",
+  "Rift hearts": "Yarık kalpleri",
+  "The mended heart still beats in the Rift's echo. It remembers you, and it is not grateful.": "Onarılan kalp hâlâ Yarık'ın yankısında atıyor. Seni hatırlıyor ve minnettar değil.",
+  "Which heart?": "Hangi kalp?"
+ }
+}

@@ -15,6 +15,8 @@ on:
       - "tools/i18n/**"
       - "tools/ui_golden*.gd"
       - "tools/era_text_shots*.gd"
+      - "tools/battle_ui_golden*.gd"
+      - "scripts/battle/**"
       - "data/era_text.json"
       - "data/era_feel.json"
       - "tools/fx_flash_check.*"
@@ -68,6 +70,16 @@ jobs:
           echo "$line" >> "$GITHUB_STEP_SUMMARY"
           [ -n "$line" ] || { echo "::error::tools/era_text_shots.gd did not finish"; exit 1; }
           case "$line" in *"all screens match"*) ;; *) echo "::warning title=Era text golden images::$line";; esac
+      - name: Compare the battle screen with tests/golden/battle_ui
+        if: always()
+        run: |
+          # KAMPF_PLAN_1000 item 937: command menu and art info, 1v1 and 2v2, Era I and V, EN and DE.
+          # Like the menu screens a difference warns; refresh with tools/battle_ui_golden.gd -- update.
+          xvfb-run -a godot --path . --rendering-driver opengl3 -s res://tools/battle_ui_golden.gd -- compare 2>&1 | tee /tmp/battle_ui.log || true
+          line=$(grep "Battle UI golden:" /tmp/battle_ui.log | tail -1)
+          echo "$line" >> "$GITHUB_STEP_SUMMARY"
+          [ -n "$line" ] || { echo "::error::tools/battle_ui_golden.gd did not finish"; exit 1; }
+          case "$line" in *"all "*"screens match"*) ;; *) echo "::warning title=Battle UI golden images::$line";; esac
       - name: Battle effects never flash more than 3 times a second (plan item 2656)
         if: always()
         run: |

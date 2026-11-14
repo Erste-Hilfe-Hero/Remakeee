@@ -1,0 +1,10 @@
+{
+ "_comment": "Russian texts for the German table kampf_k30. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "Acting order %s": "Порядок ходов %s",
+  "Auto aim: %s": "Автоприцел: %s",
+  "Fight two on two, with another friend's echo beside you?": "Сразиться двое на двое, с эхом другого друга рядом?",
+  "That field cannot be picked.": "Это поле нельзя выбрать.",
+  "foe %s": "враг %s"
+ }
+}

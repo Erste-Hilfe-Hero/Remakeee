@@ -2583,6 +2583,15 @@
   "tradeable": false
  },
  {
+  "id": "turncoat_seed",
+  "name": "Turncoat Seed",
+  "description": "Swaps one Spirling's gift for the hidden gift of its line, or back again, at any ring. Loyalty was never part of the deal. Used up.",
+  "battle": false,
+  "gift_swap": true,
+  "price": 2400,
+  "tradeable": false
+ },
+ {
   "id": "echo_hold_fast",
   "name": "Echo Crystal: Hold Fast",
   "description": "Teaches Hold Fast to a Stone Spirling. Never used up.",

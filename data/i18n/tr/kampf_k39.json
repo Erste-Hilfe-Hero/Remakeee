@@ -1,0 +1,12 @@
+{
+ "_comment": "Turkish texts for the German table kampf_k39. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "Diamond": "Elmas",
+  "Square": "Kare",
+  "Triangle": "Üçgen",
+  "Moon": "Ay",
+  "The call: %s.": "Çağrı: %s.",
+  "Echo with the keys: left %s, up %s, right %s.": "Tuşlarla tekrarla: sol %s, yukarı %s, sağ %s.",
+  "Any tap or the accept key counts.": "Her dokunuş ve onay tuşu sayılır."
+ }
+}

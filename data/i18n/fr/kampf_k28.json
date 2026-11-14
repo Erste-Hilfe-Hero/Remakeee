@@ -1,0 +1,9 @@
+{
+ "_comment": "Translations of the German table kampf_k28, written by tools/i18n/locales_kampf_k28.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s turns its coat: its gift is now %s.": "%s retourne sa veste: son don est désormais %s.",
+  "Its flame burns in any wind: fog, Daze and Muddle never spoil its aim.": "Sa flamme brûle par tous les vents: ni brouillard, ni Vertige, ni Confus ne gâchent sa visée.",
+  "Swaps one Spirling's gift for the hidden gift of its line, or back again, at any ring. Loyalty was never part of the deal. Used up.": "Échange le don d'un Spirling contre le don caché de sa lignée, ou l'inverse, à n'importe quel rang. La loyauté n'a jamais fait partie du marché. Consommé.",
+  "Turncoat Seed": "Graine de Renégat"
+ }
+}
