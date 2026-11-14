@@ -2,15 +2,15 @@
  "_comment": "ja translation of the kampf_k34 table, keyed by the English text.",
  "strings": {
   "%s: Wayfarers think at tier %d.": "%s: 旅人は段階%dで考える。",
+  "At tier 3 the damage guess is the very number your art preview shows.": "段階3のダメージの見積もりは、術のプレビューと同じ数字だ。",
   "Foes never see your order or the next roll, and guess swaps only among Spirlings you have shown.": "敵はこちらの命令も次の乱数も見ない。交代を読むのは、すでに見せたSpirlingだけ。",
   "How foes think": "敵の考え方",
   "Some Wayfarers have a temper of their own: a hothead never swaps, a tactician saves up.": "旅人には気性がある。短気者は交代せず、策士は気力をためる。",
-  "Their damage guess is the very number your art preview shows.": "敵のダメージの見積もりは、術のプレビューと同じ数字だ。",
   "Tier 0 picks any art it can pay. Mostly it just bites.": "段階0は払える術を何でも選ぶ。たいていただ噛みつく。",
   "Tier 1 picks the art that hurts most right now and never passes up a knock-out.": "段階1はいま一番痛い術を選び、倒せる機会は逃さない。",
-  "Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup or a field that weakens all its arts.": "段階2はこちらの最善の返しも考え、弱ると回復し、不利な相手や術がすべて弱まる場からは交代する。",
-  "Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, guesses your swap and saves Energy up to %d turns ahead.": "段階3は状態異常をむだにせず、安全なときだけ能力を上げ、弱った者を仕留め、こちらの交代を読み、%dターン先まで気力をためる。",
-  "Two arts worth the same? The battle seed decides, the same seed always the same way.": "同じ価値の術が二つ? 戦いのシードが決める。同じシードならいつも同じ。",
+  "Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup.": "段階2はこちらの最善の返しも考え、弱ると回復し、不利な相手からは交代する。",
+  "Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, leaves a field that weakens all its arts, guesses your swap and saves Energy up to %d turns ahead.": "段階3は状態異常をむだにせず、安全なときだけ能力を上げ、弱った者を仕留め、術がすべて弱まる場からは退き、こちらの交代を読み、%dターン先まで気力をためる。",
+  "Two arts worth the same at tier 3? The battle seed decides, the same seed always the same way.": "段階3で同じ価値の術が二つ? 戦いのシードが決める。同じシードならいつも同じ。",
   "Wild Spirlings always pick at random.": "野のSpirlingはいつもでたらめに選ぶ。"
  }
 }

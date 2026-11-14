@@ -155,22 +155,22 @@ func _field_model(ai: int, field_turns: int) -> BattleModel:
 func test_ai_swaps_out_of_a_field_that_weakens_all_its_arts() -> void:
 	assert_eq(str(BattleRules.FIELDS.high_tide.weaken), "EMBER")
 	assert_lt(Elements.multiplier(E.GALE, [E.STONE]), BattleAI.BAD_MATCHUP_EFF, "no bad matchup in play")
-	var m: BattleModel = _field_model(2, 0)
+	var m: BattleModel = _field_model(3, 0)
 	assert_true(m.ai.field_weak(m, m.active_spirling(Side.FOE)))
 	var a: BattleAction = m.ai.choose(m, Side.FOE)
 	assert_eq(a.kind, BattleAction.Kind.SWAP, "the place's own High Tide drowns its Ember")
 	assert_eq(a.swap_index, 1)
 
-func test_field_swap_needs_a_lasting_field_and_tier_two() -> void:
-	var m: BattleModel = _field_model(2, 1)
+func test_field_swap_needs_a_lasting_field_and_the_master() -> void:
+	var m: BattleModel = _field_model(3, 1)
 	assert_false(m.ai.field_weak(m, m.active_spirling(Side.FOE)), "one turn left: it waits it out")
 	assert_eq(m.ai.choose(m, Side.FOE).kind, BattleAction.Kind.MOVE)
-	m = _field_model(2, 3)
+	m = _field_model(3, 3)
 	assert_eq(m.ai.choose(m, Side.FOE).kind, BattleAction.Kind.SWAP)
 	m.ai.set_profile("hothead")
 	assert_eq(m.ai.choose(m, Side.FOE).kind, BattleAction.Kind.MOVE, "a hothead never swaps")
-	m = _field_model(1, 0)
-	assert_eq(m.ai.choose(m, Side.FOE).kind, BattleAction.Kind.MOVE, "tier 1 does not notice")
+	m = _field_model(2, 0)
+	assert_eq(m.ai.choose(m, Side.FOE).kind, BattleAction.Kind.MOVE, "tier 2 does not notice")
 
 # --- 472: the lexicon page ------------------------------------------------------------------
 
@@ -189,8 +189,8 @@ func test_lexicon_explains_the_ai_tiers() -> void:
 func test_ai_damage_guess_matches_the_preview() -> void:
 	var me: Spirling = _ling([E.GALE] as Array[int], [_art(E.EMBER, 40)] as Array[MoveData], 80)
 	var foe: Spirling = _ling([E.GALE] as Array[int], [_art(E.STONE, 40)] as Array[MoveData], 120)
-	var m: BattleModel = _model([me] as Array[Spirling], [foe] as Array[Spirling], 1)
-	var ai := BattleAI.new(1)
+	var m: BattleModel = _model([me] as Array[Spirling], [foe] as Array[Spirling], 3)
+	var ai := BattleAI.new(3)
 	for f: String in ["", "ash_storm", "high_tide"]:
 		m.field = f
 		var pct: int = CommandMenu.damage_pct(m, me, foe, me.moves[0])
@@ -206,7 +206,7 @@ func test_ai_damage_guess_matches_the_preview() -> void:
 func _twins(seed_value: int) -> BattleModel:
 	var me: Spirling = _ling([E.GALE] as Array[int], [_art(E.STONE, 40)] as Array[MoveData], 120)
 	var foe: Spirling = _ling([E.GALE] as Array[int], [_art(E.STONE, 40), _art(E.STONE, 40)] as Array[MoveData])
-	return _model([me] as Array[Spirling], [foe] as Array[Spirling], 1, seed_value)
+	return _model([me] as Array[Spirling], [foe] as Array[Spirling], 3, seed_value)
 
 func test_equal_arts_are_settled_by_the_seed() -> void:
 	var picks: Dictionary = {}

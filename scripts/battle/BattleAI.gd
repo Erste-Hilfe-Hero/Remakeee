@@ -157,14 +157,25 @@ var _rested: Dictionary = {}
 var _memo: Dictionary = {}
 var _memo_on: bool = false
 
-## BattleRules.expected_damage, remembered for the rest of this decision.
-func _dmg(model: BattleModel, user: Spirling, target: Spirling, mv: MoveData) -> float:
+## Expected damage, remembered for the rest of this decision. The Master uses the art preview's
+## BattleRules.expected_damage (item 476). Tiers 1 and 2 keep their older, plainer guess (the mean
+## roll, plus the status bonus where [param plain] is false): the act simulator's pinned bands
+## (tests/unit/test_act_difficulty.gd) are tuned on it.
+func _dmg(model: BattleModel, user: Spirling, target: Spirling, mv: MoveData, plain: bool = false) -> float:
 	if not _memo_on:
-		return BattleRules.expected_damage(user, target, mv, model.field)
-	var key: Array = [user, target, mv]
+		return _dmg_now(model, user, target, mv, plain)
+	var key: Array = [user, target, mv, plain]
 	if not _memo.has(key):
-		_memo[key] = BattleRules.expected_damage(user, target, mv, model.field)
+		_memo[key] = _dmg_now(model, user, target, mv, plain)
 	return _memo[key]
+
+func _dmg_now(model: BattleModel, user: Spirling, target: Spirling, mv: MoveData, plain: bool) -> float:
+	if level >= 3:
+		return BattleRules.expected_damage(user, target, mv, model.field)
+	if plain:
+		return DamageCalc.estimate(user, target, mv)
+	var hit: MoveData = BattleRules.resolve_move(mv, model.field)
+	return DamageCalc.estimate(user, target, hit) * BattleRules.status_bonus(hit, target)
 
 ## model.legal_actions, worked out once per decision.
 func _legal(model: BattleModel, side: int, slot: int) -> Array[BattleAction]:
@@ -274,12 +285,12 @@ func _choose(model: BattleModel, side: int, slot: int = 0) -> BattleAction:
 			var tie: bool = score == move_best and move_pick != null
 			var hp_a: int = _hp_of(model, side, aim)
 			var hp_b: int = _hp_of(model, side, move_pick.target_slot) if tie else 0
-			if score > move_best or (tie and (hp_a < hp_b or (hp_a == hp_b and tie_key(model, side, slot, a.move_index, aim) < tie_key(model, side, slot, move_pick.move_index, move_pick.target_slot)))):
+			if score > move_best or (tie and (hp_a < hp_b or (level >= 3 and hp_a == hp_b and tie_key(model, side, slot, a.move_index, aim) < tie_key(model, side, slot, move_pick.move_index, move_pick.target_slot)))):
 				move_best = score
 				move_pick = BattleAction.make_move(side, a.move_index, slot, aim)
 		# Best and runner-up are kept per art, so the runner-up is a different art. Equal scores
 		# between arts go to the battle seed, not to the order the arts are listed in (item 477).
-		if move_best > best_score or (move_best == best_score and best_score > -INF and move_pick != null \
+		if move_best > best_score or (level >= 3 and move_best == best_score and best_score > -INF and move_pick != null \
 				and tie_key(model, side, slot, move_pick.move_index, move_pick.target_slot) < tie_key(model, side, slot, best.move_index, best.target_slot)):
 			second = best if best_score > -INF else null
 			second_score = best_score
@@ -425,9 +436,10 @@ func _plans_rest(model: BattleModel, side: int, slot: int, best_now: float) -> b
 		while k < turns and e < cost:
 			e = mini(e + per_rest, model.max_energy())
 			k += 1
-		if e < cost or k == 0 or me.cooldown_left(mv) > k:
+		var wait: int = maxi(k, me.cooldown_left(mv))
+		if e < cost or wait == 0 or wait > turns:
 			continue
-		var margin: float = PLAN_MARGIN * pow(rule_num("plan_turn_margin", 1.25), k - 1)
+		var margin: float = PLAN_MARGIN * pow(rule_num("plan_turn_margin", 1.25), wait - 1)
 		if score_move(model, side, i, slot) >= maxf(best_now, USELESS_SCORE) * margin:
 			return true
 	return false
@@ -465,8 +477,8 @@ func _score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, 
 	var target: Spirling = model.active_spirling(BattleModel.other(side), target_slot) if target_slot >= 0 else model.opponent(side)
 	var mv: MoveData = BattleRules.resolve_move(me.moves[move_index], model.field)
 	var acc: float = mv.accuracy * StatusRules.acc_mult(me.status)
-	# The same expected damage the player's art preview shows (item 476): field, gifts, status
-	# bonus and reactions (the Master's status combos, item 214), keepsakes and traits.
+	# The Master sees the same expected damage the player's art preview shows (item 476): field,
+	# gifts, status bonus and reactions (its status combos, item 214), keepsakes and traits.
 	var expected: float = _dmg(model, me, target, me.moves[move_index])
 	# Overcharge counts only where the leftover Energy turns the hit into a knock-out (item 460).
 	if mv.overcharge and level >= 1 and expected < float(target.hp):
@@ -658,7 +670,7 @@ func threat_to(model: BattleModel, side: int, slot: int) -> float:
 		var foe: Spirling = model.active_spirling(BattleModel.other(side), f_slot)
 		for mv: MoveData in foe.moves:
 			if mv.is_damaging() and foe.can_afford(mv):
-				best = maxf(best, _dmg(model, foe, me, mv) * mv.accuracy / float(maxi(me.hp, 1)))
+				best = maxf(best, _dmg(model, foe, me, mv, true) * mv.accuracy / float(maxi(me.hp, 1)))
 	return best
 
 ## Picks who steps into [param slot] after a faint: the healthy ally with the best matchup.
@@ -703,7 +715,7 @@ func _tier2_special(model: BattleModel, side: int, slot: int = 0) -> BattleActio
 		var pick: BattleAction = _healthiest_swap(model, side, slot, foe)
 		if pick != null:
 			return pick
-	if settled:
+	if settled and level >= 3:
 		var out: BattleAction = _field_swap(model, side, slot, foe)
 		if out != null:
 			return out
@@ -768,7 +780,8 @@ func _best_reply_score(model: BattleModel, side: int, move_index: int, slot: int
 	var me: Spirling = model.active_spirling(side, slot)
 	var foe: Spirling = model.active_spirling(BattleModel.other(side), target_slot) if target_slot >= 0 else model.opponent(side)
 	var mv: MoveData = me.moves[move_index]
-	if mv.is_damaging() and _dmg(model, me, foe, mv) >= float(foe.hp) and acts_first(model, me, foe, mv):
+	var first: bool = acts_first(model, me, foe, mv) if level >= 3 else mv.priority > 0 or me.effective_spd() > foe.effective_spd()
+	if first and mv.is_damaging() and _dmg(model, me, foe, mv, true) >= float(foe.hp):
 		return 0.0
 	var key: Array = [&"reply", me, foe]
 	if _memo_on and _memo.has(key):
@@ -777,7 +790,7 @@ func _best_reply_score(model: BattleModel, side: int, move_index: int, slot: int
 	for reply: MoveData in foe.moves:
 		if not foe.can_afford(reply) or not reply.is_damaging():
 			continue
-		var dmg: float = _dmg(model, foe, me, reply)
+		var dmg: float = _dmg(model, foe, me, reply, true)
 		best = maxf(best, minf(dmg, float(me.hp)) / float(maxi(me.max_hp(), 1)) * reply.accuracy)
 	if _memo_on:
 		_memo[key] = best

@@ -518,7 +518,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 450. [x] KI-Persönlichkeiten pro Wayfarer (vorsichtig, wild, taktisch) (bestand: data/ai_profiles.json)
 451. [ ] KI-Debug-Ansicht für Entwickler
 452. [x] KI-Tests pro Verhalten (bestand: test_ai*.gd, neu test_kampf_boss_ai.gd)
-453. [x] KI liest nur, was der Spieler auch sieht (keine versteckten Werte) (BattleAI.acts_first folgt dem Reihenfolge-Hinweis, nie der Befehl des Spielers, Wechsel-Ahnung nur zu gezeigten Spirlings, test_kampf_k34)
+453. [ ] KI liest nur, was der Spieler auch sieht (keine versteckten Werte) (Teil: keine Stufe sieht den Befehl des Spielers; Meister-KI folgt dem Reihenfolge-Hinweis und ahnt Wechsel nur zu gezeigten Spirlings; Stufen 1-2 offen, weil die Akt-Bänder an ihrem Verhalten hängen)
 454. [x] KI-Zufall in Stufe 0 bleibt (Wildkämpfe) (bestand: Plan 5000 Punkt 625)
 455. [x] KI-Stufe pro Wayfarer übersteuerbar (bestehend) (bestand: npc-Schlüssel ai)
 456. [x] KI für Partner (Kestra) auf Veteran Stufe 2 (erledigt: TrainerData.partner_ai)
@@ -535,14 +535,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 467. [ ] KI-Entscheidungen im Replay nachvollziehbar
 468. [x] KI-Texte: Wayfarer kommentiert gute Züge (bestand: data/dialogue/battle_lines.json)
 469. [x] KI meidet Felder, die dem Spieler helfen (bestand: BattleAI.field_value)
-470. [x] KI erkennt eigene Feldschwäche und wechselt (BattleAI.field_weak, _field_swap ab Stufe 2, test_kampf_k34)
+470. [x] KI erkennt eigene Feldschwäche und wechselt (BattleAI.field_weak, _field_swap in der Meister-KI, test_kampf_k34)
 471. [x] KI-Lernen bewusst nicht (deterministisch bleiben) (erledigt: Test gleicher Seed, gleiche Wahl)
 472. [x] KI-Stufen im Lexikon erklären (RulesBook Seite 'How foes think', 14 Sprachen)
 473. [x] KI-Stufe im Wochen-Echo (bestehend 2) auf 3 heben
 474. [x] KI in Online-Echos nutzt das gespeicherte Team (bestand: EchoTeam.build)
 475. [x] KI-Fairness-Test: gleiche Regeln wie der Spieler (erledigt: KI wählt nur aus legal_actions, Fuzz-Test prüft is_legal)
-476. [x] KI-Schadensschätzung nutzt dieselbe Formel wie die Vorschau (BattleRules.expected_damage für CommandMenu.damage_pct und BattleAI)
-477. [x] KI-Tie-Breaker deterministisch über den Kampf-Seed (BattleAI.tie_key, zieht nichts aus dem Kampf-RNG)
+476. [ ] KI-Schadensschätzung nutzt dieselbe Formel wie die Vorschau (Teil: BattleRules.expected_damage für Vorschau und Meister-KI; Stufen 1-2 offen, Akt-Bänder müssten neu eingestellt werden)
+477. [ ] KI-Tie-Breaker deterministisch über den Kampf-Seed (Teil: BattleAI.tie_key für die Meister-KI; Stufen 1-2 offen, Akt-Bänder)
 478. [x] KI: Zielwahl bei gleicher Wertung nach niedrigsten HP (erledigt: BattleAI._choose)
 479. [x] KI: Nie zwei Spirlings auf dasselbe sichere K.o.-Ziel (Overkill vermeiden) (erledigt: BattleAI._claims)
 480. [x] KI: Wechsel-Strafe bei Root beachten (bestand: legal_actions ohne Wechsel bei Root, Test)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-889 von 1000 Punkten umgesetzt.
+886 von 1000 Punkten umgesetzt.
 

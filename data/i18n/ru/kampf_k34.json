@@ -2,15 +2,15 @@
  "_comment": "ru translation of the kampf_k34 table, keyed by the English text.",
  "strings": {
   "%s: Wayfarers think at tier %d.": "%s: Странники думают на уровне %d.",
+  "At tier 3 the damage guess is the very number your art preview shows.": "На уровне 3 оценка урона - то самое число, что показывает предпросмотр твоей техники.",
   "Foes never see your order or the next roll, and guess swaps only among Spirlings you have shown.": "Противники никогда не видят твой приказ и следующий бросок, а замену угадывают только среди Spirlings, которых ты уже показал.",
   "How foes think": "Как думают противники",
   "Some Wayfarers have a temper of their own: a hothead never swaps, a tactician saves up.": "У некоторых Странников свой нрав: горячая голова никогда не меняется, тактик копит.",
-  "Their damage guess is the very number your art preview shows.": "Их оценка урона - то самое число, что показывает предпросмотр твоей техники.",
   "Tier 0 picks any art it can pay. Mostly it just bites.": "Уровень 0 берёт любую технику, на которую хватает. Чаще всего просто кусает.",
   "Tier 1 picks the art that hurts most right now and never passes up a knock-out.": "Уровень 1 берёт технику, которая бьёт больнее всего сейчас, и никогда не упускает нокаут.",
-  "Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup or a field that weakens all its arts.": "Уровень 2 ещё учитывает твой лучший ответ, лечится, когда слаб, и уходит из плохой схватки или с поля, что ослабляет все его техники.",
-  "Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, guesses your swap and saves Energy up to %d turns ahead.": "Уровень 3 никогда не тратит статус зря, усиливается только в безопасности, добивает слабых, угадывает твою замену и копит Энергию на %d ходов вперёд.",
-  "Two arts worth the same? The battle seed decides, the same seed always the same way.": "Две техники стоят одинаково? Решает сид боя, при том же сиде всегда одинаково.",
+  "Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup.": "Уровень 2 ещё учитывает твой лучший ответ, лечится, когда слаб, и уходит из плохой схватки.",
+  "Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, leaves a field that weakens all its arts, guesses your swap and saves Energy up to %d turns ahead.": "Уровень 3 никогда не тратит статус зря, усиливается только в безопасности, добивает слабых, уходит с поля, что ослабляет все его техники, угадывает твою замену и копит Энергию на %d ходов вперёд.",
+  "Two arts worth the same at tier 3? The battle seed decides, the same seed always the same way.": "Две техники стоят одинаково на уровне 3? Решает сид боя, при том же сиде всегда одинаково.",
   "Wild Spirlings always pick at random.": "Дикие Spirlings всегда выбирают наугад."
  }
 }

@@ -2,15 +2,15 @@
  "_comment": "pl translation of the kampf_k34 table, keyed by the English text.",
  "strings": {
   "%s: Wayfarers think at tier %d.": "%s: Wędrowcy myślą na poziomie %d.",
+  "At tier 3 the damage guess is the very number your art preview shows.": "Na poziomie 3 ocena obrażeń to dokładnie liczba z podglądu twojej techniki.",
   "Foes never see your order or the next roll, and guess swaps only among Spirlings you have shown.": "Rywale nigdy nie widzą twojego rozkazu ani następnego rzutu, a zmianę zgadują tylko wśród Spirlingów, które już pokazałeś.",
   "How foes think": "Jak myślą rywale",
   "Some Wayfarers have a temper of their own: a hothead never swaps, a tactician saves up.": "Niektórzy Wędrowcy mają swój charakter: gorącogłowy nigdy się nie zmienia, taktyk oszczędza.",
-  "Their damage guess is the very number your art preview shows.": "Ich ocena obrażeń to dokładnie liczba z podglądu twojej techniki.",
   "Tier 0 picks any art it can pay. Mostly it just bites.": "Poziom 0 bierze dowolną technikę, na którą go stać. Zwykle po prostu gryzie.",
   "Tier 1 picks the art that hurts most right now and never passes up a knock-out.": "Poziom 1 bierze technikę, która boli najbardziej teraz, i nigdy nie przepuści nokautu.",
-  "Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup or a field that weakens all its arts.": "Poziom 2 waży też twoją najlepszą odpowiedź, leczy się, gdy słabnie, i schodzi ze złego starcia lub z pola, które osłabia wszystkie jego techniki.",
-  "Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, guesses your swap and saves Energy up to %d turns ahead.": "Poziom 3 nigdy nie marnuje stanu, wzmacnia się tylko bezpiecznie, dobija słabych, zgaduje twoją zmianę i oszczędza Energię do %d tur naprzód.",
-  "Two arts worth the same? The battle seed decides, the same seed always the same way.": "Dwie techniki warte tyle samo? Decyduje ziarno walki, to samo ziarno zawsze tak samo.",
+  "Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup.": "Poziom 2 waży też twoją najlepszą odpowiedź, leczy się, gdy słabnie, i schodzi ze złego starcia.",
+  "Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, leaves a field that weakens all its arts, guesses your swap and saves Energy up to %d turns ahead.": "Poziom 3 nigdy nie marnuje stanu, wzmacnia się tylko bezpiecznie, dobija słabych, opuszcza pole, które osłabia wszystkie jego techniki, zgaduje twoją zmianę i oszczędza Energię do %d tur naprzód.",
+  "Two arts worth the same at tier 3? The battle seed decides, the same seed always the same way.": "Dwie techniki warte tyle samo na poziomie 3? Decyduje ziarno walki, to samo ziarno zawsze tak samo.",
   "Wild Spirlings always pick at random.": "Dzikie Spirlingi zawsze wybierają losowo."
  }
 }

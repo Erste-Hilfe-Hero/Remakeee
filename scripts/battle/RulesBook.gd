@@ -119,15 +119,15 @@ static func foe_minds() -> Array[String]:
 		Loc.t("Wild Spirlings always pick at random."),
 		Loc.t("Tier 0 picks any art it can pay. Mostly it just bites."),
 		Loc.t("Tier 1 picks the art that hurts most right now and never passes up a knock-out."),
-		Loc.t("Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup or a field that weakens all its arts."),
-		Loc.t("Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, guesses your swap and saves Energy up to %d turns ahead.") % int(BattleAI.rule_num("plan_turns", 1.0)),
+		Loc.t("Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup."),
+		Loc.t("Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, leaves a field that weakens all its arts, guesses your swap and saves Energy up to %d turns ahead.") % int(BattleAI.rule_num("plan_turns", 1.0)),
 	]
 	for d: int in GameState.AI_LEVELS.size():
 		out.append(Loc.t("%s: Wayfarers think at tier %d.") % [Loc.t(MenuHost.DIFFICULTY_TEXT[d]), GameState.AI_LEVELS[d]])
 	out.append_array([
 		Loc.t("Some Wayfarers have a temper of their own: a hothead never swaps, a tactician saves up."),
 		Loc.t("Foes never see your order or the next roll, and guess swaps only among Spirlings you have shown."),
-		Loc.t("Their damage guess is the very number your art preview shows."),
-		Loc.t("Two arts worth the same? The battle seed decides, the same seed always the same way."),
+		Loc.t("At tier 3 the damage guess is the very number your art preview shows."),
+		Loc.t("Two arts worth the same at tier 3? The battle seed decides, the same seed always the same way."),
 	])
 	return out
