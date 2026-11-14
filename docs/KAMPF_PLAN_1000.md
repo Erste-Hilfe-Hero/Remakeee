@@ -481,12 +481,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 416. [ ] Boss-Kampf-Speicherpunkt
 417. [ ] Boss-Wiederholung im Endgame
 418. [ ] Boss-Rush-Modus
-419. [ ] Boss im Online-Weltziel (bestehend) mit Phasen
+419. [x] Boss im Online-Weltziel (bestehend) mit Phasen (Raid-Wächter: RaidRules.phases in data/raid_rules.json bei 50 % und 25 % Reststärke, Phase fest pro Versuch (raid_attempts.phase, 20261114032010_kampf_k32.sql), BattleModel.raid_phase)
 420. [x] Boss-KI immer mindestens Stufe 2 (erledigt: TrainerData.BOSS_MIN_AI)
 421. [x] Boss-Status-Dauer halbiert (erledigt: BossRules.status_turns)
 422. [x] Boss-Stufen halbiert (erledigt: Stufen-Senkungen am Boss halbiert, BossRules.stage_delta)
-423. [ ] Boss-Animation größer
-424. [ ] Boss-Intro kurz bei 4x
+423. [x] Boss-Animation größer (Rift-Boss holt weiter aus, springt weiter vor und wird weiter zurückgestoßen: battle_show.json boss_motion, SpirlingSprite.motion_scale)
+424. [x] Boss-Intro kurz bei 4x (BattleShow.short_boss_intro: kurze Eröffnung und eine kurze Zeile mit dem Namen auf dem Schild)
 425. [x] Boss-Phasen-Test (umgesetzt) (bestand: test_difficulty_bosses.gd, test_kampf_boss_ai.gd)
 426. [x] Boss-HP-Skalierung nach Team-Größe (bestehend) (bestand: BattleRules.boss_hp_mult)
 427. [x] Boss-Namen eigenständig (bestand: Ashen, Drowned, Mist Heart, tools/ip_check.sh)
@@ -496,9 +496,9 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 431. [x] Boss: Schwachpunkt-Runde nach Phasenwechsel (DEF -1) (erledigt: BossRules.WEAK_STAGE für eine Runde)
 432. [x] Boss: Wut-Zähler bei zu langer Kampfdauer (erledigt: ab Runde 15 alle 5 Runden Wucht und Fokus +1)
 433. [x] Boss: Gnade auf Story (eine Aktion weniger) (bestand: BattleRules.BOSS_ACTION_CAP Story 1)
-434. [ ] Boss: Prisma-Variante im Endgame
-435. [ ] Boss: Online-Rangliste nach Zügen
-436. [ ] Boss: Wochen-Boss
+434. [x] Boss: Prisma-Variante im Endgame (bestand: Kampfhalle Prisma-Herz, BattleHalls kind prism, test_battle_halls und test_kampf_k32)
+435. [x] Boss: Online-Rangliste nach Zügen (Wochenbestenliste Herzstiege und Prisma-Herz nach Runden: boss_submit/boss_board, Schalter boss_board, LocalBossBoard.gd)
+436. [x] Boss: Wochen-Boss (bestand: Wochenriese WeeklyGiant als Rift-Boss am Brett, dazu das wöchentliche Prisma-Herz)
 437. [ ] Boss: Saison-Boss zu Festen (bestehend: Feste)
 438. [x] Boss: Nach dem Sieg Lore-Seite (erledigt: Lexikon-Seite nach dem ersten Sieg (Overworld.after_tamer_win))
 439. [ ] Boss: Achievement pro Boss
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-881 von 1000 Punkten umgesetzt.
+887 von 1000 Punkten umgesetzt.
 

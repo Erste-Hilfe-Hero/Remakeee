@@ -520,6 +520,12 @@ func climb_submit(kind: String, floor_no: int) -> void:
 	if state == State.ONLINE and flag_on("climb_board") and floor_no > 0:
 		await call_fn("climb_submit", {"p_kind": kind, "p_floor": floor_no})
 
+## Sends the rounds a clear of a boss hall took ("boss_tower" or "prism_boss") to this week's boss
+## board (KAMPF_PLAN_1000 item 435), when that board is switched on. Fewest rounds count.
+func boss_submit(kind: String, rounds: int) -> void:
+	if state == State.ONLINE and flag_on("boss_board") and rounds > 0:
+		await call_fn("boss_submit", {"p_kind": kind, "p_rounds": rounds})
+
 # --- Small actions (plan item 3011) -------------------------------------------------------
 
 ## Sends a set phrase, wave, thanks or world goal step. With a weak connection it waits in

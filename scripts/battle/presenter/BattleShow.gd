@@ -116,9 +116,27 @@ static func note_intro(m: BattleModel) -> void:
 	seen[key] = 1
 	GameState.records[SEEN_KEY] = seen
 
-## Intro share for [param m] from the saved memory.
+## Intro share for [param m] from the saved memory; a Rift boss at full speed keeps only the
+## short opening too (item 424).
 static func intro_share_for(m: BattleModel) -> float:
-	return intro_share(GameState.records.get(SEEN_KEY, {}) as Dictionary, intro_key(m))
+	var share: float = intro_share(GameState.records.get(SEEN_KEY, {}) as Dictionary, intro_key(m))
+	if m != null and short_boss_intro(BattleRules.BOSSES.has(m.foe_boss), GameState.battle_speed_scale()):
+		share = minf(share, clampf(float(cfg().get("quick_intro", 0.4)), 0.05, 1.0))
+	return share
+
+## True when a Rift boss's entrance runs short (item 424): at boss_short_speed (4x) and up.
+static func short_boss_intro(boss: bool, speed: float) -> bool:
+	return boss and speed >= float(cfg().get("boss_short_speed", 4.0))
+
+## The one short line of a boss entrance at full speed (item 424); the boss's name goes on the
+## name tag, so only how often it acts is left to read.
+static func boss_short_line(e: BattleEvent) -> String:
+	var acts: int = int(e.data.get("actions", 1))
+	return "It acts %d times each turn." % acts if acts > 1 else "It acts once each turn."
+
+## How much bigger a lone Rift boss's wind-up, lunge and knockback reach (item 423), at least 1.
+static func boss_motion() -> float:
+	return maxf(1.0, float(cfg().get("boss_motion", 1.0)))
 
 ## A lone Rift boss in the formation stands bigger (655): its slot [param r] grows from the top
 ## right corner to boss_size pixels of [param era], never below [param bottom_max] and never

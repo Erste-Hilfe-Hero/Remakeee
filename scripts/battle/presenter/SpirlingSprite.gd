@@ -32,6 +32,9 @@ var facing: String = "front"
 ## Draws the sprite flipped horizontally (art faces left; the battle layout needs it facing right).
 var mirrored: bool = false
 var speed_scale: float = 1.0
+## Reach of the wind-up, lunge and knockback: a lone Rift boss moves bigger (KAMPF_PLAN_1000
+## item 423, BattleShow.boss_motion), everyone else 1.
+var motion_scale: float = 1.0
 var _texture: Texture2D
 var _home: Vector2
 var _bob_time: float = 0.0
@@ -327,7 +330,7 @@ func windup(kind: int, toward: Vector2) -> void:
 		return
 	match kind:
 		MoveData.Kind.PHYSICAL:
-			await Juice.tween(self, "position", _home - (toward.normalized() * 3.0).round(), "move", 0.08).finished
+			await Juice.tween(self, "position", _home - (toward.normalized() * 3.0 * motion_scale).round(), "move", 0.08).finished
 			await lunge(toward)
 		MoveData.Kind.FOCUS:
 			await Juice.tween(self, "position", _home + Vector2(0, -2), "move", 0.1).finished
@@ -356,6 +359,7 @@ func play_strip(kind: String) -> void:
 func lunge(toward: Vector2) -> void:
 	if Juice.reduced():
 		return
+	toward = reach(toward, motion_scale)
 	if _strips.has("attack"):
 		await play_strip("attack")
 		return
@@ -374,6 +378,10 @@ func lunge(toward: Vector2) -> void:
 	queue_redraw()
 	await Juice.tween(self, "position", _home, "move", 0.12).finished
 
+## [param v] grown by [param scale] to whole pixels (item 423).
+static func reach(v: Vector2, scale: float) -> Vector2:
+	return (v * maxf(scale, 1.0)).round()
+
 ## Pushed 3 px away from the attacker, springs back in 0.15 s (item 2332). Under reduced
 ## motion only a 1 px jolt (item 2258).
 func knockback(away: Vector2) -> void:
@@ -383,7 +391,7 @@ func knockback(away: Vector2) -> void:
 		await get_tree().create_timer(0.05).timeout
 		position = _home
 		return
-	await Juice.tween(self, "position", _home + (d * KNOCKBACK_PX).round(), "impact").finished
+	await Juice.tween(self, "position", _home + reach(d * KNOCKBACK_PX, motion_scale), "impact").finished
 	await Juice.tween(self, "position", _home, "move", 0.15).finished
 
 func hit_flash() -> void:

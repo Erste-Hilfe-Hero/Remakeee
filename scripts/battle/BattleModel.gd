@@ -61,6 +61,9 @@ var _turn_drag: Dictionary = {}
 var _partner_slot: int = -1
 ## Rift boss id (BattleRules.BOSSES) for the foe in slot 0, or "".
 var foe_boss: String = ""
+## Raid guardian phase fixed by the server when the attempt started (KAMPF_PLAN_1000 item 419):
+## the first raid_phase phases of RaidRules.phases apply to the foe in slot 0 from the start.
+var raid_phase: int = 0
 ## Extra Energy the foe side gains at the end of the first turn (Rift-Born, item 749).
 var foe_turn1_energy: int = 0
 ## Ink Oath sworn this battle, per side (once per battle each).
@@ -506,6 +509,8 @@ func start() -> Array[BattleEvent]:
 		var b: Dictionary = BattleRules.BOSSES[foe_boss]
 		emit_event(BattleEvent.Type.BOSS, {"side": Side.FOE, "slot": 0, "boss": foe_boss, "label": str(b.label), "text": str(b.text),
 			"actions": _boss_actions, "hp": foe.hp, "max_hp": foe.max_hp()})
+	if raid_phase > 0:
+		_raid_phases(foe)
 	var edge: String = ShopEffects.edge_line(seals[Side.PLAYER], amulets[Side.PLAYER])
 	if not edge.is_empty():
 		emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.PLAYER, "text": edge})
@@ -829,6 +834,15 @@ func _check_boss_phase(boss: Spirling) -> void:
 	if boss_late_done < late.size() and float(boss.hp) <= float(boss.max_hp()) * float(late[boss_late_done].get("at", 0.0)):
 		boss_late_done += 1
 		_enter_boss_phase(boss, late[boss_late_done - 1])
+
+## The raid guardian's phases reached before this attempt: each is announced, its stages apply.
+func _raid_phases(guardian: Spirling) -> void:
+	for p: Dictionary in RaidRules.phases(RaidRules.config()).slice(0, raid_phase):
+		emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": guardian.display_name(), "boss": "",
+			"raid": true, "text": str(p.get("text", "%s")) % guardian.display_name()})
+		var st: Dictionary = p.get("stage", {})
+		for stat: String in st:
+			change_stage(Side.FOE, stat, int(st[stat]), 0)
 
 ## Announces phase [param p], applies its stages and field, then opens the weak point (item 431).
 func _enter_boss_phase(boss: Spirling, p: Dictionary) -> void:

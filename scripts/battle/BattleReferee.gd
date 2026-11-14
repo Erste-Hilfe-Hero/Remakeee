@@ -165,4 +165,5 @@ static func from_expect(expect: Dictionary, inputs: Variant = []) -> Dictionary:
 		"round_limit": int(expect.get("round_limit", 0)),
 		"seals": expect.get("seals", [0, 0, 0]),
 		"amulets": expect.get("amulets", [0, 0, 0]),
+		"raid_phase": int(expect.get("raid_phase", 0)),
 		"inputs": inputs if inputs is Array else []}
