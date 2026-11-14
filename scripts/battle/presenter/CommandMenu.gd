@@ -44,6 +44,8 @@ var prefer_row: int = -1
 var undo_ok: bool = false
 
 func request_undo() -> void:
+	if not ready_for_input():
+		return
 	Sound.sfx("cancel")
 	chosen.emit(BattleAction.Kind.RUN, BattleComfort.UNDO)
 
@@ -115,6 +117,8 @@ func _ready() -> void:
 				_long_fired = false
 				return
 			_hold.stop()
+			if not ready_for_input():
+				return
 			var el: int = _shown_moves[idx].element if idx < _shown_moves.size() else -1
 			Sound.sfx("confirm", 0.0, Sound.art_pick_pitch(el))
 			chosen.emit(BattleAction.Kind.MOVE, idx))
@@ -185,6 +189,8 @@ func _ready() -> void:
 		_shortcut.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		Juice.press_feedback(_shortcut)
 		_shortcut.pressed.connect(func() -> void:
+			if not ready_for_input():
+				return
 			Sound.sfx("confirm")
 			chosen.emit(BattleAction.Kind.ITEM, SHORTCUT))
 		if _column != null:
@@ -279,6 +285,7 @@ func _tint_row(i: int) -> void:
 ## on) and the focus mark: the cursor of the text menu, an ink frame in the button eras.
 func _draw_row(b: Button, i: int) -> void:
 	var focused: bool = b.has_focus() and not b.disabled
+	_draw_kind(b, i)
 	if mode == "text":
 		if focused:
 			var cy: float = floorf(b.size.y / 2.0)
@@ -292,6 +299,19 @@ func _draw_row(b: Button, i: int) -> void:
 	if focused:
 		b.draw_rect(Rect2(Vector2.ZERO, b.size), UITheme.INK, false, 1.0)
 		b.draw_rect(Rect2(Vector2.ONE, b.size - Vector2(2, 2)), UITheme.INK, false, 1.0)
+
+## The art's kind symbol (BattleHelp.KIND_ICONS, item 145) just left of its cost text.
+func _draw_kind(b: Button, i: int) -> void:
+	if i < 0 or i >= _shown_moves.size() or i >= _move_costs.size() or _move_costs[i].text.is_empty():
+		return
+	var cost: Label = _move_costs[i]
+	var fs: int = cost.get_theme_font_size("font_size")
+	var w: float = cost.get_theme_font("font").get_string_size(cost.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+	var size: int = BattleHelp.KIND_ICON_SIZE
+	var top: bool = cost.vertical_alignment == VERTICAL_ALIGNMENT_TOP
+	var y: float = cost.offset_top + floorf((fs - size) / 2.0) + 1.0 if top else floorf((b.size.y - size) / 2.0)
+	var ink: Color = b.get_theme_color("font_disabled_color" if b.disabled else "font_color", "Button")
+	BattleHelp.draw_kind_icon(b, _shown_moves[i].kind, Vector2(b.size.x + cost.offset_right - w - size - 3.0, y), ink)
 
 ## Thin colour stripe on the button's left edge (era colour code); transparent in Era I.
 func _stripe(b: Button) -> ColorRect:
@@ -527,6 +547,8 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 		b.draw.connect(_draw_row.bind(b, -1))
 	Juice.press_feedback(b)
 	b.pressed.connect(func() -> void:
+		if not ready_for_input():
+			return
 		Sound.sfx("confirm")
 		chosen.emit(kind, -1))
 	_stripe(b)
@@ -595,8 +617,7 @@ static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = fals
 static func damage_pct(model: BattleModel, me: Spirling, foe: Spirling, mv: MoveData) -> int:
 	if not mv.is_damaging() or foe == null:
 		return -1
-	var hit: MoveData = BattleRules.resolve_move(mv, model.field)
-	var dmg: float = DamageCalc.estimate(me, foe, hit) * BattleRules.damage_mult(me, foe, hit, model.field)
+	var dmg: float = BattleRules.expected_damage(me, foe, mv, model.field)
 	return clampi(roundi(dmg * 100.0 / float(maxi(foe.max_hp(), 1))), 1, 100)
 
 ## Power multiplier an Overcharge art [param mv] of [param me] would have if used now (the
@@ -647,7 +668,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			var mv: MoveData = me.moves[i]
 			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
 			# An art that acts first carries an arrow (item 595).
-			b.text = art_marks(mv) + mv.move_name
+			b.text = BattleComfort.fav_mark(me, mv) + art_marks(mv) + mv.move_name
 			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
 			var oc: float = overcharge_now(model, me, mv)
 			if pct > 0 and oc > 1.0:
@@ -665,7 +686,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			_row_colors[i] = BattleUiStyle.matchup_color(era, shown_mult)
 			if EraBattleHud.flag(era, "art_detail"):
 				# Era IV on: the element's name under the art's name, the matchup word under the cost.
-				b.text = art_marks(mv) + Loc.t(mv.move_name) + "\n" + Loc.t(Elements.element_name(mv.element))
+				b.text = BattleComfort.fav_mark(me, mv) + art_marks(mv) + Loc.t(mv.move_name) + "\n" + Loc.t(Elements.element_name(mv.element))
 				_move_hints[i].text = Loc.t(EraBattleHud.effect_hint(era, shown_mult))
 			_style_row(b, _row_left())
 			if filled:
@@ -695,7 +716,8 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			sb.color = BattleUiStyle.command_color(era, pair[1])
 	# An ally in another slot to trade places with also opens Swap (item 366).
 	_swap.disabled = not BattleAction.Kind.SWAP in kinds and MultiRules.shift_targets(model, BattleModel.Side.PLAYER, slot).is_empty()
-	_item.disabled = not BattleAction.Kind.ITEM in kinds
+	# A keepsake from the bag to put on also opens Item (KAMPF_PLAN_1000 298).
+	_item.disabled = not BattleAction.Kind.ITEM in kinds and KeepsakeKit.swap_ids(model, slot).is_empty()
 	# Against another Wayfarer the Bond button offers the Ink Oath instead (once per battle).
 	_bond.text = "Bond" if model.is_wild else "Oath"
 	_fit_command(_bond)
@@ -813,8 +835,17 @@ func _fill_row(b: Button, element: int) -> void:
 	sb.border_width_bottom = 2
 	b.add_theme_stylebox_override("normal", sb)
 
+## When the menu last opened for an order (the tap guard of KAMPF_PLAN_1000 item 908).
+var _shown_ms: int = -100000
+
+## False while the player's tap guard still runs after the menu opened.
+func ready_for_input() -> bool:
+	return BattleCalm.input_ready(_shown_ms, Time.get_ticks_msec())
+
 func set_enabled(on: bool) -> void:
 	var was: bool = _content.visible
+	if on:
+		_shown_ms = Time.get_ticks_msec()
 	_content.visible = on
 	if not on:
 		close_info()

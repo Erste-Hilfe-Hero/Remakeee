@@ -224,7 +224,8 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	_title.text = title
 	_set_tabs(tabs, tab)
 	_cancellable = cancellable
-	_guard_ms = guard_ms
+	# The player's tap guard (KAMPF_PLAN_1000 item 908) lengthens it, never shortens it.
+	_guard_ms = BattleCalm.guard_ms(guard_ms)
 	_back.visible = cancellable
 	_foot.visible = one_hand and cancellable
 	last_dir = 0

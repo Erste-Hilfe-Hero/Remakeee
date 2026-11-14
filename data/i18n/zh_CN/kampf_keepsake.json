@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_keepsake, written by tools/i18n/locales_kampf_keepsake.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s drops its %s for the %s. That was its whole turn.": "%s丢下%s，换上了%s。这一回合就这么用掉了。",
+  "%s takes up the %s. That was its whole turn.": "%s带上了%s。这一回合就这么用掉了。",
+  "Keepsake sets": "信物套组",
+  "Keepsake sets of %s": "%s的信物套组",
+  "Keepsake: putting it on takes the whole turn.": "信物：带上它要用掉整个回合。",
+  "No %s left in the bag for %s.": "包里没有留给{1}的{0}了。",
+  "Put this set on": "换上这个套组",
+  "Save what it holds now": "保存现在携带的",
+  "Save what it holds, or put a saved set back on.": "保存它现在携带的东西，或换回已保存的套组。",
+  "Set %d: %s": "套组%d：%s",
+  "Whole team: put on set %d": "全队：换上套组%d",
+  "empty": "空",
+  "holds %s": "携带%s"
+ }
+}
