@@ -62,8 +62,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 27. [ ] Gegner-Bank-Anzahl als Punkte am Rand (wie viele Spirlings noch kommen)
 28. [ ] Spieler-Bank-Anzahl ebenfalls als Punkte
 29. [ ] Kampfstart-Text kürzer bei 2x/4x Tempo
-30. [ ] Zwischenspeichern vor Boss-Kämpfen automatisch
-31. [ ] Kampf fortsetzen nach App-Neustart (Zustand pro Zug sichern)
+30. [x] Zwischenspeichern vor Boss-Kämpfen automatisch (BattleCheckpoint.save_point_due, Overworld.start_battle)
+31. [x] Kampf fortsetzen nach App-Neustart (Zustand pro Zug sichern) (Wildkämpfe: BattleCheckpoint, records.open_battle, Overworld._resume_open_battle; Rift-Born bleibt Niederlage)
 32. [x] Wechsel kostet keine Energie, aber der neue Spirling startet mit seiner gespeicherten Energie (test_kampf_k01)
 33. [x] Energie bleibt pro Spirling beim Wechsel erhalten (bestehend, sichtbar machen) (RulesBook.energy)
 34. [x] Zufallszahlen fair: gleicher Seed erzeugt denselben Kampf (bestehend, Regressionstest) (test_battle_model.test_same_seed_same_battle)
@@ -478,7 +478,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 413. [x] Boss-Lexikon (erledigt: Lexikon-Seiten boss_*, BossRules.LEXICON)
 414. [x] Boss-Statistik (Züge, Schaden) (erledigt: records.boss_stats (Siege, beste und letzte Rundenzahl), BossRules.note_win)
 415. [ ] Boss-Belohnungen pro Schwierigkeit
-416. [ ] Boss-Kampf-Speicherpunkt
+416. [x] Boss-Kampf-Speicherpunkt (BattleCheckpoint.save_point_line)
 417. [ ] Boss-Wiederholung im Endgame
 418. [ ] Boss-Rush-Modus
 419. [ ] Boss im Online-Weltziel (bestehend) mit Phasen
@@ -709,7 +709,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 629. [x] Kampf-Wiederaufnahme nach Unterbrechung (BattleComfort.interruption: Auto und Text warten im Hintergrund)
 630. [x] Schnellspeichern im Kampf bewusst nicht (kein Savescum auf Rift-Born) (kein Speichern im Kampfmenü; GameState.battle_open: App im Kampf geschlossen zählt auf Rift-Born als Niederlage (settle_open_battle))
 631. [x] Komfort-Tipps beim ersten Kampf (Tips battle_comfort)
-632. [ ] Kampf-Steuerung ohne Zeitdruck (keine Echtzeit-Elemente)
+632. [x] Kampf-Steuerung ohne Zeitdruck (keine Echtzeit-Elemente) (Option Ohne Eile: BattleCalm.text_auto, bond_style)
 633. [x] Bond-Melodie (bestehend) mit Barrierefreiheit (Bond-Stil Mine! statt Melodie, Hochkontrast)
 634. [x] Kampf-UI bei 144x256 skaliert (project.godot)
 635. [x] Kampf-UI im Querformat bewusst nicht (orientation=1, Hochformat)
@@ -1006,11 +1006,11 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 905. [x] Barrierefreiheit-Tests (tests/unit/test_kampf_a11y_tech.gd)
 906. [x] Barrierefreiheit-Dokumentation (docs/KAMPF_TECHNIK.md Abschnitt 4)
 907. [ ] Barrierefreiheit im Store-Text
-908. [ ] Eingabe-Verzögerung einstellbar
+908. [x] Eingabe-Verzögerung einstellbar (Tippschutz: BattleCalm.INPUT_DELAYS_MS, CommandMenu, ListPicker)
 909. [x] Doppeltipp vermeiden (keine Doppeltipp-Aktion, test_ux)
 910. [x] Wisch-Gesten vermeiden (Leitplanke und Zugänglichkeit) (Wischen nur zum Listen-Scrollen)
 911. [x] Lange Drücke optional (Info per I/F1/Gamepad-Y und Screenreader, CommandMenu)
-912. [ ] Pausen jederzeit
+912. [x] Pausen jederzeit (BattlePause, Knopf II und Start/Esc)
 913. [x] Blitzfreie Effekte (tools/fx_flash_check.gd)
 914. [x] Audio-Mono-Option (GameState.mono_audio)
 915. [x] Lautstärke pro Kanal (Musik, Effekte, Stimme, Umgebung)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-920 von 1000 Punkten umgesetzt.
+926 von 1000 Punkten umgesetzt.
 
