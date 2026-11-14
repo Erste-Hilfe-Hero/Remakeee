@@ -617,8 +617,7 @@ static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = fals
 static func damage_pct(model: BattleModel, me: Spirling, foe: Spirling, mv: MoveData) -> int:
 	if not mv.is_damaging() or foe == null:
 		return -1
-	var hit: MoveData = BattleRules.resolve_move(mv, model.field)
-	var dmg: float = DamageCalc.estimate(me, foe, hit) * BattleRules.damage_mult(me, foe, hit, model.field)
+	var dmg: float = BattleRules.expected_damage(me, foe, mv, model.field)
 	return clampi(roundi(dmg * 100.0 / float(maxi(foe.max_hp(), 1))), 1, 100)
 
 ## Power multiplier an Overcharge art [param mv] of [param me] would have if used now (the
