@@ -145,7 +145,7 @@ func _show() -> void:
 	var slot: String = "[size]"
 	if not sd.height.is_empty():
 		raw = raw.replace("Height %s" % sd.height, slot)
-	_text.text = Loc.t(raw).replace(slot, EraMenus.size_line(sd))
+	_text.text = SpirlogBook.translate_lines(raw).replace(slot, EraMenus.size_line(sd))
 	if bool(_lay.get("form_names", false)):
 		var names: PackedStringArray = []
 		for member: SpirlingData in SpirlogBook.line_of(sd):

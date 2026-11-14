@@ -592,12 +592,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Wayfarer-Teams und Gegnerdesign
 
-521. [ ] Jeder Wayfarer hat ein Thema (Element, Taktik)
-522. [ ] Wayfarer-Teams auf Veteran mit Synergien
-523. [ ] Wayfarer mit Feld-Strategie (Resonanz-Techniken)
-524. [ ] Wayfarer mit Status-Strategie
-525. [ ] Wayfarer mit Stufen-Strategie
-526. [x] Wayfarer mit Mehrfachkampf-Strategie (Zündmädchen Senna in Bellows Deep: 2 gegen 2, jeder Spirling mit Brazier Pulse, KI-Profil sweeper mit spread_w; TrainerData.strategy_problems prüft es)
+521. [x] Jeder Wayfarer hat ein Thema (Element, Taktik) (WayfarerThemes.theme: Element des Teams, Taktik aus "tactic" oder KI-Profil, data/wayfarer_themes.json; im Wandererbuch)
+522. [x] Wayfarer-Teams auf Veteran mit Synergien (WayfarerThemes.veteran_arts: Anführer legt das Resonanz-Feld des Team-Elements, die nächsten bringen die Taktik-Techniken)
+523. [x] Wayfarer mit Feld-Strategie (Resonanz-Techniken) (tactic field: Zündmädchen Senna, Geschworene Wick; field_w 2.0)
+524. [x] Wayfarer mit Status-Strategie (tactic status: Geschworene Mattie und Clem; status_w 1.6, Status zuerst)
+525. [x] Wayfarer mit Stufen-Strategie (tactic stages: Wiegemeister Tolliver, Geschworener Dunstan; setup_w 1.6)
+526. [x] Wayfarer mit Mehrfachkampf-Strategie (Karrenschieber Grim in den Schlackentunneln: 2 gegen 2, jeder Spirling mit einer Technik gegen alle Gegner (Landslip, Grand Farce), KI-Profil sweeper mit spread_w; TrainerData.strategy_problems prüft es)
 527. [x] Wayfarer-Dialog vor/nach dem Kampf (bestehend: intro und defeat in den Wayfarer-Daten)
 528. [x] Wayfarer-Rückkämpfe (bestehend) (bestehend: TrainerData.can_rematch)
 529. [x] Wayfarer-Telefonbuch-Ersatz: Laternenpost-Einladungen (WayfarerBook.invitations, Zeile an Rastquellen und im Wandererbuch)
@@ -606,7 +606,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 532. [x] Wayfarer-Teamgröße bis 5 (Team 5 fix) (bestehend: GameState.MAX_PARTY, TrainerData.RIFT_BORN_MAX_TEAM)
 533. [x] Wayfarer-Level an Level-Cap gebunden (bestehend: TrainerData.build_team mit ring_cap + FOE_OVER_CAP)
 534. [x] Wayfarer mit gehaltenen Gegenständen auf Veteran (bestehend: TrainerData.keeps_keepsakes ab Veteran)
-535. [x] Wayfarer-Teams prüfen auf Dopplungen (TrainerData.repeated_species im WorldValidator und test_kampf_k36: keine Art doppelt, ausser "twins" (Bram, Kettle-Brüder), wilden Horden und einer Extra-Kopie ab Tamer; Isa, Oda, Rasmus bekamen eine andere Art)
+535. [x] Wayfarer-Teams prüfen auf Dopplungen (TrainerData.repeated_species im WorldValidator und test_kampf_k36: keine Art doppelt, ausser "twins" (Bram, Isa, Oda, Kettle-Brüder), wilden Horden und einer Extra-Kopie ab Tamer; Rasmus und fünf Rift-Born-Teams bekamen eine andere Art)
 536. [x] Wayfarer-Sprites eigenständig (bestehend: eigene Kunst laut LEGAL.md, ip_check prüft Metadaten)
 537. [x] Wayfarer-Namen eigenständig (bestehend: tools/ip_check.sh)
 538. [x] Wayfarer-Klassen eigenständig (keine bekannten Klassen übernehmen) (bestehend: tools/ip_check.sh)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-891 von 1000 Punkten umgesetzt.
+896 von 1000 Punkten umgesetzt.
 

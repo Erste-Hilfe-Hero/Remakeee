@@ -93,6 +93,8 @@ static func validate() -> PackedStringArray:
 							errors.append("map '%s': npc '%s' has a bad difficulty rule %s" % [id, n.get("id", ""), k])
 				if n.has("profile") and not BattleAI.profiles().has(str(n.profile)):
 					errors.append("map '%s': npc '%s' has unknown AI profile '%s'" % [id, n.get("id", ""), n.profile])
+				if n.has("tactic") and not WayfarerThemes.tactics().has(str(n.tactic)):
+					errors.append("map '%s': npc '%s' has unknown tactic '%s'" % [id, n.get("id", ""), n.tactic])
 				if n.has("profile_from") and not str(n.profile_from) in TrainerData.DIFFICULTY_KEYS:
 					errors.append("map '%s': npc '%s' has unknown profile_from '%s'" % [id, n.get("id", ""), n.profile_from])
 				var tune: Variant = n.get("profile_tune", {})

@@ -1,0 +1,13 @@
+{
+ "_comment": "Translations of the German table kampf_k35, written by tools/i18n/locales_kampf_k35.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Brute force": "蛮力",
+  "Field tricks": "场地战术",
+  "Give me three turns. You won't get a fourth.": "给我三个回合。你不会有第四个。",
+  "I don't win duels. I make you lose them slowly.": "我不赢对决。我让你慢慢输掉。",
+  "No tricks. Just teeth. Some of them used to be someone else's.": "没有花招。只有牙齿。其中几颗以前是别人的。",
+  "Stage tricks": "能力阶段战术",
+  "Status tricks": "状态战术",
+  "The ground here owes me money. Watch it pay up.": "这片地欠我钱。看它怎么还。"
+ }
+}

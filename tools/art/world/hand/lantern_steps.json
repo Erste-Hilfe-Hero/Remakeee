@@ -40,13 +40,16 @@
       "level": 13
      },
      {
-      "species": "Fiddlit",
+      "species": "Zephlet",
       "level": 12
      },
      {
       "species": "Shalebat",
       "level": 13
      }
+    ],
+    "twins": [
+     "Zephlet"
     ]
    }
   ]

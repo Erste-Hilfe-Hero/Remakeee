@@ -61,12 +61,14 @@ func test_repeat_rule() -> void:
 
 func test_the_named_twins() -> void:
 	assert_eq(_npc("crowcrest", "bram").get("twins"), ["Shalebat"])
+	assert_eq(_npc("lantern_steps", "isa").get("twins"), ["Zephlet"])
+	assert_eq(_npc("candle_causeway", "tollwick").get("twins"), ["Puddock"])
 	assert_eq((_read(StoryBattles.PATH) as Dictionary).bounty_b11.get("twins"), ["Gloamhog"])
 
 # --- 526 and 558 -----------------------------------------------------------------------------
 
-func test_fuse_girl_senna_plays_several_at_once() -> void:
-	var def: Dictionary = _npc("bellows_deep", "fuse")
+func test_cart_pusher_grim_plays_several_at_once() -> void:
+	var def: Dictionary = _npc("slag_tunnels", "cart_pusher")
 	assert_eq(str(def.get("strategy")), "multi")
 	assert_eq(TrainerData.strategy_problems(def), [] as Array[String])
 	assert_eq(TrainerData.front(def), [2, 2] as Array[int])
@@ -100,11 +102,11 @@ func test_strategy_check_finds_a_broken_team() -> void:
 
 func test_sweeper_prefers_the_sweep() -> void:
 	var rng := RandomNumberGenerator.new()
-	var foe := Spirling.new(Database.species("Glowflit"), 35, rng)
-	foe.moves = [Database.move("Brazier Pulse")] as Array[MoveData]
+	var foe := Spirling.new(Database.species("Latchet"), 57, rng)
+	foe.moves = [Database.move("Landslip")] as Array[MoveData]
 	var a := Spirling.new(Database.species("Mossling"), 30, rng)
 	var b := Spirling.new(Database.species("Mossling"), 30, rng)
-	var m := BattleModel.new([a, b] as Array[Spirling], [foe, Spirling.new(Database.species("Cindle"), 35, rng)] as Array[Spirling], false, 1, 1)
+	var m := BattleModel.new([a, b] as Array[Spirling], [foe, Spirling.new(Database.species("Knellgrim"), 58, rng)] as Array[Spirling], false, 1, 1)
 	m.front_size = [2, 2]
 	m.start()
 	m.ai.set_profile("balanced")

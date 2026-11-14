@@ -111,13 +111,16 @@
      "level": 94
     },
     {
-     "species": "Drizzlet",
+     "species": "Puddock",
      "level": 93
     }
    ],
    "front": [
     3,
     3
+   ],
+   "twins": [
+    "Puddock"
    ]
   },
   {
