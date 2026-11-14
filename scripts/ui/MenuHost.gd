@@ -1043,6 +1043,11 @@ const DISCORD_URL: String = "https://discord.gg/e69SM39rKK"
 ## Opens a link outside the game; tests replace it so no browser starts.
 static var open_url: Callable = func(url: String) -> void: OS.shell_open(url)
 
+## Opens the community server and shows the link in case no browser opens.
+func open_discord() -> void:
+	open_url.call(DISCORD_URL)
+	toast(DISCORD_URL)
+
 func run_legal() -> void:
 	while true:
 		var idx: int = await pick_strings("Legal", ["Imprint & privacy", "Licences", "Join our Discord"] as Array[String])
