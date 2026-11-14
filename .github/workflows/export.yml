@@ -122,6 +122,9 @@ jobs:
       # Google Play Billing plugin (plan area 10): built for exactly this engine version.
       - name: Build billing plugin
         run: tools/build_billing_plugin.sh
+      # Google Play in-app updates (docs/LIVE_CONTENT.md): built for exactly this engine version.
+      - name: Build app update plugin
+        run: tools/build_appupdate_plugin.sh
       - name: Create throwaway debug keystore
         run: |
           keytool -genkeypair -v -keystore "$RUNNER_TEMP/debug.keystore" -storepass android \
@@ -146,6 +149,27 @@ jobs:
           "$(tools/find_zipalign.sh)" -c -P 16 -v 4 build/android/Chimora-debug.apk
       - name: Billing plugin is in the APK
         run: unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'de/chimora/billing/ChimoraBilling'
+      - name: App update plugin and Play In-App Updates are in the APK
+        run: |
+          unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'de/chimora/appupdate/ChimoraAppUpdate'
+          unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'com/google/android/play/core/appupdate/AppUpdateManager'
+      # The itch.io flavour installs a downloaded APK; only it may ask for REQUEST_INSTALL_PACKAGES.
+      - name: Export itch.io APK (debug signed, permission check only)
+        env:
+          GODOT_ANDROID_KEYSTORE_DEBUG_PATH: ${{ runner.temp }}/debug.keystore
+          GODOT_ANDROID_KEYSTORE_DEBUG_USER: androiddebugkey
+          GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: android
+        run: godot --headless --path . --export-debug "Android (itch)" build/android/Chimora-itch-test.apk
+      - name: Only the itch.io APK may install packages
+        run: |
+          aapt2="$(dirname "$(tools/find_zipalign.sh)")/aapt2"
+          "$aapt2" dump permissions build/android/Chimora-itch-test.apk | tee "$RUNNER_TEMP/itch_perms.txt"
+          grep -q 'android.permission.REQUEST_INSTALL_PACKAGES' "$RUNNER_TEMP/itch_perms.txt"
+          "$aapt2" dump permissions build/android/Chimora-debug.apk | tee "$RUNNER_TEMP/play_perms.txt"
+          if grep -q 'REQUEST_INSTALL_PACKAGES' "$RUNNER_TEMP/play_perms.txt"; then
+            echo "::error::the Play build must not ask for REQUEST_INSTALL_PACKAGES"; exit 1
+          fi
+          rm -f build/android/Chimora-itch-test.apk
       - name: The APK opens chimora:// links (addons/chimora_deeplink)
         run: |
           "$(dirname "$(tools/find_zipalign.sh)")/aapt2" dump xmltree --file AndroidManifest.xml build/android/Chimora-debug.apk > "$RUNNER_TEMP/manifest.txt"
@@ -246,6 +270,9 @@ jobs:
       # Google Play Billing plugin (plan area 10): built for exactly this engine version.
       - name: Build billing plugin
         run: tools/build_billing_plugin.sh
+      # Google Play in-app updates (docs/LIVE_CONTENT.md): built for exactly this engine version.
+      - name: Build app update plugin
+        run: tools/build_appupdate_plugin.sh
       - name: Stamp version code (Play needs a higher code for every upload)
         run: |
           code=$((1000 + ${{ github.run_number }}))
@@ -280,6 +307,12 @@ jobs:
           mkdir -p build/android
           godot --headless --path . --import
           godot --headless --path . --export-release "Android" build/android/Chimora.aab
+      - name: App update plugin is in the AAB, no install permission
+        run: |
+          unzip -p build/android/Chimora.aab 'base/dex/classes*.dex' | grep -a -q 'de/chimora/appupdate/ChimoraAppUpdate'
+          if unzip -p build/android/Chimora.aab base/manifest/AndroidManifest.xml | grep -a -q 'REQUEST_INSTALL_PACKAGES'; then
+            echo "::error::the Play build must not ask for REQUEST_INSTALL_PACKAGES"; exit 1
+          fi
       - name: Check 16 KB alignment of native libraries
         run: |
           command -v python3 >/dev/null || (apt-get update -qq && apt-get install -y -qq python3)
