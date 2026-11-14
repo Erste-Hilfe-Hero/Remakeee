@@ -145,18 +145,18 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 104. [x] Trait 'Gegenstrom': resistiert das Element, das es zuletzt getroffen hat (verborgene Gabe Gegenstrom (Paddlewisp-Linie))
 105. [x] Element-Statistik im Kampfende-Bericht (Schaden nach Element im Kampflog, TechniqueRules.element_summary)
 106. [x] Matchup-Kenntnis wird pro Spielstand gespeichert (bestehend) (bestehend: SaveManager matchups)
-107. [ ] Online: Matchup-Wissen teilt sich mit Freunden (Laternenpost-Bonus)
-108. [ ] Element-Icons im Hochkontrast-Modus größer
+107. [x] Online: Matchup-Wissen teilt sich mit Freunden (Laternenpost-Bonus) (MatchupNotes, notes_send/notes_open, Freundschaftspunkte; test_kampf_k26, test_matchup_notes.sql)
+108. [x] Element-Icons im Hochkontrast-Modus größer (ElementIcons.HC_SCALE in Menüs, 9-px-Symbol mit Rand im Kampf)
 109. [x] Element-Namen bleiben in allen Sprachen gleich (bestehend) (bestehend: Elements.element_name ohne Übersetzung)
 110. [x] Element-Tabelle bleibt eigenständig, nie aus anderen Spielen übernehmen (Regel) (Regel in docs/BALANCE.md)
-111. [ ] Ein Element pro Riss als Thema der Warden
+111. [x] Ein Element pro Riss als Thema der Warden (data/warden_themes.json, WardenCard.theme auf der Warden-Karte)
 112. [x] Element-Training: Spark-Werte steigen schneller im passenden Feld (doppelte Spark-Chance, TechniqueRules.spark_field_mult)
-113. [ ] Element-Glyphen animieren beim sehr effektiven Treffer
+113. [x] Element-Glyphen animieren beim sehr effektiven Treffer (InfoStrip.kick_glyphs, glyph_hop; ohne Bewegung bei reduzierter Bewegung)
 114. [x] Element-Mischtechniken (zwei Elemente, nimmt das bessere) (Magmasturm, Gischtböe (dual_element))
 115. [x] Element-Schild-Technik für das ganze Team (3 Runden) (Schutzkreis (Ward Circle))
 116. [x] Elementarer Nachhall: Bonus, wenn zwei Verbündete im selben Zug dasselbe Element nutzen (TechniqueRules.echo_mult)
-117. [ ] Element-Rätsel in der Welt, die Kampfwissen belohnen
-118. [ ] Element-Filter im Lager
+117. [x] Element-Rätsel in der Welt, die Kampfwissen belohnen (ElementSeals: Siegel unter sechs Wahrzeichen, data/element_seals.json)
+118. [x] Element-Filter im Lager (bestehend: GameState.storage_view, Schalter 'Show:' in der Box, test_ux_extras)
 119. [x] Element-Schwäche-Warnung beim Einwechseln (Warnung '!Element' in der Tauschauswahl)
 120. [x] Gegner-Element im Info-Streifen (bestehend) (bestehend: InfoStrip zeichnet Elementsymbole)
 

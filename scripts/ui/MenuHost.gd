@@ -1042,8 +1042,8 @@ static func _draw_party_row(b: Button, s: Spirling, leader: bool = false, ready:
 		b.draw_line(Vector2(cx - 2, y - 2), Vector2(cx + 2, y + 2), ink)
 		b.draw_line(Vector2(cx + 2, y - 2), Vector2(cx - 2, y + 2), ink)
 	var els: Array[int] = s.elements()
-	var w: float = els.size() * (ElementIcons.SIZE + 1)
-	ElementIcons.draw_row(b, els, Vector2(b.size.x - 3 - w, floorf((b.size.y - ElementIcons.SIZE) / 2.0)), ink)
+	var w: float = els.size() * (ElementIcons.size() + 1)
+	ElementIcons.draw_row(b, els, Vector2(b.size.x - 3 - w, floorf((b.size.y - ElementIcons.size()) / 2.0)), ink, ElementIcons.scale())
 
 ## Settings -> Legal: imprint/privacy/terms links and the engine licence notice.
 ## The community server, opened from Settings > Legal on the title screen and in the pause menu.

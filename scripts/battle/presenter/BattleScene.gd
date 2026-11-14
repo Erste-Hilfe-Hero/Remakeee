@@ -1240,6 +1240,11 @@ func _play_event(e: BattleEvent) -> void:
 					# KAMPF_PLAN_1000 item 84: the first hit on a two-element foe writes down how factors multiply.
 					if foe.elements().size() > 1:
 						Lexicon.add(GameState.records, "dual_elements")
+			# KAMPF_PLAN_1000 item 113: the struck element symbols hop on a very effective hit.
+			if float(e.data.get("eff", 1.0)) > 1.0 and not bool(e.data.get("status_tick", false)):
+				var ks: Variant = _strip(side, slot)
+				if ks != null and ks.has_method("kick_glyphs"):
+					ks.kick_glyphs(_last_element[BattleModel.other(side)])
 			if not bool(e.data.get("status_tick", false)):
 				await _hit_feedback(e, side, slot, hit == "hit_strong")
 			await _strip(side, slot).animate_hp(int(e.data.hp), int(e.data.max_hp))
