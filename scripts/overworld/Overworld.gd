@@ -97,6 +97,7 @@ func _ready() -> void:
 		"bounty": _action_bounty,
 		"fine_training": _action_fine_training,
 		"training": _action_training,
+		"relearn": _action_relearn,
 		"matchmaker": _action_matchmaker,
 		"reserve": _action_reserve,
 		"informant": _action_informant,
@@ -174,6 +175,8 @@ func _ready() -> void:
 		if hint != "" or GameState.left_battle:
 			GameState.left_battle = false
 			show_notices.call_deferred()
+		elif BattleCheckpoint.is_open(GameState.records):
+			_resume_open_battle.call_deferred()
 
 func _build() -> void:
 	_ground = TileMapLayer.new()
@@ -1393,6 +1396,13 @@ func _action_fine_training(_args: PackedStringArray, _speaker: NPC) -> void:
 		return
 	var r: Dictionary = FineTraining.train(s, stat, GameState.rng)
 	await say([str(r.line)] as Array[String])
+
+## "relearn": Hesper digs up forgotten arts for coins (ArtTeacher, KAMPF_PLAN item 138).
+func _action_relearn(_args: PackedStringArray, _speaker: NPC) -> void:
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	await ArtTeacher.run(menu)
+	menu.queue_free()
 
 ## "training": the training ring in the lighthouse (TrainingGround): bouts against carved
 ## dummies without risk, training goals and the training record.
@@ -4132,6 +4142,9 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 		ask.queue_free()
 		if skip:
 			return await _skipped_battle(foes)
+	# Boss save point (KAMPF_PLAN_1000 items 30, 416); a Warden met on the map was saved already.
+	if BattleCheckpoint.save_point_due(trainer) and not _warden_battle:
+		toast.show_note(BattleCheckpoint.save_point_line(SaveManager.save_game()))
 	Sound.sfx("encounter")
 	await _fade_to(1.0)
 	# A league battle comes ready-made from the server's seed and teams (plan area 7).
@@ -4151,12 +4164,20 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	scene.music_track = BattleAudio.theme(str(trainer.get("theme", "")), bool(trainer.get("warden", false)), not Festival.active().is_empty(),
 		map.outdoor and GameState.day_night and DayCycle.current() == DayCycle.Phase.NIGHT, area)
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
+	# A wild battle left by closing the app goes on after the restart (item 31).
+	if trainer.get("resume") is Array:
+		scene.resume = true
+		scene.replay_inputs = (trainer.resume as Array).duplicate()
+		scene.inputs = (trainer.resume as Array).duplicate()
+	if BattleCheckpoint.resumable(wild, trainer, GameState.difficulty):
+		BattleCheckpoint.open(GameState.records, replay, scene.inputs, model)
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0
 	Online.in_battle = true
 	GameState.battle_open = not bool(trainer.get("friendly", false))
 	var result: Array = await scene.battle_finished
 	GameState.battle_open = false
+	BattleCheckpoint.close(GameState.records)
 	Online.in_battle = false
 	var outcome: BattleModel.Outcome = result[0]
 	replay["inputs"] = scene.inputs
@@ -4183,6 +4204,23 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	busy = false
 	battle_ended.emit(outcome)
 	return outcome
+
+## A wild battle left open when the app closed goes on where it stopped (KAMPF_PLAN_1000 item 31):
+## the team and satchel get their state from before it back, and its turns play again on screen.
+func _resume_open_battle() -> void:
+	var rec: Dictionary = BattleCheckpoint.take(GameState.records, GameState.difficulty)
+	var model: BattleModel = BattleCheckpoint.restore(rec, GameState.party, GameState.inventory) if not rec.is_empty() else null
+	if model == null or busy:
+		return
+	model.set_meta("summary", BattleSummary.new(model))
+	last_model = model
+	busy = true
+	player.frozen = true
+	await say([BattleCheckpoint.resume_line()] as Array[String])
+	busy = false
+	var foes: Array[Spirling] = []
+	foes.assign(model.parties[1])
+	await start_battle(foes, true, {"model": model, "resume": rec.get("inputs", [])})
 
 ## A wild battle settled by a Battle Skip: the same model and aftermath, no battle screen.
 func _skipped_battle(foes: Array[Spirling]) -> BattleModel.Outcome:
@@ -4274,6 +4312,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	# Story (KAMPF_PLAN item 52): resting mends a little Vigor (the keen-hit cut is in ChallengeRules).
 	if d == GameState.Difficulty.STORY:
 		model.rest_heal_share = BattleModel.STORY_REST_HEAL
+	# Scorch, Root and Jolt stay on after a world battle, except on Story (KAMPF_PLAN item 179).
+	model.keep_status = world and not bool(trainer.get("practice", false)) and not d in StatusRules.CLEARS_AFTER_BATTLE
 	model.ambush = wild and bool(trainer.get("ambush", false))
 	# The end report: damage, knock-outs, best Spirling, Energy, seed (KAMPF_PLAN items 20, 76).
 	model.set_meta("summary", BattleSummary.new(model))

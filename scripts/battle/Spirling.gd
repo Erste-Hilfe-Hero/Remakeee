@@ -330,8 +330,9 @@ func restore() -> void:
 	status_turns = 0
 	energy = START_ENERGY
 
-## Clears battle-only state when a battle ends. Statuses do not persist outside battle.
-func end_battle() -> void:
+## Clears battle-only state when a battle ends. The status goes too, unless [param keep_status]
+## (BattleModel.keep_status, item 179) and it is one that lingers on a Spirling still standing.
+func end_battle(keep_status: bool = false) -> void:
 	stages.clear()
 	boss_guard = false
 	sure_skip = 0
@@ -347,8 +348,9 @@ func end_battle() -> void:
 	cheap_element = -1
 	energy_lock = 0
 	cooldowns.clear()
-	status = ""
-	status_turns = 0
+	if not (keep_status and not is_fainted() and StatusRules.lingers(status)):
+		status = ""
+		status_turns = 0
 	energy = START_ENERGY
 
 static func xp_for_level(lvl: int) -> int:
@@ -571,6 +573,9 @@ func to_dict() -> Dictionary:
 		"box": box,
 		"favorite": favorite,
 		"fav_art": fav_art,
+		# A lingering status stays on between battles (item 179).
+		"status": status,
+		"status_turns": status_turns,
 	}
 	if not bonus_trait.is_empty():
 		out["bonus_trait"] = bonus_trait
@@ -629,6 +634,9 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.favorite = d.get("favorite") is bool and d.get("favorite")
 	s.fav_art = str(d.get("fav_art", ""))
 	s.hp = clampi(_num(d.get("hp"), s.max_hp()), 0, s.max_hp())
+	if StatusRules.lingers(str(d.get("status", ""))) and s.hp > 0:
+		s.status = str(d.status)
+		s.status_turns = maxi(0, _num(d.get("status_turns"), 0))
 	return s
 
 ## A save number as int; anything that is not a finite number in int range gives [param fallback].

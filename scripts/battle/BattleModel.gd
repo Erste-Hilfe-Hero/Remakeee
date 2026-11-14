@@ -205,6 +205,9 @@ var entered_turn: Dictionary = {}
 ## KAMPF_PLAN (Zugablauf, Energie).
 ## Share of max Vigor a player Spirling mends when it rests (Story, item 52); 0 = none.
 var rest_heal_share: float = 0.0
+## A lingering status (StatusRules.lingers) stays on the player's Spirlings after this battle
+## (item 179). The overworld sets it for world battles off Story; sims and duels leave it false.
+var keep_status: bool = false
 ## Wild ambush from the tall fern (item 16): in the first turn the foe acts before everything.
 var ambush: bool = false
 ## AiNotes level (items 451, 467): OFF, REASON (replays) or TABLE (developer view).
@@ -1391,7 +1394,7 @@ func _phase_rewards() -> void:
 			var share: float = float(s.hp) / float(s.max_hp())
 			s.hp_mult /= hp_scale
 			s.hp = 0 if s.hp <= 0 else maxi(1, roundi(s.max_hp() * share))
-		s.end_battle()
+		s.end_battle(keep_status)
 	for side: int in [Side.PLAYER, Side.FOE]:
 		for s: Spirling in parties[side]:
 			if s.has_meta("trait_shown"):
