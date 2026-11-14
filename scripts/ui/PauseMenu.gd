@@ -469,6 +469,8 @@ func run_records() -> void:
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
+		if not BossRules.replays(GameState.records).is_empty():
+			lines.append("Boss replays")
 		lines.append("Online replays")
 		var have: int = Achievements.unlocked().size()
 		var idx: int = await pick_strings(Loc.t("Achievements %d/%d") % [have, Achievements.list().size()], lines)
@@ -502,6 +504,21 @@ func run_records() -> void:
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
 					return
+			"Boss replays":
+				if await run_boss_replays():
+					return
+
+## The kept fastest win against each Rift boss (KAMPF_PLAN_1000 item 440). True once one is
+## picked to watch (watch_replay and watch_snap are set).
+func run_boss_replays() -> bool:
+	var kept: Array[Dictionary] = BossRules.replays(GameState.records)
+	var labels: Array[String] = []
+	for r: Dictionary in kept:
+		labels.append(Loc.t("%s, won in %d turns") % [Loc.t(str(r.label)), int(r.turns)])
+	var i: int = await pick_strings(Loc.t("Boss replays"), labels)
+	if i < 0:
+		return false
+	return await OnlineReplaysMenu._watch(self, kept[i].replay)
 
 ## Era functions (data/era_functions.json): one page per open era with what it brought.
 func run_era_functions() -> void:

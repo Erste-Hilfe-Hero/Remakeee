@@ -76,3 +76,54 @@ static func note_win(records: Dictionary, boss_id: String, turns: int) -> Dictio
 ## The statistics of [param boss_id], or {}.
 static func stats(records: Dictionary, boss_id: String) -> Dictionary:
 	return (records.get("boss_stats", {}) as Dictionary).get(boss_id, {})
+
+## How a Rift boss's AI plays its phases (item 462), by BossRules.ai_phase:
+##   held:  the player's hold field keeps it from its next phase, so an art that lays any other
+##          field is worth "field_break" more (it wants to wake up)
+##   open:  its weak point lies open; building stages now is wasted ("setup_w" 0)
+##   final: every phase is reached, nothing is held back: no stage setup, hits count "damage_w"
+const AI_PHASE: Dictionary[String, Dictionary] = {
+	"held": {"field_break": 0.6},
+	"open": {"setup_w": 0.0},
+	"final": {"setup_w": 0.0, "damage_w": 1.3},
+}
+
+## The phase mode of the boss in [param side]/[param slot] of [param model] ("" when it is no boss
+## or nothing special holds): "open", "held" or "final".
+static func ai_phase(model: BattleModel, side: int, slot: int) -> String:
+	if not model.is_boss_slot(side, slot):
+		return ""
+	if model._boss_weak_until >= 0:
+		return "open"
+	if model.boss_phase_done and model.boss_late_done >= late_phases(model.foe_boss).size():
+		return "final"
+	if held_by(model.foe_boss, model.field):
+		return "held"
+	return ""
+
+## The weights of [method ai_phase] for that boss, or {}.
+static func ai_tune(model: BattleModel, side: int, slot: int) -> Dictionary:
+	return AI_PHASE.get(ai_phase(model, side, slot), {})
+
+## Boss replays (item 440): the replay of the fastest win against each boss is kept in
+## records["boss_replays"][boss_id] = {"turns", "replay"}. Returns true when [param snap] was kept.
+static func keep_replay(records: Dictionary, boss_id: String, turns: int, snap: Dictionary) -> bool:
+	if boss_id.is_empty() or snap.is_empty():
+		return false
+	var all: Dictionary = (records.get("boss_replays", {}) as Dictionary).duplicate()
+	var old: Dictionary = all.get(boss_id, {})
+	if not old.is_empty() and int(old.get("turns", 0)) <= turns:
+		return false
+	all[boss_id] = {"turns": turns, "replay": snap.duplicate(true)}
+	records["boss_replays"] = all
+	return true
+
+## Kept boss replays as [{"boss", "label", "turns", "replay"}], in BOSSES order.
+static func replays(records: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var all: Dictionary = records.get("boss_replays", {})
+	for id: String in BattleRules.BOSSES:
+		var r: Variant = all.get(id)
+		if r is Dictionary and (r as Dictionary).get("replay") is Dictionary:
+			out.append({"boss": id, "label": str(BattleRules.BOSSES[id].label), "turns": int(r.get("turns", 0)), "replay": r.replay})
+	return out
