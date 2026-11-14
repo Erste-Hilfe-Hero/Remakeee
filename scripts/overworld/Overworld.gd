@@ -3892,13 +3892,13 @@ static func _dir_name(d: Vector2i) -> String:
 
 ## Asks whether to bring a friend's echo, lets the player pick one and builds the team.
 ## Returns {"code", "name", "partner": {...}} or {} (no friends with teams, offline, or no).
-func pick_echo_partner(question: String) -> Dictionary:
+func pick_echo_partner(question: String, skip_code: String = "") -> Dictionary:
 	if not Online.is_online() or not Online.social_on():
 		return {}
 	var r: Dictionary = await Online.call_fn("friends_list")
 	if not r.ok or not r.data is Dictionary:
 		return {}
-	var with_team: Array = (r.data.get("friends", []) as Array).filter(func(f: Dictionary) -> bool: return bool(f.get("has_team", false)))
+	var with_team: Array = (r.data.get("friends", []) as Array).filter(func(f: Dictionary) -> bool: return bool(f.get("has_team", false)) and str(f.get("code", "")) != skip_code)
 	if with_team.is_empty():
 		return {}
 	var menu := MenuHost.new()
@@ -3951,11 +3951,17 @@ func echo_duel(d: Dictionary) -> void:
 	_ui.add_child(fm)
 	var fi: int = await fm.pick_strings(Loc.t("Which field?"), EchoTeam.field_names())
 	fm.queue_free()
-	busy = false
 	# The rule of the week holds in echo duels too, the same for everyone (KAMPF_PLAN_1000).
-	var outcome: BattleModel.Outcome = await start_battle(foes, false,
-		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
-			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi), "theme": "duel"})
+	var info: Dictionary = {"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
+			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi), "theme": "duel"}
+	# Two on two with a second friend's echo beside you (KAMPF_PLAN_1000 375).
+	var helper: Dictionary = await pick_echo_partner("Fight two on two, with another friend's echo beside you?", str(d.get("code", "")))
+	if not helper.is_empty():
+		info["partner"] = EchoTeam.duel_partner(helper.partner, ring)
+		await say(TraitKit.apply_duel_rules(info.partner.echo))
+		info["front"] = EchoTeam.DOUBLE_FRONT
+	busy = false
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, info)
 	busy = true
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN

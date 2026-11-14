@@ -20,6 +20,7 @@ const ERRORS: Dictionary = {
 	"not_over": "The duel is not over yet.",
 	"no_such_loan": "That loan has ended.",
 	"used": "You already used a borrowed Spirling here.",
+	"bad_field": "That field cannot be picked.",
 }
 
 static func error_text(r: Dictionary) -> String:
@@ -70,7 +71,10 @@ static func invite(menu: PauseMenu, friends: Array) -> void:
 	var idx: int = await menu.pick_strings("Invite a friend...", labels)
 	if idx < 0:
 		return
-	var r: Dictionary = await Online.call_fn("live_invite", {"p_code": str(friends[idx].code)})
+	# The inviter picks the field (KAMPF_PLAN_1000 340); backing out means no field.
+	var fi: int = await menu.pick_strings("Which field?", LiveDuel.field_names())
+	var field: String = LiveDuel.fields()[fi] if fi >= 0 else ""
+	var r: Dictionary = await Online.call_fn("live_invite", {"p_code": str(friends[idx].code), "p_field": field})
 	await menu.info(Loc.t("Invite sent. It stays open for 10 minutes.") if _ok(r) else error_text(r))
 
 static func run_duel(menu: PauseMenu, id: int, friend: String = "") -> void:
@@ -178,6 +182,8 @@ static func state_text(d: Dictionary, now: int) -> String:
 			lines.append(Loc.t("Time left: %d s") % LiveDuel.seconds_left(int(d.deadline), now))
 		"done", "expired":
 			lines.append(LiveDuel.result_text(int(d.side), int(d.winner), str(d.reason)))
+	if not str(d.get("field", "")).is_empty():
+		lines.append(Loc.t("Field: %s") % LiveDuel.field_label(str(d.field)))
 	for e: Dictionary in (d.emotes as Array).slice(-3):
 		lines.append(("%s: %s" % [Loc.t("You") if int(e.side) == int(d.side) else Loc.t("Friend"), LiveDuel.emote_text(int(e.emote))]))
 	return "\n".join(lines)

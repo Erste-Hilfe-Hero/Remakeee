@@ -159,6 +159,8 @@ const BENCH_XP_SHARE: float = 0.5
 var damage_preview: bool = true
 ## Big buttons in the battle menu (KAMPF_PLAN item 623), switched in the battle's More list.
 var big_buttons: bool = false
+## Auto aim in multi battles (KAMPF_PLAN_1000 386): a damaging art goes at the best foe unasked.
+var auto_aim: bool = false
 ## Damage numbers over a hit Spirling (KAMPF_PLAN_1000 671), off by default.
 var damage_numbers: bool = false
 ## Bonus goals of Wayfarers and Wardens (plan area 2, item 765); off hides them and their rewards.
@@ -836,7 +838,7 @@ func from_dict(d: Dictionary) -> void:
 
 func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
-		"bench_xp": bench_xp, "wild_ward": wild_ward, "damage_preview": damage_preview, "big_buttons": big_buttons, "damage_numbers": damage_numbers, "bonus_goals": bonus_goals, "volume": volume,
+		"bench_xp": bench_xp, "wild_ward": wild_ward, "damage_preview": damage_preview, "big_buttons": big_buttons, "auto_aim": auto_aim, "damage_numbers": damage_numbers, "bonus_goals": bonus_goals, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"voice_volume": voice_volume, "ambience_volume": ambience_volume, "mono_audio": mono_audio,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "pad_opacity_steps": PAD_ALPHAS.size(), "left_handed": left_handed, "tap_to_move": tap_to_move,
@@ -856,6 +858,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	wild_ward = bool(d.get("wild_ward", false))
 	damage_preview = bool(d.get("damage_preview", true))
 	big_buttons = bool(d.get("big_buttons", false))
+	auto_aim = bool(d.get("auto_aim", false))
 	damage_numbers = bool(d.get("damage_numbers", false))
 	bonus_goals = bool(d.get("bonus_goals", true))
 	pad_size = clampi(int(d.get("pad_size", 1)), 0, PAD_SIZE_NAMES.size() - 1)

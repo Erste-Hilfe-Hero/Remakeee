@@ -109,6 +109,7 @@ static func option_rows() -> Array[Array]:
 		["speed", Loc.t("Battle speed: %dx") % int(GameState.battle_speed_scale())],
 		["text", Loc.t("Text speed: %s") % Loc.t(GameState.TextSpeed.keys()[GameState.text_speed].capitalize())],
 		["big", Loc.t("Big buttons: %s") % Loc.t("On" if GameState.big_buttons else "Off")],
+		["aim", Loc.t("Auto aim: %s") % Loc.t("On" if GameState.auto_aim else "Off")],
 		["motion", Loc.t("Less motion: %s") % Loc.t("On" if GameState.reduce_motion else "Off")],
 		["shake", Loc.t("Screen shake: %s") % Loc.t(["Off", "Weak", "Full"][clampi(GameState.screen_shake, 0, 2)])],
 	]
@@ -127,6 +128,8 @@ static func toggle_option(key: String) -> bool:
 			GameState.text_speed = MenuHost.next_text_speed(GameState.text_speed)
 		"big":
 			GameState.big_buttons = not GameState.big_buttons
+		"aim":
+			GameState.auto_aim = not GameState.auto_aim
 		"motion":
 			GameState.reduce_motion = not GameState.reduce_motion
 		"shake":
