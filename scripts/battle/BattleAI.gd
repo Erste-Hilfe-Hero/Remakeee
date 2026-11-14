@@ -317,6 +317,9 @@ func score_action(model: BattleModel, side: int, slot: int, move_index: int, aim
 	var reached: Array[int] = model.move_targets(side, mv, aim)
 	var share: float = BattleRules.SPREAD_MULT if reached.size() > 1 else 1.0
 	var score: float = 0.0
+	# A sweeper (item 526) weighs arts that reach several foes by spread_w.
+	if reached.size() > 1:
+		share *= weight("spread_w")
 	for t: int in reached:
 		score += score_move(model, side, move_index, slot, t) * share
 	if reached.is_empty():
@@ -342,8 +345,11 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 	if mv.overcharge and level >= 1 and expected < float(target.hp):
 		var extra: int = clampi(me.energy - me.move_cost(mv), 0, BattleRules.OVERCHARGE_MAX_EXTRA)
 		var charged: float = expected * (1.0 + BattleRules.OVERCHARGE_PER_ENERGY * extra)
+		# A surger (item 558) counts the whole charged hit, weighted by charge_w.
 		if charged >= float(target.hp):
 			expected = charged
+		elif weight("charge_w") > 1.0:
+			expected = charged * weight("charge_w")
 	var delayed: bool = false
 	for fx: Dictionary in mv.effects:
 		delayed = delayed or StringName(fx.get("id", "")) == &"delayed_hit"

@@ -131,6 +131,13 @@ static func validate() -> PackedStringArray:
 						if not held.is_empty() and not Database.item(held).has("held"):
 							errors.append("map '%s': npc '%s' holds '%s', which is no keepsake" % [id, n.get("id", ""), held])
 				errors.append_array(format_errors(n, id))
+				# KAMPF_PLAN_1000 items 535, 526, 558, 559/812: repeats, strategies, lessons.
+				for r: String in TrainerData.repeated_species(n):
+					errors.append("map '%s': npc '%s' repeats a kind (%s); name it in \"twins\" if on purpose" % [id, n.get("id", ""), r])
+				for r: String in TrainerData.strategy_problems(n):
+					errors.append("map '%s': npc '%s' %s" % [id, n.get("id", ""), r])
+				if n.has("lessons") and BattlePuzzle.for_teacher(str(n.lessons)).is_empty():
+					errors.append("map '%s': npc '%s' has unknown lessons '%s'" % [id, n.get("id", ""), n.lessons])
 		for s: Dictionary in m.signs:
 			_check_dialogue(errors, id, str(s.get("dialogue", "")))
 		if not m.region in REGIONS:
