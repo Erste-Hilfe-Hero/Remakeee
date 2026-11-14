@@ -141,6 +141,15 @@ def main() -> None:
         print("insert into public.server_config (key, value) values ('trade_gifts', $game$"
               + json.dumps(tg).replace("$game$", "") + "$game$::jsonb)"
               " on conflict (key) do update set value = excluded.value;")
+    # Matchup notes by Lantern Mail (KAMPF_PLAN_1000 item 107): data/matchup_notes.json.
+    mn_path = os.path.join(folder, "matchup_notes.json")
+    if os.path.exists(mn_path):
+        with open(mn_path, encoding="utf-8") as f:
+            mn = json.load(f)
+        mn.pop("_comment", None)
+        print("insert into public.server_config (key, value) values ('matchup_notes', $game$"
+              + json.dumps(mn).replace("$game$", "") + "$game$::jsonb)"
+              " on conflict (key) do update set value = excluded.value;")
     # Online events (Online 100, area 7): data/online_events.json as server_config.online_events,
     # each fixed event as a row of public.online_events (its shared total stays). Rules become the
     # list of species that fit them (like OnlineEvents.allowed in the game).

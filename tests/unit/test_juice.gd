@@ -183,7 +183,7 @@ func test_android_exports_ask_for_vibrate() -> void:
 			continue
 		android += 1
 		assert_true(bool(cfg.get_value(sec + ".options", "permissions/vibrate", false)), sec)
-	assert_eq(android, 2)
+	assert_eq(android, 3)
 
 func test_no_direct_reduce_motion_reads_outside_juice() -> void:
 	for path: String in ["res://scripts/battle/presenter/SpirlingSprite.gd", "res://scripts/overworld/Overworld.gd", "res://scripts/core/EraManager.gd"]:

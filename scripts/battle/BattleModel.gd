@@ -855,7 +855,7 @@ func _enter_boss_phase(boss: Spirling, p: Dictionary) -> void:
 			_boss_weak_back[stat] = before - boss.stage(stat)
 	if not _boss_weak_back.is_empty():
 		_boss_weak_until = turn + BossRules.WEAK_TURNS
-		emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss,
+		emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "weak": true,
 			"text": "%s lies open: its Guard is down for a turn!" % boss.display_name()})
 
 ## End of turn for a Rift boss: the weak point closes, and a long fight enrages it (item 432).

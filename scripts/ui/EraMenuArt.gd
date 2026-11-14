@@ -134,19 +134,24 @@ static func pocket_art(pocket: int, era: int) -> ImageTexture:
 
 ## Width of the badge of [param element] in [param style] ("icon" or "colour").
 static func badge_width(style: String, text_w: float = 0.0) -> float:
-	return ElementIcons.SIZE + 4.0 + (text_w + 3.0 if style == "colour" and text_w > 0.0 else 0.0)
+	return ElementIcons.size() + 4.0 + (text_w + 3.0 if style == "colour" and text_w > 0.0 else 0.0)
+
+## Height of an element badge: BADGE_H, taller by the bigger symbol in high contrast (item 108).
+static func badge_h() -> int:
+	return BADGE_H + ElementIcons.size() - ElementIcons.SIZE
 
 ## Draws the element badge at [param at] on [param ci]: Era II the plain symbol, Era III and
 ## later a chip in the element's colour with the symbol in ink, so it never rests on colour
 ## alone. Returns the width used.
 static func draw_badge(ci: CanvasItem, element: int, at: Vector2, style: String, ink: Color) -> float:
+	var px: int = ElementIcons.scale()
 	if style != "colour":
-		ci.draw_texture(ElementIcons.texture(element, ink), at + Vector2(0, 1))
-		return ElementIcons.SIZE + 1.0
-	var w: float = ElementIcons.SIZE + 4.0
+		ci.draw_texture(ElementIcons.texture(element, ink, px), at + Vector2(0, 1))
+		return ElementIcons.size() + 1.0
+	var w: float = ElementIcons.size() + 4.0
 	var chip: Color = Elements.color(element)
-	ci.draw_rect(Rect2(at, Vector2(w, BADGE_H)), chip)
-	ci.draw_rect(Rect2(at, Vector2(w, BADGE_H)), UITheme.INK, false, 1.0)
+	ci.draw_rect(Rect2(at, Vector2(w, badge_h())), chip)
+	ci.draw_rect(Rect2(at, Vector2(w, badge_h())), UITheme.INK, false, 1.0)
 	var on: Color = Color("1a1420") if chip.get_luminance() > 0.45 else Color("f8f4ea")
-	ci.draw_texture(ElementIcons.texture(element, on), at + Vector2(2, 1))
+	ci.draw_texture(ElementIcons.texture(element, on, px), at + Vector2(2, 1))
 	return w + 1.0
