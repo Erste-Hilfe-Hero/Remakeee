@@ -61,6 +61,10 @@ static func check(replay: Variant, claim: Variant) -> Dictionary:
 			break
 		var d: Dictionary = inputs[i]
 		# An input the battle could not have taken at this point means the replay does not fit.
+		if str(d.get("t", "")) == "shift" and not m.needs_shift_choice():
+			return {"verdict": MISMATCH, "detail": {"field": "input", "index": i}}
+		if BattleReplay.play_extra(m, d) != null:
+			continue
 		if str(d.get("t", "")) == "switch":
 			if not m.needs_player_switch() or not int(d.get("i", -1)) in m.swap_candidates(BattleModel.Side.PLAYER, m.switch_slot()):
 				return {"verdict": MISMATCH, "detail": {"field": "input", "index": i}}
@@ -163,6 +167,8 @@ static func from_expect(expect: Dictionary, inputs: Variant = []) -> Dictionary:
 	return {"seed": int(expect.get("seed", 0)), "wild": false, "ai": int(expect.get("ai", 2)), "teams": teams,
 		"front": front, "items_allowed": bool(expect.get("items_allowed", false)), "inventory": {},
 		"round_limit": int(expect.get("round_limit", 0)),
+		# A live duel's field (KAMPF_PLAN_1000 340); an unknown one counts as none.
+		"field": str(expect.get("field", "")) if BattleRules.FIELDS.has(str(expect.get("field", ""))) else "",
 		"seals": expect.get("seals", [0, 0, 0]),
 		"amulets": expect.get("amulets", [0, 0, 0]),
 		"inputs": inputs if inputs is Array else []}

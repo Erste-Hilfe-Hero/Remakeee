@@ -617,8 +617,7 @@ static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = fals
 static func damage_pct(model: BattleModel, me: Spirling, foe: Spirling, mv: MoveData) -> int:
 	if not mv.is_damaging() or foe == null:
 		return -1
-	var hit: MoveData = BattleRules.resolve_move(mv, model.field)
-	var dmg: float = DamageCalc.estimate(me, foe, hit) * BattleRules.damage_mult(me, foe, hit, model.field)
+	var dmg: float = BattleRules.expected_damage(me, foe, mv, model.field)
 	return clampi(roundi(dmg * 100.0 / float(maxi(foe.max_hp(), 1))), 1, 100)
 
 ## Power multiplier an Overcharge art [param mv] of [param me] would have if used now (the
@@ -717,7 +716,8 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			sb.color = BattleUiStyle.command_color(era, pair[1])
 	# An ally in another slot to trade places with also opens Swap (item 366).
 	_swap.disabled = not BattleAction.Kind.SWAP in kinds and MultiRules.shift_targets(model, BattleModel.Side.PLAYER, slot).is_empty()
-	_item.disabled = not BattleAction.Kind.ITEM in kinds
+	# A keepsake from the bag to put on also opens Item (KAMPF_PLAN_1000 298).
+	_item.disabled = not BattleAction.Kind.ITEM in kinds and KeepsakeKit.swap_ids(model, slot).is_empty()
 	# Against another Wayfarer the Bond button offers the Ink Oath instead (once per battle).
 	_bond.text = "Bond" if model.is_wild else "Oath"
 	_fit_command(_bond)
@@ -725,6 +725,10 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 	_run.disabled = not BattleAction.Kind.RUN in kinds
 	# A Trial can be restarted at any time (item 708).
 	_run.text = "Restart" if model.has_meta("puzzle_max") else "Leave"
+	# Against a Wayfarer the button gives up the battle, after a yes (KAMPF_PLAN_1000 item 8).
+	if TurnFlow.can_forfeit(model) and not model.is_partner_slot(BattleModel.Side.PLAYER, slot):
+		_run.text = "Give up"
+		_run.disabled = false
 	_fit_command(_run)
 	if model.has_meta("puzzle_max"):
 		_run.disabled = false

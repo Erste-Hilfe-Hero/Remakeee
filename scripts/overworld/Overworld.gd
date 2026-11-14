@@ -874,7 +874,7 @@ func _on_interact(cell: Vector2i) -> void:
 		await n.turn_toward(player.cell)
 		if _is_active_trainer(n):
 			await challenge(n, false)
-		elif not await offer_warden_rematch(n) and not await offer_second_trial(n) and not await offer_rematch(n) and not await offer_trials(n):
+		elif not await offer_warden_rematch(n) and not await offer_second_trial(n) and not await offer_lessons(n) and not await offer_rematch(n) and not await offer_trials(n):
 			await run_dialogue(n.dialogue_ref, n)
 		return
 	var s: Dictionary = map.sign_at(cell, GameState.flags)
@@ -3759,6 +3759,36 @@ func offer_trials(n: NPC) -> bool:
 	await _play_trial(trials[idx], str(def.warden))
 	return true
 
+## A beaten Wayfarer with a "lessons" group teaches its lesson battles (KAMPF_PLAN_1000 items 559,
+## 812): Trials with borrowed Spirlings, no rings, no rewards. Leaving the menu returns false, so
+## the rematch offer and the usual talk still follow.
+func offer_lessons(n: NPC) -> bool:
+	var def: Dictionary = n.definition
+	if not def.has("lessons") or not TrainerData.is_beaten(def, map.id, GameState.flags):
+		return false
+	var list: Array[Dictionary] = BattlePuzzle.for_teacher(str(def.lessons))
+	if list.is_empty():
+		return false
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	var entries: Array[Dictionary] = []
+	for p: Dictionary in list:
+		var got: int = BattlePuzzle.best_lanterns(GameState.records, str(p.id))
+		var mark: String = (" " + Loc.t("Lanterns %d/%d") % [got, BattlePuzzle.MAX_LANTERNS]) if got > 0 else ""
+		entries.append({"text": Loc.t(str(p.get("name", p.id))) + mark, "hint": Loc.t(str(p.get("text", "")))})
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var idx: int = await menu.pick(Loc.t(BattlePuzzle.teacher_title(str(def.lessons))), entries, true)
+	menu.queue_free()
+	if idx < 0 or idx >= list.size():
+		VirtualPad.set_wanted(true)
+		player.frozen = false
+		busy = false
+		return false
+	await _play_trial(list[idx], "")
+	return true
+
 ## Plays one Trial until it is solved or the player stops (items 707, 708, 710, 712). "Restart"
 ## in the battle and "Try again" after a miss start it at once with the same seed and no text
 ## before the fight; every miss counts towards the hints.
@@ -3965,13 +3995,13 @@ static func _dir_name(d: Vector2i) -> String:
 
 ## Asks whether to bring a friend's echo, lets the player pick one and builds the team.
 ## Returns {"code", "name", "partner": {...}} or {} (no friends with teams, offline, or no).
-func pick_echo_partner(question: String) -> Dictionary:
+func pick_echo_partner(question: String, skip_code: String = "") -> Dictionary:
 	if not Online.is_online() or not Online.social_on():
 		return {}
 	var r: Dictionary = await Online.call_fn("friends_list")
 	if not r.ok or not r.data is Dictionary:
 		return {}
-	var with_team: Array = (r.data.get("friends", []) as Array).filter(func(f: Dictionary) -> bool: return bool(f.get("has_team", false)))
+	var with_team: Array = (r.data.get("friends", []) as Array).filter(func(f: Dictionary) -> bool: return bool(f.get("has_team", false)) and str(f.get("code", "")) != skip_code)
 	if with_team.is_empty():
 		return {}
 	var menu := MenuHost.new()
@@ -4024,11 +4054,18 @@ func echo_duel(d: Dictionary) -> void:
 	_ui.add_child(fm)
 	var fi: int = await fm.pick_strings(Loc.t("Which field?"), EchoTeam.field_names())
 	fm.queue_free()
-	busy = false
 	# The rule of the week holds in echo duels too, the same for everyone (KAMPF_PLAN_1000).
-	var outcome: BattleModel.Outcome = await start_battle(foes, false,
-		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
-			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi), "theme": "duel"})
+	var info: Dictionary = {"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
+			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi), "theme": "duel",
+			TurnFlow.CLOCK_META: TurnFlow.echo_seconds()}
+	# Two on two with a second friend's echo beside you (KAMPF_PLAN_1000 375).
+	var helper: Dictionary = await pick_echo_partner("Fight two on two, with another friend's echo beside you?", str(d.get("code", "")))
+	if not helper.is_empty():
+		info["partner"] = EchoTeam.duel_partner(helper.partner, ring)
+		await say(TraitKit.apply_duel_rules(info.partner.echo))
+		info["front"] = EchoTeam.DOUBLE_FRONT
+	busy = false
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, info)
 	busy = true
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN
@@ -4150,6 +4187,9 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	# A league battle comes ready-made from the server's seed and teams (plan area 7).
 	var preset: Variant = trainer.get("model")
 	var model: BattleModel = preset if preset is BattleModel else _new_model(foes, wild, trainer)
+	# Friendly and server-checked battles cannot be given up (KAMPF_PLAN_1000 item 8).
+	if bool(trainer.get("friendly", false)):
+		model.set_meta(TurnFlow.NO_FORFEIT_META, true)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
 	# A worn shop backdrop (item 4281) replaces the place's own, never a fixed one.
@@ -4261,6 +4301,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	last_model = model
 	model.inventory = GameState.inventory
 	model.items_allowed = GameState.items_allowed_in_battle()
+	# Keepsakes go on in battle only with the real team (KAMPF_PLAN_1000 298).
+	model.held_swap = mine == GameState.party
 	model.level_cap = GameState.level_cap()
 	model.bench_share = GameState.bench_share()
 	model.trainer_name = str(trainer.get("name", ""))
@@ -4315,6 +4357,13 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	# Scorch, Root and Jolt stay on after a world battle, except on Story (KAMPF_PLAN item 179).
 	model.keep_status = world and not bool(trainer.get("practice", false)) and not d in StatusRules.CLEARS_AFTER_BATTLE
 	model.ambush = wild and bool(trainer.get("ambush", false))
+	# 1v1 Wayfarer battles: swap offer and the foe's announcement (KAMPF_PLAN_1000 items 9, 10);
+	# echo duels: a clock per turn (item 6).
+	var story_foe: bool = not wild and not bool(trainer.get("friendly", false))
+	model.shift_offer = story_foe and TurnFlow.shift_on()
+	model.foe_announce = story_foe and TurnFlow.announce_on()
+	if trainer.has(TurnFlow.CLOCK_META):
+		model.set_meta(TurnFlow.CLOCK_META, int(trainer[TurnFlow.CLOCK_META]))
 	# The end report: damage, knock-outs, best Spirling, Energy, seed (KAMPF_PLAN items 20, 76).
 	model.set_meta("summary", BattleSummary.new(model))
 	# A boss fight ends after BOSS_ROUND_LIMIT turns: the Rift closes again (item 21).

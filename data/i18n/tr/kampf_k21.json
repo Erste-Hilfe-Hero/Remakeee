@@ -1,0 +1,18 @@
+{
+ "_comment": "Turkish texts for the German table kampf_k21. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "%d s left, then everyone without orders rests.": "%d sn kaldı, sonra emri olmayan herkes dinlenir.",
+  "%s is about to step out. Swap first?": "Birazdan %s çıkacak. Önce değiştir?",
+  "%s, you're up. Last longer than the last one.": "%s, sıra sende. Öncekinden uzun dayan.",
+  "A Wayfarer names its next Spirling before it steps out.": "Gezgin sıradaki Spirlingini göndermeden önce söyler.",
+  "All rest": "Hepsi dinlensin",
+  "Fight on": "Savaşa devam",
+  "Foe announces: %s": "Duyuru: %s",
+  "Give up? It counts as a loss.": "Pes mi? Yenilgi sayılır.",
+  "Orders for %s? (%d Energy, %d s)": "%s için emir? (%d Enerji, %d sn)",
+  "Swap offer: %s": "Değişim teklifi: %s",
+  "The foe": "Rakip",
+  "When a Wayfarer's Spirling is beaten, you may swap before the next one steps out.": "Bir Gezginin Spirlingi yenilince, sonraki çıkmadan önce değiştirebilirsin.",
+  "You give up. %s doesn't even pretend to be surprised.": "Pes ediyorsun. %s şaşırmış gibi bile yapmıyor."
+ }
+}
