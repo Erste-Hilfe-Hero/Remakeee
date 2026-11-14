@@ -3558,6 +3558,8 @@ func challenge(n: NPC, spotted: bool) -> void:
 		while (player.cell - n.cell).length_squared() > 1:
 			n.step(n.facing)
 			await n.step_finished
+	# Walked up from behind (KAMPF_PLAN item 15): the player's side moves first.
+	var caught: bool = not spotted and BattleOpening.may_catch(def) and BattleOpening.from_behind(n.cell, GridWalker.DIRS[n.facing], player.cell)
 	n.face_toward(player.cell)
 	player.face(_dir_name(n.cell - player.cell))
 	if def.has("intro"):
@@ -3578,6 +3580,7 @@ func challenge(n: NPC, spotted: bool) -> void:
 		return
 	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
 	info["goal_key"] = BattleGoals.key(map.id, n.npc_id)
+	info["initiative"] = caught
 	# Helper call (item 46): after losing to a Warden once, a friend's echo can fight beside you.
 	var losses: Dictionary = GameState.records.get("warden_losses", {})
 	var lost_key: String = TrainerData.beaten_flag(def, map.id)
@@ -3613,6 +3616,9 @@ func challenge(n: NPC, spotted: bool) -> void:
 	if tailwind:
 		var used: int = Tailwind.note_use(GameState.records)
 		await say([Loc.t("Tailwind helped in this battle. Used %d times so far.") % used] as Array[String])
+	# After a Soft Defeat the Wayfarer waits until you talk to it again (item 22).
+	if outcome == BattleModel.Outcome.LOSS and SoftDefeat.applies(GameState.difficulty, SoftDefeat.is_on()):
+		n.set_meta("waved", true)
 	if def.has("warden") and outcome == BattleModel.Outcome.LOSS:
 		losses[lost_key] = int(losses.get(lost_key, 0)) + 1
 		GameState.records["warden_losses"] = losses
@@ -4357,6 +4363,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	# Scorch, Root and Jolt stay on after a world battle, except on Story (KAMPF_PLAN item 179).
 	model.keep_status = world and not bool(trainer.get("practice", false)) and not d in StatusRules.CLEARS_AFTER_BATTLE
 	model.ambush = wild and bool(trainer.get("ambush", false))
+	model.initiative = not wild and bool(trainer.get("initiative", false))
 	# 1v1 Wayfarer battles: swap offer and the foe's announcement (KAMPF_PLAN_1000 items 9, 10);
 	# echo duels: a clock per turn (item 6).
 	var story_foe: bool = not wild and not bool(trainer.get("friendly", false))
@@ -4456,6 +4463,15 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 		DailyTasks.record("bond", {"map": map.id, "elements": bond_elements})
 		SaveManager.save_game()
 	var oath: Array[String] = oath_lines(GameState.retire_fainted())
+	if outcome == BattleModel.Outcome.LOSS and SoftDefeat.applies(GameState.difficulty, SoftDefeat.is_on()):
+		# Soft Defeat on Story (KAMPF_PLAN item 22): the team wakes right here with half its Vigor.
+		SoftDefeat.wake(GameState.party)
+		ChallengeRules.after_rest(GameState.party)
+		await _fade_to(0.0)
+		var woke: Array[String] = [SoftDefeat.LINE]
+		woke.append_array(oath)
+		await say(woke)
+		return
 	if outcome == BattleModel.Outcome.LOSS:
 		# No coin penalty: a spring keeper simply brings the player back.
 		GameState.heal_party()
