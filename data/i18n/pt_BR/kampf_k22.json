@@ -1,0 +1,16 @@
+{
+ "_comment": "pt_BR translation of the kampf_k22 table, keyed by the English text.",
+ "strings": {
+  "%d still to come": "faltam %d",
+  "%s rises!": "%s se ergue!",
+  "A hushed %s!": "Um %s silenciado!",
+  "A swarm of %d!": "Um enxame de %d!",
+  "Battle paused": "Batalha pausada",
+  "Duel with %s!": "Duelo com %s!",
+  "Everything goes dark... and then, somehow, it doesn't. Your team stirs right where it fell, bruised but breathing.": "Tudo escurece... e então, de algum jeito, não. Sua equipe se mexe bem onde caiu, machucada, mas respirando.",
+  "Resume": "Retomar",
+  "Soft Defeat: %s": "Derrota suave: %s",
+  "Story only: after a lost battle your team wakes where it fell, with half its Vigor.": "Só na História: depois de perder uma batalha, sua equipe acorda onde caiu, com metade do Vigor.",
+  "You caught %s from behind! Your side moves first.": "Você pegou %s pelas costas! Seu lado age primeiro."
+ }
+}

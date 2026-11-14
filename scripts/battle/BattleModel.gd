@@ -218,6 +218,8 @@ var rest_heal_share: float = 0.0
 var keep_status: bool = false
 ## Wild ambush from the tall fern (item 16): in the first turn the foe acts before everything.
 var ambush: bool = false
+## Caught from behind (item 15, BattleOpening): the player's side acts first in the first turn.
+var initiative: bool = false
 ## KAMPF_PLAN_1000 items 9, 10 (TurnFlow): in a 1v1 Wayfarer battle the foe names its next
 ## Spirling after a knock-out (foe_announce), and with shift_offer the player may swap first.
 var shift_offer: bool = false
@@ -528,6 +530,8 @@ func start() -> Array[BattleEvent]:
 	_wild_opening(foe)
 	if ambush and is_wild:
 		emit_event(BattleEvent.Type.AMBUSH, _who(Side.FOE, 0))
+	if initiative and not is_wild:
+		emit_event(BattleEvent.Type.TECHNIQUE, BattleOpening.initiative_event(self))
 	if BattleRules.BOSSES.has(foe_boss):
 		var b: Dictionary = BattleRules.BOSSES[foe_boss]
 		emit_event(BattleEvent.Type.BOSS, {"side": Side.FOE, "slot": 0, "boss": foe_boss, "label": str(b.label), "text": str(b.text),
@@ -1225,6 +1229,8 @@ func _sort_key(a: BattleAction, tie: float) -> Vector4:
 	var cls: float = -a.order_class()
 	# An ambush (item 16): in the first turn the wild foe moves before any action of the player.
 	if ambush and turn == 0 and a.side == Side.FOE:
+		cls = 1.0
+	elif BattleOpening.player_first(self, a.side):
 		cls = 1.0
 	return Vector4(cls, prio, spd, tie)
 

@@ -32,6 +32,8 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 	# Raid guardian phase (KAMPF_PLAN_1000 item 419), only when one applies.
 	if model.raid_phase > 0:
 		snap["raid_phase"] = model.raid_phase
+	if model.initiative:
+		snap["initiative"] = true
 	# The swap offer and the foe's announcement (KAMPF_PLAN_1000 items 9, 10).
 	if model.shift_offer:
 		snap["shift_offer"] = true
@@ -218,6 +220,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.rest_heal_share = clampf(float(snap.get("rest_heal", 0.0)), 0.0, BattleModel.STORY_REST_HEAL)
 	m.ambush = bool(snap.get("ambush", false)) and m.is_wild
 	m.raid_phase = clampi(int(snap.get("raid_phase", 0)), 0, 9)
+	m.initiative = bool(snap.get("initiative", false)) and not m.is_wild
 	m.shift_offer = bool(snap.get("shift_offer", false)) and not m.is_wild
 	m.foe_announce = bool(snap.get("foe_announce", false)) and not m.is_wild
 	if not partner.is_empty():
