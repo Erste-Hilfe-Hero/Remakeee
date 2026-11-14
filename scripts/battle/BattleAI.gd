@@ -68,6 +68,10 @@ const RECOIL_W: float = 1.0
 const LOW_HP: float = 0.35
 ## Arts whose damage also refills the user (weighed by drain_w, item 619).
 const DRAIN_EFFECTS: Array[StringName] = [&"drain", &"energy_drain", &"energy_refund"]
+## Slowest single decision allowed, in milliseconds, for any tier and formation size
+## (KAMPF_PLAN_1000 item 936, tests/unit/test_kampf_k39.gd): the foe picks while the turn is
+## being resolved, so a slow pick would show as a stall between the player's order and the text.
+const THINK_BUDGET_MS: float = 60.0
 ## Mottos and battle lines per profile: data/dialogue/<file>.json, keys "<profile>_<kind>".
 const LINES_FILE: String = "battle_lines"
 

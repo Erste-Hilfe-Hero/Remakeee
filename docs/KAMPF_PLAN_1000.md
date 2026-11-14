@@ -1005,7 +1005,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 904. [x] Weitere Sprachen vorbereiten (14 Sprachen, docs/I18N.md)
 905. [x] Barrierefreiheit-Tests (tests/unit/test_kampf_a11y_tech.gd)
 906. [x] Barrierefreiheit-Dokumentation (docs/KAMPF_TECHNIK.md Abschnitt 4)
-907. [ ] Barrierefreiheit im Store-Text
+907. [x] Barrierefreiheit im Store-Text (Abschnitt in allen 14 Store-Beschreibungen, release_check A11Y_HEADINGS)
 908. [x] Eingabe-Verzögerung einstellbar (Tippschutz: BattleCalm.INPUT_DELAYS_MS, CommandMenu, ListPicker)
 909. [x] Doppeltipp vermeiden (keine Doppeltipp-Aktion, test_ux)
 910. [x] Wisch-Gesten vermeiden (Leitplanke und Zugänglichkeit) (Wischen nur zum Listen-Scrollen)
@@ -1018,7 +1018,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 917. [x] Kampf ohne Farbe spielbar (Farbenblind-Formen, Era I in vier Graustufen)
 918. [x] Kampf mit Gamepad spielbar (Joypad-Eingabe, Info per Y)
 919. [x] Kampf mit Tastatur spielbar (ui-Aktionen, Info per I/F1)
-920. [ ] Kampf mit Screenreader spielbar
+920. [x] Kampf mit Screenreader spielbar (Bindungs-Ruf in Worten, BondMinigame._say; test_kampf_k39 prüft alle erreichbaren Kampf-Knöpfe)
 
 ## Balance-Werkzeuge und Tests
 
@@ -1037,8 +1037,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 933. [x] Seed-Determinismus-Test (test_balance test_same_seed_same_result)
 934. [x] Speicherstand-Migration (bestehend) für neue Einstellungen (settings_from_dict mit Standardwerten)
 935. [x] Einstellungs-Migration (Lager-Lernen Standard an) (test_kampf_a11y_tech)
-936. [ ] Leistungs-Test der KI
-937. [ ] Screenshot-Tests für Kampf-UI
+936. [x] Leistungs-Test der KI (BattleAI.THINK_BUDGET_MS, test_kampf_k39)
+937. [x] Screenshot-Tests für Kampf-UI (tools/battle_ui_golden.gd, tests/golden/battle_ui)
 938. [x] i18n-Prüfung (bestehend) für neue Texte (i18n_extract --check)
 939. [x] IP-Prüfung (bestehend) für neue Namen (tools/ip_check.sh)
 940. [x] Originalitäts-Zahlen (bestehend) nicht verändern (test_originality)
@@ -1069,7 +1069,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 962. [x] Kein Ball, kein Wurf, kein Gleiten, kein Reiten (Patent-Leitplanken, bestehend) (LEGAL.md, IP_PATENT_AUDIT)
 963. [x] Keine sichtbare Fang-Quote (Leitplanke) (BondMinigame zeigt nur Worte)
 964. [x] Keine Wisch-Geste zum Fangen (Leitplanke) (Tippen oder Tasten)
-965. [ ] Neue Namen gegen bekannte Technik-Listen prüfen
+965. [x] Neue Namen gegen bekannte Technik-Listen prüfen (tools/ip_move_check.py in ip_check)
 966. [x] IP-Check (bestehend) in CI (ip-check-Job)
 967. [x] Kampf-Phrasen in eigener Wortwahl (bestehend Liste) (ip_check-Phrasen, test_ux_text)
 968. [x] Kampf-Layout eigenständig (bestehend: Liste statt 2x2) (CommandMenu)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-937 von 1000 Punkten umgesetzt.
+942 von 1000 Punkten umgesetzt.
 
