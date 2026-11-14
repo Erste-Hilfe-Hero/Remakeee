@@ -4173,6 +4173,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.level_cap = GameState.level_cap()
 	model.bench_share = GameState.bench_share()
 	model.trainer_name = str(trainer.get("name", ""))
+	model.foe_theme_line = str(trainer.get("theme_line", ""))
 	var tune: Variant = trainer.get("profile_tune", {})
 	model.ai.set_profile(str(trainer.get("profile", "")), tune if tune is Dictionary else {})
 	if not wild:
