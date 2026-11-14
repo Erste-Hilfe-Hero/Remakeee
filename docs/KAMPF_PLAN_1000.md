@@ -291,7 +291,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Traits
 
-241. [ ] Trait im Info-Streifen nach der ersten Auslösung zeigen
+241. [x] Trait im Info-Streifen nach der ersten Auslösung zeigen (InfoStrip.set_gifts: Marke und Name erst nach dem ersten Wirken, TraitKit.mark_seen)
 242. [x] Trait-Auslösung als kurze Meldung im Log
 243. [x] Zweiter Trait für entwickelte Spirlings (wählbar) (Bonus-Gabe neben der eigenen, im Team-Menü wählbar (TraitKit.bonus_options, PauseMenu 'Bonus gift'))
 244. [x] Versteckter Trait selten bei Prisma-Spirlings (jeder vierte Prisma-Spirling trägt 'Prism Skin' (TraitKit.prism_trait_id))
@@ -310,10 +310,10 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 257. [x] Trait 'Wurzeln' (bestehend Deep Roots) (im Gabenbuch)
 258. [x] Trait 'Last Stand' (bestehend) sichtbar machen, wenn aktiv (bestehend: BattleModel zeigt den Trait beim ersten Wirken unter 1/3 HP)
 259. [x] Trait-Balance-Bericht (tools/balance/trait_report.py)
-260. [ ] Trait-Wechsel-Gegenstand
-261. [ ] KI kennt Traits der Gegner nur, wenn sie aufgedeckt wurden (Fairness)
+260. [x] Trait-Wechsel-Gegenstand (Turncoat Seed: eigene oder verborgene Gabe, auf jedem Ring, HiddenGifts.swap; Thornridge-Laden)
+261. [x] KI kennt Traits der Gegner nur, wenn sie aufgedeckt wurden (Fairness) (TraitKit.known_immune in BattleAI)
 262. [x] Meister-KI meidet Status gegen immune Traits (umgesetzt) (bestehend: BattleAI meidet Status gegen immune Gaben (Stufe 3))
-263. [ ] Trait-Icons klein neben dem Namen
+263. [x] Trait-Icons klein neben dem Namen (5-px-Marken je Gaben-Art, data/kampf_kit.json gift_icons)
 264. [x] Trait-Texte übersetzt (bestehend) (bestehend, neue Gaben in tools/i18n/de_kampf_traits.py)
 265. [x] Traits in Online-Duellen gleich (Gaben liegen im BattleModel und im Spielstand (bonus_trait), Online-Duelle nutzen dasselbe Modell)
 266. [x] Trait-Namen eigenständig prüfen (Test: keine Namensdopplung (test_trait_kit.gd), ip_check)
@@ -329,7 +329,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 276. [x] Trait-Auswirkung im Schadensvorschau-Wert berücksichtigen (bestehend über damage_mult) (TraitKit.static_mult fließt in BattleRules.damage_mult)
 277. [x] Trait-Tests pro Trait (tests/unit/test_trait_kit.gd)
 278. [x] Trait-Kombinationen mit gehaltenen Gegenständen prüfen (Test: Echo Soul + Lantern Glass, Field Runner + Glutstein)
-279. [ ] Trait 'Sturmlaterne' für den Storm-Lantern-Träger
+279. [x] Trait 'Sturmlaterne' für den Storm-Lantern-Träger (Bonus-Gabe 'Storm Lantern' mit der Laterne im Gepäck: Nebel, Benommenheit und Wirr stören das Zielen nicht)
 280. [x] Trait-Zähler im Kampfende-Bericht (TraitKit.count_gift/gift_report: jede Auslösung deiner Gaben, 'Gifts at work: ... x3' im Kampflog)
 
 ## Gehaltene Gegenstände
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-970 von 1000 Punkten umgesetzt.
+975 von 1000 Punkten umgesetzt.
 

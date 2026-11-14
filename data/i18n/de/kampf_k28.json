@@ -1,0 +1,10 @@
+{
+ "_comment": "German texts from tools/i18n/de_kampf_k28.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%s turns its coat: its gift is now %s.": "%s wechselt die Seiten: seine Gabe ist jetzt %s.",
+  "Its flame burns in any wind: fog, Daze and Muddle never spoil its aim.": "Seine Flamme brennt in jedem Wind: Nebel, Benommenheit und Wirr verderben nie sein Zielen.",
+  "Swaps one Spirling's gift for the hidden gift of its line, or back again, at any ring. Loyalty was never part of the deal. Used up.": "Tauscht die Gabe eines Spirlings gegen die verborgene Gabe seiner Linie oder wieder zurück, auf jedem Ring. Treue war nie Teil des Handels. Verbraucht.",
+  "Turncoat Seed": "Wendehals-Samen"
+ }
+}

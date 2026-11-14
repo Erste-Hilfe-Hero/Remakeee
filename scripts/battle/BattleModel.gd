@@ -1596,6 +1596,7 @@ func _do_move(a: BattleAction) -> void:
 			continue
 		if TechniqueRules.blocks_hit(self, target_side, t_slot, target, mv):
 			continue
+		TraitKit.on_aim(self, side, slot, me, mv)
 		var acc: float = hit_chance(me, mv, target)
 		var marked: bool = mv.is_damaging() and StatusRules.sure_hit(target.status)
 		if acc < 1.0 and rng.randf() >= acc:
@@ -1714,8 +1715,10 @@ func _do_rest(a: BattleAction) -> void:
 func hit_chance(me: Spirling, mv: MoveData, target: Spirling = null) -> float:
 	if target != null and mv.is_damaging() and StatusRules.sure_hit(target.status):
 		return 1.0
-	return clampf(mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult")
-		* (sight_mult if is_wild else 1.0), 0.0, 1.0)
+	# Storm Lantern (KAMPF_PLAN_1000 item 279): fog and blurring conditions leave its aim alone.
+	var steady: bool = TraitKit.steady_aim(me)
+	return clampf(mv.accuracy * (1.0 if mv.ignore_daze or steady else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult")
+		* (sight_mult if is_wild and not steady else 1.0), 0.0, 1.0)
 
 ## Tells every Spirling of both teams which element the place's own field makes cheaper (item 75).
 ## Only the place's own field counts (a storm overhead, a map's field): a field called by an art
