@@ -62,8 +62,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 27. [ ] Gegner-Bank-Anzahl als Punkte am Rand (wie viele Spirlings noch kommen)
 28. [ ] Spieler-Bank-Anzahl ebenfalls als Punkte
 29. [ ] Kampfstart-Text kürzer bei 2x/4x Tempo
-30. [ ] Zwischenspeichern vor Boss-Kämpfen automatisch
-31. [ ] Kampf fortsetzen nach App-Neustart (Zustand pro Zug sichern)
+30. [x] Zwischenspeichern vor Boss-Kämpfen automatisch (BattleCheckpoint.save_point_due, Overworld.start_battle)
+31. [x] Kampf fortsetzen nach App-Neustart (Zustand pro Zug sichern) (Wildkämpfe: BattleCheckpoint, records.open_battle, Overworld._resume_open_battle; Rift-Born bleibt Niederlage)
 32. [x] Wechsel kostet keine Energie, aber der neue Spirling startet mit seiner gespeicherten Energie (test_kampf_k01)
 33. [x] Energie bleibt pro Spirling beim Wechsel erhalten (bestehend, sichtbar machen) (RulesBook.energy)
 34. [x] Zufallszahlen fair: gleicher Seed erzeugt denselben Kampf (bestehend, Regressionstest) (test_battle_model.test_same_seed_same_battle)
@@ -179,14 +179,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 135. [x] Technik mit Treffer-Serie (2 bis 4 Treffer) (Kieselhagel (Pebble Hail))
 136. [x] Technik, die das Feld beendet (Rissstille (Rift Hush))
 137. [x] Technik, die Status vom ganzen Team heilt (bestehend: Effekt cure_team)
-138. [ ] Technik-Lehrer im Leuchtturm (vergessene Techniken neu lernen)
+138. [x] Technik-Lehrer im Leuchtturm (vergessene Techniken neu lernen) (Hesper nach ihrem Laden, ArtTeacher, 500 Münzen je Technik)
 139. [x] Echo-Kristalle (bestehend) als Quelle seltener Techniken ausbauen (19 neue Echo-Kristalle bei Hesper im Leuchtturm)
 140. [x] Technik-Tausch-Vorschau: alte und neue Technik nebeneinander (Vergessen-Liste zeigt alt > neu)
 141. [x] Technik-Beschreibung mit Effekt-Chancen im Lexikon
 142. [ ] Techniken mit Signatur pro Art (eine je Art, eigenständig)
 143. [x] Keine Technik-Namen aus anderen Spielen (Prüfliste vor jedem Merge) (tools/ip_check.sh in CI, test_rule_checks)
 144. [x] Status-Techniken mit Genauigkeit unter 100 % sichtbar machen (Trefferchance in der Technikzeile)
-145. [ ] Technik-Kategorie Physisch/Fokus/Status mit Symbol
+145. [x] Technik-Kategorie Physisch/Fokus/Status mit Symbol (5x5-Pixelzeichen BattleHelp.KIND_ICONS in jeder Technikzeile im Kampf)
 146. [x] Mehrfachziel-Techniken zeigen 'alle' (bestehend) (bestehend: Info-Karte 'Reaches every foe.')
 147. [x] Technik 'Ablenkung': zieht alle Einzelziele drei Runden auf sich (Lichtköder (Bright Lure))
 148. [x] Technik 'Schulterschluss': schützt einen Verbündeten (Schulterschluss (Close Ranks))
@@ -199,8 +199,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 155. [x] Technik-Balancing über den Simulator pro neuer Technik (balance_sim --mode arts, ArtsSim, Ergebnis in BALANCE.md)
 156. [x] Lernlisten pro Art auf Lücken prüfen (jede Art hat eine Status-Technik) (Statustechnik für jede Art per Echo-Kristall, test_kampf_techniques_b)
 157. [x] Technik-Animationen pro Element eigenständig (bestehend: ElementFx pro Element)
-158. [ ] Technik-Favoriten im Menü markieren
-159. [ ] Technik-Reihenfolge im Menü umsortieren
+158. [x] Technik-Favoriten im Menü markieren (BattleComfort.FAV_MARK '+' im Kampfmenü und unter Team > Technik-Reihenfolge)
+159. [x] Technik-Reihenfolge im Menü umsortieren (bestehend: Team > Technik-Reihenfolge, BattleComfort.move_art)
 160. [x] Technik-Info-Bildschirm per langem Druck
 
 ## Status-Zustände
@@ -223,7 +223,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 176. [x] Status-Schutz-Technik für das Team (Technik Calm Veil)
 177. [x] Status überträgt sich bei Kontakt (Trait 'Glimmhaut') (Gabe glimmer_skin, Forgefly-Linie)
 178. [x] Status heilt beim Wechsel auf die Bank (Trait 'Ruhig') (Gabe unruffled, Prismist-Linie)
-179. [ ] Status nach dem Kampf bleibt erhalten, außer auf Story
+179. [x] Status nach dem Kampf bleibt erhalten, außer auf Story (Brand, Wurzeln, Schock: StatusRules.lingers, Heilmittel auch außerhalb des Kampfes)
 180. [x] Status-Heilung an Rastquellen (bestehend) (GameState.heal_party, Spirling.restore)
 181. [x] Status-Statistik im Kampfende-Bericht (BattleReport.status_line)
 182. [x] Status-Sound pro Status eigenständig (bestehend: BattleAudio.status_sound)
@@ -334,7 +334,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Gehaltene Gegenstände
 
-281. [ ] Gehaltene Gegenstände (bestehend) im Info-Streifen als Symbol
+281. [x] Gehaltene Gegenstände (bestehend) im Info-Streifen als Symbol (InfoStrip zeigt das Andenken-Symbol, beim Gegner erst nachdem es gewirkt hat; KeepsakeKit.strip_item, Vorleser: 'holds ...')
 282. [x] Element-Verstärker pro Element (bestehend: Prismen und Charms pro Element)
 283. [x] Energie-Kristall (+2 Start-Energie) ('Deep Crystal': +2 Energie-Maximum und Start)
 284. [x] Schutz-Talisman (einmal sehr effektiven Treffer halbieren) ('Ward Talisman')
@@ -351,16 +351,16 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 295. [x] Gegenstand-Info im Lexikon (Andenkenbuch im Rekorde-Menü (TraitKit.all_keepsake_lines))
 296. [x] Gegenstand-Verbrauch in Kampfende-Bericht (BattleReport.item_line: 'Items used: Max Tonic x2', Taschen-Gegenstände und gegessene Früchte deiner Seite)
 297. [x] Gegenstand nach dem Kampf automatisch wieder ausrüsten (Option) (Einstellung 'Refill fruit', TraitKit.refill_held: eine gegessene Frucht kommt aus der Tasche wieder an denselben Spirling)
-298. [ ] Gegenstand-Tausch im Kampf (kostet den Zug)
+298. [x] Gegenstand-Tausch im Kampf (kostet den Zug) (Item-Menü bietet Andenken aus der Tasche an, KeepsakeKit.do_swap: das alte geht in die Tasche, nur mit dem echten Team, nie in Echo-Duellen)
 299. [x] Gegenstand-Klau-Technik bewusst nicht einführen (Frust) (bewusst kein Klau-Effekt)
 300. [x] Gegenstand-Shop im Endgame (Marlas Stand (endgame.json exchange, Stufe full))
 301. [x] Gegenstand als Belohnung im Turm (oberste Turmetage gibt ein Andenken (TraitKit.tower_reward))
 302. [x] Gegenstand-Seltenheit sichtbar (Seltenheit im Andenken-Hinweis (items.json rarity))
 303. [x] Gegenstand-Balance im Simulator (gab es schon: BalanceSim.run_keepsakes, balance_sim --mode keepsakes, prüft jeden haltbaren Gegenstand, die kit_*-Andenken eingeschlossen; Test test_balance_sim_covers_every_keepsake)
-304. [ ] Gegenstand-Icons eigenständig (Asset-Log)
+304. [x] Gegenstand-Icons eigenständig (Asset-Log) (KeepsakeIcons: 22 eigene 7x7-Formen in data/keepsake_kit.json, jedes Andenken mit Form und Farbe, Ära I in Tinte; Eintrag in docs/ASSET_LOG.md)
 305. [x] Gegenstand-Namen eigenständig prüfen (Test: keine Namensdopplung)
 306. [x] Gehaltene Gegenstände in Online-Duellen gleich (gleiches Modell und Spielstand)
-307. [ ] Gegenstand-Sets pro Spirling speichern
+307. [x] Gegenstand-Sets pro Spirling speichern (3 Sets pro Spirling im Spielstand, Andenken-Menü: speichern, anlegen, ganzes Team; KeepsakeKit.wear_team_set)
 308. [x] Gegenstand 'Echo-Muschel': Bond-Chance +5 % beim Halter ('Calling Conch')
 309. [x] Gegenstand 'Ruhekerze': +1 Energie beim Rasten ('Quiet Wick')
 310. [x] Gegenstand 'Glutstein' für Ember-Felder ('Cinder Stone')
@@ -371,8 +371,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 315. [x] Gegenstand-Limit: jeder Gegenstand nur einmal pro Team in Turnieren (TraitKit.apply_duel_rules: ein doppeltes Andenken bleibt nur beim ersten Spirling, in Echo-Duellen)
 316. [x] Gegenstand-Fund in versteckten Orten (bestehend) (bestehend: Spark Coil im Versteck von Murk Hollow)
 317. [x] Gegenstand-Tests pro Gegenstand (tests/unit/test_trait_kit.gd)
-318. [ ] Gegenstand-Animation beim Auslösen
-319. [ ] Gegenstand-Sound beim Auslösen
+318. [x] Gegenstand-Animation beim Auslösen (KeepsakePop: Symbol wächst und steigt über dem Träger, bei reduzierter Bewegung nur Einblenden)
+319. [x] Gegenstand-Sound beim Auslösen (eigener Klang keepsake_stir aus tools/audio/sfx.py, je Auslösung andere Tonhöhe: Schutz tiefer, Haltestein am tiefsten, Frucht heller)
 320. [x] Gegenstand-Texte übersetzt (tools/i18n/de_kampf_traits.py)
 
 ## Rift-Felder und Umgebung
@@ -478,7 +478,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 413. [x] Boss-Lexikon (erledigt: Lexikon-Seiten boss_*, BossRules.LEXICON)
 414. [x] Boss-Statistik (Züge, Schaden) (erledigt: records.boss_stats (Siege, beste und letzte Rundenzahl), BossRules.note_win)
 415. [ ] Boss-Belohnungen pro Schwierigkeit
-416. [ ] Boss-Kampf-Speicherpunkt
+416. [x] Boss-Kampf-Speicherpunkt (BattleCheckpoint.save_point_line)
 417. [ ] Boss-Wiederholung im Endgame
 418. [ ] Boss-Rush-Modus
 419. [ ] Boss im Online-Weltziel (bestehend) mit Phasen
@@ -709,7 +709,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 629. [x] Kampf-Wiederaufnahme nach Unterbrechung (BattleComfort.interruption: Auto und Text warten im Hintergrund)
 630. [x] Schnellspeichern im Kampf bewusst nicht (kein Savescum auf Rift-Born) (kein Speichern im Kampfmenü; GameState.battle_open: App im Kampf geschlossen zählt auf Rift-Born als Niederlage (settle_open_battle))
 631. [x] Komfort-Tipps beim ersten Kampf (Tips battle_comfort)
-632. [ ] Kampf-Steuerung ohne Zeitdruck (keine Echtzeit-Elemente)
+632. [x] Kampf-Steuerung ohne Zeitdruck (keine Echtzeit-Elemente) (Option Ohne Eile: BattleCalm.text_auto, bond_style)
 633. [x] Bond-Melodie (bestehend) mit Barrierefreiheit (Bond-Stil Mine! statt Melodie, Hochkontrast)
 634. [x] Kampf-UI bei 144x256 skaliert (project.godot)
 635. [x] Kampf-UI im Querformat bewusst nicht (orientation=1, Hochformat)
@@ -1006,11 +1006,11 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 905. [x] Barrierefreiheit-Tests (tests/unit/test_kampf_a11y_tech.gd)
 906. [x] Barrierefreiheit-Dokumentation (docs/KAMPF_TECHNIK.md Abschnitt 4)
 907. [ ] Barrierefreiheit im Store-Text
-908. [ ] Eingabe-Verzögerung einstellbar
+908. [x] Eingabe-Verzögerung einstellbar (Tippschutz: BattleCalm.INPUT_DELAYS_MS, CommandMenu, ListPicker)
 909. [x] Doppeltipp vermeiden (keine Doppeltipp-Aktion, test_ux)
 910. [x] Wisch-Gesten vermeiden (Leitplanke und Zugänglichkeit) (Wischen nur zum Listen-Scrollen)
 911. [x] Lange Drücke optional (Info per I/F1/Gamepad-Y und Screenreader, CommandMenu)
-912. [ ] Pausen jederzeit
+912. [x] Pausen jederzeit (BattlePause, Knopf II und Start/Esc)
 913. [x] Blitzfreie Effekte (tools/fx_flash_check.gd)
 914. [x] Audio-Mono-Option (GameState.mono_audio)
 915. [x] Lautstärke pro Kanal (Musik, Effekte, Stimme, Umgebung)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-920 von 1000 Punkten umgesetzt.
+937 von 1000 Punkten umgesetzt.
 

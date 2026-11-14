@@ -44,6 +44,7 @@ static func _snapshot(model: BattleModel, music: String, backdrop: String) -> Di
 		"teams": [_team(model.party(BattleModel.Side.PLAYER)), _team(model.party(BattleModel.Side.FOE))],
 		"inventory": model.inventory.duplicate(),
 		"items_allowed": model.items_allowed,
+		"held_swap": model.held_swap,
 		"level_cap": model.level_cap,
 		"trainer": model.trainer_name,
 		"field": model.field,
@@ -166,6 +167,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	var m := BattleModel.new(mine, foes, bool(snap.get("wild", true)), int(snap.get("seed", 0)), int(snap.get("ai", 0)))
 	m.inventory = (snap.get("inventory", {}) as Dictionary).duplicate()
 	m.items_allowed = bool(snap.get("items_allowed", true))
+	m.held_swap = bool(snap.get("held_swap", false))
 	m.level_cap = int(snap.get("level_cap", Spirling.LEVEL_SANITY))
 	m.trainer_name = str(snap.get("trainer", ""))
 	var tune: Variant = snap.get("profile_tune", {})
