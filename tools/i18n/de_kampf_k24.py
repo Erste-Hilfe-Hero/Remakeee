@@ -13,7 +13,6 @@ T = {
 "Tip: Your Spirling is running low on Energy. An art it can't pay won't go off.": "Tipp: Deinem Spirling geht die Energie aus. Eine Technik, die er nicht bezahlen kann, geht nicht los.",
 "Pick Rest: it skips its art but gains 2 Energy on top of the turn's 1. The foe will not wait politely.": "Wähle Rasten: Er lässt die Technik aus, bekommt aber 2 Energie zusätzlich zur 1 der Runde. Der Gegner wartet nicht höflich.",
 "Tip: Watch the pips fill back up. Resting is how Energy comes home.": "Tipp: Sieh zu, wie sich die Punkte wieder füllen. Durch Rasten kommt die Energie nach Hause.",
-"A Spirling that fought and waits on the bench gains 1 Energy each turn too. Swapping out is a rest with an alibi.": "Ein Spirling, der gekämpft hat und auf der Bank wartet, bekommt auch jede Runde 1 Energie. Auswechseln ist Rasten mit Alibi.",
 "Low on Energy": "Wenig Energie",
 "Resting": "Rasten",
 }

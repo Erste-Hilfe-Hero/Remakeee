@@ -57,7 +57,7 @@ static func state(model: BattleModel) -> Dictionary:
 static func bench_tick(model: BattleModel) -> int:
 	var st: Dictionary = state(model)
 	var fought: Dictionary = st.fought
-	var gain: int = int(num("bench_regen", 1.0))
+	var gain: int = int(num("bench_regen", 0.0))
 	var n: int = 0
 	for side: int in [BattleModel.Side.PLAYER, BattleModel.Side.FOE]:
 		var team: Array = model.party(side)

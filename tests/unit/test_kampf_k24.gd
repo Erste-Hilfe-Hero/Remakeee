@@ -12,11 +12,12 @@ func after_each() -> void:
 	Loc.set_language("en")
 	EnergyKit._data = {}
 
-## Item 50 ships with no role in data/kampf_energy.json (the roles wait for a balance pass), so
-## these tests lend the rule a Weaver +2 and Vanguard +1.
+## Items 50 and 67 ship switched off in data/kampf_energy.json (they wait for a balance pass), so
+## these tests lend the rules a Weaver +2, a Vanguard +1 and +1 Energy on the bench.
 func _with_roles() -> void:
 	var d: Dictionary = EnergyKit.data().duplicate(true)
 	d["role_cap"] = {"weaver": 2, "vanguard": 1}
+	d["bench_regen"] = 1
 	EnergyKit._data = d
 
 func _duel(mine: Array[Spirling], theirs: Array[Spirling], variants: Array[String] = []) -> BattleModel:
@@ -58,6 +59,7 @@ func test_rules_book_names_the_roles_and_the_bench() -> void:
 # --- 67 ---------------------------------------------------------------------------------------
 
 func test_bench_gains_energy_only_after_it_fought() -> void:
+	_with_roles()
 	var lead: Spirling = BattleFixtures.make("Kindlop", 20, ["Bowl Over"])
 	var second: Spirling = BattleFixtures.make("Talusk", 20, ["Bowl Over"])
 	var m: BattleModel = _duel([lead, second] as Array[Spirling], [BattleFixtures.make("Mossling", 20, ["Bowl Over"])] as Array[Spirling])
@@ -142,6 +144,8 @@ func test_hesper_sells_sunk_cost_and_its_card_explains_it() -> void:
 # --- 72, 73 -----------------------------------------------------------------------------------
 
 func test_shipped_data_keeps_every_kind_at_10() -> void:
+	assert_eq(int(EnergyKit.num("bench_regen", 0.0)), 0, "no bench Energy yet")
+	assert_false("\n".join(RulesBook.energy()).contains("waits on the bench"))
 	for sd: SpirlingData in Database.spirlings.values():
 		assert_eq(Spirling.MAX_ENERGY + EnergyKit.role_bonus(sd.role), Spirling.MAX_ENERGY, sd.species_name)
 

@@ -77,7 +77,7 @@ AREAS = [
 "[x] Energie-Tutorial im ersten Wildkampf (Tips energy_low, energy_rest, EnergyKit.tip_for)",
 "[x] Hinweis, wenn eine Technik nie bezahlbar ist (Energie-Max zu klein) (CommandMenu.move_line 'never')",
 "[x] Gegenstand 'Funkentrank' gibt +3 Energie (prüfen, ob bestehend) (Spark Drop +5)",
-"[x] Energie-Regeneration bei Wechsel auf die Bank: +1 pro Runde auf der Bank (EnergyKit.bench_tick)",
+"Energie-Regeneration bei Wechsel auf die Bank: +1 pro Runde auf der Bank",
 "[x] Energie-Startwert pro Schwierigkeit anpassen (BattleRules.FOE_START_CUT)",
 "[x] Overcharge in Bosskämpfen begrenzen (max. +5) (OVERCHARGE_MAX_EXTRA gilt überall)",
 "[x] Energie-Kosten im Lexikon jeder Technik (CommandMenu.move_info)",

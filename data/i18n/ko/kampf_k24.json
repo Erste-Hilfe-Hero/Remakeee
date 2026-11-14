@@ -4,7 +4,6 @@
   "%s kinds hold %d more Energy (%d in all).": "%s 종류는 에너지를 %d 더 담는다 (합계 %d).",
   "+%d%% power for each Energy spent on arts this battle, up to %d.": "이번 전투에서 기술에 쓴 에너지 1마다 위력 +%d%% (최대 %d).",
   "A Soaked Spirling loses 2 Energy at the end of each turn.": "흠뻑 젖은 Spirling은 매 턴이 끝날 때 에너지를 2 잃는다.",
-  "A Spirling that fought and waits on the bench gains 1 Energy each turn too. Swapping out is a rest with an alibi.": "싸운 뒤 벤치에서 기다리는 Spirling도 매 턴 에너지를 1 얻는다. 교체는 알리바이가 있는 휴식이다.",
   "A Spirling that has fought gains %d Energy each turn while it waits on the bench.": "한 번 싸운 Spirling은 벤치에서 기다리는 동안 매 턴 에너지를 %d 얻는다.",
   "Damp Sparks": "젖은 불꽃",
   "It has paid too much to stop now. Every Energy it spent on arts this battle makes it hit harder.": "이제 멈추기엔 너무 많이 치렀다. 이번 전투에서 기술에 쓴 에너지만큼 더 세게 때린다.",

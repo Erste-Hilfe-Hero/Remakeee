@@ -66,7 +66,8 @@ static func energy() -> Array[String]:
 	]
 	# KAMPF_PLAN_1000 items 50 and 67: the most Energy per role, the bench catching its breath.
 	out.append_array(EnergyKit.role_lines())
-	out.append(Loc.t("A Spirling that has fought gains %d Energy each turn while it waits on the bench.") % int(EnergyKit.num("bench_regen", 1.0)))
+	if EnergyKit.num("bench_regen", 0.0) > 0.0:
+		out.append(Loc.t("A Spirling that has fought gains %d Energy each turn while it waits on the bench.") % int(EnergyKit.num("bench_regen", 0.0)))
 	return out
 
 static func fields() -> Array[String]:

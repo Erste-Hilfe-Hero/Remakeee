@@ -102,7 +102,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 64. [x] Energie-Tutorial im ersten Wildkampf (Tips energy_low, energy_rest, EnergyKit.tip_for)
 65. [x] Hinweis, wenn eine Technik nie bezahlbar ist (Energie-Max zu klein) (CommandMenu.move_line 'never')
 66. [x] Gegenstand 'Funkentrank' gibt +3 Energie (prüfen, ob bestehend) (Spark Drop +5)
-67. [x] Energie-Regeneration bei Wechsel auf die Bank: +1 pro Runde auf der Bank (EnergyKit.bench_tick)
+67. [ ] Energie-Regeneration bei Wechsel auf die Bank: +1 pro Runde auf der Bank
 68. [x] Energie-Startwert pro Schwierigkeit anpassen (BattleRules.FOE_START_CUT)
 69. [x] Overcharge in Bosskämpfen begrenzen (max. +5) (OVERCHARGE_MAX_EXTRA gilt überall)
 70. [x] Energie-Kosten im Lexikon jeder Technik (CommandMenu.move_info)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-897 von 1000 Punkten umgesetzt.
+896 von 1000 Punkten umgesetzt.
 

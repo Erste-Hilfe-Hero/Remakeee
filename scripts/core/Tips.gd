@@ -12,8 +12,7 @@ const LINES: Dictionary[String, Array] = {
 	# The Energy lesson of the first battles goes on when it is needed (KAMPF_PLAN_1000 item 64).
 	"energy_low": ["Tip: Your Spirling is running low on Energy. An art it can't pay won't go off.",
 		"Pick Rest: it skips its art but gains 2 Energy on top of the turn's 1. The foe will not wait politely."],
-	"energy_rest": ["Tip: Watch the pips fill back up. Resting is how Energy comes home.",
-		"A Spirling that fought and waits on the bench gains 1 Energy each turn too. Swapping out is a rest with an alibi."],
+	"energy_rest": ["Tip: Watch the pips fill back up. Resting is how Energy comes home."],
 	# Paced (onboarding pass): only steps 1 and 2 at the start of the first wild battle, the
 	# rest when Bond is first picked, in the words of the bonding style in use.
 	"bond": ["Tip: A wild Spirling can join your team, if it trusts you. Trust is easier when it is tired.",
