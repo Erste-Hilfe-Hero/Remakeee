@@ -56,7 +56,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 21. [x] Zug-Limit für Boss-Kämpfe (z. B. 30 Züge), danach Riss schließt sich erneut (BOSS_ROUND_LIMIT, ROUND_LIMIT)
 22. [x] Optionale 'Sanfte Niederlage' auf Story: Team erwacht mit halben HP am Kampfort (SoftDefeat, Einstellung 'Soft Defeat', data/battle_flow.json)
 23. [x] Seed des Kampfes im Log anzeigen (für Wiederholungen und Fehlerberichte) (BattleSummary.seed_line im Log)
-24. [x] Pause-Menü im Kampf mit Einstellungen, ohne den Kampf zu verlassen (Start/Esc: BattleComfort.PAUSE_TITLE, Auto, Text und nächstes Ereignis warten)
+24. [x] Pause-Menü im Kampf mit Einstellungen, ohne den Kampf zu verlassen (BattlePause: Knopf Settings öffnet BattleComfort.PAUSE_TITLE; Auto, Text und nächstes Ereignis warten)
 25. [x] Mehrfachziel-Techniken treffen Verbündete nie (bestehende Regel festschreiben) (RulesBook, test_kampf_k01)
 26. [x] Fehlende Aktionen eines Slots werden zu Rasten, nie zu Zufallszügen (bestehend, testen) (test_kampf_k01)
 27. [x] Gegner-Bank-Anzahl als Punkte am Rand (wie viele Spirlings noch kommen) (TeamRow: Feld-Marke unterstrichen, TeamRow.bench, keine runden Marken)

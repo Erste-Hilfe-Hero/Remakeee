@@ -120,10 +120,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed(GameState.AUTO_ACTION) and _auto_button.visible:
 		get_viewport().set_input_as_handled()
 		_auto_button.button_pressed = not _auto_button.button_pressed
-	elif event.is_action_pressed(GameState.MENU_ACTION) and BattleComfort.may_pause(model.is_finished(), _paused or _picker.visible or _bond_game.visible):
-		# Start / Escape pauses the battle (KAMPF_PLAN item 24): the pause list with the settings.
-		get_viewport().set_input_as_handled()
-		_more_menu(BattleComfort.PAUSE_TITLE)
 
 func _enter_tree() -> void:
 	Juice.in_battle = true
@@ -661,6 +657,10 @@ func _build_pause() -> void:
 	_pause.changed.connect(func(on: bool) -> void:
 		_away = on
 		_apply_speed())
+	# Settings from the pause (KAMPF_PLAN item 24): the pause list; the battle keeps waiting.
+	_pause.settings_wanted.connect(func() -> void:
+		if BattleComfort.may_pause(model.is_finished(), _paused or _picker.visible or _bond_game.visible):
+			_more_menu(BattleComfort.PAUSE_TITLE))
 
 ## Applies the 1x / 2x / 4x battle speed (and auto-advance while fast or on Auto).
 func _apply_speed() -> void:

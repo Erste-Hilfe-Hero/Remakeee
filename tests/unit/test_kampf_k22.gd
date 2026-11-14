@@ -118,9 +118,17 @@ func test_pause_halts_auto_and_only_opens_mid_battle() -> void:
 	assert_false(BattleComfort.may_pause(true, false), "battle over")
 	assert_false(BattleComfort.may_pause(false, true), "another list is open")
 
-func test_start_or_escape_opens_the_pause_in_battle() -> void:
+func test_the_battle_pause_offers_the_settings() -> void:
+	var p := BattlePause.new()
+	add_child_autofree(p)
+	var b: Button = p.find_child("settings_button", true, false)
+	assert_not_null(b, "the pause panel has a Settings button")
+	watch_signals(p)
+	p.open()
+	b.pressed.emit()
+	assert_signal_emitted(p, "settings_wanted")
+	assert_false(p.is_paused(), "the freeze lifts, the pause list takes over")
 	var src: String = FileAccess.get_file_as_string("res://scripts/battle/presenter/BattleScene.gd")
-	assert_string_contains(src, "event.is_action_pressed(GameState.MENU_ACTION)")
 	assert_string_contains(src, "_more_menu(BattleComfort.PAUSE_TITLE)")
 	assert_string_contains(src, "while _paused and is_inside_tree():")
 
