@@ -11,7 +11,9 @@ const PATH: String = "res://data/puzzles.json"
 ##   win_within N     win within N turns        no_faint          no own Spirling drops
 ##   exact_rests N    rest exactly N times      keep_status S     status S is never cured
 ##   use_reaction E   set off a reaction of element E           last_hit_with A   the last own art is A
-const GOALS: Array[String] = ["win_within", "no_faint", "exact_rests", "keep_status", "use_reaction", "last_hit_with"]
+##   bond_ready F     the foe still stands at or below share F of its Vigor (no win needed)
+##   foe_status       the foe carries a status at the end (lessons, items 559 and 812)
+const GOALS: Array[String] = ["win_within", "no_faint", "exact_rests", "keep_status", "use_reaction", "last_hit_with", "bond_ready", "foe_status"]
 const MAX_GOALS: int = 2
 
 ## The goals of [param p] as a list (a single goal dict counts as one).
@@ -35,6 +37,40 @@ static func all() -> Array:
 		if raw is Array:
 			_cache = raw
 	return _cache
+
+## Lesson battles (KAMPF_PLAN_1000 items 559, 812): the same fixed positions as the Trials, kept in
+## data/lessons.json and taught by a beaten Wayfarer whose map entry names its "lessons" group.
+const LESSONS_PATH: String = "res://data/lessons.json"
+static var _lessons: Dictionary = {}
+
+static func lesson_data() -> Dictionary:
+	if _lessons.is_empty():
+		var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(LESSONS_PATH)) if FileAccess.file_exists(LESSONS_PATH) else null
+		if raw is Dictionary:
+			_lessons = raw
+	return _lessons
+
+static func lessons() -> Array:
+	return lesson_data().get("lessons", [])
+
+## The lessons of teacher group [param teacher], in file order.
+static func for_teacher(teacher: String) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for p: Dictionary in lessons():
+		if str(p.get("teacher", "")) == teacher:
+			out.append(p)
+	return out
+
+## The menu title of a teacher group (English, translate with Loc.t).
+static func teacher_title(teacher: String) -> String:
+	return str(((lesson_data().get("teachers", {}) as Dictionary).get(teacher, {}) as Dictionary).get("title", "Lessons"))
+
+## False for a bond lesson: the foe must be left standing, so no win is asked for.
+static func needs_win(p: Dictionary) -> bool:
+	for g: Dictionary in goals(p):
+		if str(g.get("type", "")) == "bond_ready":
+			return false
+	return true
 
 static func by_id(id: String) -> Dictionary:
 	for p: Dictionary in all():
@@ -169,7 +205,9 @@ static func is_over(p: Dictionary, at: Attempt) -> bool:
 
 ## True once the attempt meets the goal of [param p].
 static func solved(p: Dictionary, at: Attempt) -> bool:
-	if at.model.outcome != BattleModel.Outcome.WIN:
+	if needs_win(p) and at.model.outcome != BattleModel.Outcome.WIN:
+		return false
+	if not needs_win(p) and at.model.outcome != BattleModel.Outcome.NONE:
 		return false
 	for goal: Dictionary in goals(p):
 		if not goal_met(p, goal, at):
@@ -196,6 +234,11 @@ static func goal_met(p: Dictionary, goal: Dictionary, at: Attempt) -> bool:
 			return int(at.reactions.get(int(Elements.E.get(str(v), -1)), 0)) > 0
 		"last_hit_with":
 			return at.last_move == str(v)
+		"bond_ready":
+			var foe: Spirling = at.model.party(BattleModel.Side.FOE)[0]
+			return not foe.is_fainted() and foe.hp_fraction() <= float(v)
+		"foe_status":
+			return not at.model.party(BattleModel.Side.FOE)[0].status.is_empty()
 	return false
 
 ## Lantern rating of an attempt (item 706): 0 lost, 1 won, 2 goal met, 3 goal met in the fewest
@@ -203,6 +246,8 @@ static func goal_met(p: Dictionary, goal: Dictionary, at: Attempt) -> bool:
 const MAX_LANTERNS: int = 3
 
 static func lanterns(p: Dictionary, at: Attempt) -> int:
+	if not needs_win(p):
+		return MAX_LANTERNS if solved(p, at) else 0
 	if at.model.outcome != BattleModel.Outcome.WIN:
 		return 0
 	if not solved(p, at):
@@ -292,6 +337,10 @@ static func goal_text(p: Dictionary) -> String:
 				parts.append(Loc.t("Set off a %s reaction.") % Loc.t(str(v).capitalize()))
 			"last_hit_with":
 				parts.append(Loc.t("Land the last blow with %s.") % Loc.t(str(v)))
+			"bond_ready":
+				parts.append(Loc.t("Leave the foe standing below %d%% of its Vigor.") % roundi(float(v) * 100.0))
+			"foe_status":
+				parts.append(Loc.t("Leave the foe with a status."))
 		var need: String = str(goal.get("reaction", ""))
 		if not need.is_empty():
 			parts.append(Loc.t("Set off a %s reaction.") % Loc.t(need.capitalize()))

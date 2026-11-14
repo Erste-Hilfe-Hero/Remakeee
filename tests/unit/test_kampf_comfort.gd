@@ -128,7 +128,7 @@ func test_favourite_art_and_order() -> void:
 	assert_eq(BattleComfort.favourite_row(s), -1)
 	assert_true(BattleComfort.toggle_favourite(s, 1))
 	assert_eq(BattleComfort.favourite_row(s), 1)
-	assert_true(str(BattleComfort.art_rows(s)[1].text).begins_with("* "))
+	assert_true(str(BattleComfort.art_rows(s)[1].text).begins_with(BattleComfort.FAV_MARK + " "))
 	assert_eq(BattleComfort.first_row(-1, s), 1, "no art used yet: the favourite")
 	assert_eq(BattleComfort.first_row(0, s), 0, "the last art wins")
 	assert_true(BattleComfort.move_art(s, 1, 0))
