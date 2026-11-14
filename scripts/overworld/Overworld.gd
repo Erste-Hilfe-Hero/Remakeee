@@ -884,6 +884,13 @@ func _on_interact(cell: Vector2i) -> void:
 	var landmark: Array[String] = Landmarks.lines_at(map.id, cell)
 	if not landmark.is_empty():
 		await _locked_say(landmark)
+		# KAMPF_PLAN_1000 item 117: an element seal under the landmark.
+		if not ElementSeals.seal_for(map.id).is_empty() and not GameState.has_flag(ElementSeals.flag(map.id)):
+			busy = true
+			player.frozen = true
+			await ElementSeals.run(_ui, map.id)
+			player.frozen = false
+			busy = false
 		return
 	# Talk across counters.
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
@@ -4169,6 +4176,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.level_cap = GameState.level_cap()
 	model.bench_share = GameState.bench_share()
 	model.trainer_name = str(trainer.get("name", ""))
+	model.foe_theme_line = str(trainer.get("theme_line", ""))
 	var tune: Variant = trainer.get("profile_tune", {})
 	model.ai.set_profile(str(trainer.get("profile", "")), tune if tune is Dictionary else {})
 	if not wild:
