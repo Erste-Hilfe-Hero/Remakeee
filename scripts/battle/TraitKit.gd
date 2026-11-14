@@ -19,6 +19,7 @@ extends RefCounted
 ##   drowse_heal_div: heals max Vigor / div each turn while Drowsed
 ##   no_recoil: no recoil from its own arts
 ##   free_swap: stepping back costs no Energy and no condition blocks it (also a keepsake key)
+##   steady_aim: fog (sight) and conditions that blur aim (Daze, Muddle) never lower its accuracy
 ## Keepsake keys (items.json "held"): energy_cap, super_guard (once per battle), enter_stage,
 ## overcharge_bonus, bond_bonus, rest_energy, field_mult_in {"field", "mult"}.
 
@@ -85,6 +86,13 @@ static func bonus_options(s: Spirling) -> Array[String]:
 	for id: Variant in lists.get(key, lists.get("_any", [])):
 		if traits().has(str(id)):
 			out.append(str(id))
+	# Gear gifts (item 279): while the player carries the Storm Lantern, its gift is on offer too.
+	var gear: Dictionary = data().get("gear_traits", {})
+	for g: String in gear:
+		if GameState.has_gear(g):
+			for id: Variant in gear[g]:
+				if traits().has(str(id)) and not str(id) in out:
+					out.append(str(id))
 	return out
 
 ## Labels of the bonus gifts an unfolded Spirling of kind [param sd] can learn (item 275), for the
@@ -140,6 +148,10 @@ static func free_swap(s: Spirling) -> bool:
 
 static func no_recoil(s: Spirling) -> bool:
 	return has_key(s, "no_recoil")
+
+## Storm Lantern (item 279): fog and blurring conditions leave its aim alone.
+static func steady_aim(s: Spirling) -> bool:
+	return s != null and gift(s).has("steady_aim")
 
 ## Turns a Resonance field laid by [param s] holds (Lingering Echo, Lantern Glass; items 255, 290).
 static func field_turns(s: Spirling) -> int:
@@ -252,6 +264,16 @@ static func on_enter(model: BattleModel, side: int, slot: int) -> void:
 			for stat: String in team:
 				model.change_stage(side, stat, int(team[stat]), ally)
 
+## Before an art of [param me] rolls to hit: the Storm Lantern shows itself when fog or a blurring
+## condition would have spoilt its aim (item 279).
+static func on_aim(model: BattleModel, side: int, slot: int, me: Spirling, mv: MoveData) -> void:
+	if not steady_aim(me):
+		return
+	var fog: bool = model.is_wild and model.sight_mult < 1.0
+	var blur: bool = not mv.ignore_daze and StatusRules.acc_mult(me.status) < 1.0
+	if fog or blur:
+		show(model, side, slot, trait_with(me, "steady_aim"))
+
 ## A Spirling steps back to the bench: Quiet Heart (item 249) washes its condition away.
 static func on_leave(model: BattleModel, side: int, slot: int) -> void:
 	var s: Spirling = model.active_spirling(side, slot)
@@ -316,6 +338,68 @@ static func end_of_turn(model: BattleModel, side: int, slot: int) -> void:
 	if div > 0 and s.hp < s.max_hp():
 		show(model, side, slot, trait_with(s, "drowse_heal_div"))
 		model.heal(side, maxi(1, s.max_hp() / div), slot)
+
+# --- What the other side knows (items 241, 261, 263) ----------------------------------------------
+
+## Meta key the battle screen keeps the gifts it has shown on a Spirling under (presenter only).
+const SEEN_META: String = "gifts_seen"
+
+## Gift ids of [param s] that showed themselves in this battle: its own gift once it worked
+## (BattleModel.reveal_trait) and the kit gifts TraitKit.show announced.
+static func known_ids(model: BattleModel, s: Spirling) -> Array[String]:
+	var out: Array[String] = []
+	if s == null:
+		return out
+	if s.has_meta("trait_shown"):
+		out.append(s.gift_id())
+	var shown: Dictionary = model.kit.get("shown", {})
+	for id: String in extra_ids(s):
+		if shown.has("%d:%s" % [s.get_instance_id(), id]):
+			out.append(id)
+	return out
+
+## True when [param s] is immune to [param status] and the other side already saw one of its
+## gifts work (item 261): the AI plays fair and does not read hidden gifts.
+static func known_immune(model: BattleModel, s: Spirling, status: String) -> bool:
+	return BattleRules.is_immune(s, status) and not known_ids(model, s).is_empty()
+
+## The battle screen showed gift [param id] of [param s]: its plate keeps the mark from now on.
+static func mark_seen(s: Spirling, id: String) -> void:
+	if s == null or id.is_empty():
+		return
+	var seen: Array = s.get_meta(SEEN_META, [])
+	if not id in seen:
+		seen.append(id)
+	s.set_meta(SEEN_META, seen)
+
+## Gift ids the battle screen has shown on [param s] in this battle.
+static func seen_ids(s: Spirling) -> Array[String]:
+	var out: Array[String] = []
+	if s != null:
+		for id: Variant in s.get_meta(SEEN_META, []):
+			out.append(str(id))
+	return out
+
+static func forget_seen(s: Spirling) -> void:
+	if s != null and s.has_meta(SEEN_META):
+		s.remove_meta(SEEN_META)
+
+## Name of the small mark gift [param id] takes beside the name (item 263): data "gift_icons".
+static func icon_of(id: String) -> String:
+	var cfg: Dictionary = data().get("gift_icons", {})
+	var t: Dictionary = BattleRules.trait_info(id)
+	var icons: Dictionary = cfg.get("icons", {})
+	for icon: Variant in cfg.get("order", []):
+		for k: Variant in (icons.get(str(icon), {}) as Dictionary).get("keys", []):
+			if t.has(str(k)):
+				return str(icon)
+	return "default"
+
+## Pixel rows ("#" = ink) of the mark [param icon], 5 x 5.
+static func icon_rows(icon: String) -> Array:
+	var cfg: Dictionary = data().get("gift_icons", {})
+	var d: Dictionary = cfg.get("icons", {}).get(icon, cfg.get("default", {}))
+	return d.get("rows", [])
 
 # --- Rules and texts ------------------------------------------------------------------------
 
