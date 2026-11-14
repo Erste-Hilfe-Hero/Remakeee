@@ -1,0 +1,10 @@
+{
+ "_comment": "Traditional Chinese texts for the German table kampf_k30. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "Acting order %s": "行動順序 %s",
+  "Auto aim: %s": "自動瞄準：%s",
+  "Fight two on two, with another friend's echo beside you?": "要和另一位好友的回聲並肩，進行二對二對戰嗎？",
+  "That field cannot be picked.": "無法選擇這個場地。",
+  "foe %s": "敵方%s"
+ }
+}
