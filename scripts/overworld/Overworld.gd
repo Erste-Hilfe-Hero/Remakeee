@@ -4252,6 +4252,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	last_model = model
 	model.inventory = GameState.inventory
 	model.items_allowed = GameState.items_allowed_in_battle()
+	# Keepsakes go on in battle only with the real team (KAMPF_PLAN_1000 298).
+	model.held_swap = mine == GameState.party
 	model.level_cap = GameState.level_cap()
 	model.bench_share = GameState.bench_share()
 	model.trainer_name = str(trainer.get("name", ""))

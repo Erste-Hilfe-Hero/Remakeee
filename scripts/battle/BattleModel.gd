@@ -103,6 +103,9 @@ var turn: int = 0
 ## ends as FLED: nobody won, the damage dealt so far counts.
 var round_limit: int = 0
 var items_allowed: bool = true
+## The player may put a keepsake from the bag on in battle (KeepsakeKit, KAMPF_PLAN_1000 298).
+## Only the overworld turns it on, and only when the real team fights (never with echo copies).
+var held_swap: bool = false
 var level_cap: int = Spirling.LEVEL_SANITY
 ## Player bag, item id -> count. Shared by reference with GameState so use is persisted.
 var inventory: Dictionary = {}
@@ -413,6 +416,8 @@ func is_legal(a: BattleAction) -> bool:
 			return (not StatusRules.blocks_swap(me.status) or TraitKit.free_swap(me)) and a.swap_index in swap_candidates(a.side, a.slot) \
 				and not (swap_locked and a.side == Side.PLAYER)
 		BattleAction.Kind.ITEM:
+			if KeepsakeKit.is_swap(a):
+				return KeepsakeKit.swap_legal(self, a)
 			if not _items_allowed_for(a.side, a.slot) or bag_count(a.side, a.item_id) <= 0 or not _is_battle_item(a.item_id):
 				return false
 			if a.side == Side.PLAYER and a.item_id in blocked_items:
@@ -725,6 +730,7 @@ func eat_pith(side: int, slot: int = 0) -> bool:
 		return false
 	var d: Dictionary = _who(side, slot)
 	d["item_name"] = str(Database.item(s.held).get("name", s.held))
+	d["item"] = s.held
 	s.held = ""
 	emit_event(BattleEvent.Type.HELD_FRUIT, d)
 	if heals:
@@ -1671,6 +1677,10 @@ func _do_swap(a: BattleAction) -> void:
 		change_energy(a.side, -int(rules.swap_energy_cost), a.slot)
 
 func _do_item(a: BattleAction) -> void:
+	if KeepsakeKit.is_swap(a):
+		if KeepsakeKit.swap_legal(self, a):
+			KeepsakeKit.do_swap(self, a)
+		return
 	if bag_count(a.side, a.item_id) <= 0 or not _items_allowed_for(a.side):
 		return
 	var target: Spirling = parties[a.side][a.item_target]

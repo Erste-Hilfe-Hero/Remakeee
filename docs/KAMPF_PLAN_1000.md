@@ -334,7 +334,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Gehaltene Gegenstände
 
-281. [ ] Gehaltene Gegenstände (bestehend) im Info-Streifen als Symbol
+281. [x] Gehaltene Gegenstände (bestehend) im Info-Streifen als Symbol (InfoStrip zeigt das Andenken-Symbol, beim Gegner erst nachdem es gewirkt hat; KeepsakeKit.strip_item, Vorleser: 'holds ...')
 282. [x] Element-Verstärker pro Element (bestehend: Prismen und Charms pro Element)
 283. [x] Energie-Kristall (+2 Start-Energie) ('Deep Crystal': +2 Energie-Maximum und Start)
 284. [x] Schutz-Talisman (einmal sehr effektiven Treffer halbieren) ('Ward Talisman')
@@ -351,16 +351,16 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 295. [x] Gegenstand-Info im Lexikon (Andenkenbuch im Rekorde-Menü (TraitKit.all_keepsake_lines))
 296. [x] Gegenstand-Verbrauch in Kampfende-Bericht (BattleReport.item_line: 'Items used: Max Tonic x2', Taschen-Gegenstände und gegessene Früchte deiner Seite)
 297. [x] Gegenstand nach dem Kampf automatisch wieder ausrüsten (Option) (Einstellung 'Refill fruit', TraitKit.refill_held: eine gegessene Frucht kommt aus der Tasche wieder an denselben Spirling)
-298. [ ] Gegenstand-Tausch im Kampf (kostet den Zug)
+298. [x] Gegenstand-Tausch im Kampf (kostet den Zug) (Item-Menü bietet Andenken aus der Tasche an, KeepsakeKit.do_swap: das alte geht in die Tasche, nur mit dem echten Team, nie in Echo-Duellen)
 299. [x] Gegenstand-Klau-Technik bewusst nicht einführen (Frust) (bewusst kein Klau-Effekt)
 300. [x] Gegenstand-Shop im Endgame (Marlas Stand (endgame.json exchange, Stufe full))
 301. [x] Gegenstand als Belohnung im Turm (oberste Turmetage gibt ein Andenken (TraitKit.tower_reward))
 302. [x] Gegenstand-Seltenheit sichtbar (Seltenheit im Andenken-Hinweis (items.json rarity))
 303. [x] Gegenstand-Balance im Simulator (gab es schon: BalanceSim.run_keepsakes, balance_sim --mode keepsakes, prüft jeden haltbaren Gegenstand, die kit_*-Andenken eingeschlossen; Test test_balance_sim_covers_every_keepsake)
-304. [ ] Gegenstand-Icons eigenständig (Asset-Log)
+304. [x] Gegenstand-Icons eigenständig (Asset-Log) (KeepsakeIcons: 22 eigene 7x7-Formen in data/keepsake_kit.json, jedes Andenken mit Form und Farbe, Ära I in Tinte; Eintrag in docs/ASSET_LOG.md)
 305. [x] Gegenstand-Namen eigenständig prüfen (Test: keine Namensdopplung)
 306. [x] Gehaltene Gegenstände in Online-Duellen gleich (gleiches Modell und Spielstand)
-307. [ ] Gegenstand-Sets pro Spirling speichern
+307. [x] Gegenstand-Sets pro Spirling speichern (3 Sets pro Spirling im Spielstand, Andenken-Menü: speichern, anlegen, ganzes Team; KeepsakeKit.wear_team_set)
 308. [x] Gegenstand 'Echo-Muschel': Bond-Chance +5 % beim Halter ('Calling Conch')
 309. [x] Gegenstand 'Ruhekerze': +1 Energie beim Rasten ('Quiet Wick')
 310. [x] Gegenstand 'Glutstein' für Ember-Felder ('Cinder Stone')
@@ -371,8 +371,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 315. [x] Gegenstand-Limit: jeder Gegenstand nur einmal pro Team in Turnieren (TraitKit.apply_duel_rules: ein doppeltes Andenken bleibt nur beim ersten Spirling, in Echo-Duellen)
 316. [x] Gegenstand-Fund in versteckten Orten (bestehend) (bestehend: Spark Coil im Versteck von Murk Hollow)
 317. [x] Gegenstand-Tests pro Gegenstand (tests/unit/test_trait_kit.gd)
-318. [ ] Gegenstand-Animation beim Auslösen
-319. [ ] Gegenstand-Sound beim Auslösen
+318. [x] Gegenstand-Animation beim Auslösen (KeepsakePop: Symbol wächst und steigt über dem Träger, bei reduzierter Bewegung nur Einblenden)
+319. [x] Gegenstand-Sound beim Auslösen (eigener Klang keepsake_stir aus tools/audio/sfx.py, je Auslösung andere Tonhöhe: Schutz tiefer, Haltestein am tiefsten, Frucht heller)
 320. [x] Gegenstand-Texte übersetzt (tools/i18n/de_kampf_traits.py)
 
 ## Rift-Felder und Umgebung
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-926 von 1000 Punkten umgesetzt.
+932 von 1000 Punkten umgesetzt.
 
