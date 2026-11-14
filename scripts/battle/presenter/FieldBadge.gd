@@ -66,9 +66,11 @@ func _fit() -> void:
 	if compact:
 		_label.text = str(turns) if turns > 0 else ""
 		w = ceilf(_label.get_minimum_size().x) + PAD * 2.0 + icon
-	size = Vector2(w, HEIGHT)
+	# Item 899: the tag grows with the font (Large text), so its letters are never cut off.
+	var h: float = maxf(HEIGHT, ceilf(_label.get_minimum_size().y) + 1.0)
+	size = Vector2(w, h)
 	_label.position = Vector2(PAD + icon, 0)
-	_label.size = Vector2(maxf(w - PAD * 2.0 - icon, 0.0), HEIGHT)
+	_label.size = Vector2(maxf(w - PAD * 2.0 - icon, 0.0), h)
 	queue_redraw()
 
 ## Follows one played battle event (FIELD, FIELD_END, FIELD_EXTENDED).
@@ -109,4 +111,4 @@ func _draw() -> void:
 	draw_rect(Rect2(Vector2.ZERO, size), bg)
 	draw_rect(Rect2(Vector2.ZERO, size), UITheme.INK, false, 1.0)
 	if element() >= 0:
-		draw_texture(ElementIcons.texture(element()), Vector2(PAD, floorf((HEIGHT - ElementIcons.SIZE) / 2.0)))
+		draw_texture(ElementIcons.texture(element()), Vector2(PAD, floorf((size.y - ElementIcons.SIZE) / 2.0)))

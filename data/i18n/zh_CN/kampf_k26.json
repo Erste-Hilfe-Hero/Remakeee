@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_k26, written by tools/i18n/locales_kampf_k26.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s sent you matchup notes.": "%s给你寄来了克制笔记。",
+  "%s's notes: %d matchups you did not know yet. The move list shows them now.": "%s的笔记：%d条你还不知道的克制关系。招式列表现在会显示它们。",
+  "%s's notes: nothing you did not know already. Flattering, in a way.": "%s的笔记：全是你已经知道的。某种意义上算是恭维。",
+  "A seal is cut into the base: %s. Which element breaks it?": "基座上刻着一道封印：%s。哪种元素能破开它？",
+  "Rift theme: %s": "裂隙主题：%s",
+  "Send %d matchup notes to %s? You both get %d friendship points.": "要把%d条克制笔记寄给%s吗？你们都会获得%d点友情值。",
+  "Share matchup notes": "分享克制笔记",
+  "The seal cracks. Someone hid %s behind it and never came back for it.": "封印裂开了。有人把%s藏在后面，再也没回来取。",
+  "The seal hums, smug and whole. It has met your kind before.": "封印嗡嗡作响，完好无损，一脸得意。它早见过你这种人。",
+  "Those notes are smudged. Try again after your next battle.": "这些笔记糊掉了。下次战斗后再试试。",
+  "You already sent notes to this friend today. Tomorrow again!": "今天已经给这位好友寄过笔记了。明天再来！",
+  "Your notes are empty. Land a few hits first, then share what you learned.": "你的笔记还是空的。先打中几次，再分享你学到的。",
+  "Your notes are on their way to %s. Knowledge shared is knowledge you can't sell. Oh well.": "你的笔记正寄往%s。分享出去的知识就卖不掉了。算了。"
+ }
+}

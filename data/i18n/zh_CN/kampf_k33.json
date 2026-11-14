@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table kampf_k33, written by tools/i18n/locales_kampf_k33.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s picks %s (%d) over %s (%d).": "%s选择了%s（%d），而不是%s（%d）。",
+  "%s picks %s (%d): nothing else is in reach.": "%s选择了%s（%d）：别无他法。",
+  "%s picks %s at random, as wild ones do.": "%s像野生的那样，随便选了%s。",
+  "%s rests: nothing it can pay is worth it now.": "%s休息了：现在付得起的招式都不值得。",
+  "%s swaps to %s: it doesn't like its odds.": "%s换成了%s：它不喜欢眼下的胜算。",
+  "%s uses %s: it is running low.": "%s使用了%s：它快撑不住了。",
+  "%s, won in %d turns": "%s，%d回合获胜",
+  "Banked Embers": "带利息的余烬",
+  "Beat the Ashen Heart. The smiths still want their cut.": "击败灰烬之心。铁匠们照样要分一杯羹。",
+  "Beat the Drowned Heart. Nobody reads the passenger list twice.": "击败溺亡之心。没人会把乘客名单读第二遍。",
+  "Beat the Mist Heart. What it hid is everyone's problem now.": "击败迷雾之心。它藏起的东西，如今成了所有人的麻烦。",
+  "Boss replays": "首领回放",
+  "Clear Weather": "天朗气清",
+  "Crier: An echo of the %s has crashed the festival in the shape of a %s. Nobody invited it. Will you see it out?": "传令人：%s的回响化作%s的模样闯进了节日。没人邀请它。你能把它请出去吗？",
+  "Crier: Something from the Rifts keeps trying to get in. Seal a Rift heart first, then we'll talk.": "传令人：裂隙里有东西一直想闯进来。先去封印一颗裂隙之心，我们再谈。",
+  "Crier: You saw the echo out already. It sulks somewhere behind the stands until next year.": "传令人：那个回响你已经请出去了。它会躲在摊位后面生闷气，直到明年。",
+  "It lies open and stops building up.": "它露出破绽，不再积蓄力量。",
+  "It wants that field gone, so it can wake.": "它想除掉那片场地，好让自己苏醒。",
+  "Kept in your boss replays (Records).": "已保存到首领回放（纪录）。",
+  "Last Passenger": "最后一名乘客",
+  "Last phase: it holds nothing back.": "最终阶段：它不再有任何保留。",
+  "The echo comes apart like old bunting. The crowd claps as if it had helped.": "回响像旧彩旗一样散了架。人群鼓起掌来，好像他们也出了力。",
+  "The echo keeps dancing. The crowd decides it is part of the show.": "回响还在跳舞。人群认定这是表演的一部分。"
+ }
+}

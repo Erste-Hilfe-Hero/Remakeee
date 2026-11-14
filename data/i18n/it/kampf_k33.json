@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table kampf_k33, written by tools/i18n/locales_kampf_k33.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s picks %s (%d) over %s (%d).": "%s sceglie %s (%d) invece di %s (%d).",
+  "%s picks %s (%d): nothing else is in reach.": "%s sceglie %s (%d): nient'altro è alla sua portata.",
+  "%s picks %s at random, as wild ones do.": "%s sceglie %s a caso, come fanno i selvatici.",
+  "%s rests: nothing it can pay is worth it now.": "%s riposa: niente di ciò che può pagare ne vale la pena.",
+  "%s swaps to %s: it doesn't like its odds.": "%s passa il turno a %s: le sue probabilità non gli piacciono.",
+  "%s uses %s: it is running low.": "%s usa %s: è allo stremo.",
+  "%s, won in %d turns": "%s, vinto in %d turni",
+  "Banked Embers": "Braci a interesse",
+  "Beat the Ashen Heart. The smiths still want their cut.": "Sconfiggi il Cuore di Cenere. I fabbri vogliono comunque la loro parte.",
+  "Beat the Drowned Heart. Nobody reads the passenger list twice.": "Sconfiggi il Cuore Annegato. Nessuno legge due volte la lista dei passeggeri.",
+  "Beat the Mist Heart. What it hid is everyone's problem now.": "Sconfiggi il Cuore di Nebbia. Ciò che nascondeva ora è un problema di tutti.",
+  "Boss replays": "Replay dei boss",
+  "Clear Weather": "Cielo sereno",
+  "Crier: An echo of the %s has crashed the festival in the shape of a %s. Nobody invited it. Will you see it out?": "Banditore: Un'eco del %s si è imbucata alla festa con l'aspetto di un %s. Nessuno l'ha invitata. La accompagni fuori?",
+  "Crier: Something from the Rifts keeps trying to get in. Seal a Rift heart first, then we'll talk.": "Banditore: Qualcosa dalle Fenditure continua a cercare di entrare. Sigilla prima un cuore di Fenditura, poi ne parliamo.",
+  "Crier: You saw the echo out already. It sulks somewhere behind the stands until next year.": "Banditore: L'eco l'hai già accompagnata fuori. Tiene il broncio dietro le bancarelle fino all'anno prossimo.",
+  "It lies open and stops building up.": "È scoperto e smette di potenziarsi.",
+  "It wants that field gone, so it can wake.": "Vuole liberarsi di quel campo per potersi risvegliare.",
+  "Kept in your boss replays (Records).": "Salvato nei tuoi replay dei boss (Record).",
+  "Last Passenger": "Ultimo passeggero",
+  "Last phase: it holds nothing back.": "Ultima fase: non si trattiene più.",
+  "The echo comes apart like old bunting. The crowd claps as if it had helped.": "L'eco si sfalda come vecchi festoni. La folla applaude come se avesse aiutato.",
+  "The echo keeps dancing. The crowd decides it is part of the show.": "L'eco continua a ballare. La folla decide che fa parte dello spettacolo."
+ }
+}
