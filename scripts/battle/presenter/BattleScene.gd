@@ -45,6 +45,9 @@ var demo: String = ""
 var inputs: Array = []
 ## Set to a recorded input list to watch a replay instead of playing.
 var replay_inputs: Array = []
+## With replay_inputs: a battle picked up after a restart (KAMPF_PLAN_1000 item 31). The recorded
+## turns play again, then the player goes on choosing.
+var resume: bool = false
 var _replaying: bool = false
 
 var _field: Control
@@ -108,7 +111,10 @@ const PINCH_RATIO: float = 0.25
 func _unhandled_input(event: InputEvent) -> void:
 	if _ff_button == null:
 		return
-	if event.is_action_pressed(GameState.SPEED_ACTION) and _ff_button.visible:
+	if _pause != null and not _pause.is_paused() and BattleCalm.pause_toggle(event, false):
+		get_viewport().set_input_as_handled()
+		_pause.open()
+	elif event.is_action_pressed(GameState.SPEED_ACTION) and _ff_button.visible:
 		get_viewport().set_input_as_handled()
 		_ff_button.pressed.emit()
 	elif event.is_action_pressed(GameState.AUTO_ACTION) and _auto_button.visible:
@@ -126,6 +132,7 @@ func _ready() -> void:
 	theme = EraBattleHud.theme(EraManager.active_era())
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_build()
+	_build_pause()
 	if model == null:
 		model = _demo_model()
 		quit_on_finish = false
@@ -264,6 +271,12 @@ func _build() -> void:
 	_log_button.focus_mode = Control.FOCUS_NONE
 	_log_button.pressed.connect(_toggle_log)
 	_field.add_child(_log_button)
+	# Pause at any moment (item 912); "II" needs no translation and fits every era's column.
+	_pause_button = Button.new()
+	_pause_button.text = "II"
+	_pause_button.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	_pause_button.focus_mode = Control.FOCUS_NONE
+	_field.add_child(_pause_button)
 	_pin = TargetPin.new()
 	_field.add_child(_pin)
 	_back_button = Button.new()
@@ -394,7 +407,9 @@ func _layout_field() -> void:
 	_auto_button.size = Vector2(26, 12)
 	_log_button.position = Vector2(MARGIN, MARGIN + 28)
 	_log_button.size = Vector2(26, 12)
-	_goal_label.position = Vector2(MARGIN, MARGIN + 42)
+	_pause_button.position = Vector2(MARGIN, MARGIN + 42)
+	_pause_button.size = Vector2(26, 12)
+	_goal_label.position = Vector2(MARGIN, MARGIN + 56)
 	_foe_sprite.position = Vector2(MARGIN * 2 + 28, MARGIN + STRIP_HEIGHT - 6)
 	_foe_sprite.size = Vector2(sprite, sprite)
 	_foe_sprite.mirrored = true
@@ -460,7 +475,9 @@ func _layout_formation() -> void:
 	_auto_button.size = Vector2(26, 12)
 	_log_button.position = Vector2(w - 26 - MARGIN, MARGIN + 28)
 	_log_button.size = Vector2(26, 12)
-	_goal_label.position = Vector2(w - 26 - MARGIN, MARGIN + 42)
+	_pause_button.position = Vector2(w - 26 - MARGIN, MARGIN + 42)
+	_pause_button.size = Vector2(26, 12)
+	_goal_label.position = Vector2(w - 26 - MARGIN, MARGIN + 56)
 	_back_button.position = Vector2(MARGIN, MARGIN + STRIP_HEIGHT + 10)
 	_back_button.size = Vector2(26, 12)
 	var rects: Array[Rect2] = [Rect2(), Rect2()]
@@ -616,11 +633,25 @@ func _notification(what: int) -> void:
 	_away = step > 0
 	_apply_speed()
 
+var _pause_button: Button
+var _pause: BattlePause
+
+## The pause panel over everything (item 912): while it shows, Auto and the text wait like when
+## the app is in the background (item 629), and the whole battle stands still.
+func _build_pause() -> void:
+	_pause = BattlePause.new()
+	add_child(_pause)
+	_pause_button.pressed.connect(_pause.open)
+	_pause.changed.connect(func(on: bool) -> void:
+		_away = on
+		_apply_speed())
+
 ## Applies the 1x / 2x / 4x battle speed (and auto-advance while fast or on Auto).
 func _apply_speed() -> void:
 	var speed: float = GameState.battle_speed_scale()
 	_ff_button.text = "%dx" % int(speed)
-	_text.auto_advance = (speed > 1.0 or _auto_active()) and not _away
+	# "No rush" (item 632) keeps the text waiting at 2x/4x; a picked-up battle's old turns run on.
+	_text.auto_advance = BattleCalm.text_auto(speed, _auto_active() or (resume and _replaying), _away)
 	_text.chars_per_second = GameState.text_cps() * speed
 	for n: Variant in [_foe_sprite, _player_sprite, _foe_strip, _player_strip]:
 		n.speed_scale = speed
@@ -662,10 +693,16 @@ func _run() -> void:
 		for line: String in Tips.take(id):
 			await _text.show_text(line)
 	_replaying = not replay_inputs.is_empty()
+	if resume:
+		_apply_speed()
 	while not model.is_finished() and not BattlePuzzle.out_of_turns(model):
 		if _replaying:
 			if replay_inputs.is_empty():
-				break
+				if not resume:
+					break
+				_replaying = false
+				_apply_speed()
+				continue
 			var rec: Dictionary = replay_inputs.pop_front()
 			await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
 			if str(rec.get("t", "")) == "switch":
@@ -951,7 +988,7 @@ func _bond(slot: int = 0) -> BattleAction:
 	if aim == -2:
 		return null
 	var target_slot: int = maxi(aim, 0)
-	var mine: bool = GameState.bond_style == "mine"
+	var mine: bool = BattleCalm.bond_style() == "mine"
 	var reach: String = "Reach out to %s... Tap Mine! fast!" if mine else "Reach out to %s... Listen, then echo its call!"
 	await _text.show_text(reach % model.active_spirling(BattleModel.Side.FOE, target_slot).display_name())
 	_bond_game.target = _sprite(BattleModel.Side.FOE, target_slot).texture()
@@ -964,7 +1001,7 @@ func _bond(slot: int = 0) -> BattleAction:
 		var state: String = BondEcho.rift_state(GameState.current_map, GameState.rifts_sealed)
 		_bond_plans[key] = BondEcho.make_plan(rng, foe.data, state)
 	var score: float = 0.0
-	_bond_game.calm = GameState.bond_style == "calm"
+	_bond_game.calm = BattleCalm.bond_style() == "calm"
 	if mine:
 		score = await _bond_game.run_mine(_bond_plans[key])
 	else:

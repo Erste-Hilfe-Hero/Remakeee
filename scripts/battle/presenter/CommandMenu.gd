@@ -44,6 +44,8 @@ var prefer_row: int = -1
 var undo_ok: bool = false
 
 func request_undo() -> void:
+	if not ready_for_input():
+		return
 	Sound.sfx("cancel")
 	chosen.emit(BattleAction.Kind.RUN, BattleComfort.UNDO)
 
@@ -115,6 +117,8 @@ func _ready() -> void:
 				_long_fired = false
 				return
 			_hold.stop()
+			if not ready_for_input():
+				return
 			var el: int = _shown_moves[idx].element if idx < _shown_moves.size() else -1
 			Sound.sfx("confirm", 0.0, Sound.art_pick_pitch(el))
 			chosen.emit(BattleAction.Kind.MOVE, idx))
@@ -185,6 +189,8 @@ func _ready() -> void:
 		_shortcut.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		Juice.press_feedback(_shortcut)
 		_shortcut.pressed.connect(func() -> void:
+			if not ready_for_input():
+				return
 			Sound.sfx("confirm")
 			chosen.emit(BattleAction.Kind.ITEM, SHORTCUT))
 		if _column != null:
@@ -528,6 +534,8 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 		b.draw.connect(_draw_row.bind(b, -1))
 	Juice.press_feedback(b)
 	b.pressed.connect(func() -> void:
+		if not ready_for_input():
+			return
 		Sound.sfx("confirm")
 		chosen.emit(kind, -1))
 	_stripe(b)
@@ -810,8 +818,17 @@ func _fill_row(b: Button, element: int) -> void:
 	sb.border_width_bottom = 2
 	b.add_theme_stylebox_override("normal", sb)
 
+## When the menu last opened for an order (the tap guard of KAMPF_PLAN_1000 item 908).
+var _shown_ms: int = -100000
+
+## False while the player's tap guard still runs after the menu opened.
+func ready_for_input() -> bool:
+	return BattleCalm.input_ready(_shown_ms, Time.get_ticks_msec())
+
 func set_enabled(on: bool) -> void:
 	var was: bool = _content.visible
+	if on:
+		_shown_ms = Time.get_ticks_msec()
 	_content.visible = on
 	if not on:
 		close_info()
