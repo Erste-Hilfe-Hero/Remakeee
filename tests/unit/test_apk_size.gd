@@ -20,7 +20,7 @@ func test_debug_apk_compresses_native_libraries() -> void:
 
 func test_android_presets_leave_out_dev_folders() -> void:
 	var all: Dictionary = _presets()
-	for name: String in ["Android", "Android APK (debug)"]:
+	for name: String in ["Android", "Android APK (debug)", "Android (itch)"]:
 		var p: Dictionary = all[name]
 		var cfg: ConfigFile = p.cfg
 		var filters: PackedStringArray = str(cfg.get_value(p.main, "exclude_filter", "")).split(",")

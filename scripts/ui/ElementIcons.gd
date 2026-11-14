@@ -23,13 +23,28 @@ const GLYPHS: Dictionary[int, Array] = {
 	Elements.E.ZENITH: ["...#...", "..###..", ".#.#.#.", "...#...", ".......", "#######", "......."],  # sun over the horizon
 }
 
+## High contrast draws the symbols in menus at this whole-pixel scale (KAMPF_PLAN_1000 item 108).
+const HC_SCALE: int = 2
+
 static var _cache: Dictionary[String, ImageTexture] = {}
 
-static func texture(element: int, color: Color = UITheme.INK) -> ImageTexture:
-	var key: String = "%d:%s" % [element, color.to_html()]
+## Pixel scale of the symbols in menus: HC_SCALE in high contrast, else 1.
+static func scale() -> int:
+	return HC_SCALE if UITheme.high_contrast else 1
+
+## Edge length of a menu symbol in pixels (SIZE times scale()).
+static func size() -> int:
+	return SIZE * scale()
+
+## The symbol of [param element]; [param px] > 1 doubles (triples...) every pixel.
+static func texture(element: int, color: Color = UITheme.INK, px: int = 1) -> ImageTexture:
+	px = maxi(1, px)
+	var key: String = "%d:%s:%d" % [element, color.to_html(), px]
 	if not _cache.has(key):
 		var img := Image.create(SIZE, SIZE, false, Image.FORMAT_RGBA8)
 		_paint(img, element, color, Vector2i.ZERO)
+		if px > 1:
+			img.resize(SIZE * px, SIZE * px, Image.INTERPOLATE_NEAREST)
 		_cache[key] = ImageTexture.create_from_image(img)
 	return _cache[key]
 
@@ -57,9 +72,9 @@ static func _paint(img: Image, element: int, color: Color, offset: Vector2i) -> 
 				img.set_pixel(x + offset.x, y + offset.y, color)
 
 ## Draws the icons for [param elements] left to right on [param canvas]; returns the width used.
-static func draw_row(canvas: CanvasItem, elements: Array[int], at: Vector2, color: Color = UITheme.INK) -> float:
+static func draw_row(canvas: CanvasItem, elements: Array[int], at: Vector2, color: Color = UITheme.INK, px: int = 1) -> float:
 	var x: float = at.x
 	for e: int in elements:
-		canvas.draw_texture(texture(e, color), Vector2(x, at.y))
-		x += SIZE + 1
+		canvas.draw_texture(texture(e, color, px), Vector2(x, at.y))
+		x += SIZE * maxi(1, px) + 1
 	return x - at.x

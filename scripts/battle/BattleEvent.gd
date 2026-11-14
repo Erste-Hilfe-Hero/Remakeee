@@ -39,8 +39,15 @@ func _init(t: Type = Type.BATTLE_START, d: Dictionary = {}) -> void:
 func type_name() -> String:
 	return Type.keys()[type]
 
+## Simple battle text (KAMPF_PLAN_1000 902): set from GameState.easy_battle_text.
+static var easy: bool = false
+
 ## Plain-text line for logs, tests and the text box.
 func describe() -> String:
+	if easy:
+		var plain: String = EasyText.line(self)
+		if not plain.is_empty():
+			return plain
 	var who: String = str(data.get("name", ""))
 	match type:
 		Type.BATTLE_START:
