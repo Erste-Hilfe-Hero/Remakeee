@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table kampf_k33, written by tools/i18n/locales_kampf_k33.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s picks %s (%d) over %s (%d).": "%s choisit %s (%d) plutôt que %s (%d).",
+  "%s picks %s (%d): nothing else is in reach.": "%s choisit %s (%d): rien d'autre n'est à sa portée.",
+  "%s picks %s at random, as wild ones do.": "%s choisit %s au hasard, comme le font les sauvages.",
+  "%s rests: nothing it can pay is worth it now.": "%s se repose: rien de ce qu'il peut payer n'en vaut la peine.",
+  "%s swaps to %s: it doesn't like its odds.": "%s passe le relais à %s: ses chances ne lui plaisent pas.",
+  "%s uses %s: it is running low.": "%s utilise %s: il est à bout.",
+  "%s, won in %d turns": "%s, gagné en %d tours",
+  "Banked Embers": "Braises placées",
+  "Beat the Ashen Heart. The smiths still want their cut.": "Bats le Cœur cendré. Les forgerons veulent quand même leur part.",
+  "Beat the Drowned Heart. Nobody reads the passenger list twice.": "Bats le Cœur noyé. Personne ne relit la liste des passagers.",
+  "Beat the Mist Heart. What it hid is everyone's problem now.": "Bats le Cœur de brume. Ce qu'il cachait est maintenant le problème de tous.",
+  "Boss replays": "Rediffusions de boss",
+  "Clear Weather": "Temps dégagé",
+  "Crier: An echo of the %s has crashed the festival in the shape of a %s. Nobody invited it. Will you see it out?": "Crieur: Un écho du %s s'est invité à la fête sous la forme d'un %s. Personne ne l'a convié. Tu le raccompagnes?",
+  "Crier: Something from the Rifts keeps trying to get in. Seal a Rift heart first, then we'll talk.": "Crieur: Quelque chose venu des Failles essaie sans cesse d'entrer. Scelle d'abord un cœur de Faille, on en reparlera.",
+  "Crier: You saw the echo out already. It sulks somewhere behind the stands until next year.": "Crieur: Tu as déjà raccompagné l'écho. Il boude derrière les stands jusqu'à l'an prochain.",
+  "It lies open and stops building up.": "Il est à découvert et cesse de se renforcer.",
+  "It wants that field gone, so it can wake.": "Il veut se débarrasser de ce terrain pour pouvoir s'éveiller.",
+  "Kept in your boss replays (Records).": "Gardé dans tes rediffusions de boss (Records).",
+  "Last Passenger": "Dernier passager",
+  "Last phase: it holds nothing back.": "Dernière phase: il ne retient plus rien.",
+  "The echo comes apart like old bunting. The crowd claps as if it had helped.": "L'écho se défait comme de vieux fanions. La foule applaudit comme si elle avait aidé.",
+  "The echo keeps dancing. The crowd decides it is part of the show.": "L'écho continue de danser. La foule décide que ça fait partie du spectacle."
+ }
+}

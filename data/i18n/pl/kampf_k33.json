@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table kampf_k33, written by tools/i18n/locales_kampf_k33.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s picks %s (%d) over %s (%d).": "%s wybiera %s (%d) zamiast %s (%d).",
+  "%s picks %s (%d): nothing else is in reach.": "%s wybiera %s (%d): nic innego nie wchodzi w grę.",
+  "%s picks %s at random, as wild ones do.": "%s wybiera %s na chybił trafił, jak to dzikie.",
+  "%s rests: nothing it can pay is worth it now.": "%s odpoczywa: nic, na co go stać, nie jest teraz warte zachodu.",
+  "%s swaps to %s: it doesn't like its odds.": "%s zmienia na %s: nie podobają mu się szanse.",
+  "%s uses %s: it is running low.": "%s używa %s: ledwo się trzyma.",
+  "%s, won in %d turns": "%s, wygrana w %d tur",
+  "Banked Embers": "Żar na procent",
+  "Beat the Ashen Heart. The smiths still want their cut.": "Pokonaj Popielne Serce. Kowale i tak chcą swojej działki.",
+  "Beat the Drowned Heart. Nobody reads the passenger list twice.": "Pokonaj Utopione Serce. Nikt nie czyta listy pasażerów dwa razy.",
+  "Beat the Mist Heart. What it hid is everyone's problem now.": "Pokonaj Mgliste Serce. To, co ukrywało, jest teraz problemem wszystkich.",
+  "Boss replays": "Powtórki walk z bossami",
+  "Clear Weather": "Czyste niebo",
+  "Crier: An echo of the %s has crashed the festival in the shape of a %s. Nobody invited it. Will you see it out?": "Heroldka: Echo %s wdarło się na festyn pod postacią %s. Nikt go nie zapraszał. Wyprowadzisz je?",
+  "Crier: Something from the Rifts keeps trying to get in. Seal a Rift heart first, then we'll talk.": "Heroldka: Coś z Rozpadlin wciąż próbuje się wedrzeć. Najpierw zapieczętuj serce Rozpadliny, potem pogadamy.",
+  "Crier: You saw the echo out already. It sulks somewhere behind the stands until next year.": "Heroldka: Echo już wyprowadziłeś. Dąsa się gdzieś za straganami do przyszłego roku.",
+  "It lies open and stops building up.": "Jest odsłonięty i przestaje się wzmacniać.",
+  "It wants that field gone, so it can wake.": "Chce pozbyć się tego pola, by móc się przebudzić.",
+  "Kept in your boss replays (Records).": "Zapisano w powtórkach walk z bossami (Rekordy).",
+  "Last Passenger": "Ostatni pasażer",
+  "Last phase: it holds nothing back.": "Ostatnia faza: niczego już nie oszczędza.",
+  "The echo comes apart like old bunting. The crowd claps as if it had helped.": "Echo rozłazi się jak stare chorągiewki. Tłum klaszcze, jakby pomagał.",
+  "The echo keeps dancing. The crowd decides it is part of the show.": "Echo dalej tańczy. Tłum uznaje, że to część przedstawienia."
+ }
+}

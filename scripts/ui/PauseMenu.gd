@@ -470,6 +470,8 @@ func run_records() -> void:
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
+		if not BossRules.replays(GameState.records).is_empty():
+			lines.append("Boss replays")
 		lines.append("Online replays")
 		var have: int = Achievements.unlocked().size()
 		var idx: int = await pick_strings(Loc.t("Achievements %d/%d") % [have, Achievements.list().size()], lines)
@@ -503,6 +505,21 @@ func run_records() -> void:
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
 					return
+			"Boss replays":
+				if await run_boss_replays():
+					return
+
+## The kept fastest win against each Rift boss (KAMPF_PLAN_1000 item 440). True once one is
+## picked to watch (watch_replay and watch_snap are set).
+func run_boss_replays() -> bool:
+	var kept: Array[Dictionary] = BossRules.replays(GameState.records)
+	var labels: Array[String] = []
+	for r: Dictionary in kept:
+		labels.append(Loc.t("%s, won in %d turns") % [Loc.t(str(r.label)), int(r.turns)])
+	var i: int = await pick_strings(Loc.t("Boss replays"), labels)
+	if i < 0:
+		return false
+	return await OnlineReplaysMenu._watch(self, kept[i].replay)
 
 ## Era functions (data/era_functions.json): one page per open era with what it brought.
 func run_era_functions() -> void:
@@ -1026,7 +1043,7 @@ func _usable_items() -> Array[String]:
 	var out: Array[String] = []
 	for id: Variant in GameState.inventory:
 		var it: Dictionary = Database.item(str(id))
-		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))
+		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or it.has("cure") or bool(it.get("evolves", false))
 				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false)) or bool(it.get("spark_reset", false))
 				or bool(it.get("unfurl_any", false)) or bool(it.get("gift_slot", false))):
 			out.append(str(id))
