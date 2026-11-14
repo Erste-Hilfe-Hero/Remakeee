@@ -45,6 +45,9 @@ var demo: String = ""
 var inputs: Array = []
 ## Set to a recorded input list to watch a replay instead of playing.
 var replay_inputs: Array = []
+## With replay_inputs: a battle picked up after a restart (KAMPF_PLAN_1000 item 31). The recorded
+## turns play again, then the player goes on choosing.
+var resume: bool = false
 var _replaying: bool = false
 
 var _field: Control
@@ -108,7 +111,10 @@ const PINCH_RATIO: float = 0.25
 func _unhandled_input(event: InputEvent) -> void:
 	if _ff_button == null:
 		return
-	if event.is_action_pressed(GameState.SPEED_ACTION) and _ff_button.visible:
+	if _pause != null and not _pause.is_paused() and BattleCalm.pause_toggle(event, false):
+		get_viewport().set_input_as_handled()
+		_pause.open()
+	elif event.is_action_pressed(GameState.SPEED_ACTION) and _ff_button.visible:
 		get_viewport().set_input_as_handled()
 		_ff_button.pressed.emit()
 	elif event.is_action_pressed(GameState.AUTO_ACTION) and _auto_button.visible:
@@ -126,6 +132,7 @@ func _ready() -> void:
 	theme = EraBattleHud.theme(EraManager.active_era())
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_build()
+	_build_pause()
 	if model == null:
 		model = _demo_model()
 		quit_on_finish = false
@@ -266,6 +273,12 @@ func _build() -> void:
 	_log_button.focus_mode = Control.FOCUS_NONE
 	_log_button.pressed.connect(_toggle_log)
 	_field.add_child(_log_button)
+	# Pause at any moment (item 912); "II" needs no translation and fits every era's column.
+	_pause_button = Button.new()
+	_pause_button.text = "II"
+	_pause_button.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	_pause_button.focus_mode = Control.FOCUS_NONE
+	_field.add_child(_pause_button)
 	_pin = TargetPin.new()
 	_field.add_child(_pin)
 	_back_button = Button.new()
@@ -382,6 +395,7 @@ func _layout_field() -> void:
 		_layout_formation()
 		if _hud != null:
 			_hud.layout_formation()
+		_place_pause()
 		return
 	var w: float = _field.size.x
 	var h: float = _field.size.y
@@ -414,6 +428,7 @@ func _layout_field() -> void:
 		_player_sprite.size = pr.size
 	if _hud != null:
 		_hud.layout_single()
+	_place_pause()
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade) * BattleShow.night_tint(DayCycle.current(), GameState.day_night, outdoor, backdrop)
 
@@ -618,11 +633,37 @@ func _notification(what: int) -> void:
 	_away = step > 0
 	_apply_speed()
 
+var _pause_button: Button
+var _pause: BattlePause
+
+## The pause panel over everything (item 912): while it shows, Auto and the text wait like when
+## the app is in the background (item 629), and the whole battle stands still.
+## The "II" button takes Auto's place when Auto is hidden; beside Auto it is a small square just
+## left of the speed button, so every era's own button row stays as it is.
+func _place_pause() -> void:
+	if _pause_button == null:
+		return
+	if not _auto_button.visible:
+		_pause_button.position = _auto_button.position
+		_pause_button.size = _auto_button.size
+	else:
+		_pause_button.size = Vector2(12, _ff_button.size.y)
+		_pause_button.position = Vector2(maxf(0.0, _ff_button.position.x - 14), _ff_button.position.y)
+
+func _build_pause() -> void:
+	_pause = BattlePause.new()
+	add_child(_pause)
+	_pause_button.pressed.connect(_pause.open)
+	_pause.changed.connect(func(on: bool) -> void:
+		_away = on
+		_apply_speed())
+
 ## Applies the 1x / 2x / 4x battle speed (and auto-advance while fast or on Auto).
 func _apply_speed() -> void:
 	var speed: float = GameState.battle_speed_scale()
 	_ff_button.text = "%dx" % int(speed)
-	_text.auto_advance = (speed > 1.0 or _auto_active()) and not _away
+	# "No rush" (item 632) keeps the text waiting at 2x/4x; a picked-up battle's old turns run on.
+	_text.auto_advance = BattleCalm.text_auto(speed, _auto_active() or (resume and _replaying), _away)
 	_text.chars_per_second = GameState.text_cps() * speed
 	for n: Variant in [_foe_sprite, _player_sprite, _foe_strip, _player_strip]:
 		n.speed_scale = speed
@@ -637,6 +678,7 @@ func _run() -> void:
 	_foe_strip.visible = false
 	_player_strip.visible = false
 	_auto_button.visible = model.is_wild
+	_place_pause()
 	_weather.setup(BattleWeather.weather_of(model), EraManager.active_era())
 	_apply_speed()
 	Sound.music(Sound.battle_music(music_track))
@@ -664,10 +706,16 @@ func _run() -> void:
 		for line: String in Tips.take(id):
 			await _text.show_text(line)
 	_replaying = not replay_inputs.is_empty()
+	if resume:
+		_apply_speed()
 	while not model.is_finished() and not BattlePuzzle.out_of_turns(model):
 		if _replaying:
 			if replay_inputs.is_empty():
-				break
+				if not resume:
+					break
+				_replaying = false
+				_apply_speed()
+				continue
 			var rec: Dictionary = replay_inputs.pop_front()
 			await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
 			if str(rec.get("t", "")) == "switch":
@@ -879,12 +927,22 @@ func _pick_item(slot: int = 0, preset: String = "") -> BattleAction:
 		if bool(it.get("battle", false)) and model.item_left_this_battle(BattleModel.Side.PLAYER, id):
 			ids.append(id)
 			entries.append({"text": "%s x%d" % [it.get("name", id), model.bag_count(BattleModel.Side.PLAYER, id)], "hint": str(it.get("description", ""))})
+	# Keepsakes from the bag (KAMPF_PLAN_1000 298): putting one on takes the whole turn.
+	var keep_from: int = ids.size()
+	for id: String in KeepsakeKit.swap_ids(model, slot):
+		var kt: Dictionary = Database.item(id)
+		ids.append(id)
+		entries.append({"text": "%s x%d" % [kt.get("name", id), int(model.inventory.get(id, 0))], "icon": KeepsakeIcons.for_era(id),
+			"hint": Loc.t("Keepsake: putting it on takes the whole turn.") + "\n" + Loc.t(str(kt.get("description", "")))})
 	if ids.is_empty():
 		await _text.show_text("No usable items.")
 		return null
 	var idx: int = ids.find(preset) if not preset.is_empty() else await _picker.pick("Use which item?", entries)
 	if idx < 0:
 		return null
+	if idx >= keep_from:
+		var ka := BattleAction.make_item(BattleModel.Side.PLAYER, ids[idx], model.active_index(BattleModel.Side.PLAYER, slot), slot)
+		return ka if model.is_legal(ka) else null
 	if BattleModel.is_revive_item(ids[idx]):
 		var down: int = await _pick_defeated()
 		if down < 0:
@@ -953,7 +1011,7 @@ func _bond(slot: int = 0) -> BattleAction:
 	if aim == -2:
 		return null
 	var target_slot: int = maxi(aim, 0)
-	var mine: bool = GameState.bond_style == "mine"
+	var mine: bool = BattleCalm.bond_style() == "mine"
 	var reach: String = "Reach out to %s... Tap Mine! fast!" if mine else "Reach out to %s... Listen, then echo its call!"
 	await _text.show_text(reach % model.active_spirling(BattleModel.Side.FOE, target_slot).display_name())
 	_bond_game.target = _sprite(BattleModel.Side.FOE, target_slot).texture()
@@ -966,7 +1024,7 @@ func _bond(slot: int = 0) -> BattleAction:
 		var state: String = BondEcho.rift_state(GameState.current_map, GameState.rifts_sealed)
 		_bond_plans[key] = BondEcho.make_plan(rng, foe.data, state)
 	var score: float = 0.0
-	_bond_game.calm = GameState.bond_style == "calm"
+	_bond_game.calm = BattleCalm.bond_style() == "calm"
 	if mine:
 		score = await _bond_game.run_mine(_bond_plans[key])
 	else:
@@ -1148,6 +1206,27 @@ func _gleam_entrance(sprite: SpirlingSprite) -> void:
 	Sound.sfx(str(cfg.get("sfx", "sparkle")), 0.0, float(cfg.get("sfx_pitch", 1.0)))
 	await sprite.gleam_sparkle()
 
+## A keepsake at work (KAMPF_PLAN_1000 281, 318, 319): its sound, its icon popping up over the
+## holder, and the holder's strip shows (or drops) the icon from now on.
+func _keepsake_cue(e: BattleEvent) -> void:
+	var kc: Dictionary = KeepsakeKit.cue(e, model)
+	if kc.is_empty():
+		return
+	BattleAudio.play(str(kc.sound), 0.0, float(kc.pitch))
+	var sp: Spirling = model.active_spirling(int(kc.side), int(kc.slot))
+	if sp != null:
+		sp.set_meta(KeepsakeKit.SEEN_META, true)
+		var st: Variant = _strip(int(kc.side), int(kc.slot))
+		if st is InfoStrip:
+			(st as InfoStrip).set_held(KeepsakeKit.strip_item(sp, true))
+	var holder: SpirlingSprite = _sprite(int(kc.side), int(kc.slot))
+	if holder != null and holder.visible and is_inside_tree():
+		KeepsakePop.spawn(_shake_root, KeepsakeIcons.for_era(str(kc.item)), holder.position + Vector2(holder.size.x / 2.0, 0))
+	keepsake_cues += 1
+
+## Keepsake cues played so far (tests).
+var keepsake_cues: int = 0
+
 func _play_event(e: BattleEvent) -> void:
 	var side: int = int(e.data.get("side", 0))
 	var slot: int = int(e.data.get("slot", 0))
@@ -1162,6 +1241,7 @@ func _play_event(e: BattleEvent) -> void:
 	# After a Rest the Energy flows back pip by pip (KAMPF_PLAN_1000 item 73).
 	if e.type == BattleEvent.Type.REST and _strip(side, slot) is InfoStrip:
 		(_strip(side, slot) as InfoStrip).flow_next = true
+	_keepsake_cue(e)
 	match e.type:
 		BattleEvent.Type.BATTLE_START:
 			var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)

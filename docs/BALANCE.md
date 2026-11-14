@@ -766,16 +766,18 @@ Generated from `data/ai_profiles.json`, the mottos in `data/dialogue/battle_line
 other keys are explained in the `_doc` of the profile file.
 
 <!-- gen:profiles -->
-| Profile | damage_w | status_w | setup_w | field_w | swap_below | heal_below | rest_below | focus_fire | status_first | setup_stats | field_renew | plan_energy | second_best | drain_w | Motto | Used by |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| balanced | 1 | 1 | 1 | 1 | default | 0.3 | -1 | 0 | 0 |  |  |  |  |  |  | - |
-| hothead | 1.4 | 0.4 | 0.3 | 1 | never | 0.3 | 1 | 0 | 0 |  |  |  |  |  | Never backs down, never swaps. | cinder_rift:acolyte_a, cinder_rift:warden_orrin, crowcrest:lio |
-| wall | 0.8 | 1 | 1.5 | 1 | 0.5 | 0.45 | -1 | 0 | 0 | def, foc |  |  |  |  | Builds up guard and waits. | crowcrest:bram, fernstair:joss |
-| spoiler | 1 | 1.6 | 1 | 1 | default | 0.3 | -1 | 0 | 1 |  |  |  |  |  | Spoils your plans before striking. | murk_hollow:delve, saltmarsh:aud |
-| field_keeper | 1 | 1 | 1 | 2 | default | 0.3 | -1 | 0 | 0 |  | 1 |  |  |  | Shapes the Rift field first. | murk_hollow:fenn, saltmarsh:neve |
-| tactician | 1 | 1 | 1 | 1 | 0.7 | 0.3 | -1 | 1 | 0 |  |  | 1 |  |  | Plans every turn ahead. | crowcrest:kestra, saltmarsh:Cartographer Kestra, tide_rift:mystic, tide_rift:warden_maelis |
-| apprentice | 1 | 1 | 1 | 1 | default | 0.3 | -1 | 0 | 0 |  |  |  | 0.3 |  | Still learning, sometimes guesses. | cinder_rift:acolyte_b, fernstair:imme |
-| enduring | 1 | 1 | 1 | 1 | default | 0.6 | 4 | 0 | 0 |  |  |  |  | 1.5 | Rests, mends and outlasts you. | saltmarsh:kestra_tag |
+| Profile | damage_w | status_w | setup_w | field_w | swap_below | heal_below | rest_below | focus_fire | status_first | setup_stats | field_renew | plan_energy | second_best | drain_w | spread_w | charge_w | Motto | Used by |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| balanced | 1 | 1 | 1 | 1 | default | 0.3 | -1 | 0 | 0 |  |  |  |  |  |  |  |  | - |
+| hothead | 1.4 | 0.4 | 0.3 | 1 | never | 0.3 | 1 | 0 | 0 |  |  |  |  |  |  |  | Never backs down, never swaps. | cinder_rift:acolyte_a, cinder_rift:warden_orrin, crowcrest:lio |
+| wall | 0.8 | 1 | 1.5 | 1 | 0.5 | 0.45 | -1 | 0 | 0 | def, foc |  |  |  |  |  |  | Builds up guard and waits. | crowcrest:bram, fernstair:joss |
+| spoiler | 1 | 1.6 | 1 | 1 | default | 0.3 | -1 | 0 | 1 |  |  |  |  |  |  |  | Spoils your plans before striking. | murk_hollow:delve, saltmarsh:aud |
+| field_keeper | 1 | 1 | 1 | 2 | default | 0.3 | -1 | 0 | 0 |  | 1 |  |  |  |  |  | Shapes the Rift field first. | murk_hollow:fenn, saltmarsh:neve |
+| tactician | 1 | 1 | 1 | 1 | 0.7 | 0.3 | -1 | 1 | 0 |  |  | 1 |  |  |  |  | Plans every turn ahead. | crowcrest:kestra, saltmarsh:Cartographer Kestra, tide_rift:mystic, tide_rift:warden_maelis |
+| apprentice | 1 | 1 | 1 | 1 | default | 0.3 | -1 | 0 | 0 |  |  |  | 0.3 |  |  |  | Still learning, sometimes guesses. | cinder_rift:acolyte_b, fernstair:imme |
+| enduring | 1 | 1 | 1 | 1 | default | 0.6 | 4 | 0 | 0 |  |  |  |  | 1.5 |  |  | Rests, mends and outlasts you. | saltmarsh:kestra_tag |
+| sweeper | 1 | 1 | 1 | 1 | default | 0.3 | -1 | 1 | 0 |  |  |  |  |  | 1.5 |  | Hits the whole line at once. | slag_tunnels:cart_pusher |
+| surger | 1 | 1 | 1 | 1 | default | 0.3 | 2 | 0 | 0 |  |  |  |  |  |  | 1.3 | Saves every spark for one blow. | fallen_planet:hs_thea |
 <!-- /gen:profiles -->
 
 ## Wächter-Rätsel schreiben (writing Warden Trials)

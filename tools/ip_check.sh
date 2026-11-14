@@ -4,7 +4,8 @@
 #    base64-encoded so this script does not itself spell the terms out.
 # 2. Fails if a file under art/ or audio/ is missing from docs/ASSET_LOG.md.
 # 3. Checks the metadata of images and sounds (tools/ip_meta_check.py, plan item 3956) and
-#    place and map names (tools/ip_place_check.py, item 1319).
+#    place and map names (tools/ip_place_check.py, item 1319) and art names against the
+#    inspiration's move names (tools/ip_move_check.py, KAMPF_PLAN_1000 item 965).
 # 4. With --messages <git range>: checks commit messages of that range and the PR title in
 #    PR_TITLE (plan item 3955, AGENTS.md).
 # AGENTS.md and LEGAL.md are skipped because they define the banned list.
@@ -66,6 +67,11 @@ fi
 
 # Place and map names against the inspiration's towns and regions (area 3 item 1319).
 if ! python3 tools/ip_place_check.py; then
+	fail=1
+fi
+
+# Art names against the inspiration's move names (KAMPF_PLAN_1000 item 965).
+if ! python3 tools/ip_move_check.py; then
 	fail=1
 fi
 
