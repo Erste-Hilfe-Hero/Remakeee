@@ -10,6 +10,7 @@ import json, os, re, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCRIPT_DIRS = ["scripts/ui", "scripts/overworld", "scripts/battle", "scripts/core", "scripts/online", "scripts/shop"]
 SKIP_SCRIPTS = {"BalanceSim.gd", "ActSim.gd", "ArtsSim.gd", "BalanceGroups.gd", "KampfChecks.gd", "BalanceDoc.gd", "EndgameSim.gd", "BattleTest.gd", "DataValidator.gd", "StoryValidator.gd", "WorldValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd",
+                "BattlePacks.gd",  # developer messages for pack makers, no player text
                 "BundWords.gd",  # carries its own German word lists
                 "EraActorLook.gd", "EraActors.gd",  # table checks for the test log, no player text
                 "EraTerrainLook.gd",  # only developer validation messages (problems())
@@ -120,6 +121,18 @@ def strings():
     for m in json.load(open(os.path.join(ROOT, "data/endgame.json"))).get("masters", []):
         if isinstance(m.get("title"), str):
             found.append(m["title"])
+    tables = json.load(open(os.path.join(ROOT, "data/battle_tables.json"), encoding="utf-8"))
+    def table_text(v):
+        if isinstance(v, dict):
+            for k, x in v.items():
+                if k in ("label", "text", "intro", "line", "full_text") and isinstance(x, str):
+                    found.append(x)
+                else:
+                    table_text(x)
+        elif isinstance(v, list):
+            for x in v:
+                table_text(x)
+    table_text({k: v for k, v in tables.items() if not k.startswith("_")})
     ev = os.path.join(ROOT, "data/events.json")
     if os.path.exists(ev):
         for group in json.load(open(ev)).values():
