@@ -582,6 +582,19 @@ static func drop_to_floor(foes: Array[Rect2], feet_y: float, limit_y: float) -> 
 		out.append(Rect2(r.position + Vector2(0, by), r.size))
 	return out
 
+## A gift worked for the first time (KAMPF_PLAN_1000 items 241, 263): its mark joins the plate.
+func _show_gift(e: BattleEvent) -> void:
+	var side: int = int(e.data.get("side", 0))
+	var index: int = int(e.data.get("index", -1))
+	if index < 0 or index >= model.party(side).size():
+		return
+	var s: Spirling = model.party(side)[index]
+	TraitKit.mark_seen(s, str(e.data.get("trait", "")))
+	# One-on-one: the side's plate. Formation: the ledger plate while it shows this Spirling.
+	var st: Variant = _foe_strip if _multi else _strip(side)
+	if st is InfoStrip and (st as InfoStrip).spirling_name == s.display_name():
+		(st as InfoStrip).set_gifts(TraitKit.seen_ids(s))
+
 ## Shows [param side]/[param slot]'s details in the ledger strip (formation layout).
 func _focus(side: int, slot: int) -> void:
 	if not _multi:
@@ -1156,6 +1169,11 @@ func _play_event(e: BattleEvent) -> void:
 	_place_field_badge()
 	if e.type == BattleEvent.Type.BATTLE_START:
 		battle_report.begin(model.field)
+		for team: Array in model.parties:
+			for p: Spirling in team:
+				TraitKit.forget_seen(p)
+	elif e.type == BattleEvent.Type.TRAIT:
+		_show_gift(e)
 	battle_report.add(e)
 	match e.type:
 		BattleEvent.Type.BATTLE_START:

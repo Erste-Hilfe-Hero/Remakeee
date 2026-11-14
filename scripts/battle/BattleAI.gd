@@ -407,7 +407,7 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 			var turns: int = int(fx.get("amount", 0))
 			spoil += TAX_BONUS_PER_TURN * float(turns if turns > 0 else BattleRules.ENERGY_TAX_TURNS) * acc
 		elif fx_id == &"status_shift":
-			if not me.status.is_empty() and target.status.is_empty() and not BattleRules.is_immune(target, me.status):
+			if not me.status.is_empty() and target.status.is_empty() and not TraitKit.known_immune(model, target, me.status):
 				spoil += STATUS_BONUS * 2.0 * acc
 		elif fx_id == &"energy_burn" and target.burn_guard <= 0:
 			# Burnt Energy comes back faster when everyone gains more per turn ("No Rest", item 800).
@@ -472,7 +472,8 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 		for fx: Dictionary in mv.effects:
 			if StringName(fx.get("id", "")) == &"inflict_status":
 				var st: String = str(fx.get("status", ""))
-				if level >= 3 and (BattleRules.is_immune(target, st) or model.calm_rule_blocks(BattleModel.other(side), target, st) \
+				# Only a gift that already showed itself counts (KAMPF_PLAN_1000 item 261, fairness).
+				if level >= 3 and (TraitKit.known_immune(model, target, st) or model.calm_rule_blocks(BattleModel.other(side), target, st) \
 						or not model.status_block(BattleModel.other(side), st, side).is_empty()):
 					continue
 				spoil += STATUS_BONUS * float(fx.get("chance", 1.0)) * acc

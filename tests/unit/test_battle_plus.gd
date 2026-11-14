@@ -162,9 +162,12 @@ func test_master_ai_skips_status_on_immune_foes() -> void:
 	var m: BattleModel = BattleFixtures.model([me] as Array[Spirling], _one("Wickit", 15, ["Wick Flicker"]), false)
 	m.start()
 	var greedy: float = BattleAI.new(2).score_move(m, 0, 0, 0)
-	var master: float = BattleAI.new(3).score_move(m, 0, 0, 0)
 	assert_gt(greedy, 0.0, "the plain greedy tier still counts the status")
-	assert_eq(master, 0.0, "the master knows it can't land")
+	# Fairness (KAMPF_PLAN_1000 item 261): the gift is hidden until it worked once.
+	assert_gt(BattleAI.new(3).score_move(m, 0, 0, 0), 0.0, "the master can't read a hidden gift")
+	m.reveal_trait(BattleModel.Side.FOE, 0)
+	var master: float = BattleAI.new(3).score_move(m, 0, 0, 0)
+	assert_eq(master, 0.0, "once it showed itself the master knows it can't land")
 
 func test_field_value_favours_the_own_side() -> void:
 	var m: BattleModel = BattleFixtures.model(_one("Smoldrake", 30, ["Cinder Nip", "Ash Call"]), _one("Puddlet", 30, ["Fizz Pop"]))

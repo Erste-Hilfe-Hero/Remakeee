@@ -1247,6 +1247,12 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 		s.gift_slot = true
 		msg = "%s now carries two gifts: %s and %s." % [s.display_name(), Loc.t(str(BattleRules.trait_info(s.gift_id()).get("label", ""))),
 			Loc.t(str(BattleRules.trait_info(ShopEffects.second_gift_id(s)).get("label", "")))]
+	elif bool(it.get("gift_swap", false)):
+		# Turncoat Seed (KAMPF_PLAN_1000 item 260): its own gift or its line's hidden one, at any ring.
+		var now: String = HiddenGifts.swap(s)
+		if now.is_empty():
+			return ""
+		msg = "%s turns its coat: its gift is now %s." % [s.display_name(), Loc.t(str(BattleRules.trait_info(now).get("label", "")))]
 	elif it.has("teaches"):
 		# Echo Crystals are never used up; learning is handled by the menu (it may need a slot).
 		return ""
