@@ -1,0 +1,46 @@
+Chimora 1.2.0
+
+IV. PERDE: SOLENNE
+- Güneşten ağarmış yeni bir perde: Ochrewell, Glasswind Düzlüğü, kervansaray merdiveni ve Serap Fırını.
+- Üç yeni Yarık ve Muhafızları. Artık on iki mührün hepsi seninle final arasında duruyor.
+
+FİNALDEN SONRA
+- Vellmarch: Çağ II görünümünde koca bir oyun sonu bölgesi. 5 kasaba, 6 yol, 4 Yarık ve her bölümünde bir ihanet olan bir hikâye.
+- Vellmarch'ın ötesi: Quillmarch, Halcyra ve Quivermoor, sonraki çağların görünümünde üç bölge daha.
+- 12 Muhafızın hepsiyle rövanş. Yenilgilerini düşünmek için bolca vakitleri oldu.
+- 100 katlı Yankı Kulesi, Usta Yarıkları, Rastgele Yarık, haftanın devi, bir final sınavı ve Yeni Oyun+.
+- Spirling'ler 60. halkadan sonra da büyümeye devam ediyor. Durma.
+
+HİKÂYE VE GÜVEN
+- İki klan, on bir yabancı ve duraklatma menüsünde kime güvendiğini unutmayan bir Defter. Bir iyilik karşılığını verebilir. Ya da soyulmana yol açabilir.
+- Altı yeni efsanevi için efsane görevleri; her birinde göründüğü gibi olmayabilecek bir rehber.
+- Her perdede yan hikâyeler ve Geniş Yarık'ın kıyısında bir yabancılar kampı.
+
+SPIRLING'LER
+- 400'den fazla yeni Spirling, toplam 497: her perdede ve hikâyeden sonraki her bölgede 70 tane kendine özgü.
+- Doğada Işıltı biçimleri; zincir bonusu ve Spirlog'da sayaç.
+- Sonraki evreler artık önceki hallerine benziyor, sadece büyümüş olarak.
+- Öndeki Spirling'in arkandan yürüyor. Ona nasıl davrandığını unutmuyor.
+- Mürekkep Yemini, karaborsa muhbirinden gizli armağanlar ve aile işini devralan yavrular.
+
+YENİ YERLER
+- İn: sahiplenebileceğin bir oyuk. İçerideki işgalci aynı fikirde değil.
+- Ağıt Gecesi: Oymacılar Salonu'nda her gün bir cenaze gösterisi.
+- Hollowgate Koruğu: kaçakçıların işlettiği bir yaban hayatı parkı.
+- Her bölge için haritacı taşları, simge yapılar ve harita ilerlemesi.
+
+ÇEVRİMİÇİ (internet bağlantısı gerekir)
+- Arkadaşlarla canlı düellolar, sezonlu ligler, haftalık muhafızlı akınlar.
+- Bağışlı ve haftalık hedefli Birlikler, takas, dilek listeleri, hediyeler ve süreli etkinlikler.
+
+GÖRÜNÜM, SES VE KONFOR
+- Her perdenin kendine özgü görünümü var, geceleri pencereler yanıyor ve deniz feneri sonunda deniz fenerine benziyor.
+- Bölgeler, zindanlar, savaşlar ve Muhafızlar için çağ müzikleri.
+- Savaş ekranı: çağa göre Dinçlik çubukları, renkli tür rozetleri, etki ipuçları ve renk körlüğü modu.
+- Daha yumuşak ilk 15 dakika. Haberler artık başlık ekranında "Yenilikler" altında.
+- Yolculuğun, adını seçer seçmez kaydedilir.
+- Katlanabilir telefonlar: katladığında ya da açtığında görüntü hemen uyar.
+- Mağazada yeni isteğe bağlı teklifler.
+- 14 dilin hepsinde çok daha fazla çevrilmiş metin.
+- Bir sürü düzeltme: kayıt, ayarlar, satın alımları geri yükleme. Telefonun saatini geri almak artık günlük ödülü iki kez vermiyor. İyi denemeydi.
+- Düzeltildi: Gezginin savaştan sonra artık kendi kendine yürümüyor.

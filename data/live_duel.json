@@ -1,0 +1,20 @@
+{
+ "_comment": "Live duels between friends (Online 100, area 1). The server reads the same object as server_config.live_duel (tools/online/game_data_sql.py). fields: the fields the inviter can pick for the duel (KAMPF_PLAN_1000 340), besides none.",
+ "turn_seconds": 30,
+ "reconnect_seconds": 60,
+ "pick_seconds": 90,
+ "invite_minutes": 10,
+ "show": 6,
+ "pick": 3,
+ "emotes": 12,
+ "emote_limit": 20,
+ "invites_per_hour": 20,
+ "fields": [
+  "ash_storm",
+  "high_tide",
+  "deep_murk",
+  "static_veil",
+  "pollen_drift",
+  "dawn_glow"
+ ]
+}

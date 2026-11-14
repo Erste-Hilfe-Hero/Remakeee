@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+"""Adds the missing docs/ASSET_LOG.md rows for generated art and audio (plan area 6, item 2636).
+
+    python3 tools/asset_log.py          add a row for every generator output without one
+    python3 tools/asset_log.py --check  only list the missing ones (exit 1 if any)
+
+The table below says which generator makes which files; hand-made assets still need a row
+written by hand. tools/ip_check.sh fails on any file under art/ or audio/ without a row.
+"""
+import datetime, fnmatch, os, subprocess, sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOG = os.path.join(ROOT, "docs", "ASSET_LOG.md")
+AUTHOR = "Claude (AI) for Ali"
+LICENCE = "Owned by the project, no third-party input"
+
+# (path pattern, generator, how it was made)
+SOURCES = [
+    ("art/era5/portraits/*.png", "tools/art/gen_portraits.py", "own speaker portrait for the Era V dialogue box: three 32 px busts (resting, blink, speaking) from hand-written shapes and a colour recipe per speaker"),
+    ("art/era4/portraits/*.png", "tools/art/gen_portraits.py", "own 12 px speaker head for the Era IV name plate, from hand-written shapes and a colour recipe per speaker"),
+    ("art/fonts/chimora_etch10.png", "tools/fonts/build_era_fonts.py", "specimen sheet of Chimora Etch, the own 10 px text font of Era III; every glyph hand-drawn in tools/fonts/src/etch10.txt"),
+    ("art/fonts/chimora_pano12.png", "tools/fonts/build_era_fonts.py", "specimen sheet of Chimora Panorama, the own 12 px text font of Eras IV and V; every glyph hand-drawn in tools/fonts/src/pano12.txt"),
+    ("audio/sfx/*_era[2-5].wav", "tools/audio/era_sfx.py", "era sound set: own note recipe played on that era's synthesized voice (chip, low-rate tones, room/hall), no samples"),
+    ("audio/ambience/*_era[45].ogg", "tools/audio/ambience.py", "original Era IV/V biome ambience loop from filtered noise and tone figures, room reverb, no recordings"),
+    ("audio/sfx/*.wav", "tools/audio/gen_audio.py", "synthesized pulse/triangle/noise sound effect, no samples"),
+    ("audio/music/stems/*.ogg", "tools/audio/gen_audio.py", "one stem of an original chiptune place song, for the layered MusicDirector"),
+    ("audio/music/*.ogg", "tools/audio/gen_audio.py", "original chiptune: chord charts and motifs written for Chimora, synthesized pulse/triangle/noise, Vorbis via ffmpeg"),
+    ("audio/ambience/*.ogg", "tools/audio/gen_audio.py", "original ambience loop built from filtered noise and tone patterns, no recordings"),
+    ("art/era[2-5]/actors/emotes.png", "tools/art/gen_era_chars.py", "original 16 px emote bubbles (alert, question, dots, heart, note, sleep, drop) for that era's overworld"),
+    ("art/era3/actors/*.png", "tools/art/gen_era_chars.py", "own Era I overworld figure repainted in zone colours with shading, both feet, running and wading poses, Era III"),
+    ("art/era4/actors/*.png", "tools/art/gen_era_chars.py", "own Era I overworld figure redrawn 16x24 with a longer body and legs, coloured outlines, half steps and head-turn frames, Era IV"),
+    ("art/era5/actors/*.png", "tools/art/gen_era_chars.py", "own 16x24 overworld figure with rim light, breathing and blinking frames and four season outfits, Era V"),
+    ("art/era1/fx/*.png", "tools/art/gen_fx.py", "original 8x8 effect shape for battle arts, Era I ink"),
+    ("art/era5/spirlings/*.png", "tools/art/gen_era5.py", "original Spirling line drawn from its line spec with the project's body plans, lit part by part at 96x96, Era V Living"),
+    ("art/era1/chars/stranger*.png", "tools/art/gen_strangers.py", "original 16 px overworld sheet of a stranger from the map's edge, Era I ink"),
+    ("art/era2/chars/*.png", "tools/art/era2_colourise.py", "own Era I character sheet recoloured with an original per-figure palette, Era II Aquarell"),
+    ("art/era2/fx/*.png", "tools/art/era2_colourise.py", "own Era I effect shape recoloured with an original per-element palette, Era II Aquarell"),
+    ("art/era3/fx/*.png", "tools/art/gen_fx_era34.py", "own Era I effect shape with outline, body tone and light edge in its element's colour, Era III"),
+    ("art/era4/fx/*.png", "tools/art/gen_fx_era34.py", "own Era I effect shape doubled with rounded corners, top-down shading and a soft glow, Era IV"),
+    ("art/era4/spirlings/*.png", "tools/art/gen_era4.py", "own Era I Spirling repainted at 96x96 with soft shading and a breath frame, Era IV Panorama"),
+    ("art/era2/tiles/*.png", "tools/art/era2_colourise.py", "own Era I tile atlas recoloured with an original per-tile-kind palette, Era II Aquarell"),
+]
+
+
+def files() -> list[str]:
+    out = subprocess.run(["git", "ls-files", "--others", "--cached", "--exclude-standard", "--", "art", "audio"],
+                         cwd=ROOT, capture_output=True, text=True, check=True).stdout.split()
+    return sorted(f for f in set(out) if not f.endswith((".import", ".gitkeep")) and os.path.exists(os.path.join(ROOT, f)))
+
+
+def source_for(path: str):
+    for pat, gen, how in SOURCES:
+        if fnmatch.fnmatch(path, pat) and path.count("/") == pat.count("/"):
+            return gen, how
+    return None
+
+
+def main() -> None:
+    check = "--check" in sys.argv
+    log = open(LOG, encoding="utf-8").read()
+    missing = [f for f in files() if ("| %s |" % f) not in log]
+    rows, unknown = [], []
+    for f in missing:
+        src = source_for(f)
+        if src is None:
+            unknown.append(f)
+            continue
+        rows.append("| %s | %s | Generated by %s (%s) | %s | %s |" % (f, AUTHOR, src[0], src[1], LICENCE, datetime.date.today().isoformat()))
+    for f in unknown:
+        print("no generator known, add a row by hand:", f)
+    if check:
+        for r in rows:
+            print("missing:", r.split(" | ")[0][2:])
+        sys.exit(1 if missing else 0)
+    if rows:
+        with open(LOG, "w", encoding="utf-8") as fh:
+            fh.write(log.rstrip("\n") + "\n" + "\n".join(rows) + "\n")
+    print("asset log: %d rows added" % len(rows))
+    sys.exit(1 if unknown else 0)
+
+
+if __name__ == "__main__":
+    main()

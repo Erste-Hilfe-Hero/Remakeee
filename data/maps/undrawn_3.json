@@ -1,0 +1,54 @@
+{
+ "name": "The Undrawn",
+ "region": "ashmere",
+ "biome": "rift",
+ "backdrop": "voice",
+ "rows": [
+  "XXXXXXXXXXXX",
+  "XXXX....XXXX",
+  "XX........XX",
+  "X..........X",
+  "X...,,,,...X",
+  "X...,..,...X",
+  "X...,,,,...X",
+  "X..........X",
+  "XX...__...XX",
+  "X....__....X",
+  "X....__....X",
+  "XX...__...XX",
+  "X....__....X",
+  "X....__....X",
+  "X....__....X",
+  "XXXXX__XXXXX"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 15,
+   "to": "undrawn_2",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 15,
+   "to": "undrawn_2",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "npcs": [],
+ "signs": [],
+ "spots": {
+  "mirela": [
+   6,
+   2
+  ],
+  "echo_c": [
+   2,
+   9
+  ]
+ }
+}

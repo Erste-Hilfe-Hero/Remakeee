@@ -1,0 +1,289 @@
+{
+ "name": "Root Rift",
+ "region": "corvane",
+ "biome": "rift",
+ "backdrop": "field",
+ "field": "pollen_drift",
+ "encounters": "root_rift",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^.,,....,^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^.@......^_^",
+  "^.%%..@..^_^",
+  "^.%%....@^_^",
+  "^S.......^_^",
+  "^^^^..^^^^_^",
+  "^.,,....,^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^.,,....,^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^.,,....,,.^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "woadfen",
+   "tx": 10,
+   "ty": 15,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "woadfen",
+   "tx": 10,
+   "ty": 15,
+   "facing": "left"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "kestra_r",
+   "x": 3,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "root_rift/kestra",
+   "sprite": "ranger"
+  },
+  {
+   "id": "wen",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "root_rift/wen",
+   "sprite": "warden",
+   "trainer": "Rift Acolyte Wen",
+   "intro": "root_rift/wen_intro",
+   "defeat": "root_rift/wen_defeat",
+   "money": 1150,
+   "team": [
+    {
+     "species": "Thornback",
+     "level": 24
+    },
+    {
+     "species": "Mossling",
+     "level": 23
+    }
+   ]
+  },
+  {
+   "id": "corm",
+   "x": 2,
+   "y": 14,
+   "facing": "right",
+   "dialogue": "root_rift/corm",
+   "sprite": "villager",
+   "trainer": "Moor Digger Corm",
+   "intro": "root_rift/corm_intro",
+   "defeat": "root_rift/corm_defeat",
+   "money": 1180,
+   "team": [
+    {
+     "species": "Croziel",
+     "level": 24
+    },
+    {
+     "species": "Hushkin",
+     "level": 24
+    }
+   ]
+  },
+  {
+   "id": "tilde",
+   "x": 7,
+   "y": 11,
+   "facing": "left",
+   "dialogue": "root_rift/tilde",
+   "sprite": "villager",
+   "trainer": "Herbalist Tilde",
+   "intro": "root_rift/tilde_intro",
+   "defeat": "root_rift/tilde_defeat",
+   "money": 1200,
+   "team": [
+    {
+     "species": "Reedquill",
+     "level": 24
+    },
+    {
+     "species": "Fluting",
+     "level": 25
+    },
+    {
+     "species": "Kelpup",
+     "level": 24
+    }
+   ]
+  },
+  {
+   "id": "warden_darrow",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "root_rift/darrow",
+   "sprite": "warden",
+   "trainer": "Warden Darrow",
+   "warden": "root",
+   "team": [
+    {
+     "species": "Thornback",
+     "level": 25
+    },
+    {
+     "species": "Frondmere",
+     "level": 26
+    },
+    {
+     "species": "Reedwarden",
+     "level": 25
+    },
+    {
+     "species": "Marshfife",
+     "level": 26
+    }
+   ],
+   "intro": "root_rift/darrow_intro",
+   "defeat": "root_rift/darrow_defeat",
+   "ai": 2,
+   "money": 1400,
+   "rule": "vine_tangle",
+   "mend_items": [
+    "echo_root_grip"
+   ],
+   "rematch_after": "story_complete",
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Thornback",
+      "level": 25
+     },
+     {
+      "species": "Frondmere",
+      "level": 26
+     },
+     {
+      "species": "Reedwarden",
+      "level": 25
+     },
+     {
+      "species": "Marshfife",
+      "level": 26
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Thornback",
+      "level": 27
+     },
+     {
+      "species": "Frondmere",
+      "level": 28
+     },
+     {
+      "species": "Reedwarden",
+      "level": 27
+     },
+     {
+      "species": "Marshfife",
+      "level": 28
+     },
+     {
+      "species": "Thornback",
+      "level": 23
+     }
+    ]
+   }
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "root_rift/spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "root_rift/sign"
+  },
+  {
+   "x": 2,
+   "y": 8,
+   "dialogue": "root_rift/root_1"
+  },
+  {
+   "x": 6,
+   "y": 9,
+   "dialogue": "root_rift/root_2"
+  },
+  {
+   "x": 8,
+   "y": 10,
+   "dialogue": "root_rift/root_3"
+  },
+  {
+   "x": 1,
+   "y": 11,
+   "dialogue": "root_rift/hint"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 4,
+   "y": 7,
+   "open_flag": "root_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 5,
+   "y": 7,
+   "open_flag": "root_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 6,
+   "y": 7,
+   "open_flag": "root_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 7,
+   "y": 7,
+   "open_flag": "root_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_root_sealed",
+   "closed": "@"
+  },
+  {
+   "x": 4,
+   "y": 18,
+   "open_flag": "kestra_root_tag",
+   "closed": "@"
+  },
+  {
+   "x": 5,
+   "y": 18,
+   "open_flag": "kestra_root_tag",
+   "closed": "@"
+  }
+ ]
+}

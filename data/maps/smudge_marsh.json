@@ -1,0 +1,242 @@
+{
+ "name": "Smudge Marsh",
+ "region": "quillmarch",
+ "biome": "marsh",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "smudge_marsh",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T~~..__.%%%T",
+  "T~~...__%%%T",
+  "T.....__...T",
+  "T%%~~~~_~~.T",
+  "T%%~~~~_~~.T",
+  "T....____..T",
+  "T~~~._..,,,T",
+  "T~~~._..,,,T",
+  "T...._.....T",
+  "T%%.._~~~~~T",
+  "T%%..____..T",
+  "T~~~...._..T",
+  "T~~~.%%._..T",
+  "T....%%.__.T",
+  "T,,,....._.T",
+  "T,,,~~~~._.T",
+  "T...~~~~._.T",
+  "T..______..T",
+  "T.._..%%%..T",
+  "T~~_..%%%~~T",
+  "T~~_.....~~T",
+  "T..__......T",
+  "T....__.%%.T",
+  "T.....__%%.T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "proofgate",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "burin_landing",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "proofgate",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "burin_landing",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "blotter",
+   "x": 10,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "quillmarch/smudge_marsh_blotter",
+   "sprite": "ranger",
+   "trainer": "Ink Blotter Sigrun",
+   "intro": "quillmarch/smudge_marsh_blotter_intro",
+   "defeat": "quillmarch/smudge_marsh_blotter_defeat",
+   "money": 3520,
+   "team": [
+    {
+     "species": "Siltby",
+     "level": 87
+    },
+    {
+     "species": "Smudgel",
+     "level": 88
+    }
+   ]
+  },
+  {
+   "id": "smuggler",
+   "x": 2,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "quillmarch/smudge_marsh_smuggler",
+   "sprite": "villager",
+   "trainer": "Smuggler Kettil",
+   "intro": "quillmarch/smudge_marsh_smuggler_intro",
+   "defeat": "quillmarch/smudge_marsh_smuggler_defeat",
+   "money": 3520,
+   "team": [
+    {
+     "species": "Smudgeworm",
+     "level": 87
+    },
+    {
+     "species": "Siltby",
+     "level": 88
+    },
+    {
+     "species": "Canalurker",
+     "level": 88
+    }
+   ]
+  },
+  {
+   "id": "q3_eeler",
+   "x": 10,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_smudge_marsh_eeler",
+   "sprite": "villager",
+   "trainer": "Eel Smuggler Disa",
+   "intro": "quillmarch/q3_smudge_marsh_eeler_intro",
+   "defeat": "quillmarch/q3_smudge_marsh_eeler_defeat",
+   "money": 3520,
+   "team": [
+    {
+     "species": "Forgeflare",
+     "level": 86
+    },
+    {
+     "species": "Siltby",
+     "level": 87
+    },
+    {
+     "species": "Forgefly",
+     "level": 88
+    }
+   ]
+  },
+  {
+   "id": "q3_erased_village_ulf",
+   "x": 2,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "quillmarch/q3_erased_village_ulf",
+   "sprite": "villager",
+   "show_flag": "q3_erased_village_kept"
+  },
+  {
+   "id": "q3_erased_village_hakon",
+   "x": 4,
+   "y": 9,
+   "facing": "right",
+   "dialogue": "quillmarch/q3_erased_village_hakon",
+   "sprite": "elder",
+   "show_flag": "q3_erased_village_trusted"
+  },
+  {
+   "id": "q3_erased_village_gudrun",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_erased_village_gudrun",
+   "sprite": "elder",
+   "show_flag": "q3_erased_village_s1"
+  },
+  {
+   "id": "q3_erased_village_folke",
+   "x": 7,
+   "y": 21,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_erased_village_folke",
+   "sprite": "ranger",
+   "trainer": "Tax Rider Folke",
+   "show_flag": "q3_erased_village_reveal",
+   "intro": "quillmarch/q3_erased_village_folke_intro",
+   "defeat": "quillmarch/q3_erased_village_folke_defeat",
+   "money": 4450,
+   "team": [
+    {
+     "species": "Forgefly",
+     "level": 87
+    },
+    {
+     "species": "Forgeflare",
+     "level": 88
+    },
+    {
+     "species": "Siltby",
+     "level": 89
+    }
+   ],
+   "win_flags": [
+    "q3_erased_village_done"
+   ],
+   "no_rematch": true
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_smudge_marsh_1"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_smudge_marsh_2"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_smudge_marsh_3"
+  },
+  {
+   "x": 11,
+   "y": 23,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_smudge_marsh_4"
+  },
+  {
+   "x": 0,
+   "y": 3,
+   "item": "dash_brew",
+   "count": 1,
+   "flag": "find_smudge_marsh_q3_0_3"
+  }
+ ]
+}

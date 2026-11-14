@@ -1,0 +1,287 @@
+{
+ "name": "Quillbrook",
+ "region": "veydal",
+ "biome": "fern",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "quillbrook",
+ "rows": [
+  "TTTTTTTTTTTT",
+  "T,,T..~~.___",
+  "T,,,..~~..ST",
+  "T,,...ww...T",
+  "TT,,..~~.,,T",
+  "T,,,S+~~,,,T",
+  "T..T..~~,,TT",
+  "T,,,,.~~..,T",
+  "T^^^^.~~^^^T",
+  "T,,,..~~S,,T",
+  "T,,,.,~~,,,T",
+  "T....,~~,,,T",
+  "TTT,..~~.,,T",
+  "T,,,..ww..,T",
+  "T,,,,.~~.,TT",
+  "T,,S..~~,,,T",
+  "T^^^^.~~^^^T",
+  "T,,,..~~.,,T",
+  "T,,..,~~.T,T",
+  "T..,,.~~,,,T",
+  "T,,,..~~...T",
+  "T,,,..ww..,T",
+  "T,T,..~~.,,T",
+  "T,,,..~~^^^T",
+  "T,,,..~~^D^T",
+  "T,,,..~~..,T",
+  "T__,,.~~,,,T",
+  "T_,,,.~~,,,T",
+  "T_..,.~~..,T",
+  "T_TTTT~~TTTT"
+ ],
+ "warps": [
+  {
+   "x": 11,
+   "y": 1,
+   "to": "brindlewick",
+   "tx": 1,
+   "ty": 12,
+   "facing": "right"
+  },
+  {
+   "x": 1,
+   "y": 29,
+   "to": "wrenhollow",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 9,
+   "y": 24,
+   "to": "quillbrook",
+   "tx": 9,
+   "ty": 2,
+   "facing": "down"
+  },
+  {
+   "x": 9,
+   "y": 1,
+   "to": "quillbrook",
+   "tx": 9,
+   "ty": 25,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "fisher",
+   "x": 8,
+   "y": 2,
+   "facing": "left",
+   "dialogue": "quillbrook/fisher",
+   "sprite": "villager"
+  },
+  {
+   "id": "boatman",
+   "x": 5,
+   "y": 27,
+   "facing": "right",
+   "dialogue": "quillbrook/boatman",
+   "sprite": "villager"
+  },
+  {
+   "id": "brisa",
+   "x": 10,
+   "y": 10,
+   "facing": "left",
+   "dialogue": "quillbrook/brisa",
+   "sprite": "villager",
+   "trainer": "Angler Brisa",
+   "intro": "quillbrook/brisa_intro",
+   "defeat": "quillbrook/brisa_defeat",
+   "money": 260,
+   "team": [
+    {
+     "species": "Puddlet",
+     "level": 9
+    },
+    {
+     "species": "Kelpup",
+     "level": 9
+    }
+   ]
+  },
+  {
+   "id": "corin",
+   "x": 2,
+   "y": 14,
+   "facing": "right",
+   "dialogue": "quillbrook/corin",
+   "sprite": "villager",
+   "trainer": "Wanderer Corin",
+   "intro": "quillbrook/corin_intro",
+   "defeat": "quillbrook/corin_defeat",
+   "money": 280,
+   "team": [
+    {
+     "species": "Mossling",
+     "level": 9
+    },
+    {
+     "species": "Zephlet",
+     "level": 10
+    }
+   ]
+  },
+  {
+   "id": "pim",
+   "x": 9,
+   "y": 20,
+   "facing": "left",
+   "dialogue": "quillbrook/pim",
+   "sprite": "villager",
+   "trainer": "Miller's Kid Pim",
+   "intro": "quillbrook/pim_intro",
+   "defeat": "quillbrook/pim_defeat",
+   "money": 300,
+   "team": [
+    {
+     "species": "Zippit",
+     "level": 10
+    },
+    {
+     "species": "Puddlet",
+     "level": 10
+    },
+    {
+     "species": "Wickit",
+     "level": 9
+    }
+   ]
+  },
+  {
+   "id": "vs_nettie",
+   "x": 4,
+   "y": 10,
+   "facing": "down",
+   "dialogue": "veydal_side/nettie",
+   "sprite": "villager"
+  },
+  {
+   "id": "lq_quell",
+   "x": 4,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "legend_quests/scriptorax_guide",
+   "sprite": "elder",
+   "show_flag": "story_complete",
+   "hide_flag": "lq_scriptorax_ready"
+  },
+  {
+   "id": "vm_fay",
+   "x": 3,
+   "y": 28,
+   "facing": "left",
+   "dialogue": "veydal_more/fay",
+   "sprite": "villager"
+  }
+ ],
+ "signs": [
+  {
+   "x": 10,
+   "y": 2,
+   "dialogue": "quillbrook/sign"
+  },
+  {
+   "x": 8,
+   "y": 24,
+   "dialogue": "quillbrook/culvert"
+  },
+  {
+   "x": 4,
+   "y": 5,
+   "dialogue": "quillbrook/bench"
+  },
+  {
+   "x": 2,
+   "y": 12,
+   "dialogue": "quillbrook/smooth"
+  },
+  {
+   "x": 8,
+   "y": 9,
+   "dialogue": "quillbrook/marker_stone"
+  },
+  {
+   "x": 3,
+   "y": 15,
+   "dialogue": "quillbrook/mound_stone"
+  },
+  {
+   "x": 1,
+   "y": 19,
+   "dialogue": "veydal_more/poster_5",
+   "hide_flag": "poster_5"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 9,
+   "y": 24,
+   "open_flag": "quill_culvert"
+  },
+  {
+   "x": 9,
+   "y": 1,
+   "open_flag": "quill_culvert"
+  },
+  {
+   "x": 2,
+   "y": 11,
+   "open_flag": "pass_quillbrook"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 5,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_quill_west"
+  },
+  {
+   "x": 11,
+   "y": 15,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_quill_east"
+  },
+  {
+   "x": 3,
+   "y": 22,
+   "item": "dry_towel",
+   "count": 1,
+   "flag": "find_quill_reeds"
+  },
+  {
+   "x": 1,
+   "y": 11,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_quill_pocket"
+  },
+  {
+   "x": 1,
+   "y": 15,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_mound_2"
+  }
+ ],
+ "passages": [
+  {
+   "x": 2,
+   "y": 11,
+   "flag": "pass_quillbrook"
+  }
+ ]
+}

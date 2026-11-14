@@ -1,0 +1,20 @@
+{
+ "_note": "Chapter 6: Aldo rows the player across the lake to Corvane (plan item 1407, row choice 1591). Before the Act II card the Act I main-story betrayals are cashed in on the pier.",
+ "steps": [
+  {"say": ["The whole village has come to the pier to watch Aldo row again. Some of them came to watch you."]},
+  {"action": "betrayal juna_post"},
+  {"action": "betrayal vash_hour"},
+  {"action": "betrayal fenrick_lantern"},
+  {"fade": "out", "time": 0.4},
+  {"card": "Act II: The Colours of Corvane"},
+  {"fade": "out", "time": 0.01},
+  {"music": "route"},
+  {"say": ["The ferry slides out over the grey lake. Aldo rows without a word for a while."]},
+  {"say": ["Aldo: Mirela's first crossing was in a boat like this. She was younger than you.", "Aldo: She sat right where you sit, drawing the shore as it went away.", "Aldo: Halfway over, a squall came. She didn't stop drawing. Not once.", "Aldo: When we landed, she showed me the page. She had drawn the squall, too.", "Aldo: 'If it's on the map,' she said, 'it can't surprise you twice.'", "Aldo: I married her the next spring. Nobody was surprised."]},
+  {"dialogue": "brindlewick/ferry_row"},
+  {"say": ["The far shore rises out of the mist. Above it, in the northern sky, a pale seam glows.", "Aldo: That's the third Rift. The wide one. Mirela's out there somewhere."]},
+  {"action": "warp corvane_quay 6 22 up"},
+  {"flag": "ferry_crossed"},
+  {"fade": "in", "time": 0.4}
+ ]
+}

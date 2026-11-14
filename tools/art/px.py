@@ -1,15 +1,15 @@
 """Tiny pixel-art helpers shared by the Era I art generators.
 
 Everything is drawn on an index canvas: None = transparent, 0..3 = the four Era I shades
-(0 darkest, 3 lightest). `save()` maps indices to the fixed Era I greens.
+(0 darkest, 3 lightest). `save()` maps indices to the fixed Era I inks.
 """
 from __future__ import annotations
 
 import math
 from PIL import Image
 
-# Era I "Mono" palette (same values as EraManager.MONO_PALETTE), darkest to lightest.
-PALETTE = [(0x1B, 0x2A, 0x1B), (0x3E, 0x5A, 0x3A), (0x8A, 0xA8, 0x6B), (0xD4, 0xE3, 0xB5)]
+# Era I "Ink" palette (same values as EraManager.INK_PALETTE), darkest to lightest.
+PALETTE = [(0x2A, 0x1E, 0x2C), (0x6A, 0x42, 0x56), (0xC4, 0x8A, 0x5E), (0xF2, 0xE3, 0xC2)]
 
 
 class Canvas:

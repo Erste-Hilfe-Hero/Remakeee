@@ -1,0 +1,191 @@
+{
+ "name": "Bath Rift",
+ "region": "quillmarch",
+ "biome": "rift",
+ "backdrop": "voice",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "TTTTTTTTTTTT",
+  "TT::.XX.::TT",
+  "T::.......:T",
+  "T:......T_.T",
+  "T..o.....T_T",
+  "T.......ST_T",
+  "T@@@....TT_T",
+  "T@@@....:T_T",
+  "T........T_T",
+  "T.X......T_T",
+  "T....@@..T_T",
+  "T....@@..T_T",
+  "TTTT..TTTT_T",
+  "T........T_T",
+  "T..::....T_T",
+  "TTT..TTTTT_T",
+  "T........T_T",
+  "T........T_T",
+  "TTTT..TTTT.T",
+  "T..........T",
+  "T.X......X.T",
+  "TTTTT..TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "mordant_row",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "mordant_row",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "acolyte",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "quillmarch/bath_rift_acolyte",
+   "sprite": "warden",
+   "trainer": "Bath Acolyte Hjalmar",
+   "intro": "quillmarch/bath_rift_acolyte_intro",
+   "defeat": "quillmarch/bath_rift_acolyte_defeat",
+   "money": 3000,
+   "team": [
+    {
+     "species": "Cindrel",
+     "level": 75
+    },
+    {
+     "species": "Nibquill",
+     "level": 75
+    }
+   ]
+  },
+  {
+   "id": "warden_mavet",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/warden_mavet",
+   "sprite": "warden",
+   "trainer": "Warden Mavet",
+   "warden": "v3_bath",
+   "team": [
+    {
+     "species": "Cindrel",
+     "level": 75
+    },
+    {
+     "species": "Nibquill",
+     "level": 75
+    },
+    {
+     "species": "Burringrand",
+     "level": 76
+    },
+    {
+     "species": "Mordantyrant",
+     "level": 76
+    }
+   ],
+   "intro": "quillmarch/warden_mavet_intro",
+   "defeat": "quillmarch/warden_mavet_defeat",
+   "ai": 3,
+   "money": 7600,
+   "rule": "ember_pulse",
+   "win_flags": [
+    "rift_v3_bath_sealed",
+    "v3_ch2_done"
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Siltaroth",
+      "level": 75
+     },
+     {
+      "species": "Nibravure",
+      "level": 75
+     },
+     {
+      "species": "Burringrand",
+      "level": 76
+     },
+     {
+      "species": "Mordantyrant",
+      "level": 76
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Cindrel",
+      "level": 77
+     },
+     {
+      "species": "Nibquill",
+      "level": 77
+     },
+     {
+      "species": "Burringrand",
+      "level": 78
+     },
+     {
+      "species": "Mordantyrant",
+      "level": 78
+     },
+     {
+      "species": "Cindrel",
+      "level": 73
+     }
+    ]
+   }
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "quillmarch/bath_rift_spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "quillmarch/bath_rift_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v3_bath_sealed",
+   "closed": "@"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 10,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_bath_rift_q3_0_10"
+  },
+  {
+   "x": 11,
+   "y": 14,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_bath_rift_q3_11_14"
+  }
+ ]
+}

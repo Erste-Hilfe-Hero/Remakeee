@@ -1,0 +1,44 @@
+{
+ "name": "Mask Atelier",
+ "region": "vellmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCCffCCW",
+  "WffffffW",
+  "WffffffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "larkspur_heights",
+   "tx": 3,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "maskmaker",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/larkspur_heights_mask_atelier_maskmaker",
+   "sprite": "villager"
+  },
+  {
+   "id": "q2_second_face_tilo",
+   "x": 2,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_second_face_tilo",
+   "sprite": "villager",
+   "show_flag": "q2_second_face_asked"
+  }
+ ],
+ "signs": []
+}

@@ -1,0 +1,9 @@
+{
+ "_comment": "nl translation of the kampf_k09b table, keyed by the English text.",
+ "strings": {
+  "Damage numbers: %s": "Schadegetallen: %s",
+  "Shows the damage of each hit as a number over the Spirling.": "Toont de schade van elke treffer als getal boven de Spirling.",
+  "Star of the battle: %s": "Ster van het gevecht: %s",
+  "Take a photo": "Foto maken"
+ }
+}

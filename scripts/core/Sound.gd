@@ -5,43 +5,127 @@ extends Node
 ##   Sound.music("town")         loops audio/music/<name>.ogg (crossfades; same track keeps playing)
 ##   Sound.jingle("victory")     plays a music file once, then resumes the previous track
 ##   Sound.cry(species_data)     the Spirling's own call (synthesized by Cry.gd)
+##   Sound.battle_state(p, f)    battle HP shares: low-health alarm, Era V music intensity
 ##   Sound.element_hit(element)  hit sound for a move of that element
+##   Sound.enter_map(map_id)     the map's song and ambience loop (data/music.json)
+##   Sound.footstep(kind, wet)   quiet step sound for the ground under the Wayfarer
+##   Sound.text_blip(speaker)    15 ms dialogue blip at the speaker's own pitch
+## Buses (item 2547): menu sounds on "UI", cries and text voice on "Voice", ambience loops on
+## "Ambience"; all three feed "SFX".
 ## Missing files are ignored, so code can name sounds before they exist.
+## Era sound sets (docs/ERA_FEEL_AUDIO.md): data/era_audio.json maps each sound to the file of
+## the active era, so menus, doors, jingles, cries and the low-health alarm follow the hardware
+## step of the era like the art does.
 
 const SFX_DIR: String = "res://audio/sfx/%s.wav"
 const MUSIC_DIR: String = "res://audio/music/%s.ogg"
 const MAP_MUSIC: String = "res://data/music.json"
+const AMBIENCE_DIR: String = "res://audio/ambience/%s.ogg"
+## Ambience loops sit well under the music (item 2570).
+const AMBIENCE_DB: float = -14.0
+## Under battle music the place stays faintly audible (item 2579).
+const AMBIENCE_DUCK_DB: float = -24.0
+## Ambience crossfades on its own clock, independent of the music (item 2578).
+const AMBIENCE_FADE: float = 1.0
+## Effects are written at a -3 dBFS peak; footsteps play 15 dB lower, at about -18 dB (item 2501).
+const STEP_DB: float = -15.0
+const BLIP_DB: float = -9.0
+## Fade back in after the app returns from the background (item 2550).
+const RESUME_FADE: float = 0.3
+## Menu sounds that go to the UI bus.
+const UI_SOUNDS: Array[String] = ["select", "confirm", "cancel", "bump", "tick", "coin", "save", "locked", "toast", "page_open", "page_close"]
+## Ground per tile kind for footsteps (item 2502); "sand" is a path or grass tile next to water.
+const GROUNDS: Dictionary[int, String] = {
+	TilesetFactory.Kind.GRASS: "grass", TilesetFactory.Kind.TALL_GRASS: "grass", TilesetFactory.Kind.FLOWER: "grass",
+	TilesetFactory.Kind.PATH: "path", TilesetFactory.Kind.STAIRS: "path", TilesetFactory.Kind.DOOR: "path",
+	TilesetFactory.Kind.FLOOR: "wood", TilesetFactory.Kind.PIER: "wood",
+	TilesetFactory.Kind.SCREE: "stone", TilesetFactory.Kind.PLATE: "stone", TilesetFactory.Kind.CRACKED: "stone",
+	TilesetFactory.Kind.RIFT: "stone", TilesetFactory.Kind.REEDS: "shore",
+}
+## Text voice pitch per speaker (item 2503): the Wayfarer for unnamed lines, Mirela, Kestra,
+## Aldo, the wardens, everyone else.
+const VOICE_PITCH: Dictionary[String, float] = {
+	"player": 1.0, "mirela": 1.26, "kestra": 1.12, "aldo": 0.79, "warden": 0.7, "villager": 0.94,
+}
+## Captions for important sounds (item 2653), shown at the top edge when the setting is on.
+const CAPTIONS: Dictionary[String, String] = {
+	"encounter": "[Rustling in the grass]",
+	"spot": "[Footsteps stop short]",
+	"pickup": "[Item picked up]",
+	"rumble": "[A deep rumble]",
+}
 const FADE_TIME: float = 0.4
-const SFX_VOICES: int = 6
+## Ten voices; when all are busy the least important sound gives way (item 2551).
+const SFX_VOICES: int = 10
+## Priority per kind of sound: menus 1, the world 2, battle 3 (cries and the Echo marks too).
+const PRIO_UI: int = 1
+const PRIO_WORLD: int = 2
+const PRIO_BATTLE: int = 3
+const BATTLE_SOUNDS: Array[String] = ["miss", "dodge", "faint", "status", "heal", "level_up", "energy_tick", "run", "low_hp", "bond",
+	"overcharge", "crit_accent", "rule_seal", "partner_call", "calm_fail", "defeat"]
+const BATTLE_PREFIXES: Array[String] = ["hit", "charge_", "travel_", "status_", "stage_", "field_", "boss_", "eff_"]
 ## Same effect within this many seconds is skipped (menus scroll fast).
 const SFX_MIN_GAP: float = 0.03
+
+const ERA_AUDIO: String = "res://data/era_audio.json"
+## HP share at or below which the low-health alarm sounds (the same line as the pinch music).
+const LOW_HP_RATIO: float = 0.25
 
 var current_track: String = ""
 var _music: AudioStreamPlayer
 var _music_out: AudioStreamPlayer
 var _voices: Array[AudioStreamPlayer] = []
 var _next_voice: int = 0
+## Priority of what each voice plays now.
+var _voice_prio: Array[int] = []
 var _cache: Dictionary[String, AudioStream] = {}
 var _last_play: Dictionary[String, float] = {}
 var _map_music: Dictionary = {}
 var _resume_track: String = ""
+var current_ambience: String = ""
+var _ambience: AudioStreamPlayer
+var _ambience_out: AudioStreamPlayer
+var _step_take: int = 0
+var _blip_count: int = 0
+## The effect asked for last, even when silent (tests), and the era file it resolved to.
+var last_sfx: String = ""
+var last_sfx_file: String = ""
+## True while the low-health alarm runs.
+var alarm_on: bool = false
+var _alarm: Timer
+var _alarm_left: int = 0
+var _alarm_db: float = 0.0
+var _sfx_names: Dictionary[String, String] = {}
+## Captions shown so far (tests).
+var captions: Array[String] = []
 ## Headless runs (CI, tests) have no audio output; the dummy driver never releases playbacks,
 ## which shows up as leaks at exit, so Sound stays silent there.
 var enabled: bool = DisplayServer.get_name() != "headless"
 
 func _ready() -> void:
+	_vary.randomize()
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	GameState.ensure_buses()
 	_music = _player(GameState.BUS_MUSIC)
 	_music_out = _player(GameState.BUS_MUSIC)
+	_ambience = _player(GameState.BUS_AMBIENCE)
+	_ambience_out = _player(GameState.BUS_AMBIENCE)
 	for i: int in SFX_VOICES:
 		_voices.append(_player(GameState.BUS_SFX))
+		_voice_prio.append(0)
+	_alarm = Timer.new()
+	_alarm.timeout.connect(_alarm_beep)
+	add_child(_alarm)
+	if enabled:
+		preload_sfx()
 	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(MAP_MUSIC)) if FileAccess.file_exists(MAP_MUSIC) else null
 	_map_music = raw if raw is Dictionary else {}
+	EraManager.era_changed.connect(func(era: int) -> void: apply_era_fx(era))
+	apply_era_fx.call_deferred(EraManager.active_era())
 
 ## Drops streams on quit so nothing is reported as leaked.
 func _exit_tree() -> void:
-	for p: AudioStreamPlayer in [_music, _music_out] + _voices:
+	for p: AudioStreamPlayer in [_music, _music_out, _ambience, _ambience_out] + _voices:
 		p.stop()
 		p.stream = null
 	_cache.clear()
@@ -57,28 +141,392 @@ func _load(path: String) -> AudioStream:
 		_cache[path] = load(path) if ResourceLoader.exists(path) else null
 	return _cache[path]
 
-func sfx(sound_name: String) -> void:
+## Sounds that need a longer gap than SFX_MIN_GAP: running into a wall at most every 0.4 s
+## (item 2520).
+const SFX_GAPS: Dictionary[String, float] = {"bump": 0.4, "locked": 0.4, "toast": 0.3}
+## The cursor sound picks one of three close pitches, so long scrolling does not tire (item 2510).
+const SELECT_PITCHES: Array[float] = [0.97, 1.0, 1.03]
+## Hit sounds vary their pitch between 0.95 and 1.05 (item 2533).
+const HIT_PITCH_SPREAD: float = 0.05
+var _vary := RandomNumberGenerator.new()
+
+## Seconds that must pass before [param sound_name] plays again.
+static func gap_for(sound_name: String) -> float:
+	return SFX_GAPS.get(sound_name, SFX_MIN_GAP)
+
+## Pitch for [param sound_name]: the cursor and hit sounds vary a little unless a caller set
+## its own pitch.
+func varied_pitch(sound_name: String, pitch: float) -> float:
+	if pitch != 1.0:
+		return pitch
+	if sound_name == "select":
+		return SELECT_PITCHES[_vary.randi_range(0, SELECT_PITCHES.size() - 1)]
+	if sound_name == "hit" or sound_name.begins_with("hit_"):
+		return 1.0 + _vary.randf_range(-HIT_PITCH_SPREAD, HIT_PITCH_SPREAD)
+	return pitch
+
+func sfx(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
+	last_sfx = sound_name
+	last_sfx_file = sfx_file(sound_name)
+	caption(sound_name)
 	if not enabled:
 		return
-	var stream: AudioStream = _load(SFX_DIR % sound_name)
+	var stream: AudioStream = _load(SFX_DIR % last_sfx_file)
 	if stream == null:
 		return
 	var now: float = Time.get_ticks_msec() / 1000.0
-	if now - float(_last_play.get(sound_name, -1.0)) < SFX_MIN_GAP:
+	if now - float(_last_play.get(sound_name, -1.0)) < gap_for(sound_name):
 		return
 	_last_play[sound_name] = now
-	_play_voice(stream)
+	_play_voice(stream, bus_for(sound_name), volume_db, varied_pitch(sound_name, pitch), priority_of(sound_name))
 
-func _play_voice(stream: AudioStream) -> void:
-	var p: AudioStreamPlayer = _voices[_next_voice]
-	_next_voice = (_next_voice + 1) % _voices.size()
+## Bus for an effect: menu sounds on UI, the text blip on Voice, everything else on SFX.
+static func bus_for(sound_name: String) -> StringName:
+	if sound_name in UI_SOUNDS:
+		return GameState.BUS_UI
+	if sound_name.begins_with("blip"):
+		return GameState.BUS_VOICE
+	return GameState.BUS_SFX
+
+## Priority of effect [param sound_name] (item 2551).
+static func priority_of(sound_name: String) -> int:
+	if sound_name in UI_SOUNDS or sound_name.begins_with("blip"):
+		return PRIO_UI
+	if sound_name in BATTLE_SOUNDS:
+		return PRIO_BATTLE
+	for p: String in BATTLE_PREFIXES:
+		if sound_name.begins_with(p):
+			return PRIO_BATTLE
+	return PRIO_WORLD
+
+## Voice for a new sound of priority [param prio], or -1 to drop it: a free voice from
+## [param start] on, else the busy voice with the lowest priority not above [param prio]
+## (the first one from [param start] among equals).
+static func pick_voice(busy: Array[bool], prios: Array[int], prio: int, start: int) -> int:
+	var n: int = busy.size()
+	for k: int in n:
+		var i: int = (start + k) % n
+		if not busy[i]:
+			return i
+	var best: int = -1
+	for k: int in n:
+		var i: int = (start + k) % n
+		if prios[i] <= prio and (best < 0 or prios[i] < prios[best]):
+			best = i
+	return best
+
+## Loads every effect up front (well under 2 MB), so the first hit in a battle does not
+## stall on a disk read (item 2557). Returns how many were loaded.
+func preload_sfx() -> int:
+	var count: int = 0
+	for f: String in ResourceLoader.list_directory(SFX_DIR.get_base_dir()):
+		if f.get_extension() == "wav":
+			if _load(SFX_DIR % f.get_basename()) != null:
+				count += 1
+	return count
+
+func _play_voice(stream: AudioStream, bus: StringName = GameState.BUS_SFX, volume_db: float = 0.0, pitch: float = 1.0, prio: int = PRIO_WORLD) -> void:
+	var busy: Array[bool] = []
+	for v: AudioStreamPlayer in _voices:
+		busy.append(v.playing)
+	var i: int = pick_voice(busy, _voice_prio, prio, _next_voice)
+	if i < 0:
+		return
+	_next_voice = (i + 1) % _voices.size()
+	_voice_prio[i] = prio
+	var p: AudioStreamPlayer = _voices[i]
 	p.stream = stream
+	p.bus = bus
+	p.volume_db = volume_db
+	p.pitch_scale = pitch
 	p.play()
 
-## Plays the cry of [param sd] (item 70).
-func cry(sd: SpirlingData) -> void:
+## Plays the cry of [param sd] (item 70) as it sounds in [param era] (0 = the active era).
+## A bonded Spirling passes its origin era, so it keeps the call of the era it was met in.
+func cry(sd: SpirlingData, era: int = 0) -> void:
+	var e: int = era if era > 0 else EraManager.active_era()
 	if enabled and sd != null:
-		_play_voice(Cry.stream_for(sd))
+		_play_voice(Cry.stream_for(sd, e, cry_spec(e)), GameState.BUS_VOICE, 0.0, 1.0, PRIO_BATTLE)
+	if sd != null:
+		cry_caption(sd.species_name)
+
+## Era a Spirling's cry is played in: its origin era when it is the player's own, else the
+## era on screen (wild Spirlings and rivals' teams sound like the place).
+static func cry_era_for(origin_era: int, owned: bool, active: int) -> int:
+	return clampi(origin_era, 1, EraManager.NEWEST) if owned else active
+
+## data/era_audio.json, read once ({} when the file is missing, so every lookup falls back).
+static var _era_audio: Dictionary = {}
+static var _era_audio_read: bool = false
+
+static func era_audio() -> Dictionary:
+	if not _era_audio_read:
+		_era_audio_read = true
+		var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(ERA_AUDIO)) if FileAccess.file_exists(ERA_AUDIO) else null
+		_era_audio = raw if raw is Dictionary else {}
+	return _era_audio
+
+## The era_audio.json entry of [param era] ({} when missing).
+static func era_spec(era: int) -> Dictionary:
+	var eras: Variant = era_audio().get("eras", {})
+	var spec: Variant = (eras as Dictionary).get(str(era), {}) if eras is Dictionary else {}
+	return spec if spec is Dictionary else {}
+
+## How Cry.gd processes a cry in [param era] ({} = the plain Era I chip cry).
+static func cry_spec(era: int) -> Dictionary:
+	var c: Variant = era_spec(era).get("cry", {})
+	return c if c is Dictionary else {}
+
+## File for sound [param key] in [param era]: the newest era up to [param era] that names a file
+## for it which [param exists], else [param key] itself.
+static func era_sfx_name(key: String, era: int, exists: Callable) -> String:
+	for e: int in range(era, 0, -1):
+		var table: Variant = era_spec(e).get("sfx", {})
+		var f: String = str((table as Dictionary).get(key, "")) if table is Dictionary else ""
+		if not f.is_empty() and exists.call(f):
+			return f
+	return key
+
+## File of sound [param key] in the active era (cached per era).
+func sfx_file(key: String) -> String:
+	var era: int = EraManager.active_era()
+	var ck: String = "%d:%s" % [era, key]
+	if not _sfx_names.has(ck):
+		_sfx_names[ck] = era_sfx_name(key, era, func(f: String) -> bool: return ResourceLoader.exists(SFX_DIR % f))
+	return _sfx_names[ck]
+
+## Battle feed from BattleScene: [param player] is the lowest HP share among the player's active
+## Spirlings, [param foe] the lowest on the other side. Runs the low-health alarm and, in eras
+## with "battle_layers", the music intensity.
+func battle_state(player: float, foe: float) -> void:
+	var layered: bool = bool(era_spec(EraManager.active_era()).get("battle_layers", false))
+	MusicDirector.set_intensity(battle_intensity(player, foe) if layered else MusicDirector.FULL_INTENSITY)
+	low_hp_alarm(player > 0.0 and player <= LOW_HP_RATIO)
+
+## Music intensity for the HP shares: 0 before the first blow, 2 once either side is at half or
+## below, else 1.
+static func battle_intensity(player: float, foe: float) -> int:
+	if player >= 0.999 and foe >= 0.999:
+		return 0
+	if minf(player, foe) <= 0.5:
+		return 2
+	return 1
+
+## Starts or stops the low-health alarm. Its beat comes from the era's "low_hp" entry: Era I to
+## IV beep on a loop (at most "max" times), Era V sounds one heartbeat and leaves the rest to
+## the pinch music.
+func low_hp_alarm(on: bool) -> void:
+	if on == alarm_on:
+		return
+	alarm_on = on
+	_alarm.stop()
+	if not on:
+		_alarm_left = 0
+		return
+	var spec: Variant = era_spec(EraManager.active_era()).get("low_hp", {})
+	var lh: Dictionary = spec if spec is Dictionary else {}
+	_alarm_left = int(lh.get("max", 1))
+	_alarm_db = float(lh.get("db", -8.0))
+	_alarm_beep()
+	var every: float = float(lh.get("repeat", 0.0))
+	if every > 0.0 and _alarm_left > 0:
+		_alarm.start(every)
+
+func _alarm_beep() -> void:
+	if _alarm_left <= 0:
+		_alarm.stop()
+		return
+	_alarm_left -= 1
+	sfx("low_hp", _alarm_db)
+
+## Shows the caption for [param sound_name] when sound captions are on (item 2653).
+func caption(sound_name: String) -> void:
+	if not GameState.sound_captions or not CAPTIONS.has(sound_name):
+		return
+	_show_caption(CAPTIONS[sound_name])
+
+## Caption for a Spirling's cry (Kampf-Plan, Barrierefreiheit: subtitles for cries), so the cry
+## that opens a battle or marks a knock-out is seen too when the sound is off.
+func cry_caption(species: String) -> void:
+	if GameState.sound_captions and not species.is_empty():
+		_show_caption(CRY_CAPTION % species)
+
+const CRY_CAPTION: String = "[%s cries out]"
+
+func _show_caption(text: String) -> void:
+	captions.append(text)
+	if captions.size() > 8:
+		captions.pop_front()
+	Ticker.show_text(text)
+
+## Ground name for footsteps on a tile of [param kind]; [param wet] when water is next to it.
+static func ground_for(kind: int, wet: bool) -> String:
+	var g: String = GROUNDS.get(kind, "path")
+	if wet and (g == "path" or g == "grass"):
+		return "sand"
+	return g
+
+## One quiet footstep, alternating between the two takes of the ground (items 2501, 2502).
+func footstep(kind: int, wet: bool = false) -> void:
+	_step_take = 3 - _step_take if _step_take > 0 else 1
+	sfx("step_%s_%d" % [ground_for(kind, wet), _step_take], STEP_DB)
+
+## Speaker key for the text voice: a known character's id prefix, "player" for unnamed lines.
+static func voice_for(npc_id: String) -> String:
+	if npc_id.is_empty():
+		return "player"
+	for key: String in ["mirela", "kestra", "aldo", "warden"]:
+		if npc_id.begins_with(key):
+			return key
+	return "villager"
+
+## Dialogue blip: every second typed letter plays (item 2503).
+func text_blip(speaker: String, letter: String) -> void:
+	if not GameState.text_voice or letter.strip_edges().is_empty():
+		return
+	_blip_count += 1
+	if _blip_count % 2 == 0:
+		sfx(blip_name(EraManager.active_era()), BLIP_DB, float(VOICE_PITCH.get(speaker, 1.0)))
+
+## The text voice of era [param era] (data/era_feel.json "blip"): Era I's square blip, then one
+## step up in sound chip per era. Falls back to "blip" when the era's file is missing.
+static func blip_name(era: int) -> String:
+	var n: String = str(EraFeel.value(era, "blip"))
+	return n if not n.is_empty() and ResourceLoader.exists(SFX_DIR % n) else "blip"
+
+## The song and ambience loop of [param map_id] (items 2443, 2570).
+func enter_map(map_id: String) -> void:
+	var amb: String = ambience_for_map(map_id)
+	music(track_for_map(map_id), true)
+	ambience(amb)
+
+## Ambience loop name of [param map_id], "" for none (indoor maps, rifts): its own loop from
+## data/music.json, else the biome loop of the active era (Era IV and V, data/era_audio.json).
+func ambience_for_map(map_id: String) -> String:
+	var entry: Variant = map_entry(map_id)
+	var own: String = str((entry as Dictionary).get("ambience", "")) if entry is Dictionary else ""
+	if not own.is_empty():
+		return own
+	var place: Dictionary = map_place(map_id)
+	return biome_ambience(str(place.biome), bool(place.outdoor), EraManager.active_era(),
+		func(a: String) -> bool: return ResourceLoader.exists(AMBIENCE_DIR % a))
+
+## Biome loop for an outdoor map of [param biome] in [param era]: the newest era up to [param era]
+## with a loop for it that [param exists], "" indoors or without one.
+static func biome_ambience(biome: String, outdoor: bool, era: int, exists: Callable) -> String:
+	if not outdoor or biome.is_empty():
+		return ""
+	for e: int in range(era, 0, -1):
+		var table: Variant = era_spec(e).get("ambience", {})
+		var a: String = str((table as Dictionary).get(biome, "")) if table is Dictionary else ""
+		if not a.is_empty() and exists.call(a):
+			return a
+	return ""
+
+static var _places: Dictionary[String, Dictionary] = {}
+
+## {"biome", "outdoor"} of [param map_id] from its file in data/maps (floors share the file's).
+static func map_place(map_id: String) -> Dictionary:
+	var file: String = map_id.get_slice("@", 0)
+	if not _places.has(file):
+		var path: String = "res://data/maps/%s.json" % file
+		var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(path)) if FileAccess.file_exists(path) else null
+		var d: Dictionary = raw if raw is Dictionary else {}
+		_places[file] = {"biome": str(d.get("biome", "")), "outdoor": bool(d.get("outdoor", false))}
+	return _places[file]
+
+var ambience_ducked: bool = false
+
+## Lowers (or restores) the running ambience loop.
+func duck_ambience(on: bool) -> void:
+	ambience_ducked = on
+	if enabled and _ambience.playing:
+		create_tween().tween_property(_ambience, "volume_db", AMBIENCE_DUCK_DB if on else AMBIENCE_DB, FADE_TIME)
+
+## Loops audio/ambience/<name>.ogg on the Ambience bus, crossfading; "" stops it. [param ducked]
+## keeps it at AMBIENCE_DUCK_DB (a Resonance field's loop under a battle, KAMPF_PLAN_1000 684).
+func ambience(loop_name: String, ducked: bool = false) -> void:
+	if loop_name == current_ambience:
+		if ambience_ducked != ducked:
+			duck_ambience(ducked)
+		return
+	ambience_ducked = ducked
+	current_ambience = loop_name
+	if not enabled:
+		return
+	if _ambience.playing:
+		var old: AudioStreamPlayer = _ambience
+		_ambience = _ambience_out
+		_ambience_out = old
+		var tw: Tween = create_tween()
+		tw.tween_property(_ambience_out, "volume_db", -60.0, AMBIENCE_FADE)
+		tw.tween_callback(_ambience_out.stop)
+	var stream: AudioStream = _load(AMBIENCE_DIR % loop_name) if not loop_name.is_empty() else null
+	if stream == null:
+		_ambience.stop()
+		return
+	if stream is AudioStreamOggVorbis:
+		stream = stream.duplicate()
+		(stream as AudioStreamOggVorbis).loop = true
+	_ambience.stream = stream
+	_ambience.volume_db = -60.0
+	_ambience.play()
+	create_tween().tween_property(_ambience, "volume_db", AMBIENCE_DUCK_DB if ducked else AMBIENCE_DB, AMBIENCE_FADE)
+
+## Background: silence everything; back in front: fade in over RESUME_FADE (item 2550).
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_PAUSED:
+		app_paused()
+	elif what == NOTIFICATION_APPLICATION_RESUMED:
+		app_resumed()
+
+var _resume_tween: Tween
+
+func app_paused() -> void:
+	if _resume_tween != null:
+		_resume_tween.kill()
+	GameState.master_fade = 0.0
+	GameState.apply_volume()
+
+func app_resumed() -> void:
+	if _resume_tween != null:
+		_resume_tween.kill()
+	_resume_tween = create_tween()
+	_resume_tween.tween_method(func(v: float) -> void:
+		GameState.master_fade = v
+		GameState.apply_volume(), GameState.master_fade, 1.0, RESUME_FADE)
+
+## One scale per element (Elements.E order): the three Echo call marks play these
+## notes, so every element sounds different (plan area 1, item 279).
+const ELEMENT_SCALES: Array = [
+	[60, 64, 67],  # EMBER: bright major
+	[62, 65, 69],  # TIDE: soft minor
+	[65, 69, 72],  # BLOOM: warm
+	[59, 65, 71],  # VOLT: tense
+	[55, 58, 62],  # STONE: low
+	[67, 72, 74],  # GALE: open
+	[72, 76, 79],  # LUMEN: high and clear
+	[57, 60, 63],  # UMBRA: dark
+	[53, 56, 60],  # INK: low and blotted
+	[69, 74, 81],  # ECHO: bell fifths
+	[54, 57, 61],  # RUST: grinding low
+	[61, 66, 70],  # MASK: sly
+	[63, 68, 73],  # ACID: sour fourths
+	[74, 79, 83],  # FROST: brittle and high
+	[64, 68, 71],  # GILT: rich major
+	[71, 74, 78],  # ZENITH: bright and open
+]
+
+## MIDI note for mark [param mark] in the scale of [param element].
+static func mark_note(element: int, mark: int) -> int:
+	var scale: Array = ELEMENT_SCALES[clampi(element, 0, ELEMENT_SCALES.size() - 1)]
+	return int(scale[clampi(mark, 0, scale.size() - 1)])
+
+## Plays one Echo call mark. Muted calls (next to an open Rift) are quieter and thinner.
+func mark_tone(element: int, mark: int, muted: bool = false) -> void:
+	if enabled:
+		var voice: Array = Cry.ELEMENT_VOICE[clampi(element, 0, Cry.ELEMENT_VOICE.size() - 1)]
+		_play_voice(Cry.tone(mark_note(element, mark), float(voice[0]), 0.12 if muted else 0.3), GameState.BUS_SFX, 0.0, 1.0, PRIO_BATTLE)
 
 ## Sound effect name for a hit by a move of [param element] (Elements.E), "hit" if unknown.
 static func element_hit_name(element: int) -> String:
@@ -86,14 +534,111 @@ static func element_hit_name(element: int) -> String:
 		return "hit"
 	return "hit_" + String(Elements.E.keys()[element]).to_lower()
 
-func element_hit(element: int) -> void:
-	sfx(element_hit_name(element))
+## Loudness of a hit sound by the share of strength it took (item 2532): up to 10 % at
+## -6 dB, up to 30 % at -3 dB, more at full volume.
+static func hit_volume_db(share_lost: float) -> float:
+	if share_lost <= 0.10:
+		return -6.0
+	if share_lost <= 0.30:
+		return -3.0
+	return 0.0
+
+## Picking an art rings the confirm sound one step higher per element, climbing one octave
+## in Elements.E order (item 2539).
+const ART_PICK_STEPS: Array[int] = [0, 1, 2, 4, 5, 7, 8, 9, 11, 12, 13, 14, 16, 17, 19, 21]
+
+static func art_pick_pitch(element: int) -> float:
+	if element < 0 or element >= ART_PICK_STEPS.size():
+		return 1.0
+	return pow(2.0, ART_PICK_STEPS[element] / 12.0)
+
+## Energy gained at round start ticks once per point, at most three times (item 2537).
+const ENERGY_TICKS_MAX: int = 3
+const ENERGY_TICK_GAP: float = 0.07
+
+static func energy_ticks(gain: int) -> int:
+	return clampi(gain, 0, ENERGY_TICKS_MAX)
+
+## Plays [param count] faint Energy ticks one after another.
+func energy_tick(count: int) -> void:
+	for i: int in count:
+		sfx("energy_tick")
+		if i < count - 1 and is_inside_tree():
+			await get_tree().create_timer(ENERGY_TICK_GAP, true).timeout
+
+func element_hit(element: int, share_lost: float = 1.0) -> void:
+	sfx(element_hit_name(element), hit_volume_db(share_lost))
 
 ## Track for [param map_id] from data/music.json, in the variant for the active era.
 func track_for_map(map_id: String) -> String:
-	var maps: Dictionary = _map_music.get("maps", {})
-	var track: String = str(maps.get(map_id, _map_music.get("default", "")))
+	var entry: Variant = map_entry(map_id)
+	var track: String = str((entry as Dictionary).get("track", "")) if entry is Dictionary else str(entry)
 	return era_track(track, EraManager.active_era(), func(t: String) -> bool: return ResourceLoader.exists(MUSIC_DIR % t))
+
+## The data/music.json entry for [param map_id]: a track name or {"track", "ambience"}, from
+## "maps" (own place songs) or "themes" (shared and single-file themes). A map in neither plays
+## its region's song (the region on screen), then "default".
+func map_entry(map_id: String, region: String = "") -> Variant:
+	return entry_in(_map_music, map_id, region if not region.is_empty() else EraManager.current_region)
+
+static func entry_in(table: Dictionary, map_id: String, region: String) -> Variant:
+	for list: String in ["maps", "themes"]:
+		var maps: Dictionary = table.get(list, {})
+		for key: String in [map_id, map_id.get_slice("@", 0)]:
+			if maps.has(key):
+				return maps[key]
+	var regions: Dictionary = table.get("regions", {})
+	return regions.get(region, table.get("default", ""))
+
+## The map Wayfarer battle tune of [param region] in the active era (KAMPF_PLAN_1000 item 560).
+func area_theme(region: String) -> String:
+	var t: String = BattleAudio.area_theme(_map_music, region, EraManager.active_era())
+	return t if not t.is_empty() and ResourceLoader.exists(MUSIC_DIR % t) else ""
+
+## Battle music [param track] ("battle", "warden") in the variant of the active era, so fights
+## sound like the era's hardware (battle_era2 to battle_era5).
+func battle_music(track: String) -> String:
+	return era_music(track)
+
+## [param track] in the variant of the active era ("<track>_era<N>", else the plain track).
+func era_music(track: String) -> String:
+	return era_track(track, EraManager.active_era(), func(t: String) -> bool: return ResourceLoader.exists(MUSIC_DIR % t))
+
+## Music bus effects per era from data/music.json "era_fx": chorus from Era II, a room from
+## Era III. Replaces only the effects it added before; returns how many it added.
+const ERA_FX_META: StringName = &"era_fx"
+
+func apply_era_fx(era: int) -> int:
+	var bus: int = AudioServer.get_bus_index(GameState.BUS_MUSIC)
+	if bus < 0:
+		return 0
+	for i: int in range(AudioServer.get_bus_effect_count(bus) - 1, -1, -1):
+		if AudioServer.get_bus_effect(bus, i).has_meta(ERA_FX_META):
+			AudioServer.remove_bus_effect(bus, i)
+	var added: int = 0
+	for fx: AudioEffect in era_effects((_map_music.get("era_fx", {}) as Dictionary).get(str(era), {})):
+		fx.set_meta(ERA_FX_META, era)
+		AudioServer.add_bus_effect(bus, fx)
+		added += 1
+	return added
+
+## The effects one "era_fx" entry asks for.
+static func era_effects(spec: Dictionary) -> Array[AudioEffect]:
+	var out: Array[AudioEffect] = []
+	if float(spec.get("chorus_wet", 0.0)) > 0.0:
+		var ch := AudioEffectChorus.new()
+		ch.voice_count = 2
+		ch.wet = float(spec.chorus_wet)
+		ch.dry = 1.0
+		out.append(ch)
+	if float(spec.get("reverb_wet", 0.0)) > 0.0:
+		var rv := AudioEffectReverb.new()
+		rv.room_size = float(spec.get("reverb_room", 0.4))
+		rv.wet = float(spec.reverb_wet)
+		rv.dry = 1.0
+		rv.damping = 0.6
+		out.append(rv)
+	return out
 
 ## Era music (item 66): "<track>_era<N>" for the newest era N that has its own version, so a
 ## region can rearrange a theme for its hardware generation. Falls back to the plain track.
@@ -115,7 +660,42 @@ static func list_sounds(dir: String) -> Array[String]:
 	out.sort()
 	return out
 
-func music(track: String) -> void:
+## Other music lowers the map's ambience to AMBIENCE_DUCK_DB (battles) or stops it (title);
+## enter_map() brings it back.
+## Pitch of the music players (a Rift field tunes the battle song, KAMPF_PLAN_1000 item 332; a
+## boss's second phase raises it, item 683). Kept across track changes until set back to 1.0.
+var music_pitch_scale: float = 1.0
+
+func music_pitch(p: float) -> void:
+	music_pitch_scale = clampf(p, 0.5, 2.0)
+	for player: AudioStreamPlayer in [_music, _music_out]:
+		if player != null:
+			player.pitch_scale = music_pitch_scale
+
+## Dip of the music while a battle line types (KAMPF_PLAN_1000 695), 0 when none.
+var music_duck_db: float = 0.0
+var _duck_tween: Tween
+
+## Lowers the music by BattleAudio's text_duck_db while [param on], back to full otherwise.
+func duck_music(on: bool) -> void:
+	var db: float = BattleAudio.text_duck_db(on)
+	if is_equal_approx(db, music_duck_db):
+		return
+	music_duck_db = db
+	if not enabled or _music == null or not _music.playing:
+		return
+	if _duck_tween != null and _duck_tween.is_valid():
+		_duck_tween.kill()
+	_duck_tween = create_tween()
+	_duck_tween.tween_property(_music, "volume_db", music_duck_db, BattleAudio.text_duck_fade())
+
+func music(track: String, keep_ambience: bool = false) -> void:
+	if track == "title":
+		ambience("")
+		# The title song follows the era like the battle music (title_era2 to title_era5).
+		track = era_music(track)
+	elif not keep_ambience:
+		duck_ambience(true)
 	if track == current_track and _music.playing:
 		return
 	_resume_track = ""
@@ -127,6 +707,8 @@ func stop_music() -> void:
 ## Plays [param track] once (no loop), then goes back to [param then] (or the track before it).
 func jingle(track: String, then: String = "") -> void:
 	var back: String = then if not then.is_empty() else current_track
+	# Jingles follow the era too (victory_era2 to victory_era5).
+	track = era_music(track)
 	_switch(track, false)
 	_resume_track = back
 	if enabled and _music.stream != null:
@@ -137,6 +719,8 @@ func jingle(track: String, then: String = "") -> void:
 
 func _switch(track: String, loop: bool) -> void:
 	current_track = track
+	if not MusicDirector.is_battle_track(track):
+		low_hp_alarm(false)
 	if not enabled:
 		return
 	if _music.playing:
@@ -147,7 +731,11 @@ func _switch(track: String, loop: bool) -> void:
 		var tw: Tween = create_tween()
 		tw.tween_property(_music_out, "volume_db", -40.0, FADE_TIME)
 		tw.tween_callback(_music_out.stop)
-	var stream: AudioStream = _load(MUSIC_DIR % track) if not track.is_empty() else null
+	# Place songs with stems play through the MusicDirector's layers (item 2479).
+	var stream: AudioStream = MusicDirector.stream_for(track) if loop else null
+	MusicDirector.set_active(stream, track)
+	if stream == null and not track.is_empty():
+		stream = _load(MUSIC_DIR % track)
 	if stream == null:
 		_music.stop()
 		return
@@ -155,5 +743,6 @@ func _switch(track: String, loop: bool) -> void:
 		stream = stream.duplicate()
 		(stream as AudioStreamOggVorbis).loop = loop
 	_music.stream = stream
-	_music.volume_db = 0.0
+	_music.volume_db = music_duck_db
+	_music.pitch_scale = music_pitch_scale
 	_music.play()

@@ -1,17 +1,48 @@
 {
  "aldo": {
   "lines": [
-   "Aldo: You slept through the whole storm? The sky split open over the lake last night.",
-   "Aldo: That little one hasn't left your side since it came in from the rain.",
-   "Aldo: Every Rift that opens spreads the Hush. Spirlings near it go quiet and forget their Tamers.",
-   "Aldo: The cartographers will need fresh maps. Take this, and go see Kestra at the map house."
+   "Aldo: Good. A cartographer shouldn't walk the valley alone.",
+   "Aldo: Every Rift that opens spreads the Hush. Spirlings near it go quiet and forget their Wayfarers.",
+   "Aldo: The last time the sky split like this, you weren't born yet. Your grandmother Mirela went in to map that Rift. She never came back.",
+   "Aldo: Her map book was up in the lamp room. The storm tore it apart and blew the pages across the valley.",
+   "Aldo: The cartographers will need fresh maps. Take this, and go see Kestra at the map house.",
+   "Aldo: And {name}... if you find any of Mirela's pages out there, bring them home."
   ],
-  "after_flag": {
-   "flag": "aldo_gift",
-   "lines": [
-    "Aldo: The lamp stays lit for you. If your team is worn out, the Rest Spring is just up the pier."
-   ]
-  },
+  "after_flag": [
+   {
+    "flag": "aldo_gift",
+    "lines": [
+     "Aldo: The lamp stays lit for you. If your team is worn out, the Rest Spring is just up the pier."
+    ]
+   },
+   {
+    "flag": "met_kestra",
+    "lines": [
+     "Aldo: Kestra, eh? Sharp girl. Her maps are good, even when her ideas are wild."
+    ]
+   },
+   {
+    "flag": "rift_cinder_sealed",
+    "lines": [
+     "Aldo: The smoke over Thornridge is gone. You did that? Mirela would have whooped."
+    ]
+   },
+   {
+    "flag": "rift_tide_sealed",
+    "lines": [
+     "Aldo: The marsh birds are back on the lake. The Tidewater Rift is quiet, they say."
+    ]
+   },
+   {
+    "flag": "rift_tide_sealed",
+    "if": {
+     "flag": "rift_cinder_sealed"
+    },
+    "lines": [
+     "Aldo: Both Rifts mended. The valley breathes again. Kestra wanted to see you, at the dock."
+    ]
+   }
+  ],
   "action": "give_item tonic 2",
   "flag": "aldo_gift",
   "once": true
@@ -19,5 +50,145 @@
  "stairs": [
   "The spiral stairs lead up to the lamp room.",
   "Aldo keeps it lit every night."
- ]
+ ],
+ "morning": {
+  "lines": [
+   "Aldo: {name}! You're awake at last.",
+   "Aldo: Three little Spirlings came in from the storm last night. They followed the lamp across the lake.",
+   "Aldo: They're still huddled by the lamp stairs. One of them keeps looking at you.",
+   "Aldo: Go on. Kneel down and say hello."
+  ],
+  "action": "choose_starter"
+ },
+ "aldo_dock": {
+  "lines": [
+   "Aldo: Kestra thinks something lives behind the Rifts?",
+   "Aldo: ...Mirela wrote the same thing, the night before she left.",
+   "Aldo: There's a third Rift north of the crest. If Mirela is anywhere, she's there.",
+   "Aldo: The ferry will run again one day. Until then, make your team strong. And find her pages."
+  ],
+  "flag": "aldo_dock_told",
+  "next": "betrayal/a1_report",
+  "after_flag": [
+   {
+    "flag": "aldo_dock_told",
+    "lines": [
+     "Aldo: The lamp stays lit. It always has, for her. Now for you too."
+    ]
+   },
+   {
+    "flag": "pages_all",
+    "lines": [
+     "Aldo: All six pages? Then take them up to the lamp room. I'll follow you."
+    ]
+   },
+   {
+    "flag": "mirela_lamp",
+    "lines": [
+     "Aldo: The oar is ready. Meet me at the ferry when you are."
+    ]
+   },
+   {
+    "flag": "scene_ferry_crossing_seen",
+    "lines": [
+     "Aldo: Back already? Tell me everything about Corvane. Slowly. I'm old."
+    ]
+   }
+  ]
+ },
+ "lamp_room": {
+  "lines": [
+   "You climb the spiral stairs to the lamp room. Aldo follows, slowly."
+  ],
+  "action": "scene mirela_lamp",
+  "flag": "mirela_lamp",
+  "once": true
+ },
+ "marla": {
+  "lines": [
+   "Marla: I'm Marla. I trade goods for Waymarks, the stones Wayfarers earn on the road.",
+   "Marla: Coins won't do here, and nobody can buy Waymarks. You earn them, you spend them."
+  ],
+  "after_flag": {
+   "flag": "marla_met",
+   "lines": [
+    "Marla: Waymarks in hand? Let's see what's in the crates this week."
+   ]
+  },
+  "action": "exchange",
+  "flag": "marla_met"
+ },
+ "aldo_post": {
+  "lines": [
+   "Aldo: The lamp stays lit. It always has, for her. Now for you too.",
+   "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
+  ],
+  "action": "expedition",
+  "after_flag": [
+   {
+    "flag": "guild_joined",
+    "lines": [
+     "Aldo: Guild apprentice! Mirela never wore her guild pin. Said it itched.",
+     "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
+    ]
+   },
+   {
+    "flag": "rift_rain_sealed",
+    "lines": [
+     "Aldo: Juna says the Woadfen dries out in the sun now. Moor colours, she called them.",
+     "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
+    ]
+   },
+   {
+    "flag": "rift_mirror_sealed",
+    "lines": [
+     "Aldo: Two Corvane Rifts! I told the whole pier. Twice.",
+     "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
+    ]
+   },
+   {
+    "flag": "act2_end",
+    "lines": [
+     "Aldo: You saw her handwriting at the Wide Rift? \"Still here.\" ...That's her. That's exactly her.",
+     "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
+    ]
+   },
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Aldo: Sit with me a while. Tell me about Corvane again. The colours part.",
+     "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
+    ]
+   }
+  ]
+ },
+ "tamsin": {
+  "lines": [
+   "Tamsin: Training ring. I carve the dummies, you knock them over, nobody gets hurt. Except the dummies. They don't complain.",
+   "Tamsin: Lose, and I patch your team up for free. Win, and I patch the dummy up for free. I'm very generous with other people's time."
+  ],
+  "action": "training"
+ },
+ "hesper": {
+  "lines": [
+   "Hesper: I keep the arts the Rift made people forget. Most of them were forgotten on purpose.",
+   "Hesper: An Echo Crystal never runs out. The ones who use it do. Pick one."
+  ],
+  "action": "shop echo_hold_fast echo_shove_off echo_grudge_return echo_kindred_balm echo_rank_and_file echo_shake_loose echo_rolling_drum echo_late_reply echo_opening_gambit echo_pebble_hail echo_rift_hush echo_bright_lure echo_close_ranks echo_ember_afterglow echo_borrowed_stance echo_still_point echo_ground_burst echo_dye_bath echo_ward_circle ward_shell echo_magma_rush echo_tidal_gust echo_clean_slate echo_coiled_strike echo_night_prowl echo_noon_glare echo_sunk_cost",
+  "next": "hesper_relearn"
+ },
+ "hesper_relearn": {
+  "lines": [
+   "Hesper: And if one of yours forgot an art it once knew, I can dig it back up. For a fee. Memory is cheap; mine isn't."
+  ],
+  "choices": [
+   {
+    "text": "Relearn an art",
+    "action": "relearn"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ }
 }

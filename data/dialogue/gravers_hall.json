@@ -1,0 +1,23 @@
+{
+ "undertaker": {
+  "lines": [
+   "The Undertaker: Welcome to the Wake. Every day someone dies with money and no friends.",
+   "The Undertaker: Bring a Spirling, perform one art by the coffin. The mourners pay for tears."
+  ],
+  "action": "wake"
+ },
+ "fixer": {
+  "lines": [
+   "The Fixer: Funerals are slow money. Bounties are fast money.",
+   "The Fixer: Bring them in breathing. Dead men don't pay their debts."
+  ],
+  "action": "bounty"
+ },
+ "coach": {
+  "lines": [
+   "Coach Varro: Fine training. I make good Spirlings slightly worse people.",
+   "Coach Varro: Cash up front. Results... eventually."
+  ],
+  "action": "fine_training"
+ }
+}

@@ -1,0 +1,321 @@
+{
+ "name": "Pawn Vault",
+ "region": "veydal",
+ "biome": "cave",
+ "backdrop": "ridge",
+ "rows": [
+  "WWWWWWWWWWWW",
+  "Wfff=WffffCW",
+  "WffffWfWWffW",
+  "WfWWffffWffW",
+  "WfWfffWffffW",
+  "WffffWWfWWfW",
+  "WfWfffffffCW",
+  "WffffffffffW",
+  "WWWWWDWWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 8,
+   "to": "thornridge",
+   "tx": 2,
+   "ty": 9,
+   "facing": "down"
+  },
+  {
+   "x": 4,
+   "y": 1,
+   "to": "pawn_vault@1",
+   "tx": 4,
+   "ty": 2,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "goon_a",
+   "x": 8,
+   "y": 4,
+   "facing": "left",
+   "dialogue": "veydal_side/goon_a",
+   "sprite": "villager",
+   "trainer": "Quiet Hand Snib",
+   "intro": "veydal_side/goon_a_intro",
+   "defeat": "veydal_side/goon_a_defeat",
+   "money": 300,
+   "team": [
+    {
+     "species": "Mirkmole",
+     "level": 14
+    },
+    {
+     "species": "Zippit",
+     "level": 14
+    }
+   ]
+  },
+  {
+   "id": "goon_b",
+   "x": 3,
+   "y": 6,
+   "facing": "right",
+   "dialogue": "veydal_side/goon_b",
+   "sprite": "villager",
+   "trainer": "Quiet Hand Gubb",
+   "intro": "veydal_side/goon_b_intro",
+   "defeat": "veydal_side/goon_b_defeat",
+   "money": 320,
+   "team": [
+    {
+     "species": "Shalebat",
+     "level": 15
+    },
+    {
+     "species": "Blotling",
+     "level": 14
+    }
+   ]
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 10,
+   "y": 2,
+   "item": "remedy",
+   "count": 2,
+   "flag": "find_vault_shelf"
+  },
+  {
+   "x": 1,
+   "y": 7,
+   "item": "tonic",
+   "count": 3,
+   "flag": "find_vault_crate"
+  }
+ ],
+ "floors": [
+  {
+   "name": "Counting Room",
+   "rows": [
+    "WWWWWWWWWWWW",
+    "WfCf=ffffffW",
+    "WfffffWWWWfW",
+    "WWWWffWffCfW",
+    "WfffffWfWWfW",
+    "WfWWWWWffffW",
+    "WfffffffWffW",
+    "WCffWffff=fW",
+    "WWWWWWWWWWWW"
+   ],
+   "warps": [
+    {
+     "x": 4,
+     "y": 1,
+     "to": "pawn_vault",
+     "tx": 4,
+     "ty": 2,
+     "facing": "down"
+    },
+    {
+     "x": 9,
+     "y": 7,
+     "to": "pawn_vault@2",
+     "tx": 9,
+     "ty": 6,
+     "facing": "up"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "goon_c",
+     "x": 1,
+     "y": 4,
+     "facing": "right",
+     "dialogue": "veydal_side/goon_c",
+     "sprite": "villager",
+     "trainer": "Quiet Hand Mopsy",
+     "intro": "veydal_side/goon_c_intro",
+     "defeat": "veydal_side/goon_c_defeat",
+     "money": 340,
+     "team": [
+      {
+       "species": "Scrivane",
+       "level": 15
+      },
+      {
+       "species": "Hushkin",
+       "level": 15
+      }
+     ]
+    },
+    {
+     "id": "goon_d",
+     "x": 7,
+     "y": 3,
+     "facing": "down",
+     "dialogue": "veydal_side/goon_d",
+     "sprite": "villager",
+     "trainer": "Quiet Hand Ledge",
+     "intro": "veydal_side/goon_d_intro",
+     "defeat": "veydal_side/goon_d_defeat",
+     "money": 360,
+     "team": [
+      {
+       "species": "Talusk",
+       "level": 16
+      },
+      {
+       "species": "Shalebat",
+       "level": 15
+      },
+      {
+       "species": "Mirkmole",
+       "level": 15
+      }
+     ]
+    }
+   ],
+   "signs": [],
+   "secrets": [
+    {
+     "x": 10,
+     "y": 3,
+     "item": "max_tonic",
+     "count": 1,
+     "flag": "find_vault_till"
+    },
+    {
+     "x": 1,
+     "y": 6,
+     "item": "kin_charm",
+     "count": 1,
+     "flag": "find_vault_jar"
+    }
+   ]
+  },
+  {
+   "name": "Mother's Office",
+   "rows": [
+    "WWWWWWWWWWWW",
+    "WCCfffffffCW",
+    "WffffffffffW",
+    "WfWWWffWWWfW",
+    "WfffWffWfffW",
+    "WWWfWffWfWWW",
+    "WffffffffffW",
+    "WffffWWff=fW",
+    "WWWWWWWWWWWW"
+   ],
+   "warps": [
+    {
+     "x": 9,
+     "y": 7,
+     "to": "pawn_vault@1",
+     "tx": 9,
+     "ty": 6,
+     "facing": "up"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "goon_e",
+     "x": 6,
+     "y": 4,
+     "facing": "down",
+     "dialogue": "veydal_side/goon_e",
+     "sprite": "villager",
+     "trainer": "Quiet Hand Skiv",
+     "intro": "veydal_side/goon_e_intro",
+     "defeat": "veydal_side/goon_e_defeat",
+     "money": 380,
+     "team": [
+      {
+       "species": "Duskdigger",
+       "level": 16
+      },
+      {
+       "species": "Glimmerax",
+       "level": 16
+      }
+     ]
+    },
+    {
+     "id": "sallow",
+     "x": 5,
+     "y": 1,
+     "facing": "down",
+     "dialogue": "veydal_side/sallow",
+     "sprite": "elder",
+     "trainer": "Mother Crowle",
+     "intro": "veydal_side/sallow_intro",
+     "defeat": "veydal_side/sallow_defeat",
+     "money": 1200,
+     "team": [
+      {
+       "species": "Silentra",
+       "level": 17
+      },
+      {
+       "species": "Obsidroth",
+       "level": 18
+      },
+      {
+       "species": "Hushkin",
+       "level": 17
+      }
+     ],
+     "win_flags": [
+      "vault_done"
+     ],
+     "ai": 2,
+     "teams_by_difficulty": {
+      "tamer": [
+       {
+        "species": "Silentra",
+        "level": 26
+       },
+       {
+        "species": "Obsidroth",
+        "level": 27
+       },
+       {
+        "species": "Hushkin",
+        "level": 26
+       }
+      ],
+      "rift_born": [
+       {
+        "species": "Silentra",
+        "level": 19
+       },
+       {
+        "species": "Obsidroth",
+        "level": 20
+       },
+       {
+        "species": "Hushkin",
+        "level": 19
+       },
+       {
+        "species": "Silentra",
+        "level": 15
+       }
+      ]
+     }
+    }
+   ],
+   "signs": [],
+   "secrets": [
+    {
+     "x": 10,
+     "y": 2,
+     "item": "echo_umbra",
+     "count": 1,
+     "flag": "find_vault_safe"
+    }
+   ]
+  }
+ ]
+}

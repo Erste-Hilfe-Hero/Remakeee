@@ -1,0 +1,223 @@
+{
+ "name": "Rimeglass Pass",
+ "region": "quillmarch",
+ "biome": "route",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "encounters": "rimeglass_pass",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T@@..__.,,,T",
+  "T@@...__,,,T",
+  "T.....__...T",
+  "T::@@@@_@@.T",
+  "T::@@@@_@@.T",
+  "T....____..T",
+  "T@@@._..,,,T",
+  "T@@@._..,,,T",
+  "T...._.....T",
+  "T,,.._@@@@@T",
+  "T,,..____..T",
+  "TRRR...._..T",
+  "THDH.::._..T",
+  "T....::.__.T",
+  "T,,,....._.T",
+  "T,,,@@@@._.T",
+  "T...@@@@._.T",
+  "T..______..T",
+  "T.._..,,,..T",
+  "T@@_..,,,@@T",
+  "T@@_.....@@T",
+  "T..__......T",
+  "T....__.::.T",
+  "T.....__::.T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "rimeholt",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "ledgerholm",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "rimeholt",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "ledgerholm",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 2,
+   "y": 13,
+   "to": "debtors_icehouse",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "iceguide",
+   "x": 10,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "quillmarch/rimeglass_pass_iceguide",
+   "sprite": "ranger",
+   "trainer": "Ice Guide Tyra",
+   "intro": "quillmarch/rimeglass_pass_iceguide_intro",
+   "defeat": "quillmarch/rimeglass_pass_iceguide_defeat",
+   "money": 3320,
+   "team": [
+    {
+     "species": "Veskara",
+     "level": 82
+    },
+    {
+     "species": "Sleetowl",
+     "level": 83
+    }
+   ]
+  },
+  {
+   "id": "collector",
+   "x": 2,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "quillmarch/rimeglass_pass_collector",
+   "sprite": "villager",
+   "trainer": "Debt Collector Holm",
+   "intro": "quillmarch/rimeglass_pass_collector_intro",
+   "defeat": "quillmarch/rimeglass_pass_collector_defeat",
+   "money": 3320,
+   "team": [
+    {
+     "species": "Glacilet",
+     "level": 82
+    },
+    {
+     "species": "Gelidfin",
+     "level": 83
+    },
+    {
+     "species": "Gelidray",
+     "level": 83
+    }
+   ]
+  },
+  {
+   "id": "q3_cutter",
+   "x": 10,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_rimeglass_pass_cutter",
+   "sprite": "villager",
+   "trainer": "Ice Cutter Halla",
+   "intro": "quillmarch/q3_rimeglass_pass_cutter_intro",
+   "defeat": "quillmarch/q3_rimeglass_pass_cutter_defeat",
+   "money": 3320,
+   "team": [
+    {
+     "species": "Sleetsage",
+     "level": 80
+    },
+    {
+     "species": "Glacilisk",
+     "level": 81
+    },
+    {
+     "species": "Veskara",
+     "level": 83
+    }
+   ]
+  },
+  {
+   "id": "q3_frozen_deed_ragnvald",
+   "x": 7,
+   "y": 21,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_frozen_deed_ragnvald",
+   "sprite": "villager",
+   "trainer": "Thaw Bailiff Ragnvald",
+   "show_flag": "q3_frozen_deed_reveal",
+   "intro": "quillmarch/q3_frozen_deed_ragnvald_intro",
+   "defeat": "quillmarch/q3_frozen_deed_ragnvald_defeat",
+   "money": 4200,
+   "team": [
+    {
+     "species": "Sleetowl",
+     "level": 82
+    },
+    {
+     "species": "Gelidfin",
+     "level": 83
+    },
+    {
+     "species": "Sleetcowl",
+     "level": 84
+    }
+   ],
+   "win_flags": [
+    "q3_frozen_deed_done"
+   ],
+   "no_rematch": true
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_rimeglass_pass_1"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_rimeglass_pass_2"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_rimeglass_pass_3"
+  },
+  {
+   "x": 11,
+   "y": 23,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_rimeglass_pass_4"
+  },
+  {
+   "x": 0,
+   "y": 3,
+   "item": "dash_brew",
+   "count": 1,
+   "flag": "find_rimeglass_pass_q3_0_3"
+  }
+ ]
+}

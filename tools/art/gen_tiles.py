@@ -15,11 +15,13 @@ import os
 import random
 
 from px import Canvas
+import buildings
 
 T = 16
 KINDS = ["GRASS", "TALL_GRASS", "PATH", "WATER", "TREE", "WALL", "ROOF", "DOOR", "FLOOR",
          "FENCE", "SIGN", "FLOWER", "COUNTER", "INNER_WALL", "SPRING", "RIFT",
-         "CLIFF", "STAIRS", "REEDS", "SCREE", "PIER", "TOWER", "LAMP", "ROCK"]
+         "CLIFF", "STAIRS", "REEDS", "SCREE", "PIER", "TOWER", "LAMP", "ROCK",
+         "WADE", "BOULDER", "PLATE", "CRACKED", "VINES", "PLANK"]
 K = {name: i for i, name in enumerate(KINDS)}
 UP, RIGHT, DOWN, LEFT = 1, 2, 4, 8
 
@@ -122,71 +124,20 @@ def tree(c: Canvas, ox: int, oy: int, variant: int) -> None:
 
 
 def wall(c: Canvas, ox: int, oy: int, mask: int) -> None:
-    c.rect(ox, oy, T, T, 3)
-    # Timber frame: posts at open ends, beam on top, plinth at the bottom.
-    c.hline(ox, ox + 15, oy, 1)
-    c.hline(ox, ox + 15, oy + 13, 1)
-    c.rect(ox, oy + 14, T, 2, 0)
-    if not mask & LEFT:
-        c.vline(ox, oy, oy + 15, 0)
-        c.vline(ox + 1, oy, oy + 13, 1)
-    if not mask & RIGHT:
-        c.vline(ox + 15, oy, oy + 15, 0)
-        c.vline(ox + 14, oy, oy + 13, 1)
-    # Round-top window (original shape, not a square grid).
-    c.ascii(ox + 4, oy + 3, ["..0000..",
-                             ".011110.",
-                             "01122110",
-                             "01200210",
-                             "01122110",
-                             "00000000",
-                             ".222222."])
+    # Veydal half-timbering; the other acts draw their own (buildings.py, gen_tiles_towns.py).
+    buildings.v_wall(c, ox, oy, mask)
+
 
 
 def roof(c: Canvas, ox: int, oy: int, mask: int) -> None:
-    # Overlapping wooden shingles: rows of 4 px, staggered every other row.
-    c.rect(ox, oy, T, T, 1)
-    for row in range(4):
-        y = oy + row * 4
-        c.hline(ox, ox + 15, y, 2)
-        c.hline(ox, ox + 15, y + 3, 0)
-        for x in range((row % 2) * 4, 16, 8):
-            c.vline(ox + x, y + 1, y + 2, 0)
-            c.set(ox + x + 1, y + 1, 2)
-    if not mask & UP:
-        c.hline(ox, ox + 15, oy, 0)
-        c.hline(ox, ox + 15, oy + 1, 2)
-        c.hline(ox, ox + 15, oy + 2, 3)
-    if not mask & DOWN:
-        # Eave casting a shadow on the wall below.
-        c.hline(ox, ox + 15, oy + 13, 2)
-        c.hline(ox, ox + 15, oy + 14, 0)
-        c.checker(ox, oy + 15, T, 1, 0, 1)
-    if not mask & LEFT:
-        c.vline(ox, oy, oy + 15, 0)
-        c.vline(ox + 1, oy + 1, oy + 13, 2)
-    if not mask & RIGHT:
-        c.vline(ox + 15, oy, oy + 15, 0)
+    buildings.v_roof(c, ox, oy, mask)
 
 
-def door(c: Canvas, ox: int, oy: int) -> None:
-    wall(c, ox, oy, LEFT | RIGHT)
-    c.rect(ox + 2, oy + 2, 12, 12, 3)
-    c.ascii(ox + 3, oy + 1, ["..000000..",
-                             ".01111110.",
-                             "0112112110",
-                             "0112112110",
-                             "0112112110",
-                             "0111111110",
-                             "0112112130",
-                             "0112112110",
-                             "0112112110",
-                             "0111111110",
-                             "0112112110",
-                             "0111111110",
-                             "0000000000"])
-    c.hline(ox + 1, ox + 14, oy + 14, 2)
-    c.hline(ox + 1, ox + 14, oy + 15, 1)
+
+def door(c: Canvas, ox: int, oy: int, role: int = 0) -> None:
+    # Row = role (TilesetFactory.DoorRole): house, healer, shop, Rift gate.
+    buildings.v_door(c, ox, oy, role)
+
 
 
 def floor(c: Canvas, ox: int, oy: int) -> None:
@@ -199,51 +150,13 @@ def floor(c: Canvas, ox: int, oy: int) -> None:
 
 
 def fence(c: Canvas, ox: int, oy: int, mask: int) -> None:
-    grass(c, ox, oy, 1)
-    # Split-rail fence: two rails, one post per tile.
-    for y in (5, 10):
-        c.hline(ox, ox + 15, oy + y, 0)
-        c.hline(ox, ox + 15, oy + y + 1, 3)
-        c.hline(ox, ox + 15, oy + y + 2, 0)
-    c.ascii(ox + 6, oy + 2, ["0000",
-                             "0330",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0320",
-                             "0220",
-                             "0000"])
-    if not mask & LEFT:
-        c.rect(ox, oy + 5, 3, 8, None)
-        grass_patch = Canvas(3, 8)
-        c.rect(ox, oy + 5, 3, 8, 2)
-    if not mask & RIGHT:
-        c.rect(ox + 13, oy + 5, 3, 8, 2)
+    buildings.v_fence(c, ox, oy, mask, grass)
+
 
 
 def sign(c: Canvas, ox: int, oy: int) -> None:
-    grass(c, ox, oy, 2)
-    # Hanging board on a crossbar post (not a plain rectangle on a stick).
-    c.ascii(ox + 1, oy + 1, ["00000000000000",
-                             "0..0......0..0",
-                             ".0000000000000",
-                             ".0333333333330",
-                             ".0311111111230",
-                             ".0333333333330",
-                             ".0311111123330",
-                             ".0333333333330",
-                             ".0222222222220",
-                             ".0000000000000",
-                             "......00......",
-                             "......00......",
-                             "......00......",
-                             ".....0110.....",
-                             "......00......"])
+    buildings.v_sign(c, ox, oy, grass)
+
 
 
 def flower(c: Canvas, ox: int, oy: int, variant: int) -> None:
@@ -276,44 +189,13 @@ def inner_wall(c: Canvas, ox: int, oy: int) -> None:
 
 
 def spring(c: Canvas, ox: int, oy: int) -> None:
-    floor(c, ox, oy)
-    c.ascii(ox, oy, ["....00000000....",
-                     "..002222222200..",
-                     ".02211111111220.",
-                     ".02111131111120.",
-                     "0211113331111120",
-                     "0211111311111120",
-                     "0211111111111120",
-                     "0211311111131120",
-                     "0211111111111120",
-                     "0211111111111120",
-                     "0211111131111120",
-                     ".02111111111120.",
-                     ".02211111111220.",
-                     "..002222222200..",
-                     "....00000000....",
-                     "................"])
+    buildings.v_spring(c, ox, oy, grass)
+
 
 
 def rift(c: Canvas, ox: int, oy: int) -> None:
-    grass(c, ox, oy, 3)
-    # A jagged tear in the ground with a bright seam.
-    c.ascii(ox, oy, ["......0.........",
-                     ".....010........",
-                     ".....0310.......",
-                     "....03310.......",
-                     "...0133310......",
-                     "...033330.......",
-                     "..01333310......",
-                     "...0333331 0....".replace(" ", "0"),
-                     "....0133330.....",
-                     "...013333310....",
-                     "....03333310....",
-                     ".....0133310....",
-                     "......033310....",
-                     ".......03310....",
-                     "........0310....",
-                     ".........00....."])
+    buildings.rift_gate(c, ox, oy, "veydal", grass)
+
 
 
 def cliff(c: Canvas, ox: int, oy: int, mask: int) -> None:
@@ -395,36 +277,137 @@ def pier(c: Canvas, ox: int, oy: int, mask: int) -> None:
         c.hline(ox + x0, ox + x1, oy, 0)
 
 
-def tower(c: Canvas, ox: int, oy: int) -> None:
+def _tower_row(c: Canvas, ox: int, oy: int, y: int, phase: int = 0) -> None:
+    # One row of the lighthouse shaft: tapers from 10 px at the top to 12 px at y 7, spiral
+    # bands rise to the right, the left column catches the light and the right two are shaded.
+    # [phase] shifts the taper and bands so a tile below the shaft carries them on.
+    xl = 3 if y + phase < 7 else 2
+    xr = 15 - xl
+    c.set(ox + xl, oy + y, 0)
+    c.set(ox + xr, oy + y, 0)
+    for x in range(xl + 1, xr):
+        band = ((y + phase + 40 - x // 3) // 4) % 2
+        if x == xl + 1:
+            v = 2 if band else 3
+        elif x >= xr - 2:
+            v = 0 if band else 2
+        else:
+            v = 1 if band else 3
+        c.set(ox + x, oy + y, v)
+
+
+def tower(c: Canvas, ox: int, oy: int, variant: int = 0) -> None:
+    # Lighthouse shaft (and the rift pillars): striped tapered tower on a stone plinth.
+    # Row 1: the shaft runs on into the door tile below. Row 2: the lighthouse foot with its door.
+    # TilesetFactory.atlas_coords picks rows 1 and 2 for a lamp-capped tower over a door.
+    if variant == 2:
+        lighthouse_door(c, ox, oy)
+        return
+    if variant in (3, 4):
+        headframe(c, ox, oy, variant == 3)
+        return
     grass(c, ox, oy, 0)
-    c.rect(ox + 2, oy, 12, T, 3)
-    for y in range(0, T):
-        for x in range(2, 14):
-            if (y - x // 3) % 8 < 3:
-                c.set(ox + x, oy + y, 1)
-    c.vline(ox + 2, oy, oy + 15, 0)
-    c.vline(ox + 13, oy, oy + 15, 0)
-    c.vline(ox + 3, oy, oy + 15, 2)
+    for y in range(16 if variant == 1 else 13):
+        _tower_row(c, ox, oy, y)
+    c.rect(ox + 7, oy + 5, 2, 2, 0)
+    if variant == 1:
+        return
+    c.hline(ox + 1, ox + 14, oy + 13, 0)
+    c.rect(ox + 2, oy + 14, 12, 2, 2)
+    c.vline(ox + 1, oy + 14, oy + 15, 0)
+    c.vline(ox + 14, oy + 14, oy + 15, 0)
+    c.hline(ox + 2, ox + 4, oy + 14, 3)
+    for x in (5, 10):
+        c.set(ox + x, oy + 14, 1)
+    for x in (3, 8, 12):
+        c.set(ox + x, oy + 15, 1)
+    c.set(ox + 13, oy + 14, 1)
+    c.set(ox + 13, oy + 15, 1)
+
+
+def headframe(c: Canvas, ox: int, oy: int, top: bool) -> None:
+    # Winding tower over a mine shaft (a tower with no lamp and no door, e.g. Copperfold): a timber
+    # A-frame with cross braces; the top tile carries the sheave wheel. Rows 3 (top) and 4 (lower)
+    # tile on top of each other, so a tower of any height has no seam.
+    grass(c, ox, oy, 0)
+    legs = range(7, 16) if top else range(16)
+    for y in legs:
+        spread = (y - 7) // 3 if top else 3 + y // 6
+        lx, rx = 6 - spread, 9 + spread
+        c.set(ox + lx, oy + y, 0)
+        c.set(ox + lx + 1, oy + y, 2)
+        c.set(ox + rx - 1, oy + y, 1)
+        c.set(ox + rx, oy + y, 0)
+    for y in ((10, 14) if top else (4, 11)):
+        spread = (y - 7) // 3 if top else 3 + y // 6
+        c.hline(ox + 6 - spread + 2, ox + 9 + spread - 2, oy + y, 1)
+    if not top:
+        for i in range(5):
+            c.set(ox + 5 + i, oy + 5 + i, 0)
+            c.set(ox + 10 - i, oy + 5 + i, 0)
+        return
+    c.ascii(ox + 3, oy, ["...0000...",
+                         "..022220..",
+                         ".02100120.",
+                         "0210000120",
+                         "0210330120",
+                         "0210000120",
+                         ".02100120.",
+                         "..022220..",
+                         "...0000..."])
+
+
+def lighthouse_door(c: Canvas, ox: int, oy: int) -> None:
+    # Foot of the lighthouse: the striped shaft (bands continue from the tile above) flares into
+    # the stone plinth, and an arched plank door is cut through it down to the ground.
+    grass(c, ox, oy, 0)
+    for y in range(12):
+        _tower_row(c, ox, oy, y, 16)
+    c.hline(ox + 1, ox + 14, oy + 12, 0)
+    c.rect(ox + 2, oy + 13, 12, 3, 2)
+    c.vline(ox + 1, oy + 13, oy + 15, 0)
+    c.vline(ox + 14, oy + 13, oy + 15, 0)
+    c.hline(ox + 2, ox + 4, oy + 13, 3)
+    for x in (3, 12):
+        c.set(ox + x, oy + 15, 1)
+    c.set(ox + 13, oy + 14, 1)
+    c.ascii(ox + 4, oy + 3, ["..3333..", ".3....3.", "3......3", "3......3", "3......3",
+                             "3......3", "3......3", "3......3", "3......3"])
+    c.ascii(ox + 5, oy + 4, [".0000.",
+                             "011110",
+                             "012120",
+                             "012120",
+                             "012120",
+                             "012130",
+                             "012120",
+                             "012120",
+                             "012120",
+                             "011110",
+                             "000000"])
+    c.hline(ox + 5, ox + 10, oy + 15, 0)
 
 
 def lamp(c: Canvas, ox: int, oy: int) -> None:
+    # Lighthouse lantern room (also the camp and square lamps): domed cap, glowing lens
+    # behind mullions with short rays, a railed gallery, and the top of the striped shaft.
     grass(c, ox, oy, 1)
-    c.ascii(ox, oy, ["......0000......",
-                     ".....011110.....",
-                     "....01111110....",
+    c.ascii(ox, oy, [".......00.......",
+                     "......0130......",
+                     ".....013110.....",
+                     "....01311110....",
+                     "...0131111100...",
                      "..000000000000..",
-                     "...0333333330...",
-                     "...0303333030...",
-                     "...0333223330...",
-                     "...0332112330...",
-                     "...0332112330...",
-                     "...0333223330...",
-                     "...0303333030...",
-                     "..000000000000..",
-                     "..022222222220..",
-                     "...0333113330...",
-                     "...0331113330...",
-                     "...0333113330..."])
+                     "...0122332210...",
+                     "..302233332203..",
+                     ".33023333332033.",
+                     "..302233332203..",
+                     "...0122332210...",
+                     ".00000000000000.",
+                     ".01010110101010.",
+                     ".00000000000000.",
+                     "..011111111110..",
+                     "................"])
+    _tower_row(c, ox, oy + 16, -1)
 
 
 def rock(c: Canvas, ox: int, oy: int, variant: int) -> None:
@@ -444,10 +427,81 @@ def rock(c: Canvas, ox: int, oy: int, variant: int) -> None:
                          "................"])
 
 
+# --- Area 3 (world) placeholders: simple shapes in the Era I inks; area 6 owns the final look.
+
+def wade(c: Canvas, ox: int, oy: int, mask: int) -> None:
+    # Shallow water: lighter than the lake, with stepping stones showing through.
+    water(c, ox, oy, mask)
+    c.checker(ox + 2, oy + 2, 12, 12, 2, 1)
+    for (x, y) in [(3, 5), (10, 10)]:
+        c.ascii(ox + x, oy + y, [".00.", "0330", "0220", ".00."])
+
+
+def boulder(c: Canvas, ox: int, oy: int) -> None:
+    floor_like = 2
+    c.rect(ox, oy, T, T, floor_like)
+    c.ascii(ox, oy + 1, ["....00000000....",
+                         "...0333322220...",
+                         "..033332222210..",
+                         ".03332222222110.",
+                         ".03322222221110.",
+                         ".03222222211110.",
+                         ".02222222111110.",
+                         ".02222221111110.",
+                         ".02222111111110.",
+                         ".01111111111110.",
+                         "..011111111110..",
+                         "...0000000000...",
+                         "....11111111....",
+                         "................"])
+
+
+def plate(c: Canvas, ox: int, oy: int) -> None:
+    c.rect(ox, oy, T, T, 2)
+    c.rect(ox + 2, oy + 2, 12, 12, 0)
+    c.rect(ox + 3, oy + 3, 10, 10, 1)
+    c.rect(ox + 5, oy + 5, 6, 6, 3)
+    c.rect(ox + 6, oy + 6, 4, 4, 2)
+
+
+def cracked(c: Canvas, ox: int, oy: int) -> None:
+    c.rect(ox, oy, T, T, 2)
+    for (x, y) in [(2, 3), (3, 4), (4, 4), (5, 5), (6, 6), (6, 7), (7, 8), (8, 8), (9, 9),
+                   (10, 10), (11, 10), (12, 11), (6, 8), (5, 9), (4, 10), (9, 7), (10, 6), (11, 5)]:
+        c.set(ox + x, oy + y, 0)
+    for (x, y) in [(3, 3), (5, 4), (7, 7), (9, 8), (11, 9)]:
+        c.set(ox + x, oy + y, 3)
+
+
+def vines(c: Canvas, ox: int, oy: int, mask: int) -> None:
+    cliff(c, ox, oy, mask)
+    for x in (2, 7, 12):
+        for y in range(0, 16):
+            if (y + x) % 5 != 4:
+                c.set(ox + x + (y // 4) % 2, oy + y, 2)
+        for y in (3, 9, 14):
+            c.ascii(ox + x - 1, oy + y, ["232"])
+
+
+def plank_gap(c: Canvas, ox: int, oy: int) -> None:
+    # A gap in the ground with a chalk mark where a plank fits.
+    c.rect(ox, oy, T, T, 0)
+    c.hline(ox, ox + 15, oy, 2)
+    c.hline(ox, ox + 15, oy + 1, 1)
+    c.hline(ox, ox + 15, oy + 15, 2)
+    for x in range(2, 14, 3):
+        c.set(ox + x, oy + 8, 3)
+
+
 VARIANT_ROWS = 16
 
 
 def build_tiles(path_out: str) -> None:
+    make_tiles().save(path_out)
+
+
+def make_tiles() -> Canvas:
+    """The base Era I atlas as palette indices (other region looks start from it)."""
     c = Canvas(T * len(KINDS), T * VARIANT_ROWS)
     for v in range(VARIANT_ROWS):
         oy = v * T
@@ -455,6 +509,8 @@ def build_tiles(path_out: str) -> None:
             ox = k * T
             if name == "GRASS":
                 grass(c, ox, oy, v % 4)
+                if 4 <= v < 8:
+                    buildings.shade_left(c, ox, oy)
             elif name == "TALL_GRASS":
                 tall_grass(c, ox, oy, v % 4)
             elif name == "PATH":
@@ -468,7 +524,7 @@ def build_tiles(path_out: str) -> None:
             elif name == "ROOF":
                 roof(c, ox, oy, v)
             elif name == "DOOR":
-                door(c, ox, oy)
+                door(c, ox, oy, v if v < 4 else 0)
             elif name == "FLOOR":
                 floor(c, ox, oy)
             elif name == "FENCE":
@@ -496,12 +552,24 @@ def build_tiles(path_out: str) -> None:
             elif name == "PIER":
                 pier(c, ox, oy, v)
             elif name == "TOWER":
-                tower(c, ox, oy)
+                tower(c, ox, oy, v if v < 5 else 0)
             elif name == "LAMP":
                 lamp(c, ox, oy)
             elif name == "ROCK":
                 rock(c, ox, oy, v % 4)
-    c.save(path_out)
+            elif name == "WADE":
+                wade(c, ox, oy, v)
+            elif name == "BOULDER":
+                boulder(c, ox, oy)
+            elif name == "PLATE":
+                plate(c, ox, oy)
+            elif name == "CRACKED":
+                cracked(c, ox, oy)
+            elif name == "VINES":
+                vines(c, ox, oy, 15)
+            elif name == "PLANK":
+                plank_gap(c, ox, oy)
+    return c
 
 
 # --- Characters ------------------------------------------------------------------------
@@ -536,6 +604,36 @@ HEADS = {
                   "...0113333330...",
                   "...0113333030...",
                   "....01333330....",
+                  ],
+    },
+    # Same explorer cap, with hair to the shoulders and a short tail (the player, girl).
+    "tamer_f": {
+        "down": ["................",
+                 ".....000000.....",
+                 "....01111110....",
+                 "...0113333110...",
+                 "..000000000000..",
+                 "..023333333320..",
+                 "..023033330320..",
+                 "..020333333020..",
+                 ],
+        "up": ["................",
+               ".....000000.....",
+               "....01111110....",
+               "...0111111110...",
+               "..000000000000..",
+               "..022222222220..",
+               "..022222222220..",
+               "...0222222220...",
+               ],
+        "right": ["................",
+                  "....000000......",
+                  "...01111110.....",
+                  "...011133110....",
+                  "..000000000000..",
+                  "..02223333330...",
+                  ".022223333030...",
+                  ".020.01333330...",
                   ],
     },
     # Short messy hair, no hat.
@@ -716,6 +814,7 @@ ROBE_HEM = {
 
 STYLES = {
     "tamer": ("tamer", "jacket"),
+    "tamer_f": ("tamer_f", "jacket"),
     "villager": ("villager", "jacket"),
     "ranger": ("ranger", "jacket"),
     "elder": ("elder", "robe"),

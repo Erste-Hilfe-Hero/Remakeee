@@ -6,7 +6,7 @@ Retro pixel monster-taming RPG for iOS + Android, built in Godot 4.7.2.
 ## Core idea
 - 8 elements (Ember, Tide, Bloom, Volt, Stone, Gale, Lumen, Umbra), each beats 2 and loses to 2
 - Bond minigame instead of capture items
-- **Every region = a visual generation jump**: Veydal (Era I Mono) → Corvane (Era II Color) → Ashmere (Era III Advanced) → Solenne (Era IV Dual). See `scripts/core/EraManager.gd`.
+- **Every region = a visual generation jump**: Veydal (Era I Ink) → Corvane (Era II Wash) → Ashmere (Era III Etched) → Solenne (Era IV Panorama). See `scripts/core/EraManager.gd`.
 
 - Deep systems: 4 difficulty modes with level caps (`GameState.gd`), Contracts, Rift Surges, Spirlog Tracker, The Spire
 

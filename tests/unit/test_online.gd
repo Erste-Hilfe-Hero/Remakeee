@@ -39,11 +39,15 @@ func after_all() -> void:
 func before_each() -> void:
 	_wipe_slots()
 	_server = LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	_server.rng.seed = 1
 	Online.backend = _server
 	Online.state = Online.State.OFFLINE
 	Online.revs = {}
 	Online.dirty = {}
 	Online.conflicts.clear()
+	Online._retry_count = 0
+	Online._retry_wait = Online.RETRY_SECONDS
 	GameState.in_game = false
 	GameState.new_game(GameState.Difficulty.TAMER, "Mara", 1, "Puddlet")
 
@@ -182,7 +186,7 @@ func test_saves_from_before_the_server_are_uploaded() -> void:
 
 func test_server_refuses_impossible_saves() -> void:
 	await Online.connect_now()
-	var bad: Dictionary = {"party": [{"level": 250}], "money": 1}
+	var bad: Dictionary = {"schema": 1, "party": [{"level": 10000}], "money": 1}
 	var r: Dictionary = (await _server.call_fn("save_put", {"p_slot": 1, "p_data": bad, "p_summary": "", "p_base_rev": 0})).data
 	assert_eq(r.error, "implausible")
 	assert_false(LocalBackend.save_ok({"money": -1}))
@@ -197,9 +201,9 @@ func test_server_clock_drives_the_date() -> void:
 
 func test_names_are_cleaned_like_on_the_server() -> void:
 	assert_eq(LocalBackend.clean_name("  Mara  ", "ABCDEFGH"), "Mara")
-	assert_eq(LocalBackend.clean_name("B1tch", "ABCDEFGH"), "Tamer EFGH")
-	assert_eq(LocalBackend.clean_name("<script>", "ABCDEFGH"), "Tamer EFGH")
-	assert_eq(LocalBackend.clean_name("Averyveryverylongname", "ABCDEFGH"), "Tamer EFGH")
+	assert_eq(LocalBackend.clean_name("B1tch", "ABCDEFGH"), "Wanderer EFGH")
+	assert_eq(LocalBackend.clean_name("<script>", "ABCDEFGH"), "Wanderer EFGH")
+	assert_eq(LocalBackend.clean_name("Averyveryverylongname", "ABCDEFGH"), "Wanderer EFGH")
 	assert_eq(LocalBackend.clean_name("Jörg", "ABCDEFGH"), "Jörg")
 	# The banned word list is the same as in the migration.
 	var sql: String = FileAccess.get_file_as_string("res://supabase/migrations/20261101000001_online_core.sql")
@@ -233,6 +237,8 @@ func test_losing_the_connection_while_playing_pauses_and_recovers() -> void:
 	GameState.in_game = true
 	_server.offline = true
 	await Online.call_fn("presence", {"p_place": "x"})
+	# Drops shorter than 3 s only show a small mark (plan item 2150).
+	Online._offline_for = ReconnectOverlay.SHORT_DROP
 	await wait_process_frames(2)
 	assert_true(Online._overlay.visible, "reconnect screen shows")
 	assert_true(get_tree().paused)
@@ -240,6 +246,47 @@ func test_losing_the_connection_while_playing_pauses_and_recovers() -> void:
 	await wait_seconds(Online.RETRY_SECONDS + 0.5)
 	await wait_process_frames(3)
 	assert_eq(Online.state, Online.State.ONLINE)
+	# The screen fades out in 0.2 s (plan item 2291).
+	await wait_seconds(ReconnectOverlay.FADE_TIME + 0.1)
 	assert_false(Online._overlay.visible)
 	assert_false(get_tree().paused)
 	GameState.in_game = false
+
+## Item 438 (plan area 1): no Spirling, Echo Core or Hallkind can ever be traded, gifted or
+## bought. Gifts, goal rewards and the exchange hand out bag items only, the server has no
+## function that moves a Spirling between players, and Echo Cores are no bag item.
+func test_spirlings_and_echo_cores_never_change_hands() -> void:
+	var cfg: Dictionary = LocalBackend.DEFAULT_CONFIG
+	var handed: Array[String] = []
+	for e: Dictionary in cfg.gift_table:
+		handed.append(str(e.item))
+	for it: Variant in cfg.goal_rewards:
+		handed.append(str(it))
+	for o: Dictionary in Exchange.all_offers():
+		handed.append(str(o.item))
+	for id: String in handed:
+		assert_true(Database.items.has(id), "%s is a bag item" % id)
+		assert_null(Database.species(id), "%s is no Spirling" % id)
+	for id: Variant in Database.items:
+		assert_false(str(id).contains("core") or str(id).contains("hall"), "Echo Cores are no item: %s" % id)
+		assert_null(Database.species(str(id)), "no item shares a Spirling's name: %s" % id)
+	for id: Variant in _server.trade_items():
+		assert_true(Database.items.has(str(id)), "%s is a bag item" % id)
+		assert_null(Database.species(str(id)), "trading never moves Spirlings: %s" % id)
+	for fn: String in _server._fns:
+		# The shop (plan area 10) sells items for Riftglass; shop_buy never hands out Spirlings
+		# (ShopValidator bans species grants, test_shop_catalog checks it), so only "buy" is allowed there.
+		var banned: Array = ["spirling", "trade", "core", "sell", "release"]
+		if not fn.begins_with("shop_"):
+			banned.append("buy")
+		# Item trading between friends (plan area 7, item 2792) moves only bag items, checked below.
+		if fn.begins_with("trade_"):
+			banned.erase("trade")
+		# Online step 1: Spirlings move only through this trustee trade between friends
+		# (tests/unit/test_online_step1.gd checks its rules).
+		if fn == "trade_put_spirlings":
+			continue
+		for bad: String in banned:
+			assert_false(fn.contains(bad), "server function %s must not move Spirlings" % fn)
+	# Mail carries only phrases, waves and thanks; gifts are rolled by the server.
+	assert_eq(_server._fn_mail_send({"p_kind": "spirling", "p_code": "X", "p_phrase": 0}).get("error", ""), "bad_kind")

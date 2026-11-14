@@ -1,0 +1,19 @@
+{
+ "_doc": "Known map audit findings (tools/maps/audit_maps.py). Key: map kind x,y. Value: the finding, or why it stays on purpose. Remove a line by fixing the map.",
+ "open": {
+  "ashmere_station town_few_doors -1,-1": "open: Act III station town has no building to walk into yet (Ashmere pass)",
+  "brindlewick unreachable 9,15": "kept: reed beds out in the lake, scenery seen from the pier",
+  "cinderfold town_few_doors -1,-1": "open: Act III town has 2 buildings to walk into, needs a third (Ashmere pass)",
+  "copperfold unreachable 1,1": "kept: yard behind the winding tower, scenery",
+  "copperfold unreachable 10,1": "kept: yard behind the winding tower, scenery",
+  "lastbloom town_twin -1,-1": "open: Quivermoor (Era V) towns still share one layout; each needs its own (Quivermoor pass)",
+  "ledgerholm town_twin -1,-1": "open: Quillmarch (Era III) towns still share one layout; each needs its own (Quillmarch pass)",
+  "mordant_row town_twin -1,-1": "open: Quillmarch (Era III) towns still share one layout; each needs its own (Quillmarch pass)",
+  "mossgate town_twin -1,-1": "open: Quivermoor (Era V) towns still share one layout; each needs its own (Quivermoor pass)",
+  "platewick town_twin -1,-1": "open: Quillmarch (Era III) towns still share one layout; each needs its own (Quillmarch pass)",
+  "proofgate town_twin -1,-1": "open: Quillmarch (Era III) towns still share one layout; each needs its own (Quillmarch pass)",
+  "rimeholt town_twin -1,-1": "open: Quillmarch (Era III) towns still share one layout; each needs its own (Quillmarch pass)",
+  "rootchapel town_twin -1,-1": "open: Quivermoor (Era V) towns still share one layout; each needs its own (Quivermoor pass)",
+  "tallowmere town_twin -1,-1": "open: Quivermoor (Era V) towns still share one layout; each needs its own (Quivermoor pass)"
+ }
+}

@@ -1,19 +1,20 @@
 {
  "name": "Cinder Rift",
  "region": "veydal",
+ "biome": "rift",
  "backdrop": "ember",
  "field": "ash_storm",
  "encounters": "cinder_rift",
  "rows": [
   "^^^^^^^^^^^^",
-  "^^^^.XX.^^^^",
+  "^^^^.XX=^^^^",
   "^^........^^",
   "^.::....::.^",
   "^.::....::.^",
   "^^^^^..^^^^^",
   "^.::....::.^",
-  "^.::....::.^",
-  "^..........^",
+  "^S::....::.^",
+  "D..........^",
   "^..^^..^^..^",
   "^.::....::.^",
   "^..........^",
@@ -35,14 +36,39 @@
    "tx": 2,
    "ty": 2,
    "facing": "down"
+  },
+  {
+   "x": 7,
+   "y": 1,
+   "to": "echo_path",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 0,
+   "y": 8,
+   "to": "kindle_vents",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
   }
  ],
  "npcs": [
   {
+   "id": "tower_keeper",
+   "x": 9,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "cinder_rift/tower_keeper",
+   "sprite": "villager",
+   "show_flag": "rift_cinder_sealed"
+  },
+  {
    "id": "acolyte_a",
-   "x": 1,
+   "x": 2,
    "y": 8,
-   "facing": "right",
+   "facing": "left",
    "dialogue": "cinder_rift/acolyte_a",
    "trainer": "Rift Acolyte Pell",
    "intro": "cinder_rift/acolyte_a_intro",
@@ -50,14 +76,23 @@
    "team": [
     {
      "species": "Shalebat",
-     "level": 9
+     "level": 9,
+     "moves": [
+      "Pebble Toss",
+      "Hunker Down"
+     ]
     },
     {
      "species": "Zippit",
-     "level": 9
+     "level": 9,
+     "moves": [
+      "Crackle Bite",
+      "Static Tag"
+     ]
     }
    ],
-   "sprite": "warden"
+   "sprite": "warden",
+   "profile": "hothead"
   },
   {
    "id": "acolyte_b",
@@ -71,10 +106,46 @@
    "team": [
     {
      "species": "Kindlop",
-     "level": 10
+     "level": 10,
+     "moves": [
+      "Cinder Dash",
+      "Kindle Up",
+      "Char Mark"
+     ]
     }
    ],
-   "sprite": "warden"
+   "sprite": "warden",
+   "profile": "apprentice",
+   "teams_by_difficulty": {
+    "veteran": [
+     {
+      "species": "Kindlop",
+      "level": 10,
+      "moves": [
+       "Cinder Dash",
+       "Kindle Up",
+       "Char Mark",
+       "Ash Call"
+      ]
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Kindlop",
+      "level": 10,
+      "moves": [
+       "Cinder Dash",
+       "Kindle Up",
+       "Char Mark",
+       "Ash Call"
+      ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 9
+     }
+    ]
+   }
   },
   {
    "id": "warden_orrin",
@@ -85,6 +156,9 @@
    "trainer": "Warden Orrin",
    "warden": "cinder",
    "money": 800,
+   "mend_items": [
+    "echo_ember"
+   ],
    "intro": "cinder_rift/orrin_intro",
    "defeat": "cinder_rift/orrin_defeat",
    "items": {
@@ -93,19 +167,234 @@
    "team": [
     {
      "species": "Shalebat",
-     "level": 10
+     "level": 10,
+     "moves": [
+      "Grit Jab",
+      "Hunker Down"
+     ]
     },
     {
      "species": "Kindlop",
-     "level": 11
+     "level": 10,
+     "moves": [
+      "Glow Knuckle",
+      "Kindle Up"
+     ]
     },
     {
      "species": "Smoldrake",
-     "level": 12
+     "level": 11,
+     "moves": [
+      "Char Mark",
+      "Cinder Breath",
+      "Ash Call"
+     ]
     }
    ],
    "sprite": "warden",
-   "rule": "ember_pulse"
+   "rule": "ember_pulse",
+   "teams_by_difficulty": {
+    "story": [
+     {
+      "species": "Kindlop",
+      "level": 10,
+      "moves": [
+       "Glow Knuckle",
+       "Kindle Up"
+      ]
+     },
+     {
+      "species": "Smoldrake",
+      "level": 11,
+      "moves": [
+       "Char Mark",
+       "Cinder Breath",
+       "Ash Call"
+      ]
+     }
+    ],
+    "tamer": [
+     {
+      "species": "Shalebat",
+      "level": 17,
+      "moves": [
+       "Grit Jab",
+       "Hunker Down"
+      ]
+     },
+     {
+      "species": "Kindlop",
+      "level": 17,
+      "moves": [
+       "Glow Knuckle",
+       "Kindle Up"
+      ]
+     },
+     {
+      "species": "Smoldrake",
+      "level": 18,
+      "moves": [
+       "Char Mark",
+       "Cinder Breath",
+       "Ash Call"
+      ]
+     }
+    ],
+    "veteran": [
+     {
+      "species": "Shalebat",
+      "level": 10,
+      "moves": [
+       "Grit Jab",
+       "Hunker Down"
+      ]
+     },
+     {
+      "species": "Kindlop",
+      "level": 10,
+      "moves": [
+       "Glow Knuckle",
+       "Kindle Up",
+       "Coal Seed"
+      ]
+     },
+     {
+      "species": "Smoldrake",
+      "level": 12,
+      "moves": [
+       "Char Mark",
+       "Cinder Breath",
+       "Ash Call"
+      ],
+      "held": "spark_coil"
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Shalebat",
+      "level": 9,
+      "moves": [
+       "Grit Jab",
+       "Hunker Down"
+      ],
+      "held": "iron_burr"
+     },
+     {
+      "species": "Kindlop",
+      "level": 10,
+      "moves": [
+       "Glow Knuckle",
+       "Kindle Up",
+       "Coal Seed"
+      ],
+      "held": "bark_wrap"
+     },
+     {
+      "species": "Smoldrake",
+      "level": 10,
+      "moves": [
+       "Char Mark",
+       "Cinder Breath",
+       "Ash Call"
+      ],
+      "held": "spark_coil"
+     },
+     {
+      "species": "Zippit",
+      "level": 9,
+      "moves": [
+       "Static Tag"
+      ],
+      "held": "swift_feather"
+     }
+    ]
+   },
+   "rule_by_difficulty": {
+    "story": "ember_pulse_soft",
+    "veteran": [
+     "ember_pulse",
+     "ash_rain"
+    ],
+    "rift_born": [
+     "ember_pulse",
+     "ash_rain"
+    ]
+   },
+   "profile": "hothead",
+   "profile_from": "tamer",
+   "profile_tune": {
+    "field_w": 1.5,
+    "setup_w": 0.8,
+    "status_w": 0.8
+   },
+   "lexicon": "warden_orrin",
+   "second_trial": {
+    "needs_flags": [
+     "rift_cinder_sealed",
+     "rift_tide_sealed"
+    ],
+    "rules": [
+     "ember_pulse",
+     "ash_rain"
+    ],
+    "money": 1500,
+    "team": [
+     {
+      "species": "Calderox",
+      "level": 30
+     },
+     {
+      "species": "Smoldrake",
+      "level": 28
+     },
+     {
+      "species": "Shalebat",
+      "level": 27
+     }
+    ],
+    "teams_by_difficulty": {
+     "veteran": [
+      {
+       "species": "Calderox",
+       "level": 30
+      },
+      {
+       "species": "Smoldrake",
+       "level": 28
+      },
+      {
+       "species": "Shalebat",
+       "level": 27
+      },
+      {
+       "species": "Zippit",
+       "level": 27
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Calderox",
+       "level": 30
+      },
+      {
+       "species": "Smoldrake",
+       "level": 28
+      },
+      {
+       "species": "Shalebat",
+       "level": 27
+      },
+      {
+       "species": "Zippit",
+       "level": 27
+      },
+      {
+       "species": "Kindlop",
+       "level": 26
+      }
+     ]
+    }
+   }
   },
   {
    "id": "ashen_heart",
@@ -138,5 +427,21 @@
    "leaves": true
   }
  ],
- "signs": []
+ "signs": [
+  {
+   "x": 1,
+   "y": 7,
+   "dialogue": "cinder_rift/kindle_vents_sign",
+   "gear": [
+    "plank_bundle"
+   ]
+  }
+ ],
+ "blocks": [
+  {
+   "x": 7,
+   "y": 1,
+   "open_flag": "aldo_dock_told"
+  }
+ ]
 }

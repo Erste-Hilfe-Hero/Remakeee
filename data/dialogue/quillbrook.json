@@ -1,0 +1,93 @@
+{
+ "sign": [
+  "QUILLBROOK",
+  "Brook valley, rings 8 to 11.",
+  "Ford the brook to reach Wrenhollow."
+ ],
+ "fisher": {
+  "lines": [
+   "Fisher Tamm: The brook's low enough to wade, if your feet can stand the cold.",
+   "Fisher Tamm: Take my spare boots. I've two pairs and one pair of feet."
+  ],
+  "action": "give_item wading_boots 1",
+  "flag": "got_boots",
+  "once": true,
+  "after_flag": {
+   "flag": "got_boots",
+   "lines": [
+    "Fisher Tamm: Pale water is shallow. Dark water, keep out."
+   ]
+  }
+ },
+ "culvert": {
+  "lines": [
+   "An old culvert, its grate rusted shut. It runs back up the valley."
+  ],
+  "action": "lever quill_culvert pry_bar"
+ },
+ "smooth": [
+  "This stone is too smooth to be natural."
+ ],
+ "brisa": [
+  "Brisa: Kelpups chase the trout upstream every morning."
+ ],
+ "brisa_intro": [
+  "Brisa: Scaring my fish? That's a duel!"
+ ],
+ "brisa_defeat": [
+  "Brisa: Hooked and landed. By you."
+ ],
+ "corin": [
+  "Corin: Every ford here has a name. This one is 'Wet Socks'."
+ ],
+ "corin_intro": [
+  "Corin: Across already? Then you can handle this."
+ ],
+ "corin_defeat": [
+  "Corin: Soaked and beaten. Typical Tuesday."
+ ],
+ "pim": [
+  "Pim: The mill wheel stopped when the Rift opened. Dad says it's sulking."
+ ],
+ "pim_intro": [
+  "Pim: I've practised all week! Battle me!"
+ ],
+ "pim_defeat": [
+  "Pim: I'll practise two weeks next time."
+ ],
+ "boatman": {
+  "lines": [
+   "Boatman Osk: Lake Line landing. The brook runs out to the lake from here, and so do I."
+  ],
+  "action": "transit lake_line"
+ },
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 9"
+ },
+ "bench": {
+  "lines": [
+   "A worn bench at the end of a little fishing pier. Sit for a while?"
+  ],
+  "choices": [
+   {
+    "text": "Sit and wait",
+    "action": "bench"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "mound_stone": {
+  "lines": [
+   "An old burial mound. A weathered stone stands on it, its letters worn almost away."
+  ],
+  "action": "rubbing quillbrook/mound_words"
+ },
+ "mound_words": [
+  "\"Two steps toward the setting sun, the brook keeps my gift.\""
+ ]
+}

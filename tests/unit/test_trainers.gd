@@ -1,5 +1,5 @@
 extends GutTest
-## Tamers, Rift Wardens, the rival and the vertical-slice progression (M5).
+## Wayfarers, Rift Wardens, the rival and the vertical-slice progression (M5).
 
 var _rng := RandomNumberGenerator.new()
 
@@ -37,7 +37,7 @@ func test_trainer_battle_info() -> void:
 	assert_eq(team.size(), 2)
 	var info: Dictionary = TrainerData.battle_info(bram, team, 0)
 	assert_eq(info.name, "Ridgewalker Bram")
-	assert_eq(info.money, 8 * TrainerData.MONEY_PER_LEVEL, "default money from top level")
+	assert_eq(info.money, 8 * 40, "default money: top ring times 40 (item 659)")
 	assert_eq(info.ai, 0)
 
 func test_wardens_use_at_least_greedy_ai() -> void:
@@ -69,16 +69,16 @@ func test_sealing_rifts_raises_veteran_cap_and_unlocks_pc() -> void:
 	assert_false(GameState.seal_rift("cinder"), "only once")
 	assert_gt(GameState.level_cap(), cap0)
 	assert_true(GameState.has_flag("rift_cinder_sealed"))
-	assert_false(GameState.has_flag("pc_unlocked"), "one Rift is not enough")
+	assert_false(GameState.has_flag("storage_remote"), "one Rift is not enough")
 	var maelis: Dictionary = _npc("tide_rift", "warden_maelis")
 	assert_eq(str(maelis.warden), "tide")
 	assert_true(GameState.seal_rift("tide"))
-	assert_true(GameState.has_flag("pc_unlocked"), "PC access from the menu after the second Rift")
+	assert_true(GameState.has_flag("storage_remote"), "Storage from the menu after the second Rift")
 
 func test_rifts_open_in_any_order() -> void:
 	assert_true(GameState.seal_rift("tide"))
 	assert_true(GameState.seal_rift("cinder"))
-	assert_true(GameState.has_flag("pc_unlocked"))
+	assert_true(GameState.has_flag("storage_remote"))
 
 func test_bag_is_unlimited() -> void:
 	GameState.add_item("tonic", 5000)
@@ -92,3 +92,108 @@ func test_starter_is_saved() -> void:
 	GameState.from_dict(d)
 	assert_eq(GameState.starter, "Puddlet")
 	GameState.reset()
+
+# --- Plan area 2, items 645-659 ------------------------------------------------------------
+
+## Every Wayfarer and Warden on every map with its team blocks: [map_id, npc, [entries...]].
+func _team_blocks() -> Array:
+	var out: Array = []
+	var dir := DirAccess.open(MapData.DIR)
+	for f: String in dir.get_files():
+		if not f.ends_with(".json"):
+			continue
+		var map_id: String = f.get_basename()
+		var m: MapData = MapData.load_map(map_id)
+		if m == null:
+			continue
+		for n: Dictionary in m.npcs:
+			if not TrainerData.is_trainer(n) or bool(n.get("wild", false)):
+				continue
+			var blocks: Array = []
+			if n.get("team") is Array:
+				blocks.append(n.team)
+			if n.get("team_by_starter") is Dictionary:
+				blocks.append_array((n.team_by_starter as Dictionary).values())
+			if n.get("teams_by_difficulty") is Dictionary:
+				blocks.append_array((n.teams_by_difficulty as Dictionary).values())
+			for b: Variant in blocks:
+				out.append([map_id, n, b])
+	return out
+
+func test_no_twin_species_on_the_same_ring() -> void:
+	for row: Array in _team_blocks():
+		var n: Dictionary = row[1]
+		if str(n.get("id", "")) == "bram" or n.has("warden") or n.has("boss"):
+			continue
+		var seen: Dictionary = {}
+		for e: Dictionary in row[2]:
+			var k: String = "%s@%d" % [e.species, int(e.get("level", 5))]
+			assert_false(seen.has(k), "%s/%s carries %s twice" % [row[0], n.id, k])
+			seen[k] = true
+
+## Set pieces show a mix on purpose: Kestra's practice duel, the tag battle and Ilka's 3 v 3.
+const MIXED_TEAMS: Array[String] = ["kestra", "kestra_tag", "mystic"]
+
+func test_wayfarer_teams_keep_to_three_elements() -> void:
+	for row: Array in _team_blocks():
+		var n: Dictionary = row[1]
+		if n.has("warden") or n.has("boss") or str(n.get("id", "")) in MIXED_TEAMS:
+			continue
+		var els: Dictionary = {}
+		for e: Dictionary in row[2]:
+			for el: int in Database.species(str(e.species)).elements:
+				els[el] = true
+		assert_lte(els.size(), 3, "%s/%s covers %d elements" % [row[0], n.id, els.size()])
+
+func test_wayfarers_stay_near_the_wild_rings() -> void:
+	var enc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/encounters.json"))
+	for row: Array in _team_blocks():
+		var n: Dictionary = row[1]
+		if n.has("warden") or n.has("boss") or row[2] != n.get("team"):
+			continue
+		var raw: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(MapData.DIR + str(row[0]) + ".json"))
+		var table: Variant = enc.get(str(raw.get("encounters", "")), {})
+		if not table is Dictionary or (table as Dictionary).get("spawns", []).is_empty():
+			continue
+		var wild_top: int = 0
+		for sp: Dictionary in table.spawns:
+			wild_top = maxi(wild_top, int(sp.get("max", 0)))
+		var top: int = 0
+		for e: Dictionary in row[2]:
+			top = maxi(top, int(e.get("level", 5)))
+		assert_lte(top, wild_top + 2, "%s/%s ring %d vs wild %d" % [row[0], n.id, top, wild_top])
+
+## Fixed arts may come early (a Wayfarer's trained pick, items 640-648), but each one is in the
+## species' learn list or of one of its own elements, so no foe carries a foreign art.
+func test_fixed_arts_fit_the_species() -> void:
+	for row: Array in _team_blocks():
+		for e: Dictionary in row[2]:
+			var sd: SpirlingData = Database.species(str(e.species))
+			var known: Dictionary = {}
+			for mv: MoveData in sd.learnset_moves:
+				known[mv.move_name] = true
+			for m: Variant in e.get("moves", []):
+				var mv: MoveData = Database.move(str(m))
+				assert_not_null(mv, str(m))
+				if mv != null:
+					assert_true(known.has(mv.move_name) or mv.element in sd.elements, "%s/%s: %s and %s don't fit" % [row[0], row[1].id, e.species, m])
+
+func test_default_prize_money_follows_the_ring() -> void:
+	var orrin: Dictionary = _npc("cinder_rift", "warden_orrin").duplicate()
+	orrin.erase("money")
+	var team: Array[Spirling] = TrainerData.build_team(orrin, "Kindlop", _rng)
+	var top: int = 0
+	for s: Spirling in team:
+		top = maxi(top, s.level)
+	assert_eq(TrainerData.prize_money(orrin, team), top * 70, "Wardens: top ring times 70")
+	assert_eq(TrainerData.prize_money(_npc("fernstair", "imme"), team), 120, "an explicit money key wins")
+
+func test_new_wayfarers_are_placed() -> void:
+	var want: Dictionary = {"fernstair/imme": "apprentice", "fernstair/joss": "wall", "saltmarsh/aud": "spoiler", "murk_hollow/fenn": "field_keeper"}
+	for key: String in want:
+		var parts: PackedStringArray = key.split("/")
+		var n: Dictionary = _npc(parts[0], parts[1])
+		assert_true(TrainerData.is_trainer(n), key)
+		assert_eq(str(n.get("profile", "")), str(want[key]), key)
+		assert_true(Dialogue.exists(str(n.intro)) and Dialogue.exists(str(n.defeat)), key)
+	assert_eq(int(_npc("fernstair", "imme").money), 120)

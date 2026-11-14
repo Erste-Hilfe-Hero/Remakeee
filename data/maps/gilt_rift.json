@@ -1,0 +1,182 @@
+{
+ "name": "Gilt Rift",
+ "region": "halcyra",
+ "biome": "rift",
+ "backdrop": "ember",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^........^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^..........^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "gildcrest",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "gildcrest",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "heir",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "gilt_rift/heir",
+   "sprite": "warden",
+   "trainer": "Gilt Heir Leopold",
+   "intro": "gilt_rift/heir_intro",
+   "defeat": "gilt_rift/heir_defeat",
+   "money": 6000,
+   "team": [
+    {
+     "species": "Obelith",
+     "level": 94
+    },
+    {
+     "species": "Coronarch",
+     "level": 95
+    },
+    {
+     "species": "Rollibex",
+     "level": 95
+    }
+   ]
+  },
+  {
+   "id": "warden_aurek",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "gilt_rift/aurek",
+   "sprite": "warden",
+   "trainer": "Warden Aurek",
+   "warden": "v4_gilt",
+   "team": [
+    {
+     "species": "Obelordan",
+     "level": 95
+    },
+    {
+     "species": "Coronarch",
+     "level": 95
+    },
+    {
+     "species": "Caravault",
+     "level": 95
+    },
+    {
+     "species": "Helirollax",
+     "level": 96
+    },
+    {
+     "species": "Coffrendrake",
+     "level": 96
+    }
+   ],
+   "intro": "gilt_rift/aurek_intro",
+   "defeat": "gilt_rift/aurek_defeat",
+   "ai": 2,
+   "money": 12000,
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Hazejellith",
+      "level": 89
+     },
+     {
+      "species": "Coronarch",
+      "level": 89
+     },
+     {
+      "species": "Caravault",
+      "level": 89
+     },
+     {
+      "species": "Helirollax",
+      "level": 90
+     },
+     {
+      "species": "Claspreign",
+      "level": 90
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Obelordan",
+      "level": 97
+     },
+     {
+      "species": "Coronarch",
+      "level": 97
+     },
+     {
+      "species": "Caravault",
+      "level": 97
+     },
+     {
+      "species": "Helirollax",
+      "level": 98
+     },
+     {
+      "species": "Coffrendrake",
+      "level": 98
+     }
+    ]
+   }
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "gilt_rift/spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "gilt_rift/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v4_gilt_sealed",
+   "closed": "@"
+  }
+ ]
+}

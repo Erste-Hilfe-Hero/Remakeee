@@ -1,0 +1,103 @@
+name: UI golden images
+
+# Plan item 2044: every menu screen in English and German at 144x256 is rendered and
+# compared with tests/golden/, so cut-off rows and overflowing texts show up in review.
+# After a wanted change, refresh the images with:
+#   xvfb-run -a godot --path . --rendering-driver opengl3 -s res://tools/ui_golden.gd -- update
+# For now a difference warns (annotation, job summary, diff images as artifact) and does
+# not block the merge.
+
+on:
+  pull_request:
+    paths:
+      - "scripts/ui/**"
+      - "scripts/core/**"
+      - "tools/i18n/**"
+      - "tools/ui_golden*.gd"
+      - "tools/era_text_shots*.gd"
+      - "tools/battle_ui_golden*.gd"
+      - "scripts/battle/**"
+      - "data/era_text.json"
+      - "data/era_feel.json"
+      - "tools/fx_flash_check.*"
+      - "scripts/battle/presenter/**"
+      - "tests/golden/**"
+      - ".github/workflows/ui-golden.yml"
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: "4.7.2"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  golden:
+    runs-on: ubuntu-24.04
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Godot, a virtual display and software OpenGL
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q xvfb libgl1-mesa-dri libgl1 libxcursor1 libxinerama1 libxrandr2 libxi6
+          curl -sSL -o /tmp/godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q /tmp/godot.zip -d /tmp/godot
+          sudo mv /tmp/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
+      - name: Import project
+        run: godot --headless --path . --import
+      - name: Compare menu screens with tests/golden
+        id: compare
+        run: |
+          set +e
+          xvfb-run -a godot --path . --rendering-driver opengl3 -s res://tools/ui_golden.gd -- compare 2>&1 | tee /tmp/golden.log
+          code=${PIPESTATUS[0]}
+          line=$(grep "UI golden:" /tmp/golden.log | tail -1)
+          echo "### UI golden images" >> "$GITHUB_STEP_SUMMARY"
+          echo "$line" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$code" != "0" ]; then
+            echo "::warning title=UI golden images::$line Check the diff images (artifact ui-golden) and refresh with tools/ui_golden.gd -- update if the change is wanted."
+          fi
+          exit $code
+      - name: Compare the era dialogue box and place banner with tests/golden/era_text
+        if: always()
+        run: |
+          # Eras II to V, English and German (docs/ERA_FEEL_TEXT.md). Like the menu screens a
+          # difference warns; refresh with tools/era_text_shots.gd -- update if it is wanted.
+          xvfb-run -a godot --path . --rendering-driver opengl3 -s res://tools/era_text_shots.gd -- compare 2>&1 | tee /tmp/era_text.log || true
+          line=$(grep "Era text golden:" /tmp/era_text.log | tail -1)
+          echo "$line" >> "$GITHUB_STEP_SUMMARY"
+          [ -n "$line" ] || { echo "::error::tools/era_text_shots.gd did not finish"; exit 1; }
+          case "$line" in *"all screens match"*) ;; *) echo "::warning title=Era text golden images::$line";; esac
+      - name: Compare the battle screen with tests/golden/battle_ui
+        if: always()
+        run: |
+          # KAMPF_PLAN_1000 item 937: command menu and art info, 1v1 and 2v2, Era I and V, EN and DE.
+          # Like the menu screens a difference warns; refresh with tools/battle_ui_golden.gd -- update.
+          xvfb-run -a godot --path . --rendering-driver opengl3 -s res://tools/battle_ui_golden.gd -- compare 2>&1 | tee /tmp/battle_ui.log || true
+          line=$(grep "Battle UI golden:" /tmp/battle_ui.log | tail -1)
+          echo "$line" >> "$GITHUB_STEP_SUMMARY"
+          [ -n "$line" ] || { echo "::error::tools/battle_ui_golden.gd did not finish"; exit 1; }
+          case "$line" in *"all "*"screens match"*) ;; *) echo "::warning title=Battle UI golden images::$line";; esac
+      - name: Battle effects never flash more than 3 times a second (plan item 2656)
+        if: always()
+        run: |
+          xvfb-run -a godot --path . --rendering-driver opengl3 res://tools/fx_flash_check.tscn 2>&1 | tee /tmp/flash.log
+          grep -q "FX flash: OK" /tmp/flash.log
+      - name: Review shots of title, maps, battles, bond and shop (German)
+        if: always() && github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        run: timeout 600 xvfb-run -a godot --path . --rendering-driver opengl3 -s res://tools/screenshot.gd -- /tmp/shots de 2>&1 | tail -20
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always() && github.event_name == 'workflow_dispatch'
+        with:
+          name: review-shots
+          path: /tmp/shots/
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: ui-golden
+          path: ~/.local/share/godot/app_userdata/Chimora/golden_out/
+          if-no-files-found: ignore

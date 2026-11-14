@@ -1,0 +1,30 @@
+{
+ "_comment": "Bund extras (Online 100, points 33-40). The server reads the same object as server_config.bund_rules (tools/online/game_data_sql.py).",
+ "langs": ["de", "en", "tr", "pl", "nl", "fr", "es", "it"],
+ "xp_per_item": 10,
+ "xp_per_level": 500,
+ "level_max": 20,
+ "donate_daily": 20,
+ "goal_target": 200,
+ "goal_reward": {"item": "strong_tonic", "count": 3},
+ "active_days": 7,
+ "board_rows": 20,
+ "search_rows": 20,
+ "perks": [
+  {"level": 3, "key": "house_slots", "value": 1},
+  {"level": 5, "key": "donate_more", "value": 10},
+  {"level": 10, "key": "goal_more", "value": 1},
+  {"level": 15, "key": "house_slots", "value": 2},
+  {"level": 20, "key": "goal_more", "value": 1}
+ ],
+ "house_slots": 3,
+ "decor": [
+  {"id": "lantern", "level": 1}, {"id": "banner", "level": 1}, {"id": "bench", "level": 1}, {"id": "map_table", "level": 4},
+  {"id": "fountain", "level": 8}, {"id": "trophy_shelf", "level": 12}, {"id": "star_window", "level": 16},
+  {"id": "great_hearth", "level": 20}
+ ],
+ "war_days": [6, 7],
+ "war_size": 5,
+ "war_win_xp": 300,
+ "war_xp": 100
+}

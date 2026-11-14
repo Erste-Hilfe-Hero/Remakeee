@@ -1,0 +1,29 @@
+{
+ "_comment": "pl translation of the bund_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s  Rank %d%s": "%d. %s  Stopień %d%s",
+  "%s  Rank %d  %d/30, %d active%s": "%s  Stopień %d  %d/30, aktywni: %d%s",
+  "Any language": "Dowolny język",
+  "Anyone, at once": "Każdy, od razu",
+  "Bund board": "Ranking Sojuszy",
+  "Bund rank %d (%d renown)": "Stopień Sojuszu %d (sława: %d)",
+  "Bund rank and week goal": "Stopień Sojuszu i cel tygodnia",
+  "Donate items...": "Przekaż przedmioty...",
+  "Donated today: %d / %d": "Przekazano dziś: %d / %d",
+  "Find a bund...": "Znajdź Sojusz...",
+  "How many?": "Ile?",
+  "Language and joining...": "Język i dołączanie...",
+  "Language of the bund": "Język Sojuszu",
+  "No bund found. Found your own!": "Nie znaleziono Sojuszu. Załóż własny!",
+  "No bunds yet.": "Nie ma jeszcze Sojuszy.",
+  "Only after a request": "Tylko po prośbie",
+  "Take the week reward": "Odbierz nagrodę tygodnia",
+  "Thank you! The bund has %d renown now.": "Dziękujemy! Sława Sojuszu wynosi teraz %d.",
+  "The week goal is not reached yet.": "Cel tygodnia nie jest jeszcze osiągnięty.",
+  "Week goal: %d / %d items donated": "Cel tygodnia: przekazane przedmioty %d / %d",
+  "Who may join?": "Kto może dołączyć?",
+  "You already took this week's reward.": "Nagroda z tego tygodnia jest już odebrana.",
+  "You donated all you can today. More tomorrow.": "Na dziś to wszystko, co możesz przekazać. Jutro więcej.",
+  "open": "otwarty"
+ }
+}

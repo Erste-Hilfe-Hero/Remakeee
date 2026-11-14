@@ -1,0 +1,46 @@
+Chimora 1.2.0
+
+ACT IV: SOLENNE
+- A sun-bleached new act: Ochrewell, the Glasswind Flats, a Caravanserai ladder and the Mirage Kiln.
+- Three new Rifts and their Wardens. All twelve seals now stand between you and the finale.
+
+AFTER THE FINALE
+- Vellmarch: a whole post-game region in the Era II look. 5 towns, 6 roads, 4 Rifts and a story with a betrayal in every chapter.
+- Beyond Vellmarch: Quillmarch, Halcyra and Quivermoor, three more regions in the looks of later eras.
+- Rematches against all 12 Wardens. They have had time to think about losing.
+- Echo Tower with 100 floors, Master Rifts, the Random Rift, a weekly giant, a final exam and New Game+.
+- Spirlings keep growing past ring 60. Keep going.
+
+STORY AND TRUST
+- Two clans, eleven strangers and a Ledger in the pause menu that remembers whom you trusted. A favour can pay off. Or get you robbed.
+- Lore quests for six new legendaries, each with a guide who may not be what they seem.
+- Side stories in every act and a strangers' camp at the edge of the Wide Rift.
+
+SPIRLINGS
+- Over 400 new Spirlings, 497 in all: 70 of their own in every act and every region after the story.
+- Gleam forms in the wild, with a chain bonus and a Spirlog counter.
+- Later stages now look like their earlier selves, grown up.
+- Your lead Spirling walks behind you. It remembers how you treat it.
+- The Ink Oath, hidden gifts from a black-market informant, and offspring that inherit the family business.
+
+NEW PLACES
+- The Burrow: a hollow you can claim. The squatter disagrees.
+- The Wake: a daily funeral show in Gravers' Hall.
+- Hollowgate Reserve: a wildlife park run by smugglers.
+- Cartographer's stones, landmarks and map progress per region.
+
+ONLINE (needs an internet connection)
+- Live duels with friends, leagues with seasons, raids with a weekly guardian.
+- Bunds with donations and weekly goals, trading, wish lists, gifts and timed events.
+
+LOOK, SOUND AND COMFORT
+- Every act has its own look, windows light up at night, and the lighthouse finally looks like one.
+- Era music for regions, dungeons, battles and Wardens.
+- Battle screen: Vigor bars per era, coloured type badges, matchup hints and a colour-blind mode.
+- A gentler first 15 minutes. News now appear under "What's new" on the title screen.
+- Your journey is saved right after you pick your name.
+- Foldable phones: the picture fits again as soon as you fold or unfold.
+- New optional shop offers.
+- Many more texts translated in all 14 languages.
+- Plenty of fixes: saves, settings, restoring purchases. Turning the phone clock back no longer pays out daily rewards twice. Nice try.
+- Fixed: your Wayfarer no longer walks on alone after a battle.

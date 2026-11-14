@@ -1,0 +1,14 @@
+{
+ "_comment": "ja short words for the battle screen (German table battle_short), keyed by the English text. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "Again: - (battle button)": "もう一度: -",
+  "Bond (battle button)": "絆",
+  "Give up (battle button)": "降参",
+  "Growth (bar label)": "成長",
+  "Item (battle button)": "道具",
+  "Leave (battle button)": "にげる",
+  "Oath (battle button)": "誓い",
+  "Restart (battle button)": "やり直す",
+  "Swap (battle button)": "交代"
+ }
+}

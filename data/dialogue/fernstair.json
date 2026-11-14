@@ -50,5 +50,39 @@
   "action": "give_item kin_charm 2",
   "flag": "fern_gift",
   "once": true
- }
+ },
+ "imme": [
+  "Imme: Out of Energy? Rest for a turn. Your Spirling gets it back."
+ ],
+ "imme_intro": [
+  "Imme: I'm still learning too! Let's practise together.",
+  "Imme: Tip: when your Energy runs low, pick Rest and catch your breath."
+ ],
+ "imme_defeat": [
+  "Imme: You rested at the right time. I'll remember that!"
+ ],
+ "joss": [
+  "Joss: Stages stack up. Guard twice and nothing gets through."
+ ],
+ "joss_intro": [
+  "Joss: My Shalebat digs in. Watch its Guard climb!"
+ ],
+ "joss_defeat": [
+  "Joss: Even a wall cracks. Well hit."
+ ],
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 6"
+ },
+ "mound_stone": {
+  "lines": [
+   "An old burial mound. A weathered stone stands on it, its letters worn almost away."
+  ],
+  "action": "rubbing fernstair/mound_words"
+ },
+ "mound_words": [
+  "\"One step toward morning, two toward the valley. Dig there.\""
+ ]
 }

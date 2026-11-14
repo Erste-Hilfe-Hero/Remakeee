@@ -1,15 +1,110 @@
 class_name ListPicker
 extends PanelContainer
 ## Modal list of choices. pick() is awaitable and returns the chosen index, or -1 on cancel.
+##
+## Tap safety (plan items 1781, 1782, 1785, 1786): a row fires on release, only when the finger
+## moved at most TAP_SLOP pixels since it went down (so scrolling never picks a row), and only
+## when that finger went down after the list opened plus a short guard (so the second tap of a
+## quick double tap cannot pick a row in the next menu).
 
 signal picked(index: int)
 
 const ROW_HEIGHT: int = 16
+## Pixels a finger may move between press and release and still count as a tap.
+const TAP_SLOP: float = 6.0
+## Taps that start this soon after a list opens are ignored (double-tap guard).
+const TAP_GUARD_MS: int = 120
+## Guard for questions whose answer cannot be undone.
+const DANGER_GUARD_MS: int = 300
+## Left room in every row for the focus pointer (item 2088).
+const POINTER_SPACE: int = 5
 
 var _box: VBoxContainer
 var _title: Label
+var _scroll: ScrollContainer
 var _buttons: Array[Button] = []
 var _cancellable: bool = true
+var _opened_ms: int = 0
+var _guard_ms: int = TAP_GUARD_MS
+## Pointer bookkeeping: where and when the last finger went down, and the frame of the last
+## release together with how far it moved.
+var _press_pos: Vector2 = Vector2(NAN, NAN)
+var _press_ms: int = -1
+var _release_frame: int = -1
+var _release_ok: bool = true
+## Last chosen row per menu title (item 1836), so coming back keeps your place.
+var _remembered: Dictionary[String, int] = {}
+## Fixed back button next to the title (item 1834), the explanation line under the list
+## (item 2067) and the more-rows arrows over the list (item 1835).
+var _back: Button
+var _hint: Label
+var _arrows: Control
+var _hints: Array[String] = []
+var _sliders: Array[bool] = []
+## How a slider row was moved when pick() returned its index: -1 lower, +1 higher (item 2064).
+var last_dir: int = 0
+## True when the row just picked was held down at least LONG_PRESS_MS (item 1947).
+var last_long: bool = false
+const LONG_PRESS_MS: int = 500
+
+const BACK_SIZE: int = 16
+## pick() returns TAB_PICKED - n when the player switches to tab n (item 1914).
+const TAB_PICKED: int = -100
+var _tab_row: HBoxContainer
+var _head: HBoxContainer
+## One-hand mode (item 2108): Back moves to a row under the list, on the thumb's side.
+var _foot: HBoxContainer
+var one_hand: bool = false
+var _tabs: Array[String] = []
+var _tab: int = 0
+## True after a tap or click, false after a key or gamepad button: the focus sound only plays
+## for keys and pads, so a tap does not give two sounds at once (item 1849).
+static var pointer_used: bool = false
+## The device used last: "touch" (taps and clicks), "pad" (gamepad) or "keys" (keyboard).
+## Hints follow it (item 1841).
+static var last_device: String = "touch"
+## Haptics pattern for a tapped choice when Tap buzz is on (item 1791, 15 ms).
+const TAP_BUZZ: String = "confirm"
+## Greyed-out rows can carry "why" (a reason); a tap on them shows it under the list (item 1842).
+var _whys: Array[String] = []
+## L and R jump this many rows (item 1846).
+const PAGE_ROWS: int = 8
+## Held up or down on a gamepad repeats after 350 ms, then every 80 ms (item 1848).
+const REPEAT_DELAY: float = 0.35
+const REPEAT_EVERY: float = 0.08
+var _hold_dir: int = 0
+var _hold_t: float = 0.0
+var _repeats: int = 0
+## Line shown when a list has no rows besides Back (item 1856).
+const EMPTY_TEXT: String = "Nothing here yet."
+var _empty: Label
+## Scroll position per list title, so going back a level lands where you were (item 1853).
+var _remembered_scroll: Dictionary[String, int] = {}
+var _title_key: String = ""
+## Lists fade in over 80 ms unless Reduce motion is on (item 1852).
+const FADE_IN: float = 0.08
+var _fade: Tween
+
+## Era layout of the list (EraMenus.layout): row height, columns, cursor, info panel, motion.
+## Empty is the Era I list.
+var layout: Dictionary = {}
+## Fires when the focus moves to row [param index] (previews beside the list follow it).
+signal row_focused(index: int)
+var _grid: GridContainer
+var _header: VBoxContainer
+var _backdrop: Control
+var _backdrop_t: float = 0.0
+## Era IV and V: how many lines the info panel under the list always keeps free.
+const PANEL_LINES: int = 3
+const SLIDE_PX: float = 10.0
+const SLIDE_GAP: float = 0.018
+## How often rows with a moving picture are redrawn, in seconds.
+const ROW_BEAT: float = 0.3
+var _beat_t: float = 0.0
+## Frames until the focused row is checked to be in view (_keep_focus_shown).
+var _focus_check: int = 0
+## Frames until the rows slide in (Era V), once the list has its layout.
+var _slide_wait: int = 0
 
 func _ready() -> void:
 	add_theme_stylebox_override("panel", UITheme.panel_style())
@@ -17,53 +112,862 @@ func _ready() -> void:
 	var root := VBoxContainer.new()
 	root.add_theme_constant_override("separation", 2)
 	add_child(root)
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 2)
+	root.add_child(head)
 	_title = Label.new()
 	_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_title.custom_minimum_size = Vector2(1, 0)
-	root.add_child(_title)
-	var scroll := ScrollContainer.new()
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	root.add_child(scroll)
+	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# A tap on the title scrolls back to the top (item 1797).
+	_title.mouse_filter = Control.MOUSE_FILTER_STOP
+	_title.gui_input.connect(func(ev: InputEvent) -> void:
+		if TapInput.is_release(ev):
+			scroll_to_top())
+	head.add_child(_title)
+	_back = Button.new()
+	_back.custom_minimum_size = Vector2(BACK_SIZE, BACK_SIZE)
+	_back.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	_back.focus_mode = Control.FOCUS_NONE
+	_back.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+	_back.accessibility_name = "Back"
+	_back.draw.connect(_draw_back_arrow)
+	_back.pressed.connect(func() -> void: _on_row(-1))
+	head.add_child(_back)
+	_tab_row = HBoxContainer.new()
+	_tab_row.add_theme_constant_override("separation", 1)
+	_tab_row.visible = false
+	root.add_child(_tab_row)
+	_header = VBoxContainer.new()
+	_header.visible = false
+	root.add_child(_header)
+	_scroll = ScrollContainer.new()
+	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	# A calm tap never counts as a swipe (item 1785).
+	_scroll.scroll_deadzone = int(TAP_SLOP)
+	_scroll.gui_input.connect(_overscroll_input)
+	root.add_child(_scroll)
 	_box = VBoxContainer.new()
 	_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_box.add_theme_constant_override("separation", 1)
-	scroll.add_child(_box)
+	_scroll.add_child(_box)
+	_grid = GridContainer.new()
+	_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_grid.add_theme_constant_override("h_separation", 2)
+	_grid.add_theme_constant_override("v_separation", 2)
+	_grid.visible = false
+	_box.add_child(_grid)
+	_empty = Label.new()
+	_empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_empty.custom_minimum_size = Vector2(1, 0)
+	_empty.add_theme_color_override("font_color", UITheme.MID)
+	_empty.text = EMPTY_TEXT
+	_empty.visible = false
+	_box.add_child(_empty)
+	_hint = Label.new()
+	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_hint.custom_minimum_size = Vector2(1, 0)
+	_hint.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	_hint.add_theme_color_override("font_color", UITheme.MID)
+	_hint.visible = false
+	root.add_child(_hint)
+	_foot = HBoxContainer.new()
+	_foot.visible = false
+	root.add_child(_foot)
+	_head = head
+	_backdrop = Control.new()
+	_backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_backdrop.visible = false
+	_backdrop.draw.connect(_draw_backdrop)
+	add_child(_backdrop)
+	move_child(_backdrop, 0)
+	_arrows = Control.new()
+	_arrows.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_arrows.draw.connect(_draw_arrows)
+	add_child(_arrows)
+	_scroll.get_v_scroll_bar().value_changed.connect(func(_v: float) -> void:
+		if _scroll_quiet <= 0:
+			scroll_shown = SCROLL_SHOW_TIME
+		_arrows.queue_redraw())
+	_scroll.get_v_scroll_bar().changed.connect(_arrows.queue_redraw)
 
-## [param entries]: Array of {"text": String, "disabled": bool}. [param cancellable] adds a Back row.
-func pick(title: String, entries: Array[Dictionary], cancellable: bool = true) -> int:
+## Puts Back in the top corner, or in one-hand mode at the bottom on the thumb's side
+## (right, or left when [param left] is set).
+func set_one_hand(on: bool, left: bool) -> void:
+	one_hand = on
+	if _back == null:
+		return
+	var want: Control = _foot if on else _head
+	if _back.get_parent() != want:
+		_back.get_parent().remove_child(_back)
+		want.add_child(_back)
+	_foot.alignment = BoxContainer.ALIGNMENT_BEGIN if left else BoxContainer.ALIGNMENT_END
+	_foot.visible = on and _back.visible
+
+## The Back button (tests).
+func back_button() -> Button:
+	return _back
+
+## [param entries]: Array of {"text": String, "disabled": bool, "danger": bool}.
+## [param cancellable] adds a Back row. [param focus]: row to focus first (-1 = remembered or
+## first enabled row). [param guard_ms]: how long taps are ignored after the list opens.
+## Rows may also carry "icon" (Texture2D, drawn left of the text), "decorate" (a Callable
+## that gets the row Button to draw on, e.g. a Vigor bar), "hint" (line under the list) and
+## "say" (a state only screen readers read, e.g. "worn out" when a mark shows it) and
+## "right" (text a decoration draws at the right end, e.g. a price: the row's own text is cut
+## short with ".." so it never runs under it, "right_pad" pixels of room around it).
+## [param tabs]: names of tabs above the list; left/right or a tap on a tab returns
+## TAB_PICKED - tab.
+func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, focus: int = -1,
+		guard_ms: int = TAP_GUARD_MS, tabs: Array[String] = [], tab: int = 0) -> int:
 	_title.text = title
+	_set_tabs(tabs, tab)
 	_cancellable = cancellable
+	# The player's tap guard (KAMPF_PLAN_1000 item 908) lengthens it, never shortens it.
+	_guard_ms = BattleCalm.guard_ms(guard_ms)
+	_back.visible = cancellable
+	_foot.visible = one_hand and cancellable
+	last_dir = 0
+	last_long = false
+	scroll_shown = 0.0
+	_scroll_quiet = SCROLL_QUIET_FRAMES
+	_hints.clear()
+	_whys.clear()
+	_sliders.clear()
+	_hint.visible = false
 	for b: Button in _buttons:
 		b.queue_free()
 	_buttons.clear()
 	var rows: Array[Dictionary] = entries.duplicate()
 	if cancellable:
 		rows.append({"text": "Back", "cancel": true})
+	var columns: int = maxi(1, int(layout.get("columns", 1)))
+	var row_h: int = int(layout.get("row_h", ROW_HEIGHT))
+	_grid.columns = columns
+	_grid.visible = columns > 1
+	_backdrop.visible = bool(layout.get("backdrop", false))
+	_style_panel()
 	for i: int in rows.size():
 		var b := Button.new()
-		b.text = str(rows[i].get("text", ""))
+		var text: String = str(rows[i].get("text", ""))
+		# Irreversible answers carry a warning mark (item 1837).
+		if bool(rows[i].get("danger", false)):
+			b.text = Loc.t(text)
+			b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+			b.text = "! " + b.text
+		else:
+			b.text = text
 		b.disabled = bool(rows[i].get("disabled", false))
+		var icon: Variant = rows[i].get("icon")
+		if icon is Texture2D:
+			b.icon = icon
+		var deco: Variant = rows[i].get("decorate")
+		if deco is Callable:
+			b.draw.connect(func() -> void: (deco as Callable).call(b))
+		b.set_meta("say", str(rows[i].get("say", "")))
+		# Rows with a moving picture (team sprites from Era II on) are redrawn on a slow beat.
+		b.set_meta("animate", bool(rows[i].get("animate", false)))
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		b.custom_minimum_size = Vector2(0, ROW_HEIGHT)
+		b.custom_minimum_size = Vector2(0, row_h)
 		b.clip_text = true
+		var right: String = str(rows[i].get("right", ""))
+		if not right.is_empty() and columns == 1:
+			var full: String = b.text
+			var pad: float = float(rows[i].get("right_pad", 6.0))
+			b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+			b.text = Loc.t(full)
+			b.resized.connect(func() -> void: b.text = fit_before_right(b, Loc.t(full), right, pad))
+		if columns > 1:
+			# Grid of big buttons: the symbol on top, the word under it, both centred.
+			b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			b.alignment = HORIZONTAL_ALIGNMENT_CENTER
+			b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			b.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
+		# Large text (item 2042): long rows wrap onto a second line instead of being cut.
+		# The touch eras' big buttons do the same.
+		if UITheme.large_text or bool(layout.get("wrap", false)):
+			b.clip_text = false
+			b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			b.custom_minimum_size.x = 1
+		b.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
 		var result: int = -1 if bool(rows[i].get("cancel", false)) else i
-		b.pressed.connect(func() -> void:
-			Sound.sfx("cancel" if result < 0 else "confirm")
-			picked.emit(result))
+		_hints.append(str(rows[i].get("hint", "")))
+		_whys.append(str(rows[i].get("why", "")))
+		_sliders.append(bool(rows[i].get("slider", false)))
+		b.pressed.connect(func() -> void: _on_row(result, _slider_dir(b, i), b))
+		b.gui_input.connect(func(ev: InputEvent) -> void: _row_input(ev, i, result))
 		b.focus_entered.connect(func() -> void:
-			if visible:
-				Sound.sfx("select"))
-		_box.add_child(b)
+			if visible and not pointer_used:
+				Sound.sfx("select")
+			_show_hint(i)
+			_slide_pointer(b)
+			row_focused.emit(i)
+			b.queue_redraw())
+		b.focus_exited.connect(b.queue_redraw)
+		Juice.press_feedback(b)
+		b.draw.connect(func() -> void: _draw_pointer(b))
+		if columns > 1:
+			_grid.add_child(b)
+		else:
+			_box.add_child(b)
 		_buttons.append(b)
+		_pointer_room(b)
+	_link_wrap()
+	if columns > 1:
+		_link_grid(columns)
+	_show_hint(-1)
+	_empty.visible = entries.is_empty()
+	_set_accessibility(title)
+	_opened_ms = Time.get_ticks_msec()
+	_press_pos = Vector2(NAN, NAN)
+	_press_ms = -1
+	if not visible:
+		fade_in()
 	visible = true
+	_title_key = title
+	var want: int = focus
+	if want < 0:
+		want = int(_remembered.get(title, -1))
+	_focus_row.call_deferred(want)
+	_slide_wait = 2
+	_focus_check = 3
+	var index: int = await picked
+	_remembered_scroll[title] = _scroll.scroll_vertical
+	visible = false
+	if index >= 0:
+		_remembered[title] = index
+	return index
+
+## Remembers which device the player used last (taps, gamepad or keys).
+static func note_device(event: InputEvent) -> void:
+	if TapInput.is_press(event):
+		pointer_used = true
+		last_device = "touch"
+	elif event is InputEventKey and event.is_pressed():
+		pointer_used = false
+		last_device = "keys"
+	elif (event is InputEventJoypadButton and event.is_pressed()) or (event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) > 0.5):
+		pointer_used = false
+		last_device = "pad"
+
+## -1 for L or Page Up, 1 for R or Page Down, else 0.
+static func page_jump(event: InputEvent) -> int:
+	var jb := event as InputEventJoypadButton
+	if jb != null:
+		if jb.button_index == JOY_BUTTON_LEFT_SHOULDER:
+			return -1
+		if jb.button_index == JOY_BUTTON_RIGHT_SHOULDER:
+			return 1
+	var k := event as InputEventKey
+	if k != null:
+		if k.keycode == KEY_PAGEUP:
+			return -1
+		if k.keycode == KEY_PAGEDOWN:
+			return 1
+	return 0
+
+## Index of the focused row, or -1.
+func focused_index() -> int:
+	for i: int in _buttons.size():
+		if _buttons[i].has_focus():
+			return i
+	return -1
+
+## Moves focus by [param delta] rows to the nearest enabled row; with [param wrap] it goes round
+## the ends, without it stops at the first or last row.
+func move_focus(delta: int, wrap: bool = true) -> void:
+	if _buttons.is_empty():
+		return
+	var at: int = maxi(focused_index(), 0)
+	var n: int = _buttons.size()
+	var want: int = at + delta
+	want = posmod(want, n) if wrap else clampi(want, 0, n - 1)
+	var step: int = 1 if delta >= 0 else -1
+	for k: int in n:
+		var i: int = posmod(want + step * k, n) if wrap else clampi(want - step * k, 0, n - 1)
+		if not _buttons[i].disabled:
+			_buttons[i].grab_focus()
+			_scroll.ensure_control_visible(_buttons[i])
+			return
+
+## Gamepad hold-to-repeat; keyboards repeat on their own.
+func _process(delta: float) -> void:
+	if visible:
+		_bob_pointer(delta)
+		if _slide_wait > 0:
+			_slide_wait -= 1
+			if _slide_wait == 0:
+				_slide_in()
+		if _focus_check > 0:
+			_focus_check -= 1
+			if _focus_check == 0:
+				_keep_focus_shown()
+		if _backdrop.visible and not Juice.reduced():
+			_backdrop_t += delta
+			_backdrop.queue_redraw()
+		if not Juice.reduced():
+			_beat_t += delta
+			if _beat_t >= ROW_BEAT:
+				_beat_t = 0.0
+				for b: Button in _buttons:
+					if is_instance_valid(b) and bool(b.get_meta("animate", false)):
+						b.queue_redraw()
+	if _scroll_quiet > 0:
+		_scroll_quiet -= 1
+	if scroll_shown > 0.0:
+		scroll_shown = maxf(0.0, scroll_shown - delta)
+		if scroll_shown == 0.0:
+			_arrows.queue_redraw()
+	if not visible or last_device != "pad":
+		_hold_dir = 0
+		return
+	var dir: int = 0
+	if Input.is_action_pressed("ui_down"):
+		dir = 1
+	elif Input.is_action_pressed("ui_up"):
+		dir = -1
+	if dir != _hold_dir:
+		_hold_dir = dir
+		_hold_t = 0.0
+		_repeats = 0
+		return
+	if dir == 0:
+		return
+	_hold_t += delta
+	while _hold_t >= REPEAT_DELAY + REPEAT_EVERY * _repeats:
+		_repeats += 1
+		move_focus(dir)
+
+## Up on the first row goes to the last one and down on the last to the first (item 1847).
+func _link_wrap() -> void:
+	var on: Array[Button] = []
 	for b: Button in _buttons:
 		if not b.disabled:
-			b.grab_focus.call_deferred()
-			break
-	var index: int = await picked
-	visible = false
-	return index
+			on.append(b)
+	if on.size() < 2:
+		return
+	var first: Button = on[0]
+	var last: Button = on[on.size() - 1]
+	first.focus_neighbor_top = first.get_path_to(last)
+	last.focus_neighbor_bottom = last.get_path_to(first)
+
+## Puts the list back where it was once the rows are laid out (two frames later), keeping the
+## focused row in view. One-shot connections, not awaits: an await still open when the list is
+## freed logs "Resumed function after await, but class instance is gone".
+func _restore_scroll(key: String, target: Button) -> void:
+	_queue_restore_step(key, target.get_instance_id(), 1)
+
+## The same row focused twice in one frame asks for the same step: connect it once, not twice
+## ("Signal 'process_frame' is already connected", bug sweep 2).
+func _queue_restore_step(key: String, target_id: int, frames_left: int) -> void:
+	if not is_inside_tree():
+		return
+	var step: Callable = _restore_scroll_step.bind(key, target_id, frames_left)
+	if not get_tree().process_frame.is_connected(step):
+		get_tree().process_frame.connect(step, CONNECT_ONE_SHOT)
+
+func _restore_scroll_step(key: String, target_id: int, frames_left: int) -> void:
+	if frames_left > 0:
+		_queue_restore_step(key, target_id, frames_left - 1)
+		return
+	var target: Button = instance_from_id(target_id) as Button
+	if not visible or _title_key != key or target == null or not is_instance_valid(target):
+		return
+	_scroll.scroll_vertical = _remembered_scroll[key]
+	_scroll.ensure_control_visible(target)
+
+## Starts the 80 ms fade-in; with Reduce motion the list is there at once.
+func fade_in() -> void:
+	if _fade != null and _fade.is_valid():
+		_fade.kill()
+	if GameState.reduce_motion or not is_inside_tree():
+		modulate.a = 1.0
+		return
+	modulate.a = 0.0
+	_fade = create_tween()
+	Juice.shaped(_fade.tween_property(self, "modulate:a", 1.0, FADE_IN), "fade")
+
+## [param full] cut short with ".." so it ends before [param right] (and [param pad] pixels)
+## at the right end of row [param b]. Bug sweep 2: shop rows of Eras I and II wrote the price
+## after the name and the row cut the price off ("10000 Riftglass  99,9").
+static func fit_before_right(b: Button, full: String, right: String, pad: float) -> String:
+	var font: Font = b.get_theme_font("font")
+	var fs: int = b.get_theme_font_size("font_size")
+	var box: StyleBox = b.get_theme_stylebox("normal")
+	var inner: float = b.size.x - (box.get_margin(SIDE_LEFT) + box.get_margin(SIDE_RIGHT) if box != null else 0.0)
+	if b.icon != null:
+		inner -= b.icon.get_width() + b.get_theme_constant("h_separation")
+	var room: float = inner - font.get_string_size(right, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x - pad
+	if font.get_string_size(full, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x <= room:
+		return full
+	var cut: String = full
+	while cut.length() > 1 and font.get_string_size(cut + "..", HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x > room:
+		cut = cut.substr(0, cut.length() - 1)
+	return cut.strip_edges() + ".."
+
+## Scrolls the list back to its first row (a tap on the title, item 1797).
+func scroll_to_top() -> void:
+	_scroll.scroll_vertical = 0
+
+## The empty-list line (tests).
+func empty_label() -> Label:
+	return _empty
+
+## The row the list would focus, or the first enabled one.
+func _focus_row(want: int) -> void:
+	var target: Button = null
+	if want >= 0 and want < _buttons.size() and not _buttons[want].disabled:
+		target = _buttons[want]
+	else:
+		for b: Button in _buttons:
+			if not b.disabled:
+				target = b
+				break
+	if target != null and is_instance_valid(target):
+		target.grab_focus()
+		_scroll.ensure_control_visible.call_deferred(target)
+		if _remembered_scroll.has(_title_key):
+			_restore_scroll(_title_key, target)
+	_back.accessibility_name = Loc.t("Back")
+	_arrows.queue_redraw.call_deferred()
+
+func _on_row(result: int, dir: int = 0, b: Button = null) -> void:
+	if not visible or not _tap_allowed():
+		return
+	# A tap on a row cut off at the edge scrolls it into view first (item 1794).
+	if b != null and pointer_used and not row_fully_shown(b):
+		_scroll.ensure_control_visible(b)
+		return
+	last_dir = dir
+	last_long = pointer_used and result >= 0 and _press_ms >= 0 and Time.get_ticks_msec() - _press_ms >= LONG_PRESS_MS
+	Sound.sfx("cancel" if result < 0 else "confirm")
+	if GameState.tap_vibration and pointer_used:
+		Haptics.play(TAP_BUZZ)
+	picked.emit(result)
+
+## True if all of [param b] is inside the visible part of the list.
+func row_fully_shown(b: Button) -> bool:
+	return _scroll.get_global_rect().grow(0.5).encloses(b.get_global_rect())
+
+## Slider rows: a tap on the left half lowers, on the right half raises; A raises.
+func _slider_dir(b: Button, i: int) -> int:
+	if i >= _sliders.size() or not _sliders[i]:
+		return 0
+	if _release_frame == Engine.get_process_frames():
+		var local_x: float = b.get_local_mouse_position().x
+		return -1 if local_x < b.size.x / 2.0 else 1
+	return 1
+
+func _set_tabs(tabs: Array[String], tab: int) -> void:
+	_tabs = tabs
+	_tab = tab
+	for c: Node in _tab_row.get_children():
+		c.queue_free()
+	_tab_row.visible = not tabs.is_empty()
+	for i: int in tabs.size():
+		var t := Button.new()
+		t.text = tabs[i]
+		t.toggle_mode = true
+		t.button_pressed = i == tab
+		t.focus_mode = Control.FOCUS_NONE
+		t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		t.clip_text = true
+		# Era layouts: a tab can be a symbol (satchel pockets), and touch eras make tabs finger sized.
+		var icons: Array = layout.get("tab_icons", [])
+		if i < icons.size() and icons[i] is Texture2D:
+			t.icon = icons[i]
+			t.text = ""
+			t.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			t.tooltip_text = tabs[i]
+			t.accessibility_name = tabs[i]
+		if str(layout.get("cursor", "arrow")) != "arrow":
+			t.custom_minimum_size.y = int(layout.get("row_h", ROW_HEIGHT)) - 4
+		t.pressed.connect(func() -> void: _switch_tab(i))
+		_tab_row.add_child(t)
+
+func _switch_tab(i: int) -> void:
+	if _tabs.is_empty() or not visible:
+		return
+	var n: int = posmod(i, _tabs.size())
+	if n == _tab:
+		(_tab_row.get_child(n) as Button).button_pressed = true
+		return
+	Sound.sfx("select")
+	picked.emit(TAB_PICKED - n)
+
+## Tab a [code]TAB_PICKED - n[/code] result names, or -1.
+static func tab_of(result: int) -> int:
+	return TAB_PICKED - result if result <= TAB_PICKED else -1
+
+## Left and right move a focused slider row (gamepad and keys), or switch tabs.
+func _row_input(ev: InputEvent, i: int, result: int) -> void:
+	# In a grid of buttons left and right move between cells, not tabs.
+	if int(layout.get("columns", 1)) > 1:
+		return
+	if not _tabs.is_empty() and (i >= _sliders.size() or not _sliders[i]):
+		if ev.is_action_pressed("ui_left") or ev.is_action_pressed("ui_right"):
+			_buttons[i].accept_event()
+			_switch_tab(_tab + (-1 if ev.is_action_pressed("ui_left") else 1))
+		return
+	if i >= _sliders.size() or not _sliders[i]:
+		return
+	var dir: int = 0
+	if ev.is_action_pressed("ui_left"):
+		dir = -1
+	elif ev.is_action_pressed("ui_right"):
+		dir = 1
+	if dir != 0:
+		_buttons[i].accept_event()
+		_on_row(result, dir)
+
+## Shows why row [param i] is greyed out, if the row says (item 1842). Returns true if shown.
+func show_why(i: int) -> bool:
+	var w: String = _whys[i] if i < _whys.size() else ""
+	if w.is_empty():
+		return false
+	_hint.text = Loc.t(w)
+	_hint.visible = true
+	Sound.sfx("locked")
+	return true
+
+## A calm tap on a greyed-out row (disabled buttons get no press of their own).
+func _why_at(pos: Vector2) -> void:
+	if not _scroll.get_global_rect().has_point(pos):
+		return
+	for i: int in _buttons.size():
+		if _buttons[i].disabled and _buttons[i].get_global_rect().has_point(pos):
+			tap_locked(i)
+			return
+
+## A tap on greyed-out row [param i]: its reason if it has one, and always a dull tap that
+## tells the row is locked (item 2511). The row shakes 2 px sideways, there and back (item 2423).
+func tap_locked(i: int) -> void:
+	if not show_why(i):
+		Sound.sfx("locked")
+	if i >= 0 and i < _buttons.size():
+		shake_row(_buttons[i])
+
+## Two quick 2 px nudges, right then left. Awaitable; nothing under reduced motion.
+static func shake_row(row: CanvasItem) -> void:
+	await Juice.nudge(row, Vector2.RIGHT)
+	if is_instance_valid(row):
+		await Juice.nudge(row, Vector2.LEFT)
+
+## The text under the list now (tests).
+func hint_text() -> String:
+	return _hint.text if _hint.visible else ""
+
+## After a language change: the hint line and screen reader names in the new language.
+func retranslate() -> void:
+	for i: int in _buttons.size():
+		if _buttons[i].has_focus():
+			_show_hint(i)
+	_set_accessibility(_title.text)
+
+func _show_hint(i: int) -> void:
+	var h: String = _hints[i] if i >= 0 and i < _hints.size() else ""
+	_hint.text = Loc.t(h)
+	_hint.visible = not h.is_empty()
+	# Era IV and V: the info panel under the list is always there, so the rows never jump.
+	if str(layout.get("panel", "none")) == "bottom":
+		if h.is_empty():
+			_hint.text = Loc.t(str(layout.get("panel_text", "")))
+		_hint.visible = true
+
+## The info panel's look: a framed box with room for PANEL_LINES lines in the touch eras, the
+## plain line under the list otherwise.
+func _style_panel() -> void:
+	if str(layout.get("panel", "none")) == "bottom":
+		var sb: StyleBoxFlat = UITheme.flat_style(UITheme.ACCENT.lerp(UITheme.BG, 0.5), UITheme.MID)
+		sb.set_content_margin_all(3)
+		_hint.add_theme_stylebox_override("normal", sb)
+		_hint.add_theme_color_override("font_color", UITheme.INK)
+		var f: Font = UITheme.font()
+		_hint.custom_minimum_size = Vector2(1, f.get_height(UITheme.FONT_SIZE) * PANEL_LINES + 6)
+		_hint.clip_text = false
+	else:
+		_hint.remove_theme_stylebox_override("normal")
+		_hint.add_theme_color_override("font_color", UITheme.MID)
+		_hint.custom_minimum_size = Vector2(1, 0)
+
+## Puts [param c] between the title and the rows (a clock strip, a pocket picture, a preview);
+## null takes it away again. The picker owns and frees it.
+func set_header(c: Control) -> void:
+	for old: Node in _header.get_children():
+		_header.remove_child(old)
+		old.queue_free()
+	if c != null:
+		_header.add_child(c)
+	_header.visible = c != null
+
+## The header control now shown, or null (tests).
+func header() -> Control:
+	return _header.get_child(0) as Control if _header.get_child_count() > 0 else null
+
+## Grid rows (Era IV and V start menu): up and down move a whole row, left and right one cell.
+func _link_grid(columns: int) -> void:
+	var n: int = _buttons.size()
+	for i: int in n:
+		var b: Button = _buttons[i]
+		b.focus_neighbor_left = b.get_path_to(_buttons[posmod(i - 1, n)])
+		b.focus_neighbor_right = b.get_path_to(_buttons[posmod(i + 1, n)])
+		b.focus_neighbor_top = b.get_path_to(_buttons[i - columns if i - columns >= 0 else n - 1])
+		b.focus_neighbor_bottom = b.get_path_to(_buttons[i + columns if i + columns < n else (n - 1 if i < n - 1 else 0)])
+
+## A header above the rows or a picture above the list (world map) changes the list's height
+## after the first layout: the focused row is brought back into view once the layout settled.
+func _keep_focus_shown() -> void:
+	var f: Control = get_viewport().gui_get_focus_owner()
+	if f is Button and f in _buttons and not row_fully_shown(f):
+		_scroll.ensure_control_visible(f)
+
+## Era V: the rows slide in from the right one after another. Still under reduced motion.
+func _slide_in() -> void:
+	if str(layout.get("anim", "none")) != "slide" or Juice.reduced() or not visible:
+		return
+	for i: int in _buttons.size():
+		var b: Button = _buttons[i]
+		if not is_instance_valid(b) or b.is_queued_for_deletion():
+			continue
+		var home: float = b.position.x
+		b.position.x = home + SLIDE_PX
+		b.modulate.a = 0.0
+		var tw: Tween = b.create_tween()
+		tw.tween_interval(i * SLIDE_GAP)
+		Juice.shaped(tw.tween_property(b, "position:x", home, 0.12), "move")
+		Juice.shaped(tw.parallel().tween_property(b, "modulate:a", 1.0, 0.1), "fade")
+
+## Era V: soft bands drift across the panel behind the rows. They stand still under reduced
+## motion.
+func _draw_backdrop() -> void:
+	var col: Color = UITheme.ACCENT.lerp(UITheme.BG, 0.45)
+	var w: float = _backdrop.size.x
+	var h: float = _backdrop.size.y
+	var gap: float = 24.0
+	var shift: float = fmod(_backdrop_t * 6.0, gap)
+	var y: float = -w + shift
+	while y < h:
+		_backdrop.draw_line(Vector2(0, y + w * 0.5), Vector2(w, y), col, 3.0)
+		y += gap
+
+## "<" in the fixed back button.
+func _draw_back_arrow() -> void:
+	var col: Color = _back.get_theme_color("font_color", "Button")
+	var c := Vector2(floorf(_back.size.x / 2.0), floorf(_back.size.y / 2.0))
+	_back.draw_colored_polygon(PackedVector2Array([c + Vector2(2, -4), c + Vector2(-2, 0.5), c + Vector2(2, 5)]), col)
+
+## Pushing a list past its end springs it 4 px over and back with "settle" (item 2425).
+const OVERSCROLL_PX: float = 4.0
+const OVERSCROLL_OUT_TIME: float = 0.05
+var _bouncing: bool = false
+
+## -1 for a push past the top, 1 past the bottom, 0 while the list can still scroll that way.
+## [param push] is the way the player scrolls (1 down, -1 up).
+static func overscroll_dir(value: float, page: float, max_value: float, push: int) -> int:
+	if push > 0 and value + page >= max_value - 0.5:
+		return 1
+	if push < 0 and value <= 0.5:
+		return -1
+	return 0
+
+func _overscroll_input(ev: InputEvent) -> void:
+	# A finger dragging on past the end (taps stay with TapInput).
+	var push: int = 0
+	var drag := ev as InputEventScreenDrag
+	if drag != null and absf(drag.relative.y) >= 1.0:
+		push = 1 if drag.relative.y < 0.0 else -1
+	if push == 0:
+		return
+	var bar: VScrollBar = _scroll.get_v_scroll_bar()
+	var d: int = overscroll_dir(bar.value, bar.page, bar.max_value, push)
+	if d != 0:
+		bounce(d)
+
+## Springs the list [param dir] times OVERSCROLL_PX over (down for -1, up for 1) and back.
+## Awaitable; nothing under reduced motion or while a bounce runs.
+func bounce(dir: int) -> void:
+	if _bouncing or Juice.reduced() or _scroll == null:
+		return
+	_bouncing = true
+	var home: Vector2 = _scroll.position
+	await Juice.tween(_scroll, "position", home + Vector2(0, -dir * OVERSCROLL_PX), "impact", OVERSCROLL_OUT_TIME).finished
+	if is_instance_valid(_scroll):
+		await Juice.tween(_scroll, "position", home, "settle").finished
+	_bouncing = false
+
+## A 1 px scroll indicator at the right edge shows while the list scrolls and goes 0.8 s
+## after it stops (item 2426).
+const SCROLL_SHOW_TIME: float = 0.8
+const SCROLL_MIN_PX: float = 3.0
+## Seconds the scroll indicator still shows.
+var scroll_shown: float = 0.0
+## A list scrolls itself to the focused or remembered row as it opens; that is no scrolling
+## by the player, so the indicator stays hidden for the first frames.
+const SCROLL_QUIET_FRAMES: int = 3
+var _scroll_quiet: int = 0
+
+## Where the indicator sits in list area [param r] for a scroll bar at [param value] of
+## [param max_value] showing [param page]; an empty Rect2 when the whole list fits.
+static func indicator_rect(r: Rect2, value: float, page: float, max_value: float) -> Rect2:
+	if max_value <= 0.0 or page >= max_value:
+		return Rect2()
+	var h: float = maxf(SCROLL_MIN_PX, roundf(r.size.y * page / max_value))
+	var y: float = roundf(r.position.y + (r.size.y - h) * clampf(value / maxf(max_value - page, 1.0), 0.0, 1.0))
+	return Rect2(r.position.x + r.size.x - 1.0, y, 1.0, h)
+
+## Small triangles at the top and bottom of the list when more rows are hidden there.
+func _draw_arrows() -> void:
+	if not visible or _scroll == null:
+		return
+	var bar: VScrollBar = _scroll.get_v_scroll_bar()
+	var r: Rect2 = Rect2(_scroll.global_position - _arrows.global_position, _scroll.size)
+	if scroll_shown > 0.0:
+		var ind: Rect2 = indicator_rect(r, bar.value, bar.page, bar.max_value)
+		if ind.size.y > 0.0:
+			_arrows.draw_rect(ind, UITheme.MID)
+	var x: float = floorf(r.position.x + r.size.x - 5)
+	var col: Color = UITheme.INK
+	if bar.value > 0.5:
+		var y: float = r.position.y + 1
+		_arrows.draw_colored_polygon(PackedVector2Array([Vector2(x, y + 3), Vector2(x + 2.5, y), Vector2(x + 5, y + 3)]), col)
+	if bar.value + bar.page < bar.max_value - 0.5:
+		var y2: float = r.position.y + r.size.y - 4
+		_arrows.draw_colored_polygon(PackedVector2Array([Vector2(x, y2), Vector2(x + 2.5, y2 + 3), Vector2(x + 5, y2)]), col)
+
+## True when rows are hidden above / below (tests).
+func more_above() -> bool:
+	return _scroll.get_v_scroll_bar().value > 0.5
+
+func more_below() -> bool:
+	var bar: VScrollBar = _scroll.get_v_scroll_bar()
+	return bar.value + bar.page < bar.max_value - 0.5
+
+## Rebuilds the panel look after the palette changed (high contrast, item 2065).
+func refresh_theme() -> void:
+	add_theme_stylebox_override("panel", UITheme.panel_style())
+	_hint.add_theme_color_override("font_color", UITheme.MID)
+	_style_panel()
+	for b: Button in _buttons:
+		_pointer_room(b)
+
+## Room on the left of a row for the focus pointer. Call once the row is in the tree, so the
+## styles come from the game theme.
+func _pointer_room(b: Button) -> void:
+	for state: String in ["normal", "hover", "pressed", "focus", "disabled"]:
+		b.remove_theme_stylebox_override(state)
+		var sb := b.get_theme_stylebox(state, "Button").duplicate() as StyleBox
+		sb.content_margin_left = POINTER_SPACE
+		b.add_theme_stylebox_override(state, sb)
+
+## A press from a finger or mouse must be a calm tap that started after the guard time.
+## Keyboard and gamepad presses (no pointer release this frame) always count.
+func _tap_allowed() -> bool:
+	if _release_frame != Engine.get_process_frames():
+		return true
+	if not _release_ok:
+		return false
+	return _press_ms >= 0 and _press_ms - _opened_ms >= _guard_ms
+
+## Seen before the GUI, so the row's own pressed signal can ask how the finger moved.
+func _input(event: InputEvent) -> void:
+	note_device(event)
+	if not visible:
+		return
+	if event.is_pressed() and not event.is_echo():
+		var jump: int = page_jump(event)
+		if jump != 0:
+			move_focus(jump * PAGE_ROWS, false)
+			get_viewport().set_input_as_handled()
+			return
+	if TapInput.is_press(event):
+		_press_pos = TapInput.position(event)
+		_press_ms = Time.get_ticks_msec()
+	elif TapInput.is_release(event):
+		_release_frame = Engine.get_process_frames()
+		_release_ok = not is_nan(_press_pos.x) and TapInput.position(event).distance_to(_press_pos) <= TAP_SLOP
+		if _release_ok:
+			_why_at(TapInput.position(event))
+		_press_pos = Vector2(NAN, NAN)
+
+## A small ink triangle left of the focused row, so focus shows without colour (item 2088).
+## The focus pointer slides from the last row to the new one (item 2416): curve "move", 0.06 s.
+const POINTER_SLIDE_TIME: float = 0.06
+var _pointer_row: Button
+## Vertical offset of the pointer from its row while it slides (whole pixels when drawn).
+var pointer_slide: float = 0.0:
+	set(v):
+		pointer_slide = v
+		if is_instance_valid(_pointer_row):
+			_pointer_row.queue_redraw()
+
+## While the focus rests, the pointer bobs 1 px sideways: out for half of each 0.6 s
+## (item 2417). Still under reduced motion.
+const POINTER_BOB_PERIOD: float = 0.6
+var _pointer_idle: float = 0.0
+var _pointer_bob: int = 0
+
+static func pointer_bob_at(idle: float, reduced: bool) -> int:
+	if reduced or idle < POINTER_BOB_PERIOD:
+		return 0
+	return 1 if fmod(idle, POINTER_BOB_PERIOD) >= POINTER_BOB_PERIOD * 0.5 else 0
+
+func _bob_pointer(delta: float) -> void:
+	_pointer_idle += delta
+	var bob: int = pointer_bob_at(_pointer_idle, Juice.reduced())
+	if bob != _pointer_bob:
+		_pointer_bob = bob
+		if is_instance_valid(_pointer_row):
+			_pointer_row.queue_redraw()
+
+func _slide_pointer(b: Button) -> void:
+	var from: Button = _pointer_row
+	_pointer_row = b
+	_pointer_idle = 0.0
+	_pointer_bob = 0
+	if not is_instance_valid(from) or from == b or not from.is_inside_tree() or not b.is_inside_tree():
+		pointer_slide = 0.0
+		return
+	pointer_slide = from.global_position.y - b.global_position.y
+	Juice.tween(self, "pointer_slide", 0.0, "move", POINTER_SLIDE_TIME)
+
+func _draw_pointer(b: Button) -> void:
+	if not b.has_focus():
+		return
+	var cy: float = floorf(b.size.y / 2.0) + (roundf(pointer_slide) if b == _pointer_row else 0.0)
+	var dx: float = float(_pointer_bob) if b == _pointer_row else 0.0
+	var col: Color = b.get_theme_color("font_focus_color", "Button")
+	# The touch eras frame the whole button; Era V lets the frame glow in and out.
+	var cursor: String = str(layout.get("cursor", "arrow"))
+	if cursor != "arrow":
+		var frame: Color = UITheme.ACCENT
+		if cursor == "glow" and not Juice.reduced():
+			frame = frame.lerp(UITheme.BG, 0.5 if _pointer_bob == 1 else 0.0)
+		b.draw_rect(Rect2(Vector2(1, 1), b.size - Vector2(2, 2)), frame, false, 1.0)
+		b.draw_rect(Rect2(Vector2(2, 2), b.size - Vector2(4, 4)), frame, false, 1.0)
+	b.draw_colored_polygon(PackedVector2Array([Vector2(1 + dx, cy - 2), Vector2(4 + dx, cy + 0.5), Vector2(1 + dx, cy + 3)]), col)
+
+## Screen readers: each row says its text, state and place (item 2085).
+func _set_accessibility(title: String) -> void:
+	var n: int = _buttons.size()
+	for i: int in n:
+		var b: Button = _buttons[i]
+		var state: String = Loc.t("unavailable") + ", " if b.disabled else ""
+		var say: String = str(b.get_meta("say", ""))
+		if not say.is_empty():
+			state = Loc.t(say) + ", " + state
+		var shown: String = b.text if b.auto_translate_mode == Node.AUTO_TRANSLATE_MODE_DISABLED else Loc.t(b.text)
+		b.accessibility_name = "%s, %s%s" % [shown, state, Loc.t("%d of %d" % [i + 1, n])]
+	_title.accessibility_live = AccessibilityServer.LIVE_POLITE
+	_title.accessibility_name = Loc.t(title)
+
+## The Back row's index while a cancellable list is open (tests and the back button).
+func back_index() -> int:
+	return _buttons.size() - 1 if _cancellable else -1
+
+## Rows currently shown (tests).
+func buttons() -> Array[Button]:
+	return _buttons
 
 func _unhandled_input(event: InputEvent) -> void:
 	if visible and _cancellable and event.is_action_pressed("ui_cancel"):

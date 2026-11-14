@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_k24, written by tools/i18n/locales_kampf_k24.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s kinds hold %d more Energy (%d in all).": "Виды типа %s вмещают на %d энергии больше (всего %d).",
+  "+%d%% power for each Energy spent on arts this battle, up to %d.": "+%d%% силы за каждую единицу энергии, потраченную на приёмы в этом бою, до %d.",
+  "A Soaked Spirling loses 2 Energy at the end of each turn.": "Промокший Spirling теряет 2 энергии в конце каждого хода.",
+  "A Spirling that has fought gains %d Energy each turn while it waits on the bench.": "Spirling, который уже сражался, получает %d энергии за ход, пока ждёт на скамейке.",
+  "Damp Sparks": "Сырые искры",
+  "It has paid too much to stop now. Every Energy it spent on arts this battle makes it hit harder.": "Слишком много заплачено, чтобы остановиться. Каждая единица энергии, потраченная на приёмы в этом бою, делает удар сильнее.",
+  "Low on Energy": "Мало энергии",
+  "Pick Rest: it skips its art but gains 2 Energy on top of the turn's 1. The foe will not wait politely.": "Выбери Отдых: приём пропускается, но к 1 за ход добавляется ещё 2 энергии. Враг вежливо ждать не станет.",
+  "Resting": "Отдых",
+  "Sunk Cost": "Невозвратные траты",
+  "The water seeps into %s: it loses %d Energy!": "Вода пропитывает %s: теряет %d энергии!",
+  "Tip: Watch the pips fill back up. Resting is how Energy comes home.": "Совет: смотри, как точки снова заполняются. Отдых возвращает энергию домой.",
+  "Tip: Your Spirling is running low on Energy. An art it can't pay won't go off.": "Совет: у твоего Spirling кончается энергия. Приём, за который нечем заплатить, не сработает."
+ }
+}

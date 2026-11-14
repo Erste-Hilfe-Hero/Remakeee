@@ -22,6 +22,16 @@ static func find_adjacent(start: Vector2i, target: Vector2i, passable: Callable)
 		return out
 	return _search(start, func(c: Vector2i) -> bool: return is_adjacent(c, target), passable)
 
+## Like [method find] / [method find_adjacent], but first tries a way that keeps off the cells
+## [param avoid] marks (pressure plates, plan item 901), unless that cell is the goal itself.
+## Falls back to the plain search when no such way exists.
+static func find_avoiding(start: Vector2i, goal: Vector2i, passable: Callable, avoid: Callable, adjacent: bool = false) -> Array[Vector2i]:
+	var soft: Callable = func(c: Vector2i) -> bool: return passable.call(c) and (c == goal or not avoid.call(c))
+	var route: Array[Vector2i] = find_adjacent(start, goal, soft) if adjacent else find(start, goal, soft)
+	if not route.is_empty():
+		return route
+	return find_adjacent(start, goal, passable) if adjacent else find(start, goal, passable)
+
 static func is_adjacent(a: Vector2i, b: Vector2i) -> bool:
 	return absi(a.x - b.x) + absi(a.y - b.y) == 1
 

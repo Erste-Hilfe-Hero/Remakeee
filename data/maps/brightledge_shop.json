@@ -1,0 +1,37 @@
+{
+ "name": "Station Store",
+ "region": "halcyra",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCffCCCW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "brightledge",
+   "tx": 3,
+   "ty": 13,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "odalys",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "brightledge/odalys",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

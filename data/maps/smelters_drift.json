@@ -1,0 +1,204 @@
+{
+ "name": "Smelter's Drift",
+ "region": "vellmarch",
+ "biome": "route",
+ "backdrop": "field",
+ "outdoor": true,
+ "encounters": "smelters_drift",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T...._..:::T",
+  "T::.._...::T",
+  "T::..__....T",
+  "T=....__...T",
+  "T..,,..__..T",
+  "T..,,...__.T",
+  "T........_.T",
+  "T:::....__.T",
+  "T:::...__..T",
+  "T.....__...T",
+  "T....__..::T",
+  "T...__...::T",
+  "T..__.....:T",
+  "T.__..,,...T",
+  "T._...,,...T",
+  "T.__.......T",
+  "T..__..:::.T",
+  "T...__.:::.T",
+  "T....__....T",
+  "T.....__...T",
+  "T::....__..T",
+  "T::.....__.T",
+  "T......__..T",
+  "T.....__...T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "tallowmarket",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "larkspur_heights",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "tallowmarket",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "larkspur_heights",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "to": "slag_tunnels",
+   "tx": 5,
+   "ty": 15,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "slagman",
+   "x": 9,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "vellmarch/smelters_drift_slagman",
+   "sprite": "villager",
+   "trainer": "Slag Carter Hobb",
+   "intro": "vellmarch/smelters_drift_slagman_intro",
+   "defeat": "vellmarch/smelters_drift_slagman_defeat",
+   "money": 2320,
+   "team": [
+    {
+     "species": "Smogpup",
+     "level": 58
+    },
+    {
+     "species": "Veilmote",
+     "level": 58
+    }
+   ]
+  },
+  {
+   "id": "strike_breaker",
+   "x": 7,
+   "y": 11,
+   "facing": "down",
+   "dialogue": "vellmarch/smelters_drift_strike_breaker",
+   "sprite": "warden",
+   "trainer": "Strike Breaker Kuno",
+   "intro": "vellmarch/smelters_drift_strike_breaker_intro",
+   "defeat": "vellmarch/smelters_drift_strike_breaker_defeat",
+   "money": 2320,
+   "team": [
+    {
+     "species": "Smogpup",
+     "level": 56
+    },
+    {
+     "species": "Veilmote",
+     "level": 58
+    }
+   ]
+  },
+  {
+   "id": "q2_ghost_wages_bero",
+   "x": 4,
+   "y": 19,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_ghost_wages_bero",
+   "sprite": "villager",
+   "show_flag": "q2_ghost_wages_asked"
+  },
+  {
+   "id": "q2_bought_boos_claque",
+   "x": 4,
+   "y": 16,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_bought_boos_claque",
+   "sprite": "villager",
+   "show_flag": "q2_bought_boos_s1"
+  },
+  {
+   "id": "q2_bought_boos_fitz",
+   "x": 5,
+   "y": 13,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_bought_boos_fitz",
+   "sprite": "villager",
+   "trainer": "Understudy Fitz",
+   "show_flag": "q2_bought_boos_reveal",
+   "intro": "vellmarch/q2_bought_boos_fitz_intro",
+   "defeat": "vellmarch/q2_bought_boos_fitz_defeat",
+   "money": 2950,
+   "team": [
+    {
+     "species": "Knellgrim",
+     "level": 57
+    },
+    {
+     "species": "Veilmote",
+     "level": 58
+    },
+    {
+     "species": "Latchet",
+     "level": 59
+    }
+   ],
+   "win_flags": [
+    "q2_bought_boos_done"
+   ],
+   "no_rematch": true
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 6,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_smelters_drift_1"
+  },
+  {
+   "x": 11,
+   "y": 10,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_smelters_drift_2"
+  },
+  {
+   "x": 0,
+   "y": 17,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_smelters_drift_3"
+  },
+  {
+   "x": 11,
+   "y": 21,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_smelters_drift_4"
+  }
+ ]
+}

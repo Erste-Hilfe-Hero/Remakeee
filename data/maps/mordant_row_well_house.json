@@ -1,0 +1,44 @@
+{
+ "name": "Well House",
+ "region": "quillmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "mordant_row",
+   "tx": 3,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "keeper",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/mordant_row_well_house_keeper",
+   "sprite": "villager"
+  },
+  {
+   "id": "q3_cure_proof_vera",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/q3_cure_proof_vera",
+   "sprite": "villager",
+   "show_flag": "q3_cure_proof_s1"
+  }
+ ],
+ "signs": []
+}

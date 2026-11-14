@@ -21,13 +21,22 @@
   "lines": [
    "Orrin: ..."
   ],
-  "after_flag": {
-   "flag": "rift_cinder_sealed",
-   "lines": [
-    "Orrin: I'd forgotten my own Spirlings' names. Thank you for reminding me.",
-    "Orrin: The tear is stitched. Mark it on your map, cartographer."
-   ]
-  }
+  "after_flag": [
+   {
+    "flag": "rift_cinder_sealed",
+    "lines": [
+     "Orrin: I'd forgotten my own Spirlings' names. Thank you for reminding me.",
+     "Orrin: The tear is stitched. Mark it on your map, cartographer.",
+     "Orrin: Forty years ago I was a boy in this hollow. A woman with a compass sat here and drew the tear. She said it would close one day. Her name was Mirela."
+    ]
+   },
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Orrin: Mirela's tear stayed shut. I sit here anyway. Old men need somewhere to be wrong."
+    ]
+   }
+  ]
  },
  "orrin_intro": [
   "Warden Orrin: ...",
@@ -48,5 +57,16 @@
  "heart_defeat": [
   "The heart cools to grey stone and crumbles away.",
   "Warden Orrin: That was the last of it. The Cinder Rift breathes again."
- ]
+ ],
+ "kindle_vents_sign": [
+  "KINDLE VENTS",
+  "Inside: Plank Bundle. Hot vents blow every few seconds: wait for the calm."
+ ],
+ "tower_keeper": {
+  "lines": [
+   "Vessa: With the Rift sealed, the old stair inside it is calm enough to climb.",
+   "Vessa: Only ember, stone and volt echoes walk it. Three of yours at most, ring 30 or more."
+  ],
+  "action": "rift_tower cinder_stair"
+ }
 }

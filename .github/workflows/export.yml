@@ -21,23 +21,76 @@ env:
   GODOT_TEMPLATES: "4.7.2.stable"
   BUNDLETOOL_VERSION: "1.18.1"
 
+# One run per branch; a newer push to a pull request cancels the older run (plan item 3739).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # Banned-term scan and asset provenance (docs/IP_HYGIENE.md).
   ip-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
       - run: tools/ip_check.sh
+      - name: Commit messages and PR title (AGENTS.md, plan item 3955)
+        if: github.event_name == 'pull_request'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: tools/ip_check.sh --messages "${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
+      - name: Type chart rules, chart sim gate (elements 40-60 %, teams 30-70 %), every Spirling 40-60 % on base stats (tools/balance/type_sim.py --strict)
+        run: python3 tools/balance/type_sim.py --strict
       - name: Every player-facing text has a German translation
-        run: python3 tools/i18n_extract.py de --check
+        run: python3 tools/i18n/build.py --check && python3 tools/i18n_extract.py de --check
+      - name: Cross-file data integrity (warps, reach, flags, dialogue keys and German, species, levels, items, ids)
+        run: python3 tools/data_integrity.py
+      - name: Every species has a Gleam palette (tools/art/gen_gleam_palettes.py)
+        run: python3 tools/art/gen_gleam_palettes.py --check
+      - name: The other 12 languages keep their placeholders (missing keys are counted, advisory)
+        run: python3 tools/i18n/check_lang.py
+      - name: Battle plan matches its generator (tools/plan/plan_1000.py, ticks only via the tool)
+        run: python3 tools/plan/plan_1000.py --check
+      - name: Live content is data only (tools/live/publish.py, docs/LIVE_CONTENT.md)
+        run: python3 tools/live/publish.py check live/content.json data/live_content.json
+      - name: Version name and code agree everywhere (tools/bump_version.py)
+        run: python3 tools/bump_version.py --check
+      - name: A save version bump brings a fixture and a migration test
+        run: python3 tools/save_version_check.py
+      - name: Store web pages match docs/legal
+        run: python3 tools/site/build_site.py --check
+      - name: Server copy of the shop offers and store/products.json match data/shop.json
+        run: python3 tools/shop/build_offers_sql.py --check
+      - name: Store products are valid for the Play Console (tools/store/push_products.py)
+        run: python3 tools/store/push_products.py --check && python3 -m unittest discover -s tools/store/tests
+      - name: Store listing material (texts, screenshots, icons, presets)
+        run: pip install --quiet pillow && python3 tools/release_check.py
+      - name: Era II art matches its Era I source and palettes (tools/art/era2_colourise.py)
+        run: python3 tools/art/era2_colourise.py --check
+      - name: Spirling icons and pose sheets match their sprites (tools/art/gen_tiers.py)
+        run: python3 tools/art/gen_tiers.py --check
+      - name: Halcyra Era IV atlas matches the shared Era I atlas (tools/art/gen_tiles_halcyra.py)
+        run: python3 tools/art/gen_tiles_halcyra.py --check
+      - name: Quivermoor Era V atlas matches the shared Era I atlas (tools/art/gen_tiles_quivermoor.py)
+        run: python3 tools/art/gen_tiles_quivermoor.py --check
+      - name: World maps match their generator and hand overlays (tools/art/build_world.py)
+        run: python3 -m unittest tools/art/world/test_hand.py && python3 tools/art/build_world.py --check
+      - name: Map audit finds nothing new (tools/maps/audit_maps.py, baseline tools/maps/audit_baseline.json)
+        run: python3 tools/maps/audit_maps.py --check
 
   # Server functions (supabase/migrations) on a throwaway Postgres, with their tests.
   sql:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: PostgreSQL server binaries
         run: ls /usr/lib/postgresql/*/bin/initdb || (sudo apt-get update && sudo apt-get install -y postgresql)
+      # The billing service (server/billing) needs the cryptography package, also for its database check.
+      - name: Billing service tests
+        run: |
+          python3 -m pip install -q --user --break-system-packages -r server/billing/requirements.txt
+          python3 -m unittest discover -s server/billing/tests -v
       - run: tools/online/test_sql.sh
 
   # Headless boot, data validation and GUT tests on every push and PR.
@@ -45,15 +98,15 @@ jobs:
     runs-on: ubuntu-latest
     container: barichello/godot-ci:4.7.2
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Import project
         run: godot --headless --path . --import
       - name: Headless boot must print no errors
         run: tools/headless_check.sh godot
       - name: Validate data
         run: godot --headless --path . -s res://tools/validate_data.gd
-      - name: GUT tests
-        run: godot --headless --path . -s res://addons/gut/gut_cmdln.gd
+      - name: GUT tests (fails if a test script has a parse error or is skipped)
+        run: tools/gut_strict.sh godot
 
   # Installable test APK on every push and PR: download the "android-debug-apk"
   # artifact and install it on the phone. Signed with a throwaway debug keystore
@@ -63,9 +116,15 @@ jobs:
     runs-on: ubuntu-latest
     container: barichello/godot-ci:4.7.2
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Godot templates and Android build template
         run: tools/ci_setup_android.sh
+      # Google Play Billing plugin (plan area 10): built for exactly this engine version.
+      - name: Build billing plugin
+        run: tools/build_billing_plugin.sh
+      # Google Play in-app updates (docs/LIVE_CONTENT.md): built for exactly this engine version.
+      - name: Build app update plugin
+        run: tools/build_appupdate_plugin.sh
       - name: Create throwaway debug keystore
         run: |
           keytool -genkeypair -v -keystore "$RUNNER_TEMP/debug.keystore" -storepass android \
@@ -75,6 +134,7 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          CHIMORA_SERVER: ${{ secrets.CHIMORA_SERVER || 'https://chimora.161-97-102-171.sslip.io' }}
         run: tools/online/write_config.sh
       - name: Export debug APK
         env:
@@ -87,12 +147,110 @@ jobs:
           godot --headless --path . --import
           godot --headless --path . --export-debug "Android APK (debug)" build/android/Chimora-debug.apk
           "$(tools/find_zipalign.sh)" -c -P 16 -v 4 build/android/Chimora-debug.apk
+      - name: Billing plugin is in the APK
+        run: unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'de/chimora/billing/ChimoraBilling'
+      - name: App update plugin and Play In-App Updates are in the APK
+        run: |
+          unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'de/chimora/appupdate/ChimoraAppUpdate'
+          unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'com/google/android/play/core/appupdate/AppUpdateManager'
+      # The itch.io flavour installs a downloaded APK; only it may ask for REQUEST_INSTALL_PACKAGES.
+      - name: Export itch.io APK (debug signed, permission check only)
+        env:
+          GODOT_ANDROID_KEYSTORE_DEBUG_PATH: ${{ runner.temp }}/debug.keystore
+          GODOT_ANDROID_KEYSTORE_DEBUG_USER: androiddebugkey
+          GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: android
+        run: godot --headless --path . --export-debug "Android (itch)" build/android/Chimora-itch-test.apk
+      - name: Only the itch.io APK may install packages
+        run: |
+          aapt2="$(dirname "$(tools/find_zipalign.sh)")/aapt2"
+          "$aapt2" dump permissions build/android/Chimora-itch-test.apk | tee "$RUNNER_TEMP/itch_perms.txt"
+          grep -q 'android.permission.REQUEST_INSTALL_PACKAGES' "$RUNNER_TEMP/itch_perms.txt"
+          "$aapt2" dump permissions build/android/Chimora-debug.apk | tee "$RUNNER_TEMP/play_perms.txt"
+          if grep -q 'REQUEST_INSTALL_PACKAGES' "$RUNNER_TEMP/play_perms.txt"; then
+            echo "::error::the Play build must not ask for REQUEST_INSTALL_PACKAGES"; exit 1
+          fi
+          rm -f build/android/Chimora-itch-test.apk
+      - name: The APK opens chimora:// links (addons/chimora_deeplink)
+        run: |
+          "$(dirname "$(tools/find_zipalign.sh)")/aapt2" dump xmltree --file AndroidManifest.xml build/android/Chimora-debug.apk > "$RUNNER_TEMP/manifest.txt"
+          grep -E 'scheme.*"chimora"' "$RUNNER_TEMP/manifest.txt"
       - name: APK size budget
-        run: tools/apk_budget.sh build/android/Chimora-debug.apk 80
-      - uses: actions/upload-artifact@v4
+        run: tools/apk_budget.sh build/android/Chimora-debug.apk 96
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: android-debug-apk
           path: build/android/Chimora-debug.apk
+
+  # Browser test build (single-threaded, no special headers needed). Served by the game server at /play/.
+  web:
+    needs: test
+    runs-on: ubuntu-latest
+    container: barichello/godot-ci:4.7.2
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Export templates into HOME
+        run: |
+          mkdir -p "$HOME/.local/share/godot/export_templates"
+          [ -d "$HOME/.local/share/godot/export_templates/$GODOT_TEMPLATES" ] || \
+            cp -r "/root/.local/share/godot/export_templates/$GODOT_TEMPLATES" "$HOME/.local/share/godot/export_templates/"
+      - name: Server address
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          CHIMORA_SERVER: ${{ secrets.CHIMORA_SERVER || 'https://chimora.161-97-102-171.sslip.io' }}
+        run: tools/online/write_config.sh
+      - name: Export web build
+        run: |
+          mkdir -p build/web
+          godot --headless --path . --import
+          godot --headless --path . --export-release "Web" build/web/index.html
+          ls -la build/web
+          test -s build/web/index.wasm
+          cd build/web && zip -qr ../chimora-web.zip .
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: web-build
+          path: build/chimora-web.zip
+
+  # Puts the latest test APK at a fixed public link that opens on a phone:
+  # https://github.com/Erste-Hilfe-Hero/Remakeee/releases/download/online-test/Chimora-online-test.apk
+  apk-link:
+    needs: [android-debug, web]
+    # Only the integration branch (and main) publish the test build; feature PRs into it would
+    # otherwise overwrite it with their own unmerged state.
+    if: >-
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) &&
+      (github.head_ref == 'claude/project-thread-lhphga-c' || github.ref_name == 'claude/project-thread-lhphga-c' || github.ref_name == 'main')
+    runs-on: ubuntu-latest
+    # Runs from several PRs upload to the same release; one at a time, or --clobber races (HTTP 422).
+    concurrency:
+      group: online-test-release
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: android-debug-apk
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: web-build
+      - name: Upload to the online-test release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          mv Chimora-debug.apk Chimora-online-test.apk
+          sha="${{ github.event.pull_request.head.sha || github.sha }}"
+          gh release view online-test >/dev/null 2>&1 || gh release create online-test --prerelease \
+            --target "$sha" --title "Chimora online test" --notes "Latest test build (debug APK, real server)."
+          gh release edit online-test --notes "Latest test build (debug APK, real server). Commit $sha, ref ${{ github.head_ref || github.ref_name }}."
+          # GitHub's upload endpoint sometimes times out (HTTP 408); try again.
+          for i in 1 2 3; do
+            gh release upload online-test Chimora-online-test.apk chimora-web.zip --clobber && break
+            [ "$i" = 3 ] && exit 1
+            sleep $((i * 15))
+          done
 
   # Signed release AAB for Google Play. Runs on version tags or manual runs.
   # Secrets live in the protected "prod" environment:
@@ -106,9 +264,15 @@ jobs:
     environment: prod
     container: barichello/godot-ci:4.7.2
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Godot templates and Android build template
         run: tools/ci_setup_android.sh
+      # Google Play Billing plugin (plan area 10): built for exactly this engine version.
+      - name: Build billing plugin
+        run: tools/build_billing_plugin.sh
+      # Google Play in-app updates (docs/LIVE_CONTENT.md): built for exactly this engine version.
+      - name: Build app update plugin
+        run: tools/build_appupdate_plugin.sh
       - name: Stamp version code (Play needs a higher code for every upload)
         run: |
           code=$((1000 + ${{ github.run_number }}))
@@ -131,6 +295,7 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          CHIMORA_SERVER: ${{ secrets.CHIMORA_SERVER || 'https://chimora.161-97-102-171.sslip.io' }}
         run: tools/online/write_config.sh --require
       - name: Export release AAB
         env:
@@ -142,6 +307,12 @@ jobs:
           mkdir -p build/android
           godot --headless --path . --import
           godot --headless --path . --export-release "Android" build/android/Chimora.aab
+      - name: App update plugin is in the AAB, no install permission
+        run: |
+          unzip -p build/android/Chimora.aab 'base/dex/classes*.dex' | grep -a -q 'de/chimora/appupdate/ChimoraAppUpdate'
+          if unzip -p build/android/Chimora.aab base/manifest/AndroidManifest.xml | grep -a -q 'REQUEST_INSTALL_PACKAGES'; then
+            echo "::error::the Play build must not ask for REQUEST_INSTALL_PACKAGES"; exit 1
+          fi
       - name: Check 16 KB alignment of native libraries
         run: |
           command -v python3 >/dev/null || (apt-get update -qq && apt-get install -y -qq python3)
@@ -162,7 +333,7 @@ jobs:
       - name: Remove keystore
         if: always()
         run: rm -f "$RUNNER_TEMP/upload.keystore"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: android-release-aab
           path: build/android/Chimora.aab
@@ -176,15 +347,15 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: android-release-aab
           path: build/android
       - name: Upload to the internal testing track
-        uses: r0adkll/upload-google-play@v1.1.3
+        uses: r0adkll/upload-google-play@935ef9c68bb393a8e6116b1575626a7f5be3a7fb # v1.1.3
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: com.chimora.game
+          packageName: de.chimora.game
           releaseFiles: build/android/Chimora.aab
           track: internal
           status: draft
@@ -202,13 +373,13 @@ jobs:
     runs-on: macos-26
     environment: prod
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Select Xcode 26
         run: |
           sudo xcode-select -s "$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)"
           xcodebuild -version
       - name: Cache Godot editor and templates
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: |
             ~/godot
@@ -253,7 +424,10 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          CHIMORA_SERVER: ${{ secrets.CHIMORA_SERVER || 'https://chimora.161-97-102-171.sslip.io' }}
         run: tools/online/write_config.sh --require
+      - name: StoreKit 2 plugin (App Store purchases)
+        run: tools/build_storekit_plugin.sh
       - name: Export IPA
         env:
           IOS_TEAM_ID: ${{ secrets.IOS_TEAM_ID }}
@@ -283,7 +457,7 @@ jobs:
         run: |
           security delete-keychain "$RUNNER_TEMP/build.keychain-db" || true
           rm -rf ~/.appstoreconnect/private_keys "$RUNNER_TEMP/profile.mobileprovision"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: ios-ipa
           path: build/ios/Chimora.ipa

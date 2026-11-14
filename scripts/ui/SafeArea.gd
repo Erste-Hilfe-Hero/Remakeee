@@ -3,13 +3,26 @@ extends RefCounted
 ## Notch / Dynamic Island / gesture bar insets in viewport units (item 60).
 ## Every full-screen UI root applies these so nothing important sits under the cut-outs.
 
+## A pretend screen for tests (plan item 2212): screen size and safe area in screen pixels.
+## Empty means the real display.
+static var simulated: Dictionary = {}
+
+## Pretends the screen is [param screen] pixels with [param top] and [param bottom] pixels
+## taken by the notch and the gesture bar.
+static func simulate(screen: Vector2, top: float, bottom: float, left: float = 0.0, right: float = 0.0) -> void:
+	simulated = {"screen": screen, "safe": Rect2(left, top, screen.x - left - right, screen.y - top - bottom)}
+
+## Back to the real display.
+static func stop_simulating() -> void:
+	simulated = {}
+
 ## The safe rect inside a viewport of size [param vp].
 static func rect(vp: Vector2) -> Rect2:
 	var full := Rect2(Vector2.ZERO, vp)
-	if DisplayServer.get_name() == "headless":
+	if simulated.is_empty() and DisplayServer.get_name() == "headless":
 		return full
-	var screen_size: Vector2 = Vector2(DisplayServer.window_get_size())
-	var safe_px: Rect2 = Rect2(DisplayServer.get_display_safe_area())
+	var screen_size: Vector2 = simulated.get("screen", Vector2(DisplayServer.window_get_size()))
+	var safe_px: Rect2 = simulated.get("safe", Rect2(DisplayServer.get_display_safe_area()))
 	if screen_size.x <= 0.0 or safe_px.size.x <= 0.0:
 		return full
 	var scale: Vector2 = vp / screen_size
@@ -17,8 +30,10 @@ static func rect(vp: Vector2) -> Rect2:
 	return full.intersection(r) if full.intersects(r) else full
 
 ## Insets the offsets of a full-rect [param c] so its content stays inside the safe area.
-## [param extra] is added on every side (the control's own margin).
+## [param extra] is added on every side (the control's own margin). The insets follow the
+## screen when it changes size while the game runs (a foldable opening or closing).
 static func apply(c: Control, extra: float = 0.0) -> void:
+	_follow_resizes(c, extra)
 	var vp: Vector2 = c.get_viewport().get_visible_rect().size if c.is_inside_tree() else Vector2.ZERO
 	var r: Rect2 = rect(vp) if vp != Vector2.ZERO else Rect2()
 	var top: float = r.position.y if vp != Vector2.ZERO else 0.0
@@ -29,3 +44,19 @@ static func apply(c: Control, extra: float = 0.0) -> void:
 	c.offset_top = top + extra
 	c.offset_right = -(right + extra)
 	c.offset_bottom = -(bottom + extra)
+
+## Re-applies the insets to [param c] whenever its viewport changes size, until it leaves the tree.
+static func _follow_resizes(c: Control, extra: float) -> void:
+	c.set_meta(&"safe_area_extra", extra)
+	if not c.is_inside_tree() or c.has_meta(&"safe_area_vp"):
+		return
+	var vp: Viewport = c.get_viewport()
+	var cb := func() -> void:
+		if is_instance_valid(c):
+			apply(c, float(c.get_meta(&"safe_area_extra", 0.0)))
+	vp.size_changed.connect(cb)
+	c.set_meta(&"safe_area_vp", true)
+	c.tree_exiting.connect(func() -> void:
+		if is_instance_valid(vp) and vp.size_changed.is_connected(cb):
+			vp.size_changed.disconnect(cb)
+		c.remove_meta(&"safe_area_vp"), CONNECT_ONE_SHOT)

@@ -1,0 +1,29 @@
+{
+ "_comment": "Timed online events (Online 100, area 7). tools/online/game_data_sql.py writes everything but 'events' to server_config.online_events and each entry of 'events' as a row of public.online_events; rules become an 'allowed' species list there. New events need no store update: add them here (or insert a row on the server). Kinds: festival (shared goal fed by world-goal steps, 4 tiers and an extra tier), board (confirmed Rift wins after entering a team that fits the rules), sighting (rarer Spirlings appear more often). Names are shown as they are, in the player's language.",
+ "tiers": [25, 50, 75, 100, 150],
+ "add_max": 5,
+ "user_cap": 500,
+ "board_rows": 20,
+ "calendar_days": 35,
+ "recap_days": 14,
+ "titles": [{"id": "first", "rank": 1}, {"id": "top10", "rank": 10}, {"id": "top_tenth", "pct": 10}, {"id": "took_part", "pct": 100}],
+ "title_items": {"first": "spark_charm", "top10": "max_tonic", "top_tenth": "revival_leaf", "took_part": "strong_tonic"},
+ "weekly": [
+  {"kind": "board", "name": {"en": "Ember week", "de": "Glut-Woche"}, "rules": {"elements": ["EMBER"]}},
+  {"kind": "festival", "name": {"en": "Bond drive", "de": "Bindungs-Woche"}, "goal_kind": "bonds", "target": 1500,
+   "rewards": ["tonic", "strong_tonic", "spark_drop", "max_tonic", "spark_charm"]},
+  {"kind": "board", "name": {"en": "Little ones week", "de": "Woche der Kleinen"}, "rules": {"max_stage": 1}},
+  {"kind": "festival", "name": {"en": "Battle drive", "de": "Kampf-Sammeln der Woche"}, "goal_kind": "battles", "target": 8000,
+   "rewards": ["tonic", "strong_tonic", "spark_drop", "max_tonic", "spark_charm"]},
+  {"kind": "board", "name": {"en": "Tide week", "de": "Flut-Woche"}, "rules": {"elements": ["TIDE"]}},
+  {"kind": "festival", "name": {"en": "Rest and mend", "de": "Rasten und Heilen"}, "goal_kind": "rests", "target": 3000,
+   "rewards": ["tonic", "remedy", "strong_tonic", "max_tonic", "revival_leaf"]}
+ ],
+ "events": [
+  {"id": "festival-2026-12", "kind": "festival", "name": {"en": "Lantern month", "de": "Laternenmonat"},
+   "starts": "2026-12-01T00:00:00Z", "ends": "2027-01-01T00:00:00Z", "goal_kind": "battles", "target": 40000,
+   "rewards": ["strong_tonic", "spark_drop", "max_tonic", "revival_leaf", "spark_charm"]},
+  {"id": "sighting-2026-11-28", "kind": "sighting", "name": {"en": "Sighting day: Kindlop", "de": "Sichtungstag: Kindlop"},
+   "starts": "2026-11-28T00:00:00Z", "ends": "2026-11-29T00:00:00Z", "species": ["Kindlop"], "boost": 3}
+ ]
+}

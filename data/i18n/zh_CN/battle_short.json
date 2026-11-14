@@ -1,0 +1,14 @@
+{
+ "_comment": "zh_CN short words for the battle screen (German table battle_short), keyed by the English text. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "Again: - (battle button)": "再次：-",
+  "Bond (battle button)": "结缘",
+  "Give up (battle button)": "认输",
+  "Growth (bar label)": "成长",
+  "Item (battle button)": "道具",
+  "Leave (battle button)": "离开",
+  "Oath (battle button)": "誓约",
+  "Restart (battle button)": "重来",
+  "Swap (battle button)": "替换"
+ }
+}

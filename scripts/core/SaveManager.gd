@@ -1,24 +1,40 @@
 extends Node
 ## Autoload "SaveManager": versioned JSON saves in user://.
-## - Writes to a temp file, keeps the previous save as a backup, then renames, so a crash
-##   mid-write never corrupts the save.
+## - Writes to a temp file, checks that it reads back with the same SHA-256 checksum, keeps
+##   the last three saves as rotating backups, then renames, so a crash mid-write never
+##   corrupts the save (plan items 3633, 3634, 3637).
+## - Checks the structure of every save before using it; a broken one never crashes the game,
+##   the newest readable backup is loaded instead (items 3609, 3711).
 ## - Migrates old saves step by step by "save_version".
 ## - Saves when the app is paused / backgrounded (mobile OSes kill background apps).
 ## - Never loads .tres files as saves (loading resources can run embedded scripts).
 
-const SAVE_VERSION: int = 2
+const SAVE_VERSION: int = 5
 const SLOT_PATH: String = "user://save_1.json"
 ## Three save slots (item 58). Slot 1 keeps the old file name, so existing saves stay in it.
 const SLOTS: int = 3
 const SETTINGS_PATH: String = "user://settings.json"
 
+## How many rotating backups each slot keeps (.bak.json is the newest, then .bak2, .bak3).
+const BACKUPS: int = 3
+## First line of a save with a checksum: the hash covers the rest of the file (see seal()).
+const CHECKSUM_PREFIX: String = "{\n\t\"_sha256\": \""
+
 signal saved
 signal save_failed(reason: String)
+## The main file of the slot was damaged and a backup was loaded instead.
+signal recovered(path: String)
+
+## True when the last load_game() had to use a backup (the title screen tells the player).
+var last_load_recovered: bool = false
 
 ## save_version -> Callable(Dictionary) -> Dictionary that upgrades to save_version + 1.
 var _migrations: Dictionary[int, Callable] = {
 	0: _migrate_0_to_1,
 	1: _migrate_1_to_2,
+	2: _migrate_2_to_3,
+	3: _migrate_3_to_4,
+	4: _migrate_4_to_5,
 }
 ## Act I world rebuild (save version 2): old map id -> [new map id, safe cell].
 const MAP_RENAMES_V2: Dictionary[String, Array] = {
@@ -49,17 +65,19 @@ func slot_summary(n: int) -> String:
 	slot_path = old
 	return s
 
-## The slot whose save was written most recently, or 0 if none has a save.
+## The slot whose save was written most recently, or 0 if none has a save. A slot with only a
+## backup left (the app died between moving the old save aside and renaming the new one) counts
+## too, so Continue still finds it (bug plan 1373).
 func latest_slot() -> int:
 	var best: int = 0
 	var best_time: int = -1
 	for n: int in range(1, SLOTS + 1):
-		var p: String = path_for_slot(n)
-		if FileAccess.file_exists(p):
-			var t: int = FileAccess.get_modified_time(p)
-			if t > best_time:
-				best_time = t
-				best = n
+		for p: String in save_paths(path_for_slot(n)):
+			if FileAccess.file_exists(p):
+				var t: int = FileAccess.get_modified_time(p)
+				if t > best_time:
+					best_time = t
+					best = n
 	return best
 var settings_path: String = SETTINGS_PATH
 
@@ -73,10 +91,24 @@ func _notification(what: int) -> void:
 		save_settings()
 
 func has_save() -> bool:
-	return FileAccess.file_exists(slot_path) or FileAccess.file_exists(backup_path())
+	for p: String in save_paths(slot_path):
+		if FileAccess.file_exists(p):
+			return true
+	return false
 
 func backup_path() -> String:
-	return slot_path.get_basename() + ".bak.json"
+	return backup_path_for(slot_path, 1)
+
+## Backup [param n] (1 = newest) of [param path]. Backup 1 keeps the old ".bak.json" name.
+static func backup_path_for(path: String, n: int) -> String:
+	return path.get_basename() + (".bak.json" if n <= 1 else ".bak%d.json" % n)
+
+## The main file followed by its backups, newest first.
+static func save_paths(path: String) -> Array[String]:
+	var out: Array[String] = [path]
+	for n: int in range(1, BACKUPS + 1):
+		out.append(backup_path_for(path, n))
+	return out
 
 func temp_path() -> String:
 	return slot_path + ".tmp"
@@ -91,13 +123,36 @@ func build_save() -> Dictionary:
 
 ## Saves the active slot to the local cache and sends it to the server (Online).
 func save_game() -> bool:
-	var ok: bool = write_atomic(slot_path, JSON.stringify(build_save(), "\t"))
+	var ok: bool = write_save(slot_path, build_save())
 	# Only the real slot files go online (tests point slot_path somewhere else).
 	if ok and slot_path == path_for_slot(slot):
 		Online.note_saved(slot)
 	return ok
 
-## Writes [param text] to [param path] via temp file + backup + rename.
+## Writes a save dictionary with its checksum (used for the slots and for saves from the server).
+func write_save(path: String, d: Dictionary) -> bool:
+	var clean: Dictionary = d.duplicate(true)
+	clean.erase("_sha256")
+	return write_atomic(path, seal(JSON.stringify(clean, "\t")))
+
+## Adds a SHA-256 checksum of [param text] (a JSON object) as its first key.
+static func seal(text: String) -> String:
+	if not text.begins_with("{\n"):
+		return text
+	return CHECKSUM_PREFIX + text.sha256_text() + "\",\n" + text.substr(2)
+
+## Checks the checksum of a sealed save. Files without one (older builds) count as unchecked
+## but fine: a cut-off one still fails to parse.
+static func checksum_ok(text: String) -> bool:
+	if not text.begins_with(CHECKSUM_PREFIX):
+		return true
+	var start: int = CHECKSUM_PREFIX.length()
+	var want: String = text.substr(start, 64)
+	if text.substr(start + 64, 3) != "\",\n":
+		return false
+	return ("{\n" + text.substr(start + 67)).sha256_text() == want
+
+## Writes [param text] to [param path] via temp file, read-back check, rotating backups and rename.
 func write_atomic(path: String, text: String) -> bool:
 	var tmp: String = path + ".tmp"
 	var f := FileAccess.open(tmp, FileAccess.WRITE)
@@ -107,11 +162,14 @@ func write_atomic(path: String, text: String) -> bool:
 	f.store_string(text)
 	f.flush()
 	f.close()
-	var backup: String = path.get_basename() + ".bak.json"
+	# Read it back before touching the old copies: a full disk or a cut-off write is caught
+	# here while the backups are still intact (item 3637).
+	if FileAccess.get_file_as_string(tmp) != text or not checksum_ok(FileAccess.get_file_as_string(tmp)):
+		DirAccess.remove_absolute(tmp)
+		save_failed.emit("read-back check failed for %s" % tmp)
+		return false
 	if FileAccess.file_exists(path):
-		if FileAccess.file_exists(backup):
-			DirAccess.remove_absolute(backup)
-		DirAccess.rename_absolute(path, backup)
+		_rotate_backups(path)
 	var err: Error = DirAccess.rename_absolute(tmp, path)
 	if err != OK:
 		save_failed.emit("rename failed: %s" % error_string(err))
@@ -119,28 +177,198 @@ func write_atomic(path: String, text: String) -> bool:
 	saved.emit()
 	return true
 
-## Reads, migrates and applies the save. Falls back to the backup if the main file is broken.
+## Shifts the backups down by one (.bak2 -> .bak3, .bak -> .bak2) and makes the current file .bak.
+func _rotate_backups(path: String) -> void:
+	var oldest: String = backup_path_for(path, BACKUPS)
+	if FileAccess.file_exists(oldest):
+		DirAccess.remove_absolute(oldest)
+	for n: int in range(BACKUPS - 1, 0, -1):
+		var p: String = backup_path_for(path, n)
+		if FileAccess.file_exists(p):
+			DirAccess.rename_absolute(p, backup_path_for(path, n + 1))
+	DirAccess.rename_absolute(path, backup_path_for(path, 1))
+
+## Reads, migrates and applies the save. Falls back to the newest readable backup if the main
+## file is broken (and says so through [member last_load_recovered] and [signal recovered]).
 func load_game() -> bool:
-	for path: String in [slot_path, backup_path()]:
+	last_load_recovered = false
+	var main_there: bool = FileAccess.file_exists(slot_path)
+	for path: String in save_paths(slot_path):
 		var d: Variant = read_save(path)
 		if d is Dictionary:
 			apply_save(d)
+			if path != slot_path and main_there:
+				last_load_recovered = true
+				recovered.emit(path)
 			return true
 	return false
 
 func read_save(path: String) -> Variant:
 	if not FileAccess.file_exists(path):
 		return null
+	return parse_save(FileAccess.get_file_as_string(path))
+
+## Checks, parses, cleans and migrates the text of a save. Returns null if it cannot be used.
+func parse_save(text: String) -> Variant:
+	if not checksum_ok(text):
+		return null
 	# JSON.new().parse() reports errors quietly (parse_string logs them), which keeps a corrupt
 	# save from spamming the log before we fall back to the backup.
 	var json := JSON.new()
-	if json.parse(FileAccess.get_file_as_string(path)) != OK or not json.data is Dictionary:
+	if json.parse(text) != OK or not json.data is Dictionary:
 		return null
-	return migrate(json.data)
+	var d: Dictionary = json.data
+	d.erase("_sha256")
+	var migrated: Variant = migrate(sanitize(d))
+	return sanitize(migrated) if migrated is Dictionary else null
+
+# --- Structure check (item 3609) ------------------------------------------------------------
+# A save can come from an older build, the server or a damaged file. Every value the loaders
+# read is checked for its type here; a wrong one is dropped so the loader uses its default.
+
+const DICT_KEYS: Array[String] = ["tamer", "spirlog", "inventory", "flags", "matchups", "rests",
+	"records", "switches", "era", "world"]
+const LIST_KEYS: Array[String] = ["rifts", "party", "storage", "sanctuary"]
+const CELL_KEYS: Array[String] = ["cell", "heal_cell"]
+const NUMBER_KEYS: Array[String] = ["difficulty", "money", "play_time", "save_version"]
+const TEXT_KEYS: Array[String] = ["region", "map", "facing", "starter", "saved_at"]
+const FLAG_KEYS: Array[String] = ["iron_oath"]
+## Chain glyph in PixelFont, shown before the slot line of an Iron Oath save.
+const OATH_GLYPH: String = "\ue003"
+const SPIRLING_LISTS: Array[String] = ["party", "storage", "sanctuary"]
+const SPIRLING_NUMBERS: Array[String] = ["level", "xp", "hp"]
+const SPIRLING_TEXTS: Array[String] = ["species", "nickname", "uid", "held"]
+
+static func _is_number(v: Variant) -> bool:
+	return (v is int or v is float or v is bool) and not (v is float and (is_nan(v) or is_inf(v)))
+
+static func _is_scalar(v: Variant) -> bool:
+	return v is String or v is StringName or _is_number(v)
+
+## Types of a fresh save (GameState.to_dict) and of a fresh Spirling, so fields added later by
+## other features are checked too without listing them here.
+static var _template: Dictionary = {}
+static var _spirling_template: Dictionary = {}
+
+static func _templates() -> void:
+	if not _template.is_empty():
+		return
+	_template = GameState.to_dict()
+	for s: Variant in GameState.party:
+		_spirling_template = (s as Spirling).to_dict()
+		break
+	if _spirling_template.is_empty():
+		var sd: SpirlingData = Database.species("Puddlet")
+		if sd != null:
+			_spirling_template = Spirling.new(sd, 5).to_dict()
+
+## Drops values of [param d] whose type differs from the same key in [param t].
+static func _match_template(d: Dictionary, t: Dictionary) -> void:
+	for k: Variant in d.keys():
+		if not t.has(k) or t[k] == null:
+			continue
+		var want: Variant = t[k]
+		var v: Variant = d[k]
+		var fits: bool
+		if want is Dictionary:
+			fits = v is Dictionary
+		elif want is Array:
+			fits = v is Array
+		elif want is String or want is StringName:
+			fits = _is_scalar(v)
+		else:
+			fits = _is_number(v)
+		if not fits:
+			d.erase(k)
+
+## Drops every value of [param d] whose type the loaders cannot use. Returns [param d].
+static func sanitize(d: Dictionary) -> Dictionary:
+	_templates()
+	for k: String in DICT_KEYS:
+		if d.has(k) and not d[k] is Dictionary:
+			d.erase(k)
+	for k: String in LIST_KEYS:
+		if d.has(k) and not d[k] is Array:
+			d.erase(k)
+	for k: String in CELL_KEYS:
+		if d.has(k) and not (d[k] is Array and (d[k] as Array).size() >= 2 and _is_number(d[k][0]) and _is_number(d[k][1])):
+			d.erase(k)
+	for k: String in NUMBER_KEYS:
+		if d.has(k) and not _is_number(d[k]):
+			d.erase(k)
+	for k: String in TEXT_KEYS + FLAG_KEYS:
+		if d.has(k) and not _is_scalar(d[k]):
+			d.erase(k)
+	for k: String in FLAG_KEYS:
+		if d.has(k) and d[k] is String:
+			d[k] = d[k] == "true"
+	if d.has("rifts"):
+		var rifts: Array = []
+		for r: Variant in d.rifts:
+			if _is_scalar(r):
+				rifts.append(str(r))
+		d["rifts"] = rifts
+	for k: String in ["inventory", "matchups"]:
+		if d.has(k):
+			_keep_numbers(d[k])
+	if d.has("tamer"):
+		var t: Dictionary = d.tamer
+		if t.has("name") and not _is_scalar(t.name):
+			t.erase("name")
+		for k: String in ["color", "look"]:
+			if t.has(k) and not _is_number(t[k]):
+				t.erase(k)
+	if d.has("era"):
+		_keep_numbers(d.era)
+	for k: String in SPIRLING_LISTS:
+		if not d.has(k):
+			continue
+		var kept: Array = []
+		for s: Variant in d[k]:
+			if s is Dictionary:
+				kept.append(_sanitize_spirling(s))
+		d[k] = kept
+	_match_template(d, _template)
+	return d
+
+static func _keep_numbers(d: Dictionary) -> void:
+	for key: Variant in d.keys():
+		if not _is_number(d[key]):
+			d.erase(key)
+
+static func _sanitize_spirling(s: Dictionary) -> Dictionary:
+	for k: String in SPIRLING_NUMBERS:
+		if s.has(k) and not _is_number(s[k]):
+			s.erase(k)
+	for k: String in SPIRLING_TEXTS:
+		if s.has(k) and not _is_scalar(s[k]):
+			s.erase(k)
+	if s.has("prism") and not _is_number(s.prism):
+		s.erase("prism")
+	for flag: String in ["core", "gleam", "gleam_boost"]:
+		if s.has(flag) and not s[flag] is bool:
+			s.erase(flag)
+	for k: String in ["spark", "crystal"]:
+		if s.has(k):
+			if s[k] is Dictionary:
+				_keep_numbers(s[k])
+			else:
+				s.erase(k)
+	if s.has("moves"):
+		if s.moves is Array:
+			var mv: Array = []
+			for m: Variant in s.moves:
+				if _is_scalar(m):
+					mv.append(str(m))
+			s["moves"] = mv
+		else:
+			s.erase("moves")
+	_match_template(s, _spirling_template)
+	return s
 
 ## Upgrades [param d] to SAVE_VERSION. Returns null if it is from a newer game version.
 func migrate(d: Dictionary) -> Variant:
-	var v: int = int(d.get("save_version", 0))
+	var v: int = maxi(int(d.get("save_version", 0)), 0)
 	if v > SAVE_VERSION:
 		return null
 	while v < SAVE_VERSION:
@@ -192,9 +420,83 @@ func _migrate_1_to_2(d: Dictionary) -> Dictionary:
 	out["flags"] = flags
 	return out
 
+## Version 2 -> 3: originality pass. Renamed moves keep working, the storage flag got a new
+## name, and the team is five Spirlings now (extras rest in storage).
+const MOVE_RENAMES_V3: Dictionary[String, String] = {
+	"Headlong Charge": "Bowl Over", "Tailwind Step": "Drift Step", "Clear Mind": "Still Thought",
+	"Surge Fang": "Storm Gnash", "Eclipse Fang": "Dusk Gnaw", "Brine Fang": "Salt Snap",
+	"Brine Jet": "Spindrift Shot", "Gloom Pulse": "Gloom Ripple", "Quake Stomp": "Tremor Thud",
+	"Boulder Slam": "Cairn Crash", "Tidal Crash": "Breaker Plunge", "Flare Lash": "Kiln Strike",
+	"Blaze Coil": "Furnace Spiral", "Cyclone Edge": "Gale Scythe", "Shell Up": "Hunker Down",
+}
+const TEAM_SIZE_V3: int = 5
+
+func _migrate_2_to_3(d: Dictionary) -> Dictionary:
+	var out: Dictionary = d.duplicate(true)
+	var flags: Dictionary = out.get("flags", {})
+	if flags.has("pc_unlocked"):
+		flags.erase("pc_unlocked")
+		flags["storage_remote"] = true
+	out["flags"] = flags
+	for key: String in ["party", "storage", "sanctuary"]:
+		for s: Variant in out.get(key, []):
+			if s is Dictionary and (s as Dictionary).has("moves"):
+				var mv: Array = []
+				for m: Variant in s.moves:
+					mv.append(MOVE_RENAMES_V3.get(str(m), str(m)))
+				s["moves"] = mv
+	var party: Array = out.get("party", [])
+	if party.size() > TEAM_SIZE_V3:
+		var storage: Array = out.get("storage", [])
+		storage.append_array(party.slice(TEAM_SIZE_V3))
+		out["storage"] = storage
+		out["party"] = party.slice(0, TEAM_SIZE_V3)
+	return out
+
+## Version 3 -> 4: Spirlings get stored temperaments and their story (plan area 1, items 4,
+## 5 and 7). The temperament each one had (read from its uid over six kinds) is kept, so no old
+## temperament changes. Spirlog entries get the new fields.
+const SPIRLING_DEFAULTS_V4: Dictionary = {
+	"variant": "", "origin_map": "", "met_ring": 0, "met_day": 0, "lineage": [], "echo_streak": 0,
+}
+
+func _migrate_3_to_4(d: Dictionary) -> Dictionary:
+	var out: Dictionary = d.duplicate(true)
+	for key: String in ["party", "storage", "sanctuary"]:
+		for s: Variant in out.get(key, []):
+			if not s is Dictionary:
+				continue
+			var sd: Dictionary = s
+			if not sd.has("temper"):
+				sd["temper"] = Spirling.legacy_temper(str(sd.get("uid", "")))
+			for f: String in SPIRLING_DEFAULTS_V4:
+				if not sd.has(f):
+					var v: Variant = SPIRLING_DEFAULTS_V4[f]
+					sd[f] = v.duplicate() if v is Array else v
+			if str(sd.origin_map).is_empty():
+				sd["met_ring"] = int(sd.get("level", 1)) if int(sd.met_ring) <= 0 else sd.met_ring
+	var log: Dictionary = {}
+	for k: Variant in (out.get("spirlog", {}) as Dictionary):
+		log[str(k)] = GameState.upgrade_spirlog_entry(out.spirlog[k])
+	out["spirlog"] = log
+	return out
+
+## Version 5 (plan area 8, items 3540-3541): the endgame fields. Waymarks, daily tasks, festival
+## ribbons and the Iron Oath get their defaults, and every endgame record its empty start
+## (GameState.ENDGAME_RECORDS), so older saves open the endgame without special cases.
+func _migrate_4_to_5(d: Dictionary) -> Dictionary:
+	var out: Dictionary = d.duplicate(true)
+	out["waymarks"] = clampi(GameState.as_int(out.get("waymarks", 0)), 0, Waymarks.CAP)
+	for k: String in ["daily_tasks", "festival_ribbons"]:
+		if not out.get(k) is Dictionary:
+			out[k] = {}
+	out["iron_oath"] = bool(out.get("iron_oath", false))
+	out["records"] = GameState.endgame_defaults(GameState.as_dict(out.get("records", {})).duplicate(true))
+	return out
+
 ## Short "where and how long" line for the title screen's Continue button, or "" if unreadable.
 func save_summary() -> String:
-	for path: String in [slot_path, backup_path()]:
+	for path: String in save_paths(slot_path):
 		var d: Variant = read_save(path)
 		if d is Dictionary:
 			return summary_line(d)
@@ -207,12 +509,33 @@ static func summary_line(d: Dictionary) -> String:
 	if m != null and not m.display_name.is_empty():
 		place = m.display_name
 	var secs: int = int(float(d.get("play_time", 0.0)))
-	return "%s  %d:%02d" % [place, secs / 3600, (secs / 60) % 60]
+	var line: String = "%s  %d:%02d" % [place, secs / 3600, (secs / 60) % 60]
+	# Waymarks next to play time once the player has some (plan 3127).
+	var wm: int = GameState.as_int(d.get("waymarks", 0))
+	if wm > 0:
+		line += "  %s%d" % [Waymarks.GLYPH, wm]
+	# Journey percent on the slot (plan 3381); a full journey gets a gold star (plan 3383).
+	var rec: Variant = d.get("records", {})
+	if rec is Dictionary and (rec as Dictionary).has("completion"):
+		var pct: int = GameState.as_int((rec as Dictionary).completion)
+		line += "  %d%%" % pct
+		if pct >= 100:
+			line = Collection.STAR + " " + line
+	# A small chain marks a journey under the Iron Oath (plan 3396).
+	if d.get("iron_oath", false) is bool and bool(d.get("iron_oath", false)):
+		line = OATH_GLYPH + " " + line
+	return line
 
 func delete_save() -> void:
-	for p: String in [slot_path, backup_path(), temp_path()]:
+	for p: String in save_paths(slot_path) + [temp_path()]:
 		if FileAccess.file_exists(p):
 			DirAccess.remove_absolute(p)
+
+## A new journey in a used slot: the old journey and its backups go, then the new one is saved,
+## so a damaged new save can never fall back to the old journey's backup (bug plan 1373).
+func start_fresh_slot() -> bool:
+	delete_save()
+	return save_game()
 
 func save_settings() -> void:
 	var d: Dictionary = GameState.settings_to_dict()
@@ -220,14 +543,21 @@ func save_settings() -> void:
 	d["slot"] = slot
 	write_atomic(settings_path, JSON.stringify(d))
 
+## Loads the settings file, or its newest readable backup when it is damaged (bug plan 1348).
+## Without any readable file the defaults are applied, so volume and language are never left unset.
 func load_settings() -> void:
-	if not FileAccess.file_exists(settings_path):
+	var raw: Variant = null
+	for p: String in save_paths(settings_path):
+		if FileAccess.file_exists(p):
+			var json := JSON.new()
+			if json.parse(FileAccess.get_file_as_string(p)) == OK and json.data is Dictionary:
+				raw = json.data
+				break
+	if not raw is Dictionary:
 		GameState.apply_volume()
 		GameState.apply_display()
 		return
-	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(settings_path))
-	if raw is Dictionary:
-		GameState.settings_from_dict(raw)
-		if slot_path == SLOT_PATH:
-			set_slot(int(raw.get("slot", 1)))
-		VirtualPad.apply_settings()
+	GameState.settings_from_dict(raw)
+	if slot_path == SLOT_PATH:
+		set_slot(GameState.as_int(raw.get("slot", 1), 1))
+	VirtualPad.apply_settings()

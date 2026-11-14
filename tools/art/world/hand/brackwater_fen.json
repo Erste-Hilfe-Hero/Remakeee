@@ -1,0 +1,32 @@
+{
+ "add": {
+  "npcs": [
+   {
+    "id": "vs_jinks_3",
+    "x": 6,
+    "y": 3,
+    "facing": "down",
+    "dialogue": "veydal_side/jinks_3",
+    "sprite": "ranger",
+    "show_flag": "beat_story_rival_jinks_2",
+    "hide_flag": "beat_story_rival_jinks_3"
+   },
+   {
+    "id": "vs_nettle",
+    "x": 6,
+    "y": 14,
+    "facing": "down",
+    "dialogue": "veydal_side/nettle",
+    "sprite": "villager"
+   }
+  ],
+  "signs": [
+   {
+    "x": 7,
+    "y": 3,
+    "dialogue": "veydal_more/poster_6",
+    "hide_flag": "poster_6"
+   }
+  ]
+ }
+}

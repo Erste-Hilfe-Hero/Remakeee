@@ -1,0 +1,24 @@
+{
+ "_comment": "nl translation of the online_replays table, keyed by the English text.",
+ "strings": {
+  "%s: %d%% won (%d of %d)": "%s: %d%% gewonnen (%d van %d)",
+  "%s: met %d times": "%s: %d keer ontmoet",
+  "Copy share code": "Deelcode kopiëren",
+  "Lost": "Verloren",
+  "Met most often": "Vaakst ontmoet",
+  "No online battles yet.": "Nog geen onlinegevechten.",
+  "Online battle": "Onlinegevecht",
+  "Online replays": "Onlineherhalingen",
+  "Online replays (%d)": "Onlineherhalingen (%d)",
+  "Open league": "Open Competitie",
+  "Planned maintenance in %d h. The game is offline for a short while then.": "Gepland onderhoud over %d u. Het spel is dan even offline.",
+  "Raid": "Groepskloof",
+  "Rift board": "Klovenranglijst",
+  "The clipboard holds no replay code.": "Op het klembord staat geen herhalingscode.",
+  "The code is on the clipboard. A friend can watch it under Records, Online replays.": "De code staat op het klembord. Een vriend kan hem bekijken onder Records, Onlineherhalingen.",
+  "Watch": "Bekijken",
+  "Watch a code from the clipboard": "Een code van het klembord bekijken",
+  "Win rate per Spirling": "Winstpercentage per Spirling",
+  "Won": "Gewonnen"
+ }
+}

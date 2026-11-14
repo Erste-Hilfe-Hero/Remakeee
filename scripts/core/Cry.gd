@@ -15,15 +15,25 @@ const ELEMENT_VOICE: Array = [
 	[0.25, 0.03, 0.1],   # GALE: airy
 	[0.125, 0.015, 0.0], # LUMEN: clear and high
 	[0.5, 0.04, 0.1],    # UMBRA: rough
+	[0.25, 0.0, 0.3],    # INK: scratchy, like a nib on paper
+	[0.125, 0.05, 0.0],  # ECHO: ringing, with a long shimmer
+	[0.5, 0.01, 0.3],    # RUST: grating
+	[0.25, 0.04, 0.15],  # MASK: muffled
+	[0.25, 0.02, 0.35],  # ACID: hissing
+	[0.125, 0.0, 0.05],  # FROST: glassy
+	[0.5, 0.03, 0.0],    # GILT: round and warm
+	[0.125, 0.02, 0.1],  # ZENITH: high and bright
 ]
 
 static var _cache: Dictionary[String, AudioStreamWAV] = {}
 
-## The cry of [param sd], built once and cached.
-static func stream_for(sd: SpirlingData) -> AudioStreamWAV:
-	if not _cache.has(sd.species_name):
-		_cache[sd.species_name] = make(sd)
-	return _cache[sd.species_name]
+## The cry of [param sd] in [param era], processed by [param spec] (data/era_audio.json
+## "cry"), built once per species and era and cached.
+static func stream_for(sd: SpirlingData, era: int = 1, spec: Dictionary = {}) -> AudioStreamWAV:
+	var key: String = "%s@%d" % [sd.species_name, era]
+	if not _cache.has(key):
+		_cache[key] = make(sd, spec)
+	return _cache[key]
 
 ## Pitch, length and timbre for [param sd]: {"base": midi note, "segments": [[from, to, seconds]], ...}.
 static func shape(sd: SpirlingData) -> Dictionary:
@@ -42,7 +52,13 @@ static func shape(sd: SpirlingData) -> Dictionary:
 	var voice: Array = ELEMENT_VOICE[clampi(el, 0, ELEMENT_VOICE.size() - 1)]
 	return {"base": base, "segments": segs, "duty": voice[0], "vibrato": voice[1], "noise": voice[2], "seed": rng.seed}
 
-static func make(sd: SpirlingData) -> AudioStreamWAV:
+## Era processing (docs/ERA_FEEL_AUDIO.md): Era I is the plain chip cry above ([param spec]
+## empty). Later eras stretch it, deepen the vibrato and swap the wave: "soft" band-limited
+## sample-like tones, "rich" with a bell overtone; "hold" plays it at a lower rate, "layer" adds
+## an octave-down voice, "breath" air noise, "echo" and "reverb" a tail.
+static func make(sd: SpirlingData, spec: Dictionary = {}) -> AudioStreamWAV:
+	if not spec.is_empty():
+		return make_era(sd, spec)
 	var sh: Dictionary = shape(sd)
 	var data := PackedByteArray()
 	var phase: float = 0.0
@@ -79,4 +95,132 @@ static func make(sd: SpirlingData) -> AudioStreamWAV:
 	w.mix_rate = RATE
 	w.stereo = false
 	w.data = data
+	return w
+
+## Echo delay and the comb delays of the reverb, in seconds.
+const ECHO_DELAY: float = 0.07
+const REVERB_COMBS: Array[float] = [0.031, 0.037, 0.041, 0.047]
+const REVERB_TAIL: float = 0.35
+
+static func make_era(sd: SpirlingData, spec: Dictionary) -> AudioStreamWAV:
+	var sh: Dictionary = shape(sd)
+	var stretch: float = float(spec.get("length", 1.0))
+	var vib: float = float(sh.vibrato) * float(spec.get("vibrato", 1.0))
+	var wave: String = str(spec.get("wave", "pulse"))
+	var hold: int = maxi(1, int(spec.get("hold", 1)))
+	var layer: float = float(spec.get("layer", 0.0))
+	var breath: float = float(spec.get("breath", 0.0))
+	var echo: float = float(spec.get("echo", 0.0))
+	var reverb: float = float(spec.get("reverb", 0.0))
+	var noise_rng := RandomNumberGenerator.new()
+	noise_rng.seed = int(sh.seed)
+	var t_total: float = 0.0
+	for seg: Array in sh.segments:
+		t_total += float(seg[2]) * stretch
+	var body: int = int(t_total * RATE)
+	var tail: int = int(((ECHO_DELAY * 2.0) if echo > 0.0 else 0.0) * RATE + (REVERB_TAIL * RATE if reverb > 0.0 else 0.0))
+	var buf := PackedFloat32Array()
+	buf.resize(body + tail)
+	var phase: float = 0.0
+	var phase_low: float = 0.0
+	var noise_v: float = 0.0
+	var air: float = 0.0
+	var held: float = 0.0
+	var idx: int = 0
+	for seg: Array in sh.segments:
+		var n: int = int(float(seg[2]) * stretch * RATE)
+		for i: int in n:
+			if idx >= body:
+				break
+			var k: float = float(i) / maxf(n - 1, 1)
+			var t: float = float(idx) / RATE
+			var m: float = lerpf(float(seg[0]), float(seg[1]), k) + vib * 12.0 * sin(t * TAU * 11.0)
+			var f: float = 440.0 * pow(2.0, (m - 69.0) / 12.0)
+			phase = fmod(phase + f / RATE, 1.0)
+			phase_low = fmod(phase_low + f * 0.5 / RATE, 1.0)
+			var v: float = _wave(wave, phase, f, float(sh.duty), t)
+			if layer > 0.0:
+				v = v * (1.0 - layer) + _wave(wave, phase_low, f * 0.5, float(sh.duty), t) * layer
+			if idx % 4 == 0:
+				noise_v = noise_rng.randf_range(-1.0, 1.0)
+			# From the sample voices on the noise is filtered, so it reads as a rasp, not hiss.
+			air = noise_v if wave == "pulse" else air + (noise_v - air) * 0.25
+			v = v * (1.0 - float(sh.noise)) + air * float(sh.noise)
+			if breath > 0.0:
+				v += noise_rng.randf_range(-1.0, 1.0) * breath * (0.5 + 0.5 * sin(k * PI))
+			if idx % hold == 0:
+				held = v
+			var g: float = minf(1.0, idx / (RATE * 0.012)) * minf(1.0, (body - idx) / (RATE * 0.06))
+			g *= 0.75 + 0.25 * sin(k * PI)
+			buf[idx] = held * g
+			idx += 1
+	if echo > 0.0:
+		var d: int = int(ECHO_DELAY * RATE)
+		for i: int in range(d, buf.size()):
+			buf[i] += buf[i - d] * echo
+	if reverb > 0.0:
+		var dry := buf.duplicate()
+		for c: float in REVERB_COMBS:
+			var d: int = int(c * RATE)
+			var comb := dry.duplicate()
+			for i: int in range(d, comb.size()):
+				comb[i] += comb[i - d] * 0.72
+			for i: int in buf.size():
+				buf[i] += (comb[i] - dry[i]) * reverb * 0.25
+	var peak: float = 0.0001
+	for v: float in buf:
+		peak = maxf(peak, absf(v))
+	var data := PackedByteArray()
+	data.resize(buf.size() * 2)
+	for i: int in buf.size():
+		data.encode_s16(i * 2, clampi(int(buf[i] / peak * 0.45 * 32767.0), -32768, 32767))
+	var w := AudioStreamWAV.new()
+	w.format = AudioStreamWAV.FORMAT_16_BITS
+	w.mix_rate = RATE
+	w.stereo = false
+	w.data = data
+	return w
+
+## One sample of the cry wave at [param phase]: chip pulse, "soft" (a few harmonics, odd only
+## for square-like duties) or "rich" (more harmonics plus a fading bell overtone).
+static func _wave(kind: String, phase: float, f: float, duty: float, t: float) -> float:
+	if kind == "pulse":
+		return 1.0 if phase < duty else -1.0
+	var harmonics: int = 4 if kind == "soft" else 8
+	var odd: bool = duty >= 0.5
+	var v: float = 0.0
+	for h: int in range(1, harmonics + 1):
+		if odd and h % 2 == 0:
+			continue
+		if f * h > RATE / 2.4:
+			break
+		v += sin(TAU * h * phase) / h
+	v *= 0.8
+	if kind == "rich":
+		v += 0.3 * sin(TAU * 2.0 * phase + 1.6 * sin(TAU * 3.5 * phase)) * exp(-t * 6.0)
+	return v
+
+static var _tones: Dictionary[String, AudioStreamWAV] = {}
+
+## A short square-wave note (Echo call marks, item 279), cached per pitch, timbre and gain.
+static func tone(midi: int, duty: float = 0.5, gain: float = 0.3, seconds: float = 0.22) -> AudioStreamWAV:
+	var key: String = "%d:%.3f:%.2f:%.2f" % [midi, duty, gain, seconds]
+	if _tones.has(key):
+		return _tones[key]
+	var total: int = int(seconds * RATE)
+	var data := PackedByteArray()
+	data.resize(total * 2)
+	var f: float = 440.0 * pow(2.0, (midi - 69.0) / 12.0)
+	var phase: float = 0.0
+	for i: int in total:
+		phase = fmod(phase + f / RATE, 1.0)
+		var v: float = 1.0 if phase < duty else -1.0
+		var g: float = minf(1.0, i / (RATE * 0.005)) * minf(1.0, (total - i) / (RATE * 0.06))
+		data.encode_s16(i * 2, clampi(int(v * g * gain * 32767.0), -32768, 32767))
+	var w := AudioStreamWAV.new()
+	w.format = AudioStreamWAV.FORMAT_16_BITS
+	w.mix_rate = RATE
+	w.stereo = false
+	w.data = data
+	_tones[key] = w
 	return w

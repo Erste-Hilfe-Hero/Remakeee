@@ -1,0 +1,6 @@
+{
+ "_comment": "Simplified Chinese (Mainland China) texts for the German table sprachen. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "Japanese, Korean and Chinese text uses Chimora CJK Pixel, a subset of Fusion Pixel Font 8px (Copyright (c) 2022, TakWolf, with glyphs from Galmuri, Misaki, Boutique Bitmap 7x7 and Miseki Bitmap), licensed under the SIL Open Font License 1.1: https://openfontlicense.org": "日文、韩文和中文文本使用Chimora CJK Pixel字体，它是Fusion Pixel Font 8px的子集（Copyright (c) 2022, TakWolf，包含来自Galmuri、Misaki、Boutique Bitmap 7x7和Miseki Bitmap的字形），依据SIL Open Font License 1.1授权：https://openfontlicense.org"
+ }
+}

@@ -1,0 +1,139 @@
+{
+ "sign": [
+  "WRENHOLLOW",
+  "Wrenhollow, 34 folk.",
+  "Three terraces, one well, too many ladders."
+ ],
+ "willow": {
+  "lines": [
+   "Keeper Ysolde: Sit under the willow and drink from the pool. It mends tired Spirlings."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Trader Ebbe: Brook-cooled tonics, fresh every day."
+  ],
+  "action": "shop tonic strong_tonic remedy dry_towel cooling_gel kin_charm revival_leaf pruning_shears grounding_rod smelling_salts"
+ },
+ "ropemaker": {
+  "lines": [
+   "Ropemaker Nell: The old wells hereabouts go deep. You'll want a ladder you can leave behind.",
+   "Ropemaker Nell: Tie it where you see a chalk mark. It holds."
+  ],
+  "action": "give_item rope_ladder 1",
+  "flag": "got_ladder",
+  "once": true,
+  "after_flag": {
+   "flag": "got_ladder",
+   "lines": [
+    "Ropemaker Nell: Every knot I tie has a name. That one was 'Patience'."
+   ]
+  }
+ },
+ "elder": {
+  "lines": [
+   "Old Bertil: Orrin guards that well like someone would steal it. Who'd steal a hole?"
+  ]
+ },
+ "kid": [
+  "Wren-kid: I counted the ladder rungs. All of them. Two hundred and six!"
+ ],
+ "coach": {
+  "lines": [
+   "Driver Fenna: Valley Coach, Wrenhollow stop. Climb in, the seats are dry."
+  ],
+  "action": "transit valley_coach"
+ },
+ "tamsa": {
+  "lines": [
+   "Weaver Tamsa: I weave all day so I have something to do with my hands while Lise talks to her goats about me."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Weaver Tamsa: My threads stopped tangling by themselves. Strange how a Rift reaches so far."
+   ]
+  }
+ },
+ "orrin": {
+  "lines": [
+   "Well-Keeper Orrin: Everyone here mocks me. The well is the only one who listens, and it just echoes."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Well-Keeper Orrin: The well water tastes of nothing again. That's how it should taste."
+   ]
+  },
+  "choices": [
+   {
+    "text": "Tell Orrin what Lise said",
+    "next": "orrin_pays"
+   },
+   {
+    "text": "Leave them be"
+   }
+  ]
+ },
+ "lise": {
+  "lines": [
+   "Goatherd Lise: My goats are smarter than Orrin. At least they leave the well when nothing happens."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Goatherd Lise: The goats climb up to the rim again. They hated the Rift more than I did."
+   ]
+  }
+ },
+ "brann": {
+  "lines": [
+   "Fiddler Brann: I play loud at night so nobody hears Tamsa gossip. It doesn't work. Nothing drowns her out."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Fiddler Brann: My fiddle stays in tune all night now. A small miracle, but mine."
+   ]
+  }
+ },
+ "ilse": {
+  "lines": [
+   "Basket-Maker Ilse: Brann calls it music. The goats call it a warning."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Basket-Maker Ilse: The reeds by the fen stand straight again. Better baskets for everyone."
+   ]
+  }
+ },
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 4"
+ },
+ "surveyor": {
+  "lines": [
+   "Surveyor Ilka: A map is only as good as what you've looked at. Here, look further.",
+   "Surveyor Ilka: Face where you want to look and press A on open ground. Give the glass a breath between looks."
+  ],
+  "action": "give_item survey_glass 1",
+  "flag": "got_survey_glass",
+  "once": true,
+  "after_flag": {
+   "flag": "got_survey_glass",
+   "lines": [
+    "Surveyor Ilka: Six steps out, no further. Past that, even glass gets lazy."
+   ]
+  }
+ },
+ "orrin_pays": {
+  "lines": [
+   "Well-Keeper Orrin: She said WHAT? Here, coins. Don't tell the goats."
+  ],
+  "action": "tip 60 orrin"
+ }
+}

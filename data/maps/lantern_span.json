@@ -1,0 +1,226 @@
+{
+ "name": "Lantern Span",
+ "region": "halcyra",
+ "biome": "route",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "lantern_span",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^::..__..::^",
+  "^::..__..,,^",
+  "^,,..__..,,^",
+  "~~~~L++L~~~~",
+  "~~~~|++|~~~~",
+  "~~~~L++L~~~~",
+  "~~~~|++|~~~~",
+  "~~~~L++L~~~~",
+  "~~~~|++|~~~~",
+  "~~~~L++L~~~~",
+  "^:::.++.%%%^",
+  "^:::._______",
+  "^,,..S...%%^",
+  "^,,......%%^",
+  "~~~~L++L~~~~",
+  "~~~~|++|~~~~",
+  "~~~~L++L~~~~",
+  "~~~~|++|~~~~",
+  "~~~~L++L~~~~",
+  "^::..++..,,^",
+  "^::..__..,,^",
+  "^.....__...^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 23,
+   "to": "whitecairn",
+   "tx": 5,
+   "ty": 18,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 23,
+   "to": "whitecairn",
+   "tx": 6,
+   "ty": 18,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "paleshore",
+   "tx": 10,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "paleshore",
+   "tx": 10,
+   "ty": 9,
+   "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 12,
+   "to": "gilt_span",
+   "tx": 1,
+   "ty": 10,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "toll_boy",
+   "x": 4,
+   "y": 12,
+   "facing": "right",
+   "dialogue": "lantern_span/toll_boy",
+   "sprite": "villager",
+   "trainer": "Toll Boy Kasimir",
+   "intro": "lantern_span/toll_boy_intro",
+   "defeat": "lantern_span/toll_boy_defeat",
+   "money": 4000,
+   "team": [
+    {
+     "species": "Gyrevult",
+     "level": 91
+    },
+    {
+     "species": "Velvessa",
+     "level": 91
+    },
+    {
+     "species": "Ergskim",
+     "level": 91
+    }
+   ]
+  },
+  {
+   "id": "q4_two_lanterns_pia",
+   "x": 7,
+   "y": 14,
+   "facing": "left",
+   "dialogue": "halcyra_side/two_lanterns_pia",
+   "sprite": "villager",
+   "show_flag": "q4_two_lanterns_asked"
+  },
+  {
+   "id": "q4_two_lanterns_konrad",
+   "x": 3,
+   "y": 14,
+   "facing": "right",
+   "dialogue": "halcyra_side/two_lanterns_konrad_after",
+   "sprite": "villager",
+   "trainer": "Husband Konrad",
+   "show_flag": "q4_two_lanterns_reveal",
+   "intro": "halcyra_side/two_lanterns_konrad_intro",
+   "defeat": "halcyra_side/two_lanterns_konrad_defeat",
+   "money": 4650,
+   "team": [
+    {
+     "species": "Spanbrute",
+     "level": 91
+    },
+    {
+     "species": "Eaveprowl",
+     "level": 92
+    },
+    {
+     "species": "Eavekit",
+     "level": 93
+    }
+   ],
+   "win_flags": [
+    "q4_two_lanterns_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "q4_red_column_wido",
+   "x": 2,
+   "y": 22,
+   "facing": "right",
+   "dialogue": "halcyra_side/red_column",
+   "sprite": "villager"
+  },
+  {
+   "id": "q4_red_column_ruprecht",
+   "x": 8,
+   "y": 1,
+   "facing": "left",
+   "dialogue": "halcyra_side/red_column_ruprecht",
+   "sprite": "warden",
+   "show_flag": "q4_red_column_reveal"
+  },
+  {
+   "id": "q4_red_column_fey",
+   "x": 8,
+   "y": 20,
+   "facing": "left",
+   "dialogue": "halcyra_side/red_column_fey",
+   "sprite": "villager",
+   "show_flag": "q4_red_column_asked"
+  },
+  {
+   "id": "hs_hedda",
+   "x": 7,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "halcyra_side/hedda",
+   "sprite": "villager",
+   "trainer": "Rope Inspector Hedda",
+   "intro": "halcyra_side/hedda_intro",
+   "defeat": "halcyra_side/hedda_defeat",
+   "money": 3680,
+   "team": [
+    {
+     "species": "Eaveprowl",
+     "level": 90
+    },
+    {
+     "species": "Eavekit",
+     "level": 91
+    },
+    {
+     "species": "Coffrel",
+     "level": 92
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 5,
+   "y": 13,
+   "dialogue": "lantern_span/sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 12,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_lantern_span_1"
+  },
+  {
+   "x": 11,
+   "y": 14,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_lantern_span_2"
+  },
+  {
+   "x": 0,
+   "y": 21,
+   "item": "guard_brew",
+   "count": 1,
+   "flag": "find_lantern_span_3"
+  }
+ ]
+}

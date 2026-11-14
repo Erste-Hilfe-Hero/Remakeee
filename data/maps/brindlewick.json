@@ -1,6 +1,7 @@
 {
  "name": "Brindlewick",
  "region": "veydal",
+ "biome": "town",
  "backdrop": "lake",
  "outdoor": true,
  "rows": [
@@ -9,14 +10,14 @@
   "TRRR.__.RRRT",
   "TRRR.__.RRRT",
   "THDH.__.HDHT",
-  "T._.____._.T",
+  "TS_.____._.T",
   "T.__________",
   "T.S.._.....T",
   "T*...__..,,T",
   "T..L.__.,,,T",
   "T@.|.__....T",
   "T@.D.__..*.T",
-  "T..___.....T",
+  "_..___.....T",
   "~~~~.++.~~~~",
   "~~~~~++~~~~~",
   "~~%~~++~~%%~",
@@ -73,6 +74,14 @@
    "tx": 4,
    "ty": 6,
    "facing": "up"
+  },
+  {
+   "x": 0,
+   "y": 12,
+   "to": "quillbrook",
+   "tx": 10,
+   "ty": 1,
+   "facing": "left"
   }
  ],
  "npcs": [
@@ -99,7 +108,7 @@
    "facing": "down",
    "dialogue": "brindlewick/kestra_dock",
    "sprite": "ranger",
-   "show_flag": "pc_unlocked"
+   "show_flag": "veydal_rifts_mended"
   },
   {
    "id": "ines",
@@ -125,6 +134,255 @@
    "facing": "down",
    "dialogue": "brindlewick/wynn",
    "sprite": "ranger"
+  },
+  {
+   "id": "festival_trader",
+   "x": 2,
+   "y": 8,
+   "facing": "right",
+   "dialogue": "brindlewick/festival_trader",
+   "sprite": "villager"
+  },
+  {
+   "id": "velahra",
+   "x": 2,
+   "y": 12,
+   "facing": "right",
+   "dialogue": "brindlewick/velahra",
+   "sprite": "first_voice",
+   "show_flag": "mirela_lamp",
+   "hide_flag": "first_voice_velahra_away"
+  },
+  {
+   "id": "vs_gisk",
+   "x": 6,
+   "y": 8,
+   "facing": "down",
+   "dialogue": "veydal_side/gisk",
+   "sprite": "elder"
+  },
+  {
+   "id": "vs_wicka",
+   "x": 5,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "veydal_side/wicka",
+   "sprite": "elder"
+  },
+  {
+   "id": "vs_brennick",
+   "x": 6,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "veydal_side/brennick",
+   "sprite": "villager"
+  },
+  {
+   "id": "vm_gorrie",
+   "x": 10,
+   "y": 5,
+   "facing": "left",
+   "dialogue": "veydal_more/gorrie",
+   "sprite": "villager"
+  },
+  {
+   "id": "brin",
+   "x": 3,
+   "y": 1,
+   "facing": "right",
+   "dialogue": "brindlewick/brin",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 2,
+     "y": 9,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ],
+   "walk": [
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ]
+   ]
+  },
+  {
+   "id": "lotte",
+   "x": 8,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "brindlewick/lotte",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dawn",
+     "x": 1,
+     "y": 6,
+     "facing": "right"
+    },
+    {
+     "phase": "dusk",
+     "x": 2,
+     "y": 10,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ],
+   "walk": [
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ]
+   ]
+  },
+  {
+   "id": "tilda",
+   "x": 10,
+   "y": 10,
+   "facing": "left",
+   "dialogue": "brindlewick/tilda",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 4,
+     "y": 10,
+     "facing": "up"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ],
+   "walk": [
+    [
+     10,
+     10
+    ],
+    [
+     10,
+     11
+    ]
+   ]
+  },
+  {
+   "id": "joss",
+   "x": 4,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "brindlewick/joss",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": [
+      "day"
+     ],
+     "away": true
+    },
+    {
+     "phase": "night",
+     "x": 4,
+     "y": 10,
+     "facing": "down"
+    }
+   ]
+  },
+  {
+   "id": "wim",
+   "x": 8,
+   "y": 5,
+   "facing": "down",
+   "dialogue": "brindlewick/wim",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 10,
+     "y": 9,
+     "facing": "left",
+     "map": "thornridge"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "boatwoman",
+   "x": 7,
+   "y": 13,
+   "facing": "down",
+   "dialogue": "brindlewick/boatwoman",
+   "sprite": "villager"
+  },
+  {
+   "id": "coach",
+   "x": 10,
+   "y": 7,
+   "facing": "left",
+   "dialogue": "brindlewick/coach",
+   "sprite": "villager"
+  },
+  {
+   "id": "stall_fish",
+   "x": 9,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "brindlewick/stall_fish",
+   "sprite": "villager",
+   "weekdays": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "stall_herbs",
+   "x": 8,
+   "y": 10,
+   "facing": "up",
+   "dialogue": "brindlewick/stall_herbs",
+   "sprite": "elder",
+   "weekdays": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "stall_tinker",
+   "x": 2,
+   "y": 9,
+   "facing": "right",
+   "dialogue": "brindlewick/stall_tinker",
+   "sprite": "villager",
+   "weekdays": [
+    3,
+    6
+   ]
   }
  ],
  "signs": [
@@ -139,9 +397,9 @@
    "dialogue": "brindlewick/ferry"
   },
   {
-   "x": 2,
-   "y": 16,
-   "dialogue": "brindlewick/islet"
+   "x": 1,
+   "y": 5,
+   "dialogue": "brindlewick/marker_stone"
   }
  ],
  "gear_spots": [
@@ -171,5 +429,40 @@
     16
    ]
   }
+ ],
+ "secrets": [
+  {
+   "x": 2,
+   "y": 16,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "islet_find",
+   "dialogue": "brindlewick/islet"
+  },
+  {
+   "x": 11,
+   "y": 1,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_brindle_tree"
+  },
+  {
+   "x": 1,
+   "y": 10,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_brindle_rock"
+  },
+  {
+   "x": 11,
+   "y": 8,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_brindle_fern"
+  }
+ ],
+ "square": [
+  3,
+  9
  ]
 }

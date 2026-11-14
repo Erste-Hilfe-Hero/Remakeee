@@ -1,0 +1,67 @@
+{
+ "_doc": "Overworld terrain look per era (docs/ERA_FEEL_TILES.md, scripts/overworld/EraTerrainLook.gd). A map takes the tier of its region's era, capped by the era on screen (Retro filter), so old regions keep their origin look: Era I = the four story acts, II Vellmarch, III Quillmarch, IV Halcyra, V Quivermoor. Each era keeps everything of the one before (EraTerrainLook.problems, tests/unit/test_era_overworld_look.gd): a switch never goes off again, a number never goes down, an animated kind never stops. anim.kinds: TilesetFactory.Kind name -> style (flip = mirrored second frame, sway = upper rows lean, scroll = the tile drifts sideways). raised atlases: tools/art/gen_era_raised.py.",
+ "eras": {
+  "1": {
+   "name": "Ink",
+   "anim": {"frames": 2, "period": 0.8, "wave": false, "kinds": {"WATER": "flip", "FLOWER": "flip"}},
+   "edges": false, "contact_shade": false, "reflections": false,
+   "drop_shadows": false, "canopy_lift": 0,
+   "banners": false, "parallax_px": 0, "town_zoom": 0.0
+  },
+  "2": {
+   "name": "Wash",
+   "anim": {"frames": 2, "period": 0.6, "wave": false, "kinds": {"WATER": "flip", "WADE": "flip", "FLOWER": "sway", "TALL_GRASS": "sway"}},
+   "edges": false, "contact_shade": false, "reflections": false,
+   "drop_shadows": false, "canopy_lift": 0,
+   "banners": false, "parallax_px": 0, "town_zoom": 0.0
+  },
+  "3": {
+   "name": "Etching",
+   "anim": {"frames": 4, "period": 0.3, "wave": false, "kinds": {"WATER": "scroll", "WADE": "scroll", "FLOWER": "sway", "TALL_GRASS": "sway", "REEDS": "sway"}},
+   "edges": true, "contact_shade": true, "reflections": true,
+   "drop_shadows": false, "canopy_lift": 0,
+   "banners": false, "parallax_px": 0, "town_zoom": 0.0
+  },
+  "4": {
+   "name": "Panorama",
+   "anim": {"frames": 4, "period": 0.28, "wave": false, "kinds": {"WATER": "scroll", "WADE": "scroll", "FLOWER": "sway", "TALL_GRASS": "sway", "REEDS": "sway"}},
+   "edges": true, "contact_shade": true, "reflections": true,
+   "drop_shadows": true, "canopy_lift": 5,
+   "banners": false, "parallax_px": 0, "town_zoom": 0.0
+  },
+  "5": {
+   "name": "Living",
+   "anim": {"frames": 8, "period": 0.16, "wave": true, "kinds": {"WATER": "scroll", "WADE": "scroll", "FLOWER": "sway", "TALL_GRASS": "sway", "REEDS": "sway", "GRASS": "sway", "TREE": "sway"}},
+   "edges": true, "contact_shade": true, "reflections": true,
+   "drop_shadows": true, "canopy_lift": 6,
+   "banners": true, "parallax_px": 3, "town_zoom": 0.1
+  }
+ },
+ "shared": {
+  "_doc": "Values every tier reads. sway_rows: how many upper rows of a tile lean. edge_onto / edge_from: bare ground that gets a ragged fringe from the green next to it. shore_kinds: water that gets a bank line and foam; shore_joins: neighbours that are no bank. reflect_from: kinds mirrored in the water cell below (the cut-out kinds of the raised atlas). flat: ground a contact shade may fall on. casters: kind -> height in px of its drop shadow. canopy: kind -> rows of the tile top drawn over the people. sun: per time of day (DayCycle.PHASE_NAMES) the shadow direction (x right, y down, per px of height) and strength; the tint of the hour itself is the light slice (data/era_light.json). banners: pennant colours (healer, shop, then houses and towers), flown from free tower tops and the ridge over every house door. parallax_ref: px of distance from the view centre per px of lean. town_zoom_time: seconds the view takes to settle in a town.",
+  "sway_rows": {"TALL_GRASS": 9, "FLOWER": 10, "REEDS": 9, "GRASS": 6, "TREE": 9},
+  "edge_onto": ["PATH", "SCREE", "STAIRS"],
+  "edge_from": ["GRASS", "TALL_GRASS", "FLOWER"],
+  "shore_kinds": ["WATER", "WADE"],
+  "shore_joins": ["WATER", "WADE", "REEDS", "PIER", "PLANK"],
+  "reflect_from": ["TREE", "TOWER", "LAMP", "ROCK", "SIGN", "FENCE"],
+  "reflect_alpha": 0.4,
+  "flat": ["GRASS", "TALL_GRASS", "PATH", "FLOWER", "SCREE", "STAIRS", "PIER", "FLOOR", "PLATE", "CRACKED"],
+  "contact_alpha": 0.22,
+  "casters": {"TREE": 20, "WALL": 20, "ROOF": 20, "DOOR": 20, "TOWER": 22, "LAMP": 14, "CLIFF": 16, "SIGN": 6, "FENCE": 5, "ROCK": 5},
+  "canopy": {"TREE": 9, "ROOF": 6, "CLIFF": 5},
+  "sun": {
+   "dawn": {"dir": [-0.75, 0.3], "alpha": 0.26},
+   "day": {"dir": [0.3, 0.35], "alpha": 0.34},
+   "dusk": {"dir": [0.8, 0.3], "alpha": 0.28},
+   "night": {"dir": [0.2, 0.25], "alpha": 0.14}
+  },
+  "banners": ["c8463c", "e8c040", "3c78c8", "e8e4d8"],
+  "bridge_kinds": ["PIER", "PLANK"],
+  "bridge_shadow_alpha": 0.3,
+  "parallax_ref": 40.0,
+  "town_zoom_time": 1.6,
+  "town_biomes": ["town"],
+  "raised_atlas": "res://art/era%d/tiles/raised_%s.png"
+ }
+}

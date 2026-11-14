@@ -1,0 +1,6 @@
+{
+ "_comment": "Polish texts for the German table sprachen. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "Japanese, Korean and Chinese text uses Chimora CJK Pixel, a subset of Fusion Pixel Font 8px (Copyright (c) 2022, TakWolf, with glyphs from Galmuri, Misaki, Boutique Bitmap 7x7 and Miseki Bitmap), licensed under the SIL Open Font License 1.1: https://openfontlicense.org": "Teksty japońskie, koreańskie i chińskie używają kroju Chimora CJK Pixel, wycinka Fusion Pixel Font 8px (Copyright (c) 2022, TakWolf, ze znakami z Galmuri, Misaki, Boutique Bitmap 7x7 i Miseki Bitmap), na licencji SIL Open Font License 1.1: https://openfontlicense.org"
+ }
+}

@@ -1,0 +1,148 @@
+{
+ "crystal": [
+  "A clear crystal, dull and cold. It waits for light."
+ ],
+ "mirror_0_8_2": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 8 2"
+ },
+ "mirror_0_3_4": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 3 4"
+ },
+ "mirror_1_3_2": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 3 2"
+ },
+ "mirror_1_3_5": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 3 5"
+ },
+ "mirror_1_7_3": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 7 3"
+ },
+ "mirror_2_9_1": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 9 1"
+ },
+ "mirror_2_9_4": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 9 4"
+ },
+ "mirror_2_4_4": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 4 4"
+ },
+ "mirror_2_6_2": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 6 2"
+ },
+ "mirror_2_2_5": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 2 5"
+ },
+ "mirror_3_2_5": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 2 5"
+ },
+ "mirror_3_2_2": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 2 2"
+ },
+ "mirror_3_6_2": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 6 2"
+ },
+ "mirror_3_6_4": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 6 4"
+ },
+ "mirror_3_9_2": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 9 2"
+ },
+ "mirror_4_2_3": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 2 3"
+ },
+ "mirror_4_2_1": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 2 1"
+ },
+ "mirror_4_9_1": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 9 1"
+ },
+ "mirror_4_9_4": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 9 4"
+ },
+ "mirror_4_5_4": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 5 4"
+ },
+ "mirror_4_10_3": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 10 3"
+ },
+ "mirror_4_1_5": {
+  "lines": [
+   "A tall mirror on a turning stand."
+  ],
+  "action": "mirror 1 5"
+ },
+ "hint_board": {
+  "lines": [
+   "A board for travellers' notes. Nothing useful is pinned on it yet."
+  ],
+  "after_flag": {
+   "flag": "hint_lanternwell",
+   "lines": [
+    "Tip: follow the light from where it comes in. Turn only the mirrors it touches, one at a time, until it bends toward the crystal."
+   ]
+  }
+ }
+}

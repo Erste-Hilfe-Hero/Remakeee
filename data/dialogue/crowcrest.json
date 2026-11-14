@@ -38,12 +38,49 @@
   "Lio: Wow, okay. You earned that."
  ],
  "bram": [
-  "Bram: Stone types shrug off hits. Try Tide or Bloom moves on them."
+  "Bram: Stone Spirlings shrug off hits. Try Tide or Bloom arts on them."
  ],
  "bram_intro": [
   "Bram: My Shalebats are tougher than these hills. Want to test them?"
  ],
  "bram_defeat": [
   "Bram: Crumbled like gravel..."
+ ],
+ "murk_hollow_sign": [
+  "MURK HOLLOW",
+  "Inside: Storm Lantern, Climbing Pick."
+ ],
+ "tarn_sketch": [
+  "A pencil sketch is pinned to a post: the tarn, open water, a Spirling diving.",
+  "\"The tarn, before it froze. K.\""
+ ],
+ "wanderer": {
+  "lines": [
+   "Wanderer Osk: At night I see a light up north, past the crest. Not a lamp. Brighter, and it flickers.",
+   "Wanderer Osk: Two Rifts down here, they say. I'd bet my boots there's a third one under that light."
+  ],
+  "after_flag": [
+   {
+    "flag": "kestra_dock_talk",
+    "lines": [
+     "Wanderer Osk: The northern light? Still there. Some nights it looks like a map being drawn."
+    ]
+   }
+  ]
+ },
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 7"
+ },
+ "mound_stone": {
+  "lines": [
+   "An old burial mound. A weathered stone stands on it, its letters worn almost away."
+  ],
+  "action": "rubbing crowcrest/mound_words"
+ },
+ "mound_words": [
+  "\"Stand before me, then walk two steps toward the peaks.\""
  ]
 }

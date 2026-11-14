@@ -1,0 +1,33 @@
+{
+ "_doc": "Reference teams for the warden simulator (plan area 2, item 812). Three per story section, built from the starters and the wild kinds of the maps on a typical ring. post_rifts fights the Wardens' rematch teams.",
+ "sections": {
+  "pre_orrin": {
+   "cap": 12,
+   "wardens": [["cinder_rift", "warden_orrin"]],
+   "teams": {
+    "ember_start": [{"species": "Kindlop", "level": 12}, {"species": "Shalebat", "level": 11}, {"species": "Puddlet", "level": 11}, {"species": "Mirkmole", "level": 10}],
+    "spark_start": [{"species": "Zippit", "level": 12}, {"species": "Puddlet", "level": 11}, {"species": "Shalebat", "level": 11}, {"species": "Zephlet", "level": 10}],
+    "wick_start": [{"species": "Wickit", "level": 12}, {"species": "Puddlet", "level": 11}, {"species": "Talusk", "level": 11}, {"species": "Zephlet", "level": 10}]
+   }
+  },
+  "pre_maelis": {
+   "cap": 18,
+   "wardens": [["tide_rift", "warden_maelis"]],
+   "teams": {
+    "ember_start": [{"species": "Smoldrake", "level": 16}, {"species": "Shalebat", "level": 15}, {"species": "Puddlet", "level": 15}, {"species": "Mossling", "level": 14}],
+    "spark_start": [{"species": "Zippit", "level": 16}, {"species": "Kelpup", "level": 15}, {"species": "Zephlet", "level": 15}, {"species": "Mirkmole", "level": 15}],
+    "wick_start": [{"species": "Wickit", "level": 16}, {"species": "Mossling", "level": 15}, {"species": "Shalebat", "level": 15}, {"species": "Zephlet", "level": 15}]
+   }
+  },
+  "post_rifts": {
+   "cap": 23,
+   "rematch": true,
+   "wardens": [["cinder_rift", "warden_orrin"], ["tide_rift", "warden_maelis"]],
+   "teams": {
+    "ember_start": [{"species": "Smoldrake", "level": 21}, {"species": "Riptail", "level": 20}, {"species": "Thornback", "level": 20}, {"species": "Shalebat", "level": 20}],
+    "spark_start": [{"species": "Zippit", "level": 21}, {"species": "Talusgard", "level": 20}, {"species": "Riptail", "level": 20}, {"species": "Zephlet", "level": 20}],
+    "wick_start": [{"species": "Wickit", "level": 21}, {"species": "Riptail", "level": 20}, {"species": "Talusgard", "level": 20}, {"species": "Mirkmole", "level": 20}]
+   }
+  }
+ }
+}

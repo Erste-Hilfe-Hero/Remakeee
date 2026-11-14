@@ -1,6 +1,7 @@
 {
  "name": "Brindlewick Lighthouse",
  "region": "veydal",
+ "biome": "town",
  "backdrop": "field",
  "rows": [
   "WWWWWWWWWW",
@@ -9,7 +10,7 @@
   "WffffffffW",
   "WffffffffW",
   "WCfffffffW",
-  "WffffffffW",
+  "W=fffffffW",
   "WWWWDWWWWW"
  ],
  "warps": [
@@ -20,6 +21,14 @@
    "tx": 3,
    "ty": 12,
    "facing": "down"
+  },
+  {
+   "x": 1,
+   "y": 6,
+   "to": "lanternwell",
+   "tx": 5,
+   "ty": 5,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -29,6 +38,50 @@
    "y": 3,
    "facing": "right",
    "dialogue": "lighthouse/aldo",
+   "sprite": "elder",
+   "hide_flag": "kestra_dock_talk"
+  },
+  {
+   "id": "aldo_dock",
+   "x": 2,
+   "y": 3,
+   "facing": "right",
+   "dialogue": "lighthouse/aldo_dock",
+   "sprite": "elder",
+   "show_flag": "kestra_dock_talk",
+   "hide_flag": "aldo_dock_told"
+  },
+  {
+   "id": "aldo_post",
+   "x": 2,
+   "y": 3,
+   "facing": "right",
+   "dialogue": "lighthouse/aldo_post",
+   "sprite": "elder",
+   "show_flag": "aldo_dock_told"
+  },
+  {
+   "id": "marla",
+   "x": 6,
+   "y": 5,
+   "facing": "left",
+   "dialogue": "lighthouse/marla",
+   "sprite": "villager"
+  },
+  {
+   "id": "tamsin",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "lighthouse/tamsin",
+   "sprite": "villager"
+  },
+  {
+   "id": "hesper",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "lighthouse/hesper",
    "sprite": "elder"
   }
  ],
@@ -36,7 +89,24 @@
   {
    "x": 8,
    "y": 1,
+   "dialogue": "lighthouse/lamp_room",
+   "show_flag": "pages_all",
+   "hide_flag": "mirela_lamp"
+  },
+  {
+   "x": 8,
+   "y": 1,
    "dialogue": "lighthouse/stairs"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 8,
+   "y": 2,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "hush_coin_6",
+   "dialogue": "veydal_side/coin_6"
   }
  ]
 }

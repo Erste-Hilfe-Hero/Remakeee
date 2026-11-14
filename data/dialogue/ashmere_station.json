@@ -1,0 +1,28 @@
+{
+ "conductor": {
+  "lines": [
+   "Conductor Rhea: Mountain railway. Mind the gap, mind the clouds."
+  ],
+  "action": "transit mountain_rail"
+ },
+ "sign": [
+  "ASHMERE STATION",
+  "Ashmere Station, 9 folk.",
+  "Land of the gravers. Every stone here has been drawn twice."
+ ],
+ "rhea": {
+  "lines": [
+   "Porter Rhea: The last train comes in at dusk. Then we meet by the lamp and count who stayed."
+  ]
+ },
+ "sev": {
+  "lines": [
+   "Signal-Keeper Sev: The lamp by the tracks is older than the railway. We built the station around it."
+  ]
+ },
+ "mika": {
+  "lines": [
+   "Miner Mika: Up from the pits, down to the lamp. That's the whole evening, and it's enough."
+  ]
+ }
+}

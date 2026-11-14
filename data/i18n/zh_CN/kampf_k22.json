@@ -1,0 +1,16 @@
+{
+ "_comment": "zh_CN translation of the kampf_k22 table, keyed by the English text.",
+ "strings": {
+  "%d still to come": "还有%d只",
+  "%s rises!": "%s现身了！",
+  "A hushed %s!": "沉寂的%s！",
+  "A swarm of %d!": "%d只的群体！",
+  "Battle paused": "战斗已暂停",
+  "Duel with %s!": "与%s对决！",
+  "Everything goes dark... and then, somehow, it doesn't. Your team stirs right where it fell, bruised but breathing.": "一切都黑了下来……然后不知怎的，又没有。你的队伍在倒下的地方动了动，伤痕累累，但还在呼吸。",
+  "Resume": "继续",
+  "Soft Defeat: %s": "温和战败：%s",
+  "Story only: after a lost battle your team wakes where it fell, with half its Vigor.": "仅限故事难度：战斗失败后，你的队伍会在倒下的地方醒来，元气剩一半。",
+  "You caught %s from behind! Your side moves first.": "你从背后逮住了%s！你方先行动。"
+ }
+}

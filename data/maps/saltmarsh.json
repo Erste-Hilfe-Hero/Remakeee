@@ -1,6 +1,7 @@
 {
  "name": "Saltmarsh",
  "region": "veydal",
+ "biome": "marsh",
  "backdrop": "lake",
  "outdoor": true,
  "encounters": "saltmarsh",
@@ -12,11 +13,11 @@
   "~~~.____.~~~",
   "~%%%%+%%%%%~",
   "~%~~~+~~~%%~",
-  "~%~~~++++++~",
+  "~%~~~+++++++",
   "~%%%~~~~~+%~",
   "~~%%%%%%.+.~",
   "~~~~~~~..__~",
-  "~~%%%%.____~",
+  "~~%%%%S____~",
   "_______._%%~",
   "~S%%%~~~%%%~",
   "~~~~~~~~~~~~"
@@ -45,6 +46,14 @@
    "tx": 6,
    "ty": 11,
    "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 7,
+   "to": "brackwater_fen",
+   "tx": 1,
+   "ty": 18,
+   "facing": "right"
   }
  ],
  "npcs": [
@@ -69,13 +78,66 @@
    "team": [
     {
      "species": "Puddlet",
-     "level": 12
+     "level": 12,
+     "moves": [
+      "Tide Call",
+      "Spout Jab"
+     ]
     },
     {
      "species": "Zephlet",
-     "level": 13
+     "level": 13,
+     "moves": [
+      "Crosswind"
+     ]
     }
-   ]
+   ],
+   "teams_by_difficulty": {
+    "veteran": [
+     {
+      "species": "Puddlet",
+      "level": 12,
+      "moves": [
+       "Tide Call",
+       "Spout Jab"
+      ]
+     },
+     {
+      "species": "Zephlet",
+      "level": 13,
+      "moves": [
+       "Crosswind"
+      ]
+     },
+     {
+      "species": "Kelpup",
+      "level": 13
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Puddlet",
+      "level": 12,
+      "moves": [
+       "Tide Call",
+       "Spout Jab"
+      ],
+      "held": "bark_wrap"
+     },
+     {
+      "species": "Zephlet",
+      "level": 13,
+      "moves": [
+       "Crosswind"
+      ]
+     },
+     {
+      "species": "Kelpup",
+      "level": 13
+     }
+    ]
+   },
+   "profile": "field_keeper"
   },
   {
    "id": "kestra_tag",
@@ -102,7 +164,20 @@
       "level": 14
      }
     ],
-    "front": 1
+    "front": 1,
+    "profile": "tactician"
+   },
+   "pair": {
+    "name": "Hauler Wren",
+    "team": [
+     {
+      "species": "Mirkmole",
+      "level": 14,
+      "moves": [
+       "Night Toll"
+      ]
+     }
+    ]
    },
    "show_flag": "kestra_spar",
    "hide_flag": "kestra_marsh_tag",
@@ -111,21 +186,24 @@
    "team": [
     {
      "species": "Shalebat",
-     "level": 13
+     "level": 13,
+     "moves": [
+      "Shard Bed"
+     ]
     },
     {
      "species": "Kelpup",
-     "level": 13
-    },
-    {
-     "species": "Mirkmole",
-     "level": 14
+     "level": 13,
+     "moves": [
+      "Root Mend"
+     ]
     }
    ],
    "win_flags": [
     "kestra_marsh_tag"
    ],
-   "leaves": true
+   "leaves": true,
+   "profile": "enduring"
   },
   {
    "id": "hauler",
@@ -136,6 +214,34 @@
    "sprite": "villager",
    "show_flag": "kestra_spar",
    "hide_flag": "kestra_marsh_tag"
+  },
+  {
+   "id": "aud",
+   "x": 7,
+   "y": 10,
+   "facing": "right",
+   "dialogue": "saltmarsh/aud",
+   "sprite": "villager",
+   "trainer": "Netmender Aud",
+   "intro": "saltmarsh/aud_intro",
+   "defeat": "saltmarsh/aud_defeat",
+   "profile": "spoiler",
+   "team": [
+    {
+     "species": "Kelpup",
+     "level": 12,
+     "moves": [
+      "Bramble Bed"
+     ]
+    },
+    {
+     "species": "Puddlet",
+     "level": 12,
+     "moves": [
+      "Shoal Trap"
+     ]
+    }
+   ]
   }
  ],
  "signs": [
@@ -145,9 +251,60 @@
    "dialogue": "saltmarsh/sign"
   },
   {
+   "x": 11,
+   "y": 10,
+   "dialogue": "story/find_5",
+   "hide_flag": "page_5"
+  },
+  {
+   "x": 4,
+   "y": 2,
+   "dialogue": "veydal_more/poster_4",
+   "hide_flag": "poster_4"
+  },
+  {
+   "x": 6,
+   "y": 11,
+   "dialogue": "saltmarsh/marker_stone"
+  }
+ ],
+ "secrets": [
+  {
    "x": 10,
    "y": 8,
+   "item": "power_brew",
+   "count": 1,
+   "flag": "marsh_reed_find",
    "dialogue": "saltmarsh/reed_find"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "tonic",
+   "count": 1,
+   "flag": "find_marsh_east"
+  },
+  {
+   "x": 2,
+   "y": 3,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_marsh_reeds"
+  },
+  {
+   "x": 11,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_marsh_post"
+  },
+  {
+   "x": 10,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "dig_saltmarsh",
+   "soil": true
   }
  ]
 }

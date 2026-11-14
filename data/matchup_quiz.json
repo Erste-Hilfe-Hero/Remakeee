@@ -1,0 +1,8 @@
+{
+ "_doc": "Matchup quiz in the lighthouse training ring (KAMPF_PLAN_1000 item 99), read by scripts/core/MatchupQuiz.gd. questions: questions per round. answers: the factors the player picks from (strong, plain, weak), each question's right answer is drawn evenly from them. Only elements of the eras the Wayfarer has opened are asked (type_chart.json era). reward: item given once for the first round with every answer right; best: records key of the best round.",
+ "questions": 5,
+ "answers": [2.0, 1.0, 0.5],
+ "reward": "keen_lens",
+ "best": "matchup_quiz_best",
+ "rewarded": "matchup_quiz_paid"
+}

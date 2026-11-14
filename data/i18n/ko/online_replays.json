@@ -1,0 +1,24 @@
+{
+ "_comment": "ko translation of the online_replays table, keyed by the English text.",
+ "strings": {
+  "%s: %d%% won (%d of %d)": "%s: 승률 %d%% (%d / %d)",
+  "%s: met %d times": "%s: %d번 만남",
+  "Copy share code": "공유 코드 복사",
+  "Lost": "패배",
+  "Met most often": "가장 자주 만난 상대",
+  "No online battles yet.": "아직 온라인 배틀이 없습니다.",
+  "Online battle": "온라인 배틀",
+  "Online replays": "온라인 리플레이",
+  "Online replays (%d)": "온라인 리플레이 (%d)",
+  "Open league": "오픈 리그",
+  "Planned maintenance in %d h. The game is offline for a short while then.": "%d시간 뒤 정기 점검이 있습니다. 그동안 잠시 게임이 오프라인이 됩니다.",
+  "Raid": "레이드",
+  "Rift board": "균열 순위",
+  "The clipboard holds no replay code.": "클립보드에 리플레이 코드가 없습니다.",
+  "The code is on the clipboard. A friend can watch it under Records, Online replays.": "코드를 클립보드에 넣었습니다. 친구는 기록, 온라인 리플레이에서 볼 수 있습니다.",
+  "Watch": "보기",
+  "Watch a code from the clipboard": "클립보드의 코드 보기",
+  "Win rate per Spirling": "Spirling별 승률",
+  "Won": "승리"
+ }
+}

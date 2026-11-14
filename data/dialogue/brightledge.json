@@ -1,0 +1,104 @@
+{
+ "sign": [
+  "BRIGHTLEDGE",
+  "Top station of the Gilt Funicular. The Gilt House welcomes you. The Gilt House is watching you.",
+  "North: the White Stair to Gildcrest. East: the Mirror Flats."
+ ],
+ "keeper": {
+  "lines": [
+   "Station Nurse Ambre: Rest up. The air is thin up here, and so is the patience of the people who own it."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Kiosk Keeper Lumen Doss: Water, tonics, postcards of the view. The view itself is not for sale. Yet."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear pruning_shears grounding_rod smelling_salts echo_coin_toss echo_shine_burst echo_hoard_crush echo_gild_armour echo_high_glint echo_overhead_strike echo_meridian_blaze echo_clear_sky echo_gilt_edge echo_vault_door echo_interest echo_coin_bed echo_sky_hook echo_zenith_beam echo_thin_air echo_summit_air"
+ },
+ "anselm": {
+  "lines": [
+   "Porter Anselm: I carry trunks up from the station. Nobody tips. They just say the view is payment."
+  ]
+ },
+ "cosima": {
+  "lines": [
+   "Painter Cosima: I paint the horizon every evening. The Gilt House buys every one, then burns them. They like to own the sunset."
+  ]
+ },
+ "hesper": {
+  "lines": [
+   "Old Hesper: Eighty years on this ledge. I've seen three funiculars and four Gilt patriarchs fall. Only the funiculars were accidents."
+  ]
+ },
+ "oriel": {
+  "lines": [
+   "Fixer Oriel Vane waits at the top station with tea and a contract. The Gilt House wants the four Rifts sealed before the summer feast.",
+   "Oriel Vane: Four Rifts, one summer feast, one very generous family. Sign here, here and here. The last one is in case you die."
+  ],
+  "action": "set_flag v4_ch1_done",
+  "after_flag": [
+   {
+    "flag": "v4_ch1_done",
+    "lines": [
+     "Oriel Vane: Starwell first. The Orrery Rift is north of town. Drink your tea, it's going cold.",
+     "The funicular stopped halfway on purpose. The brakeman counted your team and sent the list ahead, one copy per family."
+    ]
+   },
+   {
+    "flag": "rift_v4_orrery_sealed",
+    "lines": [
+     "Isaura sold your horoscope to the Gilt House: route, weak spots and the day you would arrive. All of it came true.",
+     "Oriel Vane: Paleshore next. The Salt Rift. Mind the mirror, it lies better than I do."
+    ]
+   },
+   {
+    "flag": "rift_v4_salt_sealed",
+    "lines": [
+     "Your fixer Oriel has worked for Halloran all along. The tea was weak on purpose, so you would sleep through the ambush.",
+     "Oriel Vane: ...Yes. That was me. Halloran paid better than tea. Go to Whitecairn. I'll be there. Probably."
+    ]
+   },
+   {
+    "flag": "rift_v4_span_sealed",
+    "lines": [
+     "Halloran cuts Oriel loose to buy his own way out. She turns up at Whitecairn with a cairn stone and an apology. Only one of them is heavy.",
+     "Oriel Vane: Gildcrest. The feast. Aurek is waiting. So is everyone who wants him dead. Bring a spare fork."
+    ]
+   }
+  ]
+ },
+ "brakeman": {
+  "lines": [
+   "Brakeman Fidel: The Gilt Funicular, down to the Greyreach and back. The brakes are new. The cable is a family heirloom."
+  ],
+  "action": "transit halcyra_funicular"
+ },
+ "white_stair": [
+  "THE WHITE STAIR",
+  "Nine hundred steps of white stone, straight up to Gildcrest. Counted every morning."
+ ],
+ "elke": {
+  "lines": [
+   "Matron Elke: Lie down. The Gilt House pays for the bed. It also counts the hours you spend in it."
+  ],
+  "action": "heal"
+ },
+ "tilde": {
+  "lines": [
+   "Tilde: Fidel checks the cable every morning. Then he comes home and checks his will.",
+   "Tilde: I am in it twice. Once as his wife, once as a witness."
+  ]
+ },
+ "odalys": {
+  "lines": [
+   "Clerk Odalys: Souvenirs on the left, tonics on the right. The souvenirs outlive most of the buyers."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear"
+ },
+ "jorin": {
+  "lines": [
+   "Apprentice Jorin: Cosima paints the sunset, the House burns it, and I sweep up the ash. It is the only steady job in the arts."
+  ]
+ }
+}

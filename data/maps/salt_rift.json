@@ -1,0 +1,178 @@
+{
+ "name": "Salt Rift",
+ "region": "halcyra",
+ "biome": "rift",
+ "backdrop": "lake",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^........^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^..........^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "paleshore",
+   "tx": 5,
+   "ty": 18,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "paleshore",
+   "tx": 6,
+   "ty": 18,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "raker",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "salt_rift/raker",
+   "sprite": "warden",
+   "trainer": "Salt Foreman Gunda",
+   "intro": "salt_rift/raker_intro",
+   "defeat": "salt_rift/raker_defeat",
+   "money": 4500,
+   "team": [
+    {
+     "species": "Saltcrown",
+     "level": 86
+    },
+    {
+     "species": "Stiltregent",
+     "level": 86
+    },
+    {
+     "species": "Wadishell",
+     "level": 87
+    }
+   ]
+  },
+  {
+   "id": "warden_halloran",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "salt_rift/halloran",
+   "sprite": "warden",
+   "trainer": "Warden Halloran",
+   "warden": "v4_salt",
+   "team": [
+    {
+     "species": "Saltcrown",
+     "level": 87
+    },
+    {
+     "species": "Stiltregent",
+     "level": 87
+    },
+    {
+     "species": "Wadibastion",
+     "level": 88
+    },
+    {
+     "species": "Flatsovereign",
+     "level": 88
+    }
+   ],
+   "intro": "salt_rift/halloran_intro",
+   "defeat": "salt_rift/halloran_defeat",
+   "ai": 2,
+   "money": 9000,
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Saltcrown",
+      "level": 103
+     },
+     {
+      "species": "Stiltregent",
+      "level": 103
+     },
+     {
+      "species": "Wadibastion",
+      "level": 104
+     },
+     {
+      "species": "Ergrava",
+      "level": 104
+     },
+     {
+      "species": "Fulgorath",
+      "level": 104
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Saltcrown",
+      "level": 89
+     },
+     {
+      "species": "Stiltregent",
+      "level": 89
+     },
+     {
+      "species": "Wadibastion",
+      "level": 90
+     },
+     {
+      "species": "Flatsovereign",
+      "level": 90
+     },
+     {
+      "species": "Saltcrown",
+      "level": 85
+     }
+    ]
+   }
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "salt_rift/spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "salt_rift/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v4_salt_sealed",
+   "closed": "@"
+  }
+ ]
+}

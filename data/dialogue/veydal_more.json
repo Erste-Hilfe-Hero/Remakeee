@@ -1,0 +1,965 @@
+{
+ "haskett": {
+  "if": {
+   "not_flag": "q_strike_asked"
+  },
+  "lines": [
+   "Haskett: You. Wayfarer. You've got the look of someone who needs money and has no opinions.",
+   "Haskett: My miners are on strike down in Shatterfloor. Sitting on my ore. Singing. Badly.",
+   "Haskett: Go down, have a word, have a fight. I pay well. In a manner of speaking."
+  ],
+  "flag": "q_strike_asked",
+  "action": "quest_stage strike 0",
+  "else": "haskett_2"
+ },
+ "haskett_2": {
+  "if": {
+   "not_flag": [
+    "strike_broke",
+    "strike_miners"
+   ]
+  },
+  "lines": [
+   "Haskett: Mine's past the square, down the hole. Mind the floor. It's cheaper than the miners."
+  ],
+  "else": "haskett_3"
+ },
+ "haskett_3": {
+  "if": {
+   "flag": "strike_broke",
+   "not_flag": "strike_done"
+  },
+  "lines": [
+   "Haskett: Strike's broken? Lovely. Ore's moving, my heart's singing. In tune, unlike them.",
+   "Haskett: Now. About your pay."
+  ],
+  "action": "betrayal haskett_scrip",
+  "flag": "strike_done",
+  "else": "haskett_4"
+ },
+ "haskett_4": {
+  "if": {
+   "flag": "strike_miners",
+   "not_flag": "beat_story_strike_prawle"
+  },
+  "lines": [
+   "Haskett: Sided with the diggers, did you? I could tell. You've got dirt on your conscience.",
+   "Haskett: Prawle! Show our guest the way out. The long way."
+  ],
+  "action": "battle strike_prawle",
+  "else": "haskett_5"
+ },
+ "haskett_5": {
+  "if": {
+   "flag": "beat_story_strike_prawle"
+  },
+  "lines": [
+   "Haskett's office is empty. A note on the desk: 'Mine sold. To myself. Under my other name. - H.'"
+  ],
+  "else": "haskett_6"
+ },
+ "haskett_6": {
+  "lines": [
+   "Haskett: Pleasure doing business. Mostly my pleasure."
+  ]
+ },
+ "haskett_caught": {
+  "lines": [
+   "You read his pay ledger in the mine. You ask for coin, not company scrip.",
+   "Haskett: Clever. I hate clever. Here, real coin. It hurts me more than it hurts you."
+  ]
+ },
+ "haskett_struck": {
+  "lines": [
+   "Haskett pays you in company scrip. Good only in his own shop. Which closed yesterday.",
+   "Haskett: And here's the bill for the lamp oil you burned down there. Business, you understand."
+  ]
+ },
+ "ledger_haskett": {
+  "lines": [
+   "Paid in scrip",
+   "Foreman Haskett hired you to break the Shatterfloor strike.",
+   "He paid the miners in scrip for years. He tried the same on you."
+  ]
+ },
+ "dory": {
+  "if": {
+   "flag": "q_strike_asked",
+   "not_flag": [
+    "strike_broke",
+    "strike_miners"
+   ]
+  },
+  "lines": [
+   "Dory: Haskett sent you. I can smell his cologne on your boots. It's called Greed, number five.",
+   "Dory: He wants to flood this gallery for the insurance. Nests and all. We sit here, he can't.",
+   "Dory: So. Whose side are you on, Wayfarer?"
+  ],
+  "choice_id": "strike_side",
+  "choices": [
+   {
+    "text": "Show me proof.",
+    "id": "proof",
+    "if": {
+     "not_flag": "strike_proof"
+    },
+    "flag": "strike_proof",
+    "next": "dory_proof"
+   },
+   {
+    "text": "Haskett pays. Step aside.",
+    "id": "haskett",
+    "action": "battle strike_dory"
+   },
+   {
+    "text": "I'm with the miners.",
+    "id": "miners",
+    "flag": "strike_miners",
+    "next": "dory_miners"
+   }
+  ],
+  "else": "dory_2"
+ },
+ "dory_proof": {
+  "lines": [
+   "Dory shows you Haskett's pay ledger. Every wage is paid in 'scrip'. Every page has a doodle of a boat.",
+   "Dory: The boat's for when he runs. He draws it every day. Planning ahead, our Haskett."
+  ],
+  "next": "dory"
+ },
+ "dory_miners": {
+  "lines": [
+   "Dory: Then go and tell him. Watch his face go the colour of old cheese.",
+   "Dory: Come back when he's run. And he will run. Men who draw boats always do."
+  ],
+  "action": "quest_stage strike 1"
+ },
+ "dory_2": {
+  "if": {
+   "flag": "strike_miners",
+   "not_flag": "beat_story_strike_prawle"
+  },
+  "lines": [
+   "Dory: Still here? Haskett won't run from you standing in my mine."
+  ],
+  "else": "dory_3"
+ },
+ "dory_3": {
+  "if": {
+   "flag": "beat_story_strike_prawle",
+   "not_flag": "strike_done"
+  },
+  "lines": [
+   "Dory: He ran! Boat and all! You should have seen the miners. Grown women weeping into their pickaxes.",
+   "Dory: We passed the hat for you. It's a good hat."
+  ],
+  "choices": [
+   {
+    "text": "I'll take it.",
+    "action": "give_item strong_tonic 2",
+    "next": "dory_sell"
+   },
+   {
+    "text": "Keep it for the miners' families.",
+    "action": "trust dory 20",
+    "next": "dory_sell"
+   }
+  ],
+  "else": "dory_4"
+ },
+ "dory_sell": {
+  "lines": [
+   "Dory: One more thing, love."
+  ],
+  "action": "betrayal dory_sale",
+  "flag": "strike_done"
+ },
+ "dory_caught": {
+  "lines": [
+   "Dory: The Marrovels offered to buy the mine this morning. I was going to say yes.",
+   "Dory: Then you gave the hat back. Now I can't, can I? Curse you and your manners. Take this instead.",
+   "Dory gives you a Revival Leaf, wrapped in a page of Haskett's ledger."
+  ],
+  "action": "give_item revival_leaf 1"
+ },
+ "dory_struck": {
+  "lines": [
+   "Dory: I sold the mine to the Marrovels this morning. Good price. Better than Haskett's boat.",
+   "Dory: Strike's over. We're all employees now. Cheers for the help, love. Truly."
+  ]
+ },
+ "dory_4": {
+  "lines": [
+   "Dory: Strike's on. Unless you're from Haskett. You've got a bit of a Haskett face."
+  ],
+  "after_flag": [
+   {
+    "flag": "strike_broke",
+    "lines": [
+     "Someone has chalked SCAB on the wall, with an arrow pointing at where you stand."
+    ]
+   },
+   {
+    "flag": "betrayal_dory_sale",
+    "lines": [
+     "Dory: Morning, colleague. Clock in, clock out, keep your head down. Marrovel rules."
+    ]
+   }
+  ]
+ },
+ "ledger_dory": {
+  "lines": [
+   "The miners' hat",
+   "You helped Dory Flint's strike run Haskett out of Copperfold.",
+   "Then Dory looked at the Marrovels' offer, and at you, and chose."
+  ]
+ },
+ "strike_dory_defeat": {
+  "lines": [
+   "Dory: Fine. Go tell Haskett. Tell him we'll be back on the same day his pay is.",
+   "Dory: Never, in other words."
+  ],
+  "action": "quest_stage strike 1"
+ },
+ "strike_dory_lose": {
+  "lines": [
+   "Dory: Off you pop. Union rules: losers make the tea."
+  ]
+ },
+ "strike_prawle_defeat": {
+  "lines": [
+   "Prawle: I'm not paid enough for this. I'm not paid at all. Scrip, mate. Scrip.",
+   "Behind him, Haskett is already climbing into a cart marked 'Definitely Not Haskett'."
+  ],
+  "action": "quest_stage strike 2"
+ },
+ "strike_prawle_lose": {
+  "lines": [
+   "Prawle: Exit's that way. Mind the step. There's no step. Just me."
+  ]
+ },
+ "striker_dunk": {
+  "lines": [
+   "Dunk: Twenty years down here. Haskett gave me a clock for it. The clock is also scrip."
+  ]
+ },
+ "striker_dunk_intro": {
+  "lines": [
+   "Dunk: Scab! Haskett's scab! I can tell by the walk. Shifty knees."
+  ]
+ },
+ "striker_dunk_defeat": {
+  "lines": [
+   "Dunk: Knees were right, though."
+  ]
+ },
+ "striker_gwen": {
+  "lines": [
+   "Gwen: My Shalebat hasn't seen daylight in a year. It thinks the sun is a rumour."
+  ]
+ },
+ "striker_gwen_intro": {
+  "lines": [
+   "Gwen: No one crosses the line. Not even a cute one with a rucksack."
+  ]
+ },
+ "striker_gwen_defeat": {
+  "lines": [
+   "Gwen: The line's moved. Apparently."
+  ]
+ },
+ "striker_wendle": {
+  "lines": [
+   "Wendle: Dory keeps the strike fund. I've never seen it. Nobody has. It's a very secret fund."
+  ]
+ },
+ "striker_wendle_intro": {
+  "lines": [
+   "Wendle: I sing the strike songs. All forty verses. Fight me or hear them."
+  ]
+ },
+ "striker_wendle_defeat": {
+  "lines": [
+   "Wendle: Verse forty-one: the one where we lost."
+  ]
+ },
+ "odette": {
+  "if": {
+   "not_flag": "q_widow_asked"
+  },
+  "lines": [
+   "Odette: Two husbands, dear. Both terribly unlucky. One fell into a well. The other fell into a different well.",
+   "Odette: Now I'm engaged to Lemuel in Wrenhollow. Sweet man. Owns a house. Big one.",
+   "Odette: Take him this tonic, would you? For his nerves. Don't read the label, it's personal."
+  ],
+  "flag": "q_widow_asked",
+  "action": "quest_stage widow 0",
+  "choices": [
+   {
+    "text": "Read the label anyway.",
+    "flag": "widow_read_label",
+    "next": "odette_label"
+   },
+   {
+    "text": "Off I go."
+   }
+  ],
+  "else": "odette_2"
+ },
+ "odette_label": {
+  "lines": [
+   "The label, in Odette's neat hand: 'For Lemuel. Sleep tight. Sign here.' There is a dotted line. You pocket the label.",
+   "Odette: Reading other people's labels. Your mother would be ashamed. I would know, I'm very ashamed of most people."
+  ]
+ },
+ "odette_2": {
+  "if": {
+   "not_flag": [
+    "widow_delivered",
+    "widow_warned"
+   ]
+  },
+  "lines": [
+   "Odette: Wrenhollow is past Quillbrook. Lemuel's the one with the hopeful face. Hurry, the tonic goes off."
+  ],
+  "else": "odette_3"
+ },
+ "odette_3": {
+  "if": {
+   "flag": "widow_delivered",
+   "not_flag": "widow_done"
+  },
+  "lines": [
+   "Odette: He's asleep? Already? Bless him. And the deed's in my name by morning. Love is so efficient.",
+   "Odette: Here, for your trouble. And dear: your name is on the delivery slip. Just so you know."
+  ],
+  "action": "give_item strong_tonic 2;betrayal odette_slip",
+  "flag": "widow_done",
+  "else": "odette_4"
+ },
+ "odette_4": {
+  "if": {
+   "flag": "widow_warned",
+   "not_flag": "beat_story_widow_odette"
+  },
+  "lines": [
+   "Odette: Lemuel watered a fern with my tonic. The fern is asleep. Do you know what ferns cost?",
+   "Odette: I'll have to do this the old-fashioned way. Through you."
+  ],
+  "action": "battle widow_odette",
+  "else": "odette_5"
+ },
+ "odette_5": {
+  "lines": [
+   "Odette: Shoo. I'm planning a wedding. Or a funeral. Same caterers."
+  ],
+  "after_flag": [
+   {
+    "flag": "widow_warned",
+    "lines": [
+     "Odette: Lemuel forgave me. Wedding's Sunday. You're not invited, but your Spirlings can carry the train."
+    ]
+   }
+  ]
+ },
+ "widow_odette_defeat": {
+  "lines": [
+   "Odette: Fine! I'll marry him properly. Awake. Ugh."
+  ],
+  "flag": "widow_done"
+ },
+ "widow_odette_lose": {
+  "lines": [
+   "Odette: Sleep tight, dear. No label needed."
+  ]
+ },
+ "odette_caught": {
+  "lines": [
+   "The Watch comes asking about a sleeping man and a missing deed. You show them the label in Odette's hand.",
+   "They fine her, not you. She waves at you from across the pier with two fingers. Not a friendly number."
+  ]
+ },
+ "odette_struck": {
+  "lines": [
+   "The Watch comes asking about a sleeping man and a missing deed. The delivery slip has your name on it.",
+   "You pay the courier's fine. Odette buys a new hat. It's a lovely hat."
+  ]
+ },
+ "ledger_odette": {
+  "lines": [
+   "The widow's tonic",
+   "You carried Widow Pinch's tonic to her fiance Lemuel. He slept for four days.",
+   "His house changed hands while he snored. Your name was on the slip."
+  ]
+ },
+ "lemuel": {
+  "if": {
+   "flag": "q_widow_asked",
+   "not_flag": [
+    "widow_delivered",
+    "widow_warned"
+   ]
+  },
+  "lines": [
+   "Lemuel: A present from Odette? She's so thoughtful. Last week she measured me. For a suit, she said.",
+   "Lemuel: A long box of a suit, but she's very modern."
+  ],
+  "choice_id": "widow_tonic",
+  "choices": [
+   {
+    "text": "Hand over the tonic.",
+    "id": "give",
+    "flag": "widow_delivered",
+    "next": "lemuel_drinks"
+   },
+   {
+    "text": "Don't drink that.",
+    "id": "warn",
+    "flag": "widow_warned",
+    "next": "lemuel_warned"
+   }
+  ],
+  "else": "lemuel_2"
+ },
+ "lemuel_drinks": {
+  "lines": [
+   "Lemuel drinks it in one go. 'Tastes like almonds and paperwork,' he says, and falls asleep mid-smile."
+  ],
+  "action": "quest_stage widow 1"
+ },
+ "lemuel_warned": {
+  "lines": [
+   "Lemuel: Don't drink it? Nonsense. Odette knits me socks. Murderers don't knit. Well. Not socks.",
+   "He pours a drop on his fern to prove you wrong. The fern yawns and goes to sleep.",
+   "Lemuel: ...Take this. And maybe stand between us for a while."
+  ],
+  "action": "give_item revival_leaf 1;quest_stage widow 1"
+ },
+ "lemuel_2": {
+  "if": {
+   "flag": [
+    "widow_delivered",
+    "widow_done"
+   ],
+   "not_flag": "beat_story_widow_lemuel"
+  },
+  "lines": [
+   "Lemuel: YOU. The tonic courier. I slept four days. She sold my house. And my hat. And my fern.",
+   "Lemuel: I can't fight Odette. I'm terrified of Odette. But you I can manage."
+  ],
+  "action": "battle widow_lemuel",
+  "else": "lemuel_3"
+ },
+ "lemuel_3": {
+  "lines": [
+   "Lemuel: Odette says I worry too much. She says it while sharpening things."
+  ],
+  "after_flag": [
+   {
+    "flag": "beat_story_widow_lemuel",
+    "lines": [
+     "Lemuel: I sleep in the library now. The books don't drug me."
+    ]
+   },
+   {
+    "flag": "beat_story_widow_odette",
+    "lines": [
+     "Lemuel: Odette and I are getting married on Sunday! She forgave me. She forgave you too, she said. In a voice."
+    ]
+   }
+  ]
+ },
+ "widow_lemuel_defeat": {
+  "lines": [
+   "Lemuel: Fair. I'd have done the same for a strong tonic."
+  ]
+ },
+ "widow_lemuel_lose": {
+  "lines": [
+   "Lemuel: Now we're even. Mostly. I'm still homeless."
+  ]
+ },
+ "jinks_4": {
+  "lines": [
+   "Jinks: There you are. I've been sitting on these steps so long the lamps know my name.",
+   "Jinks: Bad news: I'm broke. Worse news: the man who paid me to slow you down wants his money back.",
+   "Jinks: One more round. For old times. And for my pride, which is also broke."
+  ],
+  "flag": "q_jinks_back",
+  "choices": [
+   {
+    "text": "Battle",
+    "action": "battle rival_jinks_4"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "jinks_4_defeat": {
+  "lines": [
+   "Jinks: Fine. You want to know who paid me? Brennick. The lender in Brindlewick.",
+   "Jinks: He sells names. Yours fetched a good price in Corvane. Mine's next, now I've talked.",
+   "Jinks: Find me in Copperfold. I need to leave town, and leaving costs money."
+  ]
+ },
+ "jinks_4_lose": {
+  "lines": [
+   "Jinks: Ha! At least I'm still better than someone. Very cheering."
+  ]
+ },
+ "jinks_5": {
+  "lines": [
+   "Jinks: Brennick's collectors are two towns behind me and gaining. I need two hundred coins for a cart.",
+   "Jinks: I'll pay you back double. Swear on my mum. Well. On someone's mum."
+  ],
+  "choices": [
+   {
+    "text": "Lend him 200 coins.",
+    "action": "favor jinks_stake"
+   },
+   {
+    "text": "Buy him a drink first.",
+    "if": {
+     "not_flag": "jinks_drink"
+    },
+    "flag": "jinks_drink",
+    "action": "trust jinks 20",
+    "next": "jinks_drink"
+   },
+   {
+    "text": "Walk on."
+   }
+  ]
+ },
+ "jinks_drink": {
+  "lines": [
+   "Jinks drinks it in one go and tells you his real name. It is much worse than Jinks.",
+   "Jinks: Nobody's ever bought me a drink without wanting something. Do you want something? You do, don't you."
+  ]
+ },
+ "jinks_betray": {
+  "lines": [
+   "Jinks takes the coins, grins, and is gone. A minute later a large woman with a ledger blocks the road.",
+   "Dunmore: Jinks sold me your whereabouts for a head start. Says you owe Brennick. Everyone owes Brennick."
+  ],
+  "flag": "jinks_bet_done"
+ },
+ "jinks_reward": {
+  "lines": [
+   "A week later a parcel comes for you: four hundred coins and a note. 'Double, like I said. Don't tell anyone I'm honest. - J.'"
+  ],
+  "flag": "jinks_bet_done"
+ },
+ "jinks_kept": {
+  "lines": [
+   "Jinks pays you back the same evening, exact to the coin. He looks surprised at himself."
+  ],
+  "flag": "jinks_bet_done"
+ },
+ "jinks_ambush_defeat": {
+  "lines": [
+   "Dunmore: Fine. I'll write you down as 'paid in bruises'. Brennick accepts those. Barely."
+  ]
+ },
+ "jinks_ambush_lose": {
+  "lines": [
+   "Dunmore: Interest is due on Tuesday. Every Tuesday. Forever."
+  ]
+ },
+ "ledger_jinks": {
+  "lines": [
+   "A cart for Jinks",
+   "You lent Jinks Calloway two hundred coins to run from Brennick's collectors.",
+   "He bought his head start with your name instead."
+  ]
+ },
+ "sprocket": {
+  "lines": [
+   "Sprocket: Copperfold bounties! Approved by the Bailiff, which is me. Very official. Mostly stamps."
+  ],
+  "flag": "q_board_copperfold",
+  "choices": [
+   {
+    "text": "Read the cheap notices.",
+    "id": "p1",
+    "next": "sprocket_p1"
+   },
+   {
+    "text": "Read the dear notices.",
+    "id": "p2",
+    "next": "sprocket_p2"
+   },
+   {
+    "text": "Not today.",
+    "id": "no"
+   }
+  ],
+  "after_flag": [
+   {
+    "flag": "bounty_copper_done",
+    "lines": [
+     "The board is empty. A fresh notice is pinned in the corner, half written. It has your name on it."
+    ]
+   }
+  ]
+ },
+ "sprocket_p1": {
+  "lines": [
+   "The cheap end of the board. Somebody has corrected the spelling in red."
+  ],
+  "choices": [
+   {
+    "text": "Wanted: Old Gristmouth, a Talusk that eats cart wheels",
+    "id": "b9",
+    "if": {
+     "not_flag": "beat_story_bounty_b9"
+    },
+    "action": "battle bounty_b9"
+   },
+   {
+    "text": "Wanted: Penny Dreadful, who returns purses empty",
+    "id": "b10",
+    "if": {
+     "not_flag": "beat_story_bounty_b10"
+    },
+    "action": "battle bounty_b10"
+   },
+   {
+    "text": "Back away from the board.",
+    "id": "no"
+   }
+  ]
+ },
+ "sprocket_p2": {
+  "lines": [
+   "The dear end of the board. The ink is still wet on one of them."
+  ],
+  "choices": [
+   {
+    "text": "Wanted: The Kettle Brothers, who sell the same goat twice",
+    "id": "b11",
+    "if": {
+     "not_flag": "beat_story_bounty_b11"
+    },
+    "action": "battle bounty_b11"
+   },
+   {
+    "text": "Wanted: Ex-Bailiff Holloway, for knowing too much",
+    "id": "b12",
+    "if": {
+     "not_flag": "beat_story_bounty_b12",
+     "flag": [
+      "beat_story_bounty_b9",
+      "beat_story_bounty_b10",
+      "beat_story_bounty_b11"
+     ]
+    },
+    "action": "battle bounty_b12"
+   },
+   {
+    "text": "Back away from the board.",
+    "id": "no"
+   }
+  ]
+ },
+ "bounty_b9_defeat": {
+  "lines": [
+   "Old Gristmouth spits out a wheel nut and lumbers off into the scree."
+  ]
+ },
+ "bounty_b9_lose": {
+  "lines": [
+   "Old Gristmouth eats one of your bootlaces. With relish."
+  ]
+ },
+ "bounty_b10_defeat": {
+  "lines": [
+   "Penny: Here's your purse back. Empty, as is tradition."
+  ]
+ },
+ "bounty_b10_lose": {
+  "lines": [
+   "Penny: Lovely purse. I'll return it. Eventually. Empty."
+  ]
+ },
+ "bounty_b11_defeat": {
+  "lines": [
+   "Kettle: The goat was ours both times! It just kept coming home!"
+  ]
+ },
+ "bounty_b11_lose": {
+  "lines": [
+   "Kettle: Want to buy a goat? Very loyal. Comes back to us."
+  ]
+ },
+ "bounty_b12_defeat": {
+  "lines": [
+   "Holloway: Sprocket takes bribes from Haskett. I reported it. Now I'm on his board.",
+   "Holloway: Next week it'll be your name. Sprocket never runs out of villains. He makes them."
+  ]
+ },
+ "bounty_b12_lose": {
+  "lines": [
+   "Holloway: Run, kid. Before he pins you up too."
+  ]
+ },
+ "poster_1": {
+  "lines": [
+   "A wanted poster with your face on it. The artist was unkind about your nose. REWARD: 40 coins. Insulting."
+  ],
+  "flag": "poster_1"
+ },
+ "poster_2": {
+  "lines": [
+   "WANTED: the lighthouse brat. Crimes: trespassing, Rift-meddling, looking smug. You tear it down."
+  ],
+  "flag": "poster_2"
+ },
+ "poster_3": {
+  "lines": [
+   "A poster: 'Seen this Wayfarer? Do not approach. Do not feed.' Someone has drawn a moustache on you. It suits you."
+  ],
+  "flag": "poster_3"
+ },
+ "poster_4": {
+  "lines": [
+   "WANTED, ALIVE. 'Alive' is underlined three times, then crossed out once. You take it down quickly."
+  ],
+  "flag": "poster_4"
+ },
+ "poster_5": {
+  "lines": [
+   "A soggy poster in the reeds. Your face, and below it: 'Last seen being helpful. Suspicious.'"
+  ],
+  "flag": "poster_5"
+ },
+ "poster_6": {
+  "lines": [
+   "A poster nailed to a post. In small print: 'Printed by Gorrie and Sons, Brindlewick. Bulk discounts.'"
+  ],
+  "flag": "poster_6"
+ },
+ "poster_7": {
+  "lines": [
+   "WANTED for questioning. The questions are listed. Question one: 'Why?' Question two: 'Why though?'"
+  ],
+  "flag": "poster_7"
+ },
+ "poster_8": {
+  "lines": [
+   "A fresh poster. The paste is still wet. Somebody put this up an hour ago, and they knew you'd come this way."
+  ],
+  "flag": "poster_8"
+ },
+ "gorrie": {
+  "if": {
+   "not_flag": "posters_done"
+  },
+  "lines": [
+   "Gorrie: Psst. Your face is on posters all over Veydal. Not my work, I swear. Well. Not my idea.",
+   "Gorrie: Tear down all eight before some bounty hunter reads one. Bring them here. I pay for paper."
+  ],
+  "flag": "q_posters_asked",
+  "else": "gorrie_after",
+  "next": "gorrie_paid",
+  "after_flag": [
+   {
+    "flag": "q_posters_asked",
+    "lines": [
+     "Gorrie: All eight, mind. A single poster is a rumour. Eight is a reputation."
+    ]
+   }
+  ]
+ },
+ "gorrie_paid": {
+  "if": {
+   "flag": [
+    "poster_1",
+    "poster_2",
+    "poster_3",
+    "poster_4",
+    "poster_5",
+    "poster_6",
+    "poster_7",
+    "poster_8"
+   ]
+  },
+  "lines": [
+   "Gorrie: All eight! Lovely. Here's your pay.",
+   "Gorrie: Between us: Clerk Brannagh ordered them. I printed them. Then I paid you to take them down.",
+   "Gorrie: Paid twice for the same paper. Printing is a beautiful trade. He's ordered a second run, by the way."
+  ],
+  "action": "give_item max_tonic 2",
+  "flag": "posters_done"
+ },
+ "gorrie_after": {
+  "lines": [
+   "Gorrie: Second run's at the press. Different nose this time. Kinder, I think."
+  ]
+ },
+ "crane": {
+  "if": {
+   "not_flag": "q_ledger_asked"
+  },
+  "lines": [
+   "Crane: Someone burned the town debt book. Every debt Wrenhollow owes the Marrovels, gone in one night.",
+   "Crane: The Marrovels want a name by the end of the week, or they'll pick one themselves. They are not careful pickers.",
+   "Crane: Ask Tibbs, my apprentice. Ask Fay, the lamplighter in Quillbrook. Look at my shelves. Then tell me who."
+  ],
+  "flag": "q_ledger_asked",
+  "else": "crane_2"
+ },
+ "crane_2": {
+  "if": {
+   "flag": [
+    "ledger_clue_tibbs",
+    "ledger_clue_fay",
+    "ledger_clue_page"
+   ],
+   "not_flag": "ledger_done"
+  },
+  "lines": [
+   "Crane: Well? You've asked around. You've rummaged through my shelves. Who burned it?"
+  ],
+  "choice_id": "ledger_accuse",
+  "choices": [
+   {
+    "text": "Tibbs, the apprentice.",
+    "id": "tibbs",
+    "flag": "ledger_blamed_tibbs",
+    "next": "crane_blame"
+   },
+   {
+    "text": "Fay, the lamplighter.",
+    "id": "fay",
+    "flag": "ledger_blamed_fay",
+    "next": "crane_blame"
+   },
+   {
+    "text": "You did, Archivist.",
+    "id": "crane",
+    "next": "crane_you"
+   }
+  ],
+  "else": "crane_3"
+ },
+ "crane_blame": {
+  "lines": [
+   "Crane: I knew it! I'll send the name to the Marrovels tonight. Case closed. Here's your fee.",
+   "Crane: Don't look so glum. Somebody had to be guilty. Better them than someone important. Like me."
+  ],
+  "action": "give_item strong_tonic 2",
+  "flag": "ledger_done"
+ },
+ "crane_you": {
+  "lines": [
+   "Crane: Me? Burn my own book? How dare you. How did you know? No. Don't answer.",
+   "Crane: Nobody leaves this library with that idea in their head."
+  ],
+  "action": "battle ledger_crane"
+ },
+ "ledger_crane_defeat": {
+  "lines": [
+   "Crane: Page one. My name. Nine hundred coins to the Marrovels. I only meant to burn page one.",
+   "Crane: The rest caught. Books are terribly flammable. Nobody warns you.",
+   "Crane: Take the reward from the shelf. Tibbs will run the library now. Heaven help the books."
+  ],
+  "action": "give_item max_tonic 2"
+ },
+ "ledger_crane_lose": {
+  "lines": [
+   "Crane: Shh. This is a library. Losers are very quiet here."
+  ]
+ },
+ "crane_3": {
+  "if": {
+   "not_flag": "ledger_done"
+  },
+  "lines": [
+   "Crane: Tibbs in town, Fay in Quillbrook, and my shelves. Clues are like debts, dear. They turn up."
+  ],
+  "else": "crane_4"
+ },
+ "crane_4": {
+  "lines": [
+   "Crane: The Marrovels were very pleased with the name. They took it away in a sack."
+  ],
+  "after_flag": [
+   {
+    "flag": "beat_story_ledger_crane",
+    "lines": [
+     "Tibbs: The Archivist is copying debt books by hand now. Forever. It's her sentence. She's quite good at it."
+    ]
+   }
+  ]
+ },
+ "tibbs": {
+  "if": {
+   "flag": "q_ledger_asked",
+   "not_flag": "ledger_clue_tibbs"
+  },
+  "lines": [
+   "Tibbs: The fire? I was asleep. In the library. On the debt book. It's very comfy, it's the thickest book.",
+   "Tibbs: The Archivist woke me and sent me home early. She had a lamp and a very big can of oil. For reading, she said."
+  ],
+  "flag": "ledger_clue_tibbs",
+  "else": "tibbs_2"
+ },
+ "tibbs_2": {
+  "lines": [
+   "Tibbs: I dust books. Books don't dust back. It's a lonely trade."
+  ],
+  "after_flag": [
+   {
+    "flag": "ledger_blamed_fay",
+    "lines": [
+     "Tibbs: They took Fay away. Poor Fay. I mean. Better her than me. Is that bad?"
+    ]
+   },
+   {
+    "flag": "ledger_blamed_tibbs",
+    "lines": [
+     "Tibbs: Sacked. For a fire I slept through. The Marrovels want me to work it off. In a mine."
+    ]
+   },
+   {
+    "flag": "beat_story_ledger_crane",
+    "lines": [
+     "Tibbs: I'm Archivist now! The pay is terrible and the last one is still in the building."
+    ]
+   }
+  ]
+ },
+ "fay": {
+  "if": {
+   "flag": "q_ledger_asked",
+   "not_flag": "ledger_clue_fay"
+  },
+  "lines": [
+   "Fay: Me? I light lamps. I don't burn books. Different trade. Similar smell.",
+   "Fay: Mind you, the library bought a whole can of lamp oil from me that day. On account. Crane signed for it."
+  ],
+  "flag": "ledger_clue_fay",
+  "else": "fay_2"
+ },
+ "fay_2": {
+  "lines": [
+   "Fay: Every lamp on this brook, lit by me. Every lamp that goes out, blamed on me."
+  ],
+  "after_flag": [
+   {
+    "flag": "ledger_blamed_fay",
+    "lines": [
+     "Fay: The Marrovels say I owe them a library. I've started saving. Twelve coins so far."
+    ]
+   }
+  ]
+ },
+ "ledger_page": {
+  "lines": [
+   "A scorched page under the shelf. One line survived: 'Owed to the Marrovels: Archivist M. Crane, 900 coins.'"
+  ],
+  "flag": "ledger_clue_page"
+ }
+}

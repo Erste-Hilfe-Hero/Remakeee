@@ -1,0 +1,27 @@
+{
+ "_comment": "fr translation of the trainer_names table, keyed by the English text.",
+ "strings": {
+  "Angler Brisa": "Pêcheuse Brisa",
+  "Angler Teo": "Pêcheur Teo",
+  "Bog Walker Hesk": "Marcheur des tourbières Hesk",
+  "Delver Ros": "Spéléologue Ros",
+  "Diver Neve": "Plongeuse Neve",
+  "Glassblower Ines": "Souffleuse de verre Ines",
+  "Hushed swarm": "Essaim muet",
+  "Lamplighter Tova": "Allumeuse de réverbères Tova",
+  "Miller's Kid Pim": "Pim, l'enfant du meunier",
+  "Miner Garr": "Mineur Garr",
+  "Mushroom Picker Olek": "Cueilleur de champignons Olek",
+  "Peat Cutter Orla": "Coupeuse de tourbe Orla",
+  "Reed Cutter Fenn": "Coupeur de roseaux Fenn",
+  "Reed Cutter Marit": "Coupeuse de roseaux Marit",
+  "Ridgewalker Bram": "Marcheur des crêtes Bram",
+  "Ridgewalker Brann": "Marcheur des crêtes Brann",
+  "Rift Acolyte Suri": "Suri, acolyte de Faille",
+  "Salt Raker Nils": "Saunier Nils",
+  "Surveyor Kaja": "Arpenteuse Kaja",
+  "Terrace Farmer Runa": "Cultivatrice de terrasses Runa",
+  "Warden Maelis": "Gardienne Maelis",
+  "Warden Orrin": "Gardien Orrin"
+ }
+}

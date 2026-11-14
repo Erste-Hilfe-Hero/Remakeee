@@ -1,0 +1,44 @@
+{
+ "name": "Servants' Hall",
+ "region": "vellmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCCffCCW",
+  "WffffffW",
+  "WffffffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "larkspur_heights",
+   "tx": 2,
+   "ty": 17,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "maid",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/larkspur_heights_servants_hall_maid",
+   "sprite": "villager"
+  },
+  {
+   "id": "q2_second_face_petra",
+   "x": 2,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_second_face",
+   "sprite": "villager",
+   "hide_flag": "q2_second_face_reveal"
+  }
+ ],
+ "signs": []
+}

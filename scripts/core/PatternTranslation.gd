@@ -27,7 +27,10 @@ func load_strings(table: Dictionary) -> void:
 		var out: String = str(table[k])
 		if key.contains("%s") or key.contains("%d"):
 			patterns.append({"re": RegEx.create_from_string(_pattern_regex(key)), "out": out, "weight": _literal_length(key)})
-		exact[key] = out.replace("%%", "%") if key.contains("%%") else out
+			# A format key is looked up before "%" fills it in, so "%%" must stay (item 866).
+			exact[key] = out
+		else:
+			exact[key] = out.replace("%%", "%") if key.contains("%%") else out
 	patterns.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a.weight) > int(b.weight))
 
 func _get_message(src_message: StringName, _context: StringName) -> StringName:
@@ -71,6 +74,10 @@ func _lookup_line(s: String) -> String:
 	var p: String = _match_pattern(s)
 	if p != "":
 		return p
+	# Several lines go line by line (lookup), so a line break after a full stop stays a line
+	# break and is not joined into a space (French shop details, 1.2.0 store shots).
+	if s.contains("\n"):
+		return ""
 	var sentences: PackedStringArray = _split_sentences(s)
 	if sentences.size() < 2:
 		return ""

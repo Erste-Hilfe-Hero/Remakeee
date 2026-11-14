@@ -1,0 +1,58 @@
+{
+ "sign": [
+  "OCHREWELL",
+  "Ochrewell, 140 folk. 141 if you stay. Most do, one way or another.",
+  "West: the wind towers. East: the oasis. South: the sun palace. North: the way out, rarely used."
+ ],
+ "keeper": {
+  "lines": [
+   "Well Keeper Sefa: The well is free. The bucket costs extra. The rope is a matter for the Brass Veil.",
+   "Well Keeper Sefa: Drink. Your Spirlings look like raisins."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Bazaar Trader Oskin: Everything here is genuine. Especially the fakes."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts"
+ },
+ "factor": {
+  "if": {
+   "not_flag": "veil_factor_beaten"
+  },
+  "else": "factor_after",
+  "lines": [
+   "Factor Lusk: Ah, the one who ruined a perfectly good investment. Kaia sends her regards. Well, she sent an invoice.",
+   "Factor Lusk: The Brass Veil does not hold grudges. We hold contracts. Yours just expired."
+  ],
+  "action": "battle veil_factor"
+ },
+ "factor_after": [
+  "Factor Lusk: Consider this a receipt. The Veil keeps copies of everything. Especially of people."
+ ],
+ "factor_defeat": [
+  "Factor Lusk: Hm. Expensive. I'll put you down as a loss. Not mine, naturally.",
+  "Factor Lusk: Kaia was our best buyer in years. Sold her own oasis for the price of a nicer grave.",
+  "Factor Lusk: Ask Emrys at the palace who signed as witness. Then ask why he never mentioned it."
+ ],
+ "factor_lose": [
+  "Factor Lusk: Come back when you can afford to lose properly."
+ ],
+ "hadi": {
+  "lines": [
+   "Potter Hadi: I make domes by day and urns by night. Business is steady in both."
+  ]
+ },
+ "ranya": {
+  "lines": [
+   "Spice Seller Ranya: At dusk we all meet at the well and pretend we don't owe the Veil money."
+  ]
+ },
+ "tobs": {
+  "lines": [
+   "Gravedigger Tobs: Sand's easy to dig. Harder to keep shut. The wind tells on everybody."
+  ],
+  "next": "clans/tobs_4"
+ }
+}

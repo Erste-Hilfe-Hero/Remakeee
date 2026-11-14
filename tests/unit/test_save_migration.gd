@@ -81,12 +81,12 @@ func test_v2_gets_defaults_for_newer_fields() -> void:
 	assert_false(GameState.party[0].prism)
 	assert_eq(GameState.storage.size(), 1)
 	assert_true(GameState.visited_rests.has("thornridge"), "last rest spot counts for fast travel")
-	assert_eq(GameState.records, {})
+	assert_eq(GameState.records, GameState.endgame_defaults({}), "only the empty endgame records")
 	assert_eq(Achievements.check().size() >= 1, true, "old progress earns achievements")
 
 func test_every_saved_key_is_optional() -> void:
 	# A save missing any one top-level key (older or hand-edited) still loads.
-	GameState.new_game(GameState.Difficulty.TAMER, "Rowan", 0, "Kindlop")
+	GameState.new_game(GameState.Difficulty.TAMER, "Juno", 0, "Kindlop")
 	var full: Dictionary = GameState.to_dict()
 	for key: String in full.keys():
 		var d: Dictionary = full.duplicate(true)
@@ -95,3 +95,89 @@ func test_every_saved_key_is_optional() -> void:
 		assert_false(GameState.party.is_empty() and key != "party", "missing '%s' drops the party" % key)
 	GameState.from_dict(full)
 	assert_eq(GameState.party.size(), 1)
+
+func test_v2_to_v3_renames_moves_and_flag_and_trims_the_team() -> void:
+	var old: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(FIXTURES + "v2_before_extras.json"))
+	old.party[0]["moves"] = ["Headlong Charge", "Flare Lash"]
+	for i: int in 4:
+		old.party.append({"species": "Zippit", "level": 5, "hp": 10, "moves": ["Tailwind Step"], "uid": "z%d" % i})
+	var d: Dictionary = SaveManager.migrate(old)
+	assert_eq(int(d.save_version), SaveManager.SAVE_VERSION)
+	assert_eq(d.party.size(), 5)
+	assert_eq(d.storage.size(), 2, "the sixth Spirling rests in storage")
+	assert_eq(d.party[0].moves, ["Bowl Over", "Kiln Strike"])
+	assert_true(d.flags.has("storage_remote"))
+	assert_false(d.flags.has("pc_unlocked"))
+	SaveManager.apply_save(d)
+	assert_eq(GameState.party.size(), GameState.MAX_PARTY)
+	assert_true(GameState.has_flag("storage_remote"))
+
+func test_v3_to_v4_keeps_old_temperaments_and_adds_spirling_story() -> void:
+	var old: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(FIXTURES + "v3_originality.json"))
+	var before: Array[String] = []
+	for s: Dictionary in old.party:
+		var sp: Spirling = Spirling.from_dict(s)
+		before.append(str(sp.temperament().id))
+	var d: Dictionary = SaveManager.migrate(old)
+	for i: int in d.party.size():
+		var p: Dictionary = d.party[i]
+		assert_eq(str(p.temper), before[i], "temperament unchanged by the migration")
+		assert_eq(str(p.temper), Spirling.legacy_temper(str(p.uid)))
+		for f: String in ["variant", "origin_map", "met_ring", "met_day", "lineage", "echo_streak"]:
+			assert_true(p.has(f), "%s gets %s" % [p.species, f])
+	var e: Dictionary = d.spirlog.Wickit
+	for f: String in ["seen", "bonded", "first_map", "first_day", "variants", "prism_seen", "tempers"]:
+		assert_true(e.has(f), "spirlog gets %s" % f)
+	assert_true(bool(e.bonded))
+	SaveManager.apply_save(d)
+	assert_eq(str(GameState.party[0].temperament().id), before[0])
+
+func test_v4_fixture_keeps_new_fields() -> void:
+	SaveManager.apply_save(_load_fixture("v4_spirling_story.json"))
+	var g: Spirling = GameState.party[0]
+	assert_eq(g.temper, "curious")
+	assert_eq(g.origin_map, "lighthouse")
+	assert_eq(g.met_ring, 5)
+	assert_eq(g.echo_streak, 3)
+	assert_eq(GameState.party[1].temper, "gentle")
+	assert_true(bool(GameState.spirlog.Mirkmole.prism_seen))
+
+func test_v4_to_v5_adds_endgame_defaults() -> void:
+	var old: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(FIXTURES + "v4_spirling_story.json"))
+	assert_false(old.has("waymarks"))
+	var d: Dictionary = SaveManager.migrate(old)
+	assert_eq(int(d.save_version), SaveManager.SAVE_VERSION)
+	assert_eq(int(d.waymarks), 0)
+	assert_true(d.daily_tasks is Dictionary)
+	assert_true(d.festival_ribbons is Dictionary)
+	assert_false(bool(d.iron_oath))
+	for k: String in GameState.ENDGAME_RECORDS:
+		assert_eq(typeof(d.records[k]), typeof(GameState.ENDGAME_RECORDS[k]), "records.%s" % k)
+	SaveManager.apply_save(d)
+	assert_eq(GameState.waymarks, 0)
+	assert_eq(Album.filled(), 0, "an old save starts this month's album empty")
+	assert_eq(EchoPath.done_count(), 0)
+	assert_true(Expeditions.trips().is_empty())
+
+func test_v5_fixture_keeps_endgame_fields() -> void:
+	SaveManager.apply_save(_load_fixture("v5_endgame.json"))
+	assert_eq(GameState.waymarks, 345)
+	assert_eq(Album.stickers(), ["2026-10"])
+	assert_eq(int((GameState.festival_ribbons["lantern_2026"] as Dictionary).ribbons), 12)
+	assert_eq(Expeditions.trips().size(), 1, "a trip under way stays under way")
+	assert_true(Expeditions.is_away(str(GameState.storage[0].uid)))
+	assert_true(Masters.beaten("brannoc"))
+	assert_eq(int(GameState.records.echo_path_clears), 2)
+	var again: Dictionary = GameState.to_dict()
+	GameState.from_dict(again)
+	assert_eq(GameState.waymarks, 345)
+	assert_eq(GameState.records.album_stickers, ["2026-10"], "round trip keeps the endgame records")
+
+func test_damaged_endgame_records_start_fresh() -> void:
+	var d: Dictionary = _load_fixture("v5_endgame.json")
+	d.records["album"] = "broken"
+	d.records["expeditions"] = {"not": "a list"}
+	SaveManager.apply_save(d)
+	assert_true(GameState.records.album is Dictionary)
+	assert_true(Expeditions.trips().is_empty())
+	assert_eq(Album.filled(), 0)

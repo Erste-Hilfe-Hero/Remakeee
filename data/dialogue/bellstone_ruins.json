@@ -1,0 +1,151 @@
+{
+ "r1_bell_0": {
+  "lines": [
+   "A small bell hangs from a beam."
+  ],
+  "action": "bell bell_room_1 2 3"
+ },
+ "r1_bell_1": {
+  "lines": [
+   "A deep bell hangs from a beam."
+  ],
+  "action": "bell bell_room_1 1 3"
+ },
+ "r1_bell_2": {
+  "lines": [
+   "A cracked bell hangs from a beam."
+  ],
+  "action": "bell bell_room_1 3 3"
+ },
+ "r1_wall": [
+  "Scratched into the wall: the deep bell, then the small bell, then the cracked bell."
+ ],
+ "r2_bell_0": {
+  "lines": [
+   "A small bell hangs from a beam."
+  ],
+  "action": "bell bell_room_2 3 3"
+ },
+ "r2_bell_1": {
+  "lines": [
+   "A deep bell hangs from a beam."
+  ],
+  "action": "bell bell_room_2 2 3"
+ },
+ "r2_bell_2": {
+  "lines": [
+   "A cracked bell hangs from a beam."
+  ],
+  "action": "bell bell_room_2 1 3"
+ },
+ "r2_wall": [
+  "Scratched into the wall: the cracked bell, then the deep bell, then the small bell."
+ ],
+ "r3_bell_0": {
+  "lines": [
+   "A small bell hangs from a beam."
+  ],
+  "action": "bell bell_room_3 1 4"
+ },
+ "r3_bell_1": {
+  "lines": [
+   "A deep bell hangs from a beam."
+  ],
+  "action": "bell bell_room_3 3 4"
+ },
+ "r3_bell_2": {
+  "lines": [
+   "A cracked bell hangs from a beam."
+  ],
+  "action": "bell bell_room_3 4 4"
+ },
+ "r3_bell_3": {
+  "lines": [
+   "A green bell hangs from a beam."
+  ],
+  "action": "bell bell_room_3 2 4"
+ },
+ "r3_wall": [
+  "Scratched into the wall: the small bell, then the green bell, then the deep bell, then the cracked bell."
+ ],
+ "r4_bell_0": {
+  "lines": [
+   "A small bell hangs from a beam."
+  ],
+  "action": "bell bell_room_4 3 4"
+ },
+ "r4_bell_1": {
+  "lines": [
+   "A deep bell hangs from a beam."
+  ],
+  "action": "bell bell_room_4 4 4"
+ },
+ "r4_bell_2": {
+  "lines": [
+   "A cracked bell hangs from a beam."
+  ],
+  "action": "bell bell_room_4 2 4"
+ },
+ "r4_bell_3": {
+  "lines": [
+   "A green bell hangs from a beam."
+  ],
+  "action": "bell bell_room_4 1 4"
+ },
+ "r4_wall": [
+  "Scratched into the wall: the green bell, then the cracked bell, then the small bell, then the deep bell."
+ ],
+ "r5_bell_0": {
+  "lines": [
+   "A small bell hangs from a beam."
+  ],
+  "action": "bell bell_room_5 4 5"
+ },
+ "r5_bell_1": {
+  "lines": [
+   "A deep bell hangs from a beam."
+  ],
+  "action": "bell bell_room_5 2 5"
+ },
+ "r5_bell_2": {
+  "lines": [
+   "A cracked bell hangs from a beam."
+  ],
+  "action": "bell bell_room_5 5 5"
+ },
+ "r5_bell_3": {
+  "lines": [
+   "A green bell hangs from a beam."
+  ],
+  "action": "bell bell_room_5 3 5"
+ },
+ "r5_bell_4": {
+  "lines": [
+   "A starred bell hangs from a beam."
+  ],
+  "action": "bell bell_room_5 1 5"
+ },
+ "r5_wall": [
+  "Scratched into the wall: the starred bell, then the deep bell, then the green bell, then the small bell, then the cracked bell."
+ ],
+ "hint_board": {
+  "lines": [
+   "A board for travellers' notes. Nothing useful is pinned on it yet."
+  ],
+  "after_flag": {
+   "flag": "hint_bellstone_ruins",
+   "lines": [
+    "Tip: each hall's order is scratched into the wall by the stairs. Ring the bells in exactly that order; a wrong bell only starts the row again."
+   ]
+  }
+ },
+ "hallowmur": {
+  "lines": [
+   "The cracked bell in the old belfry rings once, though no one pulls the rope.",
+   "The toll does not fade. It turns, and listens back at you.",
+   "It is Hallowmur, the living bell. It has waited a long time for someone to answer.",
+   "Old songs say a legend only listens to someone who has tested it hard."
+  ],
+  "action": "legend Hallowmur 55"
+ }
+}

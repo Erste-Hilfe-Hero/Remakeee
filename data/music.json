@@ -1,17 +1,146 @@
 {
-  "_comment": "Which track (audio/music/<name>.ogg) plays on each map. Maps not listed play 'default'.",
+  "_comment": "Music per map (plan area 6, item 2443). 'maps': places with their own song (audio/music/<track>.ogg, with stems in audio/music/stems/ for the MusicDirector). 'themes': maps that play a single-file theme (no stems): region songs, dungeon songs (Pawn Vault, Rook Vault, Veil Cistern, Soot Vaults) and the shared town/route/cave/rift songs. An entry is either a track name or {\"track\": ..., \"ambience\": ...}; outdoor maps name an ambience loop (audio/ambience/<name>.ogg, items 2569, 2570), played on the Ambience bus at -14 dB. A map in neither list plays its region's song from 'regions' (e.g. new maps of a post-game region), then 'default'. tests/unit/test_era_music.gd checks that every map in data/maps is listed in 'maps' or 'themes'. Era variants: a track plays as '<track>_era<N>' when that file exists for the active era (Sound.era_track), e.g. battle_era2 to battle_era5. 'era_fx': Music bus effects per era (Sound.apply_era_fx): Era I stays dry like four hardware channels, later eras add chorus and a room.",
   "default": "route",
   "maps": {
-    "lighthouse": "town",
-    "brindlewick": "town",
-    "map_house": "town",
-    "rest_spring": "town",
-    "thornridge": "town",
-    "fernstair": "route",
-    "crowcrest": "route",
-    "saltmarsh": "route",
-    "cinder_rift": "rift",
-    "tide_rift": "rift",
-    "murk_hollow": "rift"
+    "lighthouse": {
+      "track": "lighthouse",
+      "ambience": "sea"
+    },
+    "brindlewick": {
+      "track": "brindlewick",
+      "ambience": "market"
+    },
+    "map_house": "map_house",
+    "rest_spring": "rest_spring",
+    "thornridge": {
+      "track": "thornridge",
+      "ambience": "meadow"
+    },
+    "fernstair": {
+      "track": "fernstair",
+      "ambience": "ferns"
+    },
+    "crowcrest": {
+      "track": "crowcrest",
+      "ambience": "cliffs"
+    },
+    "saltmarsh": {
+      "track": "saltmarsh",
+      "ambience": "marsh"
+    },
+    "cinder_rift": "cinder_rift",
+    "tide_rift": "tide_rift",
+    "murk_hollow": "murk_hollow",
+    "echo_path": "echo_path"
+  },
+  "themes": {
+    "pawn_vault": "pawn_vault",
+    "rook_vault": "rook_vault",
+    "veil_cistern": "veil_cistern",
+    "soot_vaults": "soot_vaults",
+    "bellstone_ruins": "dungeon",
+    "brackwater_sluice": "dungeon",
+    "kindle_vents": "cave",
+    "mossmere_grotto": "cave",
+    "sablecove": "cave",
+    "shatterfloor_mine": "cave",
+    "lanternwell": "cave",
+    "copperfold": "town",
+    "wrenhollow": "town",
+    "reedhaven": "town",
+    "wren_library": "map_house",
+    "quillbrook": "route",
+    "lantern_steps": "route",
+    "gloamwood": "route",
+    "brackwater_fen": {
+      "track": "saltmarsh",
+      "ambience": "marsh"
+    },
+    "mist_rift": "rift",
+    "corvane_quay": {
+      "track": "corvane_town",
+      "ambience": "sea"
+    },
+    "madderby": {
+      "track": "corvane_town",
+      "ambience": "market"
+    },
+    "madderby_guild": "corvane_town",
+    "woadfen": {
+      "track": "corvane_field",
+      "ambience": "marsh"
+    },
+    "stillwater": {
+      "track": "corvane_field",
+      "ambience": "meadow"
+    },
+    "greyreach": {
+      "track": "corvane_field",
+      "ambience": "cliffs"
+    },
+    "root_rift": "rift",
+    "rain_rift": "rift",
+    "mirror_rift": "rift",
+    "wide_rift_edge": "rift",
+    "ashmere_station": "ashmere_town",
+    "cinderfold": "ashmere_town",
+    "gravers_hall": "ashmere_town",
+    "saltglass": {
+      "track": "ashmere_field",
+      "ambience": "cliffs"
+    },
+    "kiln_rift": "rift",
+    "glass_rift": "rift",
+    "shade_rift": "rift",
+    "wide_rift_far": "rift",
+    "undrawn_1": "rift",
+    "undrawn_2": "rift",
+    "undrawn_3": "rift",
+    "ochrewell": "solenne_town",
+    "tower_rift": "rift",
+    "oasis_rift": "rift",
+    "sun_rift": "rift"
+  },
+  "regions": {
+    "veydal": "route",
+    "corvane": "corvane_field",
+    "ashmere": "ashmere_field",
+    "solenne": "solenne_town",
+    "vellmarch": "vellmarch",
+    "quillmarch": "quillmarch",
+    "halcyra": "halcyra",
+    "quivermoor": "quivermoor"
+  },
+  "_wayfarer": "KAMPF_PLAN_1000 item 560: battle music of a map Wayfarer per region (tools/audio/music.py WAYFARER_THEMES). Played only in the region's own era; a Warden, a challenge theme, a festival or an outdoor night keep their own music first (BattleAudio.theme).",
+  "wayfarer": {
+    "veydal": "battle_wf_veydal",
+    "corvane": "battle_wf_corvane",
+    "ashmere": "battle_wf_ashmere",
+    "solenne": "battle_wf_solenne",
+    "vellmarch": "battle_wf_vellmarch",
+    "quillmarch": "battle_wf_quillmarch",
+    "halcyra": "battle_wf_halcyra",
+    "quivermoor": "battle_wf_quivermoor"
+  },
+  "era_fx": {
+    "1": {},
+    "2": {
+      "chorus_wet": 0.15
+    },
+    "3": {
+      "chorus_wet": 0.15,
+      "reverb_room": 0.35,
+      "reverb_wet": 0.12
+    },
+    "4": {
+      "chorus_wet": 0.2,
+      "reverb_room": 0.5,
+      "reverb_wet": 0.16
+    },
+    "5": {
+      "chorus_wet": 0.2,
+      "reverb_room": 0.6,
+      "reverb_wet": 0.2
+    }
   }
 }

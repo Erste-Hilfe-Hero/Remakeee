@@ -1,0 +1,10 @@
+{
+ "_note": "Chapter 16, entering the Undrawn with the guild seal (plan item 1486).",
+ "steps": [
+  {"fade": 1.0},
+  {"say": ["The guild seal glows. The light parts like a curtain, and you step through."]},
+  {"flag": "undrawn_reached"},
+  {"action": "warp undrawn_1 6 20 up"},
+  {"fade": 0.0}
+ ]
+}

@@ -1,0 +1,44 @@
+{
+ "name": "Weigh House",
+ "region": "vellmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCCffCCW",
+  "WffffffW",
+  "WffffffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "tallowmarket",
+   "tx": 8,
+   "ty": 3,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "weigher",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/tallowmarket_weigh_house_weigher",
+   "sprite": "villager"
+  },
+  {
+   "id": "q2_heavy_rumour_gundel",
+   "x": 2,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_heavy_rumour_gundel",
+   "sprite": "villager",
+   "show_flag": "q2_heavy_rumour_s1"
+  }
+ ],
+ "signs": []
+}

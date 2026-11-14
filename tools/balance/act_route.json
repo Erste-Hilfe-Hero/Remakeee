@@ -1,0 +1,922 @@
+{
+ "_doc": "Player route for the act difficulty simulator (scripts/core/ActSim.gd, tools/balance_sim.gd --mode acts, tests/unit/test_act_difficulty.gd). Owner rule (Nov 2026): every act and era region is hard. Steps in play order: wild (an encounter table or regionN:route; bonds bond_per_table new kinds there and plays 'battles' wild battles, default incidental), fight (a Wayfarer the route passes: map:npc, story:id; played for XP, up to 3 tries) and boss (a Warden, rival or boss that is measured: win rate on arrival, after moderate_grind wild battles, and the grind battles until grind_target). Hearts (kind heart, the Rift boss the whole team faces at once right after its Warden) are reported but left out of the act means. bands: win on arrival (mean per act) and after the moderate grind, the steepening order of the acts, and the newcomer fights that stay easy. Tamer, no level cap.",
+ "starters": [
+  "Kindlop",
+  "Zippit",
+  "Wickit"
+ ],
+ "start_ring": 5,
+ "incidental": 6,
+ "bond_per_table": 1,
+ "grind_step": 20,
+ "moderate_grind": 60,
+ "grind_max": 240,
+ "grind_target": 0.7,
+ "bands": {
+  "win_arrival": [
+   0.2,
+   0.4
+  ],
+  "win_moderate_min": 0.7,
+  "fight_arrival_max": 0.6,
+  "steeper_margin": 0.0,
+  "newcomer": [
+   "story:rival_jinks_1",
+   "fernstair:imme",
+   "fernstair:joss",
+   "gloamwood:wren",
+   "gloamwood:olek",
+   "gloamwood:sorrel"
+  ],
+  "newcomer_ring_max": 7
+ },
+ "acts": [
+  {
+   "id": "act1",
+   "name": "Act I: Veydal",
+   "moderate_grind": 60,
+   "steps": [
+    {
+     "wild": "fernstair",
+     "bond": 2
+    },
+    {
+     "fight": "fernstair:imme"
+    },
+    {
+     "fight": "fernstair:joss"
+    },
+    {
+     "fight": "story:rival_jinks_1"
+    },
+    {
+     "wild": "gloamwood"
+    },
+    {
+     "fight": "gloamwood:wren"
+    },
+    {
+     "fight": "gloamwood:olek"
+    },
+    {
+     "fight": "gloamwood:sorrel"
+    },
+    {
+     "wild": "crowcrest"
+    },
+    {
+     "fight": "crowcrest:lio"
+    },
+    {
+     "fight": "crowcrest:bram"
+    },
+    {
+     "fight": "crowcrest:kestra"
+    },
+    {
+     "wild": "quillbrook"
+    },
+    {
+     "fight": "quillbrook:brisa"
+    },
+    {
+     "fight": "quillbrook:corin"
+    },
+    {
+     "fight": "quillbrook:pim"
+    },
+    {
+     "wild": "thornridge"
+    },
+    {
+     "wild": "cinder_rift"
+    },
+    {
+     "fight": "cinder_rift:acolyte_a"
+    },
+    {
+     "fight": "cinder_rift:acolyte_b"
+    },
+    {
+     "boss": "story:rival_jinks_2",
+     "kind": "rival"
+    },
+    {
+     "boss": "cinder_rift:warden_orrin",
+     "kind": "warden"
+    },
+    {
+     "boss": "cinder_rift:ashen_heart",
+     "kind": "heart"
+    },
+    {
+     "wild": "lantern_steps"
+    },
+    {
+     "fight": "lantern_steps:tova"
+    },
+    {
+     "fight": "lantern_steps:garr"
+    },
+    {
+     "fight": "lantern_steps:isa"
+    },
+    {
+     "wild": "saltmarsh"
+    },
+    {
+     "fight": "saltmarsh:neve"
+    },
+    {
+     "fight": "saltmarsh:aud"
+    },
+    {
+     "fight": "saltmarsh:kestra_tag"
+    },
+    {
+     "wild": "murk_hollow"
+    },
+    {
+     "fight": "murk_hollow:delve"
+    },
+    {
+     "fight": "murk_hollow:fenn"
+    },
+    {
+     "wild": "brackwater_fen"
+    },
+    {
+     "fight": "brackwater_fen:marit"
+    },
+    {
+     "fight": "brackwater_fen:jory"
+    },
+    {
+     "fight": "brackwater_fen:hesk"
+    },
+    {
+     "wild": "mist_rift"
+    },
+    {
+     "fight": "mist_rift:rhee"
+    },
+    {
+     "fight": "mist_rift:hask"
+    },
+    {
+     "fight": "mist_rift:ilda"
+    },
+    {
+     "boss": "mist_rift:warden_brisa",
+     "kind": "warden"
+    },
+    {
+     "boss": "mist_rift:mist_heart",
+     "kind": "heart"
+    },
+    {
+     "boss": "story:rival_jinks_3",
+     "kind": "rival"
+    },
+    {
+     "wild": "tide_rift"
+    },
+    {
+     "fight": "tide_rift:mystic"
+    },
+    {
+     "boss": "tide_rift:warden_maelis",
+     "kind": "warden"
+    },
+    {
+     "boss": "tide_rift:drowned_heart",
+     "kind": "heart"
+    },
+    {
+     "fight": "pawn_vault:goon_a"
+    },
+    {
+     "fight": "pawn_vault:goon_b"
+    },
+    {
+     "fight": "pawn_vault:goon_c"
+    },
+    {
+     "fight": "pawn_vault:goon_d"
+    },
+    {
+     "fight": "pawn_vault:goon_e"
+    },
+    {
+     "boss": "pawn_vault:sallow",
+     "kind": "boss"
+    }
+   ]
+  },
+  {
+   "id": "act2",
+   "name": "Act II: Corvane",
+   "moderate_grind": 70,
+   "steps": [
+    {
+     "wild": "woadfen"
+    },
+    {
+     "fight": "woadfen:orla"
+    },
+    {
+     "fight": "woadfen:fenn"
+    },
+    {
+     "fight": "woadfen:lusa"
+    },
+    {
+     "fight": "story:ambush_woadfen"
+    },
+    {
+     "wild": "rain_rift"
+    },
+    {
+     "boss": "rain_rift:warden_senna",
+     "kind": "warden"
+    },
+    {
+     "wild": "stillwater"
+    },
+    {
+     "fight": "stillwater:teo"
+    },
+    {
+     "fight": "stillwater:runa"
+    },
+    {
+     "fight": "stillwater:ivo"
+    },
+    {
+     "wild": "mirror_rift"
+    },
+    {
+     "boss": "mirror_rift:warden_joral",
+     "kind": "warden"
+    },
+    {
+     "wild": "root_rift"
+    },
+    {
+     "fight": "root_rift:wen"
+    },
+    {
+     "fight": "root_rift:corm"
+    },
+    {
+     "fight": "root_rift:tilde"
+    },
+    {
+     "boss": "root_rift:warden_darrow",
+     "kind": "warden"
+    },
+    {
+     "boss": "story:kestra_2",
+     "kind": "rival"
+    },
+    {
+     "wild": "greyreach"
+    },
+    {
+     "fight": "greyreach:brann"
+    },
+    {
+     "fight": "greyreach:kaja"
+    },
+    {
+     "fight": "greyreach:edrik"
+    },
+    {
+     "boss": "greyreach:veit",
+     "kind": "rival"
+    },
+    {
+     "wild": "rook_vault"
+    },
+    {
+     "fight": "rook_vault:kip"
+    },
+    {
+     "fight": "rook_vault:nance"
+    },
+    {
+     "boss": "rook_vault:keeper",
+     "kind": "boss"
+    }
+   ]
+  },
+  {
+   "id": "act3",
+   "name": "Act III: Ashmere",
+   "moderate_grind": 80,
+   "steps": [
+    {
+     "boss": "ashmere_station:juno_1",
+     "kind": "rival"
+    },
+    {
+     "wild": "saltglass"
+    },
+    {
+     "fight": "saltglass:nils"
+    },
+    {
+     "fight": "saltglass:ines"
+    },
+    {
+     "fight": "saltglass:odila"
+    },
+    {
+     "boss": "saltglass:juno_2",
+     "kind": "rival"
+    },
+    {
+     "wild": "kiln_rift"
+    },
+    {
+     "boss": "kiln_rift:warden_tovan",
+     "kind": "warden"
+    },
+    {
+     "wild": "glass_rift"
+    },
+    {
+     "boss": "glass_rift:warden_ilse",
+     "kind": "warden"
+    },
+    {
+     "boss": "story:veit_2",
+     "kind": "rival"
+    },
+    {
+     "wild": "soot_vaults"
+    },
+    {
+     "fight": "soot_vaults:pike"
+    },
+    {
+     "fight": "soot_vaults:smudge"
+    },
+    {
+     "fight": "soot_vaults:dilly"
+    },
+    {
+     "fight": "soot_vaults:nettle"
+    },
+    {
+     "fight": "soot_vaults:brask"
+    },
+    {
+     "fight": "soot_vaults:mabry"
+    },
+    {
+     "fight": "soot_vaults:coll"
+    },
+    {
+     "fight": "soot_vaults:wynn"
+    },
+    {
+     "fight": "soot_vaults:teo"
+    },
+    {
+     "fight": "soot_vaults:ottery"
+    },
+    {
+     "fight": "soot_vaults:lume"
+    },
+    {
+     "fight": "soot_vaults:quill"
+    },
+    {
+     "fight": "soot_vaults:crake"
+    },
+    {
+     "boss": "soot_vaults:juno_3",
+     "kind": "rival"
+    },
+    {
+     "boss": "soot_vaults:auditor",
+     "kind": "boss"
+    },
+    {
+     "wild": "shade_rift"
+    },
+    {
+     "fight": "shade_rift:sabe"
+    },
+    {
+     "fight": "shade_rift:fenna"
+    },
+    {
+     "fight": "shade_rift:oren"
+    },
+    {
+     "boss": "shade_rift:veit_s",
+     "kind": "rival"
+    },
+    {
+     "boss": "shade_rift:warden_odalys",
+     "kind": "warden"
+    }
+   ]
+  },
+  {
+   "id": "act4",
+   "name": "Act IV: Solenne",
+   "moderate_grind": 90,
+   "steps": [
+    {
+     "wild": "tower_rift"
+    },
+    {
+     "fight": "tower_rift:pell"
+    },
+    {
+     "fight": "tower_rift:yara"
+    },
+    {
+     "fight": "tower_rift:gideon"
+    },
+    {
+     "boss": "tower_rift:warden_aurelio",
+     "kind": "warden"
+    },
+    {
+     "wild": "oasis_rift"
+    },
+    {
+     "fight": "oasis_rift:noor"
+    },
+    {
+     "fight": "oasis_rift:hollis"
+    },
+    {
+     "fight": "oasis_rift:suni"
+    },
+    {
+     "boss": "oasis_rift:warden_kaia",
+     "kind": "warden"
+    },
+    {
+     "wild": "sun_rift"
+    },
+    {
+     "fight": "sun_rift:corwen"
+    },
+    {
+     "fight": "sun_rift:ettie"
+    },
+    {
+     "fight": "sun_rift:abel"
+    },
+    {
+     "boss": "sun_rift:warden_emrys",
+     "kind": "warden"
+    },
+    {
+     "boss": "story:kestra_3",
+     "kind": "rival"
+    },
+    {
+     "boss": "story:veil_corin_1",
+     "kind": "rival"
+    },
+    {
+     "wild": "veil_cistern"
+    },
+    {
+     "fight": "veil_cistern:clerk_ivo"
+    },
+    {
+     "fight": "veil_cistern:guard_pell"
+    },
+    {
+     "fight": "veil_cistern:clerk_mott"
+    },
+    {
+     "fight": "veil_cistern:auditor_nell"
+    },
+    {
+     "fight": "veil_cistern:guard_brack"
+    },
+    {
+     "boss": "story:veil_factor",
+     "kind": "boss"
+    },
+    {
+     "boss": "story:veil_corin_2",
+     "kind": "rival"
+    },
+    {
+     "wild": "glasswind_flats"
+    },
+    {
+     "fight": "glasswind_flats:kesh"
+    },
+    {
+     "fight": "glasswind_flats:mabli"
+    },
+    {
+     "fight": "glasswind_flats:fennel"
+    },
+    {
+     "fight": "glasswind_flats:old_pell"
+    },
+    {
+     "fight": "glasswind_flats:yusra"
+    },
+    {
+     "fight": "glasswind_flats:brannt"
+    },
+    {
+     "wild": "mirage_kiln"
+    },
+    {
+     "fight": "mirage_kiln:aske"
+    },
+    {
+     "fight": "mirage_kiln:bree"
+    },
+    {
+     "fight": "mirage_kiln:hob"
+    },
+    {
+     "fight": "mirage_kiln:lark"
+    },
+    {
+     "fight": "mirage_kiln:odo"
+    },
+    {
+     "fight": "mirage_kiln:rusk"
+    },
+    {
+     "fight": "mirage_kiln:garr"
+    },
+    {
+     "boss": "story:kiln_venn",
+     "kind": "boss"
+    },
+    {
+     "fight": "caravanserai:imre"
+    },
+    {
+     "boss": "caravanserai:dario",
+     "kind": "boss"
+    },
+    {
+     "boss": "story:veil_corin_3",
+     "kind": "rival"
+    }
+   ]
+  },
+  {
+   "id": "era2",
+   "name": "Era II: Vellmarch",
+   "moderate_grind": 100,
+   "steps": [
+    {
+     "wild": "region2:tollchain_causeway",
+     "battles": 8
+    },
+    {
+     "fight": "tollchain_causeway:tollkeeper"
+    },
+    {
+     "wild": "region2:rookery_cut",
+     "battles": 8
+    },
+    {
+     "fight": "rookery_cut:crowmonger"
+    },
+    {
+     "wild": "region2:weeping_locks",
+     "battles": 8
+    },
+    {
+     "fight": "weeping_locks:sluicer"
+    },
+    {
+     "fight": "lock_rift:acolyte"
+    },
+    {
+     "boss": "lock_rift:warden_odile",
+     "kind": "warden"
+    },
+    {
+     "wild": "region2:smelters_drift",
+     "battles": 8
+    },
+    {
+     "fight": "smelters_drift:slagman"
+    },
+    {
+     "fight": "foundry_rift:acolyte"
+    },
+    {
+     "boss": "foundry_rift:warden_brannoc",
+     "kind": "warden"
+    },
+    {
+     "wild": "region2:tithe_road",
+     "battles": 8
+    },
+    {
+     "fight": "tithe_road:tithecollector"
+    },
+    {
+     "fight": "masque_rift:acolyte"
+    },
+    {
+     "boss": "masque_rift:warden_sable",
+     "kind": "warden"
+    },
+    {
+     "wild": "region2:bellrope_marsh",
+     "battles": 8
+    },
+    {
+     "fight": "bellrope_marsh:bellwalker"
+    },
+    {
+     "fight": "vault_rift:acolyte"
+    },
+    {
+     "boss": "vault_rift:warden_corin",
+     "kind": "warden"
+    }
+   ]
+  },
+  {
+   "id": "era3",
+   "name": "Era III: Quillmarch",
+   "moderate_grind": 110,
+   "steps": [
+    {
+     "wild": "region3:drypoint_lane",
+     "battles": 8
+    },
+    {
+     "fight": "drypoint_lane:scratcher"
+    },
+    {
+     "fight": "drypoint_lane:courier"
+    },
+    {
+     "wild": "region3:mordant_steps",
+     "battles": 8
+    },
+    {
+     "fight": "mordant_steps:fumer"
+    },
+    {
+     "fight": "mordant_steps:stepcounter"
+    },
+    {
+     "wild": "region3:hoarfrost_moor",
+     "battles": 8
+    },
+    {
+     "fight": "hoarfrost_moor:sledger"
+    },
+    {
+     "fight": "hoarfrost_moor:hoarwatch"
+    },
+    {
+     "fight": "bath_rift:acolyte"
+    },
+    {
+     "boss": "bath_rift:warden_mavet",
+     "kind": "warden"
+    },
+    {
+     "wild": "region3:gravers_causeway",
+     "battles": 8
+    },
+    {
+     "fight": "gravers_causeway:graver"
+    },
+    {
+     "fight": "gravers_causeway:canalman"
+    },
+    {
+     "fight": "rime_rift:acolyte"
+    },
+    {
+     "boss": "rime_rift:warden_quenby",
+     "kind": "warden"
+    },
+    {
+     "wild": "region3:rimeglass_pass",
+     "battles": 8
+    },
+    {
+     "fight": "rimeglass_pass:iceguide"
+    },
+    {
+     "fight": "rimeglass_pass:collector"
+    },
+    {
+     "wild": "region3:stamp_road",
+     "battles": 8
+    },
+    {
+     "fight": "stamp_road:stamper"
+    },
+    {
+     "fight": "stamp_road:pressrunner"
+    },
+    {
+     "fight": "ledger_rift:acolyte"
+    },
+    {
+     "boss": "ledger_rift:warden_ottoline",
+     "kind": "warden"
+    },
+    {
+     "wild": "region3:smudge_marsh",
+     "battles": 8
+    },
+    {
+     "fight": "smudge_marsh:blotter"
+    },
+    {
+     "fight": "smudge_marsh:smuggler"
+    },
+    {
+     "fight": "press_rift:acolyte"
+    },
+    {
+     "boss": "press_rift:warden_grisel",
+     "kind": "warden"
+    }
+   ]
+  },
+  {
+   "id": "era4",
+   "name": "Era IV: Halcyra",
+   "moderate_grind": 120,
+   "steps": [
+    {
+     "wild": "region4:long_stair",
+     "battles": 8
+    },
+    {
+     "fight": "long_stair:step_counter"
+    },
+    {
+     "wild": "region4:cloudshadow_meadow",
+     "battles": 8
+    },
+    {
+     "fight": "cloudshadow_meadow:goatherd"
+    },
+    {
+     "wild": "region4:mirror_flats",
+     "battles": 8
+    },
+    {
+     "fight": "mirror_flats:salt_scout"
+    },
+    {
+     "fight": "orrery_rift:star_clerk"
+    },
+    {
+     "boss": "orrery_rift:warden_isaura",
+     "kind": "warden"
+    },
+    {
+     "wild": "region4:orrery_ridge",
+     "battles": 8
+    },
+    {
+     "fight": "orrery_ridge:climber"
+    },
+    {
+     "fight": "salt_rift:raker"
+    },
+    {
+     "boss": "salt_rift:warden_halloran",
+     "kind": "warden"
+    },
+    {
+     "wild": "region4:sunfall_terraces",
+     "battles": 8
+    },
+    {
+     "fight": "sunfall_terraces:vintner"
+    },
+    {
+     "wild": "region4:lantern_span",
+     "battles": 8
+    },
+    {
+     "fight": "lantern_span:toll_boy"
+    },
+    {
+     "fight": "span_rift:toll_clerk"
+    },
+    {
+     "boss": "span_rift:warden_veronne",
+     "kind": "warden"
+    },
+    {
+     "fight": "gilt_rift:heir"
+    },
+    {
+     "boss": "gilt_rift:warden_aurek",
+     "kind": "warden"
+    }
+   ]
+  },
+  {
+   "id": "era5",
+   "name": "Era V: Quivermoor",
+   "moderate_grind": 130,
+   "steps": [
+    {
+     "wild": "region5:breathing_bog",
+     "battles": 8
+    },
+    {
+     "fight": "breathing_bog:peatcutter"
+    },
+    {
+     "fight": "breathing_bog:bogwalker"
+    },
+    {
+     "wild": "region5:wandering_wood",
+     "battles": 8
+    },
+    {
+     "fight": "wandering_wood:oakwatcher"
+    },
+    {
+     "fight": "wandering_wood:mapseller"
+    },
+    {
+     "fight": "wick_rift:acolyte"
+    },
+    {
+     "boss": "wick_rift:warden_maudrey",
+     "kind": "warden"
+    },
+    {
+     "wild": "region5:candle_causeway",
+     "battles": 8
+    },
+    {
+     "fight": "candle_causeway:candlebearer"
+    },
+    {
+     "fight": "candle_causeway:tollwick"
+    },
+    {
+     "fight": "taproot_rift:acolyte"
+    },
+    {
+     "boss": "taproot_rift:warden_ossian",
+     "kind": "warden"
+    },
+    {
+     "wild": "region5:hymnmarsh",
+     "battles": 8
+    },
+    {
+     "fight": "hymnmarsh:hummer"
+    },
+    {
+     "fight": "hymnmarsh:rootpicker"
+    },
+    {
+     "fight": "raft_rift:acolyte"
+    },
+    {
+     "boss": "raft_rift:warden_corran",
+     "kind": "warden"
+    },
+    {
+     "wild": "region5:heaving_fields",
+     "battles": 8
+    },
+    {
+     "fight": "heaving_fields:heaver"
+    },
+    {
+     "fight": "heaving_fields:betbroker"
+    },
+    {
+     "fight": "bloom_rift:acolyte"
+    },
+    {
+     "boss": "bloom_rift:warden_sabeline",
+     "kind": "warden"
+    }
+   ]
+  }
+ ]
+}

@@ -4,7 +4,8 @@
    "Kestra: You're Aldo's apprentice? Good. Half the old maps are wrong since the storm.",
    "Kestra: Two Rifts opened: one in the Cinder hollow past Thornridge, one under the Saltmarsh.",
    "Kestra: Everyone wants them closed. I'm not so sure. New Spirlings came through that tear.",
-   "Kestra: Go and see for yourself. Fernstair goes north, Saltmarsh east. Pick either."
+   "Kestra: Go and see for yourself. Fernstair goes north, Saltmarsh east. Pick either.",
+   "Kestra: Oh, and this blew in through my window last night. It has Mirela's compass rose in the corner. Yours, I think."
   ],
   "after_flag": {
    "flag": "kestra_spar",
@@ -12,9 +13,17 @@
     "Kestra: Still mending Rifts? Fine. Just look closely at what comes through before you do."
    ]
   },
-  "flag": "met_kestra"
+  "flag": "met_kestra",
+  "action": "page 1"
  },
  "maps": [
   "Old maps of Veydal, crossed out and redrawn in three colours of ink."
- ]
+ ],
+ "hollis": {
+  "lines": [
+   "Examiner Hollis: The guild keeps a board for people who finished the story and could not stop.",
+   "Examiner Hollis: Pick something. Lose at it. I take notes."
+  ],
+  "action": "postgame_board"
+ }
 }

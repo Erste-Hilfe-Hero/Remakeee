@@ -1,0 +1,6 @@
+{
+ "_comment": "Brazilian Portuguese texts for the German table sprachen. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "Japanese, Korean and Chinese text uses Chimora CJK Pixel, a subset of Fusion Pixel Font 8px (Copyright (c) 2022, TakWolf, with glyphs from Galmuri, Misaki, Boutique Bitmap 7x7 and Miseki Bitmap), licensed under the SIL Open Font License 1.1: https://openfontlicense.org": "Os textos em japonês, coreano e chinês usam Chimora CJK Pixel, um subconjunto de Fusion Pixel Font 8px (Copyright (c) 2022, TakWolf, com glifos de Galmuri, Misaki, Boutique Bitmap 7x7 e Miseki Bitmap), com licença SIL Open Font License 1.1: https://openfontlicense.org"
+ }
+}

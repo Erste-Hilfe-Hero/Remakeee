@@ -1,0 +1,192 @@
+{
+ "name": "Drypoint Lane",
+ "region": "quillmarch",
+ "biome": "route",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "encounters": "drypoint_lane",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T@@..__.,,,T",
+  "T@@...__,,,T",
+  "T.....__...T",
+  "T::@@@@_@@.T",
+  "T::@@@@_@@.T",
+  "T....____..T",
+  "T@@@._..,,,T",
+  "T@@@._..,,,T",
+  "T...._.....T",
+  "T,,.._@@@@@T",
+  "T,,..____..T",
+  "TRRR...._..T",
+  "THDH.::._..T",
+  "T....::.__.T",
+  "T,,,....._.T",
+  "T,,,@@@@._.T",
+  "T...@@@@._.T",
+  "T..______..T",
+  "T.._..,,,..T",
+  "T@@_..,,,@@T",
+  "T@@_.....@@T",
+  "T..__......T",
+  "T....__.::.T",
+  "T.....__::.T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "burin_landing",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "platewick",
+   "tx": 1,
+   "ty": 8,
+   "facing": "right"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "burin_landing",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "platewick",
+   "tx": 1,
+   "ty": 9,
+   "facing": "right"
+  },
+  {
+   "x": 2,
+   "y": 13,
+   "to": "dead_letter_office",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "scratcher",
+   "x": 10,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "quillmarch/drypoint_lane_scratcher",
+   "sprite": "ranger",
+   "trainer": "Plate Scratcher Arne",
+   "intro": "quillmarch/drypoint_lane_scratcher_intro",
+   "defeat": "quillmarch/drypoint_lane_scratcher_defeat",
+   "money": 2920,
+   "team": [
+    {
+     "species": "Vesk",
+     "level": 72
+    },
+    {
+     "species": "Drypup",
+     "level": 73
+    }
+   ]
+  },
+  {
+   "id": "courier",
+   "x": 2,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "quillmarch/drypoint_lane_courier",
+   "sprite": "villager",
+   "trainer": "Courier Liv",
+   "intro": "quillmarch/drypoint_lane_courier_intro",
+   "defeat": "quillmarch/drypoint_lane_courier_defeat",
+   "money": 2920,
+   "team": [
+    {
+     "species": "Platewig",
+     "level": 72
+    },
+    {
+     "species": "Drypup",
+     "level": 73
+    },
+    {
+     "species": "Platemarshal",
+     "level": 73
+    }
+   ]
+  },
+  {
+   "id": "q3_puller",
+   "x": 10,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_drypoint_lane_puller",
+   "sprite": "villager",
+   "trainer": "Proof Puller Embla",
+   "intro": "quillmarch/q3_drypoint_lane_puller_intro",
+   "defeat": "quillmarch/q3_drypoint_lane_puller_defeat",
+   "money": 2920,
+   "team": [
+    {
+     "species": "Platewig",
+     "level": 71
+    },
+    {
+     "species": "Burrin",
+     "level": 72
+    },
+    {
+     "species": "Platemarshal",
+     "level": 73
+    }
+   ]
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_drypoint_lane_1"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_drypoint_lane_2"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_drypoint_lane_3"
+  },
+  {
+   "x": 11,
+   "y": 23,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_drypoint_lane_4"
+  },
+  {
+   "x": 0,
+   "y": 3,
+   "item": "dash_brew",
+   "count": 1,
+   "flag": "find_drypoint_lane_q3_0_3"
+  }
+ ]
+}
