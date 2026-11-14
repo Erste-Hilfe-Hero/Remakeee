@@ -2704,6 +2704,10 @@ func _action_postgame_board(_args: PackedStringArray, _speaker: NPC) -> void:
 	# Battle halls (KAMPF_PLAN_1000, endgame modes): scripts/overworld/HallRunner.gd.
 	ways.append(Loc.t("Battle halls"))
 	kinds.append("halls")
+	# Rift heart echoes and the heart rush (KAMPF_PLAN_1000 items 417, 418): BossRunner.gd.
+	if not BossRunner.board_line().is_empty():
+		ways.append(BossRunner.board_line())
+		kinds.append("hearts")
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	var way: int = await menu.pick_strings(Loc.t("The board"), ways)
@@ -2725,6 +2729,8 @@ func _action_postgame_board(_args: PackedStringArray, _speaker: NPC) -> void:
 			await _run_final_exam()
 		"halls":
 			await HallRunner.open(self)
+		"hearts":
+			await BossRunner.open(self)
 
 ## One timed battle for a hall; books the time on a win and says a new best.
 func _timed_battle(hall: String, foes: Array[Spirling], info: Dictionary) -> BattleModel.Outcome:
@@ -3612,6 +3618,9 @@ func after_tamer_win(n: NPC) -> void:
 	var lore: String = str(def.get("lexicon", BossRules.LEXICON.get(str(def.get("boss", "")), "")))
 	if def.has("boss") and last_model != null:
 		BossRules.note_win(GameState.records, str(def.boss), last_model.turn)
+		# The heart's spoils follow the difficulty (item 415).
+		for it: Variant in BossHall.reward_items(GameState.difficulty):
+			await _action_give_item(PackedStringArray([str(it[0]), str(it[1])]), null)
 	if not lore.is_empty() and Lexicon.add(GameState.records, lore):
 		await say([Loc.t("A new lexicon entry is written down."), "%s: %s" % [Loc.t(Lexicon.title(lore)), Loc.t(Lexicon.text(lore))]] as Array[String])
 	for f: Variant in def.get("win_flags", []):
@@ -4225,6 +4234,9 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	var front: Array = trainer.get("front", [1, 1])
 	model.front_size = [int(front[0]), int(front[1])]
 	model.foe_boss = str(trainer.get("boss", ""))
+	# A Rift heart's purse follows the difficulty (item 415, BossHall.money_mult).
+	if not model.foe_boss.is_empty():
+		model.prize_money = int(model.prize_money * BossHall.money_mult(GameState.difficulty))
 	model.foe_formation = bool(trainer.get("formation", false))
 	var goal_key: String = str(trainer.get("goal_key", ""))
 	var goal: Dictionary = BattleGoals.all().get(goal_key, {}) if not goal_key.is_empty() and GameState.bonus_goals else {}

@@ -256,7 +256,7 @@ const BOSSES: Dictionary[String, Dictionary] = {
 			"text": "The Ashen Heart flares up! Its embers spin faster."}},
 	"drowned_heart": {"label": "Drowned Heart", "hp_per_ally": 0.7, "max_actions": 2,
 		"text": "The Rift's water heaves up around a drowned heart. Its guard stands beside it!",
-		"phase": {"at": 0.5, "stage": {"def": 1, "foc": 1}, "field": "high_tide",
+		"phase": {"at": 0.5, "stage": {"def": 1, "foc": 1}, "field": "high_tide", "guard": {"species": "Kelpup", "below": 2},
 			"text": "The Drowned Heart pulls the tide around itself!"}},
 	"mist_heart": {"label": "Mist Heart", "hp_per_ally": 0.7, "max_actions": 2,
 		"text": "The fog knots itself into one grey heart. It drifts at you from every side!",
