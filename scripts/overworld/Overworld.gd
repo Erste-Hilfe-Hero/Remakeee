@@ -97,6 +97,7 @@ func _ready() -> void:
 		"bounty": _action_bounty,
 		"fine_training": _action_fine_training,
 		"training": _action_training,
+		"relearn": _action_relearn,
 		"matchmaker": _action_matchmaker,
 		"reserve": _action_reserve,
 		"informant": _action_informant,
@@ -1396,6 +1397,13 @@ func _action_fine_training(_args: PackedStringArray, _speaker: NPC) -> void:
 	var r: Dictionary = FineTraining.train(s, stat, GameState.rng)
 	await say([str(r.line)] as Array[String])
 
+## "relearn": Hesper digs up forgotten arts for coins (ArtTeacher, KAMPF_PLAN item 138).
+func _action_relearn(_args: PackedStringArray, _speaker: NPC) -> void:
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	await ArtTeacher.run(menu)
+	menu.queue_free()
+
 ## "training": the training ring in the lighthouse (TrainingGround): bouts against carved
 ## dummies without risk, training goals and the training record.
 func _action_training(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -1834,6 +1842,8 @@ func watch_replay(snap: Dictionary) -> void:
 		var why: String = BattleReplay.problem(snap)
 		await say([why if not why.is_empty() else "That replay can't be shown any more."] as Array[String])
 		return
+	# A replay says why the foe did what it did (KAMPF_PLAN_1000 item 467).
+	model.explain_ai = AiNotes.REASON
 	await _fade_to(1.0)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
@@ -3250,6 +3260,45 @@ func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.set_flag(flag)
 		await _action_give_item([Season.gift_for(f, year), "1"] as PackedStringArray, null)
 	await _festival_task()
+	await _festival_boss(f, "%s_%d" % [f.id, year])
+
+## The festival's echo of a beaten Rift heart (KAMPF_PLAN_1000 item 437, FestivalBoss).
+func _festival_boss(f: Dictionary, key: String) -> void:
+	var e: Dictionary = FestivalBoss.entry(str(f.id))
+	if e.is_empty():
+		return
+	var fb: Dictionary = FestivalBoss.data()
+	if not FestivalBoss.unlocked(str(f.id), GameState.records):
+		await say([str(fb.get("locked", ""))] as Array[String])
+		return
+	if FestivalBoss.won(key, GameState.records):
+		await say([str(fb.get("done", ""))] as Array[String])
+		return
+	var best: int = 1
+	for s: Spirling in GameState.party:
+		best = maxi(best, s.level)
+	var foes: Array[Spirling] = FestivalBoss.team(str(f.id), best, GameState.rng)
+	if foes.is_empty():
+		return
+	var label: String = str(BattleRules.BOSSES.get(str(e.boss), {}).get("label", ""))
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var go: bool = await menu.confirm(Loc.t(str(fb.get("offer", ""))) % [Loc.t(label), foes[0].display_name()])
+	menu.queue_free()
+	if not go:
+		return
+	GameState.heal_party()
+	busy = false
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, {"name": Loc.t(label), "ai": maxi(TrainerData.BOSS_MIN_AI, GameState.ai_level()), "money": 0, "boss": str(e.boss)})
+	busy = true
+	player.frozen = true
+	if outcome != BattleModel.Outcome.WIN:
+		await say([str(fb.get("loss", ""))] as Array[String])
+		return
+	var lines: Array[String] = [str(fb.get("win", ""))]
+	if FestivalBoss.note_win(key, GameState.records):
+		lines.append_array(Festival.add(int(fb.get("ribbons", 20))))
+	await say(lines)
 
 ## The crier's festival task of the day (plan 3211): one a day, pays festival ribbons.
 func _festival_task() -> void:
@@ -3621,6 +3670,9 @@ func after_tamer_win(n: NPC) -> void:
 	var lore: String = str(def.get("lexicon", BossRules.LEXICON.get(str(def.get("boss", "")), "")))
 	if def.has("boss") and last_model != null:
 		BossRules.note_win(GameState.records, str(def.boss), last_model.turn)
+		# The fastest win against each boss is kept to watch again (item 440).
+		if BossRules.keep_replay(GameState.records, str(def.boss), last_model.turn, GameState.records.get("last_battle", {})):
+			toast.show_note(Loc.t("Kept in your boss replays (Records)."))
 	if not lore.is_empty() and Lexicon.add(GameState.records, lore):
 		await say([Loc.t("A new lexicon entry is written down."), "%s: %s" % [Loc.t(Lexicon.title(lore)), Loc.t(Lexicon.text(lore))]] as Array[String])
 	for f: Variant in def.get("win_flags", []):
@@ -3629,6 +3681,9 @@ func after_tamer_win(n: NPC) -> void:
 		_npcs.erase(n)
 		n.queue_free()
 	await announce_goal_if_changed(goal_before)
+	# The boss's own badge (item 439) shows right away, not only after the next battle.
+	if def.has("boss"):
+		await announce_achievements()
 	SaveManager.save_game()
 	VirtualPad.set_wanted(true)
 	player.frozen = false
@@ -4248,6 +4303,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	# Story (KAMPF_PLAN item 52): resting mends a little Vigor (the keen-hit cut is in ChallengeRules).
 	if d == GameState.Difficulty.STORY:
 		model.rest_heal_share = BattleModel.STORY_REST_HEAL
+	# Scorch, Root and Jolt stay on after a world battle, except on Story (KAMPF_PLAN item 179).
+	model.keep_status = world and not bool(trainer.get("practice", false)) and not d in StatusRules.CLEARS_AFTER_BATTLE
 	model.ambush = wild and bool(trainer.get("ambush", false))
 	# The end report: damage, knock-outs, best Spirling, Energy, seed (KAMPF_PLAN items 20, 76).
 	model.set_meta("summary", BattleSummary.new(model))

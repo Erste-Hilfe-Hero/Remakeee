@@ -179,14 +179,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 135. [x] Technik mit Treffer-Serie (2 bis 4 Treffer) (Kieselhagel (Pebble Hail))
 136. [x] Technik, die das Feld beendet (Rissstille (Rift Hush))
 137. [x] Technik, die Status vom ganzen Team heilt (bestehend: Effekt cure_team)
-138. [ ] Technik-Lehrer im Leuchtturm (vergessene Techniken neu lernen)
+138. [x] Technik-Lehrer im Leuchtturm (vergessene Techniken neu lernen) (Hesper nach ihrem Laden, ArtTeacher, 500 Münzen je Technik)
 139. [x] Echo-Kristalle (bestehend) als Quelle seltener Techniken ausbauen (19 neue Echo-Kristalle bei Hesper im Leuchtturm)
 140. [x] Technik-Tausch-Vorschau: alte und neue Technik nebeneinander (Vergessen-Liste zeigt alt > neu)
 141. [x] Technik-Beschreibung mit Effekt-Chancen im Lexikon
 142. [ ] Techniken mit Signatur pro Art (eine je Art, eigenständig)
 143. [x] Keine Technik-Namen aus anderen Spielen (Prüfliste vor jedem Merge) (tools/ip_check.sh in CI, test_rule_checks)
 144. [x] Status-Techniken mit Genauigkeit unter 100 % sichtbar machen (Trefferchance in der Technikzeile)
-145. [ ] Technik-Kategorie Physisch/Fokus/Status mit Symbol
+145. [x] Technik-Kategorie Physisch/Fokus/Status mit Symbol (5x5-Pixelzeichen BattleHelp.KIND_ICONS in jeder Technikzeile im Kampf)
 146. [x] Mehrfachziel-Techniken zeigen 'alle' (bestehend) (bestehend: Info-Karte 'Reaches every foe.')
 147. [x] Technik 'Ablenkung': zieht alle Einzelziele drei Runden auf sich (Lichtköder (Bright Lure))
 148. [x] Technik 'Schulterschluss': schützt einen Verbündeten (Schulterschluss (Close Ranks))
@@ -199,8 +199,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 155. [x] Technik-Balancing über den Simulator pro neuer Technik (balance_sim --mode arts, ArtsSim, Ergebnis in BALANCE.md)
 156. [x] Lernlisten pro Art auf Lücken prüfen (jede Art hat eine Status-Technik) (Statustechnik für jede Art per Echo-Kristall, test_kampf_techniques_b)
 157. [x] Technik-Animationen pro Element eigenständig (bestehend: ElementFx pro Element)
-158. [ ] Technik-Favoriten im Menü markieren
-159. [ ] Technik-Reihenfolge im Menü umsortieren
+158. [x] Technik-Favoriten im Menü markieren (BattleComfort.FAV_MARK '+' im Kampfmenü und unter Team > Technik-Reihenfolge)
+159. [x] Technik-Reihenfolge im Menü umsortieren (bestehend: Team > Technik-Reihenfolge, BattleComfort.move_art)
 160. [x] Technik-Info-Bildschirm per langem Druck
 
 ## Status-Zustände
@@ -223,7 +223,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 176. [x] Status-Schutz-Technik für das Team (Technik Calm Veil)
 177. [x] Status überträgt sich bei Kontakt (Trait 'Glimmhaut') (Gabe glimmer_skin, Forgefly-Linie)
 178. [x] Status heilt beim Wechsel auf die Bank (Trait 'Ruhig') (Gabe unruffled, Prismist-Linie)
-179. [ ] Status nach dem Kampf bleibt erhalten, außer auf Story
+179. [x] Status nach dem Kampf bleibt erhalten, außer auf Story (Brand, Wurzeln, Schock: StatusRules.lingers, Heilmittel auch außerhalb des Kampfes)
 180. [x] Status-Heilung an Rastquellen (bestehend) (GameState.heal_party, Spirling.restore)
 181. [x] Status-Statistik im Kampfende-Bericht (BattleReport.status_line)
 182. [x] Status-Sound pro Status eigenständig (bestehend: BattleAudio.status_sound)
@@ -499,10 +499,10 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 434. [ ] Boss: Prisma-Variante im Endgame
 435. [ ] Boss: Online-Rangliste nach Zügen
 436. [ ] Boss: Wochen-Boss
-437. [ ] Boss: Saison-Boss zu Festen (bestehend: Feste)
+437. [x] Boss: Saison-Boss zu Festen (bestehend: Feste) (FestivalBoss: Echo eines besiegten Rissherzens beim Ausrufer, data/festival_bosses.json)
 438. [x] Boss: Nach dem Sieg Lore-Seite (erledigt: Lexikon-Seite nach dem ersten Sieg (Overworld.after_tamer_win))
-439. [ ] Boss: Achievement pro Boss
-440. [ ] Boss: Replay speichern
+439. [x] Boss: Achievement pro Boss (Erfolge boss_<id>, Stat boss_wins:)
+440. [x] Boss: Replay speichern (BossRules.keep_replay: schnellster Sieg pro Boss, Rekorde > Boss-Wiederholungen)
 
 ## Gegner-KI
 
@@ -516,7 +516,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 448. [x] KI nutzt Heil-Techniken gezielt (bestand: heal_self und mend unter heal_below)
 449. [x] KI schont Spirlings mit wenig HP für später (erledigt: BattleAI.SPARE_HP bei der Ersatzwahl)
 450. [x] KI-Persönlichkeiten pro Wayfarer (vorsichtig, wild, taktisch) (bestand: data/ai_profiles.json)
-451. [ ] KI-Debug-Ansicht für Entwickler
+451. [x] KI-Debug-Ansicht für Entwickler (AiNotes.TABLE, Start mit -- --ai-debug: alle Technik-Werte im Kampflog)
 452. [x] KI-Tests pro Verhalten (bestand: test_ai*.gd, neu test_kampf_boss_ai.gd)
 453. [ ] KI liest nur, was der Spieler auch sieht (keine versteckten Werte)
 454. [x] KI-Zufall in Stufe 0 bleibt (Wildkämpfe) (bestand: Plan 5000 Punkt 625)
@@ -527,12 +527,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 459. [x] KI-Gegenstand-Nutzung begrenzen (max. 2 pro Kampf) (erledigt: BattleAI.ITEM_LIMIT)
 460. [x] KI nutzt Overcharge, wenn es zum K.o. reicht (erledigt: BattleAI.score_move)
 461. [x] KI vermeidet Rückstoß-Techniken bei wenig HP (erledigt: BattleAI.RECOIL_W unter 35 %)
-462. [ ] KI im Boss-Kampf mit Phasen-Logik
+462. [x] KI im Boss-Kampf mit Phasen-Logik (BossRules.AI_PHASE: Haltefeld brechen, offen und letzte Phase ohne Aufbau)
 463. [x] KI im Schwarm koordiniert (verschiedene Ziele) (erledigt: sichere K.o.-Ziele werden pro Runde vergeben)
 464. [x] KI-Balance: Gewinnrate im Simulator pro Stufe messen (bestand: BalanceSim Modus ladder)
 465. [x] KI-Gewinnrate-Ziel pro Schwierigkeit dokumentieren (bestand: tools/balance/targets.json, BalanceDoc)
 466. [ ] KI-Laufzeit unter 5 ms pro Entscheidung (Handy)
-467. [ ] KI-Entscheidungen im Replay nachvollziehbar
+467. [x] KI-Entscheidungen im Replay nachvollziehbar (AiNotes.REASON: Wahl und Wert gegen die beste Alternative)
 468. [x] KI-Texte: Wayfarer kommentiert gute Züge (bestand: data/dialogue/battle_lines.json)
 469. [x] KI meidet Felder, die dem Spieler helfen (bestand: BattleAI.field_value)
 470. [ ] KI erkennt eigene Feldschwäche und wechselt
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-915 von 1000 Punkten umgesetzt.
+926 von 1000 Punkten umgesetzt.
 

@@ -55,11 +55,20 @@ static func move_art(s: Spirling, from: int, to: int) -> bool:
 static func first_row(last: int, s: Spirling) -> int:
 	return last if last >= 0 else favourite_row(s)
 
-## The art list rows for the team menu: a star marks the favourite.
+## Mark in front of the favourite art, in the team menu and on the battle art rows (item 158).
+## "+" like a favourite friend; "*" already stands for focus arts (BattleHelp.KIND_MARK).
+const FAV_MARK: String = "+"
+
+## [constant FAV_MARK] when [param mv] is [param s]'s favourite art, else "".
+static func fav_mark(s: Spirling, mv: MoveData) -> String:
+	return FAV_MARK if s != null and mv != null and not s.fav_art.is_empty() and mv.move_name == s.fav_art else ""
+
+## The art list rows for the team menu: a plus marks the favourite.
 static func art_rows(s: Spirling) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for mv: MoveData in s.moves:
-		out.append({"text": ("* " if mv.move_name == s.fav_art else "") + mv.move_name,
+		var fav: String = fav_mark(s, mv)
+		out.append({"text": (fav + " " if not fav.is_empty() else "") + mv.move_name,
 			"hint": "%s %s" % [BattleHelp.kind_mark(mv.kind), Loc.t(Elements.element_name(mv.element))]})
 	return out
 

@@ -63,6 +63,9 @@ static func stat(name: String) -> int:
 		return 1
 	if name.begins_with("count_"):
 		return int(GameState.records.get(name, 0))
+	if name.begins_with("boss_wins:"):
+		# Wins against one Rift boss (KAMPF_PLAN_1000 item 439, BossRules.note_win).
+		return int(BossRules.stats(GameState.records, name.substr(10)).get("wins", 0))
 	match name:
 		"seen":
 			return _spirlog_count("seen")
@@ -163,7 +166,7 @@ const STATS: Array[String] = ["seen", "bonded", "bonded_wild", "party_size", "st
 	"oath_rifts_riftborn", "side_goals", "gauntlet_best", "weekly_wins", "rematch_wins",
 	"daily_tasks_done", "waymarks_total", "money", "maps_visited", "all_fields", "wild_maps_all",
 	"team_at_cap", "gear", "keepsakes", "keepsakes_all", "festivals_all", "festival_gifts", "starters_done"]
-const STAT_PREFIXES: Array[String] = ["flag:", "record:", "element_bonded:", "count_"]
+const STAT_PREFIXES: Array[String] = ["flag:", "record:", "element_bonded:", "count_", "boss_wins:"]
 
 static func known_stat(name: String) -> bool:
 	return name in STATS or STAT_PREFIXES.any(func(p: String) -> bool: return name.begins_with(p))

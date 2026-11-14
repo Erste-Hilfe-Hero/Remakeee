@@ -173,6 +173,8 @@ static func show_turns(m: BattleModel) -> bool:
 
 func setup(p_model: BattleModel) -> void:
 	model = p_model
+	# The AI developer view (KAMPF_PLAN_1000 item 451): "-- --ai-debug" shows every foe score.
+	model.explain_ai = AiNotes.level_for(model.explain_ai)
 
 # --- Layout -------------------------------------------------------------------
 

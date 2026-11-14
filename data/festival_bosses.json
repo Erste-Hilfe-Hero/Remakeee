@@ -1,0 +1,17 @@
+{
+ "_comment": "Festival bosses (docs/KAMPF_PLAN_1000.md item 437, scripts/core/FestivalBoss.gd). While a festival runs, the crier offers a fight against a grown echo of a Rift heart the player has already beaten. It fights with that heart's boss rules (BattleRules.BOSSES[boss]); ring = the party's best ring + ring_over, between ring_min and the story ring. The first win per festival and year pays 'ribbons' festival ribbons.",
+ "ring_over": 2,
+ "ring_min": 20,
+ "ribbons": 20,
+ "festivals": {
+  "bloom_fair": {"boss": "mist_heart", "species": "Verdantusk"},
+  "tide_days": {"boss": "drowned_heart", "species": "Leviarch"},
+  "lantern_nights": {"boss": "mist_heart", "species": "Glimmerax"},
+  "hearth_weeks": {"boss": "ashen_heart", "species": "Calderox"}
+ },
+ "offer": "Crier: An echo of the %s has crashed the festival in the shape of a %s. Nobody invited it. Will you see it out?",
+ "locked": "Crier: Something from the Rifts keeps trying to get in. Seal a Rift heart first, then we'll talk.",
+ "done": "Crier: You saw the echo out already. It sulks somewhere behind the stands until next year.",
+ "win": "The echo comes apart like old bunting. The crowd claps as if it had helped.",
+ "loss": "The echo keeps dancing. The crowd decides it is part of the show."
+}
