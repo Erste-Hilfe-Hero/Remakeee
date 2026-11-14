@@ -1043,7 +1043,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 939. [x] IP-Prüfung (bestehend) für neue Namen (tools/ip_check.sh)
 940. [x] Originalitäts-Zahlen (bestehend) nicht verändern (test_originality)
 941. [x] Balance-Dokumentation aktualisieren (tools/balance/run_all.sh)
-942. [ ] Balancing-Ziele pro Gebiet
+942. [x] Balancing-Ziele pro Gebiet (BALANCE.md Ziele pro Gebiet aus act_route.json, test_act_difficulty Grind-Budget je Akt)
 943. [ ] Balancing: Anfänger-Spirlings gleich stark
 944. [x] Balancing: keine Pflicht-Spirlings (Band 30-70 % je Art, test_balance)
 945. [x] Balancing: jede Technik hat einen Zweck (seltene Techniken im Team-Bericht)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-986 von 1000 Punkten umgesetzt.
+987 von 1000 Punkten umgesetzt.
 
