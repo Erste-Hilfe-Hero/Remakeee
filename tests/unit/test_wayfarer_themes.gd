@@ -67,32 +67,23 @@ func test_wayfarer_book_shows_the_theme() -> void:
 	WayfarerBook.note(_npc("bellows_deep", "fuse"), "bellows_deep", true, 4)
 	assert_string_contains(WayfarerBook.page("2026-11-14"), "Ember, Field tricks")
 
-## Item 522: from Veteran the lead lays the field of the team's element; Tamer stays as it was.
+## Item 522: from Veteran the lead lays the field of the team's element and the next one brings the
+## tactic's art; Tamer stays as written.
 func test_veteran_teams_play_together() -> void:
-	var bram: Dictionary = _npc("crowcrest", "bram")
-	assert_false(bram.has("tactic"))
-	var tamer: Array[Spirling] = _team(bram, TAMER)
+	var def: Dictionary = {"trainer": "T", "profile": "wall",
+		"team": [{"species": "Cindle", "level": 20}, {"species": "Kindlop", "level": 20}]}
+	assert_eq(WayfarerThemes.element_of(def), "EMBER")
+	var tamer: Array[Spirling] = _team(def, TAMER)
 	var rng := RandomNumberGenerator.new()
-	rng.seed = 521
-	var raw: Array[Spirling] = []
 	for s: Spirling in tamer:
-		raw.append(Spirling.new(s.data, s.level, rng))
-	for i: int in tamer.size():
-		assert_eq(_names(tamer[i]), _names(raw[i]), "no theme arts on Tamer")
-	assert_eq(WayfarerThemes.art_kinds(bram, TAMER), [])
-	var vet: Array[Spirling] = _team(bram, GameState.Difficulty.VETERAN)
-	var lead: MoveData = null
-	for mv: MoveData in vet[0].moves:
-		if WayfarerThemes.is_kind(mv, "field"):
-			lead = mv
-	var el: String = WayfarerThemes.element_of(bram)
-	var has_field_art: bool = WayfarerThemes.pick_art("field", vet[0], el) != null
-	if has_field_art:
-		assert_not_null(lead, "the lead lays the field")
-		assert_eq(String(Elements.E.keys()[lead.element]), el, "the field of the team's own element")
-	assert_eq(vet[0].moves.size(), Spirling.MAX_MOVES)
-	assert_false(WayfarerThemes.line(bram, GameState.Difficulty.VETERAN).is_empty())
-	assert_true(WayfarerThemes.line(bram, TAMER).is_empty())
+		assert_eq(_names(s), _names(Spirling.new(s.data, s.level, rng)), "no theme arts on Tamer")
+	assert_eq(WayfarerThemes.art_kinds(def, TAMER), [])
+	assert_true(WayfarerThemes.line(def, TAMER).is_empty())
+	var vet: Array[Spirling] = _team(def, GameState.Difficulty.VETERAN)
+	assert_true(_names(vet[0]).has("Ash Call"), "the lead lays the Ember field: " + str(_names(vet[0])))
+	assert_true(_has_kind(vet[1], "stages"), "a wall team raises its stages: " + str(_names(vet[1])))
+	assert_lte(vet[0].moves.size(), Spirling.MAX_MOVES)
+	assert_eq(str(WayfarerThemes.line(def, GameState.Difficulty.VETERAN)), "Give me three turns. You won't get a fourth.")
 
 func test_no_synergy_for_wardens_hordes_or_own_blocks() -> void:
 	var def: Dictionary = {"trainer": "T", "team": [{"species": "Cindle", "level": 20}]}
