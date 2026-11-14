@@ -4,7 +4,7 @@ extends RefCounted
 ## rule the battle model follows, with its numbers read from the constants that the model uses,
 ## so the page can never drift from the game. Always open, nothing has to be collected first.
 
-const PAGES: Array[String] = ["Turn order", "End of a turn", "Energy", "Fields", "Fleeing", "Warden rules", "Story and bosses"]
+const PAGES: Array[String] = ["Turn order", "End of a turn", "Energy", "Fields", "Fleeing", "Warden rules", "Story and bosses", "How foes think"]
 
 static func titles() -> Array[String]:
 	var out: Array[String] = []
@@ -22,6 +22,7 @@ static func page(i: int) -> Array[String]:
 		4: return fleeing()
 		5: return warden_rules()
 		6: return story_and_bosses()
+		7: return foe_minds()
 	return []
 
 ## The highest priority any art has (moves.json).
@@ -110,3 +111,23 @@ static func story_and_bosses() -> Array[String]:
 		Loc.t("On Story Rest also mends %d%% of a Spirling's Vigor.") % roundi(BattleModel.STORY_REST_HEAL * 100.0),
 		Loc.t("A Rift boss fight ends after %d turns: the Rift closes again and you can come back.") % BattleModel.BOSS_ROUND_LIMIT,
 	]
+
+## The four AI tiers (KAMPF_PLAN_1000 item 472), which tier each difficulty uses, and the fairness
+## rules every tier keeps (items 453, 476, 477).
+static func foe_minds() -> Array[String]:
+	var out: Array[String] = [
+		Loc.t("Wild Spirlings always pick at random."),
+		Loc.t("Tier 0 picks any art it can pay. Mostly it just bites."),
+		Loc.t("Tier 1 picks the art that hurts most right now and never passes up a knock-out."),
+		Loc.t("Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup."),
+		Loc.t("Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, leaves a field that weakens all its arts, guesses your swap and saves Energy up to %d turns ahead.") % int(BattleAI.rule_num("plan_turns", 1.0)),
+	]
+	for d: int in GameState.AI_LEVELS.size():
+		out.append(Loc.t("%s: Wayfarers think at tier %d.") % [Loc.t(MenuHost.DIFFICULTY_TEXT[d]), GameState.AI_LEVELS[d]])
+	out.append_array([
+		Loc.t("Some Wayfarers have a temper of their own: a hothead never swaps, a tactician saves up."),
+		Loc.t("Foes never see your order or the next roll, and guess swaps only among Spirlings you have shown."),
+		Loc.t("At tier 3 the damage guess is the very number your art preview shows."),
+		Loc.t("Two arts worth the same at tier 3? The battle seed decides, the same seed always the same way."),
+	])
+	return out

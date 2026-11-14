@@ -617,8 +617,7 @@ static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = fals
 static func damage_pct(model: BattleModel, me: Spirling, foe: Spirling, mv: MoveData) -> int:
 	if not mv.is_damaging() or foe == null:
 		return -1
-	var hit: MoveData = BattleRules.resolve_move(mv, model.field)
-	var dmg: float = DamageCalc.estimate(me, foe, hit) * BattleRules.damage_mult(me, foe, hit, model.field)
+	var dmg: float = BattleRules.expected_damage(me, foe, mv, model.field)
 	return clampi(roundi(dmg * 100.0 / float(maxi(foe.max_hp(), 1))), 1, 100)
 
 ## Power multiplier an Overcharge art [param mv] of [param me] would have if used now (the
@@ -726,6 +725,10 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 	_run.disabled = not BattleAction.Kind.RUN in kinds
 	# A Trial can be restarted at any time (item 708).
 	_run.text = "Restart" if model.has_meta("puzzle_max") else "Leave"
+	# Against a Wayfarer the button gives up the battle, after a yes (KAMPF_PLAN_1000 item 8).
+	if TurnFlow.can_forfeit(model) and not model.is_partner_slot(BattleModel.Side.PLAYER, slot):
+		_run.text = "Give up"
+		_run.disabled = false
 	_fit_command(_run)
 	if model.has_meta("puzzle_max"):
 		_run.disabled = false

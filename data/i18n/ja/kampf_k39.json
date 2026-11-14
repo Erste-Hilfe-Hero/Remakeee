@@ -1,0 +1,12 @@
+{
+ "_comment": "Japanese texts for the German table kampf_k39. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "Diamond": "ひし形",
+  "Square": "四角",
+  "Triangle": "三角",
+  "Moon": "月",
+  "The call: %s.": "呼びかけ：%s。",
+  "Echo with the keys: left %s, up %s, right %s.": "キーでこたえる：左 %s、上 %s、右 %s。",
+  "Any tap or the accept key counts.": "どこをタップしても、決定キーでもOK。"
+ }
+}
