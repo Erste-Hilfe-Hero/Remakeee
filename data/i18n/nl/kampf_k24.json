@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table kampf_k24, written by tools/i18n/locales_kampf_k24.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s kinds hold %d more Energy (%d in all).": "%s-soorten houden %d Energie meer vast (%d in totaal).",
+  "+%d%% power for each Energy spent on arts this battle, up to %d.": "+%d%% kracht voor elke Energie die deze strijd aan technieken is uitgegeven, tot %d.",
+  "A Soaked Spirling loses 2 Energy at the end of each turn.": "Een doorweekte Spirling verliest aan het eind van elke beurt 2 Energie.",
+  "A Spirling that fought and waits on the bench gains 1 Energy each turn too. Swapping out is a rest with an alibi.": "Een Spirling die gevochten heeft en op de bank wacht, krijgt ook elke beurt 1 Energie. Wisselen is rusten met een alibi.",
+  "A Spirling that has fought gains %d Energy each turn while it waits on the bench.": "Een Spirling die al gevochten heeft, krijgt elke beurt %d Energie zolang hij op de bank wacht.",
+  "Damp Sparks": "Natte Vonken",
+  "It has paid too much to stop now. Every Energy it spent on arts this battle makes it hit harder.": "Het heeft te veel betaald om nu te stoppen. Elke Energie die het deze strijd aan technieken uitgaf, laat het harder raken.",
+  "Low on Energy": "Weinig Energie",
+  "Pick Rest: it skips its art but gains 2 Energy on top of the turn's 1. The foe will not wait politely.": "Kies Rusten: hij slaat zijn techniek over maar krijgt 2 Energie bovenop de 1 van de beurt. De tegenstander wacht niet beleefd.",
+  "Resting": "Rusten",
+  "Sunk Cost": "Verzonken Kosten",
+  "The water seeps into %s: it loses %d Energy!": "Het water trekt in %s: het verliest %d Energie!",
+  "Tip: Watch the pips fill back up. Resting is how Energy comes home.": "Tip: kijk hoe de puntjes weer vollopen. Door te rusten komt Energie thuis.",
+  "Tip: Your Spirling is running low on Energy. An art it can't pay won't go off.": "Tip: je Spirling raakt door zijn Energie heen. Een techniek die hij niet kan betalen, gaat niet af."
+ }
+}

@@ -1157,6 +1157,9 @@ func _play_event(e: BattleEvent) -> void:
 	if e.type == BattleEvent.Type.BATTLE_START:
 		battle_report.begin(model.field)
 	battle_report.add(e)
+	# After a Rest the Energy flows back pip by pip (KAMPF_PLAN_1000 item 73).
+	if e.type == BattleEvent.Type.REST and _strip(side, slot) is InfoStrip:
+		(_strip(side, slot) as InfoStrip).flow_next = true
 	match e.type:
 		BattleEvent.Type.BATTLE_START:
 			var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)

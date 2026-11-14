@@ -85,7 +85,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 47. [x] Energie-Sperre-Status: eine Runde kein Energiegewinn (Effekt energy_lock, Fuse Snap)
 48. [x] Trait 'Sparflamme': Techniken ab 5 Energie kosten 1 weniger (Trait low_flame)
 49. [x] Trait 'Überladen': bei voller Energie +10 % Schaden (Trait overflow)
-50. [ ] Maximale Energie pro Art leicht variieren (10 bis 12)
+50. [x] Maximale Energie pro Art leicht variieren (10 bis 12) (EnergyKit.role_cap: Weaver 12, Vanguard 11)
 51. [x] Energie-Leiste als Ziffer für Screenreader (InfoStrip.screen_reader_text)
 52. [x] Rasten heilt auf Story-Stufe zusätzlich 5 % HP (BattleModel.rest_heal_share)
 53. [x] Gegner-Energie im Info-Streifen anzeigen (bestehend, Lexikon erwähnen) (InfoStrip, RulesBook.energy)
@@ -99,20 +99,20 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 61. [x] Energie-Kosten-Balance über den Balancing-Simulator prüfen (BalanceSim.ENERGY_PER_ART_BAND)
 62. [x] KI berücksichtigt Energie für den nächsten Zug (zwei Züge vorausplanen) (BattleAI plan_energy)
 63. [x] KI rastet gezielt, wenn eine starke Technik bald bezahlbar ist (BattleAI plan_energy, PLAN_MARGIN)
-64. [ ] Energie-Tutorial im ersten Wildkampf
+64. [x] Energie-Tutorial im ersten Wildkampf (Tips energy_low, energy_rest, EnergyKit.tip_for)
 65. [x] Hinweis, wenn eine Technik nie bezahlbar ist (Energie-Max zu klein) (CommandMenu.move_line 'never')
 66. [x] Gegenstand 'Funkentrank' gibt +3 Energie (prüfen, ob bestehend) (Spark Drop +5)
-67. [ ] Energie-Regeneration bei Wechsel auf die Bank: +1 pro Runde auf der Bank
+67. [x] Energie-Regeneration bei Wechsel auf die Bank: +1 pro Runde auf der Bank (EnergyKit.bench_tick)
 68. [x] Energie-Startwert pro Schwierigkeit anpassen (BattleRules.FOE_START_CUT)
 69. [x] Overcharge in Bosskämpfen begrenzen (max. +5) (OVERCHARGE_MAX_EXTRA gilt überall)
 70. [x] Energie-Kosten im Lexikon jeder Technik (CommandMenu.move_info)
 71. [x] Energie-Symbol farbenblind-sicher mit Form statt Farbe (InfoStrip: volle Pips gefüllt, leere als Umriss)
-72. [ ] Energie-Pips größer im Einhand-Modus
-73. [ ] Animation: Energie fließt beim Rasten sichtbar zurück
-74. [ ] Energieverlust durch Status 'Soak' als Option prüfen
+72. [x] Energie-Pips größer im Einhand-Modus (EnergyKit.pip_size, InfoStrip)
+73. [x] Animation: Energie fließt beim Rasten sichtbar zurück (InfoStrip.flow_look, EnergyKit.flow_lit)
+74. [x] Energieverlust durch Status 'Soak' als Option prüfen (Regelvariante Damp Sparks, soak_drain)
 75. [x] Feld 'Statischer Schleier' (neu): Volt-Techniken kosten 1 weniger (cheap_element, nur als Feld des Ortes)
 76. [x] Energie-Statistik im Kampfende-Bericht (BattleSummary.energy_spent)
-77. [ ] Techniken mit variabler Stärke nach verbrauchter Energie (bestehend: Overcharge) erweitern
+77. [x] Techniken mit variabler Stärke nach verbrauchter Energie (bestehend: Overcharge) erweitern (Sunk Cost, spent_scale)
 78. [x] Energie als Ziel für Gegenstand 'Ruhekerze' (Item rest_candle)
 79. [x] Online-Duelle: gleiche Energie-Regeln, keine Ausnahmen (LiveBattleModel nutzt BattleModel, RulesBook)
 80. [x] Energie-Werte in den Balancing-Bericht aufnehmen (BalanceSim.energy_line)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-881 von 1000 Punkten umgesetzt.
+888 von 1000 Punkten umgesetzt.
 

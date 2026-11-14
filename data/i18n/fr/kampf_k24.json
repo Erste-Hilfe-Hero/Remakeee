@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table kampf_k24, written by tools/i18n/locales_kampf_k24.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s kinds hold %d more Energy (%d in all).": "Les espèces %s stockent %d Énergie de plus (%d en tout).",
+  "+%d%% power for each Energy spent on arts this battle, up to %d.": "+%d%% de puissance par Énergie dépensée en techniques dans ce combat, jusqu'à %d.",
+  "A Soaked Spirling loses 2 Energy at the end of each turn.": "Un Spirling trempé perd 2 Énergie à la fin de chaque tour.",
+  "A Spirling that fought and waits on the bench gains 1 Energy each turn too. Swapping out is a rest with an alibi.": "Un Spirling qui a combattu et attend sur le banc gagne aussi 1 Énergie par tour. Changer, c'est se reposer avec un alibi.",
+  "A Spirling that has fought gains %d Energy each turn while it waits on the bench.": "Un Spirling qui a déjà combattu gagne %d Énergie par tour tant qu'il attend sur le banc.",
+  "Damp Sparks": "Étincelles Humides",
+  "It has paid too much to stop now. Every Energy it spent on arts this battle makes it hit harder.": "Il a trop payé pour s'arrêter maintenant. Chaque Énergie dépensée en techniques dans ce combat le fait frapper plus fort.",
+  "Low on Energy": "Peu d'Énergie",
+  "Pick Rest: it skips its art but gains 2 Energy on top of the turn's 1. The foe will not wait politely.": "Choisis Repos: il saute sa technique mais gagne 2 Énergie en plus du 1 du tour. L'adversaire n'attendra pas poliment.",
+  "Resting": "Repos",
+  "Sunk Cost": "Coût Perdu",
+  "The water seeps into %s: it loses %d Energy!": "L'eau s'infiltre dans %s: il perd %d Énergie!",
+  "Tip: Watch the pips fill back up. Resting is how Energy comes home.": "Astuce: regarde les points se remplir. C'est en se reposant que l'Énergie rentre à la maison.",
+  "Tip: Your Spirling is running low on Energy. An art it can't pay won't go off.": "Astuce: ton Spirling manque d'Énergie. Une technique qu'il ne peut pas payer ne part pas."
+ }
+}

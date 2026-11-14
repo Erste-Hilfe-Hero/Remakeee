@@ -346,4 +346,4 @@ static func tip_for(e: BattleEvent) -> String:
 			return "resonance"
 		BattleEvent.Type.BOSS_PHASE:
 			return "boss_phase"
-	return ""
+	return EnergyKit.tip_for(e)

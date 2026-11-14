@@ -344,6 +344,9 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 		var charged: float = expected * (1.0 + BattleRules.OVERCHARGE_PER_ENERGY * extra)
 		if charged >= float(target.hp):
 			expected = charged
+	# A spent_scale art counts with the Energy already paid (item 77).
+	if mv.spent_scale:
+		expected *= EnergyKit.spent_mult(EnergyKit.spent_of(model, me))
 	var delayed: bool = false
 	for fx: Dictionary in mv.effects:
 		delayed = delayed or StringName(fx.get("id", "")) == &"delayed_hit"

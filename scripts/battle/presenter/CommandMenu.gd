@@ -369,6 +369,8 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 		lines.append(Loc.t("Reaches every foe."))
 	if mv.overcharge:
 		lines.append(Loc.t("Spends all leftover Energy for more power."))
+	if mv.spent_scale:
+		lines.append(Loc.t("+%d%% power for each Energy spent on arts this battle, up to %d.") % [roundi(EnergyKit.num("spent_per", 0.04) * 100.0), int(EnergyKit.num("spent_max", 15.0))])
 	if mv.cooldown > 0:
 		lines.append(Loc.t("Locked for %d turns after each use.") % mv.cooldown)
 	if mv.ignore_daze:
@@ -603,6 +605,9 @@ static func damage_pct(model: BattleModel, me: Spirling, foe: Spirling, mv: Move
 ## Power multiplier an Overcharge art [param mv] of [param me] would have if used now (the
 ## Energy left after its cost, plus the chain bonus); 0.0 for any other art (KAMPF_PLAN item 45).
 static func overcharge_now(model: BattleModel, me: Spirling, mv: MoveData) -> float:
+	# A spent_scale art shows its growth the same way (item 77).
+	if mv.spent_scale and me != null:
+		return EnergyKit.spent_mult(EnergyKit.spent_of(model, me))
 	if not mv.overcharge or me == null:
 		return 0.0
 	var chained: bool = model.turn > 0 and me.overcharge_turn == model.turn - 1
@@ -655,7 +660,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 				pct = mini(100, roundi(pct * oc))
 			var sc: Dictionary = status_chance(model, foe, mv) if pct >= 0 else {}
 			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct, me.move_cost(mv), me.cooldown_left(mv),
-				model.max_energy_of(BattleModel.Side.PLAYER), oc, int(sc.get("pct", -1)), str(sc.get("status", "")))
+				model.energy_cap_of(BattleModel.Side.PLAYER, me), oc, int(sc.get("pct", -1)), str(sc.get("status", "")))
 			var filled: bool = EraBattleHud.flag(era, "art_fill")
 			_row_elements[i] = mv.element
 			# On the element chip (Era III on) the symbol stands in ink on paper, else in its colour.

@@ -116,5 +116,13 @@
    "full_charge"
   ],
   "symbol": "wedge"
+ },
+ "damp_sparks": {
+  "label": "Damp Sparks",
+  "text": "A Soaked Spirling loses 2 Energy at the end of each turn.",
+  "keys": {
+   "soak_drain": 2
+  },
+  "symbol": "drop"
  }
 }

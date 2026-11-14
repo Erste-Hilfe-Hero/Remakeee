@@ -446,6 +446,8 @@ const VARIANT_KEYS: Dictionary[String, float] = {
 	"field_swirl_every": 0.0,
 	# 1: Rest is only there when no art can be paid, as a plain pass (item 792).
 	"rest_only_as_pass": 0.0,
+	# Energy a Soaked Spirling in front loses at each turn end (Damp Sparks, KAMPF_PLAN item 74).
+	"soak_drain": 0.0,
 }
 
 ## True for an art that does nothing but change stages (locked by "stages_locked").
@@ -460,7 +462,7 @@ static func stage_only(mv: MoveData) -> bool:
 static var _variants: Dictionary = {}
 ## Seals the rule banner can draw for a variant (item 796); each variant names its own.
 const VARIANT_SYMBOLS: Array[String] = ["spark", "full", "toll", "glass", "block", "ring", "bars", "cross",
-	"hourglass", "line", "swirl", "wedge"]
+	"hourglass", "line", "swirl", "wedge", "drop"]
 
 ## Every variant from data/rule_variants.json (cached). Unknown keys and one-sided excludes are
 ## reported by validate_variants.

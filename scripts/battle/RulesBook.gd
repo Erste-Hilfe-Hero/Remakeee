@@ -54,7 +54,7 @@ static func end_of_turn() -> Array[String]:
 	]
 
 static func energy() -> Array[String]:
-	return [
+	var out: Array[String] = [
 		Loc.t("Every Spirling starts with %d Energy and holds at most %d.") % [Spirling.START_ENERGY, Spirling.MAX_ENERGY],
 		Loc.t("Rest gives +%d Energy on top of the turn's own.") % BattleModel.REST_ENERGY,
 		Loc.t("Swapping costs no Energy. Each Spirling keeps its own Energy on the bench."),
@@ -64,6 +64,10 @@ static func energy() -> Array[String]:
 		Loc.t("On Story the foe's Spirlings start with %d Energy less.") % BattleRules.foe_start_cut(GameState.Difficulty.STORY),
 		Loc.t("Live duels and leagues use the very same Energy rules."),
 	]
+	# KAMPF_PLAN_1000 items 50 and 67: the most Energy per role, the bench catching its breath.
+	out.append_array(EnergyKit.role_lines())
+	out.append(Loc.t("A Spirling that has fought gains %d Energy each turn while it waits on the bench.") % int(EnergyKit.num("bench_regen", 1.0)))
+	return out
 
 static func fields() -> Array[String]:
 	var out: Array[String] = []
