@@ -1,5 +1,5 @@
 {
- "_doc": "Player route for the act difficulty simulator (scripts/core/ActSim.gd, tools/balance_sim.gd --mode acts, tests/unit/test_act_difficulty.gd). Owner rule (Nov 2026): every act and era region is hard. Steps in play order: wild (an encounter table or regionN:route; bonds bond_per_table new kinds there and plays 'battles' wild battles, default incidental), fight (a Wayfarer the route passes: map:npc, story:id; played for XP, up to 3 tries) and boss (a Warden, rival or boss that is measured: win rate on arrival, after moderate_grind wild battles, and the grind battles until grind_target). Hearts (kind heart, the Rift boss the whole team faces at once right after its Warden) are reported but left out of the act means. bands: win on arrival (mean per act) and after the moderate grind, the steepening order of the acts, and the newcomer fights that stay easy. Tamer, no level cap.",
+ "_doc": "Player route for the act difficulty simulator (scripts/core/ActSim.gd, tools/balance_sim.gd --mode acts, tests/unit/test_act_difficulty.gd). Owner rule (Nov 2026): every act and era region is hard. Steps in play order: wild (an encounter table or regionN:route; bonds bond_per_table new kinds there and plays 'battles' wild battles, default incidental), fight (a Wayfarer the route passes: map:npc, story:id; played for XP, up to 3 tries) and boss (a Warden, rival or boss that is measured: win rate on arrival, after moderate_grind wild battles, and the grind battles until grind_target). Hearts (kind heart, the Rift boss the whole team faces at once right after its Warden) are reported but left out of the act means. bands: win on arrival (mean per act) and after the moderate grind, the steepening order of the acts, and the newcomer fights that stay easy; starters_even lists the acts that every starter alone must clear within the act's moderate_grind (win after the grind and mean grind battles to grind_target). docs/BALANCE.md 'Ziele pro Gebiet' is generated from this file. Tamer, no level cap.",
  "starters": [
   "Kindlop",
   "Zippit",
@@ -28,7 +28,10 @@
    "gloamwood:olek",
    "gloamwood:sorrel"
   ],
-  "newcomer_ring_max": 7
+  "newcomer_ring_max": 7,
+  "starters_even": [
+   "act1"
+  ]
  },
  "acts": [
   {

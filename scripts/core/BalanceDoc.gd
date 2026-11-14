@@ -7,7 +7,7 @@ extends RefCounted
 
 const DOC_PATH: String = "res://docs/BALANCE.md"
 ## Sections built from data only (fast, checked by the test).
-const DATA_SECTIONS: Array[String] = ["difficulty", "profiles", "variants", "ref_teams", "growth"]
+const DATA_SECTIONS: Array[String] = ["difficulty", "profiles", "variants", "ref_teams", "growth", "act_targets"]
 ## Sections that need simulator runs (rewritten by run_all.sh only).
 const SIM_SECTIONS: Array[String] = ["changes", "report_lv36"]
 
@@ -61,6 +61,8 @@ static func section(name: String) -> String:
 			return ref_teams_table()
 		"growth":
 			return GrowthRules.curve_table(GROWTH_DOC_YIELD)
+		"act_targets":
+			return act_targets_table()
 	return ""
 
 ## Item 875: what each difficulty does to a foe.
@@ -176,6 +178,25 @@ static func variants_table() -> String:
 			v.get("symbol", ""), v.get("text", "")])
 	out.append("")
 	out.append("At most %d variants at once; a Rift Tower floor draws 1 from floor 6 and 2 in the third section." % BattleRules.MAX_VARIANTS)
+	return "\n".join(out)
+
+## KAMPF_PLAN_1000 items 942 and 943: the targets per act and era region of
+## tools/balance/act_route.json, checked by test_act_difficulty.gd.
+static func act_targets_table() -> String:
+	var cfg: Dictionary = ActSim.route()
+	var b: Dictionary = cfg.get("bands", {})
+	var arr: Array = b.get("win_arrival", [0.0, 0.0])
+	var even: Array = b.get("starters_even", [])
+	var out: PackedStringArray = ["| Act | Grind budget (wild battles per fight) | Win on arrival | Win after the budget | Mean grind to %d %% | Every starter alone |" % roundi(float(cfg.get("grind_target", 0.7)) * 100.0),
+		"| --- | --- | --- | --- | --- | --- |"]
+	for a: Dictionary in cfg.get("acts", []):
+		var budget: int = int(a.get("moderate_grind", cfg.get("moderate_grind", 0)))
+		out.append("| %s | %d | %d-%d %% | %d %%+ | at most %d | %s |" % [a.get("name", a.id), budget, roundi(float(arr[0]) * 100.0), roundi(float(arr[1]) * 100.0),
+			roundi(float(b.get("win_moderate_min", 0.0)) * 100.0), budget, "yes" if str(a.id) in even else "-"])
+	out.append("")
+	out.append("Every act is at most as easy on arrival as the one before (margin %d points). No measured Warden, rival or boss is won more than %d %% on arrival, and none stays under %d %% after %d grind battles (a wall). Hearts are left out of the means. Starters: %s, each from ring %d." % [
+		roundi(float(b.get("steeper_margin", 0.0)) * 100.0), roundi(float(b.get("fight_arrival_max", 0.0)) * 100.0),
+		roundi(float(cfg.get("grind_target", 0.7)) * 100.0), int(cfg.get("grind_max", 0)), ", ".join(PackedStringArray(cfg.get("starters", []))), int(cfg.get("start_ring", 5))])
 	return "\n".join(out)
 
 ## Item 880: the reference teams of the Warden simulator.

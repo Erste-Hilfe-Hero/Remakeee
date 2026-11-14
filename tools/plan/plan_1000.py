@@ -996,7 +996,7 @@ AREAS = [
 "[x] IP-Prüfung (bestehend) für neue Namen (tools/ip_check.sh)",
 "[x] Originalitäts-Zahlen (bestehend) nicht verändern (test_originality)",
 "[x] Balance-Dokumentation aktualisieren (tools/balance/run_all.sh)",
-"Balancing-Ziele pro Gebiet",
+"[x] Balancing-Ziele pro Gebiet (BALANCE.md Ziele pro Gebiet aus act_route.json, test_act_difficulty Grind-Budget je Akt)",
 "Balancing: Anfänger-Spirlings gleich stark",
 "[x] Balancing: keine Pflicht-Spirlings (Band 30-70 % je Art, test_balance)",
 "[x] Balancing: jede Technik hat einen Zweck (seltene Techniken im Team-Bericht)",
