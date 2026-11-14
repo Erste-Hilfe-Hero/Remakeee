@@ -1079,6 +1079,33 @@
    "reward": 50,
    "stat": "record:echo_duel_wins",
    "n": 25
+  },
+  {
+   "id": "boss_ashen_heart",
+   "title": "Banked Embers",
+   "text": "Beat the Ashen Heart. The smiths still want their cut.",
+   "cat": "battle",
+   "reward": 25,
+   "stat": "boss_wins:ashen_heart",
+   "n": 1
+  },
+  {
+   "id": "boss_drowned_heart",
+   "title": "Last Passenger",
+   "text": "Beat the Drowned Heart. Nobody reads the passenger list twice.",
+   "cat": "battle",
+   "reward": 25,
+   "stat": "boss_wins:drowned_heart",
+   "n": 1
+  },
+  {
+   "id": "boss_mist_heart",
+   "title": "Clear Weather",
+   "text": "Beat the Mist Heart. What it hid is everyone's problem now.",
+   "cat": "battle",
+   "reward": 25,
+   "stat": "boss_wins:mist_heart",
+   "n": 1
   }
  ]
 }

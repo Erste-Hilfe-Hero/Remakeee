@@ -499,10 +499,10 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 434. [ ] Boss: Prisma-Variante im Endgame
 435. [ ] Boss: Online-Rangliste nach Zügen
 436. [ ] Boss: Wochen-Boss
-437. [ ] Boss: Saison-Boss zu Festen (bestehend: Feste)
+437. [x] Boss: Saison-Boss zu Festen (bestehend: Feste) (FestivalBoss: Echo eines besiegten Rissherzens beim Ausrufer, data/festival_bosses.json)
 438. [x] Boss: Nach dem Sieg Lore-Seite (erledigt: Lexikon-Seite nach dem ersten Sieg (Overworld.after_tamer_win))
-439. [ ] Boss: Achievement pro Boss
-440. [ ] Boss: Replay speichern
+439. [x] Boss: Achievement pro Boss (Erfolge boss_<id>, Stat boss_wins:)
+440. [x] Boss: Replay speichern (BossRules.keep_replay: schnellster Sieg pro Boss, Rekorde > Boss-Wiederholungen)
 
 ## Gegner-KI
 
@@ -516,7 +516,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 448. [x] KI nutzt Heil-Techniken gezielt (bestand: heal_self und mend unter heal_below)
 449. [x] KI schont Spirlings mit wenig HP für später (erledigt: BattleAI.SPARE_HP bei der Ersatzwahl)
 450. [x] KI-Persönlichkeiten pro Wayfarer (vorsichtig, wild, taktisch) (bestand: data/ai_profiles.json)
-451. [ ] KI-Debug-Ansicht für Entwickler
+451. [x] KI-Debug-Ansicht für Entwickler (AiNotes.TABLE, Start mit -- --ai-debug: alle Technik-Werte im Kampflog)
 452. [x] KI-Tests pro Verhalten (bestand: test_ai*.gd, neu test_kampf_boss_ai.gd)
 453. [ ] KI liest nur, was der Spieler auch sieht (keine versteckten Werte)
 454. [x] KI-Zufall in Stufe 0 bleibt (Wildkämpfe) (bestand: Plan 5000 Punkt 625)
@@ -527,12 +527,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 459. [x] KI-Gegenstand-Nutzung begrenzen (max. 2 pro Kampf) (erledigt: BattleAI.ITEM_LIMIT)
 460. [x] KI nutzt Overcharge, wenn es zum K.o. reicht (erledigt: BattleAI.score_move)
 461. [x] KI vermeidet Rückstoß-Techniken bei wenig HP (erledigt: BattleAI.RECOIL_W unter 35 %)
-462. [ ] KI im Boss-Kampf mit Phasen-Logik
+462. [x] KI im Boss-Kampf mit Phasen-Logik (BossRules.AI_PHASE: Haltefeld brechen, offen und letzte Phase ohne Aufbau)
 463. [x] KI im Schwarm koordiniert (verschiedene Ziele) (erledigt: sichere K.o.-Ziele werden pro Runde vergeben)
 464. [x] KI-Balance: Gewinnrate im Simulator pro Stufe messen (bestand: BalanceSim Modus ladder)
 465. [x] KI-Gewinnrate-Ziel pro Schwierigkeit dokumentieren (bestand: tools/balance/targets.json, BalanceDoc)
 466. [ ] KI-Laufzeit unter 5 ms pro Entscheidung (Handy)
-467. [ ] KI-Entscheidungen im Replay nachvollziehbar
+467. [x] KI-Entscheidungen im Replay nachvollziehbar (AiNotes.REASON: Wahl und Wert gegen die beste Alternative)
 468. [x] KI-Texte: Wayfarer kommentiert gute Züge (bestand: data/dialogue/battle_lines.json)
 469. [x] KI meidet Felder, die dem Spieler helfen (bestand: BattleAI.field_value)
 470. [ ] KI erkennt eigene Feldschwäche und wechselt
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-914 von 1000 Punkten umgesetzt.
+920 von 1000 Punkten umgesetzt.
 
