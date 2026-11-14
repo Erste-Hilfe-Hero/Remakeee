@@ -84,6 +84,8 @@ var _push_again: Dictionary = {}
 var _save_gen: Dictionary = {}
 ## Seconds without connection while playing, and reconnect tries so far (reconnect screen).
 var _store_url: String = ""
+## In-game updates: Play in-app update, itch.io APK download, App Store page (AppUpdater.gd).
+var updater: AppUpdater
 var _offline_for: float = 0.0
 var _tries: int = 0
 
@@ -98,6 +100,8 @@ func _ready() -> void:
 	_overlay.try_now.connect(retry_now)
 	_overlay.to_title.connect(_to_title)
 	wait_dots = WaitDots.new()
+	updater = AppUpdater.new()
+	add_child(updater)
 	add_child(wait_dots)
 
 ## The real server if data/online.json names one, otherwise the local stand-in.
@@ -244,8 +248,8 @@ func update_state() -> String:
 	LiveContent.ensure_loaded(CLIENT_VERSION_NAME)
 	return LiveContent.update_state(LiveContent.data, LiveContent.platform(), CLIENT_VERSION_NAME, store_version)
 
-## Asks the App Store for its current version (iOS). Android has no such lookup without the
-## Play Core library; there the patch's "latest.android" decides.
+## Asks the App Store for its current version (iOS). On Android the Play in-app update API
+## (AppUpdater) and the patch's "latest.android" decide.
 func check_store() -> void:
 	if LiveContent.platform() != "ios" or not is_inside_tree():
 		return

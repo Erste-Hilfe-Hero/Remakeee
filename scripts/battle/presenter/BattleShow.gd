@@ -77,6 +77,11 @@ static func banner_title(e: BattleEvent) -> String:
 				label = str(BattleRules.FIELDS.get(str(e.data.get("field", "")), {}).get("label", ""))
 			return label
 		BattleEvent.Type.BOSS_PHASE:
+			# Item 900: the weak point and the rage get their own words, not a second "awakens".
+			if bool(e.data.get("rage", false)):
+				return "%s rages" % str(e.data.get("name", ""))
+			if bool(e.data.get("weak", false)):
+				return "%s lies open" % str(e.data.get("name", ""))
 			return "%s awakens" % str(e.data.get("name", ""))
 		BattleEvent.Type.PARTNER:
 			return "Side by side: %s" % str(e.data.get("partner", ""))
@@ -194,7 +199,7 @@ func on_event(e: BattleEvent) -> void:
 	var slot: int = int(e.data.get("slot", 0))
 	var title: String = banner_title(e)
 	if not title.is_empty():
-		show_banner(title)
+		show_banner(title, e.type == BattleEvent.Type.BOSS_PHASE)
 	match e.type:
 		BattleEvent.Type.SEND_OUT, BattleEvent.Type.SWAP_IN:
 			stages.erase(_key(side, slot))
@@ -359,17 +364,27 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		_outro_closed.emit()
 
-## Shows [param title] on the show banner for banner_time (scaled by the battle speed).
-func show_banner(title: String) -> void:
+## Seconds a banner with [param text] stays at battle speed [param speed] (items 899, 900):
+## banner_time scaled by the speed, but never less than banner_read.min plus banner_read.per_char
+## for each letter, so a field or boss phase banner can be read at 4x too.
+static func banner_seconds(text: String, speed: float) -> float:
+	var read: Dictionary = cfg().get("banner_read", {})
+	var least: float = float(read.get("min", 0.9)) + float(read.get("per_char", 0.035)) * text.length()
+	return maxf(float(cfg().get("banner_time", 1.1)) / maxf(speed, 0.01), least)
+
+## Shows [param title] on the show banner for banner_seconds. [param phase]: a boss phase, drawn
+## with the split seal so it reads apart from a field banner.
+func show_banner(title: String, phase: bool = false) -> void:
 	banners.append(title)
 	if banner == null or scene._field == null:
 		return
-	banner.show_rule(Loc.t(title), false, scene._field.size.x, roundf(scene._field.size.y * 0.42))
+	var shown: String = Loc.t(title)
+	banner.show_rule(shown, phase, scene._field.size.x, roundf(scene._field.size.y * 0.42))
 	_banner_id += 1
 	var id: int = _banner_id
 	if not is_inside_tree():
 		return
-	await get_tree().create_timer(float(cfg().get("banner_time", 1.1)) / Juice.speed()).timeout
+	await get_tree().create_timer(banner_seconds(shown, Juice.speed())).timeout
 	if id == _banner_id and is_instance_valid(banner):
 		banner.visible = false
 

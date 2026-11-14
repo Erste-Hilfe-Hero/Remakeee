@@ -105,6 +105,8 @@ func _init(p_store_path: String = "") -> void:
 	LocalClimb.install(self)
 	# Weekly boss boards by rounds for the heart stair and the prism heart (20261114032010_kampf_k32.sql).
 	LocalBossBoard.install(self)
+	# Matchup notes by Lantern Mail (KAMPF_PLAN_1000 item 107, 20261114120260_matchup_notes.sql).
+	MatchupNotes.install(self)
 
 func is_local() -> bool:
 	return true
