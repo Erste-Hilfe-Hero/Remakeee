@@ -243,7 +243,7 @@ static func page_text(sd: SpirlingData, spirlog: Dictionary) -> String:
 	var lines: PackedStringArray = []
 	var els: PackedStringArray = []
 	for el: int in sd.elements:
-		els.append(Elements.element_name(el))
+		els.append(Loc.t(Elements.element_name(el)))
 	lines.append("#%02d %s" % [sd.dex_id, sd.species_name])
 	# The kind's rarity (KAMPF_PLAN "Wild-Seltenheit sichtbar im Spirlog").
 	lines.append("/".join(els) + "   " + WildRules.rarity_line(sd))
@@ -267,7 +267,10 @@ static func page_text(sd: SpirlingData, spirlog: Dictionary) -> String:
 		# The bonus gifts it can learn once unfolded (KAMPF_PLAN_1000 item 275).
 		var extra: Array[String] = TraitKit.bonus_labels(sd)
 		if not extra.is_empty():
-			lines.append("Bonus gifts: %s" % ", ".join(PackedStringArray(extra)))
+			var names: PackedStringArray = []
+			for label: String in extra:
+				names.append(Loc.t(label))
+			lines.append("Bonus gifts: %s" % ", ".join(names))
 	lines.append("")
 	for s: String in lore_shown(sd, spirlog):
 		lines.append(s)

@@ -126,6 +126,8 @@ func test_page_text_is_translated_line_by_line_with_its_lore() -> void:
 	assert_false(text.contains("Origin:"), "origin line translated")
 	assert_false(text.contains("It cannot fly"), "lore translated")
 	assert_true(text.contains("Rauchmähne"), "both open lore sentences in German")
+	assert_false(text.contains("Ember"), "element name translated")
+	assert_false(text.contains("Spare Flame"), "bonus gift names translated")
 
 func test_sentences_split_at_cjk_marks() -> void:
 	assert_eq(SpirlogBook.split_sentences("一つ目。二つ目！三つ目？").size(), 3)
