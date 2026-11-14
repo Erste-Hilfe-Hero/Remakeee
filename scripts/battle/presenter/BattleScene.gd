@@ -877,12 +877,22 @@ func _pick_item(slot: int = 0, preset: String = "") -> BattleAction:
 		if bool(it.get("battle", false)) and model.item_left_this_battle(BattleModel.Side.PLAYER, id):
 			ids.append(id)
 			entries.append({"text": "%s x%d" % [it.get("name", id), model.bag_count(BattleModel.Side.PLAYER, id)], "hint": str(it.get("description", ""))})
+	# Keepsakes from the bag (KAMPF_PLAN_1000 298): putting one on takes the whole turn.
+	var keep_from: int = ids.size()
+	for id: String in KeepsakeKit.swap_ids(model, slot):
+		var kt: Dictionary = Database.item(id)
+		ids.append(id)
+		entries.append({"text": "%s x%d" % [kt.get("name", id), int(model.inventory.get(id, 0))], "icon": KeepsakeIcons.for_era(id),
+			"hint": Loc.t("Keepsake: putting it on takes the whole turn.") + "\n" + Loc.t(str(kt.get("description", "")))})
 	if ids.is_empty():
 		await _text.show_text("No usable items.")
 		return null
 	var idx: int = ids.find(preset) if not preset.is_empty() else await _picker.pick("Use which item?", entries)
 	if idx < 0:
 		return null
+	if idx >= keep_from:
+		var ka := BattleAction.make_item(BattleModel.Side.PLAYER, ids[idx], model.active_index(BattleModel.Side.PLAYER, slot), slot)
+		return ka if model.is_legal(ka) else null
 	if BattleModel.is_revive_item(ids[idx]):
 		var down: int = await _pick_defeated()
 		if down < 0:
@@ -1146,6 +1156,27 @@ func _gleam_entrance(sprite: SpirlingSprite) -> void:
 	Sound.sfx(str(cfg.get("sfx", "sparkle")), 0.0, float(cfg.get("sfx_pitch", 1.0)))
 	await sprite.gleam_sparkle()
 
+## A keepsake at work (KAMPF_PLAN_1000 281, 318, 319): its sound, its icon popping up over the
+## holder, and the holder's strip shows (or drops) the icon from now on.
+func _keepsake_cue(e: BattleEvent) -> void:
+	var kc: Dictionary = KeepsakeKit.cue(e, model)
+	if kc.is_empty():
+		return
+	BattleAudio.play(str(kc.sound))
+	var sp: Spirling = model.active_spirling(int(kc.side), int(kc.slot))
+	if sp != null:
+		sp.set_meta(KeepsakeKit.SEEN_META, true)
+		var st: Variant = _strip(int(kc.side), int(kc.slot))
+		if st is InfoStrip:
+			(st as InfoStrip).set_held(KeepsakeKit.strip_item(sp, true))
+	var holder: SpirlingSprite = _sprite(int(kc.side), int(kc.slot))
+	if holder != null and holder.visible and is_inside_tree():
+		KeepsakePop.spawn(_shake_root, KeepsakeIcons.for_era(str(kc.item)), holder.position + Vector2(holder.size.x / 2.0, 0))
+	keepsake_cues += 1
+
+## Keepsake cues played so far (tests).
+var keepsake_cues: int = 0
+
 func _play_event(e: BattleEvent) -> void:
 	var side: int = int(e.data.get("side", 0))
 	var slot: int = int(e.data.get("slot", 0))
@@ -1157,6 +1188,7 @@ func _play_event(e: BattleEvent) -> void:
 	if e.type == BattleEvent.Type.BATTLE_START:
 		battle_report.begin(model.field)
 	battle_report.add(e)
+	_keepsake_cue(e)
 	match e.type:
 		BattleEvent.Type.BATTLE_START:
 			var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)

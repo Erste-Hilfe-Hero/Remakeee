@@ -696,7 +696,8 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			sb.color = BattleUiStyle.command_color(era, pair[1])
 	# An ally in another slot to trade places with also opens Swap (item 366).
 	_swap.disabled = not BattleAction.Kind.SWAP in kinds and MultiRules.shift_targets(model, BattleModel.Side.PLAYER, slot).is_empty()
-	_item.disabled = not BattleAction.Kind.ITEM in kinds
+	# A keepsake from the bag to put on also opens Item (KAMPF_PLAN_1000 298).
+	_item.disabled = not BattleAction.Kind.ITEM in kinds and KeepsakeKit.swap_ids(model, slot).is_empty()
 	# Against another Wayfarer the Bond button offers the Ink Oath instead (once per battle).
 	_bond.text = "Bond" if model.is_wild else "Oath"
 	_fit_command(_bond)

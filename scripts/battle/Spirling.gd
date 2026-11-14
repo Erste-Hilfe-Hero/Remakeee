@@ -72,6 +72,9 @@ var moves: Array[MoveData] = []
 var uid: String = ""
 ## Held item id ("" for none). Only items with a "held" block can be held.
 var held: String = ""
+## Saved keepsake sets (KeepsakeKit, KAMPF_PLAN_1000 307): item id per set, "" for an empty one.
+## Saved as "held_sets" only when set.
+var held_sets: Array[String] = []
 ## Rare colour variant. Cosmetic only, never stronger.
 var prism: bool = false
 ## Power Core used on this Spirling (saved as "core" only when true).
@@ -574,6 +577,8 @@ func to_dict() -> Dictionary:
 	}
 	if not bonus_trait.is_empty():
 		out["bonus_trait"] = bonus_trait
+	if not held_sets.is_empty():
+		out["held_sets"] = held_sets.duplicate()
 	return out
 
 ## Rebuilds a Spirling from to_dict() output. Returns null if the species is unknown.
@@ -604,6 +609,8 @@ static func from_dict(d: Dictionary) -> Spirling:
 		s.moves = sd.default_moves(s.level, MAX_MOVES)
 	s.uid = str(d.get("uid", ""))
 	s.held = str(d.get("held", ""))
+	for id: Variant in (d.get("held_sets", []) if d.get("held_sets") is Array else []):
+		s.held_sets.append(str(id) if BattleRules.is_holdable(str(id)) else "")
 	s.prism = d.get("prism") is bool and d.get("prism")
 	s.hidden_gift = d.get("hidden_gift") is bool and d.get("hidden_gift")
 	s.gift_slot = d.get("gift_slot") is bool and d.get("gift_slot")

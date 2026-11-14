@@ -76,6 +76,9 @@ var slant_left: bool = true
 var caught: bool = false
 ## From Era II: a Gleam or Prism (a four-ray glint by the ring number).
 var spark: bool = false
+## The held keepsake shown as its icon at the right end of the Energy row (KAMPF_PLAN_1000
+## 281, KeepsakeKit.strip_item): "" for none or a foe's that has not shown itself yet.
+var held: String = ""
 ## Era V: pixels the plate still has to glide to its place.
 var slide: float = 0.0
 ## Era V: how far the battle camera pushed the plate (BattleHud sets it each frame).
@@ -105,6 +108,7 @@ func set_spirling(s: Spirling) -> void:
 	tax = s.energy_tax
 	caught = not show_xp and s.data != null and Collection._bonded(s.data.species_name)
 	spark = s.gleam or s.prism
+	held = KeepsakeKit.strip_item(s, show_xp or GameState.party.has(s))
 	xp_frac = xp_fraction(s)
 	xp_left = s.xp_to_next()
 	_stop_xp()
@@ -153,6 +157,10 @@ func _stop_xp() -> void:
 
 func _set_xp_shown(v: float) -> void:
 	xp_shown = v
+	queue_redraw()
+
+func set_held(id: String) -> void:
+	held = id
 	queue_redraw()
 
 func set_tax(turns: int) -> void:
@@ -273,6 +281,8 @@ func screen_reader_text() -> String:
 			t += ", " + Loc.t("%d turns left") % status_turns
 	if tax > 0:
 		t += ", " + Loc.t("Energy tax %d" % tax)
+	if not held.is_empty():
+		t += ", " + Loc.t("holds %s") % Loc.t(str(Database.item(held).get("name", held)))
 	# Stages with their factor (KAMPF_PLAN_1000 item 222).
 	for stat: String in BattleRules.STAGE_STATS:
 		if int(stages.get(stat, 0)) != 0:
@@ -372,6 +382,8 @@ func _draw() -> void:
 		limit -= 2.0
 		if marked:
 			limit = _draw_marks(limit, row3 + floorf(row3_h / 2.0), c.ink, Color(XP_ON))
+	if not held.is_empty():
+		limit = _draw_held(limit, row3, row3_h)
 	# The turns left on the status, under its tag (item 163): only for a status that runs out.
 	var turns: String = StatusRules.turns_tag(status_turns) if not status.is_empty() else ""
 	if not turns.is_empty():
@@ -560,6 +572,16 @@ func _draw_stages(x0: float, limit: float, row_y: float, row_h: float) -> void:
 			draw_colored_polygon(tri, UITheme.INK)
 			x += 4
 		x += 2
+
+## The held keepsake's icon (item 281), right-aligned at [param right]; returns the left edge
+## it used.
+func _draw_held(right: float, row_y: float, row_h: float) -> float:
+	var tex: ImageTexture = KeepsakeIcons.texture(held, KeepsakeIcons.colour(held, era))
+	if tex == null:
+		return right
+	var x: float = right - KeepsakeIcons.SIZE
+	draw_texture(tex, Vector2(x, row_y + floorf((row_h - KeepsakeIcons.SIZE) / 2.0)))
+	return x - 2.0
 
 ## Energy tax: a small coin and the turns left, right-aligned at [param right]; returns the
 ## left edge it used.

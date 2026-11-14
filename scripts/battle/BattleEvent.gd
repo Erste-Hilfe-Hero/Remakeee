@@ -221,6 +221,8 @@ func describe() -> String:
 		Type.HELD_FRUIT:
 			return "%s eats its %s!" % [who, data.get("item_name", "")]
 		Type.HELD_ITEM:
+			if str(data.get("kind", "")) == "swap":
+				return KeepsakeKit.swap_line(data)
 			if str(data.get("kind", "")) == "guard":
 				return "%s's %s takes the edge off the hit!" % [who, data.get("item_name", "")]
 			return "%s's %s stirs!" % [who, data.get("item_name", "")]
