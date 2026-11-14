@@ -1,0 +1,22 @@
+{
+ "_comment": "Translations of the German table kampf_k37, written by tools/i18n/locales_kampf_k37.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s needs three Spirlings in their echo team for a team code.": "팀 코드를 만들려면 %s의 에코 팀에 Spirling이 셋 필요하다.",
+  "%s's team code: %s": "%s의 팀 코드: %s",
+  "Always lit.": "언제나 켜져 있다.",
+  "Beat every Warden in one master tour.": "마스터 순회 한 번에 모든 수호자를 이긴다.",
+  "Clear the Battle Halls 10 times.": "배틀 전당을 10번 제패한다.",
+  "Climb the whole lighthouse stair.": "등대 계단을 끝까지 오른다.",
+  "Drowned Blue": "익사한 파랑",
+  "Ember Red": "잉걸불 빨강",
+  "Flame colour (caves, from the third era on)": "불꽃 색 (동굴에서, 세 번째 시대부터)",
+  "Flame colour: %s": "불꽃 색: %s",
+  "Hall Violet": "전당 보라",
+  "It is on the clipboard. Fight it in the Battle Halls under Fight a team code, or pass it on.": "클립보드에 복사했다. 배틀 전당의 '팀 코드와 싸우기'에서 겨루거나 다른 사람에게 넘기자.",
+  "Lamp Gold": "등불 금빛",
+  "Reach floor 20 of the endless stretch.": "끝없는 구간의 20층에 도달한다.",
+  "The flame turns %s.": "불꽃이 %s(으)로 바뀌었다.",
+  "Their team code": "상대의 팀 코드",
+  "Wardens' Ash": "수호자들의 재"
+ }
+}

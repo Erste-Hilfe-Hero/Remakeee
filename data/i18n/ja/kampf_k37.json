@@ -1,0 +1,22 @@
+{
+ "_comment": "Translations of the German table kampf_k37, written by tools/i18n/locales_kampf_k37.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s needs three Spirlings in their echo team for a team code.": "チームコードには、%sのエコーチームに3体のSpirlingが必要だ。",
+  "%s's team code: %s": "%sのチームコード: %s",
+  "Always lit.": "いつでも灯っている。",
+  "Beat every Warden in one master tour.": "マスター巡りで守り人を全員倒す。",
+  "Clear the Battle Halls 10 times.": "バトルホールを10回制覇する。",
+  "Climb the whole lighthouse stair.": "灯台の階段を最後まで登る。",
+  "Drowned Blue": "溺れた青",
+  "Ember Red": "おき火の赤",
+  "Flame colour (caves, from the third era on)": "炎の色(どうくつで、第3の時代から)",
+  "Flame colour: %s": "炎の色: %s",
+  "Hall Violet": "ホールの紫",
+  "It is on the clipboard. Fight it in the Battle Halls under Fight a team code, or pass it on.": "クリップボードにコピーした。バトルホールの「チームコードと戦う」で挑むか、だれかに渡そう。",
+  "Lamp Gold": "ランプの金",
+  "Reach floor 20 of the endless stretch.": "果てなき道の20階に着く。",
+  "The flame turns %s.": "炎は%sになった。",
+  "Their team code": "相手のチームコード",
+  "Wardens' Ash": "守り人たちの灰"
+ }
+}
