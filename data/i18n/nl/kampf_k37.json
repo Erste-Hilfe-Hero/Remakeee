@@ -1,0 +1,22 @@
+{
+ "_comment": "Translations of the German table kampf_k37, written by tools/i18n/locales_kampf_k37.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s needs three Spirlings in their echo team for a team code.": "%s heeft drie Spirlings in het echoteam nodig voor een teamcode.",
+  "%s's team code: %s": "Teamcode van %s: %s",
+  "Always lit.": "Brandt altijd.",
+  "Beat every Warden in one master tour.": "Versla alle Hoeders in één meesterronde.",
+  "Clear the Battle Halls 10 times.": "Voltooi de gevechtshallen 10 keer.",
+  "Climb the whole lighthouse stair.": "Beklim de hele vuurtorentrap.",
+  "Drowned Blue": "Verdronken blauw",
+  "Ember Red": "Gloedrood",
+  "Flame colour (caves, from the third era on)": "Vlamkleur (grotten, vanaf het derde tijdperk)",
+  "Flame colour: %s": "Vlamkleur: %s",
+  "Hall Violet": "Hallenviolet",
+  "It is on the clipboard. Fight it in the Battle Halls under Fight a team code, or pass it on.": "Hij staat op het klembord. Vecht ertegen in de gevechtshallen via Vecht tegen een teamcode, of geef hem door.",
+  "Lamp Gold": "Lampgoud",
+  "Reach floor 20 of the endless stretch.": "Haal verdieping 20 van het eindeloze traject.",
+  "The flame turns %s.": "De vlam wordt %s.",
+  "Their team code": "Hun teamcode",
+  "Wardens' Ash": "Hoedersas"
+ }
+}

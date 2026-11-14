@@ -29,6 +29,8 @@ static func note(def: Dictionary, map_id: String, won: bool, turns: int) -> void
 	e["def"] = keep
 	e["name"] = str(def.get("trainer", def.get("id", "Wayfarer")))
 	e["map"] = map_id
+	# Item 521: the Wayfarer's theme (element and tactic) for the book line.
+	e["theme"] = WayfarerThemes.theme(def)
 	if won:
 		e["wins"] = int(e.get("wins", 0)) + 1
 		if turns > 0 and (int(e.get("best_turns", 0)) <= 0 or turns < int(e.best_turns)):
@@ -50,6 +52,10 @@ static func _line(e: Dictionary) -> String:
 	var line: String = Loc.t("%s: %d won, %d lost") % [str(e.get("name", "?")), int(e.get("wins", 0)), int(e.get("losses", 0))]
 	if int(e.get("best_turns", 0)) > 0:
 		line += ", " + Loc.t("best in %d turns") % int(e.best_turns)
+	if e.get("theme") is Dictionary:
+		var label: String = WayfarerThemes.label_of(e.theme)
+		if not label.is_empty():
+			line += " - " + label
 	return line
 
 ## Most battled first (wins plus losses), then by name.

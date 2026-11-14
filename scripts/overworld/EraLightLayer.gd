@@ -618,6 +618,11 @@ func _paint_cave(c: Painter, vs: Vector2) -> void:
 	c.draw_rect(Rect2(-8, box.end.y, vs.x + 16, vs.y - box.end.y + 8), dark)
 	c.draw_rect(Rect2(-8, box.position.y, box.position.x + 8, box.size.y), dark)
 	c.draw_rect(Rect2(box.end.x, box.position.y, vs.x - box.end.x + 8, box.size.y), dark)
+	# The lantern's flame colour (KAMPF_PLAN_1000 item 837) tints the circle once the edge is soft.
+	if edge == "soft":
+		var flame: Color = LanternColors.color()
+		c.draw_circle(mid, r * 0.8, Color(flame, 0.07))
+		c.draw_circle(mid, r * 0.45, Color(flame, 0.09))
 
 func _hole_tex(r: int, edge: String) -> Texture2D:
 	var key: String = "hole|%d|%s" % [r, edge]
