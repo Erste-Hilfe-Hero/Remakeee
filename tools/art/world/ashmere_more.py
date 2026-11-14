@@ -335,6 +335,9 @@ def heath(world):
               [("Ansa: Last vote. Make it count. It won't, but make it.", "Ansa: Letzte Stimme. Lass sie zählen. Sie wird nicht zählen, aber lass sie.")],
               [("Ansa: Unanimous, then. Go and hear your verdict. Read the docket first. I'm not allowed to say that.", "Ansa: Dann einstimmig. Geh und hör dir dein Urteil an. Lies vorher die Akte. Das darf ich nicht sagen.")], 1900),
     ]
+    # KAMPF_PLAN_1000 items 523-525: jurors who play a tactic (data/wayfarer_themes.json).
+    for j, tactic in ((jury[0], "status"), (jury[1], "status"), (jury[2], "stages"), (jury[3], "field")):
+        j["tactic"] = tactic
     people = [
         npc("tull", 9, 7, "left", SIDE + "/tull", "elder"),
         npc("corwin", 3, 15, "right", SIDE + "/corwin", "villager", color="8a5a7a"),
@@ -484,6 +487,8 @@ def deep(world):
                  [("Tolliver: Let's see how much you weigh. Before and after.", "Tolliver: Mal sehen, was du wiegst. Vorher und nachher.")],
                  [("Tolliver: Lighter than you looked. Like everyone's wages.", "Tolliver: Leichter, als du aussahst. Wie jeder Lohn.")], 2100),
     ]
+    crew0[1]["tactic"] = "field"
+    crew0[2]["tactic"] = "stages"
     crew1 = [
         wayfarer(world, DEEP, "crabbe", 3, 3, "right", tr("Foreman Crabbe", "Vorarbeiter Crabbe"), team(("Fumewraith", 36), ("Stylox", 36), ("Sablowl", 37)),
                  [("Crabbe: I'm the foreman of a shift that doesn't exist, in a mine that's closed, for a clan that denies me. Very relaxing job.", "Crabbe: Ich bin Vorarbeiter einer Schicht, die es nicht gibt, in einer Grube, die zu ist, für einen Clan, der mich verleugnet. Sehr entspannter Job.")],
