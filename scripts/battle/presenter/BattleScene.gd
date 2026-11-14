@@ -1413,6 +1413,11 @@ func _play_event(e: BattleEvent) -> void:
 			_focus(side, slot)
 			_point_pin(side, slot, true)
 			Sound.sfx("status")
+			# The music changes with the phase (item 406); the pinch music still wins while low.
+			var phase_track: String = BossRules.phase_music(int(e.data.get("phase", 0)))
+			if not phase_track.is_empty():
+				music_track = phase_track
+				_update_pinch()
 			await _text.show_text(e.describe())
 			_pin.visible = false
 		BattleEvent.Type.MOVE_USED:
@@ -1852,13 +1857,13 @@ static func _demo_team(rng: RandomNumberGenerator, names: Array[String], level: 
 		out.append(Spirling.new(Database.species(n), level, rng))
 	return out
 
-## Boss phase mark on the foe plates (item 598).
+## Boss phase marks on the boss's plate (items 598, 405); a called guard's plate has none.
 func _mark_phase() -> void:
-	var at: float = BattleInfo.phase_mark(model)
+	var marks: Array[float] = BattleInfo.phase_marks(model)
 	for slot: int in model.slot_count(BattleModel.Side.FOE):
 		var st: Variant = _strip(BattleModel.Side.FOE, slot)
 		if st is InfoStrip:
-			(st as InfoStrip).phase_mark = at
+			(st as InfoStrip).phase_marks = marks if slot == 0 else ([] as Array[float])
 
 # --- More: guide and settings in battle (items 568-570, 583, 621) ---------------------------
 

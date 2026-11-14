@@ -466,9 +466,9 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 401. [x] Boss-Phasen: bei der Hälfte der HP erwacht der Boss, Stufen steigen, neue Ansage
 402. [x] Mehrere Phasen pro Boss (z. B. 66 % und 33 %) (erledigt: dritte Phase bei 25 %, BossRules.LATE_PHASES)
 403. [x] Boss-Phase wechselt das Feld (erledigt: BattleRules.BOSSES[id].phase.field)
-404. [ ] Boss-Phase ruft einen Wächter
-405. [ ] Boss-HP-Leiste mit Phasen-Markierungen
-406. [ ] Boss-Musik wechselt mit der Phase
+404. [x] Boss-Phase ruft einen Wächter (BattleRules.BOSSES.drowned_heart.phase.guard, BossRules.call_guard: ab Veteran in einen freien Platz neben dem Boss)
+405. [x] Boss-HP-Leiste mit Phasen-Markierungen (BattleInfo.phase_marks: alle noch kommenden Phasen, InfoStrip.phase_marks)
+406. [x] Boss-Musik wechselt mit der Phase (BossRules.PHASE_MUSIC: warden, dann neues battle_heart je Ära)
 407. [x] Boss-Aktionen pro Zug (bestehend) sichtbar (erledigt: Boss-Ansage nennt 'It acts %d times each turn.')
 408. [x] Boss-Schwächen als Rätsel (z. B. Feld nutzen) (erledigt: Halte-Feld pro Boss, BossRules.HOLD_FIELD, Hinweis auf der Lexikon-Seite)
 409. [x] Warden-Regeln (bestehend) erweitern: 'Stille Luft', 'Ebbe' (erledigt: Regeln still_air und ebb in BattleRules.RULES)
@@ -477,10 +477,10 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 412. [x] Warden-Texte nach dem Kampf (bestand: npc-Schlüssel defeat, z. B. cinder_rift/orrin_defeat)
 413. [x] Boss-Lexikon (erledigt: Lexikon-Seiten boss_*, BossRules.LEXICON)
 414. [x] Boss-Statistik (Züge, Schaden) (erledigt: records.boss_stats (Siege, beste und letzte Rundenzahl), BossRules.note_win)
-415. [ ] Boss-Belohnungen pro Schwierigkeit
+415. [x] Boss-Belohnungen pro Schwierigkeit (data/boss_hall.json rewards: Geldfaktor und Gegenstände, BossHall)
 416. [x] Boss-Kampf-Speicherpunkt (BattleCheckpoint.save_point_line)
-417. [ ] Boss-Wiederholung im Endgame
-418. [ ] Boss-Rush-Modus
+417. [x] Boss-Wiederholung im Endgame (Rissherzen auf Hollis' Brett nach Akt I, BossRunner.echo)
+418. [x] Boss-Rush-Modus (Herzenhatz: alle geflickten Herzen ohne Rast, BossHall.note_rush, BossRunner.rush)
 419. [ ] Boss im Online-Weltziel (bestehend) mit Phasen
 420. [x] Boss-KI immer mindestens Stufe 2 (erledigt: TrainerData.BOSS_MIN_AI)
 421. [x] Boss-Status-Dauer halbiert (erledigt: BossRules.status_turns)
@@ -672,7 +672,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 595. [x] Info: Priorität als Pfeil (^ vor dem Namen der Technik)
 596. [x] Info: Genauigkeit als Prozent
 597. [x] Info: Kategorie-Symbol (BattleHelp.KIND_MARK auf der Technik-Karte)
-598. [x] Info: Boss-Phasen-Marken (InfoStrip.phase_mark)
+598. [x] Info: Boss-Phasen-Marken (InfoStrip.phase_marks)
 599. [x] Info: Regel-Banner bei Warden (RuleBanner.gd)
 600. [x] Info: Seed im Log (BattleInfo.facts)
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-958 von 1000 Punkten umgesetzt.
+964 von 1000 Punkten umgesetzt.
 

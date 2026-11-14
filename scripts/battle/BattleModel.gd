@@ -925,7 +925,11 @@ func _check_boss_phase(boss: Spirling) -> void:
 
 ## Announces phase [param p], applies its stages and field, then opens the weak point (item 431).
 func _enter_boss_phase(boss: Spirling, p: Dictionary) -> void:
-	emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "text": str(p.get("text", ""))})
+	# "phase" (2, then 3 and on) lets the scene change the music (item 406).
+	emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "text": str(p.get("text", "")),
+		"phase": 2 + boss_late_done})
+	if p.get("guard") is Dictionary:
+		BossRules.call_guard(self, boss, p.guard)
 	var st: Dictionary = p.get("stage", {})
 	for stat: String in st:
 		change_stage(Side.FOE, stat, int(st[stat]), 0)
