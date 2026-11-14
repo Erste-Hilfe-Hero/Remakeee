@@ -25,6 +25,7 @@ const PAUSE_HINTS: Dictionary[String, String] = {
 	"Save": "Write your road into the book.",
 	"Save and to title": "Save, then go back to the title.",
 	"Photo": "Hide the menus and take a picture.",
+	"Join our Discord": "Chat with other Wayfarers, news and tips.",
 	"Settings": "Sound, controls, display and account.",
 	"Shortcuts": "Pin up to four entries to the top of this menu.",
 }
@@ -173,8 +174,8 @@ static func draw_party_row(b: Button, s: Spirling, leader: bool, index: int, lay
 	var els: Array[int] = s.elements()
 	var w2: float = 0.0
 	for e: int in els:
-		w2 += (ElementIcons.SIZE + 5.0) if style == "colour" else (ElementIcons.SIZE + 1.0)
-	var at := Vector2(right - w2, 4.0 if big else floorf((b.size.y - EraMenuArt.BADGE_H) / 2.0))
+		w2 += (ElementIcons.size() + 5.0) if style == "colour" else (ElementIcons.size() + 1.0)
+	var at := Vector2(right - w2, 4.0 if big else floorf((b.size.y - EraMenuArt.badge_h()) / 2.0))
 	for e: int in els:
 		at.x += EraMenuArt.draw_badge(b, e, at, style, ink)
 

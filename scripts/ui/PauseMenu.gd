@@ -40,7 +40,7 @@ var room_action: String = ""
 ## they can be used; they keep their place. Leagues shows only while leagues are on,
 ## the Map book once Aldo gave it, the Ledger once it has an entry (clan intrigue, Trust.gd).
 const MENU_ORDER: Array[String] = ["Goals", "Map book", "Ledger", "Map", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
-	"Leagues", "Records", "Storage", "Save", "Save and to title", "Photo", "Settings"]
+	"Leagues", "Records", "Storage", "Save", "Save and to title", "Photo", "Join our Discord", "Settings"]
 
 static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false,
 		map_book: bool = false, ledger: bool = false) -> Array[String]:
@@ -151,6 +151,7 @@ func run() -> void:
 				if await save_and_quit():
 					return
 			"Settings": await run_settings()
+			"Join our Discord": open_discord()
 			"Photo":
 				# The first time, a line on how photo mode works (item 1880).
 				await tip("photo")

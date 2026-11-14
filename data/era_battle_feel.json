@@ -575,15 +575,15 @@
   "rays_motes"
  ],
  "status_colours": {
-  "scorch": "c0502e",
-  "soak": "3a7be0",
-  "root": "4c8a3a",
+  "scorch": "b84c2c",
+  "soak": "336cc5",
+  "root": "427933",
   "jolt": "c8a020",
   "daze": "8a5a9a",
   "drowse": "6a6a8a",
-  "spent": "8a6a3a",
+  "spent": "876738",
   "marked": "b03a6a",
-  "muddle": "3a8a8a"
+  "muddle": "337979"
  },
  "status_badge_from_era": 2,
  "weather_storm_every": 4.0,

@@ -145,18 +145,18 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 104. [x] Trait 'Gegenstrom': resistiert das Element, das es zuletzt getroffen hat (verborgene Gabe Gegenstrom (Paddlewisp-Linie))
 105. [x] Element-Statistik im Kampfende-Bericht (Schaden nach Element im Kampflog, TechniqueRules.element_summary)
 106. [x] Matchup-Kenntnis wird pro Spielstand gespeichert (bestehend) (bestehend: SaveManager matchups)
-107. [ ] Online: Matchup-Wissen teilt sich mit Freunden (Laternenpost-Bonus)
-108. [ ] Element-Icons im Hochkontrast-Modus größer
+107. [x] Online: Matchup-Wissen teilt sich mit Freunden (Laternenpost-Bonus) (MatchupNotes, notes_send/notes_open, Freundschaftspunkte; test_kampf_k26, test_matchup_notes.sql)
+108. [x] Element-Icons im Hochkontrast-Modus größer (ElementIcons.HC_SCALE in Menüs, 9-px-Symbol mit Rand im Kampf)
 109. [x] Element-Namen bleiben in allen Sprachen gleich (bestehend) (bestehend: Elements.element_name ohne Übersetzung)
 110. [x] Element-Tabelle bleibt eigenständig, nie aus anderen Spielen übernehmen (Regel) (Regel in docs/BALANCE.md)
-111. [ ] Ein Element pro Riss als Thema der Warden
+111. [x] Ein Element pro Riss als Thema der Warden (data/warden_themes.json, WardenCard.theme auf der Warden-Karte)
 112. [x] Element-Training: Spark-Werte steigen schneller im passenden Feld (doppelte Spark-Chance, TechniqueRules.spark_field_mult)
-113. [ ] Element-Glyphen animieren beim sehr effektiven Treffer
+113. [x] Element-Glyphen animieren beim sehr effektiven Treffer (InfoStrip.kick_glyphs, glyph_hop; ohne Bewegung bei reduzierter Bewegung)
 114. [x] Element-Mischtechniken (zwei Elemente, nimmt das bessere) (Magmasturm, Gischtböe (dual_element))
 115. [x] Element-Schild-Technik für das ganze Team (3 Runden) (Schutzkreis (Ward Circle))
 116. [x] Elementarer Nachhall: Bonus, wenn zwei Verbündete im selben Zug dasselbe Element nutzen (TechniqueRules.echo_mult)
-117. [ ] Element-Rätsel in der Welt, die Kampfwissen belohnen
-118. [ ] Element-Filter im Lager
+117. [x] Element-Rätsel in der Welt, die Kampfwissen belohnen (ElementSeals: Siegel unter sechs Wahrzeichen, data/element_seals.json)
+118. [x] Element-Filter im Lager (bestehend: GameState.storage_view, Schalter 'Show:' in der Box, test_ux_extras)
 119. [x] Element-Schwäche-Warnung beim Einwechseln (Warnung '!Element' in der Tauschauswahl)
 120. [x] Gegner-Element im Info-Streifen (bestehend) (bestehend: InfoStrip zeichnet Elementsymbole)
 
@@ -592,11 +592,11 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Wayfarer-Teams und Gegnerdesign
 
-521. [ ] Jeder Wayfarer hat ein Thema (Element, Taktik)
-522. [ ] Wayfarer-Teams auf Veteran mit Synergien
-523. [ ] Wayfarer mit Feld-Strategie (Resonanz-Techniken)
-524. [ ] Wayfarer mit Status-Strategie
-525. [ ] Wayfarer mit Stufen-Strategie
+521. [x] Jeder Wayfarer hat ein Thema (Element, Taktik) (WayfarerThemes.theme: Element des Teams, Taktik aus "tactic" oder KI-Profil, data/wayfarer_themes.json; im Wandererbuch)
+522. [x] Wayfarer-Teams auf Veteran mit Synergien (WayfarerThemes.veteran_arts: Anführer legt das Resonanz-Feld des Team-Elements, die nächsten bringen die Taktik-Techniken)
+523. [x] Wayfarer mit Feld-Strategie (Resonanz-Techniken) (tactic field: Zündmädchen Senna, Geschworene Wick; field_w 2.0)
+524. [x] Wayfarer mit Status-Strategie (tactic status: Geschworene Mattie und Clem; status_w 1.6, Status zuerst)
+525. [x] Wayfarer mit Stufen-Strategie (tactic stages: Wiegemeister Tolliver, Geschworener Dunstan; setup_w 1.6)
 526. [ ] Wayfarer mit Mehrfachkampf-Strategie
 527. [x] Wayfarer-Dialog vor/nach dem Kampf (bestehend: intro und defeat in den Wayfarer-Daten)
 528. [x] Wayfarer-Rückkämpfe (bestehend) (bestehend: TrainerData.can_rematch)
@@ -994,13 +994,13 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 893. [x] Schadensvorschau hilft beim Planen (GameState.damage_preview)
 894. [x] Kampflog vorlesen (TextBox als Live-Region)
 895. [x] Fokus-Navigation (CommandMenu grab_focus, ui-Aktionen)
-896. [ ] Knopfgrößen
-897. [ ] Kontrast der HP-Leiste
-898. [ ] Status-Kürzel lesbar
-899. [ ] Feld-Banner lesbar
-900. [ ] Boss-Phasen-Banner lesbar
+896. [x] Knopfgrößen (BattleComfort.art_h/command_h: Große Knöpfe heben jede Zeile auf big_button_min, auch unter Einstellungen, Spiel)
+897. [x] Kontrast der HP-Leiste (jede Füllfarbe 3:1 auf dem Papier jeder Ära und Hochkontrast, test_kampf_a11y_k38)
+898. [x] Status-Kürzel lesbar (StatusRules.tag pro Sprache eindeutig, Plakettenschrift 4,5:1)
+899. [x] Feld-Banner lesbar (BattleShow.banner_seconds Mindest-Lesezeit, RuleBanner bricht um, FieldBadge wächst mit großer Schrift)
+900. [x] Boss-Phasen-Banner lesbar (eigene Titel für Phase, Blöße und Wut, geteiltes Siegel, Mindest-Lesezeit)
 901. [x] Untertitel für Schreie (Sound.cry_caption)
-902. [ ] Leichte Sprache-Option für Kampftexte
+902. [x] Leichte Sprache-Option für Kampftexte (GameState.easy_battle_text, EasyText)
 903. [x] Deutsch und Englisch (bestehend) (docs/I18N.md)
 904. [x] Weitere Sprachen vorbereiten (14 Sprachen, docs/I18N.md)
 905. [x] Barrierefreiheit-Tests (tests/unit/test_kampf_a11y_tech.gd)
@@ -1080,11 +1080,11 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 973. [x] Kampf-Code bleibt reines Modell ohne Nodes (bestehend) (test_kampf_a11y_tech)
 974. [x] Ereignis-basierte Darstellung (bestehend) (BattleEvent, BattleScene)
 975. [x] Neue Effekte über EffectRegistry (bestehend) (scripts/battle/effects)
-976. [ ] Daten in JSON, nicht im Code
+976. [x] Daten in JSON, nicht im Code (data/battle_tables.json: Gaben, Felder, Reaktionen, Regeln, Bosse; test_kampf_k40)
 977. [x] Godot 4.7.2 bleibt (test_engine_stays_on_godot_4_7)
-978. [ ] Leistung auf älteren Handys prüfen
+978. [x] Leistung auf älteren Handys prüfen (data/battle_budget.json, test_kampf_budget: Zugzeit und Ladezeit auf dem Referenzhandy)
 979. [x] APK-Budget (bestehend) (tools/apk_budget.sh)
-980. [ ] Speicher-Budget
+980. [x] Speicher-Budget (data/battle_budget.json memory_mb, leak_kb; test_kampf_budget)
 981. [x] Kampf-Zustand serialisierbar (BattleReplay.snapshot)
 982. [x] Kampf-Replay-Format versioniert (BattleReplay.FORMAT)
 983. [x] Kampf-API dokumentiert (docs/KAMPF_TECHNIK.md)
@@ -1095,9 +1095,9 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 988. [x] Kampf-Online-Server nur eigener Server (docs/ONLINE.md)
 989. [x] Kampf-Fehlerberichte mit Seed (Seed in Replay und Teilcode)
 990. [x] Kampf-Code ohne Debug-Ausgaben in Release (test_battle_code_prints_nothing_in_release)
-991. [ ] Kampf-Mods der Community später über Datenpakete (kein Code)
-992. [ ] Kampf-Datenpakete signiert
-993. [ ] Kampf-Editor für Entwickler
+991. [x] Kampf-Mods der Community später über Datenpakete (kein Code) (BattlePacks: nur Felder, Bosse, Kampf-Setups; keine Pfade oder Skripte)
+992. [x] Kampf-Datenpakete signiert (RSA SHA-256, tools/battle_pack.py, data/battle_pack_keys.json)
+993. [x] Kampf-Editor für Entwickler (tools/battle_editor/battle_editor.tscn, BattleSetup)
 994. [x] Kampf-Doku für neue Mitwirkende (docs/KAMPF_TECHNIK.md)
 995. [x] Kampf-Roadmap in docs/ROADMAP.md (Abschnitt Kampfsystem)
 996. [x] Kampf-Plan regelmäßig aktualisieren (plan_1000.py --check in CI)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-892 von 1000 Punkten umgesetzt.
+915 von 1000 Punkten umgesetzt.
 
