@@ -169,12 +169,38 @@ static func lore_sentences(sd: SpirlingData, spirlog: Dictionary) -> PackedStrin
 		n = all.size()
 	return all.slice(0, mini(n, all.size()))
 
+## The open lore sentences in the current language. The language files translate a kind's whole lore,
+## so the translation is cut into sentences the same way; when it splits into a different number of
+## sentences, the whole translation shows once every sentence is open, else the sentences one by one.
+static func lore_shown(sd: SpirlingData, spirlog: Dictionary) -> PackedStringArray:
+	var open: PackedStringArray = lore_sentences(sd, spirlog)
+	var all: PackedStringArray = split_sentences(sd.lore)
+	var whole: String = Loc.t(sd.lore)
+	if open.is_empty() or whole == sd.lore:
+		return open
+	var tl: PackedStringArray = split_sentences(whole)
+	if tl.size() == all.size():
+		return tl.slice(0, open.size())
+	if open.size() == all.size():
+		return PackedStringArray([whole])
+	var out: PackedStringArray = []
+	for s: String in open:
+		out.append(Loc.t(s))
+	return out
+
+## Page text in the current language, line by line, so a pattern for one line never takes in the next.
+static func translate_lines(text: String) -> String:
+	var parts: PackedStringArray = text.split("\n")
+	for i: int in parts.size():
+		parts[i] = Loc.t(parts[i])
+	return "\n".join(parts)
+
 static func split_sentences(text: String) -> PackedStringArray:
 	var out: PackedStringArray = []
 	var cur: String = ""
 	for i: int in text.length():
 		cur += text[i]
-		if text[i] in [".", "!", "?"] and (i + 1 >= text.length() or text[i + 1] == " "):
+		if text[i] in ["。", "！", "？"] or text[i] in [".", "!", "?"] and (i + 1 >= text.length() or text[i + 1] == " "):
 			out.append(cur.strip_edges())
 			cur = ""
 	if not cur.strip_edges().is_empty():
@@ -243,7 +269,7 @@ static func page_text(sd: SpirlingData, spirlog: Dictionary) -> String:
 		if not extra.is_empty():
 			lines.append("Bonus gifts: %s" % ", ".join(PackedStringArray(extra)))
 	lines.append("")
-	for s: String in lore_sentences(sd, spirlog):
+	for s: String in lore_shown(sd, spirlog):
 		lines.append(s)
 	# Plan item 1706 (story area): a Rift and region line once the kind is bonded.
 	if bonded and not SpirlogLore.line(sd.species_name).is_empty():

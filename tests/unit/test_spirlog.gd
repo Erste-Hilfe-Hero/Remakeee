@@ -112,3 +112,21 @@ func test_page_opens_turns_and_closes() -> void:
 
 func test_collection_total_counts_open_regions_only() -> void:
 	assert_eq(SpirlogBook.visible_kinds(GameState.flags).size(), 73, "70 kinds, Velahra, Hallowmur and Scriptorax")
+
+func test_page_text_is_translated_line_by_line_with_its_lore() -> void:
+	var lang: String = Loc._current
+	var sd: SpirlingData = Database.species("Smoldrake")
+	GameState.mark_seen("Smoldrake")
+	GameState.spirlog["Smoldrake"]["bonded"] = true
+	Loc.set_language("de")
+	var text: String = SpirlogBook.translate_lines(SpirlogBook.page_text(sd, GameState.spirlog))
+	Loc.set_language(lang)
+	assert_false(text.contains("Lives in:"), "habitat line translated: " + text)
+	assert_false(text.contains("Found on:"), "found line translated")
+	assert_false(text.contains("Origin:"), "origin line translated")
+	assert_false(text.contains("It cannot fly"), "lore translated")
+	assert_true(text.contains("Rauchmähne"), "both open lore sentences in German")
+
+func test_sentences_split_at_cjk_marks() -> void:
+	assert_eq(SpirlogBook.split_sentences("一つ目。二つ目！三つ目？").size(), 3)
+	assert_eq(SpirlogBook.split_sentences("One. Two.").size(), 2)
