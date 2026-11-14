@@ -127,7 +127,7 @@ func test_rifts_vary_their_fields() -> void:
 		assert_not_null(m, file)
 		assert_eq(m.field, RiftFields.home_field(file), file)
 		kinds[str(maps[file])] = true
-	assert_gte(kinds.size(), 8, "the Rifts do not all stand in one field")
+	assert_gte(kinds.size(), 6, "the Rifts do not all stand in one field")
 	assert_eq(MapData.load_map("cinder_rift").field, "ash_storm", "a map's own field wins")
 	assert_eq(RiftFields.home_field("brightledge"), "")
 

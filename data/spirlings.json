@@ -5458,9 +5458,6 @@
     "Quill Flick",
     "Draft Needle"
    ],
-   "36": [
-    "Ink Call"
-   ],
    "40": [
     "Blot Wave"
    ],
@@ -17400,9 +17397,6 @@
    "32": [
     "Margin Lash"
    ],
-   "36": [
-    "Ink Call"
-   ],
    "38": [
     "Cloudbreak"
    ],
@@ -22507,6 +22501,9 @@
    "26": [
     "Spindrift Shot"
    ],
+   "36": [
+    "Rime Call"
+   ],
    "38": [
     "Bore Wave"
    ],
@@ -24200,9 +24197,6 @@
    ],
    "32": [
     "Rime Shard"
-   ],
-   "36": [
-    "Rime Call"
    ],
    "38": [
     "Slow Quake"
@@ -31121,6 +31115,9 @@
    "32": [
     "Bore Wave"
    ],
+   "36": [
+    "Ink Call"
+   ],
    "44": [
     "Fathom Crush"
    ]
@@ -33205,6 +33202,9 @@
    ],
    "26": [
     "Night Siphon"
+   ],
+   "36": [
+    "Ink Call"
    ],
    "38": [
     "Lucent Void"

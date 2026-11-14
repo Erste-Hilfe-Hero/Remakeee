@@ -44,14 +44,6 @@
   "bath_rift": "high_tide",
   "ledger_rift": "ink_flood",
   "press_rift": "ink_flood",
-  "rime_rift": "rime_fall",
-  "gilt_rift": "gilt_glare",
-  "orrery_rift": "dawn_glow",
-  "salt_rift": "gale_eye",
-  "span_rift": "rust_haze",
-  "raft_rift": "high_tide",
-  "taproot_rift": "pollen_drift",
-  "wick_rift": "ash_storm",
-  "bloom_rift": "pollen_drift"
+  "rime_rift": "rime_fall"
  }
 }
