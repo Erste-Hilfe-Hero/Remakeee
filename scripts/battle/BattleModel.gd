@@ -95,6 +95,8 @@ var boss_difficulty: int = -1
 var pending_switch: Array[int] = []
 var is_wild: bool = true
 var trainer_name: String = ""
+## The foe Wayfarer's tactic line at the start (WayfarerThemes.line), "" for none.
+var foe_theme_line: String = ""
 var rng := RandomNumberGenerator.new()
 var battle_seed: int = 0
 var phase: Phase = Phase.INTRO
@@ -496,6 +498,9 @@ func start() -> Array[BattleEvent]:
 		"prism": foe.prism, "gleam": foe.gleam, "count": slot_count(Side.FOE), "multi": is_multi(), "boss": BattleRules.BOSSES.has(foe_boss)})
 	if not is_wild:
 		_battle_line("motto")
+		# KAMPF_PLAN_1000 items 523-525: the foe Wayfarer names its tactic.
+		if not foe_theme_line.is_empty() and not trainer_name.is_empty():
+			emit_event(BattleEvent.Type.BATTLE_LINE, {"side": Side.FOE, "name": trainer_name, "kind": "theme", "text": foe_theme_line})
 		for slot: int in slot_count(Side.FOE):
 			emit_event(BattleEvent.Type.SEND_OUT, _who(Side.FOE, slot))
 	for slot: int in slot_count(Side.PLAYER):

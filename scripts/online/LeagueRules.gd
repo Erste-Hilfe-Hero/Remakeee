@@ -117,6 +117,16 @@ static func rank_id(cfg: Dictionary, r: int) -> String:
 static func rank_name(cfg: Dictionary, r: int) -> String:
 	return str(RANK_NAMES.get(rank_id(cfg, r), "Placement"))
 
+## AI tier of the rival's echo for a player of rank [param r] (KAMPF_PLAN_1000 item 876, like
+## public._league_echo_ai): ranks[r].echo_ai of data/league_ranks.json, placement counts as the
+## first rank; [param fallback] (server_config league_ai) when the rank sets none.
+static func echo_ai(cfg: Dictionary, r: int, fallback: int) -> int:
+	var ranks: Array = cfg.get("ranks", [])
+	if ranks.is_empty():
+		return fallback
+	var row: Variant = ranks[clampi(r, 0, ranks.size() - 1)]
+	return clampi(int((row as Dictionary).get("echo_ai", fallback)), 1, 3) if row is Dictionary else fallback
+
 ## Rating and shield after one rated battle (like public._league_shield): after a promotion the
 ## next shield_games battles cannot drop the player below the new rank's floor.
 static func after_battle(cfg: Dictionary, old_rating: float, new_rating: float, games_after: int, shield: int) -> Dictionary:

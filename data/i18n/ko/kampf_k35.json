@@ -1,0 +1,13 @@
+{
+ "_comment": "Translations of the German table kampf_k35, written by tools/i18n/locales_kampf_k35.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Brute force": "힘으로 밀어붙이기",
+  "Field tricks": "필드 전술",
+  "Give me three turns. You won't get a fourth.": "세 턴만 줘. 네 번째 턴은 없을 거야.",
+  "I don't win duels. I make you lose them slowly.": "난 대결에서 이기지 않아. 네가 천천히 지게 만들 뿐이지.",
+  "No tricks. Just teeth. Some of them used to be someone else's.": "잔재주는 없어. 이빨뿐이지. 몇 개는 원래 남의 것이었지만.",
+  "Stage tricks": "능력 단계 전술",
+  "Status tricks": "상태 이상 전술",
+  "The ground here owes me money. Watch it pay up.": "이 땅은 나한테 빚이 있어. 갚는 걸 잘 봐."
+ }
+}

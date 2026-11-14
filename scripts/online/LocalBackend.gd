@@ -1548,15 +1548,17 @@ func _fn_league_find(a: Dictionary) -> Dictionary:
 	var pair_cap: bool = rated and pair_n >= int(safety_cfg().get("pair_rated_daily", 3))
 	if pair_cap:
 		rated = false
+	# Item 876: the rival echo's AI tier follows the searching player's rank.
+	var echo_ai: int = LeagueRules.echo_ai(ranks_cfg(), LeagueRules.rank(ranks_cfg(), float(mine.rating), int(mine.games)), config_int("league_ai", 2))
 	matches[str(id)] = {"league": league, "season": int(sn.id), "user": me(), "opponent": best, "seed": rng.randi() & 0x7fffffff,
-		"teams": teams, "created_at": now(), "state": "open", "rated": rated}
+		"teams": teams, "created_at": now(), "state": "open", "rated": rated, "ai": echo_ai}
 	return {"ok": true, "found": true, "match_id": id, "seed": matches[str(id)].seed, "teams": teams.duplicate(true),
-		"ai": config_int("league_ai", 2), "opponent_tier": LeagueRules.tier(float(opp.rating)), "range": span, "rated": rated,
+		"ai": echo_ai, "opponent_tier": LeagueRules.tier(float(opp.rating)), "range": span, "rated": rated,
 		"pair_limit": pair_cap,
 		"echo": best_d > span or best.is_empty()}
 
 func _league_expect(m: Dictionary) -> Dictionary:
-	return {"seed": m.seed, "teams": (m.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
+	return {"seed": m.seed, "teams": (m.teams as Array).duplicate(true), "ai": int(m.get("ai", config_int("league_ai", 2))), "wild": false,
 		"front": [1, 1], "items_allowed": false, "seals": seals_of(str(m.user)) if str(m.league) == LeagueRules.OPEN else [0, 0, 0],
 		"amulets": amulets_of(str(m.user)) if str(m.league) == LeagueRules.OPEN else [0, 0, 0]}
 

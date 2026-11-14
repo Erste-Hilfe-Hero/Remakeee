@@ -1,0 +1,39 @@
+{
+ "_doc": "KAMPF_PLAN_1000 items 521-525 (scripts/overworld/WayfarerThemes.gd). Every Wayfarer has a theme: the element most of its team shares and a tactic. The tactic is the npc key \"tactic\", else profile_tactics of its AI profile, else default_tactic. arts: art kinds a Wayfarer with its own \"tactic\" key teaches its team on every difficulty, one per Spirling in team order. veteran_arts: from Veteran on every Wayfarer (no Warden, boss or wild horde, no own team block for that difficulty) teaches these instead, so the team plays together: \"field\" is the Resonance art of the team's element. tune: AI weights on top of the profile for a Wayfarer with its own \"tactic\" key. line: what the Wayfarer says at the start when its tactic is in play.",
+ "default_tactic": "power",
+ "profile_tactics": {
+  "field_keeper": "field",
+  "spoiler": "status",
+  "wall": "stages"
+ },
+ "tactics": {
+  "power": {
+   "name": "Brute force",
+   "line": "No tricks. Just teeth. Some of them used to be someone else's.",
+   "tune": {},
+   "arts": [],
+   "veteran_arts": ["field"]
+  },
+  "field": {
+   "name": "Field tricks",
+   "line": "The ground here owes me money. Watch it pay up.",
+   "tune": {"field_w": 2.0, "field_renew": 1},
+   "arts": ["field"],
+   "veteran_arts": ["field", "stages"]
+  },
+  "status": {
+   "name": "Status tricks",
+   "line": "I don't win duels. I make you lose them slowly.",
+   "tune": {"status_w": 1.6, "status_first": 1},
+   "arts": ["status", "status"],
+   "veteran_arts": ["field", "status", "status"]
+  },
+  "stages": {
+   "name": "Stage tricks",
+   "line": "Give me three turns. You won't get a fourth.",
+   "tune": {"setup_w": 1.6},
+   "arts": ["stages"],
+   "veteran_arts": ["field", "stages", "stages"]
+  }
+ }
+}
