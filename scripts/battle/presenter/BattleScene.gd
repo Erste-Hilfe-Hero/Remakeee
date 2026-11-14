@@ -287,9 +287,10 @@ func _build() -> void:
 	_field.add_child(_rest_all_button)
 	_clock = Timer.new()
 	_clock.wait_time = 1.0
+	# Autostart: _build may run before the scene is in the tree.
+	_clock.autostart = true
 	_clock.timeout.connect(_on_clock)
 	add_child(_clock)
-	_clock.start()
 
 	_bond_game = BondMinigame.new()
 	_bond_game.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
