@@ -289,6 +289,7 @@ func _run() -> void:
 		if _used_slots() > 1:
 			items.append("Load...")
 		items.append("What's new")
+		items.append("Join our Discord")
 		items.append("Settings")
 		_at_root = true
 		StartupLog.mark("title menu ready")
@@ -339,6 +340,8 @@ func _run() -> void:
 					return
 			"What's new":
 				await _menu.run_news()
+			"Join our Discord":
+				_menu.open_discord()
 			"Settings":
 				await _menu.run_settings()
 

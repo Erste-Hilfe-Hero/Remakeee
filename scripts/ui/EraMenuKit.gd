@@ -25,6 +25,7 @@ const PAUSE_HINTS: Dictionary[String, String] = {
 	"Save": "Write your road into the book.",
 	"Save and to title": "Save, then go back to the title.",
 	"Photo": "Hide the menus and take a picture.",
+	"Join our Discord": "Chat with other Wayfarers, news and tips.",
 	"Settings": "Sound, controls, display and account.",
 	"Shortcuts": "Pin up to four entries to the top of this menu.",
 }
