@@ -6,6 +6,7 @@ ATO IV: SOLENNE
 
 DEPOIS DO FINAL
 - Vellmarch: uma região inteira de pós-jogo no estilo da Era II. 5 cidades, 6 estradas, 4 Fendas e uma história com uma traição em cada capítulo.
+- Além de Vellmarch: Quillmarch, Halcyra e Quivermoor, mais três regiões no estilo de eras posteriores.
 - Revanches contra as 12 Sentinelas. Elas tiveram tempo para pensar na derrota.
 - Torre Eco com 100 andares, Fendas de mestre, a Fenda aleatória, um gigante da semana, um exame final e Novo Jogo+.
 - Os Spirlings continuam crescendo além do anel 60. Siga em frente.
@@ -16,7 +17,7 @@ HISTÓRIA E CONFIANÇA
 - Histórias paralelas em cada ato e um acampamento de estranhos na beira da Fenda Larga.
 
 SPIRLINGS
-- Mais de 200 Spirlings novos: agora 70 próprios em cada ato.
+- Mais de 400 Spirlings novos, 497 no total: 70 próprios em cada ato e em cada região depois da história.
 - Formas Reluzentes na natureza, com bônus de sequência e contador no Spirlog.
 - Os estágios seguintes agora se parecem com a forma anterior, só que crescida.
 - Seu Spirling líder anda atrás de você. Ele lembra como você o trata.
@@ -35,8 +36,11 @@ ONLINE (precisa de conexão com a internet)
 VISUAL, SOM E CONFORTO
 - Cada ato tem seu próprio visual, as janelas acendem à noite e o farol finalmente parece um farol.
 - Música por era para regiões, masmorras, batalhas e Sentinelas.
-- Tela de batalha: barras de PV por era, selos de tipo coloridos, dicas de eficácia e um modo daltônico.
+- Tela de batalha: barras de Vigor por era, selos de tipo coloridos, dicas de eficácia e um modo daltônico.
 - Primeiros 15 minutos mais tranquilos. As notícias aparecem em "Novidades" na tela de título.
+- Sua jornada é salva logo depois de escolher seu nome.
+- Celulares dobráveis: a imagem se ajusta assim que você dobra ou desdobra.
 - Novas ofertas opcionais na loja.
 - Muito mais textos traduzidos nos 14 idiomas.
 - Um monte de correções: salvamento, configurações, restaurar compras. Atrasar o relógio do celular não paga mais a recompensa diária duas vezes. Boa tentativa.
+- Corrigido: seu Viajante não continua mais andando sozinho depois de uma batalha.

@@ -9,7 +9,7 @@ const ADVANTAGE_MARK: String = "+ "
 const RG_NO_VALUE: String = "Riftglass has no money value and cannot be changed back into euro or passed on."
 const LOCKED_TEXT: String = "The shop is closed for your age. Ask a grown-up."
 const ABOUT_TEXT: String = "About purchases:\n- Chimora is free. Everything in the shop is optional.\n- Each offer gives exactly what it lists. Nothing is random.\n- \"+\" marks an advantage in the game. In the Fair League bought advantages do not count.\n- Riftglass is a right to use, it has no money value and cannot be changed back.\n- Payment and refunds go through Apple or Google.\n- Monthly limits protect you: 15 EUR (13-15), 30 EUR (16-17), adults choose up to 300 EUR."
-const WEB_TEXT: String = "The shop is only in the app for iPhone and Android. The browser test version cannot buy anything."
+const WEB_TEXT: String = "The shop is only in the phone app. The browser test version cannot buy anything."
 const WITHDRAWAL_TEXT: String = "Before your first purchase: digital goods are delivered at once. You agree that the right of withdrawal ends when the delivery starts. Refunds go through Apple or Google."
 
 static func run(menu: MenuHost) -> void:
@@ -177,7 +177,7 @@ static func pass_text(o: Dictionary) -> String:
 	lines.append(Loc.t("When the pass ends, every benefit ends at once. Riftglass and items you got stay yours."))
 	lines.append("")
 	lines.append(Loc.t("Price: %s per month, renews automatically.") % ShopCatalog.format_eur(int(o.get("eur_cents", 0))))
-	lines.append(Loc.t("Cancel any time in the App Store or Google Play."))
+	lines.append(Loc.t(StoreNames.pick(StoreNames.CANCEL)))
 	var band: Variant = Billing.state.get("band")
 	if band != null and int(band) < 18:
 		# Item 4046: minors start and renew the pass only with the parents' OK in the store.
@@ -270,7 +270,7 @@ static func _run_offer(menu: MenuHost, o: Dictionary) -> void:
 		options.append(Loc.t("Pay in the store: %s") % Billing.price_text(o))
 		kinds.append(false)
 	if options.is_empty():
-		await menu.info("Purchases are only possible in the app from the App Store or Google Play.")
+		await menu.info(StoreNames.pick(StoreNames.NO_STORE))
 		return
 	var idx: int = await menu.pick_strings(Loc.t(str(o.name)), options)
 	if idx < 0:
@@ -449,7 +449,7 @@ static func reason_text(why: String) -> String:
 		"offer_limit": return "You already have this offer as often as it is sold."
 		"not_yet": return "This offer comes later in the journey."
 		"tier_order": return "Each tier follows the one before it: you pay only the difference."
-		"no_store": return "Purchases are only possible in the app from the App Store or Google Play."
+		"no_store": return StoreNames.pick(StoreNames.NO_STORE)
 		"age", "age_needed": return LOCKED_TEXT
 		"offline": return "No connection right now. Try again in a moment."
 		"price_changed": return "The price has changed. Please look again."

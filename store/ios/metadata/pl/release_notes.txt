@@ -6,6 +6,7 @@ AKT IV: SOLENNE
 
 PO FINALE
 - Vellmarch: cała kraina na później w stylu Ery II. 5 miast, 6 dróg, 4 Szczeliny i historia ze zdradą w każdym rozdziale.
+- Za Vellmarch: Quillmarch, Halcyra i Quivermoor, trzy kolejne regiony w stylu późniejszych er.
 - Rewanże ze wszystkimi 12 Strażnikami. Mieli czas, żeby przemyśleć porażkę.
 - Wieża Echa ze 100 piętrami, Mistrzowskie Szczeliny, Losowa Szczelina, olbrzym tygodnia, egzamin końcowy i Nowa gra+.
 - Spirlingi rosną dalej po pierścieniu 60. Nie zatrzymuj się.
@@ -16,7 +17,7 @@ HISTORIA I ZAUFANIE
 - Poboczne historie w każdym akcie i obóz obcych na skraju Szerokiej Szczeliny.
 
 SPIRLINGI
-- Ponad 200 nowych Spirlingów: teraz 70 własnych w każdym akcie.
+- Ponad 400 nowych Spirlingów, łącznie 497: 70 własnych w każdym akcie i w każdym regionie po fabule.
 - Połysk na wolności, z bonusem za serię i licznikiem w Spirlogu.
 - Późniejsze stadia wyglądają teraz jak ich wcześniejsza forma, tylko dorosła.
 - Twój pierwszy Spirling chodzi za tobą. Pamięta, jak go traktujesz.
@@ -35,8 +36,11 @@ ONLINE (wymaga połączenia z internetem)
 WYGLĄD, DŹWIĘK I WYGODA
 - Każdy akt ma własny styl, nocą okna się świecą, a latarnia w końcu wygląda jak latarnia.
 - Muzyka er dla krain, lochów, walk i Strażników.
-- Ekran walki: paski PŻ dla każdej ery, kolorowe odznaki typów, podpowiedzi o skuteczności i tryb dla daltonistów.
+- Ekran walki: paski Wigoru dla każdej ery, kolorowe odznaki typów, podpowiedzi o skuteczności i tryb dla daltonistów.
 - Łagodniejsze pierwsze 15 minut. Nowości są teraz w „Co nowego” na ekranie tytułowym.
+- Podróż zapisuje się zaraz po wybraniu imienia.
+- Składane telefony: obraz od razu się dopasowuje po złożeniu lub rozłożeniu.
 - Nowe opcjonalne oferty w sklepie.
 - Dużo więcej tekstów przetłumaczonych na wszystkie 14 języków.
 - Mnóstwo poprawek: zapis, ustawienia, przywracanie zakupów. Cofnięcie zegara w telefonie nie wypłaca już dziennej nagrody dwa razy. Niezła próba.
+- Naprawiono: Wędrowiec nie idzie już sam dalej po walce.

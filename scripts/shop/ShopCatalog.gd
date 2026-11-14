@@ -276,7 +276,7 @@ static func repeat_line(o: Dictionary) -> String:
 	if only_unlocks:
 		return Loc.t("Buy once: it stays unlocked for good.")
 	if str(o.get("store_type", "")) == "non_consumable":
-		return Loc.t("With Riftglass you can buy it again; in the App Store or Google Play only once.")
+		return Loc.t(StoreNames.pick(StoreNames.BUY_AGAIN))
 	return Loc.t("Can be bought again any time.")
 
 ## The line under a shop row: short contents, then duration and whether it can be bought again.

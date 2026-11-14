@@ -504,8 +504,9 @@ T = {
 	"Mit Rissglas zahlen: %d",
 "Pay in the store: %s":
 	"Im Store zahlen: %s",
-"Purchases are only possible in the app from the App Store or Google Play.":
-	"Käufe gehen nur in der App aus dem App Store oder von Google Play.",
+"Purchases are only possible in the app from the App Store.": "Käufe gehen nur in der App aus dem App Store.",
+"Purchases are only possible in the app from Google Play.": "Käufe gehen nur in der App von Google Play.",
+"Purchases are only possible in the phone app.": "Käufe gehen nur in der Handy-App.",
 "Spend %d Riftglass? Your balance after: %s":
 	"%d Rissglas ausgeben? Dein Guthaben danach: %s",
 "Done. %s is yours.":
@@ -602,7 +603,9 @@ T = {
 "When the pass ends, every benefit ends at once. Riftglass and items you got stay yours.":
 	"Endet der Pass, enden alle Vorteile sofort. Erhaltenes Rissglas und Gegenstände bleiben dir.",
 "Price: %s per month, renews automatically.": "Preis: %s pro Monat, verlängert sich automatisch.",
-"Cancel any time in the App Store or Google Play.": "Jederzeit im App Store oder bei Google Play kündbar.",
+"Cancel any time in the App Store.": "Jederzeit im App Store kündbar.",
+"Cancel any time in Google Play.": "Jederzeit bei Google Play kündbar.",
+"Cancel any time in the store you bought it in.": "Jederzeit in dem Store kündbar, in dem du ihn gekauft hast.",
 "No pass right now.": "Gerade kein Pass aktiv.",
 "Your pass runs until %s.": "Dein Pass läuft bis %s.",
 "Growth": "Wachstum", "Coins": "Münzen", "Overcharge": "Überladung",
@@ -729,8 +732,10 @@ T = {
 "Restored: %d purchases.": "Wiederhergestellt: %d Käufe.",
 "Restoring needs a connection. Try again when you are online.": "Zum Wiederherstellen brauchst du eine Verbindung. Versuch es wieder, wenn du online bist.",
 "Nothing to restore. Bought unlocks and the pass are already here.": "Nichts wiederherzustellen. Gekaufte Freischaltungen und der Pass sind schon da.",
-"Remaining Riftglass and everything bought in the shop are lost for good. Deleting does not cancel a Wayfarer Pass: cancel it first in the App Store or Google Play (Subscriptions).": "Restliches Rissglas und alles im Shop Gekaufte gehen endgültig verloren. Das Löschen kündigt keinen Wanderer-Pass: kündige ihn vorher im App Store oder bei Google Play (Abos).",
-"The shop is only in the app for iPhone and Android. The browser test version cannot buy anything.": "Den Shop gibt es nur in der App für iPhone und Android. In der Browser-Testversion kann man nichts kaufen.",
+"Remaining Riftglass and everything bought in the shop are lost for good. Deleting does not cancel a Wayfarer Pass: cancel it first in the App Store (Subscriptions).": "Restliches Rissglas und alles im Shop Gekaufte gehen endgültig verloren. Das Löschen kündigt keinen Wanderer-Pass: kündige ihn vorher im App Store (Abos).",
+"Remaining Riftglass and everything bought in the shop are lost for good. Deleting does not cancel a Wayfarer Pass: cancel it first in Google Play (Subscriptions).": "Restliches Rissglas und alles im Shop Gekaufte gehen endgültig verloren. Das Löschen kündigt keinen Wanderer-Pass: kündige ihn vorher bei Google Play (Abos).",
+"Remaining Riftglass and everything bought in the shop are lost for good. Deleting does not cancel a Wayfarer Pass: cancel it first in the store you bought it in (Subscriptions).": "Restliches Rissglas und alles im Shop Gekaufte gehen endgültig verloren. Das Löschen kündigt keinen Wanderer-Pass: kündige ihn vorher in dem Store, in dem du ihn gekauft hast (Abos).",
+"The shop is only in the phone app. The browser test version cannot buy anything.": "Den Shop gibt es nur in der Handy-App. In der Browser-Testversion kann man nichts kaufen.",
 "That was a lot of purchases in a short time. Please wait a while and try again.": "Das waren viele Käufe in kurzer Zeit. Bitte warte eine Weile und versuch es dann noch einmal.",
 "Damage Preview": "Schadensvorschau",
 "Before you pick an art, see how much of the foe's Vigor it takes. Switch it on or off in Settings. Permanent.": "Bevor du eine Kunst wählst, siehst du, wie viel Kraft sie dem Gegner nimmt. In den Einstellungen an- und ausschaltbar. Dauerhaft.",
@@ -1006,7 +1011,9 @@ T = {
 "Duration: %s": "Dauer: %s",
 "Renews every month until you cancel.": "Verlängert sich jeden Monat, bis du kündigst.",
 "Buy once: it stays unlocked for good.": "Einmal kaufen: Es bleibt für immer freigeschaltet.",
-"With Riftglass you can buy it again; in the App Store or Google Play only once.": "Mit Rissglas kannst du es wieder kaufen, im App Store oder bei Google Play nur einmal.",
+"With Riftglass you can buy it again; in the App Store only once.": "Mit Rissglas kannst du es wieder kaufen, im App Store nur einmal.",
+"With Riftglass you can buy it again; in Google Play only once.": "Mit Rissglas kannst du es wieder kaufen, bei Google Play nur einmal.",
+"With Riftglass you can buy it again; in the store only once.": "Mit Rissglas kannst du es wieder kaufen, im Store nur einmal.",
 "Can be bought again any time.": "Kann jederzeit wieder gekauft werden.",
 "Price: %d coins (you have %d)": "Preis: %d Münzen (du hast %d)",
 "What it does:": "Was es bewirkt:",

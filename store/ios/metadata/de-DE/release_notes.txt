@@ -6,6 +6,7 @@ AKT IV: SOLENNE
 
 NACH DEM FINALE
 - Vellmarch: eine ganze Region für danach im Look der Ära II. 5 Städte, 6 Wege, 4 Risse und eine Geschichte mit einem Verrat in jedem Kapitel.
+- Hinter Vellmarch: Quillmarch, Halcyra und Quivermoor, drei weitere Regionen im Look späterer Ären.
 - Revanchen gegen alle 12 Wächter. Sie hatten Zeit, über ihre Niederlage nachzudenken.
 - Echoturm mit 100 Etagen, Meister-Risse, der Zufalls-Riss, ein Riese der Woche, eine Abschlussprüfung und Neues Spiel+.
 - Spirlings wachsen über Ring 60 hinaus. Weiter geht's.
@@ -16,7 +17,7 @@ GESCHICHTE UND VERTRAUEN
 - Nebengeschichten in jedem Akt und ein Lager der Fremden am Rand des Weiten Risses.
 
 SPIRLINGS
-- Über 200 neue Spirlings: jetzt 70 eigene in jedem Akt.
+- Über 400 neue Spirlings, 497 insgesamt: 70 eigene in jedem Akt und jeder Region nach der Geschichte.
 - Glanzformen in freier Wildbahn, mit Kettenbonus und Zähler im Spirlog.
 - Spätere Stufen sehen jetzt aus wie ihre frühere Form, nur erwachsen.
 - Dein erster Spirling läuft hinter dir her. Er merkt sich, wie du ihn behandelst.
@@ -35,8 +36,11 @@ ONLINE (braucht eine Internetverbindung)
 LOOK, KLANG UND KOMFORT
 - Jeder Akt hat seinen eigenen Look, nachts leuchten die Fenster, und der Leuchtturm sieht endlich aus wie einer.
 - Ära-Musik für Regionen, Dungeons, Kämpfe und Wächter.
-- Kampfbildschirm: KP-Balken je Ära, farbige Typ-Abzeichen, Hinweise zur Wirkung und ein Farbschwäche-Modus.
+- Kampfbildschirm: Kraft-Balken je Ära, farbige Typ-Abzeichen, Hinweise zur Wirkung und ein Farbschwäche-Modus.
 - Sanftere erste 15 Minuten. Neuigkeiten stehen jetzt unter „Was ist neu“ auf dem Titelbildschirm.
+- Deine Reise wird gleich nach der Namenswahl gespeichert.
+- Faltbare Handys: Das Bild passt sofort wieder, wenn du auf- oder zuklappst.
 - Neue optionale Angebote im Shop.
 - Viel mehr Texte in allen 14 Sprachen übersetzt.
 - Jede Menge Fehlerbehebungen: Speichern, Einstellungen, Käufe wiederherstellen. Die Handyuhr zurückdrehen zahlt die Tagesbelohnung nicht mehr doppelt aus. Netter Versuch.
+- Behoben: Dein Wanderer läuft nach einem Kampf nicht mehr von allein weiter.
