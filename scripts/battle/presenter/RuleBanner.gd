@@ -29,10 +29,17 @@ func show_rule(title: String, is_turning: bool, width: float, y: float, seal: St
 	turning = is_turning
 	symbol = seal if seal in BattleRules.VARIANT_SYMBOLS else ""
 	_label.text = title
-	size = Vector2(width, HEIGHT)
-	position = Vector2(0, roundf(y))
+	# Items 899, 900: a long title (German, large text) wraps onto more lines and the strip grows
+	# with it instead of cutting the words off.
+	_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_label.position = Vector2(SEAL + 6, 0)
 	_label.size = Vector2(width - (SEAL + 6) * 2, HEIGHT)
+	var lines: int = maxi(_label.get_line_count(), 1)
+	var line_h: float = _label.get_line_height()
+	var h: float = HEIGHT if lines <= 1 else maxf(HEIGHT, ceilf(lines * line_h) + 4.0)
+	_label.size.y = h
+	size = Vector2(width, h)
+	position = Vector2(0, roundf(y))
 	visible = true
 	queue_redraw()
 

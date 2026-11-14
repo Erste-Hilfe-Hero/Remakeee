@@ -65,77 +65,19 @@ const MEND_DIV: int = 16
 ## Turns a field_extend art adds to the Resonance field in play.
 const FIELD_EXTEND_TURNS: int = 2
 
-## Passive traits (one per species, in spirlings.json "trait"). Keys:
-##   scorch_atk:    ATK multiplier while Scorched (replaces the usual drop)
-##   phys_taken:    multiplier on physical damage taken
-##   regen_div:     heal max_hp / regen_div at the end of each turn
-##   energy_per_turn: extra Energy each turn
-##   immune:        statuses that can't be applied
-##   low_hp_boost:  damage multiplier for moves of its own element below 1/3 HP
-const TRAITS: Dictionary[String, Dictionary] = {
-	"kindling": {"label": "Kindling", "text": "Scorch raises its Might instead of lowering it.", "scorch_atk": 1.25},
-	"thick_hide": {"label": "Thick Hide", "text": "Takes 15% less damage from physical arts.", "phys_taken": 0.85},
-	"deep_roots": {"label": "Deep Roots", "text": "Recovers a little Vigor at the end of each turn.", "regen_div": 16},
-	"surge": {"label": "Surge", "text": "Gains 1 extra Energy each turn.", "energy_per_turn": 1},
-	"steady": {"label": "Steady", "text": "Can't be Dazed.", "immune": ["daze"]},
-	"slick": {"label": "Slick", "text": "Can't be Rooted.", "immune": ["root"]},
-	"light_sleeper": {"label": "Light Sleeper", "text": "Can't be Drowsed.", "immune": ["drowse"]},
-	"last_stand": {"label": "Last Stand", "text": "Its own element hits 30% harder below 1/3 Vigor.", "low_hp_boost": 1.3},
-	# Field gifts (KAMPF_PLAN_1000 item 339): field_proof keeps a field from weakening its arts,
-	# field_energy is Energy gained whenever a new Rift field is laid.
-	"field_strider": {"label": "Field Strider", "text": "A Rift field never weakens its arts.", "field_proof": true},
-	"echo_soul": {"label": "Echo Soul", "text": "Gains 2 Energy whenever a new Rift field is laid.", "field_energy": 2},
-	# Items 194, 195: contact_status/contact_chance pass a status on to a physical attacker,
-	# cure_on_swap drops its status when it steps back to the bench.
-	"glimmer_skin": {"label": "Glimmer Skin", "text": "A physical hit on it may Scorch whoever struck it (3 in 10).", "contact_status": "scorch", "contact_chance": 0.3},
-	"unruffled": {"label": "Unruffled", "text": "Its status falls away when it steps back to your side.", "cure_on_swap": true},
-	# KAMPF_PLAN items 48, 49: cost_cut_from takes 1 Energy off every art that costs at least that
-	# much; full_energy_mult multiplies the damage of an art used with a full Energy bar.
-	"low_flame": {"label": "Low Flame", "text": "Arts that cost 5 Energy or more cost 1 less.", "cost_cut_from": 5},
-	"overflow": {"label": "Overflow", "text": "Hits 10% harder while its Energy is full.", "full_energy_mult": 1.1},
-}
+## The battle tables live in data/battle_tables.json (KAMPF_PLAN_1000 item 976); the "_traits",
+## "_fields", "_reactions", "_rules" and "_bosses" notes there explain every key.
+const TABLES_PATH: String = "res://data/battle_tables.json"
+static var _tables: Dictionary = {}
 
-## Rift fields. A map sets "field"; every battle there uses it. A Resonance move lays one for a
-## few turns. Optional keys:
-##   blocks:        statuses that can't take hold while the field lasts
-##   regen_element: Spirlings of this element heal max_hp / regen_div at the end of each turn
-##   rest_bonus:    extra Energy for every Rest while the field lasts (KAMPF_PLAN item 42)
-##   energy_element: Spirlings of this element gain energy_gain extra Energy at the end of each turn
-##   bond_bonus:    added to the bond chance of an Echo call while the field lasts
-##   cheap_element: arts of this element cost FIELD_COST_CUT less, only while the field is the
-##                  place's own (a storm, a map's field), never a called one (KAMPF_PLAN item 75)
-const FIELDS: Dictionary[String, Dictionary] = {
-	"ash_storm": {"label": "Ash Storm", "boost": "EMBER", "weaken": "TIDE",
-		"intro": "Ash swirls through the Rift. Ember arts burn brighter, Tide arts sputter."},
-	"high_tide": {"label": "High Tide", "boost": "TIDE", "weaken": "EMBER", "blocks": ["scorch"], "rest_bonus": 1,
-		"intro": "The water rises around you. Tide arts surge, Ember arts fizzle, and nothing catches fire."},
-	"deep_murk": {"label": "Deep Murk", "boost": "UMBRA", "weaken": "LUMEN",
-		"intro": "The hollow swallows the light. Umbra arts deepen, Lumen arts dim."},
-	"static_veil": {"label": "Static Veil", "boost": "VOLT", "weaken": "STONE", "energy_element": "VOLT", "energy_gain": 1, "cheap_element": "VOLT",
-		"intro": "The air crackles. Volt arts snap harder, Stone arts crumble."},
-	"pollen_drift": {"label": "Pollen Drift", "boost": "BLOOM", "weaken": "GALE", "regen_element": "BLOOM", "regen_div": 16,
-		"intro": "Pollen drifts through the Rift. Bloom arts flourish and Bloom Spirlings mend, Gale arts stall."},
-	"dawn_glow": {"label": "Dawn Glow", "boost": "LUMEN", "weaken": "UMBRA", "bond_bonus": 0.05,
-		"intro": "A pale dawn fills the Rift. Lumen arts shine, Umbra arts thin out."},
-	"rubble_rain": {"label": "Rubble Rain", "boost": "STONE", "weaken": "VOLT", "blocks": ["jolt"],
-		"intro": "Grit and pebbles patter down. Stone arts land heavier, Volt arts ground out, and no charge can build."},
-	"gale_eye": {"label": "Gale Eye", "boost": "GALE", "weaken": "BLOOM", "blocks": ["drowse"],
-		"intro": "The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off."},
-}
+## Passive traits (one per species, in spirlings.json "trait").
+static var TRAITS: Dictionary[String, Dictionary] = _table("traits")
 
-## Element reactions: a move of "element" that hits a foe with "status" hits harder ("mult"),
-## washes the status away after the hit ("cure"), then may give it a new one ("inflict"),
-## and/or moves a stage of the foe ("stage").
-## At most one reaction per hit: the first row that fits wins, and no two rows share a pair.
-const REACTIONS: Array[Dictionary] = [
-	{"element": "VOLT", "status": "soak", "mult": 1.2, "text": "The charge races through the soaked %s!"},
-	{"element": "TIDE", "status": "scorch", "cure": true, "text": "The water douses the embers on %s!"},
-	{"element": "STONE", "status": "jolt", "mult": 1.1, "cure": true, "text": "The stone grounds the charge in %s!"},
-	{"element": "GALE", "status": "soak", "cure": true, "stage": {"spd": -1}, "text": "The gust blows %s dry, and it slows down!"},
-	{"element": "LUMEN", "status": "drowse", "mult": 1.3, "cure": true, "text": "The light startles %s awake!"},
-	# KAMPF_PLAN_1000 item 97: fire frees a Rooted foe, but sets it alight ("inflict" after the cure).
-	{"element": "EMBER", "status": "root", "cure": true, "inflict": "scorch", "text": "The flames burn the roots off %s, and it catches fire!"},
-]
+## Rift fields. A map sets "field"; every battle there uses it. A Resonance move lays one.
+static var FIELDS: Dictionary[String, Dictionary] = _table("fields")
+
+## Element reactions; at most one per hit, the first row that fits wins.
+static var REACTIONS: Array[Dictionary] = _rows("reactions")
 
 ## The reaction a [param move] sets off on [param target], or {}.
 static func reaction(move: MoveData, target: Spirling) -> Dictionary:
@@ -150,57 +92,8 @@ static func reaction(move: MoveData, target: Spirling) -> Dictionary:
 static func field_blocks(field: String, status: String) -> bool:
 	return status in FIELDS.get(field, {}).get("blocks", [])
 
-## Warden rules (npc "rule"). foe_energy: extra Energy per turn for the Warden's side;
-## player_stage: stat stages every player Spirling starts with.
-## The Story forms (items 671, 674): foe_energy_every gives the extra Energy only every N-th turn,
-## lead_only puts the player stages on the player's first Spirling alone.
-## "difficulty": the difficulties (GameState order) a rule may be used on (item 677). Field rules
-## (items 675, 676, "warden_only"): "field_opening" lays a field for the first turns, "field_cycle"
-## brings a field back every "on" + "off" turns and announces it one turn ahead.
-const RULES: Dictionary[String, Dictionary] = {
-	"ember_pulse": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every turn.", "foe_energy": 1, "difficulty": [1, 2, 3],
-		"turning": {"text": "The pulse flares: the foe's Spirlings gain 1 Energy at once.", "full_text": "The pulse quickens: now 2 extra Energy every turn.",
-			"line": "One left? Then the embers burn for both of us!", "foe_energy_once": 1, "full_foe_energy": 1}},
-	"undertow": {"label": "Undertow", "text": "The current drags at you: your Spirlings start with less Pace.", "player_stage": {"spd": -1}, "difficulty": [1, 2, 3],
-		"turning": {"text": "The current deepens: your next Spirling to come in loses Might.", "line": "The tide turns. Whoever you send next, it pulls under!", "next_in_stage": {"atk": -1}}},
-	"ember_pulse_soft": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every second turn.", "foe_energy": 1, "foe_energy_every": 2, "difficulty": [0]},
-	"undertow_soft": {"label": "Undertow", "text": "The current drags at your lead: it starts with less Pace.", "player_stage": {"spd": -1}, "lead_only": true, "difficulty": [0]},
-	"ash_rain": {"label": "Ash Rain", "text": "Ash rains down: for 3 turns the Ash Storm can't be called away.",
-		"field_opening": {"field": "ash_storm", "turns": 3, "locked": true}, "difficulty": [2, 3], "warden_only": true},
-	"tide_turn": {"label": "Tide Turn", "text": "The tide comes and goes: High Tide for 2 turns, then 2 turns of calm.",
-		"field_cycle": {"field": "high_tide", "on": 2, "off": 2}, "difficulty": [2, 3], "warden_only": true},
-	# The Rifts added in 2026-11 (Mist, Root, Shade). Both sides feel these rules:
-	# "accuracy_mult" scales every art's accuracy, "vine_heal_div" mends the weakest Spirling in
-	# front by max Vigor / div after each round, "hidden_order" lets the seeded RNG instead of
-	# Pace decide who moves first among arts of the same priority.
-	"fog_bank": {"label": "Fog Bank", "text": "Thick fog: every art on both sides is less accurate.", "accuracy_mult": 0.85,
-		"difficulty": [0, 1, 2, 3], "warden_only": true},
-	"vine_tangle": {"label": "Vine Tangle", "text": "Vines creep in: each round they mend the weakest Spirling in front.", "vine_heal_div": 12,
-		"difficulty": [0, 1, 2, 3], "warden_only": true},
-	"night_dark": {"label": "Night Dark", "text": "In the dark nobody sees who moves first: Pace no longer sets the order.", "hidden_order": 1,
-		"difficulty": [0, 1, 2, 3], "warden_only": true},
-	# The Rifts of Solenne (Act IV). "sand_chip_div": after each round every standing Spirling in
-	# front that is not Stone loses max Vigor / div; "heal_mult" scales every heal from arts,
-	# gifts and the field; "lumen_mult" scales the damage of Lumen arts. Both sides feel them.
-	"sandstorm": {"label": "Sandstorm", "text": "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.", "sand_chip_div": 16,
-		"difficulty": [0, 1, 2, 3], "warden_only": true},
-	"dry_well": {"label": "Dry Well", "text": "The oasis has been sold dry: every heal on both sides is halved.", "heal_mult": 0.5,
-		"difficulty": [0, 1, 2, 3], "warden_only": true},
-	"high_noon": {"label": "High Noon", "text": "The sun stands straight overhead: Lumen arts on both sides hit harder.", "lumen_mult": 1.3,
-		"difficulty": [0, 1, 2, 3], "warden_only": true},
-	# KAMPF_PLAN item 54. "player_energy_cut": Energy every player Spirling starts without.
-	"low_tide": {"label": "Low Tide", "text": "The water has drawn back: your Spirlings start with 1 Energy less.", "player_energy_cut": 1,
-		"difficulty": [1, 2, 3]},
-	# KAMPF_PLAN_1000 item 409. "stages_locked": no stat stage moves on either side; "rest_cut":
-	# resting gives that much less Energy on both sides.
-	"still_air": {"label": "Still Air", "text": "Not a breath of wind: no stat stage rises or falls on either side.", "stages_locked": 1,
-		"difficulty": [0, 1, 2, 3], "warden_only": true},
-	"ebb": {"label": "Ebb", "text": "The water has run out: resting gives 1 Energy less on both sides.", "rest_cut": 1,
-		"difficulty": [0, 1, 2, 3], "warden_only": true},
-	# Item 210: "no_status" keeps every status off both sides (BattleModel.status_block).
-	"hushed_air": {"label": "Hushed Air", "text": "The air hangs dead still: no status takes hold on either side.", "no_status": 1,
-		"difficulty": [0, 1, 2, 3], "warden_only": true},
-}
+## Warden rules (npc "rule"), several join with "+" (split_rules).
+static var RULES: Dictionary[String, Dictionary] = _table("rules")
 
 ## The number a Warden rule key adds up to over every rule in [param rule_string] (0 when none
 ## sets it). Keys ending in "_mult" multiply instead and start at 1.
@@ -245,24 +138,8 @@ const SPREAD_MULT: float = 0.75
 ## Most Spirlings one side can field at once. Four 28 px sprites still fit the 144 px width.
 const MAX_FRONT: int = 4
 
-## Rift bosses (npc "boss"): one swollen Spirling the whole party faces at once. Its HP and its
-## actions per turn grow with how many Spirlings the player fields, so a lone starter is not crushed:
-##   hp_per_ally:  max HP multiplier per player Spirling on the field (never below 1)
-##   max_actions:  actions per turn when the player fields 4 (1 more for every 2 fielded)
-const BOSSES: Dictionary[String, Dictionary] = {
-	"ashen_heart": {"label": "Ashen Heart", "hp_per_ally": 0.8, "max_actions": 2,
-		"text": "The Hush gathers into one burning heart. It is far too strong to face alone!",
-		"phase": {"at": 0.5, "stage": {"atk": 1, "spd": 1}, "field": "ash_storm",
-			"text": "The Ashen Heart flares up! Its embers spin faster."}},
-	"drowned_heart": {"label": "Drowned Heart", "hp_per_ally": 0.7, "max_actions": 2,
-		"text": "The Rift's water heaves up around a drowned heart. Its guard stands beside it!",
-		"phase": {"at": 0.5, "stage": {"def": 1, "foc": 1}, "field": "high_tide",
-			"text": "The Drowned Heart pulls the tide around itself!"}},
-	"mist_heart": {"label": "Mist Heart", "hp_per_ally": 0.7, "max_actions": 2,
-		"text": "The fog knots itself into one grey heart. It drifts at you from every side!",
-		"phase": {"at": 0.5, "stage": {"spd": 1, "foc": 1}, "field": "static_veil",
-			"text": "The Mist Heart crackles! Lightning flickers in the fog."}},
-}
+## Rift bosses (npc "boss"): one swollen Spirling the whole party faces at once.
+static var BOSSES: Dictionary[String, Dictionary] = _table("bosses")
 
 ## Foe Energy at the start per difficulty (item 749): Story foes start with 2 less (8), Rift-Born
 ## foes gain 1 extra at the end of the first turn. The player always starts with the normal 10.
@@ -543,3 +420,51 @@ static func variant_values(ids: Array[String]) -> Dictionary:
 			out[k] = float(keys[k])
 	return out
 
+## The parsed battle_tables.json; JSON numbers that are whole come back as int, as they were in code.
+static func tables() -> Dictionary:
+	if _tables.is_empty():
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(TABLES_PATH))
+		_tables = _whole(parsed) if parsed is Dictionary else {}
+	return _tables
+
+static func _whole(v: Variant) -> Variant:
+	if v is float and is_equal_approx(v, roundf(v)) and absf(v) < 1e9:
+		return int(roundf(v))
+	if v is Dictionary:
+		var d: Dictionary = {}
+		for k: Variant in v:
+			d[k] = _whole(v[k])
+		return d
+	if v is Array:
+		var a: Array = []
+		for x: Variant in v:
+			a.append(_whole(x))
+		return a
+	return v
+
+static func _table(name: String) -> Dictionary[String, Dictionary]:
+	var out: Dictionary[String, Dictionary] = {}
+	var t: Variant = tables().get(name, {})
+	if t is Dictionary:
+		for k: Variant in t:
+			if t[k] is Dictionary:
+				out[str(k)] = t[k]
+	return out
+
+static func _rows(name: String) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var t: Variant = tables().get(name, [])
+	if t is Array:
+		for r: Variant in t:
+			if r is Dictionary:
+				out.append(r)
+	return out
+
+## Reads the tables again from data/battle_tables.json, dropping what data packs added.
+static func reload_tables() -> void:
+	_tables = {}
+	TRAITS = _table("traits")
+	FIELDS = _table("fields")
+	REACTIONS = _rows("reactions")
+	RULES = _table("rules")
+	BOSSES = _table("bosses")

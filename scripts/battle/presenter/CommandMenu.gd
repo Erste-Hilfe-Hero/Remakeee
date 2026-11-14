@@ -216,17 +216,16 @@ func _ready() -> void:
 	add_child(_info_panel)
 	apply_size()
 
-## Big buttons (KAMPF_PLAN item 623): every art row and command grows by BattleComfort.big_extra,
+## Big buttons (KAMPF_PLAN items 623, 896): every art row and command grows to BattleComfort.art_h /
+## command_h,
 ## the panel with them. Called again when the setting changes in the battle's More list.
 func apply_size() -> void:
-	var e: Dictionary = EraBattleHud.for_era(era)
-	var extra: int = BattleComfort.big_extra()
 	custom_minimum_size = Vector2(0, BattleComfort.menu_height(era))
 	for b: Button in _move_buttons:
-		b.custom_minimum_size.y = int(e.get("art_h", MOVE_BUTTON_HEIGHT)) + extra
+		b.custom_minimum_size.y = BattleComfort.art_h(era)
 	for b: Button in [_swap, _item, _bond, _run]:
 		if b != null:
-			b.custom_minimum_size.y = EraBattleHud.num(era, "command_h", SMALL_BUTTON_HEIGHT) + extra
+			b.custom_minimum_size.y = BattleComfort.command_h(era)
 
 ## Fill of the command panel: plain paper in Era I, the era's light colour washed into paper
 ## later (the shared accent once the menu skin frames the panel).
@@ -585,7 +584,7 @@ static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = fals
 	# The preview already carries the matchup, so it replaces the x2/x.5 tag (short rows on 144 px).
 	if pct >= 0 and mv.power > 0:
 		if status_pct > 0 and StatusRules.exists(status):
-			return "%dE ~%d%% %s%d" % [c, pct, StatusRules.label(status).substr(0, 3).to_upper(), status_pct]
+			return "%dE ~%d%% %s%d" % [c, pct, StatusRules.tag(status), status_pct]
 		return "%dE ~%d%%" % [c, pct]
 	var tag: String = "" if mv.power <= 0 else matchup_tag(mult)
 	# A status art that can miss shows its hit chance (KAMPF_PLAN_1000 item 144).

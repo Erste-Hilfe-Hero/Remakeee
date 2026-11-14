@@ -23,6 +23,8 @@ enum Type {
 	# Lines of the KAMPF_PLAN_1000 arts and element rules (TechniqueRules): "text" % "args".
 	TECHNIQUE,
 	HELD_ITEM,
+	# Why the foe AI chose its action (KAMPF_PLAN_1000 items 451, 467; AiNotes).
+	AI_NOTE,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -37,8 +39,15 @@ func _init(t: Type = Type.BATTLE_START, d: Dictionary = {}) -> void:
 func type_name() -> String:
 	return Type.keys()[type]
 
+## Simple battle text (KAMPF_PLAN_1000 902): set from GameState.easy_battle_text.
+static var easy: bool = false
+
 ## Plain-text line for logs, tests and the text box.
 func describe() -> String:
+	if easy:
+		var plain: String = EasyText.line(self)
+		if not plain.is_empty():
+			return plain
 	var who: String = str(data.get("name", ""))
 	match type:
 		Type.BATTLE_START:
@@ -218,6 +227,8 @@ func describe() -> String:
 			return "The wheel turns! The next Spirlings step up."
 		Type.TECHNIQUE:
 			return str(data.get("text", "")) % (data.get("args", [who]) as Array)
+		Type.AI_NOTE:
+			return AiNotes.describe(data)
 		Type.HELD_FRUIT:
 			return "%s eats its %s!" % [who, data.get("item_name", "")]
 		Type.HELD_ITEM:

@@ -1,0 +1,4 @@
+{
+ "_doc": "Public keys trusted for battle data packs (KAMPF_PLAN_1000 item 992, scripts/core/BattlePacks.gd). id -> PEM public key. Empty until the owner makes the release key with python3 tools/battle_pack.py keygen and keeps the private half outside the repository. Test keys live in tests/fixtures/battle_packs only.",
+ "keys": {}
+}

@@ -34,4 +34,4 @@ func test_legal_row_opens_discord() -> void:
 	assert_true(done[0])
 
 func test_label_has_german() -> void:
-	assert_eq(str(Loc.load_table("de").strings.get("Join our Discord", "")), "Tritt unserem Discord bei")
+	assert_eq(str(Loc.load_table("de").strings.get("Join our Discord", "")), "Unser Discord")

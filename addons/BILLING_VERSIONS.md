@@ -14,3 +14,10 @@ fails on any other new permission and on ad or analytics SDKs.
 
 To change the Play Billing version, change `-PbillingVersion` in `tools/build_billing_plugin.sh`
 and `BILLING` in `addons/chimora_billing/plugin.gd` together.
+
+## Play In-App Updates
+
+Plugin `ChimoraAppUpdate` (source `plugins/chimora_appupdate/android`, built by
+`tools/build_appupdate_plugin.sh` into `addons/chimora_appupdate/bin/`, CI only) uses
+`com.google.android.play:app-update:2.1.0`, the newest stable on 2026-11-14. It adds no permission.
+See docs/LIVE_CONTENT.md, "In-game updates".
