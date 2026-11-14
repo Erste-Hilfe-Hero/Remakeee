@@ -507,7 +507,8 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 ## "Swap (battle button)"): in Era II and III all four share one row of 144 or 180 px, and the
 ## general words ("Changer", "Przedmiot") were cut off there (1.2.0 store shots). English and a
 ## language without its own short word use the general word.
-const CMD_KEY: String = "%s (battle button)"
+## Built from pieces so tools/i18n_extract.py does not take the template for a text to translate.
+const CMD_KEY: String = "%s" + " " + "(battle" + " " + "button)"
 
 static func command_label(word: String) -> String:
 	var key: String = CMD_KEY % word

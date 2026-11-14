@@ -262,9 +262,10 @@ static func detail_text(o: Dictionary) -> String:
 ## besides how often it can be bought ("Once per account.").
 static func lists_only_amounts(desc: String) -> bool:
 	var amount := RegEx.create_from_string("^\\d+ \\S")
+	var per_account := RegEx.create_from_string("per\\saccount")
 	var listed: bool = false
 	for sentence: String in desc.strip_edges().trim_suffix(".").split(". "):
-		if sentence.contains("per account"):
+		if per_account.search(sentence) != null:
 			continue
 		for piece: String in sentence.split(", "):
 			if amount.search(piece.strip_edges()) == null:
