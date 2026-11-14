@@ -6,7 +6,9 @@ extends Control
 ## less, full with a paper dot = has a status, hollow = down. Colour comes on top from Era II
 ## (fit, hurt) and Era III (the status colour). See EraBattleHud.team_state / team_colour.
 
-## One entry per team member: {"state": fit|hurt|status|down, "status": String}.
+## One entry per team member: {"state": fit|hurt|status|down, "status": String, "field": bool}.
+## A member on the field gets a line under its mark, so the marks without one are the bench
+## that still comes (KAMPF_PLAN_1000 items 27, 28).
 var marks: Array[Dictionary] = []
 var era: int = 1
 ## Formation battles: marks one pixel smaller.
@@ -14,12 +16,13 @@ var compact: bool = false
 ## What a screen reader says in front of the count ("Your team" / "Foe's team").
 var title: String = "Your team"
 
-## Reads the states of [param party] (partner Spirlings left out by the caller).
-func set_party(party: Array) -> void:
+## Reads the states of [param party] (partner Spirlings left out by the caller); [param fielded]
+## holds the party indices standing on the field now.
+func set_party(party: Array, fielded: Array = []) -> void:
 	var next: Array[Dictionary] = []
-	for s: Variant in party:
-		var sp: Spirling = s as Spirling
-		next.append({"state": EraBattleHud.team_state(sp), "status": sp.status if sp != null else ""})
+	for i: int in party.size():
+		var sp: Spirling = party[i] as Spirling
+		next.append({"state": EraBattleHud.team_state(sp), "status": sp.status if sp != null else "", "field": i in fielded})
 	if next == marks:
 		return
 	var changed: bool = not marks.is_empty()
@@ -38,8 +41,15 @@ func standing() -> int:
 		n += 1 if str(m.state) != "down" else 0
 	return n
 
+## Fit members on the bench: how many Spirlings still come (items 27, 28).
+func bench() -> int:
+	var n: int = 0
+	for m: Dictionary in marks:
+		n += 1 if str(m.state) != "down" and not bool(m.get("field", false)) else 0
+	return n
+
 func screen_reader_text() -> String:
-	return Loc.t("%s: %d of %d can fight") % [Loc.t(title), standing(), marks.size()]
+	return Loc.t("%s: %d of %d can fight") % [Loc.t(title), standing(), marks.size()] + " " + Loc.t("%d still to come") % bench()
 
 func _draw() -> void:
 	accessibility_name = screen_reader_text()
@@ -67,3 +77,5 @@ func _draw() -> void:
 				draw_rect(Rect2(x + 1, y, wpx - 2, 1), col if filled else UITheme.BG)
 		if state == "status":
 			draw_rect(Rect2(x0 + m / 2, m / 2, 1, 1), UITheme.BG)
+		if bool(marks[i].get("field", false)):
+			draw_rect(Rect2(x0, m + 1, m, 1), UITheme.INK)

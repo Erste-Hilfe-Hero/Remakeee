@@ -650,7 +650,7 @@ func _point_pin(side: int, slot: int, filled: bool) -> void:
 	_pin.point_at(Rect2(sp.position, sp.size))
 
 func _auto_active() -> bool:
-	return GameState.auto_battle and model != null and model.is_wild and not _away
+	return GameState.auto_battle and model != null and model.is_wild and BattleComfort.runs(_away, _paused)
 
 ## True while the app is in the background (item 629): Auto and auto-advancing text wait.
 var _away: bool = false
@@ -686,13 +686,17 @@ func _build_pause() -> void:
 	_pause.changed.connect(func(on: bool) -> void:
 		_away = on
 		_apply_speed())
+	# Settings from the pause (KAMPF_PLAN item 24): the pause list; the battle keeps waiting.
+	_pause.settings_wanted.connect(func() -> void:
+		if BattleComfort.may_pause(model.is_finished(), _paused or _picker.visible or _bond_game.visible):
+			_more_menu(BattleComfort.PAUSE_TITLE))
 
 ## Applies the 1x / 2x / 4x battle speed (and auto-advance while fast or on Auto).
 func _apply_speed() -> void:
 	var speed: float = GameState.battle_speed_scale()
 	_ff_button.text = "%dx" % int(speed)
 	# "No rush" (item 632) keeps the text waiting at 2x/4x; a picked-up battle's old turns run on.
-	_text.auto_advance = BattleCalm.text_auto(speed, _auto_active() or (resume and _replaying), _away)
+	_text.auto_advance = BattleCalm.text_auto(speed, _auto_active() or (resume and _replaying), _away) and not _paused
 	_text.chars_per_second = GameState.text_cps() * speed
 	for n: Variant in [_foe_sprite, _player_sprite, _foe_strip, _player_strip]:
 		n.speed_scale = speed
@@ -1176,6 +1180,9 @@ func _play(events: Array[BattleEvent]) -> void:
 	_playing = events
 	for i: int in events.size():
 		_play_index = i
+		# Paused (item 24): the next event waits until the pause list closes.
+		while _paused and is_inside_tree():
+			await get_tree().process_frame
 		await _play_event(events[i])
 		if events[i].type in [BattleEvent.Type.BATTLE_START, BattleEvent.Type.SEND_OUT, BattleEvent.Type.SWAP_IN, BattleEvent.Type.BOSS, BattleEvent.Type.BOSS_PHASE]:
 			_mark_phase()
@@ -1394,7 +1401,7 @@ func _play_event(e: BattleEvent) -> void:
 						await _sprite(BattleModel.Side.FOE, fs).step_out(false)
 						if model.active_spirling(BattleModel.Side.FOE, fs).gleam:
 							await _gleam_entrance(_sprite(BattleModel.Side.FOE, fs))
-				await _text.show_text(e.describe())
+				await _text.show_text(BattleOpening.start_line(e, GameState.battle_speed_scale()))
 				return
 			_foe_sprite.setup(foe, "front")
 			_restage()
@@ -1409,7 +1416,7 @@ func _play_event(e: BattleEvent) -> void:
 				await _foe_sprite.step_out(true)
 				if foe.gleam:
 					await _gleam_entrance(_foe_sprite)
-			await _text.show_text(e.describe())
+			await _text.show_text(BattleOpening.start_line(e, GameState.battle_speed_scale()))
 		BattleEvent.Type.SEND_OUT, BattleEvent.Type.SWAP_IN:
 			var s: Spirling = model.party(side)[int(e.data.get("index", 0))]
 			_sprite(side, slot).setup(s, "back" if side == BattleModel.Side.PLAYER else "front")
@@ -1885,16 +1892,21 @@ func _mark_phase() -> void:
 
 # --- More: guide and settings in battle (items 568-570, 583, 621) ---------------------------
 
-func _more_menu() -> void:
+## True while the More / pause list is open (item 24): auto text, Auto and the next event wait.
+var _paused: bool = false
+
+func _more_menu(title: String = "More") -> void:
 	Sound.sfx("confirm")
 	_log_panel.visible = false
+	_paused = true
+	_apply_speed()
 	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER, 0)
-	var pages: Array[String] = ["Matchups", "Battle rules", "Stat calculator", "Search", "Settings"]
+	var pages: Array[String] = BattleComfort.more_pages(title)
 	while true:
 		var rows: Array[Dictionary] = []
 		for p: String in pages:
 			rows.append({"text": p})
-		var k: int = await _picker.pick("More", rows)
+		var k: int = await _picker.pick(title, rows)
 		if k < 0:
 			break
 		match pages[k]:
@@ -1912,6 +1924,10 @@ func _more_menu() -> void:
 				await _show_rows("Search", found)
 			"Settings":
 				await _battle_settings()
+			"Resume":
+				break
+	_paused = false
+	_apply_speed()
 
 ## Shows [param rows] until the player backs out; a row's hint is its explanation.
 func _show_rows(title: String, rows: Array[Dictionary]) -> void:

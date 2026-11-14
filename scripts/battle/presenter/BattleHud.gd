@@ -135,13 +135,22 @@ static func note_item(id: String) -> void:
 static func shows_team(wild: bool, side: int, members: int) -> bool:
 	return members > 1 and (side == BattleModel.Side.PLAYER or not wild)
 
+## Party indices of [param side] standing on the field now (the rest of the row is the bench).
+static func fielded(m: BattleModel, side: int) -> Array:
+	var out: Array = []
+	for slot: int in m.slot_count(side):
+		var i: int = m.active_index(side, slot)
+		if i >= 0 and m.is_standing(m.active_spirling(side, slot)):
+			out.append(i)
+	return out
+
 func refresh_teams() -> void:
 	if scene == null or scene.model == null:
 		return
 	for pair: Array in [[player_team, BattleModel.Side.PLAYER], [foe_team, BattleModel.Side.FOE]]:
 		var row: TeamRow = pair[0]
 		var team: Array = _team(int(pair[1]))
-		row.set_party(team)
+		row.set_party(team, fielded(scene.model, int(pair[1])))
 		row.visible = shows_team(scene.model.is_wild, int(pair[1]), team.size())
 
 ## Shows the ring-rise panel for the LEVEL_UP event [param e]; hide_level() takes it away.

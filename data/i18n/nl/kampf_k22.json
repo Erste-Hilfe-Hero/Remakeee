@@ -1,0 +1,16 @@
+{
+ "_comment": "nl translation of the kampf_k22 table, keyed by the English text.",
+ "strings": {
+  "%d still to come": "nog %d te gaan",
+  "%s rises!": "%s rijst op!",
+  "A hushed %s!": "Een verstomde %s!",
+  "A swarm of %d!": "Een zwerm van %d!",
+  "Battle paused": "Gevecht gepauzeerd",
+  "Duel with %s!": "Duel met %s!",
+  "Everything goes dark... and then, somehow, it doesn't. Your team stirs right where it fell, bruised but breathing.": "Alles wordt zwart... en dan, op de een of andere manier, toch niet. Je team komt bij waar het viel, gehavend maar ademend.",
+  "Resume": "Hervatten",
+  "Soft Defeat: %s": "Zachte nederlaag: %s",
+  "Story only: after a lost battle your team wakes where it fell, with half its Vigor.": "Alleen Verhaal: na een verloren gevecht wordt je team wakker waar het viel, met de helft van zijn Kracht.",
+  "You caught %s from behind! Your side moves first.": "Je verraste %s van achteren! Jouw kant is eerst aan zet."
+ }
+}

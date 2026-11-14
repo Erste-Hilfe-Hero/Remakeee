@@ -1,0 +1,16 @@
+{
+ "_comment": "ko translation of the kampf_k22 table, keyed by the English text.",
+ "strings": {
+  "%d still to come": "%d마리 남음",
+  "%s rises!": "%s이(가) 솟아올랐다!",
+  "A hushed %s!": "고요한 %s!",
+  "A swarm of %d!": "%d마리의 무리!",
+  "Battle paused": "전투 일시정지",
+  "Duel with %s!": "%s와(과) 대결!",
+  "Everything goes dark... and then, somehow, it doesn't. Your team stirs right where it fell, bruised but breathing.": "모든 것이 어두워진다... 그런데 어째선지 그렇지 않다. 팀은 쓰러진 그 자리에서 멍든 채 숨을 쉬며 깨어난다.",
+  "Resume": "계속하기",
+  "Soft Defeat: %s": "부드러운 패배: %s",
+  "Story only: after a lost battle your team wakes where it fell, with half its Vigor.": "이야기 전용: 전투에 지면 팀이 쓰러진 자리에서 기력 절반으로 깨어난다.",
+  "You caught %s from behind! Your side moves first.": "%s의 뒤를 잡았다! 우리 편이 먼저 움직인다."
+ }
+}
