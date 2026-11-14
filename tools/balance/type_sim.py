@@ -47,6 +47,8 @@ CRIT_MULT = 1.4
 CRIT_CHANCE = 1.0 / 12.0
 ROLL_MIN, ROLL_MAX = 0.90, 1.00
 START_ENERGY, MAX_ENERGY, ENERGY_PER_TURN, REST_ENERGY = 10, 10, 1, 2
+# Energy a kind holds above MAX_ENERGY by its role (data/kampf_energy.json, EnergyKit.gd).
+ROLE_CAP = json.load(open(os.path.join(ROOT, "data", "kampf_energy.json"), encoding="utf-8")).get("role_cap", {})
 
 
 def load(name):
@@ -159,6 +161,7 @@ class Mon:
         self.atk, self.df, self.foc, self.spd = st["atk"], st["def"], st["foc"], st["spd"]
         self.moves = default_moves(s, moves, level)
         self.energy = START_ENERGY
+        self.cap = MAX_ENERGY + int(ROLE_CAP.get(s.get("role", ""), 0))
 
 
 def raw(u, t, mv, mult, roll, crit):
@@ -195,7 +198,7 @@ def battle(a_team, b_team, mult, rng):
                 continue
             mv = picks[i]
             if mv is None:
-                u.energy = min(MAX_ENERGY, u.energy + REST_ENERGY)
+                u.energy = min(u.cap, u.energy + REST_ENERGY)
                 continue
             u.energy -= mv["energy"]
             if rng.random() >= mv["accuracy"]:
@@ -208,7 +211,7 @@ def battle(a_team, b_team, mult, rng):
                     return i
         for i in (0, 1):
             m = teams[i][idx[i]]
-            m.energy = min(MAX_ENERGY, m.energy + ENERGY_PER_TURN)
+            m.energy = min(m.cap, m.energy + ENERGY_PER_TURN)
     return -1
 
 

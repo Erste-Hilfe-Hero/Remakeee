@@ -100,3 +100,7 @@ func _draw_variant_seal(c: Vector2, r: float) -> void:
 			draw_arc(c, r * 0.45, PI, TAU * 1.25, 6, UITheme.ACCENT, 1.0)
 		"wedge":
 			draw_colored_polygon(PackedVector2Array([c + Vector2(-r, -r), c + Vector2(r, 0), c + Vector2(-r, r)]), ink)
+		"drop":
+			draw_colored_polygon(PackedVector2Array([c + Vector2(0, -r), c + Vector2(r * 0.7, r * 0.2), c + Vector2(0, r),
+				c + Vector2(-r * 0.7, r * 0.2)]), ink)
+			draw_rect(Rect2(c + Vector2(-1, 0), Vector2(1, 1)), UITheme.ACCENT)

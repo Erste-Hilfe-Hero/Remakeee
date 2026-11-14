@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_k24, written by tools/i18n/locales_kampf_k24.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s kinds hold %d more Energy (%d in all).": "%s類種族多儲存%d點能量（共%d點）。",
+  "+%d%% power for each Energy spent on arts this battle, up to %d.": "本場戰鬥中每在招式上花費1點能量，威力+%d%%，最多%d點。",
+  "A Soaked Spirling loses 2 Energy at the end of each turn.": "濕透的Spirling在每回合結束時失去2點能量。",
+  "A Spirling that has fought gains %d Energy each turn while it waits on the bench.": "已經出戰過的Spirling在替補席等待時，每回合獲得%d點能量。",
+  "Damp Sparks": "潮濕火花",
+  "It has paid too much to stop now. Every Energy it spent on arts this battle makes it hit harder.": "已經付出太多，停不下來了。本場戰鬥中每在招式上花費一點能量，命中就更重一分。",
+  "Low on Energy": "能量不足",
+  "Pick Rest: it skips its art but gains 2 Energy on top of the turn's 1. The foe will not wait politely.": "選擇休息：它會跳過招式，但在回合的1點之外再得2點能量。對手可不會禮貌地等著。",
+  "Resting": "休息",
+  "Sunk Cost": "沉沒成本",
+  "The water seeps into %s: it loses %d Energy!": "水滲進了%s：它失去了%d點能量！",
+  "Tip: Watch the pips fill back up. Resting is how Energy comes home.": "提示：看著能量格重新填滿。休息才能讓能量回家。",
+  "Tip: Your Spirling is running low on Energy. An art it can't pay won't go off.": "提示：你的Spirling能量快不夠了。付不起的招式放不出來。"
+ }
+}

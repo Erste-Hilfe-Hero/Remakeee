@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_k24, written by tools/i18n/locales_kampf_k24.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s kinds hold %d more Energy (%d in all).": "%s türleri %d Enerji fazla tutar (toplam %d).",
+  "+%d%% power for each Energy spent on arts this battle, up to %d.": "Bu savaşta tekniklere harcanan her Enerji için +%d%% güç, en fazla %d.",
+  "A Soaked Spirling loses 2 Energy at the end of each turn.": "Islanmış bir Spirling her turun sonunda 2 Enerji kaybeder.",
+  "A Spirling that has fought gains %d Energy each turn while it waits on the bench.": "Savaşmış bir Spirling yedek sırasında beklerken her tur %d Enerji kazanır.",
+  "Damp Sparks": "Nemli Kıvılcımlar",
+  "It has paid too much to stop now. Every Energy it spent on arts this battle makes it hit harder.": "Durmak için çok fazla ödedi. Bu savaşta tekniklere harcadığı her Enerji darbesini sertleştirir.",
+  "Low on Energy": "Az Enerji",
+  "Pick Rest: it skips its art but gains 2 Energy on top of the turn's 1. The foe will not wait politely.": "Dinlen'i seç: tekniği atlar ama turun 1'ine ek 2 Enerji kazanır. Rakip kibarca beklemeyecek.",
+  "Resting": "Dinlenme",
+  "Sunk Cost": "Batık Maliyet",
+  "The water seeps into %s: it loses %d Energy!": "Su %s içine işliyor: %d Enerji kaybediyor!",
+  "Tip: Watch the pips fill back up. Resting is how Energy comes home.": "İpucu: noktaların yeniden dolmasını izle. Enerji dinlenerek eve döner.",
+  "Tip: Your Spirling is running low on Energy. An art it can't pay won't go off.": "İpucu: Spirling'inin Enerjisi azalıyor. Ödeyemediği bir teknik çıkmaz."
+ }
+}

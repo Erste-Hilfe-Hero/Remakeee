@@ -59,6 +59,12 @@ var energy: int = 0
 var pip_from: int = 0
 var pip_pulse: float = 0.0
 var _pip_tween: Tween
+## Most Energy of the Spirling shown (EnergyKit.cap_of, item 50): that many pips stand on the plate.
+var energy_cap: int = Spirling.MAX_ENERGY
+## Set by a Rest (item 73): the next Energy gain flows back pip by pip.
+var flow_next: bool = false
+## Seconds into that flow, -1 while none runs.
+var _flow: float = -1.0
 var spirling_name: String = ""
 ## Element symbols drawn after the name (shape, not colour, tells them apart).
 var elements: Array[int] = []
@@ -122,6 +128,7 @@ func set_spirling(s: Spirling) -> void:
 	era = EraManager.active_era()
 	color_blind = GameState.color_blind
 	energy = s.energy
+	energy_cap = EnergyKit.cap_of(s)
 	status = s.status
 	status_turns = s.status_turns
 	stages = s.stages.duplicate()
@@ -229,7 +236,24 @@ func animate_hp(hp: int, new_max: int = -1) -> void:
 	await tw.finished
 
 func set_energy(value: int) -> void:
-	if value != energy and is_inside_tree() and not Juice.reduced():
+	var flow: bool = flow_next and value > energy and is_inside_tree() and not Juice.reduced()
+	flow_next = false
+	_flow = -1.0
+	if flow:
+		# After a Rest the gained pips fill one after another (item 73).
+		pip_from = energy
+		if _pip_tween != null and _pip_tween.is_valid():
+			_pip_tween.kill()
+		var total: float = EnergyKit.flow_time(energy, value)
+		_flow = 0.0
+		_pip_tween = create_tween()
+		_pip_tween.tween_method(func(v: float) -> void:
+			_flow = v
+			queue_redraw(), 0.0, total, total / speed_scale)
+		_pip_tween.tween_callback(func() -> void:
+			_flow = -1.0
+			queue_redraw())
+	elif value != energy and is_inside_tree() and not Juice.reduced():
 		pip_from = energy
 		if _pip_tween != null and _pip_tween.is_valid():
 			_pip_tween.kill()
@@ -249,6 +273,11 @@ static func pip_look(i: int, now: int, from: int, pulse: float) -> Dictionary:
 	if i < from and pulse > 0.0:
 		return {"fill": true, "alpha": pulse, "grow": 0}
 	return {"fill": false, "alpha": 1.0, "grow": 0}
+
+## Look of pip [param i] while Energy flows back after a Rest (item 73): [param lit] pips stand
+## filled, and the newest gained one pops a pixel bigger.
+static func flow_look(i: int, from: int, lit: int) -> Dictionary:
+	return {"fill": i < lit, "alpha": 1.0, "grow": 1 if i == lit - 1 and i >= from else 0}
 
 func set_status(value: String) -> void:
 	status = value
@@ -405,11 +434,13 @@ func _draw() -> void:
 	# Row 3: Energy pips, stat arrows, the Energy tax and (narrow plate) the element symbols.
 	var row3: float = float(rows.row3_y)
 	var row3_h: float = float(rows.row3_h)
-	var pip: float = EraBattleHud.num(era, "pip", 2)
-	var pips: int = maxi(Spirling.MAX_ENERGY, energy)
+	# One-hand mode draws bigger pips (item 72); a kind that holds more shows more (item 50).
+	var pip: float = minf(EnergyKit.pip_size(EraBattleHud.num(era, "pip", 2), GameState.one_hand), row3_h)
+	var pips: int = maxi(energy_cap, energy)
 	for i: int in pips:
 		var r := Rect2(i * (pip + 1.0), row3 + floorf((row3_h - pip) / 2.0), pip, pip)
-		var look: Dictionary = pip_look(i, energy, pip_from, pip_pulse)
+		var look: Dictionary = pip_look(i, energy, pip_from, pip_pulse) if _flow < 0.0 \
+			else flow_look(i, pip_from, EnergyKit.flow_lit(pip_from, energy, _flow))
 		if bool(look.fill):
 			if float(look.alpha) < 1.0:
 				draw_rect(r, UITheme.MID, false, 1.0)

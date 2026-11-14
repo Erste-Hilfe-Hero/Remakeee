@@ -1387,6 +1387,9 @@ func _play_event(e: BattleEvent) -> void:
 	elif e.type == BattleEvent.Type.TRAIT:
 		_show_gift(e)
 	battle_report.add(e)
+	# After a Rest the Energy flows back pip by pip (KAMPF_PLAN_1000 item 73).
+	if e.type == BattleEvent.Type.REST and _strip(side, slot) is InfoStrip:
+		(_strip(side, slot) as InfoStrip).flow_next = true
 	_keepsake_cue(e)
 	match e.type:
 		BattleEvent.Type.BATTLE_START:
