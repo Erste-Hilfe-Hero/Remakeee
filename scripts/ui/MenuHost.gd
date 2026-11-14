@@ -395,6 +395,8 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"bench_lessons": "Spirlings on the bench grow too.",
 	"wild_ward": "No wild Spirlings step out while it is on.",
 	"damage_preview": "Shows how hard a move would hit before you choose it.",
+	"big_buttons": "Taller arts and commands in battle, easier to tap.",
+	"easy_battle_text": "Battle lines in short, plain words.",
 	"damage_numbers": "Shows the damage of each hit as a number over the Spirling.",
 	"refill_fruit": "After a battle, a Spirling that ate its held fruit takes the same one from the bag.",
 	"bonus_goals": "Optional extra goals in Wayfarer and Warden battles.",
@@ -480,6 +482,8 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["wild_ward", "Wild Ward: %s" % shop_or("wild_ward", "On" if GameState.wild_ward else "Off")],
 				["damage_preview", "Damage preview: %s" % shop_or("damage_preview", "On" if GameState.damage_preview else "Off")],
 				["damage_numbers", "Damage numbers: %s" % ("On" if GameState.damage_numbers else "Off")],
+				["big_buttons", "Big buttons: %s" % ("On" if GameState.big_buttons else "Off")],
+				["easy_battle_text", "Easy text: %s" % ("On" if GameState.easy_battle_text else "Off")],
 				["bonus_goals", "Bonus goals: %s" % ("On" if GameState.bonus_goals else "Off")],
 				["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
 				["play_reminder", "Break reminder: %s" % ("On" if GameState.play_reminder else "Off")],
@@ -566,6 +570,10 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.damage_preview = not GameState.damage_preview
 		"damage_numbers":
 			GameState.damage_numbers = not GameState.damage_numbers
+		"big_buttons":
+			GameState.big_buttons = not GameState.big_buttons
+		"easy_battle_text":
+			GameState.easy_battle_text = not GameState.easy_battle_text
 		"refill_fruit":
 			TraitKit.set_refill(not TraitKit.refill_on())
 		"bonus_goals":
