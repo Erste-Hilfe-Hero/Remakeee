@@ -592,11 +592,11 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Wayfarer-Teams und Gegnerdesign
 
-521. [ ] Jeder Wayfarer hat ein Thema (Element, Taktik)
-522. [ ] Wayfarer-Teams auf Veteran mit Synergien
-523. [ ] Wayfarer mit Feld-Strategie (Resonanz-Techniken)
-524. [ ] Wayfarer mit Status-Strategie
-525. [ ] Wayfarer mit Stufen-Strategie
+521. [x] Jeder Wayfarer hat ein Thema (Element, Taktik) (WayfarerThemes.theme: Element des Teams, Taktik aus "tactic" oder KI-Profil, data/wayfarer_themes.json; im Wandererbuch)
+522. [x] Wayfarer-Teams auf Veteran mit Synergien (WayfarerThemes.veteran_arts: Anführer legt das Resonanz-Feld des Team-Elements, die nächsten bringen die Taktik-Techniken)
+523. [x] Wayfarer mit Feld-Strategie (Resonanz-Techniken) (tactic field: Zündmädchen Senna, Geschworene Wick; field_w 2.0)
+524. [x] Wayfarer mit Status-Strategie (tactic status: Geschworene Mattie und Clem; status_w 1.6, Status zuerst)
+525. [x] Wayfarer mit Stufen-Strategie (tactic stages: Wiegemeister Tolliver, Geschworener Dunstan; setup_w 1.6)
 526. [ ] Wayfarer mit Mehrfachkampf-Strategie
 527. [x] Wayfarer-Dialog vor/nach dem Kampf (bestehend: intro und defeat in den Wayfarer-Daten)
 528. [x] Wayfarer-Rückkämpfe (bestehend) (bestehend: TrainerData.can_rematch)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-881 von 1000 Punkten umgesetzt.
+886 von 1000 Punkten umgesetzt.
 
