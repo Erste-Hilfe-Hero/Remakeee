@@ -468,31 +468,15 @@ def late_status_sfx() -> dict[str, np.ndarray]:
 
 
 def keepsake_sfx() -> dict[str, np.ndarray]:
-    """Keepsake sounds (KAMPF_PLAN_1000 319): a glassy two-note glint when a held keepsake stirs
-    or is put on in battle, a dull knock when one takes the edge off a hit, a crunch when a held
-    fruit is eaten and a low ring when the Hold Stone keeps its holder standing. Own generator,
+    """Keepsake sound (KAMPF_PLAN_1000 319): a short glassy two-note glint when a held keepsake
+    works. One file to keep audio/sfx under its size budget; the game pitches it per cue (a lower
+    knock for a guard, a deep ring for the Hold Stone, a bright one for a fruit). Own generator,
     so the older effects keep their noise."""
-    rng = np.random.default_rng(319)
     out: dict[str, np.ndarray] = {}
-
-    def notes(seq, voice) -> np.ndarray:
-        parts = []
-        for nm, d in seq:
-            k = secs(d)
-            parts.append(voice(freq(midi(nm)), k) * env(k, attack=0.002, decay=0.03, sustain=0.5, release=0.03))
-        return np.concatenate(parts)
-
-    glass = lambda f, k: triangle(f, k) * 0.6 + pulse(f * 2, k, 0.125) * 0.25
-    out["keepsake_stir"] = notes([("B5", 0.05), ("F#6", 0.11)], glass) * 0.6
-    n = secs(0.14)
-    out["keepsake_guard"] = (triangle(freq(midi("E3")), n) * 0.6 + noise(n, 10, rng) * 0.25) * \
-        env(n, attack=0.002, decay=0.05, sustain=0.3, release=0.04) * 0.8
-    n = secs(0.18)
-    bites = np.concatenate([noise(secs(0.05), 3, rng) * env(secs(0.05), attack=0.001, decay=0.02, sustain=0.2, release=0.01),
-                            np.zeros(secs(0.03)),
-                            noise(n - secs(0.08), 4, rng) * env(n - secs(0.08), attack=0.001, decay=0.03, sustain=0.2, release=0.02)])
-    out["keepsake_fruit"] = bites * 0.7
-    n = secs(0.4)
-    out["keepsake_endure"] = (triangle(freq(midi("D4")), n) * 0.5 + triangle(freq(midi("A4")), n) * 0.3 + pulse(freq(midi("D5")), n, 0.125) * 0.15) * \
-        env(n, attack=0.004, decay=0.15, sustain=0.4, release=0.15) * 0.8
+    parts = []
+    for nm, d in [("B5", 0.04), ("F#6", 0.08)]:
+        k = secs(d)
+        parts.append((triangle(freq(midi(nm)), k) * 0.6 + pulse(freq(midi(nm)) * 2, k, 0.125) * 0.25) *
+                     env(k, attack=0.002, decay=0.03, sustain=0.5, release=0.03))
+    out["keepsake_stir"] = np.concatenate(parts) * 0.6
     return out

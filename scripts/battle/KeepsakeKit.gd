@@ -14,7 +14,7 @@ extends RefCounted
 
 ## The keepsake sounds of data/keepsake_kit.json "sounds", named here so the sound check
 ## (tests/unit/test_sfx_names.gd) finds every file in code.
-const SOUNDS: Array[String] = ["keepsake_stir", "keepsake_guard", "keepsake_fruit", "keepsake_endure"]
+const SOUNDS: Array[String] = ["keepsake_stir"]
 ## Meta on a foe Spirling whose keepsake has shown itself (its strip shows the icon from then on).
 const SEEN_META: String = "keepsake_seen"
 
@@ -126,7 +126,7 @@ static func wear_team_set(team: Array, n: int) -> Array[String]:
 
 # --- 318, 319: the keepsake cue -----------------------------------------------------------
 
-## What to show for [param e]: {"item", "sound", "side", "slot"}, or {} for an event that is
+## What to show for [param e]: {"item", "sound", "pitch", "kind", "side", "slot"}, or {} for an event that is
 ## not a keepsake at work.
 static func cue(e: BattleEvent, model: BattleModel) -> Dictionary:
 	var kind: String = ""
@@ -146,6 +146,7 @@ static func cue(e: BattleEvent, model: BattleModel) -> Dictionary:
 		_:
 			return {}
 	return {"item": item, "sound": str((data().get("sounds", {}) as Dictionary).get(kind, "")), "kind": kind,
+		"pitch": float((data().get("pitch", {}) as Dictionary).get(kind, 1.0)),
 		"side": int(e.data.get("side", 0)), "slot": int(e.data.get("slot", 0))}
 
 ## The pop over the holder: {"scale", "rise", "grow", "time", "hold"}. Under reduced motion it

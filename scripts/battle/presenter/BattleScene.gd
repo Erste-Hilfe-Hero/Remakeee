@@ -1162,7 +1162,7 @@ func _keepsake_cue(e: BattleEvent) -> void:
 	var kc: Dictionary = KeepsakeKit.cue(e, model)
 	if kc.is_empty():
 		return
-	BattleAudio.play(str(kc.sound))
+	BattleAudio.play(str(kc.sound), 0.0, float(kc.pitch))
 	var sp: Spirling = model.active_spirling(int(kc.side), int(kc.slot))
 	if sp != null:
 		sp.set_meta(KeepsakeKit.SEEN_META, true)

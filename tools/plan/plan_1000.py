@@ -341,7 +341,7 @@ AREAS = [
 "[x] Gegenstand-Fund in versteckten Orten (bestehend) (bestehend: Spark Coil im Versteck von Murk Hollow)",
 "[x] Gegenstand-Tests pro Gegenstand (tests/unit/test_trait_kit.gd)",
 "[x] Gegenstand-Animation beim Auslösen (KeepsakePop: Symbol wächst und steigt über dem Träger, bei reduzierter Bewegung nur Einblenden)",
-"[x] Gegenstand-Sound beim Auslösen (keepsake_stir, keepsake_guard, keepsake_fruit, keepsake_endure aus tools/audio/sfx.py)",
+"[x] Gegenstand-Sound beim Auslösen (eigener Klang keepsake_stir aus tools/audio/sfx.py, je Auslösung andere Tonhöhe: Schutz tiefer, Haltestein am tiefsten, Frucht heller)",
 "[x] Gegenstand-Texte übersetzt (tools/i18n/de_kampf_traits.py)",
 ]),
 ("Rift-Felder und Umgebung", [

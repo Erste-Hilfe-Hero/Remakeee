@@ -1,11 +1,11 @@
 {
- "_comment": "Keepsakes in battle (KAMPF_PLAN_1000 281, 298, 304, 307, 318, 319), read by scripts/battle/KeepsakeKit.gd and scripts/ui/KeepsakeIcons.gd. forms: own 7x7 pixel shapes, one per kind of keepsake ('#' = ink). icons: the form and colour of every keepsake; one with an 'elem' in its held block takes that element's colour. sounds: what plays when a keepsake works (cue kind -> audio/sfx name). pop: the icon that rises over the holder (pixels, seconds; scale is the icon's pixel size). sets: how many keepsake sets each Spirling remembers.",
+ "_comment": "Keepsakes in battle (KAMPF_PLAN_1000 281, 298, 304, 307, 318, 319), read by scripts/battle/KeepsakeKit.gd and scripts/ui/KeepsakeIcons.gd. forms: own 7x7 pixel shapes, one per kind of keepsake ('#' = ink). icons: the form and colour of every keepsake; one with an 'elem' in its held block takes that element's colour. sounds: what plays when a keepsake works (cue kind -> audio/sfx name), pitch: its pitch per cue kind (one file, so audio/sfx stays under its size budget). pop: the icon that rises over the holder (pixels, seconds; scale is the icon's pixel size). sets: how many keepsake sets each Spirling remembers.",
  "sets": 3,
  "sounds": {
   "stir": "keepsake_stir",
-  "guard": "keepsake_guard",
-  "fruit": "keepsake_fruit",
-  "endure": "keepsake_endure",
+  "guard": "keepsake_stir",
+  "fruit": "keepsake_stir",
+  "endure": "keepsake_stir",
   "swap": "keepsake_stir"
  },
  "pop": {
@@ -408,5 +408,12 @@
    "form": "stone",
    "colour": "5b4a7a"
   }
+ },
+ "pitch": {
+  "stir": 1.0,
+  "guard": 0.7,
+  "fruit": 1.25,
+  "endure": 0.55,
+  "swap": 1.0
  }
 }
