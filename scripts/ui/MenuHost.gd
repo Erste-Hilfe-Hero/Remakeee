@@ -398,6 +398,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"damage_numbers": "Shows the damage of each hit as a number over the Spirling.",
 	"refill_fruit": "After a battle, a Spirling that ate its held fruit takes the same one from the bag.",
 	"bonus_goals": "Optional extra goals in Wayfarer and Warden battles.",
+	"soft_defeat": "Story only: after a lost battle your team wakes where it fell, with half its Vigor.",
 	"tips": "Short hints the first time something new comes up.",
 	"play_reminder": "A short note after 90 minutes of play.",
 	"difficulty": "How strong your opponents are. You can change it any time.",
@@ -490,6 +491,8 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				rows.append(["difficulty", "Challenge: %s" % DIFFICULTY_TEXT[GameState.difficulty] + (" " + Loc.t("(lowered)") if GameState.difficulty_lowered() else "")])
 				rows.append(["iron_oath", "Iron Oath: %s" % ("Sworn" if GameState.iron_oath else "Off")])
 				rows.append(["refill_fruit", "Refill fruit: %s" % ("On" if TraitKit.refill_on() else "Off")])
+				if GameState.difficulty == GameState.Difficulty.STORY:
+					rows.append(["soft_defeat", "Soft Defeat: %s" % ("On" if SoftDefeat.is_on() else "Off")])
 				rows.append(["challenges", "Challenges..."])
 		"sound":
 			rows = [
@@ -568,6 +571,8 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.damage_numbers = not GameState.damage_numbers
 		"refill_fruit":
 			TraitKit.set_refill(not TraitKit.refill_on())
+		"soft_defeat":
+			SoftDefeat.set_on(not SoftDefeat.is_on())
 		"bonus_goals":
 			GameState.bonus_goals = not GameState.bonus_goals
 		"tips":

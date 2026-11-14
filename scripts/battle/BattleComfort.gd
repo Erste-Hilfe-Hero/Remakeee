@@ -154,3 +154,24 @@ static func interruption(what: int) -> int:
 	if what in [Node.NOTIFICATION_APPLICATION_RESUMED, Node.NOTIFICATION_APPLICATION_FOCUS_IN]:
 		return -1
 	return 0
+
+# --- Pause in battle (24) ------------------------------------------------------------------------
+
+## Title of the list Start / Escape opens mid-battle; the Log's More list is the same without Resume.
+const PAUSE_TITLE: String = "Battle paused"
+const MORE_PAGES: Array[String] = ["Matchups", "Battle rules", "Stat calculator", "Search", "Settings"]
+
+## The pages of the More list; the pause list starts with Resume.
+static func more_pages(title: String) -> Array[String]:
+	var out: Array[String] = MORE_PAGES.duplicate()
+	if title == PAUSE_TITLE:
+		out.push_front("Resume")
+	return out
+
+## Start / Escape pauses only a running battle and only when no other list is open.
+static func may_pause(finished: bool, busy: bool) -> bool:
+	return not finished and not busy
+
+## Auto, auto-advancing text and the next event run only while the app is here and not paused.
+static func runs(away: bool, paused: bool) -> bool:
+	return not away and not paused

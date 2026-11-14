@@ -29,6 +29,8 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		snap["rest_heal"] = model.rest_heal_share
 	if model.ambush:
 		snap["ambush"] = true
+	if model.initiative:
+		snap["initiative"] = true
 	return snap
 
 static func _snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
@@ -207,6 +209,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.round_limit = maxi(0, int(snap.get("round_limit", 0)))
 	m.rest_heal_share = clampf(float(snap.get("rest_heal", 0.0)), 0.0, BattleModel.STORY_REST_HEAL)
 	m.ambush = bool(snap.get("ambush", false)) and m.is_wild
+	m.initiative = bool(snap.get("initiative", false)) and not m.is_wild
 	if not partner.is_empty():
 		var ally: Array[Spirling] = _rebuild(partner.get("team", []))
 		if ally.size() != (partner.get("team", []) as Array).size():

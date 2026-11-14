@@ -205,6 +205,8 @@ var entered_turn: Dictionary = {}
 var rest_heal_share: float = 0.0
 ## Wild ambush from the tall fern (item 16): in the first turn the foe acts before everything.
 var ambush: bool = false
+## Caught from behind (item 15, BattleOpening): the player's side acts first in the first turn.
+var initiative: bool = false
 ## Bosses only (item 21): after this many turns the Rift closes and the fight ends as FLED.
 const BOSS_ROUND_LIMIT: int = 30
 ## Story values for foe_crit_mult (set by ChallengeRules) and rest_heal_share (items 36, 52).
@@ -502,6 +504,8 @@ func start() -> Array[BattleEvent]:
 	_wild_opening(foe)
 	if ambush and is_wild:
 		emit_event(BattleEvent.Type.AMBUSH, _who(Side.FOE, 0))
+	if initiative and not is_wild:
+		emit_event(BattleEvent.Type.TECHNIQUE, BattleOpening.initiative_event(self))
 	if BattleRules.BOSSES.has(foe_boss):
 		var b: Dictionary = BattleRules.BOSSES[foe_boss]
 		emit_event(BattleEvent.Type.BOSS, {"side": Side.FOE, "slot": 0, "boss": foe_boss, "label": str(b.label), "text": str(b.text),
@@ -1114,6 +1118,8 @@ func _sort_key(a: BattleAction, tie: float) -> Vector4:
 	var cls: float = -a.order_class()
 	# An ambush (item 16): in the first turn the wild foe moves before any action of the player.
 	if ambush and turn == 0 and a.side == Side.FOE:
+		cls = 1.0
+	elif BattleOpening.player_first(self, a.side):
 		cls = 1.0
 	return Vector4(cls, prio, spd, tie)
 
