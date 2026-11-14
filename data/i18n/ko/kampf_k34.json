@@ -1,0 +1,16 @@
+{
+ "_comment": "ko translation of the kampf_k34 table, keyed by the English text.",
+ "strings": {
+  "%s: Wayfarers think at tier %d.": "%s: 나그네는 %d단계로 생각한다.",
+  "Foes never see your order or the next roll, and guess swaps only among Spirlings you have shown.": "적은 너의 명령도 다음 주사위도 보지 않는다. 교체는 네가 이미 보여 준 Spirling 중에서만 읽는다.",
+  "How foes think": "적은 이렇게 생각한다",
+  "Some Wayfarers have a temper of their own: a hothead never swaps, a tactician saves up.": "어떤 나그네는 성미가 있다. 다혈질은 교체하지 않고, 책략가는 아낀다.",
+  "Their damage guess is the very number your art preview shows.": "적의 피해 예상은 네 기술 미리보기에 나오는 바로 그 숫자다.",
+  "Tier 0 picks any art it can pay. Mostly it just bites.": "0단계는 낼 수 있는 기술을 아무거나 고른다. 대개는 그냥 문다.",
+  "Tier 1 picks the art that hurts most right now and never passes up a knock-out.": "1단계는 지금 가장 아픈 기술을 고르고, 쓰러뜨릴 기회는 놓치지 않는다.",
+  "Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup or a field that weakens all its arts.": "2단계는 너의 최선의 반격도 따지고, 약해지면 회복하며, 불리한 상대나 모든 기술이 약해지는 필드에서는 교체한다.",
+  "Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, guesses your swap and saves Energy up to %d turns ahead.": "3단계는 상태 이상을 낭비하지 않고, 안전할 때만 능력을 올리고, 약한 자를 끝내고, 너의 교체를 읽고, %d턴 앞까지 에너지를 아낀다.",
+  "Two arts worth the same? The battle seed decides, the same seed always the same way.": "같은 값의 기술이 둘? 전투 시드가 정한다. 같은 시드면 언제나 같다.",
+  "Wild Spirlings always pick at random.": "야생 Spirling은 언제나 무작위로 고른다."
+ }
+}

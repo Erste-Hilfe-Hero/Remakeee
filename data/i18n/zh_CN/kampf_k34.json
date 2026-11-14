@@ -1,0 +1,16 @@
+{
+ "_comment": "zh_CN translation of the kampf_k34 table, keyed by the English text.",
+ "strings": {
+  "%s: Wayfarers think at tier %d.": "%s：旅人以%d级思考。",
+  "Foes never see your order or the next roll, and guess swaps only among Spirlings you have shown.": "对手从不看你的命令或下一次掷骰，只会在你已亮出的Spirling中猜换人。",
+  "How foes think": "对手如何思考",
+  "Some Wayfarers have a temper of their own: a hothead never swaps, a tactician saves up.": "有些旅人有自己的脾气：急性子从不换人，谋士会积攒。",
+  "Their damage guess is the very number your art preview shows.": "它们的伤害估算正是你的招式预览显示的数字。",
+  "Tier 0 picks any art it can pay. Mostly it just bites.": "0级会选任何付得起的招式。多半只是咬一口。",
+  "Tier 1 picks the art that hurts most right now and never passes up a knock-out.": "1级选当下最痛的招式，绝不放过击倒的机会。",
+  "Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup or a field that weakens all its arts.": "2级还会考虑你的最佳回应，虚弱时治疗，并在对局不利或场地削弱它所有招式时换人。",
+  "Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, guesses your swap and saves Energy up to %d turns ahead.": "3级从不浪费异常状态，只在安全时提升能力，收拾弱者，猜你的换人，并提前%d回合积攒能量。",
+  "Two arts worth the same? The battle seed decides, the same seed always the same way.": "两个招式价值相同？由战斗种子决定，同一个种子永远一样。",
+  "Wild Spirlings always pick at random.": "野生Spirling总是随机选择。"
+ }
+}

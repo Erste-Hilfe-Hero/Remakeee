@@ -1,0 +1,16 @@
+{
+ "_comment": "es translation of the kampf_k34 table, keyed by the English text.",
+ "strings": {
+  "%s: Wayfarers think at tier %d.": "%s: los Caminantes piensan en el nivel %d.",
+  "Foes never see your order or the next roll, and guess swaps only among Spirlings you have shown.": "Los rivales nunca ven tu orden ni la próxima tirada, y solo adivinan cambios hacia Spirlings que ya mostraste.",
+  "How foes think": "Cómo piensan los rivales",
+  "Some Wayfarers have a temper of their own: a hothead never swaps, a tactician saves up.": "Algunos Caminantes tienen su propio carácter: un exaltado nunca cambia, un estratega ahorra.",
+  "Their damage guess is the very number your art preview shows.": "Su cálculo de daño es el mismo número que muestra la vista previa de tu técnica.",
+  "Tier 0 picks any art it can pay. Mostly it just bites.": "El nivel 0 elige cualquier técnica que pueda pagar. Casi siempre solo muerde.",
+  "Tier 1 picks the art that hurts most right now and never passes up a knock-out.": "El nivel 1 elige la técnica que más duele ahora mismo y nunca deja pasar un K.O.",
+  "Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup or a field that weakens all its arts.": "El nivel 2 también sopesa tu mejor respuesta, se cura cuando está débil y se retira de un mal duelo o de un campo que debilita todas sus técnicas.",
+  "Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, guesses your swap and saves Energy up to %d turns ahead.": "El nivel 3 nunca desperdicia un estado, solo sube niveles cuando es seguro, remata a los débiles, adivina tu cambio y ahorra Energía hasta %d turnos por delante.",
+  "Two arts worth the same? The battle seed decides, the same seed always the same way.": "¿Dos técnicas que valen lo mismo? Decide la semilla del combate, la misma semilla siempre igual.",
+  "Wild Spirlings always pick at random.": "Los Spirlings salvajes siempre eligen al azar."
+ }
+}

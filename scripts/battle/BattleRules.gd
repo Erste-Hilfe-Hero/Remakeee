@@ -412,6 +412,13 @@ static func resolve_move(move: MoveData, field: String) -> MoveData:
 	return move
 
 ## Damage multiplier from traits, held items, the field and status bonuses for one hit.
+## Expected damage of [param move] from [param user] on [param target] under [param field]: the
+## mean roll without keen hits, times every multiplier a real hit gets (field, gifts, status bonus,
+## reactions, keepsakes, traits). The art preview and the foe AI both use it (KAMPF_PLAN item 476).
+static func expected_damage(user: Spirling, target: Spirling, move: MoveData, field: String) -> float:
+	var hit: MoveData = resolve_move(move, field)
+	return DamageCalc.estimate(user, target, hit) * damage_mult(user, target, hit, field)
+
 static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field: String) -> float:
 	var m: float = field_mult(field, move.element)
 	if m < 1.0 and bool(ShopEffects.gift_table(user).get("field_proof", false)):

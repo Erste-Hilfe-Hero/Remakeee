@@ -510,15 +510,15 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 442. [x] Meister-KI baut Stufen nur auf, wenn der Gegner sie nicht hart bestraft
 443. [x] Meister-KI nutzt Resonanz-Felder, die ihren eigenen Techniken helfen
 444. [x] Meister-KI bevorzugt sichere K.o.s und schwache Ziele im Mehrfachkampf
-445. [ ] KI plant Energie zwei Züge voraus
+445. [x] KI plant Energie zwei Züge voraus (BattleAI.plan_turns, Rift-Born 2 Runden, data/ai_rules.json, test_kampf_k34)
 446. [x] KI wechselt bei schlechter Stufe (z. B. -2 ATK) (erledigt: BattleAI.BAD_STAGE)
-447. [ ] KI sagt Wechsel des Spielers vorher (nur Meister)
+447. [x] KI sagt Wechsel des Spielers vorher (nur Meister) (BattleAI.predicted_swap, nur gezeigte Spirlings, test_kampf_k34)
 448. [x] KI nutzt Heil-Techniken gezielt (bestand: heal_self und mend unter heal_below)
 449. [x] KI schont Spirlings mit wenig HP für später (erledigt: BattleAI.SPARE_HP bei der Ersatzwahl)
 450. [x] KI-Persönlichkeiten pro Wayfarer (vorsichtig, wild, taktisch) (bestand: data/ai_profiles.json)
 451. [ ] KI-Debug-Ansicht für Entwickler
 452. [x] KI-Tests pro Verhalten (bestand: test_ai*.gd, neu test_kampf_boss_ai.gd)
-453. [ ] KI liest nur, was der Spieler auch sieht (keine versteckten Werte)
+453. [x] KI liest nur, was der Spieler auch sieht (keine versteckten Werte) (BattleAI.acts_first folgt dem Reihenfolge-Hinweis, nie der Befehl des Spielers, Wechsel-Ahnung nur zu gezeigten Spirlings, test_kampf_k34)
 454. [x] KI-Zufall in Stufe 0 bleibt (Wildkämpfe) (bestand: Plan 5000 Punkt 625)
 455. [x] KI-Stufe pro Wayfarer übersteuerbar (bestehend) (bestand: npc-Schlüssel ai)
 456. [x] KI für Partner (Kestra) auf Veteran Stufe 2 (erledigt: TrainerData.partner_ai)
@@ -531,18 +531,18 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 463. [x] KI im Schwarm koordiniert (verschiedene Ziele) (erledigt: sichere K.o.-Ziele werden pro Runde vergeben)
 464. [x] KI-Balance: Gewinnrate im Simulator pro Stufe messen (bestand: BalanceSim Modus ladder)
 465. [x] KI-Gewinnrate-Ziel pro Schwierigkeit dokumentieren (bestand: tools/balance/targets.json, BalanceDoc)
-466. [ ] KI-Laufzeit unter 5 ms pro Entscheidung (Handy)
+466. [x] KI-Laufzeit unter 5 ms pro Entscheidung (Handy) (BattleAI-Memo pro Entscheidung, Zeit-Test mit budget_ms, test_kampf_k34)
 467. [ ] KI-Entscheidungen im Replay nachvollziehbar
 468. [x] KI-Texte: Wayfarer kommentiert gute Züge (bestand: data/dialogue/battle_lines.json)
 469. [x] KI meidet Felder, die dem Spieler helfen (bestand: BattleAI.field_value)
-470. [ ] KI erkennt eigene Feldschwäche und wechselt
+470. [x] KI erkennt eigene Feldschwäche und wechselt (BattleAI.field_weak, _field_swap ab Stufe 2, test_kampf_k34)
 471. [x] KI-Lernen bewusst nicht (deterministisch bleiben) (erledigt: Test gleicher Seed, gleiche Wahl)
-472. [ ] KI-Stufen im Lexikon erklären
+472. [x] KI-Stufen im Lexikon erklären (RulesBook Seite 'How foes think', 14 Sprachen)
 473. [x] KI-Stufe im Wochen-Echo (bestehend 2) auf 3 heben
 474. [x] KI in Online-Echos nutzt das gespeicherte Team (bestand: EchoTeam.build)
 475. [x] KI-Fairness-Test: gleiche Regeln wie der Spieler (erledigt: KI wählt nur aus legal_actions, Fuzz-Test prüft is_legal)
-476. [ ] KI-Schadensschätzung nutzt dieselbe Formel wie die Vorschau
-477. [ ] KI-Tie-Breaker deterministisch über den Kampf-Seed
+476. [x] KI-Schadensschätzung nutzt dieselbe Formel wie die Vorschau (BattleRules.expected_damage für CommandMenu.damage_pct und BattleAI)
+477. [x] KI-Tie-Breaker deterministisch über den Kampf-Seed (BattleAI.tie_key, zieht nichts aus dem Kampf-RNG)
 478. [x] KI: Zielwahl bei gleicher Wertung nach niedrigsten HP (erledigt: BattleAI._choose)
 479. [x] KI: Nie zwei Spirlings auf dasselbe sichere K.o.-Ziel (Overkill vermeiden) (erledigt: BattleAI._claims)
 480. [x] KI: Wechsel-Strafe bei Root beachten (bestand: legal_actions ohne Wechsel bei Root, Test)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-881 von 1000 Punkten umgesetzt.
+889 von 1000 Punkten umgesetzt.
 
