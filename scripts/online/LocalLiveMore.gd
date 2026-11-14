@@ -19,13 +19,13 @@ static func install(backend: LocalBackend) -> LocalLiveMore:
 
 # --- 3: the referee plays the duel again -----------------------------------------------------------
 
-## What the referee gets for duel [param d]: seed, picked teams and the rounds up to [param last].
+## What the referee gets for duel [param d]: seed, picked teams, field and the rounds up to [param last].
 func expect(d: Dictionary, last: int) -> Dictionary:
 	var moves: Dictionary = {}
 	for key: String in (d.moves as Dictionary):
 		if int(key) <= last:
 			moves[key] = (d.moves[key] as Array).duplicate(true)
-	return {"live": true, "seed": d.seed, "teams": _teams(d), "moves": moves}
+	return {"live": true, "seed": d.seed, "teams": _teams(d), "moves": moves, "field": str(d.get("field", ""))}
 
 func _teams(d: Dictionary) -> Array:
 	var teams: Array = []

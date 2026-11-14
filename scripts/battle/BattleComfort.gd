@@ -55,11 +55,20 @@ static func move_art(s: Spirling, from: int, to: int) -> bool:
 static func first_row(last: int, s: Spirling) -> int:
 	return last if last >= 0 else favourite_row(s)
 
-## The art list rows for the team menu: a star marks the favourite.
+## Mark in front of the favourite art, in the team menu and on the battle art rows (item 158).
+## "+" like a favourite friend; "*" already stands for focus arts (BattleHelp.KIND_MARK).
+const FAV_MARK: String = "+"
+
+## [constant FAV_MARK] when [param mv] is [param s]'s favourite art, else "".
+static func fav_mark(s: Spirling, mv: MoveData) -> String:
+	return FAV_MARK if s != null and mv != null and not s.fav_art.is_empty() and mv.move_name == s.fav_art else ""
+
+## The art list rows for the team menu: a plus marks the favourite.
 static func art_rows(s: Spirling) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for mv: MoveData in s.moves:
-		out.append({"text": ("* " if mv.move_name == s.fav_art else "") + mv.move_name,
+		var fav: String = fav_mark(s, mv)
+		out.append({"text": (fav + " " if not fav.is_empty() else "") + mv.move_name,
 			"hint": "%s %s" % [BattleHelp.kind_mark(mv.kind), Loc.t(Elements.element_name(mv.element))]})
 	return out
 
@@ -109,8 +118,11 @@ static func option_rows() -> Array[Array]:
 		["speed", Loc.t("Battle speed: %dx") % int(GameState.battle_speed_scale())],
 		["text", Loc.t("Text speed: %s") % Loc.t(GameState.TextSpeed.keys()[GameState.text_speed].capitalize())],
 		["big", Loc.t("Big buttons: %s") % Loc.t("On" if GameState.big_buttons else "Off")],
+		["aim", Loc.t("Auto aim: %s") % Loc.t("On" if GameState.auto_aim else "Off")],
 		["motion", Loc.t("Less motion: %s") % Loc.t("On" if GameState.reduce_motion else "Off")],
 		["shake", Loc.t("Screen shake: %s") % Loc.t(["Off", "Weak", "Full"][clampi(GameState.screen_shake, 0, 2)])],
+		["no_rush", Loc.t("No rush: %s") % Loc.t("On" if GameState.no_rush else "Off")],
+		["input_delay", Loc.t("Tap guard: %s") % Loc.t(BattleCalm.delay_name())],
 	]
 	if ShopEffects.owns_setting("damage_preview"):
 		rows.insert(1, ["preview", Loc.t("Damage preview: %s") % Loc.t("On" if GameState.damage_preview else "Off")])
@@ -127,10 +139,16 @@ static func toggle_option(key: String) -> bool:
 			GameState.text_speed = MenuHost.next_text_speed(GameState.text_speed)
 		"big":
 			GameState.big_buttons = not GameState.big_buttons
+		"aim":
+			GameState.auto_aim = not GameState.auto_aim
 		"motion":
 			GameState.reduce_motion = not GameState.reduce_motion
 		"shake":
 			GameState.screen_shake = (GameState.screen_shake + 1) % 3
+		"no_rush":
+			GameState.no_rush = not GameState.no_rush
+		"input_delay":
+			GameState.input_delay = BattleCalm.next_delay(GameState.input_delay)
 		_:
 			return false
 	return true

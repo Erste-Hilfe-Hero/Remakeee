@@ -1,0 +1,10 @@
+{
+ "_comment": "Polish texts for the German table kampf_k30. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "Acting order %s": "Kolejność %s",
+  "Auto aim: %s": "Auto-cel: %s",
+  "Fight two on two, with another friend's echo beside you?": "Walczyć dwóch na dwóch, z echem innego przyjaciela u boku?",
+  "That field cannot be picked.": "Tego pola nie można wybrać.",
+  "foe %s": "wróg %s"
+ }
+}

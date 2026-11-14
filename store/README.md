@@ -26,6 +26,8 @@ lifekit workflow `chimora-store.yml` (commits `run:chimora-store-play`, `run:chi
 Rebuild the images after the art or the UI changes: see the top of `tools/store/make_store_images.py`.
 Rules for every text and image: no other game's or brand's names, no comparisons (docs/IP_HYGIENE.md,
 docs/legal/STORE_COMPLIANCE.md). Say clearly that the game needs the internet.
+Every description keeps its accessibility block ("PLAYABLE YOUR WAY" and its 13 translations,
+`A11Y_HEADINGS` in `tools/release_check.py`); claim only what the game has (docs/KAMPF_TECHNIK.md section 4).
 
 Privacy, support and account deletion URLs point to the pages the game server serves
 (`server/site`, built by `tools/site/build_site.py`). Change them together with `LegalInfo.SITE` once

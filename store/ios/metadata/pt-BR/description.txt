@@ -35,6 +35,14 @@ JUNTOS ONLINE
 - Raides, Trupes com metas semanais, eventos por tempo limitado e uma meta mundial em conjunto toda semana
 - Seu progresso fica guardado com segurança no nosso servidor na Alemanha e vai com você para um celular novo
 
+JOGUE DO SEU JEITO
+- Suporte a leitor de tela: menus, barras de batalha, Artes e o registro de batalha são lidos em voz alta
+- Texto grande, alto contraste e formas para jogadores daltônicos
+- Movimento reduzido, sem efeitos piscantes, tremor de tela e vibração ajustáveis
+- Legendas para sons e cada grito, som mono e volume por canal
+- Vínculo calmo sem limite de tempo, e as batalhas offline sempre esperam por você
+- Jogue com toque, teclado ou controle
+
 JUSTO
 Grátis para jogar. Compras opcionais no jogo, algumas com vantagens. Nada de conteúdo aleatório. Sem anúncios, sem cronômetros de energia, sem rastreamento.
 

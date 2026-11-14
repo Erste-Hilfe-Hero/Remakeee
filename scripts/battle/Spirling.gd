@@ -72,6 +72,9 @@ var moves: Array[MoveData] = []
 var uid: String = ""
 ## Held item id ("" for none). Only items with a "held" block can be held.
 var held: String = ""
+## Saved keepsake sets (KeepsakeKit, KAMPF_PLAN_1000 307): item id per set, "" for an empty one.
+## Saved as "held_sets" only when set.
+var held_sets: Array[String] = []
 ## Rare colour variant. Cosmetic only, never stronger.
 var prism: bool = false
 ## Power Core used on this Spirling (saved as "core" only when true).
@@ -330,8 +333,9 @@ func restore() -> void:
 	status_turns = 0
 	energy = START_ENERGY
 
-## Clears battle-only state when a battle ends. Statuses do not persist outside battle.
-func end_battle() -> void:
+## Clears battle-only state when a battle ends. The status goes too, unless [param keep_status]
+## (BattleModel.keep_status, item 179) and it is one that lingers on a Spirling still standing.
+func end_battle(keep_status: bool = false) -> void:
 	stages.clear()
 	boss_guard = false
 	sure_skip = 0
@@ -347,8 +351,9 @@ func end_battle() -> void:
 	cheap_element = -1
 	energy_lock = 0
 	cooldowns.clear()
-	status = ""
-	status_turns = 0
+	if not (keep_status and not is_fainted() and StatusRules.lingers(status)):
+		status = ""
+		status_turns = 0
 	energy = START_ENERGY
 
 static func xp_for_level(lvl: int) -> int:
@@ -571,9 +576,14 @@ func to_dict() -> Dictionary:
 		"box": box,
 		"favorite": favorite,
 		"fav_art": fav_art,
+		# A lingering status stays on between battles (item 179).
+		"status": status,
+		"status_turns": status_turns,
 	}
 	if not bonus_trait.is_empty():
 		out["bonus_trait"] = bonus_trait
+	if not held_sets.is_empty():
+		out["held_sets"] = held_sets.duplicate()
 	return out
 
 ## Rebuilds a Spirling from to_dict() output. Returns null if the species is unknown.
@@ -604,6 +614,8 @@ static func from_dict(d: Dictionary) -> Spirling:
 		s.moves = sd.default_moves(s.level, MAX_MOVES)
 	s.uid = str(d.get("uid", ""))
 	s.held = str(d.get("held", ""))
+	for id: Variant in (d.get("held_sets", []) if d.get("held_sets") is Array else []):
+		s.held_sets.append(str(id) if BattleRules.is_holdable(str(id)) else "")
 	s.prism = d.get("prism") is bool and d.get("prism")
 	s.hidden_gift = d.get("hidden_gift") is bool and d.get("hidden_gift")
 	s.gift_slot = d.get("gift_slot") is bool and d.get("gift_slot")
@@ -629,6 +641,9 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.favorite = d.get("favorite") is bool and d.get("favorite")
 	s.fav_art = str(d.get("fav_art", ""))
 	s.hp = clampi(_num(d.get("hp"), s.max_hp()), 0, s.max_hp())
+	if StatusRules.lingers(str(d.get("status", ""))) and s.hp > 0:
+		s.status = str(d.status)
+		s.status_turns = maxi(0, _num(d.get("status_turns"), 0))
 	return s
 
 ## A save number as int; anything that is not a finite number in int range gives [param fallback].
