@@ -97,6 +97,7 @@ func _ready() -> void:
 		"bounty": _action_bounty,
 		"fine_training": _action_fine_training,
 		"training": _action_training,
+		"relearn": _action_relearn,
 		"matchmaker": _action_matchmaker,
 		"reserve": _action_reserve,
 		"informant": _action_informant,
@@ -174,6 +175,8 @@ func _ready() -> void:
 		if hint != "" or GameState.left_battle:
 			GameState.left_battle = false
 			show_notices.call_deferred()
+		elif BattleCheckpoint.is_open(GameState.records):
+			_resume_open_battle.call_deferred()
 
 func _build() -> void:
 	_ground = TileMapLayer.new()
@@ -871,7 +874,7 @@ func _on_interact(cell: Vector2i) -> void:
 		await n.turn_toward(player.cell)
 		if _is_active_trainer(n):
 			await challenge(n, false)
-		elif not await offer_warden_rematch(n) and not await offer_second_trial(n) and not await offer_rematch(n) and not await offer_trials(n):
+		elif not await offer_warden_rematch(n) and not await offer_second_trial(n) and not await offer_lessons(n) and not await offer_rematch(n) and not await offer_trials(n):
 			await run_dialogue(n.dialogue_ref, n)
 		return
 	var s: Dictionary = map.sign_at(cell, GameState.flags)
@@ -884,6 +887,13 @@ func _on_interact(cell: Vector2i) -> void:
 	var landmark: Array[String] = Landmarks.lines_at(map.id, cell)
 	if not landmark.is_empty():
 		await _locked_say(landmark)
+		# KAMPF_PLAN_1000 item 117: an element seal under the landmark.
+		if not ElementSeals.seal_for(map.id).is_empty() and not GameState.has_flag(ElementSeals.flag(map.id)):
+			busy = true
+			player.frozen = true
+			await ElementSeals.run(_ui, map.id)
+			player.frozen = false
+			busy = false
 		return
 	# Talk across counters.
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
@@ -1387,6 +1397,13 @@ func _action_fine_training(_args: PackedStringArray, _speaker: NPC) -> void:
 	var r: Dictionary = FineTraining.train(s, stat, GameState.rng)
 	await say([str(r.line)] as Array[String])
 
+## "relearn": Hesper digs up forgotten arts for coins (ArtTeacher, KAMPF_PLAN item 138).
+func _action_relearn(_args: PackedStringArray, _speaker: NPC) -> void:
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	await ArtTeacher.run(menu)
+	menu.queue_free()
+
 ## "training": the training ring in the lighthouse (TrainingGround): bouts against carved
 ## dummies without risk, training goals and the training record.
 func _action_training(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -1825,6 +1842,8 @@ func watch_replay(snap: Dictionary) -> void:
 		var why: String = BattleReplay.problem(snap)
 		await say([why if not why.is_empty() else "That replay can't be shown any more."] as Array[String])
 		return
+	# A replay says why the foe did what it did (KAMPF_PLAN_1000 item 467).
+	model.explain_ai = AiNotes.REASON
 	await _fade_to(1.0)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
@@ -2704,6 +2723,10 @@ func _action_postgame_board(_args: PackedStringArray, _speaker: NPC) -> void:
 	# Battle halls (KAMPF_PLAN_1000, endgame modes): scripts/overworld/HallRunner.gd.
 	ways.append(Loc.t("Battle halls"))
 	kinds.append("halls")
+	# Rift heart echoes and the heart rush (KAMPF_PLAN_1000 items 417, 418): BossRunner.gd.
+	if not BossRunner.board_line().is_empty():
+		ways.append(BossRunner.board_line())
+		kinds.append("hearts")
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	var way: int = await menu.pick_strings(Loc.t("The board"), ways)
@@ -2725,6 +2748,8 @@ func _action_postgame_board(_args: PackedStringArray, _speaker: NPC) -> void:
 			await _run_final_exam()
 		"halls":
 			await HallRunner.open(self)
+		"hearts":
+			await BossRunner.open(self)
 
 ## One timed battle for a hall; books the time on a win and says a new best.
 func _timed_battle(hall: String, foes: Array[Spirling], info: Dictionary) -> BattleModel.Outcome:
@@ -3241,6 +3266,45 @@ func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.set_flag(flag)
 		await _action_give_item([Season.gift_for(f, year), "1"] as PackedStringArray, null)
 	await _festival_task()
+	await _festival_boss(f, "%s_%d" % [f.id, year])
+
+## The festival's echo of a beaten Rift heart (KAMPF_PLAN_1000 item 437, FestivalBoss).
+func _festival_boss(f: Dictionary, key: String) -> void:
+	var e: Dictionary = FestivalBoss.entry(str(f.id))
+	if e.is_empty():
+		return
+	var fb: Dictionary = FestivalBoss.data()
+	if not FestivalBoss.unlocked(str(f.id), GameState.records):
+		await say([str(fb.get("locked", ""))] as Array[String])
+		return
+	if FestivalBoss.won(key, GameState.records):
+		await say([str(fb.get("done", ""))] as Array[String])
+		return
+	var best: int = 1
+	for s: Spirling in GameState.party:
+		best = maxi(best, s.level)
+	var foes: Array[Spirling] = FestivalBoss.team(str(f.id), best, GameState.rng)
+	if foes.is_empty():
+		return
+	var label: String = str(BattleRules.BOSSES.get(str(e.boss), {}).get("label", ""))
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var go: bool = await menu.confirm(Loc.t(str(fb.get("offer", ""))) % [Loc.t(label), foes[0].display_name()])
+	menu.queue_free()
+	if not go:
+		return
+	GameState.heal_party()
+	busy = false
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, {"name": Loc.t(label), "ai": maxi(TrainerData.BOSS_MIN_AI, GameState.ai_level()), "money": 0, "boss": str(e.boss)})
+	busy = true
+	player.frozen = true
+	if outcome != BattleModel.Outcome.WIN:
+		await say([str(fb.get("loss", ""))] as Array[String])
+		return
+	var lines: Array[String] = [str(fb.get("win", ""))]
+	if FestivalBoss.note_win(key, GameState.records):
+		lines.append_array(Festival.add(int(fb.get("ribbons", 20))))
+	await say(lines)
 
 ## The crier's festival task of the day (plan 3211): one a day, pays festival ribbons.
 func _festival_task() -> void:
@@ -3612,6 +3676,12 @@ func after_tamer_win(n: NPC) -> void:
 	var lore: String = str(def.get("lexicon", BossRules.LEXICON.get(str(def.get("boss", "")), "")))
 	if def.has("boss") and last_model != null:
 		BossRules.note_win(GameState.records, str(def.boss), last_model.turn)
+		# The heart's spoils follow the difficulty (item 415).
+		for it: Variant in BossHall.reward_items(GameState.difficulty):
+			await _action_give_item(PackedStringArray([str(it[0]), str(it[1])]), null)
+		# The fastest win against each boss is kept to watch again (item 440).
+		if BossRules.keep_replay(GameState.records, str(def.boss), last_model.turn, GameState.records.get("last_battle", {})):
+			toast.show_note(Loc.t("Kept in your boss replays (Records)."))
 	if not lore.is_empty() and Lexicon.add(GameState.records, lore):
 		await say([Loc.t("A new lexicon entry is written down."), "%s: %s" % [Loc.t(Lexicon.title(lore)), Loc.t(Lexicon.text(lore))]] as Array[String])
 	for f: Variant in def.get("win_flags", []):
@@ -3620,6 +3690,9 @@ func after_tamer_win(n: NPC) -> void:
 		_npcs.erase(n)
 		n.queue_free()
 	await announce_goal_if_changed(goal_before)
+	# The boss's own badge (item 439) shows right away, not only after the next battle.
+	if def.has("boss"):
+		await announce_achievements()
 	SaveManager.save_game()
 	VirtualPad.set_wanted(true)
 	player.frozen = false
@@ -3684,6 +3757,36 @@ func offer_trials(n: NPC) -> bool:
 		busy = false
 		return idx < 0
 	await _play_trial(trials[idx], str(def.warden))
+	return true
+
+## A beaten Wayfarer with a "lessons" group teaches its lesson battles (KAMPF_PLAN_1000 items 559,
+## 812): Trials with borrowed Spirlings, no rings, no rewards. Leaving the menu returns false, so
+## the rematch offer and the usual talk still follow.
+func offer_lessons(n: NPC) -> bool:
+	var def: Dictionary = n.definition
+	if not def.has("lessons") or not TrainerData.is_beaten(def, map.id, GameState.flags):
+		return false
+	var list: Array[Dictionary] = BattlePuzzle.for_teacher(str(def.lessons))
+	if list.is_empty():
+		return false
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	var entries: Array[Dictionary] = []
+	for p: Dictionary in list:
+		var got: int = BattlePuzzle.best_lanterns(GameState.records, str(p.id))
+		var mark: String = (" " + Loc.t("Lanterns %d/%d") % [got, BattlePuzzle.MAX_LANTERNS]) if got > 0 else ""
+		entries.append({"text": Loc.t(str(p.get("name", p.id))) + mark, "hint": Loc.t(str(p.get("text", "")))})
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var idx: int = await menu.pick(Loc.t(BattlePuzzle.teacher_title(str(def.lessons))), entries, true)
+	menu.queue_free()
+	if idx < 0 or idx >= list.size():
+		VirtualPad.set_wanted(true)
+		player.frozen = false
+		busy = false
+		return false
+	await _play_trial(list[idx], "")
 	return true
 
 ## Plays one Trial until it is solved or the player stops (items 707, 708, 710, 712). "Restart"
@@ -3892,13 +3995,13 @@ static func _dir_name(d: Vector2i) -> String:
 
 ## Asks whether to bring a friend's echo, lets the player pick one and builds the team.
 ## Returns {"code", "name", "partner": {...}} or {} (no friends with teams, offline, or no).
-func pick_echo_partner(question: String) -> Dictionary:
+func pick_echo_partner(question: String, skip_code: String = "") -> Dictionary:
 	if not Online.is_online() or not Online.social_on():
 		return {}
 	var r: Dictionary = await Online.call_fn("friends_list")
 	if not r.ok or not r.data is Dictionary:
 		return {}
-	var with_team: Array = (r.data.get("friends", []) as Array).filter(func(f: Dictionary) -> bool: return bool(f.get("has_team", false)))
+	var with_team: Array = (r.data.get("friends", []) as Array).filter(func(f: Dictionary) -> bool: return bool(f.get("has_team", false)) and str(f.get("code", "")) != skip_code)
 	if with_team.is_empty():
 		return {}
 	var menu := MenuHost.new()
@@ -3951,11 +4054,18 @@ func echo_duel(d: Dictionary) -> void:
 	_ui.add_child(fm)
 	var fi: int = await fm.pick_strings(Loc.t("Which field?"), EchoTeam.field_names())
 	fm.queue_free()
-	busy = false
 	# The rule of the week holds in echo duels too, the same for everyone (KAMPF_PLAN_1000).
-	var outcome: BattleModel.Outcome = await start_battle(foes, false,
-		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
-			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi), "theme": "duel"})
+	var info: Dictionary = {"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
+			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi), "theme": "duel",
+			TurnFlow.CLOCK_META: TurnFlow.echo_seconds()}
+	# Two on two with a second friend's echo beside you (KAMPF_PLAN_1000 375).
+	var helper: Dictionary = await pick_echo_partner("Fight two on two, with another friend's echo beside you?", str(d.get("code", "")))
+	if not helper.is_empty():
+		info["partner"] = EchoTeam.duel_partner(helper.partner, ring)
+		await say(TraitKit.apply_duel_rules(info.partner.echo))
+		info["front"] = EchoTeam.DOUBLE_FRONT
+	busy = false
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, info)
 	busy = true
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN
@@ -4069,11 +4179,17 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 		ask.queue_free()
 		if skip:
 			return await _skipped_battle(foes)
+	# Boss save point (KAMPF_PLAN_1000 items 30, 416); a Warden met on the map was saved already.
+	if BattleCheckpoint.save_point_due(trainer) and not _warden_battle:
+		toast.show_note(BattleCheckpoint.save_point_line(SaveManager.save_game()))
 	Sound.sfx("encounter")
 	await _fade_to(1.0)
 	# A league battle comes ready-made from the server's seed and teams (plan area 7).
 	var preset: Variant = trainer.get("model")
 	var model: BattleModel = preset if preset is BattleModel else _new_model(foes, wild, trainer)
+	# Friendly and server-checked battles cannot be given up (KAMPF_PLAN_1000 item 8).
+	if bool(trainer.get("friendly", false)):
+		model.set_meta(TurnFlow.NO_FORFEIT_META, true)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
 	# A worn shop backdrop (item 4281) replaces the place's own, never a fixed one.
@@ -4088,12 +4204,20 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	scene.music_track = BattleAudio.theme(str(trainer.get("theme", "")), bool(trainer.get("warden", false)), not Festival.active().is_empty(),
 		map.outdoor and GameState.day_night and DayCycle.current() == DayCycle.Phase.NIGHT, area)
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
+	# A wild battle left by closing the app goes on after the restart (item 31).
+	if trainer.get("resume") is Array:
+		scene.resume = true
+		scene.replay_inputs = (trainer.resume as Array).duplicate()
+		scene.inputs = (trainer.resume as Array).duplicate()
+	if BattleCheckpoint.resumable(wild, trainer, GameState.difficulty):
+		BattleCheckpoint.open(GameState.records, replay, scene.inputs, model)
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0
 	Online.in_battle = true
 	GameState.battle_open = not bool(trainer.get("friendly", false))
 	var result: Array = await scene.battle_finished
 	GameState.battle_open = false
+	BattleCheckpoint.close(GameState.records)
 	Online.in_battle = false
 	var outcome: BattleModel.Outcome = result[0]
 	replay["inputs"] = scene.inputs
@@ -4120,6 +4244,23 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	busy = false
 	battle_ended.emit(outcome)
 	return outcome
+
+## A wild battle left open when the app closed goes on where it stopped (KAMPF_PLAN_1000 item 31):
+## the team and satchel get their state from before it back, and its turns play again on screen.
+func _resume_open_battle() -> void:
+	var rec: Dictionary = BattleCheckpoint.take(GameState.records, GameState.difficulty)
+	var model: BattleModel = BattleCheckpoint.restore(rec, GameState.party, GameState.inventory) if not rec.is_empty() else null
+	if model == null or busy:
+		return
+	model.set_meta("summary", BattleSummary.new(model))
+	last_model = model
+	busy = true
+	player.frozen = true
+	await say([BattleCheckpoint.resume_line()] as Array[String])
+	busy = false
+	var foes: Array[Spirling] = []
+	foes.assign(model.parties[1])
+	await start_battle(foes, true, {"model": model, "resume": rec.get("inputs", [])})
 
 ## A wild battle settled by a Battle Skip: the same model and aftermath, no battle screen.
 func _skipped_battle(foes: Array[Spirling]) -> BattleModel.Outcome:
@@ -4160,9 +4301,12 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	last_model = model
 	model.inventory = GameState.inventory
 	model.items_allowed = GameState.items_allowed_in_battle()
+	# Keepsakes go on in battle only with the real team (KAMPF_PLAN_1000 298).
+	model.held_swap = mine == GameState.party
 	model.level_cap = GameState.level_cap()
 	model.bench_share = GameState.bench_share()
 	model.trainer_name = str(trainer.get("name", ""))
+	model.foe_theme_line = str(trainer.get("theme_line", ""))
 	var tune: Variant = trainer.get("profile_tune", {})
 	model.ai.set_profile(str(trainer.get("profile", "")), tune if tune is Dictionary else {})
 	if not wild:
@@ -4210,7 +4354,16 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	# Story (KAMPF_PLAN item 52): resting mends a little Vigor (the keen-hit cut is in ChallengeRules).
 	if d == GameState.Difficulty.STORY:
 		model.rest_heal_share = BattleModel.STORY_REST_HEAL
+	# Scorch, Root and Jolt stay on after a world battle, except on Story (KAMPF_PLAN item 179).
+	model.keep_status = world and not bool(trainer.get("practice", false)) and not d in StatusRules.CLEARS_AFTER_BATTLE
 	model.ambush = wild and bool(trainer.get("ambush", false))
+	# 1v1 Wayfarer battles: swap offer and the foe's announcement (KAMPF_PLAN_1000 items 9, 10);
+	# echo duels: a clock per turn (item 6).
+	var story_foe: bool = not wild and not bool(trainer.get("friendly", false))
+	model.shift_offer = story_foe and TurnFlow.shift_on()
+	model.foe_announce = story_foe and TurnFlow.announce_on()
+	if trainer.has(TurnFlow.CLOCK_META):
+		model.set_meta(TurnFlow.CLOCK_META, int(trainer[TurnFlow.CLOCK_META]))
 	# The end report: damage, knock-outs, best Spirling, Energy, seed (KAMPF_PLAN items 20, 76).
 	model.set_meta("summary", BattleSummary.new(model))
 	# A boss fight ends after BOSS_ROUND_LIMIT turns: the Rift closes again (item 21).
@@ -4225,6 +4378,9 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	var front: Array = trainer.get("front", [1, 1])
 	model.front_size = [int(front[0]), int(front[1])]
 	model.foe_boss = str(trainer.get("boss", ""))
+	# A Rift heart's purse follows the difficulty (item 415, BossHall.money_mult).
+	if not model.foe_boss.is_empty():
+		model.prize_money = int(model.prize_money * BossHall.money_mult(GameState.difficulty))
 	model.foe_formation = bool(trainer.get("formation", false))
 	var goal_key: String = str(trainer.get("goal_key", ""))
 	var goal: Dictionary = BattleGoals.all().get(goal_key, {}) if not goal_key.is_empty() and GameState.bonus_goals else {}

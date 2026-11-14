@@ -102,6 +102,8 @@ func _init(p_store_path: String = "") -> void:
 	LocalLiveMore.install(self)
 	# Climb boards for the lighthouse stair and the echo tower (20261113207070_climb_boards.sql).
 	LocalClimb.install(self)
+	# Matchup notes by Lantern Mail (KAMPF_PLAN_1000 item 107, 20261114120260_matchup_notes.sql).
+	MatchupNotes.install(self)
 
 func is_local() -> bool:
 	return true
@@ -1545,15 +1547,17 @@ func _fn_league_find(a: Dictionary) -> Dictionary:
 	var pair_cap: bool = rated and pair_n >= int(safety_cfg().get("pair_rated_daily", 3))
 	if pair_cap:
 		rated = false
+	# Item 876: the rival echo's AI tier follows the searching player's rank.
+	var echo_ai: int = LeagueRules.echo_ai(ranks_cfg(), LeagueRules.rank(ranks_cfg(), float(mine.rating), int(mine.games)), config_int("league_ai", 2))
 	matches[str(id)] = {"league": league, "season": int(sn.id), "user": me(), "opponent": best, "seed": rng.randi() & 0x7fffffff,
-		"teams": teams, "created_at": now(), "state": "open", "rated": rated}
+		"teams": teams, "created_at": now(), "state": "open", "rated": rated, "ai": echo_ai}
 	return {"ok": true, "found": true, "match_id": id, "seed": matches[str(id)].seed, "teams": teams.duplicate(true),
-		"ai": config_int("league_ai", 2), "opponent_tier": LeagueRules.tier(float(opp.rating)), "range": span, "rated": rated,
+		"ai": echo_ai, "opponent_tier": LeagueRules.tier(float(opp.rating)), "range": span, "rated": rated,
 		"pair_limit": pair_cap,
 		"echo": best_d > span or best.is_empty()}
 
 func _league_expect(m: Dictionary) -> Dictionary:
-	return {"seed": m.seed, "teams": (m.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
+	return {"seed": m.seed, "teams": (m.teams as Array).duplicate(true), "ai": int(m.get("ai", config_int("league_ai", 2))), "wild": false,
 		"front": [1, 1], "items_allowed": false, "seals": seals_of(str(m.user)) if str(m.league) == LeagueRules.OPEN else [0, 0, 0],
 		"amulets": amulets_of(str(m.user)) if str(m.league) == LeagueRules.OPEN else [0, 0, 0]}
 
@@ -2709,9 +2713,11 @@ func _live_out(d: Dictionary) -> Dictionary:
 	return {"ok": true, "id": int(d.id), "side": side, "state": d.state, "show": (d.show as Array).duplicate(true),
 		"picked": [d.pick[0] != null, d.pick[1] != null], "teams": teams, "seed": d.seed, "round": d.round,
 		"moves": moves, "deadline": d.deadline, "turn_seconds": int(live_cfg().turn_seconds),
-		"winner": d.winner, "reason": d.reason, "emotes": (d.emotes as Array).duplicate(true), "judging": false}
+		"winner": d.winner, "reason": d.reason, "emotes": (d.emotes as Array).duplicate(true), "judging": false,
+		"field": str(d.get("field", ""))}
 
-func _live_new(other: String) -> Dictionary:
+## Like 20261114103000_live_field.sql: the duel is fought on [param field] (KAMPF_PLAN_1000 340).
+func _live_new(other: String, field: String = "") -> Dictionary:
 	if parent_off(me(), "live_duel") or parent_off(other, "live_duel"):
 		return _fail("parent_off")
 	var c: Dictionary = live_cfg()
@@ -2724,7 +2730,7 @@ func _live_new(other: String) -> Dictionary:
 	var id: int = _next_id("live_duels")
 	var d: Dictionary = {"id": id, "a": me(), "b": other, "state": "invited", "show": show, "pick": [null, null],
 		"seed": rng.randi() & 0x7fffffff, "round": 0, "moves": {}, "deadline": now() + 60 * int(c.invite_minutes),
-		"winner": -1, "reason": "", "emotes": [], "report": [null, null]}
+		"winner": -1, "reason": "", "emotes": [], "report": [null, null], "field": field}
 	_table("live_duels", {})[str(id)] = d
 	return {"ok": true, "id": id}
 
@@ -2734,9 +2740,12 @@ func _fn_live_invite(a: Dictionary) -> Dictionary:
 	var other: String = uid_for_code(str(a.get("p_code", "")))
 	if other.is_empty() or other == me() or is_blocked(me(), other) or not is_friend(me(), other):
 		return _fail("not_friends")
+	var field: Variant = LiveDuel.field_ok(a.get("p_field", ""), live_cfg())
+	if field == null:
+		return _fail("bad_field")
 	if not _rate_ok("live_invite", int(live_cfg().invites_per_hour)):
 		return _fail("slow_down")
-	return _live_new(other)
+	return _live_new(other, field)
 
 func _fn_live_list(_a: Dictionary) -> Dictionary:
 	var out: Array = []
@@ -2854,7 +2863,7 @@ func _fn_live_rematch(a: Dictionary) -> Dictionary:
 		return _fail("not_friends")
 	if not _rate_ok("live_invite", int(live_cfg().invites_per_hour)):
 		return _fail("slow_down")
-	return _live_new(other)
+	return _live_new(other, str(d.get("field", "")))
 
 # --- Bund extras (Online 100, area 4), like 20261111000060_bund_more.sql ------------------------
 

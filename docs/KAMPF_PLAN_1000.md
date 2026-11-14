@@ -38,13 +38,13 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 3. [x] Priorität +2 für seltene Schutz-Techniken einführen, sonst bleibt +1 das Maximum (Calm Veil +2, test_kampf_k01b)
 4. [x] Gleichstand bei SPD sichtbar als Münzwurf-Symbol im Kampflog (BattleModel._note_speed_ties, SPEED_TIE)
 5. [x] Rundenzähler oben links, nur in Wayfarer- und Boss-Kämpfen (BattleScene.show_turns)
-6. [ ] Zug-Timeout für Online-Echo-Duelle (60 s, danach Rasten)
-7. [ ] Rückgängig-Knopf für die Befehlswahl im Mehrfachkampf, bevor der Zug startet
-8. [ ] Aufgeben-Option in Wayfarer-Kämpfen mit Bestätigung (zählt als Niederlage, kein Geldverlust auf Story)
-9. [ ] Wechsel nach einem K.o. des Gegners anbieten (Stufe Story und Wayfarer), auf Veteran abschaltbar
-10. [ ] Gegner kündigt seinen nächsten Spirling an, wenn er wechselt (Ankündigungs-Option)
+6. [x] Zug-Timeout für Online-Echo-Duelle (60 s, danach Rasten) (TurnFlow, data/turn_flow.json echo_turn_seconds; BattleScene-Uhr, Warnung bei 10 s)
+7. [x] Rückgängig-Knopf für die Befehlswahl im Mehrfachkampf, bevor der Zug startet (bestehend: BattleComfort.undo, Zurück ab dem zweiten Spirling, Punkt 604)
+8. [x] Aufgeben-Option in Wayfarer-Kämpfen mit Bestätigung (zählt als Niederlage, kein Geldverlust auf Story) (BattleModel.forfeit, Knopf Aufgeben statt Fliehen, nie in Echo-Duellen und Turnieren)
+9. [x] Wechsel nach einem K.o. des Gegners anbieten (Stufe Story und Wayfarer), auf Veteran abschaltbar (BattleModel AWAIT_SHIFT/submit_shift, data/turn_flow.json shift_offer, Einstellung Wechselangebot)
+10. [x] Gegner kündigt seinen nächsten Spirling an, wenn er wechselt (Ankündigungs-Option) (BattleModel.foe_announce, Einstellung Ankündigung)
 11. [x] Doppelte Aktion eines Bosses klar als 'Nachhall' markieren (BONUS_ACTION)
-12. [ ] Rasten im Mehrfachkampf: Wahl 'Alle rasten' als Abkürzung
+12. [x] Rasten im Mehrfachkampf: Wahl 'Alle rasten' als Abkürzung (Knopf Alle rasten, TurnFlow.fill_rest)
 13. [x] Schnellwahl 'Letzten Zug wiederholen' für Wildkämpfe (CommandMenu.prefer_row, BattleInfo.focus_row: Fokus liegt auf der letzten Technik)
 14. [x] Zugvorschau: Fehlschlag-Chance bei Genauigkeit unter 100 % als Prozentwert (BattleInfo.miss_pct)
 15. [ ] Kampfbeginn mit Initiative-Bonus, wenn der Spieler den Gegner von hinten anspricht
@@ -62,8 +62,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 27. [ ] Gegner-Bank-Anzahl als Punkte am Rand (wie viele Spirlings noch kommen)
 28. [ ] Spieler-Bank-Anzahl ebenfalls als Punkte
 29. [ ] Kampfstart-Text kürzer bei 2x/4x Tempo
-30. [ ] Zwischenspeichern vor Boss-Kämpfen automatisch
-31. [ ] Kampf fortsetzen nach App-Neustart (Zustand pro Zug sichern)
+30. [x] Zwischenspeichern vor Boss-Kämpfen automatisch (BattleCheckpoint.save_point_due, Overworld.start_battle)
+31. [x] Kampf fortsetzen nach App-Neustart (Zustand pro Zug sichern) (Wildkämpfe: BattleCheckpoint, records.open_battle, Overworld._resume_open_battle; Rift-Born bleibt Niederlage)
 32. [x] Wechsel kostet keine Energie, aber der neue Spirling startet mit seiner gespeicherten Energie (test_kampf_k01)
 33. [x] Energie bleibt pro Spirling beim Wechsel erhalten (bestehend, sichtbar machen) (RulesBook.energy)
 34. [x] Zufallszahlen fair: gleicher Seed erzeugt denselben Kampf (bestehend, Regressionstest) (test_battle_model.test_same_seed_same_battle)
@@ -145,18 +145,18 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 104. [x] Trait 'Gegenstrom': resistiert das Element, das es zuletzt getroffen hat (verborgene Gabe Gegenstrom (Paddlewisp-Linie))
 105. [x] Element-Statistik im Kampfende-Bericht (Schaden nach Element im Kampflog, TechniqueRules.element_summary)
 106. [x] Matchup-Kenntnis wird pro Spielstand gespeichert (bestehend) (bestehend: SaveManager matchups)
-107. [ ] Online: Matchup-Wissen teilt sich mit Freunden (Laternenpost-Bonus)
-108. [ ] Element-Icons im Hochkontrast-Modus größer
+107. [x] Online: Matchup-Wissen teilt sich mit Freunden (Laternenpost-Bonus) (MatchupNotes, notes_send/notes_open, Freundschaftspunkte; test_kampf_k26, test_matchup_notes.sql)
+108. [x] Element-Icons im Hochkontrast-Modus größer (ElementIcons.HC_SCALE in Menüs, 9-px-Symbol mit Rand im Kampf)
 109. [x] Element-Namen bleiben in allen Sprachen gleich (bestehend) (bestehend: Elements.element_name ohne Übersetzung)
 110. [x] Element-Tabelle bleibt eigenständig, nie aus anderen Spielen übernehmen (Regel) (Regel in docs/BALANCE.md)
-111. [ ] Ein Element pro Riss als Thema der Warden
+111. [x] Ein Element pro Riss als Thema der Warden (data/warden_themes.json, WardenCard.theme auf der Warden-Karte)
 112. [x] Element-Training: Spark-Werte steigen schneller im passenden Feld (doppelte Spark-Chance, TechniqueRules.spark_field_mult)
-113. [ ] Element-Glyphen animieren beim sehr effektiven Treffer
+113. [x] Element-Glyphen animieren beim sehr effektiven Treffer (InfoStrip.kick_glyphs, glyph_hop; ohne Bewegung bei reduzierter Bewegung)
 114. [x] Element-Mischtechniken (zwei Elemente, nimmt das bessere) (Magmasturm, Gischtböe (dual_element))
 115. [x] Element-Schild-Technik für das ganze Team (3 Runden) (Schutzkreis (Ward Circle))
 116. [x] Elementarer Nachhall: Bonus, wenn zwei Verbündete im selben Zug dasselbe Element nutzen (TechniqueRules.echo_mult)
-117. [ ] Element-Rätsel in der Welt, die Kampfwissen belohnen
-118. [ ] Element-Filter im Lager
+117. [x] Element-Rätsel in der Welt, die Kampfwissen belohnen (ElementSeals: Siegel unter sechs Wahrzeichen, data/element_seals.json)
+118. [x] Element-Filter im Lager (bestehend: GameState.storage_view, Schalter 'Show:' in der Box, test_ux_extras)
 119. [x] Element-Schwäche-Warnung beim Einwechseln (Warnung '!Element' in der Tauschauswahl)
 120. [x] Gegner-Element im Info-Streifen (bestehend) (bestehend: InfoStrip zeichnet Elementsymbole)
 
@@ -179,14 +179,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 135. [x] Technik mit Treffer-Serie (2 bis 4 Treffer) (Kieselhagel (Pebble Hail))
 136. [x] Technik, die das Feld beendet (Rissstille (Rift Hush))
 137. [x] Technik, die Status vom ganzen Team heilt (bestehend: Effekt cure_team)
-138. [ ] Technik-Lehrer im Leuchtturm (vergessene Techniken neu lernen)
+138. [x] Technik-Lehrer im Leuchtturm (vergessene Techniken neu lernen) (Hesper nach ihrem Laden, ArtTeacher, 500 Münzen je Technik)
 139. [x] Echo-Kristalle (bestehend) als Quelle seltener Techniken ausbauen (19 neue Echo-Kristalle bei Hesper im Leuchtturm)
 140. [x] Technik-Tausch-Vorschau: alte und neue Technik nebeneinander (Vergessen-Liste zeigt alt > neu)
 141. [x] Technik-Beschreibung mit Effekt-Chancen im Lexikon
 142. [ ] Techniken mit Signatur pro Art (eine je Art, eigenständig)
 143. [x] Keine Technik-Namen aus anderen Spielen (Prüfliste vor jedem Merge) (tools/ip_check.sh in CI, test_rule_checks)
 144. [x] Status-Techniken mit Genauigkeit unter 100 % sichtbar machen (Trefferchance in der Technikzeile)
-145. [ ] Technik-Kategorie Physisch/Fokus/Status mit Symbol
+145. [x] Technik-Kategorie Physisch/Fokus/Status mit Symbol (5x5-Pixelzeichen BattleHelp.KIND_ICONS in jeder Technikzeile im Kampf)
 146. [x] Mehrfachziel-Techniken zeigen 'alle' (bestehend) (bestehend: Info-Karte 'Reaches every foe.')
 147. [x] Technik 'Ablenkung': zieht alle Einzelziele drei Runden auf sich (Lichtköder (Bright Lure))
 148. [x] Technik 'Schulterschluss': schützt einen Verbündeten (Schulterschluss (Close Ranks))
@@ -199,8 +199,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 155. [x] Technik-Balancing über den Simulator pro neuer Technik (balance_sim --mode arts, ArtsSim, Ergebnis in BALANCE.md)
 156. [x] Lernlisten pro Art auf Lücken prüfen (jede Art hat eine Status-Technik) (Statustechnik für jede Art per Echo-Kristall, test_kampf_techniques_b)
 157. [x] Technik-Animationen pro Element eigenständig (bestehend: ElementFx pro Element)
-158. [ ] Technik-Favoriten im Menü markieren
-159. [ ] Technik-Reihenfolge im Menü umsortieren
+158. [x] Technik-Favoriten im Menü markieren (BattleComfort.FAV_MARK '+' im Kampfmenü und unter Team > Technik-Reihenfolge)
+159. [x] Technik-Reihenfolge im Menü umsortieren (bestehend: Team > Technik-Reihenfolge, BattleComfort.move_art)
 160. [x] Technik-Info-Bildschirm per langem Druck
 
 ## Status-Zustände
@@ -223,7 +223,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 176. [x] Status-Schutz-Technik für das Team (Technik Calm Veil)
 177. [x] Status überträgt sich bei Kontakt (Trait 'Glimmhaut') (Gabe glimmer_skin, Forgefly-Linie)
 178. [x] Status heilt beim Wechsel auf die Bank (Trait 'Ruhig') (Gabe unruffled, Prismist-Linie)
-179. [ ] Status nach dem Kampf bleibt erhalten, außer auf Story
+179. [x] Status nach dem Kampf bleibt erhalten, außer auf Story (Brand, Wurzeln, Schock: StatusRules.lingers, Heilmittel auch außerhalb des Kampfes)
 180. [x] Status-Heilung an Rastquellen (bestehend) (GameState.heal_party, Spirling.restore)
 181. [x] Status-Statistik im Kampfende-Bericht (BattleReport.status_line)
 182. [x] Status-Sound pro Status eigenständig (bestehend: BattleAudio.status_sound)
@@ -334,7 +334,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Gehaltene Gegenstände
 
-281. [ ] Gehaltene Gegenstände (bestehend) im Info-Streifen als Symbol
+281. [x] Gehaltene Gegenstände (bestehend) im Info-Streifen als Symbol (InfoStrip zeigt das Andenken-Symbol, beim Gegner erst nachdem es gewirkt hat; KeepsakeKit.strip_item, Vorleser: 'holds ...')
 282. [x] Element-Verstärker pro Element (bestehend: Prismen und Charms pro Element)
 283. [x] Energie-Kristall (+2 Start-Energie) ('Deep Crystal': +2 Energie-Maximum und Start)
 284. [x] Schutz-Talisman (einmal sehr effektiven Treffer halbieren) ('Ward Talisman')
@@ -351,16 +351,16 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 295. [x] Gegenstand-Info im Lexikon (Andenkenbuch im Rekorde-Menü (TraitKit.all_keepsake_lines))
 296. [x] Gegenstand-Verbrauch in Kampfende-Bericht (BattleReport.item_line: 'Items used: Max Tonic x2', Taschen-Gegenstände und gegessene Früchte deiner Seite)
 297. [x] Gegenstand nach dem Kampf automatisch wieder ausrüsten (Option) (Einstellung 'Refill fruit', TraitKit.refill_held: eine gegessene Frucht kommt aus der Tasche wieder an denselben Spirling)
-298. [ ] Gegenstand-Tausch im Kampf (kostet den Zug)
+298. [x] Gegenstand-Tausch im Kampf (kostet den Zug) (Item-Menü bietet Andenken aus der Tasche an, KeepsakeKit.do_swap: das alte geht in die Tasche, nur mit dem echten Team, nie in Echo-Duellen)
 299. [x] Gegenstand-Klau-Technik bewusst nicht einführen (Frust) (bewusst kein Klau-Effekt)
 300. [x] Gegenstand-Shop im Endgame (Marlas Stand (endgame.json exchange, Stufe full))
 301. [x] Gegenstand als Belohnung im Turm (oberste Turmetage gibt ein Andenken (TraitKit.tower_reward))
 302. [x] Gegenstand-Seltenheit sichtbar (Seltenheit im Andenken-Hinweis (items.json rarity))
 303. [x] Gegenstand-Balance im Simulator (gab es schon: BalanceSim.run_keepsakes, balance_sim --mode keepsakes, prüft jeden haltbaren Gegenstand, die kit_*-Andenken eingeschlossen; Test test_balance_sim_covers_every_keepsake)
-304. [ ] Gegenstand-Icons eigenständig (Asset-Log)
+304. [x] Gegenstand-Icons eigenständig (Asset-Log) (KeepsakeIcons: 22 eigene 7x7-Formen in data/keepsake_kit.json, jedes Andenken mit Form und Farbe, Ära I in Tinte; Eintrag in docs/ASSET_LOG.md)
 305. [x] Gegenstand-Namen eigenständig prüfen (Test: keine Namensdopplung)
 306. [x] Gehaltene Gegenstände in Online-Duellen gleich (gleiches Modell und Spielstand)
-307. [ ] Gegenstand-Sets pro Spirling speichern
+307. [x] Gegenstand-Sets pro Spirling speichern (3 Sets pro Spirling im Spielstand, Andenken-Menü: speichern, anlegen, ganzes Team; KeepsakeKit.wear_team_set)
 308. [x] Gegenstand 'Echo-Muschel': Bond-Chance +5 % beim Halter ('Calling Conch')
 309. [x] Gegenstand 'Ruhekerze': +1 Energie beim Rasten ('Quiet Wick')
 310. [x] Gegenstand 'Glutstein' für Ember-Felder ('Cinder Stone')
@@ -371,8 +371,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 315. [x] Gegenstand-Limit: jeder Gegenstand nur einmal pro Team in Turnieren (TraitKit.apply_duel_rules: ein doppeltes Andenken bleibt nur beim ersten Spirling, in Echo-Duellen)
 316. [x] Gegenstand-Fund in versteckten Orten (bestehend) (bestehend: Spark Coil im Versteck von Murk Hollow)
 317. [x] Gegenstand-Tests pro Gegenstand (tests/unit/test_trait_kit.gd)
-318. [ ] Gegenstand-Animation beim Auslösen
-319. [ ] Gegenstand-Sound beim Auslösen
+318. [x] Gegenstand-Animation beim Auslösen (KeepsakePop: Symbol wächst und steigt über dem Träger, bei reduzierter Bewegung nur Einblenden)
+319. [x] Gegenstand-Sound beim Auslösen (eigener Klang keepsake_stir aus tools/audio/sfx.py, je Auslösung andere Tonhöhe: Schutz tiefer, Haltestein am tiefsten, Frucht heller)
 320. [x] Gegenstand-Texte übersetzt (tools/i18n/de_kampf_traits.py)
 
 ## Rift-Felder und Umgebung
@@ -396,7 +396,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 337. [x] Meister-KI nutzt Felder, die ihr nützen (umgesetzt) (BattleAI set_field)
 338. [x] Feld-Gegenstände verlängern Dauer (Andenken Feldpflock, +2 Runden)
 339. [x] Trait 'Feldläufer' und 'Echo-Seele' (Grindlet- und Vanepip-Linie)
-340. [ ] Feld in Online-Duellen wählbar
+340. [x] Feld in Online-Duellen wählbar (Echo-Duell: EchoTeam.DUEL_FIELDS; Live-Duell: Einladender wählt, LiveDuel.fields, 20261114103000_live_field.sql, Rematch und Schiedsrichter spielen auf dem Feld)
 341. [x] Feld als Wochen-Herausforderung (bestehend) (WeeklyChallenge.field)
 342. [x] Feld-Beschreibung in eigener Wortwahl (BattleRules.FIELDS intro, Lexikon)
 343. [x] Feld-Boost 1.2 und Schwächung 0.85 (bestehend) dokumentieren (Lexikon 'Riss-Felder', Test prüft die Zahlen)
@@ -434,7 +434,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 372. [x] Mehrfachkampf-Geschwindigkeit: Text pro Aktion kürzer (MultiRules.text_speed: Text tippt x1.4 schneller)
 373. [x] Mehrfachkampf-Log filtern (Tippen: Alle, Deine, Gegner)
 374. [x] Mehrfachkampf im Turm (jedes 5. Stockwerk 2v2)
-375. [ ] Mehrfachkampf online (2v2 mit Freund-Echo)
+375. [x] Mehrfachkampf online (2v2 mit Freund-Echo) (Echo-Duell zu zweit: Echo eines zweiten Freundes an deiner Seite, EchoTeam.duel_partner, DOUBLE_FRONT)
 376. [x] Ungleiche Kämpfe 3v1, 4v2 (bestehend)
 377. [x] Boss-Kämpfe mit Wächtern (bestehend) (BattleRules.BOSSES)
 378. [x] Mehrfachziel-Techniken mit 0.75 Schaden (bestehend) (SPREAD_MULT)
@@ -445,17 +445,17 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 383. [x] Mehrfachkampf-Balancing im Simulator (MultiSim: 2v2-Spiegel mit Hilfstechnik, Band 30-70 %, KI wartet mit Köder und Schutz)
 384. [x] Mehrfachkampf-Layout für 4 Sprites (bestehend)
 385. [x] Mehrfachkampf: Ziel-Wahl merken
-386. [ ] Mehrfachkampf: 'Auto-Ziel' Option
+386. [x] Mehrfachkampf: 'Auto-Ziel' Option (Kampf-Einstellung Auto aim, MultiRules.auto_aim: schadende Technik geht ans beste Ziel)
 387. [x] Mehrfachkampf: KI der Partner verbessern (Meister-KI auch für Partner auf Veteran)
 388. [x] Mehrfachkampf: Warnung bei Treffer auf Verbündete (nicht nötig: Flächen-Techniken treffen nie Verbündete, Test)
-389. [ ] Mehrfachkampf: Reihenfolge-Leiste
+389. [x] Mehrfachkampf: Reihenfolge-Leiste (MultiRules.pace_line unter der Befehlsfrage, nach Tempo, im Dunkeln verborgen)
 390. [x] Mehrfachkampf: XP-Verteilung klar anzeigen (bestehend: Wachstum-Zeile pro Spirling)
 391. [x] Mehrfachkampf: Bond nur gegen Wild (bestehend)
 392. [x] Mehrfachkampf: Rückzug nur wenn alle wild (Test)
 393. [x] Mehrfachkampf: Kampfende-Bericht pro Spirling (BattleReport: Schaden und K.o. je Spirling, Bester des Kampfes)
 394. [x] Mehrfachkampf: Replay (BattleReplay mit front und Zügen, test_multi_battle)
 395. [x] Mehrfachkampf: Barrierefreiheit (Slot-Namen vorlesen) (MultiRules.slot_spoken)
-396. [ ] Mehrfachkampf: Einhand-Modus
+396. [x] Mehrfachkampf: Einhand-Modus (Ziele als Liste unten am Bildschirm, Listen tief und Zurück auf der Daumenseite, MultiRules.aim_by_list)
 397. [x] Mehrfachkampf-Tests (bestehend) erweitern (test_multi_k05.gd)
 398. [x] Mehrfachkampf: Story-Kämpfe mit Ali-Wunsch (3v3, 4v1, 4v2) beibehalten (test_multi_battle Kartendaten)
 399. [x] Mehrfachkampf: Gegner-Formationen pro Wayfarer (Wayfarer-Eintrag "formation": true)
@@ -466,9 +466,9 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 401. [x] Boss-Phasen: bei der Hälfte der HP erwacht der Boss, Stufen steigen, neue Ansage
 402. [x] Mehrere Phasen pro Boss (z. B. 66 % und 33 %) (erledigt: dritte Phase bei 25 %, BossRules.LATE_PHASES)
 403. [x] Boss-Phase wechselt das Feld (erledigt: BattleRules.BOSSES[id].phase.field)
-404. [ ] Boss-Phase ruft einen Wächter
-405. [ ] Boss-HP-Leiste mit Phasen-Markierungen
-406. [ ] Boss-Musik wechselt mit der Phase
+404. [x] Boss-Phase ruft einen Wächter (BattleRules.BOSSES.drowned_heart.phase.guard, BossRules.call_guard: ab Veteran in einen freien Platz neben dem Boss)
+405. [x] Boss-HP-Leiste mit Phasen-Markierungen (BattleInfo.phase_marks: alle noch kommenden Phasen, InfoStrip.phase_marks)
+406. [x] Boss-Musik wechselt mit der Phase (BossRules.PHASE_MUSIC: warden, dann neues battle_heart je Ära)
 407. [x] Boss-Aktionen pro Zug (bestehend) sichtbar (erledigt: Boss-Ansage nennt 'It acts %d times each turn.')
 408. [x] Boss-Schwächen als Rätsel (z. B. Feld nutzen) (erledigt: Halte-Feld pro Boss, BossRules.HOLD_FIELD, Hinweis auf der Lexikon-Seite)
 409. [x] Warden-Regeln (bestehend) erweitern: 'Stille Luft', 'Ebbe' (erledigt: Regeln still_air und ebb in BattleRules.RULES)
@@ -477,10 +477,10 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 412. [x] Warden-Texte nach dem Kampf (bestand: npc-Schlüssel defeat, z. B. cinder_rift/orrin_defeat)
 413. [x] Boss-Lexikon (erledigt: Lexikon-Seiten boss_*, BossRules.LEXICON)
 414. [x] Boss-Statistik (Züge, Schaden) (erledigt: records.boss_stats (Siege, beste und letzte Rundenzahl), BossRules.note_win)
-415. [ ] Boss-Belohnungen pro Schwierigkeit
-416. [ ] Boss-Kampf-Speicherpunkt
-417. [ ] Boss-Wiederholung im Endgame
-418. [ ] Boss-Rush-Modus
+415. [x] Boss-Belohnungen pro Schwierigkeit (data/boss_hall.json rewards: Geldfaktor und Gegenstände, BossHall)
+416. [x] Boss-Kampf-Speicherpunkt (BattleCheckpoint.save_point_line)
+417. [x] Boss-Wiederholung im Endgame (Rissherzen auf Hollis' Brett nach Akt I, BossRunner.echo)
+418. [x] Boss-Rush-Modus (Herzenhatz: alle geflickten Herzen ohne Rast, BossHall.note_rush, BossRunner.rush)
 419. [ ] Boss im Online-Weltziel (bestehend) mit Phasen
 420. [x] Boss-KI immer mindestens Stufe 2 (erledigt: TrainerData.BOSS_MIN_AI)
 421. [x] Boss-Status-Dauer halbiert (erledigt: BossRules.status_turns)
@@ -499,10 +499,10 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 434. [ ] Boss: Prisma-Variante im Endgame
 435. [ ] Boss: Online-Rangliste nach Zügen
 436. [ ] Boss: Wochen-Boss
-437. [ ] Boss: Saison-Boss zu Festen (bestehend: Feste)
+437. [x] Boss: Saison-Boss zu Festen (bestehend: Feste) (FestivalBoss: Echo eines besiegten Rissherzens beim Ausrufer, data/festival_bosses.json)
 438. [x] Boss: Nach dem Sieg Lore-Seite (erledigt: Lexikon-Seite nach dem ersten Sieg (Overworld.after_tamer_win))
-439. [ ] Boss: Achievement pro Boss
-440. [ ] Boss: Replay speichern
+439. [x] Boss: Achievement pro Boss (Erfolge boss_<id>, Stat boss_wins:)
+440. [x] Boss: Replay speichern (BossRules.keep_replay: schnellster Sieg pro Boss, Rekorde > Boss-Wiederholungen)
 
 ## Gegner-KI
 
@@ -510,15 +510,15 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 442. [x] Meister-KI baut Stufen nur auf, wenn der Gegner sie nicht hart bestraft
 443. [x] Meister-KI nutzt Resonanz-Felder, die ihren eigenen Techniken helfen
 444. [x] Meister-KI bevorzugt sichere K.o.s und schwache Ziele im Mehrfachkampf
-445. [ ] KI plant Energie zwei Züge voraus
+445. [x] KI plant Energie zwei Züge voraus (BattleAI.plan_turns, Rift-Born 2 Runden, data/ai_rules.json, test_kampf_k34)
 446. [x] KI wechselt bei schlechter Stufe (z. B. -2 ATK) (erledigt: BattleAI.BAD_STAGE)
-447. [ ] KI sagt Wechsel des Spielers vorher (nur Meister)
+447. [x] KI sagt Wechsel des Spielers vorher (nur Meister) (BattleAI.predicted_swap, nur gezeigte Spirlings, test_kampf_k34)
 448. [x] KI nutzt Heil-Techniken gezielt (bestand: heal_self und mend unter heal_below)
 449. [x] KI schont Spirlings mit wenig HP für später (erledigt: BattleAI.SPARE_HP bei der Ersatzwahl)
 450. [x] KI-Persönlichkeiten pro Wayfarer (vorsichtig, wild, taktisch) (bestand: data/ai_profiles.json)
-451. [ ] KI-Debug-Ansicht für Entwickler
+451. [x] KI-Debug-Ansicht für Entwickler (AiNotes.TABLE, Start mit -- --ai-debug: alle Technik-Werte im Kampflog)
 452. [x] KI-Tests pro Verhalten (bestand: test_ai*.gd, neu test_kampf_boss_ai.gd)
-453. [ ] KI liest nur, was der Spieler auch sieht (keine versteckten Werte)
+453. [ ] KI liest nur, was der Spieler auch sieht (keine versteckten Werte) (Teil: keine Stufe sieht den Befehl des Spielers; Meister-KI folgt dem Reihenfolge-Hinweis und ahnt Wechsel nur zu gezeigten Spirlings; Stufen 1-2 offen, weil die Akt-Bänder an ihrem Verhalten hängen)
 454. [x] KI-Zufall in Stufe 0 bleibt (Wildkämpfe) (bestand: Plan 5000 Punkt 625)
 455. [x] KI-Stufe pro Wayfarer übersteuerbar (bestehend) (bestand: npc-Schlüssel ai)
 456. [x] KI für Partner (Kestra) auf Veteran Stufe 2 (erledigt: TrainerData.partner_ai)
@@ -527,22 +527,22 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 459. [x] KI-Gegenstand-Nutzung begrenzen (max. 2 pro Kampf) (erledigt: BattleAI.ITEM_LIMIT)
 460. [x] KI nutzt Overcharge, wenn es zum K.o. reicht (erledigt: BattleAI.score_move)
 461. [x] KI vermeidet Rückstoß-Techniken bei wenig HP (erledigt: BattleAI.RECOIL_W unter 35 %)
-462. [ ] KI im Boss-Kampf mit Phasen-Logik
+462. [x] KI im Boss-Kampf mit Phasen-Logik (BossRules.AI_PHASE: Haltefeld brechen, offen und letzte Phase ohne Aufbau)
 463. [x] KI im Schwarm koordiniert (verschiedene Ziele) (erledigt: sichere K.o.-Ziele werden pro Runde vergeben)
 464. [x] KI-Balance: Gewinnrate im Simulator pro Stufe messen (bestand: BalanceSim Modus ladder)
 465. [x] KI-Gewinnrate-Ziel pro Schwierigkeit dokumentieren (bestand: tools/balance/targets.json, BalanceDoc)
-466. [ ] KI-Laufzeit unter 5 ms pro Entscheidung (Handy)
-467. [ ] KI-Entscheidungen im Replay nachvollziehbar
+466. [x] KI-Laufzeit unter 5 ms pro Entscheidung (Handy) (BattleAI-Memo pro Entscheidung, Zeit-Test mit budget_ms, test_kampf_k34)
+467. [x] KI-Entscheidungen im Replay nachvollziehbar (AiNotes.REASON: Wahl und Wert gegen die beste Alternative)
 468. [x] KI-Texte: Wayfarer kommentiert gute Züge (bestand: data/dialogue/battle_lines.json)
 469. [x] KI meidet Felder, die dem Spieler helfen (bestand: BattleAI.field_value)
-470. [ ] KI erkennt eigene Feldschwäche und wechselt
+470. [x] KI erkennt eigene Feldschwäche und wechselt (BattleAI.field_weak, _field_swap in der Meister-KI, test_kampf_k34)
 471. [x] KI-Lernen bewusst nicht (deterministisch bleiben) (erledigt: Test gleicher Seed, gleiche Wahl)
-472. [ ] KI-Stufen im Lexikon erklären
+472. [x] KI-Stufen im Lexikon erklären (RulesBook Seite 'How foes think', 14 Sprachen)
 473. [x] KI-Stufe im Wochen-Echo (bestehend 2) auf 3 heben
 474. [x] KI in Online-Echos nutzt das gespeicherte Team (bestand: EchoTeam.build)
 475. [x] KI-Fairness-Test: gleiche Regeln wie der Spieler (erledigt: KI wählt nur aus legal_actions, Fuzz-Test prüft is_legal)
-476. [ ] KI-Schadensschätzung nutzt dieselbe Formel wie die Vorschau
-477. [ ] KI-Tie-Breaker deterministisch über den Kampf-Seed
+476. [ ] KI-Schadensschätzung nutzt dieselbe Formel wie die Vorschau (Teil: BattleRules.expected_damage für Vorschau und Meister-KI; Stufen 1-2 offen, Akt-Bänder müssten neu eingestellt werden)
+477. [ ] KI-Tie-Breaker deterministisch über den Kampf-Seed (Teil: BattleAI.tie_key für die Meister-KI; Stufen 1-2 offen, Akt-Bänder)
 478. [x] KI: Zielwahl bei gleicher Wertung nach niedrigsten HP (erledigt: BattleAI._choose)
 479. [x] KI: Nie zwei Spirlings auf dasselbe sichere K.o.-Ziel (Overkill vermeiden) (erledigt: BattleAI._claims)
 480. [x] KI: Wechsel-Strafe bei Root beachten (bestand: legal_actions ohne Wechsel bei Root, Test)
@@ -592,12 +592,12 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Wayfarer-Teams und Gegnerdesign
 
-521. [ ] Jeder Wayfarer hat ein Thema (Element, Taktik)
-522. [ ] Wayfarer-Teams auf Veteran mit Synergien
-523. [ ] Wayfarer mit Feld-Strategie (Resonanz-Techniken)
-524. [ ] Wayfarer mit Status-Strategie
-525. [ ] Wayfarer mit Stufen-Strategie
-526. [ ] Wayfarer mit Mehrfachkampf-Strategie
+521. [x] Jeder Wayfarer hat ein Thema (Element, Taktik) (WayfarerThemes.theme: Element des Teams, Taktik aus "tactic" oder KI-Profil, data/wayfarer_themes.json; im Wandererbuch)
+522. [x] Wayfarer-Teams auf Veteran mit Synergien (WayfarerThemes.veteran_arts: Anführer legt das Resonanz-Feld des Team-Elements, die nächsten bringen die Taktik-Techniken)
+523. [x] Wayfarer mit Feld-Strategie (Resonanz-Techniken) (tactic field: Zündmädchen Senna, Geschworene Wick; field_w 2.0)
+524. [x] Wayfarer mit Status-Strategie (tactic status: Geschworene Mattie und Clem; status_w 1.6, Status zuerst)
+525. [x] Wayfarer mit Stufen-Strategie (tactic stages: Wiegemeister Tolliver, Geschworener Dunstan; setup_w 1.6)
+526. [x] Wayfarer mit Mehrfachkampf-Strategie (Karrenschieber Grim in den Schlackentunneln: 2 gegen 2, jeder Spirling mit einer Technik gegen alle Gegner (Landslip, Grand Farce), KI-Profil sweeper mit spread_w; TrainerData.strategy_problems prüft es)
 527. [x] Wayfarer-Dialog vor/nach dem Kampf (bestehend: intro und defeat in den Wayfarer-Daten)
 528. [x] Wayfarer-Rückkämpfe (bestehend) (bestehend: TrainerData.can_rematch)
 529. [x] Wayfarer-Telefonbuch-Ersatz: Laternenpost-Einladungen (WayfarerBook.invitations, Zeile an Rastquellen und im Wandererbuch)
@@ -606,7 +606,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 532. [x] Wayfarer-Teamgröße bis 5 (Team 5 fix) (bestehend: GameState.MAX_PARTY, TrainerData.RIFT_BORN_MAX_TEAM)
 533. [x] Wayfarer-Level an Level-Cap gebunden (bestehend: TrainerData.build_team mit ring_cap + FOE_OVER_CAP)
 534. [x] Wayfarer mit gehaltenen Gegenständen auf Veteran (bestehend: TrainerData.keeps_keepsakes ab Veteran)
-535. [ ] Wayfarer-Teams prüfen auf Dopplungen
+535. [x] Wayfarer-Teams prüfen auf Dopplungen (TrainerData.repeated_species im WorldValidator und test_kampf_k36: keine Art doppelt, ausser "twins" (Bram, Isa, Oda, Kettle-Brüder), wilden Horden und einer Extra-Kopie ab Tamer; Rasmus und fünf Rift-Born-Teams bekamen eine andere Art)
 536. [x] Wayfarer-Sprites eigenständig (bestehend: eigene Kunst laut LEGAL.md, ip_check prüft Metadaten)
 537. [x] Wayfarer-Namen eigenständig (bestehend: tools/ip_check.sh)
 538. [x] Wayfarer-Klassen eigenständig (keine bekannten Klassen übernehmen) (bestehend: tools/ip_check.sh)
@@ -629,8 +629,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 555. [x] Wayfarer-Texte übersetzt (bestehend: test_i18n)
 556. [x] Wayfarer-Teams pro Schwierigkeit (bestehend: teams_by_difficulty)
 557. [x] Wayfarer-Geld-Belohnungen balancieren (Test: Rematch < Wayfarer < Warden pro Ring, Standardpreis steigt mit dem Ring, auf jeder Karte zahlt kein Wayfarer mehr als der Warden)
-558. [ ] Wayfarer mit Overcharge-Strategie
-559. [ ] Wayfarer mit Bond-Lehre (Tutorial)
+558. [x] Wayfarer mit Overcharge-Strategie (Krater-Schürferin Thea: All-In Crash fest, Rift-Splitter ab Veteran, KI-Profil surger spart Energie und wertet den vollen Overcharge-Treffer)
+559. [x] Wayfarer mit Bond-Lehre (Tutorial) (Wanderer Wren im Gloamwood: nach dem Sieg zwei Bond-Lektionen, Ziel bond_ready/foe_status: schwächen, Status setzen, nicht besiegen; data/lessons.json)
 560. [x] Wayfarer-Kampfmusik pro Gebiet (Eigene synthetisierte Kampfmusik fuer Kartenwayfarer pro Gebiet (battle_wf_<region>, je ca. 28 KB, data/music.json wayfarer); nur in der Aera des Gebiets, nach Warden-, Herausforderungs-, Fest- und Nacht-Themen (BattleAudio.theme))
 
 ## Info und Transparenz
@@ -672,7 +672,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 595. [x] Info: Priorität als Pfeil (^ vor dem Namen der Technik)
 596. [x] Info: Genauigkeit als Prozent
 597. [x] Info: Kategorie-Symbol (BattleHelp.KIND_MARK auf der Technik-Karte)
-598. [x] Info: Boss-Phasen-Marken (InfoStrip.phase_mark)
+598. [x] Info: Boss-Phasen-Marken (InfoStrip.phase_marks)
 599. [x] Info: Regel-Banner bei Warden (RuleBanner.gd)
 600. [x] Info: Seed im Log (BattleInfo.facts)
 
@@ -709,7 +709,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 629. [x] Kampf-Wiederaufnahme nach Unterbrechung (BattleComfort.interruption: Auto und Text warten im Hintergrund)
 630. [x] Schnellspeichern im Kampf bewusst nicht (kein Savescum auf Rift-Born) (kein Speichern im Kampfmenü; GameState.battle_open: App im Kampf geschlossen zählt auf Rift-Born als Niederlage (settle_open_battle))
 631. [x] Komfort-Tipps beim ersten Kampf (Tips battle_comfort)
-632. [ ] Kampf-Steuerung ohne Zeitdruck (keine Echtzeit-Elemente)
+632. [x] Kampf-Steuerung ohne Zeitdruck (keine Echtzeit-Elemente) (Option Ohne Eile: BattleCalm.text_auto, bond_style)
 633. [x] Bond-Melodie (bestehend) mit Barrierefreiheit (Bond-Stil Mine! statt Melodie, Hochkontrast)
 634. [x] Kampf-UI bei 144x256 skaliert (project.godot)
 635. [x] Kampf-UI im Querformat bewusst nicht (orientation=1, Hochformat)
@@ -894,7 +894,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Endgame-Kampfmodi
 
 801. [x] Turm (bestehend) mit 50 Stockwerken (EchoTower.gd: 30 Stockwerke Leuchtturm-Treppe plus Endlos-Strecke bis Stockwerk 100)
-802. [ ] Gauntlet (bestehend) mit Rangliste
+802. [x] Gauntlet (bestehend) mit Rangliste (wie Punkt 512: Wochenbestenliste der Leuchtturm-Treppe, climb_board kind 'stair')
 803. [x] Wochen-Echo (bestehend) mit Meister-KI (Overworld Wochen-Echo mit ai 3)
 804. [x] Boss-Rush (MasterTour.gd: alle Wardens am Stück ohne Heilung; dazu die Herzstiege der Kampfhallen)
 805. [x] Turnier mit Regeln (Wochenend-Turnier TourneyRules.gd, K.o. mit festen Regeln)
@@ -904,7 +904,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 809. [x] Überlebens-Modus (keine Heilung) (Kampfhallen: Lange Nacht, zwölf Runden ohne Heilung)
 810. [x] Zeitangriff (HallTimes.gd: Bestzeiten je Halle, auch für die Kampfhallen)
 811. [x] Puzzle-Kämpfe (Sieg in einem Zug) (BattlePuzzle.gd: Prüfungen mit Ziel und Zuglimit)
-812. [ ] Lehr-Kämpfe (Tutorial-Rätsel)
+812. [x] Lehr-Kämpfe (Tutorial-Rätsel) (data/lessons.json + BattlePuzzle.for_teacher: Pfadhüterin Imme lehrt Matchups, Rast und Overcharge als feste Rätsel, Overworld.offer_lessons)
 813. [x] Herausforderungs-Kämpfe gegen Warden-Echos (EchoTower Warden-Stockwerke, WardenRematch, Meister-Risse)
 814. [x] Prisma-Boss-Kämpfe (Kampfhallen: Prisma-Herz, ein Prisma-Rissherz pro Woche)
 815. [x] Endgame-Belohnungen (Wegmarken pro Halle und Woche, Titel, Geschichten, Ruhmeshalle)
@@ -929,7 +929,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 834. [x] Endgame: Schwarm-Turm (Kampfhallen: Schwarmstiege gegen sechs schwächere Spirlings)
 835. [x] Endgame: Boss-Turm (Kampfhallen: Herzstiege, ein Rissherz pro Stockwerk)
 836. [x] Endgame: Lore-Belohnungen (Hallengeschichten: eine Seite pro erster Hallen-Bezwingung)
-837. [ ] Endgame: Kosmetik-Belohnungen (Laternenfarben)
+837. [x] Endgame: Kosmetik-Belohnungen (Laternenfarben) (data/lantern_colors.json, LanternColors.gd: fünf Flammenfarben aus Treppe, Endlosstrecke, Kampfhallen und Meister-Rundgang; Wahl an der Sturmlaterne, färbt das Höhlenlicht ab Ära III)
 838. [x] Endgame: Titel auf der Wayfarer-Karte (Titel aus Hallen und Zielen auf der Wanderer-Karte, Server nimmt nur bekannte Titel (20261113200110_card_title.sql))
 839. [x] Endgame: Wochen-Ziel (Hallen-Wochenziel: 12 Hallensiege pro Woche)
 840. [x] Endgame: Ruhm-Halle (Ruhmeshalle: Team und Datum jeder ersten Bezwingung)
@@ -950,7 +950,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 852. [x] Online-Freundes-Duell (Live-Duell und Echo-Duell)
 853. [x] Online-Weltziel-Boss (Raid-Risse (RaidRules.gd) mit gemeinsamer Rangliste)
 854. [x] Online-Turnier asynchron (Wochenend-Turnier TourneyRules.gd)
-855. [ ] Online-Teamcode
+855. [x] Online-Teamcode (Freundesmenü 'Ihr Team-Code': das Echo-Team eines Freundes als Team-Code, EchoTeam.team_code, in den Kampfhallen bekämpfbar)
 856. [x] Online-Spirling-Tausch nie (bestehend Leitplanke) (Spirlings werden nie verschenkt; Tausch nur unter Freunden hinter Flag trade_spirling)
 857. [x] Online-Belohnungen ohne Geld (Wegmarken nie käuflich, Belohnungen sind Gegenstände und Titel)
 858. [x] Online-Datenschutz (bestehend) (bestehend)
@@ -971,7 +971,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 873. [x] Online-Ergebnis-Replay prüfen (Schiedsrichter spielt jedes Ergebnis nach)
 874. [x] Online-Tests in LocalBackend (bestehend) (bestehend)
 875. [x] Online-SQL-Tests (bestehend) (bestehend)
-876. [ ] Online-Echo-KI-Stufe pro Rang
+876. [x] Online-Echo-KI-Stufe pro Rang (league_ranks.json echo_ai 1-3, LeagueRules.echo_ai, league_find speichert die Stufe am Match (20261114120370_league_echo_ai.sql))
 877. [x] Online-Matchmaking nach Rang bewusst einfach (league_find: 100 Punkte Spanne, wächst langsam)
 878. [x] Online-Saison-Reset (Liga-Saisons (league_seasons), Neustart von selbst)
 879. [x] Online-Belohnung kosmetisch (Saison-Rahmen season_<n>_<rank>)
@@ -994,23 +994,23 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 893. [x] Schadensvorschau hilft beim Planen (GameState.damage_preview)
 894. [x] Kampflog vorlesen (TextBox als Live-Region)
 895. [x] Fokus-Navigation (CommandMenu grab_focus, ui-Aktionen)
-896. [ ] Knopfgrößen
-897. [ ] Kontrast der HP-Leiste
-898. [ ] Status-Kürzel lesbar
-899. [ ] Feld-Banner lesbar
-900. [ ] Boss-Phasen-Banner lesbar
+896. [x] Knopfgrößen (BattleComfort.art_h/command_h: Große Knöpfe heben jede Zeile auf big_button_min, auch unter Einstellungen, Spiel)
+897. [x] Kontrast der HP-Leiste (jede Füllfarbe 3:1 auf dem Papier jeder Ära und Hochkontrast, test_kampf_a11y_k38)
+898. [x] Status-Kürzel lesbar (StatusRules.tag pro Sprache eindeutig, Plakettenschrift 4,5:1)
+899. [x] Feld-Banner lesbar (BattleShow.banner_seconds Mindest-Lesezeit, RuleBanner bricht um, FieldBadge wächst mit großer Schrift)
+900. [x] Boss-Phasen-Banner lesbar (eigene Titel für Phase, Blöße und Wut, geteiltes Siegel, Mindest-Lesezeit)
 901. [x] Untertitel für Schreie (Sound.cry_caption)
-902. [ ] Leichte Sprache-Option für Kampftexte
+902. [x] Leichte Sprache-Option für Kampftexte (GameState.easy_battle_text, EasyText)
 903. [x] Deutsch und Englisch (bestehend) (docs/I18N.md)
 904. [x] Weitere Sprachen vorbereiten (14 Sprachen, docs/I18N.md)
 905. [x] Barrierefreiheit-Tests (tests/unit/test_kampf_a11y_tech.gd)
 906. [x] Barrierefreiheit-Dokumentation (docs/KAMPF_TECHNIK.md Abschnitt 4)
-907. [ ] Barrierefreiheit im Store-Text
-908. [ ] Eingabe-Verzögerung einstellbar
+907. [x] Barrierefreiheit im Store-Text (Abschnitt in allen 14 Store-Beschreibungen, release_check A11Y_HEADINGS)
+908. [x] Eingabe-Verzögerung einstellbar (Tippschutz: BattleCalm.INPUT_DELAYS_MS, CommandMenu, ListPicker)
 909. [x] Doppeltipp vermeiden (keine Doppeltipp-Aktion, test_ux)
 910. [x] Wisch-Gesten vermeiden (Leitplanke und Zugänglichkeit) (Wischen nur zum Listen-Scrollen)
 911. [x] Lange Drücke optional (Info per I/F1/Gamepad-Y und Screenreader, CommandMenu)
-912. [ ] Pausen jederzeit
+912. [x] Pausen jederzeit (BattlePause, Knopf II und Start/Esc)
 913. [x] Blitzfreie Effekte (tools/fx_flash_check.gd)
 914. [x] Audio-Mono-Option (GameState.mono_audio)
 915. [x] Lautstärke pro Kanal (Musik, Effekte, Stimme, Umgebung)
@@ -1018,7 +1018,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 917. [x] Kampf ohne Farbe spielbar (Farbenblind-Formen, Era I in vier Graustufen)
 918. [x] Kampf mit Gamepad spielbar (Joypad-Eingabe, Info per Y)
 919. [x] Kampf mit Tastatur spielbar (ui-Aktionen, Info per I/F1)
-920. [ ] Kampf mit Screenreader spielbar
+920. [x] Kampf mit Screenreader spielbar (Bindungs-Ruf in Worten, BondMinigame._say; test_kampf_k39 prüft alle erreichbaren Kampf-Knöpfe)
 
 ## Balance-Werkzeuge und Tests
 
@@ -1037,8 +1037,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 933. [x] Seed-Determinismus-Test (test_balance test_same_seed_same_result)
 934. [x] Speicherstand-Migration (bestehend) für neue Einstellungen (settings_from_dict mit Standardwerten)
 935. [x] Einstellungs-Migration (Lager-Lernen Standard an) (test_kampf_a11y_tech)
-936. [ ] Leistungs-Test der KI
-937. [ ] Screenshot-Tests für Kampf-UI
+936. [x] Leistungs-Test der KI (BattleAI.THINK_BUDGET_MS, test_kampf_k39)
+937. [x] Screenshot-Tests für Kampf-UI (tools/battle_ui_golden.gd, tests/golden/battle_ui)
 938. [x] i18n-Prüfung (bestehend) für neue Texte (i18n_extract --check)
 939. [x] IP-Prüfung (bestehend) für neue Namen (tools/ip_check.sh)
 940. [x] Originalitäts-Zahlen (bestehend) nicht verändern (test_originality)
@@ -1049,7 +1049,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 945. [x] Balancing: jede Technik hat einen Zweck (seltene Techniken im Team-Bericht)
 946. [x] Balancing: Status nicht zu stark (test_move_curve, Status höchstens 30 %)
 947. [x] Balancing: Felder nicht zu stark (Feld-Band +8 bis +15, tests/slow)
-948. [ ] Balancing: Bosse fair
+948. [x] Balancing: Bosse fair (KampfChecks: höchstens 2 Aktionen, Lebenskraft höchstens 1,0-fach pro Spirling des Spielers, Phase höchstens +2 Stufen; Story-Bosse handeln einmal; keine Wand bei Wächtern, Rivalen und Bossen (test_act_difficulty))
 949. [x] Balancing: Meister-KI fordernd, nicht unfair (KI-Leiter, tests/slow)
 950. [x] Balancing: Story leicht (targets.json, test_warden_sim)
 951. [x] Balancing: Veteran fordernd (targets.json, test_warden_sim)
@@ -1069,7 +1069,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 962. [x] Kein Ball, kein Wurf, kein Gleiten, kein Reiten (Patent-Leitplanken, bestehend) (LEGAL.md, IP_PATENT_AUDIT)
 963. [x] Keine sichtbare Fang-Quote (Leitplanke) (BondMinigame zeigt nur Worte)
 964. [x] Keine Wisch-Geste zum Fangen (Leitplanke) (Tippen oder Tasten)
-965. [ ] Neue Namen gegen bekannte Technik-Listen prüfen
+965. [x] Neue Namen gegen bekannte Technik-Listen prüfen (tools/ip_move_check.py in ip_check)
 966. [x] IP-Check (bestehend) in CI (ip-check-Job)
 967. [x] Kampf-Phrasen in eigener Wortwahl (bestehend Liste) (ip_check-Phrasen, test_ux_text)
 968. [x] Kampf-Layout eigenständig (bestehend: Liste statt 2x2) (CommandMenu)
@@ -1080,11 +1080,11 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 973. [x] Kampf-Code bleibt reines Modell ohne Nodes (bestehend) (test_kampf_a11y_tech)
 974. [x] Ereignis-basierte Darstellung (bestehend) (BattleEvent, BattleScene)
 975. [x] Neue Effekte über EffectRegistry (bestehend) (scripts/battle/effects)
-976. [ ] Daten in JSON, nicht im Code
+976. [x] Daten in JSON, nicht im Code (data/battle_tables.json: Gaben, Felder, Reaktionen, Regeln, Bosse; test_kampf_k40)
 977. [x] Godot 4.7.2 bleibt (test_engine_stays_on_godot_4_7)
-978. [ ] Leistung auf älteren Handys prüfen
+978. [x] Leistung auf älteren Handys prüfen (data/battle_budget.json, test_kampf_budget: Zugzeit und Ladezeit auf dem Referenzhandy)
 979. [x] APK-Budget (bestehend) (tools/apk_budget.sh)
-980. [ ] Speicher-Budget
+980. [x] Speicher-Budget (data/battle_budget.json memory_mb, leak_kb; test_kampf_budget)
 981. [x] Kampf-Zustand serialisierbar (BattleReplay.snapshot)
 982. [x] Kampf-Replay-Format versioniert (BattleReplay.FORMAT)
 983. [x] Kampf-API dokumentiert (docs/KAMPF_TECHNIK.md)
@@ -1095,9 +1095,9 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 988. [x] Kampf-Online-Server nur eigener Server (docs/ONLINE.md)
 989. [x] Kampf-Fehlerberichte mit Seed (Seed in Replay und Teilcode)
 990. [x] Kampf-Code ohne Debug-Ausgaben in Release (test_battle_code_prints_nothing_in_release)
-991. [ ] Kampf-Mods der Community später über Datenpakete (kein Code)
-992. [ ] Kampf-Datenpakete signiert
-993. [ ] Kampf-Editor für Entwickler
+991. [x] Kampf-Mods der Community später über Datenpakete (kein Code) (BattlePacks: nur Felder, Bosse, Kampf-Setups; keine Pfade oder Skripte)
+992. [x] Kampf-Datenpakete signiert (RSA SHA-256, tools/battle_pack.py, data/battle_pack_keys.json)
+993. [x] Kampf-Editor für Entwickler (tools/battle_editor/battle_editor.tscn, BattleSetup)
 994. [x] Kampf-Doku für neue Mitwirkende (docs/KAMPF_TECHNIK.md)
 995. [x] Kampf-Roadmap in docs/ROADMAP.md (Abschnitt Kampfsystem)
 996. [x] Kampf-Plan regelmäßig aktualisieren (plan_1000.py --check in CI)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-881 von 1000 Punkten umgesetzt.
+964 von 1000 Punkten umgesetzt.
 

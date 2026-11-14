@@ -35,6 +35,14 @@ GEMEINSAM ONLINE
 • Raids, Bünde mit Wochenzielen, zeitlich begrenzte Events und jede Woche ein gemeinsames Weltziel
 • Dein Spielstand liegt sicher auf unserem Server in Deutschland und zieht mit dir auf ein neues Handy um
 
+SPIELBAR, WIE DU WILLST
+• Screenreader-Unterstützung: Menüs, Kampfleisten, Techniken und das Kampflog werden vorgelesen
+• Große Schrift, hoher Kontrast und Formen für farbenblinde Spielende
+• Weniger Bewegung, keine Blitzeffekte, Bildschirmwackeln und Vibration einstellbar
+• Untertitel für Geräusche und jeden Ruf, Mono-Ton und Lautstärke pro Kanal
+• Ruhiges Binden ohne Zeitlimit, und Offline-Kämpfe warten immer auf dich
+• Spielbar mit Touch, Tastatur oder Gamepad
+
 FAIR
 Kostenlos spielbar. Optionale Käufe im Spiel, auch mit Vorteilen. Keine Zufallsinhalte. Keine Werbung, keine Energie-Timer, keine Tracking-Dienste.
 

@@ -40,7 +40,7 @@ var room_action: String = ""
 ## they can be used; they keep their place. Leagues shows only while leagues are on,
 ## the Map book once Aldo gave it, the Ledger once it has an entry (clan intrigue, Trust.gd).
 const MENU_ORDER: Array[String] = ["Goals", "Map book", "Ledger", "Map", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
-	"Leagues", "Records", "Storage", "Save", "Save and to title", "Photo", "Settings"]
+	"Leagues", "Records", "Storage", "Save", "Save and to title", "Photo", "Join our Discord", "Settings"]
 
 static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false,
 		map_book: bool = false, ledger: bool = false) -> Array[String]:
@@ -151,6 +151,7 @@ func run() -> void:
 				if await save_and_quit():
 					return
 			"Settings": await run_settings()
+			"Join our Discord": open_discord()
 			"Photo":
 				# The first time, a line on how photo mode works (item 1880).
 				await tip("photo")
@@ -469,6 +470,8 @@ func run_records() -> void:
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
+		if not BossRules.replays(GameState.records).is_empty():
+			lines.append("Boss replays")
 		lines.append("Online replays")
 		var have: int = Achievements.unlocked().size()
 		var idx: int = await pick_strings(Loc.t("Achievements %d/%d") % [have, Achievements.list().size()], lines)
@@ -502,6 +505,21 @@ func run_records() -> void:
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
 					return
+			"Boss replays":
+				if await run_boss_replays():
+					return
+
+## The kept fastest win against each Rift boss (KAMPF_PLAN_1000 item 440). True once one is
+## picked to watch (watch_replay and watch_snap are set).
+func run_boss_replays() -> bool:
+	var kept: Array[Dictionary] = BossRules.replays(GameState.records)
+	var labels: Array[String] = []
+	for r: Dictionary in kept:
+		labels.append(Loc.t("%s, won in %d turns") % [Loc.t(str(r.label)), int(r.turns)])
+	var i: int = await pick_strings(Loc.t("Boss replays"), labels)
+	if i < 0:
+		return false
+	return await OnlineReplaysMenu._watch(self, kept[i].replay)
 
 ## Era functions (data/era_functions.json): one page per open era with what it brought.
 func run_era_functions() -> void:
@@ -945,17 +963,46 @@ func _held_item(s: Spirling) -> void:
 		if GameState.item_count(str(id)) > 0 and BattleRules.is_holdable(str(id)):
 			ids.append(str(id))
 			var it: Dictionary = Database.item(str(id))
-			entries.append({"text": "%s x%d" % [it.get("name", id), GameState.item_count(str(id))],
+			entries.append({"text": "%s x%d" % [it.get("name", id), GameState.item_count(str(id))], "icon": KeepsakeIcons.for_era(str(id)),
 				"hint": Loc.t(str(it.get("description", ""))) + TraitKit.rarity_line(str(id))})
-	if ids.is_empty():
+	if ids.is_empty() and not KeepsakeKit.any_set(GameState.party):
 		await info("You have nothing a Spirling can hold.\nKeepsakes are sold in Thornridge.")
 		return
+	# Keepsake sets (KAMPF_PLAN_1000 307).
+	ids.append("@sets")
+	entries.append({"text": "Keepsake sets", "hint": Loc.t("Save what it holds, or put a saved set back on.")})
 	var now: String = "Holding: %s" % (Database.item(s.held).get("name", s.held) if not s.held.is_empty() else "nothing")
 	var idx: int = await pick(now, entries)
 	if idx < 0:
 		return
+	if ids[idx] == "@sets":
+		await _keepsake_sets(s)
+		return
 	GameState.set_held(s, ids[idx])
 	Sound.sfx("confirm")
+
+## Keepsake sets of [param s] (KAMPF_PLAN_1000 307): save what it holds into a set, put a set
+## back on, or let the whole team put on that set.
+func _keepsake_sets(s: Spirling) -> void:
+	var rows: Array[Dictionary] = []
+	for n: int in KeepsakeKit.set_count():
+		var id: String = KeepsakeKit.saved(s, n)
+		rows.append({"text": KeepsakeKit.set_row(s, n), "icon": KeepsakeIcons.for_era(id) if not id.is_empty() else null})
+	var n: int = await pick(Loc.t("Keepsake sets of %s") % s.display_name(), rows)
+	if n < 0:
+		return
+	var acts: Array[String] = ["Save what it holds now", "Put this set on", "Whole team: put on set %d" % (n + 1)]
+	var act: int = await pick_strings(KeepsakeKit.set_row(s, n), acts)
+	match act:
+		0:
+			KeepsakeKit.save_set(s, n)
+			Sound.sfx("confirm")
+		1, 2:
+			var team: Array = [s] if act == 1 else GameState.party
+			var lines: Array[String] = KeepsakeKit.wear_team_set(team, n)
+			Sound.sfx("confirm" if lines.is_empty() else "cancel")
+			if not lines.is_empty():
+				await info("\n".join(lines))
 
 func _use_item_on(s: Spirling) -> void:
 	# The list stays open after a use (item 1904) and keeps its place.
@@ -996,7 +1043,7 @@ func _usable_items() -> Array[String]:
 	var out: Array[String] = []
 	for id: Variant in GameState.inventory:
 		var it: Dictionary = Database.item(str(id))
-		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))
+		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or it.has("cure") or bool(it.get("evolves", false))
 				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false)) or bool(it.get("spark_reset", false))
 				or bool(it.get("unfurl_any", false)) or bool(it.get("gift_slot", false))):
 			out.append(str(id))
@@ -1443,10 +1490,26 @@ func _lantern_setting() -> void:
 	var opts: Array[String] = []
 	for i: int in WildRules.LANTERN_WORDS.size():
 		opts.append(("> " if i == WildRules.lantern_setting(GameState.records) else "") + Loc.t(WildRules.LANTERN_WORDS[i]))
+	opts.append(Loc.t("Flame colour: %s") % Loc.t(str(LanternColors.by_id(LanternColors.current_id()).get("name", ""))))
 	var pick: int = await pick_strings(Loc.t("Storm Lantern: how bright?"), opts)
-	if pick >= 0:
+	if pick == WildRules.LANTERN_WORDS.size():
+		await _lantern_colour()
+	elif pick >= 0:
 		GameState.records[WildRules.LANTERN_RECORD] = pick
 		await info(Loc.t("The lantern burns: %s") % Loc.t(WildRules.LANTERN_WORDS[pick]))
+
+## Flame colours earned in the endgame (KAMPF_PLAN_1000 item 837); locked ones show how to earn them.
+func _lantern_colour() -> void:
+	var cols: Array[Dictionary] = LanternColors.all()
+	var open: Array[Dictionary] = LanternColors.unlocked()
+	var opts: Array[Dictionary] = []
+	for c: Dictionary in cols:
+		var on: bool = c in open
+		opts.append({"text": ("> " if str(c.id) == LanternColors.current_id() else "") + Loc.t(str(c.name)) + ("" if on else "  (" + Loc.t(str(c.hint)) + ")"),
+			"disabled": not on})
+	var chosen: int = await pick(Loc.t("Flame colour (caves, from the third era on)"), opts)
+	if chosen >= 0 and LanternColors.choose(str(cols[chosen].id)):
+		await info(Loc.t("The flame turns %s.") % Loc.t(str(cols[chosen].name)))
 
 ## Spark Wash (KAMPF_PLAN "Spark-Reset"): one spark of one Spirling back to 0.
 func _use_spark_wash(id: String) -> void:

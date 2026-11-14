@@ -37,10 +37,10 @@ static func of(d: Dictionary) -> LiveDuelSim:
 
 ## The battle snapshot of duel state [param d]: the server's seed and both picked teams.
 static func snap_of(d: Dictionary) -> Dictionary:
-	return BattleReferee.from_expect({"seed": int(d.get("seed", 0)), "teams": d.get("teams", []), "ai": 2})
+	return BattleReferee.from_expect({"seed": int(d.get("seed", 0)), "teams": d.get("teams", []), "ai": 2, "field": str(d.get("field", ""))})
 
 ## The referee's answer for a live duel (point 3): the rounds the server kept, played again.
-## [param expect] is {seed, teams, moves}. "finished" false means the duel is not over yet.
+## [param expect] is {seed, teams, moves, field}. "finished" false means the duel is not over yet.
 static func judge(expect: Dictionary) -> Dictionary:
 	var moves: Variant = expect.get("moves", {})
 	if not moves is Dictionary or (moves as Dictionary).size() > BattleReferee.MAX_INPUTS:

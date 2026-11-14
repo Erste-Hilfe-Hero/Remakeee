@@ -93,6 +93,8 @@ static func validate() -> PackedStringArray:
 							errors.append("map '%s': npc '%s' has a bad difficulty rule %s" % [id, n.get("id", ""), k])
 				if n.has("profile") and not BattleAI.profiles().has(str(n.profile)):
 					errors.append("map '%s': npc '%s' has unknown AI profile '%s'" % [id, n.get("id", ""), n.profile])
+				if n.has("tactic") and not WayfarerThemes.tactics().has(str(n.tactic)):
+					errors.append("map '%s': npc '%s' has unknown tactic '%s'" % [id, n.get("id", ""), n.tactic])
 				if n.has("profile_from") and not str(n.profile_from) in TrainerData.DIFFICULTY_KEYS:
 					errors.append("map '%s': npc '%s' has unknown profile_from '%s'" % [id, n.get("id", ""), n.profile_from])
 				var tune: Variant = n.get("profile_tune", {})
@@ -131,6 +133,13 @@ static func validate() -> PackedStringArray:
 						if not held.is_empty() and not Database.item(held).has("held"):
 							errors.append("map '%s': npc '%s' holds '%s', which is no keepsake" % [id, n.get("id", ""), held])
 				errors.append_array(format_errors(n, id))
+				# KAMPF_PLAN_1000 items 535, 526, 558, 559/812: repeats, strategies, lessons.
+				for r: String in TrainerData.repeated_species(n):
+					errors.append("map '%s': npc '%s' repeats a kind (%s); name it in \"twins\" if on purpose" % [id, n.get("id", ""), r])
+				for r: String in TrainerData.strategy_problems(n):
+					errors.append("map '%s': npc '%s' %s" % [id, n.get("id", ""), r])
+				if n.has("lessons") and BattlePuzzle.for_teacher(str(n.lessons)).is_empty():
+					errors.append("map '%s': npc '%s' has unknown lessons '%s'" % [id, n.get("id", ""), n.lessons])
 		for s: Dictionary in m.signs:
 			_check_dialogue(errors, id, str(s.get("dialogue", "")))
 		if not m.region in REGIONS:

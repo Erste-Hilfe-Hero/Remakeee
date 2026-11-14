@@ -1,0 +1,18 @@
+{
+ "format": 1,
+ "id": "cinder_pit",
+ "name": "Cinder Pit",
+ "author": "test fixture",
+ "fields": {
+  "cinder_pit": {"label": "Cinder Pit", "boost": "EMBER", "weaken": "BLOOM", "blocks": ["soak"],
+   "intro": "Coals glow under the sand. Ember arts burn hotter, Bloom arts wither, and nothing stays wet."}
+ },
+ "bosses": {
+  "cinder_heart": {"label": "Cinder Heart", "hp_per_ally": 0.6, "max_actions": 2,
+   "text": "The pit coughs up a heart of coals. It remembers who threw it in.",
+   "phase": {"at": 0.5, "stage": {"atk": 1}, "field": "cinder_pit", "text": "The Cinder Heart stokes itself white-hot!"}}
+ },
+ "battles": [
+  {"name": "pit duel", "player": [["Kindlop", 14], ["Zippit", 14]], "foe": [["Mossling", 14]], "field": "cinder_pit", "seed": 7, "ai": 1, "front": [1, 1]}
+ ]
+}

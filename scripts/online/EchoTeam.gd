@@ -26,6 +26,15 @@ static func snapshot(party: Array[Spirling]) -> Array:
 		out.append(row)
 	return out
 
+## The team code (BattleHalls.team_code) of the first three Spirlings of a friend's echo team
+## (KAMPF_PLAN_1000 item 855), or "" with fewer than three known species.
+static func team_code(rows: Array) -> String:
+	var names: Array[String] = []
+	for r: Variant in rows:
+		if r is Dictionary and Database.spirlings.has(str(r.get("species", ""))) and names.size() < 3:
+			names.append(str(r.species))
+	return BattleHalls.team_code(names)
+
 ## Builds Spirlings from a friend's snapshot. Levels are clamped to [param max_level] (item 76).
 ## [param fixed_level] > 0 puts every Spirling on that level (duels). Unknown species are skipped.
 static func build(rows: Array, max_level: int, fixed_level: int = 0) -> Array[Spirling]:
@@ -84,3 +93,18 @@ static func field_names() -> Array[String]:
 ## The field of pick [param i] ("" when cancelled or out of range).
 static func duel_field(i: int) -> String:
 	return DUEL_FIELDS[i] if i >= 0 and i < DUEL_FIELDS.size() else ""
+
+## Two on two (KAMPF_PLAN_1000 375): you and a second friend's echo against the duel's echo. Your
+## side has your slot and the partner's, the echo fields two at once.
+const DOUBLE_FRONT: Array[int] = [1, 2]
+
+## The second friend's echo [param partner] (from pick_echo_partner) made fit for a duel: on the
+## duel Ring like everyone else, run by the duel AI, one slot.
+static func duel_partner(partner: Dictionary, ring: int) -> Dictionary:
+	var team: Array[Spirling] = []
+	team.assign(partner.get("echo", []))
+	var out: Dictionary = partner.duplicate()
+	out["echo"] = duel_copy(team, ring)
+	out["ai"] = DUEL_AI
+	out["front"] = 1
+	return out

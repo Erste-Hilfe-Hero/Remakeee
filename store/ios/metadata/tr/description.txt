@@ -35,6 +35,14 @@ FİNALDEN SONRA
 - Akınlar, haftalık hedefli Birlikler, süreli etkinlikler ve her hafta ortak bir dünya hedefi
 - Kaydın Almanya'daki sunucumuzda güvende tutulur ve yeni telefonuna seninle birlikte taşınır
 
+İSTEDİĞİN GİBİ OYNA
+- Ekran okuyucu desteği: menüler, savaş çubukları, Hünerler ve savaş günlüğü sesli okunur
+- Büyük yazı, yüksek kontrast ve renk körü oyuncular için şekiller
+- Azaltılmış hareket, yanıp sönen efekt yok, ayarlanabilir ekran sarsıntısı ve titreşim
+- Sesler ve her çağrı için altyazı, mono ses ve kanal başına ses düzeyi
+- Zaman sınırı olmayan sakin bağ kurma, çevrimdışı savaşlar her zaman seni bekler
+- Dokunmatik ekran, klavye veya oyun kumandasıyla oyna
+
 ADİL
 Ücretsiz oynanır. İsteğe bağlı oyun içi satın alımlar var, bazıları avantaj sağlar. Rastgele içerik yok. Reklam yok, enerji sayacı yok, takip yok.
 

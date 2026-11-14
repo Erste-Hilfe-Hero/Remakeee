@@ -1,13 +1,13 @@
 {
- "_comment": "Battle HP bar look per era (design plan items 31, 34, 131, 168, 178, 233, 336, 435). The bar state (high, mid, low) is the same for all eras; each era only changes how it is drawn.",
+ "_comment": "Battle HP bar look per era (design plan items 31, 34, 131, 168, 178, 233, 336, 435; KAMPF_PLAN_1000 896, 897). The bar state (high, mid, low) is the same for all eras; each era only changes how it is drawn. Every fill colour reaches 3:1 against the paper of every era and high contrast. big_button_min: the least height in pixels of an art row and a command with Big buttons on.",
  "mid_at": 0.5,
  "low_at": 0.25,
  "eras": {
   "1": {"pattern": true,  "colors": ["2f7f7a", "2f7f7a", "2f7f7a"], "blink_low": false, "frame": false, "gradient": false, "slant": 0, "trail": false},
-  "2": {"pattern": false, "colors": ["3e9a4a", "d6b02a", "c0392b"], "blink_low": true,  "frame": false, "gradient": false, "slant": 0, "trail": false},
-  "3": {"pattern": false, "colors": ["3e9a4a", "d6b02a", "c0392b"], "blink_low": true,  "frame": true,  "gradient": true,  "slant": 0, "trail": false},
-  "4": {"pattern": false, "colors": ["3e9a4a", "d6b02a", "c0392b"], "blink_low": true,  "frame": true,  "gradient": true,  "slant": 2, "trail": false},
-  "5": {"pattern": false, "colors": ["3e9a4a", "d6b02a", "c0392b"], "blink_low": true,  "frame": true,  "gradient": true,  "slant": 2, "trail": true}
+  "2": {"pattern": false, "colors": ["3e9a4a", "a07c10", "c0392b"], "blink_low": true,  "frame": false, "gradient": false, "slant": 0, "trail": false},
+  "3": {"pattern": false, "colors": ["3e9a4a", "a07c10", "c0392b"], "blink_low": true,  "frame": true,  "gradient": true,  "slant": 0, "trail": false},
+  "4": {"pattern": false, "colors": ["3e9a4a", "a07c10", "c0392b"], "blink_low": true,  "frame": true,  "gradient": true,  "slant": 2, "trail": false},
+  "5": {"pattern": false, "colors": ["3e9a4a", "a07c10", "c0392b"], "blink_low": true,  "frame": true,  "gradient": true,  "slant": 2, "trail": true}
  },
  "blink_hz": 2.0,
  "trail_color": "e8a39a",
@@ -16,6 +16,7 @@
  "colour_from_era": 2,
  "command_colors": {"move": "c0392b", "swap": "3b6fd9", "item": "d6b02a", "bond": "3e9a4a", "run": "6a4256"},
  "command_stripe": 2,
+ "big_button_min": {"art": 16, "command": 16},
  "matchup_colors": {"strong": "2e7d32", "weak": "a2502e", "none": "6a4256"},
  "matchup_marks": {"strong": "+", "weak": "-", "none": "/"}
 }

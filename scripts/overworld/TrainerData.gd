@@ -101,6 +101,7 @@ static func rematch_team(def: Dictionary, starter: String, rng: RandomNumberGene
 		up.moves = kit
 		up.held = s.held
 		out.append(up)
+	WayfarerThemes.apply(def, out, difficulty)
 	return out
 
 ## Warden "Second Trial" (items 682-684): a one-time rematch once every Rift in "needs_flags" is
@@ -202,6 +203,8 @@ static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenera
 			s.spark[main] = maxi(int(s.spark.get(main, 0)), WARDEN_MAIN_SPARK)
 			s.hp = s.max_hp()
 		out.append(s)
+	# Items 521-525: the team's theme arts (own tactic, or the Veteran synergy).
+	WayfarerThemes.apply(def, out, difficulty)
 	return out
 
 ## Rift-Born teams (item 743) have one Spirling more than on Tamer, at most RIFT_BORN_MAX_TEAM.
@@ -314,6 +317,14 @@ static func battle_info(def: Dictionary, team: Array[Spirling], difficulty_ai: i
 		"profile": profile_for(def, difficulty),
 		"profile_tune": profile_tune(def, difficulty),
 	}
+	# Items 523-525: a Wayfarer with its own tactic plays it (its own "profile_tune" wins).
+	var theme_tune: Dictionary = WayfarerThemes.tune(def)
+	if not theme_tune.is_empty():
+		theme_tune.merge(info.profile_tune, true)
+		info["profile_tune"] = theme_tune
+	var theme_line: String = WayfarerThemes.line(def, difficulty)
+	if not theme_line.is_empty():
+		info["theme_line"] = theme_line
 	if def.has("partner"):
 		info["partner"] = def.partner
 	if def.get("pair") is Dictionary:
@@ -347,6 +358,77 @@ static func front(def: Dictionary) -> Array[int]:
 ## True for a wild horde set piece: no Wayfarer, so bonding and running are allowed.
 static func is_wild_horde(def: Dictionary) -> bool:
 	return bool(def.get("wild", false))
+
+## Repeated kinds (KAMPF_PLAN_1000 item 535): a team block names every kind once. Wild hordes are
+## exempt, "twins": ["Shalebat"] allows a kind the Wayfarer brings on purpose, and a block for
+## Tamer and up may add one extra copy (the Rift-Born rule of item 743, the tuned teams of #471).
+## Returns "<block>: <kind>" for every repeat that breaks the rule.
+static func repeated_species(def: Dictionary) -> Array[String]:
+	var out: Array[String] = []
+	if is_wild_horde(def):
+		return out
+	var twins: Array = def.get("twins", [])
+	var blocks: Dictionary = {}
+	if def.get("team") is Array:
+		blocks["team"] = def.team
+	if def.get("team_by_starter") is Dictionary:
+		for k: Variant in def.team_by_starter:
+			blocks["starter " + str(k)] = def.team_by_starter[k]
+	if def.get("teams_by_difficulty") is Dictionary:
+		for k: Variant in def.teams_by_difficulty:
+			blocks[str(k)] = def.teams_by_difficulty[k]
+	for name: String in blocks:
+		var spare: int = 1 if name in ["tamer", "veteran", "rift_born"] else 0
+		var seen: Dictionary = {}
+		for e: Variant in blocks[name]:
+			var sp: String = str((e as Dictionary).get("species", "")) if e is Dictionary else ""
+			if not seen.has(sp):
+				seen[sp] = true
+			elif sp in twins:
+				continue
+			elif spare > 0:
+				spare -= 1
+			else:
+				out.append("%s: %s" % [name, sp])
+	return out
+
+## Wayfarer strategies (KAMPF_PLAN_1000 items 526, 558): "strategy" names the plan the team is
+## built for, and strategy_problems() checks that the team really carries it out.
+##   "multi"       fights two or more at once, every Spirling knows an art that hits all foes
+##   "overcharge"  at least two Spirlings know an Overcharge art and the AI banks Energy for it
+const STRATEGIES: Dictionary = {"multi": "sweeper", "overcharge": "surger"}
+const OVERCHARGE_MIN: int = 2
+
+static func strategy_problems(def: Dictionary) -> Array[String]:
+	var out: Array[String] = []
+	if not def.has("strategy"):
+		return out
+	var st: String = str(def.strategy)
+	if not STRATEGIES.has(st):
+		return ["unknown strategy '%s'" % st]
+	if str(def.get("profile", "")) != str(STRATEGIES[st]):
+		out.append("strategy %s needs the AI profile %s" % [st, STRATEGIES[st]])
+	for d: int in DIFFICULTY_KEYS.size():
+		var entries: Array = team_entries(def, "", d)
+		var charged: int = 0
+		for e: Variant in entries:
+			var spread: bool = false
+			var oc: bool = false
+			for n: Variant in (e as Dictionary).get("moves", []):
+				var mv: MoveData = Database.move(str(n))
+				if mv == null:
+					continue
+				spread = spread or (mv.is_area() and mv.is_damaging())
+				oc = oc or mv.overcharge
+			if oc:
+				charged += 1
+			if st == "multi" and not spread:
+				out.append("%s: %s has no art that hits all foes" % [DIFFICULTY_KEYS[d], (e as Dictionary).get("species", "")])
+		if st == "overcharge" and charged < OVERCHARGE_MIN:
+			out.append("%s: only %d Spirlings know an Overcharge art" % [DIFFICULTY_KEYS[d], charged])
+	if st == "multi" and front(def)[1] < 2:
+		out.append("strategy multi needs two foes at the front")
+	return out
 
 
 ## True if a Wayfarer at [param from] facing [param dir] with [param sight] cells sees [param target].

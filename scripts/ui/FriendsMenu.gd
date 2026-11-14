@@ -212,11 +212,14 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 			"Send a card..."]
 		if Online.flag_on("lend"):
 			entries.append("Lend a Spirling...")
+		entries.append("Share matchup notes")
 		entries.append_array(FriendsMoreMenu.friend_entries(f))
 		var idx: int = await menu.pick_strings(str(f.name), entries)
 		if idx >= 9:
 			if entries[idx] == "Lend a Spirling...":
 				await lend(menu, code, str(f.name))
+			elif entries[idx] == "Share matchup notes":
+				await share_notes(menu, code, str(f.name))
 			else:
 				await FriendsMoreMenu.run_entry(menu, f, entries[idx])
 			continue
@@ -480,6 +483,8 @@ static func _mail_text(m: Dictionary) -> String:
 			return ("%s's team fought beside your echo and won." % n if int(m.phrase) == 1 else "%s's team fought beside your echo." % n)
 		"duel":
 			return ("%s won a duel against your echo." % n if int(m.phrase) == 1 else "Your echo won a duel against %s!" % n)
+		"notes":
+			return "%s sent you matchup notes." % n
 		_:
 			return "%s: %s" % [n, Phrases.text(int(m.get("phrase", 0)))]
 
@@ -517,6 +522,9 @@ static func run_mail(menu: MenuHost, mail: Array) -> void:
 			else:
 				await menu.info(error_text(r))
 			continue
+		if str(m.kind) == "notes":
+			await open_notes(menu, m)
+			continue
 		if not bool(m.opened):
 			await Online.call_fn("mail_open", {"p_id": m.id})
 			m.opened = true
@@ -527,6 +535,44 @@ static func run_mail(menu: MenuHost, mail: Array) -> void:
 				await _send(menu, str(m.code), "thanks", 1)
 		else:
 			await menu.info(mail_line(m))
+
+## KAMPF_PLAN_1000 item 107: sends a friend what you learned about matchups by Lantern Mail.
+static func share_notes(menu: MenuHost, code: String, name: String) -> void:
+	var notes: Dictionary = MatchupNotes.pick(GameState.known_matchups, MatchupNotes.cfg("max_notes"))
+	if notes.is_empty():
+		await menu.info("Your notes are empty. Land a few hits first, then share what you learned.")
+		return
+	if not await menu.confirm(Loc.t("Send %d matchup notes to %s? You both get %d friendship points.") % [notes.size(), name, MatchupNotes.cfg("points")]):
+		return
+	var r: Dictionary = await Online.call_fn("notes_send", {"p_code": code, "p_notes": notes})
+	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
+		Sound.sfx("confirm")
+		await menu.info(Loc.t("Your notes are on their way to %s. Knowledge shared is knowledge you can't sell. Oh well.") % name)
+	else:
+		await menu.info(notes_error_text(r))
+
+static func notes_error_text(r: Dictionary) -> String:
+	var e: String = str(r.data.get("error", "")) if r.ok and r.data is Dictionary else str(r.get("error", ""))
+	if e == "already_today":
+		return "You already sent notes to this friend today. Tomorrow again!"
+	if e == "bad_notes":
+		return "Those notes are smudged. Try again after your next battle."
+	return error_text(r)
+
+## Opens a notes mail: keeps every matchup the player did not know yet.
+static func open_notes(menu: MenuHost, m: Dictionary) -> void:
+	var r: Dictionary = await Online.call_fn("notes_open", {"p_id": m.id})
+	if not (r.ok and r.data is Dictionary and bool(r.data.get("ok", false))):
+		await menu.info(notes_error_text(r))
+		return
+	m.opened = true
+	var notes: Variant = r.data.get("notes", {})
+	var n: int = MatchupNotes.learn(GameState.known_matchups, notes if notes is Dictionary else {})
+	if n > 0:
+		SaveManager.save_game()
+		await menu.info(Loc.t("%s's notes: %d matchups you did not know yet. The move list shows them now.") % [str(m.name), n])
+	else:
+		await menu.info(Loc.t("%s's notes: nothing you did not know already. Flattering, in a way.") % str(m.name))
 
 ## Thanks for a gift: once per gift, friendship points for both (point 49).
 static func thank_gift(menu: MenuHost, m: Dictionary) -> void:

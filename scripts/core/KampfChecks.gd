@@ -1,13 +1,19 @@
 class_name KampfChecks
 extends RefCounted
-## Data checks for the battle tables that live in code (Kampf-Plan 1000, "Balance-Werkzeuge und
+## Data checks for the battle tables in data/battle_tables.json (Kampf-Plan 1000, "Balance-Werkzeuge und
 ## Tests"): every Rift field and every boss with its second phase. DataValidator.validate() adds
 ## these errors, so the data job fails on a broken table before a battle ever meets it.
 
 const BOSS_KEYS: Array[String] = ["label", "hp_per_ally", "max_actions", "text", "phase"]
-const PHASE_KEYS: Array[String] = ["at", "stage", "field", "text"]
+const PHASE_KEYS: Array[String] = ["at", "stage", "field", "text", "guard"]
 const FIELD_KEYS: Array[String] = ["label", "boost", "weaken", "intro", "blocks", "regen_element", "regen_div",
 	"rest_bonus", "energy_element", "energy_gain", "bond_bonus", "cheap_element"]
+## Fair bosses (KAMPF_PLAN_1000 item 948): at most this many actions per turn before the second
+## phase, at most this much HP per Spirling it faces (it never outlasts the whole team put
+## together), and at most this many stat stages gained in its second phase.
+const FAIR_MAX_ACTIONS: int = 2
+const FAIR_HP_PER_ALLY: float = 1.0
+const FAIR_PHASE_STAGES: int = 2
 ## Maps and tables that name a boss by id.
 const BOSS_SOURCES: Array[String] = ["res://data/ideas200c.json"]
 const MAP_DIR: String = "res://data/maps"
@@ -53,6 +59,10 @@ static func boss_errors(bosses: Dictionary = BattleRules.BOSSES, fields: Diction
 			out.append("boss '%s': hp_per_ally must be above 0" % id)
 		if int(b.get("max_actions", 0)) < 1:
 			out.append("boss '%s': max_actions must be at least 1" % id)
+		elif int(b.get("max_actions", 0)) > FAIR_MAX_ACTIONS:
+			out.append("boss '%s': max_actions above %d is not fair" % [id, FAIR_MAX_ACTIONS])
+		if float(b.get("hp_per_ally", 0.0)) > FAIR_HP_PER_ALLY:
+			out.append("boss '%s': hp_per_ally above %.1f is not fair" % [id, FAIR_HP_PER_ALLY])
 		var p: Variant = b.get("phase", {})
 		if not p is Dictionary:
 			out.append("boss '%s': phase must be an object" % id)
@@ -68,8 +78,16 @@ static func boss_errors(bosses: Dictionary = BattleRules.BOSSES, fields: Diction
 			out.append("boss '%s': phase 'at' must lie between 0 and 1" % id)
 		if str(ph.get("text", "")).is_empty():
 			out.append("boss '%s': phase needs a text" % id)
+		# A called guard (KAMPF_PLAN_1000 item 404, BossRules.call_guard) must be a real species.
+		if ph.has("guard") and (not ph.guard is Dictionary or Database.species(str((ph.guard as Dictionary).get("species", ""))) == null):
+			out.append("boss '%s': phase guard needs a known species" % id)
 		var st: Variant = ph.get("stage", {})
 		if st is Dictionary:
+			var gained: int = 0
+			for stat: Variant in st:
+				gained += maxi(0, int(st[stat]))
+			if gained > FAIR_PHASE_STAGES:
+				out.append("boss '%s': phase gains %d stages, more than %d is not fair" % [id, gained, FAIR_PHASE_STAGES])
 			for stat: Variant in st:
 				if not str(stat) in BattleRules.STAGE_STATS:
 					out.append("boss '%s': phase raises unknown stat '%s'" % [id, stat])

@@ -49,6 +49,35 @@ var _last_lit: int = -1
 var _score: float = 0.0
 var _hint: Label
 
+## Screen readers (KAMPF_PLAN_1000 item 920): the hint is a live region, and its spoken name also
+## says the called marks in words and which key answers which mark, so the call can be followed
+## without seeing it. Marks 0, 1, 2 answer to left, up (or accept) and right.
+const MARK_WORDS: Array[String] = ["Diamond", "Square", "Triangle"]
+const SKY_WORDS: Array[String] = ["Moon", "Star", "Spark"]
+
+## Name of mark [param i] in the player's language.
+static func mark_word(i: int, sky: bool) -> String:
+	return Loc.t((SKY_WORDS if sky else MARK_WORDS)[i % BondEcho.MARKS])
+
+## The called marks in words, for screen readers.
+static func spoken_call(sequence: Array[int], sky: bool) -> String:
+	var words: PackedStringArray = []
+	for m: int in sequence:
+		words.append(mark_word(m, sky))
+	return Loc.t("The call: %s.") % ", ".join(words)
+
+## Which key answers which mark, for screen readers.
+static func spoken_keys(sky: bool) -> String:
+	return Loc.t("Echo with the keys: left %s, up %s, right %s.") % [mark_word(0, sky), mark_word(1, sky), mark_word(2, sky)]
+
+## Shows [param text] and has screen readers say it, followed by [param extra].
+func _say(text: String, extra: String = "") -> void:
+	_hint.text = text
+	_hint.accessibility_name = Loc.t(text) + ("" if extra.is_empty() else " " + extra)
+
+func _sky() -> bool:
+	return bool(_plan.get("sky", false))
+
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_hint = Label.new()
@@ -58,6 +87,7 @@ func _ready() -> void:
 	_hint.offset_top = 6
 	_hint.offset_left = 8
 	_hint.offset_right = -8
+	_hint.accessibility_live = AccessibilityServer.LIVE_POLITE
 	add_child(_hint)
 	visible = false
 	visibility_changed.connect(func() -> void:
@@ -112,7 +142,7 @@ func run_mine(plan: Dictionary = {}) -> float:
 	mine_fill = 0.0
 	_time = 0.0
 	_phase = Phase.MINE
-	_hint.text = "Tap Mine! fast!"
+	_say("Tap Mine! fast!", Loc.t("Any tap or the accept key counts."))
 	visible = true
 	var result: float = await finished
 	visible = false
@@ -129,7 +159,7 @@ func mine_tap() -> void:
 
 func _mine_end() -> void:
 	_score = mine_fill
-	_hint.text = BondEcho.result_words(_score)
+	_say(BondEcho.result_words(_score))
 	_phase = Phase.RESULT
 	_time = 0.0
 
@@ -156,7 +186,7 @@ func _start_phase(i: int) -> void:
 	_last_lit = -1
 	_time = 0.0
 	_phase = Phase.CALL
-	_hint.text = "Listen to the call..." if i == 0 else "It calls again..."
+	_say("Listen to the call..." if i == 0 else "It calls again...", spoken_call(_sequence, _sky()))
 
 func _echo_time() -> float:
 	return BondEcho.ECHO_TIME * maxf(1.0, _sequence.size() / float(BondEcho.SEQUENCE_LENGTH))
@@ -178,13 +208,13 @@ func _process(delta: float) -> void:
 	if _phase == Phase.CALL and _time >= BondEcho.call_duration(_sequence.size()) + BondEcho.GAP_TIME:
 		_phase = Phase.ECHO
 		_time = 0.0
-		_hint.text = "Echo it back, no hurry." if calm else "Now echo it back!"
+		_say("Echo it back, no hurry." if calm else "Now echo it back!", spoken_keys(_sky()))
 	elif _phase == Phase.ECHO and not calm and _time >= _echo_time():
 		_end_phase()
 	elif _phase == Phase.AFTER_CALL and _time >= BondEcho.SHOW_TIME + BondEcho.GAP_TIME:
 		_phase = Phase.AFTER_ECHO
 		_time = 0.0
-		_hint.text = "One more?"
+		_say("One more?", spoken_keys(_sky()))
 	elif _phase == Phase.AFTER_ECHO and not calm and _time >= AFTER_ECHO_TIME:
 		_finish()
 	elif _phase == Phase.RESULT and _time >= RESULT_TIME:
@@ -233,7 +263,7 @@ func _end_phase() -> void:
 		_last_lit = -1
 		_time = 0.0
 		_phase = Phase.AFTER_CALL
-		_hint.text = "An afterglow..."
+		_say("An afterglow...", spoken_call(_sequence, _sky()))
 		return
 	_finish()
 
@@ -241,7 +271,7 @@ func _finish() -> void:
 	if _phase == Phase.IDLE or _phase == Phase.RESULT:
 		return
 	_score = BondEcho.plan_score(_plan, _all_taps, _afterglow_tap)
-	_hint.text = BondEcho.result_words(_score)
+	_say(BondEcho.result_words(_score))
 	_phase = Phase.RESULT
 	_time = 0.0
 
