@@ -2,6 +2,7 @@
  "_comment": "German texts from tools/i18n/de_battle_short.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
  "keep": [],
  "strings": {
+  "Again: - (battle button)": "Erneut: -",
   "Bond (battle button)": "Binden",
   "Give up (battle button)": "Passen",
   "Growth (bar label)": "Wachst.",
