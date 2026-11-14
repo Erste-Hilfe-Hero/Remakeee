@@ -393,6 +393,7 @@ func _layout_field() -> void:
 		_layout_formation()
 		if _hud != null:
 			_hud.layout_formation()
+		_place_pause()
 		return
 	var w: float = _field.size.x
 	var h: float = _field.size.y
@@ -407,9 +408,7 @@ func _layout_field() -> void:
 	_auto_button.size = Vector2(26, 12)
 	_log_button.position = Vector2(MARGIN, MARGIN + 28)
 	_log_button.size = Vector2(26, 12)
-	_pause_button.position = Vector2(MARGIN, MARGIN + 42)
-	_pause_button.size = Vector2(26, 12)
-	_goal_label.position = Vector2(MARGIN, MARGIN + 56)
+	_goal_label.position = Vector2(MARGIN, MARGIN + 42)
 	_foe_sprite.position = Vector2(MARGIN * 2 + 28, MARGIN + STRIP_HEIGHT - 6)
 	_foe_sprite.size = Vector2(sprite, sprite)
 	_foe_sprite.mirrored = true
@@ -427,6 +426,7 @@ func _layout_field() -> void:
 		_player_sprite.size = pr.size
 	if _hud != null:
 		_hud.layout_single()
+	_place_pause()
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade) * BattleShow.night_tint(DayCycle.current(), GameState.day_night, outdoor, backdrop)
 
@@ -475,9 +475,7 @@ func _layout_formation() -> void:
 	_auto_button.size = Vector2(26, 12)
 	_log_button.position = Vector2(w - 26 - MARGIN, MARGIN + 28)
 	_log_button.size = Vector2(26, 12)
-	_pause_button.position = Vector2(w - 26 - MARGIN, MARGIN + 42)
-	_pause_button.size = Vector2(26, 12)
-	_goal_label.position = Vector2(w - 26 - MARGIN, MARGIN + 56)
+	_goal_label.position = Vector2(w - 26 - MARGIN, MARGIN + 42)
 	_back_button.position = Vector2(MARGIN, MARGIN + STRIP_HEIGHT + 10)
 	_back_button.size = Vector2(26, 12)
 	var rects: Array[Rect2] = [Rect2(), Rect2()]
@@ -638,6 +636,18 @@ var _pause: BattlePause
 
 ## The pause panel over everything (item 912): while it shows, Auto and the text wait like when
 ## the app is in the background (item 629), and the whole battle stands still.
+## The "II" button takes Auto's place when Auto is hidden; beside Auto it is a small square just
+## left of the speed button, so every era's own button row stays as it is.
+func _place_pause() -> void:
+	if _pause_button == null:
+		return
+	if not _auto_button.visible:
+		_pause_button.position = _auto_button.position
+		_pause_button.size = _auto_button.size
+	else:
+		_pause_button.size = Vector2(12, _ff_button.size.y)
+		_pause_button.position = Vector2(maxf(0.0, _ff_button.position.x - 14), _ff_button.position.y)
+
 func _build_pause() -> void:
 	_pause = BattlePause.new()
 	add_child(_pause)
@@ -666,6 +676,7 @@ func _run() -> void:
 	_foe_strip.visible = false
 	_player_strip.visible = false
 	_auto_button.visible = model.is_wild
+	_place_pause()
 	_weather.setup(BattleWeather.weather_of(model), EraManager.active_era())
 	_apply_speed()
 	Sound.music(Sound.battle_music(music_track))

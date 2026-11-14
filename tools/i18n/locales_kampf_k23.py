@@ -62,7 +62,7 @@ R = {
 	"Hiçbir şey kıpırdamıyor. Rakip bile nefesini tutuyor, nezaketten ya da kinden.",
 	"Niets beweegt. Zelfs de tegenstander houdt de adem in, uit beleefdheid of wrok."],
 "No rush: %s": ["急がない: %s", "Sans hâte: %s", "Senza fretta: %s", "Sin prisa: %s", "느긋하게: %s", "不催促: %s", "不催促: %s", "Sem pressa: %s", "Без спешки: %s", "Bez pośpiechu: %s", "Acele yok: %s", "Geen haast: %s"],
-"Tap guard: %s": ["誤タップ防止: %s", "Anti-tap: %s", "Anti-tocco: %s", "Anti-toque: %s", "오터치 방지: %s", "防误触: %s", "防誤觸: %s", "Antitoque: %s", "Защита: %s", "Ochrona: %s", "Dokunma koruma: %s", "Tikbeveiliging: %s"],
+"Tap guard: %s": ["誤タップ防止: %s", "Anti-tap: %s", "Anti-tocco: %s", "Anti-toque: %s", "오터치 방지: %s", "防误触: %s", "防誤觸: %s", "Antitoque: %s", "Защита: %s", "Ochrona: %s", "Tık koruma: %s", "Tikbeveiliging: %s"],
 "Short": ["短い", "Court", "Breve", "Corto", "짧게", "短", "短", "Curto", "Коротко", "Krótko", "Kısa", "Kort"],
 "Long": ["長い", "Long", "Lungo", "Largo", "길게", "长", "長", "Longo", "Долго", "Długo", "Uzun", "Lang"],
 "Battle text waits for your tap at any speed, and every bond is the calm echo. Nothing in battle runs on a clock.": [
