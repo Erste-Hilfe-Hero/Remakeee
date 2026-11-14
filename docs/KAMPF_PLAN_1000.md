@@ -85,7 +85,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 47. [x] Energie-Sperre-Status: eine Runde kein Energiegewinn (Effekt energy_lock, Fuse Snap)
 48. [x] Trait 'Sparflamme': Techniken ab 5 Energie kosten 1 weniger (Trait low_flame)
 49. [x] Trait 'Überladen': bei voller Energie +10 % Schaden (Trait overflow)
-50. [x] Maximale Energie pro Art leicht variieren (10 bis 12) (EnergyKit.role_cap: Weaver 12, Vanguard 11)
+50. [ ] Maximale Energie pro Art leicht variieren (10 bis 12)
 51. [x] Energie-Leiste als Ziffer für Screenreader (InfoStrip.screen_reader_text)
 52. [x] Rasten heilt auf Story-Stufe zusätzlich 5 % HP (BattleModel.rest_heal_share)
 53. [x] Gegner-Energie im Info-Streifen anzeigen (bestehend, Lexikon erwähnen) (InfoStrip, RulesBook.energy)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-888 von 1000 Punkten umgesetzt.
+887 von 1000 Punkten umgesetzt.
 

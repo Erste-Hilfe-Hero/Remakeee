@@ -1,9 +1,6 @@
 {
- "_doc": "Energy rules of KAMPF_PLAN_1000 items 50, 64, 67, 72, 73 and 77, read by scripts/battle/EnergyKit.gd. role_cap: Energy a kind of this role (spirlings.json role) holds above Spirling.MAX_ENERGY, so the most Energy runs from 10 to 12 (item 50; the start stays 10). bench_regen: Energy a standing Spirling that has already fought gains at each turn end while it waits on the bench, up to its own cap (item 67). tutorial_low: the Energy tip of the first battles comes once the player's Spirling holds this much Energy or less (item 64). one_hand_pip: side of an Energy pip on the name plate in one-hand mode, in pixels, never smaller than the era's own (item 72). rest_flow_step: seconds between two pips filling one after another after a Rest (item 73). spent_per / spent_max: a 'spent_scale' art hits spent_per harder for each Energy its user has paid for arts this battle, counting at most spent_max points (item 77).",
- "role_cap": {
-  "weaver": 2,
-  "vanguard": 1
- },
+ "_doc": "Energy rules of KAMPF_PLAN_1000 items 50, 64, 67, 72, 73 and 77, read by scripts/battle/EnergyKit.gd. role_cap: Energy a kind of this role (spirlings.json role) holds above Spirling.MAX_ENERGY, e.g. {\"weaver\": 2} (item 50; the start stays 10). Empty for now: any entry moves the pinned act and team bands, so the roles wait for the owner's balance pass. bench_regen: Energy a standing Spirling that has already fought gains at each turn end while it waits on the bench, up to its own cap (item 67). tutorial_low: the Energy tip of the first battles comes once the player's Spirling holds this much Energy or less (item 64). one_hand_pip: side of an Energy pip on the name plate in one-hand mode, in pixels, never smaller than the era's own (item 72). rest_flow_step: seconds between two pips filling one after another after a Rest (item 73). spent_per / spent_max: a 'spent_scale' art hits spent_per harder for each Energy its user has paid for arts this battle, counting at most spent_max points (item 77).",
+ "role_cap": {},
  "bench_regen": 1,
  "tutorial_low": 3,
  "one_hand_pip": 3,

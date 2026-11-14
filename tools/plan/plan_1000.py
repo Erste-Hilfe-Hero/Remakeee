@@ -60,7 +60,7 @@ AREAS = [
 "[x] Energie-Sperre-Status: eine Runde kein Energiegewinn (Effekt energy_lock, Fuse Snap)",
 "[x] Trait 'Sparflamme': Techniken ab 5 Energie kosten 1 weniger (Trait low_flame)",
 "[x] Trait 'Überladen': bei voller Energie +10 % Schaden (Trait overflow)",
-"[x] Maximale Energie pro Art leicht variieren (10 bis 12) (EnergyKit.role_cap: Weaver 12, Vanguard 11)",
+"Maximale Energie pro Art leicht variieren (10 bis 12)",
 "[x] Energie-Leiste als Ziffer für Screenreader (InfoStrip.screen_reader_text)",
 "[x] Rasten heilt auf Story-Stufe zusätzlich 5 % HP (BattleModel.rest_heal_share)",
 "[x] Gegner-Energie im Info-Streifen anzeigen (bestehend, Lexikon erwähnen) (InfoStrip, RulesBook.energy)",

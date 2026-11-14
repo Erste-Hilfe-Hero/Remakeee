@@ -10,6 +10,14 @@ func before_all() -> void:
 
 func after_each() -> void:
 	Loc.set_language("en")
+	EnergyKit._data = {}
+
+## Item 50 ships with no role in data/kampf_energy.json (the roles wait for a balance pass), so
+## these tests lend the rule a Weaver +2 and Vanguard +1.
+func _with_roles() -> void:
+	var d: Dictionary = EnergyKit.data().duplicate(true)
+	d["role_cap"] = {"weaver": 2, "vanguard": 1}
+	EnergyKit._data = d
 
 func _duel(mine: Array[Spirling], theirs: Array[Spirling], variants: Array[String] = []) -> BattleModel:
 	var m := BattleModel.new(mine, theirs, true, 5, 0)
@@ -21,6 +29,7 @@ func _duel(mine: Array[Spirling], theirs: Array[Spirling], variants: Array[Strin
 # --- 50 ---------------------------------------------------------------------------------------
 
 func test_role_sets_the_most_energy_from_10_to_12() -> void:
+	_with_roles()
 	assert_eq(EnergyKit.cap_of(BattleFixtures.make("Kindlop", 20)), 10, "kindler")
 	assert_eq(EnergyKit.cap_of(BattleFixtures.make("Puddlet", 20)), 11, "vanguard")
 	assert_eq(EnergyKit.cap_of(BattleFixtures.make("Kelpup", 20)), 12, "weaver")
@@ -29,6 +38,7 @@ func test_role_sets_the_most_energy_from_10_to_12() -> void:
 		assert_between(c, 10, 12, sd.species_name)
 
 func test_weaver_starts_at_10_and_rests_up_to_12() -> void:
+	_with_roles()
 	var me: Spirling = BattleFixtures.make("Kelpup", 20, ["Bowl Over"])
 	var m: BattleModel = _duel([me] as Array[Spirling], [BattleFixtures.make("Mossling", 20, ["Bowl Over"])] as Array[Spirling])
 	assert_eq(me.energy, Spirling.START_ENERGY, "the start stays 10")
@@ -40,6 +50,7 @@ func test_weaver_starts_at_10_and_rests_up_to_12() -> void:
 	assert_eq(plain.energy, 10, "a bulwark holds 10")
 
 func test_rules_book_names_the_roles_and_the_bench() -> void:
+	_with_roles()
 	var text: String = "\n".join(RulesBook.energy())
 	assert_string_contains(text, "Weaver kinds hold 2 more Energy (12 in all).")
 	assert_string_contains(text, "waits on the bench")
@@ -130,6 +141,10 @@ func test_hesper_sells_sunk_cost_and_its_card_explains_it() -> void:
 
 # --- 72, 73 -----------------------------------------------------------------------------------
 
+func test_shipped_data_keeps_every_kind_at_10() -> void:
+	for sd: SpirlingData in Database.spirlings.values():
+		assert_eq(Spirling.MAX_ENERGY + EnergyKit.role_bonus(sd.role), Spirling.MAX_ENERGY, sd.species_name)
+
 func test_one_hand_mode_draws_bigger_pips() -> void:
 	assert_eq(EnergyKit.pip_size(2.0, false), 2.0)
 	assert_eq(EnergyKit.pip_size(2.0, true), EnergyKit.num("one_hand_pip", 3.0))
@@ -150,6 +165,9 @@ func test_rest_fills_the_pips_one_after_another() -> void:
 
 func test_strip_shows_as_many_pips_as_the_kind_holds() -> void:
 	var strip := InfoStrip.new()
+	strip.set_spirling(BattleFixtures.make("Kelpup", 20))
+	assert_eq(strip.energy_cap, 10, "no role holds more in the shipped data")
+	_with_roles()
 	strip.set_spirling(BattleFixtures.make("Kelpup", 20))
 	assert_eq(strip.energy_cap, 12)
 	strip.free()
