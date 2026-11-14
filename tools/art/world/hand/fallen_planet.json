@@ -1,0 +1,41 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "hs_thea",
+    "x": 6,
+    "y": 6,
+    "facing": "down",
+    "dialogue": "halcyra_side/thea",
+    "sprite": "villager",
+    "trainer": "Crater Prospector Thea",
+    "intro": "halcyra_side/thea_intro",
+    "defeat": "halcyra_side/thea_defeat",
+    "money": 3560,
+    "team": [
+     {
+      "species": "Helirollax",
+      "level": 87,
+      "moves": [
+       "All-In Crash"
+      ]
+     },
+     {
+      "species": "Rollibex",
+      "level": 88,
+      "moves": [
+       "All-In Crash"
+      ],
+      "held": "kit_rift_splinter"
+     },
+     {
+      "species": "Solmantle",
+      "level": 89
+     }
+    ],
+    "strategy": "overcharge",
+    "profile": "surger"
+   }
+  ]
+ }
+}

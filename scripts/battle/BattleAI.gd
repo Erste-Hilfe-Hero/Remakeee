@@ -68,6 +68,10 @@ const RECOIL_W: float = 1.0
 const LOW_HP: float = 0.35
 ## Arts whose damage also refills the user (weighed by drain_w, item 619).
 const DRAIN_EFFECTS: Array[StringName] = [&"drain", &"energy_drain", &"energy_refund"]
+## Slowest single decision allowed, in milliseconds, for any tier and formation size
+## (KAMPF_PLAN_1000 item 936, tests/unit/test_kampf_k39.gd): the foe picks while the turn is
+## being resolved, so a slow pick would show as a stall between the player's order and the text.
+const THINK_BUDGET_MS: float = 60.0
 ## Mottos and battle lines per profile: data/dialogue/<file>.json, keys "<profile>_<kind>".
 const LINES_FILE: String = "battle_lines"
 ## Numbers for KAMPF_PLAN_1000 items 445, 447, 466 and 470 (plan turns, swap guess, field swap, budget).
@@ -470,6 +474,9 @@ func score_action(model: BattleModel, side: int, slot: int, move_index: int, aim
 	var reached: Array[int] = model.move_targets(side, mv, aim)
 	var share: float = BattleRules.SPREAD_MULT if reached.size() > 1 else 1.0
 	var score: float = 0.0
+	# A sweeper (item 526) weighs arts that reach several foes by spread_w.
+	if reached.size() > 1:
+		share *= weight("spread_w")
 	for t: int in reached:
 		score += score_move(model, side, move_index, slot, t) * share
 	if reached.is_empty():
@@ -502,8 +509,11 @@ func _score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, 
 	if mv.overcharge and level >= 1 and expected < float(target.hp):
 		var extra: int = clampi(me.energy - me.move_cost(mv), 0, BattleRules.OVERCHARGE_MAX_EXTRA)
 		var charged: float = expected * (1.0 + BattleRules.OVERCHARGE_PER_ENERGY * extra)
+		# A surger (item 558) counts the whole charged hit, weighted by charge_w.
 		if charged >= float(target.hp):
 			expected = charged
+		elif weight("charge_w") > 1.0:
+			expected = charged * weight("charge_w")
 	var delayed: bool = false
 	for fx: Dictionary in mv.effects:
 		delayed = delayed or StringName(fx.get("id", "")) == &"delayed_hit"

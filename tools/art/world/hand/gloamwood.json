@@ -21,6 +21,33 @@
    }
   ]
  },
+ "replace": {
+  "npcs": [
+   {
+    "id": "wren",
+    "x": 3,
+    "y": 18,
+    "facing": "right",
+    "dialogue": "gloamwood/wren",
+    "sprite": "villager",
+    "trainer": "Wanderer Wren",
+    "intro": "gloamwood/wren_intro",
+    "defeat": "gloamwood/wren_defeat",
+    "money": 160,
+    "team": [
+     {
+      "species": "Mossling",
+      "level": 5
+     },
+     {
+      "species": "Zippit",
+      "level": 6
+     }
+    ],
+    "lessons": "listener"
+   }
+  ]
+ },
  "set": {
   "rows": [
    "TTTT_TTTTTTT",
