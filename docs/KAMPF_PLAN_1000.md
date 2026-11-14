@@ -396,7 +396,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 337. [x] Meister-KI nutzt Felder, die ihr nützen (umgesetzt) (BattleAI set_field)
 338. [x] Feld-Gegenstände verlängern Dauer (Andenken Feldpflock, +2 Runden)
 339. [x] Trait 'Feldläufer' und 'Echo-Seele' (Grindlet- und Vanepip-Linie)
-340. [ ] Feld in Online-Duellen wählbar
+340. [x] Feld in Online-Duellen wählbar (Echo-Duell: EchoTeam.DUEL_FIELDS; Live-Duell: Einladender wählt, LiveDuel.fields, 20261114103000_live_field.sql, Rematch und Schiedsrichter spielen auf dem Feld)
 341. [x] Feld als Wochen-Herausforderung (bestehend) (WeeklyChallenge.field)
 342. [x] Feld-Beschreibung in eigener Wortwahl (BattleRules.FIELDS intro, Lexikon)
 343. [x] Feld-Boost 1.2 und Schwächung 0.85 (bestehend) dokumentieren (Lexikon 'Riss-Felder', Test prüft die Zahlen)
@@ -434,7 +434,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 372. [x] Mehrfachkampf-Geschwindigkeit: Text pro Aktion kürzer (MultiRules.text_speed: Text tippt x1.4 schneller)
 373. [x] Mehrfachkampf-Log filtern (Tippen: Alle, Deine, Gegner)
 374. [x] Mehrfachkampf im Turm (jedes 5. Stockwerk 2v2)
-375. [ ] Mehrfachkampf online (2v2 mit Freund-Echo)
+375. [x] Mehrfachkampf online (2v2 mit Freund-Echo) (Echo-Duell zu zweit: Echo eines zweiten Freundes an deiner Seite, EchoTeam.duel_partner, DOUBLE_FRONT)
 376. [x] Ungleiche Kämpfe 3v1, 4v2 (bestehend)
 377. [x] Boss-Kämpfe mit Wächtern (bestehend) (BattleRules.BOSSES)
 378. [x] Mehrfachziel-Techniken mit 0.75 Schaden (bestehend) (SPREAD_MULT)
@@ -445,17 +445,17 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 383. [x] Mehrfachkampf-Balancing im Simulator (MultiSim: 2v2-Spiegel mit Hilfstechnik, Band 30-70 %, KI wartet mit Köder und Schutz)
 384. [x] Mehrfachkampf-Layout für 4 Sprites (bestehend)
 385. [x] Mehrfachkampf: Ziel-Wahl merken
-386. [ ] Mehrfachkampf: 'Auto-Ziel' Option
+386. [x] Mehrfachkampf: 'Auto-Ziel' Option (Kampf-Einstellung Auto aim, MultiRules.auto_aim: schadende Technik geht ans beste Ziel)
 387. [x] Mehrfachkampf: KI der Partner verbessern (Meister-KI auch für Partner auf Veteran)
 388. [x] Mehrfachkampf: Warnung bei Treffer auf Verbündete (nicht nötig: Flächen-Techniken treffen nie Verbündete, Test)
-389. [ ] Mehrfachkampf: Reihenfolge-Leiste
+389. [x] Mehrfachkampf: Reihenfolge-Leiste (MultiRules.pace_line unter der Befehlsfrage, nach Tempo, im Dunkeln verborgen)
 390. [x] Mehrfachkampf: XP-Verteilung klar anzeigen (bestehend: Wachstum-Zeile pro Spirling)
 391. [x] Mehrfachkampf: Bond nur gegen Wild (bestehend)
 392. [x] Mehrfachkampf: Rückzug nur wenn alle wild (Test)
 393. [x] Mehrfachkampf: Kampfende-Bericht pro Spirling (BattleReport: Schaden und K.o. je Spirling, Bester des Kampfes)
 394. [x] Mehrfachkampf: Replay (BattleReplay mit front und Zügen, test_multi_battle)
 395. [x] Mehrfachkampf: Barrierefreiheit (Slot-Namen vorlesen) (MultiRules.slot_spoken)
-396. [ ] Mehrfachkampf: Einhand-Modus
+396. [x] Mehrfachkampf: Einhand-Modus (Ziele als Liste unten am Bildschirm, Listen tief und Zurück auf der Daumenseite, MultiRules.aim_by_list)
 397. [x] Mehrfachkampf-Tests (bestehend) erweitern (test_multi_k05.gd)
 398. [x] Mehrfachkampf: Story-Kämpfe mit Ali-Wunsch (3v3, 4v1, 4v2) beibehalten (test_multi_battle Kartendaten)
 399. [x] Mehrfachkampf: Gegner-Formationen pro Wayfarer (Wayfarer-Eintrag "formation": true)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-953 von 1000 Punkten umgesetzt.
+958 von 1000 Punkten umgesetzt.
 

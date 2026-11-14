@@ -277,7 +277,7 @@ static func _formation_for(m: BattleModel, side: int) -> void:
 			for stat: String in f.stage:
 				m.change_stage(side, stat, int(f.stage[stat]), s)
 
-# --- Aim, auto aim, screen reader (items 362, 363, 385, 386, 395) -----------------------------
+# --- Aim, auto aim, one hand, order bar, screen reader (items 362, 363, 385, 386, 389, 395, 396) ---
 
 ## Line while aiming at [param foe]: name, the expected share of its Vigor and the matchup.
 ## [param pct] is -1 when the preview is off, [param mult] -1 when the matchup is unknown.
@@ -308,6 +308,57 @@ static func best_target(m: BattleModel, me: Spirling, mv: MoveData, side: int = 
 			score = share
 			best = s
 	return best
+
+## The foe slot to aim at without asking (item 386): with Auto aim on, the best target of a
+## damaging art; -1 when the player picks (Auto aim off, a status art, nothing given).
+static func auto_aim(m: BattleModel, me: Spirling, mv: MoveData, on: bool) -> int:
+	if not on or m == null or me == null or mv == null or not mv.is_damaging():
+		return -1
+	return best_target(m, me, mv)
+
+## In one-hand mode a multi battle offers its targets as a list low on the screen, in reach of
+## the thumb, instead of the Spirlings at the top (item 396).
+static func aim_by_list(multi: bool, one_hand: bool) -> bool:
+	return multi and one_hand
+
+## Top edge of the battle's lists: low on the screen in one-hand mode (as the menus, MenuHost).
+static func hand_top(height: float, margin: float, one_hand: bool) -> float:
+	return maxf(margin, height * MenuHost.ONE_HAND_TOP) if one_hand else margin
+
+## Everyone on the field by Pace, fastest first: [{side, slot, name, pace}] (item 389). The same
+## Pace as BattleModel._sort_key, without the arts' priority and the dice; ties list your side
+## first. Empty in the dark (Warden rule Night Dark), where nobody sees the Pace.
+static func pace_order(m: BattleModel) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if m == null or BattleRules.rule_number(m.foe_rule, "hidden_order") > 0.0:
+		return out
+	for side: int in 2:
+		for s: int in m.standing_slots(side):
+			var sp: Spirling = m.active_spirling(side, s)
+			out.append({"side": side, "slot": s, "name": sp.display_name(),
+				"pace": int(sp.effective_spd() * ShopEffects.seal_speed_mult(int(m.seals[side][2])))})
+	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if int(a.pace) != int(b.pace):
+			return int(a.pace) > int(b.pace)
+		return int(a.side) * 10 + int(a.slot) < int(b.side) * 10 + int(b.slot))
+	return out
+
+## The order bar under the orders prompt of a multi battle (item 389): "Acting order A > foe B >
+## C", at most order_bar.max_names names; "" in one-on-one or in the dark.
+static func pace_line(m: BattleModel) -> String:
+	if m == null or not m.is_multi():
+		return ""
+	var order: Array[Dictionary] = pace_order(m)
+	if order.is_empty():
+		return ""
+	var cap: int = maxi(1, int(data().get("order_bar", {}).get("max_names", 4)))
+	var names: PackedStringArray = []
+	for i: int in mini(order.size(), cap):
+		var e: Dictionary = order[i]
+		names.append(Loc.t("foe %s") % str(e.name) if int(e.side) == BattleModel.Side.FOE else str(e.name))
+	if order.size() > cap:
+		names.append("+%d" % (order.size() - cap))
+	return Loc.t("Acting order %s") % " > ".join(names)
 
 ## What a screen reader says for a Spirling in a formation slot (item 395).
 static func slot_spoken(m: BattleModel, side: int, slot: int) -> String:

@@ -886,10 +886,16 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 		await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
 		if _auto_active():
 			return _auto_ai.choose(model, BattleModel.Side.PLAYER, slot)
+	# In a multi battle the acting order by Pace stands under the orders (KAMPF_PLAN_1000 389).
+	var pace: String = MultiRules.pace_line(model) if _multi else ""
+	var pace_tail: String = "\n" + pace if not pace.is_empty() else ""
 	if _turn_deadline > 0:
-		_text.show_prompt("Orders for %s? (%d Energy, %d s)" % [me.display_name(), me.energy, _clock_left()])
+		_text.show_prompt("Orders for %s? (%d Energy, %d s)" % [me.display_name(), me.energy, _clock_left()] + pace_tail)
 	else:
-		_text.show_prompt("Orders for %s? (%d Energy)" % [me.display_name(), me.energy])
+		_text.show_prompt("Orders for %s? (%d Energy)" % [me.display_name(), me.energy] + pace_tail)
+	# One-hand mode: the battle's lists sit low, Back on the thumb's side (item 396).
+	_picker.set_one_hand(GameState.one_hand, GameState.left_handed)
+	_picker.offset_top = MultiRules.hand_top(size.y, MARGIN * 6, GameState.one_hand)
 	_menu.prefer_row = BattleComfort.first_row(int(_last_art.get(slot, -1)), me)
 	_sync_status_turns()
 	_menu.refresh(model, slot)
@@ -944,6 +950,12 @@ func _pick_target(title: String, me: Spirling = null, mv: MoveData = null, from_
 	var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
 	if not _multi or foes.size() <= 1:
 		return -1 if foes.is_empty() else foes[0]
+	# Auto aim (KAMPF_PLAN_1000 386): a damaging art goes at the best foe unasked.
+	var auto: int = MultiRules.auto_aim(model, me, mv, GameState.auto_aim)
+	if auto >= 0:
+		return auto
+	if MultiRules.aim_by_list(_multi, GameState.one_hand):
+		return await _pick_target_list(title, me, mv, from_slot, foes)
 	_text.show_prompt(title)
 	for slot: int in foes:
 		var sp: SpirlingSprite = _slot_sprites[BattleModel.Side.FOE][slot]
@@ -985,6 +997,19 @@ func _pick_target(title: String, me: Spirling = null, mv: MoveData = null, from_
 	_back_button.visible = false
 	_pin.visible = false
 	return picked_slot if picked_slot >= 0 else -2
+
+## One-hand mode (KAMPF_PLAN_1000 396): the foes as a list low on the screen, each with its aim
+## line, the pin on the one in focus. Returns the foe slot or -2 when the player backs out.
+func _pick_target_list(title: String, me: Spirling, mv: MoveData, from_slot: int, foes: Array[int]) -> int:
+	var entries: Array[Dictionary] = []
+	for slot: int in foes:
+		var text: String = _aim_line(me, mv, slot, from_slot) if me != null and mv != null else model.active_spirling(BattleModel.Side.FOE, slot).display_name()
+		entries.append({"text": text, "say": MultiRules.slot_spoken(model, BattleModel.Side.FOE, slot)})
+	var start: int = BattleInfo.aim_start(foes, _last_aim)
+	_point_pin(BattleModel.Side.FOE, foes[start], true)
+	var idx: int = await _picker.pick(title, entries, true, start)
+	_pin.visible = false
+	return foes[idx] if idx >= 0 and idx < foes.size() else -2
 
 func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[int] = []) -> int:
 	var entries: Array[Dictionary] = []
