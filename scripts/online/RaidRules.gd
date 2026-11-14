@@ -61,3 +61,23 @@ static func group_echoes(cfg: Dictionary, others: int, waited: int) -> int:
 ## Damage of one Echo team: echo_share percent of the strength, dealt at once.
 static func echo_damage(cfg: Dictionary, hp_total: int) -> int:
 	return hp_total * int(cfg.get("echo_share", 15)) / 100
+
+# --- Phases of the guardian (KAMPF_PLAN_1000 item 419; 20261114032010_kampf_k32.sql) ---
+
+## The guardian's phases in order: {"left" (percent of strength left), "stage", "text"}.
+static func phases(cfg: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for p: Variant in cfg.get("phases", []):
+		if p is Dictionary:
+			out.append(p)
+	return out
+
+## The phase a new attempt meets: how many phases' "left" the strength left has fallen to.
+static func phase_of(cfg: Dictionary, hp_left: int, hp_total: int) -> int:
+	if hp_total <= 0:
+		return 0
+	var n: int = 0
+	for p: Dictionary in phases(cfg):
+		if hp_left * 100 <= int(p.get("left", 0)) * hp_total:
+			n += 1
+	return n

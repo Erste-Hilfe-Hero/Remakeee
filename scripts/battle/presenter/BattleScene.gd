@@ -516,6 +516,9 @@ func _layout_formation() -> void:
 			var sp: SpirlingSprite = _slot_sprites[side][slot]
 			sp.position = slots[slot].position
 			sp.size = slots[slot].size
+			# The Rift boss in slot 0 also moves bigger (KAMPF_PLAN_1000 423).
+			var is_boss: bool = side == BattleModel.Side.FOE and slot == 0 and model != null and BattleRules.BOSSES.has(model.foe_boss)
+			sp.motion_scale = BattleShow.boss_motion() if is_boss else 1.0
 			var tag: MiniStrip = _slot_strips[side][slot]
 			tag.position = sp.position + Vector2(-1, sp.size.y + 2)
 			tag.size = Vector2(MiniStrip.WIDTH, tag_h)
@@ -1443,7 +1446,11 @@ func _play_event(e: BattleEvent) -> void:
 			if not phase_track.is_empty():
 				music_track = phase_track
 				_update_pinch()
-			await _text.show_text(e.describe())
+			# At 4x a boss's entrance is one short line, its name on the tag (KAMPF_PLAN_1000 424).
+			if e.type == BattleEvent.Type.BOSS and BattleShow.short_boss_intro(true, GameState.battle_speed_scale()):
+				await _text.show_text(BattleShow.boss_short_line(e), str(e.data.get("label", "")))
+			else:
+				await _text.show_text(e.describe())
 			_pin.visible = false
 		BattleEvent.Type.MOVE_USED:
 			_last_player_element = int(e.data.get("element", -1)) if side == BattleModel.Side.PLAYER else -1

@@ -153,6 +153,7 @@ static func play(ow: Overworld, h: Dictionary, seed_value: int, week: String, fe
 	var won: int = 0
 	var lines: Array[String] = []
 	var t0: int = Time.get_ticks_msec()
+	var rounds_used: int = 0
 	for r: int in BattleHalls.rounds(h):
 		if BattleHalls.heals_between(h):
 			for s: Spirling in mine:
@@ -165,11 +166,16 @@ static func play(ow: Overworld, h: Dictionary, seed_value: int, week: String, fe
 		ow.busy = true
 		ow.player.frozen = true
 		BattleHalls.keep_replay(GameState.records.get("last_battle", {}))
+		if ow.last_model != null:
+			rounds_used += ow.last_model.turn
 		if outcome != BattleModel.Outcome.WIN:
 			break
 		won += 1
 		lines.append_array(BattleHalls.note_win(week))
 	lines.append_array(BattleHalls.finish(h, won, _species(mine), week, Time.get_date_string_from_unix_time(Online.unix_now())))
+	# Heart stair and prism heart clears go on the weekly boss board by rounds (item 435).
+	if won >= BattleHalls.rounds(h) and kind in ["boss", "prism"]:
+		Online.boss_submit(str(h.id), rounds_used)
 	if won >= BattleHalls.rounds(h) and HallTimes.submit("hall_" + str(h.id), maxi(1, (Time.get_ticks_msec() - t0) / 1000)):
 		lines.append(Loc.t("New best time: %s") % HallTimes.fmt(HallTimes.best("hall_" + str(h.id))))
 	await ow.say(lines)
