@@ -92,6 +92,8 @@ var boss_difficulty: int = -1
 var pending_switch: Array[int] = []
 var is_wild: bool = true
 var trainer_name: String = ""
+## The foe Wayfarer's tactic line at the start (WayfarerThemes.line), "" for none.
+var foe_theme_line: String = ""
 var rng := RandomNumberGenerator.new()
 var battle_seed: int = 0
 var phase: Phase = Phase.INTRO
@@ -207,6 +209,8 @@ var rest_heal_share: float = 0.0
 var ambush: bool = false
 ## Caught from behind (item 15, BattleOpening): the player's side acts first in the first turn.
 var initiative: bool = false
+## AiNotes level (items 451, 467): OFF, REASON (replays) or TABLE (developer view).
+var explain_ai: int = AiNotes.OFF
 ## Bosses only (item 21): after this many turns the Rift closes and the fight ends as FLED.
 const BOSS_ROUND_LIMIT: int = 30
 ## Story values for foe_crit_mult (set by ChallengeRules) and rest_heal_share (items 36, 52).
@@ -495,6 +499,9 @@ func start() -> Array[BattleEvent]:
 		"prism": foe.prism, "gleam": foe.gleam, "count": slot_count(Side.FOE), "multi": is_multi(), "boss": BattleRules.BOSSES.has(foe_boss)})
 	if not is_wild:
 		_battle_line("motto")
+		# KAMPF_PLAN_1000 items 523-525: the foe Wayfarer names its tactic.
+		if not foe_theme_line.is_empty() and not trainer_name.is_empty():
+			emit_event(BattleEvent.Type.BATTLE_LINE, {"side": Side.FOE, "name": trainer_name, "kind": "theme", "text": foe_theme_line})
 		for slot: int in slot_count(Side.FOE):
 			emit_event(BattleEvent.Type.SEND_OUT, _who(Side.FOE, slot))
 	for slot: int in slot_count(Side.PLAYER):
@@ -580,6 +587,8 @@ func submit_actions(actions: Array[BattleAction]) -> Array[BattleEvent]:
 						# Item 628: the partner knows which foe the player goes for this turn.
 						partner_ai.ally_target = _player_aim(actions)
 					a = (partner_ai if side == Side.PLAYER else ai).choose(self, side, slot)
+					if side == Side.FOE and explain_ai > AiNotes.OFF:
+						_events.append(AiNotes.note(self, ai, a, explain_ai))
 			_queue.append(a)
 			if side == Side.FOE and slot == 0 and _boss_actions > 1:
 				for i: int in _boss_actions - 1:
@@ -851,7 +860,7 @@ func _enter_boss_phase(boss: Spirling, p: Dictionary) -> void:
 			_boss_weak_back[stat] = before - boss.stage(stat)
 	if not _boss_weak_back.is_empty():
 		_boss_weak_until = turn + BossRules.WEAK_TURNS
-		emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss,
+		emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "weak": true,
 			"text": "%s lies open: its Guard is down for a turn!" % boss.display_name()})
 
 ## End of turn for a Rift boss: the weak point closes, and a long fight enrages it (item 432).

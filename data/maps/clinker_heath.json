@@ -103,7 +103,8 @@
      "level": 33
     }
    ],
-   "beaten_flag": "ah_juror_1"
+   "beaten_flag": "ah_juror_1",
+   "tactic": "status"
   },
   {
    "id": "mattie",
@@ -130,7 +131,8 @@
      "level": 34
     }
    ],
-   "beaten_flag": "ah_juror_2"
+   "beaten_flag": "ah_juror_2",
+   "tactic": "status"
   },
   {
    "id": "dunstan",
@@ -157,7 +159,8 @@
      "level": 34
     }
    ],
-   "beaten_flag": "ah_juror_3"
+   "beaten_flag": "ah_juror_3",
+   "tactic": "stages"
   },
   {
    "id": "wick",
@@ -184,7 +187,8 @@
      "level": 35
     }
    ],
-   "beaten_flag": "ah_juror_4"
+   "beaten_flag": "ah_juror_4",
+   "tactic": "field"
   },
   {
    "id": "ansa",

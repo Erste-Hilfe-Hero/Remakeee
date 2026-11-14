@@ -48,10 +48,17 @@ def problems(d):
         f = d.get(field)
         if f is None:
             continue
-        if not isinstance(f, dict) or set(f) - {"ios", "android"}:
+        extra = {"android_apk"} if field == "latest" else set()
+        if not isinstance(f, dict) or set(f) - {"ios", "android"} - extra:
             out.append("%s must be {\"ios\": \"x.y.z\", \"android\": \"x.y.z\"} (separate per platform)" % field)
             continue
+        apk = f.get("android_apk")
+        if apk is not None and not (isinstance(apk, str) and apk.startswith("https://") and " " not in apk
+                                    and apk.lower().endswith(".apk")):
+            out.append("latest.android_apk must be an https:// link to an .apk (itch.io build only), got %r" % (apk,))
         for plat, v in f.items():
+            if plat == "android_apk":
+                continue
             if not isinstance(v, str) or not VERSION_RE.match(v):
                 out.append("%s.%s must look like 1.2.3 (\"0\" = no minimum), got %r" % (field, plat, v))
     if "requires" in d and not (isinstance(d["requires"], str) and VERSION_RE.match(d["requires"])):

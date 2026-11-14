@@ -175,7 +175,7 @@ T = {
 "Legal": "Rechtliches",
 "Imprint & privacy": "Rechtstexte",
 "Licences": "Lizenzen",
-"Join our Discord": "Tritt unserem Discord bei",
+"Join our Discord": "Unser Discord",
 "Imprint: ": "Impressum: ",
 "Privacy: ": "Datenschutz: ",
 "Terms: ": "Nutzungsbedingungen: ",

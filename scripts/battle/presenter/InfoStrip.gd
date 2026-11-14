@@ -54,6 +54,13 @@ var _pip_tween: Tween
 var spirling_name: String = ""
 ## Element symbols drawn after the name (shape, not colour, tells them apart).
 var elements: Array[int] = []
+## KAMPF_PLAN_1000 item 113: after a very effective hit the symbols of the elements that took it
+## hop twice (glyph_hop). Under reduced motion they only stand out on a paper rim while it lasts.
+const GLYPH_HOP_TIME: float = 0.45
+const GLYPH_HOP_PX: int = 3
+## 1 -> 0 while the hop runs; [member _kick_element] is the element of the art that hit.
+var _kick: float = 0.0
+var _kick_element: int = -1
 var level: int = 1
 var status: String = ""
 ## Turns left on [member status], shown as a small number under its tag (0 = open-ended, no number).
@@ -321,7 +328,7 @@ func _draw() -> void:
 	var bar_w: float = w
 	var tag_right: float = w
 	if not status.is_empty():
-		var tag: String = StatusRules.label(status).substr(0, 3).to_upper()
+		var tag: String = StatusRules.tag(status)
 		var bold: bool = UITheme.high_contrast
 		var tw: float = font.get_string_size(tag, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + (1.0 if bold else 0.0)
 		# The status symbol (item 162) sits left of the letters, so the tag reads by shape too.
@@ -420,12 +427,37 @@ func _draw_marks(right: float, mid_y: float, col: Color, spark_col: Color) -> fl
 
 func _draw_elements(at: Vector2, on_band: bool) -> void:
 	var x: float = at.x
+	var reduced: bool = Juice.reduced()
 	for el: int in elements:
-		if on_band:
-			draw_texture(ElementIcons.outlined(el, BattleUiStyle.badge_color(era, el), UITheme.BG), Vector2(x - 1.0, at.y - 1.0))
+		var kicked: bool = _kick > 0.0 and glyph_kicked(_kick_element, el)
+		var y: float = at.y + (glyph_hop(_kick, reduced) if kicked else 0)
+		# High contrast (item 108) and a kicked symbol under reduced motion get the 9 px rimmed symbol.
+		if on_band or UITheme.high_contrast or (kicked and reduced):
+			draw_texture(ElementIcons.outlined(el, BattleUiStyle.badge_color(era, el), UITheme.BG), Vector2(x - 1.0, y - 1.0))
 		else:
-			draw_texture(ElementIcons.texture(el, BattleUiStyle.badge_color(era, el)), Vector2(x, at.y))
+			draw_texture(ElementIcons.texture(el, BattleUiStyle.badge_color(era, el)), Vector2(x, y))
 		x += ElementIcons.SIZE + 1
+
+## Starts the hop of the symbols hit very effectively by an art of [param art_element].
+func kick_glyphs(art_element: int) -> void:
+	_kick_element = art_element
+	if not is_inside_tree() or not elements.any(func(el: int) -> bool: return glyph_kicked(art_element, el)):
+		return
+	var tw: Tween = create_tween()
+	tw.tween_method(func(v: float) -> void:
+		_kick = v
+		queue_redraw(), 1.0, 0.0, GLYPH_HOP_TIME / maxf(speed_scale, 0.1))
+
+## True when [param art_element] hits the element [param el] very effectively.
+static func glyph_kicked(art_element: int, el: int) -> bool:
+	return art_element >= 0 and Elements.single(art_element, el) > 1.0
+
+## Vertical offset of a kicked symbol at [param k] (1 -> 0): two hops of up to GLYPH_HOP_PX
+## pixels, whole pixels only; 0 under reduced motion.
+static func glyph_hop(k: float, reduced: bool) -> int:
+	if reduced or k <= 0.0 or k >= 1.0:
+		return 0
+	return -roundi(GLYPH_HOP_PX * absf(sin(k * TAU)))
 
 ## Bonded before: a small filled lozenge (5 px).
 func _draw_caught(at: Vector2, col: Color) -> void:
