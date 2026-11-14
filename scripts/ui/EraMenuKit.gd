@@ -149,6 +149,8 @@ static func draw_party_row(b: Button, s: Spirling, leader: bool, index: int, lay
 		var cx: float = x0 + bar_w + 3
 		b.draw_line(Vector2(cx - 2, y - 2), Vector2(cx + 2, y + 2), ink)
 		b.draw_line(Vector2(cx + 2, y - 2), Vector2(cx - 2, y + 2), ink)
+	else:
+		MenuHost.draw_status_mark(b, s, Vector2(x0 + bar_w + 2, y - 3), ink)
 	var font: Font = b.get_theme_font("font", "Button")
 	var fs: int = b.get_theme_font_size("font_size", "Button")
 	var right: float = b.size.x - 3.0

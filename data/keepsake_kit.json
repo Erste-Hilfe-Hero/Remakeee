@@ -1,0 +1,419 @@
+{
+ "_comment": "Keepsakes in battle (KAMPF_PLAN_1000 281, 298, 304, 307, 318, 319), read by scripts/battle/KeepsakeKit.gd and scripts/ui/KeepsakeIcons.gd. forms: own 7x7 pixel shapes, one per kind of keepsake ('#' = ink). icons: the form and colour of every keepsake; one with an 'elem' in its held block takes that element's colour. sounds: what plays when a keepsake works (cue kind -> audio/sfx name), pitch: its pitch per cue kind (one file, so audio/sfx stays under its size budget). pop: the icon that rises over the holder (pixels, seconds; scale is the icon's pixel size). sets: how many keepsake sets each Spirling remembers.",
+ "sets": 3,
+ "sounds": {
+  "stir": "keepsake_stir",
+  "guard": "keepsake_stir",
+  "fruit": "keepsake_stir",
+  "endure": "keepsake_stir",
+  "swap": "keepsake_stir"
+ },
+ "pop": {
+  "scale": 2,
+  "rise": 10,
+  "time": 0.7,
+  "hold": 0.35,
+  "grow": 1.5
+ },
+ "forms": {
+  "prism": [
+   "...#...",
+   "..#.#..",
+   ".#...#.",
+   "#######",
+   ".#...#.",
+   "..#.#..",
+   "...#..."
+  ],
+  "charm": [
+   "..#.#..",
+   "...#...",
+   "..###..",
+   ".#####.",
+   ".##.##.",
+   ".#####.",
+   "..###.."
+  ],
+  "stone": [
+   ".......",
+   "..###..",
+   ".#####.",
+   "#######",
+   "#######",
+   ".#####.",
+   "......."
+  ],
+  "fruit": [
+   "...#...",
+   "..#....",
+   ".##.##.",
+   "#######",
+   "#######",
+   ".#####.",
+   "..###.."
+  ],
+  "feather": [
+   "....###",
+   "...####",
+   "..####.",
+   ".####..",
+   ".###...",
+   ".#.....",
+   "#......"
+  ],
+  "crystal": [
+   "...#...",
+   "..###..",
+   "..###..",
+   ".#####.",
+   "..###..",
+   "..###..",
+   "...#..."
+  ],
+  "shell": [
+   "...#...",
+   "..#.#..",
+   ".#.#.#.",
+   "#.#.#.#",
+   "#.#.#.#",
+   "#######",
+   "..###.."
+  ],
+  "ring": [
+   "..###..",
+   ".#...#.",
+   "#.....#",
+   "#.....#",
+   "#.....#",
+   ".#...#.",
+   "..###.."
+  ],
+  "glass": [
+   "..###..",
+   ".#..##.",
+   "#....##",
+   "#.....#",
+   "#.....#",
+   ".#...#.",
+   "..###.."
+  ],
+  "coil": [
+   ".#####.",
+   "#.....#",
+   ".#####.",
+   "#.....#",
+   ".#####.",
+   "#.....#",
+   ".#####."
+  ],
+  "stake": [
+   "..###..",
+   "..###..",
+   "..###..",
+   "..###..",
+   "..###..",
+   "...#...",
+   "...#..."
+  ],
+  "wrap": [
+   ".#####.",
+   "#.#.#.#",
+   "##.#.##",
+   "#.#.#.#",
+   "##.#.##",
+   "#.#.#.#",
+   ".#####."
+  ],
+  "burr": [
+   ".#.#.#.",
+   "#.###.#",
+   ".#####.",
+   "###.###",
+   ".#####.",
+   "#.###.#",
+   ".#.#.#."
+  ],
+  "anklet": [
+   ".......",
+   ".#####.",
+   "#.....#",
+   "#.....#",
+   ".#####.",
+   "..#.#..",
+   "...#..."
+  ],
+  "whetstone": [
+   ".......",
+   "......#",
+   "....###",
+   "..#####",
+   "#####..",
+   "###....",
+   "#......"
+  ],
+  "heart": [
+   ".......",
+   ".##.##.",
+   "#######",
+   "#######",
+   ".#####.",
+   "..###..",
+   "...#..."
+  ],
+  "shield": [
+   "#######",
+   "#.....#",
+   "#.....#",
+   "#.....#",
+   ".#...#.",
+   "..#.#..",
+   "...#..."
+  ],
+  "shard": [
+   "....#..",
+   "...##..",
+   "..###..",
+   "..####.",
+   ".####..",
+   ".##....",
+   "#......"
+  ],
+  "scale": [
+   "...#...",
+   "..###..",
+   ".##.##.",
+   "##...##",
+   "#.###.#",
+   "##...##",
+   ".#...#."
+  ],
+  "talisman": [
+   "..###..",
+   "..#.#..",
+   "#######",
+   "#.....#",
+   "#.###.#",
+   "#.....#",
+   "#######"
+  ],
+  "boot": [
+   "..###..",
+   "..###..",
+   "..###..",
+   "..###..",
+   "..####.",
+   "#######",
+   "#######"
+  ],
+  "candle": [
+   "...#...",
+   "..##...",
+   "...#...",
+   "..###..",
+   "..###..",
+   "..###..",
+   ".#####."
+  ]
+ },
+ "icons": {
+  "spark_coil": {
+   "form": "coil",
+   "colour": "d8b13a"
+  },
+  "field_stake": {
+   "form": "stake",
+   "colour": "8a6a44"
+  },
+  "bark_wrap": {
+   "form": "wrap",
+   "colour": "6d8a3c"
+  },
+  "iron_burr": {
+   "form": "burr",
+   "colour": "6e7378"
+  },
+  "swift_feather": {
+   "form": "anklet",
+   "colour": "7fb7c9"
+  },
+  "keen_lens": {
+   "form": "whetstone",
+   "colour": "8c8f96"
+  },
+  "rg_riftheart": {
+   "form": "heart",
+   "colour": "b0384c"
+  },
+  "rg_glass_shield": {
+   "form": "shield",
+   "colour": "6fa3c8"
+  },
+  "rg_clear_shard": {
+   "form": "shard",
+   "colour": "a9d4e0"
+  },
+  "rg_whirl_glass": {
+   "form": "glass",
+   "colour": "7cc2b0"
+  },
+  "rg_vigor_glass": {
+   "form": "glass",
+   "colour": "c86a6a"
+  },
+  "rg_prism_ember": {
+   "form": "prism"
+  },
+  "rg_prism_tide": {
+   "form": "prism"
+  },
+  "rg_prism_bloom": {
+   "form": "prism"
+  },
+  "rg_prism_volt": {
+   "form": "prism"
+  },
+  "rg_prism_stone": {
+   "form": "prism"
+  },
+  "rg_prism_gale": {
+   "form": "prism"
+  },
+  "rg_prism_lumen": {
+   "form": "prism"
+  },
+  "rg_prism_umbra": {
+   "form": "prism"
+  },
+  "rg_echo_ring": {
+   "form": "ring",
+   "colour": "b49ad0"
+  },
+  "rg_hold_stone": {
+   "form": "stone",
+   "colour": "7d7466"
+  },
+  "pith_mend": {
+   "form": "fruit",
+   "colour": "7a9b3e"
+  },
+  "pith_clear": {
+   "form": "fruit",
+   "colour": "c2b04a"
+  },
+  "ember_charm": {
+   "form": "charm"
+  },
+  "tide_charm": {
+   "form": "charm"
+  },
+  "bloom_charm": {
+   "form": "charm"
+  },
+  "volt_charm": {
+   "form": "charm"
+  },
+  "stone_charm": {
+   "form": "charm"
+  },
+  "gale_charm": {
+   "form": "charm"
+  },
+  "lumen_charm": {
+   "form": "charm"
+  },
+  "umbra_charm": {
+   "form": "charm"
+  },
+  "ink_charm": {
+   "form": "charm"
+  },
+  "echo_charm": {
+   "form": "charm"
+  },
+  "rust_charm": {
+   "form": "charm"
+  },
+  "mask_charm": {
+   "form": "charm"
+  },
+  "acid_charm": {
+   "form": "charm"
+  },
+  "frost_charm": {
+   "form": "charm"
+  },
+  "gilt_charm": {
+   "form": "charm"
+  },
+  "zenith_charm": {
+   "form": "charm"
+  },
+  "energy_crystal": {
+   "form": "crystal",
+   "colour": "3b6fd9"
+  },
+  "mirror_scale": {
+   "form": "scale",
+   "colour": "9fb6c8"
+  },
+  "ward_shell": {
+   "form": "shell",
+   "colour": "d9b48a"
+  },
+  "growth_charm": {
+   "form": "charm",
+   "colour": "5f9e4a"
+  },
+  "kit_energy_crystal": {
+   "form": "crystal",
+   "colour": "2a4fb0"
+  },
+  "kit_ward_talisman": {
+   "form": "talisman",
+   "colour": "c9a227"
+  },
+  "kit_pace_feather": {
+   "form": "feather",
+   "colour": "7fb7c9"
+  },
+  "kit_lantern_glass": {
+   "form": "glass",
+   "colour": "e0a83a"
+  },
+  "kit_rift_splinter": {
+   "form": "shard",
+   "colour": "8a4fb0"
+  },
+  "kit_wander_boot": {
+   "form": "boot",
+   "colour": "8a5a3a"
+  },
+  "kit_echo_shell": {
+   "form": "shell",
+   "colour": "e0b8a0"
+  },
+  "kit_rest_candle": {
+   "form": "candle",
+   "colour": "e8d8a8"
+  },
+  "kit_cinder_stone": {
+   "form": "stone",
+   "colour": "c8502a"
+  },
+  "kit_tide_stone": {
+   "form": "stone",
+   "colour": "3a7fc1"
+  },
+  "kit_murk_stone": {
+   "form": "stone",
+   "colour": "5b4a7a"
+  }
+ },
+ "pitch": {
+  "stir": 1.0,
+  "guard": 0.7,
+  "fruit": 1.25,
+  "endure": 0.55,
+  "swap": 1.0
+ }
+}

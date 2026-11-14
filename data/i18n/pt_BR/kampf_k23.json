@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table kampf_k23, written by tools/i18n/locales_kampf_k23.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Battle text waits for your tap at any speed, and every bond is the calm echo. Nothing in battle runs on a clock.": "O texto da batalha espera seu toque em qualquer velocidade, e todo vínculo é o eco calmo. Nada na batalha corre contra o relógio.",
+  "How long menus ignore taps after they appear, so a shaky or late tap picks nothing by mistake.": "Quanto tempo os menus ignoram toques ao aparecer, para que um toque trêmulo ou atrasado não escolha nada por engano.",
+  "Long": "Longo",
+  "No rush: %s": "Sem pressa: %s",
+  "Nothing moves. Even the foe holds its breath, out of politeness or spite.": "Nada se move. Até o rival prende a respiração, por educação ou por rancor.",
+  "Paused": "Pausado",
+  "Saved before the boss. If it goes badly, at least the paperwork survives.": "Salvo antes do chefe. Se der errado, pelo menos a papelada sobrevive.",
+  "Saving before the boss did not work this time.": "Desta vez não deu para salvar antes do chefe.",
+  "Short": "Curto",
+  "Tap guard: %s": "Antitoque: %s",
+  "The wild Spirling is still here. It waited, and it has not forgiven you for leaving.": "O Spirling selvagem ainda está aqui. Ele esperou e não perdoou sua partida."
+ }
+}

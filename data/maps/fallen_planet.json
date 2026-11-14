@@ -88,17 +88,26 @@
    "team": [
     {
      "species": "Helirollax",
-     "level": 87
+     "level": 87,
+     "moves": [
+      "All-In Crash"
+     ]
     },
     {
      "species": "Rollibex",
-     "level": 88
+     "level": 88,
+     "moves": [
+      "All-In Crash"
+     ],
+     "held": "kit_rift_splinter"
     },
     {
      "species": "Solmantle",
      "level": 89
     }
-   ]
+   ],
+   "strategy": "overcharge",
+   "profile": "surger"
   },
   {
    "id": "hs_moritz",
