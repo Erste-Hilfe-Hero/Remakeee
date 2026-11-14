@@ -98,6 +98,18 @@
   "Ring %s:": "Anel %s:",
   "Rolls all Spark values of one Spirling anew. Used up.": "Sorteia de novo todos os valores de Centelha de um Spirling. Se gasta.",
   "Spark Flux": "Fluxo de Centelhas",
-  "VIG": "VIG"
+  "VIG": "VIG",
+  "%d turns left": "faltam %d turnos",
+  "%dE ~%d%% %s%d": "%dE ~%d%% %s%d",
+  "%s %d, Spark %d of %d": "%s %d, Centelha %d de %d",
+  "Copied to the clipboard.": "Copiado para a área de transferência.",
+  "Copy team values": "Copiar valores da equipe",
+  "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Choque num Spirling Ensopado: o Ensopado sai e ele perde com certeza o próximo turno.",
+  "Statuses: %d on the foe, %d on your team": "Estados: %d no inimigo, %d na sua equipe",
+  "Team values": "Valores da equipe",
+  "The charge runs through the water: %s is jolted stiff!": "A carga corre pela água: %s fica travado!",
+  "Foe values": "Valores dos inimigos",
+  "No foe values yet. Every battle writes the foes down here.": "Ainda sem valores de inimigos. Cada batalha os anota aqui.",
+  "%s Ring %d: VIG %d  MGT %d  GRD %d  FOC %d  PCE %d": "%s Anel %d: VIG %d  FOR %d  PRO %d  FOC %d  RIT %d"
  }
 }

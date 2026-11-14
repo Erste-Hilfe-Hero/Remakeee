@@ -98,6 +98,18 @@
   "Ring %s:": "Rang %s:",
   "Rolls all Spark values of one Spirling anew. Used up.": "Retire toutes les valeurs d'Étincelle d'un Spirling. Consommé.",
   "Spark Flux": "Flux d'Étincelles",
-  "VIG": "VIG"
+  "VIG": "VIG",
+  "%d turns left": "%d tours restants",
+  "%dE ~%d%% %s%d": "%dE ~%d%% %s%d",
+  "%s %d, Spark %d of %d": "%s %d, Étincelle %d sur %d",
+  "Copied to the clipboard.": "Copié dans le presse-papiers.",
+  "Copy team values": "Copier les valeurs de l'équipe",
+  "Jolt on a Soaked Spirling: the Soak washes off and it surely loses its next turn.": "Choc sur un Spirling Trempé: le Trempé s'efface et il perd à coup sûr son prochain tour.",
+  "Statuses: %d on the foe, %d on your team": "États: %d chez l'adversaire, %d dans ton équipe",
+  "Team values": "Valeurs de l'équipe",
+  "The charge runs through the water: %s is jolted stiff!": "La charge traverse l'eau: %s est paralysé net!",
+  "Foe values": "Valeurs des adversaires",
+  "No foe values yet. Every battle writes the foes down here.": "Pas encore de valeurs d'adversaires. Chaque combat les note ici.",
+  "%s Ring %d: VIG %d  MGT %d  GRD %d  FOC %d  PCE %d": "%s Rang %d: VIG %d  FOR %d  GAR %d  ESP %d  ALL %d"
  }
 }

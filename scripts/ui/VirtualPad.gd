@@ -316,8 +316,10 @@ func _input(event: InputEvent) -> void:
 
 ## Leaving the app (home swipe, notification, call) can swallow the finger's release, which left a
 ## direction held and the Wayfarer walking by itself after coming back. Let go of everything.
+## The same when the reconnect screen pauses the game (after a battle the online steps often
+## drop a weak connection): a paused pad gets no _input, so it never saw the finger lift.
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_APPLICATION_PAUSED:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_APPLICATION_PAUSED or what == NOTIFICATION_PAUSED:
 		release_all()
 
 ## Lets go of the held direction and every pad button.

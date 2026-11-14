@@ -325,3 +325,117 @@ func test_endgame_exchange_sells_kit_keepsakes() -> void:
 		sold.append(str(o.item))
 	assert_true("kit_energy_crystal" in sold)
 	assert_true("kit_ward_talisman" in sold)
+
+func test_duel_rules_lock_bans_and_doubles() -> void:
+	var team: Array[Spirling] = [_mon("Mossling", 20, "kit_rest_candle"), _mon("Mossling", 20, "kit_ward_talisman"),
+		_mon("Mossling", 20, "kit_rest_candle"), _mon("Mossling", 20, "kit_echo_shell")]
+	var lines: Array[String] = TraitKit.apply_duel_rules(team, ["kit_ward_talisman"])
+	assert_eq(lines.size(), 2, "one locked, one double")
+	assert_eq(team[0].held, "kit_rest_candle", "the first holder keeps it")
+	assert_eq(team[1].held, "", "a locked keepsake comes off")
+	assert_eq(team[2].held, "", "the double comes off")
+	assert_eq(team[3].held, "kit_echo_shell")
+	assert_true(TraitKit.keepsakes_unique(team))
+	assert_eq(TraitKit.apply_duel_rules(team, []), [] as Array[String], "nothing left to do")
+
+func test_duel_rules_use_the_tourney_bans_by_default() -> void:
+	var team: Array[Spirling] = [_mon("Mossling", 20, str(TraitKit.tourney_bans()[0]))]
+	assert_eq(TraitKit.apply_duel_rules(team).size(), 1)
+	assert_eq(team[0].held, "")
+
+func test_gift_report_counts_each_working() -> void:
+	var me := _mon()
+	me.bonus_trait = "loner"
+	var foe := _mon()
+	foe.bonus_trait = "loner"
+	var m := _model(me, foe)
+	assert_eq(TraitKit.gift_report(m), [] as Array[String])
+	TraitKit.show(m, BattleModel.Side.PLAYER, 0, "loner")
+	TraitKit.show(m, BattleModel.Side.PLAYER, 0, "loner")
+	TraitKit.show(m, BattleModel.Side.FOE, 0, "loner")
+	var counts: Dictionary = m.kit.get("gift_counts", {})
+	assert_eq(counts.size(), 1, "only your side counts")
+	assert_eq(int(counts.values()[0]), 2)
+	var lines: Array[String] = TraitKit.gift_report(m)
+	assert_eq(lines.size(), 1)
+	assert_string_contains(lines[0], "Loner x2")
+
+func test_gift_report_counts_species_gifts_too() -> void:
+	var species: String = ""
+	for n: String in Database.spirlings:
+		if BattleRules.TRAITS.has(Database.spirlings[n].trait_id):
+			species = n
+			break
+	assert_ne(species, "")
+	var m := _model(_mon(species))
+	m.reveal_trait(BattleModel.Side.PLAYER)
+	m.reveal_trait(BattleModel.Side.PLAYER)
+	var counts: Dictionary = m.kit.get("gift_counts", {})
+	assert_eq(int(counts.values()[0]), 2, "every working counts, the gift shows once")
+
+func test_battle_report_counts_used_items() -> void:
+	var r := BattleReport.new()
+	r.begin("")
+	r.add(BattleEvent.new(BattleEvent.Type.ITEM_USED, {"side": BattleModel.Side.PLAYER, "item_name": "Max Tonic"}))
+	r.add(BattleEvent.new(BattleEvent.Type.ITEM_USED, {"side": BattleModel.Side.PLAYER, "item_name": "Max Tonic"}))
+	r.add(BattleEvent.new(BattleEvent.Type.HELD_FRUIT, {"side": BattleModel.Side.PLAYER, "item_name": "Ember Pith"}))
+	r.add(BattleEvent.new(BattleEvent.Type.ITEM_USED, {"side": BattleModel.Side.FOE, "item_name": "Max Tonic"}))
+	assert_eq(r.item_line(), "Items used: Max Tonic x2, Ember Pith x1")
+	assert_true(r.lines().has(r.item_line()))
+	r.begin("")
+	assert_eq(r.item_line(), "")
+
+func test_balance_sim_covers_every_keepsake() -> void:
+	var held: Array[String] = BalanceSim.keepsakes()
+	for id: String in TraitKit.keepsakes():
+		assert_true(held.has(id), id)
+
+func test_refill_fruit_takes_the_same_fruit_from_the_bag() -> void:
+	var party_was: Array[Spirling] = GameState.party.duplicate()
+	var inv_was: Dictionary = GameState.inventory.duplicate()
+	var flag_was: Variant = GameState.flags.get(TraitKit.REFILL_FLAG)
+	var me := _mon("Mossling", 20, "pith_mend")
+	var copy := _mon("Mossling", 20, "pith_mend")
+	GameState.party.assign([me])
+	GameState.inventory = {"pith_mend": 1}
+	var m := BattleModel.new([me, copy] as Array[Spirling], [_mon()] as Array[Spirling], true, 3)
+	m.start()
+	me.held = ""
+	copy.held = ""
+	TraitKit.set_refill(false)
+	assert_eq(TraitKit.refill_held(m), [] as Array[String], "off by default")
+	assert_eq(me.held, "")
+	TraitKit.set_refill(true)
+	assert_eq(TraitKit.refill_held(m).size(), 1, "only the real team, not a copy")
+	assert_eq(me.held, "pith_mend")
+	assert_eq(copy.held, "")
+	assert_eq(GameState.item_count("pith_mend"), 0, "taken from the bag")
+	me.held = ""
+	assert_eq(TraitKit.refill_held(m), [] as Array[String], "nothing left in the bag")
+	GameState.party.assign(party_was)
+	GameState.inventory = inv_was
+	if flag_was == null:
+		GameState.flags.erase(TraitKit.REFILL_FLAG)
+	else:
+		GameState.flags[TraitKit.REFILL_FLAG] = flag_was
+
+func test_spirlog_page_shows_gifts_once_bonded() -> void:
+	var sd: SpirlingData = null
+	for n: String in Database.spirlings:
+		var cand: SpirlingData = Database.spirlings[n]
+		if Database.earlier_form(cand) != null and BattleRules.TRAITS.has(cand.trait_id):
+			sd = cand
+			break
+	assert_not_null(sd)
+	var labels: Array[String] = TraitKit.bonus_labels(sd)
+	assert_false(labels.is_empty(), "an unfolded kind has bonus gifts")
+	var seen: String = SpirlogBook.page_text(sd, {sd.species_name: {"seen": true}})
+	assert_false(seen.contains("Bonus gifts: "), "only once bonded")
+	assert_false(seen.contains("Gift: "))
+	var bonded: String = SpirlogBook.page_text(sd, {sd.species_name: {"seen": true, "bonded": true}})
+	assert_string_contains(bonded, "Gift: %s" % BattleRules.TRAITS[sd.trait_id].label)
+	assert_string_contains(bonded, "Bonus gifts: %s" % ", ".join(PackedStringArray(labels)))
+	var first: SpirlingData = Database.earlier_form(sd)
+	while Database.earlier_form(first) != null:
+		first = Database.earlier_form(first)
+	assert_eq(TraitKit.bonus_labels(first), [] as Array[String], "a first form never unfolds")

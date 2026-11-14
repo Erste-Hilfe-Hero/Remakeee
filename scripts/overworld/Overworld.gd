@@ -3942,6 +3942,10 @@ func echo_duel(d: Dictionary) -> void:
 		await say(["The echo flickers and fades. Try again later."] as Array[String])
 		return
 	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), ring]] as Array[String])
+	# The duel rules for keepsakes: locked ones and doubles stay home (KAMPF_PLAN_1000 293, 315).
+	var rule_lines: Array[String] = TraitKit.apply_duel_rules(mine)
+	rule_lines.append_array(TraitKit.apply_duel_rules(foes))
+	await say(rule_lines)
 	# The challenger picks the field (KAMPF_PLAN_1000); the place's own field does not count.
 	var fm := MenuHost.new()
 	_ui.add_child(fm)
@@ -4245,6 +4249,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	ChallengeRules.note_result(outcome == BattleModel.Outcome.WIN, _warden_battle)
+	Lexicon.note_foes(GameState.records, model.parties[1])
 	for id: String in GrowthRules.after_battle(GameState.records, map.region, model.growth_total, model.bench_growth) + WildRules.after_battle(GameState.records, model):
 		toast.show_note(Loc.t("New lexicon entry: %s") % Loc.t(Lexicon.title(id)))
 	# Who got how much growth (KAMPF_PLAN "XP-Verteilung im Kampfende-Bericht").
@@ -4252,6 +4257,9 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	if not grown.is_empty():
 		toast.show_note(grown, null, "")
 	Kinship.after_battle(GameState.party, model.participants, outcome == BattleModel.Outcome.WIN)
+	# "Refill fruit" puts a used-up held fruit back from the bag (KAMPF_PLAN_1000 item 297).
+	for line: String in TraitKit.refill_held(model):
+		toast.show_note(line, null, "")
 	var had_growth: bool = ShopEffects.boost_left("growth") > 0
 	ShopEffects.battle_done()
 	# What is left of the shop boosts, right after the battle (item 4342).

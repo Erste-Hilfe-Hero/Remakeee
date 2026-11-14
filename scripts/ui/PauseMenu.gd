@@ -517,7 +517,9 @@ func run_lexicon() -> void:
 	var ids: Array[String] = Lexicon.collected(GameState.records)
 	# The first page counts the bonus goals met per map (item 767).
 	# The second page is the Wayfarer book: rankings and the lantern post (KAMPF plan 529-542).
-	var titles: Array[String] = [Loc.t("Bonus goals"), Loc.t("Wayfarer book")]
+	# The third page lists the matchups seen in battle (KAMPF_PLAN_1000 items 81, 83).
+	# The fourth page lists the foes' values from past battles (KAMPF_PLAN_1000 item 215).
+	var titles: Array[String] = [Loc.t("Bonus goals"), Loc.t("Wayfarer book"), Loc.t("Matchups seen"), Loc.t("Foe values")]
 	for id: String in ids:
 		titles.append(Lexicon.title(id))
 	while true:
@@ -528,10 +530,14 @@ func run_lexicon() -> void:
 			await info(BattleGoals.lexicon_text(GameState.records))
 		elif i == 1:
 			await info(WayfarerBook.page(DailyFind.today_key()))
+		elif i == 2:
+			await info("\n".join(TechniqueRules.matchup_lines(GameState.known_matchups)))
+		elif i == 3:
+			await info("\n".join(Lexicon.foe_lines(GameState.records)))
 		else:
-			var page: String = Loc.t(Lexicon.text(ids[i - 2]))
+			var page: String = Loc.t(Lexicon.text(ids[i - 4]))
 			# The bond page carries the live counts (KAMPF_PLAN "Bond-Statistik im Lexikon").
-			if ids[i - 2] == WildRules.BOND_LEXICON:
+			if ids[i - 4] == WildRules.BOND_LEXICON:
 				page += "\n\n" + "\n".join(WildRules.bond_lines(GameState.records))
 			await info(page)
 
@@ -547,9 +553,18 @@ func run_rules_book() -> void:
 func run_battle_guide() -> void:
 	var lead: Spirling = GameState.party[0] if not GameState.party.is_empty() else null
 	while true:
-		var i: int = await pick_strings(Loc.t("Battle guide"), BattleGuide.titles())
+		var titles: Array[String] = BattleGuide.titles()
+		if not GameState.party.is_empty():
+			titles.append(Loc.t("Copy team values"))
+		var i: int = await pick_strings(Loc.t("Battle guide"), titles)
 		if i < 0:
 			return
+		if i >= BattleGuide.PAGES.size():
+			# Values export for fans (item 235): the text goes to the clipboard and is shown.
+			var text: String = BattleGuide.team_values(GameState.party)
+			DisplayServer.clipboard_set(text)
+			await info(text + "\n\n" + Loc.t("Copied to the clipboard."))
+			continue
 		await info(BattleGuide.page(i, lead))
 
 ## Vows (plan 3406-3408): take one before the first Rift is mended, give one up at any time.
@@ -1286,7 +1301,7 @@ func _teach_echo(id: String) -> void:
 		return
 	var forget: int = -1
 	if s.moves.size() >= Spirling.MAX_MOVES:
-		forget = await pick("Forget which art for %s?" % mv.move_name, art_rows(s.moves))
+		forget = await pick("Forget which art for %s?" % mv.move_name, swap_rows(s.moves, mv))
 		if forget < 0:
 			return
 	if not GameState.learn_from_item(s, id, forget):
@@ -1302,6 +1317,19 @@ static func echo_reason(s: Spirling, item_id: String) -> String:
 	if mv != null and s.moves.has(mv):
 		return "Already knows this art."
 	return "Wrong element."
+
+## Swap preview (KAMPF_PLAN_1000 item 140): the known arts as rows, each with the old and the new
+## art side by side in the line below (element, power and Energy, old > new).
+static func swap_rows(moves: Array[MoveData], new_mv: MoveData) -> Array[Dictionary]:
+	if new_mv == null:
+		return art_rows(moves)
+	var out: Array[Dictionary] = []
+	var np: String = "-" if new_mv.power <= 0 else str(new_mv.power)
+	for m: MoveData in moves:
+		var power: String = "-" if m.power <= 0 else str(m.power)
+		out.append({"text": m.move_name, "hint": "%s > %s  %s  %s" % [Loc.t(Elements.element_name(m.element)), Loc.t(Elements.element_name(new_mv.element)),
+			Loc.t("Power %s > %s") % [power, np], Loc.t("Energy %d > %d") % [m.energy_cost, new_mv.energy_cost]]})
+	return out
 
 ## Known arts as rows: the name, and element, power and energy in the line below (item 1923).
 static func art_rows(moves: Array[MoveData]) -> Array[Dictionary]:
@@ -1326,7 +1354,7 @@ func _relearn(s: Spirling) -> void:
 		return
 	var forget: int = -1
 	if s.moves.size() >= Spirling.MAX_MOVES:
-		forget = await pick(Loc.t("Forget which art for %s?") % shown[pick], art_rows(s.moves))
+		forget = await pick(Loc.t("Forget which art for %s?") % shown[pick], swap_rows(s.moves, Database.move(names[pick])))
 		if forget < 0:
 			return
 	if GameState.relearn(s, names[pick], forget):

@@ -154,6 +154,9 @@ func show_tab(i: int, sound: bool = true) -> void:
 			# The card already carries name, Ring and elements; the text starts under them.
 			var text: String = EraMenus.summary_section(spirling, sec, leader)
 			_add_line(text.substr(text.find("\n", text.find("\n") + 1 if sec == "info" else 0) + 1))
+			if sec == "stats":
+				# The values as a radar and the Spark values as bars (items 209, 230).
+				_body.add_child(ValueChart.make(spirling))
 	_scroll.scroll_vertical = 0
 	# Era V: the page slides in from the side it was turned to.
 	if str(lay.get("anim", "none")) == "slide" and sound and not Juice.reduced():

@@ -182,3 +182,47 @@ func test_value_curve_grows_with_the_ring() -> void:
 	for i: int in range(1, c.size()):
 		assert_gt(c[i], c[i - 1])
 	assert_eq(c[1], BattleGuide.value(s, "atk"), "ring 30 on the curve is today's value")
+
+func test_value_chart_measures_values_and_sparks() -> void:
+	var s: Spirling = BattleFixtures.make("Kindlop", 30)
+	s.spark["atk"] = 6
+	var sh: Array[float] = ValueChart.shares(s)
+	assert_eq(sh.size(), 5)
+	for v: float in sh:
+		assert_true(v > 0.0 and v <= 1.0)
+	assert_almost_eq(ValueChart.spark_shares(s)[1], 0.5, 0.0001)
+	var pts: PackedVector2Array = ValueChart.radar_points([1.0, 1.0, 1.0, 1.0, 1.0] as Array[float], Vector2(20, 20), 10.0)
+	assert_eq(pts[0], Vector2(20, 10), "the first corner points up")
+	assert_eq(ValueChart.radar_points([0.0, 0.0, 0.0, 0.0, 0.0] as Array[float], Vector2(20, 20), 10.0)[3], Vector2(20, 20))
+	assert_string_contains(ValueChart.describe(s), "Spark 6 of 12")
+	var c: ValueChart = ValueChart.make(s)
+	assert_gt(c.custom_minimum_size.x, 0.0)
+	c.free()
+
+func test_team_values_export() -> void:
+	var a: Spirling = BattleFixtures.make("Kindlop", 30)
+	var b: Spirling = BattleFixtures.make("Mossling", 12)
+	var text: String = BattleGuide.team_values([a, b])
+	var lines: PackedStringArray = text.split("\n")
+	assert_eq(lines.size(), 3)
+	assert_string_contains(lines[1], "Kindlop R30")
+	assert_string_contains(lines[1], "MGT %d" % a.atk())
+	assert_string_contains(lines[2], "Mossling R12")
+
+func test_foe_values_go_into_the_lexicon() -> void:
+	var rec: Dictionary = {}
+	assert_eq(Lexicon.foe_lines(rec).size(), 1, "a hint while nothing is noted")
+	var low: Spirling = BattleFixtures.make("Kindlop", 12)
+	var high: Spirling = BattleFixtures.make("Kindlop", 30)
+	var moss: Spirling = BattleFixtures.make("Mossling", 8)
+	Lexicon.note_foes(rec, [high, moss])
+	Lexicon.note_foes(rec, [low])
+	var book: Dictionary = rec[Lexicon.FOE_VALUES]
+	assert_eq(int(book["Kindlop"].level), 30, "the highest Ring stays")
+	assert_eq(int(book["Kindlop"].atk), high.atk())
+	assert_eq(int(book["Mossling"].hp), moss.max_hp())
+	var lines: Array[String] = Lexicon.foe_lines(rec)
+	assert_eq(lines.size(), 2)
+	assert_string_contains(lines[0], "Kindlop Ring 30")
+	assert_string_contains(lines[0], "MGT %d" % high.atk())
+	assert_string_contains(lines[1], "Mossling Ring 8")
