@@ -597,7 +597,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 523. [x] Wayfarer mit Feld-Strategie (Resonanz-Techniken) (tactic field: Zündmädchen Senna, Geschworene Wick; field_w 2.0)
 524. [x] Wayfarer mit Status-Strategie (tactic status: Geschworene Mattie und Clem; status_w 1.6, Status zuerst)
 525. [x] Wayfarer mit Stufen-Strategie (tactic stages: Wiegemeister Tolliver, Geschworener Dunstan; setup_w 1.6)
-526. [ ] Wayfarer mit Mehrfachkampf-Strategie
+526. [x] Wayfarer mit Mehrfachkampf-Strategie (Karrenschieber Grim in den Schlackentunneln: 2 gegen 2, jeder Spirling mit einer Technik gegen alle Gegner (Landslip, Grand Farce), KI-Profil sweeper mit spread_w; TrainerData.strategy_problems prüft es)
 527. [x] Wayfarer-Dialog vor/nach dem Kampf (bestehend: intro und defeat in den Wayfarer-Daten)
 528. [x] Wayfarer-Rückkämpfe (bestehend) (bestehend: TrainerData.can_rematch)
 529. [x] Wayfarer-Telefonbuch-Ersatz: Laternenpost-Einladungen (WayfarerBook.invitations, Zeile an Rastquellen und im Wandererbuch)
@@ -606,7 +606,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 532. [x] Wayfarer-Teamgröße bis 5 (Team 5 fix) (bestehend: GameState.MAX_PARTY, TrainerData.RIFT_BORN_MAX_TEAM)
 533. [x] Wayfarer-Level an Level-Cap gebunden (bestehend: TrainerData.build_team mit ring_cap + FOE_OVER_CAP)
 534. [x] Wayfarer mit gehaltenen Gegenständen auf Veteran (bestehend: TrainerData.keeps_keepsakes ab Veteran)
-535. [ ] Wayfarer-Teams prüfen auf Dopplungen
+535. [x] Wayfarer-Teams prüfen auf Dopplungen (TrainerData.repeated_species im WorldValidator und test_kampf_k36: keine Art doppelt, ausser "twins" (Bram, Isa, Oda, Kettle-Brüder), wilden Horden und einer Extra-Kopie ab Tamer; Rasmus und fünf Rift-Born-Teams bekamen eine andere Art)
 536. [x] Wayfarer-Sprites eigenständig (bestehend: eigene Kunst laut LEGAL.md, ip_check prüft Metadaten)
 537. [x] Wayfarer-Namen eigenständig (bestehend: tools/ip_check.sh)
 538. [x] Wayfarer-Klassen eigenständig (keine bekannten Klassen übernehmen) (bestehend: tools/ip_check.sh)
@@ -629,8 +629,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 555. [x] Wayfarer-Texte übersetzt (bestehend: test_i18n)
 556. [x] Wayfarer-Teams pro Schwierigkeit (bestehend: teams_by_difficulty)
 557. [x] Wayfarer-Geld-Belohnungen balancieren (Test: Rematch < Wayfarer < Warden pro Ring, Standardpreis steigt mit dem Ring, auf jeder Karte zahlt kein Wayfarer mehr als der Warden)
-558. [ ] Wayfarer mit Overcharge-Strategie
-559. [ ] Wayfarer mit Bond-Lehre (Tutorial)
+558. [x] Wayfarer mit Overcharge-Strategie (Krater-Schürferin Thea: All-In Crash fest, Rift-Splitter ab Veteran, KI-Profil surger spart Energie und wertet den vollen Overcharge-Treffer)
+559. [x] Wayfarer mit Bond-Lehre (Tutorial) (Wanderer Wren im Gloamwood: nach dem Sieg zwei Bond-Lektionen, Ziel bond_ready/foe_status: schwächen, Status setzen, nicht besiegen; data/lessons.json)
 560. [x] Wayfarer-Kampfmusik pro Gebiet (Eigene synthetisierte Kampfmusik fuer Kartenwayfarer pro Gebiet (battle_wf_<region>, je ca. 28 KB, data/music.json wayfarer); nur in der Aera des Gebiets, nach Warden-, Herausforderungs-, Fest- und Nacht-Themen (BattleAudio.theme))
 
 ## Info und Transparenz
@@ -904,7 +904,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 809. [x] Überlebens-Modus (keine Heilung) (Kampfhallen: Lange Nacht, zwölf Runden ohne Heilung)
 810. [x] Zeitangriff (HallTimes.gd: Bestzeiten je Halle, auch für die Kampfhallen)
 811. [x] Puzzle-Kämpfe (Sieg in einem Zug) (BattlePuzzle.gd: Prüfungen mit Ziel und Zuglimit)
-812. [ ] Lehr-Kämpfe (Tutorial-Rätsel)
+812. [x] Lehr-Kämpfe (Tutorial-Rätsel) (data/lessons.json + BattlePuzzle.for_teacher: Pfadhüterin Imme lehrt Matchups, Rast und Overcharge als feste Rätsel, Overworld.offer_lessons)
 813. [x] Herausforderungs-Kämpfe gegen Warden-Echos (EchoTower Warden-Stockwerke, WardenRematch, Meister-Risse)
 814. [x] Prisma-Boss-Kämpfe (Kampfhallen: Prisma-Herz, ein Prisma-Rissherz pro Woche)
 815. [x] Endgame-Belohnungen (Wegmarken pro Halle und Woche, Titel, Geschichten, Ruhmeshalle)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-932 von 1000 Punkten umgesetzt.
+937 von 1000 Punkten umgesetzt.
 

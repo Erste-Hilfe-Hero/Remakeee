@@ -874,7 +874,7 @@ func _on_interact(cell: Vector2i) -> void:
 		await n.turn_toward(player.cell)
 		if _is_active_trainer(n):
 			await challenge(n, false)
-		elif not await offer_warden_rematch(n) and not await offer_second_trial(n) and not await offer_rematch(n) and not await offer_trials(n):
+		elif not await offer_warden_rematch(n) and not await offer_second_trial(n) and not await offer_lessons(n) and not await offer_rematch(n) and not await offer_trials(n):
 			await run_dialogue(n.dialogue_ref, n)
 		return
 	var s: Dictionary = map.sign_at(cell, GameState.flags)
@@ -3748,6 +3748,36 @@ func offer_trials(n: NPC) -> bool:
 		busy = false
 		return idx < 0
 	await _play_trial(trials[idx], str(def.warden))
+	return true
+
+## A beaten Wayfarer with a "lessons" group teaches its lesson battles (KAMPF_PLAN_1000 items 559,
+## 812): Trials with borrowed Spirlings, no rings, no rewards. Leaving the menu returns false, so
+## the rematch offer and the usual talk still follow.
+func offer_lessons(n: NPC) -> bool:
+	var def: Dictionary = n.definition
+	if not def.has("lessons") or not TrainerData.is_beaten(def, map.id, GameState.flags):
+		return false
+	var list: Array[Dictionary] = BattlePuzzle.for_teacher(str(def.lessons))
+	if list.is_empty():
+		return false
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	var entries: Array[Dictionary] = []
+	for p: Dictionary in list:
+		var got: int = BattlePuzzle.best_lanterns(GameState.records, str(p.id))
+		var mark: String = (" " + Loc.t("Lanterns %d/%d") % [got, BattlePuzzle.MAX_LANTERNS]) if got > 0 else ""
+		entries.append({"text": Loc.t(str(p.get("name", p.id))) + mark, "hint": Loc.t(str(p.get("text", "")))})
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var idx: int = await menu.pick(Loc.t(BattlePuzzle.teacher_title(str(def.lessons))), entries, true)
+	menu.queue_free()
+	if idx < 0 or idx >= list.size():
+		VirtualPad.set_wanted(true)
+		player.frozen = false
+		busy = false
+		return false
+	await _play_trial(list[idx], "")
 	return true
 
 ## Plays one Trial until it is solved or the player stops (items 707, 708, 710, 712). "Restart"
