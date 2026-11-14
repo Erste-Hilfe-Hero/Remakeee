@@ -29,6 +29,11 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		snap["rest_heal"] = model.rest_heal_share
 	if model.ambush:
 		snap["ambush"] = true
+	# The swap offer and the foe's announcement (KAMPF_PLAN_1000 items 9, 10).
+	if model.shift_offer:
+		snap["shift_offer"] = true
+	if model.foe_announce:
+		snap["foe_announce"] = true
 	return snap
 
 static func _snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
@@ -209,6 +214,8 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.round_limit = maxi(0, int(snap.get("round_limit", 0)))
 	m.rest_heal_share = clampf(float(snap.get("rest_heal", 0.0)), 0.0, BattleModel.STORY_REST_HEAL)
 	m.ambush = bool(snap.get("ambush", false)) and m.is_wild
+	m.shift_offer = bool(snap.get("shift_offer", false)) and not m.is_wild
+	m.foe_announce = bool(snap.get("foe_announce", false)) and not m.is_wild
 	if not partner.is_empty():
 		var ally: Array[Spirling] = _rebuild(partner.get("team", []))
 		if ally.size() != (partner.get("team", []) as Array).size():
@@ -249,6 +256,25 @@ static func action_from_dict(d: Dictionary) -> BattleAction:
 static func switch_to_dict(index: int) -> Dictionary:
 	return {"t": "switch", "i": index}
 
+## Giving up (KAMPF_PLAN_1000 item 8) and the answer to the swap offer (item 9, -1 stays).
+static func forfeit_to_dict() -> Dictionary:
+	return {"t": "forfeit"}
+
+static func shift_to_dict(index: int) -> Dictionary:
+	return {"t": "shift", "i": index}
+
+## Plays a "forfeit" or "shift" input on [param m] and returns its events; null for any other
+## input. A "shift" outside the swap offer is skipped (an empty list).
+static func play_extra(m: BattleModel, d: Dictionary) -> Variant:
+	match str(d.get("t", "")):
+		"forfeit":
+			return m.forfeit()
+		"shift":
+			if not m.needs_shift_choice():
+				return [] as Array[BattleEvent]
+			return m.submit_shift(int(d.get("i", -1)))
+	return null
+
 ## Plays [param snap] to the end without a screen. Returns the outcome (used by tests).
 static func simulate(snap: Dictionary) -> BattleModel.Outcome:
 	var m: BattleModel = run(snap)
@@ -265,6 +291,8 @@ static func run(snap: Dictionary) -> BattleModel:
 		if m.is_finished():
 			break
 		var d: Dictionary = v
+		if play_extra(m, d) != null:
+			continue
 		if str(d.get("t", "")) == "switch":
 			m.submit_switch(int(d.get("i", 0)))
 		elif str(d.get("t", "")) == "turns":

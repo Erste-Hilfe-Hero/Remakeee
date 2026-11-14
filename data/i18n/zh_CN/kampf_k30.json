@@ -1,0 +1,10 @@
+{
+ "_comment": "Simplified Chinese texts for the German table kampf_k30. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "Acting order %s": "行动顺序 %s",
+  "Auto aim: %s": "自动瞄准：%s",
+  "Fight two on two, with another friend's echo beside you?": "要和另一位好友的回声并肩，进行二对二对战吗？",
+  "That field cannot be picked.": "无法选择这个场地。",
+  "foe %s": "敌方%s"
+ }
+}

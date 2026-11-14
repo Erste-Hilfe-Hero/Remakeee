@@ -1,0 +1,12 @@
+{
+ "_doc": "Numbers for the foe AI items of docs/KAMPF_PLAN_1000.md (area Gegner-KI, 445-477), read by BattleAI.rules_data(). plan_turns: how many turns ahead a Rift-Born foe saves Energy for a bigger art (445; a profile's plan_energy sets it for lower tiers), each extra turn multiplies the needed margin by plan_turn_margin. predict_*: a Rift-Born foe that hits your front Spirling at least predict_min_eff guesses you swap to the Spirling you already showed that takes that art below predict_resist_eff (447), and weighs that guess by predict_weight. field_*: a tier 2+ foe whose every damaging art the field weakens swaps to a healthy ally (at least field_swap_hp) while the field lasts at least field_min_turns more turns, or is the place's own (470). budget_ms: most time one AI decision may take on a phone; desktop_factor: how much faster the CI machine is assumed to be (466).",
+ "plan_turns": 2,
+ "plan_turn_margin": 1.25,
+ "predict_min_eff": 2.0,
+ "predict_resist_eff": 1.0,
+ "predict_weight": 0.5,
+ "field_min_turns": 2,
+ "field_swap_hp": 0.5,
+ "budget_ms": 5.0,
+ "desktop_factor": 2.5
+}

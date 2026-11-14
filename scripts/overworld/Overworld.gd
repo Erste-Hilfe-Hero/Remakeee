@@ -2723,6 +2723,10 @@ func _action_postgame_board(_args: PackedStringArray, _speaker: NPC) -> void:
 	# Battle halls (KAMPF_PLAN_1000, endgame modes): scripts/overworld/HallRunner.gd.
 	ways.append(Loc.t("Battle halls"))
 	kinds.append("halls")
+	# Rift heart echoes and the heart rush (KAMPF_PLAN_1000 items 417, 418): BossRunner.gd.
+	if not BossRunner.board_line().is_empty():
+		ways.append(BossRunner.board_line())
+		kinds.append("hearts")
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	var way: int = await menu.pick_strings(Loc.t("The board"), ways)
@@ -2744,6 +2748,8 @@ func _action_postgame_board(_args: PackedStringArray, _speaker: NPC) -> void:
 			await _run_final_exam()
 		"halls":
 			await HallRunner.open(self)
+		"hearts":
+			await BossRunner.open(self)
 
 ## One timed battle for a hall; books the time on a win and says a new best.
 func _timed_battle(hall: String, foes: Array[Spirling], info: Dictionary) -> BattleModel.Outcome:
@@ -3670,6 +3676,9 @@ func after_tamer_win(n: NPC) -> void:
 	var lore: String = str(def.get("lexicon", BossRules.LEXICON.get(str(def.get("boss", "")), "")))
 	if def.has("boss") and last_model != null:
 		BossRules.note_win(GameState.records, str(def.boss), last_model.turn)
+		# The heart's spoils follow the difficulty (item 415).
+		for it: Variant in BossHall.reward_items(GameState.difficulty):
+			await _action_give_item(PackedStringArray([str(it[0]), str(it[1])]), null)
 		# The fastest win against each boss is kept to watch again (item 440).
 		if BossRules.keep_replay(GameState.records, str(def.boss), last_model.turn, GameState.records.get("last_battle", {})):
 			toast.show_note(Loc.t("Kept in your boss replays (Records)."))
@@ -3986,13 +3995,13 @@ static func _dir_name(d: Vector2i) -> String:
 
 ## Asks whether to bring a friend's echo, lets the player pick one and builds the team.
 ## Returns {"code", "name", "partner": {...}} or {} (no friends with teams, offline, or no).
-func pick_echo_partner(question: String) -> Dictionary:
+func pick_echo_partner(question: String, skip_code: String = "") -> Dictionary:
 	if not Online.is_online() or not Online.social_on():
 		return {}
 	var r: Dictionary = await Online.call_fn("friends_list")
 	if not r.ok or not r.data is Dictionary:
 		return {}
-	var with_team: Array = (r.data.get("friends", []) as Array).filter(func(f: Dictionary) -> bool: return bool(f.get("has_team", false)))
+	var with_team: Array = (r.data.get("friends", []) as Array).filter(func(f: Dictionary) -> bool: return bool(f.get("has_team", false)) and str(f.get("code", "")) != skip_code)
 	if with_team.is_empty():
 		return {}
 	var menu := MenuHost.new()
@@ -4045,11 +4054,18 @@ func echo_duel(d: Dictionary) -> void:
 	_ui.add_child(fm)
 	var fi: int = await fm.pick_strings(Loc.t("Which field?"), EchoTeam.field_names())
 	fm.queue_free()
-	busy = false
 	# The rule of the week holds in echo duels too, the same for everyone (KAMPF_PLAN_1000).
-	var outcome: BattleModel.Outcome = await start_battle(foes, false,
-		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
-			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi), "theme": "duel"})
+	var info: Dictionary = {"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true,
+			"variants": BattleHalls.variants_for(WeeklyChallenge.this_week()), "field": EchoTeam.duel_field(fi), "theme": "duel",
+			TurnFlow.CLOCK_META: TurnFlow.echo_seconds()}
+	# Two on two with a second friend's echo beside you (KAMPF_PLAN_1000 375).
+	var helper: Dictionary = await pick_echo_partner("Fight two on two, with another friend's echo beside you?", str(d.get("code", "")))
+	if not helper.is_empty():
+		info["partner"] = EchoTeam.duel_partner(helper.partner, ring)
+		await say(TraitKit.apply_duel_rules(info.partner.echo))
+		info["front"] = EchoTeam.DOUBLE_FRONT
+	busy = false
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, info)
 	busy = true
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN
@@ -4171,6 +4187,9 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	# A league battle comes ready-made from the server's seed and teams (plan area 7).
 	var preset: Variant = trainer.get("model")
 	var model: BattleModel = preset if preset is BattleModel else _new_model(foes, wild, trainer)
+	# Friendly and server-checked battles cannot be given up (KAMPF_PLAN_1000 item 8).
+	if bool(trainer.get("friendly", false)):
+		model.set_meta(TurnFlow.NO_FORFEIT_META, true)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
 	# A worn shop backdrop (item 4281) replaces the place's own, never a fixed one.
@@ -4338,6 +4357,13 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	# Scorch, Root and Jolt stay on after a world battle, except on Story (KAMPF_PLAN item 179).
 	model.keep_status = world and not bool(trainer.get("practice", false)) and not d in StatusRules.CLEARS_AFTER_BATTLE
 	model.ambush = wild and bool(trainer.get("ambush", false))
+	# 1v1 Wayfarer battles: swap offer and the foe's announcement (KAMPF_PLAN_1000 items 9, 10);
+	# echo duels: a clock per turn (item 6).
+	var story_foe: bool = not wild and not bool(trainer.get("friendly", false))
+	model.shift_offer = story_foe and TurnFlow.shift_on()
+	model.foe_announce = story_foe and TurnFlow.announce_on()
+	if trainer.has(TurnFlow.CLOCK_META):
+		model.set_meta(TurnFlow.CLOCK_META, int(trainer[TurnFlow.CLOCK_META]))
 	# The end report: damage, knock-outs, best Spirling, Energy, seed (KAMPF_PLAN items 20, 76).
 	model.set_meta("summary", BattleSummary.new(model))
 	# A boss fight ends after BOSS_ROUND_LIMIT turns: the Rift closes again (item 21).
@@ -4352,6 +4378,9 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	var front: Array = trainer.get("front", [1, 1])
 	model.front_size = [int(front[0]), int(front[1])]
 	model.foe_boss = str(trainer.get("boss", ""))
+	# A Rift heart's purse follows the difficulty (item 415, BossHall.money_mult).
+	if not model.foe_boss.is_empty():
+		model.prize_money = int(model.prize_money * BossHall.money_mult(GameState.difficulty))
 	model.foe_formation = bool(trainer.get("formation", false))
 	var goal_key: String = str(trainer.get("goal_key", ""))
 	var goal: Dictionary = BattleGoals.all().get(goal_key, {}) if not goal_key.is_empty() and GameState.bonus_goals else {}

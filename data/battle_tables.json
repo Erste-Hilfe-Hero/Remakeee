@@ -426,6 +426,10 @@
      "foc": 1
     },
     "field": "high_tide",
+    "guard": {
+     "species": "Kelpup",
+     "below": 2
+    },
     "text": "The Drowned Heart pulls the tide around itself!"
    }
   },

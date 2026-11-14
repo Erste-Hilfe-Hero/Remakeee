@@ -292,6 +292,20 @@ func _build() -> void:
 		else:
 			_target_picked.emit(-1))
 	_field.add_child(_back_button)
+	_rest_all_button = Button.new()
+	_rest_all_button.text = "All rest"
+	_rest_all_button.focus_mode = Control.FOCUS_NONE
+	_rest_all_button.visible = false
+	_rest_all_button.pressed.connect(func() -> void:
+		Sound.sfx("confirm")
+		_menu.chosen.emit(BattleAction.Kind.REST, TurnFlow.ALL_REST))
+	_field.add_child(_rest_all_button)
+	_clock = Timer.new()
+	_clock.wait_time = 1.0
+	# Autostart: _build may run before the scene is in the tree.
+	_clock.autostart = true
+	_clock.timeout.connect(_on_clock)
+	add_child(_clock)
 
 	_bond_game = BondMinigame.new()
 	_bond_game.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -480,6 +494,8 @@ func _layout_formation() -> void:
 	_goal_label.position = Vector2(w - 26 - MARGIN, MARGIN + 42)
 	_back_button.position = Vector2(MARGIN, MARGIN + STRIP_HEIGHT + 10)
 	_back_button.size = Vector2(26, 12)
+	_rest_all_button.position = Vector2(MARGIN, MARGIN + STRIP_HEIGHT + 24)
+	_rest_all_button.size = Vector2(0, 12)
 	var rects: Array[Rect2] = [Rect2(), Rect2()]
 	var tag_hs: Array[float] = [0.0, 0.0]
 	for side: int in 2:
@@ -598,6 +614,19 @@ static func drop_to_floor(foes: Array[Rect2], feet_y: float, limit_y: float) -> 
 	for r: Rect2 in foes:
 		out.append(Rect2(r.position + Vector2(0, by), r.size))
 	return out
+
+## A gift worked for the first time (KAMPF_PLAN_1000 items 241, 263): its mark joins the plate.
+func _show_gift(e: BattleEvent) -> void:
+	var side: int = int(e.data.get("side", 0))
+	var index: int = int(e.data.get("index", -1))
+	if index < 0 or index >= model.party(side).size():
+		return
+	var s: Spirling = model.party(side)[index]
+	TraitKit.mark_seen(s, str(e.data.get("trait", "")))
+	# One-on-one: the side's plate. Formation: the ledger plate while it shows this Spirling.
+	var st: Variant = _foe_strip if _multi else _strip(side)
+	if st is InfoStrip and (st as InfoStrip).spirling_name == s.display_name():
+		(st as InfoStrip).set_gifts(TraitKit.seen_ids(s))
 
 ## Shows [param side]/[param slot]'s details in the ledger strip (formation layout).
 func _focus(side: int, slot: int) -> void:
@@ -718,12 +747,19 @@ func _run() -> void:
 				continue
 			var rec: Dictionary = replay_inputs.pop_front()
 			await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
+			var extra: Variant = BattleReplay.play_extra(model, rec)
+			if extra != null:
+				await _play(extra)
+				continue
 			if str(rec.get("t", "")) == "switch":
 				await _play(model.submit_switch(int(rec.get("i", 0))))
 			elif str(rec.get("t", "")) == "turns":
 				await _play(model.submit_actions(BattleReplay.actions_from_dict(rec)))
 			else:
 				await _play(model.submit_turn(BattleReplay.action_from_dict(rec)))
+			continue
+		if model.needs_shift_choice():
+			await _offer_shift()
 			continue
 		if model.needs_player_switch():
 			_point_pin(BattleModel.Side.PLAYER, model.switch_slot(), false)
@@ -732,8 +768,12 @@ func _run() -> void:
 			inputs.append(BattleReplay.switch_to_dict(idx))
 			await _play(model.submit_switch(idx))
 			continue
+		_start_clock()
 		if _multi:
 			var actions: Array[BattleAction] = await _choose_actions()
+			_turn_deadline = 0
+			if model.is_finished():
+				break
 			if _puzzle_restart(actions.back() if not actions.is_empty() else null):
 				break
 			inputs.append(BattleReplay.actions_to_dict(actions))
@@ -743,6 +783,7 @@ func _run() -> void:
 		var action: BattleAction = await _choose_action()
 		if action == null:
 			continue
+		_turn_deadline = 0
 		if _puzzle_restart(action):
 			break
 		inputs.append(BattleReplay.action_to_dict(action))
@@ -775,7 +816,15 @@ func _choose_actions() -> Array[BattleAction]:
 		# From the second Spirling on, Back takes the order before back (item 604).
 		_menu.undo_ok = i > 0
 		_undo_asked = false
+		_rest_others = false
 		var a: BattleAction = await _choose_action(int(slots[i]), taken)
+		if model.is_finished():
+			break
+		# The clock ran out or "All rest" was picked: everyone without orders rests (items 6, 12).
+		if _rest_others:
+			out.append(a)
+			out = TurnFlow.fill_rest(model, out)
+			break
 		if _undo_asked:
 			if BattleComfort.undo(out, taken):
 				i -= 1
@@ -793,9 +842,56 @@ func _choose_actions() -> Array[BattleAction]:
 	return out
 
 var _undo_asked: bool = false
+var _rest_others: bool = false
+
+# --- Turn clock, giving up, swap offer, All rest (KAMPF_PLAN_1000 items 6, 8, 9, 12) ---------
+
+## Time.get_ticks_msec() when this turn's orders run out (echo duels), 0 without a clock.
+var _turn_deadline: int = 0
+var _waiting_orders: bool = false
+var _clock: Timer
+var _rest_all_button: Button
+
+## Starts the clock once per turn: backing out of a choice does not wind it up again.
+func _start_clock() -> void:
+	if _turn_deadline > 0:
+		return
+	_turn_deadline = Time.get_ticks_msec() + int(model.get_meta(TurnFlow.CLOCK_META)) * 1000 if model.has_meta(TurnFlow.CLOCK_META) else 0
+
+func _clock_left() -> int:
+	return TurnFlow.seconds_left(_turn_deadline, Time.get_ticks_msec())
+
+func _on_clock() -> void:
+	if _turn_deadline <= 0 or not _waiting_orders:
+		return
+	var left: int = _clock_left()
+	if left <= 0:
+		_menu.chosen.emit(BattleAction.Kind.REST, TurnFlow.TIMED_OUT)
+	elif TurnFlow.warn_now(left):
+		_text.show_prompt("%d s left, then everyone without orders rests." % left)
+
+## The foe named its next Spirling (item 9): swap first or stay.
+func _offer_shift() -> void:
+	var idx: int = -1
+	if not _auto_active():
+		var next: Spirling = model.party(BattleModel.Side.FOE)[model.shift_next]
+		if await _picker.pick(TurnFlow.shift_question(next.display_name()), [{"text": "Swap"}, {"text": "Stay"}] as Array[Dictionary], false) == 0:
+			idx = await _pick_party("Swap to?", true, 0)
+	inputs.append(BattleReplay.shift_to_dict(idx))
+	await _play(model.submit_shift(idx))
+
+## Giving up a Wayfarer battle (item 8), after a yes. It counts as a loss.
+func _ask_forfeit() -> void:
+	if await _picker.pick("Give up? It counts as a loss.", [{"text": "Give up"}, {"text": "Fight on"}] as Array[Dictionary]) != 0:
+		return
+	inputs.append(BattleReplay.forfeit_to_dict())
+	await _play(model.forfeit())
 
 func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER, slot)
+	if _turn_deadline > 0 and _clock_left() <= 0:
+		_rest_others = true
+		return BattleAction.make_rest(BattleModel.Side.PLAYER, slot)
 	_focus(BattleModel.Side.PLAYER, slot)
 	_point_pin(BattleModel.Side.PLAYER, slot, false)
 	if _auto_active():
@@ -803,20 +899,36 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 		await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
 		if _auto_active():
 			return _auto_ai.choose(model, BattleModel.Side.PLAYER, slot)
-	_text.show_prompt("Orders for %s? (%d Energy)" % [me.display_name(), me.energy])
+	# In a multi battle the acting order by Pace stands under the orders (KAMPF_PLAN_1000 389).
+	var pace: String = MultiRules.pace_line(model) if _multi else ""
+	var pace_tail: String = "\n" + pace if not pace.is_empty() else ""
+	if _turn_deadline > 0:
+		_text.show_prompt("Orders for %s? (%d Energy, %d s)" % [me.display_name(), me.energy, _clock_left()] + pace_tail)
+	else:
+		_text.show_prompt("Orders for %s? (%d Energy)" % [me.display_name(), me.energy] + pace_tail)
+	# One-hand mode: the battle's lists sit low, Back on the thumb's side (item 396).
+	_picker.set_one_hand(GameState.one_hand, GameState.left_handed)
+	_picker.offset_top = MultiRules.hand_top(size.y, MARGIN * 6, GameState.one_hand)
 	_menu.prefer_row = BattleComfort.first_row(int(_last_art.get(slot, -1)), me)
 	_sync_status_turns()
 	_menu.refresh(model, slot)
 	_menu.set_enabled(true)
 	_back_button.visible = _menu.undo_ok
+	_rest_all_button.visible = TurnFlow.all_rest_shown(model)
+	_waiting_orders = true
 	var choice: Array = await _menu.chosen
+	_waiting_orders = false
 	_back_button.visible = false
+	_rest_all_button.visible = false
 	_menu.set_enabled(false)
 	var kind: BattleAction.Kind = choice[0]
 	var index: int = choice[1]
 	if index == BattleComfort.UNDO:
 		_undo_asked = true
 		return null
+	if index == TurnFlow.TIMED_OUT or index == TurnFlow.ALL_REST:
+		_rest_others = true
+		return BattleAction.make_rest(BattleModel.Side.PLAYER, slot)
 	match kind:
 		BattleAction.Kind.MOVE:
 			if index < me.moves.size() and me.can_afford(me.moves[index]):
@@ -839,6 +951,9 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 				return BattleAction.make_oath(BattleModel.Side.PLAYER, slot)
 			return await _bond(slot)
 		BattleAction.Kind.RUN:
+			if TurnFlow.can_forfeit(model):
+				await _ask_forfeit()
+				return null
 			return BattleAction.make_run(BattleModel.Side.PLAYER, slot)
 	return null
 
@@ -848,6 +963,12 @@ func _pick_target(title: String, me: Spirling = null, mv: MoveData = null, from_
 	var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
 	if not _multi or foes.size() <= 1:
 		return -1 if foes.is_empty() else foes[0]
+	# Auto aim (KAMPF_PLAN_1000 386): a damaging art goes at the best foe unasked.
+	var auto: int = MultiRules.auto_aim(model, me, mv, GameState.auto_aim)
+	if auto >= 0:
+		return auto
+	if MultiRules.aim_by_list(_multi, GameState.one_hand):
+		return await _pick_target_list(title, me, mv, from_slot, foes)
 	_text.show_prompt(title)
 	for slot: int in foes:
 		var sp: SpirlingSprite = _slot_sprites[BattleModel.Side.FOE][slot]
@@ -889,6 +1010,19 @@ func _pick_target(title: String, me: Spirling = null, mv: MoveData = null, from_
 	_back_button.visible = false
 	_pin.visible = false
 	return picked_slot if picked_slot >= 0 else -2
+
+## One-hand mode (KAMPF_PLAN_1000 396): the foes as a list low on the screen, each with its aim
+## line, the pin on the one in focus. Returns the foe slot or -2 when the player backs out.
+func _pick_target_list(title: String, me: Spirling, mv: MoveData, from_slot: int, foes: Array[int]) -> int:
+	var entries: Array[Dictionary] = []
+	for slot: int in foes:
+		var text: String = _aim_line(me, mv, slot, from_slot) if me != null and mv != null else model.active_spirling(BattleModel.Side.FOE, slot).display_name()
+		entries.append({"text": text, "say": MultiRules.slot_spoken(model, BattleModel.Side.FOE, slot)})
+	var start: int = BattleInfo.aim_start(foes, _last_aim)
+	_point_pin(BattleModel.Side.FOE, foes[start], true)
+	var idx: int = await _picker.pick(title, entries, true, start)
+	_pin.visible = false
+	return foes[idx] if idx >= 0 and idx < foes.size() else -2
 
 func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[int] = []) -> int:
 	var entries: Array[Dictionary] = []
@@ -1237,6 +1371,11 @@ func _play_event(e: BattleEvent) -> void:
 	_place_field_badge()
 	if e.type == BattleEvent.Type.BATTLE_START:
 		battle_report.begin(model.field)
+		for team: Array in model.parties:
+			for p: Spirling in team:
+				TraitKit.forget_seen(p)
+	elif e.type == BattleEvent.Type.TRAIT:
+		_show_gift(e)
 	battle_report.add(e)
 	# After a Rest the Energy flows back pip by pip (KAMPF_PLAN_1000 item 73).
 	if e.type == BattleEvent.Type.REST and _strip(side, slot) is InfoStrip:
@@ -1295,6 +1434,11 @@ func _play_event(e: BattleEvent) -> void:
 			_focus(side, slot)
 			_point_pin(side, slot, true)
 			Sound.sfx("status")
+			# The music changes with the phase (item 406); the pinch music still wins while low.
+			var phase_track: String = BossRules.phase_music(int(e.data.get("phase", 0)))
+			if not phase_track.is_empty():
+				music_track = phase_track
+				_update_pinch()
 			await _text.show_text(e.describe())
 			_pin.visible = false
 		BattleEvent.Type.MOVE_USED:
@@ -1734,13 +1878,13 @@ static func _demo_team(rng: RandomNumberGenerator, names: Array[String], level: 
 		out.append(Spirling.new(Database.species(n), level, rng))
 	return out
 
-## Boss phase mark on the foe plates (item 598).
+## Boss phase marks on the boss's plate (items 598, 405); a called guard's plate has none.
 func _mark_phase() -> void:
-	var at: float = BattleInfo.phase_mark(model)
+	var marks: Array[float] = BattleInfo.phase_marks(model)
 	for slot: int in model.slot_count(BattleModel.Side.FOE):
 		var st: Variant = _strip(BattleModel.Side.FOE, slot)
 		if st is InfoStrip:
-			(st as InfoStrip).phase_mark = at
+			(st as InfoStrip).phase_marks = marks if slot == 0 else ([] as Array[float])
 
 # --- More: guide and settings in battle (items 568-570, 583, 621) ---------------------------
 

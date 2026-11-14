@@ -179,6 +179,20 @@ static func phase_mark(model: BattleModel) -> float:
 		return -1.0
 	return BattleRules.boss_phase_at(model.foe_boss, model.boss_difficulty)
 
+## Every phase still to come as a share of the boss's Vigor, highest first (item 405): the
+## second phase (until it starts), then each late phase (BossRules.LATE_PHASES) not yet reached.
+static func phase_marks(model: BattleModel) -> Array[float]:
+	var out: Array[float] = []
+	if model == null or not BattleRules.BOSSES.has(model.foe_boss):
+		return out
+	var first: float = phase_mark(model)
+	if first > 0.0:
+		out.append(first)
+	var late: Array = BossRules.late_phases(model.foe_boss)
+	for i: int in range(model.boss_late_done, late.size()):
+		out.append(float((late[i] as Dictionary).get("at", 0.0)))
+	return out
+
 # --- Art card lines (items 571, 572) -----------------------------------------------------
 
 ## "first", "after", "even" or "hidden": how [param mv] of [param me] likely ranks against

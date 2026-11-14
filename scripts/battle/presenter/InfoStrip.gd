@@ -71,10 +71,10 @@ var level: int = 1
 var status: String = ""
 ## Turns left on [member status], shown as a small number under its tag (0 = open-ended, no number).
 var status_turns: int = 0
-## Share of Vigor where a boss changes phase (BattleInfo.phase_mark), -1 for no mark.
-var phase_mark: float = -1.0:
+## Shares of Vigor where a boss changes phase (BattleInfo.phase_marks), empty for no mark.
+var phase_marks: Array[float] = []:
 	set(v):
-		phase_mark = v
+		phase_marks = v
 		queue_redraw()
 var speed_scale: float = 1.0
 ## Stat stages shown as small up/down arrows after the Energy pips.
@@ -101,6 +101,11 @@ var cam_shift: Vector2 = Vector2.ZERO:
 			cam_shift = v
 			queue_redraw()
 var _slide_tween: Tween
+## Gifts this Spirling has shown in this battle (KAMPF_PLAN_1000 items 241, 263): a small mark
+## each beside the name, and their names for the screen reader and the tooltip.
+var gifts: Array[String] = []
+## Side of a gift mark (TraitKit.icon_rows), in pixels.
+const GIFT_ICON: int = 5
 
 func _ready() -> void:
 	visibility_changed.connect(_on_shown)
@@ -127,7 +132,7 @@ func set_spirling(s: Spirling) -> void:
 	xp_left = s.xp_to_next()
 	_stop_xp()
 	xp_shown = xp_frac
-	queue_redraw()
+	set_gifts(TraitKit.seen_ids(s))
 
 ## Share of the way [param s] has grown from its ring to the next, 0 to 1.
 static func xp_fraction(s: Spirling) -> float:
@@ -172,6 +177,22 @@ func _stop_xp() -> void:
 func _set_xp_shown(v: float) -> void:
 	xp_shown = v
 	queue_redraw()
+
+## Shows the gifts [param ids] beside the name (item 241: only after each first worked).
+func set_gifts(ids: Array[String]) -> void:
+	gifts = ids.duplicate()
+	var names: PackedStringArray = gift_names(gifts)
+	tooltip_text = Loc.t("Gift: %s") % ", ".join(names) if not names.is_empty() else ""
+	queue_redraw()
+
+## Translated names of the gifts [param ids].
+static func gift_names(ids: Array[String]) -> PackedStringArray:
+	var out: PackedStringArray = []
+	for id: String in ids:
+		var label: String = str(BattleRules.trait_info(id).get("label", ""))
+		if not label.is_empty():
+			out.append(Loc.t(label))
+	return out
 
 func set_held(id: String) -> void:
 	held = id
@@ -323,6 +344,8 @@ func screen_reader_text() -> String:
 	for stat: String in BattleRules.STAGE_STATS:
 		if int(stages.get(stat, 0)) != 0:
 			t += ", " + BattleRules.stage_line(Loc.t(str(BattleEvent.STAT_NAMES[stat])), int(stages[stat]))
+	if not gifts.is_empty():
+		t += ", " + Loc.t("Gift: %s") % ", ".join(gift_names(gifts))
 	if show_xp:
 		t += ", " + Loc.t("Growth to next ring %d" % xp_left)
 	return t
@@ -356,11 +379,13 @@ func _draw() -> void:
 	if marked and by_name:
 		x_right = _draw_marks(x_right, asc - 4.0, head, c.light if band else Color(XP_ON))
 	var icons_w: float = elements.size() * (ElementIcons.SIZE + 1)
-	var name_max: float = maxf(x_right - 1.0 - (icons_w + 2.0 if by_name else 0.0), 8.0)
+	var gifts_w: float = gift_marks_width(gifts.size())
+	var name_max: float = maxf(x_right - 1.0 - (icons_w + 2.0 if by_name else 0.0) - gifts_w, 8.0)
 	draw_string(font, Vector2(0, asc), spirling_name, HORIZONTAL_ALIGNMENT_LEFT, name_max, fs, head)
+	var name_w: float = minf(font.get_string_size(spirling_name, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x, name_max)
 	if by_name:
-		var name_w: float = minf(font.get_string_size(spirling_name, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x, name_max)
 		_draw_elements(Vector2(name_w + 2.0, asc - ElementIcons.SIZE), band)
+	_draw_gifts(Vector2(name_w + (icons_w + 2.0 if by_name else 0.0) + 2.0, asc - GIFT_ICON), head)
 	# Row 2: the Vigor bar, shortened for the status tag at its right end.
 	var bar_y: float = float(rows.bar_y)
 	var bar_h: int = int(rows.bar_h)
@@ -394,9 +419,10 @@ func _draw() -> void:
 	# Notches every few pixels make the bar read as a measured scale, like a map ruler.
 	for x: int in range(TICK_STEP, int(bar_w) - 1, TICK_STEP):
 		draw_rect(Rect2(x, bar_y + 1, 1, 1), UITheme.INK)
-	# Boss phase mark (KAMPF_PLAN item 598): a tall notch where the second phase starts.
-	if phase_mark > 0.0 and phase_mark < 1.0:
-		draw_rect(Rect2(roundf(bar_w * phase_mark), bar_y - 1, 1, bar_h + 2), UITheme.INK)
+	# Boss phase marks (KAMPF_PLAN items 598, 405): a tall notch where each phase still to come starts.
+	for at: float in phase_marks:
+		if at > 0.0 and at < 1.0:
+			draw_rect(Rect2(roundf(bar_w * at), bar_y - 1, 1, bar_h + 2), UITheme.INK)
 	# Row 3: Energy pips, stat arrows, the Energy tax and (narrow plate) the element symbols.
 	var row3: float = float(rows.row3_y)
 	var row3_h: float = float(rows.row3_h)
@@ -439,6 +465,22 @@ func _draw() -> void:
 	if show_xp:
 		_draw_xp(float(rows.row4), x_num - 3.0)
 	draw_set_transform(Vector2.ZERO)
+
+## Pixels the gift marks of [param count] gifts take beside the name (0 for none).
+static func gift_marks_width(count: int) -> float:
+	return float(count * (GIFT_ICON + 1) + (1 if count > 0 else 0))
+
+## One small mark per shown gift (item 263), left to right from [param at].
+func _draw_gifts(at: Vector2, col: Color) -> void:
+	var x: float = at.x
+	for id: String in gifts:
+		var rows: Array = TraitKit.icon_rows(TraitKit.icon_of(id))
+		for y: int in rows.size():
+			var row: String = str(rows[y])
+			for i: int in row.length():
+				if row[i] == "#":
+					draw_rect(Rect2(x + i, at.y + y, 1, 1), col)
+		x += GIFT_ICON + 1
 
 ## Side of the status symbol grid (StatusRules.SYMBOLS), in pixels.
 const SYMBOL_SIZE: int = 5
