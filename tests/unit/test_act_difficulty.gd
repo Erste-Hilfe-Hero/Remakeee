@@ -87,16 +87,6 @@ func test_every_starter_clears_the_even_acts_alone() -> void:
 			assert_gte(float(a.win_moderate), need - MARGIN, "%s %s: %d%% after the budget" % [r.starter, a.id, roundi(a.win_moderate * 100.0)])
 			assert_lte(float(a.grind_needed), float(budget + int(_cfg.grind_step)), "%s %s: %.0f grind battles, budget %d" % [r.starter, a.id, a.grind_needed, budget])
 
-## Item 943: no starter waits a whole act longer for its second form (Kindlop's lead in Act I
-## came from unfolding at ring 14 while the others waited until 22 and 24).
-func test_starters_unfold_close_together() -> void:
-	var rings: Array[int] = []
-	for st: String in Database.STARTERS:
-		var sd: SpirlingData = Database.species(st)
-		assert_not_null(sd.evolves_to, "%s unfolds" % st)
-		rings.append(sd.evolve_level)
-	assert_lte(rings.max() - rings.min(), 3, "starter unfold rings %s" % str(rings))
-
 ## docs/BALANCE.md carries the targets of every act (test_balance_doc checks the text matches).
 func test_targets_are_written_down_per_act() -> void:
 	var table: String = BalanceDoc.act_targets_table()

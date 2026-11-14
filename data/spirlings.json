@@ -713,7 +713,7 @@
    {
     "to": "Glimmerax",
     "rule": "ring",
-    "value": 17
+    "value": 24
    }
   ],
   "origin": "A spark that jumped off the first storm over Brindlewick.",
@@ -1156,7 +1156,7 @@
    {
     "to": "Lumenewt",
     "rule": "ring",
-    "value": 14
+    "value": 22
    }
   ],
   "origin": "The last flicker of a candle that a child would not blow out.",

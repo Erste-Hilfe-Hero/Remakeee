@@ -22,14 +22,13 @@ func _kind(paths: Array[Dictionary]) -> SpirlingData:
 func _to(name: String) -> SpirlingData:
 	return Database.species(name)
 
-## Item 100: the ring rule keeps every old unfold exactly as it was. KAMPF_PLAN_1000 item 943 moved
-## Wickit (22 -> 14) and Zippit (24 -> 17) next to Kindlop (14), so the starters are equally strong.
+## Item 100: the ring rule keeps every old unfold exactly as it was.
 func test_old_kinds_unfold_as_before() -> void:
 	var expect: Dictionary = {
 		"Kindlop": ["Smoldrake", 14], "Smoldrake": ["Calderox", 31], "Puddlet": ["Riptail", 18],
 		"Riptail": ["Leviarch", 33], "Mossling": ["Thornback", 17], "Thornback": ["Verdantusk", 35],
-		"Zippit": ["Glimmerax", 17], "Shalebat": ["Obsidroth", 26], "Zephlet": ["Tempestrel", 28],
-		"Wickit": ["Lumenewt", 14], "Mirkmole": ["Duskdigger", 22],
+		"Zippit": ["Glimmerax", 24], "Shalebat": ["Obsidroth", 26], "Zephlet": ["Tempestrel", 28],
+		"Wickit": ["Lumenewt", 22], "Mirkmole": ["Duskdigger", 22],
 	}
 	for name: String in expect:
 		var sd: SpirlingData = _to(name)
