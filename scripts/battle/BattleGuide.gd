@@ -32,7 +32,8 @@ static func status_lines() -> Array[String]:
 	out.append(Loc.t("Statuses last as long on every difficulty."))
 	out.append(Loc.t("A Rift boss shakes a status off in half the time, at most %d turns.") % StatusRules.BOSS_OPEN_TURNS)
 	out.append(Loc.t("A wild Spirling with a status is easier to bond with."))
-	out.append(Loc.t("Every status ends when the battle ends."))
+	# Item 179: off Story the lingering statuses stay on after the battle.
+	out.append(Loc.t("On Story every status ends with the battle. On the other difficulties Scorch, Root and Jolt stay on until an item, an art or a rest cures them."))
 	return out
 
 ## Stage range, the factor of every stage (items 221, 222), when stages go away (item 223) and

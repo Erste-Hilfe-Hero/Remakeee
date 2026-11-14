@@ -279,6 +279,7 @@ func _tint_row(i: int) -> void:
 ## on) and the focus mark: the cursor of the text menu, an ink frame in the button eras.
 func _draw_row(b: Button, i: int) -> void:
 	var focused: bool = b.has_focus() and not b.disabled
+	_draw_kind(b, i)
 	if mode == "text":
 		if focused:
 			var cy: float = floorf(b.size.y / 2.0)
@@ -292,6 +293,19 @@ func _draw_row(b: Button, i: int) -> void:
 	if focused:
 		b.draw_rect(Rect2(Vector2.ZERO, b.size), UITheme.INK, false, 1.0)
 		b.draw_rect(Rect2(Vector2.ONE, b.size - Vector2(2, 2)), UITheme.INK, false, 1.0)
+
+## The art's kind symbol (BattleHelp.KIND_ICONS, item 145) just left of its cost text.
+func _draw_kind(b: Button, i: int) -> void:
+	if i < 0 or i >= _shown_moves.size() or i >= _move_costs.size() or _move_costs[i].text.is_empty():
+		return
+	var cost: Label = _move_costs[i]
+	var fs: int = cost.get_theme_font_size("font_size")
+	var w: float = cost.get_theme_font("font").get_string_size(cost.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+	var size: int = BattleHelp.KIND_ICON_SIZE
+	var top: bool = cost.vertical_alignment == VERTICAL_ALIGNMENT_TOP
+	var y: float = cost.offset_top + floorf((fs - size) / 2.0) + 1.0 if top else floorf((b.size.y - size) / 2.0)
+	var ink: Color = b.get_theme_color("font_disabled_color" if b.disabled else "font_color", "Button")
+	BattleHelp.draw_kind_icon(b, _shown_moves[i].kind, Vector2(b.size.x + cost.offset_right - w - size - 3.0, y), ink)
 
 ## Thin colour stripe on the button's left edge (era colour code); transparent in Era I.
 func _stripe(b: Button) -> ColorRect:
@@ -647,7 +661,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			var mv: MoveData = me.moves[i]
 			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
 			# An art that acts first carries an arrow (item 595).
-			b.text = art_marks(mv) + mv.move_name
+			b.text = BattleComfort.fav_mark(me, mv) + art_marks(mv) + mv.move_name
 			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
 			var oc: float = overcharge_now(model, me, mv)
 			if pct > 0 and oc > 1.0:
@@ -665,7 +679,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			_row_colors[i] = BattleUiStyle.matchup_color(era, shown_mult)
 			if EraBattleHud.flag(era, "art_detail"):
 				# Era IV on: the element's name under the art's name, the matchup word under the cost.
-				b.text = art_marks(mv) + Loc.t(mv.move_name) + "\n" + Loc.t(Elements.element_name(mv.element))
+				b.text = BattleComfort.fav_mark(me, mv) + art_marks(mv) + Loc.t(mv.move_name) + "\n" + Loc.t(Elements.element_name(mv.element))
 				_move_hints[i].text = Loc.t(EraBattleHud.effect_hint(era, shown_mult))
 			_style_row(b, _row_left())
 			if filled:

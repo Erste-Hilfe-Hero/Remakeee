@@ -992,6 +992,9 @@ static func party_entry(s: Spirling, leader: bool = false) -> Dictionary:
 	var hint: String = Loc.t("Vigor %d/%d" % [s.hp, s.max_hp()])
 	if s.is_fainted():
 		hint += "  " + Loc.t(worn)
+	# A status that lingers after a battle (item 179): its name in the hint, its symbol on the row.
+	if not s.status.is_empty():
+		hint += "  " + Loc.t(StatusRules.label(s.status))
 	# The leader on slot 1 carries a small flag (item 1903).
 	if leader:
 		hint = Loc.t("Leads the team") + "  " + hint
@@ -1025,6 +1028,12 @@ static func _draw_leader_flag(b: Button, ink: Color) -> void:
 	b.draw_line(Vector2(x, top), Vector2(x, bottom), ink)
 	b.draw_colored_polygon(PackedVector2Array([Vector2(x + 1, top), Vector2(x + 6, top + 2.5), Vector2(x + 1, top + 5)]), ink)
 
+## The symbol of a status that stayed on after a battle (item 179, StatusRules.SYMBOLS) at the
+## end of a team row's Vigor bar; nothing without a status.
+static func draw_status_mark(ci: CanvasItem, s: Spirling, at: Vector2, ink: Color) -> void:
+	for px: Variant in StatusRules.symbol(s.status):
+		ci.draw_rect(Rect2(at.x + int(px[0]), at.y + int(px[1]), 1, 1), ink)
+
 static func _draw_party_row(b: Button, s: Spirling, leader: bool = false, ready: bool = false) -> void:
 	var ink: Color = b.get_theme_color("font_focus_color" if b.has_focus() else "font_color", "Button")
 	if leader:
@@ -1041,6 +1050,8 @@ static func _draw_party_row(b: Button, s: Spirling, leader: bool = false, ready:
 		var cx: float = x0 + BAR_WIDTH + 3
 		b.draw_line(Vector2(cx - 2, y - 2), Vector2(cx + 2, y + 2), ink)
 		b.draw_line(Vector2(cx + 2, y - 2), Vector2(cx - 2, y + 2), ink)
+	else:
+		draw_status_mark(b, s, Vector2(x0 + BAR_WIDTH + 2, y - 3), ink)
 	var els: Array[int] = s.elements()
 	var w: float = els.size() * (ElementIcons.size() + 1)
 	ElementIcons.draw_row(b, els, Vector2(b.size.x - 3 - w, floorf((b.size.y - ElementIcons.size()) / 2.0)), ink, ElementIcons.scale())

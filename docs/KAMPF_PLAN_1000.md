@@ -179,14 +179,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 135. [x] Technik mit Treffer-Serie (2 bis 4 Treffer) (Kieselhagel (Pebble Hail))
 136. [x] Technik, die das Feld beendet (Rissstille (Rift Hush))
 137. [x] Technik, die Status vom ganzen Team heilt (bestehend: Effekt cure_team)
-138. [ ] Technik-Lehrer im Leuchtturm (vergessene Techniken neu lernen)
+138. [x] Technik-Lehrer im Leuchtturm (vergessene Techniken neu lernen) (Hesper nach ihrem Laden, ArtTeacher, 500 Münzen je Technik)
 139. [x] Echo-Kristalle (bestehend) als Quelle seltener Techniken ausbauen (19 neue Echo-Kristalle bei Hesper im Leuchtturm)
 140. [x] Technik-Tausch-Vorschau: alte und neue Technik nebeneinander (Vergessen-Liste zeigt alt > neu)
 141. [x] Technik-Beschreibung mit Effekt-Chancen im Lexikon
 142. [ ] Techniken mit Signatur pro Art (eine je Art, eigenständig)
 143. [x] Keine Technik-Namen aus anderen Spielen (Prüfliste vor jedem Merge) (tools/ip_check.sh in CI, test_rule_checks)
 144. [x] Status-Techniken mit Genauigkeit unter 100 % sichtbar machen (Trefferchance in der Technikzeile)
-145. [ ] Technik-Kategorie Physisch/Fokus/Status mit Symbol
+145. [x] Technik-Kategorie Physisch/Fokus/Status mit Symbol (5x5-Pixelzeichen BattleHelp.KIND_ICONS in jeder Technikzeile im Kampf)
 146. [x] Mehrfachziel-Techniken zeigen 'alle' (bestehend) (bestehend: Info-Karte 'Reaches every foe.')
 147. [x] Technik 'Ablenkung': zieht alle Einzelziele drei Runden auf sich (Lichtköder (Bright Lure))
 148. [x] Technik 'Schulterschluss': schützt einen Verbündeten (Schulterschluss (Close Ranks))
@@ -199,8 +199,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 155. [x] Technik-Balancing über den Simulator pro neuer Technik (balance_sim --mode arts, ArtsSim, Ergebnis in BALANCE.md)
 156. [x] Lernlisten pro Art auf Lücken prüfen (jede Art hat eine Status-Technik) (Statustechnik für jede Art per Echo-Kristall, test_kampf_techniques_b)
 157. [x] Technik-Animationen pro Element eigenständig (bestehend: ElementFx pro Element)
-158. [ ] Technik-Favoriten im Menü markieren
-159. [ ] Technik-Reihenfolge im Menü umsortieren
+158. [x] Technik-Favoriten im Menü markieren (BattleComfort.FAV_MARK '+' im Kampfmenü und unter Team > Technik-Reihenfolge)
+159. [x] Technik-Reihenfolge im Menü umsortieren (bestehend: Team > Technik-Reihenfolge, BattleComfort.move_art)
 160. [x] Technik-Info-Bildschirm per langem Druck
 
 ## Status-Zustände
@@ -223,7 +223,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 176. [x] Status-Schutz-Technik für das Team (Technik Calm Veil)
 177. [x] Status überträgt sich bei Kontakt (Trait 'Glimmhaut') (Gabe glimmer_skin, Forgefly-Linie)
 178. [x] Status heilt beim Wechsel auf die Bank (Trait 'Ruhig') (Gabe unruffled, Prismist-Linie)
-179. [ ] Status nach dem Kampf bleibt erhalten, außer auf Story
+179. [x] Status nach dem Kampf bleibt erhalten, außer auf Story (Brand, Wurzeln, Schock: StatusRules.lingers, Heilmittel auch außerhalb des Kampfes)
 180. [x] Status-Heilung an Rastquellen (bestehend) (GameState.heal_party, Spirling.restore)
 181. [x] Status-Statistik im Kampfende-Bericht (BattleReport.status_line)
 182. [x] Status-Sound pro Status eigenständig (bestehend: BattleAudio.status_sound)
