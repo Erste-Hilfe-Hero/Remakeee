@@ -10,15 +10,16 @@ const MARGIN: float = 0.08
 
 static var _sum: Dictionary = {}
 static var _cfg: Dictionary = {}
+static var _runs: Array = []
 
 func before_all() -> void:
 	Database.load_all()
 	if _sum.is_empty():
 		_cfg = ActSim.route()
-		var runs: Array = []
+		_runs.clear()
 		for st: Variant in _cfg.starters:
-			runs.append(ActSim.run(str(st), TRIALS, 1234))
-		_sum = ActSim.summary(runs)
+			_runs.append(ActSim.run(str(st), TRIALS, 1234))
+		_sum = ActSim.summary(_runs)
 
 func test_every_route_step_resolves() -> void:
 	for act: Dictionary in _cfg.acts:
@@ -56,6 +57,52 @@ func test_training_wins_and_there_are_no_walls() -> void:
 	for a: Dictionary in _sum.acts:
 		assert_gte(float(a.win_moderate), need - MARGIN, "%s: %d%% after the moderate grind" % [a.id, roundi(a.win_moderate * 100.0)])
 		assert_eq(int(a.walls), 0, "%s: a fight not won at 70 %% after %d grind battles" % [a.id, int(_cfg.grind_max)])
+
+## Item 942: the targets per act. The grind a fight needs to reach grind_target stays within the
+## act's own budget (moderate_grind) on the mean; one grind step of margin for the few CI battles.
+func test_mean_grind_stays_within_each_act_budget() -> void:
+	var acts: Dictionary = {}
+	for a: Dictionary in _cfg.acts:
+		acts[a.id] = a
+	for a: Dictionary in _sum.acts:
+		var budget: int = int(acts[a.id].get("moderate_grind", _cfg.moderate_grind))
+		assert_lte(float(a.grind_needed), float(budget + int(_cfg.grind_step)),
+			"%s: %.0f grind battles to %d %% on the mean, budget %d" % [a.id, a.grind_needed, roundi(float(_cfg.grind_target) * 100.0), budget])
+
+## Item 943: the starters are equally strong where it counts most. In the acts of
+## bands.starters_even every starter alone wins after the act's budget and needs no more grind.
+func test_every_starter_clears_the_even_acts_alone() -> void:
+	var even: Array = _cfg.bands.get("starters_even", [])
+	assert_false(even.is_empty(), "act_route.json bands.starters_even names at least Act I")
+	var need: float = float(_cfg.bands.win_moderate_min)
+	for r: Dictionary in _runs:
+		var one: Dictionary = ActSim.summary([r])
+		for a: Dictionary in one.acts:
+			if not str(a.id) in even:
+				continue
+			var budget: int = 0
+			for act: Dictionary in _cfg.acts:
+				if act.id == a.id:
+					budget = int(act.get("moderate_grind", _cfg.moderate_grind))
+			assert_gte(float(a.win_moderate), need - MARGIN, "%s %s: %d%% after the budget" % [r.starter, a.id, roundi(a.win_moderate * 100.0)])
+			assert_lte(float(a.grind_needed), float(budget + int(_cfg.grind_step)), "%s %s: %.0f grind battles, budget %d" % [r.starter, a.id, a.grind_needed, budget])
+
+## Item 943: no starter waits a whole act longer for its second form (Kindlop's lead in Act I
+## came from unfolding at ring 14 while the others waited until 22 and 24).
+func test_starters_unfold_close_together() -> void:
+	var rings: Array[int] = []
+	for st: String in Database.STARTERS:
+		var sd: SpirlingData = Database.species(st)
+		assert_not_null(sd.evolves_to, "%s unfolds" % st)
+		rings.append(sd.evolve_level)
+	assert_lte(rings.max() - rings.min(), 3, "starter unfold rings %s" % str(rings))
+
+## docs/BALANCE.md carries the targets of every act (test_balance_doc checks the text matches).
+func test_targets_are_written_down_per_act() -> void:
+	var table: String = BalanceDoc.act_targets_table()
+	for a: Dictionary in _cfg.acts:
+		assert_string_contains(table, "| %s | %d |" % [a.name, int(a.moderate_grind)])
+	assert_string_contains(FileAccess.get_file_as_string(BalanceDoc.DOC_PATH), "<!-- gen:act_targets -->")
 
 func test_each_act_is_steeper_than_the_one_before() -> void:
 	var last: Dictionary = {}

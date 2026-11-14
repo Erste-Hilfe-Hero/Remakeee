@@ -728,7 +728,7 @@
     },
     {
      "species": "Shalebat",
-     "level": 11
+     "level": 10
     },
     {
      "species": "Gloamhog",
@@ -771,12 +771,12 @@
   "teams_by_difficulty": {
    "tamer": [
     {
-     "species": "Fluting",
-     "level": 18
+     "species": "Zephlet",
+     "level": 17
     },
     {
      "species": "Smoldrake",
-     "level": 19
+     "level": 20
     },
     {
      "species": "Shalebat",
@@ -784,7 +784,7 @@
     },
     {
      "species": "Kelpup",
-     "level": 18
+     "level": 17
     },
     {
      "species": "Gloamhog",

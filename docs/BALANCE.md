@@ -64,6 +64,27 @@ The normal test run skips them; its balance tests take about 80 seconds.
 | Arts per element | 14+, of them 3+ status arts and 1+ for 1-2 Energy | `test_move_curve.gd` |
 | Learnset size | at most 14 arts | `test_move_curve.gd` |
 
+### Ziele pro Gebiet (targets per act and era region)
+
+Generated from `tools/balance/act_route.json` (`tools/balance/run_all.sh`); checked by
+`test_act_difficulty.gd` with the act simulator (`tools/balance_sim.gd --mode acts`). Grind budget is
+the act's `moderate_grind`: wild battles a player trains before a measured fight.
+
+<!-- gen:act_targets -->
+| Act | Grind budget (wild battles per fight) | Win on arrival | Win after the budget | Mean grind to 70 % | Every starter alone |
+| --- | --- | --- | --- | --- | --- |
+| Act I: Veydal | 60 | 20-40 % | 70 %+ | at most 60 | yes |
+| Act II: Corvane | 70 | 20-40 % | 70 %+ | at most 70 | - |
+| Act III: Ashmere | 80 | 20-40 % | 70 %+ | at most 80 | - |
+| Act IV: Solenne | 90 | 20-40 % | 70 %+ | at most 90 | - |
+| Era II: Vellmarch | 100 | 20-40 % | 70 %+ | at most 100 | - |
+| Era III: Quillmarch | 110 | 20-40 % | 70 %+ | at most 110 | - |
+| Era IV: Halcyra | 120 | 20-40 % | 70 %+ | at most 120 | - |
+| Era V: Quivermoor | 130 | 20-40 % | 70 %+ | at most 130 | - |
+
+Every act is at most as easy on arrival as the one before (margin 0 points). No measured Warden, rival or boss is won more than 60 % on arrival, and none stays under 70 % after 240 grind battles (a wall). Hearts are left out of the means. Starters: Kindlop, Zippit, Wickit, each from ring 5.
+<!-- /gen:act_targets -->
+
 Measured on 6 Nov 2026 (plan area 2, after the new arts): Lv36 duel turns to KO 2.5, first-mover
 advantage 52%; Lv36 teams (200 battles, seed 7) 0 draws, every species between 39% and 66%.
 Glimmerax sits lowest in duels (26%, it loses to 7 of 8 same-stage species on base stats).

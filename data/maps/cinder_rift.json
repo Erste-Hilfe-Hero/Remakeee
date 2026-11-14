@@ -216,7 +216,7 @@
     "tamer": [
      {
       "species": "Shalebat",
-      "level": 17,
+      "level": 16,
       "moves": [
        "Grit Jab",
        "Hunker Down"
@@ -224,7 +224,7 @@
      },
      {
       "species": "Kindlop",
-      "level": 17,
+      "level": 16,
       "moves": [
        "Glow Knuckle",
        "Kindle Up"
@@ -232,7 +232,7 @@
      },
      {
       "species": "Smoldrake",
-      "level": 18,
+      "level": 17,
       "moves": [
        "Char Mark",
        "Cinder Breath",
