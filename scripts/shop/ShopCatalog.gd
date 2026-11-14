@@ -94,13 +94,20 @@ static func euro_cents(rg: int) -> int:
 static func euro_hint(rg: int) -> String:
 	return "≈ " + format_eur(euro_cents(rg))
 
-## "2,97 €" (German) or "€2.97" (other languages).
-static func format_eur(cents: int) -> String:
-	var whole: int = cents / 100
-	var rest: int = absi(cents) % 100
-	if Loc.language() == "de":
-		return "%d,%02d €" % [whole, rest]
-	return "€%d.%02d" % [whole, rest]
+## How each language writes a euro amount, as the stores write it on a phone in that language
+## (CLDR): "%s" is the number. A language not listed writes "€0.99". One format per language, so
+## a hint "(≈ 0,99 €)" and the store's "0,99 €" never stand side by side in two styles (French
+## shop, 1.2.0 store shots).
+const EUR_FORMATS: Dictionary[String, String] = {"de": "%s €", "fr": "%s €", "es": "%s €", "it": "%s €",
+	"pt_BR": "€ %s", "nl": "€ %s", "pl": "%s €", "tr": "€%s", "ru": "%s €"}
+
+## "2,97 €" (German), "€2.97" (English) and so on per EUR_FORMATS.
+static func format_eur(cents: int, lang: String = "") -> String:
+	var code: String = Loc.language() if lang.is_empty() else lang
+	var num: String = "%d.%02d" % [cents / 100, absi(cents) % 100]
+	if not EUR_FORMATS.has(code):
+		return "€" + num
+	return EUR_FORMATS[code] % num.replace(".", ",")
 
 ## "300 Riftglass (≈ 2,97 €)" (item 4180).
 static func rg_text(rg: int) -> String:

@@ -1688,7 +1688,7 @@ func _float(side: int, slot: int, text: String) -> void:
 ## Battle lines shown as floats so far (tests).
 var floats_shown: int = 0
 
-## Redraws the EXP bar of the player strip at [param slot] from party member [param index].
+## Redraws the Growth bar of the player strip at [param slot] from party member [param index].
 func _refresh_xp(slot: int, index: int) -> void:
 	var st: Variant = _strip(BattleModel.Side.PLAYER, slot)
 	var party: Array = model.parties[BattleModel.Side.PLAYER]
