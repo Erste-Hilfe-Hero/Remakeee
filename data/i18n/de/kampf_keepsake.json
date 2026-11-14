@@ -1,0 +1,19 @@
+{
+ "_comment": "German texts from tools/i18n/de_kampf_keepsake.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%s drops its %s for the %s. That was its whole turn.": "%s tauscht %s gegen %s. Das war sein ganzer Zug.",
+  "%s takes up the %s. That was its whole turn.": "%s legt %s an. Das war sein ganzer Zug.",
+  "Keepsake sets": "Andenken-Sets",
+  "Keepsake sets of %s": "Andenken-Sets von %s",
+  "Keepsake: putting it on takes the whole turn.": "Andenken: Es anzulegen kostet den ganzen Zug.",
+  "No %s left in the bag for %s.": "Kein %s mehr in der Tasche für %s.",
+  "Put this set on": "Dieses Set anlegen",
+  "Save what it holds now": "Jetziges Andenken speichern",
+  "Save what it holds, or put a saved set back on.": "Speichere, was es trägt, oder lege ein gespeichertes Set wieder an.",
+  "Set %d: %s": "Set %d: %s",
+  "Whole team: put on set %d": "Ganzes Team: Set %d anlegen",
+  "empty": "leer",
+  "holds %s": "trägt %s"
+ }
+}

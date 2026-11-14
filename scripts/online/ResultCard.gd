@@ -40,6 +40,8 @@ static func facts_of_replay(snap: Dictionary, title: String) -> Dictionary:
 		if m.is_finished() or not v is Dictionary:
 			break
 		var d: Dictionary = v
+		if BattleReplay.play_extra(m, d) != null:
+			continue
 		if str(d.get("t", "")) == "switch":
 			if not m.needs_player_switch() or not int(d.get("i", -1)) in m.swap_candidates(BattleModel.Side.PLAYER, m.switch_slot()):
 				break
