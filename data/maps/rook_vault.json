@@ -432,23 +432,23 @@
       "tamer": [
        {
         "species": "Wickmoth",
-        "level": 33
-       },
-       {
-        "species": "Millvane",
         "level": 34
        },
        {
+        "species": "Millvane",
+        "level": 35
+       },
+       {
         "species": "Wickmoth",
-        "level": 33
+        "level": 34
        },
        {
         "species": "Rainmantle",
-        "level": 35
+        "level": 36
        },
        {
         "species": "Ferrowyn",
-        "level": 35
+        "level": 36
        }
       ],
       "rift_born": [

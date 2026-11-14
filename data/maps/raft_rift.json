@@ -116,25 +116,25 @@
    "teams_by_difficulty": {
     "tamer": [
      {
-      "species": "Sootharrow",
-      "level": 109
+      "species": "Peatmonarch",
+      "level": 106
      },
      {
       "species": "Dipmonarch",
-      "level": 109
+      "level": 106
      },
      {
       "species": "Ripjoltane",
-      "level": 110
+      "level": 107
      },
      {
       "species": "Weirmarshal",
-      "level": 110,
+      "level": 107,
       "held": "pith_mend"
      },
      {
       "species": "Glazeldrake",
-      "level": 110
+      "level": 107
      }
     ],
     "rift_born": [

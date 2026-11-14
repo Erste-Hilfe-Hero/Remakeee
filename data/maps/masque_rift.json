@@ -120,24 +120,24 @@
    "teams_by_difficulty": {
     "tamer": [
      {
-      "species": "Fenwarden",
-      "level": 75
+      "species": "Cogwright",
+      "level": 76
      },
      {
       "species": "Glasstarn",
-      "level": 75
+      "level": 76
      },
      {
       "species": "Lanternel",
-      "level": 76
+      "level": 77
      },
      {
       "species": "Glimmerax",
-      "level": 76
+      "level": 77
      },
      {
       "species": "Scrivane",
-      "level": 76,
+      "level": 77,
       "held": "pith_mend"
      }
     ],

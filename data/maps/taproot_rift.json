@@ -117,24 +117,24 @@
     "tamer": [
      {
       "species": "Peatmonarch",
-      "level": 123
+      "level": 128
      },
      {
       "species": "Fenwarden",
-      "level": 123
+      "level": 128
      },
      {
       "species": "Woadcastle",
-      "level": 124
+      "level": 129
      },
      {
       "species": "Rushstalker",
-      "level": 124,
+      "level": 129,
       "held": "pith_mend"
      },
      {
       "species": "Rookwarden",
-      "level": 124
+      "level": 129
      }
     ],
     "rift_born": [

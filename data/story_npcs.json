@@ -853,16 +853,16 @@
     "teams_by_difficulty": {
      "tamer": [
       {
-       "species": "Riptail",
-       "level": 27
+       "species": "Duskdigger",
+       "level": 25
       },
       {
        "species": "Tempestrel",
-       "level": 28
+       "level": 26
       },
       {
        "species": "Kelphound",
-       "level": 29
+       "level": 27
       }
      ],
      "rift_born": [
@@ -1172,15 +1172,15 @@
      "tamer": [
       {
        "species": "Gloamquill",
-       "level": 24
+       "level": 25
       },
       {
        "species": "Glimmerax",
-       "level": 25
+       "level": 26
       },
       {
        "species": "Verdantusk",
-       "level": 25
+       "level": 26
       }
      ],
      "rift_born": [
@@ -1240,23 +1240,23 @@
      "tamer": [
       {
        "species": "Obsidroth",
-       "level": 32
+       "level": 31
       },
       {
        "species": "Duskdigger",
-       "level": 33
+       "level": 32
       },
       {
        "species": "Obsidroth",
-       "level": 35
+       "level": 34
       },
       {
        "species": "Gloamquill",
-       "level": 35
+       "level": 34
       },
       {
        "species": "Woadwhorl",
-       "level": 35
+       "level": 34
       }
      ],
      "rift_born": [
@@ -1878,23 +1878,23 @@
      "tamer": [
       {
        "species": "Calderox",
-       "level": 36
+       "level": 38
       },
       {
        "species": "Obsidroth",
-       "level": 37
+       "level": 39
       },
       {
        "species": "Gloamquill",
-       "level": 35
+       "level": 37
       },
       {
        "species": "Duskdigger",
-       "level": 36
+       "level": 38
       },
       {
        "species": "Gloamquill",
-       "level": 37
+       "level": 39
       }
      ],
      "rift_born": [

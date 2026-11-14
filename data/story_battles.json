@@ -80,23 +80,23 @@
    "tamer": [
     {
      "species": "Brookbaron",
-     "level": 36
+     "level": 35
     },
     {
      "species": "Duskdigger",
-     "level": 37
+     "level": 36
     },
     {
      "species": "Obsidroth",
-     "level": 38
-    },
-    {
-     "species": "Calderox",
      "level": 37
     },
     {
+     "species": "Calderox",
+     "level": 36
+    },
+    {
      "species": "Brookbaron",
-     "level": 38
+     "level": 37
     }
    ]
   }
@@ -133,23 +133,23 @@
    "tamer": [
     {
      "species": "Tempestrel",
-     "level": 50
+     "level": 56
     },
     {
      "species": "Glimmerax",
-     "level": 49
+     "level": 55
     },
     {
      "species": "Brookbaron",
-     "level": 48
+     "level": 54
     },
     {
      "species": "Kelphound",
-     "level": 49
+     "level": 55
     },
     {
      "species": "Lumenewt",
-     "level": 48
+     "level": 54
     }
    ]
   }
@@ -1040,23 +1040,23 @@
    "tamer": [
     {
      "species": "Noonsoral",
-     "level": 42
+     "level": 43
     },
     {
      "species": "Saltspire",
-     "level": 42
+     "level": 43
     },
     {
      "species": "Scrivane",
-     "level": 43
+     "level": 44
     },
     {
      "species": "Rubriclad",
-     "level": 43
+     "level": 44
     },
     {
      "species": "Charsylvan",
-     "level": 43
+     "level": 44
     }
    ]
   }
@@ -1092,19 +1092,19 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 57
+     "level": 58
     },
     {
      "species": "Glasstarn",
-     "level": 57
+     "level": 58
     },
     {
      "species": "Mendlace",
-     "level": 58
+     "level": 59
     },
     {
      "species": "Saltcrown",
-     "level": 58
+     "level": 59
     }
    ]
   }
@@ -1144,23 +1144,23 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 55
+     "level": 59
     },
     {
      "species": "Mirassil",
-     "level": 55
+     "level": 59
     },
     {
      "species": "Leviarch",
-     "level": 56
+     "level": 60
     },
     {
      "species": "Saltcrown",
-     "level": 56
+     "level": 60
     },
     {
      "species": "Obsidroth",
-     "level": 57
+     "level": 61
     }
    ]
   }
@@ -1940,23 +1940,23 @@
    "tamer": [
     {
      "species": "Rubriclad",
-     "level": 50
+     "level": 47
     },
     {
      "species": "Obelordan",
-     "level": 51
+     "level": 48
     },
     {
      "species": "Coronarch",
-     "level": 51
+     "level": 48
     },
     {
      "species": "Fulgorath",
-     "level": 51
+     "level": 48
     },
     {
      "species": "Duskmirrah",
-     "level": 52
+     "level": 49
     }
    ]
   }
