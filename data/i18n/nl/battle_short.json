@@ -1,6 +1,7 @@
 {
  "_comment": "nl short words for the battle screen (German table battle_short), keyed by the English text. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
  "strings": {
+  "Again: - (battle button)": "Weer: -",
   "Bond (battle button)": "Band",
   "Give up (battle button)": "Opgeven",
   "Growth (bar label)": "Groei",

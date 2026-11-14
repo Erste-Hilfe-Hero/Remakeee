@@ -1,6 +1,7 @@
 {
  "_comment": "zh_TW short words for the battle screen (German table battle_short), keyed by the English text. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
  "strings": {
+  "Again: - (battle button)": "再次：-",
   "Bond (battle button)": "羈絆",
   "Give up (battle button)": "認輸",
   "Growth (bar label)": "成長",
