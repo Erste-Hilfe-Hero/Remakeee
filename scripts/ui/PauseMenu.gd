@@ -1472,10 +1472,26 @@ func _lantern_setting() -> void:
 	var opts: Array[String] = []
 	for i: int in WildRules.LANTERN_WORDS.size():
 		opts.append(("> " if i == WildRules.lantern_setting(GameState.records) else "") + Loc.t(WildRules.LANTERN_WORDS[i]))
+	opts.append(Loc.t("Flame colour: %s") % Loc.t(str(LanternColors.by_id(LanternColors.current_id()).get("name", ""))))
 	var pick: int = await pick_strings(Loc.t("Storm Lantern: how bright?"), opts)
-	if pick >= 0:
+	if pick == WildRules.LANTERN_WORDS.size():
+		await _lantern_colour()
+	elif pick >= 0:
 		GameState.records[WildRules.LANTERN_RECORD] = pick
 		await info(Loc.t("The lantern burns: %s") % Loc.t(WildRules.LANTERN_WORDS[pick]))
+
+## Flame colours earned in the endgame (KAMPF_PLAN_1000 item 837); locked ones show how to earn them.
+func _lantern_colour() -> void:
+	var cols: Array[Dictionary] = LanternColors.all()
+	var open: Array[Dictionary] = LanternColors.unlocked()
+	var opts: Array[Dictionary] = []
+	for c: Dictionary in cols:
+		var on: bool = c in open
+		opts.append({"text": ("> " if str(c.id) == LanternColors.current_id() else "") + Loc.t(str(c.name)) + ("" if on else "  (" + Loc.t(str(c.hint)) + ")"),
+			"disabled": not on})
+	var chosen: int = await pick(Loc.t("Flame colour (caves, from the third era on)"), opts)
+	if chosen >= 0 and LanternColors.choose(str(cols[chosen].id)):
+		await info(Loc.t("The flame turns %s.") % Loc.t(str(cols[chosen].name)))
 
 ## Spark Wash (KAMPF_PLAN "Spark-Reset"): one spark of one Spirling back to 0.
 func _use_spark_wash(id: String) -> void:

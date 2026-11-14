@@ -1,0 +1,22 @@
+{
+ "_comment": "Translations of the German table kampf_k37, written by tools/i18n/locales_kampf_k37.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s needs three Spirlings in their echo team for a team code.": "Для кода команды %s нужны три Spirling в эхо-команде.",
+  "%s's team code: %s": "Код команды %s: %s",
+  "Always lit.": "Горит всегда.",
+  "Beat every Warden in one master tour.": "Победите всех Стражей за один мастерский обход.",
+  "Clear the Battle Halls 10 times.": "Пройдите боевые залы 10 раз.",
+  "Climb the whole lighthouse stair.": "Поднимитесь по всей лестнице маяка.",
+  "Drowned Blue": "Утопленный синий",
+  "Ember Red": "Угольно-красный",
+  "Flame colour (caves, from the third era on)": "Цвет пламени (в пещерах, с третьей эпохи)",
+  "Flame colour: %s": "Цвет пламени: %s",
+  "Hall Violet": "Зальный фиолетовый",
+  "It is on the clipboard. Fight it in the Battle Halls under Fight a team code, or pass it on.": "Код скопирован. Сразитесь с ним в боевых залах через «Сразиться с кодом команды» или передайте его дальше.",
+  "Lamp Gold": "Ламповое золото",
+  "Reach floor 20 of the endless stretch.": "Доберитесь до 20-го этажа бесконечного пути.",
+  "The flame turns %s.": "Пламя становится таким: %s.",
+  "Their team code": "Код его команды",
+  "Wardens' Ash": "Пепел Стражей"
+ }
+}
