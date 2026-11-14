@@ -618,6 +618,19 @@ static func drop_to_floor(foes: Array[Rect2], feet_y: float, limit_y: float) -> 
 		out.append(Rect2(r.position + Vector2(0, by), r.size))
 	return out
 
+## A gift worked for the first time (KAMPF_PLAN_1000 items 241, 263): its mark joins the plate.
+func _show_gift(e: BattleEvent) -> void:
+	var side: int = int(e.data.get("side", 0))
+	var index: int = int(e.data.get("index", -1))
+	if index < 0 or index >= model.party(side).size():
+		return
+	var s: Spirling = model.party(side)[index]
+	TraitKit.mark_seen(s, str(e.data.get("trait", "")))
+	# One-on-one: the side's plate. Formation: the ledger plate while it shows this Spirling.
+	var st: Variant = _foe_strip if _multi else _strip(side)
+	if st is InfoStrip and (st as InfoStrip).spirling_name == s.display_name():
+		(st as InfoStrip).set_gifts(TraitKit.seen_ids(s))
+
 ## Shows [param side]/[param slot]'s details in the ledger strip (formation layout).
 func _focus(side: int, slot: int) -> void:
 	if not _multi:
@@ -1361,6 +1374,11 @@ func _play_event(e: BattleEvent) -> void:
 	_place_field_badge()
 	if e.type == BattleEvent.Type.BATTLE_START:
 		battle_report.begin(model.field)
+		for team: Array in model.parties:
+			for p: Spirling in team:
+				TraitKit.forget_seen(p)
+	elif e.type == BattleEvent.Type.TRAIT:
+		_show_gift(e)
 	battle_report.add(e)
 	_keepsake_cue(e)
 	match e.type:
@@ -1416,6 +1434,11 @@ func _play_event(e: BattleEvent) -> void:
 			_focus(side, slot)
 			_point_pin(side, slot, true)
 			Sound.sfx("status")
+			# The music changes with the phase (item 406); the pinch music still wins while low.
+			var phase_track: String = BossRules.phase_music(int(e.data.get("phase", 0)))
+			if not phase_track.is_empty():
+				music_track = phase_track
+				_update_pinch()
 			# At 4x a boss's entrance is one short line, its name on the tag (KAMPF_PLAN_1000 424).
 			if e.type == BattleEvent.Type.BOSS and BattleShow.short_boss_intro(true, GameState.battle_speed_scale()):
 				await _text.show_text(BattleShow.boss_short_line(e), str(e.data.get("label", "")))
@@ -1859,13 +1882,13 @@ static func _demo_team(rng: RandomNumberGenerator, names: Array[String], level: 
 		out.append(Spirling.new(Database.species(n), level, rng))
 	return out
 
-## Boss phase mark on the foe plates (item 598).
+## Boss phase marks on the boss's plate (items 598, 405); a called guard's plate has none.
 func _mark_phase() -> void:
-	var at: float = BattleInfo.phase_mark(model)
+	var marks: Array[float] = BattleInfo.phase_marks(model)
 	for slot: int in model.slot_count(BattleModel.Side.FOE):
 		var st: Variant = _strip(BattleModel.Side.FOE, slot)
 		if st is InfoStrip:
-			(st as InfoStrip).phase_mark = at
+			(st as InfoStrip).phase_marks = marks if slot == 0 else ([] as Array[float])
 
 # --- More: guide and settings in battle (items 568-570, 583, 621) ---------------------------
 

@@ -16,7 +16,22 @@
   "cold_sleep": {"label": "Cold Sleep", "text": "While Drowsed it mends an eighth of its Vigor each turn.", "drowse_heal_div": 8},
   "shock_pad": {"label": "Shock Pad", "text": "Takes no recoil from its own arts.", "no_recoil": true},
   "lucky_cap": {"label": "Lucky Cap", "text": "Lands critical hits a little more often.", "crit_mult": 1.5},
-  "nimble": {"label": "Nimble", "text": "Steps back for free: no Energy cost, and nothing roots it in place.", "free_swap": true}
+  "nimble": {"label": "Nimble", "text": "Steps back for free: no Energy cost, and nothing roots it in place.", "free_swap": true},
+  "storm_lantern": {"label": "Storm Lantern", "text": "Its flame burns in any wind: fog, Daze and Muddle never spoil its aim.", "steady_aim": true}
+ },
+ "gear_traits": {"storm_lantern": ["storm_lantern"]},
+ "gift_icons": {
+  "_doc": "Small marks drawn beside a Spirling's name once its gift showed itself (KAMPF_PLAN_1000 items 241, 263). A gift takes the first icon in 'order' whose 'keys' it carries, else 'default'. Rows are 5 wide, '#' is ink.",
+  "order": ["guard", "mend", "swift", "spark", "strike", "aim"],
+  "icons": {
+   "guard": {"keys": ["immune", "super_taken", "resist_taken", "phys_taken", "no_recoil", "status_half", "field_proof"], "rows": ["#####", "#...#", "#...#", ".#.#.", "..#.."]},
+   "mend": {"keys": ["regen_div", "drowse_heal_div", "swap_cure", "pith_heal"], "rows": ["..#..", "..#..", "#####", "..#..", "..#.."]},
+   "swift": {"keys": ["first_act", "free_swap"], "rows": ["..#..", "...#.", "#####", "...#.", "..#.."]},
+   "spark": {"keys": ["cost_cut", "field_energy", "full_energy_mult", "field_extra", "enter_team_stage"], "rows": ["...#.", "..#..", ".###.", "..#..", ".#..."]},
+   "strike": {"keys": ["multi_mult", "solo_mult", "crit_mult", "low_hp_boost", "field_double", "contact_scorch", "contact_status"], "rows": ["#...#", ".#.#.", "..#..", ".#.#.", "#...#"]},
+   "aim": {"keys": ["steady_aim"], "rows": [".###.", "#...#", "#.#.#", "#...#", ".###."]}
+  },
+  "default": {"rows": ["..#..", ".#.#.", "#...#", ".#.#.", "..#.."]}
  },
  "boss_traits": {"ashen_heart": "hush_core", "drowned_heart": "hush_core", "mist_heart": "hush_core"},
  "prism_trait": {"id": "prism_skin", "share": 4},

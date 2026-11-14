@@ -291,7 +291,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 ## Traits
 
-241. [ ] Trait im Info-Streifen nach der ersten Auslösung zeigen
+241. [x] Trait im Info-Streifen nach der ersten Auslösung zeigen (InfoStrip.set_gifts: Marke und Name erst nach dem ersten Wirken, TraitKit.mark_seen)
 242. [x] Trait-Auslösung als kurze Meldung im Log
 243. [x] Zweiter Trait für entwickelte Spirlings (wählbar) (Bonus-Gabe neben der eigenen, im Team-Menü wählbar (TraitKit.bonus_options, PauseMenu 'Bonus gift'))
 244. [x] Versteckter Trait selten bei Prisma-Spirlings (jeder vierte Prisma-Spirling trägt 'Prism Skin' (TraitKit.prism_trait_id))
@@ -310,10 +310,10 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 257. [x] Trait 'Wurzeln' (bestehend Deep Roots) (im Gabenbuch)
 258. [x] Trait 'Last Stand' (bestehend) sichtbar machen, wenn aktiv (bestehend: BattleModel zeigt den Trait beim ersten Wirken unter 1/3 HP)
 259. [x] Trait-Balance-Bericht (tools/balance/trait_report.py)
-260. [ ] Trait-Wechsel-Gegenstand
-261. [ ] KI kennt Traits der Gegner nur, wenn sie aufgedeckt wurden (Fairness)
+260. [x] Trait-Wechsel-Gegenstand (Turncoat Seed: eigene oder verborgene Gabe, auf jedem Ring, HiddenGifts.swap; Thornridge-Laden)
+261. [x] KI kennt Traits der Gegner nur, wenn sie aufgedeckt wurden (Fairness) (TraitKit.known_immune in BattleAI)
 262. [x] Meister-KI meidet Status gegen immune Traits (umgesetzt) (bestehend: BattleAI meidet Status gegen immune Gaben (Stufe 3))
-263. [ ] Trait-Icons klein neben dem Namen
+263. [x] Trait-Icons klein neben dem Namen (5-px-Marken je Gaben-Art, data/kampf_kit.json gift_icons)
 264. [x] Trait-Texte übersetzt (bestehend) (bestehend, neue Gaben in tools/i18n/de_kampf_traits.py)
 265. [x] Traits in Online-Duellen gleich (Gaben liegen im BattleModel und im Spielstand (bonus_trait), Online-Duelle nutzen dasselbe Modell)
 266. [x] Trait-Namen eigenständig prüfen (Test: keine Namensdopplung (test_trait_kit.gd), ip_check)
@@ -329,7 +329,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 276. [x] Trait-Auswirkung im Schadensvorschau-Wert berücksichtigen (bestehend über damage_mult) (TraitKit.static_mult fließt in BattleRules.damage_mult)
 277. [x] Trait-Tests pro Trait (tests/unit/test_trait_kit.gd)
 278. [x] Trait-Kombinationen mit gehaltenen Gegenständen prüfen (Test: Echo Soul + Lantern Glass, Field Runner + Glutstein)
-279. [ ] Trait 'Sturmlaterne' für den Storm-Lantern-Träger
+279. [x] Trait 'Sturmlaterne' für den Storm-Lantern-Träger (Bonus-Gabe 'Storm Lantern' mit der Laterne im Gepäck: Nebel, Benommenheit und Wirr stören das Zielen nicht)
 280. [x] Trait-Zähler im Kampfende-Bericht (TraitKit.count_gift/gift_report: jede Auslösung deiner Gaben, 'Gifts at work: ... x3' im Kampflog)
 
 ## Gehaltene Gegenstände
@@ -466,9 +466,9 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 401. [x] Boss-Phasen: bei der Hälfte der HP erwacht der Boss, Stufen steigen, neue Ansage
 402. [x] Mehrere Phasen pro Boss (z. B. 66 % und 33 %) (erledigt: dritte Phase bei 25 %, BossRules.LATE_PHASES)
 403. [x] Boss-Phase wechselt das Feld (erledigt: BattleRules.BOSSES[id].phase.field)
-404. [ ] Boss-Phase ruft einen Wächter
-405. [ ] Boss-HP-Leiste mit Phasen-Markierungen
-406. [ ] Boss-Musik wechselt mit der Phase
+404. [x] Boss-Phase ruft einen Wächter (BattleRules.BOSSES.drowned_heart.phase.guard, BossRules.call_guard: ab Veteran in einen freien Platz neben dem Boss)
+405. [x] Boss-HP-Leiste mit Phasen-Markierungen (BattleInfo.phase_marks: alle noch kommenden Phasen, InfoStrip.phase_marks)
+406. [x] Boss-Musik wechselt mit der Phase (BossRules.PHASE_MUSIC: warden, dann neues battle_heart je Ära)
 407. [x] Boss-Aktionen pro Zug (bestehend) sichtbar (erledigt: Boss-Ansage nennt 'It acts %d times each turn.')
 408. [x] Boss-Schwächen als Rätsel (z. B. Feld nutzen) (erledigt: Halte-Feld pro Boss, BossRules.HOLD_FIELD, Hinweis auf der Lexikon-Seite)
 409. [x] Warden-Regeln (bestehend) erweitern: 'Stille Luft', 'Ebbe' (erledigt: Regeln still_air und ebb in BattleRules.RULES)
@@ -477,10 +477,10 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 412. [x] Warden-Texte nach dem Kampf (bestand: npc-Schlüssel defeat, z. B. cinder_rift/orrin_defeat)
 413. [x] Boss-Lexikon (erledigt: Lexikon-Seiten boss_*, BossRules.LEXICON)
 414. [x] Boss-Statistik (Züge, Schaden) (erledigt: records.boss_stats (Siege, beste und letzte Rundenzahl), BossRules.note_win)
-415. [ ] Boss-Belohnungen pro Schwierigkeit
+415. [x] Boss-Belohnungen pro Schwierigkeit (data/boss_hall.json rewards: Geldfaktor und Gegenstände, BossHall)
 416. [x] Boss-Kampf-Speicherpunkt (BattleCheckpoint.save_point_line)
-417. [ ] Boss-Wiederholung im Endgame
-418. [ ] Boss-Rush-Modus
+417. [x] Boss-Wiederholung im Endgame (Rissherzen auf Hollis' Brett nach Akt I, BossRunner.echo)
+418. [x] Boss-Rush-Modus (Herzenhatz: alle geflickten Herzen ohne Rast, BossHall.note_rush, BossRunner.rush)
 419. [x] Boss im Online-Weltziel (bestehend) mit Phasen (Raid-Wächter: RaidRules.phases in data/raid_rules.json bei 50 % und 25 % Reststärke, Phase fest pro Versuch (raid_attempts.phase, 20261114032010_kampf_k32.sql), BattleModel.raid_phase)
 420. [x] Boss-KI immer mindestens Stufe 2 (erledigt: TrainerData.BOSS_MIN_AI)
 421. [x] Boss-Status-Dauer halbiert (erledigt: BossRules.status_turns)
@@ -672,7 +672,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 595. [x] Info: Priorität als Pfeil (^ vor dem Namen der Technik)
 596. [x] Info: Genauigkeit als Prozent
 597. [x] Info: Kategorie-Symbol (BattleHelp.KIND_MARK auf der Technik-Karte)
-598. [x] Info: Boss-Phasen-Marken (InfoStrip.phase_mark)
+598. [x] Info: Boss-Phasen-Marken (InfoStrip.phase_marks)
 599. [x] Info: Regel-Banner bei Warden (RuleBanner.gd)
 600. [x] Info: Seed im Log (BattleInfo.facts)
 
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-964 von 1000 Punkten umgesetzt.
+975 von 1000 Punkten umgesetzt.
 

@@ -939,7 +939,11 @@ func _raid_phases(guardian: Spirling) -> void:
 
 ## Announces phase [param p], applies its stages and field, then opens the weak point (item 431).
 func _enter_boss_phase(boss: Spirling, p: Dictionary) -> void:
-	emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "text": str(p.get("text", ""))})
+	# "phase" (2, then 3 and on) lets the scene change the music (item 406).
+	emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "text": str(p.get("text", "")),
+		"phase": 2 + boss_late_done})
+	if p.get("guard") is Dictionary:
+		BossRules.call_guard(self, boss, p.guard)
 	var st: Dictionary = p.get("stage", {})
 	for stat: String in st:
 		change_stage(Side.FOE, stat, int(st[stat]), 0)
@@ -1600,6 +1604,7 @@ func _do_move(a: BattleAction) -> void:
 			continue
 		if TechniqueRules.blocks_hit(self, target_side, t_slot, target, mv):
 			continue
+		TraitKit.on_aim(self, side, slot, me, mv)
 		var acc: float = hit_chance(me, mv, target)
 		var marked: bool = mv.is_damaging() and StatusRules.sure_hit(target.status)
 		if acc < 1.0 and rng.randf() >= acc:
@@ -1718,8 +1723,10 @@ func _do_rest(a: BattleAction) -> void:
 func hit_chance(me: Spirling, mv: MoveData, target: Spirling = null) -> float:
 	if target != null and mv.is_damaging() and StatusRules.sure_hit(target.status):
 		return 1.0
-	return clampf(mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult")
-		* (sight_mult if is_wild else 1.0), 0.0, 1.0)
+	# Storm Lantern (KAMPF_PLAN_1000 item 279): fog and blurring conditions leave its aim alone.
+	var steady: bool = TraitKit.steady_aim(me)
+	return clampf(mv.accuracy * (1.0 if mv.ignore_daze or steady else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult")
+		* (sight_mult if is_wild and not steady else 1.0), 0.0, 1.0)
 
 ## Tells every Spirling of both teams which element the place's own field makes cheaper (item 75).
 ## Only the place's own field counts (a storm overhead, a map's field): a field called by an art
