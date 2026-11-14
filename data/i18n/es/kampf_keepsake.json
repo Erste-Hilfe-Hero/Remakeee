@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_keepsake, written by tools/i18n/locales_kampf_keepsake.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s drops its %s for the %s. That was its whole turn.": "%s suelta %s por %s. Ahí se le va todo el turno.",
+  "%s takes up the %s. That was its whole turn.": "%s se pone %s. Ahí se le va todo el turno.",
+  "Keepsake sets": "Conjuntos de recuerdos",
+  "Keepsake sets of %s": "Conjuntos de recuerdos de %s",
+  "Keepsake: putting it on takes the whole turn.": "Recuerdo: ponérselo cuesta todo el turno.",
+  "No %s left in the bag for %s.": "No queda %s en la bolsa para %s.",
+  "Put this set on": "Ponerse este conjunto",
+  "Save what it holds now": "Guardar lo que lleva ahora",
+  "Save what it holds, or put a saved set back on.": "Guarda lo que lleva o vuelve a ponerle un conjunto guardado.",
+  "Set %d: %s": "Set %d: %s",
+  "Whole team: put on set %d": "Todo el equipo: ponerse el conjunto %d",
+  "empty": "vacío",
+  "holds %s": "lleva %s"
+ }
+}

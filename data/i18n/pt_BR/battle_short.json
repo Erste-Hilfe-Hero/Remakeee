@@ -2,6 +2,7 @@
  "_comment": "pt_BR short words for the battle screen (German table battle_short), keyed by the English text. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
  "strings": {
   "Bond (battle button)": "Laço",
+  "Give up (battle button)": "Ceder",
   "Growth (bar label)": "Cresc.",
   "Item (battle button)": "Bolsa",
   "Leave (battle button)": "Fugir",

@@ -1,0 +1,18 @@
+{
+ "_comment": "Simplified Chinese texts for the German table kampf_k21. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "%d s left, then everyone without orders rests.": "还剩%d秒，之后没有指令的都会休息。",
+  "%s is about to step out. Swap first?": "马上要出场的是%s。先换人吗？",
+  "%s, you're up. Last longer than the last one.": "%s，轮到你了。撑得比上一个久点。",
+  "A Wayfarer names its next Spirling before it steps out.": "旅人会先说出下一只要派出的Spirling。",
+  "All rest": "全员休息",
+  "Fight on": "继续战斗",
+  "Foe announces: %s": "预告：%s",
+  "Give up? It counts as a loss.": "认输吗？算作失败。",
+  "Orders for %s? (%d Energy, %d s)": "要给%s下什么指令？（%d能量，%d秒）",
+  "Swap offer: %s": "换人机会：%s",
+  "The foe": "对手",
+  "When a Wayfarer's Spirling is beaten, you may swap before the next one steps out.": "击败旅人的Spirling后，可以在下一只出场前换人。",
+  "You give up. %s doesn't even pretend to be surprised.": "你认输了。%s连惊讶都懒得装。"
+ }
+}

@@ -164,6 +164,9 @@ func _build_name_box() -> void:
 
 ## Chimora is online only: nothing past the title works without the server (item 1).
 func _go_online() -> void:
+	# The update panel at load (docs/LIVE_CONTENT.md): Play's in-app update, the itch.io download
+	# or the App Store page, before the server is even asked.
+	await _offer_update()
 	while true:
 		# Another device took the account (plan item 3010): only play here when the player says so.
 		if Online.kicked:
@@ -187,11 +190,12 @@ func _go_online() -> void:
 			continue
 		if st == Online.State.UPDATE_REQUIRED:
 			_status.text = ""
-			# A button opens the store page directly (item 2148).
-			var u: int = await _menu.pick_strings("A new version of Chimora is out. Please update it in the store to keep playing.",
-				["Update", "Try again"] as Array[String], false)
-			if u == 0:
-				MenuHost.open_url.call(Online.store_url())
+			# The update panel updates in the game where it can, otherwise opens the store page (item 2148).
+			if await Online.updater.offer("required") == AppUpdate.NONE:
+				var u: int = await _menu.pick_strings("A new version of Chimora is out. Please update it in the store to keep playing.",
+					["Update", "Try again"] as Array[String], false)
+				if u == 0:
+					MenuHost.open_url.call(Online.store_url())
 			continue
 		_status.text = "No connection"
 		var idx: int = await _menu.pick_strings(Online.error_text() + "\n" + Loc.t("Your journeys are safe on the server."),
@@ -199,19 +203,25 @@ func _go_online() -> void:
 		if idx == 1:
 			await _menu.run_settings()
 
-## Once per app start: a newer build is in the store (App Store lookup or the live content's
-## "latest" for this platform), so offer it. Below "min_client" connect_now already stopped.
+## At load and once more after connecting, once per app start each: a newer build is out (Play's
+## in-app update, the App Store lookup or the live content's "latest" for this platform), so the
+## update panel offers it. Below "min_client" connect_now already stopped.
 static var _update_offered: bool = false
+static var _offered_state: String = ""
 
 func _offer_update() -> void:
-	if _update_offered:
+	if Online.store_version.is_empty():
+		await Online.check_store()
+	var state: String = Online.update_state()
+	# The fresh patch after connecting can say more than the cached one at load.
+	if _update_offered and (state == _offered_state or state == "none"):
 		return
+	var first: bool = not _update_offered
 	_update_offered = true
-	await Online.check_store()
-	if Online.update_state() != "optional":
-		return
-	if await _menu.pick_strings("A new version of Chimora is out.", ["Update", "Later"] as Array[String], false) == 0:
-		MenuHost.open_url.call(Online.store_url())
+	_offered_state = state
+	# Play is asked only at load; after connecting the live content alone decides.
+	if first or state != "none":
+		await Online.updater.offer(state)
 
 ## "Connecting..." with moving dots, a note after 5 s and another after 15 s (item 2127).
 static func connecting_text(seconds: float) -> String:
@@ -289,6 +299,7 @@ func _run() -> void:
 		if _used_slots() > 1:
 			items.append("Load...")
 		items.append("What's new")
+		items.append("Join our Discord")
 		items.append("Settings")
 		_at_root = true
 		StartupLog.mark("title menu ready")
@@ -339,6 +350,8 @@ func _run() -> void:
 					return
 			"What's new":
 				await _menu.run_news()
+			"Join our Discord":
+				_menu.open_discord()
 			"Settings":
 				await _menu.run_settings()
 

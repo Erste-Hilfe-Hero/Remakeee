@@ -43,7 +43,7 @@ func test_battle_commands_fit_their_buttons_in_every_language() -> void:
 		_era(era)
 		for lang: String in Loc.LANGUAGES:
 			Loc.set_language(lang)
-			for words: Array in [["Bond", "Leave"], ["Oath", "Leave"], ["Bond", "Restart"], ["Oath", "Restart"]]:
+			for words: Array in [["Bond", "Leave"], ["Oath", "Leave"], ["Bond", "Restart"], ["Oath", "Restart"], ["Oath", "Give up"]]:
 				var menu := CommandMenu.new()
 				menu.theme = EraBattleHud.theme(era)
 				add_child_autofree(menu)

@@ -128,7 +128,7 @@ func test_favourite_art_and_order() -> void:
 	assert_eq(BattleComfort.favourite_row(s), -1)
 	assert_true(BattleComfort.toggle_favourite(s, 1))
 	assert_eq(BattleComfort.favourite_row(s), 1)
-	assert_true(str(BattleComfort.art_rows(s)[1].text).begins_with("* "))
+	assert_true(str(BattleComfort.art_rows(s)[1].text).begins_with(BattleComfort.FAV_MARK + " "))
 	assert_eq(BattleComfort.first_row(-1, s), 1, "no art used yet: the favourite")
 	assert_eq(BattleComfort.first_row(0, s), 0, "the last art wins")
 	assert_true(BattleComfort.move_art(s, 1, 0))
@@ -182,7 +182,9 @@ func test_battle_settings_toggle() -> void:
 func test_big_buttons_make_the_menu_taller_and_are_saved() -> void:
 	var era: int = 1
 	assert_eq(BattleComfort.menu_height(era, false), EraBattleHud.menu_height(era))
-	assert_eq(BattleComfort.menu_height(era, true), EraBattleHud.menu_height(era) + (Spirling.MAX_MOVES + 1) * BattleComfort.BIG_EXTRA)
+	# Era I: the four art rows and both command rows grow (item 896 sets their least height).
+	var grow: int = Spirling.MAX_MOVES * (BattleComfort.art_h(era, true) - BattleComfort.art_h(era, false)) + 2 * (BattleComfort.command_h(era, true) - BattleComfort.command_h(era, false))
+	assert_eq(BattleComfort.menu_height(era, true), EraBattleHud.menu_height(era) + grow)
 	GameState.big_buttons = true
 	var d: Dictionary = GameState.settings_to_dict()
 	GameState.big_buttons = false

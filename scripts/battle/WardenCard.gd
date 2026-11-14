@@ -5,6 +5,22 @@ extends RefCounted
 
 ## Pixels between two Spirlings' symbol groups on the picture.
 const GAP: int = 4
+## KAMPF_PLAN_1000 item 111: each Rift's Warden has one theme element (data/warden_themes.json).
+const THEMES_PATH: String = "res://data/warden_themes.json"
+static var _themes: Dictionary = {}
+
+## Warden id -> element name ("EMBER"), from THEMES_PATH.
+static func themes() -> Dictionary:
+	if _themes.is_empty():
+		var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(THEMES_PATH))
+		if d is Dictionary and (d as Dictionary).get("themes") is Dictionary:
+			_themes = d.themes
+	return _themes
+
+## The theme element of the Warden of [param def] (its "warden" id), or -1.
+static func theme(def: Dictionary) -> int:
+	var key: String = str(themes().get(str(def.get("warden", "")), ""))
+	return Elements.E.keys().find(key)
 
 ## The card text for [param def] (already a Second Trial def if it is one). A [param cap] below
 ## the top ring (Veteran and up, item 736) adds the ring cap beside the Warden's highest ring.
@@ -15,6 +31,9 @@ static func text(def: Dictionary, team: Array[Spirling], difficulty: int, cap: i
 		lines.append(Loc.t("No rule."))
 	for r: String in rules:
 		lines.append(Loc.t("Rule, %s: %s") % [Loc.t(str(BattleRules.RULES[r].label)), Loc.t(str(BattleRules.RULES[r].text))])
+	var th: int = theme(def)
+	if th >= 0:
+		lines.append(Loc.t("Rift theme: %s") % Elements.element_name(th))
 	lines.append(Loc.t("Spirlings: %d") % team.size())
 	if cap > 0 and cap < Spirling.STORY_RING and not team.is_empty():
 		var top: int = 0

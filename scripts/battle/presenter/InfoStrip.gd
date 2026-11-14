@@ -62,14 +62,21 @@ var _pip_tween: Tween
 var spirling_name: String = ""
 ## Element symbols drawn after the name (shape, not colour, tells them apart).
 var elements: Array[int] = []
+## KAMPF_PLAN_1000 item 113: after a very effective hit the symbols of the elements that took it
+## hop twice (glyph_hop). Under reduced motion they only stand out on a paper rim while it lasts.
+const GLYPH_HOP_TIME: float = 0.45
+const GLYPH_HOP_PX: int = 3
+## 1 -> 0 while the hop runs; [member _kick_element] is the element of the art that hit.
+var _kick: float = 0.0
+var _kick_element: int = -1
 var level: int = 1
 var status: String = ""
 ## Turns left on [member status], shown as a small number under its tag (0 = open-ended, no number).
 var status_turns: int = 0
-## Share of Vigor where a boss changes phase (BattleInfo.phase_mark), -1 for no mark.
-var phase_mark: float = -1.0:
+## Shares of Vigor where a boss changes phase (BattleInfo.phase_marks), empty for no mark.
+var phase_marks: Array[float] = []:
 	set(v):
-		phase_mark = v
+		phase_marks = v
 		queue_redraw()
 var speed_scale: float = 1.0
 ## Stat stages shown as small up/down arrows after the Energy pips.
@@ -84,6 +91,9 @@ var slant_left: bool = true
 var caught: bool = false
 ## From Era II: a Gleam or Prism (a four-ray glint by the ring number).
 var spark: bool = false
+## The held keepsake shown as its icon at the right end of the Energy row (KAMPF_PLAN_1000
+## 281, KeepsakeKit.strip_item): "" for none or a foe's that has not shown itself yet.
+var held: String = ""
 ## Era V: pixels the plate still has to glide to its place.
 var slide: float = 0.0
 ## Era V: how far the battle camera pushed the plate (BattleHud sets it each frame).
@@ -113,6 +123,7 @@ func set_spirling(s: Spirling) -> void:
 	tax = s.energy_tax
 	caught = not show_xp and s.data != null and Collection._bonded(s.data.species_name)
 	spark = s.gleam or s.prism
+	held = KeepsakeKit.strip_item(s, show_xp or GameState.party.has(s))
 	xp_frac = xp_fraction(s)
 	xp_left = s.xp_to_next()
 	_stop_xp()
@@ -161,6 +172,10 @@ func _stop_xp() -> void:
 
 func _set_xp_shown(v: float) -> void:
 	xp_shown = v
+	queue_redraw()
+
+func set_held(id: String) -> void:
+	held = id
 	queue_redraw()
 
 func set_tax(turns: int) -> void:
@@ -281,6 +296,8 @@ func screen_reader_text() -> String:
 			t += ", " + Loc.t("%d turns left") % status_turns
 	if tax > 0:
 		t += ", " + Loc.t("Energy tax %d" % tax)
+	if not held.is_empty():
+		t += ", " + Loc.t("holds %s") % Loc.t(str(Database.item(held).get("name", held)))
 	# Stages with their factor (KAMPF_PLAN_1000 item 222).
 	for stat: String in BattleRules.STAGE_STATS:
 		if int(stages.get(stat, 0)) != 0:
@@ -329,7 +346,7 @@ func _draw() -> void:
 	var bar_w: float = w
 	var tag_right: float = w
 	if not status.is_empty():
-		var tag: String = StatusRules.label(status).substr(0, 3).to_upper()
+		var tag: String = StatusRules.tag(status)
 		var bold: bool = UITheme.high_contrast
 		var tw: float = font.get_string_size(tag, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + (1.0 if bold else 0.0)
 		# The status symbol (item 162) sits left of the letters, so the tag reads by shape too.
@@ -356,9 +373,10 @@ func _draw() -> void:
 	# Notches every few pixels make the bar read as a measured scale, like a map ruler.
 	for x: int in range(TICK_STEP, int(bar_w) - 1, TICK_STEP):
 		draw_rect(Rect2(x, bar_y + 1, 1, 1), UITheme.INK)
-	# Boss phase mark (KAMPF_PLAN item 598): a tall notch where the second phase starts.
-	if phase_mark > 0.0 and phase_mark < 1.0:
-		draw_rect(Rect2(roundf(bar_w * phase_mark), bar_y - 1, 1, bar_h + 2), UITheme.INK)
+	# Boss phase marks (KAMPF_PLAN items 598, 405): a tall notch where each phase still to come starts.
+	for at: float in phase_marks:
+		if at > 0.0 and at < 1.0:
+			draw_rect(Rect2(roundf(bar_w * at), bar_y - 1, 1, bar_h + 2), UITheme.INK)
 	# Row 3: Energy pips, stat arrows, the Energy tax and (narrow plate) the element symbols.
 	var row3: float = float(rows.row3_y)
 	var row3_h: float = float(rows.row3_h)
@@ -380,6 +398,8 @@ func _draw() -> void:
 		limit -= 2.0
 		if marked:
 			limit = _draw_marks(limit, row3 + floorf(row3_h / 2.0), c.ink, Color(XP_ON))
+	if not held.is_empty():
+		limit = _draw_held(limit, row3, row3_h)
 	# The turns left on the status, under its tag (item 163): only for a status that runs out.
 	var turns: String = StatusRules.turns_tag(status_turns) if not status.is_empty() else ""
 	if not turns.is_empty():
@@ -428,12 +448,37 @@ func _draw_marks(right: float, mid_y: float, col: Color, spark_col: Color) -> fl
 
 func _draw_elements(at: Vector2, on_band: bool) -> void:
 	var x: float = at.x
+	var reduced: bool = Juice.reduced()
 	for el: int in elements:
-		if on_band:
-			draw_texture(ElementIcons.outlined(el, BattleUiStyle.badge_color(era, el), UITheme.BG), Vector2(x - 1.0, at.y - 1.0))
+		var kicked: bool = _kick > 0.0 and glyph_kicked(_kick_element, el)
+		var y: float = at.y + (glyph_hop(_kick, reduced) if kicked else 0)
+		# High contrast (item 108) and a kicked symbol under reduced motion get the 9 px rimmed symbol.
+		if on_band or UITheme.high_contrast or (kicked and reduced):
+			draw_texture(ElementIcons.outlined(el, BattleUiStyle.badge_color(era, el), UITheme.BG), Vector2(x - 1.0, y - 1.0))
 		else:
-			draw_texture(ElementIcons.texture(el, BattleUiStyle.badge_color(era, el)), Vector2(x, at.y))
+			draw_texture(ElementIcons.texture(el, BattleUiStyle.badge_color(era, el)), Vector2(x, y))
 		x += ElementIcons.SIZE + 1
+
+## Starts the hop of the symbols hit very effectively by an art of [param art_element].
+func kick_glyphs(art_element: int) -> void:
+	_kick_element = art_element
+	if not is_inside_tree() or not elements.any(func(el: int) -> bool: return glyph_kicked(art_element, el)):
+		return
+	var tw: Tween = create_tween()
+	tw.tween_method(func(v: float) -> void:
+		_kick = v
+		queue_redraw(), 1.0, 0.0, GLYPH_HOP_TIME / maxf(speed_scale, 0.1))
+
+## True when [param art_element] hits the element [param el] very effectively.
+static func glyph_kicked(art_element: int, el: int) -> bool:
+	return art_element >= 0 and Elements.single(art_element, el) > 1.0
+
+## Vertical offset of a kicked symbol at [param k] (1 -> 0): two hops of up to GLYPH_HOP_PX
+## pixels, whole pixels only; 0 under reduced motion.
+static func glyph_hop(k: float, reduced: bool) -> int:
+	if reduced or k <= 0.0 or k >= 1.0:
+		return 0
+	return -roundi(GLYPH_HOP_PX * absf(sin(k * TAU)))
 
 ## Bonded before: a small filled lozenge (5 px).
 func _draw_caught(at: Vector2, col: Color) -> void:
@@ -569,6 +614,16 @@ func _draw_stages(x0: float, limit: float, row_y: float, row_h: float) -> void:
 			draw_colored_polygon(tri, UITheme.INK)
 			x += 4
 		x += 2
+
+## The held keepsake's icon (item 281), right-aligned at [param right]; returns the left edge
+## it used.
+func _draw_held(right: float, row_y: float, row_h: float) -> float:
+	var tex: ImageTexture = KeepsakeIcons.texture(held, KeepsakeIcons.colour(held, era))
+	if tex == null:
+		return right
+	var x: float = right - KeepsakeIcons.SIZE
+	draw_texture(tex, Vector2(x, row_y + floorf((row_h - KeepsakeIcons.SIZE) / 2.0)))
+	return x - 2.0
 
 ## Energy tax: a small coin and the turns left, right-aligned at [param right]; returns the
 ## left edge it used.

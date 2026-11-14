@@ -395,8 +395,12 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"bench_lessons": "Spirlings on the bench grow too.",
 	"wild_ward": "No wild Spirlings step out while it is on.",
 	"damage_preview": "Shows how hard a move would hit before you choose it.",
+	"big_buttons": "Taller arts and commands in battle, easier to tap.",
+	"easy_battle_text": "Battle lines in short, plain words.",
 	"damage_numbers": "Shows the damage of each hit as a number over the Spirling.",
 	"refill_fruit": "After a battle, a Spirling that ate its held fruit takes the same one from the bag.",
+	"shift_offer": "When a Wayfarer's Spirling is beaten, you may swap before the next one steps out.",
+	"foe_announce": "A Wayfarer names its next Spirling before it steps out.",
 	"bonus_goals": "Optional extra goals in Wayfarer and Warden battles.",
 	"tips": "Short hints the first time something new comes up.",
 	"play_reminder": "A short note after 90 minutes of play.",
@@ -437,6 +441,8 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"tap_to_move": "Tap a tile and your Wayfarer walks there.",
 	"always_run": "Run without holding B. Hold B to walk.",
 	"bond_style": "Mine: tap one button fast. Echo: repeat the call. Calm: echo with no time limit.",
+	"no_rush": "Battle text waits for your tap at any speed, and every bond is the calm echo. Nothing in battle runs on a clock.",
+	"input_delay": "How long menus ignore taps after they appear, so a shaky or late tap picks nothing by mistake.",
 	"one_hand": "Everything sits low on the screen for one thumb.",
 	"swap_ab_touch": "A and B on the touch pad change places.",
 	"swap_ab_pad": "The gamepad's A goes back and B confirms.",
@@ -480,6 +486,8 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["wild_ward", "Wild Ward: %s" % shop_or("wild_ward", "On" if GameState.wild_ward else "Off")],
 				["damage_preview", "Damage preview: %s" % shop_or("damage_preview", "On" if GameState.damage_preview else "Off")],
 				["damage_numbers", "Damage numbers: %s" % ("On" if GameState.damage_numbers else "Off")],
+				["big_buttons", "Big buttons: %s" % ("On" if GameState.big_buttons else "Off")],
+				["easy_battle_text", "Easy text: %s" % ("On" if GameState.easy_battle_text else "Off")],
 				["bonus_goals", "Bonus goals: %s" % ("On" if GameState.bonus_goals else "Off")],
 				["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
 				["play_reminder", "Break reminder: %s" % ("On" if GameState.play_reminder else "Off")],
@@ -490,6 +498,10 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				rows.append(["difficulty", "Challenge: %s" % DIFFICULTY_TEXT[GameState.difficulty] + (" " + Loc.t("(lowered)") if GameState.difficulty_lowered() else "")])
 				rows.append(["iron_oath", "Iron Oath: %s" % ("Sworn" if GameState.iron_oath else "Off")])
 				rows.append(["refill_fruit", "Refill fruit: %s" % ("On" if TraitKit.refill_on() else "Off")])
+				# KAMPF_PLAN_1000 items 9, 10: the swap offer can be switched off on Veteran only.
+				if TurnFlow.shift_setting_shown(GameState.difficulty):
+					rows.append(["shift_offer", "Swap offer: %s" % ("On" if TurnFlow.shift_on() else "Off")])
+				rows.append(["foe_announce", "Foe announces: %s" % ("On" if TurnFlow.announce_on() else "Off")])
 				rows.append(["challenges", "Challenges..."])
 		"sound":
 			rows = [
@@ -566,8 +578,16 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.damage_preview = not GameState.damage_preview
 		"damage_numbers":
 			GameState.damage_numbers = not GameState.damage_numbers
+		"big_buttons":
+			GameState.big_buttons = not GameState.big_buttons
+		"easy_battle_text":
+			GameState.easy_battle_text = not GameState.easy_battle_text
 		"refill_fruit":
 			TraitKit.set_refill(not TraitKit.refill_on())
+		"shift_offer":
+			GameState.flags[TurnFlow.SHIFT_OFF_FLAG] = TurnFlow.shift_on()
+		"foe_announce":
+			GameState.flags[TurnFlow.ANNOUNCE_OFF_FLAG] = TurnFlow.announce_on()
 		"bonus_goals":
 			GameState.bonus_goals = not GameState.bonus_goals
 		"tips":
@@ -833,6 +853,10 @@ func run_controls() -> void:
 				GameState.always_run = not GameState.always_run
 			"bond_style":
 				GameState.bond_style = next_bond_style(GameState.bond_style)
+			"no_rush":
+				GameState.no_rush = not GameState.no_rush
+			"input_delay":
+				GameState.input_delay = BattleCalm.next_delay(GameState.input_delay)
 			"one_hand":
 				GameState.one_hand = not GameState.one_hand
 			"vibration":
@@ -869,6 +893,8 @@ static func controls_rows() -> Array[Array]:
 		["tap_to_move", "Tap to walk: %s" % ("On" if GameState.tap_to_move else "Off")],
 		["always_run", "Always run: %s" % ("On" if GameState.always_run else "Off")],
 		["bond_style", "Bonding: %s" % BOND_STYLE_NAMES.get(GameState.bond_style, "Mine")],
+		["no_rush", "No rush: %s" % ("On" if GameState.no_rush else "Off")],
+		["input_delay", "Tap guard: %s" % BattleCalm.delay_name()],
 		["one_hand", "One-hand layout: %s" % ("On" if GameState.one_hand else "Off")],
 		["swap_ab_touch", "Touch A/B swap: %s" % ("On" if GameState.swap_ab_touch else "Off")],
 		["swap_ab_pad", "Pad A/B swap: %s" % ("On" if GameState.swap_ab_pad else "Off")],
@@ -984,6 +1010,9 @@ static func party_entry(s: Spirling, leader: bool = false) -> Dictionary:
 	var hint: String = Loc.t("Vigor %d/%d" % [s.hp, s.max_hp()])
 	if s.is_fainted():
 		hint += "  " + Loc.t(worn)
+	# A status that lingers after a battle (item 179): its name in the hint, its symbol on the row.
+	if not s.status.is_empty():
+		hint += "  " + Loc.t(StatusRules.label(s.status))
 	# The leader on slot 1 carries a small flag (item 1903).
 	if leader:
 		hint = Loc.t("Leads the team") + "  " + hint
@@ -1017,6 +1046,12 @@ static func _draw_leader_flag(b: Button, ink: Color) -> void:
 	b.draw_line(Vector2(x, top), Vector2(x, bottom), ink)
 	b.draw_colored_polygon(PackedVector2Array([Vector2(x + 1, top), Vector2(x + 6, top + 2.5), Vector2(x + 1, top + 5)]), ink)
 
+## The symbol of a status that stayed on after a battle (item 179, StatusRules.SYMBOLS) at the
+## end of a team row's Vigor bar; nothing without a status.
+static func draw_status_mark(ci: CanvasItem, s: Spirling, at: Vector2, ink: Color) -> void:
+	for px: Variant in StatusRules.symbol(s.status):
+		ci.draw_rect(Rect2(at.x + int(px[0]), at.y + int(px[1]), 1, 1), ink)
+
 static func _draw_party_row(b: Button, s: Spirling, leader: bool = false, ready: bool = false) -> void:
 	var ink: Color = b.get_theme_color("font_focus_color" if b.has_focus() else "font_color", "Button")
 	if leader:
@@ -1033,15 +1068,22 @@ static func _draw_party_row(b: Button, s: Spirling, leader: bool = false, ready:
 		var cx: float = x0 + BAR_WIDTH + 3
 		b.draw_line(Vector2(cx - 2, y - 2), Vector2(cx + 2, y + 2), ink)
 		b.draw_line(Vector2(cx + 2, y - 2), Vector2(cx - 2, y + 2), ink)
+	else:
+		draw_status_mark(b, s, Vector2(x0 + BAR_WIDTH + 2, y - 3), ink)
 	var els: Array[int] = s.elements()
-	var w: float = els.size() * (ElementIcons.SIZE + 1)
-	ElementIcons.draw_row(b, els, Vector2(b.size.x - 3 - w, floorf((b.size.y - ElementIcons.SIZE) / 2.0)), ink)
+	var w: float = els.size() * (ElementIcons.size() + 1)
+	ElementIcons.draw_row(b, els, Vector2(b.size.x - 3 - w, floorf((b.size.y - ElementIcons.size()) / 2.0)), ink, ElementIcons.scale())
 
 ## Settings -> Legal: imprint/privacy/terms links and the engine licence notice.
 ## The community server, opened from Settings > Legal on the title screen and in the pause menu.
 const DISCORD_URL: String = "https://discord.gg/e69SM39rKK"
 ## Opens a link outside the game; tests replace it so no browser starts.
 static var open_url: Callable = func(url: String) -> void: OS.shell_open(url)
+
+## Opens the community server and shows the link in case no browser opens.
+func open_discord() -> void:
+	open_url.call(DISCORD_URL)
+	toast(DISCORD_URL)
 
 func run_legal() -> void:
 	while true:

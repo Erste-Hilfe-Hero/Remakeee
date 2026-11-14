@@ -17,17 +17,20 @@ const NONE: String = ""
 ##   energy_every: the turn's Energy gain is split over this many turns (2 = half the gain)
 ##   sure_hit:    the next damaging art aimed at it can't miss; the hit wears the status off
 ##   random_target: with several foes in front its single-target arts strike a random one
+##   lingers:     stays on after the battle until cured or rested away (not on Story, item 179)
+##   tag:         the short tag on the name plate (KAMPF_PLAN_1000 item 898); each language
+##                gives its own (data/i18n), unique in that language
 const RULES: Dictionary[String, Dictionary] = {
-	"scorch": {"label": "Scorch", "tick_div": 12, "atk_mult": 0.75, "turns": [0, 0]},
-	"soak":   {"label": "Soak",   "spd_mult": 0.5, "turns": [3, 3]},
-	"root":   {"label": "Root",   "tick_div": 12, "blocks_swap": true, "turns": [0, 0]},
-	"jolt":   {"label": "Jolt",   "skip_chance": 0.2, "turns": [0, 0]},
-	"daze":   {"label": "Daze",   "acc_mult": 0.7, "turns": [3, 3]},
-	"drowse": {"label": "Drowse", "sleeps": true, "turns": [2, 2]},
+	"scorch": {"label": "Scorch", "tag": "SCO", "tick_div": 12, "atk_mult": 0.75, "turns": [0, 0], "lingers": true},
+	"soak":   {"label": "Soak", "tag": "SOA",   "spd_mult": 0.5, "turns": [3, 3]},
+	"root":   {"label": "Root", "tag": "ROO",   "tick_div": 12, "blocks_swap": true, "turns": [0, 0], "lingers": true},
+	"jolt":   {"label": "Jolt", "tag": "JOL",   "skip_chance": 0.2, "turns": [0, 0], "lingers": true},
+	"daze":   {"label": "Daze", "tag": "DAZ",   "acc_mult": 0.7, "turns": [3, 3]},
+	"drowse": {"label": "Drowse", "tag": "DRO", "sleeps": true, "turns": [2, 2]},
 	# Plan items 181-183: three statuses of Chimora's own.
-	"spent":  {"label": "Spent",  "energy_every": 2, "turns": [3, 3]},
-	"marked": {"label": "Marked", "sure_hit": true, "turns": [3, 3]},
-	"muddle": {"label": "Muddle", "random_target": true, "acc_mult": 0.9, "turns": [2, 2]},
+	"spent":  {"label": "Spent", "tag": "SPE",  "energy_every": 2, "turns": [3, 3]},
+	"marked": {"label": "Marked", "tag": "MAR", "sure_hit": true, "turns": [3, 3]},
+	"muddle": {"label": "Muddle", "tag": "MUD", "random_target": true, "acc_mult": 0.9, "turns": [2, 2]},
 }
 
 ## A boss (BattleModel.foe_boss) shrugs a status off in half the time (item 190): timed ones last
@@ -52,6 +55,11 @@ static func exists(status: String) -> bool:
 
 static func label(status: String) -> String:
 	return str(RULES.get(status, {}).get("label", ""))
+
+## The short tag on the name plate in the current language (item 898): "SCO", in German "BRA".
+static func tag(status: String) -> String:
+	var t: String = str(RULES.get(status, {}).get("tag", ""))
+	return Loc.t(t) if not t.is_empty() else ""
 
 static func _num(status: String, key: String, default: float) -> float:
 	if not RULES.has(status):
@@ -89,6 +97,17 @@ static func energy_gain(status: String, gain: int, turn: int) -> int:
 ## Turns a boss keeps a status that would last [param turns] (0 = open-ended).
 static func boss_turns(turns: int) -> int:
 	return BOSS_OPEN_TURNS if turns <= 0 else (turns + 1) / 2
+
+## Difficulties on which every status ends with the battle (item 179). On the others a lingering
+## status (Scorch, Root, Jolt) stays on the Spirling until an item, a cure art or a rest takes it.
+const CLEARS_AFTER_BATTLE: Array[int] = [0] # GameState.Difficulty.STORY
+
+static func lingers(status: String) -> bool:
+	return bool(RULES.get(status, {}).get("lingers", false))
+
+## True when [param status] stays on after a battle fought on [param difficulty].
+static func keeps_after_battle(status: String, difficulty: int) -> bool:
+	return lingers(status) and not difficulty in CLEARS_AFTER_BATTLE
 
 static func text(status: String) -> String:
 	return TEXTS.get(status, "")

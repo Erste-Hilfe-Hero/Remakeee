@@ -2284,7 +2284,10 @@
   "ai": 2,
   "money": 900,
   "defeat": "veydal_more/bounty_b11_defeat",
-  "lose": "veydal_more/bounty_b11_lose"
+  "lose": "veydal_more/bounty_b11_lose",
+  "twins": [
+   "Gloamhog"
+  ]
  },
  "bounty_b12": {
   "trainer": "Ex-Bailiff Holloway",

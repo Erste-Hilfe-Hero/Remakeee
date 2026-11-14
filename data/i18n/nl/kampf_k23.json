@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table kampf_k23, written by tools/i18n/locales_kampf_k23.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Battle text waits for your tap at any speed, and every bond is the calm echo. Nothing in battle runs on a clock.": "Gevechtstekst wacht bij elke snelheid op je tik, en elke band is de rustige echo. In een gevecht loopt geen klok.",
+  "How long menus ignore taps after they appear, so a shaky or late tap picks nothing by mistake.": "Hoe lang menu's tikken negeren nadat ze verschijnen, zodat een trillende of late tik niets per ongeluk kiest.",
+  "Long": "Lang",
+  "No rush: %s": "Geen haast: %s",
+  "Nothing moves. Even the foe holds its breath, out of politeness or spite.": "Niets beweegt. Zelfs de tegenstander houdt de adem in, uit beleefdheid of wrok.",
+  "Paused": "Gepauzeerd",
+  "Saved before the boss. If it goes badly, at least the paperwork survives.": "Opgeslagen voor de baas. Gaat het mis, dan overleeft in elk geval het papierwerk.",
+  "Saving before the boss did not work this time.": "Opslaan voor de baas is deze keer niet gelukt.",
+  "Short": "Kort",
+  "Tap guard: %s": "Tikbeveiliging: %s",
+  "The wild Spirling is still here. It waited, and it has not forgiven you for leaving.": "De wilde Spirling is er nog. Hij heeft gewacht en vergeeft je niet dat je wegging."
+ }
+}

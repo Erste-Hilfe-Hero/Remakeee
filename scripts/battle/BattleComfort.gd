@@ -55,11 +55,20 @@ static func move_art(s: Spirling, from: int, to: int) -> bool:
 static func first_row(last: int, s: Spirling) -> int:
 	return last if last >= 0 else favourite_row(s)
 
-## The art list rows for the team menu: a star marks the favourite.
+## Mark in front of the favourite art, in the team menu and on the battle art rows (item 158).
+## "+" like a favourite friend; "*" already stands for focus arts (BattleHelp.KIND_MARK).
+const FAV_MARK: String = "+"
+
+## [constant FAV_MARK] when [param mv] is [param s]'s favourite art, else "".
+static func fav_mark(s: Spirling, mv: MoveData) -> String:
+	return FAV_MARK if s != null and mv != null and not s.fav_art.is_empty() and mv.move_name == s.fav_art else ""
+
+## The art list rows for the team menu: a plus marks the favourite.
 static func art_rows(s: Spirling) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for mv: MoveData in s.moves:
-		out.append({"text": ("* " if mv.move_name == s.fav_art else "") + mv.move_name,
+		var fav: String = fav_mark(s, mv)
+		out.append({"text": (fav + " " if not fav.is_empty() else "") + mv.move_name,
 			"hint": "%s %s" % [BattleHelp.kind_mark(mv.kind), Loc.t(Elements.element_name(mv.element))]})
 	return out
 
@@ -109,8 +118,11 @@ static func option_rows() -> Array[Array]:
 		["speed", Loc.t("Battle speed: %dx") % int(GameState.battle_speed_scale())],
 		["text", Loc.t("Text speed: %s") % Loc.t(GameState.TextSpeed.keys()[GameState.text_speed].capitalize())],
 		["big", Loc.t("Big buttons: %s") % Loc.t("On" if GameState.big_buttons else "Off")],
+		["aim", Loc.t("Auto aim: %s") % Loc.t("On" if GameState.auto_aim else "Off")],
 		["motion", Loc.t("Less motion: %s") % Loc.t("On" if GameState.reduce_motion else "Off")],
 		["shake", Loc.t("Screen shake: %s") % Loc.t(["Off", "Weak", "Full"][clampi(GameState.screen_shake, 0, 2)])],
+		["no_rush", Loc.t("No rush: %s") % Loc.t("On" if GameState.no_rush else "Off")],
+		["input_delay", Loc.t("Tap guard: %s") % Loc.t(BattleCalm.delay_name())],
 	]
 	if ShopEffects.owns_setting("damage_preview"):
 		rows.insert(1, ["preview", Loc.t("Damage preview: %s") % Loc.t("On" if GameState.damage_preview else "Off")])
@@ -127,10 +139,16 @@ static func toggle_option(key: String) -> bool:
 			GameState.text_speed = MenuHost.next_text_speed(GameState.text_speed)
 		"big":
 			GameState.big_buttons = not GameState.big_buttons
+		"aim":
+			GameState.auto_aim = not GameState.auto_aim
 		"motion":
 			GameState.reduce_motion = not GameState.reduce_motion
 		"shake":
 			GameState.screen_shake = (GameState.screen_shake + 1) % 3
+		"no_rush":
+			GameState.no_rush = not GameState.no_rush
+		"input_delay":
+			GameState.input_delay = BattleCalm.next_delay(GameState.input_delay)
 		_:
 			return false
 	return true
@@ -140,9 +158,36 @@ static func toggle_option(key: String) -> bool:
 static func big_extra(on: bool = GameState.big_buttons) -> int:
 	return BIG_EXTRA if on else 0
 
-## Height of the command panel: the era's own, plus every row's extra with Big buttons on.
+## Button sizes (896): with Big buttons every art row and command grows by BIG_EXTRA and is at
+## least as tall as data/battle_ui.json "big_button_min" says, so Era I's small rows reach a
+## finger-sized target too.
+static func big_min(kind: String) -> int:
+	return int((HpBarStyle.cfg().get("big_button_min", {}) as Dictionary).get(kind, 0))
+
+## Height of an art row in [param era].
+static func art_h(era: int, on: bool = GameState.big_buttons) -> int:
+	var base: int = int(EraBattleHud.num(era, "art_h", 13))
+	return maxi(base + BIG_EXTRA, big_min("art")) if on else base
+
+## Height of a command button (Swap, Item, Bond, Leave) in [param era].
+static func command_h(era: int, on: bool = GameState.big_buttons) -> int:
+	var base: int = int(EraBattleHud.num(era, "command_h", 16))
+	return maxi(base + BIG_EXTRA, big_min("command")) if on else base
+
+## Height of the command panel: the era's own, plus what the art rows and commands grew by.
 static func menu_height(era: int, on: bool = GameState.big_buttons) -> int:
-	return EraBattleHud.menu_height(era) + (Spirling.MAX_MOVES + 1) * big_extra(on)
+	var base: int = EraBattleHud.menu_height(era)
+	if not on:
+		return base
+	var art_grow: int = art_h(era, true) - art_h(era, false)
+	var cmd_grow: int = command_h(era, true) - command_h(era, false)
+	var arts: int = Spirling.MAX_MOVES * art_h(era, false) + Spirling.MAX_MOVES - 1
+	var commands: String = EraBattleHud.text(era, "commands", "row")
+	if commands == "column":
+		var col: int = EraBattleHud.command_column_height(era)
+		return base - maxi(arts, col) + maxi(arts + Spirling.MAX_MOVES * art_grow, col + 4 * cmd_grow)
+	var rows: int = 2 if commands == "grid" else 1
+	return base + Spirling.MAX_MOVES * art_grow + rows * cmd_grow
 
 # --- Interruption (629) --------------------------------------------------------------------------
 

@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table kampf_k23, written by tools/i18n/locales_kampf_k23.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Battle text waits for your tap at any speed, and every bond is the calm echo. Nothing in battle runs on a clock.": "任何速度下战斗文字都会等你点击，每次结缘都是平静的回声。战斗中没有任何计时。",
+  "How long menus ignore taps after they appear, so a shaky or late tap picks nothing by mistake.": "菜单出现后忽略点击多长时间，免得手抖或迟到的点击误选。",
+  "Long": "长",
+  "No rush: %s": "不催促: %s",
+  "Nothing moves. Even the foe holds its breath, out of politeness or spite.": "一切静止。连对手都屏住了呼吸，不知是出于礼貌还是恶意。",
+  "Paused": "暂停",
+  "Saved before the boss. If it goes badly, at least the paperwork survives.": "已在首领战前存档。就算输了，至少文书还在。",
+  "Saving before the boss did not work this time.": "这次首领战前的存档没有成功。",
+  "Short": "短",
+  "Tap guard: %s": "防误触: %s",
+  "The wild Spirling is still here. It waited, and it has not forgiven you for leaving.": "野生的Spirling还在这里。它一直在等，也没有原谅你的离开。"
+ }
+}

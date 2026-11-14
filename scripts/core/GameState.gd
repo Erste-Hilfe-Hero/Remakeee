@@ -157,8 +157,15 @@ var wild_ward: bool = false
 const BENCH_XP_SHARE: float = 0.5
 ## Damage preview: the move list shows the expected share of the foe's HP once its matchup is known.
 var damage_preview: bool = true
-## Big buttons in the battle menu (KAMPF_PLAN item 623), switched in the battle's More list.
+## Big buttons in the battle menu (KAMPF_PLAN items 623, 896), in the battle's More list and Settings, Game.
 var big_buttons: bool = false
+## Auto aim in multi battles (KAMPF_PLAN_1000 386): a damaging art goes at the best foe unasked.
+var auto_aim: bool = false
+## Simple battle text (KAMPF_PLAN_1000 902): battle lines in short, plain words (BattleEvent.easy).
+var easy_battle_text: bool = false:
+	set(v):
+		easy_battle_text = v
+		BattleEvent.easy = v
 ## Damage numbers over a hit Spirling (KAMPF_PLAN_1000 671), off by default.
 var damage_numbers: bool = false
 ## Bonus goals of Wayfarers and Wardens (plan area 2, item 765); off hides them and their rewards.
@@ -190,6 +197,10 @@ var always_run: bool = false
 var bond_style: String = "mine"
 ## "calm" is the echo without a time limit (Kampf-Plan, Barrierefreiheit).
 const BOND_STYLES: Array[String] = ["mine", "echo", "calm"]
+## Tap guard step for menus (BattleCalm.INPUT_DELAYS_MS, KAMPF_PLAN_1000 item 908).
+var input_delay: int = 0
+## "No rush" (item 632): battle text waits for a tap at any speed, bonding is the calm echo.
+var no_rush: bool = false
 ## A and B change places (item 2111), apart for the touch pad and for gamepads.
 var swap_ab_touch: bool = false
 var swap_ab_pad: bool = false
@@ -836,11 +847,11 @@ func from_dict(d: Dictionary) -> void:
 
 func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
-		"bench_xp": bench_xp, "wild_ward": wild_ward, "damage_preview": damage_preview, "big_buttons": big_buttons, "damage_numbers": damage_numbers, "bonus_goals": bonus_goals, "volume": volume,
+		"bench_xp": bench_xp, "wild_ward": wild_ward, "damage_preview": damage_preview, "big_buttons": big_buttons, "easy_battle_text": easy_battle_text, "auto_aim": auto_aim, "damage_numbers": damage_numbers, "bonus_goals": bonus_goals, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"voice_volume": voice_volume, "ambience_volume": ambience_volume, "mono_audio": mono_audio,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "pad_opacity_steps": PAD_ALPHAS.size(), "left_handed": left_handed, "tap_to_move": tap_to_move,
-		"always_run": always_run, "bond_style": bond_style, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad, "tap_vibration": tap_vibration,
+		"always_run": always_run, "bond_style": bond_style, "input_delay": input_delay, "no_rush": no_rush, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad, "tap_vibration": tap_vibration,
 		"one_hand": one_hand, "bag_sort": bag_sort, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice, "auto_text": auto_text,
 		"tips": tips_enabled, "play_reminder": play_reminder, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
@@ -856,6 +867,8 @@ func settings_from_dict(d: Dictionary) -> void:
 	wild_ward = bool(d.get("wild_ward", false))
 	damage_preview = bool(d.get("damage_preview", true))
 	big_buttons = bool(d.get("big_buttons", false))
+	auto_aim = bool(d.get("auto_aim", false))
+	easy_battle_text = bool(d.get("easy_battle_text", false))
 	damage_numbers = bool(d.get("damage_numbers", false))
 	bonus_goals = bool(d.get("bonus_goals", true))
 	pad_size = clampi(int(d.get("pad_size", 1)), 0, PAD_SIZE_NAMES.size() - 1)
@@ -867,6 +880,8 @@ func settings_from_dict(d: Dictionary) -> void:
 	tap_to_move = bool(d.get("tap_to_move", true))
 	always_run = bool(d.get("always_run", false))
 	bond_style = str(d.get("bond_style", "mine")) if str(d.get("bond_style", "mine")) in BOND_STYLES else "mine"
+	input_delay = clampi(int(d.get("input_delay", 0)), 0, BattleCalm.INPUT_DELAYS_MS.size() - 1)
+	no_rush = bool(d.get("no_rush", false))
 	swap_ab_touch = bool(d.get("swap_ab_touch", false))
 	swap_ab_pad = bool(d.get("swap_ab_pad", false))
 	tap_vibration = bool(d.get("tap_vibration", false))
@@ -1278,6 +1293,12 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 			return ""
 		s.hp = maxi(1, int(s.max_hp() * float(it.revive)))
 		msg = "%s is back on its feet!" % s.display_name()
+	elif cures_outside_battle(it, s):
+		# A status that lingers after a battle (item 179); an item that also heals mends too.
+		s.status = ""
+		s.status_turns = 0
+		s.hp = mini(s.max_hp(), s.hp + int(it.get("heal", 0)))
+		msg = "%s is cured." % s.display_name()
 	elif int(it.get("heal", 0)) > 0:
 		if s.is_fainted() or s.hp >= s.max_hp():
 			return ""
@@ -1290,6 +1311,13 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 	if inventory[id] <= 0:
 		inventory.erase(id)
 	return msg
+
+## True when item [param it] ("cure": true or a status name) takes the status off [param s].
+static func cures_outside_battle(it: Dictionary, s: Spirling) -> bool:
+	var cure: Variant = it.get("cure", false)
+	if s.is_fainted() or s.status.is_empty() or cure == null:
+		return false
+	return (cure is bool and cure) or (cure is String and cure == s.status)
 
 func visit_rest(map_id: String, cell: Vector2i) -> void:
 	visited_rests[map_id] = [cell.x, cell.y]
@@ -1384,7 +1412,24 @@ static func relearnable(s: Spirling) -> Array[String]:
 
 ## Relearns [param move_name] with the Move Memory unlock, in place of [param forget] when full.
 func relearn(s: Spirling, move_name: String, forget: int = -1) -> bool:
-	if Billing.unlocked("move_memory") <= 0 or not move_name in relearnable(s):
+	if Billing.unlocked("move_memory") <= 0:
+		return false
+	return _put_art(s, move_name, forget)
+
+## Coins Hesper in the lighthouse takes to dig up one forgotten art (KAMPF_PLAN item 138). The
+## Move Memory unlock does the same anywhere and for free.
+const TEACHER_FEE: int = 500
+
+## Hesper's lesson: relearns [param move_name] for TEACHER_FEE coins, in place of [param forget]
+## when full. No coins change hands when nothing is learned.
+func relearn_at_teacher(s: Spirling, move_name: String, forget: int = -1) -> bool:
+	if money < TEACHER_FEE or not _put_art(s, move_name, forget):
+		return false
+	money -= TEACHER_FEE
+	return true
+
+func _put_art(s: Spirling, move_name: String, forget: int) -> bool:
+	if not move_name in relearnable(s):
 		return false
 	var mv: MoveData = Database.move(move_name)
 	if mv == null:

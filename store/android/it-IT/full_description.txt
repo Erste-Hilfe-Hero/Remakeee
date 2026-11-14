@@ -35,6 +35,14 @@ INSIEME ONLINE
 - Raid, Compagnie con obiettivi settimanali, eventi a tempo e un obiettivo comune ogni settimana
 - I tuoi salvataggi restano al sicuro sul nostro server in Germania e ti seguono su un nuovo telefono
 
+GIOCA A MODO TUO
+- Supporto per lettori di schermo: menu, barre dello scontro, Arti e registro dello scontro vengono letti ad alta voce
+- Testo grande, contrasto elevato e forme per chi è daltonico
+- Movimento ridotto, nessun effetto lampeggiante, tremolio dello schermo e vibrazione regolabili
+- Sottotitoli per i suoni e ogni verso, audio mono e un volume per canale
+- Legame calmo senza limite di tempo, e le battaglie offline ti aspettano sempre
+- Si gioca con touch, tastiera o controller
+
 GIOCO ONESTO
 Gratuito. Acquisti facoltativi nel gioco, alcuni con vantaggi. Nessun contenuto casuale. Niente pubblicità, niente timer di energia, nessun tracciamento.
 

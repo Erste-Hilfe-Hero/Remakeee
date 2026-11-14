@@ -15,6 +15,30 @@ static func config() -> Dictionary:
 	var v: Variant = JSON.parse_string(f.get_as_text())
 	return v if v is Dictionary else {}
 
+## The fields a live duel can be fought on, "" (none) first (KAMPF_PLAN_1000 340); the inviter
+## picks one, the server checks it against server_config.live_duel.fields.
+static func fields(cfg: Dictionary = config()) -> Array[String]:
+	var out: Array[String] = [""]
+	for f: Variant in cfg.get("fields", []):
+		if f is String and BattleRules.FIELDS.has(f):
+			out.append(f)
+	return out
+
+## [param f] when it may be picked, "" for none, null for an unknown field.
+static func field_ok(f: Variant, cfg: Dictionary = config()) -> Variant:
+	var name: String = str(f) if f is String else ""
+	return name if name in fields(cfg) else null
+
+static func field_names(cfg: Dictionary = config()) -> Array[String]:
+	var out: Array[String] = []
+	for f: String in fields(cfg):
+		out.append(field_label(f))
+	return out
+
+## "No field" or the field's name.
+static func field_label(f: String) -> String:
+	return Loc.t("No field") if f.is_empty() or not BattleRules.FIELDS.has(f) else Loc.t(str(BattleRules.FIELDS[f].label))
+
 ## The pick as distinct whole indexes into the shown team, exactly [param need] of them, or null.
 static func check_pick(pick: Variant, shown: int, need: int) -> Variant:
 	if not pick is Array or (pick as Array).size() != need:

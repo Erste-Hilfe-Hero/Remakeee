@@ -81,6 +81,7 @@ T = {
     "Write your road into the book.": "Schreib deinen Weg ins Buch.",
     "Save, then go back to the title.": "Speichern, dann zurück zum Titel.",
     "Hide the menus and take a picture.": "Blende die Menüs aus und mach ein Bild.",
+    "Chat with other Wayfarers, news and tips.": "Chatte mit anderen Wayfarern, News und Tipps.",
     "Sound, controls, display and account.": "Ton, Steuerung, Anzeige und Konto.",
     "Pin up to four entries to the top of this menu.": "Hefte bis zu vier Einträge oben an dieses Menü.",
     "Difficulty, text speed and battle options.": "Schwierigkeit, Textgeschwindigkeit und Kampfoptionen.",

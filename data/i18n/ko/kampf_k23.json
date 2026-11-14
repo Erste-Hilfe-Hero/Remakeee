@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table kampf_k23, written by tools/i18n/locales_kampf_k23.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Battle text waits for your tap at any speed, and every bond is the calm echo. Nothing in battle runs on a clock.": "어느 속도에서도 전투 문장은 터치를 기다리고, 모든 유대는 차분한 메아리가 된다. 전투에서 시계는 돌지 않는다.",
+  "How long menus ignore taps after they appear, so a shaky or late tap picks nothing by mistake.": "메뉴가 나타난 뒤 터치를 얼마나 무시할지. 떨리거나 늦은 터치로 실수로 고르지 않게 한다.",
+  "Long": "길게",
+  "No rush: %s": "느긋하게: %s",
+  "Nothing moves. Even the foe holds its breath, out of politeness or spite.": "아무것도 움직이지 않는다. 상대도 숨을 참는다. 예의인지 악의인지.",
+  "Paused": "일시 정지",
+  "Saved before the boss. If it goes badly, at least the paperwork survives.": "보스 앞에서 저장했다. 일이 틀어져도 서류만큼은 살아남는다.",
+  "Saving before the boss did not work this time.": "이번에는 보스 앞 저장이 되지 않았다.",
+  "Short": "짧게",
+  "Tap guard: %s": "오터치 방지: %s",
+  "The wild Spirling is still here. It waited, and it has not forgiven you for leaving.": "야생 Spirling은 아직 여기 있다. 기다렸고, 떠난 것을 용서하지 않았다."
+ }
+}

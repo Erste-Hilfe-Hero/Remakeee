@@ -1,0 +1,18 @@
+{
+ "_comment": "Dutch texts for the German table kampf_k21. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "%d s left, then everyone without orders rests.": "Nog %d s, dan rust wie geen bevel heeft.",
+  "%s is about to step out. Swap first?": "Zo komt %s. Eerst wisselen?",
+  "%s, you're up. Last longer than the last one.": "%s, jij bent. Hou het langer vol dan de vorige.",
+  "A Wayfarer names its next Spirling before it steps out.": "Een Reiziger noemt zijn volgende Spirling voor hij hem stuurt.",
+  "All rest": "Allen rusten",
+  "Fight on": "Doorvechten",
+  "Foe announces: %s": "Aankondiging: %s",
+  "Give up? It counts as a loss.": "Opgeven? Dat telt als verlies.",
+  "Orders for %s? (%d Energy, %d s)": "Bevelen voor %s? (%d Energie, %d s)",
+  "Swap offer: %s": "Wisselaanbod: %s",
+  "The foe": "De tegenstander",
+  "When a Wayfarer's Spirling is beaten, you may swap before the next one steps out.": "Is een Spirling van een Reiziger verslagen, dan mag je wisselen voor de volgende komt.",
+  "You give up. %s doesn't even pretend to be surprised.": "Je geeft op. %s doet niet eens verbaasd."
+ }
+}

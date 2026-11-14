@@ -1,0 +1,16 @@
+{
+ "_comment": "pt_BR translation of the kampf_k34 table, keyed by the English text.",
+ "strings": {
+  "%s: Wayfarers think at tier %d.": "%s: Viajantes pensam no nível %d.",
+  "At tier 3 the damage guess is the very number your art preview shows.": "No nível 3 a estimativa de dano é exatamente o número que a prévia da sua técnica mostra.",
+  "Foes never see your order or the next roll, and guess swaps only among Spirlings you have shown.": "Rivais nunca veem sua ordem nem a próxima rolagem, e só adivinham trocas para Spirlings que você já mostrou.",
+  "How foes think": "Como os rivais pensam",
+  "Some Wayfarers have a temper of their own: a hothead never swaps, a tactician saves up.": "Alguns Viajantes têm gênio próprio: um esquentado nunca troca, um estrategista economiza.",
+  "Tier 0 picks any art it can pay. Mostly it just bites.": "O nível 0 escolhe qualquer técnica que possa pagar. Quase sempre só morde.",
+  "Tier 1 picks the art that hurts most right now and never passes up a knock-out.": "O nível 1 escolhe a técnica que mais dói agora e nunca deixa passar um nocaute.",
+  "Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup.": "O nível 2 também pesa sua melhor resposta, se cura quando está fraco e troca para sair de um duelo ruim.",
+  "Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, leaves a field that weakens all its arts, guesses your swap and saves Energy up to %d turns ahead.": "O nível 3 nunca desperdiça um estado, só sobe estágios quando é seguro, acaba com os fracos, deixa um campo que enfraquece todas as suas técnicas, adivinha sua troca e guarda Energia até %d turnos à frente.",
+  "Two arts worth the same at tier 3? The battle seed decides, the same seed always the same way.": "Duas técnicas valendo o mesmo no nível 3? A semente da batalha decide, a mesma semente sempre igual.",
+  "Wild Spirlings always pick at random.": "Spirlings selvagens sempre escolhem ao acaso."
+ }
+}

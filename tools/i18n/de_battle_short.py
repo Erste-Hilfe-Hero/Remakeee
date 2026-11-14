@@ -8,5 +8,6 @@ T = {
     "Oath (battle button)": "Schwur",
     "Leave (battle button)": "Gehen",
     "Restart (battle button)": "Neu",
+    "Give up (battle button)": "Passen",
     "Growth (bar label)": "Wachst.",
 }
