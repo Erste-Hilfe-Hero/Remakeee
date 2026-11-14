@@ -1,6 +1,6 @@
 class_name KampfChecks
 extends RefCounted
-## Data checks for the battle tables that live in code (Kampf-Plan 1000, "Balance-Werkzeuge und
+## Data checks for the battle tables in data/battle_tables.json (Kampf-Plan 1000, "Balance-Werkzeuge und
 ## Tests"): every Rift field and every boss with its second phase. DataValidator.validate() adds
 ## these errors, so the data job fails on a broken table before a battle ever meets it.
 

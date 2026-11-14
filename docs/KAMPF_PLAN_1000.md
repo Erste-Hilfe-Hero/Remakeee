@@ -1080,11 +1080,11 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 973. [x] Kampf-Code bleibt reines Modell ohne Nodes (bestehend) (test_kampf_a11y_tech)
 974. [x] Ereignis-basierte Darstellung (bestehend) (BattleEvent, BattleScene)
 975. [x] Neue Effekte über EffectRegistry (bestehend) (scripts/battle/effects)
-976. [ ] Daten in JSON, nicht im Code
+976. [x] Daten in JSON, nicht im Code (data/battle_tables.json: Gaben, Felder, Reaktionen, Regeln, Bosse; test_kampf_k40)
 977. [x] Godot 4.7.2 bleibt (test_engine_stays_on_godot_4_7)
-978. [ ] Leistung auf älteren Handys prüfen
+978. [x] Leistung auf älteren Handys prüfen (data/battle_budget.json, test_kampf_budget: Zugzeit und Ladezeit auf dem Referenzhandy)
 979. [x] APK-Budget (bestehend) (tools/apk_budget.sh)
-980. [ ] Speicher-Budget
+980. [x] Speicher-Budget (data/battle_budget.json memory_mb, leak_kb; test_kampf_budget)
 981. [x] Kampf-Zustand serialisierbar (BattleReplay.snapshot)
 982. [x] Kampf-Replay-Format versioniert (BattleReplay.FORMAT)
 983. [x] Kampf-API dokumentiert (docs/KAMPF_TECHNIK.md)
@@ -1095,9 +1095,9 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 988. [x] Kampf-Online-Server nur eigener Server (docs/ONLINE.md)
 989. [x] Kampf-Fehlerberichte mit Seed (Seed in Replay und Teilcode)
 990. [x] Kampf-Code ohne Debug-Ausgaben in Release (test_battle_code_prints_nothing_in_release)
-991. [ ] Kampf-Mods der Community später über Datenpakete (kein Code)
-992. [ ] Kampf-Datenpakete signiert
-993. [ ] Kampf-Editor für Entwickler
+991. [x] Kampf-Mods der Community später über Datenpakete (kein Code) (BattlePacks: nur Felder, Bosse, Kampf-Setups; keine Pfade oder Skripte)
+992. [x] Kampf-Datenpakete signiert (RSA SHA-256, tools/battle_pack.py, data/battle_pack_keys.json)
+993. [x] Kampf-Editor für Entwickler (tools/battle_editor/battle_editor.tscn, BattleSetup)
 994. [x] Kampf-Doku für neue Mitwirkende (docs/KAMPF_TECHNIK.md)
 995. [x] Kampf-Roadmap in docs/ROADMAP.md (Abschnitt Kampfsystem)
 996. [x] Kampf-Plan regelmäßig aktualisieren (plan_1000.py --check in CI)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-881 von 1000 Punkten umgesetzt.
+887 von 1000 Punkten umgesetzt.
 
