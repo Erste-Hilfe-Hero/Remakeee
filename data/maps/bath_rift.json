@@ -107,7 +107,49 @@
    "win_flags": [
     "rift_v3_bath_sealed",
     "v3_ch2_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Siltaroth",
+      "level": 75
+     },
+     {
+      "species": "Nibravure",
+      "level": 75
+     },
+     {
+      "species": "Burringrand",
+      "level": 76
+     },
+     {
+      "species": "Mordantyrant",
+      "level": 76
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Cindrel",
+      "level": 77
+     },
+     {
+      "species": "Nibquill",
+      "level": 77
+     },
+     {
+      "species": "Burringrand",
+      "level": 78
+     },
+     {
+      "species": "Mordantyrant",
+      "level": 78
+     },
+     {
+      "species": "Cindrel",
+      "level": 73
+     }
+    ]
+   }
   }
  ],
  "signs": [

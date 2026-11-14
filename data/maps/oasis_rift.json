@@ -169,7 +169,53 @@
    "mend_items": [
     "echo_dawn_mend"
    ],
-   "rematch_after": "story_complete"
+   "rematch_after": "story_complete",
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Saltcrown",
+      "level": 51
+     },
+     {
+      "species": "Leviarch",
+      "level": 52
+     },
+     {
+      "species": "Ferrowyn",
+      "level": 51
+     },
+     {
+      "species": "Glasstarn",
+      "level": 51
+     },
+     {
+      "species": "Saltspire",
+      "level": 52
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Saltcrown",
+      "level": 39
+     },
+     {
+      "species": "Leviarch",
+      "level": 40
+     },
+     {
+      "species": "Ferrowyn",
+      "level": 39
+     },
+     {
+      "species": "Glasstarn",
+      "level": 39
+     },
+     {
+      "species": "Saltspire",
+      "level": 40
+     }
+    ]
+   }
   }
  ],
  "signs": [

@@ -1,0 +1,85 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "warden_brisa",
+    "x": 5,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "mist_rift/brisa",
+    "sprite": "warden",
+    "trainer": "Warden Brisa",
+    "warden": "mist",
+    "team": [
+     {
+      "species": "Zephlet",
+      "level": 12
+     },
+     {
+      "species": "Millwhit",
+      "level": 12
+     },
+     {
+      "species": "Tempestrel",
+      "level": 13
+     }
+    ],
+    "intro": "mist_rift/brisa_intro",
+    "defeat": "mist_rift/brisa_defeat",
+    "ai": 2,
+    "money": 950,
+    "rule": "fog_bank",
+    "mend_items": [
+     "echo_tailwind"
+    ],
+    "rematch_after": "story_complete",
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Zephlet",
+       "level": 17
+      },
+      {
+       "species": "Millvane",
+       "level": 17
+      },
+      {
+       "species": "Tempestrel",
+       "level": 18
+      },
+      {
+       "species": "Gloamhog",
+       "level": 18
+      },
+      {
+       "species": "Lichub",
+       "level": 18
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Zephlet",
+       "level": 14
+      },
+      {
+       "species": "Millwhit",
+       "level": 14
+      },
+      {
+       "species": "Tempestrel",
+       "level": 15
+      },
+      {
+       "species": "Zephlet",
+       "level": 10
+      },
+      {
+       "species": "Zephlet",
+       "level": 6
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

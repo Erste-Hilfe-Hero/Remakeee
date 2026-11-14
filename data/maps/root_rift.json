@@ -165,7 +165,49 @@
    "mend_items": [
     "echo_root_grip"
    ],
-   "rematch_after": "story_complete"
+   "rematch_after": "story_complete",
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Thornback",
+      "level": 25
+     },
+     {
+      "species": "Frondmere",
+      "level": 26
+     },
+     {
+      "species": "Reedwarden",
+      "level": 25
+     },
+     {
+      "species": "Marshfife",
+      "level": 26
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Thornback",
+      "level": 27
+     },
+     {
+      "species": "Frondmere",
+      "level": 28
+     },
+     {
+      "species": "Reedwarden",
+      "level": 27
+     },
+     {
+      "species": "Marshfife",
+      "level": 28
+     },
+     {
+      "species": "Thornback",
+      "level": 23
+     }
+    ]
+   }
   }
  ],
  "signs": [

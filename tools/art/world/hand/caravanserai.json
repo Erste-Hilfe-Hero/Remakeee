@@ -1,0 +1,80 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "dario",
+    "x": 8,
+    "y": 5,
+    "facing": "left",
+    "dialogue": "caravanserai/dario",
+    "sprite": "villager",
+    "trainer": "Ladder Champion Dario",
+    "intro": "caravanserai/dario_intro",
+    "defeat": "caravanserai/dario_defeat",
+    "money": 2600,
+    "team": [
+     {
+      "species": "Zenithare",
+      "level": 47
+     },
+     {
+      "species": "Habobrax",
+      "level": 47
+     },
+     {
+      "species": "Noonsoral",
+      "level": 48
+     }
+    ],
+    "beaten_flag": "ladder_rung_8",
+    "show_flag": "ladder_rung_7",
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Zenithare",
+       "level": 52
+      },
+      {
+       "species": "Habobrax",
+       "level": 52
+      },
+      {
+       "species": "Noonsoral",
+       "level": 53
+      },
+      {
+       "species": "Tempestrel",
+       "level": 53
+      },
+      {
+       "species": "Siltgrove",
+       "level": 53
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Zenithare",
+       "level": 49
+      },
+      {
+       "species": "Habobrax",
+       "level": 49
+      },
+      {
+       "species": "Noonsoral",
+       "level": 50
+      },
+      {
+       "species": "Zenithare",
+       "level": 45
+      },
+      {
+       "species": "Zenithare",
+       "level": 41
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

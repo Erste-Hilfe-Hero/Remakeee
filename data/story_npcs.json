@@ -849,7 +849,41 @@
     "money": 1250,
     "mend_items": [
      "echo_volt"
-    ]
+    ],
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Duskdigger",
+       "level": 25
+      },
+      {
+       "species": "Tempestrel",
+       "level": 26
+      },
+      {
+       "species": "Kelphound",
+       "level": 27
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Riptail",
+       "level": 22
+      },
+      {
+       "species": "Tempestrel",
+       "level": 23
+      },
+      {
+       "species": "Kelphound",
+       "level": 24
+      },
+      {
+       "species": "Riptail",
+       "level": 18
+      }
+     ]
+    }
    }
   ]
  },
@@ -1133,7 +1167,41 @@
     "money": 1300,
     "mend_items": [
      "echo_lumen"
-    ]
+    ],
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Gloamquill",
+       "level": 25
+      },
+      {
+       "species": "Glimmerax",
+       "level": 26
+      },
+      {
+       "species": "Verdantusk",
+       "level": 26
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Lumenewt",
+       "level": 24
+      },
+      {
+       "species": "Glimmerax",
+       "level": 25
+      },
+      {
+       "species": "Verdantusk",
+       "level": 25
+      },
+      {
+       "species": "Lumenewt",
+       "level": 20
+      }
+     ]
+    }
    }
   ]
  },
@@ -1167,7 +1235,53 @@
     "leaves": true,
     "ai": 2,
     "money": 1300,
-    "hide_flag": "beat_veit_1"
+    "hide_flag": "beat_veit_1",
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Obsidroth",
+       "level": 31
+      },
+      {
+       "species": "Duskdigger",
+       "level": 32
+      },
+      {
+       "species": "Obsidroth",
+       "level": 34
+      },
+      {
+       "species": "Gloamquill",
+       "level": 34
+      },
+      {
+       "species": "Woadwhorl",
+       "level": 34
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Shalebat",
+       "level": 26
+      },
+      {
+       "species": "Duskdigger",
+       "level": 27
+      },
+      {
+       "species": "Obsidroth",
+       "level": 29
+      },
+      {
+       "species": "Shalebat",
+       "level": 22
+      },
+      {
+       "species": "Shalebat",
+       "level": 18
+      }
+     ]
+    }
    },
    {
     "id": "moss",
@@ -1759,7 +1873,53 @@
     "money": 1500,
     "mend_items": [
      "echo_stone"
-    ]
+    ],
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Calderox",
+       "level": 38
+      },
+      {
+       "species": "Obsidroth",
+       "level": 39
+      },
+      {
+       "species": "Gloamquill",
+       "level": 37
+      },
+      {
+       "species": "Duskdigger",
+       "level": 38
+      },
+      {
+       "species": "Gloamquill",
+       "level": 39
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Calderox",
+       "level": 34
+      },
+      {
+       "species": "Obsidroth",
+       "level": 35
+      },
+      {
+       "species": "Smoldrake",
+       "level": 33
+      },
+      {
+       "species": "Duskdigger",
+       "level": 34
+      },
+      {
+       "species": "Smoldrake",
+       "level": 29
+      }
+     ]
+    }
    }
   ],
   "signs": [
@@ -1965,7 +2125,49 @@
     "money": 1600,
     "mend_items": [
      "echo_gale"
-    ]
+    ],
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Leviarch",
+       "level": 38
+      },
+      {
+       "species": "Lumenewt",
+       "level": 37
+      },
+      {
+       "species": "Glimmerax",
+       "level": 38
+      },
+      {
+       "species": "Tempestrel",
+       "level": 37
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Leviarch",
+       "level": 36
+      },
+      {
+       "species": "Lumenewt",
+       "level": 35
+      },
+      {
+       "species": "Glimmerax",
+       "level": 36
+      },
+      {
+       "species": "Tempestrel",
+       "level": 35
+      },
+      {
+       "species": "Lumenewt",
+       "level": 31
+      }
+     ]
+    }
    }
   ]
  },

@@ -116,7 +116,55 @@
    "win_flags": [
     "v2_rift_lock_sealed",
     "v2_ch2_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Reedwarden",
+      "level": 67
+     },
+     {
+      "species": "Saltspire",
+      "level": 67
+     },
+     {
+      "species": "Kelphound",
+      "level": 68
+     },
+     {
+      "species": "Ferrowyn",
+      "level": 68
+     },
+     {
+      "species": "Delthorn",
+      "level": 68,
+      "held": "pith_mend"
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Rainmantle",
+      "level": 58
+     },
+     {
+      "species": "Saltspire",
+      "level": 58
+     },
+     {
+      "species": "Kelphound",
+      "level": 59
+     },
+     {
+      "species": "Ferrowyn",
+      "level": 59
+     },
+     {
+      "species": "Flakebastion",
+      "level": 59,
+      "held": "pith_mend"
+     }
+    ]
+   }
   }
  ],
  "signs": [

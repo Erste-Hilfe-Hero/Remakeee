@@ -169,7 +169,53 @@
    "mend_items": [
     "echo_squall"
    ],
-   "rematch_after": "story_complete"
+   "rematch_after": "story_complete",
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Tempestrel",
+      "level": 46
+     },
+     {
+      "species": "Zenithare",
+      "level": 47
+     },
+     {
+      "species": "Mirassil",
+      "level": 46
+     },
+     {
+      "species": "Dunebastion",
+      "level": 47
+     },
+     {
+      "species": "Orrerine",
+      "level": 47
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Tempestrel",
+      "level": 38
+     },
+     {
+      "species": "Zenithare",
+      "level": 39
+     },
+     {
+      "species": "Mirassil",
+      "level": 38
+     },
+     {
+      "species": "Dunebastion",
+      "level": 39
+     },
+     {
+      "species": "Orrerine",
+      "level": 39
+     }
+    ]
+   }
   },
   {
    "id": "lq_obed",

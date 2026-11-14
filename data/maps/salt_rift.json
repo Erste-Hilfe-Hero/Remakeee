@@ -106,7 +106,53 @@
    "intro": "salt_rift/halloran_intro",
    "defeat": "salt_rift/halloran_defeat",
    "ai": 2,
-   "money": 9000
+   "money": 9000,
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Saltcrown",
+      "level": 103
+     },
+     {
+      "species": "Stiltregent",
+      "level": 103
+     },
+     {
+      "species": "Wadibastion",
+      "level": 104
+     },
+     {
+      "species": "Ergrava",
+      "level": 104
+     },
+     {
+      "species": "Fulgorath",
+      "level": 104
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Saltcrown",
+      "level": 89
+     },
+     {
+      "species": "Stiltregent",
+      "level": 89
+     },
+     {
+      "species": "Wadibastion",
+      "level": 90
+     },
+     {
+      "species": "Flatsovereign",
+      "level": 90
+     },
+     {
+      "species": "Saltcrown",
+      "level": 85
+     }
+    ]
+   }
   }
  ],
  "signs": [

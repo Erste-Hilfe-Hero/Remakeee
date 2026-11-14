@@ -427,7 +427,53 @@
        "species": "Rainmantle",
        "level": 28
       }
-     ]
+     ],
+     "teams_by_difficulty": {
+      "tamer": [
+       {
+        "species": "Wickmoth",
+        "level": 34
+       },
+       {
+        "species": "Millvane",
+        "level": 35
+       },
+       {
+        "species": "Wickmoth",
+        "level": 34
+       },
+       {
+        "species": "Rainmantle",
+        "level": 36
+       },
+       {
+        "species": "Ferrowyn",
+        "level": 36
+       }
+      ],
+      "rift_born": [
+       {
+        "species": "Wickmoth",
+        "level": 28
+       },
+       {
+        "species": "Millvane",
+        "level": 29
+       },
+       {
+        "species": "Glimmoth",
+        "level": 28
+       },
+       {
+        "species": "Rainmantle",
+        "level": 30
+       },
+       {
+        "species": "Wickmoth",
+        "level": 24
+       }
+      ]
+     }
     },
     {
      "id": "nib_5",

@@ -111,7 +111,53 @@
    "win_flags": [
     "rift_v3_press_sealed",
     "quillmarch_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Filigrace",
+      "level": 79
+     },
+     {
+      "species": "Cindravax",
+      "level": 79
+     },
+     {
+      "species": "Siltaroth",
+      "level": 79
+     },
+     {
+      "species": "Veskarion",
+      "level": 80
+     },
+     {
+      "species": "Corrodrake",
+      "level": 80
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Nibravure",
+      "level": 89
+     },
+     {
+      "species": "Cindravax",
+      "level": 89
+     },
+     {
+      "species": "Siltaroth",
+      "level": 89
+     },
+     {
+      "species": "Veskarion",
+      "level": 90
+     },
+     {
+      "species": "Corrodrake",
+      "level": 90
+     }
+    ]
+   }
   }
  ],
  "signs": [

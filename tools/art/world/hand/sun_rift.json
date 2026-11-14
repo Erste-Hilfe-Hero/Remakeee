@@ -12,5 +12,96 @@
     "hide_flag": "first_voice_lumivane_away"
    }
   ]
+ },
+ "replace": {
+  "npcs": [
+   {
+    "id": "warden_emrys",
+    "x": 5,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "sun_rift/emrys",
+    "sprite": "warden",
+    "trainer": "Warden Emrys",
+    "warden": "sun",
+    "team": [
+     {
+      "species": "Solmantle",
+      "level": 37
+     },
+     {
+      "species": "Orrerine",
+      "level": 38
+     },
+     {
+      "species": "Glimmerax",
+      "level": 37
+     },
+     {
+      "species": "Cairnhold",
+      "level": 38
+     },
+     {
+      "species": "Zenithare",
+      "level": 38
+     }
+    ],
+    "intro": "sun_rift/emrys_intro",
+    "defeat": "sun_rift/emrys_defeat",
+    "ai": 2,
+    "money": 2100,
+    "rule": "high_noon",
+    "mend_items": [
+     "echo_radiant_lance"
+    ],
+    "rematch_after": "story_complete",
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Tempestrel",
+       "level": 48
+      },
+      {
+       "species": "Orrerine",
+       "level": 49
+      },
+      {
+       "species": "Glimmerax",
+       "level": 48
+      },
+      {
+       "species": "Cairnhold",
+       "level": 49
+      },
+      {
+       "species": "Zenithare",
+       "level": 49
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Solmantle",
+       "level": 39
+      },
+      {
+       "species": "Orrerine",
+       "level": 40
+      },
+      {
+       "species": "Glimmerax",
+       "level": 39
+      },
+      {
+       "species": "Cairnhold",
+       "level": 40
+      },
+      {
+       "species": "Zenithare",
+       "level": 40
+      }
+     ]
+    }
+   }
+  ]
  }
 }

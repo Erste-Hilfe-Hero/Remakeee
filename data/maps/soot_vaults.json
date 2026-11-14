@@ -857,7 +857,53 @@
      ],
      "show_flag": "beat_juno_2",
      "ai": 3,
-     "money": 2000
+     "money": 2000,
+     "teams_by_difficulty": {
+      "tamer": [
+       {
+        "species": "Millvane",
+        "level": 47
+       },
+       {
+        "species": "Smeltmaw",
+        "level": 47
+       },
+       {
+        "species": "Glassfell",
+        "level": 48
+       },
+       {
+        "species": "Tempestrel",
+        "level": 48
+       },
+       {
+        "species": "Millvane",
+        "level": 48
+       }
+      ],
+      "rift_born": [
+       {
+        "species": "Ashcrest",
+        "level": 37
+       },
+       {
+        "species": "Smeltmaw",
+        "level": 37
+       },
+       {
+        "species": "Glassfell",
+        "level": 38
+       },
+       {
+        "species": "Tempestrel",
+        "level": 38
+       },
+       {
+        "species": "Ashcrest",
+        "level": 33
+       }
+      ]
+     }
     }
    ],
    "signs": [
@@ -983,7 +1029,53 @@
      "defeat": "soot_vaults/auditor_defeat",
      "money": 2800,
      "ai": 3,
-     "beaten_flag": "beat_auditor"
+     "beaten_flag": "beat_auditor",
+     "teams_by_difficulty": {
+      "tamer": [
+       {
+        "species": "Duskdigger",
+        "level": 39
+       },
+       {
+        "species": "Burinox",
+        "level": 39
+       },
+       {
+        "species": "Calderox",
+        "level": 40
+       },
+       {
+        "species": "Obsidroth",
+        "level": 40
+       },
+       {
+        "species": "Duskdigger",
+        "level": 40
+       }
+      ],
+      "rift_born": [
+       {
+        "species": "Smeltmaw",
+        "level": 37
+       },
+       {
+        "species": "Burinox",
+        "level": 37
+       },
+       {
+        "species": "Calderox",
+        "level": 38
+       },
+       {
+        "species": "Obsidroth",
+        "level": 38
+       },
+       {
+        "species": "Smeltmaw",
+        "level": 33
+       }
+      ]
+     }
     },
     {
      "id": "scribe",

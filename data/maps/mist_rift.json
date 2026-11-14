@@ -152,7 +152,53 @@
    "mend_items": [
     "echo_tailwind"
    ],
-   "rematch_after": "story_complete"
+   "rematch_after": "story_complete",
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Zephlet",
+      "level": 17
+     },
+     {
+      "species": "Millvane",
+      "level": 17
+     },
+     {
+      "species": "Tempestrel",
+      "level": 18
+     },
+     {
+      "species": "Gloamhog",
+      "level": 18
+     },
+     {
+      "species": "Lichub",
+      "level": 18
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Zephlet",
+      "level": 14
+     },
+     {
+      "species": "Millwhit",
+      "level": 14
+     },
+     {
+      "species": "Tempestrel",
+      "level": 15
+     },
+     {
+      "species": "Zephlet",
+      "level": 10
+     },
+     {
+      "species": "Zephlet",
+      "level": 6
+     }
+    ]
+   }
   },
   {
    "id": "mist_heart",

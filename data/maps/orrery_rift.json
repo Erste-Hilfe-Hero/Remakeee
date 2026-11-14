@@ -106,7 +106,49 @@
    "intro": "orrery_rift/isaura_intro",
    "defeat": "orrery_rift/isaura_defeat",
    "ai": 2,
-   "money": 8200
+   "money": 8200,
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Fulgorath",
+      "level": 100
+     },
+     {
+      "species": "Solmantle",
+      "level": 100
+     },
+     {
+      "species": "Hazejellith",
+      "level": 101
+     },
+     {
+      "species": "Noonsoral",
+      "level": 101
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Orrerine",
+      "level": 85
+     },
+     {
+      "species": "Solmantle",
+      "level": 85
+     },
+     {
+      "species": "Hazejellith",
+      "level": 86
+     },
+     {
+      "species": "Orremarch",
+      "level": 86
+     },
+     {
+      "species": "Orrerine",
+      "level": 81
+     }
+    ]
+   }
   }
  ],
  "signs": [

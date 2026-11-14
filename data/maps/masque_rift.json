@@ -116,7 +116,55 @@
    "win_flags": [
     "v2_rift_masque_sealed",
     "v2_ch4_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Cogwright",
+      "level": 76
+     },
+     {
+      "species": "Glasstarn",
+      "level": 76
+     },
+     {
+      "species": "Lanternel",
+      "level": 77
+     },
+     {
+      "species": "Glimmerax",
+      "level": 77
+     },
+     {
+      "species": "Scrivane",
+      "level": 77,
+      "held": "pith_mend"
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Silentra",
+      "level": 60
+     },
+     {
+      "species": "Glasstarn",
+      "level": 60
+     },
+     {
+      "species": "Lanternel",
+      "level": 61
+     },
+     {
+      "species": "Glimmerax",
+      "level": 61
+     },
+     {
+      "species": "Guisdame",
+      "level": 61,
+      "held": "pith_mend"
+     }
+    ]
+   }
   }
  ],
  "signs": [

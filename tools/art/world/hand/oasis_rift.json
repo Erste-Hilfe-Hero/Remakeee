@@ -9,5 +9,96 @@
     "hide_flag": "lq_lumivane_ready"
    }
   ]
+ },
+ "replace": {
+  "npcs": [
+   {
+    "id": "warden_kaia",
+    "x": 5,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "oasis_rift/kaia",
+    "sprite": "warden",
+    "trainer": "Warden Kaia",
+    "warden": "oasis",
+    "team": [
+     {
+      "species": "Saltcrown",
+      "level": 37
+     },
+     {
+      "species": "Leviarch",
+      "level": 38
+     },
+     {
+      "species": "Ferrowyn",
+      "level": 37
+     },
+     {
+      "species": "Glasstarn",
+      "level": 37
+     },
+     {
+      "species": "Saltspire",
+      "level": 38
+     }
+    ],
+    "intro": "oasis_rift/kaia_intro",
+    "defeat": "oasis_rift/kaia_defeat",
+    "ai": 2,
+    "money": 2000,
+    "rule": "dry_well",
+    "mend_items": [
+     "echo_dawn_mend"
+    ],
+    "rematch_after": "story_complete",
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Saltcrown",
+       "level": 51
+      },
+      {
+       "species": "Leviarch",
+       "level": 52
+      },
+      {
+       "species": "Ferrowyn",
+       "level": 51
+      },
+      {
+       "species": "Glasstarn",
+       "level": 51
+      },
+      {
+       "species": "Saltspire",
+       "level": 52
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Saltcrown",
+       "level": 39
+      },
+      {
+       "species": "Leviarch",
+       "level": 40
+      },
+      {
+       "species": "Ferrowyn",
+       "level": 39
+      },
+      {
+       "species": "Glasstarn",
+       "level": 39
+      },
+      {
+       "species": "Saltspire",
+       "level": 40
+      }
+     ]
+    }
+   }
+  ]
  }
 }

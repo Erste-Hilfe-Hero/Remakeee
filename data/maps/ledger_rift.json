@@ -107,7 +107,49 @@
    "win_flags": [
     "rift_v3_ledger_sealed",
     "v3_ch4_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Burringrand",
+      "level": 103
+     },
+     {
+      "species": "Nibquill",
+      "level": 103
+     },
+     {
+      "species": "Frostfoil",
+      "level": 104
+     },
+     {
+      "species": "Filigravure",
+      "level": 104
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Filigrace",
+      "level": 85
+     },
+     {
+      "species": "Nibquill",
+      "level": 85
+     },
+     {
+      "species": "Frostfoil",
+      "level": 86
+     },
+     {
+      "species": "Filigravure",
+      "level": 86
+     },
+     {
+      "species": "Filigrace",
+      "level": 81
+     }
+    ]
+   }
   }
  ],
  "signs": [

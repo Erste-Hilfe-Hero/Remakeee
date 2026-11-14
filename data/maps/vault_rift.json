@@ -116,7 +116,55 @@
    "win_flags": [
     "v2_rift_vault_sealed",
     "vellmarch_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Fenwarden",
+      "level": 104
+     },
+     {
+      "species": "Duskdigger",
+      "level": 104
+     },
+     {
+      "species": "Zenithare",
+      "level": 105
+     },
+     {
+      "species": "Ashcrest",
+      "level": 105
+     },
+     {
+      "species": "Cullhorn",
+      "level": 105,
+      "held": "pith_mend"
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Obsidroth",
+      "level": 61
+     },
+     {
+      "species": "Duskdigger",
+      "level": 61
+     },
+     {
+      "species": "Zenithare",
+      "level": 62
+     },
+     {
+      "species": "Ashcrest",
+      "level": 62
+     },
+     {
+      "species": "Tithebastion",
+      "level": 62,
+      "held": "pith_mend"
+     }
+    ]
+   }
   }
  ],
  "signs": [

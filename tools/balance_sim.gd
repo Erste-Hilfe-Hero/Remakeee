@@ -27,6 +27,10 @@ extends SceneTree
 ##                 --puzzle ID for one
 ##   --seeds N     duel, team: the run on N seeds (seed, seed+7919, ...); the report adds mean and
 ##                 spread per species and marks a spread over 10 points as uncertain (item 830)
+##   --mode acts   the player route of tools/balance/act_route.json through every act and era region
+##                 (scripts/core/ActSim.gd): arrival rings, win rate on arrival and after a moderate
+##                 grind, grind battles to 70 % per Warden, rival and boss; --rounds N battles per
+##                 measure (default 40), --starter S one starter, --act ID one act
 ##   --mode arts   every art Hesper teaches: win rate with it in the lead's first slot against the
 ##                 same battle without (KAMPF_PLAN_1000 item 155, band -10 to +8 points); --art NAME for one
 ##   --mode mirror every species against itself (default 400 duels each, item 831): the player
@@ -98,6 +102,28 @@ func _initialize() -> void:
 		if opts.has("json"):
 			_write(str(opts.json), JSON.stringify(result, " ", true))
 		print(wtext)
+		quit()
+		return
+	if mode == "acts":
+		var act_sim: GDScript = load("res://scripts/core/ActSim.gd")
+		var cfg: Dictionary = act_sim.call("route")
+		var starters: Array = cfg.get("starters", ["Kindlop"])
+		if opts.has("starter"):
+			starters = [str(opts.starter)]
+		var only: Array[String] = []
+		if opts.has("act"):
+			only.append(str(opts.act))
+		var trials: int = int(opts.get("rounds", 40))
+		var runs: Array = []
+		for st: Variant in starters:
+			runs.append(act_sim.call("run", str(st), trials, seed_value, only))
+		var sum: Dictionary = act_sim.call("summary", runs)
+		var atext: String = act_sim.call("report", sum, starters, trials)
+		if opts.has("out"):
+			_write(str(opts.out), atext)
+		if opts.has("json"):
+			_write(str(opts.json), JSON.stringify(sum, " ", true))
+		print(atext)
 		quit()
 		return
 	if mode == "arts":

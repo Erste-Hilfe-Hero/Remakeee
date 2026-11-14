@@ -107,7 +107,53 @@
    "win_flags": [
     "rift_v3_rime_sealed",
     "v3_ch3_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Siltaroth",
+      "level": 74
+     },
+     {
+      "species": "Veskarion",
+      "level": 74
+     },
+     {
+      "species": "Glacilisk",
+      "level": 75
+     },
+     {
+      "species": "Rimesovereign",
+      "level": 75
+     },
+     {
+      "species": "Cindravax",
+      "level": 75
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Siltarra",
+      "level": 81
+     },
+     {
+      "species": "Veskara",
+      "level": 81
+     },
+     {
+      "species": "Glacilisk",
+      "level": 82
+     },
+     {
+      "species": "Rimesovereign",
+      "level": 82
+     },
+     {
+      "species": "Siltarra",
+      "level": 77
+     }
+    ]
+   }
   }
  ],
  "signs": [

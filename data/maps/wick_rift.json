@@ -112,7 +112,52 @@
    "rule": "ember_pulse",
    "win_flags": [
     "rift_v5_wick_sealed"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Sootharrow",
+      "level": 118
+     },
+     {
+      "species": "Glazeldrake",
+      "level": 118
+     },
+     {
+      "species": "Ardenthal",
+      "level": 119
+     },
+     {
+      "species": "Duskmirrah",
+      "level": 119,
+      "held": "pith_mend"
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Sootharrow",
+      "level": 94
+     },
+     {
+      "species": "Glazeldrake",
+      "level": 94
+     },
+     {
+      "species": "Ardenthal",
+      "level": 95
+     },
+     {
+      "species": "Duskmirrah",
+      "level": 95,
+      "held": "pith_mend"
+     },
+     {
+      "species": "Sootharrow",
+      "level": 90,
+      "held": "pith_mend"
+     }
+    ]
+   }
   },
   {
    "id": "q5_nell_letters_ivar",

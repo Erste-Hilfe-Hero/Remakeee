@@ -112,7 +112,56 @@
    "rule": "vine_tangle",
    "win_flags": [
     "rift_v5_taproot_sealed"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Peatmonarch",
+      "level": 128
+     },
+     {
+      "species": "Fenwarden",
+      "level": 128
+     },
+     {
+      "species": "Woadcastle",
+      "level": 129
+     },
+     {
+      "species": "Rushstalker",
+      "level": 129,
+      "held": "pith_mend"
+     },
+     {
+      "species": "Rookwarden",
+      "level": 129
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Peatmonarch",
+      "level": 95
+     },
+     {
+      "species": "Fenwarden",
+      "level": 95
+     },
+     {
+      "species": "Woadcastle",
+      "level": 96
+     },
+     {
+      "species": "Rushstalker",
+      "level": 96,
+      "held": "pith_mend"
+     },
+     {
+      "species": "Peatmonarch",
+      "level": 91,
+      "held": "pith_mend"
+     }
+    ]
+   }
   }
  ],
  "signs": [

@@ -169,7 +169,53 @@
    "mend_items": [
     "echo_radiant_lance"
    ],
-   "rematch_after": "story_complete"
+   "rematch_after": "story_complete",
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Tempestrel",
+      "level": 48
+     },
+     {
+      "species": "Orrerine",
+      "level": 49
+     },
+     {
+      "species": "Glimmerax",
+      "level": 48
+     },
+     {
+      "species": "Cairnhold",
+      "level": 49
+     },
+     {
+      "species": "Zenithare",
+      "level": 49
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Solmantle",
+      "level": 39
+     },
+     {
+      "species": "Orrerine",
+      "level": 40
+     },
+     {
+      "species": "Glimmerax",
+      "level": 39
+     },
+     {
+      "species": "Cairnhold",
+      "level": 40
+     },
+     {
+      "species": "Zenithare",
+      "level": 40
+     }
+    ]
+   }
   },
   {
    "id": "lumivane",

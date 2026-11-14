@@ -211,7 +211,53 @@
    "leaves": true,
    "hide_flag": "beat_juno_2",
    "ai": 3,
-   "money": 1700
+   "money": 1700,
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Ashcrest",
+      "level": 39
+     },
+     {
+      "species": "Glassfell",
+      "level": 39
+     },
+     {
+      "species": "Smeltmaw",
+      "level": 40
+     },
+     {
+      "species": "Tempestrel",
+      "level": 40
+     },
+     {
+      "species": "Millvane",
+      "level": 40
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Ashwren",
+      "level": 32
+     },
+     {
+      "species": "Cindle",
+      "level": 32
+     },
+     {
+      "species": "Smeltpup",
+      "level": 33
+     },
+     {
+      "species": "Ashwren",
+      "level": 28
+     },
+     {
+      "species": "Ashwren",
+      "level": 24
+     }
+    ]
+   }
   },
   {
    "id": "wenna",

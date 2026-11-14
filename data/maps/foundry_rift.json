@@ -116,7 +116,55 @@
    "win_flags": [
     "v2_rift_foundry_sealed",
     "v2_ch3_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Smeltmaw",
+      "level": 74
+     },
+     {
+      "species": "Cogwright",
+      "level": 74
+     },
+     {
+      "species": "Smoldrake",
+      "level": 75
+     },
+     {
+      "species": "Cairnhold",
+      "level": 75
+     },
+     {
+      "species": "Calderox",
+      "level": 75,
+      "held": "pith_mend"
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Smeltmaw",
+      "level": 59
+     },
+     {
+      "species": "Cogwright",
+      "level": 59
+     },
+     {
+      "species": "Smoldrake",
+      "level": 60
+     },
+     {
+      "species": "Cairnhold",
+      "level": 60
+     },
+     {
+      "species": "Sprockmaul",
+      "level": 60,
+      "held": "pith_mend"
+     }
+    ]
+   }
   }
  ],
  "signs": [

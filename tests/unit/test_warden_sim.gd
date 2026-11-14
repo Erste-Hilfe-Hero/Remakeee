@@ -59,9 +59,15 @@ func test_first_fights_land_in_the_target_bands() -> void:
 func test_rematches_keep_the_difficulty_order() -> void:
 	var means: Dictionary = _means()
 	for w: String in ["warden_orrin", "warden_maelis"]:
+		# Tamer has no ring cap and its own hard team (owner rule Nov 2026, test_act_difficulty.gd);
+		# Veteran and Rift-Born keep the Act I caps, so the capped reference teams order those two
+		# against Story and each other, and Tamer only against Story.
 		var last: float = 2.0
 		for d: String in TrainerData.DIFFICULTY_KEYS:
 			var wr: float = means["post_rifts|%s|%s" % [w, d]]
+			if d == "tamer":
+				assert_lte(wr, means["post_rifts|%s|story" % w] + MARGIN, "%s %s" % [w, d])
+				continue
 			assert_lte(wr, last + MARGIN, "%s %s" % [w, d])
 			last = wr
 		assert_gte(means["post_rifts|%s|story" % w], 0.9)
