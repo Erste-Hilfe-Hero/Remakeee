@@ -49,7 +49,7 @@ static func resolve(ref: String) -> Dictionary:
 			continue
 		for n: Variant in (lv as Dictionary).get("npcs", []):
 			if n is Dictionary and str(n.get("id", "")) == parts[1] and TrainerData.is_trainer(n):
-				return {"def": n, "field": str((lv as Dictionary).get("field", raw.get("field", "")))}
+				return {"def": n, "field": str((lv as Dictionary).get("field", raw.get("field", RiftFields.home_field(str(parts[0])))))}
 	return {}
 
 ## Wild table of a route reference: an encounter table id of data/encounters.json, or

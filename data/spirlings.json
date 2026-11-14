@@ -5458,6 +5458,9 @@
     "Quill Flick",
     "Draft Needle"
    ],
+   "36": [
+    "Ink Call"
+   ],
    "40": [
     "Blot Wave"
    ],
@@ -17397,6 +17400,9 @@
    "32": [
     "Margin Lash"
    ],
+   "36": [
+    "Ink Call"
+   ],
    "38": [
     "Cloudbreak"
    ],
@@ -21153,6 +21159,9 @@
    "32": [
     "Rime Shard"
    ],
+   "36": [
+    "Rime Call"
+   ],
    "44": [
     "Deep Freeze"
    ],
@@ -24192,6 +24201,9 @@
    "32": [
     "Rime Shard"
    ],
+   "36": [
+    "Rime Call"
+   ],
    "38": [
     "Slow Quake"
    ],
@@ -24958,6 +24970,9 @@
    ],
    "32": [
     "Hoard Crush"
+   ],
+   "36": [
+    "Gilt Call"
    ],
    "44": [
     "Golden Span"
@@ -28365,6 +28380,9 @@
    "32": [
     "Hoard Crush"
    ],
+   "36": [
+    "Gilt Call"
+   ],
    "38": [
     "Slow Quake"
    ],
@@ -29249,6 +29267,9 @@
    ],
    "32": [
     "Seized Gear"
+   ],
+   "36": [
+    "Rust Call"
    ],
    "38": [
     "Dusk Gnaw"
@@ -33238,6 +33259,9 @@
    ],
    "32": [
     "Seized Gear"
+   ],
+   "36": [
+    "Rust Call"
    ],
    "38": [
     "Cairn Crash"

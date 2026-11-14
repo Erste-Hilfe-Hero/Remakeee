@@ -980,7 +980,7 @@ func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1,
 ## strength ("reaction_scale" stretches a reaction's factor beyond 1.0).
 func _variant_mult(me: Spirling, target: Spirling, mv: MoveData) -> float:
 	var f: float = 1.0
-	if mv.element in me.elements() and float(rules.stab) != DamageCalc.STAB:
+	if not mv.neutral and mv.element in me.elements() and float(rules.stab) != DamageCalc.STAB:
 		f *= float(rules.stab) / DamageCalc.STAB
 	var scale: float = float(rules.reaction_scale)
 	if scale != 1.0:
@@ -1469,7 +1469,7 @@ func _do_move(a: BattleAction) -> void:
 			muddled = true
 	var targets: Array[int] = move_targets(side, mv, aim)
 	var used: Dictionary = _who(side, slot)
-	used.merge({"move": mv.move_name, "element": mv.element, "kind": mv.kind, "area": mv.is_area() and targets.size() > 1, "targets": targets})
+	used.merge({"move": mv.move_name, "element": mv.element, "neutral": mv.neutral, "kind": mv.kind, "area": mv.is_area() and targets.size() > 1, "targets": targets})
 	if extra > 0:
 		# The presenter pitches the Overcharge swell by the Energy poured in (plan 687).
 		used["overcharge"] = extra

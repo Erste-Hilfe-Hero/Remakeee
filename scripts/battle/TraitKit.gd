@@ -177,7 +177,7 @@ static func static_mult(user: Spirling, target: Spirling, mv: MoveData, field: S
 		elif eff > 0.0 and eff < 1.0:
 			m *= BattleRules.mult_key(target, "resist_taken")
 	if not field.is_empty():
-		if gift(user).has("field_double"):
+		if gift(user).has("field_double") and not mv.neutral:
 			m *= BattleRules.field_mult(field, mv.element)
 		var fm: Variant = held(user).get("field_mult_in", {})
 		if fm is Dictionary and str((fm as Dictionary).get("field", "")) == field:

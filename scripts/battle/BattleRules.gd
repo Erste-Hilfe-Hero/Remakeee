@@ -121,6 +121,16 @@ const FIELDS: Dictionary[String, Dictionary] = {
 		"intro": "Grit and pebbles patter down. Stone arts land heavier, Volt arts ground out, and no charge can build."},
 	"gale_eye": {"label": "Gale Eye", "boost": "GALE", "weaken": "BLOOM", "blocks": ["drowse"],
 		"intro": "The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off."},
+	# The later elements' fields (KAMPF_PLAN_1000 item 94): the Rifts of the later eras stand in them
+	# (data/rift_fields.json "rift_maps").
+	"rust_haze": {"label": "Rust Haze", "boost": "RUST", "weaken": "GILT",
+		"intro": "Red flakes hang in the damp air. Rust arts bite deeper, Gilt arts tarnish."},
+	"ink_flood": {"label": "Ink Flood", "boost": "INK", "weaken": "LUMEN",
+		"intro": "Ink seeps up from the ground and swallows every shape. Ink arts spread, Lumen arts drown."},
+	"rime_fall": {"label": "Rime Fall", "boost": "FROST", "weaken": "EMBER",
+		"intro": "Rime drifts down and settles on every edge. Frost arts cut colder, Ember arts gutter out."},
+	"gilt_glare": {"label": "Gilt Glare", "boost": "GILT", "weaken": "RUST",
+		"intro": "Light bounces off gilded stone. Gilt arts gleam, Rust arts flake away."},
 }
 
 ## Element reactions: a move of "element" that hits a foe with "status" hits harder ("mult"),
@@ -139,7 +149,7 @@ const REACTIONS: Array[Dictionary] = [
 
 ## The reaction a [param move] sets off on [param target], or {}.
 static func reaction(move: MoveData, target: Spirling) -> Dictionary:
-	if target == null or target.status.is_empty() or not move.is_damaging():
+	if target == null or target.status.is_empty() or not move.is_damaging() or move.neutral:
 		return {}
 	for r: Dictionary in REACTIONS:
 		if move.element == Elements.E.get(str(r.element), -1) and target.status == str(r.status):
@@ -413,7 +423,7 @@ static func resolve_move(move: MoveData, field: String) -> MoveData:
 
 ## Damage multiplier from traits, held items, the field and status bonuses for one hit.
 static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field: String) -> float:
-	var m: float = field_mult(field, move.element)
+	var m: float = 1.0 if move.neutral else field_mult(field, move.element)
 	if m < 1.0 and bool(ShopEffects.gift_table(user).get("field_proof", false)):
 		m = 1.0
 	m *= status_bonus(move, target)
@@ -422,10 +432,10 @@ static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field:
 		m *= mult_key(target, "phys_taken")
 	# Element Prisms from the shop: one element hits harder (plan item 4402).
 	var held: Dictionary = held_info(user.held)
-	if held.has("elem") and move.element == Elements.E.get(str(held.elem), -1):
+	if held.has("elem") and not move.neutral and move.element == Elements.E.get(str(held.elem), -1):
 		m *= float(held.get("elem_mult", 1.0))
 	var boost: float = float(ShopEffects.gift_table(user).get("low_hp_boost", 1.0))
-	if boost != 1.0 and move.element in user.elements() and user.hp * 3 < user.max_hp():
+	if boost != 1.0 and not move.neutral and move.element in user.elements() and user.hp * 3 < user.max_hp():
 		m *= boost
 	return m * TraitKit.static_mult(user, target, move, field)
 

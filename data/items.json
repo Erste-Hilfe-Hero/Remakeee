@@ -2480,6 +2480,26 @@
   "tradeable": false
  },
  {
+  "id": "echo_plain_shove",
+  "name": "Echo Crystal: Plain Shove",
+  "description": "Teaches Plain Shove to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Plain Shove",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_old_grudge",
+  "name": "Echo Crystal: Old Grudge",
+  "description": "Teaches Old Grudge to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Old Grudge",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
   "id": "second_wind_tea",
   "name": "Second Wind Tea",
   "description": "Cures Spent.",

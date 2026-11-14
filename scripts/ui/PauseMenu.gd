@@ -539,6 +539,10 @@ func run_lexicon() -> void:
 			# The bond page carries the live counts (KAMPF_PLAN "Bond-Statistik im Lexikon").
 			if ids[i - 4] == WildRules.BOND_LEXICON:
 				page += "\n\n" + "\n".join(WildRules.bond_lines(GameState.records))
+			# A lore page names the matchups it taught (KAMPF_PLAN_1000 item 90).
+			var lessons: Array[String] = Lexicon.lesson_lines(ids[i - 4])
+			if not lessons.is_empty():
+				page += "\n\n" + "\n".join(lessons)
 			await info(page)
 
 ## The battle rules (KAMPF_PLAN item 37): one page per topic, every number from the game itself.

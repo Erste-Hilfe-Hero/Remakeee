@@ -130,7 +130,11 @@
    "pollen_drift": "meadow",
    "dawn_glow": "ferns",
    "rubble_rain": "cliffs",
-   "gale_eye": "cliffs"
+   "gale_eye": "cliffs",
+   "rust_haze": "marsh",
+   "ink_flood": "marsh",
+   "rime_fall": "cliffs",
+   "gilt_glare": "market"
   },
   "text_duck_db": -5.0,
   "text_duck_fade": 0.15,

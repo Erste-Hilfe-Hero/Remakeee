@@ -239,7 +239,7 @@ static func target_preview(model: BattleModel, me: Spirling, foe: Spirling, mv: 
 		return ""
 	if not GameState.damage_preview or not ShopEffects.owns_setting("damage_preview"):
 		return ""
-	if GameState.known_multiplier(mv.element, foe) < 0.0:
+	if GameState.known_art_multiplier(mv, foe) < 0.0:
 		return ""
 	return " ~%d%%" % CommandMenu.damage_pct(model, me, foe, mv)
 
@@ -252,7 +252,7 @@ static func switch_tag(s: Spirling, foe: Spirling) -> String:
 	for mv: MoveData in s.moves:
 		if mv.power <= 0:
 			continue
-		best = maxf(best, GameState.known_multiplier(mv.element, foe))
+		best = maxf(best, GameState.known_art_multiplier(mv, foe))
 	var tag: String = CommandMenu.matchup_tag(best)
 	return "" if tag.is_empty() else " " + tag
 

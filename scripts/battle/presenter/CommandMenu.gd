@@ -359,9 +359,9 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 	# The kind's symbol (item 597): ! physical, * focus, ~ status, as in the rules page.
 	var kind: String = BattleHelp.kind_mark(mv.kind) + " " + Loc.t(MoveData.Kind.keys()[mv.kind].capitalize())
 	if mv.is_damaging():
-		lines.append(Loc.t("%s, %s, power %d") % [Elements.element_name(mv.element), kind, mv.power])
+		lines.append(Loc.t("%s, %s, power %d") % [Loc.t(mv.element_label()), kind, mv.power])
 	else:
-		lines.append(Loc.t("%s, %s") % [Elements.element_name(mv.element), kind])
+		lines.append(Loc.t("%s, %s") % [Loc.t(mv.element_label()), kind])
 	lines.append(Loc.t("Accuracy %d%%, %d Energy") % [roundi(mv.accuracy * 100.0), mv.energy_cost])
 	if mv.priority > 0:
 		lines.append(Loc.t("Acts before other arts."))
@@ -646,7 +646,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 		var b: Button = _move_buttons[i]
 		if i < me.moves.size():
 			var mv: MoveData = me.moves[i]
-			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
+			var mult: float = GameState.known_art_multiplier(mv, foe) if foe != null else -1.0
 			# An art that acts first carries an arrow (item 595).
 			b.text = art_marks(mv) + mv.move_name
 			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
@@ -661,17 +661,21 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			# On the element chip (Era III on) the symbol stands in ink on paper, else in its colour.
 			_move_icons[i].texture = ElementIcons.outlined(mv.element, UITheme.INK if filled else BattleUiStyle.badge_color(era, mv.element))
 			_move_stripes[i].color = BattleUiStyle.badge_color(era, mv.element) if BattleUiStyle.colour_on(era) and not filled else Color.TRANSPARENT
+			# A neutral art (item 89) carries no element symbol and no element stripe.
+			if mv.neutral:
+				_move_icons[i].texture = null
+				_move_stripes[i].color = Color.TRANSPARENT
 			var shown_mult: float = mult if mv.power > 0 else -1.0
 			_move_costs[i].text = BattleUiStyle.matchup_mark(shown_mult, GameState.color_blind) + _move_costs[i].text
 			_row_colors[i] = BattleUiStyle.matchup_color(era, shown_mult)
 			if EraBattleHud.flag(era, "art_detail"):
 				# Era IV on: the element's name under the art's name, the matchup word under the cost.
-				b.text = art_marks(mv) + Loc.t(mv.move_name) + "\n" + Loc.t(Elements.element_name(mv.element))
+				b.text = art_marks(mv) + Loc.t(mv.move_name) + "\n" + Loc.t(mv.element_label())
 				_move_hints[i].text = Loc.t(EraBattleHud.effect_hint(era, shown_mult))
 			_style_row(b, _row_left())
 			if filled:
 				_fill_row(b, mv.element)
-			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
+			b.tooltip_text = "%s %s, power %d" % [mv.element_label(), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
 			# Screen readers read the whole info card, no long press needed.
 			b.accessibility_description = move_info(mv, model)
 			b.disabled = not me.can_afford(mv) or model.move_locked(mv)

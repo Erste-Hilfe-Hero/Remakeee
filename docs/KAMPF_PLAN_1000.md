@@ -127,20 +127,20 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 86. [x] Element-Wechsel-Technik: Ziel wird für 3 Runden zu einem anderen Element (Farbbad (Dye Bath), Spirling.element_shift)
 87. [x] Element-Schutz-Gegenstand: halbiert einen sehr effektiven Treffer einmal (Schutzschale (Ward Shell), held super_guard)
 88. [x] Element-Verstärker als gehaltene Gegenstände (+15 % für ein Element) (bestehend: Prismen +20 %, Amulette +10 % je Element)
-89. [ ] Neutral-Techniken ohne Element für jeden Spirling
-90. [ ] Matchup-Lernen auch durch Lexikon-Einträge (Lore-Seiten)
-91. [ ] Elementsymbol am Ziel-Pin im Mehrfachkampf
+89. [x] Neutral-Techniken ohne Element für jeden Spirling (MoveData.neutral: Plain Shove, Old Grudge, Scrap Swipe, Echo-Kristalle für jeden Spirling)
+90. [x] Matchup-Lernen auch durch Lexikon-Einträge (Lore-Seiten) (lexicon.json matchups, Lexicon.lessons)
+91. [x] Elementsymbol am Ziel-Pin im Mehrfachkampf (TargetPin.elements)
 92. [x] Effektivitäts-Hinweis im Mehrfachkampf pro Ziel bei der Zielwahl (bekanntes x2/x.5 an der Zielwahl, TechniqueRules.aim_tag)
 93. [x] Element-Balance-Bericht: welches Element gewinnt im Simulator zu oft (bestehend: tools/balance/type_sim.py chart_report)
-94. [ ] Neue Feld-Elemente pro Riss variieren
+94. [x] Neue Feld-Elemente pro Riss variieren (Rust Haze, Ink Flood, Rime Fall, Gilt Glare; rift_fields.json rift_maps)
 95. [x] Element-Reaktion: Tide trifft Scorch-Ziel und löscht den Status
 96. [x] Element-Reaktion: Volt trifft Soak-Ziel für +20 % Schaden
 97. [x] Element-Reaktion: Ember auf Root-Ziel befreit es, verursacht aber Scorch (BattleRules.REACTIONS inflict)
 98. [x] Element-Reaktionen im Lexikon erklären (Lexikon-Eintrag 'Reactions' nennt alle Reaktionen)
-99. [ ] Matchup-Quiz als Minispiel im Leuchtturm
+99. [x] Matchup-Quiz als Minispiel im Leuchtturm (MatchupQuiz im Trainingsring)
 100. [x] Effektivitäts-Text in eigener Wortwahl (bestehend: 'overwhelming', 'barely landed') (bestehend: BattleEvent DAMAGE)
 101. [x] Unwirksam-Treffer (x0) gibt es nicht, nur x0.25 (Designregel festhalten) (Regel in docs/BALANCE.md, test_kampf_techniques)
-102. [ ] Element-Dominanz pro Region als Wild-Spawn-Tabelle
+102. [x] Element-Dominanz pro Region als Wild-Spawn-Tabelle (data/element_dominance.json, ElementDominance.boost)
 103. [x] Trait 'Prisma-Haut': nimmt bei x2 nur x1.5 (verborgene Gabe Prismenhaut (Cullet-Linie))
 104. [x] Trait 'Gegenstrom': resistiert das Element, das es zuletzt getroffen hat (verborgene Gabe Gegenstrom (Paddlewisp-Linie))
 105. [x] Element-Statistik im Kampfende-Bericht (Schaden nach Element im Kampflog, TechniqueRules.element_summary)
@@ -1107,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [x] Kampf-Plan im Projektordner gespiegelt (tools/plan/plan_1000.py)
 
 ---
-881 von 1000 Punkten umgesetzt.
+887 von 1000 Punkten umgesetzt.
 

@@ -68,6 +68,12 @@ static func spawn_boost(field: String) -> Array[int]:
 		out.append(int(Elements.E.get(str(f.boost), -1)))
 	return out
 
+## The field Rift map [param file] stands in when the map sets no "field" of its own (item 94):
+## data/rift_fields.json "rift_maps". "" for any other map.
+static func home_field(file: String) -> String:
+	var f: String = str((data().get("rift_maps", {}) as Dictionary).get(file, ""))
+	return f if BattleRules.FIELDS.has(f) else ""
+
 static func lexicon_id(field: String) -> String:
 	return LEXICON_PREFIX + field
 
