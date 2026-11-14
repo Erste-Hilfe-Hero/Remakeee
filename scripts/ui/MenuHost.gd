@@ -397,6 +397,8 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"damage_preview": "Shows how hard a move would hit before you choose it.",
 	"damage_numbers": "Shows the damage of each hit as a number over the Spirling.",
 	"refill_fruit": "After a battle, a Spirling that ate its held fruit takes the same one from the bag.",
+	"shift_offer": "When a Wayfarer's Spirling is beaten, you may swap before the next one steps out.",
+	"foe_announce": "A Wayfarer names its next Spirling before it steps out.",
 	"bonus_goals": "Optional extra goals in Wayfarer and Warden battles.",
 	"tips": "Short hints the first time something new comes up.",
 	"play_reminder": "A short note after 90 minutes of play.",
@@ -490,6 +492,10 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				rows.append(["difficulty", "Challenge: %s" % DIFFICULTY_TEXT[GameState.difficulty] + (" " + Loc.t("(lowered)") if GameState.difficulty_lowered() else "")])
 				rows.append(["iron_oath", "Iron Oath: %s" % ("Sworn" if GameState.iron_oath else "Off")])
 				rows.append(["refill_fruit", "Refill fruit: %s" % ("On" if TraitKit.refill_on() else "Off")])
+				# KAMPF_PLAN_1000 items 9, 10: the swap offer can be switched off on Veteran only.
+				if TurnFlow.shift_setting_shown(GameState.difficulty):
+					rows.append(["shift_offer", "Swap offer: %s" % ("On" if TurnFlow.shift_on() else "Off")])
+				rows.append(["foe_announce", "Foe announces: %s" % ("On" if TurnFlow.announce_on() else "Off")])
 				rows.append(["challenges", "Challenges..."])
 		"sound":
 			rows = [
@@ -568,6 +574,10 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.damage_numbers = not GameState.damage_numbers
 		"refill_fruit":
 			TraitKit.set_refill(not TraitKit.refill_on())
+		"shift_offer":
+			GameState.flags[TurnFlow.SHIFT_OFF_FLAG] = TurnFlow.shift_on()
+		"foe_announce":
+			GameState.flags[TurnFlow.ANNOUNCE_OFF_FLAG] = TurnFlow.announce_on()
 		"bonus_goals":
 			GameState.bonus_goals = not GameState.bonus_goals
 		"tips":

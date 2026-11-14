@@ -19,6 +19,8 @@ enum Side { PLAYER = 0, FOE = 1 }
 enum Phase {
 	INTRO, CHOOSE_ACTIONS, RESOLVE_ORDER, EXECUTE_ACTION, END_OF_TURN,
 	FAINT_CHECK, VICTORY_CHECK, SWITCH_IN, AWAIT_SWITCH, REWARDS, FINISHED,
+	# KAMPF_PLAN_1000 item 9: the foe named its next Spirling, the player may swap first (submit_shift).
+	AWAIT_SHIFT,
 }
 enum Outcome { NONE, WIN, LOSS, BONDED, FLED }
 
@@ -205,6 +207,12 @@ var entered_turn: Dictionary = {}
 var rest_heal_share: float = 0.0
 ## Wild ambush from the tall fern (item 16): in the first turn the foe acts before everything.
 var ambush: bool = false
+## KAMPF_PLAN_1000 items 9, 10 (TurnFlow): in a 1v1 Wayfarer battle the foe names its next
+## Spirling after a knock-out (foe_announce), and with shift_offer the player may swap first.
+var shift_offer: bool = false
+var foe_announce: bool = false
+## Party index of the foe's named next Spirling while the phase is AWAIT_SHIFT, else -1.
+var shift_next: int = -1
 ## Bosses only (item 21): after this many turns the Rift closes and the fight ends as FLED.
 const BOSS_ROUND_LIMIT: int = 30
 ## Story values for foe_crit_mult (set by ChallengeRules) and rest_heal_share (items 36, 52).
@@ -557,6 +565,9 @@ func submit_turn(player_action: BattleAction, foe_action: BattleAction = null) -
 ## without a legal action rests; foe and ally slots without one let their AI choose.
 func submit_actions(actions: Array[BattleAction]) -> Array[BattleEvent]:
 	_events = []
+	# A swap offer left open is declined: the named foe steps out first (item 9).
+	if phase == Phase.AWAIT_SHIFT:
+		_end_shift(-1)
 	if phase != Phase.CHOOSE_ACTIONS:
 		push_error("BattleModel.submit_actions called in phase %s" % Phase.keys()[phase])
 		return _events
@@ -604,6 +615,70 @@ func submit_switch(index: int) -> Array[BattleEvent]:
 		slots[Side.PLAYER][pending_switch.pop_front()] = -1
 	phase = Phase.AWAIT_SWITCH if not pending_switch.is_empty() else Phase.CHOOSE_ACTIONS
 	return _events
+
+func needs_shift_choice() -> bool:
+	return phase == Phase.AWAIT_SHIFT
+
+## Answers the swap offer (item 9): [param index] is the bench Spirling to send out first, -1 to
+## stay. Then the foe's named Spirling steps out.
+func submit_shift(index: int) -> Array[BattleEvent]:
+	_events = []
+	if phase != Phase.AWAIT_SHIFT:
+		push_error("BattleModel.submit_shift called in phase %s" % Phase.keys()[phase])
+		return _events
+	_end_shift(index)
+	return _events
+
+## Gives up the battle (item 8): it counts as a loss. Only against a Wayfarer.
+func forfeit() -> Array[BattleEvent]:
+	_events = []
+	if is_finished() or is_wild:
+		return _events
+	if phase == Phase.AWAIT_SHIFT:
+		_end_shift(-1)
+		_events = []
+	emit_event(BattleEvent.Type.TECHNIQUE, {"side": Side.PLAYER, "text": "You give up. %s doesn't even pretend to be surprised.", "args": [trainer_name if not trainer_name.is_empty() else "The foe"]})
+	outcome = Outcome.LOSS
+	_phase_rewards()
+	return _events
+
+## The player may swap before the foe's next Spirling steps out (item 9).
+func _shift_open() -> bool:
+	if not shift_offer or not is_standing(active_spirling(Side.PLAYER)) or swap_locked:
+		return false
+	var me: Spirling = active_spirling(Side.PLAYER)
+	if StatusRules.blocks_swap(me.status) and not TraitKit.free_swap(me):
+		return false
+	return not swap_candidates(Side.PLAYER).is_empty()
+
+## A 1v1 Wayfarer's emptied slot: names the next Spirling (item 10) and, with the swap offer,
+## holds it back until submit_shift. True when the slot was handled here.
+func _announce_next(slot: int) -> bool:
+	if is_wild or is_multi() or trainer_name.is_empty() or not (shift_offer or foe_announce):
+		return false
+	if is_standing(active_spirling(Side.FOE, slot)):
+		return false
+	var index: int = ai.choose_replacement(self, Side.FOE, slot)
+	if index < 0:
+		return false
+	if foe_announce:
+		emit_event(BattleEvent.Type.BATTLE_LINE, {"side": Side.FOE, "name": trainer_name, "kind": "announce",
+			"text": TurnFlow.announce_line((parties[Side.FOE][index] as Spirling).display_name())})
+	if _shift_open():
+		shift_next = index
+	else:
+		_swap_in(Side.FOE, index, slot)
+	return true
+
+func _end_shift(index: int) -> void:
+	if index >= 0 and index in swap_candidates(Side.PLAYER):
+		var a := BattleAction.make_swap(Side.PLAYER, index)
+		a.actor = active_spirling(Side.PLAYER)
+		_do_swap(a)
+	if shift_next >= 0:
+		_swap_in(Side.FOE, shift_next, 0)
+	shift_next = -1
+	phase = Phase.CHOOSE_ACTIONS
 
 # --- Helpers used by effects --------------------------------------------------
 
@@ -1344,7 +1419,8 @@ func _phase_victory_check() -> void:
 
 func _phase_switch_in() -> void:
 	for slot: int in slot_count(Side.FOE):
-		_refill_slot(Side.FOE, slot, ai)
+		if not _announce_next(slot):
+			_refill_slot(Side.FOE, slot, ai)
 	if _partner_slot >= 0:
 		for slot: int in range(_partner_slot, slot_count(Side.PLAYER)):
 			_refill_slot(Side.PLAYER, slot, partner_ai)
@@ -1359,6 +1435,8 @@ func _phase_switch_in() -> void:
 		else:
 			pending_switch.append(slot)
 	phase = Phase.AWAIT_SWITCH if not pending_switch.is_empty() else Phase.CHOOSE_ACTIONS
+	if shift_next >= 0:
+		phase = Phase.AWAIT_SHIFT
 
 ## An AI-steered slot whose Spirling dropped (or was bonded away) takes a bench Spirling, if any.
 func _refill_slot(side: int, slot: int, brain: BattleAI) -> void:
