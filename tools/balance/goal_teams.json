@@ -76,11 +76,11 @@
   "cinder_rift/warden_orrin": [
    {
     "species": "Puddlet",
-    "level": 14
+    "level": 17
    },
    {
     "species": "Kelpup",
-    "level": 14
+    "level": 17
    }
   ],
   "murk_hollow/delve": [
@@ -157,15 +157,15 @@
   "tide_rift/warden_maelis": [
    {
     "species": "Zippit",
-    "level": 26
+    "level": 30
    },
    {
     "species": "Mossling",
-    "level": 26
+    "level": 30
    },
    {
     "species": "Shalebat",
-    "level": 26
+    "level": 30
    }
   ],
   "tide_rift/drowned_heart": [
