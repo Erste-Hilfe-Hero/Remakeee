@@ -1,0 +1,19 @@
+{
+ "_comment": "German texts from tools/i18n/de_kampf_k26.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%s sent you matchup notes.": "%s hat dir Matchup-Notizen geschickt.",
+  "%s's notes: %d matchups you did not know yet. The move list shows them now.": "Notizen von %s: %d Matchups, die du noch nicht kanntest. Die Technikliste zeigt sie jetzt.",
+  "%s's notes: nothing you did not know already. Flattering, in a way.": "Notizen von %s: nichts, was du nicht schon wusstest. Irgendwie schmeichelhaft.",
+  "A seal is cut into the base: %s. Which element breaks it?": "Im Sockel ist ein Siegel eingeritzt: %s. Welches Element bricht es?",
+  "Rift theme: %s": "Thema des Risses: %s",
+  "Send %d matchup notes to %s? You both get %d friendship points.": "%d Matchup-Notizen an %s schicken? Ihr bekommt beide %d Freundschaftspunkte.",
+  "Share matchup notes": "Matchup-Notizen teilen",
+  "The seal cracks. Someone hid %s behind it and never came back for it.": "Das Siegel bricht. Jemand hat %s dahinter versteckt und ist nie zurückgekommen.",
+  "The seal hums, smug and whole. It has met your kind before.": "Das Siegel summt, selbstzufrieden und heil. Es kennt Leute wie dich.",
+  "Those notes are smudged. Try again after your next battle.": "Die Notizen sind verschmiert. Versuch es nach deinem nächsten Kampf noch einmal.",
+  "You already sent notes to this friend today. Tomorrow again!": "Du hast dieser Person heute schon Notizen geschickt. Morgen wieder!",
+  "Your notes are empty. Land a few hits first, then share what you learned.": "Deine Notizen sind leer. Lande erst ein paar Treffer, dann teile, was du gelernt hast.",
+  "Your notes are on their way to %s. Knowledge shared is knowledge you can't sell. Oh well.": "Deine Notizen sind unterwegs zu %s. Geteiltes Wissen kann man nicht mehr verkaufen. Nun ja."
+ }
+}

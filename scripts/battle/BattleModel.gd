@@ -207,6 +207,8 @@ var entered_turn: Dictionary = {}
 var rest_heal_share: float = 0.0
 ## Wild ambush from the tall fern (item 16): in the first turn the foe acts before everything.
 var ambush: bool = false
+## AiNotes level (items 451, 467): OFF, REASON (replays) or TABLE (developer view).
+var explain_ai: int = AiNotes.OFF
 ## Bosses only (item 21): after this many turns the Rift closes and the fight ends as FLED.
 const BOSS_ROUND_LIMIT: int = 30
 ## Story values for foe_crit_mult (set by ChallengeRules) and rest_heal_share (items 36, 52).
@@ -581,6 +583,8 @@ func submit_actions(actions: Array[BattleAction]) -> Array[BattleEvent]:
 						# Item 628: the partner knows which foe the player goes for this turn.
 						partner_ai.ally_target = _player_aim(actions)
 					a = (partner_ai if side == Side.PLAYER else ai).choose(self, side, slot)
+					if side == Side.FOE and explain_ai > AiNotes.OFF:
+						_events.append(AiNotes.note(self, ai, a, explain_ai))
 			_queue.append(a)
 			if side == Side.FOE and slot == 0 and _boss_actions > 1:
 				for i: int in _boss_actions - 1:
@@ -856,7 +860,7 @@ func _enter_boss_phase(boss: Spirling, p: Dictionary) -> void:
 			_boss_weak_back[stat] = before - boss.stage(stat)
 	if not _boss_weak_back.is_empty():
 		_boss_weak_until = turn + BossRules.WEAK_TURNS
-		emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss,
+		emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "weak": true,
 			"text": "%s lies open: its Guard is down for a turn!" % boss.display_name()})
 
 ## End of turn for a Rift boss: the weak point closes, and a long fight enrages it (item 432).

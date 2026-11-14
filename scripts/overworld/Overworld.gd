@@ -884,6 +884,13 @@ func _on_interact(cell: Vector2i) -> void:
 	var landmark: Array[String] = Landmarks.lines_at(map.id, cell)
 	if not landmark.is_empty():
 		await _locked_say(landmark)
+		# KAMPF_PLAN_1000 item 117: an element seal under the landmark.
+		if not ElementSeals.seal_for(map.id).is_empty() and not GameState.has_flag(ElementSeals.flag(map.id)):
+			busy = true
+			player.frozen = true
+			await ElementSeals.run(_ui, map.id)
+			player.frozen = false
+			busy = false
 		return
 	# Talk across counters.
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
@@ -1825,6 +1832,8 @@ func watch_replay(snap: Dictionary) -> void:
 		var why: String = BattleReplay.problem(snap)
 		await say([why if not why.is_empty() else "That replay can't be shown any more."] as Array[String])
 		return
+	# A replay says why the foe did what it did (KAMPF_PLAN_1000 item 467).
+	model.explain_ai = AiNotes.REASON
 	await _fade_to(1.0)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
@@ -3247,6 +3256,45 @@ func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.set_flag(flag)
 		await _action_give_item([Season.gift_for(f, year), "1"] as PackedStringArray, null)
 	await _festival_task()
+	await _festival_boss(f, "%s_%d" % [f.id, year])
+
+## The festival's echo of a beaten Rift heart (KAMPF_PLAN_1000 item 437, FestivalBoss).
+func _festival_boss(f: Dictionary, key: String) -> void:
+	var e: Dictionary = FestivalBoss.entry(str(f.id))
+	if e.is_empty():
+		return
+	var fb: Dictionary = FestivalBoss.data()
+	if not FestivalBoss.unlocked(str(f.id), GameState.records):
+		await say([str(fb.get("locked", ""))] as Array[String])
+		return
+	if FestivalBoss.won(key, GameState.records):
+		await say([str(fb.get("done", ""))] as Array[String])
+		return
+	var best: int = 1
+	for s: Spirling in GameState.party:
+		best = maxi(best, s.level)
+	var foes: Array[Spirling] = FestivalBoss.team(str(f.id), best, GameState.rng)
+	if foes.is_empty():
+		return
+	var label: String = str(BattleRules.BOSSES.get(str(e.boss), {}).get("label", ""))
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var go: bool = await menu.confirm(Loc.t(str(fb.get("offer", ""))) % [Loc.t(label), foes[0].display_name()])
+	menu.queue_free()
+	if not go:
+		return
+	GameState.heal_party()
+	busy = false
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, {"name": Loc.t(label), "ai": maxi(TrainerData.BOSS_MIN_AI, GameState.ai_level()), "money": 0, "boss": str(e.boss)})
+	busy = true
+	player.frozen = true
+	if outcome != BattleModel.Outcome.WIN:
+		await say([str(fb.get("loss", ""))] as Array[String])
+		return
+	var lines: Array[String] = [str(fb.get("win", ""))]
+	if FestivalBoss.note_win(key, GameState.records):
+		lines.append_array(Festival.add(int(fb.get("ribbons", 20))))
+	await say(lines)
 
 ## The crier's festival task of the day (plan 3211): one a day, pays festival ribbons.
 func _festival_task() -> void:
@@ -3621,6 +3669,9 @@ func after_tamer_win(n: NPC) -> void:
 		# The heart's spoils follow the difficulty (item 415).
 		for it: Variant in BossHall.reward_items(GameState.difficulty):
 			await _action_give_item(PackedStringArray([str(it[0]), str(it[1])]), null)
+		# The fastest win against each boss is kept to watch again (item 440).
+		if BossRules.keep_replay(GameState.records, str(def.boss), last_model.turn, GameState.records.get("last_battle", {})):
+			toast.show_note(Loc.t("Kept in your boss replays (Records)."))
 	if not lore.is_empty() and Lexicon.add(GameState.records, lore):
 		await say([Loc.t("A new lexicon entry is written down."), "%s: %s" % [Loc.t(Lexicon.title(lore)), Loc.t(Lexicon.text(lore))]] as Array[String])
 	for f: Variant in def.get("win_flags", []):
@@ -3629,6 +3680,9 @@ func after_tamer_win(n: NPC) -> void:
 		_npcs.erase(n)
 		n.queue_free()
 	await announce_goal_if_changed(goal_before)
+	# The boss's own badge (item 439) shows right away, not only after the next battle.
+	if def.has("boss"):
+		await announce_achievements()
 	SaveManager.save_game()
 	VirtualPad.set_wanted(true)
 	player.frozen = false
