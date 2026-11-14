@@ -86,7 +86,7 @@ Ali's OK for Google's Play In-App Updates library came on 2026-11-14 ("Es soll i
 
 ### Play build and itch build stay apart
 
-- Only the "Android (itch)" preset has `permissions/request_install_packages=true`. `tools/release_check.py` fails on it in any other preset, the `android-debug` CI job exports the itch flavour and checks that only it carries `REQUEST_INSTALL_PACKAGES`, and `android-release` checks the AAB has none. Google Play forbids an app from Play to update itself any other way, and the code path needs both the `itch` feature and an installer other than `com.android.vending`.
+- Only the "Android (itch)" preset asks for it (`permissions/custom_permissions=PackedStringArray("android.permission.REQUEST_INSTALL_PACKAGES")`, Godot has no checkbox for it). `tools/release_check.py` fails on it in any other preset, the `android-debug` CI job exports the itch flavour and checks that only it carries `REQUEST_INSTALL_PACKAGES`, and `android-release` checks the AAB has none. Google Play forbids an app from Play to update itself any other way, and the code path needs both the `itch` feature and an installer other than `com.android.vending`.
 - The itch APK must always be signed with the same key (Android refuses an update signed with another key). Export it by hand: `godot --headless --export-release "Android (itch)" build/android/Chimora-itch.apk` with the `GODOT_ANDROID_KEYSTORE_RELEASE_*` variables of the upload keystore. A copy installed from Play and one from itch cannot update each other; players stay on their channel.
 
 ### Plugin

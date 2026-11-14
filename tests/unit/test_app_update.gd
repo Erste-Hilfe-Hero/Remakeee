@@ -148,7 +148,7 @@ func _android_presets() -> Dictionary:
 	for s: String in cfg.get_sections():
 		if not s.ends_with(".options") and str(cfg.get_value(s, "platform", "")) == "Android":
 			out[str(cfg.get_value(s, "name", ""))] = {"features": str(cfg.get_value(s, "custom_features", "")),
-				"install": bool(cfg.get_value(s + ".options", "permissions/request_install_packages", false)),
+				"install": "android.permission.REQUEST_INSTALL_PACKAGES" in cfg.get_value(s + ".options", "permissions/custom_permissions", PackedStringArray()),
 				"custom": cfg.get_value(s + ".options", "permissions/custom_permissions", PackedStringArray())}
 	return out
 
@@ -159,7 +159,7 @@ func test_only_the_itch_preset_may_install_apks() -> void:
 		var p: Dictionary = all[name]
 		var itch: bool = "itch" in p.features.split(",")
 		assert_eq(p.install, itch, name)
-		assert_eq((p.custom as PackedStringArray).size(), 0, name)
+		assert_eq((p.custom as PackedStringArray).size(), 1 if itch else 0, name)
 	assert_true(all["Android (itch)"].install)
 	assert_false(all["Android"].install, "the Play build updates through Google Play only")
 

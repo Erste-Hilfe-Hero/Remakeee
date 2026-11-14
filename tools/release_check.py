@@ -120,7 +120,7 @@ AD_SDKS = re.compile(r"admob|applovin|unityads|unity_ads|ironsource|levelplay|fi
 
 # The itch.io build (custom feature "itch") downloads a new APK and hands it to the system installer
 # (docs/LIVE_CONTENT.md). Only that preset may ask for it: Play builds update through Google Play.
-ITCH_PERMISSIONS = {"request_install_packages"}
+ITCH_PERMISSIONS = {"android.permission.REQUEST_INSTALL_PACKAGES"}
 
 
 def check_permissions() -> None:
@@ -128,13 +128,15 @@ def check_permissions() -> None:
     for name, features, body in re.findall(r'^\[preset\.\d+\]\n+name="([^"]*)"\n.*?^custom_features="([^"]*)"$(.*?)(?=^\[preset\.\d+\]$|\Z)',
                                            text, re.M | re.S):
         on = set(re.findall(r"^permissions/([a-z_]+)=true$", body, re.M))
-        allowed = ALLOWED_PERMISSIONS | (ITCH_PERMISSIONS if "itch" in features.split(",") else set())
-        extra = sorted(on - allowed)
+        extra = sorted(on - ALLOWED_PERMISSIONS)
         if extra:
             errors.append("new Android permissions in export_presets.cfg (%s): %s" % (name, ", ".join(extra)))
-    for custom in re.findall(r"^permissions/custom_permissions=PackedStringArray\((.*)\)$", text, re.M):
-        if custom.strip():
-            errors.append("custom Android permissions in export_presets.cfg: " + custom)
+        # Godot's list has no REQUEST_INSTALL_PACKAGES, so the itch preset names it as a custom one.
+        allowed = ITCH_PERMISSIONS if "itch" in features.split(",") else set()
+        for custom in re.findall(r"^permissions/custom_permissions=PackedStringArray\((.*)\)$", body, re.M):
+            names = set(re.findall(r'"([^"]*)"', custom))
+            if names - allowed:
+                errors.append("custom Android permissions in export_presets.cfg (%s): %s" % (name, ", ".join(sorted(names - allowed))))
 
 
 def check_sdks() -> None:
