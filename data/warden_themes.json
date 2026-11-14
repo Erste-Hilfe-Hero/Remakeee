@@ -1,0 +1,33 @@
+{
+ "_comment": "KAMPF_PLAN_1000 item 111: one element per Rift as the theme of its Warden, keyed by the Warden's 'warden' id. The theme is always one of the most common elements in the Warden's own team (tests/unit/test_kampf_k26.gd); the Warden card names it (WardenCard.theme).",
+ "themes": {
+  "cinder": "EMBER",
+  "mist": "GALE",
+  "tide": "TIDE",
+  "rain": "TIDE",
+  "mirror": "LUMEN",
+  "root": "BLOOM",
+  "kiln": "STONE",
+  "glass": "LUMEN",
+  "shade": "UMBRA",
+  "tower": "GALE",
+  "oasis": "TIDE",
+  "sun": "LUMEN",
+  "foundry": "EMBER",
+  "lock": "TIDE",
+  "masque": "LUMEN",
+  "vault": "STONE",
+  "v3_bath": "ACID",
+  "v3_ledger": "LUMEN",
+  "v3_press": "EMBER",
+  "v3_rime": "FROST",
+  "v4_gilt": "LUMEN",
+  "v4_orrery": "LUMEN",
+  "v4_salt": "TIDE",
+  "v4_span": "GALE",
+  "v5_bloom": "UMBRA",
+  "v5_raft": "TIDE",
+  "v5_taproot": "BLOOM",
+  "v5_wick": "EMBER"
+ }
+}
