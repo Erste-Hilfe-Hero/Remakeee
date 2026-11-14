@@ -48,17 +48,32 @@
    "team": [
     {
      "species": "Latchet",
-     "level": 57
+     "level": 57,
+     "moves": [
+      "Landslip"
+     ]
     },
     {
      "species": "Knellgrim",
-     "level": 58
+     "level": 58,
+     "moves": [
+      "Landslip"
+     ]
     },
     {
      "species": "Veilmote",
-     "level": 58
+     "level": 58,
+     "moves": [
+      "Grand Farce"
+     ]
     }
-   ]
+   ],
+   "front": [
+    2,
+    2
+   ],
+   "strategy": "multi",
+   "profile": "sweeper"
   },
   {
    "id": "ash_sifter",

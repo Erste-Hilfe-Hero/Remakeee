@@ -16,6 +16,9 @@ There is no lawyer review (Ali's decision); residual risks are listed in `docs/l
 - New creature, move and place names: check that the name is not a creature, move or place name in any
   well-known monster-taming game and is not a registered trademark in games (search EUIPO and USPTO
   TESS/TSDR in class 9 and 41). Avoid the "-mon" suffix and puns that point at a specific franchise.
+  Art names are checked automatically against a block list of the inspiration's move names
+  (`tools/ip_move_check.py`, run by `tools/ip_check.sh`): an exact match after folding case, spaces
+  and hyphens fails, a name one letter away is printed as a note to look at.
 
 ## 1b. Overall impression
 

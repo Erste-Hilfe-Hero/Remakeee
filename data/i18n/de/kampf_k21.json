@@ -1,0 +1,19 @@
+{
+ "_comment": "German texts from tools/i18n/de_kampf_k21.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%d s left, then everyone without orders rests.": "Noch %d s, dann rastet jeder ohne Befehl.",
+  "%s is about to step out. Swap first?": "Gleich kommt %s. Vorher wechseln?",
+  "%s, you're up. Last longer than the last one.": "%s, du bist dran. Halt länger durch als der Letzte.",
+  "A Wayfarer names its next Spirling before it steps out.": "Ein Wanderer nennt seinen nächsten Spirling, bevor er ihn schickt.",
+  "All rest": "Alle rasten",
+  "Fight on": "Weiterkämpfen",
+  "Foe announces: %s": "Ankündigung: %s",
+  "Give up? It counts as a loss.": "Aufgeben? Das zählt als Niederlage.",
+  "Orders for %s? (%d Energy, %d s)": "Befehle für %s? (%d Energie, %d s)",
+  "Swap offer: %s": "Wechselangebot: %s",
+  "The foe": "Der Gegner",
+  "When a Wayfarer's Spirling is beaten, you may swap before the next one steps out.": "Ist ein Spirling eines Wanderers besiegt, darfst du wechseln, bevor der nächste kommt.",
+  "You give up. %s doesn't even pretend to be surprised.": "Du gibst auf. %s tut nicht mal überrascht."
+ }
+}

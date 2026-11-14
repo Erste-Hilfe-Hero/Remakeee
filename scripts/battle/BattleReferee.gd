@@ -61,6 +61,10 @@ static func check(replay: Variant, claim: Variant) -> Dictionary:
 			break
 		var d: Dictionary = inputs[i]
 		# An input the battle could not have taken at this point means the replay does not fit.
+		if str(d.get("t", "")) == "shift" and not m.needs_shift_choice():
+			return {"verdict": MISMATCH, "detail": {"field": "input", "index": i}}
+		if BattleReplay.play_extra(m, d) != null:
+			continue
 		if str(d.get("t", "")) == "switch":
 			if not m.needs_player_switch() or not int(d.get("i", -1)) in m.swap_candidates(BattleModel.Side.PLAYER, m.switch_slot()):
 				return {"verdict": MISMATCH, "detail": {"field": "input", "index": i}}

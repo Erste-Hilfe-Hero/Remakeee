@@ -45,6 +45,9 @@ var demo: String = ""
 var inputs: Array = []
 ## Set to a recorded input list to watch a replay instead of playing.
 var replay_inputs: Array = []
+## With replay_inputs: a battle picked up after a restart (KAMPF_PLAN_1000 item 31). The recorded
+## turns play again, then the player goes on choosing.
+var resume: bool = false
 var _replaying: bool = false
 
 var _field: Control
@@ -108,7 +111,10 @@ const PINCH_RATIO: float = 0.25
 func _unhandled_input(event: InputEvent) -> void:
 	if _ff_button == null:
 		return
-	if event.is_action_pressed(GameState.SPEED_ACTION) and _ff_button.visible:
+	if _pause != null and not _pause.is_paused() and BattleCalm.pause_toggle(event, false):
+		get_viewport().set_input_as_handled()
+		_pause.open()
+	elif event.is_action_pressed(GameState.SPEED_ACTION) and _ff_button.visible:
 		get_viewport().set_input_as_handled()
 		_ff_button.pressed.emit()
 	elif event.is_action_pressed(GameState.AUTO_ACTION) and _auto_button.visible:
@@ -126,6 +132,7 @@ func _ready() -> void:
 	theme = EraBattleHud.theme(EraManager.active_era())
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_build()
+	_build_pause()
 	if model == null:
 		model = _demo_model()
 		quit_on_finish = false
@@ -266,6 +273,12 @@ func _build() -> void:
 	_log_button.focus_mode = Control.FOCUS_NONE
 	_log_button.pressed.connect(_toggle_log)
 	_field.add_child(_log_button)
+	# Pause at any moment (item 912); "II" needs no translation and fits every era's column.
+	_pause_button = Button.new()
+	_pause_button.text = "II"
+	_pause_button.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	_pause_button.focus_mode = Control.FOCUS_NONE
+	_field.add_child(_pause_button)
 	_pin = TargetPin.new()
 	_field.add_child(_pin)
 	_back_button = Button.new()
@@ -279,6 +292,20 @@ func _build() -> void:
 		else:
 			_target_picked.emit(-1))
 	_field.add_child(_back_button)
+	_rest_all_button = Button.new()
+	_rest_all_button.text = "All rest"
+	_rest_all_button.focus_mode = Control.FOCUS_NONE
+	_rest_all_button.visible = false
+	_rest_all_button.pressed.connect(func() -> void:
+		Sound.sfx("confirm")
+		_menu.chosen.emit(BattleAction.Kind.REST, TurnFlow.ALL_REST))
+	_field.add_child(_rest_all_button)
+	_clock = Timer.new()
+	_clock.wait_time = 1.0
+	# Autostart: _build may run before the scene is in the tree.
+	_clock.autostart = true
+	_clock.timeout.connect(_on_clock)
+	add_child(_clock)
 
 	_bond_game = BondMinigame.new()
 	_bond_game.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -382,6 +409,7 @@ func _layout_field() -> void:
 		_layout_formation()
 		if _hud != null:
 			_hud.layout_formation()
+		_place_pause()
 		return
 	var w: float = _field.size.x
 	var h: float = _field.size.y
@@ -414,6 +442,7 @@ func _layout_field() -> void:
 		_player_sprite.size = pr.size
 	if _hud != null:
 		_hud.layout_single()
+	_place_pause()
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade) * BattleShow.night_tint(DayCycle.current(), GameState.day_night, outdoor, backdrop)
 
@@ -465,6 +494,8 @@ func _layout_formation() -> void:
 	_goal_label.position = Vector2(w - 26 - MARGIN, MARGIN + 42)
 	_back_button.position = Vector2(MARGIN, MARGIN + STRIP_HEIGHT + 10)
 	_back_button.size = Vector2(26, 12)
+	_rest_all_button.position = Vector2(MARGIN, MARGIN + STRIP_HEIGHT + 24)
+	_rest_all_button.size = Vector2(0, 12)
 	var rects: Array[Rect2] = [Rect2(), Rect2()]
 	var tag_hs: Array[float] = [0.0, 0.0]
 	for side: int in 2:
@@ -618,11 +649,37 @@ func _notification(what: int) -> void:
 	_away = step > 0
 	_apply_speed()
 
+var _pause_button: Button
+var _pause: BattlePause
+
+## The pause panel over everything (item 912): while it shows, Auto and the text wait like when
+## the app is in the background (item 629), and the whole battle stands still.
+## The "II" button takes Auto's place when Auto is hidden; beside Auto it is a small square just
+## left of the speed button, so every era's own button row stays as it is.
+func _place_pause() -> void:
+	if _pause_button == null:
+		return
+	if not _auto_button.visible:
+		_pause_button.position = _auto_button.position
+		_pause_button.size = _auto_button.size
+	else:
+		_pause_button.size = Vector2(12, _ff_button.size.y)
+		_pause_button.position = Vector2(maxf(0.0, _ff_button.position.x - 14), _ff_button.position.y)
+
+func _build_pause() -> void:
+	_pause = BattlePause.new()
+	add_child(_pause)
+	_pause_button.pressed.connect(_pause.open)
+	_pause.changed.connect(func(on: bool) -> void:
+		_away = on
+		_apply_speed())
+
 ## Applies the 1x / 2x / 4x battle speed (and auto-advance while fast or on Auto).
 func _apply_speed() -> void:
 	var speed: float = GameState.battle_speed_scale()
 	_ff_button.text = "%dx" % int(speed)
-	_text.auto_advance = (speed > 1.0 or _auto_active()) and not _away
+	# "No rush" (item 632) keeps the text waiting at 2x/4x; a picked-up battle's old turns run on.
+	_text.auto_advance = BattleCalm.text_auto(speed, _auto_active() or (resume and _replaying), _away)
 	_text.chars_per_second = GameState.text_cps() * speed
 	for n: Variant in [_foe_sprite, _player_sprite, _foe_strip, _player_strip]:
 		n.speed_scale = speed
@@ -637,6 +694,7 @@ func _run() -> void:
 	_foe_strip.visible = false
 	_player_strip.visible = false
 	_auto_button.visible = model.is_wild
+	_place_pause()
 	_weather.setup(BattleWeather.weather_of(model), EraManager.active_era())
 	_apply_speed()
 	Sound.music(Sound.battle_music(music_track))
@@ -664,18 +722,31 @@ func _run() -> void:
 		for line: String in Tips.take(id):
 			await _text.show_text(line)
 	_replaying = not replay_inputs.is_empty()
+	if resume:
+		_apply_speed()
 	while not model.is_finished() and not BattlePuzzle.out_of_turns(model):
 		if _replaying:
 			if replay_inputs.is_empty():
-				break
+				if not resume:
+					break
+				_replaying = false
+				_apply_speed()
+				continue
 			var rec: Dictionary = replay_inputs.pop_front()
 			await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
+			var extra: Variant = BattleReplay.play_extra(model, rec)
+			if extra != null:
+				await _play(extra)
+				continue
 			if str(rec.get("t", "")) == "switch":
 				await _play(model.submit_switch(int(rec.get("i", 0))))
 			elif str(rec.get("t", "")) == "turns":
 				await _play(model.submit_actions(BattleReplay.actions_from_dict(rec)))
 			else:
 				await _play(model.submit_turn(BattleReplay.action_from_dict(rec)))
+			continue
+		if model.needs_shift_choice():
+			await _offer_shift()
 			continue
 		if model.needs_player_switch():
 			_point_pin(BattleModel.Side.PLAYER, model.switch_slot(), false)
@@ -684,8 +755,12 @@ func _run() -> void:
 			inputs.append(BattleReplay.switch_to_dict(idx))
 			await _play(model.submit_switch(idx))
 			continue
+		_start_clock()
 		if _multi:
 			var actions: Array[BattleAction] = await _choose_actions()
+			_turn_deadline = 0
+			if model.is_finished():
+				break
 			if _puzzle_restart(actions.back() if not actions.is_empty() else null):
 				break
 			inputs.append(BattleReplay.actions_to_dict(actions))
@@ -695,6 +770,7 @@ func _run() -> void:
 		var action: BattleAction = await _choose_action()
 		if action == null:
 			continue
+		_turn_deadline = 0
 		if _puzzle_restart(action):
 			break
 		inputs.append(BattleReplay.action_to_dict(action))
@@ -727,7 +803,15 @@ func _choose_actions() -> Array[BattleAction]:
 		# From the second Spirling on, Back takes the order before back (item 604).
 		_menu.undo_ok = i > 0
 		_undo_asked = false
+		_rest_others = false
 		var a: BattleAction = await _choose_action(int(slots[i]), taken)
+		if model.is_finished():
+			break
+		# The clock ran out or "All rest" was picked: everyone without orders rests (items 6, 12).
+		if _rest_others:
+			out.append(a)
+			out = TurnFlow.fill_rest(model, out)
+			break
 		if _undo_asked:
 			if BattleComfort.undo(out, taken):
 				i -= 1
@@ -745,9 +829,56 @@ func _choose_actions() -> Array[BattleAction]:
 	return out
 
 var _undo_asked: bool = false
+var _rest_others: bool = false
+
+# --- Turn clock, giving up, swap offer, All rest (KAMPF_PLAN_1000 items 6, 8, 9, 12) ---------
+
+## Time.get_ticks_msec() when this turn's orders run out (echo duels), 0 without a clock.
+var _turn_deadline: int = 0
+var _waiting_orders: bool = false
+var _clock: Timer
+var _rest_all_button: Button
+
+## Starts the clock once per turn: backing out of a choice does not wind it up again.
+func _start_clock() -> void:
+	if _turn_deadline > 0:
+		return
+	_turn_deadline = Time.get_ticks_msec() + int(model.get_meta(TurnFlow.CLOCK_META)) * 1000 if model.has_meta(TurnFlow.CLOCK_META) else 0
+
+func _clock_left() -> int:
+	return TurnFlow.seconds_left(_turn_deadline, Time.get_ticks_msec())
+
+func _on_clock() -> void:
+	if _turn_deadline <= 0 or not _waiting_orders:
+		return
+	var left: int = _clock_left()
+	if left <= 0:
+		_menu.chosen.emit(BattleAction.Kind.REST, TurnFlow.TIMED_OUT)
+	elif TurnFlow.warn_now(left):
+		_text.show_prompt("%d s left, then everyone without orders rests." % left)
+
+## The foe named its next Spirling (item 9): swap first or stay.
+func _offer_shift() -> void:
+	var idx: int = -1
+	if not _auto_active():
+		var next: Spirling = model.party(BattleModel.Side.FOE)[model.shift_next]
+		if await _picker.pick(TurnFlow.shift_question(next.display_name()), [{"text": "Swap"}, {"text": "Stay"}] as Array[Dictionary], false) == 0:
+			idx = await _pick_party("Swap to?", true, 0)
+	inputs.append(BattleReplay.shift_to_dict(idx))
+	await _play(model.submit_shift(idx))
+
+## Giving up a Wayfarer battle (item 8), after a yes. It counts as a loss.
+func _ask_forfeit() -> void:
+	if await _picker.pick("Give up? It counts as a loss.", [{"text": "Give up"}, {"text": "Fight on"}] as Array[Dictionary]) != 0:
+		return
+	inputs.append(BattleReplay.forfeit_to_dict())
+	await _play(model.forfeit())
 
 func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER, slot)
+	if _turn_deadline > 0 and _clock_left() <= 0:
+		_rest_others = true
+		return BattleAction.make_rest(BattleModel.Side.PLAYER, slot)
 	_focus(BattleModel.Side.PLAYER, slot)
 	_point_pin(BattleModel.Side.PLAYER, slot, false)
 	if _auto_active():
@@ -757,7 +888,11 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 			return _auto_ai.choose(model, BattleModel.Side.PLAYER, slot)
 	# In a multi battle the acting order by Pace stands under the orders (KAMPF_PLAN_1000 389).
 	var pace: String = MultiRules.pace_line(model) if _multi else ""
-	_text.show_prompt("Orders for %s? (%d Energy)" % [me.display_name(), me.energy] + ("\n" + pace if not pace.is_empty() else ""))
+	var pace_tail: String = "\n" + pace if not pace.is_empty() else ""
+	if _turn_deadline > 0:
+		_text.show_prompt("Orders for %s? (%d Energy, %d s)" % [me.display_name(), me.energy, _clock_left()] + pace_tail)
+	else:
+		_text.show_prompt("Orders for %s? (%d Energy)" % [me.display_name(), me.energy] + pace_tail)
 	# One-hand mode: the battle's lists sit low, Back on the thumb's side (item 396).
 	_picker.set_one_hand(GameState.one_hand, GameState.left_handed)
 	_picker.offset_top = MultiRules.hand_top(size.y, MARGIN * 6, GameState.one_hand)
@@ -766,14 +901,21 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 	_menu.refresh(model, slot)
 	_menu.set_enabled(true)
 	_back_button.visible = _menu.undo_ok
+	_rest_all_button.visible = TurnFlow.all_rest_shown(model)
+	_waiting_orders = true
 	var choice: Array = await _menu.chosen
+	_waiting_orders = false
 	_back_button.visible = false
+	_rest_all_button.visible = false
 	_menu.set_enabled(false)
 	var kind: BattleAction.Kind = choice[0]
 	var index: int = choice[1]
 	if index == BattleComfort.UNDO:
 		_undo_asked = true
 		return null
+	if index == TurnFlow.TIMED_OUT or index == TurnFlow.ALL_REST:
+		_rest_others = true
+		return BattleAction.make_rest(BattleModel.Side.PLAYER, slot)
 	match kind:
 		BattleAction.Kind.MOVE:
 			if index < me.moves.size() and me.can_afford(me.moves[index]):
@@ -796,6 +938,9 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 				return BattleAction.make_oath(BattleModel.Side.PLAYER, slot)
 			return await _bond(slot)
 		BattleAction.Kind.RUN:
+			if TurnFlow.can_forfeit(model):
+				await _ask_forfeit()
+				return null
 			return BattleAction.make_run(BattleModel.Side.PLAYER, slot)
 	return null
 
@@ -903,12 +1048,22 @@ func _pick_item(slot: int = 0, preset: String = "") -> BattleAction:
 		if bool(it.get("battle", false)) and model.item_left_this_battle(BattleModel.Side.PLAYER, id):
 			ids.append(id)
 			entries.append({"text": "%s x%d" % [it.get("name", id), model.bag_count(BattleModel.Side.PLAYER, id)], "hint": str(it.get("description", ""))})
+	# Keepsakes from the bag (KAMPF_PLAN_1000 298): putting one on takes the whole turn.
+	var keep_from: int = ids.size()
+	for id: String in KeepsakeKit.swap_ids(model, slot):
+		var kt: Dictionary = Database.item(id)
+		ids.append(id)
+		entries.append({"text": "%s x%d" % [kt.get("name", id), int(model.inventory.get(id, 0))], "icon": KeepsakeIcons.for_era(id),
+			"hint": Loc.t("Keepsake: putting it on takes the whole turn.") + "\n" + Loc.t(str(kt.get("description", "")))})
 	if ids.is_empty():
 		await _text.show_text("No usable items.")
 		return null
 	var idx: int = ids.find(preset) if not preset.is_empty() else await _picker.pick("Use which item?", entries)
 	if idx < 0:
 		return null
+	if idx >= keep_from:
+		var ka := BattleAction.make_item(BattleModel.Side.PLAYER, ids[idx], model.active_index(BattleModel.Side.PLAYER, slot), slot)
+		return ka if model.is_legal(ka) else null
 	if BattleModel.is_revive_item(ids[idx]):
 		var down: int = await _pick_defeated()
 		if down < 0:
@@ -977,7 +1132,7 @@ func _bond(slot: int = 0) -> BattleAction:
 	if aim == -2:
 		return null
 	var target_slot: int = maxi(aim, 0)
-	var mine: bool = GameState.bond_style == "mine"
+	var mine: bool = BattleCalm.bond_style() == "mine"
 	var reach: String = "Reach out to %s... Tap Mine! fast!" if mine else "Reach out to %s... Listen, then echo its call!"
 	await _text.show_text(reach % model.active_spirling(BattleModel.Side.FOE, target_slot).display_name())
 	_bond_game.target = _sprite(BattleModel.Side.FOE, target_slot).texture()
@@ -990,7 +1145,7 @@ func _bond(slot: int = 0) -> BattleAction:
 		var state: String = BondEcho.rift_state(GameState.current_map, GameState.rifts_sealed)
 		_bond_plans[key] = BondEcho.make_plan(rng, foe.data, state)
 	var score: float = 0.0
-	_bond_game.calm = GameState.bond_style == "calm"
+	_bond_game.calm = BattleCalm.bond_style() == "calm"
 	if mine:
 		score = await _bond_game.run_mine(_bond_plans[key])
 	else:
@@ -1172,6 +1327,27 @@ func _gleam_entrance(sprite: SpirlingSprite) -> void:
 	Sound.sfx(str(cfg.get("sfx", "sparkle")), 0.0, float(cfg.get("sfx_pitch", 1.0)))
 	await sprite.gleam_sparkle()
 
+## A keepsake at work (KAMPF_PLAN_1000 281, 318, 319): its sound, its icon popping up over the
+## holder, and the holder's strip shows (or drops) the icon from now on.
+func _keepsake_cue(e: BattleEvent) -> void:
+	var kc: Dictionary = KeepsakeKit.cue(e, model)
+	if kc.is_empty():
+		return
+	BattleAudio.play(str(kc.sound), 0.0, float(kc.pitch))
+	var sp: Spirling = model.active_spirling(int(kc.side), int(kc.slot))
+	if sp != null:
+		sp.set_meta(KeepsakeKit.SEEN_META, true)
+		var st: Variant = _strip(int(kc.side), int(kc.slot))
+		if st is InfoStrip:
+			(st as InfoStrip).set_held(KeepsakeKit.strip_item(sp, true))
+	var holder: SpirlingSprite = _sprite(int(kc.side), int(kc.slot))
+	if holder != null and holder.visible and is_inside_tree():
+		KeepsakePop.spawn(_shake_root, KeepsakeIcons.for_era(str(kc.item)), holder.position + Vector2(holder.size.x / 2.0, 0))
+	keepsake_cues += 1
+
+## Keepsake cues played so far (tests).
+var keepsake_cues: int = 0
+
 func _play_event(e: BattleEvent) -> void:
 	var side: int = int(e.data.get("side", 0))
 	var slot: int = int(e.data.get("slot", 0))
@@ -1183,6 +1359,7 @@ func _play_event(e: BattleEvent) -> void:
 	if e.type == BattleEvent.Type.BATTLE_START:
 		battle_report.begin(model.field)
 	battle_report.add(e)
+	_keepsake_cue(e)
 	match e.type:
 		BattleEvent.Type.BATTLE_START:
 			var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
