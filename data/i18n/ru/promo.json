@@ -1,0 +1,14 @@
+{
+  "_comment": "Promo codes (scripts/ui/PromoMenu.gd), keys of tools/i18n/de_promo.py.",
+  "strings": {
+    "Code redeemed! You got: %s": "Код активирован! Ты получаешь: %s",
+    "Promo code": "Промокод",
+    "Promo codes are closed right now.": "Промокоды сейчас недоступны.",
+    "Redeem a promo code...": "Активировать промокод...",
+    "That code does not exist. Check the letters and try again.": "Такого кода нет. Проверь символы и попробуй снова.",
+    "This code has been used up.": "Этот код закончился.",
+    "This code has expired.": "Срок действия кода истёк.",
+    "Too many tries. Wait an hour, then try again.": "Слишком много попыток. Подожди час и попробуй снова.",
+    "You already redeemed this code.": "Ты уже активировал этот код."
+  }
+}

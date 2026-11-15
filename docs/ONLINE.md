@@ -681,3 +681,13 @@ Checked point by point on 2026-11-12. Everything else in the plan is built and h
 | 91-94 | No own realtime server (the game asks every few seconds), no test with 500 battles at once, no latency measurement, no load test before updates. | Server work, see `server/`. |
 | 96 | No monitoring with an alarm. | Server work. |
 | 99, 100 | Rollout in 4 updates and one build for iOS and Android are release steps, not code. | Release work. |
+
+## Promo codes
+
+Settings, Account, "Redeem a promo code..." (only during a journey, flag `promo`, on). The player types an
+8-character code; `promo_redeem(code, slot, rev)` (migration `20261115100000_promo_codes.sql`, same rules in
+`LocalPromo.gd`) puts its items into the bag of the stored save. Each account redeems a code once; a code can
+have a use limit (`max_uses`), a start and an end. Errors: `no_such_code`, `code_used`, `code_used_up`,
+`code_expired`, `slow_down` (10 tries an hour against guessing). Codes are made with
+`tools/online/promo_code.sql`. Rewards are free bag items only, never paid store products (App Store 3.1.1);
+for paid products use Apple's offer codes and Play promo codes.

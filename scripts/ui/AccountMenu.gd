@@ -19,6 +19,9 @@ static func run(menu: MenuHost) -> void:
 		var entries: Array[String] = ["Get a transfer code", "Enter a code...", "Online rules", "Privacy", "Delete account...",
 			"Friends, mail: %s" % ("On" if Online.social_on() else "Off"), "Download my data", "Messages from the team", "Earlier saves",
 			"For parents..."]
+		# Promo codes pay into the open journey's bag, so only during a journey.
+		if GameState.in_game and Online.flag_on("promo"):
+			entries.append("Redeem a promo code...")
 		var idx: int = await menu.pick_strings(title, entries)
 		match idx:
 			-1:
@@ -46,6 +49,8 @@ static func run(menu: MenuHost) -> void:
 					return
 			9:
 				await SafetyMenu.run_parents(menu)
+			10:
+				await PromoMenu.run(menu)
 
 ## Everything the server keeps about this account as one JSON file (plan area 7, item 2972;
 ## GDPR Art. 15 and 20). The browser version downloads it, phones save it to the documents folder.

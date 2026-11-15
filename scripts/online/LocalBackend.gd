@@ -49,6 +49,7 @@ const DEFAULT_FLAGS: Dictionary = {
 	"lend": {"enabled": false, "min_version": 1}, "invite": {"enabled": false, "min_version": 1},
 	"climb_board": {"enabled": false, "min_version": 1},
 	"boss_board": {"enabled": false, "min_version": 1},
+	"promo": {"enabled": true, "min_version": 1},
 }
 
 ## Where the fake server keeps its data between runs ("" = memory only, as in tests).
@@ -93,6 +94,8 @@ func _init(p_store_path: String = "") -> void:
 	LocalOnlineEvents.install(self)
 	# Friends and the shared world, Online 100 area 6 (20261112230020_friends_more.sql).
 	LocalFriendsMore.install(self)
+	# Promo codes (20261115100000_promo_codes.sql).
+	LocalPromo.install(self)
 	# Safety and fairness, Online 100 area 9 (20261113000010_safety.sql).
 	LocalSafety.install(self)
 	# Random raid groups, Echo teams, role signs, bund perks, bund house, bund wars (Online 100 areas 3, 4).
@@ -174,7 +177,7 @@ func _fn_action_once(a: Dictionary) -> Dictionary:
 ## Functions that change a stored save (the server checks them in a trigger on saves).
 const SAVE_WRITERS: Array[String] = ["save_put", "save_restore", "trade_put", "trade_collect", "trade_put_spirlings",
 	"tourney_reward", "daily_gift_claim", "league_reward", "bund_donate", "bund_goal_claim", "event_claim", "event_reward",
-	"friend_level_claim", "pair_task_claim", "invite_claim"]
+	"friend_level_claim", "pair_task_claim", "invite_claim", "promo_redeem"]
 
 ## Like public._other_device: this device's token is not the newest one of the account.
 func other_device() -> bool:
