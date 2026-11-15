@@ -14,6 +14,8 @@ static func install(backend: LocalBackend) -> LocalPromo:
 	var s := LocalPromo.new()
 	s._bref = weakref(backend)
 	backend._fns["promo_redeem"] = Callable(s, "_fn_promo_redeem")
+	# The backend keeps this object alive (Callables do not hold a RefCounted).
+	backend.set_meta("promo", s)
 	return s
 
 ## Letters and digits only, upper case (like public._promo_norm).
