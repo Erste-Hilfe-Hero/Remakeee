@@ -1,0 +1,14 @@
+{
+  "_comment": "Promo codes (scripts/ui/PromoMenu.gd), keys of tools/i18n/de_promo.py.",
+  "strings": {
+    "Code redeemed! You got: %s": "兑换成功！你获得：%s",
+    "Promo code": "推广码",
+    "Promo codes are closed right now.": "推广码暂时关闭。",
+    "Redeem a promo code...": "兑换推广码...",
+    "That code does not exist. Check the letters and try again.": "这个码不存在。请检查字符后重试。",
+    "This code has been used up.": "这个码已被领完。",
+    "This code has expired.": "这个码已过期。",
+    "Too many tries. Wait an hour, then try again.": "尝试次数过多。请等一小时后再试。",
+    "You already redeemed this code.": "你已经兑换过这个码了。"
+  }
+}

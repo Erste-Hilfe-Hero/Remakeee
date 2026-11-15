@@ -1,0 +1,14 @@
+{
+  "_comment": "Promo codes (scripts/ui/PromoMenu.gd), keys of tools/i18n/de_promo.py.",
+  "strings": {
+    "Code redeemed! You got: %s": "코드 사용 완료! 받은 것: %s",
+    "Promo code": "프로모션 코드",
+    "Promo codes are closed right now.": "지금은 프로모션 코드를 쓸 수 없어요.",
+    "Redeem a promo code...": "프로모션 코드 사용...",
+    "That code does not exist. Check the letters and try again.": "없는 코드예요. 글자를 확인하고 다시 시도하세요.",
+    "This code has been used up.": "이 코드는 모두 소진됐어요.",
+    "This code has expired.": "이 코드는 기간이 끝났어요.",
+    "Too many tries. Wait an hour, then try again.": "시도가 너무 많아요. 1시간 뒤에 다시 시도하세요.",
+    "You already redeemed this code.": "이미 사용한 코드예요."
+  }
+}
