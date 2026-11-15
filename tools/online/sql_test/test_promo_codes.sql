@@ -10,7 +10,7 @@ $$;
 create temp table pr (k text primary key, v jsonb);
 grant all on pr to authenticated;
 insert into public.promo_codes (code, reward, max_uses, ends_at, note) values
-  ('DISCORD1', '{"tonic": 3, "revival_leaf": 1}', null, null, 'test'),
+  ('TESTPRM1', '{"tonic": 3, "revival_leaf": 1}', null, null, 'test'),
   ('ONLYONE1', '{"tonic": 1}', 1, null, 'test'),
   ('OLDCODE1', '{"tonic": 1}', null, now() - interval '1 day', 'test')
 on conflict (code) do nothing;
@@ -25,18 +25,18 @@ on conflict (user_id, slot) do update set rev = excluded.rev, data = excluded.da
 
 set role authenticated;
 select pg_temp.as_user('71');
-insert into pr values ('stale', public.promo_redeem('DISCORD1', 1, 3));
-insert into pr values ('ok', public.promo_redeem('disc-ord1', 1, 4));
-insert into pr values ('again', public.promo_redeem('DISCORD1', 1, 5));
+insert into pr values ('stale', public.promo_redeem('TESTPRM1', 1, 3));
+insert into pr values ('ok', public.promo_redeem('test-prm1', 1, 4));
+insert into pr values ('again', public.promo_redeem('TESTPRM1', 1, 5));
 insert into pr values ('nope', public.promo_redeem('NOSUCH99', 1, 5));
 insert into pr values ('old', public.promo_redeem('OLDCODE1', 1, 5));
 insert into pr values ('later', public.promo_redeem('LATER001', 1, 5));
 insert into pr values ('one', public.promo_redeem('ONLYONE1', 1, 5));
 select pg_temp.as_user('72');
 insert into pr values ('one2', public.promo_redeem('ONLYONE1', 1, 2));
-insert into pr values ('ok2', public.promo_redeem('DISCORD1', 1, 2));
+insert into pr values ('ok2', public.promo_redeem('TESTPRM1', 1, 2));
 select pg_temp.as_user('73');
-insert into pr values ('noslot', public.promo_redeem('DISCORD1', 2, 0));
+insert into pr values ('noslot', public.promo_redeem('TESTPRM1', 2, 0));
 reset role;
 
 do $$
@@ -54,8 +54,8 @@ begin
   assert (select v->>'error' from pr where k = 'one2') = 'code_used_up', 'use limit';
   assert (select v->>'ok' from pr where k = 'ok2') = 'true', 'others can still redeem';
   assert (select v->>'error' from pr where k = 'noslot') = 'no_save';
-  assert (select uses from public.promo_codes where code = 'DISCORD1') = 2, 'uses counted';
-  assert (select count(*) from public.promo_redemptions where code = 'DISCORD1') = 2;
+  assert (select uses from public.promo_codes where code = 'TESTPRM1') = 2, 'uses counted';
+  assert (select count(*) from public.promo_redemptions where code = 'TESTPRM1') = 2;
 end $$;
 
 -- 10 tries an hour against guessing.
@@ -74,6 +74,6 @@ begin
   assert not has_table_privilege('authenticated', 'public.promo_codes', 'select') or
     not exists (select 1 from pg_policies where tablename = 'promo_codes'), 'codes not readable by players';
 end $$;
-delete from public.promo_redemptions where code in ('DISCORD1', 'ONLYONE1');
+delete from public.promo_redemptions where code in ('TESTPRM1', 'ONLYONE1');
 delete from public.promo_codes where note = 'test';
 delete from public.rate_events where kind = 'promo';
