@@ -1,1 +1,1 @@
-rpg,pixel,retro,por turnos,criaturas,monstruos,aventura,táctica,elementos,online,amistades,caminante
+criaturas,coleccionar,domar,entrenador,pixel,retro,estrategia,evolución,equipo,jefes,historia,rol

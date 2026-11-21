@@ -1,0 +1,99 @@
+class_name ReviewAsk
+extends RefCounted
+## The store's own rating sheet (plan Chimora 100, items 74-75): iOS AppStore.requestReview through
+## ChimoraStoreKit, Android Play In-App Review through ChimoraReview (plugins/chimora_review).
+## Asked straight after a won Warden, rival or boss battle or a sealed Rift, never in battle, never
+## in the first 10 minutes of the first session, once per app version, at most 3 times in 365 days.
+## No own question before it and nothing given for a rating (App Review Guideline 5.6.1, Play policy):
+## the store sheet itself is all the player sees, and the store may still decide not to show it.
+
+const PATH: String = "user://review_ask.json"
+const FIRST_SESSION_SECONDS: int = 600
+const MAX_PER_YEAR: int = 3
+const YEAR_SECONDS: int = 365 * 86400
+const IOS_SINGLETON: String = "ChimoraStoreKit"
+const ANDROID_SINGLETON: String = "ChimoraReview"
+
+## State of this install: {"sessions", "session_start", "asked_version", "asked_at": [unix]}.
+static var state: Dictionary = {}
+static var _loaded: bool = false
+
+## A battle worth a rating moment: a Warden or boss, the rival (a team picked against the starter),
+## or the Rift sealed by it.
+static func is_highlight(def: Dictionary, sealed: bool) -> bool:
+	return sealed or def.has("warden") or def.has("boss") or def.has("team_by_starter")
+
+## Counts one start of the app at [param now] (unix seconds).
+static func note_session(st: Dictionary, now: int) -> void:
+	st["sessions"] = int(st.get("sessions", 0)) + 1
+	st["session_start"] = now
+
+## Whether the store sheet may be asked for now.
+static func may_ask(st: Dictionary, now: int, version: String, in_battle: bool) -> bool:
+	if in_battle:
+		return false
+	if int(st.get("sessions", 0)) <= 1 and now - int(st.get("session_start", now)) < FIRST_SESSION_SECONDS:
+		return false
+	if str(st.get("asked_version", "")) == version:
+		return false
+	return recent_asks(st, now).size() < MAX_PER_YEAR
+
+## Ask times within the last 365 days.
+static func recent_asks(st: Dictionary, now: int) -> Array[int]:
+	var out: Array[int] = []
+	for t: Variant in st.get("asked_at", []):
+		if now - int(t) < YEAR_SECONDS:
+			out.append(int(t))
+	return out
+
+static func note_asked(st: Dictionary, now: int, version: String) -> void:
+	var kept: Array[int] = recent_asks(st, now)
+	kept.append(now)
+	st["asked_at"] = kept
+	st["asked_version"] = version
+
+# --- Runtime ------------------------------------------------------------------------------
+
+## Called once per app start (Online._ready).
+static func start_session() -> void:
+	_load()
+	note_session(state, int(Time.get_unix_time_from_system()))
+	_store()
+
+## After a won battle: asks the store when [param highlight] and every rule above allows it.
+## Returns true when the store was asked.
+static func after_win(highlight: bool, plugin: Object = null) -> bool:
+	if not highlight:
+		return false
+	_load()
+	var now: int = int(Time.get_unix_time_from_system())
+	if not may_ask(state, now, Online.CLIENT_VERSION_NAME, Online.in_battle):
+		return false
+	var p: Object = plugin if plugin != null else store_plugin()
+	if p == null or not p.has_method("request_review"):
+		return false
+	p.call("request_review")
+	note_asked(state, now, Online.CLIENT_VERSION_NAME)
+	_store()
+	return true
+
+## The platform's review plugin, or null (desktop, web, builds without the plugin).
+static func store_plugin() -> Object:
+	for s: String in [IOS_SINGLETON, ANDROID_SINGLETON]:
+		if Engine.has_singleton(s):
+			return Engine.get_singleton(s)
+	return null
+
+static func _load() -> void:
+	if _loaded:
+		return
+	_loaded = true
+	if FileAccess.file_exists(PATH):
+		var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(PATH))
+		if raw is Dictionary:
+			state = raw
+
+static func _store() -> void:
+	var f := FileAccess.open(PATH, FileAccess.WRITE)
+	if f != null:
+		f.store_string(JSON.stringify(state))

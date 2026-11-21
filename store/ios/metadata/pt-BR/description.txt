@@ -1,4 +1,11 @@
-Chimora é um RPG por turnos em estilo pixel retrô, e um pouco mais sombrio do que parece. Como Viajante, você parte de um farol na costa de Veydal, escolhe seu primeiro parceiro e segue o livro de mapas de Mirela por quatro regiões. Fendas estão se abrindo por toda parte, e só você pode fechá-las de novo. Todo o resto só quer alguma coisa de você.
+Conquiste a confiança de 497 monstros, descubra uma história sombria cheia de humor ácido e planeje cada turno. Chimora é um RPG de monstros em pixel art retrô, e um pouco mais sombrio do que parece.
+- 497 Spirlings para conquistar com o chamado Eco, e raras formas Reluzentes na natureza
+- Batalhas táticas por turnos com oito elementos e Sentinelas com várias fases
+- Pixel art que amadurece ao longo de cinco eras, do monocromático às cores plenas
+- Jogo online: Chimora precisa de conexão com a internet
+
+O SILÊNCIO DE VEYDAL
+Como Viajante, você parte de um farol na costa de Veydal, escolhe seu primeiro parceiro e segue o livro de mapas de Mirela por quatro regiões. Fendas estão se abrindo por toda parte, e só você pode fechá-las de novo. Todo o resto só quer alguma coisa de você.
 
 CONFIANÇA, NÃO CAPTURA
 Spirlings selvagens nunca são capturados. Você conquista a confiança deles com o chamado Eco: o Spirling chama uma sequência e você responde. Quem escuta com atenção ganha um amigo.
@@ -17,7 +24,7 @@ UMA HISTÓRIA COM DENTES
 - Missões de lenda para seis lendários e histórias paralelas em cada ato, para dezenas de horas
 
 UM MUNDO QUE MUDA
-- Mais de 280 Spirlings, 70 próprios em cada ato, e raras formas Reluzentes na natureza
+- 497 Spirlings, 70 próprios em cada ato e em cada região depois da história, e raras formas Reluzentes na natureza
 - Seu Spirling líder anda atrás de você e lembra como você o trata
 - Dia e noite, festivais, caminhos escondidos, equipamento de Viajante que abre novos lugares e um parque de vida selvagem administrado por contrabandistas
 - Uma toca para tomar, um show fúnebre diário e um informante do mercado negro que vende dons ocultos

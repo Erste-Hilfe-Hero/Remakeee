@@ -1,0 +1,10 @@
+# Marks the game as localized in it for the iOS export: Godot writes it.lproj/InfoPlist.strings
+# only for locales that have a project translation, and the App Store lists languages from .lproj
+# folders (plan Chimora 100, item 82). The game's texts live in data/i18n; nothing here is shown.
+msgid ""
+msgstr ""
+"Language: it\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "CHIMORA_IOS_LPROJ"
+msgstr "Chimora"
