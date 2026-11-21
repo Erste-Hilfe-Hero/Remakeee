@@ -45,7 +45,18 @@ func test_bought_unlocks_stay_owned() -> void:
 	Billing.state = {"unlocks": {"sky_control": 1, "retro_filter": 1}}
 	assert_eq(Billing.unlocked("sky_control"), 1)
 	assert_eq(Billing.unlocked("retro_filter"), 1)
-	assert_true(bool(ShopCatalog.offer("rg_sky_control").get("ready", false)), "the product stays as it is")
+
+## Item 68 follow-up (owner wish, 2026-11-21): the two products only granted settings that are now
+## free, so they are no longer sold (catalog v38, like rg_fast_text in v37). Buyers keep the unlock:
+## the server's _shop_credit still credits a restored receipt of a not-ready offer.
+func test_free_settings_products_no_longer_sold() -> void:
+	for id: String in ["rg_sky_control", "rg_retro_filter"]:
+		var o: Dictionary = ShopCatalog.offer(id)
+		assert_false(o.is_empty(), id + " stays in the catalog for restore")
+		assert_false(bool(o.get("ready", true)), id + ": nobody can buy what is free")
+		assert_false(o in ShopCatalog.in_tab(str(o.tab)), id + " is not shown in the shop")
+		Billing.state = {"open": true, "band": 18, "unlocks": {}}
+		assert_eq(Billing.block_reason(o, true), "not_available", id)
 
 ## Item 69: no in-app purchase banner on the title art.
 func test_no_title_banner() -> void:

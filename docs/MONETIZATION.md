@@ -292,13 +292,13 @@ item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).
 
 ## Alle Angebote
 
-Die Tabelle zeigt alle Angebote, auch nicht verkaufte (`ready: false`). `rg_fast_text` wird seit Katalog v37 nicht mehr verkauft: Schnelltext ist gratis (Chimora 100 Punkt 34); wer es gekauft hat, verliert nichts.
+Die Tabelle zeigt alle Angebote, auch nicht verkaufte (`ready: false`). `rg_fast_text` wird seit Katalog v37 nicht mehr verkauft: Schnelltext ist gratis (Chimora 100 Punkt 34); wer es gekauft hat, verliert nichts. `rg_sky_control` und `rg_retro_filter` werden seit Katalog v38 nicht mehr verkauft: Tag und Nacht, Wetter und Retro-Filter sind gratis (Chimora 100 Punkt 68). Gekaufte Freischaltungen bleiben, und ein Kauf wird weiter wiederhergestellt (`_shop_credit` lehnt nur Alter ab, Test in `tools/online/sql_test/test_shop.sql`). Im App Store und in der Play Console ändert sich nichts.
 
 <!-- shop-table:start -->
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-207 Angebote (Katalog v37): 165 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
+207 Angebote (Katalog v38): 165 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
