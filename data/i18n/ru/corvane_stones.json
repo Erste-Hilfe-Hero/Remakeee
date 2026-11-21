@@ -1,0 +1,18 @@
+{
+ "_comment": "ru translation of the corvane_stones table, keyed by the English text.",
+ "strings": {
+  "A cartographer's stone at the edge of the Wide Rift. The rose has a fifth point, towards the dark.": "Камень картографа на краю Широкого Разлома. У розы ветров есть пятый луч, в сторону тьмы.",
+  "A cartographer's stone at the water's edge. In the pond its rose turns the other way.": "Камень картографа у кромки воды. В пруду его роза повёрнута в другую сторону.",
+  "A cartographer's stone half sunk in the boards. The rose points at the harbour office. Of course it does.": "Камень картографа, наполовину ушедший в доски. Роза указывает на портовую контору. Ну конечно.",
+  "A cartographer's stone in a flower bed. Its rose has been painted over grey, then scraped clean.": "Камень картографа на клумбе. Его розу закрасили серым, а потом соскребли краску.",
+  "A cartographer's stone on the cliff. Rooks have used it as a table for years.": "Камень картографа на утёсе. Грачи годами используют его как стол.",
+  "A cartographer's stone sinking into the moor. The rose still points north. The stone has given up on the rest.": "Камень картографа, тонущий в болоте. Роза всё ещё указывает на север. На остальное камень махнул рукой.",
+  "A cartographer's stone under the reeds. Somebody scratched 'not this way' under the rose.": "Камень картографа в камышах. Под розой кто-то нацарапал «не сюда».",
+  "A cartographer's stone with a betting slip tucked under it. The slip lost.": "Камень картографа, под который сунули квитанцию ставки. Ставка проиграла.",
+  "A cartographer's stone wrapped in roots. The rose glows faintly when you touch it.": "Камень картографа, оплетённый корнями. Роза слабо светится от прикосновения.",
+  "A cartographer's stone, cracked down the middle. Both halves still point north. Stubborn.": "Камень картографа, треснувший посередине. Обе половины всё ещё указывают на север. Упрямые.",
+  "A cartographer's stone, stained red, gold and green by a hundred years of dye.": "Камень картографа, окрашенный в красный, золотой и зелёный сотней лет краски.",
+  "An old cartographer's stone by the quay wall. Someone has chalked a price on it.": "Старый камень картографа у стены причала. Кто-то написал на нём мелом цену.",
+  "Cartographer's stones: %d/%d": "Камни картографа: %d/%d"
+ }
+}

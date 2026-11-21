@@ -1,0 +1,62 @@
+{
+ "name": "Glass Rift",
+ "region": "ashmere",
+ "biome": "rift",
+ "backdrop": "voice",
+ "field": "dawn_glow",
+ "encounters": "glass_rift",
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^........^^",
+  "^.::.||.::.^",
+  "^.::....::.^",
+  "^^^^....^^^^",
+  "^.::.||.::.^",
+  "^.::....::.^",
+  "^.........S^",
+  "^..^^..^^..^",
+  "^.::....::.^",
+  "^..........^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 12,
+   "to": "saltglass",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 12,
+   "to": "saltglass",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "npcs": [],
+ "signs": [
+  {
+   "x": 10,
+   "y": 8,
+   "dialogue": "glass_rift/sign"
+  },
+  {
+   "x": 0,
+   "y": 4,
+   "dialogue": "legend_quests/monolurk_lore",
+   "show_flag": "lq_monolurk_met",
+   "hide_flag": "lq_monolurk_ready"
+  }
+ ],
+ "spots": {
+  "ilse": [
+   5,
+   2
+  ]
+ }
+}

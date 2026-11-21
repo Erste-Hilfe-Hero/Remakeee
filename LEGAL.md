@@ -6,11 +6,17 @@ Not legal advice — get a games lawyer to review before store launch.
 - NO throw-to-capture. Bonding = turn-based "Echo call" minigame in the battle menu.
   No shrinking rings, timing circles or "tap when it's smallest" mechanics.
 - NO live capture-odds meter while aiming. Show bond result only afterwards.
-- NO riding, flying, gliding or surfing on a creature. Use Tamer Gear on foot (grapple, climbing pick, lantern).
+- Echo bonding (plan area 1): cry motifs, element scales, muted calls near open Rifts, the
+  glowing frame at mended Rifts, the afterglow mark, longer calls for rarer kinds and the
+  moon/star/spark marks only change the call itself. Bonding still has no throw, no aiming,
+  no shrinking circles and no chance display, also for First Voices and peaceful meetings.
+  The result is shown only afterwards and only in words ("It listens to you", "It hesitates",
+  "It turns away"), never as a number. Tested in tests/unit/test_bond_echo.gd.
+- NO riding, flying, gliding or surfing on a creature. Use Wayfarer Gear on foot (grapple, climbing pick, lantern).
   No gliding or flying while exploring at all, not even with gear (patent risk zone).
 - NO calling a creature into the overworld/field where it fights on its own (US 12,403,397).
   Spirlings fight only on the separate turn-based battle screen.
-- NO thrown capsule/ball to summon. Spirlings step out beside the Tamer.
+- NO thrown capsule/ball to summon. Spirlings step out beside the Wayfarer.
 
 ## Copyright / trademark
 - 100% original creatures, names, moves, maps, music, fonts, sprites.

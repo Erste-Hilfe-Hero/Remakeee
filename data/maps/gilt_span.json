@@ -1,0 +1,102 @@
+{
+ "name": "The Gilt Span",
+ "region": "halcyra",
+ "biome": "town",
+ "backdrop": "lake",
+ "outdoor": true,
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^L.L.L.L.L.^",
+  "^..........^",
+  "^.S......S.^",
+  "^..........^",
+  "^L........L^",
+  "^..T....T..^",
+  "^..........^",
+  "^..........^",
+  "^.L......L.^",
+  "____.......^",
+  "^^^^^^^^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 0,
+   "y": 10,
+   "to": "lantern_span",
+   "tx": 10,
+   "ty": 12,
+   "facing": "left"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "lamplighter",
+   "x": 6,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "gilt_span/lamplighter",
+   "sprite": "villager"
+  },
+  {
+   "id": "q4_two_lanterns_sabeth",
+   "x": 4,
+   "y": 8,
+   "facing": "right",
+   "dialogue": "halcyra_side/two_lanterns",
+   "sprite": "villager"
+  },
+  {
+   "id": "q4_two_lanterns_yorick",
+   "x": 8,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "halcyra_side/two_lanterns_yorick",
+   "sprite": "elder",
+   "show_flag": "q4_two_lanterns_asked"
+  },
+  {
+   "id": "q4_brake_file_gaspard",
+   "x": 2,
+   "y": 6,
+   "facing": "right",
+   "dialogue": "halcyra_side/brake_file_gaspard",
+   "sprite": "villager",
+   "show_flag": "q4_brake_file_s1"
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 3,
+   "dialogue": "gilt_span/plaque"
+  },
+  {
+   "x": 9,
+   "y": 3,
+   "dialogue": "gilt_span/names"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 4,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_gilt_span_1"
+  },
+  {
+   "x": 0,
+   "y": 7,
+   "item": "guard_brew",
+   "count": 1,
+   "flag": "find_gilt_span_2"
+  },
+  {
+   "x": 5,
+   "y": 11,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_gilt_span_3"
+  }
+ ]
+}

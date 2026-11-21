@@ -1,0 +1,12 @@
+{
+ "_comment": "pt_BR translation of the battle_hud table, keyed by the English text.",
+ "strings": {
+  "%s: %d of %d can fight": "%s: %d de %d podem lutar",
+  "Again: %s x%d": "De novo: %s x%d",
+  "Again: -": "De novo: -",
+  "Foe's team": "Time do oponente",
+  "No effect": "Sem efeito",
+  "Strong": "Forte",
+  "Your team": "Seu time"
+ }
+}

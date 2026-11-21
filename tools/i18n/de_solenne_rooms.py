@@ -1,0 +1,13 @@
+# German texts for the three Ochrewell houses (map audit): their names and the people inside.
+# The texts come from tools/art/world/solenne.py (ochrewell_rooms, tr()/lines() pairs).
+T = {
+"Hadi's Pottery": "Hadis Töpferei",
+"Ama's Dome": "Amas Kuppelhaus",
+"Oskin's Storeroom": "Oskins Lager",
+"Apprentice Wenna: Domes by day, urns by night. I glaze both. Only the urns get compliments.": "Lehrling Wenna: Tagsüber Kuppeln, nachts Urnen. Ich glasiere beides. Komplimente kriegen nur die Urnen.",
+"Apprentice Wenna: Hadi says every urn is made to measure. I've stopped asking whose.": "Lehrling Wenna: Hadi sagt, jede Urne wird nach Maß gefertigt. Ich frage nicht mehr, nach wessen.",
+"Widow Ama: My husband signed one little paper for the Brass Veil. Now they own the house, the goats and, on paper, me.": "Witwe Ama: Mein Mann hat ein kleines Papier für den Messingschleier unterschrieben. Jetzt gehören ihnen das Haus, die Ziegen und, auf dem Papier, ich.",
+"Widow Ama: The goats took it worst. They read the small print.": "Witwe Ama: Die Ziegen hat es am schlimmsten getroffen. Die haben das Kleingedruckte gelesen.",
+"Stock Boy Jem: I paint GENUINE on every crate. Very genuine paint. Oskin checks.": "Lagerjunge Jem: Ich male ECHT auf jede Kiste. Sehr echte Farbe. Oskin prüft das.",
+"Stock Boy Jem: The last stock boy asked where the goods come from. He left with the next caravan. In a crate.": "Lagerjunge Jem: Der letzte Lagerjunge hat gefragt, woher die Ware kommt. Er ist mit der nächsten Karawane weg. In einer Kiste.",
+}

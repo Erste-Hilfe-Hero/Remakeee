@@ -1,0 +1,208 @@
+{
+ "name": "Slag Tunnels",
+ "region": "vellmarch",
+ "biome": "dungeon",
+ "backdrop": "ember",
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^..^^^^^^..^",
+  "^..........^",
+  "^..^^^^^^..^",
+  "^..^....^..^",
+  "^.........^^",
+  "^^^^.||.^^^^",
+  "^..........^",
+  "^.^^....^^.^",
+  "^.^^....^^.^",
+  "^..........^",
+  "^^^..^^^^..^",
+  "^....^^....^",
+  "^.|......|.^",
+  "^..........^",
+  "^^^^^..^^^^^",
+  "^....=...S.^",
+  "^^^^^^^^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 16,
+   "to": "smelters_drift",
+   "tx": 2,
+   "ty": 4,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "cart_pusher",
+   "x": 1,
+   "y": 2,
+   "facing": "right",
+   "dialogue": "vellmarch/slag_tunnels_cart_pusher",
+   "sprite": "villager",
+   "trainer": "Cart Pusher Grim",
+   "intro": "vellmarch/slag_tunnels_cart_pusher_intro",
+   "defeat": "vellmarch/slag_tunnels_cart_pusher_defeat",
+   "money": 2320,
+   "team": [
+    {
+     "species": "Latchet",
+     "level": 57,
+     "moves": [
+      "Landslip"
+     ]
+    },
+    {
+     "species": "Knellgrim",
+     "level": 58,
+     "moves": [
+      "Landslip"
+     ]
+    },
+    {
+     "species": "Veilmote",
+     "level": 58,
+     "moves": [
+      "Grand Farce"
+     ]
+    }
+   ],
+   "front": [
+    2,
+    2
+   ],
+   "strategy": "multi",
+   "profile": "sweeper"
+  },
+  {
+   "id": "ash_sifter",
+   "x": 9,
+   "y": 7,
+   "facing": "left",
+   "dialogue": "vellmarch/slag_tunnels_ash_sifter",
+   "sprite": "elder",
+   "trainer": "Ash Sifter Malve",
+   "intro": "vellmarch/slag_tunnels_ash_sifter_intro",
+   "defeat": "vellmarch/slag_tunnels_ash_sifter_defeat",
+   "money": 2320,
+   "team": [
+    {
+     "species": "Knellgrim",
+     "level": 57
+    },
+    {
+     "species": "Veilmote",
+     "level": 58
+    },
+    {
+     "species": "Latchet",
+     "level": 58
+    }
+   ]
+  },
+  {
+   "id": "furnace_guard",
+   "x": 2,
+   "y": 12,
+   "facing": "right",
+   "dialogue": "vellmarch/slag_tunnels_furnace_guard",
+   "sprite": "warden",
+   "trainer": "Furnace Guard Detlef",
+   "intro": "vellmarch/slag_tunnels_furnace_guard_intro",
+   "defeat": "vellmarch/slag_tunnels_furnace_guard_defeat",
+   "money": 2320,
+   "team": [
+    {
+     "species": "Smogpup",
+     "level": 57
+    },
+    {
+     "species": "Veilmote",
+     "level": 58
+    },
+    {
+     "species": "Latchet",
+     "level": 58
+    }
+   ]
+  },
+  {
+   "id": "q2_ghost_wages_bruisers",
+   "x": 5,
+   "y": 9,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_ghost_wages_bruisers",
+   "sprite": "warden",
+   "show_flag": "q2_ghost_wages_s1"
+  },
+  {
+   "id": "q2_ghost_wages_ludo",
+   "x": 9,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_ghost_wages_ludo",
+   "sprite": "elder",
+   "trainer": "Paymaster Ludo",
+   "show_flag": "q2_ghost_wages_reveal",
+   "intro": "vellmarch/q2_ghost_wages_ludo_intro",
+   "defeat": "vellmarch/q2_ghost_wages_ludo_defeat",
+   "money": 2950,
+   "team": [
+    {
+     "species": "Smogpup",
+     "level": 57
+    },
+    {
+     "species": "Veilmote",
+     "level": 58
+    },
+    {
+     "species": "Latchet",
+     "level": 59
+    }
+   ],
+   "win_flags": [
+    "q2_ghost_wages_done"
+   ],
+   "no_rematch": true
+  }
+ ],
+ "signs": [
+  {
+   "x": 9,
+   "y": 16,
+   "dialogue": "vellmarch/slag_tunnels_sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 4,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_slag_tunnels_1"
+  },
+  {
+   "x": 11,
+   "y": 7,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_slag_tunnels_2"
+  },
+  {
+   "x": 0,
+   "y": 10,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_slag_tunnels_3"
+  },
+  {
+   "x": 11,
+   "y": 13,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_slag_tunnels_4"
+  }
+ ]
+}

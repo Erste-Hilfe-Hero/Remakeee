@@ -76,5 +76,20 @@
     "Hauler Wren: We're packing up, all right?"
    ]
   }
+ },
+ "aud": [
+  "Aud: A snare waits for the next Spirling that steps in. Swap with care."
+ ],
+ "aud_intro": [
+  "Aud: I mend nets, and I lay them too. Mind your step!"
+ ],
+ "aud_defeat": [
+  "Aud: Torn right through. Next time I'll knot them tighter."
+ ],
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 12"
  }
 }

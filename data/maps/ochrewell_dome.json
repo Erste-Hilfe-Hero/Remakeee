@@ -1,0 +1,37 @@
+{
+ "name": "Ama's Dome",
+ "region": "solenne",
+ "biome": "town",
+ "backdrop": "ember",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "ochrewell",
+   "tx": 8,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "ama",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "ochrewell_dome/ama",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

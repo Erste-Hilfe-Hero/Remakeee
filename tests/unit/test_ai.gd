@@ -23,7 +23,7 @@ func test_ai_rests_when_out_of_energy() -> void:
 
 func test_tier1_prefers_super_effective() -> void:
 	# Kindlop knows a Stone move and an Ember move; Ember is x2 into Mossling.
-	var foe: Array[Spirling] = [BattleFixtures.make("Kindlop", 20, ["Headlong Charge", "Cinder Nip"])]
+	var foe: Array[Spirling] = [BattleFixtures.make("Kindlop", 20, ["Bowl Over", "Cinder Nip"])]
 	var m: BattleModel = BattleFixtures.model([BattleFixtures.make("Mossling", 20)] as Array[Spirling], foe)
 	var a: BattleAction = BattleAI.new(1).choose(m, Side.FOE)
 	assert_eq(foe[0].moves[a.move_index].move_name, "Cinder Nip")

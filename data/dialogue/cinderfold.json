@@ -1,0 +1,34 @@
+{
+ "sign": [
+  "CINDERFOLD",
+  "Cinderfold, 88 folk.",
+  "Town of the gravers. The hall is open to guild folk."
+ ],
+ "keeper": {
+  "lines": [
+   "Spring Keeper Oda: The water comes up warm under the basalt. It eases tired Spirlings."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Trader Bastian: Engraved tins, strong brews. Ashmere prices, Ashmere quality."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts"
+ },
+ "agna": {
+  "lines": [
+   "Ash-Sweeper Agna: The ash settles by evening. Then we sit by the spring and pretend it never falls."
+  ]
+ },
+ "dorn": {
+  "lines": [
+   "Kiln-Watcher Dorn: My shift ends when the kilns glow orange. The spring is the only cool place in town."
+  ]
+ },
+ "lio": {
+  "lines": [
+   "Glass-Blower Lio: Every evening someone brings a new shard from the plain. We guess what it was before."
+  ]
+ }
+}

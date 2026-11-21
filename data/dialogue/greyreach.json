@@ -1,0 +1,77 @@
+{
+ "sign": [
+  "THE GREYREACH",
+  "Uplands, rings 22 to 25.",
+  "West: Stillwater   North: the Wide Rift"
+ ],
+ "sign_top": {
+  "lines": [
+   "MOUNTAIN RAILWAY",
+   "Halt Greyreach. No trains since the storm."
+  ],
+  "after_flag": {
+   "flag": "act2_end",
+   "lines": [
+    "MOUNTAIN RAILWAY",
+    "Halt Greyreach. Trains to Ashmere again."
+   ]
+  }
+ },
+ "hut": [
+  "A survey hut. Old charts of the uplands hang on the wall, every one of them grey."
+ ],
+ "brann": [
+  "Brann: The scree up here slides if you look at it wrong."
+ ],
+ "brann_intro": [
+  "Brann: Steady feet? Prove it."
+ ],
+ "brann_defeat": [
+  "Brann: Steady enough."
+ ],
+ "kaja": [
+  "Kaja: I measure the Greyreach every year. This year it measured me."
+ ],
+ "kaja_intro": [
+  "Kaja: Hold still, I need a reference point. Ha, a duel will do."
+ ],
+ "kaja_defeat": [
+  "Kaja: Noted. You are a fixed point."
+ ],
+ "edrik": [
+  "Edrik: North of here the ground just stops. Like someone forgot to draw it."
+ ],
+ "edrik_intro": [
+  "Edrik: Last stop before nothing. Duel?"
+ ],
+ "edrik_defeat": [
+  "Edrik: Go and look, then. Don't step too close."
+ ],
+ "conductor": {
+  "lines": [
+   "Conductor Tilde: Mountain railway to Ashmere. Mind the gap, mind the clouds."
+  ],
+  "action": "transit mountain_rail"
+ },
+ "porter": {
+  "lines": [
+   "Porter Joska: The gilt funicular climbs to Halcyra. Up there they polish the rails and lie about the view."
+  ],
+  "action": "transit halcyra_funicular"
+ },
+ "mound_stone": {
+  "lines": [
+   "An old burial mound. A weathered stone stands on it, its letters worn almost away."
+  ],
+  "action": "rubbing greyreach/mound_words"
+ },
+ "mound_words": [
+  "\"Three steps from me toward morning, two toward the rails' end.\""
+ ],
+ "reserve_gate": {
+  "lines": [
+   "A woman in a velvet coat leans on a fence that is not on any map."
+  ],
+  "action": "reserve"
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "_comment": "Translations of the German table kampf_k37, written by tools/i18n/locales_kampf_k37.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s needs three Spirlings in their echo team for a team code.": "%s a besoin de trois Spirlings dans son équipe écho pour un code d'équipe.",
+  "%s's team code: %s": "Code d'équipe de %s : %s",
+  "Always lit.": "Toujours allumée.",
+  "Beat every Warden in one master tour.": "Battez tous les Gardiens en une seule tournée de maître.",
+  "Clear the Battle Halls 10 times.": "Remportez les salles de combat 10 fois.",
+  "Climb the whole lighthouse stair.": "Gravissez tout l'escalier du phare.",
+  "Drowned Blue": "Bleu noyé",
+  "Ember Red": "Rouge braise",
+  "Flame colour (caves, from the third era on)": "Couleur de la flamme (grottes, dès la troisième ère)",
+  "Flame colour: %s": "Couleur de la flamme : %s",
+  "Hall Violet": "Violet des salles",
+  "It is on the clipboard. Fight it in the Battle Halls under Fight a team code, or pass it on.": "Il est dans le presse-papiers. Affrontez-le dans les salles de combat via Affronter un code d'équipe, ou faites-le passer.",
+  "Lamp Gold": "Or de lampe",
+  "Reach floor 20 of the endless stretch.": "Atteignez l'étage 20 du parcours sans fin.",
+  "The flame turns %s.": "La flamme devient %s.",
+  "Their team code": "Son code d'équipe",
+  "Wardens' Ash": "Cendre des Gardiens"
+ }
+}

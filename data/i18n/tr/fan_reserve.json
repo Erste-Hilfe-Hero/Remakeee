@@ -1,0 +1,24 @@
+{
+ "_comment": "tr translation of the fan_reserve table, keyed by the English text.",
+ "strings": {
+  "%s answers your call and pads over to you. Dorran pretends not to notice.": "%s çağrına karşılık veriyor ve tıpış tıpış yanına geliyor. Dorran fark etmemiş gibi yapıyor.",
+  "%s slips through a hole in the fence. The ring will patch that hole. Someday.": "%s çitteki bir delikten sıvışıyor. Çete o deliği yamayacak. Bir gün.",
+  "%s tilts its head at your call, but stays put.": "%s çağrına başını eğiyor ama yerinden kıpırdamıyor.",
+  "A whistle from the lookout tower. A rival crew bursts out of the reeds and %s bolts. Somebody got paid tonight.": "Gözetleme kulesinden bir ıslık. Sazlıktan rakip bir ekip fırlıyor ve %s tabanları yağlıyor. Bu gece biri parasını aldı.",
+  "A wild %s, Ring %d. Sightings left: %d": "Yabani bir %s, Halka %d. Kalan görülme: %d",
+  "A woman in a velvet coat leans on a fence that is not on any map.": "Kadife paltolu bir kadın, hiçbir haritada olmayan bir çite yaslanmış.",
+  "Echo call (%d left)": "Yankı çağrısı (%d kaldı)",
+  "Move on": "Devam et",
+  "Pay %d coins to slip into the reserve?": "Koruma alanına süzülmek için %d para ödensin mi?",
+  "Rattle the fence": "Çiti salla",
+  "Set bait": "Yem koy",
+  "Velvet Dorran": "Kadife Dorran",
+  "Velvet Dorran: No coins? Then you were never here.": "Kadife Dorran: Para yok mu? O zaman buraya hiç gelmedin.",
+  "Velvet Dorran: No fighting in my yard. You set bait, you rattle the fence, you call. Then you leave and forget my face.": "Kadife Dorran: Avlumda dövüş yok. Yem koyarsın, çiti sallarsın, çağırırsın. Sonra gidersin ve yüzümü unutursun.",
+  "Velvet Dorran: Time's up. Out you go, and the gate never saw you.": "Kadife Dorran: Süre doldu. Hadi dışarı, kapı da seni hiç görmedi.",
+  "Velvet Dorran: Welcome to Hollowgate Reserve. Totally legal. The fence is to keep the paperwork in.": "Kadife Dorran: Hollowgate Koruma Alanı'na hoş geldin. Tamamen yasal. Çit, evraklar kaçmasın diye.",
+  "You rattle the fence. %s's ears shoot up: curious, and very jumpy.": "Çiti sallıyorsun. %s kulaklarını dikiyor: meraklı ve çok ürkek.",
+  "You set down a twist of dried bait. %s sniffs it and calms down.": "Yere bir tutam kuru yem bırakıyorsun. %s koklayıp sakinleşiyor.",
+  "the Quiet Hands": "Sessiz Eller"
+ }
+}

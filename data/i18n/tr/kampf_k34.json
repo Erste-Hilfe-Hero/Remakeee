@@ -1,0 +1,16 @@
+{
+ "_comment": "tr translation of the kampf_k34 table, keyed by the English text.",
+ "strings": {
+  "%s: Wayfarers think at tier %d.": "%s: Gezginler seviye %d ile düşünür.",
+  "At tier 3 the damage guess is the very number your art preview shows.": "Seviye 3'te hasar tahmini, teknik önizlemenin gösterdiği sayının ta kendisidir.",
+  "Foes never see your order or the next roll, and guess swaps only among Spirlings you have shown.": "Rakipler emrini ya da sonraki zarı asla görmez, değişimi yalnızca gösterdiğin Spirling'ler arasında sezer.",
+  "How foes think": "Rakipler nasıl düşünür",
+  "Some Wayfarers have a temper of their own: a hothead never swaps, a tactician saves up.": "Bazı Gezginlerin kendine has huyu var: bir aceleci asla değişmez, bir taktikçi biriktirir.",
+  "Tier 0 picks any art it can pay. Mostly it just bites.": "Seviye 0 ödeyebildiği herhangi bir tekniği seçer. Çoğu zaman sadece ısırır.",
+  "Tier 1 picks the art that hurts most right now and never passes up a knock-out.": "Seviye 1 şu an en çok acıtan tekniği seçer ve bir nakavtı asla kaçırmaz.",
+  "Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup.": "Seviye 2 en iyi cevabını da tartar, zayıflayınca iyileşir ve kötü bir eşleşmeden değişir.",
+  "Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, leaves a field that weakens all its arts, guesses your swap and saves Energy up to %d turns ahead.": "Seviye 3 bir durumu asla boşa harcamaz, yalnızca güvendeyken güçlenir, zayıfları bitirir, bütün tekniklerini zayıflatan bir alandan çekilir, değişimini sezer ve %d tur ilerisi için Enerji biriktirir.",
+  "Two arts worth the same at tier 3? The battle seed decides, the same seed always the same way.": "Seviye 3'te iki teknik aynı değerde mi? Dövüş tohumu karar verir, aynı tohum hep aynı.",
+  "Wild Spirlings always pick at random.": "Yabani Spirling'ler hep rastgele seçer."
+ }
+}

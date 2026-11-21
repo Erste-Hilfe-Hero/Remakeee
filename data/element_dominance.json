@@ -1,0 +1,13 @@
+{
+ "_doc": "Element dominance per region (KAMPF_PLAN_1000 item 102), read by scripts/overworld/ElementDominance.gd: wild Spirlings of a region's dominant elements step out more often there (the same half-again weight as a season or a field, EncounterTable.weight_of). Keys are MapData regions.",
+ "regions": {
+  "veydal": ["STONE", "TIDE"],
+  "corvane": ["TIDE", "BLOOM"],
+  "ashmere": ["EMBER", "STONE"],
+  "solenne": ["LUMEN", "GALE"],
+  "vellmarch": ["RUST", "MASK"],
+  "quillmarch": ["ACID", "FROST"],
+  "halcyra": ["GILT", "ZENITH"],
+  "quivermoor": ["TIDE", "BLOOM"]
+ }
+}

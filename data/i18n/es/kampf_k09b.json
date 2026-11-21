@@ -1,0 +1,9 @@
+{
+ "_comment": "es translation of the kampf_k09b table, keyed by the English text.",
+ "strings": {
+  "Damage numbers: %s": "Números de daño: %s",
+  "Shows the damage of each hit as a number over the Spirling.": "Muestra el daño de cada golpe como un número sobre el Spirling.",
+  "Star of the battle: %s": "Estrella del combate: %s",
+  "Take a photo": "Hacer una foto"
+ }
+}

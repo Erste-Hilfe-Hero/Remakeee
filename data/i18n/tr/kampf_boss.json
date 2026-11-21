@@ -1,0 +1,21 @@
+{
+ "_comment": "tr translation of the kampf_boss table, keyed by the English text.",
+ "strings": {
+  "%s grows restless: the longer the fight, the harder it strikes!": "%s sabırsızlanıyor: savaş uzadıkça daha sert vuruyor!",
+  "%s lies open: its Guard is down for a turn!": "%s açık verdi: Siperi bir tur düştü!",
+  "Before the Hush, the Cinder Rift fed a village's forges. The smiths sold the last of its heat to the highest bidder, and what was left curled up and learned to hate. It still keeps time like a bellows: hold it under High Tide and it can't stoke its next phase.": "Hush'tan önce Kor Yarığı bir köyün demirhanelerini besliyordu. Demirciler kalan ısısını en yüksek teklifi verene sattı, geriye kalan da kıvrılıp nefret etmeyi öğrendi. Hâlâ bir körük gibi tempo tutar: onu Met Vakti altında tut, bir sonraki evresini harlayamaz.",
+  "Ebb": "Cezir",
+  "It acts %d times each turn.": "Her tur %d kez hareket eder.",
+  "Mist hides things, and the people nearby paid it well to hide one thing in particular. When the payments stopped, it hid them too. Dawn Glow burns its fog thin; while the light lies, it can't pull itself into a new shape.": "Sis bir şeyleri saklar ve yakındaki insanlar belli bir şeyi saklaması için ona iyi para öderdi. Ödemeler kesilince onları da sakladı. Şafak Işıltısı sisini inceltir; ışık sürdükçe yeni bir şekle toparlanamaz.",
+  "Not a breath of wind: no stat stage rises or falls on either side.": "Esinti bile yok: iki tarafta da hiçbir nitelik kademesi yükselmez ya da düşmez.",
+  "Still Air": "Durgun Hava",
+  "The Ashen Heart splits open. Its core burns white!": "Küllü Kalp yarılıyor! Çekirdeği beyaz yanıyor!",
+  "The Drowned Heart sinks its weight into one last surge!": "Boğulmuş Kalp tüm ağırlığını son bir dalgaya veriyor!",
+  "The Mist Heart pulls the fog tight around its core!": "Sis Kalbi sisi çekirdeğinin etrafına sıkıca çekiyor!",
+  "The Tide Rift sank a ferry once, and the ferryman swore he had warned everyone. He had not. The heart at the bottom remembers every name on the passenger list. Static Veil sets its water humming, and while it hums the heart can't gather its next surge.": "Gelgit Yarığı bir zamanlar bir feribot batırdı ve kayıkçı herkesi uyardığına yemin etti. Uyarmamıştı. Dipteki kalp yolcu listesindeki her ismi hatırlar. Statik Peçe suyunu vızıldatır ve vızıldadıkça kalp bir sonraki dalgasını toplayamaz.",
+  "The water has run out: resting gives 1 Energy less on both sides.": "Su tükendi: dinlenmek iki tarafa da 1 Enerji daha az verir.",
+  "What the Ashen Heart was": "Küllü Kalp neydi",
+  "What the Drowned Heart was": "Boğulmuş Kalp neydi",
+  "What the Mist Heart was": "Sis Kalbi neydi"
+ }
+}

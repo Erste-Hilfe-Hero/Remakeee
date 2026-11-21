@@ -1,0 +1,8 @@
+{
+ "_comment": "Translations of the German table kampf_k32, written by tools/i18n/locales_kampf_k32.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s has lost half its strength to your friends, and it remembers every face. It strikes harder!": "%s is de helft van zijn kracht kwijt aan je vrienden, en het onthoudt elk gezicht. Het slaat harder toe!",
+  "%s is nearly broken. Cornered things are the dangerous ones: it moves faster and aims truer!": "%s is bijna gebroken. Wat in het nauw zit, is het gevaarlijkst: het beweegt sneller en mikt zuiverder!",
+  "It acts once each turn.": "Het handelt één keer per beurt."
+ }
+}

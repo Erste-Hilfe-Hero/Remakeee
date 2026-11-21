@@ -2,18 +2,20 @@
  {
   "id": "tonic",
   "name": "Tonic",
-  "description": "Restores 20 HP.",
+  "description": "Restores 25 Vigor.",
   "battle": true,
-  "heal": 20,
-  "price": 200
+  "heal": 25,
+  "price": 150,
+  "tradeable": true
  },
  {
   "id": "strong_tonic",
   "name": "Strong Tonic",
-  "description": "Restores 60 HP.",
+  "description": "Restores 70 Vigor.",
   "battle": true,
-  "heal": 60,
-  "price": 600
+  "heal": 70,
+  "price": 450,
+  "tradeable": true
  },
  {
   "id": "remedy",
@@ -21,7 +23,8 @@
   "description": "Cures any status.",
   "battle": true,
   "cure": true,
-  "price": 250
+  "price": 300,
+  "tradeable": true
  },
  {
   "id": "spark_drop",
@@ -29,15 +32,27 @@
   "description": "Restores 5 Energy to the active Spirling.",
   "battle": true,
   "energy": 5,
-  "price": 300
+  "price": 300,
+  "tradeable": true
+ },
+ {
+  "id": "rest_candle",
+  "name": "Rest Candle",
+  "description": "Restores 3 Energy to any Spirling of the team, also one waiting on the bench.",
+  "battle": true,
+  "energy": 3,
+  "energy_bench": true,
+  "price": 250,
+  "tradeable": false
  },
  {
   "id": "revival_leaf",
-  "name": "Revival Leaf",
-  "description": "Revives a Spirling outside battle with half HP.",
+  "name": "Waking Moss",
+  "description": "Wakes a fainted Spirling outside battle with a third of its Vigor.",
   "battle": false,
-  "revive": 0.5,
-  "price": 1500
+  "revive": 0.34,
+  "price": 1100,
+  "tradeable": true
  },
  {
   "id": "kin_charm",
@@ -45,89 +60,117 @@
   "description": "Hold it out during a bond to steady the link (+10%).",
   "battle": false,
   "bond_bonus": 0.1,
-  "price": 400
+  "price": 400,
+  "tradeable": true
  },
  {
   "id": "grapple_line",
   "name": "Grapple Line",
-  "description": "Tamer Gear. Face a far post across narrow water and press A to pull yourself over.",
+  "description": "Wayfarer Gear. Face a far post across narrow water and press A to pull yourself over.",
   "battle": false,
   "gear": true,
-  "hint": "The far side is just out of reach. A grapple line could bridge it."
+  "hint": "The far side is just out of reach. A grapple line could bridge it.",
+  "works_on": [
+   "~"
+  ]
  },
  {
   "id": "climbing_pick",
   "name": "Climbing Pick",
-  "description": "Tamer Gear. Face a low cliff and press A to climb up or down it.",
+  "description": "Wayfarer Gear. Face a low cliff and press A to climb up or down it.",
   "battle": false,
   "gear": true,
-  "hint": "A steep rock face. With a climbing pick you could get a grip."
+  "hint": "A steep rock face. With a climbing pick you could get a grip.",
+  "works_on": [
+   "^",
+   "v"
+  ]
  },
  {
   "id": "storm_lantern",
   "name": "Storm Lantern",
-  "description": "Tamer Gear. Lights pitch-dark places so you can walk through them.",
+  "description": "Wayfarer Gear. Lights pitch-dark places so you can walk through them.",
   "battle": false,
   "gear": true,
-  "hint": "It's pitch dark ahead. A lantern would help."
+  "hint": "It's pitch dark ahead. A lantern would help.",
+  "works_on": [
+   "dark"
+  ]
  },
  {
   "id": "spark_coil",
   "name": "Spark Coil",
-  "description": "Held. The holder gains 1 extra Energy every turn.",
+  "description": "Keepsake. The holder gains 1 extra Energy every turn.",
   "battle": false,
   "held": {
    "energy_per_turn": 1
   },
-  "price": 1200
+  "price": 1200,
+  "tradeable": true
+ },
+ {
+  "id": "field_stake",
+  "name": "Field Stake",
+  "description": "Keepsake. A Rift field its holder calls lasts 2 turns longer.",
+  "battle": false,
+  "held": {
+   "field_turns": 2
+  },
+  "price": 1500,
+  "tradeable": false
  },
  {
   "id": "bark_wrap",
   "name": "Bark Wrap",
-  "description": "Held. The holder recovers a little HP at the end of each turn.",
+  "description": "Keepsake. The holder recovers a little Vigor at the end of each turn.",
   "battle": false,
   "held": {
-   "regen_div": 16
+   "regen_div": 12
   },
-  "price": 1200
+  "price": 1200,
+  "tradeable": true
  },
  {
   "id": "iron_burr",
   "name": "Iron Burr",
-  "description": "Held. Physical hits on the holder deal 15% less damage.",
+  "description": "Keepsake. Physical hits on the holder deal 15% less damage.",
   "battle": false,
   "held": {
    "phys_taken": 0.85
   },
-  "price": 1000
+  "price": 1000,
+  "tradeable": true
  },
  {
   "id": "swift_feather",
-  "name": "Swift Feather",
-  "description": "Held. Raises the holder's SPD by 15%.",
+  "name": "Wind Anklet",
+  "description": "Keepsake. Raises the holder's Pace by 15%.",
   "battle": false,
   "held": {
    "spd_mult": 1.15
   },
-  "price": 1000
+  "price": 1000,
+  "tradeable": true
  },
  {
   "id": "keen_lens",
-  "name": "Keen Lens",
-  "description": "Held. The holder lands keen hits twice as often.",
+  "name": "Whetstone",
+  "description": "Keepsake. A sharpened edge: the holder lands keen hits twice as often.",
   "battle": false,
   "held": {
    "crit_mult": 2.0
   },
-  "price": 900
+  "price": 900,
+  "tradeable": true
  },
  {
   "id": "max_tonic",
-  "name": "Max Tonic",
-  "description": "Restores all HP.",
+  "name": "Spring Flask",
+  "description": "A flask of rest-spring water. Restores all Vigor.",
   "battle": true,
   "heal": 999,
-  "price": 1500
+  "price": 1200,
+  "tradeable": true
  },
  {
   "id": "cooling_gel",
@@ -135,7 +178,8 @@
   "description": "Cures Scorch.",
   "battle": true,
   "cure": "scorch",
-  "price": 120
+  "price": 90,
+  "tradeable": true
  },
  {
   "id": "dry_towel",
@@ -143,7 +187,8 @@
   "description": "Cures Soak.",
   "battle": true,
   "cure": "soak",
-  "price": 120
+  "price": 90,
+  "tradeable": true
  },
  {
   "id": "wake_bell",
@@ -151,27 +196,30 @@
   "description": "Cures Drowse.",
   "battle": true,
   "cure": "drowse",
-  "price": 120
+  "price": 90,
+  "tradeable": true
  },
  {
   "id": "power_brew",
   "name": "Power Brew",
-  "description": "Raises the active Spirling's ATK in battle.",
+  "description": "Raises the active Spirling's Might in battle.",
   "battle": true,
   "stage": {
    "atk": 1
   },
-  "price": 500
+  "price": 350,
+  "tradeable": true
  },
  {
   "id": "guard_brew",
   "name": "Guard Brew",
-  "description": "Raises the active Spirling's DEF in battle.",
+  "description": "Raises the active Spirling's Guard in battle.",
   "battle": true,
   "stage": {
    "def": 1
   },
-  "price": 500
+  "price": 350,
+  "tradeable": true
  },
  {
   "id": "focus_brew",
@@ -181,25 +229,28 @@
   "stage": {
    "foc": 1
   },
-  "price": 500
+  "price": 350,
+  "tradeable": true
  },
  {
   "id": "dash_brew",
   "name": "Dash Brew",
-  "description": "Raises the active Spirling's SPD in battle.",
+  "description": "Raises the active Spirling's Pace in battle.",
   "battle": true,
   "stage": {
    "spd": 1
   },
-  "price": 500
+  "price": 350,
+  "tradeable": true
  },
  {
   "id": "tide_pearl",
-  "name": "Tide Pearl",
+  "name": "Tide Shell",
   "description": "A pearl that hums with the sea. Some Spirlings change when they hold it close.",
   "battle": false,
   "evolves": true,
-  "price": 2500
+  "price": 2500,
+  "tradeable": true
  },
  {
   "id": "spark_charm",
@@ -207,23 +258,26 @@
   "description": "Brightens one Spark value of a Spirling (+3).",
   "battle": false,
   "spark": 3,
-  "price": 2000
+  "price": 2000,
+  "tradeable": true
  },
  {
   "id": "echo_ember",
-  "name": "Echo Crystal: Flare Lash",
-  "description": "Teaches Flare Lash to an Ember Spirling. Never used up.",
+  "name": "Echo Crystal: Kiln Strike",
+  "description": "Teaches Kiln Strike to an Ember Spirling. Never used up.",
   "battle": false,
-  "teaches": "Flare Lash",
-  "price": 3000
+  "teaches": "Kiln Strike",
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_tide",
-  "name": "Echo Crystal: Brine Jet",
-  "description": "Teaches Brine Jet to a Tide Spirling. Never used up.",
+  "name": "Echo Crystal: Spindrift Shot",
+  "description": "Teaches Spindrift Shot to a Tide Spirling. Never used up.",
   "battle": false,
-  "teaches": "Brine Jet",
-  "price": 3000
+  "teaches": "Spindrift Shot",
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_bloom",
@@ -231,31 +285,35 @@
   "description": "Teaches Sap Draw to a Bloom Spirling. Never used up.",
   "battle": false,
   "teaches": "Sap Draw",
-  "price": 3000
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_volt",
-  "name": "Echo Crystal: Surge Fang",
-  "description": "Teaches Surge Fang to a Volt Spirling. Never used up.",
+  "name": "Echo Crystal: Storm Gnash",
+  "description": "Teaches Storm Gnash to a Volt Spirling. Never used up.",
   "battle": false,
-  "teaches": "Surge Fang",
-  "price": 3000
+  "teaches": "Storm Gnash",
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_stone",
-  "name": "Echo Crystal: Quake Stomp",
-  "description": "Teaches Quake Stomp to a Stone Spirling. Never used up.",
+  "name": "Echo Crystal: Tremor Thud",
+  "description": "Teaches Tremor Thud to a Stone Spirling. Never used up.",
   "battle": false,
-  "teaches": "Quake Stomp",
-  "price": 3000
+  "teaches": "Tremor Thud",
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_gale",
-  "name": "Echo Crystal: Cyclone Edge",
-  "description": "Teaches Cyclone Edge to a Gale Spirling. Never used up.",
+  "name": "Echo Crystal: Gale Scythe",
+  "description": "Teaches Gale Scythe to a Gale Spirling. Never used up.",
   "battle": false,
-  "teaches": "Cyclone Edge",
-  "price": 3000
+  "teaches": "Gale Scythe",
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_lumen",
@@ -263,14 +321,2562 @@
   "description": "Teaches Prism Ray to a Lumen Spirling. Never used up.",
   "battle": false,
   "teaches": "Prism Ray",
-  "price": 3000
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_umbra",
-  "name": "Echo Crystal: Gloom Pulse",
-  "description": "Teaches Gloom Pulse to an Umbra Spirling. Never used up.",
+  "name": "Echo Crystal: Gloom Ripple",
+  "description": "Teaches Gloom Ripple to an Umbra Spirling. Never used up.",
   "battle": false,
-  "teaches": "Gloom Pulse",
-  "price": 3000
- }
+  "teaches": "Gloom Ripple",
+  "price": 3000,
+  "tradeable": true
+ },
+ {
+  "id": "echo_furnace_heart",
+  "name": "Echo Crystal: Furnace Heart",
+  "description": "Teaches Furnace Heart to an Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Furnace Heart",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_fathom_crush",
+  "name": "Echo Crystal: Fathom Crush",
+  "description": "Teaches Fathom Crush to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Fathom Crush",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_tailwind",
+  "name": "Echo Crystal: Tailwind",
+  "description": "Teaches Tailwind to a Gale Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Tailwind",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_root_grip",
+  "name": "Echo Crystal: Root Grip",
+  "description": "Teaches Root Grip to a Bloom Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Root Grip",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_night_veil",
+  "name": "Echo Crystal: Night Veil",
+  "description": "Teaches Night Veil to an Umbra Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Night Veil",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_squall",
+  "name": "Echo Crystal: Squall",
+  "description": "Teaches Squall to a Gale Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Squall",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_dawn_mend",
+  "name": "Echo Crystal: Dawn Mend",
+  "description": "Teaches Dawn Mend to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Dawn Mend",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_radiant_lance",
+  "name": "Echo Crystal: Radiant Lance",
+  "description": "Teaches Radiant Lance to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Radiant Lance",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_scatter_gale",
+  "name": "Echo Crystal: Scatter Gale",
+  "description": "Teaches Scatter Gale to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Scatter Gale",
+  "any_element": true,
+  "price": 4000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_graft",
+  "name": "Echo Crystal: Graft",
+  "description": "Teaches Graft to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Graft",
+  "any_element": true,
+  "price": 4000,
+  "tradeable": false
+ },
+ {
+  "id": "wading_boots",
+  "name": "Wading Boots",
+  "description": "Wayfarer Gear. Tall leather boots: walk through shallow water, step by step.",
+  "battle": false,
+  "gear": true,
+  "hint": "The water here is shallow, but too cold for bare feet. Wading boots would do.",
+  "works_on": [
+   "w"
+  ]
+ },
+ {
+  "id": "survey_glass",
+  "name": "Survey Glass",
+  "description": "Wayfarer Gear. A brass spyglass: face open ground and press A to spot hidden finds up to 6 steps ahead on the minimap. It needs 20 seconds between looks.",
+  "battle": false,
+  "gear": true,
+  "hint": "With a Survey Glass you could look for hidden finds from here.",
+  "works_on": [
+   "look"
+  ]
+ },
+ {
+  "id": "tide_chart",
+  "name": "Tide Chart",
+  "description": "Wayfarer Gear. A tidewatcher's chart: open it in the satchel to see when the next low and high tide come, by the clock of your device.",
+  "battle": false,
+  "gear": true,
+  "works_on": [
+   "tide"
+  ]
+ },
+ {
+  "id": "rubbing_charcoal",
+  "name": "Rubbing Charcoal",
+  "description": "Wayfarer Gear. A stick of charcoal and a roll of thin paper: face a weathered stone and press A to take a rubbing and read its worn inscription.",
+  "battle": false,
+  "gear": true,
+  "works_on": [
+   "rubbing"
+  ]
+ },
+ {
+  "id": "pry_bar",
+  "name": "Pry Bar",
+  "description": "Wayfarer Gear. Face a sluice wheel, a mine cart or a grate and press A to turn, shove or lift it.",
+  "battle": false,
+  "gear": true,
+  "hint": "It won't budge by hand. A pry bar would give you the leverage.",
+  "works_on": [
+   "wheel"
+  ]
+ },
+ {
+  "id": "rope_ladder",
+  "name": "Rope Ladder",
+  "description": "Wayfarer Gear. Face a marked edge over a shaft and press A to tie it on. It stays there, and you climb down rung by rung.",
+  "battle": false,
+  "gear": true,
+  "hint": "A chalk mark on the edge of a shaft. A rope ladder could be tied on here.",
+  "works_on": [
+   "shaft"
+  ]
+ },
+ {
+  "id": "plank_bundle",
+  "name": "Plank Bundle",
+  "description": "Wayfarer Gear. Face a gap with a chalk mark and press A to lay a plank over it. The plank stays.",
+  "battle": false,
+  "gear": true,
+  "hint": "A narrow gap with a chalk mark. A plank would bridge it.",
+  "works_on": [
+   "Y"
+  ]
+ },
+ {
+  "id": "rg_riftheart",
+  "name": "Riftheart",
+  "description": "Held memento: +15% Might. Permanent, 1 piece.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "atk_mult": 1.15
+  }
+ },
+ {
+  "id": "rg_glass_shield",
+  "name": "Glass Shield",
+  "description": "Held memento: +15% Guard. Permanent, 1 piece.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "def_mult": 1.15
+  }
+ },
+ {
+  "id": "rg_clear_shard",
+  "name": "Clear Shard",
+  "description": "Held memento: +15% Focus. Permanent, 1 piece.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "foc_mult": 1.15
+  }
+ },
+ {
+  "id": "rg_whirl_glass",
+  "name": "Whirl Glass",
+  "description": "Held memento: +15% Speed and +5% Focus. Permanent, 1 piece.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "spd_mult": 1.15,
+   "foc_mult": 1.05
+  }
+ },
+ {
+  "id": "rg_vigor_glass",
+  "name": "Core Glass",
+  "description": "Held memento: +12% Vigor. Permanent, 1 piece.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "hp_mult": 1.12
+  }
+ },
+ {
+  "id": "rg_prism_ember",
+  "name": "Ember Prism",
+  "description": "Held memento: +20% damage for Ember techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "EMBER",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_tide",
+  "name": "Tide Prism",
+  "description": "Held memento: +20% damage for Tide techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "TIDE",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_bloom",
+  "name": "Bloom Prism",
+  "description": "Held memento: +20% damage for Bloom techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "BLOOM",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_volt",
+  "name": "Volt Prism",
+  "description": "Held memento: +20% damage for Volt techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "VOLT",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_stone",
+  "name": "Stone Prism",
+  "description": "Held memento: +20% damage for Stone techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "STONE",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_gale",
+  "name": "Gale Prism",
+  "description": "Held memento: +20% damage for Gale techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "GALE",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_lumen",
+  "name": "Lumen Prism",
+  "description": "Held memento: +20% damage for Lumen techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "LUMEN",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_umbra",
+  "name": "Umbra Prism",
+  "description": "Held memento: +20% damage for Umbra techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "UMBRA",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_echo_ring",
+  "name": "Echo Ring",
+  "description": "Held memento: heals 1/10 of Vigor every round.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "regen_div": 10
+  }
+ },
+ {
+  "id": "rg_hold_stone",
+  "name": "Hold Stone",
+  "description": "Held memento: once per battle, a hit that would knock the holder out from full Vigor leaves it with 1 Vigor. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "endure_full": true
+  }
+ },
+ {
+  "id": "rg_echo_scent",
+  "name": "Echo Scent",
+  "description": "Bonding gets 25% easier for one try.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.25
+ },
+ {
+  "id": "rg_bond_seal",
+  "name": "Bond Seal",
+  "description": "The next bond with a wild Spirling succeeds for sure, also with ancient and one-of-a-kind ones. Rift Wardens and other Wayfarers' Spirlings can never be bonded.",
+  "battle": false,
+  "shop": true,
+  "bond_sure": true
+ },
+ {
+  "id": "rg_spark_shard",
+  "name": "Spark Shard",
+  "description": "Raises one chosen value by 6 Sparks, up to 12.",
+  "battle": false,
+  "shop": true,
+  "spark": 6
+ },
+ {
+  "id": "rg_ring_tonic",
+  "name": "Ring Tonic",
+  "description": "A Spirling gains 1 Ring at once. Never above the Ring cap.",
+  "battle": false,
+  "shop": true,
+  "rings": 1
+ },
+ {
+  "id": "rg_ring_tonic_5",
+  "name": "Great Ring Tonic",
+  "description": "A Spirling gains 5 Rings at once. Never above the Ring cap.",
+  "battle": false,
+  "shop": true,
+  "rings": 5
+ },
+ {
+  "id": "rg_ring_elixir",
+  "name": "Ring Elixir",
+  "description": "A Spirling rises to the current Ring cap.",
+  "battle": false,
+  "shop": true,
+  "rings": 99
+ },
+ {
+  "id": "rg_growth_x2",
+  "name": "Growth Crystal",
+  "description": "Double growth for the whole team for the next 20 battles.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "growth",
+   "mult": 2.0,
+   "battles": 20
+  }
+ },
+ {
+  "id": "rg_growth_x3",
+  "name": "Great Growth Crystal",
+  "description": "Triple growth for the whole team for the next 20 battles.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "growth",
+   "mult": 3.0,
+   "battles": 20
+  }
+ },
+ {
+  "id": "rg_coin_boost",
+  "name": "Coin Gleam",
+  "description": "Double coins from battles for 20 battles.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "coins",
+   "mult": 2.0,
+   "battles": 20
+  }
+ },
+ {
+  "id": "rg_encounter_call",
+  "name": "Encounter Call",
+  "description": "Twice as many wild encounters for the next 30 steps.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "encounters",
+   "mult": 2.0,
+   "steps": 30
+  }
+ },
+ {
+  "id": "rg_skip_battle",
+  "name": "Battle Skip",
+  "description": "Offered before a wild battle against one foe at least 10 Rings below your lead: your team wins it at once, with full growth. Used up.",
+  "battle": false,
+  "shop": true
+ },
+ {
+  "id": "rg_rematch_key",
+  "name": "Rematch Key",
+  "description": "Talk to a beaten Wayfarer who already battled you today: one more rematch. Used up.",
+  "battle": false,
+  "shop": true
+ },
+ {
+  "id": "rg_warden_weaken",
+  "name": "Warden Weakener",
+  "description": "Offered before a Rift Warden battle you lost once before: the Warden's team starts with 15% less Vigor. One per battle, not in Rift-Born. Used up.",
+  "battle": false,
+  "shop": true
+ },
+ {
+  "id": "rg_rift_anchor",
+  "name": "Rift Anchor",
+  "description": "Offered after you lose to a Rift Warden: you stay right before it with a rested team instead of going back to the spring. Not in Rift-Born. Used up.",
+  "battle": false,
+  "shop": true
+ },
+ {
+  "id": "rg_temper_shift",
+  "name": "Temper Shift",
+  "description": "Sets one Spirling's temperament to one you choose. Used up.",
+  "battle": false,
+  "shop": true,
+  "temper_shift": true
+ },
+ {
+  "id": "rg_temper_amp",
+  "name": "Power Core",
+  "description": "Doubles the lean of one Spirling's temperament: +10% instead of +5% on its stat. Permanent. Used up.",
+  "battle": false,
+  "shop": true,
+  "temper_core": true
+ },
+ {
+  "id": "rg_gleam_prism",
+  "name": "Gleam Prism",
+  "description": "Turns one Spirling you choose into its Gleam form for good: +10% on all values and a Riftglass sheen. Used up.",
+  "battle": false,
+  "shop": true,
+  "gleam": true
+ },
+ {
+  "id": "rg_spark_forge",
+  "name": "Spark Forge",
+  "description": "Sets all Spark values of one Spirling to the top (12). Shows the new values first.",
+  "battle": false,
+  "shop": true,
+  "spark_all": true
+ },
+ {
+  "id": "rg_rift_breath",
+  "name": "Rift Breath",
+  "description": "In battle: brings a defeated Spirling back with half its Vigor. One per battle.",
+  "battle": true,
+  "shop": true,
+  "battle_revive": 0.5,
+  "per_battle": 1
+ },
+ {
+  "id": "rg_rift_breath_full",
+  "name": "Great Rift Breath",
+  "description": "In battle: brings a defeated Spirling back with full Vigor and full energy. One per battle.",
+  "battle": true,
+  "shop": true,
+  "battle_revive": 1.0,
+  "revive_energy": true,
+  "per_battle": 1
+ },
+ {
+  "id": "rg_glass_tonic",
+  "name": "Riftglass Tonic",
+  "description": "In battle: heals all Vigor and every state. Two per battle.",
+  "battle": true,
+  "shop": true,
+  "heal_frac": 1.0,
+  "cure": true,
+  "per_battle": 2
+ },
+ {
+  "id": "rg_glass_spark",
+  "name": "Glass Spark",
+  "description": "In battle: fills a Spirling's energy and gives 1 more at the end of each of the next 3 turns. Three per battle.",
+  "battle": true,
+  "shop": true,
+  "energy_surge": 3,
+  "per_battle": 3
+ },
+ {
+  "id": "rg_overcharge",
+  "name": "Overcharge Core",
+  "description": "Use it before a battle: the whole team starts the next battle with 12 instead of 10 energy, maximum 12.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "overcharge",
+   "mult": 1.0,
+   "battles": 1
+  }
+ },
+ {
+  "id": "rg_overcharge_plus",
+  "name": "Overcharge Core Plus",
+  "description": "Use it before an Open League battle: the whole team starts with 12 instead of 10 energy. Only works in the Open League.",
+  "battle": false,
+  "shop": true
+ },
+ {
+  "id": "rg_last_stand",
+  "name": "Will to Win",
+  "description": "Works by itself: if your whole team is defeated, the last one returns once with 30% Vigor. Not against Rift Wardens.",
+  "battle": false,
+  "shop": true,
+  "last_stand": 0.3,
+  "per_battle": 1
+ },
+ {
+  "id": "rg_script_ember",
+  "name": "Rift Script: Glowglass Slash",
+  "description": "Teaches Glowglass Slash (power 95, accuracy 100, 4 energy, 20% chance to scorch) to one Ember Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Glowglass Slash",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_tide",
+  "name": "Rift Script: Floodglass Wave",
+  "description": "Teaches Floodglass Wave (power 95, accuracy 100, 4 energy, 20% chance to soak) to one Tide Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Floodglass Wave",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_bloom",
+  "name": "Rift Script: Vineglass Sting",
+  "description": "Teaches Vineglass Sting (power 95, accuracy 100, 4 energy, heals 25% of the damage) to one Bloom Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Vineglass Sting",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_volt",
+  "name": "Rift Script: Boltglass Bite",
+  "description": "Teaches Boltglass Bite (power 95, accuracy 100, 4 energy, 30% chance to lower Pace) to one Volt Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Boltglass Bite",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_stone",
+  "name": "Rift Script: Rockglass Ram",
+  "description": "Teaches Rockglass Ram (power 95, accuracy 100, 4 energy, 30% chance to raise own Guard) to one Stone Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Rockglass Ram",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_gale",
+  "name": "Rift Script: Stormglass Cut",
+  "description": "Teaches Stormglass Cut (power 95, accuracy 100, 4 energy, strikes first) to one Gale Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Stormglass Cut",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_lumen",
+  "name": "Rift Script: Lightglass Beam",
+  "description": "Teaches Lightglass Beam (power 95, accuracy 100, 4 energy, cures the user's own condition) to one Lumen Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Lightglass Beam",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_umbra",
+  "name": "Rift Script: Duskglass Grip",
+  "description": "Teaches Duskglass Grip (power 95, accuracy 100, 4 energy, 30% chance to lower Focus) to one Umbra Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Duskglass Grip",
+  "used_up": true
+ },
+ {
+  "id": "rg_stat_crystal_1",
+  "name": "Stat Crystal +1",
+  "description": "Adds 1 to one chosen value of one Spirling, counted like Spark. Up to 24 per value, twice the Spark cap. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "crystal": 1
+ },
+ {
+  "id": "rg_stat_crystal_5",
+  "name": "Stat Crystal +5",
+  "description": "Adds 5 to one chosen value of one Spirling, counted like Spark. Up to 24 per value, twice the Spark cap. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "crystal": 5
+ },
+ {
+  "id": "rg_stat_crystal_10",
+  "name": "Stat Crystal +10",
+  "description": "Adds 10 to one chosen value of one Spirling, counted like Spark. Up to 24 per value, twice the Spark cap. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "crystal": 10
+ },
+ {
+  "id": "rg_growth_x5",
+  "name": "Mighty Growth Crystal",
+  "description": "Five times the growth for the whole team for the next 20 battles.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "growth",
+   "mult": 5.0,
+   "battles": 20
+  }
+ },
+ {
+  "id": "rg_coin_boost_x3",
+  "name": "Great Coin Gleam",
+  "description": "Triple coins from battles for 20 battles.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "coins",
+   "mult": 3.0,
+   "battles": 20
+  }
+ },
+ {
+  "id": "rg_ring_tonic_10",
+  "name": "Grand Ring Tonic",
+  "description": "A Spirling gains 10 Rings at once. Never above the Ring cap.",
+  "battle": false,
+  "shop": true,
+  "rings": 10
+ },
+ {
+  "id": "rg_ring_crown",
+  "name": "Ring Crown",
+  "description": "A Spirling jumps to Ring 50 at once. Never above the Ring cap.",
+  "battle": false,
+  "shop": true,
+  "rings_to": 50
+ },
+ {
+  "id": "rg_bond_lure_1",
+  "name": "Bond Lure I",
+  "description": "Bonding gets 15% easier for one try. Tier 1 of 4. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.15
+ },
+ {
+  "id": "rg_bond_lure_2",
+  "name": "Bond Lure II",
+  "description": "Bonding gets 30% easier for one try. Tier 2 of 4. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.3
+ },
+ {
+  "id": "rg_bond_lure_3",
+  "name": "Bond Lure III",
+  "description": "Bonding gets 45% easier for one try. Tier 3 of 4. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.45
+ },
+ {
+  "id": "rg_bond_lure_4",
+  "name": "Bond Lure IV",
+  "description": "Bonding gets 60% easier for one try. Tier 4 of 4. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.6
+ },
+ {
+  "id": "rg_lure_scent_1",
+  "name": "Lure Scent I",
+  "description": "Uncommon, shy and ancient wild Spirlings step out twice as often for the next 100 steps. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "rare",
+   "mult": 2.0,
+   "steps": 100
+  }
+ },
+ {
+  "id": "rg_lure_scent_2",
+  "name": "Lure Scent II",
+  "description": "Uncommon, shy and ancient wild Spirlings step out 3 times as often for the next 100 steps. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "rare",
+   "mult": 3.0,
+   "steps": 100
+  }
+ },
+ {
+  "id": "rg_lure_scent_3",
+  "name": "Lure Scent III",
+  "description": "Uncommon, shy and ancient wild Spirlings step out 5 times as often for the next 100 steps. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "rare",
+   "mult": 5.0,
+   "steps": 100
+  }
+ },
+ {
+  "id": "rg_shimmer_scent",
+  "name": "Shimmer Scent",
+  "description": "Wild Spirlings show their Gleam form 10 times as often for the next 100 steps. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "gleam",
+   "mult": 10.0,
+   "steps": 100
+  }
+ },
+ {
+  "id": "rg_bond_retry",
+  "name": "Second Try Charm",
+  "description": "Hold it out on a bond: if the bond fails, you try once more at once. Used up. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_retry": true
+ },
+ {
+  "id": "rg_unfurl_spark",
+  "name": "Unfurl Spark",
+  "description": "A Spirling unfurls into its next form at once, without its Ring or other conditions. Not for forms that need an item. Used up.",
+  "battle": false,
+  "shop": true,
+  "unfurl_any": true
+ },
+ {
+  "id": "rg_grand_tonic",
+  "name": "Grand Tonic",
+  "description": "In battle: heals all Vigor and every state. No limit per battle.",
+  "battle": true,
+  "shop": true,
+  "heal_frac": 1.0,
+  "cure": true
+ },
+ {
+  "id": "rg_master_ember",
+  "name": "Master Technique: Crownfire Rend",
+  "description": "Teaches Crownfire Rend (power 115, accuracy 100, 4 energy) to one Ember Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownfire Rend",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_tide",
+  "name": "Master Technique: Crowntide Surge",
+  "description": "Teaches Crowntide Surge (power 115, accuracy 100, 4 energy) to one Tide Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crowntide Surge",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_bloom",
+  "name": "Master Technique: Crownthorn Lash",
+  "description": "Teaches Crownthorn Lash (power 115, accuracy 100, 4 energy) to one Bloom Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownthorn Lash",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_volt",
+  "name": "Master Technique: Crownbolt Arc",
+  "description": "Teaches Crownbolt Arc (power 115, accuracy 100, 4 energy) to one Volt Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownbolt Arc",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_stone",
+  "name": "Master Technique: Crownstone Break",
+  "description": "Teaches Crownstone Break (power 115, accuracy 100, 4 energy) to one Stone Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownstone Break",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_gale",
+  "name": "Master Technique: Crowngale Rush",
+  "description": "Teaches Crowngale Rush (power 115, accuracy 100, 4 energy) to one Gale Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crowngale Rush",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_lumen",
+  "name": "Master Technique: Crownlight Ray",
+  "description": "Teaches Crownlight Ray (power 115, accuracy 100, 4 energy) to one Lumen Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownlight Ray",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_umbra",
+  "name": "Master Technique: Crownshade Grasp",
+  "description": "Teaches Crownshade Grasp (power 115, accuracy 100, 4 energy) to one Umbra Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownshade Grasp",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_ink",
+  "name": "Master Technique: Crownink Scrawl",
+  "description": "Teaches Crownink Scrawl (power 115, accuracy 100, 4 energy) to one Ink Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownink Scrawl",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_echo",
+  "name": "Master Technique: Crownecho Peal",
+  "description": "Teaches Crownecho Peal (power 115, accuracy 100, 4 energy) to one Echo Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownecho Peal",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_acid",
+  "name": "Master Technique: Crownacid Etch",
+  "description": "Teaches Crownacid Etch (power 115, accuracy 100, 4 energy) to one Acid Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownacid Etch",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_frost",
+  "name": "Master Technique: Crownfrost Shatter",
+  "description": "Teaches Crownfrost Shatter (power 115, accuracy 100, 4 energy) to one Frost Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownfrost Shatter",
+  "used_up": true
+ },
+ {
+  "id": "rg_gift_slot",
+  "name": "Second Gift Slot",
+  "description": "Opens a second gift slot on one Spirling: the hidden gift of its line works next to its own gift, always. Stays with that Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "gift_slot": true
+ },
+ {
+  "id": "rg_rift_breath_deep",
+  "name": "Deep Rift Breath",
+  "description": "In battle: brings a defeated Spirling back with half its Vigor. No limit per battle.",
+  "battle": true,
+  "shop": true,
+  "battle_revive": 0.5
+ },
+ {
+  "id": "rg_wish_charm",
+  "name": "Wish Charm",
+  "description": "Hold it out on a bond: if the bond works, the new Spirling has the top Spark (12) in all five values. Used up. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_wish": true
+ },
+ {
+  "id": "rg_tide_pearl",
+  "name": "Riftglass Tide Shell",
+  "description": "Works like a Tide Shell: some Spirlings unfurl when they hold it close. Furled back, they return a plain Tide Shell.",
+  "battle": false,
+  "shop": true,
+  "evolves": true,
+  "unfurls_as": "tide_pearl"
+ },
+ {
+  "id": "pith_mend",
+  "name": "Mending Pith",
+  "description": "Keepsake fruit. When the holder drops to half its Vigor or less, it eats the fruit and recovers a quarter of its Vigor. Eaten once.",
+  "battle": false,
+  "held": {
+   "pith_heal": 0.25
+  },
+  "price": 400,
+  "tradeable": false
+ },
+ {
+  "id": "pith_clear",
+  "name": "Clearing Pith",
+  "description": "Keepsake fruit. When the holder gets a condition, it eats the fruit and the condition is gone at once. Eaten once.",
+  "battle": false,
+  "held": {
+   "pith_cure": true
+  },
+  "price": 400,
+  "tradeable": false
+ },
+ {
+  "id": "pruning_shears",
+  "name": "Pruning Shears",
+  "description": "Cures Root.",
+  "battle": true,
+  "cure": "root",
+  "price": 90,
+  "tradeable": false
+ },
+ {
+  "id": "grounding_rod",
+  "name": "Grounding Rod",
+  "description": "Cures Jolt.",
+  "battle": true,
+  "cure": "jolt",
+  "price": 90,
+  "tradeable": false
+ },
+ {
+  "id": "smelling_salts",
+  "name": "Smelling Salts",
+  "description": "Cures Daze.",
+  "battle": true,
+  "cure": "daze",
+  "price": 90,
+  "tradeable": false
+ },
+ {
+  "id": "ember_charm",
+  "name": "Ember Charm",
+  "description": "Keepsake. Ember arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "EMBER",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "tide_charm",
+  "name": "Tide Charm",
+  "description": "Keepsake. Tide arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "TIDE",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "bloom_charm",
+  "name": "Bloom Charm",
+  "description": "Keepsake. Bloom arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "BLOOM",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "volt_charm",
+  "name": "Volt Charm",
+  "description": "Keepsake. Volt arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "VOLT",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "stone_charm",
+  "name": "Stone Charm",
+  "description": "Keepsake. Stone arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "STONE",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "gale_charm",
+  "name": "Gale Charm",
+  "description": "Keepsake. Gale arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "GALE",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "lumen_charm",
+  "name": "Lumen Charm",
+  "description": "Keepsake. Lumen arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "LUMEN",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "umbra_charm",
+  "name": "Umbra Charm",
+  "description": "Keepsake. Umbra arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "UMBRA",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "ink_charm",
+  "name": "Ink Charm",
+  "description": "Keepsake. Ink arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "INK",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_charm",
+  "name": "Echo Charm",
+  "description": "Keepsake. Echo arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "ECHO",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "rust_charm",
+  "name": "Rust Charm",
+  "description": "Keepsake. Rust arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "RUST",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "mask_charm",
+  "name": "Mask Charm",
+  "description": "Keepsake. Mask arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "MASK",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "acid_charm",
+  "name": "Acid Charm",
+  "description": "Keepsake. Acid arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "ACID",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "frost_charm",
+  "name": "Frost Charm",
+  "description": "Keepsake. Frost arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "FROST",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "gilt_charm",
+  "name": "Gilt Charm",
+  "description": "Keepsake. Gilt arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "GILT",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "zenith_charm",
+  "name": "Zenith Charm",
+  "description": "Keepsake. Zenith arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "ZENITH",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_coin_toss",
+  "name": "Echo Crystal: Coin Toss",
+  "description": "Teaches Coin Toss to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Coin Toss",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_leaf_of_gold",
+  "name": "Echo Crystal: Leaf of Gold",
+  "description": "Teaches Leaf of Gold to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Leaf of Gold",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gilded_jab",
+  "name": "Echo Crystal: Gilded Jab",
+  "description": "Teaches Gilded Jab to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gilded Jab",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_shine_burst",
+  "name": "Echo Crystal: Shine Burst",
+  "description": "Teaches Shine Burst to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Shine Burst",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_bullion_bash",
+  "name": "Echo Crystal: Bullion Bash",
+  "description": "Teaches Bullion Bash to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Bullion Bash",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gold_glare",
+  "name": "Echo Crystal: Gold Glare",
+  "description": "Teaches Gold Glare to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gold Glare",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_hoard_crush",
+  "name": "Echo Crystal: Hoard Crush",
+  "description": "Teaches Hoard Crush to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Hoard Crush",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_treasure_flare",
+  "name": "Echo Crystal: Treasure Flare",
+  "description": "Teaches Treasure Flare to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Treasure Flare",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_golden_span",
+  "name": "Echo Crystal: Golden Span",
+  "description": "Teaches Golden Span to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Golden Span",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gild_armour",
+  "name": "Echo Crystal: Gild Armour",
+  "description": "Teaches Gild Armour to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gild Armour",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_dazzle_coin",
+  "name": "Echo Crystal: Dazzle Coin",
+  "description": "Teaches Dazzle Coin to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Dazzle Coin",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_noon_peck",
+  "name": "Echo Crystal: Noon Peck",
+  "description": "Teaches Noon Peck to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Noon Peck",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_high_glint",
+  "name": "Echo Crystal: High Glint",
+  "description": "Teaches High Glint to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "High Glint",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_skyward_kick",
+  "name": "Echo Crystal: Skyward Kick",
+  "description": "Teaches Skyward Kick to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Skyward Kick",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_apex_ray",
+  "name": "Echo Crystal: Apex Ray",
+  "description": "Teaches Apex Ray to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Apex Ray",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_overhead_strike",
+  "name": "Echo Crystal: Overhead Strike",
+  "description": "Teaches Overhead Strike to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Overhead Strike",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_sunpeak_beam",
+  "name": "Echo Crystal: Sunpeak Beam",
+  "description": "Teaches Sunpeak Beam to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Sunpeak Beam",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_summit_drop",
+  "name": "Echo Crystal: Summit Drop",
+  "description": "Teaches Summit Drop to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Summit Drop",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_meridian_blaze",
+  "name": "Echo Crystal: Meridian Blaze",
+  "description": "Teaches Meridian Blaze to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Meridian Blaze",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_height_of_noon",
+  "name": "Echo Crystal: Height of Noon",
+  "description": "Teaches Height of Noon to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Height of Noon",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_rise_above",
+  "name": "Echo Crystal: Rise Above",
+  "description": "Teaches Rise Above to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Rise Above",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_clear_sky",
+  "name": "Echo Crystal: Clear Sky",
+  "description": "Teaches Clear Sky to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Clear Sky",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_last_ember",
+  "name": "Echo Crystal: Last Ember",
+  "description": "Teaches Last Ember to an Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Last Ember",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_abyss_hymn",
+  "name": "Echo Crystal: Abyss Hymn",
+  "description": "Teaches Abyss Hymn to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Abyss Hymn",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_verdant_end",
+  "name": "Echo Crystal: Verdant End",
+  "description": "Teaches Verdant End to a Bloom Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Verdant End",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_grid_collapse",
+  "name": "Echo Crystal: Grid Collapse",
+  "description": "Teaches Grid Collapse to a Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Grid Collapse",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_mountain_fall",
+  "name": "Echo Crystal: Mountain Fall",
+  "description": "Teaches Mountain Fall to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Mountain Fall",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_jet_stream",
+  "name": "Echo Crystal: Jet Stream",
+  "description": "Teaches Jet Stream to a Gale Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Jet Stream",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_solar_choir",
+  "name": "Echo Crystal: Solar Choir",
+  "description": "Teaches Solar Choir to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Solar Choir",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_void_pulse",
+  "name": "Echo Crystal: Void Pulse",
+  "description": "Teaches Void Pulse to an Umbra Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Void Pulse",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_final_draft",
+  "name": "Echo Crystal: Final Draft",
+  "description": "Teaches Final Draft to an Ink Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Final Draft",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_bloodied_quill",
+  "name": "Echo Crystal: Bloodied Quill",
+  "description": "Teaches Bloodied Quill to an Ink Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Bloodied Quill",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_last_toll",
+  "name": "Echo Crystal: Last Toll",
+  "description": "Teaches Last Toll to an Echo Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Last Toll",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_thousand_bells",
+  "name": "Echo Crystal: Thousand Bells",
+  "description": "Teaches Thousand Bells to an Echo Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Thousand Bells",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_iron_lung",
+  "name": "Echo Crystal: Iron Lung",
+  "description": "Teaches Iron Lung to a Rust, Stone, Volt or Acid Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Iron Lung",
+  "price": 6000,
+  "tradeable": false,
+  "for_elements": [
+   "STONE",
+   "VOLT",
+   "ACID"
+  ]
+ },
+ {
+  "id": "echo_unmasked",
+  "name": "Echo Crystal: Unmasked",
+  "description": "Teaches Unmasked to a Mask, Umbra, Ink or Echo Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Unmasked",
+  "price": 6000,
+  "tradeable": false,
+  "for_elements": [
+   "UMBRA",
+   "INK",
+   "ECHO"
+  ]
+ },
+ {
+  "id": "echo_caustic_rain",
+  "name": "Echo Crystal: Caustic Rain",
+  "description": "Teaches Caustic Rain to an Acid Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Caustic Rain",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_permafrost",
+  "name": "Echo Crystal: Permafrost",
+  "description": "Teaches Permafrost to a Frost Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Permafrost",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_gilt_flick",
+  "name": "Echo Crystal: Gilt Flick",
+  "description": "Teaches Gilt Flick to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gilt Flick",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_tithe",
+  "name": "Echo Crystal: Tithe",
+  "description": "Teaches Tithe to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Tithe",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gilt_edge",
+  "name": "Echo Crystal: Gilt Edge",
+  "description": "Teaches Gilt Edge to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gilt Edge",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_golden_calf",
+  "name": "Echo Crystal: Golden Calf",
+  "description": "Teaches Golden Calf to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Golden Calf",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_midas_pulse",
+  "name": "Echo Crystal: Midas Pulse",
+  "description": "Teaches Midas Pulse to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Midas Pulse",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_vault_door",
+  "name": "Echo Crystal: Vault Door",
+  "description": "Teaches Vault Door to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Vault Door",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gold_rain",
+  "name": "Echo Crystal: Gold Rain",
+  "description": "Teaches Gold Rain to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gold Rain",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_bribe",
+  "name": "Echo Crystal: Bribe",
+  "description": "Teaches Bribe to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Bribe",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_interest",
+  "name": "Echo Crystal: Interest",
+  "description": "Teaches Interest to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Interest",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_ransom",
+  "name": "Echo Crystal: Ransom",
+  "description": "Teaches Ransom to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Ransom",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gold_plating",
+  "name": "Echo Crystal: Gold Plating",
+  "description": "Teaches Gold Plating to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gold Plating",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_coin_bed",
+  "name": "Echo Crystal: Coin Bed",
+  "description": "Teaches Coin Bed to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Coin Bed",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_crown_fall",
+  "name": "Echo Crystal: Crown Fall",
+  "description": "Teaches Crown Fall to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Crown Fall",
+  "price": 6000,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gilded_cage",
+  "name": "Echo Crystal: Gilded Cage",
+  "description": "Teaches Gilded Cage to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gilded Cage",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_noon_flash",
+  "name": "Echo Crystal: Noon Flash",
+  "description": "Teaches Noon Flash to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Noon Flash",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_sky_hook",
+  "name": "Echo Crystal: Sky Hook",
+  "description": "Teaches Sky Hook to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Sky Hook",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_plumb_line",
+  "name": "Echo Crystal: Plumb Line",
+  "description": "Teaches Plumb Line to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Plumb Line",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_crest_dive",
+  "name": "Echo Crystal: Crest Dive",
+  "description": "Teaches Crest Dive to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Crest Dive",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_zenith_beam",
+  "name": "Echo Crystal: Zenith Beam",
+  "description": "Teaches Zenith Beam to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Zenith Beam",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_corona",
+  "name": "Echo Crystal: Corona",
+  "description": "Teaches Corona to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Corona",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_high_noon_duel",
+  "name": "Echo Crystal: High Noon Duel",
+  "description": "Teaches High Noon Duel to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "High Noon Duel",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_thin_air",
+  "name": "Echo Crystal: Thin Air",
+  "description": "Teaches Thin Air to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Thin Air",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_sun_dial",
+  "name": "Echo Crystal: Sun Dial",
+  "description": "Teaches Sun Dial to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Sun Dial",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_clear_horizon",
+  "name": "Echo Crystal: Clear Horizon",
+  "description": "Teaches Clear Horizon to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Clear Horizon",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_summit_air",
+  "name": "Echo Crystal: Summit Air",
+  "description": "Teaches Summit Air to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Summit Air",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_glare_field",
+  "name": "Echo Crystal: Glare Field",
+  "description": "Teaches Glare Field to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Glare Field",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_apex_fall",
+  "name": "Echo Crystal: Apex Fall",
+  "description": "Teaches Apex Fall to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Apex Fall",
+  "price": 6000,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_overhead_sun",
+  "name": "Echo Crystal: Overhead Sun",
+  "description": "Teaches Overhead Sun to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Overhead Sun",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_leaden_hum",
+  "name": "Echo Crystal: Leaden Hum",
+  "description": "Teaches Leaden Hum to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Leaden Hum",
+  "any_element": true,
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_chalk_mark",
+  "name": "Echo Crystal: Chalk Mark",
+  "description": "Teaches Chalk Mark to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Chalk Mark",
+  "any_element": true,
+  "price": 2000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_mazelight",
+  "name": "Echo Crystal: Mazelight",
+  "description": "Teaches Mazelight to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Mazelight",
+  "any_element": true,
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_mirror_stance",
+  "name": "Echo Crystal: Mirror Stance",
+  "description": "Teaches Mirror Stance to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Mirror Stance",
+  "any_element": true,
+  "price": 3500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_crosswind_trade",
+  "name": "Echo Crystal: Crosswind Trade",
+  "description": "Teaches Crosswind Trade to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Crosswind Trade",
+  "any_element": true,
+  "price": 3500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_calm_veil",
+  "name": "Echo Crystal: Calm Veil",
+  "description": "Teaches Calm Veil to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Calm Veil",
+  "any_element": true,
+  "price": 4000,
+  "tradeable": false
+ },
+ {
+  "id": "energy_crystal",
+  "name": "Energy Crystal",
+  "description": "Keepsake. The holder starts every battle with 2 extra Energy.",
+  "battle": false,
+  "held": {
+   "start_energy": 2
+  },
+  "price": 1500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_long_breath",
+  "name": "Echo Crystal: Long Breath",
+  "description": "Teaches Long Breath to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Long Breath",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_spark_share",
+  "name": "Echo Crystal: Spark Share",
+  "description": "Teaches Spark Share to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Spark Share",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_charge_mirror",
+  "name": "Echo Crystal: Charge Mirror",
+  "description": "Teaches Charge Mirror to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Charge Mirror",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_fuse_snap",
+  "name": "Echo Crystal: Fuse Snap",
+  "description": "Teaches Fuse Snap to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Fuse Snap",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_scrap_swipe",
+  "name": "Echo Crystal: Scrap Swipe",
+  "description": "Teaches Scrap Swipe to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Scrap Swipe",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_rust_call",
+  "name": "Echo Crystal: Rust Call",
+  "description": "Teaches Rust Call to a Spirling of its element. Never used up.",
+  "battle": false,
+  "teaches": "Rust Call",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_ink_call",
+  "name": "Echo Crystal: Ink Call",
+  "description": "Teaches Ink Call to a Spirling of its element. Never used up.",
+  "battle": false,
+  "teaches": "Ink Call",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_rime_call",
+  "name": "Echo Crystal: Rime Call",
+  "description": "Teaches Rime Call to a Spirling of its element. Never used up.",
+  "battle": false,
+  "teaches": "Rime Call",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_gilt_call",
+  "name": "Echo Crystal: Gilt Call",
+  "description": "Teaches Gilt Call to a Spirling of its element. Never used up.",
+  "battle": false,
+  "teaches": "Gilt Call",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_plain_shove",
+  "name": "Echo Crystal: Plain Shove",
+  "description": "Teaches Plain Shove to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Plain Shove",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_old_grudge",
+  "name": "Echo Crystal: Old Grudge",
+  "description": "Teaches Old Grudge to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Old Grudge",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "second_wind_tea",
+  "name": "Second Wind Tea",
+  "description": "Cures Spent.",
+  "battle": true,
+  "cure": "spent",
+  "price": 90,
+  "tradeable": false
+ },
+ {
+  "id": "chalk_rag",
+  "name": "Chalk Rag",
+  "description": "Cures Marked.",
+  "battle": true,
+  "cure": "marked",
+  "price": 90,
+  "tradeable": false
+ },
+ {
+  "id": "clear_bell",
+  "name": "Clear Chime",
+  "description": "Cures Muddle.",
+  "battle": true,
+  "cure": "muddle",
+  "price": 90,
+  "tradeable": false
+ },
+ {
+  "id": "mirror_scale",
+  "name": "Mirror Scale",
+  "description": "Keepsake. Once per battle, the first status a foe casts on the holder is turned back on the caster.",
+  "battle": false,
+  "held": {
+   "status_reflect": true
+  },
+  "price": 1800,
+  "tradeable": false
+ },
+ {
+  "id": "spark_flux",
+  "name": "Spark Flux",
+  "description": "Rolls all Spark values of one Spirling anew. Used up.",
+  "battle": false,
+  "spark_reset": true,
+  "price": 1500,
+  "tradeable": false
+ },
+ {
+  "id": "turncoat_seed",
+  "name": "Turncoat Seed",
+  "description": "Swaps one Spirling's gift for the hidden gift of its line, or back again, at any ring. Loyalty was never part of the deal. Used up.",
+  "battle": false,
+  "gift_swap": true,
+  "price": 2400,
+  "tradeable": false
+ },
+ {
+  "id": "echo_hold_fast",
+  "name": "Echo Crystal: Hold Fast",
+  "description": "Teaches Hold Fast to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Hold Fast",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_shove_off",
+  "name": "Echo Crystal: Shove Off",
+  "description": "Teaches Shove Off to a Gale Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Shove Off",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_grudge_return",
+  "name": "Echo Crystal: Grudge Return",
+  "description": "Teaches Grudge Return to an Umbra Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Grudge Return",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_kindred_balm",
+  "name": "Echo Crystal: Kindred Balm",
+  "description": "Teaches Kindred Balm to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Kindred Balm",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_rank_and_file",
+  "name": "Echo Crystal: Rank and File",
+  "description": "Teaches Rank and File to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Rank and File",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_shake_loose",
+  "name": "Echo Crystal: Shake Loose",
+  "description": "Teaches Shake Loose to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Shake Loose",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_rolling_drum",
+  "name": "Echo Crystal: Rolling Drum",
+  "description": "Teaches Rolling Drum to a Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Rolling Drum",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_late_reply",
+  "name": "Echo Crystal: Late Reply",
+  "description": "Teaches Late Reply to an Umbra Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Late Reply",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_opening_gambit",
+  "name": "Echo Crystal: Opening Gambit",
+  "description": "Teaches Opening Gambit to a Gale Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Opening Gambit",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_pebble_hail",
+  "name": "Echo Crystal: Pebble Hail",
+  "description": "Teaches Pebble Hail to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Pebble Hail",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_rift_hush",
+  "name": "Echo Crystal: Rift Hush",
+  "description": "Teaches Rift Hush to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Rift Hush",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_bright_lure",
+  "name": "Echo Crystal: Bright Lure",
+  "description": "Teaches Bright Lure to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Bright Lure",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_close_ranks",
+  "name": "Echo Crystal: Close Ranks",
+  "description": "Teaches Close Ranks to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Close Ranks",
+  "any_element": true,
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_ember_afterglow",
+  "name": "Echo Crystal: Ember Afterglow",
+  "description": "Teaches Ember Afterglow to an Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Ember Afterglow",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_borrowed_stance",
+  "name": "Echo Crystal: Borrowed Stance",
+  "description": "Teaches Borrowed Stance to an Echo Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Borrowed Stance",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_still_point",
+  "name": "Echo Crystal: Still Point",
+  "description": "Teaches Still Point to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Still Point",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_ground_burst",
+  "name": "Echo Crystal: Ground Burst",
+  "description": "Teaches Ground Burst to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Ground Burst",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_dye_bath",
+  "name": "Echo Crystal: Dye Bath",
+  "description": "Teaches Dye Bath to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Dye Bath",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_ward_circle",
+  "name": "Echo Crystal: Ward Circle",
+  "description": "Teaches Ward Circle to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Ward Circle",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "ward_shell",
+  "name": "Ward Shell",
+  "description": "Keepsake. Halves one very effective hit on the holder, then it cracks.",
+  "battle": false,
+  "held": {
+   "super_guard": true
+  },
+  "price": 1500,
+  "tradeable": false
+ },
+ {
+  "id": "growth_charm",
+  "name": "Growth Charm",
+  "description": "Keepsake. A knotted cord that hums after every battle: the holder gains half again as much growth.",
+  "battle": false,
+  "held": {
+   "growth_mult": 1.5
+  },
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_shell",
+  "name": "Echo Shell",
+  "description": "Hold it out during a bond: the shell hums the call back and steadies the link a little more than a Kin Charm.",
+  "battle": false,
+  "bond_bonus": 0.15,
+  "price": 700,
+  "tradeable": false
+ },
+ {
+  "id": "spark_wash",
+  "name": "Spark Wash",
+  "description": "Washes one Spark value of a Spirling back to nothing, for a slower or humbler build.",
+  "battle": false,
+  "spark_reset": true,
+  "price": 1500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_magma_rush",
+  "name": "Echo Crystal: Magma Rush",
+  "description": "Teaches Magma Rush to an Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Magma Rush",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_tidal_gust",
+  "name": "Echo Crystal: Tidal Gust",
+  "description": "Teaches Tidal Gust to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Tidal Gust",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_clean_slate",
+  "name": "Echo Crystal: Clean Slate",
+  "description": "Teaches Clean Slate to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Clean Slate",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_coiled_strike",
+  "name": "Echo Crystal: Coiled Strike",
+  "description": "Teaches Coiled Strike to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Coiled Strike",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_night_prowl",
+  "name": "Echo Crystal: Night Prowl",
+  "description": "Teaches Night Prowl to an Umbra Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Night Prowl",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_noon_glare",
+  "name": "Echo Crystal: Noon Glare",
+  "description": "Teaches Noon Glare to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Noon Glare",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_sunk_cost",
+  "name": "Echo Crystal: Sunk Cost",
+  "description": "Teaches Sunk Cost to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Sunk Cost",
+  "price": 3000,
+  "tradeable": false
+ },
+ {"id": "kit_energy_crystal", "name": "Deep Crystal", "description": "Keepsake. The holder can store 2 more Energy and starts every battle with them.", "battle": false, "held": {"energy_cap": 2}, "price": 1800, "tradeable": false, "rarity": "rare"},
+ {"id": "kit_ward_talisman", "name": "Ward Talisman", "description": "Keepsake. Once per battle, a very effective hit on the holder loses half its force.", "battle": false, "held": {"super_guard": 0.5}, "price": 1600, "tradeable": false, "rarity": "rare"},
+ {"id": "kit_pace_feather", "name": "Pace Feather", "description": "Keepsake. Each time the holder steps in, its Pace rises by one stage.", "battle": false, "held": {"enter_stage": {"spd": 1}}, "price": 1400, "tradeable": false, "rarity": "uncommon"},
+ {"id": "kit_lantern_glass", "name": "Lantern Glass", "description": "Keepsake. A Resonance field the holder lays holds 2 turns longer.", "battle": false, "held": {"field_extra": 2}, "price": 1200, "tradeable": false, "rarity": "uncommon"},
+ {"id": "kit_rift_splinter", "name": "Rift Splinter", "description": "Keepsake. Each Energy poured into an Overcharge adds a little more force.", "battle": false, "held": {"overcharge_bonus": 0.05}, "price": 1500, "tradeable": false, "rarity": "rare"},
+ {"id": "kit_wander_boot", "name": "Wander Boot", "description": "Keepsake. The holder steps back for free: no Energy cost, and nothing roots it in place.", "battle": false, "held": {"free_swap": true}, "price": 1300, "tradeable": false, "rarity": "uncommon"},
+ {"id": "kit_echo_shell", "name": "Calling Conch", "description": "Keepsake. While the holder stands in front, bonds work 5% more often.", "battle": false, "held": {"bond_bonus": 0.05}, "price": 900, "tradeable": false, "rarity": "common"},
+ {"id": "kit_rest_candle", "name": "Quiet Wick", "description": "Keepsake. The holder gains 1 more Energy when it rests.", "battle": false, "held": {"rest_energy": 1}, "price": 900, "tradeable": false, "rarity": "common"},
+ {"id": "kit_cinder_stone", "name": "Cinder Stone", "description": "Keepsake. While the Ash Storm rages, the holder's arts hit 15% harder.", "battle": false, "held": {"field_mult_in": {"field": "ash_storm", "mult": 1.15}}, "price": 1100, "tradeable": false, "rarity": "uncommon"},
+ {"id": "kit_tide_stone", "name": "Tide Stone", "description": "Keepsake. While High Tide floods the Rift, the holder's arts hit 15% harder.", "battle": false, "held": {"field_mult_in": {"field": "high_tide", "mult": 1.15}}, "price": 1100, "tradeable": false, "rarity": "uncommon"},
+ {"id": "kit_murk_stone", "name": "Murk Stone", "description": "Keepsake. While Deep Murk fills the Rift, the holder's arts hit 15% harder.", "battle": false, "held": {"field_mult_in": {"field": "deep_murk", "mult": 1.15}}, "price": 1100, "tradeable": false, "rarity": "uncommon"}
 ]

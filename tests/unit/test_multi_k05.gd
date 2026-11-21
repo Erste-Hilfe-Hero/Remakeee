@@ -1,0 +1,415 @@
+extends GutTest
+## docs/KAMPF_PLAN_1000.md, "Mehrfachkämpfe" (items 361 to 400): support arts (team heal, ally
+## heal, team guard, decoy, cover), the formation bonus, aim lines, remembered and automatic
+## targets, slot lines for screen readers, the stair's double floors and the old rules kept.
+
+const Side := BattleModel.Side
+const T := BattleEvent.Type
+
+func before_all() -> void:
+	Database.load_all()
+
+func _mk(name: String, moves: Array[String] = [], level: int = 30) -> Spirling:
+	return BattleFixtures.make(name, level, moves)
+
+func _model(mine: Array[Spirling], theirs: Array[Spirling], front: Array[int], wild: bool = false, seed_value: int = 11) -> BattleModel:
+	var m := BattleModel.new(mine, theirs, wild, seed_value, 0)
+	m.front_size = front
+	return m
+
+func _rests(m: BattleModel, side: int) -> Array[BattleAction]:
+	var out: Array[BattleAction] = []
+	for s: int in m.slot_count(side):
+		out.append(BattleAction.make_rest(side, s))
+	return out
+
+func _turn(m: BattleModel, mine: Array[BattleAction], theirs: Array[BattleAction]) -> Array[BattleEvent]:
+	var all: Array[BattleAction] = []
+	all.append_array(mine)
+	all.append_array(theirs)
+	return m.submit_actions(all)
+
+func test_support_arts_exist_and_are_learned() -> void:
+	for pair: Array in [["Mending Chorus", &"heal_team", "Haloon"], ["Kindred Balm", &"heal_ally", "Vitrill"],
+			["Shell Ring", &"team_guard", "Plinthlet"], ["Lure Dance", &"decoy", "Cloudmop"], ["Breakwater Stand", &"cover", "Covepup"]]:
+		var mv: MoveData = Database.move(str(pair[0]))
+		assert_not_null(mv, str(pair[0]))
+		assert_true(mv.has_effect(pair[1]), str(pair[0]))
+		assert_true(EffectRegistry.has_effect(pair[1]))
+		var learned: bool = false
+		for m2: MoveData in Database.species(str(pair[2])).learnset_moves:
+			learned = learned or m2.move_name == str(pair[0])
+		assert_true(learned, "%s learns %s" % [pair[2], pair[0]])
+
+func test_mending_chorus_heals_the_whole_side() -> void:
+	var a: Spirling = _mk("Haloon", ["Mending Chorus"])
+	var b: Spirling = _mk("Kindlop", ["Cinder Nip"])
+	var m := _model([a, b] as Array[Spirling], [_mk("Mossling"), _mk("Puddlet")] as Array[Spirling], [2, 2])
+	m.start()
+	a.hp = a.max_hp() / 2
+	b.hp = b.max_hp() / 2
+	var before: Array[int] = [a.hp, b.hp]
+	_turn(m, [BattleAction.make_move(Side.PLAYER, 0, 0, 0), BattleAction.make_rest(Side.PLAYER, 1)], _rests(m, Side.FOE))
+	assert_gt(a.hp, before[0])
+	assert_gt(b.hp, before[1])
+
+func test_kindred_balm_tends_the_weakest_ally() -> void:
+	var a: Spirling = _mk("Vitrill", ["Kindred Balm"])
+	var b: Spirling = _mk("Kindlop", ["Cinder Nip"])
+	var c: Spirling = _mk("Puddlet", ["Fizz Pop"])
+	var m := _model([a, b, c] as Array[Spirling], [_mk("Mossling")] as Array[Spirling], [3, 1])
+	m.start()
+	b.hp = b.max_hp() / 4
+	c.hp = c.max_hp() / 2
+	a.hp = a.max_hp() / 5
+	assert_eq(MultiRules.weakest_ally(m, Side.PLAYER, 0), 1, "the user itself does not count")
+	var hb: int = b.hp
+	var hc: int = c.hp
+	_turn(m, [BattleAction.make_move(Side.PLAYER, 0, 0, 0), BattleAction.make_rest(Side.PLAYER, 1), BattleAction.make_rest(Side.PLAYER, 2)], _rests(m, Side.FOE))
+	assert_gt(b.hp, hb)
+	assert_eq(c.hp, hc)
+
+func test_shell_ring_guards_the_side_then_fades() -> void:
+	var plain: int = 0
+	var guarded: int = 0
+	for g: bool in [false, true]:
+		var arts: Array[String] = []
+		arts.append("Shell Ring" if g else "Pebble Toss")
+		var p: Spirling = _mk("Plinthlet", arts)
+		var k: Spirling = _mk("Kindlop", ["Cinder Nip"])
+		var foe: Spirling = _mk("Smoldrake", ["Cinder Nip"])
+		var m := _model([p, k] as Array[Spirling], [foe, _mk("Mossling")] as Array[Spirling], [2, 2], false, 3)
+		m.start()
+		if g:
+			MultiRules.raise(m, Side.PLAYER, 0, "team_guard", 3)
+		assert_eq(MultiRules.guard_mult(m, Side.PLAYER), 0.75 if g else 1.0)
+		var est: float = DamageCalc.estimate(foe, k, foe.moves[0]) * BattleRules.damage_mult(foe, k, foe.moves[0], m.field) * MultiRules.guard_mult(m, Side.PLAYER)
+		if g:
+			guarded = roundi(est)
+		else:
+			plain = roundi(est)
+	assert_lt(guarded, plain)
+	var m2 := _model([_mk("Plinthlet", ["Shell Ring"]), _mk("Kindlop")] as Array[Spirling], [_mk("Mossling"), _mk("Puddlet")] as Array[Spirling], [2, 2])
+	m2.start()
+	var ev: Array[BattleEvent] = _turn(m2, [BattleAction.make_move(Side.PLAYER, 0, 0, 0), BattleAction.make_rest(Side.PLAYER, 1)], _rests(m2, Side.FOE))
+	var up: BattleEvent = BattleFixtures.first_of(ev, T.SUPPORT)
+	assert_not_null(up)
+	assert_string_contains(up.describe(), "guard over its whole side for 3 turns")
+	var ended: bool = false
+	for i: int in 3:
+		for e: BattleEvent in _turn(m2, _rests(m2, Side.PLAYER), _rests(m2, Side.FOE)):
+			ended = ended or (e.type == T.SUPPORT and bool(e.data.get("ended", false)))
+	assert_true(ended, "the guard fades after its turns")
+	assert_eq(MultiRules.guard_mult(m2, Side.PLAYER), 1.0)
+
+func test_decoy_draws_aimed_arts_but_not_sweeps() -> void:
+	var m := _model([_mk("Cloudmop", ["Lure Dance"]), _mk("Kindlop")] as Array[Spirling], [_mk("Mossling"), _mk("Puddlet")] as Array[Spirling], [2, 2])
+	m.start()
+	MultiRules.raise(m, Side.PLAYER, 0, "decoy", 2)
+	var single := MoveData.new()
+	single.target = "single"
+	var sweep := MoveData.new()
+	sweep.target = "foes"
+	assert_eq(m.move_targets(Side.FOE, single, 1), [0] as Array[int], "an art aimed at slot 1 goes to the decoy")
+	assert_eq(m.move_targets(Side.FOE, sweep), [0, 1] as Array[int], "a sweep still reaches everyone")
+	assert_eq(m.move_targets(Side.PLAYER, single, 1), [1] as Array[int], "the player's own aim is untouched")
+
+func test_cover_takes_hits_meant_for_the_weakest_ally() -> void:
+	var c: Spirling = _mk("Covepup", ["Breakwater Stand"])
+	var k: Spirling = _mk("Kindlop")
+	var z: Spirling = _mk("Zippit")
+	var m := _model([c, k, z] as Array[Spirling], [_mk("Mossling")] as Array[Spirling], [3, 1])
+	m.start()
+	z.hp = z.max_hp() / 4
+	var ev: Array[BattleEvent] = _turn(m, [BattleAction.make_move(Side.PLAYER, 0, 0, 0), BattleAction.make_rest(Side.PLAYER, 1), BattleAction.make_rest(Side.PLAYER, 2)], _rests(m, Side.FOE))
+	var up: BattleEvent = BattleFixtures.first_of(ev, T.SUPPORT)
+	assert_not_null(up)
+	assert_eq(up.describe(), "%s steps in front of %s!" % [c.display_name(), z.display_name()])
+	var single := MoveData.new()
+	assert_eq(m.move_targets(Side.FOE, single, 2), [0] as Array[int], "the ward is covered")
+	assert_eq(m.move_targets(Side.FOE, single, 1), [1] as Array[int], "others are not")
+
+func test_cover_alone_has_nobody_to_cover() -> void:
+	var c: Spirling = _mk("Covepup", ["Breakwater Stand"])
+	var m := BattleFixtures.model([c] as Array[Spirling], [_mk("Mossling")] as Array[Spirling])
+	m.start()
+	var ev: Array[BattleEvent] = m.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_rest(1))
+	assert_eq(BattleFixtures.first_of(ev, T.SUPPORT).describe(), "%s has nobody to cover." % c.display_name())
+
+func test_ai_uses_a_team_heal_when_the_side_is_hurt() -> void:
+	var a: Spirling = _mk("Haloon", ["Mending Chorus", "Cinder Nip"])
+	var b: Spirling = _mk("Kindlop")
+	var m := _model([_mk("Mossling"), _mk("Puddlet")] as Array[Spirling], [a, b] as Array[Spirling], [2, 2])
+	m.start()
+	var fx: Dictionary = Database.move("Mending Chorus").effects[0]
+	assert_eq(MultiRules.ai_score(m, Side.FOE, 0, fx), 0.0, "nothing to mend at full Vigor")
+	a.hp = a.max_hp() / 3
+	b.hp = b.max_hp() / 3
+	assert_gt(MultiRules.ai_score(m, Side.FOE, 0, fx), 10.0)
+
+func test_formation_bonus_for_two_stone_spirlings() -> void:
+	var m := _model([_mk("Plinthlet"), _mk("Shalebat"), _mk("Kindlop")] as Array[Spirling], [_mk("Mossling"), _mk("Puddlet")] as Array[Spirling], [3, 2])
+	var ev: Array[BattleEvent] = m.start()
+	assert_eq(m.active_spirling(Side.PLAYER, 0).stage("def"), 1)
+	assert_eq(m.active_spirling(Side.PLAYER, 1).stage("def"), 1)
+	assert_eq(m.active_spirling(Side.PLAYER, 2).stage("def"), 0, "the Ember Spirling is not in the wall")
+	var line: BattleEvent = BattleFixtures.first_of(ev, T.SUPPORT)
+	assert_not_null(line)
+	assert_string_contains(line.describe(), "Stone Wall")
+
+func test_no_formation_bonus_in_one_on_one_or_for_foes() -> void:
+	var m := BattleFixtures.model([_mk("Plinthlet")] as Array[Spirling], [_mk("Shalebat"), _mk("Talusk")] as Array[Spirling])
+	m.start()
+	assert_eq(m.active_spirling(Side.PLAYER).stage("def"), 0)
+	var m2 := _model([_mk("Kindlop"), _mk("Puddlet")] as Array[Spirling], [_mk("Plinthlet"), _mk("Shalebat")] as Array[Spirling], [2, 2])
+	m2.start()
+	assert_eq(m2.active_spirling(Side.FOE, 0).stage("def"), 0, "only the Wayfarer's formation counts")
+
+func test_aim_line_and_targets() -> void:
+	assert_eq(MultiRules.aim_line("Kelpup", 35, 2.0), "Kelpup ~35% x2")
+	assert_eq(MultiRules.aim_line("Kelpup", -1, -1.0), "Kelpup")
+	assert_eq(MultiRules.default_target(2, [0, 2] as Array[int]), 2, "the last aim is kept")
+	assert_eq(MultiRules.default_target(1, [0, 2] as Array[int]), 0, "a fallen target falls back")
+	assert_eq(MultiRules.default_target(1, [] as Array[int]), -1)
+	var me: Spirling = _mk("Puddlet", ["Fizz Pop"])
+	var m := _model([me] as Array[Spirling], [_mk("Mossling"), _mk("Kindlop")] as Array[Spirling], [1, 2])
+	m.start()
+	assert_eq(MultiRules.best_target(m, me, me.moves[0]), 1, "Tide aims at the Ember foe")
+
+func test_slot_lines_for_screen_readers() -> void:
+	var m := _model([_mk("Kindlop"), _mk("Puddlet")] as Array[Spirling], [_mk("Mossling"), _mk("Zippit")] as Array[Spirling], [2, 2])
+	m.start()
+	var z: Spirling = m.active_spirling(Side.FOE, 1)
+	assert_eq(MultiRules.slot_spoken(m, Side.FOE, 1), "Foe, slot 2 of 2: %s, Vigor %d of %d" % [z.display_name(), z.hp, z.max_hp()])
+	assert_string_contains(MultiRules.slot_spoken(m, Side.PLAYER, 0), "Yours, slot 1 of 2")
+
+func test_stair_has_double_floors() -> void:
+	assert_eq(MultiRules.tower_front(5, false), [2, 2])
+	assert_eq(MultiRules.tower_front(10, true), [1, 1], "Warden floors stay as they are")
+	assert_eq(MultiRules.tower_front(7, false), [1, 1])
+
+func test_sweeps_never_hit_allies() -> void:
+	var m := _model([_mk("Kindlop"), _mk("Puddlet")] as Array[Spirling], [_mk("Mossling"), _mk("Zippit")] as Array[Spirling], [2, 2])
+	m.start()
+	var sweep := MoveData.new()
+	sweep.target = "foes"
+	for t: int in m.move_targets(Side.PLAYER, sweep):
+		assert_true(t < m.slot_count(Side.FOE))
+	assert_eq(m.move_targets(Side.PLAYER, sweep).size(), 2)
+
+func test_running_only_from_wild_hordes() -> void:
+	var wild := _model([_mk("Kindlop"), _mk("Puddlet")] as Array[Spirling], [_mk("Mossling"), _mk("Zippit")] as Array[Spirling], [2, 2], true)
+	wild.start()
+	var tamer := _model([_mk("Kindlop"), _mk("Puddlet")] as Array[Spirling], [_mk("Mossling"), _mk("Zippit")] as Array[Spirling], [2, 2], false)
+	tamer.start()
+	assert_true(wild.is_legal(BattleAction.make_run(Side.PLAYER, 0)))
+	assert_false(tamer.is_legal(BattleAction.make_run(Side.PLAYER, 0)))
+
+func test_supports_survive_a_full_auto_battle() -> void:
+	for sd: int in 6:
+		var mine: Array[Spirling] = [_mk("Haloon", ["Mending Chorus", "Cinder Nip"]), _mk("Covepup", ["Breakwater Stand", "Fizz Pop"]), _mk("Cloudmop", ["Lure Dance", "Kite Cut"])]
+		var theirs: Array[Spirling] = [_mk("Plinthlet", ["Shell Ring", "Pebble Toss"]), _mk("Vitrill", ["Kindred Balm", "Cinder Nip"]), _mk("Kindlop")]
+		var m := BattleModel.new(mine, theirs, false, sd, 2)
+		m.front_size = [3, 3]
+		m.start()
+		var brain := BattleAI.new(2)
+		var guard: int = 0
+		while not m.is_finished() and guard < 200:
+			guard += 1
+			if m.needs_player_switch():
+				m.submit_switch(m.swap_candidates(Side.PLAYER, m.switch_slot())[0])
+				continue
+			var acts: Array[BattleAction] = []
+			for slot: int in m.player_slots():
+				acts.append(brain.choose(m, Side.PLAYER, slot))
+			m.submit_actions(acts)
+		assert_true(m.is_finished(), "seed %d ends" % sd)
+
+func test_partner_uses_the_master_ai_from_veteran_on() -> void:
+	assert_eq(MultiRules.partner_ai(1, GameState.Difficulty.STORY), 1)
+	assert_eq(MultiRules.partner_ai(1, GameState.Difficulty.VETERAN), 3)
+	assert_eq(MultiRules.partner_ai(1, GameState.Difficulty.RIFT_BORN), 3)
+
+func test_wild_swarm_has_a_leader_and_falters_without_it() -> void:
+	var lead: Spirling = _mk("Mossling", [], 20)
+	var a: Spirling = _mk("Zippit", [], 12)
+	var b: Spirling = _mk("Kelpup", [], 12)
+	var m := _model([_mk("Kindlop", ["Cinder Nip"], 30), _mk("Puddlet", [], 30)] as Array[Spirling], [a, lead, b] as Array[Spirling], [2, 3], true)
+	var ev: Array[BattleEvent] = m.start()
+	assert_eq(MultiRules.swarm_leader(m), 1)
+	assert_eq(lead.stage("atk"), 1)
+	assert_eq(BattleFixtures.first_of(ev, T.SUPPORT).describe(), "%s leads the swarm!" % lead.display_name())
+	lead.hp = 0
+	var ev2: Array[BattleEvent] = _turn(m, _rests(m, Side.PLAYER), [BattleAction.make_rest(Side.FOE, 0), BattleAction.make_rest(Side.FOE, 2)])
+	var falter: bool = false
+	for e: BattleEvent in ev2:
+		falter = falter or (e.type == T.SUPPORT and str(e.data.get("kind", "")) == "leader_down")
+	assert_true(falter)
+	assert_eq(a.stage("spd"), -1)
+	var tamer := _model([_mk("Kindlop")] as Array[Spirling], [_mk("Mossling"), _mk("Zippit")] as Array[Spirling], [1, 2], false)
+	tamer.start()
+	assert_eq(MultiRules.swarm_leader(tamer), -1, "only wild swarms have a leader")
+
+func test_allies_set_off_a_combo_on_the_same_foe() -> void:
+	var m := _model([_mk("Kindlop"), _mk("Zephlet")] as Array[Spirling], [_mk("Mossling"), _mk("Puddlet")] as Array[Spirling], [2, 2])
+	m.start()
+	m.turn = 3
+	assert_true(MultiRules.combo(m, Side.PLAYER, 0, Side.FOE, 0, Elements.E.EMBER).is_empty(), "the first hit sets it up")
+	assert_true(MultiRules.combo(m, Side.PLAYER, 1, Side.FOE, 1, Elements.E.GALE).is_empty(), "another foe does not count")
+	assert_eq(str(MultiRules.combo(m, Side.PLAYER, 1, Side.FOE, 0, Elements.E.GALE).get("id", "")), "firestorm")
+	m.turn = 4
+	assert_true(MultiRules.combo(m, Side.PLAYER, 1, Side.FOE, 0, Elements.E.GALE).is_empty(), "a new turn starts fresh")
+	assert_true(MultiRules.combo(m, Side.PLAYER, 0, Side.FOE, 1, Elements.E.EMBER).is_empty())
+	assert_true(MultiRules.combo(m, Side.PLAYER, 0, Side.FOE, 1, Elements.E.GALE).is_empty(), "one Spirling alone makes no combo")
+
+func test_combo_shows_in_a_played_turn() -> void:
+	var k: Spirling = _mk("Kindlop", ["Cinder Nip"], 40)
+	var z: Spirling = _mk("Zephlet", ["Kite Cut"], 40)
+	var big: Spirling = _mk("Shalebat", [], 60)
+	var m := _model([k, z] as Array[Spirling], [big, _mk("Puddlet", [], 60)] as Array[Spirling], [2, 2])
+	m.start()
+	var ev: Array[BattleEvent] = _turn(m, [BattleAction.make_move(Side.PLAYER, 0, 0, 0), BattleAction.make_move(Side.PLAYER, 0, 1, 0)], _rests(m, Side.FOE))
+	var hit_both: int = 0
+	for e: BattleEvent in ev:
+		if e.type == T.DAMAGE and int(e.data.get("slot", -1)) == 0 and int(e.data.get("side", -1)) == Side.FOE:
+			hit_both += 1
+	var c: BattleEvent = null
+	for e: BattleEvent in ev:
+		if e.type == T.SUPPORT and str(e.data.get("kind", "")) == "combo":
+			c = e
+	if hit_both >= 2:
+		assert_not_null(c, "two hits of Ember and Gale on one foe make a combo")
+		assert_string_contains(c.describe(), "Firestorm")
+	else:
+		pass_test("a miss left no combo to show")
+
+func test_back_row_softens_physical_hits() -> void:
+	var m := _model([_mk("Kindlop"), _mk("Puddlet"), _mk("Mossling")] as Array[Spirling], [_mk("Zippit"), _mk("Kelpup"), _mk("Shalebat")] as Array[Spirling], [3, 3])
+	m.start()
+	assert_false(MultiRules.in_back_row(m, Side.FOE, 1))
+	assert_true(MultiRules.in_back_row(m, Side.FOE, 2))
+	var phys := MoveData.new()
+	phys.kind = MoveData.Kind.PHYSICAL
+	var focus := MoveData.new()
+	focus.kind = MoveData.Kind.FOCUS
+	assert_eq(MultiRules.row_mult(m, Side.PLAYER, 0, Side.FOE, 0, phys), 1.0)
+	assert_almost_eq(MultiRules.row_mult(m, Side.PLAYER, 0, Side.FOE, 2, phys), 0.9, 0.0001)
+	assert_almost_eq(MultiRules.row_mult(m, Side.PLAYER, 2, Side.FOE, 2, phys), 0.81, 0.0001)
+	assert_eq(MultiRules.row_mult(m, Side.PLAYER, 2, Side.FOE, 2, focus), 1.0, "Focus arts reach every row")
+	var duo := _model([_mk("Kindlop"), _mk("Puddlet")] as Array[Spirling], [_mk("Zippit"), _mk("Kelpup")] as Array[Spirling], [2, 2])
+	duo.start()
+	assert_false(MultiRules.in_back_row(duo, Side.FOE, 1), "two slots are all front")
+
+func test_multi_tip_is_short_and_in_the_guide() -> void:
+	assert_true(Tips.TOPICS.has("multi"))
+	assert_lte(Tips.LINES["multi"].size(), Tips.MAX_LINES)
+
+func test_a_foe_wayfarer_can_fight_in_formation() -> void:
+	var m := _model([_mk("Kindlop"), _mk("Puddlet")] as Array[Spirling], [_mk("Plinthlet"), _mk("Shalebat")] as Array[Spirling], [2, 2])
+	m.foe_formation = true
+	m.start()
+	assert_eq(m.active_spirling(Side.FOE, 0).stage("def"), 1)
+	assert_eq(m.active_spirling(Side.FOE, 1).stage("def"), 1)
+
+func _ev(type: int, data: Dictionary) -> BattleEvent:
+	return BattleEvent.new(type, data)
+
+func test_battle_report_credits_hits_and_knockouts() -> void:
+	var r := BattleReport.new()
+	r.begin("high_tide")
+	r.add(_ev(T.MOVE_USED, {"side": Side.PLAYER, "slot": 0, "index": 0, "name": "Zippit", "move": "Storm Gnash"}))
+	r.add(_ev(T.DAMAGE, {"side": Side.FOE, "slot": 0, "amount": 40, "move": "Storm Gnash"}))
+	r.add(_ev(T.DAMAGE, {"side": Side.FOE, "slot": 1, "amount": 25, "move": "Storm Gnash"}))
+	r.add(_ev(T.FAINTED, {"side": Side.FOE, "slot": 1}))
+	r.add(_ev(T.MOVE_USED, {"side": Side.FOE, "slot": 0, "index": 0, "name": "Riptail", "move": "Splash"}))
+	r.add(_ev(T.DAMAGE, {"side": Side.PLAYER, "slot": 0, "amount": 30, "move": "Splash"}))
+	r.add(_ev(T.MOVE_USED, {"side": Side.PLAYER, "slot": 1, "index": 1, "name": "Mossling", "move": "Sap Draw"}))
+	r.add(_ev(T.DAMAGE, {"side": Side.FOE, "slot": 0, "amount": 20, "move": "Sap Draw"}))
+	r.add(_ev(T.DAMAGE, {"side": Side.FOE, "slot": 0, "amount": 5, "status_tick": true}))
+	r.add(_ev(T.FIELD, {"field": "static_veil", "turns": 5}))
+	r.add(_ev(T.FIELD, {"field": "high_tide", "turns": 0}))
+	assert_eq(r.rows.keys(), [0, 1], "only your Spirlings, in the order they hit")
+	assert_eq(r.spirling_line(0), "Zippit: 65 damage, 1 knocked out")
+	assert_eq(r.spirling_line(1), "Mossling: 20 damage", "a status tick is no hit")
+	assert_eq(r.field_line(), "Rift fields: High Tide, Static Veil", "each field once, in order")
+	assert_eq(r.best_line(), "Best of the battle: Zippit, 65 damage")
+	assert_eq(r.lines().size(), 4)
+
+func test_battle_report_is_empty_without_hits_or_fields() -> void:
+	var r := BattleReport.new()
+	r.begin("")
+	assert_eq(r.lines(), [] as Array[String])
+	assert_eq(r.best_line(), "")
+	assert_eq(r.field_line(), "")
+
+func test_battle_report_follows_a_real_multi_battle() -> void:
+	var m := BattleModel.new([_mk("Kindlop"), _mk("Kindlop")] as Array[Spirling], [_mk("Mossling", [], 20), _mk("Mossling", [], 20)] as Array[Spirling], false, 5, 2)
+	m.front_size = [2, 2]
+	var r := BattleReport.new()
+	r.begin(m.field)
+	for e: BattleEvent in m.start():
+		r.add(e)
+	var brain := BattleAI.new(2)
+	var guard: int = 0
+	while not m.is_finished() and guard < 100:
+		guard += 1
+		if m.needs_player_switch():
+			m.submit_switch(m.swap_candidates(Side.PLAYER, m.switch_slot())[0])
+			continue
+		var acts: Array[BattleAction] = []
+		for slot: int in m.player_slots():
+			acts.append(brain.choose(m, Side.PLAYER, slot))
+		for e: BattleEvent in m.submit_actions(acts):
+			r.add(e)
+	var total: int = 0
+	for k: int in r.rows:
+		total += int(r.rows[k].damage)
+	assert_gt(total, 0, "your side's hits are counted")
+	assert_eq(r.rows.size(), 2, "two Spirlings of one kind keep their own rows")
+	assert_gte(r.best(), 0)
+
+func test_text_types_faster_with_several_spirlings() -> void:
+	var one := _model([_mk("Kindlop")], [_mk("Mossling")], [1, 1])
+	var two := _model([_mk("Kindlop"), _mk("Kindlop")], [_mk("Mossling"), _mk("Mossling")], [2, 2])
+	assert_eq(MultiRules.text_speed(one), 1.0, "one-on-one keeps its pace")
+	assert_gt(MultiRules.text_speed(two), 1.0)
+	assert_eq(MultiRules.text_speed(null), 1.0)
+
+func test_allies_trade_places_and_keep_their_orders() -> void:
+	var a := _mk("Kindlop", ["Cinder Nip"])
+	var b := _mk("Covepup", ["Fizz Pop"])
+	var m := _model([a, b], [_mk("Mossling", [], 10), _mk("Mossling", [], 10)], [2, 2])
+	m.start()
+	assert_eq(MultiRules.shift_targets(m, Side.PLAYER, 0), [1] as Array[int])
+	var shift := BattleAction.make_swap(Side.PLAYER, 1, 0)
+	assert_true(m.is_legal(shift), "a Swap onto the ally beside is legal")
+	var ev: Array[BattleEvent] = _turn(m, [shift, BattleAction.make_move(Side.PLAYER, 0, 1, 0)], _rests(m, Side.FOE))
+	assert_eq(m.active_spirling(Side.PLAYER, 0), b, "they traded places")
+	assert_eq(m.active_spirling(Side.PLAYER, 1), a)
+	var lines: Array[String] = []
+	var moved: bool = false
+	for e: BattleEvent in ev:
+		lines.append(e.describe())
+		if e.type == T.MOVE_USED and str(e.data.get("name", "")) == b.display_name():
+			moved = true
+	assert_true(lines.has("%s and %s trade places!" % [a.display_name(), b.display_name()]))
+	assert_true(moved, "the ally's queued art still goes off from its new slot")
+
+func test_no_trading_places_in_one_on_one() -> void:
+	var m := _model([_mk("Kindlop"), _mk("Covepup")], [_mk("Mossling")], [1, 1])
+	m.start()
+	assert_true(MultiRules.shift_targets(m, Side.PLAYER, 0).is_empty())
+
+func test_support_arts_are_balanced_in_the_simulator() -> void:
+	var r: Dictionary = MultiSim.support_rate(40, 7)
+	assert_true(bool(r.ok), "support side wins %.0f %% of 2v2 mirror matches (band %s)" % [float(r.rate) * 100.0, str(r.band)])
+
+func test_decoy_and_guard_wait_until_they_help() -> void:
+	var m := _model([_mk("Cloudmop", ["Lure Dance"]), _mk("Plinthlet", ["Shell Ring"])], [_mk("Mossling"), _mk("Mossling")], [2, 2])
+	m.start()
+	assert_eq(MultiRules.ai_score(m, Side.PLAYER, 0, {"id": "decoy"}), 0.0, "nobody to shield at full Vigor")
+	assert_eq(MultiRules.ai_score(m, Side.PLAYER, 1, {"id": "team_guard"}), 0.0, "no guard before the first hits")
+	var hurt: Spirling = m.active_spirling(Side.PLAYER, 1)
+	hurt.hp = hurt.max_hp() / 3
+	assert_gt(MultiRules.ai_score(m, Side.PLAYER, 0, {"id": "decoy"}), 0.0)
+	assert_gt(MultiRules.ai_score(m, Side.PLAYER, 1, {"id": "team_guard"}), 0.0)

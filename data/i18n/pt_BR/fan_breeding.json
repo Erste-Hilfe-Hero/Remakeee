@@ -1,0 +1,23 @@
+{
+ "_comment": "Brazilian Portuguese texts for the German table fan_breeding. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "Auntie Grisela": "Tia Grisela",
+  "Auntie Grisela's contract holds. The young one carries the best of both houses.": "O contrato da Tia Grisela vale. O filhote carrega o melhor das duas casas.",
+  "Auntie Grisela: A contract costs %d coins. Love is free, paperwork is not.": "Tia Grisela: Um contrato custa %d moedas. Amor é de graça, papelada não.",
+  "Auntie Grisela: A good match is a merger with feathers.": "Tia Grisela: Um bom casamento é uma fusão com penas.",
+  "Auntie Grisela: Bring me an Echo Core and I put the dowry in writing.": "Tia Grisela: Me traz um Núcleo Eco e eu ponho o dote no papel.",
+  "Auntie Grisela: I put the dowry in writing. Nobody reads it, but it is written.": "Tia Grisela: Ponho o dote no papel. Ninguém lê, mas tá escrito.",
+  "Auntie Grisela: No Echo Core, no wedding. Sing at a spring first, then we talk business.": "Tia Grisela: Sem Núcleo Eco, sem casamento. Canta numa fonte primeiro, depois a gente fala de negócios.",
+  "Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably.": "Tia Grisela: Assinado, lacrado, e ninguém mais vai saber. Provavelmente.",
+  "Auntie Grisela: Two good families, one sweet song. I arrange the rest.": "Tia Grisela: Duas boas famílias, uma doce canção. O resto eu arranjo.",
+  "It already knows %s, an heirloom art of the family.": "Já conhece %s, uma técnica de herança da família.",
+  "It carries the family's best Spark in %d values.": "Carrega a melhor Centelha da família em %d valores.",
+  "Seal": "Selar",
+  "Seal a match contract for the core of %s for %d coins?": "Selar um contrato de união pro núcleo de %s por %d moedas?",
+  "Turns out Auntie Grisela sold the same match to %s. The contract is void, but the song still wakes.": "No fim, a Tia Grisela vendeu a mesma união pra %s. O contrato é nulo, mas a canção ainda desperta.",
+  "a family she calls 'the other one'": "uma família que ela chama de 'a outra'",
+  "the Moldwick family": "a família Moldwick",
+  "the Pellgraves": "os Pellgrave",
+  "the Second Cousins": "os Primos de Segundo Grau"
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "_comment": "Dutch texts for the German table c100_goal. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "+ seen  * bonded": "+ gezien  * gebonden",
+  "A reward waits under Goals.": "Er wacht een beloning bij Doelen.",
+  "Daily tasks: %d of %d done.": "Dagtaken: %d van %d klaar.",
+  "Find Mirela's pages": "Mirela's pagina's",
+  "Go to the Map House": "Naar het Kaartenhuis",
+  "Goal line: %s": "Doelregel: %s",
+  "Goal: %s": "Doel: %s",
+  "Meet Kestra at the dock": "Kestra bij de steiger",
+  "Mend the Rifts": "Herstel de Kloven",
+  "Not yet visited.": "Nog niet bezocht.",
+  "On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.": "Op een pagina noemt \"Gezien in\" elke plek waar je de soort tegenkwam, gevechten met Reizigers inbegrepen. \"Wild in\" noemt waar hij in het wild leeft: een + na een plek betekent dat je hem daar tegenkwam, ??? een plek die je nog niet vond.",
+  "Photo, our Discord and your shortcuts.": "Foto, onze Discord en je snelkoppelingen.",
+  "See Aldo downstairs": "Naar Aldo beneden",
+  "Seen at: %s": "Gezien in: %s",
+  "Tap for every mark.": "Tik voor elk teken.",
+  "Tell Aldo at home": "Vertel het Aldo",
+  "Welcome back, %s!": "Welkom terug, %s!",
+  "Wild at: %s (%d of %d found)": "Wild in: %s (%d van %d gevonden)",
+  "You are in %s.": "Je bent in %s.",
+  "Your next goal at the top and a mark on the way there. Tap the line to open Goals.": "Je volgende doel bovenaan en een teken op de weg ernaartoe. Tik op de regel om Doelen te openen.",
+  "a Gleam of this kind was bonded": "een Glansvorm van deze soort is gebonden",
+  "a Gleam of this kind was seen": "een Glansvorm van deze soort is gezien",
+  "bonded and grown to Ring 30": "gebonden en gegroeid tot ring 30"
+ }
+}

@@ -1,0 +1,247 @@
+{
+ "name": "The Gilt Cellars",
+ "region": "halcyra",
+ "biome": "dungeon",
+ "backdrop": "ember",
+ "rows": [
+  "WWWWW==WWWWW",
+  "Wf|ffffff|fW",
+  "WffCCffCCffW",
+  "WffffffffffW",
+  "Wf|ffffff|fW",
+  "WffffffffffW",
+  "WWWfWWWWfWWW",
+  "WffffffffffW",
+  "WffffffffffW",
+  "WfSffffffSfW",
+  "WffffffffffW",
+  "WWWWWDWWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 11,
+   "to": "sunfall_terraces",
+   "tx": 10,
+   "ty": 13,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "gilt_cellars@1",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "gilt_cellars@1",
+   "tx": 6,
+   "ty": 8,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "q4_antidote_tobin",
+   "x": 3,
+   "y": 8,
+   "facing": "right",
+   "dialogue": "halcyra_side/antidote_tobin",
+   "sprite": "villager",
+   "show_flag": "q4_antidote_s1"
+  },
+  {
+   "id": "q4_cask_41_mattheus",
+   "x": 8,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "halcyra_side/cask_41_mattheus",
+   "sprite": "villager",
+   "show_flag": "q4_cask_41_asked"
+  },
+  {
+   "id": "q4_red_column_margit",
+   "x": 8,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "halcyra_side/red_column_margit",
+   "sprite": "elder",
+   "show_flag": "q4_red_column_s1"
+  },
+  {
+   "id": "hs_tilman",
+   "x": 6,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "halcyra_side/tilman",
+   "sprite": "villager",
+   "trainer": "Cellar Guard Tilman",
+   "intro": "halcyra_side/tilman_intro",
+   "defeat": "halcyra_side/tilman_defeat",
+   "money": 3640,
+   "team": [
+    {
+     "species": "Noonfox",
+     "level": 89
+    },
+    {
+     "species": "Brazlet",
+     "level": 90
+    },
+    {
+     "species": "Noonvixen",
+     "level": 91
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 9,
+   "dialogue": "halcyra_side/cellar_sign"
+  },
+  {
+   "x": 9,
+   "y": 9,
+   "dialogue": "halcyra_side/cellar_rack"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 3,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_gilt_cellars_1"
+  },
+  {
+   "x": 11,
+   "y": 8,
+   "item": "power_brew",
+   "count": 1,
+   "flag": "find_gilt_cellars_2"
+  }
+ ],
+ "floors": [
+  {
+   "name": "The Gilt Cellars, strongroom",
+   "rows": [
+    "WWWWWWWWWWWW",
+    "WfSffffffSfW",
+    "WfCCCffCCCfW",
+    "WffffffffffW",
+    "Wf|ffffff|fW",
+    "WffffffffffW",
+    "WffffffffffW",
+    "WffffffffffW",
+    "WffffffffffW",
+    "WWWWW==WWWWW"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 9,
+     "to": "gilt_cellars",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 9,
+     "to": "gilt_cellars",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "q4_forged_will_hollis",
+     "x": 3,
+     "y": 5,
+     "facing": "right",
+     "dialogue": "halcyra_side/forged_will_hollis",
+     "sprite": "elder",
+     "show_flag": "q4_forged_will_asked"
+    },
+    {
+     "id": "q4_forged_will_philippa_will",
+     "x": 8,
+     "y": 7,
+     "facing": "left",
+     "dialogue": "halcyra_side/forged_will_philippa_will",
+     "sprite": "tamer_f",
+     "show_flag": "q4_forged_will_reveal"
+    },
+    {
+     "id": "q4_cask_41_bertrand",
+     "x": 6,
+     "y": 3,
+     "facing": "down",
+     "dialogue": "halcyra_side/cask_41_bertrand",
+     "sprite": "elder",
+     "show_flag": "q4_cask_41_reveal"
+    },
+    {
+     "id": "hs_edeltraud",
+     "x": 3,
+     "y": 7,
+     "facing": "right",
+     "dialogue": "halcyra_side/edeltraud",
+     "sprite": "villager",
+     "trainer": "Vault Steward Edeltraud",
+     "intro": "halcyra_side/edeltraud_intro",
+     "defeat": "halcyra_side/edeltraud_defeat",
+     "money": 3640,
+     "team": [
+      {
+       "species": "Brazlet",
+       "level": 89
+      },
+      {
+       "species": "Vinestair",
+       "level": 90
+      },
+      {
+       "species": "Brazierbrute",
+       "level": 91
+      }
+     ]
+    }
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 1,
+     "dialogue": "halcyra_side/strong_wills"
+    },
+    {
+     "x": 9,
+     "y": 1,
+     "dialogue": "halcyra_side/strong_debts"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 11,
+     "y": 5,
+     "item": "revival_leaf",
+     "count": 1,
+     "flag": "find_gilt_cellars_3"
+    },
+    {
+     "x": 0,
+     "y": 7,
+     "item": "focus_brew",
+     "count": 1,
+     "flag": "find_gilt_cellars_4"
+    }
+   ]
+  }
+ ]
+}

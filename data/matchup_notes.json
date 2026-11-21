@@ -1,0 +1,6 @@
+{
+ "_comment": "KAMPF_PLAN_1000 item 107: matchup notes by Lantern Mail. max_notes per mail, per_friend_per_day mails to one friend, points = friendship points for the pair. The server reads the same object as server_config.matchup_notes (tools/online/game_data_sql.py).",
+ "max_notes": 30,
+ "per_friend_per_day": 1,
+ "points": 1
+}

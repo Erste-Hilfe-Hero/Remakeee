@@ -1,0 +1,37 @@
+{
+ "name": "Fenwick's House",
+ "region": "veydal",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCffffCCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "copperfold",
+   "tx": 3,
+   "ty": 13,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "fenwick",
+   "x": 2,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/copperfold_house_fenwick",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

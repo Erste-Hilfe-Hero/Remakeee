@@ -1,0 +1,23 @@
+{
+ "_comment": "Japanese texts for the German table fan_breeding. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "Auntie Grisela": "Griselaおばさん",
+  "Auntie Grisela's contract holds. The young one carries the best of both houses.": "Griselaおばさんの契約は守られた。子は両家のいいところを受けついだ。",
+  "Auntie Grisela: A contract costs %d coins. Love is free, paperwork is not.": "Griselaおばさん: 契約は%dコイン。恋はタダ、書類はタダじゃない。",
+  "Auntie Grisela: A good match is a merger with feathers.": "Griselaおばさん: いい縁組は、羽のはえた合併さ。",
+  "Auntie Grisela: Bring me an Echo Core and I put the dowry in writing.": "Griselaおばさん: エコーコアを持っておいで。持参金を書面にしてあげる。",
+  "Auntie Grisela: I put the dowry in writing. Nobody reads it, but it is written.": "Griselaおばさん: 持参金を書面にした。誰も読まないけど、書いてある。",
+  "Auntie Grisela: No Echo Core, no wedding. Sing at a spring first, then we talk business.": "Griselaおばさん: エコーコアなしに婚礼なし。まず泉で歌ってきな、商談はそれから。",
+  "Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably.": "Griselaおばさん: 署名、封印、ほかには誰にも知られない。たぶんね。",
+  "Auntie Grisela: Two good families, one sweet song. I arrange the rest.": "Griselaおばさん: よい家ふたつ、甘い歌ひとつ。あとは私がまとめる。",
+  "It already knows %s, an heirloom art of the family.": "もう%sを知っている。一族伝来の技だ。",
+  "It carries the family's best Spark in %d values.": "一族最高のスパークを%d項目で受けついでいる。",
+  "Seal": "結ぶ",
+  "Seal a match contract for the core of %s for %d coins?": "%sのコアで縁組契約を結ぶ？%dコイン",
+  "Turns out Auntie Grisela sold the same match to %s. The contract is void, but the song still wakes.": "なんとGriselaおばさんは同じ縁組を%sにも売っていた。契約は無効、でも歌はやっぱり目を覚ます。",
+  "a family she calls 'the other one'": "おばさんが「よその家」と呼ぶ一家",
+  "the Moldwick family": "Moldwick家",
+  "the Pellgraves": "Pellgrave家",
+  "the Second Cousins": "またいとこ一同"
+ }
+}

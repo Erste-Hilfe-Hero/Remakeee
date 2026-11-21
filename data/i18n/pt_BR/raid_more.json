@@ -1,0 +1,12 @@
+{
+ "_comment": "pt_BR translation of the raid_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s (%s, %d Wayfarers) %d min": "%d. %s (%s, %d Viajantes) %d min",
+  "A legendary guardian waits in this Rift: %s": "Um guardião lendário espera nesta Fenda: %s",
+  "Easy": "Fácil",
+  "Fastest Rifts": "Fendas mais rápidas",
+  "Hard": "Difícil",
+  "How hard?": "Qual dificuldade?",
+  "No Rift was won yet.": "Nenhuma Fenda foi vencida ainda."
+ }
+}

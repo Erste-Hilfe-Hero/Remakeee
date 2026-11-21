@@ -1,0 +1,473 @@
+{
+ "name": "Mirage Kiln",
+ "region": "solenne",
+ "biome": "dungeon",
+ "backdrop": "ember",
+ "encounters": "mirage_kiln",
+ "rows": [
+  "@@@@@==@@@@@",
+  "@.S......SS@",
+  "@.:..S...:.@",
+  "@..........@",
+  "@S:..@@..::@",
+  "@::..@@..::@",
+  "@..........@",
+  "@S:......:.@",
+  "@.........S@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 9,
+   "to": "glasswind_flats",
+   "tx": 5,
+   "ty": 32,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 9,
+   "to": "glasswind_flats",
+   "tx": 6,
+   "ty": 32,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "mirage_kiln@1",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "mirage_kiln@1",
+   "tx": 6,
+   "ty": 8,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "aske",
+   "x": 3,
+   "y": 3,
+   "facing": "right",
+   "dialogue": "mirage_kiln/aske",
+   "sprite": "villager",
+   "trainer": "Glass Cutter Aske",
+   "intro": "mirage_kiln/aske_intro",
+   "defeat": "mirage_kiln/aske_defeat",
+   "money": 2250,
+   "team": [
+    {
+     "species": "Obelith",
+     "level": 44
+    },
+    {
+     "species": "Solkit",
+     "level": 45
+    }
+   ]
+  },
+  {
+   "id": "bree",
+   "x": 8,
+   "y": 6,
+   "facing": "left",
+   "dialogue": "mirage_kiln/bree",
+   "sprite": "villager",
+   "trainer": "Crew Lookout Bree",
+   "intro": "mirage_kiln/bree_intro",
+   "defeat": "mirage_kiln/bree_defeat",
+   "money": 2300,
+   "team": [
+    {
+     "species": "Velvessa",
+     "level": 45
+    },
+    {
+     "species": "Claspirant",
+     "level": 45
+    }
+   ]
+  },
+  {
+   "id": "hob",
+   "x": 3,
+   "y": 7,
+   "facing": "right",
+   "dialogue": "mirage_kiln/hob",
+   "sprite": "villager",
+   "trainer": "Kiln Stoker Hob",
+   "intro": "mirage_kiln/hob_intro",
+   "defeat": "mirage_kiln/hob_defeat",
+   "money": 2350,
+   "team": [
+    {
+     "species": "Scaldcoil",
+     "level": 45
+    },
+    {
+     "species": "Ardlume",
+     "level": 45
+    },
+    {
+     "species": "Fulgorin",
+     "level": 46
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 1,
+   "dialogue": "mirage_kiln/lens_1_1"
+  },
+  {
+   "x": 5,
+   "y": 2,
+   "dialogue": "mirage_kiln/lens_1_2"
+  },
+  {
+   "x": 9,
+   "y": 1,
+   "dialogue": "mirage_kiln/lens_1_3"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "dialogue": "mirage_kiln/hint_1"
+  },
+  {
+   "x": 10,
+   "y": 8,
+   "dialogue": "mirage_kiln/bell_6"
+  },
+  {
+   "x": 1,
+   "y": 7,
+   "dialogue": "mirage_kiln/bell_7"
+  },
+  {
+   "x": 10,
+   "y": 1,
+   "dialogue": "mirage_kiln/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 0,
+   "open_flag": "kiln_lens_1",
+   "closed": "@"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "open_flag": "kiln_lens_1",
+   "closed": "@"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 3,
+   "item": "max_tonic",
+   "count": 2,
+   "flag": "find_kiln_crate"
+  },
+  {
+   "x": 0,
+   "y": 6,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_kiln_ash"
+  }
+ ],
+ "floors": [
+  {
+   "name": "Mirage Kiln, furnace hall",
+   "rows": [
+    "@@@@@==@@@@@",
+    "@.S......S.@",
+    "@.::....::.@",
+    "@.S......S.@",
+    "@...@..@...@",
+    "@::......::@",
+    "@S.........@",
+    "@.........S@",
+    "@S........S@",
+    "@@@@@==@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 9,
+     "to": "mirage_kiln",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 9,
+     "to": "mirage_kiln",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "mirage_kiln@2",
+     "tx": 5,
+     "ty": 6,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "mirage_kiln@2",
+     "tx": 6,
+     "ty": 6,
+     "facing": "up"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "lark",
+     "x": 3,
+     "y": 6,
+     "facing": "right",
+     "dialogue": "mirage_kiln/lark",
+     "sprite": "villager",
+     "trainer": "Crew Fence Lark",
+     "intro": "mirage_kiln/lark_intro",
+     "defeat": "mirage_kiln/lark_defeat",
+     "money": 2400,
+     "team": [
+      {
+       "species": "Caravant",
+       "level": 46
+      },
+      {
+       "species": "Wadishell",
+       "level": 46
+      },
+      {
+       "species": "Saltsprig",
+       "level": 46
+      }
+     ]
+    },
+    {
+     "id": "odo",
+     "x": 8,
+     "y": 3,
+     "facing": "left",
+     "dialogue": "mirage_kiln/odo",
+     "sprite": "villager",
+     "trainer": "Glassblower Odo",
+     "intro": "mirage_kiln/odo_intro",
+     "defeat": "mirage_kiln/odo_defeat",
+     "money": 2450,
+     "team": [
+      {
+       "species": "Obelith",
+       "level": 47
+      },
+      {
+       "species": "Rollibex",
+       "level": 46
+      }
+     ]
+    },
+    {
+     "id": "rusk",
+     "x": 6,
+     "y": 6,
+     "facing": "down",
+     "dialogue": "mirage_kiln/rusk",
+     "sprite": "villager",
+     "trainer": "Poacher Rusk",
+     "intro": "mirage_kiln/rusk_intro",
+     "defeat": "mirage_kiln/rusk_defeat",
+     "money": 2500,
+     "team": [
+      {
+       "species": "Spinnarow",
+       "level": 47
+      },
+      {
+       "species": "Palmop",
+       "level": 47
+      },
+      {
+       "species": "Spinnub",
+       "level": 46
+      }
+     ],
+     "show_flag": "s4_census_done",
+     "beaten_flag": "kiln_rusk_beaten"
+    }
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 1,
+     "dialogue": "mirage_kiln/lens_2_1"
+    },
+    {
+     "x": 9,
+     "y": 1,
+     "dialogue": "mirage_kiln/lens_2_2"
+    },
+    {
+     "x": 2,
+     "y": 3,
+     "dialogue": "mirage_kiln/lens_2_3"
+    },
+    {
+     "x": 9,
+     "y": 3,
+     "dialogue": "mirage_kiln/lens_2_4"
+    },
+    {
+     "x": 1,
+     "y": 6,
+     "dialogue": "mirage_kiln/hint_2"
+    },
+    {
+     "x": 10,
+     "y": 7,
+     "dialogue": "mirage_kiln/bell_8"
+    },
+    {
+     "x": 1,
+     "y": 8,
+     "dialogue": "mirage_kiln/scarf"
+    },
+    {
+     "x": 10,
+     "y": 8,
+     "dialogue": "mirage_kiln/ledger_book"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "kiln_lens_2",
+     "closed": "@"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "kiln_lens_2",
+     "closed": "@"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 4,
+     "y": 4,
+     "item": "power_brew",
+     "count": 1,
+     "flag": "find_kiln_furnace"
+    },
+    {
+     "x": 11,
+     "y": 5,
+     "item": "spark_drop",
+     "count": 1,
+     "flag": "find_kiln_vent"
+    }
+   ]
+  },
+  {
+   "name": "Mirage Kiln, glass gallery",
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@S.........@",
+    "@:..CCCC..:@",
+    "@..........@",
+    "@..........@",
+    "@::......::@",
+    "@..........@",
+    "@@@@@==@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 7,
+     "to": "mirage_kiln@1",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 7,
+     "to": "mirage_kiln@1",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "garr",
+     "x": 9,
+     "y": 4,
+     "facing": "left",
+     "dialogue": "mirage_kiln/garr",
+     "sprite": "villager",
+     "trainer": "Crew Muscle Garr",
+     "intro": "mirage_kiln/garr_intro",
+     "defeat": "mirage_kiln/garr_defeat",
+     "money": 2550,
+     "team": [
+      {
+       "species": "Dunebastion",
+       "level": 47
+      },
+      {
+       "species": "Bakedillon",
+       "level": 47
+      }
+     ]
+    },
+    {
+     "id": "venn",
+     "x": 6,
+     "y": 3,
+     "facing": "down",
+     "dialogue": "glasswind_side/venn",
+     "sprite": "elder",
+     "color": "7aa0b0"
+    }
+   ],
+   "signs": [
+    {
+     "x": 1,
+     "y": 1,
+     "dialogue": "mirage_kiln/bell_9"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 10,
+     "y": 1,
+     "item": "max_tonic",
+     "count": 2,
+     "flag": "find_kiln_gallery"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,12 @@
+{
+ "_comment": "ja translation of the battle_hud table, keyed by the English text.",
+ "strings": {
+  "%s: %d of %d can fight": "%s: %d/%d 体が戦える",
+  "Again: %s x%d": "もう一度: %s x%d",
+  "Again: -": "もう一度: -",
+  "Foe's team": "相手のチーム",
+  "No effect": "効果なし",
+  "Strong": "強い",
+  "Your team": "自分のチーム"
+ }
+}

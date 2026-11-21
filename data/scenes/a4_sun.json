@@ -1,0 +1,16 @@
+{
+ "_note": "Act IV, the Sun Rift steps after the Oasis: the tunnel bill (betrayal lusk_tunnel) and Juna's last letter (betrayal juna_letter, decided by Act I).",
+ "steps": [
+  {
+   "action": "betrayal lusk_tunnel"
+  },
+  {
+   "say": [
+    "A sand-crusted figure waves from the Sun Rift steps. Juna the courier, a long way from Brindlewick."
+   ]
+  },
+  {
+   "action": "betrayal juna_letter"
+  }
+ ]
+}

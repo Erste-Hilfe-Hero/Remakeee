@@ -1,0 +1,147 @@
+{
+ "tag_1": {
+  "if": {
+   "not_flag": "ah_tag_1"
+  },
+  "else": "tag_empty",
+  "lines": [
+   "A brass tally tag on a nail in a dead snag. Stamped: 'GAGE, No. 3'. A tag on the board means you came up. This one is not on the board.",
+   "You pocket the tag. It is lighter than it should be."
+  ],
+  "action": "set_flag ah_tag_1"
+ },
+ "tag_2": {
+  "if": {
+   "not_flag": "ah_tag_2"
+  },
+  "else": "tag_empty",
+  "lines": [
+   "A tally tag in the ferns, polished by years of rain. 'MOLLY, No. 9'. Someone scratched a smile on the back.",
+   "You pocket the tag. It is lighter than it should be."
+  ],
+  "action": "set_flag ah_tag_2"
+ },
+ "tag_3": {
+  "if": {
+   "not_flag": "ah_tag_3"
+  },
+  "else": "tag_empty",
+  "lines": [
+   "A tally tag tied to a rabbit snare. 'HAMM, No. 1, SHIFT BOSS'. The snare is empty. The rabbit won.",
+   "You pocket the tag. It is lighter than it should be."
+  ],
+  "action": "set_flag ah_tag_3"
+ },
+ "tag_4": {
+  "if": {
+   "not_flag": "ah_tag_4"
+  },
+  "else": "tag_empty",
+  "lines": [
+   "A tally tag in a slag heap. 'PENN, No. 12'. Under it, older and smaller: 'PENN, No. 12, APPRENTICE'.",
+   "You pocket the tag. It is lighter than it should be."
+  ],
+  "action": "set_flag ah_tag_4"
+ },
+ "tag_empty": [
+  "Only a nail where a tag hung."
+ ],
+ "notice_1": {
+  "if": {
+   "flag": "ah_mourner_asked",
+   "not_flag": "ah_notice_1"
+  },
+  "else": "notice_1_plain",
+  "lines": [
+   "A notice board, empty but for nails. A good spot for bad news.",
+   "You pin up one of Mercer's notices. 'Departed, suddenly, tomorrow.' The ink is still wet."
+  ],
+  "action": "set_flag ah_notice_1"
+ },
+ "notice_1_plain": [
+  "A notice board, empty but for nails. A good spot for bad news."
+ ],
+ "notice_2": {
+  "if": {
+   "flag": "ah_mourner_asked",
+   "not_flag": "ah_notice_2"
+  },
+  "else": "notice_2_plain",
+  "lines": [
+   "A notice board leaning on a slag heap. Someone has carved 'WHO NEXT?' into it, then 'NOT ME'.",
+   "You pin up one of Mercer's notices. 'Departed, suddenly, tomorrow.' The ink is still wet."
+  ],
+  "action": "set_flag ah_notice_2"
+ },
+ "notice_2_plain": [
+  "A notice board leaning on a slag heap. Someone has carved 'WHO NEXT?' into it, then 'NOT ME'."
+ ],
+ "notice_3": {
+  "if": {
+   "flag": "ah_mourner_asked",
+   "not_flag": "ah_notice_3"
+  },
+  "else": "notice_3_plain",
+  "lines": [
+   "A notice board by the path. The old notices are funeral notices too. Mercer has been busy for years.",
+   "You pin up one of Mercer's notices. 'Departed, suddenly, tomorrow.' The ink is still wet."
+  ],
+  "action": "set_flag ah_notice_3"
+ },
+ "notice_3_plain": [
+  "A notice board by the path. The old notices are funeral notices too. Mercer has been busy for years."
+ ],
+ "sign": [
+  "CLINKER HEATH",
+  "North: Cinderfold. South: the Bellows Deep, closed. In between: the Ash Assize, open, unfortunately."
+ ],
+ "deep_sign": [
+  "BELLOWS DEEP - CLOSED BY ORDER OF THE RUSKWEBER CLAN.",
+  "Under it, newer: 'Wages still payable at the office below.'"
+ ],
+ "clem": [
+  "Clem: Juror number one. I was picked because I own a chair. Most of the heath doesn't."
+ ],
+ "clem_intro": [
+  "Clem: My vote's for sale. The price is one duel. Inflation, you know."
+ ],
+ "clem_defeat": [
+  "Clem: Sold. Tell Greaves I said guilty. Of whatever. He'll know."
+ ],
+ "mattie": [
+  "Mattie: I've sat on forty juries. The verdict was always the same. I find that comforting."
+ ],
+ "mattie_intro": [
+  "Mattie: Win my vote and I'll vote. It won't count, but I'll do it beautifully."
+ ],
+ "mattie_defeat": [
+  "Mattie: My vote is yours. Keep the receipt."
+ ],
+ "dunstan": [
+  "Dunstan: I'm on the jury because the clan owes me money. They pay me in verdicts."
+ ],
+ "dunstan_intro": [
+  "Dunstan: Three votes down, two to go. Or three to go, if you lose to me. Do the maths."
+ ],
+ "dunstan_defeat": [
+  "Dunstan: Fine. Vote cast. Into a very deep well, probably."
+ ],
+ "wick": [
+  "Wick: I fell asleep during my last trial. I voted in my sleep. The defendant was hanged in effigy. The effigy was furious."
+ ],
+ "wick_intro": [
+  "Wick: Wake me up, then. If you can."
+ ],
+ "wick_defeat": [
+  "Wick: I'm up. I'm up. My vote's yours. What were we voting on?"
+ ],
+ "ansa": [
+  "Ansa: Foreman of the jury. I read the verdict out loud. Greaves writes it, I read it. It's a very good job. Low thinking."
+ ],
+ "ansa_intro": [
+  "Ansa: Last vote. Make it count. It won't, but make it."
+ ],
+ "ansa_defeat": [
+  "Ansa: Unanimous, then. Go and hear your verdict. Read the docket first. I'm not allowed to say that."
+ ]
+}

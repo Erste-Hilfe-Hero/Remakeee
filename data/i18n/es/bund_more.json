@@ -1,0 +1,29 @@
+{
+ "_comment": "es translation of the bund_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s  Rank %d%s": "%d. %s  Rango %d%s",
+  "%s  Rank %d  %d/30, %d active%s": "%s  Rango %d  %d/30, %d activos%s",
+  "Any language": "Cualquier idioma",
+  "Anyone, at once": "Cualquiera, al momento",
+  "Bund board": "Clasificación de Cofradías",
+  "Bund rank %d (%d renown)": "Rango de Cofradía %d (%d de renombre)",
+  "Bund rank and week goal": "Rango de Cofradía y meta semanal",
+  "Donate items...": "Donar objetos...",
+  "Donated today: %d / %d": "Donado hoy: %d / %d",
+  "Find a bund...": "Buscar una Cofradía...",
+  "How many?": "¿Cuántos?",
+  "Language and joining...": "Idioma y admisión...",
+  "Language of the bund": "Idioma de la Cofradía",
+  "No bund found. Found your own!": "No se encontró ninguna Cofradía. ¡Funda la tuya!",
+  "No bunds yet.": "Aún no hay Cofradías.",
+  "Only after a request": "Solo tras una solicitud",
+  "Take the week reward": "Recoger la recompensa semanal",
+  "Thank you! The bund has %d renown now.": "¡Gracias! La Cofradía tiene ahora %d de renombre.",
+  "The week goal is not reached yet.": "La meta semanal aún no se ha alcanzado.",
+  "Week goal: %d / %d items donated": "Meta semanal: %d / %d objetos donados",
+  "Who may join?": "¿Quién puede unirse?",
+  "You already took this week's reward.": "Ya recogiste la recompensa de esta semana.",
+  "You donated all you can today. More tomorrow.": "Hoy ya has donado todo lo que puedes. Mañana más.",
+  "open": "abierta"
+ }
+}

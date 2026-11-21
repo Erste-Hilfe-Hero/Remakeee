@@ -1,0 +1,42 @@
+{
+ "spring": {
+  "lines": [
+   "Clear water wells up through white stone. It tastes of nothing at all, which up here is a luxury.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "sign": [
+  "SALT RIFT",
+  "Under the salt the old lake still remembers its water. And everyone it swallowed."
+ ],
+ "raker": [
+  "Gunda: Halloran pays by the barrel. The barrels don't ask what's in them."
+ ],
+ "raker_intro": [
+  "Gunda: You're on company salt. That's trespass. Trespass is a fight."
+ ],
+ "raker_defeat": [
+  "Gunda: Go on, then. He's below. He's always below."
+ ],
+ "halloran": {
+  "lines": [
+   "Every grain of salt on these flats is mine. You are standing on my money. Wipe your feet."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_v4_salt_sealed",
+    "lines": [
+     "Halloran: The water's coming back. My salt is going to be worth nothing. You've ruined me. I'll send you a bill.",
+     "Halloran: Oriel? She worked for me. Then I sold her. Business. She'd have done the same."
+    ]
+   }
+  ]
+ },
+ "halloran_intro": [
+  "Every grain of salt on these flats is mine. You are standing on my money. Wipe your feet."
+ ],
+ "halloran_defeat": [
+  "Fine. Take the Rift. The salt stays. So do the people buried under it."
+ ]
+}

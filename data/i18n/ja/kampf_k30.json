@@ -1,0 +1,10 @@
+{
+ "_comment": "Japanese texts for the German table kampf_k30. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "Acting order %s": "行動順 %s",
+  "Auto aim: %s": "オートエイム: %s",
+  "Fight two on two, with another friend's echo beside you?": "別のフレンドのエコーと組んで、2対2で戦う？",
+  "That field cannot be picked.": "そのフィールドは選べない。",
+  "foe %s": "敵の%s"
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "_comment": "pt_BR translation of the fan_reserve table, keyed by the English text.",
+ "strings": {
+  "%s answers your call and pads over to you. Dorran pretends not to notice.": "%s atende ao seu chamado e vem trotando até você. Dorran finge que não viu.",
+  "%s slips through a hole in the fence. The ring will patch that hole. Someday.": "%s escapa por um buraco na cerca. O bando vai remendar esse buraco. Um dia.",
+  "%s tilts its head at your call, but stays put.": "%s inclina a cabeça ao seu chamado, mas fica onde está.",
+  "A whistle from the lookout tower. A rival crew bursts out of the reeds and %s bolts. Somebody got paid tonight.": "Um assobio da torre de vigia. Um bando rival irrompe dos juncos e %s dispara para longe. Alguém foi pago esta noite.",
+  "A wild %s, Ring %d. Sightings left: %d": "Um %s selvagem, Anel %d. Avistamentos restantes: %d",
+  "A woman in a velvet coat leans on a fence that is not on any map.": "Uma mulher de casaco de veludo está encostada numa cerca que não consta em mapa nenhum.",
+  "Echo call (%d left)": "Chamado de eco (restam %d)",
+  "Move on": "Seguir adiante",
+  "Pay %d coins to slip into the reserve?": "Pagar %d moedas para entrar de fininho na reserva?",
+  "Rattle the fence": "Sacudir a cerca",
+  "Set bait": "Pôr isca",
+  "Velvet Dorran": "Dorran de Veludo",
+  "Velvet Dorran: No coins? Then you were never here.": "Dorran de Veludo: Sem moedas? Então você nunca pisou aqui.",
+  "Velvet Dorran: No fighting in my yard. You set bait, you rattle the fence, you call. Then you leave and forget my face.": "Dorran de Veludo: Nada de briga no meu quintal. Você põe isca, sacode a cerca, chama. Depois vai embora e esquece o meu rosto.",
+  "Velvet Dorran: Time's up. Out you go, and the gate never saw you.": "Dorran de Veludo: Acabou o tempo. Pode sair, e o portão nunca viu ninguém.",
+  "Velvet Dorran: Welcome to Hollowgate Reserve. Totally legal. The fence is to keep the paperwork in.": "Dorran de Veludo: Esta é a Reserva de Hollowgate. Totalmente legal. A cerca é para a papelada não fugir.",
+  "You rattle the fence. %s's ears shoot up: curious, and very jumpy.": "Você sacode a cerca. As orelhas de %s se levantam: curiosidade, e muito nervosismo.",
+  "You set down a twist of dried bait. %s sniffs it and calms down.": "Você deixa no chão uma pitada de isca seca. %s fareja e se acalma.",
+  "the Quiet Hands": "as Mãos Quietas"
+ }
+}

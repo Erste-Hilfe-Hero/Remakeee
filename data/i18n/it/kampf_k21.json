@@ -1,0 +1,18 @@
+{
+ "_comment": "Italian texts for the German table kampf_k21. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py it.",
+ "strings": {
+  "%d s left, then everyone without orders rests.": "Ancora %d s, poi chi non ha ordini riposa.",
+  "%s is about to step out. Swap first?": "Sta per entrare %s. Cambiare prima?",
+  "%s, you're up. Last longer than the last one.": "%s, tocca a te. Resisti più dell'ultimo.",
+  "A Wayfarer names its next Spirling before it steps out.": "Un Viandante nomina il suo prossimo Spirling prima di mandarlo.",
+  "All rest": "Tutti riposano",
+  "Fight on": "Continua",
+  "Foe announces: %s": "Annuncio: %s",
+  "Give up? It counts as a loss.": "Arrenderti? Conta come sconfitta.",
+  "Orders for %s? (%d Energy, %d s)": "Ordini per %s? (%d Energia, %d s)",
+  "Swap offer: %s": "Offerta di cambio: %s",
+  "The foe": "L'avversario",
+  "When a Wayfarer's Spirling is beaten, you may swap before the next one steps out.": "Quando un Spirling di un Viandante cade, puoi cambiare prima che entri il prossimo.",
+  "You give up. %s doesn't even pretend to be surprised.": "Ti arrendi. %s non finge nemmeno sorpresa."
+ }
+}

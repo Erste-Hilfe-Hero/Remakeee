@@ -1,0 +1,1298 @@
+{
+ "nib_lose": {
+  "lines": [
+   "Nib: Ha! Go cry to the guild. They've got a form for that."
+  ]
+ },
+ "nib_1": {
+  "lines": [
+   "Nib: Oi, ferry kid. Nib Wexley. Quay born, quay raised, quay's finest.",
+   "Nib: Everyone off that boat thinks they're somebody. Let's see if you are."
+  ],
+  "choices": [
+   {
+    "text": "Battle",
+    "action": "battle nib_1"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "nib_1_defeat": {
+  "lines": [
+   "Nib: Beginner's luck. The quay always lets tourists win the first one. Then it eats them."
+  ]
+ },
+ "nib_2": {
+  "lines": [
+   "Nib: Guild kid now, are we? Shiny badge. Bet it opens doors and closes mouths.",
+   "Nib: Round two. I've been training. Mostly. Bit of napping."
+  ],
+  "choices": [
+   {
+    "text": "Battle",
+    "action": "battle nib_2"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "nib_2_defeat": {
+  "lines": [
+   "Nib: Fine. FINE. My Riptail had a cramp. It's a known condition."
+  ]
+ },
+ "nib_3": {
+  "lines": [
+   "Nib: Funny running into you out here. Totally by chance. I wasn't following you.",
+   "Nib: I was following the reeds. You happen to be standing in them."
+  ],
+  "choices": [
+   {
+    "text": "Battle",
+    "action": "battle nib_3"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "nib_3_defeat": {
+  "lines": [
+   "Nib: Here's the thing, guild kid. You win too much. People notice. People pay for notes on people like you."
+  ]
+ },
+ "nib_4": {
+  "lines": [
+   "Nib: You still drawing every bend of every road? Neat. Very... useful.",
+   "Nib: Don't look at me like that. I'm a businessman now. Small business. Tiny."
+  ],
+  "choices": [
+   {
+    "text": "Battle",
+    "action": "battle nib_4"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "nib_4_defeat": {
+  "lines": [
+   "Nib: Your notebook is wasted on you. You don't even know what it's worth."
+  ]
+ },
+ "nib_5": {
+  "lines": [
+   "Nib: Took you long enough. The Keeper's down? Good. Saves me the bother.",
+   "Nib: Last round, guild kid. Winner takes the hoard. Loser takes the stairs."
+  ],
+  "choices": [
+   {
+    "text": "Battle",
+    "action": "battle nib_5"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "nib_5_defeat": {
+  "lines": [
+   "Nib: ...Right. Okay. I want you to know this is nothing personal.",
+   "Nib: I sold your route notes to the Quay Book three weeks ago. Every bend. Every shortcut.",
+   "Nib: Rent's due, kid. Trust no one. Especially the ones who keep showing up."
+  ],
+  "action": "betrayal nib_sale",
+  "flag": "nib_done"
+ },
+ "nib_caught": {
+  "lines": [
+   "You hand Nib the notebook you drew for him on purpose. Every road in it ends in a bog.",
+   "Nib: The Quay Book bought this. They paid for this. Oh no. Oh, they're going to make me eat it."
+  ]
+ },
+ "nib_struck": {
+  "lines": [
+   "Three quay rats step out of the shadows, holding a copy of your own map.",
+   "Rat: Nice drawing. Shame about the artist."
+  ]
+ },
+ "ledger_nib": {
+  "lines": [
+   "The quay rat's notebook",
+   "Nib Wexley battled you across Corvane and sold your route notes to the Quay Book.",
+   "He called it business. He kept showing up, so you thought he was a friend."
+  ]
+ },
+ "nib_ambush_lose": {
+  "lines": [
+   "The rats pick your pockets with good manners and better speed. They even leave a receipt."
+  ]
+ },
+ "gaunt": {
+  "lines": [
+   "Mother Gaunt: Gaunt and Daughters. Loans, condolences and gentle reminders.",
+   "Mother Gaunt: Four of my clients forgot to pay. Memory is a terrible thing, love. Jog theirs.",
+   "Mother Gaunt: Smiler Toft on the quay, Peg Mossop in the fen, Twitchy Ambrose by Stillwater and old Brask up in Greyreach."
+  ],
+  "flag": "q_gaunt_asked",
+  "next": "gaunt_check"
+ },
+ "gaunt_check": {
+  "if": {
+   "flag": [
+    "beat_debt_toft",
+    "beat_debt_mossop",
+    "beat_debt_ambrose",
+    "beat_debt_brask"
+   ],
+   "not_flag": "gaunt_done"
+  },
+  "lines": [
+   "Mother Gaunt: All four paid? Look at you. A natural. You've got your mother's... no, I don't know your mother.",
+   "Mother Gaunt: Here's your cut. Count it outside. Slowly. Down the dark lane, preferably."
+  ],
+  "action": "betrayal gaunt_cut; give_item strong_tonic 2",
+  "flag": "gaunt_done"
+ },
+ "debt_toft_intro": {
+  "lines": [
+   "Smiler: Gaunt sent you? I'm smiling, see? This is my paying face. It's also my running face.",
+   "Toft: Fine. Fight me for it."
+  ]
+ },
+ "debt_toft_defeat": {
+  "lines": [
+   "Toft: Take it. Tell Gaunt I said... no. Tell her nothing. She hears everything anyway."
+  ]
+ },
+ "debt_toft": {
+  "lines": [
+   "Toft: Paid up. I'm a free man. Poor, but free."
+  ]
+ },
+ "debt_mossop_intro": {
+  "lines": [
+   "Peg: I borrowed nine coins in spring. Now I owe ninety. Gaunt calls it interest. I call it a crime with paperwork.",
+   "Mossop: Fine. Fight me for it."
+  ]
+ },
+ "debt_mossop_defeat": {
+  "lines": [
+   "Mossop: Take it. Tell Gaunt I said... no. Tell her nothing. She hears everything anyway."
+  ]
+ },
+ "debt_mossop": {
+  "lines": [
+   "Mossop: Paid up. I'm a free man. Poor, but free."
+  ]
+ },
+ "debt_ambrose_intro": {
+  "lines": [
+   "Ambrose: Is she here? Is she behind you? She's always behind someone.",
+   "Ambrose: Fine. Fight me for it."
+  ]
+ },
+ "debt_ambrose_defeat": {
+  "lines": [
+   "Ambrose: Take it. Tell Gaunt I said... no. Tell her nothing. She hears everything anyway."
+  ]
+ },
+ "debt_ambrose": {
+  "lines": [
+   "Ambrose: Paid up. I'm a free man. Poor, but free."
+  ]
+ },
+ "debt_brask_intro": {
+  "lines": [
+   "Brask: Forty years I've owed that woman. It's the longest relationship I've ever had.",
+   "Brask: Fine. Fight me for it."
+  ]
+ },
+ "debt_brask_defeat": {
+  "lines": [
+   "Brask: Take it. Tell Gaunt I said... no. Tell her nothing. She hears everything anyway."
+  ]
+ },
+ "debt_brask": {
+  "lines": [
+   "Brask: Paid up. Now listen, because I like your face.",
+   "Brask: Gaunt never shares a cut. She sends the Daughters to take it back off whoever collects. Watch the dark lane."
+  ],
+  "flag": "brask_warned"
+ },
+ "gaunt_caught": {
+  "lines": [
+   "You take the long way round, past the guard house. Two of Gaunt's Daughters wait in the dark lane for nobody.",
+   "Mother Gaunt (later): Clever. I hate clever. Keep the cut, love. And never come back for another."
+  ]
+ },
+ "gaunt_struck": {
+  "lines": [
+   "In the dark lane two of Gaunt's Daughters step out, smiling exactly like their mother.",
+   "Daughter: Mum says thanks for collecting. Now hand it over."
+  ]
+ },
+ "ledger_gaunt": {
+  "lines": [
+   "Gaunt and Daughters",
+   "You collected four debts for Mother Gaunt in Madderby.",
+   "She paid your cut and sent her daughters to take it back. Brask tried to warn you."
+  ]
+ },
+ "gaunt_ambush_lose": {
+  "lines": [
+   "The Daughters count the coins twice and wish you a lovely evening."
+  ]
+ },
+ "glum": {
+  "if": {
+   "not_flag": "q_glum_asked"
+  },
+  "else": "glum_check",
+  "lines": [
+   "Glum: Mortimer Glum, undertaker. Business is dead. Ha. That's my one joke.",
+   "Glum: I have a funeral today and no mourners. A funeral with no mourners is just a picnic in black.",
+   "Glum: Find me three people who will cry for a fee. Pruett in Madderby, Old Reedy in the fen, and Lettie here on the quay."
+  ],
+  "flag": "q_glum_asked"
+ },
+ "glum_check": {
+  "if": {
+   "flag": [
+    "mourner_1",
+    "mourner_2",
+    "mourner_3"
+   ],
+   "not_flag": "glum_done"
+  },
+  "else": "glum_wait",
+  "lines": [
+   "Glum: Three mourners! Places, everyone. Lettie, louder. Reedy, less snoring.",
+   "Glum: We are gathered here for Bubbles, a Kelpup of great appetite and little sense...",
+   "The box wobbles. Bubbles sneezes, climbs out and eats the flowers.",
+   "Glum: Well. The service was still performed. That will be the full fee, from you, since you organised it.",
+   "Glum: Joking. Mostly. Take this. Funerals are rare. Happy endings are rarer."
+  ],
+  "action": "give_item revival_leaf 2",
+  "flag": "glum_done"
+ },
+ "glum_wait": {
+  "lines": [
+   "Glum: Still short of mourners. The deceased is getting impatient. Metaphorically."
+  ],
+  "after_flag": [
+   {
+    "flag": "glum_done",
+    "lines": [
+     "Glum: Bubbles comes by every day now. Eats my flowers. I've started to like him. Don't tell anyone."
+    ]
+   }
+  ]
+ },
+ "mourner_1": {
+  "if": {
+   "flag": "q_glum_asked"
+  },
+  "else": "mourner_1_idle",
+  "lines": [
+   "Pruett: Cry for a stranger's Kelpup? I've buried three husbands. I can cry on cue.",
+   "Pruett: Watch. ...See? Real tears. Tell Glum I charge extra for sobbing."
+  ],
+  "flag": "mourner_1",
+  "after_flag": [
+   {
+    "flag": "glum_done",
+    "lines": [
+     "Pruett: Best funeral I ever went to. Nobody even died."
+    ]
+   }
+  ]
+ },
+ "mourner_1_idle": {
+  "lines": [
+   "Pruett: Lovely weather for a funeral. Not that anyone's asked me to one."
+  ]
+ },
+ "mourner_2": {
+  "if": {
+   "flag": "q_glum_asked"
+  },
+  "else": "mourner_2_idle",
+  "lines": [
+   "Reedy: A funeral? Is there food? There's always food at funerals.",
+   "Reedy: Put me down for weeping. Light weeping. My knees can't do the heavy kind."
+  ],
+  "flag": "mourner_2",
+  "after_flag": [
+   {
+    "flag": "glum_done",
+    "lines": [
+     "Reedy: Best funeral I ever went to. Nobody even died."
+    ]
+   }
+  ]
+ },
+ "mourner_2_idle": {
+  "lines": [
+   "Reedy: Lovely weather for a funeral. Not that anyone's asked me to one."
+  ]
+ },
+ "mourner_3": {
+  "if": {
+   "flag": "q_glum_asked"
+  },
+  "else": "mourner_3_idle",
+  "lines": [
+   "Lettie: I cry at everything. Boats. Bread. Nice weather. I'm the best mourner on the quay.",
+   "Lettie: Tell Glum I'm coming. I'm already crying a little, see?"
+  ],
+  "flag": "mourner_3",
+  "after_flag": [
+   {
+    "flag": "glum_done",
+    "lines": [
+     "Lettie: Best funeral I ever went to. Nobody even died."
+    ]
+   }
+  ]
+ },
+ "mourner_3_idle": {
+  "lines": [
+   "Lettie: Lovely weather for a funeral. Not that anyone's asked me to one."
+  ]
+ },
+ "feather_1": {
+  "lines": [
+   "A grey rook feather, stuck in a crack. It looks like it's been waiting for you.",
+   "You got a grey feather."
+  ],
+  "flag": "feather_1"
+ },
+ "feather_2": {
+  "lines": [
+   "A grey rook feather. Somebody tied a tiny note to it: 'IOU'.",
+   "You got a grey feather."
+  ],
+  "flag": "feather_2"
+ },
+ "feather_3": {
+  "lines": [
+   "A grey rook feather, tucked behind a crate like contraband.",
+   "You got a grey feather."
+  ],
+  "flag": "feather_3"
+ },
+ "feather_4": {
+  "lines": [
+   "A grey rook feather on a doorstep. Rooks leave them as rent, they say.",
+   "You got a grey feather."
+  ],
+  "flag": "feather_4"
+ },
+ "feather_5": {
+  "lines": [
+   "A grey rook feather, floating on a puddle. It's dry when you pick it up.",
+   "You got a grey feather."
+  ],
+  "flag": "feather_5"
+ },
+ "feather_6": {
+  "lines": [
+   "A grey rook feather in the reeds, pointing the way you came.",
+   "You got a grey feather."
+  ],
+  "flag": "feather_6"
+ },
+ "feather_7": {
+  "lines": [
+   "A grey rook feather caught on a post. It hums in the wind.",
+   "You got a grey feather."
+  ],
+  "flag": "feather_7"
+ },
+ "feather_8": {
+  "lines": [
+   "A grey rook feather, bent like a question mark.",
+   "You got a grey feather."
+  ],
+  "flag": "feather_8"
+ },
+ "feather_9": {
+  "lines": [
+   "A grey rook feather jammed in the rock. A rook watches you take it and says nothing.",
+   "You got a grey feather."
+  ],
+  "flag": "feather_9"
+ },
+ "feather_10": {
+  "lines": [
+   "A grey rook feather on a gravestone with no name. Cheerful.",
+   "You got a grey feather."
+  ],
+  "flag": "feather_10"
+ },
+ "corbin": {
+  "if": {
+   "not_flag": "q_corbin_asked"
+  },
+  "else": "corbin_check",
+  "lines": [
+   "Corbin: Corbin. People call me the Featherman. People are not very creative.",
+   "Corbin: The rooks of Corvane drop grey feathers all over the river. Bring me twelve and I'll make you something nice.",
+   "Corbin: And if you go into the Rook Vault below, mind your guide. Everyone down there works for someone."
+  ],
+  "flag": "q_corbin_asked",
+  "action": "set_flag q_vault_heard"
+ },
+ "corbin_check": {
+  "if": {
+   "flag": [
+    "feather_1",
+    "feather_2",
+    "feather_3",
+    "feather_4",
+    "feather_5",
+    "feather_6",
+    "feather_7",
+    "feather_8",
+    "feather_9",
+    "feather_10",
+    "feather_11",
+    "feather_12"
+   ],
+   "not_flag": "feathers_done"
+  },
+  "else": "corbin_wait",
+  "lines": [
+   "Corbin: Twelve! Every one grey as a Monday. Hold still.",
+   "Corbin: There. A rook-feather charm. Wear it and the rooks will only steal from other people."
+  ],
+  "action": "give_item kin_charm 1; give_item max_tonic 2",
+  "flag": "feathers_done"
+ },
+ "corbin_wait": {
+  "lines": [
+   "Corbin: Twelve feathers. Grey ones. The black ones are just crows showing off."
+  ],
+  "after_flag": [
+   {
+    "flag": "feathers_done",
+    "lines": [
+     "Corbin: The rooks have stopped stealing from you, haven't they? Told you."
+    ]
+   }
+  ],
+  "next": "corbin_nib"
+ },
+ "corbin_nib": {
+  "if": {
+   "flag": "beat_story_nib_3",
+   "not_flag": "nib_done"
+  },
+  "lines": [
+   "Corbin: That quay boy, Nib. He sells notebooks to the Quay Book. Other people's notebooks.",
+   "Corbin: If he asks to see your map, draw him a bad one. Bog on every corner."
+  ],
+  "flag": "nib_warned"
+ },
+ "quill_main": {
+  "if": {
+   "not_flag": "q_quill_asked"
+  },
+  "else": "quill_check",
+  "lines": [
+   "Harbourmaster Quill: Bounties! Four rascals, four posters, four lovely rewards. Minus fees.",
+   "Quill: The Wet Rat in the fen, the Dyer's Ghost in Madderby, Knuckles Marrin by Stillwater, Sister Smudge in Greyreach.",
+   "Quill: Beat them, I pay you. That's how honest work works. Allegedly."
+  ],
+  "flag": "q_quill_asked"
+ },
+ "quill_check": {
+  "if": {
+   "flag": [
+    "beat_bounty_rat",
+    "beat_bounty_ghost",
+    "beat_bounty_knuckles",
+    "beat_bounty_smudge"
+   ],
+   "not_flag": "bounties_done"
+  },
+  "else": "quill_wait",
+  "lines": [
+   "Quill: All four! The quay sleeps safer. Here's your reward.",
+   "Quill: It's half. The other half is the harbour fee, the poster fee, the ink fee and the fee for explaining fees.",
+   "Quill: Don't make that face. Everybody on this quay skims. I'm just the only one with a stamp."
+  ],
+  "action": "give_item strong_tonic 3; give_item spark_drop 1",
+  "flag": "bounties_done"
+ },
+ "quill_wait": {
+  "lines": [
+   "Quill: Posters are on the board. Rascals are out there. Fees are in here."
+  ],
+  "after_flag": [
+   {
+    "flag": "bounties_done",
+    "lines": [
+     "Quill: New poster next week. Same fees. Fees never retire."
+    ]
+   }
+  ]
+ },
+ "bounty_rat_intro": {
+  "lines": [
+   "Wet Rat: Bounty on me? How much? ...That's insulting. I'm worth twice that."
+  ]
+ },
+ "bounty_rat_defeat": {
+  "lines": [
+   "Wet Rat: Fine. Tell Quill I said his fees are the real crime."
+  ]
+ },
+ "bounty_rat": {
+  "lines": [
+   "Wet Rat: Go on, collect. I'll be back on a poster by spring."
+  ]
+ },
+ "bounty_ghost_intro": {
+  "lines": [
+   "Ghost: Whooo... okay, I'm not a ghost. I'm a dyer in a sheet. The vats were grey, and the sheet was free."
+  ]
+ },
+ "bounty_ghost_defeat": {
+  "lines": [
+   "Dyer's Ghost: Fine. Tell Quill I said his fees are the real crime."
+  ]
+ },
+ "bounty_ghost": {
+  "lines": [
+   "Dyer's Ghost: Go on, collect. I'll be back on a poster by spring."
+  ]
+ },
+ "bounty_knuckles_intro": {
+  "lines": [
+   "Knuckles: They call me Knuckles because I crack them. Before battles. It's my warm-up. It's very loud."
+  ]
+ },
+ "bounty_knuckles_defeat": {
+  "lines": [
+   "Knuckles Marrin: Fine. Tell Quill I said his fees are the real crime."
+  ]
+ },
+ "bounty_knuckles": {
+  "lines": [
+   "Knuckles Marrin: Go on, collect. I'll be back on a poster by spring."
+  ]
+ },
+ "bounty_smudge_intro": {
+  "lines": [
+   "Smudge: I forge guild maps. Little smudge here, little smudge there. Tourists walk into lakes. It's art."
+  ]
+ },
+ "bounty_smudge_defeat": {
+  "lines": [
+   "Sister Smudge: Fine. Tell Quill I said his fees are the real crime."
+  ]
+ },
+ "bounty_smudge": {
+  "lines": [
+   "Sister Smudge: Go on, collect. I'll be back on a poster by spring."
+  ]
+ },
+ "fenwick": {
+  "if": {
+   "var_max": {
+    "q_fixed_race_stage": 0
+   },
+   "not_flag": "race_done"
+  },
+  "else": "fenwick_2",
+  "lines": [
+   "Fenwick: Lucky Fenwick! Spirling races on the pond! Everybody wins! Mostly me!",
+   "Fenwick: Put a stake on your lead Spirling? Fifty coins. Can't lose. Statistically you can, but emotionally you can't."
+  ],
+  "choices": [
+   {
+    "text": "Place a bet",
+    "action": "quest_stage fixed_race 1",
+    "flag": "q_race_bet"
+   },
+   {
+    "text": "No thanks"
+   }
+  ]
+ },
+ "fenwick_2": {
+  "if": {
+   "var_min": {
+    "q_fixed_race_stage": 2
+   },
+   "not_flag": "race_done"
+  },
+  "else": "fenwick_idle",
+  "lines": [
+   "Fenwick: Fixed? Me? I'm Lucky Fenwick! Luck can't be fixed. It can be arranged, but not fixed.",
+   "Fenwick: All right, all right. You want your money back, you take it off my champion."
+  ],
+  "choices": [
+   {
+    "text": "Battle",
+    "action": "battle fenwick"
+   },
+   {
+    "text": "Later"
+   }
+  ]
+ },
+ "fenwick_idle": {
+  "lines": [
+   "Fenwick: Lost by a nose! Tragic. The nose was very long. Better luck next time!"
+  ],
+  "after_flag": [
+   {
+    "flag": "race_done",
+    "lines": [
+     "Fenwick: New rule: no more races. Now it's 'Spirling Strolling'. Nobody wins. Very fair."
+    ]
+   }
+  ]
+ },
+ "morag": {
+  "if": {
+   "var_min": {
+    "q_fixed_race_stage": 1
+   },
+   "not_flag": "race_done"
+  },
+  "else": "morag_idle",
+  "lines": [
+   "Morag: You bet on Fenwick's race? Oh, love. Oh no.",
+   "Morag: I ride for him. He pays me to sneeze at the finish line. Every race. I have the healthiest sneeze in Corvane.",
+   "Morag: Go and shake him. Tell him Wee Morag says the sneeze is retiring."
+  ],
+  "action": "quest_stage fixed_race 2"
+ },
+ "morag_idle": {
+  "lines": [
+   "Morag: I'm a jockey. I ride Spirlings in circles and get paid in apologies."
+  ],
+  "after_flag": [
+   {
+    "flag": "race_done",
+    "lines": [
+     "Morag: I'm opening a tea stall. No races. No sneezing. Just tea."
+    ]
+   }
+  ]
+ },
+ "fenwick_defeat": {
+  "lines": [
+   "Fenwick: Ow. Fine! Your fifty back, and fifty for your silence. Silence is expensive in Stillwater."
+  ],
+  "action": "give_item strong_tonic 2",
+  "flag": "race_done"
+ },
+ "fenwick_lose": {
+  "lines": [
+   "Fenwick: The house always wins! The house is a tent, but still."
+  ]
+ },
+ "pell": {
+  "if": {
+   "not_flag": "favor_pell_lend"
+  },
+  "else": "pell_after",
+  "lines": [
+   "Pell: Pockets Pell. I buy, I sell, I forget faces. Professionally.",
+   "Pell: Lend me your lead Spirling for one little job on the quay? Clean job. Mostly clean. Back by dusk."
+  ],
+  "choices": [
+   {
+    "text": "Lend my lead",
+    "action": "favor pell_lend"
+   },
+   {
+    "text": "Not a chance"
+   }
+  ]
+ },
+ "pell_after": {
+  "lines": [
+   "Pell: Pleasure doing business. Or the other thing. I forget which."
+  ]
+ },
+ "pell_betray": {
+  "lines": [
+   "Your Spirling comes back by dusk, as promised. Its keepsake does not.",
+   "Pell: Fell off. Into my pocket. Gravity, eh?"
+  ]
+ },
+ "pell_reward": {
+  "lines": [
+   "Pell: Job went smooth. Your Spirling's a natural lookout. Here, a cut. Don't ask what of."
+  ]
+ },
+ "pell_kept": {
+  "lines": [
+   "Pell: Back safe, not a scratch. See? Honest crook. Rarest thing on the quay."
+  ]
+ },
+ "ollie": {
+  "if": {
+   "not_flag": "favor_ollie_stake"
+  },
+  "else": "ollie_after",
+  "lines": [
+   "Ollie: Ollie Fairweather's Miracle Tonic! Cures colds, grey moods and bad hair!",
+   "Ollie: Lend me 250 coins for a new batch and I'll pay you back double. Partners!"
+  ],
+  "choices": [
+   {
+    "text": "Lend 250 coins",
+    "action": "favor ollie_stake"
+   },
+   {
+    "text": "No"
+   }
+  ]
+ },
+ "ollie_after": {
+  "lines": [
+   "Ollie: The secret ingredient is pond water. Don't tell. Nobody believes it anyway."
+  ]
+ },
+ "ollie_betray": {
+  "lines": [
+   "Ollie's stall is gone. A sign hangs where it stood: 'Closed for personal growth.'"
+  ]
+ },
+ "ollie_reward": {
+  "lines": [
+   "Ollie: The tonic sold out! Turns out people love pond water if it's in a nice bottle. Your share, partner."
+  ]
+ },
+ "ollie_kept": {
+  "lines": [
+   "Ollie: Sold enough to pay you back. Exactly. Not a coin more. Don't look so surprised."
+  ]
+ },
+ "ledger_ollie": {
+  "lines": [
+   "Miracle Tonic",
+   "You lent Ollie Fairweather money for his tonic. He packed up the stall that night."
+  ]
+ },
+ "quill": {
+  "if": {
+   "var_min": {
+    "q_quay_book_stage": 2
+   },
+   "not_flag": "quay_book_done"
+  },
+  "else": "quill_main",
+  "lines": [
+   "Quill: You're holding the Quay Book's ledger. In my handwriting. Awkward.",
+   "Quill: Fine. I bought the boy's notes. I buy everyone's notes. A harbour runs on knowing who sails where.",
+   "Quill: Fees, love. Everything is fees. Even you."
+  ],
+  "choices": [
+   {
+    "text": "Battle",
+    "action": "battle quill"
+   },
+   {
+    "text": "Later"
+   }
+  ]
+ },
+ "book_drop": {
+  "if": {
+   "flag": "nib_done",
+   "var_max": {
+    "q_quay_book_stage": 0
+   }
+  },
+  "else": "book_drop_idle",
+  "lines": [
+   "Under a loose plank: a tin box with a stamp on the lid. The Quay Book's drop.",
+   "Inside, a note: 'Courier collects at Stillwater, by the north bank. Bring the guild kid's next pages.'"
+  ],
+  "action": "quest_stage quay_book 1"
+ },
+ "book_drop_idle": [
+  "A loose plank. Under it, nothing but a very surprised beetle."
+ ],
+ "courier_intro": {
+  "lines": [
+   "Courier: Pages? You're not Nib. Nib is late. Nib is never late, he's greedy."
+  ]
+ },
+ "courier_defeat": {
+  "lines": [
+   "Courier: Ow. Fine. Take the ledger. I only deliver it. To the stamp. On the quay.",
+   "Courier: You know. The stamp. The one who charges for explaining fees."
+  ]
+ },
+ "courier": {
+  "if": {
+   "var_max": {
+    "q_quay_book_stage": 1
+   }
+  },
+  "else": "courier_after",
+  "lines": [
+   "Courier: The ledger goes to the harbour office. Don't tell him I told you. He'll charge me for it."
+  ],
+  "action": "quest_stage quay_book 2"
+ },
+ "courier_after": {
+  "lines": [
+   "Courier: I'm between jobs now. Mostly between hiding places."
+  ]
+ },
+ "quill_defeat": {
+  "lines": [
+   "Quill: The harbour will need a new harbourmaster. And a new Quay Book. Busy week.",
+   "Quill: Take your notes back. Every page. I kept them neat. I'm a professional."
+  ],
+  "action": "give_item max_tonic 2; ledger quay_book",
+  "flag": "quay_book_done"
+ },
+ "quill_lose": {
+  "lines": [
+   "Quill: Thank you for your visit. There is a fee for that too."
+  ]
+ },
+ "ledger_quay_book": {
+  "lines": [
+   "The Quay Book",
+   "Harbourmaster Quill bought route notes from half of Corvane, Nib's included.",
+   "He skimmed your bounties too. Everyone on the quay skims. He just had a stamp."
+  ]
+ },
+ "vetch": {
+  "if": {
+   "var_max": {
+    "q_dye_run_stage": 0
+   },
+   "not_flag": "cartel_done"
+  },
+  "else": "vetch_2",
+  "lines": [
+   "Vetch: Vetch. Cousin of the dye families. The poor cousin. The clever one.",
+   "Vetch: Grey dye is all anyone can get now, so grey dye is gold. Carry a crate to Jory in the Woadfen?",
+   "Vetch: Easy coins. No questions. Questions cost extra."
+  ],
+  "choices": [
+   {
+    "text": "Carry the crate",
+    "action": "quest_stage dye_run 1",
+    "flag": "q_dye_run_taken"
+   },
+   {
+    "text": "No"
+   }
+  ]
+ },
+ "vetch_2": {
+  "if": {
+   "var_min": {
+    "q_dye_run_stage": 2
+   },
+   "not_flag": "cartel_done"
+  },
+  "else": "vetch_idle",
+  "lines": [
+   "Vetch: Rocks? In my crate? Shocking. Truly. Who would do such a thing?",
+   "Vetch: All right. I sold the dye twice and the crate once. That's business, not betrayal. Different word."
+  ],
+  "choices": [
+   {
+    "text": "Battle",
+    "action": "battle vetch"
+   },
+   {
+    "text": "Later"
+   }
+  ]
+ },
+ "vetch_idle": {
+  "lines": [
+   "Vetch: Grey is the new red. Write that down."
+  ],
+  "after_flag": [
+   {
+    "flag": "cartel_done",
+    "lines": [
+     "Vetch: I've gone legitimate. I sell maps now. Some of them are even right."
+    ]
+   }
+  ]
+ },
+ "jory": {
+  "if": {
+   "var_min": {
+    "q_dye_run_stage": 1
+   },
+   "var_max": {
+    "q_dye_run_stage": 1
+   }
+  },
+  "else": "jory_idle",
+  "lines": [
+   "Jory: Vetch's crate? Lovely. Let's see the goods... Rocks. Grey rocks. Painted grey, even.",
+   "Jory: He did this to me last month too. I keep hoping. Hope is cheaper than dye."
+  ],
+  "action": "quest_stage dye_run 2"
+ },
+ "jory_idle": {
+  "lines": [
+   "Jory: Moss-eye Jory. I buy dye, I sell dye, I get rocks. The fen economy."
+  ]
+ },
+ "vetch_defeat": {
+  "lines": [
+   "Vetch: Ow. Fine. Here's your fee, and Jory's money. Tell him the next crate's real. It won't be."
+  ],
+  "action": "give_item strong_tonic 2",
+  "flag": "cartel_done"
+ },
+ "vetch_lose": {
+  "lines": [
+   "Vetch: See? Questions do cost extra."
+  ]
+ },
+ "hobb": {
+  "if": {
+   "not_flag": "q_ladder_asked"
+  },
+  "else": "hobb_check",
+  "lines": [
+   "Hobb: The Greyreach Ladder. Five tamers up the cliff, each meaner than the last.",
+   "Hobb: Beat all five and I'll give you my old belt. It's lucky. I lost it in a bet once, then I won it back."
+  ],
+  "flag": "q_ladder_asked"
+ },
+ "hobb_check": {
+  "if": {
+   "flag": [
+    "beat_ladder_1",
+    "beat_ladder_2",
+    "beat_ladder_3",
+    "beat_ladder_4",
+    "beat_ladder_5"
+   ],
+   "not_flag": "ladder_done"
+  },
+  "else": "hobb_wait",
+  "lines": [
+   "Hobb: All five rungs! Here. The belt didn't fit, so I sold it. Have this instead."
+  ],
+  "action": "give_item focus_brew 1; give_item max_tonic 1",
+  "flag": "ladder_done"
+ },
+ "hobb_wait": {
+  "lines": [
+   "Hobb: The Ladder doesn't climb itself. Mostly because it's people."
+  ],
+  "after_flag": [
+   {
+    "flag": "ladder_done",
+    "lines": [
+     "Hobb: Top of the Ladder. Nothing up there but wind and you."
+    ]
+   }
+  ]
+ },
+ "ladder_1_intro": {
+  "lines": [
+   "Wren: First rung. The easy one. That's what everyone says about me. They're wrong."
+  ]
+ },
+ "ladder_1_defeat": {
+  "lines": [
+   "Wren: Go on then. Next rung. Mind the wind."
+  ]
+ },
+ "ladder_1": {
+  "lines": [
+   "Wren: Hobb pays me in soup. It's good soup, to be fair."
+  ]
+ },
+ "ladder_2_intro": {
+  "lines": [
+   "Tull: Second rung. I'm only here because the first rung owes me money."
+  ]
+ },
+ "ladder_2_defeat": {
+  "lines": [
+   "Tull: Go on then. Next rung. Mind the wind."
+  ]
+ },
+ "ladder_2": {
+  "lines": [
+   "Tull: Hobb pays me in soup. It's good soup, to be fair."
+  ]
+ },
+ "ladder_3_intro": {
+  "lines": [
+   "Mabs: Third rung. Halfway up. Halfway down. Depends on your mood."
+  ]
+ },
+ "ladder_3_defeat": {
+  "lines": [
+   "Mabs: Go on then. Next rung. Mind the wind."
+  ]
+ },
+ "ladder_3": {
+  "lines": [
+   "Mabs: Hobb pays me in soup. It's good soup, to be fair."
+  ]
+ },
+ "ladder_4_intro": {
+  "lines": [
+   "Orrin: Fourth rung. I've been up here so long the rooks think I'm furniture."
+  ]
+ },
+ "ladder_4_defeat": {
+  "lines": [
+   "Orrin: Go on then. Next rung. Mind the wind."
+  ]
+ },
+ "ladder_4": {
+  "lines": [
+   "Orrin: Hobb pays me in soup. It's good soup, to be fair."
+  ]
+ },
+ "ladder_5_intro": {
+  "lines": [
+   "Dorsey: Top rung. Nobody beats me. Mostly because nobody gets this far."
+  ]
+ },
+ "ladder_5_defeat": {
+  "lines": [
+   "Dorsey: Go on then. Next rung. Mind the wind."
+  ]
+ },
+ "ladder_5": {
+  "lines": [
+   "Dorsey: Hobb pays me in soup. It's good soup, to be fair."
+  ]
+ },
+ "sorrel": {
+  "lines": [
+   "Sorrel: Sorrel, naturalist. I'm writing the first honest Spirlog of Corvane. The last one was written by Quill. It had fees.",
+   "Sorrel: Bring me Corvane's own kinds in your team: Millwhit, Drizzlet, Reedquill, Puddock, Glimmoth and Silthop."
+  ],
+  "flag": "q_sorrel_asked",
+  "action": "quest_show sorrel_millwhit Millwhit tonic 2; quest_show sorrel_drizzlet Drizzlet remedy 2; quest_show sorrel_reedquill Reedquill strong_tonic 1; quest_show sorrel_puddock Puddock revival_leaf 1; quest_show sorrel_glimmoth Glimmoth spark_drop 1; quest_show sorrel_silthop Silthop max_tonic 1",
+  "after_flag": [
+   {
+    "flag": "q_sorrel_millwhit_done",
+    "lines": [
+     "Sorrel: Show me another. My pencil is getting bored."
+    ]
+   },
+   {
+    "flag": "sorrel_done",
+    "lines": [
+     "Sorrel: Six kinds, all drawn. Next I'll write the rude chapter: Spirlings that bite tourists."
+    ]
+   }
+  ],
+  "next": "sorrel_check"
+ },
+ "sorrel_check": {
+  "if": {
+   "flag": [
+    "q_sorrel_millwhit_done",
+    "q_sorrel_drizzlet_done",
+    "q_sorrel_reedquill_done",
+    "q_sorrel_puddock_done",
+    "q_sorrel_glimmoth_done",
+    "q_sorrel_silthop_done"
+   ],
+   "not_flag": "sorrel_done"
+  },
+  "lines": [
+   "Sorrel: All six! The Spirlog is done. Here's a copy. It's mostly drawings of noses."
+  ],
+  "action": "give_item kin_charm 1",
+  "flag": "sorrel_done"
+ },
+ "ma_rook": {
+  "if": {
+   "not_flag": "q_post_asked"
+  },
+  "else": "ma_rook_check",
+  "lines": [
+   "Ma Rook: Rook Post. We deliver anything, anywhere, eventually. My rooks are on strike.",
+   "Ma Rook: Five letters. Madderby, the fen, Stillwater, Greyreach and one here on the quay. Don't read them. Everybody reads them."
+  ],
+  "flag": "q_post_asked"
+ },
+ "ma_rook_check": {
+  "if": {
+   "flag": [
+    "post_1",
+    "post_2",
+    "post_3",
+    "post_4",
+    "post_5"
+   ],
+   "not_flag": "post_done"
+  },
+  "else": "ma_rook_wait",
+  "lines": [
+   "Ma Rook: All five delivered? Even the last one? ...The last one was to my husband. From me. It said 'Come home, the rooks miss you.'",
+   "Ma Rook: He's been on the next pier for six years. Pride is a long swim. Here, your wages."
+  ],
+  "action": "give_item strong_tonic 2; give_item revival_leaf 1",
+  "flag": "post_done"
+ },
+ "ma_rook_wait": {
+  "lines": [
+   "Ma Rook: Letters don't deliver themselves. Neither do rooks, apparently."
+  ],
+  "after_flag": [
+   {
+    "flag": "post_done",
+    "lines": [
+     "Ma Rook: He came home. Brought his own rook. They argue. It's lovely."
+    ]
+   }
+  ]
+ },
+ "post_1": {
+  "if": {
+   "flag": "q_post_asked",
+   "not_flag": "post_1"
+  },
+  "else": "post_1_idle",
+  "lines": [
+   "Brine: A letter? For me? ...It's from my own tenant. Saying I owe HIM rent. Bold.",
+   "Brine: I like him. I'm doubling it."
+  ],
+  "flag": "post_1"
+ },
+ "post_1_idle": {
+  "lines": [
+   "Brine: Nothing for me today? Good. Letters are just worries with stamps."
+  ]
+ },
+ "post_2": {
+  "if": {
+   "flag": "q_post_asked",
+   "not_flag": "post_2"
+  },
+  "else": "post_2_idle",
+  "lines": [
+   "Nettle: A love letter! To me? ...No. To Nettle. My sister. Also Nettle. Long story. Parents were tired."
+  ],
+  "flag": "post_2"
+ },
+ "post_2_idle": {
+  "lines": [
+   "Nettle: Nothing for me today? Good. Letters are just worries with stamps."
+  ]
+ },
+ "post_3": {
+  "if": {
+   "flag": "q_post_asked",
+   "not_flag": "post_3"
+  },
+  "else": "post_3_idle",
+  "lines": [
+   "Pike: My own letter, sent back. 'Address unknown'. I sent it to myself. Even the post doesn't want me."
+  ],
+  "flag": "post_3"
+ },
+ "post_3_idle": {
+  "lines": [
+   "Pike: Nothing for me today? Good. Letters are just worries with stamps."
+  ]
+ },
+ "post_4": {
+  "if": {
+   "flag": "q_post_asked",
+   "not_flag": "post_4"
+  },
+  "else": "post_4_idle",
+  "lines": [
+   "Gale: A letter up here? I moved here so nobody could find me. Who told the rooks?",
+   "Gale: It's from my mother. She found me. Of course she found me."
+  ],
+  "flag": "post_4"
+ },
+ "post_4_idle": {
+  "lines": [
+   "Gale: Nothing for me today? Good. Letters are just worries with stamps."
+  ]
+ },
+ "post_5": {
+  "if": {
+   "flag": "q_post_asked",
+   "not_flag": "post_5"
+  },
+  "else": "post_5_idle",
+  "lines": [
+   "Haddock: From Ma Rook? Six years and she writes now? ...Fine. Fine! I'll come home. Tell the rook to stop staring."
+  ],
+  "flag": "post_5"
+ },
+ "post_5_idle": {
+  "lines": [
+   "Haddock: Nothing for me today? Good. Letters are just worries with stamps."
+  ]
+ },
+ "dimsy": {
+  "if": {
+   "not_flag": "favor_dimsy_tip"
+  },
+  "else": "dimsy_after",
+  "lines": [
+   "Dimsy: Dimsy Crake, vault guide. I know the Rook Vault like my own pockets. Better. My pockets have holes.",
+   "Dimsy: There's a side tunnel to the hoard. Quiet, quick, no rooks. Want me to show you?"
+  ],
+  "flag": "q_vault_heard",
+  "choices": [
+   {
+    "text": "Show me",
+    "action": "favor dimsy_tip"
+   },
+   {
+    "text": "I'll take the stairs"
+   }
+  ]
+ },
+ "dimsy_after": {
+  "lines": [
+   "Dimsy: The Vault doesn't care who you trust. Neither do I. Have a nice day!"
+  ]
+ },
+ "dimsy_betray": {
+  "lines": [
+   "The side tunnel is quiet and quick. At its end two vault robbers are waiting with a lantern and a grin.",
+   "Robber: Dimsy sends his love. And his commission."
+  ]
+ },
+ "dimsy_reward": {
+  "lines": [
+   "The side tunnel ends at a dusty crate. Dimsy prises it open and hands you a share. 'Honest guide. Rare breed.'"
+  ]
+ },
+ "dimsy_kept": {
+  "lines": [
+   "The side tunnel just leads back to the stairs. Dimsy shrugs. 'Scenic route.'"
+  ]
+ },
+ "vault_ambush_lose": {
+  "lines": [
+   "The robbers take a toll and leave you in the dark, humming."
+  ]
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "_comment": "Korean texts for the German table kampf_k21. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "%d s left, then everyone without orders rests.": "%d초 남음. 지시가 없으면 휴식합니다.",
+  "%s is about to step out. Swap first?": "곧 %s가 나온다. 먼저 교체?",
+  "%s, you're up. Last longer than the last one.": "%s, 네 차례다. 앞의 녀석보다 오래 버텨.",
+  "A Wayfarer names its next Spirling before it steps out.": "나그네가 다음 Spirling을 내보내기 전에 알려 줍니다.",
+  "All rest": "모두 휴식",
+  "Fight on": "계속 싸우기",
+  "Foe announces: %s": "예고: %s",
+  "Give up? It counts as a loss.": "항복할까? 패배로 칩니다.",
+  "Orders for %s? (%d Energy, %d s)": "%s에게 지시는? (에너지 %d, %d초)",
+  "Swap offer: %s": "교체 기회: %s",
+  "The foe": "상대",
+  "When a Wayfarer's Spirling is beaten, you may swap before the next one steps out.": "나그네의 Spirling을 쓰러뜨리면 다음이 나오기 전에 교체할 수 있습니다.",
+  "You give up. %s doesn't even pretend to be surprised.": "항복했다. %s는 놀란 척도 안 한다."
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "_comment": "Translations of the German table kampf_k28, written by tools/i18n/locales_kampf_k28.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s turns its coat: its gift is now %s.": "%s zmienia front: teraz jego dar to %s.",
+  "Its flame burns in any wind: fog, Daze and Muddle never spoil its aim.": "Jego płomień płonie na każdym wietrze: mgła, Oszołomienie i Zamęt nigdy nie psują mu celu.",
+  "Swaps one Spirling's gift for the hidden gift of its line, or back again, at any ring. Loyalty was never part of the deal. Used up.": "Zamienia dar Spirlinga na ukryty dar jego linii albo z powrotem, na dowolnym pierścieniu. Lojalność nigdy nie była częścią umowy. Zużywa się.",
+  "Turncoat Seed": "Nasiono Odstępcy"
+ }
+}

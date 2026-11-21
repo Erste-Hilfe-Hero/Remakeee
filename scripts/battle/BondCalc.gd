@@ -2,6 +2,7 @@ class_name BondCalc
 extends RefCounted
 ## Bond chance = bond_rate * max(1 - HP%, 0.1) * timing_score * (1.5 if statused) + charm bonus, capped at 0.95.
 ## The chance is never shown to the player (LEGAL.md: no live capture-odds meter).
+## A legendary Spirling multiplies the chance by LegendQuests.bond_factor (0 above half HP).
 
 const MIN_HP_FACTOR: float = 0.1
 const STATUS_BONUS: float = 1.5
@@ -11,4 +12,7 @@ static func chance(target: Spirling, timing_score: float, charm_bonus: float = 0
 	var hp_factor: float = maxf(1.0 - target.hp_fraction(), MIN_HP_FACTOR)
 	var status_bonus: float = STATUS_BONUS if not target.status.is_empty() else 1.0
 	var c: float = target.data.bond_rate * hp_factor * clampf(timing_score, 0.0, 1.0) * status_bonus
-	return clampf(c + charm_bonus, 0.0, MAX_CHANCE)
+	var legend: float = LegendQuests.bond_factor(target, GameState.flags)
+	if legend <= 0.0:
+		return 0.0
+	return clampf(c * legend + charm_bonus, 0.0, MAX_CHANCE)

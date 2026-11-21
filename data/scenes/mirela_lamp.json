@@ -1,0 +1,13 @@
+{
+ "_note": "Chapter 5, lamp room of the lighthouse: the six pages become one map (plan item 1409).",
+ "steps": [
+  {"say": ["You lay Mirela's six pages under the great lamp. The light shines through the paper...", "...and the lines join up. It's one map: the lake, the terraces, and a path north past Crowcrest."]},
+  {"sfx": "warp"}, {"flash": 0.2},
+  {"letter": ["'Where the map ends, I wait.'", "'Keep the lamp lit.'"], "speaker": "Mirela"},
+  {"wait": 0.5},
+  {"say": ["Aldo: Forty years I kept this lamp burning, and never knew why she asked me to.", "Aldo: She's out there, {name}. Past the third Rift. Take this. It was hers."]},
+  {"give_item": "echo_lumen", "count": 1},
+  {"give_item": "max_tonic", "count": 2},
+  {"action": "scene act1_finale"}
+ ]
+}

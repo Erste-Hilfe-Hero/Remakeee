@@ -1,0 +1,37 @@
+{
+ "name": "Copperfold Store",
+ "region": "veydal",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCffCCCW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "copperfold",
+   "tx": 9,
+   "ty": 5,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "benno",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/copperfold_shop_benno",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

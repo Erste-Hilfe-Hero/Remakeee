@@ -8,9 +8,16 @@
  },
  "archivist": {
   "lines": [
-   "I keep the Spirling storage box.",
+   "Spirlings who aren't travelling with you rest here with me.",
    "Want to swap who travels with you?"
   ],
   "action": "storage"
+ },
+ "matchmaker": {
+  "lines": [
+   "Auntie Grisela: Two good families, one sweet song. I arrange the rest.",
+   "Auntie Grisela: Bring me an Echo Core and I put the dowry in writing."
+  ],
+  "action": "matchmaker"
  }
 }

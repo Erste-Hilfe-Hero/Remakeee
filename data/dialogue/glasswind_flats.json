@@ -1,0 +1,168 @@
+{
+ "bell_1": {
+  "if": {
+   "not_flag": "bell_1"
+  },
+  "else": "bell_empty",
+  "lines": [
+   "A caravan bell half under the sand. Its clapper is tied to a camel's tooth. Lucky charm. Was.",
+   "You take the bell. It keeps quiet, for now."
+  ],
+  "action": "set_flag bell_1"
+ },
+ "bell_2": {
+  "if": {
+   "not_flag": "bell_2"
+  },
+  "else": "bell_empty",
+  "lines": [
+   "A caravan bell on a stake, polished by the wind. Someone carved 'turn back' into it, then 'just kidding'.",
+   "You take the bell. It keeps quiet, for now."
+  ],
+  "action": "set_flag bell_2"
+ },
+ "bell_3": {
+  "if": {
+   "not_flag": "bell_3"
+  },
+  "else": "bell_empty",
+  "lines": [
+   "A caravan bell in a dry bush. It rings when nobody touches it. You decide not to think about that.",
+   "You take the bell. It keeps quiet, for now."
+  ],
+  "action": "set_flag bell_3"
+ },
+ "bell_4": {
+  "if": {
+   "not_flag": "bell_4"
+  },
+  "else": "bell_empty",
+  "lines": [
+   "A caravan bell with a name tag: 'Gulnar, lead camel, very opinionated.'",
+   "You take the bell. It keeps quiet, for now."
+  ],
+  "action": "set_flag bell_4"
+ },
+ "bell_5": {
+  "if": {
+   "not_flag": "bell_5"
+  },
+  "else": "bell_empty",
+  "lines": [
+   "A caravan bell on a broken pole. The pole points at the kiln. Poles don't lie. People do.",
+   "You take the bell. It keeps quiet, for now."
+  ],
+  "action": "set_flag bell_5"
+ },
+ "bell_empty": [
+  "An empty stake. The wind whistles where the bell used to ring."
+ ],
+ "helio_1": {
+  "if": {
+   "flag": "s4_mirrors_asked",
+   "not_flag": "helio_1"
+  },
+  "else": "helio_1_plain",
+  "lines": [
+   "A heliograph mirror on a post, tilted at the sky. It flashes at nobody in particular.",
+   "You turn the mirror back toward the sun. It flashes, very pleased with itself."
+  ],
+  "action": "set_flag helio_1"
+ },
+ "helio_1_plain": [
+  "A heliograph mirror on a post, tilted at the sky. It flashes at nobody in particular."
+ ],
+ "helio_2": {
+  "if": {
+   "flag": "s4_mirrors_asked",
+   "not_flag": "helio_2"
+  },
+  "else": "helio_2_plain",
+  "lines": [
+   "A heliograph mirror, cracked down the middle. It sends every message twice, slightly wrong.",
+   "You turn the mirror back toward the sun. It flashes, very pleased with itself."
+  ],
+  "action": "set_flag helio_2"
+ },
+ "helio_2_plain": [
+  "A heliograph mirror, cracked down the middle. It sends every message twice, slightly wrong."
+ ],
+ "helio_3": {
+  "if": {
+   "flag": "s4_mirrors_asked",
+   "not_flag": "helio_3"
+  },
+  "else": "helio_3_plain",
+  "lines": [
+   "A heliograph mirror pointed at the kiln. Its shutter is oiled. Someone uses this one a lot.",
+   "You turn the mirror back toward the sun. It flashes, very pleased with itself."
+  ],
+  "action": "set_flag helio_3"
+ },
+ "helio_3_plain": [
+  "A heliograph mirror pointed at the kiln. Its shutter is oiled. Someone uses this one a lot."
+ ],
+ "sign": [
+  "GLASSWIND FLATS",
+  "East: Ochrewell. South: the Mirage Kiln. Everywhere else: sand, and opinions about sand."
+ ],
+ "kiln_sign": [
+  "MIRAGE KILN - GLASS SOLD, NOT TOLD.",
+  "Under it, in smaller paint: 'Lost caravans, please use the back door.'"
+ ],
+ "kesh": [
+  "Kesh: Rung one. I'm the welcome mat of the ladder. Everybody wipes their feet on me."
+ ],
+ "kesh_intro": [
+  "Kesh: Ladder rules: you lose, you buy the water. Water is expensive out here."
+ ],
+ "kesh_defeat": [
+  "Kesh: Wiped. Go on, rung two's past the rocks."
+ ],
+ "mabli": [
+  "Mabli: I trade salt for water and water for salt. Some days I come out ahead. Never both days."
+ ],
+ "mabli_intro": [
+  "Mabli: Rung two. Salt in the wound, as we say."
+ ],
+ "mabli_defeat": [
+  "Mabli: Rinse and repeat. With what water, though."
+ ],
+ "fennel": [
+  "Fennel: I used to stoke the Mirage Kiln. Then I learned what they were baking. Now I stoke this ladder."
+ ],
+ "fennel_intro": [
+  "Fennel: Rung three's hot. Mind your fingers."
+ ],
+ "fennel_defeat": [
+  "Fennel: Burned out. Story of my life."
+ ],
+ "pell": [
+  "Old Pell: I've climbed this ladder forty times. Never got paid. Never learned. Very consistent."
+ ],
+ "pell_intro": [
+  "Old Pell: Rung four. Halfway. That's where most people start counting their money. Don't."
+ ],
+ "pell_defeat": [
+  "Old Pell: Good. Now listen: when you win, make Sabine write the promise on the ladder board. In chalk. With a witness.",
+  "Old Pell: My goat will witness. She's very reliable. More than Sabine, anyway."
+ ],
+ "yusra": [
+  "Yusra: I dance in the heat shimmer. From far away I look like an oasis. Up close, I look like a bill."
+ ],
+ "yusra_intro": [
+  "Yusra: Rung five. Try not to fall for me. Everyone does, then they fall off."
+ ],
+ "yusra_defeat": [
+  "Yusra: Real after all. How disappointing for both of us."
+ ],
+ "brannt": [
+  "Brannt: I guard caravans. Fewer every year. I'm starting to think it's the bells."
+ ],
+ "brannt_intro": [
+  "Brannt: Rung six. Last one outside. After me, it's Sabine's house, Sabine's rules."
+ ],
+ "brannt_defeat": [
+  "Brannt: Go on in. Count your fingers after you shake her hand."
+ ]
+}

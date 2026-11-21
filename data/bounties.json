@@ -1,0 +1,21 @@
+{
+ "_comment": "Daily bounty fights (master plan item 1117) and the 100 percent certificate (item 1120). Read by scripts/core/Bounties.gd. Every day the Fixer pins three crooks on the board, the same for everyone. Beat one for its price; the Fixer skims a cut, and sometimes a snitch tips the mark off (tip_chance): the mark comes two rings stronger and the price doubles. Trust no one.",
+ "per_day": 3,
+ "fixer_cut": 0.2,
+ "tip_chance": 0.25,
+ "tip_ring_bonus": 2,
+ "tip_price_mult": 2,
+ "ring_offset": [-2, 0, 2],
+ "marks": [
+  {"id": "velvet_tam", "name": "Velvet Tam", "crime": "Sold the same alley to three gangs. Twice.", "team": ["Riptail", "Shalebat"], "price": 300},
+  {"id": "half_ear_osk", "name": "Half-Ear Osk", "crime": "Borrowed the Fixer's cart. Returned the wheels.", "team": ["Thornback", "Smoldrake"], "price": 350},
+  {"id": "mother_greel", "name": "Mother Greel", "crime": "Runs a soup kitchen. The soup is evidence.", "team": ["Mossling", "Puddlet", "Zippit"], "price": 450},
+  {"id": "the_accountant", "name": "The Accountant", "crime": "Knows where the money went. All of it.", "team": ["Glimmerax", "Calderox"], "price": 500},
+  {"id": "lucky_brannoch", "name": "Lucky Brannoch", "crime": "Nobody is that lucky. Check his sleeves.", "team": ["Zippit", "Riptail", "Kindlop"], "price": 400},
+  {"id": "quiet_wenna", "name": "Quiet Wenna", "crime": "Said nothing to the wardens. That is the problem.", "team": ["Shalebat", "Verdantusk"], "price": 550}
+ ],
+ "certificate_lines": [
+  "This paper says you did everything. Frame it. Somebody will try to forge it by Thursday.",
+  "Signed by the Fixer, witnessed by a man who swears he was never here."
+ ]
+}

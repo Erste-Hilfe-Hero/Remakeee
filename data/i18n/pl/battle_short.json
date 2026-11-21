@@ -1,0 +1,14 @@
+{
+ "_comment": "pl short words for the battle screen (German table battle_short), keyed by the English text. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "Again: - (battle button)": "Znowu: -",
+  "Bond (battle button)": "Więź",
+  "Give up (battle button)": "Poddaj",
+  "Growth (bar label)": "Wzrost",
+  "Item (battle button)": "Torba",
+  "Leave (battle button)": "Odejdź",
+  "Oath (battle button)": "Pakt",
+  "Restart (battle button)": "Znów",
+  "Swap (battle button)": "Zmień"
+ }
+}

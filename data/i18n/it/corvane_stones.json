@@ -1,0 +1,18 @@
+{
+ "_comment": "it translation of the corvane_stones table, keyed by the English text.",
+ "strings": {
+  "A cartographer's stone at the edge of the Wide Rift. The rose has a fifth point, towards the dark.": "Una pietra da cartografo sull'orlo dello Squarcio Ampio. La rosa ha una quinta punta, rivolta verso il buio.",
+  "A cartographer's stone at the water's edge. In the pond its rose turns the other way.": "Una pietra da cartografo in riva all'acqua. Nello stagno la sua rosa gira dall'altra parte.",
+  "A cartographer's stone half sunk in the boards. The rose points at the harbour office. Of course it does.": "Una pietra da cartografo mezza affondata nelle assi. La rosa indica l'ufficio del porto. Ovviamente.",
+  "A cartographer's stone in a flower bed. Its rose has been painted over grey, then scraped clean.": "Una pietra da cartografo in un'aiuola. La rosa è stata coperta di vernice grigia, poi raschiata fino a ripulirla.",
+  "A cartographer's stone on the cliff. Rooks have used it as a table for years.": "Una pietra da cartografo sulla scogliera. I corvi la usano come tavolo da anni.",
+  "A cartographer's stone sinking into the moor. The rose still points north. The stone has given up on the rest.": "Una pietra da cartografo che sprofonda nella brughiera. La rosa indica ancora il nord. Al resto la pietra ha rinunciato.",
+  "A cartographer's stone under the reeds. Somebody scratched 'not this way' under the rose.": "Una pietra da cartografo sotto le canne. Qualcuno ha graffiato 'non di qua' sotto la rosa.",
+  "A cartographer's stone with a betting slip tucked under it. The slip lost.": "Una pietra da cartografo con una ricevuta di scommessa infilata sotto. La scommessa è andata persa.",
+  "A cartographer's stone wrapped in roots. The rose glows faintly when you touch it.": "Una pietra da cartografo avvolta dalle radici. La rosa manda un debole bagliore quando la tocchi.",
+  "A cartographer's stone, cracked down the middle. Both halves still point north. Stubborn.": "Una pietra da cartografo, spaccata a metà. Tutte e due le metà indicano ancora il nord. Testarde.",
+  "A cartographer's stone, stained red, gold and green by a hundred years of dye.": "Una pietra da cartografo, macchiata di rosso, oro e verde da cent'anni di tintura.",
+  "An old cartographer's stone by the quay wall. Someone has chalked a price on it.": "Una vecchia pietra da cartografo accanto al muro della banchina. Qualcuno ci ha scritto un prezzo col gesso.",
+  "Cartographer's stones: %d/%d": "Pietre da cartografo: %d/%d"
+ }
+}

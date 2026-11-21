@@ -1,0 +1,15 @@
+# Used on a machine where another Caddy already owns ports 80 and 443 (SHARED_HOST=1 in setup.sh).
+# Chimora's gateway then has no public ports; it joins the other proxy's network as "chimora-gateway",
+# and that proxy forwards the Chimora address to it (server/proxy_site.sh).
+services:
+  caddy:
+    ports: !reset []
+    networks:
+      default:
+      shared:
+        aliases: [chimora-gateway]
+
+networks:
+  shared:
+    external: true
+    name: ${SHARED_NETWORK}

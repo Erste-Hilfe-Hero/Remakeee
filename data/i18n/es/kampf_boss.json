@@ -1,0 +1,21 @@
+{
+ "_comment": "es translation of the kampf_boss table, keyed by the English text.",
+ "strings": {
+  "%s grows restless: the longer the fight, the harder it strikes!": "¡%s se impacienta: cuanto más dura el combate, más fuerte golpea!",
+  "%s lies open: its Guard is down for a turn!": "¡%s queda expuesto: baja la Guardia durante un turno!",
+  "Before the Hush, the Cinder Rift fed a village's forges. The smiths sold the last of its heat to the highest bidder, and what was left curled up and learned to hate. It still keeps time like a bellows: hold it under High Tide and it can't stoke its next phase.": "Antes del Silencio, la Grieta de Brasa alimentaba las forjas de una aldea. Los herreros vendieron lo que le quedaba de calor al mejor postor, y lo que sobró se enroscó y aprendió a odiar. Todavía marca el compás como un fuelle: mantenla bajo Marea alta y no podrá avivar su siguiente fase.",
+  "Ebb": "Reflujo",
+  "It acts %d times each turn.": "Actúa %d veces cada turno.",
+  "Mist hides things, and the people nearby paid it well to hide one thing in particular. When the payments stopped, it hid them too. Dawn Glow burns its fog thin; while the light lies, it can't pull itself into a new shape.": "La niebla esconde cosas, y la gente de los alrededores le pagaba bien por esconder una en concreto. Cuando dejaron de pagar, los escondió también a ellos. El Brillo del alba adelgaza su niebla; mientras dura la luz, no puede recomponerse en una forma nueva.",
+  "Not a breath of wind: no stat stage rises or falls on either side.": "Ni un soplo de viento: ninguna característica sube ni baja en ningún bando.",
+  "Still Air": "Aire quieto",
+  "The Ashen Heart splits open. Its core burns white!": "¡El Corazón Ceniciento se abre en dos! ¡Su núcleo arde en blanco!",
+  "The Drowned Heart sinks its weight into one last surge!": "¡El Corazón Ahogado vuelca todo su peso en una última oleada!",
+  "The Mist Heart pulls the fog tight around its core!": "¡El Corazón de Niebla ciñe la niebla alrededor de su núcleo!",
+  "The Tide Rift sank a ferry once, and the ferryman swore he had warned everyone. He had not. The heart at the bottom remembers every name on the passenger list. Static Veil sets its water humming, and while it hums the heart can't gather its next surge.": "La Grieta de Marea hundió una vez un transbordador, y el barquero juró que había avisado a todos. No lo había hecho. El corazón del fondo recuerda cada nombre de la lista de pasajeros. El Velo estático hace zumbar su agua, y mientras zumba el corazón no puede reunir su siguiente oleada.",
+  "The water has run out: resting gives 1 Energy less on both sides.": "Se ha acabado el agua: descansar da 1 de Energía menos en ambos bandos.",
+  "What the Ashen Heart was": "Lo que fue el Corazón Ceniciento",
+  "What the Drowned Heart was": "Lo que fue el Corazón Ahogado",
+  "What the Mist Heart was": "Lo que fue el Corazón de Niebla"
+ }
+}

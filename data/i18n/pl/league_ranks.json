@@ -1,0 +1,20 @@
+{
+ "_comment": "pl translation of the league_ranks table, keyed by the English text.",
+ "strings": {
+  "Apprentice": "Uczeń",
+  "Boss": "Szef",
+  "Broker": "Pośrednik",
+  "Captain": "Kapitan",
+  "Fixer": "Załatwiacz",
+  "Map Master": "Mistrz Map",
+  "No season reward is waiting.": "Nie czeka na ciebie żadna nagroda sezonu.",
+  "Placement": "Kwalifikacje",
+  "Placement battles left: %d": "Pozostałe walki kwalifikacyjne: %d",
+  "Rank: %s": "Stopień: %s",
+  "Runner": "Goniec",
+  "Season reward": "Nagroda sezonu",
+  "Season reward: %d x %s": "Nagroda sezonu: %d x %s",
+  "Shield: %d battles without losing the rank": "Tarcza: %d walk bez utraty stopnia",
+  "You left too many battles. Search again in %d seconds.": "Za dużo porzuconych walk. Szukaj ponownie za %d sekund."
+ }
+}

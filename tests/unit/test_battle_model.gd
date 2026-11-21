@@ -66,7 +66,7 @@ func test_faster_moves_first_at_equal_priority() -> void:
 
 func test_energy_starts_at_10_costs_and_regenerates() -> void:
 	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 30, ["Cinder Breath"])]
-	var theirs: Array[Spirling] = [BattleFixtures.make("Calderox", 50, ["Headlong Charge"])]
+	var theirs: Array[Spirling] = [BattleFixtures.make("Calderox", 50, ["Bowl Over"])]
 	var m: BattleModel = BattleFixtures.model(mine, theirs)
 	assert_eq(mine[0].energy, 10)
 	m.submit_turn(BattleAction.make_move(Side.PLAYER, 0), BattleAction.make_rest(Side.FOE))
@@ -91,13 +91,13 @@ func test_rest_restores_energy() -> void:
 	m.submit_turn(BattleAction.make_rest(Side.PLAYER), BattleAction.make_rest(Side.FOE))
 	assert_eq(mine[0].energy, 2 + BattleModel.REST_ENERGY + BattleModel.ENERGY_PER_TURN)
 
-func test_scorch_ticks_one_sixteenth() -> void:
+func test_scorch_ticks_one_twelfth() -> void:
 	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 50)]
 	var m: BattleModel = BattleFixtures.model(mine, _p(["Kindlop"], 5))
 	m.apply_status(Side.PLAYER, "scorch")
 	var before: int = mine[0].hp
 	m.submit_turn(BattleAction.make_rest(Side.PLAYER), BattleAction.make_rest(Side.FOE))
-	assert_eq(before - mine[0].hp, mine[0].max_hp() / 16)
+	assert_eq(before - mine[0].hp, mine[0].max_hp() / 12)
 
 func test_root_ticks_and_blocks_swap() -> void:
 	var mine: Array[Spirling] = _p(["Calderox", "Kindlop"], 50)
@@ -106,7 +106,7 @@ func test_root_ticks_and_blocks_swap() -> void:
 	assert_false(m.is_legal(BattleAction.make_swap(Side.PLAYER, 1)))
 	var before: int = mine[0].hp
 	m.submit_turn(BattleAction.make_rest(Side.PLAYER), BattleAction.make_rest(Side.FOE))
-	assert_eq(before - mine[0].hp, mine[0].max_hp() / 16)
+	assert_eq(before - mine[0].hp, mine[0].max_hp() / 12)
 
 func test_soak_halves_speed_and_wears_off_after_3_turns() -> void:
 	var mine: Array[Spirling] = [BattleFixtures.make("Zippit", 30)]
@@ -141,7 +141,7 @@ func test_jolt_skips_about_a_quarter_of_turns() -> void:
 	var skipped: int = 0
 	var n: int = 400
 	for i: int in n:
-		var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 30, ["Headlong Charge"])]
+		var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 30, ["Bowl Over"])]
 		var m: BattleModel = BattleFixtures.model(mine, _p(["Calderox"], 60), true, i)
 		m.apply_status(Side.PLAYER, "jolt")
 		if BattleFixtures.first_of(m.submit_turn(BattleAction.make_move(Side.PLAYER, 0), BattleAction.make_rest(Side.FOE)), T.STATUS_PREVENTED) != null:
@@ -165,7 +165,7 @@ func test_faint_forces_player_switch_then_continues() -> void:
 	assert_eq(m.phase, BattleModel.Phase.CHOOSE_ACTIONS)
 
 func test_victory_awards_xp_and_ends() -> void:
-	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 60, ["Headlong Charge"])]
+	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 50, ["Bowl Over"])]
 	var theirs: Array[Spirling] = [BattleFixtures.make("Zippit", 3)]
 	var m: BattleModel = BattleFixtures.model(mine, theirs)
 	var xp_before: int = mine[0].xp
@@ -176,7 +176,7 @@ func test_victory_awards_xp_and_ends() -> void:
 	assert_eq(ev[ev.size() - 1].type, T.BATTLE_END)
 
 func test_trainer_switches_in_next_spirling() -> void:
-	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 60, ["Headlong Charge"])]
+	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 50, ["Bowl Over"])]
 	var theirs: Array[Spirling] = _p(["Zippit", "Zephlet"], 3)
 	var m: BattleModel = BattleFixtures.model(mine, theirs, false)
 	var ev: Array[BattleEvent] = m.submit_turn(BattleAction.make_move(Side.PLAYER, 0), BattleAction.make_rest(Side.FOE))
@@ -185,7 +185,7 @@ func test_trainer_switches_in_next_spirling() -> void:
 	assert_false(m.is_finished())
 
 func test_level_cap_stops_xp() -> void:
-	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 12, ["Headlong Charge"])]
+	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 12, ["Bowl Over"])]
 	var m := BattleModel.new(mine, [BattleFixtures.make("Zippit", 3)] as Array[Spirling], true, 3)
 	m.level_cap = 12
 	m.start()
@@ -214,7 +214,7 @@ func test_bond_success_ends_battle() -> void:
 		assert_true(m.is_finished())
 
 func test_failed_bond_gives_free_action() -> void:
-	var theirs: Array[Spirling] = [BattleFixtures.make("Zephlet", 5, ["Headlong Charge"])]
+	var theirs: Array[Spirling] = [BattleFixtures.make("Zephlet", 5, ["Bowl Over"])]
 	var m: BattleModel = BattleFixtures.model(_p(["Kindlop"], 30), theirs, true, 5)
 	# Timing score 0 => chance 0 => guaranteed failure.
 	var ev: Array[BattleEvent] = m.submit_turn(BattleAction.make_bond(Side.PLAYER, 0.0), BattleAction.make_rest(Side.FOE))
@@ -246,7 +246,7 @@ func test_items_heal_and_are_consumed_and_banned_in_rift_born() -> void:
 	m.inventory = {"tonic": 1}
 	mine[0].hp = 5
 	m.submit_turn(BattleAction.make_item(Side.PLAYER, "tonic", 0), BattleAction.make_rest(Side.FOE))
-	assert_eq(mine[0].hp, 25)
+	assert_eq(mine[0].hp, 30)
 	assert_eq(int(m.inventory.tonic), 0)
 	m.inventory = {"tonic": 3}
 	m.items_allowed = false

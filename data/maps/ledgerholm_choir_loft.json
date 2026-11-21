@@ -1,0 +1,44 @@
+{
+ "name": "Choir Loft",
+ "region": "quillmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "ledgerholm",
+   "tx": 3,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "singer",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/ledgerholm_choir_loft_singer",
+   "sprite": "villager"
+  },
+  {
+   "id": "q3_short_till_jens",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/q3_short_till_jens",
+   "sprite": "villager",
+   "show_flag": "q3_short_till_asked"
+  }
+ ],
+ "signs": []
+}

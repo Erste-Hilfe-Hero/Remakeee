@@ -1,0 +1,11 @@
+{
+ "_doc": "Flame colours of the Wayfarer's lantern (KAMPF_PLAN_1000 item 837): cosmetic endgame rewards, nothing else changes. The colour tints the light circle in caves from Era III on (soft edge); Era I and II keep their ink look. unlock: {} (always), {flag}, {record, at} (GameState.records value at least at) or {hall_clears} (BattleHalls.total_clears). Scripts: LanternColors.gd, PauseMenu Storm Lantern, EraLightLayer.",
+ "default": "lamp_gold",
+ "colors": [
+  {"id": "lamp_gold", "name": "Lamp Gold", "color": "f2c14e", "hint": "Always lit.", "unlock": {}},
+  {"id": "ember_red", "name": "Ember Red", "color": "e0563a", "hint": "Climb the whole lighthouse stair.", "unlock": {"flag": "gauntlet_clear"}},
+  {"id": "drowned_blue", "name": "Drowned Blue", "color": "4f8fe0", "hint": "Reach floor 20 of the endless stretch.", "unlock": {"record": "endless_best", "at": 20}},
+  {"id": "hall_violet", "name": "Hall Violet", "color": "a46ee0", "hint": "Clear the Battle Halls 10 times.", "unlock": {"hall_clears": 10}},
+  {"id": "wardens_ash", "name": "Wardens' Ash", "color": "d8d4e8", "hint": "Beat every Warden in one master tour.", "unlock": {"flag": "master_tour_clear"}}
+ ]
+}

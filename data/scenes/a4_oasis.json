@@ -1,0 +1,11 @@
+{
+ "_note": "Act IV, the oasis gate after the Tower Rift: Kaia's courier of record (betrayal kaia_witness), the Veil's tunnel pass (trust choice a4_tunnel).",
+ "steps": [
+  {
+   "action": "betrayal kaia_witness"
+  },
+  {
+   "dialogue": "betrayal/a4_tunnel"
+  }
+ ]
+}

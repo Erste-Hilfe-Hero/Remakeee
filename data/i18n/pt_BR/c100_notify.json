@@ -1,0 +1,12 @@
+{
+ "_comment": "Brazilian Portuguese texts for the German table c100_notify. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "%s is back from the roaming trip.": "%s voltou do passeio.",
+  "A new Find of the Day is waiting in Veydal.": "Um novo Achado do Dia espera em Veydal.",
+  "Chimora can send a short note on this phone when a roaming trip is over or a new Find of the Day is waiting. Never at night, at most one a day each. You can turn it off any time in Settings.": "Chimora pode mandar um aviso curto neste celular quando um passeio termina ou um novo Achado do Dia está esperando. Nunca à noite, no máximo um por dia de cada tipo. Dá para desligar quando quiser nas Configurações.",
+  "Turn on notifications?": "Ligar os avisos?",
+  "Notifications are off unless you turn them on. They are planned on this phone only; nothing about them is sent anywhere.": "Os avisos ficam desligados até você ligá-los. Eles são agendados só neste celular; nada é enviado para lugar nenhum.",
+  "Notifications: %s": "Avisos: %s",
+  "A note on this phone when a trip is over or a new Find of the Day waits. If the phone blocks it, allow it in the phone settings.": "Um aviso neste celular quando um passeio termina ou um novo Achado do Dia espera. Se o celular bloquear, permita nas configurações dele."
+ }
+}

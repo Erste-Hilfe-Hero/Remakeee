@@ -1,0 +1,195 @@
+{
+ "name": "Rime Rift",
+ "region": "quillmarch",
+ "biome": "rift",
+ "backdrop": "voice",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "TTTTTTTTTTTT",
+  "TT::.XX.::TT",
+  "T::.......:T",
+  "T:......T_.T",
+  "T..o.....T_T",
+  "T.......ST_T",
+  "T@@@....TT_T",
+  "T@@@....:T_T",
+  "T........T_T",
+  "T.X......T_T",
+  "T....@@..T_T",
+  "T....@@..T_T",
+  "TTTT..TTTT_T",
+  "T........T_T",
+  "T..::....T_T",
+  "TTT..TTTTT_T",
+  "T........T_T",
+  "T........T_T",
+  "TTTT..TTTT.T",
+  "T..........T",
+  "T.X......X.T",
+  "TTTTT..TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "rimeholt",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "rimeholt",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "acolyte",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "quillmarch/rime_rift_acolyte",
+   "sprite": "warden",
+   "trainer": "Rime Acolyte Solrun",
+   "intro": "quillmarch/rime_rift_acolyte_intro",
+   "defeat": "quillmarch/rime_rift_acolyte_defeat",
+   "money": 3160,
+   "team": [
+    {
+     "species": "Siltarra",
+     "level": 79
+    },
+    {
+     "species": "Veskara",
+     "level": 79
+    }
+   ]
+  },
+  {
+   "id": "warden_quenby",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/warden_quenby",
+   "sprite": "warden",
+   "trainer": "Warden Quenby",
+   "warden": "v3_rime",
+   "team": [
+    {
+     "species": "Siltarra",
+     "level": 79
+    },
+    {
+     "species": "Veskara",
+     "level": 79
+    },
+    {
+     "species": "Glacilisk",
+     "level": 80
+    },
+    {
+     "species": "Rimesovereign",
+     "level": 80
+    }
+   ],
+   "intro": "quillmarch/warden_quenby_intro",
+   "defeat": "quillmarch/warden_quenby_defeat",
+   "ai": 3,
+   "money": 8400,
+   "rule": "undertow",
+   "win_flags": [
+    "rift_v3_rime_sealed",
+    "v3_ch3_done"
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Siltaroth",
+      "level": 74
+     },
+     {
+      "species": "Veskarion",
+      "level": 74
+     },
+     {
+      "species": "Glacilisk",
+      "level": 75
+     },
+     {
+      "species": "Rimesovereign",
+      "level": 75
+     },
+     {
+      "species": "Cindravax",
+      "level": 75
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Siltarra",
+      "level": 81
+     },
+     {
+      "species": "Veskara",
+      "level": 81
+     },
+     {
+      "species": "Glacilisk",
+      "level": 82
+     },
+     {
+      "species": "Rimesovereign",
+      "level": 82
+     },
+     {
+      "species": "Siltarra",
+      "level": 77
+     }
+    ]
+   }
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "quillmarch/rime_rift_spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "quillmarch/rime_rift_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v3_rime_sealed",
+   "closed": "@"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 10,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_rime_rift_q3_0_10"
+  },
+  {
+   "x": 11,
+   "y": 14,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_rime_rift_q3_11_14"
+  }
+ ]
+}

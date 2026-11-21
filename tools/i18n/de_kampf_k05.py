@@ -1,0 +1,112 @@
+"""German texts for docs/KAMPF_PLAN_1000.md, "Rift-Felder und Umgebung" and "Mehrfachkämpfe".
+Own file so the parallel battle-plan threads do not collide in the shared tables."""
+T = {
+# Fields
+"Rubble Rain": "Geröllregen",
+"Gale Eye": "Sturmauge",
+"Grit and pebbles patter down. Stone arts land heavier, Volt arts ground out, and no charge can build.":
+    "Grus und Kiesel prasseln herab. Stone-Techniken treffen schwerer, Volt-Techniken verpuffen im Boden, und keine Ladung baut sich auf.",
+"The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off.":
+    "Der Wind kreist um den Riss und hält in der Mitte den Atem an. Gale-Techniken schneiden schärfer, Bloom-Techniken welken, und niemand kann eindösen.",
+"The %s gives way to the %s.": "{0} weicht dem Feld {1}.",
+"No Rift field.": "Kein Riss-Feld.",
+"Rift field %s, %d turns left.": "Riss-Feld {0}, noch {1} Runden.",
+"Rift field %s, for the whole battle.": "Riss-Feld {0}, für den ganzen Kampf.",
+# Arts and Keepsake
+"Rubble Call": "Geröllruf",
+"Gale Call": "Sturmruf",
+"Calls a rain of rubble over the field.": "Ruft einen Geröllregen über das Feld.",
+"Calls the eye of a gale over the field.": "Ruft das Auge eines Sturms über das Feld.",
+"Field Stake": "Feldpflock",
+"Keepsake. A Rift field its holder calls lasts 2 turns longer.": "Andenken. Ein Riss-Feld, das der Träger ruft, hält 2 Runden länger.",
+# Gifts
+"Field Strider": "Feldläufer",
+"A Rift field never weakens its arts.": "Ein Riss-Feld schwächt seine Techniken nie.",
+"Echo Soul": "Echo-Seele",
+"Gains 2 Energy whenever a new Rift field is laid.": "Erhält 2 Energie, sobald ein neues Riss-Feld entsteht.",
+# Lexicon
+"Rift fields": "Rift-Felder",
+"A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns on every difficulty; then the place's own field comes back. A new field pushes the old one out at once.":
+    "Ein Riss-Feld lässt ein Element x1.2 treffen und ein anderes x0.85. Eine Ruf-Technik legt ihr Feld auf jeder Stufe für 5 Runden; danach kehrt das Feld des Ortes zurück. Ein neues Feld verdrängt das alte sofort.",
+"Ash hangs in the air. Ember arts hit harder, Tide arts sputter.": "Asche hängt in der Luft. Ember-Techniken treffen härter, Tide-Techniken stottern.",
+"The water stands knee-deep. Tide arts hit harder, Ember arts fizzle, and nothing can catch Scorch.":
+    "Das Wasser steht knietief. Tide-Techniken treffen härter, Ember-Techniken zischen aus, und nichts fängt Brand.",
+"Light drowns in the murk. Umbra arts hit harder, Lumen arts dim. At dusk and at night it holds a turn longer.":
+    "Licht ertrinkt im Dunkel. Umbra-Techniken treffen härter, Lumen-Techniken verblassen. In der Dämmerung und nachts hält es eine Runde länger.",
+"Every hair stands on end. Volt arts hit harder, Stone arts crumble, and Volt Spirlings gain 1 extra Energy each turn.":
+    "Jedes Haar stellt sich auf. Volt-Techniken treffen härter, Stone-Techniken bröckeln, und Volt-Spirlings erhalten jede Runde 1 Energie extra.",
+"Pollen settles on everything. Bloom arts hit harder, Gale arts stall, and Bloom Spirlings mend a little each turn.":
+    "Blütenstaub legt sich auf alles. Bloom-Techniken treffen härter, Gale-Techniken stocken, und Bloom-Spirlings heilen jede Runde ein wenig.",
+"A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.":
+    "Ein blasses Morgenlicht. Lumen-Techniken treffen härter, Umbra-Techniken verblassen, und ein Echo-Ruf gelingt etwas leichter. Im Morgengrauen und tagsüber hält es eine Runde länger.",
+"Grit patters down without end. Stone arts hit harder, Volt arts ground out, and nobody can be Jolted.":
+    "Grus prasselt ohne Ende. Stone-Techniken treffen härter, Volt-Techniken verpuffen im Boden, und niemand erleidet Schock.",
+"A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.":
+    "Ein stiller Ring in kreisendem Wind. Gale-Techniken treffen härter, Bloom-Techniken welken, und niemand verfällt in Schläfrigkeit.",
+}
+T.update({
+# Multi battles: support arts
+"Mending Chorus": "Heilchor",
+"A soft chord rings out. It and every ally beside it mend a fifth of their Vigor.": "Ein sanfter Akkord erklingt. Der Spirling und jeder Verbündete neben ihm heilen ein Fünftel ihrer Kraft.",
+"Kindred Balm": "Sippenbalsam",
+"Tends the most hurt ally beside it for a third of its Vigor. Alone, it tends itself.": "Pflegt den am schwersten verletzten Verbündeten neben sich um ein Drittel seiner Kraft. Allein pflegt er sich selbst.",
+"Shell Ring": "Schalenring",
+"Raises a ring of shale around its side. Everyone there takes less damage for 3 turns.": "Zieht einen Ring aus Schiefer um die eigene Seite. Alle dort nehmen 3 Runden lang weniger Schaden.",
+"Lure Dance": "Locktanz",
+"A showy, mocking dance. Every aimed art of the foes goes for it for 2 turns.": "Ein auffälliger, spöttischer Tanz. 2 Runden lang zielt jede gezielte Technik der Gegner auf ihn.",
+"Breakwater Stand": "Wellenbrecher",
+"Plants itself before its most hurt ally and takes the aimed hits meant for it for 2 turns.": "Stellt sich vor den am schwersten verletzten Verbündeten und fängt 2 Runden lang die gezielten Treffer für ihn ab.",
+"The guard over your side fades.": "Der Schutz über deiner Seite vergeht.",
+"The guard over the foe's side fades.": "Der Schutz über der Gegnerseite vergeht.",
+"%s stops drawing the foes' aim.": "%s lenkt die Gegner nicht mehr auf sich.",
+"%s stops covering its ally.": "%s deckt den Verbündeten nicht mehr.",
+"%s raises a guard over its whole side for %d turns!": "{0} schützt die ganze eigene Seite {1} Runden lang!",
+"%s draws every aimed art onto itself for %d turns!": "{0} zieht {1} Runden lang jede gezielte Technik auf sich!",
+"%s steps in front of %s!": "%s stellt sich vor %s!",
+"%s has nobody to cover.": "%s hat niemanden zu decken.",
+# Formation bonus
+"Formation, %s: %s": "Formation, %s: %s",
+"Stone Wall": "Steinwall",
+"Gale Flock": "Sturmschwarm",
+"Ember Pack": "Glutrudel",
+"Tide School": "Flutschwarm",
+# Slot lines (screen reader)
+"Foe": "Gegner",
+"Ally": "Verbündet",
+"Yours": "Deiner",
+"%s, slot %d of %d: %s, Vigor %d of %d": "%s, Platz %d von %d: %s, Kraft %d von %d",
+})
+T.update({
+"%s leads the swarm!": "%s führt den Schwarm an!",
+"With %s down, the swarm falters!": "Ohne %s gerät der Schwarm ins Wanken!",
+})
+T.update({
+"Combo, %s! The art hits %s harder.": "Kombo, %s! Die Technik trifft %s härter.",
+"Firestorm": "Feuersturm",
+"Thunder Tide": "Donnerflut",
+"Root and Rock": "Wurzel und Fels",
+"Dusk and Dawn": "Dämmer und Morgen",
+})
+T.update({
+"Tip: Several Spirlings fight at once here. Each one gets its own orders, left to right.": "Tipp: Hier kämpfen mehrere Spirlings gleichzeitig. Jeder bekommt eigene Befehle, von links nach rechts.",
+"Pick a foe to aim at; the line shows how hard the art would hit it. Arts marked all sweep every foe.": "Wähle einen Gegner als Ziel; die Zeile zeigt, wie hart die Technik ihn träfe. Techniken mit alle treffen jeden Gegner.",
+"Two allies hitting one foe with paired elements set off a combo. The back row takes softer physical hits.": "Treffen zwei Verbündete einen Gegner mit passenden Elementen, gibt es eine Kombo. Die hintere Reihe nimmt physische Treffer schwächer.",
+"Battles with several Spirlings": "Kämpfe mit mehreren Spirlings",
+})
+T.update({
+"Battle report": "Kampfbericht",
+"%s: %d damage": "%s: %d Schaden",
+"%s: %d damage, %d knocked out": "%s: %d Schaden, %d besiegt",
+"Rift fields: %s": "Riss-Felder: %s",
+"Best of the battle: %s, %d damage": "Bester des Kampfes: %s, %d Schaden",
+})
+T.update({
+"%s and %s trade places!": "%s und %s tauschen die Plätze!",
+})
+T.update({
+"Heals it and every ally beside it by %d%% of their Vigor.": "Heilt ihn und jeden Verbündeten neben ihm um %d%% ihrer Kraft.",
+"Heals the most hurt ally beside it by %d%% of its Vigor.": "Heilt den am schwersten verletzten Verbündeten neben ihm um %d%% seiner Kraft.",
+"Its side takes less damage for %d turns.": "Seine Seite nimmt %d Runden lang weniger Schaden.",
+"Draws the foes' aimed arts for %d turns.": "Zieht %d Runden lang die gezielten Techniken der Gegner auf sich.",
+"Takes the aimed hits meant for its most hurt ally for %d turns.": "Fängt %d Runden lang die gezielten Treffer für den am schwersten verletzten Verbündeten ab.",
+})

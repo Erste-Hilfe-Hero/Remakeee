@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_k26, written by tools/i18n/locales_kampf_k26.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s sent you matchup notes.": "%s sana eşleşme notları gönderdi.",
+  "%s's notes: %d matchups you did not know yet. The move list shows them now.": "{0} adlı oyuncunun notları: henüz bilmediğin {1} eşleşme. Teknik listesi artık bunları gösteriyor.",
+  "%s's notes: nothing you did not know already. Flattering, in a way.": "%s adlı oyuncunun notları: zaten bilmediğin hiçbir şey yok. Bir bakıma gurur verici.",
+  "A seal is cut into the base: %s. Which element breaks it?": "Kaidenin içine bir mühür kazınmış: %s. Hangi element onu kırar?",
+  "Rift theme: %s": "Yarık teması: %s",
+  "Send %d matchup notes to %s? You both get %d friendship points.": "{1} adlı oyuncuya {0} eşleşme notu gönderilsin mi? İkiniz de {2} dostluk puanı kazanırsınız.",
+  "Share matchup notes": "Eşleşme notlarını paylaş",
+  "The seal cracks. Someone hid %s behind it and never came back for it.": "Mühür çatlıyor. Biri arkasına %s saklamış ve bir daha almaya gelmemiş.",
+  "The seal hums, smug and whole. It has met your kind before.": "Mühür kendinden emin ve sapasağlam vızıldıyor. Senin gibileri daha önce de görmüş.",
+  "Those notes are smudged. Try again after your next battle.": "Bu notlar lekelenmiş. Bir sonraki savaştan sonra tekrar dene.",
+  "You already sent notes to this friend today. Tomorrow again!": "Bugün bu arkadaşına zaten not gönderdin. Yarın yine!",
+  "Your notes are empty. Land a few hits first, then share what you learned.": "Notların boş. Önce birkaç vuruş yap, sonra öğrendiklerini paylaş.",
+  "Your notes are on their way to %s. Knowledge shared is knowledge you can't sell. Oh well.": "Notların %s adlı oyuncuya gidiyor. Paylaşılan bilgi artık satılamaz. Neyse."
+ }
+}

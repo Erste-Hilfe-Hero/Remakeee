@@ -1,0 +1,11 @@
+{
+ "_comment": "KAMPF_PLAN_1000 item 117: element seals under landmarks (data/landmarks.json). Talking to the landmark shows its seal; naming an Era I element that hits the seal's element(s) very effectively (x2 or more, Elements.multiplier) breaks it once and gives the item. A wrong answer costs nothing. Read by scripts/overworld/ElementSeals.gd.",
+ "seals": {
+  "fernstair": {"elements": ["BLOOM"], "item": "spark_drop"},
+  "crowcrest": {"elements": ["STONE"], "item": "guard_brew"},
+  "saltmarsh": {"elements": ["TIDE"], "item": "focus_brew"},
+  "thornridge": {"elements": ["GALE"], "item": "dash_brew"},
+  "stillwater": {"elements": ["TIDE", "STONE"], "item": "power_brew"},
+  "saltglass": {"elements": ["LUMEN", "STONE"], "item": "revival_leaf"}
+ }
+}

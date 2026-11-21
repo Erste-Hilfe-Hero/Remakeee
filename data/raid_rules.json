@@ -1,0 +1,22 @@
+{
+ "_comment": "Raid Rifts extras (Online 100, points 23-30). phases (KAMPF_PLAN_1000 item 419): once the shared strength left falls to left percent, every new attempt meets the guardian in that phase (its stage changes from the start); the phase is fixed when the attempt starts. The server reads the same object as server_config.raid_rules (tools/online/game_data_sql.py).",
+ "tiers": [
+  {"id": "easy", "hp": 70, "level": 50},
+  {"id": "normal", "hp": 100, "level": 60},
+  {"id": "hard", "hp": 150, "level": 60}
+ ],
+ "legendaries": ["Hallowmur", "Lumivane", "Monolurk", "Scriptorax", "Vorlucent"],
+ "legendary_chance": 5,
+ "legendary_hp": 150,
+ "top_bonus": 1,
+ "board_rows": 10,
+ "roles": ["attack", "guard", "help"],
+ "queue_minutes": 10,
+ "group_wait": 30,
+ "echo_wait": 60,
+ "echo_share": 15,
+ "phases": [
+  {"left": 50, "stage": {"atk": 1}, "text": "%s has lost half its strength to your friends, and it remembers every face. It strikes harder!"},
+  {"left": 25, "stage": {"spd": 1, "foc": 1}, "text": "%s is nearly broken. Cornered things are the dangerous ones: it moves faster and aims truer!"}
+ ]
+}

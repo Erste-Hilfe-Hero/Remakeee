@@ -1,0 +1,26 @@
+{
+ "_comment": "Dutch texts for the German table fan_burrow. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "A crack in the rock opens into a dry hollow.": "Een spleet in de rots komt uit op een droge holte.",
+  "A dry hollow in the rock. Nobody seems to live here. Claim it as your Burrow?": "Een droge holte in de rots. Er lijkt niemand te wonen. Claim je hem als je Hol?",
+  "A jar of names. Your Spirlings wrote them. Some are yours.": "Een pot met namen. Je Spirlings schreven ze. Sommige zijn van jou.",
+  "A map of Veydal with every Rift crossed out in red ink.": "Een kaart van Veydal met elke Kloof doorgestreept in rode inkt.",
+  "A scorched seal from the Cinder Rift. Still warm. Still angry.": "Een geschroeid zegel uit de Sintelkloof. Nog warm. Nog boos.",
+  "A seal from the Mist Rift. Half of it is missing, or hiding.": "Een zegel uit de Mistkloof. De helft ontbreekt, of verstopt zich.",
+  "A seal from the Tidewater Rift. It drips on the carpet.": "Een zegel uit de Getijdenkloof. Het druipt op het tapijt.",
+  "Black Veil": "Zwarte sluier",
+  "Cinder Seal": "Sintelzegel",
+  "Claim": "Claimen",
+  "Grudge Jar": "Wrokpot",
+  "Mended Veydal": "Gelapt Veydal",
+  "Mist Seal": "Mistzegel",
+  "Someone slept here. %s is gone from the wall; a pawn ticket hangs in its place.": "Iemand sliep hier. %s is van de muur verdwenen; er hangt een pandbriefje voor in de plaats.",
+  "The wall is full. Take something down first.": "De muur is vol. Haal eerst iets weg.",
+  "Tide Seal": "Getijdenzegel",
+  "Won at a Wake. Nobody cried harder than your Spirling.": "Gewonnen bij een Wake. Niemand huilde harder dan je Spirling.",
+  "You hang it on the wall.": "Je hangt het aan de muur.",
+  "You take it down.": "Je haalt het weg.",
+  "Your Burrow (%d/%d on the wall)": "Je Hol (%d/%d aan de muur)",
+  "Your Burrow. The walls are bare. Earn something worth hanging.": "Je Hol. De muren zijn kaal. Verdien iets dat het ophangen waard is."
+ }
+}

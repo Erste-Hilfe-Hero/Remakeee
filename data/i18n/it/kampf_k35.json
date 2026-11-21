@@ -1,0 +1,13 @@
+{
+ "_comment": "Translations of the German table kampf_k35, written by tools/i18n/locales_kampf_k35.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Brute force": "Forza bruta",
+  "Field tricks": "Trucchi di campo",
+  "Give me three turns. You won't get a fourth.": "Dammi tre turni. Un quarto non lo avrai.",
+  "I don't win duels. I make you lose them slowly.": "Io non vinco i duelli. Te li faccio perdere lentamente.",
+  "No tricks. Just teeth. Some of them used to be someone else's.": "Niente trucchi. Solo denti. Alcuni erano di qualcun altro.",
+  "Stage tricks": "Trucchi di livelli",
+  "Status tricks": "Trucchi di stato",
+  "The ground here owes me money. Watch it pay up.": "Il terreno qui mi deve dei soldi. Guarda come paga."
+ }
+}

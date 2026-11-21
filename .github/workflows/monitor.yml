@@ -1,0 +1,91 @@
+name: Server monitor
+
+# Plan item 3847: checks the live server from outside every 15 minutes (sign-in, hello, account
+# deletion, store pages, weekly restore test). After two failed runs in a row it opens an issue
+# assigned to the owner, which GitHub also sends as an email. Scheduled runs only start on the
+# default branch.
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  actions: read
+  contents: read
+
+concurrency:
+  group: monitor
+  cancel-in-progress: false
+
+env:
+  SERVER: ${{ vars.CHIMORA_PUBLIC_URL || 'https://chimora.161-97-102-171.sslip.io' }}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check the live server
+        id: check
+        run: |
+          set -uo pipefail
+          problems=""
+          note() { problems="$problems- $1"$'\n'; echo "::warning::$1"; }
+          get() { curl -sS --max-time 15 "$@"; }
+          cfg="$(get "$SERVER/chimora.json")" || note "/chimora.json not reachable"
+          anon="$(echo "$cfg" | python3 -c 'import json,sys;print(json.load(sys.stdin)["anon_key"])' 2>/dev/null)" || note "/chimora.json has no anon key"
+          if [ -n "${anon:-}" ]; then
+            tok="$(get -X POST "$SERVER/auth/v1/signup" -H "apikey: $anon" -H "Content-Type: application/json" -d '{"data": {}}' \
+              | python3 -c 'import json,sys;print(json.load(sys.stdin)["access_token"])' 2>/dev/null)" || note "anonymous sign-in failed"
+            if [ -n "${tok:-}" ]; then
+              hello="$(get -X POST "$SERVER/rest/v1/rpc/hello" -H "apikey: $anon" -H "Authorization: Bearer $tok" \
+                -H "Content-Type: application/json" -d '{"p_version": 1}')"
+              echo "$hello" | grep -q '"server_time"' || note "hello failed: ${hello:0:200}"
+              del="$(get -X POST "$SERVER/rest/v1/rpc/delete_account" -H "apikey: $anon" -H "Authorization: Bearer $tok" \
+                -H "Content-Type: application/json" -d '{}')"
+              echo "$del" | grep -q '"ok": *true\|"ok":true' || note "delete_account failed: ${del:0:200}"
+            fi
+          fi
+          for page in datenschutz privacy konto-loeschen delete-account support kaeufe purchases impressum nutzungsbedingungen terms; do
+            code="$(curl -sS --max-time 15 -o /dev/null -w '%{http_code}' "$SERVER/$page")"
+            [ "$code" = "200" ] || note "/$page answered $code"
+          done
+          # Weekly restore test (server/restore_test.sh). Missing until the first run after a deploy.
+          st="$(get -f "$SERVER/status.json" 2>/dev/null)" && python3 - "$st" <<'PY' || note "restore test: see log"
+          import json, sys, time
+          r = json.loads(sys.argv[1]).get("restore_test", {})
+          if not r.get("ok"):
+              sys.exit(print("restore test failed: " + str(r.get("message"))) or 1)
+          if time.time() - int(r.get("at", 0)) > 8 * 86400:
+              sys.exit(print("restore test older than 8 days") or 1)
+          PY
+          {
+            echo "problems<<EOF"
+            printf '%s' "$problems"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+          [ -z "$problems" ]
+      - name: Open an issue after two failed runs in a row
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PROBLEMS: ${{ steps.check.outputs.problems }}
+        run: |
+          prev="$(gh run list --workflow monitor.yml --limit 2 --json conclusion,databaseId \
+            --jq "[.[] | select(.databaseId != ${{ github.run_id }})][0].conclusion")"
+          if [ "$prev" != "failure" ]; then
+            echo "First failed run; an issue opens if the next run fails too."
+            exit 0
+          fi
+          open="$(gh issue list --label server-down --state open --json number --jq 'length')"
+          if [ "$open" != "0" ]; then
+            echo "An issue is already open."
+            exit 0
+          fi
+          gh label create server-down --color B60205 --description "Live server check failed" 2>/dev/null || true
+          printf 'The live server at %s failed two checks in a row.\n\n%s\nRun: %s/%s/actions/runs/%s\n\nSteps: docs/BETRIEB.md\n' \
+            "$SERVER" "$PROBLEMS" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > body.md
+          gh issue create --title "Server down: $(date -u +%F' '%H:%M) UTC" --label server-down \
+            --assignee "${{ github.repository_owner }}" --body-file body.md

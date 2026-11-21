@@ -1,0 +1,24 @@
+{
+ "_comment": "pl translation of the fan_reserve table, keyed by the English text.",
+ "strings": {
+  "%s answers your call and pads over to you. Dorran pretends not to notice.": "%s odpowiada na twoje wołanie i drepcze do ciebie. Dorran udaje, że nie widzi.",
+  "%s slips through a hole in the fence. The ring will patch that hole. Someday.": "%s wymyka się przez dziurę w płocie. Szajka tę dziurę załata. Kiedyś.",
+  "%s tilts its head at your call, but stays put.": "%s przechyla głowę na twoje wołanie, ale zostaje na miejscu.",
+  "A whistle from the lookout tower. A rival crew bursts out of the reeds and %s bolts. Somebody got paid tonight.": "Gwizd z wieży strażniczej. Z trzcin wypada konkurencyjna ekipa i %s daje nogę. Ktoś dziś wziął pieniądze.",
+  "A wild %s, Ring %d. Sightings left: %d": "Dziki %s, Ranga %d. Pozostałe spotkania: %d",
+  "A woman in a velvet coat leans on a fence that is not on any map.": "Kobieta w aksamitnym płaszczu opiera się o płot, którego nie ma na żadnej mapie.",
+  "Echo call (%d left)": "Wołanie echa (zostało: %d)",
+  "Move on": "Idź dalej",
+  "Pay %d coins to slip into the reserve?": "Zapłacić %d mon., żeby wśliznąć się do rezerwatu?",
+  "Rattle the fence": "Potrząśnij płotem",
+  "Set bait": "Wyłóż przynętę",
+  "Velvet Dorran": "Aksamitna Dorran",
+  "Velvet Dorran: No coins? Then you were never here.": "Aksamitna Dorran: Nie ma monet? To ciebie tu nigdy nie było.",
+  "Velvet Dorran: No fighting in my yard. You set bait, you rattle the fence, you call. Then you leave and forget my face.": "Aksamitna Dorran: Żadnych walk na moim podwórku. Wykładasz przynętę, trzęsiesz płotem, wołasz. Potem wychodzisz i zapominasz moją twarz.",
+  "Velvet Dorran: Time's up. Out you go, and the gate never saw you.": "Aksamitna Dorran: Czas minął. Wynocha, a brama nikogo nie widziała.",
+  "Velvet Dorran: Welcome to Hollowgate Reserve. Totally legal. The fence is to keep the paperwork in.": "Aksamitna Dorran: Witamy w Rezerwacie Hollowgate. Całkowicie legalnym. Płot jest po to, żeby papiery nie uciekły.",
+  "You rattle the fence. %s's ears shoot up: curious, and very jumpy.": "Trzęsiesz płotem. Uszy %s strzelają w górę: ciekawość i spora nerwowość.",
+  "You set down a twist of dried bait. %s sniffs it and calms down.": "Kładziesz szczyptę suszonej przynęty. %s obwąchuje ją i się uspokaja.",
+  "the Quiet Hands": "Ciche Ręce"
+ }
+}

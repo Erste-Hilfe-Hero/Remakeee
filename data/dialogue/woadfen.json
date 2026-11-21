@@ -1,0 +1,38 @@
+{
+ "sign": [
+  "WOADFEN",
+  "Moor, rings 18 to 21.",
+  "West: Madderby   North: the Rain Rift"
+ ],
+ "sign_top": [
+  "The rain falls here without a sound.",
+  "North: the Rain Rift. Walkers, keep to the path."
+ ],
+ "orla": [
+  "Orla: The peat is grey all the way down now. It used to be the colour of strong tea."
+ ],
+ "orla_intro": [
+  "Orla: A stranger on my moor? Let's see if you sink."
+ ],
+ "orla_defeat": [
+  "Orla: You keep your feet. Good."
+ ],
+ "fenn": [
+  "Fenn: The reeds still whisper. The people out here don't."
+ ],
+ "fenn_intro": [
+  "Fenn: You talk loudly for a moor. Duel me and be quiet after."
+ ],
+ "fenn_defeat": [
+  "Fenn: Fine. Talk all you like."
+ ],
+ "lusa": [
+  "Lusa: Past here the rain falls upward, if you look long enough."
+ ],
+ "lusa_intro": [
+  "Lusa: Before the Rift, one last test."
+ ],
+ "lusa_defeat": [
+  "Lusa: Go on, then. Senna is waiting, even if she can't hear you."
+ ]
+}

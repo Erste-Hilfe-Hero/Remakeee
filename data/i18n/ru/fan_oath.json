@@ -1,0 +1,8 @@
+{
+ "_comment": "ru translation of the fan_oath table, keyed by the English text.",
+ "strings": {
+  "%s swears the Ink Oath. Ink runs down its paws like a signature: family first!": "%s приносит Чернильную клятву. Чернила стекают по лапам, как подпись: семья прежде всего!",
+  "Oath": "Клятва",
+  "The Ink Oath comes due. The family collects from %s.": "Срок Чернильной клятвы наступил. Семья взыскивает с %s."
+ }
+}

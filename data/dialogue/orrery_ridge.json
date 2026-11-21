@@ -1,0 +1,15 @@
+{
+ "sign": [
+  "ORRERY RIDGE",
+  "A brass arm of the Great Orrery fell here. The planet it held is still missing."
+ ],
+ "climber": [
+  "Agathe: I'm looking for the missing planet. Whoever finds it gets paid by three families. Whoever keeps it gets buried by four."
+ ],
+ "climber_intro": [
+  "Agathe: You're after the planet too. Don't lie, everyone is."
+ ],
+ "climber_defeat": [
+  "Agathe: Keep looking. Up, not down."
+ ]
+}

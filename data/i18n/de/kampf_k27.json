@@ -1,0 +1,12 @@
+{
+ "_comment": "German texts from tools/i18n/de_kampf_k27.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%s is cured.": "%s ist geheilt.",
+  "Hesper: %d coins. Forgetting is free, remembering is not.": "Hesper: %d Münzen. Vergessen ist umsonst, Erinnern nicht.",
+  "Hesper: %s remembers everything it can. Lucky thing.": "Hesper: %s erinnert sich an alles, was es kann. Glückspilz.",
+  "Hesper: And if one of yours forgot an art it once knew, I can dig it back up. For a fee. Memory is cheap; mine isn't.": "Hesper: Und wenn einer von deinen eine Technik vergessen hat, die er mal konnte, grabe ich sie wieder aus. Gegen Bezahlung. Erinnerung ist billig, meine nicht.",
+  "On Story every status ends with the battle. On the other difficulties Scorch, Root and Jolt stay on until an item, an art or a rest cures them.": "Auf Story endet jeder Status mit dem Kampf. Auf den anderen Schwierigkeitsgraden bleiben Brand, Wurzeln und Schock, bis ein Gegenstand, eine Technik oder eine Rast sie heilt.",
+  "Who forgot an art? %d coins each.": "Wer hat eine Technik vergessen? %d Münzen pro Stück."
+ }
+}

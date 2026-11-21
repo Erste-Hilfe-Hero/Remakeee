@@ -1,0 +1,9 @@
+{
+ "_comment": "Traditional Chinese (Taiwan) texts for the German table era_light. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "A storm rages.": "暴風肆虐。",
+  "Fog hangs low.": "霧氣低垂。",
+  "Rain falls.": "下著雨。",
+  "Wind blows.": "颳著風。"
+ }
+}

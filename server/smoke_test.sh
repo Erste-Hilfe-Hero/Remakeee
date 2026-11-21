@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# Plays a tiny session against a running server the way the game does: anonymous sign-in, hello,
+# save, load, a friend request between two accounts, then deletes both test accounts again.
+# Usage: server/smoke_test.sh [URL]   (SMOKE_INSECURE=1 accepts a self-signed certificate)
+set -euo pipefail
+cd "$(dirname "$0")"
+url="${1:-$(python3 -c 'import json;print(json.load(open("public/chimora.json"))["url"])')}"
+anon="$(python3 -c 'import json;print(json.load(open("public/chimora.json"))["anon_key"])')"
+fail() { echo "FAIL: $*" >&2; exit 1; }
+k=""; [ "${SMOKE_INSECURE:-0}" = "1" ] && k="-k"
+post() { # path token body
+	curl -sS $k -X POST "$url$1" -H "apikey: $anon" -H "Authorization: Bearer $2" -H "Content-Type: application/json" -d "$3"
+}
+field() { python3 -c "import json,sys;d=json.load(sys.stdin);print(eval('d'+sys.argv[1]))" "$1"; }
+
+sign_in() { post /auth/v1/signup "$anon" '{"data": {}}' | field '["access_token"]'; }
+a="$(sign_in)" || fail "anonymous sign-in"
+b="$(sign_in)" || fail "second sign-in"
+[ -n "$a" ] && [ -n "$b" ] || fail "no token"
+
+hello="$(post /rest/v1/rpc/hello "$a" '{"p_version": 1}')"
+echo "$hello" | grep -q '"code"' || fail "hello: $hello"
+code_a="$(echo "$hello" | field '["profile"]["code"]')"
+
+put="$(post /rest/v1/rpc/save_put "$a" '{"p_slot": 1, "p_data": {"schema": 1, "version": 3, "party": [], "money": 5}, "p_summary": "Smoke", "p_base_rev": 0}')"
+echo "$put" | grep -q '"ok": *true\|"ok":true' || fail "save_put: $put"
+got="$(post /rest/v1/rpc/save_get "$b" '{"p_slot": 1}')"
+echo "$got" | grep -q '"money"' && fail "another account could read the save: $got"
+got="$(post /rest/v1/rpc/save_get "$a" '{"p_slot": 1}')"
+echo "$got" | grep -q '"money"' || fail "save_get: $got"
+
+post /rest/v1/rpc/hello "$b" '{"p_version": 1}' >/dev/null
+req="$(post /rest/v1/rpc/friend_request "$b" "{\"p_code\": \"$code_a\"}")"
+echo "$req" | grep -q '"ok": *true\|"ok":true' || fail "friend_request: $req"
+
+# Billing service (plan area 10): up, and it refuses purchase checks without a sign-in.
+for i in $(seq 1 30); do
+	curl -fsS $k "$url/billing/v1/health" 2>/dev/null | grep -q '"ok": *true' && break
+	[ "$i" = 30 ] && fail "billing service does not answer"
+	sleep 1
+done
+code="$(curl -sS $k -o /dev/null -w '%{http_code}' -X POST "$url/billing/v1/verify" -H "Content-Type: application/json" -d '{}')"
+[ "$code" = "401" ] || fail "billing verify without sign-in gave $code"
+bad="$(post /billing/v1/verify "$a" '{"p_receipt": {"store": "local", "txn": "1"}}')"
+echo "$bad" | grep -q 'bad_receipt' || fail "billing accepted a local receipt: $bad"
+
+# Tables must not be reachable directly.
+raw="$(curl -sS $k "$url/rest/v1/saves?select=*" -H "apikey: $anon" -H "Authorization: Bearer $a")"
+echo "$raw" | grep -q '"money"' && fail "saves table is readable: $raw"
+
+for t in "$a" "$b"; do
+	del="$(post /rest/v1/rpc/delete_account "$t" '{}')"
+	echo "$del" | grep -q '"ok": *true\|"ok":true' || fail "delete_account: $del"
+done
+
+# The store pages (privacy, account deletion, support) must be reachable.
+for page in datenschutz privacy konto-loeschen delete-account support kaeufe purchases impressum melden melden.js; do
+	code="$(curl -sS $k -o /dev/null -w '%{http_code}' "$url/$page")"
+	[ "$code" = "200" ] || fail "/$page answered $code"
+done
+
+# Plan item 3877: the sign-in admin API is closed to the public key and to player tokens.
+c="$(sign_in)" || fail "third sign-in"
+for tok in "$anon" "$c"; do
+	code="$(curl -sS $k -o /dev/null -w '%{http_code}' "$url/auth/v1/admin/users" -H "apikey: $anon" -H "Authorization: Bearer $tok")"
+	case "$code" in 401|403) ;; *) fail "admin API answered $code" ;; esac
+done
+post /rest/v1/rpc/delete_account "$c" '{}' >/dev/null
+# Items 3763 and 3874: no search engine indexing of the test build, security headers.
+curl -sS $k "$url/robots.txt" | grep -q "Disallow: /play/" || fail "robots.txt"
+headers="$(curl -sS $k -o /dev/null -D - "$url/datenschutz")"
+for h in "strict-transport-security" "x-content-type-options: nosniff" "referrer-policy" "content-security-policy"; do
+	echo "$headers" | grep -qi "^$h" || fail "header $h missing on /datenschutz"
+done
+# Item 2899: the report form may run its own script and call this server, nothing else.
+curl -sS $k -o /dev/null -D - "$url/melden" | grep -qi "^content-security-policy:.*script-src 'self'" || fail "/melden has no script CSP"
+play="$(curl -sS $k -o /dev/null -D - "$url/play/")"
+if echo "$play" | head -1 | grep -q " 200"; then
+	echo "$play" | grep -qi "^x-robots-tag: noindex" || fail "/play/ has no noindex"
+fi
+
+echo "Smoke test OK against $url"

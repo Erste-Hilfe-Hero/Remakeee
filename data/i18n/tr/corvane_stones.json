@@ -1,0 +1,18 @@
+{
+ "_comment": "tr translation of the corvane_stones table, keyed by the English text.",
+ "strings": {
+  "A cartographer's stone at the edge of the Wide Rift. The rose has a fifth point, towards the dark.": "Geniş Yarık'ın kıyısında bir haritacı taşı. Gülün beşinci bir ucu var, karanlığa doğru.",
+  "A cartographer's stone at the water's edge. In the pond its rose turns the other way.": "Su kenarında bir haritacı taşı. Gölette gülü öbür yöne dönüyor.",
+  "A cartographer's stone half sunk in the boards. The rose points at the harbour office. Of course it does.": "Tahtalara yarı gömülmüş bir haritacı taşı. Gül liman bürosunu gösteriyor. Elbette.",
+  "A cartographer's stone in a flower bed. Its rose has been painted over grey, then scraped clean.": "Bir çiçek tarhında haritacı taşı. Gülü griye boyanmış, sonra kazınıp temizlenmiş.",
+  "A cartographer's stone on the cliff. Rooks have used it as a table for years.": "Uçurumda bir haritacı taşı. Ekin kargaları yıllardır onu masa diye kullanıyor.",
+  "A cartographer's stone sinking into the moor. The rose still points north. The stone has given up on the rest.": "Bataklığa gömülen bir haritacı taşı. Gül hâlâ kuzeyi gösteriyor. Taş gerisinden vazgeçmiş.",
+  "A cartographer's stone under the reeds. Somebody scratched 'not this way' under the rose.": "Sazların altında bir haritacı taşı. Biri gülün altına 'bu taraftan değil' diye kazımış.",
+  "A cartographer's stone with a betting slip tucked under it. The slip lost.": "Altına bir bahis kuponu sıkıştırılmış haritacı taşı. Kupon kaybetmiş.",
+  "A cartographer's stone wrapped in roots. The rose glows faintly when you touch it.": "Köklere sarılmış bir haritacı taşı. Dokununca gül hafifçe ışıldıyor.",
+  "A cartographer's stone, cracked down the middle. Both halves still point north. Stubborn.": "Ortasından çatlamış bir haritacı taşı. İki yarısı da hâlâ kuzeyi gösteriyor. İnatçılar.",
+  "A cartographer's stone, stained red, gold and green by a hundred years of dye.": "Yüz yıllık boyayla kırmızıya, altın rengine ve yeşile bulanmış bir haritacı taşı.",
+  "An old cartographer's stone by the quay wall. Someone has chalked a price on it.": "Rıhtım duvarının dibinde eski bir haritacı taşı. Biri üstüne tebeşirle fiyat yazmış.",
+  "Cartographer's stones: %d/%d": "Haritacı taşları: %d/%d"
+ }
+}

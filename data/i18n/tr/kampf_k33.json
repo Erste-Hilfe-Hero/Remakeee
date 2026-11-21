@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table kampf_k33, written by tools/i18n/locales_kampf_k33.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s picks %s (%d) over %s (%d).": "{0}, {3} ({4}) yerine {1} ({2}) seçiyor.",
+  "%s picks %s (%d): nothing else is in reach.": "{0}, {1} ({2}) seçiyor: elinde başka bir şey yok.",
+  "%s picks %s at random, as wild ones do.": "{0}, vahşiler gibi rastgele {1} seçiyor.",
+  "%s rests: nothing it can pay is worth it now.": "{0} dinleniyor: karşılayabildiği hiçbir şey şu an buna değmez.",
+  "%s swaps to %s: it doesn't like its odds.": "{0}, {1} ile yer değiştiriyor: şansını beğenmiyor.",
+  "%s uses %s: it is running low.": "{0}, {1} kullanıyor: gücü tükenmek üzere.",
+  "%s, won in %d turns": "{0}, {1} turda kazanıldı",
+  "Banked Embers": "Faizli Köz",
+  "Beat the Ashen Heart. The smiths still want their cut.": "Kül Yürek'i yen. Demirciler yine de paylarını istiyor.",
+  "Beat the Drowned Heart. Nobody reads the passenger list twice.": "Boğulmuş Yürek'i yen. Yolcu listesini kimse iki kez okumaz.",
+  "Beat the Mist Heart. What it hid is everyone's problem now.": "Sis Yürek'i yen. Sakladığı şey artık herkesin derdi.",
+  "Boss replays": "Patron tekrarları",
+  "Clear Weather": "Açık Hava",
+  "Crier: An echo of the %s has crashed the festival in the shape of a %s. Nobody invited it. Will you see it out?": "Tellal: {0} yankısı, {1} kılığında şenliğe daldı. Kimse davet etmedi. Onu kapıya kadar geçirir misin?",
+  "Crier: Something from the Rifts keeps trying to get in. Seal a Rift heart first, then we'll talk.": "Tellal: Yarıklardan bir şey durmadan içeri girmeye çalışıyor. Önce bir Yarık yüreğini mühürle, sonra konuşuruz.",
+  "Crier: You saw the echo out already. It sulks somewhere behind the stands until next year.": "Tellal: Yankıyı zaten kapıya kadar geçirdin. Gelecek yıla kadar tezgâhların arkasında surat asıyor.",
+  "It lies open and stops building up.": "Açıkta kaldı ve güç toplamayı bırakıyor.",
+  "It wants that field gone, so it can wake.": "Uyanabilmek için o alandan kurtulmak istiyor.",
+  "Kept in your boss replays (Records).": "Patron tekrarlarına kaydedildi (Rekorlar).",
+  "Last Passenger": "Son Yolcu",
+  "Last phase: it holds nothing back.": "Son aşama: artık hiçbir şeyi geri tutmuyor.",
+  "The echo comes apart like old bunting. The crowd claps as if it had helped.": "Yankı eski süs bayrakları gibi dağılıyor. Kalabalık sanki yardım etmiş gibi alkışlıyor.",
+  "The echo keeps dancing. The crowd decides it is part of the show.": "Yankı dans etmeye devam ediyor. Kalabalık bunun gösterinin bir parçası olduğuna karar veriyor."
+ }
+}

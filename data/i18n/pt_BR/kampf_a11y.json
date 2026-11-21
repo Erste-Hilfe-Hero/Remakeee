@@ -1,0 +1,10 @@
+{
+ "_comment": "Portuguese (Brazil) texts for the German table kampf_a11y. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "[%s cries out]": "[%s solta um grito]",
+  "Echo it back, no hurry.": "Repita, sem pressa.",
+  "Mine: tap one button fast. Echo: repeat the call. Calm: echo with no time limit.": "Meu: toque um botão rápido. Eco: repita o chamado. Calma: eco sem limite de tempo.",
+  "Calm": "Calma",
+  "This replay comes from a newer version of the game.": "Este replay vem de uma versão mais nova do jogo."
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "_comment": "ja translation of the online_replays table, keyed by the English text.",
+ "strings": {
+  "%s: %d%% won (%d of %d)": "%s：勝率%d%%（%d / %d）",
+  "%s: met %d times": "%s：%d回対戦",
+  "Copy share code": "共有コードをコピー",
+  "Lost": "負け",
+  "Met most often": "よく当たる相手",
+  "No online battles yet.": "オンラインバトルはまだない。",
+  "Online battle": "オンラインバトル",
+  "Online replays": "オンラインリプレイ",
+  "Online replays (%d)": "オンラインリプレイ（%d）",
+  "Open league": "オープンリーグ",
+  "Planned maintenance in %d h. The game is offline for a short while then.": "%d時間後に定期メンテナンス。そのあいだ少しだけゲームがオフラインになる。",
+  "Raid": "レイド",
+  "Rift board": "裂け目ランキング",
+  "The clipboard holds no replay code.": "クリップボードにリプレイコードがない。",
+  "The code is on the clipboard. A friend can watch it under Records, Online replays.": "コードをクリップボードに入れた。フレンドは「記録」の「オンラインリプレイ」で見られる。",
+  "Watch": "見る",
+  "Watch a code from the clipboard": "クリップボードのコードを見る",
+  "Win rate per Spirling": "Spirlingごとの勝率",
+  "Won": "勝ち"
+ }
+}

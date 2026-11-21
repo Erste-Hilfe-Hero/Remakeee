@@ -1,0 +1,44 @@
+{
+ "name": "Choir Dormitory",
+ "region": "quivermoor",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "tallowmere",
+   "tx": 8,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "singer",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/tallowmere_choir_dorm_singer",
+   "sprite": "villager"
+  },
+  {
+   "id": "q5_choir_bell_liesl",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/q5_choir_bell",
+   "sprite": "villager",
+   "hide_flag": "q5_choir_bell_reveal"
+  }
+ ],
+ "signs": []
+}

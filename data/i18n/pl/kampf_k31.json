@@ -1,0 +1,14 @@
+{
+ "_comment": "Translations of the German table kampf_k31, written by tools/i18n/locales_kampf_k31.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s (won %d times)": "%s (pokonane %d razy)",
+  "%s calls %s to its side. Nobody asked the guard.": "%s wzywa %s do swojego boku. Nikt nie pytał strażnika.",
+  "Every mended heart, one after another. No rest in between: your team keeps its wounds. Begin?": "Każde załatane serce, jedno po drugim. Bez odpoczynku: drużyna zachowuje rany. Zaczynamy?",
+  "Heart %d of %d is next. It heard the last one stop.": "Następne serce: %d z %d. Słyszało, jak poprzednie stanęło.",
+  "Heart rush (best %d of %d)": "Pogoń serc (rekord %d z %d)",
+  "Heart rush: %d of %d hearts.": "Pogoń serc: %d z %d serc.",
+  "Rift hearts": "Serca Szczeliny",
+  "The mended heart still beats in the Rift's echo. It remembers you, and it is not grateful.": "Załatane serce wciąż bije w echu Szczeliny. Pamięta cię i wcale nie jest wdzięczne.",
+  "Which heart?": "Które serce?"
+ }
+}

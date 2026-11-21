@@ -1,0 +1,43 @@
+# German texts for the onboarding pass (first 15 minutes): paced bonding tutorial, first
+# steps in Goals, partner hints, tips reset. Own file so parallel threads do not collide.
+T = {
+"Tip: A wild Spirling can join your team, if it trusts you. Trust is easier when it is tired.":
+    "Tipp: Ein wilder Spirling kann deinem Team beitreten, wenn er dir vertraut. Müde vertraut er leichter.",
+"Bonding step 2: Pick Bond. A statused Spirling gives in more easily. Nobody said this was noble.":
+    "Binden, Schritt 2: Wähle Binden. Ein Spirling mit Zustand gibt leichter nach. Niemand hat gesagt, dass das edel ist.",
+"Bonding step 3: Hold out a Kin Charm when asked. You start with 20. Friendship is cheaper in bulk.":
+    "Binden, Schritt 3: Halte ein Sippenamulett hin, wenn du gefragt wirst. Du startest mit 20. Freundschaft ist im Dutzend billiger.",
+"Bonding step 4: Tap Mine! as fast as you can. The fuller the bar, the better the bond.":
+    "Binden, Schritt 4: Tippe so schnell du kannst auf Meins! Je voller der Balken, desto besser die Bindung.",
+"Bonding step 4: Press A as fast as you can. The fuller the bar, the better the bond.":
+    "Binden, Schritt 4: Drück so schnell du kannst A. Je voller der Balken, desto besser die Bindung.",
+"Bonding step 4: Listen to its call, then repeat it in the same order.":
+    "Binden, Schritt 4: Hör dir seinen Ruf an und spiel ihn in derselben Reihenfolge nach.",
+"Bonding: Mine!": "Binden: Meins!",
+"Bonding: Echo call": "Binden: Echo-Ruf",
+"Tip: Lost? Tap = and pick Goals. Nobody else in this valley will tell you the truth.":
+    "Tipp: Verirrt? Tippe auf = und wähle Ziele. Sonst sagt dir in diesem Tal niemand die Wahrheit.",
+"Tip: Lost? Press Start and pick Goals. Nobody else in this valley will tell you the truth.":
+    "Tipp: Verirrt? Drück Start und wähle Ziele. Sonst sagt dir in diesem Tal niemand die Wahrheit.",
+"First steps": "Erste Schritte",
+"First steps %d/%d": "Erste Schritte %d/%d",
+"Open the menu": "Menü öffnen",
+"Save your journey": "Reise speichern",
+"Look at your team": "Team ansehen",
+"Rest at a rest spot": "An einem Rastplatz rasten",
+"Open the Spirlog": "Spirlog öffnen",
+"First steps done. The valley stops holding your hand now.":
+    "Erste Schritte geschafft. Ab jetzt hält dir das Tal nicht mehr die Hand.",
+"Pick your partner": "Wähle deinen Partner",
+"Warm and loyal. Sets things on fire when nervous. Mostly your things.":
+    "Warm und treu. Zündet Dinge an, wenn es nervös ist. Meistens deine.",
+"Quick and twitchy. Every hug comes with a small shock. You get used to it.":
+    "Flink und zappelig. Jede Umarmung kommt mit einem kleinen Schlag. Man gewöhnt sich dran.",
+"Its light never goes out. Handy when someone cuts the lamps on purpose.":
+    "Sein Licht geht nie aus. Praktisch, wenn jemand die Lampen mit Absicht löscht.",
+"Show tips again": "Tipps neu zeigen",
+"Show every tip once more, as if you were new?": "Jeden Tipp noch einmal zeigen, als wärst du neu?",
+"Tips are back. Pretend it's your first day.": "Die Tipps sind zurück. Tu so, als wäre heute dein erster Tag.",
+"Large text, one-hand layout and more are under Settings.":
+    "Große Schrift, Einhand-Bedienung und mehr findest du unter Einstellungen.",
+}

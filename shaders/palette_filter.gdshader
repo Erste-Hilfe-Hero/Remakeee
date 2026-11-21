@@ -1,12 +1,12 @@
 shader_type canvas_item;
-// Retro filter: maps the screen's luminance onto a fixed 4-colour palette (Era I "Mono").
+// Retro filter: maps the screen's luminance onto a fixed 4-colour palette (Era I "Ink").
 // Placeholder art can use any colours; this keeps the era look consistent.
 
 uniform sampler2D screen_tex : hint_screen_texture, filter_nearest;
-uniform vec4 c0 : source_color = vec4(0.106, 0.165, 0.106, 1.0);
-uniform vec4 c1 : source_color = vec4(0.243, 0.353, 0.227, 1.0);
-uniform vec4 c2 : source_color = vec4(0.541, 0.659, 0.420, 1.0);
-uniform vec4 c3 : source_color = vec4(0.831, 0.890, 0.710, 1.0);
+uniform vec4 c0 : source_color = vec4(0.165, 0.118, 0.173, 1.0);
+uniform vec4 c1 : source_color = vec4(0.416, 0.259, 0.337, 1.0);
+uniform vec4 c2 : source_color = vec4(0.769, 0.541, 0.369, 1.0);
+uniform vec4 c3 : source_color = vec4(0.949, 0.890, 0.761, 1.0);
 uniform float strength : hint_range(0.0, 1.0) = 1.0;
 
 void fragment() {

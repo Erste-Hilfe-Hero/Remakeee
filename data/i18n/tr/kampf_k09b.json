@@ -1,0 +1,9 @@
+{
+ "_comment": "tr translation of the kampf_k09b table, keyed by the English text.",
+ "strings": {
+  "Damage numbers: %s": "Hasar sayıları: %s",
+  "Shows the damage of each hit as a number over the Spirling.": "Her vuruşun hasarını Spirling'in üstünde sayı olarak gösterir.",
+  "Star of the battle: %s": "Savaşın yıldızı: %s",
+  "Take a photo": "Fotoğraf çek"
+ }
+}

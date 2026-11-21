@@ -1,0 +1,40 @@
+{
+ "_comment": "Hidden gifts (plan item 4756-4758, fan feature rank 6): one hidden gift per line, read by scripts/core/HiddenGifts.gd. 'lines' names a line's gift; a line without an entry gets the gift of its first element ('by_element'), so new species are covered at once. A gift uses the same effect keys as BattleRules.TRAITS. The informant Whisper Moll on Corvane Quay sells the tip that reveals a line's gift; sometimes she sells a stale tip (betray_chance) and only that fee is lost. A revealed line stays revealed. A Spirling of that line at unlock_ring or higher may wake its hidden gift and put it back to sleep at any time. The Fair League never uses hidden gifts.",
+ "tip_cost": 250,
+ "betray_chance": 0.3,
+ "unlock_ring": 20,
+ "informant": "Whisper Moll",
+ "gifts": {
+  "smouldering_debt": {"label": "Smouldering Debt", "text": "Scorch raises its Might, and it never dozes off on a job.", "scorch_atk": 1.25, "immune": ["drowse"]},
+  "cold_ledger": {"label": "Cold Ledger", "text": "Can't be Scorched, and it mends a little each turn.", "regen_div": 20, "immune": ["scorch"]},
+  "family_roots": {"label": "Family Roots", "text": "Mends a fair share of Vigor at the end of each turn.", "regen_div": 12},
+  "hot_wire": {"label": "Hot Wire", "text": "Gains 1 extra Energy each turn and can't be Jolted.", "energy_per_turn": 1, "immune": ["jolt"]},
+  "stone_alibi": {"label": "Stone Alibi", "text": "Takes 20% less damage from physical arts.", "phys_taken": 0.8},
+  "getaway_wind": {"label": "Getaway Wind", "text": "Can't be Rooted or Soaked. Nobody holds it down.", "immune": ["root", "soak"]},
+  "snitch_glow": {"label": "Snitch's Glow", "text": "Can't be Dazed or Drowsed. It sees everything.", "immune": ["daze", "drowse"]},
+  "last_laugh": {"label": "Last Laugh", "text": "Its own element hits 40% harder below 1/3 Vigor.", "low_hp_boost": 1.4},
+  "old_debts": {"label": "Old Debts", "text": "Gains 1 extra Energy each turn. Someone always owes it.", "energy_per_turn": 1},
+  "prism_skin": {"label": "Prism Skin", "text": "Very effective hits split in its skin: a double hit lands at x1.5.", "super_taken": 0.75},
+  "countercurrent": {"label": "Countercurrent", "text": "Swims against the last current: the element that hit it last lands at half.", "countercurrent": true}
+ },
+ "by_element": {
+  "EMBER": "smouldering_debt", "TIDE": "cold_ledger", "BLOOM": "family_roots", "VOLT": "hot_wire",
+  "STONE": "stone_alibi", "GALE": "getaway_wind", "LUMEN": "snitch_glow", "UMBRA": "last_laugh",
+  "INK": "old_debts", "ECHO": "old_debts",
+  "RUST": "stone_alibi", "MASK": "last_laugh", "ACID": "smouldering_debt", "FROST": "cold_ledger",
+  "GILT": "snitch_glow", "ZENITH": "getaway_wind"
+ },
+ "lines": {
+  "shalebat": "last_laugh",
+  "kelpup": "family_roots",
+  "smeltpup": "hot_wire",
+  "cullet": "prism_skin",
+  "paddlewisp": "countercurrent"
+ },
+ "tip_lines": [
+  "Whisper Moll: Everybody has a secret. Spirlings too. Mine cost coins.",
+  "Whisper Moll: I hear things on the quay. Ropes creak, crates talk."
+ ],
+ "true_tip": "Whisper Moll leans in: \"The %s line hides a gift. %s.\" She is telling the truth, for once.",
+ "stale_tip": "Whisper Moll sold you a stale tip. The same rumour is chalked on the harbour wall. She keeps the coins and waves."
+}

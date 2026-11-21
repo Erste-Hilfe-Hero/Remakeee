@@ -1,0 +1,77 @@
+{
+ "trader": {
+  "lines": [
+   "Trader Ebbe: Brook-cooled tonics, fresh every day."
+  ],
+  "action": "shop tonic strong_tonic remedy dry_towel cooling_gel kin_charm revival_leaf pruning_shears grounding_rod smelling_salts"
+ },
+ "elder": {
+  "lines": [
+   "Old Bertil: Orrin guards that well like someone would steal it. Who'd steal a hole?"
+  ]
+ },
+ "tamsa": {
+  "lines": [
+   "Weaver Tamsa: I weave all day so I have something to do with my hands while Lise talks to her goats about me."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Weaver Tamsa: My threads stopped tangling by themselves. Strange how a Rift reaches so far."
+   ]
+  }
+ },
+ "orrin": {
+  "lines": [
+   "Well-Keeper Orrin: Everyone here mocks me. The well is the only one who listens, and it just echoes."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Well-Keeper Orrin: The well water tastes of nothing again. That's how it should taste."
+   ]
+  },
+  "choices": [
+   {
+    "text": "Tell Orrin what Lise said",
+    "next": "orrin_pays"
+   },
+   {
+    "text": "Leave them be"
+   }
+  ]
+ },
+ "lise": {
+  "lines": [
+   "Goatherd Lise: My goats are smarter than Orrin. At least they leave the well when nothing happens."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Goatherd Lise: The goats climb up to the rim again. They hated the Rift more than I did."
+   ]
+  }
+ },
+ "brann": {
+  "lines": [
+   "Fiddler Brann: I play loud at night so nobody hears Tamsa gossip. It doesn't work. Nothing drowns her out."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Fiddler Brann: My fiddle stays in tune all night now. A small miracle, but mine."
+   ]
+  }
+ },
+ "ilse": {
+  "lines": [
+   "Basket-Maker Ilse: Brann calls it music. The goats call it a warning."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Basket-Maker Ilse: The reeds by the fen stand straight again. Better baskets for everyone."
+   ]
+  }
+ }
+}

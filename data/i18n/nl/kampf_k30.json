@@ -1,0 +1,10 @@
+{
+ "_comment": "Dutch texts for the German table kampf_k30. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "Acting order %s": "Volgorde %s",
+  "Auto aim: %s": "Automatisch richten: %s",
+  "Fight two on two, with another friend's echo beside you?": "Twee tegen twee vechten, met de echo van een andere vriend naast je?",
+  "That field cannot be picked.": "Dat veld kan niet gekozen worden.",
+  "foe %s": "vijand %s"
+ }
+}

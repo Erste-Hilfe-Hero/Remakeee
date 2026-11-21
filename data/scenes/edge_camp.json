@@ -1,0 +1,14 @@
+{
+ "_note": "Plan 2 items 146, 147, 162, 163: the first meeting with the strangers' camp at the edge of the Wide Rift (Act II).",
+ "steps": [
+  {
+   "dialogue": "edge_camp/arrive_say"
+  },
+  {
+   "dialogue": "edge_camp/arrive_elma"
+  },
+  {
+   "flag": "edge_camp_met"
+  }
+ ]
+}

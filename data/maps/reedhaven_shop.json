@@ -1,0 +1,37 @@
+{
+ "name": "Reedhaven Store",
+ "region": "veydal",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCffCCCW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "reedhaven",
+   "tx": 2,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "dirk",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/reedhaven_shop_dirk",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

@@ -1,0 +1,340 @@
+{
+ "name": "Ashmere Station",
+ "region": "ashmere",
+ "biome": "town",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "rows": [
+  "^^^^^__^^^^^",
+  "^::.*__..::^",
+  "^::..__..::^",
+  "^^^^.__@^^^^",
+  "^....____..^",
+  "^.RRRRRR_..^",
+  "^.HHHDHH_S.^",
+  "^....____..^",
+  "^T..________",
+  "^..._....___",
+  "^..._......^",
+  "__.._..::..^",
+  "_______::..^",
+  "^*...._*..*^",
+  "^.L..._..L.^",
+  "^....._...*^",
+  "^....._....^",
+  "^....._....^",
+  "^.S..._....^",
+  "^++++++++++^",
+  "^++++++++++^",
+  "############"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 6,
+   "to": "ashmere_station",
+   "tx": 6,
+   "ty": 18,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "kiln_rift",
+   "tx": 5,
+   "ty": 11,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "kiln_rift",
+   "tx": 6,
+   "ty": 11,
+   "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 8,
+   "to": "saltglass",
+   "tx": 1,
+   "ty": 22,
+   "facing": "right"
+  },
+  {
+   "x": 11,
+   "y": 9,
+   "to": "saltglass",
+   "tx": 1,
+   "ty": 23,
+   "facing": "right"
+  },
+  {
+   "x": 0,
+   "y": 11,
+   "to": "cinderfold",
+   "tx": 10,
+   "ty": 2,
+   "facing": "left"
+  },
+  {
+   "x": 0,
+   "y": 12,
+   "to": "cinderfold",
+   "tx": 10,
+   "ty": 3,
+   "facing": "left"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "conductor",
+   "x": 8,
+   "y": 19,
+   "facing": "left",
+   "dialogue": "ashmere_station/conductor",
+   "sprite": "villager"
+  },
+  {
+   "id": "rhea",
+   "x": 9,
+   "y": 10,
+   "facing": "left",
+   "dialogue": "ashmere_station/rhea",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 3,
+     "y": 14,
+     "facing": "left"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "sev",
+   "x": 9,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "ashmere_station/sev",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 2,
+     "y": 15,
+     "facing": "up"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "mika",
+   "x": 4,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "ashmere_station/mika",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 1,
+     "y": 13,
+     "facing": "down"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "tibb",
+   "x": 2,
+   "y": 9,
+   "facing": "right",
+   "dialogue": "ashmere_side/tibb",
+   "sprite": "villager"
+  },
+  {
+   "id": "harl",
+   "x": 3,
+   "y": 15,
+   "facing": "right",
+   "dialogue": "ashmere_side/harl",
+   "sprite": "elder"
+  },
+  {
+   "id": "bram",
+   "x": 8,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "ashmere_side/bram",
+   "sprite": "villager"
+  },
+  {
+   "id": "juno_1",
+   "x": 8,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "ashmere_side/juno_1",
+   "sprite": "ranger",
+   "trainer": "Juno Sallow",
+   "team": [
+    {
+     "species": "Ashwren",
+     "level": 29
+    },
+    {
+     "species": "Cindle",
+     "level": 29
+    },
+    {
+     "species": "Smeltpup",
+     "level": 30
+    }
+   ],
+   "intro": "ashmere_side/juno_1_intro",
+   "defeat": "ashmere_side/juno_1_defeat",
+   "beaten_flag": "beat_juno_1",
+   "show_flag": "ashmere_arrived",
+   "leaves": true,
+   "hide_flag": "beat_juno_1",
+   "ai": 2,
+   "money": 1400,
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Ashcrest",
+      "level": 35
+     },
+     {
+      "species": "Glassfell",
+      "level": 35
+     },
+     {
+      "species": "Smeltmaw",
+      "level": 36
+     },
+     {
+      "species": "Tempestrel",
+      "level": 36
+     },
+     {
+      "species": "Millvane",
+      "level": 36
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Ashwren",
+      "level": 31
+     },
+     {
+      "species": "Cindle",
+      "level": 31
+     },
+     {
+      "species": "Smeltpup",
+      "level": 32
+     },
+     {
+      "species": "Ashwren",
+      "level": 27
+     },
+     {
+      "species": "Glowflit",
+      "level": 23
+     }
+    ]
+   }
+  },
+  {
+   "id": "lq_corla",
+   "x": 9,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "legend_quests/vorlucent_guide",
+   "sprite": "villager",
+   "show_flag": "rift_shade_sealed",
+   "hide_flag": "lq_vorlucent_ready"
+  }
+ ],
+ "signs": [
+  {
+   "x": 9,
+   "y": 6,
+   "dialogue": "ashmere_station/sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 15,
+   "item": "strong_tonic",
+   "count": 2,
+   "flag": "find_station_west"
+  },
+  {
+   "x": 11,
+   "y": 13,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_station_east"
+  },
+  {
+   "x": 0,
+   "y": 4,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_station_ridge"
+  },
+  {
+   "x": 0,
+   "y": 7,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "plate_2",
+   "dialogue": "ashmere_side/plate_2"
+  },
+  {
+   "x": 11,
+   "y": 16,
+   "item": "remedy",
+   "count": 1,
+   "flag": "press_part_1",
+   "dialogue": "ashmere_side/press_part_1"
+  }
+ ],
+ "spots": {
+  "tamsin": [
+   4,
+   17
+  ],
+  "page_11": [
+   10,
+   2
+  ],
+  "rail_sign": [
+   2,
+   18
+  ]
+ },
+ "square": [
+  2,
+  14
+ ]
+}

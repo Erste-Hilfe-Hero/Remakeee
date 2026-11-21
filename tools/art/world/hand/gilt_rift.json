@@ -1,0 +1,88 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "warden_aurek",
+    "x": 5,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "gilt_rift/aurek",
+    "sprite": "warden",
+    "trainer": "Warden Aurek",
+    "warden": "v4_gilt",
+    "team": [
+     {
+      "species": "Obelordan",
+      "level": 95
+     },
+     {
+      "species": "Coronarch",
+      "level": 95
+     },
+     {
+      "species": "Caravault",
+      "level": 95
+     },
+     {
+      "species": "Helirollax",
+      "level": 96
+     },
+     {
+      "species": "Coffrendrake",
+      "level": 96
+     }
+    ],
+    "intro": "gilt_rift/aurek_intro",
+    "defeat": "gilt_rift/aurek_defeat",
+    "ai": 2,
+    "money": 12000,
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Hazejellith",
+       "level": 89
+      },
+      {
+       "species": "Coronarch",
+       "level": 89
+      },
+      {
+       "species": "Caravault",
+       "level": 89
+      },
+      {
+       "species": "Helirollax",
+       "level": 90
+      },
+      {
+       "species": "Claspreign",
+       "level": 90
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Obelordan",
+       "level": 97
+      },
+      {
+       "species": "Coronarch",
+       "level": 97
+      },
+      {
+       "species": "Caravault",
+       "level": 97
+      },
+      {
+       "species": "Helirollax",
+       "level": 98
+      },
+      {
+       "species": "Coffrendrake",
+       "level": 98
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

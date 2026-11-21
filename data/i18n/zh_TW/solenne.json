@@ -1,0 +1,29 @@
+{
+ "_comment": "Traditional Chinese texts for the German table solenne. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "Act IV: The Sun of Solenne": "第四幕：Solenne的太陽",
+  "Brass Veil Factor Lusk": "黃銅帷幕代理人Lusk",
+  "Dry Well": "枯井",
+  "Echo Crystal: Dawn Mend": "回聲水晶：Dawn Mend",
+  "Echo Crystal: Radiant Lance": "回聲水晶：Radiant Lance",
+  "Echo Crystal: Squall": "回聲水晶：Squall",
+  "High Noon": "正午",
+  "Interlude: Ochrewell": "插曲：Ochrewell",
+  "Ochrewell": "Ochrewell",
+  "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.": "沙子在風塔間呼嘯：前排所有非Stone屬性的Spirling每回合損失少量元氣。",
+  "Sandstorm": "沙暴",
+  "Take the sand road south from the Saltglass flats to Ochrewell and mend the three Rifts of Solenne.": "從Saltglass平原沿沙路南下前往Ochrewell，修復Solenne的三道裂隙。",
+  "Teaches Dawn Mend to a Lumen Spirling. Never used up.": "教會Lumen屬性Spirling Dawn Mend。永不消耗。",
+  "Teaches Radiant Lance to a Lumen Spirling. Never used up.": "教會Lumen屬性Spirling Radiant Lance。永不消耗。",
+  "Teaches Squall to a Gale Spirling. Never used up.": "教會Gale屬性Spirling Squall。永不消耗。",
+  "The last shutter opens, the tower breathes, and the stair is clear!": "最後一扇百葉窗開啟，塔開始呼吸，樓梯暢通了！",
+  "The oasis east of Ochrewell has run dry: the Oasis Rift. Warden Kaia says nobody is to blame.": "Ochrewell以東的綠洲乾涸了：綠洲裂隙。守境者Kaia說這不怪任何人。",
+  "The oasis has been sold dry: every heal on both sides is halved.": "綠洲被賣幹了：雙方所有治療減半。",
+  "The shutter bangs, and the wind drops dead. Every shutter swings shut again.": "百葉窗砰地一響，風一下子死了。所有百葉窗又關上了。",
+  "The shutter swings open. Sand hisses through the slats.": "百葉窗開啟了。沙子從縫隙間嘶嘶湧入。",
+  "The shutters hum in the wind. The stair stays open.": "百葉窗在風中嗡嗡作響。樓梯一直開著。",
+  "The sun stands straight overhead: Lumen arts on both sides hit harder.": "太陽正當頭頂：雙方的Lumen技藝打得更狠。",
+  "The sundial under the sun palace has stopped: the Sun Rift. Warden Emrys is waiting, slowly.": "太陽宮下的日晷停了：太陽裂隙。守境者Emrys在等著，慢慢地。",
+  "The wind towers of Ochrewell have stopped breathing: the Tower Rift. Warden Aurelio grieves in style.": "Ochrewell的風塔停止了呼吸：高塔裂隙。守境者Aurelio哀傷得很有格調。"
+ }
+}

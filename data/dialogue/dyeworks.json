@@ -1,0 +1,723 @@
+{
+ "r0_valve_0": {
+  "lines": [
+   "A valve crusted with madder red dye."
+  ],
+  "action": "bell dye_room_0 2 3 valve"
+ },
+ "r0_valve_1": {
+  "lines": [
+   "A valve crusted with woad blue dye."
+  ],
+  "action": "bell dye_room_0 3 3 valve"
+ },
+ "r0_valve_2": {
+  "lines": [
+   "A valve crusted with weld yellow dye."
+  ],
+  "action": "bell dye_room_0 1 3 valve"
+ },
+ "r0_plate": {
+  "lines": [
+   "A brass plate, green with age: weld yellow, then madder red, then woad blue."
+  ],
+  "action": "set_flag q_dyeworks_heard"
+ },
+ "r1_valve_0": {
+  "lines": [
+   "A valve crusted with woad blue dye."
+  ],
+  "action": "bell dye_room_1 3 4 valve"
+ },
+ "r1_valve_1": {
+  "lines": [
+   "A valve crusted with gall black dye."
+  ],
+  "action": "bell dye_room_1 1 4 valve"
+ },
+ "r1_valve_2": {
+  "lines": [
+   "A valve crusted with madder red dye."
+  ],
+  "action": "bell dye_room_1 4 4 valve"
+ },
+ "r1_valve_3": {
+  "lines": [
+   "A valve crusted with weld yellow dye."
+  ],
+  "action": "bell dye_room_1 2 4 valve"
+ },
+ "r1_plate": {
+  "lines": [
+   "A brass plate, green with age: gall black, then weld yellow, then woad blue, then madder red."
+  ]
+ },
+ "r2_valve_0": {
+  "lines": [
+   "A valve crusted with weld yellow dye."
+  ],
+  "action": "bell dye_room_2 2 4 valve"
+ },
+ "r2_valve_1": {
+  "lines": [
+   "A valve crusted with lichen purple dye."
+  ],
+  "action": "bell dye_room_2 4 4 valve"
+ },
+ "r2_valve_2": {
+  "lines": [
+   "A valve crusted with woad blue dye."
+  ],
+  "action": "bell dye_room_2 1 4 valve"
+ },
+ "r2_valve_3": {
+  "lines": [
+   "A valve crusted with madder red dye."
+  ],
+  "action": "bell dye_room_2 3 4 valve"
+ },
+ "r2_plate": {
+  "lines": [
+   "A brass plate, green with age: woad blue, then weld yellow, then madder red, then lichen purple."
+  ]
+ },
+ "r3_valve_0": {
+  "lines": [
+   "A valve crusted with gall black dye."
+  ],
+  "action": "bell dye_room_3 4 5 valve"
+ },
+ "r3_valve_1": {
+  "lines": [
+   "A valve crusted with madder red dye."
+  ],
+  "action": "bell dye_room_3 2 5 valve"
+ },
+ "r3_valve_2": {
+  "lines": [
+   "A valve crusted with lichen purple dye."
+  ],
+  "action": "bell dye_room_3 5 5 valve"
+ },
+ "r3_valve_3": {
+  "lines": [
+   "A valve crusted with weld yellow dye."
+  ],
+  "action": "bell dye_room_3 1 5 valve"
+ },
+ "r3_valve_4": {
+  "lines": [
+   "A valve crusted with woad blue dye."
+  ],
+  "action": "bell dye_room_3 3 5 valve"
+ },
+ "r3_plate": {
+  "lines": [
+   "A brass plate, green with age: weld yellow, then madder red, then woad blue, then gall black, then lichen purple."
+  ]
+ },
+ "hint_board": {
+  "lines": [
+   "A foreman's board, still chalked: 'Valves in plate order. Wrong order floods the room. Again.'"
+  ],
+  "after_flag": [
+   {
+    "flag": "hint_dyeworks",
+    "lines": [
+     "Tip: every room has its own brass plate. Turn the valves in the colours it lists, first to last."
+    ]
+   }
+  ]
+ },
+ "gate_sign": [
+  "THE DROWNED DYEWORKS. Larkin and Fennimore, partners in colour. Closed by flood. Closed by lawyers."
+ ],
+ "seal_1": {
+  "lines": [
+   "A red wax seal, stamped with a Larkin rose. Someone pressed it into the mud on purpose.",
+   "You got a house seal."
+  ],
+  "flag": "seal_1"
+ },
+ "seal_2": {
+  "lines": [
+   "A blue wax seal, stamped with a Fennimore bell. It floats. Fennimore things always float.",
+   "You got a house seal."
+  ],
+  "flag": "seal_2"
+ },
+ "seal_3": {
+  "lines": [
+   "A red seal on a drying rack, holding nothing shut. The cloth it sealed was sold twice.",
+   "You got a house seal."
+  ],
+  "flag": "seal_3"
+ },
+ "seal_4": {
+  "lines": [
+   "A blue seal at the bottom of a dye pit. It has been waiting for a diver, or a fool.",
+   "You got a house seal."
+  ],
+  "flag": "seal_4"
+ },
+ "seal_5": {
+  "lines": [
+   "A seal that is half red and half blue. The only joint venture that ever worked.",
+   "You got a house seal."
+  ],
+  "flag": "seal_5"
+ },
+ "seal_6": {
+  "lines": [
+   "A red seal stuck under a quay plank, next to a Larkin debt note. The note is newer.",
+   "You got a house seal."
+  ],
+  "flag": "seal_6"
+ },
+ "seal_7": {
+  "lines": [
+   "A blue seal in the Madderby gutter. Blue water runs past it as if nothing happened.",
+   "You got a house seal."
+  ],
+  "flag": "seal_7"
+ },
+ "seal_8": {
+  "lines": [
+   "A red seal tangled in the reeds by the pond. A rook has been using it as a mirror.",
+   "You got a house seal."
+  ],
+  "flag": "seal_8"
+ },
+ "seal_9": {
+  "lines": [
+   "A blue seal wedged in the scree. Someone threw it as far from Madderby as they could.",
+   "You got a house seal."
+  ],
+  "flag": "seal_9"
+ },
+ "seal_10": {
+  "lines": [
+   "A cracked seal in the moor, red under the blue. Paint over a feud and it shows through.",
+   "You got a house seal."
+  ],
+  "flag": "seal_10"
+ },
+ "shift_bell_1": {
+  "if": {
+   "not_flag": "shift_bell_1"
+  },
+  "else": "shift_rung",
+  "lines": [
+   "A rusty shift bell. You ring it. Somewhere below, a time card is stamped twenty years late."
+  ],
+  "flag": "shift_bell_1"
+ },
+ "shift_bell_2": {
+  "if": {
+   "not_flag": "shift_bell_2"
+  },
+  "else": "shift_rung",
+  "lines": [
+   "The second shift bell. It rings flat, like a bell that has stopped believing in weekends."
+  ],
+  "flag": "shift_bell_2"
+ },
+ "shift_bell_3": {
+  "if": {
+   "not_flag": "shift_bell_3"
+  },
+  "else": "shift_rung",
+  "lines": [
+   "The last shift bell. The sound runs up the stairs, looking for anyone who still works here."
+  ],
+  "flag": "shift_bell_3"
+ },
+ "shift_rung": [
+  "The bell has been rung. Ringing it again would count as overtime."
+ ],
+ "hatch": {
+  "if": {
+   "not_flag": "q_hatch_asked"
+  },
+  "else": "hatch_check",
+  "lines": [
+   "Hatch: Sluice Keeper Hatch, on shift. Twenty years on shift. Nobody rang the end-of-shift bells after the flood.",
+   "Hatch: Rules are rules. Ring all three bells down here and I can clock out. I don't remember where home is, but I'm told it has a chair.",
+   "Hatch: One in the vat hall, one up here in the lofts, one by the dye pits."
+  ],
+  "flag": "q_hatch_asked"
+ },
+ "hatch_check": {
+  "if": {
+   "flag": [
+    "shift_bell_1",
+    "shift_bell_2",
+    "shift_bell_3"
+   ],
+   "not_flag": "hatch_done"
+  },
+  "else": "hatch_wait",
+  "lines": [
+   "Hatch: Three bells. That's the end of my shift. Twenty years, no lunch break. I'll write a strongly worded letter.",
+   "Hatch: One thing before I go. If Aunt Prim sent you for the ledger: she sells everything twice. First to the one who pays, then to the one who'd pay more to see you robbed.",
+   "Hatch: Take these. They were for the flood. Turned out nobody needed reviving, only the payroll."
+  ],
+  "action": "set_flag hatch_warned; give_item revival_leaf 2",
+  "flag": "hatch_done"
+ },
+ "hatch_wait": [
+  "Hatch: Three bells. Vat hall, lofts, dye pits. I'd do it myself, but I'm on shift."
+ ],
+ "sim": [
+  "Sim: The Larkins pay me to find Fennimore things down here. The Fennimores pay me to lose them again."
+ ],
+ "sim_intro": [
+  "Sim: Mudlark Sim. Everything that sinks is mine. You're sinking, so you're mine."
+ ],
+ "sim_defeat": [
+  "Sim: Fine. Float on, then."
+ ],
+ "rufus": [
+  "Rufus: Twenty years I've guarded this vat for the Larkins. It's empty. That's how good I am."
+ ],
+ "rufus_intro": [
+  "Rufus: Larkin vat, Larkin rules. The rule is: you lose."
+ ],
+ "rufus_defeat": [
+  "Rufus: Don't tell my aunt. She'll stop my pay. She stopped it in spring, but she'll stop it harder."
+ ],
+ "isolde": [
+  "Isolde: Rufus and I have stood twelve steps apart for twenty years. We've never once talked. It's the healthiest relationship in Madderby."
+ ],
+ "isolde_intro": [
+  "Isolde: Fennimore vat. If you're with the Larkins, you're drowning. If you're not, you're drowning politely."
+ ],
+ "isolde_defeat": [
+  "Isolde: Blue never loses. It just takes longer to dry."
+ ],
+ "moll": [
+  "Moll: I steal dye. Old dye, new dye, the dye off your boots. Business is grey this year."
+ ],
+ "moll_intro": [
+  "Moll: Dye Thief Moll. Hand over your colours. All of them. Even the embarrassing ones."
+ ],
+ "moll_defeat": [
+  "Moll: Keep your colours. They clash anyway."
+ ],
+ "agnes": [
+  "Agnes: I dive the pits for lost rings. Found forty. Every one engraved 'to my only love'. Forty only loves. Madderby."
+ ],
+ "agnes_intro": [
+  "Agnes: Pit Diver Agnes. Hold your breath. This takes a while."
+ ],
+ "agnes_defeat": [
+  "Agnes: You'd make a good diver. You don't know when to give up either."
+ ],
+ "cardew_intro": [
+  "Cardew: Cardew, loss adjuster. I've been adjusting this loss for twenty years. It's nearly adjusted.",
+  "Cardew: Both houses want this ledger. Both houses want me dead. So I sit on it. Literally. Shall we?"
+ ],
+ "cardew_defeat": [
+  "Cardew: Claim approved. Take the book. Page nine is the interesting one. Both signatures, one flood.",
+  "Cardew: The Larkins and the Fennimores opened the sluices together. Insurance paid. The workers didn't. Then each house told the town the other did it."
+ ],
+ "cardew": [
+  "Cardew: Twenty years of feud, built on one afternoon of teamwork. Touching, really."
+ ],
+ "ledger_desk": {
+  "if": {
+   "flag": "beat_cardew",
+   "not_flag": [
+    "dye_ledger_taken",
+    "ledger_burned"
+   ]
+  },
+  "else": "ledger_desk_idle",
+  "lines": [
+   "The Dyeworks ledger. Page nine: 'Sluices opened at noon, by order of both houses. Wages: lost in the flood.'",
+   "A cold stove stands next to the desk. It looks hungry."
+  ],
+  "choices": [
+   {
+    "text": "Take the ledger",
+    "action": "set_flag dye_ledger_taken; quest_stage dye_ledger 1"
+   },
+   {
+    "text": "Burn it",
+    "action": "set_flag ledger_burned; set_flag dye_ledger_done"
+   }
+  ]
+ },
+ "ledger_desk_idle": {
+  "lines": [
+   "Cardew is sitting on the ledger. Literally. He won't stand up for anyone who hasn't beaten him."
+  ],
+  "after_flag": [
+   {
+    "flag": "dye_ledger_taken",
+    "lines": [
+     "An empty desk. Cardew is reading a novel now. He says it has a happier ending."
+    ]
+   },
+   {
+    "flag": "ledger_burned",
+    "lines": [
+     "Ash in the stove. Twenty years of feud make a surprisingly small fire."
+    ]
+   }
+  ]
+ },
+ "prim": {
+  "if": {
+   "not_flag": "q_prim_asked"
+  },
+  "else": "prim_check",
+  "lines": [
+   "Prim: Aunt Prim. Everybody's aunt, nobody's relative. I fix things. Marriages, races, feuds.",
+   "Prim: The Larkins and the Fennimores have hated each other since the Dyeworks drowned. Bad for trade. Bad for my nerves.",
+   "Prim: There's a ledger in the counting room down there. Bring it to me and I'll make peace. You have my word. I have lots of words.",
+   "Prim: The way down is the sluice hatch at the end of the Stillwater jetty. Mind the damp. Damp is how this whole mess started."
+  ],
+  "flag": "q_prim_asked",
+  "action": "set_flag q_dyeworks_heard"
+ },
+ "prim_check": {
+  "if": {
+   "flag": "dye_ledger_taken",
+   "not_flag": "dye_ledger_done"
+  },
+  "else": "prim_wait",
+  "lines": [
+   "Prim: Is that the ledger? Oh, you darling. Give it to Auntie."
+  ],
+  "choices": [
+   {
+    "text": "Hand over the ledger",
+    "next": "prim_hand"
+   },
+   {
+    "text": "Not yet"
+   }
+  ]
+ },
+ "prim_hand": {
+  "lines": [
+   "Prim: Lovely. Peace is coming to Madderby. Run along now. Take the long way. Or don't. Your choice, darling."
+  ],
+  "action": "set_flag ledger_to_prim; set_flag dye_ledger_done; betrayal prim_ledger"
+ },
+ "prim_wait": {
+  "lines": [
+   "Prim: The ledger, darling. Counting room, under Stillwater. Auntie is patient. Auntie is also counting."
+  ],
+  "after_flag": [
+   {
+    "flag": "ledger_to_wenna",
+    "lines": [
+     "Prim: You gave it to the widow. Sentimental. Sentiment is very bad for business, and worse for health."
+    ]
+   },
+   {
+    "flag": "ledger_burned",
+    "lines": [
+     "Prim: You burned it. Twenty years of leverage, gone up a chimney. I'll send flowers. To your funeral, eventually."
+    ]
+   },
+   {
+    "flag": "ledger_to_prim",
+    "lines": [
+     "Prim: Peace is lovely, isn't it? Both houses are paying me for it. Separately."
+    ]
+   }
+  ]
+ },
+ "prim_caught": [
+  "Hatch's warning sits in your ear. So you gave Prim the copy you drew by lamplight, every line perfect, page nine left blank.",
+  "By dusk the Larkins and the Fennimores both own a ledger that proves nothing, and both want a word with Aunt Prim.",
+  "You sell the real page nine to the harbour clerk. Anonymously. You're learning."
+ ],
+ "prim_struck": [
+  "Prim sold the ledger to the Larkins at noon and to the Fennimores at one. At two she sold them your name as the thief.",
+  "For the first time in twenty years, a Larkin and a Fennimore walk side by side. Towards you."
+ ],
+ "ledger_prim": [
+  "Peace, by Aunt Prim",
+  "You fetched the Dyeworks ledger for Aunt Prim, the quay's fixer. She promised to end the dye feud.",
+  "She sold it to both houses and sold your name with it. Hatch and her own niece tried to warn you."
+ ],
+ "prim_ambush_lose": [
+  "The two families split your coins exactly in half. It's the first fair deal they've made in twenty years."
+ ],
+ "wenna": {
+  "if": {
+   "flag": "dye_ledger_taken",
+   "not_flag": "dye_ledger_done"
+  },
+  "else": "wenna_idle",
+  "lines": [
+   "Wenna: You found the ledger. My Tobin ran the vat hall. His crew never got their last month's pay. The houses said the flood took it.",
+   "Wenna: Give it to me and both houses will pay what they owe. Every coin. I'll see to it personally."
+  ],
+  "after_flag": [
+   {
+    "flag": "feud_paid",
+    "lines": [
+     "Wenna: You found the ledger. Funny. My nephews say you've been beating them up for a bookie's coin.",
+     "Wenna: Give it to me anyway. I'm sure we can trust each other. We're both such honest people."
+    ]
+   }
+  ],
+  "choices": [
+   {
+    "text": "Give her the ledger",
+    "action": "set_flag ledger_to_wenna; set_flag dye_ledger_done; favor wenna_ledger"
+   },
+   {
+    "text": "Not yet"
+   }
+  ]
+ },
+ "wenna_idle": {
+  "lines": [
+   "Wenna: Twenty years I've watched the Larkins and the Fennimores spit at each other across my street. Neither of them ever looked at me."
+  ],
+  "after_flag": [
+   {
+    "flag": "ledger_to_wenna",
+    "lines": [
+     "Wenna: The houses are paying. Slowly, and through their teeth. It's the sweetest sound in Madderby."
+    ]
+   }
+  ]
+ },
+ "wenna_betray": [
+  "Wenna takes the ledger, kisses it, and walks straight down the hill to Aunt Prim's table on the quay.",
+  "Wenna: The houses owe me twenty years. You beat my boys for coin. I'm just collecting from everyone at once, love.",
+  "Two of her nephews are waiting at the bottom of the lane. They remember you."
+ ],
+ "wenna_reward": [
+  "Wenna: Both houses paid within the week. Tobin's crew got their wages. With twenty years of interest. I insisted.",
+  "Wenna: This is from the crew. And this is from me. Don't tell the crew."
+ ],
+ "wenna_kept": [
+  "Wenna: The houses are paying. Not quickly, not happily, but they're paying. Thank you, love."
+ ],
+ "ledger_wenna": [
+  "The widow's pension",
+  "You gave the Dyeworks ledger to Widow Wenna, whose husband's crew was never paid.",
+  "You had beaten her nephews for Bookie Lark's coin. She sold the ledger, and you, to Aunt Prim."
+ ],
+ "wenna_ambush_lose": [
+  "The nephews take your coins and leave you a receipt signed 'with love, from the family you made'."
+ ],
+ "tansy_1": {
+  "lines": [
+   "Tansy: Tansy Hask. Aunt Prim's niece. She asked me to keep an eye on you. I've got two, so that's generous.",
+   "Tansy: Let's see if you're worth Auntie's coin."
+  ],
+  "flag": "tansy_met",
+  "choices": [
+   {
+    "text": "Battle",
+    "action": "battle tansy_1"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "tansy_1_defeat": [
+  "Tansy: Hm. Auntie will want to know about this. Auntie wants to know about everything."
+ ],
+ "tansy_2": {
+  "lines": [
+   "Tansy: Fancy meeting you in a flooded basement. I'm here for the view. And for Auntie's ledger, if you drop it."
+  ],
+  "choices": [
+   {
+    "text": "Battle",
+    "action": "battle tansy_2"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "tansy_2_defeat": {
+  "lines": [
+   "Tansy: Fine. You want a tip, from one of Auntie's tools to another? She sells everything twice. Ledgers, favours, nieces.",
+   "Tansy: I didn't tell you that. I don't tell anyone anything. It's a family value."
+  ],
+  "flag": "tansy_slip"
+ },
+ "tansy_3": {
+  "lines": [
+   "Tansy: So. The ledger's gone, the feud's still on and Auntie is smiling. That's never good for anyone.",
+   "Tansy: One last round. Then I'm leaving Corvane before she sells me to somebody with a boat."
+  ],
+  "choices": [
+   {
+    "text": "Battle",
+    "action": "battle tansy_3"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "tansy_3_defeat": [
+  "Tansy: You're good. Too good. That makes you expensive, and expensive things get sold.",
+  "Tansy: Trust nobody on this quay. Start with me. I'm leaving anyway."
+ ],
+ "tansy_lose": [
+  "Tansy: Auntie's going to love this story. She'll sell it by morning."
+ ],
+ "lark": {
+  "if": {
+   "not_flag": "q_lark_asked"
+  },
+  "else": "lark_check",
+  "lines": [
+   "Lark: Bookie Lark. I take bets on the dye feud. Larkins to win, Fennimores to win, both to lose. 'Both to lose' never pays out.",
+   "Lark: Until you. Three Larkin cousins and three Fennimore cousins are out on the roads, picking fights. Beat all six and 'both to lose' finally comes in.",
+   "Lark: I put my own money on it. You're my favourite tamer. Don't make me find a new favourite."
+  ],
+  "flag": "q_lark_asked"
+ },
+ "lark_check": {
+  "if": {
+   "flag": [
+    "beat_cousin_1",
+    "beat_cousin_2",
+    "beat_cousin_3",
+    "beat_cousin_4",
+    "beat_cousin_5",
+    "beat_cousin_6"
+   ],
+   "not_flag": "feud_paid"
+  },
+  "else": "lark_wait",
+  "lines": [
+   "Lark: All six! Both to lose! Do you know how long I've waited to say that? Twenty years of other people's money.",
+   "Lark: Your share. And a word of advice: the cousins have a lot of aunts. Aunts talk."
+  ],
+  "action": "give_item power_brew 1; give_item strong_tonic 2; trust wenna 0 25",
+  "flag": "feud_paid"
+ },
+ "lark_wait": {
+  "lines": [
+   "Lark: Three red cousins, three blue cousins. On the quay, at Stillwater and up in Greyreach. Go make me rich."
+  ],
+  "after_flag": [
+   {
+    "flag": "feud_paid",
+    "lines": [
+     "Lark: The feud is back on, of course. Bad for Madderby. Wonderful for odds."
+    ]
+   }
+  ]
+ },
+ "cousin_1": [
+  "Ginny: Larkin red runs in my blood. Also in my sleeves. The vats leak."
+ ],
+ "cousin_1_intro": [
+  "Ginny: Red, red, red! Fight me!"
+ ],
+ "cousin_1_defeat": [
+  "Ginny: That's going in the family grudge book. Page four hundred."
+ ],
+ "cousin_2": [
+  "Bertram: I'm the Fennimore who reads. It means I know exactly why we hate the Larkins. Nobody else remembers."
+ ],
+ "cousin_2_intro": [
+  "Bertram: For the bell and the blue! Or whatever the motto is this week."
+ ],
+ "cousin_2_defeat": [
+  "Bertram: I'll write a pamphlet about this. Nobody will read it either."
+ ],
+ "cousin_3": [
+  "Perpetua: Grandmother Larkin says Fennimores sink. I tested it. They float. I'm not allowed to talk about it."
+ ],
+ "cousin_3_intro": [
+  "Perpetua: You look neutral. Neutral people are the worst. Battle!"
+ ],
+ "cousin_3_defeat": [
+  "Perpetua: Don't tell Grandmother. She'll disinherit me again."
+ ],
+ "cousin_4": [
+  "Osric: I was born the day the Dyeworks flooded. Mother says I'm the only good thing that came out of it. Father says nothing came out of it."
+ ],
+ "cousin_4_intro": [
+  "Osric: Blue blood! Literally! The dye never washes out!"
+ ],
+ "cousin_4_defeat": [
+  "Osric: Fine. I'll go back to being the family disappointment. It's a steady job."
+ ],
+ "cousin_5": [
+  "Mungo: The Larkins sent me up here to keep watch on the Fennimores. There are no Fennimores up here. That's how well I watch."
+ ],
+ "cousin_5_intro": [
+  "Mungo: Finally, somebody to fight! I was about to fight a rock."
+ ],
+ "cousin_5_defeat": [
+  "Mungo: The rock would've been easier."
+ ],
+ "cousin_6": [
+  "Clementine: I'm engaged to a Larkin. Nobody knows. If you tell anyone, I'll deny it and then marry him anyway."
+ ],
+ "cousin_6_intro": [
+  "Clementine: I have to keep up appearances. Battle me like you mean it."
+ ],
+ "cousin_6_defeat": [
+  "Clementine: Perfect. Everyone will think I really hate you. Thank you."
+ ],
+ "odo": {
+  "if": {
+   "not_flag": "q_odo_asked"
+  },
+  "else": "odo_check",
+  "lines": [
+   "Odo: Sealwright Odo. I made the wax seals for both dye houses. Red for the Larkins, blue for the Fennimores, same wax, same price, same pot.",
+   "Odo: After the flood they threw them all away, so nobody could prove they'd ever worked together. Ten are still out there. Bring them back to me.",
+   "Odo: Five sank into the Dyeworks. The rest are on the quay, in Madderby, here by the pond, up in Greyreach and out in the Woadfen."
+  ],
+  "flag": "q_odo_asked"
+ },
+ "odo_check": {
+  "if": {
+   "flag": [
+    "seal_1",
+    "seal_2",
+    "seal_3",
+    "seal_4",
+    "seal_5",
+    "seal_6",
+    "seal_7",
+    "seal_8",
+    "seal_9",
+    "seal_10"
+   ],
+   "not_flag": "seals_done"
+  },
+  "else": "odo_wait",
+  "lines": [
+   "Odo: All ten. Red and blue, side by side on my table. Exactly how they sat on every contract the houses ever signed together.",
+   "Odo: I'll melt them into one. Purple. The colour of a secret nobody can sell anymore. Here, for your trouble."
+  ],
+  "action": "give_item spark_drop 1; give_item max_tonic 2",
+  "flag": "seals_done"
+ },
+ "odo_wait": {
+  "lines": [
+   "Odo: Ten seals. Five in the Dyeworks, five out in Corvane. Wax lasts longer than loyalty."
+  ],
+  "after_flag": [
+   {
+    "flag": "seals_done",
+    "lines": [
+     "Odo: One purple seal. I keep it on my desk. It frightens the right people."
+    ]
+   }
+  ]
+ }
+}

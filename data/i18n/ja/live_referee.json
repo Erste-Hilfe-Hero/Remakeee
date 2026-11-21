@@ -1,0 +1,33 @@
+{
+ "_comment": "ja translation of the live_referee table, keyed by the English text.",
+ "strings": {
+  "%s Ring %d (from %s)": "%s リング%d（%sから）",
+  "%s beats %s": "%sが%sに勝利",
+  "(borrowed)": "（借りもの）",
+  "Close": "閉じる",
+  "Could not save the picture.": "画像を保存できなかった。",
+  "Draw": "引き分け",
+  "Enter the duel": "対戦に入る",
+  "It joins this one duel. After that the loan is used up.": "この対戦1回だけ参加する。そのあと貸し出しは終わる。",
+  "Leave (the duel goes on)": "退出する（対戦は続く）",
+  "Live duel": "ライブ対戦",
+  "Menu": "メニュー",
+  "No friend has lent you a Spirling right now.": "今はどのフレンドからもSpirlingを借りていない。",
+  "No winner": "勝者なし",
+  "Result picture saved with your photos.": "結果の画像を写真といっしょに保存した。",
+  "Rounds: %d": "ラウンド: %d",
+  "Save a result picture": "結果の画像を保存する",
+  "Stop watching": "観戦をやめる",
+  "Take a borrowed Spirling along": "借りたSpirlingを連れていく",
+  "Take a borrowed Spirling along? It joins this one attempt, then the loan is used up.": "借りたSpirlingを連れていく？ この挑戦1回だけ参加し、そのあと貸し出しは終わる。",
+  "That loan has ended.": "その貸し出しは終了した。",
+  "The duel is not over yet.": "対戦はまだ終わっていない。",
+  "The referee checks the duel.": "審判が対戦を確認している。",
+  "The result picture is in your downloads.": "結果の画像はダウンロードフォルダにある。",
+  "This battle cannot be shown any more.": "このバトルはもう表示できない。",
+  "Top: %s  Bottom: %s": "上: %s  下: %s",
+  "Without a borrowed Spirling": "借りたSpirlingなし",
+  "You already used a borrowed Spirling here.": "ここではもう借りたSpirlingを使った。",
+  "Your last duel": "前回の対戦"
+ }
+}

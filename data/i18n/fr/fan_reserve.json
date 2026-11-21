@@ -1,0 +1,24 @@
+{
+ "_comment": "fr translation of the fan_reserve table, keyed by the English text.",
+ "strings": {
+  "%s answers your call and pads over to you. Dorran pretends not to notice.": "%s répond à ton appel et trottine jusqu'à toi. Dorran fait semblant de ne rien voir.",
+  "%s slips through a hole in the fence. The ring will patch that hole. Someday.": "%s se glisse par un trou dans la clôture. Le cercle bouchera ce trou. Un jour.",
+  "%s tilts its head at your call, but stays put.": "%s penche la tête à ton appel, mais ne bouge pas.",
+  "A whistle from the lookout tower. A rival crew bursts out of the reeds and %s bolts. Somebody got paid tonight.": "Un coup de sifflet depuis la tour de guet. Une bande rivale jaillit des roseaux et %s détale. Quelqu'un a été payé ce soir.",
+  "A wild %s, Ring %d. Sightings left: %d": "Un %s sauvage, Rang %d. Apparitions restantes: %d",
+  "A woman in a velvet coat leans on a fence that is not on any map.": "Une femme en manteau de velours s'appuie sur une clôture qui n'est sur aucune carte.",
+  "Echo call (%d left)": "Appel d'écho (%d restants)",
+  "Move on": "Passer au suivant",
+  "Pay %d coins to slip into the reserve?": "Payer %d pièces pour te glisser dans la réserve?",
+  "Rattle the fence": "Secouer la clôture",
+  "Set bait": "Poser un appât",
+  "Velvet Dorran": "Dorran de Velours",
+  "Velvet Dorran: No coins? Then you were never here.": "Dorran de Velours: Pas de pièces? Alors tu n'as jamais mis les pieds ici.",
+  "Velvet Dorran: No fighting in my yard. You set bait, you rattle the fence, you call. Then you leave and forget my face.": "Dorran de Velours: Pas de combat dans ma cour. Tu poses un appât, tu secoues la clôture, tu appelles. Puis tu pars et tu oublies mon visage.",
+  "Velvet Dorran: Time's up. Out you go, and the gate never saw you.": "Dorran de Velours: C'est l'heure. Dehors, et le portail n'a jamais vu personne.",
+  "Velvet Dorran: Welcome to Hollowgate Reserve. Totally legal. The fence is to keep the paperwork in.": "Dorran de Velours: Bienvenue à la Réserve de Hollowgate. Totalement légale. La clôture sert à garder les papiers à l'intérieur.",
+  "You rattle the fence. %s's ears shoot up: curious, and very jumpy.": "Tu secoues la clôture. Les oreilles de %s se dressent: curieux, et très nerveux.",
+  "You set down a twist of dried bait. %s sniffs it and calms down.": "Tu déposes une pincée d'appât séché. %s la renifle et se calme.",
+  "the Quiet Hands": "les Mains Tranquilles"
+ }
+}

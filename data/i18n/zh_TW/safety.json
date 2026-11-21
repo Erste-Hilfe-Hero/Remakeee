@@ -1,0 +1,18 @@
+{
+ "_comment": "zh_TW translation of the safety table, keyed by the English text.",
+ "strings": {
+  "Battle over": "戰鬥結束",
+  "Bunds": "盟會",
+  "For parents...": "家長專區...",
+  "For parents: switch off what your child should not use. Friends and saves stay.": "家長專區：關閉不想讓孩子使用的功能。好友和存檔會保留。",
+  "Open league": "開放聯賽",
+  "Report the rival...": "舉報對手...",
+  "Suggestions from league battles": "來自聯賽對戰的推薦",
+  "These switches are for parents. Continue?": "這些開關供家長使用。要繼續嗎？",
+  "This battle was against your own echo, so there is nobody to report.": "這場戰鬥的對手是你自己的回聲，所以沒有可舉報的人。",
+  "This is switched off under Settings, Account, For parents.": "此功能已在設定、帳號、家長專區中關閉。",
+  "Under 16: open league, bunds and suggestions start switched off.": "未滿16歲：開放聯賽、盟會和推薦預設關閉。",
+  "Why do you report the rival?": "為什麼舉報這位對手？",
+  "You met this rival 3 times today, so this battle does not count.": "你今天已經遇到這位對手3次，所以這場戰鬥不計入。"
+ }
+}

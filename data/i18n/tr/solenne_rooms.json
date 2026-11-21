@@ -1,0 +1,14 @@
+{
+ "_comment": "tr translation of the solenne_rooms table, keyed by the English text.",
+ "strings": {
+  "Ama's Dome": "Ama'nın Kubbesi",
+  "Apprentice Wenna: Domes by day, urns by night. I glaze both. Only the urns get compliments.": "Çırak Wenna: Gündüz kubbe, gece vazo. İkisini de ben sırlarım. İltifatı sadece kül vazoları alır.",
+  "Apprentice Wenna: Hadi says every urn is made to measure. I've stopped asking whose.": "Çırak Wenna: Hadi her kül vazosunun ölçüye göre yapıldığını söylüyor. Kimin ölçüsü diye sormayı bıraktım.",
+  "Hadi's Pottery": "Hadi'nin Çömlekhanesi",
+  "Oskin's Storeroom": "Oskin'in Deposu",
+  "Stock Boy Jem: I paint GENUINE on every crate. Very genuine paint. Oskin checks.": "Depocu Çocuk Jem: Her sandığa HAKİKİ yazarım. Çok hakiki boyayla. Oskin kontrol eder.",
+  "Stock Boy Jem: The last stock boy asked where the goods come from. He left with the next caravan. In a crate.": "Depocu Çocuk Jem: Önceki depocu çocuk malların nereden geldiğini sormuş. Bir sonraki kervanla gitti. Sandık içinde.",
+  "Widow Ama: My husband signed one little paper for the Brass Veil. Now they own the house, the goats and, on paper, me.": "Dul Ama: Kocam Pirinç Peçe için ufacık bir kâğıt imzaladı. Şimdi ev de keçiler de onların, kâğıt üstünde ben de.",
+  "Widow Ama: The goats took it worst. They read the small print.": "Dul Ama: En çok keçilere koydu. Küçük yazıları okumuşlar."
+ }
+}

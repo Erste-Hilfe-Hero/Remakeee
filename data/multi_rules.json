@@ -1,0 +1,104 @@
+{
+ "_doc": "Multi-Spirling battle extras (docs/KAMPF_PLAN_1000.md, Mehrfachkämpfe), read by scripts/battle/MultiRules.gd. formation: when a side fields at least 'count' Spirlings of 'element' at the start of a battle with several slots, each of them starts with these stat stages. tower: every 'every'-th lighthouse stair floor that is no Warden floor is fought 'front' against 'front'. support_turns: default turns of the support arts (team_guard, decoy, cover). guard_mult: damage taken by a side under a team guard. swarm: a wild swarm's highest-ring Spirling leads it with leader_stage; when it falls, the rest get falter_stage. combos: when an ally already hit a foe this turn with one element of a pair, a hit with the other element on the same foe deals combo_mult. text_speed: typing factor of the battle text in a multi battle. sim: MultiSim mirror matches, the support arts tried, the support side's win band and the AI tier. rows: in a side with more than front_slots slots, the slots after them stand in the back row: physical arts on them deal back_phys_taken, their own physical arts deal back_phys_dealt (sweeps and Focus arts are not changed). order_bar: the acting order under the orders prompt of a multi battle names at most max_names Spirlings, the rest as +n.",
+ "formation": [
+  {
+   "id": "stone_wall",
+   "label": "Stone Wall",
+   "element": "STONE",
+   "count": 2,
+   "stage": {
+    "def": 1
+   }
+  },
+  {
+   "id": "gale_flock",
+   "label": "Gale Flock",
+   "element": "GALE",
+   "count": 2,
+   "stage": {
+    "spd": 1
+   }
+  },
+  {
+   "id": "ember_pack",
+   "label": "Ember Pack",
+   "element": "EMBER",
+   "count": 2,
+   "stage": {
+    "atk": 1
+   }
+  },
+  {
+   "id": "tide_school",
+   "label": "Tide School",
+   "element": "TIDE",
+   "count": 2,
+   "stage": {
+    "foc": 1
+   }
+  }
+ ],
+ "tower": {
+  "every": 5,
+  "front": 2
+ },
+ "support_turns": {
+  "team_guard": 3,
+  "decoy": 2,
+  "cover": 2
+ },
+ "guard_mult": 0.75,
+ "swarm": {
+  "leader_stage": {
+   "atk": 1
+  },
+  "falter_stage": {
+   "spd": -1
+  }
+ },
+ "combos": [
+  {
+   "id": "firestorm",
+   "label": "Firestorm",
+   "elements": [
+    "EMBER",
+    "GALE"
+   ]
+  },
+  {
+   "id": "thunder_tide",
+   "label": "Thunder Tide",
+   "elements": [
+    "TIDE",
+    "VOLT"
+   ]
+  },
+  {
+   "id": "root_and_rock",
+   "label": "Root and Rock",
+   "elements": [
+    "BLOOM",
+    "STONE"
+   ]
+  },
+  {
+   "id": "dusk_and_dawn",
+   "label": "Dusk and Dawn",
+   "elements": [
+    "LUMEN",
+    "UMBRA"
+   ]
+  }
+ ],
+ "combo_mult": 1.25,
+ "text_speed": 1.4,
+ "sim": {"arts": ["Mending Chorus", "Kindred Balm", "Shell Ring", "Lure Dance", "Breakwater Stand"], "band": [0.3, 0.7], "ai": 2},
+ "rows": {
+  "front_slots": 2,
+  "back_phys_taken": 0.9,
+  "back_phys_dealt": 0.9
+ },
+ "order_bar": {
+  "max_names": 4
+ }
+}

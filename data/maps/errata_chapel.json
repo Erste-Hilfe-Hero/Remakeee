@@ -1,0 +1,75 @@
+{
+ "name": "Errata Chapel",
+ "region": "quillmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWWWW",
+  "WffCCCCCCffW",
+  "WffffffffffW",
+  "WffffffffffW",
+  "WSffffffffSW",
+  "WffCffffCffW",
+  "WffffffffffW",
+  "WffCffffCffW",
+  "WffffffffffW",
+  "WWWWWDWWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 9,
+   "to": "gravers_causeway",
+   "tx": 2,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "q3_errata_chapel",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/q3_errata_chapel",
+   "sprite": "villager"
+  },
+  {
+   "id": "q3_early_epitaph_brand",
+   "x": 8,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/q3_early_epitaph",
+   "sprite": "elder",
+   "hide_flag": "q3_early_epitaph_reveal"
+  }
+ ],
+ "signs": [
+  {
+   "x": 1,
+   "y": 4,
+   "dialogue": "quillmarch/errata_chapel_sign_1"
+  },
+  {
+   "x": 10,
+   "y": 4,
+   "dialogue": "quillmarch/errata_chapel_sign_2"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 5,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_errata_chapel_1"
+  },
+  {
+   "x": 0,
+   "y": 7,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_errata_chapel_2"
+  }
+ ]
+}

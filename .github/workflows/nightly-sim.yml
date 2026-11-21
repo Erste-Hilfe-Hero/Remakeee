@@ -1,0 +1,20 @@
+name: Nightly balance sim
+
+# Long simulator tests (GUT files test_slow_* in tests/slow, plan area 2 item 865): the target
+# bands of docs/BALANCE.md and the baseline compare. They take a few minutes, so they run once a
+# night and on demand instead of on every push; the normal "test" job skips tests/slow.
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  slow-tests:
+    runs-on: ubuntu-latest
+    container: barichello/godot-ci:4.7.2
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Import project
+        run: godot --headless --path . --import
+      - name: Slow GUT tests
+        run: godot --headless --path . -s res://addons/gut/gut_cmdln.gd -gconfig=res://tests/slow/.gutconfig.json

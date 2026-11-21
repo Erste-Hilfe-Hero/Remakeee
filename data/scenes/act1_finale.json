@@ -1,0 +1,13 @@
+{
+ "_note": "End of Act I in the lighthouse: Aldo fetches his old oar and opens the ferry himself (plan items 1405, 1406).",
+ "steps": [
+  {"say": ["Aldo stays by the lamp for a long time. Then he climbs up to the loft."]},
+  {"fade": "out", "time": 0.3},
+  {"sfx": "bump"}, {"wait": 0.4}, {"sfx": "bump"},
+  {"fade": "in", "time": 0.3},
+  {"say": ["He comes back down with a long oar, grey with dust.", "Aldo: My old oar. Nobody else rows my ferry. Not in a storm, not after one."]},
+  {"say": ["Aldo: The lake has calmed since you mended the Rifts. I'll take you across to Corvane myself.", "Aldo: One last crossing. Then the lake can have the old man back."]},
+  {"flag": "ferry_corvane_open"},
+  {"say": ["Aldo: Meet me at the ferry on the Brindlewick pier when you're ready."]}
+ ]
+}

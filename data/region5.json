@@ -1,0 +1,97 @@
+{
+ "_doc": "Quivermoor, the post-game Era V (Living) region (scripts/core/Region5.gd, tests/unit/test_region5.gd). A moor that breathes: the bog heaves, the oaks walk a step each night, one town floats on rafts and none of the paths stay where you left them. It opens with the flag in unlock_flag, which is the Era IV finale flag of data/eras.json (Halcyra sets halcyra_done, eras.json turns it into era4_finale_done), so Quivermoor chains after Halcyra without code changes. Its last chapter sets finale_flag, which eras.json turns into era5_finale_done. Drawn in Era V: 270x480, 96px sprites, the 2.5D stage, animated battle sprites and the battle camera (data/era5_anim.json; the region's own camera sway is region_looks.json quivermoor.camera, BattleCamera.cam_cfg). Tiles: art/era5/tiles/overworld_quivermoor.png (tools/art/gen_tiles_quivermoor.py, colours in data/region_looks.json). pos = cells for a later world_layout.json region quivermoor (towns, routes and Rifts never share a cell). Route slots: weights sum to 100 and sit in the stand-in's rarity band (common 25-45, uncommon 10-24); species null waits for Quivermoor's own Spirlings, stand_in names an existing one until then. Rings 89 to 96: they climb on from Halcyra's last route (89) at most 4 rings per table (WorldValidator.MAX_RING_JUMP) (Spirlings have no top ring; 96 is also the server's save_level_max today). Rift flags are rift_<warden key>_sealed (GameState.seal_rift with the key v5_<rift>); chapters 2 to 4 end when their Rift is sealed, chapter 5 when the bloom is over. Elements: Quivermoor's own new types come with its Spirlings (empty until the chart gets them).",
+ "id": "quivermoor",
+ "name": "Quivermoor",
+ "era": 5,
+ "unlock_flag": "era4_finale_done",
+ "finale_flag": "quivermoor_done",
+ "arrival": {"line": "quivermoor_rope", "from": "whitecairn", "to": "mossgate", "text": "A basket lowers you off the edge of Halcyra on a rope that has been mended more times than it has been paid for. The winch man charges by the metre. Stopping costs extra."},
+ "elements": [],
+ "towns": [
+  {"id": "mossgate", "name": "Mossgate", "pos": [0, 2], "heal": true, "shop": true,
+   "text": "A gate with no wall. The moss closes behind every visitor. The locals call that a welcome and the visitors call it a door."},
+  {"id": "tallowmere", "name": "Tallowmere", "pos": [2, 0], "heal": true, "shop": true,
+   "text": "Seat of the Tallow Choir. Every candle here burns for someone. Ask for whom and the price goes up."},
+  {"id": "rootchapel", "name": "Rootchapel", "pos": [2, 4], "heal": true, "shop": false,
+   "text": "A chapel the roots grew around. The roots are winning. The priest has started taking their side."},
+  {"id": "driftwick", "name": "Driftwick", "pos": [4, 2], "heal": true, "shop": true,
+   "text": "A town on rafts that drifts across the bog at night. Nobody wakes up next to the same neighbour twice. Some pay good money for that."},
+  {"id": "lastbloom", "name": "Lastbloom", "pos": [6, 2], "heal": true, "shop": false,
+   "text": "Once a year the moor flowers here over whatever it swallowed. The town sells the flowers. Do not ask what they grew from."}
+ ],
+ "routes": [
+  {"id": "breathing_bog", "name": "The Breathing Bog", "pos": [1, 1], "links": ["mossgate", "tallowmere"], "ring": [89, 92], "height": "bog", "slots": [
+   {"slot": "bog_a", "ground": "bog", "weight": 45, "species": null, "stand_in": "Peatlet"},
+   {"slot": "bog_b", "ground": "bog", "weight": 35, "species": null, "stand_in": "Gloomgill"},
+   {"slot": "bog_c", "ground": "reed", "weight": 20, "species": null, "stand_in": "Bogwick"}]},
+  {"id": "wandering_wood", "name": "Wandering Wood", "pos": [1, 3], "links": ["mossgate", "rootchapel"], "ring": [90, 93], "height": "forest", "slots": [
+   {"slot": "wood_a", "ground": "moss", "weight": 45, "species": null, "stand_in": "Morelit"},
+   {"slot": "wood_b", "ground": "moss", "weight": 35, "species": null, "stand_in": "Rushkit"},
+   {"slot": "wood_c", "ground": "moss", "weight": 20, "species": null, "stand_in": "Rookit"}]},
+  {"id": "candle_causeway", "name": "Candle Causeway", "pos": [3, 1], "links": ["tallowmere", "driftwick"], "ring": [91, 94], "height": "causeway", "slots": [
+   {"slot": "causeway_a", "ground": "reed", "weight": 45, "species": null, "stand_in": "Velvit"},
+   {"slot": "causeway_b", "ground": "bog", "weight": 35, "species": null, "stand_in": "Puddock"},
+   {"slot": "causeway_c", "ground": "reed", "weight": 20, "species": null, "stand_in": "Glimmoth"}]},
+  {"id": "hymnmarsh", "name": "Hymnmarsh", "pos": [3, 3], "links": ["rootchapel", "driftwick"], "ring": [92, 95], "height": "marsh", "slots": [
+   {"slot": "hymn_a", "ground": "reed", "weight": 45, "species": null, "stand_in": "Woadlet"},
+   {"slot": "hymn_b", "ground": "bog", "weight": 35, "species": null, "stand_in": "Drizzlet"},
+   {"slot": "hymn_c", "ground": "bog", "weight": 20, "species": null, "stand_in": "Padlet"}]},
+  {"id": "heaving_fields", "name": "The Heaving Fields", "pos": [5, 1], "links": ["driftwick", "lastbloom"], "ring": [93, 96], "height": "heave", "slots": [
+   {"slot": "heave_a", "ground": "moss", "weight": 45, "species": null, "stand_in": "Silthop"},
+   {"slot": "heave_b", "ground": "moss", "weight": 35, "species": null, "stand_in": "Nimbub"},
+   {"slot": "heave_c", "ground": "reed", "weight": 20, "species": null, "stand_in": "Rushprowl"}]},
+  {"id": "gloamwater", "name": "Gloamwater", "pos": [5, 3], "links": ["rootchapel", "lastbloom"], "ring": [93, 96], "height": "marsh", "slots": [
+   {"slot": "gloam_a", "ground": "bog", "weight": 45, "species": null, "stand_in": "Sablet"},
+   {"slot": "gloam_b", "ground": "reed", "weight": 35, "species": null, "stand_in": "Diplit"},
+   {"slot": "gloam_c", "ground": "bog", "weight": 20, "species": null, "stand_in": "Dusktern"}]}
+ ],
+ "landmarks": [
+  {"id": "choir_loft", "name": "The Choir Loft", "at": "tallowmere", "screens": [2, 3],
+   "text": "Ten thousand candles on one wall, each one a name. The wax runs into a vat at the bottom. The vat is for sale."},
+  {"id": "walking_oaks", "name": "The Walking Oaks", "at": "wandering_wood", "screens": [3, 2],
+   "text": "Old oaks that move one step every night. The paths follow them. The maps do not, which is why maps are cheap here and guides are not."},
+  {"id": "raft_market", "name": "The Raft Market", "at": "driftwick", "screens": [4, 1],
+   "text": "Stalls lashed together on rafts. By noon they have drifted apart. Pay first: your seller may be in another town before you count your change."}
+ ],
+ "rifts": [
+  {"id": "wick_rift", "name": "Wick Rift", "pos": [2, 1], "near": "tallowmere", "element": "EMBER", "warden": "maudrey", "flag": "rift_v5_wick_sealed"},
+  {"id": "taproot_rift", "name": "Taproot Rift", "pos": [2, 5], "near": "rootchapel", "element": "BLOOM", "warden": "ossian", "flag": "rift_v5_taproot_sealed"},
+  {"id": "raft_rift", "name": "Raft Rift", "pos": [4, 3], "near": "driftwick", "element": "TIDE", "warden": "corran", "flag": "rift_v5_raft_sealed"},
+  {"id": "bloom_rift", "name": "Bloom Rift", "pos": [6, 1], "near": "lastbloom", "element": "UMBRA", "warden": "sabeline", "flag": "rift_v5_bloom_sealed"}
+ ],
+ "wardens": [
+  {"id": "maudrey", "name": "Warden Maudrey", "rift": "wick_rift", "order": 1, "ring": 93, "money": 8600,
+   "intro": "I lit a candle for you this morning. Do not thank me. I lit it early so the wax would be ready for the next one.",
+   "defeat": "Still burning. How tiresome. I will have to sell the candle back to myself.",
+   "team": [{"species": "Sootharrow", "level": 92}, {"species": "Glazeldrake", "level": 92}, {"species": "Ardenthal", "level": 93}, {"slot": "maudrey_ace", "species": null, "stand_in": "Duskmirrah", "level": 93}]},
+  {"id": "ossian", "name": "Warden Ossian", "rift": "taproot_rift", "order": 2, "ring": 94, "money": 9200,
+   "intro": "The moor is hungry, child. I only set the table. You came at dinner time.",
+   "defeat": "The roots will forgive you. I will not. Go with their blessing, they never ask mine.",
+   "team": [{"species": "Peatmonarch", "level": 93}, {"species": "Fenwarden", "level": 93}, {"species": "Woadcastle", "level": 94}, {"slot": "ossian_ace", "species": null, "stand_in": "Rushstalker", "level": 94}]},
+  {"id": "corran", "name": "Warden Corran", "rift": "raft_rift", "order": 3, "ring": 95, "money": 9900,
+   "intro": "Tomorrow's position of Driftwick costs a hundred. Yours, tonight, costs everything. Pick a raft.",
+   "defeat": "Fine, the Rift is yours. The town drifts on without it. I already sold where it lands.",
+   "team": [{"species": "Gloomgillith", "level": 94}, {"species": "Dipmonarch", "level": 94}, {"species": "Ripjoltane", "level": 95}, {"slot": "corran_ace", "species": null, "stand_in": "Weirmarshal", "level": 95}]},
+  {"id": "sabeline", "name": "Warden Sabeline", "rift": "bloom_rift", "order": 4, "ring": 96, "money": 12500,
+   "intro": "Every flower here grew out of someone who trusted the wrong person. Pick one. I will tell you whose it was.",
+   "defeat": "Take the Rift. The bloom closes tonight. Whatever is still standing in it stays for next year.",
+   "team": [{"species": "Sablarch", "level": 95}, {"species": "Fumeregent", "level": 95}, {"species": "Rookwarden", "level": 95}, {"species": "Woadcastle", "level": 96}, {"slot": "sabeline_ace", "species": null, "stand_in": "Velverain", "level": 96}]}
+ ],
+ "story": [
+  {"id": "v5_ch1", "title": "Chapter 1: The Rope Comes Down", "at": "mossgate", "needs": "era4_finale_done", "sets": "v5_ch1_done",
+   "text": "Reeve Bram Ashby of Mossgate hires you to quiet the four Rifts that make the moor breathe. He pays in candles. Everyone here does.",
+   "betrayal": {"by": "The winch man", "text": "The winch man cut the rope ten metres short to save the haul back up. He billed Halcyra for a Wayfarer lost to the bog. The bog was soft. His invoice was not."}},
+  {"id": "v5_ch2", "title": "Chapter 2: Every Candle a Name", "at": "tallowmere", "needs": "v5_ch1_done", "sets": "rift_v5_wick_sealed", "rift": "wick_rift",
+   "text": "The Tallow Choir lights a candle for every soul the moor takes. Warden Maudrey keeps the Wick Rift and lights hers in advance.",
+   "betrayal": {"by": "Warden Maudrey", "text": "A candle with your name was lit the day you arrived. Maudrey sold its burn time to Reeve Ashby, who opened a book on how long you would last."}},
+  {"id": "v5_ch3", "title": "Chapter 3: Roots and Sermons", "at": "rootchapel", "needs": "rift_v5_wick_sealed", "sets": "rift_v5_taproot_sealed", "rift": "taproot_rift",
+   "text": "The roots have eaten half the chapel and all of the congregation's patience. Warden Ossian preaches that the moor must be fed.",
+   "betrayal": {"by": "Nell Tallis", "text": "Nell, your raft pilot and only friend on the moor, steered you to the chapel on Ossian's orders. The roots are fed on a schedule. You were the schedule."}},
+  {"id": "v5_ch4", "title": "Chapter 4: The Town That Moves", "at": "driftwick", "needs": "rift_v5_taproot_sealed", "sets": "rift_v5_raft_sealed", "rift": "raft_rift",
+   "text": "Driftwick unmoors at night and goes wherever the Raft Rift pulls it. Warden Corran sells the morning position to whoever pays most.",
+   "betrayal": {"by": "Reeve Bram Ashby", "text": "Ashby cut Driftwick's anchor lines with you aboard. Your candle was still burning and he had bet against it. He hates losing money more than he hates you."}},
+  {"id": "v5_ch5", "title": "Chapter 5: Last Bloom", "at": "lastbloom", "needs": "rift_v5_raft_sealed", "sets": "quivermoor_done", "rift": "bloom_rift",
+   "text": "The moor flowers over everything it swallowed. Warden Sabeline waits in the bloom with Ashby's betting book and an offer to split the winnings.",
+   "betrayal": {"by": "Nell Tallis", "text": "Nell comes back with a lamp and an apology and leads you out of the bloom. At the edge she blows the lamp out. You find your own way home. She had sold the book twice already."}}
+ ]
+}

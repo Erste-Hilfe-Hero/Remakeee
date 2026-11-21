@@ -1,0 +1,14 @@
+{
+ "_comment": "ko translation of the solenne_rooms table, keyed by the English text.",
+ "strings": {
+  "Ama's Dome": "Ama의 돔",
+  "Apprentice Wenna: Domes by day, urns by night. I glaze both. Only the urns get compliments.": "견습생 Wenna: 낮에는 돔, 밤에는 유골함. 둘 다 내가 유약을 발라. 칭찬은 유골함만 받아.",
+  "Apprentice Wenna: Hadi says every urn is made to measure. I've stopped asking whose.": "견습생 Wenna: Hadi는 유골함은 전부 맞춤 제작이라고 해. 누구 치수인지는 이제 안 물어.",
+  "Hadi's Pottery": "Hadi의 도자기 공방",
+  "Oskin's Storeroom": "Oskin의 창고",
+  "Stock Boy Jem: I paint GENUINE on every crate. Very genuine paint. Oskin checks.": "창고지기 Jem: 상자마다 '진품'이라고 페인트로 써. 아주 진품인 페인트로. Oskin이 확인해.",
+  "Stock Boy Jem: The last stock boy asked where the goods come from. He left with the next caravan. In a crate.": "창고지기 Jem: 전에 있던 창고지기는 물건이 어디서 오냐고 물었어. 다음 대상과 함께 떠났지. 상자에 담겨서.",
+  "Widow Ama: My husband signed one little paper for the Brass Veil. Now they own the house, the goats and, on paper, me.": "과부 Ama: 남편이 놋쇠 장막에 작은 서류 한 장을 서명해 줬어. 이제 그들이 집도, 염소도, 서류상으로는 나도 소유해.",
+  "Widow Ama: The goats took it worst. They read the small print.": "과부 Ama: 염소들이 제일 힘들어했어. 작은 글씨를 읽었거든."
+ }
+}

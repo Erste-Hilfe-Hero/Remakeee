@@ -1,0 +1,18 @@
+{
+ "_comment": "Russian texts for the German table kampf_k21. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "%d s left, then everyone without orders rests.": "Осталось %d с, потом все без приказа отдыхают.",
+  "%s is about to step out. Swap first?": "Сейчас выйдет %s. Сменить заранее?",
+  "%s, you're up. Last longer than the last one.": "%s, твой ход. Продержись дольше прошлого.",
+  "A Wayfarer names its next Spirling before it steps out.": "Странник называет следующего Спирлинга, прежде чем выпустить его.",
+  "All rest": "Все отдыхают",
+  "Fight on": "Драться дальше",
+  "Foe announces: %s": "Объявление: %s",
+  "Give up? It counts as a loss.": "Сдаться? Это поражение.",
+  "Orders for %s? (%d Energy, %d s)": "Приказ для %s? (%d Энергии, %d с)",
+  "Swap offer: %s": "Смена заранее: %s",
+  "The foe": "Противник",
+  "When a Wayfarer's Spirling is beaten, you may swap before the next one steps out.": "Когда Спирлинг Странника повержен, можно сменить своего до выхода следующего.",
+  "You give up. %s doesn't even pretend to be surprised.": "Ты сдаёшься. %s даже не делает вид, что удивлён."
+ }
+}

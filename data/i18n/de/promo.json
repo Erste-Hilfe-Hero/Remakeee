@@ -1,0 +1,15 @@
+{
+ "_comment": "German texts from tools/i18n/de_promo.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Code redeemed! You got: %s": "Code eingelöst! Du bekommst: %s",
+  "Promo code": "Werbecode",
+  "Promo codes are closed right now.": "Werbecodes sind gerade geschlossen.",
+  "Redeem a promo code...": "Werbecode einlösen...",
+  "That code does not exist. Check the letters and try again.": "Diesen Code gibt es nicht. Prüfe die Zeichen und versuche es erneut.",
+  "This code has been used up.": "Dieser Code ist aufgebraucht.",
+  "This code has expired.": "Dieser Code ist abgelaufen.",
+  "Too many tries. Wait an hour, then try again.": "Zu viele Versuche. Warte eine Stunde und versuche es dann erneut.",
+  "You already redeemed this code.": "Du hast diesen Code schon eingelöst."
+ }
+}

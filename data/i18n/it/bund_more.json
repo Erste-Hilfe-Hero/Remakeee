@@ -1,0 +1,29 @@
+{
+ "_comment": "it translation of the bund_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s  Rank %d%s": "%d. %s  Rango %d%s",
+  "%s  Rank %d  %d/30, %d active%s": "%s  Rango %d  %d/30, %d attivi%s",
+  "Any language": "Qualsiasi lingua",
+  "Anyone, at once": "Chiunque, subito",
+  "Bund board": "Classifica delle Compagnie",
+  "Bund rank %d (%d renown)": "Rango di Compagnia %d (%d di fama)",
+  "Bund rank and week goal": "Rango di Compagnia e obiettivo della settimana",
+  "Donate items...": "Dona oggetti...",
+  "Donated today: %d / %d": "Donati oggi: %d / %d",
+  "Find a bund...": "Trova una Compagnia...",
+  "How many?": "Quanti?",
+  "Language and joining...": "Lingua e adesione...",
+  "Language of the bund": "Lingua della Compagnia",
+  "No bund found. Found your own!": "Nessuna Compagnia trovata. Fondane una tua!",
+  "No bunds yet.": "Ancora nessuna Compagnia.",
+  "Only after a request": "Solo su richiesta",
+  "Take the week reward": "Ritira il premio della settimana",
+  "Thank you! The bund has %d renown now.": "Grazie! Ora la Compagnia ha %d di fama.",
+  "The week goal is not reached yet.": "L'obiettivo della settimana non è ancora raggiunto.",
+  "Week goal: %d / %d items donated": "Obiettivo della settimana: %d / %d oggetti donati",
+  "Who may join?": "Chi può unirsi?",
+  "You already took this week's reward.": "Hai già ritirato il premio di questa settimana.",
+  "You donated all you can today. More tomorrow.": "Per oggi hai donato tutto quello che puoi. Domani altro.",
+  "open": "aperta"
+ }
+}

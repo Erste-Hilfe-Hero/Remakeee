@@ -1,0 +1,73 @@
+{
+ "name": "The Great Orrery",
+ "region": "halcyra",
+ "biome": "town",
+ "backdrop": "voice",
+ "rows": [
+  "WWWWWWWWWWWW",
+  "Wf|ff||ff|fW",
+  "WffffffffffW",
+  "Wf|ffSff|ffW",
+  "WffffffffffW",
+  "WfS|ffff|SfW",
+  "WffffffffffW",
+  "Wf|ffffff|fW",
+  "WffffffffffW",
+  "WWWWWDWWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 9,
+   "to": "starwell",
+   "tx": 9,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "q4_brass_planet_lio",
+   "x": 3,
+   "y": 6,
+   "facing": "right",
+   "dialogue": "halcyra_side/brass_planet",
+   "sprite": "villager"
+  },
+  {
+   "id": "q4_brass_planet_dita",
+   "x": 8,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "halcyra_side/brass_planet_dita",
+   "sprite": "villager",
+   "show_flag": "q4_brass_planet_asked"
+  },
+  {
+   "id": "q4_two_lanterns_rosamund",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "halcyra_side/two_lanterns_rosamund",
+   "sprite": "tamer_f",
+   "show_flag": "q4_two_lanterns_s1"
+  }
+ ],
+ "signs": [
+  {
+   "x": 5,
+   "y": 3,
+   "dialogue": "great_orrery/plaque"
+  },
+  {
+   "x": 2,
+   "y": 5,
+   "dialogue": "great_orrery/gap"
+  },
+  {
+   "x": 9,
+   "y": 5,
+   "dialogue": "great_orrery/ledger"
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+{
+ "_comment": "German texts from tools/i18n/de_kampf_k39.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Any tap or the accept key counts.": "Jedes Tippen und die Bestätigen-Taste zählen.",
+  "Diamond": "Raute",
+  "Echo with the keys: left %s, up %s, right %s.": "Spiel nach mit den Tasten: links %s, oben %s, rechts %s.",
+  "Moon": "Mond",
+  "Square": "Quadrat",
+  "The call: %s.": "Der Ruf: %s.",
+  "Triangle": "Dreieck"
+ }
+}

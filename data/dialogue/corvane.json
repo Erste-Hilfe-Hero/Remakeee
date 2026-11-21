@@ -1,0 +1,602 @@
+{
+ "juna": {
+  "lines": [
+   "Juna: Fresh off the ferry? I'm Juna. I carry letters between the regions.",
+   "Juna: Madderby is up the river road. Follow the colours, or what's left of them."
+  ],
+  "after_flag": [
+   {
+    "flag": "guild_joined",
+    "lines": [
+     "Juna: Guild apprentice now? Then you'll be getting post from me. Mind the moor."
+    ]
+   },
+   {
+    "flag": "act2_end",
+    "lines": [
+     "Juna: Ashmere? I go there twice a week. Bring a scarf. The ash gets everywhere."
+    ]
+   }
+  ],
+  "next": "juna_post_1"
+ },
+ "ysolde": {
+  "lines": [
+   "Ysolde: You have Mirela's compass rose on your map case. Where did you get that?",
+   "Ysolde: ...Her grandchild. Of course. You draw like her. Too fast.",
+   "Ysolde: I am Ysolde Rennick, master of this guild. Forty years ago I let Mirela walk into a Rift alone.",
+   "Ysolde: I won't make that mistake twice. From today you are an apprentice of the guild.",
+   "Ysolde: Two Rifts tear at Corvane: the Rain Rift in the Woadfen and the Mirror Rift at Stillwater. Mend them, and the colours come back."
+  ],
+  "flag": "guild_joined",
+  "once": true,
+  "after_flag": [
+   {
+    "flag": "guild_joined",
+    "lines": [
+     "Ysolde: The Rain Rift lies in the Woadfen, the Mirror Rift past Stillwater. Either order."
+    ]
+   },
+   {
+    "flag": "rift_rain_sealed",
+    "if": {
+     "flag": "rift_mirror_sealed"
+    },
+    "lines": [
+     "Ysolde: Both Rifts mended. Look at the river. Red again, and blue, and gold."
+    ]
+   },
+   {
+    "flag": "wide_rift_seen",
+    "lines": [
+     "Ysolde: You've seen the Wide Rift. Sit down, apprentice. There is something in the guild files."
+    ]
+   },
+   {
+    "flag": "act2_end",
+    "lines": [
+     "Ysolde: The railway to Ashmere leaves from the north end of town. Halvard will be expecting you."
+    ]
+   }
+  ],
+  "next": "ysolde_files"
+ },
+ "ysolde_files": {
+  "if": {
+   "flag": "wide_rift_seen",
+   "not_flag": "act2_end"
+  },
+  "lines": [],
+  "action": "scene act2_far_side",
+  "else": "ysolde_epilogue"
+ },
+ "pim": {
+  "lines": [
+   "Pim: Pim, archivist. Well, the only archivist. Ask me anything about Rifts. Please. Nobody ever asks."
+  ],
+  "next": "pim_ask"
+ },
+ "pim_ask": {
+  "if": {
+   "flag": "guild_joined"
+  },
+  "lines": [
+   "Pim: What do you want to know?"
+  ],
+  "choices": [
+   {
+    "text": "The Hush",
+    "next": "pim_hush"
+   },
+   {
+    "text": "Mirela's letters",
+    "next": "pim_letters"
+   },
+   {
+    "text": "Nothing, thanks"
+   }
+  ]
+ },
+ "pim_hush": [
+  "Pim: Veydal calls it the Hush. Here we say the Fading, because it drains colour, not just voices.",
+  "Pim: In Ashmere they say the Stilling. Spirlings there freeze where they stand."
+ ],
+ "pim_letters": {
+  "lines": [
+   "Pim: Mirela wrote to Aldo for years before she left. Some letters never reached him.",
+   "Pim: Three are somewhere in Corvane, three more in Ashmere. Bring me any you find."
+  ],
+  "flag": "letters_pim_asked",
+  "after_flag": [
+   {
+    "flag": "letters_corvane_found",
+    "lines": [
+     "Pim: All three Corvane letters! 'I'll paint the lighthouse door blue.' Did she ever?",
+     "Pim: Take these, for the road. Three more letters wait in Ashmere, I'm sure of it."
+    ]
+   },
+   {
+    "flag": "letters_ashmere_found",
+    "if": {
+     "flag": "letters_corvane_found"
+    },
+    "lines": [
+     "Pim: All six! 'Tell them to sing. Not fight.' I'm copying these into the guild records.",
+     "Pim: Here. Ysolde said you've earned the good tonic."
+    ]
+   }
+  ],
+  "next": "pim_reward"
+ },
+ "pim_reward": {
+  "if": {
+   "flag": "letters_corvane_found",
+   "not_flag": "letters_corvane_done"
+  },
+  "else": "pim_reward_all",
+  "lines": [],
+  "action": "give_item max_tonic 2",
+  "flag": "letters_corvane_done"
+ },
+ "wall_map": {
+  "lines": [
+   "THE GUILD WALL MAP",
+   "Corvane is drawn in grey. Only the river is coloured, in faded blue."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_rain_sealed",
+    "lines": [
+     "THE GUILD WALL MAP",
+     "The Woadfen glows blue again. The rest of Corvane is still grey."
+    ]
+   },
+   {
+    "flag": "rift_mirror_sealed",
+    "lines": [
+     "THE GUILD WALL MAP",
+     "Stillwater shines silver. The rest of Corvane is still grey."
+    ]
+   },
+   {
+    "flag": "rift_mirror_sealed",
+    "if": {
+     "flag": "rift_rain_sealed"
+    },
+    "lines": [
+     "THE GUILD WALL MAP",
+     "All of Corvane is coloured in. Only the Wide Rift in the north is left blank."
+    ]
+   }
+  ]
+ },
+ "veit_desk": {
+  "lines": [
+   "An old desk with V. HARROW cut into the edge. In the drawer: a collar tag that says ASH."
+  ],
+  "flag": "veit_hint_1",
+  "once": true,
+  "next": "veit_check"
+ },
+ "veit_shelf": {
+  "lines": [
+   "A shelf of burned maps. One survived: Greyreach, with a small Mirkmole drawn in the margin."
+  ],
+  "flag": "veit_hint_2",
+  "once": true,
+  "next": "veit_check"
+ },
+ "veit_stove": {
+  "lines": [
+   "Ash in the stove, and a note half burned: '...twenty years and still no answer when I call...'"
+  ],
+  "flag": "veit_hint_3",
+  "once": true,
+  "next": "veit_check"
+ },
+ "veit_check": {
+  "if": {
+   "flag": [
+    "veit_hint_1",
+    "veit_hint_2",
+    "veit_hint_3"
+   ],
+   "not_flag": "veit_workshop_done"
+  },
+  "lines": [
+   "Ash was a Mirkmole. Veit's Mirkmole. Whatever Veit is now, he started out grieving."
+  ],
+  "action": "add_var veit_respect 1",
+  "flag": "veit_workshop_done"
+ },
+ "dyer_1": {
+  "lines": [
+   "Dyer: My vats used to run red as a sunset. Now? Grey, grey, grey.",
+   "Dyer: Bring me a Riptail with its colour back and I'll believe the Fading can end."
+  ],
+  "action": "quest_show dyer_1 Riptail tonic 3",
+  "after_flag": [
+   {
+    "flag": "q_dyer_1_done",
+    "lines": [
+     "Dyer: Look at that red! I'm dyeing a whole bolt in its honour."
+    ]
+   }
+  ],
+  "next": "dyers_check"
+ },
+ "dyer_2": {
+  "lines": [
+   "Dyer: Gold comes from Glimmerax scales, shed in spring. None shed this year.",
+   "Dyer: If you have a Glimmerax that still shines, show me."
+  ],
+  "action": "quest_show dyer_2 Glimmerax revival_leaf 1",
+  "after_flag": [
+   {
+    "flag": "q_dyer_2_done",
+    "lines": [
+     "Dyer: Gold again. My grandmother would cry."
+    ]
+   }
+  ],
+  "next": "dyers_check"
+ },
+ "dyer_3": {
+  "lines": [
+   "Dyer: Green is the hardest colour. It takes a Mossling's patience.",
+   "Dyer: Show me a Mossling with real green on it and I'll teach you the old word for hope."
+  ],
+  "action": "quest_show dyer_3 Mossling max_tonic 1",
+  "after_flag": [
+   {
+    "flag": "q_dyer_3_done",
+    "lines": [
+     "Dyer: The old word for hope is 'verd'. Now you know."
+    ]
+   }
+  ],
+  "next": "dyers_check"
+ },
+ "dyers_check": {
+  "if": {
+   "flag": [
+    "q_dyer_1_done",
+    "q_dyer_2_done",
+    "q_dyer_3_done"
+   ],
+   "not_flag": "colour_back_done"
+  },
+  "lines": [
+   "The three dye families wave cloth in red, gold and green from their windows."
+  ],
+  "flag": "colour_back_done"
+ },
+ "kestra_madderby": {
+  "lines": [
+   "Kestra: There you are. I'm mapping the colour layers in the river. Look, the grey runs downstream from the Woadfen.",
+   "Kestra: Tatter unfurled on the way here. A Tempestrel now. Still a frayed wing, see?"
+  ],
+  "after_flag": [
+   {
+    "flag": "beat_story_kestra_2",
+    "lines": [
+     "Kestra: I'm not saying you're right. I'm saying I need to check the guild files myself."
+    ]
+   }
+  ],
+  "next": "kestra_madderby_hush"
+ },
+ "kestra_madderby_hush": {
+  "if": {
+   "flag": "rift_rain_sealed",
+   "not_flag": "beat_story_kestra_2"
+  },
+  "lines": [],
+  "action": "scene kestra_tatter_hush"
+ },
+ "kestra_comfort": {
+  "lines": [
+   "Tatter shivers on Kestra's arm, silent."
+  ],
+  "choice_id": "kestra_tatter",
+  "choices": [
+   {
+    "text": "Sing to Tatter",
+    "id": "sing",
+    "next": "kestra_sing"
+   },
+   {
+    "text": "Give it space",
+    "id": "space",
+    "next": "kestra_space"
+   }
+  ],
+  "if": {
+   "not_flag": "kestra_tatter_asked"
+  },
+  "flag": "kestra_tatter_asked"
+ },
+ "kestra_sing": {
+  "lines": [
+   "You hum the Echo melody, low, the way Aldo hums at the lamp."
+  ],
+  "action": "echo_song kestra_tatter_calm",
+  "next": "kestra_sing_after"
+ },
+ "kestra_sing_after": {
+  "if": {
+   "flag": "kestra_tatter_calm"
+  },
+  "else": "kestra_sing_fail",
+  "lines": [
+   "Tatter's frayed wing twitches. Then, very quietly, it chirps.",
+   "Kestra: ...It answered you. It hasn't answered anyone since the Woadfen."
+  ],
+  "action": "add_var kestra_trust 1"
+ },
+ "kestra_sing_fail": [
+  "Tatter stays quiet, but it leans toward you a little.",
+  "Kestra: Thanks for trying. Really."
+ ],
+ "kestra_space": [
+  "You step back and let Kestra hold Tatter close.",
+  "Kestra: ...Thanks. I just need a minute."
+ ],
+ "kestra_2_intro": [
+  "Kestra: Every Rift you mend, Spirlings like Tatter get sicker. That's what I see.",
+  "Kestra: So show me. Show me your way works. Battle me!"
+ ],
+ "kestra_2_defeat": {
+  "lines": [
+   "Kestra: ...Fine. You fight like someone who believes it.",
+   "Kestra: Tell me honestly. Does what I think even matter to you?"
+  ],
+  "next": "kestra_2_ask"
+ },
+ "kestra_2_ask": {
+  "lines": [],
+  "choice_id": "kestra_madderby",
+  "choices": [
+   {
+    "text": "It does.",
+    "id": "matters",
+    "action": "add_var kestra_trust 1",
+    "next": "kestra_2_matters"
+   },
+   {
+    "text": "I have to mend",
+    "id": "mend",
+    "next": "kestra_2_mend"
+   }
+  ]
+ },
+ "kestra_2_matters": [
+  "Kestra: ...Okay. Then let's find out the truth. Together, for once."
+ ],
+ "kestra_2_mend": [
+  "Kestra: I know. That's what scares me."
+ ],
+ "senna": {
+  "lines": [
+   "Senna: ...rain. Only rain. Can you hear it? It never stops."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_rain_sealed",
+    "lines": [
+     "Senna: The rain stopped. I can hear the moor birds again. And my Riptail. Thank you.",
+     "Senna: Rain is just weather again. I'd forgotten it could smell this good."
+    ]
+   },
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Senna: Some days it still rains. But now it's only weather."
+    ]
+   }
+  ]
+ },
+ "senna_intro": [
+  "Senna: ...rain. Only rain. Can you hear it?",
+  "Senna: If you want to pass, you'll have to wake me. Riptail! ...Riptail?"
+ ],
+ "senna_defeat": [
+  "Senna: ...Oh. I can hear you. I can hear my Spirlings again.",
+  "Senna: Quickly, while my bond holds. Help me draw the edge of this Rift."
+ ],
+ "joral": {
+  "lines": [
+   "Joral: In the Rift I only see myself. Everywhere. Always me."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_mirror_sealed",
+    "lines": [
+     "Joral: Once, in the mirror, I saw an old woman with a compass. She smiled at me.",
+     "Joral: I thought I'd imagined her. Now I'm not so sure."
+    ]
+   },
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Joral: I look into the pond now and see the sky. Strange, how good that feels."
+    ]
+   }
+  ]
+ },
+ "joral_intro": [
+  "Joral: Another reflection? No... you're real. That's worse.",
+  "Joral: Show me something that isn't me!"
+ ],
+ "joral_defeat": [
+  "Joral: My Lumenewt... it's looking at me, not at itself. It sees me.",
+  "Joral: Help me close this. Before I forget the way out again."
+ ],
+ "veit_intro": [
+  "Veit: A guild apprentice. They still send children to fix the Rifts.",
+  "Veit: You can't mend a wound that keeps opening. You burn it out. Let me show you."
+ ],
+ "veit_defeat": {
+  "lines": [
+   "Veit: Strong bond. Mirela's blood, I suppose.",
+   "Veit: The Wide Rift took more than her. It took my Ash. I'll see it erased."
+  ],
+  "next": "veit_leaves"
+ },
+ "veit_leaves": [
+  "Veit gathers his maps and heads north, toward the Ashmere railway."
+ ],
+ "moss": {
+  "lines": [
+   "Moss: Mirela? I knew her. We charted the Greyreach together, fifty years ago.",
+   "Moss: She walked into that light up north and never came out. She's gone, child."
+  ],
+  "after_flag": [
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Moss: She's alive? Ha! I owe Ysolde a bottle. Fifty years of being wrong. Worth it."
+    ]
+   }
+  ]
+ },
+ "burned_words": {
+  "lines": [
+   "Words are burned into the rock at the very edge of the Rift, in a hand you know.",
+   "'Still drawing. Still here. M.'"
+  ],
+  "action": "scene wide_rift_reveal"
+ },
+ "kestra_2_lose": [
+  "Kestra: See? Maybe I'm not as wrong as you think.",
+  "Kestra: Rest up. I'll be here by the river."
+ ],
+ "pim_reward_all": {
+  "if": {
+   "flag": [
+    "letters_corvane_found",
+    "letters_ashmere_found"
+   ],
+   "not_flag": "letters_all_done"
+  },
+  "lines": [],
+  "action": "give_item max_tonic 3",
+  "flag": "letters_all_done"
+ },
+ "ysolde_epilogue": {
+  "if": {
+   "flag": "story_complete",
+   "not_flag": "epilogue_guild"
+  },
+  "lines": [
+   "Ysolde: She's alive. Mirela is alive, and you found her. Give me a moment, apprentice.",
+   "Ysolde: ...There. The guild names you cartographer. Not apprentice. Never again."
+  ],
+  "flag": "epilogue_guild"
+ },
+ "kestra_still": {
+  "if": {
+   "not_flag": "kestra_stillwater_tag"
+  },
+  "else": "kestra_still_after",
+  "lines": [
+   "Kestra: Shh. Look at the terraces. Two Wanderers, walking in circles.",
+   "Kestra: The Hush has them. Their Spirlings won't even look up.",
+   "Kestra: I can't wake them alone. Tatter's too tired. ...Fight with me?"
+  ],
+  "action": "battle kestra_tag"
+ },
+ "kestra_tag_defeat": {
+  "lines": [
+   "The two Wanderers blink, as if waking from a long walk.",
+   "Kestra: We did that. Both of us, side by side.",
+   "Kestra: ...Maybe your way and mine aren't so far apart."
+  ],
+  "action": "add_var kestra_trust 1"
+ },
+ "kestra_tag_lose": [
+  "Kestra: Too much Hush for one day. Rest up. I'll keep watch on them."
+ ],
+ "kestra_still_after": [
+  "Kestra: The Wanderers went home. Tatter keeps looking at the pond. I think it's smiling."
+ ],
+ "woad_wanderer_a": {
+  "lines": [
+   "..."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_rain_sealed",
+    "lines": [
+     "Wanderer Hale: I walked into the fen to find my Spirling. Then I forgot why I was walking.",
+     "Wanderer Hale: Days, maybe weeks. The rain sang the same note over and over.",
+     "Wanderer Hale: When the Rift closed, my Riptail licked my hand. That's how I knew I was awake."
+    ]
+   }
+  ]
+ },
+ "woad_wanderer_b": {
+  "lines": [
+   "..."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_rain_sealed",
+    "lines": [
+     "Wanderer Brisa: I was a dyer in Madderby. I came out here to gather woad, and the Hush came with the rain.",
+     "Wanderer Brisa: I still can't remember the colour of my own front door. Blue, I think. I'll go and see."
+    ]
+   }
+  ]
+ },
+ "juna_post_1": {
+  "if": {
+   "flag": "rift_rain_sealed",
+   "not_flag": "aldo_letter_1"
+  },
+  "else": "juna_post_2",
+  "lines": [
+   "Juna: Post for you! From the lighthouse.",
+   "\"{name}, the lake was calm this morning, and I thought of you. The Kelpups miss your boots. Eat something warm. Aldo.\""
+  ],
+  "flag": "aldo_letter_1"
+ },
+ "juna_post_2": {
+  "if": {
+   "flag": "rift_mirror_sealed",
+   "not_flag": "aldo_letter_2"
+  },
+  "else": "juna_post_3",
+  "lines": [
+   "Juna: Another one from Brindlewick. He writes small.",
+   "\"Kestra's mother came by asking after her. I said you two keep an eye on each other. Don't make me a liar. Aldo.\""
+  ],
+  "flag": "aldo_letter_2"
+ },
+ "juna_post_3": {
+  "if": {
+   "flag": "act2_end",
+   "not_flag": "aldo_letter_3"
+  },
+  "lines": [
+   "Juna: Last one before Ashmere. This one's heavy. I think it's mostly worry.",
+   "\"Mirela wrote me once from Ashmere. She said the ash tastes like old pencils. If you see her... tell her the lamp is lit. Aldo.\""
+  ],
+  "flag": "aldo_letter_3"
+ },
+ "weda": {
+  "lines": [
+   "Weda: The dye spring runs warm and red. Spirlings come out of it brighter than they went in.",
+   "Weda: Sit. Let the colour do the work."
+  ],
+  "action": "heal"
+ },
+ "veit_diary": {
+  "lines": [
+   "An abandoned cartographer's hut. On the table lies a diary, its edges singed.",
+   "\"Day one. Ash walked into the Wide Rift after a moth. I called until my voice gave out.\"",
+   "\"Day forty. The guild says wait, map it, mend it. I mapped it. It took him anyway.\"",
+   "\"Last page. If a map can open a Rift, a fire can close one. I will burn them all. V. H.\""
+  ]
+ }
+}

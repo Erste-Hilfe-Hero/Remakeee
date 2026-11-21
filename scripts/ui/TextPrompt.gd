@@ -6,6 +6,8 @@ extends PanelContainer
 signal _done(text: String)
 
 var _edit: LineEdit
+## Boxes of up to this many characters show the "4/10" counter.
+const NAME_COUNTER_MAX: int = 16
 
 static func ask(parent: Node, title: String, secret: bool = false, max_len: int = 64, initial: String = "") -> String:
 	var p := TextPrompt.new()
@@ -37,6 +39,9 @@ func _build(title: String, secret: bool, max_len: int, initial: String) -> void:
 	_edit.add_theme_color_override("font_color", UITheme.INK)
 	_edit.text_submitted.connect(func(t: String) -> void: _done.emit(t))
 	v.add_child(_edit)
+	# Short names (nicknames, box names) show how many characters are left (item 1966).
+	if not secret and max_len <= NAME_COUNTER_MAX:
+		v.add_child(CharCounter.make(_edit, max_len))
 	var row := HBoxContainer.new()
 	v.add_child(row)
 	var ok := Button.new()

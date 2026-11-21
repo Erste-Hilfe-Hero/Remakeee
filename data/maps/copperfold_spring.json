@@ -1,0 +1,41 @@
+{
+ "name": "Copperfold Spring House",
+ "region": "veydal",
+ "biome": "town",
+ "backdrop": "field",
+ "heal_point": [
+  4,
+  5
+ ],
+ "rows": [
+  "WWWWWWWWWW",
+  "WfffoofffW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "copperfold",
+   "tx": 3,
+   "ty": 5,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "hedda",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/copperfold_spring_hedda",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

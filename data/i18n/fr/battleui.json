@@ -1,0 +1,6 @@
+{
+ "_comment": "fr translation of the battleui table, keyed by the English text.",
+ "strings": {
+  "Colour-blind: %s": "Daltonisme: %s"
+ }
+}

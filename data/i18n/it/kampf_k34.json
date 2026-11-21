@@ -1,0 +1,16 @@
+{
+ "_comment": "it translation of the kampf_k34 table, keyed by the English text.",
+ "strings": {
+  "%s: Wayfarers think at tier %d.": "%s: i Viandanti pensano al livello %d.",
+  "At tier 3 the damage guess is the very number your art preview shows.": "Al livello 3 la stima dei danni è proprio il numero che mostra l'anteprima della tua tecnica.",
+  "Foes never see your order or the next roll, and guess swaps only among Spirlings you have shown.": "I nemici non vedono mai il tuo ordine né il prossimo tiro, e intuiscono un cambio solo verso Spirling che hai già mostrato.",
+  "How foes think": "Come pensano i nemici",
+  "Some Wayfarers have a temper of their own: a hothead never swaps, a tactician saves up.": "Alcuni Viandanti hanno un carattere tutto loro: una testa calda non cambia mai, un tattico risparmia.",
+  "Tier 0 picks any art it can pay. Mostly it just bites.": "Il livello 0 sceglie una tecnica qualsiasi che può pagare. Per lo più morde e basta.",
+  "Tier 1 picks the art that hurts most right now and never passes up a knock-out.": "Il livello 1 sceglie la tecnica che fa più male adesso e non si lascia mai sfuggire un K.O.",
+  "Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup.": "Il livello 2 valuta anche la tua risposta migliore, si cura quando è debole e si ritira da uno scontro sfavorevole.",
+  "Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, leaves a field that weakens all its arts, guesses your swap and saves Energy up to %d turns ahead.": "Il livello 3 non spreca mai uno stato, alza i livelli solo quando è al sicuro, finisce i deboli, lascia un campo che indebolisce tutte le sue tecniche, intuisce il tuo cambio e risparmia Energia fino a %d turni avanti.",
+  "Two arts worth the same at tier 3? The battle seed decides, the same seed always the same way.": "Due tecniche che valgono uguale al livello 3? Decide il seme dello scontro, lo stesso seme sempre allo stesso modo.",
+  "Wild Spirlings always pick at random.": "Gli Spirling selvaggi scelgono sempre a caso."
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "_comment": "Texts for the German table c100_start in this language. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "%s curls up at your feet. Let it stay?": "%s сворачивается у твоих ног. Оставить?",
+  "%s stays with you! The other two slip off to the lake.": "%s остаётся с тобой! Двое других ускользают к озеру.",
+  "'Our cartographers have drawn and redrawn Veydal for a hundred years. Now the Hush: Spirlings near a Rift go quiet and forget their Wayfarers.'": "«Наши картографы сто лет рисуют и перерисовывают Veydal. Теперь Безмолвие: Spirlings у Разлома затихают и забывают своих Странников.»",
+  "Aldo: Good. The Rifts bring the Hush: Spirlings there go quiet.": "Aldo: Хорошо. Разломы несут Безмолвие: Spirlings там затихают.",
+  "Aldo: Take this, and go see Kestra at the map house.": "Aldo: Возьми это и загляни к Kestra в Дом карт.",
+  "Aldo: The storm scattered Mirela's map book. Bring her pages home.": "Aldo: Буря разметала книгу карт Mirela. Неси её страницы домой.",
+  "Aldo: Three Spirlings came in from the storm. Go say hello!": "Aldo: Три Spirlings укрылись здесь от бури. Иди поздоровайся!",
+  "Coat: %s": "Плащ: %s",
+  "Gentle battles, more Growth.": "Мягкие бои, больше Роста.",
+  "Hair: %s": "Волосы: %s",
+  "I have a code": "У меня есть код",
+  "In the margin, in Aldo's hand: 'Your grandmother went in to map that Rift before you were born. She never came back.'": "На полях, рукой Aldo: «Твоя бабушка ушла в тот Разлом, чтобы нанести его на карту, ещё до твоего рождения. Она не вернулась.»",
+  "Keyboard": "Клавиатура",
+  "Last night a storm tore the sky. Rifts opened over Veydal.": "Ночью буря разорвала небо. Над Veydal открылись Разломы.",
+  "OK": "ОК",
+  "Online only: your journeys are safe on our server. No ads, no tracking.": "Только онлайн: твои странствия в безопасности на нашем сервере. Без рекламы и слежки.",
+  "Random": "Случайно",
+  "Relaxed": "Спокойно",
+  "Ring limits, smarter foes.": "Пределы Круга, умные враги.",
+  "Skin: %s": "Кожа: %s",
+  "The journey as it is meant to be.": "Странствие, как задумано.",
+  "Three small lights crossed the lake to the lighthouse lamp.": "Три огонька пересекли озеро к лампе маяка.",
+  "Tough": "Сурово",
+  "Watch the marks light up, then press them in the same order.": "Смотри, какие знаки загораются, и нажми их в том же порядке.",
+  "Watch the marks light up, then tap them in the same order.": "Смотри, какие знаки загораются, и коснись их в том же порядке.",
+  "Wayfarer: %s": "Странник: %s",
+  "You can change it later in Settings.": "Это можно поменять позже в Настройках."
+ }
+}

@@ -7,8 +7,7 @@ var table: Dictionary
 
 func before_all() -> void:
 	Database.load_all()
-	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/i18n/de.json"))
-	table = raw
+	table = Loc.load_table("de")
 	de = Loc.load_translation("de")
 
 func after_all() -> void:
@@ -46,6 +45,12 @@ func _all_dialogue_lines() -> Array[String]:
 			elif v is Dictionary:
 				for s: Variant in v.get("lines", []):
 					out.append(str(s))
+				for s: Variant in v.get("night_lines", []):
+					out.append(str(s))
+				for day: Variant in v.get("daily", []):
+					if day is Array:
+						for s: Variant in day:
+							out.append(str(s))
 				var af: Variant = v.get("after_flag")
 				if af is Dictionary:
 					for s: Variant in af.get("lines", []):
@@ -96,12 +101,12 @@ func test_patterns_carry_values() -> void:
 	assert_eq(de.lookup("Used Tonic on Kindlop."), "Tonikum bei Kindlop benutzt.")
 
 func test_reordered_values() -> void:
-	assert_eq(de.lookup("Kindlop's ATK rose sharply!"), "ANG von Kindlop steigt stark!")
+	assert_eq(de.lookup("Kindlop's Might goes up a lot."), "Wucht von Kindlop legt kräftig zu.")
 
 func test_sentences_and_lines_combine() -> void:
 	assert_eq(de.lookup("Kindlop took 9 damage. A keen hit! It's overwhelming!"),
-		"Kindlop erleidet 9 Schaden. Ein Volltreffer! Das ist überwältigend!")
-	assert_eq(de.lookup("Tonic\nRestores 20 HP."), "Tonikum\nStellt 20 LP wieder her.")
+		"Kindlop erleidet 9 Schaden. Ein scharfer Treffer! Das ist überwältigend!")
+	assert_eq(de.lookup("Tonic\nRestores 25 Vigor."), "Tonikum\nStellt 25 Kraft wieder her.")
 
 func test_unknown_text_is_left_alone() -> void:
 	assert_eq(de.lookup("Kindlop"), "")

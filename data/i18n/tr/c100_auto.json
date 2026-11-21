@@ -1,0 +1,15 @@
+{
+ "_comment": "Turkish texts for the German table c100_auto. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "Auto: %s": "Oto: %s",
+  "Wild only": "Yalnız vahşi",
+  "All story battles": "Tüm hikâye",
+  "Off, wild battles only, or every story battle. Wardens and rivals ask first.": "Kapalı, yalnız vahşi savaşlar ya da tüm hikâye savaşları. Bekçiler ve rakipler önce sorar.",
+  "A strong foe. Let Auto fight this battle?": "Güçlü bir rakip. Bu savaşı Oto yürütsün mü?",
+  "Auto on": "Oto açık",
+  "Keep control": "Ben oynarım",
+  "Auto: picking who steps out.": "Oto: kimin çıkacağını seçiyor.",
+  "Auto stops: this kind is not in your Spirlog yet. Bond or fight on.": "Oto duruyor: bu tür henüz Spirlog'unda yok. Bağ kur ya da savaşa devam et.",
+  "Turn %d": "Tur %d"
+ }
+}

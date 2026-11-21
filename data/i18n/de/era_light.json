@@ -1,0 +1,10 @@
+{
+ "_comment": "German texts from tools/i18n/de_era_light.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "A storm rages.": "Ein Sturm tobt.",
+  "Fog hangs low.": "Nebel hängt tief.",
+  "Rain falls.": "Es regnet.",
+  "Wind blows.": "Wind weht."
+ }
+}

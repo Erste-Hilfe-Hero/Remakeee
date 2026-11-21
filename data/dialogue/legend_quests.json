@@ -1,0 +1,658 @@
+{
+ "_comment": "Lore quest chains of the six legendary Spirlings (scripts/core/LegendQuests.gd, data/legend_quests.json). Guide -> inscription + witness -> back to the guide -> Trust betrayal 'lq_<legend>'.",
+ "hallowmur_guide": {
+  "if": {
+   "flag": [
+    "lq_hallowmur_lore1",
+    "lq_hallowmur_lore2"
+   ]
+  },
+  "else": "hallowmur_guide_wait",
+  "lines": [
+   "Sexton Ambrel: The clapper! And you read the wall, I can see it on your face. Wonderful.",
+   "Sexton Ambrel: Hand it over and I will see the bell to its rest. You have my word. It is worth a great deal. By the pound."
+  ],
+  "choices": [
+   {
+    "text": "Hand over the clapper",
+    "flag": "lq_hallowmur_handed",
+    "next": "hallowmur_twist"
+   },
+   {
+    "text": "Keep the clapper",
+    "flag": "lq_hallowmur_kept",
+    "next": "hallowmur_twist"
+   }
+  ]
+ },
+ "hallowmur_twist": {
+  "lines": [
+   "Sexton Ambrel smiles. It is the smile of a man adding up a bill."
+  ],
+  "action": "betrayal lq_hallowmur",
+  "flag": "lq_hallowmur_ready"
+ },
+ "hallowmur_guide_wait": {
+  "if": {
+   "flag": "lq_hallowmur_met"
+  },
+  "else": "hallowmur_guide_intro",
+  "lines": [
+   "Sexton Ambrel: The note in Lanternwell, the clapper from Brennet in Mossmere Grotto. A bell will not wait forever. Neither will my buyer. My choir, I mean."
+  ]
+ },
+ "hallowmur_guide_intro": {
+  "lines": [
+   "Sexton Ambrel: You are the one who quieted the Hush? Splendid. I have a bell problem.",
+   "Sexton Ambrel: The old bell in the Bellstone Ruins rings with no one on the rope. It is grieving, poor thing.",
+   "Sexton Ambrel: The founders cut its true note into the east wall of Lanternwell. Old Brennet in Mossmere Grotto kept its clapper.",
+   "Sexton Ambrel: Bring me the clapper and I will ring it gently to rest. I have rested a great many bells."
+  ],
+  "action": "quest_stage legend_hallowmur 1",
+  "flag": "lq_hallowmur_met"
+ },
+ "hallowmur_lore": {
+  "lines": [
+   "Marks are cut deep into the east wall, under a coat of moss.",
+   "\"Here we cast the Bellstone bell. Rung with its own clapper it sleeps, or it cracks.\"",
+   "Below, in a newer hand: \"Bronze fetches eleven coins a pound. - A.\""
+  ],
+  "flag": "lq_hallowmur_lore1",
+  "next": "hallowmur_both"
+ },
+ "hallowmur_witness": {
+  "lines": [
+   "Old Brennet: Ambrel sent you? Of course he did. He sends everyone, sooner or later.",
+   "Old Brennet: Here, the clapper. I kept it from him for thirty years. My back gave out before my stubbornness did.",
+   "Old Brennet: Three bells in this valley went quiet after he rested them. Then a foundry in Thornridge got very rich.",
+   "Old Brennet: Whatever he promises, keep the clapper in your own pocket. Free advice. The only kind I can afford."
+  ],
+  "flag": "lq_hallowmur_lore2",
+  "next": "hallowmur_both"
+ },
+ "hallowmur_both": {
+  "if": {
+   "flag": [
+    "lq_hallowmur_lore1",
+    "lq_hallowmur_lore2"
+   ],
+   "not_flag": "lq_hallowmur_ready"
+  },
+  "lines": [
+   "You know the old story and you have the clapper. Back to Sexton Ambrel in Gloamwood."
+  ],
+  "action": "quest_stage legend_hallowmur 2"
+ },
+ "hallowmur_caught": {
+  "lines": [
+   "Sexton Ambrel: You kept it. Brennet got to you, the old crow.",
+   "Sexton Ambrel: Do you know what a cracked bell is worth? Nothing. A sleeping one sells by the ton.",
+   "He runs off into the trees, still shouting prices. Far off in the ruins, the bell gives one soft, grateful note.",
+   "Old Brennet tucked a Kin Charm into the clapper's cloth for you."
+  ]
+ },
+ "hallowmur_struck": {
+  "lines": [
+   "Sexton Ambrel: Thank you. Truly. You have no idea how hard it is to find an honest fool.",
+   "He strikes the clapper on a stone. Far off in the ruins, the bell screams, and the sound cracks the air.",
+   "Sexton Ambrel: Now it sleeps and I sell. Unless you would like to argue about it?"
+  ]
+ },
+ "hallowmur_defeat": {
+  "lines": [
+   "Sexton Ambrel: Keep your bell, then. It is cracked now anyway. Damaged goods.",
+   "He drops the clapper and flees. In the ruins the bell still rings, but its note is sore and wary."
+  ]
+ },
+ "hallowmur_ledger": {
+  "lines": [
+   "The sexton who sold bells",
+   "Sexton Ambrel rested three bells and sold their bronze. He tried the same with Hallowmur, the living bell."
+  ]
+ },
+ "scriptorax_guide": {
+  "if": {
+   "flag": [
+    "lq_scriptorax_lore1",
+    "lq_scriptorax_lore2"
+   ]
+  },
+  "else": "scriptorax_guide_wait",
+  "lines": [
+   "Archivist Quell: The quill! Gently. That is a priceless artefact and also my retirement plan.",
+   "Archivist Quell: Give it here and I will make the drake's book whole again."
+  ],
+  "choices": [
+   {
+    "text": "Give Quell the quill",
+    "flag": "lq_scriptorax_handed",
+    "next": "scriptorax_twist"
+   },
+   {
+    "text": "Keep the quill",
+    "flag": "lq_scriptorax_kept",
+    "next": "scriptorax_twist"
+   }
+  ]
+ },
+ "scriptorax_twist": {
+  "lines": [
+   "Archivist Quell licks the tip of his pen."
+  ],
+  "action": "betrayal lq_scriptorax",
+  "flag": "lq_scriptorax_ready"
+ },
+ "scriptorax_guide_wait": {
+  "if": {
+   "flag": "lq_scriptorax_met"
+  },
+  "else": "scriptorax_guide_intro",
+  "lines": [
+   "Archivist Quell: The words in the Shatterfloor Mine, the quill from Idra on the Echo Path. History waits for no one. Except me."
+  ]
+ },
+ "scriptorax_guide_intro": {
+  "lines": [
+   "Archivist Quell: Ah, a Wayfarer who reads. Rare. Most of you only read signposts, and badly.",
+   "Archivist Quell: An ink drake sleeps in the Wrenhollow Library. Scriptorax. It writes down every true road in Veydal.",
+   "Archivist Quell: Its first words are on the wall of the Shatterfloor Mine. Copyist Idra on the Echo Path holds its last quill.",
+   "Archivist Quell: Bring me the quill. I will correct a few small mistakes in its book. For the public good."
+  ],
+  "action": "quest_stage legend_scriptorax 1",
+  "flag": "lq_scriptorax_met"
+ },
+ "scriptorax_lore": {
+  "lines": [
+   "Faint lines of old ink still cling to the rock, as if someone drew a map straight onto the mine wall.",
+   "\"The first map of Veydal was drawn here. Its ink woke and flew. Whoever holds its quill can make it write lies as truth.\"",
+   "Someone added a route in fresh ink. It runs from the Saltmarsh past every toll post. Neat work. Very illegal."
+  ],
+  "flag": "lq_scriptorax_lore1",
+  "next": "scriptorax_both"
+ },
+ "scriptorax_witness": {
+  "lines": [
+   "Copyist Idra: Quell? He fired me for copying a map correctly. Said it lacked vision.",
+   "Copyist Idra: Take the quill. He wants the drake to write his smugglers' road into the true map. Then no Warden ever checks it.",
+   "Copyist Idra: Hand it to him and the drake carries his lie forever. Keep it. Or don't. I'm a copyist, I only repeat things."
+  ],
+  "flag": "lq_scriptorax_lore2",
+  "next": "scriptorax_both"
+ },
+ "scriptorax_both": {
+  "if": {
+   "flag": [
+    "lq_scriptorax_lore1",
+    "lq_scriptorax_lore2"
+   ],
+   "not_flag": "lq_scriptorax_ready"
+  },
+  "lines": [
+   "You know the old story and you have the quill. Back to Archivist Quell in Quillbrook."
+  ],
+  "action": "quest_stage legend_scriptorax 2"
+ },
+ "scriptorax_caught": {
+  "lines": [
+   "Archivist Quell: Idra. Of course. I should have fired her harder.",
+   "Archivist Quell: Keep your quill. I will find another way to write myself rich.",
+   "He sweeps out with an armful of forged maps. Far off in the library, pages rustle as if something is laughing.",
+   "Copyist Idra slipped a Kin Charm into the quill's case for you."
+  ]
+ },
+ "scriptorax_struck": {
+  "lines": [
+   "Archivist Quell: Splendid. And now, a small correction.",
+   "He writes a line in the air. Far off in the Wrenhollow Library, a page tears itself out of a book with a shriek of ink.",
+   "Archivist Quell: There. The drake will remember my road as true. Unless you would like to edit me?"
+  ]
+ },
+ "scriptorax_defeat": {
+  "lines": [
+   "Archivist Quell: Fine! Footnote me, then. The drake has tasted my ink already.",
+   "He drops the quill and runs. In the library the drake wakes angry, and it does not trust a hand that holds a pen."
+  ]
+ },
+ "scriptorax_ledger": {
+  "lines": [
+   "The archivist's road",
+   "Archivist Quell tried to write a smugglers' road into the drake's true map of Veydal."
+  ]
+ },
+ "zephyrel_guide": {
+  "if": {
+   "flag": [
+    "lq_zephyrel_lore1",
+    "lq_zephyrel_lore2"
+   ]
+  },
+  "else": "zephyrel_guide_wait",
+  "lines": [
+   "Kitewright Dessa: The spool! Oh, look at that knot. Give it here, love.",
+   "Kitewright Dessa: One new string and it's tied down safe forever. At peace, I mean."
+  ],
+  "choices": [
+   {
+    "text": "Give Dessa the spool",
+    "flag": "lq_zephyrel_handed",
+    "next": "zephyrel_twist"
+   },
+   {
+    "text": "Keep the spool",
+    "flag": "lq_zephyrel_kept",
+    "next": "zephyrel_twist"
+   }
+  ]
+ },
+ "zephyrel_twist": {
+  "lines": [
+   "Kitewright Dessa winds a hook onto the end of her line."
+  ],
+  "action": "betrayal lq_zephyrel",
+  "flag": "lq_zephyrel_ready"
+ },
+ "zephyrel_guide_wait": {
+  "if": {
+   "flag": "lq_zephyrel_met"
+  },
+  "else": "zephyrel_guide_intro",
+  "lines": [
+   "Kitewright Dessa: Rain Rift wall, then Tibbet in Woadfen. The wind won't hold still for us forever."
+  ]
+ },
+ "zephyrel_guide_intro": {
+  "lines": [
+   "Kitewright Dessa: You stood at the edge of the Wide Rift and kept your lunch down? Then you're my kind of Wayfarer.",
+   "Kitewright Dessa: Above the Rift lives Zephyrel. Four wings, never lands. Born from a kite whose string snapped.",
+   "Kitewright Dessa: The tale of that kite is cut into the Rain Rift wall. A dyer's boy in Woadfen, Tibbet, found the old spool.",
+   "Kitewright Dessa: Bring me the spool. I'll tie it a new string so it can finally rest."
+  ],
+  "action": "quest_stage legend_zephyrel 1",
+  "flag": "lq_zephyrel_met"
+ },
+ "zephyrel_lore": {
+  "lines": [
+   "A picture is scratched into the rock: a child, a kite, and a string that goes up and never comes down.",
+   "\"The wind kept my kite. Whoever ties its old string again holds it like a leash.\"",
+   "Under it, a tally of little kites, each one crossed out. Someone has been counting catches."
+  ],
+  "flag": "lq_zephyrel_lore1",
+  "next": "zephyrel_both"
+ },
+ "zephyrel_witness": {
+  "lines": [
+   "Tibbet: Dessa? She buys every kite string I find. Pays well too. Then the birds over the fen go missing.",
+   "Tibbet: Here's the spool. She hooks them on her strings and sells them to a collector in Madderby. Says they flew away.",
+   "Tibbet: Don't give it to her, all right? My mum says never trust someone who sells sky by the yard."
+  ],
+  "flag": "lq_zephyrel_lore2",
+  "next": "zephyrel_both"
+ },
+ "zephyrel_both": {
+  "if": {
+   "flag": [
+    "lq_zephyrel_lore1",
+    "lq_zephyrel_lore2"
+   ],
+   "not_flag": "lq_zephyrel_ready"
+  },
+  "lines": [
+   "You know the old story and you have the spool. Back to Kitewright Dessa in Greyreach."
+  ],
+  "action": "quest_stage legend_zephyrel 2"
+ },
+ "zephyrel_caught": {
+  "lines": [
+   "Kitewright Dessa: The dyer's brat. Should have paid him more.",
+   "Kitewright Dessa: Keep it, then! Plenty of things in the sky that can't say no.",
+   "She stalks off down the mountain. High above the Wide Rift, the wind starts again, light and easy.",
+   "Tibbet tied a Kin Charm to the spool for you."
+  ]
+ },
+ "zephyrel_struck": {
+  "lines": [
+   "Kitewright Dessa: Ta, love. And now, the leash.",
+   "She casts a hooked line into the wind. Over the Wide Rift, something with four wings is jerked out of the air.",
+   "Kitewright Dessa: Sold before it lands. Unless you've got a bid of your own?"
+  ]
+ },
+ "zephyrel_defeat": {
+  "lines": [
+   "Kitewright Dessa: All right, all right! Cut it loose. It's ruined for the collector anyway.",
+   "The hook comes free. Above the Rift, Zephyrel shakes off the line, and now it watches every hand on the ground."
+  ]
+ },
+ "zephyrel_ledger": {
+  "lines": [
+   "The kitewright's hooks",
+   "Kitewright Dessa hooked Spirlings out of the sky and sold them. She wanted Zephyrel next."
+  ]
+ },
+ "monolurk_guide": {
+  "if": {
+   "flag": [
+    "lq_monolurk_lore1",
+    "lq_monolurk_lore2"
+   ]
+  },
+  "else": "monolurk_guide_wait",
+  "lines": [
+   "Stonecutter Dorran: That's the chisel, all right. Feel the weight of it.",
+   "Stonecutter Dorran: Hand it over. One clean rune and that stone won't trouble anyone ever again."
+  ],
+  "choices": [
+   {
+    "text": "Give Dorran the chisel",
+    "flag": "lq_monolurk_handed",
+    "next": "monolurk_twist"
+   },
+   {
+    "text": "Keep the chisel",
+    "flag": "lq_monolurk_kept",
+    "next": "monolurk_twist"
+   }
+  ]
+ },
+ "monolurk_twist": {
+  "lines": [
+   "Stonecutter Dorran already has a sketch of a headstone in his apron pocket."
+  ],
+  "action": "betrayal lq_monolurk",
+  "flag": "lq_monolurk_ready"
+ },
+ "monolurk_guide_wait": {
+  "if": {
+   "flag": "lq_monolurk_met"
+  },
+  "else": "monolurk_guide_intro",
+  "lines": [
+   "Stonecutter Dorran: Glass Rift wall, then Moll in Gravers' Hall. Stone is patient. I'm not."
+  ]
+ },
+ "monolurk_guide_intro": {
+  "lines": [
+   "Stonecutter Dorran: You sealed the Kiln Rift? Good. Now there's a stone standing in there that shouldn't be.",
+   "Stonecutter Dorran: Monolurk, they call it. A rune stone that got up and walked. Bad for business. Stones are meant to stay put.",
+   "Stonecutter Dorran: Its runes are copied on the wall of the Glass Rift. Gravedigger Moll in Gravers' Hall has its rune chisel.",
+   "Stonecutter Dorran: Bring me the chisel. I'll cut it a kinder rune and it'll sleep sound."
+  ],
+  "action": "quest_stage legend_monolurk 1",
+  "flag": "lq_monolurk_met"
+ },
+ "monolurk_lore": {
+  "lines": [
+   "Rows of runes run along the wall, half melted by old heat.",
+   "\"The stone guards the kiln. Its chisel cut its runes. A new rune from that chisel is its last word.\"",
+   "Someone scratched a price list below. Headstone, small. Headstone, large. Headstone, walking."
+  ],
+  "flag": "lq_monolurk_lore1",
+  "next": "monolurk_both"
+ },
+ "monolurk_witness": {
+  "lines": [
+   "Gravedigger Moll: Dorran? He's cut half the stones in my yard. Never asks where the stone came from.",
+   "Gravedigger Moll: Here's the chisel. A new rune from it won't make the stone sleep. It makes it a headstone. Still. Forever.",
+   "Gravedigger Moll: He'd sell a gravestone that used to be alive. Folk pay double for a story. Keep the chisel, dear."
+  ],
+  "flag": "lq_monolurk_lore2",
+  "next": "monolurk_both"
+ },
+ "monolurk_both": {
+  "if": {
+   "flag": [
+    "lq_monolurk_lore1",
+    "lq_monolurk_lore2"
+   ],
+   "not_flag": "lq_monolurk_ready"
+  },
+  "lines": [
+   "You know the old story and you have the chisel. Back to Stonecutter Dorran on the Saltglass Flats."
+  ],
+  "action": "quest_stage legend_monolurk 2"
+ },
+ "monolurk_caught": {
+  "lines": [
+   "Stonecutter Dorran: Moll's been talking. The dead are quieter than her.",
+   "Stonecutter Dorran: Keep it. A rock's a rock. I'll find one that hasn't got friends.",
+   "He stomps off over the flats. Deep in the Kiln Rift, a stone lets out a long breath, like a sigh of relief.",
+   "Gravedigger Moll wrapped a Kin Charm around the chisel's handle for you."
+  ]
+ },
+ "monolurk_struck": {
+  "lines": [
+   "Stonecutter Dorran: Lovely. Now, the inscription. Here lies a rock. It wouldn't sit still.",
+   "He cuts a rune into a slab of glass. Far off in the Kiln Rift, Monolurk groans as its runes go dark one by one.",
+   "Stonecutter Dorran: Unless you'd like to be the second headstone today?"
+  ]
+ },
+ "monolurk_defeat": {
+  "lines": [
+   "Stonecutter Dorran: Have it your way! Half the rune is cut already. It'll never stand quite straight again.",
+   "He drops the chisel and runs. In the Kiln Rift, Monolurk stands, cracked and wary of any tool in a hand."
+  ]
+ },
+ "monolurk_ledger": {
+  "lines": [
+   "The stonecutter's headstone",
+   "Stonecutter Dorran wanted to cut a last rune into Monolurk and sell it as a headstone that used to walk."
+  ]
+ },
+ "vorlucent_guide": {
+  "if": {
+   "flag": [
+    "lq_vorlucent_lore1",
+    "lq_vorlucent_lore2"
+   ]
+  },
+  "else": "vorlucent_guide_wait",
+  "lines": [
+   "Lamplighter Corla: The dark wick! That's the real one. Give it here before it gets dark.",
+   "Lamplighter Corla: One flame and the moth is mine. Safe, I mean. Safe with me."
+  ],
+  "choices": [
+   {
+    "text": "Give Corla the wick",
+    "flag": "lq_vorlucent_handed",
+    "next": "vorlucent_twist"
+   },
+   {
+    "text": "Keep the wick",
+    "flag": "lq_vorlucent_kept",
+    "next": "vorlucent_twist"
+   }
+  ]
+ },
+ "vorlucent_twist": {
+  "lines": [
+   "Lamplighter Corla's lamp is already open, waiting for something to put inside."
+  ],
+  "action": "betrayal lq_vorlucent",
+  "flag": "lq_vorlucent_ready"
+ },
+ "vorlucent_guide_wait": {
+  "if": {
+   "flag": "lq_vorlucent_met"
+  },
+  "else": "vorlucent_guide_intro",
+  "lines": [
+   "Lamplighter Corla: Soot Vaults wall, then Kesk in Cinderfold. The lamps won't fix themselves. Well, they will. That's the problem."
+  ]
+ },
+ "vorlucent_guide_intro": {
+  "lines": [
+   "Lamplighter Corla: Every lamp in Ashmere has flickered since you sealed the Shade Rift. Thanks for that.",
+   "Lamplighter Corla: It's Vorlucent, the eclipse moth. It eats light, and my wages are paid in light.",
+   "Lamplighter Corla: The miners drew its story in the Soot Vaults. Coal Runner Kesk in Cinderfold has its dark wick.",
+   "Lamplighter Corla: Bring me the wick. I'll light it and lure the moth somewhere it can rest. Far from my lamps."
+  ],
+  "action": "quest_stage legend_vorlucent 1",
+  "flag": "lq_vorlucent_met"
+ },
+ "vorlucent_lore": {
+  "lines": [
+   "Soot has been wiped off the wall in a wide circle. Under it is a moth with two dark rings on its wings.",
+   "\"Light the dark wick and the moth comes. Hold the flame and it cannot leave. Its wing dust sends a whole town to sleep.\"",
+   "Below it someone has written: Sleeping towns do not lock their doors."
+  ],
+  "flag": "lq_vorlucent_lore1",
+  "next": "vorlucent_both"
+ },
+ "vorlucent_witness": {
+  "lines": [
+   "Coal Runner Kesk: Corla? Lovely woman. Her lamps go dark the same nights the clan houses rob someone.",
+   "Coal Runner Kesk: Here's the wick. She'll trap the moth in a lamp and shake its dust off for the clans. A whole town asleep, doors open.",
+   "Coal Runner Kesk: You didn't get this from me. I've got a family. Well, a cousin who owes me money. Same thing."
+  ],
+  "flag": "lq_vorlucent_lore2",
+  "next": "vorlucent_both"
+ },
+ "vorlucent_both": {
+  "if": {
+   "flag": [
+    "lq_vorlucent_lore1",
+    "lq_vorlucent_lore2"
+   ],
+   "not_flag": "lq_vorlucent_ready"
+  },
+  "lines": [
+   "You know the old story and you have the dark wick. Back to Lamplighter Corla at Ashmere Station."
+  ],
+  "action": "quest_stage legend_vorlucent 2"
+ },
+ "vorlucent_caught": {
+  "lines": [
+   "Lamplighter Corla: Kesk. That coal-faced little snitch.",
+   "Lamplighter Corla: Keep your wick! The clans will just have to rob towns while they're awake. How tiring for everyone.",
+   "She blows out her lamp and slips into the crowd. In the Shade Rift, two dark rings open slowly, unafraid.",
+   "Coal Runner Kesk wrapped a Kin Charm in the wick's paper for you."
+  ]
+ },
+ "vorlucent_struck": {
+  "lines": [
+   "Lamplighter Corla: Thank you, sweet. Now let's watch it dance.",
+   "She lights the wick. The station lamps flare, and far off in the Shade Rift a great moth is dragged toward a flame it cannot leave.",
+   "Lamplighter Corla: My clients pay by the pinch. Shall I put you to sleep first?"
+  ]
+ },
+ "vorlucent_defeat": {
+  "lines": [
+   "Lamplighter Corla: Fine, let it go! Half the dust is shaken off anyway.",
+   "The flame goes out. In the Shade Rift, Vorlucent shudders free, and it will not come near a lit hand again in a hurry."
+  ]
+ },
+ "vorlucent_ledger": {
+  "lines": [
+   "The lamplighter's dust",
+   "Lamplighter Corla sold moth dust to the clans to put towns to sleep before a robbery. She tried to trap Vorlucent for it."
+  ]
+ },
+ "lumivane_guide": {
+  "if": {
+   "flag": [
+    "lq_lumivane_lore1",
+    "lq_lumivane_lore2"
+   ]
+  },
+  "else": "lumivane_guide_wait",
+  "lines": [
+   "Pilgrim Sevrin: The ember glass. Bless you. Give it here, quickly. The light is wasted on the free.",
+   "Pilgrim Sevrin: With this, no one will ever be lost without me again."
+  ],
+  "choices": [
+   {
+    "text": "Give Sevrin the glass",
+    "flag": "lq_lumivane_handed",
+    "next": "lumivane_twist"
+   },
+   {
+    "text": "Keep the glass",
+    "flag": "lq_lumivane_kept",
+    "next": "lumivane_twist"
+   }
+  ]
+ },
+ "lumivane_twist": {
+  "lines": [
+   "Pilgrim Sevrin is already counting coins on his fingers."
+  ],
+  "action": "betrayal lq_lumivane",
+  "flag": "lq_lumivane_ready"
+ },
+ "lumivane_guide_wait": {
+  "if": {
+   "flag": "lq_lumivane_met"
+  },
+  "else": "lumivane_guide_intro",
+  "lines": [
+   "Pilgrim Sevrin: Oasis Rift wall, then Obed in the Tower Rift. The dunes are patient. Pilgrims are not."
+  ]
+ },
+ "lumivane_guide_intro": {
+  "lines": [
+   "Pilgrim Sevrin: Travellers lost in the dunes follow a light home. A deer with a lantern heart. Lumivane.",
+   "Pilgrim Sevrin: I guide pilgrims too. For a small fee. Smaller than dying of thirst, anyway.",
+   "Pilgrim Sevrin: Its story is carved in the Oasis Rift. Hermit Obed in the Tower Rift keeps its ember glass.",
+   "Pilgrim Sevrin: Bring me the glass. With it I can send the deer to every lost soul at once."
+  ],
+  "action": "quest_stage legend_lumivane 1",
+  "flag": "lq_lumivane_met"
+ },
+ "lumivane_lore": {
+  "lines": [
+   "Pictures are carved into the rock: a line of travellers, a desert, a small light leading them home.",
+   "\"The first lantern lives in the deer. Shut its ember in glass and its light shines for one hand only.\"",
+   "Someone scratched a price beside the travellers. Then a higher price. Then a much higher one."
+  ],
+  "flag": "lq_lumivane_lore1",
+  "next": "lumivane_both"
+ },
+ "lumivane_witness": {
+  "lines": [
+   "Hermit Obed: Sevrin. He leads pilgrims into the dunes, then sells them the way out. Water costs extra.",
+   "Hermit Obed: Here is the ember glass. Shut the deer's light in it and only Sevrin can show the way. Then everyone lost pays him.",
+   "Hermit Obed: I came out here to get away from people like him. Then they built a pilgrim road past my door. Keep the glass."
+  ],
+  "flag": "lq_lumivane_lore2",
+  "next": "lumivane_both"
+ },
+ "lumivane_both": {
+  "if": {
+   "flag": [
+    "lq_lumivane_lore1",
+    "lq_lumivane_lore2"
+   ],
+   "not_flag": "lq_lumivane_ready"
+  },
+  "lines": [
+   "You know the old story and you have the ember glass. Back to Pilgrim Sevrin in Ochrewell."
+  ],
+  "action": "quest_stage legend_lumivane 2"
+ },
+ "lumivane_caught": {
+  "lines": [
+   "Pilgrim Sevrin: The hermit. He never did like competition.",
+   "Pilgrim Sevrin: Keep it! The desert is big. Someone will always need me.",
+   "He hurries off with his water skins. On the crown of the Sun Rift, a soft light glows a little brighter.",
+   "Hermit Obed hid a Kin Charm in the glass's pouch for you."
+  ]
+ },
+ "lumivane_struck": {
+  "lines": [
+   "Pilgrim Sevrin: Thank you, friend. Now the light belongs to whoever holds the glass.",
+   "He raises the glass toward the Sun Rift. Far off, the deer's lantern dims as its light is pulled into his hand.",
+   "Pilgrim Sevrin: The first lost soul I charge is you. Pay up, or fight?"
+  ]
+ },
+ "lumivane_defeat": {
+  "lines": [
+   "Pilgrim Sevrin: Take the cursed thing! Half the light is out of it anyway.",
+   "The glass cracks open. At the Sun Rift, Lumivane's lantern flickers back, but now it shies from any hand held out to it."
+  ]
+ },
+ "lumivane_ledger": {
+  "lines": [
+   "The pilgrim's toll",
+   "Pilgrim Sevrin led pilgrims into the dunes and sold them the way out. He wanted to shut Lumivane's light in glass."
+  ]
+ }
+}

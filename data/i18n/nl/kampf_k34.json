@@ -1,0 +1,16 @@
+{
+ "_comment": "nl translation of the kampf_k34 table, keyed by the English text.",
+ "strings": {
+  "%s: Wayfarers think at tier %d.": "%s: Reizigers denken op niveau %d.",
+  "At tier 3 the damage guess is the very number your art preview shows.": "Op niveau 3 is de schadeschatting precies het getal dat je techniekvoorbeeld toont.",
+  "Foes never see your order or the next roll, and guess swaps only among Spirlings you have shown.": "Tegenstanders zien nooit je bevel of de volgende worp, en raden wissels alleen bij Spirlings die je al hebt laten zien.",
+  "How foes think": "Hoe tegenstanders denken",
+  "Some Wayfarers have a temper of their own: a hothead never swaps, a tactician saves up.": "Sommige Reizigers hebben hun eigen aard: een heethoofd wisselt nooit, een tacticus spaart.",
+  "Tier 0 picks any art it can pay. Mostly it just bites.": "Niveau 0 kiest elke techniek die het kan betalen. Meestal bijt het gewoon.",
+  "Tier 1 picks the art that hurts most right now and never passes up a knock-out.": "Niveau 1 kiest de techniek die nu het meeste pijn doet en laat nooit een knock-out liggen.",
+  "Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup.": "Niveau 2 weegt ook jouw beste antwoord, heelt zich als het zwak is en wisselt uit een slecht duel.",
+  "Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, leaves a field that weakens all its arts, guesses your swap and saves Energy up to %d turns ahead.": "Niveau 3 verspilt nooit een status, versterkt zich alleen als het veilig is, maakt de zwakken af, verlaat een veld dat al zijn technieken verzwakt, raadt je wissel en spaart Energie tot %d beurten vooruit.",
+  "Two arts worth the same at tier 3? The battle seed decides, the same seed always the same way.": "Twee technieken even goed op niveau 3? Het gevechtsseed beslist, hetzelfde seed altijd hetzelfde.",
+  "Wild Spirlings always pick at random.": "Wilde Spirlings kiezen altijd willekeurig."
+ }
+}

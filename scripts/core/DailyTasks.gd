@@ -1,0 +1,338 @@
+class_name DailyTasks
+extends RefCounted
+## Daily tasks (plan area 8): every day by the server clock three tasks are drawn from
+## data/events.json with the seed "chimora-tasks-YYYY-MM-DD". Each pays REWARD Waymarks, all
+## three together pay BONUS more. Only tasks that the save can do are drawn (places already
+## reached, elements living there), at most one battle task per day, and each fits in about
+## 15 minutes. Progress lives in GameState.daily_tasks, so it is part of the (server) save and
+## survives a device change on the same day. Missing a day costs nothing: there is no streak.
+## Daily tasks are never advertised by a notification, not even once push is available (plan
+## 3500): they wait quietly on the goals screen. tests/unit/test_endgame_p3a.gd keeps it so.
+
+const PER_DAY: int = 3
+const REWARD: int = 10
+const BONUS: int = 10
+const MAX_BATTLE_TASKS: int = 1
+## After Act I a fourth, harder task joins the day (plan 3170) and pays HARD_REWARD.
+const HARD_REWARD: int = 25
+## An Echo melody score from here up counts as "Good or better" (plan 3166), the same mark as
+## the echo song outside battle.
+const MELODY_GOOD: float = 0.6
+const DATA_PATH: String = "res://data/events.json"
+
+static var _defs: Array[Dictionary] = []
+
+static func defs() -> Array[Dictionary]:
+	if _defs.is_empty():
+		var f := FileAccess.open(DATA_PATH, FileAccess.READ)
+		if f == null:
+			return _defs
+		var d: Variant = JSON.parse_string(f.get_as_text())
+		if d is Dictionary:
+			for t: Variant in (d as Dictionary).get("daily_tasks", []):
+				if t is Dictionary:
+					_defs.append(t)
+	return _defs
+
+static func def(id: String) -> Dictionary:
+	for t: Dictionary in defs():
+		if str(t.id) == id:
+			return t
+	return {}
+
+static func day_key() -> String:
+	return DailyFind.today_key()
+
+## Map ids the save has reached (visited maps, rest spots, where the player stands).
+static func reached_maps() -> Array[String]:
+	var out: Array[String] = []
+	for m: Variant in GameState.records.get("maps_visited", []):
+		if not str(m) in out:
+			out.append(str(m))
+	for m: Variant in GameState.visited_rests.keys():
+		if not str(m) in out:
+			out.append(str(m))
+	for m: String in [GameState.current_map, GameState.heal_map]:
+		if not m in out:
+			out.append(m)
+	return out
+
+## Remembers that the player reached [param map_id] (Overworld calls this on every map load).
+static func note_map(map_id: String) -> void:
+	var seen: Array = GameState.records.get("maps_visited", [])
+	if not map_id in seen:
+		seen.append(map_id)
+		GameState.records["maps_visited"] = seen
+
+## Element names (Elements.E keys) of wild Spirlings on the reached maps.
+static func reachable_elements(maps: Array[String]) -> Array[String]:
+	var out: Array[String] = []
+	var tables: Array[String] = EncounterTable.table_ids()
+	for m: String in maps:
+		if not m in tables:
+			continue
+		for sp: String in EncounterTable.species_on(m):
+			var sd: SpirlingData = Database.species(sp)
+			if sd == null:
+				continue
+			for e: int in sd.elements:
+				var en: String = Elements.E.keys()[e]
+				if not en in out:
+					out.append(en)
+	return out
+
+## True if task [param t] can be done with the places and Spirlings this save can reach.
+static func doable(t: Dictionary, maps: Array[String], elements: Array[String], day: String = "") -> bool:
+	var ev: String = str(t.get("event", ""))
+	var wild_maps: int = 0
+	for m: String in maps:
+		if m in EncounterTable.table_ids():
+			wild_maps += 1
+	if t.has("map") and not str(t.map) in maps:
+		return false
+	if t.has("map") and ev == "win" and not str(t.map) in EncounterTable.table_ids():
+		return false
+	if t.has("element") and not str(t.element) in elements:
+		return false
+	if ev in ["win", "bond", "melody"] and wild_maps == 0:
+		return false
+	if ev == "bond" and GameState.party.is_empty():
+		return false
+	if bool(t.get("distinct", false)) and ev in ["rest", "visit"]:
+		var places: int = GameState.visited_rests.size() if ev == "rest" else maps.size()
+		if places < int(t.get("n", 1)):
+			return false
+	if ev == "visit" and t.has("map") and str(t.map) == GameState.current_map:
+		return false
+	# Roaming trips only once Aldo offers them (plan 3173).
+	if ev == "trip" and (not GameState.has_flag(GameState.ACT1_END_FLAG) or GameState.storage.is_empty()):
+		return false
+	# A new Spirling only while unseen kinds live where the player can go (plan 3167).
+	if ev == "discover" and unseen_reachable(maps).is_empty():
+		return false
+	# The day's rare visitor only when its place is reached (plan 3168).
+	if ev == "daily_find":
+		var p: Dictionary = DailyFind.pick(day if day != "" else day_key())
+		if p.is_empty() or not str(p.table) in maps:
+			return false
+	if bool(t.get("hard", false)) and not GameState.has_flag(GameState.ACT1_END_FLAG):
+		return false
+	return true
+
+## Species living on the reached maps that the Spirlog has not seen yet.
+static func unseen_reachable(maps: Array[String]) -> Array[String]:
+	var out: Array[String] = []
+	var tables: Array[String] = EncounterTable.table_ids()
+	for m: String in maps:
+		if not m in tables:
+			continue
+		for sp: String in EncounterTable.species_on(m):
+			if not sp in out and not bool((GameState.spirlog.get(sp, {}) as Dictionary).get("seen", false)):
+				out.append(sp)
+	return out
+
+## Counts the "discover" task when [param species] is met for the first time (call it before
+## GameState.mark_seen).
+static func note_seen(species: String, map_id: String) -> void:
+	if not bool((GameState.spirlog.get(species, {}) as Dictionary).get("seen", false)):
+		record("discover", {"map": map_id})
+
+static func reward_for(t: Dictionary) -> int:
+	return HARD_REWARD if bool(t.get("hard", false)) else REWARD
+
+## Draws the tasks for [param day] (ids), the same every time for the same save state.
+static func draw(day: String) -> Array[String]:
+	var maps: Array[String] = reached_maps()
+	var elements: Array[String] = reachable_elements(maps)
+	var pool: Array[Dictionary] = []
+	for t: Dictionary in defs():
+		if doable(t, maps, elements, day):
+			pool.append(t)
+	pool.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return str(a.id) < str(b.id))
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash("chimora-tasks-" + day)
+	var out: Array[String] = []
+	var battles: int = 0
+	var hard: Array[Dictionary] = []
+	for t: Dictionary in pool:
+		if bool(t.get("hard", false)):
+			hard.append(t)
+	for t: Dictionary in hard:
+		pool.erase(t)
+	while out.size() < PER_DAY and not pool.is_empty():
+		var t: Dictionary = pool.pop_at(rng.randi_range(0, pool.size() - 1))
+		if str(t.get("kind", "")) == "battle":
+			if battles >= MAX_BATTLE_TASKS:
+				continue
+			battles += 1
+		out.append(str(t.id))
+	if battles >= MAX_BATTLE_TASKS:
+		hard = hard.filter(func(t: Dictionary) -> bool: return str(t.get("kind", "")) != "battle")
+	if not hard.is_empty():
+		out.append(str(hard[rng.randi_range(0, hard.size() - 1)].id))
+	return out
+
+## Today's state, drawn fresh when the day changed: {"day", "tasks": [{"id", "n"}], "bonus"}.
+static func today() -> Dictionary:
+	var day: String = day_key()
+	var stored: String = str(GameState.daily_tasks.get("day", ""))
+	if GameState.time_went_back(stored, day) and _valid(GameState.daily_tasks):
+		return GameState.daily_tasks
+	if stored != day or not _valid(GameState.daily_tasks):
+		var tasks: Array = []
+		for id: String in draw(day):
+			tasks.append({"id": id, "n": 0})
+		GameState.daily_tasks = {"day": day, "tasks": tasks, "bonus": false}
+	return GameState.daily_tasks
+
+## False for damaged task state (a broken save): it is then drawn again.
+static func _valid(state: Dictionary) -> bool:
+	var tasks: Variant = state.get("tasks")
+	if not tasks is Array:
+		return false
+	for e: Variant in tasks:
+		if not e is Dictionary or not (e as Dictionary).has("id") or not ((e as Dictionary).get("n", 0) is int or (e as Dictionary).get("n", 0) is float):
+			return false
+	return true
+
+static func is_done(entry: Dictionary) -> bool:
+	return int(entry.get("n", 0)) >= int(def(str(entry.get("id", ""))).get("n", 1))
+
+## True if a game event matches task [param t]. [param info]: "map", "wild", "elements".
+static func matches(t: Dictionary, event: String, info: Dictionary) -> bool:
+	if str(t.get("event", "")) != event:
+		return false
+	if t.has("map") and str(info.get("map", "")) != str(t.map):
+		return false
+	if t.has("wild") and bool(info.get("wild", false)) != bool(t.wild):
+		return false
+	if t.has("night") and bool(info.get("night", false)) != bool(t.night):
+		return false
+	if t.has("element"):
+		var els: Array = info.get("elements", [])
+		if not str(t.element) in els:
+			return false
+	return true
+
+## Counts game event [param event] ("win", "bond", "rest", "visit", "step", "photo") with
+## [param info] towards today's tasks, pays Waymarks for finished ones and returns the reward
+## lines (also queued in GameState.notices for the overworld to show).
+static func record(event: String, info: Dictionary = {}, amount: int = 1) -> Array[String]:
+	# Lifetime counters for achievements: count_win, count_win_wild, count_step, ...
+	var counters: Array[String] = ["count_" + event]
+	if event == "win":
+		counters.append("count_win_wild" if bool(info.get("wild", false)) else "count_win_tamer")
+		if bool(info.get("night", false)):
+			counters.append("count_win_night")
+		if bool(info.get("one_element", false)):
+			counters.append("count_win_one_element")
+	for c: String in counters:
+		GameState.records[c] = int(GameState.records.get(c, 0)) + amount
+	var state: Dictionary = today()
+	var lines: Array[String] = []
+	for entry: Dictionary in state.get("tasks", []):
+		if is_done(entry):
+			continue
+		var t: Dictionary = def(str(entry.id))
+		if t.is_empty() or not matches(t, event, info):
+			continue
+		if bool(t.get("distinct", false)):
+			var where: Array = entry.get("seen", [])
+			var m: String = str(info.get("key", info.get("map", "")))
+			if m in where:
+				continue
+			where.append(m)
+			entry["seen"] = where
+			entry["n"] = where.size()
+		else:
+			entry["n"] = mini(int(entry.get("n", 0)) + amount, int(t.get("n", 1)))
+		if is_done(entry):
+			lines.append(Loc.t("Daily task done: %s") % Loc.t(str(t.text)))
+			lines.append_array(Waymarks.reward_lines(Waymarks.earn(reward_for(t), "daily_task")))
+			GameState.records["daily_tasks_done"] = int(GameState.records.get("daily_tasks_done", 0)) + 1
+			lines.append_array(SeasonPath.add("daily_task"))
+			lines.append_array(Album.record("daily"))
+	if not bool(state.get("bonus", false)) and all_done():
+		state["bonus"] = true
+		lines.append(Loc.t("All of today's tasks are done!"))
+		lines.append_array(Waymarks.reward_lines(Waymarks.earn(BONUS, "daily_bonus")))
+		lines.append_array(SeasonPath.add("daily_bonus"))
+	lines.append_array(Festival.record(event, info, amount))
+	lines.append_array(Album.record(event, info, amount))
+	GameState.notices.append_array(lines)
+	return lines
+
+static func all_done() -> bool:
+	var tasks: Array = GameState.daily_tasks.get("tasks", [])
+	if tasks.is_empty():
+		return false
+	for entry: Dictionary in tasks:
+		if not is_done(entry):
+			return false
+	return true
+
+## Goals screen block: one line per task with progress (k/n), already translated.
+static func lines() -> Array[String]:
+	var out: Array[String] = []
+	var tasks: Array = today().get("tasks", [])
+	if tasks.is_empty():
+		return out
+	out.append(Loc.t("Daily tasks (%d Waymarks each):") % REWARD)
+	for entry: Dictionary in tasks:
+		var t: Dictionary = def(str(entry.id))
+		var need: int = int(t.get("n", 1))
+		var extra: String = " (%s%d)" % [Waymarks.GLYPH, HARD_REWARD] if bool(t.get("hard", false)) else ""
+		out.append("%s %s %d/%d%s" % ["[x]" if is_done(entry) else "[ ]", Loc.t(str(t.get("text", entry.id))), mini(int(entry.get("n", 0)), need), need, extra])
+	if all_done():
+		out.append(Loc.t("All done. New tasks arrive tomorrow."))
+	else:
+		out.append(Loc.t("All of them: %d Waymarks extra.") % BONUS)
+	return out
+
+## Plan 3163: once a day one open task can be swapped for another one, free of charge.
+static func can_swap() -> bool:
+	var st: Dictionary = today()
+	if bool(st.get("swapped", false)):
+		return false
+	for entry: Dictionary in st.get("tasks", []):
+		if not is_done(entry) and int(entry.get("n", 0)) == 0:
+			return true
+	return false
+
+## Swaps open task number [param index] for a doable task of the same weight that is not on
+## today's list. Returns the new task id, or "" if nothing was swapped.
+static func swap(index: int) -> String:
+	var st: Dictionary = today()
+	var tasks: Array = st.get("tasks", [])
+	if bool(st.get("swapped", false)) or index < 0 or index >= tasks.size():
+		return ""
+	var entry: Dictionary = tasks[index]
+	if is_done(entry) or int(entry.get("n", 0)) > 0:
+		return ""
+	var old: Dictionary = def(str(entry.id))
+	var have: Array[String] = []
+	var battles: int = 0
+	for e: Dictionary in tasks:
+		have.append(str(e.id))
+		if e != entry and str(def(str(e.id)).get("kind", "")) == "battle":
+			battles += 1
+	var maps: Array[String] = reached_maps()
+	var elements: Array[String] = reachable_elements(maps)
+	var pool: Array[String] = []
+	for t: Dictionary in defs():
+		if str(t.id) in have or bool(t.get("hard", false)) != bool(old.get("hard", false)):
+			continue
+		if str(t.get("kind", "")) == "battle" and battles >= MAX_BATTLE_TASKS:
+			continue
+		if doable(t, maps, elements, str(st.day)):
+			pool.append(str(t.id))
+	if pool.is_empty():
+		return ""
+	pool.sort()
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash("chimora-swap-%s-%d" % [str(st.day), index])
+	var pick: String = pool[rng.randi_range(0, pool.size() - 1)]
+	tasks[index] = {"id": pick, "n": 0}
+	st["swapped"] = true
+	return pick
+

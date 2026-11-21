@@ -1,0 +1,14 @@
+{
+ "_doc": "Challenge modes (KAMPF_PLAN_1000 area 'Schwierigkeit und Herausforderungen', items 486-520). They join the four rules in data/ideas200.json 'challenges' and are read by ChallengeRules. Any set of them can be taken at a new game or before the first mended Rift, and dropped at any time. None of them is sold in the shop.",
+ "modes": [
+  {"id": "one_per_place", "name": "One per Place", "text": "Only one Spirling may bond with you in each place."},
+  {"id": "first_meeting", "name": "First Meeting", "text": "Only the first wild battle in each place can end in a bond."},
+  {"id": "spring_water", "name": "Spring Water Only", "text": "No healing items, in battle or out. Only rest springs mend your team."},
+  {"id": "wild_shuffle", "name": "Shuffled Wilds", "text": "The wild Spirlings of every place are shuffled by your run seed."},
+  {"id": "art_shuffle", "name": "Shuffled Arts", "text": "Every Spirling that bonds with you knows arts drawn by your run seed."},
+  {"id": "stand_ground", "name": "Stand Your Ground", "text": "No swapping in battle. A Spirling only leaves the field when it falls."},
+  {"id": "half_rested", "name": "Half Rested", "text": "Rest springs only mend half of each Spirling's Vigor."},
+  {"id": "ace_first", "name": "Ace Up Front", "text": "Wayfarers lead with their strongest Spirling."},
+  {"id": "night_bonds", "name": "Night Bonds", "text": "Bonds only form at night."}
+ ]
+}

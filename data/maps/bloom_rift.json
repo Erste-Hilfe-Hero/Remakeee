@@ -1,0 +1,231 @@
+{
+ "name": "Bloom Rift",
+ "region": "quivermoor",
+ "biome": "rift",
+ "backdrop": "lake",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "TTTTTTTTTTTT",
+  "TT~~.XX.~~TT",
+  "T~~.......~T",
+  "T~......T_.T",
+  "T..o.....T_T",
+  "T.......ST_T",
+  "T~~~....TT_T",
+  "T~~~....~T_T",
+  "T........T_T",
+  "T.X......T_T",
+  "T....~~..T_T",
+  "T....~~..T_T",
+  "TTTT..TTTT_T",
+  "T........T_T",
+  "T.....~~.T_T",
+  "TTT..TTTTT_T",
+  "T........T_T",
+  "T........T_T",
+  "TTTT..TTTT.T",
+  "T..........T",
+  "T.X......X.T",
+  "TTTTT..TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "lastbloom",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "lastbloom",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "acolyte",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "quivermoor/bloom_rift_acolyte",
+   "sprite": "warden",
+   "trainer": "Bloom Acolyte Signe",
+   "intro": "quivermoor/bloom_rift_acolyte_intro",
+   "defeat": "quivermoor/bloom_rift_acolyte_defeat",
+   "money": 4275,
+   "team": [
+    {
+     "species": "Sablarch",
+     "level": 95
+    },
+    {
+     "species": "Fumeregent",
+     "level": 95
+    },
+    {
+     "species": "Rookwarden",
+     "level": 95
+    }
+   ],
+   "wheel": true
+  },
+  {
+   "id": "warden_sabeline",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/warden_sabeline",
+   "sprite": "warden",
+   "trainer": "Warden Sabeline",
+   "warden": "v5_bloom",
+   "team": [
+    {
+     "species": "Sablarch",
+     "level": 95
+    },
+    {
+     "species": "Fumeregent",
+     "level": 95
+    },
+    {
+     "species": "Rookwarden",
+     "level": 95
+    },
+    {
+     "species": "Woadcastle",
+     "level": 96
+    },
+    {
+     "species": "Velverain",
+     "level": 96,
+     "held": "pith_mend"
+    }
+   ],
+   "intro": "quivermoor/warden_sabeline_intro",
+   "defeat": "quivermoor/warden_sabeline_defeat",
+   "ai": 3,
+   "money": 12500,
+   "rule": "night_dark",
+   "win_flags": [
+    "rift_v5_bloom_sealed",
+    "quivermoor_done"
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Sablarch",
+      "level": 117
+     },
+     {
+      "species": "Fumeregent",
+      "level": 117
+     },
+     {
+      "species": "Rookwarden",
+      "level": 117
+     },
+     {
+      "species": "Woadcastle",
+      "level": 118
+     },
+     {
+      "species": "Velverain",
+      "level": 118,
+      "held": "pith_mend"
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Sablarch",
+      "level": 97
+     },
+     {
+      "species": "Fumeregent",
+      "level": 97
+     },
+     {
+      "species": "Rookwarden",
+      "level": 97
+     },
+     {
+      "species": "Woadcastle",
+      "level": 98
+     },
+     {
+      "species": "Velverain",
+      "level": 98,
+      "held": "pith_mend"
+     }
+    ]
+   }
+  },
+  {
+   "id": "q5_named_seed_sol",
+   "x": 2,
+   "y": 13,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_named_seed_sol",
+   "sprite": "elder",
+   "show_flag": "q5_named_seed_s1"
+  },
+  {
+   "id": "q5_named_seed_fenja_bloom",
+   "x": 7,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_named_seed_fenja_bloom",
+   "sprite": "elder",
+   "trainer": "Gardener Fenja",
+   "show_flag": "q5_named_seed_reveal",
+   "intro": "quivermoor/q5_named_seed_fenja_bloom_intro",
+   "defeat": "quivermoor/q5_named_seed_fenja_bloom_defeat",
+   "money": 4850,
+   "team": [
+    {
+     "species": "Rushprowl",
+     "level": 95
+    },
+    {
+     "species": "Thrashkin",
+     "level": 96
+    },
+    {
+     "species": "Silthop",
+     "level": 97
+    }
+   ],
+   "win_flags": [
+    "q5_named_seed_done"
+   ],
+   "no_rematch": true
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "quivermoor/bloom_rift_spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "quivermoor/bloom_rift_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v5_bloom_sealed",
+   "closed": "@"
+  }
+ ]
+}

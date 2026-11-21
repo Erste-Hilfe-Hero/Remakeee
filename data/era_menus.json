@@ -1,0 +1,829 @@
+{
+ "_comment": "Menu screen layouts per era (docs/ERA_FEEL_MENUS.md). 'base' is every list of the era; 'screens' overrides it per screen. 'functions' says how each function of a screen is presented in that era: every function is there in every era (EraMenus.problems). The skin (colours, frames, font) is data/era_feel.json.",
+ "screens": [
+  "pause",
+  "party",
+  "summary",
+  "bag",
+  "dex",
+  "save",
+  "options",
+  "shop",
+  "map"
+ ],
+ "functions": {
+  "pause": [
+   "open_screens",
+   "clock",
+   "shortcuts",
+   "reward_mark"
+  ],
+  "party": [
+   "summary",
+   "lead",
+   "reorder",
+   "use_item",
+   "keepsake",
+   "vigor",
+   "elements",
+   "free_slots"
+  ],
+  "summary": [
+   "info",
+   "stats",
+   "arts",
+   "marks",
+   "sprite",
+   "turn"
+  ],
+  "bag": [
+   "pockets",
+   "use",
+   "describe",
+   "count"
+  ],
+  "dex": [
+   "numbers",
+   "sprite",
+   "progress",
+   "search",
+   "filters",
+   "region",
+   "season",
+   "area",
+   "size",
+   "cry",
+   "forms"
+  ],
+  "save": [
+   "save",
+   "save_quit",
+   "card",
+   "clock"
+  ],
+  "options": [
+   "groups",
+   "hints"
+  ],
+  "shop": [
+   "tabs",
+   "price",
+   "detail",
+   "purchases"
+  ],
+  "map": [
+   "map",
+   "zoom",
+   "here",
+   "marks",
+   "places",
+   "detail"
+  ]
+ },
+ "wayfarer_height_m": 1.6,
+ "seasons": {
+  "Spring": [
+   "BLOOM",
+   "GALE"
+  ],
+  "Summer": [
+   "EMBER",
+   "LUMEN"
+  ],
+  "Autumn": [
+   "STONE",
+   "RUST"
+  ],
+  "Winter": [
+   "FROST",
+   "TIDE"
+  ]
+ },
+ "eras": {
+  "1": {
+   "name": "Plain list",
+   "base": {
+    "style": "text",
+    "columns": 1,
+    "row_h": 16,
+    "cursor": "arrow",
+    "icons": false,
+    "icon_size": 0,
+    "panel": "none",
+    "anim": "none",
+    "backdrop": false,
+    "wrap": false
+   },
+   "screens": {
+    "pause": {
+     "header": "none",
+     "quick_bar": false,
+     "functions": {
+      "open_screens": "row",
+      "clock": "save_card",
+      "shortcuts": "row",
+      "reward_mark": "text"
+     }
+    },
+    "party": {
+     "sprite": 0,
+     "sprite_anim": false,
+     "badges": "text",
+     "drag": false,
+     "functions": {
+      "summary": "row",
+      "lead": "row",
+      "reorder": "row",
+      "use_item": "row",
+      "keepsake": "row",
+      "vigor": "text",
+      "elements": "text",
+      "free_slots": "row"
+     }
+    },
+    "summary": {
+     "tabs": false,
+     "pages": [
+      [
+       "stats",
+       "arts"
+      ],
+      [
+       "info",
+       "marks"
+      ]
+     ],
+     "sprite": 32,
+     "sprite_anim": false,
+     "badges": "text",
+     "functions": {
+      "info": "page",
+      "stats": "page",
+      "arts": "page",
+      "marks": "text",
+      "sprite": "picture",
+      "turn": "tap"
+     }
+    },
+    "bag": {
+     "pockets": "flat",
+     "pocket_art": false,
+     "functions": {
+      "pockets": "order",
+      "use": "row",
+      "describe": "hint",
+      "count": "text"
+     }
+    },
+    "dex": {
+     "header": "preview",
+     "preview": 24,
+     "area": "text",
+     "tools": [],
+     "region_tabs": false,
+     "search_bar": false,
+     "form_size": 20,
+     "form_names": false,
+     "functions": {
+      "numbers": "text",
+      "sprite": "header",
+      "progress": "row",
+      "search": "row",
+      "filters": "row",
+      "region": "row",
+      "season": "row",
+      "area": "text",
+      "size": "text",
+      "cry": "sprite_tap",
+      "forms": "sprite"
+     }
+    },
+    "save": {
+     "card": "text",
+     "party": 0,
+     "party_anim": false,
+     "functions": {
+      "save": "row",
+      "save_quit": "row",
+      "card": "header",
+      "clock": "text"
+     }
+    },
+    "options": {
+     "functions": {
+      "groups": "row",
+      "hints": "hint"
+     }
+    },
+    "shop": {
+     "functions": {
+      "tabs": "row",
+      "price": "text",
+      "detail": "page",
+      "purchases": "row"
+     }
+    },
+    "map": {
+     "view_h": 104,
+     "actions": "row",
+     "pulse": false,
+     "functions": {
+      "map": "view",
+      "zoom": "row",
+      "here": "row",
+      "marks": "row",
+      "places": "row",
+      "detail": "page"
+     }
+    }
+   }
+  },
+  "2": {
+   "name": "Icon list",
+   "base": {
+    "style": "icon",
+    "columns": 1,
+    "row_h": 16,
+    "cursor": "arrow",
+    "icons": true,
+    "icon_size": 9,
+    "panel": "none",
+    "anim": "none",
+    "backdrop": false,
+    "wrap": true
+   },
+   "screens": {
+    "pause": {
+     "header": "clock",
+     "quick_bar": false,
+     "functions": {
+      "open_screens": "icon_row",
+      "clock": "header",
+      "shortcuts": "row",
+      "reward_mark": "icon"
+     }
+    },
+    "party": {
+     "sprite": 14,
+     "sprite_anim": true,
+     "badges": "icon",
+     "drag": false,
+     "functions": {
+      "summary": "row",
+      "lead": "row",
+      "reorder": "row",
+      "use_item": "row",
+      "keepsake": "row",
+      "vigor": "bar",
+      "elements": "icon",
+      "free_slots": "row"
+     }
+    },
+    "summary": {
+     "tabs": false,
+     "pages": [
+      [
+       "info"
+      ],
+      [
+       "stats",
+       "marks"
+      ],
+      [
+       "arts"
+      ]
+     ],
+     "sprite": 32,
+     "sprite_anim": false,
+     "badges": "text",
+     "functions": {
+      "info": "page",
+      "stats": "page",
+      "arts": "page",
+      "marks": "text",
+      "sprite": "picture",
+      "turn": "tap"
+     }
+    },
+    "bag": {
+     "pockets": "tabs",
+     "pocket_art": false,
+     "functions": {
+      "pockets": "tab",
+      "use": "row",
+      "describe": "hint",
+      "count": "text"
+     }
+    },
+    "dex": {
+     "header": "preview_map",
+     "preview": 24,
+     "area": "map",
+     "tools": [
+      "area"
+     ],
+     "region_tabs": false,
+     "search_bar": false,
+     "form_size": 20,
+     "form_names": false,
+     "functions": {
+      "numbers": "text",
+      "sprite": "header",
+      "progress": "row",
+      "search": "row",
+      "filters": "row",
+      "region": "row",
+      "season": "row",
+      "area": "map",
+      "size": "text",
+      "cry": "sprite_tap",
+      "forms": "sprite"
+     }
+    },
+    "save": {
+     "card": "clock",
+     "party": 14,
+     "party_anim": false,
+     "functions": {
+      "save": "row",
+      "save_quit": "row",
+      "card": "header",
+      "clock": "header"
+     }
+    },
+    "options": {
+     "functions": {
+      "groups": "icon_row",
+      "hints": "hint"
+     }
+    },
+    "shop": {
+     "functions": {
+      "tabs": "icon_row",
+      "price": "text",
+      "detail": "page",
+      "purchases": "row"
+     }
+    },
+    "map": {
+     "view_h": 104,
+     "actions": "row",
+     "pulse": false,
+     "functions": {
+      "map": "view",
+      "zoom": "row",
+      "here": "row",
+      "marks": "row",
+      "places": "icon_row",
+      "detail": "page"
+     }
+    }
+   }
+  },
+  "3": {
+   "name": "Tabbed pages",
+   "base": {
+    "style": "tabbed",
+    "columns": 1,
+    "row_h": 18,
+    "cursor": "arrow",
+    "icons": true,
+    "icon_size": 9,
+    "panel": "none",
+    "anim": "none",
+    "backdrop": false,
+    "wrap": true
+   },
+   "screens": {
+    "pause": {
+     "header": "clock",
+     "quick_bar": false,
+     "functions": {
+      "open_screens": "icon_row",
+      "clock": "header",
+      "shortcuts": "row",
+      "reward_mark": "icon"
+     }
+    },
+    "party": {
+     "row_h": 22,
+     "sprite": 14,
+     "sprite_anim": true,
+     "badges": "colour",
+     "drag": false,
+     "functions": {
+      "summary": "row",
+      "lead": "row",
+      "reorder": "row",
+      "use_item": "row",
+      "keepsake": "row",
+      "vigor": "bar",
+      "elements": "badge",
+      "free_slots": "row"
+     }
+    },
+    "summary": {
+     "tabs": true,
+     "pages": [
+      [
+       "info"
+      ],
+      [
+       "stats"
+      ],
+      [
+       "arts"
+      ],
+      [
+       "marks"
+      ]
+     ],
+     "sprite": 48,
+     "sprite_anim": false,
+     "badges": "colour",
+     "functions": {
+      "info": "tab",
+      "stats": "tab",
+      "arts": "tab",
+      "marks": "tab",
+      "sprite": "picture",
+      "turn": "tab"
+     }
+    },
+    "bag": {
+     "pockets": "tabs",
+     "pocket_art": true,
+     "functions": {
+      "pockets": "tab_art",
+      "use": "row",
+      "describe": "hint",
+      "count": "text"
+     }
+    },
+    "dex": {
+     "header": "preview_map",
+     "preview": 32,
+     "area": "map",
+     "tools": [
+      "cry",
+      "size",
+      "area"
+     ],
+     "region_tabs": false,
+     "search_bar": false,
+     "form_size": 20,
+     "form_names": false,
+     "functions": {
+      "numbers": "text",
+      "sprite": "header",
+      "progress": "row",
+      "search": "row",
+      "filters": "row",
+      "region": "row",
+      "season": "row",
+      "area": "map",
+      "size": "picture",
+      "cry": "button",
+      "forms": "sprite"
+     }
+    },
+    "save": {
+     "card": "clock",
+     "party": 14,
+     "party_anim": false,
+     "functions": {
+      "save": "row",
+      "save_quit": "row",
+      "card": "header",
+      "clock": "header"
+     }
+    },
+    "options": {
+     "functions": {
+      "groups": "icon_row",
+      "hints": "hint"
+     }
+    },
+    "shop": {
+     "functions": {
+      "tabs": "icon_row",
+      "price": "badge",
+      "detail": "page",
+      "purchases": "row"
+     }
+    },
+    "map": {
+     "view_h": 120,
+     "actions": "row",
+     "pulse": false,
+     "functions": {
+      "map": "view",
+      "zoom": "row",
+      "here": "row",
+      "marks": "row",
+      "places": "icon_row",
+      "detail": "page"
+     }
+    }
+   }
+  },
+  "4": {
+   "name": "Touch panels",
+   "base": {
+    "style": "touch",
+    "columns": 1,
+    "row_h": 28,
+    "cursor": "frame",
+    "icons": true,
+    "icon_size": 18,
+    "panel": "bottom",
+    "anim": "none",
+    "backdrop": false,
+    "wrap": true
+   },
+   "screens": {
+    "pause": {
+     "columns": 2,
+     "row_h": 38,
+     "header": "clock",
+     "quick_bar": false,
+     "functions": {
+      "open_screens": "button",
+      "clock": "header",
+      "shortcuts": "button",
+      "reward_mark": "icon"
+     }
+    },
+    "party": {
+     "row_h": 36,
+     "sprite": 28,
+     "sprite_anim": false,
+     "badges": "colour",
+     "drag": true,
+     "functions": {
+      "summary": "row",
+      "lead": "row",
+      "reorder": "drag",
+      "use_item": "row",
+      "keepsake": "row",
+      "vigor": "bar",
+      "elements": "badge",
+      "free_slots": "row"
+     }
+    },
+    "summary": {
+     "tabs": true,
+     "pages": [
+      [
+       "info"
+      ],
+      [
+       "stats"
+      ],
+      [
+       "arts"
+      ],
+      [
+       "marks"
+      ]
+     ],
+     "sprite": 64,
+     "sprite_anim": false,
+     "badges": "colour",
+     "functions": {
+      "info": "tab",
+      "stats": "tab",
+      "arts": "tab",
+      "marks": "tab",
+      "sprite": "panel",
+      "turn": "tab"
+     }
+    },
+    "bag": {
+     "pockets": "tabs",
+     "pocket_art": true,
+     "functions": {
+      "pockets": "tab_art",
+      "use": "button",
+      "describe": "panel",
+      "count": "text"
+     }
+    },
+    "dex": {
+     "header": "preview_map",
+     "preview": 48,
+     "area": "map",
+     "tools": [
+      "cry",
+      "size",
+      "area"
+     ],
+     "region_tabs": false,
+     "search_bar": true,
+     "form_size": 32,
+     "form_names": true,
+     "functions": {
+      "numbers": "text",
+      "sprite": "header",
+      "progress": "row",
+      "search": "button",
+      "filters": "row",
+      "region": "row",
+      "season": "row",
+      "area": "map",
+      "size": "picture",
+      "cry": "button",
+      "forms": "named_sprite"
+     }
+    },
+    "save": {
+     "card": "clock",
+     "party": 28,
+     "party_anim": false,
+     "functions": {
+      "save": "button",
+      "save_quit": "button",
+      "card": "header",
+      "clock": "header"
+     }
+    },
+    "options": {
+     "functions": {
+      "groups": "button",
+      "hints": "panel"
+     }
+    },
+    "shop": {
+     "functions": {
+      "tabs": "button",
+      "price": "badge",
+      "detail": "panel",
+      "purchases": "button"
+     }
+    },
+    "map": {
+     "view_h": 200,
+     "actions": "bar",
+     "pulse": false,
+     "functions": {
+      "map": "view",
+      "zoom": "button",
+      "here": "button",
+      "marks": "button",
+      "places": "button",
+      "detail": "panel"
+     }
+    }
+   }
+  },
+  "5": {
+   "name": "Living menus",
+   "base": {
+    "style": "living",
+    "columns": 1,
+    "row_h": 28,
+    "cursor": "glow",
+    "icons": true,
+    "icon_size": 18,
+    "panel": "bottom",
+    "anim": "slide",
+    "backdrop": true,
+    "wrap": true
+   },
+   "screens": {
+    "pause": {
+     "columns": 2,
+     "row_h": 38,
+     "header": "clock",
+     "quick_bar": true,
+     "functions": {
+      "open_screens": "button",
+      "clock": "header",
+      "shortcuts": "quick_bar",
+      "reward_mark": "icon"
+     }
+    },
+    "party": {
+     "row_h": 36,
+     "sprite": 28,
+     "sprite_anim": true,
+     "badges": "colour",
+     "drag": true,
+     "functions": {
+      "summary": "row",
+      "lead": "row",
+      "reorder": "drag",
+      "use_item": "row",
+      "keepsake": "row",
+      "vigor": "bar",
+      "elements": "badge",
+      "free_slots": "row"
+     }
+    },
+    "summary": {
+     "tabs": true,
+     "pages": [
+      [
+       "info"
+      ],
+      [
+       "stats"
+      ],
+      [
+       "arts"
+      ],
+      [
+       "marks"
+      ]
+     ],
+     "sprite": 64,
+     "sprite_anim": true,
+     "badges": "colour",
+     "functions": {
+      "info": "tab",
+      "stats": "tab",
+      "arts": "tab",
+      "marks": "tab",
+      "sprite": "animated",
+      "turn": "tab"
+     }
+    },
+    "bag": {
+     "pockets": "tabs",
+     "pocket_art": true,
+     "functions": {
+      "pockets": "tab_art",
+      "use": "button",
+      "describe": "panel",
+      "count": "text"
+     }
+    },
+    "dex": {
+     "header": "preview_map",
+     "preview": 48,
+     "area": "map",
+     "tools": [
+      "cry",
+      "size",
+      "area"
+     ],
+     "region_tabs": true,
+     "search_bar": true,
+     "form_size": 32,
+     "form_names": true,
+     "functions": {
+      "numbers": "text",
+      "sprite": "header",
+      "progress": "row",
+      "search": "button",
+      "filters": "row",
+      "region": "tab",
+      "season": "tab",
+      "area": "map",
+      "size": "picture",
+      "cry": "button",
+      "forms": "named_sprite"
+     }
+    },
+    "save": {
+     "card": "clock",
+     "party": 28,
+     "party_anim": true,
+     "functions": {
+      "save": "button",
+      "save_quit": "button",
+      "card": "header",
+      "clock": "header"
+     }
+    },
+    "options": {
+     "functions": {
+      "groups": "button",
+      "hints": "panel"
+     }
+    },
+    "shop": {
+     "functions": {
+      "tabs": "button",
+      "price": "badge",
+      "detail": "panel",
+      "purchases": "button"
+     }
+    },
+    "map": {
+     "view_h": 200,
+     "actions": "bar",
+     "pulse": true,
+     "functions": {
+      "map": "view",
+      "zoom": "button",
+      "here": "button",
+      "marks": "button",
+      "places": "button",
+      "detail": "panel"
+     }
+    }
+   }
+  }
+ }
+}

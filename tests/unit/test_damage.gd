@@ -53,15 +53,15 @@ func test_stab_is_1_25() -> void:
 	var without: float = DamageCalc.raw(a, d, BattleFixtures.move(E.STONE, 40), 1.0, false)
 	assert_almost_eq(with_stab / without, 1.25, 0.0001)
 
-func test_crit_is_1_5() -> void:
+func test_crit_is_1_4() -> void:
 	var a: Spirling = BattleFixtures.make("Zippit", 20)
 	var d: Spirling = BattleFixtures.make("Zephlet", 20)
 	var mv: MoveData = BattleFixtures.move(E.STONE, 40)
 	var normal: float = DamageCalc.raw(a, d, mv, 1.0, false)
 	var crit: float = DamageCalc.raw(a, d, mv, 1.0, true)
-	assert_almost_eq(crit / normal, 1.5, 0.0001)
+	assert_almost_eq(crit / normal, 1.4, 0.0001)
 
-func test_crit_rate_is_about_one_in_sixteen() -> void:
+func test_crit_rate_is_about_one_in_twelve() -> void:
 	var a: Spirling = BattleFixtures.make("Zippit", 20)
 	var d: Spirling = BattleFixtures.make("Zephlet", 20)
 	var mv: MoveData = BattleFixtures.move(E.STONE, 40)
@@ -72,7 +72,7 @@ func test_crit_rate_is_about_one_in_sixteen() -> void:
 	for i: int in n:
 		if DamageCalc.compute(a, d, mv, rng).crit:
 			crits += 1
-	assert_between(float(crits) / n, 0.05, 0.075)
+	assert_between(float(crits) / n, 0.07, 0.097)
 
 func test_scorch_cuts_physical_attack() -> void:
 	var a: Spirling = BattleFixtures.make("Mossling", 20)

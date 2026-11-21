@@ -1,0 +1,46 @@
+Chimora 1.2.0
+
+ATO IV: SOLENNE
+- Um novo ato queimado de sol: Ochrewell, a Planície Glasswind, a escada do caravançará e o Forno da Miragem.
+- Três Fendas novas e suas Sentinelas. Agora os doze selos estão entre você e o final.
+
+DEPOIS DO FINAL
+- Vellmarch: uma região inteira de pós-jogo no estilo da Era II. 5 cidades, 6 estradas, 4 Fendas e uma história com uma traição em cada capítulo.
+- Além de Vellmarch: Quillmarch, Halcyra e Quivermoor, mais três regiões no estilo de eras posteriores.
+- Revanches contra as 12 Sentinelas. Elas tiveram tempo para pensar na derrota.
+- Torre Eco com 100 andares, Fendas de mestre, a Fenda aleatória, um gigante da semana, um exame final e Novo Jogo+.
+- Os Spirlings continuam crescendo além do anel 60. Siga em frente.
+
+HISTÓRIA E CONFIANÇA
+- Dois clãs, onze estranhos e um Livro-razão no menu de pausa que lembra em quem você confiou. Um favor pode valer a pena. Ou deixar você sem nada.
+- Missões de lenda para seis lendários novos, cada uma com um guia que talvez não seja o que parece.
+- Histórias paralelas em cada ato e um acampamento de estranhos na beira da Fenda Larga.
+
+SPIRLINGS
+- Mais de 400 Spirlings novos, 497 no total: 70 próprios em cada ato e em cada região depois da história.
+- Formas Reluzentes na natureza, com bônus de sequência e contador no Spirlog.
+- Os estágios seguintes agora se parecem com a forma anterior, só que crescida.
+- Seu Spirling líder anda atrás de você. Ele lembra como você o trata.
+- O Juramento de Tinta, dons ocultos de um informante do mercado negro e filhotes que herdam o negócio da família.
+
+LUGARES NOVOS
+- A Toca: um buraco que você pode tomar para si. O invasor discorda.
+- O Velório: um show fúnebre diário no Salão dos Gravadores.
+- Reserva de Hollowgate: um parque de vida selvagem administrado por contrabandistas.
+- Pedras de cartógrafo, marcos e progresso do mapa por região.
+
+ONLINE (precisa de conexão com a internet)
+- Duelos ao vivo com amigos, ligas com temporadas, raides com um guardião semanal.
+- Trupes com doações e metas semanais, trocas, listas de desejos, presentes e eventos por tempo limitado.
+
+VISUAL, SOM E CONFORTO
+- Cada ato tem seu próprio visual, as janelas acendem à noite e o farol finalmente parece um farol.
+- Música por era para regiões, masmorras, batalhas e Sentinelas.
+- Tela de batalha: barras de Vigor por era, selos de tipo coloridos, dicas de eficácia e um modo daltônico.
+- Primeiros 15 minutos mais tranquilos. As notícias aparecem em "Novidades" na tela de título.
+- Sua jornada é salva logo depois de escolher seu nome.
+- Celulares dobráveis: a imagem se ajusta assim que você dobra ou desdobra.
+- Novas ofertas opcionais na loja.
+- Muito mais textos traduzidos nos 14 idiomas.
+- Um monte de correções: salvamento, configurações, restaurar compras. Atrasar o relógio do celular não paga mais a recompensa diária duas vezes. Boa tentativa.
+- Corrigido: seu Viajante não continua mais andando sozinho depois de uma batalha.

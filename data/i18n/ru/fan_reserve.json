@@ -1,0 +1,24 @@
+{
+ "_comment": "ru translation of the fan_reserve table, keyed by the English text.",
+ "strings": {
+  "%s answers your call and pads over to you. Dorran pretends not to notice.": "%s откликается на зов и подходит к тебе. Dorran делает вид, что не замечает.",
+  "%s slips through a hole in the fence. The ring will patch that hole. Someday.": "%s ускользает через дыру в заборе. Эту дыру заделают. Когда-нибудь.",
+  "%s tilts its head at your call, but stays put.": "%s наклоняет голову на твой зов, но остаётся на месте.",
+  "A whistle from the lookout tower. A rival crew bursts out of the reeds and %s bolts. Somebody got paid tonight.": "Свист с дозорной вышки. Из камышей вылетает чужая команда, и %s удирает. Кому-то сегодня заплатили.",
+  "A wild %s, Ring %d. Sightings left: %d": "Дикий %s, Круг %d. Осталось встреч: %d",
+  "A woman in a velvet coat leans on a fence that is not on any map.": "Женщина в бархатном пальто опирается на забор, которого нет ни на одной карте.",
+  "Echo call (%d left)": "Зов эха (осталось: %d)",
+  "Move on": "Идти дальше",
+  "Pay %d coins to slip into the reserve?": "Заплатить %d мон., чтобы проскользнуть в заповедник?",
+  "Rattle the fence": "Потрясти забор",
+  "Set bait": "Положить приманку",
+  "Velvet Dorran": "Бархатная Dorran",
+  "Velvet Dorran: No coins? Then you were never here.": "Бархатная Dorran: Нет монет? Значит, тебя тут никогда не было.",
+  "Velvet Dorran: No fighting in my yard. You set bait, you rattle the fence, you call. Then you leave and forget my face.": "Бархатная Dorran: В моём дворе не дерутся. Кладёшь приманку, трясёшь забор, зовёшь. Потом уходишь и забываешь моё лицо.",
+  "Velvet Dorran: Time's up. Out you go, and the gate never saw you.": "Бархатная Dorran: Время вышло. На выход, и ворота тебя не видели.",
+  "Velvet Dorran: Welcome to Hollowgate Reserve. Totally legal. The fence is to keep the paperwork in.": "Бархатная Dorran: Добро пожаловать в заповедник Hollowgate. Совершенно законно. Забор нужен, чтобы бумаги не разбежались.",
+  "You rattle the fence. %s's ears shoot up: curious, and very jumpy.": "Ты трясёшь забор. %s навостряет уши: любопытно и очень нервно.",
+  "You set down a twist of dried bait. %s sniffs it and calms down.": "Ты кладёшь щепотку сушёной приманки. %s обнюхивает её и успокаивается.",
+  "the Quiet Hands": "Тихие Руки"
+ }
+}

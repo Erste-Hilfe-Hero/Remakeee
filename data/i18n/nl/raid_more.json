@@ -1,0 +1,12 @@
+{
+ "_comment": "nl translation of the raid_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s (%s, %d Wayfarers) %d min": "%d. %s (%s, %d Reizigers) %d min",
+  "A legendary guardian waits in this Rift: %s": "In deze Kloof wacht een legendarische wachter: %s",
+  "Easy": "Makkelijk",
+  "Fastest Rifts": "Snelste Kloven",
+  "Hard": "Moeilijk",
+  "How hard?": "Hoe moeilijk?",
+  "No Rift was won yet.": "Er is nog geen Kloof gewonnen."
+ }
+}

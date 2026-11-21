@@ -1,0 +1,26 @@
+{
+ "_comment": "Spanish texts for the German table fan_burrow. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py es.",
+ "strings": {
+  "A crack in the rock opens into a dry hollow.": "Una grieta en la roca da a un hueco seco.",
+  "A dry hollow in the rock. Nobody seems to live here. Claim it as your Burrow?": "Un hueco seco en la roca. Parece que aquí no vive nadie. ¿Lo reclamas como tu Madriguera?",
+  "A jar of names. Your Spirlings wrote them. Some are yours.": "Un tarro de nombres. Los escribieron tus Spirlings. Algunos son tuyos.",
+  "A map of Veydal with every Rift crossed out in red ink.": "Un mapa de Veydal con cada Grieta tachada en tinta roja.",
+  "A scorched seal from the Cinder Rift. Still warm. Still angry.": "Un sello chamuscado de la Grieta de Brasa. Aún caliente. Aún cabreado.",
+  "A seal from the Mist Rift. Half of it is missing, or hiding.": "Un sello de la Grieta de Niebla. Le falta la mitad, o se esconde.",
+  "A seal from the Tidewater Rift. It drips on the carpet.": "Un sello de la Grieta de Marea. Gotea sobre la alfombra.",
+  "Black Veil": "Velo negro",
+  "Cinder Seal": "Sello de Brasa",
+  "Claim": "Reclamar",
+  "Grudge Jar": "Tarro de rencores",
+  "Mended Veydal": "Veydal remendada",
+  "Mist Seal": "Sello de Niebla",
+  "Someone slept here. %s is gone from the wall; a pawn ticket hangs in its place.": "Alguien durmió aquí. %s ya no está en la pared; en su lugar cuelga una papeleta de empeño.",
+  "The wall is full. Take something down first.": "La pared está llena. Descuelga algo primero.",
+  "Tide Seal": "Sello de Marea",
+  "Won at a Wake. Nobody cried harder than your Spirling.": "Ganado en un Velatorio. Nadie lloró más fuerte que tu Spirling.",
+  "You hang it on the wall.": "Lo cuelgas en la pared.",
+  "You take it down.": "Lo descuelgas.",
+  "Your Burrow (%d/%d on the wall)": "Tu Madriguera (%d/%d en la pared)",
+  "Your Burrow. The walls are bare. Earn something worth hanging.": "Tu Madriguera. Las paredes están desnudas. Gánate algo que valga la pena colgar."
+ }
+}

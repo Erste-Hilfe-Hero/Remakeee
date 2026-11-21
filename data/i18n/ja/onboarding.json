@@ -1,0 +1,31 @@
+{
+ "_comment": "ja translation of the onboarding table, keyed by the English text.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A statused Spirling gives in more easily. Nobody said this was noble.": "絆を結ぶ その2：絆を選ぶ。状態にかかったSpirlingは折れやすい。気高いやり方だなんて誰も言ってない。",
+  "Bonding step 3: Hold out a Kin Charm when asked. You start with 20. Friendship is cheaper in bulk.": "絆を結ぶ その3：たずねられたら一族のお守りをかかげる。最初は20個。友情はまとめ買いが安い。",
+  "Bonding step 4: Listen to its call, then repeat it in the same order.": "絆を結ぶ その4：鳴き声を聞いて、同じ順番でくり返す。",
+  "Bonding step 4: Press A as fast as you can. The fuller the bar, the better the bond.": "絆を結ぶ その4：Aをできるだけ速く連打。ゲージが満ちるほど絆は深まる。",
+  "Bonding step 4: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "絆を結ぶ その4：「おれの！」をできるだけ速く連打。ゲージが満ちるほど絆は深まる。",
+  "Bonding: Echo call": "絆を結ぶ：こだまの声",
+  "Bonding: Mine!": "絆を結ぶ：おれの！",
+  "First steps": "はじめの一歩",
+  "First steps %d/%d": "はじめの一歩 %d/%d",
+  "First steps done. The valley stops holding your hand now.": "はじめの一歩、完了。ここから先、谷はもう手を引いてくれない。",
+  "Its light never goes out. Handy when someone cuts the lamps on purpose.": "その光は決して消えない。誰かがわざとランプを消したときに便利。",
+  "Large text, one-hand layout and more are under Settings.": "大きな文字や片手操作などは設定にある。",
+  "Look at your team": "チームを見る",
+  "Open the Spirlog": "Spirlogを開く",
+  "Open the menu": "メニューを開く",
+  "Pick your partner": "パートナーを選ぶ",
+  "Quick and twitchy. Every hug comes with a small shock. You get used to it.": "すばしこくて落ちつきがない。抱きしめるたびに小さくビリッとくる。そのうち慣れる。",
+  "Rest at a rest spot": "休み処で休む",
+  "Save your journey": "旅を記録する",
+  "Show every tip once more, as if you were new?": "はじめてのように、すべてのヒントをもう一度見る？",
+  "Show tips again": "ヒントをもう一度見る",
+  "Tip: A wild Spirling can join your team, if it trusts you. Trust is easier when it is tired.": "ヒント：野生のSpirlingは、信じてくれればチームに入る。疲れているほど信じやすい。",
+  "Tip: Lost? Press Start and pick Goals. Nobody else in this valley will tell you the truth.": "ヒント：迷った？Startを押して目標を選ぶ。この谷でほかに本当のことを教えてくれる者はいない。",
+  "Tip: Lost? Tap = and pick Goals. Nobody else in this valley will tell you the truth.": "ヒント：迷った？=をタップして目標を選ぶ。この谷でほかに本当のことを教えてくれる者はいない。",
+  "Tips are back. Pretend it's your first day.": "ヒントが戻ってきた。今日がはじめての日のつもりで。",
+  "Warm and loyal. Sets things on fire when nervous. Mostly your things.": "あたたかくて忠実。緊張すると物に火をつける。たいていキミの物に。"
+ }
+}

@@ -1,0 +1,263 @@
+{
+ "name": "Gravers' Causeway",
+ "region": "quillmarch",
+ "biome": "route",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "encounters": "gravers_causeway",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T@@..__.%%%T",
+  "T@@...__%%%T",
+  "T.....__...T",
+  "T::@@@@_@@.T",
+  "T::@@@@_@@.T",
+  "T....____..T",
+  "T@@@._..,,,T",
+  "T@@@._..,,,T",
+  "T...._.....T",
+  "T%%.._@@@@@T",
+  "T%%..____..T",
+  "TRRR...._..T",
+  "THDH.::._..T",
+  "T....::.__.T",
+  "T,,,....._.T",
+  "T,,,@@@@._.T",
+  "T...@@@@._.T",
+  "T..______..T",
+  "T.._..%%%..T",
+  "T@@_..%%%@@T",
+  "T@@_.....@@T",
+  "T..__......T",
+  "T....__.::.T",
+  "T.....__::.T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "platewick",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "ledgerholm",
+   "tx": 1,
+   "ty": 8,
+   "facing": "right"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "platewick",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "ledgerholm",
+   "tx": 1,
+   "ty": 9,
+   "facing": "right"
+  },
+  {
+   "x": 2,
+   "y": 13,
+   "to": "errata_chapel",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "graver",
+   "x": 10,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "quillmarch/gravers_causeway_graver",
+   "sprite": "ranger",
+   "trainer": "Guild Graver Osk",
+   "intro": "quillmarch/gravers_causeway_graver_intro",
+   "defeat": "quillmarch/gravers_causeway_graver_defeat",
+   "money": 3200,
+   "team": [
+    {
+     "species": "Copperling",
+     "level": 79
+    },
+    {
+     "species": "Burrowgraver",
+     "level": 80
+    }
+   ]
+  },
+  {
+   "id": "canalman",
+   "x": 2,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "quillmarch/gravers_causeway_canalman",
+   "sprite": "villager",
+   "trainer": "Canal Dredger Bo",
+   "intro": "quillmarch/gravers_causeway_canalman_intro",
+   "defeat": "quillmarch/gravers_causeway_canalman_defeat",
+   "money": 3200,
+   "team": [
+    {
+     "species": "Siltby",
+     "level": 79
+    },
+    {
+     "species": "Canalurk",
+     "level": 80
+    },
+    {
+     "species": "Siltaroth",
+     "level": 80
+    }
+   ]
+  },
+  {
+   "id": "q3_toller",
+   "x": 10,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_gravers_causeway_toller",
+   "sprite": "ranger",
+   "trainer": "Toll Graver Sixten",
+   "intro": "quillmarch/q3_gravers_causeway_toller_intro",
+   "defeat": "quillmarch/q3_gravers_causeway_toller_defeat",
+   "money": 3200,
+   "team": [
+    {
+     "species": "Canalurk",
+     "level": 77
+    },
+    {
+     "species": "Siltaroth",
+     "level": 78
+    },
+    {
+     "species": "Siltby",
+     "level": 80
+    }
+   ]
+  },
+  {
+   "id": "q3_wanted_face_mette",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_wanted_face_mette",
+   "sprite": "ranger",
+   "show_flag": "q3_wanted_face_s1"
+  },
+  {
+   "id": "q3_wanted_face_sture",
+   "x": 7,
+   "y": 21,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_wanted_face_sture",
+   "sprite": "villager",
+   "trainer": "Bounty Cutter Sture",
+   "show_flag": "q3_wanted_face_reveal",
+   "intro": "quillmarch/q3_wanted_face_sture_intro",
+   "defeat": "quillmarch/q3_wanted_face_sture_defeat",
+   "money": 4050,
+   "team": [
+    {
+     "species": "Nibquill",
+     "level": 79
+    },
+    {
+     "species": "Cindrel",
+     "level": 80
+    },
+    {
+     "species": "Nibravure",
+     "level": 81
+    }
+   ],
+   "win_flags": [
+    "q3_wanted_face_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "q3_early_epitaph_brand_stone",
+   "x": 2,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "quillmarch/q3_early_epitaph_brand_stone",
+   "sprite": "elder",
+   "trainer": "Corrector Brand",
+   "show_flag": "q3_early_epitaph_reveal",
+   "intro": "quillmarch/q3_early_epitaph_brand_stone_intro",
+   "defeat": "quillmarch/q3_early_epitaph_brand_stone_defeat",
+   "money": 4050,
+   "team": [
+    {
+     "species": "Canalurk",
+     "level": 79
+    },
+    {
+     "species": "Siltaroth",
+     "level": 80
+    },
+    {
+     "species": "Siltby",
+     "level": 81
+    }
+   ],
+   "win_flags": [
+    "q3_early_epitaph_done"
+   ],
+   "no_rematch": true
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_gravers_causeway_1"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_gravers_causeway_2"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_gravers_causeway_3"
+  },
+  {
+   "x": 11,
+   "y": 23,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_gravers_causeway_4"
+  },
+  {
+   "x": 0,
+   "y": 3,
+   "item": "dash_brew",
+   "count": 1,
+   "flag": "find_gravers_causeway_q3_0_3"
+  }
+ ]
+}

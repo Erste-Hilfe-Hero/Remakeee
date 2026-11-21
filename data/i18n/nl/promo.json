@@ -1,0 +1,14 @@
+{
+  "_comment": "Promo codes (scripts/ui/PromoMenu.gd), keys of tools/i18n/de_promo.py.",
+  "strings": {
+    "Code redeemed! You got: %s": "Code ingewisseld! Je krijgt: %s",
+    "Promo code": "Promocode",
+    "Promo codes are closed right now.": "Promocodes zijn nu gesloten.",
+    "Redeem a promo code...": "Promocode inwisselen...",
+    "That code does not exist. Check the letters and try again.": "Die code bestaat niet. Controleer de tekens en probeer het opnieuw.",
+    "This code has been used up.": "Deze code is op.",
+    "This code has expired.": "Deze code is verlopen.",
+    "Too many tries. Wait an hour, then try again.": "Te veel pogingen. Wacht een uur en probeer het dan opnieuw.",
+    "You already redeemed this code.": "Je hebt deze code al ingewisseld."
+  }
+}

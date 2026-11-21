@@ -1,0 +1,22 @@
+{
+ "_comment": "Translations of the German table kampf_k37, written by tools/i18n/locales_kampf_k37.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s needs three Spirlings in their echo team for a team code.": "Takım kodu için %s yankı takımında üç Spirling'e ihtiyaç duyuyor.",
+  "%s's team code: %s": "%s takım kodu: %s",
+  "Always lit.": "Hep yanıyor.",
+  "Beat every Warden in one master tour.": "Tek bir usta turunda tüm Muhafızları yen.",
+  "Clear the Battle Halls 10 times.": "Savaş salonlarını 10 kez tamamla.",
+  "Climb the whole lighthouse stair.": "Deniz feneri merdiveninin tamamını çık.",
+  "Drowned Blue": "Boğulmuş Mavi",
+  "Ember Red": "Kor Kırmızısı",
+  "Flame colour (caves, from the third era on)": "Alev rengi (mağaralarda, üçüncü çağdan itibaren)",
+  "Flame colour: %s": "Alev rengi: %s",
+  "Hall Violet": "Salon Moru",
+  "It is on the clipboard. Fight it in the Battle Halls under Fight a team code, or pass it on.": "Panoya kopyalandı. Savaş salonlarında Bir takım koduyla savaş ile dövüş ya da başkasına ver.",
+  "Lamp Gold": "Lamba Altını",
+  "Reach floor 20 of the endless stretch.": "Sonsuz yolun 20. katına ulaş.",
+  "The flame turns %s.": "Alev %s rengine dönüyor.",
+  "Their team code": "Onun takım kodu",
+  "Wardens' Ash": "Muhafızların Külü"
+ }
+}

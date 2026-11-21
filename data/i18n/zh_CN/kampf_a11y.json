@@ -1,0 +1,10 @@
+{
+ "_comment": "Simplified Chinese texts for the German table kampf_a11y. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "[%s cries out]": "[%s发出叫声]",
+  "Echo it back, no hurry.": "不用急，跟着重复吧。",
+  "Mine: tap one button fast. Echo: repeat the call. Calm: echo with no time limit.": "归我：快速连点一个按钮。回声：重复呼唤。从容：没有时间限制的回声。",
+  "Calm": "从容",
+  "This replay comes from a newer version of the game.": "这段回放来自更新版本的游戏。"
+ }
+}

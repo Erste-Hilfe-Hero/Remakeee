@@ -1,0 +1,24 @@
+{
+ "_comment": "ru translation of the online_replays table, keyed by the English text.",
+ "strings": {
+  "%s: %d%% won (%d of %d)": "%s: побед %d%% (%d из %d)",
+  "%s: met %d times": "%s: встреч: %d",
+  "Copy share code": "Скопировать код",
+  "Lost": "Поражение",
+  "Met most often": "Самые частые встречи",
+  "No online battles yet.": "Онлайн-боёв пока нет.",
+  "Online battle": "Онлайн-бой",
+  "Online replays": "Онлайн-повторы",
+  "Online replays (%d)": "Онлайн-повторы (%d)",
+  "Open league": "Открытая лига",
+  "Planned maintenance in %d h. The game is offline for a short while then.": "Плановые работы через %d ч. Игра ненадолго уйдёт в офлайн.",
+  "Raid": "Рейд",
+  "Rift board": "Рейтинг Разломов",
+  "The clipboard holds no replay code.": "В буфере обмена нет кода повтора.",
+  "The code is on the clipboard. A friend can watch it under Records, Online replays.": "Код в буфере обмена. Друг может посмотреть повтор в разделе Рекорды, Онлайн-повторы.",
+  "Watch": "Смотреть",
+  "Watch a code from the clipboard": "Смотреть код из буфера обмена",
+  "Win rate per Spirling": "Доля побед по Spirlings",
+  "Won": "Победа"
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "name": "Gilt Commissary",
+ "region": "halcyra",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCffCCCW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "gildcrest",
+   "tx": 2,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "ottmar",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "gildcrest/ottmar",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

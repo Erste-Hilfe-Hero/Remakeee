@@ -1,0 +1,9 @@
+{
+ "_comment": "German texts from tools/i18n/de_fan_oath.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%s swears the Ink Oath. Ink runs down its paws like a signature: family first!": "%s leistet den Tintenschwur. Tinte läuft ihm wie eine Unterschrift über die Pfoten: Familie zuerst!",
+  "Oath": "Schwur",
+  "The Ink Oath comes due. The family collects from %s.": "Der Tintenschwur wird fällig. Die Familie treibt bei %s ein."
+ }
+}

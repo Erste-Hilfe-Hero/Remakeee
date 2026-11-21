@@ -1,0 +1,18 @@
+{
+ "_comment": "tr translation of the safety table, keyed by the English text.",
+ "strings": {
+  "Battle over": "Savaş bitti",
+  "Bunds": "Birlikler",
+  "For parents...": "Ebeveynler için...",
+  "For parents: switch off what your child should not use. Friends and saves stay.": "Ebeveynler için: çocuğunuzun kullanmaması gerekenleri kapatın. Arkadaşlar ve kayıtlar kalır.",
+  "Open league": "Açık Lig",
+  "Report the rival...": "Rakibi bildir...",
+  "Suggestions from league battles": "Lig savaşlarından öneriler",
+  "These switches are for parents. Continue?": "Bu anahtarlar ebeveynler içindir. Devam edilsin mi?",
+  "This battle was against your own echo, so there is nobody to report.": "Bu savaş kendi yankına karşıydı, yani bildirilecek kimse yok.",
+  "This is switched off under Settings, Account, For parents.": "Bu, Ayarlar, Hesap, Ebeveynler için altından kapatılmış.",
+  "Under 16: open league, bunds and suggestions start switched off.": "16 yaş altı: Açık Lig, Birlikler ve öneriler kapalı başlar.",
+  "Why do you report the rival?": "Rakibi neden bildiriyorsun?",
+  "You met this rival 3 times today, so this battle does not count.": "Bu rakiple bugün 3 kez karşılaştın, bu yüzden bu savaş sayılmıyor."
+ }
+}

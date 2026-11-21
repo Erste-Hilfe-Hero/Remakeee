@@ -1,0 +1,9 @@
+{
+ "_comment": "Translations of the German table kampf_k28, written by tools/i18n/locales_kampf_k28.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s turns its coat: its gift is now %s.": "%s loopt over: zijn gave is nu %s.",
+  "Its flame burns in any wind: fog, Daze and Muddle never spoil its aim.": "Zijn vlam brandt in elke wind: mist, Versuft en Verward bederven nooit zijn mikken.",
+  "Swaps one Spirling's gift for the hidden gift of its line, or back again, at any ring. Loyalty was never part of the deal. Used up.": "Ruilt de gave van een Spirling voor de verborgen gave van zijn lijn, of weer terug, op elke ring. Trouw hoorde nooit bij de deal. Wordt opgebruikt.",
+  "Turncoat Seed": "Overloperszaad"
+ }
+}

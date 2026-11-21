@@ -1,0 +1,16 @@
+{
+ "_note": "Act III, Cinderfold after the Glass Rift: Nella's wax copy (betrayal nella_wax), Grell's copper (trust choice a3_copper).",
+ "steps": [
+  {
+   "say": [
+    "Cinderfold square smells of hot copper and gossip. Both are sold by the pound."
+   ]
+  },
+  {
+   "action": "betrayal nella_wax"
+  },
+  {
+   "dialogue": "betrayal/a3_copper"
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+{
+ "_comment": "Translations of the German table kampf_k31, written by tools/i18n/locales_kampf_k31.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s (won %d times)": "%s（勝利%d次）",
+  "%s calls %s to its side. Nobody asked the guard.": "%s把%s喚到身邊。沒人問過護衛的意見。",
+  "Every mended heart, one after another. No rest in between: your team keeps its wounds. Begin?": "所有修補過的心，一個接一個。中間沒有休息：你的隊伍會帶著傷繼續。開始嗎？",
+  "Heart %d of %d is next. It heard the last one stop.": "下一顆：第%d顆，共%d顆。它聽見了上一顆停下。",
+  "Heart rush (best %d of %d)": "心臟連戰（最佳 %d/%d）",
+  "Heart rush: %d of %d hearts.": "心臟連戰：%d/%d顆。",
+  "Rift hearts": "裂隙之心",
+  "The mended heart still beats in the Rift's echo. It remembers you, and it is not grateful.": "修補過的心仍在裂隙的迴響中跳動。它記得你，而且並不感激。",
+  "Which heart?": "哪顆心？"
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "_comment": "Italian texts for the German table fan_burrow. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py it.",
+ "strings": {
+  "A crack in the rock opens into a dry hollow.": "Una crepa nella roccia si apre su una cavità asciutta.",
+  "A dry hollow in the rock. Nobody seems to live here. Claim it as your Burrow?": "Una cavità asciutta nella roccia. Sembra che qui non viva nessuno. La reclami come tua Tana?",
+  "A jar of names. Your Spirlings wrote them. Some are yours.": "Un barattolo di nomi. Li hanno scritti i tuoi Spirling. Alcuni sono tuoi.",
+  "A map of Veydal with every Rift crossed out in red ink.": "Una mappa di Veydal con ogni Squarcio cancellato a inchiostro rosso.",
+  "A scorched seal from the Cinder Rift. Still warm. Still angry.": "Un sigillo bruciacchiato dallo Squarcio di Brace. Ancora caldo. Ancora incavolato.",
+  "A seal from the Mist Rift. Half of it is missing, or hiding.": "Un sigillo dallo Squarcio della Nebbia. Ne manca metà, o si nasconde.",
+  "A seal from the Tidewater Rift. It drips on the carpet.": "Un sigillo dallo Squarcio della Marea. Gocciola sul tappeto.",
+  "Black Veil": "Velo nero",
+  "Cinder Seal": "Sigillo di Brace",
+  "Claim": "Reclama",
+  "Grudge Jar": "Barattolo dei rancori",
+  "Mended Veydal": "Veydal ricucita",
+  "Mist Seal": "Sigillo della Nebbia",
+  "Someone slept here. %s is gone from the wall; a pawn ticket hangs in its place.": "Qualcuno ha dormito qui. %s è sparito dal muro; al suo posto pende una ricevuta del banco dei pegni.",
+  "The wall is full. Take something down first.": "Il muro è pieno. Prima togli qualcosa.",
+  "Tide Seal": "Sigillo della Marea",
+  "Won at a Wake. Nobody cried harder than your Spirling.": "Vinto a una Veglia. Nessuno ha pianto più forte del tuo Spirling.",
+  "You hang it on the wall.": "Lo appendi al muro.",
+  "You take it down.": "Lo stacchi.",
+  "Your Burrow (%d/%d on the wall)": "La tua Tana (%d/%d sul muro)",
+  "Your Burrow. The walls are bare. Earn something worth hanging.": "La tua Tana. I muri sono spogli. Guadagnati qualcosa che valga la pena appendere."
+ }
+}

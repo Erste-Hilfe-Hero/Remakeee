@@ -1,0 +1,100 @@
+{
+ "spring": {
+  "lines": [
+   "A cold spring bubbles up between the stones.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "sign": [
+  "THE MIST RIFT",
+  "The fog moves the paths while you walk them."
+ ],
+ "vane_1": {
+  "lines": [
+   "An old wind vane, rusted stiff. West."
+  ],
+  "action": "bell mist_rift_open 2 3 vane"
+ },
+ "vane_2": {
+  "lines": [
+   "An old wind vane, rusted stiff. Middle."
+  ],
+  "action": "bell mist_rift_open 1 3 vane"
+ },
+ "vane_3": {
+  "lines": [
+   "An old wind vane, rusted stiff. East."
+  ],
+  "action": "bell mist_rift_open 3 3 vane"
+ },
+ "hint": [
+  "Scratched into the rock: middle vane, west vane, east vane."
+ ],
+ "heart": [
+  "The fog curls into a tight grey knot here."
+ ],
+ "heart_intro": [
+  "The fog draws together into one heavy heart.",
+  "Brisa: That's what kept me lost. Bring everyone you have!"
+ ],
+ "heart_defeat": [
+  "The Mist Heart frays into thin morning air.",
+  "Brisa: Clear as a bell. Now the Rift is truly quiet."
+ ],
+ "rhee": [
+  "Rhee: We tie ropes from post to post. The fog unties them."
+ ],
+ "rhee_intro": [
+  "Rhee: Stop! Brisa walks in circles up there. Prove you won't."
+ ],
+ "rhee_defeat": [
+  "Rhee: You keep your bearings. Good. Go on."
+ ],
+ "hask": [
+  "Hask: I came up for the view. There is no view."
+ ],
+ "hask_intro": [
+  "Hask: Can't see a thing. Let's duel by ear!"
+ ],
+ "hask_defeat": [
+  "Hask: Heard that one coming. Too late."
+ ],
+ "ilda": [
+  "Ilda: Turn the vanes and the wind comes back. My gran told me so."
+ ],
+ "ilda_intro": [
+  "Ilda: One more duel before the vanes. Ready?"
+ ],
+ "ilda_defeat": [
+  "Ilda: Go. Brisa needs the wind more than I do."
+ ],
+ "brisa": {
+  "lines": [
+   "Brisa: Which way was out? The fog keeps moving the paths."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_mist_sealed",
+    "lines": [
+     "Brisa: The fog lifted. I can see Crowcrest from here!",
+     "Brisa: Let the wind carry you, not lose you."
+    ]
+   },
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Brisa: I walk the ridge every morning now. No fog, only wind."
+    ]
+   }
+  ]
+ },
+ "brisa_intro": [
+  "Brisa: Who's there? Everything sounds far away in here.",
+  "Brisa: My Zephlet used to find the way. Now it only circles."
+ ],
+ "brisa_defeat": [
+  "Brisa: ...A gust! My Zephlet is tugging at my sleeve.",
+  "Brisa: I know the way again. Help me draw the Rift's edge."
+ ]
+}

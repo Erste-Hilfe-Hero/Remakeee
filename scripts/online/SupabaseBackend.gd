@@ -33,8 +33,12 @@ func sign_out() -> void:
 		await _http(HTTPClient.METHOD_POST, "/auth/v1/logout", {}, true)
 	session = {}
 
+## Server functions that are not database functions, but routes of the billing service
+## (server/billing, plan area 10): store receipts are checked with Apple and Google there.
+const SERVICE_ROUTES: Dictionary = {"shop_verify": "/billing/v1/verify"}
+
 func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
-	return await _authed(HTTPClient.METHOD_POST, "/rest/v1/rpc/" + name, args)
+	return await _authed(HTTPClient.METHOD_POST, str(SERVICE_ROUTES.get(name, "/rest/v1/rpc/" + name)), args)
 
 ## Refreshes the token when it is about to expire, and once more after a 401.
 func _authed(method: int, path: String, body: Dictionary) -> Dictionary:
@@ -70,6 +74,8 @@ func _http(method: int, path: String, body: Dictionary, with_token: bool) -> Dic
 		return fail("no_host", true)
 	var req := HTTPRequest.new()
 	req.timeout = TIMEOUT
+	# On the web the browser already unpacks gzip; Godot unpacking again fails (stream_peer_gzip).
+	req.accept_gzip = false
 	host.add_child(req)
 	var token: String = str(session.get("access_token", "")) if with_token else anon_key
 	var headers: PackedStringArray = [
@@ -78,6 +84,8 @@ func _http(method: int, path: String, body: Dictionary, with_token: bool) -> Dic
 		"Content-Type: application/json",
 		"Accept: application/json",
 	]
+	if with_token and not device_token.is_empty():
+		headers.append("x-chimora-session: " + device_token)
 	var err: Error = req.request(url + path, headers, method, JSON.stringify(body))
 	if err != OK:
 		req.queue_free()
@@ -88,12 +96,14 @@ func _http(method: int, path: String, body: Dictionary, with_token: bool) -> Dic
 	var code: int = res[1]
 	var text: String = (res[3] as PackedByteArray).get_string_from_utf8()
 	if result != HTTPRequest.RESULT_SUCCESS:
-		return fail("network", true)
+		return fail(OnlineErrors.code_for_result(result), true)
 	var parsed: Variant = JSON.parse_string(text) if not text.is_empty() else null
 	if code >= 200 and code < 300:
 		return ok(parsed)
 	if code == 401:
 		return fail("401")
+	if code == 429:
+		return fail("server_429", true)
 	if code >= 500 or code == 0:
 		return fail("server_%d" % code, true)
 	var msg: String = str(code)

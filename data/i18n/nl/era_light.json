@@ -1,0 +1,9 @@
+{
+ "_comment": "nl translation of the era_light table, keyed by the English text.",
+ "strings": {
+  "A storm rages.": "Er woedt een storm.",
+  "Fog hangs low.": "Er hangt laaghangende mist.",
+  "Rain falls.": "Er valt regen.",
+  "Wind blows.": "De wind waait."
+ }
+}

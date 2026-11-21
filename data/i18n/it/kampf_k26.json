@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_k26, written by tools/i18n/locales_kampf_k26.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s sent you matchup notes.": "%s ti ha mandato degli appunti sulle affinità.",
+  "%s's notes: %d matchups you did not know yet. The move list shows them now.": "Appunti di %s: %d affinità che non conoscevi. Ora l'elenco delle tecniche le mostra.",
+  "%s's notes: nothing you did not know already. Flattering, in a way.": "Appunti di %s: niente che non sapessi già. Lusinghiero, in un certo senso.",
+  "A seal is cut into the base: %s. Which element breaks it?": "Un sigillo è inciso nella base: %s. Quale elemento lo spezza?",
+  "Rift theme: %s": "Tema della Faglia: %s",
+  "Send %d matchup notes to %s? You both get %d friendship points.": "Mandare %d appunti sulle affinità a %s? Riceverete entrambi %d punti amicizia.",
+  "Share matchup notes": "Condividi gli appunti sulle affinità",
+  "The seal cracks. Someone hid %s behind it and never came back for it.": "Il sigillo si spezza. Qualcuno ha nascosto %s lì dietro e non è mai tornato a prenderlo.",
+  "The seal hums, smug and whole. It has met your kind before.": "Il sigillo ronza, intatto e compiaciuto. Ha già visto gente come te.",
+  "Those notes are smudged. Try again after your next battle.": "Questi appunti sono sbavati. Riprova dopo la prossima battaglia.",
+  "You already sent notes to this friend today. Tomorrow again!": "Oggi hai già mandato appunti a questo amico. Di nuovo domani!",
+  "Your notes are empty. Land a few hits first, then share what you learned.": "I tuoi appunti sono vuoti. Metti a segno qualche colpo, poi condividi ciò che hai imparato.",
+  "Your notes are on their way to %s. Knowledge shared is knowledge you can't sell. Oh well.": "I tuoi appunti sono in viaggio verso %s. Il sapere condiviso non si vende più. Pazienza."
+ }
+}

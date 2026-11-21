@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table kampf_k23, written by tools/i18n/locales_kampf_k23.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Battle text waits for your tap at any speed, and every bond is the calm echo. Nothing in battle runs on a clock.": "Savaş metni her hızda dokunuşunu bekler ve her bağ sakin yankıdır. Savaşta hiçbir saat işlemez.",
+  "How long menus ignore taps after they appear, so a shaky or late tap picks nothing by mistake.": "Menüler açıldıktan sonra dokunuşları ne kadar yok sayar; titrek ya da geç bir dokunuş yanlışlıkla bir şey seçmez.",
+  "Long": "Uzun",
+  "No rush: %s": "Acele yok: %s",
+  "Nothing moves. Even the foe holds its breath, out of politeness or spite.": "Hiçbir şey kıpırdamıyor. Rakip bile nefesini tutuyor, nezaketten ya da kinden.",
+  "Paused": "Duraklatıldı",
+  "Saved before the boss. If it goes badly, at least the paperwork survives.": "Patrondan önce kaydedildi. İşler kötü giderse en azından evraklar kurtulur.",
+  "Saving before the boss did not work this time.": "Bu sefer patrondan önce kayıt yapılamadı.",
+  "Short": "Kısa",
+  "Tap guard: %s": "Tık koruma: %s",
+  "The wild Spirling is still here. It waited, and it has not forgiven you for leaving.": "Yabani Spirling hâlâ burada. Bekledi ve gitmeni affetmedi."
+ }
+}

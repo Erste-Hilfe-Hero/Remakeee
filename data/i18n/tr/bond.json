@@ -1,0 +1,19 @@
+{
+ "_comment": "Turkish texts for the German table bond. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A big Mine! button appears.": "Bağ kurma, adım 2: Bağ kur'u seç. Büyük bir Benim! düğmesi çıkar.",
+  "Bonding step 3: Press A as fast as you can. The fuller the bar, the better the bond.": "Bağ kurma, adım 3: A'ya olabildiğince hızlı bas. Çubuk ne kadar doluysa bağ o kadar iyi.",
+  "Bonding step 3: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "Bağ kurma, adım 3: Benim!'e olabildiğince hızlı dokun. Çubuk ne kadar doluysa bağ o kadar iyi.",
+  "Bonding: %s": "Bağ kuruluyor: %s",
+  "Echo": "Yankı",
+  "Hint": "İpucu",
+  "Mine": "Benim",
+  "Mine!": "Benim!",
+  "Mine: tap one button fast. Echo: repeat the call.": "Benim: tek düğmeye hızlı dokun. Yankı: çağrıyı tekrarla.",
+  "Note": "Not",
+  "Reach out to %s... Tap Mine! fast!": "Elini uzat: %s... Benim!'e hızlı dokun!",
+  "Tap Mine! fast!": "Benim!'e hızlı dokun!",
+  "Tip": "Tüyo",
+  "Tips": "Tüyolar"
+ }
+}

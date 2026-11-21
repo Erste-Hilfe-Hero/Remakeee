@@ -1,0 +1,19 @@
+{
+ "_comment": "Italian texts for the German table bond. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py it.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A big Mine! button appears.": "Legame, passo 2: scegli Lega. Compare un grosso pulsante Mio!.",
+  "Bonding step 3: Press A as fast as you can. The fuller the bar, the better the bond.": "Legame, passo 3: premi A più veloce che puoi. Più piena è la barra, migliore è il legame.",
+  "Bonding step 3: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "Legame, passo 3: tocca Mio! più veloce che puoi. Più piena è la barra, migliore è il legame.",
+  "Bonding: %s": "Legame: %s",
+  "Echo": "Eco",
+  "Hint": "Indizio",
+  "Mine": "Mio",
+  "Mine!": "Mio!",
+  "Mine: tap one button fast. Echo: repeat the call.": "Mio: tocca un pulsante veloce. Eco: ripeti il richiamo.",
+  "Note": "Nota",
+  "Reach out to %s... Tap Mine! fast!": "Tendi la mano a %s... Tocca Mio! veloce!",
+  "Tap Mine! fast!": "Tocca Mio! veloce!",
+  "Tip": "Consiglio",
+  "Tips": "Consigli"
+ }
+}

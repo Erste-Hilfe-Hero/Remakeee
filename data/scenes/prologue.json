@@ -1,0 +1,12 @@
+{
+ "_note": "Prologue, the storm night over Brindlewick (plan item 1410). Starts over black. Three text boxes (Chimora 100 item 26): the lore that was cut here (the cartographers, the Hush, Mirela's lost Rift) is told by Aldo and on Mirela's first map page.",
+ "steps": [
+  {"music": "title"},
+  {"say": ["Last night a storm tore the sky. Rifts opened over Veydal."]},
+  {"flash": 0.12}, {"sfx": "hit_volt"}, {"shake": 0.4},
+  {"say": ["Three small lights crossed the lake to the lighthouse lamp."]},
+  {"flash": 0.08}, {"wait": 0.15}, {"flash": 0.12}, {"sfx": "hit_volt"}, {"shake": 0.3},
+  {"card": "Prologue: The Storm Night"},
+  {"say": ["{name}! Wake up!"]}
+ ]
+}

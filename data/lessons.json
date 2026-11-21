@@ -1,0 +1,74 @@
+{
+ "_doc": "Lesson battles (KAMPF_PLAN_1000 items 559, 812): fixed puzzle positions like data/puzzles.json, taught by a beaten Wayfarer whose map entry names the group in \"lessons\". Same fields as a Trial plus \"teacher\". scripts/battle/BattlePuzzle.gd.",
+ "teachers": {
+  "pathkeeper": {"title": "Imme's lessons"},
+  "listener": {"title": "Wren's bond lessons"}
+ },
+ "lessons": [
+  {
+   "id": "lesson_matchup",
+   "teacher": "pathkeeper",
+   "name": "Lesson: Matchups",
+   "text": "Puddlet against Kindlop. Tide beats Ember: pick the art that hits hard.",
+   "player": [{"species": "Puddlet", "level": 8, "moves": ["Bowl Over", "Fizz Pop", "Drench"]}],
+   "foe": [{"species": "Kindlop", "level": 8, "moves": ["Cinder Nip", "Bowl Over"]}],
+   "field": "", "rule": "", "seed": 812, "ai": 1,
+   "goal": {"type": "win_within", "value": 3},
+   "max_turns": 3, "best_turns": 3,
+   "hint_1": "Look at the element of each art. Tide washes out Ember.",
+   "hint_2": "Use Fizz Pop every turn."
+  },
+  {
+   "id": "lesson_rest",
+   "teacher": "pathkeeper",
+   "name": "Lesson: Rest",
+   "text": "Shalebat starts with no Energy to spare. Rest once, then strike.",
+   "player": [{"species": "Shalebat", "level": 9, "moves": ["Dusk Rake", "Bowl Over"], "energy": 1}],
+   "foe": [{"species": "Wickit", "level": 8, "moves": ["Wick Flicker", "Dawn Needle"], "hp": 0.6}],
+   "field": "", "rule": "", "seed": 813, "ai": 1,
+   "goal": [{"type": "win_within", "value": 4}, {"type": "exact_rests", "value": 1}],
+   "max_turns": 4, "best_turns": 3,
+   "hint_1": "Dusk Rake costs 3 Energy. Resting gives some back.",
+   "hint_2": "Rest on the first turn, then Dusk Rake."
+  },
+  {
+   "id": "lesson_overcharge",
+   "teacher": "pathkeeper",
+   "name": "Lesson: Overcharge",
+   "text": "Zippit knows Overcharge: every spare Energy adds power. Finish the Mossling with it.",
+   "player": [{"species": "Zippit", "level": 15, "moves": ["Overcharge", "Crackle Bite"], "energy": 2}],
+   "foe": [{"species": "Mossling", "level": 14, "moves": ["Lichen Lash", "Bowl Over"], "hp": 0.5}],
+   "field": "", "rule": "", "seed": 814, "ai": 1,
+   "goal": {"type": "last_hit_with", "value": "Overcharge"},
+   "max_turns": 3, "best_turns": 3,
+   "hint_1": "Overcharge spends all spare Energy. The more is left, the harder it hits.",
+   "hint_2": "Overcharge every turn."
+  },
+  {
+   "id": "lesson_bond_weaken",
+   "teacher": "listener",
+   "name": "Bond lesson: Weaken",
+   "text": "A wild Spirling hears your call best when it is worn out. Wear this Mossling down, but don't knock it out.",
+   "player": [{"species": "Zephlet", "level": 9, "moves": ["Updraft", "Draft Needle"]}],
+   "foe": [{"species": "Mossling", "level": 8, "moves": ["Lichen Lash", "Bowl Over"]}],
+   "field": "", "rule": "", "seed": 559, "ai": 1,
+   "goal": {"type": "bond_ready", "value": 0.34},
+   "max_turns": 3, "best_turns": 3,
+   "hint_1": "Updraft hits too hard at the end. A soft art leaves it standing.",
+   "hint_2": "Two soft Draft Needles are enough."
+  },
+  {
+   "id": "lesson_bond_status",
+   "teacher": "listener",
+   "name": "Bond lesson: Status",
+   "text": "A status makes the bond easier still. Leave Kindlop worn down and soaked.",
+   "player": [{"species": "Puddlet", "level": 9, "moves": ["Fizz Pop", "Drench", "Bowl Over"]}],
+   "foe": [{"species": "Kindlop", "level": 8, "moves": ["Cinder Nip", "Bowl Over"]}],
+   "field": "", "rule": "", "seed": 560, "ai": 1,
+   "goal": [{"type": "bond_ready", "value": 0.5}, {"type": "foe_status"}],
+   "max_turns": 3, "best_turns": 3,
+   "hint_1": "Drench soaks the foe. Fizz Pop wears it down.",
+   "hint_2": "Fizz Pop, then Drench, then one more soft hit."
+  }
+ ]
+}

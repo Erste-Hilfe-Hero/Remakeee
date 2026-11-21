@@ -1,0 +1,24 @@
+{
+ "_comment": "nl translation of the fan_reserve table, keyed by the English text.",
+ "strings": {
+  "%s answers your call and pads over to you. Dorran pretends not to notice.": "%s geeft gehoor aan je roep en komt naar je toe getrippeld. Dorran doet alsof ze niets ziet.",
+  "%s slips through a hole in the fence. The ring will patch that hole. Someday.": "%s glipt door een gat in het hek. De bende gaat dat gat nog dichten. Ooit.",
+  "%s tilts its head at your call, but stays put.": "%s houdt het hoofd schuin bij je roep, maar blijft waar het is.",
+  "A whistle from the lookout tower. A rival crew bursts out of the reeds and %s bolts. Somebody got paid tonight.": "Een fluitsignaal vanaf de uitkijktoren. Een rivaliserende ploeg stormt uit het riet en %s stuift ervandoor. Iemand is vanavond betaald.",
+  "A wild %s, Ring %d. Sightings left: %d": "Een wilde %s, Ring %d. Waarnemingen over: %d",
+  "A woman in a velvet coat leans on a fence that is not on any map.": "Een vrouw in een fluwelen jas leunt tegen een hek dat op geen enkele kaart staat.",
+  "Echo call (%d left)": "Echoroep (nog %d)",
+  "Move on": "Verder gaan",
+  "Pay %d coins to slip into the reserve?": "%d munten betalen om het reservaat binnen te glippen?",
+  "Rattle the fence": "Aan het hek rammelen",
+  "Set bait": "Aas neerleggen",
+  "Velvet Dorran": "Fluwelen Dorran",
+  "Velvet Dorran: No coins? Then you were never here.": "Fluwelen Dorran: Geen munten? Dan ben je hier nooit geweest.",
+  "Velvet Dorran: No fighting in my yard. You set bait, you rattle the fence, you call. Then you leave and forget my face.": "Fluwelen Dorran: Niet vechten op mijn erf. Je legt aas neer, je rammelt aan het hek, je roept. Daarna ga je weg en vergeet je mijn gezicht.",
+  "Velvet Dorran: Time's up. Out you go, and the gate never saw you.": "Fluwelen Dorran: De tijd is om. Wegwezen, en de poort heeft je nooit gezien.",
+  "Velvet Dorran: Welcome to Hollowgate Reserve. Totally legal. The fence is to keep the paperwork in.": "Fluwelen Dorran: Welkom in Reservaat Hollowgate. Volkomen legaal. Het hek is er om het papierwerk binnen te houden.",
+  "You rattle the fence. %s's ears shoot up: curious, and very jumpy.": "Je rammelt aan het hek. De oren van %s schieten omhoog: nieuwsgierig, en erg schrikachtig.",
+  "You set down a twist of dried bait. %s sniffs it and calms down.": "Je legt een plukje gedroogd aas neer. %s snuffelt eraan en komt tot rust.",
+  "the Quiet Hands": "de Stille Handen"
+ }
+}

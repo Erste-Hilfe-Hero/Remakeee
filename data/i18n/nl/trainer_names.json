@@ -1,0 +1,27 @@
+{
+ "_comment": "nl translation of the trainer_names table, keyed by the English text.",
+ "strings": {
+  "Angler Brisa": "Hengelaarster Brisa",
+  "Angler Teo": "Hengelaar Teo",
+  "Bog Walker Hesk": "Veenloper Hesk",
+  "Delver Ros": "Grotganger Ros",
+  "Diver Neve": "Duikster Neve",
+  "Glassblower Ines": "Glasblaasster Ines",
+  "Hushed swarm": "Verstilde zwerm",
+  "Lamplighter Tova": "Lantaarnopsteekster Tova",
+  "Miller's Kid Pim": "Molenaarskind Pim",
+  "Miner Garr": "Mijnwerker Garr",
+  "Mushroom Picker Olek": "Paddenstoelenplukker Olek",
+  "Peat Cutter Orla": "Turfsteekster Orla",
+  "Reed Cutter Fenn": "Rietsnijder Fenn",
+  "Reed Cutter Marit": "Rietsnijdster Marit",
+  "Ridgewalker Bram": "Kamloper Bram",
+  "Ridgewalker Brann": "Kamloper Brann",
+  "Rift Acolyte Suri": "Kloofacoliet Suri",
+  "Salt Raker Nils": "Zoutharker Nils",
+  "Surveyor Kaja": "Landmeetster Kaja",
+  "Terrace Farmer Runa": "Terrasboerin Runa",
+  "Warden Maelis": "Hoeder Maelis",
+  "Warden Orrin": "Hoeder Orrin"
+ }
+}

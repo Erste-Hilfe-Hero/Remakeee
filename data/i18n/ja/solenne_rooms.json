@@ -1,0 +1,14 @@
+{
+ "_comment": "ja translation of the solenne_rooms table, keyed by the English text.",
+ "strings": {
+  "Ama's Dome": "Amaのドーム",
+  "Apprentice Wenna: Domes by day, urns by night. I glaze both. Only the urns get compliments.": "見習いWenna: 昼はドーム、夜は骨つぼ。どっちにも釉薬をかけるの。ほめられるのは骨つぼだけ。",
+  "Apprentice Wenna: Hadi says every urn is made to measure. I've stopped asking whose.": "見習いWenna: Hadiは、骨つぼはどれも寸法に合わせて作ると言うの。だれの寸法かは、もう聞かない。",
+  "Hadi's Pottery": "Hadiの陶房",
+  "Oskin's Storeroom": "Oskinの倉庫",
+  "Stock Boy Jem: I paint GENUINE on every crate. Very genuine paint. Oskin checks.": "倉庫番Jem: どの木箱にも「本物」ってペンキで書くんだ。すごく本物のペンキだよ。Oskinが確かめる。",
+  "Stock Boy Jem: The last stock boy asked where the goods come from. He left with the next caravan. In a crate.": "倉庫番Jem: 前の倉庫番は、品物がどこから来るのか聞いた。そいつは次の隊商といっしょに出ていった。木箱に入って。",
+  "Widow Ama: My husband signed one little paper for the Brass Veil. Now they own the house, the goats and, on paper, me.": "未亡人Ama: 夫が真鍮のベールの小さな書類に一枚だけ署名したの。今ではあの人たちが家も、ヤギも、書類の上ではわたしも持っている。",
+  "Widow Ama: The goats took it worst. They read the small print.": "未亡人Ama: いちばんこたえたのはヤギたち。小さい字まで読んだから。"
+ }
+}

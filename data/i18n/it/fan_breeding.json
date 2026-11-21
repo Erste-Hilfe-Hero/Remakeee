@@ -1,0 +1,23 @@
+{
+ "_comment": "Italian texts for the German table fan_breeding. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py it.",
+ "strings": {
+  "Auntie Grisela": "Zia Grisela",
+  "Auntie Grisela's contract holds. The young one carries the best of both houses.": "Il contratto di Zia Grisela regge. Il piccolo porta il meglio di entrambe le casate.",
+  "Auntie Grisela: A contract costs %d coins. Love is free, paperwork is not.": "Zia Grisela: Un contratto costa %d monete. L'amore è gratis, le scartoffie no.",
+  "Auntie Grisela: A good match is a merger with feathers.": "Zia Grisela: Un buon matrimonio è una fusione con le piume.",
+  "Auntie Grisela: Bring me an Echo Core and I put the dowry in writing.": "Zia Grisela: Portami un Nucleo Eco e metto la dote per iscritto.",
+  "Auntie Grisela: I put the dowry in writing. Nobody reads it, but it is written.": "Zia Grisela: Metto la dote per iscritto. Nessuno la legge, ma è scritta.",
+  "Auntie Grisela: No Echo Core, no wedding. Sing at a spring first, then we talk business.": "Zia Grisela: Niente Nucleo Eco, niente nozze. Prima canta a una sorgente, poi parliamo d'affari.",
+  "Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably.": "Zia Grisela: Firmato, sigillato, e nessun altro lo saprà. Probabilmente.",
+  "Auntie Grisela: Two good families, one sweet song. I arrange the rest.": "Zia Grisela: Due buone famiglie, una dolce canzone. Al resto penso io.",
+  "It already knows %s, an heirloom art of the family.": "Conosce già %s, una tecnica di famiglia.",
+  "It carries the family's best Spark in %d values.": "Porta la miglior Scintilla della famiglia in %d valori.",
+  "Seal": "Sigilla",
+  "Seal a match contract for the core of %s for %d coins?": "Sigillare un contratto di unione per il nucleo di %s per %d monete?",
+  "Turns out Auntie Grisela sold the same match to %s. The contract is void, but the song still wakes.": "Salta fuori che Zia Grisela ha venduto la stessa unione a %s. Il contratto è nullo, ma la canzone risveglia lo stesso.",
+  "a family she calls 'the other one'": "una famiglia che lei chiama 'l'altra'",
+  "the Moldwick family": "la famiglia Moldwick",
+  "the Pellgraves": "i Pellgrave",
+  "the Second Cousins": "i Cugini di secondo grado"
+ }
+}

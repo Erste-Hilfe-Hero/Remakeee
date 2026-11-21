@@ -1,0 +1,42 @@
+{
+ "name": "Madderby Spring House",
+ "region": "corvane",
+ "biome": "town",
+ "backdrop": "field",
+ "heal_point": [
+  4,
+  6
+ ],
+ "rows": [
+  "WWWWWWWWWW",
+  "WfffoofffW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 8,
+   "to": "madderby",
+   "tx": 8,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "trudi",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/madderby_spring_trudi",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

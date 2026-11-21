@@ -1,0 +1,9 @@
+{
+ "_comment": "Translations of the German table kampf_k28, written by tools/i18n/locales_kampf_k28.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s turns its coat: its gift is now %s.": "%s倒戈了：它現在的天賦是%s。",
+  "Its flame burns in any wind: fog, Daze and Muddle never spoil its aim.": "它的火焰在任何風中都不會熄滅：霧、暈眩和混亂都無法打亂它的瞄準。",
+  "Swaps one Spirling's gift for the hidden gift of its line, or back again, at any ring. Loyalty was never part of the deal. Used up.": "把一隻Spirling的天賦換成它這一系的隱藏天賦，或再換回來，任何環數皆可。忠誠從來不在交易之內。用後消失。",
+  "Turncoat Seed": "倒戈種子"
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "add": {
+  "warps": [
+   {
+    "x": 8,
+    "y": 13,
+    "to": "madderby_spring",
+    "tx": 4,
+    "ty": 7,
+    "facing": "up"
+   },
+   {
+    "x": 2,
+    "y": 9,
+    "to": "madderby_house",
+    "tx": 4,
+    "ty": 7,
+    "facing": "up"
+   }
+  ]
+ },
+ "set": {
+  "spots": {
+   "kestra": [
+    10,
+    4
+   ],
+   "weda": [
+    8,
+    6
+   ],
+   "dyer_1": [
+    1,
+    10
+   ],
+   "dyer_2": [
+    4,
+    10
+   ],
+   "dyer_3": [
+    3,
+    10
+   ],
+   "letter_c2": [
+    10,
+    14
+   ]
+  }
+ }
+}

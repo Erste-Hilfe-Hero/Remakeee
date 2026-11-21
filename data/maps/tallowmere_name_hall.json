@@ -1,0 +1,44 @@
+{
+ "name": "Hall of Names",
+ "region": "quivermoor",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "tallowmere",
+   "tx": 8,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "scribe",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/tallowmere_name_hall_scribe",
+   "sprite": "elder"
+  },
+  {
+   "id": "q5_short_candle_fenn",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/q5_short_candle_fenn",
+   "sprite": "villager",
+   "show_flag": "q5_short_candle_s1"
+  }
+ ],
+ "signs": []
+}

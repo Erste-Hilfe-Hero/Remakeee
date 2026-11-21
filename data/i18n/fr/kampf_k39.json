@@ -1,0 +1,12 @@
+{
+ "_comment": "French texts for the German table kampf_k39. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py fr.",
+ "strings": {
+  "Diamond": "Losange",
+  "Square": "Carré",
+  "Triangle": "Triangle",
+  "Moon": "Lune",
+  "The call: %s.": "L'appel : %s.",
+  "Echo with the keys: left %s, up %s, right %s.": "Répète avec les touches : gauche %s, haut %s, droite %s.",
+  "Any tap or the accept key counts.": "Chaque toucher et la touche Valider comptent."
+ }
+}

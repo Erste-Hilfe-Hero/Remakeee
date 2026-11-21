@@ -1,6 +1,7 @@
 {
  "name": "Crowcrest",
  "region": "veydal",
+ "biome": "scree",
  "backdrop": "ridge",
  "outdoor": true,
  "encounters": "crowcrest",
@@ -9,20 +10,20 @@
   "@::..__..::@",
   "@:...__...:@",
   "@^^^^==^^^^@",
-  "@...____...@",
+  "_...____...@",
   "@.::_..:::.@",
   "@.::_..:::@@",
-  "@...____...@",
+  "@S..____...@",
   "@@^^^^^^=^^@",
   "@~~~...:_..@",
   "@~~~%..:_..@",
   "@~~~++++_..@",
-  "@~~~%..:_..@",
+  "@~~~%..:_..S",
   "@......::..@",
   "@^^^=^^^^D^@",
-  "@:::_:::...@",
+  "@:::_:::..S@",
   "@:::_::....@",
-  "@...______.@",
+  "@...______._",
   "@@........@@",
   "@.::....::.@",
   "@.::.S..::.@",
@@ -64,6 +65,22 @@
    "facing": "up"
   },
   {
+   "x": 0,
+   "y": 4,
+   "to": "gloamwood",
+   "tx": 10,
+   "ty": 2,
+   "facing": "left"
+  },
+  {
+   "x": 11,
+   "y": 17,
+   "to": "mist_rift",
+   "tx": 5,
+   "ty": 20,
+   "facing": "up"
+  },
+  {
    "x": 9,
    "y": 14,
    "to": "murk_hollow",
@@ -88,17 +105,45 @@
    "team": [
     {
      "species": "Zippit",
-     "level": 7
+     "level": 7,
+     "moves": [
+      "Static Tag"
+     ]
     },
     {
      "species": "Zephlet",
-     "level": 8
+     "level": 8,
+     "moves": [
+      "Kite Cut"
+     ]
     },
     {
      "species": "Shalebat",
-     "level": 9
+     "level": 9,
+     "moves": [
+      "Grit Jab"
+     ]
     }
-   ]
+   ],
+   "profile": "tactician",
+   "teams_by_difficulty": {
+    "story": [
+     {
+      "species": "Zephlet",
+      "level": 8,
+      "moves": [
+       "Kite Cut"
+      ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 9,
+      "moves": [
+       "Grit Jab"
+      ]
+     }
+    ]
+   }
   },
   {
    "id": "lio",
@@ -119,7 +164,49 @@
      "species": "Zippit",
      "level": 8
     }
-   ]
+   ],
+   "teams_by_difficulty": {
+    "story": [
+     {
+      "species": "Zephlet",
+      "level": 6
+     }
+    ],
+    "veteran": [
+     {
+      "species": "Zephlet",
+      "level": 7,
+      "moves": [
+       "Kite Cut",
+       "Draft Needle"
+      ]
+     },
+     {
+      "species": "Zippit",
+      "level": 8
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Zephlet",
+      "level": 7,
+      "moves": [
+       "Kite Cut",
+       "Draft Needle"
+      ]
+     },
+     {
+      "species": "Zippit",
+      "level": 8,
+      "held": "spark_coil"
+     },
+     {
+      "species": "Puddlet",
+      "level": 7
+     }
+    ]
+   },
+   "profile": "hothead"
   },
   {
    "id": "bram",
@@ -134,13 +221,98 @@
    "team": [
     {
      "species": "Shalebat",
-     "level": 7
+     "level": 7,
+     "moves": [
+      "Hunker Down",
+      "Grit Jab"
+     ]
     },
     {
      "species": "Shalebat",
-     "level": 8
+     "level": 8,
+     "moves": [
+      "Hunker Down",
+      "Grit Jab"
+     ]
     }
+   ],
+   "teams_by_difficulty": {
+    "veteran": [
+     {
+      "species": "Shalebat",
+      "level": 7,
+      "moves": [
+       "Hunker Down",
+       "Grit Jab"
+      ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 8,
+      "moves": [
+       "Hunker Down",
+       "Grit Jab"
+      ],
+      "held": "iron_burr"
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Shalebat",
+      "level": 7,
+      "moves": [
+       "Hunker Down",
+       "Grit Jab"
+      ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 8,
+      "moves": [
+       "Hunker Down",
+       "Grit Jab"
+      ],
+      "held": "iron_burr"
+     },
+     {
+      "species": "Mossling",
+      "level": 8,
+      "moves": [
+       "Pollen Prick"
+      ]
+     }
+    ]
+   },
+   "profile": "wall",
+   "twins": [
+    "Shalebat"
    ]
+  },
+  {
+   "id": "vs_jinks_2",
+   "x": 7,
+   "y": 19,
+   "facing": "down",
+   "dialogue": "veydal_side/jinks_2",
+   "sprite": "ranger",
+   "show_flag": "beat_story_rival_jinks_1",
+   "hide_flag": "beat_story_rival_jinks_2"
+  },
+  {
+   "id": "vs_marl",
+   "x": 8,
+   "y": 5,
+   "facing": "down",
+   "dialogue": "veydal_side/marl",
+   "sprite": "villager"
+  },
+  {
+   "id": "vs_corr",
+   "x": 5,
+   "y": 12,
+   "facing": "down",
+   "dialogue": "veydal_side/corr",
+   "sprite": "warden"
   }
  ],
  "signs": [
@@ -148,6 +320,37 @@
    "x": 5,
    "y": 20,
    "dialogue": "crowcrest/sign"
+  },
+  {
+   "x": 10,
+   "y": 6,
+   "dialogue": "story/find_3",
+   "hide_flag": "page_3"
+  },
+  {
+   "x": 10,
+   "y": 21,
+   "dialogue": "veydal_more/poster_2",
+   "hide_flag": "poster_2"
+  },
+  {
+   "x": 10,
+   "y": 15,
+   "dialogue": "crowcrest/murk_hollow_sign",
+   "gear": [
+    "storm_lantern",
+    "climbing_pick"
+   ]
+  },
+  {
+   "x": 1,
+   "y": 7,
+   "dialogue": "crowcrest/marker_stone"
+  },
+  {
+   "x": 11,
+   "y": 12,
+   "dialogue": "crowcrest/mound_stone"
   }
  ],
  "gear_spots": [
@@ -176,6 +379,43 @@
     8,
     13
    ]
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 13,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_crow_tarn"
+  },
+  {
+   "x": 11,
+   "y": 4,
+   "item": "dry_towel",
+   "count": 1,
+   "flag": "find_crow_top"
+  },
+  {
+   "x": 1,
+   "y": 18,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_crow_scree"
+  },
+  {
+   "x": 11,
+   "y": 13,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_crow_door"
+  },
+  {
+   "x": 10,
+   "y": 10,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_mound_4"
   }
  ]
 }

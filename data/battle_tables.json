@@ -1,0 +1,476 @@
+{
+ "_doc": "Battle rule tables (KAMPF_PLAN_1000 item 976), read once by scripts/battle/BattleRules.gd into TRAITS, FIELDS, REACTIONS, RULES and BOSSES. Data only: KampfChecks inside DataValidator checks every field and boss, and battle data packs (BattlePacks.gd, items 991, 992) may add entries but never change one. Keep the key order: the seeded field pick walks FIELDS in this order. Player texts (label, text, intro, line, full_text) are English; German goes into a tools/i18n/de_*.py table.",
+ "_traits": "Passive gifts, one per species (spirlings.json trait). scorch_atk: Might multiplier while Scorched; phys_taken: multiplier on physical damage taken; regen_div: heal max Vigor / div at turn end; energy_per_turn: extra Energy each turn; immune: statuses that cannot be applied; low_hp_boost: own-element damage below 1/3 Vigor; field_proof: a field never weakens its arts; field_energy: Energy when a new field is laid; contact_status, contact_chance: status passed to a physical attacker; cure_on_swap: status falls away on the bench; cost_cut_from: arts costing at least this cost 1 less; full_energy_mult: damage with a full Energy bar.",
+ "_fields": "Rift fields. A map sets field; a Resonance art lays one for a few turns. boost, weaken: elements; blocks: statuses that cannot take hold; regen_element, regen_div: that element heals max Vigor / div per turn; rest_bonus: extra Energy per Rest; energy_element, energy_gain: extra Energy per turn for that element; bond_bonus: added to the Echo call chance; cheap_element: arts of that element cost BattleRules.FIELD_COST_CUT less while the field is the place's own.",
+ "_reactions": "Element reactions: an art of element hitting a foe with status hits harder (mult), washes the status off (cure), may give a new one (inflict) and/or moves a stage (stage). At most one per hit: the first row that fits wins, no two rows share a pair.",
+ "_rules": "Warden rules (npc rule). foe_energy, foe_energy_every, player_stage, lead_only, difficulty (GameState order the rule may be used on), warden_only, field_opening, field_cycle, turning (the turning point block), accuracy_mult, vine_heal_div, hidden_order, sand_chip_div, heal_mult, lumen_mult, player_energy_cut, stages_locked, rest_cut, no_status. Keys ending in _mult multiply over stacked rules, the others add up (BattleRules.rule_number).",
+ "_bosses": "Rift bosses (npc boss). hp_per_ally: max Vigor multiplier per player Spirling on the field; max_actions: actions per turn with 4 fielded; phase: second phase with at (share of max Vigor), stage changes, an existing field and a text.",
+ "traits": {
+  "kindling": {
+   "label": "Kindling",
+   "text": "Scorch raises its Might instead of lowering it.",
+   "scorch_atk": 1.25
+  },
+  "thick_hide": {
+   "label": "Thick Hide",
+   "text": "Takes 15% less damage from physical arts.",
+   "phys_taken": 0.85
+  },
+  "deep_roots": {
+   "label": "Deep Roots",
+   "text": "Recovers a little Vigor at the end of each turn.",
+   "regen_div": 16
+  },
+  "surge": {
+   "label": "Surge",
+   "text": "Gains 1 extra Energy each turn.",
+   "energy_per_turn": 1
+  },
+  "steady": {
+   "label": "Steady",
+   "text": "Can't be Dazed.",
+   "immune": [
+    "daze"
+   ]
+  },
+  "slick": {
+   "label": "Slick",
+   "text": "Can't be Rooted.",
+   "immune": [
+    "root"
+   ]
+  },
+  "light_sleeper": {
+   "label": "Light Sleeper",
+   "text": "Can't be Drowsed.",
+   "immune": [
+    "drowse"
+   ]
+  },
+  "last_stand": {
+   "label": "Last Stand",
+   "text": "Its own element hits 30% harder below 1/3 Vigor.",
+   "low_hp_boost": 1.3
+  },
+  "field_strider": {
+   "label": "Field Strider",
+   "text": "A Rift field never weakens its arts.",
+   "field_proof": true
+  },
+  "echo_soul": {
+   "label": "Echo Soul",
+   "text": "Gains 2 Energy whenever a new Rift field is laid.",
+   "field_energy": 2
+  },
+  "glimmer_skin": {
+   "label": "Glimmer Skin",
+   "text": "A physical hit on it may Scorch whoever struck it (3 in 10).",
+   "contact_status": "scorch",
+   "contact_chance": 0.3
+  },
+  "unruffled": {
+   "label": "Unruffled",
+   "text": "Its status falls away when it steps back to your side.",
+   "cure_on_swap": true
+  },
+  "low_flame": {
+   "label": "Low Flame",
+   "text": "Arts that cost 5 Energy or more cost 1 less.",
+   "cost_cut_from": 5
+  },
+  "overflow": {
+   "label": "Overflow",
+   "text": "Hits 10% harder while its Energy is full.",
+   "full_energy_mult": 1.1
+  }
+ },
+ "fields": {
+  "ash_storm": {
+   "label": "Ash Storm",
+   "boost": "EMBER",
+   "weaken": "TIDE",
+   "intro": "Ash swirls through the Rift. Ember arts burn brighter, Tide arts sputter."
+  },
+  "high_tide": {
+   "label": "High Tide",
+   "boost": "TIDE",
+   "weaken": "EMBER",
+   "blocks": [
+    "scorch"
+   ],
+   "rest_bonus": 1,
+   "intro": "The water rises around you. Tide arts surge, Ember arts fizzle, and nothing catches fire."
+  },
+  "deep_murk": {
+   "label": "Deep Murk",
+   "boost": "UMBRA",
+   "weaken": "LUMEN",
+   "intro": "The hollow swallows the light. Umbra arts deepen, Lumen arts dim."
+  },
+  "static_veil": {
+   "label": "Static Veil",
+   "boost": "VOLT",
+   "weaken": "STONE",
+   "energy_element": "VOLT",
+   "energy_gain": 1,
+   "cheap_element": "VOLT",
+   "intro": "The air crackles. Volt arts snap harder, Stone arts crumble."
+  },
+  "pollen_drift": {
+   "label": "Pollen Drift",
+   "boost": "BLOOM",
+   "weaken": "GALE",
+   "regen_element": "BLOOM",
+   "regen_div": 16,
+   "intro": "Pollen drifts through the Rift. Bloom arts flourish and Bloom Spirlings mend, Gale arts stall."
+  },
+  "dawn_glow": {
+   "label": "Dawn Glow",
+   "boost": "LUMEN",
+   "weaken": "UMBRA",
+   "bond_bonus": 0.05,
+   "intro": "A pale dawn fills the Rift. Lumen arts shine, Umbra arts thin out."
+  },
+  "rubble_rain": {
+   "label": "Rubble Rain",
+   "boost": "STONE",
+   "weaken": "VOLT",
+   "blocks": [
+    "jolt"
+   ],
+   "intro": "Grit and pebbles patter down. Stone arts land heavier, Volt arts ground out, and no charge can build."
+  },
+  "gale_eye": {
+   "label": "Gale Eye",
+   "boost": "GALE",
+   "weaken": "BLOOM",
+   "blocks": [
+    "drowse"
+   ],
+   "intro": "The wind circles the Rift and holds its breath in the middle. Gale arts cut sharper, Bloom arts wilt, and nobody can doze off."
+  },
+  "rust_haze": {
+   "label": "Rust Haze",
+   "boost": "RUST",
+   "weaken": "GILT",
+   "intro": "Red flakes hang in the damp air. Rust arts bite deeper, Gilt arts tarnish."
+  },
+  "ink_flood": {
+   "label": "Ink Flood",
+   "boost": "INK",
+   "weaken": "LUMEN",
+   "intro": "Ink seeps up from the ground and swallows every shape. Ink arts spread, Lumen arts drown."
+  },
+  "rime_fall": {
+   "label": "Rime Fall",
+   "boost": "FROST",
+   "weaken": "EMBER",
+   "intro": "Rime drifts down and settles on every edge. Frost arts cut colder, Ember arts gutter out."
+  },
+  "gilt_glare": {
+   "label": "Gilt Glare",
+   "boost": "GILT",
+   "weaken": "RUST",
+   "intro": "Light bounces off gilded stone. Gilt arts gleam, Rust arts flake away."
+  }
+ },
+ "reactions": [
+  {
+   "element": "VOLT",
+   "status": "soak",
+   "mult": 1.2,
+   "text": "The charge races through the soaked %s!"
+  },
+  {
+   "element": "TIDE",
+   "status": "scorch",
+   "cure": true,
+   "text": "The water douses the embers on %s!"
+  },
+  {
+   "element": "STONE",
+   "status": "jolt",
+   "mult": 1.1,
+   "cure": true,
+   "text": "The stone grounds the charge in %s!"
+  },
+  {
+   "element": "GALE",
+   "status": "soak",
+   "cure": true,
+   "stage": {
+    "spd": -1
+   },
+   "text": "The gust blows %s dry, and it slows down!"
+  },
+  {
+   "element": "LUMEN",
+   "status": "drowse",
+   "mult": 1.3,
+   "cure": true,
+   "text": "The light startles %s awake!"
+  },
+  {
+   "element": "EMBER",
+   "status": "root",
+   "cure": true,
+   "inflict": "scorch",
+   "text": "The flames burn the roots off %s, and it catches fire!"
+  }
+ ],
+ "rules": {
+  "ember_pulse": {
+   "label": "Ember Pulse",
+   "text": "The foe's Spirlings gain 1 extra Energy every turn.",
+   "foe_energy": 1,
+   "difficulty": [
+    1,
+    2,
+    3
+   ],
+   "turning": {
+    "text": "The pulse flares: the foe's Spirlings gain 1 Energy at once.",
+    "full_text": "The pulse quickens: now 2 extra Energy every turn.",
+    "line": "One left? Then the embers burn for both of us!",
+    "foe_energy_once": 1,
+    "full_foe_energy": 1
+   }
+  },
+  "undertow": {
+   "label": "Undertow",
+   "text": "The current drags at you: your Spirlings start with less Pace.",
+   "player_stage": {
+    "spd": -1
+   },
+   "difficulty": [
+    1,
+    2,
+    3
+   ],
+   "turning": {
+    "text": "The current deepens: your next Spirling to come in loses Might.",
+    "line": "The tide turns. Whoever you send next, it pulls under!",
+    "next_in_stage": {
+     "atk": -1
+    }
+   }
+  },
+  "ember_pulse_soft": {
+   "label": "Ember Pulse",
+   "text": "The foe's Spirlings gain 1 extra Energy every second turn.",
+   "foe_energy": 1,
+   "foe_energy_every": 2,
+   "difficulty": [
+    0
+   ]
+  },
+  "undertow_soft": {
+   "label": "Undertow",
+   "text": "The current drags at your lead: it starts with less Pace.",
+   "player_stage": {
+    "spd": -1
+   },
+   "lead_only": true,
+   "difficulty": [
+    0
+   ]
+  },
+  "ash_rain": {
+   "label": "Ash Rain",
+   "text": "Ash rains down: for 3 turns the Ash Storm can't be called away.",
+   "field_opening": {
+    "field": "ash_storm",
+    "turns": 3,
+    "locked": true
+   },
+   "difficulty": [
+    2,
+    3
+   ],
+   "warden_only": true
+  },
+  "tide_turn": {
+   "label": "Tide Turn",
+   "text": "The tide comes and goes: High Tide for 2 turns, then 2 turns of calm.",
+   "field_cycle": {
+    "field": "high_tide",
+    "on": 2,
+    "off": 2
+   },
+   "difficulty": [
+    2,
+    3
+   ],
+   "warden_only": true
+  },
+  "fog_bank": {
+   "label": "Fog Bank",
+   "text": "Thick fog: every art on both sides is less accurate.",
+   "accuracy_mult": 0.85,
+   "difficulty": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "warden_only": true
+  },
+  "vine_tangle": {
+   "label": "Vine Tangle",
+   "text": "Vines creep in: each round they mend the weakest Spirling in front.",
+   "vine_heal_div": 12,
+   "difficulty": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "warden_only": true
+  },
+  "night_dark": {
+   "label": "Night Dark",
+   "text": "In the dark nobody sees who moves first: Pace no longer sets the order.",
+   "hidden_order": 1,
+   "difficulty": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "warden_only": true
+  },
+  "sandstorm": {
+   "label": "Sandstorm",
+   "text": "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.",
+   "sand_chip_div": 16,
+   "difficulty": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "warden_only": true
+  },
+  "dry_well": {
+   "label": "Dry Well",
+   "text": "The oasis has been sold dry: every heal on both sides is halved.",
+   "heal_mult": 0.5,
+   "difficulty": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "warden_only": true
+  },
+  "high_noon": {
+   "label": "High Noon",
+   "text": "The sun stands straight overhead: Lumen arts on both sides hit harder.",
+   "lumen_mult": 1.3,
+   "difficulty": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "warden_only": true
+  },
+  "low_tide": {
+   "label": "Low Tide",
+   "text": "The water has drawn back: your Spirlings start with 1 Energy less.",
+   "player_energy_cut": 1,
+   "difficulty": [
+    1,
+    2,
+    3
+   ]
+  },
+  "still_air": {
+   "label": "Still Air",
+   "text": "Not a breath of wind: no stat stage rises or falls on either side.",
+   "stages_locked": 1,
+   "difficulty": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "warden_only": true
+  },
+  "ebb": {
+   "label": "Ebb",
+   "text": "The water has run out: resting gives 1 Energy less on both sides.",
+   "rest_cut": 1,
+   "difficulty": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "warden_only": true
+  },
+  "hushed_air": {
+   "label": "Hushed Air",
+   "text": "The air hangs dead still: no status takes hold on either side.",
+   "no_status": 1,
+   "difficulty": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "warden_only": true
+  }
+ },
+ "bosses": {
+  "ashen_heart": {
+   "label": "Ashen Heart",
+   "hp_per_ally": 0.8,
+   "max_actions": 2,
+   "text": "The Hush gathers into one burning heart. It is far too strong to face alone!",
+   "phase": {
+    "at": 0.5,
+    "stage": {
+     "atk": 1,
+     "spd": 1
+    },
+    "field": "ash_storm",
+    "text": "The Ashen Heart flares up! Its embers spin faster."
+   }
+  },
+  "drowned_heart": {
+   "label": "Drowned Heart",
+   "hp_per_ally": 0.7,
+   "max_actions": 2,
+   "text": "The Rift's water heaves up around a drowned heart. Its guard stands beside it!",
+   "phase": {
+    "at": 0.5,
+    "stage": {
+     "def": 1,
+     "foc": 1
+    },
+    "field": "high_tide",
+    "guard": {
+     "species": "Kelpup",
+     "below": 2
+    },
+    "text": "The Drowned Heart pulls the tide around itself!"
+   }
+  },
+  "mist_heart": {
+   "label": "Mist Heart",
+   "hp_per_ally": 0.7,
+   "max_actions": 2,
+   "text": "The fog knots itself into one grey heart. It drifts at you from every side!",
+   "phase": {
+    "at": 0.5,
+    "stage": {
+     "spd": 1,
+     "foc": 1
+    },
+    "field": "static_veil",
+    "text": "The Mist Heart crackles! Lightning flickers in the fog."
+   }
+  }
+ }
+}

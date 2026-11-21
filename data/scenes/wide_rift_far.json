@@ -1,0 +1,10 @@
+{
+ "_note": "Chapter 16, the far end of the Wide Rift: the Rift hums; Kestra waits for a farewell duel (plan items 1486, 1559).",
+ "steps": [
+  {"sfx": "warp"},
+  {"shake": 0.4},
+  {"say": ["The far end of the Wide Rift. From this side it doesn't look torn. It looks unfinished."]},
+  {"dialogue": "ashmere/finale_veit"},
+  {"flag": "wide_far_seen"}
+ ]
+}

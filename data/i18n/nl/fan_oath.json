@@ -1,0 +1,8 @@
+{
+ "_comment": "nl translation of the fan_oath table, keyed by the English text.",
+ "strings": {
+  "%s swears the Ink Oath. Ink runs down its paws like a signature: family first!": "%s zweert de Inkteed. Inkt loopt over zijn poten als een handtekening: familie eerst!",
+  "Oath": "Eed",
+  "The Ink Oath comes due. The family collects from %s.": "De Inkteed vervalt. De familie int bij %s."
+ }
+}

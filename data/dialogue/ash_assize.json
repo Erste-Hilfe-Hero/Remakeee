@@ -1,0 +1,36 @@
+{
+ "docket": {
+  "if": {
+   "flag": "ah_assize_asked"
+  },
+  "else": "docket_plain",
+  "lines": [
+   "The court docket, page two: 'Wage plates, the Ruskweber clan against everyone. Verdict: for the clan (prepaid). Jury: advisory.'",
+   "Dated last Tuesday. In the margin, in Tansy's hand: 'Advisory means ignored.'"
+  ],
+  "flag": "ah_docket_read"
+ },
+ "docket_plain": [
+  "A thick court docket. The first page is a list of fees for reading the docket."
+ ],
+ "archive": {
+  "if": {
+   "var_min": {
+    "q_ah_deeds_stage": 0
+   },
+   "var_max": {
+    "q_ah_deeds_stage": 0
+   },
+   "flag": "ah_portraits_done"
+  },
+  "else": "archive_plain",
+  "lines": [
+   "The court archive. Corwin's eight portraits hang framed on the wall, each one stamped: 'DEED. This kind and its nests are property of the Ruskweber clan.'",
+   "Under them, a new rule: 'Catching a deeded kind is theft. Fine: one Spirling.' Corwin should hear about this."
+  ],
+  "action": "quest_stage ah_deeds 1"
+ },
+ "archive_plain": [
+  "The court archive. Verdicts, sorted by price."
+ ]
+}

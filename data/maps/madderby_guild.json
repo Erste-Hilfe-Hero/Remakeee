@@ -1,0 +1,55 @@
+{
+ "name": "Guild House",
+ "region": "corvane",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCffCCCW",
+  "WffffffffW",
+  "WfCCffCCfW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 8,
+   "to": "madderby",
+   "tx": 3,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [],
+ "signs": [],
+ "spots": {
+  "ysolde": [
+   4,
+   2
+  ],
+  "pim": [
+   6,
+   5
+  ],
+  "wall_map": [
+   4,
+   0
+  ],
+  "veit_desk": [
+   1,
+   6
+  ],
+  "veit_shelf": [
+   1,
+   1
+  ],
+  "veit_stove": [
+   8,
+   6
+  ]
+ }
+}

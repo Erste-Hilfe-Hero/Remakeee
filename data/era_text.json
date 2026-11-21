@@ -1,0 +1,60 @@
+{
+  "_doc": "Text look of the later eras (docs/ERA_FEEL_TEXT.md), read by scripts/core/EraText.gd. eras: one row per era I-V. font: id of an own era font in scripts/ui/EraFontGlyphs.gd (built by tools/fonts/build_era_fonts.py), empty = the Chimora pixel font the era had before. portrait: none, icon (a 12 px head on the name plate) or bust (a 32 px animated portrait on the dialogue box). warp: a door warp variant that replaces the one of data/era_feel.json for this era, empty = keep it. languages: the languages the era fonts are drawn for; every other language keeps the pixel font and its CJK fonts. portrait: sizes and timings of the portraits (seconds). spiral: arms and turns of the spiral warp and how much longer it runs than the door wipe. speakers: id -> the names a speaker is shown under in the name tag; art is art/era5/portraits/<id>.png and art/era4/portraits/<id>.png (tools/art/gen_portraits.py). A speaker without an entry gets no portrait and the plain name tag. bold: era fonts drawn with every stroke doubled (scripts/ui/EraFont.gd, PixelFont.embolden), so the Era IV/V menus, title and text boxes are as heavy as the Era IV/V battle HUD.",
+  "bold": ["pano12"],
+  "languages": [
+    "en",
+    "de"
+  ],
+  "eras": {
+    "1": {"font": "", "portrait": "none", "warp": ""},
+    "2": {"font": "", "portrait": "none", "warp": ""},
+    "3": {"font": "etch10", "portrait": "none", "warp": "spiral"},
+    "4": {"font": "pano12", "portrait": "icon", "warp": ""},
+    "5": {"font": "pano12", "portrait": "bust", "warp": ""}
+  },
+  "portrait": {
+    "size": 32,
+    "icon_size": 12,
+    "frames": 3,
+    "blink_every": 3.4,
+    "blink_time": 0.14,
+    "talk_time": 0.11
+  },
+  "spiral": {
+    "arms": 2,
+    "turns": 1.5,
+    "time_mult": 3.2
+  },
+  "speakers": {
+    "kestra": {"names": ["Kestra"]},
+    "aldo": {"names": ["Aldo"]},
+    "mirela": {"names": ["Mirela"]},
+    "corin": {"names": ["Corin", "Warden Corin"]},
+    "veit": {"names": ["Veit", "Veit Harrow"]},
+    "ysolde": {"names": ["Ysolde"]},
+    "senna": {"names": ["Senna", "Warden Senna"]},
+    "joral": {"names": ["Joral", "Warden Joral"]},
+    "tovan": {"names": ["Tovan", "Warden Tovan"]},
+    "ilse": {"names": ["Ilse", "Warden Ilse", "Naturalist Ilse"]},
+    "brisa": {"names": ["Brisa", "Warden Brisa"]},
+    "darrow": {"names": ["Darrow", "Warden Darrow"]},
+    "odalys": {"names": ["Odalys", "Warden Odalys"]},
+    "aurelio": {"names": ["Aurelio", "Warden Aurelio"]},
+    "kaia": {"names": ["Kaia", "Warden Kaia"]},
+    "emrys": {"names": ["Emrys", "Warden Emrys"]},
+    "vash": {"names": ["Vash"]},
+    "fenrick": {"names": ["Fenrick"]},
+    "ottilie": {"names": ["Ottilie"]},
+    "grell": {"names": ["Mother Grell", "Grell"]},
+    "sable": {"names": ["Sable", "Warden Sable"]},
+    "wren": {"names": ["Wren"]},
+    "isaura": {"names": ["Isaura", "Warden Isaura"]},
+    "halloran": {"names": ["Halloran", "Warden Halloran"]},
+    "veronne": {"names": ["Veronne", "Warden Veronne"]},
+    "aurek": {"names": ["Aurek", "Warden Aurek"]},
+    "maudrey": {"names": ["Maudrey", "Warden Maudrey"]},
+    "ossian": {"names": ["Ossian", "Warden Ossian"]},
+    "corran": {"names": ["Corran", "Warden Corran"]},
+    "sabeline": {"names": ["Sabeline", "Warden Sabeline"]}
+  }
+}

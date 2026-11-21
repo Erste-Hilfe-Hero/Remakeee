@@ -1,0 +1,10 @@
+{
+ "_comment": "Turkish texts for the German table kampf_k30. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "Acting order %s": "Hamle sırası %s",
+  "Auto aim: %s": "Otomatik nişan: %s",
+  "Fight two on two, with another friend's echo beside you?": "Başka bir arkadaşının yankısı yanında, ikiye iki dövüşmek ister misin?",
+  "That field cannot be picked.": "Bu alan seçilemez.",
+  "foe %s": "rakip %s"
+ }
+}

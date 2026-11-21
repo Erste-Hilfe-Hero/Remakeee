@@ -1,0 +1,57 @@
+{
+ "_comment": "Spirling sprite tiers (docs/ERA_SPRITE_TIERS.md). A Spirling keeps the look of its origin era forever; the tier is the era folder its art lives in. tools/art/gen_tiers.py builds, from each front/back sprite, the menu icons (art/eraN/spirling_icons/) and the pose sheet (art/eraN/spirling_anim/, row 0 front, row 1 back, one cell per pose). In an Era V battle every Spirling moves, each in its own tier's style: an Era I kind hops in two ink frames, an Era V kind plays full strips. Poses: sy = height scale about the feet, sx = width scale, shear = pixels the top leans forward, top = share of the height (from the top) that moves. Timelines: cells index the poses, -1 hides the sprite for that frame (the old blink), -2 draws the flash silhouette; dx is pixels forward, dy pixels down. Read by scripts/battle/presenter/SpriteTiers.gd.",
+ "kinds": ["idle", "attack", "hit"],
+ "icon_sizes": [14, 16, 32],
+ "anim_from_era": 5,
+ "breath_from_era": 4,
+ "gleam": {"hue_shift": 0.5, "spread": 0.08, "steps": 9},
+ "tiers": {
+  "1": {
+   "label": "Ink", "canvas": 56, "max_colours": 4,
+   "poses": [{"name": "rest"}, {"name": "hop", "sy": 1.06}],
+   "anim": {
+    "idle": {"fps": 2.5, "loop": true, "cells": [0, 1], "dy": [0, -2]},
+    "attack": {"fps": 8, "cells": [1, 1, 0], "dx": [3, 6, 0], "dy": [-1, -1, 0]},
+    "hit": {"fps": 10, "cells": [-1, 0, -1, 0]}
+   }
+  },
+  "2": {
+   "label": "Wash", "canvas": 56, "max_colours": 8,
+   "poses": [{"name": "rest"}, {"name": "hop", "sy": 1.06}],
+   "anim": {
+    "idle": {"fps": 2.5, "loop": true, "cells": [0, 1], "dy": [0, -2]},
+    "attack": {"fps": 10, "cells": [0, 1, 1, 0], "dx": [-1, 4, 6, 1], "dy": [0, -1, -1, 0]},
+    "hit": {"fps": 10, "cells": [-1, 0, -1, 0], "dx": [0, -1, 0, 0]}
+   }
+  },
+  "3": {
+   "label": "Etched", "canvas": 64, "max_colours": 15,
+   "poses": [{"name": "rest"}, {"name": "hop", "sy": 1.05}, {"name": "lean", "sy": 0.97, "shear": 4}],
+   "anim": {
+    "idle": {"fps": 2, "loop": true, "cells": [0, 1], "dy": [0, -2]},
+    "attack": {"fps": 12, "cells": [0, 2, 2, 2, 0], "dx": [-2, 3, 7, 5, 1]},
+    "hit": {"fps": 12, "cells": [-2, 0, -2, 0], "dx": [0, -2, -1, 0]}
+   }
+  },
+  "4": {
+   "label": "Panorama", "canvas": 96, "max_colours": 24,
+   "poses": [{"name": "rest"}, {"name": "breath", "sy": 0.96, "top": 0.65}, {"name": "lunge", "sy": 0.96, "shear": 7}, {"name": "recoil", "sy": 0.98, "shear": -4}],
+   "anim": {
+    "idle": {"fps": 2, "loop": true, "cells": [0, 1]},
+    "attack": {"fps": 14, "cells": [3, 2, 2, 2, 0, 0], "dx": [-3, 4, 10, 8, 3, 0]},
+    "hit": {"fps": 14, "cells": [-2, 3, -2, 3, 0], "dx": [0, -4, -3, -2, 0]}
+   }
+  },
+  "5": {
+   "label": "Living", "canvas": 96, "max_colours": 32,
+   "poses": [{"name": "rest"}, {"name": "breath1", "sy": 0.98, "top": 0.7}, {"name": "breath2", "sy": 0.955, "sx": 1.02, "top": 0.7},
+             {"name": "crouch", "sy": 0.9, "sx": 1.04, "shear": -2}, {"name": "lean", "sy": 0.98, "shear": 4},
+             {"name": "lunge", "sy": 0.95, "sx": 1.03, "shear": 9}, {"name": "recoil", "sy": 0.97, "shear": -5}, {"name": "sag", "sy": 0.93, "sx": 1.03}],
+   "anim": {
+    "idle": {"fps": 6, "loop": true, "cells": [0, 1, 2, 2, 1, 0], "dy": [0, 0, 0, 0, 0, -1]},
+    "attack": {"fps": 16, "cells": [3, 3, 4, 5, 5, 4, 0], "dx": [-2, -3, 3, 9, 11, 5, 1]},
+    "hit": {"fps": 18, "cells": [-2, 6, -2, 6, 6, 7, 0], "dx": [0, -5, -4, -4, -3, -1, 0]}
+   }
+  }
+ }
+}

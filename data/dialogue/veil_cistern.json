@@ -1,0 +1,267 @@
+{
+ "valve_1_1": {
+  "lines": [
+   "A valve marked DEBT."
+  ],
+  "action": "bell cistern_valve_1 3 3 valve"
+ },
+ "valve_1_2": {
+  "lines": [
+   "A valve marked INTEREST."
+  ],
+  "action": "bell cistern_valve_1 1 3 valve"
+ },
+ "valve_1_3": {
+  "lines": [
+   "A valve marked FEES."
+  ],
+  "action": "bell cistern_valve_1 2 3 valve"
+ },
+ "hint_1": [
+  "Scratched under the pipes: Interest first. Then fees. Debt last. Debt is always last."
+ ],
+ "valve_2_1": {
+  "lines": [
+   "A valve marked WIDOWS."
+  ],
+  "action": "bell cistern_valve_2 2 4 valve"
+ },
+ "valve_2_2": {
+  "lines": [
+   "A valve marked ORPHANS."
+  ],
+  "action": "bell cistern_valve_2 4 4 valve"
+ },
+ "valve_2_3": {
+  "lines": [
+   "A valve marked WELLS."
+  ],
+  "action": "bell cistern_valve_2 3 4 valve"
+ },
+ "valve_2_4": {
+  "lines": [
+   "A valve marked MISC."
+  ],
+  "action": "bell cistern_valve_2 1 4 valve"
+ },
+ "hint_2": [
+  "A clerk's note: Misc, widows, wells, orphans. Alphabetical was too honest."
+ ],
+ "seal_4": {
+  "if": {
+   "not_flag": "veil_seal_4"
+  },
+  "else": "seal_empty",
+  "lines": [
+   "A brass seal nailed to a pipe: 'Property of the Veil. So is this pipe. So are you, if you stand here long.'",
+   "You pry the seal off."
+  ],
+  "action": "set_flag veil_seal_4"
+ },
+ "seal_5": {
+  "if": {
+   "not_flag": "veil_seal_5"
+  },
+  "else": "seal_empty",
+  "lines": [
+   "A brass seal on a bucket. The bucket has a contract. The contract has a bucket.",
+   "You pry the seal off."
+  ],
+  "action": "set_flag veil_seal_5"
+ },
+ "seal_6": {
+  "if": {
+   "not_flag": "veil_seal_6"
+  },
+  "else": "seal_empty",
+  "lines": [
+   "A brass seal stamped on a tiny chair. Someone small worked off a debt here.",
+   "You pry the seal off."
+  ],
+  "action": "set_flag veil_seal_6"
+ },
+ "seal_7": {
+  "if": {
+   "not_flag": "veil_seal_7"
+  },
+  "else": "seal_empty",
+  "lines": [
+   "A brass seal on the strongroom bell: 'Ring for service. Pay for silence.'",
+   "You pry the seal off."
+  ],
+  "action": "set_flag veil_seal_7"
+ },
+ "seal_8": {
+  "if": {
+   "not_flag": "veil_seal_8"
+  },
+  "else": "seal_empty",
+  "lines": [
+   "A brass seal on a ledger cabinet. It's warm. Ledgers here are kept by the fire, in case.",
+   "You pry the seal off."
+  ],
+  "action": "set_flag veil_seal_8"
+ },
+ "iou_3": {
+  "if": {
+   "not_flag": "veil_iou_3"
+  },
+  "else": "iou_empty",
+  "lines": [
+   "An IOU: 'Hadi the potter owes the Veil one kiln, two domes and his good thumb.'",
+   "You pocket the IOU."
+  ],
+  "action": "set_flag veil_iou_3"
+ },
+ "iou_4": {
+  "if": {
+   "not_flag": "veil_iou_4"
+  },
+  "else": "iou_empty",
+  "lines": [
+   "An IOU: 'Ranya owes forty sacks of pepper. Interest payable in sneezes.'",
+   "You pocket the IOU."
+  ],
+  "action": "set_flag veil_iou_4"
+ },
+ "iou_5": {
+  "if": {
+   "not_flag": "veil_iou_5"
+  },
+  "else": "iou_empty",
+  "lines": [
+   "An IOU: 'Sefa owes the well. The whole well. Signed under protest, then signed again.'",
+   "You pocket the IOU."
+  ],
+  "action": "set_flag veil_iou_5"
+ },
+ "seal_empty": [
+  "Just a nail hole now."
+ ],
+ "iou_empty": [
+  "Nothing left here but a smell of ink and regret."
+ ],
+ "orders": {
+  "lines": [
+   "The Veil's order book. 'Three graves, prepaid: K. (retired), Q. (thief), and the map kid (pending).'",
+   "Pending. How flattering."
+  ],
+  "if": {
+   "var_min": {
+    "q_s4_graves_stage": 1
+   },
+   "var_max": {
+    "q_s4_graves_stage": 1
+   }
+  },
+  "else": "orders_read",
+  "action": "quest_stage s4_graves 2"
+ },
+ "orders_read": [
+  "The Veil's order book. Most entries end in 'collected'."
+ ],
+ "note": {
+  "if": {
+   "not_flag": "rift_sun_sealed"
+  },
+  "else": "note_gone",
+  "lines": [
+   "A note on the counter: 'Out collecting. Back when the sun moves again. Touch nothing. Everything is counted. L.'"
+  ]
+ },
+ "note_gone": [
+  "The note is gone. Someone is back."
+ ],
+ "lusk": {
+  "if": {
+   "not_flag": "betrayal_lusk_vault"
+  },
+  "else": "lusk_duel",
+  "lines": [
+   "Factor Lusk: You again. Let's not fight. Sign this truce and your debts vanish. Have a seat. I'll get the door."
+  ],
+  "action": "betrayal lusk_vault"
+ },
+ "lusk_duel": {
+  "if": {
+   "not_flag": "veil_vault_beaten"
+  },
+  "else": "lusk_after",
+  "lines": [
+   "Factor Lusk: Fine. We'll do it the expensive way. I'll invoice your next of kin."
+  ],
+  "action": "battle veil_vault"
+ },
+ "lusk_after": [
+  "Factor Lusk: Bankrupt. Do you know what that's like? No. You never had anything to lose."
+ ],
+ "vault_caught": [
+  "You wedge the door with a ledger before it can shut. Lusk sighs. 'Qadir. Of course. I should have bought him.'"
+ ],
+ "vault_struck": [
+  "The door clicks shut behind you. From the other side, Lusk's guards. 'Signature or shovel. Your choice.'"
+ ],
+ "vault_defeat": [
+  "Factor Lusk: ...My Spirlings, my brass, my strongroom. All written off.",
+  "Factor Lusk: Take the vault key. Corin will want it. He always wanted everything of mine, the vulture. So proud."
+ ],
+ "vault_lose": [
+  "Factor Lusk: Collected. Come back when you're solvent."
+ ],
+ "ledger_vault": [
+  "The strongroom truce",
+  "Factor Lusk offered you a truce in his strongroom and locked the door behind you while you read it."
+ ],
+ "guards_lose": [
+  "The Veil guards take a fee for your release. They give you a receipt. It's very nicely printed."
+ ],
+ "sign": [
+  "THE BRASS VEIL - CISTERN AND COUNTING HOUSE",
+  "Water sold by the cup. Souls by arrangement."
+ ],
+ "clerk_ivo": [
+  "Ivo: I count buckets. Some days the buckets count me."
+ ],
+ "clerk_ivo_intro": [
+  "Ivo: Unauthorised visitor. That's a fine. Fight me and it's two fines."
+ ],
+ "clerk_ivo_defeat": [
+  "Ivo: Write it down as... no, don't write it down."
+ ],
+ "guard_pell": [
+  "Orla: I guard water. Tried drinking on shift once. They docked a week."
+ ],
+ "guard_pell_intro": [
+  "Orla: Nobody gets past. Nobody's paid me to let them."
+ ],
+ "guard_pell_defeat": [
+  "Orla: Fine, go. I'll tell them you bribed me. Did you? No? Pity."
+ ],
+ "clerk_mott": [
+  "Quill: I run debts across town. Fastest legs in Solenne. Need them."
+ ],
+ "clerk_mott_intro": [
+  "Quill: You owe me a duel. Everybody owes me something."
+ ],
+ "clerk_mott_defeat": [
+  "Quill: Ran out of Spirlings. Running out of town next."
+ ],
+ "auditor_nell": [
+  "Nell: I audit the auditors. Somebody has to distrust the distrustful."
+ ],
+ "auditor_nell_intro": [
+  "Nell: Your numbers don't add up. Let me subtract some."
+ ],
+ "auditor_nell_defeat": [
+  "Nell: Rounding error. Mine. Don't tell anyone."
+ ],
+ "guard_brack": [
+  "Brack: My last job was breaking legs. This one's breaking spirits. Better hours."
+ ],
+ "guard_brack_intro": [
+  "Brack: Valves don't turn themselves. Neither do I."
+ ],
+ "guard_brack_defeat": [
+  "Brack: Broken. Me, I mean. Spirit's fine."
+ ]
+}

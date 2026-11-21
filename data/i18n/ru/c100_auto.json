@@ -1,0 +1,15 @@
+{
+ "_comment": "Russian texts for the German table c100_auto. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "Auto: %s": "Авто: %s",
+  "Wild only": "Только дикие",
+  "All story battles": "Все бои сюжета",
+  "Off, wild battles only, or every story battle. Wardens and rivals ask first.": "Выкл, только дикие бои или все сюжетные бои. Стражи и соперники сначала спрашивают.",
+  "A strong foe. Let Auto fight this battle?": "Сильный противник. Пусть Авто ведёт этот бой?",
+  "Auto on": "Авто вкл",
+  "Keep control": "Сам",
+  "Auto: picking who steps out.": "Авто: выбирает, кто выйдет.",
+  "Auto stops: this kind is not in your Spirlog yet. Bond or fight on.": "Авто остановлено: этого вида ещё нет в Spirlog. Свяжись с ним или сражайся дальше.",
+  "Turn %d": "Ход %d"
+ }
+}

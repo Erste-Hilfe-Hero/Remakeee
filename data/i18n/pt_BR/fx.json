@@ -1,0 +1,30 @@
+{
+ "_comment": "Brazilian Portuguese texts for the German table fx. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "Ambience": "Ambiente",
+  "Ambience: %d%%": "Ambiente: %d%%",
+  "Both ears hear the same sound, for hearing on one side.": "Os dois ouvidos ouvem o mesmo som, para quem ouve de um lado só.",
+  "Coins: %d": "Moedas: %d",
+  "Full": "Total",
+  "How much the screen shakes on big hits.": "Quanto a tela treme em golpes fortes.",
+  "How strongly the phone or gamepad vibrates.": "Quanto o celular ou o controle vibra.",
+  "Important sounds also show as a short text at the top.": "Sons importantes também aparecem como um texto curto no topo.",
+  "Mono sound: %s": "Som mono: %s",
+  "Places": "Lugares",
+  "Screen shake: %s": "Tremor: %s",
+  "Short blips while a line types out.": "Bipes curtos enquanto uma linha é escrita.",
+  "Sound captions: %s": "Legendas: %s",
+  "Text voice and Spirling cries. Left and right change it in steps of 10.": "Voz do texto e gritos dos Spirlings. Esquerda e direita mudam de 10 em 10.",
+  "Text voice: %s": "Voz do texto: %s",
+  "Vibration: %s": "Vibração: %s",
+  "Voice": "Voz",
+  "Voices: %d%%": "Vozes: %d%%",
+  "Waiting for the server": "Aguardando o servidor",
+  "Weak": "Fraco",
+  "Wind, water and other sounds of a place. Left and right change it in steps of 10.": "Vento, água e outros sons de um lugar. Esquerda e direita mudam de 10 em 10.",
+  "[A deep rumble]": "[Um estrondo grave]",
+  "[Footsteps stop short]": "[Passos param de repente]",
+  "[Item picked up]": "[Item recolhido]",
+  "[Rustling in the grass]": "[Farfalhar na grama]"
+ }
+}

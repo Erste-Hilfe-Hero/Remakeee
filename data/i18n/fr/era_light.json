@@ -1,0 +1,9 @@
+{
+ "_comment": "fr translation of the era_light table, keyed by the English text.",
+ "strings": {
+  "A storm rages.": "Un orage fait rage.",
+  "Fog hangs low.": "Le brouillard est bas.",
+  "Rain falls.": "Il pleut.",
+  "Wind blows.": "Le vent souffle."
+ }
+}

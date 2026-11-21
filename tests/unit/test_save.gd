@@ -90,7 +90,7 @@ func test_items_outside_battle_and_storage_rules() -> void:
 	assert_eq(GameState.party.size(), 2)
 
 func test_party_overflow_goes_to_storage_and_spirlog_tracks() -> void:
-	for i: int in 6:
+	for i: int in GameState.MAX_PARTY:
 		GameState.receive_spirling(Spirling.new(Database.species("Zippit"), 2))
 	assert_eq(GameState.party.size(), GameState.MAX_PARTY)
 	assert_eq(GameState.storage.size(), 1)

@@ -1,0 +1,146 @@
+"""Quivermoor (Era V, post-game, data/region5.json) lines: a moor that breathes. The Breathing
+Bog, the Wandering Wood and its walking oaks, Candle Causeway and the Tallow Choir, Hymnmarsh,
+the Heaving Fields, Gloamwater and the raft town Driftwick.
+
+Era V art: the lines are drawn with the shared body plans of tools/art/gen_lines.py (every stage
+grows from the same base form) and lit part by part at 96 px by tools/art/gen_era5.py.
+29 lines, 70 kinds: 16 three-stage, 9 two-stage, 4 single.
+
+This file is the art spec. Quivermoor has no elements of its own yet (data/region5.json
+"elements" is empty), so the lines use elements that exist. Stats, arts, lore texts and the route
+slots of data/region5.json follow with the data step (tools/build_lines.py quivermoor)."""
+
+L = dict
+
+ERA = 5
+ACT = "Era V post-game"
+ART_TOOL = "tools/art/gen_era5.py"
+# Unfold rings (3-stage first, 3-stage second, 2-stage): Quivermoor's wild rings are 89 to 96.
+RINGS = (90, 95, 93)
+
+LINES = [
+    # Three-stage lines
+    L(id="quagpup", names=["Quagpup", "Quaghound", "Quagmastiff"], elements=["STONE", "TIDE"], role="bulwark",
+      art=dict(plan="quad", tones=("mid", "light", "dark"), ears="round", ear_tone="dark", tail="club",
+               back="hump", snout="short", eye="sleepy", marks="spots", size=1)),
+    L(id="chandlit", names=["Chandlit", "Chandlow", "Chandelwraith"], elements=["EMBER", "UMBRA"], role="kindler",
+      art=dict(plan="spirit", tones=("light", "light", "dark"), extras=("flame", "arms"), eye="glow",
+               mouth="line", marks="band")),
+    L(id="oakstep", names=["Oakstep", "Oakstride", "Oakwander"], elements=["BLOOM", "STONE"], role="bulwark",
+      art=dict(plan="biped", tones=("mid", "mid", "dark"), pillar=True, horn="antler", horn_tone="dark",
+               extras=("leafarms",), eye="small", mouth="line", marks="stripes")),
+    L(id="raftlet", names=["Raftlet", "Raftoar", "Raftarch"], elements=["TIDE", "BLOOM"], role="bulwark",
+      art=dict(plan="shell", tones=("mid", "light", "dark"), back="plates", back_n=2, extras=("shellpat",),
+               tail="fin", eye="small", mouth="smile")),
+    L(id="hymnib", names=["Hymnib", "Hymnara", "Hymnaroth"], elements=["GALE", "LUMEN"], role="weaver",
+      art=dict(plan="bird", tones=("light", "light", "mid"), crest=2, crest_tone="mid", tail="fan",
+               extras=("wing", "halo"), eye="big")),
+    L(id="murkfin", names=["Murkfin", "Murkglide", "Murkgrave"], elements=["TIDE", "UMBRA"], role="striker",
+      art=dict(plan="fish", tones=("dark", "mid", "dark"), tail="ray", extras=("fins",), eye="glow",
+               mouth="fang", back="spikes", back_n=1, marks="stripes")),
+    L(id="tuftkit", names=["Tuftkit", "Tuftlynx", "Tuftreaver"], elements=["BLOOM", "GALE"], role="striker",
+      art=dict(plan="quad", tones=("light", "light", "dark"), ears="pointed", ear_tone="dark", tail="leaf",
+               eye="slit", snout="short", legs=1, marks="stripes", extras=("claws",))),
+    L(id="snufflit", names=["Snufflit", "Snuffmoth", "Snuffmourn"], elements=["UMBRA", "EMBER"], role="weaver",
+      art=dict(plan="bug", tones=("dark", "mid", "light"), extras=("wings",), ears="antenna", ear_tone="light",
+               eye="glow", marks="spots", size=-1)),
+    L(id="rootnub", names=["Rootnub", "Rootknot", "Rootcathedral"], elements=["BLOOM", "UMBRA"], role="vanguard",
+      art=dict(plan="plant", tones=("dark", "mid", "light"), extras=("leafarms", "spines"), crest=3,
+               crest_tone="light", eye="glow", mouth="fang", marks="rings")),
+    L(id="soddit", names=["Soddit", "Soddenback", "Soddenmoor"], elements=["STONE", "BLOOM"], role="bulwark",
+      art=dict(plan="shell", tones=("dark", "mid", "light"), back="leaves", back_n=3, tail="club",
+               ears="round", eye="sleepy", mouth="line", marks="band")),
+    L(id="eelume", names=["Eelume", "Eelantern", "Eelumbra"], elements=["VOLT", "TIDE"], role="striker",
+      art=dict(plan="serpent", tones=("mid", "light", "dark"), tail="whip", ears="fin", ear_tone="light",
+               eye="glow", mouth="fang", marks="rings", back="sail", back_n=2)),
+    L(id="wispin", names=["Wispin", "Wispyre", "Wisperial"], elements=["LUMEN", "EMBER"], role="kindler",
+      art=dict(plan="spirit", tones=("light", "mid", "dark"), extras=("halo", "ball"), tail="flame",
+               eye="big", mouth="smile", marks="stars")),
+    L(id="boomlet", names=["Boomlet", "Boombittern", "Boomregent"], elements=["GALE", "TIDE"], role="vanguard",
+      art=dict(plan="bird", tones=("mid", "light", "dark"), crest=3, crest_tone="dark", tail="plume",
+               extras=("wing",), eye="small", neck=True, marks="stripes")),
+    L(id="croakit", names=["Croakit", "Croakum", "Croakardinal"], elements=["TIDE", "VOLT"], role="kindler",
+      art=dict(plan="biped", tones=("mid", "light", "dark"), extras=("arms", "hindleg"), eye="big",
+               mouth="smile", marks="spots", back="spikes", back_n=1, size=1)),
+    L(id="heavelet", names=["Heavelet", "Heavemole", "Heavemound"], elements=["STONE", "VOLT"], role="vanguard",
+      art=dict(plan="quad", tones=("dark", "mid", "light"), snout="long", tail="whip", back="crystals",
+               back_n=2, eye="small", extras=("claws",), claw_tone="light", long=1)),
+    L(id="lichfawn", names=["Lichfawn", "Lichenhart", "Lichenthrone"], elements=["BLOOM", "LUMEN"], role="weaver",
+      art=dict(plan="quad", tones=("light", "light", "mid"), ears="long", ear_tone="mid", horn="antler",
+               horn_tone="mid", tail="fluff", eye="big", snout="short", legs=1, neck=True, marks="stars")),
+    # Two-stage lines
+    L(id="driftgull", names=["Driftgull", "Driftadmiral"], elements=["GALE"], role="striker", cover="TIDE",
+      art=dict(plan="bird", tones=("light", "light", "dark"), tail="fan", extras=("wing",), eye="small",
+               crest=1, crest_tone="dark", marks="band")),
+    L(id="tollit", names=["Tollit", "Tollgrave"], elements=["UMBRA", "STONE"], role="bulwark",
+      art=dict(plan="spirit", tones=("dark", "mid", "light"), extras=("ball", "arms"), horn="single",
+               horn_tone="light", eye="glow", mouth="line", marks="rings", size=1)),
+    L(id="waxil", names=["Waxil", "Waxhelix"], elements=["EMBER", "STONE"], role="bulwark",
+      art=dict(plan="shell", tones=("light", "light", "mid"), back="crystals", back_n=1, extras=("shellpat",),
+               ears="antenna", ear_tone="mid", eye="small", mouth="smile")),
+    L(id="reedpip", names=["Reedpip", "Reedpiper"], elements=["GALE", "BLOOM"], role="weaver",
+      art=dict(plan="bug", tones=("light", "mid", "dark"), ears="antenna", ear_tone="dark", extras=("wings",),
+               tail="sting", eye="twin", marks="stripes")),
+    L(id="blurp", names=["Blurp", "Blurpyre"], elements=["EMBER", "TIDE"], role="kindler",
+      art=dict(plan="spirit", tones=("mid", "light", "dark"), extras=("flame",), eye="big", mouth="smile",
+               marks="spots", size=1)),
+    L(id="slicknewt", names=["Slicknewt", "Slickdrake"], elements=["TIDE", "EMBER"], role="striker",
+      art=dict(plan="serpent", tones=("mid", "light", "dark"), crest=2, crest_tone="dark", tail="fin",
+               eye="slit", mouth="line", marks="spots", extras=("claws",))),
+    L(id="mossnout", names=["Mossnout", "Mossgore"], elements=["BLOOM", "STONE"], role="vanguard",
+      art=dict(plan="quad", tones=("mid", "mid", "dark"), snout="long", horn="twin", horn_tone="light",
+               ears="pointed", ear_tone="dark", tail="fluff", back="leaves", back_n=2, eye="small",
+               extras=("mane",), size=1)),
+    L(id="dripwing", names=["Dripwing", "Dripvesper"], elements=["UMBRA", "GALE"], role="striker",
+      art=dict(plan="bird", tones=("dark", "dark", "mid"), ears="big", ear_tone="mid", extras=("wing",),
+               tail="whip", eye="glow", mouth="fang", snout="short")),
+    L(id="thrumlet", names=["Thrumlet", "Thrumvault"], elements=["VOLT", "STONE"], role="bulwark",
+      art=dict(plan="biped", tones=("mid", "light", "dark"), horn="back", horn_tone="light", extras=("arms",),
+               back="plates", back_n=2, eye="twin", mouth="line", marks="band", size=1)),
+    # Single kinds
+    L(id="moorbreath", names=["Moorbreath"], elements=["GALE", "UMBRA"], role="weaver",
+      art=dict(plan="spirit", tones=("light", "mid", "dark"), extras=("halo", "arms"), tail="ray", ears="fin",
+               ear_tone="dark", eye="glow", marks="rings", size=1)),
+    L(id="choirmaw", names=["Choirmaw"], elements=["UMBRA", "EMBER"], role="vanguard",
+      art=dict(plan="quad", tones=("dark", "mid", "light"), horn="curl", horn_tone="light", extras=("mane", "flame"),
+               tail="flame", eye="glow", mouth="fang", snout="long", legs=1, size=1)),
+    L(id="ferrywake", names=["Ferrywake"], elements=["TIDE", "STONE"], role="bulwark",
+      art=dict(plan="fish", tones=("mid", "light", "dark"), tail="fan", extras=("fins",), back="plates",
+               back_n=3, horn="single", horn_tone="light", eye="small", mouth="line", marks="band", size=1)),
+    L(id="bloomvigil", names=["Bloomvigil"], elements=["BLOOM", "LUMEN"], role="kindler",
+      art=dict(plan="plant", tones=("light", "mid", "dark"), extras=("petals", "leafarms", "sun"), eye="big",
+               mouth="smile", marks="stars", size=1)),
+]
+
+# line id: (habitat EN, habitat DE)
+HABITAT = {
+    "quagpup": ("The Breathing Bog, wherever the ground last sighed", "Das Atmende Moor, wo der Boden zuletzt geseufzt hat"),
+    "chandlit": ("The candle wall of Tallowmere", "Die Kerzenwand von Tallowmere"),
+    "oakstep": ("Wandering Wood, one step further every night", "Wandernder Wald, jede Nacht einen Schritt weiter"),
+    "raftlet": ("Under the rafts of Driftwick", "Unter den Flößen von Driftwick"),
+    "hymnib": ("Reed tops of Hymnmarsh", "Schilfspitzen des Hymnenmoors"),
+    "murkfin": ("Black pools of Gloamwater", "Schwarze Tümpel des Dämmerwassers"),
+    "tuftkit": ("Sedge banks of the Heaving Fields", "Seggenufer der Wogenden Felder"),
+    "snufflit": ("Around the candles of the Causeway", "Um die Kerzen des Kerzendamms"),
+    "rootnub": ("The roots of Rootchapel", "Die Wurzeln von Rootchapel"),
+    "soddit": ("Peat cuts of the Breathing Bog", "Torfstiche des Atmenden Moors"),
+    "eelume": ("Deep channels of Gloamwater", "Tiefe Rinnen des Dämmerwassers"),
+    "wispin": ("Over the bog at night, just out of reach", "Nachts über dem Moor, knapp außer Reichweite"),
+    "boomlet": ("Reed beds of Hymnmarsh", "Schilfgürtel des Hymnenmoors"),
+    "croakit": ("Puddles of Candle Causeway", "Pfützen des Kerzendamms"),
+    "heavelet": ("Under the Heaving Fields", "Unter den Wogenden Feldern"),
+    "lichfawn": ("Clearings the oaks have left behind", "Lichtungen, die die Eichen zurückließen"),
+    "driftgull": ("Masts of the Raft Market", "Masten des Floßmarkts"),
+    "tollit": ("Sunken chapels of the moor", "Versunkene Kapellen des Moors"),
+    "waxil": ("The wax vat under the Choir Loft", "Der Wachsbottich unter der Chorempore"),
+    "reedpip": ("Reeds of Candle Causeway", "Schilf am Kerzendamm"),
+    "blurp": ("Gas vents of the Breathing Bog", "Gasquellen des Atmenden Moors"),
+    "slicknewt": ("Warm springs of Hymnmarsh", "Warme Quellen des Hymnenmoors"),
+    "mossnout": ("Moss banks of Wandering Wood", "Moosbänke des Wandernden Walds"),
+    "dripwing": ("Rafters of the Choir Loft", "Dachbalken der Chorempore"),
+    "thrumlet": ("Storm-struck stones of the Heaving Fields", "Vom Blitz getroffene Steine der Wogenden Felder"),
+    "moorbreath": ("Everywhere the moor breathes out", "Überall, wo das Moor ausatmet"),
+    "choirmaw": ("The Bloom Rift", "Der Blütenriss"),
+    "ferrywake": ("The open water past Driftwick", "Das offene Wasser hinter Driftwick"),
+    "bloomvigil": ("The last meadow before Lastbloom", "Die letzte Wiese vor Lastbloom"),
+}

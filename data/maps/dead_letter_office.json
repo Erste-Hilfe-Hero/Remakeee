@@ -1,0 +1,84 @@
+{
+ "name": "Dead Letter Office",
+ "region": "quillmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWWWW",
+  "WCCCffffCCCW",
+  "WffffffffffW",
+  "WCCffffffCCW",
+  "WSffffffffSW",
+  "WffffCCffffW",
+  "WCffffffffCW",
+  "WffffffffffW",
+  "WffffffffffW",
+  "WWWWWDWWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 9,
+   "to": "drypoint_lane",
+   "tx": 2,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "q3_dead_letter_office",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/q3_dead_letter_office",
+   "sprite": "elder"
+  },
+  {
+   "id": "q3_widow_post_edda",
+   "x": 2,
+   "y": 5,
+   "facing": "right",
+   "dialogue": "quillmarch/q3_widow_post_edda",
+   "sprite": "villager",
+   "show_flag": "q3_widow_post_asked"
+  },
+  {
+   "id": "q3_dead_stamp_asmund",
+   "x": 9,
+   "y": 7,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_dead_stamp_asmund",
+   "sprite": "elder",
+   "show_flag": "q3_dead_stamp_s1"
+  }
+ ],
+ "signs": [
+  {
+   "x": 1,
+   "y": 4,
+   "dialogue": "quillmarch/dead_letter_office_sign_1"
+  },
+  {
+   "x": 10,
+   "y": 4,
+   "dialogue": "quillmarch/dead_letter_office_sign_2"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 5,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_dead_letter_office_1"
+  },
+  {
+   "x": 0,
+   "y": 7,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_dead_letter_office_2"
+  }
+ ]
+}

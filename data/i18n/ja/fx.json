@@ -1,0 +1,30 @@
+{
+ "_comment": "Japanese texts for the German table fx. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "Ambience": "環境音",
+  "Ambience: %d%%": "環境音：%d%%",
+  "Both ears hear the same sound, for hearing on one side.": "左右の耳に同じ音が届きます。片耳で聞くときに。",
+  "Coins: %d": "コイン：%d",
+  "Full": "強",
+  "How much the screen shakes on big hits.": "大きな一撃で画面がゆれる強さです。",
+  "How strongly the phone or gamepad vibrates.": "スマホやゲームパッドの振動の強さです。",
+  "Important sounds also show as a short text at the top.": "大事な音は画面上部に短い文字でも出ます。",
+  "Mono sound: %s": "モノラル：%s",
+  "Places": "場所",
+  "Screen shake: %s": "画面ゆれ：%s",
+  "Short blips while a line types out.": "文字が出るときの短い音です。",
+  "Sound captions: %s": "音の字幕：%s",
+  "Text voice and Spirling cries. Left and right change it in steps of 10.": "文字の声とSpirlingの鳴き声。左右で10ずつ変わります。",
+  "Text voice: %s": "文字の声：%s",
+  "Vibration: %s": "振動：%s",
+  "Voice": "声",
+  "Voices: %d%%": "声：%d%%",
+  "Waiting for the server": "サーバーを待っています",
+  "Weak": "弱",
+  "Wind, water and other sounds of a place. Left and right change it in steps of 10.": "風や水など、その場所の音。左右で10ずつ変わります。",
+  "[A deep rumble]": "［低いとどろき］",
+  "[Footsteps stop short]": "［足音がぴたりと止まる］",
+  "[Item picked up]": "［道具を拾った］",
+  "[Rustling in the grass]": "［草むらでガサガサ音］"
+ }
+}

@@ -1,0 +1,107 @@
+{
+ "add": {
+  "npcs": [
+   {
+    "id": "lq_obed",
+    "x": 6,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "legend_quests/lumivane_witness",
+    "sprite": "elder",
+    "show_flag": "lq_lumivane_met",
+    "hide_flag": "lq_lumivane_ready"
+   }
+  ]
+ },
+ "replace": {
+  "npcs": [
+   {
+    "id": "warden_aurelio",
+    "x": 5,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "tower_rift/aurelio",
+    "sprite": "warden",
+    "trainer": "Warden Aurelio",
+    "warden": "tower",
+    "team": [
+     {
+      "species": "Tempestrel",
+      "level": 36
+     },
+     {
+      "species": "Zenithare",
+      "level": 37
+     },
+     {
+      "species": "Mirassil",
+      "level": 36
+     },
+     {
+      "species": "Dunebastion",
+      "level": 37
+     },
+     {
+      "species": "Orrerine",
+      "level": 37
+     }
+    ],
+    "intro": "tower_rift/aurelio_intro",
+    "defeat": "tower_rift/aurelio_defeat",
+    "ai": 2,
+    "money": 1900,
+    "rule": "sandstorm",
+    "mend_items": [
+     "echo_squall"
+    ],
+    "rematch_after": "story_complete",
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Tempestrel",
+       "level": 46
+      },
+      {
+       "species": "Zenithare",
+       "level": 47
+      },
+      {
+       "species": "Mirassil",
+       "level": 46
+      },
+      {
+       "species": "Dunebastion",
+       "level": 47
+      },
+      {
+       "species": "Orrerine",
+       "level": 47
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Tempestrel",
+       "level": 38
+      },
+      {
+       "species": "Zenithare",
+       "level": 39
+      },
+      {
+       "species": "Mirassil",
+       "level": 38
+      },
+      {
+       "species": "Dunebastion",
+       "level": 39
+      },
+      {
+       "species": "Orrerine",
+       "level": 39
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

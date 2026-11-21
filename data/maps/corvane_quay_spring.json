@@ -1,0 +1,42 @@
+{
+ "name": "Quay Spring House",
+ "region": "corvane",
+ "biome": "town",
+ "backdrop": "field",
+ "heal_point": [
+  4,
+  6
+ ],
+ "rows": [
+  "WWWWWWWWWW",
+  "WfffoofffW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 8,
+   "to": "corvane_quay",
+   "tx": 2,
+   "ty": 5,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "liesl",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/corvane_quay_spring_liesl",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

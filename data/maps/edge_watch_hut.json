@@ -1,0 +1,35 @@
+{
+ "name": "Watcher's Hut",
+ "region": "corvane",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCCffCCW",
+  "WffffffW",
+  "WffffffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "wide_rift_edge",
+   "tx": 3,
+   "ty": 7,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "ida",
+   "x": 2,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/edge_watch_hut_ida",
+   "sprite": "ranger"
+  }
+ ],
+ "signs": []
+}

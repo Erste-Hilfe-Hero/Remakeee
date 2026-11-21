@@ -1,0 +1,22 @@
+{
+ "_comment": "Rift heart rewards per difficulty, endgame rematches and the heart rush (BossHall.gd, KAMPF_PLAN_1000 items 415, 417, 418). rewards: one row per difficulty (Story, Tamer, Veteran, Rift-Born): money factor on the heart's purse and the items a story heart win gives. echo: one rematch per heart, open after Act I once its Rift is mended (flag). rush: every open heart in a row with no rest; first clear gives reward once.",
+ "rewards": [
+  {"money_mult": 0.8, "items": [["tonic", 2]]},
+  {"money_mult": 1.0, "items": [["strong_tonic", 2]]},
+  {"money_mult": 1.25, "items": [["max_tonic", 1], ["spark_drop", 1]]},
+  {"money_mult": 1.5, "items": [["max_tonic", 2], ["energy_crystal", 1]]}
+ ],
+ "echo": [
+  {"boss": "ashen_heart", "name": "Ashen Heart", "flag": "cinder_heart_mended", "front": [4, 1], "money": 3000,
+   "team": [{"species": "Smoldrake", "level": 56}]},
+  {"boss": "drowned_heart", "name": "Drowned Heart", "flag": "tide_heart_mended", "front": [4, 2], "money": 3200,
+   "team": [{"species": "Riptail", "level": 57}, {"species": "Kelpup", "level": 55}]},
+  {"boss": "mist_heart", "name": "Mist Heart", "flag": "mist_heart_mended", "front": [4, 1], "money": 3400,
+   "team": [{"species": "Millwhit", "level": 58}]}
+ ],
+ "rush": {"min_hearts": 3, "reward": ["energy_crystal", 2], "flag": "heart_rush_clear"},
+ "echo_intro": "The mended heart still beats in the Rift's echo. It remembers you, and it is not grateful.",
+ "rush_intro": "Every mended heart, one after another. No rest in between: your team keeps its wounds. Begin?",
+ "rush_line": "Heart %d of %d is next. It heard the last one stop.",
+ "rush_result": "Heart rush: %d of %d hearts."
+}

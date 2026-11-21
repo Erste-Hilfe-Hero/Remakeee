@@ -1,0 +1,84 @@
+{
+ "name": "Debtors' Icehouse",
+ "region": "quillmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWWWW",
+  "WCCfffffCCCW",
+  "WffffffffffW",
+  "WCCfCCfCCfCW",
+  "WSffffffffSW",
+  "WffffffffffW",
+  "WCCfCCfCffCW",
+  "WffffffffffW",
+  "WffffffffffW",
+  "WWWWWDWWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 9,
+   "to": "rimeglass_pass",
+   "tx": 2,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "q3_debtors_icehouse",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/q3_debtors_icehouse",
+   "sprite": "villager"
+  },
+  {
+   "id": "q3_frozen_deed_tagger",
+   "x": 9,
+   "y": 7,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_frozen_deed_tagger",
+   "sprite": "villager",
+   "show_flag": "q3_frozen_deed_trusted"
+  },
+  {
+   "id": "q3_frozen_deed_torsten",
+   "x": 2,
+   "y": 5,
+   "facing": "right",
+   "dialogue": "quillmarch/q3_frozen_deed_torsten",
+   "sprite": "elder",
+   "show_flag": "q3_frozen_deed_s1"
+  }
+ ],
+ "signs": [
+  {
+   "x": 1,
+   "y": 4,
+   "dialogue": "quillmarch/debtors_icehouse_sign_1"
+  },
+  {
+   "x": 10,
+   "y": 4,
+   "dialogue": "quillmarch/debtors_icehouse_sign_2"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 5,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_debtors_icehouse_1"
+  },
+  {
+   "x": 0,
+   "y": 7,
+   "item": "cooling_gel",
+   "count": 1,
+   "flag": "find_debtors_icehouse_2"
+  }
+ ]
+}

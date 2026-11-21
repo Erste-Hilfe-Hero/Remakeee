@@ -1,0 +1,31 @@
+{
+ "_comment": "zh_TW translation of the onboarding table, keyed by the English text.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A statused Spirling gives in more easily. Nobody said this was noble.": "羈絆第2步：選擇羈絆。陷入狀態的Spirling更容易屈服。沒人說過這很高尚。",
+  "Bonding step 3: Hold out a Kin Charm when asked. You start with 20. Friendship is cheaper in bulk.": "羈絆第3步：被問到時舉起同族護符。一開始你有20個。友情批發更便宜。",
+  "Bonding step 4: Listen to its call, then repeat it in the same order.": "羈絆第4步：聽它的叫聲，然後按同樣的順序重複。",
+  "Bonding step 4: Press A as fast as you can. The fuller the bar, the better the bond.": "羈絆第4步：儘快連按A。槽越滿，緣分越深。",
+  "Bonding step 4: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "羈絆第4步：儘快連點“歸我！”。槽越滿，緣分越深。",
+  "Bonding: Echo call": "羈絆：回聲呼喚",
+  "Bonding: Mine!": "羈絆：歸我！",
+  "First steps": "第一步",
+  "First steps %d/%d": "第一步 %d/%d",
+  "First steps done. The valley stops holding your hand now.": "第一步完成。從現在起，山谷不會再牽著你的手。",
+  "Its light never goes out. Handy when someone cuts the lamps on purpose.": "它的光永遠不會熄滅。有人故意掐滅燈的時候很方便。",
+  "Large text, one-hand layout and more are under Settings.": "大字型、單手操作等都在設定裡。",
+  "Look at your team": "檢視隊伍",
+  "Open the Spirlog": "開啟Spirlog",
+  "Open the menu": "開啟選單",
+  "Pick your partner": "選擇你的夥伴",
+  "Quick and twitchy. Every hug comes with a small shock. You get used to it.": "敏捷又好動。每個擁抱都帶著一點電擊。習慣就好。",
+  "Rest at a rest spot": "在歇腳處休息",
+  "Save your journey": "儲存旅程",
+  "Show every tip once more, as if you were new?": "要像新手一樣，把每條提示再看一遍嗎？",
+  "Show tips again": "重新顯示提示",
+  "Tip: A wild Spirling can join your team, if it trusts you. Trust is easier when it is tired.": "提示：野生Spirling如果信任你，就可能加入你的隊伍。累了的時候更容易信任。",
+  "Tip: Lost? Press Start and pick Goals. Nobody else in this valley will tell you the truth.": "提示：迷路了？按Start並選擇目標。這座山谷裡沒有別人會告訴你真相。",
+  "Tip: Lost? Tap = and pick Goals. Nobody else in this valley will tell you the truth.": "提示：迷路了？點=並選擇目標。這座山谷裡沒有別人會告訴你真相。",
+  "Tips are back. Pretend it's your first day.": "提示回來了。假裝今天是你的第一天吧。",
+  "Warm and loyal. Sets things on fire when nervous. Mostly your things.": "溫暖又忠誠。緊張時會點著東西。多半是你的東西。"
+ }
+}

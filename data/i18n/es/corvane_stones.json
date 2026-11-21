@@ -1,0 +1,18 @@
+{
+ "_comment": "es translation of the corvane_stones table, keyed by the English text.",
+ "strings": {
+  "A cartographer's stone at the edge of the Wide Rift. The rose has a fifth point, towards the dark.": "Una piedra de cartógrafo al borde de la Grieta Ancha. La rosa tiene una quinta punta, hacia la oscuridad.",
+  "A cartographer's stone at the water's edge. In the pond its rose turns the other way.": "Una piedra de cartógrafo a la orilla del agua. En el estanque su rosa gira hacia el otro lado.",
+  "A cartographer's stone half sunk in the boards. The rose points at the harbour office. Of course it does.": "Una piedra de cartógrafo medio hundida en las tablas. La rosa apunta a la oficina del puerto. Cómo no.",
+  "A cartographer's stone in a flower bed. Its rose has been painted over grey, then scraped clean.": "Una piedra de cartógrafo en un parterre. Pintaron su rosa de gris y luego alguien la rascó hasta dejarla limpia.",
+  "A cartographer's stone on the cliff. Rooks have used it as a table for years.": "Una piedra de cartógrafo en el acantilado. Los grajos llevan años usándola de mesa.",
+  "A cartographer's stone sinking into the moor. The rose still points north. The stone has given up on the rest.": "Una piedra de cartógrafo que se hunde en el páramo. La rosa aún señala al norte. Con lo demás, la piedra se ha rendido.",
+  "A cartographer's stone under the reeds. Somebody scratched 'not this way' under the rose.": "Una piedra de cartógrafo bajo los juncos. Alguien arañó 'por aquí no' debajo de la rosa.",
+  "A cartographer's stone with a betting slip tucked under it. The slip lost.": "Una piedra de cartógrafo con un boleto de apuestas metido debajo. El boleto perdió.",
+  "A cartographer's stone wrapped in roots. The rose glows faintly when you touch it.": "Una piedra de cartógrafo envuelta en raíces. La rosa brilla débilmente cuando la tocas.",
+  "A cartographer's stone, cracked down the middle. Both halves still point north. Stubborn.": "Una piedra de cartógrafo, partida por la mitad. Las dos mitades siguen señalando al norte. Tercas.",
+  "A cartographer's stone, stained red, gold and green by a hundred years of dye.": "Una piedra de cartógrafo, teñida de rojo, oro y verde por cien años de tinte.",
+  "An old cartographer's stone by the quay wall. Someone has chalked a price on it.": "Una vieja piedra de cartógrafo junto al muro del muelle. Alguien le ha apuntado un precio con tiza.",
+  "Cartographer's stones: %d/%d": "Piedras de cartógrafo: %d/%d"
+ }
+}

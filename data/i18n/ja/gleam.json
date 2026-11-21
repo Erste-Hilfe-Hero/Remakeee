@@ -1,0 +1,7 @@
+{
+ "_comment": "Japanese texts for the German table gleam. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "Gleam: %d seen, %d bonded": "輝き: %d 回目撃、%d 回絆",
+  "No Gleam has joined you yet.": "まだ輝きの姿は仲間になっていない。"
+ }
+}

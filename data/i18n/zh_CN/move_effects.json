@@ -1,0 +1,9 @@
+{
+ "_comment": "Simplified Chinese (Mainland China) texts for the German table move_effects. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "Costs %d%% of its own Vigor, never the last point.": "消耗自身%d%%的元气，但绝不会耗尽最后一点。",
+  "Cures the status of its whole team.": "治愈己方全队的异常状态。",
+  "Gains %d Energy.": "获得%d点能量。",
+  "Sets every stage on both sides back to 0.": "将双方所有阶段归0。"
+ }
+}

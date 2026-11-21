@@ -1,0 +1,24 @@
+{
+ "save_version": 3,
+ "tamer": {"name": "Juno", "color": 3},
+ "starter": "Wickit",
+ "difficulty": 1,
+ "region": "veydal",
+ "rifts": ["rift_cinder", "rift_tide"],
+ "party": [
+  {"species": "Lumenewt", "nickname": "Wick", "level": 24, "xp": 10000, "spark": {"hp": 5, "atk": 9, "def": 2, "foc": 12, "spd": 7}, "hp": 60, "moves": ["Wick Flicker", "Still Thought"], "uid": "00000000000000a1"},
+  {"species": "Smoldrake", "level": 22, "hp": 50, "moves": ["Kiln Strike", "Bowl Over"], "uid": "00000000000000a2"},
+  {"species": "Riptail", "level": 20, "hp": 48, "moves": ["Spindrift Shot"], "uid": "00000000000000a3"}
+ ],
+ "storage": [{"species": "Zephlet", "level": 12, "hp": 30, "moves": ["Drift Step"], "uid": "00000000000000a4"}],
+ "spirlog": {"Wickit": {"seen": true, "bonded": true}, "Kindlop": {"seen": true, "bonded": true}, "Puddlet": {"seen": true, "bonded": true}, "Zephlet": {"seen": true, "bonded": true}},
+ "inventory": {"tonic": 3, "max_tonic": 1, "grapple_line": 1, "climbing_pick": 1},
+ "money": 2400,
+ "map": "brindlewick",
+ "cell": [5, 5],
+ "facing": "down",
+ "heal_map": "brindlewick",
+ "heal_cell": [5, 5],
+ "flags": {"got_starter": true, "aldo_gift": true, "met_kestra": true, "rift_cinder_sealed": true, "rift_tide_sealed": true, "storage_remote": true},
+ "play_time": 9000.0
+}

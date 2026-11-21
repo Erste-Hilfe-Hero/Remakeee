@@ -1,0 +1,3 @@
+{
+ "sun_dial": {"start": [6, 10], "moves": ["right", "up", "up", "down", "left", "left", "left", "left", "down", "left", "up", "up"]}
+}

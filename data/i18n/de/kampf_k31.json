@@ -1,0 +1,15 @@
+{
+ "_comment": "German texts from tools/i18n/de_kampf_k31.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%s (won %d times)": "%s (%d-mal besiegt)",
+  "%s calls %s to its side. Nobody asked the guard.": "%s ruft %s an seine Seite. Die Wache wurde nicht gefragt.",
+  "Every mended heart, one after another. No rest in between: your team keeps its wounds. Begin?": "Jedes geflickte Herz, eins nach dem anderen. Keine Rast dazwischen: dein Team behält seine Wunden. Anfangen?",
+  "Heart %d of %d is next. It heard the last one stop.": "Herz %d von %d ist dran. Es hat gehört, wie das letzte aufhörte.",
+  "Heart rush (best %d of %d)": "Herzenhatz (bestens %d von %d)",
+  "Heart rush: %d of %d hearts.": "Herzenhatz: %d von %d Herzen.",
+  "Rift hearts": "Rissherzen",
+  "The mended heart still beats in the Rift's echo. It remembers you, and it is not grateful.": "Das geflickte Herz schlägt noch im Echo des Risses. Es erinnert sich an dich, und dankbar ist es nicht.",
+  "Which heart?": "Welches Herz?"
+ }
+}
