@@ -101,7 +101,7 @@ func run() -> void:
 			quick = EraMenus.quick_list(GameState.flags, labels)
 		MenuDots.baseline()
 		var entries: Array[Dictionary] = EraMenuKit.pause_entries(labels, Goals.pending() > 0, lay, MenuDots.dotted(labels))
-		var idx: int = await pick_screen("pause", menu_title(current_map), entries, {"focus": maxi(0, labels.find(last_label)),
+		var idx: int = await pick_screen("pause", pause_title(), entries, {"focus": maxi(0, labels.find(last_label)),
 			"tabs": quick, "tab": -1, "tab_icons": quick.map(func(l: String) -> Texture2D: return EraMenuKit.icon_for(l, lay)), "header": EraMenuKit.clock_strip() if str(lay.get("header", "none")) == "clock" else null})
 		var chosen: String = ""
 		if ListPicker.tab_of(idx) >= 0 and ListPicker.tab_of(idx) < quick.size():
@@ -718,6 +718,11 @@ static func menu_title(map_id: String = "") -> String:
 		t += "   Ring limit %d" % GameState.level_cap()
 	return t
 
+## The pause list's title in at most three lines: without the place name when name, coins,
+## place and festival ribbons need more (Chimora 100, item 51).
+func pause_title() -> String:
+	return fit_title([menu_title(current_map), menu_title()] as Array[String])
+
 ## Puzzle room tools (area 3 items 1012, 1014). Returns true if an action was picked.
 func run_room() -> bool:
 	var opts: Array[String] = []
@@ -961,13 +966,13 @@ func _held_item(s: Spirling) -> void:
 	var entries: Array[Dictionary] = []
 	if not s.held.is_empty():
 		ids.append("")
-		entries.append({"text": "Take off %s" % Database.item(s.held).get("name", s.held),
+		entries.append({"text": Loc.t("Take off %s") % Loc.t(str(Database.item(s.held).get("name", s.held))),
 			"hint": Loc.t(str(Database.item(s.held).get("description", "")))})
 	for id: Variant in GameState.inventory:
 		if GameState.item_count(str(id)) > 0 and BattleRules.is_holdable(str(id)):
 			ids.append(str(id))
 			var it: Dictionary = Database.item(str(id))
-			entries.append({"text": "%s x%d" % [it.get("name", id), GameState.item_count(str(id))], "icon": KeepsakeIcons.for_era(str(id)),
+			entries.append({"text": "%s x%d" % [Loc.t(str(it.get("name", id))), GameState.item_count(str(id))], "icon": KeepsakeIcons.for_era(str(id)),
 				"hint": Loc.t(str(it.get("description", ""))) + TraitKit.rarity_line(str(id))})
 	if ids.is_empty() and not KeepsakeKit.any_set(GameState.party):
 		await info("You have nothing a Spirling can hold.\nKeepsakes are sold in Thornridge.")
@@ -975,7 +980,7 @@ func _held_item(s: Spirling) -> void:
 	# Keepsake sets (KAMPF_PLAN_1000 307).
 	ids.append("@sets")
 	entries.append({"text": "Keepsake sets", "hint": Loc.t("Save what it holds, or put a saved set back on.")})
-	var now: String = "Holding: %s" % (Database.item(s.held).get("name", s.held) if not s.held.is_empty() else "nothing")
+	var now: String = Loc.t("Holding: %s") % (Loc.t(str(Database.item(s.held).get("name", s.held))) if not s.held.is_empty() else Loc.t("nothing"))
 	var idx: int = await pick(now, entries)
 	if idx < 0:
 		return
@@ -1018,7 +1023,7 @@ func _use_item_on(s: Spirling) -> void:
 			return
 		var entries: Array[Dictionary] = []
 		for id: String in ids:
-			var row: Dictionary = {"text": "%s x%d" % [Database.item(id).get("name", id), GameState.item_count(id)]}
+			var row: Dictionary = {"text": bag_row_text(id)}
 			var after: String = vigor_preview(Database.item(id), s)
 			if not after.is_empty():
 				row["hint"] = after
@@ -1061,6 +1066,11 @@ static func _draw_new_dot(b: Button, id: String) -> void:
 		return
 	var ink: Color = b.get_theme_color("font_color", "Button")
 	b.draw_rect(Rect2(b.size.x - 5, floorf(b.size.y / 2.0) - 1, 3, 3), ink)
+
+## "Aroma of Echo x4": a satchel row in the player's language. The name is translated on its own
+## first; translated as one line, "Echo Scent x4" came out half done ("Эхо Scent x4").
+static func bag_row_text(id: String) -> String:
+	return "%s x%d" % [Loc.t(str(Database.item(id).get("name", id))), GameState.item_count(id)]
 
 ## Name, count and what a satchel thing does, for a long press on its row.
 static func item_details(id: String) -> String:
@@ -1110,6 +1120,10 @@ func title_toggle(id: String, text: String, code: int) -> Button:
 	b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	b.text = text
 	b.clip_text = true
+	# Wide enough for its words (up to half the row): clipped to nothing it left an empty band
+	# with a one-pixel stub under the title (Chimora 100, item 64).
+	var f: Font = UITheme.font()
+	b.custom_minimum_size.x = minf(f.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x + 8.0, 96.0)
 	b.focus_mode = Control.FOCUS_NONE
 	b.pressed.connect(func() -> void:
 		Sound.sfx("select")
@@ -1169,7 +1183,7 @@ func run_bag() -> void:
 				hint = Loc.t(BATTLE_ONLY) + " " + hint
 			elif bool(it0.get("gear", false)):
 				hint = gear_hint(id)
-			var row: Dictionary = {"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)], "hint": hint}
+			var row: Dictionary = {"text": bag_row_text(id), "hint": hint}
 			var pic: Texture2D = EraMenuKit.icon_for("pocket%d" % bag_tab(it0), lay)
 			if pic != null:
 				row["icon"] = pic

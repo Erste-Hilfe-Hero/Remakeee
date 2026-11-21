@@ -45,7 +45,8 @@ static func menu_rows() -> Array[String]:
 		"Friends, mail: On", "Friends, mail: Off", "Try again", "Open the store",
 		"No, I am new", "Yes, I have a code", "Lantern Mail", "Add a friend...", "World goal of the week",
 		"Weekly board", "Blocked Wayfarers", "Copy my code", "Sound test...", "Music", "Sound effects",
-		"Cries", "Imprint & privacy", "Licences", "Take the Iron Oath", "Not now", "Delete", "Keep"])
+		"Cries", "Imprint & privacy", "Licences", "Take the Iron Oath", "Not now", "Delete", "Keep",
+		AccountMenu.RULES_ROW, AccountMenu.NOTICES_ROW, "Download my data", "Earlier saves", "For parents..."])
 	return out
 
 func _width(text: String) -> float:

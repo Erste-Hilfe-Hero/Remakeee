@@ -29,7 +29,7 @@ static func run(menu: MenuHost) -> void:
 		var entries: Array[String] = []
 		for n: Dictionary in notices:
 			entries.append(("" if bool(n.get("read", false)) else "* ") + Loc.t(title_of(n)) % int(n.get("report_id", 0)))
-		var idx: int = await menu.pick_strings("Messages from the team", entries)
+		var idx: int = await menu.pick_strings(AccountMenu.NOTICES_ROW, entries)
 		if idx < 0:
 			return
 		await show(menu, notices[idx])

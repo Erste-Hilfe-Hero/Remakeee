@@ -262,7 +262,11 @@ func test_transfer_keeps_purchases() -> void:
 func test_shop_menu_texts() -> void:
 	Loc.set_language("de")
 	Billing.state = {"balance": 500}
-	assert_eq(ShopMenu.title(), "Shop\n500 Rissglas (≈ 4,95 €)")
+	# The balance stays on one line where it fits, else the euro value moves to its own line
+	# whole, never "(≈ 4,95" / "€)" (Chimora 100, item 60).
+	assert_eq(ShopMenu.balance_text(400.0), "500 Rissglas (≈ 4,95 €)")
+	assert_eq(ShopMenu.balance_text(60.0), "500 Rissglas\n(≈ 4,95 €)")
+	assert_string_starts_with(ShopMenu.title(), "Shop\n500 Rissglas")
 	var o: Dictionary = ShopCatalog.offer("rg_ring_tonic")
 	assert_true(ShopMenu.row_text(o).begins_with("+ Ring-Trank"), ShopMenu.row_text(o))
 	var d: String = ShopMenu.detail_text(o)

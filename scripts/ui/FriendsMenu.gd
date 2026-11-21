@@ -401,7 +401,7 @@ static func report(menu: MenuHost, code: String, name: String, context: String =
 		return
 	var r: Dictionary = await Online.call_fn("report_in", {"p_code": code, "p_reason": reason, "p_context": context, "p_object": ""})
 	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
-		await menu.info(Loc.t("Thank you. Your report has number %d. We will look at it and tell you the result under Account, Messages from the team.") % int(r.data.get("report_id", 0))
+		await menu.info(Loc.t("Thank you. Your report has number %d. We will look at it and tell you the result under Account, Team messages.") % int(r.data.get("report_id", 0))
 			+ "\n" + Loc.t("You can also block %s.") % name)
 	else:
 		await menu.info(error_text(r))

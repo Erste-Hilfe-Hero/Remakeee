@@ -201,12 +201,22 @@ const SHORT_TITLE: String = "Your choice:"
 ## How many lines [param title] takes as a list title.
 func title_lines(title: String) -> int:
 	var w: float = picker._title.size.x
-	if w < 8.0:
+	# A list not laid out yet has a stale, narrow title; a status line then counted as many
+	# lines and popped up first (Chimora 100, item 51).
+	if w < 8.0 or not picker.is_visible_in_tree():
 		w = get_viewport_rect().size.x - PANEL_MARGIN * 2.0 - ListPicker.BACK_SIZE - 12.0
 	var f: Font = UITheme.font()
 	var line_h: float = f.get_height(UITheme.FONT_SIZE)
 	var h: float = f.get_multiline_string_size(Loc.t(title), HORIZONTAL_ALIGNMENT_LEFT, w, UITheme.FONT_SIZE).y
 	return int(ceil(h / maxf(line_h, 1.0) - 0.01))
+
+## The first of [param candidates] (status titles, fullest first) that fits in TITLE_MAX_LINES,
+## else the last one. A status title never pops up before its list.
+func fit_title(candidates: Array[String]) -> String:
+	for c: String in candidates:
+		if title_lines(c) <= TITLE_MAX_LINES:
+			return c
+	return candidates[candidates.size() - 1] if not candidates.is_empty() else ""
 
 ## The last sentence of a long question, if it fits in three lines, else "Your choice:".
 func short_title(title: String) -> String:
