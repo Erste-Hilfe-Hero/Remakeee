@@ -391,7 +391,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"wardrobe": "Put on or take off the looks you got in the shop.",
 	"text_speed": "How fast text appears in talks and battles.",
 	"battle_speed": "Plays battle animations faster.",
-	"auto_battle": "Wild battles pick moves by themselves.",
+	"auto_battle": "Off, wild battles only, or every story battle. Wardens and rivals ask first.",
 	"bench_lessons": "Spirlings on the bench grow too.",
 	"wild_ward": "No wild Spirlings step out while it is on.",
 	"damage_preview": "Shows how hard a move would hit before you choose it.",
@@ -482,7 +482,7 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["text_speed", "Text speed: %s" % String(GameState.TextSpeed.keys()[GameState.text_speed]).capitalize()],
 				["auto_text", "Auto text: %s" % ("On" if GameState.auto_text else "Off")],
 				["battle_speed", "Battle speed: %dx" % int(GameState.battle_speed_scale())],
-				["auto_battle", "Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off")],
+				["auto_battle", BattleComfort.auto_setting_label(GameState.auto_mode)],
 				["bench_lessons", "Bench lessons: %s" % shop_or("bench_lessons", "On" if GameState.bench_xp else "Off")],
 				["wild_ward", "Wild Ward: %s" % shop_or("wild_ward", "On" if GameState.wild_ward else "Off")],
 				["damage_preview", "Damage preview: %s" % shop_or("damage_preview", "On" if GameState.damage_preview else "Off")],
@@ -572,7 +572,7 @@ func _settings_action(key: String, dir: int = 1) -> void:
 		"battle_speed":
 			GameState.cycle_battle_speed()
 		"auto_battle":
-			GameState.auto_battle = not GameState.auto_battle
+			GameState.auto_mode = (GameState.auto_mode + 1) % BattleComfort.AUTO_MODE_NAMES.size()
 		"bench_lessons":
 			GameState.bench_xp = not GameState.bench_xp
 		"wild_ward":

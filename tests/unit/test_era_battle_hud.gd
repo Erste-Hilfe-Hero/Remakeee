@@ -48,6 +48,8 @@ func _named_rects(era: int, l: Dictionary) -> Dictionary:
 		"player plate": EraBattleHud.plate_outer(era, l.player_plate, bool(l.player_slant_left)),
 		"foe sprite": l.foe_sprite, "player sprite": l.player_sprite,
 		"foe team": l.foe_team, "player team": l.player_team, "goal": l.goal,
+		# The Auto tab at the right edge above the text box (plan Chimora 100, item 23).
+		"auto": l.auto,
 	}
 	for i: int in (l.buttons as Array).size():
 		out["button %d" % i] = l.buttons[i]
@@ -78,21 +80,36 @@ func test_each_era_has_its_own_look() -> void:
 	assert_eq(EraBattleHud.text(5, "info_card"), "rich")
 
 func test_nothing_overlaps_on_any_era_screen() -> void:
-	for era: int in range(1, 6):
-		var f: Vector2 = _field(era)
-		assert_gt(f.y, 100.0, "era %d keeps a field" % era)
-		var sp: Array[Rect2] = _sprites(era, f)
-		var rects: Dictionary = _named_rects(era, EraBattleHud.single_layout(era, f, sp[0], sp[1], 7))
-		var names: Array = rects.keys()
-		var screen := Rect2(Vector2.ZERO, f)
-		for i: int in names.size():
-			var a: Rect2 = rects[names[i]]
-			assert_true(screen.encloses(a), "era %d: %s %s inside the field %s" % [era, names[i], a, f])
-			for j: int in range(i + 1, names.size()):
-				# The two Spirlings are the stage's business; everything else is the HUD's.
-				if str(names[i]).ends_with("sprite") and str(names[j]).ends_with("sprite"):
-					continue
-				assert_false(a.intersects(rects[names[j]]), "era %d: %s %s and %s %s overlap" % [era, names[i], a, names[j], rects[names[j]]])
+	# Plain, and with Big buttons and the widest Log word (plan Chimora 100, items 17, 57).
+	for big: bool in [false, true]:
+		for era: int in range(1, 6):
+			_check_single(era, big, 0.0 if not big else EraBattleHud.side_button(era).x * 3.0)
+
+func _check_single(era: int, big: bool, log_text_w: float) -> void:
+	var f: Vector2 = _field(era)
+	f.y -= BattleComfort.menu_height(era, big) - EraBattleHud.menu_height(era)
+	assert_gt(f.y, 100.0, "era %d keeps a field" % era)
+	var sp: Array[Rect2] = _sprites(era, f)
+	var l: Dictionary = EraBattleHud.single_layout(era, f, sp[0], sp[1], 7, big, EraBattleHud.log_width(era, log_text_w))
+	var rects: Dictionary = _named_rects(era, l)
+	assert_eq((l.auto as Rect2).end, f, "era %d: the Auto tab stands in the corner on the text box" % era)
+	if big:
+		# Big buttons leave Era I/II a field too short for every plate; the tab still stays clear
+		# of the plates, team rows and buttons.
+		for k: Variant in rects:
+			if k != "auto" and not str(k).ends_with("sprite"):
+				assert_false((rects[k] as Rect2).intersects(l.auto), "era %d big: %s and the Auto tab overlap" % [era, k])
+		return
+	var names: Array = rects.keys()
+	var screen := Rect2(Vector2.ZERO, f)
+	for i: int in names.size():
+		var a: Rect2 = rects[names[i]]
+		assert_true(screen.encloses(a), "era %d: %s %s inside the field %s" % [era, names[i], a, f])
+		for j: int in range(i + 1, names.size()):
+			# The two Spirlings are the stage's business; everything else is the HUD's.
+			if str(names[i]).ends_with("sprite") and str(names[j]).ends_with("sprite"):
+				continue
+			assert_false(a.intersects(rects[names[j]]), "era %d: %s %s and %s %s overlap" % [era, names[i], a, names[j], rects[names[j]]])
 
 func test_formation_band_stays_above_the_foes() -> void:
 	for era: int in range(1, 6):
@@ -100,6 +117,9 @@ func test_formation_band_stays_above_the_foes() -> void:
 		var l: Dictionary = EraBattleHud.formation_layout(era, w, 7)
 		var rects: Dictionary = {"ledger": EraBattleHud.plate_outer(era, l.ledger, false), "player team": l.player_team,
 			"foe team": l.foe_team, "goal": l.goal}
+		# Without a field height the Auto button waits in the band.
+		assert_true(bool(l.auto_band))
+		rects["auto"] = l.auto
 		for i: int in (l.buttons as Array).size():
 			rects["button %d" % i] = l.buttons[i]
 		var names: Array = rects.keys()
@@ -394,3 +414,35 @@ func test_german_hud_words() -> void:
 	for key: String in ["Strong", "Weak", "No effect", "Again: -", "Your team", "Foe's team"]:
 		assert_ne(de.lookup(key), "", key)
 	assert_eq(de.lookup("Again: %s x%d" % ["Tonic", 3]).count("x3"), 1)
+
+# --- Auto tab (plan Chimora 100, items 17, 18, 23) ------------------------------------------------
+
+func test_auto_tab_is_finger_sized_in_every_era() -> void:
+	for era: int in range(1, 6):
+		assert_gte(EraBattleHud.auto_dp(era), 46.0, "era %d: the Auto tab is at least 46 dp tall on a 440 pt phone" % era)
+		assert_gt(EraBattleHud.auto_size(era).y, EraBattleHud.side_button(era).y, "era %d: taller than the small buttons" % era)
+		var big: Vector2 = EraBattleHud.auto_size(era, true)
+		assert_gt(big.y, EraBattleHud.auto_size(era).y, "era %d: grows with Big buttons" % era)
+		assert_gt(big.x, EraBattleHud.auto_size(era).x)
+	assert_eq(EraBattleHud.auto_size(1), Vector2(30, 17), "Era I/II: two 7 px lines, 52 dp on a 440 pt phone")
+	assert_eq(EraBattleHud.auto_size(3), Vector2(34, 22))
+	assert_eq(EraBattleHud.auto_size(5), Vector2(52, 30))
+
+func test_formation_auto_tab_above_the_text_box_when_the_rank_leaves_room() -> void:
+	for era: int in range(1, 6):
+		var f: Vector2 = _field(era)
+		for ours: int in [2, 3, 4]:
+			var l: Dictionary = EraBattleHud.formation_layout(era, f.x, 7, f.y, ours)
+			var tab: Rect2 = l.auto
+			if bool(l.auto_band):
+				assert_lte(tab.end.y, float(EraBattleHud.FORMATION_TOP), "era %d, %d own: Auto in the band" % [era, ours])
+				continue
+			assert_eq(tab.end, f, "era %d, %d own: Auto in the corner on the text box" % [era, ours])
+			assert_gt(tab.position.x, EraBattleHud.rank_end(era, ours), "era %d: clear of the player's rank" % era)
+	assert_false(bool(EraBattleHud.formation_layout(1, 144, 7, 134, 2).auto_band), "Era I 2v2: a tab")
+
+func test_log_button_grows_for_long_words() -> void:
+	var b: Vector2 = EraBattleHud.side_button(1)
+	assert_eq(EraBattleHud.log_width(1, 10.0), b.x, "short words keep the small button")
+	assert_eq(EraBattleHud.log_width(1, 34.0), 38.0, "\"Journal\" gets its width")
+	assert_eq(EraBattleHud.log_width(1, 500.0), b.x * 2.0 + 2.0, "never wider than two buttons")

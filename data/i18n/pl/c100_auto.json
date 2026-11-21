@@ -1,0 +1,15 @@
+{
+ "_comment": "Polish texts for the German table c100_auto. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "Auto: %s": "Auto: %s",
+  "Wild only": "Tylko dzikie",
+  "All story battles": "Wszystkie walki",
+  "Off, wild battles only, or every story battle. Wardens and rivals ask first.": "Wył., tylko dzikie walki albo wszystkie walki fabularne. Strażnicy i rywale pytają najpierw.",
+  "A strong foe. Let Auto fight this battle?": "Silny przeciwnik. Niech Auto stoczy tę walkę?",
+  "Auto on": "Auto wł.",
+  "Keep control": "Gram sam",
+  "Auto: picking who steps out.": "Auto: wybiera, kto wchodzi.",
+  "Auto stops: this kind is not in your Spirlog yet. Bond or fight on.": "Auto przerywa: tego gatunku nie ma jeszcze w Spirlogu. Zwiąż go albo walcz dalej.",
+  "Turn %d": "Tura %d"
+ }
+}

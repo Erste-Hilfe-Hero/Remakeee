@@ -148,8 +148,16 @@ var text_speed: TextSpeed = TextSpeed.NORMAL
 ## Battle playback speed: index into BATTLE_SPEEDS (1x / 2x / 4x).
 var battle_speed: int = 0
 const BATTLE_SPEEDS: Array[float] = [1.0, 2.0, 4.0]
-## Wild battles pick moves on their own (greedy AI) until the player turns it off.
-var auto_battle: bool = false
+## Auto in battle (plan Chimora 100, item 22): BattleComfort.AutoMode OFF, WILD (wild battles
+## start on Auto) or STORY (Wayfarers too). Saved as "auto_mode"; the old on/off "auto_battle"
+## key is still written and read (an old true means Wild only).
+var auto_mode: int = 0
+## True while any battle starts on Auto (the old on/off setting).
+var auto_battle: bool:
+	get:
+		return auto_mode > 0
+	set(on):
+		auto_mode = maxi(auto_mode, 1) if on else 0
 ## Bench lessons: healthy team members that did not fight get BENCH_XP_SHARE of a fighter's XP.
 var bench_xp: bool = true
 ## Wild Ward (shop, pay-to-win step 6, plan point 37): while on and bought, no wild Spirling steps out.
@@ -850,7 +858,7 @@ func from_dict(d: Dictionary) -> void:
 	in_game = true
 
 func settings_to_dict() -> Dictionary:
-	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
+	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle, "auto_mode": auto_mode,
 		"bench_xp": bench_xp, "wild_ward": wild_ward, "damage_preview": damage_preview, "big_buttons": big_buttons, "easy_battle_text": easy_battle_text, "auto_aim": auto_aim, "damage_numbers": damage_numbers, "bonus_goals": bonus_goals, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"voice_volume": voice_volume, "ambience_volume": ambience_volume, "mono_audio": mono_audio,
@@ -866,7 +874,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	# Older settings files only had an on/off fast-forward; map "on" to 2x.
 	var legacy: int = 1 if bool(d.get("fast_forward", false)) else 0
 	battle_speed = clampi(int(d.get("battle_speed", legacy)), 0, BATTLE_SPEEDS.size() - 1)
-	auto_battle = bool(d.get("auto_battle", false))
+	auto_mode = clampi(int(d.get("auto_mode", 1 if bool(d.get("auto_battle", false)) else 0)), 0, 2)
 	bench_xp = bool(d.get("bench_xp", true))
 	wild_ward = bool(d.get("wild_ward", false))
 	damage_preview = bool(d.get("damage_preview", true))

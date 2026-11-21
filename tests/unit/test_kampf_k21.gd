@@ -131,10 +131,13 @@ func test_overworld_takes_no_coins_after_a_loss() -> void:
 	assert_string_contains(after, "if outcome == BattleModel.Outcome.WIN and not model.is_wild else 0")
 	assert_false(after.substr(0, after.find("\nfunc ", 10)).contains("GameState.money -="), "a loss never costs coins")
 
-func test_command_menu_offers_give_up() -> void:
-	var src: String = FileAccess.get_file_as_string("res://scripts/battle/presenter/CommandMenu.gd")
+## Giving up stays reachable, no longer as a main command next to Item (plan Chimora 100, item
+## 43): the Log's More list and the pause list end with it while orders are asked for.
+func test_battle_offers_give_up_in_the_more_list() -> void:
+	var src: String = FileAccess.get_file_as_string("res://scripts/battle/presenter/BattleScene.gd")
 	assert_string_contains(src, "TurnFlow.can_forfeit(model)")
-	assert_string_contains(src, "\"Give up\"")
+	assert_string_contains(src, "\"Give up\":")
+	assert_has(BattleComfort.more_pages(BattleComfort.PAUSE_TITLE, true), "Give up")
 
 # --- Item 9: swap offer ---
 

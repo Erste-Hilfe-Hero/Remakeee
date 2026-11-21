@@ -10,6 +10,9 @@ var era: int = 1
 var player_team: TeamRow
 var foe_team: TeamRow
 var level_panel: LevelPanel
+## The Auto tab is a small one-line button in the formation band (no room above the text box).
+var auto_small: bool = false
+var _auto_on: bool = false
 
 ## Hooks the HUD onto [param p_scene] once its controls exist (end of BattleScene._build).
 func attach(p_scene: BattleScene) -> void:
@@ -33,7 +36,7 @@ func attach(p_scene: BattleScene) -> void:
 	level_panel.visible = false
 	level_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	scene.add_child(level_panel)
-	for b: Button in [scene._ff_button, scene._auto_button, scene._log_button, scene._back_button]:
+	for b: Button in [scene._ff_button, scene._log_button, scene._back_button]:
 		b.clip_text = true
 		# Thin side margins, so "Auto" fits a small button.
 		for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
@@ -47,6 +50,42 @@ func attach(p_scene: BattleScene) -> void:
 	scene._back_button.visibility_changed.connect(func() -> void:
 		scene._log_button.visible = not scene._back_button.visible)
 	scene._goal_label.clip_text = true
+	scene._log_button.text = Loc.t("Log")
+	scene._log_button.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	dress_auto(false)
+
+## The Auto tab (plan Chimora 100, items 17, 18): "Auto" over "On" or "Off", flush with the
+## right edge (no right border), in the era's accent colour while Auto plays.
+func dress_auto(on: bool) -> void:
+	var b: Button = scene._auto_button
+	_auto_on = on
+	b.text = Loc.t("Auto") if auto_small else Loc.t("Auto") + "\n" + Loc.t("On" if on else "Off")
+	b.clip_text = true
+	b.accessibility_name = Loc.t("Auto") + " " + Loc.t("On" if on else "Off")
+	var c: Dictionary = EraBattleHud.colours(era)
+	var bg: Color = (c.accent as Color) if on else CommandMenu.panel_bg(era)
+	var ink: Color = UITheme.BG if on and UITheme.contrast(UITheme.BG, bg) >= UITheme.contrast(UITheme.INK, bg) else UITheme.INK
+	for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = bg.darkened(0.15) if state == "pressed" else bg
+		sb.border_color = UITheme.INK
+		sb.border_width_left = 1
+		sb.border_width_top = 1
+		sb.border_width_bottom = 1
+		sb.set_content_margin_all(1)
+		sb.content_margin_top = 1
+		sb.content_margin_bottom = 0
+		b.add_theme_stylebox_override(state, sb)
+	for key: String in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_hover_pressed_color"]:
+		b.add_theme_color_override(key, ink)
+	# Era I/II: two 7 px lines in a 17 px tab ("Auto", "On" have no descenders).
+	var pixel: bool = EraBattleHud.line_h(era) <= PixelFont.CELL_H
+	b.add_theme_constant_override("line_spacing", -2 if pixel else 0)
+
+## Width the Log button needs for its word in this language.
+func _log_w() -> float:
+	var b: Button = scene._log_button
+	return EraBattleHud.log_width(era, b.get_theme_font("font").get_string_size(b.text, HORIZONTAL_ALIGNMENT_LEFT, -1, b.get_theme_font_size("font_size")).x)
 
 func _place(n: Control, r: Rect2) -> void:
 	n.position = r.position
@@ -71,7 +110,7 @@ func _team_size() -> int:
 func layout_single() -> void:
 	var f: Vector2 = scene._field.size
 	var l: Dictionary = EraBattleHud.single_layout(era, f, Rect2(scene._foe_sprite.position, scene._foe_sprite.size),
-		Rect2(scene._player_sprite.position, scene._player_sprite.size), _team_size())
+		Rect2(scene._player_sprite.position, scene._player_sprite.size), _team_size(), GameState.big_buttons, _log_w())
 	scene._foe_sprite.position = (l.foe_sprite as Rect2).position
 	scene._player_sprite.position = (l.player_sprite as Rect2).position
 	scene._foe_strip.slant_left = bool(l.foe_slant_left)
@@ -82,8 +121,11 @@ func layout_single() -> void:
 	_place(scene._player_strip, l.player_plate)
 	var buttons: Array = l.buttons
 	_place(scene._ff_button, buttons[0])
-	_place(scene._auto_button, buttons[1])
-	_place(scene._log_button, buttons[2])
+	_place(scene._log_button, buttons[1])
+	_place(scene._auto_button, l.auto)
+	if auto_small:
+		auto_small = false
+		dress_auto(_auto_on)
 	_place(scene._goal_label, l.goal)
 	for row: TeamRow in [player_team, foe_team]:
 		row.compact = false
@@ -93,15 +135,19 @@ func layout_single() -> void:
 ## Formation layout (several Spirlings per side): called after BattleScene._layout_formation.
 func layout_formation() -> void:
 	var f: Vector2 = scene._field.size
-	var l: Dictionary = EraBattleHud.formation_layout(era, f.x, _team_size())
+	var ours: int = scene.model.slot_count(BattleModel.Side.PLAYER) if scene.model != null else 4
+	var l: Dictionary = EraBattleHud.formation_layout(era, f.x, _team_size(), f.y, ours, GameState.big_buttons, _log_w())
 	scene._foe_strip.slant_left = false
 	scene._foe_strip.single = false
 	_place(scene._foe_strip, l.ledger)
 	var buttons: Array = l.buttons
 	_place(scene._ff_button, buttons[0])
-	_place(scene._auto_button, buttons[1])
-	_place(scene._log_button, buttons[2])
-	_place(scene._back_button, buttons[2])
+	_place(scene._log_button, buttons[1])
+	_place(scene._back_button, Rect2((buttons[1] as Rect2).position, EraBattleHud.side_button(era)))
+	_place(scene._auto_button, l.auto)
+	# Only in the band (a full rank of four on a small screen) is Auto a small button.
+	auto_small = bool(l.get("auto_band", false))
+	dress_auto(_auto_on)
 	_place(scene._goal_label, l.goal)
 	for row: TeamRow in [player_team, foe_team]:
 		row.compact = true

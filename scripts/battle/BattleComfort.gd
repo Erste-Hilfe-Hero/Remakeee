@@ -206,11 +206,15 @@ static func interruption(what: int) -> int:
 const PAUSE_TITLE: String = "Battle paused"
 const MORE_PAGES: Array[String] = ["Matchups", "Battle rules", "Stat calculator", "Search", "Settings"]
 
-## The pages of the More list; the pause list starts with Resume.
-static func more_pages(title: String) -> Array[String]:
+## The pages of the More list; the pause list starts with Resume. [param forfeit]: a Wayfarer
+## battle that may be given up ends the list with "Give up" (plan Chimora 100, item 43: no main
+## command next to Item; it still asks before the battle counts as lost).
+static func more_pages(title: String, forfeit: bool = false) -> Array[String]:
 	var out: Array[String] = MORE_PAGES.duplicate()
 	if title == PAUSE_TITLE:
 		out.push_front("Resume")
+	if forfeit:
+		out.append("Give up")
 	return out
 
 ## Start / Escape pauses only a running battle and only when no other list is open.
@@ -220,3 +224,66 @@ static func may_pause(finished: bool, busy: bool) -> bool:
 ## Auto, auto-advancing text and the next event run only while the app is here and not paused.
 static func runs(away: bool, paused: bool) -> bool:
 	return not away and not paused
+
+# --- Auto (plan Chimora 100, items 15-22: Ali 2026-11-21 "im Kampf Auto Knopf seitlich") -------
+
+## The Auto setting: off, wild battles only, or every story battle (Wayfarers too; Wardens,
+## Rift bosses and rivals always start off and ask once).
+enum AutoMode { OFF, WILD, STORY }
+const AUTO_MODE_NAMES: Array[String] = ["Off", "Wild only", "All story battles"]
+## chosen(REST, AUTO_PICK) from the scene: Auto was switched on while the menu waited.
+const AUTO_PICK: int = -5
+
+## Which Auto a battle gets: "wild", "wayfarer", "boss" (Warden, Rift boss, story rival) or
+## "off". Real opponents (League, live duels, raids, tourneys, war, Halls, Trials: all
+## "friendly") stay off. So do the record runs (Tower, Boss Hall, Weekly Giant, Master tour,
+## Masters, Random Rift, weekly echoes, bounties): only battles TrainerData.battle_info marks
+## "story" offer Auto, so no best floor or best time is ever set by Auto.
+static func auto_kind(wild: bool, trainer: Dictionary) -> String:
+	if bool(trainer.get("friendly", false)):
+		return "off"
+	if wild:
+		return "wild"
+	if not bool(trainer.get("story", false)):
+		return "off"
+	if bool(trainer.get("warden", false)) or not str(trainer.get("boss", "")).is_empty() or bool(trainer.get("rival", false)):
+		return "boss"
+	return "wayfarer"
+
+## True when Auto is on as the battle starts: wild battles from "Wild only", Wayfarers from
+## "All story battles"; a boss battle always starts off.
+static func auto_starts_on(kind: String, mode: int) -> bool:
+	match kind:
+		"wild":
+			return mode >= AutoMode.WILD
+		"wayfarer":
+			return mode >= AutoMode.STORY
+	return false
+
+## The AI tier Auto fights with: tier 2 against bosses, tier 1 otherwise and on Story difficulty.
+static func auto_tier(kind: String, difficulty: int) -> int:
+	return 2 if kind == "boss" and difficulty != GameState.Difficulty.STORY else 1
+
+## The new setting after the Auto tab was tapped in a [param kind] battle: a wild battle keeps
+## the choice for the next ones (as before), other battles change only themselves.
+static func auto_mode_after_tap(kind: String, mode: int, on: bool) -> int:
+	if kind != "wild":
+		return mode
+	if on:
+		return maxi(mode, AutoMode.WILD)
+	return AutoMode.OFF
+
+## True when Auto should hand the battle back: a wild Spirling of a kind not yet bonded in the
+## Spirlog stands and the Echo call is open.
+static func auto_yields_bond(m: BattleModel, spirlog: Dictionary) -> bool:
+	if m == null or not m.is_wild or m.bonded != null or not m.bond_block.is_empty():
+		return false
+	for slot: int in m.standing_slots(BattleModel.Side.FOE):
+		var s: Spirling = m.active_spirling(BattleModel.Side.FOE, slot)
+		if s != null and s.data != null and not bool(GameState.upgrade_spirlog_entry(spirlog.get(s.data.species_name, {})).get("bonded", false)):
+			return true
+	return false
+
+## "Auto: Wild only" for the settings list.
+static func auto_setting_label(mode: int) -> String:
+	return Loc.t("Auto: %s") % Loc.t(AUTO_MODE_NAMES[clampi(mode, 0, AUTO_MODE_NAMES.size() - 1)])

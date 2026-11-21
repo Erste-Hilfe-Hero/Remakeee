@@ -2272,6 +2272,8 @@ func _action_battle(args: PackedStringArray, _speaker: NPC) -> void:
 	_text.visible = false
 	SaveManager.save_game()
 	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level())
+	# A story duel (rivals like Jinks, Nib and Tansy) is a boss for Auto: it asks first.
+	info["rival"] = true
 	var outcome: BattleModel.Outcome = await start_battle(team, bool(info.wild), info)
 	busy = true
 	player.frozen = true
@@ -4208,6 +4210,8 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 		model.set_meta(TurnFlow.NO_FORFEIT_META, true)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
+	# The Auto tab (plan Chimora 100, items 15-20): wild, Wayfarer, boss or none at all.
+	scene.auto_kind = BattleComfort.auto_kind(wild, trainer)
 	# A worn shop backdrop (item 4281) replaces the place's own, never a fixed one.
 	var worn: String = GameState.battle_backdrop()
 	scene.backdrop = str(trainer.get("backdrop", worn if not worn.is_empty() else map.backdrop))

@@ -50,6 +50,8 @@ func request_undo() -> void:
 	chosen.emit(BattleAction.Kind.RUN, BattleComfort.UNDO)
 
 const LONG_PRESS: float = 0.45
+## The info card covers the panel's own frame too (the holder sits inside the frame's padding).
+const FRAME_OUT: int = EraBattleHud.FRAME_PAD
 
 ## Era whose look the panel was built in, and its menu style (text, buttons, typed, touch).
 var era: int = 1
@@ -222,7 +224,20 @@ func _ready() -> void:
 	_info_panel.gui_input.connect(func(ev: InputEvent) -> void:
 		if TapInput.is_release(ev):
 			close_info())
-	add_child(_info_panel)
+	# The card stands on the panel's lower edge and grows upward over the text box, in a holder
+	# with no size of its own: a long card (German, Russian) no longer makes the panel taller,
+	# which squeezed the field and pushed the player's plate onto the foe's plate and the small
+	# buttons (plan Chimora 100 item 49, audit-ui #7).
+	var holder := Control.new()
+	holder.name = "info_holder"
+	holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(holder)
+	_info_panel.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	_info_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_info_panel.offset_left = -FRAME_OUT
+	_info_panel.offset_right = FRAME_OUT
+	_info_panel.offset_bottom = FRAME_OUT
+	holder.add_child(_info_panel)
 	apply_size()
 
 ## Big buttons (KAMPF_PLAN items 623, 896): every art row and command grows to BattleComfort.art_h /
@@ -361,6 +376,8 @@ func open_info(index: int) -> void:
 		lines.remove_at(0)
 		text = "\n".join(lines)
 	_info_label.text = text
+	# At least as tall as the panel, so it covers the arts; taller cards rise over the text box.
+	_info_panel.custom_minimum_size.y = (_info_panel.get_parent() as Control).size.y + FRAME_OUT * 2
 	_info_panel.visible = true
 	if rich and not Juice.reduced():
 		_info_panel.modulate.a = 0.0
@@ -752,10 +769,8 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 	_run.disabled = not BattleAction.Kind.RUN in kinds
 	# A Trial can be restarted at any time (item 708).
 	_run.text = command_label("Restart" if model.has_meta("puzzle_max") else "Leave")
-	# Against a Wayfarer the button gives up the battle, after a yes (KAMPF_PLAN_1000 item 8).
-	if TurnFlow.can_forfeit(model) and not model.is_partner_slot(BattleModel.Side.PLAYER, slot):
-		_run.text = command_label("Give up")
-		_run.disabled = false
+	# Giving up a Wayfarer battle (KAMPF_PLAN_1000 item 8) is no main command next to Item any
+	# more (plan Chimora 100, item 43): it waits in the Log's More list and the pause list.
 	_fit_command(_run)
 	if model.has_meta("puzzle_max"):
 		_run.disabled = false
@@ -928,7 +943,10 @@ func _fit_art_name(i: int) -> void:
 	var fs: int = _move_costs[i].get_theme_font_size("font_size")
 	var tail: float = maxf(f.get_string_size(_move_costs[i].text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x,
 		f.get_string_size(_move_hints[i].text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x if _move_hints[i].visible else 0.0)
-	var right: int = (int(ceilf(tail)) + ART_COST_GAP) if tail > 0.0 else 1
+	# The kind symbol stands left of the cost (_draw_kind): the name ends before it, not under it
+	# ("Zarpazo del O...*4E", plan Chimora 100 item 57).
+	var kind_w: int = (BattleHelp.KIND_ICON_SIZE + 3) if not _move_costs[i].text.is_empty() and i < _shown_moves.size() else 0
+	var right: int = (int(ceilf(tail)) + ART_COST_GAP + kind_w) if tail > 0.0 else 1
 	for state: String in ["normal", "hover", "pressed", "disabled"]:
 		if b.has_theme_stylebox_override(state) and b.get_theme_stylebox(state).content_margin_right != right:
 			b.get_theme_stylebox(state).content_margin_right = right
