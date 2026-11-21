@@ -21,3 +21,12 @@ Plugin `ChimoraAppUpdate` (source `plugins/chimora_appupdate/android`, built by
 `tools/build_appupdate_plugin.sh` into `addons/chimora_appupdate/bin/`, CI only) uses
 `com.google.android.play:app-update:2.1.0`, the newest stable on 2026-11-14. It adds no permission.
 See docs/LIVE_CONTENT.md, "In-game updates".
+
+## Play In-App Review
+
+Plugin `ChimoraReview` (source `plugins/chimora_review/android`, built by
+`tools/build_review_plugin.sh` into `addons/chimora_review/bin/`, CI only) uses
+`com.google.android.play:review:2.0.2`, the newest stable on 2026-11-21 (Google Maven metadata).
+It adds no permission and no install code. `scripts/online/ReviewAsk.gd` decides when it is asked
+(plan Chimora 100, item 75); on iOS the same script asks `ChimoraStoreKit.request_review`
+(`AppStore.requestReview(in:)`, item 74).

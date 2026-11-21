@@ -65,4 +65,4 @@ locale/translations=PackedStringArray("res://ios/lproj/de.po", "res://ios/lproj/
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/chimora_appupdate/plugin.cfg", "res://addons/chimora_billing/plugin.cfg", "res://addons/chimora_deeplink/plugin.cfg", "res://addons/gut/plugin.cfg")
+enabled=PackedStringArray("res://addons/chimora_appupdate/plugin.cfg", "res://addons/chimora_billing/plugin.cfg", "res://addons/chimora_deeplink/plugin.cfg", "res://addons/chimora_review/plugin.cfg", "res://addons/gut/plugin.cfg")

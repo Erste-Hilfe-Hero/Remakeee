@@ -2097,6 +2097,8 @@ func prologue() -> void:
 	await run_dialogue("lighthouse/aldo")
 	# Saved right after the prologue, and the tip says saving also works in the menu (1988).
 	SaveManager.save_game()
+	# A prologue started offline goes online here: account and first sync (plan Chimora 100, item 77).
+	Online.offline_save_point()
 	await _locked_say(Tips.take("save"))
 	show_walk_hint()
 
@@ -3674,7 +3676,8 @@ func after_tamer_win(n: NPC) -> void:
 	if not gift.is_empty():
 		Sound.sfx("coin")
 		await say([WayfarerRewards.line(def, gift)] as Array[String])
-	if def.has("warden") and GameState.seal_rift(str(def.warden)):
+	var sealed: bool = def.has("warden") and GameState.seal_rift(str(def.warden))
+	if sealed:
 		var lines: Array[String] = ["The Warden's bond wakes again.", "Together you mend the Rift. The Hush lifts!"]
 		if GameState.has_flag("storage_remote"):
 			lines.append("Your resting Spirlings can now be called from the menu, wherever you are.")
@@ -3713,6 +3716,8 @@ func after_tamer_win(n: NPC) -> void:
 	VirtualPad.set_wanted(true)
 	player.frozen = false
 	busy = false
+	# The store's own rating sheet, after the win is saved (plan Chimora 100, items 74-75).
+	ReviewAsk.after_win(ReviewAsk.is_highlight(def, sealed))
 
 ## Iron Oath messages for [param retired], refilling or ending the oath if the party is empty.
 static func oath_lines(retired: Array[String]) -> Array[String]:

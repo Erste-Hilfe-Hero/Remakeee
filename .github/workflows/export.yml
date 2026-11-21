@@ -127,6 +127,9 @@ jobs:
       # Google Play in-app updates (docs/LIVE_CONTENT.md): built for exactly this engine version.
       - name: Build app update plugin
         run: tools/build_appupdate_plugin.sh
+      # Google Play In-App Review (plan Chimora 100, item 75): built for exactly this engine version.
+      - name: Build review plugin
+        run: tools/build_review_plugin.sh
       - name: Create throwaway debug keystore
         run: |
           keytool -genkeypair -v -keystore "$RUNNER_TEMP/debug.keystore" -storepass android \
@@ -155,6 +158,10 @@ jobs:
         run: |
           unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'de/chimora/appupdate/ChimoraAppUpdate'
           unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'com/google/android/play/core/appupdate/AppUpdateManager'
+      - name: Review plugin and Play In-App Review are in the APK
+        run: |
+          unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'de/chimora/review/ChimoraReview'
+          unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'com/google/android/play/core/review/ReviewManager'
       # The itch.io flavour installs a downloaded APK; only it may ask for REQUEST_INSTALL_PACKAGES.
       - name: Export itch.io APK (debug signed, permission check only)
         env:
@@ -275,6 +282,9 @@ jobs:
       # Google Play in-app updates (docs/LIVE_CONTENT.md): built for exactly this engine version.
       - name: Build app update plugin
         run: tools/build_appupdate_plugin.sh
+      # Google Play In-App Review (plan Chimora 100, item 75): built for exactly this engine version.
+      - name: Build review plugin
+        run: tools/build_review_plugin.sh
       - name: Stamp version code (Play needs a higher code for every upload)
         run: |
           code=$((1000 + ${{ github.run_number }}))
