@@ -1,0 +1,12 @@
+{
+ "_comment": "Polish texts for the German table c100_notify. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "%s is back from the roaming trip.": "%s wraca z wyprawy.",
+  "A new Find of the Day is waiting in Veydal.": "W Veydal czeka nowe Znalezisko Dnia.",
+  "Chimora can send a short note on this phone when a roaming trip is over or a new Find of the Day is waiting. Never at night, at most one a day each. You can turn it off any time in Settings.": "Chimora może wysłać krótkie powiadomienie na ten telefon, gdy wyprawa się skończy albo czeka nowe Znalezisko Dnia. Nigdy w nocy, najwyżej jedno dziennie każdego rodzaju. Możesz je wyłączyć w każdej chwili w Ustawieniach.",
+  "Turn on notifications?": "Włączyć powiadomienia?",
+  "Notifications are off unless you turn them on. They are planned on this phone only; nothing about them is sent anywhere.": "Powiadomienia są wyłączone, dopóki ich nie włączysz. Są planowane tylko na tym telefonie; nic nie jest nigdzie wysyłane.",
+  "Notifications: %s": "Powiadomienia: %s",
+  "A note on this phone when a trip is over or a new Find of the Day waits. If the phone blocks it, allow it in the phone settings.": "Powiadomienie na tym telefonie, gdy wyprawa się skończy albo czeka nowe Znalezisko Dnia. Jeśli telefon je blokuje, zezwól w jego ustawieniach."
+ }
+}

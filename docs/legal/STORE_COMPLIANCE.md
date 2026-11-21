@@ -27,6 +27,11 @@ nicht flüchtig, nicht geteilt):
 | E-Mail-Adresse, Geräte-IDs, Absturzprotokolle, Diagnose | **Nein** |
 | Standort → Ungefährer Standort | **Nein** (IP-Adressen liegen nur 7 Tage in Sicherheits-Logs und werden nicht zur Standortbestimmung genutzt) |
 
+Lokale Mitteilungen (plan Chimora 100, item 76, `scripts/core/LocalNotify.gd`) ändern daran nichts: Sie werden
+nur auf dem Gerät geplant (AlarmManager / UNUserNotificationCenter), es gibt keinen Push-Dienst und kein
+Geräte-Token, nichts verlässt das Gerät. Android 13+ fragt `POST_NOTIFICATIONS` erst, nachdem der Spieler im
+Spiel Ja gesagt hat; keine Exact-Alarm- oder Boot-Berechtigung. Texte sind neutral (nie Shop oder Kauf).
+
 Weitere Play-Console-Punkte:
 - **Datenschutzerklärung:** öffentliche URL (kein PDF, keine Store-Seite), `https://chimora.161-97-102-171.sslip.io/datenschutz`.
 - **Zielgruppe und Inhalte:** Zielgruppe **13 Jahre und älter** wählen und nicht gezielt an Kinder

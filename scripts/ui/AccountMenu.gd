@@ -34,7 +34,8 @@ static func run(menu: MenuHost) -> void:
 			2:
 				await menu.info(ONLINE_RULES_TRADE if Online.flag_on("trade_spirling") else ONLINE_RULES)
 			3:
-				await menu.info(PRIVACY_NOTE)
+				# Plan Chimora 100, item 76: the opt-in phone notes stay on the phone.
+				await menu.info(Loc.t(PRIVACY_NOTE) + "\n\n" + Loc.t(LocalNotify.PRIVACY_LINE))
 			4:
 				if await _delete(menu):
 					return

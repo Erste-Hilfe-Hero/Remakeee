@@ -93,6 +93,8 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	# Action ids (plan item 3011) must differ after every start of the app.
 	_rng.randomize()
+	# Opt-in phone notes (plan Chimora 100, item 76): cancel what was planned while away.
+	LocalNotify.app_opened()
 	backend = make_backend()
 	_load_session()
 	_overlay = ReconnectOverlay.new()
@@ -264,6 +266,11 @@ func check_store() -> void:
 
 ## Back from the background: new content, and a required update sends the player to the title.
 func _notification(what: int) -> void:
+	# Opt-in phone notes (item 76): planned when the app leaves, cancelled when it is back.
+	if what == NOTIFICATION_APPLICATION_PAUSED or what == NOTIFICATION_WM_CLOSE_REQUEST:
+		LocalNotify.app_left()
+	elif what == NOTIFICATION_APPLICATION_RESUMED:
+		LocalNotify.app_opened()
 	if what == NOTIFICATION_APPLICATION_RESUMED and state == State.ONLINE:
 		_on_resumed()
 

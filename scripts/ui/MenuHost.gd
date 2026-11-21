@@ -405,6 +405,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"soft_defeat": "Story only: after a lost battle your team wakes where it fell, with half its Vigor.",
 	"tips": "Short hints the first time something new comes up.",
 	"play_reminder": "A short note after 90 minutes of play.",
+	"notify": "A note on this phone when a trip is over or a new Find of the Day waits. If the phone blocks it, allow it in the phone settings.",
 	"difficulty": "How strong your opponents are. You can change it any time.",
 	"iron_oath": "Spirlings that faint retire for good. Only before your first Rift.",
 	"challenges": "Extra rules for a harder journey. Taken before your first Rift, dropped any time.",
@@ -493,6 +494,9 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
 				["play_reminder", "Break reminder: %s" % ("On" if GameState.play_reminder else "Off")],
 			]
+			# Opt-in phone notes (plan Chimora 100, item 76) only where the phone can show them.
+			if LocalNotify.available():
+				rows.append(["notify", "Notifications: %s" % ("On" if LocalNotify.is_enabled() else "Off")])
 			# Difficulty and the Iron Oath only during a journey.
 			if GameState.in_game:
 				# A lowered challenge stays visible (item 746).
@@ -599,6 +603,8 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.tips_enabled = not GameState.tips_enabled
 		"play_reminder":
 			GameState.play_reminder = not GameState.play_reminder
+		"notify":
+			LocalNotify.toggle()
 		"volume":
 			GameState.volume = step_volume(GameState.volume, dir)
 			GameState.apply_volume()

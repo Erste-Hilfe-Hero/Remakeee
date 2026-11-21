@@ -3257,6 +3257,8 @@ func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
 		if Expeditions.send(ready[who], hours, dest):
 			DailyTasks.record("trip", {"map": map.id})
 			await menu.info(Loc.t("%s sets off. Back in %d hours.") % [ready[who].display_name(), hours])
+			# The one opt-in question for phone notes (plan Chimora 100, item 76), only where they exist.
+			await LocalNotify.offer(menu)
 	menu.queue_free()
 
 ## Seasonal festival (item 89): the crier names the festival and hands out its gift once a year.
