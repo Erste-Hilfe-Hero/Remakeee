@@ -691,3 +691,26 @@ have a use limit (`max_uses`), a start and an end. Errors: `no_such_code`, `code
 `code_expired`, `slow_down` (10 tries an hour against guessing). Codes are made with
 `tools/online/promo_code.sql`. Rewards are free bag items only, never paid store products (App Store 3.1.1);
 for paid products use Apple's offer codes and Play promo codes.
+
+## Where new players stop (funnel)
+
+Chimora 100 plan, item 79 (Ali said yes on 2026-11-21, with the line in the privacy note). `admin_funnel(from, to)`
+(migration `20261121079000_funnel_view.sql`) counts, per sign-up day: accounts, accounts with a save, how many
+reached each story step (save flags `got_starter`, `aldo_gift`, `met_kestra`, `beat_story_rival_jinks_1`,
+`kestra_spar`, `rift_cinder_sealed`, `rift_tide_sealed`, `aldo_dock_told`, in any slot), who was seen again 1 and
+7 days after sign-up (`profiles.last_seen`), and for players not seen for 7 days: median play time, the most common
+map of their newest save and the share with a lost Warden try (`records.warden_losses`, Orrin first) or a lowered
+difficulty (`records.difficulty_lowered`). Only numbers and map ids come out, never an id or a name; it stores
+nothing new. Only the database owner and `service_role` can call it (players and anon cannot, tested in
+`tools/online/sql_test/test_funnel.sql`). The monitor's test accounts delete themselves, so they are not counted.
+Not in LocalBackend (admin only). Run it in the database console (see Looking into the database):
+
+```sh
+docker compose exec -T db psql -U postgres -h localhost -v from=2026-11-01 -v to=2026-11-14 < tools/online/funnel_report.sql
+```
+
+The privacy note (Settings, Account, Privacy), `docs/legal/DATENSCHUTZ.md` 3.1, `PRIVACY_POLICY_EN.md` and
+`VERARBEITUNGEN.md` say that anonymous counts of game progress are used to improve the game; the store forms
+(`docs/legal/STORE_COMPLIANCE.md`) list the purpose "Analytics" for gameplay content. Item 81 (the daily report
+shows these steps) runs the same script over ssh; the server has no service-role API key (setup.sh only makes
+the anon key), so a call through `/rest/v1/rpc/admin_funnel` would first need one signed with `JWT_SECRET`.
