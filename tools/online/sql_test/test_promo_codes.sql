@@ -1,5 +1,6 @@
 -- Promo codes (20261115100000_promo_codes.sql): once per account, use limit, time window,
--- items into the bag of the stored save. The same cases as tests/unit/test_promo_codes.gd.
+-- items into the bag of the stored save, never shop items (20261121120000_promo_free_only.sql).
+-- The same cases as tests/unit/test_promo_codes.gd.
 insert into auth.users (id) values
   ('20000000-0000-0000-0000-000000000071'), ('20000000-0000-0000-0000-000000000072'),
   ('20000000-0000-0000-0000-000000000073')
@@ -13,6 +14,14 @@ insert into public.promo_codes (code, reward, max_uses, ends_at, note) values
   ('TESTPRM1', '{"tonic": 3, "revival_leaf": 1}', null, null, 'test'),
   ('ONLYONE1', '{"tonic": 1}', 1, null, 'test'),
   ('OLDCODE1', '{"tonic": 1}', null, now() - interval '1 day', 'test')
+on conflict (code) do nothing;
+-- Shop items in a reward (3.1.1): an rg_* id, and a plain id that a shop offer grants.
+insert into public.shop_offers (id, product_id, data) values
+  ('test_paid_offer', 'de.chimora.test.paid', '{"grants": [{"t": "item", "id": "test_paid_gem", "n": 1}]}')
+on conflict (id) do nothing;
+insert into public.promo_codes (code, reward, max_uses, ends_at, note) values
+  ('PAIDRG01', '{"tonic": 1, "rg_grand_tonic": 1}', null, null, 'test'),
+  ('PAIDGEM1', '{"test_paid_gem": 1}', null, null, 'test')
 on conflict (code) do nothing;
 insert into public.promo_codes (code, reward, starts_at, note) values
   ('LATER001', '{"tonic": 1}', now() + interval '1 day', 'test')
@@ -31,6 +40,8 @@ insert into pr values ('again', public.promo_redeem('TESTPRM1', 1, 5));
 insert into pr values ('nope', public.promo_redeem('NOSUCH99', 1, 5));
 insert into pr values ('old', public.promo_redeem('OLDCODE1', 1, 5));
 insert into pr values ('later', public.promo_redeem('LATER001', 1, 5));
+insert into pr values ('paidrg', public.promo_redeem('PAIDRG01', 1, 5));
+insert into pr values ('paidgem', public.promo_redeem('PAIDGEM1', 1, 5));
 insert into pr values ('one', public.promo_redeem('ONLYONE1', 1, 5));
 select pg_temp.as_user('72');
 insert into pr values ('one2', public.promo_redeem('ONLYONE1', 1, 2));
@@ -50,6 +61,9 @@ begin
   assert (select v->>'error' from pr where k = 'nope') = 'no_such_code';
   assert (select v->>'error' from pr where k = 'old') = 'code_expired';
   assert (select v->>'error' from pr where k = 'later') = 'no_such_code', 'not started yet';
+  assert (select v->>'error' from pr where k = 'paidrg') = 'no_such_code', 'no rg_* items from a promo code';
+  assert (select v->>'error' from pr where k = 'paidgem') = 'no_such_code', 'no item a shop offer grants';
+  assert not exists (select 1 from public.promo_redemptions where code in ('PAIDRG01', 'PAIDGEM1')), 'nothing redeemed';
   assert (select v->>'ok' from pr where k = 'one') = 'true';
   assert (select v->>'error' from pr where k = 'one2') = 'code_used_up', 'use limit';
   assert (select v->>'ok' from pr where k = 'ok2') = 'true', 'others can still redeem';
@@ -75,5 +89,6 @@ begin
     not exists (select 1 from pg_policies where tablename = 'promo_codes'), 'codes not readable by players';
 end $$;
 delete from public.promo_redemptions where code in ('TESTPRM1', 'ONLYONE1');
+delete from public.shop_offers where id = 'test_paid_offer';
 delete from public.promo_codes where note = 'test';
 delete from public.rate_events where kind = 'promo';

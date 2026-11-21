@@ -53,8 +53,10 @@ Add to the `prod` environment:
 - `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_P8_B64`: App Store Connect API key with App Manager access
 
 Then set the repository variable `IOS_ENABLED=true` to build iOS on tags, or run the workflow manually with
-"ios" ticked. Godot's iOS export writes a `PrivacyInfo.xcprivacy`; with no analytics the App Store privacy label
-is "Data Not Collected".
+"ios" ticked. Godot's iOS export writes a `PrivacyInfo.xcprivacy` from the `privacy/*` options of the iOS
+preset: no tracking, collected data Gameplay Content (Analytics + App Functionality) and Product Interaction
+(Analytics), both linked to the account, for the anonymous progress funnel (`admin_funnel`). Keep it in line
+with the App Privacy answers in `docs/legal/STORE_COMPLIANCE.md` and App Store Connect.
 
 ## Releasing
 
