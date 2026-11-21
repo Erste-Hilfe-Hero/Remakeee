@@ -540,8 +540,9 @@ func _run_setting_group(title: String, group: String) -> void:
 			return
 		SaveManager.save_settings()
 
-## Shown instead of the value while a setting still needs its shop unlock (short in every language).
-const SHOP_MARK: String = "€"
+## Shown instead of the value while a setting still needs its shop unlock: the plain state the
+## feature stays in. No price or euro mark on a settings row (Chimora 100, item 68).
+const SHOP_MARK: String = "Off"
 
 ## [param value] for a setting row, or SHOP_MARK while its shop unlock is missing (Ali, 7 Nov).
 static func shop_or(key: String, value: String) -> String:
@@ -769,7 +770,8 @@ func run_display() -> void:
 const MINIMAP_NAMES: Dictionary = {"on": "On", "off": "Off", "outdoor": "Outside only"}
 
 static func display_rows() -> Array[Array]:
-	var retro: String = "Newest" if EraManager.retro_filter == 0 else "Era %d" % EraManager.retro_filter
+	# Off (the newest era's look) is shorter than "Newest" and fits in every language (item 68).
+	var retro: String = "Off" if EraManager.retro_filter == 0 else "Era %d" % EraManager.retro_filter
 	var rows: Array[Array] = [
 		["battery", "Battery saver: %s" % ("On" if GameState.battery_saver else "Off")],
 		["motion", "Less motion: %s" % ("On" if GameState.reduce_motion else "Off")],

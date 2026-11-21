@@ -91,6 +91,8 @@ T = {
 # Overworld
 "Today's visitor in %s has been met. Another arrives tomorrow.": "Den heutigen Besucher in %s hast du getroffen. Morgen kommt ein neuer.",
 "Today: a rare visitor stirs in %s.": "Heute: In %s regt sich ein seltener Besucher.",
+"Tomorrow: a rare visitor stirs in %s.": "Morgen: In %s regt sich ein seltener Besucher.",
+"Tomorrow: a rare visitor stirs in %s. New daily tasks: %d.": "Morgen: In %s regt sich ein seltener Besucher. Neue Tagesaufgaben: %d.",
 "You can't go that way yet.": "Da kommst du noch nicht weiter.", "You can't cross here yet.": "Hier kommst du noch nicht hinüber.",
 "The grass rustles strangely... A rare visitor!": "Das Gras raschelt seltsam... Ein seltener Besucher!",
 "New goal: %s": "Neues Ziel: %s", "New goal: ": "Neues Ziel: ",

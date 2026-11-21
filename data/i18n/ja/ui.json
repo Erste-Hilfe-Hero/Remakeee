@@ -399,6 +399,8 @@
   "Tips: %s": "ヒント：%s",
   "Today's visitor in %s has been met. Another arrives tomorrow.": "%sの今日のお客さんにはもう会った。明日また別のお客さんが来る。",
   "Today: a rare visitor stirs in %s.": "今日：%sでめずらしいお客さんがうごめいている。",
+  "Tomorrow: a rare visitor stirs in %s.": "明日：%sでめずらしいお客さんがうごめく。",
+  "Tomorrow: a rare visitor stirs in %s. New daily tasks: %d.": "明日：%sでめずらしいお客さんがうごめく。新しい毎日の課題：%d。",
   "Together you mend the Rift. The Hush lifts!": "力を合わせて裂け目をふさいだ。静寂が晴れていく！",
   "Touch controls": "タッチ操作",
   "Touch controls...": "タッチ操作…",

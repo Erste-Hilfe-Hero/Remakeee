@@ -399,6 +399,8 @@
   "Tips: %s": "提示：%s",
   "Today's visitor in %s has been met. Another arrives tomorrow.": "今天在%s的访客已经见过了。明天会有新的到来。",
   "Today: a rare visitor stirs in %s.": "今日：一位稀有访客在%s出没。",
+  "Tomorrow: a rare visitor stirs in %s.": "明日：一位稀有访客将在%s出没。",
+  "Tomorrow: a rare visitor stirs in %s. New daily tasks: %d.": "明日：一位稀有访客将在%s出没。新的每日任务：%d。",
   "Together you mend the Rift. The Hush lifts!": "你们一起修复了裂隙。沉寂散去了！",
   "Touch controls": "触屏操作",
   "Touch controls...": "触屏操作……",

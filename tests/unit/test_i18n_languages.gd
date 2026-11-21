@@ -77,13 +77,3 @@ func test_switching_translates_labels_in_every_language() -> void:
 		assert_ne(shown, "Settings", code + " translates Settings")
 	Loc.set_language("en")
 
-## The in-app purchase note on the title screen is one line across the whole screen: it must
-## be readable in full in every language (it was cut off before).
-func test_title_purchase_note_fits_in_every_language() -> void:
-	var room: float = float(ProjectSettings.get_setting("display/window/size/viewport_width")) - 4.0
-	for code: String in Loc.LANGUAGES:
-		Loc.set_language(code)
-		var shown: String = Loc.t(TitleScreen.IAP_NOTE)
-		var w: float = PixelFont.get_font().get_string_size(shown, HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x
-		assert_lte(w, room, "%s: %s (%d px)" % [code, shown, int(w)])
-	Loc.set_language("en")

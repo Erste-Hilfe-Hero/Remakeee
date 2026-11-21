@@ -45,7 +45,22 @@
   ],
   "action": "give_item tonic 2",
   "flag": "aldo_gift",
-  "once": true
+  "once": true,
+  "choices": [
+   {
+    "text": "Send a Spirling on a roaming trip",
+    "action": "expedition",
+    "if": {
+     "flag": "met_kestra"
+    }
+   },
+   {
+    "text": "Not now",
+    "if": {
+     "flag": "met_kestra"
+    }
+   }
+  ]
  },
  "stairs": [
   "The spiral stairs lead up to the lamp room.",
