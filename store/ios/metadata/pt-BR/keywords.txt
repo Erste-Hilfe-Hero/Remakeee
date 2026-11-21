@@ -1,1 +1,1 @@
-rpg,pixel,retro,turnos,criaturas,aventura,tática,estratégia,elementos,amigos,história,fantasia
+domar,treinador,coleção,pixel,retrô,turnos,estratégia,evolução,aventura,história,equipe,duelo

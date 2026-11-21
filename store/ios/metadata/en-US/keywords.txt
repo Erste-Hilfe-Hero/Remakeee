@@ -1,1 +1,1 @@
-rpg,pixel,retro,turn based,creature,monster,adventure,tactics,elements,tamer,friends,story
+tamer,collector,retro,turn,based,evolve,trainer,8bit,16bit,tactics,beasts,story,dark,pvp,duel,team

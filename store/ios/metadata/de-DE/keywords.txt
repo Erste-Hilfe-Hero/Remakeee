@@ -1,1 +1,1 @@
-rpg,pixel,retro,rundenbasiert,kreaturen,monster,abenteuer,taktik,elemente,online,freunde,wanderer
+retro,rundenbasiert,rollenspiel,taktik,entwickeln,trainer,story,düster,verrat,team,duell,abenteuer

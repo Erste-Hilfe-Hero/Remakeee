@@ -35,6 +35,11 @@ Die Seiten gehen online, sobald dieser Stand per Workflow **Game server** auf de
 
 1. 👤 **Name prüfen** in [TMview](https://www.tmdn.org/tmview/) („chimora“, Klassen 9 und 41). Treffer → Bescheid
    sagen, dann wird auf „Spirlings of Veydal“ umgestellt.
+   Vorprüfung 21. 11. 2026 (nur Websuche, Plan Chimora 100, Punkt 83): kein Eintrag „Chimora“ gefunden. Ähnliche
+   US-Marken: CHYMORA (Anmeldung 99391509, Klasse 20, Möbel), CHIMORY (98036119), CHIMOOR (90744978,
+   Klasse 20), keine davon in Klasse 9 oder 41. TMview selbst war aus der Cloud-Sitzung gesperrt („Request
+   Rejected“). Die TMview-Suche bleibt also nötig, bevor die neuen Namen „Chimora: Monster Taming RPG“ usw.
+   (`store/ios/metadata/*/name.txt`) mit der nächsten Version eingereicht werden.
 2. 👤 **Gewerbe anmelden** und eine **ladungsfähige Adresse**, **E-Mail** und **Telefonnummer** festlegen.
    Die vier Angaben schickst du mir; ich trage sie in Impressum, Datenschutz, AGB, Support und Spiel ein.
 3. 👤 **Google Play Console** anlegen (25 $ einmalig, Identitätsprüfung), **DSA-Händlererklärung**.
