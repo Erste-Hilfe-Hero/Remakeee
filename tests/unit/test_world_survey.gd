@@ -75,9 +75,14 @@ func test_minimap_modes() -> void:
 	var outside: MapData = _field()
 	var inside := MapData.from_dict("room_t", {"rows": ["fff"], "outdoor": false})
 	var keep_billing: Dictionary = Billing.state
+	var keep_flags: Dictionary = GameState.flags
 	Billing.state = {"unlocks": {}}
 	GameState.minimap = "on"
-	assert_false(Survey.minimap_shows(inside), "the Minimap is a shop unlock (Ali, 7 Nov)")
+	GameState.flags = {}
+	assert_true(Survey.minimap_shows(inside), "free during Act I (plan Chimora 100, item 39)")
+	GameState.flags = {"mirela_lamp": true}
+	assert_false(Survey.minimap_shows(inside), "after Act I the Minimap is a shop unlock (Ali, 7 Nov)")
+	GameState.flags = keep_flags
 	Billing.state = {"unlocks": {"minimap": 1}}
 	assert_true(Survey.minimap_shows(inside))
 	GameState.minimap = "outdoor"

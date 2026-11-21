@@ -108,7 +108,7 @@ func test_every_pause_entry_opens_something_and_closes() -> void:
 	menu.encounter_table = "fernstair"
 	add_child_autofree(menu)
 	await wait_process_frames(1)
-	var labels: Array[String] = PauseMenu.menu_labels(true, false, false, false, true)
+	var labels: Array[String] = PauseMenu.menu_labels(true, false, false, false)
 	for i: int in labels.size():
 		var res: Dictionary = await _walk(menu, menu.run, [i])
 		assert_true(res.done, "%s: the pause menu closes again" % labels[i])

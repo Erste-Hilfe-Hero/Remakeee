@@ -150,3 +150,79 @@ static func summary(flags: Dictionary) -> String:
 			if not where.is_empty():
 				lines.append("  " + ("Where: %s" % where))
 	return "\n".join(lines)
+
+# --- Goal line and goal doors (plan Chimora 100, items 37-39) ---------------------------------
+
+## True while the story is in its first act (the act of the first main goal): the goal line
+## shows and the minimap is free.
+static func in_act_one(flags: Dictionary) -> bool:
+	var goals: Array = main_goals()
+	return not goals.is_empty() and str(current(flags).get("act", "")) == str((goals[0] as Dictionary).get("act", ""))
+
+## The short goal line for the overworld (translated, with "(k/n)" progress), or "" when the
+## current goal has no "hud" text (after Act I).
+static func hud_text(flags: Dictionary) -> String:
+	var g: Dictionary = current(flags)
+	var text: String = str(g.get("hud", ""))
+	if text.is_empty():
+		return ""
+	text = Loc.t(text)
+	var need: Array = g.get("done", [])
+	if need.size() > 1:
+		var have: int = 0
+		for f: Variant in need:
+			have += 1 if bool(flags.get(str(f), false)) else 0
+		text += " (%d/%d)" % [have, need.size()]
+	return text
+
+## Maps the current goal still leads to: its "goto" entries whose "done" flag is not set yet
+## (a single "goto" entry stands for every flag).
+static func goal_maps(flags: Dictionary) -> Array[String]:
+	var g: Dictionary = current(flags)
+	var go: Array = g.get("goto", [])
+	var need: Array = g.get("done", [])
+	var out: Array[String] = []
+	for i: int in go.size():
+		var flag: String = str(need[i]) if go.size() == need.size() else ""
+		if flag.is_empty() or not bool(flags.get(flag, false)):
+			out.append(str(go[i]))
+	return out
+
+## Warps per map id, read once (the goal doors search the warp graph on every map change).
+static var _warps: Dictionary = {}
+const ROUTE_MAX_MAPS: int = 120
+
+static func _warps_of(map_id: String) -> Array:
+	if not _warps.has(map_id):
+		var m: MapData = MapData.load_map(map_id) if MapData.exists(map_id) else null
+		_warps[map_id] = m.warps if m != null else []
+	return _warps[map_id]
+
+## Cells of the warps on [param m] that start the shortest walk toward the nearest of
+## [param targets] (item 38); empty on a target map or when no target can be reached.
+static func goal_warps(m: MapData, targets: Array[String]) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	if m == null or targets.is_empty() or m.id in targets:
+		return out
+	_warps[m.id] = m.warps
+	# Breadth-first over the warp graph; each map remembers the first step out of [param m].
+	var first: Dictionary = {m.id: ""}
+	var queue: Array[String] = [m.id]
+	var found: String = ""
+	while not queue.is_empty() and found.is_empty() and first.size() < ROUTE_MAX_MAPS:
+		var at: String = queue.pop_front()
+		for w: Variant in _warps_of(at):
+			var to: String = str((w as Dictionary).get("to", ""))
+			if to.is_empty() or first.has(to):
+				continue
+			first[to] = to if at == m.id else first[at]
+			if to in targets:
+				found = to
+				break
+			queue.append(to)
+	if found.is_empty():
+		return out
+	for w: Dictionary in m.warps:
+		if str(w.get("to", "")) == str(first[found]):
+			out.append(Vector2i(int(w.x), int(w.y)))
+	return out

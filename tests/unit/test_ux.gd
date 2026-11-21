@@ -501,8 +501,9 @@ func test_always_run_setting_is_kept() -> void:
 	GameState.always_run = before
 
 func test_pause_menu_order_is_fixed() -> void:
+	# Photo, Join our Discord and Shortcuts sit under More (plan Chimora 100, item 41).
 	assert_eq(PauseMenu.menu_labels(true, true, false),
-		["Goals", "Map", "Team", "Satchel", "Spirlog", "Travel", "Friends", "Records", "Storage", "Save", "Save and to title", "Photo", "Join our Discord", "Settings"] as Array[String])
+		["Goals", "Map", "Team", "Satchel", "Spirlog", "Travel", "Friends", "Records", "Storage", "Save", "Save and to title", "Settings", "More"] as Array[String])
 	var short: Array[String] = PauseMenu.menu_labels(false, false, false)
 	assert_eq(short.find("Satchel"), 3, "places do not move when Travel is missing")
 	assert_false("Storage" in short)
@@ -722,10 +723,15 @@ func test_goals_list_ends_with_the_wider_tabs() -> void:
 	for r: Dictionary in rows:
 		assert_ne(str(r.detail), "")
 
-func test_map_book_sits_after_goals_once_given() -> void:
-	assert_false("Map book" in PauseMenu.menu_labels(false, false, false))
-	var labels: Array[String] = PauseMenu.menu_labels(false, false, false, false, true)
-	assert_eq(labels.find("Map book"), 1)
+func test_era1_start_menu_is_short_with_more_and_map_book_under_map() -> void:
+	# Plan Chimora 100, item 41 (audit flow 9): the Era I list had 16-17 rows. A new player now
+	# sees 11 entries plus Shop; the Map book opens from Map, Photo, Discord and Shortcuts from More.
+	var labels: Array[String] = PauseMenu.menu_labels(false, false, false)
+	assert_eq(labels.size(), 11)
+	for gone: String in ["Map book", "Photo", "Join our Discord", EraMenuKit.SHORTCUTS]:
+		assert_false(gone in labels, gone + " is under Map or More")
+	assert_eq(labels[labels.size() - 1], PauseMenu.MORE)
+	assert_eq(PauseMenu.MORE_ENTRIES, ["Photo", "Join our Discord", EraMenuKit.SHORTCUTS] as Array[String])
 
 func test_one_hand_menus_sit_low_with_back_on_the_thumb_side() -> void:
 	var host := MenuHost.new()

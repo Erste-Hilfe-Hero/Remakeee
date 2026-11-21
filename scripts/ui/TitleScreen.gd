@@ -304,6 +304,30 @@ func _resolve_conflicts() -> void:
 		else:
 			await Online.resolve_conflict_take_server(slot)
 
+## The "Welcome back" card after Continue (plan Chimora 100, item 44): where the Wayfarer
+## stands, the current goal and what today brings. One tap closes it.
+static func welcome_text(flags: Dictionary) -> String:
+	var lines: PackedStringArray = [Loc.t("Welcome back, %s!") % GameState.tamer_name, ""]
+	lines.append(Loc.t("You are in %s.") % Loc.t(Spirling.place_name(GameState.current_map)))
+	var goal: String = QuestLog.hud_text(flags)
+	if goal.is_empty():
+		goal = Loc.t(QuestLog.goal_text(QuestLog.current(flags), flags))
+	lines.append(Loc.t("Goal: %s") % goal)
+	var today: PackedStringArray = []
+	var visitor: String = DailyFind.hint(flags)
+	if not visitor.is_empty():
+		today.append(Loc.t(visitor))
+	var tasks: Array = DailyTasks.today().get("tasks", [])
+	if not tasks.is_empty():
+		var done: int = tasks.filter(func(e: Variant) -> bool: return e is Dictionary and DailyTasks.is_done(e)).size()
+		today.append(Loc.t("Daily tasks: %d of %d done.") % [done, tasks.size()])
+	if Goals.pending() > 0:
+		today.append(Loc.t("A reward waits under Goals."))
+	if not today.is_empty():
+		lines.append("")
+		lines.append_array(today)
+	return "\n".join(lines)
+
 func _run() -> void:
 	var first_start: bool = GameState.language.is_empty() and not Online.privacy_seen and _used_slots() == 0
 	if GameState.language.is_empty():
@@ -357,6 +381,7 @@ func _run() -> void:
 				SaveManager.set_slot(latest)
 				if SaveManager.load_game():
 					await _say_if_recovered()
+					await _menu.info(welcome_text(GameState.flags), EraSaveCard.badge(maxi(EraMoments.slot_era(latest), 1)))
 					SaveManager.save_settings()
 					_enter_game()
 					return
