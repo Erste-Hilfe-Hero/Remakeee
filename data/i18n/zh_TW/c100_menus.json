@@ -1,0 +1,13 @@
+{
+ "_comment": "Texts of the Chimora 100 menu fixes (tools/i18n/de_c100_menus.py is the German reference).",
+ "strings": {
+  "-: the store has not sent this price yet. Try again in a moment.": "-：商店尚未傳來此價格。請稍後再試。",
+  "Account  (offline)": "帳號  (離線)",
+  "Riftglass: offline": "裂晶：離線",
+  "Rules & privacy...": "規則與隱私權...",
+  "Team messages": "團隊來信",
+  "Update failed": "更新失敗",
+  "Update ready": "更新已就緒",
+  "Updating": "正在更新"
+ }
+}

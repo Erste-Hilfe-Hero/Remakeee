@@ -1,0 +1,13 @@
+{
+ "_comment": "Texts of the Chimora 100 menu fixes (tools/i18n/de_c100_menus.py is the German reference).",
+ "strings": {
+  "-: the store has not sent this price yet. Try again in a moment.": "-: lo store non ha ancora inviato questo prezzo. Riprova tra un momento.",
+  "Account  (offline)": "Account  (offline)",
+  "Riftglass: offline": "Vetrosquarcio: offline",
+  "Rules & privacy...": "Regole e privacy...",
+  "Team messages": "Messaggi del team",
+  "Update failed": "Aggiornamento non riuscito",
+  "Update ready": "Aggiornamento pronto",
+  "Updating": "Aggiornamento in corso"
+ }
+}

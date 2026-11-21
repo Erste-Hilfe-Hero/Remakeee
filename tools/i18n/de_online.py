@@ -116,7 +116,7 @@ T = {
 "Thank you. A person from our team looks at it again and answers here.": "Danke. Ein Mensch aus unserem Team sieht es sich noch einmal an und antwortet hier.",
 "The time to object has passed.": "Die Frist für einen Widerspruch ist vorbei.",
 "You already objected to this.": "Du hast dem schon widersprochen.",
-"Thank you. Your report has number %d. We will look at it and tell you the result under Account, Messages from the team.": "Danke. Deine Meldung hat die Nummer %d. Wir sehen sie uns an und sagen dir das Ergebnis unter Konto, Nachrichten vom Team.",
+"Thank you. Your report has number %d. We will look at it and tell you the result under Account, Team messages.": "Danke. Deine Meldung hat die Nummer %d. Wir sehen sie uns an und sagen dir das Ergebnis unter Konto, Team-Nachrichten.",
 "You can also block %s.": "Du kannst %s auch blockieren.",
 # Leagues (plan area 7)
 "Leagues": "Ligen",
@@ -151,7 +151,7 @@ T = {
 "The season ends soon, so this battle does not count.": "Die Saison endet bald, darum zählt dieser Kampf nicht.",
 "Your result is being checked. It counts once the check is done.": "Dein Ergebnis wird geprüft. Es zählt, sobald die Prüfung fertig ist.",
 "The result could not be sent, so it does not count.": "Das Ergebnis konnte nicht gesendet werden, darum zählt es nicht.",
-"Download my data": "Meine Daten herunterladen",
+"Download my data": "Daten herunterladen",
 "Your data is downloading as %s.": "Deine Daten werden als %s heruntergeladen.",
 "The file could not be saved. Write to our support and we send your data by email.": "Die Datei konnte nicht gespeichert werden. Schreib unserem Support, dann schicken wir dir deine Daten per E-Mail.",
 "Your data was saved as:": "Deine Daten wurden gespeichert als:",

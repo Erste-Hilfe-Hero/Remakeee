@@ -591,7 +591,7 @@ select public.moderation_decide(13, false, null);          -- rejected, no breac
 
 An upheld decision sends the reported player a statement of reasons in the game (DSA Art. 17:
 measure, reason from the fixed list, section 4 of the terms, a person decided, objection possible for 6
-months), under Account, Messages from the team. The reporter always gets the result. Reasons: 0 name,
+months), under Account, Team messages. The reporter always gets the result. Reasons: 0 name,
 1 greetings, 2 cheating, 3 something else.
 
 Objections (DSA Art. 20) come in as `appeals`:

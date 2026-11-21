@@ -120,14 +120,16 @@ func _show() -> void:
 	_sprite.texture = load(sprite_path(sd)) if ResourceLoader.exists(sprite_path(sd)) else null
 	for c: Node in _line.get_children():
 		c.queue_free()
-	for member: SpirlingData in SpirlogBook.line_of(sd):
-		if SpirlogBook.line_of(sd).size() < 2:
+	var line: Array = SpirlogBook.line_of(sd)
+	# The forms shrink so the page never gets wider than the screen (Chimora 100, item 47).
+	var form_px: int = form_px_for(int(_lay.get("form_size", 20)), line.size(), _line_room(), float(_line.get_theme_constant("separation")))
+	for member: SpirlingData in line:
+		if line.size() < 2:
 			break
 		var t := TextureRect.new()
 		t.texture = load(sprite_path(member)) if ResourceLoader.exists(sprite_path(member)) else null
 		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		var form_px: int = int(_lay.get("form_size", 20))
 		t.custom_minimum_size = Vector2(form_px, form_px)
 		# Unseen forms show only as an outline (item 245).
 		var seen: bool = SpirlogBook.is_seen(GameState.spirlog, member.species_name)
@@ -153,6 +155,27 @@ func _show() -> void:
 		if names.size() > 1:
 			_text.text = Loc.t("Forms: %s") % " > ".join(names) + "\n" + _text.text
 	_scroll.scroll_vertical = 0
+
+## The extra size of the form on the page now.
+const CURRENT_FORM_EXTRA: int = 4
+const MIN_FORM_PX: int = 8
+
+## Form size for [param count] forms in [param room] pixels: the era's [param want] or less.
+static func form_px_for(want: int, count: int, room: float, gap: float = 4.0) -> int:
+	if count < 1:
+		return want
+	var fit: int = floori((room - CURRENT_FORM_EXTRA - gap * (count - 1)) / count)
+	return clampi(fit, MIN_FORM_PX, want)
+
+## Width left for the forms right of the big sprite.
+func _line_room() -> float:
+	var w: float = get_viewport_rect().size.x - MenuHost.PANEL_MARGIN * 2.0
+	var sb: StyleBox = get_theme_stylebox("panel")
+	if sb != null:
+		w -= sb.get_minimum_size().x
+	var top: HBoxContainer = _line.get_parent() as HBoxContainer
+	var gap: float = float(top.get_theme_constant("separation")) if top != null else 4.0
+	return w - _sprite.custom_minimum_size.x - gap
 
 func _turn(step: int) -> void:
 	if kinds.is_empty():

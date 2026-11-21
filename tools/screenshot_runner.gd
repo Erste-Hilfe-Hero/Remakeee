@@ -56,7 +56,7 @@ func _shot_v110(db: Object) -> void:
 		var entries: Array[Dictionary] = []
 		for id: String in ids:
 			entries.append({"text": ShopMenu.row_text(ShopCatalog.offer(id))})
-		h.pick(Loc.t("Advantages") + "  " + ShopCatalog.rg_text(Billing.balance()), entries, true, 0, 0))
+		h.pick(ShopMenu.tab_title("advantages"), entries, true, 0, 0))
 	await _shot_menu("10_legal_discord", func(h: MenuHost) -> void: h.run_legal())
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 7
@@ -160,7 +160,7 @@ func _shot_shop() -> void:
 	var entries: Array[Dictionary] = []
 	for o: Dictionary in ShopCatalog.in_tab("riftglass"):
 		entries.append({"text": ShopMenu.row_text(o)})
-	host.pick(Loc.t("Riftglass") + "  " + ShopCatalog.rg_text(Billing.balance()), entries, true, 0, 0)
+	host.pick(ShopMenu.tab_title("riftglass"), entries, true, 0, 0)
 	for i: int in 6:
 		await get_tree().process_frame
 	await RenderingServer.frame_post_draw
