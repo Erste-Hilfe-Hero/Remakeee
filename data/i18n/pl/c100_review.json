@@ -1,0 +1,8 @@
+{
+ "_comment": "Polish texts for the German table c100_review. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "Start offline": "Zacznij offline",
+  "A new journey can start offline. The prologue goes online at its save point.": "Nową podróż można zacząć offline. Prolog łączy się z siecią w swoim punkcie zapisu.",
+  "Offline: prologue only": "Offline: tylko prolog"
+ }
+}

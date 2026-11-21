@@ -88,11 +88,18 @@ var _store_url: String = ""
 var updater: AppUpdater
 var _offline_for: float = 0.0
 var _tries: int = 0
+## A new journey started without a connection (plan Chimora 100, item 77): true until the first
+## connection; the account is then created and the saves go up through the normal save_put.
+var offline_start: bool = false
+## While true the prologue plays on without the reconnect screen; it ends at the prologue's save
+## point (offline_save_point), after which a missing connection pauses the game as always.
+var offline_play: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	# Action ids (plan item 3011) must differ after every start of the app.
 	_rng.randomize()
+	ReviewAsk.start_session()
 	backend = make_backend()
 	_load_session()
 	_overlay = ReconnectOverlay.new()
@@ -640,6 +647,15 @@ func _process(delta: float) -> void:
 		_overlay.hide_overlay()
 		_offline_for = 0.0
 		return
+	if offline_play:
+		# The offline prologue (item 77) plays on and goes online by itself once it can.
+		_overlay.hide_overlay()
+		if state == State.OFFLINE and not _busy:
+			_retry += delta
+			if _retry >= _retry_wait:
+				_retry = 0.0
+				_reconnect()
+		return
 	# Playing without a connection is not possible: pause and keep trying (item 7).
 	_overlay.show_overlay()
 	_offline_for += delta
@@ -673,9 +689,33 @@ func _reconnect() -> void:
 		_retry_wait = retry_wait(0, 0.0)
 		await push_dirty()
 		await send_actions()
+		if offline_start:
+			offline_start = false
+			offline_play = false
+			await push_profile()
 	else:
 		_retry_count += 1
 		_retry_wait = retry_wait(_retry_count, _rng.randf_range(-1.0, 1.0))
+
+## New Game without a connection (item 77) only on a phone with no journey of this account yet:
+## nothing in the local cache and no slot this device ever synced, so the first upload cannot
+## meet a server save. Continue and Load stay online only.
+static func offline_start_allowed(used_slots: int, known_revs: int, was_kicked: bool, st: State) -> bool:
+	return used_slots == 0 and known_revs == 0 and not was_kicked and st == State.OFFLINE
+
+## The title chose New Game offline.
+func begin_offline_start() -> void:
+	offline_start = true
+	offline_play = true
+
+## The prologue's save point: from here the game needs the server like any other journey. The
+## first try to connect starts now (account, save_put of the local save, profile).
+func offline_save_point() -> void:
+	if not offline_play:
+		return
+	offline_play = false
+	if state == State.OFFLINE:
+		retry_now()
 
 ## Seconds before reconnect try number [param failed] + 1; [param spread] from -1 to 1 is the
 ## random part (scaled to RETRY_JITTER).

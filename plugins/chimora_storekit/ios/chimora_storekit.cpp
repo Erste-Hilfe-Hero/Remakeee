@@ -19,6 +19,7 @@ void ck_purchase(const char *product_id, const char *account_token, int64_t req)
 void ck_finish(const char *txn, int64_t req);
 void ck_owned(int64_t req);
 void ck_restore(int64_t req);
+void ck_request_review();
 void ck_url_install();
 char *ck_take_url();
 }
@@ -36,6 +37,7 @@ protected:
 		ClassDB::bind_method(D_METHOD("finish", "txn", "req"), &ChimoraStoreKit::finish);
 		ClassDB::bind_method(D_METHOD("owned", "req"), &ChimoraStoreKit::owned);
 		ClassDB::bind_method(D_METHOD("restore", "req"), &ChimoraStoreKit::restore);
+		ClassDB::bind_method(D_METHOD("request_review"), &ChimoraStoreKit::request_review);
 		ClassDB::bind_method(D_METHOD("take_url"), &ChimoraStoreKit::take_url);
 		ADD_SIGNAL(MethodInfo("billing_event", PropertyInfo(Variant::STRING, "json")));
 	}
@@ -58,6 +60,8 @@ public:
 	void finish(const String &txn, int64_t req) { ck_finish(txn.utf8().get_data(), req); }
 	void owned(int64_t req) { ck_owned(req); }
 	void restore(int64_t req) { ck_restore(req); }
+	// The App Store rating sheet (ReviewAsk.gd decides when; iOS may show nothing).
+	void request_review() { ck_request_review(); }
 	// The last chimora:// link (ChimoraLinks.swift), "" when none; DeepLink.gd polls it.
 	String take_url() {
 		char *p = ck_take_url();

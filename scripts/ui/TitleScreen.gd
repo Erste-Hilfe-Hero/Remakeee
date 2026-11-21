@@ -205,10 +205,31 @@ func _go_online() -> void:
 					MenuHost.open_url.call(Online.store_url())
 			continue
 		_status.text = "No connection"
-		var idx: int = await _menu.pick_strings(Online.error_text() + "\n" + Loc.t("Your journeys are safe on the server."),
-			["Try again", "Settings"] as Array[String], false)
+		var offline_ok: bool = Online.offline_start_allowed(_used_slots(), Online.revs.size(), Online.kicked, st)
+		var options: Array[String] = ["Try again", "Settings"]
+		if offline_ok:
+			options.append(OFFLINE_START)
+		var idx: int = await _menu.pick_strings(Online.error_text() + "\n" + Loc.t(OFFLINE_NOTE if offline_ok else "Your journeys are safe on the server."),
+			options, false)
 		if idx == 1:
 			await _menu.run_settings()
+		elif idx == 2:
+			await _start_offline()
+			return
+
+## New Game without a connection (plan Chimora 100, item 77): only the prologue, up to its save
+## point; then the account is created and the save goes up like any other (Online.offline_save_point).
+const OFFLINE_START: String = "Start offline"
+const OFFLINE_NOTE: String = "A new journey can start offline. The prologue goes online at its save point."
+const OFFLINE_STATUS: String = "Offline: prologue only"
+
+func _start_offline() -> void:
+	if not Online.privacy_seen:
+		await privacy_note(_menu, _set_art_note)
+		_hide_art_note()
+		Online.mark_privacy_seen()
+	Online.begin_offline_start()
+	_status.text = OFFLINE_STATUS
 
 ## At load and once more after connecting, once per app start each: a newer build is out (Play's
 ## in-app update, the App Store lookup or the live content's "latest" for this platform), so the
@@ -288,13 +309,15 @@ func _run() -> void:
 	if GameState.language.is_empty():
 		StartupLog.mark("language menu ready")
 		await _pick_language()
+	# An offline start ends when the title shows again; Continue is online only (item 77).
+	Online.offline_play = false
 	await _go_online()
 	if first_start:
 		# Item 2000: once, where the comfort settings live, without a tap to dismiss. Over the
 		# title art, never over the list (Chimora 100 item 33).
 		_show_art_note(FIRST_START_HINT, FIRST_START_HINT_SECONDS)
 	while true:
-		if not Online.is_online():
+		if not Online.is_online() and not Online.offline_play:
 			await _go_online()
 		var items: Array[String] = []
 		# "Continue" is always the newest save, one tap from launch.
@@ -305,7 +328,7 @@ func _run() -> void:
 		items.append("New Game")
 		# Played on another phone: a row of its own instead of a question before the game
 		# starts (Chimora 100 item 29). With a save here it lives under Settings, Account.
-		if _used_slots() == 0:
+		if _used_slots() == 0 and not Online.offline_play:
 			items.append(HAVE_CODE)
 		if _used_slots() > 1:
 			items.append("Load...")

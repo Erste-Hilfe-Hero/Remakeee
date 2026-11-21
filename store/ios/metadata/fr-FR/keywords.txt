@@ -1,1 +1,1 @@
-rpg,pixel,rétro,tour par tour,créatures,monstres,aventure,tactique,éléments,amis,histoire,voyage
+dresseur,apprivoiser,pixel,rétro,tour,stratégie,évolution,aventure,histoire,sombre,bestiaire,duel
