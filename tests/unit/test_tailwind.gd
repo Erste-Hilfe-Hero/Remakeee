@@ -47,12 +47,12 @@ func test_tailwind_offer_rules() -> void:
 	var tamer: int = GameState.Difficulty.TAMER
 	assert_false(Tailwind.offered(story, 1))
 	assert_true(Tailwind.offered(story, 2))
-	assert_false(Tailwind.offered(tamer, 2))
-	assert_true(Tailwind.offered(tamer, 3))
+	assert_false(Tailwind.offered(tamer, 1))
+	assert_true(Tailwind.offered(tamer, 2), "Tamer from 2 losses (Ali 2026-11-21, easier start)")
 	for d: int in [GameState.Difficulty.VETERAN, GameState.Difficulty.RIFT_BORN]:
 		assert_false(Tailwind.offered(d, 99), "never on difficulty %d" % d)
 	assert_eq(Tailwind.energy_cut(story), 2)
-	assert_eq(Tailwind.energy_cut(tamer), 0)
+	assert_eq(Tailwind.energy_cut(tamer), 1)
 
 func test_tailwind_counts() -> void:
 	var rec: Dictionary = {}

@@ -684,11 +684,11 @@
   "team": [
    {
     "species": "Zippit",
-    "level": 6
+    "level": 5
    },
    {
     "species": "Kindlop",
-    "level": 6
+    "level": 4
    }
   ],
   "ai": 1,
@@ -715,31 +715,7 @@
   "ai": 2,
   "money": 400,
   "defeat": "veydal_side/jinks_2_defeat",
-  "lose": "veydal_side/jinks_2_lose",
-  "teams_by_difficulty": {
-   "tamer": [
-    {
-     "species": "Zippit",
-     "level": 11
-    },
-    {
-     "species": "Smoldrake",
-     "level": 12
-    },
-    {
-     "species": "Shalebat",
-     "level": 11
-    },
-    {
-     "species": "Gloamhog",
-     "level": 12
-    },
-    {
-     "species": "Glasstarn",
-     "level": 12
-    }
-   ]
-  }
+  "lose": "veydal_side/jinks_2_lose"
  },
  "rival_jinks_3": {
   "trainer": "Rival Jinks",
@@ -767,31 +743,7 @@
   "lose": "veydal_side/jinks_3_lose",
   "win_flags": [
    "rival_jinks_done"
-  ],
-  "teams_by_difficulty": {
-   "tamer": [
-    {
-     "species": "Fluting",
-     "level": 18
-    },
-    {
-     "species": "Smoldrake",
-     "level": 19
-    },
-    {
-     "species": "Shalebat",
-     "level": 18
-    },
-    {
-     "species": "Kelpup",
-     "level": 18
-    },
-    {
-     "species": "Gloamhog",
-     "level": 19
-    }
-   ]
-  }
+  ]
  },
  "bounty_b1": {
   "trainer": "Gnasher",

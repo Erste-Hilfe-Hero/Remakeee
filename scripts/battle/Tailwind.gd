@@ -4,11 +4,12 @@ extends RefCounted
 ## the game openly offers help before the next try. The player must say yes; it is never used
 ## quietly, and every use is counted in GameState.records["tailwind_used"].
 ##   Story   from 2 losses: the team is fully healed and the foe starts with 2 Energy less.
-##   Tamer   from 3 losses: only the full heal.
+##   Tamer   from 2 losses: the team is fully healed and the foe starts with 1 Energy less
+##           (Ali 2026-11-21, "make the game somewhat easier"; Chimora 100 item 8).
 ##   Veteran and Rift-Born: never offered.
 
-const LOSSES_NEEDED: Dictionary = {0: 2, 1: 3}
-const FOE_ENERGY_CUT: Dictionary = {0: 2, 1: 0}
+const LOSSES_NEEDED: Dictionary = {0: 2, 1: 2}
+const FOE_ENERGY_CUT: Dictionary = {0: 2, 1: 1}
 
 ## True if Tailwind is offered on [param difficulty] after [param losses] lost tries.
 static func offered(difficulty: int, losses: int) -> bool:

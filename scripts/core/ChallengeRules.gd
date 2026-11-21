@@ -22,7 +22,8 @@ const FLOOR_KEY: String = "difficulty_floor"
 ## Letters of a shareable seed code (no 0/O or 1/I, so it reads well aloud).
 const CODE_LETTERS: String = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"
 const CODE_LENGTH: int = 7
-## Story difficulty (item 497): foes land critical hits half as often, battles give 20% more Growth.
+## Story difficulty (item 497): foes land critical hits half as often, battles give 20% more Growth
+## on top of GrowthRules difficulty_mult (x1.25), 50% in all (MenuHost.DIFFICULTY_HINTS).
 const FOE_CRIT: Array[float] = [0.5, 1.0, 1.0, 1.0]
 const GROWTH: Array[float] = [1.2, 1.0, 1.0, 1.0]
 ## Foe scaling (item 496, an option per journey): Wayfarer Spirlings stand at least this many

@@ -73,7 +73,7 @@ the act's `moderate_grind`: wild battles a player trains before a measured fight
 <!-- gen:act_targets -->
 | Act | Grind budget (wild battles per fight) | Win on arrival | Win after the budget | Mean grind to 70 % | Every starter alone |
 | --- | --- | --- | --- | --- | --- |
-| Act I: Veydal | 60 | 20-40 % | 70 %+ | at most 60 | yes |
+| Act I: Veydal | 20 | 50-80 % | 70 %+ | at most 20 | yes |
 | Act II: Corvane | 70 | 20-40 % | 70 %+ | at most 70 | - |
 | Act III: Ashmere | 80 | 20-40 % | 70 %+ | at most 80 | - |
 | Act IV: Solenne | 90 | 20-40 % | 70 %+ | at most 90 | - |
@@ -82,7 +82,7 @@ the act's `moderate_grind`: wild battles a player trains before a measured fight
 | Era IV: Halcyra | 120 | 20-40 % | 70 %+ | at most 120 | - |
 | Era V: Quivermoor | 130 | 20-40 % | 70 %+ | at most 130 | - |
 
-Every act is at most as easy on arrival as the one before (margin 0 points). No measured Warden, rival or boss is won more than 60 % on arrival, and none stays under 70 % after 240 grind battles (a wall). Hearts are left out of the means. Starters: Kindlop, Zippit, Wickit, each from ring 5.
+Act I is the tutorial act (Ali 2026-11-21): no measured fight there is won more than 85 % on arrival. Every later act is at most as easy on arrival as the one before (margin 0 points). No measured Warden, rival or boss after Act I is won more than 60 % on arrival, and none stays under 70 % after 240 grind battles (a wall). Hearts are left out of the means. Starters: Kindlop, Zippit, Wickit, each from ring 5.
 <!-- /gen:act_targets -->
 
 Act I per starter, measured 14 Nov 2026 with 64 battles per measure (`--mode acts --act act1
@@ -764,6 +764,7 @@ Generated from `GameState`, `BattleRules` and `TrainerData` (item 875).
 | Rift-Born | +2 | 10 | 3 / 3 | kept | 10 (+1 after turn 1) | x1.00 | up to 2 | as the boss data says, +1 in phase 2 | +1 copy of the lowest entry (team of up to 5) |
 
 Foe ring: the shift of a shared Wayfarer team (teams with their own block for the difficulty keep their rings), never more than 2 above the ring cap.
+Foe damage on Tamer: x0.90 while the player has fewer than 6 Spirlings (newcomer, Ali 2026-11-21).
 <!-- /gen:difficulty -->
 
 ## Wachstum (growth curve)
@@ -777,18 +778,18 @@ wild battles.
 | Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (normal) | Story |
 | --- | --- | --- | --- | --- |
 | 5 | 78 | 48 | 3 | 2 |
-| 10 | 477 | 135 | 4 | 3 |
-| 15 | 1370 | 251 | 5 | 4 |
+| 10 | 477 | 135 | 3 | 3 |
+| 15 | 1370 | 251 | 4 | 4 |
 | 20 | 2896 | 392 | 5 | 4 |
-| 30 | 8311 | 740 | 7 | 5 |
-| 40 | 17560 | 1164 | 8 | 6 |
-| 50 | 31369 | 1657 | 9 | 7 |
-| 60 | 50393 | 2213 | 10 | 8 |
-| 80 | 106467 | 3494 | 11 | 9 |
-| 100 | 190187 | 4984 | 13 | 10 |
+| 30 | 8311 | 740 | 6 | 5 |
+| 40 | 17560 | 1164 | 7 | 6 |
+| 50 | 31369 | 1657 | 8 | 7 |
+| 60 | 50393 | 2213 | 9 | 8 |
+| 80 | 106467 | 3494 | 10 | 9 |
+| 100 | 190187 | 4984 | 11 | 10 |
 
 Growth to reach ring L = floor(1.2 x L ^ 2.6). There is no top ring. One battle gives yield x foe ring / 20 (x1.5 against a Wayfarer), shared by the Spirlings that fought; the bench gets 50 % with Bench lessons. Table for a kind of yield 80.
-Factors: Story x1.25, rematch x1.2, kinship 80+ x1.1, Growth Charm x1.5, world goal x1.25 for 20 battles. No penalty for a higher ring than the foe (only Era V scales by ring).
+Factors: Story x1.25, Tamer x1.15, rematch x1.2, kinship 80+ x1.1, Growth Charm x1.5, world goal x1.25 for 20 battles. No penalty for a higher ring than the foe (only Era V scales by ring).
 <!-- /gen:growth -->
 
 ## KI-Profile (AI profiles)

@@ -1,0 +1,10 @@
+{
+ "_comment": "Traditional Chinese texts for the German table easy_start. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "Kestra: Go and see for yourself, but start north in Fernstair. The Saltmarsh and Quillbrook roads are rough for a new Wayfarer.": "Kestra：自己去看看吧，不過先往北去Fernstair。去Saltmarsh和Quillbrook的路，對新旅人來說太難走了。",
+  "Lookout Corra: Quillbrook's Wayfarers would beat a fresh team before breakfast.": "哨兵Corra：Quillbrook的旅人不用等到早餐就能打敗一支新隊伍。",
+  "Lookout Corra: Take the north road to Fernstair first, and let Kestra test you on the Crowcrest path. Then this road is yours.": "哨兵Corra：先走北邊的路去Fernstair，讓Kestra在通往Crowcrest的小路上考驗你。之後這條路就隨你走了。",
+  "Lookout Halde: Go north through Fernstair first. Kestra tests new Wayfarers on the Crowcrest path. Come back once she has seen you fight.": "哨兵Halde：先往北穿過Fernstair。Kestra會在通往Crowcrest的小路上考驗新來的旅人。等她看過你戰鬥再回來吧。",
+  "Lookout Halde: The Saltmarsh road? The Spirlings out there bite harder than anything near the village.": "哨兵Halde：去Saltmarsh的路？那邊的Spirling咬得比村子附近的任何傢伙都狠。"
+ }
+}

@@ -1,6 +1,7 @@
 class_name ActSim
 extends RefCounted
-## Act difficulty simulator (owner rule, Nov 2026: every act and era region is hard).
+## Act difficulty simulator (owner rule, Nov 2026: every act and era region is hard; since
+## Ali 2026-11-21 Act I is the tutorial act with its own band in act_route.json).
 ## Plays a seeded player route through each act and era region of tools/balance/act_route.json on
 ## the real BattleModel: wild battles at the route's rings give XP the way the game does, the
 ## player bonds one new kind per wild table, re-picks the five strongest, unfolds by ring and
@@ -21,6 +22,15 @@ const HEART: String = "heart"
 static func route() -> Dictionary:
 	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(ROUTE_PATH)) if FileAccess.file_exists(ROUTE_PATH) else null
 	return raw if raw is Dictionary else {}
+
+## The bands of one act: the route's "bands" with the act's own "bands" laid over them (Act I is
+## the tutorial act and carries its own arrival band, Ali 2026-11-21).
+static func act_bands(cfg: Dictionary, act_id: String) -> Dictionary:
+	var out: Dictionary = (cfg.get("bands", {}) as Dictionary).duplicate()
+	for a: Dictionary in cfg.get("acts", []):
+		if str(a.get("id", "")) == act_id and a.get("bands") is Dictionary:
+			out.merge(a.bands, true)
+	return out
 
 static func _read(path: String) -> Dictionary:
 	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(path)) if FileAccess.file_exists(path) else null
@@ -170,7 +180,8 @@ static func _play(m: BattleModel) -> int:
 
 ## One battle against a Wayfarer on Tamer, set up as Overworld._new_model does (no player items,
 ## like the Warden simulator). XP lands on [param mine] as in the game. Returns 0 win, 1 loss, -1 draw.
-static func trainer_battle(mine: Array[Spirling], foe: Dictionary, seed_value: int) -> int:
+## [param owned]: Spirlings the player has bonded (a newcomer takes less damage on Tamer).
+static func trainer_battle(mine: Array[Spirling], foe: Dictionary, seed_value: int, owned: int = GameState.NEWCOMER_SPIRLINGS) -> int:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
 	var def: Dictionary = foe.def
@@ -181,7 +192,8 @@ static func trainer_battle(mine: Array[Spirling], foe: Dictionary, seed_value: i
 	m.level_cap = Spirling.LEVEL_SANITY
 	m.ai.set_profile(str(info.profile), info.profile_tune)
 	m.ai.set_difficulty(DIFFICULTY)
-	m.foe_damage_mult = GameState.FOE_DAMAGE[DIFFICULTY]
+	m.foe_damage_mult = GameState.foe_damage_for(DIFFICULTY, owned)
+	m.xp_mult = GrowthRules.battle_mult(DIFFICULTY, {}, {})
 	m.boss_hp_scale = GameState.BOSS_HP_SCALE[DIFFICULTY]
 	m.boss_difficulty = DIFFICULTY
 	m.field = str(foe.get("field", ""))
@@ -207,6 +219,7 @@ static func wild_battle(mine: Array[Spirling], table: Array, rng: RandomNumberGe
 		return
 	var foe := Spirling.new(sd, rng.randi_range(int(sp.min), int(sp.max)), rng)
 	var m := BattleModel.new(mine, [foe] as Array[Spirling], true, rng.randi(), 0)
+	m.xp_mult = GrowthRules.battle_mult(DIFFICULTY, {}, {})
 	m.items_allowed = false
 	m.level_cap = Spirling.LEVEL_SANITY
 	_play(m)
@@ -233,18 +246,18 @@ static func measure(owned: Array[Spirling], foe: Dictionary, trials: int, seed_v
 	var probe: Array[Spirling] = TrainerData.build_team(foe.def, "", rng, DIFFICULTY, Spirling.LEVEL_SANITY)
 	var none: Array[Spirling] = []
 	var base_seed: int = rng.randi()
-	var plain: float = _rate(pick_party(owned, GameState.MAX_PARTY + 1), none, foe, trials, base_seed)
+	var plain: float = _rate(pick_party(owned, GameState.MAX_PARTY + 1), none, foe, trials, base_seed, owned.size())
 	if not smart:
 		return plain
-	return maxf(plain, _rate(pick_for(owned, probe), probe, foe, trials, base_seed))
+	return maxf(plain, _rate(pick_for(owned, probe), probe, foe, trials, base_seed, owned.size()))
 
-static func _rate(cands: Array[Spirling], probe: Array[Spirling], foe: Dictionary, trials: int, seed_value: int) -> float:
+static func _rate(cands: Array[Spirling], probe: Array[Spirling], foe: Dictionary, trials: int, seed_value: int, owned: int = GameState.NEWCOMER_SPIRLINGS) -> float:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
 	var wins: float = 0.0
 	for t: int in trials:
 		var team: Array[Spirling] = lineup(cands, rng, probe)
-		var res: int = trainer_battle(copy_team(team), foe, rng.randi())
+		var res: int = trainer_battle(copy_team(team), foe, rng.randi(), owned)
 		wins += 1.0 if res == 0 else (0.5 if res == -1 else 0.0)
 	return wins / maxf(1.0, trials)
 
@@ -335,7 +348,7 @@ static func run(starter: String, trials: int, seed_value: int, only: Array[Strin
 					continue
 				for attempt: int in 3:
 					var party: Array[Spirling] = pick_party(owned)
-					var res: int = trainer_battle(party, foe, rng.randi())
+					var res: int = trainer_battle(party, foe, rng.randi(), owned.size())
 					for s: Spirling in party:
 						grow(s)
 					if res == 0:
@@ -402,7 +415,7 @@ static func _boss(owned: Array[Spirling], foe: Dictionary, step: Dictionary, tri
 	# The player wins the fight once and keeps its XP.
 	for attempt: int in 5:
 		var team: Array[Spirling] = lineup(pick_for(next, probe), rng, probe)
-		var res: int = trainer_battle(team, foe, rng.randi())
+		var res: int = trainer_battle(team, foe, rng.randi(), next.size())
 		for s: Spirling in team:
 			grow(s)
 		if res == 0:

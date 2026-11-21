@@ -18,9 +18,10 @@ func _first_species_of(element: int) -> String:
 
 func test_story_and_rematches_grow_faster() -> void:
 	var tamer: float = GrowthRules.battle_mult(GameState.Difficulty.TAMER, {}, {})
-	assert_eq(tamer, 1.0)
+	# Tamer grows 15 % faster since Ali asked for an easier game (2026-11-21, Chimora 100 item 7).
+	assert_almost_eq(tamer, 1.15, 0.001)
 	assert_gt(GrowthRules.battle_mult(GameState.Difficulty.STORY, {}, {}), tamer, "Story grows faster")
-	assert_eq(GrowthRules.battle_mult(GameState.Difficulty.VETERAN, {}, {}), tamer)
+	assert_eq(GrowthRules.battle_mult(GameState.Difficulty.VETERAN, {}, {}), 1.0)
 	assert_gt(GrowthRules.battle_mult(GameState.Difficulty.TAMER, {"rematch": true}, {}), tamer, "a rematch grows faster")
 	var rec: Dictionary = {}
 	GrowthRules.grant_world_boost(rec)

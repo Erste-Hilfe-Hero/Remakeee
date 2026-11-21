@@ -411,5 +411,17 @@
    "Carter Wim: Stop! Fine, take these coins, just stop squeaking about my cart."
   ],
   "action": "tip 80 wim"
+ },
+ "warn_saltmarsh": {
+  "lines": [
+   "Lookout Halde: The Saltmarsh road? The Spirlings out there bite harder than anything near the village.",
+   "Lookout Halde: Go north through Fernstair first. Kestra tests new Wayfarers on the Crowcrest path. Come back once she has seen you fight."
+  ]
+ },
+ "warn_quillbrook": {
+  "lines": [
+   "Lookout Corra: Quillbrook's Wayfarers would beat a fresh team before breakfast.",
+   "Lookout Corra: Take the north road to Fernstair first, and let Kestra test you on the Crowcrest path. Then this road is yours."
+  ]
  }
 }

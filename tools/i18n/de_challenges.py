@@ -46,7 +46,7 @@ T = {
 "New rules can only be taken before you mend your first Rift.": "Neue Regeln gehen nur, bevor du deinen ersten Riss heilst.",
 "Extra rules for a harder journey. Taken before your first Rift, dropped any time.": "Zusatzregeln für eine härtere Reise. Vor dem ersten Riss wählbar, jederzeit aufzugeben.",
 "Challenges...": "Herausforderungen...",
-"Relaxed battles for enjoying the story. Foes deal 90% damage, land fewer critical hits, and battles give 20% more Growth.": "Entspannte Kämpfe, um die Geschichte zu genießen. Gegner machen 90 % Schaden, treffen seltener kritisch, und Kämpfe geben 20 % mehr Wachstum.",
+"Relaxed battles for enjoying the story. Foes deal 90% damage, land fewer critical hits, and battles give 50% more Growth.": "Entspannte Kämpfe, um die Geschichte zu genießen. Gegner machen 90 % Schaden, treffen seltener kritisch, und Kämpfe geben 50 % mehr Wachstum.",
 "How do you want to travel?": "Wie willst du reisen?",
 "With challenge rules": "Mit Herausforderungs-Regeln",
 "This journey is now in the run chronicle: %s.": "Diese Reise steht jetzt in der Lauf-Chronik: %s.",

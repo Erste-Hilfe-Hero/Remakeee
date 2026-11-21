@@ -1102,11 +1102,11 @@
   "role": "weaver",
   "line_id": "wickit",
   "base": {
-   "hp": 53,
-   "atk": 50,
-   "foc": 65,
-   "spd": 67,
-   "def": 52
+   "hp": 57,
+   "atk": 54,
+   "foc": 70,
+   "spd": 72,
+   "def": 56
   },
   "trait": "light_sleeper",
   "learnset": {

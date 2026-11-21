@@ -1,9 +1,11 @@
 extends GutTest
-## Owner rule (Nov 2026): every act and era region is hard. The act simulator (ActSim) plays the
-## route of tools/balance/act_route.json for every starter on Tamer and measures each Warden, rival
-## and boss on arrival and after a moderate grind. These tests pin the bands of the route file, so
-## new content cannot make an act easy again (or put up a wall). The CI run uses few battles per
-## measure, so the bands get a margin.
+## Owner rule (Nov 2026): every act and era region is hard. Since Ali asked for an easier game
+## (2026-11-21, Chimora 100 items 1-14) Act I is the tutorial act: its own bands in act_route.json
+## (won 50-80 % on arrival, no fight over 85 %, a budget of 20 wild battles); Acts II on keep
+## the route's bands. The act simulator (ActSim) plays the route of tools/balance/act_route.json
+## for every starter on Tamer and measures each Warden, rival and boss on arrival and after a
+## moderate grind. These tests pin the bands of the route file, so new content cannot make an act
+## easy again (or put up a wall). The CI run uses few battles per measure, so the bands get a margin.
 
 const TRIALS: int = 16
 const MARGIN: float = 0.08
@@ -38,23 +40,23 @@ func test_every_act_and_era_is_measured() -> void:
 	for a: Dictionary in _sum.acts:
 		assert_gte((a.fights as Array).size(), 4, "%s measures its Wardens, rivals and bosses" % a.id)
 
-func test_arrival_is_hard_in_every_act() -> void:
-	var band: Array = _cfg.bands.win_arrival
+func test_arrival_is_in_each_acts_band() -> void:
 	for a: Dictionary in _sum.acts:
+		var band: Array = ActSim.act_bands(_cfg, a.id).win_arrival
 		assert_between(float(a.win_arrival), float(band[0]) - MARGIN, float(band[1]) + MARGIN,
 			"%s: %d%% won on arrival" % [a.id, roundi(a.win_arrival * 100.0)])
 
 func test_no_measured_fight_is_a_pushover() -> void:
-	var top: float = float(_cfg.bands.fight_arrival_max)
 	for a: Dictionary in _sum.acts:
+		var top: float = float(ActSim.act_bands(_cfg, a.id).fight_arrival_max)
 		for f: Dictionary in a.fights:
 			if f.kind == ActSim.HEART:
 				continue
 			assert_lte(float(f.win_arrival), top + 2.0 * MARGIN, "%s %s: %d%% on arrival" % [a.id, f.name, roundi(f.win_arrival * 100.0)])
 
 func test_training_wins_and_there_are_no_walls() -> void:
-	var need: float = float(_cfg.bands.win_moderate_min)
 	for a: Dictionary in _sum.acts:
+		var need: float = float(ActSim.act_bands(_cfg, a.id).win_moderate_min)
 		assert_gte(float(a.win_moderate), need - MARGIN, "%s: %d%% after the moderate grind" % [a.id, roundi(a.win_moderate * 100.0)])
 		assert_eq(int(a.walls), 0, "%s: a fight not won at 70 %% after %d grind battles" % [a.id, int(_cfg.grind_max)])
 
@@ -74,12 +76,12 @@ func test_mean_grind_stays_within_each_act_budget() -> void:
 func test_every_starter_clears_the_even_acts_alone() -> void:
 	var even: Array = _cfg.bands.get("starters_even", [])
 	assert_false(even.is_empty(), "act_route.json bands.starters_even names at least Act I")
-	var need: float = float(_cfg.bands.win_moderate_min)
 	for r: Dictionary in _runs:
 		var one: Dictionary = ActSim.summary([r])
 		for a: Dictionary in one.acts:
 			if not str(a.id) in even:
 				continue
+			var need: float = float(ActSim.act_bands(_cfg, a.id).win_moderate_min)
 			var budget: int = 0
 			for act: Dictionary in _cfg.acts:
 				if act.id == a.id:
@@ -91,8 +93,18 @@ func test_every_starter_clears_the_even_acts_alone() -> void:
 func test_targets_are_written_down_per_act() -> void:
 	var table: String = BalanceDoc.act_targets_table()
 	for a: Dictionary in _cfg.acts:
-		assert_string_contains(table, "| %s | %d |" % [a.name, int(a.moderate_grind)])
+		var band: Array = ActSim.act_bands(_cfg, a.id).win_arrival
+		assert_string_contains(table, "| %s | %d | %d-%d %% |" % [a.name, int(a.moderate_grind), roundi(float(band[0]) * 100.0), roundi(float(band[1]) * 100.0)])
 	assert_string_contains(FileAccess.get_file_as_string(BalanceDoc.DOC_PATH), "<!-- gen:act_targets -->")
+
+## Act I is the tutorial act (Ali 2026-11-21): its band sits above the hard band of the later acts.
+func test_act_one_is_the_tutorial_act() -> void:
+	var one: Dictionary = ActSim.act_bands(_cfg, "act1")
+	assert_gte(float(one.win_arrival[0]), float(_cfg.bands.win_arrival[1]), "Act I starts easier than the hard band")
+	assert_lte(int((_cfg.acts[0] as Dictionary).moderate_grind), 20, "Act I needs at most 20 grind battles per fight")
+	for a: Dictionary in _cfg.acts:
+		if a.id != "act1":
+			assert_false(a.has("bands"), "%s keeps the hard band of the route" % a.id)
 
 func test_each_act_is_steeper_than_the_one_before() -> void:
 	var last: Dictionary = {}

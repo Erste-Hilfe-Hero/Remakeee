@@ -332,7 +332,16 @@ func ai_level() -> int:
 
 ## Share of damage the foe side deals (Story softens every hit, item 728).
 func foe_damage_mult() -> float:
-	return FOE_DAMAGE[difficulty]
+	return foe_damage_for(difficulty, party.size() + storage.size())
+
+## Share of damage the foe side deals on [param d] for a player with [param owned] Spirlings in
+## team and storage: on Tamer a newcomer (fewer than NEWCOMER_SPIRLINGS) takes NEWCOMER_FOE_DAMAGE
+## (Ali 2026-11-21, easier start; Chimora 100 item 9). ActSim measures with the same rule.
+static func foe_damage_for(d: int, owned: int) -> float:
+	var m: float = FOE_DAMAGE[d]
+	if d == Difficulty.TAMER and owned < NEWCOMER_SPIRLINGS:
+		m = minf(m, NEWCOMER_FOE_DAMAGE)
+	return m
 
 func text_cps() -> float:
 	return TEXT_CPS[text_speed]
@@ -632,8 +641,10 @@ func battle_backdrop() -> String:
 ## Kin Charms every new game starts with (Ali, 7 Nov: 20 free bond items).
 const START_KIN_CHARMS: int = 20
 ## Below this many Spirlings (team and storage) the player counts as new: a failed bond gives
-## the wild Spirling no free hit.
+## the wild Spirling no free hit, and on Tamer foes deal less damage (foe_damage_for).
 const NEWCOMER_SPIRLINGS: int = 6
+## Share of damage foes deal to a newcomer on Tamer (foe_damage_for).
+const NEWCOMER_FOE_DAMAGE: float = 0.9
 
 ## True while the player has fewer than NEWCOMER_SPIRLINGS Spirlings in team and storage.
 func is_newcomer() -> bool:

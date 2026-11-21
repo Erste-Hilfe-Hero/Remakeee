@@ -157,23 +157,15 @@
     "tamer": [
      {
       "species": "Zephlet",
-      "level": 17
+      "level": 13
      },
      {
-      "species": "Millvane",
-      "level": 17
+      "species": "Millwhit",
+      "level": 13
      },
      {
       "species": "Tempestrel",
-      "level": 18
-     },
-     {
-      "species": "Gloamhog",
-      "level": 18
-     },
-     {
-      "species": "Lichub",
-      "level": 18
+      "level": 14
      }
     ],
     "rift_born": [
