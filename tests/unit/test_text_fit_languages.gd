@@ -25,7 +25,8 @@ var _lone: RegEx = RegEx.create_from_string(LONE_NUMBER)
 
 func before_all() -> void:
 	_keep = {"unlocked": EraManager.unlocked_era, "retro": EraManager.retro_filter, "flags": GameState.flags.duplicate(),
-		"reduce": GameState.reduce_motion, "settings": SaveManager.settings_path, "billing": Billing.state.duplicate()}
+		"reduce": GameState.reduce_motion, "settings": SaveManager.settings_path, "billing": Billing.state.duplicate(),
+		"language": GameState.language}
 	SaveManager.settings_path = "user://test_text_fit_settings.json"
 
 func after_all() -> void:
@@ -36,6 +37,8 @@ func after_all() -> void:
 	SaveManager.settings_path = _keep.settings
 	Billing.state = _keep.billing
 	GameState.in_game = false
+	# The loop sets GameState.language; a later settings_from_dict(settings_to_dict()) would re-apply it.
+	GameState.language = _keep.language
 	Loc.set_language("en")
 
 ## Known problems: "problem text" -> "owner note", from KNOWN_PATH (# starts a comment line,
