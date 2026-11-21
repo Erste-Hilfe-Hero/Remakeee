@@ -1,0 +1,32 @@
+{
+ "_comment": "Texts for the German table c100_start in this language. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "%s curls up at your feet. Let it stay?": "%s zwija się u twoich stóp. Może zostać?",
+  "%s stays with you! The other two slip off to the lake.": "%s zostaje z tobą! Pozostałe dwa umykają nad jezioro.",
+  "'Our cartographers have drawn and redrawn Veydal for a hundred years. Now the Hush: Spirlings near a Rift go quiet and forget their Wayfarers.'": "'Nasi kartografowie od stu lat rysują i przerysowują Veydal. Teraz Cisza: Spirlingi przy Szczelinie milkną i zapominają swoich Wędrowców.'",
+  "Aldo: Good. The Rifts bring the Hush: Spirlings there go quiet.": "Aldo: Dobrze. Szczeliny niosą Ciszę: Spirlingi tam milkną.",
+  "Aldo: Take this, and go see Kestra at the map house.": "Aldo: Weź to i idź do Kestry w domu map.",
+  "Aldo: The storm scattered Mirela's map book. Bring her pages home.": "Aldo: Burza rozwiała księgę map Mireli. Przynieś jej strony do domu.",
+  "Aldo: Three Spirlings came in from the storm. Go say hello!": "Aldo: Trzy Spirlingi schroniły się tu przed burzą. Idź się przywitać!",
+  "Coat: %s": "Płaszcz: %s",
+  "Gentle battles, more Growth.": "Łagodne walki, więcej Wzrostu.",
+  "Hair: %s": "Włosy: %s",
+  "I have a code": "Mam kod",
+  "In the margin, in Aldo's hand: 'Your grandmother went in to map that Rift before you were born. She never came back.'": "Na marginesie, ręką Aldo: 'Twoja babcia weszła do tej Szczeliny, by ją zmapować, zanim się urodziłeś. Nigdy nie wróciła.'",
+  "Keyboard": "Klawiatura",
+  "Last night a storm tore the sky. Rifts opened over Veydal.": "Zeszłej nocy burza rozdarła niebo. Nad Veydal otworzyły się Szczeliny.",
+  "OK": "OK",
+  "Online only: your journeys are safe on our server. No ads, no tracking.": "Tylko online: twoje podróże są bezpieczne na naszym serwerze. Bez reklam i śledzenia.",
+  "Random": "Losowo",
+  "Relaxed": "Na luzie",
+  "Ring limits, smarter foes.": "Limity Rangi, sprytniejsi wrogowie.",
+  "Skin: %s": "Skóra: %s",
+  "The journey as it is meant to be.": "Podróż taka, jak ją pomyślano.",
+  "Three small lights crossed the lake to the lighthouse lamp.": "Trzy małe światełka przepłynęły jezioro do lampy latarni.",
+  "Tough": "Trudno",
+  "Watch the marks light up, then press them in the same order.": "Patrz, które znaki się świecą, i naciśnij je w tej samej kolejności.",
+  "Watch the marks light up, then tap them in the same order.": "Patrz, które znaki się świecą, i dotknij ich w tej samej kolejności.",
+  "Wayfarer: %s": "Wędrowiec: %s",
+  "You can change it later in Settings.": "Możesz to później zmienić w Ustawieniach."
+ }
+}

@@ -4,7 +4,7 @@ extends GutTest
 ## as on the title screen, so it scrolls and its scrollbar takes room from the rows.
 
 ## The title menu's rows (TitleScreen), "Continue" without its save summary.
-const ROWS: Array[String] = ["Continue", "New Game", "Load...", "What's new", "Join our Discord", "Settings"]
+const ROWS: Array[String] = ["Continue", "New Game", TitleScreen.HAVE_CODE, "Load...", "What's new", "Join our Discord", "Settings"]
 
 var _keep: Array = []
 

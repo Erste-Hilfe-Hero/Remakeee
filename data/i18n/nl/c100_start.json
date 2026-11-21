@@ -1,0 +1,32 @@
+{
+ "_comment": "Texts for the German table c100_start in this language. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "%s curls up at your feet. Let it stay?": "%s krult zich op aan je voeten. Mag hij blijven?",
+  "%s stays with you! The other two slip off to the lake.": "%s blijft bij je! De andere twee glippen weg naar het meer.",
+  "'Our cartographers have drawn and redrawn Veydal for a hundred years. Now the Hush: Spirlings near a Rift go quiet and forget their Wayfarers.'": "'Onze cartografen tekenen Veydal al honderd jaar opnieuw en opnieuw. Nu de Stilte: Spirlings bij een Kloof verstommen en vergeten hun Reizigers.'",
+  "Aldo: Good. The Rifts bring the Hush: Spirlings there go quiet.": "Aldo: Goed. De Kloven brengen de Stilte: Spirlings daar verstommen.",
+  "Aldo: Take this, and go see Kestra at the map house.": "Aldo: Neem dit mee en ga naar Kestra in het Kaartenhuis.",
+  "Aldo: The storm scattered Mirela's map book. Bring her pages home.": "Aldo: De storm heeft Mirela's kaartenboek verspreid. Breng haar pagina's thuis.",
+  "Aldo: Three Spirlings came in from the storm. Go say hello!": "Aldo: Drie Spirlings kwamen binnen uit de storm. Ga gedag zeggen!",
+  "Coat: %s": "Jas: %s",
+  "Gentle battles, more Growth.": "Zachte gevechten, meer Groei.",
+  "Hair: %s": "Haar: %s",
+  "I have a code": "Ik heb een code",
+  "In the margin, in Aldo's hand: 'Your grandmother went in to map that Rift before you were born. She never came back.'": "In de kantlijn, in Aldo's handschrift: 'Je grootmoeder ging die Kloof in om hem in kaart te brengen, voor je geboren was. Ze kwam nooit terug.'",
+  "Keyboard": "Toetsenbord",
+  "Last night a storm tore the sky. Rifts opened over Veydal.": "Vannacht scheurde een storm de hemel open. Boven Veydal gingen Kloven open.",
+  "OK": "OK",
+  "Online only: your journeys are safe on our server. No ads, no tracking.": "Alleen online: je reizen staan veilig op onze server. Geen reclame, geen tracking.",
+  "Random": "Willekeurig",
+  "Relaxed": "Ontspannen",
+  "Ring limits, smarter foes.": "Ringgrenzen, slimmere tegenstanders.",
+  "Skin: %s": "Huid: %s",
+  "The journey as it is meant to be.": "De reis zoals bedoeld.",
+  "Three small lights crossed the lake to the lighthouse lamp.": "Drie kleine lichtjes staken het meer over, naar de vuurtorenlamp.",
+  "Tough": "Zwaar",
+  "Watch the marks light up, then press them in the same order.": "Kijk welke tekens oplichten en druk ze in dezelfde volgorde.",
+  "Watch the marks light up, then tap them in the same order.": "Kijk welke tekens oplichten en tik ze in dezelfde volgorde.",
+  "Wayfarer: %s": "Reiziger: %s",
+  "You can change it later in Settings.": "Je kunt dit later in Instellingen veranderen."
+ }
+}

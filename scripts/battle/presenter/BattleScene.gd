@@ -765,14 +765,9 @@ func _run() -> void:
 	if model.is_wild and not model.bond_block.is_empty() and not model.has_meta("quick"):
 		await _text.show_text(Loc.t(model.bond_block))
 	_refresh_goal()
-	var tip_ids: Array[String] = ["battle"]
-	if model.is_wild:
-		tip_ids.append("bond")
-	if _multi:
-		tip_ids.append("multi")
-	for id: String in tip_ids:
-		for line: String in Tips.take(id):
-			await _text.show_text(line)
+	# One tip per battle start, the Energy tip first (Chimora 100 item 31).
+	for line: String in Tips.take(Tips.battle_start_tip(model.is_wild, _multi)):
+		await _text.show_text(line)
 	_replaying = not replay_inputs.is_empty()
 	if resume:
 		_apply_speed()
@@ -1192,7 +1187,10 @@ static func bond_charms(bag: Dictionary) -> Array[String]:
 	return out
 
 func _bond(slot: int = 0) -> BattleAction:
-	# Steps 3 and 4 of the bonding tutorial come when they are needed, not at battle start.
+	# The bonding tutorial comes when it is needed: steps 1 and 2 if no battle start showed them
+	# yet (Chimora 100 item 31), then steps 3 and 4.
+	for line: String in Tips.take("bond"):
+		await _text.show_text(line)
 	for line: String in Tips.take(Tips.bond_how_id()):
 		await _text.show_text(line)
 	var charm: String = ""

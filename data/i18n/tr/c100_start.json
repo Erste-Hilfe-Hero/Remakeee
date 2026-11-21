@@ -1,0 +1,32 @@
+{
+ "_comment": "Texts for the German table c100_start in this language. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "%s curls up at your feet. Let it stay?": "%s ayaklarının dibinde kıvrılıyor. Kalsın mı?",
+  "%s stays with you! The other two slip off to the lake.": "%s seninle kalıyor! Diğer ikisi göle doğru sıvışıyor.",
+  "'Our cartographers have drawn and redrawn Veydal for a hundred years. Now the Hush: Spirlings near a Rift go quiet and forget their Wayfarers.'": "'Haritacılarımız yüz yıldır Veydal'ı çizip yeniden çiziyor. Şimdi Hush: Bir Yarığın yakınındaki Spirling'ler susar ve Gezginlerini unutur.'",
+  "Aldo: Good. The Rifts bring the Hush: Spirlings there go quiet.": "Aldo: İyi. Yarıklar Hush'ı getirir: oradaki Spirling'ler susar.",
+  "Aldo: Take this, and go see Kestra at the map house.": "Aldo: Şunu al ve harita evindeki Kestra'ya git.",
+  "Aldo: The storm scattered Mirela's map book. Bring her pages home.": "Aldo: Fırtına Mirela'nın harita defterini dağıttı. Sayfalarını eve getir.",
+  "Aldo: Three Spirlings came in from the storm. Go say hello!": "Aldo: Fırtınadan üç Spirling sığındı. Git, merhaba de!",
+  "Coat: %s": "Palto: %s",
+  "Gentle battles, more Growth.": "Yumuşak savaşlar, daha çok Gelişim.",
+  "Hair: %s": "Saç: %s",
+  "I have a code": "Kodum var",
+  "In the margin, in Aldo's hand: 'Your grandmother went in to map that Rift before you were born. She never came back.'": "Kenarda, Aldo'nun el yazısıyla: 'Büyükannen, sen doğmadan önce o Yarığın haritasını çıkarmaya girdi. Bir daha dönmedi.'",
+  "Keyboard": "Klavye",
+  "Last night a storm tore the sky. Rifts opened over Veydal.": "Dün gece bir fırtına gökyüzünü yırttı. Veydal üzerinde Yarıklar açıldı.",
+  "OK": "Tamam",
+  "Online only: your journeys are safe on our server. No ads, no tracking.": "Yalnızca çevrimiçi: yolculukların sunucumuzda güvende. Reklam yok, takip yok.",
+  "Random": "Rastgele",
+  "Relaxed": "Rahat",
+  "Ring limits, smarter foes.": "Halka sınırı, zeki rakipler.",
+  "Skin: %s": "Ten: %s",
+  "The journey as it is meant to be.": "Yolculuk tasarlandığı gibi.",
+  "Three small lights crossed the lake to the lighthouse lamp.": "Üç küçük ışık, fener lambasına doğru gölü geçti.",
+  "Tough": "Zor",
+  "Watch the marks light up, then press them in the same order.": "Yanan işaretleri izle, sonra aynı sırayla bas.",
+  "Watch the marks light up, then tap them in the same order.": "Yanan işaretleri izle, sonra aynı sırayla dokun.",
+  "Wayfarer: %s": "Gezgin: %s",
+  "You can change it later in Settings.": "Sonra Ayarlar'dan değiştirebilirsin."
+ }
+}

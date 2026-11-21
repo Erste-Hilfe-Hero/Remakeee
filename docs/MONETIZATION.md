@@ -287,11 +287,13 @@ item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).
 
 ## Alle Angebote
 
+Die Tabelle zeigt alle Angebote, auch nicht verkaufte (`ready: false`). `rg_fast_text` wird seit Katalog v37 nicht mehr verkauft: Schnelltext ist gratis (Chimora 100 Punkt 34); wer es gekauft hat, verliert nichts.
+
 <!-- shop-table:start -->
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-207 Angebote (Katalog v36): 165 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
+207 Angebote (Katalog v37): 165 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
