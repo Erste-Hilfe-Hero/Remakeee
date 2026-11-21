@@ -29,7 +29,7 @@ func test_places_are_ticked_where_seen() -> void:
 		GameState.mark_seen(sd.species_name)
 	assert_true(Collection.places_done(sd.species_name))
 	assert_false(Collection.places_line(sd.species_name).contains("???"))
-	assert_string_contains(SpirlogBook.page_text(sd, GameState.spirlog), "(%d of %d)" % [maps.size(), maps.size()])
+	assert_string_contains(SpirlogBook.page_text(sd, GameState.spirlog), "(%d of %d found)" % [maps.size(), maps.size()])
 
 func test_places_goal_counts_and_pays_once() -> void:
 	assert_gt(Collection.set_total("places"), 0)

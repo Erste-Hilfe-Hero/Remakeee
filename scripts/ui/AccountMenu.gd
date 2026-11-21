@@ -6,51 +6,75 @@ extends RefCounted
 const TITLE_SCENE: String = "res://scenes/ui/Title.tscn"
 const TRANSFER_CODE_LENGTH: int = 12
 
-const PRIVACY_NOTE: String = "Chimora is online only. Your journeys are stored on our server in Germany, so they are safe if your phone breaks. We store your Wayfarer name, friend code, saves, friends, Lantern Mail and league standings, nothing else. No ads, no tracking. You can download or delete everything under Settings, Account."
+const PRIVACY_NOTE: String = "Chimora is online only. Your journeys are stored on our server in Germany, so they are safe if your phone breaks. We store your Wayfarer name, friend code, saves, friends, Lantern Mail and league standings, nothing else. No ads, no tracking. We count anonymously how far players get in the game, to make it better. You can download or delete everything under Settings, Account."
 const ONLINE_RULES: String = "Online rules:\n- Be kind. Greetings use set phrases, there is no free chat.\n- Never share your real name, address or passwords.\n- Spirlings stay with the Wayfarer who bonded them. They cannot be traded or gifted.\n- Report names that are not okay. Blocking works at once.\n- Cheating gets the account reset."
 ## The same rules once Spirling trading is switched on (online step 1).
 const ONLINE_RULES_TRADE: String = "Online rules:\n- Be kind. Greetings use set phrases, there is no free chat.\n- Never share your real name, address or passwords.\n- Spirlings can only be traded with friends, always inside the game. Nobody can ask you to pay for one.\n- Report names that are not okay. Blocking works at once.\n- Cheating gets the account reset."
 
 static func run(menu: MenuHost) -> void:
 	while true:
-		var title: String = Loc.t("Account  Code %s") % Online.pretty_code(Online.friend_code())
+		var t: String = title()
+		# The test-server note only when it fits: a longer title popped up before the list.
+		var titles: Array[String] = [t]
 		if Online.is_local():
-			title += "\n" + Loc.t("(test server on this phone)")
-		var entries: Array[String] = ["Get a transfer code", "Enter a code...", "Online rules", "Privacy", "Delete account...",
-			"Friends, mail: %s" % ("On" if Online.social_on() else "Off"), "Download my data", "Messages from the team", "Earlier saves",
+			titles.push_front(t + "\n" + Loc.t("(test server on this phone)"))
+		# Ten rows at most: the rules and the privacy note share one row (Chimora 100, item 61).
+		var entries: Array[String] = ["Get a transfer code", "Enter a code...", RULES_ROW, "Delete account...",
+			"Friends, mail: %s" % ("On" if Online.social_on() else "Off"), "Download my data", NOTICES_ROW, "Earlier saves",
 			"For parents..."]
 		# Promo codes pay into the open journey's bag, so only during a journey.
 		if GameState.in_game and Online.flag_on("promo"):
 			entries.append("Redeem a promo code...")
-		var idx: int = await menu.pick_strings(title, entries)
-		match idx:
-			-1:
-				return
-			0:
+		var idx: int = await menu.pick_strings(menu.fit_title(titles), entries)
+		if idx < 0:
+			return
+		match entries[idx]:
+			"Get a transfer code":
 				await _show_transfer(menu)
-			1:
+			"Enter a code...":
 				if await _claim_transfer(menu):
 					return
-			2:
-				await menu.info(ONLINE_RULES_TRADE if Online.flag_on("trade_spirling") else ONLINE_RULES)
-			3:
-				await menu.info(PRIVACY_NOTE)
-			4:
+			RULES_ROW:
+				await _rules(menu)
+			"Delete account...":
 				if await _delete(menu):
 					return
-			5:
-				await _toggle_social(menu)
-			6:
+			"Download my data":
 				await _export(menu)
-			7:
+			NOTICES_ROW:
 				await NoticesMenu.run(menu)
-			8:
+			"Earlier saves":
 				if await SaveHistoryMenu.run(menu):
 					return
-			9:
+			"For parents...":
 				await SafetyMenu.run_parents(menu)
-			10:
+			"Redeem a promo code...":
 				await PromoMenu.run(menu)
+			_:
+				await _toggle_social(menu)
+
+const RULES_ROW: String = "Rules & privacy..."
+const NOTICES_ROW: String = "Team messages"
+
+## "Account  Code ABCD-EFGH"; offline, when the server has not sent the code yet, it says so
+## instead of an empty code (Chimora 100, item 56).
+static func title() -> String:
+	var code: String = Online.friend_code()
+	if code.is_empty():
+		return Loc.t("Account  (offline)")
+	return Loc.t("Account  Code %s") % Online.pretty_code(code)
+
+## The online rules and the privacy note behind one row.
+static func _rules(menu: MenuHost) -> void:
+	while true:
+		var idx: int = await menu.pick_strings(RULES_ROW, ["Online rules", "Privacy"] as Array[String])
+		if idx < 0:
+			return
+		if idx == 0:
+			await menu.info(ONLINE_RULES_TRADE if Online.flag_on("trade_spirling") else ONLINE_RULES)
+		else:
+			# Plan Chimora 100, item 76: the opt-in phone notes stay on the phone.
+			await menu.info(Loc.t(PRIVACY_NOTE) + "\n\n" + Loc.t(LocalNotify.PRIVACY_LINE))
 
 ## Everything the server keeps about this account as one JSON file (plan area 7, item 2972;
 ## GDPR Art. 15 and 20). The browser version downloads it, phones save it to the documents folder.

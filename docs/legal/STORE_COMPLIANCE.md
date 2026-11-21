@@ -2,8 +2,8 @@
 
 > Erstellt von einer KI ohne anwaltliche Prüfung. Die Antworten gelten für das Modell aus
 > [DATENSCHUTZ.md](DATENSCHUTZ.md): automatisches Konto mit zufälliger Spieler-ID, Übertragungscode statt
-> E-Mail, Wayfarer-Name nur für dich sichtbar, eigener Server bei Contabo in Deutschland, keine Werbung, keine Analytics,
-> keine Absturzberichte, kein Drittanbieter-Login, kein Chat, keine Lootboxen. Ändert sich davon etwas,
+> E-Mail, Wayfarer-Name nur für dich sichtbar, eigener Server bei Contabo in Deutschland, keine Werbung, keine Analytics-SDKs
+> (nur eine eigene anonyme Zählung des Fortschritts auf dem Server, `admin_funnel`), keine Absturzberichte, kein Drittanbieter-Login, kein Chat, keine Lootboxen. Ändert sich davon etwas,
 > ändern sich die Antworten. Store-Formulare ändern sich oft: im Zweifel die Hilfe in der Konsole lesen.
 
 ## 1. Google Play: Data Safety (Datensicherheit)
@@ -23,9 +23,14 @@ nicht flüchtig, nicht geteilt):
 | Personenbezogene Daten → **Name** | **Ja** (Wayfarer-Name; Google zählt auch Spitznamen dazu) |
 | Finanzdaten → **Kaufverlauf** | **Ja**, erhoben, nicht geteilt, Zweck *App-Funktionen* (der Server speichert Käufe, Rissglas-Buchungen und Erstattungen) |
 | Personenbezogene Daten → **Sonstige Infos** | **Ja** (nur die Altersgruppe für den Shop, kein Geburtsdatum) |
-| App-Aktivitäten → **Sonstige Aktionen** | **Ja** (Spielstand/Fortschritt) |
+| App-Aktivitäten → **Sonstige Aktionen** | **Ja** (Spielstand/Fortschritt); Zwecke *App-Funktionen* und *Analysen* (anonyme Zählung, wo neue Spieler aufhören) |
 | E-Mail-Adresse, Geräte-IDs, Absturzprotokolle, Diagnose | **Nein** |
 | Standort → Ungefährer Standort | **Nein** (IP-Adressen liegen nur 7 Tage in Sicherheits-Logs und werden nicht zur Standortbestimmung genutzt) |
+
+Lokale Mitteilungen (plan Chimora 100, item 76, `scripts/core/LocalNotify.gd`) ändern daran nichts: Sie werden
+nur auf dem Gerät geplant (AlarmManager / UNUserNotificationCenter), es gibt keinen Push-Dienst und kein
+Geräte-Token, nichts verlässt das Gerät. Android 13+ fragt `POST_NOTIFICATIONS` erst, nachdem der Spieler im
+Spiel Ja gesagt hat; keine Exact-Alarm- oder Boot-Berechtigung. Texte sind neutral (nie Shop oder Kauf).
 
 Weitere Play-Console-Punkte:
 - **Datenschutzerklärung:** öffentliche URL (kein PDF, keine Store-Seite), `https://chimora.161-97-102-171.sslip.io/datenschutz`.
@@ -43,7 +48,7 @@ Weitere Play-Console-Punkte:
 | Datentyp | Mit Identität verknüpft? | Tracking? | Zweck |
 | --- | --- | --- | --- |
 | Identifiers → **User ID** | Ja | Nein | App Functionality |
-| User Content → **Gameplay Content** (Spielstand inkl. Wayfarer-Name) | Ja | Nein | App Functionality |
+| User Content → **Gameplay Content** (Spielstand inkl. Wayfarer-Name) | Ja | Nein | App Functionality, Analytics (anonyme Fortschrittszählung `admin_funnel`) |
 | Purchases → **Purchase History** (Käufe, Rissglas-Buchungen, Erstattungen auf unserem Server) | Ja | Nein | App Functionality |
 | Other Data → **Other Data Types** (Altersgruppe für den Shop) | Ja | Nein | App Functionality |
 

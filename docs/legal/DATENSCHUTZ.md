@@ -44,6 +44,10 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
   nutzt dasselbe Konto- und Speichersystem wie die App. Konten, die zuletzt im Browser genutzt wurden,
   löschen wir automatisch, wenn sie 30 Tage nicht genutzt wurden. Wer ein Browser-Konto per
   Übertragungscode in die App mitnimmt, hat danach die Fristen der App.
+- **Anonyme Zählung des Spielfortschritts:** Aus den gespeicherten Spielständen zählen wir anonym, wie viele
+  neue Spieler pro Anmeldetag welchen Schritt im Spiel erreichen und wo sie aufhören, um das Spiel zu
+  verbessern. Die Auswertung enthält nur Zahlen, keine Spieler-ID und keinen Namen, und es werden dafür keine
+  zusätzlichen Daten erhoben (Art. 6 Abs. 1 lit. f DSGVO, berechtigtes Interesse an einem verständlichen Spiel).
 
 ### 3.2 Freunde, Leuchtpost und Meldungen
 
@@ -120,6 +124,13 @@ Erledigung, spätestens nach 2 Jahren, sofern keine Aufbewahrungspflicht besteht
 Das Spiel speichert auf deinem Gerät eine Kopie des Spielstands, deine Einstellungen und das Anmelde-Token.
 Das ist für den von dir gewünschten Dienst unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG) und braucht keine
 Einwilligung. Wir lesen keine Werbe-IDs (IDFA / Android-Werbe-ID) aus.
+
+Mitteilungen auf dem Handy (freiwillig, ab Werk aus): Wenn du sie im Spiel einschaltest und dein Gerät es
+erlaubt, plant das Spiel auf deinem Gerät kurze Hinweise, wenn ein Streifzug vorbei ist oder ein neuer Fund
+des Tages wartet (höchstens einer je Art und Tag, nie zwischen 21 und 9 Uhr). Sie werden nur auf dem Gerät
+geplant und angezeigt (lokale Mitteilungen). Es gibt keinen Push-Dienst, kein Geräte-Token, und es wird dafür
+nichts an uns oder Dritte gesendet. Ausschalten kannst du sie jederzeit unter Einstellungen > Spiel oder in den
+Einstellungen deines Geräts.
 
 ## 5. Empfänger
 

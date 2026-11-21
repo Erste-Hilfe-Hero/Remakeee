@@ -171,4 +171,4 @@ static func show_area(parent: Node, sd: SpirlingData) -> void:
 	view.marked = places_of(sd, GameState.spirlog)
 	view.custom_minimum_size = Vector2(120, 104)
 	var found: String = SpirlogBook.found_line(sd, GameState.spirlog)
-	await EraMenuKit.show_card(parent, view, Loc.t("Found on: %s" % (found if not found.is_empty() else "unknown")))
+	await EraMenuKit.show_card(parent, view, Loc.t("Seen at: %s" % (found if not found.is_empty() else "unknown")))

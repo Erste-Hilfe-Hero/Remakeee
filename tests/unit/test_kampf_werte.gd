@@ -145,7 +145,7 @@ func test_swap_hint_compares_with_the_one_in_front() -> void:
 	var a: Spirling = BattleFixtures.make("Kindlop", 20)
 	var b: Spirling = BattleFixtures.make("Kindlop", 25)
 	var line: String = BattleGuide.compare_line(b, a)
-	assert_string_contains(line, "MGT %d (%+d)" % [b.atk(), b.atk() - a.atk()])
+	assert_string_contains(line, Loc.glue("MGT %d (%+d)" % [b.atk(), b.atk() - a.atk()]))
 	assert_string_contains(line, str(b.temperament().label))
 	assert_false(BattleGuide.compare_line(a, a).contains("("), "no difference against itself")
 

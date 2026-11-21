@@ -2,12 +2,15 @@ class_name Exchange
 extends RefCounted
 ## Marla's exchange stand in the lighthouse (plan area 8): items for Waymarks only, never coins
 ## or real money. Offers and weekly stock come from data/endgame.json. The stand opens with the
-## base offers once the first Rift is mended and shows everything after Act I. Stock refills
+## two "early" offers once Kestra is met (Chimora 100, item 72), adds the base offers once the
+## first Rift is mended and shows everything after Act I. Stock refills
 ## every Monday by the server clock (ISO week, like the weekly challenge).
 
 const DATA_PATH: String = "res://data/endgame.json"
 ## Act I ends when Aldo has heard about the dock (quest "home" done).
 const ACT1_FLAG: String = "aldo_dock_told"
+## The early offers open with this flag, so daily-task Waymarks are spendable before the first Rift.
+const EARLY_FLAG: String = "met_kestra"
 
 ## Offers of the week (plan 3141): WEEKLY_PICKS of the open list exchange_weekly.
 const WEEKLY_PICKS: int = 3
@@ -101,18 +104,23 @@ static func goal_line() -> String:
 	return Loc.t("Savings goal %s: [%s] %d more Waymarks") % [nm, "#".repeat(filled) + "-".repeat(10 - filled), price - have]
 
 static func is_open() -> bool:
+	return GameState.has_flag(EARLY_FLAG) or base_unlocked()
+
+## The base offers: once the first Rift is mended.
+static func base_unlocked() -> bool:
 	return not GameState.rifts_sealed.is_empty()
 
 static func full_unlocked() -> bool:
 	return GameState.has_flag(ACT1_FLAG)
 
-## Offers the save can see right now (base, plus full after Act I).
+## Offers the save can see right now (early, base after the first Rift, full after Act I).
 static func offers() -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	if not is_open():
 		return out
 	for o: Dictionary in all_offers():
-		if str(o.get("tier", "base")) == "base" or full_unlocked():
+		var tier: String = str(o.get("tier", "base"))
+		if tier == "early" or (tier == "base" and base_unlocked()) or full_unlocked():
 			out.append(o)
 	if full_unlocked():
 		out.append_array(weekly_for(week()))

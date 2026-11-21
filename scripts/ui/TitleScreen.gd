@@ -5,8 +5,6 @@ extends Control
 const OVERWORLD: String = "res://scenes/overworld/Overworld.tscn"
 const NAME_MAX: int = 10
 const ART_HEIGHT: int = 148
-const IAP_NOTE: String = "Free, in-app purchases"
-var _iap_note: Label
 ## Era of the title (the newest era any save reached), its art height and the save card.
 var _era: int = 1
 var _art_h: int = ART_HEIGHT
@@ -43,7 +41,11 @@ func _ready() -> void:
 	_era = EraMoments.title_era()
 	if EraManager.unlocked_era != _era or EraManager.retro_filter != 0:
 		EraManager.from_dict({"unlocked_era": _era})
-	_art_h = EraTitleArt.art_height(EraManager.RESOLUTION[_era].x)
+	# The picture takes the height the list and a save card in its own band leave (item 66).
+	var room_h: float = get_viewport_rect().size.y
+	if _used_slots() > 0 and EraSaveCard.fits_band(get_viewport_rect().size):
+		room_h -= EraSaveCard.height_for(EraManager.RESOLUTION[_era].x) + 2
+	_art_h = EraTitleArt.title_height(Vector2(EraManager.RESOLUTION[_era]), room_h, EraMenus.layout(_era))
 	var art := EraTitleArt.new()
 	art.era = _era
 	art.set_anchors_preset(Control.PRESET_TOP_WIDE)
@@ -56,7 +58,7 @@ func _ready() -> void:
 		# The save card, in the save's own era look: between the picture and the list where the
 		# screen has the room, else over the picture's lower edge while a slot list is open.
 		var card_h: int = EraSaveCard.height_for(EraManager.RESOLUTION[_era].x)
-		_card_band = EraSaveCard.fits_band(get_viewport_rect().size)
+		_card_band = EraSaveCard.fits_band(get_viewport_rect().size, _art_h)
 		_card = EraSaveCard.new()
 		_card.set_anchors_preset(Control.PRESET_TOP_WIDE)
 		_card.offset_left = 4
@@ -82,17 +84,8 @@ func _ready() -> void:
 	_status.add_theme_stylebox_override("normal", strip)
 	_status.visible = false
 	add_child(_status)
-	# Free to play with optional purchases, said before the game starts (shop item 4036).
-	_iap_note = Label.new()
-	_iap_note.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
-	_iap_note.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	_iap_note.offset_top = _art_h - 11
-	_iap_note.offset_bottom = _art_h
-	_iap_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_iap_note.add_theme_color_override("font_color", UITheme.BG)
-	_iap_note.add_theme_stylebox_override("normal", strip)
-	_iap_note.text = Loc.t(IAP_NOTE)
-	add_child(_iap_note)
+	# No "Free, in-app purchases" banner on the title art (Chimora 100, item 69): the store
+	# listing carries that notice, the shop's About page says the game is free.
 	_build_name_box()
 	# The version sits under the list frame, not on it (Chimora 100 item 54).
 	add_child(version_label())
@@ -274,8 +267,6 @@ func _process(_delta: float) -> void:
 			_card.visible = false
 
 func _on_language_changed(_code: String) -> void:
-	if _iap_note != null:
-		_iap_note.text = Loc.t(IAP_NOTE)
 	if not _connecting and Online.is_online():
 		_show_status()
 
@@ -303,6 +294,30 @@ func _resolve_conflicts() -> void:
 			await Online.resolve_conflict_keep_local(slot)
 		else:
 			await Online.resolve_conflict_take_server(slot)
+
+## The "Welcome back" card after Continue (plan Chimora 100, item 44): where the Wayfarer
+## stands, the current goal and what today brings. One tap closes it.
+static func welcome_text(flags: Dictionary) -> String:
+	var lines: PackedStringArray = [Loc.t("Welcome back, %s!") % GameState.tamer_name, ""]
+	lines.append(Loc.t("You are in %s.") % Loc.t(Spirling.place_name(GameState.current_map)))
+	var goal: String = QuestLog.hud_text(flags)
+	if goal.is_empty():
+		goal = Loc.t(QuestLog.goal_text(QuestLog.current(flags), flags))
+	lines.append(Loc.t("Goal: %s") % goal)
+	var today: PackedStringArray = []
+	var visitor: String = DailyFind.hint(flags)
+	if not visitor.is_empty():
+		today.append(Loc.t(visitor))
+	var tasks: Array = DailyTasks.today().get("tasks", [])
+	if not tasks.is_empty():
+		var done: int = tasks.filter(func(e: Variant) -> bool: return e is Dictionary and DailyTasks.is_done(e)).size()
+		today.append(Loc.t("Daily tasks: %d of %d done.") % [done, tasks.size()])
+	if Goals.pending() > 0:
+		today.append(Loc.t("A reward waits under Goals."))
+	if not today.is_empty():
+		lines.append("")
+		lines.append_array(today)
+	return "\n".join(lines)
 
 func _run() -> void:
 	var first_start: bool = GameState.language.is_empty() and not Online.privacy_seen and _used_slots() == 0
@@ -357,6 +372,7 @@ func _run() -> void:
 				SaveManager.set_slot(latest)
 				if SaveManager.load_game():
 					await _say_if_recovered()
+					await _menu.info(welcome_text(GameState.flags), EraSaveCard.badge(maxi(EraMoments.slot_era(latest), 1)))
 					SaveManager.save_settings()
 					_enter_game()
 					return
@@ -432,7 +448,7 @@ func _set_art_note(text: String) -> void:
 		_art_note.set_anchors_preset(Control.PRESET_TOP_WIDE)
 		_art_note.offset_left = 4
 		_art_note.offset_right = -4
-		_art_note.offset_bottom = _iap_note.offset_top - 1
+		_art_note.offset_bottom = _art_h - 1
 		_art_note.offset_top = _art_note.offset_bottom
 		_art_note.grow_vertical = Control.GROW_DIRECTION_BEGIN
 		_art_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -474,7 +490,7 @@ static func privacy_note(menu: MenuHost, note: Callable = Callable()) -> void:
 			note.call(PRIVACY_SHORT)
 		if await menu.pick(PRIVACY_TITLE, privacy_rows(not note.is_valid()), false) != 1:
 			return
-		await menu.info(AccountMenu.PRIVACY_NOTE)
+		await menu.info(Loc.t(AccountMenu.PRIVACY_NOTE) + "\n\n" + Loc.t(LocalNotify.PRIVACY_LINE))
 
 ## Android back (item 1787): on the main list it asks to quit, otherwise it works like B.
 func _notification(what: int) -> void:

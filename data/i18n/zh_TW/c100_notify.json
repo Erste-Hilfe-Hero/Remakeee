@@ -1,0 +1,12 @@
+{
+ "_comment": "Traditional Chinese texts for the German table c100_notify. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "%s is back from the roaming trip.": "%s遠行回來了。",
+  "A new Find of the Day is waiting in Veydal.": "Veydal有新的每日發現在等你。",
+  "Chimora can send a short note on this phone when a roaming trip is over or a new Find of the Day is waiting. Never at night, at most one a day each. You can turn it off any time in Settings.": "遠行結束或有新的每日發現時，Chimora可以在這支手機上發一則簡短通知。夜裡不發，每種每天最多一則。隨時可以在設定裡關閉。",
+  "Turn on notifications?": "要開啟通知嗎？",
+  "Notifications are off unless you turn them on. They are planned on this phone only; nothing about them is sent anywhere.": "除非你開啟，通知一直是關閉的。通知只在這支手機上安排，不會向任何地方傳送任何內容。",
+  "Notifications: %s": "通知：%s",
+  "A note on this phone when a trip is over or a new Find of the Day waits. If the phone blocks it, allow it in the phone settings.": "遠行結束或有新的每日發現時，在這支手機上提醒。若手機攔截，請在手機設定裡允許。"
+ }
+}

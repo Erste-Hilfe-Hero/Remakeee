@@ -58,9 +58,9 @@ static func height_for(width: float) -> int:
 ## True when a screen of [param size] has room for the card between the title picture and a
 ## five-row menu. 16:9 phones and tablets have none: there the card lies over the picture's
 ## lower edge, and only while a slot list is open.
-static func fits_band(size: Vector2) -> bool:
+static func fits_band(size: Vector2, art_h: int = -1) -> bool:
 	var k: int = EraMomentLayer.ui_scale(size.x)
-	return size.y >= EraTitleArt.art_height(size.x) + (HEIGHT + 110) * k
+	return size.y >= (art_h if art_h >= 0 else EraTitleArt.art_height(size.x)) + (HEIGHT + 110) * k
 
 ## The two lines of a card: the era ("Era II: Wash") and the save's summary line.
 static func card_lines(e: int, summary: String) -> Array[String]:

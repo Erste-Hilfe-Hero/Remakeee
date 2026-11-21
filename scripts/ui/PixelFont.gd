@@ -51,7 +51,7 @@ static func get_font() -> FontFile:
 static func get_large_font() -> FontFile:
 	if _large == null:
 		_large = _build(true)
-		_large.fallbacks = cjk_fallbacks(_lang)
+		_large.fallbacks = cjk_fallbacks(_lang, true)
 	return _large
 
 ## Bold large font (Era IV/V battle HUD): the large glyphs with every stroke doubled to the
@@ -62,7 +62,7 @@ const BOLD_W: int = LARGE_W + 1
 static func get_bold_font() -> FontFile:
 	if _bold == null:
 		_bold = _build(true, true)
-		_bold.fallbacks = cjk_fallbacks(_lang)
+		_bold.fallbacks = cjk_fallbacks(_lang, true)
 	return _bold
 
 ## Rows of a glyph drawn bold: each lit pixel also lights the next to its right, so every row
@@ -91,27 +91,35 @@ static func bold_glyph(ch: String) -> Array[String]:
 		out.append(b)
 	return out
 
-## Japanese, Korean and Chinese come from the Fusion Pixel 8px fonts in art/fonts (OFL, built by
+## Japanese, Korean and Chinese come from the Fusion Pixel fonts in art/fonts (OFL, built by
 ## tools/fonts/build_cjk.py), added as fallbacks of the pixel font. The current language's font
 ## comes first, so shared characters get its regional form; the others stay behind it, because
-## the language list shows every language's own name.
-const CJK_FONT: String = "res://art/fonts/chimora_cjk_8px_%s.otf"
+## the language list shows every language's own name. The small font gets 10 px glyphs and the
+## large and bold fonts 12 px ones (plan Chimora 100, item 59: 8 px hanzi merged into blots);
+## a few rare hanzi only the 8 px set has come last.
+const CJK_FONT: String = "res://art/fonts/chimora_cjk_10px_%s.otf"
+const CJK_FONT_LARGE: String = "res://art/fonts/chimora_cjk_12px_%s.otf"
+const CJK_FONT_SPARE: String = "res://art/fonts/chimora_cjk_8px_%s.otf"
 static var _lang: String = "en"
 static var _cjk: Dictionary[String, Font] = {}
 
-static func cjk_fallbacks(code: String) -> Array[Font]:
+static func cjk_fallbacks(code: String, large: bool = false) -> Array[Font]:
 	var order: Array[String] = ["ja", "zh_CN", "zh_TW", "ko"]
 	if code in order:
 		order.erase(code)
 		order.push_front(code)
 	var out: Array[Font] = []
-	for c: String in order:
-		if not _cjk.has(c):
-			var f: Font = load(CJK_FONT % c) as Font
-			if f == null:
-				continue
-			_cjk[c] = f
-		out.append(_cjk[c])
+	for path: String in [CJK_FONT_LARGE if large else CJK_FONT, CJK_FONT_SPARE]:
+		for c: String in order:
+			var p: String = path % c
+			if not _cjk.has(p):
+				if not ResourceLoader.exists(p):
+					continue
+				var f: Font = load(p) as Font
+				if f == null:
+					continue
+				_cjk[p] = f
+			out.append(_cjk[p])
 	return out
 
 ## Called by Loc.set_language: puts the language's own CJK font first.
@@ -122,9 +130,9 @@ static func use_language(code: String) -> void:
 	if _font != null:
 		_font.fallbacks = cjk_fallbacks(code)
 	if _large != null:
-		_large.fallbacks = cjk_fallbacks(code)
+		_large.fallbacks = cjk_fallbacks(code, true)
 	if _bold != null:
-		_bold.fallbacks = cjk_fallbacks(code)
+		_bold.fallbacks = cjk_fallbacks(code, true)
 
 ## One glyph of the large set, as rows of "#" and ".".
 static func large_glyph(ch: String) -> Array[String]:
@@ -186,6 +194,8 @@ static func _build(large: bool = false, bold: bool = false) -> FontFile:
 
 const GLYPHS: Dictionary[String, Array] = {
 	" ": [".....", ".....", ".....", ".....", ".....", ".....", ".....", ".....", "....."],
+	# No-break space (Loc.glue): a space a line never breaks at.
+	"\u00a0": [".....", ".....", ".....", ".....", ".....", ".....", ".....", ".....", "....."],
 	"A": [".###.", "#...#", "#...#", "#####", "#...#", "#...#", "#...#", ".....", "....."],
 	"B": ["####.", "#...#", "#...#", "####.", "#...#", "#...#", "####.", ".....", "....."],
 	"C": [".####", "#....", "#....", "#....", "#....", "#....", ".####", ".....", "....."],

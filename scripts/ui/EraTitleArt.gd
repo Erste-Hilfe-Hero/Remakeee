@@ -36,6 +36,30 @@ var _cast_era: int = 0
 static func art_height(width: float) -> int:
 	return int(round(BASE_ART_H * width / BASE_W))
 
+## Plan Chimora 100, item 66: on 19.5:9 phones about 40 % of the title screen stood empty under
+## a picture sized for 9:16, while 9:16 needed a scroll to reach Settings. The title list keeps
+## room for TITLE_ROWS rows of the era's list layout, the picture takes the rest, between
+## ART_MIN and ART_MAX times its 9:16 height.
+const TITLE_ROWS: int = 5
+const ART_MIN: float = 0.85
+const ART_MAX: float = 1.35
+
+## Pixels the title list needs in list layout [param layout] (EraMenus.layout): the gap under
+## the picture, the menu margins, the list frame, TITLE_ROWS rows with their gaps and the info
+## panel of the touch eras.
+static func list_room(layout: Dictionary) -> int:
+	var row_h: int = int(layout.get("row_h", ListPicker.ROW_HEIGHT))
+	var room: int = 4 + 2 * MenuHost.PANEL_MARGIN + 2 * (UITheme.FRAME_MARGIN + 2) + TITLE_ROWS * (row_h + 1) + 2
+	if str(layout.get("panel", "none")) == "bottom":
+		room += int(ListPicker.PANEL_LINES * UITheme.font().get_height(UITheme.FONT_SIZE)) + 8
+	return room
+
+## Height of the title art on a screen with [param room_h] px for picture and list, for an era
+## whose base screen is [param base] (EraManager.RESOLUTION) and list layout [param layout].
+static func title_height(base: Vector2, room_h: float, layout: Dictionary = {}) -> int:
+	var h: float = art_height(base.x)
+	return int(clampf(room_h - list_room(layout), h * ART_MIN, h * ART_MAX))
+
 ## Which of the two Era I frames shows at second [param t].
 static func ink_frame(t: float, blink: float) -> int:
 	return int(floor(t / maxf(blink, 0.05))) % 2
@@ -143,7 +167,9 @@ func _draw_era_logo(center: Vector2) -> void:
 	var sfs: int = PixelFont.BASE_SIZE * EraMomentLayer.fit_scale(font, sub, EraMoments.font_scale(era), size.x - 4.0)
 	var sw: float = font.get_string_size(sub, HORIZONTAL_ALIGNMENT_LEFT, -1, sfs).x
 	var sub_pos := Vector2(roundf(center.x - sw / 2.0), pos.y + PixelFont.DESCENT * k + 3.0 * d + PixelFont.ASCENT * sfs / PixelFont.BASE_SIZE + 2)
-	draw_string(font, sub_pos + Vector2(1, 1), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, sfs, ink)
+	# Dense CJK glyphs blur into their own one-pixel shadow (plan Chimora 100, item 53).
+	if not Loc.language() in Loc.CJK:
+		draw_string(font, sub_pos + Vector2(1, 1), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, sfs, ink)
 	draw_string(font, sub_pos, sub, HORIZONTAL_ALIGNMENT_LEFT, -1, sfs, EraMoments.col(era, "sun"))
 
 ## Where the light stands on the logo at second [param t]: -0.3..1.3 across its width while it

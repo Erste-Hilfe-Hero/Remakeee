@@ -1,0 +1,28 @@
+{
+ "_comment": "Russian texts for the German table c100_goal. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "+ seen  * bonded": "+ встречен  * связь",
+  "A reward waits under Goals.": "В Целях ждёт награда.",
+  "Daily tasks: %d of %d done.": "Задания дня: %d из %d.",
+  "Find Mirela's pages": "Страницы Mirela",
+  "Go to the Map House": "В Дом карт",
+  "Goal line: %s": "Строка цели: %s",
+  "Goal: %s": "Цель: %s",
+  "Meet Kestra at the dock": "Kestra у причала",
+  "Mend the Rifts": "Залатай Разломы",
+  "Not yet visited.": "Ещё не посещено.",
+  "On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.": "На странице \"Встречен\" перечисляет все места, где ты видел вид, бои со Странниками тоже. \"В дикой природе\" перечисляет, где он живёт на воле: + после места значит, что ты встретил его там, ??? место ещё не найдено.",
+  "Photo, our Discord and your shortcuts.": "Фото, наш Discord и твои ярлыки.",
+  "See Aldo downstairs": "Спустись к Aldo",
+  "Seen at: %s": "Встречен: %s",
+  "Tap for every mark.": "Нажми, чтобы увидеть все знаки.",
+  "Tell Aldo at home": "Расскажи Aldo",
+  "Welcome back, %s!": "С возвращением, %s!",
+  "Wild at: %s (%d of %d found)": "В дикой природе: %s (найдено %d из %d)",
+  "You are in %s.": "Ты здесь: %s.",
+  "Your next goal at the top and a mark on the way there. Tap the line to open Goals.": "Следующая цель вверху и знак на пути к ней. Нажми на строку, чтобы открыть Цели.",
+  "a Gleam of this kind was bonded": "с Сиянием этого вида есть связь",
+  "a Gleam of this kind was seen": "Сияние этого вида встречено",
+  "bonded and grown to Ring 30": "связь и рост до Круга 30"
+ }
+}

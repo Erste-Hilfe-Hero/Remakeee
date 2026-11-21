@@ -232,6 +232,8 @@ var auto_text: bool = false
 var tips_enabled: bool = true
 ## Break reminder after PlayReminder.MINUTES of play (plan 3503).
 var play_reminder: bool = true
+## The goal line at the top of the overworld and the goal door marks (plan Chimora 100, item 37).
+var goal_line: bool = true
 ## Display and accessibility (items 59, 76, 78).
 var battery_saver: bool = false
 var reduce_motion: bool = false
@@ -877,7 +879,7 @@ func settings_to_dict() -> Dictionary:
 		"always_run": always_run, "bond_style": bond_style, "input_delay": input_delay, "no_rush": no_rush, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad, "tap_vibration": tap_vibration,
 		"one_hand": one_hand, "bag_sort": bag_sort, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice, "auto_text": auto_text,
-		"tips": tips_enabled, "play_reminder": play_reminder, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
+		"tips": tips_enabled, "play_reminder": play_reminder, "goal_line": goal_line, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
 		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language}
 
 func settings_from_dict(d: Dictionary) -> void:
@@ -920,6 +922,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	auto_text = bool(d.get("auto_text", false))
 	tips_enabled = bool(d.get("tips", true))
 	play_reminder = bool(d.get("play_reminder", true))
+	goal_line = bool(d.get("goal_line", true))
 	battery_saver = bool(d.get("battery_saver", false))
 	reduce_motion = bool(d.get("reduce_motion", false))
 	high_contrast = bool(d.get("high_contrast", false))

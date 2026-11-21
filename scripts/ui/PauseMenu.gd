@@ -37,18 +37,23 @@ var can_undo: bool = false
 var room_action: String = ""
 
 ## Fixed order, the most used first (item 1869). Travel, Storage and Room only show when
-## they can be used; they keep their place. Leagues shows only while leagues are on,
-## the Map book once Aldo gave it, the Ledger once it has an entry (clan intrigue, Trust.gd).
-const MENU_ORDER: Array[String] = ["Goals", "Map book", "Ledger", "Map", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
-	"Leagues", "Records", "Storage", "Save", "Save and to title", "Photo", "Join our Discord", "Settings"]
+## they can be used; they keep their place. Leagues shows only while leagues are on, the
+## Ledger once it has an entry (clan intrigue, Trust.gd). The Map book sits under Map once
+## Aldo gave it, and the rarely used entries under More (plan Chimora 100, item 41: the
+## Era I list had 16-17 rows).
+const MENU_ORDER: Array[String] = ["Goals", "Ledger", "Map", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
+	"Leagues", "Records", "Storage", "Save", "Save and to title", "Settings", "More"]
+const MORE: String = "More"
+## What More holds: Photo, the Discord invite (kept one tap deep, Ali wants it visible) and
+## the Shortcuts.
+const MORE_ENTRIES: Array[String] = ["Photo", "Join our Discord", EraMenuKit.SHORTCUTS]
 
 static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false,
-		map_book: bool = false, ledger: bool = false) -> Array[String]:
+		ledger: bool = false) -> Array[String]:
 	var out: Array[String] = []
 	for l: String in MENU_ORDER:
 		if (l == "Storage" and not storage) or (l == "Travel" and not travel) or (l == "Room" and not room) \
-				or (l == "Leagues" and not leagues) or (l == "Map book" and not map_book) \
-				or (l == "Ledger" and not ledger):
+				or (l == "Leagues" and not leagues) or (l == "Ledger" and not ledger):
 			continue
 		out.append(l)
 	return out
@@ -84,8 +89,8 @@ func run() -> void:
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
-			GameState.has_flag("aldo_gift"), not Trust.ledger_rows(GameState.flags).is_empty())
-		labels.insert(labels.find("Satchel") + 1, "Shop (locked)" if Billing.kids_locked() else "Shop")
+			not Trust.ledger_rows(GameState.flags).is_empty())
+		place_shop(labels, "Shop (locked)" if Billing.kids_locked() else "Shop", not GameState.rifts_sealed.is_empty())
 		# Pocket Rest (shop, pay-to-win step 6, plan point 51): rest anywhere outside battle.
 		if ShopEffects.can_rest_anywhere():
 			labels.insert(labels.find("Team") + 1, "Rest")
@@ -93,15 +98,14 @@ func run() -> void:
 			await tip("travel")
 		# The start menu in the era's layout (EraMenus): a plain list in Era I, symbols and the
 		# clock from Era II, a grid of big buttons with an info panel in Era IV, pinned
-		# shortcuts on top in Era V. "Shortcuts" is there in every era.
-		labels.append(EraMenuKit.SHORTCUTS)
+		# shortcuts on top in Era V. "Shortcuts" is under More in every era.
 		var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "pause")
 		var quick: Array[String] = []
 		if bool(lay.get("quick_bar", false)):
 			quick = EraMenus.quick_list(GameState.flags, labels)
 		MenuDots.baseline()
 		var entries: Array[Dictionary] = EraMenuKit.pause_entries(labels, Goals.pending() > 0, lay, MenuDots.dotted(labels))
-		var idx: int = await pick_screen("pause", menu_title(current_map), entries, {"focus": maxi(0, labels.find(last_label)),
+		var idx: int = await pick_screen("pause", pause_title(), entries, {"focus": maxi(0, labels.find(last_label)),
 			"tabs": quick, "tab": -1, "tab_icons": quick.map(func(l: String) -> Texture2D: return EraMenuKit.icon_for(l, lay)), "header": EraMenuKit.clock_strip() if str(lay.get("header", "none")) == "clock" else null})
 		var chosen: String = ""
 		if ListPicker.tab_of(idx) >= 0 and ListPicker.tab_of(idx) < quick.size():
@@ -111,8 +115,8 @@ func run() -> void:
 		else:
 			chosen = labels[idx]
 			last_label = chosen
-		if chosen == EraMenuKit.SHORTCUTS:
-			chosen = await run_shortcuts(labels)
+		if chosen == MORE:
+			chosen = await run_more(labels)
 			if chosen.is_empty():
 				continue
 		MenuDots.mark_seen(chosen)
@@ -120,7 +124,7 @@ func run() -> void:
 			"Goals": await run_goals()
 			"Map book": await MapBookMenu.run(self)
 			"Ledger": await run_ledger()
-			"Map": await WorldMapMenu.run(self, current_map)
+			"Map": await run_map()
 			"Team": await run_team()
 			"Rest":
 				if ShopEffects.pocket_rest():
@@ -164,12 +168,70 @@ func run() -> void:
 				if await run_room():
 					return
 
+const SPIRLOG_LEGEND_ROW: String = "+ seen  * bonded"
+
+## The marks of the Spirlog list and pages, one per line, translated (item 42).
+static func spirlog_legend() -> String:
+	var lines: PackedStringArray = [
+		"+  " + Loc.t("seen"),
+		"*  " + Loc.t("bonded"),
+		Collection.STAR + "  " + Loc.t("bonded and grown to Ring 30"),
+		"~  " + Loc.t("a Gleam of this kind was seen"),
+		GleamRules.STAR + "  " + Loc.t("a Gleam of this kind was bonded"),
+		"",
+		Loc.t("On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.")]
+	return "\n".join(lines)
+
+## Map (item 41): the world map at once, or once Aldo gave the map book a choice of the two.
+func run_map() -> void:
+	if not GameState.has_flag("aldo_gift"):
+		await WorldMapMenu.run(self, current_map)
+		return
+	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "pause")
+	var panel: bool = str(lay.get("panel", "none")) != "none"
+	while true:
+		var entries: Array[Dictionary] = [
+			{"text": "World map", "icon": EraMenuKit.icon_for("Map", lay), "hint": EraMenuKit.PAUSE_HINTS["Map"] if panel else ""},
+			{"text": "Map book", "icon": EraMenuKit.icon_for("Map book", lay), "hint": EraMenuKit.PAUSE_HINTS["Map book"] if panel else ""}]
+		var idx: int = await pick_screen("pause", "Map", entries, {"columns": 1})
+		match idx:
+			0: await WorldMapMenu.run(self, current_map)
+			1: await MapBookMenu.run(self)
+			_: return
+
+## More (item 41): Photo, Join our Discord and Shortcuts. Returns the entry the menu should
+## open (Photo or a pinned shortcut), or "" to go back to the start menu.
+func run_more(labels: Array[String]) -> String:
+	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "pause")
+	while true:
+		var idx: int = await pick_screen("pause", MORE, EraMenuKit.pause_entries(MORE_ENTRIES, false, lay), {"columns": 1})
+		if idx < 0 or idx >= MORE_ENTRIES.size():
+			return ""
+		match MORE_ENTRIES[idx]:
+			"Join our Discord":
+				open_discord()
+			EraMenuKit.SHORTCUTS:
+				var pinned: String = await run_shortcuts(labels)
+				if not pinned.is_empty():
+					return pinned
+			var other:
+				return other
+	return ""
+
+## Puts the shop entry [param shop] into [param labels]: after the Satchel once the first Rift is
+## mended ([param prominent]), before that at the end of the list, still reachable (Chimora 100, item 70).
+static func place_shop(labels: Array[String], shop: String, prominent: bool) -> void:
+	if prominent and "Satchel" in labels:
+		labels.insert(labels.find("Satchel") + 1, shop)
+	else:
+		labels.append(shop)
+
 ## Shortcuts (docs/ERA_FEEL_MENUS.md): the pinned entries open from here in every era; Era V
 ## also shows them as a bar on top of the start menu. Returns the entry to open, or "".
 func run_shortcuts(labels: Array[String]) -> String:
 	var can: Array[String] = []
 	for l: String in labels:
-		if l != EraMenuKit.SHORTCUTS and not l.begins_with("Shop (") and l != "Photo":
+		if l != EraMenuKit.SHORTCUTS and l != MORE and not l.begins_with("Shop (") and l != "Photo":
 			can.append(l)
 	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "pause")
 	lay["columns"] = 1
@@ -381,7 +443,10 @@ func save_now() -> void:
 	var on_server: bool = await Online.wait_synced(SaveManager.slot)
 	if not is_inside_tree():
 		return
-	toast(SAVED_TEXT if on_server else SAVED_LOCAL_TEXT, 1.5 if on_server else 3.0)
+	# What tomorrow brings, under the saved note (Chimora 100, item 71).
+	var tomorrow: String = DailyFind.tomorrow_line()
+	var done: String = Loc.t(SAVED_TEXT if on_server else SAVED_LOCAL_TEXT)
+	toast(done + ("\n" + tomorrow if not tomorrow.is_empty() else ""), (1.5 if on_server else 3.0) + (2.5 if not tomorrow.is_empty() else 0.0))
 
 ## Saves and, if that worked, ends the session (item 1879). Returns true when the menu
 ## should close and the game go back to the title.
@@ -718,6 +783,11 @@ static func menu_title(map_id: String = "") -> String:
 		t += "   Ring limit %d" % GameState.level_cap()
 	return t
 
+## The pause list's title in at most three lines: without the place name when name, coins,
+## place and festival ribbons need more (Chimora 100, item 51).
+func pause_title() -> String:
+	return fit_title([menu_title(current_map), menu_title()] as Array[String])
+
 ## Puzzle room tools (area 3 items 1012, 1014). Returns true if an action was picked.
 func run_room() -> bool:
 	var opts: Array[String] = []
@@ -775,10 +845,6 @@ func run_team() -> void:
 		var power: int = ShopEffects.account_power()
 		if power > 0:
 			boosts.push_front(Loc.t("Power %d") % power)
-		# What the best next tier would add (plan point 60): adults only, a note, no button.
-		var next_power: String = ShopEffects.next_power_line()
-		if not next_power.is_empty():
-			boosts.append(next_power)
 		var title: String = Loc.t("Team") + ("  " + "  ".join(boosts) if not boosts.is_empty() else "")
 		var drag: EraPartyDrag = EraPartyDrag.attach(self, GameState.party.size()) if bool(lay.get("drag", false)) else null
 		var idx: int = await pick_screen("party", title, rows, {"panel_text": "Drag a row to change the order. Tap one for more."})
@@ -961,13 +1027,13 @@ func _held_item(s: Spirling) -> void:
 	var entries: Array[Dictionary] = []
 	if not s.held.is_empty():
 		ids.append("")
-		entries.append({"text": "Take off %s" % Database.item(s.held).get("name", s.held),
+		entries.append({"text": Loc.t("Take off %s") % Loc.t(str(Database.item(s.held).get("name", s.held))),
 			"hint": Loc.t(str(Database.item(s.held).get("description", "")))})
 	for id: Variant in GameState.inventory:
 		if GameState.item_count(str(id)) > 0 and BattleRules.is_holdable(str(id)):
 			ids.append(str(id))
 			var it: Dictionary = Database.item(str(id))
-			entries.append({"text": "%s x%d" % [it.get("name", id), GameState.item_count(str(id))], "icon": KeepsakeIcons.for_era(str(id)),
+			entries.append({"text": "%s x%d" % [Loc.t(str(it.get("name", id))), GameState.item_count(str(id))], "icon": KeepsakeIcons.for_era(str(id)),
 				"hint": Loc.t(str(it.get("description", ""))) + TraitKit.rarity_line(str(id))})
 	if ids.is_empty() and not KeepsakeKit.any_set(GameState.party):
 		await info("You have nothing a Spirling can hold.\nKeepsakes are sold in Thornridge.")
@@ -975,7 +1041,7 @@ func _held_item(s: Spirling) -> void:
 	# Keepsake sets (KAMPF_PLAN_1000 307).
 	ids.append("@sets")
 	entries.append({"text": "Keepsake sets", "hint": Loc.t("Save what it holds, or put a saved set back on.")})
-	var now: String = "Holding: %s" % (Database.item(s.held).get("name", s.held) if not s.held.is_empty() else "nothing")
+	var now: String = Loc.t("Holding: %s") % (Loc.t(str(Database.item(s.held).get("name", s.held))) if not s.held.is_empty() else Loc.t("nothing"))
 	var idx: int = await pick(now, entries)
 	if idx < 0:
 		return
@@ -1018,7 +1084,7 @@ func _use_item_on(s: Spirling) -> void:
 			return
 		var entries: Array[Dictionary] = []
 		for id: String in ids:
-			var row: Dictionary = {"text": "%s x%d" % [Database.item(id).get("name", id), GameState.item_count(id)]}
+			var row: Dictionary = {"text": bag_row_text(id)}
 			var after: String = vigor_preview(Database.item(id), s)
 			if not after.is_empty():
 				row["hint"] = after
@@ -1061,6 +1127,11 @@ static func _draw_new_dot(b: Button, id: String) -> void:
 		return
 	var ink: Color = b.get_theme_color("font_color", "Button")
 	b.draw_rect(Rect2(b.size.x - 5, floorf(b.size.y / 2.0) - 1, 3, 3), ink)
+
+## "Aroma of Echo x4": a satchel row in the player's language. The name is translated on its own
+## first; translated as one line, "Echo Scent x4" came out half done ("Эхо Scent x4").
+static func bag_row_text(id: String) -> String:
+	return "%s x%d" % [Loc.t(str(Database.item(id).get("name", id))), GameState.item_count(id)]
 
 ## Name, count and what a satchel thing does, for a long press on its row.
 static func item_details(id: String) -> String:
@@ -1110,6 +1181,10 @@ func title_toggle(id: String, text: String, code: int) -> Button:
 	b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	b.text = text
 	b.clip_text = true
+	# Wide enough for its words (up to half the row): clipped to nothing it left an empty band
+	# with a one-pixel stub under the title (Chimora 100, item 64).
+	var f: Font = UITheme.font()
+	b.custom_minimum_size.x = minf(f.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x + 8.0, 96.0)
 	b.focus_mode = Control.FOCUS_NONE
 	b.pressed.connect(func() -> void:
 		Sound.sfx("select")
@@ -1169,7 +1244,7 @@ func run_bag() -> void:
 				hint = Loc.t(BATTLE_ONLY) + " " + hint
 			elif bool(it0.get("gear", false)):
 				hint = gear_hint(id)
-			var row: Dictionary = {"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)], "hint": hint}
+			var row: Dictionary = {"text": bag_row_text(id), "hint": hint}
 			var pic: Texture2D = EraMenuKit.icon_for("pocket%d" % bag_tab(it0), lay)
 			if pic != null:
 				row["icon"] = pic
@@ -1635,6 +1710,9 @@ func run_spirlog() -> void:
 			# Plan 3354: the Echo Path's wild kinds of the week, so missing ones can be planned.
 			entries.append({"text": EchoPath.spirlog_hint()})
 			actions.append("echo")
+		# What the marks beside the names mean (plan Chimora 100, item 42).
+		entries.append({"text": SPIRLOG_LEGEND_ROW, "hint": "Tap for every mark."})
+		actions.append("legend")
 		var first_kind: int = entries.size()
 		for sd: SpirlingData in kinds:
 			# Own marks beside the line (item 1934): an eye for seen, a band for bonded.
@@ -1645,7 +1723,10 @@ func run_spirlog() -> void:
 			if bool(lay.get("icons", false)):
 				row["icon"] = mark
 			if str(lay.get("panel", "none")) != "none" and SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
-				row["hint"] = Loc.t("Found on: %s" % SpirlogBook.found_line(sd, GameState.spirlog))
+				row["hint"] = Loc.t("Seen at: %s" % SpirlogBook.found_line(sd, GameState.spirlog))
+			else:
+				# The line under the list keeps the marks' meaning in view (item 42).
+				row["hint"] = SPIRLOG_LEGEND_ROW
 			entries.append(row)
 			actions.append("kind")
 		var preview := EraDexViews.Preview.new()
@@ -1686,6 +1767,8 @@ func run_spirlog() -> void:
 				_log_role = _log_role + 1 if _log_role + 1 < SpirlingData.ROLES.size() else -1
 			"status":
 				_log_status = (_log_status + 1) % SpirlogBook.STATUS_NAMES.size()
+			"legend":
+				await info(spirlog_legend())
 			"tracker":
 				await info(_tracker_text())
 			"gleam":

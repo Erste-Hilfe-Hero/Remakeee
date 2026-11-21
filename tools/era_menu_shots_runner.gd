@@ -102,7 +102,7 @@ func _era(era: int, lang: String) -> void:
 	var tag: String = "era%d_%s" % [era, lang]
 	var m: PauseMenu = _menu()
 	await get_tree().process_frame
-	var labels: Array[String] = PauseMenu.menu_labels(true, not GameState.travel_targets("fernstair").is_empty(), false, false, true,
+	var labels: Array[String] = PauseMenu.menu_labels(true, not GameState.travel_targets("fernstair").is_empty(), false, false,
 		not Trust.ledger_rows(GameState.flags).is_empty())
 	labels.insert(labels.find("Satchel") + 1, "Shop")
 	await _shoot(m, tag + "_01_pause", m.run, [])

@@ -399,6 +399,8 @@
   "Tips: %s": "Советы: %s",
   "Today's visitor in %s has been met. Another arrives tomorrow.": "Сегодняшний гость в %s уже встречен. Завтра придёт новый.",
   "Today: a rare visitor stirs in %s.": "Сегодня: в %s шевелится редкий гость.",
+  "Tomorrow: a rare visitor stirs in %s.": "Завтра: в %s зашевелится редкий гость.",
+  "Tomorrow: a rare visitor stirs in %s. New daily tasks: %d.": "Завтра: в %s зашевелится редкий гость. Новых заданий дня: %d.",
   "Together you mend the Rift. The Hush lifts!": "Вместе вы латаете Разлом. Безмолвие отступает!",
   "Touch controls": "Сенсор",
   "Touch controls...": "Сенсорное упр-е...",

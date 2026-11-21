@@ -34,10 +34,23 @@ func _ready() -> void:
 	panel.offset_bottom = 60
 	panel.grow_vertical = Control.GROW_DIRECTION_BOTH
 	_root.add_child(panel)
+	# Room inside the frame and between title and text: French, Spanish and Italian touched the
+	# frame, and title and text ran together (Chimora 100, item 62).
+	var pad := MarginContainer.new()
+	for side: String in ["left", "top", "right", "bottom"]:
+		pad.add_theme_constant_override("margin_" + side, PAD)
+	panel.add_child(pad)
 	var v := VBoxContainer.new()
-	panel.add_child(v)
+	v.add_theme_constant_override("separation", GAP)
+	pad.add_child(v)
 	_title = _label()
-	_title.text = "Update available"
+	_title.text = TITLE_STORE
+	var rule := StyleBoxFlat.new()
+	rule.bg_color = Color(0, 0, 0, 0)
+	rule.border_color = UITheme.MID
+	rule.border_width_bottom = 1
+	rule.content_margin_bottom = 2
+	_title.add_theme_stylebox_override("normal", rule)
 	v.add_child(_title)
 	_body = _label()
 	_body.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
@@ -70,6 +83,7 @@ func _label() -> Label:
 ## update screen is open.
 func show_view(body: String, buttons: Array[String] = []) -> void:
 	visible = true
+	_title.text = title_for(body)
 	_body.text = Loc.t(body)
 	for b: Node in _buttons.get_children():
 		b.queue_free()
@@ -80,6 +94,28 @@ func show_view(body: String, buttons: Array[String] = []) -> void:
 		_buttons.add_child(btn)
 		if i == 0:
 			btn.call_deferred("grab_focus")
+
+const PAD: int = 3
+const GAP: int = 4
+const TITLE_STORE: String = "Update available"
+const TITLE_LOADING: String = "Updating"
+const TITLE_READY: String = "Update ready"
+const TITLE_FAILED: String = "Update failed"
+
+## The title that goes with [param body], one of AppUpdater's texts: it follows the update from
+## "available" through "updating" to "ready" or "failed" (item 62).
+static func title_for(body: String) -> String:
+	match body:
+		AppUpdater.TEXT_PLAY, AppUpdater.TEXT_FLEX, AppUpdater.TEXT_FLEX_REQUIRED, AppUpdater.TEXT_APK:
+			return TITLE_LOADING
+		AppUpdater.TEXT_READY, AppUpdater.TEXT_APK_DONE:
+			return TITLE_READY
+		AppUpdater.TEXT_PLAY_FAILED, AppUpdater.TEXT_APK_FAILED:
+			return TITLE_FAILED
+	return TITLE_STORE
+
+func title_text() -> String:
+	return _title.text
 
 ## [param p] from 0.0 to 1.0, or below 0 while the size is unknown; [param line] under the bar.
 func set_progress(p: float, line: String) -> void:

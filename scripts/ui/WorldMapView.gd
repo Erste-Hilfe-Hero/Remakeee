@@ -36,6 +36,57 @@ func _ready() -> void:
 	add_child(_phase_icon)
 	refresh()
 
+## What waits for the first real size: "fit" (first opening: zoom and centre on the known
+## places, plan Chimora 100 item 40), "here" (centre on the player) or "" (keep the pan).
+var _on_size: String = "fit"
+
+## Zoom and pan to carry over to the next list (the menu rebuilds the view for each list).
+func state() -> Dictionary:
+	return {"zoom": zoom, "pan": pan}
+
+## Takes [param keep] from state(); "here": true centres on the player once laid out.
+func restore(keep: Dictionary) -> void:
+	if keep.is_empty():
+		return
+	zoom = int(keep.get("zoom", 1))
+	pan = keep.get("pan", Vector2.ZERO)
+	_on_size = "here" if bool(keep.get("here", false)) else ""
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED and size.x > 0.0 and size.y > 0.0:
+		match _on_size:
+			"fit": fit_known()
+			"here": center_on_here()
+			_: _clamp_pan()
+		_on_size = ""
+
+## Rectangle (in grid cells) around every place the player knows, or an empty one.
+func known_box() -> Rect2i:
+	var box := Rect2i()
+	var any: bool = false
+	for id: String in known:
+		if int(known[id]) == WorldAtlas.Known.UNKNOWN:
+			continue
+		var c: Vector2i = WorldAtlas.grid_cell(id)
+		box = Rect2i(c, Vector2i.ONE) if not any else box.merge(Rect2i(c, Vector2i.ONE))
+		any = true
+	return box
+
+## First opening: 2x when the known places fit at 2x (or the picture is a touch era's large
+## one), then the known places in the middle so they fill the picture instead of sitting
+## small in a corner; the player's place when they do not fit.
+func fit_known() -> void:
+	var box: Rect2i = known_box()
+	var fits2: bool = box.size != Vector2i.ZERO and Vector2(box.size * CELL_1X * 2).x <= size.x and Vector2(box.size * CELL_1X * 2).y <= size.y
+	zoom = 2 if fits2 or size.y >= 160.0 else 1
+	var full: Vector2 = Vector2(box.size * cell_px())
+	if box.size == Vector2i.ZERO or full.x > size.x or full.y > size.y:
+		center_on_here()
+		return
+	pan = (Vector2(box.position) + Vector2(box.size) / 2.0) * cell_px() - size / 2.0
+	_clamp_pan()
+	queue_redraw()
+
 func refresh(here: String = current) -> void:
 	current = here
 	known = WorldAtlas.known(current)
@@ -63,10 +114,15 @@ func center_on_here() -> void:
 	_clamp_pan()
 	queue_redraw()
 
+## How far the picture may move past the world's edge, so places on the edge of the grid can
+## still sit in the middle (plan Chimora 100, item 40).
+const EDGE_SLACK: float = 0.25
+
 func _clamp_pan() -> void:
 	var full: Vector2 = Vector2(WorldAtlas.grid_size()) * cell_px()
-	pan.x = clampf(pan.x, minf(0.0, full.x - size.x), maxf(0.0, full.x - size.x))
-	pan.y = clampf(pan.y, minf(0.0, full.y - size.y), maxf(0.0, full.y - size.y))
+	var slack: Vector2 = size * EDGE_SLACK
+	pan.x = clampf(pan.x, minf(0.0, full.x - size.x) - slack.x, maxf(0.0, full.x - size.x) + slack.x)
+	pan.y = clampf(pan.y, minf(0.0, full.y - size.y) - slack.y, maxf(0.0, full.y - size.y) + slack.y)
 	if full.x <= size.x:
 		pan.x = (full.x - size.x) / 2.0
 	if full.y <= size.y:

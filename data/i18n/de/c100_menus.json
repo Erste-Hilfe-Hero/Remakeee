@@ -1,0 +1,14 @@
+{
+ "_comment": "German texts from tools/i18n/de_c100_menus.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "-: the store has not sent this price yet. Try again in a moment.": "-: Der Store hat diesen Preis noch nicht geschickt. Versuch es gleich noch einmal.",
+  "Account  (offline)": "Konto  (offline)",
+  "Riftglass: offline": "Rissglas: offline",
+  "Rules & privacy...": "Regeln, Datenschutz...",
+  "Team messages": "Team-Nachrichten",
+  "Update failed": "Update fehlgeschlagen",
+  "Update ready": "Update bereit",
+  "Updating": "Wird aktualisiert"
+ }
+}

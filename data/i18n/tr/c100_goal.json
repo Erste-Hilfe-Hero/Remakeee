@@ -1,0 +1,28 @@
+{
+ "_comment": "Turkish texts for the German table c100_goal. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "+ seen  * bonded": "+ görüldü  * bağ",
+  "A reward waits under Goals.": "Hedefler'de bir ödül bekliyor.",
+  "Daily tasks: %d of %d done.": "Günlük görevler: %d / %d bitti.",
+  "Find Mirela's pages": "Mirela'nın sayfaları",
+  "Go to the Map House": "Harita Evi'ne git",
+  "Goal line: %s": "Hedef satırı: %s",
+  "Goal: %s": "Hedef: %s",
+  "Meet Kestra at the dock": "İskelede Kestra",
+  "Mend the Rifts": "Yarıkları onar",
+  "Not yet visited.": "Henüz ziyaret edilmedi.",
+  "On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.": "Bir sayfada \"Görüldüğü yer\", Gezgin savaşları dahil türle karşılaştığın her yeri listeler. \"Yabanda\", türün doğada yaşadığı yerleri listeler: bir yerin ardındaki + orada karşılaştığın, ??? henüz bulunmamış bir yer demektir.",
+  "Photo, our Discord and your shortcuts.": "Fotoğraf, Discord'umuz ve kısayolların.",
+  "See Aldo downstairs": "Aşağıda Aldo'yu gör",
+  "Seen at: %s": "Görüldüğü yer: %s",
+  "Tap for every mark.": "Tüm işaretler için dokun.",
+  "Tell Aldo at home": "Aldo'ya anlat",
+  "Welcome back, %s!": "Tekrar hoş geldin, %s!",
+  "Wild at: %s (%d of %d found)": "Yabanda: %s (%d / %d bulundu)",
+  "You are in %s.": "Şu an buradasın: %s.",
+  "Your next goal at the top and a mark on the way there. Tap the line to open Goals.": "Sıradaki hedefin üstte, yolunda bir işaret. Hedefler'i açmak için satıra dokun.",
+  "a Gleam of this kind was bonded": "bu türün Işıltısıyla bağ kuruldu",
+  "a Gleam of this kind was seen": "bu türün Işıltısı görüldü",
+  "bonded and grown to Ring 30": "bağ kuruldu ve halka 30'a büyüdü"
+ }
+}

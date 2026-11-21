@@ -28,6 +28,7 @@ const PAUSE_HINTS: Dictionary[String, String] = {
 	"Join our Discord": "Chat with other Wayfarers, news and tips.",
 	"Settings": "Sound, controls, display and account.",
 	"Shortcuts": "Pin up to four entries to the top of this menu.",
+	"More": "Photo, our Discord and your shortcuts.",
 }
 const SETTING_GROUP_HINTS: Dictionary[String, String] = {
 	"game": "Difficulty, text speed and battle options.",

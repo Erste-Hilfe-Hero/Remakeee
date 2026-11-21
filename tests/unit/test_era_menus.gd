@@ -202,9 +202,11 @@ func test_symbols_start_in_era_two() -> void:
 	assert_null(EraMenuKit.icon_for("Team", EraMenus.layout(1, "pause")))
 
 func test_every_start_menu_entry_has_a_symbol_and_hint() -> void:
-	for l: String in PauseMenu.menu_labels(true, true, true, true, true, true):
+	for l: String in PauseMenu.menu_labels(true, true, true, true, true):
 		assert_true(EraMenuKit.PAUSE_HINTS.has(l), l + " explains itself in the info panel")
-	assert_true(EraMenuKit.PAUSE_HINTS.has(EraMenuKit.SHORTCUTS))
+	for l: String in PauseMenu.MORE_ENTRIES + ["Map book"]:
+		assert_true(EraMenuKit.PAUSE_HINTS.has(l), l + " (under More or Map) explains itself")
+	assert_true(EraMenuArt.has(PauseMenu.MORE), "More has its own symbol")
 
 # --- Every screen opens in every era --------------------------------------------
 

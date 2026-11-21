@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Android 13+: asked at runtime, and only after the player said yes in the game. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <application>
+        <!-- Godot Android plugin v2: the engine finds the plugin by this name. -->
+        <meta-data
+            android:name="org.godotengine.plugin.v2.ChimoraNotify"
+            android:value="de.chimora.notify.ChimoraNotify" />
+        <!-- Shows a planned note when its alarm goes off; only this app can start it. -->
+        <receiver
+            android:name="de.chimora.notify.NotifyReceiver"
+            android:exported="false" />
+    </application>
+</manifest>

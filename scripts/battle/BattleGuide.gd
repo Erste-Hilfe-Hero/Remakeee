@@ -129,7 +129,8 @@ static func compare_line(s: Spirling, front: Spirling) -> String:
 	for key: String in VALUE_KEYS:
 		var v: int = value(s, key)
 		var d: int = v - (value(front, key) if front != null and front != s else v)
-		parts.append("%s %d%s" % [Loc.t(SHORT[key]), v, "" if d == 0 else " (%+d)" % d])
+		# One stat with its number and change wraps as one piece (plan Chimora 100, item 63).
+		parts.append(Loc.glue("%s %d%s" % [Loc.t(SHORT[key]), v, "" if d == 0 else " (%+d)" % d]))
 	return "  ".join(parts) + "  " + Loc.t(str(s.temperament().label))
 
 ## The first time the player's own Spirling gets [param status] (item 217): a short explanation,
