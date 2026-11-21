@@ -986,7 +986,7 @@ static func summary_pages(s: Spirling) -> Array[String]:
 	var head: String = "%s  (%s)\n%s   %s" % [s.display_name(), s.data.species_name, "/".join(els), Loc.t("Ring %d" % s.level)]
 	var values: PackedStringArray = [head, "",
 		Loc.t("Vigor %d/%d" % [s.hp, s.max_hp()]) + ("  " + Loc.t("worn out") if s.is_fainted() else ""),
-		Loc.t("Growth to next ring %d" % s.xp_to_next()),
+		Loc.glue_last(Loc.t("Growth to next ring %d" % s.xp_to_next())),
 		Loc.t("Might %d" % s.atk()), Loc.t("Guard %d" % s.def()), Loc.t("Focus %d" % s.foc()), Loc.t("Pace %d" % s.spd())]
 	var arts: PackedStringArray = [Loc.t("Arts of %s" % s.display_name()), ""]
 	for mv: MoveData in s.moves:
@@ -1069,10 +1069,12 @@ static func _draw_party_row(b: Button, s: Spirling, leader: bool = false, ready:
 	# The bar takes the era's look (data/era_feel.json "bar"): ink line, then colour, shading, bevel, gloss.
 	EraFeel.draw_bar(b, Rect2(x0, y, BAR_WIDTH, 2), ratio, ink, str(EraManager.feel("bar")))
 	if ratio <= 0.0:
-		# Worn out: a small cross at the end of the empty bar.
+		# Worn out: a 3 px cross at the end of the empty bar, on the bar's own rows so it stays
+		# off the name above it (plan Chimora 100, item 58).
 		var cx: float = x0 + BAR_WIDTH + 3
-		b.draw_line(Vector2(cx - 2, y - 2), Vector2(cx + 2, y + 2), ink)
-		b.draw_line(Vector2(cx + 2, y - 2), Vector2(cx - 2, y + 2), ink)
+		for d: int in [-1, 0, 1]:
+			b.draw_rect(Rect2(cx + d, y + d, 1, 1), ink)
+			b.draw_rect(Rect2(cx + d, y - d, 1, 1), ink)
 	else:
 		draw_status_mark(b, s, Vector2(x0 + BAR_WIDTH + 2, y - 3), ink)
 	var els: Array[int] = s.elements()

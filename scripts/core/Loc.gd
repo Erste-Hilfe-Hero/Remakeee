@@ -106,8 +106,41 @@ static func load_translation(code: String) -> PatternTranslation:
 		return null
 	var t := PatternTranslation.new()
 	t.locale = code
-	t.load_strings(data.get("strings", {}))
+	var strings: Dictionary = data.get("strings", {})
+	if code in KEEP_ALL:
+		strings = keep_words(strings)
+	t.load_strings(strings)
 	return t
+
+## Korean is written with spaces between words, but line breaking may split a word between
+## any two syllables ("저/장"). A word joiner (U+2060, drawn as nothing) between neighbouring
+## Hangul syllables keeps each word on one line, like CSS word-break: keep-all (plan Chimora
+## 100, item 59).
+const KEEP_ALL: Array[String] = ["ko"]
+const WORD_JOINER: String = "\u2060"
+static var _hangul_pair: RegEx
+
+## No-break space: drawn like a space, but a line never breaks there.
+const NO_BREAK: String = "\u00a0"
+
+## [param s] with no-break spaces, so a short unit like "Energy 2" or "FOC 56 (-18)" wraps as
+## one piece and never leaves its number alone on the next line (plan Chimora 100, item 63).
+static func glue(s: String) -> String:
+	return s.replace(" ", NO_BREAK)
+
+## [param s] with a no-break space before its last word (a label's number stays with its word).
+static func glue_last(s: String) -> String:
+	var i: int = s.rfind(" ")
+	return s if i < 0 else s.substr(0, i) + NO_BREAK + s.substr(i + 1)
+
+## [param strings] with a word joiner between every two Hangul syllables of each value.
+static func keep_words(strings: Dictionary) -> Dictionary:
+	if _hangul_pair == null:
+		_hangul_pair = RegEx.create_from_string("([\\x{AC00}-\\x{D7A3}])(?=[\\x{AC00}-\\x{D7A3}])")
+	var out: Dictionary = {}
+	for k: Variant in strings:
+		out[k] = _hangul_pair.sub(str(strings[k]), "$1" + WORD_JOINER, true)
+	return out
 
 ## Translates [param s] into the current language (unchanged in English or if unknown).
 static func t(s: String) -> String:

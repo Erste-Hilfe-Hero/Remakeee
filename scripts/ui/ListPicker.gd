@@ -204,6 +204,7 @@ func set_one_hand(on: bool, left: bool) -> void:
 		want.add_child(_back)
 	_foot.alignment = BoxContainer.ALIGNMENT_BEGIN if left else BoxContainer.ALIGNMENT_END
 	_foot.visible = on and _back.visible
+	_head.visible = not _title.text.is_empty() or (_back.visible and not on)
 
 ## The Back button (tests).
 func back_button() -> Button:
@@ -228,6 +229,9 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	_guard_ms = BattleCalm.guard_ms(guard_ms)
 	_back.visible = cancellable
 	_foot.visible = one_hand and cancellable
+	# A list with no title and no Back button in its head gives that line to the rows (plan
+	# Chimora 100, item 66: the title list needed a scroll to reach Settings at 9:16).
+	_head.visible = not title.is_empty() or (cancellable and not one_hand)
 	last_dir = 0
 	last_long = false
 	scroll_shown = 0.0

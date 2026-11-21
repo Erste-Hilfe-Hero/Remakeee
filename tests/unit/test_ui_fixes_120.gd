@@ -122,7 +122,8 @@ func test_element_names_are_translated_wherever_german_translates_them() -> void
 			assert_ne(Loc.t(n), n, "%s: the element %s is translated" % [lang, n])
 	for pair: Array in [["it", "Brace"], ["ko", "불씨"], ["zh_TW", "餘燼"]]:
 		Loc.set_language(pair[0])
-		assert_eq(Loc.t("Ember"), pair[1])
+		# Korean carries word joiners between syllables (Loc.keep_words, plan Chimora 100 item 59).
+		assert_eq(Loc.t("Ember").replace(Loc.WORD_JOINER, ""), pair[1])
 
 func test_growth_bar_label_is_the_games_own_word_and_fits() -> void:
 	for lang: String in Loc.LANGUAGES:

@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cth6j3ljx1w6g"
-path="res://.godot/imported/chimora_cjk_8px_ja.otf-d7c6f73a3381741cb2a9439b78b9368f.fontdata"
+uid="uid://coi7htfjtb1cy"
+path="res://.godot/imported/chimora_cjk_10px_zh_CN.otf-532748f085bf2fd8a0c3c8dca34ca616.fontdata"
 
 [deps]
 
-source_file="res://art/fonts/chimora_cjk_8px_ja.otf"
-dest_files=["res://.godot/imported/chimora_cjk_8px_ja.otf-d7c6f73a3381741cb2a9439b78b9368f.fontdata"]
+source_file="res://art/fonts/chimora_cjk_10px_zh_CN.otf"
+dest_files=["res://.godot/imported/chimora_cjk_10px_zh_CN.otf-532748f085bf2fd8a0c3c8dca34ca616.fontdata"]
 
 [params]
 
