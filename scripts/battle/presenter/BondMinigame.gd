@@ -186,7 +186,17 @@ func _start_phase(i: int) -> void:
 	_last_lit = -1
 	_time = 0.0
 	_phase = Phase.CALL
-	_say("Listen to the call..." if i == 0 else "It calls again...", spoken_call(_sequence, _sky()))
+	_say(first_call_hint() if i == 0 else "It calls again...", spoken_call(_sequence, _sky()))
+
+## The first line of the echo call says what to do (Chimora 100 item 35): until now it only
+## said "Listen to the call...".
+const FIRST_CALL_HINT: Dictionary[String, String] = {
+	"touch": "Watch the marks light up, then tap them in the same order.",
+	"buttons": "Watch the marks light up, then press them in the same order.",
+}
+
+static func first_call_hint(touch: bool = Tips.touch_mode()) -> String:
+	return FIRST_CALL_HINT["touch" if touch else "buttons"]
 
 func _echo_time() -> float:
 	return BondEcho.ECHO_TIME * maxf(1.0, _sequence.size() / float(BondEcho.SEQUENCE_LENGTH))

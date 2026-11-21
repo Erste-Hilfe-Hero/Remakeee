@@ -107,17 +107,50 @@ func play(id: String, data: Dictionary = {}) -> void:
 		overworld.player.frozen = false
 		VirtualPad.set_wanted(true)
 
+## "Skip" (Chimora 100 item 45): as wide as its word in every language, and on the other side of
+## the screen from the talk box, so it never covers a line of the story.
+const SKIP_MARGIN: float = 2.0
+
 func _add_skip_button() -> void:
 	_skip_button = Button.new()
+	_skip_button.name = "skip"
 	_skip_button.text = "Skip"
-	_skip_button.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	_skip_button.offset_left = -34
-	_skip_button.offset_top = 2
-	_skip_button.offset_right = -2
-	_skip_button.offset_bottom = 16
 	_skip_button.theme = UITheme.get_theme()
+	_skip_button.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	_skip_button.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	_skip_button.pressed.connect(skip)
 	overworld.ui_root().add_child(_skip_button)
+	place_skip_button()
+
+## Puts Skip in the top right corner, or the bottom right one while the talk box is at the top,
+## inside the screen's safe area.
+func place_skip_button() -> void:
+	if _skip_button == null or not _skip_button.is_inside_tree():
+		return
+	var vp: Vector2 = _skip_button.get_viewport().get_visible_rect().size
+	var safe: Rect2 = SafeArea.rect(vp)
+	var h: float = _skip_button.get_combined_minimum_size().y
+	var right: float = -(vp.x - safe.end.x) - SKIP_MARGIN
+	_skip_button.offset_right = right
+	_skip_button.offset_left = right - _skip_button.get_combined_minimum_size().x
+	if overworld.text_box_on_top():
+		_skip_button.anchor_top = 1.0
+		_skip_button.anchor_bottom = 1.0
+		_skip_button.offset_bottom = -(vp.y - safe.end.y) - SKIP_MARGIN
+		_skip_button.offset_top = _skip_button.offset_bottom - h
+	else:
+		_skip_button.anchor_top = 0.0
+		_skip_button.anchor_bottom = 0.0
+		_skip_button.offset_top = safe.position.y + SKIP_MARGIN
+		_skip_button.offset_bottom = _skip_button.offset_top + h
+
+func _process(_delta: float) -> void:
+	if _skip_button != null and _skip_button.visible:
+		place_skip_button()
+
+## The Skip button while a skippable scene runs (tests), else null.
+func skip_button() -> Button:
+	return _skip_button
 
 ## Jumps to the end of the scene (effect steps still run).
 func skip() -> void:
@@ -301,6 +334,10 @@ func _show_emote(f: GridWalker, icon: String) -> void:
 	await _wait(EMOTE_TIME)
 	_emote.visible = false
 
+## How long a chapter card stays; Skip or a tap ends it sooner.
+const CARD_TIME: float = 1.6
+var _card_cut: bool = false
+
 ## A chapter card (plan item 1413): ink background, two centred lines.
 func _card(top: String, title: String) -> void:
 	var rect: ColorRect = overworld.fade_rect()
@@ -316,9 +353,18 @@ func _card(top: String, title: String) -> void:
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	label.add_theme_color_override("font_color", UITheme.BG)
+	# A tap on the card ends the card at once, Skip the whole scene (Chimora 100 item 30).
+	_card_cut = false
+	label.mouse_filter = Control.MOUSE_FILTER_STOP
+	label.gui_input.connect(func(ev: InputEvent) -> void:
+		if TapInput.is_press(ev) or ev.is_action_pressed("ui_accept"):
+			_card_cut = true)
 	overworld.ui_root().add_child(label)
 	Sound.sfx("level_up")
-	await _wait(1.6)
+	var shown: float = 0.0
+	while shown < CARD_TIME and not skipping and not _card_cut and is_inside_tree():
+		await get_tree().process_frame
+		shown += get_process_delta_time()
 	label.queue_free()
 	var back: Tween = overworld.create_tween()
 	Juice.shaped(back.tween_property(rect, "color:a", 0.0, 0.3), "fade")

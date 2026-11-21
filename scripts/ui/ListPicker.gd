@@ -215,6 +215,7 @@ func back_button() -> Button:
 ## Rows may also carry "icon" (Texture2D, drawn left of the text), "decorate" (a Callable
 ## that gets the row Button to draw on, e.g. a Vigor bar), "hint" (line under the list) and
 ## "say" (a state only screen readers read, e.g. "worn out" when a mark shows it) and
+## "ellipsis" (a long row ends in "..." instead of being cut) and
 ## "right" (text a decoration draws at the right end, e.g. a price: the row's own text is cut
 ## short with ".." so it never runs under it, "right_pad" pixels of room around it).
 ## [param tabs]: names of tabs above the list; left/right or a tap on a tab returns
@@ -271,6 +272,9 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.custom_minimum_size = Vector2(0, row_h)
 		b.clip_text = true
+		# "ellipsis": a long row ends in "..." instead of being cut mid-word (Chimora 100 item 54).
+		if bool(rows[i].get("ellipsis", false)):
+			b.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		var right: String = str(rows[i].get("right", ""))
 		if not right.is_empty() and columns == 1:
 			var full: String = b.text

@@ -86,8 +86,9 @@ func test_the_bond_call_is_said_in_words() -> void:
 	var g: BondMinigame = _bond(false)
 	assert_eq(g._hint.accessibility_live, AccessibilityServer.LIVE_POLITE)
 	g._start_phase(0)
-	assert_eq(g._hint.text, "Listen to the call...")
-	assert_eq(g._hint.accessibility_name, "Listen to the call... The call: Diamond, Triangle, Square, Diamond.")
+	# Chimora 100 item 35: the first line says what to do, not only "Listen to the call...".
+	assert_eq(g._hint.text, BondMinigame.first_call_hint())
+	assert_eq(g._hint.accessibility_name, BondMinigame.first_call_hint() + " The call: Diamond, Triangle, Square, Diamond.")
 	g._process(BondEcho.call_duration(4) + BondEcho.GAP_TIME + 0.01)
 	assert_eq(g._phase, BondMinigame.Phase.ECHO)
 	assert_string_contains(g._hint.accessibility_name, "left Diamond, up Square, right Triangle")

@@ -23,6 +23,9 @@ const PAGE_EXTRA: String = "ÄÖ"
 const PAGE_LETTERS: String = "AB"
 const PASTE: String = "Paste"
 const BACK: String = "Back"
+## Opens the phone's own keyboard, which has the player's script (Cyrillic, kana, Hangul, hanzi;
+## Chimora 100 item 36). The letter keys stay for gamepads and phones whose keyboard does not open.
+const SYSTEM_KEYS: String = "Keyboard"
 const KEY_SIZE := Vector2(18, 15)
 ## Characters per group in CODE mode.
 const GROUP: int = 4
@@ -40,6 +43,8 @@ func make_extra_row() -> HBoxContainer:
 	var labels: Array[String] = [BACK]
 	if mode == Mode.CODE:
 		labels.push_front(PASTE)
+	else:
+		labels.push_front(SYSTEM_KEYS)
 	for l: String in labels:
 		var b := Button.new()
 		b.text = l
@@ -133,6 +138,9 @@ func press(label: String) -> void:
 	if label == BACK:
 		cancelled.emit()
 		return
+	if label == SYSTEM_KEYS:
+		open_system_keyboard()
+		return
 	if fresh and label != OK:
 		fresh = false
 		target.text = ""
@@ -181,7 +189,7 @@ func type_key(event: InputEvent) -> bool:
 			label = ch
 	elif ch == SPACE_CHAR:
 		label = SPACE
-	elif ch.length() == 1 and (LETTERS.contains(ch) or ch in EXTRA):
+	elif ch.length() == 1 and (LETTERS.contains(ch) or ch in EXTRA or name_letter(ch)):
 		label = ch
 	if label.is_empty():
 		return false
@@ -229,6 +237,27 @@ static func pretty(raw: String) -> String:
 		parts.append(raw.substr(i, GROUP))
 		i += GROUP
 	return "-".join(parts)
+
+## A letter of any script for a name: Latin, Cyrillic, kana, Hangul, hanzi... (Chimora 100 item 36;
+## the server takes any letter, LocalBackend.clean_name). Digits and signs are not letters.
+static func name_letter(ch: String) -> bool:
+	return ch.length() == 1 and ch != "_" and ch.is_valid_unicode_identifier()
+
+## True where the phone's own keyboard should come first: a touch screen that has one and no
+## gamepad (the letter keys are for the gamepad).
+static func system_keyboard_first() -> bool:
+	return DisplayServer.has_feature(DisplayServer.FEATURE_VIRTUAL_KEYBOARD) and DisplayServer.is_touchscreen_available() \
+		and Input.get_connected_joypads().is_empty()
+
+## Focuses the name field so the phone's own keyboard opens; what it types still goes through
+## the keys above (first letter replaces the suggestion, capitals).
+func open_system_keyboard() -> void:
+	if target == null or not target.is_inside_tree():
+		return
+	target.grab_focus()
+	target.caret_column = target.text.length()
+	if DisplayServer.has_feature(DisplayServer.FEATURE_VIRTUAL_KEYBOARD):
+		DisplayServer.virtual_keyboard_show(target.text, Rect2(), DisplayServer.KEYBOARD_TYPE_DEFAULT, target.max_length)
 
 ## A name the game accepts: not empty, not only spaces (item 1961).
 static func valid_name(text: String) -> bool:

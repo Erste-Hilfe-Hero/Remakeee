@@ -1,0 +1,33 @@
+{
+ "_comment": "German texts from tools/i18n/de_c100_start.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%s curls up at your feet. Let it stay?": "%s rollt sich zu deinen Füßen zusammen. Darf er bleiben?",
+  "%s stays with you! The other two slip off to the lake.": "%s bleibt bei dir! Die zwei anderen huschen zum See.",
+  "'Our cartographers have drawn and redrawn Veydal for a hundred years. Now the Hush: Spirlings near a Rift go quiet and forget their Wayfarers.'": "'Seit hundert Jahren zeichnen unsere Kartografen Veydal immer wieder neu. Jetzt die Stille: Spirlings nahe einem Riss verstummen und vergessen ihre Wanderer.'",
+  "Aldo: Good. The Rifts bring the Hush: Spirlings there go quiet.": "Aldo: Gut. Die Risse bringen die Stille: Spirlings dort verstummen.",
+  "Aldo: Take this, and go see Kestra at the map house.": "Aldo: Nimm das und geh zu Kestra ins Kartenhaus.",
+  "Aldo: The storm scattered Mirela's map book. Bring her pages home.": "Aldo: Der Sturm hat Mirelas Kartenbuch verstreut. Bring ihre Seiten heim.",
+  "Aldo: Three Spirlings came in from the storm. Go say hello!": "Aldo: Drei Spirlings kamen aus dem Sturm herein. Sag Hallo!",
+  "Coat: %s": "Mantel: %s",
+  "Gentle battles, more Growth.": "Sanfte Kämpfe, mehr Wachstum.",
+  "Hair: %s": "Haare: %s",
+  "I have a code": "Ich habe einen Code",
+  "In the margin, in Aldo's hand: 'Your grandmother went in to map that Rift before you were born. She never came back.'": "Am Rand, in Aldos Schrift: 'Deine Großmutter ging in diesen Riss, um ihn zu kartieren, bevor du geboren warst. Sie kam nie zurück.'",
+  "Keyboard": "Tastatur",
+  "Last night a storm tore the sky. Rifts opened over Veydal.": "Nachts zerriss ein Sturm den Himmel. Über Veydal klafften Risse.",
+  "OK": "OK",
+  "Online only: your journeys are safe on our server. No ads, no tracking.": "Nur online: Deine Reisen sind auf unserem Server sicher. Keine Werbung, kein Tracking.",
+  "Random": "Zufall",
+  "Relaxed": "Entspannt",
+  "Ring limits, smarter foes.": "Ringgrenzen, klügere Gegner.",
+  "Skin: %s": "Haut: %s",
+  "The journey as it is meant to be.": "Die Reise, wie sie gedacht ist.",
+  "Three small lights crossed the lake to the lighthouse lamp.": "Drei kleine Lichter zogen über den See, dem Leuchtturm nach.",
+  "Tough": "Hart",
+  "Watch the marks light up, then press them in the same order.": "Sieh, welche Zeichen leuchten, und drück sie in derselben Folge.",
+  "Watch the marks light up, then tap them in the same order.": "Sieh, welche Zeichen leuchten, und tippe sie in derselben Folge.",
+  "Wayfarer: %s": "Wanderer: %s",
+  "You can change it later in Settings.": "Du kannst das später in den Einstellungen ändern."
+ }
+}
