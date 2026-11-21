@@ -1,0 +1,15 @@
+{
+ "_comment": "Traditional Chinese texts for the German table c100_auto. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "Auto: %s": "自動：%s",
+  "Wild only": "僅野生",
+  "All story battles": "全部劇情戰",
+  "Off, wild battles only, or every story battle. Wardens and rivals ask first.": "關、僅野生戰鬥或全部劇情戰鬥。守望者和對手會先詢問。",
+  "A strong foe. Let Auto fight this battle?": "強敵。讓自動來打這場戰鬥嗎？",
+  "Auto on": "自動開",
+  "Keep control": "自己來",
+  "Auto: picking who steps out.": "自動：正在選擇誰出場。",
+  "Auto stops: this kind is not in your Spirlog yet. Bond or fight on.": "自動已停：此種類尚未錄入Spirlog。羈絆或繼續戰鬥。",
+  "Turn %d": "第%d回合"
+ }
+}

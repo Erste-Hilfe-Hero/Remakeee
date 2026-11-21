@@ -5,6 +5,10 @@ const SCALE: int = 2
 var out: String = "user://era_hud_shots"
 ## 0 = every era, else only this one.
 var only: int = 0
+## Optional: languages and states to shoot instead of the default set (plan Chimora 100: the
+## Auto tab in en, de and ru), e.g. "en,de,ru" and "menu,auto,trainer,info,status,team".
+var langs: String = ""
+var states: String = ""
 
 func _ready() -> void:
 	_run.call_deferred()
@@ -21,6 +25,13 @@ func _run() -> void:
 			continue
 		em.call("set_retro_filter", era)
 		EraBattleHud.last_item = "tonic"
+		if not langs.is_empty():
+			for lang: String in langs.split(","):
+				Loc.set_language(lang)
+				for st: String in states.split(","):
+					await _state(era, st + "_" + lang)
+			Loc.set_language("en")
+			continue
 		await _state(era, "menu")
 		await _state(era, "info")
 		await _state(era, "status")
@@ -54,17 +65,19 @@ func _duel() -> BattleModel:
 func _state(era: int, tag: String) -> void:
 	var inst: BattleScene = load("res://scenes/battle/Battle.tscn").instantiate()
 	inst.backdrop = "field"
-	var kind: String = tag.trim_suffix("_de")
+	var kind: String = tag.get_slice("_", 0)
 	if kind == "duel3" or kind == "aim":
 		inst.demo = "duel3"
-	elif kind == "status" or kind == "team" or kind == "level":
+	elif kind == "status" or kind == "team" or kind == "level" or kind == "trainer":
 		var m: BattleModel = _duel()
 		m.set_meta("quick", true)
 		inst.setup(m)
+		inst.auto_kind = "wayfarer"
 	else:
 		var m: BattleModel = inst._demo_model()
 		m.set_meta("quick", true)
 		inst.setup(m)
+		inst.auto_kind = "wild"
 	get_tree().root.add_child(inst)
 	# Play on until the commands are up.
 	for i: int in 900:
@@ -74,6 +87,8 @@ func _state(era: int, tag: String) -> void:
 	var me: Spirling = inst.model.active_spirling(BattleModel.Side.PLAYER)
 	var foe: Spirling = inst.model.active_spirling(BattleModel.Side.FOE)
 	match kind:
+		"auto":
+			inst.set_auto(true)
 		"info":
 			inst._menu.open_info(0)
 		"status", "team", "level":

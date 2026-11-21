@@ -1,0 +1,16 @@
+{
+ "_comment": "German texts from tools/i18n/de_c100_auto.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "A strong foe. Let Auto fight this battle?": "Ein starker Gegner. Soll Auto diesen Kampf führen?",
+  "All story battles": "Alle Story-Kämpfe",
+  "Auto on": "Auto an",
+  "Auto stops: this kind is not in your Spirlog yet. Bond or fight on.": "Auto hält an: Diese Art fehlt noch im Spirlog. Binde sie oder kämpfe weiter.",
+  "Auto: %s": "Auto: %s",
+  "Auto: picking who steps out.": "Auto: wählt, wer vortritt.",
+  "Keep control": "Selbst kämpfen",
+  "Off, wild battles only, or every story battle. Wardens and rivals ask first.": "Aus, nur wilde Kämpfe oder alle Story-Kämpfe. Wächter und Rivalen fragen zuerst.",
+  "Turn %d": "Runde %d",
+  "Wild only": "Nur wild"
+ }
+}
