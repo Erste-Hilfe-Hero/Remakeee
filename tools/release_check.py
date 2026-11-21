@@ -145,6 +145,17 @@ def check_presets() -> None:
     elif sorted(langs) != sorted(want):
         errors.append("iOS preset CFBundleLocalizations %s must list the game languages %s (data/i18n plus en), "
                       "or the App Store shows English only" % (sorted(langs), sorted(want)))
+    # Godot writes <lang>.lproj only for locales with a project translation (ios/lproj/*.po), and puts
+    # name_localized into each one; Apple lists the languages from those folders (item 82).
+    game = sorted(["en"] + [d for d in os.listdir("data/i18n") if os.path.isdir(os.path.join("data/i18n", d))])
+    proj = read("project.godot")
+    names = sorted(re.findall(r'^"([A-Za-z_]+)": "[^"]*",?$', proj.split("config/name_localized=", 1)[-1].split("}", 1)[0], re.M))
+    if names != game:
+        errors.append("project.godot application/config/name_localized %s must cover the game languages %s" % (names, game))
+    stubs = sorted(re.findall(r'"res://ios/lproj/([A-Za-z_]+)\.po"', proj))
+    if stubs != [g for g in game if g != "en"] or any(not os.path.exists("ios/lproj/%s.po" % s) for s in stubs):
+        errors.append("project.godot internationalization/locale/translations must list ios/lproj/<lang>.po for %s "
+                      "(found %s), or the iOS build gets no .lproj folders" % ([g for g in game if g != "en"], stubs))
 
 
 # Android permissions the game may ask for. Play Billing adds com.android.vending.BILLING through its

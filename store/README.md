@@ -31,6 +31,12 @@ so these pairs carry disjoint words: `en-US` + `es-MX` (US, es-MX holds extra En
 many EU storefronts). The pairs come from reported behaviour, not from Apple docs: test one unique word
 before relying on one. `python3 tools/store/listing_check.py` checks every limit and rule and runs in CI.
 
+App Store "Languages": Apple lists the languages from the `.lproj` folders in the app. Godot 4.7 writes
+`<lang>.lproj/InfoPlist.strings` only for locales that have a project translation, so `ios/lproj/<lang>.po`
+(one unused string each, listed in `internationalization/locale/translations`) marks the 13 non-English
+languages, `application/config/name_localized` keeps the home-screen name "Chimora" in each, and the iOS
+preset also lists them in `CFBundleLocalizations`. `tools/release_check.py` checks all three against `data/i18n`.
+
 Upload: Google Play by `play_store.mjs`, App Store Connect by `app_store.mjs` and `iap.mjs` in the
 lifekit workflow `chimora-store.yml` (commits `run:chimora-store-play`, `run:chimora-store-asc+iap`).
 
