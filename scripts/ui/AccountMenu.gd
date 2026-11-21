@@ -22,8 +22,8 @@ static func run(menu: MenuHost) -> void:
 		var entries: Array[String] = ["Get a transfer code", "Enter a code...", RULES_ROW, "Delete account...",
 			"Friends, mail: %s" % ("On" if Online.social_on() else "Off"), "Download my data", NOTICES_ROW, "Earlier saves",
 			"For parents..."]
-		# Promo codes pay into the open journey's bag, so only during a journey.
-		if GameState.in_game and Online.flag_on("promo"):
+		# Promo codes pay into the open journey's bag, so only during a journey; never on iOS.
+		if GameState.in_game and Online.flag_on("promo") and promo_allowed():
 			entries.append("Redeem a promo code...")
 		var idx: int = await menu.pick_strings(menu.fit_title(titles), entries)
 		if idx < 0:
@@ -54,6 +54,11 @@ static func run(menu: MenuHost) -> void:
 				await _toggle_social(menu)
 
 const RULES_ROW: String = "Rules & privacy..."
+
+## Owner rule (App Store guideline 3.1.1): no promo code entry in the iOS build. Android and
+## desktop keep "Redeem a promo code...". [param p] is a StoreNames platform, empty = this build.
+static func promo_allowed(p: String = "") -> bool:
+	return (p if not p.is_empty() else StoreNames.platform()) != StoreNames.IOS
 const NOTICES_ROW: String = "Team messages"
 
 ## "Account  Code ABCD-EFGH"; offline, when the server has not sent the code yet, it says so

@@ -16,6 +16,7 @@ func before_each() -> void:
 		"ONLYONE1": {"reward": {"tonic": 1}, "max_uses": 1, "uses": 0, "starts_at": 0, "ends_at": null, "active": true},
 		"OLDCODE1": {"reward": {"tonic": 1}, "max_uses": null, "uses": 0, "starts_at": 0, "ends_at": t - 86400, "active": true},
 		"LATER001": {"reward": {"tonic": 1}, "max_uses": null, "uses": 0, "starts_at": t + 86400, "ends_at": null, "active": true},
+		"PAIDRG01": {"reward": {"tonic": 1, "rg_grand_tonic": 1}, "max_uses": null, "uses": 0, "starts_at": 0, "ends_at": null, "active": true},
 	})
 	for who: String in ["ann", "ben", "cid"]:
 		s.switch_user(who)
@@ -50,6 +51,20 @@ func test_unknown_expired_not_started_and_limit() -> void:
 	assert_eq(_as("ben", "ONLYONE1", 1, 2).error, "code_used_up", "use limit")
 	assert_eq(_as("cid", "DISCORD1", 2, 0).error, "no_save")
 
+## Free items only (App Store 3.1.1, 20261121120000_promo_free_only.sql): nothing the shop sells.
+func test_no_shop_items() -> void:
+	assert_eq(_as("ann", "PAIDRG01", 1, 4).error, "no_such_code", "rg_* item refused")
+	assert_eq(s._saves()["1"].data.inventory, {"tonic": 1}, "bag unchanged")
+	assert_eq(int(s.db.promo_codes.PAIDRG01.uses), 0)
+	assert_true(LocalPromo.paid_item("rg_grand_tonic"))
+	for o: Dictionary in ShopCatalog.offers():
+		assert_true(LocalPromo.paid_item(str(o.id)), "offer id " + str(o.id))
+		for g: Variant in o.get("grants", []):
+			if g is Dictionary and g.has("id"):
+				assert_true(LocalPromo.paid_item(str(g.id)), "granted " + str(g.id))
+	for free: String in ["tonic", "strong_tonic", "revival_leaf"]:
+		assert_false(LocalPromo.paid_item(free), free + " is a free bag item")
+
 func test_ten_tries_an_hour() -> void:
 	var last: Dictionary = {}
 	for i: int in 11:
@@ -66,3 +81,10 @@ func test_norm() -> void:
 func test_error_texts() -> void:
 	for e: String in ["no_such_code", "code_used", "code_used_up", "code_expired", "slow_down"]:
 		assert_eq(PromoMenu.error_text({"ok": true, "data": {"ok": false, "error": e}}), PromoMenu.ERRORS[e])
+
+## Owner rule (App Store 3.1.1): the promo row is hidden on iOS only.
+func test_promo_row_not_on_ios() -> void:
+	assert_false(AccountMenu.promo_allowed(StoreNames.IOS), "no promo codes on iOS")
+	assert_true(AccountMenu.promo_allowed(StoreNames.ANDROID))
+	assert_true(AccountMenu.promo_allowed(StoreNames.OTHER))
+	assert_true(AccountMenu.promo_allowed(), "this test build is not iOS")

@@ -49,10 +49,13 @@ Weitere Play-Console-Punkte:
 | --- | --- | --- | --- |
 | Identifiers → **User ID** | Ja | Nein | App Functionality |
 | User Content → **Gameplay Content** (Spielstand inkl. Wayfarer-Name) | Ja | Nein | App Functionality, Analytics (anonyme Fortschrittszählung `admin_funnel`) |
+| Usage Data → **Product Interaction** (wiederkehrend nach 1/7 Tagen, Spielfortschritt im Funnel) | Ja | Nein | Analytics (anonyme Fortschrittszählung `admin_funnel`) |
 | Purchases → **Purchase History** (Käufe, Rissglas-Buchungen, Erstattungen auf unserem Server) | Ja | Nein | App Functionality |
 | Other Data → **Other Data Types** (Altersgruppe für den Shop) | Ja | Nein | App Functionality |
 
-Alles andere (Kontaktdaten, Standort, Diagnose, Nutzungsdaten) nicht ankreuzen. Weil der Server Käufe dem
+Alles andere (Kontaktdaten, Standort, Diagnose, sonstige Nutzungsdaten) nicht ankreuzen. Gameplay Content und
+Product Interaction stehen auch im `PrivacyInfo.xcprivacy` (`privacy/collected_data/*` im iOS-Preset von
+`export_presets.cfg`, Chimora 100 Vorcheck). Weil der Server Käufe dem
 Konto zuordnet und speichert, wird „Purchase History“ angegeben.
 
 - „Used for tracking“: **Nein** bei allem. Keine App-Tracking-Transparency-Abfrage nötig, solange kein

@@ -1,7 +1,7 @@
 class_name LocalPromo
 extends RefCounted
 ## Promo codes in the local stand-in server, with the same rules as
-## supabase/migrations/20261115100000_promo_codes.sql. Codes live in db.promo_codes
+## supabase/migrations/20261115100000_promo_codes.sql and 20261121120000_promo_free_only.sql. Codes live in db.promo_codes
 ## ({code: {"reward", "max_uses", "uses", "starts_at", "ends_at", "active"}}), tests add them.
 ## tests/unit/test_promo_codes.gd checks it.
 
@@ -26,6 +26,19 @@ static func norm(code: String) -> String:
 			out += ch
 	return out
 
+## True when the shop sells the item: an rg_* id, an offer id or an item an offer grants
+## (like public._promo_paid_item). Promo codes give free bag items only (App Store 3.1.1).
+static func paid_item(id: String) -> bool:
+	if id.begins_with("rg_"):
+		return true
+	for o: Dictionary in ShopCatalog.offers():
+		if str(o.get("id", "")) == id or str(o.get("product_id", "")) == id:
+			return true
+		for g: Variant in o.get("grants", []):
+			if g is Dictionary and str(g.get("id", "")) == id:
+				return true
+	return false
+
 func _fn_promo_redeem(a: Dictionary) -> Dictionary:
 	if not b.flag_on("promo", 2147483647):
 		return LocalBackend._fail("feature_off")
@@ -44,7 +57,7 @@ func _fn_promo_redeem(a: Dictionary) -> Dictionary:
 		return LocalBackend._fail("code_used_up")
 	var reward: Dictionary = p.get("reward", {})
 	for k: String in reward:
-		if int(reward[k]) < 1 or int(reward[k]) > 999:
+		if int(reward[k]) < 1 or int(reward[k]) > 999 or paid_item(k):
 			return LocalBackend._fail("no_such_code")
 	var r: Dictionary = b._trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), reward)
 	if not bool(r.ok):
