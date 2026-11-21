@@ -7,19 +7,23 @@ Everything the two store consoles ask for, in the folder layout of fastlane (`su
 | --- | --- |
 | `android/<lang>/title.txt`, `short_description.txt`, `full_description.txt` | Play listing (30 / 80 / 4000 characters) |
 | `android/<lang>/changelogs/default.txt` | "What's new" |
-| `android/<lang>/images/phoneScreenshots/1-6.png` | 1080 x 1920 phone screenshots |
+| `android/<lang>/images/phoneScreenshots/1-8.png` | 1080 x 2160 phone screenshots (captions of the language's main App Store locale) |
 | `android/<lang>/images/featureGraphic.png`, `icon.png` | 1024 x 500 feature graphic, 512 x 512 icon |
 | `android/app_access_de.txt` | Text for Play Console → App content → App access |
 | `ios/metadata/<lang>/*.txt` | Name, subtitle, description, keywords, promotional text, URLs, release notes |
 | `ios/in_app_events/<lang>/*.txt` | In-App Event card: name (30), short (50) and long description (120) |
-| `ios/screenshots/<lang>/N_iphone69.png` | 1320 x 2868 (6.9" iPhone, the one size Apple requires; smaller iPhones are scaled from it) |
+| `ios/screenshots/<lang>/N_iphone69.png` | 1320 x 2868 (6.9" iPhone, the one size Apple requires; smaller iPhones are scaled from it), 8 per locale, all 20 locales |
+| `ios/screenshot_captions/<locale>.txt` | The 8 captions of the pictures, one per line, per App Store locale (checked by `tools/store/listing_check.py`) |
+| `ios/screenshots_ipad13/<lang>/N_ipad13.png` | 2064 x 2752 (13" iPad), en-US and de-DE only; not uploaded while the app is iPhone-only. All 20 locales are rendered by the same tool |
+| `icon_variants/face_*.png` | Icon variant "face" (plan Chimora 100, item 88) for a Product Page Optimization test; the app icon stays `art/icon/`. Made by `tools/art/gen_icon.py --variant` |
 | `ios/review_information/notes.txt` | Notes for App Review |
 | `ios/iap_review.png` | 720 x 1280 picture of the shop, App Review needs one for every in-app purchase |
 | `products.json` | In-app products for both stores |
 
 Languages: all 14 of the game (Play folders like `ja-JP`, App Store folders like `ja`, pairs in
 `tools/release_check.py` TEXT_LANGS), each with its own texts and screenshots. The app is
-iPhone-only (`targeted_device_family=0`), so no iPad screenshots are needed.
+iPhone-only (`targeted_device_family=0`), so no iPad screenshots are needed for now (the 13" set waits
+in `ios/screenshots_ipad13/`).
 
 App Store locales: all 20 Chimora is listed in, the 14 game languages plus `en-GB`, `en-AU`, `en-CA`,
 `fr-CA`, `es-MX` and `pt-PT` (the game text there is pt-BR, the description says so). Each locale has its
@@ -40,7 +44,13 @@ preset also lists them in `CFBundleLocalizations`. `tools/release_check.py` chec
 Upload: Google Play by `play_store.mjs`, App Store Connect by `app_store.mjs` and `iap.mjs` in the
 lifekit workflow `chimora-store.yml` (commits `run:chimora-store-play`, `run:chimora-store-asc+iap`).
 
-Rebuild the images after the art or the UI changes: see the top of `tools/store/make_store_images.py`.
+Rebuild the images after the art or the UI changes: see the top of `tools/store/make_store_images.py`
+(raw screens from `tools/store_shots.gd`, all from the running game). The set, in this order: monster
+hero (Era IV Spirlings, one Gleam), 3v3 battle, unfurl before/after, one town in Eras I to IV, a story
+line, a live duel, a Spirlog page, the shop's Looks list (Riftglass prices only). No money prices and no
+Discord note in any picture. The app preview video (15-30 s, 1080 x 1920, 30 fps, H.264) is recorded by
+`tools/store_video.gd` and encoded by `tools/store/make_store_video.py`; it is kept outside the repo.
+The folders with pictures carry a `.gdignore`, so Godot does not import them.
 Rules for every text and image: no other game's or brand's names, no comparisons (docs/IP_HYGIENE.md,
 docs/legal/STORE_COMPLIANCE.md). Say clearly that the game needs the internet.
 Every description keeps its accessibility block ("PLAYABLE YOUR WAY" and its 13 translations,

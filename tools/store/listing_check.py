@@ -8,6 +8,9 @@ App Store, store/ios/metadata/<locale>/ for all 20 locales Chimora is listed in:
   Keywords: comma separated, no spaces, no item twice, no word that the name or subtitle already has,
   and no word that the other locale indexed in the same storefront already carries (SHARED_INDEX).
 In-App Event texts, store/ios/in_app_events/<locale>/: name 30, short_description 50, long_description 120.
+Screenshot captions, store/ios/screenshot_captions/<locale>.txt (tools/store/make_store_images.py): one line
+  per picture, CAPTION_LINES of them, each at most CAPTION_MAX characters, no money signs and no Discord
+  (plan Chimora 100, items 86, 87, 97; Play uses the captions of its language's main locale).
 Google Play, store/android/<lang>/ for the 14 game languages: title 30, short 80, full 4000, changelog 500.
 Every text: no franchise term (the pattern of tools/ip_check.sh) and no other game's name (OTHER_GAMES).
 """
@@ -37,6 +40,9 @@ OTHER_GAMES = re.compile(r"evocreo|neo ?monsters|aniimo|voidpet|nexomon|coromon|
                          r"|monster super league|bulu monster|wild tamer|monster masters|dragonvale|negamon|nevomove"
                          r"|digimon|yo-?kai|palworld|monster ?hunter|dragon ?quest|monster ?sanctuary|ooblets", re.I)
 CJK = re.compile(r"[぀-ヿ㐀-鿿가-힯]")
+CAPTION_LINES = 8
+CAPTION_MAX = 60
+NOT_IN_CAPTIONS = re.compile(r"discord|[€$£¥₩₽]", re.I)
 
 
 def franchise_pattern() -> re.Pattern | None:
@@ -112,6 +118,19 @@ def check(root: str = ROOT) -> list[str]:
             check_keywords(loc, t["keywords.txt"], name, sub, errors)
         if "description.txt" in t and "497" not in t["description.txt"]:
             errors.append("store/ios/metadata/%s/description.txt: name the 497 Spirlings" % loc)
+        cap = os.path.join(root, "store/ios/screenshot_captions", loc + ".txt")
+        if not os.path.exists(cap):
+            errors.append("missing " + os.path.relpath(cap, root))
+        else:
+            files.append(cap)
+            lines = read(cap).split("\n")
+            if len(lines) != CAPTION_LINES or any(not l.strip() for l in lines):
+                errors.append("%s needs %d non-empty lines, one per picture" % (os.path.relpath(cap, root), CAPTION_LINES))
+            for l in lines:
+                if len(l) > CAPTION_MAX:
+                    errors.append("%s: %r is longer than %d characters" % (os.path.relpath(cap, root), l, CAPTION_MAX))
+                if NOT_IN_CAPTIONS.search(l):
+                    errors.append("%s: %r: no prices and no Discord in the pictures" % (os.path.relpath(cap, root), l))
         ev = os.path.join(root, "store/ios/in_app_events", loc)
         files += [os.path.join(ev, n) for n in check_lengths(root, ev, LIMITS_EVENT, errors)]
     for a, b in SHARED_INDEX:
