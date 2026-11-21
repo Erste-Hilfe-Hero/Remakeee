@@ -1,6 +1,6 @@
 class_name BattlePause
 extends Control
-## The battle pause (KAMPF_PLAN_1000 item 912): the menu button or the "II" button stops the
+## The battle pause (KAMPF_PLAN_1000 item 912): the menu button (Start / Escape) stops the
 ## battle at any moment, in the middle of an art or a line of text. The whole tree waits; only
 ## this panel runs, and a tap, confirm, back or the menu button again lets the battle go on.
 

@@ -273,12 +273,6 @@ func _build() -> void:
 	_log_button.focus_mode = Control.FOCUS_NONE
 	_log_button.pressed.connect(_toggle_log)
 	_field.add_child(_log_button)
-	# Pause at any moment (item 912); "II" needs no translation and fits every era's column.
-	_pause_button = Button.new()
-	_pause_button.text = "II"
-	_pause_button.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
-	_pause_button.focus_mode = Control.FOCUS_NONE
-	_field.add_child(_pause_button)
 	_pin = TargetPin.new()
 	_field.add_child(_pin)
 	_back_button = Button.new()
@@ -409,7 +403,6 @@ func _layout_field() -> void:
 		_layout_formation()
 		if _hud != null:
 			_hud.layout_formation()
-		_place_pause()
 		return
 	var w: float = _field.size.x
 	var h: float = _field.size.y
@@ -442,7 +435,6 @@ func _layout_field() -> void:
 		_player_sprite.size = pr.size
 	if _hud != null:
 		_hud.layout_single()
-	_place_pause()
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade) * BattleShow.night_tint(DayCycle.current(), GameState.day_night, outdoor, backdrop)
 
@@ -668,27 +660,15 @@ func _notification(what: int) -> void:
 	_away = step > 0
 	_apply_speed()
 
-var _pause_button: Button
 var _pause: BattlePause
 
 ## The pause panel over everything (item 912): while it shows, Auto and the text wait like when
-## the app is in the background (item 629), and the whole battle stands still.
-## The "II" button takes Auto's place when Auto is hidden; beside Auto it is a small square just
-## left of the speed button, so every era's own button row stays as it is.
-func _place_pause() -> void:
-	if _pause_button == null:
-		return
-	if not _auto_button.visible:
-		_pause_button.position = _auto_button.position
-		_pause_button.size = _auto_button.size
-	else:
-		_pause_button.size = Vector2(12, _ff_button.size.y)
-		_pause_button.position = Vector2(maxf(0.0, _ff_button.position.x - 14), _ff_button.position.y)
+## the app is in the background (item 629), and the whole battle stands still. It opens with
+## Start / Escape; the on-screen "II" button was removed on Ali's wish (2026-11-21).
 
 func _build_pause() -> void:
 	_pause = BattlePause.new()
 	add_child(_pause)
-	_pause_button.pressed.connect(_pause.open)
 	_pause.changed.connect(func(on: bool) -> void:
 		_away = on
 		_apply_speed())
@@ -717,7 +697,6 @@ func _run() -> void:
 	_foe_strip.visible = false
 	_player_strip.visible = false
 	_auto_button.visible = model.is_wild
-	_place_pause()
 	_weather.setup(BattleWeather.weather_of(model), EraManager.active_era())
 	_apply_speed()
 	Sound.music(Sound.battle_music(music_track))
