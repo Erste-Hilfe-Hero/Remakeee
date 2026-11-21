@@ -1,0 +1,10 @@
+{
+ "_comment": "Russian texts for the German table easy_start. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "Kestra: Go and see for yourself, but start north in Fernstair. The Saltmarsh and Quillbrook roads are rough for a new Wayfarer.": "Kestra: Иди и посмотри своими глазами, но начни с севера, с Fernstair. Дороги к Saltmarsh и Quillbrook тяжелы для нового Странника.",
+  "Lookout Corra: Quillbrook's Wayfarers would beat a fresh team before breakfast.": "Дозорная Corra: Странники из Quillbrook одолеют новенькую команду ещё до завтрака.",
+  "Lookout Corra: Take the north road to Fernstair first, and let Kestra test you on the Crowcrest path. Then this road is yours.": "Дозорная Corra: Сначала иди северной дорогой в Fernstair, и пусть Kestra испытает тебя на тропе к Crowcrest. Тогда и эта дорога будет твоей.",
+  "Lookout Halde: Go north through Fernstair first. Kestra tests new Wayfarers on the Crowcrest path. Come back once she has seen you fight.": "Дозорная Halde: Сначала иди на север через Fernstair. Kestra испытывает новых Странников на тропе к Crowcrest. Возвращайся, когда она увидит тебя в бою.",
+  "Lookout Halde: The Saltmarsh road? The Spirlings out there bite harder than anything near the village.": "Дозорная Halde: Дорога к Saltmarsh? Тамошние Spirlings кусаются сильнее всех, кто водится у деревни."
+ }
+}

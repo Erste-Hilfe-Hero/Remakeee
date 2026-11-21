@@ -83,6 +83,7 @@ static func difficulty_table() -> String:
 			"+1 copy of the lowest entry (team of up to %d)" % TrainerData.RIFT_BORN_MAX_TEAM if d == GameState.Difficulty.RIFT_BORN else "-"])
 	lines.append("")
 	lines.append("Foe ring: the shift of a shared Wayfarer team (teams with their own block for the difficulty keep their rings), never more than %d above the ring cap." % GameState.FOE_OVER_CAP)
+	lines.append("Foe damage on Tamer: x%.2f while the player has fewer than %d Spirlings (newcomer, Ali 2026-11-21)." % [GameState.NEWCOMER_FOE_DAMAGE, GameState.NEWCOMER_SPIRLINGS])
 	return "\n".join(lines)
 
 ## Item 876: every AI profile with its weights, its motto and who uses it.
@@ -185,16 +186,18 @@ static func variants_table() -> String:
 static func act_targets_table() -> String:
 	var cfg: Dictionary = ActSim.route()
 	var b: Dictionary = cfg.get("bands", {})
-	var arr: Array = b.get("win_arrival", [0.0, 0.0])
 	var even: Array = b.get("starters_even", [])
 	var out: PackedStringArray = ["| Act | Grind budget (wild battles per fight) | Win on arrival | Win after the budget | Mean grind to %d %% | Every starter alone |" % roundi(float(cfg.get("grind_target", 0.7)) * 100.0),
 		"| --- | --- | --- | --- | --- | --- |"]
 	for a: Dictionary in cfg.get("acts", []):
 		var budget: int = int(a.get("moderate_grind", cfg.get("moderate_grind", 0)))
+		var ab: Dictionary = ActSim.act_bands(cfg, str(a.id))
+		var arr: Array = ab.get("win_arrival", [0.0, 0.0])
 		out.append("| %s | %d | %d-%d %% | %d %%+ | at most %d | %s |" % [a.get("name", a.id), budget, roundi(float(arr[0]) * 100.0), roundi(float(arr[1]) * 100.0),
-			roundi(float(b.get("win_moderate_min", 0.0)) * 100.0), budget, "yes" if str(a.id) in even else "-"])
+			roundi(float(ab.get("win_moderate_min", 0.0)) * 100.0), budget, "yes" if str(a.id) in even else "-"])
 	out.append("")
-	out.append("Every act is at most as easy on arrival as the one before (margin %d points). No measured Warden, rival or boss is won more than %d %% on arrival, and none stays under %d %% after %d grind battles (a wall). Hearts are left out of the means. Starters: %s, each from ring %d." % [
+	out.append("Act I is the tutorial act (Ali 2026-11-21): no measured fight there is won more than %d %% on arrival. Every later act is at most as easy on arrival as the one before (margin %d points). No measured Warden, rival or boss after Act I is won more than %d %% on arrival, and none stays under %d %% after %d grind battles (a wall). Hearts are left out of the means. Starters: %s, each from ring %d." % [
+		roundi(float(ActSim.act_bands(cfg, "act1").get("fight_arrival_max", 0.0)) * 100.0),
 		roundi(float(b.get("steeper_margin", 0.0)) * 100.0), roundi(float(b.get("fight_arrival_max", 0.0)) * 100.0),
 		roundi(float(cfg.get("grind_target", 0.7)) * 100.0), int(cfg.get("grind_max", 0)), ", ".join(PackedStringArray(cfg.get("starters", []))), int(cfg.get("start_ring", 5))])
 	return "\n".join(out)

@@ -73,7 +73,7 @@ the act's `moderate_grind`: wild battles a player trains before a measured fight
 <!-- gen:act_targets -->
 | Act | Grind budget (wild battles per fight) | Win on arrival | Win after the budget | Mean grind to 70 % | Every starter alone |
 | --- | --- | --- | --- | --- | --- |
-| Act I: Veydal | 60 | 20-40 % | 70 %+ | at most 60 | yes |
+| Act I: Veydal | 20 | 50-80 % | 70 %+ | at most 20 | yes |
 | Act II: Corvane | 70 | 20-40 % | 70 %+ | at most 70 | - |
 | Act III: Ashmere | 80 | 20-40 % | 70 %+ | at most 80 | - |
 | Act IV: Solenne | 90 | 20-40 % | 70 %+ | at most 90 | - |
@@ -82,19 +82,26 @@ the act's `moderate_grind`: wild battles a player trains before a measured fight
 | Era IV: Halcyra | 120 | 20-40 % | 70 %+ | at most 120 | - |
 | Era V: Quivermoor | 130 | 20-40 % | 70 %+ | at most 130 | - |
 
-Every act is at most as easy on arrival as the one before (margin 0 points). No measured Warden, rival or boss is won more than 60 % on arrival, and none stays under 70 % after 240 grind battles (a wall). Hearts are left out of the means. Starters: Kindlop, Zippit, Wickit, each from ring 5.
+Act I is the tutorial act (Ali 2026-11-21): no measured fight there is won more than 85 % on arrival. Every later act is at most as easy on arrival as the one before (margin 0 points). No measured Warden, rival or boss after Act I is won more than 60 % on arrival, and none stays under 70 % after 240 grind battles (a wall). Hearts are left out of the means. Starters: Kindlop, Zippit, Wickit, each from ring 5.
 <!-- /gen:act_targets -->
 
-Act I per starter, measured 14 Nov 2026 with 64 battles per measure (`--mode acts --act act1
---rounds 64 --starter S`): Kindlop 85 % after the budget, 40 grind battles to 70 %; Wickit 66 %, 73;
-Zippit 70 %, 70. Wickit and Zippit miss the starter target (KAMPF_PLAN_1000 item 943 stays open).
-Why: Kindlop unfolds at ring 14 (Smoldrake, stat sum 437), Wickit at 22 and Zippit at 24, and
-Wickit's first form (stat sum 287) drops out of the simulated five early. The hard fights for them
-are Warden Orrin, Warden Brisa, Rival Jinks (second and third) and Mother Crowle. Retuning those
-teams brought all three starters to 70 %+ within 60 battles at 64 battles per measure, but every
-such change re-rolls the single seeded route of the later acts, and the 16-battle CI run then found
-new walls (Veil Heir Corin at the end of Act IV, Warden Corin in Era II) and broke the steeper-act
-order; the starter fix needs a route that does not carry one seed through all eight regions.
+Act I per starter, measured 21 Nov 2026 with 64 battles per measure (`--mode acts --act act1
+--rounds 64 --starter S`), after Act I became the tutorial act (Ali 2026-11-21, Chimora 100
+items 1-14): Kindlop 74 % on arrival, 87 % after the budget, 3 grind battles to 70 % on the mean;
+Zippit 83 %, 92 %, 3; Wickit 75 %, 90 %, 3 (before, with a budget of 60: Kindlop 35 %, 85 %, 40;
+Zippit 29 %, 70 %, 70; Wickit 26 %, 66 %, 73). The Tamer teams of Orrin, Brisa, Maelis and Mother
+Crowle sit one to five rings over their base teams again, Rival Jinks fights with his base team,
+Tamer grows x1.15 in Act I only (GrowthRules `act1_mult`) and newcomers take x0.9 damage. The
+hardest fight left is Mother Crowle (27-61 % on arrival).
+
+Act II starts from a pinned entry. A single seeded route carries the team and the dice from Act I
+into every later act, so retuning Act I re-rolled Acts II to Era V and turned borderline fights
+there into walls although their data did not change. `tools/balance/act_entry.json` holds the team,
+rings and dice the route brought to Act II on 21 Nov 2026 (before the tutorial act), per starter for
+the 16-battle runs of `test_act_difficulty.gd` and `--mode acts --rounds 16`; ActSim restores it at
+Act II, so the later acts measure their own content and match the numbers from before. Runs with
+other battle counts or seeds still carry the team on. Re-record only on purpose:
+`godot --headless --path . -s res://tools/balance/record_act_entry.gd`.
 
 Measured on 6 Nov 2026 (plan area 2, after the new arts): Lv36 duel turns to KO 2.5, first-mover
 advantage 52%; Lv36 teams (200 battles, seed 7) 0 draws, every species between 39% and 66%.
@@ -764,6 +771,7 @@ Generated from `GameState`, `BattleRules` and `TrainerData` (item 875).
 | Rift-Born | +2 | 10 | 3 / 3 | kept | 10 (+1 after turn 1) | x1.00 | up to 2 | as the boss data says, +1 in phase 2 | +1 copy of the lowest entry (team of up to 5) |
 
 Foe ring: the shift of a shared Wayfarer team (teams with their own block for the difficulty keep their rings), never more than 2 above the ring cap.
+Foe damage on Tamer: x0.90 while the player has fewer than 6 Spirlings (newcomer, Ali 2026-11-21).
 <!-- /gen:difficulty -->
 
 ## Wachstum (growth curve)
@@ -788,7 +796,7 @@ wild battles.
 | 100 | 190187 | 4984 | 13 | 10 |
 
 Growth to reach ring L = floor(1.2 x L ^ 2.6). There is no top ring. One battle gives yield x foe ring / 20 (x1.5 against a Wayfarer), shared by the Spirlings that fought; the bench gets 50 % with Bench lessons. Table for a kind of yield 80.
-Factors: Story x1.25, rematch x1.2, kinship 80+ x1.1, Growth Charm x1.5, world goal x1.25 for 20 battles. No penalty for a higher ring than the foe (only Era V scales by ring).
+Factors: Story x1.25, Act I on Tamer x1.15, rematch x1.2, kinship 80+ x1.1, Growth Charm x1.5, world goal x1.25 for 20 battles. No penalty for a higher ring than the foe (only Era V scales by ring).
 <!-- /gen:growth -->
 
 ## KI-Profile (AI profiles)

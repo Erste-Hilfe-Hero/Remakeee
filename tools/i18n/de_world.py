@@ -73,7 +73,6 @@ T = {
 "Kestra: You're Aldo's apprentice? Good. Half the old maps are wrong since the storm.": "Kestra: Du bist Aldos Lehrling? Gut. Seit dem Sturm ist die Hälfte der alten Karten falsch.",
 "Kestra: Two Rifts opened: one in the Cinder hollow past Thornridge, one under the Saltmarsh.": "Kestra: Zwei Risse haben sich geöffnet: einer in der Glutsenke hinter Thornridge, einer unter der Saltmarsh.",
 "Kestra: Everyone wants them closed. I'm not so sure. New Spirlings came through that tear.": "Kestra: Alle wollen sie geschlossen haben. Ich bin mir nicht so sicher. Durch diesen Riss kamen neue Spirlings.",
-"Kestra: Go and see for yourself. Fernstair goes north, Saltmarsh east. Pick either.": "Kestra: Sieh es dir selbst an. Nach Norden geht es nach Fernstair, nach Osten zur Saltmarsh. Such dir eins aus.",
 "Kestra: Still mending Rifts? Fine. Just look closely at what comes through before you do.": "Kestra: Flickst du immer noch Risse? Na gut. Sieh dir nur genau an, was durchkommt, bevor du es tust.",
 "Old maps of Veydal, crossed out and redrawn in three colours of ink.": "Alte Karten von Veydal, durchgestrichen und in drei Tintenfarben neu gezeichnet.",
 "Tamsin: Nobody's dug here since my knees gave out. The upper gallery's black as ink.": "Tamsin: Seit meine Knie nicht mehr wollen, hat hier keiner gegraben. Der obere Stollen ist schwarz wie Tinte.",

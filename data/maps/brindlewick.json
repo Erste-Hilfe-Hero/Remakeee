@@ -186,6 +186,24 @@
    "sprite": "villager"
   },
   {
+   "id": "warn_saltmarsh",
+   "x": 7,
+   "y": 7,
+   "facing": "right",
+   "dialogue": "brindlewick/warn_saltmarsh",
+   "sprite": "ranger",
+   "hide_flag": "kestra_spar"
+  },
+  {
+   "id": "warn_quillbrook",
+   "x": 4,
+   "y": 11,
+   "facing": "left",
+   "dialogue": "brindlewick/warn_quillbrook",
+   "sprite": "ranger",
+   "hide_flag": "kestra_spar"
+  },
+  {
    "id": "brin",
    "x": 3,
    "y": 1,
