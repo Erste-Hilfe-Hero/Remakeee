@@ -1,0 +1,15 @@
+{
+ "_comment": "Korean texts for the German table c100_auto. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "Auto: %s": "자동: %s",
+  "Wild only": "야생만",
+  "All story battles": "모든 스토리 배틀",
+  "Off, wild battles only, or every story battle. Wardens and rivals ask first.": "끄기, 야생 배틀만, 또는 모든 스토리 배틀. 수호자와 라이벌은 먼저 묻습니다.",
+  "A strong foe. Let Auto fight this battle?": "강한 상대입니다. 이 배틀을 자동에 맡길까요?",
+  "Auto on": "자동 켜기",
+  "Keep control": "직접 싸우기",
+  "Auto: picking who steps out.": "자동: 나갈 동료를 고르는 중.",
+  "Auto stops: this kind is not in your Spirlog yet. Bond or fight on.": "자동 중지: 이 종은 아직 Spirlog에 없습니다. 유대를 맺거나 계속 싸우세요.",
+  "Turn %d": "%d턴"
+ }
+}

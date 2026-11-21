@@ -1,5 +1,5 @@
 extends GutTest
-## Settings sold in the shop (Ali, 7 Nov): Damage Preview, Minimap, Fast Text, Retro Filter,
+## Settings sold in the shop (Ali, 7 Nov): Damage Preview, Minimap, Retro Filter,
 ## Sky Control (weather, day and night) and Bench Lessons.
 
 var _state: Dictionary
@@ -36,11 +36,12 @@ func test_locked_until_bought() -> void:
 	assert_eq(MenuHost.shop_or("damage_preview", "On"), "On")
 	assert_false(ShopEffects.owns_setting("minimap"))
 
-func test_fast_text_needs_the_unlock() -> void:
-	assert_eq(MenuHost.next_text_speed(GameState.TextSpeed.NORMAL), GameState.TextSpeed.SLOW)
-	Billing.state = {"unlocks": {"fast_text": 1}}
+## Chimora 100 item 34 (owner wish): fast text is free and its offer is no longer sold.
+func test_fast_text_is_free() -> void:
+	assert_true(ShopEffects.owns_setting("fast_text"))
 	assert_eq(MenuHost.next_text_speed(GameState.TextSpeed.NORMAL), GameState.TextSpeed.FAST)
 	assert_eq(MenuHost.next_text_speed(GameState.TextSpeed.FAST), GameState.TextSpeed.SLOW)
+	assert_false(bool(ShopCatalog.offer("rg_fast_text").get("ready", true)), "nobody can buy what is free")
 
 func test_bench_lessons_need_the_unlock() -> void:
 	var keep: bool = GameState.bench_xp

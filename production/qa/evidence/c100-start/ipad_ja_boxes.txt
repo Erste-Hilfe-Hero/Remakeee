@@ -1,0 +1,11 @@
+box 1: 昨夜、嵐が空を裂いた。Veydalの上に裂け目が開いた。
+box 2: 3つの小さな光が、灯台のランプへと湖を渡ってきた。
+box 3: Liora！起きて！
+box 4: 嵐から3匹のSpirlingが逃げこんできた。あいさつしておいで！
+box 5: Zippitが一緒に来てくれる！ほかの2匹は湖へ去っていった。
+box 6: よし。裂け目は静寂を呼ぶ。そこのSpirlingは声を失うんだ。
+box 7: 嵐でMirelaの地図帳が散らばった。ページを持ち帰っておくれ。
+box 8: これを持って、地図の家のKestraに会いに行きなさい。
+box 9: 強壮薬 x2を手に入れた！
+box 10: 新しい目標：Brindlewickの地図の家にいるKestraをたずねる。
+boxes before control: 10

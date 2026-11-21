@@ -94,7 +94,9 @@ func _ready() -> void:
 	_iap_note.text = Loc.t(IAP_NOTE)
 	add_child(_iap_note)
 	_build_name_box()
+	# The version sits under the list frame, not on it (Chimora 100 item 54).
 	add_child(version_label())
+	_menu.offset_bottom = -VERSION_ROOM
 	Loc.events.language_changed.connect(_on_language_changed)
 	VirtualPad.set_wanted(false)
 	GameState.in_game = false
@@ -115,9 +117,13 @@ static func version_label() -> Label:
 	v.offset_right = -2
 	v.offset_bottom = 0
 	v.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	v.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	v.add_theme_color_override("font_color", UITheme.MID)
 	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return v
+
+## Height kept free under the title list for the version label.
+const VERSION_ROOM: int = 5
 
 static func version_text() -> String:
 	return "v" + Online.CLIENT_VERSION_NAME
@@ -180,7 +186,8 @@ func _go_online() -> void:
 		if st == Online.State.ONLINE:
 			_status.text = ""
 			if not Online.privacy_seen:
-				await _menu.info(AccountMenu.PRIVACY_NOTE)
+				await privacy_note(_menu, _set_art_note)
+				_hide_art_note()
 				Online.mark_privacy_seen()
 			if await Online.sync_down():
 				await _resolve_conflicts()
@@ -198,10 +205,31 @@ func _go_online() -> void:
 					MenuHost.open_url.call(Online.store_url())
 			continue
 		_status.text = "No connection"
-		var idx: int = await _menu.pick_strings(Online.error_text() + "\n" + Loc.t("Your journeys are safe on the server."),
-			["Try again", "Settings"] as Array[String], false)
+		var offline_ok: bool = Online.offline_start_allowed(_used_slots(), Online.revs.size(), Online.kicked, st)
+		var options: Array[String] = ["Try again", "Settings"]
+		if offline_ok:
+			options.append(OFFLINE_START)
+		var idx: int = await _menu.pick_strings(Online.error_text() + "\n" + Loc.t(OFFLINE_NOTE if offline_ok else "Your journeys are safe on the server."),
+			options, false)
 		if idx == 1:
 			await _menu.run_settings()
+		elif idx == 2:
+			await _start_offline()
+			return
+
+## New Game without a connection (plan Chimora 100, item 77): only the prologue, up to its save
+## point; then the account is created and the save goes up like any other (Online.offline_save_point).
+const OFFLINE_START: String = "Start offline"
+const OFFLINE_NOTE: String = "A new journey can start offline. The prologue goes online at its save point."
+const OFFLINE_STATUS: String = "Offline: prologue only"
+
+func _start_offline() -> void:
+	if not Online.privacy_seen:
+		await privacy_note(_menu, _set_art_note)
+		_hide_art_note()
+		Online.mark_privacy_seen()
+	Online.begin_offline_start()
+	_status.text = OFFLINE_STATUS
 
 ## At load and once more after connecting, once per app start each: a newer build is out (Play's
 ## in-app update, the App Store lookup or the live content's "latest" for this platform), so the
@@ -281,13 +309,15 @@ func _run() -> void:
 	if GameState.language.is_empty():
 		StartupLog.mark("language menu ready")
 		await _pick_language()
+	# An offline start ends when the title shows again; Continue is online only (item 77).
+	Online.offline_play = false
 	await _go_online()
 	if first_start:
-		await _ask_other_phone()
-		# Item 2000: once, where the comfort settings live, without a tap to dismiss.
-		_menu.toast(FIRST_START_HINT, FIRST_START_HINT_SECONDS)
+		# Item 2000: once, where the comfort settings live, without a tap to dismiss. Over the
+		# title art, never over the list (Chimora 100 item 33).
+		_show_art_note(FIRST_START_HINT, FIRST_START_HINT_SECONDS)
 	while true:
-		if not Online.is_online():
+		if not Online.is_online() and not Online.offline_play:
 			await _go_online()
 		var items: Array[String] = []
 		# "Continue" is always the newest save, one tap from launch.
@@ -296,6 +326,10 @@ func _run() -> void:
 		if latest > 0:
 			items.append("Continue" if summary.is_empty() else "Continue  %s" % summary)
 		items.append("New Game")
+		# Played on another phone: a row of its own instead of a question before the game
+		# starts (Chimora 100 item 29). With a save here it lives under Settings, Account.
+		if _used_slots() == 0 and not Online.offline_play:
+			items.append(HAVE_CODE)
 		if _used_slots() > 1:
 			items.append("Load...")
 		items.append("What's new")
@@ -307,8 +341,10 @@ func _run() -> void:
 		for it: String in items:
 			entries.append({"text": it})
 		if latest > 0:
-			# The Continue row carries the badge of the save's era.
+			# The Continue row carries the badge of the save's era; a long place name ends in
+			# an ellipsis instead of being cut (Chimora 100 item 54).
 			entries[0]["icon"] = EraSaveCard.badge(maxi(EraMoments.slot_era(latest), 1))
+			entries[0]["ellipsis"] = true
 		var idx: int = await _menu.pick("", entries, false)
 		_at_root = false
 		if idx == QUIT_ASKED:
@@ -348,6 +384,9 @@ func _run() -> void:
 					SaveManager.save_settings()
 					_enter_game()
 					return
+			HAVE_CODE:
+				if await AccountMenu.claim_code(_menu, false):
+					_status.text = ""
 			"What's new":
 				await _menu.run_news()
 			"Join our Discord":
@@ -368,14 +407,74 @@ func _pick_language() -> void:
 
 const FIRST_START_HINT: String = "Large text, one-hand layout and more are under Settings."
 const FIRST_START_HINT_SECONDS: float = 4.0
+## Title row for players who come from another phone (item 1964, Chimora 100 item 29).
+const HAVE_CODE: String = "I have a code"
 
-## First start (item 1964): someone who played on another phone gets there with a code
-## instead of starting over by mistake.
-func _ask_other_phone() -> void:
-	var idx: int = await _menu.pick_strings("Played Chimora on another phone before?",
-		["No, I am new", "Yes, I have a code"] as Array[String], false)
-	if idx == 1:
-		await AccountMenu.claim_code(_menu, false)
+## The first-start hint, in a strip over the lower edge of the title art so it never hides a
+## row of the list under it (Chimora 100 item 33).
+var _art_note: Label
+
+func _show_art_note(text: String, seconds: float) -> void:
+	_set_art_note(text)
+	_art_note_gen += 1
+	var gen: int = _art_note_gen
+	await get_tree().create_timer(seconds, true).timeout
+	if gen == _art_note_gen:
+		_hide_art_note()
+
+## Shows [param text] over the art until _hide_art_note (the explanation of the list below).
+func _set_art_note(text: String) -> void:
+	_art_note_gen += 1
+	if _art_note == null:
+		_art_note = Label.new()
+		_art_note.name = "art_note"
+		_art_note.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+		_art_note.set_anchors_preset(Control.PRESET_TOP_WIDE)
+		_art_note.offset_left = 4
+		_art_note.offset_right = -4
+		_art_note.offset_bottom = _iap_note.offset_top - 1
+		_art_note.offset_top = _art_note.offset_bottom
+		_art_note.grow_vertical = Control.GROW_DIRECTION_BEGIN
+		_art_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_art_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_art_note.add_theme_color_override("font_color", UITheme.INK)
+		_art_note.add_theme_stylebox_override("normal", UITheme.flat_style(UITheme.ACCENT, UITheme.INK))
+		_art_note.accessibility_live = AccessibilityServer.LIVE_POLITE
+		_art_note.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(_art_note)
+	_art_note.text = Loc.t(text)
+	_art_note.visible = true
+
+var _art_note_gen: int = 0
+
+func _hide_art_note() -> void:
+	if is_instance_valid(_art_note):
+		_art_note.visible = false
+
+## The note over the art while it shows (tests), else null.
+func art_note() -> Label:
+	return _art_note if _art_note != null and _art_note.visible else null
+
+## First connect (Chimora 100 item 28): one short sentence, "More" opens the whole note.
+const PRIVACY_SHORT: String = "Online only: your journeys are safe on our server. No ads, no tracking."
+const PRIVACY_TITLE: String = "Privacy"
+const PRIVACY_ROWS: Array[String] = ["OK", "More"]
+
+## The sentence is the rows' hint under the list, or, with [param note] (the title screen), it
+## stands over the title art so both rows stay in view on the smallest screen.
+static func privacy_rows(hint: bool = true) -> Array[Dictionary]:
+	var rows: Array[Dictionary] = []
+	for r: String in PRIVACY_ROWS:
+		rows.append({"text": r, "hint": Loc.t(PRIVACY_SHORT) if hint else ""})
+	return rows
+
+static func privacy_note(menu: MenuHost, note: Callable = Callable()) -> void:
+	while true:
+		if note.is_valid():
+			note.call(PRIVACY_SHORT)
+		if await menu.pick(PRIVACY_TITLE, privacy_rows(not note.is_valid()), false) != 1:
+			return
+		await menu.info(AccountMenu.PRIVACY_NOTE)
 
 ## Android back (item 1787): on the main list it asks to quit, otherwise it works like B.
 func _notification(what: int) -> void:
@@ -395,9 +494,14 @@ const NAME_BACK: String = "\n"
 ## suggestion comes back), or NAME_BACK.
 func _ask_name(suggestion: String) -> String:
 	_name_edit.text = suggestion
+	_hide_art_note()
 	_name_box.visible = true
 	_name_keys.fresh = true
-	_name_keys.focus_first()
+	# Phones open their own keyboard (any script), gamepads use the letter keys (item 36).
+	if NameKeyboard.system_keyboard_first():
+		_name_keys.open_system_keyboard.call_deferred()
+	else:
+		_name_keys.focus_first()
 	var name: String = ""
 	while true:
 		name = await _name_done
@@ -407,6 +511,8 @@ func _ask_name(suggestion: String) -> String:
 		_name_edit.text = suggestion
 		_name_keys.fresh = true
 	_name_box.visible = false
+	if DisplayServer.has_feature(DisplayServer.FEATURE_VIRTUAL_KEYBOARD):
+		DisplayServer.virtual_keyboard_hide()
 	return name
 
 func _enter_game() -> void:
@@ -446,38 +552,207 @@ func _pick_slot(title: String, allow_empty: bool) -> int:
 	_slot_list = false
 	return picked
 
-## New game (Ali, 2026-11-04): boy or girl, skin tone, hair and coat colour (Ali, 7 Nov), then a name, and the journey starts. The partner
-## Spirling is picked in the story (prologue at the lighthouse). Difficulty and the Iron Oath
-## live in the settings during the game.
+## New game (Chimora 100 items 25, 27): how hard battles should be, then one look screen with a
+## live picture of the Wayfarer, then a name, and the journey starts. The partner Spirling is
+## picked in the story (prologue at the lighthouse). Challenge rules and the Iron Oath are
+## optional rows under Settings during the journey, until the first Rift is mended.
 func _new_game() -> bool:
-	var look: int = -1
-	var skin: int = 0
-	var hair: int = 0
-	var coat: int = 0
+	var diff: int = -1
+	var look: Array[int] = [0, 0, 0, 0]
 	var name: String = ""
-	while true:
-		look = await _menu.pick_strings("Who are you?", ["Boy", "Girl"] as Array[String])
-		if look < 0:
+	var step: int = 0
+	while step < 3:
+		match step:
+			0:
+				diff = await ask_difficulty(_menu, _set_art_note)
+				_hide_art_note()
+				step = 1 if diff >= 0 else -1
+			1:
+				step = 2 if await look_screen(_menu, look, _look_stage()) else 0
+			2:
+				name = await _ask_name(GameState.DEFAULT_NAMES[look[LOOK_BODY]])
+				step = 3 if name != NAME_BACK else 1
+		if step < 0:
 			return false
-		skin = await _menu.pick_strings("Skin tone", GameState.SKIN_NAMES)
-		if skin < 0:
-			continue
-		hair = await _menu.pick_strings("Hair colour", GameState.HAIR_NAMES)
-		if hair < 0:
-			continue
-		coat = await _menu.pick_strings("Coat colour", GameState.COAT_NAMES)
-		if coat < 0:
-			continue
-		name = await _ask_name(GameState.DEFAULT_NAMES[look])
-		if name != NAME_BACK:
-			break
-	GameState.new_game(GameState.Difficulty.TAMER, name.strip_edges(), coat, "", look, skin, hair)
+	GameState.new_game(diff as GameState.Difficulty, name.strip_edges(), look[LOOK_COAT], "", look[LOOK_BODY], look[LOOK_SKIN], look[LOOK_HAIR])
 	GameState.iron_oath = false
 	EraManager.from_dict({})
-	# Challenge rules combine freely at the start (KAMPF plan item 492); the normal journey is first.
-	if await _menu.pick_strings("How do you want to travel?", ["Normal journey", "With challenge rules"] as Array[String], false) == 1:
-		await ChallengeMenu.run(_menu)
 	return true
+
+## The three difficulties asked at new game, easiest first, with one line each. The fourth,
+## Rift-Born, stays in Settings (Challenge) for players who know the game.
+const DIFFICULTY_TITLE: String = "Difficulty"
+const DIFFICULTY_CHOICES: Array[GameState.Difficulty] = [GameState.Difficulty.STORY, GameState.Difficulty.TAMER, GameState.Difficulty.VETERAN]
+const DIFFICULTY_ROWS: Array[String] = ["Relaxed", "Normal", "Tough"]
+const DIFFICULTY_LINES: Array[String] = [
+	"Gentle battles, more Growth.",
+	"The journey as it is meant to be.",
+	"Ring limits, smarter foes.",
+]
+## Said over the title art while the choice is open: nothing is locked in.
+const DIFFICULTY_LATER: String = "You can change it later in Settings."
+
+static func difficulty_rows(hint: bool = true) -> Array[Dictionary]:
+	var rows: Array[Dictionary] = []
+	for i: int in DIFFICULTY_ROWS.size():
+		rows.append({"text": DIFFICULTY_ROWS[i], "hint": Loc.t(DIFFICULTY_LINES[i]) if hint else ""})
+	return rows
+
+## The line said for difficulty row [param i] over the title art.
+static func difficulty_note(i: int) -> String:
+	return Loc.t(DIFFICULTY_LINES[clampi(i, 0, DIFFICULTY_LINES.size() - 1)]) + "\n" + Loc.t(DIFFICULTY_LATER)
+
+## Returns the picked GameState.Difficulty, or -1 for Back. Normal has the focus. With
+## [param note] (the title screen) the focused row's line goes over the art, not under the list.
+static func ask_difficulty(menu: MenuHost, note: Callable = Callable()) -> int:
+	var follow: Callable = func(i: int) -> void:
+		if i < DIFFICULTY_LINES.size():
+			note.call(difficulty_note(i))
+	if note.is_valid():
+		note.call(difficulty_note(1))
+		menu.picker.row_focused.connect(follow)
+	var idx: int = await menu.pick(DIFFICULTY_TITLE, difficulty_rows(not note.is_valid()), true, 1)
+	if note.is_valid() and menu.picker.row_focused.is_connected(follow):
+		menu.picker.row_focused.disconnect(follow)
+	return DIFFICULTY_CHOICES[idx] if idx >= 0 and idx < DIFFICULTY_CHOICES.size() else -1
+
+## The look screen: body, skin, hair and coat in one list over a live picture, plus Random.
+## A tap (or right) moves a row to the next choice, left to the one before.
+const LOOK_BODY: int = 0
+const LOOK_SKIN: int = 1
+const LOOK_HAIR: int = 2
+const LOOK_COAT: int = 3
+const LOOK_RANDOM: int = 4
+const LOOK_DONE: int = 5
+const LOOK_TITLE: String = "Your look"
+const LOOK_ROWS: Array[String] = ["Wayfarer: %s", "Skin: %s", "Hair: %s", "Coat: %s"]
+const BODY_NAMES: Array[String] = ["Boy", "Girl"]
+
+static func look_choices(part: int) -> Array[String]:
+	match part:
+		LOOK_SKIN:
+			return GameState.SKIN_NAMES
+		LOOK_HAIR:
+			return GameState.HAIR_NAMES
+		LOOK_COAT:
+			return GameState.COAT_NAMES
+	return BODY_NAMES
+
+static func look_rows(look: Array[int]) -> Array[Dictionary]:
+	var rows: Array[Dictionary] = []
+	for part: int in LOOK_ROWS.size():
+		rows.append({"text": LOOK_ROWS[part] % look_choices(part)[look[part]], "slider": true})
+	rows.append({"text": "Random"})
+	rows.append({"text": "Done"})
+	return rows
+
+## Moves [param part] of [param look] by [param dir] choices, wrapping around.
+static func step_look(look: Array[int], part: int, dir: int) -> void:
+	look[part] = posmod(look[part] + (dir if dir != 0 else 1), look_choices(part).size())
+
+static func random_look(look: Array[int], rng: RandomNumberGenerator) -> void:
+	for part: int in LOOK_ROWS.size():
+		look[part] = rng.randi_range(0, look_choices(part).size() - 1)
+
+## Returns true on Done, false on Back. [param look] holds the choices and is changed in place.
+## The picture goes into [param stage] (the title shows it over its art, so the list keeps its
+## rows), else above the list.
+static func look_screen(menu: MenuHost, look: Array[int], stage: Control = null) -> bool:
+	var rng := RandomNumberGenerator.new()
+	rng.randomize()
+	var focus: int = 0
+	while menu.is_inside_tree():
+		if stage != null:
+			for c: Node in stage.get_children():
+				c.queue_free()
+			stage.add_child(look_preview(look))
+			stage.visible = true
+		else:
+			menu.picker.set_header(look_preview(look))
+		var idx: int = await menu.pick(LOOK_TITLE, look_rows(look), true, focus)
+		if stage != null:
+			stage.visible = false
+		elif is_instance_valid(menu.picker):
+			menu.picker.set_header(null)
+		if idx < 0:
+			return false
+		focus = idx
+		if idx < LOOK_ROWS.size():
+			step_look(look, idx, menu.picker.last_dir)
+		elif idx == LOOK_RANDOM:
+			random_look(look, rng)
+		elif idx == LOOK_DONE:
+			return true
+	return false
+
+## The panel over the title art that holds the look picture (built once).
+var _look_panel: PanelContainer
+
+func _look_stage() -> Control:
+	if _look_panel == null:
+		_look_panel = PanelContainer.new()
+		_look_panel.name = "look_stage"
+		_look_panel.add_theme_stylebox_override("panel", UITheme.panel_style())
+		_look_panel.set_anchors_preset(Control.PRESET_CENTER_TOP)
+		_look_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+		_look_panel.offset_top = maxf(4.0, (_art_h - LOOK_FRAME * LOOK_SCALE) / 2.0 - 4.0)
+		_look_panel.visible = false
+		add_child(_look_panel)
+	return _look_panel
+
+## Size of one Wayfarer frame and how much bigger the preview draws it.
+const LOOK_FRAME: int = 16
+const LOOK_SCALE: int = 3
+## Sheet colours the tamer sheets are drawn in (same as shaders/tamer_palette.gdshader).
+const SRC_SKIN: Color = Color(0.949, 0.890, 0.761)
+const SRC_CLOTH: Color = Color(0.416, 0.259, 0.337)
+const HAIR_ROWS: int = 3
+
+## The Wayfarer facing down and to the side in the picked colours, side by side.
+static func look_preview(look: Array[int]) -> Control:
+	var box := HBoxContainer.new()
+	box.name = "look_preview"
+	box.alignment = BoxContainer.ALIGNMENT_CENTER
+	box.add_theme_constant_override("separation", 6)
+	for column: int in [0, 3]:
+		var r := TextureRect.new()
+		r.texture = look_texture(look, column)
+		r.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		r.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+		r.custom_minimum_size = Vector2(LOOK_FRAME * LOOK_SCALE, LOOK_FRAME * LOOK_SCALE)
+		box.add_child(r)
+	return box
+
+## One frame of the Wayfarer sheet ([param column]: 0 down, 1 up, 2 left, 3 right), recoloured
+## and scaled LOOK_SCALE times. Null when the sheet is missing.
+static func look_texture(look: Array[int], column: int) -> Texture2D:
+	var sheet: Texture2D = GridWalker.sheet_for(GameState.TAMER_SPRITES[look[LOOK_BODY]])
+	if sheet == null:
+		return null
+	var img: Image = sheet.get_image()
+	if img == null:
+		return null
+	if img.is_compressed():
+		img.decompress()
+	img = img.get_region(Rect2i(column * LOOK_FRAME, 0, LOOK_FRAME, LOOK_FRAME))
+	img.convert(Image.FORMAT_RGBA8)
+	var skin: Color = GameState.SKIN_TONES[look[LOOK_SKIN]]
+	var hair: Color = GameState.HAIR_COLORS[look[LOOK_HAIR]]
+	var coat: Color = GameState.TAMER_COLORS[look[LOOK_COAT]]
+	for y: int in LOOK_FRAME:
+		for x: int in LOOK_FRAME:
+			var c: Color = img.get_pixel(x, y)
+			if c.a <= 0.0:
+				continue
+			if _same(c, SRC_SKIN):
+				img.set_pixel(x, y, Color(skin, c.a))
+			elif _same(c, SRC_CLOTH):
+				img.set_pixel(x, y, Color(hair if y < HAIR_ROWS else coat, c.a))
+	img.resize(LOOK_FRAME * LOOK_SCALE, LOOK_FRAME * LOOK_SCALE, Image.INTERPOLATE_NEAREST)
+	return ImageTexture.create_from_image(img)
+
+static func _same(a: Color, b: Color) -> bool:
+	return Vector3(a.r - b.r, a.g - b.g, a.b - b.b).length() < 0.02
 
 ## The main save file was damaged and a backup was loaded (plan item 3609).
 func _say_if_recovered() -> void:

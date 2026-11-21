@@ -1,0 +1,15 @@
+{
+ "_comment": "Dutch texts for the German table c100_auto. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "Auto: %s": "Auto: %s",
+  "Wild only": "Alleen wild",
+  "All story battles": "Alle verhaalgevechten",
+  "Off, wild battles only, or every story battle. Wardens and rivals ask first.": "Uit, alleen wilde gevechten of alle verhaalgevechten. Wachters en rivalen vragen eerst.",
+  "A strong foe. Let Auto fight this battle?": "Een sterke tegenstander. Laat je Auto dit gevecht voeren?",
+  "Auto on": "Auto aan",
+  "Keep control": "Zelf vechten",
+  "Auto: picking who steps out.": "Auto: kiest wie erin gaat.",
+  "Auto stops: this kind is not in your Spirlog yet. Bond or fight on.": "Auto stopt: deze soort staat nog niet in je Spirlog. Bind hem of vecht verder.",
+  "Turn %d": "Beurt %d"
+ }
+}

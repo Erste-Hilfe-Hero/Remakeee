@@ -1,0 +1,32 @@
+{
+ "_comment": "Texts for the German table c100_start in this language. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "%s curls up at your feet. Let it stay?": "%sが足元で丸くなった。一緒にいてもらう？",
+  "%s stays with you! The other two slip off to the lake.": "%sが一緒に来てくれる！ほかの2匹は湖へ去っていった。",
+  "'Our cartographers have drawn and redrawn Veydal for a hundred years. Now the Hush: Spirlings near a Rift go quiet and forget their Wayfarers.'": "「地図職人たちは百年、Veydalを描いては描き直してきた。そして今、静寂。裂け目の近くのSpirlingは声を失い、旅人を忘れてしまう。」",
+  "Aldo: Good. The Rifts bring the Hush: Spirlings there go quiet.": "Aldo: よし。裂け目は静寂を呼ぶ。そこのSpirlingは声を失うんだ。",
+  "Aldo: Take this, and go see Kestra at the map house.": "Aldo: これを持って、地図の家のKestraに会いに行きなさい。",
+  "Aldo: The storm scattered Mirela's map book. Bring her pages home.": "Aldo: 嵐でMirelaの地図帳が散らばった。ページを持ち帰っておくれ。",
+  "Aldo: Three Spirlings came in from the storm. Go say hello!": "Aldo: 嵐から3匹のSpirlingが逃げこんできた。あいさつしておいで！",
+  "Coat: %s": "コート：%s",
+  "Gentle battles, more Growth.": "やさしい戦い、成長が多め。",
+  "Hair: %s": "髪：%s",
+  "I have a code": "コードを持っている",
+  "In the margin, in Aldo's hand: 'Your grandmother went in to map that Rift before you were born. She never came back.'": "余白にAldoの字で：「おまえが生まれる前、おばあさんはあの裂け目を地図にしに入っていった。そして帰らなかった。」",
+  "Keyboard": "キーボード",
+  "Last night a storm tore the sky. Rifts opened over Veydal.": "昨夜、嵐が空を裂いた。Veydalの上に裂け目が開いた。",
+  "OK": "OK",
+  "Online only: your journeys are safe on our server. No ads, no tracking.": "オンライン専用：旅はサーバーに安全に保存されます。広告も追跡もありません。",
+  "Random": "ランダム",
+  "Relaxed": "のんびり",
+  "Ring limits, smarter foes.": "リング上限、かしこい相手。",
+  "Skin: %s": "肌：%s",
+  "The journey as it is meant to be.": "本来の旅の手ごたえ。",
+  "Three small lights crossed the lake to the lighthouse lamp.": "3つの小さな光が、灯台のランプへと湖を渡ってきた。",
+  "Tough": "きびしい",
+  "Watch the marks light up, then press them in the same order.": "光るしるしを見て、同じ順番で押そう。",
+  "Watch the marks light up, then tap them in the same order.": "光るしるしを見て、同じ順番でタップしよう。",
+  "Wayfarer: %s": "旅人：%s",
+  "You can change it later in Settings.": "あとで設定から変えられます。"
+ }
+}

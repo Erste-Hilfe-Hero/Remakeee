@@ -400,11 +400,13 @@ func _draw() -> void:
 	var bar_w: float = w
 	var tag_right: float = w
 	if not status.is_empty():
-		var tag: String = StatusRules.tag(status)
 		var bold: bool = UITheme.high_contrast
-		var tw: float = font.get_string_size(tag, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + (1.0 if bold else 0.0)
 		# The status symbol (item 162) sits left of the letters, so the tag reads by shape too.
 		var sym_w: float = SYMBOL_SIZE + 1.0 if not StatusRules.symbol(status).is_empty() else 0.0
+		# The whole word ("Scorch") where it leaves the bar most of the plate; the three-letter
+		# tag only on a narrow plate (plan Chimora 100 item 57: "SCO", "JOL" said nothing).
+		var tag: String = status_text(status, w - sym_w - 3.0, func(t: String) -> float: return font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x)
+		var tw: float = font.get_string_size(tag, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + (1.0 if bold else 0.0)
 		var box := Rect2(roundf(w - tw - sym_w - 3.0), bar_y - 1.0, roundf(tw + sym_w + 3.0), asc + 1.0)
 		var badge: Color = EraBattleFeel.status_badge(era, status)
 		if badge.a > 0.0:
@@ -497,6 +499,17 @@ const SYMBOL_SIZE: int = 5
 static func draw_symbol(ci: CanvasItem, p_status: String, at: Vector2, col: Color) -> void:
 	for d: Array in StatusRules.symbol(p_status):
 		ci.draw_rect(Rect2(at + Vector2(int(d[0]), int(d[1])), Vector2(1, 1)), col)
+
+## Share of a plate the status word may take before the short tag stands in its place.
+const STATUS_WORD_SHARE: float = 0.45
+
+## The status as a word when it fits [param room] * STATUS_WORD_SHARE, else its short tag.
+## [param measure] gives a text's width in the plate's font.
+static func status_text(status: String, room: float, measure: Callable) -> String:
+	var word: String = Loc.t(StatusRules.label(status))
+	if not word.is_empty() and float(measure.call(word)) <= room * STATUS_WORD_SHARE:
+		return word
+	return StatusRules.tag(status)
 
 ## Letters on a status badge: light or ink, whichever stands out more on [param badge]
 ## (plain ink where there is no badge, Era I).

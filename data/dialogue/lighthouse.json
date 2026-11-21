@@ -1,12 +1,9 @@
 {
  "aldo": {
   "lines": [
-   "Aldo: Good. A cartographer shouldn't walk the valley alone.",
-   "Aldo: Every Rift that opens spreads the Hush. Spirlings near it go quiet and forget their Wayfarers.",
-   "Aldo: The last time the sky split like this, you weren't born yet. Your grandmother Mirela went in to map that Rift. She never came back.",
-   "Aldo: Her map book was up in the lamp room. The storm tore it apart and blew the pages across the valley.",
-   "Aldo: The cartographers will need fresh maps. Take this, and go see Kestra at the map house.",
-   "Aldo: And {name}... if you find any of Mirela's pages out there, bring them home."
+   "Aldo: Good. The Rifts bring the Hush: Spirlings there go quiet.",
+   "Aldo: The storm scattered Mirela's map book. Bring her pages home.",
+   "Aldo: Take this, and go see Kestra at the map house."
   ],
   "after_flag": [
    {
@@ -53,10 +50,7 @@
  ],
  "morning": {
   "lines": [
-   "Aldo: {name}! You're awake at last.",
-   "Aldo: Three little Spirlings came in from the storm last night. They followed the lamp across the lake.",
-   "Aldo: They're still huddled by the lamp stairs. One of them keeps looking at you.",
-   "Aldo: Go on. Kneel down and say hello."
+   "Aldo: Three Spirlings came in from the storm. Go say hello!"
   ],
   "action": "choose_starter"
  },

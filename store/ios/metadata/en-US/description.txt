@@ -1,4 +1,11 @@
-Chimora is a turn-based role-playing game in retro pixel style, and a little darker than it looks. As a Wayfarer you set out from a lighthouse on the coast of Veydal, choose your first partner and follow Mirela's map book through four regions. Rifts are tearing open everywhere, and only you can seal them again. Everyone else just wants something from you.
+Win over 497 monsters, uncover a dark and funny story, and plan every turn. Chimora is a monster taming RPG in retro pixel art, and a little darker than it looks.
+• 497 Spirlings to win over with the echo call, plus rare Gleam forms in the wild
+• Tactical turn-based battles with eight elements and Wardens with several phases
+• Pixel art that grows up across five eras, from monochrome to full color
+• Online game: Chimora needs an internet connection
+
+THE HUSH OF VEYDAL
+As a Wayfarer you set out from a lighthouse on the coast of Veydal, choose your first partner and follow Mirela's map book through four regions. Rifts are tearing open everywhere, and only you can seal them again. Everyone else just wants something from you.
 
 TRUST, NOT CAPTURE
 Wild Spirlings are never caught. You win their trust with the echo call: the Spirling calls a sequence, you answer it. Listen well and you gain a friend.
@@ -17,7 +24,7 @@ A STORY WITH TEETH
 • Lore quests for six legendaries and side stories in every act, good for dozens of hours
 
 A WORLD THAT CHANGES
-• Over 280 Spirlings, 70 of their own in every act, and rare Gleam forms in the wild
+• 497 Spirlings, 70 of their own in every act and every region after the story, and rare Gleam forms in the wild
 • Your lead Spirling walks behind you and remembers how you treat it
 • Day and night, festivals, hidden paths, Wayfarer Gear that opens new places, and a wildlife park run by smugglers
 • A claimable hollow, a daily funeral show and a black-market informant who sells hidden gifts
@@ -37,7 +44,7 @@ TOGETHER ONLINE
 
 PLAYABLE YOUR WAY
 • Screen reader support: menus, battle strips, arts and the battle log are read out
-• Large text, high contrast and shapes for colour-blind players
+• Large text, high contrast and shapes for color-blind players
 • Reduced motion, no flashing effects, adjustable screen shake and vibration
 • Captions for sounds and every cry, mono sound and a volume per channel
 • Calm bonding with no time limit, and offline battles always wait for you

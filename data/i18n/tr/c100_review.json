@@ -1,0 +1,8 @@
+{
+ "_comment": "Turkish texts for the German table c100_review. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "Start offline": "Çevrimdışı başla",
+  "A new journey can start offline. The prologue goes online at its save point.": "Yeni bir yolculuk çevrimdışı başlayabilir. Giriş bölümü kayıt noktasında çevrimiçi olur.",
+  "Offline: prologue only": "Çevrimdışı: yalnızca giriş bölümü"
+ }
+}

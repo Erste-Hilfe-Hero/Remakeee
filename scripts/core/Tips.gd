@@ -120,6 +120,20 @@ static func flag(id: String) -> String:
 static func pending(id: String) -> bool:
 	return (GameState.tips_enabled or id in ALWAYS) and LINES.has(id) and not GameState.has_flag(flag(id))
 
+## The one tip a battle starts with (Chimora 100 item 31): the first battle shows only the
+## Energy tip; bonding and battles with several Spirlings explain themselves in a later battle
+## (or when Bond is picked), one tip per battle start. "" when none is pending.
+static func battle_start_tip(wild: bool, multi: bool) -> String:
+	var ids: Array[String] = ["battle"]
+	if multi:
+		ids.append("multi")
+	if wild:
+		ids.append("bond")
+	for id: String in ids:
+		if pending(id):
+			return id
+	return ""
+
 ## The lines for [param id] if it should show now (and marks it seen), else [].
 static func take(id: String) -> Array[String]:
 	var out: Array[String] = []

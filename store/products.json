@@ -1533,7 +1533,7 @@
    "desc_en": "Adds the Fast text speed: talks and battle lines appear at once. Permanent.",
    "desc_de": "Schaltet das schnelle Texttempo frei: Gespräche und Kampfzeilen erscheinen sofort. Dauerhaft.",
    "family_shareable": false,
-   "ready": true
+   "ready": false
   },
   {
    "product_id": "de.chimora.game.unlock.retro_filter",

@@ -75,6 +75,17 @@ var _auto_button: Button
 var _goal_label: Label
 var _rule_banner: RuleBanner
 var _auto_ai := BattleAI.new(1)
+## Which Auto this battle offers (BattleComfort.auto_kind): "wild", "wayfarer", "boss" or "off".
+## Overworld.start_battle sets it; every other battle (live duels, tests) keeps "off".
+var auto_kind: String = "off"
+## Auto is on in this battle (the tab at the right edge; plan Chimora 100, items 15-22).
+var _auto_on: bool = false
+## A boss battle asked once whether Auto may fight it (item 19).
+var _auto_asked: bool = false
+## Auto handed a bond chance back once this battle (item 21).
+var _auto_yielded: bool = false
+## Auto picked at least one order or replacement in this battle.
+var auto_used: bool = false
 var _log_button: Button
 var _log_panel: PanelContainer
 var _log_label: Label
@@ -119,7 +130,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_ff_button.pressed.emit()
 	elif event.is_action_pressed(GameState.AUTO_ACTION) and _auto_button.visible:
 		get_viewport().set_input_as_handled()
-		_auto_button.button_pressed = not _auto_button.button_pressed
+		_auto_button.pressed.emit()
 
 func _enter_tree() -> void:
 	Juice.in_battle = true
@@ -157,15 +168,26 @@ func _refresh_goal() -> void:
 		return
 	if _goal_label != null and not model.has_meta("goal_tracker") and show_turns(model):
 		# Wayfarer and boss battles count the turns top left (KAMPF_PLAN item 5).
-		_goal_label.text = Loc.t("T%d") % (model.turn + 1)
+		_goal_label.text = _turn_text(model.turn + 1)
 		_goal_label.visible = not model.is_finished()
 		return
 	if _goal_label == null or not model.has_meta("goal_tracker") or not GameState.bonus_goals:
 		return
 	var t: BattleGoals.Tracker = model.get_meta("goal_tracker")
 	var mark: String = ["✗", "", "✓"][t.status() + 1]
-	_goal_label.text = (Loc.t("T%d") % (t.turns() + 1)) + ("" if mark.is_empty() else " " + mark)
+	_goal_label.text = _turn_text(t.turns() + 1, "" if mark.is_empty() else " " + mark)
 	_goal_label.visible = true
+
+## The turn count "Turn 3" (plan Chimora 100 item 57: "T1", "R1", "X1" said nothing); the short
+## "T3" only where the word does not fit (the narrow formation band).
+func _turn_text(n: int, tail: String = "") -> String:
+	var long: String = Loc.t("Turn %d") % n + tail
+	var f: Font = _goal_label.get_theme_font("font")
+	var fs: int = _goal_label.get_theme_font_size("font_size")
+	var room: float = _hud.goal_w if _hud != null else 0.0
+	if room > 0.0 and f.get_string_size(long, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x <= room:
+		return long
+	return Loc.t("T%d") % n + tail
 
 ## True for the battles that show the turn count without a bonus goal: Wayfarers and bosses.
 static func show_turns(m: BattleModel) -> bool:
@@ -251,13 +273,10 @@ func _build() -> void:
 		_apply_speed())
 	_field.add_child(_ff_button)
 	_auto_button = Button.new()
-	_auto_button.text = "Auto"
-	_auto_button.toggle_mode = true
+	_auto_button.name = "auto_tab"
+	_auto_button.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	_auto_button.focus_mode = Control.FOCUS_NONE
-	_auto_button.button_pressed = GameState.auto_battle
-	_auto_button.toggled.connect(func(on: bool) -> void:
-		GameState.auto_battle = on
-		_apply_speed())
+	_auto_button.pressed.connect(_on_auto_tab)
 	_auto_button.visible = false
 	_field.add_child(_auto_button)
 	# Turn count with the bonus goal mark (plan area 2, item 762); only shown when a goal is on.
@@ -648,7 +667,36 @@ func _point_pin(side: int, slot: int, filled: bool) -> void:
 	_pin.point_at(Rect2(sp.position, sp.size))
 
 func _auto_active() -> bool:
-	return GameState.auto_battle and model != null and model.is_wild and BattleComfort.runs(_away, _paused)
+	return _auto_on and auto_kind != "off" and model != null and BattleComfort.runs(_away, _paused)
+
+## The Auto tab was tapped (or Y / R pressed). A boss battle asks once before Auto takes over;
+## a wild battle keeps the choice for the next ones. Switched on while the menu waits, Auto
+## picks this order at once.
+func _on_auto_tab() -> void:
+	if auto_kind == "off" or model == null or model.is_finished() or _picker.visible:
+		return
+	var on: bool = not _auto_on
+	if on and auto_kind == "boss" and not _auto_asked:
+		_auto_asked = true
+		_paused = true
+		_apply_speed()
+		var k: int = await _picker.pick(Loc.t("A strong foe. Let Auto fight this battle?"),
+			[{"text": Loc.t("Auto on")}, {"text": Loc.t("Keep control")}] as Array[Dictionary])
+		_paused = false
+		_apply_speed()
+		if k != 0:
+			return
+	set_auto(on)
+	GameState.auto_mode = BattleComfort.auto_mode_after_tap(auto_kind, GameState.auto_mode, on)
+	if on and _waiting_orders:
+		_menu.chosen.emit(BattleAction.Kind.REST, BattleComfort.AUTO_PICK)
+
+## Turns Auto on or off for this battle and shows it on the tab.
+func set_auto(on: bool) -> void:
+	_auto_on = on
+	if _hud != null:
+		_hud.dress_auto(on)
+	_apply_speed()
 
 ## True while the app is in the background (item 629): Auto and auto-advancing text wait.
 var _away: bool = false
@@ -696,7 +744,9 @@ func _run() -> void:
 	_menu.set_enabled(false)
 	_foe_strip.visible = false
 	_player_strip.visible = false
-	_auto_button.visible = model.is_wild
+	_auto_button.visible = auto_kind != "off"
+	_auto_ai = BattleAI.new(BattleComfort.auto_tier(auto_kind, GameState.difficulty))
+	set_auto(BattleComfort.auto_starts_on(auto_kind, GameState.auto_mode))
 	_weather.setup(BattleWeather.weather_of(model), EraManager.active_era())
 	_apply_speed()
 	Sound.music(Sound.battle_music(music_track))
@@ -715,14 +765,9 @@ func _run() -> void:
 	if model.is_wild and not model.bond_block.is_empty() and not model.has_meta("quick"):
 		await _text.show_text(Loc.t(model.bond_block))
 	_refresh_goal()
-	var tip_ids: Array[String] = ["battle"]
-	if model.is_wild:
-		tip_ids.append("bond")
-	if _multi:
-		tip_ids.append("multi")
-	for id: String in tip_ids:
-		for line: String in Tips.take(id):
-			await _text.show_text(line)
+	# One tip per battle start, the Energy tip first (Chimora 100 item 31).
+	for line: String in Tips.take(Tips.battle_start_tip(model.is_wild, _multi)):
+		await _text.show_text(line)
 	_replaying = not replay_inputs.is_empty()
 	if resume:
 		_apply_speed()
@@ -752,7 +797,9 @@ func _run() -> void:
 			continue
 		if model.needs_player_switch():
 			_point_pin(BattleModel.Side.PLAYER, model.switch_slot(), false)
-			var idx: int = await _pick_party("Who steps out?", false, model.switch_slot())
+			var idx: int = await _auto_replacement()
+			if idx < 0:
+				idx = await _pick_party("Who steps out?", false, model.switch_slot())
 			_pin.visible = false
 			inputs.append(BattleReplay.switch_to_dict(idx))
 			await _play(model.submit_switch(idx))
@@ -869,6 +916,29 @@ func _offer_shift() -> void:
 	inputs.append(BattleReplay.shift_to_dict(idx))
 	await _play(model.submit_shift(idx))
 
+## Auto picks who steps out after a faint (item 21): the AI's best matchup, after the usual
+## pause so the tab can still be tapped. -1 when Auto is off (the player picks).
+func _auto_replacement() -> int:
+	if not _auto_active():
+		return -1
+	_text.show_prompt(Loc.t("Auto: picking who steps out."))
+	await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
+	if not _auto_active():
+		return -1
+	var idx: int = _auto_ai.choose_replacement(model, BattleModel.Side.PLAYER, model.switch_slot())
+	if idx >= 0:
+		auto_used = true
+	return idx
+
+## Auto hands the battle back once when a kind the Spirlog has not bonded yet could be called
+## (item 21), so a new Spirling is never fought down unasked.
+func _auto_hands_back() -> void:
+	if not _auto_active() or _auto_yielded or not BattleComfort.auto_yields_bond(model, GameState.spirlog):
+		return
+	_auto_yielded = true
+	set_auto(false)
+	await _text.show_text(Loc.t("Auto stops: this kind is not in your Spirlog yet. Bond or fight on."))
+
 ## Giving up a Wayfarer battle (item 8), after a yes. It counts as a loss.
 func _ask_forfeit() -> void:
 	if await _picker.pick("Give up? It counts as a loss.", [{"text": "Give up"}, {"text": "Fight on"}] as Array[Dictionary]) != 0:
@@ -883,10 +953,12 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 		return BattleAction.make_rest(BattleModel.Side.PLAYER, slot)
 	_focus(BattleModel.Side.PLAYER, slot)
 	_point_pin(BattleModel.Side.PLAYER, slot, false)
+	await _auto_hands_back()
 	if _auto_active():
 		_text.show_prompt("Auto: %s picks an art." % me.display_name())
 		await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
 		if _auto_active():
+			auto_used = true
 			return _auto_ai.choose(model, BattleModel.Side.PLAYER, slot)
 	# In a multi battle the acting order by Pace stands under the orders (KAMPF_PLAN_1000 389).
 	var pace: String = MultiRules.pace_line(model) if _multi else ""
@@ -915,6 +987,9 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 	if index == BattleComfort.UNDO:
 		_undo_asked = true
 		return null
+	if index == BattleComfort.AUTO_PICK:
+		auto_used = true
+		return _auto_ai.choose(model, BattleModel.Side.PLAYER, slot)
 	if index == TurnFlow.TIMED_OUT or index == TurnFlow.ALL_REST:
 		_rest_others = true
 		return BattleAction.make_rest(BattleModel.Side.PLAYER, slot)
@@ -1035,11 +1110,15 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 		var warn: String = TechniqueRules.switch_warning(model, BattleModel.Side.PLAYER, s) if i in candidates else ""
 		entries.append({"text": "%s R%d %d/%d%s%s" % [s.display_name(), s.level, s.hp, s.max_hp(), BattleInfo.switch_tag(s, foe), (" " + warn if not warn.is_empty() else "")], "disabled": not i in candidates,
 			"hint": BattleGuide.compare_line(s, model.active_spirling(BattleModel.Side.PLAYER, slot))})
+	# The command words must not show under the list's lower edge (plan Chimora 100 item 57).
+	_menu.modulate.a = 0.0
+	var idx: int = -1
 	while true:
-		var idx: int = await _picker.pick(title, entries, cancellable)
+		idx = await _picker.pick(title, entries, cancellable)
 		if idx < 0 or idx in candidates:
-			return idx
-	return -1
+			break
+	_menu.modulate.a = 1.0
+	return idx
 
 ## [param preset] (the item shortcut, Era IV on) uses that item on the active Spirling at once.
 func _pick_item(slot: int = 0, preset: String = "") -> BattleAction:
@@ -1108,7 +1187,10 @@ static func bond_charms(bag: Dictionary) -> Array[String]:
 	return out
 
 func _bond(slot: int = 0) -> BattleAction:
-	# Steps 3 and 4 of the bonding tutorial come when they are needed, not at battle start.
+	# The bonding tutorial comes when it is needed: steps 1 and 2 if no battle start showed them
+	# yet (Chimora 100 item 31), then steps 3 and 4.
+	for line: String in Tips.take("bond"):
+		await _text.show_text(line)
 	for line: String in Tips.take(Tips.bond_how_id()):
 		await _text.show_text(line)
 	var charm: String = ""
@@ -1894,7 +1976,10 @@ func _more_menu(title: String = "More") -> void:
 	_paused = true
 	_apply_speed()
 	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER, 0)
-	var pages: Array[String] = BattleComfort.more_pages(title)
+	# Giving up only while orders are asked for, for a Spirling of our own (item 43).
+	var forfeit: bool = _waiting_orders and TurnFlow.can_forfeit(model) and not model.is_partner_slot(BattleModel.Side.PLAYER, _menu._slot)
+	var pages: Array[String] = BattleComfort.more_pages(title, forfeit)
+	var give_up: bool = false
 	while true:
 		var rows: Array[Dictionary] = []
 		for p: String in pages:
@@ -1919,8 +2004,14 @@ func _more_menu(title: String = "More") -> void:
 				await _battle_settings()
 			"Resume":
 				break
+			"Give up":
+				give_up = true
+				break
 	_paused = false
 	_apply_speed()
+	if give_up and _waiting_orders:
+		# The order's RUN asks "Give up? It counts as a loss." first (_ask_forfeit).
+		_menu.chosen.emit(BattleAction.Kind.RUN, -1)
 
 ## Shows [param rows] until the player backs out; a row's hint is its explanation.
 func _show_rows(title: String, rows: Array[Dictionary]) -> void:

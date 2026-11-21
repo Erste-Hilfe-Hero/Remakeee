@@ -1,0 +1,15 @@
+{
+ "_comment": "Japanese texts for the German table c100_auto. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "Auto: %s": "自動：%s",
+  "Wild only": "野生のみ",
+  "All story battles": "物語の全バトル",
+  "Off, wild battles only, or every story battle. Wardens and rivals ask first.": "オフ、野生のバトルのみ、または物語の全バトル。番人とライバルは先に確認します。",
+  "A strong foe. Let Auto fight this battle?": "強敵です。このバトルを自動に任せますか？",
+  "Auto on": "自動オン",
+  "Keep control": "自分で戦う",
+  "Auto: picking who steps out.": "自動：次に出る仲間を選んでいます。",
+  "Auto stops: this kind is not in your Spirlog yet. Bond or fight on.": "自動を止めました：この種はまだSpirlogにいません。絆を結ぶか戦い続けましょう。",
+  "Turn %d": "%dターン"
+ }
+}

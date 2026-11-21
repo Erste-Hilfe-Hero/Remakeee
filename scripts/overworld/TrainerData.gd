@@ -316,6 +316,8 @@ static func battle_info(def: Dictionary, team: Array[Spirling], difficulty_ai: i
 		"wild": is_wild_horde(def),
 		"profile": profile_for(def, difficulty),
 		"profile_tune": profile_tune(def, difficulty),
+		# A story battle: Auto may fight it (BattleComfort.auto_kind, plan Chimora 100 item 15).
+		"story": true,
 	}
 	# Items 523-525: a Wayfarer with its own tactic plays it (its own "profile_tune" wins).
 	var theme_tune: Dictionary = WayfarerThemes.tune(def)

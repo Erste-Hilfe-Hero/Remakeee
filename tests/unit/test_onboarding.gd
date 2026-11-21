@@ -38,10 +38,15 @@ func test_no_tip_is_a_wall_of_text() -> void:
 			assert_between(Tips.lines_of(id, touch).size(), 1, Tips.MAX_LINES, id)
 		assert_true(Tips.TOPICS.has(id), id + " is in the Guide")
 
+## Lowered on purpose (Chimora 100 item 31, owner wish): the first battle opens with the Energy
+## tip only (2 lines, was 5 with bonding steps 1 and 2); bonding explains itself in the next wild
+## battle or when Bond is picked.
+const FIRST_BATTLE_TIP_LINES: int = 2
+
 func test_first_wild_battle_starts_with_few_lines() -> void:
-	# Before the first order: the Energy tip and bonding steps 1 and 2 only.
-	var n: int = Tips.take("battle").size() + Tips.take("bond").size()
-	assert_lte(n, 5)
+	var n: int = Tips.take(Tips.battle_start_tip(true, false)).size()
+	assert_lte(n, FIRST_BATTLE_TIP_LINES)
+	assert_true(Tips.pending("bond"), "bonding waits")
 	var start: String = "\n".join(Tips.lines_of("bond"))
 	assert_false(start.contains("step 3"), "steps 3 and 4 wait until Bond is picked")
 
@@ -122,7 +127,7 @@ func test_partner_rows_have_a_hint_each() -> void:
 
 func test_new_texts_have_german_and_fit_the_rows() -> void:
 	var texts: Array[String] = [Overworld.STARTER_TITLE, FirstSteps.DONE_LINE, "First steps",
-		PauseMenu.RESET_TIPS_ROW, PauseMenu.RESET_TIPS_DONE, TitleScreen.FIRST_START_HINT]
+		PauseMenu.RESET_TIPS_ROW, PauseMenu.RESET_TIPS_DONE, TitleScreen.FIRST_START_HINT, TitleScreen.HAVE_CODE]
 	texts.append_array(Overworld.STARTER_HINTS.values())
 	for s: Array in FirstSteps.STEPS:
 		texts.append(str(s[1]))

@@ -1,0 +1,32 @@
+{
+ "_comment": "Texts for the German table c100_start in this language. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "%s curls up at your feet. Let it stay?": "%s蜷縮在你腳邊。讓牠留下嗎？",
+  "%s stays with you! The other two slip off to the lake.": "%s決定留在你身邊！另外兩隻溜向了湖邊。",
+  "'Our cartographers have drawn and redrawn Veydal for a hundred years. Now the Hush: Spirlings near a Rift go quiet and forget their Wayfarers.'": "「我們的製圖師百年來一遍遍描繪Veydal。如今是沉寂：裂隙附近的Spirling變得沉默，忘記自己的旅人。」",
+  "Aldo: Good. The Rifts bring the Hush: Spirlings there go quiet.": "Aldo：好。裂隙帶來沉寂：那裡的Spirling會變得沉默。",
+  "Aldo: Take this, and go see Kestra at the map house.": "Aldo：拿著這個，去地圖館找Kestra吧。",
+  "Aldo: The storm scattered Mirela's map book. Bring her pages home.": "Aldo：暴風雨吹散了Mirela的地圖冊。把她的書頁帶回家。",
+  "Aldo: Three Spirlings came in from the storm. Go say hello!": "Aldo：三隻Spirling躲進來避暴風雨。去打個招呼吧！",
+  "Coat: %s": "外套：%s",
+  "Gentle battles, more Growth.": "溫和的戰鬥，更多成長。",
+  "Hair: %s": "頭髮：%s",
+  "I have a code": "我有轉移代碼",
+  "In the margin, in Aldo's hand: 'Your grandmother went in to map that Rift before you were born. She never came back.'": "頁邊是Aldo的字跡：「你出生前，你的祖母進入那道裂隙去繪製地圖。她再也沒有回來。」",
+  "Keyboard": "鍵盤",
+  "Last night a storm tore the sky. Rifts opened over Veydal.": "昨夜，暴風雨撕裂了天空。Veydal上空裂隙打開了。",
+  "OK": "好",
+  "Online only: your journeys are safe on our server. No ads, no tracking.": "僅限線上：你的旅程安全地存在我們的伺服器上。沒有廣告，沒有追蹤。",
+  "Random": "隨機",
+  "Relaxed": "輕鬆",
+  "Ring limits, smarter foes.": "環數上限，更聰明的對手。",
+  "Skin: %s": "膚色：%s",
+  "The journey as it is meant to be.": "原本設計的旅程。",
+  "Three small lights crossed the lake to the lighthouse lamp.": "三個小小的光點渡過湖面，來到燈塔的燈下。",
+  "Tough": "困難",
+  "Watch the marks light up, then press them in the same order.": "看哪些標記亮起，然後照同樣的順序按下。",
+  "Watch the marks light up, then tap them in the same order.": "看哪些標記亮起，然後照同樣的順序點擊。",
+  "Wayfarer: %s": "旅人：%s",
+  "You can change it later in Settings.": "之後可以在設定裡更改。"
+ }
+}

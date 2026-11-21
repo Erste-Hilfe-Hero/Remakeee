@@ -1,7 +1,7 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 36,
+ "catalog_version": 37,
  "advantage_values": {
   "_comment": "Pay-to-win step 1 (Ali, 10 Nov 2026). Seal tiers in percent (ShopEffects.seal_percent), crystal_cap = most crystal points per stat (twice Spirling.SPARK_MAX), growth_plus = extra growth of the Growth Seal. Step 3: ring_cap_plus = extra Rings over the Ring cap with the Ring Cap Seal. Step 4: crit_seal = extra crit chance in percentage points per tier, status_ward = percent chance a foe's status fails on your side, start_shield = percent less damage on the first hit your lead takes in each battle. Step 5: bond_edge = percentage points added to the bond timing score per Bond Head Start tier. Step 6: storage_wing = extra storage boxes owned after each Storage Wing step (each box holds 30).",
   "power_seal": [
@@ -3020,7 +3020,7 @@
    "league_scope": "none",
    "duration": "permanent",
    "min_band": 13,
-   "ready": true
+   "ready": false
   },
   {
    "id": "rg_retro_filter",

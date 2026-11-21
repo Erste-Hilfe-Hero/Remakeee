@@ -1,0 +1,12 @@
+{
+ "_comment": "German texts from tools/i18n/de_c100_review.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [
+  "ChimoraReview",
+  "ChimoraStoreKit"
+ ],
+ "strings": {
+  "A new journey can start offline. The prologue goes online at its save point.": "Eine neue Reise kann offline beginnen. Der Prolog geht an seinem Speicherpunkt online.",
+  "Offline: prologue only": "Offline: nur der Prolog",
+  "Start offline": "Offline starten"
+ }
+}
