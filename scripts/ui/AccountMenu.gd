@@ -70,7 +70,11 @@ static func _rules(menu: MenuHost) -> void:
 		var idx: int = await menu.pick_strings(RULES_ROW, ["Online rules", "Privacy"] as Array[String])
 		if idx < 0:
 			return
-		await menu.info((ONLINE_RULES_TRADE if Online.flag_on("trade_spirling") else ONLINE_RULES) if idx == 0 else PRIVACY_NOTE)
+		if idx == 0:
+			await menu.info(ONLINE_RULES_TRADE if Online.flag_on("trade_spirling") else ONLINE_RULES)
+		else:
+			# Plan Chimora 100, item 76: the opt-in phone notes stay on the phone.
+			await menu.info(Loc.t(PRIVACY_NOTE) + "\n\n" + Loc.t(LocalNotify.PRIVACY_LINE))
 
 ## Everything the server keeps about this account as one JSON file (plan area 7, item 2972;
 ## GDPR Art. 15 and 20). The browser version downloads it, phones save it to the documents folder.

@@ -36,10 +36,11 @@ out=addons/chimora_storekit/bin
 fw="$out/ChimoraStoreKit.framework"
 rm -rf "$out" && mkdir -p "$fw"
 xcrun -sdk iphoneos swiftc -target "arm64-apple-ios$MIN_IOS" -sdk "$SDK" -swift-version 5 -O -emit-library \
-	-module-name ChimoraStoreKit "$src/ChimoraStoreKit.swift" "$src/ChimoraLinks.swift" "$work/chimora_storekit.o" \
-	-Xlinker "$lib" -lc++ -framework StoreKit -framework UIKit \
+	-module-name ChimoraStoreKit "$src/ChimoraStoreKit.swift" "$src/ChimoraLinks.swift" "$src/ChimoraNotify.swift" "$work/chimora_storekit.o" \
+	-Xlinker "$lib" -lc++ -framework StoreKit -framework UIKit -framework UserNotifications \
 	-Xlinker -install_name -Xlinker "@rpath/ChimoraStoreKit.framework/ChimoraStoreKit" -o "$fw/ChimoraStoreKit"
 nm -gU "$fw/ChimoraStoreKit" | grep -q chimora_storekit_init || { echo "entry symbol missing"; exit 1; }
+nm -gU "$fw/ChimoraStoreKit" | grep -q ck_notify_schedule || { echo "notification symbols missing"; exit 1; }
 cat > "$fw/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">

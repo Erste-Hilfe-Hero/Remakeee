@@ -1,0 +1,12 @@
+{
+ "_comment": "Korean texts for the German table c100_notify. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "%s is back from the roaming trip.": "%s이(가) 나들이에서 돌아왔다.",
+  "A new Find of the Day is waiting in Veydal.": "Veydal에서 새로운 오늘의 발견이 기다리고 있다.",
+  "Chimora can send a short note on this phone when a roaming trip is over or a new Find of the Day is waiting. Never at night, at most one a day each. You can turn it off any time in Settings.": "나들이가 끝나거나 새로운 오늘의 발견이 기다릴 때 Chimora가 이 휴대폰에 짧은 알림을 보낼 수 있습니다. 밤에는 보내지 않고, 종류마다 하루에 한 번까지입니다. 설정에서 언제든 끌 수 있습니다.",
+  "Turn on notifications?": "알림을 켤까요?",
+  "Notifications are off unless you turn them on. They are planned on this phone only; nothing about them is sent anywhere.": "알림은 직접 켜기 전까지 꺼져 있습니다. 이 휴대폰 안에서만 예약되며, 어디로도 아무것도 보내지 않습니다.",
+  "Notifications: %s": "알림: %s",
+  "A note on this phone when a trip is over or a new Find of the Day waits. If the phone blocks it, allow it in the phone settings.": "나들이가 끝나거나 새로운 오늘의 발견이 기다릴 때 이 휴대폰에 알림. 휴대폰이 막으면 휴대폰 설정에서 허용하세요."
+ }
+}

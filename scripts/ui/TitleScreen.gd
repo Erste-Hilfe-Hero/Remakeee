@@ -486,7 +486,7 @@ static func privacy_note(menu: MenuHost, note: Callable = Callable()) -> void:
 			note.call(PRIVACY_SHORT)
 		if await menu.pick(PRIVACY_TITLE, privacy_rows(not note.is_valid()), false) != 1:
 			return
-		await menu.info(AccountMenu.PRIVACY_NOTE)
+		await menu.info(Loc.t(AccountMenu.PRIVACY_NOTE) + "\n\n" + Loc.t(LocalNotify.PRIVACY_LINE))
 
 ## Android back (item 1787): on the main list it asks to quit, otherwise it works like B.
 func _notification(what: int) -> void:

@@ -1,0 +1,12 @@
+{
+ "_comment": "Japanese texts for the German table c100_notify. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "%s is back from the roaming trip.": "%sが散歩から帰ってきた。",
+  "A new Find of the Day is waiting in Veydal.": "Veydalで新しい「今日のめぐり合い」が待っている。",
+  "Chimora can send a short note on this phone when a roaming trip is over or a new Find of the Day is waiting. Never at night, at most one a day each. You can turn it off any time in Settings.": "散歩が終わったときや新しい「今日のめぐり合い」が待っているとき、Chimoraがこの端末に短いお知らせを送れます。夜は送らず、種類ごとに1日1回まで。設定からいつでもオフにできます。",
+  "Turn on notifications?": "通知をオンにしますか？",
+  "Notifications are off unless you turn them on. They are planned on this phone only; nothing about them is sent anywhere.": "通知はオンにしない限りオフのままです。この端末の中だけで予約され、どこにも何も送られません。",
+  "Notifications: %s": "通知：%s",
+  "A note on this phone when a trip is over or a new Find of the Day waits. If the phone blocks it, allow it in the phone settings.": "散歩が終わったときや新しい「今日のめぐり合い」が待っているときに、この端末にお知らせ。端末がブロックしたら端末の設定で許可してください。"
+ }
+}

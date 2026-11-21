@@ -130,6 +130,9 @@ jobs:
       # Google Play In-App Review (plan Chimora 100, item 75): built for exactly this engine version.
       - name: Build review plugin
         run: tools/build_review_plugin.sh
+      # Opt-in local notifications (plan Chimora 100, item 76): built for exactly this engine version.
+      - name: Build notify plugin
+        run: tools/build_notify_plugin.sh
       - name: Create throwaway debug keystore
         run: |
           keytool -genkeypair -v -keystore "$RUNNER_TEMP/debug.keystore" -storepass android \
@@ -162,6 +165,14 @@ jobs:
         run: |
           unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'de/chimora/review/ChimoraReview'
           unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'com/google/android/play/core/review/ReviewManager'
+      - name: Notify plugin is in the APK, with no exact-alarm or boot permission
+        run: |
+          unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'de/chimora/notify/ChimoraNotify'
+          perms="$("$(dirname "$(tools/find_zipalign.sh)")/aapt2" dump permissions build/android/Chimora-debug.apk)"
+          echo "$perms" | grep -q 'android.permission.POST_NOTIFICATIONS'
+          if echo "$perms" | grep -E -q 'SCHEDULE_EXACT_ALARM|USE_EXACT_ALARM|RECEIVE_BOOT_COMPLETED'; then
+            echo "::error::local notifications must not need exact alarms or a boot receiver"; exit 1
+          fi
       # The itch.io flavour installs a downloaded APK; only it may ask for REQUEST_INSTALL_PACKAGES.
       - name: Export itch.io APK (debug signed, permission check only)
         env:
@@ -285,6 +296,9 @@ jobs:
       # Google Play In-App Review (plan Chimora 100, item 75): built for exactly this engine version.
       - name: Build review plugin
         run: tools/build_review_plugin.sh
+      # Opt-in local notifications (plan Chimora 100, item 76): built for exactly this engine version.
+      - name: Build notify plugin
+        run: tools/build_notify_plugin.sh
       - name: Stamp version code (Play needs a higher code for every upload)
         run: |
           code=$((1000 + ${{ github.run_number }}))

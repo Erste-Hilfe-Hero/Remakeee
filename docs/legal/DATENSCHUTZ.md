@@ -125,6 +125,13 @@ Das Spiel speichert auf deinem Gerät eine Kopie des Spielstands, deine Einstell
 Das ist für den von dir gewünschten Dienst unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG) und braucht keine
 Einwilligung. Wir lesen keine Werbe-IDs (IDFA / Android-Werbe-ID) aus.
 
+Mitteilungen auf dem Handy (freiwillig, ab Werk aus): Wenn du sie im Spiel einschaltest und dein Gerät es
+erlaubt, plant das Spiel auf deinem Gerät kurze Hinweise, wenn ein Streifzug vorbei ist oder ein neuer Fund
+des Tages wartet (höchstens einer je Art und Tag, nie zwischen 21 und 9 Uhr). Sie werden nur auf dem Gerät
+geplant und angezeigt (lokale Mitteilungen). Es gibt keinen Push-Dienst, kein Geräte-Token, und es wird dafür
+nichts an uns oder Dritte gesendet. Ausschalten kannst du sie jederzeit unter Einstellungen > Spiel oder in den
+Einstellungen deines Geräts.
+
 ## 5. Empfänger
 
 - **Hosting:** Contabo GmbH, Aschauer Straße 32a, 81549 München, Deutschland <!-- Adresse beim Abschluss des AV-Vertrags prüfen -->.

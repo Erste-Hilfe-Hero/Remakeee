@@ -1,0 +1,12 @@
+{
+ "_comment": "Dutch texts for the German table c100_notify. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "%s is back from the roaming trip.": "%s is terug van de zwerftocht.",
+  "A new Find of the Day is waiting in Veydal.": "In Veydal wacht een nieuwe Vondst van de Dag.",
+  "Chimora can send a short note on this phone when a roaming trip is over or a new Find of the Day is waiting. Never at night, at most one a day each. You can turn it off any time in Settings.": "Chimora kan op deze telefoon een korte melding geven als een zwerftocht klaar is of een nieuwe Vondst van de Dag wacht. Nooit 's nachts, van elke soort hooguit één per dag. Je kunt het altijd uitzetten bij Instellingen.",
+  "Turn on notifications?": "Meldingen aanzetten?",
+  "Notifications are off unless you turn them on. They are planned on this phone only; nothing about them is sent anywhere.": "Meldingen staan uit tot je ze aanzet. Ze worden alleen op deze telefoon gepland; er wordt niets naartoe gestuurd.",
+  "Notifications: %s": "Meldingen: %s",
+  "A note on this phone when a trip is over or a new Find of the Day waits. If the phone blocks it, allow it in the phone settings.": "Een melding op deze telefoon als een zwerftocht klaar is of een nieuwe Vondst van de Dag wacht. Blokkeert de telefoon hem, sta hem dan toe in de telefooninstellingen."
+ }
+}

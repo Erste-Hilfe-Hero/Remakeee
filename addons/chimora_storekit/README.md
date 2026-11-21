@@ -8,3 +8,6 @@ StoreKit 2 for the App Store, as a GDExtension. Source: `plugins/chimora_storeki
 The game talks to it through `scripts/shop/AppleBillingStore.gd`.
 `request_review` shows the App Store's own rating sheet (`AppStore.requestReview(in:)`); `scripts/online/ReviewAsk.gd`
 decides when (plan Chimora 100, item 74).
+`notify_request_permission`, `notify_schedule` and `notify_cancel_all` (with the signal `notify_event`) are the opt-in
+local notifications of `scripts/core/LocalNotify.gd` (`ChimoraNotify.swift`, UNUserNotificationCenter; plan Chimora 100,
+item 76). They are scheduled on the phone only: no push server, no device token, nothing leaves the device.

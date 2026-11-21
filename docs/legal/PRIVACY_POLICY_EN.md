@@ -35,6 +35,12 @@ The game stores a copy of your save, your settings and the sign-in token on your
 necessary for the service you request (Sec. 25(2) no. 2 German TDDDG) and needs no consent. We do not read
 advertising identifiers (IDFA / Android Advertising ID).
 
+Notifications on your phone (optional, off by default): if you turn them on in the game and your device allows
+them, the game plans short notes on your device when a roaming trip is over or a new Find of the Day is waiting
+(at most one of each kind a day, never between 21:00 and 09:00). They are planned and shown on the device only
+(local notifications). There is no push service and no device token, and nothing about them is sent to us or
+anyone else. You can turn them off any time under Settings > Game or in your device settings.
+
 ## 5. Recipients
 
 - Hosting: Contabo GmbH, Aschauer Straße 32a, 81549 Munich, Germany <!-- check against the DPA -->. The

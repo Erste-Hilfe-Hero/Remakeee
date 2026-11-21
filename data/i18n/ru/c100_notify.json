@@ -1,0 +1,12 @@
+{
+ "_comment": "Russian texts for the German table c100_notify. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "%s is back from the roaming trip.": "%s вернулся с вылазки.",
+  "A new Find of the Day is waiting in Veydal.": "В Veydal ждёт новая находка дня.",
+  "Chimora can send a short note on this phone when a roaming trip is over or a new Find of the Day is waiting. Never at night, at most one a day each. You can turn it off any time in Settings.": "Chimora может прислать на этот телефон короткое уведомление, когда вылазка закончилась или ждёт новая находка дня. Никогда ночью, не больше одного в день каждого вида. Выключить можно в любой момент в Настройках.",
+  "Turn on notifications?": "Включить уведомления?",
+  "Notifications are off unless you turn them on. They are planned on this phone only; nothing about them is sent anywhere.": "Уведомления выключены, пока ты их не включишь. Они планируются только на этом телефоне; никуда ничего не отправляется.",
+  "Notifications: %s": "Уведомления: %s",
+  "A note on this phone when a trip is over or a new Find of the Day waits. If the phone blocks it, allow it in the phone settings.": "Уведомление на этом телефоне, когда вылазка закончилась или ждёт новая находка дня. Если телефон его блокирует, разреши в настройках телефона."
+ }
+}
