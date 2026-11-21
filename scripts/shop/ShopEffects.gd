@@ -36,8 +36,6 @@ static func apply_unlocks() -> void:
 		GameState.weather = true
 	if not owns_setting("wild_ward"):
 		GameState.wild_ward = false
-	if not owns_setting("fast_text") and GameState.text_speed == GameState.TextSpeed.FAST:
-		GameState.text_speed = GameState.TextSpeed.NORMAL
 
 ## Growth with the pass (+50 %, item 4625) times a running Growth Crystal (items 4345, 4346).
 const PASS_GROWTH: float = 1.5
