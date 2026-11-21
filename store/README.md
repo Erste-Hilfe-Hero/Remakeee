@@ -11,6 +11,7 @@ Everything the two store consoles ask for, in the folder layout of fastlane (`su
 | `android/<lang>/images/featureGraphic.png`, `icon.png` | 1024 x 500 feature graphic, 512 x 512 icon |
 | `android/app_access_de.txt` | Text for Play Console → App content → App access |
 | `ios/metadata/<lang>/*.txt` | Name, subtitle, description, keywords, promotional text, URLs, release notes |
+| `ios/in_app_events/<lang>/*.txt` | In-App Event card: name (30), short (50) and long description (120) |
 | `ios/screenshots/<lang>/N_iphone69.png` | 1320 x 2868 (6.9" iPhone, the one size Apple requires; smaller iPhones are scaled from it) |
 | `ios/review_information/notes.txt` | Notes for App Review |
 | `ios/iap_review.png` | 720 x 1280 picture of the shop, App Review needs one for every in-app purchase |
@@ -19,6 +20,22 @@ Everything the two store consoles ask for, in the folder layout of fastlane (`su
 Languages: all 14 of the game (Play folders like `ja-JP`, App Store folders like `ja`, pairs in
 `tools/release_check.py` TEXT_LANGS), each with its own texts and screenshots. The app is
 iPhone-only (`targeted_device_family=0`), so no iPad screenshots are needed.
+
+App Store locales: all 20 Chimora is listed in, the 14 game languages plus `en-GB`, `en-AU`, `en-CA`,
+`fr-CA`, `es-MX` and `pt-PT` (the game text there is pt-BR, the description says so). Each locale has its
+own name ("Chimora: " plus a genre phrase), subtitle with search words, keywords and promotional text
+(plan Chimora 100, items 83-85, 93, 95). Keyword rules: comma separated without spaces, no word that the
+name or subtitle already has, and no word twice in one storefront. Apple indexes some locales together,
+so these pairs carry disjoint words: `en-US` + `es-MX` (US, es-MX holds extra English terms), `en-CA` +
+`fr-CA` (Canada, fr-CA holds extra English terms), `en-GB` + `en-AU` (Australia; en-GB is also read in
+many EU storefronts). The pairs come from reported behaviour, not from Apple docs: test one unique word
+before relying on one. `python3 tools/store/listing_check.py` checks every limit and rule and runs in CI.
+
+App Store "Languages": Apple lists the languages from the `.lproj` folders in the app. Godot 4.7 writes
+`<lang>.lproj/InfoPlist.strings` only for locales that have a project translation, so `ios/lproj/<lang>.po`
+(one unused string each, listed in `internationalization/locale/translations`) marks the 13 non-English
+languages, `application/config/name_localized` keeps the home-screen name "Chimora" in each, and the iOS
+preset also lists them in `CFBundleLocalizations`. `tools/release_check.py` checks all three against `data/i18n`.
 
 Upload: Google Play by `play_store.mjs`, App Store Connect by `app_store.mjs` and `iap.mjs` in the
 lifekit workflow `chimora-store.yml` (commits `run:chimora-store-play`, `run:chimora-store-asc+iap`).

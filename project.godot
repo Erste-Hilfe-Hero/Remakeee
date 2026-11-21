@@ -2,6 +2,22 @@ config_version=5
 
 [application]
 config/name="Chimora"
+config/name_localized={
+"en": "Chimora",
+"de": "Chimora",
+"es": "Chimora",
+"fr": "Chimora",
+"it": "Chimora",
+"ja": "Chimora",
+"ko": "Chimora",
+"nl": "Chimora",
+"pl": "Chimora",
+"pt_BR": "Chimora",
+"ru": "Chimora",
+"tr": "Chimora",
+"zh_CN": "Chimora",
+"zh_TW": "Chimora"
+}
 config/icon="res://art/icon/icon_192.png"
 run/main_scene="res://scenes/ui/Title.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
@@ -42,6 +58,10 @@ renderer/rendering_method.mobile="gl_compatibility"
 textures/canvas_textures/default_texture_filter=0
 textures/vram_compression/import_etc2_astc=true
 2d/snap/snap_2d_transforms_to_pixel=true
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://ios/lproj/de.po", "res://ios/lproj/es.po", "res://ios/lproj/fr.po", "res://ios/lproj/it.po", "res://ios/lproj/ja.po", "res://ios/lproj/ko.po", "res://ios/lproj/nl.po", "res://ios/lproj/pl.po", "res://ios/lproj/pt_BR.po", "res://ios/lproj/ru.po", "res://ios/lproj/tr.po", "res://ios/lproj/zh_CN.po", "res://ios/lproj/zh_TW.po")
 
 [editor_plugins]
 
