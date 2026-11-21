@@ -49,7 +49,16 @@ class ListingCheck(unittest.TestCase):
             with open(os.path.join(tmp, "store/android/de-DE/short_description.txt"), "w", encoding="utf-8") as f:
                 f.write("Wie Temtem, nur dunkler.")
             os.remove(os.path.join(tmp, "store/ios/in_app_events/ko/name.txt"))
+            caps = os.path.join(tmp, "store/ios/screenshot_captions/")
+            with open(caps + "ja.txt", "w", encoding="utf-8") as f:
+                f.write("\n".join(["ok"] * 7 + ["Join our Discord"]))
+            with open(caps + "pl.txt", "w", encoding="utf-8") as f:
+                f.write("\n".join(["ok"] * 6))
+            os.remove(caps + "tr.txt")
             text = "\n".join(lc.check(tmp))
+            self.assertIn("ja.txt: 'Join our Discord': no prices and no Discord", text)
+            self.assertIn("pl.txt needs 8 non-empty lines", text)
+            self.assertIn("missing store/ios/screenshot_captions/tr.txt", text)
             self.assertIn("en-GB/subtitle.txt: use search words", text)
             self.assertIn("en-GB/promotional_text.txt has 171", text)
             self.assertIn("en-AU/keywords.txt: 'tamer' is already indexed through en-GB", text)
