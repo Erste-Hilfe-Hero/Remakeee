@@ -41,7 +41,11 @@ func _ready() -> void:
 	_era = EraMoments.title_era()
 	if EraManager.unlocked_era != _era or EraManager.retro_filter != 0:
 		EraManager.from_dict({"unlocked_era": _era})
-	_art_h = EraTitleArt.art_height(EraManager.RESOLUTION[_era].x)
+	# The picture takes the height the list and a save card in its own band leave (item 66).
+	var room_h: float = get_viewport_rect().size.y
+	if _used_slots() > 0 and EraSaveCard.fits_band(get_viewport_rect().size):
+		room_h -= EraSaveCard.height_for(EraManager.RESOLUTION[_era].x) + 2
+	_art_h = EraTitleArt.title_height(Vector2(EraManager.RESOLUTION[_era]), room_h, EraMenus.layout(_era))
 	var art := EraTitleArt.new()
 	art.era = _era
 	art.set_anchors_preset(Control.PRESET_TOP_WIDE)
@@ -54,7 +58,7 @@ func _ready() -> void:
 		# The save card, in the save's own era look: between the picture and the list where the
 		# screen has the room, else over the picture's lower edge while a slot list is open.
 		var card_h: int = EraSaveCard.height_for(EraManager.RESOLUTION[_era].x)
-		_card_band = EraSaveCard.fits_band(get_viewport_rect().size)
+		_card_band = EraSaveCard.fits_band(get_viewport_rect().size, _art_h)
 		_card = EraSaveCard.new()
 		_card.set_anchors_preset(Control.PRESET_TOP_WIDE)
 		_card.offset_left = 4

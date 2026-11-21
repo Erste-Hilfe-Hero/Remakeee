@@ -30,12 +30,16 @@ static func ascent_of(id: String) -> int:
 
 ## True if font [param id] draws [param ch] itself.
 static func has_glyph(id: String, ch: String) -> bool:
-	return ((EraFontGlyphs.FONTS.get(id, {}) as Dictionary).get("glyphs", {}) as Dictionary).has(ch)
+	return ((EraFontGlyphs.FONTS.get(id, {}) as Dictionary).get("glyphs", {}) as Dictionary).has(_own(ch))
+
+## The no-break space (Loc.glue) is drawn as the font's own space.
+static func _own(ch: String) -> String:
+	return " " if ch == Loc.NO_BREAK else ch
 
 ## The pixel rows of [param ch] in font [param id] ("#" = ink), empty when it has none. A bold
 ## font (data/era_text.json "bold") draws every stroke doubled, like the Era IV/V battle HUD.
 static func glyph(id: String, ch: String) -> Array:
-	var rows: Array = ((EraFontGlyphs.FONTS.get(id, {}) as Dictionary).get("glyphs", {}) as Dictionary).get(ch, [])
+	var rows: Array = ((EraFontGlyphs.FONTS.get(id, {}) as Dictionary).get("glyphs", {}) as Dictionary).get(_own(ch), [])
 	return PixelFont.embolden(rows) if is_bold(id) and not rows.is_empty() else rows
 
 ## True when font [param id] is drawn bold (data/era_text.json "bold": the Era IV/V font).
@@ -48,7 +52,7 @@ static func text_width(id: String, text: String) -> int:
 	var w: int = 0
 	for i: int in text.length():
 		var g: Array = glyph(id, text[i])
-		if text[i] == " ":
+		if _own(text[i]) == " ":
 			w += int(def.get("space", 3))
 		elif not g.is_empty():
 			w += str(g[0]).length() + GAP
@@ -69,6 +73,8 @@ static func _build(id: String) -> FontFile:
 	var chh: int = int(def.cell_h)
 	var ascent: int = int(def.ascent)
 	var chars: Array = glyphs.keys()
+	if glyphs.has(" "):
+		chars.append(Loc.NO_BREAK)
 	var pad: int = 1
 	var rows: int = int(ceil(chars.size() / float(COLS)))
 	var img := Image.create(COLS * (cw + pad), rows * (chh + pad), false, Image.FORMAT_LA8)
@@ -94,7 +100,7 @@ static func _build(id: String) -> FontFile:
 				if line[x] == "#":
 					img.set_pixel(gx + x, gy + y, Color(1, 1, 1, 1))
 		var code: int = ch.unicode_at(0)
-		if ch == " ":
+		if _own(ch) == " ":
 			w = int(def.space) - GAP
 		f.set_glyph_advance(0, base, code, Vector2(w + GAP, 0))
 		f.set_glyph_offset(0, size, code, Vector2(0, -ascent))

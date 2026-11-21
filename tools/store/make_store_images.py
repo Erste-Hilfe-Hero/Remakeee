@@ -176,7 +176,7 @@ def native(path: str) -> Image.Image:
 def _fonts(lang: str) -> tuple[ImageFont.FreeTypeFont, ImageFont.FreeTypeFont | None, int]:
     """Latin font, CJK font (or None) and the size both are drawn at."""
     if lang in CJK:
-        return ImageFont.truetype(FONT, 16), ImageFont.truetype(f"art/fonts/chimora_cjk_8px_{lang}.otf", 16), 16
+        return ImageFont.truetype(FONT, 16), ImageFont.truetype(f"art/fonts/chimora_cjk_10px_{lang}.otf", 16), 16
     return ImageFont.truetype(FONT, 12), None, 12
 
 

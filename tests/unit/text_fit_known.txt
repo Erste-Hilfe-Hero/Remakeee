@@ -1,0 +1,11 @@
+# Known text-fit problems that another plan item owns (tests/unit/test_text_fit_languages.gd).
+# One problem per line, exactly as the test prints it, then a TAB and the owner, e.g.
+#   era 1 de pause: cut off: Speichern & Ende<TAB>Chimora 100 item 41 (pause menu rows)
+# Listed problems show as pending; a listed problem that no longer happens fails the test,
+# so remove its line together with the fix. Never add a line to get a new problem green.
+
+# Plan Chimora 100, item 51 (start menu header: wraps, and becomes a tap-to-continue popup in de).
+era 1 de pause page 0: number alone on a line (0): Rowan   500 Münzen   0 / Fernstair   Festbänder 0 /  / (tippen zum Fortfahren)	Chimora 100 item 51 (PauseMenu.menu_title / MenuHost.short_title)
+era 1 en pause: number alone on a line (0): Fernstair   Ribbons 0	Chimora 100 item 51 (PauseMenu.menu_title / MenuHost.short_title)
+era 1 fr pause: number alone on a line (0): Fernstair   Rubans 0	Chimora 100 item 51 (PauseMenu.menu_title / MenuHost.short_title)
+era 1 tr pause: number alone on a line (0): Fernstair   Kurdele 0	Chimora 100 item 51 (PauseMenu.menu_title / MenuHost.short_title)
