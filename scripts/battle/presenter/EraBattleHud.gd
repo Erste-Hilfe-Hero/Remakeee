@@ -9,7 +9,7 @@ const ERAS: int = 5
 ## Every era entry sets every one of these.
 const KEYS: Array[String] = ["name", "font", "frame", "plate", "plate_slant", "plate_shadow", "plate_header",
 	"plate_gloss", "plate_slide", "camera_follow", "bar_h", "bar_h_single", "pip", "marks", "hp_numbers", "xp", "xp_colour",
-	"menu", "commands", "art_h", "command_h", "art_fill", "art_slant", "art_detail", "item_shortcut",
+	"menu", "commands", "art_h", "command_h", "auto_w", "auto_h", "art_fill", "art_slant", "art_detail", "item_shortcut",
 	"menu_stagger", "info_card", "team_row", "team_mark", "team_shape", "team_pop", "level_panel",
 	"level_count", "bond", "bond_mark", "mini", "accent", "light", "shade"]
 ## Keys whose value is a step in an ordered list of the file (later = richer).
@@ -24,7 +24,7 @@ const FRAME_SIZE: int = 11
 const FRAME_MARGIN: int = 4
 ## Content margin of a framed panel, the same as UITheme.panel_style so layouts match.
 const FRAME_PAD: int = 5
-## Small speed / Auto / Log buttons.
+## Small speed and Log buttons (Auto has its own tab, auto_size).
 const SIDE_BUTTON: Vector2 = Vector2(26, 13)
 const SIDE_BUTTON_LARGE: Vector2 = Vector2(38, 16)
 ## Stage eras: the player's plate is at least this share of the field wide.
@@ -411,6 +411,22 @@ static func plate_height(era: int, extra_row: bool, single: bool = false) -> int
 static func side_button(era: int) -> Vector2:
 	return SIDE_BUTTON_LARGE if large_font(era) else SIDE_BUTTON
 
+## The Auto tab at the right edge above the text box (plan Chimora 100, items 17, 18): the
+## era's auto_w x auto_h, BattleComfort.BIG_EXTRA more each way per side with Big buttons.
+static func auto_size(era: int, big: bool = false) -> Vector2:
+	var grow: float = 2.0 * BattleComfort.BIG_EXTRA if big else 0.0
+	return Vector2(num(era, "auto_w", 30) + grow, num(era, "auto_h", 20) + grow)
+
+## The Auto tab in dp on a phone [param phone_w] points wide (the era screen fills its width).
+static func auto_dp(era: int, phone_w: float = 440.0, big: bool = false) -> float:
+	return auto_size(era, big).y * phone_w / float(EraManager.RESOLUTION[clampi(era, 1, ERAS)].x)
+
+## Width of the Log button: at least a small button, at most two of them, so "Journal" or
+## "Журнал" is not cut to "Jour" (plan Chimora 100 item 57). [param text_w] is the word's width.
+static func log_width(era: int, text_w: float) -> float:
+	var b: Vector2 = side_button(era)
+	return clampf(ceilf(text_w) + 4.0, b.x, b.x * 2.0 + 2.0)
+
 ## Height of the command panel in [param era] (fixed, so the field never jumps).
 static func menu_height(era: int) -> int:
 	var e: Dictionary = for_era(era)
@@ -440,11 +456,17 @@ static func shortcut_height(era: int) -> int:
 ## player_plate (content rects), foe_sprite, player_sprite (moved in Era I-III so no plate
 ## covers a sprite), buttons (3), goal, foe_team, player_team, level_panel; and flags
 ## foe_slant_left, player_slant_left. Nothing in it overlaps (tests/unit/test_era_battle_hud.gd).
-static func single_layout(era: int, field: Vector2, foe_sprite: Rect2, player_sprite: Rect2, team: int = 7) -> Dictionary:
+static func single_layout(era: int, field: Vector2, foe_sprite: Rect2, player_sprite: Rect2, team: int = 7,
+		big: bool = false, log_w: float = 0.0) -> Dictionary:
 	var w: float = field.x
 	var h: float = field.y
 	var stage: bool = era >= EraManager.STAGE_25D_FROM
 	var b: Vector2 = side_button(era)
+	var lw: float = maxf(log_w, b.x)
+	# The Auto tab: flush with the right edge, standing on the text box.
+	var a: Vector2 = auto_size(era, big)
+	var tab := Rect2(w - a.x, h - a.y, a.x, a.y)
+	var floor_y: float = tab.position.y - 2
 	var out: Dictionary = {"foe_slant_left": true}
 	var fh: float = plate_height(era, false, true)
 	var ph: float = plate_height(era, true, true)
@@ -454,28 +476,34 @@ static func single_layout(era: int, field: Vector2, foe_sprite: Rect2, player_sp
 	if stage:
 		# Stage eras: the slabs place the sprites. Buttons stand in a column at the top left,
 		# the foe's plate at the top right, the player's plate at the bottom right.
-		for i: int in 3:
-			buttons.append(Rect2(MARGIN, MARGIN + i * (b.y + 2), b.x, b.y))
+		buttons.append(Rect2(MARGIN, MARGIN, b.x, b.y))
+		buttons.append(Rect2(MARGIN, MARGIN + b.y + 2, lw, b.y))
 		var fw: float = roundf(w * 0.5)
 		out["foe_plate"] = Rect2(w - MARGIN - fpad[2] - fw, MARGIN + fpad[1], fw, fh)
 		out["foe_team"] = Rect2(w - MARGIN - row.x, MARGIN + fpad[1] + fh + fpad[3] + 3, row.x, row.y)
 		# The big Era IV/V back sprite may reach under the plate; the plate keeps room for its name.
 		var pw: float = maxf(roundf(w - player_sprite.end.x - MARGIN * 2 - fpad[0] - fpad[2]), roundf(w * MIN_PLAYER_PLATE))
 		out["player_slant_left"] = true
-		out["player_plate"] = Rect2(w - MARGIN - fpad[2] - pw, h - MARGIN - fpad[3] - ph, pw, ph)
-		out["player_team"] = Rect2(w - MARGIN - row.x, h - MARGIN - fpad[3] - ph - fpad[1] - 3 - row.y, row.x, row.y)
-		out["goal"] = Rect2(MARGIN, MARGIN + 3 * (b.y + 2), roundf(w * 0.4), line_h(era) * 2)
+		# The plate and the team row stand on the Auto tab, which keeps the corner above the text box.
+		var bottom: float = minf(h - MARGIN, floor_y)
+		out["player_plate"] = Rect2(w - MARGIN - fpad[2] - pw, bottom - fpad[3] - ph, pw, ph)
+		out["player_team"] = Rect2(w - MARGIN - row.x, bottom - fpad[3] - ph - fpad[1] - 3 - row.y, row.x, row.y)
+		out["goal"] = Rect2(MARGIN, MARGIN + 2 * (b.y + 2), roundf(w * 0.4), line_h(era) * 2)
 	else:
 		# Era I-III: foe at the top left with its plate to the right, the small buttons in a
 		# row under that plate; the player's Spirling at the bottom right, its plate to the left.
 		var fs: float = foe_sprite.size.x
 		foe_sprite = Rect2(Vector2(MARGIN, MARGIN), foe_sprite.size)
 		player_sprite.position.x = w - MARGIN - player_sprite.size.x
+		# The player's Spirling stands on the Auto tab.
+		# Never above the foe's buttons and team row (Big buttons on a short Era I/II field).
+		player_sprite.position.y = maxf(minf(player_sprite.position.y, floor_y - player_sprite.size.y),
+			MARGIN + fpad[1] + fh + fpad[3] + 3 + b.y + 3 + row.y + 1)
 		var fx: float = MARGIN + fs + 2 + fpad[0]
 		out["foe_plate"] = Rect2(fx, MARGIN + fpad[1], w - MARGIN - fpad[2] - fx, fh)
 		var by: float = MARGIN + fpad[1] + fh + fpad[3] + 3
-		for i: int in 3:
-			buttons.append(Rect2(w - MARGIN - (3 - i) * b.x - (2 - i), by, b.x, b.y))
+		buttons.append(Rect2(w - MARGIN - lw - 2 - b.x, by, b.x, b.y))
+		buttons.append(Rect2(w - MARGIN - lw, by, lw, b.y))
 		out["foe_team"] = Rect2(w - MARGIN - row.x, by + b.y + 3, row.x, row.y)
 		var ppad: Array[int] = plate_pad(era, false)
 		var pw: float = player_sprite.position.x - MARGIN - 2 - ppad[0] - ppad[2]
@@ -487,6 +515,7 @@ static func single_layout(era: int, field: Vector2, foe_sprite: Rect2, player_sp
 	out["foe_sprite"] = foe_sprite
 	out["player_sprite"] = player_sprite
 	out["buttons"] = buttons
+	out["auto"] = tab
 	return out
 
 ## The outer rect a plate draws over, from its content rect.
@@ -495,13 +524,19 @@ static func plate_outer(era: int, content: Rect2, slant_left: bool) -> Rect2:
 	return Rect2(content.position - Vector2(p[0], p[1]), content.size + Vector2(p[0] + p[2], p[1] + p[3]))
 
 ## Top band of the formation HUD (several Spirlings per side) on a field [param w] wide:
-## ledger (content rect of the plate of the Spirling in focus), buttons (3; Back takes the
-## third while aiming), goal, player_team, foe_team. Era I-III keep the ledger across the top
+## ledger (content rect of the plate of the Spirling in focus), buttons (4x and Log; Back takes
+## Log's place while aiming), goal, player_team, foe_team, and auto: the Auto tab at the right
+## edge above the text box of a field [param h] high when the player's rank of [param ours]
+## leaves that corner free (auto_band false), else a small button in the band (auto_band true). Era I-III keep the ledger across the top
 ## with both team rows on one line under it; the wide Era IV/V screens put the buttons in a row
 ## beside a shorter ledger. Everything ends above FORMATION_TOP, where the foes' rank starts.
 const FORMATION_TOP: int = 48
-static func formation_layout(era: int, w: float, team: int = 7) -> Dictionary:
+static func formation_layout(era: int, w: float, team: int = 7, h: float = 0.0, ours: int = 4, big: bool = false,
+		log_w: float = 0.0) -> Dictionary:
 	var b: Vector2 = side_button(era)
+	var lw: float = maxf(log_w, b.x)
+	var a: Vector2 = auto_size(era, big)
+	var band: bool = h <= 0.0 or rank_end(era, ours) + 2.0 > w - a.x
 	var pad: Array[int] = plate_pad(era, false)
 	var ph: float = plate_height(era, true)
 	var out: Dictionary = {}
@@ -509,8 +544,12 @@ static func formation_layout(era: int, w: float, team: int = 7) -> Dictionary:
 	var row: Vector2 = team_row_size(era, team, true)
 	if large_font(era) and w >= 240.0:
 		var bx: float = w - MARGIN - 3 * b.x - 4
-		for i: int in 3:
-			buttons.append(Rect2(bx + i * (b.x + 2), MARGIN, b.x, b.y))
+		buttons.append(Rect2(bx, MARGIN, b.x, b.y))
+		if band:
+			out["auto"] = Rect2(bx + b.x + 2, MARGIN, b.x, b.y)
+			buttons.append(Rect2(bx + 2 * (b.x + 2), MARGIN, b.x, b.y))
+		else:
+			buttons.append(Rect2(bx + b.x + 2, MARGIN, 2 * b.x + 2, b.y))
 		# One pixel higher than the margin: the tall plate and its shadow end on the foes' rank.
 		out["ledger"] = Rect2(MARGIN + pad[0], MARGIN - 1 + pad[1], bx - MARGIN * 2 - pad[0] - pad[2], ph)
 		out["player_team"] = Rect2(bx, MARGIN + b.y + 4, row.x, row.y)
@@ -518,13 +557,27 @@ static func formation_layout(era: int, w: float, team: int = 7) -> Dictionary:
 		var gx: float = bx + row.x + 4
 		out["goal"] = Rect2(gx, MARGIN + b.y + 2, maxf(w - MARGIN - gx, 0.0), FORMATION_TOP - (MARGIN + b.y + 2))
 	else:
-		for i: int in 3:
-			buttons.append(Rect2(w - MARGIN - b.x, MARGIN + i * (b.y + 2), b.x, b.y))
+		buttons.append(Rect2(w - MARGIN - b.x, MARGIN, b.x, b.y))
+		if band:
+			out["auto"] = Rect2(w - MARGIN - b.x, MARGIN + b.y + 2, b.x, b.y)
+			buttons.append(Rect2(w - MARGIN - b.x, MARGIN + 2 * (b.y + 2), b.x, b.y))
+		else:
+			buttons.append(Rect2(w - MARGIN - b.x, MARGIN + b.y + 2, b.x, b.y))
 		out["ledger"] = Rect2(MARGIN + pad[0], MARGIN + pad[1], w - b.x - MARGIN * 3 - pad[0] - pad[2], ph)
-		var band: float = MARGIN + pad[1] + ph + pad[3] + 1
+		var band_y: float = MARGIN + pad[1] + ph + pad[3] + 1
 		var right: float = w - b.x - MARGIN * 2
-		out["player_team"] = Rect2(MARGIN, band, row.x, row.y)
-		out["foe_team"] = Rect2(right - row.x, band, row.x, row.y)
-		out["goal"] = Rect2(MARGIN + row.x + 3, band - 1, maxf(right - row.x - 6 - MARGIN - row.x, 0.0), FORMATION_TOP - band)
+		out["player_team"] = Rect2(MARGIN, band_y, row.x, row.y)
+		out["foe_team"] = Rect2(right - row.x, band_y, row.x, row.y)
+		out["goal"] = Rect2(MARGIN + row.x + 3, band_y - 1, maxf(right - row.x - 6 - MARGIN - row.x, 0.0), FORMATION_TOP - band_y)
 	out["buttons"] = buttons
+	out["auto_band"] = band
+	if not band:
+		out["auto"] = Rect2(w - a.x, h - a.y, a.x, a.y)
 	return out
+
+## Right end of the player's rank of [param n] at the era's full formation size (BattleScene
+## places it from the left edge; a shrunken rank only ends sooner).
+static func rank_end(era: int, n: int) -> float:
+	var px: float = EraBattleFeel.num(era, "formation_slot", 28)
+	var gap: float = EraBattleFeel.num(era, "formation_gap", 6)
+	return MARGIN + 4 + BattleScene.formation_width(maxi(n, 1), px, gap)
