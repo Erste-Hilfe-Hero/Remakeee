@@ -87,12 +87,21 @@ Act I is the tutorial act (Ali 2026-11-21): no measured fight there is won more 
 
 Act I per starter, measured 21 Nov 2026 with 64 battles per measure (`--mode acts --act act1
 --rounds 64 --starter S`), after Act I became the tutorial act (Ali 2026-11-21, Chimora 100
-items 1-14): Kindlop 74 % on arrival, 87 % after the budget, 7 grind battles to 70 % on the mean;
-Zippit 84 %, 91 %, 3; Wickit 77 %, 89 %, 7 (before, with a budget of 60: Kindlop 35 %, 85 %, 40; Zippit 29 %, 70 %, 70;
-Wickit 26 %, 66 %, 73). The Tamer teams of Orrin, Brisa, Maelis and Mother Crowle sit one to five
-rings over their base teams again, Rival Jinks fights with his base team, Tamer grows x1.15,
-newcomers take x0.9 damage and Wickit's stats rose 8 %. The hardest fight left is Mother Crowle
-(31-67 % on arrival).
+items 1-14): Kindlop 74 % on arrival, 87 % after the budget, 3 grind battles to 70 % on the mean;
+Zippit 83 %, 92 %, 3; Wickit 75 %, 90 %, 3 (before, with a budget of 60: Kindlop 35 %, 85 %, 40;
+Zippit 29 %, 70 %, 70; Wickit 26 %, 66 %, 73). The Tamer teams of Orrin, Brisa, Maelis and Mother
+Crowle sit one to five rings over their base teams again, Rival Jinks fights with his base team,
+Tamer grows x1.15 in Act I only (GrowthRules `act1_mult`) and newcomers take x0.9 damage. The
+hardest fight left is Mother Crowle (27-61 % on arrival).
+
+Act II starts from a pinned entry. A single seeded route carries the team and the dice from Act I
+into every later act, so retuning Act I re-rolled Acts II to Era V and turned borderline fights
+there into walls although their data did not change. `tools/balance/act_entry.json` holds the team,
+rings and dice the route brought to Act II on 21 Nov 2026 (before the tutorial act), per starter for
+the 16-battle runs of `test_act_difficulty.gd` and `--mode acts --rounds 16`; ActSim restores it at
+Act II, so the later acts measure their own content and match the numbers from before. Runs with
+other battle counts or seeds still carry the team on. Re-record only on purpose:
+`godot --headless --path . -s res://tools/balance/record_act_entry.gd`.
 
 Measured on 6 Nov 2026 (plan area 2, after the new arts): Lv36 duel turns to KO 2.5, first-mover
 advantage 52%; Lv36 teams (200 battles, seed 7) 0 draws, every species between 39% and 66%.
@@ -776,18 +785,18 @@ wild battles.
 | Ring | Growth to reach it | To the next ring | Even wild battles to the next ring (normal) | Story |
 | --- | --- | --- | --- | --- |
 | 5 | 78 | 48 | 3 | 2 |
-| 10 | 477 | 135 | 3 | 3 |
-| 15 | 1370 | 251 | 4 | 4 |
+| 10 | 477 | 135 | 4 | 3 |
+| 15 | 1370 | 251 | 5 | 4 |
 | 20 | 2896 | 392 | 5 | 4 |
-| 30 | 8311 | 740 | 6 | 5 |
-| 40 | 17560 | 1164 | 7 | 6 |
-| 50 | 31369 | 1657 | 8 | 7 |
-| 60 | 50393 | 2213 | 9 | 8 |
-| 80 | 106467 | 3494 | 10 | 9 |
-| 100 | 190187 | 4984 | 11 | 10 |
+| 30 | 8311 | 740 | 7 | 5 |
+| 40 | 17560 | 1164 | 8 | 6 |
+| 50 | 31369 | 1657 | 9 | 7 |
+| 60 | 50393 | 2213 | 10 | 8 |
+| 80 | 106467 | 3494 | 11 | 9 |
+| 100 | 190187 | 4984 | 13 | 10 |
 
 Growth to reach ring L = floor(1.2 x L ^ 2.6). There is no top ring. One battle gives yield x foe ring / 20 (x1.5 against a Wayfarer), shared by the Spirlings that fought; the bench gets 50 % with Bench lessons. Table for a kind of yield 80.
-Factors: Story x1.25, Tamer x1.15, rematch x1.2, kinship 80+ x1.1, Growth Charm x1.5, world goal x1.25 for 20 battles. No penalty for a higher ring than the foe (only Era V scales by ring).
+Factors: Story x1.25, Act I on Tamer x1.15, rematch x1.2, kinship 80+ x1.1, Growth Charm x1.5, world goal x1.25 for 20 battles. No penalty for a higher ring than the foe (only Era V scales by ring).
 <!-- /gen:growth -->
 
 ## KI-Profile (AI profiles)

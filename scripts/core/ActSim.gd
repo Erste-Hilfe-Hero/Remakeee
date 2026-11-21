@@ -18,6 +18,15 @@ const DIFFICULTY: int = 1 # GameState.Difficulty.TAMER, the default
 ## Route kind of a Rift heart: reported, but left out of the act means (one swollen Spirling the
 ## whole team faces at once, right after its Warden).
 const HEART: String = "heart"
+## Act II starts from the team, rings and dice the reference route brought to it (recorded before
+## Act I became the tutorial act; docs/BALANCE.md "Ziele pro Gebiet"), so the tutorial act does
+## not re-roll the acts after it.
+const ENTRY_PATH: String = "res://tools/balance/act_entry.json"
+## Growth factor of the act being played (Act I on Tamer adds GrowthRules "act1_mult").
+static var _growth: float = 1.0
+## tools/balance/record_act_entry.gd: true writes the entry states into record_entry.
+static var recording: bool = false
+static var record_entry: Dictionary = {}
 
 static func route() -> Dictionary:
 	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(ROUTE_PATH)) if FileAccess.file_exists(ROUTE_PATH) else null
@@ -193,7 +202,7 @@ static func trainer_battle(mine: Array[Spirling], foe: Dictionary, seed_value: i
 	m.ai.set_profile(str(info.profile), info.profile_tune)
 	m.ai.set_difficulty(DIFFICULTY)
 	m.foe_damage_mult = GameState.foe_damage_for(DIFFICULTY, owned)
-	m.xp_mult = GrowthRules.battle_mult(DIFFICULTY, {}, {})
+	m.xp_mult = _growth
 	m.boss_hp_scale = GameState.BOSS_HP_SCALE[DIFFICULTY]
 	m.boss_difficulty = DIFFICULTY
 	m.field = str(foe.get("field", ""))
@@ -219,7 +228,7 @@ static func wild_battle(mine: Array[Spirling], table: Array, rng: RandomNumberGe
 		return
 	var foe := Spirling.new(sd, rng.randi_range(int(sp.min), int(sp.max)), rng)
 	var m := BattleModel.new(mine, [foe] as Array[Spirling], true, rng.randi(), 0)
-	m.xp_mult = GrowthRules.battle_mult(DIFFICULTY, {}, {})
+	m.xp_mult = _growth
 	m.items_allowed = false
 	m.level_cap = Spirling.LEVEL_SANITY
 	_play(m)
@@ -334,10 +343,27 @@ static func run(starter: String, trials: int, seed_value: int, only: Array[Strin
 	var target: float = float(cfg.get("grind_target", 0.7))
 	var out_acts: Array = []
 	var last_table: Array = []
+	var last_wild: String = ""
+	var key: String = entry_key(starter, trials, seed_value)
+	var entries: Dictionary = (_read(ENTRY_PATH).get("entries", {}) as Dictionary).get(key, {})
+	var first: bool = true
 	for act: Dictionary in cfg.get("acts", []):
+		var id: String = str(act.get("id", ""))
+		_growth = GrowthRules.battle_mult(DIFFICULTY, {}, {}, first)
+		if not first and recording:
+			var rec: Dictionary = record_entry.get(key, {})
+			rec[id] = {"party": _snapshot(owned), "rng": str(rng.state), "last_wild": last_wild}
+			record_entry[key] = rec
+		elif not first and entries.has(id):
+			owned = _restore(entries[id].party)
+			rng.state = str(entries[id].rng).to_int()
+			last_wild = str(entries[id].get("last_wild", ""))
+			last_table = wild_table(last_wild) if not last_wild.is_empty() else []
+		first = false
 		var fights: Array = []
 		for step: Dictionary in act.get("steps", []):
 			if step.has("wild"):
+				last_wild = str(step.wild)
 				last_table = wild_table(str(step.wild))
 				_bond(owned, last_table, int(step.get("bond", cfg.get("bond_per_table", 1))), rng)
 				grind(owned, last_table, int(step.get("battles", cfg.get("incidental", 6))), rng)
@@ -370,7 +396,12 @@ static func run(starter: String, trials: int, seed_value: int, only: Array[Strin
 			out_acts.append({"id": str(act.id), "name": str(act.get("name", act.id)), "fights": fights})
 		if not only.is_empty() and out_acts.size() == only.size():
 			break
+	_growth = 1.0
 	return {"acts": out_acts, "starter": starter, "trials": trials, "seed": seed_value}
+
+## The key of one route run in tools/balance/act_entry.json.
+static func entry_key(starter: String, trials: int, seed_value: int) -> String:
+	return "%s|%d|%d" % [starter, trials, seed_value]
 
 static func _boss(owned: Array[Spirling], foe: Dictionary, step: Dictionary, trials: int, rng: RandomNumberGenerator,
 		table: Array, step_n: int, moderate: int, grind_max: int, target: float) -> Dictionary:

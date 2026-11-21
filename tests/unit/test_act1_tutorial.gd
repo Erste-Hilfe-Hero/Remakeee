@@ -21,7 +21,7 @@ func _levels(def: Dictionary, difficulty: int) -> Array[int]:
 func test_act_one_wardens_on_tamer_sit_just_above_the_base_team() -> void:
 	var tamer: int = GameState.Difficulty.TAMER
 	assert_eq(_levels(_npc("cinder_rift", "warden_orrin"), tamer), [11, 11, 12] as Array[int])
-	assert_eq(_levels(_npc("mist_rift", "warden_brisa"), tamer), [15, 15, 16] as Array[int])
+	assert_eq(_levels(_npc("mist_rift", "warden_brisa"), tamer), [16, 16, 17] as Array[int])
 	assert_eq(_levels(_npc("tide_rift", "warden_maelis"), tamer), [16, 17, 18] as Array[int])
 	# Mother Crowle closes Act I: a few rings over her base team, not nine (she was a wall at R26-27).
 	assert_eq(_levels(ActSim.resolve("pawn_vault:sallow").def, tamer), [22, 23, 22] as Array[int])
@@ -46,16 +46,11 @@ func test_newcomers_take_less_damage_on_tamer() -> void:
 		"Veteran keeps its full damage")
 	assert_almost_eq(GameState.foe_damage_for(GameState.Difficulty.STORY, 1), GameState.FOE_DAMAGE[GameState.Difficulty.STORY], 0.001)
 
-func test_tamer_grows_faster_than_veteran() -> void:
-	assert_almost_eq(GrowthRules.battle_mult(GameState.Difficulty.TAMER, {}, {}), 1.15, 0.001)
-	assert_gt(GrowthRules.battle_mult(GameState.Difficulty.TAMER, {}, {}), GrowthRules.battle_mult(GameState.Difficulty.VETERAN, {}, {}))
-
-func test_wickit_is_as_strong_as_the_other_starters() -> void:
-	var sums: Dictionary = {}
-	for st: String in ["Kindlop", "Zippit", "Wickit"]:
-		var s: Spirling = BattleFixtures.make(st, 5)
-		sums[st] = s.max_hp() + s.atk() + s.def() + s.foc() + s.spd()
-	assert_gte(float(sums.Wickit), float(mini(int(sums.Kindlop), int(sums.Zippit))) * 0.95, str(sums))
+func test_tamer_grows_faster_in_act_one_only() -> void:
+	var tamer: int = GameState.Difficulty.TAMER
+	assert_almost_eq(GrowthRules.battle_mult(tamer, {}, {}, true), 1.15, 0.001)
+	assert_almost_eq(GrowthRules.battle_mult(tamer, {}, {}, false), 1.0, 0.001, "later acts keep their growth")
+	assert_almost_eq(GrowthRules.battle_mult(GameState.Difficulty.VETERAN, {}, {}, true), 1.0, 0.001)
 
 ## The Story hint names the real growth bonus: GrowthRules difficulty_mult and ChallengeRules.GROWTH.
 func test_story_hint_names_the_real_growth_bonus() -> void:

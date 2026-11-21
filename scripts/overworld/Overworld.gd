@@ -4392,7 +4392,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		model.variants.assign(vids)
 	model.rule_turn_full = GameState.difficulty >= GameState.Difficulty.VETERAN
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
-	model.xp_mult = ShopEffects.growth_mult() * GrowthRules.battle_mult(GameState.difficulty, trainer, GameState.records)
+	model.xp_mult = ShopEffects.growth_mult() * GrowthRules.battle_mult(GameState.difficulty, trainer, GameState.records, not GameState.has_flag(GameState.ACT1_END_FLAG))
 	model.ring_scaled_growth = EraFeatures.is_unlocked("ring_scaled_growth")
 	model.wheel = bool(trainer.get("wheel", false)) and EraFeatures.is_unlocked("wheel_battles")
 	model.wheel_size = EraActivities.wheel_size()

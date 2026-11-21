@@ -25,10 +25,14 @@ static func num(key: String, fallback: float) -> float:
 	return float(data().get(key, fallback))
 
 ## Growth factor of a whole battle: the difficulty (Story grows faster), a rematch, and a running
-## world goal boost from [param records].
-static func battle_mult(difficulty: int, trainer: Dictionary, records: Dictionary) -> float:
+## world goal boost from [param records]. [param in_act1]: Act I is still running (the tutorial
+## act adds "act1_mult", Ali 2026-11-21).
+static func battle_mult(difficulty: int, trainer: Dictionary, records: Dictionary, in_act1: bool = false) -> float:
 	var per: Array = data().get("difficulty_mult", [])
 	var m: float = float(per[difficulty]) if difficulty >= 0 and difficulty < per.size() else 1.0
+	var act1: Array = data().get("act1_mult", [])
+	if in_act1 and difficulty >= 0 and difficulty < act1.size():
+		m *= float(act1[difficulty])
 	if bool(trainer.get("rematch", false)):
 		m *= num("rematch_mult", 1.0)
 	if int(records.get(WORLD_RECORD, 0)) > 0:
@@ -118,9 +122,8 @@ static func curve_table(xp_yield: int) -> String:
 	lines.append("")
 	lines.append("Growth to reach ring L = floor(%s x L ^ %s). There is no top ring. One battle gives yield x foe ring / %d (x%s against a Wayfarer), shared by the Spirlings that fought; the bench gets %d %% with Bench lessons. Table for a kind of yield %d." % [
 		str(Spirling.XP_MULT), str(Spirling.XP_EXP), int(BattleModel.XP_LEVEL_DIV), str(BattleModel.TRAINER_XP_MULT), int(GameState.BENCH_XP_SHARE * 100), xp_yield])
-	var per: Array = data().get("difficulty_mult", [1.0, 1.0])
-	lines.append("Factors: Story x%s, Tamer x%s, rematch x%s, kinship %d+ x%s, Growth Charm x%s, world goal x%s for %d battles. No penalty for a higher ring than the foe (only Era V scales by ring)." % [
-		str(per[0]), str(per[1] if per.size() > 1 else 1.0), str(num("rematch_mult", 1.0)), int(num("kinship_min", 0)),
+	lines.append("Factors: Story x%s, Act I on Tamer x%s, rematch x%s, kinship %d+ x%s, Growth Charm x%s, world goal x%s for %d battles. No penalty for a higher ring than the foe (only Era V scales by ring)." % [
+		str((data().get("difficulty_mult", [1.0]) as Array)[0]), str(battle_mult(GameState.Difficulty.TAMER, {}, {}, true)), str(num("rematch_mult", 1.0)), int(num("kinship_min", 0)),
 		str(num("kinship_mult", 1.0)), str(float((Database.item("growth_charm").get("held", {}) as Dictionary).get("growth_mult", 1.0))),
 		str(num("world_goal_mult", 1.0)), int(num("world_goal_battles", 0))])
 	return "\n".join(lines)
