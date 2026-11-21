@@ -10,6 +10,7 @@
 // transaction (JWS) to the server and finishes it only after the server credited it (item 4097).
 import Foundation
 import StoreKit
+import UIKit
 
 public typealias CKCallback = @convention(c) (UnsafePointer<CChar>) -> Void
 
@@ -167,5 +168,18 @@ public func ck_restore(_ req: Int64) {
             code = 6
         }
         s.emit(["kind": "owned", "req": req, "code": code, "purchases": await s.owned()])
+    }
+}
+
+/// The App Store's own rating sheet (plan Chimora 100, item 74; scripts/online/ReviewAsk.gd decides
+/// when). iOS shows it at most 3 times a year and may show nothing; there is no answer to report.
+/// Needs the foreground window scene; without one nothing happens.
+@_cdecl("ck_request_review")
+public func ck_request_review() {
+    Task { @MainActor in
+        let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+        if let scene = scenes.first(where: { $0.activationState == .foregroundActive }) ?? scenes.first {
+            AppStore.requestReview(in: scene)
+        }
     }
 }

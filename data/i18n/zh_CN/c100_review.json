@@ -1,0 +1,8 @@
+{
+ "_comment": "Simplified Chinese texts for the German table c100_review. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "Start offline": "离线开始",
+  "A new journey can start offline. The prologue goes online at its save point.": "新的旅程可以离线开始。序章会在存档点联网。",
+  "Offline: prologue only": "离线：仅限序章"
+ }
+}

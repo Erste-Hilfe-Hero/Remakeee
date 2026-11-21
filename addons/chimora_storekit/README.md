@@ -6,3 +6,5 @@ StoreKit 2 for the App Store, as a GDExtension. Source: `plugins/chimora_storeki
 (with its own Info.plist, MinimumOSVersion = the app's `application/min_ios_version`) and
 `chimora_storekit.gdextension` here; both are gitignored, so other platforms never see the extension.
 The game talks to it through `scripts/shop/AppleBillingStore.gd`.
+`request_review` shows the App Store's own rating sheet (`AppStore.requestReview(in:)`); `scripts/online/ReviewAsk.gd`
+decides when (plan Chimora 100, item 74).
