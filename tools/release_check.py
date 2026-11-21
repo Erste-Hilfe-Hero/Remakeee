@@ -104,6 +104,27 @@ def check_images() -> None:
         errors.append(icon + " must have no transparency (App Store rule)")
 
 
+# Game language folder (data/i18n) -> Apple localization code for CFBundleLocalizations (plan Chimora 100, item 82).
+APPLE_LANG = {"pt_BR": "pt-BR", "zh_CN": "zh-Hans", "zh_TW": "zh-Hant"}
+
+
+def game_localizations() -> list[str]:
+    dirs = [d for d in os.listdir("data/i18n") if os.path.isdir(os.path.join("data/i18n", d))]
+    return ["en"] + [APPLE_LANG.get(d, d) for d in dirs]
+
+
+def ios_localizations() -> list[str] | None:
+    import plistlib
+    content = preset_values("application/additional_plist_content")
+    if not content:
+        return []
+    xml = '<?xml version="1.0" encoding="UTF-8"?><plist version="1.0"><dict>%s</dict></plist>' % content[0]
+    try:
+        return list(plistlib.loads(xml.encode("utf-8")).get("CFBundleLocalizations", []))
+    except Exception:
+        return None
+
+
 def check_presets() -> None:
     names = set(preset_values("version/name")) | set(preset_values("application/short_version"))
     if len(names) > 1:
@@ -117,6 +138,13 @@ def check_presets() -> None:
         errors.append("iOS preset should be iPhone only (targeted_device_family=0), or add iPad screenshots")
     if "ITSAppUsesNonExemptEncryption" not in read("export_presets.cfg"):
         errors.append("iOS preset lacks ITSAppUsesNonExemptEncryption in additional_plist_content")
+    langs = ios_localizations()
+    want = game_localizations()
+    if langs is None:
+        errors.append("iOS preset: additional_plist_content is not valid plist XML")
+    elif sorted(langs) != sorted(want):
+        errors.append("iOS preset CFBundleLocalizations %s must list the game languages %s (data/i18n plus en), "
+                      "or the App Store shows English only" % (sorted(langs), sorted(want)))
 
 
 # Android permissions the game may ask for. Play Billing adds com.android.vending.BILLING through its
