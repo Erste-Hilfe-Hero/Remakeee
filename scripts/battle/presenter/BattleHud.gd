@@ -12,6 +12,8 @@ var foe_team: TeamRow
 var level_panel: LevelPanel
 ## The Auto tab is a small one-line button in the formation band (no room above the text box).
 var auto_small: bool = false
+## Width the layout gave the turn count (the label itself may be wider than its rect).
+var goal_w: float = 0.0
 var _auto_on: bool = false
 
 ## Hooks the HUD onto [param p_scene] once its controls exist (end of BattleScene._build).
@@ -127,6 +129,7 @@ func layout_single() -> void:
 		auto_small = false
 		dress_auto(_auto_on)
 	_place(scene._goal_label, l.goal)
+	goal_w = (l.goal as Rect2).size.x
 	for row: TeamRow in [player_team, foe_team]:
 		row.compact = false
 	_place(player_team, l.player_team)
@@ -149,6 +152,7 @@ func layout_formation() -> void:
 	auto_small = bool(l.get("auto_band", false))
 	dress_auto(_auto_on)
 	_place(scene._goal_label, l.goal)
+	goal_w = (l.goal as Rect2).size.x
 	for row: TeamRow in [player_team, foe_team]:
 		row.compact = true
 	_place(player_team, l.player_team)

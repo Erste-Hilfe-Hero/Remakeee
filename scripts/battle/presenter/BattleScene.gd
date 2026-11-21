@@ -184,7 +184,8 @@ func _turn_text(n: int, tail: String = "") -> String:
 	var long: String = Loc.t("Turn %d") % n + tail
 	var f: Font = _goal_label.get_theme_font("font")
 	var fs: int = _goal_label.get_theme_font_size("font_size")
-	if _goal_label.size.x <= 0.0 or f.get_string_size(long, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x <= _goal_label.size.x:
+	var room: float = _hud.goal_w if _hud != null else 0.0
+	if room > 0.0 and f.get_string_size(long, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x <= room:
 		return long
 	return Loc.t("T%d") % n + tail
 

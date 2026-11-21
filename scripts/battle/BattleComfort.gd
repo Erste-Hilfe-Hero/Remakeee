@@ -284,6 +284,7 @@ static func auto_yields_bond(m: BattleModel, spirlog: Dictionary) -> bool:
 			return true
 	return false
 
-## "Auto: Wild only" for the settings list.
+## "Auto: Wild only" for the settings list, in English like its other rows (the list
+## translates the pattern and the value when it shows them).
 static func auto_setting_label(mode: int) -> String:
-	return Loc.t("Auto: %s") % Loc.t(AUTO_MODE_NAMES[clampi(mode, 0, AUTO_MODE_NAMES.size() - 1)])
+	return "Auto: %s" % AUTO_MODE_NAMES[clampi(mode, 0, AUTO_MODE_NAMES.size() - 1)]
