@@ -38,6 +38,7 @@ var _remembered: Dictionary[String, int] = {}
 ## (item 2067) and the more-rows arrows over the list (item 1835).
 var _back: Button
 var _hint: Label
+var _hint_gap: Control
 var _arrows: Control
 var _hints: Array[String] = []
 var _sliders: Array[bool] = []
@@ -147,6 +148,7 @@ func _ready() -> void:
 	# A calm tap never counts as a swipe (item 1785).
 	_scroll.scroll_deadzone = int(TAP_SLOP)
 	_scroll.gui_input.connect(_overscroll_input)
+	_scroll.resized.connect(func() -> void: _snap_rows.call_deferred())
 	root.add_child(_scroll)
 	_box = VBoxContainer.new()
 	_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -165,6 +167,12 @@ func _ready() -> void:
 	_empty.text = EMPTY_TEXT
 	_empty.visible = false
 	_box.add_child(_empty)
+	# Room between the rows and the line under them, so the list ends on a whole row and no
+	# half-cut row sits on the description (Chimora 100, item 48).
+	_hint_gap = Control.new()
+	_hint_gap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_hint_gap.visible = false
+	root.add_child(_hint_gap)
 	_hint = Label.new()
 	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_hint.custom_minimum_size = Vector2(1, 0)
@@ -204,6 +212,7 @@ func set_one_hand(on: bool, left: bool) -> void:
 		want.add_child(_back)
 	_foot.alignment = BoxContainer.ALIGNMENT_BEGIN if left else BoxContainer.ALIGNMENT_END
 	_foot.visible = on and _back.visible
+	_head.visible = not _title.text.is_empty() or (_back.visible and not on)
 
 ## The Back button (tests).
 func back_button() -> Button:
@@ -229,6 +238,9 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	_guard_ms = BattleCalm.guard_ms(guard_ms)
 	_back.visible = cancellable
 	_foot.visible = one_hand and cancellable
+	# A list with no title and no Back button in its head gives that line to the rows (plan
+	# Chimora 100, item 66: the title list needed a scroll to reach Settings at 9:16).
+	_head.visible = not title.is_empty() or (cancellable and not one_hand)
 	last_dir = 0
 	last_long = false
 	scroll_shown = 0.0
@@ -678,6 +690,34 @@ func _show_hint(i: int) -> void:
 		if h.is_empty():
 			_hint.text = Loc.t(str(layout.get("panel_text", "")))
 		_hint.visible = true
+	_snap_rows.call_deferred()
+
+## The gap that makes the list above the description end on a whole row: [param room] is the
+## height the rows and the gap share, [param step] one row plus the space between rows.
+static func row_gap(room: float, step: float, space: float) -> float:
+	if step <= 0.0 or room <= 0.0:
+		return 0.0
+	var shown: int = maxi(1, floori((room + space) / step))
+	return maxf(0.0, room - (shown * step - space))
+
+## Shrinks the list so its last shown row is whole while the description is under it. The gap
+## costs the column's spacing too when it shows, so a leftover smaller than that is left alone
+## (it would cut into the next row, and switching back and forth never settles).
+func _snap_rows() -> void:
+	if _hint_gap == null or not is_inside_tree():
+		return
+	var space_col: float = float((_scroll.get_parent() as Control).get_theme_constant("separation"))
+	var room: float = _scroll.size.y + (_hint_gap.custom_minimum_size.y + space_col if _hint_gap.visible else 0.0)
+	var cut: float = 0.0
+	if _hint.visible and not _grid.visible:
+		var space: float = float(_box.get_theme_constant("separation"))
+		cut = row_gap(room, float(int(layout.get("row_h", ROW_HEIGHT))) + space, space)
+	var show: bool = cut >= space_col and cut > 0.0
+	var h: float = cut - space_col if show else 0.0
+	if show == _hint_gap.visible and is_equal_approx(h, _hint_gap.custom_minimum_size.y):
+		return
+	_hint_gap.custom_minimum_size = Vector2(0, h)
+	_hint_gap.visible = show
 
 ## The info panel's look: a framed box with room for PANEL_LINES lines in the touch eras, the
 ## plain line under the list otherwise.
@@ -691,7 +731,13 @@ func _style_panel() -> void:
 		_hint.custom_minimum_size = Vector2(1, f.get_height(UITheme.FONT_SIZE) * PANEL_LINES + 6)
 		_hint.clip_text = false
 	else:
-		_hint.remove_theme_stylebox_override("normal")
+		# A thin rule over the description parts it from the rows (Chimora 100, item 48).
+		var rule := StyleBoxFlat.new()
+		rule.bg_color = Color(0, 0, 0, 0)
+		rule.border_color = UITheme.MID
+		rule.border_width_top = 1
+		rule.content_margin_top = 2
+		_hint.add_theme_stylebox_override("normal", rule)
 		_hint.add_theme_color_override("font_color", UITheme.MID)
 		_hint.custom_minimum_size = Vector2(1, 0)
 

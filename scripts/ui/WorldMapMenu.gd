@@ -25,7 +25,9 @@ static func place_rows(known: Dictionary) -> Array[Dictionary]:
 	for id: String in visited:
 		out.append({"text": "%s  %d%%" % [_name(id), WorldAtlas.percent(id)], "place": id})
 	for id: String in sighted:
-		out.append({"text": Loc.t("%s (not yet visited)") % _name(id), "place": id, "sighted": true})
+		# Only the name, without the "14%" of visited places: "(not yet visited)" was cut off at
+		# 144 px (plan Chimora 100, item 40). The hint line under the list says it in full.
+		out.append({"text": _name(id), "place": id, "sighted": true, "hint": "Not yet visited."})
 	return out
 
 static func _name(id: String) -> String:
@@ -35,36 +37,27 @@ static func run(host: MenuHost, here: String) -> void:
 	# The map in the era's layout (EraMenus): the picture over a list in Era I to III, a
 	# picture that takes the upper part of the phone with Zoom, Here and Marks as a button bar
 	# and an info panel for the focused place in Era IV, a pulsing "you are here" in Era V.
+	# The picture is the list's header (plan Chimora 100, items 40 and 55): the title and the
+	# back button stay on top and every row starts below the picture. The header is rebuilt for
+	# each list, so zoom and pan are carried over.
 	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "map")
 	var view_h: float = float(lay.get("view_h", VIEW_H))
 	var bar: bool = str(lay.get("actions", "row")) == "bar"
 	var panel: bool = str(lay.get("panel", "none")) != "none"
-	var view := WorldMapView.new()
-	view.current = here
-	view.pulse = bool(lay.get("pulse", false))
-	view.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	view.offset_left = MenuHost.PANEL_MARGIN
-	view.offset_right = -MenuHost.PANEL_MARGIN
-	view.offset_top = MenuHost.PANEL_MARGIN
-	view.offset_bottom = MenuHost.PANEL_MARGIN + view_h
-	host.add_child(view)
-	var picker: Control = host.picker
-	var had_meta: bool = picker.has_meta("top")
-	var old_top: Variant = picker.get_meta("top") if had_meta else picker.offset_top
-	picker.set_meta("top", MenuHost.PANEL_MARGIN * 2 + view_h)
 	var rows_now: Array[Dictionary] = []
-	var on_tap: Callable = func(id: String) -> void:
-		for i: int in rows_now.size():
-			if str(rows_now[i].get("place", "")) == id:
-				host.picker.picked.emit(i)
-				return
-	view.place_tapped.connect(on_tap)
-	await host.get_tree().process_frame
-	# The large picture of the touch eras starts zoomed in, so places are finger sized.
-	if view_h >= 160.0:
-		view.zoom = 2
-	view.center_on_here()
+	var keep: Dictionary = {}
 	while true:
+		var view := WorldMapView.new()
+		view.current = here
+		view.pulse = bool(lay.get("pulse", false))
+		view.custom_minimum_size = Vector2(0, view_h)
+		view.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		view.restore(keep)
+		view.place_tapped.connect(func(id: String) -> void:
+			for i: int in rows_now.size():
+				if str(rows_now[i].get("place", "")) == id:
+					host.picker.picked.emit(i)
+					return)
 		view.refresh(here)
 		var acts: Array[String] = [Loc.t("Zoom: %dx") % view.zoom, Loc.t("Here"),
 			Loc.t("Marks") if bar else Loc.t("Marks (%d/%d)") % [GameState.map_marks.size(), Survey.MAX_MARKS]]
@@ -81,16 +74,18 @@ static func run(host: MenuHost, here: String) -> void:
 				r["hint"] = WorldAtlas.detail_text(str(r.place)).get_slice("\n", 1)
 			rows_now.append(r)
 		var idx: int = await host.pick_screen("map", "World map", rows_now, {"tabs": acts if bar else ([] as Array[String]), "tab": -1,
-			"tab_icons": [null, null, EraMenuKit.icon_for("Shortcuts", lay)],
+			"tab_icons": [null, null, EraMenuKit.icon_for("Shortcuts", lay)], "header": view,
 			"panel_text": "Tap a place on the map or in the list."})
+		keep = view.state() if is_instance_valid(view) else keep
 		var act: int = ListPicker.tab_of(idx) if bar else (idx if idx >= 0 and idx < first_place else -1)
 		if idx < 0 and act < 0:
 			break
 		match act:
 			0:
-				view.toggle_zoom()
+				keep["zoom"] = 2 if int(keep.get("zoom", 1)) == 1 else 1
+				keep["here"] = true
 			1:
-				view.center_on_here()
+				keep["here"] = true
 			2:
 				await run_marks(host, here)
 			_:
@@ -99,12 +94,6 @@ static func run(host: MenuHost, here: String) -> void:
 					await host.info(Loc.t("%s: seen from afar. Walk there to map it.") % _name(id))
 				else:
 					await host.info(WorldAtlas.detail_text(id))
-	view.queue_free()
-	if had_meta:
-		picker.set_meta("top", old_top)
-	else:
-		picker.remove_meta("top")
-		picker.offset_top = float(old_top)
 
 ## The player's marks: add one where they stand, or pick one to remove it (item 1273).
 static func run_marks(host: MenuHost, here: String) -> void:

@@ -111,3 +111,25 @@ static func hint(flags: Dictionary, day: String = "") -> String:
 	if met(flags, day):
 		return "Today's visitor in %s has been met. Another arrives tomorrow." % where
 	return "Today: a rare visitor stirs in %s." % where
+
+## "YYYY-MM-DD" of tomorrow by the same clock as today_key().
+static func tomorrow_key() -> String:
+	var today: Dictionary = Online.date_now()
+	var d: Dictionary = Time.get_date_dict_from_unix_time(Time.get_unix_time_from_datetime_dict(
+		{"year": today.year, "month": today.month, "day": today.day}) + 86400)
+	return "%04d-%02d-%02d" % [d.year, d.month, d.day]
+
+## What tomorrow brings (Chimora 100, item 71), shown after saving and resting: where the next
+## visitor stirs and how many daily tasks wait. Only a line in the game, never a notification
+## (the daily tasks rule, plan 3500). "" without data.
+static func tomorrow_line(day: String = "") -> String:
+	if day.is_empty():
+		day = tomorrow_key()
+	var p: Dictionary = pick(day)
+	if p.is_empty():
+		return ""
+	var where: String = MapData.load_map(str(p.table)).display_name if MapData.exists(str(p.table)) else str(p.table).capitalize()
+	var n: int = DailyTasks.draw(day).size()
+	if n == 0:
+		return Loc.t("Tomorrow: a rare visitor stirs in %s.") % Loc.t(where)
+	return Loc.t("Tomorrow: a rare visitor stirs in %s. New daily tasks: %d.") % [Loc.t(where), n]

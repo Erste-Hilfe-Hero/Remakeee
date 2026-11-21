@@ -22,6 +22,10 @@ void ck_restore(int64_t req);
 void ck_request_review();
 void ck_url_install();
 char *ck_take_url();
+void ck_notify_set_callback(CKCallback cb);
+void ck_notify_request();
+void ck_notify_schedule(int64_t id, const char *title, const char *body, int64_t delay);
+void ck_notify_cancel_all();
 }
 
 using namespace godot;
@@ -39,7 +43,11 @@ protected:
 		ClassDB::bind_method(D_METHOD("restore", "req"), &ChimoraStoreKit::restore);
 		ClassDB::bind_method(D_METHOD("request_review"), &ChimoraStoreKit::request_review);
 		ClassDB::bind_method(D_METHOD("take_url"), &ChimoraStoreKit::take_url);
+		ClassDB::bind_method(D_METHOD("notify_request_permission"), &ChimoraStoreKit::notify_request_permission);
+		ClassDB::bind_method(D_METHOD("notify_schedule", "id", "title", "body", "delay"), &ChimoraStoreKit::notify_schedule);
+		ClassDB::bind_method(D_METHOD("notify_cancel_all"), &ChimoraStoreKit::notify_cancel_all);
 		ADD_SIGNAL(MethodInfo("billing_event", PropertyInfo(Variant::STRING, "json")));
+		ADD_SIGNAL(MethodInfo("notify_event", PropertyInfo(Variant::STRING, "json")));
 	}
 
 public:
@@ -51,6 +59,18 @@ public:
 			singleton->call_deferred("emit_signal", "billing_event", String::utf8(json));
 		}
 	}
+
+	// Opt-in local notifications (ChimoraNotify.swift, LocalNotify.gd, plan Chimora 100 item 76).
+	static void on_notify(const char *json) {
+		if (singleton) {
+			singleton->call_deferred("emit_signal", "notify_event", String::utf8(json));
+		}
+	}
+	void notify_request_permission() { ck_notify_request(); }
+	void notify_schedule(int64_t id, const String &title, const String &body, int64_t delay) {
+		ck_notify_schedule(id, title.utf8().get_data(), body.utf8().get_data(), delay);
+	}
+	void notify_cancel_all() { ck_notify_cancel_all(); }
 
 	void start(int64_t req) { ck_start(req); }
 	void query(const String &ids_json, int64_t req) { ck_query(ids_json.utf8().get_data(), req); }
@@ -87,6 +107,7 @@ static void initialize(ModuleInitializationLevel level) {
 	ChimoraStoreKit::singleton = memnew(ChimoraStoreKit);
 	Engine::get_singleton()->register_singleton("ChimoraStoreKit", ChimoraStoreKit::singleton);
 	ck_set_callback(&ChimoraStoreKit::on_event);
+	ck_notify_set_callback(&ChimoraStoreKit::on_notify);
 }
 
 static void uninitialize(ModuleInitializationLevel level) {

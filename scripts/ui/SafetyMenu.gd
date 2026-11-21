@@ -63,7 +63,7 @@ static func report(menu: MenuHost, kind: String, ref: int) -> void:
 		return
 	var r: Dictionary = await Online.call_fn("report_battle", {"p_kind": kind, "p_ref": str(ref), "p_reason": reason})
 	if _ok(r):
-		await menu.info(Loc.t("Thank you. Your report has number %d. We will look at it and tell you the result under Account, Messages from the team.") % int(r.data.get("report_id", 0)))
+		await menu.info(Loc.t("Thank you. Your report has number %d. We will look at it and tell you the result under Account, Team messages.") % int(r.data.get("report_id", 0)))
 	elif r.ok and r.data is Dictionary and str(r.data.get("error", "")) == "no_such_battle":
 		await menu.info("This battle was against your own echo, so there is nobody to report.")
 	else:

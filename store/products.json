@@ -1546,7 +1546,7 @@
    "desc_en": "Pick old-style colours for each era you reached. Only looks, no effect. Permanent.",
    "desc_de": "Wähle alte Farben für jede erreichte Epoche. Nur Optik, keine Wirkung. Dauerhaft.",
    "family_shareable": false,
-   "ready": true
+   "ready": false
   },
   {
    "product_id": "de.chimora.game.unlock.sky_control",
@@ -1559,7 +1559,7 @@
    "desc_en": "Switch weather and the day and night light on or off as you like. Only looks. Permanent.",
    "desc_de": "Schalte Wetter und das Tag-und-Nacht-Licht nach Belieben an oder aus. Nur Optik. Dauerhaft.",
    "family_shareable": false,
-   "ready": true
+   "ready": false
   },
   {
    "product_id": "de.chimora.game.unlock.bench_lessons",

@@ -1,0 +1,28 @@
+{
+ "_comment": "Polish texts for the German table c100_goal. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "+ seen  * bonded": "+ widziany  * Więź",
+  "A reward waits under Goals.": "W Celach czeka nagroda.",
+  "Daily tasks: %d of %d done.": "Zadania dnia: %d z %d zrobione.",
+  "Find Mirela's pages": "Strony Mireli",
+  "Go to the Map House": "Idź do Domu Map",
+  "Goal line: %s": "Linia celu: %s",
+  "Goal: %s": "Cel: %s",
+  "Meet Kestra at the dock": "Kestra w przystani",
+  "Mend the Rifts": "Napraw Szczeliny",
+  "Not yet visited.": "Jeszcze nie odwiedzone.",
+  "On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.": "Na stronie \"Widziany w\" wymienia każde miejsce, gdzie spotkano gatunek, także w walkach Wędrowców. \"Dziko w\" wymienia, gdzie żyje na wolności: + po miejscu znaczy, że spotkano go tam, ??? to miejsce jeszcze nieznalezione.",
+  "Photo, our Discord and your shortcuts.": "Zdjęcie, nasz Discord i twoje skróty.",
+  "See Aldo downstairs": "Zejdź do Aldo",
+  "Seen at: %s": "Widziany w: %s",
+  "Tap for every mark.": "Dotknij, by zobaczyć znaki.",
+  "Tell Aldo at home": "Powiedz Aldo",
+  "Welcome back, %s!": "Witaj z powrotem, %s!",
+  "Wild at: %s (%d of %d found)": "Dziko w: %s (%d z %d znalezione)",
+  "You are in %s.": "Jesteś w: %s.",
+  "Your next goal at the top and a mark on the way there. Tap the line to open Goals.": "Twój następny cel na górze i znak na drodze do niego. Dotknij linii, aby otworzyć Cele.",
+  "a Gleam of this kind was bonded": "Połysk tego gatunku jest w Więzi",
+  "a Gleam of this kind was seen": "widziano Połysk tego gatunku",
+  "bonded and grown to Ring 30": "w Więzi i urósł do Rangi 30"
+ }
+}

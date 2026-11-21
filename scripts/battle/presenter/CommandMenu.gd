@@ -403,7 +403,8 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 		lines.append(Loc.t("%s, %s") % [Loc.t(mv.element_label()), kind])
 	lines.append(Loc.t("Accuracy %d%%, %d Energy") % [roundi(mv.accuracy * 100.0), mv.energy_cost])
 	if mv.priority > 0:
-		lines.append(Loc.t("Acts before other arts."))
+		# The "^" in front of the art's name (item 595) is explained where it applies (plan item 50).
+		lines.append("^ " + Loc.t("Acts before other arts."))
 	if mv.is_area():
 		lines.append(Loc.t("Reaches every foe."))
 	if mv.overcharge:
@@ -536,6 +537,8 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 				line = TechniqueRules.info_line(fx)
 		if line.is_empty():
 			continue
+		if StringName(fx.get("id", "")) in ENERGY_THIEF_FX:
+			line = ENERGY_THIEF_MARK + " " + line
 		if chance < 1.0:
 			line = Loc.t("%d%% chance: %s") % [roundi(chance * 100.0), line]
 		lines.append(line)
@@ -707,7 +710,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			var mv: MoveData = me.moves[i]
 			var mult: float = GameState.known_art_multiplier(mv, foe) if foe != null else -1.0
 			# An art that acts first carries an arrow (item 595).
-			b.text = BattleComfort.fav_mark(me, mv) + art_marks(mv) + mv.move_name
+			b.text = BattleComfort.fav_mark(me, mv) + art_marks(mv) + Loc.t(mv.move_name)
 			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
 			var oc: float = overcharge_now(model, me, mv)
 			if pct > 0 and oc > 1.0:

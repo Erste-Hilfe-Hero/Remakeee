@@ -106,6 +106,9 @@ static func _place_kinds() -> Array[SpirlingData]:
 	return SpirlogBook.visible_kinds(GameState.flags).filter(func(sd: SpirlingData) -> bool: return not habitat_maps(sd.species_name).is_empty())
 
 ## Spirlog page line: places seen get their name and a "+", the others stay "???" (plan 3361).
+## It names the wild places only, next to "Seen at" (every place the kind was met, Wayfarer
+## battles included), so "Wild at: ??? (0 of 1 found)" no longer reads as a contradiction
+## (plan Chimora 100, item 42).
 static func places_line(species: String) -> String:
 	var all: Array[String] = habitat_maps(species)
 	if all.is_empty():
@@ -116,7 +119,7 @@ static func places_line(species: String) -> String:
 	var atlas: bool = ShopEffects.spirlog_atlas()
 	for id: String in all:
 		parts.append(Spirling.place_name(id) + " +" if id in seen else (Spirling.place_name(id) if atlas else "???"))
-	return Loc.t("Places: %s (%d of %d)") % [", ".join(parts), seen.size(), all.size()]
+	return Loc.t("Wild at: %s (%d of %d found)") % [", ".join(parts), seen.size(), all.size()]
 
 ## The art book (plan 3358): every learnable art, a "+" before each one used in battle.
 static func art_book_lines() -> Array[String]:

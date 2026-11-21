@@ -1,0 +1,27 @@
+# German texts for the goal line, goal doors, world map, pause menu More, Spirlog legend and the
+# Welcome back card (plan Chimora 100, items 37-44). Written to data/i18n/de/ by tools/i18n/build.py.
+T = {
+"See Aldo downstairs": "Aldo unten besuchen",
+"Go to the Map House": "Zum Kartenhaus",
+"Mend the Rifts": "Die Risse flicken",
+"Meet Kestra at the dock": "Zu Kestra am Steg",
+"Tell Aldo at home": "Aldo alles erzählen",
+"Find Mirela's pages": "Mirelas Seiten suchen",
+"Goal line: %s": "Zielzeile: %s",
+"Your next goal at the top and a mark on the way there. Tap the line to open Goals.": "Dein nächstes Ziel oben und ein Zeichen auf dem Weg dorthin. Tippe auf die Zeile, um die Ziele zu öffnen.",
+"+ seen  * bonded": "+ gesehen  * gebunden",
+"bonded and grown to Ring 30": "gebunden und bis Ring 30 gewachsen",
+"a Gleam of this kind was seen": "eine Glanzform dieser Art wurde gesehen",
+"a Gleam of this kind was bonded": "eine Glanzform dieser Art wurde gebunden",
+"Tap for every mark.": "Tippen für alle Zeichen.",
+"On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.": "Auf einer Seite nennt \"Gesehen in\" jeden Ort, an dem du der Art begegnet bist, Wandererkämpfe eingeschlossen. \"Wild in\" nennt, wo sie in freier Natur lebt: ein + hinter einem Ort heißt, du bist ihr dort begegnet, ??? ein Ort, den du noch nicht gefunden hast.",
+"Seen at: %s": "Gesehen in: %s",
+"Wild at: %s (%d of %d found)": "Wild in: %s (%d von %d gefunden)",
+"Welcome back, %s!": "Willkommen zurück, %s!",
+"You are in %s.": "Du bist in %s.",
+"Goal: %s": "Ziel: %s",
+"Daily tasks: %d of %d done.": "Tagesaufgaben: %d von %d erledigt.",
+"A reward waits under Goals.": "Unter Ziele wartet eine Belohnung.",
+"Photo, our Discord and your shortcuts.": "Foto, unser Discord und deine Kurzwahl.",
+"Not yet visited.": "Noch nicht besucht.",
+}

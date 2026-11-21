@@ -1,0 +1,29 @@
+{
+ "_comment": "German texts from tools/i18n/de_c100_goal.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "+ seen  * bonded": "+ gesehen  * gebunden",
+  "A reward waits under Goals.": "Unter Ziele wartet eine Belohnung.",
+  "Daily tasks: %d of %d done.": "Tagesaufgaben: %d von %d erledigt.",
+  "Find Mirela's pages": "Mirelas Seiten suchen",
+  "Go to the Map House": "Zum Kartenhaus",
+  "Goal line: %s": "Zielzeile: %s",
+  "Goal: %s": "Ziel: %s",
+  "Meet Kestra at the dock": "Zu Kestra am Steg",
+  "Mend the Rifts": "Die Risse flicken",
+  "Not yet visited.": "Noch nicht besucht.",
+  "On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.": "Auf einer Seite nennt \"Gesehen in\" jeden Ort, an dem du der Art begegnet bist, Wandererkämpfe eingeschlossen. \"Wild in\" nennt, wo sie in freier Natur lebt: ein + hinter einem Ort heißt, du bist ihr dort begegnet, ??? ein Ort, den du noch nicht gefunden hast.",
+  "Photo, our Discord and your shortcuts.": "Foto, unser Discord und deine Kurzwahl.",
+  "See Aldo downstairs": "Aldo unten besuchen",
+  "Seen at: %s": "Gesehen in: %s",
+  "Tap for every mark.": "Tippen für alle Zeichen.",
+  "Tell Aldo at home": "Aldo alles erzählen",
+  "Welcome back, %s!": "Willkommen zurück, %s!",
+  "Wild at: %s (%d of %d found)": "Wild in: %s (%d von %d gefunden)",
+  "You are in %s.": "Du bist in %s.",
+  "Your next goal at the top and a mark on the way there. Tap the line to open Goals.": "Dein nächstes Ziel oben und ein Zeichen auf dem Weg dorthin. Tippe auf die Zeile, um die Ziele zu öffnen.",
+  "a Gleam of this kind was bonded": "eine Glanzform dieser Art wurde gebunden",
+  "a Gleam of this kind was seen": "eine Glanzform dieser Art wurde gesehen",
+  "bonded and grown to Ring 30": "gebunden und bis Ring 30 gewachsen"
+ }
+}

@@ -199,10 +199,12 @@ func test_refunded_settings_fall_back() -> void:
 	assert_true(GameState.wild_ward)
 	Billing.state = {"unlocks": {}}
 	ShopEffects.apply_unlocks()
-	assert_eq(EraManager.retro_filter, 0)
-	assert_true(GameState.day_night)
-	assert_true(GameState.weather)
+	# Retro filter, Day and night and Weather are free since Chimora 100 item 68: they stay.
+	assert_eq(EraManager.retro_filter, EraManager.Era.INK)
+	assert_false(GameState.day_night)
+	assert_false(GameState.weather)
 	assert_false(GameState.wild_ward, "a refunded paid setting falls back")
 	# Fast text is free since Chimora 100 item 34: nothing to refund, it stays.
 	assert_eq(GameState.text_speed, GameState.TextSpeed.FAST)
+	EraManager.set_retro_filter(0)
 	GameState.settings_from_dict(_old_settings)

@@ -109,6 +109,22 @@ do $$ declare r jsonb; u uuid := '20000000-0000-0000-0000-00000000000a'; begin
   assert public._shop_credit('20000000-0000-0000-0000-00000000000c', 'google', 'G-kid', 'de.chimora.game.glass.100', 99)->>'error' = 'age';
 end $$;
 
+-- Offers no longer sold (ready false: rg_fast_text since v37, rg_sky_control and rg_retro_filter
+-- since v38, Chimora 100 items 34 and 68) still credit a restored store receipt, so buyers keep
+-- their unlock. The fixture purchases are removed again so the later counts stay as they were.
+do $$ declare r jsonb; u uuid := '20000000-0000-0000-0000-00000000000a'; begin
+  assert not (select (data->>'ready')::boolean from public.shop_offers where id = 'rg_sky_control');
+  assert not (select (data->>'ready')::boolean from public.shop_offers where id = 'rg_retro_filter');
+  r := public._shop_credit(u, 'apple', 'A-restore-sky', 'de.chimora.game.unlock.sky_control', 299);
+  assert (r->>'ok')::boolean, 'restore of a retired offer: ' || r::text;
+  r := public._shop_credit(u, 'google', 'G-restore-retro', 'de.chimora.game.unlock.retro_filter', 199);
+  assert (r->>'ok')::boolean, 'restore of a retired offer: ' || r::text;
+  assert exists (select 1 from public.entitlements where user_id = u and key = 'sky_control');
+  assert exists (select 1 from public.entitlements where user_id = u and key = 'retro_filter');
+  delete from public.entitlements where user_id = u and key in ('sky_control', 'retro_filter');
+  delete from public.purchases where store_transaction_id in ('A-restore-sky', 'G-restore-retro');
+end $$;
+
 set role authenticated;
 select pg_temp.as_user('20000000-0000-0000-0000-00000000000a');
 do $$ declare r jsonb; c jsonb; begin

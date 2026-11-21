@@ -16,13 +16,13 @@
    "item": "strong_tonic",
    "price": 20,
    "stock": 5,
-   "tier": "base"
+   "tier": "early"
   },
   {
    "item": "remedy",
    "price": 10,
    "stock": 5,
-   "tier": "base"
+   "tier": "early"
   },
   {
    "item": "revival_leaf",

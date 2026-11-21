@@ -1,0 +1,12 @@
+{
+ "_comment": "Turkish texts for the German table c100_notify. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "%s is back from the roaming trip.": "%s geziden döndü.",
+  "A new Find of the Day is waiting in Veydal.": "Veydal'da yeni bir Günün Bulgusu bekliyor.",
+  "Chimora can send a short note on this phone when a roaming trip is over or a new Find of the Day is waiting. Never at night, at most one a day each. You can turn it off any time in Settings.": "Chimora, bir gezi bittiğinde ya da yeni bir Günün Bulgusu beklediğinde bu telefona kısa bir bildirim gönderebilir. Asla gece değil, her türden günde en fazla bir tane. Ayarlar'dan istediğin zaman kapatabilirsin.",
+  "Turn on notifications?": "Bildirimler açılsın mı?",
+  "Notifications are off unless you turn them on. They are planned on this phone only; nothing about them is sent anywhere.": "Bildirimler sen açmadıkça kapalıdır. Yalnızca bu telefonda planlanır; hiçbir yere bir şey gönderilmez.",
+  "Notifications: %s": "Bildirimler: %s",
+  "A note on this phone when a trip is over or a new Find of the Day waits. If the phone blocks it, allow it in the phone settings.": "Bir gezi bittiğinde ya da yeni bir Günün Bulgusu beklediğinde bu telefonda bir bildirim. Telefon engellerse telefon ayarlarından izin ver."
+ }
+}

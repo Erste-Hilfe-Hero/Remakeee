@@ -2,15 +2,17 @@ class_name ReconnectOverlay
 extends CanvasLayer
 ## "Connection lost" screen over everything while the game is playing (item 7). The game is
 ## paused underneath and nothing is lost; Online keeps retrying and hides this when it is back.
-## Short drops under SHORT_DROP seconds only show a small mark in the top right corner (item
-## 2150). The big screen counts the tries, says when the next one comes, has "Try now" and,
-## after a minute, "To title" (item 2147).
+## Short drops under SHORT_DROP seconds only show a small mark at the top centre (item 2150).
+## The big screen counts the tries, says when the next one comes, has "Try now" and, after a
+## minute, "To title" (item 2147).
 
 signal try_now
 signal to_title
 
 ## Seconds without connection before the big screen and the pause.
 const SHORT_DROP: float = 3.0
+## Width of the small mark.
+const MARK_W: float = 18.0
 ## Seconds before "To title" appears.
 const TITLE_AFTER: float = 60.0
 ## The big screen fades in and out in 0.2 s and leaves the game at 60 % brightness (item 2291).
@@ -33,10 +35,13 @@ func _ready() -> void:
 	_mark = Label.new()
 	_mark.theme = UITheme.get_theme()
 	_mark.text = "(!)"
-	_mark.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	_mark.offset_left = -18
-	_mark.offset_top = 2
-	_mark.offset_right = -2
+	# Top centre on the menu frame, above the title text: in the top right corner it covered
+	# every list's Back button (Chimora 100, item 56).
+	_mark.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	_mark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_mark.offset_left = -MARK_W / 2.0
+	_mark.offset_right = MARK_W / 2.0
+	_mark.offset_top = 0
 	_mark.add_theme_stylebox_override("normal", UITheme.flat_style(UITheme.BG, UITheme.INK))
 	_mark.accessibility_name = "Connection lost. Reconnecting."
 	add_child(_mark)
@@ -92,6 +97,8 @@ func update_view(tries: int, next_in: float, offline_for: float) -> void:
 	# and the pause come once it is over, and its result is sent when the connection is back.
 	var big: bool = offline_for >= SHORT_DROP and not Online.in_battle
 	_mark.visible = not big
+	if _mark.is_inside_tree():
+		_mark.offset_top = SafeArea.rect(_mark.get_viewport().get_visible_rect().size).position.y
 	if big and (not _root.visible or _closing):
 		if not _root.visible:
 			_root.modulate.a = 0.0

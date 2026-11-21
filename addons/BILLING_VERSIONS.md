@@ -30,3 +30,12 @@ Plugin `ChimoraReview` (source `plugins/chimora_review/android`, built by
 It adds no permission and no install code. `scripts/online/ReviewAsk.gd` decides when it is asked
 (plan Chimora 100, item 75); on iOS the same script asks `ChimoraStoreKit.request_review`
 (`AppStore.requestReview(in:)`, item 74).
+## Local notifications
+
+Plugin `ChimoraNotify` (source `plugins/chimora_notify/android`, built by `tools/build_notify_plugin.sh` into
+`addons/chimora_notify/bin/`, CI only) uses `androidx.core:core:1.13.1` for NotificationCompat (AndroidX, already in
+every Godot app through the engine's androidx.fragment). It adds `POST_NOTIFICATIONS` (asked at runtime on Android 13+
+only after the player said yes in the game), an inexact `AlarmManager.set` per note and a non-exported receiver;
+no exact-alarm, boot or install permission, no network. On iOS the same calls go to `ChimoraStoreKit.notify_*`
+(`ChimoraNotify.swift`, UNUserNotificationCenter). `scripts/core/LocalNotify.gd` decides what and when
+(plan Chimora 100, item 76).

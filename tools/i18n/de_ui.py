@@ -17,7 +17,7 @@ T = {
 "Volume: %d%%": "Lautstärke: %d%%", "Music: %d%%": "Musik: %d%%", "Sound effects: %d%%": "Soundeffekte: %d%%",
 "Tips: %s": "Tipps: %s",
 "Touch controls...": "Touch-Steuerung...", "Touch controls": "Touch-Steuerung",
-"Display and access...": "Anzeige, Zugang ...", "Display and access": "Anzeige und Zugang",
+"Display and access...": "Anzeige, Zugang...", "Display and access": "Anzeige und Zugang",
 "Battery saver (30 FPS): %s": "Akkusparmodus (30 FPS): %s",
 "Reduce motion and flashes: %s": "Weniger Bewegung und Blitze: %s",
 "High contrast menus: %s": "Kontrastreiche Menüs: %s",
@@ -29,7 +29,7 @@ T = {
 "Music": "Musik", "Sound effects": "Soundeffekte", "Cries": "Rufe",
 "Sound test...": "Soundtest...", "Sound test": "Soundtest", "Meet a Spirling to hear its cry.": "Triff einen Spirling, um seinen Ruf zu hören.",
 # Pause menu
-"Goals": "Ziele", "Team": "Team", "Spirlog": "Spirlog", "Satchel": "Umhängetasche", "Save": "Speichern",
+"Goals": "Ziele", "Team": "Team", "Spirlog": "Spirlog", "Satchel": "Tasche", "Save": "Speichern",
 "Storage": "Lager", "Travel": "Reisen",
 "Game saved.": "Spiel gespeichert.", "Saving failed.": "Speichern fehlgeschlagen.",
 "%s   %d coins": "%s   %d Münzen", "   Ring limit %d": "   Ringgrenze %d",
@@ -91,6 +91,8 @@ T = {
 # Overworld
 "Today's visitor in %s has been met. Another arrives tomorrow.": "Den heutigen Besucher in %s hast du getroffen. Morgen kommt ein neuer.",
 "Today: a rare visitor stirs in %s.": "Heute: In %s regt sich ein seltener Besucher.",
+"Tomorrow: a rare visitor stirs in %s.": "Morgen: In %s regt sich ein seltener Besucher.",
+"Tomorrow: a rare visitor stirs in %s. New daily tasks: %d.": "Morgen: In %s regt sich ein seltener Besucher. Neue Tagesaufgaben: %d.",
 "You can't go that way yet.": "Da kommst du noch nicht weiter.", "You can't cross here yet.": "Hier kommst du noch nicht hinüber.",
 "The grass rustles strangely... A rare visitor!": "Das Gras raschelt seltsam... Ein seltener Besucher!",
 "New goal: %s": "Neues Ziel: %s", "New goal: ": "Neues Ziel: ",

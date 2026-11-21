@@ -51,6 +51,10 @@ var _phase_icon: PhaseIcon
 ## Plain weather dots and veil (area 3 item 1144).
 var weather_layer: WeatherLayer
 var minimap: Minimap
+## The current goal in one line at the top (Act I) and the marks on the doors toward it
+## (plan Chimora 100, items 37 and 38).
+var goal_line: GoalLine
+var goal_marks: GoalMarks
 ## Top-of-screen notes (badges, daily tasks).
 var toast: Toast
 var _fade: ColorRect
@@ -229,6 +233,8 @@ func _build() -> void:
 	var hint := InteractHint.new()
 	hint.ow = self
 	add_child(hint)
+	goal_marks = GoalMarks.new()
+	add_child(goal_marks)
 	_camera = Camera2D.new()
 	_camera.position_smoothing_enabled = false
 	add_child(_camera)
@@ -262,6 +268,9 @@ func _build() -> void:
 	DayCycle.events.phase_changed.connect(_on_phase_changed)
 	minimap = Minimap.new()
 	_ui_root.add_child(minimap)
+	goal_line = GoalLine.new()
+	goal_line.ow = self
+	_ui_root.add_child(goal_line)
 	# Speed-run clock, only when switched on for the journey (KAMPF plan 507).
 	_ui_root.add_child(RunTimer.new())
 	_door_wipe = ColorRect.new()
@@ -478,6 +487,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		GameState.set_flag(goal_flag(map.id))
 		_era_line_after_load.call_deferred(map.goal)
 	refresh_minimap()
+	refresh_goal_marks()
 	var arrive: String = StoryPlacements.enter_scene(map_id, GameState.flags)
 	if not arrive.is_empty():
 		_arrival_scene.call_deferred(arrive)
@@ -704,6 +714,19 @@ func refresh_minimap() -> void:
 		if _is_active_trainer(n):
 			trainers.append(n.cell)
 	minimap.refresh(map, player.cell if player != null else GameState.player_cell, trainers)
+
+## Marks the doors and exits toward the current goal on the map and the minimap (item 38);
+## none once Settings > Game > Goal line is off or the goal has no place to walk to.
+func refresh_goal_marks() -> void:
+	if map == null or goal_marks == null:
+		return
+	var cells: Array[Vector2i] = []
+	if GameState.goal_line:
+		cells = QuestLog.goal_warps(map, QuestLog.goal_maps(GameState.flags))
+	goal_marks.show_cells(map, cells)
+	if minimap != null:
+		minimap.goal_cells = cells
+		minimap.queue_redraw()
 
 func _show_banner(text: String) -> void:
 	_banner.text = "    %s " % text
@@ -1668,7 +1691,12 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.visit_rest(map.id, map.heal_point)
 	Online.contribute("rests")
 	DailyTasks.record("rest", {"map": map.id})
-	await say(["Your team is fully rested."] as Array[String])
+	var rested: Array[String] = ["Your team is fully rested."]
+	# What tomorrow brings (Chimora 100, item 71).
+	var tomorrow: String = DailyFind.tomorrow_line()
+	if not tomorrow.is_empty():
+		rested.append(tomorrow)
+	await say(rested)
 	var cap_lines: Array[String] = ChallengeRules.rest_lines()
 	if not cap_lines.is_empty():
 		await say(cap_lines)
@@ -3304,6 +3332,8 @@ func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
 		if Expeditions.send(ready[who], hours, dest):
 			DailyTasks.record("trip", {"map": map.id})
 			await menu.info(Loc.t("%s sets off. Back in %d hours.") % [ready[who].display_name(), hours])
+			# The one opt-in question for phone notes (plan Chimora 100, item 76), only where they exist.
+			await LocalNotify.offer(menu)
 	menu.queue_free()
 
 ## Seasonal festival (item 89): the crier names the festival and hands out its gift once a year.

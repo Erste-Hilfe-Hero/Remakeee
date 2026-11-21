@@ -236,7 +236,7 @@ static func summary_section(s: Spirling, key: String, leader: bool = false) -> S
 			lines.append("%s  (%s)" % [s.display_name(), s.data.species_name])
 			lines.append("%s   %s" % ["/".join(els), Loc.t("Ring %d" % s.level)])
 			if not s.origin_map.is_empty():
-				lines.append(Loc.t("Met in %s at Ring %d") % [Loc.t(Spirling.place_name(s.origin_map)), maxi(s.met_ring, 1)])
+				lines.append(Loc.glue_last(Loc.t("Met in %s at Ring %d") % [Loc.t(Spirling.place_name(s.origin_map)), maxi(s.met_ring, 1)]))
 			var tm: Dictionary = s.temperament()
 			lines.append(Loc.t("Temperament: %s" % tm.label) + "\n" + Loc.t(str(tm.text)))
 			var tr: Dictionary = BattleRules.trait_info(s.gift_id())
@@ -249,7 +249,7 @@ static func summary_section(s: Spirling, key: String, leader: bool = false) -> S
 		"stats":
 			lines.append("%s  %s" % [s.display_name(), Loc.t("Ring %d" % s.level)])
 			lines.append(Loc.t("Vigor %d/%d" % [s.hp, s.max_hp()]) + ("  " + Loc.t("worn out") if s.is_fainted() else ""))
-			lines.append(Loc.t("Growth to next ring %d" % s.xp_to_next()))
+			lines.append(Loc.glue_last(Loc.t("Growth to next ring %d" % s.xp_to_next())))
 			lines.append(Loc.t("Might %d" % s.atk()))
 			lines.append(Loc.t("Guard %d" % s.def()))
 			lines.append(Loc.t("Focus %d" % s.foc()))
@@ -259,7 +259,7 @@ static func summary_section(s: Spirling, key: String, leader: bool = false) -> S
 			for mv: MoveData in s.moves:
 				var power: String = "-" if mv.power <= 0 else str(mv.power)
 				lines.append("%s\n  %s  %s  %s" % [Loc.t(mv.move_name), Loc.t(Elements.element_name(mv.element)),
-					Loc.t("Power %s" % power), Loc.t("Energy %d" % mv.energy_cost)])
+					Loc.glue(Loc.t("Power %s" % power)), Loc.glue(Loc.t("Energy %d" % mv.energy_cost))])
 		"marks":
 			var ms: Array[Dictionary] = marks(s, leader)
 			lines.append(Loc.t("Honours (%d)") % ms.size())

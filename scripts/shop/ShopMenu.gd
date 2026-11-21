@@ -72,9 +72,41 @@ static func run_help(menu: Node) -> void:
 	if await menu.pick_strings(text, ["Open the page", "Back"] as Array[String]) == 0:
 		OS.shell_open(url)
 
-## "Shop  Riftglass 500 (≈ 4,95 €)" (item 4183).
+## "Shop" over "500 Riftglass (≈ 4,95 €)" (item 4183).
 static func title() -> String:
-	return Loc.t("Shop") + "\n" + ShopCatalog.rg_text(Billing.balance())
+	return Loc.t("Shop") + "\n" + balance_text()
+
+## The title of tab [param tab]: its name over the balance. The Riftglass tab shows only the
+## balance, which names Riftglass already ("Riftglass 0 Riftglass" read twice, item 60).
+static func tab_title(tab: String) -> String:
+	if tab == "riftglass":
+		return balance_text()
+	return Loc.t(ShopCatalog.TAB_NAMES[tab]) + "\n" + balance_text()
+
+## Offline, before the server sent the shop state.
+const BALANCE_OFFLINE: String = "Riftglass: offline"
+
+## "500 Riftglass (≈ 4,95 €)" on one line when it fits the title, else the euro value on its own
+## line, never broken inside the brackets ("(≈ 1,18" / "€)", item 60). Offline it says so instead
+## of a false 0 (item 56).
+static func balance_text(width: float = -1.0) -> String:
+	if not Billing.state.has("balance"):
+		return Loc.t(BALANCE_OFFLINE)
+	var rg: int = Billing.balance()
+	var amount: String = Loc.t("%d Riftglass") % rg
+	var euro: String = "(" + ShopCatalog.euro_hint(rg) + ")"
+	var w: float = width if width > 0.0 else title_width()
+	var f: Font = UITheme.font()
+	var one: String = amount + " " + euro
+	if f.get_string_size(one, HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x <= w:
+		return one
+	return amount + "\n" + euro
+
+## Width of a list title on this screen (left of the Back button).
+static func title_width() -> float:
+	var tree: SceneTree = Engine.get_main_loop() as SceneTree
+	var vp: float = tree.root.get_visible_rect().size.x if tree != null else 144.0
+	return vp - MenuHost.PANEL_MARGIN * 2.0 - ListPicker.BACK_SIZE - 12.0
 
 static func _query_prices() -> void:
 	var ids: Array[String] = []
@@ -88,7 +120,11 @@ static func row_price(o: Dictionary) -> String:
 	if int(o.get("rg_price", 0)) > 0:
 		return Loc.t("%d Riftglass") % int(o.rg_price)
 	var p: String = Billing.price_text(o)
-	return p if not p.is_empty() else "-"
+	return p if not p.is_empty() else NO_PRICE
+
+## The price mark of an offer whose store price has not come.
+const NO_PRICE: String = "-"
+const NO_PRICE_HINT: String = "-: the store has not sent this price yet. Try again in a moment."
 
 static func row_text(o: Dictionary) -> String:
 	return (ADVANTAGE_MARK if ShopCatalog.is_advantage(o) else "") + Loc.t(str(o.name)) + "  " + row_price(o)
@@ -115,6 +151,9 @@ static func offer_row(o: Dictionary, lay: Dictionary) -> Dictionary:
 		"disabled": Billing.block_reason(o, int(o.get("rg_price", 0)) > 0) in ["offer_limit", "not_yet", "tier_order"]}
 	# The name gives way to the price, never the other way round (bug sweep 2).
 	var price: String = row_price(o)
+	# "-": the store sent no price (yet); the line under the list says why (item 60).
+	if price == NO_PRICE:
+		row["hint"] = Loc.t(NO_PRICE_HINT) + ("\n" + hint if not hint.is_empty() else "")
 	row["text"] = (ADVANTAGE_MARK if ShopCatalog.is_advantage(o) else "") + Loc.t(str(o.name))
 	row["say"] = price
 	row["right"] = price
@@ -156,7 +195,13 @@ static func _run_tab(menu: MenuHost, tab: String) -> void:
 		var entries: Array[Dictionary] = []
 		for o: Dictionary in list:
 			entries.append(offer_row(o, EraMenus.layout(EraManager.active_era(), "shop")))
-		var idx: int = await menu.pick_screen("shop", Loc.t(ShopCatalog.TAB_NAMES[tab]) + "  " + ShopCatalog.rg_text(Billing.balance()), entries)
+		# What the best next tier would add (plan point 60) lives here, not in the Team title
+		# (Chimora 100, item 67): adults only, a note in the info panel, no button.
+		var opts: Dictionary = {}
+		var next_power: String = ShopEffects.next_power_line() if tab == "advantages" else ""
+		if not next_power.is_empty():
+			opts["panel_text"] = next_power
+		var idx: int = await menu.pick_screen("shop", tab_title(tab), entries, opts)
 		if idx < 0:
 			return
 		await _run_offer(menu, list[idx])

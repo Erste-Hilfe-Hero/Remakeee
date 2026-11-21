@@ -701,7 +701,8 @@ func test_riftglass_packs_say_they_have_no_money_value() -> void:
 	assert_string_contains(ShopMenu.detail_text(ShopCatalog.offer("rg_glass_100")), Loc.t(ShopMenu.RG_NO_VALUE))
 	assert_false(Loc.t(ShopMenu.RG_NO_VALUE) in ShopMenu.detail_text(ShopCatalog.offer("rg_hat_tricorn")))
 	var src: String = FileAccess.get_file_as_string("res://scripts/ui/TitleScreen.gd")
-	assert_string_contains(src, "Loc.t(IAP_NOTE)", "the title screen says the game has in-app purchases")
+	assert_false("IAP_NOTE" in src, "no in-app purchase banner on the title art (Chimora 100, item 69)")
+	assert_string_contains(ShopMenu.ABOUT_TEXT, "Chimora is free.", "the shop still says the game is free")
 
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
