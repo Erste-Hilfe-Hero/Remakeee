@@ -1070,11 +1070,18 @@ func announce_goal_if_changed(before: int) -> void:
 		var sp := ScenePlayer.new()
 		sp.overworld = self
 		add_child(sp)
-		await sp.play("chapter_card", {"skippable": false, "steps": [{"card": card[0], "title": card[1] if card.size() > 1 else ""}]})
+		# Skippable like every scene (Chimora 100 item 30): Skip or a tap ends the card.
+		await sp.play("chapter_card", {"skippable": true, "steps": [{"card": card[0], "title": card[1] if card.size() > 1 else ""}]})
 		sp.queue_free()
 		busy = true
 		player.frozen = true
 	await say(["New goal: " + QuestLog.goal_text(QuestLog.current(GameState.flags), GameState.flags)] as Array[String])
+	# Before the Wayfarer first walks free the goals tip waits for the next map change, so the
+	# start stays short (Chimora 100 item 26); afterwards it follows the new goal at once.
+	if not GameState.has_flag(FIRST_WALK_FLAG):
+		if Tips.pending("goals") and not "goals" in waiting_tips:
+			waiting_tips.append("goals")
+		return
 	var tip: Array[String] = Tips.take("goals")
 	if not tip.is_empty():
 		await say(tip)
@@ -2095,10 +2102,18 @@ func prologue() -> void:
 	while not GameState.has_flag("got_starter"):
 		await run_dialogue("lighthouse/morning")
 	await run_dialogue("lighthouse/aldo")
-	# Saved right after the prologue, and the tip says saving also works in the menu (1988).
+	GameState.set_flag(FIRST_WALK_FLAG)
+	# Saved right after the prologue (1988). The tip that saving also works in the menu waits
+	# for the next map change, so the Wayfarer walks at once (Chimora 100 item 26).
 	SaveManager.save_game()
-	await _locked_say(Tips.take("save"))
+	if Tips.pending("save") and not "save" in waiting_tips:
+		waiting_tips.append("save")
 	show_walk_hint()
+
+## Set when the prologue hands over the controls (the start may show at most
+## START_TEXT_BOXES text boxes before it, tests/unit/test_start_flow.gd).
+const FIRST_WALK_FLAG: String = "first_walk"
+const START_TEXT_BOXES: int = 10
 
 ## One line per starter under the partner list, so the choice is not made blind (onboarding).
 const STARTER_HINTS: Dictionary[String, String] = {
@@ -2108,13 +2123,39 @@ const STARTER_HINTS: Dictionary[String, String] = {
 }
 const STARTER_TITLE: String = "Pick your partner"
 
-## The partner list: name and element per row, a short description as the row's hint.
+## The partner list: name and element per row with the Spirling's picture, a short description
+## as the row's hint.
 static func starter_rows() -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for sp: String in Database.STARTERS:
 		out.append({"text": "%s (%s)" % [sp, Elements.element_name(Database.species(sp).elements[0])],
-			"hint": Loc.t(str(STARTER_HINTS.get(sp, "")))})
+			"hint": Loc.t(str(STARTER_HINTS.get(sp, ""))), "icon": MiniSprite.of(sp, 14)})
 	return out
+
+## Size of each partner picture above the list (Chimora 100 item 32).
+const STARTER_SPRITE: int = 40
+
+## The three partners side by side above the list, so the choice is seen, not only read.
+static func starter_header() -> Control:
+	var box := HBoxContainer.new()
+	box.name = "starter_header"
+	box.alignment = BoxContainer.ALIGNMENT_CENTER
+	box.add_theme_constant_override("separation", 2)
+	for sp: String in Database.STARTERS:
+		var r := TextureRect.new()
+		r.texture = MiniSprite.of(sp, STARTER_SPRITE)
+		r.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		r.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+		r.custom_minimum_size = Vector2(STARTER_SPRITE, STARTER_SPRITE)
+		box.add_child(r)
+	return box
+
+## The question after a pick: short, so it stays the list title in every language (a longer
+## one opened a tap-to-read text first).
+const STARTER_ASK: String = "%s curls up at your feet. Let it stay?"
+
+## Said once the partner stays: one text box (Chimora 100 item 26).
+const STARTER_STAY_LINE: String = "%s stays with you! The other two slip off to the lake."
 
 ## "choose_starter": the three Spirlings that sheltered from the storm; one stays.
 func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -2123,15 +2164,17 @@ func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	while true:
+		menu.picker.set_header(starter_header())
 		var pick: int = await menu.pick(STARTER_TITLE, starter_rows(), false)
+		menu.picker.set_header(null)
 		var sd: SpirlingData = Database.species(Database.STARTERS[pick])
-		if await menu.confirm("%s, the %s Spirling, curls up at your feet. Let it stay?" % [sd.species_name, Elements.element_name(sd.elements[0])]):
+		# Yes or No only: a Back row would say the same as No (Chimora 100 item 32).
+		if await menu.pick_strings(STARTER_ASK % sd.species_name, ["Yes", "No"] as Array[String], false) == 0:
 			GameState.choose_starter(sd.species_name)
 			break
 	menu.queue_free()
 	Sound.sfx("level_up")
-	await say(["%s decided to stay with you!" % GameState.starter,
-		"The other two slip out into the morning, toward the lake."] as Array[String])
+	await say([STARTER_STAY_LINE % GameState.starter] as Array[String])
 
 ## Mirela's map book has 14 pages: 1-6 in Veydal (Act I), 7-10 in Corvane, 11-14 in Ashmere.
 const PAGE_COUNT: int = 14

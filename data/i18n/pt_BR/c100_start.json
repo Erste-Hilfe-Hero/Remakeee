@@ -1,0 +1,32 @@
+{
+ "_comment": "Texts for the German table c100_start in this language. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "%s curls up at your feet. Let it stay?": "%s se enrosca aos seus pés. Deixa ficar?",
+  "%s stays with you! The other two slip off to the lake.": "%s fica com você! Os outros dois escapam para o lago.",
+  "'Our cartographers have drawn and redrawn Veydal for a hundred years. Now the Hush: Spirlings near a Rift go quiet and forget their Wayfarers.'": "'Nossos cartógrafos desenham e redesenham Veydal há cem anos. Agora o Silêncio: os Spirlings perto de uma Fenda se calam e esquecem seus Viajantes.'",
+  "Aldo: Good. The Rifts bring the Hush: Spirlings there go quiet.": "Aldo: Bom. As Fendas trazem o Silêncio: os Spirlings ali se calam.",
+  "Aldo: Take this, and go see Kestra at the map house.": "Aldo: Pegue isto e vá falar com Kestra na Casa dos Mapas.",
+  "Aldo: The storm scattered Mirela's map book. Bring her pages home.": "Aldo: A tempestade espalhou o livro de mapas da Mirela. Traga as páginas.",
+  "Aldo: Three Spirlings came in from the storm. Go say hello!": "Aldo: Três Spirlings entraram fugindo da tempestade. Vá dar oi!",
+  "Coat: %s": "Casaco: %s",
+  "Gentle battles, more Growth.": "Batalhas leves, mais Crescimento.",
+  "Hair: %s": "Cabelo: %s",
+  "I have a code": "Tenho um código",
+  "In the margin, in Aldo's hand: 'Your grandmother went in to map that Rift before you were born. She never came back.'": "Na margem, com a letra de Aldo: 'Sua avó entrou naquela Fenda para mapeá-la antes de você nascer. Ela nunca voltou.'",
+  "Keyboard": "Teclado",
+  "Last night a storm tore the sky. Rifts opened over Veydal.": "Ontem à noite uma tempestade rasgou o céu. Fendas se abriram sobre Veydal.",
+  "OK": "OK",
+  "Online only: your journeys are safe on our server. No ads, no tracking.": "Só online: suas jornadas ficam seguras no nosso servidor. Sem anúncios, sem rastreio.",
+  "Random": "Aleatório",
+  "Relaxed": "Tranquilo",
+  "Ring limits, smarter foes.": "Limites de Anel, rivais espertos.",
+  "Skin: %s": "Pele: %s",
+  "The journey as it is meant to be.": "A jornada como foi pensada.",
+  "Three small lights crossed the lake to the lighthouse lamp.": "Três luzinhas cruzaram o lago até a luz do farol.",
+  "Tough": "Difícil",
+  "Watch the marks light up, then press them in the same order.": "Veja quais marcas acendem e aperte-as na mesma ordem.",
+  "Watch the marks light up, then tap them in the same order.": "Veja quais marcas acendem e toque nelas na mesma ordem.",
+  "Wayfarer: %s": "Viajante: %s",
+  "You can change it later in Settings.": "Você pode mudar depois em Ajustes."
+ }
+}

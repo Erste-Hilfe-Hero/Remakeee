@@ -554,12 +554,9 @@ func locked_setting(key: String) -> bool:
 	toast("In the shop: %s" % ShopEffects.setting_offer_name(key))
 	return true
 
-## Next text speed; Fast only with the shop's Fast Text.
+## Next text speed: Slow, Normal, Fast and around (Fast is free, Chimora 100 item 34).
 static func next_text_speed(current: int) -> GameState.TextSpeed:
-	var next: int = (current + 1) % GameState.TextSpeed.size()
-	if next == GameState.TextSpeed.FAST and not ShopEffects.owns_setting("fast_text"):
-		next = GameState.TextSpeed.SLOW
-	return next as GameState.TextSpeed
+	return ((current + 1) % GameState.TextSpeed.size()) as GameState.TextSpeed
 
 func _settings_action(key: String, dir: int = 1) -> void:
 	if key in ShopEffects.SETTING_UNLOCKS and locked_setting(key):
@@ -1144,6 +1141,22 @@ func _draw_info_bar() -> void:
 	var r: Rect2 = info_bar_rect()
 	if r.size.y > 0.0:
 		_info_bar.draw_rect(r, UITheme.MID)
+	var cue: Rect2 = info_more_cue_rect()
+	if cue.size.x > 0.0:
+		_info_bar.draw_rect(cue.grow(1.0), UITheme.BG)
+		_info_bar.draw_colored_polygon(PackedVector2Array([cue.position, cue.position + Vector2(cue.size.x, 0),
+			cue.position + Vector2(cue.size.x / 2.0, cue.size.y)]), UITheme.INK)
+
+## Size of the arrow at the bottom of an info text that goes on below (Chimora 100 item 52).
+const INFO_MORE_CUE: Vector2 = Vector2(7, 4)
+
+## Where the "more below" arrow is drawn: bottom centre of the text window while the text goes
+## on below it, else empty. A cut sentence then always has a sign that there is more.
+func info_more_cue_rect() -> Rect2:
+	if not _info_panel.visible or not info_has_more():
+		return Rect2()
+	var bottom: float = _info_scroll.position.y + _info_scroll.get_parent_control().position.y + _info_scroll.size.y
+	return Rect2(Vector2(roundf((_info_bar.size.x - INFO_MORE_CUE.x) / 2.0), bottom - INFO_MORE_CUE.y - 1), INFO_MORE_CUE)
 
 ## "(tap to continue)" in the words of the device used last (item 1841).
 const CONTINUE_HINTS: Dictionary[String, String] = {"touch": "(tap to continue)", "pad": "(A: continue)", "keys": "(Enter: continue)"}

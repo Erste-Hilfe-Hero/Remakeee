@@ -412,7 +412,7 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_gift_cards` | Gift Cards: 8 Motifs | 3,99 € | 400 | Kosmetik | überall sichtbar, keine Wirkung |
 | `rg_damage_preview` | Damage Preview | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
 | `rg_minimap` | Minimap | 2,99 € | 300 | Vorteil | keine Liga-Wirkung |
-| `rg_fast_text` | Fast Text | 1,99 € | 200 | Komfort | keine Liga-Wirkung |
+| `rg_fast_text` | Fast Text | - | - | nicht mehr verkauft | Schnelltext ist seit Chimora 100 Punkt 34 gratis (Katalog v37, `ready: false`); wer es gekauft hat, verliert nichts |
 | `rg_retro_filter` | Retro Filter | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
 | `rg_sky_control` | Sky Control | 2,99 € | 300 | Komfort | keine Liga-Wirkung |
 | `rg_bench_lessons` | Bench Lessons | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |

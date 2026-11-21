@@ -1,0 +1,32 @@
+{
+ "_comment": "Texts for the German table c100_start in this language. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "%s curls up at your feet. Let it stay?": "%s(이)가 발치에 웅크렸다. 함께할까?",
+  "%s stays with you! The other two slip off to the lake.": "%s(이)가 함께하기로 했다! 나머지 둘은 호수로 사라졌다.",
+  "'Our cartographers have drawn and redrawn Veydal for a hundred years. Now the Hush: Spirlings near a Rift go quiet and forget their Wayfarers.'": "'우리 지도 제작자들은 백 년 동안 Veydal을 그리고 또 고쳐 그렸다. 이제는 고요. 균열 근처의 Spirling은 목소리를 잃고 나그네를 잊는다.'",
+  "Aldo: Good. The Rifts bring the Hush: Spirlings there go quiet.": "Aldo: 좋아. 균열은 고요를 부르지. 그곳의 Spirling은 목소리를 잃는단다.",
+  "Aldo: Take this, and go see Kestra at the map house.": "Aldo: 이걸 가지고 지도의 집에 있는 Kestra를 만나 보거라.",
+  "Aldo: The storm scattered Mirela's map book. Bring her pages home.": "Aldo: 폭풍에 Mirela의 지도책이 흩어졌다. 페이지를 찾아 가져오렴.",
+  "Aldo: Three Spirlings came in from the storm. Go say hello!": "Aldo: 폭풍을 피해 Spirling 셋이 들어왔단다. 가서 인사하렴!",
+  "Coat: %s": "코트: %s",
+  "Gentle battles, more Growth.": "순한 전투, 성장 더 많이.",
+  "Hair: %s": "머리: %s",
+  "I have a code": "코드가 있어요",
+  "In the margin, in Aldo's hand: 'Your grandmother went in to map that Rift before you were born. She never came back.'": "여백에 Aldo의 글씨로: '네가 태어나기 전, 할머니는 그 균열을 지도로 그리러 들어갔다. 그리고 돌아오지 않았다.'",
+  "Keyboard": "키보드",
+  "Last night a storm tore the sky. Rifts opened over Veydal.": "어젯밤 폭풍이 하늘을 찢었다. Veydal 위로 균열이 열렸다.",
+  "OK": "확인",
+  "Online only: your journeys are safe on our server. No ads, no tracking.": "온라인 전용: 여행은 서버에 안전하게 보관돼요. 광고도 추적도 없어요.",
+  "Random": "무작위",
+  "Relaxed": "느긋하게",
+  "Ring limits, smarter foes.": "링 제한, 영리한 상대.",
+  "Skin: %s": "피부: %s",
+  "The journey as it is meant to be.": "원래 의도한 여정.",
+  "Three small lights crossed the lake to the lighthouse lamp.": "작은 빛 셋이 등대 불빛을 향해 호수를 건너왔다.",
+  "Tough": "어렵게",
+  "Watch the marks light up, then press them in the same order.": "빛나는 표시를 보고 같은 순서로 누르세요.",
+  "Watch the marks light up, then tap them in the same order.": "빛나는 표시를 보고 같은 순서로 탭하세요.",
+  "Wayfarer: %s": "나그네: %s",
+  "You can change it later in Settings.": "나중에 설정에서 바꿀 수 있어요."
+ }
+}

@@ -81,8 +81,9 @@ static func bond_grace() -> int:
 
 ## Settings sold in the shop (Ali, 7 Nov): settings key -> unlock id from data/shop.json.
 ## Without the unlock the row says "Shop" and the feature stays at its plain state.
+## Fast text is free for everyone (Chimora 100 item 34); its old offer is no longer sold.
 const SETTING_UNLOCKS: Dictionary[String, String] = {
-	"damage_preview": "damage_preview", "minimap": "minimap", "fast_text": "fast_text",
+	"damage_preview": "damage_preview", "minimap": "minimap",
 	"retro": "retro_filter", "day_night": "sky_control", "weather": "sky_control",
 	"bench_lessons": "bench_lessons", "wild_ward": "wild_ward",
 }

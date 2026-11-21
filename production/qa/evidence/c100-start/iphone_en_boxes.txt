@@ -1,0 +1,11 @@
+box 1: Last night a storm tore the sky. Rifts opened over Veydal.
+box 2: Three small lights crossed the lake to the lighthouse lamp.
+box 3: Liora! Wake up!
+box 4: Three Spirlings came in from the storm. Go say hello!
+box 5: Zippit stays with you! The other two slip off to the lake.
+box 6: Good. The Rifts bring the Hush: Spirlings there go quiet.
+box 7: The storm scattered Mirela's map book. Bring her pages home.
+box 8: Take this, and go see Kestra at the map house.
+box 9: You got Tonic x2!
+box 10: Visit Kestra at the Map House in Brindlewick.
+boxes before control: 10
