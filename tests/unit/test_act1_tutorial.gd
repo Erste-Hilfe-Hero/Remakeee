@@ -21,8 +21,10 @@ func _levels(def: Dictionary, difficulty: int) -> Array[int]:
 func test_act_one_wardens_on_tamer_sit_just_above_the_base_team() -> void:
 	var tamer: int = GameState.Difficulty.TAMER
 	assert_eq(_levels(_npc("cinder_rift", "warden_orrin"), tamer), [11, 11, 12] as Array[int])
-	assert_eq(_levels(_npc("mist_rift", "warden_brisa"), tamer), [13, 13, 14] as Array[int])
+	assert_eq(_levels(_npc("mist_rift", "warden_brisa"), tamer), [15, 15, 16] as Array[int])
 	assert_eq(_levels(_npc("tide_rift", "warden_maelis"), tamer), [16, 17, 18] as Array[int])
+	# Mother Crowle closes Act I: a few rings over her base team, not nine (she was a wall at R26-27).
+	assert_eq(_levels(ActSim.resolve("pawn_vault:sallow").def, tamer), [22, 23, 22] as Array[int])
 
 func test_rival_jinks_fights_with_his_base_team_on_tamer() -> void:
 	var tamer: int = GameState.Difficulty.TAMER

@@ -85,16 +85,14 @@ the act's `moderate_grind`: wild battles a player trains before a measured fight
 Act I is the tutorial act (Ali 2026-11-21): no measured fight there is won more than 85 % on arrival. Every later act is at most as easy on arrival as the one before (margin 0 points). No measured Warden, rival or boss after Act I is won more than 60 % on arrival, and none stays under 70 % after 240 grind battles (a wall). Hearts are left out of the means. Starters: Kindlop, Zippit, Wickit, each from ring 5.
 <!-- /gen:act_targets -->
 
-Act I per starter, measured 14 Nov 2026 with 64 battles per measure (`--mode acts --act act1
---rounds 64 --starter S`): Kindlop 85 % after the budget, 40 grind battles to 70 %; Wickit 66 %, 73;
-Zippit 70 %, 70. Wickit and Zippit miss the starter target (KAMPF_PLAN_1000 item 943 stays open).
-Why: Kindlop unfolds at ring 14 (Smoldrake, stat sum 437), Wickit at 22 and Zippit at 24, and
-Wickit's first form (stat sum 287) drops out of the simulated five early. The hard fights for them
-are Warden Orrin, Warden Brisa, Rival Jinks (second and third) and Mother Crowle. Retuning those
-teams brought all three starters to 70 %+ within 60 battles at 64 battles per measure, but every
-such change re-rolls the single seeded route of the later acts, and the 16-battle CI run then found
-new walls (Veil Heir Corin at the end of Act IV, Warden Corin in Era II) and broke the steeper-act
-order; the starter fix needs a route that does not carry one seed through all eight regions.
+Act I per starter, measured 21 Nov 2026 with 64 battles per measure (`--mode acts --act act1
+--rounds 64 --starter S`), after Act I became the tutorial act (Ali 2026-11-21, Chimora 100
+items 1-14): Kindlop 74 % on arrival, 87 % after the budget, 7 grind battles to 70 % on the mean;
+Zippit 84 %, 91 %, 3; Wickit 77 %, 89 %, 7 (before, with a budget of 60: Kindlop 35 %, 85 %, 40; Zippit 29 %, 70 %, 70;
+Wickit 26 %, 66 %, 73). The Tamer teams of Orrin, Brisa, Maelis and Mother Crowle sit one to five
+rings over their base teams again, Rival Jinks fights with his base team, Tamer grows x1.15,
+newcomers take x0.9 damage and Wickit's stats rose 8 %. The hardest fight left is Mother Crowle
+(31-67 % on arrival).
 
 Measured on 6 Nov 2026 (plan area 2, after the new arts): Lv36 duel turns to KO 2.5, first-mover
 advantage 52%; Lv36 teams (200 battles, seed 7) 0 draws, every species between 39% and 66%.
