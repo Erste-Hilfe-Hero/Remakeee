@@ -1,0 +1,28 @@
+{
+ "_comment": "Traditional Chinese texts for the German table c100_goal. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "+ seen  * bonded": "+ 見過  * 已羈絆",
+  "A reward waits under Goals.": "目標裡有獎勵在等你。",
+  "Daily tasks: %d of %d done.": "每日任務：完成 %d/%d。",
+  "Find Mirela's pages": "尋找Mirela的書頁",
+  "Go to the Map House": "去地圖館",
+  "Goal line: %s": "目標列：%s",
+  "Goal: %s": "目標：%s",
+  "Meet Kestra at the dock": "碼頭找Kestra",
+  "Mend the Rifts": "修復裂隙",
+  "Not yet visited.": "還沒去過。",
+  "On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.": "在圖鑑頁上，\"見過的地點\"列出你遇到這一種的所有地方，包括旅人對戰。\"野生地點\"列出牠在野外生活的地方：地點後的 + 表示你在那裡遇過，??? 表示還沒找到的地方。",
+  "Photo, our Discord and your shortcuts.": "照片、我們的 Discord 和捷徑。",
+  "See Aldo downstairs": "去樓下找Aldo",
+  "Seen at: %s": "見過的地點：%s",
+  "Tap for every mark.": "點擊查看所有記號。",
+  "Tell Aldo at home": "告訴Aldo",
+  "Welcome back, %s!": "歡迎回來，%s！",
+  "Wild at: %s (%d of %d found)": "野生地點：%s（找到 %d/%d）",
+  "You are in %s.": "你在%s。",
+  "Your next goal at the top and a mark on the way there. Tap the line to open Goals.": "在上方顯示下一個目標，並在路上做記號。點這一列打開目標。",
+  "a Gleam of this kind was bonded": "與這一種的輝光結下羈絆",
+  "a Gleam of this kind was seen": "見過這一種的輝光",
+  "bonded and grown to Ring 30": "已羈絆並成長到第30環"
+ }
+}

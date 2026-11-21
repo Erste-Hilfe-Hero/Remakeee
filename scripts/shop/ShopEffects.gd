@@ -87,8 +87,11 @@ const SETTING_UNLOCKS: Dictionary[String, String] = {
 	"bench_lessons": "bench_lessons", "wild_ward": "wild_ward",
 }
 
-## True when the setting [param key] is free or its shop unlock was bought.
+## True when the setting [param key] is free or its shop unlock was bought. The minimap is
+## free while the story is in Act I (plan Chimora 100, item 39).
 static func owns_setting(key: String) -> bool:
+	if key == "minimap" and QuestLog.in_act_one(GameState.flags):
+		return true
 	return not SETTING_UNLOCKS.has(key) or Billing.unlocked(SETTING_UNLOCKS[key]) > 0
 
 ## Shop offer name for a locked setting, for the "In the shop" note.

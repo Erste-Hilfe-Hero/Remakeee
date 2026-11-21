@@ -30,6 +30,7 @@ const GLYPHS: Dictionary[String, Array] = {
 	"Save and to title": ["#####....", "#+++#..#.", "#+++#...#", "#+++#####", "#+++#...#", "#+++#..#.", "#####....", ".........", "........."],
 	"Photo": [".........", "..###....", "#########", "#+++++++#", "#++###++#", "#++#.#++#", "#++###++#", "#+++++++#", "#########"],
 	"Settings": ["...###...", ".#.#+#.#.", ".#######.", "###+++###", "#++#.#++#", "###+++###", ".#######.", ".#.#+#.#.", "...###..."],
+	"More": [".........", ".........", ".........", ".##.##.##", ".##.##.##", ".........", ".........", ".........", "........."],
 	"Shortcuts": ["....#....", "...#+#...", "...#+#...", "####+####", ".#+++++#.", "..#+++#..", ".#++#++#.", ".#+#.#+#.", ".##...##."],
 	"game": ["#########", "#+++++++#", "#+#+++#+#", "#+++++++#", "#+++#+++#", "#+++++++#", "#+#+++#+#", "#+++++++#", "#########"],
 	"sound": ["...#####.", "...#+++#.", "...#####.", "...#...#.", "...#...#.", ".###.###.", "#++#.#+#.", "#++#.###.", ".##......"],
@@ -52,7 +53,7 @@ const GLYPHS: Dictionary[String, Array] = {
 }
 
 const COLORS: Dictionary[String, String] = {
-	"Goals": "c4432f", "Map book": "8a5a2e", "Ledger": "6a4256", "Map": "3e9a52", "Room": "9a7b55", "Team": "d6a227", "Satchel": "a8582e", "Shop": "3a7be0", "Spirlog": "8a5a80", "Travel": "3a9ab0", "Friends": "e0603a", "Leagues": "e8c050", "Records": "4b6aa6", "Storage": "9a7b55", "Save": "4caf50", "Save and to title": "7d5f5f", "Photo": "8ab8ec", "Settings": "808890", "Shortcuts": "f2d03b", "game": "c4432f", "sound": "8a5a80", "controls": "3a7be0", "display": "3a9ab0", "wardrobe": "e0603a", "account": "d6a227", "legal": "7d5f5f", "place": "a8582e", "dot": "3e9a52", "pocket0": "4caf50", "pocket1": "e8c050", "pocket2": "8ab8ec", "pocket3": "9a7b55", "pocket4": "c4432f", "mark": "e8c050", "search": "8ab8ec", "cry": "e0603a", "size": "3e9a52",
+	"Goals": "c4432f", "Map book": "8a5a2e", "Ledger": "6a4256", "Map": "3e9a52", "Room": "9a7b55", "Team": "d6a227", "Satchel": "a8582e", "Shop": "3a7be0", "Spirlog": "8a5a80", "Travel": "3a9ab0", "Friends": "e0603a", "Leagues": "e8c050", "Records": "4b6aa6", "Storage": "9a7b55", "Save": "4caf50", "Save and to title": "7d5f5f", "Photo": "8ab8ec", "Settings": "808890", "Shortcuts": "f2d03b", "More": "808890", "game": "c4432f", "sound": "8a5a80", "controls": "3a7be0", "display": "3a9ab0", "wardrobe": "e0603a", "account": "d6a227", "legal": "7d5f5f", "place": "a8582e", "dot": "3e9a52", "pocket0": "4caf50", "pocket1": "e8c050", "pocket2": "8ab8ec", "pocket3": "9a7b55", "pocket4": "c4432f", "mark": "e8c050", "search": "8ab8ec", "cry": "e0603a", "size": "3e9a52",
 }
 ## Mark rosette colours by mark id (Era III and later).
 const MARK_COLORS: Dictionary[String, String] = {"leader": "c4432f", "gleam": "f2d03b", "favourite": "e0603a",

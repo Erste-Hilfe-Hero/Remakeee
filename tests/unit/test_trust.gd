@@ -66,9 +66,10 @@ func test_ledger_rows_follow_flags_in_data_order() -> void:
 		assert_gte(Trust.ledger_text(str(e.ref)).size(), 2, "title and text: %s" % e.id)
 
 func test_ledger_menu_only_with_entries() -> void:
-	assert_false("Ledger" in PauseMenu.menu_labels(false, false, false, false, true))
-	var labels: Array[String] = PauseMenu.menu_labels(false, false, false, false, true, true)
-	assert_eq(labels.find("Ledger"), labels.find("Map book") + 1)
+	assert_false("Ledger" in PauseMenu.menu_labels(false, false, false, false, false))
+	var labels: Array[String] = PauseMenu.menu_labels(false, false, false, false, true)
+	# The Map book moved under Map (plan Chimora 100, item 41), so the Ledger follows Goals.
+	assert_eq(labels.find("Ledger"), labels.find("Goals") + 1)
 
 func test_eleven_strangers_with_allies_and_traitors() -> void:
 	var allies: int = 0

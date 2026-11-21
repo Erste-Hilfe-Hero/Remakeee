@@ -114,7 +114,10 @@ func test_menu_opens_and_closes() -> void:
 		if host.picker.visible:
 			break
 	assert_eq(host.last_title, "World map")
-	assert_true(host.get_node_or_null("world_map") != null)
+	# The picture is the list's header, under the title and back button (plan Chimora 100, item 40).
+	var view: Node = host.find_child("world_map", true, false)
+	assert_not_null(view)
+	assert_true(host.picker.is_ancestor_of(view), "the map sits inside the list, below its title")
 	host.picker.picked.emit(-1)
 	for i: int in 30:
 		await wait_process_frames(1)
@@ -122,7 +125,7 @@ func test_menu_opens_and_closes() -> void:
 			break
 	assert_true(state.done)
 	await wait_process_frames(1)
-	assert_null(host.get_node_or_null("world_map"))
+	assert_null(host.find_child("world_map", true, false))
 
 func test_dungeon_banner_counts_rooms() -> void:
 	# Items 993 and 1026.

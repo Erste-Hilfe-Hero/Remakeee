@@ -1,0 +1,28 @@
+{
+ "_comment": "Japanese texts for the German table c100_goal. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "+ seen  * bonded": "+ 発見済み  * 絆あり",
+  "A reward waits under Goals.": "目標にごほうびが待っている。",
+  "Daily tasks: %d of %d done.": "毎日の課題：%d/%d 完了",
+  "Find Mirela's pages": "Mirelaのページ探し",
+  "Go to the Map House": "地図の家へ行く",
+  "Goal line: %s": "目標表示：%s",
+  "Goal: %s": "目標：%s",
+  "Meet Kestra at the dock": "船着き場のKestra",
+  "Mend the Rifts": "裂け目を直す",
+  "Not yet visited.": "まだ行っていない。",
+  "On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.": "ページの「見た場所」は、旅人との戦いも含めてその種に会った場所すべて。「野生の場所」は野生で暮らす場所：場所の後の + はそこで会ったこと、??? はまだ見つけていない場所。",
+  "Photo, our Discord and your shortcuts.": "写真、Discord、ショートカット。",
+  "See Aldo downstairs": "下の階のAldoに会う",
+  "Seen at: %s": "見た場所：%s",
+  "Tap for every mark.": "タップで印の一覧。",
+  "Tell Aldo at home": "Aldoに話す",
+  "Welcome back, %s!": "おかえり、%s！",
+  "Wild at: %s (%d of %d found)": "野生の場所：%s（%d/%d 発見）",
+  "You are in %s.": "今いる場所：%s",
+  "Your next goal at the top and a mark on the way there. Tap the line to open Goals.": "次の目標を上に、行き先に印を出す。表示をタップすると目標を開く。",
+  "a Gleam of this kind was bonded": "この種の輝きと絆を結んだ",
+  "a Gleam of this kind was seen": "この種の輝きを見た",
+  "bonded and grown to Ring 30": "絆を結び、リング30まで成長"
+ }
+}

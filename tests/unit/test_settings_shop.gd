@@ -7,12 +7,18 @@ var _state: Dictionary
 func before_all() -> void:
 	Database.load_all()
 
+var _flags: Dictionary
+
 func before_each() -> void:
 	_state = Billing.state
 	Billing.state = {"unlocks": {}}
+	# After Act I: during Act I the Minimap is free (plan Chimora 100, item 39, test_c100_goal.gd).
+	_flags = GameState.flags
+	GameState.flags = {"mirela_lamp": true}
 
 func after_each() -> void:
 	Billing.state = _state
+	GameState.flags = _flags
 
 func test_every_sold_setting_has_a_ready_offer() -> void:
 	for key: String in ShopEffects.SETTING_UNLOCKS:

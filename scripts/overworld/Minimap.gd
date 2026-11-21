@@ -4,7 +4,9 @@ extends Control
 ## 3 pixels per cell, 36 x 36 pixels. Ground is paper, solid cells grey, water mid brown;
 ## cells not yet seen stay dark. Single pixels mark warps (accent), the rest point and
 ## Wayfarers still to meet (ink); the player is a full ink cell. A hidden find already taken
-## stays as a filled cross over its cell (plan item 1097). UITheme colours only.
+## stays as a filled cross over its cell (plan item 1097). The door or exit toward the current
+## goal is a ring; when it lies outside the window a mark on the frame points to it (plan
+## Chimora 100, item 38). UITheme colours only.
 
 const CELLS: int = 12
 const PX: int = 3
@@ -29,6 +31,8 @@ func _ready() -> void:
 var spotted: Array[Vector2i] = []
 ## Flags used for taken finds (GameState.flags in the game, tests pass their own).
 var flags: Dictionary = {}
+## Warp cells toward the current goal (QuestLog.goal_warps), set by the overworld.
+var goal_cells: Array[Vector2i] = []
 
 func refresh(m: MapData, cell: Vector2i, trainers: Array[Vector2i] = [], f: Variant = null) -> void:
 	flags = f if f is Dictionary else GameState.flags
@@ -71,6 +75,8 @@ func _draw() -> void:
 	for c: Vector2i in spotted:
 		if not c in taken_finds():
 			_dot(c, UITheme.ACCENT)
+	for c: Vector2i in goal_cells:
+		_goal(c)
 	var p: Vector2i = center - o
 	draw_rect(Rect2(p.x * PX, p.y * PX, PX, PX), UITheme.INK)
 
@@ -97,3 +103,20 @@ func _cross(c: Vector2i, col: Color) -> void:
 		return
 	draw_rect(Rect2(l.x * PX + 1, l.y * PX, 1, PX), col)
 	draw_rect(Rect2(l.x * PX, l.y * PX + 1, PX, 1), col)
+
+## Where the goal mark of [param c] is drawn: its cell inside the window, otherwise the
+## nearest frame cell in its direction. The second value is true when it lies inside.
+func goal_spot(c: Vector2i) -> Array:
+	var l: Vector2i = c - origin()
+	var inside: bool = l.x >= 0 and l.y >= 0 and l.x < CELLS and l.y < CELLS
+	return [Vector2i(clampi(l.x, 0, CELLS - 1), clampi(l.y, 0, CELLS - 1)), inside]
+
+## A ringed cell on the goal (seen or not), or on the frame toward it with an ink dot inside.
+func _goal(c: Vector2i) -> void:
+	var spot: Array = goal_spot(c)
+	var l: Vector2i = spot[0]
+	# Ink ring around an accent cell: the ring shows on seen paper, the cell on dark ground.
+	draw_rect(Rect2(l.x * PX - 1, l.y * PX - 1, PX + 2, PX + 2), UITheme.INK)
+	draw_rect(Rect2(l.x * PX, l.y * PX, PX, PX), UITheme.ACCENT)
+	if not bool(spot[1]):
+		draw_rect(Rect2(l.x * PX + 1, l.y * PX + 1, 1, 1), UITheme.INK)

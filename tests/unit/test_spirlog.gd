@@ -122,7 +122,7 @@ func test_page_text_is_translated_line_by_line_with_its_lore() -> void:
 	var text: String = SpirlogBook.translate_lines(SpirlogBook.page_text(sd, GameState.spirlog))
 	Loc.set_language(lang)
 	assert_false(text.contains("Lives in:"), "habitat line translated: " + text)
-	assert_false(text.contains("Found on:"), "found line translated")
+	assert_false(text.contains("Seen at:"), "seen-at line translated")
 	assert_false(text.contains("Origin:"), "origin line translated")
 	assert_false(text.contains("It cannot fly"), "lore translated")
 	assert_true(text.contains("Rauchmähne"), "both open lore sentences in German")

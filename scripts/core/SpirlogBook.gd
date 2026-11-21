@@ -252,7 +252,7 @@ static func page_text(sd: SpirlingData, spirlog: Dictionary) -> String:
 	if not sd.habitat.is_empty():
 		lines.append("Lives in: %s" % sd.habitat)
 	var found: String = found_line(sd, spirlog)
-	lines.append("Found on: %s" % (found if not found.is_empty() else "unknown"))
+	lines.append("Seen at: %s" % (found if not found.is_empty() else "unknown"))
 	var places: String = Collection.places_line(sd.species_name)
 	if not places.is_empty():
 		lines.append(places)

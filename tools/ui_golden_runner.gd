@@ -24,7 +24,7 @@ func _screens() -> Array[Array]:
 		["settings_display", "Display and access", MenuHost._rows_to_entries(MenuHost.display_rows())],
 	]
 	var labels: Array[Dictionary] = []
-	for l: String in PauseMenu.menu_labels(true, true, false, false, true):
+	for l: String in PauseMenu.menu_labels(true, true, false, false):
 		labels.append({"text": l})
 	out.append(["pause", "Rowan", labels])
 	# Shown as a seasoned player: the newcomer-only "First steps" row has its own width test.
