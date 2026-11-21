@@ -448,7 +448,7 @@ func _set_art_note(text: String) -> void:
 		_art_note.set_anchors_preset(Control.PRESET_TOP_WIDE)
 		_art_note.offset_left = 4
 		_art_note.offset_right = -4
-		_art_note.offset_bottom = _iap_note.offset_top - 1
+		_art_note.offset_bottom = _art_h - 1
 		_art_note.offset_top = _art_note.offset_bottom
 		_art_note.grow_vertical = Control.GROW_DIRECTION_BEGIN
 		_art_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
