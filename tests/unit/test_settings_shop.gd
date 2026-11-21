@@ -1,6 +1,6 @@
 extends GutTest
-## Settings sold in the shop (Ali, 7 Nov): Damage Preview, Minimap, Retro Filter,
-## Sky Control (weather, day and night) and Bench Lessons.
+## Settings sold in the shop (Ali, 7 Nov): Damage Preview, Minimap, Bench Lessons and Wild Ward.
+## Day and night, Weather and Retro filter are free (Chimora 100, item 68), Fast Text too (item 34).
 
 var _state: Dictionary
 
@@ -36,9 +36,7 @@ func test_locked_until_bought() -> void:
 		assert_eq(MenuHost.shop_or(key, "On"), MenuHost.SHOP_MARK, key)
 	assert_true(ShopEffects.owns_setting("tips"), "other settings stay free")
 	assert_true(ShopEffects.owns_setting("large_text"), "access settings stay free")
-	Billing.state = {"unlocks": {"sky_control": 1, "damage_preview": 1}}
-	assert_true(ShopEffects.owns_setting("weather"))
-	assert_true(ShopEffects.owns_setting("day_night"))
+	Billing.state = {"unlocks": {"damage_preview": 1}}
 	assert_eq(MenuHost.shop_or("damage_preview", "On"), "On")
 	assert_false(ShopEffects.owns_setting("minimap"))
 

@@ -1691,7 +1691,12 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.visit_rest(map.id, map.heal_point)
 	Online.contribute("rests")
 	DailyTasks.record("rest", {"map": map.id})
-	await say(["Your team is fully rested."] as Array[String])
+	var rested: Array[String] = ["Your team is fully rested."]
+	# What tomorrow brings (Chimora 100, item 71).
+	var tomorrow: String = DailyFind.tomorrow_line()
+	if not tomorrow.is_empty():
+		rested.append(tomorrow)
+	await say(rested)
 	var cap_lines: Array[String] = ChallengeRules.rest_lines()
 	if not cap_lines.is_empty():
 		await say(cap_lines)

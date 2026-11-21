@@ -90,7 +90,7 @@ func run() -> void:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
 			not Trust.ledger_rows(GameState.flags).is_empty())
-		labels.insert(labels.find("Satchel") + 1, "Shop (locked)" if Billing.kids_locked() else "Shop")
+		place_shop(labels, "Shop (locked)" if Billing.kids_locked() else "Shop", not GameState.rifts_sealed.is_empty())
 		# Pocket Rest (shop, pay-to-win step 6, plan point 51): rest anywhere outside battle.
 		if ShopEffects.can_rest_anywhere():
 			labels.insert(labels.find("Team") + 1, "Rest")
@@ -217,6 +217,14 @@ func run_more(labels: Array[String]) -> String:
 			var other:
 				return other
 	return ""
+
+## Puts the shop entry [param shop] into [param labels]: after the Satchel once the first Rift is
+## mended ([param prominent]), before that at the end of the list, still reachable (Chimora 100, item 70).
+static func place_shop(labels: Array[String], shop: String, prominent: bool) -> void:
+	if prominent and "Satchel" in labels:
+		labels.insert(labels.find("Satchel") + 1, shop)
+	else:
+		labels.append(shop)
 
 ## Shortcuts (docs/ERA_FEEL_MENUS.md): the pinned entries open from here in every era; Era V
 ## also shows them as a bar on top of the start menu. Returns the entry to open, or "".
@@ -435,7 +443,10 @@ func save_now() -> void:
 	var on_server: bool = await Online.wait_synced(SaveManager.slot)
 	if not is_inside_tree():
 		return
-	toast(SAVED_TEXT if on_server else SAVED_LOCAL_TEXT, 1.5 if on_server else 3.0)
+	# What tomorrow brings, under the saved note (Chimora 100, item 71).
+	var tomorrow: String = DailyFind.tomorrow_line()
+	var done: String = Loc.t(SAVED_TEXT if on_server else SAVED_LOCAL_TEXT)
+	toast(done + ("\n" + tomorrow if not tomorrow.is_empty() else ""), (1.5 if on_server else 3.0) + (2.5 if not tomorrow.is_empty() else 0.0))
 
 ## Saves and, if that worked, ends the session (item 1879). Returns true when the menu
 ## should close and the game go back to the title.
@@ -834,10 +845,6 @@ func run_team() -> void:
 		var power: int = ShopEffects.account_power()
 		if power > 0:
 			boosts.push_front(Loc.t("Power %d") % power)
-		# What the best next tier would add (plan point 60): adults only, a note, no button.
-		var next_power: String = ShopEffects.next_power_line()
-		if not next_power.is_empty():
-			boosts.append(next_power)
 		var title: String = Loc.t("Team") + ("  " + "  ".join(boosts) if not boosts.is_empty() else "")
 		var drag: EraPartyDrag = EraPartyDrag.attach(self, GameState.party.size()) if bool(lay.get("drag", false)) else null
 		var idx: int = await pick_screen("party", title, rows, {"panel_text": "Drag a row to change the order. Tap one for more."})

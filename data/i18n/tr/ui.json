@@ -399,6 +399,8 @@
   "Tips: %s": "İpuçları: %s",
   "Today's visitor in %s has been met. Another arrives tomorrow.": "%s yöresindeki günün ziyaretçisiyle karşılaşıldı. Yarın bir başkası gelecek.",
   "Today: a rare visitor stirs in %s.": "Bugün: %s yöresinde nadir bir ziyaretçi kıpırdanıyor.",
+  "Tomorrow: a rare visitor stirs in %s.": "Yarın: %s yöresinde nadir bir ziyaretçi kıpırdanacak.",
+  "Tomorrow: a rare visitor stirs in %s. New daily tasks: %d.": "Yarın: %s yöresinde nadir bir ziyaretçi kıpırdanacak. Yeni günlük görevler: %d.",
   "Together you mend the Rift. The Hush lifts!": "Birlikte Yarığı onarıyorsunuz. Hush dağılıyor!",
   "Touch controls": "Dokunmatik kontroller",
   "Touch controls...": "Dokunmatik kontroller...",

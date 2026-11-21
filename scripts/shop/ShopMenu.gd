@@ -195,7 +195,13 @@ static func _run_tab(menu: MenuHost, tab: String) -> void:
 		var entries: Array[Dictionary] = []
 		for o: Dictionary in list:
 			entries.append(offer_row(o, EraMenus.layout(EraManager.active_era(), "shop")))
-		var idx: int = await menu.pick_screen("shop", tab_title(tab), entries)
+		# What the best next tier would add (plan point 60) lives here, not in the Team title
+		# (Chimora 100, item 67): adults only, a note in the info panel, no button.
+		var opts: Dictionary = {}
+		var next_power: String = ShopEffects.next_power_line() if tab == "advantages" else ""
+		if not next_power.is_empty():
+			opts["panel_text"] = next_power
+		var idx: int = await menu.pick_screen("shop", tab_title(tab), entries, opts)
 		if idx < 0:
 			return
 		await _run_offer(menu, list[idx])

@@ -12,13 +12,17 @@ func test_offers_reference_real_items() -> void:
 		assert_false(Database.item(str(o.item)).is_empty(), "item %s" % o.item)
 		assert_gt(int(o.price), 0)
 		assert_gt(int(o.stock), 0)
-		assert_true(str(o.tier) in ["base", "full"])
+		assert_true(str(o.tier) in ["early", "base", "full"])
 
-func test_closed_until_first_rift_then_six_then_all() -> void:
+func test_closed_until_kestra_then_two_then_six_then_all() -> void:
 	assert_false(Exchange.is_open())
 	assert_eq(Exchange.offers().size(), 0)
+	# Chimora 100, item 72: two early offers once Kestra is met, before the first Rift.
+	GameState.set_flag(Exchange.EARLY_FLAG)
+	assert_true(Exchange.is_open())
+	assert_eq(Exchange.offers().size(), 2, "two early offers after meeting Kestra")
 	GameState.seal_rift("cinder")
-	assert_eq(Exchange.offers().size(), 6, "six base offers after the first Rift")
+	assert_eq(Exchange.offers().size(), 6, "six offers after the first Rift")
 	GameState.set_flag(Exchange.ACT1_FLAG)
 	var by_item: Dictionary = {}
 	for o: Dictionary in Exchange.offers():

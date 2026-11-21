@@ -5,8 +5,6 @@ extends Control
 const OVERWORLD: String = "res://scenes/overworld/Overworld.tscn"
 const NAME_MAX: int = 10
 const ART_HEIGHT: int = 148
-const IAP_NOTE: String = "Free, in-app purchases"
-var _iap_note: Label
 ## Era of the title (the newest era any save reached), its art height and the save card.
 var _era: int = 1
 var _art_h: int = ART_HEIGHT
@@ -82,17 +80,8 @@ func _ready() -> void:
 	_status.add_theme_stylebox_override("normal", strip)
 	_status.visible = false
 	add_child(_status)
-	# Free to play with optional purchases, said before the game starts (shop item 4036).
-	_iap_note = Label.new()
-	_iap_note.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
-	_iap_note.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	_iap_note.offset_top = _art_h - 11
-	_iap_note.offset_bottom = _art_h
-	_iap_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_iap_note.add_theme_color_override("font_color", UITheme.BG)
-	_iap_note.add_theme_stylebox_override("normal", strip)
-	_iap_note.text = Loc.t(IAP_NOTE)
-	add_child(_iap_note)
+	# No "Free, in-app purchases" banner on the title art (Chimora 100, item 69): the store
+	# listing carries that notice, the shop's About page says the game is free.
 	_build_name_box()
 	# The version sits under the list frame, not on it (Chimora 100 item 54).
 	add_child(version_label())
@@ -274,8 +263,6 @@ func _process(_delta: float) -> void:
 			_card.visible = false
 
 func _on_language_changed(_code: String) -> void:
-	if _iap_note != null:
-		_iap_note.text = Loc.t(IAP_NOTE)
 	if not _connecting and Online.is_online():
 		_show_status()
 

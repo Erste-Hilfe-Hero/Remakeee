@@ -204,6 +204,11 @@ Abschnitt 3 die Punkte 50, 51, 57, 58 und 60.
   Das ändert nur die Texte von 2 vorhandenen Store-Produkten, keine Produkt-IDs.
 - **Punkt 60:** Die Team-Ansicht zeigt ab 18 Jahren neben "Macht N" eine Notiz "Shop: Macht-Siegel II bringt 5 Macht" (das
   Stufen-Angebot mit der meisten Macht je Rissglas, `ShopEffects.next_power_line`). Kein Knopf, kein Kauffenster, unter 18 nichts.
+  Chimora 100, Punkt 67: Die Notiz steht nicht mehr im Team-Titel, nur noch im Infofeld des Shop-Reiters "Vorteile".
+- **Chimora 100, Punkt 68:** Tag und Nacht, Wetter und Retro-Filter sind für alle gratis. Die Produkte Himmelskontrolle
+  (`rg_sky_control`) und Retro-Filter (`rg_retro_filter`) bleiben unverändert im Katalog und im Store, wer sie gekauft hat,
+  behält die Freischaltung. Was sie künftig bringen oder ob sie aus dem Verkauf gehen, entscheidet der Inhaber. Gesperrte
+  Einstellungen zeigen ihren Grundzustand ("Aus") statt "€".
 - **Neue Bedingung `max:<unlock>:<n>`:** Einzelne Lager-Fächer (`rg_storage_box`) gehen nur noch bis 11 gekaufte Fächer, damit
   Fächer aus beiden Wegen nie über 12 kommen (`ShopEffects.max_ok`, Server `_shop_offer_block`).
 - **Server:** Migration `20261113120060_shop_p2w_step6.sql` (`_party_max` mit `team_slot_7`, `_shop_offer_block` mit `max:`,

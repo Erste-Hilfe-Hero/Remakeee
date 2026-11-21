@@ -28,12 +28,6 @@ static func apply_unlocks() -> void:
 	while GameState.party.size() > GameState.party_max():
 		GameState._store(GameState.party.pop_back(), true)
 	# A refunded setting goes back to its plain state, it does not keep working (bug plan 1360).
-	if not owns_setting("retro") and EraManager.retro_filter != 0:
-		EraManager.set_retro_filter(0)
-	if not owns_setting("day_night"):
-		GameState.day_night = true
-	if not owns_setting("weather"):
-		GameState.weather = true
 	if not owns_setting("wild_ward"):
 		GameState.wild_ward = false
 
@@ -78,11 +72,12 @@ static func bond_grace() -> int:
 	return 1 if pass_active() else 0
 
 ## Settings sold in the shop (Ali, 7 Nov): settings key -> unlock id from data/shop.json.
-## Without the unlock the row says "Shop" and the feature stays at its plain state.
+## Without the unlock the row shows the plain state and the feature stays there. Day and night,
+## Weather and Retro filter are free for everyone (Chimora 100, item 68); the Sky Control and
+## Retro Filter unlocks stay owned and sold unchanged until the owner decides on them.
 ## Fast text is free for everyone (Chimora 100 item 34); its old offer is no longer sold.
 const SETTING_UNLOCKS: Dictionary[String, String] = {
 	"damage_preview": "damage_preview", "minimap": "minimap",
-	"retro": "retro_filter", "day_night": "sky_control", "weather": "sky_control",
 	"bench_lessons": "bench_lessons", "wild_ward": "wild_ward",
 }
 
