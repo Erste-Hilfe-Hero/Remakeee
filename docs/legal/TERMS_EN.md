@@ -10,8 +10,9 @@ Last updated: November 2026
 
 1. **Provider.** Ali Amuri Alnasag, Im Vogelgesang 9, 60488 Frankfurt am Main, Germany, aa.amuri@icloud.com ("we"). These terms cover the game Chimora (iOS,
    Android) and its online services. The app store's own terms also apply to downloads and purchases.
-2. **Account.** By accepting these terms on first launch you get a game account automatically; no email is
-   needed. The game is **online only** and needs an internet connection. Keep your transfer code secret.
+2. **Account.** On the first connection the game shows a short privacy note and creates a game account
+   automatically; no email is needed. These terms are available in the game under Settings, Legal and at
+   https://[DOMAIN]/terms. They apply when you then use the game's online features. The game is **online only** and needs an internet connection. Keep your transfer code secret.
    It only moves your own account to a new device; purchases, Riftglass and the pass move with it.
    One account per person; accounts are not transferable to others, and selling, buying, swapping or
    lending accounts or transfer codes is not allowed. Minors need a parent's consent for purchases.

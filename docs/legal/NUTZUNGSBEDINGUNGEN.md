@@ -17,8 +17,10 @@ Vollständige Angaben im [Impressum](IMPRESSUM.md).
 
 ## 2. Vertragsschluss und Konto
 
-2.1 Der Nutzungsvertrag kommt zustande, wenn du beim ersten Start diesen Bedingungen zustimmst. Dabei wird
-automatisch ein Spielkonto angelegt; eine E-Mail-Adresse ist nicht nötig.
+2.1 Bei der ersten Verbindung zeigt das Spiel einen kurzen Datenschutzhinweis und legt automatisch ein
+Spielkonto an; eine E-Mail-Adresse ist nicht nötig. Diese Bedingungen stehen im Spiel unter Einstellungen,
+Rechtliches und auf https://[DOMAIN]/nutzungsbedingungen. Der Nutzungsvertrag zu diesen Bedingungen kommt
+zustande, wenn du danach die Online-Funktionen des Spiels nutzt.
 2.2 Das Spiel ist **nur online spielbar**. Du brauchst eine Internetverbindung; Kosten dafür trägst du.
 2.3 Pro Person ist ein Konto vorgesehen. Halte deinen Übertragungscode geheim; wer ihn kennt, kann deinen
 Spielstand auf ein anderes Gerät holen. Der Übertragungscode ist nur dafür da, dein eigenes Konto auf ein
