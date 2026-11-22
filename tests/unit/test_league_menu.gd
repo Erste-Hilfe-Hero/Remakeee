@@ -96,3 +96,32 @@ func test_a_found_league_battle_plays_like_the_referee_replays_it() -> void:
 		"p_replay": replay, "p_claim": BattleReferee.claim_of(model)})
 	assert_true(bool(r.data.ok))
 	assert_eq((await Online.backend.call_fn("battle_status", {"p_battle_id": r.data.battle_id})).data.status, "ok")
+
+## A joined player gets the league list (Chimora 100, store shot 6): the entries were built with a
+## ternary of two array literals, an untyped Array, and the typed assign stopped the menu.
+func test_a_joined_league_shows_find_a_battle_first() -> void:
+	Online.flags.assign(["league_fair"])
+	_server.switch_user("ann")
+	await Online.backend.call_fn("hello", {"p_version": 1})
+	await Online.backend.call_fn("team_set", {"p_team": EchoTeam.snapshot(GameState.party)})
+	var r: Dictionary = await Online.backend.call_fn("league_join", {"p_league": LeagueRules.FAIR, "p_pick": LeagueMenu.pick_of(GameState.party)})
+	assert_true(r.ok and not (r.data as Dictionary).has("error"), str(r))
+	var menu := PauseMenu.new()
+	add_child_autofree(menu)
+	var done: Array[bool] = [false]
+	var run := func() -> void:
+		await LeagueMenu.run_league(menu, LeagueRules.FAIR)
+		done[0] = true
+	run.call()
+	for i: int in 300:
+		await get_tree().process_frame
+		if menu._info_wait:
+			menu._close_info()
+		if menu.picker.visible and menu.picker._buttons.size() > 0:
+			break
+	assert_true(menu.picker.visible, "the league list opens")
+	assert_eq(menu.picker._buttons[0].text, Loc.t("Find a battle"))
+	menu.picker.picked.emit(-1)
+	for i: int in 10:
+		await get_tree().process_frame
+	assert_true(done[0], "Back leaves the league")

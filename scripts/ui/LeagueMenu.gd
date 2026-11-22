@@ -52,7 +52,10 @@ static func run_league(menu: PauseMenu, league: String) -> bool:
 			await menu.info(error_text(r))
 			return false
 		var info: Dictionary = r.data
-		var entries: Array[String] = ["Find a battle", "Join with my team"] if bool(info.joined) else ["Join with my team"]
+		# Not a ternary of two literals: that is an untyped Array and fails on the typed assign.
+		var entries: Array[String] = ["Join with my team"]
+		if bool(info.joined):
+			entries.push_front("Find a battle")
 		if bool(info.get("reward_ready", false)):
 			entries.push_front("Season reward")
 		entries.append("Best team of the season")

@@ -6,14 +6,16 @@ the game draws it; nothing shows a feature the game does not have.
      for l in en de fr es it ja ko zh_CN zh_TW pt_BR ru pl tr nl; do
        xvfb-run -a godot --path . --rendering-driver opengl3 -s res://tools/store_shots.gd -- /tmp/shots/$l $l
      done
-2. python3 tools/store/make_store_images.py /tmp/shots [--out DIR] [locale or game language ...]
+2. python3 tools/store/make_store_images.py /tmp/shots [--out DIR] [--shots 1,6] [locale or game language ...]
+   (--shots: only these pictures, and no feature graphic or icon; the raw screens of the other
+   pictures are then not needed)
    (needs Pillow and fonttools)
 
 The set, the same in every locale (store/ios/screenshot_captions/<locale>.txt, one caption per line):
   1 monster hero (Era IV Spirlings, one Gleam with its glints)   2 3v3 battle in Era V (whole screen:
                                                                   the text box height differs per language)
   3 unfurl before and after                                       4 one town in Eras I to IV, 2 x 2
-  5 story line (Wren, Act I)                                      6 live duel with a friend
+  5 story line (Wren, Act I)                                      6 Fair league screen (tier, rank)
   7 Spirlog page                                                  8 shop: Looks list, Riftglass prices only
 No money prices and no Discord note in any picture.
 
@@ -335,7 +337,7 @@ def screen(name: str):
     return make
 
 
-SHOTS = [hero, screen("b1_era5_3v3"), unfurl, eras, screen("s1_story"), screen("l1_duel"), screen("m1_spirlog"), screen("m2_shop_looks")]
+SHOTS = [hero, screen("b1_era5_3v3"), unfurl, eras, screen("s1_story"), screen("l2_league"), screen("m1_spirlog"), screen("m2_shop_looks")]
 
 
 def picture(n: int, src: str, lang: str, size: tuple, caption: str, cap_lang: str) -> Image.Image:
@@ -386,12 +388,16 @@ def main() -> None:
     ap.add_argument("only", nargs="*", help="App Store locales or game languages")
     ap.add_argument("--out", default=ROOT)
     ap.add_argument("--no-ipad", action="store_true")
+    ap.add_argument("--shots", default="", help="comma list of picture numbers (1-8)")
     a = ap.parse_args()
+    shots = {int(x) for x in a.shots.split(",") if x.strip()}
     for loc, lang in APP_LOCALES.items():
         if a.only and loc not in a.only and lang not in a.only:
             continue
         caps = captions(loc)
         for n, cap in enumerate(caps):
+            if shots and n + 1 not in shots:
+                continue
             save(picture(n, a.src, lang, IPHONE, cap, lang), f"{a.out}/store/ios/screenshots/{loc}/{n + 1}_iphone69.png")
             if not a.no_ipad:
                 save(picture(n, a.src, lang, IPAD, cap, lang), f"{a.out}/store/ios/screenshots_ipad13/{loc}/{n + 1}_ipad13.png")
@@ -401,7 +407,12 @@ def main() -> None:
         if a.only and play not in a.only and lang not in a.only and loc not in a.only:
             continue
         for n, cap in enumerate(captions(loc)):
+            if shots and n + 1 not in shots:
+                continue
             save(picture(n, a.src, lang, PHONE_PLAY, cap, lang), f"{a.out}/store/android/{play}/images/phoneScreenshots/{n + 1}.png")
+        if shots:
+            print("Play pictures written for", play)
+            continue
         img_dir = f"{a.out}/store/android/{play}/images"
         save(feature_graphic(lang, load(a.src, lang, "t01_title")), f"{img_dir}/featureGraphic.png")
         icon.save(f"{img_dir}/icon.png")

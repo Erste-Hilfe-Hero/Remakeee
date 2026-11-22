@@ -47,7 +47,7 @@ lifekit workflow `chimora-store.yml` (commits `run:chimora-store-play`, `run:chi
 Rebuild the images after the art or the UI changes: see the top of `tools/store/make_store_images.py`
 (raw screens from `tools/store_shots.gd`, all from the running game). The set, in this order: monster
 hero (Era IV Spirlings, one Gleam), 3v3 battle, unfurl before/after, one town in Eras I to IV, a story
-line, a live duel, a Spirlog page, the shop's Looks list (Riftglass prices only). No money prices and no
+line, the Fair league screen (live duels are off live), a Spirlog page, the shop's Looks list (Riftglass prices only). No money prices and no
 Discord note in any picture. The app preview video (15-30 s, 1080 x 1920, 30 fps, H.264) is recorded by
 `tools/store_video.gd` and encoded by `tools/store/make_store_video.py`; it is kept outside the repo.
 The folders with pictures carry a `.gdignore`, so Godot does not import them.
