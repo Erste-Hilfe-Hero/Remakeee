@@ -28,3 +28,19 @@ func test_store_kinds_exist_with_their_own_art() -> void:
 	var old: SpirlingData = Database.species(Shots.UNFURL[0])
 	assert_true(old.unfold.any(func(u: Dictionary) -> bool: return (u.to as SpirlingData).species_name == Shots.UNFURL[1]),
 		"the unfurl picture shows a real step of the line")
+
+func test_store_league_is_a_joined_fair_league_and_online_is_restored() -> void:
+	var keep_backend: OnlineBackend = Online.backend
+	var keep_state: int = Online.state
+	var keep_flags: Array[String] = Online.flags.duplicate()
+	var league: Array = Shots.start_league(Shots.TEAM_MINE)
+	assert_true(Online.backend is LocalBackend)
+	assert_true(Online.flag_on("league_fair"), "the league the picture shows is on live too")
+	assert_false(Online.flag_on("live_duel"), "the store set shows no switched-off feature")
+	var info: Dictionary = (league[0] as LocalBackend).call_fn("league_info", {"p_league": LeagueRules.FAIR}).data
+	assert_true(bool(info.joined))
+	assert_gte(int(info.rank), 0, str(info))
+	Shots.end_league(league)
+	assert_eq(Online.backend, keep_backend)
+	assert_eq(Online.state, keep_state)
+	assert_eq(Online.flags, keep_flags)

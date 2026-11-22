@@ -9,7 +9,9 @@ extends Node
 ##   u1_before, u3_after the unfurl moment (UnfurlSequence) in Era V: old form, new form
 ##   o1..o4_brindlewick   one town (Brindlewick) in Eras I to IV (V draws it like IV)
 ##   s1_story             Era V Brindlewick, Wren's line in the text box
-##   l1_duel              a live duel between two friends (LiveDuelStage on the local server)
+##   l2_league            the Fair league screen (LeagueMenu on the local server): tier, rank, season.
+##                        Live duels are off on the live server, so the store set shows the league
+##                        instead; start_duel() stays for tools/store_video_runner.gd
 ##   m1_spirlog           a Spirlog page (Era V menus)
 ##   m2_shop_looks        the shop's Looks list (Era V menus): Riftglass prices, no money prices
 
@@ -31,7 +33,7 @@ const STORY_LINE: String = "Wren: My advice? Trust nobody who pays on time. That
 const FRIEND: String = "Mara"
 var out: String = "user://store_shots"
 var lang: String = "en"
-## "all", or a comma list of: title, hero, battle, unfurl, eras, story, duel, menus.
+## "all", or a comma list of: title, hero, battle, unfurl, eras, story, league, menus.
 var only: String = "all"
 
 func _ready() -> void:
@@ -101,9 +103,8 @@ func _run() -> void:
 		em.call("set_retro_filter", 5)
 		_place("brindlewick", 12, ow)
 		await _story()
-	if _want("duel"):
-		em.call("set_retro_filter", 5)
-		await _duel()
+	if _want("league"):
+		await _league(em)
 	if _want("menus"):
 		await _menus(em)
 	get_tree().quit()
@@ -248,15 +249,59 @@ static func end_duel(duel: Array) -> void:
 	Online.backend = duel[3]
 	Online.state = duel[4]
 
-func _duel() -> void:
-	var duel: Array = start_duel(TEAM_MINE, TEAM_FOE, FRIEND)
-	get_tree().root.add_child(duel[0])
-	await wave_and_pick(get_tree(), duel)
-	for i: int in 120:
+## The Fair league screen as Menu > Leagues shows it, on the local stand-in of the server with the
+## league flags it ships with (league_fair is on live). The player has joined with the store team
+## and played part of a season. Online is given back after the shot.
+static func start_league(mine: Array[String]) -> Array:
+	var keep: Array = [Online.backend, Online.state, Online.flags.duplicate()]
+	var s := LocalBackend.new()
+	s.rng.seed = 1
+	s.switch_user("me")
+	var hello: Dictionary = s.call_fn("hello", {"p_version": Online.CLIENT_VERSION}).data
+	var team: Array = []
+	var pick: Array = []
+	for k: String in mine:
+		team.append({"species": k, "level": 40, "moves": []})
+		pick.append({"species": k, "moves": []})
+	s.call_fn("team_set", {"p_team": team})
+	s.call_fn("league_join", {"p_league": LeagueRules.FAIR, "p_pick": pick})
+	var entry: Dictionary = s.league_entry(LeagueRules.FAIR, int(s.league_season().id), s.me())
+	entry.rating = 1500.0
+	entry.games = 14
+	entry.wins = 9
+	Online.backend = s
+	Online.state = Online.State.ONLINE
+	Online.flags.assign(hello.flags)
+	return [s] + keep
+
+static func end_league(league: Array) -> void:
+	Online.backend = league[1]
+	Online.state = league[2]
+	Online.flags.assign(league[3])
+
+func _league(em: Node) -> void:
+	var mn: Node = _helper("res://tools/era_menu_shots_runner.gd")
+	mn.call("setup_state")
+	_language()
+	em.set("unlocked_era", 5)
+	em.call("set_retro_filter", 0)
+	var league: Array = start_league(TEAM_MINE)
+	await get_tree().process_frame
+	var pm: PauseMenu = mn.call("_menu")
+	await get_tree().process_frame
+	# The league's status (rule, Ring, tier, rank, battles) is longer than a list title, so the
+	# game shows it in full first; that is the screen in the picture.
+	var open := func() -> void: await LeagueMenu.run_league(pm, LeagueRules.FAIR)
+	open.call()
+	for i: int in 600:
 		await get_tree().process_frame
-	await _save_root("l1_duel", 1)
-	end_duel(duel)
-	Juice.calm()
+		if pm._info_wait:
+			break
+	for i: int in 30:
+		await get_tree().process_frame
+	await _save_root("l2_league", 1)
+	pm.queue_free()
+	end_league(league)
 	await get_tree().process_frame
 
 func _menus(em: Node) -> void:
