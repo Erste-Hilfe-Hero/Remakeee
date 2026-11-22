@@ -157,8 +157,16 @@ def page(title: str, lang: str, body: str) -> str:
            '<a href="/support">Support</a></nav>')
     return ('<!doctype html>\n<html lang="%s"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width,initial-scale=1">'
-            '<title>%s · Chimora</title><style>%s</style></head>\n<body><main>%s\n%s\n</main></body></html>\n'
-            % (lang, html.escape(title), CSS, nav, body))
+            '<title>%s · Chimora</title><style>%s</style></head>\n<body><main>%s\n%s\n%s\n</main></body></html>\n'
+            % (lang, html.escape(title), CSS, nav, body, IMPRINT_FOOTER[lang]))
+
+
+# Operator imprint on the main site; German pages link the German page, all others the English one.
+IMPRINT_FOOTER = {
+    "de": '<footer><hr><a href="https://play.nyrathen.com/legal/impressum">Impressum</a> · '
+          '<a href="https://play.nyrathen.com/legal/imprint" lang="en">Imprint (English)</a></footer>',
+    "en": '<footer><hr><a href="https://play.nyrathen.com/legal/imprint">Imprint</a></footer>',
+}
 
 
 # The DSA report form (plan area 7, item 2899). Works without an account: melden.js signs in

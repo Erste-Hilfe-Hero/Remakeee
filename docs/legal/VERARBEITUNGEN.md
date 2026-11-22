@@ -1,7 +1,7 @@
 # Verzeichnis von Verarbeitungstätigkeiten (Art. 30 DSGVO)
 
-Verantwortlicher: siehe `IMPRESSUM.md`. Server: Contabo GmbH, Rechenzentrum in Deutschland
-(Auftragsverarbeitung, Vertrag siehe `CHECKLISTE_ALI.md`). Alle Online-Daten liegen in einer
+Verantwortlicher: siehe `IMPRESSUM.md`. Server: Contabo GmbH, München, Deutschland (Auftragsverarbeiter, Art. 28 DSGVO); Serverstandort: Rechenzentrum Lauterbourg, Frankreich (EU)
+(Vertrag siehe `CHECKLISTE_ALI.md`). Alle Online-Daten liegen in einer
 Postgres-Datenbank auf diesem Server; Tabellen und Funktionen stehen in `supabase/migrations/`.
 
 Für jede Online-Funktion: Zweck, Daten (Tabellen), betroffene Personen, Speicherdauer, Rechtsgrundlage.
@@ -50,7 +50,7 @@ Betroffene sind immer Spielerinnen und Spieler von Chimora (alle Altersgruppen, 
   `rate_events` und `transfer_attempts` 1 Tag, Übertragungscodes 7 Tage, inaktive Konten (siehe oben),
   Anmelde-Protokoll 7 Tage, dazu `_web_cleanup()` für Browser-Testkonten (30 Tage). Ruft auch `_privacy_cleanup()` auf (Ligen, Kämpfe, Echtheitsprüfung), das
   zusätzlich ab und zu bei `hello` läuft. Das Ergebnis steht im Cron-Log.
-- Empfänger: Contabo GmbH (Hosting, Art. 28), Apple und Google (eigene Verantwortung), Behörden nur bei
+- Empfänger: Contabo GmbH, München, Deutschland (Hosting, Auftragsverarbeiter, Art. 28 DSGVO; Serverstandort: Rechenzentrum Lauterbourg, Frankreich (EU)), Apple und Google (eigene Verantwortung), Behörden nur bei
   gesetzlicher Pflicht. Kein Drittland. Kein Datenschutzbeauftragter (keine Pflicht nach § 38 BDSG).
 
 ## Technische und organisatorische Maßnahmen (Art. 32)

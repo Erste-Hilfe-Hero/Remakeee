@@ -13,7 +13,7 @@ Ali Amuri Alnasag, Im Vogelgesang 9, 60488 Frankfurt am Main, Germany. Email: aa
 
 ## 2. Summary
 
-Chimora is an online game for iOS and Android. Your save game is stored on our server in Germany so you can
+Chimora is an online game for iOS and Android. Your save game is stored on our server in the EU (data centre Lauterbourg, France) so you can
 play and keep your progress. We collect only what the game needs. **No ads, no sale of data, no tracking or
 analytics, no third-party sign-in, no email address required.**
 
@@ -43,15 +43,15 @@ anyone else. You can turn them off any time under Settings > Game or in your dev
 
 ## 5. Recipients
 
-- Hosting: Contabo GmbH, Aschauer Straße 32a, 81549 Munich, Germany <!-- check against the DPA -->. The
-  server is in a data centre in Germany. Contabo only provides the machine; we run the database on it
+- Hosting: Contabo GmbH, Munich, Germany (processor, Art. 28 GDPR); server location: data centre Lauterbourg, France (EU).
+  Address: Contabo GmbH, Aschauer Straße 32a, 81549 Munich. <!-- check against the DPA --> Contabo only provides the machine; we run the database on it
   ourselves. Other services of the same controller run on the same machine; they are kept apart from
   Chimora and have no access to its database. Contabo processes the data on our behalf under an Art. 28 GDPR agreement. No data is transferred
   outside the EU.
 - Apple and Google process data as independent controllers when you download the app or buy something.
 - Authorities only where required by law.
 
-Apart from this we do not transfer data outside the EU/EEA. The game data itself is stored only in Germany.
+Apart from this we do not transfer data outside the EU/EEA. The game data itself is stored only in the EU (data centre Lauterbourg, France).
 
 ## 6. Children
 

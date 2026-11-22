@@ -18,7 +18,7 @@
 
 ## Festgelegtes Modell (darauf beruhen alle Texte)
 
-- Online-only, Spielstand auf unserem eigenen Server bei Contabo in Deutschland (docs/ONLINE.md).
+- Online-only, Spielstand auf unserem eigenen Server: Contabo GmbH, München, Deutschland (Auftragsverarbeiter, Art. 28 DSGVO); Serverstandort: Rechenzentrum Lauterbourg, Frankreich (EU) (docs/ONLINE.md).
 - Konto wird beim ersten Start automatisch angelegt (zufällige Spieler-ID), Gerätewechsel per
   Übertragungscode. Keine E-Mail, kein Login über Apple/Google/Facebook.
 - Wayfarer-Name nur für bestätigte Freunde sichtbar. Kein freier Chat: Grüße sind feste Sätze. Wochen-Rangliste

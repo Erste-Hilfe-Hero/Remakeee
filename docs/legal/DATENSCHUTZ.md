@@ -22,7 +22,7 @@ Bei Fragen zum Datenschutz schreib an die oben genannte E-Mail-Adresse.
 ## 2. Kurz gesagt
 
 Chimora ist ein Online-Spiel für iOS und Android. Damit du spielen kannst, wird dein Spielstand auf unserem
-Server in Deutschland gespeichert. Wir erheben nur, was dafür nötig ist. **Keine Werbung, kein Verkauf von
+Server in der EU (Rechenzentrum Lauterbourg, Frankreich) gespeichert. Wir erheben nur, was dafür nötig ist. **Keine Werbung, kein Verkauf von
 Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, keine E-Mail-Adresse nötig.**
 
 ## 3. Welche Daten wir verarbeiten, wofür und auf welcher Rechtsgrundlage
@@ -134,8 +134,8 @@ Einstellungen deines Geräts.
 
 ## 5. Empfänger
 
-- **Hosting:** Contabo GmbH, Aschauer Straße 32a, 81549 München, Deutschland <!-- Adresse beim Abschluss des AV-Vertrags prüfen -->.
-  Der Server steht in einem Rechenzentrum in Deutschland. Contabo stellt nur den Rechner bereit; die
+- **Hosting:** Contabo GmbH, München, Deutschland (Auftragsverarbeiter, Art. 28 DSGVO); Serverstandort: Rechenzentrum Lauterbourg, Frankreich (EU).
+  Anschrift: Contabo GmbH, Aschauer Straße 32a, 81549 München. <!-- Adresse beim Abschluss des AV-Vertrags prüfen --> Contabo stellt nur den Rechner bereit; die
   Datenbank betreiben wir selbst darauf. Auf demselben Rechner laufen weitere Dienste desselben
   Verantwortlichen; sie sind von Chimora getrennt und haben keinen Zugriff auf die Chimora-Datenbank. Contabo verarbeitet die Daten in unserem Auftrag auf Grundlage
   eines Vertrags nach Art. 28 DSGVO. Eine Übermittlung in Länder außerhalb der EU findet nicht statt.
@@ -144,7 +144,7 @@ Einstellungen deines Geräts.
 - **Behörden** nur, wenn wir gesetzlich dazu verpflichtet sind.
 
 Darüber hinaus übermitteln wir keine Daten in Länder außerhalb der EU bzw. des EWR. Die Spieldaten selbst
-liegen ausschließlich in Deutschland.
+liegen ausschließlich in der EU (Rechenzentrum Lauterbourg, Frankreich).
 
 ## 6. Kinder und Jugendliche
 
