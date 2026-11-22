@@ -2,7 +2,7 @@
 
 > Erstellt von einer KI ohne anwaltliche Prüfung. Die Antworten gelten für das Modell aus
 > [DATENSCHUTZ.md](DATENSCHUTZ.md): automatisches Konto mit zufälliger Spieler-ID, Übertragungscode statt
-> E-Mail, Wayfarer-Name nur für dich sichtbar, eigener Server bei Contabo in Deutschland, keine Werbung, keine Analytics-SDKs
+> E-Mail, Wayfarer-Name nur für dich sichtbar, eigener Server bei Contabo GmbH, München, Deutschland (Auftragsverarbeiter, Art. 28 DSGVO; Serverstandort: Rechenzentrum Lauterbourg, Frankreich (EU)), keine Werbung, keine Analytics-SDKs
 > (nur eine eigene anonyme Zählung des Fortschritts auf dem Server, `admin_funnel`), keine Absturzberichte, kein Drittanbieter-Login, kein Chat, keine Lootboxen. Ändert sich davon etwas,
 > ändern sich die Antworten. Store-Formulare ändern sich oft: im Zweifel die Hilfe in der Konsole lesen.
 

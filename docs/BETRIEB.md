@@ -1,7 +1,7 @@
 # Server-Betrieb
 
 Plan Bereich 9 (Punkte 3826 bis 3850). Ergänzt `docs/ONLINE.md` (Aufbau) und `docs/SICHERHEIT.md`.
-Der Server läuft auf Alis Contabo-Rechner 161.97.102.171 im geteilten Modus (`/opt/chimora`), Deploys
+Der Server läuft auf Alis Contabo-Rechner 161.97.102.171 (Rechenzentrum Lauterbourg, Frankreich, EU) im geteilten Modus (`/opt/chimora`), Deploys
 kommen aus dem lifekit-Repository (Workflow "Chimora on Contabo", `run:chimora-deploy`).
 
 ## Was automatisch läuft
@@ -37,7 +37,7 @@ als die Löschung ist).
 
 Für den Fall, dass der Contabo-Rechner weg ist oder neu installiert werden muss.
 
-1. **Neuer Rechner (15 min):** Contabo Cloud VPS, Region Deutschland, Ubuntu 24.04. Root-Zugang in
+1. **Neuer Rechner (15 min):** Contabo Cloud VPS, Region EU (bisher Rechenzentrum Lauterbourg, Frankreich; bei anderem Standort Datenschutztexte anpassen), Ubuntu 24.04. Root-Zugang in
    lifekit eintragen (Secrets wie bisher). Läuft dort auch Nyrathen, zuerst dessen Proxy aufsetzen.
 2. **Sicherung holen (10 min):** die neueste `chimora-*.dump` vom alten Rechner, vom zweiten Anbieter
    (mit `age -d -i <privater Schlüssel>` entschlüsseln) oder aus Alis Offline-Kopie.

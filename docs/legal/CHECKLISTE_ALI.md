@@ -56,7 +56,7 @@ mache ich das.
 
 ## 4. Online-Betrieb
 
-- [ ] Bei **Contabo** einen **Cloud VPS 10** mit Ubuntu 24.04 in Deutschland bestellen (ca. 5 € im Monat).
+- [ ] Bei **Contabo** einen **Cloud VPS 10** mit Ubuntu 24.04 in der EU bestellen (bestehender Server: Rechenzentrum Lauterbourg, Frankreich) (ca. 5 € im Monat).
 - [ ] Im Contabo-Kundenbereich den **Auftragsverarbeitungsvertrag (AV-Vertrag)** abschließen und die Adresse
       in `DATENSCHUTZ.md` und `PRIVACY_POLICY_EN.md` damit vergleichen.
 - [ ] In GitHub drei Secrets eintragen (IP, Root-Passwort, Server-Adresse) und den Workflow **Game server**

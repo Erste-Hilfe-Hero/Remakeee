@@ -1,7 +1,7 @@
 # Online (Chimora is online only)
 
 Chimora only runs with an internet connection. The server keeps every journey, the phone keeps a cache copy.
-The server is our own machine at **Contabo** in Germany (Cloud VPS), running the same open-source programs
+The server is our own machine at **Contabo** (Contabo GmbH, Munich, Germany, processor under Art. 28 GDPR; server location: data centre Lauterbourg, France, EU; Cloud VPS), running the same open-source programs
 as Supabase (Postgres, GoTrue for sign-in, PostgREST for the API) behind Caddy for HTTPS. Everything for it
 is in `server/`. The game would also work with a Supabase Cloud project, see the end of this page. The
 ideas list behind this is the "Chimora online: 200 ideas" artifact in the project.

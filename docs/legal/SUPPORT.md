@@ -10,7 +10,7 @@ Nur [E-MAIL] ersetzen.
 ## Häufige Fragen
 
 **Warum braucht Chimora Internet?**
-Dein Spielstand liegt auf unserem Server in Deutschland. So geht er nicht verloren, wenn dein Handy kaputt
+Dein Spielstand liegt auf unserem Server in der EU (Rechenzentrum Lauterbourg, Frankreich). So geht er nicht verloren, wenn dein Handy kaputt
 geht, und du kannst mit Freunden Grüße, Geschenke und Duelle austauschen. Bricht die Verbindung ab, pausiert
 das Spiel und macht von selbst weiter, sobald sie wieder da ist.
 
@@ -38,7 +38,7 @@ Weitere Seiten: [Datenschutz](/datenschutz) · [Nutzungsbedingungen](/nutzungsbe
 
 **Email:** aa.amuri@icloud.com (we usually answer within 2 working days)
 
-**Why does Chimora need the internet?** Your save lives on our server in Germany, so it is safe if your
+**Why does Chimora need the internet?** Your save lives on our server in the EU (data centre Lauterbourg, France), so it is safe if your
 phone breaks, and you can swap greetings, gifts and duels with friends. If the connection drops, the game
 pauses and carries on by itself once it is back.
 
