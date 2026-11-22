@@ -226,21 +226,22 @@ lokal und senden nichts (Abschnitt 4).
   indem du auf unsere Antwort antwortest oder an aa.amuri@icloud.com mit dem Betreff „Appeal“ schreibst. Wir
   entscheiden innerhalb von 45 Tagen mit Begründung. Lehnen wir erneut ab, kannst du dich an den Attorney
   General deines Bundesstaats wenden.
-- **Kinder (COPPA):** Chimora hat im App Store die Altersfreigabe 9+ und kann von Kindern unter 13 gespielt
-  werden. Das Spiel ist so gebaut, dass Kinder spielen können, ohne uns personenbezogene Daten zu geben, die
-  über das hinausgehen, was COPPA ohne Zustimmung der Eltern für den internen Spielbetrieb erlaubt: eine
-  zufällige Spieler-ID, das Anmelde-Token, den Spielstand und IP-Adressen in Sicherheits-Protokollen für
-  7 Tage. Wir fragen nicht nach echtem Namen, E-Mail-Adresse, Telefonnummer, Anschrift, Foto,
-  Sprachaufnahme oder Standort. Es gibt keinen freien Chat (Grüße sind feste Sätze), keine Werbung, kein
-  Tracking und kein Dritt-SDK. Der Wayfarer-Name ist ein Spielname, den nur bestätigte Freunde und die anderen
-  Mitglieder eines Bundes oder Raid-Risses sehen; Kinder sollten darin nicht ihren echten Namen verwenden, und
-  unpassende Namen setzen wir zurück. Der Shop fragt vor dem ersten Öffnen Geburtsjahr und -monat ab und
-  bleibt **unter 13 gesperrt**. Eltern können Freunde, Grüße und Geschenke unter Einstellungen, Konto
-  ausschalten und Live-Duelle, Raid-Risse, Bünde, Ligen und Vorschläge unter Einstellungen, Konto, Für Eltern;
-  ergibt die Altersfrage ein Alter unter 16, sind offene Liga, Bünde und Vorschläge von Anfang an aus. Eltern
-  oder Erziehungsberechtigte können die Daten ihres Kindes jederzeit einsehen („Meine Daten herunterladen“),
-  löschen lassen und die weitere Erhebung stoppen („Konto löschen“ im Spiel oder eine E-Mail an
-  aa.amuri@icloud.com).
+- **Kinder (COPPA):** Chimora ist ein Spiel für ein allgemeines Publikum und richtet sich nicht an Kinder
+  unter 13; die Altersfreigabe im App Store ist 9+. Beim Start fragt das Spiel nicht nach dem Alter. Es legt
+  eine zufällige Spieler-ID an und speichert den Wayfarer-Namen, den du bei einem neuen Spiel eintippst, und
+  einen Freundescode; bestätigte Freunde und die anderen Mitglieder eines Bundes oder Raid-Risses sehen den
+  Wayfarer-Namen, und Freunde fügen sich über den Freundescode hinzu. Wir fragen nicht nach echtem Namen,
+  E-Mail-Adresse, Telefonnummer, Anschrift, Foto, Sprachaufnahme oder Standort, und es gibt keinen freien
+  Chat (Grüße sind feste Sätze). Das Alter wird nur vor dem ersten Öffnen des Shops abgefragt, als
+  Geburtsjahr und -monat, und wir behalten nur die Altersgruppe. Ist die Antwort unter 13, bleibt der Shop
+  gesperrt, die Antwort lässt sich später nicht auf eine ältere Altersgruppe ändern, und offene Liga, Bünde
+  und Vorschläge aus Liga-Kämpfen sind von Anfang an aus (wie für alle unter 16). Freunde, Grüße und Geschenke
+  bleiben an, bis ein Elternteil sie unter Einstellungen, Konto ausschaltet; Live-Duelle, Raid-Risse, Bünde,
+  Ligen und Vorschläge lassen sich unter Einstellungen, Konto, Für Eltern ausschalten. Wenn du als Elternteil
+  annimmst, dass dein Kind unter 13 uns personenbezogene Daten gegeben hat, schreib an aa.amuri@icloud.com,
+  wenn möglich mit der Spieler-ID des Kindes: Wir löschen das Konto und seine Daten. Auf dem Gerät des Kindes
+  kannst du die Daten auch selbst einsehen („Meine Daten herunterladen“) oder das Konto löschen („Konto
+  löschen“).
 - **Minderjährige in Kalifornien:** Bist du unter 18, kannst du Inhalte, die du eingestellt hast und die
   andere Spieler sehen (dein Wayfarer-Name, deine Bund-Mitgliedschaft), entfernen lassen: Schreib uns, dann
   setzen wir den Namen zurück oder entfernen den Eintrag, oder lösche dein Konto. Kopien, die andere gemacht
@@ -277,9 +278,19 @@ an Dritte und die Offenlegung von Aufzeichnungen über Weitergaben an Dritte unt
 
 ### 10.5 Republik Korea (PIPA): Übermittlung ins Ausland
 
-- **Übermittelte Daten:** zufällige Spieler-ID, Anmelde-Token, Wayfarer-Name, Freundescode, Spielstand und
-  Fortschritt, Freunde und Leuchtpost, Liga- und Kampfdaten, Kaufbestätigungen, Rissglas-Buchungen und
-  Altersgruppe, Meldungen, IP-Adresse in Server-Protokollen.
+- **Übermittelte Daten** (alles, was laut Abschnitt 3.1 bis 3.6 auf dem Server gespeichert wird):
+  zufällige Spieler-ID, Anmelde-Token, Übertragungscode (nur als Hash), Wayfarer-Name, Freundescode,
+  Spielstand mit den letzten 5 früheren Fassungen, Zeitpunkt der letzten Synchronisierung, App-Version,
+  Gerätetyp und Betriebssystemversion; Freundesliste, Freundschaftsanfragen, Lieblings-Freunde und
+  Blockierungen; Grüße (Satznummern) und Geschenke; Wanderer-Karte, aktueller Ort im Spiel und Echo-Team;
+  Beitrag zum Weltziel und Werte der Wochen-Rangliste; Meldungen, Entscheidungen, Begründungen und
+  Widersprüche sowie Meldungen über das Web-Formular (mit Name und E-Mail, wenn angegeben);
+  Bund-Mitgliedschaft, Rolle und Online-Status, Bund-Einladungen; Schaden, Versuche und Warteschlangen-Einträge in
+  Raid-Rissen; Tausch (eingelegte Gegenstände, Bestätigungen); Liga-Teams, Wertungen, Paarungen,
+  Kampfaufnahmen und Prüfergebnisse des Schiedsrichters; Vermerke zu abgelehnten Spielständen;
+  Eltern-Schalter; Kaufbestätigungen, Rissglas-Guthaben und Buchungen, freigeschaltete Inhalte, Erstattungen,
+  Ausgabelimit und Altersgruppe; IP-Adresse, Zeitpunkt, Endpunkt, Statuscode und App-Version in den
+  Server-Protokollen (7 Tage).
 - **Land:** Frankreich (EU), Rechenzentrum Lauterbourg.
 - **Zeitpunkt und Weg:** bei jeder Verbindung der App mit unserem Server, über eine TLS-verschlüsselte
   Verbindung.
@@ -327,9 +338,11 @@ nicht, kannst du dich an das OAIC (oaic.gov.au) oder den neuseeländischen Priva
 
 ### 10.9 Indien (DPDP Act)
 
-Wir verarbeiten deine personenbezogenen Daten nur für die Zwecke in Abschnitt 3, denen du zustimmst, wenn du
-beim ersten Start die Bedingungen annimmst und das Spiel nutzt. Widerrufen kannst du das, indem du dein Konto
-löschst. Nach dem Digital Personal Data Protection Act 2023 kannst du eine Übersicht deiner Daten bekommen
+Wir verarbeiten deine personenbezogenen Daten nur für die Zwecke in Abschnitt 3. Du gibst uns die Daten
+selbst, indem du spielst, und zwar zum Spielen; eine eigene Einwilligung fragen wir nicht ab. Bei der ersten
+Verbindung zeigt das Spiel einen kurzen Datenschutzhinweis mit dem Wichtigsten, und unter Einstellungen,
+Rechtliches sind diese Erklärung und die Nutzungsbedingungen verlinkt. Die Verarbeitung beendest du jederzeit,
+indem du dein Konto löschst. Nach dem Digital Personal Data Protection Act 2023 kannst du eine Übersicht deiner Daten bekommen
 („Meine Daten herunterladen“), sie berichtigen oder löschen lassen, unsere Beschwerdestelle nutzen und eine
 Person benennen, die deine Rechte ausübt, wenn du stirbst oder selbst nicht handeln kannst. Beschwerdestelle
 (Grievance Officer): Ali Amuri Alnasag, aa.amuri@icloud.com; wir antworten innerhalb von 30 Tagen. Bist du

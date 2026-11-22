@@ -120,20 +120,21 @@ Notifications are local only and send nothing (section 4).
 - **Appeal:** if we refuse a request in whole or in part, you can appeal by replying to our answer or by
   writing to aa.amuri@icloud.com with the subject "Appeal". We decide within 45 days and explain why. If we
   deny the appeal, you can contact the Attorney General of your state.
-- **Children (COPPA):** Chimora has an App Store age rating of 9+ and can be played by children under 13.
-  It is built so that children can play without giving us personal information beyond what COPPA allows
-  without parental consent to support the internal operations of the game: a random player ID, the sign-in
-  token, the save game and IP addresses in security logs kept for 7 days. We do not ask for a real name,
-  email address, phone number, postal address, photo, voice recording or location. There is no free-text
-  chat (greetings are fixed phrases), no advertising, no tracking and no third-party SDK. The Wayfarer name
-  is a game name that only confirmed friends and the other members of a bund or Raid Rift see; children
-  should not use their real name in it, and we reset unsuitable names. The shop asks for the birth year and
-  month before it opens and stays **closed under 13**. Parents can switch off friends, greetings and gifts
-  under Settings, Account, and live duels, Raid Rifts, bunds, leagues and suggestions under Settings,
-  Account, For parents; once the age question shows an age under 16, the open league, bunds and
-  suggestions are off by default. A parent or guardian can review the child's data ("Download my data"),
-  have it deleted and stop any further collection ("Delete account" in the game, or an email to
-  aa.amuri@icloud.com) at any time.
+- **Children (COPPA):** Chimora is a game for a general audience and is not directed at children under 13;
+  its App Store age rating is 9+. The game does not ask for the age when you start. It creates a random
+  player ID and stores the Wayfarer name you type in at a new game and a friend code; confirmed friends
+  and the other members of a bund or Raid Rift see the Wayfarer name, and friends add each other with the
+  friend code. We do not ask for a real name, email address, phone number, postal address, photo, voice
+  recording or location, and there is no free-text chat (greetings are fixed phrases). The age is asked
+  only before the shop opens first, as birth year and month, and we keep only the age group. If the answer
+  is under 13, the shop stays closed, the answer cannot later be changed to an older age group, and the
+  open league, bunds and suggestions from league battles are switched off by default (as for everyone
+  under 16). Friends, greetings and gifts stay on unless a parent switches them off under Settings,
+  Account; live duels, Raid Rifts, bunds, leagues and suggestions can be switched off under Settings,
+  Account, For parents. If you are a parent and believe your child under 13 has given us personal
+  information, write to aa.amuri@icloud.com with the child's player ID if you have it: we delete the
+  account and its data. You can also review the data ("Download my data") or delete the account
+  ("Delete account") in the game on the child's device.
 - **California minors:** if you are under 18, you can have content you posted that other players can see
   (your Wayfarer name, your bund membership) removed: write to us, and we reset the name or remove the
   entry, or delete your account. The removal cannot cover copies other people made.
@@ -169,9 +170,17 @@ third-party provision, and disclosure of records of third-party provision, at th
 
 ### 10.5 Republic of Korea (PIPA): transfer of personal information overseas
 
-- **Items transferred:** random player ID, sign-in token, Wayfarer name, friend code, save game and game
-  progress, friends and Lantern Mail, league and battle data, purchase confirmations, Riftglass bookings and
-  age group, reports, IP address in server logs.
+- **Items transferred** (everything sections 3.1 to 3.6 say is stored on the server): random player ID,
+  sign-in token, transfer code (stored only as a hash), Wayfarer name, friend code, save game with its last
+  5 earlier versions, last sync time, app version, device model and OS version; friend list, friend
+  requests, favourite friends and blocks; greetings (phrase numbers) and gifts; Wayfarer card, current place
+  in the game and echo team; world goal contribution and weekly board scores; reports, decisions,
+  notices and appeals, and reports from the web form (with name and email if given); bund membership, role
+  and online status, bund invitations; Raid Rift damage, attempts and queue entries; trades (items put in,
+  confirmations); league teams, ratings, matches, battle recordings and the referee's results; notes on
+  refused saves; parent switches; purchase confirmations, Riftglass balance and bookings, unlocked content,
+  refunds, spending limit and age group; IP address, time, endpoint, status code and app version in
+  server logs (7 days).
 - **Country:** France (EU), data centre Lauterbourg.
 - **Time and method:** each time the app connects to our server, over a TLS-encrypted connection.
 - **Recipient:** Contabo GmbH (server hosting on our behalf), Aschauer Straße 32a, 81549 Munich, Germany,
@@ -215,8 +224,10 @@ can contact the OAIC (oaic.gov.au) or the New Zealand Privacy Commissioner (priv
 
 ### 10.9 India (DPDP Act)
 
-We process your personal data only for the purposes in section 3, which you agree to when you accept the
-terms on first launch and use the game. You can withdraw by deleting your account. Under the Digital
+We process your personal data only for the purposes in section 3. You give us the data yourself by
+playing, for the purpose of playing; we do not ask for a separate consent. On the first connection the
+game shows a short privacy note with the main points, and this policy and the terms are linked under
+Settings, Legal. You can stop the processing at any time by deleting your account. Under the Digital
 Personal Data Protection Act 2023 you can get a summary of your data ("Download my data"), have it corrected
 or erased, use our grievance redressal and nominate a person to exercise your rights if you die or cannot
 act. Grievance contact: Ali Amuri Alnasag, aa.amuri@icloud.com; we respond within 30 days. If you are not
