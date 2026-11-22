@@ -1,46 +1,17 @@
-Chimora 1.2.0
+Chimora 1.3.0
 
-ATO IV: SOLENNE
-- Um novo ato queimado pelo sol: Ochrewell, a Planície Glasswind, a escada do caravançará e o Forno da Miragem.
-- Três Fendas novas e as suas Sentinelas. Agora os doze selos estão entre ti e o final.
+UM INÍCIO MAIS FÁCIL
+- Escolhe a dificuldade ao começar uma nova viagem.
+- Um prólogo mais curto leva-te mais depressa ao teu primeiro Spirling.
+- O Ato I está mais suave enquanto aprendes o básico.
 
-DEPOIS DO FINAL
-- Vellmarch: uma região inteira de pós-jogo no estilo da Era II. 5 cidades, 6 estradas, 4 Fendas e uma história com uma traição em cada capítulo.
-- Para lá de Vellmarch: Quillmarch, Halcyra e Quivermoor, mais três regiões no estilo de eras posteriores.
-- Desforras contra as 12 Sentinelas. Tiveram tempo para pensar na derrota.
-- Torre Eco com 100 andares, Fendas de mestre, a Fenda aleatória, um gigante da semana, um exame final e Novo Jogo+.
-- Os Spirlings continuam a crescer para lá do anel 60. Continua.
+BATALHA
+- O botão Auto fica agora na lateral do ecrã de batalha. Só batalhas selvagens ou todas as batalhas da história. Guardiões e rivais perguntam primeiro.
 
-HISTÓRIA E CONFIANÇA
-- Dois clãs, onze estranhos e um Livro-razão no menu de pausa que se lembra de quem confiaste. Um favor pode compensar. Ou deixar-te sem nada.
-- Missões de lenda para seis lendários novos, cada uma com um guia que talvez não seja o que parece.
-- Histórias paralelas em cada ato e um acampamento de estranhos à beira da Fenda Larga.
+ORIENTAÇÃO
+- A linha do objetivo e o minimapa são gratuitos no Ato I.
 
-SPIRLINGS
-- Mais de 400 Spirlings novos, 497 no total: 70 próprios em cada ato e em cada região depois da história.
-- Formas Reluzentes na natureza, com bónus de sequência e contador no Spirlog.
-- As fases seguintes parecem-se agora com a forma anterior, só que crescida.
-- O teu Spirling da frente anda atrás de ti. Lembra-se de como o tratas.
-- O Juramento de Tinta, dons ocultos de um informador do mercado negro e crias que herdam o negócio da família.
-
-LUGARES NOVOS
-- A Toca: um buraco que podes ocupar. O ocupante não concorda.
-- O Velório: um espetáculo fúnebre diário no Salão dos Gravadores.
-- Reserva de Hollowgate: um parque de vida selvagem gerido por contrabandistas.
-- Pedras de cartógrafo, marcos e progresso do mapa por região.
-
-ONLINE (precisa de ligação à internet)
-- Duelos ao vivo com amigos, ligas com temporadas, raides com um guardião semanal.
-- Trupes com doações e metas semanais, trocas, listas de desejos, presentes e eventos por tempo limitado.
-
-VISUAL, SOM E CONFORTO
-- Cada ato tem o seu próprio visual, as janelas acendem-se à noite e o farol finalmente parece um farol.
-- Música por era para regiões, masmorras, batalhas e Sentinelas.
-- Ecrã de batalha: barras de Vigor por era, selos de tipo coloridos, dicas de eficácia e um modo para daltónicos.
-- Primeiros 15 minutos mais tranquilos. As novidades aparecem em "Novidades" no ecrã de título.
-- A tua viagem é guardada logo depois de escolheres o teu nome.
-- Telemóveis dobráveis: a imagem ajusta-se assim que dobras ou desdobras.
-- Novas ofertas opcionais na loja.
-- Muitos mais textos traduzidos nos 14 idiomas.
-- Muitas correções: gravações, definições, restaurar compras. Atrasar o relógio do telemóvel já não paga a recompensa diária duas vezes. Boa tentativa.
-- Corrigido: o teu Viajante já não continua a andar sozinho depois de uma batalha.
+ASPETO E CONFORTO
+- Dia e noite, meteorologia e o filtro retro são agora gratuitos. Liga-os ou desliga-os quando quiseres.
+- Avisos opcionais: uma nota curta quando um passeio termina ou um novo Achado do Dia está à espera. Desligados até os ligares.
+- Muitas correções na interface nos 14 idiomas.
