@@ -224,7 +224,8 @@ func back_button() -> Button:
 ## Rows may also carry "icon" (Texture2D, drawn left of the text), "decorate" (a Callable
 ## that gets the row Button to draw on, e.g. a Vigor bar), "hint" (line under the list) and
 ## "say" (a state only screen readers read, e.g. "worn out" when a mark shows it) and
-## "ellipsis" (a long row ends in "..." instead of being cut) and
+## "ellipsis" (a long row ends in "..." instead of being cut), "icon_top" (the icon above
+## the text, which then has the row's whole width) and
 ## "right" (text a decoration draws at the right end, e.g. a price: the row's own text is cut
 ## short with ".." so it never runs under it, "right_pad" pixels of room around it).
 ## [param tabs]: names of tabs above the list; left/right or a tap on a tab returns
@@ -275,6 +276,10 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		var icon: Variant = rows[i].get("icon")
 		if icon is Texture2D:
 			b.icon = icon
+			# "icon_top": the icon on its own line above the text, which keeps the full width.
+			if bool(rows[i].get("icon_top", false)):
+				b.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
+				b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		var deco: Variant = rows[i].get("decorate")
 		if deco is Callable:
 			b.draw.connect(func() -> void: (deco as Callable).call(b))

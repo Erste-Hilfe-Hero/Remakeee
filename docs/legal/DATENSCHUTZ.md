@@ -339,9 +339,10 @@ nicht, kannst du dich an das OAIC (oaic.gov.au) oder den neuseeländischen Priva
 ### 10.9 Indien (DPDP Act)
 
 Wir verarbeiten deine personenbezogenen Daten nur für die Zwecke in Abschnitt 3. Du gibst uns die Daten
-selbst, indem du spielst, und zwar zum Spielen; eine eigene Einwilligung fragen wir nicht ab. Bei der ersten
-Verbindung zeigt das Spiel einen kurzen Datenschutzhinweis mit dem Wichtigsten, und unter Einstellungen,
-Rechtliches sind diese Erklärung und die Nutzungsbedingungen verlinkt. Die Verarbeitung beendest du jederzeit,
+selbst, indem du spielst, und zwar zum Spielen; eine eigene Einwilligung fragen wir nicht ab. Vor der ersten
+Verbindung zeigt das Spiel einen kurzen Datenschutzhinweis mit dem Wichtigsten und fragt, ob du die
+Nutzungsbedingungen und diese Erklärung gelesen hast (das bestätigt nur, dass du sie kennst); beide sind dort
+und unter Einstellungen, Rechtliches verlinkt. Die Verarbeitung beendest du jederzeit,
 indem du dein Konto löschst. Nach dem Digital Personal Data Protection Act 2023 kannst du eine Übersicht deiner Daten bekommen
 („Meine Daten herunterladen“), sie berichtigen oder löschen lassen, unsere Beschwerdestelle nutzen und eine
 Person benennen, die deine Rechte ausübt, wenn du stirbst oder selbst nicht handeln kannst. Beschwerdestelle

@@ -17,10 +17,18 @@ Vollständige Angaben im [Impressum](IMPRESSUM.md).
 
 ## 2. Vertragsschluss und Konto
 
-2.1 Bei der ersten Verbindung zeigt das Spiel einen kurzen Datenschutzhinweis und legt automatisch ein
-Spielkonto an; eine E-Mail-Adresse ist nicht nötig. Diese Bedingungen stehen im Spiel unter Einstellungen,
-Rechtliches und auf https://[DOMAIN]/nutzungsbedingungen. Der Nutzungsvertrag zu diesen Bedingungen kommt
-zustande, wenn du danach die Online-Funktionen des Spiels nutzt.
+2.1 Vor der ersten Verbindung und vor dem ersten Spiel, auch vor einem Start ohne Verbindung, zeigt das
+Spiel einen kurzen Datenschutzhinweis und das Kästchen „Ich habe die Nutzungsbedingungen und die
+Datenschutzerklärung gelesen und akzeptiere sie.“ Daneben öffnen zwei Zeilen diese Bedingungen
+(https://[DOMAIN]/nutzungsbedingungen) und die Datenschutzerklärung (https://[DOMAIN]/datenschutz), in
+anderen Sprachen die englischen Fassungen. „Weiter“ geht erst, wenn du das Kästchen angehakt hast. Das Spiel
+merkt sich auf deinem Gerät, welche Fassung dieser Bedingungen du akzeptiert hast; erst danach fragt es den
+Server und legt automatisch ein Spielkonto an, eine E-Mail-Adresse ist nicht nötig. Wer schon einen Spielstand
+hat, sieht diesen Schritt einmal beim nächsten Start; nach einer Änderung dieser Bedingungen (Abschnitt 10)
+fragt das Spiel erneut. Diese Bedingungen stehen außerdem im Spiel unter Einstellungen, Rechtliches. Der
+Nutzungsvertrag zu diesen Bedingungen kommt zustande, wenn du sie so akzeptierst. Das Häkchen bei der
+Datenschutzerklärung bestätigt nur, dass du sie kennst; es ist keine Einwilligung in die Datenverarbeitung
+(Rechtsgrundlagen siehe Datenschutzerklärung).
 2.2 Das Spiel ist **nur online spielbar**. Du brauchst eine Internetverbindung; Kosten dafür trägst du.
 2.3 Pro Person ist ein Konto vorgesehen. Halte deinen Übertragungscode geheim; wer ihn kennt, kann deinen
 Spielstand auf ein anderes Gerät holen. Der Übertragungscode ist nur dafür da, dein eigenes Konto auf ein

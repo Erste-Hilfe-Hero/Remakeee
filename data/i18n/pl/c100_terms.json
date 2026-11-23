@@ -1,0 +1,12 @@
+{
+ "_comment": "Polish texts for the German table c100_terms. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "Before you play": "Zanim zagrasz",
+  "I have read and accept the Terms of Use and the Privacy Policy.": "Znam i akceptuję Warunki korzystania oraz Politykę prywatności.",
+  "Read the Terms of Use": "Przeczytaj Warunki korzystania",
+  "Read the Privacy Policy": "Przeczytaj Politykę prywatności",
+  "Ticked": "Zaznaczone",
+  "Not ticked": "Niezaznaczone",
+  "Tick the box above to continue.": "Zaznacz pole powyżej, aby kontynuować."
+ }
+}

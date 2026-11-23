@@ -9,6 +9,12 @@ const IMPRINT_URL: String = SITE + "/impressum"
 const PRIVACY_URL: String = SITE + "/datenschutz"
 const TERMS_URL: String = SITE + "/nutzungsbedingungen"
 const LICENCES_URL: String = SITE + "/lizenzen"
+## The English pages of the terms and the privacy policy (docs/legal/TERMS_EN.md, PRIVACY_POLICY_EN.md).
+const TERMS_URL_EN: String = SITE + "/terms"
+const PRIVACY_URL_EN: String = SITE + "/privacy"
+## Version of the terms the player accepts before the first connection (the "Stand" of
+## docs/legal/NUTZUNGSBEDINGUNGEN.md). A new version asks every player once more.
+const TERMS_VERSION: String = "2026-11"
 ## Help with purchases (docs/legal/KAEUFE.md): German page and English page.
 const PURCHASES_URL_DE: String = SITE + "/kaeufe"
 const PURCHASES_URL_EN: String = SITE + "/purchases"
@@ -24,6 +30,14 @@ static func links_text() -> String:
 		"Terms: " + TERMS_URL,
 		"Contact: " + CONTACT,
 	])
+
+## The terms page in the game's language: German, else English.
+static func terms_url() -> String:
+	return TERMS_URL if Loc.language() == "de" else TERMS_URL_EN
+
+## The privacy policy page in the game's language: German, else English.
+static func privacy_url() -> String:
+	return PRIVACY_URL if Loc.language() == "de" else PRIVACY_URL_EN
 
 ## The purchases help page in the game's language.
 static func purchases_url() -> String:

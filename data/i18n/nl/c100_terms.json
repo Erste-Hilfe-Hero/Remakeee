@@ -1,0 +1,12 @@
+{
+ "_comment": "Dutch texts for the German table c100_terms. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "Before you play": "Voordat je speelt",
+  "I have read and accept the Terms of Use and the Privacy Policy.": "Ik heb de Gebruiksvoorwaarden en het Privacybeleid gelezen en ga ermee akkoord.",
+  "Read the Terms of Use": "Gebruiksvoorwaarden lezen",
+  "Read the Privacy Policy": "Privacybeleid lezen",
+  "Ticked": "Aangevinkt",
+  "Not ticked": "Niet aangevinkt",
+  "Tick the box above to continue.": "Vink het vakje hierboven aan om verder te gaan."
+ }
+}

@@ -65,8 +65,9 @@ func _run() -> void:
 	var em: Node = get_tree().root.get_node("/root/EraManager")
 	# Title (Era I, the first thing a player sees).
 	EraBoot.shown = true
-	# The title with its menu, not the one-time privacy note in front of it.
+	# The title with its menu, not the one-time terms step and privacy note in front of it.
 	Online.privacy_seen = true
+	GameState.terms_version = LegalInfo.TERMS_VERSION
 	em.set("unlocked_era", 1)
 	em.call("set_retro_filter", 1)
 	if _want("title"):

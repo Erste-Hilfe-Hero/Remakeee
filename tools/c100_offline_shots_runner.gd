@@ -25,6 +25,8 @@ func _run() -> void:
 	Online.revs = {}
 	Online.dirty = {}
 	Online.privacy_seen = false
+	# Terms accepted before (an older start), so the privacy note of the offline start shows.
+	GameState.terms_version = LegalInfo.TERMS_VERSION
 	# Title without a connection: the list offers Start offline.
 	var title: Node = load("res://scenes/ui/Title.tscn").instantiate()
 	get_tree().root.add_child(title)

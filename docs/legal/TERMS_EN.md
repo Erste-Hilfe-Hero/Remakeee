@@ -10,9 +10,16 @@ Last updated: November 2026
 
 1. **Provider.** Ali Amuri Alnasag, Im Vogelgesang 9, 60488 Frankfurt am Main, Germany, aa.amuri@icloud.com ("we"). These terms cover the game Chimora (iOS,
    Android) and its online services. The app store's own terms also apply to downloads and purchases.
-2. **Account.** On the first connection the game shows a short privacy note and creates a game account
-   automatically; no email is needed. These terms are available in the game under Settings, Legal and at
-   https://[DOMAIN]/terms. They apply when you then use the game's online features. The game is **online only** and needs an internet connection. Keep your transfer code secret.
+2. **Account.** Before the first connection and the first journey, also before a start without a
+   connection, the game shows a short privacy note and the box "I have read and accept the Terms of Use and
+   the Privacy Policy." Two rows next to it open these terms (https://[DOMAIN]/terms) and the Privacy Policy
+   (https://[DOMAIN]/privacy), the German versions in German. "Continue" works only once you tick the box.
+   The game keeps on your device which version of these terms you accepted; only then does it contact the
+   server and create a game account automatically, no email is needed. Players who already have a save see
+   this step once on their next start; after a change of these terms (section 11) the game asks again.
+   These terms are also available in the game under Settings, Legal. The contract under these terms is
+   made when you accept them this way. Ticking the box for the Privacy Policy only confirms that you know
+   it; it is not a consent to the processing of data (for the legal bases see the Privacy Policy). The game is **online only** and needs an internet connection. Keep your transfer code secret.
    It only moves your own account to a new device; purchases, Riftglass and the pass move with it.
    One account per person; accounts are not transferable to others, and selling, buying, swapping or
    lending accounts or transfer codes is not allowed. Minors need a parent's consent for purchases.
