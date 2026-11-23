@@ -47,8 +47,14 @@ var _arrow: Label
 var _tag: Label
 ## Head on the name plate (Era IV) or portrait on the box (Era V) of the one who speaks.
 var _portrait: SpeakerPortrait
-## Right padding reserved for the continue marker.
+## Least padding reserved for the continue marker on the right (and as much on the left, so
+## centred lines stay in the middle).
 const ARROW_SPACE: int = 6
+## Clear pixels between the end of a line and the continue marker.
+const ARROW_GAP: int = 3
+## Padding in use: the marker's width in its font plus ARROW_GAP, at least ARROW_SPACE.
+var _arrow_space: int = ARROW_SPACE
+var _label_pad: StyleBoxEmpty
 var _typing: bool = false
 var _waiting: bool = false
 var _visible_chars: float = 0.0
@@ -81,10 +87,10 @@ func _ready() -> void:
 	_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	# Keep wrapped text clear of the continue marker in the corner, and as much room on the
 	# left, so the centred lines sit in the middle of the box.
-	var pad := StyleBoxEmpty.new()
-	pad.content_margin_left = ARROW_SPACE
-	pad.content_margin_right = ARROW_SPACE
-	_label.add_theme_stylebox_override("normal", pad)
+	_label_pad = StyleBoxEmpty.new()
+	_label_pad.content_margin_left = ARROW_SPACE
+	_label_pad.content_margin_right = ARROW_SPACE
+	_label.add_theme_stylebox_override("normal", _label_pad)
 	add_child(_label)
 	_arrow = Label.new()
 	_arrow.text = "v"
@@ -158,6 +164,17 @@ func apply_era_frame() -> void:
 		_tag.add_theme_stylebox_override("normal", UITheme.panel_style())
 	era_speed = maxf(0.1, float(EraManager.feel("text_cps_mult")))
 	_apply_big_font()
+	_reserve_arrow()
+
+## Keeps the continue marker clear of the text (centred lines can run to the right edge).
+func _reserve_arrow() -> void:
+	if _arrow == null or _label_pad == null:
+		return
+	var f: Font = _arrow.get_theme_font("font")
+	var w: int = int(ceilf(f.get_string_size(_arrow.text, HORIZONTAL_ALIGNMENT_LEFT, -1, _arrow.get_theme_font_size("font_size")).x)) if f != null else 0
+	_arrow_space = maxi(ARROW_SPACE, w + ARROW_GAP)
+	_label_pad.content_margin_left = _arrow_space
+	_label_pad.content_margin_right = _arrow_space
 
 ## Talk and battle lines are one font step larger than the screen around them (owner wish
 ## 23.11.2026, plan Chimora 100): a line under the large 12 px height takes the large glyphs
@@ -330,7 +347,7 @@ func _text_width() -> float:
 	var sb: StyleBox = get_theme_stylebox("panel")
 	if sb != null:
 		w -= sb.get_margin(SIDE_LEFT) + sb.get_margin(SIDE_RIGHT)
-	return w - ARROW_SPACE * 2
+	return w - _arrow_space * 2
 
 ## Wraps [param text] word by word to [param width] and groups the lines into windows of
 ## [param max_lines]. A line break in the text starts a new line.

@@ -71,3 +71,13 @@ func test_long_prompt_keeps_the_screen_font() -> void:
 	assert_false(box._label.has_theme_font_override("font"), "too long for three large lines: the screen's own font")
 	box.show_prompt("Orders for Kindlop?")
 	assert_true(box._label.has_theme_font_override("font"), "a short prompt is larger again")
+
+func test_continue_marker_keeps_clear_of_the_text() -> void:
+	var box := TextBox.new()
+	add_child_autofree(box)
+	box.size = Vector2(144, 52)
+	box.show_prompt("Orders for Kindlop?")
+	var f: Font = box._arrow.get_theme_font("font")
+	var aw: float = f.get_string_size("v", HORIZONTAL_ALIGNMENT_LEFT, -1, box._arrow.get_theme_font_size("font_size")).x
+	assert_gte(float(box._arrow_space), aw + TextBox.ARROW_GAP, "room for the marker and a gap")
+	assert_eq(box._label_pad.content_margin_left, box._label_pad.content_margin_right, "centring stays true")
