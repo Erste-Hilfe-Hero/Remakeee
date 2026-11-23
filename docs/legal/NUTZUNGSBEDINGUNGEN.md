@@ -17,8 +17,10 @@ Vollständige Angaben im [Impressum](IMPRESSUM.md).
 
 ## 2. Vertragsschluss und Konto
 
-2.1 Der Nutzungsvertrag kommt zustande, wenn du beim ersten Start diesen Bedingungen zustimmst. Dabei wird
-automatisch ein Spielkonto angelegt; eine E-Mail-Adresse ist nicht nötig.
+2.1 Bei der ersten Verbindung zeigt das Spiel einen kurzen Datenschutzhinweis und legt automatisch ein
+Spielkonto an; eine E-Mail-Adresse ist nicht nötig. Diese Bedingungen stehen im Spiel unter Einstellungen,
+Rechtliches und auf https://[DOMAIN]/nutzungsbedingungen. Der Nutzungsvertrag zu diesen Bedingungen kommt
+zustande, wenn du danach die Online-Funktionen des Spiels nutzt.
 2.2 Das Spiel ist **nur online spielbar**. Du brauchst eine Internetverbindung; Kosten dafür trägst du.
 2.3 Pro Person ist ein Konto vorgesehen. Halte deinen Übertragungscode geheim; wer ihn kennt, kann deinen
 Spielstand auf ein anderes Gerät holen. Der Übertragungscode ist nur dafür da, dein eigenes Konto auf ein
@@ -147,3 +149,42 @@ Aufenthalt haben.
 11.2 Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
 Verbraucherschlichtungsstelle teilzunehmen.
 11.3 Sollten einzelne Bestimmungen unwirksam sein, bleibt der Vertrag im Übrigen wirksam (§ 306 BGB).
+
+## 12. Verbraucher in anderen Ländern und Sprachfassungen
+
+12.1 Nichts in diesen Bedingungen schränkt zwingende Verbraucherrechte ein, die du nach dem Recht deines
+Wohnsitzlandes hast. Insbesondere gilt:
+
+- **Vereinigtes Königreich:** Deine gesetzlichen Rechte nach dem Consumer Rights Act 2015 (digitale Inhalte
+  von zufriedenstellender Qualität, geeignet und wie beschrieben) bleiben bestehen. Das Recht, Käufe digitaler
+  Inhalte innerhalb von 14 Tagen zu widerrufen, gilt wie in Ziffer 6.2 und erlischt ebenso, sobald die
+  Bereitstellung mit deiner Zustimmung begonnen hat.
+- **USA:** Virtuelle Güter und Rissglas sind ein beschränktes Nutzungsrecht und kein Eigentum, Geld oder
+  Wertpapier (Ziffer 6.4). Soweit gesetzlich zulässig, wird das Spiel „wie besehen“ bereitgestellt; manche
+  Bundesstaaten erlauben keinen Ausschluss stillschweigender Gewährleistungen oder bestimmter Schäden, dann
+  gelten diese Grenzen für dich nicht. Diese Bedingungen enthalten keine Schiedsklausel und keinen Verzicht
+  auf Sammelklagen. Einwohner Kaliforniens können sich an die Complaint Assistance Unit der Division of
+  Consumer Services des California Department of Consumer Affairs wenden.
+- **Australien und Neuseeland:** Unsere Leistungen sind mit Garantien verbunden, die nach dem Australian
+  Consumer Law und dem neuseeländischen Consumer Guarantees Act nicht ausgeschlossen werden können. Ziffer 8
+  schließt sie nicht aus.
+- **Republik Korea:** Du kannst einen Kauf von Rissglas oder Gegenständen innerhalb von 7 Tagen widerrufen,
+  solange der gekaufte Inhalt nicht genutzt wurde (Gesetz über Verbraucherschutz im elektronischen Handel);
+  über den Store oder bei uns. Bezahlte Zufallsinhalte gibt es nicht (Ziffer 6.3). Unbenutztes bezahltes
+  Rissglas wird bei Vertragsende erstattet, wo das Gesetz es verlangt.
+- **Japan:** Es gibt keine bezahlten Zufallsinhalte (kein „Gacha“, Ziffer 6.3). Rissglas verfällt nicht,
+  solange dein Konto besteht (Ziffer 6.8).
+- **Brasilien:** Deine Rechte nach dem Verbraucherschutzgesetz (Código de Defesa do Consumidor), einschließlich
+  des Widerrufs innerhalb von 7 Tagen bei Käufen außerhalb von Geschäftsräumen (Art. 49 CDC) über den Store,
+  bleiben bestehen.
+- **Kanada (einschließlich Quebec):** Die Verbraucherschutzgesetze deiner Provinz bleiben unberührt. Wohnst
+  du in Quebec, gilt zusätzlich der Quebec Consumer Protection Act; dort verbotene Klauseln gelten für dich
+  nicht.
+- **Andere Länder:** Gibt dir dein Recht eine längere Widerrufsfrist, eine stärkere Gewährleistung oder ein
+  Erstattungsrecht, gilt dieses Recht. Erstattungen laufen über den Store, in dem du gekauft hast (Ziffer 6.1).
+
+12.2 Du kannst uns vor den Gerichten deines Wohnorts verklagen, wo dein Recht das erlaubt.
+
+12.3 Diese Bedingungen gibt es auf Deutsch und Englisch. Die englische Fassung ist eine Übersetzung zur
+Erleichterung. Weichen die Fassungen voneinander ab, gilt die deutsche Fassung, soweit das zwingende Recht
+deines Landes nichts anderes vorschreibt.

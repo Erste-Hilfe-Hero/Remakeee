@@ -1,5 +1,6 @@
 <!--
-English version of NUTZUNGSBEDINGUNGEN.md; the German version prevails for users in Germany.
+English version of NUTZUNGSBEDINGUNGEN.md, a convenience translation; the German version prevails in case of
+conflict (section 14), unless mandatory local law says otherwise.
 Replace only [NAME], [ADDRESS], [EMAIL]. Written by an AI without review by a lawyer.
 -->
 
@@ -9,8 +10,9 @@ Last updated: November 2026
 
 1. **Provider.** Ali Amuri Alnasag, Im Vogelgesang 9, 60488 Frankfurt am Main, Germany, aa.amuri@icloud.com ("we"). These terms cover the game Chimora (iOS,
    Android) and its online services. The app store's own terms also apply to downloads and purchases.
-2. **Account.** By accepting these terms on first launch you get a game account automatically; no email is
-   needed. The game is **online only** and needs an internet connection. Keep your transfer code secret.
+2. **Account.** On the first connection the game shows a short privacy note and creates a game account
+   automatically; no email is needed. These terms are available in the game under Settings, Legal and at
+   https://[DOMAIN]/terms. They apply when you then use the game's online features. The game is **online only** and needs an internet connection. Keep your transfer code secret.
    It only moves your own account to a new device; purchases, Riftglass and the pass move with it.
    One account per person; accounts are not transferable to others, and selling, buying, swapping or
    lending accounts or transfer codes is not allowed. Minors need a parent's consent for purchases.
@@ -70,5 +72,35 @@ Last updated: November 2026
     the game. Significant changes apply only if you accept them; otherwise the old terms continue and we may
     end the contract under section 8.
 12. **Law.** German law applies, excluding the UN Sales Convention. If you are a consumer, mandatory
-    consumer protection rules of your country of residence still apply. We are not willing or obliged to
-    take part in consumer dispute resolution proceedings.
+    consumer protection rules of your country of residence still apply (section 13). We are not willing or
+    obliged to take part in consumer dispute resolution proceedings.
+13. **Consumers in other countries.** Nothing in these terms limits the mandatory rights you have as a
+    consumer under the law of your country of residence. In particular:
+  - **United Kingdom:** your statutory rights under the Consumer Rights Act 2015 (digital content of
+    satisfactory quality, fit for purpose and as described) remain. The right to cancel a purchase of
+    digital content within 14 days ends once supply has begun with your consent, as under section 7 and
+    the store's terms.
+  - **United States:** virtual goods and Riftglass are a limited licence and not property, money or
+    securities (section 7). To the extent permitted by law the game is provided "as is"; some states do
+    not allow the exclusion of implied warranties or the limitation of certain damages, so these limits
+    may not apply to you. These terms contain no arbitration clause and no class action waiver.
+    California residents may contact the Complaint Assistance Unit of the Division of Consumer Services
+    of the California Department of Consumer Affairs.
+  - **Australia and New Zealand:** our services come with guarantees that cannot be excluded under the
+    Australian Consumer Law and the New Zealand Consumer Guarantees Act. Section 9 does not exclude them.
+  - **Republic of Korea:** you can withdraw from a purchase of Riftglass or items within 7 days as long as
+    the purchased content has not been used (Act on Consumer Protection in Electronic Commerce), through
+    the store or by asking us. There is no paid random content (section 7). Unused paid Riftglass is
+    refunded on termination where the law requires it.
+  - **Japan:** there is no paid random content (no gacha, section 7). Riftglass does not expire while your
+    account exists.
+  - **Brazil:** your rights under the Consumer Defence Code (Código de Defesa do Consumidor), including
+    withdrawal within 7 days for purchases made outside a business establishment (Art. 49 CDC) through the
+    store, remain.
+  - **Canada (incl. Quebec):** the consumer protection laws of your province remain. If you live in
+    Quebec, the Quebec Consumer Protection Act also applies; clauses it prohibits do not apply to you.
+  - **Other countries:** where your law gives you a longer withdrawal period, a stronger warranty or a
+    refund right, that law applies. Refunds are made through the store you bought from.
+14. **Language and courts.** You can sue us at the courts of your place of residence where your law allows
+    it. These terms exist in German and English. The English version is a convenience translation; if the
+    two differ, the German version applies, unless the mandatory law of your country requires otherwise.
