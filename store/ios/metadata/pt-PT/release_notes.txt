@@ -1,5 +1,14 @@
 Chimora 1.3.0
 
+NOVO: A VIGÍLIA DA LÂMPADA
+- Acende a lâmpada do farol de Brindlewick uma vez por dia. Todas as noites um Spirling perdido segue a luz. Responde com o teu chamamento de Eco e ele junta-se a ti.
+- Na 7.ª noite chega um raro Spirling Gleam e recebes uma nova lembrança: a Lente do farol.
+
+MAIS FÁCIL DE LER
+- Os textos de conversa e de batalha estão maiores, centrados e acima dos botões.
+- Já nenhum Spirling anda atrás de ti.
+- Antes de jogares pela primeira vez, aceitas os Termos de Utilização num passo curto.
+
 UM INÍCIO MAIS FÁCIL
 - Escolhe a dificuldade ao começar uma nova viagem.
 - Um prólogo mais curto leva-te mais depressa ao teu primeiro Spirling.

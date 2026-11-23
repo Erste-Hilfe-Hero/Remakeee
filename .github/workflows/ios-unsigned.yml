@@ -91,3 +91,34 @@ jobs:
             gh release upload ios-unsigned Chimora-unsigned.tar.gz Chimora-unsigned.txt --clobber && break
             sleep $((i * 10))
           done
+      # Apple pre-check rule (owner 2026-11-22): the app must really start before any submission. Same exported
+      # project, built for the simulator, launched on an iPhone simulator, screenshots kept as artifact. Does not
+      # block the device build above.
+      - name: Simulator start check
+        continue-on-error: true
+        run: |
+          xcodebuild -project build/ios/Chimora.xcodeproj -scheme Chimora -configuration Release \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath "$RUNNER_TEMP/sim" ARCHS=x86_64 ONLY_ACTIVE_ARCH=NO EXCLUDED_ARCHS=arm64 \
+            CODE_SIGNING_ALLOWED=NO build 2>&1 | grep -E "error|BUILD|building for|Undefined" | grep -v "ignoring file" | tail -30
+          APP=$(ls -d "$RUNNER_TEMP"/sim/Build/Products/*-iphonesimulator/*.app | head -1)
+          test -d "$APP"
+          DEV=$(xcrun simctl list devices available -j | python3 -c 'import json,sys;d=json.load(sys.stdin)["devices"];print([x["udid"] for k,v in d.items() if "iOS" in k for x in v if x["name"].startswith("iPhone")][-1])')
+          xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
+          xcrun simctl install "$DEV" "$APP"
+          BID=$(plutil -extract CFBundleIdentifier raw "$APP/Info.plist")
+          xcrun simctl launch "$DEV" "$BID"
+          mkdir -p "$RUNNER_TEMP/simshots"
+          for t in 15 35 60; do
+            sleep $((t - ${prev:-0})); prev=$t
+            xcrun simctl io "$DEV" screenshot "$RUNNER_TEMP/simshots/sim_${t}s.png"
+          done
+          xcrun simctl spawn "$DEV" launchctl list | grep -i "$BID" && echo "SIM: app still running after 60 s" || echo "::error::SIM: app not running after 60 s"
+          xcrun simctl spawn "$DEV" log show --last 2m --predicate "process CONTAINS[c] 'Chimora'" 2>/dev/null | tail -60 > "$RUNNER_TEMP/simshots/log.txt" || true
+          printf 'commit=%s\nbuild=%s\n' "$GITHUB_SHA" "$BUILD_NUMBER" > "$RUNNER_TEMP/simshots/info.txt"
+      - name: Keep simulator screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ios-sim-shots
+          path: ${{ runner.temp }}/simshots/
+          if-no-files-found: ignore

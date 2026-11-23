@@ -1,5 +1,14 @@
 Chimora 1.3.0
 
+NEU: DIE LAMPENWACHE
+- Zünde einmal am Tag die Lampe im Leuchtturm von Brindlewick an. Jede Nacht folgt ein verirrtes Spirling dem Licht. Antworte ihm mit deinem Echo-Ruf, und es schließt sich dir an.
+- In Nacht 7 kommt ein seltenes Gleam-Spirling, dazu gibt es ein neues Andenken: die Lampenlinse.
+
+BESSER LESBAR
+- Gesprächs- und Kampftexte sind größer, mittig und stehen über den Knöpfen.
+- Kein Spirling läuft mehr hinter dir her.
+- Vor dem ersten Spielen bestätigst du in einem kurzen Schritt die Nutzungsbedingungen.
+
 LEICHTERER EINSTIEG
 - Wähle die Schwierigkeit, wenn du eine neue Reise beginnst.
 - Ein kürzerer Prolog bringt dich schneller zu deinem ersten Spirling.

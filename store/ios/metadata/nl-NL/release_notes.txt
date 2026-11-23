@@ -1,5 +1,14 @@
 Chimora 1.3.0
 
+NIEUW: DE LAMPWACHT
+- Steek één keer per dag de lamp in de vuurtoren van Brindlewick aan. Elke nacht volgt een verdwaalde Spirling het licht. Beantwoord hem met je Echo-roep en hij sluit zich bij je aan.
+- In nacht 7 komt een zeldzame Gleam-Spirling, en je krijgt een nieuw aandenken: de Lamplens.
+
+BETER LEESBAAR
+- Gesprekken en gevechtstekst zijn groter, gecentreerd en staan boven de knoppen.
+- Er loopt geen Spirling meer achter je aan.
+- Voor je eerste spel accepteer je in één korte stap de Gebruiksvoorwaarden.
+
 MAKKELIJKER BEGIN
 - Kies de moeilijkheid als je aan een nieuwe reis begint.
 - Een kortere proloog brengt je sneller bij je eerste Spirling.

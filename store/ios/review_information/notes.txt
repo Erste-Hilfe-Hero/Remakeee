@@ -1,12 +1,14 @@
 What the app is: Chimora is a turn-based monster-taming RPG in pixel art for players aged 9 and up (mild fantasy violence: creatures faint, no blood). It is a single-player story game with optional online features with friends. Chimora is online only.
 
-How to start: no sign-in is needed. On first launch the game creates an anonymous account on our own server (EU) and the game starts right away: choose a language, read the privacy note, then New Game. There is no email, no third-party login and no chat.
+How to start: no sign-in is needed. On first launch the game creates an anonymous account on our own server (EU) and the game starts right away: choose a language, tick the box to accept the Terms of Use and Privacy Policy (both open from links on the same screen), then New Game. There is no email, no third-party login and no chat.
 
 To test online features: Menu > Friends shows your friend code. A second device or a second install can add it; friends exchange set greetings, Lantern Mail, gifts and echo duels against each other's team. Menu > Account shows the transfer code, the online rules, the privacy note and "Delete account..." (deletes the account and all data on the server at once, guideline 5.1.1(v)). "Enter a code..." there and "I have a code" on the title screen only take a transfer code to move your own account to a new phone; they unlock no content. The app has no promo or redeem codes.
 
 In-app purchases (the game is free): Menu > Shop. The first time, the shop asks for the player's age (the shop is closed under 13; enter an adult age to test). Every offer lists its exact contents, its effect and the price; nothing is random. To test a purchase: open a tab, choose an offer, choose the price and confirm with the sandbox account. "My purchases" lists every purchase, "Restore purchases" brings back unlocks and the Wayfarer Pass (guideline 3.1.1), "Spending limit" shows the monthly limit, "Help with purchases" opens the help page.
 
 External services: only our own server (Contabo GmbH, Munich, Germany, processor under Art. 28 GDPR; server location: data centre Lauterbourg, France, EU) for game data, saves and friends, and Apple: StoreKit for purchases and the App Store lookup to see if an update is out. Reminders are local notifications on the phone, no push service. Uses only standard HTTPS (ITSAppUsesNonExemptEncryption = NO). We count anonymously how far players get in the game (progress funnel), only to improve the game; this stays on our own server. No tracking, no ads, no third-party SDKs.
+
+New in 1.3.0: a daily offline goal in the Brindlewick lighthouse (Lamp Watch, reached a few minutes into the story): light the lamp once per day, a lost Spirling visits and joins through the same Echo call minigame as in battle. No purchase is involved.
 
 Regional differences: none. Every country gets the same content and features; only the language (14 languages) and the local store prices differ.
 

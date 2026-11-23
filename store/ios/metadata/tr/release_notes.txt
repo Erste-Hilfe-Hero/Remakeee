@@ -1,5 +1,14 @@
 Chimora 1.3.0
 
+YENİ: LAMBA NÖBETİ
+- Brindlewick fenerindeki lambayı günde bir kez yak. Her gece kaybolmuş bir Spirling ışığı takip eder. Ona Yankı çağrınla cevap ver, sana katılsın.
+- 7. gece nadir bir Gleam Spirling gelir ve yeni bir hatıra kazanırsın: Fener Merceği.
+
+DAHA OKUNAKLI
+- Konuşma ve savaş yazıları daha büyük, ortalı ve düğmelerin üstünde.
+- Artık arkandan yürüyen bir Spirling yok.
+- İlk oyundan önce Kullanım Koşullarını kısa bir adımda kabul edersin.
+
 DAHA KOLAY BAŞLANGIÇ
 - Yeni bir yolculuğa başlarken zorluğu seç.
 - Daha kısa bir giriş bölümü seni ilk Spirling'ine daha çabuk ulaştırır.

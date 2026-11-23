@@ -1,5 +1,14 @@
 Chimora 1.3.0
 
+NOUVEAU : LA VEILLE DE LA LAMPE
+- Allume la lampe du phare de Brindlewick une fois par jour. Chaque nuit, un Spirling égaré suit la lumière. Réponds-lui avec ton appel d'Écho et il te rejoint.
+- La 7e nuit, un rare Spirling Gleam arrive, et tu reçois un nouveau souvenir : la Lentille du phare.
+
+PLUS LISIBLE
+- Les textes de dialogue et de combat sont plus grands, centrés et placés au-dessus des boutons.
+- Plus aucun Spirling ne marche derrière toi.
+- Avant ta première partie, tu acceptes les Conditions d'utilisation en une courte étape.
+
 UN DÉBUT PLUS FACILE
 - Choisis la difficulté au début d'un nouveau voyage.
 - Un prologue plus court t'amène plus vite à ton premier Spirling.

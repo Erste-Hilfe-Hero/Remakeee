@@ -1,5 +1,14 @@
 Chimora 1.3.0
 
+NOWOŚĆ: STRAŻ LAMPY
+- Raz dziennie zapal lampę w latarni Brindlewick. Każdej nocy zagubiony Spirling podąża za światłem. Odpowiedz mu swoim wezwaniem Echa, a dołączy do ciebie.
+- Siódmej nocy przychodzi rzadki Spirling Gleam, a ty dostajesz nową pamiątkę: Soczewkę latarni.
+
+CZYTELNIEJ
+- Teksty rozmów i walki są większe, wyśrodkowane i stoją nad przyciskami.
+- Żaden Spirling nie chodzi już za tobą.
+- Przed pierwszą grą akceptujesz Warunki korzystania w jednym krótkim kroku.
+
 ŁATWIEJSZY POCZĄTEK
 - Wybierz poziom trudności, gdy zaczynasz nową podróż.
 - Krótszy prolog szybciej prowadzi do pierwszego Spirlinga.
