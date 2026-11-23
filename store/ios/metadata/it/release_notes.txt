@@ -1,5 +1,14 @@
 Chimora 1.3.0
 
+NOVITÀ: LA VEGLIA DELLA LANTERNA
+- Accendi la lanterna del faro di Brindlewick una volta al giorno. Ogni notte uno Spirling smarrito segue la luce. Rispondigli con il tuo richiamo Eco e si unirà a te.
+- La settima notte arriva un raro Spirling Gleam e ricevi un nuovo ricordo: la Lente del faro.
+
+PIÙ LEGGIBILE
+- I testi di dialogo e di battaglia sono più grandi, centrati e sopra i pulsanti.
+- Nessuno Spirling ti cammina più dietro.
+- Prima di giocare per la prima volta accetti i Termini d'uso in un breve passaggio.
+
 UN INIZIO PIÙ FACILE
 - Scegli la difficoltà quando inizi un nuovo viaggio.
 - Un prologo più breve ti porta prima al tuo primo Spirling.
