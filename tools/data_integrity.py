@@ -595,6 +595,10 @@ def action_flags(where, a):
         S("got_starter", where)
     elif verb == "scene" and args:
         S("scene_%s_seen" % args[0], where)
+    elif verb == "lamp_watch":
+        # The lighthouse lamp (LampWatch.gd): one flag per fixed night, then the end.
+        n = len(json.load(open(os.path.join(ROOT, "data/lamp_watch.json"), encoding="utf-8")).get("nights", []))
+        S(["lamp_night_%d" % (i + 1) for i in range(n)] + ["lamp_watch_done"], where)
 
 
 for f, d in dialogue.items():

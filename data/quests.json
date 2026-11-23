@@ -37,6 +37,7 @@
   ],
   "side": [
     {"id": "pages", "text": "Find the six pages of Mirela's map book. Kestra has one; the storm blew the rest to Fernstair, Crowcrest, Thornridge, the Saltmarsh and Murk Hollow.", "where": "Veydal", "show": "aldo_gift", "done": "pages_all", "progress": ["page_1", "page_2", "page_3", "page_4", "page_5", "page_6"]},
+    {"id": "lamp", "text": "Light the lighthouse lamp once each night. Lost Spirlings follow its light, and Mirela left pages of her lamp log behind the lens.", "where": "Brindlewick Lighthouse", "show": "aldo_gift", "done": "lamp_watch_done", "progress": ["lamp_night_1", "lamp_night_2", "lamp_night_3", "lamp_night_4", "lamp_night_5", "lamp_night_6", "lamp_night_7"]},
     {"id": "spar", "text": "Kestra wants to test you on the Crowcrest path.", "where": "Crowcrest", "show": "met_kestra", "done": "kestra_spar"},
     {"id": "fern", "text": "Someone in Fernstair has something for you.", "where": "Fernstair", "show": "met_kestra", "done": "fern_gift"},
     {"id": "hollow", "text": "Light up the dark gallery in Murk Hollow, behind the Crowcrest cliff.", "where": "Murk Hollow", "show": "got_lantern", "done": "hollow_find"},

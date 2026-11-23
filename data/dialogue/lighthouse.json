@@ -9,13 +9,21 @@
    {
     "flag": "aldo_gift",
     "lines": [
-     "Aldo: The lamp stays lit for you. If your team is worn out, the Rest Spring is just up the pier."
+     "Aldo: The lamp stays lit for you. If your team is worn out, the Rest Spring is just up the pier.",
+     "Aldo: Light it yourself tonight, up the stairs. Lost Spirlings follow that light."
     ]
    },
    {
     "flag": "met_kestra",
     "lines": [
      "Aldo: Kestra, eh? Sharp girl. Her maps are good, even when her ideas are wild."
+    ]
+   },
+   {
+    "flag": "lamp_watch_done",
+    "lines": [
+     "Aldo: You found her lamp log. She lit that lamp for every lost thing on the lake.",
+     "Aldo: Forty years I kept it burning. Now it has a second keeper."
     ]
    },
    {
@@ -59,10 +67,35 @@
    }
   ]
  },
- "stairs": [
-  "The spiral stairs lead up to the lamp room.",
-  "Aldo keeps it lit every night."
- ],
+ "stairs": {
+  "lines": [
+   "The spiral stairs lead up to the lamp room.",
+   "Aldo keeps it lit every night."
+  ],
+  "after_flag": [
+   {
+    "flag": "aldo_gift",
+    "lines": [
+     "The spiral stairs lead up to the lamp room. Lost Spirlings follow its light."
+    ]
+   }
+  ],
+  "choices": [
+   {
+    "text": "Climb to the lamp",
+    "action": "lamp_watch",
+    "if": {
+     "flag": "aldo_gift"
+    }
+   },
+   {
+    "text": "Not now",
+    "if": {
+     "flag": "aldo_gift"
+    }
+   }
+  ]
+ },
  "morning": {
   "lines": [
    "Aldo: Three Spirlings came in from the storm. Go say hello!"

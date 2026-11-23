@@ -97,6 +97,7 @@ func _ready() -> void:
 		"tide_stone": _action_tide_stone,
 		"rubbing": _action_rubbing,
 		"fish_trap": _action_fish_trap,
+		"lamp_watch": _action_lamp_watch,
 		"wake": _action_wake,
 		"bounty": _action_bounty,
 		"fine_training": _action_fine_training,
@@ -175,6 +176,11 @@ func _ready() -> void:
 		var hint: String = Festival.start_hint()
 		if hint != "":
 			GameState.notices.append(hint)
+		# A new day and the lighthouse lamp still dark (update "The Lamp Watch").
+		var lamp: String = LampWatch.start_hint(GameState.flags, GameState.records, DailyFind.today_key())
+		if lamp != "":
+			GameState.notices.append(lamp)
+			hint = lamp
 		# A battle left open on Rift-Born leaves its note here (item 630).
 		if hint != "" or GameState.left_battle:
 			GameState.left_battle = false
@@ -1321,6 +1327,122 @@ func _action_fish_trap(args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.money += int(got.money)
 		Sound.sfx("pickup")
 		await say([Loc.plural(int(got.money), "You found %d coin!", "You found %d coins!")] as Array[String])
+
+## The lamp strip over the Lamp Watch card (art/era1/fx/lamp_watch_<n>.png, tools/art/gen_lamp_watch.py).
+const LAMP_STRIP: String = "res://art/era1/fx/lamp_watch_%d.png"
+
+## "lamp_watch": the lighthouse lamp room (update "The Lamp Watch", scripts/core/LampWatch.gd):
+## light the lamp once a day, answer tonight's visitor, see the card and Mirela's lamp log.
+func _action_lamp_watch(_args: PackedStringArray, _speaker: NPC) -> void:
+	if not LampWatch.unlocked(GameState.flags):
+		return
+	var day: String = DailyFind.today_key()
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	while true:
+		var rows: Array[String] = []
+		var keys: Array[String] = []
+		if LampWatch.can_light(GameState.records, day):
+			rows.append("Light the lamp")
+			keys.append("light")
+		elif LampWatch.visitor_waiting(GameState.records, day):
+			rows.append("Answer the call")
+			keys.append("answer")
+		rows.append("Lamp Watch")
+		keys.append("card")
+		if not LampWatch.log_pages(GameState.records).is_empty():
+			rows.append("Mirela's lamp log")
+			keys.append("log")
+		var pick: int = await menu.pick_strings(Loc.t("The lamp room"), rows)
+		if pick < 0:
+			break
+		match keys[pick]:
+			"light":
+				await _lamp_light(day, menu)
+			"answer":
+				await _lamp_answer(LampWatch.night(LampWatch.nights_lit(GameState.records), GameState.starter, day), day)
+			"card":
+				await menu.info(LampWatch.card_text(GameState.records, day), lamp_strip())
+			"log":
+				await menu.info_pages(LampWatch.log_pages(GameState.records))
+	menu.queue_free()
+
+## The strip of seven lamps, as many lit as nights were lit (at most seven).
+static func lamp_strip() -> Texture2D:
+	var path: String = LAMP_STRIP % clampi(LampWatch.nights_lit(GameState.records), 0, LampWatch.fixed_nights())
+	return load(path) as Texture2D if ResourceLoader.exists(path) else null
+
+func _lamp_light(day: String, menu: MenuHost) -> void:
+	var info: Dictionary = LampWatch.light(GameState.records, GameState.flags, GameState.starter, day)
+	if info.is_empty():
+		return
+	Sound.sfx("confirm")
+	await say(["You strike a match. The lamp flares, and its beam sweeps over the lake."] as Array[String])
+	if not (info.log as Array).is_empty():
+		var page: Array[String] = ["Tucked behind the lens: a page of Mirela's lamp log."]
+		for l: Variant in info.log:
+			page.append(str(l))
+		await say(page)
+	var gift: Array = info.gift
+	if not gift.is_empty():
+		await _action_give_item([str(gift[0]), str(gift[1] if gift.size() > 1 else 1)] as PackedStringArray, null)
+	SaveManager.save_game()
+	await _lamp_answer(info, day)
+	await menu.info(LampWatch.card_text(GameState.records, day), lamp_strip())
+
+## Tonight's visitor comes to the light; answering is the Echo call outside battle (no throw, no
+## odds shown, LEGAL.md). A good enough echo and it joins; otherwise it waits until morning.
+func _lamp_answer(info: Dictionary, day: String) -> void:
+	var s: Spirling = LampWatch.make_visitor(info, GameState.party, GameState.rng)
+	if s == null:
+		return
+	GameState.mark_seen(s.data.species_name)
+	GameState.note_spirlog(s, false)
+	# The visitor shows itself with its lines.
+	var lines: Array[String] = []
+	for l: Variant in info.get("lines", []):
+		lines.append(Loc.t(str(l) % s.data.species_name if "%s" in str(l) else str(l)))
+	var ask := MenuHost.new()
+	_ui.add_child(ask)
+	await ask.info("\n".join(lines), load(EraManager.sprite_path(s.data.species_name)) as Texture2D)
+	var go: bool = await ask.confirm(Loc.t("Answer the call of %s?") % s.display_name(), "Answer", "Not now")
+	ask.queue_free()
+	if not go:
+		await say(["It stays by the lamp until morning."] as Array[String])
+		return
+	_text.visible = false
+	var game := BondMinigame.new()
+	game.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	game.target = load(EraManager.sprite_path(s.data.species_name)) as Texture2D
+	game.target_name = s.display_name()
+	game.calm = BattleCalm.bond_style() == "calm"
+	var dim := ColorRect.new()
+	dim.color = Color(UITheme.BG, 0.85)
+	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_ui_root.add_child(dim)
+	_ui_root.add_child(game)
+	var plan_rng := RandomNumberGenerator.new()
+	plan_rng.randomize()
+	var score: float = await game.run(BondEcho.make_plan(plan_rng, s.data))
+	game.queue_free()
+	dim.queue_free()
+	GameState.note_echo(score)
+	if score >= DailyTasks.MELODY_GOOD:
+		DailyTasks.record("melody", {"map": map.id})
+	if score < LampWatch.pass_score():
+		Sound.sfx("cancel")
+		await say([Loc.t("%s shrinks back from the glass. It stays by the lamp until morning.") % s.display_name()] as Array[String])
+		return
+	LampWatch.answer(GameState.records, day)
+	Sound.sfx("level_up")
+	var joined: bool = GameState.receive_spirling(s)
+	var out: Array[String] = [Loc.t("%s answers your echo and stays with you.") % s.display_name()]
+	if s.gleam:
+		out.append("Its colours shine like the lamp itself: a Gleam!")
+	if not joined:
+		out.append("%s was sent to storage." % s.display_name())
+	await say(out)
+	SaveManager.save_game()
 
 ## "wake": the daily funeral show in Gravers' Hall (data/wake.json, scripts/core/Wake.gd).
 func _action_wake(_args: PackedStringArray, _speaker: NPC) -> void:
