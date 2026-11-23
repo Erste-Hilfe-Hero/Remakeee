@@ -1,5 +1,5 @@
 {
- "_doc": "Overworld figures per era (docs/ERA_FEEL_CHARS.md): the Wayfarer, villagers, Tamers and the Spirling that walks behind. Read by scripts/overworld/EraActorLook.gd; the sheets come from tools/art/gen_era_chars.py. One entry per era I-V and every era sets every key in EraActorLook.KEYS. Era I and II keep the 64x32 sheets in art/eraN/chars (sheet_dir chars, drawn by GridWalker as before); from Era III the sheets live in art/eraN/actors and EraActorLook draws them. A later era never drops a feature: switches stay on, numbers only grow (step_px only shrinks), lists only get longer. frame: sprite size in px. colours: 4 = four tones per figure, more = zone colours with shading. rows: sheet row of each pose (4 columns: down, up, left, right). step_seq: poses of one tile step in order (stand, half, step); the foot alternates per tile. step_px: the figure moves in jumps of this many px (2 = coarse tile-by-tile slide, 1 = every pixel). walk_time/run_time: seconds per tile, read only by the test that pins them to GridWalker (running exists from Era I, hold the cancel key). run_anim: own running poses. wade: own wading pose (on foot, knee-deep, no hop arc) for crossings with wade_gear. shadow: none or drop. emotes: bubble kinds the era can show; emote_style: ink (the old ink box and label), flat, tail, shadow, live; emote_frames: frames per bubble; emote_pop: bubble pops in. emote_on: what shows which bubble (spot = a Tamer sees you, talk = talked to, talk_beaten = a beaten Tamer talked to, near/near_night/near_rain = a villager notices you, follower = you turn to your Spirling). head_turn: villagers turn their head to the Wayfarer within head_turn_radius tiles. follower: ink (still ink shadow, jumps a tile) or colour (own colours); follower_walk: it walks the tile step by step and hops; follower_shadow. idle: still or breathe_blink. turn_blend: a quarter turn shows a head-first frame. outfits: none or season (columns blocks of the sheet in the order of seasons).",
+ "_doc": "Overworld figures per era (docs/ERA_FEEL_CHARS.md): the Wayfarer, villagers and Tamers (the Spirling that walked behind is gone, owner wish 23.11.2026). Read by scripts/overworld/EraActorLook.gd; the sheets come from tools/art/gen_era_chars.py. One entry per era I-V and every era sets every key in EraActorLook.KEYS. Era I and II keep the 64x32 sheets in art/eraN/chars (sheet_dir chars, drawn by GridWalker as before); from Era III the sheets live in art/eraN/actors and EraActorLook draws them. A later era never drops a feature: switches stay on, numbers only grow (step_px only shrinks), lists only get longer. frame: sprite size in px. colours: 4 = four tones per figure, more = zone colours with shading. rows: sheet row of each pose (4 columns: down, up, left, right). step_seq: poses of one tile step in order (stand, half, step); the foot alternates per tile. step_px: the figure moves in jumps of this many px (2 = coarse tile-by-tile slide, 1 = every pixel). walk_time/run_time: seconds per tile, read only by the test that pins them to GridWalker (running exists from Era I, hold the cancel key). run_anim: own running poses. wade: own wading pose (on foot, knee-deep, no hop arc) for crossings with wade_gear. shadow: none or drop. emotes: bubble kinds the era can show; emote_style: ink (the old ink box and label), flat, tail, shadow, live; emote_frames: frames per bubble; emote_pop: bubble pops in. emote_on: what shows which bubble (spot = a Tamer sees you, talk = talked to, talk_beaten = a beaten Tamer talked to, near/near_night/near_rain = a villager notices you). head_turn: villagers turn their head to the Wayfarer within head_turn_radius tiles. idle: still or breathe_blink. turn_blend: a quarter turn shows a head-first frame. outfits: none or season (columns blocks of the sheet in the order of seasons).",
  "styles": [
   "tamer",
   "tamer_f",
@@ -68,7 +68,6 @@
  "near_emote_cooldown": 40.0,
  "near_emote_gap": 6.0,
  "near_emote_time": 1.4,
- "follower_emote_cooldown": 12.0,
  "turn_blend_ms": 70,
  "breathe_ms": 900,
  "blink_every_ms": 3600,
@@ -115,9 +114,6 @@
    },
    "head_turn": false,
    "head_turn_radius": 0,
-   "follower": "ink",
-   "follower_walk": false,
-   "follower_shadow": false,
    "idle": "still",
    "turn_blend": false,
    "outfits": "none"
@@ -165,9 +161,6 @@
    },
    "head_turn": false,
    "head_turn_radius": 0,
-   "follower": "ink",
-   "follower_walk": false,
-   "follower_shadow": false,
    "idle": "still",
    "turn_blend": false,
    "outfits": "none"
@@ -218,9 +211,6 @@
    },
    "head_turn": false,
    "head_turn_radius": 0,
-   "follower": "ink",
-   "follower_walk": false,
-   "follower_shadow": false,
    "idle": "still",
    "turn_blend": false,
    "outfits": "none"
@@ -271,14 +261,10 @@
    "emote_on": {
     "spot": "alert",
     "talk": "note",
-    "talk_beaten": "dots",
-    "follower": "heart"
+    "talk_beaten": "dots"
    },
    "head_turn": true,
    "head_turn_radius": 2,
-   "follower": "colour",
-   "follower_walk": true,
-   "follower_shadow": true,
    "idle": "still",
    "turn_blend": false,
    "outfits": "none"
@@ -334,16 +320,12 @@
     "spot": "alert",
     "talk": "note",
     "talk_beaten": "dots",
-    "follower": "heart",
     "near": "note",
     "near_night": "zzz",
     "near_rain": "drop"
    },
    "head_turn": true,
    "head_turn_radius": 3,
-   "follower": "colour",
-   "follower_walk": true,
-   "follower_shadow": true,
    "idle": "breathe_blink",
    "turn_blend": true,
    "outfits": "season"

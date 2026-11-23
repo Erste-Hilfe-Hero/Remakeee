@@ -2,7 +2,8 @@
 
 The owner's request: the game should feel like it starts on the genre's first handheld and gets
 more modern era by era, up to the fifth generation. This page covers the figures on the map: the
-Wayfarer, villagers, Tamers, and the Spirling that walks behind. Menus, text boxes, banners and
+Wayfarer, villagers and Tamers. (The Spirling that walked behind the Wayfarer was removed on the
+owner's wish of 23.11.2026; its remarks stay, see `scripts/core/Inkshadow.gd`.) Menus, text boxes, banners and
 map extras (water shimmer, footprints, reflections, tilt, camera) belong to `docs/ERA_FEEL_UI.md`;
 battles to `docs/ERA_FEEL_BATTLE.md`; sound to `docs/ERA_FEEL_AUDIO.md`.
 
@@ -23,7 +24,6 @@ Described in general terms. Chimora copies none of these, only the jump in techn
 | Standing | still | still | still | heads follow the hero | breathing, blinking |
 | Reaction | "!" over a trainer | more bubbles | bubbles with a tail | bubbles with depth | animated bubbles, by the moment |
 | Ground | none | none | reflection in water | drop shadow | drop shadow |
-| Companion | none | none | none | walks behind | walks behind |
 | Water | none | none | own riding sprite | same | same |
 | Clothes | fixed | fixed | fixed | fixed | change with the season |
 
@@ -40,7 +40,6 @@ Described in general terms. Chimora copies none of these, only the jump in techn
 | Bubbles | ink "!" box, ink label in scenes (existed) | **flat colour bubbles: ! ? ... heart note** | **bubble with tail and shade, pops in** | **bubble with drop shadow and gloss** | **two-frame bubbles, plus sleep and rain drop** |
 | What shows a bubble | Tamer sight | **+ talk (note), beaten Tamer (...)** | same | **+ turning to your Spirling (heart)** | **+ a villager notices you: by night, rain or mood** |
 | Villagers | glance around (existed) | same | same | **turn only the head to the Wayfarer within 2 tiles** | within 3 tiles |
-| Spirling behind | ink shadow, jumps a tile (existed) | same | same | **own colours, walks the tile with a hop, drop shadow, faces its way** | **+ slow breathing** |
 | Idle | still | still | still | still | **breathing and blinking, each figure on its own beat** |
 | Turning | at once | at once | at once | at once | **a quarter turn leads with the head (one blend frame)** |
 | Outfits | fixed | fixed | fixed | fixed | **spring, summer (short sleeves), autumn, winter (scarf) by the month** |
@@ -66,7 +65,7 @@ the head already in the new one for 70 ms.
   `art/eraN/actors`. A figure without a sheet there falls back to the old drawing.
 - `EraActors` is one node in the overworld, after the figures in the tree. Each frame it picks the
   pose of every figure and redraws it when the pose changes, applies the era's pixel jump, turns
-  heads, keeps the bubbles and moves the Spirling behind. `NPC.alert`, a talk and the scene step
+  heads and keeps the bubbles. `NPC.alert`, a talk and the scene step
   `{"emote": who, "icon": ...}` all end in a bubble of the era.
 - The sheets are built from the Era I sheets: every ink of a figure belongs to a zone by where it
   sits (hat or hair, band, skin, top, trim, trousers, shoes), each zone has its own colour, and the
@@ -75,12 +74,10 @@ the head already in the new one for 70 ms.
 - The Wayfarer's look: the generator writes which sheet colours are skin, hair and coat
   (`data/era_actor_zones.json`), and `EraActorLook.player_sheet()` repaints them once per look.
   The coat is the player's own in every season; scarf, sleeves, trim and trousers still change.
-- Reduced motion: no breathing or blinking, no blend frame, bubbles neither pop nor bob, the
-  Spirling behind does not hop or breathe. The walk cycle, head turns and bubbles stay.
+- Reduced motion: no breathing or blinking, no blend frame, bubbles neither pop nor bob. The walk cycle, head turns and bubbles stay.
 
 ## Not done
 
 - Diagonal movement (the grid is four-way), region outfits (seasons were chosen), drawn water
   reflections of the taller figures (tiles slice).
 - The map sprite "hush" has no sheet in any era and is drawn as the old coloured box.
-- The Spirling behind is the battle sprite scaled to 16 px, not an own walking sheet per kind.

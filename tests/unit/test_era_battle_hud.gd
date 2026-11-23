@@ -181,6 +181,10 @@ func test_frames_per_era_and_shop_frame_wins() -> void:
 	EraBattleHud.skin_override = 1
 	assert_false(EraBattleHud.frames_text_box(""), "the menu skin frames the box itself")
 	assert_gte(EraBattleHud.text_box_height(4), 3 * EraBattleHud.line_h(4) + 10)
+	for era: int in range(1, 6):
+		assert_gte(EraBattleHud.text_box_height(era), 3 * EraBattleHud.text_line_h(era) + EraBattleHud.TEXT_PAD_Y * 2, "era %d: three large lines fit" % era)
+	assert_eq(EraBattleHud.text_line_h(1), PixelFont.LARGE_H, "Era I battle text takes the large glyphs")
+	assert_eq(EraBattleHud.text_line_h(5), PixelFont.LARGE_H, "Era V keeps its large bold line")
 	assert_eq(EraBattleHud.text_box_height(1), BattleScene.TEXT_BOX_HEIGHT)
 
 func test_colours_keep_contrast() -> void:

@@ -76,9 +76,13 @@ func _ready() -> void:
 	_label.accessibility_live = AccessibilityServer.LIVE_POLITE
 	_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	# Centred lines (owner wish 23.11.2026, plan Chimora 100).
+	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	# Keep wrapped text clear of the continue marker in the corner.
+	# Keep wrapped text clear of the continue marker in the corner, and as much room on the
+	# left, so the centred lines sit in the middle of the box.
 	var pad := StyleBoxEmpty.new()
+	pad.content_margin_left = ARROW_SPACE
 	pad.content_margin_right = ARROW_SPACE
 	_label.add_theme_stylebox_override("normal", pad)
 	add_child(_label)
@@ -144,10 +148,46 @@ func _set_rise(v: int) -> void:
 ## worn shop frame when one is chosen, else the era's frame (ink, wash, etched, panorama,
 ## living) for the box and the name tag, and the era's typing speed.
 func apply_era_frame() -> void:
-	add_theme_stylebox_override("panel", UITheme.text_frame_style(GameState.dialogue_frame()))
+	var sb: StyleBox = UITheme.text_frame_style(GameState.dialogue_frame())
+	if pad_y >= 0:
+		sb = sb.duplicate()
+		sb.content_margin_top = pad_y
+		sb.content_margin_bottom = pad_y
+	add_theme_stylebox_override("panel", sb)
 	if _tag != null:
 		_tag.add_theme_stylebox_override("normal", UITheme.panel_style())
 	era_speed = maxf(0.1, float(EraManager.feel("text_cps_mult")))
+	_apply_big_font()
+
+## Talk and battle lines are one font step larger than the screen around them (owner wish
+## 23.11.2026, plan Chimora 100): a line under the large 12 px height takes the large glyphs
+## (or the era's own font when it is that tall). A line already that tall is drawn at
+## BIG_SCALE times the small glyphs when [param allow_double] is set (the map's talk box),
+## else it stays (the Era IV/V battle box keeps its large bold HUD font: doubled, the
+## two-part order prompt ran past the box). Returns [font, font size].
+const BIG_SCALE: int = 2
+static func big_font(inherited: Font, size: int, allow_double: bool) -> Array:
+	if inherited != null and inherited.get_height(size) >= PixelFont.LARGE_H:
+		return [PixelFont.get_font(), UITheme.FONT_SIZE * BIG_SCALE] if allow_double else [inherited, size]
+	var own: FontFile = EraText.font(true)
+	return [own if own != null else PixelFont.get_large_font(), UITheme.FONT_SIZE]
+
+## False in battle: see big_font().
+var allow_double: bool = true
+## Padding above and below the text, -1 for the frame's own. The battle box uses a tighter one,
+## so three large lines fit the 44 px box of the 144 px eras.
+var pad_y: int = -1
+## Set by the battle: a prompt too long for MAX_LINES larger lines keeps the smaller font.
+var fit_prompt: bool = false
+
+func _apply_big_font() -> void:
+	if _label == null:
+		return
+	_label.remove_theme_font_override("font")
+	_label.remove_theme_font_size_override("font_size")
+	var big: Array = big_font(_label.get_theme_font("font"), _label.get_theme_font_size("font_size"), allow_double)
+	_label.add_theme_font_override("font", big[0])
+	_label.add_theme_font_size_override("font_size", big[1])
 
 ## Shows [param text] with the typewriter effect and waits for the player (or the auto timer).
 func show_text(text: String, speaker: String = "") -> void:
@@ -243,6 +283,11 @@ func show_prompt(text: String, speaker: String = "") -> void:
 		speaker = parts[0]
 		shown = parts[1]
 	set_speaker(speaker)
+	# A prompt does not page: in battle one longer than MAX_LINES in the larger font (the order
+	# line of a formation battle) keeps the screen's own font, so the box leaves the field room.
+	if fit_prompt and split_lines(shown, _text_width(), _label.get_theme_font("font"), _label.get_theme_font_size("font_size"), MAX_LINES).size() > 1:
+		_label.remove_theme_font_override("font")
+		_label.remove_theme_font_size_override("font_size")
 	_label.text = shown
 	_label.visible_characters = -1
 	_typing = false
@@ -285,7 +330,7 @@ func _text_width() -> float:
 	var sb: StyleBox = get_theme_stylebox("panel")
 	if sb != null:
 		w -= sb.get_margin(SIDE_LEFT) + sb.get_margin(SIDE_RIGHT)
-	return w - ARROW_SPACE
+	return w - ARROW_SPACE * 2
 
 ## Wraps [param text] word by word to [param width] and groups the lines into windows of
 ## [param max_lines]. A line break in the text starts a new line.

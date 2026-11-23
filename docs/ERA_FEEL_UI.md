@@ -30,7 +30,7 @@ Described generically, from general knowledge of the genre's history; no product
 | Menus, Vigor bar | ink theme, ink line bar | bar style "ink" | |
 | Warp | door rectangle, edge slide | warp "door" | stepped 4-shade fade |
 | Place banner | plain panel | style "plain" | |
-| Overworld | dust, inkshadow, weather dots, day tint | | |
+| Overworld | dust, weather dots, day tint | | |
 
 ### Era II - Wash (Vellmarch)
 

@@ -217,6 +217,9 @@ func _build() -> void:
 	col.add_child(_field)
 	_text = TextBox.new()
 	_text.duck_music = true
+	_text.allow_double = false
+	_text.pad_y = EraBattleHud.TEXT_PAD_Y
+	_text.fit_prompt = true
 	_text.custom_minimum_size = Vector2(0, TEXT_BOX_HEIGHT)
 	col.add_child(_text)
 	_menu = CommandMenu.new()

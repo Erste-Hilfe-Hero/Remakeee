@@ -127,14 +127,6 @@ func _cast(era: int) -> void:
 	y += 8
 	var shown: Array[NPC] = []
 	y = _line(holder, kinds.map(func(_k: Variant) -> String: return "villager"), per_row, y, func(n: NPC, _i: int) -> void: shown.append(n), row_h + 4)
-	# The Spirling behind.
-	var f := Sprite2D.new()
-	f.centered = false
-	f.texture = MiniSprite.of("Kindlop", GridWalker.TILE)
-	f.modulate = Color(UITheme.INK, 0.85)
-	f.position = Vector2(8 + 18, y + 4)
-	holder.add_child(f)
-	actors.follower = f
 	var lead := NPC.new()
 	lead.setup({"id": "lead", "x": 0, "y": 0, "sprite": "tamer", "facing": "right", "still": true})
 	holder.add_child(lead)
