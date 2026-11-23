@@ -16,6 +16,7 @@ func _run() -> void:
 	Database.load_all()
 	Loc.set_language(lang)
 	db.language = lang
+	db.terms_version = LegalInfo.TERMS_VERSION
 	# The review shot shows the title itself, not the boot card in front of it.
 	EraBoot.shown = true
 	await _shot_scene("res://scenes/ui/Title.tscn", "01_title", 40)

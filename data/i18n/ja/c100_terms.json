@@ -1,0 +1,12 @@
+{
+ "_comment": "Japanese texts for the German table c100_terms. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "Before you play": "プレイの前に",
+  "I have read and accept the Terms of Use and the Privacy Policy.": "利用規約とプライバシーポリシーを読み、同意します。",
+  "Read the Terms of Use": "利用規約を読む",
+  "Read the Privacy Policy": "プライバシーポリシーを読む",
+  "Ticked": "チェック済み",
+  "Not ticked": "未チェック",
+  "Tick the box above to continue.": "続けるには上のボックスにチェックを入れてください。"
+ }
+}

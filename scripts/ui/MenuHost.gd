@@ -180,7 +180,7 @@ var screens_shown: Array[String] = []
 ## eras says while no row explains itself).
 func pick_screen(screen: String, title: String, entries: Array[Dictionary], opts: Dictionary = {}) -> int:
 	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), screen)
-	for k: String in ["panel_text", "columns", "row_h", "tab_icons"]:
+	for k: String in ["panel_text", "columns", "row_h", "tab_icons", "wrap"]:
 		if opts.has(k):
 			lay[k] = opts[k]
 	_next_layout = lay

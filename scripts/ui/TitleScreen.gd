@@ -324,6 +324,13 @@ func _run() -> void:
 	if GameState.language.is_empty():
 		StartupLog.mark("language menu ready")
 		await _pick_language()
+	# The terms come before the server is asked and before any journey, offline ones too.
+	if terms_needed():
+		# The list takes the room under the wordmark, so every row and the note show at once.
+		var top: float = _menu.offset_top
+		_menu.offset_top = roundf(TERMS_TOP * get_viewport_rect().size.x / EraTitleArt.BASE_W)
+		await terms_step(_menu)
+		_menu.offset_top = top
 	# An offline start ends when the title shows again; Continue is online only (item 77).
 	Online.offline_play = false
 	await _go_online()
@@ -491,6 +498,86 @@ static func privacy_note(menu: MenuHost, note: Callable = Callable()) -> void:
 		if await menu.pick(PRIVACY_TITLE, privacy_rows(not note.is_valid()), false) != 1:
 			return
 		await menu.info(Loc.t(AccountMenu.PRIVACY_NOTE) + "\n\n" + Loc.t(LocalNotify.PRIVACY_LINE))
+
+## Before the first connection and the first journey the player accepts the terms of use and
+## the privacy policy (docs/legal/NUTZUNGSBEDINGUNGEN.md 2.1). Players with a save see it once on
+## their next start; a new LegalInfo.TERMS_VERSION asks again. The short privacy note stands with
+## it, so the separate note after connecting is not needed any more.
+const TERMS_SCREEN: String = "terms"
+const TERMS_TITLE: String = "Before you play"
+const TERMS_ACCEPT: String = "I have read and accept the Terms of Use and the Privacy Policy."
+const TERMS_READ: String = "Read the Terms of Use"
+const PRIVACY_READ: String = "Read the Privacy Policy"
+const TERMS_GO: String = "Continue"
+const TERMS_WHY: String = "Tick the box above to continue."
+enum TermsRow { ACCEPT, TERMS, PRIVACY, GO }
+## Top of the terms list on the 144 px wide title: just under the wordmark and its subtitle.
+const TERMS_TOP: float = 46.0
+## Rows a finger hits safely: 18 px of the 144 px wide screen are 48 pt on a 390 pt phone.
+const TERMS_ROW_H: int = 18
+
+static func terms_needed() -> bool:
+	return GameState.terms_version != LegalInfo.TERMS_VERSION
+
+## The rows of the terms step; "Continue" works only once the box is ticked. The sentence of the
+## privacy note is the rows' hint under the list.
+static func terms_rows(checked: bool) -> Array[Dictionary]:
+	var h: String = Loc.t(PRIVACY_SHORT)
+	return [
+		{"text": TERMS_ACCEPT, "icon": check_box(checked), "icon_top": true, "say": Loc.t("Ticked" if checked else "Not ticked"), "hint": h},
+		{"text": TERMS_READ, "hint": h},
+		{"text": PRIVACY_READ, "hint": h},
+		{"text": TERMS_GO, "disabled": not checked, "hint": h, "why": "" if checked else TERMS_WHY},
+	]
+
+## A small tick box for the accept row, ticked or empty.
+static func check_box(on: bool) -> ImageTexture:
+	var key: int = 1 if on else 0
+	if _boxes.has(key):
+		return _boxes[key]
+	var img: Image = Image.create(9, 9, false, Image.FORMAT_RGBA8)
+	# Paper inside, so the box shows on a light row and on the dark focused one alike.
+	img.fill(UITheme.BG)
+	for i: int in 9:
+		for p: Vector2i in [Vector2i(i, 0), Vector2i(i, 8), Vector2i(0, i), Vector2i(8, i)]:
+			img.set_pixelv(p, UITheme.INK)
+	if on:
+		for p: Vector2i in [Vector2i(2, 4), Vector2i(3, 5), Vector2i(4, 6), Vector2i(5, 5), Vector2i(6, 4), Vector2i(6, 3), Vector2i(7, 2),
+				Vector2i(2, 5), Vector2i(3, 6), Vector2i(4, 5), Vector2i(5, 4)]:
+			img.set_pixelv(p, UITheme.INK)
+	_boxes[key] = ImageTexture.create_from_image(img)
+	return _boxes[key]
+
+static var _boxes: Dictionary[int, ImageTexture] = {}
+
+## Keeps the accepted version on this device and counts the privacy note as seen.
+static func accept_terms() -> void:
+	GameState.terms_version = LegalInfo.TERMS_VERSION
+	SaveManager.save_settings()
+	Online.mark_privacy_seen()
+
+static func terms_step(menu: MenuHost) -> void:
+	var checked: bool = false
+	var focus: int = TermsRow.ACCEPT
+	while true:
+		var idx: int = await menu.pick_screen(TERMS_SCREEN, TERMS_TITLE, terms_rows(checked),
+			{"cancellable": false, "focus": focus, "wrap": true, "row_h": TERMS_ROW_H})
+		focus = maxi(idx, 0)
+		match idx:
+			TermsRow.ACCEPT:
+				checked = not checked
+				if checked:
+					focus = TermsRow.GO
+			TermsRow.TERMS:
+				MenuHost.open_url.call(LegalInfo.terms_url())
+				menu.toast(LegalInfo.terms_url())
+			TermsRow.PRIVACY:
+				MenuHost.open_url.call(LegalInfo.privacy_url())
+				menu.toast(LegalInfo.privacy_url())
+			TermsRow.GO:
+				if checked:
+					accept_terms()
+					return
 
 ## Android back (item 1787): on the main list it asks to quit, otherwise it works like B.
 func _notification(what: int) -> void:

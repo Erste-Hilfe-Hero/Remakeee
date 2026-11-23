@@ -99,13 +99,11 @@ func test_each_era_takes_its_step() -> void:
 	assert_eq(int(_row(3).walk_frames), 3)
 	assert_true(bool(_row(3).run_anim) and bool(_row(3).wade))
 	assert_eq(int(_row(3).step_px), 1)
-	# IV: taller, shadow, half steps, head turns, the coloured follower.
+	# IV: taller, shadow, half steps, head turns.
 	assert_gt(int(_row(4).frame[1]), int(_row(3).frame[1]))
 	assert_eq(str(_row(4).shadow), "drop")
 	assert_has(_row(4).step_seq, "half")
 	assert_true(bool(_row(4).head_turn))
-	assert_eq(str(_row(4).follower), "colour")
-	assert_eq(str(_row(3).follower), "ink")
 	# V: living idle, quarter-turn blend, season outfits, bubbles by the moment.
 	assert_eq(str(_row(5).idle), "breathe_blink")
 	assert_true(bool(_row(5).turn_blend))
@@ -245,10 +243,6 @@ func test_reduced_motion_stills_the_figures() -> void:
 	# The walk cycle and head turns stay: they carry information, not decoration.
 	assert_eq(EraActorLook.pose(r, "down", true, false, 0.5, 0, "", false, "", 0, true).row, "step_l")
 	assert_eq(EraActorLook.pose(r, "down", false, false, 0.0, 0, "left", false, "", 0, true).row, "head_cw")
-	assert_eq(EraActors.follower_offset(0.5, 0, "breathe_blink", true), Vector2.ZERO)
-	assert_eq(EraActors.follower_offset(1.0, 900, "breathe_blink", true), Vector2.ZERO)
-	assert_eq(EraActors.follower_offset(0.5, 0, "still", false), Vector2(0, -1), "hop in the middle of the step")
-	assert_eq(EraActors.follower_offset(1.0, 900, "breathe_blink", false), Vector2(0, 1))
 
 func test_reduced_motion_keeps_bubbles_still() -> void:
 	_era(5)
@@ -365,36 +359,6 @@ func test_coarse_steps_in_the_first_eras() -> void:
 	assert_eq(EraActors.snap(Vector2(21, 37), 2), Vector2(20, 36))
 	assert_eq(EraActors.snap(Vector2(16, 32), 2), Vector2(16, 32), "cells stay cells")
 	assert_eq(EraActors.snap(Vector2(21, 37), 1), Vector2(21, 37))
-
-func test_follower_is_ink_then_colour_and_walks() -> void:
-	var a: EraActors = _actors()
-	var f := Sprite2D.new()
-	f.centered = false
-	f.modulate = Color(0.1, 0.1, 0.2, 0.85)
-	add_child_autofree(f)
-	a.follower = f
-	f.position = Vector2(32, 32)
-	_era(3)
-	a._tick_follower(_row(3), 0.016)
-	assert_eq(f.modulate, Color(0.1, 0.1, 0.2, 0.85), "Eras I-III: the ink shadow")
-	assert_eq(f.get_child_count(), 0)
-	_era(4)
-	a._tick_follower(_row(4), 0.016)
-	assert_eq(f.modulate, Color.WHITE)
-	assert_true((f.get_child(0) as Sprite2D).visible, "drop shadow")
-	f.position = Vector2(48, 32)
-	a._tick_follower(_row(4), GridWalker.WALK_TIME / 2.0)
-	assert_eq(f.position, Vector2(40, 32), "half way after half a step")
-	assert_true(f.flip_h)
-	a._tick_follower(_row(4), GridWalker.WALK_TIME)
-	assert_eq(f.position, Vector2(48, 32))
-	f.position = Vector2(160, 160)
-	a._tick_follower(_row(4), 0.016)
-	assert_eq(f.position, Vector2(160, 160), "a warp jumps, it is not walked")
-	_era(1)
-	a._tick_follower(_row(1), 0.016)
-	assert_eq(f.modulate, Color(0.1, 0.1, 0.2, 0.85), "the Retro filter brings the ink back")
-	assert_false((f.get_child(0) as Sprite2D).visible)
 
 func test_walker_draws_through_the_era_look() -> void:
 	var n: NPC = _walker("elder")

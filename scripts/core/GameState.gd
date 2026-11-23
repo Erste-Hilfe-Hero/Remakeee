@@ -250,6 +250,8 @@ var weather: bool = true
 var minimap: String = "on"
 ## Game language (item 62): a Loc.LANGUAGES code, or "" for the device language.
 var language: String = ""
+## Version of the terms of use this device accepted (LegalInfo.TERMS_VERSION), "" = not yet.
+var terms_version: String = ""
 const FPS_NORMAL: int = 60
 const FPS_BATTERY: int = 30
 ## A fourth size "Very large" (item 1816) and five opacity steps (item 1817).
@@ -880,7 +882,8 @@ func settings_to_dict() -> Dictionary:
 		"one_hand": one_hand, "bag_sort": bag_sort, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice, "auto_text": auto_text,
 		"tips": tips_enabled, "play_reminder": play_reminder, "goal_line": goal_line, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language}
+		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language,
+		"terms_version": terms_version}
 
 func settings_from_dict(d: Dictionary) -> void:
 	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
@@ -932,6 +935,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	weather = bool(d.get("weather", true))
 	minimap = str(d.get("minimap", "on")) if str(d.get("minimap", "on")) in Survey.MINIMAP_MODES else "on"
 	language = str(d.get("language", ""))
+	terms_version = str(d.get("terms_version", ""))
 	apply_display()
 	volume = clampf(float(d.get("volume", 0.8)), 0.0, 1.0)
 	music_volume = clampf(float(d.get("music_volume", 0.7)), 0.0, 1.0)

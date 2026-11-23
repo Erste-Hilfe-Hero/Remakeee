@@ -225,9 +225,9 @@ can contact the OAIC (oaic.gov.au) or the New Zealand Privacy Commissioner (priv
 ### 10.9 India (DPDP Act)
 
 We process your personal data only for the purposes in section 3. You give us the data yourself by
-playing, for the purpose of playing; we do not ask for a separate consent. On the first connection the
-game shows a short privacy note with the main points, and this policy and the terms are linked under
-Settings, Legal. You can stop the processing at any time by deleting your account. Under the Digital
+playing, for the purpose of playing; we do not ask for a separate consent. Before the first connection the
+game shows a short privacy note with the main points and asks you to confirm that you have read the terms
+and this policy (this only confirms that you know them); both are linked there and under Settings, Legal. You can stop the processing at any time by deleting your account. Under the Digital
 Personal Data Protection Act 2023 you can get a summary of your data ("Download my data"), have it corrected
 or erased, use our grievance redressal and nominate a person to exercise your rights if you die or cannot
 act. Grievance contact: Ali Amuri Alnasag, aa.amuri@icloud.com; we respond within 30 days. If you are not

@@ -259,9 +259,19 @@ static func frame_style(era: int, bg: Color = UITheme.BG) -> StyleBox:
 static func frames_text_box(shop_frame: String) -> bool:
 	return not skin_api() and not shop_frame in UITheme.TEXT_FRAMES
 
+## Height of one line in the battle text box of [param era] (TextBox.big_font without the
+## doubling): at least the large 12 px line, also where the HUD writes smaller.
+static func text_line_h(era: int) -> int:
+	return maxi(line_h(era), PixelFont.LARGE_H)
+
+## Padding above and below the battle text (TextBox.pad_y): three large lines and this fit
+## the 44 px box of Eras I and II.
+const TEXT_PAD_Y: int = 4
+
 ## Height of the battle text box in [param era]: three lines of its font inside the frame.
 static func text_box_height(era: int) -> int:
-	return maxi(44, TEXT_LINES * line_h(era) + FRAME_PAD * 2 + 2)
+	return maxi(maxi(BattleScene.TEXT_BOX_HEIGHT, TEXT_LINES * line_h(era) + FRAME_PAD * 2 + 2),
+			TEXT_LINES * text_line_h(era) + TEXT_PAD_Y * 2)
 
 # --- Plates --------------------------------------------------------------------------
 

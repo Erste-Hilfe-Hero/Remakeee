@@ -1,0 +1,13 @@
+{
+ "_comment": "German texts from tools/i18n/de_c100_terms.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Before you play": "Bevor du spielst",
+  "I have read and accept the Terms of Use and the Privacy Policy.": "Ich habe die Nutzungsbedingungen und die Datenschutzerklärung gelesen und akzeptiere sie.",
+  "Not ticked": "Nicht angehakt",
+  "Read the Privacy Policy": "Datenschutzerklärung lesen",
+  "Read the Terms of Use": "Nutzungsbedingungen lesen",
+  "Tick the box above to continue.": "Hake oben das Kästchen an, um weiterzumachen.",
+  "Ticked": "Angehakt"
+ }
+}

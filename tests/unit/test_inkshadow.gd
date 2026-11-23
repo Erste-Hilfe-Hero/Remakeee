@@ -1,5 +1,6 @@
 extends GutTest
-## Inkshadow: the lead Spirling trails one step behind, remarks by temperament, keeps a grudge.
+## Inkshadow: the lead Spirling remarks by temperament and keeps a grudge. It no longer walks
+## behind the Wayfarer on the map (owner wish 23.11.2026).
 
 func before_all() -> void:
 	Database.load_all()
@@ -21,10 +22,16 @@ func test_data_values() -> void:
 		assert_false(GameState.as_dict(d.remarks).get(t.id, []).is_empty(), "remarks for " + str(t.id))
 	assert_false((d.sour as Array).is_empty())
 
-func test_trail_cell() -> void:
-	assert_eq(Inkshadow.trail_cell(Vector2i(4, 5), Vector2i(5, 5), "right"), Vector2i(4, 5), "the cell just left")
-	assert_eq(Inkshadow.trail_cell(Vector2i(0, 0), Vector2i(5, 5), "down"), Vector2i(5, 4), "behind after a warp")
-	assert_eq(Inkshadow.trail_cell(Vector2i(5, 5), Vector2i(5, 5), "left"), Vector2i(6, 5))
+func test_no_spirling_walks_behind_on_the_map() -> void:
+	GameState.current_map = "brindlewick"
+	GameState.player_cell = Vector2i(5, 8)
+	var ow: Overworld = load("res://scenes/overworld/Overworld.tscn").instantiate()
+	add_child_autofree(ow)
+	await wait_process_frames(2)
+	assert_not_null(Inkshadow.lead(), "a lead Spirling is in the team")
+	assert_null(ow.find_child("Inkshadow", true, false), "no follower sprite on the map")
+	for c: Node in ow._entities.get_children():
+		assert_false(c is Sprite2D and (c as Sprite2D).texture == MiniSprite.of(Inkshadow.lead().data.species_name, GridWalker.TILE), "no mini sprite of the lead")
 
 func test_lead_is_first_standing() -> void:
 	assert_eq(Inkshadow.lead(), GameState.party[0])

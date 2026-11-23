@@ -1,0 +1,12 @@
+{
+ "_comment": "Traditional Chinese texts for the German table c100_terms. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "Before you play": "開始遊戲前",
+  "I have read and accept the Terms of Use and the Privacy Policy.": "我已閱讀並接受《使用條款》與《隱私權政策》。",
+  "Read the Terms of Use": "閱讀使用條款",
+  "Read the Privacy Policy": "閱讀隱私權政策",
+  "Ticked": "已勾選",
+  "Not ticked": "未勾選",
+  "Tick the box above to continue.": "請勾選上方的方框以繼續。"
+ }
+}
