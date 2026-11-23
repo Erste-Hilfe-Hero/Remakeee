@@ -388,6 +388,7 @@
    "form": "boot",
    "colour": "8a5a3a"
   },
+  "lamp_lens": {"form": "glass", "colour": "f0c870"},
   "kit_echo_shell": {
    "form": "shell",
    "colour": "e0b8a0"

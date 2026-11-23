@@ -48,6 +48,11 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 			for c: Variant in (d[k].get("choices", []) if d[k] is Dictionary else []):
 				if c is Dictionary and c.has("flag"):
 					settable[str(c.flag)] = true
+				# "lamp_watch" (the lighthouse lamp) sets one flag per lit fixed night and the end.
+				if c is Dictionary and str(c.get("action", "")) == "lamp_watch":
+					for i: int in LampWatch.fixed_nights():
+						settable[LampWatch.NIGHT_FLAG % (i + 1)] = true
+					settable[LampWatch.DONE_FLAG] = true
 			# Actions that set flags themselves: quest_show <id> ..., switch <puzzle> ...
 			for one: String in (str(d[k].get("action", "")).split(";") if d[k] is Dictionary else PackedStringArray()):
 				var act: PackedStringArray = one.strip_edges().split(" ")

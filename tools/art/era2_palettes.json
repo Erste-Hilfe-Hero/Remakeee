@@ -63,7 +63,8 @@
   },
   "fx": {
     "spark": "EMBER", "drop": "TIDE", "leaf": "BLOOM", "zag": "VOLT",
-    "rock": "STONE", "streak": "GALE", "glint": "LUMEN", "shade": "UMBRA"
+    "rock": "STONE", "streak": "GALE", "glint": "LUMEN", "shade": "UMBRA",
+    "lamp": "LUMEN"
   },
   "landmarks": {
     "veydal_standing_stone": "ROCK", "veydal_cairn": "BOULDER", "veydal_beacon": "LAMP", "veydal_tide_post": "PIER",

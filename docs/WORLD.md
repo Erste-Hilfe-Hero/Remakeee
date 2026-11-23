@@ -45,6 +45,31 @@ world that does not follow the classic monster-RPG template. Check new content a
   (flag `mirela_lamp`), at Ring 40, with its own battle backdrop ("voice": the lake at night
   with columns of light).
 
+## The Lamp Watch (update, 2026-11-23)
+
+Owner wish "Überleg dir ein Update was im Spiel fehlt": an offline daily return loop at the place
+where new players stop, the lighthouse. Data `data/lamp_watch.json`, rules `scripts/core/LampWatch.gd`,
+flow `Overworld._action_lamp_watch`, art `tools/art/gen_lamp_watch.py`, tests
+`tests/unit/test_lamp_watch.gd`.
+
+- Lore: lost Spirlings, whose Wayfarer is gone, follow a light (the Hush is the echo of lost
+  bonds, Lore 3). Mirela lit the lamp for them before she went into the Rift and kept a lamp log
+  behind the lens; Aldo kept it burning for forty years.
+- Opens with `aldo_gift` (right after the prologue): the lighthouse stairs offer "Climb to the
+  lamp". Once per local calendar day the lamp can be lit; a day at or before the last lit one
+  lights nothing (clock turned back). Only lit nights count, a missed day costs nothing.
+- Each lit night one visitor comes. It is answered with the Echo call outside battle (no fight,
+  no throw, no odds shown); a score of 0.5 or more and it joins at the best team Ring - 1 (at
+  least Ring 3), otherwise it waits until morning and can be tried again that day.
+- Nights 1-7 are fixed: the two storm Spirlings the player did not pick, then Button
+  (Gleamgrub), Sorrel (Hushkin), Tansy (Blotling), Reed (Fluting) and a Gleam Seamlet. Each
+  brings a page of Mirela's lamp log and a small gift; night 7 gives the keepsake Lamp Lens
+  (bonds +5 % while in front). Flags `lamp_night_1`..`lamp_night_7`, `lamp_watch_done`; side
+  goal `lamp` in `data/quests.json`. After night 7 a visitor of the pool comes each night.
+- Visitors are Veydal base forms with base totals 287-322, so no new kind is added (70 per act)
+  and the act bands do not move.
+- A save continued on a day with the lamp still dark gets one note per day.
+
 ## Map design rules
 
 - **No numbered routes.** Every path has a name and a shape: Fernstair (switchback terraces),

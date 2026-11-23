@@ -140,6 +140,13 @@ def strings():
                 for k in ("text", "name", "desc", "found"):
                     if isinstance(t.get(k), str):
                         found.append(t[k])
+    # The Lamp Watch: visitor lines and Mirela's lamp log (scripts/core/LampWatch.gd).
+    lw = os.path.join(ROOT, "data/lamp_watch.json")
+    if os.path.exists(lw):
+        lamp = json.load(open(lw, encoding="utf-8"))
+        for n in lamp.get("nights", []):
+            found += n.get("lines", []) + n.get("log", [])
+        found += lamp.get("pool_lines", [])
     for sd in SCRIPT_DIRS:
         for dp, _, fs in os.walk(os.path.join(ROOT, sd)):
             for f in sorted(fs):
