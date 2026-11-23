@@ -5,7 +5,7 @@ extends RefCounted
 ## crossings, drop shadow, emote bubbles, head turns, the Spirling that walks behind, idle
 ## breathing and blinking, season outfits. Eras I and II keep GridWalker's own drawing of the
 ## 64x32 sheets; from Era III on [method draw_actor] draws the figure from art/eraN/actors.
-## The live part (ticks, bubbles, the follower) is the EraActors node.
+## The live part (ticks, bubbles) is the EraActors node.
 
 const PATH: String = "res://data/era_actor_look.json"
 ## Which sheet colours of the Wayfarer are skin, hair and coat (made by tools/art/gen_era_chars.py).
@@ -15,16 +15,16 @@ const EMOTE_REL: String = "actors/emotes.png"
 ## Every era sets every one of these.
 const KEYS: Array[String] = ["title", "sheet_dir", "frame", "colours", "walk_frames", "rows", "step_seq",
 	"step_px", "walk_time", "run_time", "run_anim", "wade", "shadow", "emotes", "emote_style",
-	"emote_frames", "emote_pop", "emote_on", "head_turn", "head_turn_radius", "follower",
-	"follower_walk", "follower_shadow", "idle", "turn_blend", "outfits"]
+	"emote_frames", "emote_pop", "emote_on", "head_turn", "head_turn_radius", "idle", "turn_blend",
+	"outfits"]
 ## Switches that stay on in every later era once an era turns them on.
-const SWITCHES: Array[String] = ["run_anim", "wade", "emote_pop", "head_turn", "follower_walk", "follower_shadow", "turn_blend"]
+const SWITCHES: Array[String] = ["run_anim", "wade", "emote_pop", "head_turn", "turn_blend"]
 ## Numbers that never go down from one era to the next.
 const GROWING: Array[String] = ["colours", "walk_frames", "emote_frames", "head_turn_radius"]
 ## Named steps: a later era is never further left in its list.
 const LADDERS: Dictionary[String, Array] = {
 	"sheet_dir": ["chars", "actors"], "shadow": ["none", "drop"],
-	"emote_style": ["ink", "flat", "tail", "shadow", "live"], "follower": ["ink", "colour"],
+	"emote_style": ["ink", "flat", "tail", "shadow", "live"],
 	"idle": ["still", "breathe_blink"], "outfits": ["none", "season"],
 }
 const POSES: Array[String] = ["stand", "half", "step"]

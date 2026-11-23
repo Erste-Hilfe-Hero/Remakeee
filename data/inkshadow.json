@@ -1,5 +1,5 @@
 {
- "_comment": "Inkshadow: the lead Spirling walks one step behind the Wayfarer and mutters a remark now and then. Read by scripts/core/Inkshadow.gd. A battle the lead ends fainted adds one grudge mark; from grudge_sour marks on, its remarks come from the sour pool. A Spirling with no grudge sometimes finds coins.",
+ "_comment": "Inkshadow: the lead Spirling mutters a remark now and then (it no longer walks behind the Wayfarer on the map, owner wish 23.11.2026). Read by scripts/core/Inkshadow.gd. A battle the lead ends fainted adds one grudge mark; from grudge_sour marks on, its remarks come from the sour pool. A Spirling with no grudge sometimes finds coins.",
  "remark_every": 40,
  "grudge_sour": 3,
  "grudge_max": 9,

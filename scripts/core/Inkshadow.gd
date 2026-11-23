@@ -1,7 +1,7 @@
 class_name Inkshadow
 extends RefCounted
-## Inkshadow: the lead Spirling walks one step behind the Wayfarer, drawn in ink, and mutters a
-## remark every few dozen steps. It keeps a grudge: each battle it ends fainted adds a mark in
+## Inkshadow: the lead Spirling mutters a remark every few dozen steps (it no longer walks behind
+## the Wayfarer on the map, owner wish 23.11.2026). It keeps a grudge: each battle it ends fainted adds a mark in
 ## GameState.records["inkshadow_grudge"][uid]; from "grudge_sour" marks on its remarks turn sour.
 ## A Spirling with no grudge sometimes finds coins instead. Values live in data/inkshadow.json.
 
@@ -16,14 +16,7 @@ static func data() -> Dictionary:
 		_data = GameState.as_dict(JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH)))
 	return _data
 
-## The cell the shadow stands on: the cell the Wayfarer just left, or the one behind them
-## (opposite of [param facing]) right after a warp.
-static func trail_cell(prev_cell: Vector2i, cell: Vector2i, facing: String) -> Vector2i:
-	if prev_cell != cell and absi(prev_cell.x - cell.x) + absi(prev_cell.y - cell.y) == 1:
-		return prev_cell
-	return cell - GridWalker.DIRS.get(facing, Vector2i.DOWN)
-
-## The Spirling that walks behind: the first one in the team that is still standing.
+## The Spirling that remarks: the first one in the team that is still standing.
 static func lead() -> Spirling:
 	var i: int = GameState.first_healthy_index()
 	return GameState.party[i] if i >= 0 else null

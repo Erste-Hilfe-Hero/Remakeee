@@ -216,17 +216,11 @@ func _build() -> void:
 	player.path_blocked.connect(_on_path_blocked)
 	_entities.add_child(player)
 	_era_feel.player = player
-	_inkshadow = Sprite2D.new()
-	_inkshadow.name = "Inkshadow"
-	_inkshadow.centered = false
-	_inkshadow.modulate = Color(UITheme.INK, 0.85)
-	_entities.add_child(_inkshadow)
-	# Era look of the figures: poses, bubbles, head turns, the Spirling behind (EraActors).
+	# Era look of the figures: poses, bubbles, head turns (EraActors).
 	var actors := EraActors.new()
 	actors.name = "era_actors"
 	actors.entities = _entities
 	actors.player = player
-	actors.follower = _inkshadow
 	actors.is_night = func() -> bool: return map != null and map.outdoor and DayCycle.current() == DayCycle.Phase.NIGHT
 	actors.is_rain = func() -> bool: return map != null and map.outdoor and WeatherCycle.current(map) in ["rain", "storm"]
 	add_child(actors)
@@ -439,7 +433,6 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_place_landmark()
 	_place_rustle()
 	player.place(cell, face)
-	_place_inkshadow(cell, cell)
 	GameState.current_map = map_id
 	# Boat and coach stops open once the player has walked there (area 3 item 1190).
 	if not _on_trip and Transit.is_stop(map_id):
@@ -793,7 +786,6 @@ func _warp_out(edge: bool) -> void:
 
 func _on_player_stepped(cell: Vector2i) -> void:
 	_hinted_cell = Vector2i(-1, -1)
-	_place_inkshadow(GameState.player_cell, cell)
 	_era_feel.stepped(cell, GameState.player_cell)
 	GameState.player_cell = cell
 	GameState.facing = player.facing
@@ -1113,21 +1105,36 @@ func announce_goal_if_changed(before: int) -> void:
 static func text_on_top(player_y: float, view_h: float) -> bool:
 	return view_h > 0.0 and player_y > view_h / 2.0
 
-## Puts the talk box at the bottom, or at the top when it would cover the Wayfarer.
+## Gap between the talk box and the on-screen buttons under it.
+const PAD_GAP: int = 2
+
+## Space the talk box leaves free above [param bottom] (the bottom edge it hangs from): none
+## without on-screen buttons, else room down to [param pad_top] (owner wish 23.11.2026: the text sits
+## above the buttons, never under them).
+static func text_lift(pad_top: float, bottom: float) -> int:
+	if pad_top < 0.0 or pad_top >= bottom:
+		return 0
+	return int(ceilf(bottom - pad_top)) + PAD_GAP
+
+## Puts the talk box at the bottom above the on-screen buttons, or at the top when it would
+## cover the Wayfarer.
 func _place_text_box() -> void:
 	var top: bool = false
+	var view_h: float = get_viewport().get_visible_rect().size.y
 	if player != null and is_instance_valid(player) and player.is_inside_tree():
 		var y: float = player.get_global_transform_with_canvas().origin.y + TilesetFactory.TILE / 2.0
-		top = text_on_top(y, get_viewport().get_visible_rect().size.y)
+		top = text_on_top(y, view_h)
 	if top:
 		_text.set_anchors_preset(Control.PRESET_TOP_WIDE)
 		_text.offset_top = 0
 		_text.offset_bottom = TEXT_BOX_HEIGHT
 		_text.grow_vertical = Control.GROW_DIRECTION_END
 	else:
+		# The box hangs from the bottom of the UI root (inside the safe area).
+		var lift: int = text_lift(VirtualPad.top_y(), _ui_root.get_global_rect().end.y)
 		_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-		_text.offset_top = -TEXT_BOX_HEIGHT
-		_text.offset_bottom = 0
+		_text.offset_top = -TEXT_BOX_HEIGHT - lift
+		_text.offset_bottom = -lift
 		_text.grow_vertical = Control.GROW_DIRECTION_BEGIN
 
 ## True while the talk box sits at the top of the screen.
@@ -1818,19 +1825,7 @@ func _close_menu(menu: PauseMenu) -> void:
 	Juice.tween(menu, "modulate:a", 0.0, "close")
 	await Juice.tween(menu, "position", Vector2(MENU_SLIDE, 0), "close").finished
 
-# --- Inkshadow (the lead Spirling one step behind) ------------------------------------
-
-var _inkshadow: Sprite2D
-
-func _place_inkshadow(prev_cell: Vector2i, cell: Vector2i) -> void:
-	if _inkshadow == null:
-		return
-	var lead: Spirling = Inkshadow.lead()
-	_inkshadow.visible = lead != null and map != null and map.outdoor
-	if not _inkshadow.visible:
-		return
-	_inkshadow.texture = MiniSprite.of(lead.data.species_name, GridWalker.TILE)
-	_inkshadow.position = GridWalker.cell_to_pos(Inkshadow.trail_cell(prev_cell, cell, player.facing))
+# --- Inkshadow (the lead Spirling's remarks; it no longer walks behind, owner wish 23.11.2026) --
 
 func _inkshadow_remark() -> void:
 	if not map.outdoor:

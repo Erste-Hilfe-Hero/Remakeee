@@ -36,7 +36,7 @@ Each tier has at least as many poses and frames as the one before
 - `art/eraN/spirlings/<id>_front.png`, `<id>_back.png`: the drawn sprites (not made here).
 - `art/eraN/spirling_icons/<id>.png`: menu icons of 14, 16 and 32 px side by side. Each icon pixel
   takes the most common colour of its block; a block that is mostly outline stays outline.
-  `MiniSprite.of()` uses them for these sizes (party rows, the Inkshadow, the summary page).
+  `MiniSprite.of()` uses them for these sizes (party rows, the summary page).
 - `art/eraN/spirling_anim/<id>.png`: the pose sheet. Row 0 front, row 1 back, one cell per pose.
   A pose is a nearest-pixel remap of the sprite (stretch about the feet, lean forward, squash), so
   it only holds colours of its sprite: an Era I kind stays in four inks. An Era IV breath frame
