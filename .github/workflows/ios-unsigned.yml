@@ -98,8 +98,8 @@ jobs:
         continue-on-error: true
         run: |
           xcodebuild -project build/ios/Chimora.xcodeproj -scheme Chimora -configuration Release \
-            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath "$RUNNER_TEMP/sim" \
-            CODE_SIGNING_ALLOWED=NO build 2>&1 | grep -E "error|BUILD" | tail -30
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath "$RUNNER_TEMP/sim" ARCHS=x86_64 ONLY_ACTIVE_ARCH=NO EXCLUDED_ARCHS=arm64 \
+            CODE_SIGNING_ALLOWED=NO build 2>&1 | grep -E "error|BUILD|building for|Undefined" | grep -v "ignoring file" | tail -30
           APP=$(ls -d "$RUNNER_TEMP"/sim/Build/Products/*-iphonesimulator/*.app | head -1)
           test -d "$APP"
           DEV=$(xcrun simctl list devices available -j | python3 -c 'import json,sys;d=json.load(sys.stdin)["devices"];print([x["udid"] for k,v in d.items() if "iOS" in k for x in v if x["name"].startswith("iPhone")][-1])')
