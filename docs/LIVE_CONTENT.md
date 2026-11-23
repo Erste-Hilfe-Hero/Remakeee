@@ -19,7 +19,7 @@ Changes to shop offers, balance values, the type chart, events, texts and news r
   "latest": {"ios": "1.2.0", "android": "1.2.0"},
   "news": [
     {"date": "2026-11-20", "title": {"en": "Patch 1.2", "de": "Patch 1.2"},
-     "body": {"en": "...", "de": "..."}, "url": "https://discord.gg/e69SM39rKK"}
+     "body": {"en": "...", "de": "..."}, "url": "https://discord.gg/Ya2qyDpcaB"}
   ],
   "texts": {"en": {"key": "text"}, "de": {"key": "Text"}},
   "shop": {}, "balance": {}, "type_chart": {}, "events": []

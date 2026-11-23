@@ -1102,7 +1102,7 @@ static func _draw_party_row(b: Button, s: Spirling, leader: bool = false, ready:
 
 ## Settings -> Legal: imprint/privacy/terms links and the engine licence notice.
 ## The community server, opened from Settings > Legal on the title screen and in the pause menu.
-const DISCORD_URL: String = "https://discord.gg/e69SM39rKK"
+const DISCORD_URL: String = "https://discord.gg/Ya2qyDpcaB"
 ## Opens a link outside the game; tests replace it so no browser starts.
 static var open_url: Callable = func(url: String) -> void: OS.shell_open(url)
 

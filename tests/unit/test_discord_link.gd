@@ -13,7 +13,7 @@ func after_each() -> void:
 	MenuHost.open_url = _open
 
 func test_url_is_the_invite() -> void:
-	assert_eq(MenuHost.DISCORD_URL, "https://discord.gg/e69SM39rKK")
+	assert_eq(MenuHost.DISCORD_URL, "https://discord.gg/Ya2qyDpcaB")
 
 func test_legal_row_opens_discord() -> void:
 	var host := MenuHost.new()
