@@ -1,5 +1,5 @@
 extends SceneTree
-## Chimora 100 items 25-36, 45, 52, 54: the new start, screen by screen (privacy note, title,
+## Chimora 100 items 25-36, 45, 52, 54: the new start, screen by screen (terms step with the privacy note, title,
 ## difficulty, look, name, prologue, card, partner pick, the first free step, the echo call).
 ## Runs the real Title and Overworld scenes on the local test server, in a fresh user folder:
 ##   XDG_DATA_HOME=$(mktemp -d) xvfb-run -a godot --path . --rendering-driver opengl3 --resolution 440x956 \

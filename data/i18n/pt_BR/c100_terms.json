@@ -1,0 +1,12 @@
+{
+ "_comment": "Brazilian Portuguese texts for the German table c100_terms. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "Before you play": "Antes de jogar",
+  "I have read and accept the Terms of Use and the Privacy Policy.": "Li e aceito os Termos de Uso e a Política de Privacidade.",
+  "Read the Terms of Use": "Ler os Termos de Uso",
+  "Read the Privacy Policy": "Ler a Política de Privacidade",
+  "Ticked": "Marcado",
+  "Not ticked": "Desmarcado",
+  "Tick the box above to continue.": "Marque a caixa acima para continuar."
+ }
+}

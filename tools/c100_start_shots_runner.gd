@@ -18,6 +18,7 @@ func _run() -> void:
 	GameState.reduce_motion = true
 	Online.backend = LocalBackend.new("user://c100_shots_server.json")
 	Online.privacy_seen = false
+	GameState.terms_version = ""
 	GameState.language = ""
 	await _title()
 	await _prologue()
@@ -55,14 +56,14 @@ func _title() -> void:
 	var menu: MenuHost = title._menu
 	await _menu_open(menu, "Language / Sprache")
 	menu.picker.picked.emit(Loc.LANGUAGES.find(lang))
-	await _menu_open(menu, TitleScreen.PRIVACY_TITLE)
-	await _shot("01_privacy")
-	menu.picker.picked.emit(1)
-	await _until(func() -> bool: return menu._info_panel.visible)
-	await _shot("02_privacy_more")
-	menu._close_info()
-	await _menu_open(menu, TitleScreen.PRIVACY_TITLE)
-	menu.picker.picked.emit(0)
+	# The terms step carries the short privacy note (c100-terms).
+	await _menu_open(menu, TitleScreen.TERMS_TITLE)
+	await _shot("01_terms")
+	menu.picker.picked.emit(TitleScreen.TermsRow.ACCEPT)
+	await _frames(4)
+	await _menu_open(menu, TitleScreen.TERMS_TITLE)
+	await _shot("02_terms_ticked")
+	menu.picker.picked.emit(TitleScreen.TermsRow.GO)
 	await _menu_open(menu, "")
 	await _shot("03_title")
 	menu.picker.picked.emit(0)

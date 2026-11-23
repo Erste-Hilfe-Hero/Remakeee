@@ -1,0 +1,12 @@
+{
+ "_comment": "Russian texts for the German table c100_terms. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "Before you play": "Перед игрой",
+  "I have read and accept the Terms of Use and the Privacy Policy.": "Я прочитал(а) и принимаю Условия использования и Политику конфиденциальности.",
+  "Read the Terms of Use": "Открыть Условия использования",
+  "Read the Privacy Policy": "Открыть Политику конфиденциальности",
+  "Ticked": "Отмечено",
+  "Not ticked": "Не отмечено",
+  "Tick the box above to continue.": "Отметьте поле выше, чтобы продолжить."
+ }
+}
