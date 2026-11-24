@@ -102,7 +102,9 @@ jobs:
             CODE_SIGNING_ALLOWED=NO build 2>&1 | grep -E "error|BUILD|building for|Undefined" | grep -v "ignoring file" | tail -30
           APP=$(ls -d "$RUNNER_TEMP"/sim/Build/Products/*-iphonesimulator/*.app | head -1)
           test -d "$APP"
-          DEV=$(xcrun simctl list devices available -j | python3 -c 'import json,sys;d=json.load(sys.stdin)["devices"];print([x["udid"] for k,v in d.items() if "iOS" in k for x in v if x["name"].startswith("iPhone")][-1])')
+          # iPhone Duo first (foldable, two displays), else the newest iPhone.
+          DEV=$(xcrun simctl list devices available -j | python3 -c 'import json,sys;d=json.load(sys.stdin)["devices"];a=[x for k,v in d.items() if "iOS" in k for x in v if x["name"].startswith("iPhone")];duo=[x for x in a if "Duo" in x["name"]];print((duo or a)[-1]["udid"])')
+          xcrun simctl list devices available | grep -i "$DEV"
           xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
           xcrun simctl install "$DEV" "$APP"
           BID=$(plutil -extract CFBundleIdentifier raw "$APP/Info.plist")
@@ -111,6 +113,7 @@ jobs:
           for t in 15 35 60; do
             sleep $((t - ${prev:-0})); prev=$t
             xcrun simctl io "$DEV" screenshot "$RUNNER_TEMP/simshots/sim_${t}s.png"
+            for n in 0 1 2; do xcrun simctl io "$DEV" screenshot --display=$n "$RUNNER_TEMP/simshots/sim_${t}s_display$n.png" 2>/dev/null || true; done
           done
           xcrun simctl spawn "$DEV" launchctl list | grep -i "$BID" && echo "SIM: app still running after 60 s" || echo "::error::SIM: app not running after 60 s"
           xcrun simctl spawn "$DEV" log show --last 2m --predicate "process CONTAINS[c] 'Chimora'" 2>/dev/null | tail -60 > "$RUNNER_TEMP/simshots/log.txt" || true
