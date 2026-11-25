@@ -15,6 +15,8 @@ const FLAG: String = "crash_report"
 ## Server function (/rest/v1/rpc/crash_report) that takes p_version, p_platform, p_scene.
 const FN: String = "crash_report"
 const MAX_LEN: int = 40
+## Shown with the privacy note in Settings, Account.
+const PRIVACY_LINE: String = "If the game ended unexpectedly, it sends one short anonymous crash report next time: only the game version, the device system and the last scene, never your account."
 
 static var mark_path: String = MARK_PATH
 static var pending_path: String = PENDING_PATH

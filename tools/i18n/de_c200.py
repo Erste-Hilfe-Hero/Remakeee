@@ -85,5 +85,6 @@ T = {
 "Kasimir": "Kasimir",
 "Lumi": "Lumi",
 "Oren": "Oren",
+"If the game ended unexpectedly, it sends one short anonymous crash report next time: only the game version, the device system and the last scene, never your account.": "Endet das Spiel unerwartet, schickt es beim nächsten Mal einen kurzen anonymen Absturzbericht: nur Spielversion, Gerätesystem und letzte Szene, nie dein Konto.",
 "Nia": "Nia",
 }
