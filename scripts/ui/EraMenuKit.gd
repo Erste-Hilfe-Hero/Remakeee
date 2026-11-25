@@ -202,7 +202,8 @@ class ClockStrip extends HBoxContainer:
 		label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 		label.add_theme_color_override("font_color", UITheme.MID)
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		label.clip_text = true
+		# Wraps instead of cutting "Mittwoch 05:40  Morgen" on the 144 px screen (1.3.1).
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		add_child(label)
 		refresh()
 
@@ -299,7 +300,7 @@ static func pocket_header(pocket: int, pocket_name: String, count: int, lay: Dic
 	label.text = "%s%s%s" % [Loc.t(pocket_name), "\n" if art else "  ", Loc.t("%d kinds") % count]
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	label.clip_text = true
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	row.add_child(label)
 	return row
 

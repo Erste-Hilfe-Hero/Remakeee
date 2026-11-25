@@ -363,10 +363,9 @@ func _run() -> void:
 		for it: String in items:
 			entries.append({"text": it})
 		if latest > 0:
-			# The Continue row carries the badge of the save's era; a long place name ends in
-			# an ellipsis instead of being cut (Chimora 100 item 54).
+			# The Continue row carries the badge of the save's era; a long place name wraps onto
+			# a second line (1.3.1; it ended in "..." before).
 			entries[0]["icon"] = EraSaveCard.badge(maxi(EraMoments.slot_era(latest), 1))
-			entries[0]["ellipsis"] = true
 		var idx: int = await _menu.pick("", entries, false)
 		_at_root = false
 		if idx == QUIT_ASKED:

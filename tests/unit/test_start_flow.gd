@@ -282,18 +282,24 @@ func test_new_texts_are_translated() -> void:
 		for t: String in texts:
 			assert_ne(Loc.t(t), t, "%s: %s" % [lang, t])
 
-# --- Item 54: Continue row ends in an ellipsis; version under the list -----------------------
+# --- Item 54 / 1.3.1: an "ellipsis" row still ends in "...", every other long row wraps ------
 
-func test_continue_row_ends_in_an_ellipsis() -> void:
+func test_continue_row_wraps_and_ellipsis_rows_stay_one_line() -> void:
 	var host := MenuHost.new()
 	add_child_autofree(host)
 	await wait_frames(1)
-	var run := func() -> void: await host.pick("", [{"text": "Continue  Brindlewick Lighthouse", "ellipsis": true}, {"text": "New Game"}] as Array[Dictionary], false)
+	var run := func() -> void: await host.pick("", [{"text": "Continue  Brindlewick Lighthouse", "ellipsis": true}, {"text": "Continue  Brindlewick Lighthouse"}] as Array[Dictionary], false)
 	run.call()
 	await wait_frames(2)
-	assert_eq(host.picker._buttons[0].text_overrun_behavior, TextServer.OVERRUN_TRIM_ELLIPSIS)
-	assert_eq(host.picker._buttons[1].text_overrun_behavior, TextServer.OVERRUN_NO_TRIMMING)
-	assert_string_contains(FileAccess.get_file_as_string("res://scripts/ui/TitleScreen.gd"), "entries[0][\"ellipsis\"] = true")
+	var cut: Button = host.picker._buttons[0]
+	var wrapped: Button = host.picker._buttons[1]
+	assert_eq(cut.text_overrun_behavior, TextServer.OVERRUN_TRIM_ELLIPSIS)
+	assert_true(cut.clip_text)
+	assert_eq(wrapped.text_overrun_behavior, TextServer.OVERRUN_NO_TRIMMING)
+	assert_false(wrapped.clip_text, "a long row is never cut")
+	assert_eq(wrapped.autowrap_mode, TextServer.AUTOWRAP_WORD_SMART)
+	assert_false(FileAccess.get_file_as_string("res://scripts/ui/TitleScreen.gd").contains("entries[0][\"ellipsis\"] = true"),
+		"the Continue row shows the whole place name")
 	host.picker.picked.emit(-1)
 	await wait_frames(1)
 
