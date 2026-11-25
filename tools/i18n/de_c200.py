@@ -1,0 +1,21 @@
+# German texts for the Chimora 200 list (Ali, 2026-11-25), shipped with 1.3.1.
+T = {
+"Tip: %s arts hit %s hard.": "Tipp: %s-Künste treffen %s hart.",
+"Tip: %s and %s arts hit %s hard.": "Tipp: %s- und %s-Künste treffen %s hart.",
+"Cinder Flurry": "Funkenwirbel",
+"Ripple Jab": "Wellenstoß",
+"Burr Volley": "Kletten-Salve",
+"Static Patter": "Knistertrommeln",
+"Gust Flicks": "Windschnipser",
+"Glint Volley": "Glanzsalve",
+"Shadow Pecks": "Schattenpicker",
+"Knuckle Patter": "Knöchelhagel",
+"A spray of sparks: two to four small burns.": "Ein Funkenregen: zwei bis vier kleine Brandtreffer.",
+"Quick jabs that ride the ripples: two to four hits.": "Schnelle Stöße auf den Wellen: zwei bis vier Treffer.",
+"A volley of sticky burrs: two to four hits.": "Eine Salve klebriger Kletten: zwei bis vier Treffer.",
+"Little crackles in a row: two to four hits.": "Kleines Knistern in Folge: zwei bis vier Treffer.",
+"Sharp flicks of wind: two to four hits.": "Scharfe Windschnipser: zwei bis vier Treffer.",
+"Light glints off it again and again: two to four hits.": "Licht blitzt immer wieder auf: zwei bis vier Treffer.",
+"Pecks from where the light does not reach: two to four hits.": "Picker von dort, wo kein Licht hinkommt: zwei bis vier Treffer.",
+"Plain little blows with no element: two to four hits.": "Schlichte kleine Hiebe ohne Element: zwei bis vier Treffer.",
+}

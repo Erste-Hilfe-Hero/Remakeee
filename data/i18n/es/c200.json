@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table c200, written by tools/i18n/locales_c200.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "A spray of sparks: two to four small burns.": "Una lluvia de chispas: de dos a cuatro pequeñas quemaduras.",
+  "A volley of sticky burrs: two to four hits.": "Una andanada de abrojos pegajosos: de dos a cuatro golpes.",
+  "Burr Volley": "Andanada de Abrojos",
+  "Cinder Flurry": "Ráfaga de Chispas",
+  "Glint Volley": "Andanada de Destellos",
+  "Gust Flicks": "Chasquidos de Viento",
+  "Knuckle Patter": "Lluvia de Nudillos",
+  "Light glints off it again and again: two to four hits.": "La luz destella una y otra vez: de dos a cuatro golpes.",
+  "Little crackles in a row: two to four hits.": "Pequeños chasquidos seguidos: de dos a cuatro golpes.",
+  "Pecks from where the light does not reach: two to four hits.": "Picotazos desde donde no llega la luz: de dos a cuatro golpes.",
+  "Plain little blows with no element: two to four hits.": "Pequeños golpes simples sin elemento: de dos a cuatro golpes.",
+  "Quick jabs that ride the ripples: two to four hits.": "Golpes rápidos sobre las ondas: de dos a cuatro golpes.",
+  "Ripple Jab": "Golpes de Onda",
+  "Shadow Pecks": "Picotazos de Sombra",
+  "Sharp flicks of wind: two to four hits.": "Chasquidos de viento afilados: de dos a cuatro golpes.",
+  "Static Patter": "Repiqueteo Estático",
+  "Tip: %s and %s arts hit %s hard.": "Consejo: las artes %s y %s golpean fuerte a %s.",
+  "Tip: %s arts hit %s hard.": "Consejo: las artes %s golpean fuerte a %s."
+ }
+}

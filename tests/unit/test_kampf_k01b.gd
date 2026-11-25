@@ -162,7 +162,7 @@ func test_new_arts_read_on_the_card_and_can_be_taught() -> void:
 	for n: String in ["Long Breath", "Spark Share", "Charge Mirror", "Fuse Snap", "Scrap Swipe"]:
 		var mv: MoveData = Database.move(n)
 		assert_not_null(mv, n)
-		assert_eq(CommandMenu.move_info(mv).split("\n").size(), 4 + int(mv.priority > 0) + mv.effects.size(), n)
+		assert_eq(CommandMenu.move_info(mv).split("\n").size(), 4 + int(mv.priority > 0) + int(not mv.description.is_empty()) + mv.effects.size(), n)
 		assert_false(Database.item("echo_" + n.to_snake_case()).is_empty(), "%s has an Echo Crystal" % n)
 
 # --- Item 44: a free art at half strength ---

@@ -79,7 +79,8 @@ func test_info_card_has_a_line_per_effect_in_english_and_german() -> void:
 		Loc.set_language("en")
 		var en: PackedStringArray = CommandMenu.move_info(mv).split("\n")
 		var flags: int = int(mv.priority > 0) + int(mv.is_area()) + int(mv.overcharge) \
-			+ int(mv.cooldown > 0) + int(mv.ignore_daze) + int(mv.ignore_stages)
+			+ int(mv.cooldown > 0) + int(mv.ignore_daze) + int(mv.ignore_stages) \
+			+ int(not mv.description.is_empty())
 		assert_eq(en.size(), 4 + flags + mv.effects.size(), art + ":\n" + "\n".join(en))
 		Loc.set_language("de")
 		var de: PackedStringArray = CommandMenu.move_info(mv).split("\n")

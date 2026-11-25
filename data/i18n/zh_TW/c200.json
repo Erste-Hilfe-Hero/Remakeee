@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table c200, written by tools/i18n/locales_c200.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "A spray of sparks: two to four small burns.": "噴出一陣火星：二到四次小灼傷。",
+  "A volley of sticky burrs: two to four hits.": "連射黏人的蒼耳：命中二到四次。",
+  "Burr Volley": "蒼耳連射",
+  "Cinder Flurry": "火星亂舞",
+  "Glint Volley": "閃光連射",
+  "Gust Flicks": "疾風彈指",
+  "Knuckle Patter": "指節連打",
+  "Light glints off it again and again: two to four hits.": "光芒一次又一次閃爍：命中二到四次。",
+  "Little crackles in a row: two to four hits.": "一連串細小的噼啪聲：命中二到四次。",
+  "Pecks from where the light does not reach: two to four hits.": "從光照不到的地方啄擊：命中二到四次。",
+  "Plain little blows with no element: two to four hits.": "不帶屬性的小連擊：命中二到四次。",
+  "Quick jabs that ride the ripples: two to four hits.": "乘著漣漪的快速連刺：命中二到四次。",
+  "Ripple Jab": "漣漪連刺",
+  "Shadow Pecks": "暗影啄擊",
+  "Sharp flicks of wind: two to four hits.": "銳利的疾風彈指：命中二到四次。",
+  "Static Patter": "靜電連拍",
+  "Tip: %s and %s arts hit %s hard.": "提示：%s系和%s系招式對%s效果拔群。",
+  "Tip: %s arts hit %s hard.": "提示：%s系招式對%s效果拔群。"
+ }
+}

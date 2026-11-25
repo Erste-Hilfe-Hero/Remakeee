@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""Translations of the German table c200 (tools/i18n/de_c200.py) for the other 12 locales.
+Writes data/i18n/<code>/c200.json. Run: python3 tools/i18n/locales_c200.py
+Order per row: ja, fr, it, es, ko, zh_CN, zh_TW, pt_BR, ru, pl, tr, nl."""
+import json, os
+
+LANGS = ["ja", "fr", "it", "es", "ko", "zh_CN", "zh_TW", "pt_BR", "ru", "pl", "tr", "nl"]
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+R = {
+"Tip: %s arts hit %s hard.": ["ヒント: %sのわざは%sによく効く。", "Astuce : les arts %s frappent fort %s.", "Consiglio: le arti %s colpiscono forte %s.", "Consejo: las artes %s golpean fuerte a %s.", "팁: %s 기술은 %s에게 잘 통한다.", "提示：%s系招式对%s效果拔群。", "提示：%s系招式對%s效果拔群。", "Dica: artes %s atingem %s com força.", "Совет: искусства стихии %s сильно бьют по %s.", "Wskazówka: sztuki %s mocno trafiają %s.", "İpucu: %s sanatları %s üzerinde çok etkili.", "Tip: %s-kunsten raken %s hard."],
+"Tip: %s and %s arts hit %s hard.": ["ヒント: %sと%sのわざは%sによく効く。", "Astuce : les arts %s et %s frappent fort %s.", "Consiglio: le arti %s e %s colpiscono forte %s.", "Consejo: las artes %s y %s golpean fuerte a %s.", "팁: %s와 %s 기술은 %s에게 잘 통한다.", "提示：%s系和%s系招式对%s效果拔群。", "提示：%s系和%s系招式對%s效果拔群。", "Dica: artes %s e %s atingem %s com força.", "Совет: искусства стихий %s и %s сильно бьют по %s.", "Wskazówka: sztuki %s i %s mocno trafiają %s.", "İpucu: %s ve %s sanatları %s üzerinde çok etkili.", "Tip: %s- en %s-kunsten raken %s hard."],
+"Cinder Flurry": ["ひのこのうず", "Rafale de Braises", "Raffica di Faville", "Ráfaga de Chispas", "불티 회오리", "火星乱舞", "火星亂舞", "Rajada de Fagulhas", "Вихрь искр", "Wir Iskier", "Kıvılcım Sağanağı", "Vonkenvlaag"],
+"Ripple Jab": ["さざなみづき", "Coups de Vaguelette", "Colpi d'Increspatura", "Golpes de Onda", "잔물결 찌르기", "涟漪连刺", "漣漪連刺", "Golpes de Marola", "Рябь-удары", "Pchnięcia Fali", "Dalgacık Dürtüşü", "Rimpelstoten"],
+"Burr Volley": ["ひっつきのみだれうち", "Salve de Bardanes", "Raffica di Lappole", "Andanada de Abrojos", "도꼬마리 연사", "苍耳连射", "蒼耳連射", "Rajada de Carrapichos", "Залп репьёв", "Salwa Rzepów", "Pıtrak Yaylımı", "Klitensalvo"],
+"Static Patter": ["パチパチれんだ", "Crépitement Statique", "Crepitio Statico", "Repiqueteo Estático", "찌릿찌릿 연타", "静电连拍", "靜電連拍", "Estalidos Estáticos", "Треск разрядов", "Trzask Statyczny", "Statik Tıkırtı", "Statisch Geknetter"],
+"Gust Flicks": ["かぜのはじき", "Pichenettes de Vent", "Schiocchi di Vento", "Chasquidos de Viento", "바람 튕기기", "疾风弹指", "疾風彈指", "Petelecos de Vento", "Щелчки ветра", "Pstryczki Wiatru", "Rüzgâr Fiskeleri", "Windtikken"],
+"Glint Volley": ["きらめきれんしゃ", "Salve Scintillante", "Raffica Scintillante", "Andanada de Destellos", "반짝임 연사", "闪光连射", "閃光連射", "Rajada de Lampejos", "Залп бликов", "Salwa Błysków", "Pırıltı Yaylımı", "Glinstersalvo"],
+"Shadow Pecks": ["かげのついばみ", "Becquées d'Ombre", "Beccate d'Ombra", "Picotazos de Sombra", "그림자 쪼기", "暗影啄击", "暗影啄擊", "Bicadas Sombrias", "Теневые клевки", "Dziobnięcia Cienia", "Gölge Gagalaması", "Schaduwpikken"],
+"Knuckle Patter": ["げんこつれんだ", "Pluie de Phalanges", "Pioggia di Nocche", "Lluvia de Nudillos", "주먹 연타", "指节连打", "指節連打", "Chuva de Juntas", "Град тычков", "Grad Kuksów", "Yumruk Yağmuru", "Knokkelregen"],
+"A spray of sparks: two to four small burns.": ["火の粉をまき散らす。2回から4回の小さなやけど。", "Une pluie d'étincelles : deux à quatre petites brûlures.", "Una pioggia di faville: da due a quattro piccole bruciature.", "Una lluvia de chispas: de dos a cuatro pequeñas quemaduras.", "불티를 흩뿌린다. 작은 화상이 2번에서 4번.", "喷出一阵火星：二到四次小灼伤。", "噴出一陣火星：二到四次小灼傷。", "Uma chuva de fagulhas: de duas a quatro pequenas queimaduras.", "Россыпь искр: от двух до четырёх маленьких ожогов.", "Deszcz iskier: od dwóch do czterech małych oparzeń.", "Kıvılcım saçar: iki ila dört küçük yanık.", "Een regen van vonken: twee tot vier kleine brandwondjes."],
+"Quick jabs that ride the ripples: two to four hits.": ["さざなみに乗ったすばやい突き。2回から4回当たる。", "Des coups rapides portés par les vaguelettes : deux à quatre coups.", "Colpi rapidi sulle increspature: da due a quattro colpi.", "Golpes rápidos sobre las ondas: de dos a cuatro golpes.", "잔물결을 탄 빠른 찌르기. 2번에서 4번 맞힌다.", "乘着涟漪的快速连刺：命中二到四次。", "乘著漣漪的快速連刺：命中二到四次。", "Golpes rápidos que seguem as marolas: de dois a quatro golpes.", "Быстрые удары на волнах ряби: от двух до четырёх ударов.", "Szybkie pchnięcia niesione przez fale: od dwóch do czterech trafień.", "Dalgacıklara binen hızlı dürtüşler: iki ila dört vuruş.", "Snelle stoten op de rimpelingen: twee tot vier treffers."],
+"A volley of sticky burrs: two to four hits.": ["ひっつく実を次々と飛ばす。2回から4回当たる。", "Une salve de bardanes collantes : deux à quatre coups.", "Una raffica di lappole appiccicose: da due a quattro colpi.", "Una andanada de abrojos pegajosos: de dos a cuatro golpes.", "들러붙는 도꼬마리를 연달아 쏜다. 2번에서 4번 맞힌다.", "连射黏人的苍耳：命中二到四次。", "連射黏人的蒼耳：命中二到四次。", "Uma rajada de carrapichos grudentos: de dois a quatro golpes.", "Залп цепких репьёв: от двух до четырёх ударов.", "Salwa lepkich rzepów: od dwóch do czterech trafień.", "Yapışkan pıtrak yaylımı: iki ila dört vuruş.", "Een salvo plakkerige klitten: twee tot vier treffers."],
+"Little crackles in a row: two to four hits.": ["小さなパチパチが続く。2回から4回当たる。", "De petits crépitements en série : deux à quatre coups.", "Piccoli crepitii in fila: da due a quattro colpi.", "Pequeños chasquidos seguidos: de dos a cuatro golpes.", "작은 찌릿함이 이어진다. 2번에서 4번 맞힌다.", "一连串细小的噼啪声：命中二到四次。", "一連串細小的噼啪聲：命中二到四次。", "Pequenos estalos seguidos: de dois a quatro golpes.", "Мелкий треск подряд: от двух до четырёх ударов.", "Drobne trzaski jeden po drugim: od dwóch do czterech trafień.", "Art arda küçük çıtırtılar: iki ila dört vuruş.", "Kleine knetters achter elkaar: twee tot vier treffers."],
+"Sharp flicks of wind: two to four hits.": ["するどい風のはじき。2回から4回当たる。", "De vives pichenettes de vent : deux à quatre coups.", "Schiocchi di vento taglienti: da due a quattro colpi.", "Chasquidos de viento afilados: de dos a cuatro golpes.", "날카로운 바람 튕기기. 2번에서 4번 맞힌다.", "锐利的疾风弹指：命中二到四次。", "銳利的疾風彈指：命中二到四次。", "Petelecos de vento afiados: de dois a quatro golpes.", "Резкие щелчки ветра: от двух до четырёх ударов.", "Ostre pstryczki wiatru: od dwóch do czterech trafień.", "Keskin rüzgâr fiskeleri: iki ila dört vuruş.", "Scherpe windtikken: twee tot vier treffers."],
+"Light glints off it again and again: two to four hits.": ["光が何度もきらめく。2回から4回当たる。", "La lumière scintille encore et encore : deux à quatre coups.", "La luce scintilla ancora e ancora: da due a quattro colpi.", "La luz destella una y otra vez: de dos a cuatro golpes.", "빛이 몇 번이고 반짝인다. 2번에서 4번 맞힌다.", "光芒一次又一次闪烁：命中二到四次。", "光芒一次又一次閃爍：命中二到四次。", "A luz lampeja de novo e de novo: de dois a quatro golpes.", "Свет бликует снова и снова: от двух до четырёх ударов.", "Światło błyska raz po raz: od dwóch do czterech trafień.", "Işık tekrar tekrar parlar: iki ila dört vuruş.", "Het licht glinstert keer op keer: twee tot vier treffers."],
+"Pecks from where the light does not reach: two to four hits.": ["光の届かない所からついばむ。2回から4回当たる。", "Des becquées venues de là où la lumière n'arrive pas : deux à quatre coups.", "Beccate da dove la luce non arriva: da due a quattro colpi.", "Picotazos desde donde no llega la luz: de dos a cuatro golpes.", "빛이 닿지 않는 곳에서 쪼아 댄다. 2번에서 4번 맞힌다.", "从光照不到的地方啄击：命中二到四次。", "從光照不到的地方啄擊：命中二到四次。", "Bicadas de onde a luz não chega: de dois a quatro golpes.", "Клевки оттуда, куда не достаёт свет: от двух до четырёх ударов.", "Dziobnięcia stamtąd, gdzie nie sięga światło: od dwóch do czterech trafień.", "Işığın ulaşmadığı yerden gagalamalar: iki ila dört vuruş.", "Pikken van waar het licht niet komt: twee tot vier treffers."],
+"Plain little blows with no element: two to four hits.": ["属性のない小さな連打。2回から4回当たる。", "De petits coups simples sans élément : deux à quatre coups.", "Piccoli colpi semplici senza elemento: da due a quattro colpi.", "Pequeños golpes simples sin elemento: de dos a cuatro golpes.", "속성 없는 작은 연타. 2번에서 4번 맞힌다.", "不带属性的小连击：命中二到四次。", "不帶屬性的小連擊：命中二到四次。", "Pequenos golpes simples sem elemento: de dois a quatro golpes.", "Простые мелкие удары без стихии: от двух до четырёх ударов.", "Proste drobne ciosy bez żywiołu: od dwóch do czterech trafień.", "Elementsiz küçük sade darbeler: iki ila dört vuruş.", "Eenvoudige kleine klappen zonder element: twee tot vier treffers."],
+}
+
+
+def main():
+    for i, code in enumerate(LANGS):
+        strings = {k: v[i] for k, v in sorted(R.items())}
+        data = {"_comment": "Translations of the German table c200, written by tools/i18n/locales_c200.py. "
+                "Keys are the English text; keys with %s or %d are patterns.", "strings": strings}
+        path = os.path.join(ROOT, "data/i18n", code, "c200.json")
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(json.dumps(data, ensure_ascii=False, indent=1) + "\n")
+    print("c200: %d strings x %d locales" % (len(R), len(LANGS)))
+
+
+if __name__ == "__main__":
+    main()

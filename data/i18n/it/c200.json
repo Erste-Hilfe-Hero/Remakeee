@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table c200, written by tools/i18n/locales_c200.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "A spray of sparks: two to four small burns.": "Una pioggia di faville: da due a quattro piccole bruciature.",
+  "A volley of sticky burrs: two to four hits.": "Una raffica di lappole appiccicose: da due a quattro colpi.",
+  "Burr Volley": "Raffica di Lappole",
+  "Cinder Flurry": "Raffica di Faville",
+  "Glint Volley": "Raffica Scintillante",
+  "Gust Flicks": "Schiocchi di Vento",
+  "Knuckle Patter": "Pioggia di Nocche",
+  "Light glints off it again and again: two to four hits.": "La luce scintilla ancora e ancora: da due a quattro colpi.",
+  "Little crackles in a row: two to four hits.": "Piccoli crepitii in fila: da due a quattro colpi.",
+  "Pecks from where the light does not reach: two to four hits.": "Beccate da dove la luce non arriva: da due a quattro colpi.",
+  "Plain little blows with no element: two to four hits.": "Piccoli colpi semplici senza elemento: da due a quattro colpi.",
+  "Quick jabs that ride the ripples: two to four hits.": "Colpi rapidi sulle increspature: da due a quattro colpi.",
+  "Ripple Jab": "Colpi d'Increspatura",
+  "Shadow Pecks": "Beccate d'Ombra",
+  "Sharp flicks of wind: two to four hits.": "Schiocchi di vento taglienti: da due a quattro colpi.",
+  "Static Patter": "Crepitio Statico",
+  "Tip: %s and %s arts hit %s hard.": "Consiglio: le arti %s e %s colpiscono forte %s.",
+  "Tip: %s arts hit %s hard.": "Consiglio: le arti %s colpiscono forte %s."
+ }
+}
