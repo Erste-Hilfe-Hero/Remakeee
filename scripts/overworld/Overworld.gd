@@ -2334,6 +2334,8 @@ func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
 			break
 	menu.queue_free()
 	Sound.sfx("level_up")
+	# The partner greets the player with its own call (200 list item 4).
+	Sound.cry(Database.species(GameState.starter))
 	await say([STARTER_STAY_LINE % GameState.starter] as Array[String])
 
 ## Mirela's map book has 14 pages: 1-6 in Veydal (Act I), 7-10 in Corvane, 11-14 in Ashmere.
