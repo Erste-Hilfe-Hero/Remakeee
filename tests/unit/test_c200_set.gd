@@ -165,7 +165,7 @@ func test_no_birthday_without_start_day() -> void:
 func test_starter_pack_once_and_first_seven_days() -> void:
 	var o: Dictionary = ShopCatalog.offer("rg_starter")
 	assert_eq(int(o.limit.n), 1, "once per account")
-	assert_eq(int(o.save_days), 7)
+	assert_eq(ShopCatalog.save_days(o), 7)
 	assert_eq(int(o.eur_cents), 299, "price unchanged")
 	assert_eq(str(o.product_id), "de.chimora.game.consumable.starter")
 	GameState.start_day = 500

@@ -1270,7 +1270,6 @@
    "eur_cents": 299,
    "store_type": "consumable",
    "product_id": "de.chimora.game.consumable.starter",
-   "save_days": 7,
    "grants": [
     {
      "t": "rg",
