@@ -221,6 +221,7 @@ func _build() -> void:
 	player.body_color = Color("3a5a9a")
 	player.sprite_style = "tamer"
 	player.can_move = _can_enter
+	player.can_probe = _can_probe
 	player.stepped.connect(_on_player_stepped)
 	player.step_started.connect(_on_player_step_started)
 	player.bob = true
@@ -591,6 +592,19 @@ func _can_enter(cell: Vector2i) -> bool:
 		_gear_hint.call_deferred(gear)
 		return false
 	return true
+
+## Like _can_enter but without pushing, sounds or hints, and no for anything unsure
+## (boulders, gear tiles without the gear). Picks diagonal steps (200 list item 30).
+func _can_probe(cell: Vector2i) -> bool:
+	if busy or map == null or not map.in_bounds(cell) or npc_at(cell) != null or map.char_at(cell) == "B":
+		return false
+	var k: int = map.kind_at(cell)
+	if TilesetFactory.GEAR_KINDS.has(k):
+		return GameState.has_gear(str(TilesetFactory.GEAR_KINDS[k]))
+	if not map.is_walkable(cell):
+		return false
+	var gear: String = map.gear_needed_at(cell)
+	return gear.is_empty() or GameState.has_gear(gear)
 
 var _hinted_cell: Vector2i = Vector2i(-1, -1)
 

@@ -27,6 +27,57 @@ func after_each() -> void:
 func _open(_d: String) -> bool:
 	return true
 
+# Item 30: picking the direction for held buttons.
+
+func test_single_direction_is_kept() -> void:
+	assert_eq(Player.pick_direction(["left"] as Array[String], "down", _open), "left")
+	assert_eq(Player.pick_direction([] as Array[String], "down", _open), "")
+
+func test_diagonal_alternates_axes() -> void:
+	var held: Array[String] = ["up", "right"]
+	assert_eq(Player.pick_direction(held, "down", _open), "up", "from standing, vertical first")
+	assert_eq(Player.pick_direction(held, "up", _open), "right")
+	assert_eq(Player.pick_direction(held, "right", _open), "up")
+
+func test_diagonal_slides_along_a_wall() -> void:
+	var held: Array[String] = ["up", "right"]
+	var no_up: Callable = func(d: String) -> bool: return d != "up"
+	assert_eq(Player.pick_direction(held, "right", no_up), "right", "blocked up gives way to right")
+	var none: Callable = func(_d: String) -> bool: return false
+	assert_eq(Player.pick_direction(held, "right", none), "up", "both blocked: turns toward the first")
+
+func test_walking_round_a_corner_has_no_turn_pause() -> void:
+	var p := Player.new()
+	autofree(p)
+	p.place(Vector2i(5, 5), "right")
+	p._walking = true
+	Input.action_press("ui_up")
+	p._process(0.0)
+	assert_true(p.moving, "steps on at once")
+	assert_eq(p.facing, "up")
+	assert_eq(p.cell, Vector2i(5, 4))
+
+func test_standing_turn_still_waits() -> void:
+	var p := Player.new()
+	autofree(p)
+	p.place(Vector2i(5, 5), "right")
+	Input.action_press("ui_up")
+	p._process(0.0)
+	assert_false(p.moving, "a tap from standing only turns")
+	assert_eq(p.facing, "up")
+	assert_almost_eq(p._turn_timer, Player.TURN_GRACE, 0.001)
+
+func test_corner_into_a_wall_turns_and_waits() -> void:
+	var p := Player.new()
+	autofree(p)
+	p.place(Vector2i(5, 5), "right")
+	p.can_probe = func(c: Vector2i) -> bool: return c != Vector2i(5, 4)
+	p._walking = true
+	Input.action_press("ui_up")
+	p._process(0.0)
+	assert_false(p.moving)
+	assert_eq(p.facing, "up")
+
 # Item 27: door glow.
 
 func test_glow_strength_by_distance() -> void:
