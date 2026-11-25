@@ -1,7 +1,10 @@
 Chimora 1.3.1
 
-- Składane telefony i tablety: gra wypełnia teraz cały ekran w poziomie, bez czarnych pasów.
-- Rozmowy na mapie znów wyglądają jak przed wersją 1.3.0.
-- Era I: koniec ze wzorem deszczu i mgły na mapie. Pogoda jest teraz wyłączona dla wszystkich, możesz ją włączyć w Ustawieniach.
-- Długie teksty w menu nie są już ucinane. Przechodzą do drugiej linii.
-- Drobne poprawki.
+- 7 nowych darów dla twoich Spirlingów oraz nowe sztuki, które trafiają kilka razy albo wpuszczają towarzysza.
+- "Który do ciebie pasuje?" pomaga wybrać partnera, a przycisk Pomysł podsuwa imiona.
+- Mapa świata: gdzie byłeś ostatnio, droga do najbliższego miejsca odpoczynku i gwiazdka tam, gdzie zawarłeś więź z każdym gatunkiem.
+- Historia rozmów, tryb nocny i "Przywróć domyślne" na każdej stronie ustawień.
+- Bonus weekendowy: podwójne doświadczenie w sobotę i niedzielę.
+- Teraz także na iPadzie, i lepiej na tabletach i składanych telefonach.
+- Długie teksty w menu zawijają się zamiast być ucinane.
+- Wiele drobnych poprawek.

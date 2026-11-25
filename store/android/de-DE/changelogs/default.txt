@@ -1,7 +1,7 @@
 Chimora 1.3.1
 
-- Falt-Handys und Tablets: Das Spiel füllt quer jetzt den ganzen Bildschirm, ohne schwarze Ränder.
-- Gespräche auf der Karte sehen wieder aus wie vor 1.3.0.
-- Ära I: kein Regen- und Nebelmuster mehr über der Karte. Das Wetter ist jetzt für alle aus, du kannst es in den Einstellungen einschalten.
-- Lange Menütexte werden nicht mehr abgeschnitten. Sie brechen in eine zweite Zeile um.
-- Kleine Korrekturen.
+- 7 neue Gaben für deine Spirlings und neue Künste, die mehrmals treffen oder einen Gefährten eintreten lassen.
+- "Wer passt zu dir?" hilft bei der Partnerwahl, und ein Ideen-Knopf schlägt Namen vor.
+- Wochenend-Bonus: doppelte Erfahrung am Samstag und Sonntag.
+- Läuft auf mehr Geräten, auch auf Chromebooks, und besser auf Tablets und Falt-Handys.
+- Viele kleine Korrekturen.

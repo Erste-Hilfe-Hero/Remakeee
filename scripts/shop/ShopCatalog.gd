@@ -79,9 +79,26 @@ static func by_product(product_id: String) -> Dictionary:
 static func in_tab(tab: String, include_unready: bool = false) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for o: Dictionary in offers():
-		if str(o.get("tab", "")) == tab and (include_unready or bool(o.get("ready", false))):
+		if str(o.get("tab", "")) == tab and (include_unready or bool(o.get("ready", false))) and in_save_window(o):
 			out.append(o)
 	return out
+
+## Offers that show only in the first days of a journey (200 list item 180), by offer id. Kept in
+## the client, not in data/shop.json, because the server catalog does not know a save's start day.
+const SAVE_DAYS: Dictionary = {"rg_starter": 7}
+
+## True while [param o] may show: offers in [constant SAVE_DAYS] only in that many first days of the
+## journey (GameState.start_day), checked on [param day] (today when -1). No days left are ever shown
+## (no countdown). Without a journey running the offer stays.
+static func save_days(o: Dictionary) -> int:
+	return int(SAVE_DAYS.get(str(o.get("id", "")), 0))
+
+static func in_save_window(o: Dictionary, day: int = -1) -> bool:
+	var days: int = save_days(o)
+	if days <= 0 or GameState.start_day <= 0:
+		return true
+	var d: int = GameState.today() if day < 0 else day
+	return d - GameState.start_day < days
 
 static func is_advantage(o: Dictionary) -> bool:
 	return str(o.get("kind", "")) == "advantage"

@@ -18,6 +18,9 @@ func step(dir: String, run: bool = false) -> void:
 const TURN_GRACE: float = 0.08
 
 var can_move: Callable = func(_c: Vector2i) -> bool: return true
+## Quiet walkability check without side effects (no push, no sound, no hint), used to pick the
+## next direction when walking diagonally or round a corner (200 list item 30).
+var can_probe: Callable = func(_c: Vector2i) -> bool: return true
 var frozen: bool = false
 var _turn_timer: float = 0.0
 ## Cells still to walk (tap-to-move), and the cell to interact with on arrival (or NO_TARGET).
@@ -72,6 +75,7 @@ func _process(delta: float) -> void:
 		cancel_path()
 		return
 	if moving:
+		_walking = true
 		return
 	var dir: String = _held_direction()
 	if not dir.is_empty():
@@ -82,8 +86,13 @@ func _process(delta: float) -> void:
 	if dir.is_empty():
 		_turn_timer = 0.0
 		_bumped = NO_TARGET
+		_walking = false
 		return
-	if dir != facing:
+	# Walking on round a corner or diagonally needs no turn in place (200 list item 30).
+	if _walking and dir != facing and can_probe.call(cell + DIRS[dir]):
+		_turn_timer = 0.0
+	elif dir != facing:
+		_walking = false
 		face(dir)
 		_turn_timer = TURN_GRACE
 		return
@@ -95,6 +104,7 @@ func _process(delta: float) -> void:
 		manual_steps += 1
 		step(dir, Input.is_action_pressed("ui_cancel") != GameState.always_run)
 	else:
+		_walking = false
 		bump(dir)
 
 ## Length of the wall jolt.
@@ -142,11 +152,34 @@ func _follow_step() -> void:
 ## Long tap-to-move paths run instead of walk.
 const RUN_AFTER: int = 6
 
+## True right after a step while a direction is still held, so the next step starts at once.
+var _walking: bool = false
+
 func _held_direction() -> String:
+	var held: Array[String] = []
 	for dir: String in ["up", "down", "left", "right"]:
 		if Input.is_action_pressed("ui_" + dir):
-			return dir
-	return ""
+			held.append(dir)
+	return pick_direction(held, facing, func(d: String) -> bool: return can_probe.call(cell + DIRS[d]))
+
+## Direction to walk with [param held] pressed (200 list item 30). Two crossing directions walk
+## a diagonal staircase: the one not walked last comes first, and a blocked one gives way to
+## the other, so the Wayfarer slides along walls instead of stopping.
+static func pick_direction(held: Array[String], last: String, open: Callable) -> String:
+	var vertical: String = ""
+	var horizontal: String = ""
+	for d: String in held:
+		if d in ["up", "down"] and vertical.is_empty():
+			vertical = d
+		elif d in ["left", "right"] and horizontal.is_empty():
+			horizontal = d
+	if vertical.is_empty() or horizontal.is_empty():
+		return horizontal if vertical.is_empty() else vertical
+	var first: String = horizontal if last == vertical else vertical
+	var second: String = vertical if first == horizontal else horizontal
+	if open.call(first) or not open.call(second):
+		return first
+	return second
 
 func _unhandled_input(event: InputEvent) -> void:
 	if frozen or moving:

@@ -35,7 +35,7 @@ Signing uses Godot's `GODOT_ANDROID_KEYSTORE_RELEASE_*` environment variables, s
 `export_presets.cfg`. The release job sets **no** `GODOT_ANDROID_KEYSTORE_DEBUG_*` variables, because setting
 only some of them breaks the export (Godot issue #109551).
 
-Preset values: target SDK 36, min SDK 24, arm64-v8a only, Gradle build, AAB. The Gradle build template is
+Preset values: target SDK 36, min SDK 24, arm64-v8a, armeabi-v7a and x86_64 (Chromebooks), Gradle build, AAB. The Gradle build template is
 installed fresh in CI by `tools/ci_setup_android.sh` (the `android/` folder is gitignored). To build locally,
 use Project → Install Android Build Template in the editor.
 
@@ -65,7 +65,7 @@ in `export_presets.cfg`, then push a tag such as `v0.1.0`.
 
 ## APK size budget
 
-CI fails the Android debug job when the APK is larger than 96 MB (raised from 94 MB on 12 Nov 2026 on purpose for content growth from Acts I-IV and Era III: the base APK reached 92.2 MB, and no large unused PNG or OGG was found to trim - the full place-music mixes are already left out of the Android presets; 94 MB was raised from 92 MB on 12 Nov 2026 for the 70-Spirlings-per-act lines: front and back sprites of about 230 new kinds; 92 MB was raised from 88 MB on 7 Nov 2026 for the 12 new languages: their text tables and the CJK pixel fonts add about 2-3 MB) (`tools/apk_budget.sh`). The job summary shows the size and the biggest files in the package. If the budget is hit, first look for large textures or audio that slipped in. Raise the number in `.github/workflows/export.yml` only on purpose, for example when a new era adds art.
+CI fails the Android debug job when the APK is larger than 136 MB (raised from 96 MB on 25 Nov 2026 on purpose for device reach in 1.3.1, Chimora 200 list: the debug APK now carries three CPU libraries (arm64-v8a, armeabi-v7a for older 32-bit phones, x86_64 for Chromebooks), about 18 MB each; the game data did not grow and Google Play still delivers one CPU library per device from the app bundle; 96 MB was raised from 94 MB on 12 Nov 2026 on purpose for content growth from Acts I-IV and Era III: the base APK reached 92.2 MB, and no large unused PNG or OGG was found to trim - the full place-music mixes are already left out of the Android presets; 94 MB was raised from 92 MB on 12 Nov 2026 for the 70-Spirlings-per-act lines: front and back sprites of about 230 new kinds; 92 MB was raised from 88 MB on 7 Nov 2026 for the 12 new languages: their text tables and the CJK pixel fonts add about 2-3 MB) (`tools/apk_budget.sh`). The job summary shows the size and the biggest files in the package. If the budget is hit, first look for large textures or audio that slipped in. Raise the number in `.github/workflows/export.yml` only on purpose, for example when a new era adds art.
 
 Raised from 80 to 88 MB for the layered place music (plan area 6, items 2475 to 2479): every place song ships as four stems. Phones and tablets play the stems, so the Android and iOS presets leave out the eleven full mixes of the place songs; the web build plays the full mixes and leaves out `audio/music/stems/` (web audio plays samples, which AudioStreamSynchronized does not use).
 

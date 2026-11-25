@@ -2887,5 +2887,11 @@
  {"id": "echo_gust_flicks", "name": "Echo Crystal: Gust Flicks", "description": "Teaches Gust Flicks to a Gale Spirling. Never used up.", "battle": false, "teaches": "Gust Flicks", "price": 3000, "tradeable": false},
  {"id": "echo_glint_volley", "name": "Echo Crystal: Glint Volley", "description": "Teaches Glint Volley to a Lumen Spirling. Never used up.", "battle": false, "teaches": "Glint Volley", "price": 3000, "tradeable": false},
  {"id": "echo_shadow_pecks", "name": "Echo Crystal: Shadow Pecks", "description": "Teaches Shadow Pecks to an Umbra Spirling. Never used up.", "battle": false, "teaches": "Shadow Pecks", "price": 3000, "tradeable": false},
- {"id": "echo_knuckle_patter", "name": "Echo Crystal: Knuckle Patter", "description": "Teaches Knuckle Patter to any Spirling. Never used up.", "battle": false, "teaches": "Knuckle Patter", "price": 3000, "tradeable": false, "any_element": true}
+ {"id": "echo_knuckle_patter", "name": "Echo Crystal: Knuckle Patter", "description": "Teaches Knuckle Patter to any Spirling. Never used up.", "battle": false, "teaches": "Knuckle Patter", "price": 3000, "tradeable": false, "any_element": true},
+ {"id": "echo_ember_feint", "name": "Echo Crystal: Ember Feint", "description": "Teaches Ember Feint to an Ember Spirling. Never used up.", "battle": false, "teaches": "Ember Feint", "price": 3000, "tradeable": false},
+ {"id": "echo_ebb_strike", "name": "Echo Crystal: Ebb Strike", "description": "Teaches Ebb Strike to a Tide Spirling. Never used up.", "battle": false, "teaches": "Ebb Strike", "price": 3000, "tradeable": false},
+ {"id": "echo_petal_dodge", "name": "Echo Crystal: Petal Dodge", "description": "Teaches Petal Dodge to a Bloom Spirling. Never used up.", "battle": false, "teaches": "Petal Dodge", "price": 3000, "tradeable": false},
+ {"id": "echo_spark_and_dash", "name": "Echo Crystal: Spark and Dash", "description": "Teaches Spark and Dash to a Volt Spirling. Never used up.", "battle": false, "teaches": "Spark and Dash", "price": 3000, "tradeable": false},
+ {"id": "echo_gust_retreat", "name": "Echo Crystal: Gust Retreat", "description": "Teaches Gust Retreat to a Gale Spirling. Never used up.", "battle": false, "teaches": "Gust Retreat", "price": 3000, "tradeable": false},
+ {"id": "echo_fade_swipe", "name": "Echo Crystal: Fade Swipe", "description": "Teaches Fade Swipe to an Umbra Spirling. Never used up.", "battle": false, "teaches": "Fade Swipe", "price": 3000, "tradeable": false}
 ]

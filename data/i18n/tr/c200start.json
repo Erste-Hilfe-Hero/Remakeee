@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table c200start, written by tools/i18n/locales_c200start.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s might suit you. But choose whoever you like!": "%s sana uygun olabilir. Ama istediğini seç!",
+  "A free afternoon. You...": "Boş bir öğleden sonra. Sen...",
+  "Two short questions. You still choose freely.": "İki kısa soru. Yine de özgürce seçersin.",
+  "Which one suits you?": "Hangisi sana uygun?",
+  "Your partner should be...": "Ortağın şöyle olmalı...",
+  "calm and bright": "sakin ve parlak",
+  "explore a dark cave": "karanlık bir mağarayı keşfedersin",
+  "loyal and warm": "sadık ve sıcak",
+  "quick and lively": "hızlı ve hareketli",
+  "race to the lake": "göle kadar yarışırsın",
+  "sit by a warm fire": "sıcak bir ateşin yanında oturursun"
+ }
+}

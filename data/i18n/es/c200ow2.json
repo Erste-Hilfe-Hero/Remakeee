@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table c200ow2, written by tools/i18n/locales_c200ow2.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Nearest rest point: %s, to the %s.": "Punto de descanso más cercano: %s, hacia el %s.",
+  "No rest point found yet. Rest points show as a small cross on the map.": "Aún no has encontrado ningún punto de descanso. Aparecen como una pequeña cruz en el mapa.",
+  "Reset": "Reiniciar",
+  "Rest point": "Punto de descanso",
+  "There is a rest point right here, in %s.": "Hay un punto de descanso aquí mismo, en %s.",
+  "You were here last.": "Aquí estuviste por última vez.",
+  "east": "este",
+  "north": "norte",
+  "north-east": "noreste",
+  "north-west": "noroeste",
+  "south": "sur",
+  "south-east": "sureste",
+  "south-west": "suroeste",
+  "west": "oeste"
+ }
+}

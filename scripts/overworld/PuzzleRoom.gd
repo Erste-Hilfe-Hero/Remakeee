@@ -173,6 +173,18 @@ static func reset(m: MapData, state: Dictionary) -> Dictionary:
 	set_boulders(m, start_boulders(m))
 	return out
 
+## True when the on-screen "Reset room" button should show (200 list item 41): a boulder has
+## been moved from its start and the room's puzzles are not all held down right now.
+static func reset_offered(m: MapData, player: Vector2i = Vector2i(-1, -1)) -> bool:
+	if boulders(m) == start_boulders(m):
+		return false
+	if m.puzzles.is_empty():
+		return true
+	for p: Dictionary in m.puzzles:
+		if not pressed(m, p, player):
+			return true
+	return false
+
 # --- One step, as the overworld does it -----------------------------------------------------
 
 ## Moves the player one cell along [param dir] from [param from], pushing a boulder if one is

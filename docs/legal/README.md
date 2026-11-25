@@ -23,7 +23,7 @@
   Übertragungscode. Keine E-Mail, kein Login über Apple/Google/Facebook.
 - Wayfarer-Name nur für bestätigte Freunde sichtbar. Kein freier Chat: Grüße sind feste Sätze. Wochen-Rangliste
   zeigt Fremden nur Punkte. Blockieren und Melden im Spiel (docs/ONLINE.md).
-- Keine Werbung, keine Analytics, keine Absturzberichte, keine Werbe-ID.
+- Keine Werbung, keine Analytics, keine Werbe-ID. Nur ein eigener anonymer Absturzbericht (ab 1.3.1, ohne Spieler-ID).
 - Käufe (falls es welche gibt) nur über Apple/Google, keine Lootboxen.
 
 Weicht die Umsetzung davon ab, müssen Datenschutzerklärung, Nutzungsbedingungen und Store-Antworten vorher

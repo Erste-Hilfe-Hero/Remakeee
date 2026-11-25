@@ -79,4 +79,8 @@ if echo "$play" | head -1 | grep -q " 200"; then
 	echo "$play" | grep -qi "^x-robots-tag: noindex" || fail "/play/ has no noindex"
 fi
 
+# 200 list item 184: the anonymous crash report (stored without the account).
+crash="$(post /rest/v1/rpc/crash_report "$a" '{"p_version": "1.3.1", "p_platform": "Smoke", "p_scene": "start"}')"
+echo "$crash" | grep -q '"ok": *true' || fail "crash_report: $crash"
+
 echo "Smoke test OK against $url"

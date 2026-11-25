@@ -52,3 +52,15 @@ static func start_line(e: BattleEvent, speed: float) -> String:
 	if bool(e.data.get("boss", false)):
 		return "%s rises!" % e.data.get("trainer", "")
 	return "Duel with %s!" % e.data.get("trainer", "A Wayfarer")
+
+# --- Spirlog note (200 list items 23, 24) --------------------------------------------------------
+
+const NOTE_NEW: String = "Not in your Spirlog yet!"
+const NOTE_KNOWN: String = "Already in your Spirlog."
+
+## For a wild Spirling: whether the player has bonded with its kind. Empty for Wayfarer battles.
+static func spirlog_note(m: BattleModel, foe: Spirling, spirlog: Dictionary) -> String:
+	if m == null or not m.is_wild or foe == null or foe.data == null:
+		return ""
+	var bonded: bool = bool(GameState.upgrade_spirlog_entry(spirlog.get(foe.data.species_name, {})).get("bonded", false))
+	return NOTE_KNOWN if bonded else NOTE_NEW

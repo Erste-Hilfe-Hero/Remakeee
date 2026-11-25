@@ -28,6 +28,26 @@ const STATUS_TYPES: Array[BattleEvent.Type] = [
 	BattleEvent.Type.BOSS_PHASE,
 ]
 
+## Escape at or above this chance reads "easy", below ESCAPE_HARD "hard" (200 list item 59).
+const ESCAPE_EASY: float = 0.75
+const ESCAPE_HARD: float = 0.4
+
+## How getting away from a wild battle looks for the Spirling in [param slot], in words only
+## (never a number, LEGAL.md spirit). "" when Leave is not a plain escape (Wayfarer battle,
+## Trial, partner slot).
+static func escape_words(model: BattleModel, slot: int = 0) -> String:
+	if not model.is_wild or model.has_meta("puzzle_max") or model.is_partner_slot(BattleModel.Side.PLAYER, slot):
+		return ""
+	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER, slot)
+	if me == null:
+		return ""
+	var chance: float = model.escape_chance(me)
+	if chance >= ESCAPE_EASY:
+		return "Escape looks easy."
+	if chance >= ESCAPE_HARD:
+		return "Escape might work."
+	return "Escape looks hard."
+
 # --- Log filter (item 565) -------------------------------------------------------------
 
 ## "hits", "status" or "other" for the log filter.

@@ -1,7 +1,7 @@
 Chimora 1.3.1
 
-- Telefoni pieghevoli e tablet: il gioco ora riempie tutto lo schermo in orizzontale, senza bande nere.
-- I dialoghi sulla mappa tornano come prima della 1.3.0.
-- Era I: niente più motivo di pioggia e nebbia sulla mappa. Il meteo ora è disattivato per tutti, puoi attivarlo nelle Impostazioni.
-- I testi lunghi dei menu non vengono più tagliati. Vanno a capo su una seconda riga.
-- Piccole correzioni.
+- 7 nuovi doni per i tuoi Spirling, e nuove arti che colpiscono più volte o fanno entrare un compagno.
+- "Quale fa per te?" ti aiuta a scegliere il partner, e un pulsante Idea suggerisce nomi.
+- Bonus del weekend: esperienza doppia il sabato e la domenica.
+- Funziona su più dispositivi, anche Chromebook, e meglio su tablet e telefoni pieghevoli.
+- Tante piccole correzioni.

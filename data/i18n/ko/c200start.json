@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table c200start, written by tools/i18n/locales_c200start.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s might suit you. But choose whoever you like!": "%s(이)가 맞을지도 몰라. 하지만 마음에 드는 아이를 골라!",
+  "A free afternoon. You...": "한가한 오후. 너는...",
+  "Two short questions. You still choose freely.": "짧은 질문 두 개. 선택은 여전히 자유야.",
+  "Which one suits you?": "누가 너와 맞을까?",
+  "Your partner should be...": "파트너는 이랬으면...",
+  "calm and bright": "차분하고 밝게",
+  "explore a dark cave": "어두운 동굴을 탐험한다",
+  "loyal and warm": "의리 있고 따뜻하게",
+  "quick and lively": "재빠르고 활발하게",
+  "race to the lake": "호수까지 달리기 시합을 한다",
+  "sit by a warm fire": "따뜻한 불 옆에 앉는다"
+ }
+}

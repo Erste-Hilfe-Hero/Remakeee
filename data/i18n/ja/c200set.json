@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table c200set, written by tools/i18n/locales_c200set.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Dim": "くらめ",
+  "Dims the whole screen for dark rooms. Warm also takes out the cold blue light.": "くらい部屋のために画面全体をくらくする。あたたかは青い光もおさえる。",
+  "Night mode: %s": "ナイトモード: %s",
+  "Reset to default": "もとにもどす",
+  "Set every setting on this page back to how it was at the start?": "このページの設定をすべて最初の状態にもどしますか？",
+  "Sets every setting on this page back to how it was at the start.": "このページの設定をすべて最初の状態にもどす。",
+  "Sets every setting on this page back to how it was at the start. The language stays.": "このページの設定をすべて最初の状態にもどす。言語はそのまま。",
+  "This weekend, battles give double Growth on Saturday and Sunday.": "今週末は土曜と日曜、バトルで成長が2倍になる。",
+  "This weekend, battles give more Growth on Saturday and Sunday.": "今週末は土曜と日曜、バトルで成長がふえる。",
+  "Warm": "あたたか",
+  "Weekend: battles give double Growth today.": "週末: きょうはバトルで成長が2倍。",
+  "Weekend: battles give more Growth today.": "週末: きょうはバトルで成長がふえる。",
+  "Your journey is %d years old today! A birthday gift: a Growth Charm and %d coins.": "きょうで旅が%d年に！ たんじょうびのおくりもの: 成長のお守りと%dコイン。",
+  "Your journey is one year old today! A birthday gift: a Growth Charm and %d coins.": "きょうで旅が1年に！ たんじょうびのおくりもの: 成長のお守りと%dコイン。"
+ }
+}

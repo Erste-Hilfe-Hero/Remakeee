@@ -91,7 +91,10 @@ You can always download or delete your data yourself in the game (section 7).
 **What is the same everywhere:** your data is stored on our own server, which Contabo GmbH (Munich, Germany)
 hosts for us in its data centre in Lauterbourg, France (EU). We do not sell your data, do not share it for
 advertising, show no ads, do not track you across apps or websites and use no analytics, advertising or
-crash-report SDKs. The only evaluation is the anonymous count of game progress from section 3: it is
+crash-report SDKs. From version 1.3.1, after the last game ended unexpectedly, the app sends one short anonymous
+crash report: only the game version, the device system (for example "Android") and the game scene that was
+open last. We store it without a player ID, name or save game and delete
+it after 30 days; the sign-in is only used to accept at most three reports an hour. The only evaluation is the anonymous count of game progress from section 3: it is
 computed from the save games stored with your account (that is why the store privacy labels list game
 progress as linked to you), but the result contains only numbers per sign-up day, no player ID and no name.
 Notifications are local only and send nothing (section 4).

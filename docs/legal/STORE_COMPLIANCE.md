@@ -3,7 +3,7 @@
 > Erstellt von einer KI ohne anwaltliche Prüfung. Die Antworten gelten für das Modell aus
 > [DATENSCHUTZ.md](DATENSCHUTZ.md): automatisches Konto mit zufälliger Spieler-ID, Übertragungscode statt
 > E-Mail, Wayfarer-Name nur für dich sichtbar, eigener Server bei Contabo GmbH, München, Deutschland (Auftragsverarbeiter, Art. 28 DSGVO; Serverstandort: Rechenzentrum Lauterbourg, Frankreich (EU)), keine Werbung, keine Analytics-SDKs
-> (nur eine eigene anonyme Zählung des Fortschritts auf dem Server, `admin_funnel`), keine Absturzberichte, kein Drittanbieter-Login, kein Chat, keine Lootboxen. Ändert sich davon etwas,
+> (nur eine eigene anonyme Zählung des Fortschritts auf dem Server, `admin_funnel`), nur ein eigener anonymer Absturzbericht (ab 1.3.1, `crash_report`), kein Drittanbieter-Login, kein Chat, keine Lootboxen. Ändert sich davon etwas,
 > ändern sich die Antworten. Store-Formulare ändern sich oft: im Zweifel die Hilfe in der Konsole lesen.
 
 ## 1. Google Play: Data Safety (Datensicherheit)
@@ -24,7 +24,8 @@ nicht flüchtig, nicht geteilt):
 | Finanzdaten → **Kaufverlauf** | **Ja**, erhoben, nicht geteilt, Zweck *App-Funktionen* (der Server speichert Käufe, Rissglas-Buchungen und Erstattungen) |
 | Personenbezogene Daten → **Sonstige Infos** | **Ja** (nur die Altersgruppe für den Shop, kein Geburtsdatum) |
 | App-Aktivitäten → **Sonstige Aktionen** | **Ja** (Spielstand/Fortschritt); Zwecke *App-Funktionen* und *Analysen* (anonyme Zählung, wo neue Spieler aufhören) |
-| E-Mail-Adresse, Geräte-IDs, Absturzprotokolle, Diagnose | **Nein** |
+| App-Informationen und -Leistung → **Absturzprotokolle** | **Ja** (ab 1.3.1), erhoben, nicht geteilt, Zweck *App-Funktionen*; anonym (ohne Spieler-ID, nur Version, System, Szene), 30 Tage. Apple: *Crash Data*, nicht mit dir verknüpft, kein Tracking |
+| E-Mail-Adresse, Geräte-IDs, Diagnose | **Nein** |
 | Standort → Ungefährer Standort | **Nein** (IP-Adressen liegen nur 7 Tage in Sicherheits-Logs und werden nicht zur Standortbestimmung genutzt) |
 
 Lokale Mitteilungen (plan Chimora 100, item 76, `scripts/core/LocalNotify.gd`) ändern daran nichts: Sie werden

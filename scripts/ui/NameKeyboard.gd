@@ -26,6 +26,12 @@ const BACK: String = "Back"
 ## Opens the phone's own keyboard, which has the player's script (Cyrillic, kana, Hangul, hanzi;
 ## Chimora 100 item 36). The letter keys stay for gamepads and phones whose keyboard does not open.
 const SYSTEM_KEYS: String = "Keyboard"
+## Puts a name idea in the field (200 list item 6); the first key typed replaces it again.
+const DICE: String = "Idea"
+## Name ideas for the dice key: short, easy to say in every language, none from another game.
+const NAME_IDEAS: Array[String] = ["Corin", "Liora", "Taren", "Mira", "Joss", "Elin", "Bram", "Sela",
+	"Odo", "Kaia", "Rune", "Nell", "Arlo", "Ysa", "Pell", "Tova", "Fenn", "Ilse", "Dov", "Wren",
+	"Kasimir", "Lumi", "Oren", "Nia"]
 const KEY_SIZE := Vector2(18, 15)
 ## Characters per group in CODE mode.
 const GROUP: int = 4
@@ -44,6 +50,7 @@ func make_extra_row() -> HBoxContainer:
 	if mode == Mode.CODE:
 		labels.push_front(PASTE)
 	else:
+		labels.push_front(DICE)
 		labels.push_front(SYSTEM_KEYS)
 	for l: String in labels:
 		var b := Button.new()
@@ -140,6 +147,11 @@ func press(label: String) -> void:
 		return
 	if label == SYSTEM_KEYS:
 		open_system_keyboard()
+		return
+	if label == DICE:
+		target.text = name_idea(target.text, randi())
+		target.caret_column = target.text.length()
+		fresh = true
 		return
 	if fresh and label != OK:
 		fresh = false
@@ -260,6 +272,11 @@ func open_system_keyboard() -> void:
 		DisplayServer.virtual_keyboard_show(target.text, Rect2(), DisplayServer.KEYBOARD_TYPE_DEFAULT, target.max_length)
 
 ## A name the game accepts: not empty, not only spaces (item 1961).
+## A name idea that differs from [param current], picked by [param roll].
+static func name_idea(current: String, roll: int) -> String:
+	var pick: String = NAME_IDEAS[absi(roll) % NAME_IDEAS.size()]
+	return NAME_IDEAS[(NAME_IDEAS.find(pick) + 1) % NAME_IDEAS.size()] if pick == current else pick
+
 static func valid_name(text: String) -> bool:
 	return not text.strip_edges().is_empty()
 

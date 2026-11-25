@@ -5619,5 +5619,71 @@
   "neutral": true,
   "era": 1,
   "desc": "Plain little blows with no element: two to four hits."
+ },
+ {
+  "name": "Ember Feint",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "pivot",
+  "era": 1,
+  "desc": "A flare in the foe's face, and it is already gone. The best-suited teammate steps in."
+ },
+ {
+  "name": "Ebb Strike",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "pivot",
+  "era": 1,
+  "desc": "Hits like a wave, then draws back like the tide. The best-suited teammate steps in."
+ },
+ {
+  "name": "Petal Dodge",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "pivot",
+  "era": 1,
+  "desc": "A slap of petals, then it slips behind its friends. The best-suited teammate steps in."
+ },
+ {
+  "name": "Spark and Dash",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "pivot",
+  "era": 1,
+  "desc": "A quick jolt, then a dash back to the bench. The best-suited teammate steps in."
+ },
+ {
+  "name": "Gust Retreat",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "pivot",
+  "era": 1,
+  "desc": "A buffet of wind that carries it back to the bench. The best-suited teammate steps in."
+ },
+ {
+  "name": "Fade Swipe",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "pivot",
+  "era": 1,
+  "desc": "A swipe out of the dark, and it fades away again. The best-suited teammate steps in."
  }
 ]
