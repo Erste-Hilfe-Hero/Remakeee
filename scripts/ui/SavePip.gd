@@ -26,7 +26,7 @@ func flash() -> void:
 	modulate.a = 1.0
 	_tween = create_tween()
 	_tween.tween_interval(SHOW_S)
-	_tween.tween_property(self, "modulate:a", 0.0, FADE_S)
+	_tween.tween_property(self, "modulate:a", 0.0, FADE_S).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 
 func is_showing() -> bool:
 	return modulate.a > 0.0
