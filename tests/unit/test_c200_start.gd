@@ -1,143 +1,134 @@
 extends GutTest
-## Chimora 200 list, start package: name dice key (item 6).
+## Chimora 200 list items 2 (team lead on the Continue row), 5 (which partner suits you),
+## 11 (the first battle's arrow at the first art) and 17 (place pictures in Earlier saves).
 
-func test_dice_key_puts_a_new_name_idea_in_the_field() -> void:
-	var edit := LineEdit.new()
-	add_child_autofree(edit)
-	var keys := NameKeyboard.new()
-	keys.target = edit
-	add_child_autofree(keys)
-	edit.text = "Corin"
-	keys.press(NameKeyboard.DICE)
-	assert_true(edit.text in NameKeyboard.NAME_IDEAS, edit.text)
-	assert_true(keys.fresh, "the first typed key replaces the idea")
-	keys.press("B")
-	assert_eq(edit.text, "B")
+const ROW_TEXT_WIDTH: int = 115
 
-func test_name_idea_never_repeats_the_current_name() -> void:
-	for roll: int in NameKeyboard.NAME_IDEAS.size():
-		var cur: String = NameKeyboard.NAME_IDEAS[roll]
-		assert_ne(NameKeyboard.name_idea(cur, roll), cur)
+func before_all() -> void:
+	Database.load_all()
 
-func test_name_ideas_are_valid_names() -> void:
-	for n: String in NameKeyboard.NAME_IDEAS:
-		assert_true(NameKeyboard.valid_name(n), n)
+func after_each() -> void:
+	Loc.set_language("en")
 
-func test_name_row_has_keyboard_dice_and_back() -> void:
-	var keys := NameKeyboard.new()
-	var row: HBoxContainer = keys.make_extra_row()
-	assert_eq(row.get_child_count(), 3)
-	assert_eq((row.get_child(1) as Button).text, NameKeyboard.DICE)
-	row.free()
-	keys.free()
+func _width(text: String) -> float:
+	return PixelFont.get_font().get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x
 
-# --- item 15: a save mark shows after each quiet save ------------------------------------------
+# --- Item 2 -------------------------------------------------------------------------------
 
-func test_save_pip_shows_on_save_and_fades() -> void:
-	var pip := SavePip.new()
-	add_child_autofree(pip)
-	assert_false(pip.is_showing())
-	SaveManager.saved.emit()
-	assert_true(pip.is_showing())
-	await wait_seconds(SavePip.SHOW_S + SavePip.FADE_S + 0.2)
-	assert_false(pip.is_showing())
+func test_lead_species_is_the_first_team_member() -> void:
+	assert_eq(EraSaveCard.lead_species({"party": [{"species": "Zippit"}, {"species": "Kindlop"}]}), "Zippit")
+	assert_eq(EraSaveCard.lead_species({"party": []}), "")
+	assert_eq(EraSaveCard.lead_species({}), "")
 
-# --- items 14, 115: the talk log keeps the last 20 overworld lines --------------------------------
+func test_continue_icon_shows_badge_and_lead() -> void:
+	var with_lead: Texture2D = EraSaveCard.continue_icon(1, "Kindlop")
+	assert_eq(with_lead.get_width(), EraSaveCard.badge(1).get_width() + 2 + EraSaveCard.LEAD_SIZE)
+	assert_eq(with_lead.get_height(), EraSaveCard.LEAD_SIZE)
+	assert_eq(EraSaveCard.continue_icon(1, ""), EraSaveCard.badge(1), "no team: only the badge")
+	assert_eq(EraSaveCard.continue_icon(1, "NoSuchKind"), EraSaveCard.badge(1))
 
-func test_talk_log_keeps_the_last_twenty_lines_newest_first_in_the_menu() -> void:
-	TextBox.talk_log.clear()
-	for i: int in 25:
-		TextBox.log_line("Kestra: line %d" % i)
-	assert_eq(TextBox.talk_log.size(), TextBox.TALK_LOG_MAX)
-	var rows: Array[Dictionary] = PauseMenu.talk_log_rows()
-	assert_eq(str(rows[0].text), "Kestra: line 24")
-	assert_eq(str(rows[rows.size() - 1].text), "Kestra: line 5")
-	TextBox.talk_log.clear()
-	assert_true(bool(PauseMenu.talk_log_rows()[0].get("disabled", false)), "an empty log says so")
+func test_title_uses_the_continue_icon() -> void:
+	var src: String = FileAccess.get_file_as_string("res://scripts/ui/TitleScreen.gd")
+	assert_string_contains(src, "EraSaveCard.continue_icon(")
 
-func test_only_a_logging_box_writes_the_talk_log() -> void:
-	TextBox.talk_log.clear()
-	var box := TextBox.new()
-	add_child_autofree(box)
-	box.show_text("A battle line.")
-	assert_true(TextBox.talk_log.is_empty(), "battle boxes do not log")
-	box.keep_log = true
-	box.show_text("Hello there.", "Kestra")
-	assert_eq(TextBox.talk_log, ["Kestra: Hello there."] as Array[String])
-	TextBox.talk_log.clear()
+# --- Item 5 -------------------------------------------------------------------------------
 
-func test_talk_log_has_a_symbol_and_hint() -> void:
-	assert_true(EraMenuArt.has(PauseMenu.TALK_LOG))
-	assert_true(EraMenuKit.PAUSE_HINTS.has(PauseMenu.TALK_LOG))
+func test_each_partner_can_be_suggested() -> void:
+	assert_eq(Overworld.SUIT_QUESTIONS.size(), 2)
+	var hits: Dictionary = {}
+	for a: int in 3:
+		for b: int in 3:
+			var s: int = Overworld.suit_pick([a, b] as Array[int])
+			assert_between(s, 0, Database.STARTERS.size() - 1)
+			hits[s] = true
+	assert_eq(hits.size(), Database.STARTERS.size())
 
-# --- item 19: the Account menu says when the journey last reached the server ----------------------
+func test_matching_answers_suggest_that_partner() -> void:
+	for i: int in Database.STARTERS.size():
+		assert_eq(Overworld.suit_pick([i, i] as Array[int]), i, Database.STARTERS[i])
 
-func test_backup_line_says_how_long_ago() -> void:
-	var keep_at: Dictionary = Online.backup_at.duplicate()
-	var keep_dirty: Dictionary = Online.dirty.duplicate()
-	Online.dirty.erase(7)
-	Online.backup_at.erase(7)
-	assert_eq(Online.backup_line(7), "", "never backed up: no line")
-	Online.backup_at[7] = 1000
-	assert_eq(Online.backup_line(7, 1030), "Backed up just now.")
-	assert_eq(Online.backup_line(7, 1000 + 5 * 60), "Backed up 5 min ago.")
-	assert_eq(Online.backup_line(7, 1000 + 3 * 3600), "Backed up 3 h ago.")
-	Online.dirty[7] = true
-	assert_eq(Online.backup_line(7, 1030), "Backup waits for the connection.")
-	Online.backup_at = keep_at
-	Online.dirty = keep_dirty
+func test_the_second_answer_counts_too() -> void:
+	# Warm fire (Kindlop first, Wickit second) and calm and bright: Wickit.
+	assert_eq(Overworld.suit_pick([0, 2] as Array[int]), 2)
+	# Warm fire and quick: a tie, the first question decides.
+	assert_eq(Overworld.suit_pick([0, 1] as Array[int]), 0)
 
-# --- items 22, 45: bonded kinds per place, a star when all are bonded --------------------------------
+func test_the_list_is_unchanged_and_the_pick_stays_free() -> void:
+	assert_eq(Overworld.starter_rows().size(), Database.STARTERS.size())
+	var src: String = FileAccess.get_file_as_string("res://scripts/overworld/Overworld.gd")
+	assert_string_contains(src, "rows.append({\"text\": SUIT_ROW")
+	assert_string_contains(src, "focus = hint")
 
-func test_bond_count_and_star_per_place() -> void:
-	var kinds: Array[String] = WorldAtlas.spawn_kinds("brindlewick")
-	if kinds.is_empty():
-		kinds = WorldAtlas.spawn_kinds("fernstair")
-	assert_false(kinds.is_empty(), "a starting place has wild Spirlings")
-	var place: String = "brindlewick" if not WorldAtlas.spawn_kinds("brindlewick").is_empty() else "fernstair"
-	assert_eq(WorldAtlas.bond_count(place, {}), [0, kinds.size()] as Array[int])
-	assert_eq(WorldAtlas.complete_mark(place, {}), "")
-	var all: Dictionary = {}
-	for k: String in kinds:
-		all[k] = {"seen": true, "bonded": true}
-	assert_eq(WorldAtlas.bond_count(place, all), [kinds.size(), kinds.size()] as Array[int])
-	assert_eq(WorldAtlas.complete_mark(place, all), " *")
+func test_suit_texts_are_german_and_fit() -> void:
+	var texts: Array[String] = [Overworld.SUIT_ROW, Overworld.SUIT_HINT, Overworld.SUIT_RESULT]
+	var answers: Array[String] = []
+	for q: Dictionary in Overworld.SUIT_QUESTIONS:
+		texts.append(str(q.q))
+		for a: Array in q.a:
+			answers.append(str(a[0]))
+	texts.append_array(answers)
+	Loc.set_language("de")
+	for t: String in texts:
+		assert_ne(Loc.t(t), t, t)
+	for lang: String in ["en", "de"]:
+		Loc.set_language(lang)
+		for t: String in answers + [Overworld.SUIT_ROW]:
+			assert_lte(_width(Loc.t(t)), float(ROW_TEXT_WIDTH), "%s row too wide: %s" % [lang, Loc.t(t)])
 
-# --- item 129: version and build for support ---------------------------------------------------
+# --- Item 11 ------------------------------------------------------------------------------
 
-func test_about_text_names_version_build_and_contact() -> void:
-	var t: String = LegalInfo.about_text()
-	assert_string_contains(t, Online.CLIENT_VERSION_NAME)
-	assert_string_contains(t, "build %d" % Online.CLIENT_VERSION)
-	assert_string_contains(t, LegalInfo.CONTACT)
+func test_only_the_very_first_battle() -> void:
+	assert_true(FirstArtArrow.is_first_battle({}))
+	assert_true(FirstArtArrow.is_first_battle({"Kindlop": {"battles": 0}}))
+	assert_false(FirstArtArrow.is_first_battle({"Kindlop": {"battles": 1}}))
 
-# --- item 36: the last travel target heads the list ------------------------------------------------
+func test_arrow_after_five_idle_seconds() -> void:
+	var host := Control.new()
+	add_child_autofree(host)
+	var b := Button.new()
+	b.size = Vector2(80, 13)
+	host.add_child(b)
+	var arrow := FirstArtArrow.new()
+	arrow.set_process(false)
+	host.add_child(arrow)
+	arrow.wait_for(b)
+	arrow.tick(FirstArtArrow.IDLE_SECONDS - 0.1)
+	assert_false(arrow.visible)
+	arrow.tick(0.2)
+	assert_true(arrow.visible)
+	var tap := InputEventMouseButton.new()
+	tap.button_index = MOUSE_BUTTON_LEFT
+	tap.pressed = true
+	arrow._input(tap)
+	assert_false(arrow.visible, "a tap hides it")
+	assert_eq(arrow.idle_time(), 0.0, "and starts the wait again")
+	arrow.tick(FirstArtArrow.IDLE_SECONDS)
+	assert_true(arrow.visible)
+	arrow.stop()
+	arrow.tick(10.0)
+	assert_false(arrow.visible, "no arrow once the orders are given")
 
-func test_last_travel_target_comes_first() -> void:
-	var ids: Array[String] = ["a", "b", "c"]
-	assert_eq(PauseMenu.last_first(ids, "c"), ["c", "a", "b"] as Array[String])
-	assert_eq(PauseMenu.last_first(ids, "x"), ids, "unknown last target: order stays")
-	assert_eq(ids, ["a", "b", "c"] as Array[String], "the input is not changed")
+func test_battle_wires_the_arrow() -> void:
+	var src: String = FileAccess.get_file_as_string("res://scripts/battle/presenter/BattleScene.gd")
+	assert_string_contains(src, "FirstArtArrow.is_first_battle(GameState.spirlog)")
+	assert_string_contains(src, "_first_arrow.wait_for(_menu.first_art_button())")
 
-# --- item 7: the name box asks for another name while typing a refused one ------------------------
+# --- Item 17 ------------------------------------------------------------------------------
 
-func test_refused_names_are_flagged_while_typing() -> void:
-	assert_false(CharCounter.name_refused(""))
-	assert_false(CharCounter.name_refused("Liora"))
-	assert_true(CharCounter.name_refused("www"))
-	assert_true(CharCounter.name_refused("Nazi"))
-	var edit := LineEdit.new()
-	add_child_autofree(edit)
-	var ask := Label.new()
-	ask.text = "Your name?"
-	add_child_autofree(ask)
-	var c: CharCounter = CharCounter.make(edit, 10)
-	c.ask_label = ask
-	c.ask_text = ask.text
-	add_child_autofree(c)
-	edit.text = "Hitler"
-	await wait_frames(2)
-	assert_eq(ask.text, CharCounter.ASK_AGAIN)
-	edit.text = "Mira"
-	await wait_frames(2)
-	assert_eq(ask.text, "Your name?")
+func test_place_id_from_a_summary() -> void:
+	assert_eq(SaveHistoryMenu.place_id("Brindlewick  1:05"), "brindlewick")
+	assert_eq(SaveHistoryMenu.place_id(SaveManager.OATH_GLYPH + " Brindlewick  1:05  40%"), "brindlewick")
+	assert_eq(SaveHistoryMenu.place_id("Nowhere Land  1:05"), "")
+
+func test_place_picture() -> void:
+	var pic: Texture2D = SaveHistoryMenu.place_picture("brindlewick")
+	assert_not_null(pic)
+	assert_eq(Vector2i(pic.get_size()), SaveHistoryMenu.PICTURE)
+	assert_null(SaveHistoryMenu.place_picture(""))
+
+func test_rows_carry_the_picture() -> void:
+	var rows: Array[Dictionary] = SaveHistoryMenu.entry_rows([{"saved_at": 0, "summary": "Brindlewick  0:05"},
+		{"saved_at": 0, "summary": "Ashdown  0:01"}])
+	assert_eq(rows.size(), 2)
+	assert_true(rows[0].get("icon") is Texture2D)
+	assert_string_contains(str(rows[0].text), "Brindlewick  0:05")

@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table c200start, written by tools/i18n/locales_c200start.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s might suit you. But choose whoever you like!": "%s past misschien bij jou. Maar kies wie je wilt!",
+  "A free afternoon. You...": "Een vrije middag. Jij...",
+  "Two short questions. You still choose freely.": "Twee korte vragen. Je kiest nog steeds vrij.",
+  "Which one suits you?": "Wie past bij jou?",
+  "Your partner should be...": "Je partner moet zijn...",
+  "calm and bright": "rustig en stralend",
+  "explore a dark cave": "verkent een donkere grot",
+  "loyal and warm": "trouw en warm",
+  "quick and lively": "snel en levendig",
+  "race to the lake": "rent om het hardst naar het meer",
+  "sit by a warm fire": "zit bij een warm vuur"
+ }
+}

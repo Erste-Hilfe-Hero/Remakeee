@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table c200start, written by tools/i18n/locales_c200start.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s might suit you. But choose whoever you like!": "%sが合うかも。でも好きな子をえらんでね!",
+  "A free afternoon. You...": "ひまな午後。きみは...",
+  "Two short questions. You still choose freely.": "みじかい質問が2つ。えらぶのはきみの自由。",
+  "Which one suits you?": "どの子が合うかな?",
+  "Your partner should be...": "パートナーは...",
+  "calm and bright": "おちついていて、明るい",
+  "explore a dark cave": "くらいどうくつをたんけんする",
+  "loyal and warm": "なかまおもいで、あたたかい",
+  "quick and lively": "すばやくて、げんき",
+  "race to the lake": "湖まできょうそうする",
+  "sit by a warm fire": "あたたかい火のそばにすわる"
+ }
+}

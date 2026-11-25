@@ -796,6 +796,10 @@ func _run() -> void:
 	for line: String in Tips.take(Tips.battle_start_tip(model.is_wild, _multi)):
 		await _text.show_text(line)
 	_replaying = not replay_inputs.is_empty()
+	# The very first battle: an arrow at the first art when nothing is tapped (200 list item 11).
+	if not _replaying and not model.has_meta("quick") and FirstArtArrow.is_first_battle(GameState.spirlog):
+		_first_arrow = FirstArtArrow.new()
+		add_child(_first_arrow)
 	if resume:
 		_apply_speed()
 	while not model.is_finished() and not BattlePuzzle.out_of_turns(model):
@@ -905,6 +909,8 @@ func _choose_actions() -> Array[BattleAction]:
 	return out
 
 var _undo_asked: bool = false
+## The first battle's arrow at the first art (200 list item 11); null in every later battle.
+var _first_arrow: FirstArtArrow
 var _rest_others: bool = false
 
 # --- Turn clock, giving up, swap offer, All rest (KAMPF_PLAN_1000 items 6, 8, 9, 12) ---------
@@ -1008,8 +1014,12 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 	_back_button.visible = _menu.undo_ok
 	_rest_all_button.visible = TurnFlow.all_rest_shown(model)
 	_waiting_orders = true
+	if _first_arrow != null:
+		_first_arrow.wait_for(_menu.first_art_button())
 	var choice: Array = await _menu.chosen
 	_waiting_orders = false
+	if _first_arrow != null:
+		_first_arrow.stop()
 	_back_button.visible = false
 	_rest_all_button.visible = false
 	_menu.set_enabled(false)

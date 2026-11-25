@@ -11,6 +11,70 @@ static func date_text(unix: int) -> String:
 static func entry_line(h: Dictionary) -> String:
 	return "%s  %s" % [date_text(int(h.saved_at)), str(h.summary)]
 
+## Size of the place picture in each row (200 list item 17).
+const PICTURE: Vector2i = Vector2i(20, 14)
+
+static var _place_ids: Dictionary = {}
+static var _pictures: Dictionary = {}
+
+## The map id of the place a save summary line starts with ("" when no map has that name).
+## Marks in front of the place (the Iron Oath chain, the full journey star) are skipped.
+static func place_id(summary: String) -> String:
+	if _place_ids.is_empty():
+		var dir: String = MapData.DIR
+		var files: PackedStringArray = DirAccess.get_files_at(dir)
+		files.sort()
+		for f: String in files:
+			if not f.ends_with(".json"):
+				continue
+			var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(dir + f))
+			var nm: String = str((raw as Dictionary).get("name", "")) if raw is Dictionary else ""
+			if not nm.is_empty() and not _place_ids.has(nm):
+				_place_ids[nm] = f.get_basename()
+	var best: String = ""
+	var best_len: int = 0
+	for nm: String in _place_ids:
+		var at: int = summary.find(nm + "  ")
+		if at >= 0 and at <= 4 and nm.length() > best_len:
+			best = _place_ids[nm]
+			best_len = nm.length()
+	return best
+
+## A small picture of map [param map_id] (the whole map shrunk, in the minimap's colours:
+## ground paper, solid grey, water mid), or null for an unknown map.
+static func place_picture(map_id: String) -> Texture2D:
+	if map_id.is_empty() or not MapData.exists(map_id):
+		return null
+	if _pictures.has(map_id):
+		return _pictures[map_id]
+	var m: MapData = MapData.load_map(map_id)
+	if m == null or m.width <= 0 or m.height <= 0:
+		return null
+	var img: Image = Image.create(PICTURE.x, PICTURE.y, false, Image.FORMAT_RGBA8)
+	img.fill(UITheme.INK)
+	for y: int in range(1, PICTURE.y - 1):
+		for x: int in range(1, PICTURE.x - 1):
+			var c := Vector2i((x - 1) * m.width / (PICTURE.x - 2), (y - 1) * m.height / (PICTURE.y - 2))
+			var col: Color = UITheme.DISABLED
+			if m.kind_at(c) == TilesetFactory.Kind.WATER:
+				col = UITheme.MID
+			elif m.is_walkable(c):
+				col = UITheme.BG
+			img.set_pixel(x, y, col)
+	_pictures[map_id] = ImageTexture.create_from_image(img)
+	return _pictures[map_id]
+
+## The rows of the list: date, place and play time, with the place's picture.
+static func entry_rows(saves: Array) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for h: Dictionary in saves:
+		var row: Dictionary = {"text": entry_line(h)}
+		var pic: Texture2D = place_picture(place_id(str(h.summary)))
+		if pic != null:
+			row["icon"] = pic
+		out.append(row)
+	return out
+
 ## Returns true when the game went back to the title (the running journey was replaced).
 static func run(menu: MenuHost) -> bool:
 	var slots: Array[String] = []
@@ -28,10 +92,7 @@ static func run(menu: MenuHost) -> bool:
 	if saves.is_empty():
 		await menu.info("There are no earlier saves of this slot yet.")
 		return false
-	var labels: Array[String] = []
-	for h: Dictionary in saves:
-		labels.append(entry_line(h))
-	var hi: int = await menu.pick_strings("Earlier saves (the server keeps the last 5)", labels)
+	var hi: int = await menu.pick("Earlier saves (the server keeps the last 5)", entry_rows(saves))
 	if hi < 0:
 		return false
 	if not await menu.confirm(Loc.t("Bring back the save from %s? The current one stays in this list.") % date_text(int(saves[hi].saved_at))):
