@@ -1,26 +1,7 @@
-Chimora 1.3.0
+Chimora 1.3.1
 
-NEW: THE LAMP WATCH
-- Light the lamp in the Brindlewick lighthouse once a day. Each night a lost Spirling follows the light. Answer it with your Echo call and it joins you.
-- On night 7 a rare Gleam Spirling comes, and you get a new keepsake: the Lamp Lens.
-
-EASIER TO READ
-- Talk and battle text is larger, centered and sits above the buttons.
-- No more Spirling trailing behind you in towns.
-- Before you first play, you accept the Terms of Use in one short step.
-
-AN EASIER START
-- Choose your difficulty when you begin a new journey.
-- A shorter prologue gets you to your first Spirling sooner.
-- Act I is gentler while you learn the ropes.
-
-BATTLE
-- The Auto button now sits at the side of the battle screen. Wild battles only, or every story battle. Wardens and rivals ask first.
-
-FINDING YOUR WAY
-- The goal line and the minimap are free in Act I.
-
-LOOK AND COMFORT
-- Day and night, weather and the Retro filter are now free. Turn them on or off whenever you like.
-- Optional notifications: a short note when a roaming trip is over or a new Find of the Day is waiting. Off unless you turn them on.
-- Many UI fixes in all 14 languages.
+- Foldable phones and tablets: the game now fills the whole screen sideways, without black bars.
+- Talk on the map looks as it did before 1.3.0 again.
+- Era I: no more rain and fog pattern over the map. Weather is now off for everyone; you can switch it on in Settings.
+- Long menu texts are no longer cut off. They wrap onto a second line.
+- Small fixes.

@@ -1,26 +1,7 @@
-Chimora 1.3.0
+Chimora 1.3.1
 
-NEU: DIE LAMPENWACHE
-- Zünde einmal am Tag die Lampe im Leuchtturm von Brindlewick an. Jede Nacht folgt ein verirrtes Spirling dem Licht. Antworte ihm mit deinem Echo-Ruf, und es schließt sich dir an.
-- In Nacht 7 kommt ein seltenes Gleam-Spirling, dazu gibt es ein neues Andenken: die Lampenlinse.
-
-BESSER LESBAR
-- Gesprächs- und Kampftexte sind größer, mittig und stehen über den Knöpfen.
-- Kein Spirling läuft mehr hinter dir her.
-- Vor dem ersten Spielen bestätigst du in einem kurzen Schritt die Nutzungsbedingungen.
-
-LEICHTERER EINSTIEG
-- Wähle die Schwierigkeit, wenn du eine neue Reise beginnst.
-- Ein kürzerer Prolog bringt dich schneller zu deinem ersten Spirling.
-- Akt I ist sanfter, solange du die Grundlagen lernst.
-
-KAMPF
-- Der Auto-Knopf sitzt jetzt seitlich am Kampfbildschirm. Nur wilde Kämpfe oder alle Story-Kämpfe. Wächter und Rivalen fragen zuerst.
-
-ORIENTIERUNG
-- Zielzeile und Minikarte sind in Akt I gratis.
-
-OPTIK UND KOMFORT
-- Tag und Nacht, Wetter und der Retro-Filter sind jetzt gratis. Schalte sie an oder aus, wann du willst.
-- Mitteilungen auf Wunsch: ein kurzer Hinweis, wenn ein Streifzug vorbei ist oder ein neuer Fund des Tages wartet. Aus, solange du sie nicht einschaltest.
-- Viele Korrekturen an der Oberfläche in allen 14 Sprachen.
+- Falt-Handys und Tablets: Das Spiel füllt quer jetzt den ganzen Bildschirm, ohne schwarze Ränder.
+- Gespräche auf der Karte sehen wieder aus wie vor 1.3.0.
+- Ära I: kein Regen- und Nebelmuster mehr über der Karte. Das Wetter ist jetzt für alle aus, du kannst es in den Einstellungen einschalten.
+- Lange Menütexte werden nicht mehr abgeschnitten. Sie brechen in eine zweite Zeile um.
+- Kleine Korrekturen.

@@ -1,1 +1,7 @@
-Acto IV: Solenne, tres Grietas nuevas y un desierto que te miente. Tras el final: Vellmarch, luego Quillmarch, Halcyra y Quivermoor, con el estilo de eras posteriores. 497 Spirlings, seis legendarios con misiones, formas Fulgor. Los clanes anotan en quién confiaste. Online: ligas y duelos Eco. Se guarda tras elegir tu nombre, los plegables se ajustan y tu Caminante ya no sigue andando solo tras un combate.
+Chimora 1.3.1
+
+- Móviles plegables y tabletas: el juego ahora llena toda la pantalla en horizontal, sin bandas negras.
+- Las conversaciones en el mapa vuelven a verse como antes de la 1.3.0.
+- Era I: ya no hay patrón de lluvia y niebla sobre el mapa. El clima está desactivado para todos; puedes activarlo en Ajustes.
+- Los textos largos de los menús ya no se cortan. Pasan a una segunda línea.
+- Pequeñas correcciones.

@@ -1,26 +1,7 @@
-Chimora 1.3.0
+Chimora 1.3.1
 
-YENİ: LAMBA NÖBETİ
-- Brindlewick fenerindeki lambayı günde bir kez yak. Her gece kaybolmuş bir Spirling ışığı takip eder. Ona Yankı çağrınla cevap ver, sana katılsın.
-- 7. gece nadir bir Gleam Spirling gelir ve yeni bir hatıra kazanırsın: Fener Merceği.
-
-DAHA OKUNAKLI
-- Konuşma ve savaş yazıları daha büyük, ortalı ve düğmelerin üstünde.
-- Artık arkandan yürüyen bir Spirling yok.
-- İlk oyundan önce Kullanım Koşullarını kısa bir adımda kabul edersin.
-
-DAHA KOLAY BAŞLANGIÇ
-- Yeni bir yolculuğa başlarken zorluğu seç.
-- Daha kısa bir giriş bölümü seni ilk Spirling'ine daha çabuk ulaştırır.
-- I. Perde, temel bilgileri öğrenirken daha yumuşak.
-
-SAVAŞ
-- Oto düğmesi artık savaş ekranının yanında. Yalnız vahşi savaşlar ya da tüm hikâye savaşları. Bekçiler ve rakipler önce sorar.
-
-YOL BULMA
-- Hedef satırı ve mini harita I. Perde'de ücretsiz.
-
-GÖRÜNÜM VE KONFOR
-- Gece ve gündüz, hava durumu ve retro filtre artık ücretsiz. İstediğin zaman aç ya da kapat.
-- İsteğe bağlı bildirimler: bir gezinti bittiğinde ya da yeni bir Günün Bulgusu beklediğinde kısa bir not. Sen açana kadar kapalı.
-- 14 dilin hepsinde birçok arayüz düzeltmesi.
+- Katlanabilir telefonlar ve tabletler: oyun artık yatayda siyah şerit olmadan tüm ekranı dolduruyor.
+- Haritadaki konuşmalar yine 1.3.0 öncesindeki gibi görünüyor.
+- Çağ I: haritada artık yağmur ve sis deseni yok. Hava durumu artık herkes için kapalı; Ayarlar'dan açabilirsin.
+- Uzun menü metinleri artık kesilmiyor, ikinci satıra geçiyor.
+- Küçük düzeltmeler.

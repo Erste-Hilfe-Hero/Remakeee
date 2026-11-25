@@ -1,26 +1,7 @@
-Chimora 1.3.0
+Chimora 1.3.1
 
-NOUVEAU : LA VEILLE DE LA LAMPE
-- Allume la lampe du phare de Brindlewick une fois par jour. Chaque nuit, un Spirling égaré suit la lumière. Réponds-lui avec ton appel d'Écho et il te rejoint.
-- La 7e nuit, un rare Spirling Gleam arrive, et tu reçois un nouveau souvenir : la Lentille du phare.
-
-PLUS LISIBLE
-- Les textes de dialogue et de combat sont plus grands, centrés et placés au-dessus des boutons.
-- Plus aucun Spirling ne marche derrière toi.
-- Avant ta première partie, tu acceptes les Conditions d'utilisation en une courte étape.
-
-UN DÉBUT PLUS FACILE
-- Choisis la difficulté au début d'un nouveau voyage.
-- Un prologue plus court t'amène plus vite à ton premier Spirling.
-- L'Acte I est plus doux le temps d'apprendre les bases.
-
-COMBAT
-- Le bouton Auto se trouve désormais sur le côté de l'écran de combat. Combats sauvages seulement, ou tous les combats de l'histoire. Gardiens et rivaux demandent d'abord.
-
-S'ORIENTER
-- La ligne d'objectif et la minicarte sont gratuites dans l'Acte I.
-
-APPARENCE ET CONFORT
-- Le jour et la nuit, la météo et le filtre rétro sont désormais gratuits. Active-les ou coupe-les quand tu veux.
-- Alertes facultatives : un petit mot quand une virée est finie ou qu'une nouvelle trouvaille du jour attend. Désactivées tant que tu ne les actives pas.
-- De nombreuses corrections de l'interface dans les 14 langues.
+- Téléphones pliables et tablettes : le jeu remplit maintenant tout l'écran à l'horizontale, sans bandes noires.
+- Les dialogues sur la carte ont retrouvé leur aspect d'avant la 1.3.0.
+- Ère I : plus de motif de pluie et de brouillard sur la carte. La météo est désormais désactivée pour tous, tu peux l'activer dans les Paramètres.
+- Les longs textes des menus ne sont plus coupés. Ils passent sur une deuxième ligne.
+- Petites corrections.

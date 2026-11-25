@@ -1,1 +1,7 @@
-Ato IV: Solenne, três Fendas novas e um deserto que mente para você. Depois do final: Vellmarch, e então Quillmarch, Halcyra e Quivermoor, no estilo de eras posteriores. 497 Spirlings, seis lendários com missões, formas Reluzentes. Os clãs anotam em quem você confiou. Online: ligas e Duelos Eco. Salva logo após escolher o nome, dobráveis se ajustam e seu Viajante não anda mais sozinho após a batalha.
+Chimora 1.3.1
+
+- Celulares dobráveis e tablets: o jogo agora preenche a tela inteira na horizontal, sem faixas pretas.
+- As conversas no mapa voltaram a ficar como antes da 1.3.0.
+- Era I: sem o padrão de chuva e névoa sobre o mapa. O clima agora está desligado para todos; você pode ligá-lo nas Configurações.
+- Textos longos dos menus não são mais cortados. Eles quebram para uma segunda linha.
+- Pequenas correções.
