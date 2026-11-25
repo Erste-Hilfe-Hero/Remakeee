@@ -70,6 +70,31 @@ func test_view_knows_last_here() -> void:
 	view.refresh("fernstair")
 	assert_eq(view.last_here, "brindlewick")
 
+func test_nearest_heal_walks_the_roads() -> void:
+	_visit("brindlewick")
+	var known: Dictionary = WorldAtlas.known("fernstair")
+	assert_has(WorldAtlas.symbols("brindlewick"), "heal")
+	assert_eq(WorldAtlas.nearest_heal("fernstair", known), "brindlewick")
+	assert_eq(WorldAtlas.nearest_heal("lighthouse", known), "brindlewick", "its own place counts")
+	assert_eq(WorldAtlas.nearest_heal("fernstair", {}), "", "only visited rest points")
+	assert_eq(WorldAtlas.nearest_heal("nowhere", known), "")
+
+func test_heal_hint_says_the_way() -> void:
+	assert_eq(WorldAtlas.direction("fernstair", "brindlewick"), "south", "Brindlewick lies one cell south")
+	assert_eq(WorldAtlas.direction("brindlewick", "fernstair"), "north")
+	assert_eq(WorldAtlas.direction("brindlewick", "reedhaven"), "east", "two east, one south reads as east")
+	assert_eq(WorldAtlas.direction("fernstair", "reedhaven"), "south-east")
+	assert_string_contains(WorldAtlas.heal_hint("fernstair", "brindlewick"), "to the south")
+	assert_string_contains(WorldAtlas.heal_hint("lighthouse", "brindlewick"), "right here")
+	assert_string_contains(WorldAtlas.heal_hint("fernstair", ""), "No rest point")
+
+func test_view_rings_the_highlight() -> void:
+	var view := WorldMapView.new()
+	view.restore({"zoom": 2, "pan": Vector2.ZERO, "highlight": "brindlewick", "show_highlight": true})
+	assert_eq(view.highlight, "brindlewick")
+	assert_eq(view.state().highlight, "brindlewick", "carried over to the next list")
+	view.free()
+
 func _room() -> MapData:
 	return MapData.from_dict("t_room", {"name": "Test Room", "rows": [
 		"WWWWfWWWW",

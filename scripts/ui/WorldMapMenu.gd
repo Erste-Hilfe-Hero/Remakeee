@@ -3,8 +3,9 @@ extends RefCounted
 ## "Map" in the pause menu (area 3 items 1242-1248, 1273): the world map picture on top, a list
 ## below. The list zooms (1x / 2x), jumps back to the player's place ("Here"), manages the
 ## player's own marks and lists every place the player knows with its survey share. Tapping a
-## place on the picture picks its row; a place opens its detail page. The place visited before
-## this one is marked "last here" (200 list item 31).
+## place on the picture picks its row; a place opens its detail page. "Rest point" rings the
+## nearest rest point and says which way it lies (200 list item 32); the place visited before
+## this one is marked "last here" (item 31).
 
 const VIEW_H: float = 104.0
 const ICON_NAMES: Dictionary = {"star": "Star", "cross": "Cross", "question": "Question",
@@ -66,7 +67,7 @@ static func run(host: MenuHost, here: String) -> void:
 					return)
 		view.refresh(here)
 		var acts: Array[String] = [Loc.t("Zoom: %dx") % view.zoom, Loc.t("Here"),
-			Loc.t("Marks") if bar else Loc.t("Marks (%d/%d)") % [GameState.map_marks.size(), Survey.MAX_MARKS]]
+			Loc.t("Marks") if bar else Loc.t("Marks (%d/%d)") % [GameState.map_marks.size(), Survey.MAX_MARKS], Loc.t("Rest point")]
 		rows_now = []
 		if not bar:
 			for a: String in acts:
@@ -80,7 +81,7 @@ static func run(host: MenuHost, here: String) -> void:
 				r["hint"] = (Loc.t("You were here last.") + " " if bool(r.get("last", false)) else "") + WorldAtlas.detail_text(str(r.place)).get_slice("\n", 1)
 			rows_now.append(r)
 		var idx: int = await host.pick_screen("map", "World map", rows_now, {"tabs": acts if bar else ([] as Array[String]), "tab": -1,
-			"tab_icons": [null, null, EraMenuKit.icon_for("Shortcuts", lay)], "header": view,
+			"tab_icons": [null, null, EraMenuKit.icon_for("Shortcuts", lay), EraMenuKit.icon_for("Travel", lay)], "header": view,
 			"panel_text": "Tap a place on the map or in the list."})
 		keep = view.state() if is_instance_valid(view) else keep
 		var act: int = ListPicker.tab_of(idx) if bar else (idx if idx >= 0 and idx < first_place else -1)
@@ -94,6 +95,11 @@ static func run(host: MenuHost, here: String) -> void:
 				keep["here"] = true
 			2:
 				await run_marks(host, here)
+			3:
+				var heal: String = WorldAtlas.nearest_heal(here, WorldAtlas.known(here))
+				keep["highlight"] = heal
+				keep["show_highlight"] = true
+				await host.info(WorldAtlas.heal_hint(here, heal))
 			_:
 				var id: String = str(rows_now[idx].place)
 				if bool(rows_now[idx].get("sighted", false)):
