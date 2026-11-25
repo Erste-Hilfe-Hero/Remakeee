@@ -96,16 +96,26 @@ jobs:
             sleep $((i * 10))
           done
       # Apple pre-check rule (owner 2026-11-22): the app must really start before any submission. Same exported
-      # project, built for the simulator, launched on an iPhone simulator, screenshots kept as artifact. Does not
+      # device app, retagged for the simulator, launched on an iPhone simulator, screenshots kept as artifact. Does not
       # block the device build above.
       - name: Simulator start check
         continue-on-error: true
         run: |
-          xcodebuild -project build/ios/Chimora.xcodeproj -scheme Chimora -configuration Release \
-            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath "$RUNNER_TEMP/sim" ARCHS=x86_64 ONLY_ACTIVE_ARCH=NO EXCLUDED_ARCHS=arm64 \
-            CODE_SIGNING_ALLOWED=NO build 2>&1 | grep -E "error|BUILD|building for|Undefined" | grep -v "ignoring file" | tail -30
-          APP=$(ls -d "$RUNNER_TEMP"/sim/Build/Products/*-iphonesimulator/*.app | head -1)
-          test -d "$APP"
+          # iOS 27 simulators run arm64 only, and Godot's simulator library is x86_64 only. So the shipped arm64
+          # device app itself is retagged for the simulator platform (vtool, platform 7) and ad-hoc signed: the
+          # check runs the same binary that goes to the App Store.
+          SRC=$(ls -d "$RUNNER_TEMP"/Chimora.xcarchive/Products/Applications/*.app | head -1)
+          mkdir -p "$RUNNER_TEMP/simapp" && cp -R "$SRC" "$RUNNER_TEMP/simapp/"
+          APP="$RUNNER_TEMP/simapp/$(basename "$SRC")"
+          SDKV=$(xcrun --sdk iphonesimulator --show-sdk-version)
+          find "$APP" -type f | while read -r f; do
+            if file "$f" | grep -q "Mach-O"; then
+              xcrun vtool -arch arm64 -set-build-version 7 16.0 "$SDKV" -replace -output "$f.sim" "$f" && mv "$f.sim" "$f"
+            fi
+          done
+          for fw in "$APP"/Frameworks/*.framework; do [ -d "$fw" ] && codesign -f -s - "$fw"; done
+          codesign -f -s - "$APP"
+          xcrun vtool -show-build "$APP/$(plutil -extract CFBundleExecutable raw "$APP/Info.plist")" | head -8
           # iPhone Duo first (foldable, two displays), else the newest iPhone.
           DEV=$(xcrun simctl list devices available -j | python3 -c 'import json,sys;d=json.load(sys.stdin)["devices"];a=[x for k,v in d.items() if "iOS" in k for x in v if x["name"].startswith("iPhone")];duo=[x for x in a if "Duo" in x["name"]];print((duo or a)[-1]["udid"])')
           xcrun simctl list devices available | grep -i "$DEV"
