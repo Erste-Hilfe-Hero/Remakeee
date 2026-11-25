@@ -82,13 +82,12 @@ func _ready() -> void:
 	_label.accessibility_live = AccessibilityServer.LIVE_POLITE
 	_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
-	# Centred lines (owner wish 23.11.2026, plan Chimora 100).
-	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	# Talk on the map: left-aligned in the screen's own font, as before update 1.3.0 (owner wish
+	# 25.11.2026). The battle box keeps the centred, larger lines of 23.11.2026 (big_text).
+	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER if big_text else HORIZONTAL_ALIGNMENT_LEFT
 	_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	# Keep wrapped text clear of the continue marker in the corner, and as much room on the
-	# left, so the centred lines sit in the middle of the box.
+	# Keep wrapped text clear of the continue marker in the corner.
 	_label_pad = StyleBoxEmpty.new()
-	_label_pad.content_margin_left = ARROW_SPACE
 	_label_pad.content_margin_right = ARROW_SPACE
 	_label.add_theme_stylebox_override("normal", _label_pad)
 	add_child(_label)
@@ -166,14 +165,14 @@ func apply_era_frame() -> void:
 	_apply_big_font()
 	_reserve_arrow()
 
-## Keeps the continue marker clear of the text (centred lines can run to the right edge).
+## Keeps the continue marker clear of the text.
 func _reserve_arrow() -> void:
 	if _arrow == null or _label_pad == null:
 		return
 	var f: Font = _arrow.get_theme_font("font")
 	var w: int = int(ceilf(f.get_string_size(_arrow.text, HORIZONTAL_ALIGNMENT_LEFT, -1, _arrow.get_theme_font_size("font_size")).x)) if f != null else 0
 	_arrow_space = maxi(ARROW_SPACE, w + ARROW_GAP)
-	_label_pad.content_margin_left = _arrow_space
+	_label_pad.content_margin_left = _arrow_space if big_text else 0
 	_label_pad.content_margin_right = _arrow_space
 
 ## Talk and battle lines are one font step larger than the screen around them (owner wish
@@ -183,6 +182,9 @@ func _reserve_arrow() -> void:
 ## else it stays (the Era IV/V battle box keeps its large bold HUD font: doubled, the
 ## two-part order prompt ran past the box). Returns [font, font size].
 const BIG_SCALE: int = 2
+## Centred, one step larger lines (owner wish 23.11.2026). Set by the battle; the map's talk
+## box is back to the plain text since 25.11.2026 (owner: "Texte im Chat gleich machen wie davor").
+var big_text: bool = false
 static func big_font(inherited: Font, size: int, allow_double: bool) -> Array:
 	if inherited != null and inherited.get_height(size) >= PixelFont.LARGE_H:
 		return [PixelFont.get_font(), UITheme.FONT_SIZE * BIG_SCALE] if allow_double else [inherited, size]
@@ -202,6 +204,8 @@ func _apply_big_font() -> void:
 		return
 	_label.remove_theme_font_override("font")
 	_label.remove_theme_font_size_override("font_size")
+	if not big_text:
+		return
 	var big: Array = big_font(_label.get_theme_font("font"), _label.get_theme_font_size("font_size"), allow_double)
 	_label.add_theme_font_override("font", big[0])
 	_label.add_theme_font_size_override("font_size", big[1])
@@ -347,7 +351,7 @@ func _text_width() -> float:
 	var sb: StyleBox = get_theme_stylebox("panel")
 	if sb != null:
 		w -= sb.get_margin(SIDE_LEFT) + sb.get_margin(SIDE_RIGHT)
-	return w - _arrow_space * 2
+	return w - _arrow_space * (2 if big_text else 1)
 
 ## Wraps [param text] word by word to [param width] and groups the lines into windows of
 ## [param max_lines]. A line break in the text starts a new line.
