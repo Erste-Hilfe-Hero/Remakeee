@@ -33,6 +33,7 @@
   "System: %s": "システム: %s",
   "Talk log": "会話ログ",
   "Tip: %s and %s arts hit %s hard.": "ヒント: %sと%sのわざは%sによく効く。",
-  "Tip: %s arts hit %s hard.": "ヒント: %sのわざは%sによく効く。"
+  "Tip: %s arts hit %s hard.": "ヒント: %sのわざは%sによく効く。",
+  "Welcome back! A small gift: %d Tonics and %d coins.": "おかえり!ささやかな贈り物: 強壮薬%d個と%dコイン。"
  }
 }

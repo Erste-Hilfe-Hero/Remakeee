@@ -33,6 +33,7 @@
   "System: %s": "Система: %s",
   "Talk log": "Журнал разговоров",
   "Tip: %s and %s arts hit %s hard.": "Совет: искусства стихий %s и %s сильно бьют по %s.",
-  "Tip: %s arts hit %s hard.": "Совет: искусства стихии %s сильно бьют по %s."
+  "Tip: %s arts hit %s hard.": "Совет: искусства стихии %s сильно бьют по %s.",
+  "Welcome back! A small gift: %d Tonics and %d coins.": "С возвращением! Маленький подарок: %d тоников и %d монет."
  }
 }

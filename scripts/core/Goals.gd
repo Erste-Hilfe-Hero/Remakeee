@@ -79,7 +79,7 @@ static func pending() -> int:
 	var n: int = Collection.unclaimed() + Completion.unclaimed()
 	if GameState.has_flag(GameState.ACT1_END_FLAG):
 		n += Vows.list().filter(func(v: Dictionary) -> bool: return Vows.is_active(str(v.id))).size()
-	return n + trips_home()
+	return n + trips_home() + Comeback.pending()
 
 static func trips_home() -> int:
 	return Expeditions.trips().filter(func(t: Dictionary) -> bool: return Expeditions.seconds_left(t) <= 0).size()
@@ -88,6 +88,7 @@ static func trips_home() -> int:
 ## Aldo, so the line only points there.
 static func collect_all() -> Array[String]:
 	var lines: Array[String] = Collection.claim()
+	lines.append_array(Comeback.claim())
 	lines.append_array(Vows.settle())
 	lines.append_array(RunChronicle.note())
 	for t: String in Achievements.check():

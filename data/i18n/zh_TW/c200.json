@@ -33,6 +33,7 @@
   "System: %s": "系統：%s",
   "Talk log": "對話記錄",
   "Tip: %s and %s arts hit %s hard.": "提示：%s系和%s系招式對%s效果拔群。",
-  "Tip: %s arts hit %s hard.": "提示：%s系招式對%s效果拔群。"
+  "Tip: %s arts hit %s hard.": "提示：%s系招式對%s效果拔群。",
+  "Welcome back! A small gift: %d Tonics and %d coins.": "歡迎回來！一份小禮物：%d瓶補劑和%d枚硬幣。"
  }
 }

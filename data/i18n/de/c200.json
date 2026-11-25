@@ -34,6 +34,7 @@
   "System: %s": "System: %s",
   "Talk log": "Gesprächsverlauf",
   "Tip: %s and %s arts hit %s hard.": "Tipp: %s- und %s-Künste treffen %s hart.",
-  "Tip: %s arts hit %s hard.": "Tipp: %s-Künste treffen %s hart."
+  "Tip: %s arts hit %s hard.": "Tipp: %s-Künste treffen %s hart.",
+  "Welcome back! A small gift: %d Tonics and %d coins.": "Willkommen zurück! Ein kleines Geschenk: %d Tonika und %d Münzen."
  }
 }

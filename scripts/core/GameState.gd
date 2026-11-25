@@ -98,6 +98,10 @@ var menu_seen: Dictionary = {}
 var money: int = 0
 ## Waymarks (plan area 8): earned only by playing, never bought or traded. Change through Waymarks.earn().
 var waymarks: int = 0
+## Day (GameState.today) of the last time the journey was opened, and whether a welcome-back
+## gift waits in Goals (200 list item 139, Comeback).
+var last_play_day: int = 0
+var comeback_ready: bool = false
 ## Today's daily tasks and their progress (see DailyTasks.gd): {"day", "tasks": [{"id", "n"}], "bonus"}.
 var daily_tasks: Dictionary = {}
 ## Festival ribbons per festival (see Festival.gd): "<id>_<year>" -> {"ribbons", "earned", "stages", "task"}.
@@ -583,6 +587,8 @@ func reset() -> void:
 	menu_seen = {}
 	money = 0
 	waymarks = 0
+	last_play_day = 0
+	comeback_ready = false
 	daily_tasks = {}
 	festival_ribbons = {}
 	notices.clear()
@@ -737,6 +743,8 @@ func to_dict() -> Dictionary:
 		"new_items": new_items.keys().filter(func(k: Variant) -> bool: return int(inventory.get(k, 0)) > 0),
 		"money": money,
 		"waymarks": waymarks,
+		"last_play_day": last_play_day,
+		"comeback_ready": comeback_ready,
 		"daily_tasks": daily_tasks.duplicate(true),
 		"festival_ribbons": festival_ribbons.duplicate(true),
 		"map": current_map,
@@ -831,6 +839,8 @@ func from_dict(d: Dictionary) -> void:
 	# Saves from before plan area 8 start with no Waymarks; old achievements pay out once
 	# through the achievement reward, never here.
 	waymarks = clampi(as_int(d.get("waymarks", 0)), 0, Waymarks.CAP)
+	last_play_day = maxi(0, as_int(d.get("last_play_day", 0)))
+	comeback_ready = bool(d.get("comeback_ready", false))
 	var dt: Variant = d.get("daily_tasks", {})
 	daily_tasks = (dt as Dictionary).duplicate(true) if dt is Dictionary else {}
 	festival_ribbons = {}

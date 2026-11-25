@@ -494,10 +494,16 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		_arrival_scene.call_deferred(arrive)
 	refresh_daylight()
 	Sound.enter_map(map_id)
+	if not _day_noted:
+		_day_noted = true
+		Comeback.note_day(int(Online.unix_now() / 86400.0))
 	if not map.encounter_table.is_empty() and Tips.pending("wild_area"):
 		_tip_after_load.call_deferred("wild_area")
 	elif not waiting_tips.is_empty():
 		_waiting_tip_after_load.call_deferred()
+
+## The day was noted for the welcome-back gift this session (200 list item 139).
+var _day_noted: bool = false
 
 var _rustle: Node2D
 

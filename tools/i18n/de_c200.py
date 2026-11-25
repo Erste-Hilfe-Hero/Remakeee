@@ -33,4 +33,5 @@ T = {
 "Chimora %s (build %d)": "Chimora %s (Build %d)",
 "System: %s": "System: %s",
 "Please name these in a mail to support.": "Bitte nenne diese Angaben in einer Mail an den Support.",
+"Welcome back! A small gift: %d Tonics and %d coins.": "Willkommen zurück! Ein kleines Geschenk: %d Tonika und %d Münzen.",
 }

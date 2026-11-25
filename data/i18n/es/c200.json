@@ -33,6 +33,7 @@
   "System: %s": "Sistema: %s",
   "Talk log": "Registro de diálogos",
   "Tip: %s and %s arts hit %s hard.": "Consejo: las artes %s y %s golpean fuerte a %s.",
-  "Tip: %s arts hit %s hard.": "Consejo: las artes %s golpean fuerte a %s."
+  "Tip: %s arts hit %s hard.": "Consejo: las artes %s golpean fuerte a %s.",
+  "Welcome back! A small gift: %d Tonics and %d coins.": "¡Bienvenido de nuevo! Un pequeño regalo: %d Tónicos y %d monedas."
  }
 }

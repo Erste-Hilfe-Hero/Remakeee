@@ -33,6 +33,7 @@
   "System: %s": "시스템: %s",
   "Talk log": "대화 기록",
   "Tip: %s and %s arts hit %s hard.": "팁: %s와 %s 기술은 %s에게 잘 통한다.",
-  "Tip: %s arts hit %s hard.": "팁: %s 기술은 %s에게 잘 통한다."
+  "Tip: %s arts hit %s hard.": "팁: %s 기술은 %s에게 잘 통한다.",
+  "Welcome back! A small gift: %d Tonics and %d coins.": "돌아온 걸 환영해! 작은 선물: 토닉 %d개와 코인 %d개."
  }
 }

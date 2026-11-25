@@ -33,6 +33,7 @@
   "System: %s": "Sistem: %s",
   "Talk log": "Konuşma kaydı",
   "Tip: %s and %s arts hit %s hard.": "İpucu: %s ve %s sanatları %s üzerinde çok etkili.",
-  "Tip: %s arts hit %s hard.": "İpucu: %s sanatları %s üzerinde çok etkili."
+  "Tip: %s arts hit %s hard.": "İpucu: %s sanatları %s üzerinde çok etkili.",
+  "Welcome back! A small gift: %d Tonics and %d coins.": "Tekrar hoş geldin! Küçük bir hediye: %d Tonik ve %d jeton."
  }
 }
