@@ -55,6 +55,7 @@ var minimap: Minimap
 ## (plan Chimora 100, items 37 and 38).
 var goal_line: GoalLine
 var goal_marks: GoalMarks
+var _door_glow: DoorGlow
 ## Top-of-screen notes (badges, daily tasks).
 var toast: Toast
 var _fade: ColorRect
@@ -203,6 +204,11 @@ func _build() -> void:
 	add_child(_particles)
 	_era_feel = EraFeelLayer.new()
 	add_child(_era_feel)
+	# Doors and cave mouths glow softly when the Wayfarer is near (200 list item 27).
+	_door_glow = DoorGlow.new()
+	_door_glow.name = "door_glow"
+	_door_glow.ow = self
+	add_child(_door_glow)
 	_entities = Node2D.new()
 	_entities.name = "Entities"
 	_entities.y_sort_enabled = true
