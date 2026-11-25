@@ -1649,6 +1649,8 @@ func _do_move(a: BattleAction) -> void:
 		if mv.is_damaging():
 			if mv.kind == MoveData.Kind.PHYSICAL and ShopEffects.gift_table(target).has("phys_taken"):
 				reveal_trait(target_side, t_slot)
+			if mv.kind == MoveData.Kind.FOCUS and ShopEffects.gift_table(target).has("focus_taken"):
+				reveal_trait(target_side, t_slot)
 			if ShopEffects.gift_table(me).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
 				reveal_trait(side, slot)
 			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field) * _variant_mult(me, target, mv)

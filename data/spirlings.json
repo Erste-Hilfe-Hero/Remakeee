@@ -1419,7 +1419,7 @@
    "spd": 71,
    "def": 56
   },
-  "trait": "deep_roots",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Bowl Over",
@@ -1495,7 +1495,7 @@
    "spd": 90,
    "def": 78
   },
-  "trait": "deep_roots",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Bramble Bed",
@@ -1693,7 +1693,7 @@
    "spd": 60,
    "def": 80
   },
-  "trait": "steady",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Bowl Over",
@@ -1768,7 +1768,7 @@
    "spd": 76,
    "def": 96
   },
-  "trait": "steady",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Dusk Snare",
@@ -2160,7 +2160,7 @@
    "spd": 76,
    "def": 54
   },
-  "trait": "light_sleeper",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Breeze Slice",
@@ -2231,7 +2231,7 @@
    "spd": 110,
    "def": 72
   },
-  "trait": "light_sleeper",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Gale Mantle",
@@ -2416,7 +2416,7 @@
    "spd": 78,
    "def": 48
   },
-  "trait": "surge",
+  "trait": "static_fur",
   "learnset": {
    "1": [
     "Crackle Bite",
@@ -2491,7 +2491,7 @@
    "spd": 110,
    "def": 68
   },
-  "trait": "surge",
+  "trait": "static_fur",
   "learnset": {
    "1": [
     "Crackle Jab",
@@ -2549,7 +2549,7 @@
    "spd": 63,
    "def": 59
   },
-  "trait": "deep_roots",
+  "trait": "thorn_coat",
   "learnset": {
    "1": [
     "Lichen Lash",
@@ -2615,7 +2615,7 @@
    "spd": 92,
    "def": 76
   },
-  "trait": "deep_roots",
+  "trait": "thorn_coat",
   "learnset": {
    "1": [
     "Nettle Rub",
@@ -2674,7 +2674,7 @@
    "spd": 74,
    "def": 70
   },
-  "trait": "slick",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Pebble Toss",
@@ -2741,7 +2741,7 @@
    "spd": 96,
    "def": 104
   },
-  "trait": "slick",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Cave Echo",
@@ -3808,7 +3808,7 @@
    "spd": 71,
    "def": 54
   },
-  "trait": "kindling",
+  "trait": "fireproof",
   "learnset": {
    "1": [
     "Bowl Over",
@@ -3877,7 +3877,7 @@
    "spd": 97,
    "def": 66
   },
-  "trait": "kindling",
+  "trait": "fireproof",
   "learnset": {
    "1": [
     "Coal Seed",
@@ -4947,7 +4947,7 @@
    "spd": 46,
    "def": 84
   },
-  "trait": "thick_hide",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "Pebble Toss",
@@ -5016,7 +5016,7 @@
    "spd": 64,
    "def": 111
   },
-  "trait": "thick_hide",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "Ore Pulse",
@@ -5077,7 +5077,7 @@
    "spd": 68,
    "def": 53
   },
-  "trait": "last_stand",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Bowl Over",
@@ -5143,7 +5143,7 @@
    "spd": 96,
    "def": 68
   },
-  "trait": "last_stand",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Puff of Air",
@@ -6771,7 +6771,7 @@
    "spd": 46,
    "def": 81
   },
-  "trait": "steady",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Spout Jab",
@@ -6839,7 +6839,7 @@
    "spd": 55,
    "def": 113
   },
-  "trait": "steady",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Spout Jab",
@@ -6910,7 +6910,7 @@
    "spd": 60,
    "def": 126
   },
-  "trait": "steady",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Spout Jab",
@@ -6974,7 +6974,7 @@
    "spd": 70,
    "def": 40
   },
-  "trait": "slick",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Draft Needle",
@@ -7042,7 +7042,7 @@
    "spd": 96,
    "def": 52
   },
-  "trait": "slick",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Draft Needle",
@@ -7113,7 +7113,7 @@
    "spd": 111,
    "def": 61
   },
-  "trait": "slick",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Breeze Slice",
@@ -8019,7 +8019,7 @@
    "spd": 85,
    "def": 46
   },
-  "trait": "slick",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Veil Step",
@@ -8090,7 +8090,7 @@
    "spd": 117,
    "def": 58
   },
-  "trait": "slick",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Veil Step",
@@ -8164,7 +8164,7 @@
    "spd": 143,
    "def": 72
   },
-  "trait": "slick",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Veil Step",
@@ -8791,7 +8791,7 @@
    "spd": 77,
    "def": 60
   },
-  "trait": "kindling",
+  "trait": "thorn_coat",
   "learnset": {
    "1": [
     "Lichen Lash",
@@ -8859,7 +8859,7 @@
    "spd": 91,
    "def": 80
   },
-  "trait": "kindling",
+  "trait": "thorn_coat",
   "learnset": {
    "1": [
     "Lichen Lash",
@@ -8926,7 +8926,7 @@
    "spd": 50,
    "def": 89
   },
-  "trait": "last_stand",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "Bowl Over",
@@ -8997,7 +8997,7 @@
    "spd": 65,
    "def": 134
   },
-  "trait": "last_stand",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "Bowl Over",
@@ -9208,7 +9208,7 @@
    "spd": 81,
    "def": 56
   },
-  "trait": "surge",
+  "trait": "fireproof",
   "learnset": {
    "1": [
     "Cinder Dash",
@@ -9279,7 +9279,7 @@
    "spd": 107,
    "def": 73
   },
-  "trait": "surge",
+  "trait": "fireproof",
   "learnset": {
    "1": [
     "Cinder Nip",
@@ -11450,7 +11450,7 @@
    "spd": 62,
    "def": 65
   },
-  "trait": "light_sleeper",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Draft Needle",
@@ -11521,7 +11521,7 @@
    "spd": 75,
    "def": 85
   },
-  "trait": "light_sleeper",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Breeze Slice",
@@ -11595,7 +11595,7 @@
    "spd": 89,
    "def": 98
   },
-  "trait": "light_sleeper",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Draft Needle",
@@ -11877,7 +11877,7 @@
    "spd": 67,
    "def": 55
   },
-  "trait": "kindling",
+  "trait": "fireproof",
   "learnset": {
    "1": [
     "Cinder Nip",
@@ -11948,7 +11948,7 @@
    "spd": 96,
    "def": 67
   },
-  "trait": "kindling",
+  "trait": "fireproof",
   "learnset": {
    "1": [
     "Cinder Nip",
@@ -12022,7 +12022,7 @@
    "spd": 104,
    "def": 90
   },
-  "trait": "kindling",
+  "trait": "fireproof",
   "learnset": {
    "1": [
     "Cinder Dash",
@@ -12092,7 +12092,7 @@
    "spd": 83,
    "def": 50
   },
-  "trait": "slick",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Veil Step",
@@ -12163,7 +12163,7 @@
    "spd": 111,
    "def": 69
   },
-  "trait": "slick",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Mirk Nip",
@@ -12237,7 +12237,7 @@
    "spd": 145,
    "def": 72
   },
-  "trait": "slick",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Veil Step",
@@ -12301,7 +12301,7 @@
    "spd": 75,
    "def": 55
   },
-  "trait": "last_stand",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "Bowl Over",
@@ -12372,7 +12372,7 @@
    "spd": 98,
    "def": 71
   },
-  "trait": "last_stand",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "Bowl Over",
@@ -12446,7 +12446,7 @@
    "spd": 113,
    "def": 85
   },
-  "trait": "last_stand",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "Grit Jab",
@@ -13418,7 +13418,7 @@
    "spd": 52,
    "def": 56
   },
-  "trait": "light_sleeper",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Fizz Pop",
@@ -13489,7 +13489,7 @@
    "spd": 75,
    "def": 68
   },
-  "trait": "light_sleeper",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Fizz Pop",
@@ -14234,7 +14234,7 @@
    "spd": 75,
    "def": 44
   },
-  "trait": "surge",
+  "trait": "static_fur",
   "learnset": {
    "1": [
     "Crackle Bite",
@@ -14302,7 +14302,7 @@
    "spd": 108,
    "def": 64
   },
-  "trait": "surge",
+  "trait": "static_fur",
   "learnset": {
    "1": [
     "Crackle Bite",
@@ -14373,7 +14373,7 @@
    "spd": 117,
    "def": 63
   },
-  "trait": "surge",
+  "trait": "static_fur",
   "learnset": {
    "1": [
     "Crackle Bite",
@@ -16341,7 +16341,7 @@
    "spd": 69,
    "def": 54
   },
-  "trait": "deep_roots",
+  "trait": "thorn_coat",
   "learnset": {
    "1": [
     "Pollen Prick",
@@ -16409,7 +16409,7 @@
    "spd": 95,
    "def": 75
   },
-  "trait": "deep_roots",
+  "trait": "thorn_coat",
   "learnset": {
    "1": [
     "Lichen Lash",
@@ -16483,7 +16483,7 @@
    "spd": 96,
    "def": 84
   },
-  "trait": "deep_roots",
+  "trait": "thorn_coat",
   "learnset": {
    "1": [
     "Lichen Lash",
@@ -17509,7 +17509,7 @@
    "spd": 112,
    "def": 55
   },
-  "trait": "steady",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Veil Step",
@@ -18200,7 +18200,7 @@
    "spd": 44,
    "def": 92
   },
-  "trait": "thick_hide",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Spout Jab",
@@ -18268,7 +18268,7 @@
    "spd": 61,
    "def": 104
   },
-  "trait": "thick_hide",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Spout Jab",
@@ -18339,7 +18339,7 @@
    "spd": 72,
    "def": 126
   },
-  "trait": "thick_hide",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Spout Jab",
@@ -18403,7 +18403,7 @@
    "spd": 80,
    "def": 48
   },
-  "trait": "surge",
+  "trait": "fireproof",
   "learnset": {
    "1": [
     "Cinder Dash",
@@ -18474,7 +18474,7 @@
    "spd": 128,
    "def": 64
   },
-  "trait": "surge",
+  "trait": "fireproof",
   "learnset": {
    "1": [
     "Cinder Dash",
@@ -18548,7 +18548,7 @@
    "spd": 140,
    "def": 79
   },
-  "trait": "surge",
+  "trait": "fireproof",
   "learnset": {
    "1": [
     "Cinder Nip",
@@ -19645,7 +19645,7 @@
    "spd": 75,
    "def": 43
   },
-  "trait": "slick",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Breeze Slice",
@@ -19715,7 +19715,7 @@
    "spd": 109,
    "def": 59
   },
-  "trait": "slick",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Draft Needle",
@@ -19788,7 +19788,7 @@
    "spd": 136,
    "def": 77
   },
-  "trait": "slick",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Breeze Slice",
@@ -21199,7 +21199,7 @@
    "spd": 74,
    "def": 57
   },
-  "trait": "deep_roots",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "All-In Crash",
@@ -21276,7 +21276,7 @@
    "spd": 120,
    "def": 89
   },
-  "trait": "deep_roots",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "Pebble Toss",
@@ -21353,7 +21353,7 @@
    "spd": 111,
    "def": 92
   },
-  "trait": "deep_roots",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "All-In Crash",
@@ -22770,7 +22770,7 @@
    "spd": 55,
    "def": 62
   },
-  "trait": "deep_roots",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Mirk Nip",
@@ -22844,7 +22844,7 @@
    "spd": 70,
    "def": 77
   },
-  "trait": "deep_roots",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Veil Step",
@@ -22921,7 +22921,7 @@
    "spd": 89,
    "def": 100
   },
-  "trait": "deep_roots",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Mirk Nip",
@@ -24385,7 +24385,7 @@
    "spd": 69,
    "def": 49
   },
-  "trait": "deep_roots",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Spout Jab",
@@ -24459,7 +24459,7 @@
    "spd": 94,
    "def": 75
   },
-  "trait": "deep_roots",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Spout Jab",
@@ -26315,7 +26315,7 @@
    "spd": 71,
    "def": 53
   },
-  "trait": "surge",
+  "trait": "thorn_coat",
   "learnset": {
    "1": [
     "Lichen Lash",
@@ -26377,7 +26377,7 @@
    "spd": 96,
    "def": 70
   },
-  "trait": "surge",
+  "trait": "thorn_coat",
   "learnset": {
    "1": [
     "Lichen Lash",
@@ -26442,7 +26442,7 @@
    "spd": 119,
    "def": 75
   },
-  "trait": "surge",
+  "trait": "thorn_coat",
   "learnset": {
    "1": [
     "Pollen Prick",
@@ -26691,7 +26691,7 @@
    "spd": 65,
    "def": 48
   },
-  "trait": "last_stand",
+  "trait": "static_fur",
   "learnset": {
    "1": [
     "Crackle Bite",
@@ -26750,7 +26750,7 @@
    "spd": 97,
    "def": 69
   },
-  "trait": "last_stand",
+  "trait": "static_fur",
   "learnset": {
    "1": [
     "Crackle Bite",
@@ -26812,7 +26812,7 @@
    "spd": 117,
    "def": 77
   },
-  "trait": "last_stand",
+  "trait": "static_fur",
   "learnset": {
    "1": [
     "Crackle Bite",
@@ -26870,7 +26870,7 @@
    "spd": 42,
    "def": 83
   },
-  "trait": "thick_hide",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "Grit Jab",
@@ -26932,7 +26932,7 @@
    "spd": 58,
    "def": 112
   },
-  "trait": "thick_hide",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "Grit Jab",
@@ -27000,7 +27000,7 @@
    "spd": 71,
    "def": 130
   },
-  "trait": "thick_hide",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "All-In Crash",
@@ -28402,7 +28402,7 @@
    "spd": 70,
    "def": 59
   },
-  "trait": "steady",
+  "trait": "fireproof",
   "learnset": {
    "1": [
     "Cinder Dash",
@@ -28464,7 +28464,7 @@
    "spd": 94,
    "def": 73
   },
-  "trait": "steady",
+  "trait": "fireproof",
   "learnset": {
    "1": [
     "Cinder Dash",
@@ -28759,7 +28759,7 @@
    "spd": 75,
    "def": 43
   },
-  "trait": "slick",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Mirk Nip",
@@ -28818,7 +28818,7 @@
    "spd": 121,
    "def": 64
   },
-  "trait": "slick",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Mirk Nip",
@@ -29660,7 +29660,7 @@
    "spd": 59,
    "def": 59
   },
-  "trait": "steady",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Fizz Pop",
@@ -29722,7 +29722,7 @@
    "spd": 76,
    "def": 77
   },
-  "trait": "steady",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Fizz Pop",
@@ -29784,7 +29784,7 @@
    "spd": 88,
    "def": 82
   },
-  "trait": "steady",
+  "trait": "damp_skin",
   "learnset": {
    "1": [
     "Brine Pellet",
@@ -29845,7 +29845,7 @@
    "spd": 72,
    "def": 43
   },
-  "trait": "surge",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Breeze Slice",
@@ -29907,7 +29907,7 @@
    "spd": 109,
    "def": 66
   },
-  "trait": "surge",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Breeze Slice",
@@ -29972,7 +29972,7 @@
    "spd": 142,
    "def": 77
   },
-  "trait": "surge",
+  "trait": "dry_coat",
   "learnset": {
    "1": [
     "Breeze Slice",
@@ -31318,7 +31318,7 @@
    "spd": 41,
    "def": 80
   },
-  "trait": "thick_hide",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "Bowl Over",
@@ -31376,7 +31376,7 @@
    "spd": 58,
    "def": 108
   },
-  "trait": "thick_hide",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "Pebble Toss",
@@ -31440,7 +31440,7 @@
    "spd": 73,
    "def": 147
   },
-  "trait": "thick_hide",
+  "trait": "grounded",
   "learnset": {
    "1": [
     "Bowl Over",
@@ -32059,7 +32059,7 @@
    "spd": 77,
    "def": 39
   },
-  "trait": "slick",
+  "trait": "thorn_coat",
   "learnset": {
    "1": [
     "Pollen Prick",
@@ -32121,7 +32121,7 @@
    "spd": 111,
    "def": 64
   },
-  "trait": "slick",
+  "trait": "thorn_coat",
   "learnset": {
    "1": [
     "Seed Spit",
@@ -32186,7 +32186,7 @@
    "spd": 142,
    "def": 79
   },
-  "trait": "slick",
+  "trait": "thorn_coat",
   "learnset": {
    "1": [
     "Lichen Lash",
@@ -33331,7 +33331,7 @@
    "spd": 84,
    "def": 71
   },
-  "trait": "kindling",
+  "trait": "calm_mind",
   "learnset": {
    "1": [
     "Shadow Whisper",

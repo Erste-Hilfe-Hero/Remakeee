@@ -98,3 +98,31 @@ func test_pivot_art_alone_keeps_the_user_in() -> void:
 	var m: BattleModel = BattleFixtures.model([lead] as Array[Spirling], [foe] as Array[Spirling])
 	m.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_rest(1))
 	assert_eq(m.active_index(BattleModel.Side.PLAYER), 0)
+
+const NEW_GIFTS: Array[String] = ["fireproof", "dry_coat", "grounded", "thorn_coat", "static_fur", "damp_skin", "calm_mind"]
+
+func test_new_gifts_exist_are_translated_and_are_spread_over_kinds() -> void:
+	Loc.set_language("de")
+	var count: Dictionary = {}
+	for sd: SpirlingData in Database.spirlings.values():
+		count[sd.trait_id] = int(count.get(sd.trait_id, 0)) + 1
+	for id: String in NEW_GIFTS:
+		var t: Dictionary = BattleRules.trait_info(id)
+		assert_false(t.is_empty(), id)
+		assert_ne(Loc.t(str(t.label)), str(t.label), id)
+		assert_ne(Loc.t(str(t.text)), str(t.text), id)
+		assert_true(int(count.get(id, 0)) >= 5, "%s is on %d kinds" % [id, int(count.get(id, 0))])
+
+func test_new_immunity_gifts_block_their_status() -> void:
+	assert_true(BattleRules.is_immune(BattleFixtures.make("Cindle", 20, ["Cinder Nip"] as Array[String]), "scorch"))
+	assert_false(BattleRules.is_immune(BattleFixtures.make("Kindlop", 20, ["Cinder Nip"] as Array[String]), "scorch"))
+
+func test_calm_mind_takes_less_from_focus_arts_only() -> void:
+	var calm: Spirling = BattleFixtures.make("Hushkin", 20, ["Cinder Nip"] as Array[String])
+	var user: Spirling = BattleFixtures.make("Kindlop", 20, ["Cinder Nip"] as Array[String])
+	var phys: MoveData = Database.move("Cinder Nip").duplicate()
+	phys.kind = MoveData.Kind.PHYSICAL
+	var focus: MoveData = phys.duplicate()
+	focus.kind = MoveData.Kind.FOCUS
+	var a: float = BattleRules.damage_mult(user, calm, phys, "")
+	assert_almost_eq(BattleRules.damage_mult(user, calm, focus, ""), a * 0.85, 0.001)
