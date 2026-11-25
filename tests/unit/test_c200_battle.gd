@@ -70,3 +70,31 @@ func test_battle_items_are_grouped_heal_cure_energy_rest() -> void:
 			energy = str(it.id)
 	assert_false(heal.is_empty() or cure.is_empty() or energy.is_empty())
 	assert_eq(BattleScene.sort_battle_items([energy, cure, heal] as Array[String]), [heal, cure, energy] as Array[String])
+
+# --- item 49: arts that hit and then fall back --------------------------------------------------
+
+const PIVOT: Array[String] = ["Ember Feint", "Ebb Strike", "Petal Dodge", "Spark and Dash", "Gust Retreat", "Fade Swipe"]
+
+func test_pivot_arts_exist_with_a_crystal_and_an_info_line() -> void:
+	var shop: String = FileAccess.get_file_as_string("res://data/dialogue/lighthouse.json")
+	for n: String in PIVOT:
+		var mv: MoveData = Database.move(n)
+		assert_not_null(mv, n)
+		assert_true(mv.has_effect(&"pivot"), n)
+		assert_true(shop.contains("echo_" + n.to_snake_case()), n)
+		assert_string_contains(CommandMenu.move_info(mv), "best-suited teammate steps in")
+
+func test_pivot_art_swaps_the_user_out_after_a_hit() -> void:
+	var lead: Spirling = BattleFixtures.make("Kindlop", 30, ["Ember Feint"] as Array[String])
+	var bench: Spirling = BattleFixtures.make("Zippit", 30, ["Cinder Nip"] as Array[String])
+	var foe: Spirling = BattleFixtures.make("Wickit", 30, ["Cinder Nip"] as Array[String])
+	var m: BattleModel = BattleFixtures.model([lead, bench] as Array[Spirling], [foe] as Array[Spirling])
+	m.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_rest(1))
+	assert_eq(m.active_index(BattleModel.Side.PLAYER), 1, "the teammate stepped in")
+
+func test_pivot_art_alone_keeps_the_user_in() -> void:
+	var lead: Spirling = BattleFixtures.make("Kindlop", 30, ["Ember Feint"] as Array[String])
+	var foe: Spirling = BattleFixtures.make("Wickit", 30, ["Cinder Nip"] as Array[String])
+	var m: BattleModel = BattleFixtures.model([lead] as Array[Spirling], [foe] as Array[Spirling])
+	m.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_rest(1))
+	assert_eq(m.active_index(BattleModel.Side.PLAYER), 0)
