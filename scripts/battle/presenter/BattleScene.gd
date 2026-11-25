@@ -134,10 +134,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _enter_tree() -> void:
 	Juice.in_battle = true
+	CrashReport.set_battle(true)
 
 func _exit_tree() -> void:
 	Juice.in_battle = false
 	Juice.set_shake_root(null)
+	CrashReport.set_battle(false)
 
 func _ready() -> void:
 	theme = EraBattleHud.theme(EraManager.active_era())

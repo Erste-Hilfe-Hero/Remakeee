@@ -377,6 +377,7 @@ func _run() -> void:
 		_at_root = false
 		if idx == QUIT_ASKED:
 			if await _menu.confirm("Quit Chimora?"):
+				CrashReport.app_left()
 				get_tree().quit()
 			continue
 		var choice: String = "Continue" if items[idx].begins_with("Continue") else items[idx]

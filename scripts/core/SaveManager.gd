@@ -83,9 +83,18 @@ var settings_path: String = SETTINGS_PATH
 
 func _ready() -> void:
 	load_settings()
+	# Anonymous crash report (200 list item 184): only in shipped builds, not editor or test runs.
+	if not OS.has_feature("editor"):
+		CrashReport.begin(Online.CLIENT_VERSION_NAME)
+		get_tree().scene_changed.connect(func() -> void:
+			var cur: Node = get_tree().current_scene
+			CrashReport.enter_scene(cur.scene_file_path.get_file().get_basename() if cur != null else ""))
 
 func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_RESUMED or what == NOTIFICATION_APPLICATION_FOCUS_IN:
+		CrashReport.app_back()
 	if what == NOTIFICATION_APPLICATION_PAUSED or what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_WM_CLOSE_REQUEST:
+		CrashReport.app_left()
 		if GameState.in_game:
 			save_game()
 		save_settings()

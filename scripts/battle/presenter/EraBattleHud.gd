@@ -504,14 +504,20 @@ static func single_layout(era: int, field: Vector2, foe_sprite: Rect2, player_sp
 		# row under that plate; the player's Spirling at the bottom right, its plate to the left.
 		var fs: float = foe_sprite.size.x
 		foe_sprite = Rect2(Vector2(MARGIN, MARGIN), foe_sprite.size)
-		player_sprite.position.x = w - MARGIN - player_sprite.size.x
-		# The player's Spirling stands on the Auto tab.
-		# Never above the foe's buttons and team row (Big buttons on a short Era I/II field).
-		player_sprite.position.y = maxf(minf(player_sprite.position.y, floor_y - player_sprite.size.y),
-			MARGIN + fpad[1] + fh + fpad[3] + 3 + b.y + 3 + row.y + 1)
+		var by: float = MARGIN + fpad[1] + fh + fpad[3] + 3
+		var min_top: float = by + b.y + 3 + row.y + 1
+		var left_x: float = minf(minf(w - MARGIN - lw - 2 - b.x, w - MARGIN - row.x), tab.position.x) - 2 - player_sprite.size.x
+		if floor_y - player_sprite.size.y < min_top and left_x - MARGIN >= roundf(w * MIN_PLAYER_PLATE):
+			# A wide, short field (a tablet on its side, 200 list items 187/188): no room on the
+			# Auto tab under the buttons, so the Spirling stands left of both, on the text box.
+			player_sprite.position = Vector2(left_x, maxf(minf(player_sprite.position.y, h - MARGIN - player_sprite.size.y), by))
+		else:
+			player_sprite.position.x = w - MARGIN - player_sprite.size.x
+			# The player's Spirling stands on the Auto tab.
+			# Never above the foe's buttons and team row (Big buttons on a short Era I/II field).
+			player_sprite.position.y = maxf(minf(player_sprite.position.y, floor_y - player_sprite.size.y), min_top)
 		var fx: float = MARGIN + fs + 2 + fpad[0]
 		out["foe_plate"] = Rect2(fx, MARGIN + fpad[1], w - MARGIN - fpad[2] - fx, fh)
-		var by: float = MARGIN + fpad[1] + fh + fpad[3] + 3
 		buttons.append(Rect2(w - MARGIN - lw - 2 - b.x, by, b.x, b.y))
 		buttons.append(Rect2(w - MARGIN - lw, by, lw, b.y))
 		out["foe_team"] = Rect2(w - MARGIN - row.x, by + b.y + 3, row.x, row.y)

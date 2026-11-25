@@ -198,6 +198,8 @@ func connect_now() -> State:
 			await OnlineEvents.refresh()
 		if update_state() == "required":
 			_set_state(State.UPDATE_REQUIRED)
+		# Anonymous crash report of the last run (200 list item 184), only once the server has it.
+		CrashReport.send(backend, flag_on(CrashReport.FLAG))
 	if state == State.ONLINE and str(profile.get("platform", "")) != platform_name():
 		# The browser test build's accounts are deleted after 30 days unused (plan item 3765).
 		var p: Dictionary = await backend.call_fn("platform_set", {"p_platform": platform_name()})
