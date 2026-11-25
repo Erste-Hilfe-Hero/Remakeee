@@ -1838,6 +1838,7 @@ func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
 	var second: int = ElementFx.second_for(me.elements(), element) if me != null else -1
 	_fx.user_sprite = user
 	_fx.feel = EraBattleFeel.move_anim(mv, EraManager.active_era()) if mv != null else {}
+	_fx.repeat_speed = RepeatShort.speed("art:" + str(e.data.get("move", "")))
 	if str(_fx.feel.get("style", "")) == "quake" and int(_fx.feel.get("tier", 1)) >= 4 and kind != MoveData.Kind.STATUS:
 		Juice.add_trauma(era_trauma(0.1), element)
 	if kind != MoveData.Kind.PHYSICAL and target != user:
