@@ -8,4 +8,8 @@ T = {
 "Dim": "Dunkel",
 "Warm": "Warm",
 "Dims the whole screen for dark rooms. Warm also takes out the cold blue light.": "Dunkelt den ganzen Bildschirm für dunkle Räume ab. Warm nimmt auch das kalte blaue Licht heraus.",
+"This weekend, battles give double Growth on Saturday and Sunday.": "Dieses Wochenende geben Kämpfe am Samstag und Sonntag doppeltes Wachstum.",
+"This weekend, battles give more Growth on Saturday and Sunday.": "Dieses Wochenende geben Kämpfe am Samstag und Sonntag mehr Wachstum.",
+"Weekend: battles give double Growth today.": "Wochenende: Kämpfe geben heute doppeltes Wachstum.",
+"Weekend: battles give more Growth today.": "Wochenende: Kämpfe geben heute mehr Wachstum.",
 }

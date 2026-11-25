@@ -8,6 +8,10 @@
   "Set every setting on this page back to how it was at the start?": "Вернуть все настройки на этой странице к начальным?",
   "Sets every setting on this page back to how it was at the start.": "Возвращает все настройки на этой странице к начальным.",
   "Sets every setting on this page back to how it was at the start. The language stays.": "Возвращает все настройки на этой странице к начальным. Язык остаётся.",
-  "Warm": "Тёплый"
+  "This weekend, battles give double Growth on Saturday and Sunday.": "В эти выходные, в субботу и воскресенье, бои дают двойной Рост.",
+  "This weekend, battles give more Growth on Saturday and Sunday.": "В эти выходные, в субботу и воскресенье, бои дают больше Роста.",
+  "Warm": "Тёплый",
+  "Weekend: battles give double Growth today.": "Выходные: сегодня бои дают двойной Рост.",
+  "Weekend: battles give more Growth today.": "Выходные: сегодня бои дают больше Роста."
  }
 }

@@ -85,3 +85,30 @@ func test_display_reset_turns_night_mode_off() -> void:
 	GameState.night_mode = 2
 	SettingsReset.reset("display")
 	assert_eq(GameState.night_mode, 0)
+
+# --- 141 ---
+
+func test_weekend_doubles_growth_by_config() -> void:
+	assert_eq(GrowthRules.num("weekend_mult", 1.0), 2.0, "data/growth_rules.json")
+	assert_eq(GrowthRules.weekend_mult(6), 2.0, "Saturday")
+	assert_eq(GrowthRules.weekend_mult(0), 2.0, "Sunday")
+	for wd: int in [1, 2, 3, 4, 5]:
+		assert_eq(GrowthRules.weekend_mult(wd), 1.0, "weekday %d" % wd)
+
+func test_weekend_note_on_friday_and_the_weekend_only() -> void:
+	assert_string_contains(GrowthRules.weekend_line(5), "Saturday and Sunday")
+	assert_string_contains(GrowthRules.weekend_line(6), "today")
+	assert_string_contains(GrowthRules.weekend_line(0), "today")
+	for wd: int in [1, 2, 3, 4]:
+		assert_eq(GrowthRules.weekend_line(wd), "")
+
+func test_weekend_off_when_config_is_one() -> void:
+	var keep: Variant = GrowthRules.data().get("weekend_mult")
+	GrowthRules._data["weekend_mult"] = 1.0
+	assert_eq(GrowthRules.weekend_mult(6), 1.0)
+	assert_eq(GrowthRules.weekend_line(5), "")
+	GrowthRules._data["weekend_mult"] = keep
+
+func test_weekend_is_applied_to_battle_growth() -> void:
+	var src: String = FileAccess.get_file_as_string("res://scripts/overworld/Overworld.gd")
+	assert_string_contains(src, "model.xp_mult *= GrowthRules.weekend_mult(GrowthRules.local_weekday())")

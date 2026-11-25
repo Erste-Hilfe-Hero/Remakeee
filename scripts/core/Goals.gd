@@ -23,7 +23,7 @@ static func today() -> String:
 	var trips: Array[String] = Expeditions.status_lines()
 	if not trips.is_empty():
 		trips.insert(0, Loc.t("Roaming trips:"))
-	return _join([Loc.t(daily) if daily != "" else "", Festival.goal_lines(), WorldEvents.lines(), DailyTasks.lines(), trips])
+	return _join([Loc.t(daily) if daily != "" else "", GrowthRules.weekend_line(GrowthRules.local_weekday()), Festival.goal_lines(), WorldEvents.lines(), DailyTasks.lines(), trips])
 
 static func _weekly_line() -> String:
 	var rec: Dictionary = GameState.as_dict(GameState.records.get("weekly", {}))
