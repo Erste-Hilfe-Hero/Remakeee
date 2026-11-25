@@ -98,3 +98,36 @@ func test_glow_cells_are_doors_not_edge_paths() -> void:
 		var c := Vector2i(int(w.x), int(w.y))
 		if m.kind_at(c) == TilesetFactory.Kind.PATH:
 			assert_false(c in cells, "edge path %s stays unmarked" % c)
+
+# Item 38: soft day-night.
+
+func test_daylight_fades_instead_of_jumping() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, "Kindlop")
+	GameState.set_flag("got_starter")
+	GameState.current_map = "brindlewick"
+	GameState.player_cell = Vector2i(5, 8)
+	var ow: Overworld = load("res://scenes/overworld/Overworld.tscn").instantiate()
+	add_child_autofree(ow)
+	await wait_process_frames(2)
+	assert_true(ow.map.outdoor)
+	EraLight.debug_era = 3
+	EraLight.debug_weather = "clear"
+	EraLight.debug_hour = NOON
+	ow.refresh_daylight()
+	var day: Color = ow._daylight.color
+	EraLight.debug_hour = NIGHT
+	ow.refresh_daylight()
+	var night: Color = ow._daylight.color
+	assert_ne(day, night, "era III has a night tint")
+	EraLight.debug_hour = NOON
+	ow.refresh_daylight()
+	assert_eq(ow._daylight.color, day, "without fade the tint is set at once")
+	EraLight.debug_hour = NIGHT
+	ow.refresh_daylight(true)
+	assert_eq(ow._daylight.color, day, "the fade starts from the old tint")
+	await wait_seconds(Overworld.DAYLIGHT_FADE * 0.5)
+	assert_ne(ow._daylight.color, day, "halfway it has moved on")
+	assert_ne(ow._daylight.color, night, "halfway it is not there yet")
+	ow.refresh_daylight()
+	assert_eq(ow._daylight.color, night, "a plain refresh ends the fade")
+	remove_child(ow)

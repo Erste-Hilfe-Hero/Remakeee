@@ -529,15 +529,18 @@ func _place_rustle() -> void:
 	_rustle.visible = true
 
 ## Tints the world for the time of day (UI layers are not affected). Checked once a minute.
-func refresh_daylight() -> void:
+## With [param fade] the tint glides to the new colour over DAYLIGHT_FADE seconds instead of
+## jumping (200 list item 38); map loads and settings changes stay instant.
+func refresh_daylight(fade: bool = false) -> void:
 	if _daylight == null:
 		_daylight = CanvasModulate.new()
 		add_child(_daylight)
 		var t := Timer.new()
 		t.wait_time = 60.0
 		t.autostart = true
-		t.timeout.connect(refresh_daylight)
+		t.timeout.connect(refresh_daylight.bind(true))
 		add_child(t)
+	var before: Color = _daylight.color
 	var w: String = WeatherCycle.current(map)
 	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night) * WeatherCycle.tint(w)
 	# Era V shows the season on outdoor maps (data/era_feel.json "season_tint").
@@ -555,6 +558,24 @@ func refresh_daylight() -> void:
 		weather_layer.show_kind(w)
 	DayCycle.poll()
 	_era_light.refresh(map, w, _daylight, _glow, weather_layer)
+	_fade_daylight(before, fade)
+
+## Seconds the world tint takes to glide to a new time of day (200 list item 38).
+const DAYLIGHT_FADE: float = 4.0
+var _daylight_tween: Tween
+
+## Glides the tint from [param before] to its new colour when [param fade] is set.
+func _fade_daylight(before: Color, fade: bool) -> void:
+	if _daylight_tween != null:
+		_daylight_tween.kill()
+		_daylight_tween = null
+	var after: Color = _daylight.color
+	if not fade or before.is_equal_approx(after) or not is_inside_tree():
+		return
+	_daylight.color = before
+	# A slow light change, far longer than the Juice curves, so a plain sine tween (docs/JUICE.md).
+	_daylight_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_daylight_tween.tween_property(_daylight, "color", after, DAYLIGHT_FADE)
 
 const SHADE_DARK: float = 0.9
 const SHADE_LIT: float = 0.3
@@ -718,7 +739,7 @@ func _spawn_npcs() -> void:
 func _on_phase_changed(_phase: int) -> void:
 	if map == null or busy:
 		return
-	refresh_daylight()
+	refresh_daylight(true)
 	_spawn_npcs()
 	_world.refresh(player.cell)
 
@@ -1318,7 +1339,7 @@ func _action_bench(_args: PackedStringArray, _speaker: NPC) -> void:
 	var p: DayCycle.Phase = DayCycle.skip_to_next()
 	Sound.sfx("confirm")
 	await say(["You sit on the bench and watch the line drift. Time slips by...", BENCH_LINES[p]] as Array[String])
-	refresh_daylight()
+	refresh_daylight(true)
 	_spawn_npcs()
 	_world.refresh(player.cell)
 
