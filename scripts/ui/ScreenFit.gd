@@ -4,13 +4,15 @@ extends RefCounted
 ## runs: a foldable like iPhone Duo goes from its outer display (1398 x 2034 px) to its
 ## inner one (1878 x 2670 px) and back, and the inner display does not keep the app in
 ## portrait. Up to MAX_ASPECT (width / height) the view grows sideways ("expand", more of
-## the world shows); a wider screen keeps a 3:4 view in the middle with bars at the sides, so
-## menus and the battle made for a portrait phone never stretch across a landscape screen.
+## the world shows), so the inner display on its side (2670 x 1878 px, about 1.42) and a
+## tablet in landscape are filled edge to edge; only a wider screen (a 16:9 monitor) keeps a
+## 3:2 view in the middle with bars at the sides.
 ## The scale stays a whole number (project setting), so the pixels stay crisp.
 
-## Widest view, width / height. 3:4 is the shape of a portrait tablet, which the game
-## already fills; iPhone Duo's inner display (about 0.70) fits under it.
-const MAX_ASPECT: float = 0.75
+## Widest view, width / height. 3:2 covers iPhone Duo's inner display on its side (about
+## 1.42, update 1.3.1: it showed a narrow 3:4 column with black bars before) and a tablet
+## in landscape (4:3).
+const MAX_ASPECT: float = 1.5
 
 ## Expand up to MAX_ASPECT, keep (bars at the sides) beyond it.
 static func aspect_mode(window: Vector2) -> Window.ContentScaleAspect:
