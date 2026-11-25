@@ -281,6 +281,7 @@ func _build() -> void:
 	_ui_root.add_child(goal_line)
 	# Speed-run clock, only when switched on for the journey (KAMPF plan 507).
 	_ui_root.add_child(RunTimer.new())
+	_add_reset_button()
 	_door_wipe = ColorRect.new()
 	_door_wipe.color = UITheme.INK
 	_door_wipe.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -338,6 +339,8 @@ func _process(delta: float) -> void:
 	# A chimora://event link opens the Goals screen once the player is free (DeepLink.gd).
 	if DeepLink.route in ["event", "friend"] and GameState.has_flag("got_starter") and not busy and not scene_running and _photo == null and not player.moving:
 		open_menu("Goals" if DeepLink.take() == "event" else "Invite")
+	if reset_button != null:
+		reset_button.visible = _world.reset_wanted and not busy and not scene_running and _photo == null
 	_walk_clock += delta
 	if _walk_clock >= WALK_PAUSE:
 		_walk_clock = 0.0
@@ -439,6 +442,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_entry_cell = cell
 	if map.outdoor:
 		GameState.enter_map(map_id, cell)
+	GameState.note_place(WorldAtlas.place_of(map_id))
 	_world.prepare(map, cell)
 	map.paint(_ground)
 	_terrain_look.show_map(map, _ground, _camera, _entities)
@@ -2745,6 +2749,39 @@ func drop_to(map_id: String, cell: Vector2i) -> void:
 	busy = false
 	await _locked_say(["The floor gave way! You land on the level below, unhurt."] as Array[String])
 	await _note_room_fail(fell_from)
+
+## "Reset room" on screen (200 list item 41): shows in a boulder room once a boulder has moved
+## and the plates are not all held, so a stuck player need not look for it in the menu.
+var reset_button: Button
+
+func _add_reset_button() -> void:
+	reset_button = Button.new()
+	reset_button.name = "reset_room"
+	reset_button.text = "Reset room"
+	reset_button.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	reset_button.offset_left = 4
+	reset_button.offset_top = 24
+	reset_button.visible = false
+	reset_button.pressed.connect(func() -> void: ask_reset_room())
+	_ui_root.add_child(reset_button)
+
+## Asks first, then puts every boulder of the room back and the player at the room's entrance
+## (the same as Room > Reset room in the menu).
+func ask_reset_room() -> void:
+	if busy or not _world.reset_wanted:
+		return
+	busy = true
+	player.frozen = true
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var yes: bool = await menu.confirm("Put every boulder back where it started?", "Reset", "Keep")
+	menu.queue_free()
+	if yes:
+		_world.reset_room(_entry_cell)
+	player.frozen = false
+	busy = false
+	if yes:
+		await _note_room_fail(map.id)
 
 ## A failed try in a puzzle room (area 3 item 1027): the third one pins a tip at the entrance.
 func _note_room_fail(room_id: String) -> void:

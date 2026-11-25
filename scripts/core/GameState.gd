@@ -131,6 +131,10 @@ var visited_maps: Dictionary = {}
 var map_cells: Dictionary = {}
 ## Own world map marks (item 1273): [{"map", "x", "y", "icon"}], at most Survey.MAX_MARKS.
 var map_marks: Array = []
+## World map "last here" (200 list item 31): the place the player is in now and the one they
+## were in before it (WorldAtlas place ids, "" until known).
+var here_place: String = ""
+var last_place: String = ""
 ## Personal bests, e.g. "gauntlet_best".
 var records: Dictionary = {}
 ## Story numbers such as kestra_trust (dialogue actions set_var / add_var, plan item 1339).
@@ -604,6 +608,8 @@ func reset() -> void:
 	visited_maps = {}
 	map_cells = {}
 	map_marks = []
+	here_place = ""
+	last_place = ""
 	records = endgame_defaults({})
 	story_vars = {}
 	story_choices = {}
@@ -760,6 +766,8 @@ func to_dict() -> Dictionary:
 		"maps_entered": visited_maps.duplicate(true),
 		"map_cells": Survey.cells_to_save(map_cells),
 		"map_marks": map_marks.duplicate(true),
+		"here_place": here_place,
+		"last_place": last_place,
 		"records": records.duplicate(true),
 		"story_vars": story_vars.duplicate(),
 		"story_choices": story_choices.duplicate(),
@@ -865,6 +873,8 @@ func from_dict(d: Dictionary) -> void:
 	visited_maps = _as_dict(d.get("maps_entered", {}))
 	map_cells = Survey.cells_from_save(d.get("map_cells", {}))
 	map_marks = Survey.marks_from_save(d.get("map_marks", []))
+	here_place = str(d.get("here_place", ""))
+	last_place = str(d.get("last_place", ""))
 	# Saves from before fast travel: the last rest spot used still counts as visited.
 	if visited_rests.is_empty() and heal_map != "lighthouse":
 		visit_rest(heal_map, heal_cell)
@@ -1376,6 +1386,15 @@ func visit_rest(map_id: String, cell: Vector2i) -> void:
 ## Remembers where the player came into outdoor map [param map_id] (Signpost targets).
 func enter_map(map_id: String, cell: Vector2i) -> void:
 	visited_maps[map_id] = [cell.x, cell.y]
+
+## Called on every map change with the place of the new map (200 list item 31): the place
+## left behind becomes the "last here" place of the world map.
+func note_place(place: String) -> void:
+	if place.is_empty() or place == here_place:
+		return
+	if not here_place.is_empty():
+		last_place = here_place
+	here_place = place
 
 ## Where fast travel to [param map_id] lands: its rest spot, else (with the Signpost) the last
 ## entry. Empty when it is no target.

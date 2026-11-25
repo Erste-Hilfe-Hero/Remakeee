@@ -1,0 +1,20 @@
+{
+ "_comment": "German texts from tools/i18n/de_c200ow2.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Nearest rest point: %s, to the %s.": "Nächster Rastplatz: %s, Richtung %s.",
+  "No rest point found yet. Rest points show as a small cross on the map.": "Noch kein Rastplatz gefunden. Rastplätze zeigt die Karte als kleines Kreuz.",
+  "Reset": "Zurücksetzen",
+  "Rest point": "Rastplatz",
+  "There is a rest point right here, in %s.": "Hier gibt es einen Rastplatz, in %s.",
+  "You were here last.": "Hier warst du zuletzt.",
+  "east": "Osten",
+  "north": "Norden",
+  "north-east": "Nordosten",
+  "north-west": "Nordwesten",
+  "south": "Süden",
+  "south-east": "Südosten",
+  "south-west": "Südwesten",
+  "west": "Westen"
+ }
+}

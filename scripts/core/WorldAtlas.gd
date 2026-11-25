@@ -189,6 +189,56 @@ static func symbols(place: String) -> Array[String]:
 		out.append("rift")
 	return out
 
+## The place the player was in before the current one, for the map's "last here" mark
+## (200 list item 31); "" when unknown or when it is the place of [param current].
+static func last_here(current: String = "") -> String:
+	var last: String = GameState.last_place
+	if last.is_empty() or not places().has(last):
+		return ""
+	return "" if not current.is_empty() and place_of(current) == last else last
+
+## Nearest visited place with a rest point, counted in road and line hops from the place of
+## [param current] (200 list item 32), or "". The player's own place counts when it has one.
+static func nearest_heal(current: String, known_now: Dictionary) -> String:
+	var start: String = place_of(current)
+	if start.is_empty():
+		return ""
+	var seen: Dictionary = {start: true}
+	var queue: Array[String] = [start]
+	var head: int = 0
+	while head < queue.size():
+		var id: String = queue[head]
+		head += 1
+		if int(known_now.get(id, Known.UNKNOWN)) == Known.VISITED and "heal" in symbols(id):
+			return id
+		for n: String in links_of(id):
+			if places().has(n) and not seen.has(n):
+				seen[n] = true
+				queue.append(n)
+	return ""
+
+## Compass word from [param from] to [param to] on the world grid: "north", "south-east", ...
+## or "" for the same cell (north is up).
+static func direction(from: String, to: String) -> String:
+	var d: Vector2i = grid_cell(to) - grid_cell(from)
+	var ns: String = "north" if d.y < 0 else ("south" if d.y > 0 else "")
+	var ew: String = "west" if d.x < 0 else ("east" if d.x > 0 else "")
+	# A mostly straight way reads as one direction.
+	if absi(d.x) >= 2 * absi(d.y):
+		ns = ""
+	elif absi(d.y) >= 2 * absi(d.x):
+		ew = ""
+	return ns + ("-" if not ns.is_empty() and not ew.is_empty() else "") + ew
+
+## The hint for "Rest point" on the map (200 list item 32).
+static func heal_hint(current: String, target: String) -> String:
+	if target.is_empty():
+		return Loc.t("No rest point found yet. Rest points show as a small cross on the map.")
+	var name: String = Loc.t(MapData.load_map(target).display_name) if MapData.exists(target) else target
+	if target == place_of(current):
+		return Loc.t("There is a rest point right here, in %s.") % name
+	return Loc.t("Nearest rest point: %s, to the %s.") % [name, Loc.t(direction(place_of(current), target))]
+
 ## The detail page text (item 1247).
 static func detail_text(place: String) -> String:
 	var m: MapData = MapData.load_map(place)

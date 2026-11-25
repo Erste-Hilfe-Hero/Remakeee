@@ -16,6 +16,8 @@ var _undo: Array = []
 var _cracking: Vector2i = Vector2i(-1, -1)
 ## Last pressed state per puzzle flag, to play a sound when it changes.
 var _pressed: Dictionary = {}
+## The overworld shows its "Reset room" button while this is true (200 list item 41).
+var reset_wanted: bool = false
 ## Hidden finds glint briefly every few seconds (area 3 item 1078).
 const GLINT_EVERY: float = 4.0
 const GLINT_TIME: float = 0.35
@@ -47,6 +49,7 @@ func prepare(m: MapData, cell: Vector2i) -> void:
 	vents_calm = true
 	m.apply_blocks(flags_now(m, cell))
 	_pressed = _pressed_now(m, cell)
+	reset_wanted = PuzzleRoom.reset_offered(m, cell)
 	_build_glints(m)
 	_setup_vents(m)
 	_draw_beam(m)
@@ -328,6 +331,7 @@ func refresh(cell: Vector2i) -> void:
 		if bool(now[f]) != bool(_pressed.get(f, false)):
 			Sound.sfx("warp" if now[f] else "bump")
 	_pressed = now
+	reset_wanted = PuzzleRoom.reset_offered(m, cell)
 
 func _save_state(state: Dictionary) -> void:
 	GameState.set_world_of(ow.map.id, state)
