@@ -255,6 +255,7 @@ func _build() -> void:
 	_ui.add_child(ui_root)
 	_ui_root = ui_root
 	SafeArea.apply(ui_root)
+	ui_root.add_child(SavePip.new())
 	_fade = ColorRect.new()
 	_fade.color = Color(UITheme.INK, 0.0)
 	_fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -292,6 +293,7 @@ func _build() -> void:
 	add_child(toast)
 	Billing.pass_paid.connect(_on_pass_paid)
 	_text = TextBox.new()
+	_text.keep_log = true
 	_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	_text.offset_top = -TEXT_BOX_HEIGHT
 	# Long lines (and German text) grow the box upward instead of off the bottom of the screen.

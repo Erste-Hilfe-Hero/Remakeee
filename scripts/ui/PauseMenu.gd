@@ -46,7 +46,9 @@ const MENU_ORDER: Array[String] = ["Goals", "Ledger", "Map", "Room", "Team", "Sa
 const MORE: String = "More"
 ## What More holds: Photo, the Discord invite (kept one tap deep, Ali wants it visible) and
 ## the Shortcuts.
-const MORE_ENTRIES: Array[String] = ["Photo", "Join our Discord", EraMenuKit.SHORTCUTS]
+const MORE_ENTRIES: Array[String] = ["Photo", TALK_LOG, "Join our Discord", EraMenuKit.SHORTCUTS]
+## Reads the last talk lines again (200 list items 14, 115).
+const TALK_LOG: String = "Talk log"
 
 static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false,
 		ledger: bool = false) -> Array[String]:
@@ -199,7 +201,7 @@ func run_map() -> void:
 			1: await MapBookMenu.run(self)
 			_: return
 
-## More (item 41): Photo, Join our Discord and Shortcuts. Returns the entry the menu should
+## More (item 41): Photo, Talk log (200 list item 14), Join our Discord and Shortcuts. Returns the entry the menu should
 ## open (Photo or a pinned shortcut), or "" to go back to the start menu.
 func run_more(labels: Array[String]) -> String:
 	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "pause")
@@ -210,6 +212,8 @@ func run_more(labels: Array[String]) -> String:
 		match MORE_ENTRIES[idx]:
 			"Join our Discord":
 				open_discord()
+			TALK_LOG:
+				await pick_screen("pause", TALK_LOG, talk_log_rows(), {"columns": 1})
 			EraMenuKit.SHORTCUTS:
 				var pinned: String = await run_shortcuts(labels)
 				if not pinned.is_empty():
@@ -217,6 +221,15 @@ func run_more(labels: Array[String]) -> String:
 			var other:
 				return other
 	return ""
+
+## One row per remembered talk line, newest first; one quiet row when nothing was said yet.
+static func talk_log_rows() -> Array[Dictionary]:
+	var rows: Array[Dictionary] = []
+	for i: int in range(TextBox.talk_log.size() - 1, -1, -1):
+		rows.append({"text": TextBox.talk_log[i]})
+	if rows.is_empty():
+		rows.append({"text": "Nobody has spoken yet.", "disabled": true})
+	return rows
 
 ## Puts the shop entry [param shop] into [param labels]: after the Satchel once the first Rift is
 ## mended ([param prominent]), before that at the end of the list, still reachable (Chimora 100, item 70).
@@ -231,7 +244,7 @@ static func place_shop(labels: Array[String], shop: String, prominent: bool) -> 
 func run_shortcuts(labels: Array[String]) -> String:
 	var can: Array[String] = []
 	for l: String in labels:
-		if l != EraMenuKit.SHORTCUTS and l != MORE and not l.begins_with("Shop (") and l != "Photo":
+		if l != EraMenuKit.SHORTCUTS and l != MORE and not l.begins_with("Shop (") and l != "Photo" and l != TALK_LOG:
 			can.append(l)
 	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "pause")
 	lay["columns"] = 1

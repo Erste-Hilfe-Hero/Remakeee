@@ -731,7 +731,7 @@ func test_era1_start_menu_is_short_with_more_and_map_book_under_map() -> void:
 	for gone: String in ["Map book", "Photo", "Join our Discord", EraMenuKit.SHORTCUTS]:
 		assert_false(gone in labels, gone + " is under Map or More")
 	assert_eq(labels[labels.size() - 1], PauseMenu.MORE)
-	assert_eq(PauseMenu.MORE_ENTRIES, ["Photo", "Join our Discord", EraMenuKit.SHORTCUTS] as Array[String])
+	assert_eq(PauseMenu.MORE_ENTRIES, ["Photo", PauseMenu.TALK_LOG, "Join our Discord", EraMenuKit.SHORTCUTS] as Array[String])
 
 func test_one_hand_menus_sit_low_with_back_on_the_thumb_side() -> void:
 	var host := MenuHost.new()

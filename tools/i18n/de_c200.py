@@ -18,4 +18,8 @@ T = {
 "Light glints off it again and again: two to four hits.": "Licht blitzt immer wieder auf: zwei bis vier Treffer.",
 "Pecks from where the light does not reach: two to four hits.": "Picker von dort, wo kein Licht hinkommt: zwei bis vier Treffer.",
 "Plain little blows with no element: two to four hits.": "Schlichte kleine Hiebe ohne Element: zwei bis vier Treffer.",
+"Talk log": "Gesprächsverlauf",
+"Nobody has spoken yet.": "Noch hat niemand etwas gesagt.",
+"Read the last things people said again.": "Lies noch einmal, was zuletzt gesagt wurde.",
+"Idea": "Idee",
 }
