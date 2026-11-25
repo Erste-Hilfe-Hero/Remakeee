@@ -35,6 +35,11 @@ func sign_out() -> void:
 func call_fn(_name: String, _args: Dictionary = {}) -> Dictionary:
 	return fail("not_implemented")
 
+## Calls a server function without the sign-in token (only the public key), so the server cannot
+## tell who sent it. Used for the anonymous crash report (CrashReport).
+func call_anon(_name: String, _args: Dictionary = {}) -> Dictionary:
+	return fail("not_implemented")
+
 static func ok(data: Variant = null) -> Dictionary:
 	return {"ok": true, "data": data, "error": "", "net": false}
 
