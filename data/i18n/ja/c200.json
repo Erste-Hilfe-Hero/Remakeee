@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table c200, written by tools/i18n/locales_c200.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "A spray of sparks: two to four small burns.": "火の粉をまき散らす。2回から4回の小さなやけど。",
+  "A volley of sticky burrs: two to four hits.": "ひっつく実を次々と飛ばす。2回から4回当たる。",
+  "Burr Volley": "ひっつきのみだれうち",
+  "Cinder Flurry": "ひのこのうず",
+  "Glint Volley": "きらめきれんしゃ",
+  "Gust Flicks": "かぜのはじき",
+  "Knuckle Patter": "げんこつれんだ",
+  "Light glints off it again and again: two to four hits.": "光が何度もきらめく。2回から4回当たる。",
+  "Little crackles in a row: two to four hits.": "小さなパチパチが続く。2回から4回当たる。",
+  "Pecks from where the light does not reach: two to four hits.": "光の届かない所からついばむ。2回から4回当たる。",
+  "Plain little blows with no element: two to four hits.": "属性のない小さな連打。2回から4回当たる。",
+  "Quick jabs that ride the ripples: two to four hits.": "さざなみに乗ったすばやい突き。2回から4回当たる。",
+  "Ripple Jab": "さざなみづき",
+  "Shadow Pecks": "かげのついばみ",
+  "Sharp flicks of wind: two to four hits.": "するどい風のはじき。2回から4回当たる。",
+  "Static Patter": "パチパチれんだ",
+  "Tip: %s and %s arts hit %s hard.": "ヒント: %sと%sのわざは%sによく効く。",
+  "Tip: %s arts hit %s hard.": "ヒント: %sのわざは%sによく効く。"
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table c200, written by tools/i18n/locales_c200.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "A spray of sparks: two to four small burns.": "Kıvılcım saçar: iki ila dört küçük yanık.",
+  "A volley of sticky burrs: two to four hits.": "Yapışkan pıtrak yaylımı: iki ila dört vuruş.",
+  "Burr Volley": "Pıtrak Yaylımı",
+  "Cinder Flurry": "Kıvılcım Sağanağı",
+  "Glint Volley": "Pırıltı Yaylımı",
+  "Gust Flicks": "Rüzgâr Fiskeleri",
+  "Knuckle Patter": "Yumruk Yağmuru",
+  "Light glints off it again and again: two to four hits.": "Işık tekrar tekrar parlar: iki ila dört vuruş.",
+  "Little crackles in a row: two to four hits.": "Art arda küçük çıtırtılar: iki ila dört vuruş.",
+  "Pecks from where the light does not reach: two to four hits.": "Işığın ulaşmadığı yerden gagalamalar: iki ila dört vuruş.",
+  "Plain little blows with no element: two to four hits.": "Elementsiz küçük sade darbeler: iki ila dört vuruş.",
+  "Quick jabs that ride the ripples: two to four hits.": "Dalgacıklara binen hızlı dürtüşler: iki ila dört vuruş.",
+  "Ripple Jab": "Dalgacık Dürtüşü",
+  "Shadow Pecks": "Gölge Gagalaması",
+  "Sharp flicks of wind: two to four hits.": "Keskin rüzgâr fiskeleri: iki ila dört vuruş.",
+  "Static Patter": "Statik Tıkırtı",
+  "Tip: %s and %s arts hit %s hard.": "İpucu: %s ve %s sanatları %s üzerinde çok etkili.",
+  "Tip: %s arts hit %s hard.": "İpucu: %s sanatları %s üzerinde çok etkili."
+ }
+}

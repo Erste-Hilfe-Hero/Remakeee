@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table c200, written by tools/i18n/locales_c200.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "A spray of sparks: two to four small burns.": "Uma chuva de fagulhas: de duas a quatro pequenas queimaduras.",
+  "A volley of sticky burrs: two to four hits.": "Uma rajada de carrapichos grudentos: de dois a quatro golpes.",
+  "Burr Volley": "Rajada de Carrapichos",
+  "Cinder Flurry": "Rajada de Fagulhas",
+  "Glint Volley": "Rajada de Lampejos",
+  "Gust Flicks": "Petelecos de Vento",
+  "Knuckle Patter": "Chuva de Juntas",
+  "Light glints off it again and again: two to four hits.": "A luz lampeja de novo e de novo: de dois a quatro golpes.",
+  "Little crackles in a row: two to four hits.": "Pequenos estalos seguidos: de dois a quatro golpes.",
+  "Pecks from where the light does not reach: two to four hits.": "Bicadas de onde a luz não chega: de dois a quatro golpes.",
+  "Plain little blows with no element: two to four hits.": "Pequenos golpes simples sem elemento: de dois a quatro golpes.",
+  "Quick jabs that ride the ripples: two to four hits.": "Golpes rápidos que seguem as marolas: de dois a quatro golpes.",
+  "Ripple Jab": "Golpes de Marola",
+  "Shadow Pecks": "Bicadas Sombrias",
+  "Sharp flicks of wind: two to four hits.": "Petelecos de vento afiados: de dois a quatro golpes.",
+  "Static Patter": "Estalidos Estáticos",
+  "Tip: %s and %s arts hit %s hard.": "Dica: artes %s e %s atingem %s com força.",
+  "Tip: %s arts hit %s hard.": "Dica: artes %s atingem %s com força."
+ }
+}

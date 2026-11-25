@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table c200, written by tools/i18n/locales_c200.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "A spray of sparks: two to four small burns.": "Deszcz iskier: od dwóch do czterech małych oparzeń.",
+  "A volley of sticky burrs: two to four hits.": "Salwa lepkich rzepów: od dwóch do czterech trafień.",
+  "Burr Volley": "Salwa Rzepów",
+  "Cinder Flurry": "Wir Iskier",
+  "Glint Volley": "Salwa Błysków",
+  "Gust Flicks": "Pstryczki Wiatru",
+  "Knuckle Patter": "Grad Kuksów",
+  "Light glints off it again and again: two to four hits.": "Światło błyska raz po raz: od dwóch do czterech trafień.",
+  "Little crackles in a row: two to four hits.": "Drobne trzaski jeden po drugim: od dwóch do czterech trafień.",
+  "Pecks from where the light does not reach: two to four hits.": "Dziobnięcia stamtąd, gdzie nie sięga światło: od dwóch do czterech trafień.",
+  "Plain little blows with no element: two to four hits.": "Proste drobne ciosy bez żywiołu: od dwóch do czterech trafień.",
+  "Quick jabs that ride the ripples: two to four hits.": "Szybkie pchnięcia niesione przez fale: od dwóch do czterech trafień.",
+  "Ripple Jab": "Pchnięcia Fali",
+  "Shadow Pecks": "Dziobnięcia Cienia",
+  "Sharp flicks of wind: two to four hits.": "Ostre pstryczki wiatru: od dwóch do czterech trafień.",
+  "Static Patter": "Trzask Statyczny",
+  "Tip: %s and %s arts hit %s hard.": "Wskazówka: sztuki %s i %s mocno trafiają %s.",
+  "Tip: %s arts hit %s hard.": "Wskazówka: sztuki %s mocno trafiają %s."
+ }
+}

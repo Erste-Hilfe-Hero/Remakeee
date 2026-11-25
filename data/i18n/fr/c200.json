@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table c200, written by tools/i18n/locales_c200.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "A spray of sparks: two to four small burns.": "Une pluie d'étincelles : deux à quatre petites brûlures.",
+  "A volley of sticky burrs: two to four hits.": "Une salve de bardanes collantes : deux à quatre coups.",
+  "Burr Volley": "Salve de Bardanes",
+  "Cinder Flurry": "Rafale de Braises",
+  "Glint Volley": "Salve Scintillante",
+  "Gust Flicks": "Pichenettes de Vent",
+  "Knuckle Patter": "Pluie de Phalanges",
+  "Light glints off it again and again: two to four hits.": "La lumière scintille encore et encore : deux à quatre coups.",
+  "Little crackles in a row: two to four hits.": "De petits crépitements en série : deux à quatre coups.",
+  "Pecks from where the light does not reach: two to four hits.": "Des becquées venues de là où la lumière n'arrive pas : deux à quatre coups.",
+  "Plain little blows with no element: two to four hits.": "De petits coups simples sans élément : deux à quatre coups.",
+  "Quick jabs that ride the ripples: two to four hits.": "Des coups rapides portés par les vaguelettes : deux à quatre coups.",
+  "Ripple Jab": "Coups de Vaguelette",
+  "Shadow Pecks": "Becquées d'Ombre",
+  "Sharp flicks of wind: two to four hits.": "De vives pichenettes de vent : deux à quatre coups.",
+  "Static Patter": "Crépitement Statique",
+  "Tip: %s and %s arts hit %s hard.": "Astuce : les arts %s et %s frappent fort %s.",
+  "Tip: %s arts hit %s hard.": "Astuce : les arts %s frappent fort %s."
+ }
+}

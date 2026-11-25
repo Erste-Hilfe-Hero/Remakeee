@@ -1140,8 +1140,10 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 	# The command words must not show under the list's lower edge (plan Chimora 100 item 57).
 	_menu.modulate.a = 0.0
 	var idx: int = -1
+	# After a faint the cursor starts on the best matchup (200 list item 70); the player still picks.
+	var focus: int = BattleAI.new(1).choose_replacement(model, BattleModel.Side.PLAYER, slot) if not cancellable else -1
 	while true:
-		idx = await _picker.pick(title, entries, cancellable)
+		idx = await _picker.pick(title, entries, cancellable, focus if focus in candidates else -1)
 		if idx < 0 or idx in candidates:
 			break
 	_menu.modulate.a = 1.0
@@ -1693,6 +1695,10 @@ func _play_event(e: BattleEvent) -> void:
 				await _text.show_text("You received %d coins." % money)
 			elif int(e.data.outcome) == BattleModel.Outcome.LOSS:
 				await _text.show_text("Your team is worn out...")
+				var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
+				var tip: String = BattleGuide.loss_tip(model.active_spirling(BattleModel.Side.FOE, foes[0])) if not foes.is_empty() else ""
+				if not tip.is_empty():
+					await _text.show_text(tip)
 			# The end report for Wayfarer and boss battles (KAMPF_PLAN items 20, 76).
 			if model.has_meta("summary") and not model.is_wild and not model.has_meta("quick"):
 				var rep_lines: Array[String] = (model.get_meta("summary") as BattleSummary).lines()

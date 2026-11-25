@@ -159,3 +159,18 @@ static func team_values(party: Array) -> String:
 			sparks.append(str(int(sp.spark.get(key, 0))))
 		lines.append("%s R%d: %s | %s %s | %s" % [Loc.t(sp.data.species_name), sp.level, " ".join(vals), Loc.t("Spark"), "/".join(sparks), Loc.t(str(sp.temperament().label))])
 	return "\n".join(lines)
+
+## After a loss (200 list item 71): which elements hit the Spirling that won, up to two, as one
+## line ("Tip: Tide and Stone arts hit Cindrel hard."). Empty when no element hits it hard.
+static func loss_tip(foe: Spirling) -> String:
+	if foe == null:
+		return ""
+	var names: Array[String] = []
+	for e: int in Elements.E.values():
+		if Elements.multiplier(e, foe.elements()) >= 2.0 and names.size() < 2:
+			names.append(Loc.t(Elements.element_name(e)))
+	if names.is_empty():
+		return ""
+	if names.size() == 1:
+		return Loc.t("Tip: %s arts hit %s hard.") % [names[0], foe.display_name()]
+	return Loc.t("Tip: %s and %s arts hit %s hard.") % [names[0], names[1], foe.display_name()]

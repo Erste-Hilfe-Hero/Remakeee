@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table c200, written by tools/i18n/locales_c200.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "A spray of sparks: two to four small burns.": "Een regen van vonken: twee tot vier kleine brandwondjes.",
+  "A volley of sticky burrs: two to four hits.": "Een salvo plakkerige klitten: twee tot vier treffers.",
+  "Burr Volley": "Klitensalvo",
+  "Cinder Flurry": "Vonkenvlaag",
+  "Glint Volley": "Glinstersalvo",
+  "Gust Flicks": "Windtikken",
+  "Knuckle Patter": "Knokkelregen",
+  "Light glints off it again and again: two to four hits.": "Het licht glinstert keer op keer: twee tot vier treffers.",
+  "Little crackles in a row: two to four hits.": "Kleine knetters achter elkaar: twee tot vier treffers.",
+  "Pecks from where the light does not reach: two to four hits.": "Pikken van waar het licht niet komt: twee tot vier treffers.",
+  "Plain little blows with no element: two to four hits.": "Eenvoudige kleine klappen zonder element: twee tot vier treffers.",
+  "Quick jabs that ride the ripples: two to four hits.": "Snelle stoten op de rimpelingen: twee tot vier treffers.",
+  "Ripple Jab": "Rimpelstoten",
+  "Shadow Pecks": "Schaduwpikken",
+  "Sharp flicks of wind: two to four hits.": "Scherpe windtikken: twee tot vier treffers.",
+  "Static Patter": "Statisch Geknetter",
+  "Tip: %s and %s arts hit %s hard.": "Tip: %s- en %s-kunsten raken %s hard.",
+  "Tip: %s arts hit %s hard.": "Tip: %s-kunsten raken %s hard."
+ }
+}

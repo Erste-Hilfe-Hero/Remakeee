@@ -16,8 +16,9 @@ func test_every_effect_gets_a_line_on_the_info_card() -> void:
 		var mv: MoveData = Database.move(art)
 		var text: String = CommandMenu.move_info(mv)
 		var flags: int = int(mv.priority > 0) + int(mv.is_area()) + int(mv.overcharge) \
-			+ int(mv.cooldown > 0) + int(mv.ignore_daze) + int(mv.ignore_stages)
-		# name, element/kind, accuracy/Energy, flags, one line per effect, "(tap to close)"
+			+ int(mv.cooldown > 0) + int(mv.ignore_daze) + int(mv.ignore_stages) \
+			+ int(not mv.description.is_empty())
+		# name, element/kind, accuracy/Energy, its own line, flags, one line per effect, "(tap to close)"
 		assert_eq(text.split("\n").size(), 4 + flags + mv.effects.size(), art + ":\n" + text)
 
 func test_info_card_is_german_apart_from_names() -> void:
