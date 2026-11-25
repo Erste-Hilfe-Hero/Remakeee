@@ -245,7 +245,11 @@ var large_text: bool = false
 ## Day and night tint and encounters on outdoor maps (item 43).
 var day_night: bool = true
 ## Weather in the world (area 3 item 1145); off means always clear.
-var weather: bool = true
+## Weather on the map and in battle. Off by default since 1.3.1 (owner 25.11.2026); Settings
+## switch it back on.
+var weather: bool = false
+## Settings files from before 1.3.1 lack this mark: their "weather" is turned off once.
+const WEATHER_MARK: String = "weather_131"
 ## Minimap (area 3 item 1272): "on", "off" or "outdoor" (only outside).
 var minimap: String = "on"
 ## Game language (item 62): a Loc.LANGUAGES code, or "" for the device language.
@@ -882,7 +886,7 @@ func settings_to_dict() -> Dictionary:
 		"one_hand": one_hand, "bag_sort": bag_sort, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice, "auto_text": auto_text,
 		"tips": tips_enabled, "play_reminder": play_reminder, "goal_line": goal_line, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language,
+		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, WEATHER_MARK: true, "minimap": minimap, "language": language,
 		"terms_version": terms_version}
 
 func settings_from_dict(d: Dictionary) -> void:
@@ -932,7 +936,8 @@ func settings_from_dict(d: Dictionary) -> void:
 	color_blind = bool(d.get("color_blind", false))
 	large_text = bool(d.get("large_text", false))
 	day_night = bool(d.get("day_night", true))
-	weather = bool(d.get("weather", true))
+	# Off for everyone with 1.3.1 (owner 25.11.2026); a later choice in Settings is kept.
+	weather = bool(d.get("weather", false)) if d.has(WEATHER_MARK) else false
 	minimap = str(d.get("minimap", "on")) if str(d.get("minimap", "on")) in Survey.MINIMAP_MODES else "on"
 	language = str(d.get("language", ""))
 	terms_version = str(d.get("terms_version", ""))

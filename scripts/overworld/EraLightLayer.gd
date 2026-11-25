@@ -237,6 +237,9 @@ func _process(delta: float) -> void:
 	_sweep(delta)
 	if fx.is_empty() and wipe_style.is_empty() and _flash_left <= 0.0:
 		return
+	# The weather line is a Label of its own: alone it needs no repaint (Era I, style "none").
+	if fx.size() == 1 and fx[0] == "weather_text" and wipe_style.is_empty() and _flash_left <= 0.0:
+		return
 	if _weather_clip != null:
 		_weather_clip.queue_redraw()
 	if str(cfg.get("weather_style", "")) == "pattern" and wipe_style.is_empty() and not "cave_light" in fx:
@@ -441,6 +444,8 @@ func _paint_weather(c: Painter) -> void:
 	var vs: Vector2 = c.get_viewport_rect().size
 	if look != "clear":
 		match str(cfg.get("weather_style", "pattern")):
+			"none":
+				pass
 			"pattern":
 				_paint_pattern(c, vs)
 			"lines":
