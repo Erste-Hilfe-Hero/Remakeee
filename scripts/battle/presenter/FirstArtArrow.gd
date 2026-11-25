@@ -5,7 +5,7 @@ extends Control
 ## and starts the wait again. No timer is shown (no countdown pressure).
 
 const IDLE_SECONDS: float = 5.0
-## Arrow size at UI scale 1 and how far it bobs.
+## Arrow size (length of the head, width) and how far it bobs.
 const SIZE: Vector2 = Vector2(10, 8)
 const BOB: float = 2.0
 
@@ -62,17 +62,31 @@ func _input(event: InputEvent) -> void:
 		_idle = 0.0
 		visible = false
 
+## Where the arrow's tip sits: just after the art's name on [param b], halfway down the row.
+static func tip_for(b: Control, rect: Rect2) -> Vector2:
+	var x: float = rect.size.x * 0.5
+	var btn := b as Button
+	if btn != null:
+		var font: Font = btn.get_theme_font("font")
+		var fs: int = btn.get_theme_font_size("font_size")
+		var sb: StyleBox = btn.get_theme_stylebox("normal")
+		var left: float = sb.content_margin_left if sb != null else 0.0
+		var icon_w: float = float(btn.icon.get_width()) + 2.0 if btn.icon != null else 0.0
+		var line: String = btn.text.get_slice("\n", 0)
+		x = left + icon_w + font.get_string_size(line, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + 3.0
+	return Vector2(rect.position.x + minf(x, rect.size.x * 0.6), rect.position.y + rect.size.y * 0.5)
+
 func _draw() -> void:
 	if target == null:
 		return
-	var k: float = maxf(1.0, target.get_global_transform().get_scale().x)
-	var r: Rect2 = Rect2(target.global_position - global_position, target.size * k)
-	var bob: float = 0.0 if GameState.reduce_motion else roundf(sin(_t * TAU) * BOB) * k
-	var tip: Vector2 = Vector2(r.position.x + minf(r.size.x * 0.5, 40.0 * k), r.position.y - 1.0 * k + bob)
-	var w: float = SIZE.x * k
-	var h: float = SIZE.y * k
-	var pts := PackedVector2Array([tip, tip + Vector2(-w * 0.5, -h), tip + Vector2(-w * 0.2, -h),
-		tip + Vector2(-w * 0.2, -h * 1.8), tip + Vector2(w * 0.2, -h * 1.8), tip + Vector2(w * 0.2, -h), tip + Vector2(w * 0.5, -h)])
-	draw_colored_polygon(pts, UITheme.ACCENT)
+	var r: Rect2 = Rect2(target.global_position - global_position, target.size)
+	var bob: float = 0.0 if GameState.reduce_motion else roundf(sin(_t * TAU) * BOB)
+	var tip: Vector2 = tip_for(target, r) + Vector2(bob, 0)
+	var w: float = SIZE.x
+	var h: float = SIZE.y
+	# Pointing left at the art's name: head, then the shaft to the right.
+	var pts := PackedVector2Array([tip, tip + Vector2(h, -w * 0.5), tip + Vector2(h, -w * 0.2),
+		tip + Vector2(h * 2.2, -w * 0.2), tip + Vector2(h * 2.2, w * 0.2), tip + Vector2(h, w * 0.2), tip + Vector2(h, w * 0.5)])
+	draw_colored_polygon(pts, UITheme.INK)
 	pts.append(tip)
-	draw_polyline(pts, UITheme.INK, maxf(1.0, k))
+	draw_polyline(pts, UITheme.ACCENT, 1.0)
