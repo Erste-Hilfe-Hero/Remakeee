@@ -45,13 +45,12 @@ func test_era_progress_counts_seen_and_bonded_per_era() -> void:
 	assert_eq([int(rows[0].seen), int(rows[0].bonded)], [1, 1])
 	assert_eq([int(rows[1].seen), int(rows[1].bonded)], [1, 0])
 
-func test_era_rows_show_percent_and_a_bar() -> void:
+func test_era_rows_show_percent() -> void:
 	GameState.flags["story_complete"] = true
 	var rows: Array[Dictionary] = PauseMenu.spirlog_era_rows()
 	assert_eq(rows.size(), 2)
 	assert_eq(str(rows[0].text), "Era I: 0% seen, 0% bonded")
 	assert_string_contains(str(rows[1].text), "Era II: ")
-	assert_true(rows[0].decorate is Callable, "each era row draws a bar")
 
 func test_event_kind_is_noted_once_and_survives_a_save() -> void:
 	var sd: SpirlingData = _first_kind_of_era(1)
