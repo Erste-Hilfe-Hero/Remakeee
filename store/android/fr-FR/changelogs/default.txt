@@ -1,7 +1,7 @@
 Chimora 1.3.1
 
-- Téléphones pliables et tablettes : le jeu remplit maintenant tout l'écran à l'horizontale, sans bandes noires.
-- Les dialogues sur la carte ont retrouvé leur aspect d'avant la 1.3.0.
-- Ère I : plus de motif de pluie et de brouillard sur la carte. La météo est désormais désactivée pour tous, tu peux l'activer dans les Paramètres.
-- Les longs textes des menus ne sont plus coupés. Ils passent sur une deuxième ligne.
-- Petites corrections.
+- 7 nouveaux dons pour tes Spirlings, et de nouveaux arts qui frappent plusieurs fois ou font entrer un équipier.
+- « Lequel te correspond ? » t'aide à choisir ton partenaire, et un bouton Idée propose des noms.
+- Bonus du week-end : expérience doublée le samedi et le dimanche.
+- Fonctionne sur plus d'appareils, Chromebooks compris, et mieux sur tablettes et téléphones pliables.
+- Nombreuses petites corrections.

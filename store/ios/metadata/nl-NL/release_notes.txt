@@ -1,7 +1,10 @@
 Chimora 1.3.1
 
-- Vouwtelefoons en tablets: het spel vult nu liggend het hele scherm, zonder zwarte balken.
-- Gesprekken op de kaart zien er weer uit zoals vóór 1.3.0.
-- Tijdperk I: geen regen- en mistpatroon meer over de kaart. Het weer staat nu voor iedereen uit; je kunt het aanzetten in Instellingen.
-- Lange menuteksten worden niet meer afgekapt. Ze lopen door op een tweede regel.
-- Kleine verbeteringen.
+- 7 nieuwe gaven voor je Spirlings, en nieuwe kunsten die meerdere keren raken of een teamgenoot laten invallen.
+- "Welke past bij jou?" helpt je een partner te kiezen, en een Idee-knop stelt namen voor.
+- Wereldkaart: waar je het laatst was, de weg naar het dichtstbijzijnde rustpunt en een ster waar je met elke soort een band hebt.
+- Gesprekslog, nachtmodus en "Standaard herstellen" op elke instellingenpagina.
+- Weekendbonus: dubbele ervaring op zaterdag en zondag.
+- Nu ook op iPad, en beter op tablets en vouwtelefoons.
+- Lange menuteksten lopen door op een nieuwe regel in plaats van afgekapt te worden.
+- Veel kleine verbeteringen.
