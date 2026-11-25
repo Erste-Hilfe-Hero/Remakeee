@@ -1184,7 +1184,8 @@ func title_toggle(id: String, text: String, code: int) -> Button:
 	# Wide enough for its words (up to half the row): clipped to nothing it left an empty band
 	# with a one-pixel stub under the title (Chimora 100, item 64).
 	var f: Font = UITheme.font()
-	b.custom_minimum_size.x = minf(f.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x + 8.0, 96.0)
+	# No cap: "Sortierung: Neu" was cut at 96 px; the pocket name next to it wraps instead (1.3.1).
+	b.custom_minimum_size.x = f.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x + 8.0
 	b.focus_mode = Control.FOCUS_NONE
 	b.pressed.connect(func() -> void:
 		Sound.sfx("select")

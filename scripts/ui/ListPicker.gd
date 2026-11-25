@@ -290,7 +290,9 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		b.custom_minimum_size = Vector2(0, row_h)
 		b.clip_text = true
 		# "ellipsis": a long row ends in "..." instead of being cut mid-word (Chimora 100 item 54).
-		if bool(rows[i].get("ellipsis", false)):
+		# A row with a "detail" (a goal) is a preview of the text a tap opens: it ends in "..." too.
+		var preview: bool = bool(rows[i].get("ellipsis", false)) or not str(rows[i].get("detail", "")).is_empty()
+		if preview:
 			b.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		var right: String = str(rows[i].get("right", ""))
 		if not right.is_empty() and columns == 1:
@@ -307,7 +309,11 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 			b.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
 		# Large text (item 2042): long rows wrap onto a second line instead of being cut.
 		# The touch eras' big buttons do the same.
-		if UITheme.large_text or bool(layout.get("wrap", false)):
+		# Chimora 1.3.1: a one-column row that is too long wraps onto a second line instead of
+		# being cut ("Echo Crystal: Storm Gnash x4" in the narrow phone menu). Rows with a right
+		# column, "ellipsis" or a "detail" keep one line.
+		var long_row: bool = columns == 1 and right.is_empty() and not preview
+		if UITheme.large_text or bool(layout.get("wrap", false)) or long_row:
 			b.clip_text = false
 			b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			b.custom_minimum_size.x = 1
