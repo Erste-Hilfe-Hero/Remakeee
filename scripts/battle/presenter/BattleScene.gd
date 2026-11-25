@@ -990,6 +990,10 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 	# In a multi battle the acting order by Pace stands under the orders (KAMPF_PLAN_1000 389).
 	var pace: String = MultiRules.pace_line(model) if _multi else ""
 	var pace_tail: String = "\n" + pace if not pace.is_empty() else ""
+	# Wild battles: how leaving looks, in words only (200 list item 59).
+	var escape: String = BattleInfo.escape_words(model, slot)
+	if not escape.is_empty():
+		pace_tail += "\n" + escape
 	if _turn_deadline > 0:
 		_text.show_prompt("Orders for %s? (%d Energy, %d s)" % [me.display_name(), me.energy, _clock_left()] + pace_tail)
 	else:
