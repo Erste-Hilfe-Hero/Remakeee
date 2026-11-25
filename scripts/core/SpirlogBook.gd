@@ -80,6 +80,28 @@ static func chapter_progress(region: String, spirlog: Dictionary) -> Dictionary:
 		out.gleam = int(out.gleam) + (1 if bool(entry(spirlog, sd.species_name).gleam_bonded) else 0)
 	return out
 
+## Progress per art era (200 list item 83): [{"era", "total", "seen", "bonded"}] for every era
+## with kinds in the open regions, in era order, so each era's share is a number the player can reach.
+static func era_progress(spirlog: Dictionary, flags: Dictionary) -> Array[Dictionary]:
+	var by_era: Dictionary[int, Dictionary] = {}
+	for sd: SpirlingData in visible_kinds(flags):
+		if not by_era.has(sd.era):
+			by_era[sd.era] = {"era": sd.era, "total": 0, "seen": 0, "bonded": 0}
+		var p: Dictionary = by_era[sd.era]
+		p.total = int(p.total) + 1
+		p.seen = int(p.seen) + (1 if is_seen(spirlog, sd.species_name) else 0)
+		p.bonded = int(p.bonded) + (1 if is_bonded(spirlog, sd.species_name) else 0)
+	var eras: Array[int] = by_era.keys()
+	eras.sort()
+	var out: Array[Dictionary] = []
+	for e: int in eras:
+		out.append(by_era[e])
+	return out
+
+## Whole percent of [param n] out of [param total], rounded down so 100 means complete.
+static func percent(n: int, total: int) -> int:
+	return 0 if total <= 0 else (n * 100) / total
+
 ## Gleam counter over every kind: {"seen", "bonded", "total"}, kinds whose Gleam was seen or
 ## bonded (a bonded Gleam counts as seen too).
 static func gleam_counts(spirlog: Dictionary) -> Dictionary:

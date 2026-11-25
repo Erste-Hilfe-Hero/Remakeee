@@ -1,0 +1,6 @@
+{
+ "_comment": "Translations of the German table c200team, written by tools/i18n/locales_c200team.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Era %s: %d%% seen, %d%% bonded": "%s시대: 목격 %d%%, 유대 %d%%"
+ }
+}

@@ -1697,8 +1697,8 @@ func run_spirlog() -> void:
 		var region_tabs: bool = bool(lay.get("region_tabs", false))
 		var entries: Array[Dictionary] = []
 		var actions: Array[String] = []
-		# Two progress bars on top (item 1940).
-		for row: Dictionary in spirlog_progress_rows():
+		# Two progress bars on top (item 1940), then one percent row per era (200 list item 83).
+		for row: Dictionary in spirlog_progress_rows() + spirlog_era_rows():
 			entries.append(row)
 			actions.append("progress")
 		if bool(lay.get("search_bar", false)):
@@ -1830,6 +1830,19 @@ static func spirlog_progress_rows() -> Array[Dictionary]:
 		var n: int = int(pair[1])
 		var ratio: float = float(n) / maxf(1.0, float(total))
 		out.append({"text": Loc.t(str(pair[0]) % [n, total]),
+			"decorate": func(b: Button) -> void: _draw_progress(b, ratio)})
+	return out
+
+## "Era I: 54% seen, 30% bonded" per era with kinds in the open regions, the bar showing the
+## bonded share (200 list item 83).
+static func spirlog_era_rows() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for p: Dictionary in SpirlogBook.era_progress(GameState.spirlog, GameState.flags):
+		var total: int = int(p.total)
+		var bonded: int = int(p.bonded)
+		var ratio: float = float(bonded) / maxf(1.0, float(total))
+		out.append({"text": Loc.t("Era %s: %d%% seen, %d%% bonded") % [EraFeatures.ROMAN[clampi(int(p.era), 0, 5)],
+			SpirlogBook.percent(int(p.seen), total), SpirlogBook.percent(bonded, total)],
 			"decorate": func(b: Button) -> void: _draw_progress(b, ratio)})
 	return out
 
