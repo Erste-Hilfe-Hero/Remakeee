@@ -180,6 +180,7 @@ static func spirlog_legend() -> String:
 		Collection.STAR + "  " + Loc.t("bonded and grown to Ring 30"),
 		"~  " + Loc.t("a Gleam of this kind was seen"),
 		GleamRules.STAR + "  " + Loc.t("a Gleam of this kind was bonded"),
+		Loc.t("Lantern at the right: it joined you at an event, such as the Lamp Watch"),
 		"",
 		Loc.t("On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.")]
 	return "\n".join(lines)
@@ -1748,6 +1749,9 @@ func run_spirlog() -> void:
 			# Era I is a plain number list: the line's own "+" and "*" say seen and bonded.
 			if bool(lay.get("icons", false)):
 				row["icon"] = mark
+			# Event kinds (Lamp Watch) carry a lantern badge at the right end (200 list item 137).
+			if not SpirlogBook.event_of(GameState.spirlog, sd.species_name).is_empty():
+				row["decorate"] = SpirlogMarks.draw_event_badge
 			if str(lay.get("panel", "none")) != "none" and SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
 				row["hint"] = Loc.t("Seen at: %s" % SpirlogBook.found_line(sd, GameState.spirlog))
 			else:

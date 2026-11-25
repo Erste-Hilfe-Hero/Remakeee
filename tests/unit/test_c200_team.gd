@@ -53,6 +53,29 @@ func test_era_rows_show_percent_and_a_bar() -> void:
 	assert_string_contains(str(rows[1].text), "Era II: ")
 	assert_true(rows[0].decorate is Callable, "each era row draws a bar")
 
+func test_event_kind_is_noted_once_and_survives_a_save() -> void:
+	var sd: SpirlingData = _first_kind_of_era(1)
+	assert_eq(SpirlogBook.event_of(GameState.spirlog, sd.species_name), "")
+	GameState.note_event_kind(sd.species_name, LampWatch.RECORD)
+	GameState.note_event_kind(sd.species_name, "other")
+	assert_eq(SpirlogBook.event_of(GameState.spirlog, sd.species_name), "lamp_watch", "the first event stays")
+	GameState.from_dict(GameState.to_dict())
+	assert_eq(SpirlogBook.event_of(GameState.spirlog, sd.species_name), "lamp_watch")
+
+func test_damaged_event_field_reads_as_none() -> void:
+	assert_eq(str(GameState.upgrade_spirlog_entry({"event": 5}).event), "")
+	assert_eq(str(GameState.upgrade_spirlog_entry({"seen": true}).event), "")
+
+func test_event_kind_page_names_the_event_and_the_badge_is_a_lantern() -> void:
+	var sd: SpirlingData = _first_kind_of_era(1)
+	GameState.mark_seen(sd.species_name, true)
+	assert_false(SpirlogBook.page_text(sd, GameState.spirlog).contains("Event Spirling"))
+	GameState.note_event_kind(sd.species_name, LampWatch.RECORD)
+	assert_string_contains(SpirlogBook.page_text(sd, GameState.spirlog), "Event Spirling: Lamp Watch")
+	var tex: Texture2D = SpirlogMarks.event()
+	assert_eq(tex.get_size(), Vector2(7, 7))
+	assert_string_contains(PauseMenu.spirlog_legend(), "Lamp Watch")
+
 func test_held_mark_only_for_a_held_keepsake() -> void:
 	assert_null(KeepsakeIcons.held_mark(""))
 	var icons: Dictionary = KeepsakeKit.data().get("icons", {})

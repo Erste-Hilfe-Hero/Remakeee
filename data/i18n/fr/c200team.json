@@ -1,6 +1,8 @@
 {
  "_comment": "Translations of the German table c200team, written by tools/i18n/locales_c200team.py. Keys are the English text; keys with %s or %d are patterns.",
  "strings": {
-  "Era %s: %d%% seen, %d%% bonded": "Ère %s : %d %% vus, %d %% liés"
+  "Era %s: %d%% seen, %d%% bonded": "Ère %s : %d %% vus, %d %% liés",
+  "Event Spirling: %s": "Spirling d'événement : %s",
+  "Lantern at the right: it joined you at an event, such as the Lamp Watch": "Lanterne à droite : il t'a rejoint lors d'un événement, comme la Veille de la lampe"
  }
 }

@@ -1,11 +1,13 @@
 class_name SpirlogMarks
 extends RefCounted
 ## Own 7x7 marks for the Spirlog list (plan item 1934): an eye for "seen", a band for
-## "bonded", and an empty space of the same size so names line up.
+## "bonded", and an empty space of the same size so names line up. A lantern marks a kind that
+## joined from an event such as the Lamp Watch (200 list item 137).
 
 const LEGEND: String = "Eye: seen. Band: bonded."
 
 const EYE: Array[String] = [".......", ".......", "..###..", ".#.#.#.", "#.###.#", ".#...#.", "..###.."]
+const LANTERN: Array[String] = ["..###..", "...#...", ".#####.", ".#.#.#.", ".#.#.#.", ".#####.", "..###.."]
 const BAND: Array[String] = ["..###..", ".#...#.", "#.....#", "#######", "#.....#", ".#...#.", "..###.."]
 
 static var _cache: Dictionary[String, ImageTexture] = {}
@@ -15,6 +17,15 @@ static func seen() -> Texture2D:
 
 static func bonded() -> Texture2D:
 	return _make("band", BAND)
+
+## The event badge: a small lantern.
+static func event() -> Texture2D:
+	return _make("lantern", LANTERN)
+
+## Draws the event badge at the right end of a Spirlog row [param b].
+static func draw_event_badge(b: Button) -> void:
+	var tex: Texture2D = event()
+	b.draw_texture(tex, Vector2(b.size.x - tex.get_width() - 4, floorf((b.size.y - tex.get_height()) / 2.0)))
 
 static func none() -> Texture2D:
 	return _make("none", [] as Array[String])

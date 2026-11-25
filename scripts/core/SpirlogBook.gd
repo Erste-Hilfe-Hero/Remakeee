@@ -102,6 +102,13 @@ static func era_progress(spirlog: Dictionary, flags: Dictionary) -> Array[Dictio
 static func percent(n: int, total: int) -> int:
 	return 0 if total <= 0 else (n * 100) / total
 
+## Player-facing name of each event a kind can join from (200 list item 137).
+const EVENT_NAMES: Dictionary[String, String] = {"lamp_watch": "Lamp Watch"}
+
+## The event a kind joined from ("lamp_watch"), or "" (200 list item 137).
+static func event_of(spirlog: Dictionary, species: String) -> String:
+	return str(entry(spirlog, species).event)
+
 ## Gleam counter over every kind: {"seen", "bonded", "total"}, kinds whose Gleam was seen or
 ## bonded (a bonded Gleam counts as seen too).
 static func gleam_counts(spirlog: Dictionary) -> Dictionary:
@@ -280,6 +287,9 @@ static func page_text(sd: SpirlingData, spirlog: Dictionary) -> String:
 		lines.append(places)
 	if Collection.card_open(sd):
 		lines.append(Collection.STAR + " " + Loc.t("Collector card: bonded, ring 30 and every art of its line used."))
+	var ev: String = event_of(spirlog, sd.species_name)
+	if not ev.is_empty():
+		lines.append(Loc.t("Event Spirling: %s") % Loc.t(EVENT_NAMES.get(ev, ev.capitalize())))
 	var bonded: bool = is_bonded(spirlog, sd.species_name)
 	if bonded:
 		lines.append("Origin: %s" % sd.origin)
