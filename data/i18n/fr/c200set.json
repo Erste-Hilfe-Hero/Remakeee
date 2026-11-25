@@ -1,0 +1,9 @@
+{
+ "_comment": "Translations of the German table c200set, written by tools/i18n/locales_c200set.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Reset to default": "Réinitialiser",
+  "Set every setting on this page back to how it was at the start?": "Remettre tous les réglages de cette page comme au début ?",
+  "Sets every setting on this page back to how it was at the start.": "Remet tous les réglages de cette page comme au début.",
+  "Sets every setting on this page back to how it was at the start. The language stays.": "Remet tous les réglages de cette page comme au début. La langue reste."
+ }
+}

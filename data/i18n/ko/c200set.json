@@ -1,0 +1,9 @@
+{
+ "_comment": "Translations of the German table c200set, written by tools/i18n/locales_c200set.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Reset to default": "초기화",
+  "Set every setting on this page back to how it was at the start?": "이 페이지의 설정을 모두 처음 상태로 되돌릴까요?",
+  "Sets every setting on this page back to how it was at the start.": "이 페이지의 설정을 모두 처음 상태로 되돌린다.",
+  "Sets every setting on this page back to how it was at the start. The language stays.": "이 페이지의 설정을 모두 처음 상태로 되돌린다. 언어는 그대로."
+ }
+}

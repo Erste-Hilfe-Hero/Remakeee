@@ -1,0 +1,10 @@
+{
+ "_comment": "German texts from tools/i18n/de_c200set.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Reset to default": "Zurücksetzen",
+  "Set every setting on this page back to how it was at the start?": "Alle Einstellungen auf dieser Seite so zurücksetzen, wie sie am Anfang waren?",
+  "Sets every setting on this page back to how it was at the start.": "Setzt alle Einstellungen auf dieser Seite so zurück, wie sie am Anfang waren.",
+  "Sets every setting on this page back to how it was at the start. The language stays.": "Setzt alle Einstellungen auf dieser Seite so zurück, wie sie am Anfang waren. Die Sprache bleibt."
+ }
+}
