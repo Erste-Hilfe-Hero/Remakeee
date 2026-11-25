@@ -1,6 +1,8 @@
 extends GutTest
-## Owner wish 23.11.2026 (plan Chimora 100): talk and battle text centred, one font step larger,
-## and the map's talk box above the on-screen buttons, never under them.
+## Owner wish 23.11.2026 (plan Chimora 100): the map's talk box above the on-screen buttons,
+## never under them. The centred, larger talk text of that day is off again since 25.11.2026
+## on the map (owner: "Texte im Chat gleich machen wie davor"): left-aligned, the screen's own
+## font. The battle box (big_text) keeps the centred, larger lines.
 
 var _lang: String
 var _large: bool
@@ -32,14 +34,14 @@ func test_large_text_doubles_on_the_map_and_stays_in_battle() -> void:
 	var battle: Array = TextBox.big_font(PixelFont.get_bold_font(), UITheme.FONT_SIZE, false)
 	assert_same(battle[0], PixelFont.get_bold_font())
 
-func test_box_text_is_centred_and_larger() -> void:
+func test_box_text_is_left_aligned_in_the_screen_font_as_before() -> void:
 	var box := TextBox.new()
 	add_child_autofree(box)
 	box.size = Vector2(144, 44)
 	box.show_prompt("Orders for Kindlop?")
-	assert_eq(box._label.horizontal_alignment, HORIZONTAL_ALIGNMENT_CENTER)
-	var f: Font = box._label.get_theme_font("font")
-	assert_gte(int(f.get_height(box._label.get_theme_font_size("font_size"))), PixelFont.LARGE_H)
+	assert_eq(box._label.horizontal_alignment, HORIZONTAL_ALIGNMENT_LEFT)
+	assert_false(box._label.has_theme_font_override("font"), "no larger talk font")
+	assert_false(box._label.has_theme_font_size_override("font_size"))
 
 func test_map_talk_box_sits_above_the_pad() -> void:
 	Database.load_all()
@@ -62,8 +64,21 @@ func test_map_talk_box_sits_above_the_pad() -> void:
 	VirtualPad.set_wanted(false)
 	VirtualPad.force_visible = false
 
+func test_battle_box_is_centred_and_larger() -> void:
+	var box := TextBox.new()
+	box.big_text = true
+	box.allow_double = false
+	add_child_autofree(box)
+	box.size = Vector2(144, 44)
+	box.show_prompt("Orders for Kindlop?")
+	assert_eq(box._label.horizontal_alignment, HORIZONTAL_ALIGNMENT_CENTER)
+	var f: Font = box._label.get_theme_font("font")
+	assert_gte(int(f.get_height(box._label.get_theme_font_size("font_size"))), PixelFont.LARGE_H)
+	assert_eq(box._label_pad.content_margin_left, box._label_pad.content_margin_right, "centring stays true")
+
 func test_long_prompt_keeps_the_screen_font() -> void:
 	var box := TextBox.new()
+	box.big_text = true
 	add_child_autofree(box)
 	box.size = Vector2(144, 44)
 	box.fit_prompt = true
@@ -80,4 +95,4 @@ func test_continue_marker_keeps_clear_of_the_text() -> void:
 	var f: Font = box._arrow.get_theme_font("font")
 	var aw: float = f.get_string_size("v", HORIZONTAL_ALIGNMENT_LEFT, -1, box._arrow.get_theme_font_size("font_size")).x
 	assert_gte(float(box._arrow_space), aw + TextBox.ARROW_GAP, "room for the marker and a gap")
-	assert_eq(box._label_pad.content_margin_left, box._label_pad.content_margin_right, "centring stays true")
+	assert_lte(box._label_pad.content_margin_left, 0.0, "left-aligned text starts at the frame (no left margin)")

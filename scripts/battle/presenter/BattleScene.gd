@@ -233,6 +233,7 @@ func _build() -> void:
 	col.add_child(_field)
 	_text = TextBox.new()
 	_text.duck_music = true
+	_text.big_text = true
 	_text.allow_double = false
 	_text.pad_y = EraBattleHud.TEXT_PAD_Y
 	_text.fit_prompt = true
