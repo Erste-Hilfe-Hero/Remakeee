@@ -54,6 +54,18 @@ func test_weather_switch_in_display_menu() -> void:
 	assert_false(GameState.weather, "the switch is saved")
 	GameState.weather = true
 
+func test_weather_is_off_for_everyone_from_1_3_1_and_a_later_choice_is_kept() -> void:
+	var keep: bool = GameState.weather
+	GameState.settings_from_dict({"weather": true})
+	assert_false(GameState.weather, "a settings file from before 1.3.1 turns the weather off once")
+	GameState.settings_from_dict({})
+	assert_false(GameState.weather, "a new player starts without weather")
+	GameState.weather = true
+	var d: Dictionary = GameState.settings_to_dict()
+	GameState.settings_from_dict(d)
+	assert_true(GameState.weather, "switched on again in Settings, it stays on")
+	GameState.weather = keep
+
 func test_weather_layer_dots() -> void:
 	# Item 1144.
 	var layer := WeatherLayer.new()
