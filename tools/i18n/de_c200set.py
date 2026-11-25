@@ -4,4 +4,8 @@ T = {
 "Set every setting on this page back to how it was at the start?": "Alle Einstellungen auf dieser Seite so zurücksetzen, wie sie am Anfang waren?",
 "Sets every setting on this page back to how it was at the start.": "Setzt alle Einstellungen auf dieser Seite so zurück, wie sie am Anfang waren.",
 "Sets every setting on this page back to how it was at the start. The language stays.": "Setzt alle Einstellungen auf dieser Seite so zurück, wie sie am Anfang waren. Die Sprache bleibt.",
+"Night mode: %s": "Nachtmodus: %s",
+"Dim": "Dunkel",
+"Warm": "Warm",
+"Dims the whole screen for dark rooms. Warm also takes out the cold blue light.": "Dunkelt den ganzen Bildschirm für dunkle Räume ab. Warm nimmt auch das kalte blaue Licht heraus.",
 }

@@ -256,6 +256,14 @@ var weather: bool = false
 const WEATHER_MARK: String = "weather_131"
 ## Minimap (area 3 item 1272): "on", "off" or "outdoor" (only outside).
 var minimap: String = "on"
+## Night mode (200 list item 127): 0 off, 1 dim, 2 warm. A tint over the whole screen for dark rooms.
+var night_mode: int = 0
+const NIGHT_MODE_NAMES: Array[String] = ["Off", "Dim", "Warm"]
+## Multiplied over the screen per night mode; the first is unused (off).
+const NIGHT_TINTS: Array[Color] = [Color(1, 1, 1), Color(0.6, 0.6, 0.62), Color(0.78, 0.6, 0.42)]
+## Above every other layer (UpdatePanel is 125), so menus and pop-ups are dimmed too.
+const NIGHT_LAYER: int = 126
+var _night_layer: CanvasLayer
 ## Game language (item 62): a Loc.LANGUAGES code, or "" for the device language.
 var language: String = ""
 ## Version of the terms of use this device accepted (LegalInfo.TERMS_VERSION), "" = not yet.
@@ -896,7 +904,7 @@ func settings_to_dict() -> Dictionary:
 		"one_hand": one_hand, "bag_sort": bag_sort, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice, "auto_text": auto_text,
 		"tips": tips_enabled, "play_reminder": play_reminder, "goal_line": goal_line, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, WEATHER_MARK: true, "minimap": minimap, "language": language,
+		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, WEATHER_MARK: true, "minimap": minimap, "night_mode": night_mode, "language": language,
 		"terms_version": terms_version}
 
 func settings_from_dict(d: Dictionary) -> void:
@@ -949,6 +957,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	# Off for everyone with 1.3.1 (owner 25.11.2026); a later choice in Settings is kept.
 	weather = bool(d.get("weather", false)) if d.has(WEATHER_MARK) else false
 	minimap = str(d.get("minimap", "on")) if str(d.get("minimap", "on")) in Survey.MINIMAP_MODES else "on"
+	night_mode = clampi(int(d.get("night_mode", 0)), 0, NIGHT_MODE_NAMES.size() - 1)
 	language = str(d.get("language", ""))
 	terms_version = str(d.get("terms_version", ""))
 	apply_display()
@@ -967,6 +976,27 @@ func apply_display() -> void:
 	if UITheme.high_contrast != high_contrast:
 		UITheme.set_high_contrast(high_contrast)
 	UITheme.set_large_text(large_text)
+	apply_night_mode()
+
+## Shows or hides the night mode tint (200 list item 127). Taps go through it.
+func apply_night_mode() -> void:
+	if night_mode <= 0:
+		if _night_layer != null:
+			_night_layer.visible = false
+		return
+	if _night_layer == null:
+		_night_layer = CanvasLayer.new()
+		_night_layer.layer = NIGHT_LAYER
+		var rect := ColorRect.new()
+		rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+		rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var mat := CanvasItemMaterial.new()
+		mat.blend_mode = CanvasItemMaterial.BLEND_MODE_MUL
+		rect.material = mat
+		_night_layer.add_child(rect)
+		add_child(_night_layer)
+	_night_layer.visible = true
+	(_night_layer.get_child(0) as ColorRect).color = NIGHT_TINTS[clampi(night_mode, 0, NIGHT_TINTS.size() - 1)]
 
 ## Extra Master gain (not saved): Sound fades it to 0 while the app is in the background.
 var master_fade: float = 1.0

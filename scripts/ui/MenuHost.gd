@@ -461,6 +461,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"swap_ab_pad": "The gamepad's A goes back and B confirms.",
 	"pad_help": "Which gamepad button does what.",
 	"keys_help": "Which key does what in the browser.",
+	"night_mode": "Dims the whole screen for dark rooms. Warm also takes out the cold blue light.",
 	"reset_game": "Sets every setting on this page back to how it was at the start.",
 	"reset_sound": "Sets every setting on this page back to how it was at the start.",
 	"reset_controls": "Sets every setting on this page back to how it was at the start.",
@@ -796,6 +797,8 @@ func run_display() -> void:
 				EraManager.replay_upgrade()
 			"screen_shake":
 				GameState.screen_shake = (GameState.screen_shake + 1) % Juice.LEVEL_NAMES.size()
+			"night_mode":
+				GameState.night_mode = (GameState.night_mode + 1) % GameState.NIGHT_MODE_NAMES.size()
 			"reset_display":
 				await reset_settings_group("display")
 		GameState.apply_display()
@@ -820,6 +823,7 @@ static func display_rows() -> Array[Array]:
 		["minimap", "Minimap: %s" % shop_or("minimap", MINIMAP_NAMES[GameState.minimap])],
 		["retro", "Retro filter: %s" % shop_or("retro", retro)],
 		["screen_shake", "Screen shake: %s" % Juice.LEVEL_NAMES[GameState.screen_shake]],
+		["night_mode", "Night mode: %s" % GameState.NIGHT_MODE_NAMES[GameState.night_mode]],
 	]
 	rows.append_array(era_replay_rows())
 	rows.append(["reset_display", SettingsReset.ROW_TEXT])

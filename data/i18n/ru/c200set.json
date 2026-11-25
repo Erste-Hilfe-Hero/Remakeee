@@ -1,9 +1,13 @@
 {
  "_comment": "Translations of the German table c200set, written by tools/i18n/locales_c200set.py. Keys are the English text; keys with %s or %d are patterns.",
  "strings": {
+  "Dim": "Темнее",
+  "Dims the whole screen for dark rooms. Warm also takes out the cold blue light.": "Затемняет весь экран для тёмной комнаты. Тёплый также убирает холодный синий свет.",
+  "Night mode: %s": "Ночной режим: %s",
   "Reset to default": "Сбросить",
   "Set every setting on this page back to how it was at the start?": "Вернуть все настройки на этой странице к начальным?",
   "Sets every setting on this page back to how it was at the start.": "Возвращает все настройки на этой странице к начальным.",
-  "Sets every setting on this page back to how it was at the start. The language stays.": "Возвращает все настройки на этой странице к начальным. Язык остаётся."
+  "Sets every setting on this page back to how it was at the start. The language stays.": "Возвращает все настройки на этой странице к начальным. Язык остаётся.",
+  "Warm": "Тёплый"
  }
 }

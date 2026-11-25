@@ -55,3 +55,33 @@ func test_reset_keys_are_real_settings() -> void:
 	for g: String in SettingsReset.GROUP_KEYS:
 		for k: Variant in SettingsReset.GROUP_KEYS[g]:
 			assert_true(d.has(k), "%s in %s" % [k, g])
+
+# --- 127 ---
+
+func test_night_mode_is_saved_and_shows_a_tint_over_everything() -> void:
+	GameState.night_mode = 1
+	var d: Dictionary = GameState.settings_to_dict()
+	GameState.night_mode = 0
+	GameState.settings_from_dict(d)
+	assert_eq(GameState.night_mode, 1)
+	var layer: CanvasLayer = GameState._night_layer
+	assert_not_null(layer)
+	assert_true(layer.visible)
+	assert_eq(layer.layer, GameState.NIGHT_LAYER)
+	var rect: ColorRect = layer.get_child(0)
+	assert_eq(rect.mouse_filter, Control.MOUSE_FILTER_IGNORE, "taps go through")
+	assert_eq(rect.color, GameState.NIGHT_TINTS[1])
+	GameState.night_mode = 0
+	GameState.apply_display()
+	assert_false(layer.visible)
+
+func test_night_mode_row_and_bad_value() -> void:
+	var keys: Array = MenuHost.display_rows().map(func(r: Array) -> String: return str(r[0]))
+	assert_has(keys, "night_mode")
+	GameState.settings_from_dict({"night_mode": 9})
+	assert_eq(GameState.night_mode, GameState.NIGHT_MODE_NAMES.size() - 1)
+
+func test_display_reset_turns_night_mode_off() -> void:
+	GameState.night_mode = 2
+	SettingsReset.reset("display")
+	assert_eq(GameState.night_mode, 0)
