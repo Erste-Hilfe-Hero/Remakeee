@@ -106,19 +106,19 @@
   },
   "thorn_coat": {
    "label": "Thorn Coat",
-   "text": "A physical hit on it may root the attacker.",
+   "text": "A physical hit on it may root the one that hit it.",
    "contact_status": "root",
    "contact_chance": 0.3
   },
   "static_fur": {
    "label": "Static Fur",
-   "text": "A physical hit on it may jolt the attacker.",
+   "text": "A physical hit on it may jolt the one that hit it.",
    "contact_status": "jolt",
    "contact_chance": 0.3
   },
   "damp_skin": {
    "label": "Damp Skin",
-   "text": "A physical hit on it may soak the attacker.",
+   "text": "A physical hit on it may soak the one that hit it.",
    "contact_status": "soak",
    "contact_chance": 0.3
   },
