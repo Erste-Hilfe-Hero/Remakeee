@@ -23,7 +23,8 @@ static func place_rows(known: Dictionary) -> Array[Dictionary]:
 	sighted.sort()
 	var out: Array[Dictionary] = []
 	for id: String in visited:
-		out.append({"text": "%s  %d%%" % [_name(id), WorldAtlas.percent(id)], "place": id})
+		# A star once every wild kind of the place is bonded (200 list item 45).
+		out.append({"text": "%s  %d%%%s" % [_name(id), WorldAtlas.percent(id), WorldAtlas.complete_mark(id, GameState.spirlog)], "place": id})
 	for id: String in sighted:
 		# Only the name, without the "14%" of visited places: "(not yet visited)" was cut off at
 		# 144 px (plan Chimora 100, item 40). The hint line under the list says it in full.

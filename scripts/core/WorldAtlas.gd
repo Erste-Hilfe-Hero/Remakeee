@@ -121,6 +121,40 @@ static func finds(place: String) -> Array[int]:
 	return [found, total]
 
 ## Species of the place's encounter tables: seen ones by name, others as "???", sorted.
+## Kinds of wild Spirlings a place has and how many of them the player has bonded with:
+## [bonded, total] (200 list items 22, 45). [0, 0] for a place without wild Spirlings.
+static func bond_count(place: String, spirlog: Dictionary) -> Array[int]:
+	var kinds: Array[String] = spawn_kinds(place)
+	var bonded: int = 0
+	for n: String in kinds:
+		if bool(GameState.upgrade_spirlog_entry(spirlog.get(n, {})).get("bonded", false)):
+			bonded += 1
+	return [bonded, kinds.size()]
+
+## Every kind on the encounter tables of [param place], its floors and houses.
+static func spawn_kinds(place: String) -> Array[String]:
+	var names: Dictionary = {}
+	for id: String in maps_of(place):
+		if not MapData.exists(id):
+			continue
+		var m: MapData = MapData.load_map(id)
+		if m.encounter_table.is_empty():
+			continue
+		for sp: Variant in EncounterTable.table(m.encounter_table).get("spawns", []):
+			var n: String = str((sp as Dictionary).get("species", ""))
+			if not n.is_empty():
+				names[n] = true
+	var out: Array[String] = []
+	for n: Variant in names:
+		out.append(str(n))
+	out.sort()
+	return out
+
+## Mark after a place's name in the map list: a star once every kind there is bonded.
+static func complete_mark(place: String, spirlog: Dictionary) -> String:
+	var c: Array[int] = bond_count(place, spirlog)
+	return " *" if c[1] > 0 and c[0] == c[1] else ""
+
 static func species(place: String) -> Array[String]:
 	var names: Dictionary = {}
 	for id: String in maps_of(place):
@@ -172,6 +206,8 @@ static func detail_text(place: String) -> String:
 		for s: String in sp:
 			shown.append(s if s == "???" else Loc.t(s))
 		lines.append(Loc.t("Spirlings: %s") % ", ".join(shown))
+		var c: Array[int] = bond_count(place, GameState.spirlog)
+		lines.append(Loc.t("Bonded here: %d/%d") % [c[0], c[1]] + (" *" if c[0] == c[1] else ""))
 	return "\n".join(lines)
 
 ## Rooms of a dungeon (item 1026): the flag each room sets when solved, over all levels of the

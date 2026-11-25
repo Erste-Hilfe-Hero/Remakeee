@@ -86,3 +86,19 @@ func test_backup_line_says_how_long_ago() -> void:
 	assert_eq(Online.backup_line(7, 1030), "Backup waits for the connection.")
 	Online.backup_at = keep_at
 	Online.dirty = keep_dirty
+
+# --- items 22, 45: bonded kinds per place, a star when all are bonded --------------------------------
+
+func test_bond_count_and_star_per_place() -> void:
+	var kinds: Array[String] = WorldAtlas.spawn_kinds("brindlewick")
+	if kinds.is_empty():
+		kinds = WorldAtlas.spawn_kinds("fernstair")
+	assert_false(kinds.is_empty(), "a starting place has wild Spirlings")
+	var place: String = "brindlewick" if not WorldAtlas.spawn_kinds("brindlewick").is_empty() else "fernstair"
+	assert_eq(WorldAtlas.bond_count(place, {}), [0, kinds.size()] as Array[int])
+	assert_eq(WorldAtlas.complete_mark(place, {}), "")
+	var all: Dictionary = {}
+	for k: String in kinds:
+		all[k] = {"seen": true, "bonded": true}
+	assert_eq(WorldAtlas.bond_count(place, all), [kinds.size(), kinds.size()] as Array[int])
+	assert_eq(WorldAtlas.complete_mark(place, all), " *")
