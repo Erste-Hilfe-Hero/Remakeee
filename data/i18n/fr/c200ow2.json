@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table c200ow2, written by tools/i18n/locales_c200ow2.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Nearest rest point: %s, to the %s.": "Halte la plus proche : %s, vers le %s.",
+  "No rest point found yet. Rest points show as a small cross on the map.": "Aucune halte trouvée pour l'instant. Les haltes sont une petite croix sur la carte.",
+  "Reset": "Réinitialiser",
+  "Rest point": "Halte",
+  "There is a rest point right here, in %s.": "Il y a une halte juste ici, à %s.",
+  "You were here last.": "Vous étiez ici en dernier.",
+  "east": "est",
+  "north": "nord",
+  "north-east": "nord-est",
+  "north-west": "nord-ouest",
+  "south": "sud",
+  "south-east": "sud-est",
+  "south-west": "sud-ouest",
+  "west": "ouest"
+ }
+}
