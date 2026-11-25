@@ -1,1 +1,7 @@
-Akte IV: Solenne, drie nieuwe Kloven en een woestijn die tegen je liegt. Na de finale: Vellmarch, dan Quillmarch, Halcyra en Quivermoor in de stijl van latere tijdperken. 497 Spirlings, zes legendarische met queesten, Glansvormen. Clans houden bij wie je vertrouwde. Online: competities en echoduels. Opslaan meteen na je naam, vouwtelefoons passen direct, en je Reiziger loopt na een gevecht niet meer vanzelf door.
+Chimora 1.3.1
+
+- Vouwtelefoons en tablets: het spel vult nu liggend het hele scherm, zonder zwarte balken.
+- Gesprekken op de kaart zien er weer uit zoals vóór 1.3.0.
+- Tijdperk I: geen regen- en mistpatroon meer over de kaart. Het weer staat nu voor iedereen uit; je kunt het aanzetten in Instellingen.
+- Lange menuteksten worden niet meer afgekapt. Ze lopen door op een tweede regel.
+- Kleine verbeteringen.

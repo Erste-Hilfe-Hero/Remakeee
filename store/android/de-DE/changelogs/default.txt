@@ -1,1 +1,7 @@
-Akt IV: Solenne, drei neue Risse und eine Wüste, die dich anlügt. Nach dem Finale: Vellmarch, dann Quillmarch, Halcyra und Quivermoor im Look späterer Ären. 497 Spirlings, sechs Legendäre mit Sagen-Quests, Glanzformen. Clans führen ein Schuldbuch über dein Vertrauen. Online: Ligen und Echo-Duelle. Gespeichert wird gleich nach der Namenswahl, Falt-Handys passen sofort, und dein Wanderer läuft nach Kämpfen nicht mehr von allein weiter.
+Chimora 1.3.1
+
+- Falt-Handys und Tablets: Das Spiel füllt quer jetzt den ganzen Bildschirm, ohne schwarze Ränder.
+- Gespräche auf der Karte sehen wieder aus wie vor 1.3.0.
+- Ära I: kein Regen- und Nebelmuster mehr über der Karte. Das Wetter ist jetzt für alle aus, du kannst es in den Einstellungen einschalten.
+- Lange Menütexte werden nicht mehr abgeschnitten. Sie brechen in eine zweite Zeile um.
+- Kleine Korrekturen.

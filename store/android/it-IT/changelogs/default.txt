@@ -1,1 +1,7 @@
-Atto IV: Solenne, tre nuovi Squarci e un deserto che ti mente. Dopo il finale: Vellmarch, poi Quillmarch, Halcyra e Quivermoor, nello stile delle ere successive. 497 Spirling, sei leggendari con missioni, forme Splendore. I clan annotano di chi ti fidi. Online: leghe e duelli Eco. Salvataggio subito dopo il nome, pieghevoli adattati, e il Viandante non cammina più da solo dopo uno scontro.
+Chimora 1.3.1
+
+- Telefoni pieghevoli e tablet: il gioco ora riempie tutto lo schermo in orizzontale, senza bande nere.
+- I dialoghi sulla mappa tornano come prima della 1.3.0.
+- Era I: niente più motivo di pioggia e nebbia sulla mappa. Il meteo ora è disattivato per tutti, puoi attivarlo nelle Impostazioni.
+- I testi lunghi dei menu non vengono più tagliati. Vanno a capo su una seconda riga.
+- Piccole correzioni.
