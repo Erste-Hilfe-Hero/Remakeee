@@ -53,3 +53,20 @@ func test_wild_opening_says_if_the_kind_is_in_the_spirlog() -> void:
 	assert_eq(BattleOpening.spirlog_note(wild, foe, {"Kindlop": {"seen": true, "bonded": true}}), BattleOpening.NOTE_KNOWN)
 	var duel: BattleModel = BattleFixtures.model([me] as Array[Spirling], [foe] as Array[Spirling], false)
 	assert_eq(BattleOpening.spirlog_note(duel, foe, {}), "", "no note against a Wayfarer")
+
+func test_battle_items_are_grouped_heal_cure_energy_rest() -> void:
+	var heal: String = ""
+	var cure: String = ""
+	var energy: String = ""
+	for it: Dictionary in Database.items.values():
+		if not bool(it.get("battle", false)):
+			continue
+		var g: int = BattleScene.item_group(it)
+		if g == 0 and heal.is_empty():
+			heal = str(it.id)
+		elif g == 1 and cure.is_empty():
+			cure = str(it.id)
+		elif g == 2 and energy.is_empty():
+			energy = str(it.id)
+	assert_false(heal.is_empty() or cure.is_empty() or energy.is_empty())
+	assert_eq(BattleScene.sort_battle_items([energy, cure, heal] as Array[String]), [heal, cure, energy] as Array[String])

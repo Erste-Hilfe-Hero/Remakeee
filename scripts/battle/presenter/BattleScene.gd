@@ -1149,11 +1149,32 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 	_menu.modulate.a = 1.0
 	return idx
 
+## Battle items by what they do (200 list item 79): healing and revives, then cures, then Energy,
+## then the rest; by name inside each group.
+static func sort_battle_items(ids: Array[String]) -> Array[String]:
+	var out: Array[String] = ids.duplicate()
+	out.sort_custom(func(a: String, b: String) -> bool:
+		var ga: int = item_group(Database.item(a))
+		var gb: int = item_group(Database.item(b))
+		if ga != gb:
+			return ga < gb
+		return str(Database.item(a).get("name", a)) < str(Database.item(b).get("name", b)))
+	return out
+
+static func item_group(it: Dictionary) -> int:
+	if it.has("heal") or it.has("heal_frac") or it.has("battle_revive"):
+		return 0
+	if it.has("cure"):
+		return 1
+	if it.has("energy") or it.has("energy_bench") or it.has("energy_surge") or it.has("revive_energy"):
+		return 2
+	return 3
+
 ## [param preset] (the item shortcut, Era IV on) uses that item on the active Spirling at once.
 func _pick_item(slot: int = 0, preset: String = "") -> BattleAction:
 	var ids: Array[String] = []
 	var entries: Array[Dictionary] = []
-	for id: String in model.bag_ids(BattleModel.Side.PLAYER):
+	for id: String in sort_battle_items(model.bag_ids(BattleModel.Side.PLAYER)):
 		var it: Dictionary = Database.item(id)
 		if bool(it.get("battle", false)) and model.item_left_this_battle(BattleModel.Side.PLAYER, id):
 			ids.append(id)
