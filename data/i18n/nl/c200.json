@@ -3,6 +3,10 @@
  "strings": {
   "A spray of sparks: two to four small burns.": "Een regen van vonken: twee tot vier kleine brandwondjes.",
   "A volley of sticky burrs: two to four hits.": "Een salvo plakkerige klitten: twee tot vier treffers.",
+  "Backed up %d h ago.": "%d uur geleden geback-upt.",
+  "Backed up %d min ago.": "%d min geleden geback-upt.",
+  "Backed up just now.": "Zojuist geback-upt.",
+  "Backup waits for the connection.": "Back-up wacht op de verbinding.",
   "Burr Volley": "Klitensalvo",
   "Cinder Flurry": "Vonkenvlaag",
   "Glint Volley": "Glinstersalvo",

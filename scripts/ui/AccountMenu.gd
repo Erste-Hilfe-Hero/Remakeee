@@ -18,6 +18,10 @@ static func run(menu: MenuHost) -> void:
 		var titles: Array[String] = [t]
 		if Online.is_local():
 			titles.push_front(t + "\n" + Loc.t("(test server on this phone)"))
+		# When the journey last reached the server (200 list item 19), only when it fits.
+		var backup: String = Online.backup_line(SaveManager.slot) if GameState.in_game else ""
+		if not backup.is_empty():
+			titles.push_front(t + "\n" + backup)
 		# Ten rows at most: the rules and the privacy note share one row (Chimora 100, item 61).
 		var entries: Array[String] = ["Get a transfer code", "Enter a code...", RULES_ROW, "Delete account...",
 			"Friends, mail: %s" % ("On" if Online.social_on() else "Off"), "Download my data", NOTICES_ROW, "Earlier saves",

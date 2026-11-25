@@ -22,4 +22,8 @@ T = {
 "Nobody has spoken yet.": "Noch hat niemand etwas gesagt.",
 "Read the last things people said again.": "Lies noch einmal, was zuletzt gesagt wurde.",
 "Idea": "Idee",
+"Backup waits for the connection.": "Sicherung wartet auf die Verbindung.",
+"Backed up just now.": "Gerade eben gesichert.",
+"Backed up %d min ago.": "Vor %d Min. gesichert.",
+"Backed up %d h ago.": "Vor %d Std. gesichert.",
 }

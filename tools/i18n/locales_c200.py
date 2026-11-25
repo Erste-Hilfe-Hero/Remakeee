@@ -30,6 +30,10 @@ R = {
 "Nobody has spoken yet.": ["まだだれも話していない。", "Personne n'a encore parlé.", "Nessuno ha ancora parlato.", "Nadie ha hablado todavía.", "아직 아무도 말하지 않았다.", "还没有人说过话。", "還沒有人說過話。", "Ninguém falou ainda.", "Пока никто ничего не сказал.", "Nikt jeszcze nic nie powiedział.", "Henüz kimse konuşmadı.", "Er heeft nog niemand iets gezegd."],
 "Read the last things people said again.": ["さいきん話されたことを読み返す。", "Relisez les dernières paroles échangées.", "Rileggi le ultime cose dette.", "Vuelve a leer lo último que se dijo.", "최근에 들은 말을 다시 읽는다.", "重读最近听到的话。", "重讀最近聽到的話。", "Leia de novo o que foi dito por último.", "Перечитайте последние сказанные слова.", "Przeczytaj ponownie, co ostatnio powiedziano.", "Son söylenenleri yeniden oku.", "Lees nog eens wat er het laatst gezegd is."],
 "Idea": ["おまかせ", "Idée", "Idea", "Idea", "추천", "随机", "隨機", "Ideia", "Идея", "Pomysł", "Fikir", "Idee"],
+"Backup waits for the connection.": ["バックアップは接続を待っている。", "La sauvegarde attend la connexion.", "Il backup attende la connessione.", "La copia espera a la conexión.", "백업이 연결을 기다리는 중.", "备份正在等待连接。", "備份正在等待連線。", "O backup espera a conexão.", "Резервная копия ждёт соединения.", "Kopia czeka na połączenie.", "Yedek bağlantıyı bekliyor.", "Back-up wacht op de verbinding."],
+"Backed up just now.": ["たった今バックアップした。", "Sauvegardé à l'instant.", "Backup appena fatto.", "Copia hecha ahora mismo.", "방금 백업했다.", "刚刚已备份。", "剛剛已備份。", "Backup feito agora mesmo.", "Копия сохранена только что.", "Kopia zapisana przed chwilą.", "Az önce yedeklendi.", "Zojuist geback-upt."],
+"Backed up %d min ago.": ["%d分前にバックアップ。", "Sauvegardé il y a %d min.", "Backup %d min fa.", "Copia hecha hace %d min.", "%d분 전에 백업.", "%d分钟前已备份。", "%d分鐘前已備份。", "Backup há %d min.", "Копия %d мин назад.", "Kopia %d min temu.", "%d dk önce yedeklendi.", "%d min geleden geback-upt."],
+"Backed up %d h ago.": ["%d時間前にバックアップ。", "Sauvegardé il y a %d h.", "Backup %d h fa.", "Copia hecha hace %d h.", "%d시간 전에 백업.", "%d小时前已备份。", "%d小時前已備份。", "Backup há %d h.", "Копия %d ч назад.", "Kopia %d godz. temu.", "%d sa önce yedeklendi.", "%d uur geleden geback-upt."],
 }
 
 

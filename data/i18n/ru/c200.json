@@ -3,6 +3,10 @@
  "strings": {
   "A spray of sparks: two to four small burns.": "Россыпь искр: от двух до четырёх маленьких ожогов.",
   "A volley of sticky burrs: two to four hits.": "Залп цепких репьёв: от двух до четырёх ударов.",
+  "Backed up %d h ago.": "Копия %d ч назад.",
+  "Backed up %d min ago.": "Копия %d мин назад.",
+  "Backed up just now.": "Копия сохранена только что.",
+  "Backup waits for the connection.": "Резервная копия ждёт соединения.",
   "Burr Volley": "Залп репьёв",
   "Cinder Flurry": "Вихрь искр",
   "Glint Volley": "Залп бликов",

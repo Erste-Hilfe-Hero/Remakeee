@@ -3,6 +3,10 @@
  "strings": {
   "A spray of sparks: two to four small burns.": "Una lluvia de chispas: de dos a cuatro pequeñas quemaduras.",
   "A volley of sticky burrs: two to four hits.": "Una andanada de abrojos pegajosos: de dos a cuatro golpes.",
+  "Backed up %d h ago.": "Copia hecha hace %d h.",
+  "Backed up %d min ago.": "Copia hecha hace %d min.",
+  "Backed up just now.": "Copia hecha ahora mismo.",
+  "Backup waits for the connection.": "La copia espera a la conexión.",
   "Burr Volley": "Andanada de Abrojos",
   "Cinder Flurry": "Ráfaga de Chispas",
   "Glint Volley": "Andanada de Destellos",

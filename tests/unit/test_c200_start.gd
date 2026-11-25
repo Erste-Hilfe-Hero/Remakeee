@@ -69,3 +69,20 @@ func test_only_a_logging_box_writes_the_talk_log() -> void:
 func test_talk_log_has_a_symbol_and_hint() -> void:
 	assert_true(EraMenuArt.has(PauseMenu.TALK_LOG))
 	assert_true(EraMenuKit.PAUSE_HINTS.has(PauseMenu.TALK_LOG))
+
+# --- item 19: the Account menu says when the journey last reached the server ----------------------
+
+func test_backup_line_says_how_long_ago() -> void:
+	var keep_at: Dictionary = Online.backup_at.duplicate()
+	var keep_dirty: Dictionary = Online.dirty.duplicate()
+	Online.dirty.erase(7)
+	Online.backup_at.erase(7)
+	assert_eq(Online.backup_line(7), "", "never backed up: no line")
+	Online.backup_at[7] = 1000
+	assert_eq(Online.backup_line(7, 1030), "Backed up just now.")
+	assert_eq(Online.backup_line(7, 1000 + 5 * 60), "Backed up 5 min ago.")
+	assert_eq(Online.backup_line(7, 1000 + 3 * 3600), "Backed up 3 h ago.")
+	Online.dirty[7] = true
+	assert_eq(Online.backup_line(7, 1030), "Backup waits for the connection.")
+	Online.backup_at = keep_at
+	Online.dirty = keep_dirty

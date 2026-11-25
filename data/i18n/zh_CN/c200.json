@@ -3,6 +3,10 @@
  "strings": {
   "A spray of sparks: two to four small burns.": "喷出一阵火星：二到四次小灼伤。",
   "A volley of sticky burrs: two to four hits.": "连射黏人的苍耳：命中二到四次。",
+  "Backed up %d h ago.": "%d小时前已备份。",
+  "Backed up %d min ago.": "%d分钟前已备份。",
+  "Backed up just now.": "刚刚已备份。",
+  "Backup waits for the connection.": "备份正在等待连接。",
   "Burr Volley": "苍耳连射",
   "Cinder Flurry": "火星乱舞",
   "Glint Volley": "闪光连射",

@@ -4,6 +4,10 @@
  "strings": {
   "A spray of sparks: two to four small burns.": "Ein Funkenregen: zwei bis vier kleine Brandtreffer.",
   "A volley of sticky burrs: two to four hits.": "Eine Salve klebriger Kletten: zwei bis vier Treffer.",
+  "Backed up %d h ago.": "Vor %d Std. gesichert.",
+  "Backed up %d min ago.": "Vor %d Min. gesichert.",
+  "Backed up just now.": "Gerade eben gesichert.",
+  "Backup waits for the connection.": "Sicherung wartet auf die Verbindung.",
   "Burr Volley": "Kletten-Salve",
   "Cinder Flurry": "Funkenwirbel",
   "Glint Volley": "Glanzsalve",

@@ -3,6 +3,10 @@
  "strings": {
   "A spray of sparks: two to four small burns.": "Una pioggia di faville: da due a quattro piccole bruciature.",
   "A volley of sticky burrs: two to four hits.": "Una raffica di lappole appiccicose: da due a quattro colpi.",
+  "Backed up %d h ago.": "Backup %d h fa.",
+  "Backed up %d min ago.": "Backup %d min fa.",
+  "Backed up just now.": "Backup appena fatto.",
+  "Backup waits for the connection.": "Il backup attende la connessione.",
   "Burr Volley": "Raffica di Lappole",
   "Cinder Flurry": "Raffica di Faville",
   "Glint Volley": "Raffica Scintillante",

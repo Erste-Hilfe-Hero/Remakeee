@@ -3,6 +3,10 @@
  "strings": {
   "A spray of sparks: two to four small burns.": "火の粉をまき散らす。2回から4回の小さなやけど。",
   "A volley of sticky burrs: two to four hits.": "ひっつく実を次々と飛ばす。2回から4回当たる。",
+  "Backed up %d h ago.": "%d時間前にバックアップ。",
+  "Backed up %d min ago.": "%d分前にバックアップ。",
+  "Backed up just now.": "たった今バックアップした。",
+  "Backup waits for the connection.": "バックアップは接続を待っている。",
   "Burr Volley": "ひっつきのみだれうち",
   "Cinder Flurry": "ひのこのうず",
   "Glint Volley": "きらめきれんしゃ",

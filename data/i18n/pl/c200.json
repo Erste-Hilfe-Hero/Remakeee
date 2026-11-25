@@ -3,6 +3,10 @@
  "strings": {
   "A spray of sparks: two to four small burns.": "Deszcz iskier: od dwóch do czterech małych oparzeń.",
   "A volley of sticky burrs: two to four hits.": "Salwa lepkich rzepów: od dwóch do czterech trafień.",
+  "Backed up %d h ago.": "Kopia %d godz. temu.",
+  "Backed up %d min ago.": "Kopia %d min temu.",
+  "Backed up just now.": "Kopia zapisana przed chwilą.",
+  "Backup waits for the connection.": "Kopia czeka na połączenie.",
   "Burr Volley": "Salwa Rzepów",
   "Cinder Flurry": "Wir Iskier",
   "Glint Volley": "Salwa Błysków",
