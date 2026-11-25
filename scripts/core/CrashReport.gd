@@ -4,9 +4,9 @@ extends RefCounted
 ## removed whenever the app goes to the background or closes and written again when it is back.
 ## A mark still there on the next start means the last run ended unexpectedly, and one short
 ## report is kept: game version, platform and the last scene. No account id, no name, no save.
-## It is sent without the sign-in token (only the public anon key) and only when the server
-## switches it on with the feature flag FLAG; until the server has the flag and the function FN
-## nothing leaves the phone and the kept report is simply replaced by the next one.
+## The server needs the sign-in only to stop one phone from flooding it (rate limit) and stores the
+## report without the account. It is sent only when the server switches it on with the feature flag
+## FLAG; until then nothing leaves the phone and the kept report is replaced by the next one.
 
 const MARK_PATH: String = "user://session_mark.json"
 const PENDING_PATH: String = "user://crash_report.json"
@@ -86,7 +86,7 @@ static func send(backend: OnlineBackend, flag_on: bool) -> void:
 	var p: Dictionary = pending()
 	if p.is_empty() or not flag_on:
 		return
-	var r: Dictionary = await backend.call_anon(FN, args_for(p))
+	var r: Dictionary = await backend.call_fn(FN, args_for(p))
 	if r.ok or not r.net:
 		clear_pending()
 

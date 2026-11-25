@@ -40,9 +40,6 @@ const SERVICE_ROUTES: Dictionary = {"shop_verify": "/billing/v1/verify"}
 func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
 	return await _authed(HTTPClient.METHOD_POST, str(SERVICE_ROUTES.get(name, "/rest/v1/rpc/" + name)), args)
 
-func call_anon(name: String, args: Dictionary = {}) -> Dictionary:
-	return await _http(HTTPClient.METHOD_POST, "/rest/v1/rpc/" + name, args, false)
-
 ## Refreshes the token when it is about to expire, and once more after a 401.
 func _authed(method: int, path: String, body: Dictionary) -> Dictionary:
 	if not signed_in():

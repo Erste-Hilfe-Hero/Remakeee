@@ -6,7 +6,7 @@ const DIR: String = "user://test_c200_tech"
 class FakeBackend extends OnlineBackend:
 	var calls: Array = []
 	var answer: Dictionary = OnlineBackend.ok(null)
-	func call_anon(name: String, args: Dictionary = {}) -> Dictionary:
+	func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
 		calls.append([name, args])
 		return answer
 
