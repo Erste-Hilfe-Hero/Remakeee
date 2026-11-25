@@ -19,14 +19,18 @@ env:
 jobs:
   build:
     if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[ios-build]')
-    runs-on: macos-26
-    timeout-minutes: 60
+    # Xcode 27.2 (iOS SDK 27.2) on GitHub's free "xcode-27" image (Ali 2026-11-25: Chimora on Xcode 27 after
+    # Two at the Table). The lifekit signing step refuses an app whose DTXcode is not 27*.
+    runs-on: xcode-27
+    timeout-minutes: 75
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - name: Select Xcode 26
+      - name: Xcode 27.2
         run: |
-          sudo xcode-select -s "$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)"
           xcodebuild -version
+          xcodebuild -version | grep -q "Xcode 27\."
       - name: Godot and export templates
         run: |
           base="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable"
@@ -110,12 +114,13 @@ jobs:
           BID=$(plutil -extract CFBundleIdentifier raw "$APP/Info.plist")
           xcrun simctl launch "$DEV" "$BID"
           mkdir -p "$RUNNER_TEMP/simshots"
-          for t in 15 35 60; do
+          # iOS 27 simulators can take ~35 s for the first frame.
+          for t in 15 35 60 90; do
             sleep $((t - ${prev:-0})); prev=$t
             xcrun simctl io "$DEV" screenshot "$RUNNER_TEMP/simshots/sim_${t}s.png"
             for n in 0 1 2; do xcrun simctl io "$DEV" screenshot --display=$n "$RUNNER_TEMP/simshots/sim_${t}s_display$n.png" 2>/dev/null || true; done
           done
-          xcrun simctl spawn "$DEV" launchctl list | grep -i "$BID" && echo "SIM: app still running after 60 s" || echo "::error::SIM: app not running after 60 s"
+          xcrun simctl spawn "$DEV" launchctl list | grep -i "$BID" && echo "SIM: app still running after 90 s" || echo "::error::SIM: app not running after 90 s"
           xcrun simctl spawn "$DEV" log show --last 2m --predicate "process CONTAINS[c] 'Chimora'" 2>/dev/null | tail -60 > "$RUNNER_TEMP/simshots/log.txt" || true
           printf 'commit=%s\nbuild=%s\n' "$GITHUB_SHA" "$BUILD_NUMBER" > "$RUNNER_TEMP/simshots/info.txt"
       - name: Keep simulator screenshots
