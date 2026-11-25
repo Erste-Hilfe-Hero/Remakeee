@@ -189,6 +189,14 @@ static func symbols(place: String) -> Array[String]:
 		out.append("rift")
 	return out
 
+## The place the player was in before the current one, for the map's "last here" mark
+## (200 list item 31); "" when unknown or when it is the place of [param current].
+static func last_here(current: String = "") -> String:
+	var last: String = GameState.last_place
+	if last.is_empty() or not places().has(last):
+		return ""
+	return "" if not current.is_empty() and place_of(current) == last else last
+
 ## The detail page text (item 1247).
 static func detail_text(place: String) -> String:
 	var m: MapData = MapData.load_map(place)

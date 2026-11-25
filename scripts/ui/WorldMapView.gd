@@ -4,7 +4,8 @@ extends Control
 ## data/world_layout.json as a cell, roads between neighbours, boat and coach lines dotted.
 ## Unknown places stay empty parchment, sighted ones are an outline, visited ones are filled.
 ## Fixed symbols: the player (ink square), rest points (cross), stops (small square), Rifts (x)
-## and the player's own marks (mid dot). A tap on a place emits place_tapped; dragging pans
+## and the player's own marks (mid dot), the place the player was in last (hollow square, 200
+## list item 31). A tap on a place emits place_tapped; dragging pans
 ## at 2x zoom. The time-of-day symbol sits in the corner. UITheme colours only.
 
 signal place_tapped(place: String)
@@ -16,6 +17,8 @@ var zoom: int = 1
 var pan: Vector2 = Vector2.ZERO
 var current: String = ""
 var known: Dictionary = {}
+## Place the player was in before this one ("" for none), drawn as a hollow square.
+var last_here: String = ""
 var _press: Vector2 = Vector2(NAN, NAN)
 var _dragged: bool = false
 var _phase_icon: PhaseIcon
@@ -90,6 +93,7 @@ func fit_known() -> void:
 func refresh(here: String = current) -> void:
 	current = here
 	known = WorldAtlas.known(current)
+	last_here = WorldAtlas.last_here(current)
 	if _phase_icon != null:
 		_phase_icon.phase = DayCycle.current()
 		_phase_icon.queue_redraw()
@@ -189,6 +193,10 @@ func _draw() -> void:
 				_draw_symbols(id, r)
 			WorldAtlas.Known.SIGHTED:
 				draw_rect(r, UITheme.MID, false, 1.0)
+	var s_last: float = maxf(3.0, p / 3.0)
+	if not last_here.is_empty() and int(known.get(last_here, 0)) == WorldAtlas.Known.VISITED:
+		var lr: Rect2 = cell_rect(last_here)
+		draw_rect(Rect2(lr.get_center() - Vector2(s_last, s_last) / 2.0, Vector2(s_last, s_last)), UITheme.INK, false, 1.0)
 	var here: String = WorldAtlas.place_of(current)
 	if not here.is_empty():
 		var hr: Rect2 = cell_rect(here)

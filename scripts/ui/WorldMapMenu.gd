@@ -3,14 +3,15 @@ extends RefCounted
 ## "Map" in the pause menu (area 3 items 1242-1248, 1273): the world map picture on top, a list
 ## below. The list zooms (1x / 2x), jumps back to the player's place ("Here"), manages the
 ## player's own marks and lists every place the player knows with its survey share. Tapping a
-## place on the picture picks its row; a place opens its detail page.
+## place on the picture picks its row; a place opens its detail page. The place visited before
+## this one is marked "last here" (200 list item 31).
 
 const VIEW_H: float = 104.0
 const ICON_NAMES: Dictionary = {"star": "Star", "cross": "Cross", "question": "Question",
 	"heart": "Heart", "arrow": "Arrow", "hammer": "Hammer"}
 
 ## Places for the list: visited first (with share), then sighted ones, each by grid order.
-static func place_rows(known: Dictionary) -> Array[Dictionary]:
+static func place_rows(known: Dictionary, last_here: String = "") -> Array[Dictionary]:
 	var visited: Array[String] = []
 	var sighted: Array[String] = []
 	for id: String in known:
@@ -24,7 +25,11 @@ static func place_rows(known: Dictionary) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for id: String in visited:
 		# A star once every wild kind of the place is bonded (200 list item 45).
-		out.append({"text": "%s  %d%%%s" % [_name(id), WorldAtlas.percent(id), WorldAtlas.complete_mark(id, GameState.spirlog)], "place": id})
+		var row: Dictionary = {"text": "%s  %d%%%s" % [_name(id), WorldAtlas.percent(id), WorldAtlas.complete_mark(id, GameState.spirlog)], "place": id}
+		if id == last_here:
+			row["hint"] = "You were here last."
+			row["last"] = true
+		out.append(row)
 	for id: String in sighted:
 		# Only the name, without the "14%" of visited places: "(not yet visited)" was cut off at
 		# 144 px (plan Chimora 100, item 40). The hint line under the list says it in full.
@@ -67,12 +72,12 @@ static func run(host: MenuHost, here: String) -> void:
 			for a: String in acts:
 				rows_now.append({"text": a})
 		var first_place: int = rows_now.size()
-		for r: Dictionary in place_rows(view.known):
+		for r: Dictionary in place_rows(view.known, view.last_here):
 			var pic: Texture2D = EraMenuKit.icon_for("dot" if bool(r.get("sighted", false)) else "place", lay)
 			if pic != null:
 				r["icon"] = pic
 			if panel and not bool(r.get("sighted", false)):
-				r["hint"] = WorldAtlas.detail_text(str(r.place)).get_slice("\n", 1)
+				r["hint"] = (Loc.t("You were here last.") + " " if bool(r.get("last", false)) else "") + WorldAtlas.detail_text(str(r.place)).get_slice("\n", 1)
 			rows_now.append(r)
 		var idx: int = await host.pick_screen("map", "World map", rows_now, {"tabs": acts if bar else ([] as Array[String]), "tab": -1,
 			"tab_icons": [null, null, EraMenuKit.icon_for("Shortcuts", lay)], "header": view,

@@ -2,6 +2,74 @@ extends GutTest
 ## Chimora 200 list items 31 (world map "last here"), 32 (way to the nearest rest point) and
 ## 41 (on-screen "Reset room" in boulder rooms).
 
+var _cells: Dictionary
+var _here: String
+var _last: String
+
+func before_all() -> void:
+	Database.load_all()
+
+func before_each() -> void:
+	_cells = GameState.map_cells
+	_here = GameState.here_place
+	_last = GameState.last_place
+	GameState.map_cells = {}
+	GameState.here_place = ""
+	GameState.last_place = ""
+
+func after_each() -> void:
+	GameState.map_cells = _cells
+	GameState.here_place = _here
+	GameState.last_place = _last
+
+func _visit(id: String) -> void:
+	var m: MapData = MapData.load_map(id)
+	Survey.reveal(m, Vector2i(m.width / 2, m.height / 2))
+
+func test_last_here_follows_map_changes() -> void:
+	GameState.note_place("brindlewick")
+	assert_eq(GameState.last_place, "", "nothing before the first place")
+	GameState.note_place("brindlewick")
+	assert_eq(GameState.last_place, "", "the same place again changes nothing")
+	GameState.note_place("fernstair")
+	assert_eq(GameState.last_place, "brindlewick")
+	GameState.note_place("")
+	assert_eq(GameState.here_place, "fernstair", "maps outside the layout are ignored")
+	assert_eq(WorldAtlas.last_here("fernstair"), "brindlewick")
+	assert_eq(WorldAtlas.last_here("lighthouse"), "", "not when the player stands in it (a house of it)")
+
+func test_last_here_survives_saving() -> void:
+	GameState.note_place("brindlewick")
+	GameState.note_place("fernstair")
+	var d: Dictionary = GameState.to_dict()
+	GameState.last_place = ""
+	GameState.here_place = ""
+	GameState.from_dict(d)
+	assert_eq(GameState.last_place, "brindlewick")
+	assert_eq(GameState.here_place, "fernstair")
+
+func test_rows_mark_last_here() -> void:
+	_visit("brindlewick")
+	_visit("fernstair")
+	var rows: Array[Dictionary] = WorldMapMenu.place_rows(WorldAtlas.known("fernstair"), "brindlewick")
+	var marked: Array[String] = []
+	for r: Dictionary in rows:
+		if bool(r.get("last", false)):
+			marked.append(str(r.place))
+			assert_eq(str(r.hint), "You were here last.")
+	assert_eq(marked, ["brindlewick"] as Array[String])
+
+func test_view_knows_last_here() -> void:
+	_visit("brindlewick")
+	_visit("fernstair")
+	GameState.note_place("brindlewick")
+	GameState.note_place("fernstair")
+	var view := WorldMapView.new()
+	view.size = Vector2(160, 104)
+	add_child_autofree(view)
+	view.refresh("fernstair")
+	assert_eq(view.last_here, "brindlewick")
+
 func _room() -> MapData:
 	return MapData.from_dict("t_room", {"name": "Test Room", "rows": [
 		"WWWWfWWWW",

@@ -435,6 +435,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_entry_cell = cell
 	if map.outdoor:
 		GameState.enter_map(map_id, cell)
+	GameState.note_place(WorldAtlas.place_of(map_id))
 	_world.prepare(map, cell)
 	map.paint(_ground)
 	_terrain_look.show_map(map, _ground, _camera, _entities)
