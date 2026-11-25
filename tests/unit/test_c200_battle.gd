@@ -118,7 +118,7 @@ func test_new_immunity_gifts_block_their_status() -> void:
 	assert_false(BattleRules.is_immune(BattleFixtures.make("Kindlop", 20, ["Cinder Nip"] as Array[String]), "scorch"))
 
 func test_calm_mind_takes_less_from_focus_arts_only() -> void:
-	var calm: Spirling = BattleFixtures.make("Hushkin", 20, ["Cinder Nip"] as Array[String])
+	var calm: Spirling = BattleFixtures.make("Clasplet", 20, ["Cinder Nip"] as Array[String])
 	var user: Spirling = BattleFixtures.make("Kindlop", 20, ["Cinder Nip"] as Array[String])
 	var phys: MoveData = Database.move("Cinder Nip").duplicate()
 	phys.kind = MoveData.Kind.PHYSICAL

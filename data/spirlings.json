@@ -1693,7 +1693,7 @@
    "spd": 60,
    "def": 80
   },
-  "trait": "calm_mind",
+  "trait": "steady",
   "learnset": {
    "1": [
     "Bowl Over",
@@ -1768,7 +1768,7 @@
    "spd": 76,
    "def": 96
   },
-  "trait": "calm_mind",
+  "trait": "steady",
   "learnset": {
    "1": [
     "Dusk Snare",
