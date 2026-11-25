@@ -7,6 +7,10 @@ const Side := BattleModel.Side
 func before_all() -> void:
 	Database.load_all()
 
+func before_each() -> void:
+	# Battle scenes in earlier test files leave arts in the session list.
+	RepeatShort.reset()
+
 func after_each() -> void:
 	RepeatShort.reset()
 
