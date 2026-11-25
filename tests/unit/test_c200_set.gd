@@ -112,3 +112,50 @@ func test_weekend_off_when_config_is_one() -> void:
 func test_weekend_is_applied_to_battle_growth() -> void:
 	var src: String = FileAccess.get_file_as_string("res://scripts/overworld/Overworld.gd")
 	assert_string_contains(src, "model.xp_mult *= GrowthRules.weekend_mult(GrowthRules.local_weekday())")
+
+# --- 147 ---
+
+func test_birthday_gift_after_one_year_once() -> void:
+	GameState.start_day = 1000
+	GameState.birthdays_paid = 0
+	assert_eq(SaveBirthday.pending(1364), 0)
+	assert_eq(SaveBirthday.claim(1364).size(), 0)
+	assert_eq(SaveBirthday.pending(1365), 1)
+	var money: int = GameState.money
+	var charms: int = GameState.item_count(SaveBirthday.GIFT_ITEM)
+	var lines: Array[String] = SaveBirthday.claim(1365)
+	assert_eq(lines.size(), 1)
+	assert_eq(GameState.money, money + SaveBirthday.GIFT_COINS)
+	assert_eq(GameState.item_count(SaveBirthday.GIFT_ITEM), charms + SaveBirthday.GIFT_COUNT)
+	assert_eq(SaveBirthday.pending(1500), 0, "paid once")
+	assert_eq(SaveBirthday.pending(1730), 1, "second birthday")
+	assert_string_contains(SaveBirthday.claim(1730)[0], "2 years")
+	GameState.add_item(SaveBirthday.GIFT_ITEM, -2 * SaveBirthday.GIFT_COUNT)
+
+func test_birthday_waits_in_goals() -> void:
+	GameState.start_day = GameState.today() - SaveBirthday.YEAR_DAYS
+	GameState.birthdays_paid = 0
+	var before: int = Goals.pending()
+	assert_gt(before, 0)
+	assert_true(Goals.collect_all().size() > 0)
+	assert_eq(GameState.birthdays_paid, 1)
+	assert_eq(SaveBirthday.pending(), 0)
+	GameState.add_item(SaveBirthday.GIFT_ITEM, -SaveBirthday.GIFT_COUNT)
+
+func test_start_day_round_trip_and_old_saves() -> void:
+	GameState.start_day = 4321
+	GameState.birthdays_paid = 2
+	var d: Dictionary = GameState.to_dict()
+	GameState.start_day = 0
+	GameState.birthdays_paid = 0
+	GameState.from_dict(d)
+	assert_eq(GameState.start_day, 4321)
+	assert_eq(GameState.birthdays_paid, 2)
+	d.erase("start_day")
+	GameState.from_dict(d)
+	assert_gt(GameState.start_day, 0, "older saves get a start day")
+	assert_lte(GameState.start_day, GameState.today())
+
+func test_no_birthday_without_start_day() -> void:
+	GameState.start_day = 0
+	assert_eq(SaveBirthday.pending(99999), 0)

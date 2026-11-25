@@ -12,4 +12,6 @@ T = {
 "This weekend, battles give more Growth on Saturday and Sunday.": "Dieses Wochenende geben Kämpfe am Samstag und Sonntag mehr Wachstum.",
 "Weekend: battles give double Growth today.": "Wochenende: Kämpfe geben heute doppeltes Wachstum.",
 "Weekend: battles give more Growth today.": "Wochenende: Kämpfe geben heute mehr Wachstum.",
+"Your journey is one year old today! A birthday gift: a Growth Charm and %d coins.": "Deine Reise wird heute ein Jahr alt! Ein Geburtstagsgeschenk: einen Wachstums-Glücksbringer und %d Münzen.",
+"Your journey is %d years old today! A birthday gift: a Growth Charm and %d coins.": "Deine Reise wird heute %d Jahre alt! Ein Geburtstagsgeschenk: einen Wachstums-Glücksbringer und %d Münzen.",
 }

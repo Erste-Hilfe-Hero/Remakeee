@@ -102,6 +102,10 @@ var waymarks: int = 0
 ## gift waits in Goals (200 list item 139, Comeback).
 var last_play_day: int = 0
 var comeback_ready: bool = false
+## Day (GameState.today) the journey was started, and the save birthdays already gifted
+## (200 list item 147, SaveBirthday; the shop's first-days window, item 180).
+var start_day: int = 0
+var birthdays_paid: int = 0
 ## Today's daily tasks and their progress (see DailyTasks.gd): {"day", "tasks": [{"id", "n"}], "bonus"}.
 var daily_tasks: Dictionary = {}
 ## Festival ribbons per festival (see Festival.gd): "<id>_<year>" -> {"ribbons", "earned", "stages", "task"}.
@@ -597,6 +601,8 @@ func reset() -> void:
 	waymarks = 0
 	last_play_day = 0
 	comeback_ready = false
+	start_day = 0
+	birthdays_paid = 0
 	daily_tasks = {}
 	festival_ribbons = {}
 	notices.clear()
@@ -689,6 +695,7 @@ func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, p_starter:
 	tamer_name = p_name.strip_edges() if not p_name.strip_edges().is_empty() else DEFAULT_NAMES[tamer_look]
 	tamer_color = clampi(p_color, 0, TAMER_COLORS.size() - 1)
 	money = 500
+	start_day = today()
 	# Easier start (Ali, 7 Nov): 20 free Kin Charms for the first bonds.
 	add_item("kin_charm", START_KIN_CHARMS)
 	in_game = true
@@ -753,6 +760,8 @@ func to_dict() -> Dictionary:
 		"waymarks": waymarks,
 		"last_play_day": last_play_day,
 		"comeback_ready": comeback_ready,
+		"start_day": start_day,
+		"birthdays_paid": birthdays_paid,
 		"daily_tasks": daily_tasks.duplicate(true),
 		"festival_ribbons": festival_ribbons.duplicate(true),
 		"map": current_map,
@@ -849,6 +858,10 @@ func from_dict(d: Dictionary) -> void:
 	waymarks = clampi(as_int(d.get("waymarks", 0)), 0, Waymarks.CAP)
 	last_play_day = maxi(0, as_int(d.get("last_play_day", 0)))
 	comeback_ready = bool(d.get("comeback_ready", false))
+	start_day = maxi(0, as_int(d.get("start_day", 0)))
+	if start_day == 0:
+		start_day = first_spirlog_day()
+	birthdays_paid = maxi(0, as_int(d.get("birthdays_paid", 0)))
 	var dt: Variant = d.get("daily_tasks", {})
 	daily_tasks = (dt as Dictionary).duplicate(true) if dt is Dictionary else {}
 	festival_ribbons = {}
@@ -1241,6 +1254,15 @@ func pay_tip(who: String, coins: int, day: int = -1) -> int:
 ## Days since 1970 (local device date), for "met on day N".
 static func today() -> int:
 	return int(Time.get_unix_time_from_system() / 86400.0)
+
+## Start day for a save from before item 147: the first Spirlog sighting (the partner), else today.
+func first_spirlog_day() -> int:
+	var first: int = 0
+	for e: Variant in spirlog.values():
+		var d: int = as_int((e as Dictionary).get("first_day", 0)) if e is Dictionary else 0
+		if d > 0 and (first == 0 or d < first):
+			first = d
+	return first if first > 0 else today()
 
 func mark_seen(species: String, bonded: bool = false) -> void:
 	var e: Dictionary = upgrade_spirlog_entry(spirlog.get(species, {}))
