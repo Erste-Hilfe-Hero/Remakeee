@@ -94,3 +94,28 @@ func test_editor_and_test_runs_never_write_a_mark() -> void:
 	CrashReport.enter_scene("Overworld")
 	CrashReport.set_battle(true)
 	assert_false(FileAccess.file_exists(CrashReport.mark_path))
+
+# --- Tablets on their side (187, 188) -------------------------------------------------------
+
+## Era screens on 4:3 (iPad) and 16:10 (Android tablet) landscape: the base height, widened.
+func _tablet_fields(era: int) -> Array[Vector2]:
+	var base: Vector2i = EraManager.RESOLUTION[era]
+	var out: Array[Vector2] = []
+	for aspect: float in [4.0 / 3.0, 1.6]:
+		out.append(Vector2(roundf(base.y * aspect), base.y - EraBattleHud.text_box_height(era) - EraBattleHud.menu_height(era)))
+	return out
+
+func test_one_on_one_battle_hud_does_not_cover_the_spirling_on_a_tablet_on_its_side() -> void:
+	for era: int in [1, 2, 3]:
+		var px: float = float(EraManager.BATTLE_SPRITE_SIZE[era])
+		for f: Vector2 in _tablet_fields(era):
+			var l: Dictionary = EraBattleHud.single_layout(era, f, Rect2(44, 20, px, px), Rect2(f.x - px - 8, f.y - px - 8, px, px))
+			var me: Rect2 = l.player_sprite
+			var hud: Dictionary = {"auto": l.auto, "foe team": l.foe_team, "player team": l.player_team,
+				"foe plate": EraBattleHud.plate_outer(era, l.foe_plate, bool(l.foe_slant_left)),
+				"player plate": EraBattleHud.plate_outer(era, l.player_plate, bool(l.player_slant_left))}
+			for i: int in (l.buttons as Array).size():
+				hud["button %d" % i] = l.buttons[i]
+			assert_true(Rect2(Vector2.ZERO, f).encloses(me), "era %d %s: the Spirling stays in the field" % [era, f])
+			for k: Variant in hud:
+				assert_false(me.intersects(hud[k]), "era %d %s: %s covers the Spirling" % [era, f, k])
