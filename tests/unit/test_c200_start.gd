@@ -113,3 +113,22 @@ func test_battle_wires_the_arrow() -> void:
 	assert_string_contains(src, "FirstArtArrow.is_first_battle(GameState.spirlog)")
 	assert_string_contains(src, "_first_arrow.wait_for(_menu.first_art_button())")
 
+# --- Item 17 ------------------------------------------------------------------------------
+
+func test_place_id_from_a_summary() -> void:
+	assert_eq(SaveHistoryMenu.place_id("Brindlewick  1:05"), "brindlewick")
+	assert_eq(SaveHistoryMenu.place_id(SaveManager.OATH_GLYPH + " Brindlewick  1:05  40%"), "brindlewick")
+	assert_eq(SaveHistoryMenu.place_id("Nowhere Land  1:05"), "")
+
+func test_place_picture() -> void:
+	var pic: Texture2D = SaveHistoryMenu.place_picture("brindlewick")
+	assert_not_null(pic)
+	assert_eq(Vector2i(pic.get_size()), SaveHistoryMenu.PICTURE)
+	assert_null(SaveHistoryMenu.place_picture(""))
+
+func test_rows_carry_the_picture() -> void:
+	var rows: Array[Dictionary] = SaveHistoryMenu.entry_rows([{"saved_at": 0, "summary": "Brindlewick  0:05"},
+		{"saved_at": 0, "summary": "Ashdown  0:01"}])
+	assert_eq(rows.size(), 2)
+	assert_true(rows[0].get("icon") is Texture2D)
+	assert_string_contains(str(rows[0].text), "Brindlewick  0:05")
