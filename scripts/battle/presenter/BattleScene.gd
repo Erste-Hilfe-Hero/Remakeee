@@ -181,14 +181,18 @@ func _refresh_goal() -> void:
 	_goal_label.visible = true
 	fit_goal_label()
 
-## Shrinks the goal label to its text, so its light plate sits only behind the words.
+## Shrinks the goal label to its text, so its light plate sits only behind the words; never
+## wider than its place in the HUD layout (the label clips there, as before).
 func fit_goal_label() -> void:
 	if _goal_label == null:
 		return
 	var f: Font = _goal_label.get_theme_font("font")
 	var fs: int = _goal_label.get_theme_font_size("font_size")
 	var t: Vector2 = f.get_multiline_string_size(_goal_label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs)
-	_goal_label.size = Vector2(ceilf(t.x) + 2.0, ceilf(t.y))
+	var w: float = ceilf(t.x) + 2.0
+	if _hud != null and _hud.goal_w > 0.0:
+		w = minf(w, _hud.goal_w)
+	_goal_label.size = Vector2(w, ceilf(t.y))
 
 ## The turn count "Turn 3" (plan Chimora 100 item 57: "T1", "R1", "X1" said nothing); the short
 ## "T3" only where the word does not fit (the narrow formation band).
