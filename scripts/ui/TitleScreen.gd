@@ -370,7 +370,9 @@ func _run() -> void:
 		if latest > 0:
 			# The Continue row carries the badge of the save's era; a long place name wraps onto
 			# a second line (1.3.1; it ended in "..." before).
-			entries[0]["icon"] = EraSaveCard.badge(maxi(EraMoments.slot_era(latest), 1))
+			# Beside it the team lead as a small picture (200 list item 2).
+			var lead: String = EraSaveCard.lead_species(EraMoments.slot_dict(latest))
+			entries[0]["icon"] = EraSaveCard.continue_icon(maxi(EraMoments.slot_era(latest), 1), lead)
 		var idx: int = await _menu.pick("", entries, false)
 		_at_root = false
 		if idx == QUIT_ASKED:
