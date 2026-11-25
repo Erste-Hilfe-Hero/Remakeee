@@ -79,9 +79,18 @@ static func by_product(product_id: String) -> Dictionary:
 static func in_tab(tab: String, include_unready: bool = false) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for o: Dictionary in offers():
-		if str(o.get("tab", "")) == tab and (include_unready or bool(o.get("ready", false))):
+		if str(o.get("tab", "")) == tab and (include_unready or bool(o.get("ready", false))) and in_save_window(o):
 			out.append(o)
 	return out
+
+## Offers with "save_days" (the Starter Pack, 200 list item 180) show only in the first that many
+## days of the journey (GameState.start_day), checked on [param day] (today when -1). No days
+## left are ever shown (no countdown). Without a journey running the offer stays.
+static func in_save_window(o: Dictionary, day: int = -1) -> bool:
+	if not o.has("save_days") or GameState.start_day <= 0:
+		return true
+	var d: int = GameState.today() if day < 0 else day
+	return d - GameState.start_day < int(o.save_days)
 
 static func is_advantage(o: Dictionary) -> bool:
 	return str(o.get("kind", "")) == "advantage"

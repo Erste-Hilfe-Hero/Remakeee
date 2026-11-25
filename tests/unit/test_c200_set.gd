@@ -159,3 +159,29 @@ func test_start_day_round_trip_and_old_saves() -> void:
 func test_no_birthday_without_start_day() -> void:
 	GameState.start_day = 0
 	assert_eq(SaveBirthday.pending(99999), 0)
+
+# --- 180 ---
+
+func test_starter_pack_once_and_first_seven_days() -> void:
+	var o: Dictionary = ShopCatalog.offer("rg_starter")
+	assert_eq(int(o.limit.n), 1, "once per account")
+	assert_eq(int(o.save_days), 7)
+	assert_eq(int(o.eur_cents), 299, "price unchanged")
+	assert_eq(str(o.product_id), "de.chimora.game.consumable.starter")
+	GameState.start_day = 500
+	assert_true(ShopCatalog.in_save_window(o, 500))
+	assert_true(ShopCatalog.in_save_window(o, 506))
+	assert_false(ShopCatalog.in_save_window(o, 507))
+	assert_true(ShopCatalog.in_save_window(ShopCatalog.offer("rg_coins_5000"), 9999), "other offers stay")
+
+func test_starter_pack_leaves_the_tab_and_cannot_be_bought_late() -> void:
+	var o: Dictionary = ShopCatalog.offer("rg_starter")
+	GameState.start_day = GameState.today() - 30
+	assert_false(ShopCatalog.in_tab(str(o.tab)).has(o))
+	var keep: Dictionary = Billing.state
+	Billing.state = {"open": true, "band": 18, "bought": {}, "rifts": 3}
+	assert_eq(Billing.block_reason(o, false), "not_available")
+	GameState.start_day = GameState.today()
+	assert_true(ShopCatalog.in_tab(str(o.tab)).has(o))
+	assert_ne(Billing.block_reason(o, false), "not_available")
+	Billing.state = keep
