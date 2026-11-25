@@ -1496,6 +1496,7 @@ func _lamp_answer(info: Dictionary, day: String) -> void:
 	LampWatch.answer(GameState.records, day)
 	Sound.sfx("level_up")
 	var joined: bool = GameState.receive_spirling(s)
+	GameState.note_event_kind(s.data.species_name, LampWatch.RECORD)
 	var out: Array[String] = [Loc.t("%s answers your echo and stays with you.") % s.display_name()]
 	if s.gleam:
 		out.append("Its colours shine like the lamp itself: a Gleam!")

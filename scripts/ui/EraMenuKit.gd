@@ -142,6 +142,11 @@ static func draw_party_row(b: Button, s: Spirling, leader: bool, index: int, lay
 		if tex != null:
 			var bob: int = bob_at(Time.get_ticks_msec(), index, Juice.reduced() or not bool(lay.get("sprite_anim", false)))
 			b.draw_texture(tex, Vector2(ListPicker.POINTER_SPACE, floorf((b.size.y - sp) / 2.0) + bob))
+	# A held keepsake shows as its icon on the team picture (200 list item 103): on the sprite's
+	# lower right corner, or left of the Vigor numbers in Era I where rows have no sprite.
+	var held: Texture2D = KeepsakeIcons.held_mark(s.held, ink)
+	if held != null and sp > 0:
+		b.draw_texture(held, Vector2(ListPicker.POINTER_SPACE + sp - held.get_width() + 2, floorf((b.size.y + sp) / 2.0) - held.get_height() + 1))
 	var ratio: float = clampf(float(s.hp) / maxf(1.0, float(s.max_hp())), 0.0, 1.0)
 	var bar_w: float = BAR_WIDE if big else MenuHost.BAR_WIDTH
 	var bar_h: float = 3.0 if big else 2.0
@@ -171,6 +176,8 @@ static func draw_party_row(b: Button, s: Spirling, leader: bool, index: int, lay
 		var nums: String = "%d/%d" % [s.hp, s.max_hp()]
 		var w: float = font.get_string_size(nums, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
 		b.draw_string(font, Vector2(right - w, floorf(b.size.y / 2.0) + font.get_ascent(fs) / 2.0 - 1), nums, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, ink)
+		if held != null and sp <= 0:
+			b.draw_texture(held, Vector2(right - w - held.get_width() - 3, floorf((b.size.y - held.get_height()) / 2.0)))
 		return
 	if big:
 		var nums2: String = "%d/%d" % [s.hp, s.max_hp()]

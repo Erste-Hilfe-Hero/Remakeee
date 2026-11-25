@@ -1157,7 +1157,7 @@ func receive_spirling(s: Spirling) -> bool:
 ## regional imprints, Prism colours and temperaments met so far (plan area 1, item 7).
 static func new_spirlog_entry() -> Dictionary:
 	return {"seen": false, "bonded": false, "first_map": "", "first_day": 0,
-		"variants": [], "prism_seen": false, "gleam_seen": false, "gleam_bonded": false, "tempers": [], "maps": [], "battles": 0}
+		"variants": [], "prism_seen": false, "gleam_seen": false, "gleam_bonded": false, "tempers": [], "maps": [], "battles": 0, "event": ""}
 
 ## Fills missing fields of an older Spirlog entry ({"seen", "bonded"} only) with defaults.
 static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
@@ -1174,6 +1174,7 @@ static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
 	out["prism_seen"] = out.prism_seen is bool and out.prism_seen
 	out["gleam_bonded"] = out.gleam_bonded is bool and out.gleam_bonded
 	out["gleam_seen"] = out.gleam_seen is bool and out.gleam_seen or out.gleam_bonded
+	out["event"] = out.event if out.event is String else ""
 	for k: String in ["variants", "tempers", "maps"]:
 		if not out[k] is Array:
 			out[k] = []
@@ -1275,6 +1276,14 @@ func note_spirlog(s: Spirling, show_temper: bool = true) -> void:
 	if show_temper and not (e.tempers as Array).has(t):
 		(e.tempers as Array).append(t)
 	spirlog[s.data.species_name] = e
+
+## Marks [param species] in the Spirlog as joined from event [param event_id] ("lamp_watch"),
+## shown as the event badge in the list (200 list item 137). The first event stays.
+func note_event_kind(species: String, event_id: String) -> void:
+	var e: Dictionary = upgrade_spirlog_entry(spirlog.get(species, {}))
+	if str(e.event).is_empty():
+		e["event"] = event_id
+	spirlog[species] = e
 
 ## Furls [param s] back into its earlier form. A form that needed an item to unfurl (Tide
 ## Pearl) gives the item back, so "you can unfurl it again later" stays true.

@@ -180,6 +180,7 @@ static func spirlog_legend() -> String:
 		Collection.STAR + "  " + Loc.t("bonded and grown to Ring 30"),
 		"~  " + Loc.t("a Gleam of this kind was seen"),
 		GleamRules.STAR + "  " + Loc.t("a Gleam of this kind was bonded"),
+		Loc.t("Lantern at the right: it joined you at an event, such as the Lamp Watch"),
 		"",
 		Loc.t("On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.")]
 	return "\n".join(lines)
@@ -1697,8 +1698,8 @@ func run_spirlog() -> void:
 		var region_tabs: bool = bool(lay.get("region_tabs", false))
 		var entries: Array[Dictionary] = []
 		var actions: Array[String] = []
-		# Two progress bars on top (item 1940).
-		for row: Dictionary in spirlog_progress_rows():
+		# Two progress bars on top (item 1940), then one percent row per era (200 list item 83).
+		for row: Dictionary in spirlog_progress_rows() + spirlog_era_rows():
 			entries.append(row)
 			actions.append("progress")
 		if bool(lay.get("search_bar", false)):
@@ -1748,6 +1749,9 @@ func run_spirlog() -> void:
 			# Era I is a plain number list: the line's own "+" and "*" say seen and bonded.
 			if bool(lay.get("icons", false)):
 				row["icon"] = mark
+			# Event kinds (Lamp Watch) carry a lantern badge at the right end (200 list item 137).
+			if not SpirlogBook.event_of(GameState.spirlog, sd.species_name).is_empty():
+				row["decorate"] = SpirlogMarks.draw_event_badge
 			if str(lay.get("panel", "none")) != "none" and SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
 				row["hint"] = Loc.t("Seen at: %s" % SpirlogBook.found_line(sd, GameState.spirlog))
 			else:
@@ -1831,6 +1835,16 @@ static func spirlog_progress_rows() -> Array[Dictionary]:
 		var ratio: float = float(n) / maxf(1.0, float(total))
 		out.append({"text": Loc.t(str(pair[0]) % [n, total]),
 			"decorate": func(b: Button) -> void: _draw_progress(b, ratio)})
+	return out
+
+## "Era I: 54% seen, 30% bonded" per era with kinds in the open regions (200 list item 83). No bar:
+## the row wraps onto two lines on the narrow screen and a bar would run through the second.
+static func spirlog_era_rows() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for p: Dictionary in SpirlogBook.era_progress(GameState.spirlog, GameState.flags):
+		var total: int = int(p.total)
+		out.append({"text": Loc.t("Era %s: %d%% seen, %d%% bonded") % [EraFeatures.ROMAN[clampi(int(p.era), 0, 5)],
+			SpirlogBook.percent(int(p.seen), total), SpirlogBook.percent(int(p.bonded), total)]})
 	return out
 
 const PROGRESS_W: int = 48
