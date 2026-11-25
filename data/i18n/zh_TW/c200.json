@@ -1,6 +1,7 @@
 {
  "_comment": "Translations of the German table c200, written by tools/i18n/locales_c200.py. Keys are the English text; keys with %s or %d are patterns.",
  "strings": {
+  "(%d in the bag)": "（包裡有%d個）",
   "A spray of sparks: two to four small burns.": "噴出一陣火星：二到四次小灼傷。",
   "A volley of sticky burrs: two to four hits.": "連射黏人的蒼耳：命中二到四次。",
   "About this app": "關於本應用",

@@ -2197,7 +2197,12 @@ func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 	GameState.add_item(args[0], count)
 	Sound.sfx("pickup")
 	var item_name: String = str(Database.item(args[0]).get("name", args[0]))
-	await say(["You got %s x%d!" % [item_name, count]] as Array[String])
+	# How many the bag holds now (200 list item 35), when that is more than this gift.
+	var now: int = GameState.item_count(args[0])
+	if now > count:
+		await say([Loc.t("You got %s x%d!") % [Loc.t(item_name), count] + " " + Loc.t("(%d in the bag)") % now] as Array[String])
+	else:
+		await say(["You got %s x%d!" % [item_name, count]] as Array[String])
 	if PauseMenu.bag_tab(Database.item(args[0])) == 1:
 		await say(Tips.take("keepsake"))
 	if bool(Database.item(args[0]).get("gear", false)):

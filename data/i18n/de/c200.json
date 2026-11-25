@@ -2,6 +2,7 @@
  "_comment": "German texts from tools/i18n/de_c200.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
  "keep": [],
  "strings": {
+  "(%d in the bag)": "(%d in der Tasche)",
   "A spray of sparks: two to four small burns.": "Ein Funkenregen: zwei bis vier kleine Brandtreffer.",
   "A volley of sticky burrs: two to four hits.": "Eine Salve klebriger Kletten: zwei bis vier Treffer.",
   "About this app": "Über diese App",

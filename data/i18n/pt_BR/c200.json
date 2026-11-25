@@ -1,6 +1,7 @@
 {
  "_comment": "Translations of the German table c200, written by tools/i18n/locales_c200.py. Keys are the English text; keys with %s or %d are patterns.",
  "strings": {
+  "(%d in the bag)": "(%d na bolsa)",
   "A spray of sparks: two to four small burns.": "Uma chuva de fagulhas: de duas a quatro pequenas queimaduras.",
   "A volley of sticky burrs: two to four hits.": "Uma rajada de carrapichos grudentos: de dois a quatro golpes.",
   "About this app": "Sobre o app",

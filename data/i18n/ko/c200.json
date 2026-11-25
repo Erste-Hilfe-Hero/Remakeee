@@ -1,6 +1,7 @@
 {
  "_comment": "Translations of the German table c200, written by tools/i18n/locales_c200.py. Keys are the English text; keys with %s or %d are patterns.",
  "strings": {
+  "(%d in the bag)": "(가방에 %d개)",
   "A spray of sparks: two to four small burns.": "불티를 흩뿌린다. 작은 화상이 2번에서 4번.",
   "A volley of sticky burrs: two to four hits.": "들러붙는 도꼬마리를 연달아 쏜다. 2번에서 4번 맞힌다.",
   "About this app": "앱 정보",
