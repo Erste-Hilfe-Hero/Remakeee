@@ -35,7 +35,7 @@ Signing uses Godot's `GODOT_ANDROID_KEYSTORE_RELEASE_*` environment variables, s
 `export_presets.cfg`. The release job sets **no** `GODOT_ANDROID_KEYSTORE_DEBUG_*` variables, because setting
 only some of them breaks the export (Godot issue #109551).
 
-Preset values: target SDK 36, min SDK 24, arm64-v8a only, Gradle build, AAB. The Gradle build template is
+Preset values: target SDK 36, min SDK 24, arm64-v8a, armeabi-v7a and x86_64 (Chromebooks), Gradle build, AAB. The Gradle build template is
 installed fresh in CI by `tools/ci_setup_android.sh` (the `android/` folder is gitignored). To build locally,
 use Project → Install Android Build Template in the editor.
 
