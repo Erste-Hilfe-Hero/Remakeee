@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table c200set, written by tools/i18n/locales_c200set.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Dim": "Темнее",
+  "Dims the whole screen for dark rooms. Warm also takes out the cold blue light.": "Затемняет весь экран для тёмной комнаты. Тёплый также убирает холодный синий свет.",
+  "Night mode: %s": "Ночной режим: %s",
+  "Reset to default": "Сбросить",
+  "Set every setting on this page back to how it was at the start?": "Вернуть все настройки на этой странице к начальным?",
+  "Sets every setting on this page back to how it was at the start.": "Возвращает все настройки на этой странице к начальным.",
+  "Sets every setting on this page back to how it was at the start. The language stays.": "Возвращает все настройки на этой странице к начальным. Язык остаётся.",
+  "This weekend, battles give double Growth on Saturday and Sunday.": "В эти выходные, в субботу и воскресенье, бои дают двойной Рост.",
+  "This weekend, battles give more Growth on Saturday and Sunday.": "В эти выходные, в субботу и воскресенье, бои дают больше Роста.",
+  "Warm": "Тёплый",
+  "Weekend: battles give double Growth today.": "Выходные: сегодня бои дают двойной Рост.",
+  "Weekend: battles give more Growth today.": "Выходные: сегодня бои дают больше Роста.",
+  "Your journey is %d years old today! A birthday gift: a Growth Charm and %d coins.": "Твоему путешествию сегодня %d лет! Подарок на день рождения: Амулет роста и %d монет.",
+  "Your journey is one year old today! A birthday gift: a Growth Charm and %d coins.": "Твоему путешествию сегодня год! Подарок на день рождения: Амулет роста и %d монет."
+ }
+}

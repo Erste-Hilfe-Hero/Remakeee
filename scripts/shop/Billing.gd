@@ -130,7 +130,7 @@ func block_reason(o: Dictionary, with_riftglass: bool) -> String:
 		return "age_needed"
 	if int(state.band) < maxi(13, int(o.get("min_band", 13))):
 		return "age"
-	if not bool(o.get("ready", false)):
+	if not bool(o.get("ready", false)) or not ShopCatalog.in_save_window(o):
 		return "not_available"
 	if bool(state.get("locked", false)):
 		return "limit_reached"

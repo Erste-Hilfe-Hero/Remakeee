@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table c200set, written by tools/i18n/locales_c200set.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Dim": "Scuro",
+  "Dims the whole screen for dark rooms. Warm also takes out the cold blue light.": "Scurisce tutto lo schermo per le stanze buie. Caldo toglie anche la fredda luce blu.",
+  "Night mode: %s": "Modalità notte: %s",
+  "Reset to default": "Ripristina",
+  "Set every setting on this page back to how it was at the start?": "Riportare tutte le impostazioni di questa pagina come all'inizio?",
+  "Sets every setting on this page back to how it was at the start.": "Riporta tutte le impostazioni di questa pagina come all'inizio.",
+  "Sets every setting on this page back to how it was at the start. The language stays.": "Riporta tutte le impostazioni di questa pagina come all'inizio. La lingua resta.",
+  "This weekend, battles give double Growth on Saturday and Sunday.": "Questo fine settimana, le lotte danno il doppio della Crescita sabato e domenica.",
+  "This weekend, battles give more Growth on Saturday and Sunday.": "Questo fine settimana, le lotte danno più Crescita sabato e domenica.",
+  "Warm": "Caldo",
+  "Weekend: battles give double Growth today.": "Fine settimana: oggi le lotte danno il doppio della Crescita.",
+  "Weekend: battles give more Growth today.": "Fine settimana: oggi le lotte danno più Crescita.",
+  "Your journey is %d years old today! A birthday gift: a Growth Charm and %d coins.": "Il tuo viaggio compie %d anni oggi! Un regalo di compleanno: un Amuleto della crescita e %d monete.",
+  "Your journey is one year old today! A birthday gift: a Growth Charm and %d coins.": "Il tuo viaggio compie un anno oggi! Un regalo di compleanno: un Amuleto della crescita e %d monete."
+ }
+}

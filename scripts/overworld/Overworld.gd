@@ -182,6 +182,11 @@ func _ready() -> void:
 		if lamp != "":
 			GameState.notices.append(lamp)
 			hint = lamp
+		# Weekend boost (200 list item 141): a note on Friday and on the weekend, never a push.
+		var weekend: String = GrowthRules.weekend_line(GrowthRules.local_weekday())
+		if weekend != "":
+			GameState.notices.append(weekend)
+			hint = weekend
 		# A battle left open on Rift-Born leaves its note here (item 630).
 		if hint != "" or GameState.left_battle:
 			GameState.left_battle = false
@@ -4684,6 +4689,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.rule_turn_full = GameState.difficulty >= GameState.Difficulty.VETERAN
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
 	model.xp_mult = ShopEffects.growth_mult() * GrowthRules.battle_mult(GameState.difficulty, trainer, GameState.records, not GameState.has_flag(GameState.ACT1_END_FLAG))
+	model.xp_mult *= GrowthRules.weekend_mult(GrowthRules.local_weekday())
 	model.ring_scaled_growth = EraFeatures.is_unlocked("ring_scaled_growth")
 	model.wheel = bool(trainer.get("wheel", false)) and EraFeatures.is_unlocked("wheel_battles")
 	model.wheel_size = EraActivities.wheel_size()

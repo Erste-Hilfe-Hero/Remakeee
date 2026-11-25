@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table c200set, written by tools/i18n/locales_c200set.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Dim": "调暗",
+  "Dims the whole screen for dark rooms. Warm also takes out the cold blue light.": "为昏暗的房间调暗整个屏幕。暖色还会去掉冷冷的蓝光。",
+  "Night mode: %s": "夜间模式：%s",
+  "Reset to default": "恢复默认",
+  "Set every setting on this page back to how it was at the start?": "要把本页的所有设置恢复到最初的样子吗？",
+  "Sets every setting on this page back to how it was at the start.": "把本页的所有设置恢复到最初的样子。",
+  "Sets every setting on this page back to how it was at the start. The language stays.": "把本页的所有设置恢复到最初的样子。语言保持不变。",
+  "This weekend, battles give double Growth on Saturday and Sunday.": "本周末的周六和周日，战斗获得双倍成长。",
+  "This weekend, battles give more Growth on Saturday and Sunday.": "本周末的周六和周日，战斗获得更多成长。",
+  "Warm": "暖色",
+  "Weekend: battles give double Growth today.": "周末：今天战斗获得双倍成长。",
+  "Weekend: battles give more Growth today.": "周末：今天战斗获得更多成长。",
+  "Your journey is %d years old today! A birthday gift: a Growth Charm and %d coins.": "你的旅程今天满%d年了！生日礼物：成长护符和%d枚硬币。",
+  "Your journey is one year old today! A birthday gift: a Growth Charm and %d coins.": "你的旅程今天满一年了！生日礼物：成长护符和%d枚硬币。"
+ }
+}
