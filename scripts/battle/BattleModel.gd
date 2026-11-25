@@ -1898,13 +1898,18 @@ func _do_bond(a: BattleAction) -> void:
 	free.is_free = true
 	_queue.push_front(free)
 
-func _do_run(a: BattleAction) -> void:
-	var mine: float = float(a.actor.effective_spd())
+## Chance (0..1) that [param runner] gets away from the fastest standing foe on the next try.
+## Only ever shown to the player in words (BattleInfo.escape_words, 200 list item 59).
+func escape_chance(runner: Spirling) -> float:
+	var mine: float = float(runner.effective_spd())
 	var fastest: int = 0
 	for slot: int in standing_slots(Side.FOE):
 		fastest = maxi(fastest, active_spirling(Side.FOE, slot).effective_spd())
 	var theirs: float = maxf(float(fastest), 1.0)
-	var chance: float = clampf(FLEE_BASE + FLEE_PER_ATTEMPT * flee_attempts + (mine / theirs - 1.0) * FLEE_SPEED_WEIGHT, 0.0, 1.0)
+	return clampf(FLEE_BASE + FLEE_PER_ATTEMPT * flee_attempts + (mine / theirs - 1.0) * FLEE_SPEED_WEIGHT, 0.0, 1.0)
+
+func _do_run(a: BattleAction) -> void:
+	var chance: float = escape_chance(a.actor)
 	flee_attempts += 1
 	var success: bool = rng.randf() < chance
 	emit_event(BattleEvent.Type.FLEE_RESULT, {"success": success})

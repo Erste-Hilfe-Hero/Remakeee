@@ -990,6 +990,10 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 	# In a multi battle the acting order by Pace stands under the orders (KAMPF_PLAN_1000 389).
 	var pace: String = MultiRules.pace_line(model) if _multi else ""
 	var pace_tail: String = "\n" + pace if not pace.is_empty() else ""
+	# Wild battles: how leaving looks, in words only (200 list item 59).
+	var escape: String = BattleInfo.escape_words(model, slot)
+	if not escape.is_empty():
+		pace_tail += "\n" + escape
 	if _turn_deadline > 0:
 		_text.show_prompt("Orders for %s? (%d Energy, %d s)" % [me.display_name(), me.energy, _clock_left()] + pace_tail)
 	else:
@@ -1838,6 +1842,7 @@ func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
 	var second: int = ElementFx.second_for(me.elements(), element) if me != null else -1
 	_fx.user_sprite = user
 	_fx.feel = EraBattleFeel.move_anim(mv, EraManager.active_era()) if mv != null else {}
+	_fx.repeat_speed = RepeatShort.speed("art:" + str(e.data.get("move", "")))
 	if str(_fx.feel.get("style", "")) == "quake" and int(_fx.feel.get("tier", 1)) >= 4 and kind != MoveData.Kind.STATUS:
 		Juice.add_trauma(era_trauma(0.1), element)
 	if kind != MoveData.Kind.PHYSICAL and target != user:

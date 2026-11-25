@@ -1,0 +1,8 @@
+{
+ "_comment": "Translations of the German table c200bat, written by tools/i18n/locales_c200bat.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Escape looks easy.": "도망치기 쉬워 보인다.",
+  "Escape looks hard.": "도망치기 어려워 보인다.",
+  "Escape might work.": "도망칠 수 있을지도 모른다."
+ }
+}
