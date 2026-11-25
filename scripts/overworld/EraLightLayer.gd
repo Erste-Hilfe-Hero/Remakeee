@@ -441,6 +441,8 @@ func _paint_weather(c: Painter) -> void:
 	var vs: Vector2 = c.get_viewport_rect().size
 	if look != "clear":
 		match str(cfg.get("weather_style", "pattern")):
+			"none":
+				pass
 			"pattern":
 				_paint_pattern(c, vs)
 			"lines":

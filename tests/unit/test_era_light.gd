@@ -100,7 +100,8 @@ func test_era_one_has_no_day_tint_and_plain_weather() -> void:
 	assert_eq(EraLight.day_tint(1, NIGHT, true), white)
 	assert_eq(EraLight.world_tint(1, _town("veydal"), "storm", NIGHT, 10, true), white)
 	var fx: Array[String] = EraLight.effects(1, _ctx("rain", NIGHT))
-	assert_eq(fx, ["weather_pattern", "weather_text"] as Array[String], "a flat pattern and a line, nothing else")
+	# No pattern over the map (owner 25.11.2026: the dotted rain looked smeared), only the line.
+	assert_eq(fx, ["weather_text"] as Array[String], "only the weather line, no pattern over the map")
 	assert_eq(EraLight.effects(1, _ctx("clear", NIGHT)), [] as Array[String], "no lit windows, no glow")
 	assert_eq(EraLight.transition(1, "door"), "cut")
 	assert_eq(EraLight.transition(1, "stairs"), "cut")

@@ -13,7 +13,7 @@ const SEASONS: Array[String] = ["spring", "summer", "autumn", "winter"]
 const BOOL_KEYS: Array[String] = ["lit_windows", "splashes", "puddles", "fog_bands", "lightning", "lamp_glow",
 	"light_shafts", "cloud_shadows", "snow_prints", "golden_hour", "long_shadows", "season_tint", "camera_sweep"]
 const TINT_STYLES: Array[String] = ["none", "stepped", "smooth"]
-const WEATHER_STYLES: Array[String] = ["pattern", "lines", "rich"]
+const WEATHER_STYLES: Array[String] = ["none", "pattern", "lines", "rich"]
 const TRANSITIONS: Array[String] = ["cut", "fade", "base", "door_wipe", "stair_wipe"]
 const WARP_KINDS: Array[String] = ["door", "stairs", "edge"]
 const CAVE_EDGES: Array[String] = ["hard", "dither", "soft"]
@@ -244,7 +244,9 @@ static func effects(era: int, ctx: Dictionary) -> Array[String]:
 	var s: String = season(int(ctx.get("month", 1)))
 	var parts: Array = row.get("particles", [])
 	if look != "clear":
-		out.append("weather_" + str(row.get("weather_style", "pattern")))
+		# Era I draws no weather over the map ("none", owner 25.11.2026), only the line.
+		if str(row.get("weather_style", "pattern")) != "none":
+			out.append("weather_" + str(row.get("weather_style", "pattern")))
 		if bool(row.get("weather_text", false)):
 			out.append("weather_text")
 	if look in WET:
