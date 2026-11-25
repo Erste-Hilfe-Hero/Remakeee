@@ -696,6 +696,10 @@ static func status_chance(model: BattleModel, foe: Spirling, mv: MoveData) -> Di
 
 ## Fills the buttons from the model's current legal actions for the Spirling in [param slot].
 ## The matchup tag shows only when one foe stands (with several, the target is picked after).
+## The first art button (the first battle's arrow points at it, 200 list item 11).
+func first_art_button() -> Button:
+	return _move_buttons[0] if not _move_buttons.is_empty() else null
+
 func refresh(model: BattleModel, slot: int = 0) -> void:
 	_model = model
 	_slot = slot

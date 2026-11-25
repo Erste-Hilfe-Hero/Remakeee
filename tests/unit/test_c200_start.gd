@@ -75,3 +75,41 @@ func test_suit_texts_are_german_and_fit() -> void:
 		for t: String in answers + [Overworld.SUIT_ROW]:
 			assert_lte(_width(Loc.t(t)), float(ROW_TEXT_WIDTH), "%s row too wide: %s" % [lang, Loc.t(t)])
 
+# --- Item 11 ------------------------------------------------------------------------------
+
+func test_only_the_very_first_battle() -> void:
+	assert_true(FirstArtArrow.is_first_battle({}))
+	assert_true(FirstArtArrow.is_first_battle({"Kindlop": {"battles": 0}}))
+	assert_false(FirstArtArrow.is_first_battle({"Kindlop": {"battles": 1}}))
+
+func test_arrow_after_five_idle_seconds() -> void:
+	var host := Control.new()
+	add_child_autofree(host)
+	var b := Button.new()
+	b.size = Vector2(80, 13)
+	host.add_child(b)
+	var arrow := FirstArtArrow.new()
+	arrow.set_process(false)
+	host.add_child(arrow)
+	arrow.wait_for(b)
+	arrow.tick(FirstArtArrow.IDLE_SECONDS - 0.1)
+	assert_false(arrow.visible)
+	arrow.tick(0.2)
+	assert_true(arrow.visible)
+	var tap := InputEventMouseButton.new()
+	tap.button_index = MOUSE_BUTTON_LEFT
+	tap.pressed = true
+	arrow._input(tap)
+	assert_false(arrow.visible, "a tap hides it")
+	assert_eq(arrow.idle_time(), 0.0, "and starts the wait again")
+	arrow.tick(FirstArtArrow.IDLE_SECONDS)
+	assert_true(arrow.visible)
+	arrow.stop()
+	arrow.tick(10.0)
+	assert_false(arrow.visible, "no arrow once the orders are given")
+
+func test_battle_wires_the_arrow() -> void:
+	var src: String = FileAccess.get_file_as_string("res://scripts/battle/presenter/BattleScene.gd")
+	assert_string_contains(src, "FirstArtArrow.is_first_battle(GameState.spirlog)")
+	assert_string_contains(src, "_first_arrow.wait_for(_menu.first_art_button())")
+
