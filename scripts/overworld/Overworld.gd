@@ -55,6 +55,7 @@ var minimap: Minimap
 ## (plan Chimora 100, items 37 and 38).
 var goal_line: GoalLine
 var goal_marks: GoalMarks
+var _door_glow: DoorGlow
 ## Top-of-screen notes (badges, daily tasks).
 var toast: Toast
 var _fade: ColorRect
@@ -203,6 +204,11 @@ func _build() -> void:
 	add_child(_particles)
 	_era_feel = EraFeelLayer.new()
 	add_child(_era_feel)
+	# Doors and cave mouths glow softly when the Wayfarer is near (200 list item 27).
+	_door_glow = DoorGlow.new()
+	_door_glow.name = "door_glow"
+	_door_glow.ow = self
+	add_child(_door_glow)
 	_entities = Node2D.new()
 	_entities.name = "Entities"
 	_entities.y_sort_enabled = true
@@ -215,6 +221,7 @@ func _build() -> void:
 	player.body_color = Color("3a5a9a")
 	player.sprite_style = "tamer"
 	player.can_move = _can_enter
+	player.can_probe = _can_probe
 	player.stepped.connect(_on_player_stepped)
 	player.step_started.connect(_on_player_step_started)
 	player.bob = true
@@ -522,15 +529,18 @@ func _place_rustle() -> void:
 	_rustle.visible = true
 
 ## Tints the world for the time of day (UI layers are not affected). Checked once a minute.
-func refresh_daylight() -> void:
+## With [param fade] the tint glides to the new colour over DAYLIGHT_FADE seconds instead of
+## jumping (200 list item 38); map loads and settings changes stay instant.
+func refresh_daylight(fade: bool = false) -> void:
 	if _daylight == null:
 		_daylight = CanvasModulate.new()
 		add_child(_daylight)
 		var t := Timer.new()
 		t.wait_time = 60.0
 		t.autostart = true
-		t.timeout.connect(refresh_daylight)
+		t.timeout.connect(refresh_daylight.bind(true))
 		add_child(t)
+	var before: Color = _daylight.color
 	var w: String = WeatherCycle.current(map)
 	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night) * WeatherCycle.tint(w)
 	# Era V shows the season on outdoor maps (data/era_feel.json "season_tint").
@@ -548,6 +558,24 @@ func refresh_daylight() -> void:
 		weather_layer.show_kind(w)
 	DayCycle.poll()
 	_era_light.refresh(map, w, _daylight, _glow, weather_layer)
+	_fade_daylight(before, fade)
+
+## Seconds the world tint takes to glide to a new time of day (200 list item 38).
+const DAYLIGHT_FADE: float = 4.0
+var _daylight_tween: Tween
+
+## Glides the tint from [param before] to its new colour when [param fade] is set.
+func _fade_daylight(before: Color, fade: bool) -> void:
+	if _daylight_tween != null:
+		_daylight_tween.kill()
+		_daylight_tween = null
+	var after: Color = _daylight.color
+	if not fade or before.is_equal_approx(after) or not is_inside_tree():
+		return
+	_daylight.color = before
+	# A slow light change, far longer than the Juice curves, so a plain sine tween (docs/JUICE.md).
+	_daylight_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_daylight_tween.tween_property(_daylight, "color", after, DAYLIGHT_FADE)
 
 const SHADE_DARK: float = 0.9
 const SHADE_LIT: float = 0.3
@@ -585,6 +613,19 @@ func _can_enter(cell: Vector2i) -> bool:
 		_gear_hint.call_deferred(gear)
 		return false
 	return true
+
+## Like _can_enter but without pushing, sounds or hints, and no for anything unsure
+## (boulders, gear tiles without the gear). Picks diagonal steps (200 list item 30).
+func _can_probe(cell: Vector2i) -> bool:
+	if busy or map == null or not map.in_bounds(cell) or npc_at(cell) != null or map.char_at(cell) == "B":
+		return false
+	var k: int = map.kind_at(cell)
+	if TilesetFactory.GEAR_KINDS.has(k):
+		return GameState.has_gear(str(TilesetFactory.GEAR_KINDS[k]))
+	if not map.is_walkable(cell):
+		return false
+	var gear: String = map.gear_needed_at(cell)
+	return gear.is_empty() or GameState.has_gear(gear)
 
 var _hinted_cell: Vector2i = Vector2i(-1, -1)
 
@@ -698,7 +739,7 @@ func _spawn_npcs() -> void:
 func _on_phase_changed(_phase: int) -> void:
 	if map == null or busy:
 		return
-	refresh_daylight()
+	refresh_daylight(true)
 	_spawn_npcs()
 	_world.refresh(player.cell)
 
@@ -1298,7 +1339,7 @@ func _action_bench(_args: PackedStringArray, _speaker: NPC) -> void:
 	var p: DayCycle.Phase = DayCycle.skip_to_next()
 	Sound.sfx("confirm")
 	await say(["You sit on the bench and watch the line drift. Time slips by...", BENCH_LINES[p]] as Array[String])
-	refresh_daylight()
+	refresh_daylight(true)
 	_spawn_npcs()
 	_world.refresh(player.cell)
 
