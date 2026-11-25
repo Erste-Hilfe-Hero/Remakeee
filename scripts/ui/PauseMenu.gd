@@ -819,8 +819,19 @@ func run_room() -> bool:
 	return true
 
 ## Fast travel between rest spots already used (item 41). Returns true if a target was picked.
+## The place travelled to last in this session; it heads the list next time (200 list item 36).
+static var last_travel: String = ""
+
+## [param ids] with [param last] moved to the front when it is there.
+static func last_first(ids: Array[String], last: String) -> Array[String]:
+	var out: Array[String] = ids.duplicate()
+	if out.has(last):
+		out.erase(last)
+		out.push_front(last)
+	return out
+
 func run_travel() -> bool:
-	var ids: Array[String] = GameState.travel_targets(current_map)
+	var ids: Array[String] = last_first(GameState.travel_targets(current_map), last_travel)
 	var names: Array[String] = []
 	for id: String in ids:
 		names.append(MapData.load_map(id).display_name if MapData.exists(id) else id)
@@ -831,6 +842,7 @@ func run_travel() -> bool:
 	if not await confirm("Travel to %s?" % names[idx], "Travel", "Stay"):
 		return false
 	travel_to = ids[idx]
+	last_travel = ids[idx]
 	return true
 
 func run_team() -> void:

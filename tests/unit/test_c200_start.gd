@@ -110,3 +110,11 @@ func test_about_text_names_version_build_and_contact() -> void:
 	assert_string_contains(t, Online.CLIENT_VERSION_NAME)
 	assert_string_contains(t, "build %d" % Online.CLIENT_VERSION)
 	assert_string_contains(t, LegalInfo.CONTACT)
+
+# --- item 36: the last travel target heads the list ------------------------------------------------
+
+func test_last_travel_target_comes_first() -> void:
+	var ids: Array[String] = ["a", "b", "c"]
+	assert_eq(PauseMenu.last_first(ids, "c"), ["c", "a", "b"] as Array[String])
+	assert_eq(PauseMenu.last_first(ids, "x"), ids, "unknown last target: order stays")
+	assert_eq(ids, ["a", "b", "c"] as Array[String], "the input is not changed")
