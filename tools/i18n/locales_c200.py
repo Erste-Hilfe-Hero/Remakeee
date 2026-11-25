@@ -37,6 +37,10 @@ R = {
 "Not in your Spirlog yet!": ["まだSpirlogにいない!", "Pas encore dans ton Spirlog !", "Non ancora nel tuo Spirlog!", "¡Aún no está en tu Spirlog!", "아직 Spirlog에 없다!", "还不在你的Spirlog里！", "還不在你的Spirlog裡！", "Ainda não está no seu Spirlog!", "Его ещё нет в твоём Spirlog!", "Jeszcze nie ma go w twoim Spirlogu!", "Henüz Spirlog'unda yok!", "Nog niet in je Spirlog!"],
 "Already in your Spirlog.": ["もうSpirlogにいる。", "Déjà dans ton Spirlog.", "Già nel tuo Spirlog.", "Ya está en tu Spirlog.", "이미 Spirlog에 있다.", "已经在你的Spirlog里。", "已經在你的Spirlog裡。", "Já está no seu Spirlog.", "Уже есть в твоём Spirlog.", "Już jest w twoim Spirlogu.", "Zaten Spirlog'unda.", "Staat al in je Spirlog."],
 "Bonded here: %d/%d": ["ここできずなを結んだ数: %d/%d", "Liés ici : %d/%d", "Legati qui: %d/%d", "Vinculados aquí: %d/%d", "여기서 맺은 인연: %d/%d", "在此结缘：%d/%d", "在此結緣：%d/%d", "Vinculados aqui: %d/%d", "Связь здесь: %d/%d", "Związane tutaj: %d/%d", "Burada bağ kurulan: %d/%d", "Hier verbonden: %d/%d"],
+"About this app": ["このアプリについて", "À propos de l'app", "Info sull'app", "Acerca de la app", "앱 정보", "关于本应用", "關於本應用", "Sobre o app", "Об приложении", "O aplikacji", "Uygulama hakkında", "Over deze app"],
+"Chimora %s (build %d)": ["Chimora %s(ビルド %d)", "Chimora %s (build %d)", "Chimora %s (build %d)", "Chimora %s (compilación %d)", "Chimora %s (빌드 %d)", "Chimora %s（构建 %d）", "Chimora %s（組建 %d）", "Chimora %s (build %d)", "Chimora %s (сборка %d)", "Chimora %s (kompilacja %d)", "Chimora %s (derleme %d)", "Chimora %s (build %d)"],
+"System: %s": ["システム: %s", "Système : %s", "Sistema: %s", "Sistema: %s", "시스템: %s", "系统：%s", "系統：%s", "Sistema: %s", "Система: %s", "System: %s", "Sistem: %s", "Systeem: %s"],
+"Please name these in a mail to support.": ["サポートへのメールにこれを書いてね。", "Indiquez-les dans un e-mail au support.", "Indicali in una mail al supporto.", "Indícalos en un correo al soporte.", "지원팀에 메일을 보낼 때 이 정보를 적어 주세요.", "给客服写邮件时请附上这些信息。", "寫信給客服時請附上這些資訊。", "Informe isto em um e-mail ao suporte.", "Укажите это в письме в поддержку.", "Podaj te dane w mailu do wsparcia.", "Desteğe yazarken bunları belirt.", "Noem deze in een mail aan support."],
 }
 
 

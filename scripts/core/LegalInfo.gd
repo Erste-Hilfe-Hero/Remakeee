@@ -31,6 +31,15 @@ static func links_text() -> String:
 		"Contact: " + CONTACT,
 	])
 
+## Version, build and platform for a support mail (200 list item 129).
+static func about_text() -> String:
+	return "\n".join([
+		Loc.t("Chimora %s (build %d)") % [Online.CLIENT_VERSION_NAME, Online.CLIENT_VERSION],
+		Loc.t("System: %s") % OS.get_name(),
+		Loc.t("Please name these in a mail to support."),
+		"Contact: " + CONTACT,
+	])
+
 ## The terms page in the game's language: German, else English.
 static func terms_url() -> String:
 	return TERMS_URL if Loc.language() == "de" else TERMS_URL_EN

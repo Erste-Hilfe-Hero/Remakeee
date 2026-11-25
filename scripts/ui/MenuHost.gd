@@ -1113,7 +1113,7 @@ func open_discord() -> void:
 
 func run_legal() -> void:
 	while true:
-		var idx: int = await pick_strings("Legal", ["Imprint & privacy", "Licences", "Join our Discord"] as Array[String])
+		var idx: int = await pick_strings("Legal", ["Imprint & privacy", "Licences", "Join our Discord", "About this app"] as Array[String])
 		match idx:
 			-1:
 				return
@@ -1125,6 +1125,8 @@ func run_legal() -> void:
 			2:
 				open_url.call(DISCORD_URL)
 				toast(DISCORD_URL)
+			3:
+				await info(LegalInfo.about_text())
 
 ## "What's new" (docs/LIVE_CONTENT.md): patch notes and news from the live content, newest
 ## first, and the Discord invite. An entry with a link offers to open it after its text.

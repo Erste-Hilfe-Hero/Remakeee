@@ -102,3 +102,11 @@ func test_bond_count_and_star_per_place() -> void:
 		all[k] = {"seen": true, "bonded": true}
 	assert_eq(WorldAtlas.bond_count(place, all), [kinds.size(), kinds.size()] as Array[int])
 	assert_eq(WorldAtlas.complete_mark(place, all), " *")
+
+# --- item 129: version and build for support ---------------------------------------------------
+
+func test_about_text_names_version_build_and_contact() -> void:
+	var t: String = LegalInfo.about_text()
+	assert_string_contains(t, Online.CLIENT_VERSION_NAME)
+	assert_string_contains(t, "build %d" % Online.CLIENT_VERSION)
+	assert_string_contains(t, LegalInfo.CONTACT)

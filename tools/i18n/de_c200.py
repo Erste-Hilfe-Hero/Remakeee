@@ -29,4 +29,8 @@ T = {
 "Not in your Spirlog yet!": "Noch nicht in deinem Spirlog!",
 "Already in your Spirlog.": "Schon in deinem Spirlog.",
 "Bonded here: %d/%d": "Hier gebunden: %d/%d",
+"About this app": "Über diese App",
+"Chimora %s (build %d)": "Chimora %s (Build %d)",
+"System: %s": "System: %s",
+"Please name these in a mail to support.": "Bitte nenne diese Angaben in einer Mail an den Support.",
 }
