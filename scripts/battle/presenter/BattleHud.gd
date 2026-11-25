@@ -130,6 +130,7 @@ func layout_single() -> void:
 		dress_auto(_auto_on)
 	_place(scene._goal_label, l.goal)
 	goal_w = (l.goal as Rect2).size.x
+	scene.fit_goal_label()
 	for row: TeamRow in [player_team, foe_team]:
 		row.compact = false
 	_place(player_team, l.player_team)
@@ -153,6 +154,7 @@ func layout_formation() -> void:
 	dress_auto(_auto_on)
 	_place(scene._goal_label, l.goal)
 	goal_w = (l.goal as Rect2).size.x
+	scene.fit_goal_label()
 	for row: TeamRow in [player_team, foe_team]:
 		row.compact = true
 	_place(player_team, l.player_team)

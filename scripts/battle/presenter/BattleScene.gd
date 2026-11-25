@@ -165,11 +165,13 @@ func _refresh_goal() -> void:
 		# Trials (item 711): the goal as a sentence and the turns left, top left.
 		_goal_label.text = str(model.get_meta("puzzle_goal", "")) + "\n" + Loc.t("Turns left: %d") % BattlePuzzle.turns_left(model)
 		_goal_label.visible = true
+		fit_goal_label()
 		return
 	if _goal_label != null and not model.has_meta("goal_tracker") and show_turns(model):
 		# Wayfarer and boss battles count the turns top left (KAMPF_PLAN item 5).
 		_goal_label.text = _turn_text(model.turn + 1)
 		_goal_label.visible = not model.is_finished()
+		fit_goal_label()
 		return
 	if _goal_label == null or not model.has_meta("goal_tracker") or not GameState.bonus_goals:
 		return
@@ -177,6 +179,20 @@ func _refresh_goal() -> void:
 	var mark: String = ["✗", "", "✓"][t.status() + 1]
 	_goal_label.text = _turn_text(t.turns() + 1, "" if mark.is_empty() else " " + mark)
 	_goal_label.visible = true
+	fit_goal_label()
+
+## Shrinks the goal label to its text, so its light plate sits only behind the words; never
+## wider than its place in the HUD layout (the label clips there, as before).
+func fit_goal_label() -> void:
+	if _goal_label == null:
+		return
+	var f: Font = _goal_label.get_theme_font("font")
+	var fs: int = _goal_label.get_theme_font_size("font_size")
+	var t: Vector2 = f.get_multiline_string_size(_goal_label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs)
+	var w: float = ceilf(t.x) + 2.0
+	if _hud != null and _hud.goal_w > 0.0:
+		w = minf(w, _hud.goal_w)
+	_goal_label.size = Vector2(w, ceilf(t.y))
 
 ## The turn count "Turn 3" (plan Chimora 100 item 57: "T1", "R1", "X1" said nothing); the short
 ## "T3" only where the word does not fit (the narrow formation band).
@@ -286,6 +302,13 @@ func _build() -> void:
 	_goal_label = Label.new()
 	_goal_label.visible = false
 	_goal_label.add_theme_font_size_override("font_size", 8)
+	# A light plate keeps "Turn 3" readable where a short field (iPhone Duo, tablets) puts the
+	# dark hills behind it.
+	var plate := StyleBoxFlat.new()
+	plate.bg_color = Color(UITheme.BG, 0.85)
+	plate.content_margin_left = 1
+	plate.content_margin_right = 1
+	_goal_label.add_theme_stylebox_override("normal", plate)
 	_field.add_child(_goal_label)
 	_rule_banner = RuleBanner.new()
 	_field.add_child(_rule_banner)
