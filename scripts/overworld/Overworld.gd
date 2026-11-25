@@ -2317,16 +2317,66 @@ const STARTER_ASK: String = "%s curls up at your feet. Let it stay?"
 ## Said once the partner stays: one text box (Chimora 100 item 26).
 const STARTER_STAY_LINE: String = "%s stays with you! The other two slip off to the lake."
 
+## Help for undecided players under the partner list (200 list item 5): two short questions
+## that suggest a partner; the player still picks freely.
+const SUIT_ROW: String = "Which one suits you?"
+const SUIT_HINT: String = "Two short questions. You still choose freely."
+const SUIT_RESULT: String = "%s might suit you. But choose whoever you like!"
+## Each question with its answers; an answer's points go to Database.STARTERS in order.
+const SUIT_QUESTIONS: Array[Dictionary] = [
+	{"q": "A free afternoon. You...", "a": [["sit by a warm fire", [2, 0, 1]],
+		["race to the lake", [1, 2, 0]], ["explore a dark cave", [0, 1, 2]]]},
+	{"q": "Your partner should be...", "a": [["loyal and warm", [2, 0, 0]],
+		["quick and lively", [0, 2, 0]], ["calm and bright", [0, 0, 2]]]},
+]
+
+## Index in Database.STARTERS suggested by [param answers] (one answer index per question):
+## the most points; on a tie the first question's points decide.
+static func suit_pick(answers: Array[int]) -> int:
+	var best: int = 0
+	var best_score: int = -1
+	for i: int in Database.STARTERS.size():
+		var score: int = 0
+		for q: int in answers.size():
+			var pts: Array = (SUIT_QUESTIONS[q].a as Array)[answers[q]][1]
+			score += int(pts[i]) * 10 + (int(pts[i]) if q == 0 else 0)
+		if score > best_score:
+			best_score = score
+			best = i
+	return best
+
+## Asks the two questions; the suggested partner index, or -1 when the player backed out.
+static func ask_suit(menu: MenuHost) -> int:
+	var answers: Array[int] = []
+	for q: Dictionary in SUIT_QUESTIONS:
+		var items: Array[String] = []
+		for a: Array in q.a:
+			items.append(str(a[0]))
+		var idx: int = await menu.pick_strings(str(q.q), items)
+		if idx < 0:
+			return -1
+		answers.append(idx)
+	return suit_pick(answers)
+
 ## "choose_starter": the three Spirlings that sheltered from the storm; one stays.
 func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
 	if GameState.has_flag("got_starter"):
 		return
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
+	var rows: Array[Dictionary] = starter_rows()
+	rows.append({"text": SUIT_ROW, "hint": Loc.t(SUIT_HINT)})
+	var focus: int = -1
 	while true:
 		menu.picker.set_header(starter_header())
-		var pick: int = await menu.pick(STARTER_TITLE, starter_rows(), false)
+		var pick: int = await menu.pick(STARTER_TITLE, rows, false, focus)
 		menu.picker.set_header(null)
+		if pick >= Database.STARTERS.size():
+			var hint: int = await ask_suit(menu)
+			if hint >= 0:
+				await menu.info(Loc.t(SUIT_RESULT) % Database.STARTERS[hint], MiniSprite.of(Database.STARTERS[hint], STARTER_SPRITE))
+				focus = hint
+			continue
 		var sd: SpirlingData = Database.species(Database.STARTERS[pick])
 		# Yes or No only: a Back row would say the same as No (Chimora 100 item 32).
 		if await menu.pick_strings(STARTER_ASK % sd.species_name, ["Yes", "No"] as Array[String], false) == 0:

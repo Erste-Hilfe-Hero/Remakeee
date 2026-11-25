@@ -31,3 +31,47 @@ func test_title_uses_the_continue_icon() -> void:
 	var src: String = FileAccess.get_file_as_string("res://scripts/ui/TitleScreen.gd")
 	assert_string_contains(src, "EraSaveCard.continue_icon(")
 
+# --- Item 5 -------------------------------------------------------------------------------
+
+func test_each_partner_can_be_suggested() -> void:
+	assert_eq(Overworld.SUIT_QUESTIONS.size(), 2)
+	var hits: Dictionary = {}
+	for a: int in 3:
+		for b: int in 3:
+			var s: int = Overworld.suit_pick([a, b] as Array[int])
+			assert_between(s, 0, Database.STARTERS.size() - 1)
+			hits[s] = true
+	assert_eq(hits.size(), Database.STARTERS.size())
+
+func test_matching_answers_suggest_that_partner() -> void:
+	for i: int in Database.STARTERS.size():
+		assert_eq(Overworld.suit_pick([i, i] as Array[int]), i, Database.STARTERS[i])
+
+func test_the_second_answer_counts_too() -> void:
+	# Warm fire (Kindlop first, Wickit second) and calm and bright: Wickit.
+	assert_eq(Overworld.suit_pick([0, 2] as Array[int]), 2)
+	# Warm fire and quick: a tie, the first question decides.
+	assert_eq(Overworld.suit_pick([0, 1] as Array[int]), 0)
+
+func test_the_list_is_unchanged_and_the_pick_stays_free() -> void:
+	assert_eq(Overworld.starter_rows().size(), Database.STARTERS.size())
+	var src: String = FileAccess.get_file_as_string("res://scripts/overworld/Overworld.gd")
+	assert_string_contains(src, "rows.append({\"text\": SUIT_ROW")
+	assert_string_contains(src, "focus = hint")
+
+func test_suit_texts_are_german_and_fit() -> void:
+	var texts: Array[String] = [Overworld.SUIT_ROW, Overworld.SUIT_HINT, Overworld.SUIT_RESULT]
+	var answers: Array[String] = []
+	for q: Dictionary in Overworld.SUIT_QUESTIONS:
+		texts.append(str(q.q))
+		for a: Array in q.a:
+			answers.append(str(a[0]))
+	texts.append_array(answers)
+	Loc.set_language("de")
+	for t: String in texts:
+		assert_ne(Loc.t(t), t, t)
+	for lang: String in ["en", "de"]:
+		Loc.set_language(lang)
+		for t: String in answers + [Overworld.SUIT_ROW]:
+			assert_lte(_width(Loc.t(t)), float(ROW_TEXT_WIDTH), "%s row too wide: %s" % [lang, Loc.t(t)])
+
