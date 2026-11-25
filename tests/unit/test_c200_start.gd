@@ -118,3 +118,26 @@ func test_last_travel_target_comes_first() -> void:
 	assert_eq(PauseMenu.last_first(ids, "c"), ["c", "a", "b"] as Array[String])
 	assert_eq(PauseMenu.last_first(ids, "x"), ids, "unknown last target: order stays")
 	assert_eq(ids, ["a", "b", "c"] as Array[String], "the input is not changed")
+
+# --- item 7: the name box asks for another name while typing a refused one ------------------------
+
+func test_refused_names_are_flagged_while_typing() -> void:
+	assert_false(CharCounter.name_refused(""))
+	assert_false(CharCounter.name_refused("Liora"))
+	assert_true(CharCounter.name_refused("www"))
+	assert_true(CharCounter.name_refused("Nazi"))
+	var edit := LineEdit.new()
+	add_child_autofree(edit)
+	var ask := Label.new()
+	ask.text = "Your name?"
+	add_child_autofree(ask)
+	var c: CharCounter = CharCounter.make(edit, 10)
+	c.ask_label = ask
+	c.ask_text = ask.text
+	add_child_autofree(c)
+	edit.text = "Hitler"
+	await wait_frames(2)
+	assert_eq(ask.text, CharCounter.ASK_AGAIN)
+	edit.text = "Mira"
+	await wait_frames(2)
+	assert_eq(ask.text, "Your name?")

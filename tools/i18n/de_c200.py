@@ -35,4 +35,5 @@ T = {
 "Please name these in a mail to support.": "Bitte nenne diese Angaben in einer Mail an den Support.",
 "Welcome back! A small gift: %d Tonics and %d coins.": "Willkommen zurück! Ein kleines Geschenk: %d Tonika und %d Münzen.",
 "(%d in the bag)": "(%d in der Tasche)",
+"Please pick another name.": "Bitte nimm einen anderen Namen.",
 }

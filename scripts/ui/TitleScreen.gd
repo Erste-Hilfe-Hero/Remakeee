@@ -139,11 +139,16 @@ func _build_name_box() -> void:
 	var l := Label.new()
 	l.text = "Your name?"
 	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# "Please pick another name." wraps instead of widening the box (200 list item 7).
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	head.add_child(l)
 	_name_edit = LineEdit.new()
 	_name_edit.max_length = NAME_MAX
 	# Characters left, "4/10" (item 1966).
-	head.add_child(CharCounter.make(_name_edit, NAME_MAX))
+	var counter: CharCounter = CharCounter.make(_name_edit, NAME_MAX)
+	counter.ask_label = l
+	counter.ask_text = l.text
+	head.add_child(counter)
 	_name_edit.add_theme_stylebox_override("normal", UITheme.flat_style(UITheme.ACCENT, UITheme.INK))
 	_name_edit.add_theme_color_override("font_color", UITheme.INK)
 	_name_edit.text_submitted.connect(func(t: String) -> void: _name_done.emit(t))
