@@ -34,6 +34,8 @@ R = {
 "Backed up just now.": ["たった今バックアップした。", "Sauvegardé à l'instant.", "Backup appena fatto.", "Copia hecha ahora mismo.", "방금 백업했다.", "刚刚已备份。", "剛剛已備份。", "Backup feito agora mesmo.", "Копия сохранена только что.", "Kopia zapisana przed chwilą.", "Az önce yedeklendi.", "Zojuist geback-upt."],
 "Backed up %d min ago.": ["%d分前にバックアップ。", "Sauvegardé il y a %d min.", "Backup %d min fa.", "Copia hecha hace %d min.", "%d분 전에 백업.", "%d分钟前已备份。", "%d分鐘前已備份。", "Backup há %d min.", "Копия %d мин назад.", "Kopia %d min temu.", "%d dk önce yedeklendi.", "%d min geleden geback-upt."],
 "Backed up %d h ago.": ["%d時間前にバックアップ。", "Sauvegardé il y a %d h.", "Backup %d h fa.", "Copia hecha hace %d h.", "%d시간 전에 백업.", "%d小时前已备份。", "%d小時前已備份。", "Backup há %d h.", "Копия %d ч назад.", "Kopia %d godz. temu.", "%d sa önce yedeklendi.", "%d uur geleden geback-upt."],
+"Not in your Spirlog yet!": ["まだSpirlogにいない!", "Pas encore dans ton Spirlog !", "Non ancora nel tuo Spirlog!", "¡Aún no está en tu Spirlog!", "아직 Spirlog에 없다!", "还不在你的Spirlog里！", "還不在你的Spirlog裡！", "Ainda não está no seu Spirlog!", "Его ещё нет в твоём Spirlog!", "Jeszcze nie ma go w twoim Spirlogu!", "Henüz Spirlog'unda yok!", "Nog niet in je Spirlog!"],
+"Already in your Spirlog.": ["もうSpirlogにいる。", "Déjà dans ton Spirlog.", "Già nel tuo Spirlog.", "Ya está en tu Spirlog.", "이미 Spirlog에 있다.", "已经在你的Spirlog里。", "已經在你的Spirlog裡。", "Já está no seu Spirlog.", "Уже есть в твоём Spirlog.", "Już jest w twoim Spirlogu.", "Zaten Spirlog'unda.", "Staat al in je Spirlog."],
 }
 
 

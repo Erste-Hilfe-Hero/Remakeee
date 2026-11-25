@@ -44,3 +44,12 @@ func test_loss_tip_names_elements_that_hit_the_winner_hard() -> void:
 
 func test_loss_tip_is_empty_without_a_foe() -> void:
 	assert_eq(BattleGuide.loss_tip(null), "")
+
+func test_wild_opening_says_if_the_kind_is_in_the_spirlog() -> void:
+	var me: Spirling = BattleFixtures.make("Zippit", 10, ["Cinder Nip"] as Array[String])
+	var foe: Spirling = BattleFixtures.make("Kindlop", 8, ["Cinder Nip"] as Array[String])
+	var wild: BattleModel = BattleFixtures.model([me] as Array[Spirling], [foe] as Array[Spirling])
+	assert_eq(BattleOpening.spirlog_note(wild, foe, {}), BattleOpening.NOTE_NEW)
+	assert_eq(BattleOpening.spirlog_note(wild, foe, {"Kindlop": {"seen": true, "bonded": true}}), BattleOpening.NOTE_KNOWN)
+	var duel: BattleModel = BattleFixtures.model([me] as Array[Spirling], [foe] as Array[Spirling], false)
+	assert_eq(BattleOpening.spirlog_note(duel, foe, {}), "", "no note against a Wayfarer")

@@ -26,4 +26,6 @@ T = {
 "Backed up just now.": "Gerade eben gesichert.",
 "Backed up %d min ago.": "Vor %d Min. gesichert.",
 "Backed up %d h ago.": "Vor %d Std. gesichert.",
+"Not in your Spirlog yet!": "Noch nicht in deinem Spirlog!",
+"Already in your Spirlog.": "Schon in deinem Spirlog.",
 }

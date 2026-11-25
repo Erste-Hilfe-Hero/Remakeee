@@ -3,6 +3,7 @@
  "strings": {
   "A spray of sparks: two to four small burns.": "噴出一陣火星：二到四次小灼傷。",
   "A volley of sticky burrs: two to four hits.": "連射黏人的蒼耳：命中二到四次。",
+  "Already in your Spirlog.": "已經在你的Spirlog裡。",
   "Backed up %d h ago.": "%d小時前已備份。",
   "Backed up %d min ago.": "%d分鐘前已備份。",
   "Backed up just now.": "剛剛已備份。",
@@ -16,6 +17,7 @@
   "Light glints off it again and again: two to four hits.": "光芒一次又一次閃爍：命中二到四次。",
   "Little crackles in a row: two to four hits.": "一連串細小的噼啪聲：命中二到四次。",
   "Nobody has spoken yet.": "還沒有人說過話。",
+  "Not in your Spirlog yet!": "還不在你的Spirlog裡！",
   "Pecks from where the light does not reach: two to four hits.": "從光照不到的地方啄擊：命中二到四次。",
   "Plain little blows with no element: two to four hits.": "不帶屬性的小連擊：命中二到四次。",
   "Quick jabs that ride the ripples: two to four hits.": "乘著漣漪的快速連刺：命中二到四次。",

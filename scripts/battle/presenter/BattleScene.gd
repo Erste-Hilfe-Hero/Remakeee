@@ -1515,7 +1515,9 @@ func _play_event(e: BattleEvent) -> void:
 				await _foe_sprite.step_out(true)
 				if foe.gleam:
 					await _gleam_entrance(_foe_sprite)
-			await _text.show_text(BattleOpening.start_line(e, GameState.battle_speed_scale()))
+			# One box: the opening line, then whether its kind is in the Spirlog yet (200 list 23, 24).
+			var note: String = BattleOpening.spirlog_note(model, foe, GameState.spirlog)
+			await _text.show_text(Loc.t(BattleOpening.start_line(e, GameState.battle_speed_scale())) + ("\n" + Loc.t(note) if not note.is_empty() else ""))
 		BattleEvent.Type.SEND_OUT, BattleEvent.Type.SWAP_IN:
 			var s: Spirling = model.party(side)[int(e.data.get("index", 0))]
 			_sprite(side, slot).setup(s, "back" if side == BattleModel.Side.PLAYER else "front")
