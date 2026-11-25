@@ -4432,7 +4432,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	if bool(trainer.get("area_music", false)):
 		area = Sound.area_theme(map.region if not map.region.is_empty() else EraManager.current_region)
 	scene.music_track = BattleAudio.theme(str(trainer.get("theme", "")), bool(trainer.get("warden", false)), not Festival.active().is_empty(),
-		map.outdoor and GameState.day_night and DayCycle.current() == DayCycle.Phase.NIGHT, area)
+		map.outdoor and GameState.day_night and DayCycle.current() == DayCycle.Phase.NIGHT, area, wild and BattleAudio.rare_foes(foes))
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	# A wild battle left by closing the app goes on after the restart (item 31).
 	if trainer.get("resume") is Array:

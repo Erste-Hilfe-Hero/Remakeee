@@ -145,6 +145,7 @@
    "night": "battle_night",
    "fest": "battle_fest",
    "echo": "battle_echo",
+   "rare": "battle_heart",
    "tower": "battle_tower",
    "duel": "battle_duel"
   }

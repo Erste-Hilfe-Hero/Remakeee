@@ -80,3 +80,25 @@ func test_player_auto_keeps_its_item_limit() -> void:
 	m.party(Side.PLAYER)[0].hp = 3
 	m.items_used[Side.PLAYER] = {"tonic": 1}
 	assert_eq(BattleAI.new(2).choose(m, Side.PLAYER).kind, BattleAction.Kind.ITEM, "auto battle may still heal twice")
+
+# --- 76 ---------------------------------------------------------------------------------------
+
+func test_rare_foes() -> void:
+	assert_false(BattleAudio.rare_foes([BattleFixtures.make("Zippit", 10)] as Array[Spirling]))
+	assert_false(BattleAudio.rare_foes([BattleFixtures.make("Smoldrake", 10)] as Array[Spirling]), "shy is too common")
+	assert_true(BattleAudio.rare_foes([BattleFixtures.make("Velahra", 10)] as Array[Spirling]), "ancient kind")
+	var prism: Spirling = BattleFixtures.make("Zippit", 10)
+	prism.prism = true
+	assert_true(BattleAudio.rare_foes([BattleFixtures.make("Kindlop", 10), prism] as Array[Spirling]), "a Prism one")
+	var elder: Spirling = BattleFixtures.make("Zippit", 10)
+	elder.set_meta(WildRules.ELDER_META, true)
+	assert_true(BattleAudio.rare_foes([elder] as Array[Spirling]), "an Elder")
+
+func test_rare_theme_is_its_own_existing_track() -> void:
+	var rare: String = BattleAudio.theme("", false, false, false, "", true)
+	assert_ne(rare, "battle")
+	assert_true(ResourceLoader.exists(Sound.MUSIC_DIR % rare), rare)
+	assert_true(MusicDirector.is_battle_track(rare))
+	assert_eq(BattleAudio.theme("", false, true, true, "", true), rare, "ahead of festival and night")
+	assert_eq(BattleAudio.theme("", true, false, false, "", true), "warden", "a Warden keeps its own")
+	assert_eq(BattleAudio.theme("", false, false, false, "", false), "battle")
