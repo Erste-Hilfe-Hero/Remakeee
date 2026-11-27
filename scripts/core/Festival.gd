@@ -54,8 +54,8 @@ static func start_hint() -> String:
 	if a.is_empty() or str(GameState.records.get("festival_hint", "")) == str(a.key):
 		return ""
 	GameState.records["festival_hint"] = str(a.key)
-	return Loc.t("The %s has begun! %s Spirlings are about, and Tilda's stand in Brindlewick trades festival goods.") % [
-		Loc.t(str(a.fest.name)), " & ".join(element_names(a.fest))]
+	return Loc.f("The %s has begun! %s Spirlings are about, and Tilda's stand in Brindlewick trades festival goods.", [
+		Loc.t(str(a.fest.name)), " & ".join(element_names(a.fest))])
 
 ## The running festival and its save key: {"fest": Dictionary, "key": String}, or {}.
 static func active() -> Dictionary:

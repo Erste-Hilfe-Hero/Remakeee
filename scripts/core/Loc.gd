@@ -152,6 +152,18 @@ static func t(s: String) -> String:
 	var r: String = tr.lookup(s)
 	return r if r != "" else s
 
+## [param key] translated and filled with [param args] ("%s took %d damage." with ["Kindlop", 12]).
+## A translation may order the values by position ({0}, {1}: ja, ko, tr, zh), which "%" cannot
+## fill: Loc.t(key) % args raised a format error there. Use this instead of Loc.t(key) % args.
+static func f(key: String, args: Variant) -> String:
+	var values: Array = args if args is Array else [args]
+	var out: String = t(key)
+	if out.contains("{0}"):
+		for i: int in values.size():
+			out = out.replace("{%d}" % i, str(values[i]))
+		return out.replace("%%", "%")
+	return out % values
+
 ## English singular or plural for [param n] (plan item 2188): "1 coin", "3 coins". Both forms
 ## are their own keys in the language files, so other languages get theirs too.
 static func plural(n: int, one: String, other: String) -> String:

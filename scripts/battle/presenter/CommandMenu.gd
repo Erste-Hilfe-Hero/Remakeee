@@ -498,7 +498,7 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 				line = Loc.t("Takes Energy from the foe.")
 			&"set_field":
 				var f: Dictionary = BattleRules.FIELDS.get(str(fx.get("field", "")), {})
-				line = Loc.t("Lays %s for %d turns.") % [Loc.t(str(f.get("label", ""))), BattleRules.RESONANCE_TURNS]
+				line = Loc.f("Lays %s for %d turns.", [Loc.t(str(f.get("label", ""))), BattleRules.RESONANCE_TURNS])
 			&"bonus_vs_status":
 				var vs: String = str(fx.get("vs_status", ""))
 				var mult: String = String.num(float(fx.get("vs_mult", 1.0)), 1)
@@ -507,10 +507,10 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 				elif vs == "stage_down":
 					line = Loc.t("x%s power if the foe has a lowered stat.") % mult
 				else:
-					line = Loc.t("x%s power if the foe has %s.") % [mult, Loc.t(StatusRules.label(vs))]
+					line = Loc.f("x%s power if the foe has %s.", [mult, Loc.t(StatusRules.label(vs))])
 			&"energy_tax":
 				var turns: int = int(fx.get("amount", 0))
-				line = Loc.t("The foe's arts cost %d more Energy for %d turns.") % [BattleRules.ENERGY_TAX_COST, turns if turns > 0 else BattleRules.ENERGY_TAX_TURNS]
+				line = Loc.f("The foe's arts cost %d more Energy for %d turns.", [BattleRules.ENERGY_TAX_COST, turns if turns > 0 else BattleRules.ENERGY_TAX_TURNS])
 			&"field_element":
 				line = Loc.t("In a field it takes the field's element, power +%d.") % int(fx.get("power_bonus", BattleRules.FIELD_ELEMENT_POWER))
 				if model != null and BattleRules.FIELDS.has(model.field):

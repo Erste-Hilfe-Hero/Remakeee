@@ -26,10 +26,10 @@ static func open(ow: Overworld) -> void:
 	var items: Array[String] = []
 	for e: Dictionary in open_hearts:
 		var wins: int = int(BossRules.stats(GameState.records, str(e.get("boss", ""))).get("wins", 0))
-		items.append(Loc.t("%s (won %d times)") % [Loc.t(str(e.get("name", ""))), wins])
+		items.append(Loc.f("%s (won %d times)", [Loc.t(str(e.get("name", ""))), wins]))
 	var rush_on: bool = BossHall.rush_open(GameState.flags)
 	if rush_on:
-		items.append(Loc.t("Heart rush (best %d of %d)") % [BossHall.rush_best(GameState.records), open_hearts.size()])
+		items.append(Loc.f("Heart rush (best %d of %d)", [BossHall.rush_best(GameState.records), open_hearts.size()]))
 	var pick: int = await _pick(ow, Loc.t("Which heart?"), items)
 	if pick < 0:
 		return

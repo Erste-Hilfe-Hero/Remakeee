@@ -574,8 +574,8 @@ static func limit_text() -> String:
 	var t: String = Loc.t("Monthly limit: %s") % ShopCatalog.format_eur(int(s.get("cap_cents", 0)))
 	t += "\n" + Loc.t("Spent this month: %s") % ShopCatalog.format_eur(int(s.get("spent_cents", 0)))
 	if s.get("raise_to_cents") != null:
-		t += "\n" + Loc.t("Raising to %s on %s") % [ShopCatalog.format_eur(int(s.raise_to_cents)),
-			Time.get_date_string_from_unix_time(int(s.get("raise_at", 0)))]
+		t += "\n" + Loc.f("Raising to %s on %s", [ShopCatalog.format_eur(int(s.raise_to_cents)),
+			Time.get_date_string_from_unix_time(int(s.get("raise_at", 0)))])
 	return t
 
 static func _run_limit(menu: MenuHost) -> void:
