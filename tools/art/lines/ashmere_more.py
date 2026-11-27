@@ -78,10 +78,7 @@ TEXTS = {
 }
 
 ENCOUNTERS_ADD = {
-    "glass_rift": [("Annealet", "scree")],
-    "saltglass": [("Annealet", "scree"), ("Turfkin", "fern")],
-    "soot_vaults": [("Sumplet", "scree")],
-    "wide_rift_far": [("Sumplet", "scree")],
+    "wide_rift_far": [("Sumplet", "scree"), ("Flintkit", "scree")],
     "clinker_heath": [("Turfkin", "fern"), ("Flintkit", "scree")],
-    "kiln_rift": [("Flintkit", "scree")],
+    "bellows_deep": [("Annealet", "scree"), ("Sumplet", "scree")],
 }

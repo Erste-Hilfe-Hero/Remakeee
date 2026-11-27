@@ -83,10 +83,7 @@ TEXTS = {
 }
 
 ENCOUNTERS_ADD = {
-    "sun_rift": [("Glarelet", "scree")],
-    "glasswind_flats": [("Glarelet", "scree"), ("Grainspout", "fern")],
-    "tower_rift": [("Haulbug", "scree"), ("Grainspout", "scree")],
-    "mirage_kiln": [("Haulbug", "")],
-    "veil_cistern": [("Cistlet", "scree"), ("Noctolabe", "scree")],
-    "oasis_rift": [("Cistlet", "fern")],
+    "tollchain_causeway": [("Glarelet", "fern"), ("Cistlet", "reeds")],
+    "rookery_cut": [("Haulbug", "scree"), ("Grainspout", "fern")],
+    "weeping_locks": [("Noctolabe", "fern")],
 }

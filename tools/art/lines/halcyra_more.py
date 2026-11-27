@@ -84,10 +84,6 @@ TEXTS = {
 }
 
 ENCOUNTERS_ADD = {
-    "cloudshadow_meadow": [("Culmlet", "fern")],
-    "sunfall_terraces": [("Culmlet", "fern")],
-    "mirror_flats": [("Mintlet", "water"), ("Fulmenkit", "scree")],
-    "long_stair": [("Cornicet", "scree")],
-    "lantern_span": [("Cornicet", "scree")],
-    "orrery_ridge": [("Fulmenkit", "scree")],
+    "fallen_planet": [("Culmlet", "fern"), ("Cornicet", "scree")],
+    "brine_catacombs": [("Mintlet", "reeds"), ("Fulmenkit", "scree")],
 }

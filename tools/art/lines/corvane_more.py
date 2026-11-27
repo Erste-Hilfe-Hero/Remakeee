@@ -83,10 +83,5 @@ TEXTS = {
 }
 
 ENCOUNTERS_ADD = {
-    "woadfen": [("Flaxlet", "fern"), ("Stookhulk", "fern")],
-    "stillwater": [("Flaxlet", "fern"), ("Pondchime", "reeds"), ("Lockgill", "reeds")],
-    "dyeworks": [("Simmerkit", "")],
-    "root_rift": [("Simmerkit", "fern")],
-    "rain_rift": [("Lockgill", "reeds")],
-    "greyreach": [("Stookhulk", "scree")],
+    "dyeworks": [("Flaxlet", ""), ("Simmerkit", ""), ("Lockgill", ""), ("Pondchime", ""), ("Stookhulk", "")],
 }

@@ -336,11 +336,11 @@ def main():
         hi = max(int(s["max"]) for s in old)
         used = {"common": 1, "uncommon": 1, "shy": 1}
         add = [spawn(n, g, k, lo, hi, used) for k, (n, g) in enumerate(rows)]
-        # A newcomer never outweighs the table's own most common kind (the one a player meets and
-        # bonds first, tools/balance/act_route.json): at most one below it, inside its rarity band.
-        top = max(int(s["weight"]) for s in old)
+        # Newcomers take the lowest weight of their rarity band, so a table's own kinds stay the ones
+        # a player meets and bonds first; the route sim (scripts/core/ActSim.gd) bonds by weight and
+        # would otherwise build its reference team from the add-on kinds.
         for s in add:
-            s["weight"] = max(min(s["weight"], top - 1), WEIGHT_MIN[rarity[s["species"]]])
+            s["weight"] = WEIGHT_MIN[rarity[s["species"]]]
         enc[table]["spawns"] = old + add
     if getattr(mod, "SLOTS", None):
         sync_slots(mod, enc)

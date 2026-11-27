@@ -85,13 +85,9 @@ TEXTS = {
 
 # Veydal keeps its tables; these kinds are added to them.
 ENCOUNTERS_ADD = {
-    "crowcrest": [("Heathpip", "scree")],
-    "thornridge": [("Heathpip", "")],
-    "quillbrook": [("Tinglet", "water")],
-    "saltmarsh": [("Tinglet", "reeds"), ("Saltwhistle", "reeds")],
-    "lantern_steps": [("Keepling", "scree")],
-    "sablecove": [("Keepling", "cave")],
-    "gloamwood": [("Brackenram", "fern")],
-    "brackwater_fen": [("Brackenram", "reeds"), ("Tinglash", "reeds")],
-    "brackwater_sluice": [("Saltwhistle", "")],
+    "kindle_vents": [("Heathpip", "cave")],
+    "bellstone_ruins": [("Heathpip", ""), ("Brackenram", "")],
+    "sablecove": [("Tinglet", "cave"), ("Keepling", "cave")],
+    "mossmere_grotto": [("Tinglet", "cave")],
+    "echo_gallery": [("Saltwhistle", "cave")],
 }
