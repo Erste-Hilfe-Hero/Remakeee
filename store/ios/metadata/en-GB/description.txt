@@ -1,21 +1,28 @@
-Win over 567 monsters, uncover a dark and funny story, and plan every turn. Chimora is a monster taming RPG in retro pixel art, and a little darker than it looks.
-• 567 Spirlings to win over with the echo call, plus rare Gleam forms in the wild
+Bond with 567 pixel monsters, hunt rare Gleam forms and plan every turn. Chimora is a monster taming RPG and creature collector in retro pixel art, with a dark, funny story that is a little darker than it looks.
+• 567 Spirlings to bond: tap the big Mine! button fast to fill the bar
 • Tactical turn-based battles with eight elements and Wardens with several phases
 • Pixel art that grows up across five eras, from monochrome to full colour
 • Online game: Chimora needs an internet connection
+
+NEW IN 1.3.2
+• 70 new Spirlings, 10 in every region
+• Gleam forms in five kinds, from the classic Gleam to the very rare Opaline Gleam
+• Weather: rain, fog, wind, storms and snow change the world and some battles
+• 35 riddle stones and puzzle boards, and many hidden secrets found just by playing
+• A new shop and a pass with 30 tiers, with a free row for everyone
 
 THE HUSH OF VEYDAL
 As a Wayfarer you set out from a lighthouse on the coast of Veydal, choose your first partner and follow Mirela's map book through four regions. Rifts are tearing open everywhere, and only you can seal them again. Everyone else just wants something from you.
 
 TRUST, NOT CAPTURE
-Wild Spirlings are never caught. You win their trust with the echo call: the Spirling calls a sequence, you answer it. Listen well and you gain a friend.
+Wild Spirlings are never caught. In battle you pick Bond and a big Mine! button appears: tap it as fast as you can. The fuller the bar, the better the bond. In the settings you can switch to the Echo call (repeat the Spirling's call) or to Calm (the echo with no time limit).
 
 TACTICAL BATTLES
 • Eight elements, each strong against two and weak against two
-• Energy instead of move points, traits, held items and battle fields
+• Energy instead of move points, Gifts, Keepsakes and battle fields
 • Battles with several Spirlings per side, tag battles and Wardens with several phases
 • Damage preview, battle log, auto battle and double speed
-• Four difficulty modes, from Story to Rift-Born with level caps
+• The challenge grows with every act
 
 A STORY WITH TEETH
 • Four acts: Veydal, Corvane, Ashmere and the sun-bleached Solenne, with twelve Rifts and their Wardens
@@ -24,22 +31,20 @@ A STORY WITH TEETH
 • Lore quests for six legendaries and side stories in every act, good for dozens of hours
 
 A WORLD THAT CHANGES
-• 567 Spirlings, 80 of their own in every act and every region after the story, and rare Gleam forms in the wild
+• About 80 Spirlings of their own in every region, and rare Gleam forms in five kinds
 • Your lead Spirling walks behind you and remembers how you treat it
-• Day and night, festivals, hidden paths, Wayfarer Gear that opens new places, and a wildlife park run by smugglers
-• A claimable hollow, a daily funeral show and a black-market informant who sells hidden gifts
+• Day and night, weather, festivals, hidden paths and Wayfarer Gear that opens new places
+• A wildlife park run by smugglers, a daily funeral show and a black-market informant who sells hidden gifts
 
 AFTER THE FINALE
 • Vellmarch, a whole post-game region drawn in the next era's look, with four more Rifts and a betrayal in every chapter
 • Rematches with all twelve Wardens, an Echo Tower with 100 floors, Master Rifts, a weekly giant and New Game+
-• Spirlings keep growing past ring 60
 • More regions and eras follow as free updates
 
 TOGETHER ONLINE
 • Add friends by code, send greetings and Lantern Mail
 • Keep wish lists and send your friends gifts
 • Echo duels against your friends' teams, leagues with seasons
-• A shared world goal every week
 • Your save is kept safe on our server in the EU and moves with you to a new phone
 
 PLAYABLE YOUR WAY
@@ -50,7 +55,7 @@ PLAYABLE YOUR WAY
 • Calm bonding with no time limit, and offline battles always wait for you
 • Play by touch, keyboard or gamepad
 
-FAIR
-Free to play. Optional in-game purchases, many of them with advantages in the game. The Fair League switches them off. No random content. No ads, no energy timers, no tracking.
+SHOP AND FAIR LEAGUE
+Free to play with optional in-app purchases. Many of them give advantages in battle or speed up progress; in the Fair League they do not count. Every offer shows exactly what is inside, nothing is random. Every region, Warden and kind of Spirling can be reached without paying. The shop is locked for players under 13 and has monthly limits by age. No ads, no tracking.
 
 Note: Chimora needs an internet connection.

@@ -1,1 +1,1 @@
-tamer,collector,retro,turn,based,evolve,trainer,8bit,16bit,tactics,beasts,story,dark,pvp,duel,team
+collect,pixel,retro,tamer,trainer,evolve,pet,tactics,strategy,8bit,story,dark,pvp,duel,team,puzzle

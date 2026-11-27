@@ -1,1 +1,1 @@
-Collect 567 pixel creatures
+Turn-based creature collector
