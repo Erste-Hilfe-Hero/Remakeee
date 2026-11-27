@@ -31,7 +31,7 @@ func test_warden_teams_fit_the_ring_cap() -> void:
 	# Orrin guards the first Rift (no Rift sealed yet), Brisa the second, Maelis the third.
 	var wardens: Array = [["cinder_rift", "warden_orrin", 0], ["mist_rift", "warden_brisa", 1], ["tide_rift", "warden_maelis", 2]]
 	for w: Array in wardens:
-		var cap: int = GameState.LEVEL_CAPS[int(w[2])]
+		var cap: int = GameState.PROGRESS_RINGS[int(w[2])]
 		for d: int in [GameState.Difficulty.VETERAN, GameState.Difficulty.RIFT_BORN]:
 			for s: Spirling in TrainerData.build_team(_npc(w[0], w[1]), "", RandomNumberGenerator.new(), d, cap):
 				assert_lte(s.level, cap, "%s %s R%d on %d" % [w[1], s.data.species_name, s.level, d])

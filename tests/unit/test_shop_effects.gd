@@ -104,7 +104,8 @@ func test_ready_offers_have_working_items() -> void:
 func test_receipt_check_goes_to_billing_service() -> void:
 	assert_eq(SupabaseBackend.SERVICE_ROUTES.get("shop_verify"), "/billing/v1/verify")
 
-func test_ring_tonics_stop_at_the_cap() -> void:
+## No Ring cap (2026-11-27): bought rings stop only at the story ring.
+func test_ring_tonics_stop_at_the_story_ring() -> void:
 	var s: Spirling = Spirling.new(Database.species("Mossling"), 10)
 	var diff: int = GameState.difficulty
 	GameState.difficulty = GameState.Difficulty.TAMER
@@ -115,9 +116,9 @@ func test_ring_tonics_stop_at_the_cap() -> void:
 	assert_eq(GameState.item_count("rg_ring_tonic_5"), 0, "used up")
 	GameState.add_item("rg_ring_elixir")
 	GameState.use_item_outside_battle("rg_ring_elixir", s)
-	assert_eq(s.level, mini(GameState.level_cap(), Spirling.STORY_RING))
+	assert_eq(s.level, Spirling.STORY_RING)
 	GameState.add_item("rg_ring_tonic")
-	assert_eq(GameState.use_item_outside_battle("rg_ring_tonic", s), "", "nothing above the cap")
+	assert_eq(GameState.use_item_outside_battle("rg_ring_tonic", s), "", "nothing above the story ring")
 	assert_eq(GameState.item_count("rg_ring_tonic"), 1, "kept when it would do nothing")
 	GameState.inventory.erase("rg_ring_tonic")
 	GameState.difficulty = diff

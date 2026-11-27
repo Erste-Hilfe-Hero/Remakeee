@@ -35,9 +35,6 @@ static func menu_rows() -> Array[String]:
 			out.append(t.trim_suffix("On") + "Off")
 		elif t.ends_with(": Off"):
 			out.append(t.trim_suffix("Off") + "On")
-	for d: String in MenuHost.DIFFICULTY_TEXT:
-		out.append(d)
-		out.append("Challenge: %s" % d)
 	for t: String in PauseMenu.MENU_ORDER:
 		out.append(t)
 	out.append_array(["Continue", "New Game", "Load...", "Settings", "Back", "Yes", "No",

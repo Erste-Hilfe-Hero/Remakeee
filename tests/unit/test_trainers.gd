@@ -62,12 +62,11 @@ func test_beaten_flag() -> void:
 	var kestra: Dictionary = _npc("crowcrest", "kestra")
 	assert_eq(TrainerData.beaten_flag(kestra, "crowcrest"), "kestra_spar")
 
-func test_sealing_rifts_raises_veteran_cap_and_unlocks_pc() -> void:
-	GameState.difficulty = GameState.Difficulty.VETERAN
-	var cap0: int = GameState.level_cap()
+func test_sealing_rifts_raises_the_story_ring_and_unlocks_pc() -> void:
+	var cap0: int = GameState.progress_cap()
 	assert_true(GameState.seal_rift("cinder"))
 	assert_false(GameState.seal_rift("cinder"), "only once")
-	assert_gt(GameState.level_cap(), cap0)
+	assert_gt(GameState.progress_cap(), cap0, "foe scaling follows the mended Rifts")
 	assert_true(GameState.has_flag("rift_cinder_sealed"))
 	assert_false(GameState.has_flag("storage_remote"), "one Rift is not enough")
 	var maelis: Dictionary = _npc("tide_rift", "warden_maelis")

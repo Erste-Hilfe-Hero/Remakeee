@@ -212,15 +212,17 @@ func _save_mid_battle(difficulty: GameState.Difficulty) -> Dictionary:
 	GameState.battle_open = true
 	return GameState.to_dict()
 
-func test_rift_born_counts_a_battle_left_open_as_a_loss() -> void:
-	GameState.from_dict(_save_mid_battle(GameState.Difficulty.RIFT_BORN))
+## One mode (owner decision 2026-11-27): a journey started or saved as Rift-Born plays as TAMER,
+## so a battle left open is never counted as a loss.
+func test_an_old_rift_born_save_does_not_count_a_battle_left_open_as_a_loss() -> void:
+	var d: Dictionary = _save_mid_battle(GameState.Difficulty.RIFT_BORN)
+	d["difficulty"] = GameState.Difficulty.RIFT_BORN
+	GameState.from_dict(d)
+	assert_eq(GameState.difficulty, GameState.Difficulty.TAMER)
 	assert_false(GameState.battle_open)
-	assert_true(GameState.left_battle)
-	assert_eq(GameState.current_map, "lighthouse", "wakes at the last spring")
-	assert_eq(GameState.player_cell, Vector2i(4, 4))
-	assert_eq(GameState.party[0].hp, GameState.party[0].max_hp(), "the team is rested")
-	assert_eq(GameState.notices.size(), 1)
-	assert_string_contains(GameState.notices[0], "counts as a loss")
+	assert_false(GameState.left_battle)
+	assert_eq(GameState.current_map, "route_1")
+	assert_true(GameState.notices.is_empty())
 
 func test_other_difficulties_only_drop_the_flag() -> void:
 	GameState.from_dict(_save_mid_battle(GameState.Difficulty.TAMER))

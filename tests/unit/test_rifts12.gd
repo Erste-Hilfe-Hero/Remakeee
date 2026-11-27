@@ -136,8 +136,8 @@ func test_story_order_and_level_curve() -> void:
 	assert_lt(ids.find("rift_root"), ids.find("veit"))
 	assert_lt(ids.find("veit_plate"), ids.find("rift_shade"))
 	assert_lt(ids.find("rift_shade"), ids.find("far_end"))
-	for i: int in range(1, GameState.LEVEL_CAPS.size()):
-		assert_gt(GameState.LEVEL_CAPS[i], GameState.LEVEL_CAPS[i - 1], "caps rise with every Rift")
+	for i: int in range(1, GameState.PROGRESS_RINGS.size()):
+		assert_gt(GameState.PROGRESS_RINGS[i], GameState.PROGRESS_RINGS[i - 1], "caps rise with every Rift")
 
 func test_wild_rings_fit_the_place_in_the_story() -> void:
 	var rings: Dictionary = {"mist_rift": [12, 15], "root_rift": [23, 25], "shade_rift": [32, 35]}
