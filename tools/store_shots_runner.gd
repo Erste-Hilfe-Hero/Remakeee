@@ -415,13 +415,6 @@ func _pass(em: Node) -> void:
 	await get_tree().process_frame
 	PassScreen.run(m)
 	await p2w.call("_wait_dialog", m, 0, 0)
-	# The list starts at the step rows: the premium row's name takes three lines in some
-	# languages and is not what the picture is about.
-	var lp: ListPicker = (p2w.call("_live", m) as MenuHost).picker
-	for b: Button in lp.buttons():
-		if b.text.contains(Loc.t("Step %d") % 1):
-			lp._scroll.scroll_vertical = int(b.global_position.y - lp._scroll.global_position.y) + lp._scroll.scroll_vertical
-			break
 	for i: int in 12:
 		await get_tree().process_frame
 	await _save_root("n2_pass_track", 1)

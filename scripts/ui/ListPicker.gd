@@ -511,7 +511,7 @@ func _restore_scroll_step(key: String, target_id: int, frames_left: int) -> void
 	if not visible or _title_key != key or target == null or not is_instance_valid(target):
 		return
 	_scroll.scroll_vertical = _remembered_scroll[key]
-	_scroll.ensure_control_visible(target)
+	_show_whole_rows(target)
 
 ## Starts the 80 ms fade-in; with Reduce motion the list is there at once.
 func fade_in() -> void:
@@ -562,11 +562,39 @@ func _focus_row(want: int) -> void:
 				break
 	if target != null and is_instance_valid(target):
 		target.grab_focus()
-		_scroll.ensure_control_visible.call_deferred(target)
+		_show_whole_rows.call_deferred(target)
 		if _remembered_scroll.has(_title_key):
 			_restore_scroll(_title_key, target)
 	_back.accessibility_name = Loc.t("Back")
 	_arrows.queue_redraw.call_deferred()
+
+## Scrolls [param target] into view so the list starts on a whole row: a scroll of a few pixels
+## to show the focused row cut the first row's text off at the top (pass track, "Premium row" on
+## three lines in Russian, 1.3.2 store shots). The list scrolls on to the next row's top while
+## [param target] stays in view.
+func _show_whole_rows(target: Button) -> void:
+	if not is_instance_valid(target) or target.get_parent() != _box:
+		_scroll.ensure_control_visible(target)
+		return
+	_scroll.ensure_control_visible(target)
+	var top: int = _scroll.scroll_vertical
+	if top <= 0:
+		return
+	for b: Button in _buttons:
+		if b.get_parent() != _box or b.position.y + b.size.y <= top:
+			continue
+		if b.position.y >= top:
+			return
+		# On to the next row's top, or back to this row's top when the list cannot scroll that
+		# far (its end) and the focused row still shows whole.
+		var next: float = b.position.y + b.size.y + _box.get_theme_constant("separation")
+		if next <= target.position.y:
+			_scroll.scroll_vertical = ceili(next)
+			if _scroll.scroll_vertical >= ceili(next):
+				return
+		if target.position.y + target.size.y <= b.position.y + _scroll.size.y:
+			_scroll.scroll_vertical = floori(b.position.y)
+		return
 
 func _on_row(result: int, dir: int = 0, b: Button = null) -> void:
 	if not visible or not _tap_allowed():
@@ -809,11 +837,12 @@ func _link_grid(columns: int) -> void:
 		b.focus_neighbor_bottom = b.get_path_to(_buttons[i + columns if i + columns < n else (n - 1 if i < n - 1 else 0)])
 
 ## A header above the rows or a picture above the list (world map) changes the list's height
-## after the first layout: the focused row is brought back into view once the layout settled.
+## after the first layout: the focused row is brought back into view once the layout settled,
+## with the list starting on a whole row.
 func _keep_focus_shown() -> void:
 	var f: Control = get_viewport().gui_get_focus_owner()
-	if f is Button and f in _buttons and not row_fully_shown(f):
-		_scroll.ensure_control_visible(f)
+	if f is Button and f in _buttons:
+		_show_whole_rows(f)
 
 ## Era V: the rows slide in from the right one after another. Still under reduced motion.
 func _slide_in() -> void:
