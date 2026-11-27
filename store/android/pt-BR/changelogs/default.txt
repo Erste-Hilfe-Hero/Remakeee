@@ -1,7 +1,9 @@
-Chimora 1.3.1
+Chimora 1.3.2
 
-- 7 novos dons para seus Spirlings, e novas artes que acertam várias vezes ou fazem um parceiro entrar.
-- "Qual combina com você?" ajuda a escolher seu parceiro, e um botão Ideia sugere nomes.
-- Bônus de fim de semana: experiência em dobro no sábado e no domingo.
-- Roda em mais aparelhos, inclusive Chromebooks, e melhor em tablets e celulares dobráveis.
-- Muitas pequenas correções.
+- Loja nova com pacotes de Vidrofenda, Cartão mensal, Spirlings Campeões, kits e ofertas diárias e semanais.
+- Vidrofenda no jogo: continuar depois de uma derrota, curar, acelerar crescimento ou vínculos, encurtar viagens. 20 de presente todo dia.
+- Novo passe com 30 níveis.
+- 70 Spirlings novos e 5 tipos de Reluzente.
+- Clima: chuva, neblina, vento, tempestades e neve.
+- 35 enigmas e muitos segredos escondidos.
+- Mapas mais bem conectados, melhor em tablets e muitas correções.
