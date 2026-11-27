@@ -86,6 +86,11 @@ func run() -> void:
 	elif open_on == "Invite":
 		open_on = ""
 		await run_invite_link()
+	elif open_on == ShopScreen.STARTER_OPEN:
+		# The Starter Pack note after the tutorial act (ShopScreen.starter_popup_due), then back to the world.
+		open_on = ""
+		await ShopScreen.run_starter_popup(self)
+		return
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),

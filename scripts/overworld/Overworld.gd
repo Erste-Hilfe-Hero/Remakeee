@@ -329,6 +329,9 @@ func _process(delta: float) -> void:
 	# A chimora://event link opens the Goals screen once the player is free (DeepLink.gd).
 	if DeepLink.route in ["event", "friend"] and GameState.has_flag("got_starter") and not busy and not scene_running and _photo == null and not player.moving:
 		open_menu("Goals" if DeepLink.take() == "event" else "Invite")
+	# The Starter Pack note once the tutorial act is over (adults only, never in a battle).
+	elif not busy and not scene_running and _photo == null and not player.moving and ShopScreen.starter_popup_now():
+		open_menu(ShopScreen.STARTER_OPEN)
 	_walk_clock += delta
 	if _walk_clock >= WALK_PAUSE:
 		_walk_clock = 0.0
