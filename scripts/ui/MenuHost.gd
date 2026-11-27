@@ -1030,6 +1030,8 @@ static func summary_pages(s: Spirling) -> Array[String]:
 	for e: int in s.elements():
 		els.append(Elements.element_name(e))
 	var head: String = "%s  (%s)\n%s   %s" % [s.display_name(), s.data.species_name, "/".join(els), Loc.t("Ring %d" % s.level)]
+	if s.gleam:
+		head += "\n" + GleamRules.label(GleamRules.kind_of(s))
 	var values: PackedStringArray = [head, "",
 		Loc.t("Vigor %d/%d" % [s.hp, s.max_hp()]) + ("  " + Loc.t("worn out") if s.is_fainted() else ""),
 		Loc.glue_last(Loc.t("Growth to next ring %d" % s.xp_to_next())),

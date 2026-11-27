@@ -82,6 +82,9 @@ var temper_core: bool = false
 ## Gleam form: the species' own alternate palette (GleamRules). Wild ones roll it at
 ## data/gleam.json "wild_one_in"; the shop's Gleam Prism gives it too. Kept on unfurling and trades.
 var gleam: bool = false
+## Gleam kind (GleamRules.kinds(), data/gleam.json): "" without a Gleam; saves from before the
+## kinds load as GleamRules.CLASSIC. Saved as "gleam_kind"; kept on unfurling and trades.
+var gleam_kind: String = ""
 ## +10 % on all five values from the shop's Gleam Prism (items 4791-4794). Saves from before wild
 ## Gleams have only "gleam", which then meant this boost. The Fair League never carries it.
 var gleam_boost: bool = false
@@ -563,6 +566,7 @@ func to_dict() -> Dictionary:
 		"temper": temperament().id,
 		"core": temper_core,
 		"gleam": gleam,
+		"gleam_kind": GleamRules.kind_of(self),
 		"gleam_boost": gleam_boost,
 		"shop": shop_bought,
 		"variant": variant,
@@ -626,6 +630,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 		s.temper = legacy_temper(s.uid)
 	s.temper_core = d.get("core") is bool and d.get("core")
 	s.gleam = d.get("gleam") is bool and d.get("gleam")
+	s.gleam_kind = GleamRules.kind_of_dict(d)
 	s.gleam_boost = d.get("gleam_boost") is bool and d.get("gleam_boost") if d.has("gleam_boost") else s.gleam
 	s.shop_bought = d.get("shop") is bool and d.get("shop")
 	s.variant = str(d.get("variant", ""))

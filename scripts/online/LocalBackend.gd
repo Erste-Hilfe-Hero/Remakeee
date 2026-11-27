@@ -2278,12 +2278,17 @@ static func gleam_boosted(m: Dictionary) -> bool:
 	return bool(m.get("gleam_boost", false)) if m.has("gleam_boost") else bool(m.get("gleam", false))
 
 ## Like public._trade_mon_clean: the origin era stays (1 for older saves), no nickname, box or mark.
+## A Gleam keeps its kind (an unknown or missing one travels as the classic kind); a Spirling that
+## does not gleam carries none.
 static func trade_mon_clean(m: Dictionary) -> Dictionary:
 	var out: Dictionary = m.duplicate(true)
-	for k: String in ["nickname", "box", "favorite"]:
+	for k: String in ["nickname", "box", "favorite", "gleam_kind"]:
 		out.erase(k)
 	var era: Variant = m.get("origin_era")
 	out["origin_era"] = int(era) if (era is int or era is float) and int(era) >= 1 and int(era) <= Spirling.MAX_ERA else 1
+	var gk: String = GleamRules.kind_of_dict(m)
+	if gk != "":
+		out["gleam_kind"] = gk
 	return out
 
 static func mon_uids(list: Variant) -> Array:

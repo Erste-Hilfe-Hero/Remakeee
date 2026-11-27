@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table gleam_kinds, written by tools/i18n/locales_gleam_kinds.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  " Frost glitters on its hide: a Rime Gleam!": " La escarcha brilla sobre su piel: ¡un Fulgor de escarcha!",
+  " It glows like the last of the sun: a Duskgold Gleam!": " Resplandece como el último sol: ¡un Fulgor de oro crepuscular!",
+  " It is washed in deep ink: an Inkwash Gleam!": " Está bañado en tinta profunda: ¡un Fulgor de tinta!",
+  " Its colours never hold still: an Opaline Gleam!": " Sus colores nunca se quedan quietos: ¡un Fulgor opalino!",
+  "%d seen, %d bonded": "%d vistos, %d vinculados",
+  "Duskgold Gleam": "Fulgor de oro crepuscular",
+  "Gleams bonded: %s": "Fulgores vinculados: %s",
+  "Gleams seen: %s": "Fulgores vistos: %s",
+  "Inkwash Gleam": "Fulgor de tinta",
+  "Opaline Gleam": "Fulgor opalino",
+  "Rarer Gleams show their own mark:": "Los Fulgores más raros llevan su propia marca:",
+  "Rime Gleam": "Fulgor de escarcha"
+ }
+}

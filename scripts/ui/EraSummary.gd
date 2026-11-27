@@ -76,6 +76,15 @@ func build() -> void:
 	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	name_label.custom_minimum_size = Vector2(1, 0)
 	head.add_child(name_label)
+	# Gleam kind (1.3.2): its glyph and name in the kind's own colour.
+	var gk: String = GleamRules.kind_of(spirling)
+	if gk != "":
+		var kind_label := Label.new()
+		kind_label.name = "gleam_kind"
+		kind_label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+		kind_label.text = GleamRules.label(gk)
+		kind_label.add_theme_color_override("font_color", GleamRules.text_color(gk, UITheme.BG))
+		head.add_child(kind_label)
 	var badges := Control.new()
 	badges.name = "badges"
 	badges.custom_minimum_size = Vector2(1, EraMenuArt.badge_h() + 1)

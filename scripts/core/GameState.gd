@@ -432,7 +432,8 @@ func shift_temper(s: Spirling, temper_id: String, item_id: String = "rg_temper_s
 func use_gleam_prism(s: Spirling, item_id: String = "rg_gleam_prism") -> bool:
 	if item_count(item_id) <= 0 or s.gleam_boost:
 		return false
-	s.gleam = true
+	# A wild Gleam keeps its kind; any other Spirling takes the classic kind (no kind is sold).
+	GleamRules.apply(s, GleamRules.kind_of(s) if s.gleam else GleamRules.CLASSIC)
 	s.gleam_boost = true
 	note_gleam_bonded(s)
 	return take_item(item_id)
@@ -1200,7 +1201,8 @@ func receive_spirling(s: Spirling) -> bool:
 ## regional imprints, Prism colours and temperaments met so far (plan area 1, item 7).
 static func new_spirlog_entry() -> Dictionary:
 	return {"seen": false, "bonded": false, "first_map": "", "first_day": 0,
-		"variants": [], "prism_seen": false, "gleam_seen": false, "gleam_bonded": false, "tempers": [], "maps": [], "battles": 0, "event": ""}
+		"variants": [], "prism_seen": false, "gleam_seen": false, "gleam_bonded": false,
+		"gleam_kinds_seen": [], "gleam_kinds_bonded": [], "tempers": [], "maps": [], "battles": 0, "event": ""}
 
 ## Fills missing fields of an older Spirlog entry ({"seen", "bonded"} only) with defaults.
 static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
@@ -1217,6 +1219,21 @@ static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
 	out["prism_seen"] = out.prism_seen is bool and out.prism_seen
 	out["gleam_bonded"] = out.gleam_bonded is bool and out.gleam_bonded
 	out["gleam_seen"] = out.gleam_seen is bool and out.gleam_seen or out.gleam_bonded
+	# Gleam kinds (1.3.2): which kinds were seen and bonded. Entries from before the kinds only
+	# knew the classic Gleam.
+	for k: String in ["gleam_kinds_seen", "gleam_kinds_bonded"]:
+		var ids: Array = []
+		for id: Variant in (out[k] if out[k] is Array else []):
+			if GleamRules.is_kind(str(id)) and not ids.has(str(id)):
+				ids.append(str(id))
+		out[k] = ids
+	if bool(out.gleam_bonded) and (out.gleam_kinds_bonded as Array).is_empty():
+		out["gleam_kinds_bonded"] = [GleamRules.CLASSIC]
+	for id: Variant in out.gleam_kinds_bonded:
+		if not (out.gleam_kinds_seen as Array).has(id):
+			(out.gleam_kinds_seen as Array).append(id)
+	if bool(out.gleam_seen) and (out.gleam_kinds_seen as Array).is_empty():
+		out["gleam_kinds_seen"] = [GleamRules.CLASSIC]
 	out["event"] = out.event if out.event is String else ""
 	for k: String in ["variants", "tempers", "maps"]:
 		if not out[k] is Array:
@@ -1313,6 +1330,10 @@ func note_gleam_bonded(s: Spirling) -> void:
 	var e: Dictionary = upgrade_spirlog_entry(spirlog.get(s.data.species_name, {}))
 	e["gleam_seen"] = true
 	e["gleam_bonded"] = true
+	var id: String = GleamRules.kind_of(s)
+	for k: String in ["gleam_kinds_seen", "gleam_kinds_bonded"]:
+		if not (e[k] as Array).has(id):
+			(e[k] as Array).append(id)
 	spirlog[s.data.species_name] = e
 
 ## Records what [param s] shows the Spirlog: its Prism colour, imprint and temperament.
@@ -1322,6 +1343,8 @@ func note_spirlog(s: Spirling, show_temper: bool = true) -> void:
 		e["prism_seen"] = true
 	if s.gleam:
 		e["gleam_seen"] = true
+		if not (e.gleam_kinds_seen as Array).has(GleamRules.kind_of(s)):
+			(e.gleam_kinds_seen as Array).append(GleamRules.kind_of(s))
 	if not s.variant.is_empty() and not (e.variants as Array).has(s.variant):
 		(e.variants as Array).append(s.variant)
 	var t: String = str(s.temperament().id)

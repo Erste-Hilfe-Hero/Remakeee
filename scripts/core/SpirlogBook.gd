@@ -127,6 +127,33 @@ static func gleam_bonded_kinds(spirlog: Dictionary) -> PackedStringArray:
 			out.append(sd.species_name)
 	return out
 
+## Per Gleam kind (classic first): {"id", "seen", "bonded"}, kinds of Spirling whose Gleam of
+## that kind was seen or bonded.
+static func gleam_kind_counts(spirlog: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for id: String in GleamRules.kind_ids():
+		out.append({"id": id, "seen": 0, "bonded": 0})
+	for sd: SpirlingData in Database.spirlings.values():
+		var e: Dictionary = entry(spirlog, sd.species_name)
+		for row: Dictionary in out:
+			row.seen = int(row.seen) + (1 if (e.gleam_kinds_seen as Array).has(row.id) else 0)
+			row.bonded = int(row.bonded) + (1 if (e.gleam_kinds_bonded as Array).has(row.id) else 0)
+	return out
+
+## One line per Gleam kind: "<glyph> Rime Gleam: 1 seen, 0 bonded". No odds are shown.
+static func gleam_kind_lines(spirlog: Dictionary) -> PackedStringArray:
+	var out: PackedStringArray = []
+	for row: Dictionary in gleam_kind_counts(spirlog):
+		out.append(GleamRules.label(str(row.id)) + ": " + Loc.t("%d seen, %d bonded") % [int(row.seen), int(row.bonded)])
+	return out
+
+## The Gleam kinds of [param species] seen or bonded, as "<glyph> Name" (translated), for its page.
+static func gleam_kinds_line(spirlog: Dictionary, species: String, key: String) -> String:
+	var names: PackedStringArray = []
+	for id: String in GleamRules.kinds_in(entry(spirlog, species), key):
+		names.append(GleamRules.label(id))
+	return ", ".join(names)
+
 ## The Spirlog's Gleam counter line: "<star> Gleam: 3 seen, 1 bonded".
 static func gleam_line(spirlog: Dictionary) -> String:
 	var c: Dictionary = gleam_counts(spirlog)
@@ -181,7 +208,11 @@ static func list_line(sd: SpirlingData, spirlog: Dictionary) -> String:
 		mark = "+"
 	# Gleam star once a Gleam of this kind was bonded, "~" once one was only seen.
 	var e: Dictionary = entry(spirlog, sd.species_name)
-	var gleam: String = " " + GleamRules.STAR if bool(e.get("gleam_bonded", false)) else (" ~" if bool(e.get("gleam_seen", false)) else "")
+	# Each Gleam kind bonded shows its own glyph (the star for the classic kind).
+	var gleam: String = ""
+	for id: String in GleamRules.kinds_in(e, "gleam_kinds_bonded"):
+		gleam += GleamRules.glyph(id)
+	gleam = " " + gleam if not gleam.is_empty() else (" ~" if bool(e.get("gleam_seen", false)) else "")
 	return "%02d %s %s%s" % [sd.dex_id, mark, sd.species_name if seen else "???", gleam]
 
 ## The lore sentences that are open: the first when seen, the second when bonded, the rest
@@ -290,6 +321,12 @@ static func page_text(sd: SpirlingData, spirlog: Dictionary) -> String:
 	var ev: String = event_of(spirlog, sd.species_name)
 	if not ev.is_empty():
 		lines.append(Loc.t("Event Spirling: %s") % Loc.t(EVENT_NAMES.get(ev, ev.capitalize())))
+	var g_seen: String = gleam_kinds_line(spirlog, sd.species_name, "gleam_kinds_seen")
+	if not g_seen.is_empty():
+		lines.append(Loc.t("Gleams seen: %s") % g_seen)
+	var g_bonded: String = gleam_kinds_line(spirlog, sd.species_name, "gleam_kinds_bonded")
+	if not g_bonded.is_empty():
+		lines.append(Loc.t("Gleams bonded: %s") % g_bonded)
 	var bonded: bool = is_bonded(spirlog, sd.species_name)
 	if bonded:
 		lines.append("Origin: %s" % sd.origin)

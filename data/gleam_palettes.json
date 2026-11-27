@@ -2989,5 +2989,11943 @@
    "d8e6af",
    "4c7324"
   ]
+ },
+ "kinds": {
+  "rime": {
+   "Kindlop": [
+    "182f32",
+    "ddf1ee",
+    "4497a2",
+    "9bc0d5"
+   ],
+   "Smoldrake": [
+    "1d2b3c",
+    "94c3d7",
+    "5788c0",
+    "e7eaf6"
+   ],
+   "Calderox": [
+    "1a2d37",
+    "3a9ca6",
+    "e1eef4",
+    "a1bbde"
+   ],
+   "Puddlet": [
+    "1d2b3c",
+    "e1eef3",
+    "a1bcdb",
+    "697ec5"
+   ],
+   "Riptail": [
+    "1d2b3c",
+    "4b91b1",
+    "e5ecf4",
+    "acb6dc"
+   ],
+   "Leviarch": [
+    "1c2c39",
+    "dcf0f5",
+    "458fc8",
+    "a4b9e4"
+   ],
+   "Mossling": [
+    "1b2d38",
+    "8acad3",
+    "4890ba",
+    "e5ebf5"
+   ],
+   "Thornback": [
+    "1a2e35",
+    "359fa2",
+    "dfeff4",
+    "9dbddf"
+   ],
+   "Verdantusk": [
+    "1a2e37",
+    "def0f1",
+    "4a91b2",
+    "a4bbd9"
+   ],
+   "Zippit": [
+    "1c2c3a",
+    "8cc7d9",
+    "4c8cc4",
+    "e6ebf7"
+   ],
+   "Glimmerax": [
+    "1a2d37",
+    "ddf0f2",
+    "4592b9",
+    "a2bbdd"
+   ],
+   "Shalebat": [
+    "1d2b3c",
+    "e1eef3",
+    "5a87bb",
+    "acb7dc"
+   ],
+   "Obsidroth": [
+    "1a2e36",
+    "dcf0f2",
+    "4593b4",
+    "a2bcdb"
+   ],
+   "Zephlet": [
+    "182f33",
+    "76d5cb",
+    "359dad",
+    "e0eef6"
+   ],
+   "Tempestrel": [
+    "1b2d38",
+    "e0eff1",
+    "9ebfd4",
+    "6283ba"
+   ],
+   "Wickit": [
+    "1b2d38",
+    "e0eff1",
+    "528db0",
+    "a7bad7"
+   ],
+   "Lumenewt": [
+    "1a2e36",
+    "dff0f0",
+    "4d91ab",
+    "a4bcd6"
+   ],
+   "Mirkmole": [
+    "192f34",
+    "ddf0ef",
+    "4894a6",
+    "9fbed5"
+   ],
+   "Duskdigger": [
+    "192f33",
+    "7fd1ca",
+    "3d99aa",
+    "e2edf5"
+   ],
+   "Kelpup": [
+    "1d2b3c",
+    "9ac1d3",
+    "e5ecf4",
+    "6c7dc0"
+   ],
+   "Kelphound": [
+    "182f32",
+    "48998f",
+    "e0eff0",
+    "9fbfd1"
+   ],
+   "Blotling": [
+    "182f33",
+    "449b91",
+    "e0eff1",
+    "9dc0d4"
+   ],
+   "Scrivane": [
+    "1c2c39",
+    "8cc8d6",
+    "4c8dc0",
+    "e6ebf6"
+   ],
+   "Hushkin": [
+    "1a2e35",
+    "d9f2f2",
+    "3e97b4",
+    "9dbedd"
+   ],
+   "Silentra": [
+    "1c2c39",
+    "98c3ce",
+    "e4ecf2",
+    "6781b6"
+   ],
+   "Paddlewisp": [
+    "182f32",
+    "76d6c8",
+    "daf1f4",
+    "3b95c4"
+   ],
+   "Ferrowyn": [
+    "1c2c3a",
+    "e1eef2",
+    "578ab6",
+    "aab8da"
+   ],
+   "Talusk": [
+    "1a2e35",
+    "8dc9cb",
+    "e2eef2",
+    "5c87b4"
+   ],
+   "Talusgard": [
+    "1d2b3b",
+    "4195b5",
+    "e4ecf5",
+    "aab7e0"
+   ],
+   "Cairnhold": [
+    "182f33",
+    "3d9e93",
+    "def0f2",
+    "9ac1d8"
+   ],
+   "Fluting": [
+    "1b2d37",
+    "8fc8cf",
+    "4e8fb2",
+    "e5ebf4"
+   ],
+   "Marshfife": [
+    "1d2b3b",
+    "dfeff5",
+    "508ac7",
+    "a9b7e3"
+   ],
+   "Glasstarn": [
+    "1c2c3b",
+    "e1eef3",
+    "a0bdd9",
+    "677fc3"
+   ],
+   "Lanternel": [
+    "192f34",
+    "dbf1f0",
+    "4197aa",
+    "9cbfd9"
+   ],
+   "Seamlet": [
+    "1d2b3d",
+    "e3edf2",
+    "a6bbd6",
+    "6e7dbc"
+   ],
+   "Mendlace": [
+    "192f33",
+    "dcf1ef",
+    "4397a6",
+    "9cc0d7"
+   ],
+   "Croziel": [
+    "1b2d37",
+    "8dc9d0",
+    "e2edf3",
+    "5e85bd"
+   ],
+   "Frondmere": [
+    "1d2b3c",
+    "deeff5",
+    "9dbde2",
+    "657dd1"
+   ],
+   "Brinelet": [
+    "1c2c3b",
+    "dfeff4",
+    "518ac3",
+    "a9b7e1"
+   ],
+   "Saltspire": [
+    "1a2e36",
+    "dff0f0",
+    "4e90ab",
+    "a4bcd5"
+   ],
+   "Millwhit": [
+    "1d2b3d",
+    "e2edf2",
+    "a5bbd8",
+    "6d7dbf"
+   ],
+   "Millvane": [
+    "1a2d37",
+    "339eaa",
+    "dfeef6",
+    "9fbce2"
+   ],
+   "Drizzlet": [
+    "1c2c3a",
+    "e2eef1",
+    "5a89b1",
+    "abb8d7"
+   ],
+   "Rainmantle": [
+    "192e34",
+    "409b99",
+    "e0eef2",
+    "9fbed8"
+   ],
+   "Reedquill": [
+    "1c2c3a",
+    "99c3d0",
+    "e5ecf3",
+    "6980ba"
+   ],
+   "Reedwarden": [
+    "1a2e36",
+    "91c8ca",
+    "518fa8",
+    "e5ecf3"
+   ],
+   "Cogmite": [
+    "1b2d37",
+    "7fced8",
+    "e0eef5",
+    "5686cb"
+   ],
+   "Cogwright": [
+    "1b2d38",
+    "93c6cf",
+    "538cb3",
+    "e6ebf4"
+   ],
+   "Puddock": [
+    "1d2b3c",
+    "93c4d8",
+    "5588c2",
+    "e7eaf6"
+   ],
+   "Delthorn": [
+    "182f33",
+    "def0ee",
+    "93c6ce",
+    "528db0"
+   ],
+   "Glimmoth": [
+    "192f33",
+    "def0ef",
+    "4795a3",
+    "9ebfd5"
+   ],
+   "Wickmoth": [
+    "1b2d38",
+    "8cc8d3",
+    "4b8fb9",
+    "e5ebf5"
+   ],
+   "Silthop": [
+    "1c2c3a",
+    "3899b6",
+    "e2edf6",
+    "a6b8e4"
+   ],
+   "Siltgrove": [
+    "1d2b3b",
+    "e0eef4",
+    "a0bddc",
+    "677ec7"
+   ],
+   "Flourie": [
+    "192f33",
+    "87cdc7",
+    "4496a5",
+    "e3edf3"
+   ],
+   "Floursprite": [
+    "1b2d38",
+    "ddf0f3",
+    "97c2da",
+    "5b85c5"
+   ],
+   "Cindle": [
+    "1d2b3c",
+    "4294b8",
+    "e4ecf5",
+    "abb6e1"
+   ],
+   "Glassfell": [
+    "1b2d37",
+    "dbf1f3",
+    "3f93c1",
+    "a1bbe1"
+   ],
+   "Etchling": [
+    "192f33",
+    "36a197",
+    "ddf0f3",
+    "97c1dc"
+   ],
+   "Burinox": [
+    "192f34",
+    "469995",
+    "e1eef1",
+    "a1bed4"
+   ],
+   "Ashwren": [
+    "1d2b3b",
+    "e2eef2",
+    "5c87b6",
+    "acb7da"
+   ],
+   "Ashcrest": [
+    "1a2d37",
+    "dcf1f3",
+    "95c3da",
+    "5886c5"
+   ],
+   "Bogwick": [
+    "192e35",
+    "83cecd",
+    "e0eef3",
+    "548abb"
+   ],
+   "Fenwarden": [
+    "1a2e35",
+    "7dd0d1",
+    "3f96b3",
+    "e3ecf5"
+   ],
+   "Cullet": [
+    "1b2d38",
+    "dfeff2",
+    "4d8eb9",
+    "a6b9dc"
+   ],
+   "Cullhorn": [
+    "1a2e36",
+    "e0eff0",
+    "9dc1d0",
+    "5f86b3"
+   ],
+   "Smeltpup": [
+    "1b2d38",
+    "80cdd9",
+    "e0eef6",
+    "5785cc"
+   ],
+   "Smeltmaw": [
+    "1b2d37",
+    "90c7ce",
+    "4f8fb1",
+    "e6ebf4"
+   ],
+   "Solkit": [
+    "1a2e36",
+    "8ec9cc",
+    "e2edf2",
+    "5d87b5"
+   ],
+   "Solmantle": [
+    "1a2e36",
+    "7dd0d4",
+    "dfeef4",
+    "5289c6"
+   ],
+   "Saltsprig": [
+    "192f33",
+    "74d6ce",
+    "dcf0f4",
+    "4291c7"
+   ],
+   "Saltcrown": [
+    "1c2c3a",
+    "ddf0f5",
+    "488dca",
+    "a5b8e5"
+   ],
+   "Orrlet": [
+    "1b2d38",
+    "def0f3",
+    "99c1d9",
+    "5d84c3"
+   ],
+   "Orrerine": [
+    "192f34",
+    "36a09a",
+    "ddf0f4",
+    "99c0dd"
+   ],
+   "Duneshrew": [
+    "1a2e37",
+    "e0eff0",
+    "9dc0d0",
+    "6085b3"
+   ],
+   "Dunebastion": [
+    "1a2e35",
+    "489798",
+    "e2eef1",
+    "a4bcd4"
+   ],
+   "Shimmerlet": [
+    "192f34",
+    "8ecac7",
+    "e1eef1",
+    "578bb0"
+   ],
+   "Mirassil": [
+    "1a2e35",
+    "daf1f2",
+    "91c5d8",
+    "528ac2"
+   ],
+   "Highhare": [
+    "1a2d37",
+    "e0eff1",
+    "9dc0d2",
+    "6085b6"
+   ],
+   "Zenithare": [
+    "1a2d37",
+    "ddf0f2",
+    "4891b6",
+    "a3bbdb"
+   ],
+   "Velahra": [
+    "192f33",
+    "3a9f96",
+    "def0f3",
+    "99c1da"
+   ],
+   "Hallowmur": [
+    "1a2e36",
+    "daf2f3",
+    "90c5da",
+    "5289c6"
+   ],
+   "Scriptorax": [
+    "1a2e36",
+    "dfeff0",
+    "9bc1d0",
+    "5e87b3"
+   ],
+   "Lumivane": [
+    "1d2b3c",
+    "9bc1d1",
+    "5d86b5",
+    "e7eaf4"
+   ],
+   "Zephyrel": [
+    "1b2d39",
+    "4596a7",
+    "e3edf3",
+    "a7b9db"
+   ],
+   "Monolurk": [
+    "192e35",
+    "dff0f0",
+    "9ac2cf",
+    "5b88b1"
+   ],
+   "Vorlucent": [
+    "192e35",
+    "8ec9c9",
+    "4e91a6",
+    "e5ecf3"
+   ],
+   "Rollib": [
+    "1d2b3c",
+    "9bc1d1",
+    "e5ecf3",
+    "6c7ebb"
+   ],
+   "Rollibex": [
+    "1b2d39",
+    "e1eef1",
+    "a1bed3",
+    "6682b7"
+   ],
+   "Helirollax": [
+    "1a2e36",
+    "32a0a7",
+    "dfeff5",
+    "9dbde2"
+   ],
+   "Sirocub": [
+    "1c2c3a",
+    "e0eef3",
+    "9fbed9",
+    "6580c1"
+   ],
+   "Sirocat": [
+    "182f33",
+    "3e9d93",
+    "deeff2",
+    "9ac0d7"
+   ],
+   "Siroclaw": [
+    "1b2d38",
+    "e0eff1",
+    "528daf",
+    "a7bad6"
+   ],
+   "Scaldasp": [
+    "1c2c3a",
+    "93c5d3",
+    "548aba",
+    "e6ebf5"
+   ],
+   "Scaldcoil": [
+    "1b2d39",
+    "8fc7d3",
+    "4f8dba",
+    "e6ebf5"
+   ],
+   "Scaldrahn": [
+    "1c2c3a",
+    "deeff4",
+    "9bbfdd",
+    "6280ca"
+   ],
+   "Noonpip": [
+    "182f32",
+    "31a494",
+    "daf1f4",
+    "91c4de"
+   ],
+   "Noonwhist": [
+    "1d2b3b",
+    "deeff5",
+    "4e8aca",
+    "a8b7e5"
+   ],
+   "Noonsoral": [
+    "192f34",
+    "daf2f1",
+    "3f97ad",
+    "9cbfdb"
+   ],
+   "Spinnub": [
+    "1a2e37",
+    "d9f2f4",
+    "90c5dd",
+    "5288cb"
+   ],
+   "Spinnarow": [
+    "1c2c3a",
+    "e1eef2",
+    "a1bdd7",
+    "6880be"
+   ],
+   "Spinnacle": [
+    "1b2d38",
+    "81cdda",
+    "3f92c6",
+    "e4ebf7"
+   ],
+   "Wadlet": [
+    "1b2d38",
+    "90c7d0",
+    "4f8eb5",
+    "e6ebf4"
+   ],
+   "Wadishell": [
+    "1b2d38",
+    "8ac9d5",
+    "e2edf5",
+    "5e83c5"
+   ],
+   "Wadibastion": [
+    "192f34",
+    "88ccc9",
+    "4795a6",
+    "e3edf3"
+   ],
+   "Ergfin": [
+    "182f33",
+    "32a397",
+    "dbf1f4",
+    "94c2de"
+   ],
+   "Ergskim": [
+    "182f32",
+    "8fcac3",
+    "4b949e",
+    "e4edf2"
+   ],
+   "Ergrava": [
+    "1a2e36",
+    "85cdd0",
+    "4594b3",
+    "e4ecf5"
+   ],
+   "Ardlet": [
+    "1b2d39",
+    "4894a5",
+    "e4edf3",
+    "a8b9d9"
+   ],
+   "Ardlume": [
+    "1c2c3a",
+    "ddeff5",
+    "4a8dc8",
+    "a6b8e4"
+   ],
+   "Ardenthal": [
+    "1b2d38",
+    "deeff3",
+    "4c8ebb",
+    "a6badd"
+   ],
+   "Fulgrit": [
+    "192f34",
+    "479894",
+    "e1eef1",
+    "a1bed3"
+   ],
+   "Fulgorin": [
+    "192f34",
+    "78d4d0",
+    "ddf0f4",
+    "498ec4"
+   ],
+   "Fulgorath": [
+    "1a2e35",
+    "7bd1d2",
+    "dfeff4",
+    "508bc3"
+   ],
+   "Carabun": [
+    "182f33",
+    "ddf1ef",
+    "8ec8d1",
+    "4d8fb6"
+   ],
+   "Caravant": [
+    "182f32",
+    "3e9d90",
+    "def0f2",
+    "99c1d6"
+   ],
+   "Caravault": [
+    "192f34",
+    "dcf1f0",
+    "4595a9",
+    "9ebed7"
+   ],
+   "Velvit": [
+    "1b2d38",
+    "deeff3",
+    "9bc0d9",
+    "5f83c2"
+   ],
+   "Velvessa": [
+    "192f34",
+    "7ad3ce",
+    "ddf0f4",
+    "488fc2"
+   ],
+   "Velverain": [
+    "1d2b3c",
+    "e3edf2",
+    "5e86b6",
+    "adb6da"
+   ],
+   "Clasplet": [
+    "1b2d37",
+    "379ca9",
+    "e0eef5",
+    "a1bbe0"
+   ],
+   "Claspirant": [
+    "1d2b3c",
+    "e3edf2",
+    "5f86b2",
+    "adb7d8"
+   ],
+   "Claspreign": [
+    "1b2d39",
+    "4c93a2",
+    "e4ecf2",
+    "a9b9d7"
+   ],
+   "Obelit": [
+    "1c2c3a",
+    "e1eef2",
+    "5989b3",
+    "aab8d8"
+   ],
+   "Obelith": [
+    "1b2d39",
+    "e1eef1",
+    "558bb2",
+    "a9b9d8"
+   ],
+   "Obelordan": [
+    "192e34",
+    "469997",
+    "e1eef1",
+    "a2bdd4"
+   ],
+   "Haboblet": [
+    "1b2d38",
+    "3b9aac",
+    "e2edf5",
+    "a4bae0"
+   ],
+   "Haboborn": [
+    "1c2c3b",
+    "97c3d2",
+    "5988b8",
+    "e7ebf5"
+   ],
+   "Habobrax": [
+    "1a2e35",
+    "3a9d9e",
+    "e0eff3",
+    "9ebedc"
+   ],
+   "Stiltwade": [
+    "192f34",
+    "81cfcc",
+    "dfeff3",
+    "4f8cbc"
+   ],
+   "Stiltregent": [
+    "1c2c3a",
+    "e2eef1",
+    "a3bdd3",
+    "6980b8"
+   ],
+   "Palmop": [
+    "182f32",
+    "d9f3f0",
+    "369daa",
+    "94c3dd"
+   ],
+   "Palmonarch": [
+    "1c2c3a",
+    "e2eef1",
+    "5a89b2",
+    "abb8d8"
+   ],
+   "Bakedil": [
+    "192f34",
+    "3b9e98",
+    "dfeff3",
+    "9bbfda"
+   ],
+   "Bakedillon": [
+    "182f33",
+    "d8f3f0",
+    "369cac",
+    "94c2de"
+   ],
+   "Hazejel": [
+    "1d2b3c",
+    "90c5dc",
+    "5388c8",
+    "e7eaf7"
+   ],
+   "Hazejellith": [
+    "1d2b3c",
+    "97c2d6",
+    "5a87bd",
+    "e7eaf6"
+   ],
+   "Corocub": [
+    "1a2e36",
+    "def0f1",
+    "99c2d3",
+    "5c87b8"
+   ],
+   "Coronarch": [
+    "192f34",
+    "dcf1f0",
+    "91c6d2",
+    "518cb8"
+   ],
+   "Chirrik": [
+    "1d2b3c",
+    "e1eef3",
+    "a2bcda",
+    "6a7dc4"
+   ],
+   "Chirrikade": [
+    "1a2e37",
+    "dfeff1",
+    "4e90ae",
+    "a5bbd6"
+   ],
+   "Brinewhorl": [
+    "192f34",
+    "d9f2f1",
+    "89c9d9",
+    "498ec4"
+   ],
+   "Gyrevult": [
+    "1a2d37",
+    "8fc8ce",
+    "4d90b1",
+    "e5ebf4"
+   ],
+   "Heliodrop": [
+    "1b2d38",
+    "e0eff1",
+    "9ebfd3",
+    "6284b7"
+   ],
+   "Duskmirrah": [
+    "1a2d37",
+    "91c7cd",
+    "e3edf2",
+    "6085b7"
+   ],
+   "Sootpaw": [
+    "1c2c3b",
+    "e0eef3",
+    "5589bd",
+    "aab7de"
+   ],
+   "Sootlurk": [
+    "1c2c39",
+    "4197ac",
+    "e3edf4",
+    "a7b9de"
+   ],
+   "Sootharrow": [
+    "182f32",
+    "8ecbc2",
+    "49959e",
+    "e3edf2"
+   ],
+   "Vitrill": [
+    "192f33",
+    "84cfc9",
+    "dfeff2",
+    "4e8eb9"
+   ],
+   "Vitrillon": [
+    "1a2e36",
+    "def0f1",
+    "4c91ad",
+    "a3bcd7"
+   ],
+   "Vitrillaxe": [
+    "1a2e35",
+    "d9f2f3",
+    "3a97b9",
+    "9cbee0"
+   ],
+   "Sablet": [
+    "192f33",
+    "74d6cd",
+    "dbf1f4",
+    "4092c7"
+   ],
+   "Sablowl": [
+    "1c2c3a",
+    "4794a8",
+    "e4ecf3",
+    "a9b8da"
+   ],
+   "Sablarch": [
+    "1b2d38",
+    "dbf1f4",
+    "94c2dd",
+    "5985ca"
+   ],
+   "Quenchet": [
+    "192f34",
+    "dcf1f0",
+    "4496a8",
+    "9dbfd8"
+   ],
+   "Quenchcoil": [
+    "1a2e37",
+    "8dc9ce",
+    "4b91b1",
+    "e5ecf4"
+   ],
+   "Quenchwyrm": [
+    "192f34",
+    "7bd2cd",
+    "ddf0f4",
+    "498ec1"
+   ],
+   "Brickit": [
+    "1a2e35",
+    "d9f2f3",
+    "3c97b8",
+    "9dbedf"
+   ],
+   "Brickwarden": [
+    "182f32",
+    "7fd2c6",
+    "dcf0f3",
+    "4293bc"
+   ],
+   "Brickolossus": [
+    "182f32",
+    "74d7c9",
+    "daf1f4",
+    "3a96c5"
+   ],
+   "Clinklet": [
+    "1c2c3a",
+    "95c4d3",
+    "5689b9",
+    "e7ebf5"
+   ],
+   "Clinkshell": [
+    "182f33",
+    "def1ee",
+    "4696a2",
+    "9dc0d4"
+   ],
+   "Clinkerdome": [
+    "182f32",
+    "82d0c5",
+    "3d9aa4",
+    "e1eef4"
+   ],
+   "Peatlet": [
+    "192f33",
+    "8bccc6",
+    "4895a3",
+    "e3edf3"
+   ],
+   "Peatbloom": [
+    "182f32",
+    "8dcbc3",
+    "e0eff1",
+    "518eb0"
+   ],
+   "Peatmonarch": [
+    "192f34",
+    "369f9b",
+    "deeff4",
+    "9abfdd"
+   ],
+   "Gloomgill": [
+    "1a2e36",
+    "399da1",
+    "e0eef4",
+    "9fbddd"
+   ],
+   "Gloomgillar": [
+    "192e34",
+    "88ccca",
+    "e1eef2",
+    "568ab6"
+   ],
+   "Gloomgillith": [
+    "192e34",
+    "ddf1f0",
+    "4794aa",
+    "9fbed7"
+   ],
+   "Fumelet": [
+    "182f33",
+    "dff0ee",
+    "95c5cc",
+    "558cae"
+   ],
+   "Fumewraith": [
+    "1c2c3b",
+    "9bc2cf",
+    "5d87b2",
+    "e7ebf4"
+   ],
+   "Fumeregent": [
+    "1a2e36",
+    "d9f2f3",
+    "8ec5dd",
+    "5189ca"
+   ],
+   "Lodekit": [
+    "1a2e37",
+    "dfeff1",
+    "4c90b0",
+    "a4bbd8"
+   ],
+   "Lodebrock": [
+    "192f34",
+    "379f9a",
+    "deeff4",
+    "99c0dc"
+   ],
+   "Lodemarshal": [
+    "1d2b3c",
+    "96c3d6",
+    "5888be",
+    "e7eaf6"
+   ],
+   "Glowflit": [
+    "1c2c3a",
+    "4f91a4",
+    "e5ecf2",
+    "abb8d7"
+   ],
+   "Glowflitter": [
+    "1b2d38",
+    "8ec8d1",
+    "e2edf3",
+    "5f84bd"
+   ],
+   "Glowflare": [
+    "192f33",
+    "def0ef",
+    "4895a3",
+    "9ebfd4"
+   ],
+   "Stylet": [
+    "1c2c3a",
+    "dfeff4",
+    "4f8bc3",
+    "a8b8e1"
+   ],
+   "Stylox": [
+    "1a2e35",
+    "d8f2f3",
+    "3b98b7",
+    "9cbedf"
+   ],
+   "Stylaxon": [
+    "182f33",
+    "85cec7",
+    "deeff2",
+    "4b8fb7"
+   ],
+   "Coalkid": [
+    "192e34",
+    "7fd0ce",
+    "dfeff3",
+    "4f8cbf"
+   ],
+   "Coalbuck": [
+    "1a2e37",
+    "81ced4",
+    "4094bb",
+    "e4ecf6"
+   ],
+   "Coalpatriarch": [
+    "1b2d38",
+    "8dc8d3",
+    "e2edf4",
+    "6083c1"
+   ],
+   "Glazel": [
+    "1b2d38",
+    "dfeff2",
+    "9dbfd6",
+    "6183be"
+   ],
+   "Glazelisk": [
+    "192e34",
+    "ddf0f0",
+    "95c4d1",
+    "568ab6"
+   ],
+   "Glazeldrake": [
+    "1a2e36",
+    "85cdd1",
+    "4493b6",
+    "e4ecf5"
+   ],
+   "Puffbellow": [
+    "1c2c3a",
+    "95c4d2",
+    "e4ecf4",
+    "6680be"
+   ],
+   "Bellowroc": [
+    "1c2c3a",
+    "e1eef2",
+    "a0bed6",
+    "6681bc"
+   ],
+   "Lampick": [
+    "1c2c3a",
+    "dfeff3",
+    "9dbedc",
+    "6380c7"
+   ],
+   "Lampickard": [
+    "182f32",
+    "84cfc5",
+    "3f99a3",
+    "e2edf4"
+   ],
+   "Charsprout": [
+    "1d2b3d",
+    "9dc0d2",
+    "e6ebf3",
+    "6e7dbc"
+   ],
+   "Charsylvan": [
+    "192e35",
+    "89cccb",
+    "4a93a9",
+    "e4ecf3"
+   ],
+   "Ingotlet": [
+    "1b2d38",
+    "4099a5",
+    "e2edf4",
+    "a4badc"
+   ],
+   "Ingotusk": [
+    "1b2d37",
+    "83cdd6",
+    "4093c0",
+    "e4ecf6"
+   ],
+   "Mortarant": [
+    "1b2d38",
+    "87cad7",
+    "e1edf5",
+    "5c83c8"
+   ],
+   "Mortarmarch": [
+    "1d2b3b",
+    "e2edf2",
+    "a5bcd4",
+    "6b7eba"
+   ],
+   "Vaporel": [
+    "1c2c3a",
+    "98c3d0",
+    "e4ecf3",
+    "6880ba"
+   ],
+   "Vaporelle": [
+    "1a2e36",
+    "dbf1f3",
+    "4095b9",
+    "a0bcde"
+   ],
+   "Shadeback": [
+    "1b2d39",
+    "3f98ab",
+    "e2edf4",
+    "a6b9de"
+   ],
+   "Kilnstork": [
+    "192e35",
+    "daf2f2",
+    "8fc6d7",
+    "4f8bc1"
+   ],
+   "Puffglass": [
+    "182f32",
+    "75d6ca",
+    "339eac",
+    "e0eef6"
+   ],
+   "Flueling": [
+    "192e34",
+    "8ccac9",
+    "e1eef1",
+    "5989b2"
+   ],
+   "Inkpip": [
+    "1d2b3b",
+    "93c4d7",
+    "5589c0",
+    "e7eaf6"
+   ],
+   "Inkspool": [
+    "192f33",
+    "7fd1cb",
+    "3e99ab",
+    "e2edf5"
+   ],
+   "Inkregent": [
+    "1b2d37",
+    "def0f2",
+    "4a90b6",
+    "a4bbdb"
+   ],
+   "Weirkit": [
+    "1b2d39",
+    "4795a6",
+    "e3edf3",
+    "a8b9da"
+   ],
+   "Weirrunner": [
+    "1c2c3a",
+    "deeff4",
+    "4c8cc4",
+    "a7b8e2"
+   ],
+   "Weirmarshal": [
+    "1a2e35",
+    "dcf1f1",
+    "4594b1",
+    "a0bdda"
+   ],
+   "Diplit": [
+    "1b2d37",
+    "e0eff1",
+    "9ec0d2",
+    "6284b5"
+   ],
+   "Diparrow": [
+    "192f33",
+    "36a098",
+    "ddf0f4",
+    "98c1dc"
+   ],
+   "Dipmonarch": [
+    "1b2d38",
+    "def0f3",
+    "498fbe",
+    "a5badf"
+   ],
+   "Woadlet": [
+    "192f33",
+    "ddf1ef",
+    "4496a6",
+    "9dbfd7"
+   ],
+   "Woadwhorl": [
+    "192f34",
+    "d7f3f2",
+    "349cb3",
+    "96c1e0"
+   ],
+   "Woadcastle": [
+    "192f34",
+    "daf2f1",
+    "8dc7d6",
+    "4e8dbe"
+   ],
+   "Rubrit": [
+    "182f32",
+    "dcf1ee",
+    "8bcad1",
+    "4991b6"
+   ],
+   "Rubricorn": [
+    "182f32",
+    "dff0ee",
+    "94c6cc",
+    "538dad"
+   ],
+   "Rubriclad": [
+    "1c2c39",
+    "4c93a4",
+    "e4ecf3",
+    "aab9d8"
+   ],
+   "Nimbub": [
+    "1d2b3d",
+    "9ec0d1",
+    "6185b4",
+    "e8eaf4"
+   ],
+   "Nimbuck": [
+    "1d2b3c",
+    "4593b4",
+    "e4ecf5",
+    "abb7df"
+   ],
+   "Nimbarch": [
+    "1a2e35",
+    "85cdcf",
+    "e1eef3",
+    "5689bd"
+   ],
+   "Sluicekit": [
+    "1a2e35",
+    "ddf0f1",
+    "4992ad",
+    "a2bcd8"
+   ],
+   "Sluicer": [
+    "1d2b3d",
+    "e2edf3",
+    "5c86bc",
+    "acb6dd"
+   ],
+   "Sluicewarden": [
+    "1b2d38",
+    "8fc8d0",
+    "e3edf3",
+    "6084bc"
+   ],
+   "Vanepip": [
+    "192f34",
+    "dcf1f0",
+    "4496aa",
+    "9ebed8"
+   ],
+   "Vanecrow": [
+    "1b2d38",
+    "86cbd5",
+    "4591be",
+    "e5ebf6"
+   ],
+   "Vanecrest": [
+    "1b2d38",
+    "94c5cf",
+    "548cb1",
+    "e6ebf4"
+   ],
+   "Chimelet": [
+    "182f32",
+    "75d6ca",
+    "daf1f4",
+    "3c94c5"
+   ],
+   "Chimewell": [
+    "192f33",
+    "3d9d96",
+    "dfeff2",
+    "9bc0d8"
+   ],
+   "Chimeward": [
+    "1d2b3c",
+    "92c4d9",
+    "5488c4",
+    "e7eaf7"
+   ],
+   "Rushkit": [
+    "1c2c3a",
+    "dfeff4",
+    "4f8cc0",
+    "a7b8e0"
+   ],
+   "Rushprowl": [
+    "1d2b3c",
+    "3898bf",
+    "e3ecf7",
+    "a8b6e6"
+   ],
+   "Rushstalker": [
+    "1d2b3b",
+    "4594b2",
+    "e4ecf5",
+    "aab7de"
+   ],
+   "Ripjolt": [
+    "1c2c3a",
+    "92c5d4",
+    "538bbb",
+    "e6ebf5"
+   ],
+   "Ripjolter": [
+    "192f34",
+    "d9f2f1",
+    "8ac9d7",
+    "498ec1"
+   ],
+   "Ripjoltane": [
+    "1a2e36",
+    "31a0a7",
+    "dfeff5",
+    "9dbde2"
+   ],
+   "Grindlet": [
+    "1a2e35",
+    "409a9d",
+    "e1eef3",
+    "a1bdd9"
+   ],
+   "Grindwheel": [
+    "1c2c3b",
+    "4494b0",
+    "e4ecf4",
+    "aab7de"
+   ],
+   "Grindmonolith": [
+    "1c2c3a",
+    "8fc6d5",
+    "e3edf5",
+    "6281c5"
+   ],
+   "Morelit": [
+    "1d2b3d",
+    "e1eef3",
+    "a3bbdb",
+    "6b7cc5"
+   ],
+   "Morelamp": [
+    "182f32",
+    "8fcac2",
+    "e0eff0",
+    "518ead"
+   ],
+   "Morelord": [
+    "192f34",
+    "8ecac7",
+    "e1eef1",
+    "588ab1"
+   ],
+   "Rookit": [
+    "192e35",
+    "dbf1f1",
+    "4296af",
+    "9ebedb"
+   ],
+   "Rookwarden": [
+    "192e35",
+    "3a9d9c",
+    "dfeff3",
+    "9ebedb"
+   ],
+   "Skimmit": [
+    "1d2b3d",
+    "e3edf2",
+    "a5bbd7",
+    "6d7dbe"
+   ],
+   "Skimmarch": [
+    "192f34",
+    "7ed1ce",
+    "deeff3",
+    "4d8dbf"
+   ],
+   "Prismist": [
+    "1a2e36",
+    "dfeff1",
+    "4e90ad",
+    "a4bbd6"
+   ],
+   "Prismistral": [
+    "1c2c3a",
+    "4296ac",
+    "e3edf4",
+    "a8b8dd"
+   ],
+   "Canalet": [
+    "1d2b3c",
+    "91c4db",
+    "e4ecf6",
+    "677dce"
+   ],
+   "Canalord": [
+    "192e35",
+    "daf2f2",
+    "8ec6d8",
+    "4f8bc2"
+   ],
+   "Padlet": [
+    "1a2e36",
+    "dbf1f2",
+    "93c4d7",
+    "5588c0"
+   ],
+   "Padlotus": [
+    "192f34",
+    "8accc9",
+    "e1eef2",
+    "558bb5"
+   ],
+   "Thrashkin": [
+    "1d2b3c",
+    "98c2d4",
+    "5b87ba",
+    "e7eaf5"
+   ],
+   "Threshox": [
+    "1b2d39",
+    "8dc8d4",
+    "e2edf4",
+    "6082c4"
+   ],
+   "Cartocoil": [
+    "1a2e35",
+    "d7f3f3",
+    "3799bc",
+    "9bbee2"
+   ],
+   "Belfrit": [
+    "1c2c3a",
+    "3c98b3",
+    "e3edf5",
+    "a7b8e1"
+   ],
+   "Dusktern": [
+    "1a2e36",
+    "84cdd2",
+    "e1eef4",
+    "5788c1"
+   ],
+   "Fiddlit": [
+    "192e35",
+    "78d3d2",
+    "3b98b5",
+    "e2edf6"
+   ],
+   "Fiddlehorn": [
+    "1c2c39",
+    "4994a6",
+    "e4ecf3",
+    "a9b9d9"
+   ],
+   "Fiddlestag": [
+    "182f32",
+    "7cd3c7",
+    "dcf1f3",
+    "4093be"
+   ],
+   "Gleamgrub": [
+    "1d2b3c",
+    "3f95b9",
+    "e4ecf6",
+    "aab6e2"
+   ],
+   "Gleamworm": [
+    "182f33",
+    "86cec6",
+    "dfeff2",
+    "4c8fb7"
+   ],
+   "Gleamwyrm": [
+    "1a2e36",
+    "42999e",
+    "e2eef3",
+    "a3bcd8"
+   ],
+   "Skerrit": [
+    "182f32",
+    "d8f3f0",
+    "7fced8",
+    "3d94c4"
+   ],
+   "Skerrigale": [
+    "1a2e37",
+    "dfeff0",
+    "508fad",
+    "a6bbd6"
+   ],
+   "Skerrimast": [
+    "1a2e36",
+    "86cccf",
+    "4693b2",
+    "e4ecf4"
+   ],
+   "Pinchkin": [
+    "1a2e36",
+    "7cd0d5",
+    "3c96bc",
+    "e3ecf6"
+   ],
+   "Pinchward": [
+    "192e35",
+    "33a0a0",
+    "deeff5",
+    "9bbfdf"
+   ],
+   "Pinchcastle": [
+    "182f32",
+    "daf2ef",
+    "399ca7",
+    "94c3db"
+   ],
+   "Flicklet": [
+    "192f33",
+    "86cec7",
+    "4397a6",
+    "e3edf4"
+   ],
+   "Flickscale": [
+    "1b2d39",
+    "dcf0f4",
+    "97c1df",
+    "5c83cc"
+   ],
+   "Flickwyrm": [
+    "182f32",
+    "429c91",
+    "dfeff1",
+    "9bc0d5"
+   ],
+   "Brookhop": [
+    "182f32",
+    "469a8e",
+    "e0eff1",
+    "9dc0d3"
+   ],
+   "Brookbaron": [
+    "192e35",
+    "d7f3f3",
+    "379ab8",
+    "99bfe1"
+   ],
+   "Covepup": [
+    "1c2c3a",
+    "97c3d2",
+    "e4ecf3",
+    "6880be"
+   ],
+   "Covewarden": [
+    "1b2d39",
+    "e0eff2",
+    "538cb5",
+    "a8b9da"
+   ],
+   "Gloamhog": [
+    "1b2d37",
+    "ddf0f2",
+    "4691ba",
+    "a3bbdd"
+   ],
+   "Gloamquill": [
+    "182f33",
+    "d8f3f0",
+    "82cdd8",
+    "4092c3"
+   ],
+   "Glimshell": [
+    "1d2b3d",
+    "4493b9",
+    "e4ecf5",
+    "acb6e1"
+   ],
+   "Glimbastion": [
+    "1c2c3a",
+    "e0eff3",
+    "528bbc",
+    "a8b8dd"
+   ],
+   "Lichub": [
+    "1c2c39",
+    "dfeff3",
+    "4f8cbb",
+    "a7b9dd"
+   ],
+   "Lichenbear": [
+    "1d2b3c",
+    "9ac1d3",
+    "e5ecf4",
+    "6c7dc0"
+   ],
+   "Verdigrub": [
+    "192f33",
+    "7ed1cb",
+    "3d99ab",
+    "e2edf5"
+   ],
+   "Verdigrand": [
+    "1d2b3c",
+    "dfeef6",
+    "5188cc",
+    "a9b6e6"
+   ],
+   "Peallith": [
+    "1a2e36",
+    "84cdd1",
+    "e1eef4",
+    "5788c1"
+   ],
+   "Fernwhisk": [
+    "192f34",
+    "34a19b",
+    "ddf0f4",
+    "98c0de"
+   ],
+   "Hearthmote": [
+    "182f32",
+    "7ad4c7",
+    "dbf1f3",
+    "3e94c1"
+   ],
+   "Vesk": [
+    "1a2e35",
+    "7fcfd2",
+    "4096b5",
+    "e3ecf5"
+   ],
+   "Veskara": [
+    "1c2c3a",
+    "e2eef2",
+    "5a88b4",
+    "abb8d9"
+   ],
+   "Veskarion": [
+    "1a2e35",
+    "d9f2f2",
+    "8dc7da",
+    "4f8bc5"
+   ],
+   "Siltby": [
+    "1a2d37",
+    "4498a0",
+    "e2edf3",
+    "a5bbd9"
+   ],
+   "Siltarra": [
+    "192f34",
+    "d9f2f1",
+    "89c9d7",
+    "498fc2"
+   ],
+   "Siltaroth": [
+    "1c2c3a",
+    "97c3d0",
+    "e4ecf3",
+    "6880ba"
+   ],
+   "Cindrik": [
+    "1d2b3c",
+    "9ac1d2",
+    "e5ecf3",
+    "6c7ebc"
+   ],
+   "Cindrel": [
+    "1a2e36",
+    "85cdd0",
+    "4593b2",
+    "e4ecf5"
+   ],
+   "Cindravax": [
+    "1d2b3c",
+    "dfeef5",
+    "5389c6",
+    "a9b6e3"
+   ],
+   "Nibbet": [
+    "192e35",
+    "85cdcd",
+    "e0eef2",
+    "558aba"
+   ],
+   "Nibquill": [
+    "1c2c39",
+    "ddf0f4",
+    "478fc5",
+    "a5b9e2"
+   ],
+   "Nibravure": [
+    "192f33",
+    "419b93",
+    "dfeff2",
+    "9dbfd6"
+   ],
+   "Filigrin": [
+    "1b2d37",
+    "7fced8",
+    "3c94c4",
+    "e4ecf7"
+   ],
+   "Filigrace": [
+    "1c2c3b",
+    "93c4d6",
+    "5489be",
+    "e7eaf6"
+   ],
+   "Filigravure": [
+    "192e34",
+    "33a19e",
+    "ddeff4",
+    "9abfdf"
+   ],
+   "Mordling": [
+    "192f33",
+    "489892",
+    "e1eef1",
+    "a1bed2"
+   ],
+   "Mordantoad": [
+    "1a2e35",
+    "dbf1f2",
+    "4395b2",
+    "9fbddb"
+   ],
+   "Mordantyrant": [
+    "1a2d37",
+    "daf1f4",
+    "91c4de",
+    "5487cb"
+   ],
+   "Rimekit": [
+    "1d2b3c",
+    "e3edf2",
+    "a6bbd5",
+    "6d7dbb"
+   ],
+   "Rimelynx": [
+    "1c2c3a",
+    "4a93aa",
+    "e4ecf3",
+    "aab8da"
+   ],
+   "Rimesovereign": [
+    "1c2c3a",
+    "deeff4",
+    "4c8dc2",
+    "a6b8e1"
+   ],
+   "Burrin": [
+    "1a2e36",
+    "8ec9cc",
+    "e2edf2",
+    "5c87b6"
+   ],
+   "Burrowgraver": [
+    "192f34",
+    "439a97",
+    "e1eef2",
+    "a0bed6"
+   ],
+   "Burringrand": [
+    "1c2c39",
+    "4a94a5",
+    "e4ecf3",
+    "a9b9d9"
+   ],
+   "Hoarling": [
+    "1a2d37",
+    "dcf1f3",
+    "95c3da",
+    "5886c4"
+   ],
+   "Hoarstag": [
+    "1a2e37",
+    "e0eff0",
+    "9dc0d0",
+    "6185b3"
+   ],
+   "Hoarmonarch": [
+    "1a2d37",
+    "87cbd2",
+    "e1eef4",
+    "5986c2"
+   ],
+   "Platewig": [
+    "1a2e37",
+    "31a0a9",
+    "dfeef6",
+    "9ebce3"
+   ],
+   "Platewing": [
+    "1b2d37",
+    "4198a3",
+    "e2edf3",
+    "a4bbdb"
+   ],
+   "Platemarshal": [
+    "1a2e36",
+    "87cccf",
+    "4793b1",
+    "e4ecf4"
+   ],
+   "Smudgel": [
+    "182f32",
+    "81d1c6",
+    "3c9aa5",
+    "e1eef4"
+   ],
+   "Smudgeworm": [
+    "192e34",
+    "dcf1f0",
+    "4694aa",
+    "9fbed8"
+   ],
+   "Smudgewyrm": [
+    "1b2d39",
+    "dfeff3",
+    "9bbfd9",
+    "6182c3"
+   ],
+   "Corrodent": [
+    "1b2d38",
+    "379cab",
+    "e1eef5",
+    "a2bbe1"
+   ],
+   "Corrodile": [
+    "1b2d39",
+    "e0eff2",
+    "9dbfd7",
+    "6282bf"
+   ],
+   "Corrodrake": [
+    "192f34",
+    "7cd2ce",
+    "deeff4",
+    "4c8dc1"
+   ],
+   "Gelidfin": [
+    "1a2e36",
+    "88cbcf",
+    "e1eef3",
+    "5a87bc"
+   ],
+   "Gelidray": [
+    "1b2d38",
+    "ddf0f3",
+    "4790c0",
+    "a4bae0"
+   ],
+   "Gelidmonarch": [
+    "192f34",
+    "d8f3f2",
+    "89c9d9",
+    "498ec4"
+   ],
+   "Stampet": [
+    "1b2d38",
+    "82ccd9",
+    "4092c5",
+    "e4ebf7"
+   ],
+   "Stamphorn": [
+    "1b2d39",
+    "95c5cf",
+    "e4ecf3",
+    "6582b9"
+   ],
+   "Stampcolossus": [
+    "1c2c3b",
+    "8bc7dc",
+    "4d8bc9",
+    "e6eaf7"
+   ],
+   "Quilmoth": [
+    "1c2c39",
+    "deeff3",
+    "4c8dbf",
+    "a6b9df"
+   ],
+   "Quilmothra": [
+    "182f32",
+    "7bd3c8",
+    "389ca9",
+    "e1eef5"
+   ],
+   "Quilmothane": [
+    "1a2e35",
+    "31a1a2",
+    "deeff5",
+    "9bbee1"
+   ],
+   "Vatrat": [
+    "182f32",
+    "81d0c7",
+    "3d9aa6",
+    "e1edf4"
+   ],
+   "Vatreeve": [
+    "1a2d37",
+    "8fc8ce",
+    "e3edf3",
+    "5f85b9"
+   ],
+   "Vatbaron": [
+    "1d2b3c",
+    "e2edf2",
+    "5d86b8",
+    "adb6db"
+   ],
+   "Sleetowl": [
+    "1b2d38",
+    "e1eef1",
+    "558cb0",
+    "a9b9d7"
+   ],
+   "Sleetcowl": [
+    "182f32",
+    "7dd3c7",
+    "dcf1f3",
+    "4193be"
+   ],
+   "Sleetsage": [
+    "1d2b3b",
+    "e0eef3",
+    "5688be",
+    "aab7de"
+   ],
+   "Copperling": [
+    "1c2c3a",
+    "ddf0f5",
+    "99bfe1",
+    "5f80d0"
+   ],
+   "Copperclad": [
+    "1b2d38",
+    "4297a6",
+    "e2edf4",
+    "a6badb"
+   ],
+   "Copperpatriarch": [
+    "1d2b3c",
+    "9dc0d0",
+    "6085b3",
+    "e8eaf4"
+   ],
+   "Blotkin": [
+    "1c2c39",
+    "4a93a5",
+    "e4ecf3",
+    "a9b9d8"
+   ],
+   "Blotgrimm": [
+    "1a2e37",
+    "88cbd0",
+    "4792b5",
+    "e5ecf5"
+   ],
+   "Drypup": [
+    "1c2c3a",
+    "8ec7d8",
+    "e3edf5",
+    "6280c8"
+   ],
+   "Dryhound": [
+    "1b2d39",
+    "dfeff2",
+    "9cbfd8",
+    "6182c1"
+   ],
+   "Fizzlet": [
+    "182f32",
+    "49988f",
+    "e1eff0",
+    "9fbfd1"
+   ],
+   "Fizzgrove": [
+    "1c2c3a",
+    "8ac8da",
+    "e2edf6",
+    "6080cd"
+   ],
+   "Glacilet": [
+    "1d2b3c",
+    "9cc1d1",
+    "e5ecf3",
+    "6d7dbc"
+   ],
+   "Glacilisk": [
+    "182f32",
+    "dff0ee",
+    "93c6cd",
+    "528dae"
+   ],
+   "Pressbug": [
+    "192e34",
+    "7ad2d0",
+    "deeff4",
+    "4c8dc3"
+   ],
+   "Pressbeetle": [
+    "1a2d37",
+    "87cbd2",
+    "4592b9",
+    "e5ecf5"
+   ],
+   "Canalurk": [
+    "1b2d38",
+    "dfeff2",
+    "4d8eba",
+    "a6b9dc"
+   ],
+   "Canalurker": [
+    "1c2c3a",
+    "93c4d4",
+    "558abb",
+    "e7ebf5"
+   ],
+   "Forgefly": [
+    "1d2b3c",
+    "9ac1d2",
+    "e5ecf3",
+    "6b7ebd"
+   ],
+   "Forgeflare": [
+    "182f33",
+    "dbf2ef",
+    "8ac9d3",
+    "4990ba"
+   ],
+   "Vitriolus": [
+    "192f33",
+    "8ecac6",
+    "e1eef1",
+    "568bb0"
+   ],
+   "Frostfoil": [
+    "1d2b3c",
+    "dfeff5",
+    "5089ca",
+    "a9b6e5"
+   ],
+   "Gildfinch": [
+    "1c2c3a",
+    "e1eef2",
+    "a1bdd6",
+    "6780bd"
+   ],
+   "Gildwing": [
+    "1a2d37",
+    "ddf0f2",
+    "4692b7",
+    "a3bbdc"
+   ],
+   "Gildaurus": [
+    "1a2e35",
+    "7dd0d3",
+    "3e96b6",
+    "e3ecf5"
+   ],
+   "Ledgepup": [
+    "1a2d37",
+    "92c7cc",
+    "e3edf2",
+    "6185b5"
+   ],
+   "Ledgehound": [
+    "182f33",
+    "3c9e94",
+    "def0f2",
+    "99c1d9"
+   ],
+   "Ledgewarden": [
+    "182f33",
+    "479990",
+    "e0eff1",
+    "9fbfd2"
+   ],
+   "Zenkit": [
+    "1a2e35",
+    "8dcaca",
+    "4d91a8",
+    "e5ecf3"
+   ],
+   "Zenlynx": [
+    "1d2b3d",
+    "e2edf3",
+    "5d86bb",
+    "adb6dc"
+   ],
+   "Zenithar": [
+    "182f33",
+    "38a095",
+    "ddf0f3",
+    "97c1da"
+   ],
+   "Orrebit": [
+    "182f32",
+    "dcf1ef",
+    "8cc9d1",
+    "4a90b6"
+   ],
+   "Orrewheel": [
+    "182f33",
+    "dbf2ef",
+    "3e99a7",
+    "98c1d9"
+   ],
+   "Orremarch": [
+    "1c2c3a",
+    "98c3ce",
+    "e4ecf2",
+    "6881b8"
+   ],
+   "Flatskip": [
+    "1d2b3c",
+    "9dc1d1",
+    "6086b4",
+    "e8eaf4"
+   ],
+   "Flatskimmer": [
+    "1a2e37",
+    "86ccd2",
+    "4593b7",
+    "e4ecf5"
+   ],
+   "Flatsovereign": [
+    "1b2d38",
+    "e1eef1",
+    "548cb1",
+    "a8b9d7"
+   ],
+   "Cloudmop": [
+    "1c2c39",
+    "8ec7d5",
+    "e3edf4",
+    "6182c4"
+   ],
+   "Cloudram": [
+    "1a2e35",
+    "dff0f0",
+    "9ac2cf",
+    "5c88b2"
+   ],
+   "Cloudbellow": [
+    "192f33",
+    "def0ef",
+    "4895a4",
+    "9fbfd5"
+   ],
+   "Haloon": [
+    "1c2c3b",
+    "e1eef3",
+    "5689bb",
+    "aab7dd"
+   ],
+   "Halonel": [
+    "192f34",
+    "ddf0f0",
+    "94c5d1",
+    "558bb5"
+   ],
+   "Halorch": [
+    "192f34",
+    "72d6d2",
+    "dcf0f5",
+    "458fc9"
+   ],
+   "Lumoth": [
+    "1b2d38",
+    "e0eff1",
+    "9dc0d4",
+    "6184b9"
+   ],
+   "Lumothra": [
+    "192f34",
+    "8ccbc7",
+    "e1eef1",
+    "568bb2"
+   ],
+   "Lumothane": [
+    "192f33",
+    "88cdc7",
+    "dfeff2",
+    "4f8eb5"
+   ],
+   "Vinestep": [
+    "1c2c3a",
+    "3999b5",
+    "e2edf6",
+    "a6b8e3"
+   ],
+   "Vinestair": [
+    "1b2d38",
+    "dcf0f4",
+    "97c1dd",
+    "5b83ca"
+   ],
+   "Vinespire": [
+    "1a2e35",
+    "7bd1d4",
+    "dfeff4",
+    "508ac6"
+   ],
+   "Noonfox": [
+    "1b2d39",
+    "91c6d2",
+    "518cb7",
+    "e6ebf5"
+   ],
+   "Noonvixen": [
+    "1a2e35",
+    "dcf1f1",
+    "4594ae",
+    "a0bdd9"
+   ],
+   "Noonregent": [
+    "1d2b3c",
+    "e2eef3",
+    "5b87bc",
+    "acb6dd"
+   ],
+   "Brasshop": [
+    "1a2e37",
+    "dbf1f3",
+    "92c4db",
+    "5587c6"
+   ],
+   "Brassjack": [
+    "192f34",
+    "8fcac6",
+    "e1eef1",
+    "588aaf"
+   ],
+   "Brassgrand": [
+    "1d2b3c",
+    "4a91b1",
+    "e5ecf4",
+    "acb6dc"
+   ],
+   "Plinthlet": [
+    "1a2e35",
+    "86cdcf",
+    "4693b0",
+    "e4ecf4"
+   ],
+   "Plinthshell": [
+    "182f32",
+    "47998f",
+    "e0eff1",
+    "9ebfd2"
+   ],
+   "Plinthcastle": [
+    "1b2d37",
+    "90c7ce",
+    "e3edf3",
+    "6084b9"
+   ],
+   "Kitelet": [
+    "1b2d37",
+    "89cad2",
+    "e2edf4",
+    "5c85c1"
+   ],
+   "Kitewhip": [
+    "1b2d38",
+    "95c5cd",
+    "548caf",
+    "e6ebf3"
+   ],
+   "Kitemonarch": [
+    "182f32",
+    "d9f3ef",
+    "389ca8",
+    "94c3db"
+   ],
+   "Coffrel": [
+    "192f33",
+    "dff0ef",
+    "4b93a2",
+    "a0bed3"
+   ],
+   "Coffrake": [
+    "1d2b3c",
+    "3f95bb",
+    "e4ecf6",
+    "aab6e3"
+   ],
+   "Coffrendrake": [
+    "192e35",
+    "84cecd",
+    "e0eef3",
+    "548abb"
+   ],
+   "Rillsnail": [
+    "1c2c3a",
+    "e1eef2",
+    "a1bdd6",
+    "6780bd"
+   ],
+   "Rillshell": [
+    "1a2e35",
+    "8dcaca",
+    "e2eef2",
+    "5b88b3"
+   ],
+   "Rillcastle": [
+    "1c2c3a",
+    "8fc6d5",
+    "e3edf4",
+    "6381c4"
+   ],
+   "Spanling": [
+    "1a2e35",
+    "daf1f2",
+    "4196b2",
+    "9ebedc"
+   ],
+   "Spanbrute": [
+    "1d2b3d",
+    "9dc0d2",
+    "6085b6",
+    "e8eaf4"
+   ],
+   "Spanwarden": [
+    "1b2d38",
+    "e0eff1",
+    "528db0",
+    "a7bad7"
+   ],
+   "Spumlet": [
+    "1c2c3a",
+    "e0eef2",
+    "a0bed8",
+    "6680c0"
+   ],
+   "Spumeclaw": [
+    "1a2d37",
+    "def0f1",
+    "9ac1d5",
+    "5d85bb"
+   ],
+   "Chalkid": [
+    "1b2d38",
+    "88cad6",
+    "4790c0",
+    "e5ebf6"
+   ],
+   "Chalkhorn": [
+    "1a2e36",
+    "daf1f3",
+    "3e96b8",
+    "9ebdde"
+   ],
+   "Wellet": [
+    "1c2c39",
+    "deeff3",
+    "9abfdc",
+    "6082c8"
+   ],
+   "Wellwyrm": [
+    "1b2d38",
+    "94c6cd",
+    "538daf",
+    "e6ebf3"
+   ],
+   "Glintwader": [
+    "1a2e37",
+    "3f9aa1",
+    "e1eef3",
+    "a3bbdb"
+   ],
+   "Glintheron": [
+    "1b2d38",
+    "84ccd8",
+    "e1edf5",
+    "5a84ca"
+   ],
+   "Gildmite": [
+    "1a2e35",
+    "83ced0",
+    "4494b2",
+    "e4ecf5"
+   ],
+   "Gildscarab": [
+    "1a2d37",
+    "e0eff0",
+    "528eac",
+    "a7bad5"
+   ],
+   "Brazlet": [
+    "192f34",
+    "d8f3f1",
+    "399ab2",
+    "99c0de"
+   ],
+   "Brazierbrute": [
+    "192e35",
+    "82cfce",
+    "e0eef3",
+    "538abd"
+   ],
+   "Dewfawn": [
+    "1d2b3b",
+    "e1eef3",
+    "5988ba",
+    "abb7dc"
+   ],
+   "Dewstag": [
+    "1a2d37",
+    "86ccd3",
+    "4393ba",
+    "e4ecf5"
+   ],
+   "Arcfin": [
+    "1d2b3c",
+    "9dc0d0",
+    "e6ecf3",
+    "6d7dba"
+   ],
+   "Arcfinnar": [
+    "1b2d38",
+    "dfeff1",
+    "9cc0d5",
+    "6084bb"
+   ],
+   "Eavekit": [
+    "1c2c39",
+    "96c4cf",
+    "568bb3",
+    "e7ebf4"
+   ],
+   "Eaveprowl": [
+    "192f34",
+    "82cfcc",
+    "4296ab",
+    "e3edf4"
+   ],
+   "Gildrelic": [
+    "192f33",
+    "ddf1ef",
+    "91c6d1",
+    "518db6"
+   ],
+   "Zenwhirl": [
+    "1a2e36",
+    "78d2d7",
+    "3997c0",
+    "e3ecf7"
+   ],
+   "Gnomonk": [
+    "1a2e36",
+    "399ca3",
+    "e0eef4",
+    "a0bcde"
+   ],
+   "Gildbloom": [
+    "182f32",
+    "83d0c6",
+    "ddf0f2",
+    "4891b9"
+   ],
+   "Boltnib": [
+    "1d2b3c",
+    "9ac1d3",
+    "5d86b8",
+    "e7eaf5"
+   ],
+   "Boltgnaw": [
+    "1b2d38",
+    "dfeff2",
+    "4d8eb7",
+    "a6badb"
+   ],
+   "Boltgrimmer": [
+    "1a2e37",
+    "dbf1f3",
+    "4194ba",
+    "a1bcde"
+   ],
+   "Veilmote": [
+    "1b2d37",
+    "82cdd6",
+    "e0eef5",
+    "5886c8"
+   ],
+   "Veilmothel": [
+    "192f34",
+    "76d5cf",
+    "379bb1",
+    "e1edf6"
+   ],
+   "Veilmarquise": [
+    "1d2b3b",
+    "95c4d5",
+    "e4ecf4",
+    "687ec4"
+   ],
+   "Tallop": [
+    "1c2c39",
+    "98c3ce",
+    "588ab0",
+    "e7ebf3"
+   ],
+   "Tallogg": [
+    "1a2d37",
+    "4497a0",
+    "e2edf3",
+    "a5bbd8"
+   ],
+   "Tallowgrand": [
+    "1b2d38",
+    "e0eff1",
+    "518db3",
+    "a7bad8"
+   ],
+   "Dimlure": [
+    "1a2e36",
+    "31a0a7",
+    "dfeff5",
+    "9dbde2"
+   ],
+   "Dimlurker": [
+    "1a2e35",
+    "dbf1f1",
+    "4395b0",
+    "9fbdda"
+   ],
+   "Dimluminor": [
+    "1c2c3a",
+    "4096b2",
+    "e3ecf5",
+    "a8b8e0"
+   ],
+   "Tollpip": [
+    "1a2e36",
+    "def0f1",
+    "4a91b0",
+    "a3bcd8"
+   ],
+   "Tollgull": [
+    "1a2e35",
+    "def0f0",
+    "4d91a8",
+    "a3bcd5"
+   ],
+   "Tollbaron": [
+    "182f32",
+    "def1ee",
+    "8ec8cf",
+    "4d90b2"
+   ],
+   "Sootkin": [
+    "1d2b3d",
+    "4c90b1",
+    "e5ecf4",
+    "adb6dc"
+   ],
+   "Sootrook": [
+    "1b2d38",
+    "def0f3",
+    "4990bb",
+    "a5badd"
+   ],
+   "Sootregent": [
+    "1c2c3a",
+    "8cc7d9",
+    "e2edf6",
+    "6180cb"
+   ],
+   "Flakit": [
+    "1b2d39",
+    "e1eef1",
+    "558bb2",
+    "a9b9d8"
+   ],
+   "Flakeshell": [
+    "1b2d38",
+    "dfeff2",
+    "9cc0d7",
+    "6183bf"
+   ],
+   "Flakebastion": [
+    "192e34",
+    "8bcbc9",
+    "4b93a7",
+    "e4ecf3"
+   ],
+   "Sprockle": [
+    "182f33",
+    "dbf2ef",
+    "8ac9d3",
+    "4990ba"
+   ],
+   "Sprocklen": [
+    "1a2d37",
+    "369da8",
+    "e0eef5",
+    "a0bce0"
+   ],
+   "Sprockmaul": [
+    "192e35",
+    "33a09f",
+    "deeff4",
+    "9bbfdf"
+   ],
+   "Guiskit": [
+    "192e35",
+    "76d4d3",
+    "3999b6",
+    "e2edf6"
+   ],
+   "Guisvix": [
+    "1d2b3c",
+    "95c3d7",
+    "5887c0",
+    "e7eaf6"
+   ],
+   "Guisdame": [
+    "1b2d39",
+    "ddf0f4",
+    "468fc4",
+    "a4b9e2"
+   ],
+   "Fenglim": [
+    "182f32",
+    "8ccbc4",
+    "e0eff1",
+    "508eb0"
+   ],
+   "Fenglimmer": [
+    "1a2e36",
+    "31a0a5",
+    "deeff5",
+    "9cbde2"
+   ],
+   "Fenglowmarsh": [
+    "182f32",
+    "7cd3c7",
+    "dbf1f3",
+    "4094bf"
+   ],
+   "Splotchet": [
+    "1c2c3a",
+    "4c92a7",
+    "e4ecf3",
+    "aab8d8"
+   ],
+   "Splotchling": [
+    "1b2d37",
+    "dfeff1",
+    "4e8fb2",
+    "a6bad8"
+   ],
+   "Splotcheroth": [
+    "1c2c3a",
+    "88c9da",
+    "488ec7",
+    "e5ebf7"
+   ],
+   "Snaglet": [
+    "192e35",
+    "7dd1d0",
+    "dfeff4",
+    "508bc1"
+   ],
+   "Snagwhisk": [
+    "192f33",
+    "3b9e97",
+    "deeff3",
+    "9ac0d9"
+   ],
+   "Snaggrave": [
+    "182f33",
+    "439b91",
+    "e0eff1",
+    "9dc0d4"
+   ],
+   "Pewnib": [
+    "182f32",
+    "90cac3",
+    "e1eff0",
+    "548dad"
+   ],
+   "Pewspine": [
+    "1d2b3b",
+    "97c3d4",
+    "e4ecf4",
+    "697ec1"
+   ],
+   "Pewrampart": [
+    "182f32",
+    "dcf1ef",
+    "8bc9d1",
+    "4990b8"
+   ],
+   "Snoblet": [
+    "1b2d38",
+    "85cbd6",
+    "4392bf",
+    "e5ebf6"
+   ],
+   "Snobplume": [
+    "1a2e35",
+    "85cdcf",
+    "4694b0",
+    "e4ecf4"
+   ],
+   "Snobsovereign": [
+    "1a2d37",
+    "e0eff1",
+    "508fae",
+    "a6bbd6"
+   ],
+   "Tithel": [
+    "192f34",
+    "daf2f1",
+    "8bc8d6",
+    "4a8ec0"
+   ],
+   "Tithshell": [
+    "1d2b3b",
+    "8fc6db",
+    "518ac6",
+    "e6eaf7"
+   ],
+   "Tithebastion": [
+    "192f34",
+    "8ecac6",
+    "4d93a2",
+    "e4ecf2"
+   ],
+   "Bargit": [
+    "1d2b3b",
+    "e3edf1",
+    "5e87b2",
+    "adb7d7"
+   ],
+   "Bargwing": [
+    "1b2d38",
+    "84ccd7",
+    "4292c1",
+    "e4ebf6"
+   ],
+   "Bargemourn": [
+    "192f34",
+    "dcf1f0",
+    "90c7d3",
+    "4f8dba"
+   ],
+   "Sedgel": [
+    "1a2e36",
+    "85cdd1",
+    "e1eef4",
+    "5787c0"
+   ],
+   "Sedgecoil": [
+    "1b2d38",
+    "e0eff1",
+    "518db0",
+    "a7bad7"
+   ],
+   "Sedgemire": [
+    "1b2d38",
+    "93c6cd",
+    "528daf",
+    "e6ebf3"
+   ],
+   "Smogpup": [
+    "1d2b3c",
+    "e1eef4",
+    "a2bcdc",
+    "697dc6"
+   ],
+   "Smoglurcher": [
+    "1a2e35",
+    "88cccc",
+    "4993ab",
+    "e4ecf4"
+   ],
+   "Smogcapo": [
+    "1c2c3b",
+    "e2eef2",
+    "a3bcd6",
+    "697fbc"
+   ],
+   "Hushbeak": [
+    "1a2d37",
+    "46979f",
+    "e2edf3",
+    "a5bbd8"
+   ],
+   "Hushmonger": [
+    "1b2d38",
+    "93c6cd",
+    "e3edf2",
+    "6284b7"
+   ],
+   "Moldcap": [
+    "1b2d38",
+    "dfeff2",
+    "9cc0d7",
+    "6183c0"
+   ],
+   "Moldmagnate": [
+    "182f32",
+    "dbf2ef",
+    "86ccd3",
+    "4393bb"
+   ],
+   "Groatfin": [
+    "1b2d39",
+    "85cbda",
+    "4490c6",
+    "e5ebf7"
+   ],
+   "Groatgrand": [
+    "1c2c3a",
+    "e2eef2",
+    "5989b5",
+    "abb8d9"
+   ],
+   "Shivlet": [
+    "182f33",
+    "dcf1ef",
+    "8bc9d3",
+    "4a90b9"
+   ],
+   "Shivreaper": [
+    "1a2e37",
+    "8ec8cd",
+    "4d90af",
+    "e5ecf4"
+   ],
+   "Latchet": [
+    "192f33",
+    "dbf2f0",
+    "8cc8d4",
+    "4c8ebc"
+   ],
+   "Latchgrim": [
+    "1b2d39",
+    "4d93a2",
+    "e4ecf2",
+    "a9b9d7"
+   ],
+   "Waxwhisk": [
+    "1a2d37",
+    "dbf1f3",
+    "3f94bf",
+    "a1bce0"
+   ],
+   "Waxwidow": [
+    "182f33",
+    "d7f3f0",
+    "339dae",
+    "93c3df"
+   ],
+   "Fauxscript": [
+    "1d2b3c",
+    "8dc6de",
+    "e3ecf7",
+    "647dd2"
+   ],
+   "Anchorrot": [
+    "1b2d38",
+    "dfeff2",
+    "9cc0d7",
+    "6183bf"
+   ],
+   "Knellgrim": [
+    "192e35",
+    "d9f2f2",
+    "3c98b4",
+    "9bbede"
+   ],
+   "Mirefane": [
+    "1c2c3a",
+    "8fc6d7",
+    "4f8bc0",
+    "e6ebf6"
+   ]
+  },
+  "inkwash": {
+   "Kindlop": [
+    "0e0b14",
+    "312e52",
+    "a394c3",
+    "724f8e"
+   ],
+   "Smoldrake": [
+    "0d0b17",
+    "4f58bc",
+    "32286b",
+    "a98ed4"
+   ],
+   "Calderox": [
+    "0e0a15",
+    "9d95cf",
+    "3a2859",
+    "7c479e"
+   ],
+   "Puddlet": [
+    "0c0b17",
+    "8e9cd3",
+    "2d2b6e",
+    "694bb9"
+   ],
+   "Riptail": [
+    "0e0b14",
+    "322d53",
+    "a593c4",
+    "754e8f"
+   ],
+   "Leviarch": [
+    "0c0b17",
+    "4c5dad",
+    "2f2c63",
+    "a492cf"
+   ],
+   "Mossling": [
+    "0f0b12",
+    "a196c0",
+    "6f5289",
+    "3f2945"
+   ],
+   "Thornback": [
+    "0e0a16",
+    "9a97d0",
+    "6a4eac",
+    "3f2654"
+   ],
+   "Verdantusk": [
+    "0f0a15",
+    "9f95ca",
+    "6f4e9d",
+    "41274e"
+   ],
+   "Zippit": [
+    "0d0b16",
+    "525aa9",
+    "9e96cc",
+    "3a2954"
+   ],
+   "Glimmerax": [
+    "0d0b14",
+    "555c99",
+    "322d52",
+    "a593c3"
+   ],
+   "Shalebat": [
+    "0f0a15",
+    "9e95ce",
+    "3b2857",
+    "7d489a"
+   ],
+   "Obsidroth": [
+    "0f0b13",
+    "a095c5",
+    "3a2a4d",
+    "794c8c"
+   ],
+   "Zephlet": [
+    "0d0b14",
+    "989ac4",
+    "635695",
+    "392b4b"
+   ],
+   "Tempestrel": [
+    "0f0a15",
+    "684cb8",
+    "40245c",
+    "bc86cf"
+   ],
+   "Wickit": [
+    "0f0a15",
+    "684eb1",
+    "ad8dcd",
+    "452451"
+   ],
+   "Lumenewt": [
+    "0d0b15",
+    "5659a8",
+    "342c56",
+    "a991c7"
+   ],
+   "Mirkmole": [
+    "0e0b15",
+    "5c55a9",
+    "372a54",
+    "ae8ec6"
+   ],
+   "Duskdigger": [
+    "0e0b16",
+    "9a97cd",
+    "6850a5",
+    "3e2852"
+   ],
+   "Kelpup": [
+    "0d0b15",
+    "535ca0",
+    "322d56",
+    "a692c7"
+   ],
+   "Kelphound": [
+    "0f0a13",
+    "685396",
+    "ab90c2",
+    "412848"
+   ],
+   "Blotling": [
+    "0d0b16",
+    "5457b8",
+    "352962",
+    "ac8ed0"
+   ],
+   "Scrivane": [
+    "0e0a15",
+    "322a64",
+    "a88fd0",
+    "7f45a3"
+   ],
+   "Hushkin": [
+    "0e0a15",
+    "9d95ce",
+    "3a2857",
+    "7c489b"
+   ],
+   "Silentra": [
+    "0f0a15",
+    "624fb9",
+    "3d265e",
+    "b788cf"
+   ],
+   "Paddlewisp": [
+    "0d0b16",
+    "2c2e5d",
+    "a094cc",
+    "714ca0"
+   ],
+   "Ferrowyn": [
+    "0c0b16",
+    "4f5f9a",
+    "9a98ca",
+    "362b53"
+   ],
+   "Talusk": [
+    "0d0b15",
+    "545c9c",
+    "9d97c7",
+    "382b4f"
+   ],
+   "Talusgard": [
+    "0d0b14",
+    "9a99c6",
+    "362c4f",
+    "705090"
+   ],
+   "Cairnhold": [
+    "0f0a15",
+    "6352a8",
+    "3b2953",
+    "b38bc7"
+   ],
+   "Fluting": [
+    "0f0a15",
+    "6150ba",
+    "aa8ed3",
+    "452358"
+   ],
+   "Marshfife": [
+    "0d0b16",
+    "5656b5",
+    "36295f",
+    "ac8ece"
+   ],
+   "Glasstarn": [
+    "0f0a15",
+    "6451aa",
+    "aa90ca",
+    "42264f"
+   ],
+   "Lanternel": [
+    "0d0b17",
+    "282e6a",
+    "9e94d6",
+    "7346b9"
+   ],
+   "Seamlet": [
+    "100a14",
+    "694eaa",
+    "ae8dcb",
+    "45244f"
+   ],
+   "Mendlace": [
+    "0d0b16",
+    "959acb",
+    "5f54aa",
+    "392954"
+   ],
+   "Croziel": [
+    "0c0b17",
+    "293156",
+    "9a97cd",
+    "694fa6"
+   ],
+   "Frondmere": [
+    "0d0b17",
+    "9499d6",
+    "614fbc",
+    "3d2561"
+   ],
+   "Brinelet": [
+    "0f0a15",
+    "654fb0",
+    "ab8ecc",
+    "442551"
+   ],
+   "Saltspire": [
+    "0c0b17",
+    "4e5ea1",
+    "9a97cd",
+    "372a57"
+   ],
+   "Millwhit": [
+    "0e0a15",
+    "6052b4",
+    "3b275a",
+    "b38acc"
+   ],
+   "Millvane": [
+    "0e0a16",
+    "5b52bd",
+    "a590d4",
+    "43235b"
+   ],
+   "Drizzlet": [
+    "0f0a15",
+    "6150b6",
+    "3c275c",
+    "b589ce"
+   ],
+   "Rainmantle": [
+    "0f0a15",
+    "a094cf",
+    "734aa5",
+    "432551"
+   ],
+   "Reedquill": [
+    "0e0b12",
+    "342e4d",
+    "a693c0",
+    "754f87"
+   ],
+   "Reedwarden": [
+    "0f0a15",
+    "694cbb",
+    "af8bd3",
+    "492157"
+   ],
+   "Cogmite": [
+    "0f0a14",
+    "a393ca",
+    "754b9a",
+    "44254d"
+   ],
+   "Cogwright": [
+    "0f0a14",
+    "65539f",
+    "3c294f",
+    "b48cc3"
+   ],
+   "Puddock": [
+    "0e0b16",
+    "5a56ad",
+    "372a57",
+    "ad8ec9"
+   ],
+   "Delthorn": [
+    "0e0b13",
+    "322e4f",
+    "a494c1",
+    "72508a"
+   ],
+   "Glimmoth": [
+    "0f0a14",
+    "69519d",
+    "ad8fc5",
+    "43274a"
+   ],
+   "Wickmoth": [
+    "0e0a16",
+    "5b53ba",
+    "392761",
+    "b18bd0"
+   ],
+   "Silthop": [
+    "0c0b15",
+    "949cc6",
+    "312d55",
+    "695299"
+   ],
+   "Siltgrove": [
+    "0f0a15",
+    "6850a6",
+    "3e2852",
+    "b889c6"
+   ],
+   "Flourie": [
+    "0d0b14",
+    "979bc2",
+    "605795",
+    "382c4b"
+   ],
+   "Floursprite": [
+    "0c0b17",
+    "4a5eac",
+    "9997d2",
+    "37285e"
+   ],
+   "Cindle": [
+    "0d0b16",
+    "5757af",
+    "362a59",
+    "ac8fca"
+   ],
+   "Glassfell": [
+    "0c0b16",
+    "2a3152",
+    "9b97ca",
+    "69519e"
+   ],
+   "Etchling": [
+    "0f0a13",
+    "65549b",
+    "a991c4",
+    "40284a"
+   ],
+   "Burinox": [
+    "0d0b14",
+    "2d304f",
+    "9e97c3",
+    "6b5390"
+   ],
+   "Ashwren": [
+    "0d0b16",
+    "5655bb",
+    "372863",
+    "ae8cd1"
+   ],
+   "Ashcrest": [
+    "0d0b16",
+    "5557b4",
+    "a093d0",
+    "3d2758"
+   ],
+   "Bogwick": [
+    "0d0b16",
+    "9799ca",
+    "342c56",
+    "704e9a"
+   ],
+   "Fenwarden": [
+    "0f0a15",
+    "6150b7",
+    "3c265d",
+    "b589ce"
+   ],
+   "Cullet": [
+    "0d0b15",
+    "959bc7",
+    "322d55",
+    "6b5198"
+   ],
+   "Cullhorn": [
+    "0f0a14",
+    "a493c8",
+    "754c96",
+    "43264b"
+   ],
+   "Smeltpup": [
+    "0d0b17",
+    "5158b6",
+    "332a63",
+    "a98fd0"
+   ],
+   "Smeltmaw": [
+    "0c0b17",
+    "293155",
+    "9a97cd",
+    "6850a4"
+   ],
+   "Solkit": [
+    "0d0b14",
+    "5a58a2",
+    "a295c5",
+    "3b2a4d"
+   ],
+   "Solmantle": [
+    "0f0a15",
+    "664eb6",
+    "ac8dd0",
+    "462354"
+   ],
+   "Saltsprig": [
+    "0e0a14",
+    "9f96c8",
+    "3a2a50",
+    "784c90"
+   ],
+   "Saltcrown": [
+    "0f0a15",
+    "9e94d2",
+    "724aad",
+    "432455"
+   ],
+   "Orrlet": [
+    "0e0b13",
+    "625795",
+    "a693c0",
+    "3d2a48"
+   ],
+   "Orrerine": [
+    "100a14",
+    "6b4ea7",
+    "3f2752",
+    "bb88c7"
+   ],
+   "Duneshrew": [
+    "0d0b15",
+    "969ac8",
+    "6054a3",
+    "392a51"
+   ],
+   "Dunebastion": [
+    "0f0a15",
+    "352a5c",
+    "ab8fcc",
+    "81469a"
+   ],
+   "Shimmerlet": [
+    "0c0c14",
+    "959cc1",
+    "5d5897",
+    "372c4c"
+   ],
+   "Mirassil": [
+    "0e0b16",
+    "9997d0",
+    "694eac",
+    "3f2755"
+   ],
+   "Highhare": [
+    "0f0b12",
+    "68558f",
+    "ab91be",
+    "402945"
+   ],
+   "Zenithare": [
+    "0c0c13",
+    "555e8e",
+    "9c98c1",
+    "362d4b"
+   ],
+   "Velahra": [
+    "0d0b15",
+    "9799c8",
+    "342c53",
+    "6f5096"
+   ],
+   "Hallowmur": [
+    "0d0b13",
+    "302f50",
+    "a295c1",
+    "70518b"
+   ],
+   "Scriptorax": [
+    "0e0b13",
+    "615797",
+    "a693c1",
+    "3d2a48"
+   ],
+   "Lumivane": [
+    "100a14",
+    "6a4eab",
+    "3f2654",
+    "bb87c8"
+   ],
+   "Zephyrel": [
+    "100a14",
+    "39275e",
+    "b18bce",
+    "8a419b"
+   ],
+   "Monolurk": [
+    "0d0b17",
+    "4e59bb",
+    "9d94d6",
+    "3c2562"
+   ],
+   "Vorlucent": [
+    "0f0a13",
+    "69519b",
+    "ad8fc4",
+    "432749"
+   ],
+   "Rollib": [
+    "0d0b16",
+    "9699ce",
+    "6351ac",
+    "3c2855"
+   ],
+   "Rollibex": [
+    "0f0a14",
+    "67529d",
+    "ab90c5",
+    "42274a"
+   ],
+   "Helirollax": [
+    "0e0b14",
+    "5c56a3",
+    "372b51",
+    "ad8fc4"
+   ],
+   "Sirocub": [
+    "0f0a15",
+    "a292d2",
+    "7847aa",
+    "472354"
+   ],
+   "Sirocat": [
+    "0d0b15",
+    "555c9b",
+    "332d52",
+    "a693c4"
+   ],
+   "Siroclaw": [
+    "0c0b16",
+    "919dc7",
+    "2f2e5a",
+    "6751a0"
+   ],
+   "Scaldasp": [
+    "0c0b17",
+    "929ad4",
+    "5d51bb",
+    "3b2661"
+   ],
+   "Scaldcoil": [
+    "0f0b12",
+    "655593",
+    "3a2b4a",
+    "b18ebe"
+   ],
+   "Scaldrahn": [
+    "0e0a16",
+    "5b54b4",
+    "39285b",
+    "b08ccc"
+   ],
+   "Noonpip": [
+    "0e0b14",
+    "312e52",
+    "a394c3",
+    "724f8e"
+   ],
+   "Noonwhist": [
+    "0e0b16",
+    "5955b2",
+    "37295a",
+    "ae8dcb"
+   ],
+   "Noonsoral": [
+    "0d0b16",
+    "9598d3",
+    "342964",
+    "7448af"
+   ],
+   "Spinnub": [
+    "0c0b15",
+    "949cc5",
+    "312e55",
+    "695298"
+   ],
+   "Spinnarow": [
+    "0d0b16",
+    "9598d4",
+    "352964",
+    "7547b0"
+   ],
+   "Spinnacle": [
+    "0e0a15",
+    "9c94d6",
+    "3b2663",
+    "8142ad"
+   ],
+   "Wadlet": [
+    "100a14",
+    "372959",
+    "ae8eca",
+    "834595"
+   ],
+   "Wadishell": [
+    "0e0b16",
+    "5755ba",
+    "372862",
+    "af8cd0"
+   ],
+   "Wadibastion": [
+    "0e0b14",
+    "9d97c8",
+    "6b5198",
+    "3e284c"
+   ],
+   "Ergfin": [
+    "0d0b14",
+    "9a98c7",
+    "362c51",
+    "714f92"
+   ],
+   "Ergskim": [
+    "0d0b17",
+    "2c2f5b",
+    "9e95cc",
+    "6f4da1"
+   ],
+   "Ergrava": [
+    "0c0c15",
+    "525f94",
+    "9a98c6",
+    "362c4f"
+   ],
+   "Ardlet": [
+    "0e0b16",
+    "2f2d5e",
+    "a393cb",
+    "764b9d"
+   ],
+   "Ardlume": [
+    "0e0a15",
+    "9e96ca",
+    "3a2953",
+    "7a4a94"
+   ],
+   "Ardenthal": [
+    "0f0a13",
+    "685395",
+    "ab90c1",
+    "412848"
+   ],
+   "Fulgrit": [
+    "0e0a16",
+    "5b54b0",
+    "382959",
+    "af8dca"
+   ],
+   "Fulgorin": [
+    "0e0b16",
+    "5955b4",
+    "a392cf",
+    "3f2656"
+   ],
+   "Fulgorath": [
+    "0e0b16",
+    "2e2c64",
+    "a392cf",
+    "7748a4"
+   ],
+   "Carabun": [
+    "0f0a13",
+    "a394c4",
+    "3c294c",
+    "7c4b89"
+   ],
+   "Caravant": [
+    "0e0a15",
+    "5e51bb",
+    "a88fd3",
+    "44235a"
+   ],
+   "Caravault": [
+    "0e0a16",
+    "2e2b6a",
+    "a491d3",
+    "7c45ab"
+   ],
+   "Velvit": [
+    "0d0b13",
+    "595b95",
+    "9f97c1",
+    "392c49"
+   ],
+   "Velvessa": [
+    "0e0b14",
+    "5b58a0",
+    "362c50",
+    "ab91c2"
+   ],
+   "Velverain": [
+    "0d0b15",
+    "555aa4",
+    "342c55",
+    "a891c6"
+   ],
+   "Clasplet": [
+    "0d0b15",
+    "979ac7",
+    "342d53",
+    "6d5095"
+   ],
+   "Claspirant": [
+    "0e0b13",
+    "342d51",
+    "a892c3",
+    "784d8c"
+   ],
+   "Claspreign": [
+    "0e0b13",
+    "625694",
+    "a793c0",
+    "3e2a47"
+   ],
+   "Obelit": [
+    "0d0b15",
+    "969ac8",
+    "6054a3",
+    "392a51"
+   ],
+   "Obelith": [
+    "0f0a13",
+    "67529c",
+    "3c294e",
+    "b58cc2"
+   ],
+   "Obelordan": [
+    "0e0b13",
+    "645694",
+    "3a2b4a",
+    "b08fbe"
+   ],
+   "Haboblet": [
+    "0f0a14",
+    "68529d",
+    "3d294e",
+    "b68bc2"
+   ],
+   "Haboborn": [
+    "0d0b16",
+    "9498d7",
+    "342869",
+    "7646b7"
+   ],
+   "Habobrax": [
+    "0c0b17",
+    "919ad3",
+    "5c52b9",
+    "3a2760"
+   ],
+   "Stiltwade": [
+    "0f0a14",
+    "63549d",
+    "a891c5",
+    "40284b"
+   ],
+   "Stiltregent": [
+    "0d0b14",
+    "565d94",
+    "9d97c3",
+    "382c4c"
+   ],
+   "Palmop": [
+    "0d0b15",
+    "555aa2",
+    "9e96c8",
+    "3a2a50"
+   ],
+   "Palmonarch": [
+    "0f0a15",
+    "a293cd",
+    "764aa1",
+    "452550"
+   ],
+   "Bakedil": [
+    "0e0a15",
+    "5f53ae",
+    "a691cb",
+    "402651"
+   ],
+   "Bakedillon": [
+    "100a14",
+    "6c4bb7",
+    "42245a",
+    "be84ce"
+   ],
+   "Hazejel": [
+    "0e0a15",
+    "6052b1",
+    "a790cd",
+    "422553"
+   ],
+   "Hazejellith": [
+    "0c0b17",
+    "929bd1",
+    "5d53b6",
+    "3a275d"
+   ],
+   "Corocub": [
+    "0d0b15",
+    "969ac8",
+    "6055a1",
+    "392a50"
+   ],
+   "Coronarch": [
+    "0d0b14",
+    "2e2f53",
+    "a096c4",
+    "6e5191"
+   ],
+   "Chirrik": [
+    "0d0b13",
+    "575c94",
+    "9e97c2",
+    "382c4a"
+   ],
+   "Chirrikade": [
+    "0c0c14",
+    "555e8e",
+    "9c98c2",
+    "362d4b"
+   ],
+   "Brinewhorl": [
+    "0f0a15",
+    "6351ae",
+    "3c2856",
+    "b48ac9"
+   ],
+   "Gyrevult": [
+    "0f0b12",
+    "a395c1",
+    "70518a",
+    "402946"
+   ],
+   "Heliodrop": [
+    "0c0b17",
+    "919ccc",
+    "5b55b0",
+    "382959"
+   ],
+   "Duskmirrah": [
+    "0d0b15",
+    "9898cb",
+    "6552a2",
+    "3c2950"
+   ],
+   "Sootpaw": [
+    "0f0a15",
+    "362a59",
+    "ab8fca",
+    "804795"
+   ],
+   "Sootlurk": [
+    "0e0a14",
+    "9f96c8",
+    "6e5098",
+    "40284c"
+   ],
+   "Sootharrow": [
+    "0f0a15",
+    "a391d3",
+    "40245b",
+    "8940a0"
+   ],
+   "Vitrill": [
+    "0c0b17",
+    "283255",
+    "9997ce",
+    "6850a8"
+   ],
+   "Vitrillon": [
+    "0d0b14",
+    "59599e",
+    "352d4f",
+    "a892c2"
+   ],
+   "Vitrillaxe": [
+    "0f0a15",
+    "634eba",
+    "3e255f",
+    "b887d0"
+   ],
+   "Sablet": [
+    "0d0b17",
+    "505ab0",
+    "322b60",
+    "a790cd"
+   ],
+   "Sablowl": [
+    "0e0a15",
+    "5f50ba",
+    "a98fd3",
+    "442358"
+   ],
+   "Sablarch": [
+    "0f0a15",
+    "a293cb",
+    "3d2853",
+    "804794"
+   ],
+   "Quenchet": [
+    "0c0c14",
+    "555e90",
+    "322e4e",
+    "a395c0"
+   ],
+   "Quenchcoil": [
+    "0d0b15",
+    "2d2f57",
+    "9f95c9",
+    "6f4f9a"
+   ],
+   "Quenchwyrm": [
+    "0d0b15",
+    "575aa2",
+    "342c53",
+    "a892c4"
+   ],
+   "Brickit": [
+    "0d0b16",
+    "9599d1",
+    "6250b3",
+    "3c275a"
+   ],
+   "Brickwarden": [
+    "0f0a15",
+    "372862",
+    "ae8cd0",
+    "8741a0"
+   ],
+   "Brickolossus": [
+    "0e0b13",
+    "5e579a",
+    "372c4d",
+    "ad90c0"
+   ],
+   "Clinklet": [
+    "0d0b15",
+    "969ac5",
+    "60569c",
+    "392b4e"
+   ],
+   "Clinkshell": [
+    "0d0b14",
+    "2f2f51",
+    "a096c2",
+    "6d528e"
+   ],
+   "Clinkerdome": [
+    "0d0b16",
+    "2c2d64",
+    "a093d0",
+    "744aa7"
+   ],
+   "Peatlet": [
+    "0e0b13",
+    "322e52",
+    "a593c3",
+    "744f8d"
+   ],
+   "Peatbloom": [
+    "0c0b17",
+    "4a5bb8",
+    "9b95d5",
+    "3a2662"
+   ],
+   "Peatmonarch": [
+    "0f0a15",
+    "664eb5",
+    "ac8dcf",
+    "462354"
+   ],
+   "Gloomgill": [
+    "0d0b17",
+    "9499d3",
+    "332964",
+    "7349b0"
+   ],
+   "Gloomgillar": [
+    "0f0a13",
+    "a394c4",
+    "3c2a4b",
+    "7b4c88"
+   ],
+   "Gloomgillith": [
+    "0e0b15",
+    "302d59",
+    "a393c8",
+    "744d96"
+   ],
+   "Fumelet": [
+    "0f0a14",
+    "a094ca",
+    "3c2951",
+    "7d4992"
+   ],
+   "Fumewraith": [
+    "0f0a15",
+    "654ebb",
+    "ac8dd3",
+    "472258"
+   ],
+   "Fumeregent": [
+    "0d0b16",
+    "9799cb",
+    "342c56",
+    "704e9b"
+   ],
+   "Lodekit": [
+    "0d0b17",
+    "949acc",
+    "322c5b",
+    "6d4ea2"
+   ],
+   "Lodebrock": [
+    "0f0a15",
+    "6a4bba",
+    "41245d",
+    "be84d0"
+   ],
+   "Lodemarshal": [
+    "0c0b17",
+    "283060",
+    "9b95d3",
+    "6e4ab3"
+   ],
+   "Glowflit": [
+    "0d0b15",
+    "9998ca",
+    "66529f",
+    "3c294f"
+   ],
+   "Glowflitter": [
+    "0c0b17",
+    "4c5cb1",
+    "302b64",
+    "a591d0"
+   ],
+   "Glowflare": [
+    "0c0b14",
+    "2d314e",
+    "9d98c4",
+    "695391"
+   ],
+   "Stylet": [
+    "0d0b15",
+    "5659a5",
+    "9f95c8",
+    "3a2a50"
+   ],
+   "Stylox": [
+    "0c0b16",
+    "939cc6",
+    "302e56",
+    "68529b"
+   ],
+   "Stylaxon": [
+    "0e0b13",
+    "342d4f",
+    "a892c1",
+    "774e89"
+   ],
+   "Coalkid": [
+    "0e0a15",
+    "5f54a9",
+    "a692c9",
+    "3f274f"
+   ],
+   "Coalbuck": [
+    "0f0a14",
+    "6950a3",
+    "3e2851",
+    "b889c5"
+   ],
+   "Coalpatriarch": [
+    "0e0a15",
+    "31296b",
+    "a78fd4",
+    "8043ab"
+   ],
+   "Glazel": [
+    "0e0b16",
+    "5954b6",
+    "38285e",
+    "af8cce"
+   ],
+   "Glazelisk": [
+    "0e0a15",
+    "6051b4",
+    "a890cf",
+    "432555"
+   ],
+   "Glazeldrake": [
+    "0c0b16",
+    "525ca4",
+    "9c96cb",
+    "392a54"
+   ],
+   "Puffbellow": [
+    "0c0b17",
+    "909cca",
+    "5956af",
+    "372a58"
+   ],
+   "Bellowroc": [
+    "0c0b15",
+    "959bc5",
+    "5e579e",
+    "372b4f"
+   ],
+   "Lampick": [
+    "0f0a15",
+    "37295d",
+    "ad8dcd",
+    "84449b"
+   ],
+   "Lampickard": [
+    "0d0b17",
+    "4f5ab7",
+    "322a66",
+    "a88fd1"
+   ],
+   "Charsprout": [
+    "0e0b13",
+    "5f5894",
+    "372c4b",
+    "ab91be"
+   ],
+   "Charsylvan": [
+    "0d0b16",
+    "5757ad",
+    "a194cb",
+    "3c2852"
+   ],
+   "Ingotlet": [
+    "0e0b16",
+    "9998cd",
+    "362a57",
+    "744c9c"
+   ],
+   "Ingotusk": [
+    "0e0b12",
+    "645691",
+    "3a2b49",
+    "b08fbd"
+   ],
+   "Mortarant": [
+    "0c0b17",
+    "929cc9",
+    "5a56ac",
+    "372a56"
+   ],
+   "Mortarmarch": [
+    "0c0b17",
+    "919ad4",
+    "302a6a",
+    "6f49b7"
+   ],
+   "Vaporel": [
+    "0e0b14",
+    "5e56a0",
+    "382b50",
+    "ae8fc3"
+   ],
+   "Vaporelle": [
+    "0c0b17",
+    "8e9cd3",
+    "5754bc",
+    "382764"
+   ],
+   "Shadeback": [
+    "0d0b16",
+    "5655bb",
+    "a292d3",
+    "40255c"
+   ],
+   "Kilnstork": [
+    "0f0a15",
+    "6151b3",
+    "a98fce",
+    "432554"
+   ],
+   "Puffglass": [
+    "0e0a16",
+    "5d54ae",
+    "382957",
+    "af8dc9"
+   ],
+   "Flueling": [
+    "0c0b17",
+    "4d5caf",
+    "9b96d1",
+    "39285c"
+   ],
+   "Inkpip": [
+    "0e0b14",
+    "9e96c8",
+    "6d5098",
+    "3f284c"
+   ],
+   "Inkspool": [
+    "0e0a16",
+    "5b53b7",
+    "a591d1",
+    "412558"
+   ],
+   "Inkregent": [
+    "0d0b17",
+    "9599cf",
+    "6151b0",
+    "3b2857"
+   ],
+   "Weirkit": [
+    "0d0b16",
+    "9797d5",
+    "674db7",
+    "3f255b"
+   ],
+   "Weirrunner": [
+    "0f0a13",
+    "a295c5",
+    "3c2a4d",
+    "7b4b8b"
+   ],
+   "Weirmarshal": [
+    "0d0b16",
+    "5757af",
+    "a194cc",
+    "3d2854"
+   ],
+   "Diplit": [
+    "0d0b13",
+    "5a5a97",
+    "352d4c",
+    "a893bf"
+   ],
+   "Diparrow": [
+    "0f0b13",
+    "675494",
+    "ab91c0",
+    "402847"
+   ],
+   "Dipmonarch": [
+    "0c0b17",
+    "919bd2",
+    "302b67",
+    "6d4bb5"
+   ],
+   "Woadlet": [
+    "0e0a15",
+    "9c96cd",
+    "392956",
+    "794a9a"
+   ],
+   "Woadwhorl": [
+    "0e0b15",
+    "5a57a5",
+    "a294c7",
+    "3c294e"
+   ],
+   "Woadcastle": [
+    "0e0a15",
+    "9d94d3",
+    "3b275d",
+    "8044a4"
+   ],
+   "Rubrit": [
+    "100a14",
+    "3a2762",
+    "b28ad1",
+    "8c3f9f"
+   ],
+   "Rubricorn": [
+    "100a14",
+    "694fa6",
+    "3e2752",
+    "b889c6"
+   ],
+   "Rubriclad": [
+    "0d0b13",
+    "5b5a95",
+    "a196c0",
+    "3a2b48"
+   ],
+   "Nimbub": [
+    "0e0b16",
+    "2f2d5e",
+    "a393cb",
+    "754b9c"
+   ],
+   "Nimbuck": [
+    "0f0a15",
+    "9f95cc",
+    "3b2955",
+    "7c4897"
+   ],
+   "Nimbarch": [
+    "0f0b12",
+    "665590",
+    "3a2b48",
+    "b18fbc"
+   ],
+   "Sluicekit": [
+    "0d0b16",
+    "2d2d63",
+    "a293ce",
+    "754aa3"
+   ],
+   "Sluicer": [
+    "0f0b12",
+    "362d4c",
+    "aa92bf",
+    "794e85"
+   ],
+   "Sluicewarden": [
+    "0c0b17",
+    "4c5cb0",
+    "9b96d1",
+    "39285c"
+   ],
+   "Vanepip": [
+    "0f0a15",
+    "a391d5",
+    "40245d",
+    "893fa4"
+   ],
+   "Vanecrow": [
+    "0f0a15",
+    "9f95ca",
+    "3b2953",
+    "7c4994"
+   ],
+   "Vanecrest": [
+    "0f0a15",
+    "9f93d4",
+    "7547b2",
+    "462357"
+   ],
+   "Chimelet": [
+    "0d0b16",
+    "969aca",
+    "332c57",
+    "6e4f9b"
+   ],
+   "Chimewell": [
+    "0c0c14",
+    "2d314b",
+    "9c98c2",
+    "67558f"
+   ],
+   "Chimeward": [
+    "0f0a13",
+    "a393c7",
+    "744d94",
+    "43274a"
+   ],
+   "Rushkit": [
+    "0c0b17",
+    "4e5ea3",
+    "2f2d5e",
+    "a393cb"
+   ],
+   "Rushprowl": [
+    "0c0b16",
+    "929dc6",
+    "2f2e58",
+    "67529d"
+   ],
+   "Rushstalker": [
+    "100a14",
+    "a690d4",
+    "43235b",
+    "8d3ea1"
+   ],
+   "Ripjolt": [
+    "0f0a15",
+    "6152af",
+    "3b2857",
+    "b38bca"
+   ],
+   "Ripjolter": [
+    "0d0b17",
+    "949acd",
+    "322b5d",
+    "6e4da6"
+   ],
+   "Ripjoltane": [
+    "0e0a16",
+    "5c52b9",
+    "3a275f",
+    "b28acf"
+   ],
+   "Grindlet": [
+    "0c0c14",
+    "2c324c",
+    "9b98c4",
+    "665493"
+   ],
+   "Grindwheel": [
+    "0d0b14",
+    "565d95",
+    "9d97c3",
+    "382c4c"
+   ],
+   "Grindmonolith": [
+    "100a14",
+    "a492cb",
+    "774a9c",
+    "45254d"
+   ],
+   "Morelit": [
+    "0e0a15",
+    "9c96cd",
+    "392956",
+    "794a9a"
+   ],
+   "Morelamp": [
+    "100a14",
+    "a491cf",
+    "402656",
+    "874399"
+   ],
+   "Morelord": [
+    "0f0a13",
+    "67529c",
+    "ab90c4",
+    "42274a"
+   ],
+   "Rookit": [
+    "0d0b13",
+    "989ac2",
+    "332e4e",
+    "6c538d"
+   ],
+   "Rookwarden": [
+    "0c0b17",
+    "8e9cd2",
+    "5854bb",
+    "382762"
+   ],
+   "Skimmit": [
+    "0c0b17",
+    "939bcc",
+    "312c5d",
+    "6c4ea5"
+   ],
+   "Skimmarch": [
+    "0e0b13",
+    "322e4e",
+    "a495c0",
+    "715188"
+   ],
+   "Prismist": [
+    "0f0a15",
+    "a093d1",
+    "7549aa",
+    "452454"
+   ],
+   "Prismistral": [
+    "0e0b12",
+    "9f97c1",
+    "6b538d",
+    "3d2a47"
+   ],
+   "Canalet": [
+    "0e0b16",
+    "2d2b6b",
+    "a392d2",
+    "7946ac"
+   ],
+   "Canalord": [
+    "0d0b14",
+    "979bc2",
+    "605795",
+    "382c4b"
+   ],
+   "Padlet": [
+    "0e0b16",
+    "9a97cd",
+    "372a57",
+    "754b9b"
+   ],
+   "Padlotus": [
+    "0e0a15",
+    "322c59",
+    "a692c9",
+    "784b96"
+   ],
+   "Thrashkin": [
+    "0e0b14",
+    "9b97c8",
+    "372b51",
+    "744e92"
+   ],
+   "Threshox": [
+    "0d0b16",
+    "9598d5",
+    "342867",
+    "7546b4"
+   ],
+   "Cartocoil": [
+    "0c0b17",
+    "4e5ab5",
+    "9c95d3",
+    "3a275e"
+   ],
+   "Belfrit": [
+    "0f0a15",
+    "a192d4",
+    "7845b2",
+    "472257"
+   ],
+   "Dusktern": [
+    "0e0a16",
+    "2f2b65",
+    "a491d0",
+    "7a47a5"
+   ],
+   "Fiddlit": [
+    "0d0b14",
+    "575a9f",
+    "9f96c5",
+    "3a2a4d"
+   ],
+   "Fiddlehorn": [
+    "0e0b15",
+    "9a97cb",
+    "372a55",
+    "754c98"
+   ],
+   "Fiddlestag": [
+    "0f0b13",
+    "675494",
+    "3b2a4b",
+    "b38dbf"
+   ],
+   "Gleamgrub": [
+    "0c0c14",
+    "949dc1",
+    "5c5998",
+    "362d4d"
+   ],
+   "Gleamworm": [
+    "0d0b13",
+    "9a99c4",
+    "665593",
+    "3b2b4a"
+   ],
+   "Gleamwyrm": [
+    "0d0b16",
+    "2b2e60",
+    "9f94cf",
+    "724ba6"
+   ],
+   "Skerrit": [
+    "0e0a15",
+    "5d53b3",
+    "3a285b",
+    "b18bcc"
+   ],
+   "Skerrigale": [
+    "0e0b14",
+    "9c97c9",
+    "382a52",
+    "764c93"
+   ],
+   "Skerrimast": [
+    "0c0b17",
+    "929ad2",
+    "312a65",
+    "6f4ab2"
+   ],
+   "Pinchkin": [
+    "0d0b15",
+    "5857aa",
+    "a194c9",
+    "3c2950"
+   ],
+   "Pinchward": [
+    "0e0b13",
+    "332e50",
+    "a594c2",
+    "744f8b"
+   ],
+   "Pinchcastle": [
+    "0f0a15",
+    "6152af",
+    "3b2857",
+    "b38bca"
+   ],
+   "Flicklet": [
+    "0f0a14",
+    "a393c8",
+    "3d284f",
+    "7f498f"
+   ],
+   "Flickscale": [
+    "0f0a14",
+    "a393ca",
+    "754b9a",
+    "44254d"
+   ],
+   "Flickwyrm": [
+    "0c0c14",
+    "949dc0",
+    "5b5998",
+    "352d4d"
+   ],
+   "Brookhop": [
+    "0e0b14",
+    "5d579e",
+    "372c4f",
+    "ac90c2"
+   ],
+   "Brookbaron": [
+    "0d0b17",
+    "4e59b8",
+    "322968",
+    "a88fd2"
+   ],
+   "Covepup": [
+    "0e0b14",
+    "5b57a2",
+    "a294c5",
+    "3c294d"
+   ],
+   "Covewarden": [
+    "0c0b17",
+    "272f67",
+    "9c94d6",
+    "7048b9"
+   ],
+   "Gloamhog": [
+    "0e0b13",
+    "9c98c3",
+    "685491",
+    "3c2a49"
+   ],
+   "Gloamquill": [
+    "0c0b17",
+    "27315b",
+    "9996d2",
+    "6a4cb2"
+   ],
+   "Glimshell": [
+    "0f0a14",
+    "a393ca",
+    "3e2851",
+    "804891"
+   ],
+   "Glimbastion": [
+    "0e0b13",
+    "352d4f",
+    "a892c1",
+    "774e89"
+   ],
+   "Lichub": [
+    "0d0b16",
+    "959ac9",
+    "322c57",
+    "6c509c"
+   ],
+   "Lichenbear": [
+    "0d0b16",
+    "5757ad",
+    "352b58",
+    "ab90c9"
+   ],
+   "Verdigrub": [
+    "0c0b17",
+    "909cce",
+    "2f2c63",
+    "6a4daf"
+   ],
+   "Verdigrand": [
+    "0c0b16",
+    "929cc6",
+    "5b57a5",
+    "362b52"
+   ],
+   "Peallith": [
+    "0d0b17",
+    "949ace",
+    "5f53b0",
+    "3a2858"
+   ],
+   "Fernwhisk": [
+    "0f0a15",
+    "6451ac",
+    "3c2855",
+    "b58ac8"
+   ],
+   "Hearthmote": [
+    "0d0b17",
+    "959acd",
+    "332b5c",
+    "6f4da3"
+   ],
+   "Vesk": [
+    "0d0b14",
+    "59599e",
+    "352c4f",
+    "a992c2"
+   ],
+   "Veskara": [
+    "0d0b17",
+    "939ad2",
+    "322a64",
+    "704ab0"
+   ],
+   "Veskarion": [
+    "0f0a14",
+    "69519f",
+    "3e284f",
+    "b78ac4"
+   ],
+   "Siltby": [
+    "0f0a15",
+    "a092d5",
+    "3f255e",
+    "8641a5"
+   ],
+   "Siltarra": [
+    "0f0a13",
+    "362c50",
+    "aa91c3",
+    "7b4c8a"
+   ],
+   "Siltaroth": [
+    "0d0b17",
+    "939ad3",
+    "322a66",
+    "7149b3"
+   ],
+   "Cindrik": [
+    "0d0b15",
+    "9998c9",
+    "352c53",
+    "714f95"
+   ],
+   "Cindrel": [
+    "0c0b17",
+    "29305d",
+    "9c95d0",
+    "6e4cab"
+   ],
+   "Cindravax": [
+    "0e0b13",
+    "9f96c5",
+    "392b4d",
+    "774e8b"
+   ],
+   "Nibbet": [
+    "0d0b14",
+    "979ac4",
+    "332d50",
+    "6c5290"
+   ],
+   "Nibquill": [
+    "0f0a15",
+    "6251b3",
+    "3c2759",
+    "b58acc"
+   ],
+   "Nibravure": [
+    "0d0b16",
+    "9799cd",
+    "6352aa",
+    "3b2854"
+   ],
+   "Filigrin": [
+    "0c0b17",
+    "929bce",
+    "302b62",
+    "6c4dac"
+   ],
+   "Filigrace": [
+    "0c0b14",
+    "545d97",
+    "9d97c5",
+    "382b4e"
+   ],
+   "Filigravure": [
+    "0f0a14",
+    "6552a0",
+    "3c2950",
+    "b48cc4"
+   ],
+   "Mordling": [
+    "0c0b16",
+    "2a3155",
+    "9b97cb",
+    "6a50a0"
+   ],
+   "Mordantoad": [
+    "0c0b17",
+    "4e5da7",
+    "9a97cf",
+    "382959"
+   ],
+   "Mordantyrant": [
+    "0d0b15",
+    "2d2f56",
+    "9f96c8",
+    "6e4f98"
+   ],
+   "Rimekit": [
+    "0f0a13",
+    "a394c5",
+    "724f90",
+    "412848"
+   ],
+   "Rimelynx": [
+    "0c0b17",
+    "929cc9",
+    "2f2d5b",
+    "6850a3"
+   ],
+   "Rimesovereign": [
+    "0e0b13",
+    "60569a",
+    "a593c3",
+    "3d294a"
+   ],
+   "Burrin": [
+    "0d0b14",
+    "2e2f55",
+    "a095c6",
+    "6f5094"
+   ],
+   "Burrowgraver": [
+    "0f0b13",
+    "645597",
+    "a892c2",
+    "3f2948"
+   ],
+   "Burringrand": [
+    "0c0b17",
+    "949bcb",
+    "322c5a",
+    "6c4fa1"
+   ],
+   "Hoarling": [
+    "0e0a15",
+    "5c55ac",
+    "a493ca",
+    "3e2751"
+   ],
+   "Hoarstag": [
+    "0c0b17",
+    "8f9bd3",
+    "2f2a6c",
+    "6c4ab8"
+   ],
+   "Hoarmonarch": [
+    "0d0b14",
+    "2e2f56",
+    "a195c6",
+    "704f94"
+   ],
+   "Platewig": [
+    "0d0b16",
+    "2c3056",
+    "9e96ca",
+    "6d4f9c"
+   ],
+   "Platewing": [
+    "0e0a16",
+    "9b96ce",
+    "6b4ea6",
+    "402752"
+   ],
+   "Platemarshal": [
+    "0e0b13",
+    "5c5998",
+    "a295c1",
+    "3b2b49"
+   ],
+   "Smudgel": [
+    "0d0b16",
+    "5157ba",
+    "342966",
+    "ab8ed2"
+   ],
+   "Smudgeworm": [
+    "0d0b14",
+    "5a589e",
+    "362c4f",
+    "aa91c2"
+   ],
+   "Smudgewyrm": [
+    "0e0b13",
+    "625696",
+    "a793c1",
+    "3e2948"
+   ],
+   "Corrodent": [
+    "0d0b16",
+    "9898cf",
+    "6650aa",
+    "3d2754"
+   ],
+   "Corrodile": [
+    "0c0b17",
+    "28305f",
+    "9b95d2",
+    "6e4bb1"
+   ],
+   "Corrodrake": [
+    "0c0b16",
+    "949bc8",
+    "322d57",
+    "6b509c"
+   ],
+   "Gelidfin": [
+    "0e0a15",
+    "5f53ae",
+    "3a2957",
+    "b18cc9"
+   ],
+   "Gelidray": [
+    "0f0a14",
+    "9f95c9",
+    "6e4f9a",
+    "40274d"
+   ],
+   "Gelidmonarch": [
+    "0d0b16",
+    "9799cd",
+    "342b59",
+    "714d9f"
+   ],
+   "Stampet": [
+    "0c0c14",
+    "535f8f",
+    "9a99c4",
+    "362d4d"
+   ],
+   "Stamphorn": [
+    "0d0b16",
+    "2c2c6a",
+    "a292d2",
+    "7847ab"
+   ],
+   "Stampcolossus": [
+    "0e0a16",
+    "302d5d",
+    "a493cb",
+    "764b9b"
+   ],
+   "Quilmoth": [
+    "0f0a15",
+    "372860",
+    "ae8dcf",
+    "86429d"
+   ],
+   "Quilmothra": [
+    "0e0a15",
+    "5d51bd",
+    "3b2663",
+    "b489d2"
+   ],
+   "Quilmothane": [
+    "0d0c13",
+    "979bc1",
+    "605892",
+    "382c4a"
+   ],
+   "Vatrat": [
+    "0e0a16",
+    "9a97cd",
+    "372a57",
+    "764b9b"
+   ],
+   "Vatreeve": [
+    "0d0b16",
+    "5557b6",
+    "352960",
+    "ab8ece"
+   ],
+   "Vatbaron": [
+    "0d0b14",
+    "2f2f52",
+    "a096c3",
+    "6e518f"
+   ],
+   "Sleetowl": [
+    "0d0b17",
+    "4e59b9",
+    "9d94d5",
+    "3c2660"
+   ],
+   "Sleetcowl": [
+    "0d0b17",
+    "5059b4",
+    "332a62",
+    "a88fcf"
+   ],
+   "Sleetsage": [
+    "0f0a15",
+    "a391d2",
+    "40255a",
+    "88419f"
+   ],
+   "Copperling": [
+    "0c0b16",
+    "525d9e",
+    "9c97c9",
+    "382a52"
+   ],
+   "Copperclad": [
+    "0c0b16",
+    "2b3055",
+    "9c96ca",
+    "6b509d"
+   ],
+   "Copperpatriarch": [
+    "0e0b16",
+    "2e2d60",
+    "a293cd",
+    "754a9f"
+   ],
+   "Blotkin": [
+    "0d0b15",
+    "9899c8",
+    "352c53",
+    "704f95"
+   ],
+   "Blotgrimm": [
+    "0e0b13",
+    "332e4e",
+    "a694c0",
+    "745087"
+   ],
+   "Drypup": [
+    "0d0b15",
+    "5858a5",
+    "352c52",
+    "a991c4"
+   ],
+   "Dryhound": [
+    "0e0b16",
+    "9997ce",
+    "6750a8",
+    "3e2753"
+   ],
+   "Fizzlet": [
+    "0d0b14",
+    "302f53",
+    "a195c3",
+    "70508f"
+   ],
+   "Fizzgrove": [
+    "0d0b14",
+    "585b97",
+    "332d4e",
+    "a693c0"
+   ],
+   "Glacilet": [
+    "0f0a15",
+    "a292d2",
+    "3f255a",
+    "8642a0"
+   ],
+   "Glacilisk": [
+    "0f0a13",
+    "a195c5",
+    "3b2a4c",
+    "7a4c8a"
+   ],
+   "Pressbug": [
+    "0c0c14",
+    "949dc0",
+    "302f4f",
+    "665590"
+   ],
+   "Pressbeetle": [
+    "0d0b14",
+    "2e304e",
+    "9e97c3",
+    "6a538f"
+   ],
+   "Canalurk": [
+    "0f0a15",
+    "a392d1",
+    "402558",
+    "86429c"
+   ],
+   "Canalurker": [
+    "0c0c14",
+    "545f8c",
+    "9a99c2",
+    "352d4c"
+   ],
+   "Forgefly": [
+    "0d0b16",
+    "5657b0",
+    "a194cc",
+    "3d2854"
+   ],
+   "Forgeflare": [
+    "0e0b13",
+    "322e4f",
+    "a494c0",
+    "725089"
+   ],
+   "Vitriolus": [
+    "0e0b14",
+    "5c56a3",
+    "372b51",
+    "ad8fc4"
+   ],
+   "Frostfoil": [
+    "0f0a13",
+    "a394c5",
+    "724f91",
+    "412749"
+   ],
+   "Gildfinch": [
+    "0e0b13",
+    "332e4f",
+    "a594c1",
+    "745089"
+   ],
+   "Gildwing": [
+    "0d0b15",
+    "2c3052",
+    "9d97c7",
+    "6b5196"
+   ],
+   "Gildaurus": [
+    "0f0a14",
+    "372a56",
+    "ad8ec8",
+    "804791"
+   ],
+   "Ledgepup": [
+    "0e0b13",
+    "9b98c4",
+    "362c4d",
+    "71508c"
+   ],
+   "Ledgehound": [
+    "0e0b16",
+    "5a56ae",
+    "a393cb",
+    "3e2752"
+   ],
+   "Ledgewarden": [
+    "0e0b15",
+    "9a97cc",
+    "6950a2",
+    "3e2850"
+   ],
+   "Zenkit": [
+    "0d0b16",
+    "9797d3",
+    "664eb4",
+    "3e2659"
+   ],
+   "Zenlynx": [
+    "0f0a15",
+    "362862",
+    "ad8dd0",
+    "8642a0"
+   ],
+   "Zenithar": [
+    "0d0b15",
+    "9899c9",
+    "65539d",
+    "3b2a4f"
+   ],
+   "Orrebit": [
+    "100a14",
+    "6a509f",
+    "3e284f",
+    "b889c4"
+   ],
+   "Orrewheel": [
+    "0e0a15",
+    "9d96ca",
+    "6d4f9e",
+    "40274f"
+   ],
+   "Orremarch": [
+    "0e0a16",
+    "9b96d0",
+    "38295a",
+    "7948a0"
+   ],
+   "Flatskip": [
+    "100a14",
+    "a491d1",
+    "7a46a8",
+    "482253"
+   ],
+   "Flatskimmer": [
+    "0c0b17",
+    "505ca7",
+    "312c5c",
+    "a592cb"
+   ],
+   "Flatsovereign": [
+    "0f0b12",
+    "a395c0",
+    "705188",
+    "402945"
+   ],
+   "Cloudmop": [
+    "0d0b16",
+    "2c3057",
+    "9e96ca",
+    "6d4f9d"
+   ],
+   "Cloudram": [
+    "0e0b13",
+    "9b98c4",
+    "372c4d",
+    "72508c"
+   ],
+   "Cloudbellow": [
+    "0e0b13",
+    "9b98c4",
+    "675492",
+    "3b2b49"
+   ],
+   "Haloon": [
+    "0e0b15",
+    "9a98ca",
+    "372b54",
+    "744d97"
+   ],
+   "Halonel": [
+    "0d0b13",
+    "989ac3",
+    "342d4e",
+    "6c528d"
+   ],
+   "Halorch": [
+    "0d0b13",
+    "585c93",
+    "332e4c",
+    "a694bf"
+   ],
+   "Lumoth": [
+    "0e0b14",
+    "5e56a3",
+    "a593c6",
+    "3e284d"
+   ],
+   "Lumothra": [
+    "0f0a13",
+    "a493c6",
+    "3d294d",
+    "7f498c"
+   ],
+   "Lumothane": [
+    "0e0b13",
+    "312f4e",
+    "a395c0",
+    "705288"
+   ],
+   "Vinestep": [
+    "0d0b17",
+    "939ad2",
+    "322a64",
+    "704ab0"
+   ],
+   "Vinestair": [
+    "0c0b17",
+    "4c5bb5",
+    "302a66",
+    "a690d1"
+   ],
+   "Vinespire": [
+    "0c0c15",
+    "2b324f",
+    "9a98c7",
+    "66539a"
+   ],
+   "Noonfox": [
+    "0e0a16",
+    "5c54af",
+    "392958",
+    "b08dca"
+   ],
+   "Noonvixen": [
+    "0d0b16",
+    "2e2e5c",
+    "a194ca",
+    "734c9b"
+   ],
+   "Noonregent": [
+    "0c0b17",
+    "283256",
+    "9997ce",
+    "684fa9"
+   ],
+   "Brasshop": [
+    "0f0a15",
+    "342868",
+    "ab8dd3",
+    "8641a7"
+   ],
+   "Brassjack": [
+    "0e0a16",
+    "9b96cf",
+    "392958",
+    "79499d"
+   ],
+   "Brassgrand": [
+    "0d0b14",
+    "2f2f55",
+    "a195c5",
+    "705091"
+   ],
+   "Plinthlet": [
+    "0e0b14",
+    "302e55",
+    "a394c5",
+    "734e92"
+   ],
+   "Plinthshell": [
+    "0e0b14",
+    "322c56",
+    "a692c7",
+    "784c92"
+   ],
+   "Plinthcastle": [
+    "0f0a14",
+    "69519e",
+    "3d284f",
+    "b78ac3"
+   ],
+   "Kitelet": [
+    "0f0a15",
+    "a094cd",
+    "3c2855",
+    "7f4798"
+   ],
+   "Kitewhip": [
+    "100a14",
+    "a591cf",
+    "402655",
+    "874398"
+   ],
+   "Kitemonarch": [
+    "0e0a15",
+    "5f51b8",
+    "3c265e",
+    "b589cf"
+   ],
+   "Coffrel": [
+    "0e0b13",
+    "625697",
+    "a793c1",
+    "3e2948"
+   ],
+   "Coffrake": [
+    "0e0b14",
+    "9e96c8",
+    "6d5099",
+    "3f284c"
+   ],
+   "Coffrendrake": [
+    "0f0a15",
+    "352963",
+    "ac8ed0",
+    "8443a1"
+   ],
+   "Rillsnail": [
+    "0e0b14",
+    "5d579f",
+    "372b4f",
+    "ad90c2"
+   ],
+   "Rillshell": [
+    "0e0b14",
+    "322d53",
+    "a593c4",
+    "754e8f"
+   ],
+   "Rillcastle": [
+    "0f0a15",
+    "a094cc",
+    "3c2854",
+    "7e4797"
+   ],
+   "Spanling": [
+    "0d0b17",
+    "5059b6",
+    "322a65",
+    "a98fd1"
+   ],
+   "Spanbrute": [
+    "0e0a15",
+    "9c97cb",
+    "6b50a1",
+    "3f2750"
+   ],
+   "Spanwarden": [
+    "0e0b14",
+    "5e569f",
+    "382b4f",
+    "ad8fc2"
+   ],
+   "Spumlet": [
+    "0d0b16",
+    "9699cc",
+    "342b58",
+    "704e9e"
+   ],
+   "Spumeclaw": [
+    "0c0b17",
+    "272f66",
+    "9b95d7",
+    "6f48ba"
+   ],
+   "Chalkid": [
+    "0e0a16",
+    "9b96d0",
+    "6b4dac",
+    "402654"
+   ],
+   "Chalkhorn": [
+    "0f0a15",
+    "342b58",
+    "a990c9",
+    "7d4994"
+   ],
+   "Wellet": [
+    "0f0a15",
+    "36295d",
+    "ac8ecc",
+    "82459a"
+   ],
+   "Wellwyrm": [
+    "0f0a15",
+    "674eb3",
+    "ad8dce",
+    "462353"
+   ],
+   "Glintwader": [
+    "0d0b15",
+    "5758a9",
+    "352b54",
+    "aa90c6"
+   ],
+   "Glintheron": [
+    "0e0a16",
+    "302b63",
+    "a591cf",
+    "7a47a3"
+   ],
+   "Gildmite": [
+    "0e0b12",
+    "342d4d",
+    "a893bf",
+    "764f86"
+   ],
+   "Gildscarab": [
+    "0d0b17",
+    "9499d5",
+    "332967",
+    "7447b4"
+   ],
+   "Brazlet": [
+    "0d0b15",
+    "2c3053",
+    "9d97c8",
+    "6b5198"
+   ],
+   "Brazierbrute": [
+    "0e0b13",
+    "9d97c4",
+    "382c4d",
+    "744f8b"
+   ],
+   "Dewfawn": [
+    "0c0b17",
+    "4e5da4",
+    "9a97cd",
+    "382a57"
+   ],
+   "Dewstag": [
+    "0f0b13",
+    "64549b",
+    "a991c3",
+    "40284a"
+   ],
+   "Arcfin": [
+    "0f0a15",
+    "654fb1",
+    "ac8ecd",
+    "442452"
+   ],
+   "Arcfinnar": [
+    "0d0b16",
+    "2c2f5d",
+    "9f95cd",
+    "714ca2"
+   ],
+   "Eavekit": [
+    "0e0b13",
+    "605798",
+    "382c4c",
+    "ad90bf"
+   ],
+   "Eaveprowl": [
+    "0d0b16",
+    "9898cf",
+    "674fac",
+    "3e2755"
+   ],
+   "Gildrelic": [
+    "0e0b13",
+    "9f96c4",
+    "392b4c",
+    "774e8b"
+   ],
+   "Zenwhirl": [
+    "0c0b17",
+    "2a3059",
+    "9c96ce",
+    "6c4ea6"
+   ],
+   "Gnomonk": [
+    "0f0a13",
+    "67529c",
+    "3c294e",
+    "b58cc2"
+   ],
+   "Gildbloom": [
+    "0f0a15",
+    "a292d1",
+    "7747aa",
+    "462353"
+   ],
+   "Boltnib": [
+    "0d0b15",
+    "2d3054",
+    "9e96c7",
+    "6d5097"
+   ],
+   "Boltgnaw": [
+    "0d0b14",
+    "575c96",
+    "9e97c2",
+    "382c4b"
+   ],
+   "Boltgrimmer": [
+    "0c0b17",
+    "282f64",
+    "9c95d5",
+    "7049b7"
+   ],
+   "Veilmote": [
+    "0e0b14",
+    "6055a0",
+    "a692c5",
+    "3e284c"
+   ],
+   "Veilmothel": [
+    "0d0b14",
+    "9999c5",
+    "645596",
+    "3a2b4b"
+   ],
+   "Veilmarquise": [
+    "0d0b17",
+    "9399d5",
+    "6050bb",
+    "3c2561"
+   ],
+   "Tallop": [
+    "0d0b17",
+    "949acd",
+    "5f53ae",
+    "3a2956"
+   ],
+   "Tallogg": [
+    "0e0b13",
+    "5f5895",
+    "a494c0",
+    "3c2a48"
+   ],
+   "Tallowgrand": [
+    "0f0b13",
+    "362c4e",
+    "aa91c1",
+    "7a4d87"
+   ],
+   "Dimlure": [
+    "0f0a14",
+    "6552a5",
+    "3c2952",
+    "b48bc5"
+   ],
+   "Dimlurker": [
+    "0c0b17",
+    "28305f",
+    "9b96d3",
+    "6d4bb4"
+   ],
+   "Dimluminor": [
+    "0d0b15",
+    "5857a9",
+    "a194c8",
+    "3c2950"
+   ],
+   "Tollpip": [
+    "0e0b14",
+    "9b97c9",
+    "372b52",
+    "744d93"
+   ],
+   "Tollgull": [
+    "0f0a14",
+    "a393ca",
+    "754b9a",
+    "44264d"
+   ],
+   "Tollbaron": [
+    "0f0a15",
+    "a292d4",
+    "7945b1",
+    "482256"
+   ],
+   "Sootkin": [
+    "0c0b17",
+    "2a305a",
+    "9c96ce",
+    "6c4ea7"
+   ],
+   "Sootrook": [
+    "0e0b15",
+    "9b98c9",
+    "68519d",
+    "3d294e"
+   ],
+   "Sootregent": [
+    "0d0b16",
+    "5558af",
+    "a094cd",
+    "3c2855"
+   ],
+   "Flakit": [
+    "0f0a14",
+    "68519e",
+    "3d294f",
+    "b68bc3"
+   ],
+   "Flakeshell": [
+    "0e0b14",
+    "312e53",
+    "a494c4",
+    "734f8f"
+   ],
+   "Flakebastion": [
+    "0e0a15",
+    "312a65",
+    "a790d0",
+    "7d45a5"
+   ],
+   "Sprockle": [
+    "0d0b15",
+    "5758a8",
+    "352c55",
+    "a991c6"
+   ],
+   "Sprocklen": [
+    "0d0b13",
+    "999ac2",
+    "352d4c",
+    "6d538a"
+   ],
+   "Sprockmaul": [
+    "0c0b17",
+    "4d5ea4",
+    "2f2d5e",
+    "a393cc"
+   ],
+   "Guiskit": [
+    "0d0b15",
+    "9998ca",
+    "6652a0",
+    "3c2950"
+   ],
+   "Guisvix": [
+    "0d0b14",
+    "2d3052",
+    "9e96c5",
+    "6c5194"
+   ],
+   "Guisdame": [
+    "0d0b16",
+    "2d2e5c",
+    "a194ca",
+    "724d9c"
+   ],
+   "Fenglim": [
+    "0d0b13",
+    "595b95",
+    "a097c1",
+    "392c49"
+   ],
+   "Fenglimmer": [
+    "0c0c14",
+    "959cc1",
+    "5d5897",
+    "372c4c"
+   ],
+   "Fenglowmarsh": [
+    "0d0b13",
+    "585b96",
+    "9f97c2",
+    "392c4a"
+   ],
+   "Splotchet": [
+    "0e0b13",
+    "9f97c2",
+    "6c538d",
+    "3e2a47"
+   ],
+   "Splotchling": [
+    "0e0b13",
+    "9c97c5",
+    "695393",
+    "3d2a4a"
+   ],
+   "Splotcheroth": [
+    "0f0a15",
+    "362b58",
+    "ab8fc9",
+    "7f4894"
+   ],
+   "Snaglet": [
+    "100a14",
+    "6a4cb3",
+    "402557",
+    "bc86cb"
+   ],
+   "Snagwhisk": [
+    "0f0a15",
+    "a392d1",
+    "402559",
+    "87429d"
+   ],
+   "Snaggrave": [
+    "0e0a16",
+    "9b95d4",
+    "6e4ab6",
+    "422459"
+   ],
+   "Pewnib": [
+    "0d0b16",
+    "5857ac",
+    "362b56",
+    "ab8fc8"
+   ],
+   "Pewspine": [
+    "0d0b16",
+    "2c2b6d",
+    "a292d4",
+    "7945af"
+   ],
+   "Pewrampart": [
+    "0c0c14",
+    "555e90",
+    "312e4f",
+    "a395c1"
+   ],
+   "Snoblet": [
+    "0f0a15",
+    "6253a7",
+    "3a2953",
+    "b28cc6"
+   ],
+   "Snobplume": [
+    "0f0a15",
+    "a093d2",
+    "7548ac",
+    "452354"
+   ],
+   "Snobsovereign": [
+    "0f0a14",
+    "6453a3",
+    "3b2951",
+    "b38cc5"
+   ],
+   "Tithel": [
+    "0d0b17",
+    "949acc",
+    "322c5c",
+    "6e4da4"
+   ],
+   "Tithshell": [
+    "0f0a13",
+    "68529b",
+    "ac90c4",
+    "42274a"
+   ],
+   "Tithebastion": [
+    "0d0b17",
+    "5159b1",
+    "332b60",
+    "a890ce"
+   ],
+   "Bargit": [
+    "0c0b17",
+    "929bcc",
+    "5c54af",
+    "382958"
+   ],
+   "Bargwing": [
+    "0e0b16",
+    "5856b0",
+    "a293cd",
+    "3e2754"
+   ],
+   "Bargemourn": [
+    "0f0a15",
+    "a194cc",
+    "734c9f",
+    "43264f"
+   ],
+   "Sedgel": [
+    "0f0a15",
+    "9f94ce",
+    "3b2857",
+    "7e479b"
+   ],
+   "Sedgecoil": [
+    "0f0a15",
+    "9f93d3",
+    "3d265d",
+    "8343a4"
+   ],
+   "Sedgemire": [
+    "0f0a15",
+    "362a58",
+    "ab8fc9",
+    "7f4794"
+   ],
+   "Smogpup": [
+    "0e0b13",
+    "312e51",
+    "a494c2",
+    "72508c"
+   ],
+   "Smoglurcher": [
+    "0f0a14",
+    "a294c9",
+    "3c2850",
+    "7e4991"
+   ],
+   "Smogcapo": [
+    "0d0b15",
+    "9899c8",
+    "352c52",
+    "704f94"
+   ],
+   "Hushbeak": [
+    "0d0b14",
+    "5859a3",
+    "352c52",
+    "a991c4"
+   ],
+   "Hushmonger": [
+    "0f0a14",
+    "a393ca",
+    "754c9b",
+    "43264d"
+   ],
+   "Moldcap": [
+    "0f0a14",
+    "6552a4",
+    "3c2951",
+    "b48bc5"
+   ],
+   "Moldmagnate": [
+    "0c0c14",
+    "969cc1",
+    "5e5896",
+    "372c4b"
+   ],
+   "Groatfin": [
+    "100a14",
+    "a490d5",
+    "7d43b0",
+    "4a2156"
+   ],
+   "Groatgrand": [
+    "0c0b15",
+    "535e97",
+    "312e53",
+    "a494c4"
+   ],
+   "Shivlet": [
+    "0c0b17",
+    "495cb8",
+    "2f2a6c",
+    "a590d4"
+   ],
+   "Shivreaper": [
+    "100a14",
+    "a492ce",
+    "7948a1",
+    "46244f"
+   ],
+   "Latchet": [
+    "0c0c14",
+    "949dbf",
+    "5b5a95",
+    "352d4b"
+   ],
+   "Latchgrim": [
+    "0f0a15",
+    "342966",
+    "aa8ed2",
+    "8342a5"
+   ],
+   "Waxwhisk": [
+    "0e0b13",
+    "5f5894",
+    "372c4b",
+    "ab91be"
+   ],
+   "Waxwidow": [
+    "0c0c14",
+    "2c314c",
+    "9c98c3",
+    "685490"
+   ],
+   "Fauxscript": [
+    "0f0a15",
+    "644eb8",
+    "ac8dd1",
+    "462356"
+   ],
+   "Anchorrot": [
+    "0f0a13",
+    "a095c6",
+    "3b2a4e",
+    "7a4c8d"
+   ],
+   "Knellgrim": [
+    "0e0a15",
+    "9c96cb",
+    "382a54",
+    "774b96"
+   ],
+   "Mirefane": [
+    "0e0b14",
+    "332d52",
+    "a693c4",
+    "754e8d"
+   ]
+  },
+  "duskgold": {
+   "Kindlop": [
+    "281c13",
+    "c33918",
+    "f7d4ba",
+    "d89a1a"
+   ],
+   "Smoldrake": [
+    "241f11",
+    "df8f41",
+    "7a5f15",
+    "e9e67e"
+   ],
+   "Calderox": [
+    "291b14",
+    "d2301f",
+    "f6d3c1",
+    "df932c"
+   ],
+   "Puddlet": [
+    "291b14",
+    "d72e19",
+    "f7d3bf",
+    "e4931e"
+   ],
+   "Riptail": [
+    "251e12",
+    "e9884a",
+    "f4d8a8",
+    "71640e"
+   ],
+   "Leviarch": [
+    "231f11",
+    "f5d6b5",
+    "cca01b",
+    "69680e"
+   ],
+   "Mossling": [
+    "241f11",
+    "f5d5b8",
+    "7c5e11",
+    "b4ad19"
+   ],
+   "Thornback": [
+    "271d13",
+    "a34724",
+    "f0d7bc",
+    "c6a02c"
+   ],
+   "Verdantusk": [
+    "281c13",
+    "de8673",
+    "915022",
+    "eddab4"
+   ],
+   "Zippit": [
+    "291b14",
+    "e78173",
+    "9e4b1b",
+    "f2d8b1"
+   ],
+   "Glimmerax": [
+    "281c13",
+    "ea8269",
+    "f5d4bb",
+    "805c12"
+   ],
+   "Shalebat": [
+    "271d13",
+    "f5d2c7",
+    "90531a",
+    "cd9e24"
+   ],
+   "Obsidroth": [
+    "251e12",
+    "f5d4bf",
+    "dd9624",
+    "716412"
+   ],
+   "Zephlet": [
+    "231f11",
+    "f1d7ba",
+    "c6a128",
+    "676815"
+   ],
+   "Tempestrel": [
+    "291c14",
+    "f6d1cb",
+    "9d4c1a",
+    "db9725"
+   ],
+   "Wickit": [
+    "241e12",
+    "f0d6c2",
+    "7b5c1e",
+    "b5a82c"
+   ],
+   "Lumenewt": [
+    "271d13",
+    "e68563",
+    "8f5317",
+    "f0dca2"
+   ],
+   "Mirkmole": [
+    "2a1b14",
+    "bc382d",
+    "f1d4c6",
+    "d39446"
+   ],
+   "Duskdigger": [
+    "231f11",
+    "de913a",
+    "776014",
+    "e8e877"
+   ],
+   "Kelpup": [
+    "231f11",
+    "f1d7ba",
+    "c5a129",
+    "676816"
+   ],
+   "Kelphound": [
+    "281c13",
+    "e18571",
+    "f2d5c1",
+    "7e5c1b"
+   ],
+   "Blotling": [
+    "281c13",
+    "f6d1c9",
+    "984e19",
+    "d79924"
+   ],
+   "Scrivane": [
+    "231f11",
+    "d4934b",
+    "ebdcac",
+    "676719"
+   ],
+   "Hushkin": [
+    "251e12",
+    "f1d5c2",
+    "d19933",
+    "6d6419"
+   ],
+   "Silentra": [
+    "271d13",
+    "f6d2c5",
+    "8f5317",
+    "cc9f21"
+   ],
+   "Paddlewisp": [
+    "271d13",
+    "f8d1c5",
+    "e68d3a",
+    "7c5e10"
+   ],
+   "Ferrowyn": [
+    "291b14",
+    "f6d1cd",
+    "a1491d",
+    "da9435"
+   ],
+   "Talusk": [
+    "251e12",
+    "e98750",
+    "f5d8ac",
+    "73630e"
+   ],
+   "Talusgard": [
+    "251e12",
+    "d98d5b",
+    "7e5b1d",
+    "e9e0a0"
+   ],
+   "Cairnhold": [
+    "271d13",
+    "a64621",
+    "f1d7ba",
+    "c7a028"
+   ],
+   "Fluting": [
+    "261d12",
+    "da8a69",
+    "efd7bd",
+    "74601d"
+   ],
+   "Marshfife": [
+    "261d12",
+    "f5d3c3",
+    "de9235",
+    "766113"
+   ],
+   "Glasstarn": [
+    "251e12",
+    "e7894c",
+    "f3d9aa",
+    "71640f"
+   ],
+   "Lanternel": [
+    "291b14",
+    "d3301b",
+    "f7d3bf",
+    "e29322"
+   ],
+   "Seamlet": [
+    "251e12",
+    "f6d4be",
+    "dc9720",
+    "706410"
+   ],
+   "Mendlace": [
+    "261d12",
+    "f2d4c6",
+    "d49445",
+    "73611a"
+   ],
+   "Croziel": [
+    "291c14",
+    "df8576",
+    "954e22",
+    "eed9b6"
+   ],
+   "Frondmere": [
+    "241f11",
+    "8b541f",
+    "eddcad",
+    "b0ac27"
+   ],
+   "Brinelet": [
+    "261d12",
+    "e1885d",
+    "875719",
+    "edde9f"
+   ],
+   "Saltspire": [
+    "241e11",
+    "905120",
+    "eedab1",
+    "b4aa28"
+   ],
+   "Millwhit": [
+    "231f11",
+    "e68e33",
+    "7a600f",
+    "ecea62"
+   ],
+   "Millvane": [
+    "291b14",
+    "f5d1cc",
+    "df8b5a",
+    "83591a"
+   ],
+   "Drizzlet": [
+    "241e11",
+    "e78c3e",
+    "7e5d10",
+    "ede674"
+   ],
+   "Rainmantle": [
+    "251e12",
+    "9b4c1d",
+    "f1d9b2",
+    "bca623"
+   ],
+   "Reedquill": [
+    "281c13",
+    "f4d2ca",
+    "dc8d51",
+    "7d5c19"
+   ],
+   "Reedwarden": [
+    "231f11",
+    "e68e34",
+    "f2dc9a",
+    "69680d"
+   ],
+   "Cogmite": [
+    "251e12",
+    "954e23",
+    "eed9b6",
+    "baa62b"
+   ],
+   "Cogwright": [
+    "271d13",
+    "dd886a",
+    "f0d7bd",
+    "775f1b"
+   ],
+   "Puddock": [
+    "251e12",
+    "f7d3bc",
+    "855a0f",
+    "bea816"
+   ],
+   "Delthorn": [
+    "2a1b14",
+    "ed7e76",
+    "f7d2c2",
+    "8e5513"
+   ],
+   "Glimmoth": [
+    "231f11",
+    "88561d",
+    "ecdda8",
+    "adae25"
+   ],
+   "Wickmoth": [
+    "231f11",
+    "875521",
+    "ebdcae",
+    "aead2b"
+   ],
+   "Silthop": [
+    "281c13",
+    "f5d2c9",
+    "dd8e4d",
+    "7c5d18"
+   ],
+   "Siltgrove": [
+    "291b14",
+    "f4d1cc",
+    "dd8b5c",
+    "82591b"
+   ],
+   "Flourie": [
+    "281c13",
+    "e2856e",
+    "f2d5bf",
+    "7d5c19"
+   ],
+   "Floursprite": [
+    "251e12",
+    "e28957",
+    "f2d8b2",
+    "726314"
+   ],
+   "Cindle": [
+    "241e11",
+    "94501b",
+    "f0daab",
+    "b6aa21"
+   ],
+   "Glassfell": [
+    "241e12",
+    "9b4e15",
+    "f3d9a6",
+    "b9aa19"
+   ],
+   "Etchling": [
+    "251e12",
+    "da8c5d",
+    "805a1d",
+    "eadfa1"
+   ],
+   "Burinox": [
+    "261d12",
+    "ab441a",
+    "f4d6b5",
+    "c8a21e"
+   ],
+   "Ashwren": [
+    "2a1b14",
+    "e0837b",
+    "f2d4c6",
+    "84571f"
+   ],
+   "Ashcrest": [
+    "261d12",
+    "e7865a",
+    "8b5614",
+    "f0de98"
+   ],
+   "Bogwick": [
+    "251e12",
+    "9e4d14",
+    "f4d9a7",
+    "bba918"
+   ],
+   "Fenwarden": [
+    "241e11",
+    "f0d6c2",
+    "7a5d1e",
+    "b4a92d"
+   ],
+   "Cullet": [
+    "291c14",
+    "f6d1cb",
+    "9c4c1b",
+    "da9728"
+   ],
+   "Cullhorn": [
+    "261d12",
+    "f5d3c4",
+    "8a5617",
+    "c5a321"
+   ],
+   "Smeltpup": [
+    "251e12",
+    "f8d3be",
+    "895810",
+    "c2a616"
+   ],
+   "Smeltmaw": [
+    "271d13",
+    "e58566",
+    "f3d6ba",
+    "7b5e15"
+   ],
+   "Solkit": [
+    "251e12",
+    "9b4d1a",
+    "f2d9ae",
+    "bca81f"
+   ],
+   "Solmantle": [
+    "281c13",
+    "de8671",
+    "f1d6c1",
+    "7b5c1c"
+   ],
+   "Saltsprig": [
+    "291b14",
+    "f7d0cc",
+    "e58758",
+    "885715"
+   ],
+   "Saltcrown": [
+    "281c13",
+    "ba3c20",
+    "f4d5be",
+    "d69925"
+   ],
+   "Orrlet": [
+    "251e12",
+    "f2d4c4",
+    "d3963c",
+    "70631a"
+   ],
+   "Orrerine": [
+    "291b14",
+    "e28376",
+    "f2d4c3",
+    "82591b"
+   ],
+   "Duneshrew": [
+    "271d13",
+    "e58566",
+    "f3d6ba",
+    "7a5e15"
+   ],
+   "Dunebastion": [
+    "281c13",
+    "f5d1ca",
+    "964f1c",
+    "d59927"
+   ],
+   "Shimmerlet": [
+    "271d13",
+    "f3d3c9",
+    "d8904e",
+    "785e1b"
+   ],
+   "Mirassil": [
+    "241f11",
+    "f0d6be",
+    "785e1b",
+    "b1ab28"
+   ],
+   "Highhare": [
+    "251e12",
+    "d88d5d",
+    "7e5b1f",
+    "e8e0a3"
+   ],
+   "Zenithare": [
+    "281c13",
+    "ee8068",
+    "f7d4ba",
+    "835b0f"
+   ],
+   "Velahra": [
+    "281c13",
+    "f5d2c9",
+    "df8d4e",
+    "7e5c17"
+   ],
+   "Hallowmur": [
+    "291b14",
+    "c63523",
+    "f4d4c2",
+    "db9530"
+   ],
+   "Scriptorax": [
+    "281c13",
+    "b53e24",
+    "f2d5c0",
+    "d4992a"
+   ],
+   "Lumivane": [
+    "291c14",
+    "f8d0ca",
+    "e6894e",
+    "855a12"
+   ],
+   "Zephyrel": [
+    "251e12",
+    "f2d5c0",
+    "d4992b",
+    "6e6416"
+   ],
+   "Monolurk": [
+    "251e12",
+    "f3d4c3",
+    "83591a",
+    "bea525"
+   ],
+   "Vorlucent": [
+    "261d12",
+    "d98c63",
+    "815920",
+    "eadea8"
+   ],
+   "Rollib": [
+    "2a1b14",
+    "f6d0cd",
+    "e3885d",
+    "895717"
+   ],
+   "Rollibex": [
+    "271c13",
+    "f4d2c8",
+    "db8f4c",
+    "7a5e18"
+   ],
+   "Helirollax": [
+    "231f11",
+    "885521",
+    "ebdcae",
+    "aead2a"
+   ],
+   "Sirocub": [
+    "2a1b14",
+    "f9cfcc",
+    "b14314",
+    "e79029"
+   ],
+   "Sirocat": [
+    "2a1b14",
+    "ea7f78",
+    "aa451a",
+    "f3d7b5"
+   ],
+   "Siroclaw": [
+    "241e12",
+    "dd8d51",
+    "7e5c18",
+    "eae293"
+   ],
+   "Scaldasp": [
+    "2a1b14",
+    "f9cfcc",
+    "eb8556",
+    "8d5611"
+   ],
+   "Scaldcoil": [
+    "271d13",
+    "e08866",
+    "8a551c",
+    "eddca8"
+   ],
+   "Scaldrahn": [
+    "241f11",
+    "f2d6bc",
+    "7a5e18",
+    "b2ac23"
+   ],
+   "Noonpip": [
+    "261d12",
+    "dc8b60",
+    "efd8b8",
+    "726219"
+   ],
+   "Noonwhist": [
+    "291b14",
+    "f4d1cd",
+    "dc8b5f",
+    "82591d"
+   ],
+   "Noonsoral": [
+    "281c13",
+    "e8826e",
+    "f5d4be",
+    "825b15"
+   ],
+   "Spinnub": [
+    "231f11",
+    "875620",
+    "ebdcab",
+    "adae29"
+   ],
+   "Spinnarow": [
+    "251e12",
+    "da8c60",
+    "81591e",
+    "eadfa4"
+   ],
+   "Spinnacle": [
+    "241f11",
+    "965112",
+    "f3db9e",
+    "b4ad16"
+   ],
+   "Wadlet": [
+    "261d12",
+    "a7471b",
+    "f3d7b5",
+    "c5a320"
+   ],
+   "Wadishell": [
+    "261d12",
+    "f2d4c6",
+    "85571f",
+    "c1a22d"
+   ],
+   "Wadibastion": [
+    "271d13",
+    "de8869",
+    "8a541e",
+    "eddcac"
+   ],
+   "Ergfin": [
+    "281c13",
+    "e3846e",
+    "93501d",
+    "efdaae"
+   ],
+   "Ergskim": [
+    "241e11",
+    "955117",
+    "f1dba6",
+    "b5ac1c"
+   ],
+   "Ergrava": [
+    "261d12",
+    "f6d3c1",
+    "885814",
+    "c2a51c"
+   ],
+   "Ardlet": [
+    "291b14",
+    "c13723",
+    "f4d4c1",
+    "d9962f"
+   ],
+   "Ardlume": [
+    "241f11",
+    "8d531e",
+    "eddbad",
+    "b2ab26"
+   ],
+   "Ardenthal": [
+    "281c13",
+    "e4846d",
+    "94501c",
+    "f0daad"
+   ],
+   "Fulgrit": [
+    "281c13",
+    "f7d1c8",
+    "9a4e15",
+    "d79a1d"
+   ],
+   "Fulgorin": [
+    "281c13",
+    "f7d1c8",
+    "e48b47",
+    "805c13"
+   ],
+   "Fulgorath": [
+    "251e12",
+    "a64813",
+    "f5d8ab",
+    "c2a617"
+   ],
+   "Carabun": [
+    "241e11",
+    "905120",
+    "eedab1",
+    "b4aa28"
+   ],
+   "Caravant": [
+    "291c14",
+    "f7d1ca",
+    "9d4c19",
+    "dc9623"
+   ],
+   "Caravault": [
+    "291b14",
+    "e88075",
+    "f5d3c2",
+    "885716"
+   ],
+   "Velvit": [
+    "251e12",
+    "e9884a",
+    "855a10",
+    "f0e283"
+   ],
+   "Velvessa": [
+    "241e11",
+    "f5d5bb",
+    "7e5d14",
+    "b7ab1c"
+   ],
+   "Velverain": [
+    "261d12",
+    "b24214",
+    "f6d6b1",
+    "cba217"
+   ],
+   "Clasplet": [
+    "261d12",
+    "9d4a25",
+    "efd8bb",
+    "c1a22d"
+   ],
+   "Claspirant": [
+    "281c13",
+    "b83c22",
+    "f3d5bf",
+    "d59927"
+   ],
+   "Claspreign": [
+    "281c13",
+    "df8672",
+    "f1d5c1",
+    "7d5c1c"
+   ],
+   "Obelit": [
+    "251e12",
+    "f0d5c3",
+    "7c5b1e",
+    "b7a82c"
+   ],
+   "Obelith": [
+    "291c14",
+    "ba3b25",
+    "f3d4c1",
+    "d69730"
+   ],
+   "Obelordan": [
+    "261d12",
+    "e58857",
+    "885815",
+    "efdf95"
+   ],
+   "Haboblet": [
+    "271c13",
+    "e1866b",
+    "f2d6bd",
+    "7a5e19"
+   ],
+   "Haboborn": [
+    "261d12",
+    "dd8a62",
+    "f0d8b9",
+    "736119"
+   ],
+   "Habobrax": [
+    "241e11",
+    "90521d",
+    "eedbad",
+    "b3ab24"
+   ],
+   "Stiltwade": [
+    "251e12",
+    "f0d5c3",
+    "ce9a38",
+    "6d641b"
+   ],
+   "Stiltregent": [
+    "281c13",
+    "f4d2cb",
+    "da8d56",
+    "7d5c1b"
+   ],
+   "Palmop": [
+    "281c13",
+    "b33f20",
+    "f3d5bd",
+    "d19c25"
+   ],
+   "Palmonarch": [
+    "241e11",
+    "e78b42",
+    "f3daa3",
+    "6e660e"
+   ],
+   "Bakedil": [
+    "291b14",
+    "f5d1cc",
+    "9a4c1f",
+    "d69634"
+   ],
+   "Bakedillon": [
+    "251e12",
+    "a34a14",
+    "f5d8aa",
+    "bfa717"
+   ],
+   "Hazejel": [
+    "2a1b14",
+    "ea7f78",
+    "a9451b",
+    "f3d7b5"
+   ],
+   "Hazejellith": [
+    "251e12",
+    "e18b4f",
+    "f1d9ad",
+    "6f6513"
+   ],
+   "Corocub": [
+    "2a1b14",
+    "f4d1ce",
+    "dc8a63",
+    "85571e"
+   ],
+   "Coronarch": [
+    "291b14",
+    "d43018",
+    "f8d3bd",
+    "e4941a"
+   ],
+   "Chirrik": [
+    "2a1b14",
+    "ef7d75",
+    "f8d2c1",
+    "8f5510"
+   ],
+   "Chirrikade": [
+    "261d12",
+    "f4d3c3",
+    "db9335",
+    "746215"
+   ],
+   "Brinewhorl": [
+    "271c13",
+    "f3d3c9",
+    "8d5320",
+    "cb9d2e"
+   ],
+   "Gyrevult": [
+    "271d13",
+    "b3401b",
+    "f4d5b8",
+    "cf9e1f"
+   ],
+   "Heliodrop": [
+    "261d12",
+    "f2d4c6",
+    "d49445",
+    "73611b"
+   ],
+   "Duskmirrah": [
+    "281c13",
+    "e38471",
+    "f3d5c1",
+    "805b19"
+   ],
+   "Sootpaw": [
+    "241e11",
+    "d69055",
+    "795d1d",
+    "e7e29b"
+   ],
+   "Sootlurk": [
+    "2a1b14",
+    "f8d0cd",
+    "a84619",
+    "e0922f"
+   ],
+   "Sootharrow": [
+    "261d12",
+    "de8960",
+    "85571c",
+    "ecdea3"
+   ],
+   "Vitrill": [
+    "281c13",
+    "dc8773",
+    "8e5223",
+    "ecdab4"
+   ],
+   "Vitrillon": [
+    "251e12",
+    "ea8848",
+    "855a0f",
+    "f0e280"
+   ],
+   "Vitrillaxe": [
+    "291b14",
+    "e28376",
+    "994d20",
+    "efd8b5"
+   ],
+   "Sablet": [
+    "291b14",
+    "e18478",
+    "f2d4c4",
+    "82591d"
+   ],
+   "Sablowl": [
+    "291c14",
+    "f3d2cd",
+    "d88d5e",
+    "7e5a1f"
+   ],
+   "Sablarch": [
+    "241f11",
+    "d49153",
+    "785e1e",
+    "e6e39a"
+   ],
+   "Quenchet": [
+    "281c13",
+    "e7836b",
+    "f4d5bc",
+    "7f5c14"
+   ],
+   "Quenchcoil": [
+    "241e11",
+    "f3d5bc",
+    "7c5d17",
+    "b4ab21"
+   ],
+   "Quenchwyrm": [
+    "271d13",
+    "e48664",
+    "8e5319",
+    "efdca4"
+   ],
+   "Brickit": [
+    "281c13",
+    "f4d2c9",
+    "91511d",
+    "cf9c2a"
+   ],
+   "Brickwarden": [
+    "261d12",
+    "9f4a1e",
+    "f1d8b5",
+    "c0a424"
+   ],
+   "Brickolossus": [
+    "271d13",
+    "f8d1c5",
+    "e68d3a",
+    "7c5e10"
+   ],
+   "Clinklet": [
+    "261d12",
+    "f2d4c5",
+    "d4953e",
+    "726219"
+   ],
+   "Clinkshell": [
+    "251e12",
+    "dd8c54",
+    "7f5b19",
+    "eae196"
+   ],
+   "Clinkerdome": [
+    "241f11",
+    "d6914d",
+    "775f1b",
+    "e6e492"
+   ],
+   "Peatlet": [
+    "261d12",
+    "db8b64",
+    "efd8ba",
+    "72611b"
+   ],
+   "Peatbloom": [
+    "271d13",
+    "da8a6b",
+    "875621",
+    "ebdcae"
+   ],
+   "Peatmonarch": [
+    "2a1b14",
+    "f4d1cf",
+    "9d4925",
+    "d49448"
+   ],
+   "Gloomgill": [
+    "241f11",
+    "e88c39",
+    "f4db9d",
+    "6c670d"
+   ],
+   "Gloomgillar": [
+    "261d12",
+    "f3d4c4",
+    "d69539",
+    "726217"
+   ],
+   "Gloomgillith": [
+    "281c13",
+    "b93c1e",
+    "f4d5bd",
+    "d49a23"
+   ],
+   "Fumelet": [
+    "281c13",
+    "f4d2ca",
+    "dd8d54",
+    "7e5c19"
+   ],
+   "Fumewraith": [
+    "281c13",
+    "f5d2c9",
+    "92511b",
+    "d09c27"
+   ],
+   "Fumeregent": [
+    "281c13",
+    "f7d1c7",
+    "e48c44",
+    "7e5d12"
+   ],
+   "Lodekit": [
+    "241f11",
+    "8f5318",
+    "f0dca5",
+    "b1ad1e"
+   ],
+   "Lodebrock": [
+    "2a1b14",
+    "e88079",
+    "f5d3c4",
+    "8a5618"
+   ],
+   "Lodemarshal": [
+    "291b14",
+    "d1311d",
+    "f6d3c0",
+    "e19425"
+   ],
+   "Glowflit": [
+    "291c14",
+    "f9d0c9",
+    "ea884a",
+    "86590f"
+   ],
+   "Glowflitter": [
+    "261d12",
+    "f2d4c7",
+    "86561f",
+    "c3a12d"
+   ],
+   "Glowflare": [
+    "281c13",
+    "e48371",
+    "f3d4c0",
+    "805b18"
+   ],
+   "Stylet": [
+    "271d13",
+    "f4d3c7",
+    "8c541c",
+    "c99f28"
+   ],
+   "Stylox": [
+    "281c13",
+    "f7d1c9",
+    "9a4e17",
+    "d89921"
+   ],
+   "Stylaxon": [
+    "251e12",
+    "f0d5c3",
+    "7c5b1e",
+    "b7a82c"
+   ],
+   "Coalkid": [
+    "281c13",
+    "e98367",
+    "975016",
+    "f2daa5"
+   ],
+   "Coalbuck": [
+    "261d12",
+    "dd8964",
+    "f0d7b9",
+    "746119"
+   ],
+   "Coalpatriarch": [
+    "271d13",
+    "f6d2c6",
+    "925217",
+    "ce9e20"
+   ],
+   "Glazel": [
+    "2a1b14",
+    "e2281c",
+    "f7d2c2",
+    "e5902d"
+   ],
+   "Glazelisk": [
+    "271d13",
+    "f2d3c9",
+    "8a5422",
+    "c89e31"
+   ],
+   "Glazeldrake": [
+    "271d13",
+    "f2d3ca",
+    "895422",
+    "c79e32"
+   ],
+   "Puffbellow": [
+    "261d12",
+    "de8962",
+    "f0d7b9",
+    "746118"
+   ],
+   "Bellowroc": [
+    "281c13",
+    "e08572",
+    "925021",
+    "eedab3"
+   ],
+   "Lampick": [
+    "271d13",
+    "e48665",
+    "8e5419",
+    "efdca5"
+   ],
+   "Lampickard": [
+    "241f11",
+    "d49154",
+    "775e1e",
+    "e6e39a"
+   ],
+   "Charsprout": [
+    "281c13",
+    "f7d1c7",
+    "e58c43",
+    "7f5d12"
+   ],
+   "Charsylvan": [
+    "241e11",
+    "f6d5b8",
+    "7e5d11",
+    "b6ac18"
+   ],
+   "Ingotlet": [
+    "231f11",
+    "dd9040",
+    "efdca4",
+    "696812"
+   ],
+   "Ingotusk": [
+    "2a1b14",
+    "c43529",
+    "f3d4c5",
+    "d7943f"
+   ],
+   "Mortarant": [
+    "261d12",
+    "f6d2c3",
+    "8d5514",
+    "c8a21d"
+   ],
+   "Mortarmarch": [
+    "261d12",
+    "f5d3c2",
+    "895716",
+    "c3a41f"
+   ],
+   "Vaporel": [
+    "251e12",
+    "e08a56",
+    "f1d8b1",
+    "716314"
+   ],
+   "Vaporelle": [
+    "251e12",
+    "954e24",
+    "eed9b7",
+    "baa62d"
+   ],
+   "Shadeback": [
+    "271c13",
+    "e1866b",
+    "f2d6bd",
+    "7a5e19"
+   ],
+   "Kilnstork": [
+    "261d12",
+    "df8962",
+    "f1d7b8",
+    "746118"
+   ],
+   "Puffglass": [
+    "251e12",
+    "ea8848",
+    "855a0f",
+    "f1e27f"
+   ],
+   "Flueling": [
+    "261d12",
+    "f4d3c4",
+    "d99439",
+    "746216"
+   ],
+   "Inkpip": [
+    "261d12",
+    "eb8556",
+    "8e5510",
+    "f2de91"
+   ],
+   "Inkspool": [
+    "241f11",
+    "e68d37",
+    "f3dc9c",
+    "6a680d"
+   ],
+   "Inkregent": [
+    "271d13",
+    "dd8868",
+    "f0d7bc",
+    "76601a"
+   ],
+   "Weirkit": [
+    "231f11",
+    "f2d7b9",
+    "766016",
+    "aeaf21"
+   ],
+   "Weirrunner": [
+    "241e12",
+    "984f18",
+    "f2daa9",
+    "b8aa1d"
+   ],
+   "Weirmarshal": [
+    "241e11",
+    "935119",
+    "f0dba9",
+    "b4ab1f"
+   ],
+   "Diplit": [
+    "281c13",
+    "f7d1c8",
+    "9b4d16",
+    "d9991f"
+   ],
+   "Diparrow": [
+    "2a1b14",
+    "e68178",
+    "f4d3c4",
+    "885719"
+   ],
+   "Dipmonarch": [
+    "281c13",
+    "f7d1c8",
+    "e68b45",
+    "805c11"
+   ],
+   "Woadlet": [
+    "241f11",
+    "d49252",
+    "765f1e",
+    "e5e398"
+   ],
+   "Woadwhorl": [
+    "231f11",
+    "dd9041",
+    "785f16",
+    "e8e77f"
+   ],
+   "Woadcastle": [
+    "291b14",
+    "ef7e6e",
+    "a64912",
+    "f6d8aa"
+   ],
+   "Rubrit": [
+    "281c13",
+    "ad4127",
+    "f1d5c1",
+    "cf9b2f"
+   ],
+   "Rubricorn": [
+    "291b14",
+    "d3301c",
+    "f7d3c0",
+    "e29423"
+   ],
+   "Rubriclad": [
+    "271d13",
+    "a84520",
+    "f2d6b9",
+    "c8a026"
+   ],
+   "Nimbub": [
+    "281c13",
+    "b13e29",
+    "f1d5c2",
+    "d19935"
+   ],
+   "Nimbuck": [
+    "291c14",
+    "e98170",
+    "f5d4bf",
+    "845a14"
+   ],
+   "Nimbarch": [
+    "2a1b14",
+    "f5d1ce",
+    "de8962",
+    "86571c"
+   ],
+   "Sluicekit": [
+    "281c13",
+    "a84329",
+    "f0d6c1",
+    "cc9c31"
+   ],
+   "Sluicer": [
+    "251e12",
+    "db8b5e",
+    "82591d",
+    "eadfa2"
+   ],
+   "Sluicewarden": [
+    "241f11",
+    "f0d6be",
+    "775f1b",
+    "b0ac28"
+   ],
+   "Vanepip": [
+    "2a1b14",
+    "f7d0cd",
+    "e5875c",
+    "8a5616"
+   ],
+   "Vanecrow": [
+    "2a1b14",
+    "e2827a",
+    "f2d4c5",
+    "85571d"
+   ],
+   "Vanecrest": [
+    "251e12",
+    "9a4c20",
+    "f0d8b5",
+    "bda527"
+   ],
+   "Chimelet": [
+    "281c13",
+    "f4d2ca",
+    "da8e53",
+    "7c5c1b"
+   ],
+   "Chimewell": [
+    "241e11",
+    "91511e",
+    "eedaaf",
+    "b5aa26"
+   ],
+   "Chimeward": [
+    "291b14",
+    "f8d0cb",
+    "e98655",
+    "8a5712"
+   ],
+   "Rushkit": [
+    "241f11",
+    "925214",
+    "f2dc9f",
+    "b2ae19"
+   ],
+   "Rushprowl": [
+    "281c13",
+    "b83c22",
+    "f3d5bf",
+    "d59927"
+   ],
+   "Rushstalker": [
+    "241f11",
+    "d7914d",
+    "eddcad",
+    "696717"
+   ],
+   "Ripjolt": [
+    "231f11",
+    "8a551a",
+    "eedda5",
+    "aeae21"
+   ],
+   "Ripjolter": [
+    "241e11",
+    "e98b3b",
+    "7f5d0e",
+    "efe76d"
+   ],
+   "Ripjoltane": [
+    "281c13",
+    "b13f29",
+    "f1d5c2",
+    "d19935"
+   ],
+   "Grindlet": [
+    "261d12",
+    "f4d3c6",
+    "da9240",
+    "766017"
+   ],
+   "Grindwheel": [
+    "2a1b14",
+    "f7d0cd",
+    "a8461c",
+    "de9138"
+   ],
+   "Grindmonolith": [
+    "261d12",
+    "f8d2c0",
+    "8c5610",
+    "c6a416"
+   ],
+   "Morelit": [
+    "2a1b14",
+    "f6d0ce",
+    "a6471e",
+    "dc923b"
+   ],
+   "Morelamp": [
+    "291b14",
+    "f3d2ce",
+    "974d25",
+    "d19642"
+   ],
+   "Morelord": [
+    "281c13",
+    "aa4327",
+    "f1d6c0",
+    "cd9c2f"
+   ],
+   "Rookit": [
+    "281c13",
+    "e28470",
+    "f2d5c0",
+    "7e5c1a"
+   ],
+   "Rookwarden": [
+    "241e12",
+    "f6d4bb",
+    "815c11",
+    "b9aa18"
+   ],
+   "Skimmit": [
+    "251e12",
+    "e78852",
+    "f4d8ae",
+    "736310"
+   ],
+   "Skimmarch": [
+    "251e12",
+    "984d20",
+    "efd9b4",
+    "bca627"
+   ],
+   "Prismist": [
+    "281c13",
+    "f9d0c7",
+    "ea8a41",
+    "815c0f"
+   ],
+   "Prismistral": [
+    "241e11",
+    "f3d5bc",
+    "7c5d17",
+    "b4ab21"
+   ],
+   "Canalet": [
+    "271c13",
+    "f5d2c7",
+    "925219",
+    "cf9d24"
+   ],
+   "Canalord": [
+    "281c13",
+    "a74429",
+    "f0d6c1",
+    "cc9c32"
+   ],
+   "Padlet": [
+    "281c13",
+    "e1866d",
+    "f2d6be",
+    "7b5d19"
+   ],
+   "Padlotus": [
+    "241e11",
+    "d68f58",
+    "7a5d1e",
+    "e7e19e"
+   ],
+   "Thrashkin": [
+    "271d13",
+    "df876a",
+    "f1d6bd",
+    "795e1a"
+   ],
+   "Threshox": [
+    "251e12",
+    "db8c5a",
+    "efd9b4",
+    "6f6418"
+   ],
+   "Cartocoil": [
+    "261d12",
+    "e2885d",
+    "875718",
+    "edde9e"
+   ],
+   "Belfrit": [
+    "231f11",
+    "da9146",
+    "775f18",
+    "e7e687"
+   ],
+   "Dusktern": [
+    "281c13",
+    "f3d2cb",
+    "d88f56",
+    "7b5c1d"
+   ],
+   "Fiddlit": [
+    "241e12",
+    "db8e54",
+    "eedab1",
+    "6d6517"
+   ],
+   "Fiddlehorn": [
+    "251e12",
+    "994d1d",
+    "f0d9b1",
+    "bba723"
+   ],
+   "Fiddlestag": [
+    "251e12",
+    "f2d4c4",
+    "81591d",
+    "bca52b"
+   ],
+   "Gleamgrub": [
+    "271d13",
+    "f2d3c9",
+    "895521",
+    "c69f30"
+   ],
+   "Gleamworm": [
+    "291b14",
+    "f5d1cd",
+    "df8a5c",
+    "84581a"
+   ],
+   "Gleamwyrm": [
+    "251e12",
+    "974e1b",
+    "f0d9ae",
+    "b9a921"
+   ],
+   "Skerrit": [
+    "2a1b14",
+    "f8d0cc",
+    "e98658",
+    "8c5613"
+   ],
+   "Skerrigale": [
+    "291b14",
+    "e58276",
+    "9d4b1e",
+    "f1d8b4"
+   ],
+   "Skerrimast": [
+    "241e11",
+    "f5d5ba",
+    "7d5d12",
+    "b5ac1a"
+   ],
+   "Pinchkin": [
+    "281c13",
+    "f8d1c6",
+    "984f13",
+    "d59b1b"
+   ],
+   "Pinchward": [
+    "281c13",
+    "f4d2cb",
+    "da8d56",
+    "7d5c1b"
+   ],
+   "Pinchcastle": [
+    "241f11",
+    "d8904e",
+    "eddbad",
+    "6a6617"
+   ],
+   "Flicklet": [
+    "281c13",
+    "ec816a",
+    "9c4d14",
+    "f4d9a7"
+   ],
+   "Flickscale": [
+    "291b14",
+    "c43622",
+    "f4d4c1",
+    "da962c"
+   ],
+   "Flickwyrm": [
+    "241e11",
+    "f0d6c1",
+    "cc9c32",
+    "6b651a"
+   ],
+   "Brookhop": [
+    "271d13",
+    "f8d1c5",
+    "955112",
+    "d19e1a"
+   ],
+   "Brookbaron": [
+    "241f11",
+    "955113",
+    "f3dba0",
+    "b4ad17"
+   ],
+   "Covepup": [
+    "261d12",
+    "f5d3c4",
+    "de913a",
+    "776014"
+   ],
+   "Covewarden": [
+    "2a1b14",
+    "f3d1cf",
+    "da8a65",
+    "845720"
+   ],
+   "Gloamhog": [
+    "2a1b14",
+    "df847e",
+    "9c4a27",
+    "eed8bd"
+   ],
+   "Gloamquill": [
+    "291b14",
+    "ed7e73",
+    "f7d2c0",
+    "8a5712"
+   ],
+   "Glimshell": [
+    "241e11",
+    "f7d4b7",
+    "d59c19",
+    "6d670d"
+   ],
+   "Glimbastion": [
+    "281c13",
+    "f7d1c9",
+    "9a4e17",
+    "d89921"
+   ],
+   "Lichub": [
+    "231f11",
+    "f0d7bc",
+    "c6a02c",
+    "686717"
+   ],
+   "Lichenbear": [
+    "231f11",
+    "f1d7ba",
+    "766018",
+    "adae24"
+   ],
+   "Verdigrub": [
+    "271d13",
+    "f6d2c4",
+    "8f5415",
+    "cba01d"
+   ],
+   "Verdigrand": [
+    "261d12",
+    "f1d4c7",
+    "845720",
+    "c1a22f"
+   ],
+   "Peallith": [
+    "291b14",
+    "be3828",
+    "f3d4c4",
+    "d69539"
+   ],
+   "Fernwhisk": [
+    "271d13",
+    "e38763",
+    "f2d6b9",
+    "776016"
+   ],
+   "Hearthmote": [
+    "261d12",
+    "f5d3c2",
+    "dc942f",
+    "736213"
+   ],
+   "Vesk": [
+    "291b14",
+    "df847a",
+    "994c25",
+    "eed8ba"
+   ],
+   "Veskara": [
+    "281c13",
+    "b14025",
+    "f2d5bf",
+    "d19b2b"
+   ],
+   "Veskarion": [
+    "281c13",
+    "f4d2cb",
+    "935020",
+    "d19a2f"
+   ],
+   "Siltby": [
+    "251e12",
+    "f6d3bf",
+    "de9621",
+    "726411"
+   ],
+   "Siltarra": [
+    "271d13",
+    "f5d2c6",
+    "8f5318",
+    "cb9f22"
+   ],
+   "Siltaroth": [
+    "251e12",
+    "f7d3ba",
+    "845b0f",
+    "bcaa15"
+   ],
+   "Cindrik": [
+    "231f11",
+    "f2d7b8",
+    "c7a125",
+    "686813"
+   ],
+   "Cindrel": [
+    "261d12",
+    "e5875d",
+    "8a5616",
+    "efde9c"
+   ],
+   "Cindravax": [
+    "251e12",
+    "974e1e",
+    "f0d9b2",
+    "baa725"
+   ],
+   "Nibbet": [
+    "281c13",
+    "f3d2cc",
+    "d88d5c",
+    "7d5b1e"
+   ],
+   "Nibquill": [
+    "291b14",
+    "e78176",
+    "f4d3c3",
+    "875718"
+   ],
+   "Nibravure": [
+    "241f11",
+    "f6d5b6",
+    "d29e19",
+    "6c670d"
+   ],
+   "Filigrin": [
+    "241f11",
+    "e08e43",
+    "7b5e14",
+    "eae67f"
+   ],
+   "Filigrace": [
+    "2a1b14",
+    "f9cfcc",
+    "ec8457",
+    "8f5510"
+   ],
+   "Filigravure": [
+    "261d12",
+    "a74718",
+    "f4d7b1",
+    "c4a41c"
+   ],
+   "Mordling": [
+    "271d13",
+    "e98461",
+    "f5d6b6",
+    "7a5f11"
+   ],
+   "Mordantoad": [
+    "2a1b14",
+    "f7d0cd",
+    "e6875b",
+    "8a5615"
+   ],
+   "Mordantyrant": [
+    "291b14",
+    "ed7e73",
+    "f7d2c0",
+    "8b5711"
+   ],
+   "Rimekit": [
+    "281c13",
+    "ed8069",
+    "9e4d13",
+    "f4d9a5"
+   ],
+   "Rimelynx": [
+    "271d13",
+    "a04728",
+    "efd7bf",
+    "c69f31"
+   ],
+   "Rimesovereign": [
+    "281c13",
+    "de8574",
+    "934f22",
+    "eed9b5"
+   ],
+   "Burrin": [
+    "281c13",
+    "e6826f",
+    "9a4d1a",
+    "f1d9ae"
+   ],
+   "Burrowgraver": [
+    "241e11",
+    "974f17",
+    "f2daa7",
+    "b7ab1b"
+   ],
+   "Burringrand": [
+    "241e11",
+    "8f521f",
+    "eedbae",
+    "b3ab27"
+   ],
+   "Hoarling": [
+    "271d13",
+    "df876b",
+    "f1d6bd",
+    "785e1a"
+   ],
+   "Hoarstag": [
+    "271d13",
+    "e28669",
+    "8e531c",
+    "eedba9"
+   ],
+   "Hoarmonarch": [
+    "281c13",
+    "f2d3ca",
+    "8d5222",
+    "cc9c31"
+   ],
+   "Platewig": [
+    "281c13",
+    "df866f",
+    "f1d6c0",
+    "7a5d1c"
+   ],
+   "Platewing": [
+    "261d12",
+    "eb8459",
+    "8f5411",
+    "f2dd95"
+   ],
+   "Platemarshal": [
+    "271d13",
+    "b3401b",
+    "f4d5b8",
+    "cf9e1f"
+   ],
+   "Smudgel": [
+    "281c13",
+    "b13e29",
+    "f1d5c2",
+    "d19935"
+   ],
+   "Smudgeworm": [
+    "291b14",
+    "e88076",
+    "f5d3c2",
+    "875717"
+   ],
+   "Smudgewyrm": [
+    "251e12",
+    "f2d5c3",
+    "d29738",
+    "6f6319"
+   ],
+   "Corrodent": [
+    "241e11",
+    "d59058",
+    "ecdab4",
+    "6b651b"
+   ],
+   "Corrodile": [
+    "291c14",
+    "f5d1cc",
+    "dd8b59",
+    "815a1a"
+   ],
+   "Corrodrake": [
+    "2a1b14",
+    "e1837d",
+    "9e4925",
+    "efd7bb"
+   ],
+   "Gelidfin": [
+    "271c13",
+    "ab4324",
+    "f1d6be",
+    "cc9d2c"
+   ],
+   "Gelidray": [
+    "281c13",
+    "b83c22",
+    "f3d5bf",
+    "d59927"
+   ],
+   "Gelidmonarch": [
+    "2a1b14",
+    "e3827a",
+    "9f4921",
+    "f0d7b8"
+   ],
+   "Stampet": [
+    "271d13",
+    "e38763",
+    "f2d6b9",
+    "776016"
+   ],
+   "Stamphorn": [
+    "281c13",
+    "ab412a",
+    "f0d6c3",
+    "ce9a37"
+   ],
+   "Stampcolossus": [
+    "271d13",
+    "f4d3c8",
+    "8d531d",
+    "ca9e2a"
+   ],
+   "Quilmoth": [
+    "251e12",
+    "f8d3be",
+    "895810",
+    "c2a616"
+   ],
+   "Quilmothra": [
+    "271d13",
+    "e38666",
+    "8d541a",
+    "efdca6"
+   ],
+   "Quilmothane": [
+    "261d12",
+    "f5d3c3",
+    "8a5617",
+    "c5a320"
+   ],
+   "Vatrat": [
+    "261d12",
+    "e3885f",
+    "895618",
+    "eedd9f"
+   ],
+   "Vatreeve": [
+    "281c13",
+    "b93d1f",
+    "f4d5bd",
+    "d49a24"
+   ],
+   "Vatbaron": [
+    "251e12",
+    "9b4c1c",
+    "f1d8b1",
+    "bda722"
+   ],
+   "Sleetowl": [
+    "251e12",
+    "e98750",
+    "885811",
+    "f0e08b"
+   ],
+   "Sleetcowl": [
+    "291b14",
+    "e08477",
+    "974d22",
+    "efd9b7"
+   ],
+   "Sleetsage": [
+    "281c13",
+    "f3d2cc",
+    "d98d5b",
+    "7e5b1d"
+   ],
+   "Copperling": [
+    "251e12",
+    "f0d5c3",
+    "7e5b1f",
+    "b8a72d"
+   ],
+   "Copperclad": [
+    "241e11",
+    "de8d4d",
+    "f0daac",
+    "6c6614"
+   ],
+   "Copperpatriarch": [
+    "261d12",
+    "e68759",
+    "f3d7b2",
+    "756212"
+   ],
+   "Blotkin": [
+    "291b14",
+    "f4d1ce",
+    "dc8a62",
+    "83581e"
+   ],
+   "Blotgrimm": [
+    "251e12",
+    "f3d4c0",
+    "815a18",
+    "bba723"
+   ],
+   "Drypup": [
+    "261d12",
+    "e0895c",
+    "855819",
+    "ecdf9e"
+   ],
+   "Dryhound": [
+    "291b14",
+    "bb392c",
+    "f2d4c6",
+    "d39542"
+   ],
+   "Fizzlet": [
+    "231f11",
+    "d99146",
+    "775f18",
+    "e7e688"
+   ],
+   "Fizzgrove": [
+    "291b14",
+    "f5d1cd",
+    "9c4b1f",
+    "d79536"
+   ],
+   "Glacilet": [
+    "2a1b14",
+    "cf3123",
+    "f5d3c3",
+    "dd9336"
+   ],
+   "Glacilisk": [
+    "281c13",
+    "f7d1c7",
+    "e48c44",
+    "7e5d12"
+   ],
+   "Pressbug": [
+    "271d13",
+    "e18669",
+    "f2d6bc",
+    "795e18"
+   ],
+   "Pressbeetle": [
+    "251e12",
+    "9e4b19",
+    "f2d8af",
+    "bea71f"
+   ],
+   "Canalurk": [
+    "251e12",
+    "f1d5c5",
+    "80591f",
+    "bca52d"
+   ],
+   "Canalurker": [
+    "281c13",
+    "f6d2c8",
+    "945019",
+    "d29c23"
+   ],
+   "Forgefly": [
+    "251e12",
+    "e48955",
+    "f2d8b0",
+    "726312"
+   ],
+   "Forgeflare": [
+    "241e11",
+    "e98b40",
+    "f4daa2",
+    "6e660d"
+   ],
+   "Vitriolus": [
+    "241f11",
+    "8d541c",
+    "eedca9",
+    "b0ad23"
+   ],
+   "Frostfoil": [
+    "241f11",
+    "db9046",
+    "eedca8",
+    "696714"
+   ],
+   "Gildfinch": [
+    "241e11",
+    "da8f50",
+    "eedbae",
+    "6b6617"
+   ],
+   "Gildwing": [
+    "281c13",
+    "de8673",
+    "915022",
+    "eddab4"
+   ],
+   "Gildaurus": [
+    "251e12",
+    "e08b54",
+    "f1d9b0",
+    "706414"
+   ],
+   "Ledgepup": [
+    "281c13",
+    "f6d1c9",
+    "984e19",
+    "d69924"
+   ],
+   "Ledgehound": [
+    "291b14",
+    "f5d1cd",
+    "de8a5f",
+    "85581b"
+   ],
+   "Ledgewarden": [
+    "241e11",
+    "f1d6c0",
+    "7b5d1c",
+    "b4aa29"
+   ],
+   "Zenkit": [
+    "231f11",
+    "f5d6b3",
+    "caa11a",
+    "68690e"
+   ],
+   "Zenlynx": [
+    "241f11",
+    "f6d5b5",
+    "cf9f1a",
+    "6a680d"
+   ],
+   "Zenithar": [
+    "241e11",
+    "f5d5bb",
+    "d59b1f",
+    "6d6610"
+   ],
+   "Orrebit": [
+    "261d12",
+    "f8d2bf",
+    "e5931e",
+    "75630d"
+   ],
+   "Orrewheel": [
+    "281c13",
+    "f2d3cc",
+    "d78e5a",
+    "7c5c1e"
+   ],
+   "Orremarch": [
+    "241f11",
+    "dc8f49",
+    "efdbaa",
+    "6a6714"
+   ],
+   "Flatskip": [
+    "281c13",
+    "de8574",
+    "934f22",
+    "eed9b5"
+   ],
+   "Flatskimmer": [
+    "291b14",
+    "b43d2b",
+    "f1d5c4",
+    "d1973e"
+   ],
+   "Flatsovereign": [
+    "261d12",
+    "f2d4c6",
+    "d39543",
+    "72611b"
+   ],
+   "Cloudmop": [
+    "291c14",
+    "e08575",
+    "f1d5c3",
+    "7f5a1d"
+   ],
+   "Cloudram": [
+    "231f11",
+    "efd7be",
+    "765f1c",
+    "aead2a"
+   ],
+   "Cloudbellow": [
+    "271d13",
+    "a24725",
+    "f0d7bc",
+    "c5a02d"
+   ],
+   "Haloon": [
+    "231f11",
+    "e29035",
+    "f1dd9c",
+    "68690f"
+   ],
+   "Halonel": [
+    "291b14",
+    "f5d1cc",
+    "9b4c1f",
+    "d79633"
+   ],
+   "Halorch": [
+    "281c13",
+    "bd3a21",
+    "f4d4bf",
+    "d89826"
+   ],
+   "Lumoth": [
+    "251e12",
+    "db8c5a",
+    "7f5b1c",
+    "eae09e"
+   ],
+   "Lumothra": [
+    "251e12",
+    "e38b4d",
+    "815b14",
+    "ede28b"
+   ],
+   "Lumothane": [
+    "261d12",
+    "eb8557",
+    "f6d6b0",
+    "77610e"
+   ],
+   "Vinestep": [
+    "241e12",
+    "f7d4ba",
+    "da9a1a",
+    "6f660d"
+   ],
+   "Vinestair": [
+    "261d12",
+    "a4471d",
+    "f2d7b6",
+    "c4a223"
+   ],
+   "Vinespire": [
+    "241e12",
+    "9a4e16",
+    "f2daa8",
+    "b9aa1b"
+   ],
+   "Noonfox": [
+    "291b14",
+    "f4d1cd",
+    "9a4c21",
+    "d5963b"
+   ],
+   "Noonvixen": [
+    "291c14",
+    "f3d2cc",
+    "da8d5d",
+    "7f5a1d"
+   ],
+   "Noonregent": [
+    "2a1b14",
+    "e5271b",
+    "f8d2c1",
+    "e7902a"
+   ],
+   "Brasshop": [
+    "2a1b14",
+    "ce3026",
+    "f4d3c5",
+    "db923d"
+   ],
+   "Brassjack": [
+    "281c13",
+    "f2d2cc",
+    "915024",
+    "ce993b"
+   ],
+   "Brassgrand": [
+    "231f11",
+    "f6d5b3",
+    "cda018",
+    "6a690c"
+   ],
+   "Plinthlet": [
+    "271c13",
+    "f3d3ca",
+    "8d5320",
+    "cb9d2f"
+   ],
+   "Plinthshell": [
+    "251e12",
+    "994c21",
+    "efd8b6",
+    "bda529"
+   ],
+   "Plinthcastle": [
+    "291b14",
+    "f5d1cc",
+    "9c4c1d",
+    "d8962f"
+   ],
+   "Kitelet": [
+    "291b14",
+    "f6d1cd",
+    "a1491d",
+    "da9436"
+   ],
+   "Kitewhip": [
+    "251e12",
+    "e98849",
+    "855a10",
+    "f0e282"
+   ],
+   "Kitemonarch": [
+    "241e11",
+    "f2d6bd",
+    "7b5d18",
+    "b4ab23"
+   ],
+   "Coffrel": [
+    "271c13",
+    "dd876e",
+    "8c5321",
+    "eddbb0"
+   ],
+   "Coffrake": [
+    "241e11",
+    "f2d5be",
+    "7c5d19",
+    "b5aa24"
+   ],
+   "Coffrendrake": [
+    "251e12",
+    "9f4c15",
+    "f4d9aa",
+    "bda819"
+   ],
+   "Rillsnail": [
+    "261d12",
+    "de8963",
+    "f0d7b9",
+    "746118"
+   ],
+   "Rillshell": [
+    "281c13",
+    "aa4227",
+    "f1d6c0",
+    "cd9c2f"
+   ],
+   "Rillcastle": [
+    "261d12",
+    "f1d4c7",
+    "d29448",
+    "73611c"
+   ],
+   "Spanling": [
+    "271d13",
+    "df8867",
+    "89551d",
+    "eddca9"
+   ],
+   "Spanbrute": [
+    "291c14",
+    "f5d1cb",
+    "994d1e",
+    "d6972f"
+   ],
+   "Spanwarden": [
+    "281c13",
+    "b03f27",
+    "f1d5c1",
+    "d19a30"
+   ],
+   "Spumlet": [
+    "291b14",
+    "f9cfcb",
+    "ec8552",
+    "8c5710"
+   ],
+   "Spumeclaw": [
+    "231f11",
+    "89551c",
+    "eddda6",
+    "adae23"
+   ],
+   "Chalkid": [
+    "261d12",
+    "d98c63",
+    "815920",
+    "eadea8"
+   ],
+   "Chalkhorn": [
+    "291b14",
+    "f3d2ce",
+    "d88c63",
+    "815920"
+   ],
+   "Wellet": [
+    "261d12",
+    "e5875a",
+    "895716",
+    "efde99"
+   ],
+   "Wellwyrm": [
+    "231f11",
+    "dd9041",
+    "785f16",
+    "e8e77f"
+   ],
+   "Glintwader": [
+    "231f11",
+    "f0d7bd",
+    "765f1b",
+    "aead29"
+   ],
+   "Glintheron": [
+    "291b14",
+    "f8d0ca",
+    "e88850",
+    "875912"
+   ],
+   "Gildmite": [
+    "231f11",
+    "e49032",
+    "f1dd99",
+    "68690e"
+   ],
+   "Gildscarab": [
+    "251e12",
+    "f3d4c1",
+    "825a19",
+    "bca624"
+   ],
+   "Brazlet": [
+    "261d12",
+    "e0895f",
+    "f1d8b6",
+    "736217"
+   ],
+   "Brazierbrute": [
+    "271d13",
+    "e18767",
+    "8c541b",
+    "eedca8"
+   ],
+   "Dewfawn": [
+    "281c13",
+    "e08571",
+    "f2d5c1",
+    "7d5c1b"
+   ],
+   "Dewstag": [
+    "271d13",
+    "f3d3c8",
+    "8b541e",
+    "c89f2b"
+   ],
+   "Arcfin": [
+    "241e11",
+    "f6d4ba",
+    "d69b1c",
+    "6d660f"
+   ],
+   "Arcfinnar": [
+    "291b14",
+    "e78175",
+    "f4d4c2",
+    "855818"
+   ],
+   "Eavekit": [
+    "271d13",
+    "f3d3c8",
+    "d8914a",
+    "775f1a"
+   ],
+   "Eaveprowl": [
+    "261d12",
+    "f4d3c4",
+    "db933a",
+    "756115"
+   ],
+   "Gildrelic": [
+    "251e12",
+    "f4d4c1",
+    "845918",
+    "bfa622"
+   ],
+   "Zenwhirl": [
+    "271c13",
+    "b2401f",
+    "f3d5bb",
+    "cf9d24"
+   ],
+   "Gnomonk": [
+    "241e11",
+    "e38d43",
+    "f2dba5",
+    "6c6710"
+   ],
+   "Gildbloom": [
+    "231f11",
+    "8b551c",
+    "eedca7",
+    "afad23"
+   ],
+   "Boltnib": [
+    "231f11",
+    "f5d6b4",
+    "7a5f10",
+    "b1af17"
+   ],
+   "Boltgnaw": [
+    "291b14",
+    "f6d1cc",
+    "e1895a",
+    "855818"
+   ],
+   "Boltgrimmer": [
+    "281c13",
+    "f5d2c9",
+    "95501a",
+    "d39a25"
+   ],
+   "Veilmote": [
+    "281c13",
+    "c2381e",
+    "f5d4be",
+    "da9822"
+   ],
+   "Veilmothel": [
+    "261d12",
+    "e28762",
+    "8a5519",
+    "eedda2"
+   ],
+   "Veilmarquise": [
+    "261d12",
+    "f4d3c4",
+    "da933b",
+    "756116"
+   ],
+   "Tallop": [
+    "261d12",
+    "f5d3c1",
+    "dd942d",
+    "736212"
+   ],
+   "Tallogg": [
+    "251e12",
+    "de8a5c",
+    "f0d8b5",
+    "716317"
+   ],
+   "Tallowgrand": [
+    "251e12",
+    "f1d5c4",
+    "7f5a1f",
+    "baa62d"
+   ],
+   "Dimlure": [
+    "231f11",
+    "f1d7b9",
+    "c6a126",
+    "686814"
+   ],
+   "Dimlurker": [
+    "281c13",
+    "ec8069",
+    "9d4d13",
+    "f4d9a6"
+   ],
+   "Dimluminor": [
+    "271d13",
+    "e0876a",
+    "f1d6bd",
+    "795e19"
+   ],
+   "Tollpip": [
+    "271d13",
+    "f3d3c7",
+    "89551e",
+    "c6a02c"
+   ],
+   "Tollgull": [
+    "2a1b14",
+    "f5d1ce",
+    "a34720",
+    "d9923f"
+   ],
+   "Tollbaron": [
+    "291c14",
+    "ec806e",
+    "f7d3bd",
+    "855a11"
+   ],
+   "Sootkin": [
+    "281c13",
+    "b33f20",
+    "f3d5bd",
+    "d19c26"
+   ],
+   "Sootrook": [
+    "231f11",
+    "f4d6b4",
+    "786011",
+    "afb019"
+   ],
+   "Sootregent": [
+    "241f11",
+    "f6d5b6",
+    "7c5f10",
+    "b2ae17"
+   ],
+   "Flakit": [
+    "291b14",
+    "f4d2cd",
+    "db8b60",
+    "82591e"
+   ],
+   "Flakeshell": [
+    "251e12",
+    "f6d3bf",
+    "855913",
+    "bea71c"
+   ],
+   "Flakebastion": [
+    "241f11",
+    "935216",
+    "f1dba3",
+    "b3ad1b"
+   ],
+   "Sprockle": [
+    "251e12",
+    "f4d4c1",
+    "835a18",
+    "bda722"
+   ],
+   "Sprocklen": [
+    "241e11",
+    "de8d4d",
+    "f0daac",
+    "6c6614"
+   ],
+   "Sprockmaul": [
+    "251e12",
+    "eb864e",
+    "f6d7aa",
+    "74630d"
+   ],
+   "Guiskit": [
+    "281c13",
+    "f6d1ca",
+    "994d1b",
+    "d89826"
+   ],
+   "Guisvix": [
+    "231f11",
+    "f6d5b3",
+    "cea017",
+    "6a690c"
+   ],
+   "Guisdame": [
+    "231f11",
+    "f4d6b6",
+    "cca01d",
+    "69680f"
+   ],
+   "Fenglim": [
+    "261d12",
+    "a2491a",
+    "f2d8b2",
+    "c1a51f"
+   ],
+   "Fenglimmer": [
+    "271d13",
+    "e38665",
+    "8e541a",
+    "efdca6"
+   ],
+   "Fenglowmarsh": [
+    "261d12",
+    "f7d2c1",
+    "8d5512",
+    "c8a319"
+   ],
+   "Splotchet": [
+    "271d13",
+    "df8769",
+    "f1d6bc",
+    "775f19"
+   ],
+   "Splotchling": [
+    "261d12",
+    "f3d4c3",
+    "85581a",
+    "c0a425"
+   ],
+   "Splotcheroth": [
+    "241e12",
+    "e48b49",
+    "f2daa9",
+    "6e6510"
+   ],
+   "Snaglet": [
+    "251e12",
+    "ea874b",
+    "87590f",
+    "f1e184"
+   ],
+   "Snagwhisk": [
+    "291b14",
+    "e58276",
+    "9d4b1e",
+    "f1d8b4"
+   ],
+   "Snaggrave": [
+    "261d12",
+    "e18860",
+    "885619",
+    "eddda1"
+   ],
+   "Pewnib": [
+    "241e12",
+    "f3d5bf",
+    "7e5c18",
+    "b7a923"
+   ],
+   "Pewspine": [
+    "271d13",
+    "af421c",
+    "f4d6b8",
+    "cc9f20"
+   ],
+   "Pewrampart": [
+    "241e12",
+    "f3d5bf",
+    "7e5c18",
+    "b7a923"
+   ],
+   "Snoblet": [
+    "261d12",
+    "df8960",
+    "86571b",
+    "ecdea2"
+   ],
+   "Snobplume": [
+    "231f11",
+    "f6d6b3",
+    "cba119",
+    "68690d"
+   ],
+   "Snobsovereign": [
+    "231f11",
+    "d4924e",
+    "ebdcae",
+    "686719"
+   ],
+   "Tithel": [
+    "241e11",
+    "8f5221",
+    "eddab2",
+    "b4a92a"
+   ],
+   "Tithshell": [
+    "241e11",
+    "f0d6c2",
+    "7a5d1e",
+    "b4a92d"
+   ],
+   "Tithebastion": [
+    "281c13",
+    "f7d1c9",
+    "e68a4c",
+    "835a13"
+   ],
+   "Bargit": [
+    "291b14",
+    "ee7e70",
+    "a74814",
+    "f5d7ac"
+   ],
+   "Bargwing": [
+    "2a1b14",
+    "f5d1ce",
+    "de8962",
+    "86571d"
+   ],
+   "Bargemourn": [
+    "251e12",
+    "944e25",
+    "edd9b8",
+    "baa62e"
+   ],
+   "Sedgel": [
+    "281c13",
+    "de8673",
+    "915022",
+    "eddab4"
+   ],
+   "Sedgecoil": [
+    "241f11",
+    "f1d6bc",
+    "785f19",
+    "b0ac25"
+   ],
+   "Sedgemire": [
+    "271d13",
+    "a94421",
+    "f2d6bb",
+    "ca9f27"
+   ],
+   "Smogpup": [
+    "281c13",
+    "a74429",
+    "f0d6c1",
+    "cc9c32"
+   ],
+   "Smoglurcher": [
+    "281c13",
+    "ed806b",
+    "a04c14",
+    "f4d9a7"
+   ],
+   "Smogcapo": [
+    "251e12",
+    "dc8b5d",
+    "82591c",
+    "ebdfa1"
+   ],
+   "Hushbeak": [
+    "241f11",
+    "f2d6bc",
+    "7a5e18",
+    "b2ac23"
+   ],
+   "Hushmonger": [
+    "261d12",
+    "e1895e",
+    "875719",
+    "edde9f"
+   ],
+   "Moldcap": [
+    "261d12",
+    "f3d3c6",
+    "89561c",
+    "c5a128"
+   ],
+   "Moldmagnate": [
+    "2a1b14",
+    "e2837b",
+    "9e4a23",
+    "f0d8b9"
+   ],
+   "Groatfin": [
+    "261d12",
+    "a74715",
+    "f5d7ae",
+    "c3a519"
+   ],
+   "Groatgrand": [
+    "261d12",
+    "f4d3c5",
+    "da923f",
+    "766017"
+   ],
+   "Shivlet": [
+    "281c13",
+    "bf3a1d",
+    "f5d4bd",
+    "d89921"
+   ],
+   "Shivreaper": [
+    "271d13",
+    "e58662",
+    "f3d6b7",
+    "786014"
+   ],
+   "Latchet": [
+    "271d13",
+    "f2d3c8",
+    "895520",
+    "c79f2e"
+   ],
+   "Latchgrim": [
+    "291b14",
+    "dc2c19",
+    "f8d2bf",
+    "e69221"
+   ],
+   "Waxwhisk": [
+    "271c13",
+    "ea8364",
+    "955114",
+    "f2dba2"
+   ],
+   "Waxwidow": [
+    "271d13",
+    "e88463",
+    "f5d5b8",
+    "7c5e12"
+   ],
+   "Fauxscript": [
+    "261d12",
+    "e88754",
+    "f4d7af",
+    "74620f"
+   ],
+   "Anchorrot": [
+    "231f11",
+    "e78e32",
+    "7b600f",
+    "eceb60"
+   ],
+   "Knellgrim": [
+    "281c13",
+    "e1856f",
+    "92511f",
+    "eedab0"
+   ],
+   "Mirefane": [
+    "281c13",
+    "e38470",
+    "f3d5c0",
+    "7e5c19"
+   ]
+  },
+  "opaline": {
+   "Kindlop": [
+    "302d5d",
+    "e7eaf8",
+    "bcb8ec",
+    "9678da"
+   ],
+   "Smoldrake": [
+    "3b2854",
+    "c0b6ed",
+    "a073dc",
+    "f2e4f8"
+   ],
+   "Calderox": [
+    "4b2440",
+    "d25dcb",
+    "f7e3f1",
+    "e7aac6"
+   ],
+   "Puddlet": [
+    "3e2852",
+    "9479db",
+    "efe6f8",
+    "d9aae9"
+   ],
+   "Riptail": [
+    "4a2444",
+    "f6e2f8",
+    "e8a5dd",
+    "d662a7"
+   ],
+   "Leviarch": [
+    "342b59",
+    "e8e9fb",
+    "c1b5f1",
+    "a370e4"
+   ],
+   "Mossling": [
+    "4d2538",
+    "e8a7d4",
+    "f8e3ed",
+    "d76881"
+   ],
+   "Thornback": [
+    "312c5b",
+    "7a86dd",
+    "eae8f9",
+    "c7b3eb"
+   ],
+   "Verdantusk": [
+    "322c5b",
+    "e7e9fa",
+    "beb7ee",
+    "9c74df"
+   ],
+   "Zippit": [
+    "3e2751",
+    "9778db",
+    "f0e5f8",
+    "dba9e8"
+   ],
+   "Glimmerax": [
+    "3e2852",
+    "ece7fa",
+    "a96de2",
+    "dda7ee"
+   ],
+   "Shalebat": [
+    "492349",
+    "bc65d8",
+    "f7e2f7",
+    "e8a6d8"
+   ],
+   "Obsidroth": [
+    "302d5d",
+    "b3bded",
+    "e9e8fa",
+    "9777de"
+   ],
+   "Zephlet": [
+    "4b2441",
+    "f9e1f8",
+    "eda3d9",
+    "df5e9e"
+   ],
+   "Tempestrel": [
+    "312c5c",
+    "b4bcec",
+    "eae8f9",
+    "9976db"
+   ],
+   "Wickit": [
+    "4e2630",
+    "eda6c9",
+    "fae3e9",
+    "e16869"
+   ],
+   "Lumenewt": [
+    "4f262e",
+    "df6098",
+    "fae3e8",
+    "eeaca9"
+   ],
+   "Mirkmole": [
+    "4d2536",
+    "f9e2f1",
+    "dc6295",
+    "ecaab6"
+   ],
+   "Duskdigger": [
+    "4a2348",
+    "f4e3f8",
+    "e7a4e4",
+    "d65fb3"
+   ],
+   "Kelpup": [
+    "42264f",
+    "eee6f9",
+    "d7abeb",
+    "cf5bd9"
+   ],
+   "Kelphound": [
+    "2d2d5e",
+    "afbeef",
+    "8181e6",
+    "ece7fa"
+   ],
+   "Blotling": [
+    "4d2537",
+    "f7e3f1",
+    "e7aac5",
+    "d56980"
+   ],
+   "Scrivane": [
+    "4e2532",
+    "da60a4",
+    "f9e4ea",
+    "ebacb0"
+   ],
+   "Hushkin": [
+    "352b59",
+    "b8baef",
+    "907ae0",
+    "efe6f9"
+   ],
+   "Silentra": [
+    "492349",
+    "dba8eb",
+    "d956d9",
+    "f8e2f3"
+   ],
+   "Paddlewisp": [
+    "4f262e",
+    "eca7c6",
+    "f9e4e8",
+    "de6a65"
+   ],
+   "Ferrowyn": [
+    "362a58",
+    "bab8f1",
+    "ece7fa",
+    "a86ee1"
+   ],
+   "Talusk": [
+    "4a2447",
+    "c164d2",
+    "f7e2f5",
+    "e6a8d2"
+   ],
+   "Talusgard": [
+    "46254c",
+    "f0e5f8",
+    "dda8e8",
+    "d45ccb"
+   ],
+   "Cairnhold": [
+    "45254d",
+    "d1aeed",
+    "f4e3f9",
+    "d957d4"
+   ],
+   "Fluting": [
+    "48244a",
+    "d9a9ee",
+    "d557df",
+    "f9e1f5"
+   ],
+   "Marshfife": [
+    "4e262f",
+    "e25e9c",
+    "fae3e9",
+    "f0abaa"
+   ],
+   "Glasstarn": [
+    "3b2854",
+    "8e7cdb",
+    "eee6f8",
+    "d5ace8"
+   ],
+   "Lanternel": [
+    "2f2d5d",
+    "e7eaf9",
+    "bbb9ed",
+    "9578dc"
+   ],
+   "Seamlet": [
+    "3a2955",
+    "bfb7ed",
+    "9c74dd",
+    "f1e5f9"
+   ],
+   "Mendlace": [
+    "4e2533",
+    "f7e3ef",
+    "d5678c",
+    "e8adb2"
+   ],
+   "Croziel": [
+    "492349",
+    "c062db",
+    "f8e1f8",
+    "eaa4d8"
+   ],
+   "Frondmere": [
+    "4b2441",
+    "e9a2e8",
+    "d85db9",
+    "f8e3ee"
+   ],
+   "Brinelet": [
+    "352b58",
+    "8181e2",
+    "ece7fa",
+    "cdb0ed"
+   ],
+   "Saltspire": [
+    "3b2954",
+    "ebe8f9",
+    "cab1ec",
+    "b369da"
+   ],
+   "Millwhit": [
+    "392955",
+    "eae8fb",
+    "9c73e4",
+    "d4abef"
+   ],
+   "Millvane": [
+    "43264e",
+    "a76ee2",
+    "f4e3f9",
+    "eaa1ec"
+   ],
+   "Drizzlet": [
+    "402750",
+    "c8b2ed",
+    "b06adc",
+    "f5e3f8"
+   ],
+   "Rainmantle": [
+    "4b2440",
+    "f9e1f7",
+    "de5bb6",
+    "eda6c7"
+   ],
+   "Reedquill": [
+    "402750",
+    "c8b2eb",
+    "af6cd8",
+    "f5e3f8"
+   ],
+   "Reedwarden": [
+    "47244b",
+    "d6abec",
+    "f6e2f8",
+    "da59c8"
+   ],
+   "Cogmite": [
+    "4a2444",
+    "e3a5e9",
+    "d85bc5",
+    "f8e3f0"
+   ],
+   "Cogwright": [
+    "4c253a",
+    "f9e2f4",
+    "dc5fa4",
+    "eca9be"
+   ],
+   "Puddock": [
+    "49244a",
+    "bd64de",
+    "f8e1f9",
+    "eca3dd"
+   ],
+   "Delthorn": [
+    "3e2752",
+    "ece7f9",
+    "a86fd9",
+    "daaae8"
+   ],
+   "Glimmoth": [
+    "4d2536",
+    "d461af",
+    "f8e4ec",
+    "e8acb7"
+   ],
+   "Wickmoth": [
+    "342b5a",
+    "b7baf1",
+    "ebe7fa",
+    "a171e3"
+   ],
+   "Silthop": [
+    "47244b",
+    "b667dc",
+    "f6e2f8",
+    "eaa3df"
+   ],
+   "Siltgrove": [
+    "4f262c",
+    "d36791",
+    "f7e5e7",
+    "e7afaa"
+   ],
+   "Flourie": [
+    "3d2853",
+    "ece7f9",
+    "a66fdd",
+    "daa9eb"
+   ],
+   "Floursprite": [
+    "4d2534",
+    "e9a7cf",
+    "f8e4eb",
+    "d96977"
+   ],
+   "Cindle": [
+    "47244b",
+    "f2e4fa",
+    "cf5adf",
+    "eda1e3"
+   ],
+   "Glassfell": [
+    "502727",
+    "d96784",
+    "f8e5e5",
+    "e8b1a1"
+   ],
+   "Etchling": [
+    "382956",
+    "bdb8eb",
+    "ede7f8",
+    "aa6fd6"
+   ],
+   "Burinox": [
+    "48244a",
+    "daa9ee",
+    "d657dd",
+    "f9e1f5"
+   ],
+   "Ashwren": [
+    "4d2536",
+    "e6a8d1",
+    "d46694",
+    "f8e5e8"
+   ],
+   "Ashcrest": [
+    "4a2447",
+    "dfa7e9",
+    "d65acc",
+    "f8e3f1"
+   ],
+   "Bogwick": [
+    "43264e",
+    "ccb0ea",
+    "b768d7",
+    "f6e2f7"
+   ],
+   "Fenwarden": [
+    "4a2444",
+    "ca5fd5",
+    "f7e2f4",
+    "e8a7cf"
+   ],
+   "Cullet": [
+    "43264e",
+    "efe6f9",
+    "d8aaea",
+    "d15bd6"
+   ],
+   "Cullhorn": [
+    "412650",
+    "eee6f8",
+    "b06cd7",
+    "dfa7e7"
+   ],
+   "Smeltpup": [
+    "4d2539",
+    "eca3d9",
+    "de5f9e",
+    "f9e3e9"
+   ],
+   "Smeltmaw": [
+    "43264e",
+    "efe6f8",
+    "b669d5",
+    "e3a6e6"
+   ],
+   "Solkit": [
+    "3f2751",
+    "c7b2ee",
+    "ae6bde",
+    "f5e3f9"
+   ],
+   "Solmantle": [
+    "46254c",
+    "d1aeea",
+    "f4e3f8",
+    "d45bcb"
+   ],
+   "Saltsprig": [
+    "42264f",
+    "eee6f8",
+    "b36bd4",
+    "e1a7e6"
+   ],
+   "Saltcrown": [
+    "492349",
+    "dca8ed",
+    "db55db",
+    "f9e2f3"
+   ],
+   "Orrlet": [
+    "4c243e",
+    "e9a4e1",
+    "d85fae",
+    "f8e3ec"
+   ],
+   "Orrerine": [
+    "302d5d",
+    "7588e0",
+    "e9e8fa",
+    "c5b3ee"
+   ],
+   "Duneshrew": [
+    "412650",
+    "9f73dd",
+    "f1e4f8",
+    "e2a6e9"
+   ],
+   "Dunebastion": [
+    "3e2852",
+    "ece7f9",
+    "ceafeb",
+    "bd65d9"
+   ],
+   "Shimmerlet": [
+    "382a56",
+    "bcb8ec",
+    "9778da",
+    "f0e5f8"
+   ],
+   "Mirassil": [
+    "492349",
+    "d9aae7",
+    "f7e2f7",
+    "d261b5"
+   ],
+   "Highhare": [
+    "302d5d",
+    "e7eaf9",
+    "867fdf",
+    "c5b4ec"
+   ],
+   "Zenithare": [
+    "4b243f",
+    "d75acd",
+    "f8e2f1",
+    "eaa8c5"
+   ],
+   "Velahra": [
+    "4f262c",
+    "f9e3ec",
+    "ecabb4",
+    "db6c62"
+   ],
+   "Hallowmur": [
+    "48244a",
+    "d6ace9",
+    "f6e2f7",
+    "d45ec0"
+   ],
+   "Scriptorax": [
+    "372a57",
+    "e9e8fa",
+    "9577e2",
+    "cfaeee"
+   ],
+   "Lumivane": [
+    "322c5b",
+    "7985e7",
+    "eae8fb",
+    "c9b1f1"
+   ],
+   "Zephyrel": [
+    "502628",
+    "f8e4ea",
+    "ebacaf",
+    "d77058"
+   ],
+   "Monolurk": [
+    "4a2447",
+    "c85ede",
+    "f9e1f7",
+    "eca4d6"
+   ],
+   "Vorlucent": [
+    "4b2441",
+    "d957d7",
+    "f8e2f3",
+    "eba7ca"
+   ],
+   "Rollib": [
+    "4d2534",
+    "dd5dab",
+    "f9e3eb",
+    "edaab3"
+   ],
+   "Rollibex": [
+    "44254e",
+    "f0e5fa",
+    "dca7ee",
+    "dc54dd"
+   ],
+   "Helirollax": [
+    "4a2444",
+    "cc5ed5",
+    "f7e2f4",
+    "e8a8ce"
+   ],
+   "Sirocub": [
+    "2f2d5d",
+    "e6eaf9",
+    "8480e0",
+    "c4b4ed"
+   ],
+   "Sirocat": [
+    "4a2446",
+    "dfa7e8",
+    "f7e2f5",
+    "d660ae"
+   ],
+   "Siroclaw": [
+    "3d2853",
+    "ece7fa",
+    "a86ee1",
+    "dba8ed"
+   ],
+   "Scaldasp": [
+    "4d2536",
+    "f7e3f1",
+    "d66596",
+    "e9acb7"
+   ],
+   "Scaldcoil": [
+    "3a2955",
+    "ebe8f8",
+    "c8b3e9",
+    "af6dd4"
+   ],
+   "Scaldrahn": [
+    "4d2535",
+    "d860ac",
+    "f8e3ec",
+    "eaabb5"
+   ],
+   "Noonpip": [
+    "48244a",
+    "b668d6",
+    "f6e2f7",
+    "e7a6db"
+   ],
+   "Noonwhist": [
+    "502727",
+    "f8e4e9",
+    "da6b6b",
+    "e7b1a0"
+   ],
+   "Noonsoral": [
+    "4f262f",
+    "e8a9c6",
+    "d66981",
+    "f8e5e5"
+   ],
+   "Spinnub": [
+    "46254c",
+    "f1e5f8",
+    "dfa7e9",
+    "d55bca"
+   ],
+   "Spinnarow": [
+    "45254d",
+    "a96fd6",
+    "f3e4f7",
+    "e5a5e3"
+   ],
+   "Spinnacle": [
+    "49234a",
+    "ba66d7",
+    "f7e2f7",
+    "e8a6d9"
+   ],
+   "Wadlet": [
+    "352b58",
+    "e9e9fa",
+    "c2b5ef",
+    "a56fe0"
+   ],
+   "Wadishell": [
+    "4f262a",
+    "f9e3eb",
+    "edabb1",
+    "dc6d5b"
+   ],
+   "Wadibastion": [
+    "4b2440",
+    "f9e1f8",
+    "e059b7",
+    "eea6c7"
+   ],
+   "Ergfin": [
+    "2f2d5d",
+    "e6eaf9",
+    "bbb8ed",
+    "9578dd"
+   ],
+   "Ergskim": [
+    "312c5c",
+    "b4bced",
+    "eae8f9",
+    "9976de"
+   ],
+   "Ergrava": [
+    "4f262c",
+    "de6290",
+    "f9e4e7",
+    "ecada6"
+   ],
+   "Ardlet": [
+    "2f2d5d",
+    "e6eaf9",
+    "bbb9ed",
+    "9479dd"
+   ],
+   "Ardlume": [
+    "4a2444",
+    "f8e1fa",
+    "eea0e3",
+    "e25aad"
+   ],
+   "Ardenthal": [
+    "4a2447",
+    "e0a6ec",
+    "f9e1f7",
+    "dc5cb5"
+   ],
+   "Fulgrit": [
+    "49234a",
+    "f3e4f8",
+    "d35ad5",
+    "e8a5d9"
+   ],
+   "Fulgorin": [
+    "3e2752",
+    "c4b4ec",
+    "f0e5f9",
+    "be64d9"
+   ],
+   "Fulgorath": [
+    "43264e",
+    "efe6f8",
+    "b868d5",
+    "e4a5e6"
+   ],
+   "Carabun": [
+    "302d5d",
+    "e7eaf8",
+    "8680dc",
+    "c5b4eb"
+   ],
+   "Caravant": [
+    "4e2630",
+    "e9a8c9",
+    "d96785",
+    "f8e5e5"
+   ],
+   "Caravault": [
+    "362a58",
+    "bab9ee",
+    "ece7f9",
+    "a670dc"
+   ],
+   "Velvit": [
+    "4d2537",
+    "e8a6d4",
+    "d76498",
+    "f8e4e8"
+   ],
+   "Velvessa": [
+    "412650",
+    "eee6fa",
+    "d6abed",
+    "cd5cdb"
+   ],
+   "Velverain": [
+    "4f262c",
+    "f8e4ec",
+    "e9acb5",
+    "d76e64"
+   ],
+   "Clasplet": [
+    "3e2751",
+    "9777dd",
+    "f0e5f9",
+    "dca9e9"
+   ],
+   "Claspirant": [
+    "44254d",
+    "a96ede",
+    "f4e3f9",
+    "eaa1e9"
+   ],
+   "Claspreign": [
+    "4d2535",
+    "df5bae",
+    "fae3ec",
+    "eeaab3"
+   ],
+   "Obelit": [
+    "45254d",
+    "aa6eda",
+    "f4e3f8",
+    "e7a3e5"
+   ],
+   "Obelith": [
+    "342b5a",
+    "b7baed",
+    "ebe8f9",
+    "9f73db"
+   ],
+   "Obelordan": [
+    "3e2852",
+    "c4b3f1",
+    "aa6ce4",
+    "f4e3fa"
+   ],
+   "Haboblet": [
+    "4b2441",
+    "f9e1f8",
+    "dd5abc",
+    "eda6ca"
+   ],
+   "Haboborn": [
+    "4a2447",
+    "c95edd",
+    "f9e1f7",
+    "eca4d5"
+   ],
+   "Habobrax": [
+    "46254c",
+    "ae6cdb",
+    "f5e3f8",
+    "e9a3e4"
+   ],
+   "Stiltwade": [
+    "48244a",
+    "f3e4f9",
+    "d458dc",
+    "eca2df"
+   ],
+   "Stiltregent": [
+    "4e2533",
+    "fae2f0",
+    "e2618c",
+    "efaab0"
+   ],
+   "Palmop": [
+    "42264f",
+    "eee6f8",
+    "b16bd4",
+    "e0a7e6"
+   ],
+   "Palmonarch": [
+    "372a57",
+    "e9e8fa",
+    "9677de",
+    "cfaeec"
+   ],
+   "Bakedil": [
+    "362a58",
+    "bab9ec",
+    "9379db",
+    "efe6f8"
+   ],
+   "Bakedillon": [
+    "342b59",
+    "e8e9f9",
+    "8f7bde",
+    "cbb1ec"
+   ],
+   "Hazejel": [
+    "492349",
+    "dea6ef",
+    "e051e0",
+    "fae1f4"
+   ],
+   "Hazejellith": [
+    "372a57",
+    "e9e8fa",
+    "c5b3ee",
+    "aa6ddd"
+   ],
+   "Corocub": [
+    "4a2444",
+    "e6a2ed",
+    "de56ca",
+    "f9e2f0"
+   ],
+   "Coronarch": [
+    "392956",
+    "eae8fa",
+    "c7b2ef",
+    "b06ae0"
+   ],
+   "Chirrik": [
+    "4e2533",
+    "f9e2ef",
+    "e1618c",
+    "efaab0"
+   ],
+   "Chirrikade": [
+    "4b2442",
+    "e9a2ea",
+    "da5bbc",
+    "f9e3ee"
+   ],
+   "Brinewhorl": [
+    "4c253b",
+    "fae1f5",
+    "efa4ce",
+    "e2618b"
+   ],
+   "Gyrevult": [
+    "3b2954",
+    "c0b6ec",
+    "9f73db",
+    "f1e4f8"
+   ],
+   "Heliodrop": [
+    "4a2444",
+    "f7e1fa",
+    "eea1e2",
+    "e15bad"
+   ],
+   "Duskmirrah": [
+    "3c2853",
+    "c2b4f0",
+    "efe5fa",
+    "bc64e1"
+   ],
+   "Sootpaw": [
+    "4a2444",
+    "f7e1f9",
+    "dd58c7",
+    "eda5d0"
+   ],
+   "Sootlurk": [
+    "382a56",
+    "867fdf",
+    "ede7f9",
+    "d0aeeb"
+   ],
+   "Sootharrow": [
+    "502727",
+    "ebaaba",
+    "f9e5e5",
+    "d67252"
+   ],
+   "Vitrill": [
+    "4d2539",
+    "f9e2f3",
+    "eda6c9",
+    "e06384"
+   ],
+   "Vitrillon": [
+    "4e262f",
+    "eba8c7",
+    "f9e4e9",
+    "dc6a6a"
+   ],
+   "Vitrillaxe": [
+    "4a2446",
+    "e3a4ed",
+    "de56d0",
+    "f9e2f1"
+   ],
+   "Sablet": [
+    "44254d",
+    "cfaeed",
+    "bf63db",
+    "f8e1f8"
+   ],
+   "Sablowl": [
+    "4e2533",
+    "f9e2ef",
+    "eda8bf",
+    "df6772"
+   ],
+   "Sablarch": [
+    "342b59",
+    "e8e9f9",
+    "c1b6ed",
+    "a172dc"
+   ],
+   "Quenchet": [
+    "4d2535",
+    "f8e3f0",
+    "e9a9c3",
+    "d8697b"
+   ],
+   "Quenchcoil": [
+    "3f2751",
+    "ede7f8",
+    "ab6ed6",
+    "dca9e7"
+   ],
+   "Quenchwyrm": [
+    "402750",
+    "c7b2ed",
+    "f1e5f9",
+    "c660da"
+   ],
+   "Brickit": [
+    "46254c",
+    "f1e5f9",
+    "e0a6ea",
+    "d859cd"
+   ],
+   "Brickwarden": [
+    "502628",
+    "efa8bc",
+    "fae4e5",
+    "df6d52"
+   ],
+   "Brickolossus": [
+    "352b58",
+    "8081e5",
+    "ece7fa",
+    "cdafef"
+   ],
+   "Clinklet": [
+    "332b5a",
+    "b7bbeb",
+    "8d7ddb",
+    "eee6f8"
+   ],
+   "Clinkshell": [
+    "4a2348",
+    "f4e3f8",
+    "e8a3e4",
+    "d65fb4"
+   ],
+   "Clinkerdome": [
+    "4e2631",
+    "d5649f",
+    "f8e4ea",
+    "e9adb0"
+   ],
+   "Peatlet": [
+    "4a2444",
+    "f7e2f9",
+    "eca2e1",
+    "dd5dab"
+   ],
+   "Peatbloom": [
+    "392955",
+    "8a7ce8",
+    "eee6fb",
+    "d5abf0"
+   ],
+   "Peatmonarch": [
+    "4f262f",
+    "d56598",
+    "f8e4e9",
+    "e9aeac"
+   ],
+   "Gloomgill": [
+    "4a2444",
+    "e8a1ee",
+    "f9e1f5",
+    "e15baa"
+   ],
+   "Gloomgillar": [
+    "46254c",
+    "d2adeb",
+    "f5e3f8",
+    "d759ce"
+   ],
+   "Gloomgillith": [
+    "4c253c",
+    "e8a5dd",
+    "f8e3ef",
+    "d8658f"
+   ],
+   "Fumelet": [
+    "46254c",
+    "af6ade",
+    "f5e3f9",
+    "eba2e5"
+   ],
+   "Fumewraith": [
+    "4f262b",
+    "efa7c0",
+    "fae4e6",
+    "e06b5b"
+   ],
+   "Fumeregent": [
+    "46244c",
+    "f1e4f9",
+    "e2a5ec",
+    "db57cd"
+   ],
+   "Lodekit": [
+    "3f2751",
+    "ede7f9",
+    "ad6cdc",
+    "dea7ea"
+   ],
+   "Lodebrock": [
+    "49234a",
+    "daaaea",
+    "d459d6",
+    "f8e2f3"
+   ],
+   "Lodemarshal": [
+    "47244b",
+    "d8aaef",
+    "d358e0",
+    "f9e1f6"
+   ],
+   "Glowflit": [
+    "4a2447",
+    "c461d7",
+    "f8e2f6",
+    "e8a6d3"
+   ],
+   "Glowflitter": [
+    "372a57",
+    "e9e8fa",
+    "c4b4ed",
+    "a86fdc"
+   ],
+   "Glowflare": [
+    "302d5d",
+    "b2bdef",
+    "e9e8fa",
+    "9776e2"
+   ],
+   "Stylet": [
+    "4b2440",
+    "df53d9",
+    "f9e1f3",
+    "eea6c8"
+   ],
+   "Stylox": [
+    "372a57",
+    "bab8f2",
+    "ece7fa",
+    "aa6ce3"
+   ],
+   "Stylaxon": [
+    "49234a",
+    "f4e3fa",
+    "ec9fed",
+    "e057c2"
+   ],
+   "Coalkid": [
+    "4f262a",
+    "f7e4eb",
+    "e7adb3",
+    "d17162"
+   ],
+   "Coalbuck": [
+    "47244b",
+    "d5acea",
+    "ca5ed6",
+    "f8e2f5"
+   ],
+   "Coalpatriarch": [
+    "2d2d5e",
+    "e6eaf9",
+    "b9b9ed",
+    "927add"
+   ],
+   "Glazel": [
+    "3d2853",
+    "c2b5ec",
+    "efe6f9",
+    "b966d9"
+   ],
+   "Glazelisk": [
+    "4c2539",
+    "e8a6d8",
+    "d6639e",
+    "f8e4ea"
+   ],
+   "Glazeldrake": [
+    "502628",
+    "fae3ea",
+    "e3666c",
+    "eeae9f"
+   ],
+   "Puffbellow": [
+    "402750",
+    "c7b2ed",
+    "f1e5f9",
+    "c660d9"
+   ],
+   "Bellowroc": [
+    "42264f",
+    "cab2ea",
+    "b36ad7",
+    "f5e3f7"
+   ],
+   "Lampick": [
+    "42264f",
+    "eee6f8",
+    "d5ace9",
+    "c95fd4"
+   ],
+   "Lampickard": [
+    "4c253c",
+    "eda1e0",
+    "e05ca9",
+    "fae3eb"
+   ],
+   "Charsprout": [
+    "49234a",
+    "dca7ee",
+    "f9e1f9",
+    "df58c1"
+   ],
+   "Charsylvan": [
+    "372a57",
+    "847fe4",
+    "ece7fa",
+    "cfaeee"
+   ],
+   "Ingotlet": [
+    "4c253a",
+    "e6a7d8",
+    "d364a1",
+    "f7e4ea"
+   ],
+   "Ingotusk": [
+    "4d2536",
+    "f8e2f1",
+    "eba8c5",
+    "dc677d"
+   ],
+   "Mortarant": [
+    "42264f",
+    "efe6fa",
+    "d9aaed",
+    "d459db"
+   ],
+   "Mortarmarch": [
+    "4c253a",
+    "e6a6d8",
+    "d464a0",
+    "f8e4ea"
+   ],
+   "Vaporel": [
+    "392955",
+    "8a7de2",
+    "ede6f9",
+    "d3acec"
+   ],
+   "Vaporelle": [
+    "4f262f",
+    "f9e3ed",
+    "ebaab8",
+    "dc6b68"
+   ],
+   "Shadeback": [
+    "3c2853",
+    "ebe7f9",
+    "a371dc",
+    "d7abea"
+   ],
+   "Kilnstork": [
+    "4c243d",
+    "eca2e2",
+    "de5cac",
+    "f9e3eb"
+   ],
+   "Puffglass": [
+    "372a57",
+    "e9e8fa",
+    "9677e0",
+    "d0aeed"
+   ],
+   "Flueling": [
+    "47244b",
+    "b469db",
+    "f6e2f8",
+    "e9a4df"
+   ],
+   "Inkpip": [
+    "49234a",
+    "f3e4f8",
+    "e7a3e8",
+    "d65dbb"
+   ],
+   "Inkspool": [
+    "302c5c",
+    "e7eaf9",
+    "bcb8ec",
+    "9777da"
+   ],
+   "Inkregent": [
+    "2f2d5d",
+    "b0bdf1",
+    "837fe8",
+    "ece7fb"
+   ],
+   "Weirkit": [
+    "4f262c",
+    "f8e4ec",
+    "eaacb5",
+    "d76e63"
+   ],
+   "Weirrunner": [
+    "342b59",
+    "b7baf2",
+    "ebe7fb",
+    "a36fe5"
+   ],
+   "Weirmarshal": [
+    "4c253c",
+    "f8e2f5",
+    "eaa6cf",
+    "db648f"
+   ],
+   "Diplit": [
+    "4a2446",
+    "f6e2f9",
+    "dd56cf",
+    "eda4d4"
+   ],
+   "Diparrow": [
+    "4f262f",
+    "f7e4ed",
+    "e7acb9",
+    "d56e6b"
+   ],
+   "Dipmonarch": [
+    "502628",
+    "efa8bc",
+    "e3666d",
+    "f9e5e0"
+   ],
+   "Woadlet": [
+    "3f2751",
+    "9974e6",
+    "f1e4fa",
+    "e0a5ef"
+   ],
+   "Woadwhorl": [
+    "46254c",
+    "b269e1",
+    "f6e2f9",
+    "eca1e5"
+   ],
+   "Woadcastle": [
+    "4b2440",
+    "f8e2f7",
+    "e9a6d6",
+    "d8639b"
+   ],
+   "Rubrit": [
+    "332c5a",
+    "e8e9f9",
+    "bfb7ed",
+    "9d74dc"
+   ],
+   "Rubricorn": [
+    "48244a",
+    "f2e4f8",
+    "e4a5e8",
+    "d55dbf"
+   ],
+   "Rubriclad": [
+    "2e2d5e",
+    "b1beeb",
+    "8381de",
+    "ece7f9"
+   ],
+   "Nimbub": [
+    "4f262c",
+    "d46790",
+    "f8e5e7",
+    "e7b0a9"
+   ],
+   "Nimbuck": [
+    "4a2348",
+    "dca9e7",
+    "d25ccc",
+    "f7e3f1"
+   ],
+   "Nimbarch": [
+    "372a57",
+    "8480df",
+    "ece7f9",
+    "ceafeb"
+   ],
+   "Sluicekit": [
+    "4d2537",
+    "e9a6d4",
+    "f8e3ed",
+    "d9687f"
+   ],
+   "Sluicer": [
+    "2f2d5d",
+    "7689d9",
+    "e9e9f9",
+    "c4b4ea"
+   ],
+   "Sluicewarden": [
+    "44254d",
+    "f0e5f8",
+    "bd65d6",
+    "e7a4e5"
+   ],
+   "Vanepip": [
+    "362a58",
+    "b9b9f0",
+    "9378e3",
+    "efe5fa"
+   ],
+   "Vanecrow": [
+    "4b243f",
+    "e7a4e2",
+    "f8e3f1",
+    "d66597"
+   ],
+   "Vanecrest": [
+    "47244b",
+    "d4ade8",
+    "c761d2",
+    "f7e2f4"
+   ],
+   "Chimelet": [
+    "4b243f",
+    "e7a5e1",
+    "f7e3f1",
+    "d56597"
+   ],
+   "Chimewell": [
+    "4f262a",
+    "f7e4eb",
+    "d56c76",
+    "e6b0a7"
+   ],
+   "Chimeward": [
+    "4f262c",
+    "e7abc2",
+    "f7e5e7",
+    "d37066"
+   ],
+   "Rushkit": [
+    "2d2d5e",
+    "aebef0",
+    "8080e8",
+    "ece7fb"
+   ],
+   "Rushprowl": [
+    "4a2445",
+    "f6e2f8",
+    "eaa3e0",
+    "d95fac"
+   ],
+   "Rushstalker": [
+    "4e2532",
+    "eda5cd",
+    "e0628a",
+    "fae4e6"
+   ],
+   "Ripjolt": [
+    "3d2853",
+    "c3b4f0",
+    "a86ee2",
+    "f4e3f9"
+   ],
+   "Ripjolter": [
+    "342b5a",
+    "e8e9f9",
+    "c0b6ed",
+    "9f73dc"
+   ],
+   "Ripjoltane": [
+    "46244c",
+    "d4acec",
+    "c95ed9",
+    "f8e2f6"
+   ],
+   "Grindlet": [
+    "332b5a",
+    "b7bbec",
+    "8d7cdd",
+    "eee6f9"
+   ],
+   "Grindwheel": [
+    "4d2539",
+    "dc5bba",
+    "f9e3ee",
+    "eca9bb"
+   ],
+   "Grindmonolith": [
+    "3e2852",
+    "c4b3f1",
+    "f0e5fa",
+    "c260e1"
+   ],
+   "Morelit": [
+    "4e2630",
+    "eea6ca",
+    "fae3e9",
+    "e1676b"
+   ],
+   "Morelamp": [
+    "502727",
+    "f7e4e9",
+    "d56d6f",
+    "e5b2a3"
+   ],
+   "Morelord": [
+    "4d2539",
+    "f9e2f3",
+    "dd609e",
+    "eda9bb"
+   ],
+   "Rookit": [
+    "3b2954",
+    "c0b5f2",
+    "eee6fa",
+    "b865e3"
+   ],
+   "Rookwarden": [
+    "49244a",
+    "f2e4f8",
+    "ce5dd2",
+    "e6a6d9"
+   ],
+   "Skimmit": [
+    "302c5c",
+    "7787dd",
+    "eae8f9",
+    "c6b3ec"
+   ],
+   "Skimmarch": [
+    "4e2532",
+    "f9e3ef",
+    "dc648a",
+    "ecabb0"
+   ],
+   "Prismist": [
+    "47244b",
+    "f2e4f9",
+    "e3a5eb",
+    "da59ca"
+   ],
+   "Prismistral": [
+    "4b243f",
+    "e8a3e3",
+    "d85fb1",
+    "f8e3ed"
+   ],
+   "Canalet": [
+    "4f262c",
+    "eda7c2",
+    "df6678",
+    "f9e5e3"
+   ],
+   "Canalord": [
+    "49234a",
+    "f4e3fa",
+    "dd53df",
+    "eea2dd"
+   ],
+   "Padlet": [
+    "3b2854",
+    "ebe8f9",
+    "cbb1ed",
+    "b668db"
+   ],
+   "Padlotus": [
+    "44254e",
+    "a76fdd",
+    "f3e3f8",
+    "e8a2e9"
+   ],
+   "Thrashkin": [
+    "502629",
+    "e9aabe",
+    "f8e5e6",
+    "d4715c"
+   ],
+   "Threshox": [
+    "342b59",
+    "e8e9fa",
+    "8f7ae5",
+    "ccb0ef"
+   ],
+   "Cartocoil": [
+    "47244b",
+    "d7abeb",
+    "f6e2f8",
+    "d95ac5"
+   ],
+   "Belfrit": [
+    "4d2538",
+    "e7a7d4",
+    "f8e4ed",
+    "d76881"
+   ],
+   "Dusktern": [
+    "43264e",
+    "cdafec",
+    "f3e4f9",
+    "d459d8"
+   ],
+   "Fiddlit": [
+    "3d2853",
+    "ece7f9",
+    "cdafeb",
+    "bb66d9"
+   ],
+   "Fiddlehorn": [
+    "3d2853",
+    "c3b5eb",
+    "a571d8",
+    "f3e4f8"
+   ],
+   "Fiddlestag": [
+    "302d5d",
+    "b2bdf0",
+    "e9e8fa",
+    "9776e3"
+   ],
+   "Gleamgrub": [
+    "3c2854",
+    "ebe7fb",
+    "a46fe4",
+    "d9a9ef"
+   ],
+   "Gleamworm": [
+    "4f262d",
+    "e9a9c3",
+    "f8e4e8",
+    "d86d65"
+   ],
+   "Gleamwyrm": [
+    "49244a",
+    "f4e3fa",
+    "eba0ee",
+    "e156c4"
+   ],
+   "Skerrit": [
+    "342b59",
+    "e8e9fa",
+    "8f7ae2",
+    "cbb0ee"
+   ],
+   "Skerrigale": [
+    "4e2630",
+    "e8a9c8",
+    "d66884",
+    "f8e5e5"
+   ],
+   "Skerrimast": [
+    "382a56",
+    "eae8fa",
+    "9876e0",
+    "d1aeec"
+   ],
+   "Pinchkin": [
+    "4e2533",
+    "f9e2f0",
+    "eda8c0",
+    "e06774"
+   ],
+   "Pinchward": [
+    "4a2348",
+    "e0a6ef",
+    "f9e0f9",
+    "e158bb"
+   ],
+   "Pinchcastle": [
+    "342b5a",
+    "b8bbeb",
+    "8e7cda",
+    "eee6f8"
+   ],
+   "Flicklet": [
+    "382956",
+    "bdb8eb",
+    "9878d8",
+    "f0e5f8"
+   ],
+   "Flickscale": [
+    "4a2445",
+    "d259e0",
+    "f9e1f6",
+    "eea4d2"
+   ],
+   "Flickwyrm": [
+    "4a2446",
+    "ce5be0",
+    "f9e1f7",
+    "eea3d5"
+   ],
+   "Brookhop": [
+    "4c253b",
+    "e7a6da",
+    "f7e3ef",
+    "d6678b"
+   ],
+   "Brookbaron": [
+    "412650",
+    "c9b2ea",
+    "f1e5f8",
+    "c661d3"
+   ],
+   "Covepup": [
+    "4c243d",
+    "dd57cc",
+    "f9e2f1",
+    "eda7c3"
+   ],
+   "Covewarden": [
+    "3d2853",
+    "ece7f8",
+    "ccb1e9",
+    "b769d4"
+   ],
+   "Gloamhog": [
+    "47244b",
+    "f2e4f9",
+    "e5a4eb",
+    "da59c6"
+   ],
+   "Gloamquill": [
+    "4c243d",
+    "eca2e3",
+    "f9e2f1",
+    "df6192"
+   ],
+   "Glimshell": [
+    "3f2751",
+    "9b73e6",
+    "f1e4fa",
+    "e2a4ef"
+   ],
+   "Glimbastion": [
+    "342b59",
+    "7f83dd",
+    "ebe8f9",
+    "cab1ea"
+   ],
+   "Lichub": [
+    "42264f",
+    "cbb0f0",
+    "b965e2",
+    "f7e1f9"
+   ],
+   "Lichenbear": [
+    "42264f",
+    "a371dc",
+    "f2e4f8",
+    "e5a4e9"
+   ],
+   "Verdigrub": [
+    "332c5a",
+    "e8e9f9",
+    "bfb7ec",
+    "9c75da"
+   ],
+   "Verdigrand": [
+    "4d2535",
+    "e7a8cf",
+    "d56691",
+    "f8e5e7"
+   ],
+   "Peallith": [
+    "48244a",
+    "b56ad4",
+    "f6e3f7",
+    "e5a7da"
+   ],
+   "Fernwhisk": [
+    "4f262a",
+    "f8e4eb",
+    "eaacb2",
+    "d76f5e"
+   ],
+   "Hearthmote": [
+    "302d5d",
+    "e7eaf9",
+    "8680de",
+    "c5b4ec"
+   ],
+   "Vesk": [
+    "362a58",
+    "b9b9f2",
+    "9377e6",
+    "efe5fa"
+   ],
+   "Veskara": [
+    "49234a",
+    "f3e3f9",
+    "e8a2e9",
+    "d95cbd"
+   ],
+   "Veskarion": [
+    "4b2440",
+    "d55bce",
+    "f8e3f1",
+    "e9a9c6"
+   ],
+   "Siltby": [
+    "502727",
+    "f7e4e9",
+    "e8aeaf",
+    "d07459"
+   ],
+   "Siltarra": [
+    "4e262f",
+    "eca7c8",
+    "f9e4e9",
+    "de6969"
+   ],
+   "Siltaroth": [
+    "4f262d",
+    "d66595",
+    "f8e4e8",
+    "e8aeab"
+   ],
+   "Cindrik": [
+    "2e2d5e",
+    "738adb",
+    "e9e9f9",
+    "c3b5ec"
+   ],
+   "Cindrel": [
+    "352b59",
+    "b9baed",
+    "ebe7f9",
+    "a272db"
+   ],
+   "Cindravax": [
+    "302d5d",
+    "7788db",
+    "e9e8f9",
+    "c5b4eb"
+   ],
+   "Nibbet": [
+    "46254c",
+    "d3acee",
+    "f5e2f9",
+    "dd56d3"
+   ],
+   "Nibquill": [
+    "382a56",
+    "eae8fa",
+    "c6b3ef",
+    "ac6cdf"
+   ],
+   "Nibravure": [
+    "4a2447",
+    "c361d8",
+    "f8e2f6",
+    "e9a6d4"
+   ],
+   "Filigrin": [
+    "44254e",
+    "efe6f8",
+    "b967d5",
+    "e5a5e6"
+   ],
+   "Filigrace": [
+    "4e262f",
+    "e05f9c",
+    "fae3e9",
+    "efabab"
+   ],
+   "Filigravure": [
+    "3c2853",
+    "c2b5ed",
+    "efe6f9",
+    "b867da"
+   ],
+   "Mordling": [
+    "4f262f",
+    "f8e3ed",
+    "da6780",
+    "ebadab"
+   ],
+   "Mordantoad": [
+    "44254e",
+    "a86ee0",
+    "f4e3f9",
+    "eaa1eb"
+   ],
+   "Mordantyrant": [
+    "47244b",
+    "f2e4f9",
+    "e4a4ec",
+    "dc57cc"
+   ],
+   "Rimekit": [
+    "4c243e",
+    "e6a5df",
+    "d462ac",
+    "f7e4ec"
+   ],
+   "Rimelynx": [
+    "332c5a",
+    "7a84e5",
+    "eae8fa",
+    "c9b1f0"
+   ],
+   "Rimesovereign": [
+    "4c253b",
+    "d45ebd",
+    "f8e3ef",
+    "e8aabf"
+   ],
+   "Burrin": [
+    "4f262d",
+    "e8aac3",
+    "d7697c",
+    "f8e5e4"
+   ],
+   "Burrowgraver": [
+    "3e2852",
+    "9577e4",
+    "f0e5fa",
+    "dda7ee"
+   ],
+   "Burringrand": [
+    "412650",
+    "eee6f8",
+    "b16bd8",
+    "e0a7e7"
+   ],
+   "Hoarling": [
+    "49234a",
+    "f4e3fa",
+    "de52e0",
+    "eea1dd"
+   ],
+   "Hoarstag": [
+    "44254e",
+    "cfaeef",
+    "f4e3f9",
+    "dc54dd"
+   ],
+   "Hoarmonarch": [
+    "4d2536",
+    "eaa6d3",
+    "f8e3ec",
+    "db677c"
+   ],
+   "Platewig": [
+    "3e2752",
+    "ece7f8",
+    "ceb0e9",
+    "bb66d4"
+   ],
+   "Platewing": [
+    "4f262a",
+    "e9aabf",
+    "f8e5e7",
+    "d5705f"
+   ],
+   "Platemarshal": [
+    "4e2533",
+    "fae2f0",
+    "e3608c",
+    "f0aab0"
+   ],
+   "Smudgel": [
+    "48244a",
+    "d7abea",
+    "f6e2f8",
+    "d75cc2"
+   ],
+   "Smudgeworm": [
+    "502727",
+    "f8e4e9",
+    "d66d6e",
+    "e5b2a3"
+   ],
+   "Smudgewyrm": [
+    "502628",
+    "d76786",
+    "f8e5e5",
+    "e7b1a3"
+   ],
+   "Corrodent": [
+    "49244a",
+    "ba66da",
+    "f7e2f8",
+    "e9a5db"
+   ],
+   "Corrodile": [
+    "382956",
+    "bdb8ee",
+    "9976de",
+    "f0e5f9"
+   ],
+   "Corrodrake": [
+    "4d2536",
+    "f8e3f1",
+    "d96395",
+    "ebabb6"
+   ],
+   "Gelidfin": [
+    "412650",
+    "ede7f8",
+    "d3ade8",
+    "c562d3"
+   ],
+   "Gelidray": [
+    "4c253c",
+    "df56c9",
+    "fae2f0",
+    "efa7c1"
+   ],
+   "Gelidmonarch": [
+    "302c5c",
+    "e6eafb",
+    "bcb7f2",
+    "9974e6"
+   ],
+   "Stampet": [
+    "4d2537",
+    "e7a7d3",
+    "d66598",
+    "f8e4e8"
+   ],
+   "Stamphorn": [
+    "47244b",
+    "f2e5f8",
+    "e1a6e7",
+    "d35ec1"
+   ],
+   "Stampcolossus": [
+    "49244a",
+    "d8aaea",
+    "d25bd6",
+    "f8e2f3"
+   ],
+   "Quilmoth": [
+    "3c2854",
+    "c1b6ea",
+    "a073d7",
+    "f2e5f7"
+   ],
+   "Quilmothra": [
+    "312c5c",
+    "e7eaf9",
+    "887ee1",
+    "c7b3ed"
+   ],
+   "Quilmothane": [
+    "3d2853",
+    "ece7f9",
+    "cdb0ea",
+    "b967d6"
+   ],
+   "Vatrat": [
+    "4c243e",
+    "f9e1f6",
+    "de5cb0",
+    "eda7c4"
+   ],
+   "Vatreeve": [
+    "45254d",
+    "f1e5fa",
+    "dfa6ee",
+    "de54d9"
+   ],
+   "Vatbaron": [
+    "4e2630",
+    "f8e3ed",
+    "e9abba",
+    "d86c6d"
+   ],
+   "Sleetowl": [
+    "412650",
+    "eee6f9",
+    "d5abec",
+    "cc5dda"
+   ],
+   "Sleetcowl": [
+    "46254c",
+    "d3acec",
+    "f5e2f9",
+    "d958ce"
+   ],
+   "Sleetsage": [
+    "312c5c",
+    "7987db",
+    "eae8f9",
+    "c6b3eb"
+   ],
+   "Copperling": [
+    "4c253a",
+    "de59c0",
+    "f9e2ef",
+    "eea8bd"
+   ],
+   "Copperclad": [
+    "412650",
+    "ede6f8",
+    "d3ade9",
+    "c561d4"
+   ],
+   "Copperpatriarch": [
+    "342b5a",
+    "e8e9fa",
+    "c0b5f1",
+    "a171e3"
+   ],
+   "Blotkin": [
+    "412650",
+    "c9b2e9",
+    "b06cd5",
+    "f5e3f7"
+   ],
+   "Blotgrimm": [
+    "4a2447",
+    "dca9e7",
+    "d15dca",
+    "f7e3f1"
+   ],
+   "Drypup": [
+    "492349",
+    "f4e3f9",
+    "eba1ea",
+    "dc5abb"
+   ],
+   "Dryhound": [
+    "4d2537",
+    "eaa5d5",
+    "db6298",
+    "f9e4e8"
+   ],
+   "Fizzlet": [
+    "4e2631",
+    "eea5cb",
+    "e16286",
+    "fae4e5"
+   ],
+   "Fizzgrove": [
+    "42264f",
+    "efe5fa",
+    "d9a9ef",
+    "d557df"
+   ],
+   "Glacilet": [
+    "4d2538",
+    "e7a7d5",
+    "f8e3ed",
+    "d76883"
+   ],
+   "Glacilisk": [
+    "4f262b",
+    "e9aac0",
+    "d96976",
+    "f8e5e3"
+   ],
+   "Pressbug": [
+    "502727",
+    "f9e4e9",
+    "ecacac",
+    "d77252"
+   ],
+   "Pressbeetle": [
+    "47244b",
+    "b567e1",
+    "f6e2f9",
+    "eda1e3"
+   ],
+   "Canalurk": [
+    "4e2533",
+    "e8a8ce",
+    "f8e4eb",
+    "d86a76"
+   ],
+   "Canalurker": [
+    "322c5b",
+    "e7e9fa",
+    "beb6f0",
+    "9d73e3"
+   ],
+   "Forgefly": [
+    "412650",
+    "cab0f1",
+    "f2e4fa",
+    "d258e1"
+   ],
+   "Forgeflare": [
+    "4d2535",
+    "f7e3f0",
+    "e7abc2",
+    "d46b7a"
+   ],
+   "Vitriolus": [
+    "45254d",
+    "cfafe8",
+    "bd65d3",
+    "f7e2f6"
+   ],
+   "Frostfoil": [
+    "4d2534",
+    "e15bac",
+    "fae3eb",
+    "f0a9b2"
+   ],
+   "Gildfinch": [
+    "342b5a",
+    "b7baee",
+    "8e7be0",
+    "eee6f9"
+   ],
+   "Gildwing": [
+    "2e2d5e",
+    "e6eaf9",
+    "bab9ee",
+    "9379df"
+   ],
+   "Gildaurus": [
+    "47244b",
+    "d6abeb",
+    "ce5cd9",
+    "f8e2f5"
+   ],
+   "Ledgepup": [
+    "3e2852",
+    "ece7f9",
+    "a86fdd",
+    "dba9eb"
+   ],
+   "Ledgehound": [
+    "4b243f",
+    "d859cf",
+    "f8e2f1",
+    "eba8c6"
+   ],
+   "Ledgewarden": [
+    "502727",
+    "f8e4e9",
+    "e9adad",
+    "d27355"
+   ],
+   "Zenkit": [
+    "392955",
+    "eae8f9",
+    "9b75dc",
+    "d2adea"
+   ],
+   "Zenlynx": [
+    "3b2854",
+    "ebe7fa",
+    "a172df",
+    "d7abec"
+   ],
+   "Zenithar": [
+    "3a2955",
+    "eae8fa",
+    "c9b1ef",
+    "b369df"
+   ],
+   "Orrebit": [
+    "392955",
+    "eae8fa",
+    "c8b1ef",
+    "b169e0"
+   ],
+   "Orrewheel": [
+    "3c2854",
+    "c1b5ef",
+    "a371e0",
+    "f2e4f9"
+   ],
+   "Orremarch": [
+    "3d2853",
+    "ece7f8",
+    "a472d6",
+    "d7abe7"
+   ],
+   "Flatskip": [
+    "392955",
+    "beb7ed",
+    "ede7f9",
+    "ae6cd9"
+   ],
+   "Flatskimmer": [
+    "502628",
+    "efa8bc",
+    "fae4e5",
+    "df6d53"
+   ],
+   "Flatsovereign": [
+    "4e2631",
+    "e9a8ca",
+    "d86787",
+    "f8e5e5"
+   ],
+   "Cloudmop": [
+    "43264e",
+    "efe5fa",
+    "be62e2",
+    "eaa1ed"
+   ],
+   "Cloudram": [
+    "502628",
+    "f8e4ea",
+    "e9adb0",
+    "d3725b"
+   ],
+   "Cloudbellow": [
+    "49244a",
+    "d7abe8",
+    "f6e2f7",
+    "d25fbb"
+   ],
+   "Haloon": [
+    "362a58",
+    "e9e9f9",
+    "c3b5ea",
+    "a571d7"
+   ],
+   "Halonel": [
+    "412650",
+    "ede6f8",
+    "b06cd7",
+    "dfa7e7"
+   ],
+   "Halorch": [
+    "2e2d5e",
+    "e6eaf8",
+    "bab9ec",
+    "937adb"
+   ],
+   "Lumoth": [
+    "4e2630",
+    "f8e3ee",
+    "e8abbb",
+    "d76c6f"
+   ],
+   "Lumothra": [
+    "42264f",
+    "eee6fa",
+    "b865e2",
+    "e7a2ee"
+   ],
+   "Lumothane": [
+    "392956",
+    "eae8f9",
+    "c7b3ed",
+    "ae6cdc"
+   ],
+   "Vinestep": [
+    "46254c",
+    "af6cda",
+    "f5e3f8",
+    "e8a4e2"
+   ],
+   "Vinestair": [
+    "372a57",
+    "e9e8fa",
+    "c5b3ef",
+    "ab6ce1"
+   ],
+   "Vinespire": [
+    "42264f",
+    "eee6fa",
+    "d8aaef",
+    "d358df"
+   ],
+   "Noonfox": [
+    "42264f",
+    "eee6f9",
+    "d5ace9",
+    "ca5fd5"
+   ],
+   "Noonvixen": [
+    "4a2447",
+    "dea8e8",
+    "d45cca",
+    "f8e3f1"
+   ],
+   "Noonregent": [
+    "4d2535",
+    "f8e2f0",
+    "eba8c2",
+    "dc6878"
+   ],
+   "Brasshop": [
+    "3b2854",
+    "8e7be0",
+    "eee6f9",
+    "d6abeb"
+   ],
+   "Brassjack": [
+    "4a2348",
+    "e0a5ef",
+    "e052dc",
+    "fae1f3"
+   ],
+   "Brassgrand": [
+    "4c2539",
+    "e058bf",
+    "fae2ee",
+    "efa8bb"
+   ],
+   "Plinthlet": [
+    "3e2852",
+    "ece7f9",
+    "ceb0ea",
+    "bb66d6"
+   ],
+   "Plinthshell": [
+    "4b2442",
+    "f7e2f8",
+    "d75dbc",
+    "e9a8cb"
+   ],
+   "Plinthcastle": [
+    "332b5a",
+    "e8e9fa",
+    "bfb6ee",
+    "9f73de"
+   ],
+   "Kitelet": [
+    "46254c",
+    "b168e4",
+    "f6e2fa",
+    "eea0e8"
+   ],
+   "Kitewhip": [
+    "3b2954",
+    "c0b6ec",
+    "eee6f9",
+    "b26ad8"
+   ],
+   "Kitemonarch": [
+    "2e2d5e",
+    "b0beee",
+    "8280e4",
+    "ece7fa"
+   ],
+   "Coffrel": [
+    "44254d",
+    "cfafe9",
+    "f3e4f8",
+    "d25ccf"
+   ],
+   "Coffrake": [
+    "4e2630",
+    "fae2ee",
+    "efa8bb",
+    "e4666a"
+   ],
+   "Coffrendrake": [
+    "4a2446",
+    "f5e2f8",
+    "e9a3e1",
+    "d95fad"
+   ],
+   "Rillsnail": [
+    "4b2443",
+    "e7a3ea",
+    "f8e2f4",
+    "da60a4"
+   ],
+   "Rillshell": [
+    "47244b",
+    "d4ace9",
+    "c95fd5",
+    "f7e2f4"
+   ],
+   "Rillcastle": [
+    "4b2442",
+    "e5a4e7",
+    "f7e2f3",
+    "d663a1"
+   ],
+   "Spanling": [
+    "402750",
+    "c8b1f0",
+    "f1e4fa",
+    "cb5ce0"
+   ],
+   "Spanbrute": [
+    "342b5a",
+    "b8bbeb",
+    "ebe8f9",
+    "9f74d8"
+   ],
+   "Spanwarden": [
+    "402750",
+    "c8b2ef",
+    "b169e1",
+    "f5e2f9"
+   ],
+   "Spumlet": [
+    "4e2533",
+    "f8e3ef",
+    "d9658c",
+    "ebacb2"
+   ],
+   "Spumeclaw": [
+    "4e2631",
+    "f8e3ee",
+    "e9abbc",
+    "d86b70"
+   ],
+   "Chalkid": [
+    "4f262c",
+    "d66691",
+    "f8e4e7",
+    "e8afa9"
+   ],
+   "Chalkhorn": [
+    "4a2446",
+    "e1a6e9",
+    "d75bc8",
+    "f8e3f0"
+   ],
+   "Wellet": [
+    "362a58",
+    "e9e9f9",
+    "c3b5eb",
+    "a571d9"
+   ],
+   "Wellwyrm": [
+    "43264e",
+    "cdb0eb",
+    "ba66d9",
+    "f7e2f8"
+   ],
+   "Glintwader": [
+    "4c253c",
+    "e8a5dd",
+    "f8e3ef",
+    "d7668f"
+   ],
+   "Glintheron": [
+    "3e2751",
+    "c5b4ec",
+    "f0e5f8",
+    "bf64d7"
+   ],
+   "Gildmite": [
+    "2f2d5d",
+    "7689da",
+    "e9e8f9",
+    "c4b4eb"
+   ],
+   "Gildscarab": [
+    "4c2539",
+    "e9a5d8",
+    "d8629f",
+    "f8e4ea"
+   ],
+   "Brazlet": [
+    "4d2539",
+    "f9e1f3",
+    "eea5ca",
+    "e26284"
+   ],
+   "Brazierbrute": [
+    "48244a",
+    "d9a9ef",
+    "d656df",
+    "f9e1f5"
+   ],
+   "Dewfawn": [
+    "2e2d5e",
+    "e6eafa",
+    "bab9f0",
+    "9378e2"
+   ],
+   "Dewstag": [
+    "46254c",
+    "f1e4fa",
+    "e1a5ed",
+    "dc56d2"
+   ],
+   "Arcfin": [
+    "2d2d5e",
+    "b1bee9",
+    "8282dc",
+    "ece7f8"
+   ],
+   "Arcfinnar": [
+    "4c2539",
+    "f7e3f2",
+    "e8a9c9",
+    "d76886"
+   ],
+   "Eavekit": [
+    "382956",
+    "eae8fa",
+    "9975e2",
+    "d2adee"
+   ],
+   "Eaveprowl": [
+    "4a2444",
+    "f6e2f8",
+    "d55dc3",
+    "e8a7cf"
+   ],
+   "Gildrelic": [
+    "44254d",
+    "f0e5f8",
+    "be64d7",
+    "e7a3e6"
+   ],
+   "Zenwhirl": [
+    "47244b",
+    "b36ad9",
+    "f6e2f8",
+    "e8a5de"
+   ],
+   "Gnomonk": [
+    "332b5a",
+    "b7bbeb",
+    "ebe8f8",
+    "9d75d8"
+   ],
+   "Gildbloom": [
+    "302d5d",
+    "7788da",
+    "e9e8f9",
+    "c5b4eb"
+   ],
+   "Boltnib": [
+    "4e2533",
+    "e7a9cd",
+    "d4678d",
+    "f8e5e7"
+   ],
+   "Boltgnaw": [
+    "2e2d5e",
+    "748ad8",
+    "e9e9f9",
+    "c3b5ea"
+   ],
+   "Boltgrimmer": [
+    "4f262d",
+    "f9e3ec",
+    "ecaab6",
+    "dc6c65"
+   ],
+   "Veilmote": [
+    "412650",
+    "c9b2e9",
+    "b06cd5",
+    "f5e3f7"
+   ],
+   "Veilmothel": [
+    "402750",
+    "9a77d8",
+    "f0e5f8",
+    "dda9e6"
+   ],
+   "Veilmarquise": [
+    "4c243d",
+    "d95ac9",
+    "f8e2f0",
+    "eba8c3"
+   ],
+   "Tallop": [
+    "4b2442",
+    "d956da",
+    "f9e2f3",
+    "eba7cb"
+   ],
+   "Tallogg": [
+    "2d2d5e",
+    "e6eaf8",
+    "babaeb",
+    "917bda"
+   ],
+   "Tallowgrand": [
+    "46254c",
+    "d4aced",
+    "c95edc",
+    "f9e1f6"
+   ],
+   "Dimlure": [
+    "312c5c",
+    "b3bcf0",
+    "eae8fa",
+    "9a74e4"
+   ],
+   "Dimlurker": [
+    "44254d",
+    "cfafea",
+    "be65d6",
+    "f7e2f7"
+   ],
+   "Dimluminor": [
+    "4f262c",
+    "d36890",
+    "f7e5e7",
+    "e6b0a9"
+   ],
+   "Tollpip": [
+    "372a57",
+    "e9e8fb",
+    "c4b3f1",
+    "aa6ce4"
+   ],
+   "Tollgull": [
+    "502628",
+    "d76788",
+    "f8e5e6",
+    "e7b0a3"
+   ],
+   "Tollbaron": [
+    "46244c",
+    "d5abef",
+    "ce5bdf",
+    "f9e1f7"
+   ],
+   "Sootkin": [
+    "352b58",
+    "b9b9ed",
+    "ebe7f9",
+    "a371db"
+   ],
+   "Sootrook": [
+    "502628",
+    "f8e4ea",
+    "e9adb0",
+    "d2725c"
+   ],
+   "Sootregent": [
+    "4c243d",
+    "f8e2f5",
+    "d860ac",
+    "eaa9c2"
+   ],
+   "Flakit": [
+    "3b2954",
+    "ebe8fa",
+    "cab1ee",
+    "b568de"
+   ],
+   "Flakeshell": [
+    "46254c",
+    "d2adeb",
+    "c461d8",
+    "f8e2f6"
+   ],
+   "Flakebastion": [
+    "4c253c",
+    "eaa4de",
+    "da5fa7",
+    "f9e3eb"
+   ],
+   "Sprockle": [
+    "4c2539",
+    "e9a5d8",
+    "f8e3ee",
+    "d96686"
+   ],
+   "Sprocklen": [
+    "3e2751",
+    "9777df",
+    "f0e5f9",
+    "dca8ea"
+   ],
+   "Sprockmaul": [
+    "46254c",
+    "d2aee9",
+    "c362d4",
+    "f7e2f5"
+   ],
+   "Guiskit": [
+    "352b59",
+    "b8b9ef",
+    "907ae2",
+    "efe6f9"
+   ],
+   "Guisvix": [
+    "4d2534",
+    "d463a7",
+    "f8e4eb",
+    "e8adb4"
+   ],
+   "Guisdame": [
+    "332b5a",
+    "b6baf1",
+    "8d7be5",
+    "eee6fa"
+   ],
+   "Fenglim": [
+    "4f262c",
+    "e9a9c1",
+    "d96978",
+    "f8e5e3"
+   ],
+   "Fenglimmer": [
+    "392955",
+    "eae8f8",
+    "9a77d8",
+    "d1aee8"
+   ],
+   "Fenglowmarsh": [
+    "332c5a",
+    "b6bbec",
+    "8b7dde",
+    "eee6f9"
+   ],
+   "Splotchet": [
+    "4e2533",
+    "eca6cf",
+    "dd638e",
+    "f9e4e6"
+   ],
+   "Splotchling": [
+    "4b2440",
+    "f8e1f7",
+    "d85eb4",
+    "eaa8c6"
+   ],
+   "Splotcheroth": [
+    "4a2445",
+    "f7e2f9",
+    "de56cc",
+    "eea4d2"
+   ],
+   "Snaglet": [
+    "4b2441",
+    "eba1ea",
+    "f9e2f3",
+    "dd609f"
+   ],
+   "Snagwhisk": [
+    "302d5d",
+    "b3bdea",
+    "e9e8f9",
+    "9678da"
+   ],
+   "Snaggrave": [
+    "4a2444",
+    "e3a5e9",
+    "f8e2f5",
+    "d860a9"
+   ],
+   "Pewnib": [
+    "4f262e",
+    "f9e3ed",
+    "ecaab7",
+    "de6a66"
+   ],
+   "Pewspine": [
+    "3a2955",
+    "bfb6ed",
+    "eee6f9",
+    "b26adb"
+   ],
+   "Pewrampart": [
+    "332b5a",
+    "e8e9f9",
+    "8d7cdf",
+    "c9b1ec"
+   ],
+   "Snoblet": [
+    "4e262f",
+    "eea5c8",
+    "e26381",
+    "fae4e4"
+   ],
+   "Snobplume": [
+    "42264f",
+    "eee6f8",
+    "b46ad6",
+    "e2a6e6"
+   ],
+   "Snobsovereign": [
+    "4a2447",
+    "c65fdc",
+    "f8e1f7",
+    "eba5d5"
+   ],
+   "Tithel": [
+    "4c253c",
+    "eea1e2",
+    "fae2f0",
+    "e2608f"
+   ],
+   "Tithshell": [
+    "4d2539",
+    "e7a7d6",
+    "f7e4ed",
+    "d66885"
+   ],
+   "Tithebastion": [
+    "4b2443",
+    "f7e2f8",
+    "d95bc0",
+    "eaa7cd"
+   ],
+   "Bargit": [
+    "342b5a",
+    "e8e9f9",
+    "8e7cdf",
+    "cab1ec"
+   ],
+   "Bargwing": [
+    "332b5a",
+    "b7bbeb",
+    "8d7dda",
+    "eee6f8"
+   ],
+   "Bargemourn": [
+    "492349",
+    "f4e3fa",
+    "eda0eb",
+    "df59bc"
+   ],
+   "Sedgel": [
+    "4c243d",
+    "eba2e1",
+    "f9e2f0",
+    "de6291"
+   ],
+   "Sedgecoil": [
+    "4d2538",
+    "f9e2f2",
+    "df5f9b",
+    "eea9b8"
+   ],
+   "Sedgemire": [
+    "332c5a",
+    "b5bbf1",
+    "8b7be5",
+    "eee6fa"
+   ],
+   "Smogpup": [
+    "372a57",
+    "bbb9ed",
+    "9578dd",
+    "efe5f8"
+   ],
+   "Smoglurcher": [
+    "362a58",
+    "e9e9fa",
+    "c3b4ed",
+    "a570dd"
+   ],
+   "Smogcapo": [
+    "4a2446",
+    "dda8e6",
+    "d15ec5",
+    "f7e3f0"
+   ],
+   "Hushbeak": [
+    "3c2854",
+    "ebe8f9",
+    "cbb1eb",
+    "b569d8"
+   ],
+   "Hushmonger": [
+    "2f2d5d",
+    "e7eaf8",
+    "8481da",
+    "c3b5ea"
+   ],
+   "Moldcap": [
+    "382956",
+    "eae8f9",
+    "9976de",
+    "d1aeeb"
+   ],
+   "Moldmagnate": [
+    "4e2632",
+    "f8e3ee",
+    "da6588",
+    "ebacb0"
+   ],
+   "Groatfin": [
+    "2f2d5d",
+    "b2bdec",
+    "8580df",
+    "ece7f9"
+   ],
+   "Groatgrand": [
+    "3c2854",
+    "c1b6eb",
+    "a173d9",
+    "f2e4f8"
+   ],
+   "Shivlet": [
+    "4a2348",
+    "c162da",
+    "f8e1f7",
+    "eaa5d7"
+   ],
+   "Shivreaper": [
+    "4b2443",
+    "cd5ed1",
+    "f7e3f3",
+    "e7a9cb"
+   ],
+   "Latchet": [
+    "2d2d5e",
+    "b0beec",
+    "e9e9fa",
+    "9279df"
+   ],
+   "Latchgrim": [
+    "312c5c",
+    "b5bceb",
+    "eae8f9",
+    "9977da"
+   ],
+   "Waxwhisk": [
+    "352b58",
+    "8282db",
+    "ebe8f8",
+    "cbb1e8"
+   ],
+   "Waxwidow": [
+    "4f262d",
+    "efa6c5",
+    "fae3e7",
+    "e36861"
+   ],
+   "Fauxscript": [
+    "2f2d5d",
+    "b3bdea",
+    "e9e8f9",
+    "9579da"
+   ],
+   "Anchorrot": [
+    "4f262d",
+    "da6395",
+    "f9e4e8",
+    "ebadaa"
+   ],
+   "Knellgrim": [
+    "4b2442",
+    "e5a5e5",
+    "f7e3f2",
+    "d2659f"
+   ],
+   "Mirefane": [
+    "44254d",
+    "cfafeb",
+    "be64d7",
+    "f8e2f7"
+   ]
+  }
  }
 }

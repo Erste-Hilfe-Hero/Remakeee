@@ -235,6 +235,8 @@ static func summary_section(s: Spirling, key: String, leader: bool = false) -> S
 				els.append(Elements.element_name(e))
 			lines.append("%s  (%s)" % [s.display_name(), s.data.species_name])
 			lines.append("%s   %s" % ["/".join(els), Loc.t("Ring %d" % s.level)])
+			if s.gleam:
+				lines.append(GleamRules.label(GleamRules.kind_of(s)))
 			if not s.origin_map.is_empty():
 				lines.append(Loc.glue_last(Loc.t("Met in %s at Ring %d") % [Loc.t(Spirling.place_name(s.origin_map)), maxi(s.met_ring, 1)]))
 			var tm: Dictionary = s.temperament()

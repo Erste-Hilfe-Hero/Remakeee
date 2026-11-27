@@ -1530,9 +1530,9 @@ func _fill_log() -> void:
 	_log_label.text = variant_list(model) + (elem + "\n\n" if not elem.is_empty() else "") + BattleInfo.facts(model, _seen_arts) + "\n\n" + Loc.t("Battle log") + "\n\n" \
 		+ ("\n".join(lines) if not lines.is_empty() else Loc.t("Nothing yet.")) + "\n\n" + Loc.t("(tap to close)")
 
-## A Gleam steps out: the sound cue and the sparkle (data/gleam.json).
+## A Gleam steps out: the sound cue and the sparkle of its kind (data/gleam.json).
 func _gleam_entrance(sprite: SpirlingSprite) -> void:
-	var cfg: Dictionary = GleamRules.config()
+	var cfg: Dictionary = GleamRules.sparkle(GleamRules.kind_of(sprite.spirling))
 	Sound.sfx(str(cfg.get("sfx", "sparkle")), 0.0, float(cfg.get("sfx_pitch", 1.0)))
 	await sprite.gleam_sparkle()
 

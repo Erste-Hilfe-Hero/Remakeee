@@ -64,7 +64,7 @@ static func make_wild(id: String, rng: RandomNumberGenerator, chain: Dictionary 
 	if sd == null:
 		return null
 	var wild := Spirling.new(sd, int(s.get("max", 4)) + RING_BONUS, rng)
-	wild.gleam = GleamRules.roll(rng, GleamRules.chain_for(chain, sd.species_name), GLEAM_MULT * ShopEffects.gleam_mult())
+	GleamRules.apply(wild, GleamRules.roll_kind(rng, GleamRules.chain_for(chain, sd.species_name), GLEAM_MULT, ShopEffects.gleam_mult()))
 	return wild
 
 ## The shaking patch on the map: a few blades that sway back and forth.

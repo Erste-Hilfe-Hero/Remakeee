@@ -56,7 +56,7 @@ func describe() -> String:
 			if data.get("wild", false):
 				var shimmer: String = " It shimmers with odd colours!" if bool(data.get("prism", false)) else ""
 				if bool(data.get("gleam", false)):
-					shimmer = " It gleams in colours of its own!"
+					shimmer = str(GleamRules.kind(str(data.get("gleam_kind", GleamRules.CLASSIC))).get("line", " It gleams in colours of its own!"))
 				return "A hushed %s blocks your way.%s" % [data.get("foe_name", ""), shimmer]
 			if bool(data.get("boss", false)):
 				return "%s rises from the Rift!" % data.get("trainer", "")

@@ -189,6 +189,7 @@ static func spirlog_legend() -> String:
 		Collection.STAR + "  " + Loc.t("bonded and grown to Ring 30"),
 		"~  " + Loc.t("a Gleam of this kind was seen"),
 		GleamRules.STAR + "  " + Loc.t("a Gleam of this kind was bonded"),
+		Loc.t("Rarer Gleams show their own mark:") + " " + "  ".join(PackedStringArray(GleamRules.kind_ids().slice(1).map(func(id: String) -> String: return GleamRules.label(id)))),
 		Loc.t("Lantern at the right: it joined you at an event, such as the Lamp Watch"),
 		"",
 		Loc.t("On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.")]
@@ -1812,7 +1813,7 @@ func run_spirlog() -> void:
 				await info(_tracker_text())
 			"gleam":
 				var names: PackedStringArray = SpirlogBook.gleam_bonded_kinds(GameState.spirlog)
-				await info(SpirlogBook.gleam_line(GameState.spirlog) + "\n\n" + (", ".join(names) if not names.is_empty() else Loc.t("No Gleam has joined you yet.")))
+				await info(SpirlogBook.gleam_line(GameState.spirlog) + "\n" + "\n".join(SpirlogBook.gleam_kind_lines(GameState.spirlog)) + "\n\n" + (", ".join(names) if not names.is_empty() else Loc.t("No Gleam has joined you yet.")))
 			"arts":
 				await info("\n".join(Collection.art_book_lines()))
 			"prism":

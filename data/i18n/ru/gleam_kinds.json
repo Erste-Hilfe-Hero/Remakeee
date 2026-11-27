@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table gleam_kinds, written by tools/i18n/locales_gleam_kinds.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  " Frost glitters on its hide: a Rime Gleam!": " На его шкуре искрится иней: Сияние инея!",
+  " It glows like the last of the sun: a Duskgold Gleam!": " Оно светится, как последний луч солнца: Сияние закатного золота!",
+  " It is washed in deep ink: an Inkwash Gleam!": " Оно окрашено густыми чернилами: Чернильное сияние!",
+  " Its colours never hold still: an Opaline Gleam!": " Его цвета не стоят на месте: Опаловое сияние!",
+  "%d seen, %d bonded": "увидено %d, связано %d",
+  "Duskgold Gleam": "Сияние закатного золота",
+  "Gleams bonded: %s": "Связанные сияния: %s",
+  "Gleams seen: %s": "Увиденные сияния: %s",
+  "Inkwash Gleam": "Чернильное сияние",
+  "Opaline Gleam": "Опаловое сияние",
+  "Rarer Gleams show their own mark:": "У более редких сияний свой знак:",
+  "Rime Gleam": "Сияние инея"
+ }
+}

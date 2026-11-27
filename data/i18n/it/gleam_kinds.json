@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table gleam_kinds, written by tools/i18n/locales_gleam_kinds.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  " Frost glitters on its hide: a Rime Gleam!": " La brina scintilla sul suo corpo: uno Splendore di brina!",
+  " It glows like the last of the sun: a Duskgold Gleam!": " Brilla come l'ultimo sole: uno Splendore d'oro al tramonto!",
+  " It is washed in deep ink: an Inkwash Gleam!": " È immerso in un inchiostro profondo: uno Splendore d'inchiostro!",
+  " Its colours never hold still: an Opaline Gleam!": " I suoi colori non stanno mai fermi: uno Splendore opalino!",
+  "%d seen, %d bonded": "%d visti, %d legati",
+  "Duskgold Gleam": "Splendore d'oro al tramonto",
+  "Gleams bonded: %s": "Splendori legati: %s",
+  "Gleams seen: %s": "Splendori visti: %s",
+  "Inkwash Gleam": "Splendore d'inchiostro",
+  "Opaline Gleam": "Splendore opalino",
+  "Rarer Gleams show their own mark:": "Gli Splendori più rari hanno un segno proprio:",
+  "Rime Gleam": "Splendore di brina"
+ }
+}

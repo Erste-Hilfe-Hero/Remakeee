@@ -97,6 +97,9 @@ var slant_left: bool = true
 var caught: bool = false
 ## From Era II: a Gleam or Prism (a four-ray glint by the ring number).
 var spark: bool = false
+## A rarer Gleam kind draws its glint in the kind's colour (GleamRules.color); null keeps the
+## plate's own glint colour (classic Gleam, Prism).
+var spark_tint: Variant = null
 ## The held keepsake shown as its icon at the right end of the Energy row (KAMPF_PLAN_1000
 ## 281, KeepsakeKit.strip_item): "" for none or a foe's that has not shown itself yet.
 var held: String = ""
@@ -135,6 +138,8 @@ func set_spirling(s: Spirling) -> void:
 	tax = s.energy_tax
 	caught = not show_xp and s.data != null and Collection._bonded(s.data.species_name)
 	spark = s.gleam or s.prism
+	var gk: String = GleamRules.kind_of(s)
+	spark_tint = GleamRules.color(gk) if gk != "" and gk != GleamRules.CLASSIC else null
 	held = KeepsakeKit.strip_item(s, show_xp or GameState.party.has(s))
 	xp_frac = xp_fraction(s)
 	xp_left = s.xp_to_next()
@@ -525,7 +530,7 @@ func _draw_marks(right: float, mid_y: float, col: Color, spark_col: Color) -> fl
 	var x: float = right
 	if spark:
 		x -= 6.0
-		_draw_spark(Vector2(x + 2.0, mid_y), spark_col)
+		_draw_spark(Vector2(x + 2.0, mid_y), spark_tint as Color if spark_tint is Color else spark_col)
 	if caught:
 		x -= 6.0
 		_draw_caught(Vector2(x + 2.0, mid_y), col)

@@ -61,7 +61,8 @@ static func mons_text(mons: Variant) -> String:
 	for m: Variant in (mons if mons is Array else []):
 		if m is Dictionary:
 			var era: int = clampi(int(m.get("origin_era", 1)), 1, ERA_NAMES.size())
-			parts.append(Loc.t("%s R%d %s") % [str(m.get("species", "?")), int(m.get("level", 1)), Loc.t(ERA_NAMES[era - 1])])
+			var gk: String = GleamRules.kind_of_dict(m)
+			parts.append((GleamRules.label(gk) + " " if gk != "" else "") + Loc.t("%s R%d %s") % [str(m.get("species", "?")), int(m.get("level", 1)), Loc.t(ERA_NAMES[era - 1])])
 	return ", ".join(parts)
 
 ## Items and Spirlings of one side.
@@ -326,7 +327,7 @@ static func pick_spirlings(menu: PauseMenu, current: Array[String]) -> Variant:
 		var labels: Array[String] = []
 		for sp: Spirling in all:
 			var mark: String = "[x] " if picked.has(sp.uid) else "[ ] "
-			labels.append(mark + Loc.t("%s R%d %s") % [sp.display_name(), sp.level, Loc.t(ERA_NAMES[clampi(sp.origin_era, 1, ERA_NAMES.size()) - 1])])
+			labels.append(mark + GleamRules.mark(sp) + Loc.t("%s R%d %s") % [sp.display_name(), sp.level, Loc.t(ERA_NAMES[clampi(sp.origin_era, 1, ERA_NAMES.size()) - 1])])
 		labels.append(Loc.t("Done: %d Spirlings") % picked.size())
 		var idx: int = await menu.pick_strings("Which Spirlings do you give? (up to 3)", labels)
 		if idx < 0:

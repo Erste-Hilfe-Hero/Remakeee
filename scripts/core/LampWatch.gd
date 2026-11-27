@@ -128,7 +128,7 @@ static func make_visitor(info: Dictionary, party: Array[Spirling], rng: RandomNu
 		return null
 	var s := Spirling.new(sd, visitor_ring(party), rng)
 	s.nickname = str(info.get("nickname", ""))
-	s.gleam = bool(info.get("gleam", false))
+	GleamRules.apply(s, GleamRules.CLASSIC if bool(info.get("gleam", false)) else "")
 	return s
 
 ## Echo call score from which a visitor stays.
