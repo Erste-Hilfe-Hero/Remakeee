@@ -2,7 +2,7 @@ Chimora 1.3.2
 
 - Uma loja totalmente nova: pacotes de Vidrofenda, o Cartão mensal, Spirlings Campeões, conjuntos e ofertas diárias e semanais. Cada oferta mostra exatamente o que traz, nada é aleatório.
 - A Vidrofenda agora também serve dentro do jogo: continuar a batalha depois de uma derrota, curar a tua equipa, acelerar o crescimento ou um vínculo, encurtar a espera de uma viagem, voltar a defrontar uma Sentinela de imediato e muito mais.
-- 20 de Vidrofenda de oferta todos os dias.
+- 20 de Vidrofenda de oferta todos os dias, quando estás online.
 - Um passe novo com 30 níveis e uma fila gratuita para todos.
 - 70 Spirlings novos, 10 em cada região.
 - As formas Reluzentes passam a ter 5 tipos, do Reluzente clássico ao raríssimo Reluzente opalino.

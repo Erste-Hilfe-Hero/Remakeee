@@ -2,7 +2,7 @@ Chimora 1.3.2
 
 - Baştan sona yeni bir dükkân: Yarık Camı paketleri, Aylık Kart, Şampiyon Spirling'ler, setler, günlük ve haftalık teklifler. Her teklif içinde ne olduğunu tam olarak gösterir, hiçbir şey rastgele değildir.
 - Yarık Camı artık oyunda da işe yarar: yenilgiden sonra savaşa devam etmek, takımını iyileştirmek, gelişimi ya da bir bağı güçlendirmek, bir yolculuğun bekleme süresini kısaltmak, bir Muhafız'la hemen yeniden savaşmak ve dahası.
-- Her gün 20 Yarık Camı hediye.
+- Çevrimiçiyken her gün 20 Yarık Camı hediye.
 - 30 kademeli, herkes için ücretsiz bir sırası olan yeni bir paso.
 - 70 yeni Spirling, her bölgede 10 tane.
 - Işıltı formları artık 5 çeşit: klasik Işıltı'dan çok nadir Opal Işıltısı'na kadar.

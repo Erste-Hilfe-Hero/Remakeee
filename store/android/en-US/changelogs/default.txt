@@ -1,7 +1,7 @@
 Chimora 1.3.2
 
 - New shop with Riftglass packs, a Monthly Card, Champion Spirlings, bundles and daily and weekly offers.
-- Use Riftglass in the game: continue after a defeat, heal, boost growth or bonds, skip trip waits and more. Plus 20 Riftglass as a daily gift.
+- Use Riftglass in the game: continue after a defeat, heal, boost growth or bonds, skip trip waits and more. Plus a daily gift of 20 Riftglass when online.
 - New pass with 30 tiers.
 - 70 new Spirlings and 5 kinds of Gleam forms.
 - Weather: rain, fog, wind, storms and snow.

@@ -2,7 +2,7 @@ Chimora 1.3.2
 
 - Ein ganz neuer Shop: Rissglas-Pakete, die Monatskarte, Champion-Spirlings, Bündel sowie Tages- und Wochenangebote. Jedes Angebot zeigt genau, was drin ist, nichts ist Zufall.
 - Rissglas wirkt jetzt auch im Spiel: nach einer Niederlage weiterkämpfen, das Team heilen, Wachstum oder eine Bindung stärken, die Wartezeit einer Reise abkürzen, einen Wächter sofort noch einmal herausfordern und mehr.
-- Jeden Tag 20 Rissglas als Geschenk.
+- Jeden Tag 20 Rissglas als Geschenk, wenn du online bist.
 - Ein neuer Pass mit 30 Stufen und einer freien Reihe für alle.
 - 70 neue Spirlings, 10 in jeder Region.
 - Glanzformen gibt es jetzt in 5 Arten, von der klassischen Glanzform bis zur sehr seltenen Opal-Glanzform.

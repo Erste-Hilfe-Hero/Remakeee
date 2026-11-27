@@ -2,7 +2,7 @@ Chimora 1.3.2
 
 - Une toute nouvelle boutique : packs de Verre de Faille, Carte mensuelle, Spirlings Champions, lots, et offres du jour et de la semaine. Chaque offre montre exactement son contenu, rien n'est laissé au hasard.
 - Le Verre de Faille sert maintenant aussi en jeu : continuer le combat après une défaite, soigner ton équipe, booster la croissance ou un lien, écourter l'attente d'un voyage, affronter à nouveau un Gardien tout de suite, et plus encore.
-- 20 Verre de Faille offerts chaque jour.
+- 20 Verre de Faille offerts chaque jour quand tu es en ligne.
 - Un nouveau pass à 30 paliers, avec une rangée gratuite pour tout le monde.
 - 70 nouveaux Spirlings, 10 dans chaque région.
 - Les Reflets existent maintenant en 5 sortes, du Reflet classique au très rare Reflet opalin.
