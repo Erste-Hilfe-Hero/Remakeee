@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table pass_track, written by tools/i18n/locales_pass_track.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d of %d pass points": "パスポイント %d / %d",
+  "%d premium rewards reached and waiting.": "プレミアムのほうび%d個が到達済みで待っている。",
+  "Free:": "無料:",
+  "Free: %s": "無料: %s",
+  "Locked: needs the Wayfarer Pass.": "ロック中: 旅人パスが必要。",
+  "Opens the premium row of every step.": "すべてのステップのプレミアム列が開く。",
+  "Pass track": "パスの道",
+  "Premium (Wayfarer Pass):": "プレミアム(旅人パス):",
+  "Premium row: Wayfarer Pass": "プレミアム列: 旅人パス",
+  "Premium: %s": "プレミアム: %s",
+  "Reached at %d pass points.": "パスポイント%dで到達。",
+  "Ready to take.": "受け取れる。",
+  "Something went wrong. Try again in a moment.": "うまくいかなかった。少ししてからもう一度。",
+  "Step %d": "ステップ %d",
+  "Step %d of %d": "ステップ %d / %d",
+  "Step %d: %s": "ステップ %d: %s",
+  "Take all rewards (%d)": "ほうびを全部受け取る (%d)",
+  "Take the free reward": "無料のほうびを受け取る",
+  "Take the premium reward": "プレミアムのほうびを受け取る",
+  "Taken.": "受け取り済み。",
+  "The premium row needs the Wayfarer Pass.": "プレミアム列には旅人パスが必要だ。",
+  "Top row: free for everyone. Bottom row: with the Wayfarer Pass. Pass points come from battles won (%d), bonds (%d) and daily tasks (%d), up to %d a day.": "上の列: だれでも無料。下の列: 旅人パスで。パスポイントは勝ったバトル(%d)、絆(%d)、デイリー課題(%d)でもらえる。1日に%dまで。",
+  "You got:": "もらったもの:",
+  "ends in %s": "残り%s"
+ }
+}

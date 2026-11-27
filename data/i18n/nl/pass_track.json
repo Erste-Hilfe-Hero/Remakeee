@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table pass_track, written by tools/i18n/locales_pass_track.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d of %d pass points": "%d van %d paspunten",
+  "%d premium rewards reached and waiting.": "%d bereikte premiumbeloningen wachten.",
+  "Free:": "Gratis:",
+  "Free: %s": "Gratis: %s",
+  "Locked: needs the Wayfarer Pass.": "Op slot: heeft de Reizigerspas nodig.",
+  "Opens the premium row of every step.": "Opent de premiumrij van elke stap.",
+  "Pass track": "Paspad",
+  "Premium (Wayfarer Pass):": "Premium (Reizigerspas):",
+  "Premium row: Wayfarer Pass": "Premiumrij: Reizigerspas",
+  "Premium: %s": "Premium: %s",
+  "Reached at %d pass points.": "Bereikt bij %d paspunten.",
+  "Ready to take.": "Klaar om te nemen.",
+  "Something went wrong. Try again in a moment.": "Er ging iets mis. Probeer het zo opnieuw.",
+  "Step %d": "Stap %d",
+  "Step %d of %d": "Stap %d van %d",
+  "Step %d: %s": "Stap %d: %s",
+  "Take all rewards (%d)": "Alle beloningen nemen (%d)",
+  "Take the free reward": "Gratis beloning nemen",
+  "Take the premium reward": "Premiumbeloning nemen",
+  "Taken.": "Genomen.",
+  "The premium row needs the Wayfarer Pass.": "De premiumrij heeft de Reizigerspas nodig.",
+  "Top row: free for everyone. Bottom row: with the Wayfarer Pass. Pass points come from battles won (%d), bonds (%d) and daily tasks (%d), up to %d a day.": "Bovenste rij: gratis voor iedereen. Onderste rij: met de Reizigerspas. Paspunten komen van gewonnen gevechten (%d), banden (%d) en dagtaken (%d), tot %d per dag.",
+  "You got:": "Je kreeg:",
+  "ends in %s": "eindigt over %s"
+ }
+}

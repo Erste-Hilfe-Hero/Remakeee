@@ -187,6 +187,9 @@ static func draw_price(b: Button, price: String) -> void:
 	b.draw_string(font, r.position + Vector2(3, 1 + font.get_ascent(fs)), price, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UITheme.INK)
 
 static func _run_tab(menu: MenuHost, tab: String) -> void:
+	if tab == "pass":
+		await PassScreen.run(menu)
+		return
 	while true:
 		var list: Array[Dictionary] = ShopCatalog.in_tab(tab)
 		if list.is_empty():

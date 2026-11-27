@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table pass_track, written by tools/i18n/locales_pass_track.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d of %d pass points": "%d / %d paso puanı",
+  "%d premium rewards reached and waiting.": "Ulaşılan %d premium ödül bekliyor.",
+  "Free:": "Ücretsiz:",
+  "Free: %s": "Ücretsiz: %s",
+  "Locked: needs the Wayfarer Pass.": "Kilitli: Gezgin Pasosu gerekir.",
+  "Opens the premium row of every step.": "Her aşamanın premium sırasını açar.",
+  "Pass track": "Paso yolu",
+  "Premium (Wayfarer Pass):": "Premium (Gezgin Pasosu):",
+  "Premium row: Wayfarer Pass": "Premium sıra: Gezgin Pasosu",
+  "Premium: %s": "Premium: %s",
+  "Reached at %d pass points.": "%d paso puanında ulaşılır.",
+  "Ready to take.": "Alınmaya hazır.",
+  "Something went wrong. Try again in a moment.": "Bir sorun oldu. Birazdan yeniden dene.",
+  "Step %d": "Aşama %d",
+  "Step %d of %d": "Aşama %d / %d",
+  "Step %d: %s": "Aşama %d: %s",
+  "Take all rewards (%d)": "Tüm ödülleri al (%d)",
+  "Take the free reward": "Ücretsiz ödülü al",
+  "Take the premium reward": "Premium ödülü al",
+  "Taken.": "Alındı.",
+  "The premium row needs the Wayfarer Pass.": "Premium sıra Gezgin Pasosu gerektirir.",
+  "Top row: free for everyone. Bottom row: with the Wayfarer Pass. Pass points come from battles won (%d), bonds (%d) and daily tasks (%d), up to %d a day.": "Üst sıra: herkese ücretsiz. Alt sıra: Gezgin Pasosu ile. Paso puanları kazanılan savaşlardan (%d), bağlardan (%d) ve günlük görevlerden (%d) gelir, günde en fazla %d.",
+  "You got:": "Aldıkların:",
+  "ends in %s": "%s sonra biter"
+ }
+}
