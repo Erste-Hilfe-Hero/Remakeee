@@ -665,7 +665,7 @@ Owner request for 1.3.2: ten more Spirlings in every region. Drawn by tools/art/
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 528 | Glarelet | Lumen/Ember | common | striker | thick_hide | 325 | Glarelisk (ring 18) |
 | 529 | Glarelisk | Lumen/Ember | uncommon | striker | thick_hide | 443 | Glaremonarch (ring 34) |
-| 530 | Glaremonarch | Lumen/Ember | shy | striker | thick_hide | 510 | - |
+| 530 | Glaremonarch | Lumen/Ember | shy | striker | thick_hide | 520 | - |
 | 531 | Haulbug | Stone/Gale | common | bulwark | thick_hide | 306 | Haulbeetle (ring 18) |
 | 532 | Haulbeetle | Stone/Gale | uncommon | bulwark | thick_hide | 448 | Haulbastion (ring 33) |
 | 533 | Haulbastion | Stone/Gale | shy | bulwark | thick_hide | 466 | - |
@@ -686,7 +686,7 @@ Owner request for 1.3.2: ten more Spirlings in every region. Drawn by tools/art/
 | 539 | Brumeshade | Frost/Umbra | uncommon | striker | slick | 348 | Brumarch (ring 39) |
 | 540 | Brumarch | Frost/Umbra | shy | striker | slick | 515 | - |
 | 541 | Zinclet | Acid/Volt | common | vanguard | glimmer_skin | 296 | Zincrawler (ring 25) |
-| 542 | Zincrawler | Acid/Volt | uncommon | vanguard | glimmer_skin | 402 | Zincolossus (ring 39) |
+| 542 | Zincrawler | Acid/Volt | uncommon | vanguard | glimmer_skin | 370 | Zincolossus (ring 39) |
 | 543 | Zincolossus | Acid/Volt | shy | vanguard | glimmer_skin | 476 | - |
 | 544 | Serifkit | Stone/Lumen | uncommon | weaver | low_flame | 322 | Serifane (ring 34) |
 | 545 | Serifane | Stone/Lumen | shy | weaver | low_flame | 429 | - |
@@ -724,7 +724,7 @@ Owner request for 1.3.2: ten more Spirlings in every region. Drawn by tools/art/
 | 559 | Hoistheron | Rust/Gale | uncommon | striker | dry_coat | 410 | Hoistgrand (ring 41) |
 | 560 | Hoistgrand | Rust/Gale | shy | striker | dry_coat | 495 | - |
 | 561 | Fibbet | Mask/Tide | common | weaver | fireproof | 310 | Fibwhisker (ring 23) |
-| 562 | Fibwhisker | Mask/Tide | uncommon | weaver | fireproof | 410 | Fibgrandee (ring 40) |
+| 562 | Fibwhisker | Mask/Tide | uncommon | weaver | fireproof | 451 | Fibgrandee (ring 40) |
 | 563 | Fibgrandee | Mask/Tide | shy | weaver | fireproof | 504 | - |
 | 564 | Murmlet | Echo/Umbra | uncommon | kindler | grounded | 309 | Murmuron (ring 33) |
 | 565 | Murmuron | Echo/Umbra | shy | kindler | grounded | 425 | - |

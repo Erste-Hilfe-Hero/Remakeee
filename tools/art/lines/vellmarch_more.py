@@ -10,7 +10,7 @@ BATCH = ", 1.3.2 batch"
 NOTE = "Owner request for 1.3.2: ten more Spirlings in every region."
 LOGGED = "2026-11-27"
 # Stat totals placed with tools/balance/type_sim.py so older kinds stay inside its 40-60 percent gate.
-TOTALS_SET = {"Tallywarden": 387}
+TOTALS_SET = {"Fibwhisker": 451, "Tallywarden": 387}
 ERA = 2
 ACT = "Era II post-game"
 ART_TOOL = "tools/art/gen_era2.py"

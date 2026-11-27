@@ -128,7 +128,7 @@ func test_closed_regions_stay_out_of_the_spirlog_and_the_wild() -> void:
 			var own: String = Database.species(str(s.species)).region
 			assert_gte(WorldValidator.REGIONS.find(region), 0, "%s has a known region" % area)
 			assert_lte(WorldValidator.REGIONS.find(own), WorldValidator.REGIONS.find(region), "%s in %s" % [s.species, area])
-	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 71)
+	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 81, "Corvane: 70 Act II kinds, 10 from 1.3.2 and its legendary")
 	assert_true(SpirlogBook.region_open("solenne", {"rift_shade_sealed": true}), "the sand road opens the chapter")
 	assert_false(SpirlogBook.region_open("solenne", {}))
 

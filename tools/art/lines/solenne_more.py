@@ -9,7 +9,7 @@ BATCH = ", 1.3.2 batch"
 NOTE = "Owner request for 1.3.2: ten more Spirlings in every region."
 LOGGED = "2026-11-27"
 # Stat totals placed with tools/balance/type_sim.py so older kinds stay inside its 40-60 percent gate.
-TOTALS_SET = {"Cisternox": 383, "Haulbeetle": 448, "Noctolabe": 410, "Grainspout": 407, "Haulbastion": 466}
+TOTALS_SET = {"Glaremonarch": 520, "Cisternox": 383, "Haulbeetle": 448, "Noctolabe": 410, "Grainspout": 407, "Haulbastion": 466}
 
 LINES = [
     L(id="glarelet", names=["Glarelet", "Glarelisk", "Glaremonarch"], elements=["LUMEN", "EMBER"], role="striker",

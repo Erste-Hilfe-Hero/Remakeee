@@ -35341,11 +35341,11 @@
   "line_id": "glarelet",
   "era": 1,
   "base": {
-   "hp": 82,
-   "atk": 126,
-   "foc": 87,
-   "spd": 141,
-   "def": 74
+   "hp": 84,
+   "atk": 128,
+   "foc": 89,
+   "spd": 144,
+   "def": 75
   },
   "trait": "thick_hide",
   "learnset": {
@@ -36070,11 +36070,11 @@
   "line_id": "zinclet",
   "era": 3,
   "base": {
-   "hp": 82,
-   "atk": 100,
-   "foc": 67,
-   "spd": 88,
-   "def": 65
+   "hp": 76,
+   "atk": 92,
+   "foc": 61,
+   "spd": 81,
+   "def": 60
   },
   "trait": "glimmer_skin",
   "learnset": {
@@ -37284,11 +37284,11 @@
   "line_id": "fibbet",
   "era": 2,
   "base": {
-   "hp": 90,
-   "atk": 57,
-   "foc": 105,
-   "spd": 72,
-   "def": 86
+   "hp": 97,
+   "atk": 63,
+   "foc": 116,
+   "spd": 80,
+   "def": 95
   },
   "trait": "fireproof",
   "learnset": {
