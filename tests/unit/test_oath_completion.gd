@@ -43,12 +43,14 @@ func test_save_slot_line_shows_chain_under_oath() -> void:
 	assert_true(SaveManager.summary_line(d).begins_with(SaveManager.OATH_GLYPH))
 	assert_true(PixelFont.GLYPHS.has(SaveManager.OATH_GLYPH), "the chain is drawn in the pixel font")
 
-func test_oathkeeper_has_three_steps() -> void:
+## One mode (owner decision 2026-11-27): the Veteran and Rift-Born Oathkeeper steps are retired,
+## so one Oathkeeper badge is left to earn.
+func test_oathkeeper_has_one_step_left() -> void:
 	var tiers: Array = []
 	for a: Dictionary in Achievements.list():
 		if str(a.get("group", "")) == "oath":
 			tiers.append(str(a.tier))
-	assert_eq(tiers.size(), 3)
+	assert_eq(tiers.size(), 1)
 
 func test_completion_weights_and_range() -> void:
 	var sum: int = 0

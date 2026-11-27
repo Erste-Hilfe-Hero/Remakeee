@@ -76,7 +76,6 @@ func test_new_game_asks_no_difficulty() -> void:
 	var consts: Dictionary = (TitleScreen as Script).get_script_constant_map()
 	for k: String in ["DIFFICULTY_TITLE", "DIFFICULTY_CHOICES", "DIFFICULTY_ROWS", "DIFFICULTY_LINES", "DIFFICULTY_LATER"]:
 		assert_false(consts.has(k), k)
-	assert_false(TitleScreen.has_method("ask_difficulty"))
 	var src: String = FileAccess.get_file_as_string("res://scripts/ui/TitleScreen.gd")
 	assert_false(src.contains("ask_difficulty"), "the new game flow asks no difficulty")
 	assert_string_contains(src, "GameState.new_game(GameState.Difficulty.TAMER,")
