@@ -14,13 +14,13 @@
   "^.HHHDHH_S.^",
   "^....____..^",
   "^T..________",
-  "^..._....___",
-  "^..._......^",
+  "^..._.RRR___",
+  "^..._.HDH..^",
   "__.._..::..^",
   "_______::..^",
   "^*...._*..*^",
-  "^.L..._..L.^",
-  "^....._...*^",
+  "^RRRL._LRRR^",
+  "^HDH.._.HDH^",
   "^....._....^",
   "^....._....^",
   "^.S..._....^",
@@ -84,6 +84,30 @@
    "tx": 10,
    "ty": 3,
    "facing": "left"
+  },
+  {
+   "x": 2,
+   "y": 15,
+   "to": "station_pointsman",
+   "tx": 4,
+   "ty": 7,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 15,
+   "to": "station_lamproom",
+   "tx": 4,
+   "ty": 7,
+   "facing": "up"
+  },
+  {
+   "x": 7,
+   "y": 10,
+   "to": "station_freight",
+   "tx": 4,
+   "ty": 7,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -105,7 +129,7 @@
    "schedule": [
     {
      "phase": "dusk",
-     "x": 3,
+     "x": 5,
      "y": 14,
      "facing": "left"
     },
@@ -119,16 +143,16 @@
   },
   {
    "id": "sev",
-   "x": 9,
-   "y": 16,
+   "x": 10,
+   "y": 17,
    "facing": "left",
    "dialogue": "ashmere_station/sev",
    "sprite": "elder",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 2,
-     "y": 15,
+     "x": 5,
+     "y": 16,
      "facing": "up"
     },
     {
@@ -149,7 +173,7 @@
    "schedule": [
     {
      "phase": "dusk",
-     "x": 1,
+     "x": 3,
      "y": 13,
      "facing": "down"
     },
@@ -171,7 +195,7 @@
   },
   {
    "id": "harl",
-   "x": 3,
+   "x": 4,
    "y": 15,
    "facing": "right",
    "dialogue": "ashmere_side/harl",
@@ -282,13 +306,6 @@
  ],
  "secrets": [
   {
-   "x": 0,
-   "y": 15,
-   "item": "strong_tonic",
-   "count": 2,
-   "flag": "find_station_west"
-  },
-  {
    "x": 11,
    "y": 13,
    "item": "remedy",
@@ -301,6 +318,13 @@
    "item": "revival_leaf",
    "count": 1,
    "flag": "find_station_ridge"
+  },
+  {
+   "x": 0,
+   "y": 16,
+   "item": "strong_tonic",
+   "count": 2,
+   "flag": "find_station_west"
   },
   {
    "x": 0,
@@ -334,7 +358,7 @@
   ]
  },
  "square": [
-  2,
+  4,
   14
  ]
 }

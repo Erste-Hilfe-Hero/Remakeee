@@ -1,0 +1,38 @@
+{
+ "name": "Lamp Room",
+ "region": "ashmere",
+ "biome": "town",
+ "backdrop": "ember",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCffCCCW",
+  "WffffffffW",
+  "WfCffffCfW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 8,
+   "to": "ashmere_station",
+   "tx": 9,
+   "ty": 16,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "ines",
+   "x": 7,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "map_pass/station_lamproom_ines",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}
