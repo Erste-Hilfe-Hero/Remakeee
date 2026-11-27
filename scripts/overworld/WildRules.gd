@@ -142,7 +142,7 @@ static func event_lines(day: String) -> Array[String]:
 	var sw: Dictionary = swarm(day)
 	if sw.is_empty():
 		return []
-	return [Loc.t("Swarm today: %s near %s") % [Loc.t(str(sw.species)), Spirling.place_name(str(sw.table))]] as Array[String]
+	return [Loc.f("Swarm today: %s near %s", [Loc.t(str(sw.species)), Spirling.place_name(str(sw.table))])] as Array[String]
 
 ## The Storm Lantern sets the encounter rate (KAMPF_PLAN "Wild-Begegnungs-Rate einstellbar"):
 ## 0 dim, 1 normal, 2 bright, saved in GameState.records[LANTERN_RECORD].

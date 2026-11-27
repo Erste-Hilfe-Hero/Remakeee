@@ -208,7 +208,8 @@ static func entry_name(e: Dictionary) -> String:
 		"pass":
 			return Loc.t("Wayfarer Pass for %d days") % int(e.n)
 		"spirling":
-			return Loc.t("%s at Ring %d with the highest Spark in every value") % [Loc.t(str(e.species)), int(e.level)]
+			# Filled in first, then translated as a whole: ja, ko, tr and zh write it with {0} and {1}.
+			return Loc.t("%s at Ring %d with the highest Spark in every value" % [str(e.species), int(e.level)])
 		"card":
 			return Loc.t("Monthly Card")
 	return ""

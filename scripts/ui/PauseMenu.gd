@@ -604,7 +604,7 @@ func run_boss_replays() -> bool:
 	var kept: Array[Dictionary] = BossRules.replays(GameState.records)
 	var labels: Array[String] = []
 	for r: Dictionary in kept:
-		labels.append(Loc.t("%s, won in %d turns") % [Loc.t(str(r.label)), int(r.turns)])
+		labels.append(Loc.f("%s, won in %d turns", [Loc.t(str(r.label)), int(r.turns)]))
 	var i: int = await pick_strings(Loc.t("Boss replays"), labels)
 	if i < 0:
 		return false
@@ -1671,7 +1671,7 @@ func _use_stat_crystal(id: String) -> void:
 		return
 	GameState.take_item(id)
 	Sound.sfx("level_up")
-	await info(Loc.t("%s's %s rose by %d.") % [s.display_name(), key.to_upper(), added])
+	await info(Loc.f("%s's %s rose by %d.", [s.display_name(), key.to_upper(), added]))
 
 ## Spirlog filters (item 249), kept while the menu is open.
 var _log_search: String = ""

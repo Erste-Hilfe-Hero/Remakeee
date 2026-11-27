@@ -214,7 +214,7 @@ static func collect() -> Array[String]:
 static func diary_line(s: Spirling, dest: String, item_name: String) -> String:
 	if dest == "":
 		return Loc.t("%s found a %s on the way") % [s.display_name(), item_name]
-	return Loc.t("%s found a %s in %s") % [s.display_name(), item_name, Spirling.place_name(dest)]
+	return Loc.f("%s found a %s in %s", [s.display_name(), item_name, Spirling.place_name(dest)])
 
 static func _log(line: String) -> void:
 	var log: Array = GameState.records.get("expedition_log", []) if GameState.records.get("expedition_log") is Array else []
