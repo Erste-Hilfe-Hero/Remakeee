@@ -77,7 +77,10 @@ def build():
         pass
     rows = []
     for o in offers:
-        rows.append("  (%s, %s, %s)" % (lit(o["id"]), lit(o["product_id"]), lit(json.dumps(o, ensure_ascii=False, sort_keys=True))))
+        # "explain" is the in-game explanation text only (detail view); the server never reads it, so a
+        # text change needs no new catalog version.
+        server = {k: v for k, v in o.items() if k != "explain"}
+        rows.append("  (%s, %s, %s)" % (lit(o["id"]), lit(o["product_id"]), lit(json.dumps(server, ensure_ascii=False, sort_keys=True))))
     advantages = sorted(o["id"] for o in offers if o["kind"] == "advantage")
     sql = ("-- Shop offers, copied from data/shop.json by tools/shop/build_offers_sql.py. Do not edit by hand.\n"
            "insert into public.shop_offers (id, product_id, data) values\n" + ",\n".join(rows) + "\n"
