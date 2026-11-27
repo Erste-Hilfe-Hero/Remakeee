@@ -108,6 +108,11 @@ func _screens(lang: String) -> void:
 	# A pack of one item: the contents line says what the item does (shop explanations, 27 Nov 2026).
 	s.show_detail(ShopCatalog.offer("rg_deal_mon"))
 	await _picture(t + "_13_detail_deal", s)
+	# Pay-to-win step 8 (release 1.3.2): a tier offer and a one-step offer.
+	s.show_detail(ShopCatalog.offer("rg_victory_mend_2"))
+	await _picture(t + "_13_detail_victory_mend", s)
+	s.show_detail(ShopCatalog.offer("rg_gleam_lens"))
+	await _picture(t + "_13_detail_gleam_lens", s)
 	# Under 18: the end shows as a date.
 	_state(16)
 	s.select_tab("featured")

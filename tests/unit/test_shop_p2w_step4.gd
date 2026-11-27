@@ -112,7 +112,7 @@ func test_replay_keeps_and_clamps_amulets() -> void:
 	var snap: Dictionary = BattleReplay.snapshot(m, "", "")
 	assert_eq(BattleReplay.build_model(snap).amulets[0], [2, 1, 0])
 	snap["amulets"] = [99, 99, 99]
-	assert_eq(BattleReplay.build_model(snap).amulets[0], [3, 1, 1], "a tampered replay is clamped")
+	assert_eq(BattleReplay.build_model(snap).amulets[0], [5, 1, 1], "a tampered replay is clamped (Crit Seal V, step 8)")
 	snap.erase("amulets")
 	assert_eq(BattleReplay.build_model(snap).amulets[0], [0, 0, 0], "old replays run without amulets")
 	assert_eq(BattleReferee.from_expect({"seed": 1, "teams": [], "amulets": [1, 0, 1]}).amulets, [1, 0, 1])
