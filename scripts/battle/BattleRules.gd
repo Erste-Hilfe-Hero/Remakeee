@@ -304,6 +304,8 @@ static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field:
 	m *= float(reaction(move, target).get("mult", 1.0))
 	if move.kind == MoveData.Kind.PHYSICAL:
 		m *= mult_key(target, "phys_taken")
+	elif move.kind == MoveData.Kind.FOCUS:
+		m *= mult_key(target, "focus_taken")
 	# Element Prisms from the shop: one element hits harder (plan item 4402).
 	var held: Dictionary = held_info(user.held)
 	if held.has("elem") and not move.neutral and move.element == Elements.E.get(str(held.elem), -1):

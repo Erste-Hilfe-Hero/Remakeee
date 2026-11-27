@@ -1,7 +1,8 @@
 class_name ShopMenu
 extends RefCounted
-## The shop (items 4177-4184), opened only from the menu by the player (item 4028).
-## Tabs: Advantages, Packs, Pass, Looks, Riftglass, plus My purchases, Spending limit and About.
+## The shop (items 4177-4184), opened only from the menu by the player (item 4028). Since the
+## pay-to-win rebuild (27.11.2026) the screen is ShopScreen; this keeps the checks before it, the
+## purchase flow (buy), the pages behind More and the old list rows (tools, tests).
 ## Rows show name and price; "+" marks an advantage in the game. Prices in euro come from the store;
 ## Riftglass prices always show their euro value. No direct purchase prompts (UWG annex no. 28).
 
@@ -12,7 +13,9 @@ const ABOUT_TEXT: String = "About purchases:\n- Chimora is free. Everything in t
 const WEB_TEXT: String = "The shop is only in the phone app. The browser test version cannot buy anything."
 const WITHDRAWAL_TEXT: String = "Before your first purchase: digital goods are delivered at once. You agree that the right of withdrawal ends when the delivery starts. Refunds go through Apple or Google."
 
-static func run(menu: MenuHost) -> void:
+## Opens the shop: the full-screen ShopScreen after the connection, age and kids checks.
+## [param open_offer] opens straight on that offer (the Starter Pack note).
+static func run(menu: MenuHost, open_offer: String = "") -> void:
 	# Item 4111: the browser test version cannot buy; the shop lives in the apps only.
 	if OS.has_feature("web"):
 		await menu.info(WEB_TEXT)
@@ -33,31 +36,17 @@ static func run(menu: MenuHost) -> void:
 		return
 	await _query_prices()
 	await Billing.claim()
-	while true:
-		var entries: Array[String] = []
-		for t: String in ShopCatalog.TABS:
-			entries.append(ShopCatalog.TAB_NAMES[t])
-		entries.append_array(["My purchases", "Spending limit", "About purchases", "Help with purchases"])
-		# Apple guideline 3.1.1: bought unlocks and the pass can be restored (only with a store).
-		if Billing.available():
-			entries.append("Restore purchases")
-		# The shop list in the era's layout (EraMenus): plain rows in Era I, symbols from
-		# Era II, big buttons from Era IV.
-		var idx: int = await menu.pick_screen("shop", title(), list_rows(entries, EraMenus.layout(EraManager.active_era(), "shop")), {"panel_text": RG_NO_VALUE})
-		if idx < 0:
-			return
-		if idx < ShopCatalog.TABS.size():
-			await _run_tab(menu, ShopCatalog.TABS[idx])
-		elif entries[idx] == "My purchases":
-			await _run_history(menu)
-		elif entries[idx] == "Spending limit":
-			await _run_limit(menu)
-		elif entries[idx] == "Help with purchases":
-			await run_help(menu)
-		elif entries[idx] == "Restore purchases":
-			await menu.info(restore_text(await Billing.restore()))
-		else:
-			await menu.info(ABOUT_TEXT)
+	await ShopScreen.open(menu, open_offer)
+
+## The pages behind the More tab, by the old shop list's row names.
+static func run_more_entry(menu: MenuHost, label: String) -> void:
+	match label:
+		"My purchases": await _run_history(menu)
+		"Spending limit": await _run_limit(menu)
+		"Help with purchases": await run_help(menu)
+		"Restore purchases": await menu.info(restore_text(await Billing.restore()))
+		"Wardrobe": await run_wardrobe(menu)
+		_: await menu.info(ABOUT_TEXT)
 
 ## The line after "Restore purchases" for [param n] from Billing.restore() (-1 = no connection).
 static func restore_text(n: int) -> String:
@@ -326,13 +315,7 @@ static func limit_line(o: Dictionary) -> String:
 	return ShopCatalog.repeat_line(o) if o.get("limit") is Dictionary else ""
 
 static func _run_offer(menu: MenuHost, o: Dictionary) -> void:
-	# An owned jacket, backdrop or text frame is worn or taken off here (items 4277, 4281).
-	if str(o.get("slot", "")) == "gift_card" and Billing.unlocked("gift_card_" + FriendsMenu.GIFT_CARDS.keys()[0]) > 0:
-		await _run_gift_cards(menu)
-		return
-	var key: String = look_key(o)
-	if not key.is_empty() and Billing.unlocked(key) > 0:
-		await _run_wear(menu, o, key)
+	if await run_owned(menu, o):
 		return
 	# Looks are shown before they are bought (item 4291).
 	await menu.info(detail_text(o) + ShopPreview.preview_text(o), await ShopPreview.picture(o, menu))
@@ -350,33 +333,52 @@ static func _run_offer(menu: MenuHost, o: Dictionary) -> void:
 	var idx: int = await menu.pick_strings(Loc.t(str(o.name)), options)
 	if idx < 0:
 		return
+	await buy(menu, o, kinds[idx])
+
+## An owned jacket, backdrop, text frame or gift card set is worn or taken off here (items 4277,
+## 4281). False when [param o] is no owned look.
+static func run_owned(menu: MenuHost, o: Dictionary) -> bool:
+	if str(o.get("slot", "")) == "gift_card" and Billing.unlocked("gift_card_" + FriendsMenu.GIFT_CARDS.keys()[0]) > 0:
+		await _run_gift_cards(menu)
+		return true
+	var key: String = look_key(o)
+	if not key.is_empty() and Billing.unlocked(key) > 0:
+		await _run_wear(menu, o, key)
+		return true
+	return false
+
+## Buys [param o] with Riftglass or in the store: the choice of a prism, the withdrawal note before
+## the first purchase, the block check, "No" first on spending Riftglass, then Billing. True when
+## the purchase went through.
+static func buy(menu: MenuHost, o: Dictionary, with_rg: bool) -> bool:
 	var choice: Variant = null
 	if o.get("choice") is Array:
 		choice = await _pick_choice(menu, o)
 		if choice == null:
-			return
+			return false
 	if not await _withdrawal_ok(menu):
-		return
-	var with_rg: bool = kinds[idx]
+		return false
 	var why: String = Billing.block_reason(o, with_rg)
 	if not why.is_empty():
 		await menu.info(reason_text(why))
-		return
+		return false
 	var r: Dictionary
 	if with_rg:
 		var after: int = Billing.balance() - int(o.rg_price)
 		var q: String = Loc.t("Spend %d Riftglass? Your balance after: %s") % [int(o.rg_price), ShopCatalog.rg_text(after)]
 		# "No" comes first and is selected (item 4182).
 		if await menu.pick_strings(q, ["No", "Yes"] as Array[String]) != 1:
-			return
+			return false
 		r = await Billing.buy_with_riftglass(o, choice)
 	else:
 		r = await Billing.buy_in_store(o, choice)
 	if bool(r.get("ok", false)):
 		Sound.sfx("save")
 		await menu.info(Loc.t("Done. %s is yours.") % Loc.t(str(o.name)))
-	elif str(r.get("error", "")) != "cancelled":
+		return true
+	if str(r.get("error", "")) != "cancelled":
 		await menu.info(reason_text(str(r.get("error", ""))))
+	return false
 
 ## The unlock key of a jacket offer ("" for any other offer).
 static func jacket_key(o: Dictionary) -> String:

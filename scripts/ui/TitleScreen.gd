@@ -139,11 +139,16 @@ func _build_name_box() -> void:
 	var l := Label.new()
 	l.text = "Your name?"
 	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# "Please pick another name." wraps instead of widening the box (200 list item 7).
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	head.add_child(l)
 	_name_edit = LineEdit.new()
 	_name_edit.max_length = NAME_MAX
 	# Characters left, "4/10" (item 1966).
-	head.add_child(CharCounter.make(_name_edit, NAME_MAX))
+	var counter: CharCounter = CharCounter.make(_name_edit, NAME_MAX)
+	counter.ask_label = l
+	counter.ask_text = l.text
+	head.add_child(counter)
 	_name_edit.add_theme_stylebox_override("normal", UITheme.flat_style(UITheme.ACCENT, UITheme.INK))
 	_name_edit.add_theme_color_override("font_color", UITheme.INK)
 	_name_edit.text_submitted.connect(func(t: String) -> void: _name_done.emit(t))
@@ -365,11 +370,14 @@ func _run() -> void:
 		if latest > 0:
 			# The Continue row carries the badge of the save's era; a long place name wraps onto
 			# a second line (1.3.1; it ended in "..." before).
-			entries[0]["icon"] = EraSaveCard.badge(maxi(EraMoments.slot_era(latest), 1))
+			# Beside it the team lead as a small picture (200 list item 2).
+			var lead: String = EraSaveCard.lead_species(EraMoments.slot_dict(latest))
+			entries[0]["icon"] = EraSaveCard.continue_icon(maxi(EraMoments.slot_era(latest), 1), lead)
 		var idx: int = await _menu.pick("", entries, false)
 		_at_root = false
 		if idx == QUIT_ASKED:
 			if await _menu.confirm("Quit Chimora?"):
+				CrashReport.app_left()
 				get_tree().quit()
 			continue
 		var choice: String = "Continue" if items[idx].begins_with("Continue") else items[idx]

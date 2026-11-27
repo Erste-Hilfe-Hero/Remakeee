@@ -1,1 +1,7 @@
-Act IV: Solenne, three new Rifts and a desert that lies to you. After the finale: Vellmarch, then Quillmarch, Halcyra and Quivermoor, each in a later era's look. 497 Spirlings in all, six legendaries with lore quests, Gleam forms. Clans keep a Ledger of whom you trusted. Online: leagues and echo duels. Your journey saves right after you pick your name, foldables refit at once, and your Wayfarer no longer walks on alone after a battle.
+Chimora 1.3.1
+
+- 7 new gifts for your Spirlings, plus new arts that hit several times or let a teammate step in.
+- "Which one suits you?" helps you choose your partner, and an Idea button suggests names.
+- Weekend bonus: double experience on Saturday and Sunday.
+- Runs on more devices, including Chromebooks, and better on tablets and foldable phones.
+- Many small fixes.

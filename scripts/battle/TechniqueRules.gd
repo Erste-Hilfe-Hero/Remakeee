@@ -256,6 +256,8 @@ static func info_line(fx: Dictionary) -> String:
 			return Loc.t("Foe arts glance off it this turn. Fails if used twice in a row.")
 		&"force_out":
 			return Loc.t("In a Wayfarer duel the target is knocked back to its bench.")
+		&"pivot":
+			return Loc.t("After the hit it falls back, and the best-suited teammate steps in.")
 		&"counter":
 			return Loc.t("Pays back the physical damage it took this turn, x%s.") % String.num(amount if amount > 0.0 else COUNTER_MULT, 1)
 		&"heal_ally":

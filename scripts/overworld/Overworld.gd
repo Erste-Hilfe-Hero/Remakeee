@@ -55,6 +55,7 @@ var minimap: Minimap
 ## (plan Chimora 100, items 37 and 38).
 var goal_line: GoalLine
 var goal_marks: GoalMarks
+var _door_glow: DoorGlow
 ## Top-of-screen notes (badges, daily tasks).
 var toast: Toast
 var _fade: ColorRect
@@ -181,6 +182,11 @@ func _ready() -> void:
 		if lamp != "":
 			GameState.notices.append(lamp)
 			hint = lamp
+		# Weekend boost (200 list item 141): a note on Friday and on the weekend, never a push.
+		var weekend: String = GrowthRules.weekend_line(GrowthRules.local_weekday())
+		if weekend != "":
+			GameState.notices.append(weekend)
+			hint = weekend
 		# A battle left open on Rift-Born leaves its note here (item 630).
 		if hint != "" or GameState.left_battle:
 			GameState.left_battle = false
@@ -203,6 +209,11 @@ func _build() -> void:
 	add_child(_particles)
 	_era_feel = EraFeelLayer.new()
 	add_child(_era_feel)
+	# Doors and cave mouths glow softly when the Wayfarer is near (200 list item 27).
+	_door_glow = DoorGlow.new()
+	_door_glow.name = "door_glow"
+	_door_glow.ow = self
+	add_child(_door_glow)
 	_entities = Node2D.new()
 	_entities.name = "Entities"
 	_entities.y_sort_enabled = true
@@ -215,6 +226,7 @@ func _build() -> void:
 	player.body_color = Color("3a5a9a")
 	player.sprite_style = "tamer"
 	player.can_move = _can_enter
+	player.can_probe = _can_probe
 	player.stepped.connect(_on_player_stepped)
 	player.step_started.connect(_on_player_step_started)
 	player.bob = true
@@ -255,6 +267,7 @@ func _build() -> void:
 	_ui.add_child(ui_root)
 	_ui_root = ui_root
 	SafeArea.apply(ui_root)
+	ui_root.add_child(SavePip.new())
 	_fade = ColorRect.new()
 	_fade.color = Color(UITheme.INK, 0.0)
 	_fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -273,6 +286,7 @@ func _build() -> void:
 	_ui_root.add_child(goal_line)
 	# Speed-run clock, only when switched on for the journey (KAMPF plan 507).
 	_ui_root.add_child(RunTimer.new())
+	_add_reset_button()
 	_door_wipe = ColorRect.new()
 	_door_wipe.color = UITheme.INK
 	_door_wipe.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -295,6 +309,7 @@ func _build() -> void:
 	Online.state_changed.connect(_on_online_daily_rg)
 	_on_online_daily_rg(Online.state)
 	_text = TextBox.new()
+	_text.keep_log = true
 	_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	_text.offset_top = -TEXT_BOX_HEIGHT
 	# Long lines (and German text) grow the box upward instead of off the bottom of the screen.
@@ -332,6 +347,11 @@ func _process(delta: float) -> void:
 	# A chimora://event link opens the Goals screen once the player is free (DeepLink.gd).
 	if DeepLink.route in ["event", "friend"] and GameState.has_flag("got_starter") and not busy and not scene_running and _photo == null and not player.moving:
 		open_menu("Goals" if DeepLink.take() == "event" else "Invite")
+	# The Starter Pack note once the tutorial act is over (adults only, never in a battle).
+	elif not busy and not scene_running and _photo == null and not player.moving and ShopScreen.starter_popup_now():
+		open_menu(ShopScreen.STARTER_OPEN)
+	if reset_button != null:
+		reset_button.visible = _world.reset_wanted and not busy and not scene_running and _photo == null
 	_walk_clock += delta
 	if _walk_clock >= WALK_PAUSE:
 		_walk_clock = 0.0
@@ -433,6 +453,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_entry_cell = cell
 	if map.outdoor:
 		GameState.enter_map(map_id, cell)
+	GameState.note_place(WorldAtlas.place_of(map_id))
 	_world.prepare(map, cell)
 	map.paint(_ground)
 	_terrain_look.show_map(map, _ground, _camera, _entities)
@@ -495,10 +516,16 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		_arrival_scene.call_deferred(arrive)
 	refresh_daylight()
 	Sound.enter_map(map_id)
+	if not _day_noted:
+		_day_noted = true
+		Comeback.note_day(int(Online.unix_now() / 86400.0))
 	if not map.encounter_table.is_empty() and Tips.pending("wild_area"):
 		_tip_after_load.call_deferred("wild_area")
 	elif not waiting_tips.is_empty():
 		_waiting_tip_after_load.call_deferred()
+
+## The day was noted for the welcome-back gift this session (200 list item 139).
+var _day_noted: bool = false
 
 var _rustle: Node2D
 
@@ -517,15 +544,18 @@ func _place_rustle() -> void:
 	_rustle.visible = true
 
 ## Tints the world for the time of day (UI layers are not affected). Checked once a minute.
-func refresh_daylight() -> void:
+## With [param fade] the tint glides to the new colour over DAYLIGHT_FADE seconds instead of
+## jumping (200 list item 38); map loads and settings changes stay instant.
+func refresh_daylight(fade: bool = false) -> void:
 	if _daylight == null:
 		_daylight = CanvasModulate.new()
 		add_child(_daylight)
 		var t := Timer.new()
 		t.wait_time = 60.0
 		t.autostart = true
-		t.timeout.connect(refresh_daylight)
+		t.timeout.connect(refresh_daylight.bind(true))
 		add_child(t)
+	var before: Color = _daylight.color
 	var w: String = WeatherCycle.current(map)
 	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night) * WeatherCycle.tint(w)
 	# Era V shows the season on outdoor maps (data/era_feel.json "season_tint").
@@ -543,6 +573,24 @@ func refresh_daylight() -> void:
 		weather_layer.show_kind(w)
 	DayCycle.poll()
 	_era_light.refresh(map, w, _daylight, _glow, weather_layer)
+	_fade_daylight(before, fade)
+
+## Seconds the world tint takes to glide to a new time of day (200 list item 38).
+const DAYLIGHT_FADE: float = 4.0
+var _daylight_tween: Tween
+
+## Glides the tint from [param before] to its new colour when [param fade] is set.
+func _fade_daylight(before: Color, fade: bool) -> void:
+	if _daylight_tween != null:
+		_daylight_tween.kill()
+		_daylight_tween = null
+	var after: Color = _daylight.color
+	if not fade or before.is_equal_approx(after) or not is_inside_tree():
+		return
+	_daylight.color = before
+	# A slow light change, far longer than the Juice curves, so a plain sine tween (docs/JUICE.md).
+	_daylight_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_daylight_tween.tween_property(_daylight, "color", after, DAYLIGHT_FADE)
 
 const SHADE_DARK: float = 0.9
 const SHADE_LIT: float = 0.3
@@ -580,6 +628,19 @@ func _can_enter(cell: Vector2i) -> bool:
 		_gear_hint.call_deferred(gear)
 		return false
 	return true
+
+## Like _can_enter but without pushing, sounds or hints, and no for anything unsure
+## (boulders, gear tiles without the gear). Picks diagonal steps (200 list item 30).
+func _can_probe(cell: Vector2i) -> bool:
+	if busy or map == null or not map.in_bounds(cell) or npc_at(cell) != null or map.char_at(cell) == "B":
+		return false
+	var k: int = map.kind_at(cell)
+	if TilesetFactory.GEAR_KINDS.has(k):
+		return GameState.has_gear(str(TilesetFactory.GEAR_KINDS[k]))
+	if not map.is_walkable(cell):
+		return false
+	var gear: String = map.gear_needed_at(cell)
+	return gear.is_empty() or GameState.has_gear(gear)
 
 var _hinted_cell: Vector2i = Vector2i(-1, -1)
 
@@ -693,7 +754,7 @@ func _spawn_npcs() -> void:
 func _on_phase_changed(_phase: int) -> void:
 	if map == null or busy:
 		return
-	refresh_daylight()
+	refresh_daylight(true)
 	_spawn_npcs()
 	_world.refresh(player.cell)
 
@@ -1293,7 +1354,7 @@ func _action_bench(_args: PackedStringArray, _speaker: NPC) -> void:
 	var p: DayCycle.Phase = DayCycle.skip_to_next()
 	Sound.sfx("confirm")
 	await say(["You sit on the bench and watch the line drift. Time slips by...", BENCH_LINES[p]] as Array[String])
-	refresh_daylight()
+	refresh_daylight(true)
 	_spawn_npcs()
 	_world.refresh(player.cell)
 
@@ -1455,6 +1516,7 @@ func _lamp_answer(info: Dictionary, day: String) -> void:
 	LampWatch.answer(GameState.records, day)
 	Sound.sfx("level_up")
 	var joined: bool = GameState.receive_spirling(s)
+	GameState.note_event_kind(s.data.species_name, LampWatch.RECORD)
 	var out: Array[String] = [Loc.t("%s answers your echo and stays with you.") % s.display_name()]
 	if s.gleam:
 		out.append("Its colours shine like the lamp itself: a Gleam!")
@@ -2201,7 +2263,12 @@ func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 	GameState.add_item(args[0], count)
 	Sound.sfx("pickup")
 	var item_name: String = str(Database.item(args[0]).get("name", args[0]))
-	await say(["You got %s x%d!" % [item_name, count]] as Array[String])
+	# How many the bag holds now (200 list item 35), when that is more than this gift.
+	var now: int = GameState.item_count(args[0])
+	if now > count:
+		await say([Loc.t("You got %s x%d!") % [Loc.t(item_name), count] + " " + Loc.t("(%d in the bag)") % now] as Array[String])
+	else:
+		await say(["You got %s x%d!" % [item_name, count]] as Array[String])
 	if PauseMenu.bag_tab(Database.item(args[0])) == 1:
 		await say(Tips.take("keepsake"))
 	if bool(Database.item(args[0]).get("gear", false)):
@@ -2316,16 +2383,66 @@ const STARTER_ASK: String = "%s curls up at your feet. Let it stay?"
 ## Said once the partner stays: one text box (Chimora 100 item 26).
 const STARTER_STAY_LINE: String = "%s stays with you! The other two slip off to the lake."
 
+## Help for undecided players under the partner list (200 list item 5): two short questions
+## that suggest a partner; the player still picks freely.
+const SUIT_ROW: String = "Which one suits you?"
+const SUIT_HINT: String = "Two short questions. You still choose freely."
+const SUIT_RESULT: String = "%s might suit you. But choose whoever you like!"
+## Each question with its answers; an answer's points go to Database.STARTERS in order.
+const SUIT_QUESTIONS: Array[Dictionary] = [
+	{"q": "A free afternoon. You...", "a": [["sit by a warm fire", [2, 0, 1]],
+		["race to the lake", [1, 2, 0]], ["explore a dark cave", [0, 1, 2]]]},
+	{"q": "Your partner should be...", "a": [["loyal and warm", [2, 0, 0]],
+		["quick and lively", [0, 2, 0]], ["calm and bright", [0, 0, 2]]]},
+]
+
+## Index in Database.STARTERS suggested by [param answers] (one answer index per question):
+## the most points; on a tie the first question's points decide.
+static func suit_pick(answers: Array[int]) -> int:
+	var best: int = 0
+	var best_score: int = -1
+	for i: int in Database.STARTERS.size():
+		var score: int = 0
+		for q: int in answers.size():
+			var pts: Array = (SUIT_QUESTIONS[q].a as Array)[answers[q]][1]
+			score += int(pts[i]) * 10 + (int(pts[i]) if q == 0 else 0)
+		if score > best_score:
+			best_score = score
+			best = i
+	return best
+
+## Asks the two questions; the suggested partner index, or -1 when the player backed out.
+static func ask_suit(menu: MenuHost) -> int:
+	var answers: Array[int] = []
+	for q: Dictionary in SUIT_QUESTIONS:
+		var items: Array[String] = []
+		for a: Array in q.a:
+			items.append(str(a[0]))
+		var idx: int = await menu.pick_strings(str(q.q), items)
+		if idx < 0:
+			return -1
+		answers.append(idx)
+	return suit_pick(answers)
+
 ## "choose_starter": the three Spirlings that sheltered from the storm; one stays.
 func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
 	if GameState.has_flag("got_starter"):
 		return
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
+	var rows: Array[Dictionary] = starter_rows()
+	rows.append({"text": SUIT_ROW, "hint": Loc.t(SUIT_HINT)})
+	var focus: int = -1
 	while true:
 		menu.picker.set_header(starter_header())
-		var pick: int = await menu.pick(STARTER_TITLE, starter_rows(), false)
+		var pick: int = await menu.pick(STARTER_TITLE, rows, false, focus)
 		menu.picker.set_header(null)
+		if pick >= Database.STARTERS.size():
+			var hint: int = await ask_suit(menu)
+			if hint >= 0:
+				await menu.info(Loc.t(SUIT_RESULT) % Database.STARTERS[hint], MiniSprite.of(Database.STARTERS[hint], STARTER_SPRITE))
+				focus = hint
+			continue
 		var sd: SpirlingData = Database.species(Database.STARTERS[pick])
 		# Yes or No only: a Back row would say the same as No (Chimora 100 item 32).
 		if await menu.pick_strings(STARTER_ASK % sd.species_name, ["Yes", "No"] as Array[String], false) == 0:
@@ -2333,6 +2450,8 @@ func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
 			break
 	menu.queue_free()
 	Sound.sfx("level_up")
+	# The partner greets the player with its own call (200 list item 4).
+	Sound.cry(Database.species(GameState.starter))
 	await say([STARTER_STAY_LINE % GameState.starter] as Array[String])
 
 ## Mirela's map book has 14 pages: 1-6 in Veydal (Act I), 7-10 in Corvane, 11-14 in Ashmere.
@@ -2701,6 +2820,39 @@ func drop_to(map_id: String, cell: Vector2i) -> void:
 	busy = false
 	await _locked_say(["The floor gave way! You land on the level below, unhurt."] as Array[String])
 	await _note_room_fail(fell_from)
+
+## "Reset room" on screen (200 list item 41): shows in a boulder room once a boulder has moved
+## and the plates are not all held, so a stuck player need not look for it in the menu.
+var reset_button: Button
+
+func _add_reset_button() -> void:
+	reset_button = Button.new()
+	reset_button.name = "reset_room"
+	reset_button.text = "Reset room"
+	reset_button.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	reset_button.offset_left = 4
+	reset_button.offset_top = 24
+	reset_button.visible = false
+	reset_button.pressed.connect(func() -> void: ask_reset_room())
+	_ui_root.add_child(reset_button)
+
+## Asks first, then puts every boulder of the room back and the player at the room's entrance
+## (the same as Room > Reset room in the menu).
+func ask_reset_room() -> void:
+	if busy or not _world.reset_wanted:
+		return
+	busy = true
+	player.frozen = true
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var yes: bool = await menu.confirm("Put every boulder back where it started?", "Reset", "Keep")
+	menu.queue_free()
+	if yes:
+		_world.reset_room(_entry_cell)
+	player.frozen = false
+	busy = false
+	if yes:
+		await _note_room_fail(map.id)
 
 ## A failed try in a puzzle room (area 3 item 1027): the third one pins a tip at the entrance.
 func _note_room_fail(room_id: String) -> void:
@@ -4493,7 +4645,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	if bool(trainer.get("area_music", false)):
 		area = Sound.area_theme(map.region if not map.region.is_empty() else EraManager.current_region)
 	scene.music_track = BattleAudio.theme(str(trainer.get("theme", "")), bool(trainer.get("warden", false)), not Festival.active().is_empty(),
-		map.outdoor and GameState.day_night and DayCycle.current() == DayCycle.Phase.NIGHT, area)
+		map.outdoor and GameState.day_night and DayCycle.current() == DayCycle.Phase.NIGHT, area, wild and BattleAudio.rare_foes(foes))
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	# A wild battle left by closing the app goes on after the restart (item 31).
 	if trainer.get("resume") is Array:
@@ -4616,6 +4768,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.rule_turn_full = GameState.difficulty >= GameState.Difficulty.VETERAN
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
 	model.xp_mult = ShopEffects.growth_mult() * GrowthRules.battle_mult(GameState.difficulty, trainer, GameState.records, not GameState.has_flag(GameState.ACT1_END_FLAG))
+	model.xp_mult *= GrowthRules.weekend_mult(GrowthRules.local_weekday())
 	model.ring_scaled_growth = EraFeatures.is_unlocked("ring_scaled_growth")
 	model.wheel = bool(trainer.get("wheel", false)) and EraFeatures.is_unlocked("wheel_battles")
 	model.wheel_size = EraActivities.wheel_size()

@@ -46,7 +46,9 @@ const MENU_ORDER: Array[String] = ["Goals", "Ledger", "Map", "Room", "Team", "Sa
 const MORE: String = "More"
 ## What More holds: Photo, the Discord invite (kept one tap deep, Ali wants it visible) and
 ## the Shortcuts.
-const MORE_ENTRIES: Array[String] = ["Photo", "Join our Discord", EraMenuKit.SHORTCUTS]
+const MORE_ENTRIES: Array[String] = ["Photo", TALK_LOG, "Join our Discord", EraMenuKit.SHORTCUTS]
+## Reads the last talk lines again (200 list items 14, 115).
+const TALK_LOG: String = "Talk log"
 
 static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false,
 		ledger: bool = false) -> Array[String]:
@@ -86,6 +88,11 @@ func run() -> void:
 	elif open_on == "Invite":
 		open_on = ""
 		await run_invite_link()
+	elif open_on == ShopScreen.STARTER_OPEN:
+		# The Starter Pack note after the tutorial act (ShopScreen.starter_popup_due), then back to the world.
+		open_on = ""
+		await ShopScreen.run_starter_popup(self)
+		return
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
@@ -182,6 +189,7 @@ static func spirlog_legend() -> String:
 		Collection.STAR + "  " + Loc.t("bonded and grown to Ring 30"),
 		"~  " + Loc.t("a Gleam of this kind was seen"),
 		GleamRules.STAR + "  " + Loc.t("a Gleam of this kind was bonded"),
+		Loc.t("Lantern at the right: it joined you at an event, such as the Lamp Watch"),
 		"",
 		Loc.t("On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.")]
 	return "\n".join(lines)
@@ -203,7 +211,7 @@ func run_map() -> void:
 			1: await MapBookMenu.run(self)
 			_: return
 
-## More (item 41): Photo, Join our Discord and Shortcuts. Returns the entry the menu should
+## More (item 41): Photo, Talk log (200 list item 14), Join our Discord and Shortcuts. Returns the entry the menu should
 ## open (Photo or a pinned shortcut), or "" to go back to the start menu.
 func run_more(labels: Array[String]) -> String:
 	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "pause")
@@ -214,6 +222,8 @@ func run_more(labels: Array[String]) -> String:
 		match MORE_ENTRIES[idx]:
 			"Join our Discord":
 				open_discord()
+			TALK_LOG:
+				await pick_screen("pause", TALK_LOG, talk_log_rows(), {"columns": 1})
 			EraMenuKit.SHORTCUTS:
 				var pinned: String = await run_shortcuts(labels)
 				if not pinned.is_empty():
@@ -221,6 +231,15 @@ func run_more(labels: Array[String]) -> String:
 			var other:
 				return other
 	return ""
+
+## One row per remembered talk line, newest first; one quiet row when nothing was said yet.
+static func talk_log_rows() -> Array[Dictionary]:
+	var rows: Array[Dictionary] = []
+	for i: int in range(TextBox.talk_log.size() - 1, -1, -1):
+		rows.append({"text": TextBox.talk_log[i]})
+	if rows.is_empty():
+		rows.append({"text": "Nobody has spoken yet.", "disabled": true})
+	return rows
 
 ## Puts the shop entry [param shop] into [param labels]: after the Satchel once the first Rift is
 ## mended ([param prominent]), before that at the end of the list, still reachable (Chimora 100, item 70).
@@ -235,7 +254,7 @@ static func place_shop(labels: Array[String], shop: String, prominent: bool) -> 
 func run_shortcuts(labels: Array[String]) -> String:
 	var can: Array[String] = []
 	for l: String in labels:
-		if l != EraMenuKit.SHORTCUTS and l != MORE and not l.begins_with("Shop (") and l != "Photo":
+		if l != EraMenuKit.SHORTCUTS and l != MORE and not l.begins_with("Shop (") and l != "Photo" and l != TALK_LOG:
 			can.append(l)
 	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "pause")
 	lay["columns"] = 1
@@ -810,8 +829,19 @@ func run_room() -> bool:
 	return true
 
 ## Fast travel between rest spots already used (item 41). Returns true if a target was picked.
+## The place travelled to last in this session; it heads the list next time (200 list item 36).
+static var last_travel: String = ""
+
+## [param ids] with [param last] moved to the front when it is there.
+static func last_first(ids: Array[String], last: String) -> Array[String]:
+	var out: Array[String] = ids.duplicate()
+	if out.has(last):
+		out.erase(last)
+		out.push_front(last)
+	return out
+
 func run_travel() -> bool:
-	var ids: Array[String] = GameState.travel_targets(current_map)
+	var ids: Array[String] = last_first(GameState.travel_targets(current_map), last_travel)
 	var names: Array[String] = []
 	for id: String in ids:
 		names.append(MapData.load_map(id).display_name if MapData.exists(id) else id)
@@ -822,6 +852,7 @@ func run_travel() -> bool:
 	if not await confirm("Travel to %s?" % names[idx], "Travel", "Stay"):
 		return false
 	travel_to = ids[idx]
+	last_travel = ids[idx]
 	return true
 
 func run_team() -> void:
@@ -1676,8 +1707,8 @@ func run_spirlog() -> void:
 		var region_tabs: bool = bool(lay.get("region_tabs", false))
 		var entries: Array[Dictionary] = []
 		var actions: Array[String] = []
-		# Two progress bars on top (item 1940).
-		for row: Dictionary in spirlog_progress_rows():
+		# Two progress bars on top (item 1940), then one percent row per era (200 list item 83).
+		for row: Dictionary in spirlog_progress_rows() + spirlog_era_rows():
 			entries.append(row)
 			actions.append("progress")
 		if bool(lay.get("search_bar", false)):
@@ -1727,6 +1758,9 @@ func run_spirlog() -> void:
 			# Era I is a plain number list: the line's own "+" and "*" say seen and bonded.
 			if bool(lay.get("icons", false)):
 				row["icon"] = mark
+			# Event kinds (Lamp Watch) carry a lantern badge at the right end (200 list item 137).
+			if not SpirlogBook.event_of(GameState.spirlog, sd.species_name).is_empty():
+				row["decorate"] = SpirlogMarks.draw_event_badge
 			if str(lay.get("panel", "none")) != "none" and SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
 				row["hint"] = Loc.t("Seen at: %s" % SpirlogBook.found_line(sd, GameState.spirlog))
 			else:
@@ -1810,6 +1844,16 @@ static func spirlog_progress_rows() -> Array[Dictionary]:
 		var ratio: float = float(n) / maxf(1.0, float(total))
 		out.append({"text": Loc.t(str(pair[0]) % [n, total]),
 			"decorate": func(b: Button) -> void: _draw_progress(b, ratio)})
+	return out
+
+## "Era I: 54% seen, 30% bonded" per era with kinds in the open regions (200 list item 83). No bar:
+## the row wraps onto two lines on the narrow screen and a bar would run through the second.
+static func spirlog_era_rows() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for p: Dictionary in SpirlogBook.era_progress(GameState.spirlog, GameState.flags):
+		var total: int = int(p.total)
+		out.append({"text": Loc.t("Era %s: %d%% seen, %d%% bonded") % [EraFeatures.ROMAN[clampi(int(p.era), 0, 5)],
+			SpirlogBook.percent(int(p.seen), total), SpirlogBook.percent(int(p.bonded), total)]})
 	return out
 
 const PROGRESS_W: int = 48

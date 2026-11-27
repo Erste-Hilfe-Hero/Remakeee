@@ -168,7 +168,7 @@ func block_reason(o: Dictionary, with_riftglass: bool) -> String:
 		return "age_needed"
 	if int(state.band) < maxi(13, int(o.get("min_band", 13))):
 		return "age"
-	if not bool(o.get("ready", false)):
+	if not bool(o.get("ready", false)) or not ShopCatalog.in_save_window(o):
 		return "not_available"
 	if not ShopCatalog.deal_active(o, int(state.get("server_time", Time.get_unix_time_from_system()))):
 		return "not_now"

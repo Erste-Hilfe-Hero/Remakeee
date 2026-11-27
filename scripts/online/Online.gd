@@ -11,10 +11,10 @@ enum State { OFFLINE, CONNECTING, ONLINE, UPDATE_REQUIRED }
 
 ## Must match version/code in export_presets.cfg (tests check it). The server sends builds
 ## older than its "min_version" to the store.
-const CLIENT_VERSION: int = 3
+const CLIENT_VERSION: int = 4
 ## Must match version/name in export_presets.cfg. Live content compares it with its per-platform
 ## "min_client" and "latest" (docs/LIVE_CONTENT.md).
-const CLIENT_VERSION_NAME: String = "1.3.0"
+const CLIENT_VERSION_NAME: String = "1.3.1"
 const APP_STORE_ID: String = "6831632885"
 const ITUNES_LOOKUP: String = "https://itunes.apple.com/lookup?id=6831632885"
 ## Format number of the online save (plan item 2673). The server refuses saves without it or
@@ -198,6 +198,8 @@ func connect_now() -> State:
 			await OnlineEvents.refresh()
 		if update_state() == "required":
 			_set_state(State.UPDATE_REQUIRED)
+		# Anonymous crash report of the last run (200 list item 184), only once the server has it.
+		CrashReport.send(backend, flag_on(CrashReport.FLAG))
 	if state == State.ONLINE and str(profile.get("platform", "")) != platform_name():
 		# The browser test build's accounts are deleted after 30 days unused (plan item 3765).
 		var p: Dictionary = await backend.call_fn("platform_set", {"p_platform": platform_name()})
@@ -437,6 +439,22 @@ func pull(slot: int) -> bool:
 	return true
 
 ## Called by SaveManager after every local save of the active slot.
+## When each slot last reached the server (unix seconds), for the Account menu (200 list item 19).
+var backup_at: Dictionary = {}
+
+## "Backed up 5 min ago" for [param slot]; a waiting upload or no upload yet says so.
+func backup_line(slot: int, now: int = -1) -> String:
+	if dirty.has(slot):
+		return Loc.t("Backup waits for the connection.")
+	if not backup_at.has(slot):
+		return ""
+	var mins: int = maxi(0, ((int(Time.get_unix_time_from_system()) if now < 0 else now) - int(backup_at[slot])) / 60)
+	if mins < 1:
+		return Loc.t("Backed up just now.")
+	if mins < 120:
+		return Loc.t("Backed up %d min ago.") % mins
+	return Loc.t("Backed up %d h ago.") % (mins / 60)
+
 func note_saved(slot: int) -> void:
 	dirty[slot] = true
 	_save_gen[slot] = int(_save_gen.get(slot, 0)) + 1
@@ -478,6 +496,7 @@ func _push_once(slot: int, force: bool) -> bool:
 		return false
 	if bool(r.data.get("ok", false)):
 		revs[slot] = int(r.data.rev)
+		backup_at[slot] = int(Time.get_unix_time_from_system())
 		# A save made while this upload was on its way is still waiting to go up.
 		if int(_save_gen.get(slot, 0)) == gen:
 			dirty.erase(slot)
@@ -754,6 +773,7 @@ static func current_place() -> String:
 
 func _save_session() -> void:
 	var d: Dictionary = {"session": backend.session, "revs": revs, "dirty": dirty.keys(), "privacy_seen": privacy_seen,
+		"backup_at": backup_at,
 		"actions": actions,
 		"local": backend.is_local()}
 	var f := FileAccess.open(SESSION_PATH, FileAccess.WRITE)
@@ -773,6 +793,8 @@ func _load_session() -> void:
 			revs[int(k)] = int(raw.revs[k])
 		for k: Variant in (raw.get("dirty", []) as Array):
 			dirty[int(k)] = true
+		for k: Variant in (raw.get("backup_at", {}) as Dictionary):
+			backup_at[int(k)] = int(raw.backup_at[k])
 		if raw.get("actions") is Array:
 			actions = (raw.actions as Array).filter(func(a: Variant) -> bool: return a is Dictionary and a.has("id"))
 	privacy_seen = bool(raw.get("privacy_seen", false))

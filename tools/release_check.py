@@ -125,6 +125,12 @@ def ios_localizations() -> list[str] | None:
         return None
 
 
+def ipad_shots() -> bool:
+    """13-inch iPad screenshots for the primary locale (store/ios/screenshots_ipad13/en-US)."""
+    d = os.path.join("store", "ios", "screenshots_ipad13", "en-US")
+    return os.path.isdir(d) and any(f.endswith(".png") for f in os.listdir(d))
+
+
 def check_presets() -> None:
     names = set(preset_values("version/name")) | set(preset_values("application/short_version"))
     if len(names) > 1:
@@ -134,7 +140,7 @@ def check_presets() -> None:
         errors.append("Android package and iOS bundle ID differ: " + ", ".join(sorted(ids)))
     if "com.chimora.game" in ids:
         todo.append("Bundle ID is still the old placeholder com.chimora.game")
-    if preset_values("application/targeted_device_family") != ["0"]:
+    if preset_values("application/targeted_device_family") != ["0"] and not ipad_shots():
         errors.append("iOS preset should be iPhone only (targeted_device_family=0), or add iPad screenshots")
     if "ITSAppUsesNonExemptEncryption" not in read("export_presets.cfg"):
         errors.append("iOS preset lacks ITSAppUsesNonExemptEncryption in additional_plist_content")

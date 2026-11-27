@@ -98,6 +98,14 @@ var menu_seen: Dictionary = {}
 var money: int = 0
 ## Waymarks (plan area 8): earned only by playing, never bought or traded. Change through Waymarks.earn().
 var waymarks: int = 0
+## Day (GameState.today) of the last time the journey was opened, and whether a welcome-back
+## gift waits in Goals (200 list item 139, Comeback).
+var last_play_day: int = 0
+var comeback_ready: bool = false
+## Day (GameState.today) the journey was started, and the save birthdays already gifted
+## (200 list item 147, SaveBirthday; the shop's first-days window, item 180).
+var start_day: int = 0
+var birthdays_paid: int = 0
 ## Today's daily tasks and their progress (see DailyTasks.gd): {"day", "tasks": [{"id", "n"}], "bonus"}.
 var daily_tasks: Dictionary = {}
 ## Festival ribbons per festival (see Festival.gd): "<id>_<year>" -> {"ribbons", "earned", "stages", "task"}.
@@ -127,6 +135,10 @@ var visited_maps: Dictionary = {}
 var map_cells: Dictionary = {}
 ## Own world map marks (item 1273): [{"map", "x", "y", "icon"}], at most Survey.MAX_MARKS.
 var map_marks: Array = []
+## World map "last here" (200 list item 31): the place the player is in now and the one they
+## were in before it (WorldAtlas place ids, "" until known).
+var here_place: String = ""
+var last_place: String = ""
 ## Personal bests, e.g. "gauntlet_best".
 var records: Dictionary = {}
 ## Story numbers such as kestra_trust (dialogue actions set_var / add_var, plan item 1339).
@@ -252,6 +264,14 @@ var weather: bool = false
 const WEATHER_MARK: String = "weather_131"
 ## Minimap (area 3 item 1272): "on", "off" or "outdoor" (only outside).
 var minimap: String = "on"
+## Night mode (200 list item 127): 0 off, 1 dim, 2 warm. A tint over the whole screen for dark rooms.
+var night_mode: int = 0
+const NIGHT_MODE_NAMES: Array[String] = ["Off", "Dim", "Warm"]
+## Multiplied over the screen per night mode; the first is unused (off).
+const NIGHT_TINTS: Array[Color] = [Color(1, 1, 1), Color(0.6, 0.6, 0.62), Color(0.78, 0.6, 0.42)]
+## Above every other layer (UpdatePanel is 125), so menus and pop-ups are dimmed too.
+const NIGHT_LAYER: int = 126
+var _night_layer: CanvasLayer
 ## Game language (item 62): a Loc.LANGUAGES code, or "" for the device language.
 var language: String = ""
 ## Version of the terms of use this device accepted (LegalInfo.TERMS_VERSION), "" = not yet.
@@ -583,6 +603,10 @@ func reset() -> void:
 	menu_seen = {}
 	money = 0
 	waymarks = 0
+	last_play_day = 0
+	comeback_ready = false
+	start_day = 0
+	birthdays_paid = 0
 	daily_tasks = {}
 	festival_ribbons = {}
 	notices.clear()
@@ -598,6 +622,8 @@ func reset() -> void:
 	visited_maps = {}
 	map_cells = {}
 	map_marks = []
+	here_place = ""
+	last_place = ""
 	records = endgame_defaults({})
 	story_vars = {}
 	story_choices = {}
@@ -675,6 +701,7 @@ func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, p_starter:
 	tamer_name = p_name.strip_edges() if not p_name.strip_edges().is_empty() else DEFAULT_NAMES[tamer_look]
 	tamer_color = clampi(p_color, 0, TAMER_COLORS.size() - 1)
 	money = 500
+	start_day = today()
 	# Easier start (Ali, 7 Nov): 20 free Kin Charms for the first bonds.
 	add_item("kin_charm", START_KIN_CHARMS)
 	in_game = true
@@ -737,6 +764,10 @@ func to_dict() -> Dictionary:
 		"new_items": new_items.keys().filter(func(k: Variant) -> bool: return int(inventory.get(k, 0)) > 0),
 		"money": money,
 		"waymarks": waymarks,
+		"last_play_day": last_play_day,
+		"comeback_ready": comeback_ready,
+		"start_day": start_day,
+		"birthdays_paid": birthdays_paid,
 		"daily_tasks": daily_tasks.duplicate(true),
 		"festival_ribbons": festival_ribbons.duplicate(true),
 		"map": current_map,
@@ -752,6 +783,8 @@ func to_dict() -> Dictionary:
 		"maps_entered": visited_maps.duplicate(true),
 		"map_cells": Survey.cells_to_save(map_cells),
 		"map_marks": map_marks.duplicate(true),
+		"here_place": here_place,
+		"last_place": last_place,
 		"records": records.duplicate(true),
 		"story_vars": story_vars.duplicate(),
 		"story_choices": story_choices.duplicate(),
@@ -831,6 +864,12 @@ func from_dict(d: Dictionary) -> void:
 	# Saves from before plan area 8 start with no Waymarks; old achievements pay out once
 	# through the achievement reward, never here.
 	waymarks = clampi(as_int(d.get("waymarks", 0)), 0, Waymarks.CAP)
+	last_play_day = maxi(0, as_int(d.get("last_play_day", 0)))
+	comeback_ready = bool(d.get("comeback_ready", false))
+	start_day = maxi(0, as_int(d.get("start_day", 0)))
+	if start_day == 0:
+		start_day = first_spirlog_day()
+	birthdays_paid = maxi(0, as_int(d.get("birthdays_paid", 0)))
 	var dt: Variant = d.get("daily_tasks", {})
 	daily_tasks = (dt as Dictionary).duplicate(true) if dt is Dictionary else {}
 	festival_ribbons = {}
@@ -855,6 +894,8 @@ func from_dict(d: Dictionary) -> void:
 	visited_maps = _as_dict(d.get("maps_entered", {}))
 	map_cells = Survey.cells_from_save(d.get("map_cells", {}))
 	map_marks = Survey.marks_from_save(d.get("map_marks", []))
+	here_place = str(d.get("here_place", ""))
+	last_place = str(d.get("last_place", ""))
 	# Saves from before fast travel: the last rest spot used still counts as visited.
 	if visited_rests.is_empty() and heal_map != "lighthouse":
 		visit_rest(heal_map, heal_cell)
@@ -886,7 +927,7 @@ func settings_to_dict() -> Dictionary:
 		"one_hand": one_hand, "bag_sort": bag_sort, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice, "auto_text": auto_text,
 		"tips": tips_enabled, "play_reminder": play_reminder, "goal_line": goal_line, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, WEATHER_MARK: true, "minimap": minimap, "language": language,
+		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, WEATHER_MARK: true, "minimap": minimap, "night_mode": night_mode, "language": language,
 		"terms_version": terms_version}
 
 func settings_from_dict(d: Dictionary) -> void:
@@ -939,6 +980,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	# Off for everyone with 1.3.1 (owner 25.11.2026); a later choice in Settings is kept.
 	weather = bool(d.get("weather", false)) if d.has(WEATHER_MARK) else false
 	minimap = str(d.get("minimap", "on")) if str(d.get("minimap", "on")) in Survey.MINIMAP_MODES else "on"
+	night_mode = clampi(int(d.get("night_mode", 0)), 0, NIGHT_MODE_NAMES.size() - 1)
 	language = str(d.get("language", ""))
 	terms_version = str(d.get("terms_version", ""))
 	apply_display()
@@ -957,6 +999,27 @@ func apply_display() -> void:
 	if UITheme.high_contrast != high_contrast:
 		UITheme.set_high_contrast(high_contrast)
 	UITheme.set_large_text(large_text)
+	apply_night_mode()
+
+## Shows or hides the night mode tint (200 list item 127). Taps go through it.
+func apply_night_mode() -> void:
+	if night_mode <= 0:
+		if _night_layer != null:
+			_night_layer.visible = false
+		return
+	if _night_layer == null:
+		_night_layer = CanvasLayer.new()
+		_night_layer.layer = NIGHT_LAYER
+		var rect := ColorRect.new()
+		rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+		rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var mat := CanvasItemMaterial.new()
+		mat.blend_mode = CanvasItemMaterial.BLEND_MODE_MUL
+		rect.material = mat
+		_night_layer.add_child(rect)
+		add_child(_night_layer)
+	_night_layer.visible = true
+	(_night_layer.get_child(0) as ColorRect).color = NIGHT_TINTS[clampi(night_mode, 0, NIGHT_TINTS.size() - 1)]
 
 ## Extra Master gain (not saved): Sound fades it to 0 while the app is in the background.
 var master_fade: float = 1.0
@@ -1137,7 +1200,7 @@ func receive_spirling(s: Spirling) -> bool:
 ## regional imprints, Prism colours and temperaments met so far (plan area 1, item 7).
 static func new_spirlog_entry() -> Dictionary:
 	return {"seen": false, "bonded": false, "first_map": "", "first_day": 0,
-		"variants": [], "prism_seen": false, "gleam_seen": false, "gleam_bonded": false, "tempers": [], "maps": [], "battles": 0}
+		"variants": [], "prism_seen": false, "gleam_seen": false, "gleam_bonded": false, "tempers": [], "maps": [], "battles": 0, "event": ""}
 
 ## Fills missing fields of an older Spirlog entry ({"seen", "bonded"} only) with defaults.
 static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
@@ -1154,6 +1217,7 @@ static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
 	out["prism_seen"] = out.prism_seen is bool and out.prism_seen
 	out["gleam_bonded"] = out.gleam_bonded is bool and out.gleam_bonded
 	out["gleam_seen"] = out.gleam_seen is bool and out.gleam_seen or out.gleam_bonded
+	out["event"] = out.event if out.event is String else ""
 	for k: String in ["variants", "tempers", "maps"]:
 		if not out[k] is Array:
 			out[k] = []
@@ -1201,6 +1265,15 @@ func pay_tip(who: String, coins: int, day: int = -1) -> int:
 ## Days since 1970 (local device date), for "met on day N".
 static func today() -> int:
 	return int(Time.get_unix_time_from_system() / 86400.0)
+
+## Start day for a save from before item 147: the first Spirlog sighting (the partner), else today.
+func first_spirlog_day() -> int:
+	var first: int = 0
+	for e: Variant in spirlog.values():
+		var d: int = as_int((e as Dictionary).get("first_day", 0)) if e is Dictionary else 0
+		if d > 0 and (first == 0 or d < first):
+			first = d
+	return first if first > 0 else today()
 
 func mark_seen(species: String, bonded: bool = false) -> void:
 	var e: Dictionary = upgrade_spirlog_entry(spirlog.get(species, {}))
@@ -1255,6 +1328,14 @@ func note_spirlog(s: Spirling, show_temper: bool = true) -> void:
 	if show_temper and not (e.tempers as Array).has(t):
 		(e.tempers as Array).append(t)
 	spirlog[s.data.species_name] = e
+
+## Marks [param species] in the Spirlog as joined from event [param event_id] ("lamp_watch"),
+## shown as the event badge in the list (200 list item 137). The first event stays.
+func note_event_kind(species: String, event_id: String) -> void:
+	var e: Dictionary = upgrade_spirlog_entry(spirlog.get(species, {}))
+	if str(e.event).is_empty():
+		e["event"] = event_id
+	spirlog[species] = e
 
 ## Furls [param s] back into its earlier form. A form that needed an item to unfurl (Tide
 ## Pearl) gives the item back, so "you can unfurl it again later" stays true.
@@ -1366,6 +1447,15 @@ func visit_rest(map_id: String, cell: Vector2i) -> void:
 ## Remembers where the player came into outdoor map [param map_id] (Signpost targets).
 func enter_map(map_id: String, cell: Vector2i) -> void:
 	visited_maps[map_id] = [cell.x, cell.y]
+
+## Called on every map change with the place of the new map (200 list item 31): the place
+## left behind becomes the "last here" place of the world map.
+func note_place(place: String) -> void:
+	if place.is_empty() or place == here_place:
+		return
+	if not here_place.is_empty():
+		last_place = here_place
+	here_place = place
 
 ## Where fast travel to [param map_id] lands: its rest spot, else (with the Signpost) the last
 ## entry. Empty when it is no target.

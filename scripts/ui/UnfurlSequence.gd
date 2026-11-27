@@ -91,11 +91,13 @@ func play(old_form: SpirlingData, new_form: SpirlingData) -> void:
 		_fade = 0.0
 		_sprite.queue_redraw()
 		return
+	# The second unfurl this session runs shorter (200 list item 55).
+	var quick: float = RepeatShort.speed("unfurl")
 	for d: float in intervals():
 		if _skipped:
 			break
 		_sprite.queue_redraw()
-		await get_tree().create_timer(d).timeout
+		await get_tree().create_timer(d / quick).timeout
 		_show_new = not _show_new
 	_show_new = true
 	_silhouette = false

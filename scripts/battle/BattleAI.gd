@@ -63,6 +63,8 @@ const SPARE_HP: float = 0.25
 const SPARE_COST: float = 1.0
 ## Most bag items one side's AI uses in a battle (item 459).
 const ITEM_LIMIT: int = 2
+## Healing items the foe side's AI uses in a battle, so a foe does not heal again and again (200 list item 66).
+const FOE_HEAL_ITEM_LIMIT: int = 1
 ## Recoil arts cost this much per share of own max HP they take back, below LOW_HP only (item 461).
 const RECOIL_W: float = 1.0
 const LOW_HP: float = 0.35
@@ -742,7 +744,7 @@ func _tier2_special(model: BattleModel, side: int, slot: int = 0) -> BattleActio
 	var me: Spirling = model.active_spirling(side, slot)
 	var foe: Spirling = model.opponent(side)
 	# Heal when low, if the bag allows it.
-	if me.hp_fraction() < _rule("heal_below", HEAL_THRESHOLD) and items_spent(model, side) < ITEM_LIMIT:
+	if me.hp_fraction() < _rule("heal_below", HEAL_THRESHOLD) and items_spent(model, side) < ITEM_LIMIT and (side != BattleModel.Side.FOE or heal_items_spent(model, side) < FOE_HEAL_ITEM_LIMIT):
 		for a: BattleAction in _legal(model, side, slot):
 			if a.kind == BattleAction.Kind.ITEM and int(Database.item(a.item_id).get("heal", 0)) > 0:
 				return a
@@ -776,6 +778,14 @@ static func items_spent(model: BattleModel, side: int) -> int:
 	var n: int = 0
 	for id: Variant in model.items_used[side]:
 		n += int(model.items_used[side][id])
+	return n
+
+## Healing bag items (an item with "heal" above 0) [param side] used so far in this battle.
+static func heal_items_spent(model: BattleModel, side: int) -> int:
+	var n: int = 0
+	for id: Variant in model.items_used[side]:
+		if int(Database.item(String(id)).get("heal", 0)) > 0:
+			n += int(model.items_used[side][id])
 	return n
 
 ## The stage of the stat [param s]'s damaging arts mostly use (Might or Focus).

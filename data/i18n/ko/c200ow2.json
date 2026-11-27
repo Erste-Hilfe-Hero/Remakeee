@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table c200ow2, written by tools/i18n/locales_c200ow2.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Nearest rest point: %s, to the %s.": "가장 가까운 휴식처: %s, %s쪽.",
+  "No rest point found yet. Rest points show as a small cross on the map.": "아직 휴식처를 찾지 못했다. 휴식처는 지도에 작은 십자로 표시된다.",
+  "Reset": "초기화",
+  "Rest point": "휴식처",
+  "There is a rest point right here, in %s.": "바로 여기, %s에 휴식처가 있다.",
+  "You were here last.": "마지막으로 있던 곳.",
+  "east": "동",
+  "north": "북",
+  "north-east": "북동",
+  "north-west": "북서",
+  "south": "남",
+  "south-east": "남동",
+  "south-west": "남서",
+  "west": "서"
+ }
+}

@@ -1,26 +1,10 @@
-Chimora 1.3.0
+Chimora 1.3.1
 
-NOVO: A VIGÍLIA DA LÂMPADA
-- Acenda a lâmpada do farol de Brindlewick uma vez por dia. Toda noite um Spirling perdido segue a luz. Responda com seu chamado de Eco e ele se junta a você.
-- Na 7ª noite chega um raro Spirling Gleam, e você ganha uma nova lembrança: a Lente do farol.
-
-MAIS FÁCIL DE LER
-- Os textos de conversa e de batalha estão maiores, centralizados e acima dos botões.
-- Nenhum Spirling anda mais atrás de você.
-- Antes de jogar pela primeira vez, você aceita os Termos de Uso em um passo curto.
-
-UM COMEÇO MAIS FÁCIL
-- Escolha a dificuldade ao começar uma nova jornada.
-- Um prólogo mais curto leva você mais rápido ao seu primeiro Spirling.
-- O Ato I está mais leve enquanto você aprende o básico.
-
-BATALHA
-- O botão Auto agora fica na lateral da tela de batalha. Só batalhas selvagens ou todas as batalhas da história. Guardiões e rivais perguntam antes.
-
-ORIENTAÇÃO
-- A linha da meta e o minimapa são grátis no Ato I.
-
-VISUAL E CONFORTO
-- Dia e noite, clima e o filtro retrô agora são grátis. Ligue ou desligue quando quiser.
-- Avisos opcionais: uma nota curta quando um passeio termina ou um novo Achado do Dia está esperando. Desligados até você ligar.
-- Muitas correções na interface nos 14 idiomas.
+- 7 novos dons para seus Spirlings, e novas artes que acertam várias vezes ou fazem um parceiro entrar.
+- "Qual combina com você?" ajuda a escolher seu parceiro, e um botão Ideia sugere nomes.
+- Mapa do mundo: onde você esteve por último, o caminho até o ponto de descanso mais próximo e uma estrela onde você se uniu a todas as espécies.
+- Histórico de conversas, modo noturno e "Restaurar padrão" em cada página de configurações.
+- Bônus de fim de semana: experiência em dobro no sábado e no domingo.
+- Agora também no iPad, e melhor em tablets e celulares dobráveis.
+- Textos longos de menu quebram a linha em vez de serem cortados.
+- Muitas pequenas correções.

@@ -82,6 +82,50 @@
    "label": "Overflow",
    "text": "Hits 10% harder while its Energy is full.",
    "full_energy_mult": 1.1
+  },
+  "fireproof": {
+   "label": "Fireproof",
+   "text": "It cannot be scorched.",
+   "immune": [
+    "scorch"
+   ]
+  },
+  "dry_coat": {
+   "label": "Dry Coat",
+   "text": "It cannot be soaked.",
+   "immune": [
+    "soak"
+   ]
+  },
+  "grounded": {
+   "label": "Grounded",
+   "text": "It cannot be jolted.",
+   "immune": [
+    "jolt"
+   ]
+  },
+  "thorn_coat": {
+   "label": "Thorn Coat",
+   "text": "A physical hit on it may root the one that hit it.",
+   "contact_status": "root",
+   "contact_chance": 0.3
+  },
+  "static_fur": {
+   "label": "Static Fur",
+   "text": "A physical hit on it may jolt the one that hit it.",
+   "contact_status": "jolt",
+   "contact_chance": 0.3
+  },
+  "damp_skin": {
+   "label": "Damp Skin",
+   "text": "A physical hit on it may soak the one that hit it.",
+   "contact_status": "soak",
+   "contact_chance": 0.3
+  },
+  "calm_mind": {
+   "label": "Calm Mind",
+   "text": "It takes 15% less damage from Focus arts.",
+   "focus_taken": 0.85
   }
  },
  "fields": {

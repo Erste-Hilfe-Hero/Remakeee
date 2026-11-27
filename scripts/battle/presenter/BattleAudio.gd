@@ -98,21 +98,36 @@ static func text_duck_fade() -> float:
 
 ## Battle themes of data/battle_show.json "audio.themes", named here so the sound check finds
 ## every file in code.
-const THEMES: Array[String] = ["battle_night", "battle_fest", "battle_echo", "battle_tower", "battle_duel"]
+const THEMES: Array[String] = ["battle_night", "battle_fest", "battle_echo", "battle_heart", "battle_tower", "battle_duel"]
 
 ## Music of a battle (713-717): a Warden keeps its own; [param kind] ("echo", "tower", "duel")
 ## names a challenge theme; otherwise a running festival, then an outdoor night picks theirs,
 ## else the plain battle song.
 ## [param area] is a map Wayfarer's area theme (item 560, [method area_theme]); it comes after
 ## all of those and before the plain battle song.
-static func theme(kind: String, warden: bool, festival: bool, night: bool, area: String = "") -> String:
+## [param rare] (a wild ancient kind, an Elder or a Prism one, [method rare_foes]) plays the
+## "rare" theme ahead of festival and night (200 list item 76).
+static func theme(kind: String, warden: bool, festival: bool, night: bool, area: String = "", rare: bool = false) -> String:
 	if warden:
 		return "warden"
 	var t: Dictionary = cfg().get("themes", {})
-	for k: String in [kind, "fest" if festival else "", "night" if night else ""]:
+	for k: String in [kind, "rare" if rare else "", "fest" if festival else "", "night" if night else ""]:
 		if not k.is_empty() and t.has(k):
 			return str(t[k])
 	return area if not area.is_empty() else "battle"
+
+## Kinds whose wild battles get the rare theme (200 list item 76). "shy" is left out: more than
+## a third of all kinds are shy, so it would hardly sound special.
+const RARE_KINDS: Array[String] = ["ancient"]
+
+## True when one of [param foes] is an ancient kind, an Elder (WildRules) or a Prism colour variant.
+static func rare_foes(foes: Array[Spirling]) -> bool:
+	for f: Spirling in foes:
+		if f == null:
+			continue
+		if f.prism or f.has_meta(WildRules.ELDER_META) or (f.data != null and f.data.rarity in RARE_KINDS):
+			return true
+	return false
 
 ## The Wayfarer battle tune of [param region] from data/music.json "wayfarer" (item 560), or ""
 ## when the region has none or [param era] is not the region's own era (other eras keep their

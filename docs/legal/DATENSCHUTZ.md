@@ -194,7 +194,10 @@ selbst im Spiel (Abschnitt 7).
 **Was überall gleich ist:** Deine Daten liegen auf unserem eigenen Server, den die Contabo GmbH (München,
 Deutschland) für uns im Rechenzentrum Lauterbourg, Frankreich (EU), betreibt. Wir verkaufen deine Daten nicht,
 geben sie nicht für Werbung weiter, zeigen keine Werbung, verfolgen dich nicht über Apps oder Websites hinweg
-und nutzen keine Analyse-, Werbe- oder Absturzbericht-SDKs. Die einzige Auswertung ist die anonyme Zählung des
+und nutzen keine Analyse-, Werbe- oder Absturzbericht-SDKs. Ab Version 1.3.1 schickt die App nach einem
+unerwarteten Ende des letzten Spiels einmal einen kurzen anonymen Absturzbericht: nur Spielversion, Gerätesystem
+(zum Beispiel "Android") und die zuletzt offene Spielszene. Wir speichern ihn ohne Spieler-ID, ohne Namen und ohne Spielstand
+und löschen ihn nach 30 Tagen; die Anmeldung dient nur dazu, höchstens drei Berichte pro Stunde anzunehmen. Die einzige Auswertung ist die anonyme Zählung des
 Spielfortschritts aus Abschnitt 3.1: Sie wird aus den Spielständen berechnet, die zu deinem Konto gespeichert
 sind (deshalb nennen die Datenschutz-Angaben der Stores den Spielfortschritt als mit dir verknüpft), das
 Ergebnis enthält aber nur Zahlen pro Anmeldetag, keine Spieler-ID und keinen Namen. Mitteilungen sind nur

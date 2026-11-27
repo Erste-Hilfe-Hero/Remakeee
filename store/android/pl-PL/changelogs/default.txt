@@ -1,1 +1,7 @@
-Akt IV: Solenne, trzy nowe Szczeliny i pustynia, która cię okłamuje. Po finale: Vellmarch, potem Quillmarch, Halcyra i Quivermoor w stylu późniejszych er. 497 Spirlingów, sześć legendarnych z zadaniami, Połysk. Klany zapisują, komu zaufałeś. Online: ligi i Pojedynki Echa. Zapis zaraz po wyborze imienia, składane telefony od razu pasują, a Wędrowiec nie idzie już sam po walce.
+Chimora 1.3.1
+
+- 7 nowych darów dla twoich Spirlingów oraz nowe sztuki, które trafiają kilka razy albo wpuszczają towarzysza.
+- "Który do ciebie pasuje?" pomaga wybrać partnera, a przycisk Pomysł podsuwa imiona.
+- Bonus weekendowy: podwójne doświadczenie w sobotę i niedzielę.
+- Działa na większej liczbie urządzeń, także na Chromebookach, i lepiej na tabletach i składanych telefonach.
+- Wiele drobnych poprawek.

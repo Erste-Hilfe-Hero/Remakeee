@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table c200ow2, written by tools/i18n/locales_c200ow2.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Nearest rest point: %s, to the %s.": "最近的休息點：%s，在%s方。",
+  "No rest point found yet. Rest points show as a small cross on the map.": "還沒有找到休息點。休息點在地圖上顯示為小十字。",
+  "Reset": "重置",
+  "Rest point": "休息點",
+  "There is a rest point right here, in %s.": "這裡就有休息點，在%s。",
+  "You were here last.": "你上次在這裡。",
+  "east": "東",
+  "north": "北",
+  "north-east": "東北",
+  "north-west": "西北",
+  "south": "南",
+  "south-east": "東南",
+  "south-west": "西南",
+  "west": "西"
+ }
+}

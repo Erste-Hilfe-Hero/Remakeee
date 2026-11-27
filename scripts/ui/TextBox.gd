@@ -210,6 +210,19 @@ func _apply_big_font() -> void:
 	_label.add_theme_font_override("font", big[0])
 	_label.add_theme_font_size_override("font_size", big[1])
 
+## The last talk lines of the overworld (200 list items 14, 115), newest last, for the Talk log
+## under More. Only a box with [member keep_log] writes here, so battle lines stay out.
+static var talk_log: Array[String] = []
+const TALK_LOG_MAX: int = 20
+var keep_log: bool = false
+
+static func log_line(line: String) -> void:
+	if line.strip_edges().is_empty():
+		return
+	talk_log.append(line)
+	while talk_log.size() > TALK_LOG_MAX:
+		talk_log.remove_at(0)
+
 ## Shows [param text] with the typewriter effect and waits for the player (or the auto timer).
 func show_text(text: String, speaker: String = "") -> void:
 	# A worn shop text frame (item 4282); the plain box otherwise.
@@ -225,6 +238,8 @@ func show_text(text: String, speaker: String = "") -> void:
 	else:
 		speaker = Loc.t(speaker).replace("{name}", GameState.tamer_name)
 	set_speaker(speaker)
+	if keep_log:
+		log_line((speaker + ": " if not speaker.is_empty() else "") + shown)
 	_line_voice = voice_for_line(speaker + ": " if not speaker.is_empty() else shown, voice)
 	var pages: Array[String] = split_lines(shown, _text_width(), _label.get_theme_font("font"),
 			_label.get_theme_font_size("font_size"), MAX_LINES)

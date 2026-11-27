@@ -34,7 +34,7 @@ Instructions for coding agents (Codex, Claude, etc.) working in this repo. Read 
 | Stretch | mode `viewport`, aspect `expand`, scale_mode `integer` |
 | Pixel snapping | `rendering/2d/snap/snap_2d_transforms_to_pixel=true`, default texture filter Nearest |
 | Maps | Tiled 1.12 + YATI importer → **TileMapLayer** nodes (never the deprecated `TileMap`) |
-| Android | target SDK 36, arm64-v8a, AAB via Gradle build, Play App Signing |
+| Android | target SDK 36, min SDK 24, arm64-v8a + armeabi-v7a + x86_64, AAB via Gradle build, Play App Signing |
 | iOS | Xcode 26 / iOS 26 SDK; build on a macOS runner |
 | Tests | GUT (Godot Unit Test) for the pure battle model |
 

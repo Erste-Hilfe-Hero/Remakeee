@@ -1700,6 +1700,8 @@ func _do_move(a: BattleAction) -> void:
 		if mv.is_damaging():
 			if mv.kind == MoveData.Kind.PHYSICAL and ShopEffects.gift_table(target).has("phys_taken"):
 				reveal_trait(target_side, t_slot)
+			if mv.kind == MoveData.Kind.FOCUS and ShopEffects.gift_table(target).has("focus_taken"):
+				reveal_trait(target_side, t_slot)
 			if ShopEffects.gift_table(me).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
 				reveal_trait(side, slot)
 			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field) * _variant_mult(me, target, mv)
@@ -1949,13 +1951,18 @@ func _do_bond(a: BattleAction) -> void:
 	free.is_free = true
 	_queue.push_front(free)
 
-func _do_run(a: BattleAction) -> void:
-	var mine: float = float(a.actor.effective_spd())
+## Chance (0..1) that [param runner] gets away from the fastest standing foe on the next try.
+## Only ever shown to the player in words (BattleInfo.escape_words, 200 list item 59).
+func escape_chance(runner: Spirling) -> float:
+	var mine: float = float(runner.effective_spd())
 	var fastest: int = 0
 	for slot: int in standing_slots(Side.FOE):
 		fastest = maxi(fastest, active_spirling(Side.FOE, slot).effective_spd())
 	var theirs: float = maxf(float(fastest), 1.0)
-	var chance: float = clampf(FLEE_BASE + FLEE_PER_ATTEMPT * flee_attempts + (mine / theirs - 1.0) * FLEE_SPEED_WEIGHT, 0.0, 1.0)
+	return clampf(FLEE_BASE + FLEE_PER_ATTEMPT * flee_attempts + (mine / theirs - 1.0) * FLEE_SPEED_WEIGHT, 0.0, 1.0)
+
+func _do_run(a: BattleAction) -> void:
+	var chance: float = escape_chance(a.actor)
 	flee_attempts += 1
 	var success: bool = rng.randf() < chance
 	emit_event(BattleEvent.Type.FLEE_RESULT, {"success": success})
