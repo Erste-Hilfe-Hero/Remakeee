@@ -226,6 +226,9 @@ static func material(species: String, id: String = CLASSIC) -> ShaderMaterial:
 		for i: int in 4:
 			mat.set_shader_parameter("src%d" % i, EraManager.INK_PALETTE[i])
 			mat.set_shader_parameter("dst%d" % i, pal[i])
+	if mat != null:
+		# The palette colours themselves, not tinted by the old inks (the muddy look before 1.3.2).
+		mat.set_shader_parameter("true_colours", true)
 	_materials[species] = mat
 	return mat
 

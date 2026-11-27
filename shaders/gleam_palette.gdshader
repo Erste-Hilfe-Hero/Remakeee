@@ -15,8 +15,8 @@ uniform float cycle = 0.0;
 // Fixed hue turn (turns) for a cycling kind under reduced motion, which then has cycle 0.
 uniform float phase = 0.0;
 // In a canvas fragment COLOR already holds the texture colour, so "c * COLOR" tints the new
-// colour with the old ink. The classic Gleam has always been drawn that way and keeps it;
-// the rarer kinds set true_colours and are multiplied by the vertex colour only.
+// colour with the old ink (the muddy Gleam look before 1.3.2). GleamRules sets true_colours on
+// every Gleam material, so the result is multiplied by the vertex colour only.
 uniform bool true_colours = false;
 varying vec4 vertex_colour;
 

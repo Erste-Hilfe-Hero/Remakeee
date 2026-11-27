@@ -327,13 +327,13 @@ func test_opaline_stands_still_under_reduced_motion() -> void:
 	assert_eq(float(moving.get_shader_parameter("phase")), 0.0)
 	GameState.reduce_motion = was
 
-## The classic material keeps its old shader settings (same look as before the kinds); the
-## rarer kinds draw their own colours, not tinted by the old ink (true_colours).
-func test_rarer_kinds_draw_true_colours_and_classic_is_unchanged() -> void:
+## Every kind, classic included, draws its own colours, not tinted by the old inks
+## (true_colours); classic keeps its palette and never cycles.
+func test_every_kind_draws_true_colours() -> void:
 	for name: String in ["Kindlop", "Blotkin"]:
 		var classic: ShaderMaterial = GleamRules.material(name)
-		assert_ne(classic.get_shader_parameter("true_colours"), true, name + ": classic as before")
-		assert_null(classic.get_shader_parameter("phase"), name + ": classic sets no new parameter")
+		assert_eq(classic.get_shader_parameter("true_colours"), true, name + ": classic in its true colours")
+		assert_null(classic.get_shader_parameter("cycle"), name + ": classic does not cycle")
 		for id: String in RARE:
 			assert_eq(GleamRules.material(name, id).get_shader_parameter("true_colours"), true, "%s %s" % [name, id])
 	var tier: ShaderMaterial = GleamRules.material("Blotkin", "inkwash")
