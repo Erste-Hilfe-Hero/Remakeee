@@ -4,7 +4,6 @@ Chimora 1.3.2
 - A Vidrofenda agora também vale dentro do jogo: continuar a batalha depois de uma derrota, curar sua equipe, acelerar o crescimento ou um vínculo, encurtar a espera de uma viagem, enfrentar uma Sentinela de novo na hora e mais.
 - 20 de Vidrofenda de presente todo dia, quando você estiver online.
 - Um passe novo com 30 níveis e uma fileira grátis para todos.
-- 70 Spirlings novos, 10 em cada região.
 - As formas Reluzentes agora têm 5 tipos, do Reluzente clássico ao raríssimo Reluzente opalino.
 - Clima novo: chuva, neblina, vento, tempestades e neve mudam o mundo e algumas batalhas. Já vem ligado e pode ser ajustado nas configurações.
 - 35 pedras-enigma e tabuleiros de quebra-cabeça em todas as regiões.

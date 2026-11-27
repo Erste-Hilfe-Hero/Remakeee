@@ -4,7 +4,6 @@ Chimora 1.3.2
 - Il Vetro-squarcio ora serve anche nel gioco: continuare a combattere dopo una sconfitta, curare la squadra, potenziare la crescita o un legame, accorciare l'attesa di un viaggio, riaffrontare subito un Custode e altro ancora.
 - 20 Vetro-squarcio in regalo ogni giorno, quando sei online.
 - Un nuovo lasciapassare con 30 livelli e una fila gratuita per tutti.
-- 70 nuovi Spirling, 10 in ogni regione.
 - Gli Splendori ora sono di 5 tipi, dallo Splendore classico al rarissimo Splendore opalino.
 - Nuovo meteo: pioggia, nebbia, vento, tempeste e neve cambiano il mondo e alcuni combattimenti. È attivo fin dall'inizio e si può regolare nelle impostazioni.
 - 35 pietre enigma e tavole rompicapo in tutte le regioni.

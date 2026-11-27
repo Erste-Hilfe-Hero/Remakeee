@@ -4,7 +4,6 @@ Chimora 1.3.2
 - Kloofglas werkt nu ook in het spel: doorvechten na een nederlaag, je team genezen, groei of een band versterken, de wachttijd van een reis inkorten, meteen opnieuw tegen een Hoeder en meer.
 - Elke dag 20 Kloofglas cadeau als je online bent.
 - Een nieuwe pas met 30 niveaus en een gratis rij voor iedereen.
-- 70 nieuwe Spirlings, 10 in elke regio.
 - Glansvormen zijn er nu in 5 soorten, van de klassieke glansvorm tot de zeldzame opaalglansvorm.
 - Nieuw weer: regen, mist, wind, storm en sneeuw veranderen de wereld en sommige gevechten. Het staat meteen aan en je kunt het aanpassen bij de instellingen.
 - 35 raadselstenen en puzzelborden in alle regio's.

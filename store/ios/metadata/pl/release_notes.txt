@@ -4,7 +4,6 @@ Chimora 1.3.2
 - Szczelinit przydaje się teraz także w grze: walka dalej po porażce, leczenie drużyny, szybszy rozwój lub silniejsza więź, krótsze czekanie na podróż, natychmiastowa powtórka walki ze Strażnikiem i więcej.
 - 20 Szczelinitu w prezencie każdego dnia, gdy grasz online.
 - Nowy karnet z 30 poziomami i darmowym rzędem dla wszystkich.
-- 70 nowych Spirlingów, po 10 w każdym regionie.
 - Połysk ma teraz 5 rodzajów, od klasycznego Połysku po bardzo rzadki Opalowy połysk.
 - Nowa pogoda: deszcz, mgła, wiatr, burze i śnieg zmieniają świat i niektóre walki. Jest włączona od początku i można ją dostosować w ustawieniach.
 - 35 kamieni zagadek i plansz z łamigłówkami we wszystkich regionach.

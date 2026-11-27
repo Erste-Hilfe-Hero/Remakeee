@@ -4,7 +4,6 @@ Chimora 1.3.2
 - El Vidrio Grieta ahora también sirve en el juego: seguir luchando tras una derrota, curar a tu equipo, impulsar el crecimiento o un vínculo, acortar la espera de un viaje, volver a enfrentarte a un Custodio al momento y más.
 - 20 de Vidrio Grieta de regalo cada día si estás en línea.
 - Un pase nuevo con 30 niveles y una fila gratis para todos.
-- 70 Spirlings nuevos, 10 en cada región.
 - El Fulgor ahora tiene 5 tipos, desde el Fulgor clásico hasta el rarísimo Fulgor opalino.
 - Clima nuevo: lluvia, niebla, viento, tormentas y nieve cambian el mundo y algunos combates. Viene activado y se puede regular en Ajustes.
 - 35 piedras enigma y tableros de acertijos en todas las regiones.

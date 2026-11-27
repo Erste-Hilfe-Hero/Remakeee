@@ -3,7 +3,7 @@ Chimora 1.3.2
 - Nieuwe winkel met Kloofglas-pakketten, Maandkaart, Kampioen-Spirlings, bundels en dag- en weekaanbiedingen.
 - Kloofglas in het spel: doorgaan na een nederlaag, genezen, groei of banden versterken, reizen inkorten. Online elke dag 20 cadeau.
 - Nieuwe pas met 30 niveaus.
-- 70 nieuwe Spirlings en 5 soorten glansvormen.
+- Glansvormen nu in 5 soorten.
 - Weer: regen, mist, wind, storm en sneeuw.
 - 35 puzzels en veel verborgen geheimen.
 - Beter verbonden kaarten, beter op tablets, veel verbeteringen.

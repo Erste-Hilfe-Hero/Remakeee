@@ -3,7 +3,7 @@ Chimora 1.3.2
 - Tienda nueva con packs de Vidrio Grieta, Tarjeta mensual, Spirlings Campeones, lotes y ofertas diarias y semanales.
 - Vidrio Grieta en el juego: seguir tras una derrota, curar, impulsar crecimiento o vínculos, acortar viajes. 20 de regalo al día en línea.
 - Nuevo pase con 30 niveles.
-- 70 Spirlings nuevos y 5 tipos de Fulgor.
+- Ahora hay 5 tipos de Fulgor.
 - Clima: lluvia, niebla, viento, tormentas y nieve.
 - 35 acertijos y muchos secretos ocultos.
 - Mapas mejor conectados, mejor en tabletas, correcciones.

@@ -4,7 +4,6 @@ Chimora 1.3.2
 - Rissglas wirkt jetzt auch im Spiel: nach einer Niederlage weiterkämpfen, das Team heilen, Wachstum oder eine Bindung stärken, die Wartezeit einer Reise abkürzen, einen Wächter sofort noch einmal herausfordern und mehr.
 - Jeden Tag 20 Rissglas als Geschenk, wenn du online bist.
 - Ein neuer Pass mit 30 Stufen und einer freien Reihe für alle.
-- 70 neue Spirlings, 10 in jeder Region.
 - Glanzformen gibt es jetzt in 5 Arten, von der klassischen Glanzform bis zur sehr seltenen Opal-Glanzform.
 - Neues Wetter: Regen, Nebel, Wind, Gewitter und Schnee verändern die Welt und manche Kämpfe. Es ist gleich eingeschaltet und lässt sich in den Einstellungen anpassen.
 - 35 Rätselsteine und Rätseltafeln in allen Regionen.

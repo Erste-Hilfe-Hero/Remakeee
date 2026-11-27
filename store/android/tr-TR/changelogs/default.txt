@@ -3,7 +3,7 @@ Chimora 1.3.2
 - Yeni dükkân: Yarık Camı paketleri, Aylık Kart, Şampiyon Spirling'ler, setler, günlük ve haftalık teklifler.
 - Yarık Camı oyunda: yenilgiden sonra devam, iyileştirme, gelişim ya da bağ desteği, yolculuğu kısaltma. Çevrimiçiyken her gün 20 hediye.
 - 30 kademeli yeni paso.
-- 70 yeni Spirling ve 5 çeşit Işıltı.
+- Artık 5 çeşit Işıltı var.
 - Hava durumu: yağmur, sis, rüzgâr, fırtına ve kar.
 - 35 bulmaca ve bir sürü gizli sır.
 - Daha iyi bağlanan haritalar, tabletlerde daha iyi görünüm, birçok düzeltme.

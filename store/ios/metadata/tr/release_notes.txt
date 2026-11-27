@@ -4,7 +4,6 @@ Chimora 1.3.2
 - Yarık Camı artık oyunda da işe yarar: yenilgiden sonra savaşa devam etmek, takımını iyileştirmek, gelişimi ya da bir bağı güçlendirmek, bir yolculuğun bekleme süresini kısaltmak, bir Muhafız'la hemen yeniden savaşmak ve dahası.
 - Çevrimiçiyken her gün 20 Yarık Camı hediye.
 - 30 kademeli, herkes için ücretsiz bir sırası olan yeni bir paso.
-- 70 yeni Spirling, her bölgede 10 tane.
 - Işıltı formları artık 5 çeşit: klasik Işıltı'dan çok nadir Opal Işıltısı'na kadar.
 - Yeni hava durumu: yağmur, sis, rüzgâr, fırtına ve kar dünyayı ve bazı savaşları değiştirir. Baştan açıktır ve ayarlardan değiştirilebilir.
 - Tüm bölgelerde 35 bilmece taşı ve bulmaca tahtası.
