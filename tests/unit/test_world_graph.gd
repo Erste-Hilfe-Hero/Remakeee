@@ -130,3 +130,15 @@ func test_story_warps_follow_dialogue_and_scenes() -> void:
 	for t: Dictionary in found:
 		assert_true("ferry_corvane_open" in t.flags or "scene_ferry_crossing_seen" in t.flags, "the crossing waits for the story: %s" % [t.flags])
 	assert_false(g.node_at("corvane_quay", Vector2i(6, 22)).is_empty(), "the ferry lands on the quay")
+
+func test_a_gate_keeper_on_the_landing_is_fine_only_when_the_way_back_passes_them() -> void:
+	# The stairs up (2,0) are reached only through (2,1), where the keeper stands until beaten:
+	# whoever comes down those stairs has beaten them.
+	var keeper: Dictionary = {"id": "crake", "x": 2, "y": 1, "hide_flag": "beat_crake", "beaten_flag": "beat_crake"}
+	var room: MapData = _map("room", ["WW=WW", "W...W", "W...W", "WWWWW"], {"npcs": [keeper],
+		"warps": [{"x": 2, "y": 0, "to": "up", "tx": 1, "ty": 1}]})
+	assert_true(WorldGraph.passed_keeper(room, Vector2i(2, 1), "up", keeper))
+	assert_false(WorldGraph.passed_keeper(room, Vector2i(2, 1), "elsewhere", keeper), "not from another map")
+	var plain: Dictionary = keeper.duplicate()
+	plain.erase("hide_flag")
+	assert_false(WorldGraph.passed_keeper(room, Vector2i(2, 1), "up", plain), "someone who never leaves")

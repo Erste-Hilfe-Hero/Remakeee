@@ -188,7 +188,7 @@ func _link(from: Array[String], to: String, kind: String) -> void:
 		(edges[f] as Array).append({"to": to, "kind": kind})
 
 ## Checks a landing cell and returns its node ("" if it is no good).
-func _land(what: String, to: String, c: Vector2i) -> String:
+func _land(what: String, to: String, c: Vector2i, from: String = "") -> String:
 	if not maps.has(to):
 		land_problems.append("%s: leads to unknown map '%s'" % [what, to])
 		return ""
@@ -201,16 +201,35 @@ func _land(what: String, to: String, c: Vector2i) -> String:
 		return ""
 	# Anyone who may ever stand there counts, gate keepers too (they stand there until their flag).
 	for n: Dictionary in m.npcs:
-		if Vector2i(int(n.x), int(n.y)) == c and str(n.get("id", "")) != WorldEvents.MERCHANT_ID and not NpcSchedule.has_plan(n):
+		if Vector2i(int(n.x), int(n.y)) == c and str(n.get("id", "")) != WorldEvents.MERCHANT_ID and not NpcSchedule.has_plan(n) \
+				and not passed_keeper(m, c, from, n):
 			land_problems.append("%s: lands on '%s' standing at %s in '%s'" % [what, n.get("id", ""), c, to])
 			return ""
 	return node_at(to, c)
+
+## True if [param n] on landing [param c] of [param m] is a gate keeper (a Wayfarer who leaves
+## once beaten) standing on the only way to the warp back to [param from]: whoever comes back
+## through that warp has walked past them, so they are gone (Paymaster Crake, Soot Vaults).
+static func passed_keeper(m: MapData, c: Vector2i, from: String, n: Dictionary) -> bool:
+	if from.is_empty() or not n.has("hide_flag") or str(n.hide_flag) != str(n.get("beaten_flag", "")):
+		return false
+	for w: Dictionary in m.warps:
+		var b := Vector2i(int(w.x), int(w.y))
+		if str(w.to) != from or absi(b.x - c.x) + absi(b.y - c.y) != 1:
+			continue
+		var ways: int = 0
+		for d: Vector2i in DIRS:
+			if m.is_walkable(b + d):
+				ways += 1
+		if ways == 1:
+			return true
+	return false
 
 func _map_edges(id: String) -> void:
 	var m: MapData = maps[id]
 	for w: Dictionary in m.warps:
 		var at := Vector2i(int(w.x), int(w.y))
-		var dest: String = _land("'%s' warp %s" % [id, at], str(w.to), Vector2i(int(w.tx), int(w.ty)))
+		var dest: String = _land("'%s' warp %s" % [id, at], str(w.to), Vector2i(int(w.tx), int(w.ty)), id)
 		if not dest.is_empty():
 			_link(_nodes_near(id, at), dest, "warp")
 	if not m.drop_to.is_empty():

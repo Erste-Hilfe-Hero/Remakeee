@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table map_pass, written by tools/i18n/locales_map_pass.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Clerk Odo: Crates go up the mountain full of plates and come down full of soot.": "Escribiente Odo: Las cajas suben llenas de planchas y bajan llenas de hollín.",
+  "Clerk Odo: I weigh both. The soot is heavier. Nobody believes me.": "Escribiente Odo: Peso ambas. El hollín pesa más. Nadie me cree.",
+  "Engraver Mira: A plate takes a year to cut and a second to drop. I have not dropped one. Yet.": "Grabadora Mira: Una plancha tarda un año en grabarse y un segundo en caerse. No se me ha caído ninguna. Todavía.",
+  "Engraver Mira: Halvard says my lines are too soft. Halvard says that to everyone.": "Grabadora Mira: Halvard dice que mis líneas son demasiado suaves. Halvard se lo dice a todos.",
+  "Engraver's Workshop": "Taller de la grabadora",
+  "Freight Office": "Oficina de carga",
+  "Lamp Room": "Cuarto de lámparas",
+  "Lampwright Ines: A train in fog finds the station by my wicks. Trim them and you trim the timetable.": "Lamparera Ines: Un tren en la niebla encuentra la estación por mis mechas. Recórtalas y recortas el horario.",
+  "Lampwright Ines: Every lamp on the platform is mine. The smoke is the stack's.": "Lamparera Ines: Cada lámpara del andén es mía. El humo es de la chimenea.",
+  "Pointsman Ulf: Porridge works best. Do not tell the guild.": "Guardagujas Ulf: Las gachas funcionan mejor. No se lo digas al gremio.",
+  "Pointsman Ulf: The points freeze every winter. I thaw them with my breakfast.": "Guardagujas Ulf: Las agujas se congelan cada invierno. Las descongelo con mi desayuno.",
+  "Pointsman's House": "Casa del guardagujas"
+ }
+}

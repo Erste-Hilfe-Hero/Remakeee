@@ -10,6 +10,8 @@ const TEST_SLOT: String = "user://test_world_walk_save.json"
 
 var _old_slot: String
 var _old_scale: float
+## The map the last warp started on (a gate keeper on the landing was passed on the way there).
+var _came_from: String = ""
 
 func before_all() -> void:
 	Database.load_all()
@@ -62,7 +64,7 @@ func _landing_problem(ow: Overworld, to: String, cell: Vector2i) -> String:
 		return "player stands on %s, not %s" % [ow.player.cell, cell]
 	if not ow.map.is_walkable(cell):
 		return "lands on '%s' at %s" % [ow.map.char_at(cell), cell]
-	if ow.npc_at(cell) != null:
+	if ow.npc_at(cell) != null and not WorldGraph.passed_keeper(ow.map, cell, _came_from, ow.npc_at(cell).definition):
 		return "lands on %s at %s" % [ow.npc_at(cell).npc_id, cell]
 	var floor: Callable = _floor(ow)
 	for d: Vector2i in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
@@ -92,6 +94,7 @@ func test_every_warp_lands_on_free_floor_and_every_door_walks_back() -> void:
 		var to: String = str(w.to)
 		var land := Vector2i(int(w.tx), int(w.ty))
 		ow.load_map(from, at, str(w.get("facing", "down")))
+		_came_from = from
 		await ow._warp(w)
 		var why: String = _landing_problem(ow, to, land)
 		if not why.is_empty():
@@ -118,6 +121,7 @@ func test_every_warp_lands_on_free_floor_and_every_door_walks_back() -> void:
 			fails.append("%s door %s -> %s: no way back to '%s' from %s" % [from, at, to, from, land])
 			continue
 		ow.player.place(Vector2i(int(back.x), int(back.y)), ow.player.facing)
+		_came_from = to
 		await ow._warp(back)
 		var home := Vector2i(int(back.tx), int(back.ty))
 		why = _landing_problem(ow, from, home)

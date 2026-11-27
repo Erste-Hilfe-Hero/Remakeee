@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table map_pass, written by tools/i18n/locales_map_pass.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Clerk Odo: Crates go up the mountain full of plates and come down full of soot.": "Klerk Odo: Kisten gaan de berg op vol platen en komen terug vol roet.",
+  "Clerk Odo: I weigh both. The soot is heavier. Nobody believes me.": "Klerk Odo: Ik weeg allebei. Het roet is zwaarder. Niemand gelooft me.",
+  "Engraver Mira: A plate takes a year to cut and a second to drop. I have not dropped one. Yet.": "Graveur Mira: Een plaat snijden kost een jaar, laten vallen een seconde. Ik heb er nog geen laten vallen. Nog niet.",
+  "Engraver Mira: Halvard says my lines are too soft. Halvard says that to everyone.": "Graveur Mira: Halvard zegt dat mijn lijnen te zacht zijn. Halvard zegt dat tegen iedereen.",
+  "Engraver's Workshop": "Werkplaats van de graveur",
+  "Freight Office": "Vrachtkantoor",
+  "Lamp Room": "Lampenkamer",
+  "Lampwright Ines: A train in fog finds the station by my wicks. Trim them and you trim the timetable.": "Lampenmaakster Ines: Een trein in de mist vindt het station aan mijn lonten. Knip ze bij en je knipt de dienstregeling bij.",
+  "Lampwright Ines: Every lamp on the platform is mine. The smoke is the stack's.": "Lampenmaakster Ines: Elke lamp op het perron is van mij. De rook is van de schoorsteen.",
+  "Pointsman Ulf: Porridge works best. Do not tell the guild.": "Wisselwachter Ulf: Pap werkt het best. Zeg het niet tegen het gilde.",
+  "Pointsman Ulf: The points freeze every winter. I thaw them with my breakfast.": "Wisselwachter Ulf: De wissels bevriezen elke winter. Ik ontdooi ze met mijn ontbijt.",
+  "Pointsman's House": "Huis van de wisselwachter"
+ }
+}
