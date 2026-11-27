@@ -279,6 +279,8 @@ static func detail_text(o: Dictionary) -> String:
 	if o.has("explain"):
 		lines.append(Loc.t("What it does:"))
 		lines.append(Loc.t(str(o.explain)))
+		# A blank line, so duration and the buying rule read as their own block.
+		lines.append("")
 	elif parts.size() <= 1 or not lists_only_amounts(str(o.desc)):
 		lines.append(Loc.t("What it does:"))
 		# A once-only pack's text ends in "Once per account." itself; the rule line below says it once.

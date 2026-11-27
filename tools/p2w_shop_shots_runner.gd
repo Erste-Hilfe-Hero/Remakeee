@@ -97,12 +97,17 @@ func _screens(lang: String) -> void:
 			await _picture(t + "_%02d_%s_end" % [ShopScreen.TABS.find(tab) + 1, tab], s)
 	s.show_detail(ShopCatalog.offer("rg_starter"))
 	await _picture(t + "_10_detail_starter", s)
+	s._scroll.scroll_vertical = 100000
+	await _picture(t + "_10_detail_starter_end", s)
 	s.show_detail(ShopCatalog.offer("rg_power_seal_1"))
 	await _picture(t + "_11_detail_seal", s)
 	s.show_detail(ShopCatalog.offer("rg_glass_1000"))
 	await _picture(t + "_12_detail_riftglass", s)
 	s.show_detail(ShopCatalog.offer("rg_jacket_moss"))
 	await _picture(t + "_13_detail_owned_look", s)
+	# A pack of one item: the contents line says what the item does (shop explanations, 27 Nov 2026).
+	s.show_detail(ShopCatalog.offer("rg_deal_mon"))
+	await _picture(t + "_13_detail_deal", s)
 	# Under 18: the end shows as a date.
 	_state(16)
 	s.select_tab("featured")
