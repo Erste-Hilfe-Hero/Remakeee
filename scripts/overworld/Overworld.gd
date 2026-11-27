@@ -24,6 +24,7 @@ var player: Player
 var busy: bool = false
 
 var _ground: TileMapLayer
+var _surround: MapSurround
 ## Terrain look of the map's era over the ground tiles (EraTerrainLook, docs/ERA_FEEL_TILES.md).
 var _terrain_look: EraTerrainLook
 ## Shade over dark gear cells (thick without the gear, a faint dusk with it).
@@ -202,6 +203,9 @@ func _ready() -> void:
 			_resume_open_battle.call_deferred()
 
 func _build() -> void:
+	# The land around an outdoor map on screens larger than the map (update 1.3.2).
+	_surround = MapSurround.new()
+	add_child(_surround)
 	_ground = TileMapLayer.new()
 	_ground.name = "Ground"
 	add_child(_ground)
@@ -469,6 +473,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	GameState.note_place(WorldAtlas.place_of(map_id))
 	_world.prepare(map, cell)
 	map.paint(_ground)
+	_surround.show_map(map)
 	_terrain_look.show_map(map, _ground, _camera, _entities)
 	_era_depth.show_map(map, _ground)
 	refresh_shade()

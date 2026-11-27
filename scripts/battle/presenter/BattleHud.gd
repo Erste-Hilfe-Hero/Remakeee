@@ -130,7 +130,12 @@ func layout_single() -> void:
 		dress_auto(_auto_on)
 	_place(scene._goal_label, l.goal)
 	goal_w = (l.goal as Rect2).size.x
-	scene.fit_goal_label()
+	# The turn count picks its long or short form for the room it has now (update 1.3.2: a
+	# short field puts it beside the foe).
+	if scene.model != null:
+		scene._refresh_goal()
+	else:
+		scene.fit_goal_label()
 	for row: TeamRow in [player_team, foe_team]:
 		row.compact = false
 	_place(player_team, l.player_team)

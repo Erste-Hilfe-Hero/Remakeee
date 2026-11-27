@@ -32,6 +32,8 @@ const QUIT_ASKED: int = -2
 func _ready() -> void:
 	Database.load_all()
 	theme = UITheme.get_theme()
+	# The title lays its art and lists out over the whole width itself (sized by the width).
+	add_to_group(SafeArea.FULL_WIDTH_GROUP)
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var bg := ColorRect.new()
 	bg.color = UITheme.BG

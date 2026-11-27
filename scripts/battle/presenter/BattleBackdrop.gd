@@ -17,6 +17,9 @@ var player_rect: Rect2
 ## Worn shop hat (HatArt.KINDS, item 4283): the Wayfarer is then seen from behind beside the
 ## partner, wearing it. "" draws no Wayfarer.
 var hat: String = ""
+## Where the hill pattern starts: the wide backdrop beside the battle column sets it so its hills
+## run on from the column's own (update 1.3.2).
+var hill_shift: float = 0.0
 ## Colour roles of the era (data/era_battle_feel.json "backdrop_colours"): Era I keeps the
 ## screen inks (the palette filter maps them), Era II takes a few flat colours per place, Era III
 ## a richer set with a two-tone sky and a highlight on the banks.
@@ -211,7 +214,7 @@ func _ground(hy: float) -> void:
 func _hills(hy: float, amp: float, freq: float, col: Color) -> void:
 	if size.x < 8.0 or hy < 2.0:
 		return
-	var pts: PackedVector2Array = hill_points(size.x, hy, amp, freq)
+	var pts: PackedVector2Array = hill_points(size.x, hy, amp, freq, hill_shift)
 	draw_colored_polygon(pts, col)
 	for i: int in range(1, pts.size() - 2):
 		draw_line(pts[i], pts[i + 1], _ink, 1.0)
@@ -219,11 +222,12 @@ func _hills(hy: float, amp: float, freq: float, col: Color) -> void:
 ## The hill outline closed along the horizon. A low hill (amp under 15) dipped below the
 ## horizon and the last point could lie past the right edge: the outline then crossed itself,
 ## "Invalid polygon data, triangulation failed" and the hill had no fill (bug sweep 2).
-static func hill_points(w: float, hy: float, amp: float, freq: float) -> PackedVector2Array:
+## [param shift] moves the hill pattern left by that many pixels.
+static func hill_points(w: float, hy: float, amp: float, freq: float, shift: float = 0.0) -> PackedVector2Array:
 	var pts := PackedVector2Array()
 	pts.append(Vector2(0, hy))
 	for x: int in range(0, int(w) + 4, 4):
-		var y: float = roundf(hy - amp - amp * sin(x * freq) * 0.8 - 3.0 * sin(x * freq * 3.1))
+		var y: float = roundf(hy - amp - amp * sin((x + shift) * freq) * 0.8 - 3.0 * sin((x + shift) * freq * 3.1))
 		pts.append(Vector2(minf(x, w), minf(y, hy - 1.0)))
 		if x >= w:
 			break

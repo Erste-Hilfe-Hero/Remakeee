@@ -29,13 +29,23 @@ static func rect(vp: Vector2) -> Rect2:
 	var r := Rect2(safe_px.position * scale, safe_px.size * scale)
 	return full.intersection(r) if full.intersects(r) else full
 
-## Insets the offsets of a full-rect [param c] so its content stays inside the safe area.
+## The UI column inside the safe area of a viewport of size [param vp] (update 1.3.2): the
+## whole safe area on a portrait screen, a centred column on a wide one (ScreenFit.column).
+static func column(vp: Vector2) -> Rect2:
+	return ScreenFit.column(vp, rect(vp))
+
+## Insets the offsets of a full-rect [param c] so its content stays inside the safe area, and,
+## when [param c] fills the screen, on a wide screen inside the centred UI column (update 1.3.2).
 ## [param extra] is added on every side (the control's own margin). The insets follow the
 ## screen when it changes size while the game runs (a foldable opening or closing).
 static func apply(c: Control, extra: float = 0.0) -> void:
 	_follow_resizes(c, extra)
 	var vp: Vector2 = c.get_viewport().get_visible_rect().size if c.is_inside_tree() else Vector2.ZERO
-	var r: Rect2 = rect(vp) if vp != Vector2.ZERO else Rect2()
+	# The column only for a control that spans the whole screen; one inside a smaller box
+	# (a test stage, a panel) keeps that box's width and only the safe-area insets.
+	var parent: Control = c.get_parent() as Control
+	var full: bool = (parent == null or parent.get_global_rect().size.x >= vp.x - 0.5) and not _in_full_width(c)
+	var r: Rect2 = (column(vp) if full else rect(vp)) if vp != Vector2.ZERO else Rect2()
 	var top: float = r.position.y if vp != Vector2.ZERO else 0.0
 	var left: float = r.position.x if vp != Vector2.ZERO else 0.0
 	var right: float = (vp.x - r.end.x) if vp != Vector2.ZERO else 0.0
@@ -44,6 +54,18 @@ static func apply(c: Control, extra: float = 0.0) -> void:
 	c.offset_top = top + extra
 	c.offset_right = -(right + extra)
 	c.offset_bottom = -(bottom + extra)
+
+## Screens that lay themselves out over the whole width (the title) keep their menus out of the
+## UI column.
+const FULL_WIDTH_GROUP: StringName = &"safe_area_full_width"
+
+static func _in_full_width(c: Node) -> bool:
+	var n: Node = c
+	while n != null:
+		if n.is_in_group(FULL_WIDTH_GROUP):
+			return true
+		n = n.get_parent()
+	return false
 
 ## Re-applies the insets to [param c] whenever its viewport changes size, until it leaves the tree.
 static func _follow_resizes(c: Control, extra: float) -> void:

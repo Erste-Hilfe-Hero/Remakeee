@@ -54,9 +54,13 @@ func _run() -> void:
 
 func _show(t: Dictionary) -> void:
 	var vp: Vector2 = _bar.get_viewport().get_visible_rect().size
-	var top: float = SafeArea.rect(vp).position.y
-	_bar.size = Vector2(vp.x - 16.0, HEIGHT)
-	var home := Vector2(8.0, top + 2.0)
+	# In the UI column on a wide screen (update 1.3.2), like the menus.
+	var col: Rect2 = SafeArea.column(vp)
+	var top: float = col.position.y
+	var left: float = col.position.x if col.size.x < vp.x else 0.0
+	var w: float = col.size.x if col.size.x < vp.x else vp.x
+	_bar.size = Vector2(w - 16.0, HEIGHT)
+	var home := Vector2(left + 8.0, top + 2.0)
 	_bar.position = home - Vector2(0, HEIGHT + 2 + top)
 	var fmt: String = Loc.t(str(t.text))
 	if t.has("from"):
