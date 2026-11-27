@@ -1,5 +1,5 @@
-497 canavarın güvenini kazan, kara mizahla dolu karanlık bir hikâyeyi keşfet ve her hamleni planla. Chimora, retro piksel sanatıyla yapılmış bir canavar RPG'si ve göründüğünden biraz daha karanlık.
-- Yankı çağrısıyla güvenini kazanacağın 497 Spirling ve doğada nadir Işıltı biçimleri
+567 canavarın güvenini kazan, kara mizahla dolu karanlık bir hikâyeyi keşfet ve her hamleni planla. Chimora, retro piksel sanatıyla yapılmış bir canavar RPG'si ve göründüğünden biraz daha karanlık.
+- Yankı çağrısıyla güvenini kazanacağın 567 Spirling ve doğada nadir Işıltı biçimleri
 - Sekiz element ve birkaç evreli Muhafızlarla taktik, sıra tabanlı savaşlar
 - Beş çağ boyunca büyüyen piksel sanatı: tek renkten tam renge
 - Çevrimiçi oyun: Chimora internet bağlantısı gerektirir
@@ -24,7 +24,7 @@ DİŞLİ BİR HİKÂYE
 - Altı efsanevi için efsane görevleri ve her perdede yan hikâyeler; onlarca saatlik oyun
 
 DEĞİŞEN BİR DÜNYA
-- 497 Spirling, her perdede ve hikâye sonrasındaki her bölgede 70 tane kendine özgü, ve doğada nadir Işıltı biçimleri
+- 567 Spirling, her perdede ve hikâye sonrasındaki her bölgede 80 tane kendine özgü, ve doğada nadir Işıltı biçimleri
 - Öndeki Spirling'in arkandan yürüyor ve ona nasıl davrandığını unutmuyor
 - Gece ve gündüz, şenlikler, gizli yollar, yeni yerler açan Gezgin donanımı ve kaçakçıların işlettiği bir yaban hayatı parkı
 - Sahiplenebileceğin bir in, her gün bir cenaze gösterisi ve gizli armağanlar satan bir karaborsa muhbiri

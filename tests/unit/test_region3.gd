@@ -142,7 +142,7 @@ func test_first_era_three_spirlings() -> void:
 	for sd: SpirlingData in Database.spirlings.values():
 		if sd.region == "quillmarch":
 			kinds.append(sd)
-	assert_eq(kinds.size(), 70, "70 own kinds: the hand-built first set plus the second batch (gen_era3.py --lines)")
+	assert_eq(kinds.size(), 80, "80 own kinds: the hand-built first set, the second batch (gen_era3.py --lines) and 10 more in 1.3.2 (quillmarch_more.py)")
 	for sd: SpirlingData in kinds:
 		assert_eq(sd.era, 3, sd.species_name)
 		assert_eq(EraManager.sprite_path(sd.species_name), "res://art/era3/spirlings/%s_front.png" % sd.species_name.to_lower())

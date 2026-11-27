@@ -17,11 +17,15 @@ Every text: no franchise term (the pattern of tools/ip_check.sh) and no other ga
 from __future__ import annotations
 
 import base64
+import json
 import os
 import re
 import sys
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+# The description names the real number of Spirlings in data/spirlings.json.
+with open(os.path.join(ROOT, "data", "spirlings.json"), encoding="utf-8") as _f:
+    SPIRLINGS = len(json.load(_f))
 
 APP_LOCALES = ["en-US", "en-GB", "en-AU", "en-CA", "de-DE", "fr-FR", "fr-CA", "es-ES", "es-MX", "pt-BR", "pt-PT",
                "it", "nl-NL", "pl", "tr", "ru", "ja", "ko", "zh-Hans", "zh-Hant"]
@@ -116,8 +120,8 @@ def check(root: str = ROOT) -> list[str]:
             errors.append("store/ios/metadata/%s/subtitle.txt: use search words, not Spirling" % loc)
         if "keywords.txt" in t:
             check_keywords(loc, t["keywords.txt"], name, sub, errors)
-        if "description.txt" in t and "497" not in t["description.txt"]:
-            errors.append("store/ios/metadata/%s/description.txt: name the 497 Spirlings" % loc)
+        if "description.txt" in t and str(SPIRLINGS) not in t["description.txt"]:
+            errors.append("store/ios/metadata/%s/description.txt: name the %d Spirlings" % (loc, SPIRLINGS))
         cap = os.path.join(root, "store/ios/screenshot_captions", loc + ".txt")
         if not os.path.exists(cap):
             errors.append("missing " + os.path.relpath(cap, root))

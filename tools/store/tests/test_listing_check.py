@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 import listing_check as lc  # noqa: E402
 
 
-def kw_errors(kw, name="Chimora: Monster Taming RPG", subtitle="Collect 497 pixel creatures"):
+def kw_errors(kw, name="Chimora: Monster Taming RPG", subtitle="Collect 567 pixel creatures"):
     errors = []
     lc.check_keywords("en-US", kw, name, subtitle, errors)
     return errors
@@ -31,7 +31,7 @@ class ListingCheck(unittest.TestCase):
 
     def test_cjk_keywords(self):
         errors = []
-        lc.check_keywords("ja", "収集,ドット絵", "Chimora：モンスター育成RPG", "497体を仲間にするドット絵冒険", errors)
+        lc.check_keywords("ja", "収集,ドット絵", "Chimora：モンスター育成RPG", "567体を仲間にするドット絵冒険", errors)
         self.assertEqual(len(errors), 1)
 
     def test_broken_listing_is_caught(self):

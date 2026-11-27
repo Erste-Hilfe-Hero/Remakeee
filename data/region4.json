@@ -29,7 +29,8 @@
    {"slot": "stair_e", "ground": "scree", "weight": 26, "species": "Spanling"},
    {"slot": "stair_f", "ground": "scree", "weight": 40, "species": "Gildmite"},
    {"slot": "stair_g", "ground": "scree", "weight": 18, "species": "Ledgehound"},
-   {"slot": "stair_h", "ground": "scree", "weight": 14, "species": "Gnomonk"}]},
+   {"slot": "stair_h", "ground": "scree", "weight": 14, "species": "Gnomonk"},
+   {"slot": "stair_i", "ground": "scree", "weight": 18, "species": "Cornicet"}]},
   {"id": "cloudshadow_meadow", "name": "Cloudshadow Meadow", "pos": [3, 1], "links": ["gildcrest", "starwell"], "ring": [80, 83], "height": "terraces",
    "slots": [
    {"slot": "meadow_a", "ground": "fern", "weight": 40, "species": "Cloudmop"},
@@ -39,7 +40,8 @@
    {"slot": "meadow_e", "ground": "fern", "weight": 18, "species": "Cloudram"},
    {"slot": "meadow_f", "ground": "fern", "weight": 26, "species": "Rillsnail"},
    {"slot": "meadow_g", "ground": "fern", "weight": 6, "species": "Dewstag"},
-   {"slot": "meadow_h", "ground": "fern", "weight": 14, "species": "Gildbloom"}]},
+   {"slot": "meadow_h", "ground": "fern", "weight": 14, "species": "Gildbloom"},
+   {"slot": "meadow_i", "ground": "fern", "weight": 34, "species": "Culmlet"}]},
   {"id": "mirror_flats", "name": "Mirror Flats", "pos": [3, 4], "links": ["brightledge", "paleshore"], "ring": [82, 85], "height": "flat",
    "slots": [
    {"slot": "mirror_a", "ground": "water", "weight": 40, "species": "Flatskip"},
@@ -48,7 +50,9 @@
    {"slot": "mirror_d", "ground": "water", "weight": 14, "species": "Arcfin"},
    {"slot": "mirror_e", "ground": "water", "weight": 12, "species": "Flatskimmer"},
    {"slot": "mirror_f", "ground": "scree", "weight": 34, "species": "Plinthlet"},
-   {"slot": "mirror_g", "ground": "reeds", "weight": 6, "species": "Glintheron"}]},
+   {"slot": "mirror_g", "ground": "reeds", "weight": 6, "species": "Glintheron"},
+   {"slot": "mirror_h", "ground": "water", "weight": 34, "species": "Mintlet"},
+   {"slot": "mirror_i", "ground": "scree", "weight": 18, "species": "Fulmenkit"}]},
   {"id": "orrery_ridge", "name": "Orrery Ridge", "pos": [5, 1], "links": ["starwell", "whitecairn"], "ring": [85, 88], "height": "cliffs",
    "slots": [
    {"slot": "ridge_a", "ground": "scree", "weight": 40, "species": "Orrebit"},
@@ -58,7 +62,8 @@
    {"slot": "ridge_e", "ground": "scree", "weight": 14, "species": "Zenlynx"},
    {"slot": "ridge_f", "ground": "scree", "weight": 12, "species": "Orrewheel"},
    {"slot": "ridge_g", "ground": "scree", "weight": 10, "species": "Brassjack"},
-   {"slot": "ridge_h", "ground": "scree", "weight": 22, "species": "Zenwhirl"}]},
+   {"slot": "ridge_h", "ground": "scree", "weight": 22, "species": "Zenwhirl"},
+   {"slot": "ridge_i", "ground": "scree", "weight": 18, "species": "Fulmenkit"}]},
   {"id": "sunfall_terraces", "name": "Sunfall Terraces", "pos": [4, 3], "links": ["gildcrest", "paleshore"], "ring": [87, 90], "height": "terraces",
    "slots": [
    {"slot": "sunfall_a", "ground": "fern", "weight": 40, "species": "Noonfox"},
@@ -68,7 +73,8 @@
    {"slot": "sunfall_e", "ground": "fern", "weight": 14, "species": "Noonvixen"},
    {"slot": "sunfall_f", "ground": "fern", "weight": 12, "species": "Rillshell"},
    {"slot": "sunfall_g", "ground": "fern", "weight": 10, "species": "Gildwing"},
-   {"slot": "sunfall_h", "ground": "scree", "weight": 6, "species": "Brazierbrute"}]},
+   {"slot": "sunfall_h", "ground": "scree", "weight": 6, "species": "Brazierbrute"},
+   {"slot": "sunfall_i", "ground": "fern", "weight": 34, "species": "Culmlet"}]},
   {"id": "lantern_span", "name": "Lantern Span", "pos": [5, 3], "links": ["paleshore", "whitecairn"], "ring": [89, 92], "height": "bridge",
    "slots": [
    {"slot": "span_a", "ground": "scree", "weight": 40, "species": "Lumoth"},
@@ -78,7 +84,8 @@
    {"slot": "span_e", "ground": "scree", "weight": 14, "species": "Lumothra"},
    {"slot": "span_f", "ground": "scree", "weight": 12, "species": "Halonel"},
    {"slot": "span_g", "ground": "scree", "weight": 6, "species": "Eaveprowl"},
-   {"slot": "span_h", "ground": "scree", "weight": 10, "species": "Gildrelic"}]}
+   {"slot": "span_h", "ground": "scree", "weight": 10, "species": "Gildrelic"},
+   {"slot": "span_i", "ground": "scree", "weight": 18, "species": "Cornicet"}]}
  ],
  "landmarks": [
   {"id": "great_orrery", "name": "The Great Orrery", "at": "starwell", "screens": [3, 2],

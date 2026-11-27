@@ -33369,5 +33369,4278 @@
    0
   ],
   "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 498,
+  "name": "Heathpip",
+  "elements": [
+   "EMBER",
+   "BLOOM"
+  ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "heathpip",
+  "era": 1,
+  "base": {
+   "hp": 59,
+   "atk": 72,
+   "foc": 46,
+   "spd": 72,
+   "def": 53
+  },
+  "trait": "calm_mind",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Ash Call"
+   ],
+   "6": [
+    "Seed Spit"
+   ],
+   "10": [
+    "Kiln Rush"
+   ],
+   "15": [
+    "Bloom Call"
+   ],
+   "20": [
+    "Kiln Strike"
+   ],
+   "26": [
+    "Bark Burst"
+   ],
+   "32": [
+    "Bonfire Body"
+   ]
+  },
+  "bond_rate": 0.55,
+  "height": "0.5 m",
+  "habitat": "Heather slopes above Crowcrest",
+  "lore": "Its quills smoulder like heather in a dry summer. It rolls into a ball when it is embarrassed, which singes the grass.",
+  "origin": "Hatched in the ashes of a shepherd's fire that nobody put out.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Heathbristle",
+    "rule": "ring",
+    "value": 12
+   }
+  ]
+ },
+ {
+  "dex_id": 499,
+  "name": "Heathbristle",
+  "elements": [
+   "EMBER",
+   "BLOOM"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "heathpip",
+  "era": 1,
+  "base": {
+   "hp": 67,
+   "atk": 88,
+   "foc": 58,
+   "spd": 82,
+   "def": 61
+  },
+  "trait": "calm_mind",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Smoulder"
+   ],
+   "6": [
+    "Kelp Lash"
+   ],
+   "10": [
+    "Ember Lash"
+   ],
+   "15": [
+    "Overgrowth"
+   ],
+   "20": [
+    "Kiln Rush"
+   ],
+   "26": [
+    "Root Grip"
+   ],
+   "32": [
+    "Bonfire Body"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.9 m",
+  "habitat": "Heather slopes above Crowcrest",
+  "lore": "It patrols the heather and stamps out every fire except its own.",
+  "origin": "A Heathpip that slept a whole autumn under a juniper bush.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Heathbrand",
+    "rule": "ring",
+    "value": 31
+   }
+  ]
+ },
+ {
+  "dex_id": 500,
+  "name": "Heathbrand",
+  "elements": [
+   "EMBER",
+   "BLOOM"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "heathpip",
+  "era": 1,
+  "base": {
+   "hp": 89,
+   "atk": 100,
+   "foc": 60,
+   "spd": 88,
+   "def": 70
+  },
+  "trait": "calm_mind",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Banked Coals"
+   ],
+   "6": [
+    "Kelp Lash"
+   ],
+   "10": [
+    "Ember Lash"
+   ],
+   "15": [
+    "Bloom Call"
+   ],
+   "20": [
+    "Kiln Rush"
+   ],
+   "26": [
+    "Nettle Rub"
+   ],
+   "32": [
+    "Bonfire Body"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ],
+   "44": [
+    "Furnace Heart"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.6 m",
+  "habitat": "Heather slopes above Crowcrest",
+  "lore": "Shepherds burn old heather so new shoots can grow. They ask a Heathbrand first, and it always says yes.",
+  "origin": "Grew up on the hill where the beacon fires were lit in the old wars.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "bark_wrap"
+ },
+ {
+  "dex_id": 501,
+  "name": "Tinglet",
+  "elements": [
+   "VOLT",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "tinglet",
+  "era": 1,
+  "base": {
+   "hp": 45,
+   "atk": 68,
+   "foc": 50,
+   "spd": 75,
+   "def": 43
+  },
+  "trait": "static_fur",
+  "learnset": {
+   "1": [
+    "Spark Prod",
+    "Grid Lock"
+   ],
+   "6": [
+    "Puddle Jump"
+   ],
+   "10": [
+    "Pylon Snap"
+   ],
+   "15": [
+    "Fog Bank"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Wave Shoulder"
+   ],
+   "32": [
+    "Pylon Fall"
+   ]
+  },
+  "bond_rate": 0.45,
+  "height": "0.9 m",
+  "habitat": "Brooks after a thunderstorm",
+  "lore": "Touching it feels like a foot that has gone to sleep. Children dare each other to try.",
+  "origin": "Fell into a brook with the first drop of a summer storm.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Tinglash",
+    "rule": "ring",
+    "value": 16
+   }
+  ]
+ },
+ {
+  "dex_id": 502,
+  "name": "Tinglash",
+  "elements": [
+   "VOLT",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "tinglet",
+  "era": 1,
+  "base": {
+   "hp": 75,
+   "atk": 106,
+   "foc": 68,
+   "spd": 115,
+   "def": 60
+  },
+  "trait": "static_fur",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Overdraw"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Pylon Snap"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Wave Shoulder"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "1.7 m",
+  "habitat": "Brooks after a thunderstorm",
+  "lore": "It lies still under the water until a fish swims past, then the whole brook hums.",
+  "origin": "A Tinglet that was struck by lightning and liked it.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Tinglewyrm",
+    "rule": "ring",
+    "value": 29
+   }
+  ]
+ },
+ {
+  "dex_id": 503,
+  "name": "Tinglewyrm",
+  "elements": [
+   "VOLT",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "tinglet",
+  "era": 1,
+  "base": {
+   "hp": 88,
+   "atk": 122,
+   "foc": 83,
+   "spd": 145,
+   "def": 76
+  },
+  "trait": "static_fur",
+  "learnset": {
+   "1": [
+    "Spark Prod",
+    "Spark Call"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Crackle Jab"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Wave Shoulder"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ],
+   "44": [
+    "Capacitor Crash"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "2.9 m",
+  "habitat": "Brooks after a thunderstorm",
+  "lore": "Millers along the brooks pay it in bread to keep their wheels turning on calm days.",
+  "origin": "Coiled around the old mill wheel for so long that the wheel began to spin by itself.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 504,
+  "name": "Keepling",
+  "elements": [
+   "STONE",
+   "LUMEN"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "keepling",
+  "era": 1,
+  "base": {
+   "hp": 87,
+   "atk": 66,
+   "foc": 51,
+   "spd": 45,
+   "def": 98
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Bowl Over",
+    "Hunker Down"
+   ],
+   "6": [
+    "Dawn Needle"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Sunwell Sip"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Lantern Swing"
+   ],
+   "32": [
+    "Tremor Thud"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.4 m",
+  "habitat": "Lantern steps and lake rocks",
+  "lore": "It carries a small light in its shell and sits where people tend to trip.",
+  "origin": "Found inside a lantern that was left on the steps for a whole winter.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Keepwarden",
+    "rule": "ring",
+    "value": 22
+   }
+  ]
+ },
+ {
+  "dex_id": 505,
+  "name": "Keepwarden",
+  "elements": [
+   "STONE",
+   "LUMEN"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "keepling",
+  "era": 1,
+  "base": {
+   "hp": 117,
+   "atk": 85,
+   "foc": 73,
+   "spd": 64,
+   "def": 126
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Gravel Hum"
+   ],
+   "6": [
+    "Dawn Needle"
+   ],
+   "10": [
+    "Boulder Roll"
+   ],
+   "15": [
+    "Vigil Light"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Starlit Lash"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Vane of Morning"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "0.9 m",
+  "habitat": "Lantern steps and lake rocks",
+  "lore": "When the lighthouse lamp went out one stormy night, three Keepwardens climbed the tower and lit their shells.",
+  "origin": "A Keepling that guided a lost boat home and was never quite the same afterwards.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 506,
+  "name": "Brackenram",
+  "elements": [
+   "BLOOM",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "brackenram",
+  "era": 1,
+  "base": {
+   "hp": 79,
+   "atk": 106,
+   "foc": 71,
+   "spd": 98,
+   "def": 68
+  },
+  "trait": "dry_coat",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Graft"
+   ],
+   "6": [
+    "Grit Jab"
+   ],
+   "10": [
+    "Nettle Rub"
+   ],
+   "15": [
+    "Rubble Call"
+   ],
+   "20": [
+    "Root Grip"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Bark Burst"
+   ],
+   "38": [
+    "Lurking Mass"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.8 m",
+  "habitat": "Bracken thickets in Gloamwood",
+  "lore": "It wears a coat of fern on its back and charges anyone who walks off the path. Gardeners consider it an ally.",
+  "origin": "Grew out of a boulder that a ram had headbutted every day for a hundred years.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "bark_wrap"
+ },
+ {
+  "dex_id": 507,
+  "name": "Saltwhistle",
+  "elements": [
+   "GALE",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "saltwhistle",
+  "era": 1,
+  "base": {
+   "hp": 69,
+   "atk": 46,
+   "foc": 94,
+   "spd": 69,
+   "def": 70
+  },
+  "trait": "calm_mind",
+  "learnset": {
+   "1": [
+    "Puff of Air",
+    "Scatter Gale"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "10": [
+    "Updraft"
+   ],
+   "15": [
+    "Drench"
+   ],
+   "20": [
+    "Weathervane"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Cyclone Wheel"
+   ],
+   "38": [
+    "Bore Wave"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.6 m",
+  "habitat": "Saltmarsh dikes in the wind",
+  "lore": "It whistles before a storm. The marsh folk listen to it more than to the weather almanac.",
+  "origin": "Hatched from an egg that the wind rolled along the dike for three days.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 508,
+  "name": "Flaxlet",
+  "elements": [
+   "BLOOM",
+   "GALE"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "flaxlet",
+  "era": 1,
+  "base": {
+   "hp": 66,
+   "atk": 39,
+   "foc": 89,
+   "spd": 53,
+   "def": 60
+  },
+  "trait": "echo_soul",
+  "learnset": {
+   "1": [
+    "Thistle Puff",
+    "Puffcap Haze"
+   ],
+   "6": [
+    "Whistle Wind"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Calm Eye"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Weathervane"
+   ],
+   "32": [
+    "Bloom Burst"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.3 m",
+  "habitat": "Flax fields along the dikes",
+  "lore": "It spins a thread so fine that weavers lose it in their own fingers.",
+  "origin": "Crawled out of a bale of flax that was left out in the dew.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Flaxreel",
+    "rule": "ring",
+    "value": 16
+   }
+  ]
+ },
+ {
+  "dex_id": 509,
+  "name": "Flaxreel",
+  "elements": [
+   "BLOOM",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "flaxlet",
+  "era": 1,
+  "base": {
+   "hp": 84,
+   "atk": 59,
+   "foc": 97,
+   "spd": 72,
+   "def": 71
+  },
+  "trait": "echo_soul",
+  "learnset": {
+   "1": [
+    "Thistle Puff",
+    "Graft"
+   ],
+   "6": [
+    "Puff of Air"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Scatter Gale"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Weathervane"
+   ],
+   "38": [
+    "Squall"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.6 m",
+  "habitat": "Flax fields along the dikes",
+  "lore": "It winds its thread around fence posts until the whole field is fenced in. Then it forgets the way out.",
+  "origin": "A Flaxlet that spent a summer in a weaver's attic and learned the loom by watching.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Flaxdowager",
+    "rule": "ring",
+    "value": 34
+   }
+  ]
+ },
+ {
+  "dex_id": 510,
+  "name": "Flaxdowager",
+  "elements": [
+   "BLOOM",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "flaxlet",
+  "era": 1,
+  "base": {
+   "hp": 92,
+   "atk": 72,
+   "foc": 139,
+   "spd": 88,
+   "def": 105
+  },
+  "trait": "echo_soul",
+  "learnset": {
+   "1": [
+    "Thistle Puff",
+    "Puffcap Haze"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Scatter Gale"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Weathervane"
+   ],
+   "38": [
+    "Cyclone Wheel"
+   ],
+   "44": [
+    "Bloom Burst"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "1.0 m",
+  "habitat": "Flax fields along the dikes",
+  "lore": "It sits in the middle of its web like an old aunt at a wedding and judges every thread.",
+  "origin": "Wove itself a shawl from a whole year of harvest, then refused to take it off.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 511,
+  "name": "Simmerkit",
+  "elements": [
+   "EMBER",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "corvane",
+  "role": "kindler",
+  "line_id": "simmerkit",
+  "era": 1,
+  "base": {
+   "hp": 60,
+   "atk": 54,
+   "foc": 71,
+   "spd": 70,
+   "def": 54
+  },
+  "trait": "field_strider",
+  "learnset": {
+   "1": [
+    "Tinder Flick",
+    "Heat Haze"
+   ],
+   "6": [
+    "Brine Pellet"
+   ],
+   "10": [
+    "Cinder Breath"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Pyre Waltz"
+   ],
+   "26": [
+    "Riptide Coil"
+   ],
+   "32": [
+    "Hearth Collapse"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.5 m",
+  "habitat": "Steaming dye vats of Madderby",
+  "lore": "It sleeps on the rim of the dye vats. Its fur comes out a different colour every week.",
+  "origin": "Fell into a madder vat as an egg and hatched bright red.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Simmerhound",
+    "rule": "ring",
+    "value": 19
+   }
+  ]
+ },
+ {
+  "dex_id": 512,
+  "name": "Simmerhound",
+  "elements": [
+   "EMBER",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "kindler",
+  "line_id": "simmerkit",
+  "era": 1,
+  "base": {
+   "hp": 77,
+   "atk": 66,
+   "foc": 91,
+   "spd": 89,
+   "def": 67
+  },
+  "trait": "field_strider",
+  "learnset": {
+   "1": [
+    "Tinder Flick",
+    "Smoulder"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "10": [
+    "Cinder Breath"
+   ],
+   "15": [
+    "Low Water"
+   ],
+   "26": [
+    "Riptide Coil"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Bore Wave"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.9 m",
+  "habitat": "Steaming dye vats of Madderby",
+  "lore": "Dyers keep one by the vats. It growls when the water is too cold and steams when it is too hot.",
+  "origin": "A Simmerkit that guarded the dye works through a flood and kept the fires lit.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Simmerbaron",
+    "rule": "ring",
+    "value": 32
+   }
+  ]
+ },
+ {
+  "dex_id": 513,
+  "name": "Simmerbaron",
+  "elements": [
+   "EMBER",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "kindler",
+  "line_id": "simmerkit",
+  "era": 1,
+  "base": {
+   "hp": 89,
+   "atk": 83,
+   "foc": 115,
+   "spd": 93,
+   "def": 72
+  },
+  "trait": "field_strider",
+  "learnset": {
+   "1": [
+    "Tinder Flick",
+    "Kindle Up"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "10": [
+    "Cinder Breath"
+   ],
+   "15": [
+    "Chill Mist"
+   ],
+   "20": [
+    "Brazier Pulse"
+   ],
+   "26": [
+    "Bore Wave"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Drowned Bell"
+   ],
+   "44": [
+    "Furnace Heart"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "1.6 m",
+  "habitat": "Steaming dye vats of Madderby",
+  "lore": "It owns no land and no title, but every dyer in Madderby bows when it walks past.",
+  "origin": "Drank from every vat in Madderby in a single night and became every colour at once.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 514,
+  "name": "Lockgill",
+  "elements": [
+   "STONE",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "bulwark",
+  "line_id": "lockgill",
+  "era": 1,
+  "base": {
+   "hp": 74,
+   "atk": 63,
+   "foc": 55,
+   "spd": 43,
+   "def": 83
+  },
+  "trait": "unruffled",
+  "learnset": {
+   "1": [
+    "Grit Jab",
+    "Hunker Down"
+   ],
+   "6": [
+    "Puddle Jump"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Undertow"
+   ],
+   "32": [
+    "Slow Quake"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.5 m",
+  "habitat": "Canal locks and their gates",
+  "lore": "It wedges itself into the gaps of lock gates. The lock keepers never know if it is helping or the reason for the leak.",
+  "origin": "Hatched in the mud at the bottom of a lock that was drained for repairs.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Lockreeve",
+    "rule": "ring",
+    "value": 24
+   }
+  ]
+ },
+ {
+  "dex_id": 515,
+  "name": "Lockreeve",
+  "elements": [
+   "STONE",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "corvane",
+  "role": "bulwark",
+  "line_id": "lockgill",
+  "era": 1,
+  "base": {
+   "hp": 101,
+   "atk": 77,
+   "foc": 65,
+   "spd": 63,
+   "def": 123
+  },
+  "trait": "unruffled",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Sediment"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Chill Mist"
+   ],
+   "20": [
+    "Landslip"
+   ],
+   "26": [
+    "Undertow"
+   ],
+   "32": [
+    "Tremor Thud"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.1 m",
+  "habitat": "Canal locks and their gates",
+  "lore": "No boat passes its lock without paying. It accepts bread, buttons and, once, a whole cart wheel.",
+  "origin": "A Lockgill that held a lock gate shut through a spring flood and saved a village.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 516,
+  "name": "Pondchime",
+  "elements": [
+   "ECHO",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "weaver",
+  "line_id": "pondchime",
+  "era": 1,
+  "base": {
+   "hp": 85,
+   "atk": 61,
+   "foc": 120,
+   "spd": 75,
+   "def": 89
+  },
+  "trait": "echo_soul",
+  "learnset": {
+   "1": [
+    "Bell Tap",
+    "Silence Please"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "10": [
+    "Knell"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Reverb"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Toll of Ages"
+   ],
+   "38": [
+    "Drowned Bell"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.6 m",
+  "habitat": "Still ponds behind the bell towers",
+  "lore": "When the wind is still, it rings like a bell under the water. The ripples spread in perfect circles.",
+  "origin": "The echo of a bell that fell into a pond and was never pulled out.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 517,
+  "name": "Stookhulk",
+  "elements": [
+   "BLOOM",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "corvane",
+  "role": "bulwark",
+  "line_id": "stookhulk",
+  "era": 1,
+  "base": {
+   "hp": 78,
+   "atk": 71,
+   "foc": 54,
+   "spd": 48,
+   "def": 93
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Bloom Call"
+   ],
+   "6": [
+    "Pebble Toss"
+   ],
+   "10": [
+    "Nettle Rub"
+   ],
+   "15": [
+    "Sediment"
+   ],
+   "20": [
+    "Thorn Volley"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Bark Burst"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "1.0 m",
+  "habitat": "Harvest fields and threshing floors",
+  "lore": "It stands in the fields after the harvest and looks exactly like a stack of sheaves until it sneezes.",
+  "origin": "The last sheaf of a harvest, tied too tight by a farmer who was in a hurry.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "bark_wrap"
+ },
+ {
+  "dex_id": 518,
+  "name": "Annealet",
+  "elements": [
+   "LUMEN",
+   "VOLT"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "annealet",
+  "era": 1,
+  "base": {
+   "hp": 64,
+   "atk": 41,
+   "foc": 86,
+   "spd": 57,
+   "def": 55
+  },
+  "trait": "static_fur",
+  "learnset": {
+   "1": [
+    "Wick Flicker",
+    "Dawn Call"
+   ],
+   "6": [
+    "Static Tag"
+   ],
+   "10": [
+    "Glint"
+   ],
+   "15": [
+    "Dynamo Hum"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Arc Bolt"
+   ],
+   "32": [
+    "Searchlight"
+   ]
+  },
+  "bond_rate": 0.55,
+  "height": "0.3 m",
+  "habitat": "Annealing ovens of the glassworks",
+  "lore": "It rests on cooling glass and hums. Glass it has slept on never cracks.",
+  "origin": "Flew out of a glass bubble that a blower blew too thin.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Annealix",
+    "rule": "ring",
+    "value": 18
+   }
+  ]
+ },
+ {
+  "dex_id": 519,
+  "name": "Annealix",
+  "elements": [
+   "LUMEN",
+   "VOLT"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "annealet",
+  "era": 1,
+  "base": {
+   "hp": 71,
+   "atk": 57,
+   "foc": 109,
+   "spd": 78,
+   "def": 70
+  },
+  "trait": "static_fur",
+  "learnset": {
+   "1": [
+    "Beacon Ping",
+    "Still Thought"
+   ],
+   "6": [
+    "Static Tag"
+   ],
+   "10": [
+    "Glint"
+   ],
+   "15": [
+    "Overdraw"
+   ],
+   "20": [
+    "Searchlight"
+   ],
+   "26": [
+    "Ball Lightning"
+   ],
+   "32": [
+    "Prism Burst"
+   ],
+   "38": [
+    "Short Circuit"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.6 m",
+  "habitat": "Annealing ovens of the glassworks",
+  "lore": "Its wings are panes of glass with a spark trapped between them. It cannot see out of them, which it finds restful.",
+  "origin": "An Annealet that spent a night in the cooling oven by mistake.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Annealord",
+    "rule": "ring",
+    "value": 36
+   }
+  ]
+ },
+ {
+  "dex_id": 520,
+  "name": "Annealord",
+  "elements": [
+   "LUMEN",
+   "VOLT"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "annealet",
+  "era": 1,
+  "base": {
+   "hp": 78,
+   "atk": 53,
+   "foc": 104,
+   "spd": 75,
+   "def": 82
+  },
+  "trait": "static_fur",
+  "learnset": {
+   "1": [
+    "Wick Flicker",
+    "Sunwell Sip"
+   ],
+   "6": [
+    "Siphon Spark"
+   ],
+   "10": [
+    "Glint"
+   ],
+   "15": [
+    "Spark Call"
+   ],
+   "20": [
+    "Searchlight"
+   ],
+   "26": [
+    "Ball Lightning"
+   ],
+   "32": [
+    "Omen Bell"
+   ],
+   "38": [
+    "Short Circuit"
+   ],
+   "44": [
+    "Daybreak Strike"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.0 m",
+  "habitat": "Annealing ovens of the glassworks",
+  "lore": "The master blowers hang their best work near its nest. It fixes every flaw, then asks to be thanked.",
+  "origin": "Grew inside the great window of the glassworks hall and stepped out when it was finished.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 521,
+  "name": "Sumplet",
+  "elements": [
+   "STONE",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "sumplet",
+  "era": 1,
+  "base": {
+   "hp": 77,
+   "atk": 61,
+   "foc": 51,
+   "spd": 46,
+   "def": 78
+  },
+  "trait": "static_fur",
+  "learnset": {
+   "1": [
+    "All-In Crash",
+    "Hunker Down"
+   ],
+   "6": [
+    "Puddle Jump"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Breakwater Stand"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Wave Shoulder"
+   ],
+   "32": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.55,
+  "height": "0.5 m",
+  "habitat": "Flooded sumps of the old mines",
+  "lore": "It drinks the water out of flooded tunnels and spits it out again somewhere less useful.",
+  "origin": "Washed out of a mine when the pumps stopped for a holiday.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Sumpdelver",
+    "rule": "ring",
+    "value": 22
+   }
+  ]
+ },
+ {
+  "dex_id": 522,
+  "name": "Sumpdelver",
+  "elements": [
+   "STONE",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "sumplet",
+  "era": 1,
+  "base": {
+   "hp": 110,
+   "atk": 84,
+   "foc": 72,
+   "spd": 67,
+   "def": 117
+  },
+  "trait": "static_fur",
+  "learnset": {
+   "1": [
+    "Bowl Over",
+    "Hunker Down"
+   ],
+   "6": [
+    "Puddle Jump"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Fog Bank"
+   ],
+   "20": [
+    "Landslip"
+   ],
+   "26": [
+    "Wave Shoulder"
+   ],
+   "32": [
+    "Tremor Thud"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.9 m",
+  "habitat": "Flooded sumps of the old mines",
+  "lore": "Miners follow it into old shafts. Where it stops digging, there is always ore, or water, or both.",
+  "origin": "A Sumplet that dug through to the next mine and refused to say how.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Sumpthane",
+    "rule": "ring",
+    "value": 38
+   }
+  ]
+ },
+ {
+  "dex_id": 523,
+  "name": "Sumpthane",
+  "elements": [
+   "STONE",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "sumplet",
+  "era": 1,
+  "base": {
+   "hp": 105,
+   "atk": 95,
+   "foc": 69,
+   "spd": 59,
+   "def": 127
+  },
+  "trait": "static_fur",
+  "learnset": {
+   "1": [
+    "Grit Jab",
+    "Sediment"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Boulder Roll"
+   ],
+   "15": [
+    "Fog Bank"
+   ],
+   "20": [
+    "Landslip"
+   ],
+   "26": [
+    "Rip Current"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.6 m",
+  "habitat": "Flooded sumps of the old mines",
+  "lore": "It rules the drowned levels of the mine. Nobody has seen the bottom, but everyone has heard it breathing.",
+  "origin": "Sat in the deepest sump for so long that the mine grew around it.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 524,
+  "name": "Turfkin",
+  "elements": [
+   "BLOOM",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "turfkin",
+  "era": 1,
+  "base": {
+   "hp": 65,
+   "atk": 54,
+   "foc": 73,
+   "spd": 63,
+   "def": 57
+  },
+  "trait": "thorn_coat",
+  "learnset": {
+   "1": [
+    "Thistle Puff",
+    "Puffcap Haze"
+   ],
+   "6": [
+    "Cave Echo"
+   ],
+   "10": [
+    "Spore Dart"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Fault Line"
+   ],
+   "32": [
+    "Canopy Crash"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.5 m",
+  "habitat": "Peat cuttings on the moor",
+  "lore": "Peat cutters find it asleep in the bog, rolled up like a brick of turf. Burning it by mistake is very rude.",
+  "origin": "Sprouted from a peat brick that was stacked too close to a damp wall.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Turfhulk",
+    "rule": "ring",
+    "value": 28
+   }
+  ]
+ },
+ {
+  "dex_id": 525,
+  "name": "Turfhulk",
+  "elements": [
+   "BLOOM",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "turfkin",
+  "era": 1,
+  "base": {
+   "hp": 69,
+   "atk": 68,
+   "foc": 96,
+   "spd": 78,
+   "def": 67
+  },
+  "trait": "thorn_coat",
+  "learnset": {
+   "1": [
+    "Thistle Puff",
+    "Root Mend"
+   ],
+   "6": [
+    "Grit Spray"
+   ],
+   "10": [
+    "Spore Dart"
+   ],
+   "15": [
+    "Gravel Hum"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Fault Line"
+   ],
+   "32": [
+    "Canopy Crash"
+   ],
+   "38": [
+    "Strata Burst"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.1 m",
+  "habitat": "Peat cuttings on the moor",
+  "lore": "It walks slowly and leaves a trail of new moss. The moor is a little greener wherever it has been.",
+  "origin": "A Turfkin that was planted on a grave by a grieving cutter and grew out of grief.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "bark_wrap"
+ },
+ {
+  "dex_id": 526,
+  "name": "Flintkit",
+  "elements": [
+   "STONE",
+   "EMBER"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "striker",
+  "line_id": "flintkit",
+  "era": 1,
+  "base": {
+   "hp": 57,
+   "atk": 80,
+   "foc": 54,
+   "spd": 88,
+   "def": 45
+  },
+  "trait": "glimmer_skin",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Bedrock"
+   ],
+   "6": [
+    "Ember Lash"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Kindle Up"
+   ],
+   "20": [
+    "Landslip"
+   ],
+   "26": [
+    "Kiln Strike"
+   ],
+   "32": [
+    "Slow Quake"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.5 m",
+  "habitat": "Flint seams beside the kilns",
+  "lore": "Its horn throws sparks when it bumps into things, which is often.",
+  "origin": "Struck out of a flint by a potter who was trying to light his kiln.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Flintlancer",
+    "rule": "ring",
+    "value": 26
+   }
+  ]
+ },
+ {
+  "dex_id": 527,
+  "name": "Flintlancer",
+  "elements": [
+   "STONE",
+   "EMBER"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "striker",
+  "line_id": "flintkit",
+  "era": 1,
+  "base": {
+   "hp": 83,
+   "atk": 116,
+   "foc": 80,
+   "spd": 135,
+   "def": 65
+  },
+  "trait": "glimmer_skin",
+  "learnset": {
+   "1": [
+    "Grit Jab",
+    "Gravel Hum"
+   ],
+   "6": [
+    "Ember Lash"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Smoulder"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Kiln Rush"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Bonfire Body"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.1 m",
+  "habitat": "Flint seams beside the kilns",
+  "lore": "It charges the kiln doors to light the fires. The potters pay it in coal and never stand behind it.",
+  "origin": "A Flintkit that broke its horn on an anvil and grew a sharper one.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 528,
+  "name": "Glarelet",
+  "elements": [
+   "LUMEN",
+   "EMBER"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "glarelet",
+  "era": 1,
+  "base": {
+   "hp": 57,
+   "atk": 72,
+   "foc": 60,
+   "spd": 85,
+   "def": 51
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Dawn Needle",
+    "Dawn Mend"
+   ],
+   "6": [
+    "Ember Lash"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Smoulder"
+   ],
+   "20": [
+    "Halo Kick"
+   ],
+   "26": [
+    "Kiln Strike"
+   ],
+   "32": [
+    "Radiant Lance"
+   ]
+  },
+  "bond_rate": 0.45,
+  "height": "0.5 m",
+  "habitat": "Salt flats in the glare of noon",
+  "lore": "Its scales throw the sun back into your eyes. It thinks this is how you say hello.",
+  "origin": "Hatched on a mirror that a caravan dropped on the salt.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Glarelisk",
+    "rule": "ring",
+    "value": 18
+   }
+  ]
+ },
+ {
+  "dex_id": 529,
+  "name": "Glarelisk",
+  "elements": [
+   "LUMEN",
+   "EMBER"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "glarelet",
+  "era": 1,
+  "base": {
+   "hp": 73,
+   "atk": 115,
+   "foc": 71,
+   "spd": 115,
+   "def": 69
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Lamp Oil",
+    "Kindred Balm"
+   ],
+   "6": [
+    "Ember Lash"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Smoulder"
+   ],
+   "20": [
+    "Halo Kick"
+   ],
+   "26": [
+    "Bonfire Body"
+   ],
+   "32": [
+    "Radiant Lance"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.9 m",
+  "habitat": "Salt flats in the glare of noon",
+  "lore": "Travellers cross the flats with their eyes shut when one is about. Most of them arrive somewhere.",
+  "origin": "A Glarelet that stared at the sun for a whole day out of stubbornness.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Glaremonarch",
+    "rule": "ring",
+    "value": 34
+   }
+  ]
+ },
+ {
+  "dex_id": 530,
+  "name": "Glaremonarch",
+  "elements": [
+   "LUMEN",
+   "EMBER"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "glarelet",
+  "era": 1,
+  "base": {
+   "hp": 82,
+   "atk": 126,
+   "foc": 87,
+   "spd": 141,
+   "def": 74
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Lamp Oil",
+    "Vigil Light"
+   ],
+   "6": [
+    "Glow Knuckle"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Ash Call"
+   ],
+   "20": [
+    "Halo Kick"
+   ],
+   "26": [
+    "Bonfire Body"
+   ],
+   "32": [
+    "Radiant Lance"
+   ],
+   "44": [
+    "Daybreak Strike"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.6 m",
+  "habitat": "Salt flats in the glare of noon",
+  "lore": "At noon it is the brightest thing on the plateau. At night it sulks in a hole and nobody can find it.",
+  "origin": "Grew from the burning glass of the old sun tower after it fell into the salt.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 531,
+  "name": "Haulbug",
+  "elements": [
+   "STONE",
+   "GALE"
+  ],
+  "rarity": "common",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "haulbug",
+  "era": 1,
+  "base": {
+   "hp": 75,
+   "atk": 54,
+   "foc": 51,
+   "spd": 40,
+   "def": 86
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Quarry Wall"
+   ],
+   "6": [
+    "Pinwheel"
+   ],
+   "10": [
+    "Boulder Roll"
+   ],
+   "15": [
+    "Gale Mantle"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Gust Ladder"
+   ],
+   "32": [
+    "Tremor Thud"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.3 m",
+  "habitat": "Caravan roads and their waystations",
+  "lore": "It pushes balls of dried dung along the caravan roads and sells them as fuel at the next well.",
+  "origin": "Fell off a caravan cart and decided to keep going on foot.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Haulbeetle",
+    "rule": "ring",
+    "value": 18
+   }
+  ]
+ },
+ {
+  "dex_id": 532,
+  "name": "Haulbeetle",
+  "elements": [
+   "STONE",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "haulbug",
+  "era": 1,
+  "base": {
+   "hp": 103,
+   "atk": 87,
+   "foc": 69,
+   "spd": 61,
+   "def": 128
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "All-In Crash",
+    "Rubble Call"
+   ],
+   "6": [
+    "Kite Cut"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Gale Call"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Gale Scythe"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.6 m",
+  "habitat": "Caravan roads and their waystations",
+  "lore": "Caravans hire it to pull carts out of the sand. It works for water and complains in a low hum.",
+  "origin": "A Haulbug that pulled a stuck cart for a mile and never let go of the rope.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Haulbastion",
+    "rule": "ring",
+    "value": 33
+   }
+  ]
+ },
+ {
+  "dex_id": 533,
+  "name": "Haulbastion",
+  "elements": [
+   "STONE",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "bulwark",
+  "line_id": "haulbug",
+  "era": 1,
+  "base": {
+   "hp": 114,
+   "atk": 86,
+   "foc": 72,
+   "spd": 67,
+   "def": 127
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "All-In Crash",
+    "Sediment"
+   ],
+   "6": [
+    "Kite Cut"
+   ],
+   "10": [
+    "Boulder Roll"
+   ],
+   "15": [
+    "Drift Step"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Gale Scythe"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "1.0 m",
+  "habitat": "Caravan roads and their waystations",
+  "lore": "A whole waystation is built on its back. It moves twice a year, and the innkeeper moves with it.",
+  "origin": "Lay down to rest on the caravan road and woke up with a roof on its shell.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 534,
+  "name": "Cistlet",
+  "elements": [
+   "TIDE",
+   "UMBRA"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "vanguard",
+  "line_id": "cistlet",
+  "era": 1,
+  "base": {
+   "hp": 64,
+   "atk": 71,
+   "foc": 49,
+   "spd": 67,
+   "def": 55
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Puddle Jump",
+    "Chill Mist"
+   ],
+   "6": [
+    "Dusk Rake"
+   ],
+   "10": [
+    "Wave Shoulder"
+   ],
+   "15": [
+    "Night Veil"
+   ],
+   "20": [
+    "Undertow"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.9 m",
+  "habitat": "Old cisterns under the towns",
+  "lore": "It lives in the dark water under the towns and smiles at every bucket that comes down.",
+  "origin": "Dropped into a cistern by a girl who wanted to keep it secret.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Cisternox",
+    "rule": "ring",
+    "value": 30
+   }
+  ]
+ },
+ {
+  "dex_id": 535,
+  "name": "Cisternox",
+  "elements": [
+   "TIDE",
+   "UMBRA"
+  ],
+  "rarity": "shy",
+  "region": "solenne",
+  "role": "vanguard",
+  "line_id": "cistlet",
+  "era": 1,
+  "base": {
+   "hp": 73,
+   "atk": 103,
+   "foc": 56,
+   "spd": 81,
+   "def": 70
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Chill Mist"
+   ],
+   "6": [
+    "Dusk Rake"
+   ],
+   "10": [
+    "Wave Shoulder"
+   ],
+   "15": [
+    "Gloom Handoff"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Backstab"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ],
+   "44": [
+    "Fathom Crush"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "2.0 m",
+  "habitat": "Old cisterns under the towns",
+  "lore": "Whole towns drink from its cistern. It keeps the water clean and keeps count of every bucket.",
+  "origin": "A Cistlet that grew too big to leave through the well shaft.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 536,
+  "name": "Noctolabe",
+  "elements": [
+   "UMBRA",
+   "LUMEN"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "weaver",
+  "line_id": "noctolabe",
+  "era": 1,
+  "base": {
+   "hp": 84,
+   "atk": 51,
+   "foc": 111,
+   "spd": 80,
+   "def": 84
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Shadow Whisper",
+    "Night Veil"
+   ],
+   "6": [
+    "Glint"
+   ],
+   "10": [
+    "Night Siphon"
+   ],
+   "15": [
+    "Still Thought"
+   ],
+   "20": [
+    "Gloom Ripple"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Nightfall"
+   ],
+   "38": [
+    "Tide of Dawn"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.6 m",
+  "habitat": "Observatory roofs on clear nights",
+  "lore": "It turns slowly on the observatory roof and points at the stars nobody has named yet.",
+  "origin": "Came loose from an astronomer's brass instrument on the longest night of the year.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 537,
+  "name": "Grainspout",
+  "elements": [
+   "GALE",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "solenne",
+  "role": "striker",
+  "line_id": "grainspout",
+  "era": 1,
+  "base": {
+   "hp": 74,
+   "atk": 95,
+   "foc": 66,
+   "spd": 114,
+   "def": 58
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Gale Call"
+   ],
+   "6": [
+    "All-In Crash"
+   ],
+   "10": [
+    "Gust Ladder"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Boulder Roll"
+   ],
+   "32": [
+    "Gale Scythe"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.6 m",
+  "habitat": "Millet fields when the wind turns",
+  "lore": "It spins through the millet and threshes it in one go. The farmers sweep up behind it and say thank you.",
+  "origin": "A dust devil that ate a whole field of millet and got stuck that way.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 538,
+  "name": "Brumelet",
+  "elements": [
+   "FROST",
+   "UMBRA"
+  ],
+  "rarity": "common",
+  "region": "quillmarch",
+  "role": "striker",
+  "line_id": "brumelet",
+  "era": 3,
+  "base": {
+   "hp": 50,
+   "atk": 74,
+   "foc": 54,
+   "spd": 86,
+   "def": 44
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Rime Nip",
+    "Numbing Mist"
+   ],
+   "6": [
+    "Shade Pounce"
+   ],
+   "10": [
+    "Frostbite"
+   ],
+   "15": [
+    "Murk Veil"
+   ],
+   "20": [
+    "Black Ice"
+   ],
+   "26": [
+    "Backstab"
+   ],
+   "32": [
+    "Avalanche Run"
+   ]
+  },
+  "bond_rate": 0.53,
+  "height": "0.5 m",
+  "habitat": "Winter fog on the Hoarfrost Moor",
+  "lore": "It hides in the fog and nips at ankles. You only see it when it laughs, and its breath freezes in the air.",
+  "origin": "Born from the first fog of winter, which rolled over the moor and forgot to lift.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Brumeshade",
+    "rule": "ring",
+    "value": 23
+   }
+  ]
+ },
+ {
+  "dex_id": 539,
+  "name": "Brumeshade",
+  "elements": [
+   "FROST",
+   "UMBRA"
+  ],
+  "rarity": "uncommon",
+  "region": "quillmarch",
+  "role": "striker",
+  "line_id": "brumelet",
+  "era": 3,
+  "base": {
+   "hp": 58,
+   "atk": 76,
+   "foc": 63,
+   "spd": 95,
+   "def": 56
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Rime Nip",
+    "Rime Armour"
+   ],
+   "6": [
+    "Veil Step"
+   ],
+   "10": [
+    "Icicle Lunge"
+   ],
+   "15": [
+    "Night Toll"
+   ],
+   "20": [
+    "Icicle Rake"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Avalanche Run"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.9 m",
+  "habitat": "Winter fog on the Hoarfrost Moor",
+  "lore": "Wayfarers lost in the fog sometimes follow a pair of eyes home. Sometimes they do not get home.",
+  "origin": "A Brumelet that spent a night in the shadow of a gallows stone.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Brumarch",
+    "rule": "ring",
+    "value": 39
+   }
+  ]
+ },
+ {
+  "dex_id": 540,
+  "name": "Brumarch",
+  "elements": [
+   "FROST",
+   "UMBRA"
+  ],
+  "rarity": "shy",
+  "region": "quillmarch",
+  "role": "striker",
+  "line_id": "brumelet",
+  "era": 3,
+  "base": {
+   "hp": 84,
+   "atk": 125,
+   "foc": 83,
+   "spd": 141,
+   "def": 82
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Rime Nip",
+    "Thaw Song"
+   ],
+   "6": [
+    "Veil Step"
+   ],
+   "10": [
+    "Icicle Lunge"
+   ],
+   "15": [
+    "Night Toll"
+   ],
+   "20": [
+    "Black Ice"
+   ],
+   "26": [
+    "Backstab"
+   ],
+   "32": [
+    "Rime Shard"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ],
+   "44": [
+    "Deep Freeze"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.6 m",
+  "habitat": "Winter fog on the Hoarfrost Moor",
+  "lore": "When it walks across the moor, the fog follows it like a cloak. Even the frost keeps quiet.",
+  "origin": "Gathered every fog bank of the moor into itself on the longest night.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 541,
+  "name": "Zinclet",
+  "elements": [
+   "ACID",
+   "VOLT"
+  ],
+  "rarity": "common",
+  "region": "quillmarch",
+  "role": "vanguard",
+  "line_id": "zinclet",
+  "era": 3,
+  "base": {
+   "hp": 56,
+   "atk": 76,
+   "foc": 45,
+   "spd": 68,
+   "def": 51
+  },
+  "trait": "glimmer_skin",
+  "learnset": {
+   "1": [
+    "Bite Bath",
+    "Fume Veil"
+   ],
+   "6": [
+    "Spark Prod"
+   ],
+   "10": [
+    "Pickled Punch"
+   ],
+   "15": [
+    "Charged Mist"
+   ],
+   "20": [
+    "Brine Pickle"
+   ],
+   "26": [
+    "Pylon Snap"
+   ],
+   "32": [
+    "Etched Fang"
+   ]
+  },
+  "bond_rate": 0.55,
+  "height": "0.3 m",
+  "habitat": "Zinc baths of Mordant Row",
+  "lore": "It bathes in the zinc tanks and comes out tingling. Touching two of them at once is a mistake you make once.",
+  "origin": "Crawled out of a battery jar that an engraver left in the rain.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Zincrawler",
+    "rule": "ring",
+    "value": 25
+   }
+  ]
+ },
+ {
+  "dex_id": 542,
+  "name": "Zincrawler",
+  "elements": [
+   "ACID",
+   "VOLT"
+  ],
+  "rarity": "uncommon",
+  "region": "quillmarch",
+  "role": "vanguard",
+  "line_id": "zinclet",
+  "era": 3,
+  "base": {
+   "hp": 82,
+   "atk": 100,
+   "foc": 67,
+   "spd": 88,
+   "def": 65
+  },
+  "trait": "glimmer_skin",
+  "learnset": {
+   "1": [
+    "Bite Bath",
+    "Acid Bath"
+   ],
+   "6": [
+    "Crackle Bite"
+   ],
+   "10": [
+    "Brine Pickle"
+   ],
+   "15": [
+    "Grid Lock"
+   ],
+   "20": [
+    "Corrode Claw"
+   ],
+   "26": [
+    "Storm Gnash"
+   ],
+   "32": [
+    "Plate Biter"
+   ],
+   "38": [
+    "Pylon Fall"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.6 m",
+  "habitat": "Zinc baths of Mordant Row",
+  "lore": "It walks the gutters of Mordant Row and eats spilled acid. The cobbles behind it shine like new.",
+  "origin": "A Zinclet that fell into a plating bath and came out with a shell of metal.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Zincolossus",
+    "rule": "ring",
+    "value": 39
+   }
+  ]
+ },
+ {
+  "dex_id": 543,
+  "name": "Zincolossus",
+  "elements": [
+   "ACID",
+   "VOLT"
+  ],
+  "rarity": "shy",
+  "region": "quillmarch",
+  "role": "vanguard",
+  "line_id": "zinclet",
+  "era": 3,
+  "base": {
+   "hp": 93,
+   "atk": 115,
+   "foc": 72,
+   "spd": 111,
+   "def": 85
+  },
+  "trait": "glimmer_skin",
+  "learnset": {
+   "1": [
+    "Fizzle Bite",
+    "Dissolve"
+   ],
+   "6": [
+    "Crackle Jab"
+   ],
+   "10": [
+    "Brine Pickle"
+   ],
+   "15": [
+    "Overdraw"
+   ],
+   "20": [
+    "Corrode Claw"
+   ],
+   "26": [
+    "Storm Gnash"
+   ],
+   "38": [
+    "Pylon Fall"
+   ],
+   "44": [
+    "Acid Deluge"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "1.0 m",
+  "habitat": "Zinc baths of Mordant Row",
+  "lore": "The etching works run their presses on its current. Nobody asks what happens if it walks away.",
+  "origin": "Lay in the great plating tank for a whole year while the works paid it in copper.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 544,
+  "name": "Serifkit",
+  "elements": [
+   "STONE",
+   "LUMEN"
+  ],
+  "rarity": "uncommon",
+  "region": "quillmarch",
+  "role": "weaver",
+  "line_id": "serifkit",
+  "era": 3,
+  "base": {
+   "hp": 62,
+   "atk": 46,
+   "foc": 84,
+   "spd": 60,
+   "def": 70
+  },
+  "trait": "low_flame",
+  "learnset": {
+   "1": [
+    "Grit Spray",
+    "Gravel Hum"
+   ],
+   "6": [
+    "Beacon Ping"
+   ],
+   "10": [
+    "Cave Echo"
+   ],
+   "15": [
+    "Candle Ward"
+   ],
+   "20": [
+    "Ore Pulse"
+   ],
+   "26": [
+    "Searchlight"
+   ],
+   "32": [
+    "Dust Devil"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.5 m",
+  "habitat": "Type cases in the print houses",
+  "lore": "Its ears end in tiny serifs. Typesetters keep one to find the letters they have dropped.",
+  "origin": "Jumped out of a type case when the printer sneezed.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Serifane",
+    "rule": "ring",
+    "value": 34
+   }
+  ]
+ },
+ {
+  "dex_id": 545,
+  "name": "Serifane",
+  "elements": [
+   "STONE",
+   "LUMEN"
+  ],
+  "rarity": "shy",
+  "region": "quillmarch",
+  "role": "weaver",
+  "line_id": "serifkit",
+  "era": 3,
+  "base": {
+   "hp": 91,
+   "atk": 58,
+   "foc": 110,
+   "spd": 78,
+   "def": 92
+  },
+  "trait": "low_flame",
+  "learnset": {
+   "1": [
+    "Grit Spray",
+    "Bedrock"
+   ],
+   "6": [
+    "Beacon Ping"
+   ],
+   "10": [
+    "Cave Echo"
+   ],
+   "15": [
+    "Dawn Mend"
+   ],
+   "20": [
+    "Ore Pulse"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Strata Burst"
+   ],
+   "38": [
+    "Omen Bell"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.1 m",
+  "habitat": "Type cases in the print houses",
+  "lore": "It reads every page that comes off the press and glows at every mistake. The forgers hate it.",
+  "origin": "A Serifkit that slept in a lamp-lit print room until the light soaked into its fur.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 546,
+  "name": "Tangbeak",
+  "elements": [
+   "ACID",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "quillmarch",
+  "role": "striker",
+  "line_id": "tangbeak",
+  "era": 3,
+  "base": {
+   "hp": 59,
+   "atk": 76,
+   "foc": 54,
+   "spd": 86,
+   "def": 46
+  },
+  "trait": "overflow",
+  "learnset": {
+   "1": [
+    "Fizzle Bite",
+    "Sour Turn"
+   ],
+   "6": [
+    "Breeze Slice"
+   ],
+   "10": [
+    "Mordant Fang"
+   ],
+   "15": [
+    "Drift Step"
+   ],
+   "20": [
+    "Corrode Claw"
+   ],
+   "26": [
+    "Gust Ladder"
+   ],
+   "32": [
+    "Etched Fang"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.4 m",
+  "habitat": "Acid fumes over the etching works",
+  "lore": "It rides the acid fumes above the chimneys and smells of vinegar. Its call makes your teeth hurt.",
+  "origin": "Hatched in a nest built on a chimney of the etching works.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Tangharrier",
+    "rule": "ring",
+    "value": 32
+   }
+  ]
+ },
+ {
+  "dex_id": 547,
+  "name": "Tangharrier",
+  "elements": [
+   "ACID",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "quillmarch",
+  "role": "striker",
+  "line_id": "tangbeak",
+  "era": 3,
+  "base": {
+   "hp": 70,
+   "atk": 99,
+   "foc": 73,
+   "spd": 124,
+   "def": 69
+  },
+  "trait": "overflow",
+  "learnset": {
+   "1": [
+    "Fizzle Bite",
+    "Ferment"
+   ],
+   "6": [
+    "Breeze Slice"
+   ],
+   "10": [
+    "Brine Pickle"
+   ],
+   "15": [
+    "Scatter Gale"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Etched Fang"
+   ],
+   "38": [
+    "Gale Scythe"
+   ],
+   "44": [
+    "Acid Deluge"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "0.9 m",
+  "habitat": "Acid fumes over the etching works",
+  "lore": "It dives through the fumes at copper roofs and leaves green streaks where its claws scrape.",
+  "origin": "A Tangbeak that flew through the thickest cloud of the works and came out sharper.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 548,
+  "name": "Culmlet",
+  "elements": [
+   "ZENITH",
+   "BLOOM"
+  ],
+  "rarity": "common",
+  "region": "halcyra",
+  "role": "kindler",
+  "line_id": "culmlet",
+  "era": 4,
+  "base": {
+   "hp": 60,
+   "atk": 51,
+   "foc": 71,
+   "spd": 69,
+   "def": 48
+  },
+  "trait": "dry_coat",
+  "learnset": {
+   "1": [
+    "High Glint",
+    "Rise Above"
+   ],
+   "6": [
+    "Spore Dart"
+   ],
+   "10": [
+    "Apex Ray"
+   ],
+   "15": [
+    "Compost Pact"
+   ],
+   "20": [
+    "Sunpeak Beam"
+   ],
+   "26": [
+    "Thornwake"
+   ],
+   "32": [
+    "Meridian Blaze"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.5 m",
+  "habitat": "Hanging gardens at the top of the terraces",
+  "lore": "It always turns its face to the highest point of the sky, even indoors, even at night.",
+  "origin": "Sprouted from a seed that fell out of a cloud onto the top terrace.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Culmbough",
+    "rule": "ring",
+    "value": 82
+   }
+  ]
+ },
+ {
+  "dex_id": 549,
+  "name": "Culmbough",
+  "elements": [
+   "ZENITH",
+   "BLOOM"
+  ],
+  "rarity": "uncommon",
+  "region": "halcyra",
+  "role": "kindler",
+  "line_id": "culmlet",
+  "era": 4,
+  "base": {
+   "hp": 77,
+   "atk": 67,
+   "foc": 98,
+   "spd": 86,
+   "def": 71
+  },
+  "trait": "dry_coat",
+  "learnset": {
+   "1": [
+    "High Glint",
+    "Rise Above"
+   ],
+   "6": [
+    "Thistle Puff"
+   ],
+   "10": [
+    "Apex Ray"
+   ],
+   "15": [
+    "Husk Shed"
+   ],
+   "20": [
+    "Sunpeak Beam"
+   ],
+   "26": [
+    "Thornwake"
+   ],
+   "38": [
+    "Bloom Burst"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.9 m",
+  "habitat": "Hanging gardens at the top of the terraces",
+  "lore": "Gardeners grow vines along its arms. By midsummer it is a whole arbour and very proud of it.",
+  "origin": "A Culmlet that climbed the tallest wall in Halcyra to be closer to noon.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Culmarch",
+    "rule": "ring",
+    "value": 87
+   }
+  ]
+ },
+ {
+  "dex_id": 550,
+  "name": "Culmarch",
+  "elements": [
+   "ZENITH",
+   "BLOOM"
+  ],
+  "rarity": "shy",
+  "region": "halcyra",
+  "role": "kindler",
+  "line_id": "culmlet",
+  "era": 4,
+  "base": {
+   "hp": 85,
+   "atk": 73,
+   "foc": 116,
+   "spd": 110,
+   "def": 74
+  },
+  "trait": "dry_coat",
+  "learnset": {
+   "1": [
+    "High Glint",
+    "Rise Above"
+   ],
+   "6": [
+    "Spore Dart"
+   ],
+   "10": [
+    "Apex Ray"
+   ],
+   "15": [
+    "Overgrowth"
+   ],
+   "20": [
+    "Sunpeak Beam"
+   ],
+   "26": [
+    "Thornwake"
+   ],
+   "32": [
+    "Meridian Blaze"
+   ],
+   "38": [
+    "Canopy Crash"
+   ],
+   "44": [
+    "Height of Noon"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "1.6 m",
+  "habitat": "Hanging gardens at the top of the terraces",
+  "lore": "At noon its crown opens and the whole garden goes quiet. The bees say it is rude to buzz.",
+  "origin": "Grew on the roof of the highest house until its roots held the house together.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 551,
+  "name": "Mintlet",
+  "elements": [
+   "GILT",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "halcyra",
+  "role": "weaver",
+  "line_id": "mintlet",
+  "era": 4,
+  "base": {
+   "hp": 59,
+   "atk": 45,
+   "foc": 82,
+   "spd": 61,
+   "def": 67
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Leaf of Gold",
+    "Dazzle Coin"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "10": [
+    "Shine Burst"
+   ],
+   "15": [
+    "Fog Bank"
+   ],
+   "20": [
+    "Gold Glare"
+   ],
+   "26": [
+    "Riptide Coil"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.5 m",
+  "habitat": "Wishing pools full of old coins",
+  "lore": "It swims among the coins in the wishing pools and polishes them with its fins. It keeps the shiny ones.",
+  "origin": "Hatched from a coin that someone wished on very hard.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Mintmarker",
+    "rule": "ring",
+    "value": 80
+   }
+  ]
+ },
+ {
+  "dex_id": 552,
+  "name": "Mintmarker",
+  "elements": [
+   "GILT",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "halcyra",
+  "role": "weaver",
+  "line_id": "mintlet",
+  "era": 4,
+  "base": {
+   "hp": 88,
+   "atk": 57,
+   "foc": 114,
+   "spd": 82,
+   "def": 79
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Leaf of Gold",
+    "Dazzle Coin"
+   ],
+   "6": [
+    "Fizz Pop"
+   ],
+   "10": [
+    "Shine Burst"
+   ],
+   "15": [
+    "Fog Bank"
+   ],
+   "20": [
+    "Gold Glare"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "38": [
+    "Bore Wave"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.9 m",
+  "habitat": "Wishing pools full of old coins",
+  "lore": "Its scales carry the stamp of a coin that was never minted. Collectors pay a fortune for a shed one.",
+  "origin": "A Mintlet that swallowed the mint master's stamp and would not give it back.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Mintmajesty",
+    "rule": "ring",
+    "value": 90
+   }
+  ]
+ },
+ {
+  "dex_id": 553,
+  "name": "Mintmajesty",
+  "elements": [
+   "GILT",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "halcyra",
+  "role": "weaver",
+  "line_id": "mintlet",
+  "era": 4,
+  "base": {
+   "hp": 96,
+   "atk": 71,
+   "foc": 130,
+   "spd": 89,
+   "def": 94
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Leaf of Gold",
+    "Dazzle Coin"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "10": [
+    "Shine Burst"
+   ],
+   "15": [
+    "Fog Bank"
+   ],
+   "20": [
+    "Gold Glare"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Treasure Flare"
+   ],
+   "38": [
+    "Bore Wave"
+   ],
+   "44": [
+    "Golden Span"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.6 m",
+  "habitat": "Wishing pools full of old coins",
+  "lore": "It lies at the bottom of the great fountain and grants no wishes at all. People throw coins anyway.",
+  "origin": "Ate every wish ever thrown into the great fountain of Gildcrest.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 554,
+  "name": "Cornicet",
+  "elements": [
+   "STONE",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "halcyra",
+  "role": "vanguard",
+  "line_id": "cornicet",
+  "era": 4,
+  "base": {
+   "hp": 65,
+   "atk": 75,
+   "foc": 48,
+   "spd": 69,
+   "def": 59
+  },
+  "trait": "fireproof",
+  "learnset": {
+   "1": [
+    "All-In Crash",
+    "Rubble Call"
+   ],
+   "6": [
+    "Draft Needle"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Tailwind"
+   ],
+   "20": [
+    "Landslip"
+   ],
+   "26": [
+    "Gale Scythe"
+   ],
+   "32": [
+    "Tremor Thud"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.4 m",
+  "habitat": "Cornices of the white terraces",
+  "lore": "It perches on cornices and pretends to be carved stone. Pigeons have stopped falling for it.",
+  "origin": "Chipped off a terrace cornice in a storm and flew away before it hit the ground.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Corniceroc",
+    "rule": "ring",
+    "value": 82
+   }
+  ]
+ },
+ {
+  "dex_id": 555,
+  "name": "Corniceroc",
+  "elements": [
+   "STONE",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "halcyra",
+  "role": "vanguard",
+  "line_id": "cornicet",
+  "era": 4,
+  "base": {
+   "hp": 92,
+   "atk": 109,
+   "foc": 69,
+   "spd": 94,
+   "def": 68
+  },
+  "trait": "fireproof",
+  "learnset": {
+   "1": [
+    "Bowl Over",
+    "Gravel Hum"
+   ],
+   "6": [
+    "Breeze Slice"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Gale Mantle"
+   ],
+   "20": [
+    "Landslip"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Gale Scythe"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "0.9 m",
+  "habitat": "Cornices of the white terraces",
+  "lore": "It drops from the highest cornice like a stone and opens its wings a hand's breadth from the ground.",
+  "origin": "A Cornicet that sat on the same cornice for a hundred years and wore a dent in it.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 556,
+  "name": "Fulmenkit",
+  "elements": [
+   "VOLT",
+   "ZENITH"
+  ],
+  "rarity": "uncommon",
+  "region": "halcyra",
+  "role": "striker",
+  "line_id": "fulmenkit",
+  "era": 4,
+  "base": {
+   "hp": 53,
+   "atk": 76,
+   "foc": 54,
+   "spd": 91,
+   "def": 48
+  },
+  "trait": "grounded",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Spark Call"
+   ],
+   "6": [
+    "Skyward Kick"
+   ],
+   "10": [
+    "Crackle Jab"
+   ],
+   "15": [
+    "Rise Above"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Overhead Strike"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.5 m",
+  "habitat": "Storm ridges above the orrery",
+  "lore": "Its antlers crackle before a storm. The orrery keepers check it instead of the barometer.",
+  "origin": "Born on the ridge where lightning strikes the same rock every summer.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Fulmenhart",
+    "rule": "ring",
+    "value": 86
+   }
+  ]
+ },
+ {
+  "dex_id": 557,
+  "name": "Fulmenhart",
+  "elements": [
+   "VOLT",
+   "ZENITH"
+  ],
+  "rarity": "shy",
+  "region": "halcyra",
+  "role": "striker",
+  "line_id": "fulmenkit",
+  "era": 4,
+  "base": {
+   "hp": 81,
+   "atk": 96,
+   "foc": 73,
+   "spd": 115,
+   "def": 69
+  },
+  "trait": "grounded",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Spark Call"
+   ],
+   "6": [
+    "Skyward Kick"
+   ],
+   "10": [
+    "Crackle Jab"
+   ],
+   "15": [
+    "Clear Sky"
+   ],
+   "20": [
+    "Live Wire"
+   ],
+   "26": [
+    "Overhead Strike"
+   ],
+   "32": [
+    "Pylon Fall"
+   ],
+   "38": [
+    "Summit Drop"
+   ],
+   "44": [
+    "Capacitor Crash"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.1 m",
+  "habitat": "Storm ridges above the orrery",
+  "lore": "It stands on the highest ridge in every storm and catches the lightning in its antlers. Nobody knows why.",
+  "origin": "A Fulmenkit that was struck at the exact moment the sun stood highest.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 558,
+  "name": "Hoistling",
+  "elements": [
+   "RUST",
+   "GALE"
+  ],
+  "rarity": "common",
+  "region": "vellmarch",
+  "role": "striker",
+  "line_id": "hoistling",
+  "era": 2,
+  "base": {
+   "hp": 48,
+   "atk": 64,
+   "foc": 41,
+   "spd": 76,
+   "def": 41
+  },
+  "trait": "dry_coat",
+  "learnset": {
+   "1": [
+    "Flake Rasp",
+    "Riveted"
+   ],
+   "6": [
+    "Breeze Slice"
+   ],
+   "10": [
+    "Hinge Snap"
+   ],
+   "15": [
+    "Gale Call"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Seized Gear"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.4 m",
+  "habitat": "Dock cranes above the quay",
+  "lore": "It perches on crane hooks and rides them up and down all day. The dock workers pretend not to see it.",
+  "origin": "Hatched in a nest of rusty chains at the top of the oldest crane.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Hoistheron",
+    "rule": "ring",
+    "value": 24
+   }
+  ]
+ },
+ {
+  "dex_id": 559,
+  "name": "Hoistheron",
+  "elements": [
+   "RUST",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "vellmarch",
+  "role": "striker",
+  "line_id": "hoistling",
+  "era": 2,
+  "base": {
+   "hp": 73,
+   "atk": 92,
+   "foc": 65,
+   "spd": 114,
+   "def": 66
+  },
+  "trait": "dry_coat",
+  "learnset": {
+   "1": [
+    "Flake Rasp",
+    "Oil Can"
+   ],
+   "6": [
+    "Breeze Slice"
+   ],
+   "10": [
+    "Hinge Snap"
+   ],
+   "15": [
+    "Gale Call"
+   ],
+   "26": [
+    "Gust Ladder"
+   ],
+   "32": [
+    "Seized Gear"
+   ],
+   "38": [
+    "Gale Scythe"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.8 m",
+  "habitat": "Dock cranes above the quay",
+  "lore": "It stands on one leg on the crane arm and spears fish out of the harbour. It also spears hats.",
+  "origin": "A Hoistling that was hoisted aboard a ship by mistake and came back on the next tide.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Hoistgrand",
+    "rule": "ring",
+    "value": 41
+   }
+  ]
+ },
+ {
+  "dex_id": 560,
+  "name": "Hoistgrand",
+  "elements": [
+   "RUST",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "vellmarch",
+  "role": "striker",
+  "line_id": "hoistling",
+  "era": 2,
+  "base": {
+   "hp": 82,
+   "atk": 127,
+   "foc": 79,
+   "spd": 134,
+   "def": 73
+  },
+  "trait": "dry_coat",
+  "learnset": {
+   "1": [
+    "Flake Rasp",
+    "Rust Bloom"
+   ],
+   "6": [
+    "Kite Cut"
+   ],
+   "10": [
+    "Hinge Snap"
+   ],
+   "15": [
+    "Drift Step"
+   ],
+   "26": [
+    "Gale Scythe"
+   ],
+   "32": [
+    "Seized Gear"
+   ],
+   "44": [
+    "Wrecking Hulk"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "1.3 m",
+  "habitat": "Dock cranes above the quay",
+  "lore": "The harbour master lets it decide which ship unloads first. Bribes are paid in fish.",
+  "origin": "Took over the biggest crane after its operator retired and has not come down since.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 561,
+  "name": "Fibbet",
+  "elements": [
+   "MASK",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "vellmarch",
+  "role": "weaver",
+  "line_id": "fibbet",
+  "era": 2,
+  "base": {
+   "hp": 57,
+   "atk": 46,
+   "foc": 88,
+   "spd": 62,
+   "def": 57
+  },
+  "trait": "fireproof",
+  "learnset": {
+   "1": [
+    "Smile Wide",
+    "Stage Fright"
+   ],
+   "6": [
+    "Fizz Pop"
+   ],
+   "10": [
+    "Two Faces"
+   ],
+   "15": [
+    "Low Water"
+   ],
+   "20": [
+    "Charade"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Masquerade"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.5 m",
+  "habitat": "Hookwick fishing grounds",
+  "lore": "It swims into fishing nets on purpose and pretends to be a much bigger fish.",
+  "origin": "Grew out of a fishing story told so often that it came true.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Fibwhisker",
+    "rule": "ring",
+    "value": 23
+   }
+  ]
+ },
+ {
+  "dex_id": 562,
+  "name": "Fibwhisker",
+  "elements": [
+   "MASK",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "vellmarch",
+  "role": "weaver",
+  "line_id": "fibbet",
+  "era": 2,
+  "base": {
+   "hp": 90,
+   "atk": 57,
+   "foc": 105,
+   "spd": 72,
+   "def": 86
+  },
+  "trait": "fireproof",
+  "learnset": {
+   "1": [
+    "Smile Wide",
+    "Stage Fright"
+   ],
+   "6": [
+    "Brine Pellet"
+   ],
+   "10": [
+    "Two Faces"
+   ],
+   "15": [
+    "Low Water"
+   ],
+   "20": [
+    "Charade"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Masquerade"
+   ],
+   "38": [
+    "Drowned Bell"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.9 m",
+  "habitat": "Hookwick fishing grounds",
+  "lore": "Its whiskers point the way to the best fishing spots. They point the wrong way on purpose.",
+  "origin": "A Fibbet that won the Hookwick fishing contest by entering itself.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Fibgrandee",
+    "rule": "ring",
+    "value": 40
+   }
+  ]
+ },
+ {
+  "dex_id": 563,
+  "name": "Fibgrandee",
+  "elements": [
+   "MASK",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "vellmarch",
+  "role": "weaver",
+  "line_id": "fibbet",
+  "era": 2,
+  "base": {
+   "hp": 96,
+   "atk": 75,
+   "foc": 133,
+   "spd": 99,
+   "def": 101
+  },
+  "trait": "fireproof",
+  "learnset": {
+   "1": [
+    "Smile Wide",
+    "Crocodile Tears"
+   ],
+   "6": [
+    "Brine Pellet"
+   ],
+   "10": [
+    "Two Faces"
+   ],
+   "15": [
+    "Deepwell Draught"
+   ],
+   "20": [
+    "Charade"
+   ],
+   "26": [
+    "Harbour Swell"
+   ],
+   "32": [
+    "Grand Farce"
+   ],
+   "38": [
+    "Bore Wave"
+   ],
+   "44": [
+    "Curtain Call"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "1.6 m",
+  "habitat": "Hookwick fishing grounds",
+  "lore": "Every fisherman in Hookwick claims to have caught it once. It has never been caught.",
+  "origin": "The sum of every lie ever told at the bar of the Hookwick inn.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 564,
+  "name": "Murmlet",
+  "elements": [
+   "ECHO",
+   "UMBRA"
+  ],
+  "rarity": "uncommon",
+  "region": "vellmarch",
+  "role": "kindler",
+  "line_id": "murmlet",
+  "era": 2,
+  "base": {
+   "hp": 57,
+   "atk": 54,
+   "foc": 79,
+   "spd": 67,
+   "def": 52
+  },
+  "trait": "grounded",
+  "learnset": {
+   "1": [
+    "Bell Tap",
+    "Hymn of Rest"
+   ],
+   "6": [
+    "Dread Note"
+   ],
+   "10": [
+    "Knell"
+   ],
+   "15": [
+    "Night Toll"
+   ],
+   "20": [
+    "Resound"
+   ],
+   "26": [
+    "Gloom Ripple"
+   ],
+   "32": [
+    "Choir Loft"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.5 m",
+  "habitat": "Behind the rumour stalls",
+  "lore": "It repeats every whisper it hears, but a little wrong. Half the rumours in Vellmarch start with it.",
+  "origin": "Born in the gap between two market stalls where secrets get traded.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Murmuron",
+    "rule": "ring",
+    "value": 33
+   }
+  ]
+ },
+ {
+  "dex_id": 565,
+  "name": "Murmuron",
+  "elements": [
+   "ECHO",
+   "UMBRA"
+  ],
+  "rarity": "shy",
+  "region": "vellmarch",
+  "role": "kindler",
+  "line_id": "murmlet",
+  "era": 2,
+  "base": {
+   "hp": 87,
+   "atk": 72,
+   "foc": 102,
+   "spd": 95,
+   "def": 69
+  },
+  "trait": "grounded",
+  "learnset": {
+   "1": [
+    "Hum Back",
+    "Tuning Fork"
+   ],
+   "6": [
+    "Shadow Whisper"
+   ],
+   "10": [
+    "Knell"
+   ],
+   "15": [
+    "Gloom Handoff"
+   ],
+   "20": [
+    "Reverb"
+   ],
+   "26": [
+    "Gloom Ripple"
+   ],
+   "32": [
+    "Toll of Ages"
+   ],
+   "38": [
+    "Lucent Void"
+   ],
+   "44": [
+    "Hollow Tone"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "1.1 m",
+  "habitat": "Behind the rumour stalls",
+  "lore": "When it hums, everyone in the street feels that they are being talked about. They usually are.",
+  "origin": "A Murmlet that heard one secret too many and grew heavy with it.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 566,
+  "name": "Tallykit",
+  "elements": [
+   "INK",
+   "RUST"
+  ],
+  "rarity": "uncommon",
+  "region": "vellmarch",
+  "role": "bulwark",
+  "line_id": "tallykit",
+  "era": 2,
+  "base": {
+   "hp": 66,
+   "atk": 52,
+   "foc": 45,
+   "spd": 35,
+   "def": 72
+  },
+  "trait": "low_flame",
+  "learnset": {
+   "1": [
+    "Quill Flick",
+    "Quill Sharpen"
+   ],
+   "6": [
+    "Tetanus Nick"
+   ],
+   "10": [
+    "Ledger Slap"
+   ],
+   "15": [
+    "Old Machine"
+   ],
+   "20": [
+    "Seal and Sign"
+   ],
+   "26": [
+    "Hinge Snap"
+   ],
+   "32": [
+    "Fine Print"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.6 m",
+  "habitat": "Counting houses and ledger rooms",
+  "lore": "It counts everything: coins, steps, breaths. It writes the totals on its arms in ink.",
+  "origin": "Climbed out of a ledger that was closed with a wet pen inside.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Tallywarden",
+    "rule": "ring",
+    "value": 32
+   }
+  ]
+ },
+ {
+  "dex_id": 567,
+  "name": "Tallywarden",
+  "elements": [
+   "INK",
+   "RUST"
+  ],
+  "rarity": "shy",
+  "region": "vellmarch",
+  "role": "bulwark",
+  "line_id": "tallykit",
+  "era": 2,
+  "base": {
+   "hp": 89,
+   "atk": 71,
+   "foc": 60,
+   "spd": 60,
+   "def": 107
+  },
+  "trait": "low_flame",
+  "learnset": {
+   "1": [
+    "Nib Prick",
+    "Censor"
+   ],
+   "6": [
+    "Tetanus Nick"
+   ],
+   "10": [
+    "Ledger Slap"
+   ],
+   "15": [
+    "Old Machine"
+   ],
+   "20": [
+    "Seal and Sign"
+   ],
+   "26": [
+    "Hinge Snap"
+   ],
+   "32": [
+    "Margin Lash"
+   ],
+   "38": [
+    "Seized Gear"
+   ],
+   "44": [
+    "Last Word"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.3 m",
+  "habitat": "Counting houses and ledger rooms",
+  "lore": "The counting houses trust it with their keys. It has never stolen a coin, only the right to know.",
+  "origin": "A Tallykit that found a mistake in the city's books and was hired on the spot.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
  }
 ]

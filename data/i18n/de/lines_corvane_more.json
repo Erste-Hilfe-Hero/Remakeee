@@ -1,0 +1,31 @@
+{
+ "_comment": "German texts from tools/i18n/de_lines_corvane_more.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "A Flaxlet that spent a summer in a weaver's attic and learned the loom by watching.": "Ein Flaxlet, das einen Sommer auf dem Dachboden eines Webers verbrachte und den Webstuhl vom Zusehen lernte.",
+  "A Lockgill that held a lock gate shut through a spring flood and saved a village.": "Ein Lockgill, das ein Schleusentor durch ein Frühjahrshochwasser hielt und ein Dorf rettete.",
+  "A Simmerkit that guarded the dye works through a flood and kept the fires lit.": "Ein Simmerkit, das die Färberei durch eine Flut bewachte und die Feuer am Brennen hielt.",
+  "Canal locks and their gates": "Kanalschleusen und ihre Tore",
+  "Crawled out of a bale of flax that was left out in the dew.": "Aus einem Flachsballen gekrochen, der im Tau liegen blieb.",
+  "Drank from every vat in Madderby in a single night and became every colour at once.": "Trank in einer einzigen Nacht aus jedem Bottich in Madderby und wurde alle Farben auf einmal.",
+  "Dyers keep one by the vats. It growls when the water is too cold and steams when it is too hot.": "Färber halten eines bei den Bottichen. Es knurrt, wenn das Wasser zu kalt ist, und dampft, wenn es zu heiß ist.",
+  "Fell into a madder vat as an egg and hatched bright red.": "Fiel als Ei in einen Krappbottich und schlüpfte knallrot.",
+  "Flax fields along the dikes": "Flachsfelder an den Deichen",
+  "Harvest fields and threshing floors": "Erntefelder und Dreschböden",
+  "Hatched in the mud at the bottom of a lock that was drained for repairs.": "Im Schlamm am Grund einer Schleuse geschlüpft, die für eine Reparatur leergepumpt wurde.",
+  "It owns no land and no title, but every dyer in Madderby bows when it walks past.": "Es besitzt weder Land noch Titel, aber jeder Färber in Madderby verbeugt sich, wenn es vorbeigeht.",
+  "It sits in the middle of its web like an old aunt at a wedding and judges every thread.": "Es sitzt mitten in seinem Netz wie eine alte Tante auf einer Hochzeit und beurteilt jeden Faden.",
+  "It sleeps on the rim of the dye vats. Its fur comes out a different colour every week.": "Es schläft am Rand der Färbebottiche. Sein Fell hat jede Woche eine andere Farbe.",
+  "It spins a thread so fine that weavers lose it in their own fingers.": "Es spinnt einen Faden, so fein, dass die Weber ihn in den eigenen Fingern verlieren.",
+  "It stands in the fields after the harvest and looks exactly like a stack of sheaves until it sneezes.": "Es steht nach der Ernte auf den Feldern und sieht genau aus wie ein Garbenstapel, bis es niest.",
+  "It wedges itself into the gaps of lock gates. The lock keepers never know if it is helping or the reason for the leak.": "Es klemmt sich in die Spalten der Schleusentore. Die Schleusenwärter wissen nie, ob es hilft oder der Grund für das Leck ist.",
+  "It winds its thread around fence posts until the whole field is fenced in. Then it forgets the way out.": "Es wickelt seinen Faden um Zaunpfähle, bis das ganze Feld eingezäunt ist. Dann vergisst es den Weg hinaus.",
+  "No boat passes its lock without paying. It accepts bread, buttons and, once, a whole cart wheel.": "Kein Boot passiert seine Schleuse, ohne zu zahlen. Es nimmt Brot, Knöpfe und einmal ein ganzes Wagenrad.",
+  "Steaming dye vats of Madderby": "Dampfende Färbebottiche von Madderby",
+  "Still ponds behind the bell towers": "Stille Teiche hinter den Glockentürmen",
+  "The echo of a bell that fell into a pond and was never pulled out.": "Das Echo einer Glocke, die in einen Teich fiel und nie herausgezogen wurde.",
+  "The last sheaf of a harvest, tied too tight by a farmer who was in a hurry.": "Die letzte Garbe einer Ernte, zu fest gebunden von einem Bauern, der es eilig hatte.",
+  "When the wind is still, it rings like a bell under the water. The ripples spread in perfect circles.": "Ist der Wind still, läutet es unter Wasser wie eine Glocke. Die Wellen breiten sich in perfekten Kreisen aus.",
+  "Wove itself a shawl from a whole year of harvest, then refused to take it off.": "Webte sich einen Schal aus einer ganzen Jahresernte und weigerte sich, ihn je wieder abzulegen."
+ }
+}
