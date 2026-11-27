@@ -1,10 +1,10 @@
 {
  "_comment": "Simplified Chinese texts for the German table p2w_step8. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
  "strings": {
-  "+100% coins from every won trainer battle in the story, on top of a Coin Gleam. Replaces Coin Seal II: you pay only the difference. Story only, not in leagues. Permanent.": "剧情中每赢一场训练师战斗，金币+100%，与金币光泽叠加。取代金币之印II：只需支付差价。仅限剧情，联赛中无效。永久。",
+  "+100% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. Replaces Coin Seal II: you pay only the difference. Story only, not in leagues. Permanent.": "剧情中每赢一场与旅人的对战，金币+100%，与金币光泽叠加。取代金币之印II：只需支付差价。仅限剧情，联赛中无效。永久。",
   "+100% growth for the whole team in every battle instead of +50%, together with every Growth Crystal and the pass. Replaces the Growth Seal: you pay only the difference. Does not work in leagues. Permanent.": "每场战斗全队成长+100%，而不是+50%，与每块成长水晶和通行证叠加。取代成长印：只需支付差价。联赛中无效。永久。",
-  "+25% coins from every won trainer battle in the story, on top of a Coin Gleam. Story only, not in leagues. Permanent.": "剧情中每赢一场训练师战斗，金币+25%，与金币光泽叠加。仅限剧情，联赛中无效。永久。",
-  "+50% coins from every won trainer battle in the story, on top of a Coin Gleam. Replaces Coin Seal I: you pay only the difference. Story only, not in leagues. Permanent.": "剧情中每赢一场训练师战斗，金币+50%，与金币光泽叠加。取代金币之印I：只需支付差价。仅限剧情，联赛中无效。永久。",
+  "+25% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. Story only, not in leagues. Permanent.": "剧情中每赢一场与旅人的对战，金币+25%，与金币光泽叠加。仅限剧情，联赛中无效。永久。",
+  "+50% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. Replaces Coin Seal I: you pay only the difference. Story only, not in leagues. Permanent.": "剧情中每赢一场与旅人的对战，金币+50%，与金币光泽叠加。取代金币之印I：只需支付差价。仅限剧情，联赛中无效。永久。",
   "40% lower coin prices in all merchant shops instead of 20%. Replaces Merchant Discount: you pay only the difference. Permanent.": "所有商人商店的金币价格降低40%，而不是20%。取代商人折扣：只需支付差价。永久有效。",
   "After every won battle in the story, each Spirling of your team that is still standing regains 10% of its maximum Vigor. Story only, not in leagues. Permanent.": "在剧情中每赢一场战斗，队伍里仍站着的每只Spirling恢复最大元气的10%。仅限剧情，联赛中无效。永久。",
   "After every won battle in the story, each Spirling of your team that is still standing regains 20% of its maximum Vigor. Replaces Victory Mend I: you pay only the difference. Story only, not in leagues. Permanent.": "在剧情中每赢一场战斗，队伍里仍站着的每只Spirling恢复最大元气的20%。取代胜利疗愈I：只需支付差价。仅限剧情，联赛中无效。永久。",

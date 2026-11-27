@@ -89,7 +89,7 @@ add("rg_coin_boost", ("coin_boost", {"m": 2}))
 add("rg_coin_boost_x3", ("coin_boost", {"m": 3}))
 for n in [5000, 20000, 100000]:
     add("rg_coins_%d" % n, ("coins", {"n": n}))
-add("rg_starter", ("b_starter", {}))
+# The Starter Pack lists only what each part does, so its page still fits the info panel (see test_ui_fixes_120).
 add("rg_wayfarer_pack", ("b_wayfarer", {}))
 add("rg_battle_supply", ("b_supply", {}))
 add("rg_warden_bundle", ("b_warden", {}))

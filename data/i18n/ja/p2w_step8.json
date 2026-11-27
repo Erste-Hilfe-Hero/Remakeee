@@ -1,10 +1,10 @@
 {
  "_comment": "Japanese texts for the German table p2w_step8. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
  "strings": {
-  "+100% coins from every won trainer battle in the story, on top of a Coin Gleam. Replaces Coin Seal II: you pay only the difference. Story only, not in leagues. Permanent.": "ストーリーのトレーナー戦に勝つたびにコイン+100%、コインの輝きと重ねがけ。コインの印IIと入れかわる：差額だけ払う。ストーリー限定、リーグでは無効。永続。",
+  "+100% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. Replaces Coin Seal II: you pay only the difference. Story only, not in leagues. Permanent.": "ストーリーで旅人とのバトルに勝つたびにコイン+100%、コインの輝きと重ねがけ。コインの印IIと入れかわる：差額だけ払う。ストーリー限定、リーグでは無効。永続。",
   "+100% growth for the whole team in every battle instead of +50%, together with every Growth Crystal and the pass. Replaces the Growth Seal: you pay only the difference. Does not work in leagues. Permanent.": "すべての戦闘でチーム全員の成長が+50%ではなく+100%、成長の結晶やパスと重ねがけ。成長の印と入れかわる：差額だけ払う。リーグでは無効。永続。",
-  "+25% coins from every won trainer battle in the story, on top of a Coin Gleam. Story only, not in leagues. Permanent.": "ストーリーのトレーナー戦に勝つたびにコイン+25%、コインの輝きと重ねがけ。ストーリー限定、リーグでは無効。永続。",
-  "+50% coins from every won trainer battle in the story, on top of a Coin Gleam. Replaces Coin Seal I: you pay only the difference. Story only, not in leagues. Permanent.": "ストーリーのトレーナー戦に勝つたびにコイン+50%、コインの輝きと重ねがけ。コインの印Iと入れかわる：差額だけ払う。ストーリー限定、リーグでは無効。永続。",
+  "+25% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. Story only, not in leagues. Permanent.": "ストーリーで旅人とのバトルに勝つたびにコイン+25%、コインの輝きと重ねがけ。ストーリー限定、リーグでは無効。永続。",
+  "+50% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. Replaces Coin Seal I: you pay only the difference. Story only, not in leagues. Permanent.": "ストーリーで旅人とのバトルに勝つたびにコイン+50%、コインの輝きと重ねがけ。コインの印Iと入れかわる：差額だけ払う。ストーリー限定、リーグでは無効。永続。",
   "40% lower coin prices in all merchant shops instead of 20%. Replaces Merchant Discount: you pay only the difference. Permanent.": "すべての商人の店で、コインの値段が20%ではなく40%下がる。商人の割引と入れかわる：差額だけ払う。永続。",
   "After every won battle in the story, each Spirling of your team that is still standing regains 10% of its maximum Vigor. Story only, not in leagues. Permanent.": "ストーリーで戦闘に勝つたびに、まだ立っているチームのSpirling全員が最大活力の10%を回復する。ストーリー限定、リーグでは無効。永続。",
   "After every won battle in the story, each Spirling of your team that is still standing regains 20% of its maximum Vigor. Replaces Victory Mend I: you pay only the difference. Story only, not in leagues. Permanent.": "ストーリーで戦闘に勝つたびに、まだ立っているチームのSpirling全員が最大活力の20%を回復する。勝利の癒しIと入れかわる：差額だけ払う。ストーリー限定、リーグでは無効。永続。",

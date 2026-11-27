@@ -1,10 +1,10 @@
 {
  "_comment": "Korean texts for the German table p2w_step8. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
  "strings": {
-  "+100% coins from every won trainer battle in the story, on top of a Coin Gleam. Replaces Coin Seal II: you pay only the difference. Story only, not in leagues. Permanent.": "스토리에서 이긴 모든 트레이너 전투의 코인 +100%. 코인 광채와 함께 적용. 코인 인장 II를 대체: 차액만 낸다. 스토리 전용, 리그에서는 불가. 영구.",
+  "+100% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. Replaces Coin Seal II: you pay only the difference. Story only, not in leagues. Permanent.": "스토리에서 이긴 모든 여행자와의 배틀의 코인 +100%. 코인 광채와 함께 적용. 코인 인장 II를 대체: 차액만 낸다. 스토리 전용, 리그에서는 불가. 영구.",
   "+100% growth for the whole team in every battle instead of +50%, together with every Growth Crystal and the pass. Replaces the Growth Seal: you pay only the difference. Does not work in leagues. Permanent.": "모든 전투에서 팀 전체 성장 +50% 대신 +100%. 모든 성장 수정 및 패스와 함께 적용된다. 성장 인장을 대체: 차액만 낸다. 리그에서는 효과 없음. 영구.",
-  "+25% coins from every won trainer battle in the story, on top of a Coin Gleam. Story only, not in leagues. Permanent.": "스토리에서 이긴 모든 트레이너 전투의 코인 +25%. 코인 광채와 함께 적용. 스토리 전용, 리그에서는 불가. 영구.",
-  "+50% coins from every won trainer battle in the story, on top of a Coin Gleam. Replaces Coin Seal I: you pay only the difference. Story only, not in leagues. Permanent.": "스토리에서 이긴 모든 트레이너 전투의 코인 +50%. 코인 광채와 함께 적용. 코인 인장 I를 대체: 차액만 낸다. 스토리 전용, 리그에서는 불가. 영구.",
+  "+25% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. Story only, not in leagues. Permanent.": "스토리에서 이긴 모든 여행자와의 배틀의 코인 +25%. 코인 광채와 함께 적용. 스토리 전용, 리그에서는 불가. 영구.",
+  "+50% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. Replaces Coin Seal I: you pay only the difference. Story only, not in leagues. Permanent.": "스토리에서 이긴 모든 여행자와의 배틀의 코인 +50%. 코인 광채와 함께 적용. 코인 인장 I를 대체: 차액만 낸다. 스토리 전용, 리그에서는 불가. 영구.",
   "40% lower coin prices in all merchant shops instead of 20%. Replaces Merchant Discount: you pay only the difference. Permanent.": "모든 상인 가게의 코인 가격 20% 대신 40% 할인. 상인 할인을 대체: 차액만 낸다. 영구.",
   "After every won battle in the story, each Spirling of your team that is still standing regains 10% of its maximum Vigor. Story only, not in leagues. Permanent.": "스토리에서 전투에 이길 때마다 아직 서 있는 팀의 모든 Spirling이 최대 기력의 10%를 회복합니다. 스토리 전용, 리그에서는 불가. 영구.",
   "After every won battle in the story, each Spirling of your team that is still standing regains 20% of its maximum Vigor. Replaces Victory Mend I: you pay only the difference. Story only, not in leagues. Permanent.": "스토리에서 전투에 이길 때마다 아직 서 있는 팀의 모든 Spirling이 최대 기력의 20%를 회복합니다. 승리의 치유 I를 대체: 차액만 낸다. 스토리 전용, 리그에서는 불가. 영구.",

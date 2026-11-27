@@ -83,7 +83,8 @@ func test_every_offer_has_german_text() -> void:
 ## own page; the Ring Cap Seal leaves the shop on another branch).
 func test_every_offer_on_sale_explains_itself() -> void:
 	for o: Dictionary in ShopCatalog.offers():
-		if not bool(o.get("ready", false)) or str(o.id) in ["rg_pass", "rg_ring_cap_plus"]:
+		# The Starter Pack explains each part in its contents list (its page fits the info box, test_ui_fixes_120).
+		if not bool(o.get("ready", false)) or str(o.id) in ["rg_pass", "rg_ring_cap_plus", "rg_starter"]:
 			continue
 		assert_true(str(o.get("explain", "")).length() > 20, "%s has an explanation" % o.id)
 		assert_string_contains(ShopMenu.detail_text(o), Loc.t(str(o.get("explain", "-"))), "%s shows it" % o.id)

@@ -1204,7 +1204,7 @@
    "plan": 4505,
    "min_band": 13,
    "ready": true,
-   "explain": "Supplies for hard battles: 5 revives, 5 energy boosts for the start of a battle and 5 energy refills. Each part is explained in the list above."
+   "explain": "Supplies for hard battles: 5 revives, 5 energy boosts for the start of a battle and 5 energy refills."
   },
   {
    "id": "rg_bond_seal",
@@ -1402,8 +1402,7 @@
    "min_band": 13,
    "ready": true,
    "featured": true,
-   "badge": "limited",
-   "explain": "A start pack: Riftglass, Rings, double growth, revives and easier bonds. Each part is explained in the list above."
+   "badge": "limited"
   },
   {
    "id": "rg_wayfarer_pack",
@@ -1450,7 +1449,7 @@
    "plan": 4686,
    "min_band": 13,
    "ready": true,
-   "explain": "A pack for the road: Riftglass, two keepsakes for Might and Guard, 10 Rings in tonics and one sure bond. Each part is explained in the list above."
+   "explain": "A pack for the road: Riftglass, two keepsakes for Might and Guard, 10 Rings in tonics and one sure bond."
   },
   {
    "id": "rg_rift_pack_1",
@@ -2186,7 +2185,7 @@
    "plan": 4890,
    "min_band": 13,
    "ready": true,
-   "explain": "Help for Rift Warden battles: see the Warden's team first, weaken it, and try again right before it. Each part is explained in the list above."
+   "explain": "Help for Rift Warden battles: see the Warden's team first, weaken it, and try again right before it."
   },
   {
    "id": "rg_league_power",
@@ -5769,7 +5768,7 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "explain": "All 8 Rift Scripts in one pack, one for each element: Ember, Tide, Bloom, Volt, Stone, Gale, Lumen and Umbra. Each part is explained in the list above."
+   "explain": "All 8 Rift Scripts in one pack, one for each element: Ember, Tide, Bloom, Volt, Stone, Gale, Lumen and Umbra."
   },
   {
    "id": "rg_starter_trio",
@@ -6214,7 +6213,7 @@
    "min_band": 13,
    "ready": true,
    "discount_pct": 69,
-   "explain": "A big pack: Riftglass, 50 Rings in tonics, growth crystals, heals, sure bonds and one Ring Crown. Each part is explained in the list above."
+   "explain": "A big pack: Riftglass, 50 Rings in tonics, growth crystals, heals, sure bonds and one Ring Crown."
   },
   {
    "id": "rg_deal_mon",
@@ -6701,7 +6700,7 @@
    "kind": "advantage",
    "tab": "advantages",
    "name": "Coin Seal I",
-   "desc": "+25% coins from every won trainer battle in the story, on top of a Coin Gleam. Story only, not in leagues. Permanent.",
+   "desc": "+25% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. Story only, not in leagues. Permanent.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "non_consumable",
@@ -6723,14 +6722,14 @@
    "min_band": 13,
    "ready": true,
    "badge": "new",
-   "explain": "+25% coins from every won trainer battle in the story, on top of a Coin Gleam."
+   "explain": "+25% coins from every won Wayfarer battle in the story, on top of a Coin Gleam."
   },
   {
    "id": "rg_coin_seal_2",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Coin Seal II",
-   "desc": "+50% coins from every won trainer battle in the story, on top of a Coin Gleam. Replaces Coin Seal I: you pay only the difference. Story only, not in leagues. Permanent.",
+   "desc": "+50% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. Replaces Coin Seal I: you pay only the difference. Story only, not in leagues. Permanent.",
    "rg_price": 1000,
    "eur_cents": 999,
    "store_type": "non_consumable",
@@ -6752,14 +6751,14 @@
    "min_band": 13,
    "ready": true,
    "badge": "new",
-   "explain": "+50% coins from every won trainer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference."
+   "explain": "+50% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_coin_seal_3",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Coin Seal III",
-   "desc": "+100% coins from every won trainer battle in the story, on top of a Coin Gleam. Replaces Coin Seal II: you pay only the difference. Story only, not in leagues. Permanent.",
+   "desc": "+100% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. Replaces Coin Seal II: you pay only the difference. Story only, not in leagues. Permanent.",
    "rg_price": 1500,
    "eur_cents": 1499,
    "store_type": "non_consumable",
@@ -6781,7 +6780,7 @@
    "min_band": 13,
    "ready": true,
    "badge": "new",
-   "explain": "+100% coins from every won trainer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference."
+   "explain": "+100% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_wild_purse",
