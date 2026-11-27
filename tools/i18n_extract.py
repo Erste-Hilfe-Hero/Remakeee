@@ -14,6 +14,7 @@ SKIP_SCRIPTS = {"BalanceSim.gd", "ActSim.gd", "ArtsSim.gd", "BalanceGroups.gd", 
                 "BundWords.gd",  # carries its own German word lists
                 "EraActorLook.gd", "EraActors.gd",  # table checks for the test log, no player text
                 "EraTerrainLook.gd",  # only developer validation messages (problems())
+                "WorldGraph.gd",  # map connectivity check messages for developers (problems())
                 "ShopValidator.gd", "LocalBilling.gd", "LocalShop.gd", "GoogleBillingStore.gd", "AppleBillingStore.gd", "DeepLink.gd"}
 LIT = re.compile(r'"((?:[^"\\\n]|\\.)*)"')
 
