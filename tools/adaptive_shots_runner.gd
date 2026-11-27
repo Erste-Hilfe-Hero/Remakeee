@@ -57,10 +57,14 @@ func _run() -> void:
 			printerr("%s shop: %s" % [tag, p])
 		s.queue_free()
 	get_tree().change_scene_to_file("res://scenes/battle/Battle.tscn")
-	for i: int in 240:
+	for i: int in 1200:
+		var b: Node = get_tree().current_scene
+		if i > 60 and b != null and bool(b.get("_waiting_orders")):
+			break
 		if i % 40 == 39:
 			_tap()
 		await get_tree().process_frame
+	await _frames(30)
 	await _shot("battle")
 	get_tree().quit()
 

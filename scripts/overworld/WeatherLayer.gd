@@ -5,6 +5,9 @@ extends Control
 ## With "Less motion" on, the dots stand still.
 
 const DOTS: int = 36
+## View area DOTS are made for (the Era I base screen); a larger view gets more dots, so rain
+## and snow keep the same density on a tablet or an unfolded foldable (update 1.3.2).
+const DOTS_AREA: float = 144.0 * 256.0
 var kind: String = "clear"
 var _dots: Array[ColorRect] = []
 var _veil: ColorRect
@@ -17,12 +20,30 @@ func _ready() -> void:
 	_veil.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_veil.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_veil)
-	for i: int in DOTS:
+	_fit_dots()
+	show_kind("clear")
+	resized.connect(func() -> void:
+		if _fit_dots():
+			show_kind(kind))
+
+## Dots for a view of [param view] pixels: DOTS per DOTS_AREA, never fewer than DOTS.
+static func dots_for(view: Vector2) -> int:
+	return maxi(DOTS, roundi(DOTS * view.x * view.y / DOTS_AREA))
+
+## Adds or removes dots to match the current size. True when the count changed.
+func _fit_dots() -> bool:
+	var want: int = dots_for(size)
+	if want == _dots.size():
+		return false
+	while _dots.size() < want:
 		var d := ColorRect.new()
 		d.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		d.visible = false
 		add_child(d)
 		_dots.append(d)
-	show_kind("clear")
+	while _dots.size() > want:
+		_dots.pop_back().queue_free()
+	return true
 
 func show_kind(k: String) -> void:
 	kind = k

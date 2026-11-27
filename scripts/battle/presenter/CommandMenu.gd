@@ -12,8 +12,6 @@ extends PanelContainer
 
 signal chosen(kind: BattleAction.Kind, index: int)
 
-## Command rows under the arts counted when sharing out extra height (Era I: two rows of two).
-const TOUCH_COMMAND_ROWS: int = 2
 const MOVE_BUTTON_HEIGHT: int = 13
 ## Room on the left of a move row for its element symbol.
 const ICON_PAD: int = 11
@@ -71,6 +69,8 @@ var _row_colors: Array[Color] = []
 ## Element of each row (-1 none), for the slanted chip of the element-coloured buttons.
 var _row_elements: Array[int] = []
 var _swap: Button
+## Era I's commands stand in one row of four (set_one_row).
+var _one_row: bool = false
 var _item: Button
 var _bond: Button
 var _run: Button
@@ -243,36 +243,66 @@ func _ready() -> void:
 	apply_size()
 	get_viewport().size_changed.connect(apply_size, CONNECT_DEFERRED)
 
+## Rows the commands stand in under the arts: Era I two rows of two (one row of four with
+## [param one_row]), Eras II/III one row; 0 for Era IV/V, where they stand beside the arts.
+static func command_rows(p_era: int, one_row: bool = false) -> int:
+	match EraBattleHud.text(p_era, "commands", "row"):
+		"column":
+			return 0
+		"grid":
+			return 1 if one_row else 2
+	return 1
+
+## Height the panel grows by when every art row and command is at least [param touch] px tall
+## (ScreenFit.touch_px, update 1.3.2); [param one_row] as in command_rows.
+static func touch_need(p_era: int, touch: int, one_row: bool = false) -> int:
+	var art: int = BattleComfort.art_h(p_era)
+	var cmd: int = BattleComfort.command_h(p_era)
+	var arts: int = Spirling.MAX_MOVES * maxi(0, touch - art)
+	var rows: int = command_rows(p_era, one_row)
+	if rows == 0:
+		return maxi(arts, 4 * maxi(0, touch - cmd))
+	var before: int = command_rows(p_era) * (cmd + 1)
+	return maxi(0, arts + rows * (maxi(cmd, touch) + 1) - before)
+
+## Era I on a short portrait view: the commands in one row of four, so the field keeps a row
+## more of its height, when the four words of a battle like [param model] fit a panel
+## [param width] px wide (update 1.3.2). False (and two rows of two) when they do not, or in
+## another era.
+func set_one_row(on: bool, width: float, model: BattleModel) -> bool:
+	var g: GridContainer = _swap.get_parent() as GridContainer if _swap != null else null
+	if g == null:
+		return false
+	var fits: bool = on
+	if on:
+		var sep: float = g.get_theme_constant("h_separation")
+		var slot: float = (width - EraBattleHud.FRAME_PAD * 2 - sep * 3) / 4.0
+		var f: Font = _swap.get_theme_font("font")
+		var fs: int = _swap.get_theme_font_size("font_size")
+		var pad: float = _swap.get_theme_stylebox("normal").get_minimum_size().x
+		for word: String in ["Swap", "Item", "Bond" if model.is_wild else "Oath", "Restart" if model.has_meta("puzzle_max") else "Leave"]:
+			fits = fits and f.get_string_size(command_label(word), HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + pad <= slot
+	g.columns = 4 if fits else 2
+	if fits != _one_row:
+		_one_row = fits
+		apply_size()
+	return fits
+
 ## Big buttons (KAMPF_PLAN items 623, 896): every art row and command grows to BattleComfort.art_h /
 ## command_h,
 ## the panel with them. Called again when the setting changes in the battle's More list.
-## Art and command row heights for a touch floor of [param touch] px with [param spare] px of
-## height above the era's base screen: both reach the floor when the spare height covers it,
-## else they share the spare height out (never below [param art] / [param cmd]).
-static func touch_rows(art: int, cmd: int, touch: int, spare: float) -> Vector2i:
-	var need_art: int = maxi(0, touch - art)
-	var need_cmd: int = maxi(0, touch - cmd)
-	var need: int = Spirling.MAX_MOVES * need_art + TOUCH_COMMAND_ROWS * need_cmd
-	if need == 0 or spare >= need:
-		return Vector2i(art + need_art, cmd + need_cmd)
-	var share: float = maxf(spare, 0.0) / need
-	return Vector2i(art + floori(need_art * share), cmd + floori(need_cmd * share))
-
-## On a view taller than the era's base height the rows grow toward a finger-sized target
-## (ScreenFit.touch_px, update 1.3.2) out of that extra height only, so the battle field never
-## gets shorter than on the base screen; they follow the screen when it changes mid-battle.
+## Every art row and command is also at least finger sized (44 pt, ScreenFit.touch_px, update
+## 1.3.2) and follows the screen when it changes mid-battle. Where the view has no height to
+## spare for that, the battle puts this panel beside the field (BattleScene._fit_menu).
 func apply_size() -> void:
 	var touch: int = ScreenFit.touch_px(get_window()) if is_inside_tree() else 0
-	var spare: float = get_viewport_rect().size.y - EraManager.RESOLUTION[era].y if is_inside_tree() else 0.0
-	custom_minimum_size = Vector2(0, BattleComfort.menu_height(era))
-	var art: int = BattleComfort.art_h(era)
-	var cmd: int = BattleComfort.command_h(era)
-	var sizes: Vector2i = touch_rows(art, cmd, touch, spare)
+	var one_less: int = BattleComfort.command_h(era) + 1 if _one_row else 0
+	custom_minimum_size = Vector2(0, BattleComfort.menu_height(era) - one_less)
 	for b: Button in _move_buttons:
-		b.custom_minimum_size.y = sizes.x
+		b.custom_minimum_size.y = maxi(BattleComfort.art_h(era), touch)
 	for b: Button in [_swap, _item, _bond, _run]:
 		if b != null:
-			b.custom_minimum_size.y = sizes.y
+			b.custom_minimum_size.y = maxi(BattleComfort.command_h(era), touch)
 
 ## Fill of the command panel: plain paper in Era I, the era's light colour washed into paper
 ## later (the shared accent once the menu skin frames the panel).

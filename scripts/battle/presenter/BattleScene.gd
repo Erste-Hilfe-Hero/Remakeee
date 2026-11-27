@@ -68,6 +68,11 @@ var _foe_strip: InfoStrip
 var _player_strip: InfoStrip
 var _text: TextBox
 var _menu: CommandMenu
+## The field, text box and (on a tall enough view) the command panel, top to bottom.
+var _col: VBoxContainer
+## Beside the field on a landscape or short view: the command panel, so its rows reach 44 pt
+## without making the field shorter (update 1.3.2).
+var _side: VBoxContainer
 var _picker: ListPicker
 var _bond_game: BondMinigame
 ## Echo call plan per wild Spirling (uid): a second try in this battle hears the same call.
@@ -153,6 +158,8 @@ func _ready() -> void:
 	if model == null:
 		model = _demo_model()
 		quit_on_finish = false
+	_fit_menu()
+	get_viewport().size_changed.connect(_fit_menu, CONNECT_DEFERRED)
 	_multi = model.is_multi()
 	_text.chars_per_second *= MultiRules.text_speed(model)
 	_run.call_deferred()
@@ -235,10 +242,18 @@ func _build() -> void:
 	add_child(_wide_backdrop)
 	resized.connect(_sync_wide_backdrop)
 	var col := VBoxContainer.new()
+	_col = col
 	col.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	col.add_theme_constant_override("separation", 0)
 	add_child(col)
 	SafeArea.apply(col)
+	_side = VBoxContainer.new()
+	_side.name = "side"
+	_side.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_side.alignment = BoxContainer.ALIGNMENT_END
+	_side.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_side.visible = false
+	add_child(_side)
 	_field = Control.new()
 	_field.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_field.clip_contents = true
@@ -470,9 +485,46 @@ func _sync_wide_backdrop() -> void:
 	_wide_backdrop.size = Vector2(size.x, f.size.y)
 	var shift := Vector2(f.position.x, 0.0)
 	_wide_backdrop.hat = _backdrop.hat
+	_wide_backdrop.hill_shift = -f.position.x
 	_wide_backdrop.set_scene(_backdrop.kind, Rect2(_backdrop.foe_rect.position + shift, _backdrop.foe_rect.size),
 		Rect2(_backdrop.player_rect.position + shift, _backdrop.player_rect.size))
 	_wide_backdrop.modulate = _backdrop.modulate
+
+## Gap between the field column and the command panel beside it.
+const SIDE_GAP: float = 2.0
+
+## Puts the command panel under the text box, or beside the field when the safe area has too
+## little height above the era's base screen for finger-sized rows (ScreenFit.touch_px) and room
+## for the panel at the base screen's width next to a field at least as wide; the field and the
+## panel then stand centred in the safe area. Under the field on a short view, Era I's commands
+## stand in one row of four where they fit, and the field gives up the rest (update 1.3.2).
+func _fit_menu() -> void:
+	if _menu == null or not is_inside_tree():
+		return
+	var vp: Vector2 = get_viewport_rect().size
+	var era: int = EraManager.active_era()
+	var base: Vector2 = Vector2(EraManager.RESOLUTION[era])
+	var touch: int = ScreenFit.touch_px(get_window())
+	var safe: Rect2 = SafeArea.rect(vp)
+	var short: bool = CommandMenu.touch_need(era, touch) > safe.size.y - base.y
+	var cw: float = minf(SafeArea.column(vp).size.x, safe.size.x - base.x - SIDE_GAP)
+	var beside: bool = short and cw >= base.x
+	var home: Control = _side if beside else _col
+	if _menu.get_parent() != home:
+		_menu.reparent(home, false)
+	_side.visible = beside
+	_menu.set_one_row(short and not beside, SafeArea.column(vp).size.x, model)
+	if not beside:
+		SafeArea.apply(_col)
+		return
+	var x: float = roundf(safe.position.x + (safe.size.x - cw - SIDE_GAP - base.x) / 2.0)
+	for c: Control in [_col, _side]:
+		c.offset_top = safe.position.y
+		c.offset_bottom = safe.end.y - vp.y
+	_col.offset_left = x
+	_col.offset_right = x + cw - vp.x
+	_side.offset_left = x + cw + SIDE_GAP
+	_side.offset_right = x + cw + SIDE_GAP + base.x - vp.x
 
 func _layout_field() -> void:
 	if _multi and not _slot_sprites[BattleModel.Side.FOE].is_empty():
@@ -2201,3 +2253,4 @@ func _battle_settings() -> void:
 		SaveManager.save_settings()
 		_apply_speed()
 		_menu.apply_size()
+		_fit_menu()

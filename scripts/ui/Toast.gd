@@ -42,6 +42,8 @@ func _ready() -> void:
 
 ## Keeps the note in the UI column on a wide screen (update 1.3.2); full width on a portrait one.
 func _fit_column() -> void:
+	if not is_inside_tree():
+		return
 	var vp: Vector2 = get_viewport().get_visible_rect().size
 	var col: Rect2 = SafeArea.column(vp)
 	var narrower: bool = col.size.x < vp.x - 0.5

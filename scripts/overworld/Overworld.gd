@@ -205,7 +205,6 @@ func _ready() -> void:
 func _build() -> void:
 	# The land around an outdoor map on screens larger than the map (update 1.3.2).
 	_surround = MapSurround.new()
-	_surround.name = "Surround"
 	add_child(_surround)
 	_ground = TileMapLayer.new()
 	_ground.name = "Ground"

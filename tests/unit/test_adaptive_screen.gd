@@ -183,28 +183,33 @@ func test_battle_fits_every_size_and_its_scenery_reaches_both_edges() -> void:
 		await wait_process_frames(2)
 		var view: Rect2 = _view()
 		var col: Rect2 = scene._field.get_parent().get_global_rect()
-		assert_true(SafeArea.column(view.size).grow(0.5).encloses(col), "%s: battle column %s in the safe column" % [size, col])
+		var safe: Rect2 = SafeArea.rect(view.size).grow(0.5)
+		var beside: bool = scene._menu.get_parent() == scene._side
+		if beside:
+			# Landscape / short view: the command panel beside the field, both in the safe area,
+			# the field at least as wide and as tall as on the era's base screen less the text box.
+			var side: Rect2 = scene._side.get_global_rect()
+			assert_true(safe.encloses(col), "%s: battle column %s in the safe area" % [size, col])
+			assert_true(safe.encloses(side), "%s: command panel %s in the safe area" % [size, side])
+			assert_lte(col.end.x, side.position.x, "%s: command panel beside the field" % size)
+			assert_gte(scene._field.size.x, float(EraManager.RESOLUTION[1].x), "%s: field as wide as the base screen" % size)
+		else:
+			assert_true(SafeArea.column(view.size).grow(0.5).encloses(col), "%s: battle column %s in the safe column" % [size, col])
 		if col.size.x < view.size.x - 1.0:
 			var wide: Rect2 = scene._wide_backdrop.get_global_rect()
 			assert_true(scene._wide_backdrop.visible, "%s: scenery beside the column" % size)
 			assert_almost_eq(wide.position.x, 0.0, 0.5, "%s: scenery from the left edge" % size)
 			assert_almost_eq(wide.end.x, view.size.x, 0.5, "%s: scenery to the right edge" % size)
 			assert_almost_eq(wide.position.y, scene._field.get_global_rect().position.y, 0.5, "%s: same horizon" % size)
-		# Battle rows reach 44 pt out of the height above the era's base screen; the field never
-		# gets shorter than on the base screen. Where that height is too little (a 16:9 or
-		# landscape view), every spare pixel goes to the rows.
+		# Every art row and command reaches 44 pt (Apple's rule, iPad landscape included).
 		var touch: int = ScreenFit.touch_px(_win)
-		var art: int = BattleComfort.art_h(1)
-		var cmd: int = BattleComfort.command_h(1)
-		var spare: float = view.size.y - EraManager.RESOLUTION[1].y
-		var need: int = Spirling.MAX_MOVES * maxi(0, touch - art) + CommandMenu.TOUCH_COMMAND_ROWS * maxi(0, touch - cmd)
-		_assert_controls(scene._menu, size, spare >= need)
-		if spare < need:
-			var rows: Vector2i = CommandMenu.touch_rows(art, cmd, touch, spare)
-			var used: int = Spirling.MAX_MOVES * (rows.x - art) + CommandMenu.TOUCH_COMMAND_ROWS * (rows.y - cmd)
-			assert_lte(used, int(spare), "%s: the rows take no height from the field" % size)
-			assert_gte(used, int(spare) - Spirling.MAX_MOVES - CommandMenu.TOUCH_COMMAND_ROWS, "%s: the spare height goes to the rows" % size)
-			gut.p("%s: battle rows %.0f / %.0f pt (%d px of height to spare, %d needed)" % [size, _pt(rows.x), _pt(rows.y), int(spare), need])
+		var need: int = CommandMenu.touch_need(1, touch)
+		var spare: float = SafeArea.rect(view.size).size.y - EraManager.RESOLUTION[1].y
+		if need > spare and view.size.x > view.size.y:
+			assert_true(beside, "%s: landscape view short of height puts the commands beside the field" % size)
+		_assert_controls(scene._menu, size, true)
+		var rows: int = (scene._menu._swap.get_parent() as GridContainer).columns
+		gut.p("%s: view %s, commands %s in rows of %d, field %s" % [size, view.size, "beside the field" if beside else "below the field", rows, scene._field.size])
 		scene.queue_free()
 		_win.queue_free()
 		await wait_process_frames(1)

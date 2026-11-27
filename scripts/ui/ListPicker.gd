@@ -242,9 +242,9 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	# The player's tap guard (KAMPF_PLAN_1000 item 908) lengthens it, never shortens it.
 	_guard_ms = BattleCalm.guard_ms(guard_ms)
 	_back.visible = cancellable
-	# A layout may ask for a larger Back button (the shop's lists, ShopZoom).
-	var back: int = int(layout.get("back_size", BACK_SIZE))
-	_back.custom_minimum_size = Vector2(back, back)
+	# A layout may ask for a larger Back button (the shop's lists, ShopZoom); back_px() adds
+	# the screen's touch floor.
+	_back.custom_minimum_size = Vector2.ONE * back_px()
 	_foot.visible = one_hand and cancellable
 	# A list with no title and no Back button in its head gives that line to the rows (plan
 	# Chimora 100, item 66: the title list needed a scroll to reach Settings at 9:16).
@@ -266,7 +266,6 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	var columns: int = maxi(1, int(layout.get("columns", 1)))
 	var row_h: int = row_height()
 	_touch_floor = ScreenFit.touch_px(get_window())
-	_back.custom_minimum_size = Vector2.ONE * maxi(BACK_SIZE, ScreenFit.touch_px(get_window()))
 	_grid.columns = columns
 	_grid.visible = columns > 1
 	_backdrop.visible = bool(layout.get("backdrop", false))
@@ -727,14 +726,18 @@ func row_height() -> int:
 	var h: int = int(layout.get("row_h", ROW_HEIGHT))
 	return maxi(h, ScreenFit.touch_px(get_window())) if is_inside_tree() else h
 
+## Size of the Back button: the layout's (back_size, ShopZoom), never below the touch floor.
+func back_px() -> int:
+	var back: int = int(layout.get("back_size", BACK_SIZE))
+	return maxi(back, ScreenFit.touch_px(get_window())) if is_inside_tree() else back
+
 ## Re-applies the touch floor to the rows and Back after a screen change (fold, unfold, turn).
 func _apply_touch() -> void:
 	if not is_inside_tree() or ScreenFit.touch_px(get_window()) == _touch_floor:
 		return
 	_touch_floor = ScreenFit.touch_px(get_window())
 	var row_h: int = row_height()
-	_touch_floor = ScreenFit.touch_px(get_window())
-	_back.custom_minimum_size = Vector2.ONE * maxi(BACK_SIZE, ScreenFit.touch_px(get_window()))
+	_back.custom_minimum_size = Vector2.ONE * back_px()
 	for b: Button in _buttons:
 		if is_instance_valid(b) and b.get_meta("touch_row", false):
 			b.custom_minimum_size.y = row_h
