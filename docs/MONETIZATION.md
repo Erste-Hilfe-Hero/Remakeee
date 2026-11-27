@@ -309,7 +309,7 @@ Gleichstand-Liga (`league_fair_blocked_sources` zählt jedes Vorteil-Angebot) un
 - Kontomacht zählt nur Kampfkraft (Siegel, Amulette, Bindungs-Vorsprung, Wachstum): Siegesheilung und Münz-Siegel
   erscheinen nicht im Hinweis "fügt Macht hinzu" (`ShopEffects.POWER_TIER_KINDS`).
 - ActSim und BalanceSim kennen keine Käufe: ohne Freischaltungen sind alle Faktoren 1 (Test).
-- **Server:** Angebote in `20261127100000_shop_offers_v040.sql`, Migration `20261127210000_shop_p2w_step8.sql`
+- **Server:** Angebote in `20261127205900_shop_offers_v040.sql`, Migration `20261127210000_shop_p2w_step8.sql`
   (`_shop_amulets` bis Krit-Siegel V). Tests: `tests/unit/test_shop_p2w_step8.gd`,
   `tools/online/sql_test/test_shop_p2w_step8.sql`.
 
