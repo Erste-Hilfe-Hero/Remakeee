@@ -15,7 +15,7 @@ TAKTYCZNE WALKI
 • Energia zamiast punktów ruchów, cechy, trzymane przedmioty i pola walki
 • Walki z kilkoma Spirlingami na stronę, walki w parach i Strażnicy z kilkoma fazami
 • Podgląd obrażeń, dziennik walki, walka automatyczna i podwójna prędkość
-• Cztery poziomy trudności, od Opowieści po Zrodzonych, z limitami poziomów
+• Podróż, która z każdym aktem jest trudniejsza, a rywale coraz silniejsi
 
 HISTORIA Z PAZURAMI
 • Cztery akty: Veydal, Corvane, Ashmere i wypalone słońcem Solenne, z dwunastoma Szczelinami i ich Strażnikami

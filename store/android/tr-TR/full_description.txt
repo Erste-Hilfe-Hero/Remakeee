@@ -15,7 +15,7 @@ TAKTİK SAVAŞLAR
 - Hüner puanı yerine Enerji, Armağanlar, Hatıralar ve savaş alanları
 - Her tarafta birden çok Spirling'in olduğu savaşlar, ikili savaşlar ve birkaç evreli Muhafızlar
 - Hasar önizleme, savaş günlüğü, otomatik savaş ve iki kat hız
-- "Hikâye"den "Yarık Doğumlu"ya, Halka sınırlı dört zorluk seviyesi
+- Her perdede zorlaşan bir yolculuk, rakipler de sürekli güçlenir
 
 DİŞLİ BİR HİKÂYE
 - Dört perde: Veydal, Corvane, Ashmere ve güneşten ağarmış Solenne; on iki Yarık ve Muhafızları

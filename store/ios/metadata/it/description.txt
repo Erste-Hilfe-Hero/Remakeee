@@ -15,7 +15,7 @@ SCONTRI TATTICI
 - Energia al posto dei punti per le Arti, Doni, Ricordi e campi di scontro
 - Scontri con più Spirling per lato, scontri in coppia e Custodi con più fasi
 - Anteprima dei danni, registro dello scontro, scontro automatico e velocità doppia
-- Quattro modalità di difficoltà, da "Storia" a "Figli dello Squarcio" con limiti di Rango
+- Un viaggio che si fa più duro atto dopo atto, con avversari sempre più forti
 
 UNA STORIA CHE MORDE
 - Quattro atti: Veydal, Corvane, Ashmere e Solenne sbiancata dal sole, con dodici Squarci e i loro Custodi

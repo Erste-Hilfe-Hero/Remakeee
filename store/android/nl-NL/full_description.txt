@@ -15,7 +15,7 @@ TACTISCHE GEVECHTEN
 - Energie in plaats van techniekpunten, eigenschappen, voorwerpen om te dragen en gevechtsvelden
 - Gevechten met meerdere Spirlings per kant, duogevechten en Hoeders met meerdere fasen
 - Schadevoorbeeld, gevechtslogboek, automatisch vechten en dubbele snelheid
-- Vier moeilijkheidsgraden, van Verhaal tot Kloofgeboren met ringgrenzen
+- Een reis die per akte zwaarder wordt, met steeds sterkere tegenstanders
 
 EEN VERHAAL MET TANDEN
 - Vier aktes: Veydal, Corvane, Ashmere en het door de zon gebleekte Solenne, met twaalf Kloven en hun Hoeders

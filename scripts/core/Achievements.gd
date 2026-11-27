@@ -22,7 +22,9 @@ static func list() -> Array[Dictionary]:
 			var d: Variant = JSON.parse_string(f.get_as_text())
 			if d is Dictionary:
 				for a: Variant in (d as Dictionary).get("achievements", []):
-					if a is Dictionary:
+					# Retired badges (the Veteran and Rift-Born ones: the game has one mode since
+					# 2026-11-27) are neither shown nor counted; earned records stay in the save.
+					if a is Dictionary and not bool((a as Dictionary).get("retired", false)):
 						_list.append(a)
 	return _list
 

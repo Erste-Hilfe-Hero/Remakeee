@@ -15,7 +15,7 @@ COMBATES TÁCTICOS
 - Energía en lugar de puntos por arte, Dones, Recuerdos y campos de combate
 - Combates con varios Spirlings por bando, combates en pareja y Custodios con varias fases
 - Vista previa del daño, registro de combate, combate automático y velocidad doble
-- Cuatro niveles de dificultad, de "Historia" a "Nacido de Grieta", con topes de rango
+- Un viaje que se vuelve más difícil acto tras acto, con rivales cada vez más fuertes
 
 UNA HISTORIA CON DIENTES
 - Cuatro actos: Veydal, Corvane, Ashmere y la abrasada Solenne, con doce Grietas y sus Custodios

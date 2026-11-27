@@ -15,7 +15,7 @@ TAKTISCHE KÄMPFE
 • Energie statt Technikpunkte, Eigenschaften, gehaltene Gegenstände und Kampffelder
 • Kämpfe mit mehreren Spirlings pro Seite, Duo-Kämpfe und Wächter mit mehreren Phasen
 • Schadensvorschau, Kampf-Log, Auto-Kampf und doppelte Geschwindigkeit
-• Vier Schwierigkeitsgrade, von „Geschichte“ bis „Rissgeboren“ mit Levelgrenzen
+• Eine Reise, die von Akt zu Akt schwerer wird, die Gegner wachsen mit
 
 EINE GESCHICHTE MIT BISS
 • Vier Akte: Veydal, Corvane, Ashmere und das sonnengebleichte Solenne, mit zwölf Rissen und ihren Wächtern

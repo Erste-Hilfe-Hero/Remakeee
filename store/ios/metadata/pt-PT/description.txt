@@ -16,7 +16,7 @@ BATALHAS TÁTICAS
 - Energia em vez de pontos de golpe, traços, objetos equipados e campos de batalha
 - Batalhas com vários Spirlings de cada lado, batalhas em dupla e Sentinelas com várias fases
 - Pré-visualização do dano, registo da batalha, batalha automática e velocidade dupla
-- Quatro níveis de dificuldade, de História a Cria da Fenda, com limite de nível
+- Uma jornada que fica mais difícil a cada ato, com rivais cada vez mais fortes
 
 UMA HISTÓRIA COM DENTES
 - Quatro atos: Veydal, Corvane, Ashmere e a Solenne queimada pelo sol, com doze Fendas e as suas Sentinelas

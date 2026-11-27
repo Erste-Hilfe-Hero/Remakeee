@@ -15,7 +15,7 @@ TACTICAL BATTLES
 • Energy instead of move points, traits, held items and battle fields
 • Battles with several Spirlings per side, tag battles and Wardens with several phases
 • Damage preview, battle log, auto battle and double speed
-• Four difficulty modes, from Story to Rift-Born with level caps
+• One journey that grows harder act by act, with foes rising all the way
 
 A STORY WITH TEETH
 • Four acts: Veydal, Corvane, Ashmere and the sun-bleached Solenne, with twelve Rifts and their Wardens
