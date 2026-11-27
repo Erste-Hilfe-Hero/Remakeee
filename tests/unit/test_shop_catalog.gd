@@ -75,7 +75,19 @@ func test_every_offer_has_german_text() -> void:
 	for o: Dictionary in ShopCatalog.offers():
 		assert_ne(Loc.t(str(o.name)), str(o.name), "German name for %s" % o.id)
 		assert_ne(Loc.t(str(o.desc)), str(o.desc), "German text for %s" % o.id)
+		if o.has("explain"):
+			assert_ne(Loc.t(str(o.explain)), str(o.explain), "German explanation for %s" % o.id)
 	Loc.set_language("en")
+
+## Owner, 27 Nov 2026: every offer on sale explains in plain words what it does (the pass has its
+## own page; the Ring Cap Seal leaves the shop on another branch).
+func test_every_offer_on_sale_explains_itself() -> void:
+	for o: Dictionary in ShopCatalog.offers():
+		# The Starter Pack explains each part in its contents list (its page fits the info box, test_ui_fixes_120).
+		if not bool(o.get("ready", false)) or str(o.id) in ["rg_pass", "rg_ring_cap_plus", "rg_starter"]:
+			continue
+		assert_true(str(o.get("explain", "")).length() > 20, "%s has an explanation" % o.id)
+		assert_string_contains(ShopMenu.detail_text(o), Loc.t(str(o.get("explain", "-"))), "%s shows it" % o.id)
 
 func test_shop_goods_never_at_merchants() -> void:
 	# Shop goods carry the rg_ prefix and have no coin price, so merchants cannot list them (item 4968).
@@ -89,7 +101,7 @@ func test_no_purchase_prompts() -> void:
 	var banned: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/shop_banned_phrases.json"))
 	var words: Array = banned.de + banned.en
 	for o: Dictionary in ShopCatalog.offers():
-		for text: String in [str(o.name), str(o.desc), Loc.t(str(o.name))]:
+		for text: String in [str(o.name), str(o.desc), Loc.t(str(o.name)), str(o.get("explain", "")), Loc.t(str(o.get("explain", "")))]:
 			for w: Variant in words:
 				assert_false(str(w) in text.to_lower(), "'%s' in %s" % [w, o.id])
 
@@ -114,7 +126,7 @@ func test_limits_are_rules_not_scarcity() -> void:
 	assert_eq(ShopMenu.limit_line({}), "")
 	var bad: RegEx = RegEx.create_from_string("(?i)only \\d+ left|nur noch \\d+|\\d+ left in stock|players bought|others bought")
 	for o: Dictionary in ShopCatalog.offers():
-		var text: String = str(o.get("name", "")) + " " + str(o.get("desc", ""))
+		var text: String = str(o.get("name", "")) + " " + str(o.get("desc", "")) + " " + str(o.get("explain", ""))
 		assert_null(bad.search(text), "%s uses scarcity or social pressure" % o.id)
 
 ## Item 4045: the shop links to the purchases help page in the right language.

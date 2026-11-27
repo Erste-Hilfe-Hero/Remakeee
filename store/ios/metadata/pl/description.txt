@@ -1,21 +1,27 @@
-Zdobądź zaufanie 567 potworów, odkryj mroczną historię z czarnym humorem i planuj każdy ruch. Chimora to RPG z potworami w stylu retro pixel art, trochę mroczniejsze, niż się wydaje.
-• 567 Spirlingów do zjednania zewem Echa i rzadki Połysk na wolności
+Zawiąż więź z 567 pikselowymi potworami, szukaj rzadkiego Połysku i planuj każdy ruch. Chimora to RPG o zbieraniu i oswajaniu potworów w stylu retro pixel art, z mroczną historią pełną czarnego humoru.
+• 567 Spirlingów do zjednania: stukaj szybko w duży przycisk Mój! i napełnij pasek
 • Taktyczne walki turowe z ośmioma żywiołami i Strażnikami o kilku fazach
 • Pikselowa grafika, która dojrzewa przez pięć epok: od monochromu do pełnego koloru
 • Gra online: Chimora wymaga połączenia z internetem
+
+NOWOŚCI W 1.3.2
+• 70 nowych Spirlingów, po 10 w każdej krainie
+• Połysk w pięciu rodzajach, od klasycznego po bardzo rzadki Opalowy połysk
+• Pogoda: deszcz, mgła, wiatr, burze i śnieg zmieniają świat i niektóre walki
+• 35 kamieni z zagadkami i plansz łamigłówek oraz wiele sekretów odkrywanych w trakcie gry
+• Nowy sklep i przepustka z 30 poziomami, z darmowym rzędem dla wszystkich
 
 CISZA VEYDAL
 Wyruszasz jako Wędrowiec z latarni na wybrzeżu Veydal, wybierasz pierwszego Spirlinga i podążasz za księgą map Mireli przez cztery krainy. Wszędzie otwierają się Szczeliny, a tylko ty możesz je znów zamknąć. Wszyscy inni po prostu czegoś od ciebie chcą.
 
 ZAUFANIE ZAMIAST CHWYTANIA
-Dzikich Spirlingów nikt tu nie łapie. Ich zaufanie zdobywasz zewem Echa: Spirling wywołuje sekwencję, a ty na nią odpowiadasz. Kto dobrze słucha, zyskuje przyjaciela.
+Dzikich Spirlingów nikt tu nie łapie. W walce wybierasz Więź i pojawia się duży przycisk Mój!: stukaj w niego najszybciej, jak umiesz. Im pełniejszy pasek, tym lepsza więź. W ustawieniach możesz przełączyć się na zew Echa (powtórz wołanie Spirlinga) albo na Spokój (echo bez limitu czasu).
 
 TAKTYCZNE WALKI
 • Osiem żywiołów, każdy silny przeciw dwóm i słaby przeciw dwóm
 • Energia zamiast punktów ruchów, cechy, trzymane przedmioty i pola walki
 • Walki z kilkoma Spirlingami na stronę, walki w parach i Strażnicy z kilkoma fazami
-• Podgląd obrażeń, dziennik walki, walka automatyczna i podwójna prędkość
-• Podróż, która z każdym aktem jest trudniejsza, a rywale coraz silniejsi
+• Wyzwanie rośnie z każdym aktem
 
 HISTORIA Z PAZURAMI
 • Cztery akty: Veydal, Corvane, Ashmere i wypalone słońcem Solenne, z dwunastoma Szczelinami i ich Strażnikami
@@ -24,22 +30,18 @@ HISTORIA Z PAZURAMI
 • Zadania dla sześciu legendarnych i poboczne historie w każdym akcie, na dziesiątki godzin
 
 ŚWIAT, KTÓRY SIĘ ZMIENIA
-• 567 Spirlingów, po 80 własnych w każdym akcie i w każdej krainie po zakończeniu fabuły, i rzadki Połysk na wolności
+• Około 80 własnych Spirlingów w każdej krainie i rzadki Połysk w pięciu rodzajach
 • Twój pierwszy Spirling chodzi za tobą i pamięta, jak go traktujesz
-• Dzień i noc, święta, ukryte ścieżki, sprzęt Wędrowca otwierający nowe miejsca i park dzikiej przyrody prowadzony przez przemytników
-• Nora do zajęcia, codzienny pogrzebowy spektakl i informator z czarnego rynku, który sprzedaje ukryte dary
+• Dzień i noc, pogoda, święta, ukryte ścieżki i sprzęt Wędrowca otwierający nowe miejsca
 
 PO FINALE
 • Vellmarch, cała kraina na później w stylu kolejnej ery, z czterema kolejnymi Szczelinami i zdradą w każdym rozdziale
 • Rewanże ze wszystkimi dwunastoma Strażnikami, Wieża Echa ze 100 piętrami, Mistrzowskie Szczeliny, olbrzym tygodnia i Nowa gra+
-• Spirlingi rosną dalej po pierścieniu 60
 • Kolejne krainy i ery pojawią się w darmowych aktualizacjach
 
 RAZEM ONLINE
 • Dodawaj znajomych za pomocą kodu, wysyłaj pozdrowienia i Pocztę Latarni
-• Prowadź listy życzeń i wysyłaj prezenty znajomym
 • Pojedynki Echa z drużynami znajomych, ligi z sezonami
-• Wspólny cel świata co tydzień
 • Twój zapis gry jest bezpieczny na naszym serwerze w UE i przenosi się z tobą na nowy telefon
 
 GRAJ PO SWOJEMU
@@ -50,7 +52,7 @@ GRAJ PO SWOJEMU
 • Spokojne więzi bez limitu czasu, a walki offline zawsze na ciebie czekają
 • Graj dotykiem, klawiaturą lub padem
 
-UCZCIWIE
-Gra jest darmowa. Opcjonalne zakupy w grze, wiele z nich daje przewagę. W Lidze równych szans nie działają. Bez losowej zawartości. Bez reklam, bez liczników energii, bez śledzenia.
+SKLEP I LIGA RÓWNYCH SZANS
+Gra jest darmowa i ma opcjonalne zakupy w aplikacji. Wiele z nich daje przewagę w walce lub przyspiesza postępy; w Lidze równych szans nie działają. Każda oferta pokazuje dokładnie, co zawiera, nic nie jest losowe. Każda kraina, każdy Strażnik i każdy gatunek Spirlinga są dostępne bez płacenia. Sklep jest zablokowany dla graczy poniżej 13 lat i ma miesięczne limity zależne od wieku. Bez reklam, bez śledzenia.
 
 Uwaga: Chimora wymaga połączenia z internetem.

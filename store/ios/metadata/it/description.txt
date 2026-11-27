@@ -1,45 +1,46 @@
-Conquista la fiducia di 567 mostri, scopri una storia cupa piena di humour nero e pianifica ogni turno. Chimora è un GdR di mostri in pixel art retrò, un po' più cupo di quanto sembri.
-- 567 Spirling da conquistare con il richiamo eco, e rare forme Splendore allo stato brado
+Stringi un legame con 567 mostri in pixel art, cerca le rare forme Splendore e pianifica ogni turno. Chimora è un GdR di mostri da collezionare e addomesticare in pixel art retrò, con una storia cupa piena di humour nero.
+- 567 Spirling da legare: tocca veloce il grande pulsante Mio! e riempi la barra
 - Combattimenti tattici a turni con otto elementi e Custodi con più fasi
 - Una pixel art che cresce attraverso cinque ere, dal bianco e nero ai colori pieni
 - Gioco online: Chimora richiede una connessione a Internet
+
+NOVITÀ DELLA 1.3.2
+- 70 nuovi Spirling, 10 in ogni regione
+- Forme Splendore in cinque tipi, dallo Splendore classico al rarissimo Splendore opalino
+- Meteo: pioggia, nebbia, vento, temporali e neve cambiano il mondo e alcuni scontri
+- 35 pietre degli enigmi e tavole rompicapo, e tanti segreti da scoprire giocando
+- Un nuovo negozio e un pass a 30 livelli, con una fila gratuita per tutti
 
 IL SILENZIO DI VEYDAL
 Nei panni di un Viandante parti da un faro sulla costa di Veydal, scegli il tuo primo compagno e segui il libro di mappe di Mirela attraverso quattro regioni. Gli Squarci si aprono ovunque, e solo tu puoi richiuderli. Tutti gli altri vogliono solo qualcosa da te.
 
 FIDUCIA, NON CATTURA
-Gli Spirling selvaggi non si catturano mai. Ne conquisti la fiducia con il richiamo eco: lo Spirling intona una sequenza e tu la ripeti. Chi ascolta bene trova un amico.
+Gli Spirling selvaggi non si catturano mai. In battaglia scegli Legame e appare un grande pulsante Mio!: toccalo più veloce che puoi. Più piena è la barra, migliore è il legame. Nelle impostazioni puoi passare al richiamo Eco (ripetere il richiamo dello Spirling) o a Calma (l'eco senza limite di tempo).
 
 SCONTRI TATTICI
 - Otto elementi, ognuno forte contro due e debole contro due
 - Energia al posto dei punti per le Arti, Doni, Ricordi e campi di scontro
 - Scontri con più Spirling per lato, scontri in coppia e Custodi con più fasi
-- Anteprima dei danni, registro dello scontro, scontro automatico e velocità doppia
-- Un viaggio che si fa più duro atto dopo atto, con avversari sempre più forti
+- La sfida cresce a ogni atto
 
 UNA STORIA CHE MORDE
 - Quattro atti: Veydal, Corvane, Ashmere e Solenne sbiancata dal sole, con dodici Squarci e i loro Custodi
 - Due clan e undici sconosciuti, ognuno con una fiducia nascosta. Un Registro ricorda di chi ti sei fidato
 - Un favore può ripagare, o finire in furti e imboscate. Il tradimento fa parte della trama, non è un bug
-- Missioni per sei leggendari e storie secondarie in ogni atto, per decine di ore di gioco
 
 UN MONDO CHE CAMBIA
-- 567 Spirling, 80 tutti suoi in ogni atto e in ogni regione dopo la storia, e rare forme Splendore allo stato brado
+- Circa 80 Spirling tutti suoi in ogni regione, e rare forme Splendore in cinque tipi
 - Il tuo Spirling in testa cammina dietro di te e si ricorda come lo tratti
-- Giorno e notte, feste, sentieri nascosti, equipaggiamento da Viandante che apre nuovi luoghi e un parco faunistico gestito da contrabbandieri
-- Una tana da reclamare, uno spettacolo funebre quotidiano e un informatore del mercato nero che vende doni nascosti
+- Giorno e notte, meteo, feste, sentieri nascosti ed equipaggiamento da Viandante che apre nuovi luoghi
 
 DOPO IL FINALE
 - Vellmarch, un'intera regione post-gioco nello stile dell'era successiva, con altri quattro Squarci e un tradimento in ogni capitolo
 - Rivincite contro tutti i dodici Custodi, una Torre Eco da 100 piani, Squarci da maestro, un gigante della settimana e Nuova partita+
-- Gli Spirling continuano a crescere oltre l'anello 60
 - Altre regioni ed ere arriveranno con aggiornamenti gratuiti
 
 INSIEME ONLINE
 - Aggiungi amici tramite codice, invia saluti e Posta Lanterna
-- Tieni liste dei desideri e invia regali agli amici
 - Duelli Eco contro le squadre dei tuoi amici, leghe a stagioni
-- Un obiettivo comune ogni settimana
 - I tuoi salvataggi restano al sicuro sul nostro server nell'UE e ti seguono su un nuovo telefono
 
 GIOCA A MODO TUO
@@ -50,7 +51,7 @@ GIOCA A MODO TUO
 - Legame calmo senza limite di tempo, e le battaglie offline ti aspettano sempre
 - Si gioca con touch, tastiera o controller
 
-GIOCO ONESTO
-Gratuito. Acquisti facoltativi nel gioco, molti con vantaggi. Nella Lega alla pari non contano. Nessun contenuto casuale. Niente pubblicità, niente timer di energia, nessun tracciamento.
+NEGOZIO E LEGA ALLA PARI
+Gratuito, con acquisti in-app facoltativi. Molti danno vantaggi in battaglia o accelerano i progressi; nella Lega alla pari non contano. Ogni offerta mostra esattamente cosa contiene, niente è casuale. Ogni regione, ogni Custode e ogni specie di Spirling si raggiunge senza pagare. Il negozio è bloccato sotto i 13 anni e ha limiti mensili in base all'età. Niente pubblicità, nessun tracciamento.
 
 Nota: Chimora richiede una connessione a Internet.

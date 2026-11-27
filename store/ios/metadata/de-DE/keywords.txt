@@ -1,1 +1,1 @@
-retro,rundenbasiert,rollenspiel,taktik,entwickeln,trainer,story,düster,verrat,team,duell,abenteuer
+retro,rundenbasiert,rollenspiel,taktik,trainer,sammler,haustier,düster,abenteuer,rätsel,duell,team

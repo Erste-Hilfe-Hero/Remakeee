@@ -1,21 +1,27 @@
-567 canavarın güvenini kazan, kara mizahla dolu karanlık bir hikâyeyi keşfet ve her hamleni planla. Chimora, retro piksel sanatıyla yapılmış bir canavar RPG'si ve göründüğünden biraz daha karanlık.
-- Yankı çağrısıyla güvenini kazanacağın 567 Spirling ve doğada nadir Işıltı biçimleri
+567 piksel canavarla bağ kur, nadir Işıltı biçimlerinin peşine düş ve her hamleni planla. Chimora, retro piksel sanatıyla canavar toplama ve evcilleştirme RPG'si; kara mizahla dolu karanlık bir hikâyesi var.
+- Bağ kurulacak 567 Spirling: büyük Benim! düğmesine hızlı dokun, çubuğu doldur
 - Sekiz element ve birkaç evreli Muhafızlarla taktik, sıra tabanlı savaşlar
 - Beş çağ boyunca büyüyen piksel sanatı: tek renkten tam renge
 - Çevrimiçi oyun: Chimora internet bağlantısı gerektirir
+
+1.3.2 İLE GELENLER
+- 70 yeni Spirling, her bölgede 10 tane
+- Beş türde Işıltı biçimi: klasik Işıltı'dan çok nadir Opal Işıltısı'na kadar
+- Hava durumu: yağmur, sis, rüzgâr, fırtına ve kar dünyayı ve bazı savaşları değiştirir
+- 35 bilmece taşı ve bulmaca tahtası, oynarken bulunan birçok gizli sır
+- Yeni bir mağaza ve herkes için ücretsiz sırası olan 30 basamaklı bir pass
 
 VEYDAL'IN SESSİZLİĞİ
 Bir Gezgin olarak Veydal kıyısındaki bir deniz fenerinden yola çıkıyor, ilk yol arkadaşını seçiyor ve Mirela'nın harita kitabının izinde dört bölgeyi dolaşıyorsun. Her yerde Yarıklar açılıyor ve onları yeniden mühürleyebilecek tek kişi sensin. Diğer herkes senden sadece bir şey istiyor.
 
 YAKALAMAK DEĞİL, GÜVEN KAZANMAK
-Yabani Spirling'ler asla yakalanmaz. Güvenlerini Yankı çağrısıyla kazanırsın: Spirling bir dizi ses çıkarır, sen de ona aynı diziyle cevap verirsin. İyi dinleyen yeni bir dost kazanır.
+Yabani Spirling'ler asla yakalanmaz. Savaşta Bağ kur'u seçersin ve büyük bir Benim! düğmesi çıkar: ona olabildiğince hızlı dokun. Çubuk ne kadar doluysa bağ o kadar iyi. Ayarlardan Yankı çağrısına (Spirling'in çağrısını tekrarla) ya da Sakin'e (süre sınırı olmayan yankı) geçebilirsin.
 
 TAKTİK SAVAŞLAR
 - Sekiz element: her biri ikisine karşı güçlü, ikisine karşı zayıf
 - Hüner puanı yerine Enerji, Armağanlar, Hatıralar ve savaş alanları
 - Her tarafta birden çok Spirling'in olduğu savaşlar, ikili savaşlar ve birkaç evreli Muhafızlar
-- Hasar önizleme, savaş günlüğü, otomatik savaş ve iki kat hız
-- Her perdede zorlaşan bir yolculuk, rakipler de sürekli güçlenir
+- Zorluk her perdede biraz daha artar
 
 DİŞLİ BİR HİKÂYE
 - Dört perde: Veydal, Corvane, Ashmere ve güneşten ağarmış Solenne; on iki Yarık ve Muhafızları
@@ -24,22 +30,18 @@ DİŞLİ BİR HİKÂYE
 - Altı efsanevi için efsane görevleri ve her perdede yan hikâyeler; onlarca saatlik oyun
 
 DEĞİŞEN BİR DÜNYA
-- 567 Spirling, her perdede ve hikâye sonrasındaki her bölgede 80 tane kendine özgü, ve doğada nadir Işıltı biçimleri
+- Her bölgede kendine özgü yaklaşık 80 Spirling ve beş türde nadir Işıltı biçimi
 - Öndeki Spirling'in arkandan yürüyor ve ona nasıl davrandığını unutmuyor
-- Gece ve gündüz, şenlikler, gizli yollar, yeni yerler açan Gezgin donanımı ve kaçakçıların işlettiği bir yaban hayatı parkı
-- Sahiplenebileceğin bir in, her gün bir cenaze gösterisi ve gizli armağanlar satan bir karaborsa muhbiri
+- Gece ve gündüz, hava durumu, şenlikler, gizli yollar ve yeni yerler açan Gezgin donanımı
 
 FİNALDEN SONRA
 - Vellmarch: bir sonraki çağın görünümünde koca bir oyun sonu bölgesi; dört Yarık daha ve her bölümünde bir ihanet
 - On iki Muhafızın hepsiyle rövanş, 100 katlı Yankı Kulesi, Usta Yarıkları, haftanın devi ve Yeni Oyun+
-- Spirling'ler 60. halkadan sonra da büyümeye devam ediyor
 - Yeni bölgeler ve çağlar ücretsiz güncellemelerle geliyor
 
 ÇEVRİMİÇİ BİRLİKTE
 - Arkadaşlarını kodla ekle, selam ve Fener Postası gönder
-- Dilek listesi tut ve arkadaşlarına hediye gönder
 - Arkadaşlarının takımlarına karşı Yankı düelloları, sezonlu ligler
-- Her hafta ortak bir dünya hedefi
 - Kaydın AB'deki sunucumuzda güvende tutulur ve yeni telefonuna seninle birlikte taşınır
 
 İSTEDİĞİN GİBİ OYNA
@@ -50,7 +52,7 @@ FİNALDEN SONRA
 - Zaman sınırı olmayan sakin bağ kurma, çevrimdışı savaşlar her zaman seni bekler
 - Dokunmatik ekran, klavye veya oyun kumandasıyla oyna
 
-ADİL
-Ücretsiz oynanır. İsteğe bağlı oyun içi satın alımlar var, birçoğu oyunda avantaj sağlar. Adil ligde geçerli değildir. Rastgele içerik yok. Reklam yok, enerji sayacı yok, takip yok.
+MAĞAZA VE ADİL LİG
+Ücretsiz oynanır, isteğe bağlı uygulama içi satın alımlar vardır. Birçoğu savaşta avantaj sağlar ya da ilerlemeyi hızlandırır; Adil ligde geçerli değildir. Her teklif içinde tam olarak ne olduğunu gösterir, hiçbir şey rastgele değildir. Her bölgeye, her Muhafız'a ve her Spirling türüne ödeme yapmadan ulaşılabilir. Mağaza 13 yaş altı oyunculara kapalıdır ve yaşa göre aylık sınırları vardır. Reklam yok, takip yok.
 
 Not: Chimora için internet bağlantısı gerekir.

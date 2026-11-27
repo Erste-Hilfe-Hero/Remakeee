@@ -260,7 +260,7 @@ static func detail_text(o: Dictionary) -> String:
 		# paragraph per part so a pack of five still fits the box (Starter Pack, 1.2.0 store shots).
 		# An item that is used up when used is the usual case and says nothing more; Riftglass
 		# and coins need no words on what they are, only how long they stay.
-		if parts.size() > 1:
+		if parts.size() > 1 or _pack_of_one_item(o, e):
 			var money: bool = str(e.t) in ["rg", "coins"]
 			var eff: String = "" if money else ShopCatalog.entry_effect(e, o)
 			if not eff.is_empty():
@@ -274,7 +274,15 @@ static func detail_text(o: Dictionary) -> String:
 	var rule: String = ShopCatalog.repeat_line(o)
 	# A bundle whose text only lists its parts says nothing the contents above do not (Starter
 	# Pack, 1.2.0 store shots: the box overflowed), so the text is left out there.
-	if parts.size() <= 1 or not lists_only_amounts(str(o.desc)):
+	# "explain" is the plain in-game explanation (owner, 27 Nov 2026: a better explanation per
+	# package); "desc" stays the short store text and is the fallback.
+	if o.has("explain"):
+		lines.append(Loc.t("What it does:"))
+		lines.append(Loc.t(str(o.explain)))
+		# A blank line, so duration and the buying rule read as their own block.
+		if not dur.is_empty():
+			lines.append("")
+	elif parts.size() <= 1 or not lists_only_amounts(str(o.desc)):
 		lines.append(Loc.t("What it does:"))
 		# A once-only pack's text ends in "Once per account." itself; the rule line below says it once.
 		lines.append(Loc.t(str(o.desc)).replace(rule, "").strip_edges())
@@ -300,6 +308,11 @@ static func detail_text(o: Dictionary) -> String:
 	if not p.is_empty():
 		lines.append(Loc.t("Price in the store: %s") % p)
 	return "\n".join(lines)
+
+## True when [param o] sells several of one item that has its own offer ("Ring Tonic x5", a deal):
+## the contents line then says what that item does, like a part of a bundle.
+static func _pack_of_one_item(o: Dictionary, e: Dictionary) -> bool:
+	return str(e.t) == "item" and str(e.id) != str(o.get("id", "")) and ShopCatalog.offer(str(e.id)).has("explain")
 
 ## True when the English [param desc] is only a list of amounts ("300 Riftglass, 5 Ring Tonics."),
 ## besides how often it can be bought ("Once per account.").

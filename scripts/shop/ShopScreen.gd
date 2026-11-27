@@ -309,6 +309,8 @@ func show_detail(o: Dictionary) -> void:
 	body = body.substr(body.find("\n") + 1).strip_edges()
 	# "(≈ 1,98 €)" never breaks before the euro sign.
 	body = body.replace(" €", Loc.NO_BREAK + "€")
+	# "(+30 %)" never breaks before the percent sign either (German writes a space there).
+	body = body.replace(" %", Loc.NO_BREAK + "%")
 	_list.add_child(_label(body, UITheme.INK, true, "detail_body"))
 	var why: String = state_text(o)
 	if not why.is_empty():

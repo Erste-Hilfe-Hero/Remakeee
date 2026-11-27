@@ -256,11 +256,15 @@ static func entry_effect(e: Dictionary, o: Dictionary) -> String:
 		"card":
 			return Loc.t("Collected in the shop once a day. Missed days wait for you.")
 		"item":
+			# The plain explanation of the item's own offer first, so a pack says the same as the offer.
+			var own: Dictionary = offer(str(e.id))
+			if own.has("explain"):
+				return Loc.t(str(own.explain))
 			var it: Dictionary = Database.item(str(e.id))
-			return Loc.t(str(it.get("description", offer(str(e.id)).get("desc", ""))))
+			return Loc.t(str(it.get("description", own.get("desc", ""))))
 		"unlock":
 			var u: Dictionary = unlock_offer(str(e.id), int(e.n))
-			return Loc.t(str(u.get("desc", o.get("desc", ""))))
+			return Loc.t(str(u.get("explain", u.get("desc", o.get("desc", "")))))
 		"choice":
 			var names: Array[String] = []
 			for id: Variant in o.get("choice", []):
