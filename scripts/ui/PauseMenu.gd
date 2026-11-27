@@ -795,7 +795,7 @@ static func records_text() -> String:
 		lines.append("Festival: %s" % f.name)
 	return "\n".join(lines)
 
-## Title line: name, coins, and the level cap on Veteran / Rift-Born (item 47).
+## Title line: name, coins, Waymarks, the place and festival ribbons.
 ## Name, coins, waymarks and the place the player stands (item 1875).
 static func menu_title(map_id: String = "") -> String:
 	var t: String = "%s   %s   %s" % [GameState.tamer_name, Loc.plural(GameState.money, "%d coin", "%d coins"), Waymarks.label()]
@@ -803,8 +803,6 @@ static func menu_title(map_id: String = "") -> String:
 		t += "\n" + Loc.t(MapData.load_map(map_id).display_name)
 	if not Festival.active().is_empty():
 		t += "   " + Loc.t("Ribbons %d") % Festival.ribbons()
-	if GameState.has_ring_limit():
-		t += "   Ring limit %d" % GameState.level_cap()
 	return t
 
 ## The pause list's title in at most three lines: without the place name when name, coins,

@@ -198,7 +198,6 @@ static func trainer_battle(mine: Array[Spirling], foe: Dictionary, seed_value: i
 	var info: Dictionary = TrainerData.battle_info(def, foes, GameState.AI_LEVELS[DIFFICULTY], DIFFICULTY)
 	var m := BattleModel.new(mine, foes, false, seed_value, int(info.ai))
 	m.items_allowed = false
-	m.level_cap = Spirling.LEVEL_SANITY
 	m.ai.set_profile(str(info.profile), info.profile_tune)
 	m.ai.set_difficulty(DIFFICULTY)
 	m.foe_damage_mult = GameState.foe_damage_for(DIFFICULTY, owned)
@@ -230,7 +229,6 @@ static func wild_battle(mine: Array[Spirling], table: Array, rng: RandomNumberGe
 	var m := BattleModel.new(mine, [foe] as Array[Spirling], true, rng.randi(), 0)
 	m.xp_mult = _growth
 	m.items_allowed = false
-	m.level_cap = Spirling.LEVEL_SANITY
 	_play(m)
 
 static func _roll(table: Array, rng: RandomNumberGenerator) -> Dictionary:

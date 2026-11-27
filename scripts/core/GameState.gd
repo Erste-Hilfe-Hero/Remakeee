@@ -1,10 +1,13 @@
 extends Node
 ## Global player state. Saving and loading go through SaveManager (M4).
 
-## Difficulty, picked at new game. Rift-Born adds the Master AI (tier 3).
+## Internal difficulty tiers. The game has one mode (owner decision 2026-11-27): every journey
+## plays on TAMER and no screen offers or shows a choice; new_game and old saves set TAMER. The
+## other values stay for the simulators and the tables indexed by them.
 enum Difficulty { STORY, TAMER, VETERAN, RIFT_BORN }
-## Level cap per Rift sealed (Veteran + Rift-Born only).
-const LEVEL_CAPS: Array[int] = [12, 15, 18, 23, 28, 32, 36, 40, 44, 50, 54, 57, 60]
+## Story ring by Rifts mended, for foe scaling only (progress_cap: endgame echoes, foe scaling).
+## The player's Spirlings have no ring cap (owner decision 2026-11-27).
+const PROGRESS_RINGS: Array[int] = [12, 15, 18, 23, 28, 32, 36, 40, 44, 50, 54, 57, 60]
 const AI_LEVELS: Array[int] = [0, 1, 2, 3]
 ## Plan area 2, items 726-728: Wayfarer Spark in every stat, ring shift of a shared team, and the
 ## share of damage foes deal, per difficulty (Story, Tamer, Veteran, Rift-Born).
@@ -13,7 +16,7 @@ const FOE_LEVEL_SHIFT: Array[int] = [-1, 0, 1, 2]
 const FOE_DAMAGE: Array[float] = [0.9, 1.0, 1.0, 1.0]
 ## Factor on a Rift boss's "hp_per_ally" per difficulty (item 729).
 const BOSS_HP_SCALE: Array[float] = [0.8, 1.0, 1.0, 1.0]
-## A shifted foe never stands more than this many rings above the player's ring cap.
+## A shifted foe never stands more than this many rings above the story ring (progress_cap).
 const FOE_OVER_CAP: int = 2
 const MAX_PARTY: int = 5
 
@@ -316,19 +319,7 @@ static func finale_flags() -> Array[String]:
 ## Story flag at the end of Act I ("Waiting for the Ferry" starts).
 const ACT1_END_FLAG: String = "aldo_dock_told"
 
-## Ring a Spirling can grow to now. No top ring (owner decision 2026-11-12): on Tamer and below,
-## and on every difficulty after Act I, Spirlings grow without limit (Spirling.LEVEL_SANITY is only
-## a guard against broken data). Veteran and Rift-Born keep their Act I Warden caps (LEVEL_CAPS).
-func level_cap() -> int:
-	if not has_ring_limit():
-		return Spirling.LEVEL_SANITY
-	return mini(progress_cap() + ShopEffects.ring_cap_bonus(), Spirling.LEVEL_SANITY)
-
-## True while a difficulty ring limit holds (Veteran and up, before the end of Act I).
-func has_ring_limit() -> bool:
-	return difficulty >= Difficulty.VETERAN and not has_flag(ACT1_END_FLAG)
-
-## Marks a Rift as sealed (raises the level cap on Veteran and up). Returns false if it already was.
+## Marks a Rift as sealed. Returns false if it already was.
 func seal_rift(rift_id: String) -> bool:
 	if rift_id in rifts_sealed:
 		return false
@@ -344,14 +335,13 @@ func seal_rift(rift_id: String) -> bool:
 			records["small_band"] = 1
 	return true
 
-## Ring cap by story progress for every difficulty (the Veteran caps). Endgame echoes (weekly
-## challenge, lighthouse climb) use it, so raising one Spirling high does not change them.
-## After Act I (ACT1_END_FLAG) it is Spirling.STORY_RING (plan 3287), so Master Wayfarers and
-## the endgame use the whole story ring range; the player's own Spirlings are not capped by it.
+## Story ring by progress, for foes only. Endgame echoes (weekly challenge, lighthouse climb)
+## and foe scaling use it, so raising one Spirling high does not change them. After Act I
+## (ACT1_END_FLAG) it is Spirling.STORY_RING (plan 3287). The player's own Spirlings have no cap.
 func progress_cap() -> int:
 	if has_flag(ACT1_END_FLAG):
 		return Spirling.STORY_RING
-	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
+	return PROGRESS_RINGS[mini(rifts_sealed.size(), PROGRESS_RINGS.size() - 1)]
 
 func items_allowed_in_battle() -> bool:
 	return difficulty != Difficulty.RIFT_BORN
@@ -699,9 +689,10 @@ const NEWCOMER_FOE_DAMAGE: float = 0.9
 func is_newcomer() -> bool:
 	return party.size() + storage.size() < NEWCOMER_SPIRLINGS
 
-func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, p_starter: String, p_look: int = 0, p_skin: int = 0, p_hair: int = 0) -> void:
+## [param _p_difficulty] is ignored: every journey plays the one mode (TAMER).
+func new_game(_p_difficulty: Difficulty, p_name: String, p_color: int, p_starter: String, p_look: int = 0, p_skin: int = 0, p_hair: int = 0) -> void:
 	reset()
-	difficulty = p_difficulty
+	difficulty = Difficulty.TAMER
 	skin_tone = clampi(p_skin, 0, SKIN_TONES.size() - 1)
 	hair_color = clampi(p_hair, 0, HAIR_COLORS.size() - 1)
 	tamer_look = clampi(p_look, 0, TAMER_SPRITES.size() - 1)
@@ -826,7 +817,8 @@ func from_dict(d: Dictionary) -> void:
 	hat_look = str(wayfarer.get("hat", "")) if wayfarer.get("hat") is String else ""
 	card_frame = str(wayfarer.get("card_frame", "")) if wayfarer.get("card_frame") is String else ""
 	gift_card = str(wayfarer.get("gift_card", "")) if wayfarer.get("gift_card") is String else ""
-	difficulty = clampi(int(d.get("difficulty", Difficulty.TAMER)), 0, Difficulty.size() - 1) as Difficulty
+	# One mode for everyone: saves from Story, Veteran or Rift-Born load as TAMER.
+	difficulty = Difficulty.TAMER
 	region = str(d.get("region", "veydal"))
 	rifts_sealed.assign(d.get("rifts", []))
 	starter = str(d.get("starter", ""))
@@ -1420,10 +1412,10 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 		# Echo Crystals are never used up; learning is handled by the menu (it may need a slot).
 		return ""
 	elif int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0:
-		# Ring Tonics and the Ring Crown from the shop: never above the Ring cap (plan item 4341)
-		# nor above the story ring, so bought rings stop at 60; past it Spirlings grow by battling.
+		# Ring Tonics and the Ring Crown from the shop: never above the story ring, so bought
+		# rings stop at 60; past it Spirlings grow by battling.
 		var goal: int = int(it.rings_to) if int(it.get("rings_to", 0)) > 0 else s.level + int(it.rings)
-		var target: int = mini(goal, mini(level_cap(), Spirling.STORY_RING))
+		var target: int = mini(goal, Spirling.STORY_RING)
 		if s.level >= target:
 			return ""
 		var from: int = s.level

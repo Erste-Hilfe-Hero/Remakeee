@@ -2,8 +2,8 @@ class_name GrowthRules
 extends RefCounted
 ## Growth (XP) rules of the battle plan area "Fortschritt, XP und Training"
 ## (docs/KAMPF_PLAN_1000.md). Tuning in data/growth_rules.json. There is no top ring: the curve
-## runs on (Spirling.LEVEL_SANITY only guards broken data); a ring cap holds only on Veteran and
-## Rift-Born in Act I (GameState.level_cap).
+## runs on (Spirling.LEVEL_SANITY only guards broken data); there is no ring cap (owner
+## decision 2026-11-27).
 
 const PATH: String = "res://data/growth_rules.json"
 ## GameState.records keys.

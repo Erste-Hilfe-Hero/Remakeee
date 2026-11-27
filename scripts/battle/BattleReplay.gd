@@ -61,7 +61,6 @@ static func _snapshot(model: BattleModel, music: String, backdrop: String) -> Di
 		"inventory": model.inventory.duplicate(),
 		"items_allowed": model.items_allowed,
 		"held_swap": model.held_swap,
-		"level_cap": model.level_cap,
 		"trainer": model.trainer_name,
 		"field": model.field,
 		"bench_share": model.bench_share,
@@ -184,7 +183,6 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.inventory = (snap.get("inventory", {}) as Dictionary).duplicate()
 	m.items_allowed = bool(snap.get("items_allowed", true))
 	m.held_swap = bool(snap.get("held_swap", false))
-	m.level_cap = int(snap.get("level_cap", Spirling.LEVEL_SANITY))
 	m.trainer_name = str(snap.get("trainer", ""))
 	var tune: Variant = snap.get("profile_tune", {})
 	m.ai.set_profile(str(snap.get("profile", "")), tune if tune is Dictionary else {})
