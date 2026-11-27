@@ -12,7 +12,7 @@ extends RefCounted
 ## window is rarely an exact multiple of the scale, the stretch is "fractional": the view is
 ## at most one pixel wider or taller than an exact multiple and is drawn at the scale to
 ## within a fraction of a percent, so the pixels stay crisp. A window smaller than the base
-## size (a tiny split-screen strip) shows the base size scaled down.
+## size (a tiny split-screen strip) keeps the old integer stretch at scale 1.
 
 ## Width of the UI column on wide views, as a share of the view height (3:4). Lists, the shop,
 ## the battle panels and the talk box stay in a column of at most this width in the middle;
@@ -43,7 +43,10 @@ static func apply(w: Window, base: Vector2i) -> bool:
 	var size := Vector2(w.size)
 	var mode: Window.ContentScaleAspect = aspect_mode(size)
 	var content: Vector2i = content_size(size, base)
-	var stretch := Window.CONTENT_SCALE_STRETCH_FRACTIONAL
+	# Below the base size (k = 0: a tiny split-screen strip, the 64 x 64 px headless window) the
+	# integer stretch keeps drawing at scale 1, as before 1.3.2, so touch and mouse positions
+	# stay in view pixels there.
+	var stretch := Window.CONTENT_SCALE_STRETCH_FRACTIONAL if pixel_scale(size, base) >= 1 else Window.CONTENT_SCALE_STRETCH_INTEGER
 	var changed: bool = w.content_scale_aspect != mode or w.content_scale_size != content or w.content_scale_stretch != stretch
 	if w.content_scale_stretch != stretch:
 		w.content_scale_stretch = stretch

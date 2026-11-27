@@ -34,14 +34,18 @@ static func rect(vp: Vector2) -> Rect2:
 static func column(vp: Vector2) -> Rect2:
 	return ScreenFit.column(vp, rect(vp))
 
-## Insets the offsets of a full-rect [param c] so its content stays inside the safe area, and
-## on a wide screen inside the centred UI column (update 1.3.2).
+## Insets the offsets of a full-rect [param c] so its content stays inside the safe area, and,
+## when [param c] fills the screen, on a wide screen inside the centred UI column (update 1.3.2).
 ## [param extra] is added on every side (the control's own margin). The insets follow the
 ## screen when it changes size while the game runs (a foldable opening or closing).
 static func apply(c: Control, extra: float = 0.0) -> void:
 	_follow_resizes(c, extra)
 	var vp: Vector2 = c.get_viewport().get_visible_rect().size if c.is_inside_tree() else Vector2.ZERO
-	var r: Rect2 = column(vp) if vp != Vector2.ZERO else Rect2()
+	# The column only for a control that spans the whole screen; one inside a smaller box
+	# (a test stage, a panel) keeps that box's width and only the safe-area insets.
+	var parent: Control = c.get_parent() as Control
+	var full: bool = parent == null or parent.get_global_rect().size.x >= vp.x - 0.5
+	var r: Rect2 = (column(vp) if full else rect(vp)) if vp != Vector2.ZERO else Rect2()
 	var top: float = r.position.y if vp != Vector2.ZERO else 0.0
 	var left: float = r.position.x if vp != Vector2.ZERO else 0.0
 	var right: float = (vp.x - r.end.x) if vp != Vector2.ZERO else 0.0

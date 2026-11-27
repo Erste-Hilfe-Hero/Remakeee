@@ -23,6 +23,8 @@ var _box: VBoxContainer
 var _title: Label
 var _scroll: ScrollContainer
 var _buttons: Array[Button] = []
+## The touch floor the rows were last sized for (ScreenFit.touch_px, update 1.3.2).
+var _touch_floor: int = 0
 var _cancellable: bool = true
 var _opened_ms: int = 0
 var _guard_ms: int = TAP_GUARD_MS
@@ -260,6 +262,7 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		rows.append({"text": "Back", "cancel": true})
 	var columns: int = maxi(1, int(layout.get("columns", 1)))
 	var row_h: int = row_height()
+	_touch_floor = ScreenFit.touch_px(get_window())
 	_back.custom_minimum_size = Vector2.ONE * maxi(BACK_SIZE, ScreenFit.touch_px(get_window()))
 	_grid.columns = columns
 	_grid.visible = columns > 1
@@ -723,9 +726,11 @@ func row_height() -> int:
 
 ## Re-applies the touch floor to the rows and Back after a screen change (fold, unfold, turn).
 func _apply_touch() -> void:
-	if not is_inside_tree():
+	if not is_inside_tree() or ScreenFit.touch_px(get_window()) == _touch_floor:
 		return
+	_touch_floor = ScreenFit.touch_px(get_window())
 	var row_h: int = row_height()
+	_touch_floor = ScreenFit.touch_px(get_window())
 	_back.custom_minimum_size = Vector2.ONE * maxi(BACK_SIZE, ScreenFit.touch_px(get_window()))
 	for b: Button in _buttons:
 		if is_instance_valid(b) and b.get_meta("touch_row", false):
