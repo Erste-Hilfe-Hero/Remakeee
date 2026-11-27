@@ -142,3 +142,39 @@ func test_continue_choice_shows_the_price() -> void:
 	var t: String = BattleScene.continue_title(200)
 	assert_true(t.contains(RiftglassSinks.cost_text(200)), t)
 	assert_true(t.contains(RiftglassSinks.balance_line()), t)
+
+## A German text with {0} {1} is only filled when the English line is formatted first and then
+## translated; Loc.t(key) % values left "Das kostet {0}, du hast {1}." on screen.
+func test_reordered_texts_are_formatted_before_translating() -> void:
+	Loc.set_language("de")
+	Billing.state = {"balance": 50}
+	var t: String = RiftglassSinks.error_text("not_enough", 200)
+	assert_true(t.contains("200") and t.contains("50") and not t.contains("{"), t)
+	var keys: Array[String] = []
+	for f: String in DirAccess.get_files_at("res://data/i18n/de"):
+		var d: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/i18n/de/" + f))
+		if d is Dictionary and d.get("strings") is Dictionary:
+			for k: String in d.strings:
+				if str(d.strings[k]).contains("{0}"):
+					keys.append(k)
+	assert_gt(keys.size(), 0)
+	var bad: Array[String] = []
+	for path: String in _scripts("res://scripts"):
+		var src: String = FileAccess.get_file_as_string(path)
+		for k: String in keys:
+			var call: String = "Loc.t(\"%s\")" % k.replace("\\", "\\\\").replace("\"", "\\\"")
+			var at: int = src.find(call)
+			while at >= 0:
+				if src.substr(at + call.length()).strip_edges().begins_with("%"):
+					bad.append("%s: %s" % [path, k])
+				at = src.find(call, at + 1)
+	assert_eq(bad, [] as Array[String])
+
+func _scripts(dir: String) -> Array[String]:
+	var out: Array[String] = []
+	for f: String in DirAccess.get_files_at(dir):
+		if f.ends_with(".gd"):
+			out.append(dir + "/" + f)
+	for d: String in DirAccess.get_directories_at(dir):
+		out.append_array(_scripts(dir + "/" + d))
+	return out

@@ -150,7 +150,7 @@ static func balance_line() -> String:
 static func error_text(why: String, cost: int = 0) -> String:
 	match why:
 		"not_enough":
-			return Loc.t("Not enough Riftglass: this costs %d, you have %d.") % [cost, Billing.balance()]
+			return Loc.t("Not enough Riftglass: this costs %d, you have %d." % [cost, Billing.balance()])
 		"offline":
 			return Loc.t("No connection right now. Riftglass needs the server.")
 		"age":

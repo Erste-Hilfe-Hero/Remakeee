@@ -1355,7 +1355,7 @@ func _bond_boost(charm: String) -> float:
 	if bool(Database.item(charm).get("bond_sure", false)) or _rg_boosts >= int(RiftglassSinks.sink("bond_boost").get("max_per_ref", 0)):
 		return 0.0
 	var pct: String = "+%d %%" % roundi(RiftglassSinks.bond_boost() * 100.0)
-	var use: int = await _picker.pick(Loc.t("Bond boost %s? You have %d Riftglass.") % [pct, Billing.balance()],
+	var use: int = await _picker.pick(Loc.t("Bond boost %s? You have %d Riftglass." % [pct, Billing.balance()]),
 		[{"text": Loc.t("Boost: %d Riftglass") % cost}, {"text": "No boost"}] as Array[Dictionary])
 	if use < 0:
 		return -1.0

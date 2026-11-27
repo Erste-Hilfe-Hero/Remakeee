@@ -105,5 +105,5 @@ static func spoken(field: String, turns: int) -> String:
 		return Loc.t("No Rift field.")
 	var label: String = Loc.t(str(BattleRules.FIELDS[field].label))
 	if turns > 0:
-		return Loc.t("Rift field %s, %d turns left.") % [label, turns]
-	return Loc.t("Rift field %s, for the whole battle.") % label
+		return Loc.t("Rift field %s, %d turns left." % [label, turns])
+	return Loc.t("Rift field %s, for the whole battle." % label)
