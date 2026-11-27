@@ -21,7 +21,7 @@ T2 = {
  "Hold it out on one bond try: bonding is {p}% easier for that try.",
  "Halte es bei einem Bindungsversuch hin: das Binden ist bei diesem Versuch {p} % leichter.",
  "絆の挑戦で1回差し出す：その1回は絆が{p}%結びやすくなる。",
- "Présente-le lors d'une tentative de lien: le lien est {p}% plus facile pour cette tentative.",
+ "Une tentative de lien est {p}% plus facile.",
  "Mostralo durante un tentativo di legame: legarsi è più facile del {p}% per quel tentativo.",
  "Ofrécelo en un intento de vínculo: vincular es un {p}% más fácil en ese intento.",
  "유대 시도 한 번에 내밀기: 그 시도에서 유대가 {p}% 쉬워집니다.",
