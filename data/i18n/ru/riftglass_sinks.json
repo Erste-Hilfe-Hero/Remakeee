@@ -1,0 +1,31 @@
+{
+ "_comment": "Translations of the German table riftglass_sinks, written by tools/i18n/locales_riftglass_sinks.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s: %d Riftglass": "%s: %d Стекла Разлома",
+  "Bond boost %s? You have %d Riftglass.": "Усилить связь на %s? У вас %d Стекла Разлома.",
+  "Boost: %d Riftglass": "Усилить: %d Стекла Разлома",
+  "Bring one home now": "Забрать домой сейчас",
+  "Bring this Spirling home now? %d h left.": "Забрать этого Spirling домой сейчас? Осталось %d ч.",
+  "Continue for %s? Your whole team stands up with full Vigor.": "Продолжить за %s? Вся команда встанет с полной Бодростью.",
+  "Daily gift: +%d Riftglass": "Подарок дня: +%d Стекла Разлома",
+  "Growth x2 for the next %d battles?": "Рост x2 на ближайшие бои: %d?",
+  "Growth x2: %d": "Рост x2: %d",
+  "Heal team: %d": "Лечить команду: %d",
+  "Heal the whole team now? Full Vigor, Energy, no states.": "Вылечить всю команду сейчас? Полная Бодрость и Энергия, без состояний.",
+  "Light it again": "Зажечь снова",
+  "Light the lamp again tonight? Another visitor may follow the light.": "Зажечь лампу снова этой ночью? Может, на свет придёт ещё один гость.",
+  "No boost": "Без усиления",
+  "No connection right now. Riftglass needs the server.": "Сейчас нет связи. Для Стекла Разлома нужен сервер.",
+  "Not enough Riftglass: this costs %d, you have %d.": "Не хватает Стекла Разлома: нужно %d, у вас %d.",
+  "Riftglass flares! Your whole team stands up again with full Vigor.": "Стекло Разлома вспыхивает! Вся команда встаёт с полной Бодростью.",
+  "Riftglass holds you in place. Your team is rested again.": "Стекло Разлома удерживает вас на месте. Команда снова отдохнула.",
+  "Riftglass is locked for now. Look in the shop under My purchases.": "Стекло Разлома пока заблокировано. Загляните в магазин, раздел Мои покупки.",
+  "Riftglass is not available on this account.": "Стекло Разлома недоступно для этой учётной записи.",
+  "Riftglass shop": "Магазин Стекла Разлома",
+  "Stay right before the Warden? Your team is rested.": "Остаться прямо перед Стражем? Ваша команда отдохнула.",
+  "That did not work. No Riftglass was taken.": "Не получилось. Стекло Разлома не списано.",
+  "That was a lot in a short time. Please wait a while.": "Слишком много за короткое время. Подождите немного.",
+  "That was the last one here.": "Здесь это был последний раз.",
+  "You have %d Riftglass.": "У вас %d Стекла Разлома."
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "_comment": "Translations of the German table riftglass_sinks, written by tools/i18n/locales_riftglass_sinks.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s: %d Riftglass": "%s：%d裂隙晶",
+  "Bond boost %s? You have %d Riftglass.": "结缘加成%s？你有%d裂隙晶。",
+  "Boost: %d Riftglass": "加成：%d裂隙晶",
+  "Bring one home now": "现在带一只回家",
+  "Bring this Spirling home now? %d h left.": "现在就把这只Spirling带回家吗？还剩%d小时。",
+  "Continue for %s? Your whole team stands up with full Vigor.": "花费%s继续吗？全队元气全满，重新站起来。",
+  "Daily gift: +%d Riftglass": "每日礼物：+%d裂隙晶",
+  "Growth x2 for the next %d battles?": "接下来%d场战斗成长x2吗？",
+  "Growth x2: %d": "成长x2：%d",
+  "Heal team: %d": "治疗队伍：%d",
+  "Heal the whole team now? Full Vigor, Energy, no states.": "现在治疗全队吗？元气和能量全满，清除所有状态。",
+  "Light it again": "再点一次",
+  "Light the lamp again tonight? Another visitor may follow the light.": "今晚再点一次灯吗？也许还会有访客循着灯光而来。",
+  "No boost": "不加成",
+  "No connection right now. Riftglass needs the server.": "现在没有网络连接。裂隙晶需要服务器。",
+  "Not enough Riftglass: this costs %d, you have %d.": "裂隙晶不够：需要%d，你有%d。",
+  "Riftglass flares! Your whole team stands up again with full Vigor.": "裂隙晶闪耀！全队元气全满，重新站起来了。",
+  "Riftglass holds you in place. Your team is rested again.": "裂隙晶把你留在原地。你的队伍又恢复了。",
+  "Riftglass is locked for now. Look in the shop under My purchases.": "裂隙晶暂时被锁定。请到商店的「我的购买」查看。",
+  "Riftglass is not available on this account.": "此账号无法使用裂隙晶。",
+  "Riftglass shop": "裂隙晶商店",
+  "Stay right before the Warden? Your team is rested.": "停在守望者跟前吗？你的队伍已恢复。",
+  "That did not work. No Riftglass was taken.": "没有成功。没有扣除裂隙晶。",
+  "That was a lot in a short time. Please wait a while.": "短时间内次数太多了。请稍等一会儿。",
+  "That was the last one here.": "这里的次数已经用完了。",
+  "You have %d Riftglass.": "你有%d裂隙晶。"
+ }
+}

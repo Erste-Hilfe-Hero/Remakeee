@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table p2w_shop, written by tools/i18n/locales_p2w_shop.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "+%d %% bonus": "+%d %% bonus",
+  "A one-time pack for your journey": "Een eenmalig pakket voor je reis",
+  "After the tier before it": "Na de vorige trap",
+  "All advantages": "Alle voordelen",
+  "Best value": "Beste waarde",
+  "Bestseller": "Bestseller",
+  "Featured": "Uitgelicht",
+  "First buy x2": "1e aankoop x2",
+  "Later in the journey": "Later op de reis",
+  "Limited": "Beperkt",
+  "Owned": "In bezit",
+  "Pay %d Riftglass": "%d Kloofglas betalen",
+  "Popular": "Populair",
+  "Show": "Bekijken",
+  "Show offer": "Aanbod bekijken",
+  "Show the pass": "Pas bekijken",
+  "Until %s": "Tot %s",
+  "Use it": "Gebruiken"
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "_comment": "Translations of the German table riftglass_sinks, written by tools/i18n/locales_riftglass_sinks.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s: %d Riftglass": "%s: %d Yarık Camı",
+  "Bond boost %s? You have %d Riftglass.": "Bağ desteği %s? %d Yarık Camın var.",
+  "Boost: %d Riftglass": "Destek: %d Yarık Camı",
+  "Bring one home now": "Şimdi eve getir",
+  "Bring this Spirling home now? %d h left.": "Bu Spirling şimdi eve gelsin mi? %d sa kaldı.",
+  "Continue for %s? Your whole team stands up with full Vigor.": "%s ile devam edilsin mi? Tüm takımın tam Dinçlikle ayağa kalkar.",
+  "Daily gift: +%d Riftglass": "Günlük hediye: +%d Yarık Camı",
+  "Growth x2 for the next %d battles?": "Sonraki %d savaşta Gelişim x2 olsun mu?",
+  "Growth x2: %d": "Gelişim x2: %d",
+  "Heal team: %d": "Takımı iyileştir: %d",
+  "Heal the whole team now? Full Vigor, Energy, no states.": "Tüm takım şimdi iyileşsin mi? Tam Dinçlik ve Enerji, durum yok.",
+  "Light it again": "Yeniden yak",
+  "Light the lamp again tonight? Another visitor may follow the light.": "Lamba bu gece yeniden yakılsın mı? Işığı başka bir ziyaretçi de izleyebilir.",
+  "No boost": "Desteksiz",
+  "No connection right now. Riftglass needs the server.": "Şu an bağlantı yok. Yarık Camı sunucuya ihtiyaç duyar.",
+  "Not enough Riftglass: this costs %d, you have %d.": "Yeterli Yarık Camı yok: bedeli %d, sende %d var.",
+  "Riftglass flares! Your whole team stands up again with full Vigor.": "Yarık Camı parlıyor! Tüm takımın tam Dinçlikle yeniden ayağa kalkıyor.",
+  "Riftglass holds you in place. Your team is rested again.": "Yarık Camı seni yerinde tutar. Takımın yeniden dinlendi.",
+  "Riftglass is locked for now. Look in the shop under My purchases.": "Yarık Camı şimdilik kilitli. Dükkânda Satın aldıklarım bölümüne bak.",
+  "Riftglass is not available on this account.": "Yarık Camı bu hesapta kullanılamaz.",
+  "Riftglass shop": "Yarık Camı dükkânı",
+  "Stay right before the Warden? Your team is rested.": "Muhafızın hemen önünde kalınsın mı? Takımın dinlenmiş olur.",
+  "That did not work. No Riftglass was taken.": "Olmadı. Yarık Camı alınmadı.",
+  "That was a lot in a short time. Please wait a while.": "Kısa sürede çok fazla oldu. Lütfen biraz bekle.",
+  "That was the last one here.": "Burada son seferdi.",
+  "You have %d Riftglass.": "%d Yarık Camın var."
+ }
+}

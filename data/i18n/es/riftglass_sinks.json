@@ -1,0 +1,31 @@
+{
+ "_comment": "Translations of the German table riftglass_sinks, written by tools/i18n/locales_riftglass_sinks.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s: %d Riftglass": "%s: %d Vidrio Grieta",
+  "Bond boost %s? You have %d Riftglass.": "¿Impulso de vínculo %s? Tienes %d Vidrio Grieta.",
+  "Boost: %d Riftglass": "Impulso: %d Vidrio Grieta",
+  "Bring one home now": "Traer uno a casa ya",
+  "Bring this Spirling home now? %d h left.": "¿Traer a este Spirling a casa ya? Quedan %d h.",
+  "Continue for %s? Your whole team stands up with full Vigor.": "¿Continuar por %s? Todo tu equipo se levanta con el Vigor lleno.",
+  "Daily gift: +%d Riftglass": "Regalo diario: +%d Vidrio Grieta",
+  "Growth x2 for the next %d battles?": "¿Crecimiento x2 en los próximos %d combates?",
+  "Growth x2: %d": "Crecimiento x2: %d",
+  "Heal team: %d": "Curar equipo: %d",
+  "Heal the whole team now? Full Vigor, Energy, no states.": "¿Curar a todo el equipo ya? Vigor y Energía llenos, sin estados.",
+  "Light it again": "Volver a encenderla",
+  "Light the lamp again tonight? Another visitor may follow the light.": "¿Volver a encender la lámpara esta noche? Quizá otro visitante siga la luz.",
+  "No boost": "Sin impulso",
+  "No connection right now. Riftglass needs the server.": "Ahora no hay conexión. El Vidrio Grieta necesita el servidor.",
+  "Not enough Riftglass: this costs %d, you have %d.": "No tienes suficiente Vidrio Grieta: cuesta %d y tienes %d.",
+  "Riftglass flares! Your whole team stands up again with full Vigor.": "¡El Vidrio Grieta destella! Todo tu equipo se levanta con el Vigor lleno.",
+  "Riftglass holds you in place. Your team is rested again.": "El Vidrio Grieta te mantiene en tu sitio. Tu equipo vuelve a estar descansado.",
+  "Riftglass is locked for now. Look in the shop under My purchases.": "El Vidrio Grieta está bloqueado por ahora. Mira en la tienda, en Mis compras.",
+  "Riftglass is not available on this account.": "El Vidrio Grieta no está disponible en esta cuenta.",
+  "Riftglass shop": "Tienda de Vidrio Grieta",
+  "Stay right before the Warden? Your team is rested.": "¿Quedarte justo antes del Custodio? Tu equipo está descansado.",
+  "That did not work. No Riftglass was taken.": "No ha funcionado. No se ha gastado Vidrio Grieta.",
+  "That was a lot in a short time. Please wait a while.": "Ha sido mucho en poco tiempo. Espera un rato.",
+  "That was the last one here.": "Era el último aquí.",
+  "You have %d Riftglass.": "Tienes %d Vidrio Grieta."
+ }
+}
