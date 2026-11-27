@@ -1,0 +1,31 @@
+{
+ "_comment": "Translations of the German table riftglass_sinks, written by tools/i18n/locales_riftglass_sinks.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s: %d Riftglass": "%s: %d Szczelinitu",
+  "Bond boost %s? You have %d Riftglass.": "Wzmocnić więź o %s? Masz %d Szczelinitu.",
+  "Boost: %d Riftglass": "Wzmocnij: %d Szczelinitu",
+  "Bring one home now": "Sprowadź jednego teraz",
+  "Bring this Spirling home now? %d h left.": "Sprowadzić tego Spirlinga teraz? Zostało %d godz.",
+  "Continue for %s? Your whole team stands up with full Vigor.": "Kontynuować za %s? Cała drużyna wstanie z pełnym Wigorem.",
+  "Daily gift: +%d Riftglass": "Dar dnia: +%d Szczelinitu",
+  "Growth x2 for the next %d battles?": "Wzrost x2 na kolejne walki: %d?",
+  "Growth x2: %d": "Wzrost x2: %d",
+  "Heal team: %d": "Wylecz drużynę: %d",
+  "Heal the whole team now? Full Vigor, Energy, no states.": "Wyleczyć całą drużynę teraz? Pełny Wigor i Energia, bez stanów.",
+  "Light it again": "Zapal ponownie",
+  "Light the lamp again tonight? Another visitor may follow the light.": "Zapalić lampę jeszcze raz tej nocy? Może kolejny gość przyjdzie za światłem.",
+  "No boost": "Bez wzmocnienia",
+  "No connection right now. Riftglass needs the server.": "Brak połączenia. Szczelinit wymaga serwera.",
+  "Not enough Riftglass: this costs %d, you have %d.": "Za mało Szczelinitu: koszt %d, masz %d.",
+  "Riftglass flares! Your whole team stands up again with full Vigor.": "Szczelinit rozbłyska! Cała drużyna wstaje z pełnym Wigorem.",
+  "Riftglass holds you in place. Your team is rested again.": "Szczelinit trzyma cię w miejscu. Twoja drużyna znów jest wypoczęta.",
+  "Riftglass is locked for now. Look in the shop under My purchases.": "Szczelinit jest na razie zablokowany. Zajrzyj do sklepu, w Moje zakupy.",
+  "Riftglass is not available on this account.": "Szczelinit nie jest dostępny na tym koncie.",
+  "Riftglass shop": "Sklep Szczelinitu",
+  "Stay right before the Warden? Your team is rested.": "Zostać tuż przed Strażnikiem? Twoja drużyna jest wypoczęta.",
+  "That did not work. No Riftglass was taken.": "Nie udało się. Nie pobrano Szczelinitu.",
+  "That was a lot in a short time. Please wait a while.": "To było dużo w krótkim czasie. Poczekaj chwilę.",
+  "That was the last one here.": "To był tu ostatni raz.",
+  "You have %d Riftglass.": "Masz %d Szczelinitu."
+ }
+}

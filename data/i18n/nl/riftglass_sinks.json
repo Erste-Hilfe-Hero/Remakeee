@@ -1,0 +1,31 @@
+{
+ "_comment": "Translations of the German table riftglass_sinks, written by tools/i18n/locales_riftglass_sinks.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s: %d Riftglass": "%s: %d Kloofglas",
+  "Bond boost %s? You have %d Riftglass.": "Bindboost %s? Je hebt %d Kloofglas.",
+  "Boost: %d Riftglass": "Boost: %d Kloofglas",
+  "Bring one home now": "Nu eentje ophalen",
+  "Bring this Spirling home now? %d h left.": "Deze Spirling nu ophalen? Nog %d uur.",
+  "Continue for %s? Your whole team stands up with full Vigor.": "Doorgaan voor %s? Je hele team staat op met volle Kracht.",
+  "Daily gift: +%d Riftglass": "Dagcadeau: +%d Kloofglas",
+  "Growth x2 for the next %d battles?": "Groei x2 voor de volgende %d gevechten?",
+  "Growth x2: %d": "Groei x2: %d",
+  "Heal team: %d": "Team helen: %d",
+  "Heal the whole team now? Full Vigor, Energy, no states.": "Het hele team nu helen? Volle Kracht en Energie, geen toestanden.",
+  "Light it again": "Opnieuw aansteken",
+  "Light the lamp again tonight? Another visitor may follow the light.": "De lamp vannacht opnieuw aansteken? Misschien volgt nog een bezoeker het licht.",
+  "No boost": "Geen boost",
+  "No connection right now. Riftglass needs the server.": "Nu geen verbinding. Kloofglas heeft de server nodig.",
+  "Not enough Riftglass: this costs %d, you have %d.": "Niet genoeg Kloofglas: dit kost %d, je hebt %d.",
+  "Riftglass flares! Your whole team stands up again with full Vigor.": "Kloofglas laait op! Je hele team staat weer op met volle Kracht.",
+  "Riftglass holds you in place. Your team is rested again.": "Kloofglas houdt je op je plek. Je team is weer uitgerust.",
+  "Riftglass is locked for now. Look in the shop under My purchases.": "Kloofglas is nu op slot. Kijk in de winkel onder Mijn aankopen.",
+  "Riftglass is not available on this account.": "Kloofglas is niet beschikbaar op dit account.",
+  "Riftglass shop": "Kloofglaswinkel",
+  "Stay right before the Warden? Your team is rested.": "Vlak voor de Hoeder blijven? Je team is uitgerust.",
+  "That did not work. No Riftglass was taken.": "Dat lukte niet. Er is geen Kloofglas afgeschreven.",
+  "That was a lot in a short time. Please wait a while.": "Dat was veel in korte tijd. Wacht even.",
+  "That was the last one here.": "Dat was hier de laatste.",
+  "You have %d Riftglass.": "Je hebt %d Kloofglas."
+ }
+}

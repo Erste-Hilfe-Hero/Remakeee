@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table p2w_shop, written by tools/i18n/locales_p2w_shop.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "+%d %% bonus": "+%d %% 보너스",
+  "A one-time pack for your journey": "여행을 위한 한 번뿐인 묶음",
+  "After the tier before it": "이전 단계 다음에",
+  "All advantages": "모든 이점",
+  "Best value": "최고 가성비",
+  "Bestseller": "인기 상품",
+  "Featured": "추천",
+  "First buy x2": "첫 구매 x2",
+  "Later in the journey": "여행 후반에",
+  "Limited": "한정",
+  "Owned": "보유 중",
+  "Pay %d Riftglass": "균열유리 %d 지불",
+  "Popular": "인기",
+  "Show": "보기",
+  "Show offer": "상품 보기",
+  "Show the pass": "패스 보기",
+  "Until %s": "%s까지",
+  "Use it": "사용하기"
+ }
+}

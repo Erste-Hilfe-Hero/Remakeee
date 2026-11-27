@@ -1,0 +1,31 @@
+{
+ "_comment": "Translations of the German table riftglass_sinks, written by tools/i18n/locales_riftglass_sinks.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s: %d Riftglass": "%s: %d Vidrofenda",
+  "Bond boost %s? You have %d Riftglass.": "Impulso de vínculo %s? Você tem %d Vidrofenda.",
+  "Boost: %d Riftglass": "Impulso: %d Vidrofenda",
+  "Bring one home now": "Trazer um para casa já",
+  "Bring this Spirling home now? %d h left.": "Trazer este Spirling para casa já? Faltam %d h.",
+  "Continue for %s? Your whole team stands up with full Vigor.": "Continuar por %s? Toda a sua equipe se levanta com Vigor cheio.",
+  "Daily gift: +%d Riftglass": "Presente diário: +%d Vidrofenda",
+  "Growth x2 for the next %d battles?": "Crescimento x2 nas próximas %d batalhas?",
+  "Growth x2: %d": "Crescimento x2: %d",
+  "Heal team: %d": "Curar equipe: %d",
+  "Heal the whole team now? Full Vigor, Energy, no states.": "Curar a equipe toda agora? Vigor e Energia cheios, sem estados.",
+  "Light it again": "Acender de novo",
+  "Light the lamp again tonight? Another visitor may follow the light.": "Acender a lâmpada de novo esta noite? Outro visitante pode seguir a luz.",
+  "No boost": "Sem impulso",
+  "No connection right now. Riftglass needs the server.": "Sem conexão agora. A Vidrofenda precisa do servidor.",
+  "Not enough Riftglass: this costs %d, you have %d.": "Vidrofenda insuficiente: custa %d, você tem %d.",
+  "Riftglass flares! Your whole team stands up again with full Vigor.": "A Vidrofenda brilha! Toda a sua equipe se levanta com Vigor cheio.",
+  "Riftglass holds you in place. Your team is rested again.": "A Vidrofenda mantém você no lugar. Sua equipe está descansada de novo.",
+  "Riftglass is locked for now. Look in the shop under My purchases.": "A Vidrofenda está bloqueada por enquanto. Veja na loja, em Minhas compras.",
+  "Riftglass is not available on this account.": "A Vidrofenda não está disponível nesta conta.",
+  "Riftglass shop": "Loja de Vidrofenda",
+  "Stay right before the Warden? Your team is rested.": "Ficar logo antes da Sentinela? Sua equipe está descansada.",
+  "That did not work. No Riftglass was taken.": "Não deu certo. Nenhuma Vidrofenda foi gasta.",
+  "That was a lot in a short time. Please wait a while.": "Foi muito em pouco tempo. Espere um pouco.",
+  "That was the last one here.": "Era o último aqui.",
+  "You have %d Riftglass.": "Você tem %d Vidrofenda."
+ }
+}
