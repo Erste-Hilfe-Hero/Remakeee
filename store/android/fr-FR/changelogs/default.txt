@@ -1,7 +1,9 @@
-Chimora 1.3.1
+Chimora 1.3.2
 
-- 7 nouveaux dons pour tes Spirlings, et de nouveaux arts qui frappent plusieurs fois ou font entrer un équipier.
-- « Lequel te correspond ? » t'aide à choisir ton partenaire, et un bouton Idée propose des noms.
-- Bonus du week-end : expérience doublée le samedi et le dimanche.
-- Fonctionne sur plus d'appareils, Chromebooks compris, et mieux sur tablettes et téléphones pliables.
-- Nombreuses petites corrections.
+- Nouvelle boutique : packs de Verre de Faille, Carte mensuelle, Spirlings Champions, lots, offres du jour et de la semaine.
+- Verre de Faille en jeu : continuer après une défaite, soigner, booster croissance ou liens, écourter les voyages. 20 offerts chaque jour.
+- Nouveau pass à 30 paliers.
+- 70 nouveaux Spirlings et 5 sortes de Reflets.
+- Météo : pluie, brouillard, vent, orages et neige.
+- 35 énigmes et des secrets.
+- Cartes mieux reliées, mieux sur tablette, corrections.

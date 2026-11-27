@@ -1,7 +1,9 @@
-Chimora 1.3.1
+Chimora 1.3.2
 
-- 7 dones nuevos para tus Spirlings, y nuevas artes que golpean varias veces o hacen entrar a un compañero.
-- "¿Cuál va contigo?" te ayuda a elegir compañero, y un botón Idea sugiere nombres.
-- Bonus de fin de semana: experiencia doble el sábado y el domingo.
-- Funciona en más dispositivos, incluidos Chromebooks, y mejor en tabletas y móviles plegables.
-- Muchas pequeñas correcciones.
+- Tienda nueva con packs de Vidrio Grieta, Tarjeta mensual, Spirlings Campeones, lotes y ofertas diarias y semanales.
+- Vidrio Grieta en el juego: seguir tras una derrota, curar, impulsar crecimiento o vínculos, acortar viajes. 20 de regalo cada día.
+- Nuevo pase con 30 niveles.
+- 70 Spirlings nuevos y 5 tipos de Fulgor.
+- Clima: lluvia, niebla, viento, tormentas y nieve.
+- 35 acertijos y muchos secretos ocultos.
+- Mapas mejor conectados, mejor en tabletas y muchas correcciones.

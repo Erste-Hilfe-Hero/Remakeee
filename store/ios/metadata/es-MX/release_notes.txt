@@ -1,10 +1,14 @@
-Chimora 1.3.1
+Chimora 1.3.2
 
-- 7 dones nuevos para tus Spirlings, y nuevas artes que golpean varias veces o hacen entrar a un compañero.
-- "¿Cuál va contigo?" te ayuda a elegir compañero, y un botón Idea sugiere nombres.
-- Mapa del mundo: dónde estuviste por última vez, el camino al punto de descanso más cercano y una estrella donde te uniste a cada especie.
-- Historial de diálogos, modo noche y "Restablecer" en cada página de ajustes.
-- Bonus de fin de semana: experiencia doble el sábado y el domingo.
-- Ahora también en iPad, y mejor en tabletas y móviles plegables.
-- Los textos largos de los menús se ajustan en vez de cortarse.
-- Muchas pequeñas correcciones.
+- Una tienda totalmente nueva: packs de Vidrio Grieta, la Tarjeta mensual, Spirlings Campeones, lotes y ofertas diarias y semanales. Cada oferta muestra exactamente lo que trae, nada es al azar.
+- El Vidrio Grieta ahora también sirve en el juego: seguir luchando tras una derrota, curar a tu equipo, impulsar el crecimiento o un vínculo, acortar la espera de un viaje, volver a enfrentarte a un Custodio al momento y más.
+- 20 de Vidrio Grieta de regalo cada día.
+- Un pase nuevo con 30 niveles y una fila gratis para todos.
+- 70 Spirlings nuevos, 10 en cada región.
+- El Fulgor ahora tiene 5 tipos, desde el Fulgor clásico hasta el rarísimo Fulgor opalino.
+- Clima nuevo: lluvia, niebla, viento, tormentas y nieve cambian el mundo y algunos combates. Viene activado y se puede regular en Ajustes.
+- 35 piedras enigma y tableros de acertijos en todas las regiones.
+- Muchos secretos ocultos que descubrirás jugando.
+- Los mapas están mejor conectados: sin callejones sin salida y con casas nuevas en los pueblos.
+- Mejor adaptado a pantallas grandes y tabletas.
+- Muchas correcciones de errores.

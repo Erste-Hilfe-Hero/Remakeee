@@ -1,7 +1,9 @@
-Chimora 1.3.1
+Chimora 1.3.2
 
-- 7 nieuwe gaven voor je Spirlings, en nieuwe kunsten die meerdere keren raken of een teamgenoot laten invallen.
-- "Welke past bij jou?" helpt je een partner te kiezen, en een Idee-knop stelt namen voor.
-- Weekendbonus: dubbele ervaring op zaterdag en zondag.
-- Werkt op meer apparaten, ook Chromebooks, en beter op tablets en vouwtelefoons.
-- Veel kleine verbeteringen.
+- Nieuwe winkel met Kloofglas-pakketten, Maandkaart, Kampioen-Spirlings, bundels en dag- en weekaanbiedingen.
+- Kloofglas in het spel: doorgaan na een nederlaag, genezen, groei of banden versterken, reizen inkorten. Elke dag 20 cadeau.
+- Nieuwe pas met 30 niveaus.
+- 70 nieuwe Spirlings en 5 soorten glansvormen.
+- Weer: regen, mist, wind, storm en sneeuw.
+- 35 puzzels en veel verborgen geheimen.
+- Beter verbonden kaarten, beter op tablets, veel verbeteringen.

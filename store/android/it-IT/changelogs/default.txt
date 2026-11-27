@@ -1,7 +1,9 @@
-Chimora 1.3.1
+Chimora 1.3.2
 
-- 7 nuovi doni per i tuoi Spirling, e nuove arti che colpiscono più volte o fanno entrare un compagno.
-- "Quale fa per te?" ti aiuta a scegliere il partner, e un pulsante Idea suggerisce nomi.
-- Bonus del weekend: esperienza doppia il sabato e la domenica.
-- Funziona su più dispositivi, anche Chromebook, e meglio su tablet e telefoni pieghevoli.
-- Tante piccole correzioni.
+- Nuovo negozio: pacchetti di Vetro-squarcio, Carta mensile, Spirling Campioni, set e offerte del giorno e della settimana.
+- Vetro-squarcio nel gioco: continuare dopo una sconfitta, curare, potenziare crescita o legami, accorciare i viaggi. 20 in regalo ogni giorno.
+- Nuovo lasciapassare con 30 livelli.
+- 70 nuovi Spirling e 5 tipi di Splendore.
+- Meteo: pioggia, nebbia, vento, tempeste e neve.
+- 35 enigmi e tanti segreti.
+- Mappe più collegate, meglio sui tablet, correzioni.
