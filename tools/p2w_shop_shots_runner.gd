@@ -84,9 +84,11 @@ func _screens(lang: String) -> void:
 	add_child(m)
 	await get_tree().process_frame
 	_state(18)
+	# As in the game: Eras IV and V show the shop twice as large (ShopZoom).
+	var h: MenuHost = ShopZoom.enter(m)
 	var s := ShopScreen.new()
-	s.menu = m
-	m.add_child(s)
+	s.menu = h
+	h.add_child(s)
 	for tab: String in ShopScreen.TABS:
 		s.select_tab(tab)
 		await _picture(t + "_%02d_%s" % [ShopScreen.TABS.find(tab) + 1, tab], s)
@@ -109,14 +111,15 @@ func _screens(lang: String) -> void:
 	_state(18)
 	var pop := ShopScreen.StarterPopup.new()
 	pop.offer = ShopCatalog.offer("rg_starter")
-	m.add_child(pop)
+	h.add_child(pop)
 	await _picture(t + "_15_starter_note", pop)
 	pop.queue_free()
 	# A child account: the menu row says locked and the shop says why.
 	_state(10)
-	m.info(ShopMenu.LOCKED_TEXT)
+	h.info(ShopMenu.LOCKED_TEXT)
 	await _picture(t + "_16_kids_locked", null)
-	m._close_info()
+	h._close_info()
+	ShopZoom.leave(h)
 	m.queue_free()
 	await get_tree().process_frame
 
@@ -137,8 +140,28 @@ func _server(balance: int, band_year: int = 1990) -> void:
 func _wait_dialog(host: MenuHost, picks: int, infos: int, frames: int = 120) -> void:
 	for i: int in frames:
 		await get_tree().process_frame
-		if host.picks > picks or host.infos > infos:
+		if _live(host).picks > picks or _live(host).infos > infos:
 			return
+
+## The host that shows the dialogs of [param m]: the zoomed one over it (ShopZoom), else [param m].
+static func _live(m: Node) -> MenuHost:
+	var v: Node = _zoom_of(m)
+	return v.get_child(0).get_child(0) as MenuHost if v != null else m as MenuHost
+
+static func _zoom_of(n: Node) -> Node:
+	for c: Node in n.get_children():
+		if c is ShopZoom.View:
+			return c
+	return null
+
+static func _find_shop(n: Node) -> ShopScreen:
+	for c: Node in n.get_children():
+		if c is ShopScreen:
+			return c
+		var d: ShopScreen = _find_shop(c)
+		if d != null:
+			return d
+	return null
 
 ## The pass track screen without and with the pass: points in step 5, two free rewards taken.
 func _pass_screens(lang: String) -> void:
@@ -160,7 +183,7 @@ func _pass_screens(lang: String) -> void:
 		await _picture(t + ("_21_pass_track_premium" if premium else "_20_pass_track"), null)
 		if not premium:
 			# A step page with the premium row locked.
-			m.picker.picked.emit(_first_step_row(m))
+			_live(m).picker.picked.emit(_first_step_row(_live(m)))
 			await _wait_dialog(m, 1, 0)
 			await _picture(t + "_22_pass_step", null)
 			await _past_page(m, t + "_23_pass_step_choice")
@@ -169,12 +192,13 @@ func _pass_screens(lang: String) -> void:
 		await get_tree().process_frame
 
 ## A long question shows as a page before its list (MenuHost.pick): turn it, shoot the list.
-func _past_page(m: MenuHost, shot: String) -> void:
+func _past_page(outer: MenuHost, shot: String) -> void:
+	var m: MenuHost = _live(outer)
 	if not m._info_wait:
 		return
 	var picks: int = m.picks
 	m._close_info()
-	await _wait_dialog(m, picks, m.infos)
+	await _wait_dialog(outer, picks, m.infos)
 	await _picture(shot, null)
 
 func _first_step_row(m: MenuHost) -> int:
@@ -196,7 +220,7 @@ func _sink_screens(lang: String) -> void:
 	RiftglassSinks.run_menu(m)
 	await _wait_dialog(m, 0, 0)
 	await _picture(t + "_30_rg_menu", null)
-	m.picker.picked.emit(0)
+	_live(m).picker.picked.emit(0)
 	await _wait_dialog(m, 1, 0)
 	await _picture(t + "_31_rg_heal_anywhere", null)
 	await _past_page(m, t + "_31b_rg_heal_choice")
@@ -209,18 +233,16 @@ func _sink_screens(lang: String) -> void:
 	await get_tree().process_frame
 	RiftglassSinks.run_menu(m)
 	await _wait_dialog(m, 0, 0)
-	m.picker.picked.emit(0)
+	_live(m).picker.picked.emit(0)
 	await _wait_dialog(m, 1, 0)
 	await _picture(t + "_32_rg_not_enough", null)
 	await _past_page(m, t + "_32b_rg_not_enough_choice")
 	# "Riftglass shop": the shop screen on its Riftglass tab.
-	m.picker.picked.emit(0)
+	_live(m).picker.picked.emit(0)
 	var s: ShopScreen = null
 	for i: int in 240:
 		await get_tree().process_frame
-		for c: Node in m.get_children():
-			if c is ShopScreen:
-				s = c
+		s = _find_shop(m)
 		if s != null:
 			break
 	if s == null:
@@ -254,10 +276,19 @@ func _continue_screen(lang: String) -> void:
 	inst._offer_continue()
 	for i: int in 240:
 		await get_tree().process_frame
-		if inst._picker.visible:
+		if inst._picker.visible or _zoom_of(inst) != null:
 			break
 		if i % 20 == 19:
 			inst._text.advance_now()
+	# Zoomed (Eras IV, V): a long question shows as a page first; the shot is the list.
+	if _zoom_of(inst) != null:
+		var lh: MenuHost = _live(inst)
+		for i: int in 60:
+			await get_tree().process_frame
+			if lh._info_wait:
+				lh._close_info()
+			elif lh.picker.is_visible_in_tree():
+				break
 	await _picture(t + "_40_continue_after_defeat", null)
 	inst.queue_free()
 	await get_tree().process_frame

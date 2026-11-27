@@ -965,7 +965,7 @@ func _offer_continue() -> void:
 	var ok: bool = false
 	if why.is_empty():
 		await _text.show_text(Loc.t("Continue for %s? Your whole team stands up with full Vigor.") % RiftglassSinks.cost_text(cost))
-		if await _picker.pick(continue_title(cost), [{"text": "Continue"}, {"text": "Give up"}] as Array[Dictionary], false) == 0:
+		if await ShopZoom.ask(self, _picker, continue_title(cost), [{"text": "Continue"}, {"text": "Give up"}] as Array[Dictionary], false) == 0:
 			var d: Dictionary = await RiftglassSinks.spend("continue", continue_ref(model), cost)
 			ok = bool(d.get("ok", false))
 			if not ok:
@@ -975,10 +975,15 @@ func _offer_continue() -> void:
 	inputs.append(BattleReplay.continue_to_dict(ok))
 	await _play(model.submit_continue(ok))
 
-## The title of the continue choice: the price with its euro value stays in sight while the
-## player decides (docs/MONETIZATION.md rule 3), then the balance.
+## The title of the continue choice: the balance, then the price with its euro value, which
+## stays in sight while the player decides (docs/MONETIZATION.md rule 3), also when a narrow
+## screen shows the title as a page first and keeps only its last line for the list.
 static func continue_title(cost: int) -> String:
-	return RiftglassSinks.cost_text(cost) + "\n" + RiftglassSinks.balance_line()
+	return RiftglassSinks.balance_line() + "\n" + RiftglassSinks.cost_text(cost)
+
+## The bond boost answer: "Boost: 100 Riftglass (≈ 0,99 €)".
+static func bond_boost_row(cost: int) -> String:
+	return Loc.t("Boost: %d Riftglass") % cost + " (" + ShopCatalog.euro_hint(cost) + ")"
 
 ## The battle's key for per-battle Riftglass limits on the server (continue, bond boost).
 static func continue_ref(m: BattleModel) -> String:
@@ -1355,8 +1360,9 @@ func _bond_boost(charm: String) -> float:
 	if bool(Database.item(charm).get("bond_sure", false)) or _rg_boosts >= int(RiftglassSinks.sink("bond_boost").get("max_per_ref", 0)):
 		return 0.0
 	var pct: String = "+%d %%" % roundi(RiftglassSinks.bond_boost() * 100.0)
-	var use: int = await _picker.pick(Loc.t("Bond boost %s? You have %d Riftglass." % [pct, Billing.balance()]),
-		[{"text": Loc.t("Boost: %d Riftglass") % cost}, {"text": "No boost"}] as Array[Dictionary])
+	# The price with its euro value (docs/MONETIZATION.md rule 3).
+	var use: int = await ShopZoom.ask(self, _picker, Loc.t("Bond boost %s? You have %d Riftglass." % [pct, Billing.balance()]),
+		[{"text": bond_boost_row(cost)}, {"text": "No boost"}] as Array[Dictionary])
 	if use < 0:
 		return -1.0
 	if use != 0:

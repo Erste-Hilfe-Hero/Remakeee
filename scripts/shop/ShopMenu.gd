@@ -16,6 +16,12 @@ const WITHDRAWAL_TEXT: String = "Before your first purchase: digital goods are d
 ## Opens the shop: the full-screen ShopScreen after the connection, age and kids checks.
 ## [param open_offer] opens straight on that offer (the Starter Pack note).
 static func run(menu: MenuHost, open_offer: String = "") -> void:
+	# Every page of the shop in finger and reading size (ShopZoom).
+	var h: MenuHost = ShopZoom.enter(menu)
+	await _run(h, open_offer)
+	ShopZoom.leave(h)
+
+static func _run(menu: MenuHost, open_offer: String) -> void:
 	# Item 4111: the browser test version cannot buy; the shop lives in the apps only.
 	if OS.has_feature("web"):
 		await menu.info(WEB_TEXT)

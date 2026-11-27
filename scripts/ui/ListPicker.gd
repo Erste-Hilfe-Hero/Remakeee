@@ -238,6 +238,9 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	# The player's tap guard (KAMPF_PLAN_1000 item 908) lengthens it, never shortens it.
 	_guard_ms = BattleCalm.guard_ms(guard_ms)
 	_back.visible = cancellable
+	# A layout may ask for a larger Back button (the shop's lists, ShopZoom).
+	var back: int = int(layout.get("back_size", BACK_SIZE))
+	_back.custom_minimum_size = Vector2(back, back)
 	_foot.visible = one_hand and cancellable
 	# A list with no title and no Back button in its head gives that line to the rows (plan
 	# Chimora 100, item 66: the title list needed a scroll to reach Settings at 9:16).

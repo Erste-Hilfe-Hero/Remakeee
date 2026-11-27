@@ -143,6 +143,10 @@ static func claim_daily() -> int:
 static func cost_text(cost: int) -> String:
 	return ShopCatalog.rg_text(cost)
 
+## A Riftglass question: the question, the balance, then the price with its euro value.
+static func price_question(question: String, cost: int) -> String:
+	return question + "\n" + balance_line() + "\n" + cost_text(cost)
+
 static func balance_line() -> String:
 	return Loc.t("You have %d Riftglass.") % Billing.balance()
 
@@ -150,7 +154,7 @@ static func balance_line() -> String:
 static func error_text(why: String, cost: int = 0) -> String:
 	match why:
 		"not_enough":
-			return Loc.t("Not enough Riftglass: this costs %d, you have %d." % [cost, Billing.balance()])
+			return Loc.glue_last(Loc.t("Not enough Riftglass: this costs %d, you have %d." % [cost, Billing.balance()]))
 		"offline":
 			return Loc.t("No connection right now. Riftglass needs the server.")
 		"age":
@@ -170,6 +174,11 @@ static func error_text(why: String, cost: int = 0) -> String:
 static func open_riftglass_page(menu: MenuHost) -> void:
 	if OS.has_feature("web") or Billing.kids_locked():
 		return
+	var h: MenuHost = ShopZoom.enter(menu)
+	await _open_riftglass_page(h)
+	ShopZoom.leave(h)
+
+static func _open_riftglass_page(menu: MenuHost) -> void:
 	var r: Dictionary = await Billing.refresh_state()
 	if not r.ok:
 		await menu.info(error_text("offline"))
@@ -190,6 +199,13 @@ static func open_riftglass_page(menu: MenuHost) -> void:
 ## with [param shop_link] false, e.g. right after a defeat). True once the server took the
 ## Riftglass (the caller then applies the effect).
 static func pay_in_menu(menu: MenuHost, reason: String, ref: String, cost: int, question: String, shop_link: bool = true) -> bool:
+	# The question in finger and reading size (ShopZoom).
+	var h: MenuHost = ShopZoom.enter(menu)
+	var ok: bool = await _pay_in_menu(h, reason, ref, cost, question, shop_link)
+	ShopZoom.leave(h)
+	return ok
+
+static func _pay_in_menu(menu: MenuHost, reason: String, ref: String, cost: int, question: String, shop_link: bool) -> bool:
 	if not visible():
 		await menu.info(error_text(why_not(cost), cost))
 		return false
@@ -201,7 +217,9 @@ static func pay_in_menu(menu: MenuHost, reason: String, ref: String, cost: int, 
 	if not why.is_empty():
 		await menu.info(error_text(why, cost))
 		return false
-	if not await menu.confirm(question + "\n" + cost_text(cost) + "\n" + balance_line(), "Use", "Not now"):
+	# The price comes last: when a long question shows as a page first, the list keeps its last
+	# line (MenuHost.short_title), so the price with its euro value stays in sight.
+	if not await menu.confirm(price_question(question, cost), "Use", "Not now"):
 		return false
 	var d: Dictionary = await spend(reason, ref, cost)
 	if not bool(d.get("ok", false)):
@@ -213,6 +231,11 @@ static func pay_in_menu(menu: MenuHost, reason: String, ref: String, cost: int, 
 ## "Riftglass" in the pause menu: heal the team anywhere, Growth x2, and the shop's Riftglass
 ## page. Only shown while visible().
 static func run_menu(menu: MenuHost) -> void:
+	var h: MenuHost = ShopZoom.enter(menu)
+	await _run_menu(h)
+	ShopZoom.leave(h)
+
+static func _run_menu(menu: MenuHost) -> void:
 	while true:
 		var rows: Array[Dictionary] = [
 			{"text": Loc.t("Heal team: %d") % price("heal")},
