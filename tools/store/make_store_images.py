@@ -2,22 +2,27 @@
 (plan Chimora 100, items 86, 87, 97). Every picture is a screen of the running game or Spirling art as
 the game draws it; nothing shows a feature the game does not have.
 
-1. Render the raw screens in all 14 languages (needs a display):
+1. Render the raw screens in all 14 languages (needs a display); the 1.3.2 screens (shop, pass,
+   gleam, weather, puzzle) in a second run with the tall phone window:
      for l in en de fr es it ja ko zh_CN zh_TW pt_BR ru pl tr nl; do
-       xvfb-run -a godot --path . --rendering-driver opengl3 -s res://tools/store_shots.gd -- /tmp/shots/$l $l
+       xvfb-run -a godot --path . --rendering-driver opengl3 -s res://tools/store_shots.gd -- /tmp/shots/$l $l title,hero,battle,eras
+       xvfb-run -a godot --path . --rendering-driver opengl3 --resolution 440x956 \
+         -s res://tools/store_shots.gd -- /tmp/shots/$l $l shop,pass,gleam,weather,puzzle
      done
 2. python3 tools/store/make_store_images.py /tmp/shots [--out DIR] [--shots 1,6] [locale or game language ...]
    (--shots: only these pictures, and no feature graphic or icon; the raw screens of the other
    pictures are then not needed)
    (needs Pillow and fonttools)
 
-The set, the same in every locale (store/ios/screenshot_captions/<locale>.txt, one caption per line):
+The set (1.3.2), the same in every locale (store/ios/screenshot_captions/<locale>.txt, one caption per line):
   1 monster hero (Era IV Spirlings, one Gleam with its glints)   2 3v3 battle in Era V (whole screen:
                                                                   the text box height differs per language)
-  3 unfurl before and after                                       4 one town in Eras I to IV, 2 x 2
-  5 story line (Wren, Act I)                                      6 Fair league screen (tier, rank)
-  7 Spirlog page                                                  8 shop: Looks list, Riftglass prices only
-No money prices and no Discord note in any picture.
+  3 a wild Rime Gleam in an Era V battle: its opening line,       4 Era V Mossgate in the rain
+    or the command menu where the line takes two pages
+  5 a puzzle board (Tracks in the Mud)                            6 one town in Eras I to IV, 2 x 2
+  7 shop: Featured page, no store prices, euro hints taken out    8 the pass track in step 5
+No money prices and no Discord note in any picture. The 1.3.1 pictures (unfurl, story line, league,
+Spirlog, Looks list) are still rendered by tools/store_shots.gd and drawn by unfurl() and screen().
 
 Writes (fastlane folder layout), under --out (default: the repo):
   store/ios/screenshots/<locale>/N_iphone69.png          1320 x 2868 (App Store 6.9", all 20 locales)
@@ -337,7 +342,25 @@ def screen(name: str):
     return make
 
 
-SHOTS = [hero, screen("b1_era5_3v3"), unfurl, eras, screen("s1_story"), screen("l2_league"), screen("m1_spirlog"), screen("m2_shop_looks")]
+# The Gleam battle at its opening line: the command panel under the text box is still empty, so it
+# is cut off. Languages whose line takes two pages have the command menu after it (whole screen).
+GLEAM_KEEP = 0.795
+
+
+def gleam_battle(src: str, lang: str, w: int, h: int, px: int) -> Image.Image:
+    out = backdrop(w, h, px)
+    if os.path.exists(os.path.join(src, lang, "n3_gleam_battle.png")):
+        img = load(src, lang, "n3_gleam_battle")
+        img = img.crop((0, 0, img.width, round(img.height * GLEAM_KEEP)))
+    else:
+        img = load(src, lang, "n3_gleam_menu")
+    img = fit(img, w - 4 * px, h)
+    framed(out, img, (w - img.width) // 2, (h - img.height) // 2, px)
+    return out
+
+
+SHOTS = [hero, screen("b1_era5_3v3"), gleam_battle, screen("n4_weather_rain"), screen("n5_puzzle"), eras,
+         screen("n1_shop_featured"), screen("n2_pass_track")]
 
 
 def picture(n: int, src: str, lang: str, size: tuple, caption: str, cap_lang: str) -> Image.Image:
