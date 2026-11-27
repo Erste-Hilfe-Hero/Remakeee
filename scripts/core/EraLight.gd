@@ -82,7 +82,8 @@ static func day_tint(era: int, hour: float, lit: bool) -> Color:
 
 ## How [param kind] (WeatherCycle) looks on a map: a rule of "weather_looks" may turn it into
 ## sandstorm, ash or snow when the era knows that look; a look the era lacks stays [param kind].
-static func weather_look(era: int, map_id: String, region: String, biome: String, kind: String) -> String:
+## A rule with "months" holds in those months only (snow on scree slopes in the cold months).
+static func weather_look(era: int, map_id: String, region: String, biome: String, kind: String, month: int = 0) -> String:
 	if kind == "clear" or kind.is_empty():
 		return "clear"
 	var known: Array = for_era(era).get("looks", [])
@@ -94,9 +95,28 @@ static func weather_look(era: int, map_id: String, region: String, biome: String
 			continue
 		if rule.has("biome") and str(rule.biome) != biome:
 			continue
+		if rule.has("months") and not _has_month(rule.months, month if month > 0 else month_now()):
+			continue
 		if str(rule.to) in known:
 			return str(rule.to)
 	return kind if kind in known else "clear"
+
+## The look of [param kind] on [param m] in the era on screen there.
+static func look_for(m: MapData, kind: String) -> String:
+	return weather_look(era_for(m.region), m.id, m.region, m.biome, kind) if m != null else "clear"
+
+## English name of the sky over [param m] for Loc.t: the grade ("Drizzle", "Downpour"), or the
+## look where the place turns the weather into its own ("Snow", "Ash fall").
+static func weather_name(m: MapData, unix: int = -1) -> String:
+	var st: Dictionary = WeatherCycle.state(m, unix)
+	var seen: String = look_for(m, str(st.kind))
+	return WeatherCycle.name_of(str(st.grade) if seen == str(st.kind) or seen == "clear" else seen)
+
+static func _has_month(months: Variant, month: int) -> bool:
+	for v: Variant in months as Array:
+		if int(v) == month:
+			return true
+	return false
 
 static func weather_tint(era: int, look: String) -> Color:
 	return _color((for_era(era).get("weather_tints", {}) as Dictionary).get(look, ""))
@@ -229,7 +249,8 @@ static func weather_line(look: String) -> String:
 	return str((data().get("weather_text", {}) as Dictionary).get(look, ""))
 
 ## Names of everything the layer draws for [param ctx]: {look, outdoor, lit (outdoor with the
-## day-night option on), hour, wooded, lamps, cave, month, reduced}.
+## day-night option on), hour, wooded, lamps, cave, month, reduced, weather_fx ("off" draws no
+## weather, WeatherCycle.fx_level), after_rain (a clear sky right after rain)}.
 static func effects(era: int, ctx: Dictionary) -> Array[String]:
 	var out: Array[String] = []
 	var row: Dictionary = for_era(era)
@@ -243,21 +264,22 @@ static func effects(era: int, ctx: Dictionary) -> Array[String]:
 	var lamps: bool = bool(ctx.get("lamps", false))
 	var s: String = season(int(ctx.get("month", 1)))
 	var parts: Array = row.get("particles", [])
+	var drawn: bool = str(ctx.get("weather_fx", "full")) != "off"
 	if look != "clear":
 		# Era I draws no weather over the map ("none", owner 25.11.2026), only the line.
-		if str(row.get("weather_style", "pattern")) != "none":
+		if drawn and str(row.get("weather_style", "pattern")) != "none":
 			out.append("weather_" + str(row.get("weather_style", "pattern")))
 		if bool(row.get("weather_text", false)):
 			out.append("weather_text")
-	if look in WET:
+	if look in WET and drawn:
 		for k: String in ["splashes", "puddles"]:
 			if bool(row.get(k, false)):
 				out.append(k)
-	if look == "fog" and bool(row.get("fog_bands", false)):
+	if look == "fog" and drawn and bool(row.get("fog_bands", false)):
 		out.append("fog_bands")
-	if look == "storm" and bool(row.get("lightning", false)) and not bool(ctx.get("reduced", false)):
+	if look == "storm" and drawn and bool(row.get("lightning", false)) and not bool(ctx.get("reduced", false)):
 		out.append("lightning")
-	if look == "snow" and bool(row.get("snow_prints", false)):
+	if look == "snow" and drawn and bool(row.get("snow_prints", false)):
 		out.append("snow_prints")
 	if lit and dark and bool(row.get("lit_windows", false)):
 		out.append("lit_windows")
@@ -277,6 +299,9 @@ static func effects(era: int, ctx: Dictionary) -> Array[String]:
 		out.append("pollen")
 	if lit and dark and lamps and "embers" in parts:
 		out.append("embers")
+	# A rainbow stands over wet land by day once the rain has gone (eras with puddles).
+	if outdoor and drawn and look == "clear" and phase == DayCycle.Phase.DAY and bool(ctx.get("after_rain", false)) and bool(row.get("puddles", false)):
+		out.append("rainbow")
 	if bool(ctx.get("cave", false)):
 		out.append("cave_light")
 	return out

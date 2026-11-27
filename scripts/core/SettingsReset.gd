@@ -15,7 +15,7 @@ const GROUP_KEYS: Dictionary[String, Array] = {
 	"controls": ["pad_size", "pad_opacity", "left_handed", "tap_to_move", "always_run", "bond_style", "input_delay",
 		"no_rush", "swap_ab_touch", "swap_ab_pad", "tap_vibration", "one_hand", "vibration"],
 	"display": ["battery_saver", "reduce_motion", "high_contrast", "color_blind", "large_text", "day_night",
-		"weather", "minimap", "screen_shake", "night_mode"],
+		"weather", "weather_fx", "minimap", "screen_shake", "night_mode"],
 }
 
 const ROW_TEXT: String = "Reset to default"

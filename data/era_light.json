@@ -11,7 +11,8 @@
   {"region": "quillmarch", "maps": ["mordant_row", "mordant_steps", "platewick"], "from": ["wind", "fog"], "to": "ash"},
   {"region": "quillmarch", "biome": "route", "from": ["wind"], "to": "sandstorm"},
   {"region": "halcyra", "maps": ["white_stair", "long_stair", "whitecairn", "orrery_ridge"], "from": ["rain", "storm", "fog"], "to": "snow"},
-  {"region": "quivermoor", "biome": "town", "from": ["wind"], "to": "ash"}
+  {"region": "quivermoor", "biome": "town", "from": ["wind"], "to": "ash"},
+  {"biome": "scree", "months": [11, 12, 1, 2, 3], "from": ["rain", "storm"], "to": "snow"}
  ],
  "seasons": {
   "months": {"spring": [3, 4, 5], "summer": [6, 7, 8], "autumn": [9, 10, 11], "winter": [12, 1, 2]},

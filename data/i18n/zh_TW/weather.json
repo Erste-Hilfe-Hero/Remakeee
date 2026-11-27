@@ -1,0 +1,15 @@
+{
+ "_comment": "Translations of the German table weather, written by tools/i18n/locales_weather.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Ash fall": "落灰",
+  "Downpour": "傾盆大雨",
+  "Drizzle": "毛毛雨",
+  "Gale": "大風",
+  "How much rain, snow and fog is drawn. Low is easier on old phones. Off: only the light changes.": "繪製多少雨、雪和霧。少對舊手機更輕鬆。關：只有光線變化。",
+  "Later: %s": "之後：%s",
+  "Low": "少",
+  "Snow": "雪",
+  "Thick fog": "濃霧",
+  "Weather effects: %s": "天氣效果：%s"
+ }
+}

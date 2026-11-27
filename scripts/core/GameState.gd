@@ -262,6 +262,9 @@ var day_night: bool = true
 var weather: bool = false
 ## Settings files from before 1.3.1 lack this mark: their "weather" is turned off once.
 const WEATHER_MARK: String = "weather_131"
+## How much of the weather is drawn (WeatherCycle.FX_LEVELS): "full", "low" (half the drops, no
+## splashes) or "off" (the tint only). The weather and its rules are the same at every level.
+var weather_fx: String = "full"
 ## Minimap (area 3 item 1272): "on", "off" or "outdoor" (only outside).
 var minimap: String = "on"
 ## Night mode (200 list item 127): 0 off, 1 dim, 2 warm. A tint over the whole screen for dark rooms.
@@ -927,7 +930,7 @@ func settings_to_dict() -> Dictionary:
 		"one_hand": one_hand, "bag_sort": bag_sort, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice, "auto_text": auto_text,
 		"tips": tips_enabled, "play_reminder": play_reminder, "goal_line": goal_line, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, WEATHER_MARK: true, "minimap": minimap, "night_mode": night_mode, "language": language,
+		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, WEATHER_MARK: true, "weather_fx": weather_fx, "minimap": minimap, "night_mode": night_mode, "language": language,
 		"terms_version": terms_version}
 
 func settings_from_dict(d: Dictionary) -> void:
@@ -979,6 +982,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	day_night = bool(d.get("day_night", true))
 	# Off for everyone with 1.3.1 (owner 25.11.2026); a later choice in Settings is kept.
 	weather = bool(d.get("weather", false)) if d.has(WEATHER_MARK) else false
+	weather_fx = str(d.get("weather_fx", "full")) if str(d.get("weather_fx", "full")) in WeatherCycle.FX_LEVELS else "full"
 	minimap = str(d.get("minimap", "on")) if str(d.get("minimap", "on")) in Survey.MINIMAP_MODES else "on"
 	night_mode = clampi(int(d.get("night_mode", 0)), 0, NIGHT_MODE_NAMES.size() - 1)
 	language = str(d.get("language", ""))

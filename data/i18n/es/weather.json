@@ -1,0 +1,15 @@
+{
+ "_comment": "Translations of the German table weather, written by tools/i18n/locales_weather.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Ash fall": "Lluvia de ceniza",
+  "Downpour": "Aguacero",
+  "Drizzle": "Llovizna",
+  "Gale": "Vendaval",
+  "How much rain, snow and fog is drawn. Low is easier on old phones. Off: only the light changes.": "Cuánta lluvia, nieve y niebla se dibuja. Pocos va mejor en móviles antiguos. No: solo cambia la luz.",
+  "Later: %s": "Más tarde: %s",
+  "Low": "Pocos",
+  "Snow": "Nieve",
+  "Thick fog": "Niebla densa",
+  "Weather effects: %s": "Efectos clima: %s"
+ }
+}

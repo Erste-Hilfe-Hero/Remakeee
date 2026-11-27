@@ -1,0 +1,15 @@
+{
+ "_comment": "Translations of the German table weather, written by tools/i18n/locales_weather.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Ash fall": "Deszcz popiołu",
+  "Downpour": "Ulewa",
+  "Drizzle": "Mżawka",
+  "Gale": "Wichura",
+  "How much rain, snow and fog is drawn. Low is easier on old phones. Off: only the light changes.": "Ile deszczu, śniegu i mgły jest rysowane. Mało oszczędza starsze telefony. Wył.: zmienia się tylko światło.",
+  "Later: %s": "Później: %s",
+  "Low": "Mało",
+  "Snow": "Śnieg",
+  "Thick fog": "Gęsta mgła",
+  "Weather effects: %s": "Efekty pogody: %s"
+ }
+}

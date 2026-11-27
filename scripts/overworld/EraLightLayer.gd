@@ -6,6 +6,9 @@ extends Node2D
 ## the day tint does not reach), and rain, fog, cave dark, lightning and wipes on the screen.
 ## Motion comes from the clock alone, so with reduced motion everything stands still and
 ## lightning, wipes and the camera sweep are off.
+## Rain, snow, fog and wind themselves are drawn by WeatherFx (data/weather.json "fx"); this
+## layer fades one weather into the next, lets puddles and snow build up and dry, and sends
+## the thunder after a flash.
 
 class Painter extends Node2D:
 	var paint: Callable
@@ -27,7 +30,6 @@ const SWEEP_DIST: float = 56.0
 const PATTERN_FPS: float = 4.0
 const SHADOW: Color = Color(0.05, 0.05, 0.16, 0.26)
 const WARM: Color = Color(1.0, 0.86, 0.55)
-const FOG: Color = Color(0.93, 0.94, 0.97)
 const LEAVES: Array[Color] = [Color("d0782c"), Color("8a5a2a"), Color("b8a03c")]
 const GROUND_KINDS: Array[int] = [TilesetFactory.Kind.GRASS, TilesetFactory.Kind.PATH, TilesetFactory.Kind.FLOWER, TilesetFactory.Kind.SCREE, TilesetFactory.Kind.TALL_GRASS, TilesetFactory.Kind.STAIRS]
 
@@ -49,6 +51,21 @@ var wipe_style: String = ""
 var wipe_k: float = 0.0
 var wipe_up: bool = false
 var sweeping: bool = false
+## Draws rain, snow, fog and wind (data/weather.json "fx").
+var wx: WeatherFx = WeatherFx.new()
+## The look that is fading out, and how far the new one is in (1 = all the way).
+var from_look: String = "clear"
+var mix: float = 1.0
+## Grade of the look and of the one fading out (WeatherCycle.grade "amount").
+var power: float = 1.0
+var from_power: float = 1.0
+## How wet the ground is now, 0 to 1 (puddles, lying snow), and where it is heading.
+var wet: float = 0.0
+var wet_to: float = 0.0
+## True when the screen shows land around the map (EraDepthLayer fill): weather covers it too.
+var full_screen: bool = false
+## Seconds on the layer's clock when the next thunder sounds; below 0 for none.
+var thunder_at: float = -1.0
 
 var _t: float = 0.0
 var _ground: Painter
@@ -64,8 +81,6 @@ var _last_cell: Vector2i = Vector2i(-99, -99)
 var _lamps: Array[Vector2i] = []
 var _trees: Array[Vector2i] = []
 var _shafts: Array[Vector2i] = []
-var _puddles: Array[Vector2i] = []
-var _snow: Array[Vector2i] = []
 var _flash_left: float = 0.0
 var _next_strike: float = 0.0
 var _closed: bool = false
@@ -76,6 +91,9 @@ var _sweep_left: float = 0.0
 var _sweep_from: Vector2 = Vector2.ZERO
 var _pattern_frame: int = -1
 var _tex: Dictionary = {}
+var _dim: float = 1.0
+var _rainbow: float = 0.0
+var _level: String = "full"
 
 func setup(p: GridWalker, cam: Camera2D) -> void:
 	player = p
@@ -142,7 +160,18 @@ func refresh(m: MapData, kind: String, daylight: CanvasModulate = null, glow: Wi
 	if not EraLight.debug_weather.is_empty() and m.outdoor:
 		kind = EraLight.debug_weather
 	var new_look: String = EraLight.weather_look(era, m.id, m.region, m.biome, kind)
+	var new_power: float = float(WeatherCycle.grade(kind, WeatherCycle.strength(m.region, Online.unix_now())).get("amount", 1.0))
 	var entered: bool = m.id != _map_id
+	_level = WeatherCycle.fx_level()
+	wx.setup(m, era, _level)
+	# The ground is as wet as the sky made it; a sky set by a tool is wet when it rains.
+	var loose: bool = m.outdoor and not EraLight.is_cave(m) and GameState.weather
+	if not EraLight.debug_weather.is_empty() and WeatherCycle.debug_wet < 0.0:
+		wet_to = 1.0 if new_look in EraLight.WET or new_look == "snow" else 0.0
+	else:
+		wet_to = WeatherCycle.wetness(m) if loose or WeatherCycle.debug_wet >= 0.0 else 0.0
+	if not m.outdoor or EraLight.is_cave(m):
+		wet_to = 0.0
 	if entered:
 		_map_id = m.id
 		_scan()
@@ -150,18 +179,35 @@ func refresh(m: MapData, kind: String, daylight: CanvasModulate = null, glow: Wi
 		_last_cell = player.cell if player != null else Vector2i(-99, -99)
 	fx = EraLight.effects(era, {"look": new_look, "outdoor": m.outdoor, "lit": m.outdoor and GameState.day_night,
 		"hour": hour, "wooded": EraLight.wooded(m), "lamps": not _lamps.is_empty(), "cave": EraLight.is_cave(m),
-		"month": EraLight.month_now(), "reduced": Juice.reduced()})
+		"month": EraLight.month_now(), "reduced": Juice.reduced(), "weather_fx": _level,
+		"after_rain": wet_to > 0.0 and (WeatherCycle.after_rain(m) if loose and EraLight.debug_weather.is_empty() else WeatherCycle.debug_wet >= 0.0)})
+	var tint: Color = EraLight.world_tint(era, m, new_look, hour, EraLight.month_now(), GameState.day_night)
+	# Drops and fog sit above the day tint: they take their share of the dark themselves.
+	_dim = clampf(0.35 + 0.65 * tint.get_luminance(), 0.4, 1.0)
 	if daylight != null:
-		daylight.color = EraLight.world_tint(era, m, new_look, hour, EraLight.month_now(), GameState.day_night)
+		daylight.color = tint
 	if glow != null:
 		glow.show_for(m, "lit_windows" in fx)
 	if plain_weather != null:
 		plain_weather.visible = false
 	if (entered or new_look != look) and "weather_text" in fx:
 		_say(Loc.t(EraLight.weather_line(new_look)))
+	if entered or Juice.reduced():
+		# A new map shows its sky at once; so does a calm screen.
+		from_look = "clear"
+		mix = 1.0
+		wet = wet_to
+		thunder_at = -1.0
+		_rainbow = 1.0 if "rainbow" in fx else 0.0
+	elif new_look != look:
+		# The old sky thins out while the new one comes in (WeatherFx.fade_seconds).
+		from_look = look
+		from_power = power
+		mix = 0.0
 	if new_look != look:
 		_next_strike = _t + 1.0
 	look = new_look
+	power = new_power
 	if entered:
 		_start_sweep()
 		_open_wipe()
@@ -172,8 +218,6 @@ func _scan() -> void:
 	_lamps.clear()
 	_trees.clear()
 	_shafts.clear()
-	_puddles.clear()
-	_snow.clear()
 	var salt: int = absi(hash(map.id)) % 9973
 	for y: int in map.height:
 		for x: int in map.rows[y].length():
@@ -186,10 +230,6 @@ func _scan() -> void:
 				_trees.append(c)
 				if r < 0.22:
 					_shafts.append(c)
-			elif k in GROUND_KINDS:
-				_snow.append(c)
-				if r < 0.16 and (k == TilesetFactory.Kind.PATH or k == TilesetFactory.Kind.GRASS):
-					_puddles.append(c)
 
 func _say(text: String) -> void:
 	if _label == null or text.is_empty():
@@ -200,6 +240,10 @@ func _say(text: String) -> void:
 
 func _redraw() -> void:
 	queue_redraw()
+	if _weather != null:
+		# Weather keeps the pixel size of the world when the camera zooms in whole steps.
+		var zoom: float = maxf(1.0, roundf(camera.zoom.x)) if camera != null else 1.0
+		_weather.scale = Vector2(zoom, zoom)
 	for p: Painter in [_ground, _sky_clip, _sky, _weather_clip, _weather, _screen]:
 		if p != null:
 			p.queue_redraw()
@@ -221,10 +265,23 @@ func _process(delta: float) -> void:
 		p.age = float(p.age) + delta
 	while not prints.is_empty() and float(prints[0].age) >= PRINT_LIFE:
 		prints.pop_front()
+	var moving: bool = mix < 1.0 or wet != wet_to or _rainbow > 0.0 or "rainbow" in fx
+	if mix < 1.0:
+		mix = minf(1.0, mix + delta / WeatherFx.fade_seconds())
+		if mix >= 1.0:
+			from_look = "clear"
+	if wet != wet_to:
+		var pc: Dictionary = WeatherFx.cfg().get("puddles", {})
+		var secs: float = float(pc.get("form_seconds", 45.0)) if wet_to > wet else float(pc.get("dry_seconds", 600.0))
+		wet = move_toward(wet, wet_to, delta / maxf(secs, 0.01))
+	_rainbow = move_toward(_rainbow, 1.0 if "rainbow" in fx else 0.0, delta / WeatherFx.fade_seconds())
 	if "lightning" in fx and not still and _t >= _next_strike:
 		_next_strike = _t + float(EraLight.flash_cfg().get("strike_every", 7.0)) * randf_range(0.6, 1.4)
 		if try_flash() and randf() < float(EraLight.flash_cfg().get("double_share", 0.0)):
 			_next_strike = _t + float(EraLight.flash_cfg().get("min_gap", 0.35)) + 0.05
+	if thunder_at >= 0.0 and _t >= thunder_at:
+		thunder_at = -1.0
+		_thunder()
 	if _flash_left > 0.0:
 		_flash_left = maxf(0.0, _flash_left - delta)
 	if _closed:
@@ -235,10 +292,10 @@ func _process(delta: float) -> void:
 			wipe_k = 0.0
 			wipe_style = ""
 	_sweep(delta)
-	if fx.is_empty() and wipe_style.is_empty() and _flash_left <= 0.0:
+	if fx.is_empty() and wipe_style.is_empty() and _flash_left <= 0.0 and not moving and wet <= 0.0:
 		return
 	# The weather line is a Label of its own: alone it needs no repaint (Era I, style "none").
-	if fx.size() == 1 and fx[0] == "weather_text" and wipe_style.is_empty() and _flash_left <= 0.0:
+	if fx.size() == 1 and fx[0] == "weather_text" and wipe_style.is_empty() and _flash_left <= 0.0 and not moving and (wet <= 0.0 or not _draws_weather()):
 		return
 	if _weather_clip != null:
 		_weather_clip.queue_redraw()
@@ -267,7 +324,23 @@ func try_flash() -> bool:
 	while flash_times.size() > 8:
 		flash_times.pop_front()
 	_flash_left = float(EraLight.flash_cfg().get("length", 0.07)) * 3.0
+	if thunder_at < 0.0:
+		# The thunder follows the flash after a moment; a double flash has one thunder.
+		var th: Dictionary = WeatherFx.cfg().get("thunder", {})
+		thunder_at = _t + randf_range(float(th.get("delay_min", 0.35)), float(th.get("delay_max", 1.4)))
 	return true
+
+func _thunder() -> void:
+	var th: Dictionary = WeatherFx.cfg().get("thunder", {})
+	Sound.sfx(str(th.get("sfx", "rumble")), float(th.get("db", -5.0)), randf_range(float(th.get("pitch_min", 0.85)), float(th.get("pitch_max", 1.1))))
+
+## True when this era draws weather over the map at all (Era I shows a line of text only).
+func _draws_weather() -> bool:
+	return str(cfg.get("weather_style", "pattern")) != "none" and _level != "off"
+
+## The part of the map on screen, in map px.
+func _view(c: CanvasItem) -> Rect2:
+	return c.get_viewport().get_canvas_transform().affine_inverse() * Rect2(Vector2.ZERO, c.get_viewport_rect().size)
 
 # --- Map transitions ----------------------------------------------------------------------
 
@@ -353,17 +426,20 @@ func _paint_map_rect(c: Painter) -> void:
 
 ## The map's rectangle on the screen (weather is drawn in screen pixels).
 func _paint_map_on_screen(c: Painter) -> void:
-	if map != null:
+	if map != null and full_screen and map.outdoor:
+		c.draw_rect(Rect2(Vector2.ZERO, c.get_viewport_rect().size), Color.WHITE)
+	elif map != null:
 		c.draw_rect(c.get_viewport().get_canvas_transform() * Rect2(Vector2.ZERO, Vector2(map.width, map.height) * TILE), Color.WHITE)
 
 func _paint_ground(g: Painter) -> void:
 	if map == null:
 		return
+	var view: Rect2 = _view(g)
+	var live: bool = _draws_weather()
+	var snowy: float = (mix if look == "snow" else 0.0) + ((1.0 - mix) if from_look == "snow" else 0.0)
+	if live and snowy > 0.0:
+		wx.paint_snow_cover(g, view, wet * snowy)
 	if "snow_prints" in fx:
-		for c: Vector2i in _snow:
-			g.draw_rect(Rect2(c * TILE, Vector2(TILE, TILE)), Color(1, 1, 1, 0.34))
-			var r: float = EraLight.h(c.x * 57 + c.y, 3)
-			g.draw_rect(Rect2(c.x * TILE + int(r * 12.0), c.y * TILE + int(EraLight.h(c.x, c.y) * 12.0), 3, 2), Color(1, 1, 1, 0.5))
 		for p: Dictionary in prints:
 			var a: float = 0.6 * (1.0 - float(p.age) / PRINT_LIFE)
 			var o: Vector2 = Vector2(p.cell as Vector2i) * TILE
@@ -371,19 +447,24 @@ func _paint_ground(g: Painter) -> void:
 			var col := Color(0.25, 0.3, 0.45, a)
 			g.draw_rect(Rect2(o + (Vector2(4, 5) if side else Vector2(5, 4)), Vector2(3, 2) if side else Vector2(2, 3)), col)
 			g.draw_rect(Rect2(o + (Vector2(9, 9) if side else Vector2(9, 9)), Vector2(3, 2) if side else Vector2(2, 3)), col)
-	if "puddles" in fx:
-		for i: int in _puddles.size():
-			var o: Vector2 = Vector2(_puddles[i]) * TILE
-			g.draw_rect(Rect2(o + Vector2(2, 7), Vector2(12, 5)), Color(0.16, 0.24, 0.4, 0.5))
-			g.draw_rect(Rect2(o + Vector2(4, 6), Vector2(8, 7)), Color(0.16, 0.24, 0.4, 0.5))
-			# The sky in the puddle: a pale streak that wanders, and whoever stands above it.
-			g.draw_rect(Rect2(o + Vector2(5 + roundf(sin(_t * 1.7 + i) * 2.0), 8), Vector2(5, 1)), Color(0.86, 0.92, 1.0, 0.6))
-			if player != null and player.cell == _puddles[i] + Vector2i.UP:
-				g.draw_rect(Rect2(o + Vector2(5, 8), Vector2(6, 4)), Color(player.body_color, 0.4))
-			var ring: float = fposmod(_t * 1.3 + EraLight.h(i, 5), 1.0)
-			if ring < 0.4:
-				var w: float = 2.0 + roundf(ring * 10.0)
-				g.draw_rect(Rect2(o + Vector2(8.0 - w / 2.0, 10), Vector2(w, 1)), Color(0.86, 0.92, 1.0, 0.5 * (1.0 - ring / 0.4)))
+	if live and bool(cfg.get("puddles", false)) and snowy < 1.0:
+		var raining: float = (mix if look in EraLight.WET else 0.0) + ((1.0 - mix) if from_look in EraLight.WET else 0.0)
+		wx.paint_puddles(g, view, wet * (1.0 - snowy), _t, raining)
+		if player != null and wet > 0.5:
+			# Whoever stands right above a puddle shows in it.
+			for i: int in wx.puddle_x.size():
+				if player.cell.x == wx.puddle_x[i] and player.cell.y == wx.puddle_y[i] - 1 and wet - wx.puddle_from[i] > 0.3:
+					g.draw_rect(Rect2(wx.puddle_x[i] * TILE + 5, wx.puddle_y[i] * TILE + 9, 6, 2), Color(player.body_color, 0.35))
+	if live and bool(cfg.get("splashes", false)):
+		if look in EraLight.WET:
+			wx.paint_splashes(g, view, look, mix, power, _t)
+		if from_look in EraLight.WET and mix < 1.0:
+			wx.paint_splashes(g, view, from_look, 1.0 - mix, from_power, _t)
+	if live:
+		if look == "wind" or look == "storm":
+			wx.paint_gusts(g, view, mix, power, _t)
+		if (from_look == "wind" or from_look == "storm") and mix < 1.0:
+			wx.paint_gusts(g, view, 1.0 - mix, from_power, _t)
 	if "long_shadows" in fx:
 		var sv: Vector2 = EraLight.shadow(hour)
 		for c: Vector2i in _trees:
@@ -408,6 +489,11 @@ func _paint_sky(c: Painter) -> void:
 	if map == null:
 		return
 	var size: Vector2 = Vector2(map.width, map.height) * TILE
+	if _draws_weather() and hour > 5.5 and hour < 20.5:
+		if look != "clear":
+			wx.paint_clouds(c, size, look, mix, _t)
+		if from_look != "clear" and mix < 1.0:
+			wx.paint_clouds(c, size, from_look, 1.0 - mix, _t)
 	if "cloud_shadows" in fx:
 		var tex: Texture2D = _cloud_tex()
 		for i: int in 3:
@@ -441,17 +527,19 @@ func _paint_sky(c: Painter) -> void:
 func _paint_weather(c: Painter) -> void:
 	if map == null:
 		return
-	var vs: Vector2 = c.get_viewport_rect().size
-	if look != "clear":
-		match str(cfg.get("weather_style", "pattern")):
-			"none":
-				pass
-			"pattern":
+	var vs: Vector2 = (c.get_viewport_rect().size / c.scale.x).ceil()
+	wx.set_view(vs)
+	if _draws_weather():
+		if str(cfg.get("weather_style", "pattern")) == "pattern":
+			if look != "clear":
 				_paint_pattern(c, vs)
-			"lines":
-				_paint_lines(c, vs)
-			_:
-				_paint_rich(c, vs)
+		else:
+			if from_look != "clear" and mix < 1.0:
+				_paint_look(c, vs, from_look, 1.0 - mix, from_power)
+			if look != "clear":
+				_paint_look(c, vs, look, mix, power)
+		if _rainbow > 0.0 and wx.soft:
+			wx.paint_rainbow(c, vs, 0.42 * _rainbow * _dim)
 	_paint_motes(c, vs)
 	if "golden_hour" in fx:
 		var g: float = EraLight.golden(hour)
@@ -507,88 +595,41 @@ func _pattern_tex(kind: String) -> Texture2D:
 	_tex[key] = ImageTexture.create_from_image(img)
 	return _tex[key]
 
-## Era II: plain rain lines in one colour, a flat veil for fog, streaks for wind.
-func _paint_lines(c: Painter, vs: Vector2) -> void:
-	if look == "fog":
-		c.draw_rect(Rect2(Vector2.ZERO, vs), Color(FOG, 0.34))
+## One look at [param amount] (0 to 1, the fade): sandstorm and ash are painted here, rain,
+## snow, fog and wind by WeatherFx in the era's colours.
+func _paint_look(c: Painter, vs: Vector2, kind: String, amount: float, grade: float) -> void:
+	if kind == "sandstorm" or kind == "ash":
+		if _level != "off":
+			_paint_rich(c, vs, kind, amount * wx.density)
 		return
-	var storm: bool = look == "storm"
-	for i: int in (14 if look == "wind" else (48 if storm else 28)):
-		if look == "wind":
-			var w: Vector2 = _drift(i, vs, Vector2(90, 6))
-			c.draw_rect(Rect2(w, Vector2(4, 1)), Color(1, 1, 1, 0.7))
-		else:
-			var p: Vector2 = _drift(i, vs, Vector2(-14, 150 if storm else 110))
-			c.draw_rect(Rect2(p, Vector2(1, 4)), Color("b8c8f0"))
+	wx.paint_screen(c, vs, kind, amount, grade, _t, _dim)
 
 ## Screen spot of mote [param i] moving at [param vel] px/s, wrapped; whole pixels.
 func _drift(i: int, vs: Vector2, vel: Vector2, salt: int = 1) -> Vector2:
 	var k: float = 0.75 + 0.5 * EraLight.h(i, salt + 2)
 	return Vector2(fposmod(EraLight.h(i, salt) * vs.x + vel.x * k * _t, vs.x), fposmod(EraLight.h(i, salt + 1) * vs.y + vel.y * k * _t, vs.y)).round()
 
-## Era III on: two-tone rain with splashes, fog in drifting bands, sandstorm, ash fall, snow.
-func _paint_rich(c: Painter, vs: Vector2) -> void:
-	match look:
-		"rain", "storm":
-			var storm: bool = look == "storm"
-			if storm:
-				c.draw_rect(Rect2(Vector2.ZERO, vs), Color(0.1, 0.1, 0.25, 0.14))
-			for i: int in (72 if storm else 44):
-				var near: bool = i % 3 == 0
-				var p: Vector2 = _drift(i, vs, Vector2(-36, 210) if storm else Vector2(-22, 160))
-				c.draw_line(p, p + (Vector2(-2, 7) if near else Vector2(-1, 4)), Color("dce8ff") if near else Color(0.62, 0.72, 0.92, 0.7), 1.0)
-			if "splashes" in fx:
-				for i: int in (26 if storm else 16):
-					var period: float = 0.45 + 0.4 * EraLight.h(i, 21)
-					var at: float = _t / period + EraLight.h(i, 22)
-					var ph: float = at - floorf(at)
-					if ph > 0.4:
-						continue
-					var turn: int = int(floorf(at))
-					var s: Vector2 = Vector2(EraLight.h(i * 31 + turn, 23) * vs.x, EraLight.h(i * 31 + turn, 24) * vs.y).round()
-					var col := Color(0.86, 0.92, 1.0, 0.85)
-					if ph < 0.2:
-						c.draw_rect(Rect2(s + Vector2(-1, 0), Vector2(3, 1)), col)
-						c.draw_rect(Rect2(s + Vector2(0, -1), Vector2(1, 1)), col)
-					else:
-						c.draw_rect(Rect2(s + Vector2(-3, -1), Vector2(1, 1)), col)
-						c.draw_rect(Rect2(s + Vector2(3, -1), Vector2(1, 1)), col)
-						c.draw_rect(Rect2(s + Vector2(-2, 0), Vector2(5, 1)), Color(col, 0.4))
-		"fog":
-			c.draw_rect(Rect2(Vector2.ZERO, vs), Color(FOG, 0.2))
-			for i: int in 9:
-				var w: float = 70.0 + 50.0 * EraLight.h(i, 31)
-				var x: float = fposmod(EraLight.h(i, 32) * (vs.x + w) + _t * (5.0 + 6.0 * EraLight.h(i, 33)), vs.x + w) - w
-				var y: float = vs.y * (0.06 + 0.105 * i) + sin(_t * 0.3 + i) * 3.0
-				for j: int in 3:
-					c.draw_rect(Rect2(Vector2(x + j * 7.0, y + j * 3.0).round(), Vector2(w - j * 14.0, 18.0 - j * 6.0)), Color(FOG, 0.13))
+## Era III on: sandstorm and ash fall.
+func _paint_rich(c: Painter, vs: Vector2, kind: String, amount: float) -> void:
+	match kind:
 		"sandstorm":
-			c.draw_rect(Rect2(Vector2.ZERO, vs), Color(0.86, 0.72, 0.44, 0.24))
+			c.draw_rect(Rect2(Vector2.ZERO, vs), Color(0.86, 0.72, 0.44, 0.24 * amount))
 			for i: int in 3:
 				var y: float = fposmod(EraLight.h(i, 41) * vs.y + _t * 9.0, vs.y)
-				c.draw_rect(Rect2(0, roundf(y), vs.x, 22), Color(0.9, 0.78, 0.5, 0.12))
-			for i: int in 54:
+				c.draw_rect(Rect2(0, roundf(y), vs.x, 22), Color(0.9, 0.78, 0.5, 0.12 * amount))
+			for i: int in int(54 * amount):
 				var p: Vector2 = _drift(i, vs, Vector2(230, 24), 42)
 				if i % 3 == 0:
 					c.draw_rect(Rect2(p, Vector2(1, 1)), Color("7a5a30"))
 				else:
 					c.draw_rect(Rect2(p, Vector2(5 + i % 4, 1)), Color(0.98, 0.9, 0.68, 0.75))
 		"ash":
-			c.draw_rect(Rect2(Vector2.ZERO, vs), Color(0.42, 0.4, 0.42, 0.16))
-			for i: int in 46:
+			c.draw_rect(Rect2(Vector2.ZERO, vs), Color(0.42, 0.4, 0.42, 0.16 * amount))
+			for i: int in int(46 * amount):
 				var p: Vector2 = _drift(i, vs, Vector2(4, 22), 51)
 				p.x = roundf(p.x + sin(_t * 1.1 + i) * 3.0)
 				var col: Color = Color("ff9040") if i % 9 == 0 else (Color("e4e0dc") if i % 2 == 0 else Color("6e686a"))
 				c.draw_rect(Rect2(p, Vector2(2, 1) if i % 4 == 0 else Vector2(1, 1)), col)
-		"snow":
-			c.draw_rect(Rect2(Vector2.ZERO, vs), Color(0.9, 0.94, 1.0, 0.1))
-			for i: int in 64:
-				var p: Vector2 = _drift(i, vs, Vector2(-6, 30), 61)
-				p.x = roundf(p.x + sin(_t * 1.4 + i) * 4.0)
-				c.draw_rect(Rect2(p, Vector2(2, 2) if i % 4 == 0 else Vector2(1, 1)), Color(1, 1, 1, 0.95))
-		"wind":
-			for i: int in 16:
-				c.draw_rect(Rect2(_drift(i, vs, Vector2(120, 8), 71), Vector2(6 + i % 5, 1)), Color(1, 1, 1, 0.5))
 
 ## Era V: leaves in autumn or wind, pollen on fair spring and summer days.
 func _paint_motes(c: Painter, vs: Vector2) -> void:

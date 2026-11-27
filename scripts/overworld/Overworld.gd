@@ -48,6 +48,8 @@ var _on_trip: bool = false
 var _banner: Label
 ## Time-of-day symbol beside the place banner (area 3 item 1169).
 var _phase_icon: PhaseIcon
+## The sky over the map as a small symbol at the right end of the banner (hidden when clear).
+var _weather_icon: WeatherIcon
 ## Plain weather dots and veil (area 3 item 1144).
 var weather_layer: WeatherLayer
 var minimap: Minimap
@@ -302,6 +304,11 @@ func _build() -> void:
 	ui_root.add_child(_banner)
 	_phase_icon = PhaseIcon.new()
 	_banner.add_child(_phase_icon)
+	_weather_icon = WeatherIcon.new()
+	_weather_icon.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	_weather_icon.position = Vector2(-13, 3)
+	_banner.add_child(_weather_icon)
+	_weather_icon.show_kind("clear")
 	toast = Toast.new()
 	add_child(toast)
 	Billing.pass_paid.connect(_on_pass_paid)
@@ -572,6 +579,7 @@ func refresh_daylight(fade: bool = false) -> void:
 	if weather_layer != null:
 		weather_layer.show_kind(w)
 	DayCycle.poll()
+	_era_light.full_screen = _era_depth != null and _era_depth.has_fill()
 	_era_light.refresh(map, w, _daylight, _glow, weather_layer)
 	_fade_daylight(before, fade)
 
@@ -792,12 +800,15 @@ func refresh_goal_marks() -> void:
 		minimap.queue_redraw()
 
 func _show_banner(text: String) -> void:
-	_banner.text = "    %s " % text
+	_weather_icon.show_kind(_era_light.look if _era_light != null and map != null and map.outdoor else "clear")
+	_banner.text = ("    %s    " if _weather_icon.visible else "    %s ") % text
 	_phase_icon.phase = DayCycle.current()
 	_phase_icon.queue_redraw()
 	# The banner takes the era's place-name style (TownPopup, data/era_feel.json "town_popup").
 	var style: String = str(EraManager.feel("town_popup"))
 	TownPopup.dress(_banner, style)
+	_weather_icon.ink = _banner.get_theme_color("font_color")
+	_weather_icon.queue_redraw()
 	_banner.visible = true
 	await TownPopup.slide(_banner, style, true)
 	await get_tree().create_timer(BANNER_TIME).timeout

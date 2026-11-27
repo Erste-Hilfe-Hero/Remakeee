@@ -447,6 +447,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"language": "English or Deutsch.",
 	"day_night": "The light changes with the time of day.",
 	"weather": "Rain, fog and wind in the world. Off: always clear.",
+	"weather_fx": "How much rain, snow and fog is drawn. Low is easier on old phones. Off: only the light changes.",
 	"minimap": "Small map in the top corner. Outside only: hidden in houses and caves.",
 	"pad_size": "How big the touch pad and buttons are.",
 	"pad_opacity": "How see-through the touch pad is.",
@@ -786,6 +787,9 @@ func run_display() -> void:
 				GameState.day_night = not GameState.day_night
 			"weather":
 				GameState.weather = not GameState.weather
+			"weather_fx":
+				var levels: Array[String] = WeatherCycle.FX_LEVELS
+				GameState.weather_fx = levels[(levels.find(GameState.weather_fx) + 1) % levels.size()]
 			"minimap":
 				var modes: Array[String] = Survey.MINIMAP_MODES
 				GameState.minimap = modes[(modes.find(GameState.minimap) + 1) % modes.size()]
@@ -820,6 +824,7 @@ static func display_rows() -> Array[Array]:
 		["language", "Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()]],
 		["day_night", "Day and night: %s" % shop_or("day_night", "On" if GameState.day_night else "Off")],
 		["weather", "Weather: %s" % shop_or("weather", "On" if GameState.weather else "Off")],
+		["weather_fx", "Weather effects: %s" % WeatherCycle.FX_LEVEL_NAMES[GameState.weather_fx]],
 		["minimap", "Minimap: %s" % shop_or("minimap", MINIMAP_NAMES[GameState.minimap])],
 		["retro", "Retro filter: %s" % shop_or("retro", retro)],
 		["screen_shake", "Screen shake: %s" % Juice.LEVEL_NAMES[GameState.screen_shake]],
