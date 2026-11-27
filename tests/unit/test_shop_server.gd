@@ -13,6 +13,8 @@ var s: LocalBackend
 var shop: LocalShop
 var store: LocalBilling
 
+var _was_ready: Dictionary = {}
+
 func before_all() -> void:
 	Database.load_all()
 	_old_backend = Online.backend
@@ -58,12 +60,24 @@ func _year(age: int) -> int:
 ## A ready offer that costs Riftglass (most real ones get ready with their effects).
 func _ready_offer(id: String) -> Dictionary:
 	var o: Dictionary = ShopCatalog.offer(id)
+	if not _was_ready.has(id):
+		_was_ready[id] = o.get("ready", false)
 	o["ready"] = true
 	return o
 
+## An offer that is not ready yet, whatever the catalog ships.
+func _unready_offer(id: String) -> void:
+	var o: Dictionary = ShopCatalog.offer(id)
+	if not _was_ready.has(id):
+		_was_ready[id] = o.get("ready", false)
+	o["ready"] = false
+
+## Puts back the catalog's own "ready" (setting it to false left offers that ship ready
+## hidden for every later test in the run).
 func after_each() -> void:
-	for id: String in ["rg_ring_tonic", "rg_team_slot_6", "rg_rift_pack_1", "rg_pass", "rg_gleam_prism"]:
-		ShopCatalog.offer(id)["ready"] = false
+	for id: String in _was_ready:
+		ShopCatalog.offer(id)["ready"] = _was_ready[id]
+	_was_ready.clear()
 
 func test_age_bands() -> void:
 	var today: Dictionary = {"year": 2026, "month": 11, "day": 6}
@@ -181,6 +195,7 @@ func test_riftglass_purchase_delivers_items() -> void:
 	assert_eq(GameState.item_count("rg_ring_tonic"), 1, "delivered into the bag by the server")
 	assert_eq(_call("shop_claim"), [], "only once")
 	assert_eq(_call("shop_buy", {"p_offer": "rg_ring_tonic", "p_expected_price": 50}).error, "price_changed")
+	_unready_offer("rg_team_slot_6")
 	assert_eq(_call("shop_buy", {"p_offer": "rg_team_slot_6", "p_expected_price": 1500}).error, "not_available", "only ready offers")
 
 func test_once_per_account_and_choice() -> void:
