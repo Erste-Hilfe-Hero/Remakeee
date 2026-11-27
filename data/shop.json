@@ -2336,7 +2336,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "40% lower coin prices in all merchant shops instead of 20%. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_jacket_moss",
@@ -3952,7 +3953,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "+100% growth for the whole team in every battle instead of +50%, together with every Growth Crystal and the pass. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_coin_boost_x3",
@@ -4573,7 +4575,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "All your Spirlings land critical hits 20 percentage points more often. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_crit_seal_5",
@@ -4601,7 +4604,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "All your Spirlings land critical hits 25 percentage points more often. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_status_ward",
@@ -4863,7 +4867,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "Every bond counts as 40 percentage points better timed: the bond bar starts ahead. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_bond_edge_5",
@@ -4891,7 +4896,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "Every bond counts as 50 percentage points better timed: the bond bar starts ahead. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_bond_retry",
@@ -6629,7 +6635,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "After every won battle in the story, each Spirling of your team that is still standing regains 10% of its maximum Vigor."
   },
   {
    "id": "rg_victory_mend_2",
@@ -6657,7 +6664,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "After every won battle in the story, each Spirling of your team that is still standing regains 20% of its maximum Vigor. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_victory_mend_3",
@@ -6685,7 +6693,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "After every won battle in the story, each Spirling of your team that is still standing regains 30% of its maximum Vigor. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_coin_seal_1",
@@ -6713,7 +6722,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "+25% coins from every won trainer battle in the story, on top of a Coin Gleam."
   },
   {
    "id": "rg_coin_seal_2",
@@ -6741,7 +6751,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "+50% coins from every won trainer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_coin_seal_3",
@@ -6769,7 +6780,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "+100% coins from every won trainer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_wild_purse",
@@ -6796,7 +6808,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "Every won battle against wild Spirlings in the story pays coins: 20 for each Ring of the highest foe (Ring 30 pays 600)."
   },
   {
    "id": "rg_gleam_lens",
@@ -6823,7 +6836,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "Wild Gleam Spirlings show up twice as often in the story, and twice as often again on top of a Shimmer Scent."
   },
   {
    "id": "rg_rare_compass",
@@ -6850,7 +6864,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "Uncommon, shy and ancient wild Spirlings step out 1.5 times as often, on top of a Lure Scent."
   },
   {
    "id": "rg_spark_seal",
@@ -6877,7 +6892,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "Twice the chance that a story battle trains a Spark value. Not in Warden battles."
   },
   {
    "id": "rg_kinship_bell",
@@ -6904,7 +6920,8 @@
    "rg_only": true,
    "min_band": 13,
    "ready": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "Spirlings that fought in a won battle in the story gain double Kinship: 4 instead of 2."
   }
  ]
 }
