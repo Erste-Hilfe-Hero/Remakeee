@@ -194,6 +194,17 @@ jobs:
         run: |
           "$(dirname "$(tools/find_zipalign.sh)")/aapt2" dump xmltree --file AndroidManifest.xml build/android/Chimora-debug.apk > "$RUNNER_TEMP/manifest.txt"
           grep -E 'scheme.*"chimora"' "$RUNNER_TEMP/manifest.txt"
+      - name: The app fills any screen (resizable, every orientation, no aspect cap; Play adaptive tier 3, update 1.3.2)
+        run: |
+          m="$RUNNER_TEMP/manifest.txt"
+          grep -E 'resizeableActivity|screenOrientation' "$m"
+          if grep -E 'maxAspectRatio|android.max_aspect|resizeableActivity\([^)]*\)=(false|0x0+|0)$' "$m"; then
+            echo "::error::the activity must be resizable with no aspect ratio cap"; exit 1
+          fi
+          # fullUser (13) is expected: phones are kept upright at run time (ScreenFit.apply_orientation).
+          if ! grep -E 'screenOrientation\([^)]*\)=(13|0xd|0x0000000d|"?fullUser"?)' "$m"; then
+            echo "::error::the manifest must allow every orientation (project orientation sensor)"; exit 1
+          fi
       - name: APK size budget
         run: tools/apk_budget.sh build/android/Chimora-debug.apk 136
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

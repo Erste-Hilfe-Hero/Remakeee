@@ -239,17 +239,21 @@ func _ready() -> void:
 	_info_panel.offset_bottom = FRAME_OUT
 	holder.add_child(_info_panel)
 	apply_size()
+	get_viewport().size_changed.connect(apply_size, CONNECT_DEFERRED)
 
 ## Big buttons (KAMPF_PLAN items 623, 896): every art row and command grows to BattleComfort.art_h /
 ## command_h,
 ## the panel with them. Called again when the setting changes in the battle's More list.
+## Rows are never smaller than a finger on this screen (ScreenFit.touch_px, update 1.3.2), and
+## follow it when the screen changes during the battle.
 func apply_size() -> void:
+	var touch: int = ScreenFit.touch_px(get_window()) if is_inside_tree() else 0
 	custom_minimum_size = Vector2(0, BattleComfort.menu_height(era))
 	for b: Button in _move_buttons:
-		b.custom_minimum_size.y = BattleComfort.art_h(era)
+		b.custom_minimum_size.y = maxi(BattleComfort.art_h(era), touch)
 	for b: Button in [_swap, _item, _bond, _run]:
 		if b != null:
-			b.custom_minimum_size.y = BattleComfort.command_h(era)
+			b.custom_minimum_size.y = maxi(BattleComfort.command_h(era), touch)
 
 ## Fill of the command panel: plain paper in Era I, the era's light colour washed into paper
 ## later (the shared accent once the menu skin frames the panel).

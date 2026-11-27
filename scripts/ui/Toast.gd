@@ -24,6 +24,8 @@ func _ready() -> void:
 	_panel.offset_top = 4
 	_panel.visible = false
 	add_child(_panel)
+	_fit_column()
+	get_viewport().size_changed.connect(_fit_column)
 	var row := HBoxContainer.new()
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_panel.add_child(row)
@@ -37,6 +39,14 @@ func _ready() -> void:
 	_label.custom_minimum_size = Vector2(1, 0)
 	_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(_label)
+
+## Keeps the note in the UI column on a wide screen (update 1.3.2); full width on a portrait one.
+func _fit_column() -> void:
+	var vp: Vector2 = get_viewport().get_visible_rect().size
+	var col: Rect2 = SafeArea.column(vp)
+	var narrower: bool = col.size.x < vp.x - 0.5
+	_panel.offset_left = (col.position.x if narrower else 0.0) + 4.0
+	_panel.offset_right = -((vp.x - col.end.x) if narrower else 0.0) - 4.0
 
 ## Queues a note; [param icon] may be null. Each note rings [param sound] as it shows, a quiet
 ## two-note chime by default (item 2512); "" for none.

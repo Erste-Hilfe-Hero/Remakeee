@@ -74,6 +74,15 @@ jobs:
           for pl in "$APP/Info.plist" "$APP"/Frameworks/*.framework/Info.plist; do
             echo "$pl: MinimumOSVersion $(plutil -extract MinimumOSVersion raw "$pl" 2>/dev/null || echo none)"
           done
+          # Update 1.3.2 (adaptive screens): the iPad allows every orientation (Split View, Stage
+          # Manager); the game keeps an iPhone upright itself (ScreenFit.apply_orientation).
+          echo "iPhone: $(plutil -extract UISupportedInterfaceOrientations json -o - "$APP/Info.plist")"
+          o=$(plutil -extract "UISupportedInterfaceOrientations~ipad" json -o - "$APP/Info.plist")
+          echo "iPad: $o"
+          for want in Portrait PortraitUpsideDown LandscapeLeft LandscapeRight; do
+            echo "$o" | grep -q "\"UIInterfaceOrientation$want\"" || { echo "::error::the iPad orientations lack $want"; exit 1; }
+          done
+          echo "UIRequiresFullScreen: $(plutil -extract UIRequiresFullScreen raw "$APP/Info.plist" 2>/dev/null || echo unset)"
           plutil -extract CFBundleShortVersionString raw "$APP/Info.plist"
           plutil -extract CFBundleVersion raw "$APP/Info.plist"
           # strip any ad-hoc signature, the host signs everything again
