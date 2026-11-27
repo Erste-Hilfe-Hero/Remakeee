@@ -43,7 +43,7 @@ jobs:
       - name: Type chart rules, chart sim gate (elements 40-60 %, teams 30-70 %), every Spirling 40-60 % on base stats (tools/balance/type_sim.py --strict)
         run: python3 tools/balance/type_sim.py --strict
       - name: Every player-facing text has a German translation
-        run: python3 tools/i18n/build.py --check && python3 tools/i18n_extract.py de --check
+        run: python3 tools/i18n/build.py --check && python3 tools/i18n_extract.py de --check && python3 tools/i18n/shop_explain_src.py --check
       - name: Cross-file data integrity (warps, reach, flags, dialogue keys and German, species, levels, items, ids)
         run: python3 tools/data_integrity.py
       - name: Every species has a Gleam palette (tools/art/gen_gleam_palettes.py)
