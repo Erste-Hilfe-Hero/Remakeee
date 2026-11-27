@@ -259,6 +259,10 @@ def sync_slots(mod, enc):
         f.write(text)
 
 
+# Lowest encounter weight of each rarity (test_spirling_data: common 25-45, uncommon 10-24, shy 2-9).
+WEIGHT_MIN = {"common": 25, "uncommon": 10, "shy": 2}
+
+
 def main():
     modname = sys.argv[1]
     mod = importlib.import_module(modname)
@@ -331,7 +335,13 @@ def main():
         lo = min(int(s["min"]) for s in old)
         hi = max(int(s["max"]) for s in old)
         used = {"common": 1, "uncommon": 1, "shy": 1}
-        enc[table]["spawns"] = old + [spawn(n, g, k, lo, hi, used) for k, (n, g) in enumerate(rows)]
+        add = [spawn(n, g, k, lo, hi, used) for k, (n, g) in enumerate(rows)]
+        # A newcomer never outweighs the table's own most common kind (the one a player meets and
+        # bonds first, tools/balance/act_route.json): at most one below it, inside its rarity band.
+        top = max(int(s["weight"]) for s in old)
+        for s in add:
+            s["weight"] = max(min(s["weight"], top - 1), WEIGHT_MIN[rarity[s["species"]]])
+        enc[table]["spawns"] = old + add
     if getattr(mod, "SLOTS", None):
         sync_slots(mod, enc)
     with open(os.path.join(ROOT, "data/encounters.json"), "w", encoding="utf-8") as f:
