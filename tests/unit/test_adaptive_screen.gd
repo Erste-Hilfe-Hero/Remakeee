@@ -190,7 +190,21 @@ func test_battle_fits_every_size_and_its_scenery_reaches_both_edges() -> void:
 			assert_almost_eq(wide.position.x, 0.0, 0.5, "%s: scenery from the left edge" % size)
 			assert_almost_eq(wide.end.x, view.size.x, 0.5, "%s: scenery to the right edge" % size)
 			assert_almost_eq(wide.position.y, scene._field.get_global_rect().position.y, 0.5, "%s: same horizon" % size)
-		_assert_controls(scene._menu, size, true)
+		# Battle rows reach 44 pt out of the height above the era's base screen; the field never
+		# gets shorter than on the base screen. Where that height is too little (a 16:9 or
+		# landscape view), every spare pixel goes to the rows.
+		var touch: int = ScreenFit.touch_px(_win)
+		var art: int = BattleComfort.art_h(1)
+		var cmd: int = BattleComfort.command_h(1)
+		var spare: float = view.size.y - EraManager.RESOLUTION[1].y
+		var need: int = Spirling.MAX_MOVES * maxi(0, touch - art) + CommandMenu.TOUCH_COMMAND_ROWS * maxi(0, touch - cmd)
+		_assert_controls(scene._menu, size, spare >= need)
+		if spare < need:
+			var rows: Vector2i = CommandMenu.touch_rows(art, cmd, touch, spare)
+			var used: int = Spirling.MAX_MOVES * (rows.x - art) + CommandMenu.TOUCH_COMMAND_ROWS * (rows.y - cmd)
+			assert_lte(used, int(spare), "%s: the rows take no height from the field" % size)
+			assert_gte(used, int(spare) - Spirling.MAX_MOVES - CommandMenu.TOUCH_COMMAND_ROWS, "%s: the spare height goes to the rows" % size)
+			gut.p("%s: battle rows %.0f / %.0f pt (%d px of height to spare, %d needed)" % [size, _pt(rows.x), _pt(rows.y), int(spare), need])
 		scene.queue_free()
 		_win.queue_free()
 		await wait_process_frames(1)

@@ -44,7 +44,7 @@ static func apply(c: Control, extra: float = 0.0) -> void:
 	# The column only for a control that spans the whole screen; one inside a smaller box
 	# (a test stage, a panel) keeps that box's width and only the safe-area insets.
 	var parent: Control = c.get_parent() as Control
-	var full: bool = parent == null or parent.get_global_rect().size.x >= vp.x - 0.5
+	var full: bool = (parent == null or parent.get_global_rect().size.x >= vp.x - 0.5) and not _in_full_width(c)
 	var r: Rect2 = (column(vp) if full else rect(vp)) if vp != Vector2.ZERO else Rect2()
 	var top: float = r.position.y if vp != Vector2.ZERO else 0.0
 	var left: float = r.position.x if vp != Vector2.ZERO else 0.0
@@ -54,6 +54,18 @@ static func apply(c: Control, extra: float = 0.0) -> void:
 	c.offset_top = top + extra
 	c.offset_right = -(right + extra)
 	c.offset_bottom = -(bottom + extra)
+
+## Screens that lay themselves out over the whole width (the title) keep their menus out of the
+## UI column.
+const FULL_WIDTH_GROUP: StringName = &"safe_area_full_width"
+
+static func _in_full_width(c: Node) -> bool:
+	var n: Node = c
+	while n != null:
+		if n.is_in_group(FULL_WIDTH_GROUP):
+			return true
+		n = n.get_parent()
+	return false
 
 ## Re-applies the insets to [param c] whenever its viewport changes size, until it leaves the tree.
 static func _follow_resizes(c: Control, extra: float) -> void:
