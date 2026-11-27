@@ -36,7 +36,7 @@ R = {
  "Sprowadzić tego Spirlinga teraz? Zostało %d godz.",
  "Bu Spirling şimdi eve gelsin mi? %d sa kaldı.",
  "Deze Spirling nu ophalen? Nog %d uur."],
-"%s: %d Riftglass": ["%s: 裂け目ガラス%d", "%s : %d Verre de Faille", "%s: %d Vetrosquarcio", "%s: %d Vidrio Grieta", "%s: 균열유리 %d", "%s：%d裂隙晶", "%s：%d裂晶", "%s: %d Vidrofenda", "%s: %d Стекла Разлома", "%s: %d Szczelinitu", "%s: %d Yarık Camı", "%s: %d Kloofglas"],
+"%s: %d Riftglass": ["%s: 裂け目ガラス%d", "%s : %d Verre de Faille", "%s: %d Vetro-squarcio", "%s: %d Vidrio Grieta", "%s: 균열유리 %d", "%s：%d裂隙晶", "%s：%d裂晶", "%s: %d Vidrofenda", "%s: %d Стекла Разлома", "%s: %d Szczelinitu", "%s: %d Yarık Camı", "%s: %d Kloofglas"],
 "Stay right before the Warden? Your team is rested.": [
  "守り人の直前にとどまる？チームは回復している。",
  "Rester juste avant le Gardien ? Votre équipe est reposée.",
@@ -53,7 +53,7 @@ R = {
 "Riftglass holds you in place. Your team is rested again.": [
  "裂け目ガラスがその場にとどめてくれた。チームはまた元気になった。",
  "Le Verre de Faille vous retient sur place. Votre équipe est de nouveau reposée.",
- "Il Vetrosquarcio ti tiene sul posto. La tua squadra è di nuovo riposata.",
+ "Il Vetro-squarcio ti tiene sul posto. La tua squadra è di nuovo riposata.",
  "El Vidrio Grieta te mantiene en tu sitio. Tu equipo vuelve a estar descansado.",
  "균열유리가 너를 그 자리에 붙잡아 둔다. 팀이 다시 회복했다.",
  "裂隙晶把你留在原地。你的队伍又恢复了。",
@@ -66,7 +66,7 @@ R = {
 "Riftglass flares! Your whole team stands up again with full Vigor.": [
  "裂け目ガラスが光った！チーム全員が活力満タンで立ち上がる。",
  "Le Verre de Faille flamboie ! Toute votre équipe se relève avec toute sa Vigueur.",
- "Il Vetrosquarcio divampa! Tutta la squadra si rialza con Vigore pieno.",
+ "Il Vetro-squarcio divampa! Tutta la squadra si rialza con Vigore pieno.",
  "¡El Vidrio Grieta destella! Todo tu equipo se levanta con el Vigor lleno.",
  "균열유리가 빛난다! 팀 전원이 기력을 가득 채우고 다시 일어선다.",
  "裂隙晶闪耀！全队元气全满，重新站起来了。",
@@ -92,7 +92,7 @@ R = {
 "Bond boost %s? You have %d Riftglass.": [
  "絆ブースト%s？手持ちの裂け目ガラス: %d",
  "Bonus de lien %s ? Vous avez %d Verre de Faille.",
- "Spinta al Legame %s? Hai %d Vetrosquarcio.",
+ "Spinta al Legame %s? Hai %d Vetro-squarcio.",
  "¿Impulso de vínculo %s? Tienes %d Vidrio Grieta.",
  "유대 부스트 %s? 균열유리 %d개가 있다.",
  "结缘加成%s？你有%d裂隙晶。",
@@ -102,13 +102,13 @@ R = {
  "Wzmocnić więź o %s? Masz %d Szczelinitu.",
  "Bağ desteği %s? %d Yarık Camın var.",
  "Bindboost %s? Je hebt %d Kloofglas."],
-"Boost: %d Riftglass": ["ブースト: 裂け目ガラス%d", "Bonus : %d Verre de Faille", "Spinta: %d Vetrosquarcio", "Impulso: %d Vidrio Grieta", "부스트: 균열유리 %d", "加成：%d裂隙晶", "加成：%d裂晶", "Impulso: %d Vidrofenda", "Усилить: %d Стекла Разлома", "Wzmocnij: %d Szczelinitu", "Destek: %d Yarık Camı", "Boost: %d Kloofglas"],
+"Boost: %d Riftglass": ["ブースト: 裂け目ガラス%d", "Bonus : %d Verre de Faille", "Spinta: %d Vetro-squarcio", "Impulso: %d Vidrio Grieta", "부스트: 균열유리 %d", "加成：%d裂隙晶", "加成：%d裂晶", "Impulso: %d Vidrofenda", "Усилить: %d Стекла Разлома", "Wzmocnij: %d Szczelinitu", "Destek: %d Yarık Camı", "Boost: %d Kloofglas"],
 "No boost": ["ブーストなし", "Sans bonus", "Senza spinta", "Sin impulso", "부스트 없이", "不加成", "不加成", "Sem impulso", "Без усиления", "Bez wzmocnienia", "Desteksiz", "Geen boost"],
-"You have %d Riftglass.": ["裂け目ガラスを%d持っている。", "Vous avez %d Verre de Faille.", "Hai %d Vetrosquarcio.", "Tienes %d Vidrio Grieta.", "균열유리가 %d개 있다.", "你有%d裂隙晶。", "你有%d裂晶。", "Você tem %d Vidrofenda.", "У вас %d Стекла Разлома.", "Masz %d Szczelinitu.", "%d Yarık Camın var.", "Je hebt %d Kloofglas."],
+"You have %d Riftglass.": ["裂け目ガラスを%d持っている。", "Vous avez %d Verre de Faille.", "Hai %d Vetro-squarcio.", "Tienes %d Vidrio Grieta.", "균열유리가 %d개 있다.", "你有%d裂隙晶。", "你有%d裂晶。", "Você tem %d Vidrofenda.", "У вас %d Стекла Разлома.", "Masz %d Szczelinitu.", "%d Yarık Camın var.", "Je hebt %d Kloofglas."],
 "Not enough Riftglass: this costs %d, you have %d.": [
  "裂け目ガラスが足りない。必要: %d、手持ち: %d。",
  "Pas assez de Verre de Faille : il en faut %d, vous en avez %d.",
- "Vetrosquarcio insufficiente: costa %d, ne hai %d.",
+ "Vetro-squarcio insufficiente: costa %d, ne hai %d.",
  "No tienes suficiente Vidrio Grieta: cuesta %d y tienes %d.",
  "균열유리가 부족하다. 필요 %d, 보유 %d.",
  "裂隙晶不够：需要%d，你有%d。",
@@ -121,7 +121,7 @@ R = {
 "No connection right now. Riftglass needs the server.": [
  "今は接続がない。裂け目ガラスにはサーバーが必要だ。",
  "Pas de connexion pour l'instant. Le Verre de Faille a besoin du serveur.",
- "Nessuna connessione ora. Il Vetrosquarcio richiede il server.",
+ "Nessuna connessione ora. Il Vetro-squarcio richiede il server.",
  "Ahora no hay conexión. El Vidrio Grieta necesita el servidor.",
  "지금은 연결이 없다. 균열유리는 서버가 필요하다.",
  "现在没有网络连接。裂隙晶需要服务器。",
@@ -134,7 +134,7 @@ R = {
 "Riftglass is not available on this account.": [
  "このアカウントでは裂け目ガラスを使えない。",
  "Le Verre de Faille n'est pas disponible sur ce compte.",
- "Il Vetrosquarcio non è disponibile su questo account.",
+ "Il Vetro-squarcio non è disponibile su questo account.",
  "El Vidrio Grieta no está disponible en esta cuenta.",
  "이 계정에서는 균열유리를 쓸 수 없다.",
  "此账号无法使用裂隙晶。",
@@ -147,7 +147,7 @@ R = {
 "Riftglass is locked for now. Look in the shop under My purchases.": [
  "裂け目ガラスは今ロック中。店の「購入の記録」を確かめよう。",
  "Le Verre de Faille est bloqué pour l'instant. Voyez la boutique, sous Mes achats.",
- "Il Vetrosquarcio è bloccato per ora. Guarda nel negozio sotto I miei acquisti.",
+ "Il Vetro-squarcio è bloccato per ora. Guarda nel negozio sotto I miei acquisti.",
  "El Vidrio Grieta está bloqueado por ahora. Mira en la tienda, en Mis compras.",
  "균열유리가 지금은 잠겨 있다. 상점의 구매 내역을 확인하자.",
  "裂隙晶暂时被锁定。请到商店的「我的购买」查看。",
@@ -174,7 +174,7 @@ R = {
 "That did not work. No Riftglass was taken.": [
  "うまくいかなかった。裂け目ガラスは使われていない。",
  "Ça n'a pas marché. Aucun Verre de Faille n'a été pris.",
- "Non ha funzionato. Non è stato tolto nessun Vetrosquarcio.",
+ "Non ha funzionato. Non è stato tolto nessun Vetro-squarcio.",
  "No ha funcionado. No se ha gastado Vidrio Grieta.",
  "잘되지 않았다. 균열유리는 쓰이지 않았다.",
  "没有成功。没有扣除裂隙晶。",
@@ -184,7 +184,7 @@ R = {
  "Nie udało się. Nie pobrano Szczelinitu.",
  "Olmadı. Yarık Camı alınmadı.",
  "Dat lukte niet. Er is geen Kloofglas afgeschreven."],
-"Riftglass shop": ["裂け目ガラスの店", "Boutique Verre de Faille", "Negozio Vetrosquarcio", "Tienda de Vidrio Grieta", "균열유리 상점", "裂隙晶商店", "裂晶商店", "Loja de Vidrofenda", "Магазин Стекла Разлома", "Sklep Szczelinitu", "Yarık Camı dükkânı", "Kloofglaswinkel"],
+"Riftglass shop": ["裂け目ガラスの店", "Boutique Verre de Faille", "Negozio Vetro-squarcio", "Tienda de Vidrio Grieta", "균열유리 상점", "裂隙晶商店", "裂晶商店", "Loja de Vidrofenda", "Магазин Стекла Разлома", "Sklep Szczelinitu", "Yarık Camı dükkânı", "Kloofglaswinkel"],
 "Heal team: %d": ["チームを回復: %d", "Soigner l'équipe : %d", "Cura squadra: %d", "Curar equipo: %d", "팀 회복: %d", "治疗队伍：%d", "治療隊伍：%d", "Curar equipe: %d", "Лечить команду: %d", "Wylecz drużynę: %d", "Takımı iyileştir: %d", "Team helen: %d"],
 "Growth x2: %d": ["成長x2: %d", "Croissance x2 : %d", "Crescita x2: %d", "Crecimiento x2: %d", "성장 x2: %d", "成长x2：%d", "成長x2：%d", "Crescimento x2: %d", "Рост x2: %d", "Wzrost x2: %d", "Gelişim x2: %d", "Groei x2: %d"],
 "Heal the whole team now? Full Vigor, Energy, no states.": [
@@ -213,7 +213,7 @@ R = {
  "Wzrost x2 na kolejne walki: %d?",
  "Sonraki %d savaşta Gelişim x2 olsun mu?",
  "Groei x2 voor de volgende %d gevechten?"],
-"Daily gift: +%d Riftglass": ["毎日のおくりもの: 裂け目ガラス+%d", "Cadeau du jour : +%d Verre de Faille", "Dono del giorno: +%d Vetrosquarcio", "Regalo diario: +%d Vidrio Grieta", "일일 선물: 균열유리 +%d", "每日礼物：+%d裂隙晶", "每日禮物：+%d裂晶", "Presente diário: +%d Vidrofenda", "Подарок дня: +%d Стекла Разлома", "Dar dnia: +%d Szczelinitu", "Günlük hediye: +%d Yarık Camı", "Dagcadeau: +%d Kloofglas"],
+"Daily gift: +%d Riftglass": ["毎日のおくりもの: 裂け目ガラス+%d", "Cadeau du jour : +%d Verre de Faille", "Dono del giorno: +%d Vetro-squarcio", "Regalo diario: +%d Vidrio Grieta", "일일 선물: 균열유리 +%d", "每日礼物：+%d裂隙晶", "每日禮物：+%d裂晶", "Presente diário: +%d Vidrofenda", "Подарок дня: +%d Стекла Разлома", "Dar dnia: +%d Szczelinitu", "Günlük hediye: +%d Yarık Camı", "Dagcadeau: +%d Kloofglas"],
 }
 
 
