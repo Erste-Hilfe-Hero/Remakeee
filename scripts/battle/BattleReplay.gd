@@ -42,6 +42,9 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		snap["shift_offer"] = true
 	if model.foe_announce:
 		snap["foe_announce"] = true
+	# Hidden battle touches (HiddenBattle): only when on, so older replays stay the same.
+	if model.hidden_rules:
+		snap["hidden"] = true
 	return snap
 
 static func _snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
@@ -227,6 +230,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.initiative = bool(snap.get("initiative", false)) and not m.is_wild
 	m.shift_offer = bool(snap.get("shift_offer", false)) and not m.is_wild
 	m.foe_announce = bool(snap.get("foe_announce", false)) and not m.is_wild
+	m.hidden_rules = bool(snap.get("hidden", false))
 	if not partner.is_empty():
 		var ally: Array[Spirling] = _rebuild(partner.get("team", []))
 		if ally.size() != (partner.get("team", []) as Array).size():

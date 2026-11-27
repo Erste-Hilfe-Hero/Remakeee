@@ -147,6 +147,19 @@ def strings():
         for n in lamp.get("nights", []):
             found += n.get("lines", []) + n.get("log", [])
         found += lamp.get("pool_lines", [])
+    # Hidden mechanics (scripts/core/HiddenMechanics.gd, docs/HIDDEN_MECHANICS.md).
+    hm = os.path.join(ROOT, "data/hidden_mechanics.json")
+    if os.path.exists(hm):
+        h = json.load(open(hm, encoding="utf-8"))
+        found += [sp["line"] for sp in h.get("spawns", []) if sp.get("line")]
+        for p in h.get("spots", []):
+            for k in ("taps", "lines", "after"):
+                found += p.get(k, [])
+        found += [h[k] for k in ("code_prompt", "code_wrong", "code_leave", "code_write") if k in h]
+        for k in ("combos", "skies"):
+            found += [c["text"] for c in h.get("battle", {}).get(k, []) if c.get("text")]
+        found += list(h.get("knack", {}).get("words", {}).values())
+        found += [d["line"] for d in h.get("dates", []) if d.get("line")]
     for sd in SCRIPT_DIRS:
         for dp, _, fs in os.walk(os.path.join(ROOT, sd)):
             for f in sorted(fs):

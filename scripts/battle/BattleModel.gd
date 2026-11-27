@@ -81,6 +81,9 @@ var warden_weakened: bool = false
 var foe_damage_mult: float = 1.0
 ## Factor on the foe side's critical chance (Story difficulty, KAMPF plan item 497).
 var foe_crit_mult: float = 1.0
+## Hidden battle touches (HiddenBattle, docs/HIDDEN_MECHANICS.md): only world battles set it;
+## league, live duel, raid and echo battles keep it off. Travels in the replay as "hidden".
+var hidden_rules: bool = false
 ## Challenge rules (ChallengeRules): no chosen swaps for the player, why no bond can form ("" = it
 ## can), and bag items the player may not use in this battle.
 var swap_locked: bool = false
@@ -1662,6 +1665,7 @@ func _do_move(a: BattleAction) -> void:
 		used["muddled"] = true
 	emit_event(BattleEvent.Type.MOVE_USED, used)
 	TechniqueRules.note_move(self, side, me, mv, slot)
+	HiddenBattle.note_move(self, me, mv)
 	if targets.is_empty():
 		emit_event(BattleEvent.Type.NO_TARGET, {})
 		return
@@ -1715,6 +1719,7 @@ func _do_move(a: BattleAction) -> void:
 			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
 			mult *= TechniqueRules.hit_mult(self, side, slot, me, target_side, t_slot, target, mv)
 			mult *= TraitKit.hit_mult(self, side, slot, target_side, t_slot, mv)
+			mult *= HiddenBattle.hit_mult(self, side, slot, me, mv)
 			mult *= MultiRules.guard_mult(self, target_side) * MultiRules.row_mult(self, side, slot, target_side, t_slot, mv)
 			var combo: Dictionary = MultiRules.combo(self, side, slot, target_side, t_slot, mv.element)
 			if not combo.is_empty():
@@ -1726,7 +1731,7 @@ func _do_move(a: BattleAction) -> void:
 			if shielded:
 				mult *= ShopEffects.shield_mult(int(amulets[target_side][2]))
 			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult,
-				ShopEffects.crit_mult(BattleRules.mult_key(me, "crit_mult"), int(amulets[side][0])) * (foe_crit_mult if side == Side.FOE else 1.0))
+				ShopEffects.crit_mult(BattleRules.mult_key(me, "crit_mult"), int(amulets[side][0])) * (foe_crit_mult if side == Side.FOE else 1.0) * HiddenBattle.crit_mult(self, me, target))
 			if shielded and int(r.damage) > 0:
 				_shield_on[target_side] = null
 			if mv.has_effect(&"delayed_hit"):
