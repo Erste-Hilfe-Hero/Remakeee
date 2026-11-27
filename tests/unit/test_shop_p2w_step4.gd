@@ -36,13 +36,13 @@ func test_offers_are_fixed_riftglass_only_and_for_13_plus() -> void:
 	assert_eq(ShopValidator.check(mine), [] as Array[String])
 
 func test_values_come_from_data_and_never_reach_the_fair_league() -> void:
-	assert_eq(ShopEffects.seal_max("crit_seal"), 3)
+	assert_eq(ShopEffects.seal_max("crit_seal"), 5, "Crit Seal I to V (step 8)")
 	assert_eq(ShopEffects.seal_max("status_ward"), 1)
 	assert_eq(ShopEffects.seal_max("start_shield"), 1)
 	Billing.state = {"unlocks": {"crit_seal": 9, "status_ward": 1, "start_shield": 1}}
-	assert_eq(ShopEffects.amulet_tiers(), [3, 1, 1] as Array[int], "clamped to the top tier")
+	assert_eq(ShopEffects.amulet_tiers(), [5, 1, 1] as Array[int], "clamped to the top tier")
 	for ctx: String in ["story", "raid", "league_open"]:
-		assert_eq(ShopEffects.amulets_for(ctx), [3, 1, 1] as Array[int], ctx)
+		assert_eq(ShopEffects.amulets_for(ctx), [5, 1, 1] as Array[int], ctx)
 	for ctx: String in ["league_fair", "echo"]:
 		assert_eq(ShopEffects.amulets_for(ctx), [0, 0, 0] as Array[int], ctx)
 	var be := LocalBackend.new()
