@@ -84,7 +84,8 @@ func test_bundles_list_every_part_with_amounts() -> void:
 
 func test_bundle_detail_says_what_each_part_does_and_how_long() -> void:
 	var d: String = ShopMenu.detail_text(ShopCatalog.offer("rg_starter"))
-	assert_string_contains(d, Database.item("rg_growth_x2").description)
+	# Each part says what it does with its own offer's plain explanation (owner, 27 Nov 2026).
+	assert_string_contains(d, "- 1x Growth Crystal: " + str(ShopCatalog.offer("rg_growth_x2").explain))
 	assert_string_contains(d, "Duration: 20 battles from the moment you use it")
 	assert_string_contains(d, "Duration: yours until you spend it")
 	assert_string_contains(d, "Once per account.")

@@ -149,7 +149,7 @@ static func _check_was_price(o: Dictionary, where: String, errs: Array[String]) 
 ## Paid offers never sound free (item 4035): no "free", "as a gift" or "for nothing" in name or text.
 ## ("gifts" alone stays allowed: it names Spirling gifts and gifts to friends, both game features.)
 static func _check_wording(o: Dictionary, where: String, errs: Array[String]) -> void:
-	var text: String = (str(o.get("name", "")) + " " + str(o.get("desc", ""))).to_lower()
+	var text: String = (str(o.get("name", "")) + " " + str(o.get("desc", "")) + " " + str(o.get("explain", ""))).to_lower()
 	for w: String in ["free", "for nothing", "gratis", "as a gift", "geschenkt"]:
 		if text.contains(w):
 			errs.append(where + ": paid offers never say '%s' (item 4035)" % w)

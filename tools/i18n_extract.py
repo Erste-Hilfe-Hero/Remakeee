@@ -97,7 +97,7 @@ def strings():
                 found.append(mv[k])
     shop = json.load(open(os.path.join(ROOT, "data/shop.json"), encoding="utf-8"))
     for o in shop.get("offers", []):
-        for k in ("name", "desc"):
+        for k in ("name", "desc", "explain"):
             if isinstance(o.get(k), str):
                 found.append(o[k])
         if isinstance(o.get("duration"), str) and " " in o["duration"]:
