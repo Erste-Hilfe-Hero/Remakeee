@@ -1,0 +1,14 @@
+{
+  "_comment": "Riftglass sinks in play (Ali 27.11.2026). Prices are checked by the server: the same table is server_config 'rg_sinks' in supabase/migrations/20261127120000_rg_sinks.sql (tests/unit/test_riftglass_sinks.gd compares them). Fixed values, no chance.",
+  "daily_rg": 20,
+  "spends_per_hour": 60,
+  "sinks": {
+    "continue": {"prices": [200, 400, 800], "max_per_ref": 3},
+    "heal": {"price": 100},
+    "bond_boost": {"price": 200, "bonus": 0.3, "max_per_ref": 5},
+    "trip_skip": {"price_per_hour": 100, "max_hours": 12},
+    "lamp_relight": {"price": 200, "max_per_day": 3},
+    "warden_retry": {"price": 100},
+    "growth_x2": {"price": 100, "battles": 5, "mult": 2.0}
+  }
+}
