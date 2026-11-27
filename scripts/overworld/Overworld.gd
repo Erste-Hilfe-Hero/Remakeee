@@ -310,6 +310,7 @@ func _build() -> void:
 	toast = Toast.new()
 	add_child(toast)
 	Billing.pass_paid.connect(_on_pass_paid)
+	Billing.card_paid.connect(_on_card_paid)
 	# The free Riftglass of the day (RiftglassSinks.claim_daily), once online.
 	Online.state_changed.connect(_on_online_daily_rg)
 	_on_online_daily_rg(Online.state)
@@ -4084,6 +4085,11 @@ func challenge(n: NPC, spotted: bool) -> void:
 func _on_pass_paid(added: int) -> void:
 	if is_instance_valid(toast):
 		toast.show_note(Loc.t("Wayfarer Pass: +%d Riftglass") % added)
+
+## The Monthly Card paid its due daily Riftglass (pay-to-win step 7).
+func _on_card_paid(added: int) -> void:
+	if is_instance_valid(toast):
+		toast.show_note(Loc.t("Monthly Card: +%d Riftglass") % added)
 
 ## Claims the free Riftglass of the day when the game is online; a toast says what came.
 func _on_online_daily_rg(s: int) -> void:

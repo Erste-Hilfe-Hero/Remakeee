@@ -1646,7 +1646,7 @@ func _use_spark_wash(id: String) -> void:
 		await info(Loc.t("That spark is already dark."))
 		return
 	GameState.take_item(id)
-	await info(Loc.t("%s's %s spark is washed out.") % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()])
+	await info(Loc.t("%s's %s spark is washed out." % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()]))
 
 ## Stat Crystal from the shop: adds its points to one stat of one Spirling, up to twice the
 ## free Spark cap per stat.

@@ -286,6 +286,12 @@ def check_products() -> None:
         c = int(o["eur_cents"])
         de = "| %d Rissglas | %d,%02d € |" % (n, c // 100, c % 100)
         en = "| %d Riftglass | %d.%02d EUR |" % (n, c // 100, c % 100)
+        card = [g for g in o.get("grants", []) if g.get("t") == "card"]
+        if card:
+            # The Monthly Card: what comes at once and every day, not only the first amount.
+            d, days = int(card[0].get("n", 0)), int(card[0].get("days", 0))
+            de = "| Monatskarte: %d Rissglas sofort, dann %d Tage lang %d am Tag | %d,%02d € |" % (n, days, d, c // 100, c % 100)
+            en = "| Monthly Card: %d Riftglass at once, then %d a day for %d days | %d.%02d EUR |" % (n, d, days, c // 100, c % 100)
         for row in (de, en):
             if row not in help_page:
                 errors.append("docs/legal/KAEUFE.md: row '%s' is missing or has another price" % row)

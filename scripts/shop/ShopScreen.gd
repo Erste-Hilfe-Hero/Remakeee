@@ -610,7 +610,7 @@ static func deal_on(o: Dictionary, now: int) -> bool:
 
 ## True once an offer's "ends_at" has passed.
 static func expired(o: Dictionary, now: int) -> bool:
-	var e: int = end_time(o)
+	var e: int = end_time(o, now)
 	return e > 0 and now >= e
 
 ## The offers shown in [param t]: ready and not ended.

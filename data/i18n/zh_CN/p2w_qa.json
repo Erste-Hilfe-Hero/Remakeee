@@ -1,0 +1,6 @@
+{
+ "_comment": "Simplified Chinese texts for the German table p2w_qa. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "Monthly Card: +%d Riftglass": "月卡：+%d裂隙晶"
+ }
+}
