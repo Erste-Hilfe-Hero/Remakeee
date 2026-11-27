@@ -165,7 +165,7 @@ static func error_text(why: String, cost: int = 0) -> String:
 			return Loc.t("The price has changed. Please look again.")
 	return Loc.t("That did not work. No Riftglass was taken.")
 
-## The shop's Riftglass page, for the "not enough" message outside battle. Children's accounts
+## The shop's Riftglass tab, for the "not enough" message outside battle. Children's accounts
 ## never get here (their rows are hidden); the age question comes first like in the shop.
 static func open_riftglass_page(menu: MenuHost) -> void:
 	if OS.has_feature("web") or Billing.kids_locked():
@@ -182,7 +182,8 @@ static func open_riftglass_page(menu: MenuHost) -> void:
 		await menu.info(ShopMenu.LOCKED_TEXT)
 		return
 	await ShopMenu._query_prices()
-	await ShopMenu._run_tab(menu, "riftglass")
+	# The new shop screen on its Riftglass tab (tags, first purchase x2, Monthly Card), not the old list.
+	await ShopScreen.open(menu, "", "riftglass")
 
 ## Pays [param cost] for [param reason] from a menu outside battle: asks first with the price,
 ## says why when it cannot, and offers the shop's Riftglass page when Riftglass is short (not
@@ -194,13 +195,13 @@ static func pay_in_menu(menu: MenuHost, reason: String, ref: String, cost: int, 
 		return false
 	var why: String = why_not(cost)
 	if why == "not_enough" and shop_link:
-		if await menu.confirm(error_text(why, cost), "Riftglass shop", "Back"):
+		if await menu.confirm(error_text(why, cost), "Riftglass shop", "Not now"):
 			await open_riftglass_page(menu)
 		return false
 	if not why.is_empty():
 		await menu.info(error_text(why, cost))
 		return false
-	if not await menu.confirm(question + "\n" + cost_text(cost) + "\n" + balance_line(), "Use", "Back"):
+	if not await menu.confirm(question + "\n" + cost_text(cost) + "\n" + balance_line(), "Use", "Not now"):
 		return false
 	var d: Dictionary = await spend(reason, ref, cost)
 	if not bool(d.get("ok", false)):

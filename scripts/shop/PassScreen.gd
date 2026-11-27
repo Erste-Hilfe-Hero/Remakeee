@@ -22,16 +22,24 @@ const TAKE_ALL: String = "Take all rewards (%d)"
 static func error_text(e: String) -> String:
 	return Loc.t(str(ERRORS.get(e, "Something went wrong. Try again in a moment.")))
 
-## "Step 7 of 30" over "40 of 100 pass points  ends in 12 d".
-static func title(st: Dictionary) -> String:
+## "Pass track  Step 7 of 30" over "40 of 100 pass points" over "Until 30. 11." (the season end
+## as a fixed date, never a running "ends in": docs/MONETIZATION.md rule 5). [param short] 1 leaves
+## the date out, 2 also the "Pass track" name, for narrow screens (titles()).
+static func title(st: Dictionary, short: int = 0) -> String:
 	var pts: int = int(st.get("points", 0))
 	var prog: Array[int] = PassTrack.progress(pts)
-	var head: String = Loc.t(TITLE) + "  " + Loc.t("Step %d of %d") % [PassTrack.tier_for(pts), PassTrack.tier_count()]
+	var head: String = Loc.t("Step %d of %d") % [PassTrack.tier_for(pts), PassTrack.tier_count()]
+	if short < 2:
+		head = Loc.t(TITLE) + "  " + head
 	var line: String = Loc.t("%d of %d pass points") % [prog[0], prog[1]]
 	var ends: int = int(st.get("ends", 0))
-	if ends > 0:
-		line += "  " + Loc.t("ends in %s") % EventsMenu.span_text(ends - Online.unix_now())
+	if ends > 0 and short < 1:
+		line += "\n" + ShopScreen.time_text(ends)
 	return head + "\n" + line
+
+## The title candidates, fullest first, for MenuHost.fit_title.
+static func titles(st: Dictionary) -> Array[String]:
+	return [title(st), title(st, 1), title(st, 2)]
 
 static func panel_text() -> String:
 	return Loc.t(PANEL_TEXT) % [PassTrack.points_for("win"), PassTrack.points_for("bond"), PassTrack.points_for("daily_task"), PassTrack.day_cap()]
@@ -97,7 +105,8 @@ static func run(host: MenuHost) -> void:
 		view.st = st.duplicate()
 		view.custom_minimum_size = Vector2(0, PassTrackView.HEIGHT)
 		view.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		var idx: int = await host.pick_screen("shop", title(st), list, {"header": view, "panel_text": panel_text(),
+		# The status title never pops up as a page before the list (MenuHost.fit_title).
+		var idx: int = await host.pick_screen("shop", host.fit_title(titles(st)), list, {"header": view, "panel_text": panel_text(),
 			"focus": focus_row(list, st)})
 		if idx < 0:
 			return
