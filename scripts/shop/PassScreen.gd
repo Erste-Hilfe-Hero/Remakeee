@@ -93,7 +93,13 @@ static func focus_row(list: Array[Dictionary], st: Dictionary) -> int:
 			return i
 	return 0
 
-static func run(host: MenuHost) -> void:
+static func run(menu: MenuHost) -> void:
+	# The track in finger and reading size (ShopZoom).
+	var h: MenuHost = ShopZoom.enter(menu)
+	await _run(h)
+	ShopZoom.leave(h)
+
+static func _run(host: MenuHost) -> void:
 	var r: Dictionary = await PassTrack.refresh()
 	if not r.ok or PassTrack.state.is_empty():
 		await host.info(error_text("offline"))
@@ -160,12 +166,13 @@ static func _run_step(host: MenuHost, tier: int) -> void:
 		else:
 			await host.info(error_text(str(d.get("error", ""))))
 
-## The Wayfarer Pass offer page of the shop (price, contents, how to cancel).
+## The Wayfarer Pass on the shop screen's detail page (price, contents, buy buttons); Back
+## comes back to the track.
 static func _open_pass_offer(host: MenuHost) -> void:
 	var o: Dictionary = ShopCatalog.offer(PassTrack.PASS_OFFER)
 	if o.is_empty():
 		return
-	await ShopMenu._run_offer(host, o)
+	await ShopScreen.open(host, PassTrack.PASS_OFFER, "pass", true)
 
 ## The two state marks at the right end of a step row: free left, premium right.
 static func draw_marks(b: Button, st: Dictionary, tier: int) -> void:
@@ -190,7 +197,7 @@ class PassTrackView extends Control:
 		return clampi(tier, 1, maxi(1, PassTrack.tier_count() - COLUMNS + 1))
 
 	func _draw() -> void:
-		var font: Font = UITheme.font()
+		var font: Font = get_theme_default_font()
 		var fs: int = UITheme.FONT_SIZE
 		var pts: int = int(st.get("points", 0))
 		var tier: int = PassTrack.tier_for(pts)

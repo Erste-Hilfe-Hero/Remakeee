@@ -16,7 +16,8 @@ const BADGES: Dictionary[String, String] = {"bestseller": "Bestseller", "best_va
 	"new": "New", "limited": "Limited"}
 ## Fallback when no offer is marked "featured" yet: these, in this order, then the best Riftglass tier.
 const FEATURED_FALLBACK: Array[String] = ["rg_starter", "rg_pass"]
-## Smallest touch target in viewport pixels (EraMenus.TOUCH_MIN_ROW, about 44 pt on a phone).
+## Smallest touch target in viewport pixels (EraMenus.TOUCH_MIN_ROW); touch() raises it where a
+## pixel is smaller (ShopZoom), so a button is always at least 44 pt.
 const TOUCH: int = 22
 const TAB_H: int = 22
 const MARGIN: int = 3
@@ -35,6 +36,8 @@ const STARTER_POPUP_MIN_BAND: int = 18
 var menu: MenuHost
 var tab: String = "featured"
 var detail: Dictionary = {}
+## Back on the detail page closes the screen (opened for one offer only).
+var close_on_back: bool = false
 var _busy: bool = false
 var _list: VBoxContainer
 var _scroll: ScrollContainer
@@ -45,19 +48,28 @@ var _balance_btn: Button
 var _tab_buttons: Dictionary[String, Button] = {}
 var _tabs_row: HBoxContainer
 
+## The smallest button height here: TOUCH, or more where a pixel is small (ShopZoom).
+static func touch() -> int:
+	return maxi(TOUCH, ShopZoom.touch_px())
+
 # --- Opening -----------------------------------------------------------------------------------
 
 ## Opens the shop on [param host] and returns when it closes. [param offer_id] opens straight on
 ## that offer's detail page (the Starter Pack note).
-static func open(host: MenuHost, offer_id: String = "", start_tab: String = "featured") -> void:
+## [param only_detail] closes the screen on Back from that detail page (the pass track's premium
+## row comes back to the track).
+static func open(host: MenuHost, offer_id: String = "", start_tab: String = "featured", only_detail: bool = false) -> void:
+	var h: MenuHost = ShopZoom.enter(host)
 	var s := ShopScreen.new()
-	s.menu = host
+	s.menu = h
 	s.tab = start_tab
-	host.add_child(s)
+	h.add_child(s)
 	if not offer_id.is_empty() and not ShopCatalog.offer(offer_id).is_empty():
+		s.close_on_back = only_detail
 		s.show_detail(ShopCatalog.offer(offer_id))
 	await s.closed
 	s.queue_free()
+	ShopZoom.leave(h)
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -84,7 +96,7 @@ func _ready() -> void:
 		b.icon = ShopArt.icon(ShopArt.TAB_ICONS[t])
 		b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		b.expand_icon = false
-		b.custom_minimum_size = Vector2(16, TAB_H)
+		b.custom_minimum_size = Vector2(16, touch())
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.tooltip_text = Loc.t(TAB_TITLES[t])
 		b.set("accessibility_name", Loc.t(TAB_TITLES[t]))
@@ -124,7 +136,7 @@ func _top_bar() -> Control:
 	bar.add_theme_constant_override("separation", 2)
 	var back := Button.new()
 	back.text = "<"
-	back.custom_minimum_size = Vector2(TOUCH, TOUCH)
+	back.custom_minimum_size = Vector2(touch(), touch())
 	back.set("accessibility_name", Loc.t("Back"))
 	back.pressed.connect(go_back)
 	bar.add_child(back)
@@ -134,7 +146,7 @@ func _top_bar() -> Control:
 	bar.add_child(title)
 	_balance_btn = Button.new()
 	_balance_btn.icon = ShopArt.icon("gem")
-	_balance_btn.custom_minimum_size = Vector2(0, TOUCH)
+	_balance_btn.custom_minimum_size = Vector2(0, touch())
 	_balance_btn.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	for k: String in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color"]:
 		_balance_btn.add_theme_color_override(k, Color.WHITE)
@@ -357,7 +369,7 @@ func _dialog(job: Callable) -> void:
 func go_back() -> void:
 	if _busy:
 		return
-	if not detail.is_empty():
+	if not detail.is_empty() and not close_on_back:
 		select_tab(tab)
 		return
 	closed.emit()
@@ -462,7 +474,7 @@ func price_box(o: Dictionary, wide: bool) -> Control:
 	var st: String = offer_state(o)
 	var box := _panel(UITheme.DISABLED if st != "" else UITheme.INK, UITheme.INK)
 	box.name = "price"
-	box.custom_minimum_size = Vector2(0, TOUCH if wide else 18)
+	box.custom_minimum_size = Vector2(0, touch() if wide else 18)
 	var v := VBoxContainer.new()
 	v.alignment = BoxContainer.ALIGNMENT_CENTER
 	v.add_theme_constant_override("separation", 0)
@@ -569,7 +581,7 @@ func _action_button(text: String, on_press: Callable, primary: bool = false) -> 
 	b.text = text
 	b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	b.custom_minimum_size = Vector2(1, TOUCH)
+	b.custom_minimum_size = Vector2(1, touch())
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	b.add_theme_stylebox_override("normal", UITheme.flat_style(UITheme.INK if primary else UITheme.ACCENT, UITheme.INK))
 	if primary:
@@ -665,9 +677,20 @@ static func short_contents(o: Dictionary) -> String:
 	var name: String = Loc.t(str(o.get("name", "")))
 	if line == name:
 		return ""
-	if line == "1x " + name or line == "%dx %s" % [1, name]:
+	if line == "1x " + name or line == "%dx %s" % [1, name] or gift_card_set(o):
 		return first_sentence(Loc.t(str(o.get("desc", ""))))
 	return line
+
+## True for a set of gift card motifs: its card says what the set is instead of
+## "1x Gift Card: Lantern, 1x Gift Card: Moth, 1x Gift Card: Wave, and 5 more".
+static func gift_card_set(o: Dictionary) -> bool:
+	var grants: Array = o.get("grants", [])
+	if grants.size() < 2:
+		return false
+	for e: Variant in grants:
+		if not (e is Dictionary and str(e.get("t", "")) == "unlock" and str(e.get("id", "")).begins_with("gift_card_")):
+			return false
+	return true
 
 ## The first sentence of [param text] ("" stays "").
 static func first_sentence(text: String) -> String:
@@ -762,13 +785,15 @@ static func run_starter_popup(host: MenuHost) -> void:
 	var o: Dictionary = ShopCatalog.offer(STARTER_ID)
 	if o.is_empty() or Billing.kids_locked():
 		return
+	var h: MenuHost = ShopZoom.enter(host)
 	var pop := StarterPopup.new()
 	pop.offer = o
-	host.add_child(pop)
+	h.add_child(pop)
 	var want: bool = await pop.chosen
 	pop.queue_free()
 	if want:
-		await ShopMenu.run(host, STARTER_ID)
+		await ShopMenu.run(h, STARTER_ID)
+	ShopZoom.leave(h)
 
 ## The note itself: a dimmed screen with the banner card and two buttons.
 class StarterPopup extends Control:
@@ -841,7 +866,7 @@ static func _fit_walk(c: Node, vp: Rect2, out: Array[String]) -> void:
 			_fit_label(ctl as Label, out)
 		elif ctl is Button:
 			var b: Button = ctl as Button
-			if r.size.y < TAB_H - 0.5 and not b.flat:
+			if r.size.y < touch() - 0.5 and not b.flat:
 				out.append("button below finger size: %s" % _text_of(b))
 			if not b.text.is_empty() and b.autowrap_mode == TextServer.AUTOWRAP_OFF:
 				var f: Font = b.get_theme_font("font")

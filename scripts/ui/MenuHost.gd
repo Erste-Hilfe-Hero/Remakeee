@@ -162,6 +162,10 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	# The era's list layout (EraMenus): plain lists take the era's base, screens their own.
 	var lay: Dictionary = _next_layout if not _next_layout.is_empty() else EraMenus.layout(EraManager.active_era())
 	_next_layout = {}
+	if min_row > 0:
+		lay = lay.duplicate()
+		lay["row_h"] = maxi(int(lay.get("row_h", ListPicker.ROW_HEIGHT)), min_row)
+		lay["back_size"] = maxi(ListPicker.BACK_SIZE, min_row)
 	picker.layout = lay
 	last_layout = lay
 	var r: int = await picker.pick(title, entries, cancellable, focus, guard_ms, tabs, tab)
@@ -169,6 +173,9 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	return r
 
 var _next_layout: Dictionary = {}
+## Smallest list row and Back button in pixels (0 = the era's own). The shop, the pass track and
+## the Riftglass questions raise it to a finger's size (ShopZoom).
+var min_row: int = 0
 ## The layout of the list shown last (tests).
 var last_layout: Dictionary = {}
 ## Screens opened through pick_screen so far, newest last (tests).
@@ -204,8 +211,9 @@ func title_lines(title: String) -> int:
 	# A list not laid out yet has a stale, narrow title; a status line then counted as many
 	# lines and popped up first (Chimora 100, item 51).
 	if w < 8.0 or not picker.is_visible_in_tree():
-		w = get_viewport_rect().size.x - PANEL_MARGIN * 2.0 - ListPicker.BACK_SIZE - 12.0
-	var f: Font = UITheme.font()
+		w = get_viewport_rect().size.x - PANEL_MARGIN * 2.0 - maxi(ListPicker.BACK_SIZE, min_row) - 12.0
+	# The font this host draws with (a zoomed shop view has its own, ShopZoom).
+	var f: Font = get_theme_default_font()
 	var line_h: float = f.get_height(UITheme.FONT_SIZE)
 	var h: float = f.get_multiline_string_size(Loc.t(title), HORIZONTAL_ALIGNMENT_LEFT, w, UITheme.FONT_SIZE).y
 	return int(ceil(h / maxf(line_h, 1.0) - 0.01))
