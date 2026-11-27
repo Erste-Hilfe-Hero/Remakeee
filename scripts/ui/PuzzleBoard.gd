@@ -471,8 +471,8 @@ func _lost(text: String) -> void:
 	_canvas.queue_redraw()
 
 func _on_canvas_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
-		var p: Vector2 = (event as InputEventMouseButton).position
+	if TapInput.is_press(event):
+		var p: Vector2 = TapInput.position(event)
 		tap_cell(Vector2i(int(p.x / _cell), int(p.y / _cell)))
 		accept_event()
 
