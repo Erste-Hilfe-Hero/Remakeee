@@ -15,9 +15,8 @@ Every Era I sprite pixel is one of the four inks (EraManager.INK_PALETTE). The G
   Gleam still reads as different under the Era I Retro filter, which maps the screen by luminance.
 "palettes" holds the classic kind (unchanged since the first Gleam, so saved Gleams look the
 same). The rarer kinds of data/gleam.json that have a "palette" spec get "kinds"/<id>/<species>:
-the hue is the kind's own ("hue" +- "jitter" degrees by species), the saturation lies in "sat",
-the four tones sit at the kind's "bands" (outline darkest), and inks 1..3 are permuted the same
-way. Every species of data/spirlings.json gets every kind, so new species need no edit here.
+"tones" gives [hue, saturation, luma] for inks 0..3 (outline darkest), and the hue of all four
+moves by up to "jitter" degrees per species, so each kind is one recognisable look. Every species of data/spirlings.json gets every kind, so new species need no edit here.
 """
 import colorsys, hashlib, json, os, sys
 
@@ -67,15 +66,10 @@ def kind_palette(sp, kind):
     spec = kind["palette"]
     digest = hashlib.sha256((kind["id"] + ":" + sp["name"]).encode()).digest()
     jitter = int(spec.get("jitter", 0))
-    hue = ((spec["hue"] + (digest[0] % (2 * jitter + 1)) - jitter) % 360) / 360.0
-    lo, hi = spec.get("sat", [0.45, 0.75])
-    sat = lo + (digest[1] % 101) / 100.0 * (hi - lo)
-    bands = spec.get("bands", BANDS)
-    perm = PERMS[digest[2] % len(PERMS)]
-    out = [hexc(tone(hue, min(sat, 0.35), bands[0]))]
-    for i, band in enumerate(perm):
-        out.append(hexc(tone((hue + (i - 1) * 0.04) % 1.0, sat, bands[band])))
-    return out
+    shift = (digest[0] % (2 * jitter + 1)) - jitter
+    # One fixed tone per ink (outline, shadow, mid, light) so a kind reads the same on every
+    # species; only the hue moves a few degrees per species.
+    return [hexc(tone(((h + shift) % 360) / 360.0, s, luma)) for h, s, luma in spec["tones"]]
 
 
 def gleam_kinds():

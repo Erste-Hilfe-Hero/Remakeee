@@ -1,7 +1,7 @@
 extends SceneTree
 ## In-game battle shot per Gleam kind (data/gleam.json "kinds", 1.3.2): a wild battle in the era
-## given (Era III shows the coloured glint; Era I maps all to four inks), foe and lead Gleams of
-## that kind, settled at the command menu, scaled x4 nearest.
+## given (Era III shows the coloured glint; Era I maps all to four inks): an Era I foe and an
+## Era III lead, both Gleams of that kind (plus "normal" without), at the command menu, x4.
 ##   xvfb-run -a godot --path . --rendering-driver opengl3 --resolution 144x256 \
 ##     -s res://tools/gleam_kind_shots.gd -- out_dir [era]
 

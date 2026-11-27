@@ -327,6 +327,37 @@ func test_opaline_stands_still_under_reduced_motion() -> void:
 	assert_eq(float(moving.get_shader_parameter("phase")), 0.0)
 	GameState.reduce_motion = was
 
+## The classic material keeps its old shader settings (same look as before the kinds); the
+## rarer kinds draw their own colours, not tinted by the old ink (true_colours).
+func test_rarer_kinds_draw_true_colours_and_classic_is_unchanged() -> void:
+	for name: String in ["Kindlop", "Blotkin"]:
+		var classic: ShaderMaterial = GleamRules.material(name)
+		assert_ne(classic.get_shader_parameter("true_colours"), true, name + ": classic as before")
+		assert_null(classic.get_shader_parameter("phase"), name + ": classic sets no new parameter")
+		for id: String in RARE:
+			assert_eq(GleamRules.material(name, id).get_shader_parameter("true_colours"), true, "%s %s" % [name, id])
+	var tier: ShaderMaterial = GleamRules.material("Blotkin", "inkwash")
+	assert_eq(tier.shader.resource_path, SpriteTiers.HUE_SHADER_PATH, "Era III art takes the ramp path")
+	assert_gt(float(tier.get_shader_parameter("ramp_mix")), 0.5)
+	assert_lt(float(tier.get_shader_parameter("accent_from")), 1.0, "Inkwash keeps one bright accent")
+
+func test_each_kind_has_its_own_hue_family() -> void:
+	# Mid tone (ink 2) of every species: Rime cyan, Inkwash bright accent, Duskgold orange,
+	# Opaline a light pastel; ink 1 of Inkwash stays near black.
+	for sd: SpirlingData in Database.spirlings.values():
+		var n: String = sd.species_name
+		var rime: Array[Color] = GleamRules.palette(n, "rime")
+		assert_gt(rime[3].get_luminance(), 0.85, n + ": Rime light is near white")
+		assert_true(rime[2].b > rime[2].r, n + ": Rime is blue")
+		var ink: Array[Color] = GleamRules.palette(n, "inkwash")
+		assert_lt(ink[1].get_luminance(), 0.1, n + ": Inkwash shadow is ink-black")
+		assert_lt(ink[3].get_luminance(), 0.2, n + ": Inkwash light stays dark")
+		assert_gt(ink[2].get_luminance(), 0.5, n + ": one bright accent")
+		var gold: Array[Color] = GleamRules.palette(n, "duskgold")
+		assert_true(gold[2].r > gold[2].b and gold[3].r > gold[3].b, n + ": Duskgold is warm")
+		var opal: Array[Color] = GleamRules.palette(n, "opaline")
+		assert_gt(opal[1].get_luminance(), 0.55, n + ": Opaline is pastel")
+
 func test_sparkle_settings_per_kind() -> void:
 	var base: Dictionary = GleamRules.sparkle(GleamRules.CLASSIC)
 	assert_eq(int(base.sparkles), int(GleamRules.config().sparkles), "classic sparkle unchanged")

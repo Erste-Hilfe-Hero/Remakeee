@@ -252,6 +252,10 @@ static func _kind_material(species: String, id: String) -> ShaderMaterial:
 		mat.set_shader_parameter("shift", SpriteTiers.gleam_shift(line) if k.has("cycle") else 0.0)
 		mat.set_shader_parameter("ramp_dark", Color(str(t.get("dark", "000000"))))
 		mat.set_shader_parameter("ramp_light", Color(str(t.get("light", "ffffff"))))
+		mat.set_shader_parameter("ramp_mid", Color(str(t.get("dark", "000000"))).lerp(Color(str(t.get("light", "ffffff"))), 0.5) if not t.has("mid") else Color(str(t.mid)))
+		mat.set_shader_parameter("accent", Color(str(t.get("accent", "ffffff"))))
+		mat.set_shader_parameter("accent_from", float(t.get("accent_from", 2.0)))
+		mat.set_shader_parameter("true_colours", true)
 		mat.set_shader_parameter("ramp_mix", float(t.get("mix", 0.0)))
 		mat.set_shader_parameter("cycle", cycle)
 		mat.set_shader_parameter("phase", phase)
@@ -263,6 +267,7 @@ static func _kind_material(species: String, id: String) -> ShaderMaterial:
 			mat.set_shader_parameter("dst%d" % i, pal[i])
 		mat.set_shader_parameter("cycle", cycle)
 		mat.set_shader_parameter("phase", phase)
+		mat.set_shader_parameter("true_colours", true)
 	_materials[key] = mat
 	return mat
 

@@ -14,6 +14,15 @@ uniform vec4 dst3 : source_color = vec4(0.949, 0.890, 0.761, 1.0);
 uniform float cycle = 0.0;
 // Fixed hue turn (turns) for a cycling kind under reduced motion, which then has cycle 0.
 uniform float phase = 0.0;
+// In a canvas fragment COLOR already holds the texture colour, so "c * COLOR" tints the new
+// colour with the old ink. The classic Gleam has always been drawn that way and keeps it;
+// the rarer kinds set true_colours and are multiplied by the vertex colour only.
+uniform bool true_colours = false;
+varying vec4 vertex_colour;
+
+void vertex() {
+	vertex_colour = COLOR;
+}
 
 bool same(vec3 a, vec3 b) {
 	return distance(a, b) < 0.03;
@@ -35,5 +44,5 @@ void fragment() {
 		vec3 k = vec3(0.57735026919);
 		c.rgb = clamp(c.rgb * cos(a) + cross(k, c.rgb) * sin(a) + k * dot(k, c.rgb) * (1.0 - cos(a)), 0.0, 1.0);
 	}
-	COLOR = c * COLOR;
+	COLOR = c * (true_colours ? vertex_colour : COLOR);
 }

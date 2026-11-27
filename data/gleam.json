@@ -1,5 +1,5 @@
 {
- "_comment": "Gleam form tuning (scripts/core/GleamRules.gd). Wild chance of a kind = (1 + min(chain, chain_max) * chain_step) * mult / one_in; the classic kind uses wild_one_in. One draw decides the kind: classic first, then the rarer kinds in this order. The shop's Shimmer Scent only scales the classic kind, so no rare kind can be bought. Palettes: data/gleam_palettes.json (tools/art/gen_gleam_palettes.py reads \"palette\"); \"tier\" recolours art of tiers II to V (shaders/gleam_hue.gdshader); \"cycle\" turns the hues in turns per second; under reduced motion they stand still at \"still_phase\" (turns).",
+ "_comment": "Gleam form tuning (scripts/core/GleamRules.gd). Wild chance of a kind = (1 + min(chain, chain_max) * chain_step) * mult / one_in; the classic kind uses wild_one_in. One draw decides the kind: classic first, then the rarer kinds in this order. The shop's Shimmer Scent only scales the classic kind, so no rare kind can be bought. Palettes: data/gleam_palettes.json (tools/art/gen_gleam_palettes.py reads \"palette\": four [hue, saturation, luma] tones for inks 0..3, hue jittered by species); \"tier\" recolours art of tiers II to V by brightness along dark/mid/light, the brightest pixels to \"accent\" (shaders/gleam_hue.gdshader); \"cycle\" turns the hues in turns per second; under reduced motion they stand still at \"still_phase\" (turns).",
  "wild_one_in": 1024,
  "chain_step": 0.5,
  "chain_max": 10,
@@ -12,22 +12,22 @@
   {"id": "rime", "name": "Rime Gleam", "one_in": 8192, "line": " Frost glitters on its hide: a Rime Gleam!",
    "glyph": "e007", "color": "9fdcff",
    "sparkles": 8, "sparkle_time": 0.7, "sfx_pitch": 1.5, "sparkle_color": "c8ecff",
-   "palette": {"hue": 200, "jitter": 14, "sat": [0.35, 0.55], "bands": [0.16, 0.5, 0.72, 0.92]},
-   "tier": {"dark": "1d2f52", "light": "eef8ff", "mix": 0.75}},
+   "palette": {"jitter": 8, "tones": [[215, 0.55, 0.22], [200, 0.6, 0.6], [188, 0.55, 0.8], [180, 0.4, 0.95]]},
+   "tier": {"dark": "2a5a8c", "mid": "8fd0f0", "light": "f6fdff", "mix": 0.9}},
   {"id": "inkwash", "name": "Inkwash Gleam", "one_in": 8192, "line": " It is washed in deep ink: an Inkwash Gleam!",
    "glyph": "e008", "color": "8a7ad0",
    "sparkles": 6, "sparkle_time": 0.8, "sfx_pitch": 0.9, "sparkle_color": "a898f0",
-   "palette": {"hue": 258, "jitter": 16, "sat": [0.25, 0.45], "bands": [0.05, 0.2, 0.38, 0.62]},
-   "tier": {"dark": "0c0a16", "light": "9a8cc8", "mix": 0.8}},
+   "palette": {"jitter": 8, "tones": [[230, 0.5, 0.02], [228, 0.55, 0.05], [182, 1.0, 0.62], [226, 0.6, 0.12]]},
+   "tier": {"dark": "02030a", "mid": "101a40", "light": "24305e", "accent": "30f0ff", "accent_from": 0.72, "mix": 0.92}},
   {"id": "duskgold", "name": "Duskgold Gleam", "one_in": 16384, "line": " It glows like the last of the sun: a Duskgold Gleam!",
    "glyph": "e009", "color": "f0a040",
    "sparkles": 10, "sparkle_time": 0.7, "sfx_pitch": 1.1, "sparkle_color": "ffc860",
-   "palette": {"hue": 32, "jitter": 14, "sat": [0.6, 0.8], "bands": [0.12, 0.37, 0.62, 0.86]},
-   "tier": {"dark": "4a1424", "light": "ffe08a", "mix": 0.75}},
+   "palette": {"jitter": 6, "tones": [[340, 0.6, 0.07], [350, 0.65, 0.34], [26, 0.95, 0.55], [46, 0.95, 0.82]]},
+   "tier": {"dark": "5a1430", "mid": "f07038", "light": "ffe070", "mix": 0.88}},
   {"id": "opaline", "name": "Opaline Gleam", "one_in": 65536, "line": " Its colours never hold still: an Opaline Gleam!",
    "glyph": "e00a", "color": "f0a0e8",
    "sparkles": 12, "sparkle_time": 0.9, "sfx_pitch": 1.75, "sparkle_color": "ffffff", "cycle": 0.25, "still_phase": 0.5,
-   "palette": {"hue": 300, "jitter": 60, "sat": [0.55, 0.7], "bands": [0.2, 0.55, 0.75, 0.92]},
-   "tier": {"dark": "3a2a5a", "light": "fff0fa", "mix": 0.35}}
+   "palette": {"jitter": 20, "tones": [[268, 0.35, 0.28], [310, 0.55, 0.66], [190, 0.6, 0.8], [55, 0.75, 0.93]]},
+   "tier": {"dark": "7a6aa8", "mid": "f2b4e4", "light": "f2fff6", "mix": 0.75}}
  ]
 }
