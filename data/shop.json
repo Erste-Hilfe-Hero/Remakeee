@@ -86,7 +86,8 @@
    "plan": 4218,
    "min_band": 13,
    "ready": true,
-   "first_buy_double": true
+   "first_buy_double": true,
+   "explain": "You get 100 Riftglass. The first time you buy this pack you get 100 more: 200 in total. Riftglass pays for offers in this shop. Fixed amounts, no chance."
   },
   {
    "id": "rg_glass_200",
@@ -110,7 +111,8 @@
    "min_band": 13,
    "ready": true,
    "bonus_pct": 10,
-   "first_buy_double": true
+   "first_buy_double": true,
+   "explain": "You get 220 Riftglass: 200 plus 20 bonus (+10%). The first time you buy this pack you get 200 more: 420 in total. Riftglass pays for offers in this shop. Fixed amounts, no chance."
   },
   {
    "id": "rg_glass_500",
@@ -134,7 +136,8 @@
    "min_band": 13,
    "ready": true,
    "bonus_pct": 20,
-   "first_buy_double": true
+   "first_buy_double": true,
+   "explain": "You get 600 Riftglass: 500 plus 100 bonus (+20%). The first time you buy this pack you get 500 more: 1100 in total. Riftglass pays for offers in this shop. Fixed amounts, no chance."
   },
   {
    "id": "rg_glass_1000",
@@ -159,7 +162,8 @@
    "ready": true,
    "bonus_pct": 30,
    "first_buy_double": true,
-   "badge": "new"
+   "badge": "new",
+   "explain": "You get 1300 Riftglass: 1000 plus 300 bonus (+30%). The first time you buy this pack you get 1000 more: 2300 in total. Riftglass pays for offers in this shop. Fixed amounts, no chance."
   },
   {
    "id": "rg_glass_2000",
@@ -183,7 +187,8 @@
    "min_band": 13,
    "ready": true,
    "bonus_pct": 40,
-   "first_buy_double": true
+   "first_buy_double": true,
+   "explain": "You get 2800 Riftglass: 2000 plus 800 bonus (+40%). The first time you buy this pack you get 2000 more: 4800 in total. Riftglass pays for offers in this shop. Fixed amounts, no chance."
   },
   {
    "id": "rg_glass_5000",
@@ -207,7 +212,8 @@
    "min_band": 13,
    "ready": true,
    "bonus_pct": 50,
-   "first_buy_double": true
+   "first_buy_double": true,
+   "explain": "You get 7500 Riftglass: 5000 plus 2500 bonus (+50%). The first time you buy this pack you get 5000 more: 12500 in total. Riftglass pays for offers in this shop. Fixed amounts, no chance."
   },
   {
    "id": "rg_glass_10000",
@@ -232,7 +238,8 @@
    "ready": true,
    "bonus_pct": 60,
    "first_buy_double": true,
-   "badge": "best_value"
+   "badge": "best_value",
+   "explain": "You get 16000 Riftglass: 10000 plus 6000 bonus (+60%). The first time you buy this pack you get 10000 more: 26000 in total. Riftglass pays for offers in this shop. Fixed amounts, no chance."
   },
   {
    "id": "rg_ring_tonic",
@@ -255,7 +262,8 @@
    "duration": "once",
    "plan": 4334,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: it goes up 1 Ring right away."
   },
   {
    "id": "rg_ring_tonic_5",
@@ -278,7 +286,8 @@
    "duration": "once",
    "plan": 4335,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: it goes up 5 Rings right away."
   },
   {
    "id": "rg_ring_elixir",
@@ -301,7 +310,8 @@
    "duration": "once",
    "plan": 4336,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: it goes up as many Rings as it can right away."
   },
   {
    "id": "rg_growth_x2",
@@ -324,7 +334,8 @@
    "duration": "20 battles",
    "plan": 4339,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Your whole team gets x2 growth in the next 20 battles."
   },
   {
    "id": "rg_growth_x3",
@@ -347,7 +358,8 @@
    "duration": "20 battles",
    "plan": 4340,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Your whole team gets x3 growth in the next 20 battles."
   },
   {
    "id": "rg_share_band",
@@ -369,7 +381,8 @@
    "duration": "permanent",
    "plan": 4343,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "After every battle, growth is shared evenly by everyone in your team, also by those who did not fight."
   },
   {
    "id": "rg_ring_tonic_x5",
@@ -392,7 +405,8 @@
    "duration": "once",
    "plan": 4345,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "5 pieces of the item listed above, in one pack."
   },
   {
    "id": "rg_riftheart",
@@ -415,7 +429,8 @@
    "duration": "permanent",
    "plan": 4394,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: +15% Might in every battle, as long as it holds it."
   },
   {
    "id": "rg_glass_shield",
@@ -438,7 +453,8 @@
    "duration": "permanent",
    "plan": 4394,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: +15% Guard in every battle, as long as it holds it."
   },
   {
    "id": "rg_clear_shard",
@@ -461,7 +477,8 @@
    "duration": "permanent",
    "plan": 4394,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: +15% Focus in every battle, as long as it holds it."
   },
   {
    "id": "rg_whirl_glass",
@@ -484,7 +501,8 @@
    "duration": "permanent",
    "plan": 4394,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: +15% Pace and +5% Focus in every battle, as long as it holds it."
   },
   {
    "id": "rg_vigor_glass",
@@ -507,7 +525,8 @@
    "duration": "permanent",
    "plan": 4394,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: +12% Vigor in every battle, as long as it holds it."
   },
   {
    "id": "rg_prism_ember",
@@ -530,7 +549,8 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: its Ember arts deal 20% more damage, as long as it holds it."
   },
   {
    "id": "rg_prism_tide",
@@ -553,7 +573,8 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: its Tide arts deal 20% more damage, as long as it holds it."
   },
   {
    "id": "rg_prism_bloom",
@@ -576,7 +597,8 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: its Bloom arts deal 20% more damage, as long as it holds it."
   },
   {
    "id": "rg_prism_volt",
@@ -599,7 +621,8 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: its Volt arts deal 20% more damage, as long as it holds it."
   },
   {
    "id": "rg_prism_stone",
@@ -622,7 +645,8 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: its Stone arts deal 20% more damage, as long as it holds it."
   },
   {
    "id": "rg_prism_gale",
@@ -645,7 +669,8 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: its Gale arts deal 20% more damage, as long as it holds it."
   },
   {
    "id": "rg_prism_lumen",
@@ -668,7 +693,8 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: its Lumen arts deal 20% more damage, as long as it holds it."
   },
   {
    "id": "rg_prism_umbra",
@@ -691,7 +717,8 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: its Umbra arts deal 20% more damage, as long as it holds it."
   },
   {
    "id": "rg_hold_stone",
@@ -714,7 +741,8 @@
    "duration": "permanent",
    "plan": 4403,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: once per battle, a hit that would knock it out from full Vigor leaves it with 1 Vigor."
   },
   {
    "id": "rg_echo_ring",
@@ -737,7 +765,8 @@
    "duration": "permanent",
    "plan": 4404,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Give it to one Spirling to hold: it heals 1/10 of its Vigor every round."
   },
   {
    "id": "rg_script_ember",
@@ -760,7 +789,8 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Ember Spirling the art in its name: power 95, accuracy 100, 4 energy. It may scorch the foe (20% chance). The item is used up."
   },
   {
    "id": "rg_script_tide",
@@ -783,7 +813,8 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Tide Spirling the art in its name: power 95, accuracy 100, 4 energy. It may soak the foe (20% chance). The item is used up."
   },
   {
    "id": "rg_script_bloom",
@@ -806,7 +837,8 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Bloom Spirling the art in its name: power 95, accuracy 100, 4 energy. The user heals by 25% of the damage it deals. The item is used up."
   },
   {
    "id": "rg_script_volt",
@@ -829,7 +861,8 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Volt Spirling the art in its name: power 95, accuracy 100, 4 energy. It may lower the foe's Pace (30% chance). The item is used up."
   },
   {
    "id": "rg_script_stone",
@@ -852,7 +885,8 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Stone Spirling the art in its name: power 95, accuracy 100, 4 energy. It may raise the user's Guard (30% chance). The item is used up."
   },
   {
    "id": "rg_script_gale",
@@ -875,7 +909,8 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Gale Spirling the art in its name: power 95, accuracy 100, 4 energy. It always strikes first. The item is used up."
   },
   {
    "id": "rg_script_lumen",
@@ -898,7 +933,8 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Lumen Spirling the art in its name: power 95, accuracy 100, 4 energy. It cures the user's own state. The item is used up."
   },
   {
    "id": "rg_script_umbra",
@@ -921,7 +957,8 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Umbra Spirling the art in its name: power 95, accuracy 100, 4 energy. It may lower the foe's Focus (30% chance). The item is used up."
   },
   {
    "id": "rg_move_memory",
@@ -943,7 +980,8 @@
    "duration": "permanent",
    "plan": 4457,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Your Spirlings can relearn any art they forgot, at any time."
   },
   {
    "id": "rg_overcharge",
@@ -966,7 +1004,8 @@
    "duration": "once",
    "plan": 4495,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it before a battle: your whole team starts the next battle with 12 energy instead of 10 (maximum 12)."
   },
   {
    "id": "rg_overcharge_x5",
@@ -989,7 +1028,8 @@
    "duration": "once",
    "plan": 4495,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "5 pieces of the item listed above, in one pack."
   },
   {
    "id": "rg_rift_breath",
@@ -1012,7 +1052,8 @@
    "duration": "once",
    "plan": 4496,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "In battle: brings one defeated Spirling back with half its Vigor. 1 per battle."
   },
   {
    "id": "rg_rift_breath_full",
@@ -1035,7 +1076,8 @@
    "duration": "once",
    "plan": 4497,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "In battle: brings one defeated Spirling back with full Vigor and full energy. 1 per battle."
   },
   {
    "id": "rg_last_stand",
@@ -1058,7 +1100,8 @@
    "duration": "once",
    "plan": 4499,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Works by itself: if your whole team is defeated, your last Spirling comes back once with 30% Vigor. Not against Rift Wardens."
   },
   {
    "id": "rg_glass_spark",
@@ -1081,7 +1124,8 @@
    "duration": "once",
    "plan": 4501,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "In battle: fills one Spirling's energy, then gives it 1 more energy at the end of each of the next 3 turns. Up to 3 per battle."
   },
   {
    "id": "rg_glass_tonic",
@@ -1104,7 +1148,8 @@
    "duration": "once",
    "plan": 4502,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "In battle: heals one Spirling to full Vigor and cures every state. Up to 2 per battle."
   },
   {
    "id": "rg_battle_supply",
@@ -1137,7 +1182,8 @@
    "duration": "once",
    "plan": 4505,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Supplies for hard battles: 5 revives, 5 energy boosts for the start of a battle and 5 energy refills. Each part is explained in the list above."
   },
   {
    "id": "rg_bond_seal",
@@ -1160,7 +1206,8 @@
    "duration": "once",
    "plan": 4549,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Your next bond with a wild Spirling works for sure, also with ancient and one-of-a-kind ones. Spirlings of Rift Wardens and other Wayfarers can never be bonded."
   },
   {
    "id": "rg_echo_scent",
@@ -1183,7 +1230,8 @@
    "duration": "once",
    "plan": 4550,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Hold it out on one bond try: bonding is 25% easier for that try."
   },
   {
    "id": "rg_echo_scent_x10",
@@ -1206,7 +1254,8 @@
    "duration": "once",
    "plan": 4556,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "10 pieces of the item listed above, in one pack."
   },
   {
    "id": "rg_team_slot_6",
@@ -1232,7 +1281,8 @@
    },
    "plan": 4593,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Your team holds 6 Spirlings instead of 5 in battles out in the world."
   },
   {
    "id": "rg_storage_box",
@@ -1259,7 +1309,8 @@
    "plan": 4597,
    "min_band": 13,
    "ready": true,
-   "requires": "max:storage_box:11"
+   "requires": "max:storage_box:11",
+   "explain": "One more storage box with 30 places for your Spirlings. Up to 12 extra boxes."
   },
   {
    "id": "rg_pass",
@@ -1330,7 +1381,8 @@
    "min_band": 13,
    "ready": true,
    "featured": true,
-   "badge": "limited"
+   "badge": "limited",
+   "explain": "A start pack: Riftglass, Rings, double growth, revives and easier bonds. Each part is explained in the list above."
   },
   {
    "id": "rg_wayfarer_pack",
@@ -1376,7 +1428,8 @@
    },
    "plan": 4686,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A pack for the road: Riftglass, two keepsakes for Might and Guard, 10 Rings in tonics and one sure bond. Each part is explained in the list above."
   },
   {
    "id": "rg_rift_pack_1",
@@ -1423,7 +1476,8 @@
    ],
    "plan": 4687,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A pack for sealing Rift 1: 10 Rings in tonics, one Element Prism and 5 revives. You can buy it after Rift 1 is sealed, and you pick the Prism's element before you buy."
   },
   {
    "id": "rg_rift_pack_2",
@@ -1470,7 +1524,8 @@
    ],
    "plan": 4687,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A pack for sealing Rift 2: 10 Rings in tonics, one Element Prism and 5 revives. You can buy it after Rift 2 is sealed, and you pick the Prism's element before you buy."
   },
   {
    "id": "rg_rift_pack_3",
@@ -1517,7 +1572,8 @@
    ],
    "plan": 4687,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A pack for sealing Rift 3: 10 Rings in tonics, one Element Prism and 5 revives. You can buy it after Rift 3 is sealed, and you pick the Prism's element before you buy."
   },
   {
    "id": "rg_rift_pack_4",
@@ -1564,7 +1620,8 @@
    ],
    "plan": 4687,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A pack for sealing Rift 4: 10 Rings in tonics, one Element Prism and 5 revives. You can buy it after Rift 4 is sealed, and you pick the Prism's element before you buy."
   },
   {
    "id": "rg_rift_pack_5",
@@ -1611,7 +1668,8 @@
    ],
    "plan": 4687,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A pack for sealing Rift 5: 10 Rings in tonics, one Element Prism and 5 revives. You can buy it after Rift 5 is sealed, and you pick the Prism's element before you buy."
   },
   {
    "id": "rg_rift_pack_6",
@@ -1658,7 +1716,8 @@
    ],
    "plan": 4687,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A pack for sealing Rift 6: 10 Rings in tonics, one Element Prism and 5 revives. You can buy it after Rift 6 is sealed, and you pick the Prism's element before you buy."
   },
   {
    "id": "rg_comeback",
@@ -1714,7 +1773,8 @@
    "duration": "once",
    "plan": 4741,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: all its Spark values go to the top (12). You see the new values first."
   },
   {
    "id": "rg_spark_shard",
@@ -1737,7 +1797,8 @@
    "duration": "once",
    "plan": 4742,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: one value you choose gets +6 Spark, up to the top of 12."
   },
   {
    "id": "rg_temper_shift",
@@ -1760,7 +1821,8 @@
    "duration": "once",
    "plan": 4743,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: its temperament changes to one you choose."
   },
   {
    "id": "rg_spark_shard_x5",
@@ -1783,7 +1845,8 @@
    "duration": "once",
    "plan": 4749,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "5 pieces of the item listed above, in one pack."
   },
   {
    "id": "rg_power_core",
@@ -1806,7 +1869,8 @@
    "duration": "once",
    "plan": 4750,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: its temperament counts double, +10% instead of +5% on its value. This stays with that Spirling."
   },
   {
    "id": "rg_gleam_prism",
@@ -1833,7 +1897,8 @@
    },
    "plan": 4791,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling you choose: it takes its Gleam form for good, with +10% on all values and a Riftglass shimmer."
   },
   {
    "id": "rg_battle_speed",
@@ -1900,7 +1965,8 @@
    "duration": "20 battles",
    "plan": 4835,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Your battles give x2 coins for the next 20 battles."
   },
   {
    "id": "rg_fast_travel",
@@ -1922,7 +1988,8 @@
    "duration": "permanent",
    "plan": 4836,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Fast travel to every place you have visited, not only to rest spots."
   },
   {
    "id": "rg_encounter_call",
@@ -1945,7 +2012,8 @@
    "duration": "30 steps",
    "plan": 4838,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Wild Spirlings step out twice as often for the next 30 steps."
   },
   {
    "id": "rg_skip_battle",
@@ -1968,7 +2036,8 @@
    "duration": "once",
    "plan": 4839,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Before a wild battle against one foe at least 10 Rings below your lead Spirling, you can skip it: your team wins at once and gets full growth. Each skip is used up."
   },
   {
    "id": "rg_rematch_key",
@@ -1991,7 +2060,8 @@
    "duration": "once",
    "plan": 4841,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Talk to a beaten Wayfarer who already battled you today: you can battle once more. Each rematch uses one key."
   },
   {
    "id": "rg_warden_lore",
@@ -2013,7 +2083,8 @@
    "duration": "permanent",
    "plan": 4883,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Before a Rift Warden battle you see the Warden's team, arts and gifts. It shows only after one try without it."
   },
   {
    "id": "rg_rift_anchor",
@@ -2036,7 +2107,8 @@
    "duration": "once",
    "plan": 4884,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "After you lose to a Rift Warden, you stay right before it with a fully healed team instead of walking back."
   },
   {
    "id": "rg_warden_weaken",
@@ -2059,7 +2131,8 @@
    "duration": "once",
    "plan": 4885,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Before a Rift Warden battle you lost once: the Warden's team starts with 15% less Vigor. 1 per Warden battle."
   },
   {
    "id": "rg_warden_bundle",
@@ -2091,7 +2164,8 @@
    "duration": "once",
    "plan": 4890,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Help for Rift Warden battles: see the Warden's team first, weaken it, and try again right before it. Each part is explained in the list above."
   },
   {
    "id": "rg_league_power",
@@ -2162,7 +2236,8 @@
    },
    "plan": 4964,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "You get exactly 5000 coins for the merchants in the world."
   },
   {
    "id": "rg_coins_20000",
@@ -2188,7 +2263,8 @@
    },
    "plan": 4965,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "You get exactly 20000 coins for the merchants in the world."
   },
   {
    "id": "rg_merchant_discount",
@@ -2210,7 +2286,8 @@
    "duration": "permanent",
    "plan": 4970,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Everything in the merchant shops of the world costs 20% fewer coins."
   },
   {
    "id": "rg_jacket_moss",
@@ -2234,7 +2311,8 @@
    "plan": 4277,
    "min_band": 13,
    "ready": true,
-   "color": "4f7a3a"
+   "color": "4f7a3a",
+   "explain": "A new jacket colour for your Wayfarer."
   },
   {
    "id": "rg_jacket_plum",
@@ -2258,7 +2336,8 @@
    "plan": 4277,
    "min_band": 13,
    "ready": true,
-   "color": "7a3f6a"
+   "color": "7a3f6a",
+   "explain": "A new jacket colour for your Wayfarer."
   },
   {
    "id": "rg_jacket_slate",
@@ -2282,7 +2361,8 @@
    "plan": 4277,
    "min_band": 13,
    "ready": true,
-   "color": "4a5466"
+   "color": "4a5466",
+   "explain": "A new jacket colour for your Wayfarer."
   },
   {
    "id": "rg_jacket_rust",
@@ -2306,7 +2386,8 @@
    "plan": 4277,
    "min_band": 13,
    "ready": true,
-   "color": "8a4a2a"
+   "color": "8a4a2a",
+   "explain": "A new jacket colour for your Wayfarer."
   },
   {
    "id": "rg_jacket_sky",
@@ -2330,7 +2411,8 @@
    "plan": 4277,
    "min_band": 13,
    "ready": true,
-   "color": "4a7aa2"
+   "color": "4a7aa2",
+   "explain": "A new jacket colour for your Wayfarer."
   },
   {
    "id": "rg_jacket_sand",
@@ -2354,7 +2436,8 @@
    "plan": 4277,
    "min_band": 13,
    "ready": true,
-   "color": "b09a6a"
+   "color": "b09a6a",
+   "explain": "A new jacket colour for your Wayfarer."
   },
   {
    "id": "rg_jacket_ink",
@@ -2378,7 +2461,8 @@
    "plan": 4277,
    "min_band": 13,
    "ready": true,
-   "color": "2a3048"
+   "color": "2a3048",
+   "explain": "A new jacket colour for your Wayfarer."
   },
   {
    "id": "rg_jacket_rose",
@@ -2402,7 +2486,8 @@
    "plan": 4277,
    "min_band": 13,
    "ready": true,
-   "color": "a25a6a"
+   "color": "a25a6a",
+   "explain": "A new jacket colour for your Wayfarer."
   },
   {
    "id": "rg_backdrop_moon_lake",
@@ -2425,7 +2510,8 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A new backdrop behind your battles."
   },
   {
    "id": "rg_backdrop_copper_wood",
@@ -2448,7 +2534,8 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A new backdrop behind your battles."
   },
   {
    "id": "rg_backdrop_mist_harbour",
@@ -2471,7 +2558,8 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A new backdrop behind your battles."
   },
   {
    "id": "rg_backdrop_star_meadow",
@@ -2494,7 +2582,8 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A new backdrop behind your battles."
   },
   {
    "id": "rg_backdrop_ash_field",
@@ -2517,7 +2606,8 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A new backdrop behind your battles."
   },
   {
    "id": "rg_backdrop_glass_grotto",
@@ -2540,7 +2630,8 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A new backdrop behind your battles."
   },
   {
    "id": "rg_frame_vine",
@@ -2563,7 +2654,8 @@
    "slot": "frame",
    "plan": 4282,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A new frame for the dialogue box."
   },
   {
    "id": "rg_frame_brass",
@@ -2586,7 +2678,8 @@
    "slot": "frame",
    "plan": 4282,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A new frame for the dialogue box."
   },
   {
    "id": "rg_frame_wave",
@@ -2609,7 +2702,8 @@
    "slot": "frame",
    "plan": 4282,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A new frame for the dialogue box."
   },
   {
    "id": "rg_frame_lantern",
@@ -2632,7 +2726,8 @@
    "slot": "frame",
    "plan": 4282,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A new frame for the dialogue box."
   },
   {
    "id": "rg_frame_frost",
@@ -2655,7 +2750,8 @@
    "slot": "frame",
    "plan": 4282,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A new frame for the dialogue box."
   },
   {
    "id": "rg_hat_wide_brim",
@@ -2678,7 +2774,8 @@
    "slot": "hat",
    "plan": 4283,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A hat for your Wayfarer, seen in the world and in battle."
   },
   {
    "id": "rg_hat_wool_cap",
@@ -2701,7 +2798,8 @@
    "slot": "hat",
    "plan": 4283,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A hat for your Wayfarer, seen in the world and in battle."
   },
   {
    "id": "rg_hat_feather_hat",
@@ -2724,7 +2822,8 @@
    "slot": "hat",
    "plan": 4283,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A hat for your Wayfarer, seen in the world and in battle."
   },
   {
    "id": "rg_hat_lantern_hood",
@@ -2747,7 +2846,8 @@
    "slot": "hat",
    "plan": 4283,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A hat for your Wayfarer, seen in the world and in battle."
   },
   {
    "id": "rg_hat_straw_hat",
@@ -2770,7 +2870,8 @@
    "slot": "hat",
    "plan": 4283,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A hat for your Wayfarer, seen in the world and in battle."
   },
   {
    "id": "rg_hat_tricorn",
@@ -2793,7 +2894,8 @@
    "slot": "hat",
    "plan": 4283,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A hat for your Wayfarer, seen in the world and in battle."
   },
   {
    "id": "rg_card_frame_leaf",
@@ -2816,7 +2918,8 @@
    "slot": "card_frame",
    "plan": 4284,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A frame for your card in the friends list."
   },
   {
    "id": "rg_card_frame_shell",
@@ -2839,7 +2942,8 @@
    "slot": "card_frame",
    "plan": 4284,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A frame for your card in the friends list."
   },
   {
    "id": "rg_card_frame_gear",
@@ -2862,7 +2966,8 @@
    "slot": "card_frame",
    "plan": 4284,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A frame for your card in the friends list."
   },
   {
    "id": "rg_card_frame_star",
@@ -2885,7 +2990,8 @@
    "slot": "card_frame",
    "plan": 4284,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A frame for your card in the friends list."
   },
   {
    "id": "rg_card_frame_ripple",
@@ -2908,7 +3014,8 @@
    "slot": "card_frame",
    "plan": 4284,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A frame for your card in the friends list."
   },
   {
    "id": "rg_card_frame_ember",
@@ -2931,7 +3038,8 @@
    "slot": "card_frame",
    "plan": 4284,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A frame for your card in the friends list."
   },
   {
    "id": "rg_gift_cards",
@@ -2982,7 +3090,8 @@
    "slot": "gift_card",
    "plan": 4285,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "8 motifs for the card on gifts you send to friends. The gift itself stays the same."
   },
   {
    "id": "rg_damage_preview",
@@ -3003,7 +3112,8 @@
    "league_scope": "none",
    "duration": "permanent",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Before you pick an art, you see how much of the foe's Vigor it will take. Switch it on or off in Settings."
   },
   {
    "id": "rg_minimap",
@@ -3024,7 +3134,8 @@
    "league_scope": "none",
    "duration": "permanent",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "A small map in the top corner shows where you are and what you have found."
   },
   {
    "id": "rg_fast_text",
@@ -3108,7 +3219,8 @@
    "league_scope": "none",
    "duration": "permanent",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Spirlings on the bench grow too after every battle you win. Switch it on or off in Settings."
   },
   {
    "id": "rg_power_seal_1",
@@ -3135,7 +3247,8 @@
    "requires": "tier:power_seal:0",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings deal 5% more damage in every battle."
   },
   {
    "id": "rg_power_seal_2",
@@ -3162,7 +3275,8 @@
    "requires": "tier:power_seal:1",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings deal 10% more damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_power_seal_3",
@@ -3189,7 +3303,8 @@
    "requires": "tier:power_seal:2",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings deal 15% more damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_power_seal_4",
@@ -3216,7 +3331,8 @@
    "requires": "tier:power_seal:3",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings deal 20% more damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_power_seal_5",
@@ -3243,7 +3359,8 @@
    "requires": "tier:power_seal:4",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings deal 25% more damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_power_seal_6",
@@ -3270,7 +3387,8 @@
    "requires": "tier:power_seal:5",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings deal 30% more damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_power_seal_7",
@@ -3297,7 +3415,8 @@
    "requires": "tier:power_seal:6",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings deal 35% more damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_guard_seal_1",
@@ -3324,7 +3443,8 @@
    "requires": "tier:guard_seal:0",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings take 5% less damage in every battle."
   },
   {
    "id": "rg_guard_seal_2",
@@ -3351,7 +3471,8 @@
    "requires": "tier:guard_seal:1",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings take 10% less damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_guard_seal_3",
@@ -3378,7 +3499,8 @@
    "requires": "tier:guard_seal:2",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings take 15% less damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_guard_seal_4",
@@ -3405,7 +3527,8 @@
    "requires": "tier:guard_seal:3",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings take 20% less damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_guard_seal_5",
@@ -3432,7 +3555,8 @@
    "requires": "tier:guard_seal:4",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings take 25% less damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_guard_seal_6",
@@ -3459,7 +3583,8 @@
    "requires": "tier:guard_seal:5",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings take 30% less damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_guard_seal_7",
@@ -3486,7 +3611,8 @@
    "requires": "tier:guard_seal:6",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings take 35% less damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_speed_seal_1",
@@ -3513,7 +3639,8 @@
    "requires": "tier:speed_seal:0",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings have 5% more Pace in every battle."
   },
   {
    "id": "rg_speed_seal_2",
@@ -3540,7 +3667,8 @@
    "requires": "tier:speed_seal:1",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings have 10% more Pace in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_speed_seal_3",
@@ -3567,7 +3695,8 @@
    "requires": "tier:speed_seal:2",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings have 15% more Pace in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_speed_seal_4",
@@ -3594,7 +3723,8 @@
    "requires": "tier:speed_seal:3",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings have 20% more Pace in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_speed_seal_5",
@@ -3621,7 +3751,8 @@
    "requires": "tier:speed_seal:4",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings have 25% more Pace in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_stat_crystal_1",
@@ -3644,7 +3775,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: one value you choose gets +1, counted like Spark. Each value can go up to 24, twice the Spark top."
   },
   {
    "id": "rg_stat_crystal_5",
@@ -3667,7 +3799,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: one value you choose gets +5, counted like Spark. Each value can go up to 24, twice the Spark top."
   },
   {
    "id": "rg_stat_crystal_10",
@@ -3690,7 +3823,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: one value you choose gets +10, counted like Spark. Each value can go up to 24, twice the Spark top."
   },
   {
    "id": "rg_growth_x5",
@@ -3713,7 +3847,8 @@
    "duration": "20 battles",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Your whole team gets x5 growth in the next 20 battles."
   },
   {
    "id": "rg_growth_plus",
@@ -3739,7 +3874,8 @@
    },
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Your whole team gets +50% growth in every battle. It adds up with Growth Crystals and the pass."
   },
   {
    "id": "rg_coin_boost_x3",
@@ -3762,7 +3898,8 @@
    "duration": "20 battles",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Your battles give x3 coins for the next 20 battles."
   },
   {
    "id": "rg_ring_tonic_10",
@@ -3785,7 +3922,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: it goes up 10 Rings right away."
   },
   {
    "id": "rg_ring_crown",
@@ -3808,7 +3946,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: it jumps straight to Ring 50."
   },
   {
    "id": "rg_ring_cap_plus",
@@ -3856,7 +3995,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "You get exactly 100000 coins for the merchants in the world."
   },
   {
    "id": "rg_bond_lure_1",
@@ -3879,7 +4019,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Hold it out on one bond try: bonding is 15% easier for that try."
   },
   {
    "id": "rg_bond_lure_2",
@@ -3902,7 +4043,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Hold it out on one bond try: bonding is 30% easier for that try."
   },
   {
    "id": "rg_bond_lure_3",
@@ -3925,7 +4067,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Hold it out on one bond try: bonding is 45% easier for that try."
   },
   {
    "id": "rg_bond_lure_4",
@@ -3948,7 +4091,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Hold it out on one bond try: bonding is 60% easier for that try."
   },
   {
    "id": "rg_seal_set",
@@ -4050,7 +4194,8 @@
    "ready": true,
    "featured": true,
    "discount_pct": 63,
-   "badge": "best_value"
+   "badge": "best_value",
+   "explain": "Three seals at once for all your Spirlings: +35% damage, 35% less damage taken and +25% Pace. Only for accounts that own no seal tier yet."
   },
   {
    "id": "rg_spirling_velahra",
@@ -4076,7 +4221,8 @@
     "n": 1
    },
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Velahra, an ancient Spirling, joins your team at Ring 40 with the top Spark (12) in every value. It is a second one besides the one you can bond on your journey. Fixed values, no chance. It can never be traded or lent. The top Spark counts in the story; leagues and Raid Rifts build teams from species, Ring and arts."
   },
   {
    "id": "rg_spirling_hallowmur",
@@ -4102,7 +4248,8 @@
     "n": 1
    },
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Hallowmur, an ancient Spirling, joins your team at Ring 40 with the top Spark (12) in every value. It is a second one besides the one you can bond on your journey. Fixed values, no chance. It can never be traded or lent. The top Spark counts in the story; leagues and Raid Rifts build teams from species, Ring and arts."
   },
   {
    "id": "rg_spirling_scriptorax",
@@ -4128,7 +4275,8 @@
     "n": 1
    },
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Scriptorax, an ancient Spirling, joins your team at Ring 40 with the top Spark (12) in every value. It is a second one besides the one you can bond on your journey. Fixed values, no chance. It can never be traded or lent. The top Spark counts in the story; leagues and Raid Rifts build teams from species, Ring and arts."
   },
   {
    "id": "rg_spirling_lumivane",
@@ -4154,7 +4302,8 @@
     "n": 1
    },
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Lumivane, an ancient Spirling, joins your team at Ring 40 with the top Spark (12) in every value. It is a second one besides the one you can bond on your journey. Fixed values, no chance. It can never be traded or lent. The top Spark counts in the story; leagues and Raid Rifts build teams from species, Ring and arts."
   },
   {
    "id": "rg_spirling_zephyrel",
@@ -4180,7 +4329,8 @@
     "n": 1
    },
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Zephyrel, an ancient Spirling, joins your team at Ring 40 with the top Spark (12) in every value. It is a second one besides the one you can bond on your journey. Fixed values, no chance. It can never be traded or lent. The top Spark counts in the story; leagues and Raid Rifts build teams from species, Ring and arts."
   },
   {
    "id": "rg_spirling_monolurk",
@@ -4206,7 +4356,8 @@
     "n": 1
    },
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Monolurk, an ancient Spirling, joins your team at Ring 40 with the top Spark (12) in every value. It is a second one besides the one you can bond on your journey. Fixed values, no chance. It can never be traded or lent. The top Spark counts in the story; leagues and Raid Rifts build teams from species, Ring and arts."
   },
   {
    "id": "rg_spirling_vorlucent",
@@ -4232,7 +4383,8 @@
     "n": 1
    },
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Vorlucent, an ancient Spirling, joins your team at Ring 40 with the top Spark (12) in every value. It is a second one besides the one you can bond on your journey. Fixed values, no chance. It can never be traded or lent. The top Spark counts in the story; leagues and Raid Rifts build teams from species, Ring and arts."
   },
   {
    "id": "rg_crit_seal_1",
@@ -4259,7 +4411,8 @@
    "requires": "tier:crit_seal:0",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings land critical hits 5 percentage points more often."
   },
   {
    "id": "rg_crit_seal_2",
@@ -4286,7 +4439,8 @@
    "requires": "tier:crit_seal:1",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings land critical hits 10 percentage points more often. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_crit_seal_3",
@@ -4313,7 +4467,8 @@
    "requires": "tier:crit_seal:2",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings land critical hits 15 percentage points more often. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_status_ward",
@@ -4339,7 +4494,8 @@
    },
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Half of the states foes try to put on your Spirlings fail."
   },
   {
    "id": "rg_start_shield",
@@ -4365,7 +4521,8 @@
    },
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "In every battle, the Spirling you send out first takes half damage from the first hit."
   },
   {
    "id": "rg_lure_scent_1",
@@ -4388,7 +4545,8 @@
    "duration": "100 steps",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Uncommon, shy and ancient wild Spirlings step out 2 times as often for the next 100 steps."
   },
   {
    "id": "rg_lure_scent_2",
@@ -4411,7 +4569,8 @@
    "duration": "100 steps",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Uncommon, shy and ancient wild Spirlings step out 3 times as often for the next 100 steps."
   },
   {
    "id": "rg_lure_scent_3",
@@ -4434,7 +4593,8 @@
    "duration": "100 steps",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Uncommon, shy and ancient wild Spirlings step out 5 times as often for the next 100 steps."
   },
   {
    "id": "rg_shimmer_scent",
@@ -4457,7 +4617,8 @@
    "duration": "100 steps",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Wild Spirlings show their Gleam form 10 times as often for the next 100 steps."
   },
   {
    "id": "rg_bond_edge_1",
@@ -4484,7 +4645,8 @@
    "requires": "tier:bond_edge:0",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Every bond counts as 10 percentage points better timed: the bond bar starts ahead."
   },
   {
    "id": "rg_bond_edge_2",
@@ -4511,7 +4673,8 @@
    "requires": "tier:bond_edge:1",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Every bond counts as 20 percentage points better timed: the bond bar starts ahead. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_bond_edge_3",
@@ -4538,7 +4701,8 @@
    "requires": "tier:bond_edge:2",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Every bond counts as 30 percentage points better timed: the bond bar starts ahead. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_bond_retry",
@@ -4561,7 +4725,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Hold it out on a bond: if the bond fails, you get one more try right away."
   },
   {
    "id": "rg_unfurl_spark",
@@ -4584,7 +4749,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: it unfurls into its next form right away, without the Ring or other conditions. Not for forms that need an item."
   },
   {
    "id": "rg_grand_tonic",
@@ -4607,7 +4773,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "In battle: heals one Spirling to full Vigor and cures every state. No limit per battle."
   },
   {
    "id": "rg_master_ember",
@@ -4630,7 +4797,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Ember Spirling the master art in its name: power 115, accuracy 100, 4 energy, no drawback. It is stronger than every art learned on the journey. The Fair League and Raid Rifts allow only learned arts. The item is used up."
   },
   {
    "id": "rg_master_tide",
@@ -4653,7 +4821,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Tide Spirling the master art in its name: power 115, accuracy 100, 4 energy, no drawback. It is stronger than every art learned on the journey. The Fair League and Raid Rifts allow only learned arts. The item is used up."
   },
   {
    "id": "rg_master_bloom",
@@ -4676,7 +4845,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Bloom Spirling the master art in its name: power 115, accuracy 100, 4 energy, no drawback. It is stronger than every art learned on the journey. The Fair League and Raid Rifts allow only learned arts. The item is used up."
   },
   {
    "id": "rg_master_volt",
@@ -4699,7 +4869,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Volt Spirling the master art in its name: power 115, accuracy 100, 4 energy, no drawback. It is stronger than every art learned on the journey. The Fair League and Raid Rifts allow only learned arts. The item is used up."
   },
   {
    "id": "rg_master_stone",
@@ -4722,7 +4893,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Stone Spirling the master art in its name: power 115, accuracy 100, 4 energy, no drawback. It is stronger than every art learned on the journey. The Fair League and Raid Rifts allow only learned arts. The item is used up."
   },
   {
    "id": "rg_master_gale",
@@ -4745,7 +4917,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Gale Spirling the master art in its name: power 115, accuracy 100, 4 energy, no drawback. It is stronger than every art learned on the journey. The Fair League and Raid Rifts allow only learned arts. The item is used up."
   },
   {
    "id": "rg_master_lumen",
@@ -4768,7 +4941,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Lumen Spirling the master art in its name: power 115, accuracy 100, 4 energy, no drawback. It is stronger than every art learned on the journey. The Fair League and Raid Rifts allow only learned arts. The item is used up."
   },
   {
    "id": "rg_master_umbra",
@@ -4791,7 +4965,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Umbra Spirling the master art in its name: power 115, accuracy 100, 4 energy, no drawback. It is stronger than every art learned on the journey. The Fair League and Raid Rifts allow only learned arts. The item is used up."
   },
   {
    "id": "rg_master_ink",
@@ -4814,7 +4989,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Ink Spirling the master art in its name: power 115, accuracy 100, 4 energy, no drawback. It is stronger than every art learned on the journey. The Fair League and Raid Rifts allow only learned arts. The item is used up."
   },
   {
    "id": "rg_master_echo",
@@ -4837,7 +5013,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Echo Spirling the master art in its name: power 115, accuracy 100, 4 energy, no drawback. It is stronger than every art learned on the journey. The Fair League and Raid Rifts allow only learned arts. The item is used up."
   },
   {
    "id": "rg_master_acid",
@@ -4860,7 +5037,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Acid Spirling the master art in its name: power 115, accuracy 100, 4 energy, no drawback. It is stronger than every art learned on the journey. The Fair League and Raid Rifts allow only learned arts. The item is used up."
   },
   {
    "id": "rg_master_frost",
@@ -4883,7 +5061,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Teaches one Frost Spirling the master art in its name: power 115, accuracy 100, 4 energy, no drawback. It is stronger than every art learned on the journey. The Fair League and Raid Rifts allow only learned arts. The item is used up."
   },
   {
    "id": "rg_gift_slot",
@@ -4906,7 +5085,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Use it on one Spirling: it gets a second gift slot, and the hidden gift of its line always works next to its own gift. The slot stays with that Spirling, which can then no longer be traded. The top Spark counts in the story; leagues and Raid Rifts build teams from species, Ring and arts."
   },
   {
    "id": "rg_team_slot_7",
@@ -4932,7 +5112,8 @@
    },
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Your team holds 1 more Spirling in battles out in the world: 7 with the Sixth Team Place, 6 without it. Leagues and Raid Rifts stay at 5."
   },
   {
    "id": "rg_rift_breath_deep",
@@ -4955,7 +5136,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "In battle: brings one defeated Spirling back with half its Vigor. No limit per battle."
   },
   {
    "id": "rg_radar",
@@ -4981,7 +5163,8 @@
    },
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "When you enter a place, a note names its uncommon, shy and ancient wild Spirlings and where they hide."
   },
   {
    "id": "rg_wish_charm",
@@ -5004,7 +5187,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Hold it out on a bond: if the bond works, the new Spirling has the top Spark (12) in all 5 values. It does not make the bond easier."
   },
   {
    "id": "rg_storage_wing_1",
@@ -5035,7 +5219,8 @@
    "requires": "tier:storage_box:0",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Step 1 of 5: 2 more storage boxes with 30 places each, 300 places in all. You can buy it when you own exactly 0 bought boxes; single Storage Box offers count too."
   },
   {
    "id": "rg_storage_wing_2",
@@ -5066,7 +5251,8 @@
    "requires": "tier:storage_box:2",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Step 2 of 5: 2 more storage boxes with 30 places each, 360 places in all. You can buy it when you own exactly 2 bought boxes; single Storage Box offers count too."
   },
   {
    "id": "rg_storage_wing_3",
@@ -5097,7 +5283,8 @@
    "requires": "tier:storage_box:4",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Step 3 of 5: 2 more storage boxes with 30 places each, 420 places in all. You can buy it when you own exactly 4 bought boxes; single Storage Box offers count too."
   },
   {
    "id": "rg_storage_wing_4",
@@ -5132,7 +5319,8 @@
    "requires": "tier:storage_box:6",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Step 4 of 5: 3 more storage boxes with 30 places each, 510 places in all. You can buy it when you own exactly 6 bought boxes; single Storage Box offers count too."
   },
   {
    "id": "rg_storage_wing_5",
@@ -5167,7 +5355,8 @@
    "requires": "tier:storage_box:9",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Step 5 of 5: 3 more storage boxes with 30 places each, 600 places in all. You can buy it when you own exactly 9 bought boxes; single Storage Box offers count too."
   },
   {
    "id": "rg_tide_pearl",
@@ -5190,7 +5379,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Works like a Tide Shell, the item some Spirlings need to unfurl (merchants sell that one for 2500 coins). If the Spirling furls back, you get a plain Tide Shell."
   },
   {
    "id": "rg_spirlog_atlas",
@@ -5216,7 +5406,8 @@
    },
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Every Spirlog page names all places where that kind lives, also the ones you have not searched yet."
   },
   {
    "id": "rg_daily_find_x3",
@@ -5242,7 +5433,8 @@
    },
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "You can meet the rare visitor of the day 3 times a day instead of once."
   },
   {
    "id": "rg_wild_ward",
@@ -5268,7 +5460,8 @@
    },
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Switch it on in Settings and no wild Spirlings step out while you walk. Switch it off to meet them again."
   },
   {
    "id": "rg_swift_steps",
@@ -5294,7 +5487,8 @@
    },
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "You walk and run twice as fast on the map."
   },
   {
    "id": "rg_rest_anywhere",
@@ -5320,7 +5514,8 @@
    },
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Rest from the menu anywhere outside battle: your whole team gets full Vigor and energy, and every state is cured. After a lost battle you still wake up at your last rest spot."
   },
   {
    "id": "rg_script_pack",
@@ -5378,7 +5573,8 @@
    "duration": "once",
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All 8 Rift Scripts in one pack, one for each element: Ember, Tide, Bloom, Volt, Stone, Gale, Lumen and Umbra. Each part is explained in the list above."
   },
   {
    "id": "rg_starter_trio",
@@ -5415,7 +5611,8 @@
    },
    "rg_only": true,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Zippit, Zephlet and Mirkmole join your team at Ring 15 with the top Spark (12) in every value. Made for the start of your journey. Fixed values, no chance. They can never be traded or lent."
   },
   {
    "id": "rg_monthly_card",
@@ -5444,7 +5641,8 @@
    "featured": true,
    "league_scope": "none",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "You get 300 Riftglass right away and 100 Riftglass every day for 30 days: 3300 Riftglass in total. Collect each day's Riftglass in the shop; missed days wait for you. Not a subscription: it never renews. Buying it again adds 30 days."
   },
   {
    "id": "rg_power_seal_8",
@@ -5472,7 +5670,8 @@
    "rg_only": true,
    "badge": "new",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings deal 40% more damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_power_seal_9",
@@ -5500,7 +5699,8 @@
    "rg_only": true,
    "badge": "new",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings deal 45% more damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_power_seal_10",
@@ -5528,7 +5728,8 @@
    "rg_only": true,
    "badge": "new",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings deal 50% more damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_guard_seal_8",
@@ -5556,7 +5757,8 @@
    "rg_only": true,
    "badge": "new",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings take 40% less damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_guard_seal_9",
@@ -5584,7 +5786,8 @@
    "rg_only": true,
    "badge": "new",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings take 45% less damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_guard_seal_10",
@@ -5612,7 +5815,8 @@
    "rg_only": true,
    "badge": "new",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings take 50% less damage in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_speed_seal_6",
@@ -5640,7 +5844,8 @@
    "rg_only": true,
    "badge": "new",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings have 30% more Pace in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_speed_seal_7",
@@ -5668,7 +5873,8 @@
    "rg_only": true,
    "badge": "new",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "All your Spirlings have 35% more Pace in every battle. It replaces the tier before it: you only pay the difference."
   },
   {
    "id": "rg_champion_fulgorath",
@@ -5698,7 +5904,8 @@
    "league_scope": "none",
    "min_band": 13,
    "ready": true,
-   "featured": true
+   "featured": true,
+   "explain": "Fulgorath joins your team at Ring 50 with the top Spark (12) in every value. Fierce temperament: it hits harder. Fixed values, no chance. It can never be traded or lent. The top Spark counts in the story; leagues and Raid Rifts build teams from species, Ring and arts."
   },
   {
    "id": "rg_champion_ardenthal",
@@ -5727,7 +5934,8 @@
    "icon": "res://art/era1/spirling_icons/ardenthal.png",
    "league_scope": "none",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Ardenthal joins your team at Ring 50 with the top Spark (12) in every value. Keen temperament: it focuses sharper. Fixed values, no chance. It can never be traded or lent. The top Spark counts in the story; leagues and Raid Rifts build teams from species, Ring and arts."
   },
   {
    "id": "rg_champion_obelordan",
@@ -5756,7 +5964,8 @@
    "icon": "res://art/era1/spirling_icons/obelordan.png",
    "league_scope": "none",
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "explain": "Obelordan joins your team at Ring 50 with the top Spark (12) in every value. Stalwart temperament: it takes blows better. Fixed values, no chance. It can never be traded or lent. The top Spark counts in the story; leagues and Raid Rifts build teams from species, Ring and arts."
   },
   {
    "id": "rg_champion_bundle",
@@ -5809,7 +6018,8 @@
    "featured": true,
    "min_band": 13,
    "ready": true,
-   "discount_pct": 69
+   "discount_pct": 69,
+   "explain": "A big pack: Riftglass, 50 Rings in tonics, growth crystals, heals, sure bonds and one Ring Crown. Each part is explained in the list above."
   },
   {
    "id": "rg_deal_mon",
@@ -5842,7 +6052,8 @@
    "badge": "hot",
    "min_band": 13,
    "ready": true,
-   "discount_pct": 40
+   "discount_pct": 40,
+   "explain": "The item listed above for fewer Riftglass than one by one. This deal comes back on the same weekday every week; you can buy it once a week."
   },
   {
    "id": "rg_deal_tue",
@@ -5875,7 +6086,8 @@
    "badge": "hot",
    "min_band": 13,
    "ready": true,
-   "discount_pct": 42
+   "discount_pct": 42,
+   "explain": "The item listed above for fewer Riftglass than one by one. This deal comes back on the same weekday every week; you can buy it once a week."
   },
   {
    "id": "rg_deal_wed",
@@ -5908,7 +6120,8 @@
    "badge": "hot",
    "min_band": 13,
    "ready": true,
-   "discount_pct": 50
+   "discount_pct": 50,
+   "explain": "The item listed above for fewer Riftglass than one by one. This deal comes back on the same weekday every week; you can buy it once a week."
   },
   {
    "id": "rg_deal_thu",
@@ -5941,7 +6154,8 @@
    "badge": "hot",
    "min_band": 13,
    "ready": true,
-   "discount_pct": 42
+   "discount_pct": 42,
+   "explain": "The item listed above for fewer Riftglass than one by one. This deal comes back on the same weekday every week; you can buy it once a week."
   },
   {
    "id": "rg_deal_fri",
@@ -5974,7 +6188,8 @@
    "badge": "hot",
    "min_band": 13,
    "ready": true,
-   "discount_pct": 48
+   "discount_pct": 48,
+   "explain": "The item listed above for fewer Riftglass than one by one. This deal comes back on the same weekday every week; you can buy it once a week."
   },
   {
    "id": "rg_deal_sat",
@@ -6007,7 +6222,8 @@
    "badge": "hot",
    "min_band": 13,
    "ready": true,
-   "discount_pct": 50
+   "discount_pct": 50,
+   "explain": "The item listed above for fewer Riftglass than one by one. This deal comes back on the same weekday every week; you can buy it once a week."
   },
   {
    "id": "rg_deal_sun",
@@ -6040,7 +6256,8 @@
    "badge": "hot",
    "min_band": 13,
    "ready": true,
-   "discount_pct": 50
+   "discount_pct": 50,
+   "explain": "The item listed above for fewer Riftglass than one by one. This deal comes back on the same weekday every week; you can buy it once a week."
   },
   {
    "id": "rg_week_power",
@@ -6079,7 +6296,8 @@
    "badge": "hot",
    "min_band": 13,
    "ready": true,
-   "discount_pct": 50
+   "discount_pct": 50,
+   "explain": "The items listed above for fewer Riftglass than one by one. This deal comes back every 4 weeks for a whole week, Monday to Sunday; you can buy it once that week."
   },
   {
    "id": "rg_week_bond",
@@ -6113,7 +6331,8 @@
    "badge": "hot",
    "min_band": 13,
    "ready": true,
-   "discount_pct": 50
+   "discount_pct": 50,
+   "explain": "The items listed above for fewer Riftglass than one by one. This deal comes back every 4 weeks for a whole week, Monday to Sunday; you can buy it once that week."
   },
   {
    "id": "rg_week_battle",
@@ -6152,7 +6371,8 @@
    "badge": "hot",
    "min_band": 13,
    "ready": true,
-   "discount_pct": 50
+   "discount_pct": 50,
+   "explain": "The items listed above for fewer Riftglass than one by one. This deal comes back every 4 weeks for a whole week, Monday to Sunday; you can buy it once that week."
   },
   {
    "id": "rg_week_growth",
@@ -6191,7 +6411,8 @@
    "badge": "hot",
    "min_band": 13,
    "ready": true,
-   "discount_pct": 49
+   "discount_pct": 49,
+   "explain": "The items listed above for fewer Riftglass than one by one. This deal comes back every 4 weeks for a whole week, Monday to Sunday; you can buy it once that week."
   }
  ]
 }
