@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table pass_track, written by tools/i18n/locales_pass_track.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d of %d pass points": "通行证点数 %d / %d",
+  "%d premium rewards reached and waiting.": "已达到%d个高级奖励，正在等待。",
+  "Free:": "免费：",
+  "Free: %s": "免费：%s",
+  "Locked: needs the Wayfarer Pass.": "已锁定：需要旅人通行证。",
+  "Opens the premium row of every step.": "开启每一阶的高级排。",
+  "Pass track": "通行证之路",
+  "Premium (Wayfarer Pass):": "高级（旅人通行证）：",
+  "Premium row: Wayfarer Pass": "高级排：旅人通行证",
+  "Premium: %s": "高级：%s",
+  "Reached at %d pass points.": "通行证点数达到%d时解锁。",
+  "Ready to take.": "可以领取。",
+  "Something went wrong. Try again in a moment.": "出了点问题。请稍后再试。",
+  "Step %d": "第%d阶",
+  "Step %d of %d": "第%d阶，共%d阶",
+  "Step %d: %s": "第%d阶：%s",
+  "Take all rewards (%d)": "领取全部奖励（%d）",
+  "Take the free reward": "领取免费奖励",
+  "Take the premium reward": "领取高级奖励",
+  "Taken.": "已领取。",
+  "The premium row needs the Wayfarer Pass.": "高级排需要旅人通行证。",
+  "Top row: free for everyone. Bottom row: with the Wayfarer Pass. Pass points come from battles won (%d), bonds (%d) and daily tasks (%d), up to %d a day.": "上排：所有人免费。下排：需要旅人通行证。通行证点数来自胜利的战斗（%d）、结缘（%d）和每日任务（%d），每天最多%d。",
+  "You got:": "你获得了：",
+  "ends in %s": "%s后结束"
+ }
+}

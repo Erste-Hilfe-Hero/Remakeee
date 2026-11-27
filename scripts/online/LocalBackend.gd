@@ -88,6 +88,8 @@ func _init(p_store_path: String = "") -> void:
 	LocalShop.install(self)
 	# Riftglass sinks in play (20261127120000_rg_sinks.sql).
 	LocalRiftglass.install(self)
+	# Wayfarer Pass track (20261127140040_pass_track.sql).
+	LocalPassTrack.install(self)
 	# Planned maintenance (Online 100 point 95, 20261112230010_maintenance.sql).
 	_fns["maintenance_info"] = Callable(self, "_fn_maintenance_info")
 	# Trading and gifting, Online 100 area 5 (20261112000050_trade_gifts.sql).
@@ -170,6 +172,8 @@ func _fn_action_once(a: Dictionary) -> Dictionary:
 		r = _fn_mail_send({"p_code": args.get("p_code"), "p_kind": args.get("p_kind"), "p_phrase": int(args.get("p_phrase", 0))})
 	elif str(a.get("p_fn", "")) == "community_add":
 		r = _fn_community_add({"p_kind": args.get("p_kind"), "p_amount": int(args.get("p_amount", 0))})
+	elif str(a.get("p_fn", "")) == "pass_points_add":
+		r = LocalPassTrack.of(self)._fn_pass_points_add({"p_kind": args.get("p_kind"), "p_amount": int(args.get("p_amount", 0))})
 	else:
 		return _fail("bad_action")
 	if not (r is Dictionary and str((r as Dictionary).get("error", "")) == "slow_down"):
