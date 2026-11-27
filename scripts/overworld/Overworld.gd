@@ -182,6 +182,11 @@ func _ready() -> void:
 		if lamp != "":
 			GameState.notices.append(lamp)
 			hint = lamp
+		# Dated easter eggs (HiddenMechanics): a quiet line once a year.
+		var dated: String = HiddenMechanics.start_note(GameState.records, Online.unix_now())
+		if dated != "":
+			GameState.notices.append(dated)
+			hint = dated
 		# Weekend boost (200 list item 141): a note on Friday and on the weekend, never a push.
 		var weekend: String = GrowthRules.weekend_line(GrowthRules.local_weekday())
 		if weekend != "":
@@ -905,6 +910,14 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				# The pass holder's rare Spirling of the day (pay-to-win step 6, plan point 38).
 				wild = ShopEffects.pass_rare(map.encounter_table, GameState.flags, GameState.rng)
 			if wild == null:
+				# Hidden rare spawns: a certain sky, moon, weekday or chain (HiddenMechanics).
+				var rare: Dictionary = HiddenMechanics.maybe_spawn(map.id, map.encounter_table, HiddenMechanics.context(map), GameState.rng)
+				if not rare.is_empty():
+					wild = rare.wild
+					HiddenMechanics.note_found(str(rare.id), GameState.records)
+					Sound.sfx("sparkle")
+					await _locked_say([str(rare.line)] as Array[String])
+			if wild == null:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
 				for e: int in WildRules.weather_boost(WeatherCycle.current(map)):
 					if not e in boost:
@@ -970,6 +983,7 @@ func _on_interact(cell: Vector2i) -> void:
 		await run_dialogue(str(s.dialogue))
 		if icons != null:
 			icons.queue_free()
+		await hidden_spot(cell, "sign")
 		return
 	var landmark: Array[String] = Landmarks.lines_at(map.id, cell)
 	if not landmark.is_empty():
@@ -981,6 +995,7 @@ func _on_interact(cell: Vector2i) -> void:
 			await ElementSeals.run(_ui, map.id)
 			player.frozen = false
 			busy = false
+		await hidden_spot(cell, "landmark")
 		return
 	# Talk across counters.
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
@@ -989,7 +1004,48 @@ func _on_interact(cell: Vector2i) -> void:
 			await beyond.turn_toward(player.cell)
 			await run_dialogue(beyond.dialogue_ref, beyond)
 			return
+	if await hidden_spot(cell, "tile"):
+		return
 	survey_look(cell - player.cell)
+
+## Hidden things on a cell (HiddenMechanics, docs/HIDDEN_MECHANICS.md): a tree knocked on three
+## times, something behind a statue, a word written at a sign, the Star Well's reading. True when
+## the cell answered.
+func hidden_spot(cell: Vector2i, at: String) -> bool:
+	var p: Dictionary = HiddenMechanics.spot_at(map.id, cell, at)
+	if p.is_empty():
+		return false
+	var res: Dictionary = HiddenMechanics.tap(p, HiddenMechanics.context(map), GameState.records, GameState.flags)
+	if res.is_empty():
+		return false
+	busy = true
+	player.frozen = true
+	var lines: Array[String] = res.lines
+	if str(p.get("action", "")) == "knack" and not str(res.flag).is_empty():
+		lines = lines + HiddenMechanics.knack_lines(GameState.party)
+	await say(lines)
+	if bool(res.code):
+		var d: Dictionary = HiddenMechanics.data()
+		var menu := MenuHost.new()
+		_ui.add_child(menu)
+		var pick: int = await menu.pick_strings("", [Loc.t(str(d.code_write)), Loc.t(str(d.code_leave))] as Array[String])
+		menu.queue_free()
+		if pick == 0:
+			var word: String = await TextPrompt.ask(_ui, Loc.t(str(d.code_prompt)), false, 12)
+			if HiddenMechanics.code_ok(p, word):
+				res = HiddenMechanics.code_result(p)
+				Sound.sfx("sparkle")
+				await say(res.lines as Array[String])
+			else:
+				await say([str(d.code_wrong)] as Array[String])
+	if HiddenMechanics.grant(p, res, GameState.flags, GameState.records):
+		if not str(res.item).is_empty() and int(res.count) > 0:
+			Sound.sfx("confirm")
+			await _action_give_item([str(res.item), str(res.count)] as PackedStringArray, null)
+		await announce_achievements()
+	player.frozen = false
+	busy = false
+	return true
 
 ## Survey Glass (area 3 items 1052, 1053): A on open ground looks ahead; finds up to 6 steps
 ## away show on the minimap. Says so in the ticker, so it never stops the walk.
@@ -4792,6 +4848,9 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
 	model.seals = [ShopEffects.seals_for("story" if world else "echo"), [0, 0, 0]]
 	model.amulets = [ShopEffects.amulets_for("story" if world else "echo"), [0, 0, 0]]
+	# Hidden combos, sky synergies and keen hits (HiddenBattle): world battles only. Warden battles
+	# keep them off, because the weekly Rift board sends those to the server's referee.
+	model.hidden_rules = world and not trainer.has("warden")
 	# Story foes start with less Energy, Rift-Born foes gain more in turn 1 (item 749); echo duels stay even.
 	var d: int = GameState.difficulty if world else -1
 	model.start_energy_cut = [0, int(trainer.get("foe_energy_cut", 0)) + BattleRules.foe_start_cut(d)]
@@ -4859,6 +4918,9 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	if not grown.is_empty():
 		toast.show_note(grown, null, "")
 	Kinship.after_battle(GameState.party, model.participants, outcome == BattleModel.Outcome.WIN)
+	# A Spirling's favourite sky (its hidden knack): a little more Kinship after a win under it.
+	if model.hidden_rules:
+		HiddenMechanics.after_battle(model.participants, WeatherCycle.current(map), outcome == BattleModel.Outcome.WIN)
 	# "Refill fruit" puts a used-up held fruit back from the bag (KAMPF_PLAN_1000 item 297).
 	for line: String in TraitKit.refill_held(model):
 		toast.show_note(line, null, "")

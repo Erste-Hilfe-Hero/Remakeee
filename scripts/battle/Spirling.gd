@@ -407,6 +407,10 @@ func unfurl_targets(map_id: String = "", ctx: Dictionary = {}) -> Array[Spirling
 	for p: Dictionary in data.unfold:
 		if unfold_ready(p, c) and not out.has(p.to):
 			out.append(p.to)
+	# Secret unfold paths (HiddenMechanics): never hinted, found by playing.
+	for to: SpirlingData in HiddenMechanics.unfold_targets(self, c):
+		if not out.has(to):
+			out.append(to)
 	return out
 
 ## What the unfold rules look at: {"map", "pages", "mended", "phase"}.
