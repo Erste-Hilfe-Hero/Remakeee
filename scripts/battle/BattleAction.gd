@@ -19,6 +19,8 @@ var item_id: String = ""
 var item_target: int = -1
 ## Bond minigame score 0..1 (BOND only).
 var timing_score: float = 0.0
+## Riftglass bond boost paid for this bond try (BOND only, RiftglassSinks "bond_boost").
+var rg_boost: float = 0.0
 ## Set by the model when queued: the Spirling that chose this action.
 var actor: Spirling = null
 ## True for the bonus action a wild Spirling gets after a failed bond.

@@ -21,6 +21,8 @@ enum Phase {
 	FAINT_CHECK, VICTORY_CHECK, SWITCH_IN, AWAIT_SWITCH, REWARDS, FINISHED,
 	# KAMPF_PLAN_1000 item 9: the foe named its next Spirling, the player may swap first (submit_shift).
 	AWAIT_SHIFT,
+	# Riftglass Continue: the player's side is beaten, the player may continue (submit_continue).
+	AWAIT_CONTINUE,
 }
 enum Outcome { NONE, WIN, LOSS, BONDED, FLED }
 
@@ -135,6 +137,11 @@ var seals: Array = [[0, 0, 0], [0, 0, 0]]
 var amulets: Array = [[0, 0, 0], [0, 0, 0]]
 ## The Spirling per side whose next hit taken is softened by the Opening Shield (null when used).
 var _shield_on: Array = [null, null]
+## Riftglass Continue (RiftglassSinks "continue"): how many times a beaten player side may stand
+## up again in this battle (0 = never). Set before start(), only for story battles; kept in replays.
+var continue_offer: int = 0
+## Continues taken in this battle (each next one costs more).
+var continues_used: int = 0
 ## Trainer bag for AI tier 2.
 var foe_items: Dictionary = {}
 var ai: BattleAI
@@ -653,6 +660,48 @@ func submit_shift(index: int) -> Array[BattleEvent]:
 		push_error("BattleModel.submit_shift called in phase %s" % Phase.keys()[phase])
 		return _events
 	_end_shift(index)
+	return _events
+
+func needs_continue_choice() -> bool:
+	return phase == Phase.AWAIT_CONTINUE
+
+## Line when the team stands up again through a Riftglass Continue.
+const CONTINUE_LINE: String = "Riftglass flares! Your whole team stands up again with full Vigor."
+
+## Answers the Continue offer: [param accept] brings every own Spirling back with full Vigor,
+## full Energy and no status and the battle goes on; false ends it as a loss.
+func submit_continue(accept: bool) -> Array[BattleEvent]:
+	_events = []
+	if phase != Phase.AWAIT_CONTINUE:
+		push_error("BattleModel.submit_continue called in phase %s" % Phase.keys()[phase])
+		return _events
+	if not accept:
+		outcome = Outcome.LOSS
+		phase = Phase.REWARDS
+		_run()
+		return _events
+	continues_used += 1
+	for i: int in parties[Side.PLAYER].size():
+		var s: Spirling = parties[Side.PLAYER][i]
+		if is_partner_index(Side.PLAYER, i) or s == bonded:
+			continue
+		s.hp = s.max_hp()
+		s.status = ""
+		s.status_turns = 0
+		s.energy = max_energy_of(Side.PLAYER)
+	emit_event(BattleEvent.Type.TECHNIQUE, {"side": Side.PLAYER, "text": CONTINUE_LINE, "args": []})
+	for slot: int in slot_count(Side.PLAYER):
+		if is_partner_slot(Side.PLAYER, slot):
+			continue
+		var index: int = active_index(Side.PLAYER, slot)
+		if index < 0:
+			var free: Array[int] = swap_candidates(Side.PLAYER, slot)
+			if free.is_empty():
+				continue
+			index = free[0]
+		_swap_in(Side.PLAYER, index, slot)
+	phase = Phase.SWITCH_IN
+	_run()
 	return _events
 
 ## Gives up the battle (item 8): it counts as a loss. Only against a Wayfarer.
@@ -1456,6 +1505,8 @@ func _phase_victory_check() -> void:
 		phase = Phase.REWARDS
 	elif own_alive_count() == 0 and _last_stand():
 		phase = Phase.SWITCH_IN
+	elif own_alive_count() == 0 and continues_used < continue_offer:
+		phase = Phase.AWAIT_CONTINUE
 	elif own_alive_count() == 0:
 		outcome = Outcome.LOSS
 		phase = Phase.REWARDS
@@ -1863,6 +1914,8 @@ func _do_bond(a: BattleAction) -> void:
 	who["timing"] = a.timing_score
 	emit_event(BattleEvent.Type.BOND_ATTEMPT, who)
 	bonus += TraitKit.bond_bonus(self)
+	# A Riftglass bond boost paid for this try (RiftglassSinks "bond_boost"), a fixed value.
+	bonus += clampf(a.rg_boost, 0.0, RiftglassSinks.BOND_BOOST_MAX)
 	var timing: float = minf(1.0, a.timing_score + clampf(bond_edge, 0.0, 1.0))
 	# Some fields make a bond a little likelier (Dawn Glow, KAMPF_PLAN_1000 item 349).
 	bonus += float(BattleRules.FIELDS.get(field, {}).get("bond_bonus", 0.0))

@@ -86,6 +86,8 @@ func _init(p_store_path: String = "") -> void:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
+	# Riftglass sinks in play (20261127120000_rg_sinks.sql).
+	LocalRiftglass.install(self)
 	# Planned maintenance (Online 100 point 95, 20261112230010_maintenance.sql).
 	_fns["maintenance_info"] = Callable(self, "_fn_maintenance_info")
 	# Trading and gifting, Online 100 area 5 (20261112000050_trade_gifts.sql).

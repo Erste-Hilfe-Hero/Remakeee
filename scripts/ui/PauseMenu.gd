@@ -91,6 +91,9 @@ func run() -> void:
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
 			not Trust.ledger_rows(GameState.flags).is_empty())
 		place_shop(labels, "Shop (locked)" if Billing.kids_locked() else "Shop", not GameState.rifts_sealed.is_empty())
+		# Riftglass in play (RiftglassSinks): heal anywhere, Growth x2, next to the shop. Never for children.
+		if RiftglassSinks.visible() and "Shop" in labels:
+			labels.insert(labels.find("Shop") + 1, "Riftglass")
 		# Pocket Rest (shop, pay-to-win step 6, plan point 51): rest anywhere outside battle.
 		if ShopEffects.can_rest_anywhere():
 			labels.insert(labels.find("Team") + 1, "Rest")
@@ -147,6 +150,7 @@ func run() -> void:
 			"Satchel": await run_bag()
 			"Shop": await ShopMenu.run(self)
 			"Shop (locked)": await info(ShopMenu.LOCKED_TEXT)
+			"Riftglass": await RiftglassSinks.run_menu(self)
 			"Storage": await run_storage()
 			"Save":
 				if await run_save():

@@ -291,6 +291,9 @@ func _build() -> void:
 	toast = Toast.new()
 	add_child(toast)
 	Billing.pass_paid.connect(_on_pass_paid)
+	# The free Riftglass of the day (RiftglassSinks.claim_daily), once online.
+	Online.state_changed.connect(_on_online_daily_rg)
+	_on_online_daily_rg(Online.state)
 	_text = TextBox.new()
 	_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	_text.offset_top = -TEXT_BOX_HEIGHT
@@ -1355,6 +1358,10 @@ func _action_lamp_watch(_args: PackedStringArray, _speaker: NPC) -> void:
 		elif LampWatch.visitor_waiting(GameState.records, day):
 			rows.append("Answer the call")
 			keys.append("answer")
+		elif RiftglassSinks.visible():
+			# Riftglass lights the lamp once more today (RiftglassSinks "lamp_relight").
+			rows.append("Light it again")
+			keys.append("relight")
 		rows.append("Lamp Watch")
 		keys.append("card")
 		if not LampWatch.log_pages(GameState.records).is_empty():
@@ -1366,6 +1373,11 @@ func _action_lamp_watch(_args: PackedStringArray, _speaker: NPC) -> void:
 		match keys[pick]:
 			"light":
 				await _lamp_light(day, menu)
+			"relight":
+				if await RiftglassSinks.pay_in_menu(menu, "lamp_relight", "", RiftglassSinks.price("lamp_relight"),
+						Loc.t("Light the lamp again tonight? Another visitor may follow the light.")):
+					RiftglassSinks.apply_lamp_relight(GameState.records)
+					await _lamp_light(day, menu)
 			"answer":
 				await _lamp_answer(LampWatch.night(LampWatch.nights_lit(GameState.records), GameState.starter, day), day)
 			"card":
@@ -3412,6 +3424,8 @@ func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
 		var options: Array[String] = []
 		if Expeditions.can_send():
 			options.append("Send a Spirling")
+		if RiftglassSinks.visible() and Expeditions.trips().any(func(t: Dictionary) -> bool: return Expeditions.seconds_left(t) > 0):
+			options.append("Bring one home now")
 		if not Expeditions.diary().is_empty():
 			options.append("Trip diary")
 		options.append("Done")
@@ -3420,6 +3434,9 @@ func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
 			break
 		if options[pick] == "Trip diary":
 			await menu.info("\n".join(Expeditions.diary()))
+			continue
+		if options[pick] == "Bring one home now":
+			await _rg_trip_skip(menu)
 			continue
 		var ready: Array[Spirling] = Expeditions.ready_to_go()
 		var names: Array[String] = []
@@ -3452,6 +3469,31 @@ func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
 			# The one opt-in question for phone notes (plan Chimora 100, item 76), only where they exist.
 			await LocalNotify.offer(menu)
 	menu.queue_free()
+
+## Riftglass trip skip (RiftglassSinks "trip_skip"): one trip comes home now, priced per
+## started hour left, and is paid out at once.
+func _rg_trip_skip(menu: MenuHost) -> void:
+	var away: Array[Dictionary] = []
+	for t: Dictionary in Expeditions.trips():
+		if Expeditions.seconds_left(t) > 0:
+			away.append(t)
+	var rows: Array[String] = []
+	for t: Dictionary in away:
+		var hours: int = RiftglassSinks.hours_left(Expeditions.seconds_left(t))
+		var s: Spirling = Expeditions._spirling(str(t.uid))
+		rows.append(Loc.t("%s: %d Riftglass") % [s.display_name() if s != null else "?", RiftglassSinks.price("trip_skip", 0, hours)])
+	var i: int = await menu.pick_strings("Bring one home now", rows)
+	if i < 0:
+		return
+	var h: int = RiftglassSinks.hours_left(Expeditions.seconds_left(away[i]))
+	if not await RiftglassSinks.pay_in_menu(menu, "trip_skip", str(h), RiftglassSinks.price("trip_skip", 0, h),
+			Loc.t("Bring this Spirling home now? %d h left.") % h):
+		return
+	RiftglassSinks.apply_trip_skip(away[i])
+	var back: Array[String] = Expeditions.collect()
+	if not back.is_empty():
+		await say(back)
+	SaveManager.save_game()
 
 ## Seasonal festival (item 89): the crier names the festival and hands out its gift once a year.
 func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -3835,6 +3877,14 @@ func _on_pass_paid(added: int) -> void:
 	if is_instance_valid(toast):
 		toast.show_note(Loc.t("Wayfarer Pass: +%d Riftglass") % added)
 
+## Claims the free Riftglass of the day when the game is online; a toast says what came.
+func _on_online_daily_rg(s: int) -> void:
+	if s != Online.State.ONLINE:
+		return
+	var added: int = await RiftglassSinks.claim_daily()
+	if added > 0 and is_instance_valid(toast):
+		toast.show_note(Loc.t("Daily gift: +%d Riftglass") % added)
+
 ## Bonus goal of the battle just fought (items 755-757): pays out once when it was met.
 func _pay_bonus_goal(goal_key: String) -> void:
 	if last_model == null or not last_model.has_meta("goal_tracker"):
@@ -3858,7 +3908,8 @@ func after_tamer_win(n: NPC) -> void:
 	_mark_rematch(def)
 	# Weekly Rift board (online step 1): the won Warden battle goes to the referee; its rounds
 	# count once the referee replayed it.
-	if def.has("warden") and Online.flag_on("rift_board"):
+	# A win with a Riftglass Continue never goes to the board.
+	if def.has("warden") and Online.flag_on("rift_board") and (last_model == null or last_model.continues_used == 0):
 		Online.call_fn("battle_submit", {"p_kind": "rift", "p_ref": str(def.warden),
 			"p_replay": BattleReplay.shareable(GameState.records.get("last_battle", {})), "p_claim": last_claim})
 	if def.has("defeat"):
@@ -4053,6 +4104,26 @@ func _use_rift_anchor() -> bool:
 		await _fade_to(1.0)
 		return false
 	await say(["The Rift Anchor holds you in place. Your team is rested again."] as Array[String])
+	return true
+
+## Riftglass instead of a Rift Anchor (RiftglassSinks "warden_retry"): offered after a lost Warden
+## battle only when the player has no anchor and enough Riftglass, never on Rift-Born. No shop
+## pointer after a defeat (docs/MONETIZATION.md rule 5).
+func _rg_warden_retry_offered() -> bool:
+	return ShopEffects.warden_help_allowed(1, GameState.difficulty) and not ShopEffects.can_anchor(GameState.difficulty) \
+		and RiftglassSinks.visible() and RiftglassSinks.why_not(RiftglassSinks.price("warden_retry")).is_empty()
+
+func _rg_warden_retry() -> bool:
+	await _fade_to(0.0)
+	var ask := MenuHost.new()
+	_ui.add_child(ask)
+	var paid: bool = await RiftglassSinks.pay_in_menu(ask, "warden_retry", "", RiftglassSinks.price("warden_retry"),
+		Loc.t("Stay right before the Warden? Your team is rested."), false)
+	ask.queue_free()
+	if not paid:
+		await _fade_to(1.0)
+		return false
+	await say(["Riftglass holds you in place. Your team is rested again."] as Array[String])
 	return true
 
 ## Lost tries against the Warden of [param def] (records "warden_losses").
@@ -4400,6 +4471,11 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	# A league battle comes ready-made from the server's seed and teams (plan area 7).
 	var preset: Variant = trainer.get("model")
 	var model: BattleModel = preset if preset is BattleModel else _new_model(foes, wild, trainer)
+	# Riftglass in story battles: Continue after a loss and the bond boost (RiftglassSinks).
+	if RiftglassSinks.continue_allowed(trainer, wild, GameState.difficulty, model.items_allowed):
+		model.set_meta(RiftglassSinks.STORY_META, true)
+		if RiftglassSinks.visible():
+			model.continue_offer = RiftglassSinks.continue_max()
 	# Friendly and server-checked battles cannot be given up (KAMPF_PLAN_1000 item 8).
 	if bool(trainer.get("friendly", false)):
 		model.set_meta(TurnFlow.NO_FORFEIT_META, true)
@@ -4687,6 +4763,10 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 		GameState.heal_party()
 		ChallengeRules.after_rest(GameState.party)
 		if _warden_battle and ShopEffects.can_anchor(GameState.difficulty) and await _use_rift_anchor():
+			if not oath.is_empty():
+				await say(oath)
+			return
+		if _warden_battle and _rg_warden_retry_offered() and await _rg_warden_retry():
 			if not oath.is_empty():
 				await say(oath)
 			return

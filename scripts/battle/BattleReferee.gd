@@ -51,6 +51,10 @@ static func check(replay: Variant, claim: Variant) -> Dictionary:
 		return {"verdict": ERROR, "detail": {"reason": why}}
 	if not BattleReplay.problem(replay).is_empty():
 		return {"verdict": ERROR, "detail": {"reason": "variant"}}
+	# A battle won with a Riftglass Continue never counts on a board (story only, RiftglassSinks).
+	for d: Variant in (replay as Dictionary).get("inputs", []):
+		if d is Dictionary and str(d.get("t", "")) == "continue" and bool(d.get("ok", false)):
+			return {"verdict": ERROR, "detail": {"reason": "continue"}}
 	var m: BattleModel = BattleReplay.build_model(replay)
 	if m == null:
 		return {"verdict": ERROR, "detail": {"reason": "rebuild"}}
@@ -62,6 +66,8 @@ static func check(replay: Variant, claim: Variant) -> Dictionary:
 		var d: Dictionary = inputs[i]
 		# An input the battle could not have taken at this point means the replay does not fit.
 		if str(d.get("t", "")) == "shift" and not m.needs_shift_choice():
+			return {"verdict": MISMATCH, "detail": {"field": "input", "index": i}}
+		if str(d.get("t", "")) == "continue" and not m.needs_continue_choice():
 			return {"verdict": MISMATCH, "detail": {"field": "input", "index": i}}
 		if BattleReplay.play_extra(m, d) != null:
 			continue

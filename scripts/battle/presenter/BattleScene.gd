@@ -70,6 +70,8 @@ var _picker: ListPicker
 var _bond_game: BondMinigame
 ## Echo call plan per wild Spirling (uid): a second try in this battle hears the same call.
 var _bond_plans: Dictionary[String, Dictionary] = {}
+## Riftglass bond boosts paid in this battle (the server allows max_per_ref).
+var _rg_boosts: int = 0
 var _ff_button: Button
 var _auto_button: Button
 var _goal_label: Label
@@ -819,6 +821,9 @@ func _run() -> void:
 			else:
 				await _play(model.submit_turn(BattleReplay.action_from_dict(rec)))
 			continue
+		if model.needs_continue_choice():
+			await _offer_continue()
+			continue
 		if model.needs_shift_choice():
 			await _offer_shift()
 			continue
@@ -942,6 +947,29 @@ func _offer_shift() -> void:
 			idx = await _pick_party("Swap to?", true, 0)
 	inputs.append(BattleReplay.shift_to_dict(idx))
 	await _play(model.submit_shift(idx))
+
+## The player's side is beaten in a story battle: continue for Riftglass (RiftglassSinks
+## "continue"), the price rising with each continue in this battle. Without enough Riftglass one
+## line says so; no shop window in battle (docs/MONETIZATION.md rule 5), nothing for children.
+func _offer_continue() -> void:
+	var cost: int = RiftglassSinks.price("continue", model.continues_used)
+	var why: String = RiftglassSinks.why_not(cost)
+	var ok: bool = false
+	if why.is_empty():
+		await _text.show_text(Loc.t("Continue for %s? Your whole team stands up with full Vigor.") % RiftglassSinks.cost_text(cost))
+		if await _picker.pick(RiftglassSinks.balance_line(), [{"text": "Continue"}, {"text": "Give up"}] as Array[Dictionary], false) == 0:
+			var d: Dictionary = await RiftglassSinks.spend("continue", continue_ref(model), cost)
+			ok = bool(d.get("ok", false))
+			if not ok:
+				await _text.show_text(RiftglassSinks.error_text(str(d.get("error", "")), cost))
+	elif why in ["not_enough", "offline"]:
+		await _text.show_text(RiftglassSinks.error_text(why, cost))
+	inputs.append(BattleReplay.continue_to_dict(ok))
+	await _play(model.submit_continue(ok))
+
+## The battle's key for per-battle Riftglass limits on the server (continue, bond boost).
+static func continue_ref(m: BattleModel) -> String:
+	return "b%d" % m.battle_seed
 
 ## Auto picks who steps out after a faint (item 21): the AI's best matchup, after the usual
 ## pause so the tab can still be tapped. -1 when Auto is off (the player picks).
@@ -1239,6 +1267,9 @@ func _bond(slot: int = 0) -> BattleAction:
 			return null
 		if use < charms.size():
 			charm = charms[use]
+	var boost: float = await _bond_boost(charm)
+	if boost < 0.0:
+		return null
 	var aim: int = await _pick_target("Reach out to which one?")
 	if aim == -2:
 		return null
@@ -1266,7 +1297,32 @@ func _bond(slot: int = 0) -> BattleAction:
 		DailyTasks.record("melody", {"map": GameState.current_map})
 	if score >= 1.0:
 		GameState.records["melody_perfect"] = 1
-	return BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm, slot, aim)
+	var bond: BattleAction = BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm, slot, aim)
+	bond.rg_boost = boost
+	return bond
+
+## Asks before the Echo call whether to boost this bond try with Riftglass (RiftglassSinks
+## "bond_boost", a fixed value). Only in story battles, only with enough Riftglass, never for
+## children. Returns the boost, 0 for none, -1 when the player backed out.
+func _bond_boost(charm: String) -> float:
+	var cost: int = RiftglassSinks.price("bond_boost")
+	if not model.has_meta(RiftglassSinks.STORY_META) or not RiftglassSinks.why_not(cost).is_empty():
+		return 0.0
+	if bool(Database.item(charm).get("bond_sure", false)) or _rg_boosts >= int(RiftglassSinks.sink("bond_boost").get("max_per_ref", 0)):
+		return 0.0
+	var pct: String = "+%d %%" % roundi(RiftglassSinks.bond_boost() * 100.0)
+	var use: int = await _picker.pick(Loc.t("Bond boost %s? You have %d Riftglass.") % [pct, Billing.balance()],
+		[{"text": Loc.t("Boost: %d Riftglass") % cost}, {"text": "No boost"}] as Array[Dictionary])
+	if use < 0:
+		return -1.0
+	if use != 0:
+		return 0.0
+	var d: Dictionary = await RiftglassSinks.spend("bond_boost", continue_ref(model), cost)
+	if not bool(d.get("ok", false)):
+		await _text.show_text(RiftglassSinks.error_text(str(d.get("error", "")), cost))
+		return 0.0
+	_rg_boosts += 1
+	return RiftglassSinks.bond_boost()
 
 # --- Event playback -----------------------------------------------------------------
 
