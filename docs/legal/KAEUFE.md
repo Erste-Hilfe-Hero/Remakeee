@@ -16,12 +16,17 @@ Rissglas ist die Währung im Shop. Du kaufst es über Apple oder Google und gibs
 | Paket | Preis |
 |---|---|
 | 100 Rissglas | 0,99 € |
-| 200 Rissglas | 1,99 € |
-| 500 Rissglas | 4,99 € |
-| 1000 Rissglas | 9,99 € |
-| 2000 Rissglas | 19,99 € |
-| 5000 Rissglas | 49,99 € |
-| 10000 Rissglas | 99,99 € |
+| 220 Rissglas | 1,99 € |
+| 600 Rissglas | 4,99 € |
+| 1300 Rissglas | 9,99 € |
+| 2800 Rissglas | 19,99 € |
+| 7500 Rissglas | 49,99 € |
+| 16000 Rissglas | 99,99 € |
+| 300 Rissglas | 4,99 € |
+
+- Die Mengen enthalten den Bonus des Pakets (bis +60 %).
+- Erstkauf doppelt: Beim ersten Kauf eines Pakets bekommst du die Grundmenge noch einmal dazu, einmal je Paket und Konto.
+- Monatskarte (4,99 €): 300 Rissglas sofort, dann 30 Tage lang 100 Rissglas am Tag, zusammen 3300. Kein Abo, verlängert sich nie.
 
 - Jedes Angebot zeigt vorher den Preis in Rissglas und den Gegenwert in Euro.
 - Rissglas verfällt nicht, solange dein Konto besteht.
@@ -85,12 +90,17 @@ Riftglass is the shop's currency. You buy it through Apple or Google and spend i
 | Pack | Price |
 |---|---|
 | 100 Riftglass | 0.99 EUR |
-| 200 Riftglass | 1.99 EUR |
-| 500 Riftglass | 4.99 EUR |
-| 1000 Riftglass | 9.99 EUR |
-| 2000 Riftglass | 19.99 EUR |
-| 5000 Riftglass | 49.99 EUR |
-| 10000 Riftglass | 99.99 EUR |
+| 220 Riftglass | 1.99 EUR |
+| 600 Riftglass | 4.99 EUR |
+| 1300 Riftglass | 9.99 EUR |
+| 2800 Riftglass | 19.99 EUR |
+| 7500 Riftglass | 49.99 EUR |
+| 16000 Riftglass | 99.99 EUR |
+| 300 Riftglass | 4.99 EUR |
+
+- The amounts include the pack's bonus (up to +60%).
+- First buy double: the first purchase of each pack gives the base amount once more, once per pack and account.
+- Monthly Card (4.99 EUR): 300 Riftglass at once, then 100 Riftglass a day for 30 days, 3300 in total. Not a subscription, never renews.
 
 - Every offer shows its price in Riftglass and the euro equivalent first.
 - Riftglass does not expire while your account exists.
