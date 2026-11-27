@@ -1,45 +1,46 @@
-Win het vertrouwen van 567 monsters, ontdek een duister verhaal vol zwarte humor en plan elke zet. Chimora is een monster-RPG in retro-pixelstijl, en iets duisterder dan het eruitziet.
-- 567 Spirlings om voor je te winnen met de echoroep, plus zeldzame Glansvormen in het wild
+Sluit een band met 567 pixelmonsters, zoek zeldzame Glansvormen en plan elke zet. Chimora is een RPG om monsters te verzamelen en te temmen in retro-pixelstijl, met een duister verhaal vol zwarte humor.
+- 567 Spirlings om te binden: tik snel op de grote knop Van mij! en vul de balk
 - Tactische beurtgevechten met acht elementen en Hoeders met meerdere fasen
 - Pixelkunst die in vijf tijdperken volwassen wordt, van zwart-wit tot volle kleur
 - Online game: Chimora heeft een internetverbinding nodig
+
+NIEUW IN 1.3.2
+- 70 nieuwe Spirlings, 10 in elke regio
+- Glansvormen in vijf soorten, van de klassieke Glansvorm tot de zeer zeldzame Opaalglansvorm
+- Weer: regen, mist, wind, storm en sneeuw veranderen de wereld en sommige gevechten
+- 35 raadselstenen en puzzelborden, en veel geheimen die je gewoon al spelend vindt
+- Een nieuwe winkel en een pas met 30 treden, met een gratis rij voor iedereen
 
 DE STILTE VAN VEYDAL
 Als Reiziger vertrek je vanaf een vuurtoren aan de kust van Veydal, kies je je eerste partner en volg je Mirela's kaartenboek door vier regio's. Overal scheuren Kloven open, en alleen jij kunt ze weer dichten. Alle anderen willen gewoon iets van je.
 
 VERTROUWEN, NIET VANGEN
-Wilde Spirlings worden nooit gevangen. Je wint hun vertrouwen met de echoroep: de Spirling roept een reeks, jij antwoordt. Wie goed luistert, krijgt er een vriend bij.
+Wilde Spirlings worden nooit gevangen. In een gevecht kies je Binden en verschijnt een grote knop Van mij!: tik er zo snel als je kunt op. Hoe voller de balk, hoe beter de band. In de instellingen kun je overschakelen op de echoroep (de roep van de Spirling herhalen) of op Rustig (de echo zonder tijdslimiet).
 
 TACTISCHE GEVECHTEN
 - Acht elementen, elk sterk tegen twee en zwak tegen twee
 - Energie in plaats van techniekpunten, eigenschappen, voorwerpen om te dragen en gevechtsvelden
 - Gevechten met meerdere Spirlings per kant, duogevechten en Hoeders met meerdere fasen
-- Schadevoorbeeld, gevechtslogboek, automatisch vechten en dubbele snelheid
-- Vier moeilijkheidsgraden, van Verhaal tot Kloofgeboren met ringgrenzen
+- De uitdaging groeit met elke akte
 
 EEN VERHAAL MET TANDEN
 - Vier aktes: Veydal, Corvane, Ashmere en het door de zon gebleekte Solenne, met twaalf Kloven en hun Hoeders
 - Twee clans en elf vreemden, elk met een verborgen vertrouwenswaarde. Een Grootboek onthoudt wie je vertrouwde
 - Een gunst kan lonen, of eindigen in diefstal en hinderlagen. Verraad hoort bij het verhaal, het is geen bug
-- Legendequesten voor zes legendarische Spirlings en zijverhalen in elke akte, goed voor tientallen uren
 
 EEN WERELD DIE VERANDERT
-- 567 Spirlings, 80 eigen soorten in elke akte en elke regio na het verhaal, en zeldzame Glansvormen in het wild
+- Zo'n 80 eigen Spirlings in elke regio, en zeldzame Glansvormen in vijf soorten
 - Je voorste Spirling loopt achter je aan en onthoudt hoe je hem behandelt
-- Dag en nacht, feesten, verborgen paden, reizigersuitrusting die nieuwe plekken opent en een wildpark gerund door smokkelaars
-- Een hol om op te eisen, een dagelijkse rouwshow en een zwarthandelaar die verborgen gaven verkoopt
+- Dag en nacht, weer, feesten, verborgen paden en reizigersuitrusting die nieuwe plekken opent
 
 NA DE FINALE
 - Vellmarch, een hele regio voor daarna in de stijl van het volgende tijdperk, met nog vier Kloven en een verraad in elk hoofdstuk
 - Revanches tegen alle twaalf Hoeders, een Echotoren met 100 verdiepingen, Meesterkloven, een reus van de week en Nieuw spel+
-- Spirlings groeien door na ring 60
 - Meer regio's en tijdperken volgen als gratis updates
 
 SAMEN ONLINE
 - Voeg vrienden toe met een code, stuur groeten en Lantaarnpost
-- Houd verlanglijstjes bij en stuur je vrienden cadeaus
 - Echoduels tegen de teams van je vrienden, competities met seizoenen
-- Elke week een gezamenlijk wereldoel
 - Je voortgang staat veilig op onze server in de EU en verhuist mee naar een nieuwe telefoon
 
 SPEEL ZOALS JIJ WILT
@@ -50,7 +51,7 @@ SPEEL ZOALS JIJ WILT
 - Rustig binden zonder tijdslimiet, en offline gevechten wachten altijd op jou
 - Speel met aanraken, toetsenbord of controller
 
-EERLIJK
-Gratis te spelen. Aankopen in het spel zijn optioneel, veel ervan geven voordelen. In de Eerlijke competitie tellen ze niet mee. Geen willekeurige inhoud. Geen reclame, geen energietimers, geen tracking.
+WINKEL EN EERLIJKE COMPETITIE
+Gratis te spelen, met optionele in-app-aankopen. Veel ervan geven voordelen in gevechten of versnellen je voortgang; in de Eerlijke competitie tellen ze niet mee. Elk aanbod laat precies zien wat erin zit, niets is willekeurig. Elke regio, elke Hoeder en elke soort Spirling is te bereiken zonder te betalen. De winkel is dicht voor spelers onder de 13 en heeft maandlimieten per leeftijd. Geen reclame, geen tracking.
 
 Let op: Chimora heeft een internetverbinding nodig.

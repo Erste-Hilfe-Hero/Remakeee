@@ -10,7 +10,7 @@ Riftglass in play (new in 1.3.2): Riftglass the player owns can be spent at fixe
 
 External services: only our own server (Contabo GmbH, Munich, Germany, processor under Art. 28 GDPR; server location: data centre Lauterbourg, France, EU) for game data, saves and friends, and Apple: StoreKit for purchases and the App Store lookup to see if an update is out. Reminders are local notifications on the phone, no push service. Uses only standard HTTPS (ITSAppUsesNonExemptEncryption = NO). An anonymous progress count (how far players get) stays on our own server. No tracking, no ads, no third-party SDKs.
 
-New in 1.3.0: a daily offline goal in the Brindlewick lighthouse (Lamp Watch, reached a few minutes into the story): light the lamp once per day, a lost Spirling visits and joins through the same Echo call minigame as in battle. The daily light is free.
+New in 1.3.0: a daily offline goal in the Brindlewick lighthouse (Lamp Watch, reached a few minutes into the story): light the lamp once per day, a lost Spirling visits and joins through the same bonding minigame as in battle (the Mine! button). The daily light is free.
 
 Regional differences: none. Same content everywhere; only the language (14) and local store prices differ.
 
