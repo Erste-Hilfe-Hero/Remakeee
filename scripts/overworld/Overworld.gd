@@ -749,6 +749,12 @@ func _spawn_npcs() -> void:
 		n.setup(def)
 		_entities.add_child(n)
 		_npcs.append(n)
+	# Riddle stones and riddlers (data/puzzle_spots.json, PuzzleSpots).
+	for def: Dictionary in PuzzleSpots.npc_defs(map.id):
+		var p: NPC = PuzzleTablet.new() if bool(def.tablet) else NPC.new()
+		p.setup(def)
+		_entities.add_child(p)
+		_npcs.append(p)
 
 ## The time of day moved on: light, people, doors and the banner symbol follow (item 1167).
 func _on_phase_changed(_phase: int) -> void:
@@ -904,6 +910,12 @@ func _on_player_stepped(cell: Vector2i) -> void:
 			else:
 				# The pass holder's rare Spirling of the day (pay-to-win step 6, plan point 38).
 				wild = ShopEffects.pass_rare(map.encounter_table, GameState.flags, GameState.rng)
+			# A rare visitor woken by a solved riddle stone (PuzzleSpots "meet" rewards).
+			if wild == null:
+				wild = PuzzleSpots.rare_wild(map.id, GameState.flags, GameState.rng)
+				if wild != null:
+					Sound.sfx("sparkle")
+					await _locked_say(["Something stirs. The rare visitor from the riddle stone!"] as Array[String])
 			if wild == null:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
 				for e: int in WildRules.weather_boost(WeatherCycle.current(map)):
@@ -956,6 +968,10 @@ func _on_interact(cell: Vector2i) -> void:
 		return
 	if await _world.interact(cell):
 		return
+	var spot: Dictionary = PuzzleSpots.at(map.id, cell)
+	if not spot.is_empty():
+		await run_puzzle_spot(spot)
+		return
 	var n: NPC = npc_at(cell)
 	if n != null:
 		await n.turn_toward(player.cell)
@@ -990,6 +1006,22 @@ func _on_interact(cell: Vector2i) -> void:
 			await run_dialogue(beyond.dialogue_ref, beyond)
 			return
 	survey_look(cell - player.cell)
+
+## A riddle stone or riddler (PuzzleSpots): the puzzle screen, then any achievements.
+func run_puzzle_spot(spot: Dictionary) -> void:
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	var n: NPC = npc_at(PuzzleSpots.cell_of(spot))
+	if n != null and not n is PuzzleTablet:
+		await n.turn_toward(player.cell)
+	await PuzzleBoard.run(_ui, spot)
+	for p: NPC in _npcs:
+		p.queue_redraw()
+	await announce_achievements()
+	VirtualPad.set_wanted(true)
+	player.frozen = false
+	busy = false
 
 ## Survey Glass (area 3 items 1052, 1053): A on open ground looks ahead; finds up to 6 steps
 ## away show on the minimap. Says so in the ticker, so it never stops the walk.
