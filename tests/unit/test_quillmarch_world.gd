@@ -3,7 +3,7 @@ extends GutTest
 ## roads and four Rifts exist as Era III maps, the Mail Boat from Lastlamp (Vellmarch's end) runs
 ## after the Era II finale, every house has a room, everything is reachable, the Wardens seal their
 ## Rifts in order, the last one sets era3_finale_done (Halcyra's way in), and the road tables hold
-## all 70 of Quillmarch's own kinds.
+## all 80 of Quillmarch's own kinds.
 
 var _d: Dictionary = {}
 
@@ -173,7 +173,7 @@ func test_every_own_kind_lives_on_a_road() -> void:
 			continue
 		own += 1
 		assert_true(wild.has(sd.species_name), "%s can be met on a Quillmarch road" % sd.species_name)
-	assert_eq(own, 70)
+	assert_eq(own, 80)
 
 func test_texts_have_german() -> void:
 	var de: Dictionary = Loc.load_table("de").get("strings", {})

@@ -2988,6 +2988,426 @@
    "abac36",
    "d8e6af",
    "4c7324"
+  ],
+  "Heathpip": [
+   "15212b",
+   "c0e5ef",
+   "6faadb",
+   "3260c8"
+  ],
+  "Heathbristle": [
+   "112424",
+   "27d9a8",
+   "167e7a",
+   "bbe7f3"
+  ],
+  "Heathbrand": [
+   "122424",
+   "148269",
+   "a9f0f2",
+   "4abce3"
+  ],
+  "Tinglet": [
+   "191e33",
+   "79a4df",
+   "3e59d0",
+   "d9d7f5"
+  ],
+  "Tinglash": [
+   "181e32",
+   "76a7da",
+   "385dca",
+   "d8d8f5"
+  ],
+  "Tinglewyrm": [
+   "1d1b38",
+   "d5daf3",
+   "564dce",
+   "a68de0"
+  ],
+  "Keepling": [
+   "132328",
+   "29d0d1",
+   "bfe5f2",
+   "236cb2"
+  ],
+  "Keepwarden": [
+   "181e32",
+   "cbdff4",
+   "345dd5",
+   "9495e9"
+  ],
+  "Brackenram": [
+   "251832",
+   "6940dd",
+   "e4d1f7",
+   "cb79e7"
+  ],
+  "Saltwhistle": [
+   "2e1623",
+   "f0cee9",
+   "d77eaf",
+   "af365b"
+  ],
+  "Flaxlet": [
+   "271730",
+   "dfd5ef",
+   "b688d2",
+   "8d3b9b"
+  ],
+  "Flaxreel": [
+   "251831",
+   "a78be9",
+   "e5d1f6",
+   "a426c9"
+  ],
+  "Flaxdowager": [
+   "271730",
+   "ad89e1",
+   "e7d1f3",
+   "a02daf"
+  ],
+  "Simmerkit": [
+   "122522",
+   "237d5d",
+   "b8ebe5",
+   "4ebecd"
+  ],
+  "Simmerhound": [
+   "122520",
+   "41d18d",
+   "b6ede0",
+   "1e7a7a"
+  ],
+  "Simmerbaron": [
+   "15212c",
+   "bee6f2",
+   "236dad",
+   "829fe5"
+  ],
+  "Lockgill": [
+   "132328",
+   "29d0cf",
+   "1d7691",
+   "c9e0f4"
+  ],
+  "Lockreeve": [
+   "142229",
+   "b6ebf0",
+   "5db3de",
+   "2768bf"
+  ],
+  "Pondchime": [
+   "132713",
+   "397d25",
+   "c2edc3",
+   "54cc73"
+  ],
+  "Stookhulk": [
+   "251831",
+   "a58ee0",
+   "e3d3f3",
+   "9532b5"
+  ],
+  "Annealet": [
+   "171f2f",
+   "cbe0ef",
+   "83a1d8",
+   "4856c5"
+  ],
+  "Annealix": [
+   "1c1b38",
+   "3f5cbe",
+   "d9d8f2",
+   "a390da"
+  ],
+  "Annealord": [
+   "171f2f",
+   "72abd2",
+   "3862b1",
+   "d6d9f2"
+  ],
+  "Sumplet": [
+   "16202f",
+   "65afdc",
+   "cfddf4",
+   "4156d4"
+  ],
+  "Sumpdelver": [
+   "132328",
+   "51bfc0",
+   "c8e2eb",
+   "366897"
+  ],
+  "Sumpthane": [
+   "181f31",
+   "2b6ba5",
+   "d2dbf3",
+   "9396e3"
+  ],
+  "Turfkin": [
+   "2d1529",
+   "dd70e8",
+   "bf1fa7",
+   "f7cbe6"
+  ],
+  "Turfhulk": [
+   "2d1627",
+   "cf7cd0",
+   "eed0e7",
+   "a03a6f"
+  ],
+  "Flintkit": [
+   "142229",
+   "b1ecf3",
+   "57b4e6",
+   "1f68d1"
+  ],
+  "Flintlancer": [
+   "132228",
+   "bae9eb",
+   "63b2d2",
+   "3068a6"
+  ],
+  "Glarelet": [
+   "191d35",
+   "7ea2de",
+   "d5d9f4",
+   "594bd1"
+  ],
+  "Glarelisk": [
+   "15212c",
+   "53b8de",
+   "cadff5",
+   "345cd8"
+  ],
+  "Glaremonarch": [
+   "1a1d35",
+   "ceddf8",
+   "8c98ee",
+   "5a47e3"
+  ],
+  "Haulbug": [
+   "132328",
+   "237878",
+   "c4e3ee",
+   "76a8d7"
+  ],
+  "Haulbeetle": [
+   "122326",
+   "bfe8e4",
+   "5eb7c5",
+   "336b8d"
+  ],
+  "Haulbastion": [
+   "171f2f",
+   "2070a8",
+   "cfdcf6",
+   "8e98e9"
+  ],
+  "Cistlet": [
+   "291b14",
+   "e78176",
+   "a2491d",
+   "f2d7b4"
+  ],
+  "Cisternox": [
+   "261d12",
+   "efd5c9",
+   "815825",
+   "bea237"
+  ],
+  "Noctolabe": [
+   "162512",
+   "4a7327",
+   "c9eac1",
+   "61c963"
+  ],
+  "Grainspout": [
+   "301718",
+   "d58399",
+   "f0d2d3",
+   "984934"
+  ],
+  "Brumelet": [
+   "132328",
+   "2fcecd",
+   "20758e",
+   "cae0f3"
+  ],
+  "Brumeshade": [
+   "142229",
+   "56bbc4",
+   "306d8a",
+   "d0ddee"
+  ],
+  "Brumarch": [
+   "122425",
+   "4dc4af",
+   "bfe7ea",
+   "2e6e8b"
+  ],
+  "Zinclet": [
+   "14222a",
+   "4cbed1",
+   "c8e1f1",
+   "3064ba"
+  ],
+  "Zincrawler": [
+   "12251e",
+   "b6f1ce",
+   "31d69c",
+   "197e73"
+  ],
+  "Zincolossus": [
+   "14222a",
+   "3fc3d9",
+   "c5e2f4",
+   "2865ca"
+  ],
+  "Serifkit": [
+   "122326",
+   "bfe8e4",
+   "5eb7c5",
+   "336b8d"
+  ],
+  "Serifane": [
+   "15212b",
+   "277387",
+   "cbdff0",
+   "849fdb"
+  ],
+  "Tangbeak": [
+   "122520",
+   "29df83",
+   "acf3e0",
+   "137f7c"
+  ],
+  "Tangharrier": [
+   "12251c",
+   "5ac87a",
+   "297b55",
+   "bee9e0"
+  ],
+  "Culmlet": [
+   "112424",
+   "3ecda6",
+   "b5ecea",
+   "237489"
+  ],
+  "Culmbough": [
+   "12251e",
+   "4cce7f",
+   "bbecda",
+   "217a6f"
+  ],
+  "Culmarch": [
+   "15212b",
+   "306f80",
+   "cedfec",
+   "889fd2"
+  ],
+  "Mintlet": [
+   "12251f",
+   "22814c",
+   "b9ecdc",
+   "3acbc0"
+  ],
+  "Mintmarker": [
+   "12251d",
+   "5dc581",
+   "2c7959",
+   "c0e8e1"
+  ],
+  "Mintmajesty": [
+   "12251d",
+   "5ac77f",
+   "2a7a59",
+   "bee9e1"
+  ],
+  "Cornicet": [
+   "1b1c37",
+   "d4dbef",
+   "9498d8",
+   "614bbc"
+  ],
+  "Corniceroc": [
+   "132327",
+   "1c7b77",
+   "bee6f0",
+   "6cabde"
+  ],
+  "Fulmenkit": [
+   "16202d",
+   "64b2d2",
+   "cedef1",
+   "3c5cc6"
+  ],
+  "Fulmenhart": [
+   "1b1b39",
+   "849deb",
+   "d8d8f9",
+   "6741e0"
+  ],
+  "Hoistling": [
+   "112424",
+   "28d7ad",
+   "acf0f0",
+   "1b7693"
+  ],
+  "Hoistheron": [
+   "14222a",
+   "c5e4ea",
+   "356a8e",
+   "85a1d2"
+  ],
+  "Hoistgrand": [
+   "122520",
+   "1d8252",
+   "b4eee1",
+   "2dcecf"
+  ],
+  "Fibbet": [
+   "132327",
+   "3fc7c4",
+   "277287",
+   "cbdff0"
+  ],
+  "Fibwhisker": [
+   "12251d",
+   "61c381",
+   "c3e8d8",
+   "2d7668"
+  ],
+  "Fibgrandee": [
+   "122520",
+   "c0ead5",
+   "287963",
+   "4ac3bf"
+  ],
+  "Murmlet": [
+   "192411",
+   "547020",
+   "cceab6",
+   "63cc4c"
+  ],
+  "Murmuron": [
+   "162612",
+   "417b17",
+   "c0f1b5",
+   "45db4d"
+  ],
+  "Tallykit": [
+   "1e2210",
+   "eae778",
+   "5b6f11",
+   "7bc81f"
+  ],
+  "Tallywarden": [
+   "1e2210",
+   "afaa33",
+   "5c6c1f",
+   "d1e9b2"
   ]
  },
  "kinds": {
@@ -5973,6 +6393,426 @@
     "5dacd6",
     "a5dbe5",
     "eaf6f6"
+   ],
+   "Heathpip": [
+    "1b405d",
+    "4ab6d2",
+    "9ae2e2",
+    "eaf6f4"
+   ],
+   "Heathbristle": [
+    "1e3d66",
+    "59aed5",
+    "a2dce4",
+    "eaf6f6"
+   ],
+   "Heathbrand": [
+    "1f3b6a",
+    "5fabd7",
+    "a6dbe5",
+    "eaf6f6"
+   ],
+   "Tinglet": [
+    "203a6d",
+    "62a9d8",
+    "a8d9e6",
+    "eaf5f6"
+   ],
+   "Tinglash": [
+    "1c3e61",
+    "50b3d3",
+    "9edfe3",
+    "eaf6f5"
+   ],
+   "Tinglewyrm": [
+    "1d3d64",
+    "57afd5",
+    "a1dde4",
+    "eaf6f6"
+   ],
+   "Keepling": [
+    "1d3e63",
+    "55b0d4",
+    "a0dee3",
+    "eaf6f5"
+   ],
+   "Keepwarden": [
+    "1c3e61",
+    "50b3d3",
+    "9edfe3",
+    "eaf6f5"
+   ],
+   "Brackenram": [
+    "1c3e62",
+    "53b1d4",
+    "9fdfe3",
+    "eaf6f5"
+   ],
+   "Saltwhistle": [
+    "20396f",
+    "66a7d9",
+    "aad8e6",
+    "ebf5f6"
+   ],
+   "Flaxlet": [
+    "203a6e",
+    "64a8d8",
+    "a9d9e6",
+    "ebf5f6"
+   ],
+   "Flaxreel": [
+    "1c3e62",
+    "53b1d4",
+    "9fdfe3",
+    "eaf6f5"
+   ],
+   "Flaxdowager": [
+    "1e3c67",
+    "5badd6",
+    "a4dce4",
+    "eaf6f6"
+   ],
+   "Simmerkit": [
+    "1f3b6b",
+    "60aad7",
+    "a7dae5",
+    "eaf6f6"
+   ],
+   "Simmerhound": [
+    "1d3e63",
+    "55b0d4",
+    "a0dee3",
+    "eaf6f5"
+   ],
+   "Simmerbaron": [
+    "1b405d",
+    "4ab6d2",
+    "9ae2e2",
+    "eaf6f4"
+   ],
+   "Lockgill": [
+    "203a6e",
+    "64a8d8",
+    "a9d9e6",
+    "ebf5f6"
+   ],
+   "Lockreeve": [
+    "1c3e62",
+    "53b1d4",
+    "9fdfe3",
+    "eaf6f5"
+   ],
+   "Pondchime": [
+    "1e3c67",
+    "5badd6",
+    "a4dce4",
+    "eaf6f6"
+   ],
+   "Stookhulk": [
+    "1f3b6b",
+    "60aad7",
+    "a7dae5",
+    "eaf6f6"
+   ],
+   "Annealet": [
+    "1e3c68",
+    "5dacd6",
+    "a5dbe5",
+    "eaf6f6"
+   ],
+   "Annealix": [
+    "1b405d",
+    "4ab6d2",
+    "9ae2e2",
+    "eaf6f4"
+   ],
+   "Annealord": [
+    "1e3c67",
+    "5badd6",
+    "a4dce4",
+    "eaf6f6"
+   ],
+   "Sumplet": [
+    "1b405d",
+    "4ab6d2",
+    "9ae2e2",
+    "eaf6f4"
+   ],
+   "Sumpdelver": [
+    "1d3e63",
+    "55b0d4",
+    "a0dee3",
+    "eaf6f5"
+   ],
+   "Sumpthane": [
+    "1c3e61",
+    "50b3d3",
+    "9edfe3",
+    "eaf6f5"
+   ],
+   "Turfkin": [
+    "203a6d",
+    "62a9d8",
+    "a8d9e6",
+    "eaf5f6"
+   ],
+   "Turfhulk": [
+    "1c3e61",
+    "50b3d3",
+    "9edfe3",
+    "eaf6f5"
+   ],
+   "Flintkit": [
+    "1f3b6b",
+    "60aad7",
+    "a7dae5",
+    "eaf6f6"
+   ],
+   "Flintlancer": [
+    "213971",
+    "67a6d9",
+    "abd8e7",
+    "ebf5f6"
+   ],
+   "Glarelet": [
+    "1d3e63",
+    "55b0d4",
+    "a0dee3",
+    "eaf6f5"
+   ],
+   "Glarelisk": [
+    "20396f",
+    "66a7d9",
+    "aad8e6",
+    "ebf5f6"
+   ],
+   "Glaremonarch": [
+    "1e3d66",
+    "59aed5",
+    "a2dce4",
+    "eaf6f6"
+   ],
+   "Haulbug": [
+    "203a6e",
+    "64a8d8",
+    "a9d9e6",
+    "ebf5f6"
+   ],
+   "Haulbeetle": [
+    "1c3f60",
+    "4eb4d3",
+    "9ce0e2",
+    "eaf6f5"
+   ],
+   "Haulbastion": [
+    "1e3d66",
+    "59aed5",
+    "a2dce4",
+    "eaf6f6"
+   ],
+   "Cistlet": [
+    "203a6d",
+    "62a9d8",
+    "a8d9e6",
+    "eaf5f6"
+   ],
+   "Cisternox": [
+    "1e3c67",
+    "5badd6",
+    "a4dce4",
+    "eaf6f6"
+   ],
+   "Noctolabe": [
+    "1d3d64",
+    "57afd5",
+    "a1dde4",
+    "eaf6f6"
+   ],
+   "Grainspout": [
+    "1e3c67",
+    "5badd6",
+    "a4dce4",
+    "eaf6f6"
+   ],
+   "Brumelet": [
+    "1c3e61",
+    "50b3d3",
+    "9edfe3",
+    "eaf6f5"
+   ],
+   "Brumeshade": [
+    "1b3f5f",
+    "4cb5d2",
+    "9be1e2",
+    "eaf6f5"
+   ],
+   "Brumarch": [
+    "1b405d",
+    "4ab6d2",
+    "9ae2e2",
+    "eaf6f4"
+   ],
+   "Zinclet": [
+    "203a6e",
+    "64a8d8",
+    "a9d9e6",
+    "ebf5f6"
+   ],
+   "Zincrawler": [
+    "1c3e62",
+    "53b1d4",
+    "9fdfe3",
+    "eaf6f5"
+   ],
+   "Zincolossus": [
+    "1e3d66",
+    "59aed5",
+    "a2dce4",
+    "eaf6f6"
+   ],
+   "Serifkit": [
+    "213971",
+    "67a6d9",
+    "abd8e7",
+    "ebf5f6"
+   ],
+   "Serifane": [
+    "1b3f5f",
+    "4cb5d2",
+    "9be1e2",
+    "eaf6f5"
+   ],
+   "Tangbeak": [
+    "213873",
+    "69a5d9",
+    "acd7e7",
+    "ebf5f7"
+   ],
+   "Tangharrier": [
+    "1e3c67",
+    "5badd6",
+    "a4dce4",
+    "eaf6f6"
+   ],
+   "Culmlet": [
+    "213873",
+    "69a5d9",
+    "acd7e7",
+    "ebf5f7"
+   ],
+   "Culmbough": [
+    "1b405d",
+    "4ab6d2",
+    "9ae2e2",
+    "eaf6f4"
+   ],
+   "Culmarch": [
+    "1f3b6a",
+    "5fabd7",
+    "a6dbe5",
+    "eaf6f6"
+   ],
+   "Mintlet": [
+    "1d3d64",
+    "57afd5",
+    "a1dde4",
+    "eaf6f6"
+   ],
+   "Mintmarker": [
+    "203a6d",
+    "62a9d8",
+    "a8d9e6",
+    "eaf5f6"
+   ],
+   "Mintmajesty": [
+    "203a6e",
+    "64a8d8",
+    "a9d9e6",
+    "ebf5f6"
+   ],
+   "Cornicet": [
+    "1e3c68",
+    "5dacd6",
+    "a5dbe5",
+    "eaf6f6"
+   ],
+   "Corniceroc": [
+    "1b405d",
+    "4ab6d2",
+    "9ae2e2",
+    "eaf6f4"
+   ],
+   "Fulmenkit": [
+    "1c3e61",
+    "50b3d3",
+    "9edfe3",
+    "eaf6f5"
+   ],
+   "Fulmenhart": [
+    "1f3b6b",
+    "60aad7",
+    "a7dae5",
+    "eaf6f6"
+   ],
+   "Hoistling": [
+    "1f3b6b",
+    "60aad7",
+    "a7dae5",
+    "eaf6f6"
+   ],
+   "Hoistheron": [
+    "1b3f5f",
+    "4cb5d2",
+    "9be1e2",
+    "eaf6f5"
+   ],
+   "Hoistgrand": [
+    "1d3e63",
+    "55b0d4",
+    "a0dee3",
+    "eaf6f5"
+   ],
+   "Fibbet": [
+    "1e3d66",
+    "59aed5",
+    "a2dce4",
+    "eaf6f6"
+   ],
+   "Fibwhisker": [
+    "203a6d",
+    "62a9d8",
+    "a8d9e6",
+    "eaf5f6"
+   ],
+   "Fibgrandee": [
+    "1e3c67",
+    "5badd6",
+    "a4dce4",
+    "eaf6f6"
+   ],
+   "Murmlet": [
+    "20396f",
+    "66a7d9",
+    "aad8e6",
+    "ebf5f6"
+   ],
+   "Murmuron": [
+    "203a6e",
+    "64a8d8",
+    "a9d9e6",
+    "ebf5f6"
+   ],
+   "Tallykit": [
+    "1b3f5f",
+    "4cb5d2",
+    "9be1e2",
+    "eaf6f5"
+   ],
+   "Tallywarden": [
+    "1d3d64",
+    "57afd5",
+    "a1dde4",
+    "eaf6f6"
    ]
   },
   "inkwash": {
@@ -8957,6 +9797,426 @@
     "070d19",
     "00e5ce",
     "0f203e"
+   ],
+   "Heathpip": [
+    "04050b",
+    "090c1e",
+    "00def6",
+    "131c4b"
+   ],
+   "Heathbristle": [
+    "04040c",
+    "090b1f",
+    "00dcfe",
+    "131b4e"
+   ],
+   "Heathbrand": [
+    "04050b",
+    "080c1c",
+    "00e0eb",
+    "121d47"
+   ],
+   "Tinglet": [
+    "03050a",
+    "070d19",
+    "00e5ce",
+    "0f203e"
+   ],
+   "Tinglash": [
+    "04050b",
+    "080c1d",
+    "00dfef",
+    "121d48"
+   ],
+   "Tinglewyrm": [
+    "03050a",
+    "070d19",
+    "00e5d2",
+    "10203f"
+   ],
+   "Keepling": [
+    "04050b",
+    "090c1d",
+    "00def2",
+    "121c4a"
+   ],
+   "Keepwarden": [
+    "03050a",
+    "080d1a",
+    "00e3db",
+    "101f41"
+   ],
+   "Brackenram": [
+    "03050a",
+    "070d19",
+    "00e5d2",
+    "10203f"
+   ],
+   "Saltwhistle": [
+    "03050a",
+    "070d19",
+    "00e5d2",
+    "10203f"
+   ],
+   "Flaxlet": [
+    "04050b",
+    "080c1c",
+    "00e0e8",
+    "111e46"
+   ],
+   "Flaxreel": [
+    "03050a",
+    "070d19",
+    "00e5ce",
+    "0f203e"
+   ],
+   "Flaxdowager": [
+    "04050b",
+    "090c1d",
+    "00def2",
+    "121c4a"
+   ],
+   "Simmerkit": [
+    "03050a",
+    "080d1b",
+    "00e2de",
+    "111f42"
+   ],
+   "Simmerhound": [
+    "03050a",
+    "080d1a",
+    "00e3db",
+    "101f41"
+   ],
+   "Simmerbaron": [
+    "04050b",
+    "080c1c",
+    "00e0e8",
+    "111e46"
+   ],
+   "Lockgill": [
+    "04050b",
+    "090c1d",
+    "00def2",
+    "121c4a"
+   ],
+   "Lockreeve": [
+    "04050b",
+    "090c1e",
+    "00def6",
+    "131c4b"
+   ],
+   "Pondchime": [
+    "04050b",
+    "090c1e",
+    "00def6",
+    "131c4b"
+   ],
+   "Stookhulk": [
+    "03050a",
+    "070d19",
+    "00e5ce",
+    "0f203e"
+   ],
+   "Annealet": [
+    "03050a",
+    "080d1b",
+    "00e2de",
+    "111f42"
+   ],
+   "Annealix": [
+    "03050a",
+    "070d1a",
+    "00e4d5",
+    "10203f"
+   ],
+   "Annealord": [
+    "04040c",
+    "090b1e",
+    "00ddfa",
+    "131c4c"
+   ],
+   "Sumplet": [
+    "03050a",
+    "070d19",
+    "00e5ce",
+    "0f203e"
+   ],
+   "Sumpdelver": [
+    "03050a",
+    "080d1a",
+    "00e3db",
+    "101f41"
+   ],
+   "Sumpthane": [
+    "03050a",
+    "080d1b",
+    "00e2de",
+    "111f42"
+   ],
+   "Turfkin": [
+    "04040c",
+    "090b20",
+    "0bd6ff",
+    "141a51"
+   ],
+   "Turfhulk": [
+    "03050a",
+    "080d1a",
+    "00e3db",
+    "101f41"
+   ],
+   "Flintkit": [
+    "03050a",
+    "070d1a",
+    "00e4d5",
+    "10203f"
+   ],
+   "Flintlancer": [
+    "04050b",
+    "090c1e",
+    "00def6",
+    "131c4b"
+   ],
+   "Glarelet": [
+    "03050a",
+    "070d19",
+    "00e5d2",
+    "10203f"
+   ],
+   "Glarelisk": [
+    "03050a",
+    "080d1b",
+    "00e2de",
+    "111f42"
+   ],
+   "Glaremonarch": [
+    "04040c",
+    "090b1e",
+    "00ddfa",
+    "131c4c"
+   ],
+   "Haulbug": [
+    "04040c",
+    "090b1f",
+    "00dcfe",
+    "131b4e"
+   ],
+   "Haulbeetle": [
+    "04050b",
+    "080c1c",
+    "00e1e5",
+    "111e45"
+   ],
+   "Haulbastion": [
+    "03050a",
+    "080c1b",
+    "00e2e2",
+    "111e44"
+   ],
+   "Cistlet": [
+    "04040c",
+    "090b1f",
+    "00dcfe",
+    "131b4e"
+   ],
+   "Cisternox": [
+    "03050a",
+    "080d1a",
+    "00e3d8",
+    "101f40"
+   ],
+   "Noctolabe": [
+    "03050a",
+    "080d1a",
+    "00e3db",
+    "101f41"
+   ],
+   "Grainspout": [
+    "04050b",
+    "080c1c",
+    "00e0eb",
+    "121d47"
+   ],
+   "Brumelet": [
+    "04050b",
+    "090c1d",
+    "00def2",
+    "121c4a"
+   ],
+   "Brumeshade": [
+    "03050a",
+    "070d19",
+    "00e5ce",
+    "0f203e"
+   ],
+   "Brumarch": [
+    "04040c",
+    "090b20",
+    "0bd6ff",
+    "141a51"
+   ],
+   "Zinclet": [
+    "04040c",
+    "090b1e",
+    "00ddfa",
+    "131c4c"
+   ],
+   "Zincrawler": [
+    "04040c",
+    "090b20",
+    "0bd6ff",
+    "141a51"
+   ],
+   "Zincolossus": [
+    "04040c",
+    "090b1f",
+    "05d9ff",
+    "141b4f"
+   ],
+   "Serifkit": [
+    "04050b",
+    "080c1c",
+    "00e0eb",
+    "121d47"
+   ],
+   "Serifane": [
+    "04040c",
+    "090b1f",
+    "00dcfe",
+    "131b4e"
+   ],
+   "Tangbeak": [
+    "04050b",
+    "080c1c",
+    "00e1e5",
+    "111e45"
+   ],
+   "Tangharrier": [
+    "03050a",
+    "080d1a",
+    "00e3db",
+    "101f41"
+   ],
+   "Culmlet": [
+    "04050b",
+    "080c1d",
+    "00dfef",
+    "121d48"
+   ],
+   "Culmbough": [
+    "04050b",
+    "080c1c",
+    "00e0eb",
+    "121d47"
+   ],
+   "Culmarch": [
+    "03050a",
+    "080d1a",
+    "00e3d8",
+    "101f40"
+   ],
+   "Mintlet": [
+    "04050b",
+    "090c1e",
+    "00def6",
+    "131c4b"
+   ],
+   "Mintmarker": [
+    "03050a",
+    "080d1a",
+    "00e3db",
+    "101f41"
+   ],
+   "Mintmajesty": [
+    "03050a",
+    "080d1b",
+    "00e2de",
+    "111f42"
+   ],
+   "Cornicet": [
+    "03050a",
+    "080d1a",
+    "00e3d8",
+    "101f40"
+   ],
+   "Corniceroc": [
+    "04050b",
+    "090c1d",
+    "00def2",
+    "121c4a"
+   ],
+   "Fulmenkit": [
+    "04050b",
+    "090c1d",
+    "00def2",
+    "121c4a"
+   ],
+   "Fulmenhart": [
+    "04050b",
+    "080c1c",
+    "00e0eb",
+    "121d47"
+   ],
+   "Hoistling": [
+    "03050a",
+    "070d19",
+    "00e5ce",
+    "0f203e"
+   ],
+   "Hoistheron": [
+    "04050b",
+    "080c1c",
+    "00e0eb",
+    "121d47"
+   ],
+   "Hoistgrand": [
+    "03050a",
+    "070d19",
+    "00e5ce",
+    "0f203e"
+   ],
+   "Fibbet": [
+    "03050a",
+    "080c1b",
+    "00e2e2",
+    "111e44"
+   ],
+   "Fibwhisker": [
+    "03050a",
+    "070d19",
+    "00e5d2",
+    "10203f"
+   ],
+   "Fibgrandee": [
+    "03050a",
+    "080d1a",
+    "00e3d8",
+    "101f40"
+   ],
+   "Murmlet": [
+    "04040c",
+    "090b1f",
+    "00dcfe",
+    "131b4e"
+   ],
+   "Murmuron": [
+    "03050a",
+    "080d1a",
+    "00e3d8",
+    "101f40"
+   ],
+   "Tallykit": [
+    "04050b",
+    "080c1c",
+    "00e0e8",
+    "111e46"
+   ],
+   "Tallywarden": [
+    "03050a",
+    "070d19",
+    "00e5d2",
+    "10203f"
    ]
   },
   "duskgold": {
@@ -11937,6 +13197,426 @@
     "fbd260"
    ],
    "Mirefane": [
+    "230914",
+    "b8274e",
+    "f96921",
+    "fbce73"
+   ],
+   "Heathpip": [
+    "240910",
+    "be2835",
+    "e57906",
+    "fadc31"
+   ],
+   "Heathbristle": [
+    "240911",
+    "bd283c",
+    "f07306",
+    "fad748"
+   ],
+   "Heathbrand": [
+    "240911",
+    "bc283e",
+    "f47106",
+    "fad54f"
+   ],
+   "Tinglet": [
+    "240911",
+    "bd283c",
+    "f07306",
+    "fad748"
+   ],
+   "Tinglash": [
+    "24090f",
+    "bf2933",
+    "e17b06",
+    "f9dd27"
+   ],
+   "Tinglewyrm": [
+    "230912",
+    "bb2843",
+    "f96e0b",
+    "fbd35b"
+   ],
+   "Keepling": [
+    "230913",
+    "ba2747",
+    "f96c15",
+    "fbd165"
+   ],
+   "Keepwarden": [
+    "230913",
+    "ba2747",
+    "f96c15",
+    "fbd165"
+   ],
+   "Brackenram": [
+    "240911",
+    "bc283e",
+    "f47106",
+    "fad54f"
+   ],
+   "Saltwhistle": [
+    "230913",
+    "ba2747",
+    "f96c15",
+    "fbd165"
+   ],
+   "Flaxlet": [
+    "240911",
+    "bc283e",
+    "f47106",
+    "fad54f"
+   ],
+   "Flaxreel": [
+    "230914",
+    "b8274b",
+    "f96a1d",
+    "fbcf6f"
+   ],
+   "Flaxdowager": [
+    "230914",
+    "b8274e",
+    "f96921",
+    "fbce73"
+   ],
+   "Simmerkit": [
+    "230913",
+    "ba2745",
+    "f96d10",
+    "fbd260"
+   ],
+   "Simmerhound": [
+    "240911",
+    "bd283a",
+    "ec7506",
+    "fad841"
+   ],
+   "Simmerbaron": [
+    "240911",
+    "bc283e",
+    "f47106",
+    "fad54f"
+   ],
+   "Lockgill": [
+    "240911",
+    "bd283c",
+    "f07306",
+    "fad748"
+   ],
+   "Lockreeve": [
+    "230914",
+    "b8274b",
+    "f96a1d",
+    "fbcf6f"
+   ],
+   "Pondchime": [
+    "240910",
+    "be2835",
+    "e57906",
+    "fadc31"
+   ],
+   "Stookhulk": [
+    "230912",
+    "bb2843",
+    "f96e0b",
+    "fbd35b"
+   ],
+   "Annealet": [
+    "230914",
+    "b8274b",
+    "f96a1d",
+    "fbcf6f"
+   ],
+   "Annealix": [
+    "240911",
+    "bd283c",
+    "f07306",
+    "fad748"
+   ],
+   "Annealord": [
+    "24090f",
+    "bf2933",
+    "e17b06",
+    "f9dd27"
+   ],
+   "Sumplet": [
+    "230913",
+    "ba2745",
+    "f96d10",
+    "fbd260"
+   ],
+   "Sumpdelver": [
+    "240912",
+    "bb2840",
+    "f86f06",
+    "fbd455"
+   ],
+   "Sumpthane": [
+    "230912",
+    "bb2843",
+    "f96e0b",
+    "fbd35b"
+   ],
+   "Turfkin": [
+    "230914",
+    "b8274b",
+    "f96a1d",
+    "fbcf6f"
+   ],
+   "Turfhulk": [
+    "230914",
+    "b8274b",
+    "f96a1d",
+    "fbcf6f"
+   ],
+   "Flintkit": [
+    "240910",
+    "be2835",
+    "e57906",
+    "fadc31"
+   ],
+   "Flintlancer": [
+    "230913",
+    "b92749",
+    "f96b19",
+    "fbd06a"
+   ],
+   "Glarelet": [
+    "240911",
+    "bd283c",
+    "f07306",
+    "fad748"
+   ],
+   "Glarelisk": [
+    "24090f",
+    "bf2933",
+    "e17b06",
+    "f9dd27"
+   ],
+   "Glaremonarch": [
+    "230914",
+    "b8274b",
+    "f96a1d",
+    "fbcf6f"
+   ],
+   "Haulbug": [
+    "230914",
+    "b8274b",
+    "f96a1d",
+    "fbcf6f"
+   ],
+   "Haulbeetle": [
+    "240910",
+    "be2837",
+    "e97706",
+    "fada39"
+   ],
+   "Haulbastion": [
+    "240911",
+    "bd283c",
+    "f07306",
+    "fad748"
+   ],
+   "Cistlet": [
+    "240911",
+    "bd283c",
+    "f07306",
+    "fad748"
+   ],
+   "Cisternox": [
+    "230913",
+    "ba2747",
+    "f96c15",
+    "fbd165"
+   ],
+   "Noctolabe": [
+    "240911",
+    "bd283a",
+    "ec7506",
+    "fad841"
+   ],
+   "Grainspout": [
+    "240910",
+    "be2835",
+    "e57906",
+    "fadc31"
+   ],
+   "Brumelet": [
+    "230913",
+    "ba2745",
+    "f96d10",
+    "fbd260"
+   ],
+   "Brumeshade": [
+    "230913",
+    "ba2747",
+    "f96c15",
+    "fbd165"
+   ],
+   "Brumarch": [
+    "240911",
+    "bc283e",
+    "f47106",
+    "fad54f"
+   ],
+   "Zinclet": [
+    "230913",
+    "b92749",
+    "f96b19",
+    "fbd06a"
+   ],
+   "Zincrawler": [
+    "240911",
+    "bd283a",
+    "ec7506",
+    "fad841"
+   ],
+   "Zincolossus": [
+    "240911",
+    "bd283a",
+    "ec7506",
+    "fad841"
+   ],
+   "Serifkit": [
+    "24090f",
+    "bf2933",
+    "e17b06",
+    "f9dd27"
+   ],
+   "Serifane": [
+    "240910",
+    "be2835",
+    "e57906",
+    "fadc31"
+   ],
+   "Tangbeak": [
+    "230914",
+    "b8274e",
+    "f96921",
+    "fbce73"
+   ],
+   "Tangharrier": [
+    "230912",
+    "bb2843",
+    "f96e0b",
+    "fbd35b"
+   ],
+   "Culmlet": [
+    "24090f",
+    "bf2933",
+    "e17b06",
+    "f9dd27"
+   ],
+   "Culmbough": [
+    "230913",
+    "ba2747",
+    "f96c15",
+    "fbd165"
+   ],
+   "Culmarch": [
+    "240910",
+    "be2837",
+    "e97706",
+    "fada39"
+   ],
+   "Mintlet": [
+    "230913",
+    "b92749",
+    "f96b19",
+    "fbd06a"
+   ],
+   "Mintmarker": [
+    "240910",
+    "be2837",
+    "e97706",
+    "fada39"
+   ],
+   "Mintmajesty": [
+    "230913",
+    "b92749",
+    "f96b19",
+    "fbd06a"
+   ],
+   "Cornicet": [
+    "230913",
+    "ba2745",
+    "f96d10",
+    "fbd260"
+   ],
+   "Corniceroc": [
+    "230913",
+    "b92749",
+    "f96b19",
+    "fbd06a"
+   ],
+   "Fulmenkit": [
+    "240910",
+    "be2837",
+    "e97706",
+    "fada39"
+   ],
+   "Fulmenhart": [
+    "240910",
+    "be2837",
+    "e97706",
+    "fada39"
+   ],
+   "Hoistling": [
+    "240911",
+    "bc283e",
+    "f47106",
+    "fad54f"
+   ],
+   "Hoistheron": [
+    "240910",
+    "be2835",
+    "e57906",
+    "fadc31"
+   ],
+   "Hoistgrand": [
+    "230914",
+    "b8274b",
+    "f96a1d",
+    "fbcf6f"
+   ],
+   "Fibbet": [
+    "240912",
+    "bb2840",
+    "f86f06",
+    "fbd455"
+   ],
+   "Fibwhisker": [
+    "240910",
+    "be2835",
+    "e57906",
+    "fadc31"
+   ],
+   "Fibgrandee": [
+    "230913",
+    "ba2747",
+    "f96c15",
+    "fbd165"
+   ],
+   "Murmlet": [
+    "24090f",
+    "bf2933",
+    "e17b06",
+    "f9dd27"
+   ],
+   "Murmuron": [
+    "240912",
+    "bb2840",
+    "f86f06",
+    "fbd455"
+   ],
+   "Tallykit": [
+    "230913",
+    "ba2747",
+    "f96c15",
+    "fbd165"
+   ],
+   "Tallywarden": [
     "230914",
     "b8274e",
     "f96921",
@@ -14925,6 +16605,426 @@
     "d488dc",
     "95e5dd",
     "f9ecd4"
+   ],
+   "Heathpip": [
+    "533975",
+    "dc86d0",
+    "9fdee7",
+    "f6f1c3"
+   ],
+   "Heathbristle": [
+    "4b3c7c",
+    "d687dc",
+    "95e4df",
+    "f9edd2"
+   ],
+   "Heathbrand": [
+    "5e356d",
+    "dd8ab9",
+    "b2d3ec",
+    "ecf6c1"
+   ],
+   "Tinglet": [
+    "4b3b7b",
+    "d886dc",
+    "94e4e0",
+    "f8edd1"
+   ],
+   "Tinglash": [
+    "523976",
+    "dc86d2",
+    "9edee7",
+    "f7f0c5"
+   ],
+   "Tinglewyrm": [
+    "4d3b7a",
+    "db84db",
+    "93e4e4",
+    "f8eece"
+   ],
+   "Keepling": [
+    "593671",
+    "dd88c5",
+    "aad8ea",
+    "f3f5b7"
+   ],
+   "Keepwarden": [
+    "4b3c7c",
+    "d687dc",
+    "95e4df",
+    "f9edd2"
+   ],
+   "Brackenram": [
+    "5e356d",
+    "dd8ab9",
+    "b2d3ec",
+    "ecf6c1"
+   ],
+   "Saltwhistle": [
+    "4c3b7b",
+    "d986dc",
+    "94e4e2",
+    "f8edd0"
+   ],
+   "Flaxlet": [
+    "4d3b7a",
+    "db84db",
+    "93e4e4",
+    "f8eece"
+   ],
+   "Flaxreel": [
+    "5e356d",
+    "dd8ab9",
+    "b2d3ec",
+    "ecf6c1"
+   ],
+   "Flaxdowager": [
+    "5d356e",
+    "dd8abc",
+    "b1d4eb",
+    "eef6bf"
+   ],
+   "Simmerkit": [
+    "5f346d",
+    "dd8ab8",
+    "b3d2ec",
+    "ecf6c2"
+   ],
+   "Simmerhound": [
+    "593671",
+    "dd88c5",
+    "aad8ea",
+    "f3f5b7"
+   ],
+   "Simmerbaron": [
+    "593671",
+    "dd88c3",
+    "abd7ea",
+    "f2f5b9"
+   ],
+   "Lockgill": [
+    "573772",
+    "dc88c7",
+    "a8d9e9",
+    "f4f4b5"
+   ],
+   "Lockreeve": [
+    "60346b",
+    "dd8bb4",
+    "b6d1ed",
+    "eaf7c4"
+   ],
+   "Pondchime": [
+    "503a78",
+    "dc85d7",
+    "98e1e5",
+    "f8efcb"
+   ],
+   "Stookhulk": [
+    "463d7f",
+    "cf8add",
+    "97e5d8",
+    "f9ebd7"
+   ],
+   "Annealet": [
+    "483d7e",
+    "d289dd",
+    "96e5da",
+    "f9ecd6"
+   ],
+   "Annealix": [
+    "543875",
+    "dc86cf",
+    "a1dde7",
+    "f6f1c2"
+   ],
+   "Annealord": [
+    "463d7f",
+    "cf8add",
+    "97e5d8",
+    "f9ebd7"
+   ],
+   "Sumplet": [
+    "523976",
+    "dc86d2",
+    "9edee7",
+    "f7f0c5"
+   ],
+   "Sumpdelver": [
+    "483d7e",
+    "d289dd",
+    "96e5da",
+    "f9ecd6"
+   ],
+   "Sumpthane": [
+    "503a78",
+    "dc85d7",
+    "98e1e5",
+    "f8efcb"
+   ],
+   "Turfkin": [
+    "5f346c",
+    "dd8bb7",
+    "b4d2ec",
+    "ebf6c3"
+   ],
+   "Turfhulk": [
+    "5b366f",
+    "dd89bf",
+    "aed5eb",
+    "f0f5bc"
+   ],
+   "Flintkit": [
+    "60346b",
+    "dd8bb4",
+    "b6d1ed",
+    "eaf7c4"
+   ],
+   "Flintlancer": [
+    "593671",
+    "dd88c3",
+    "abd7ea",
+    "f2f5b9"
+   ],
+   "Glarelet": [
+    "4d3b7a",
+    "da85dc",
+    "94e4e3",
+    "f8edcf"
+   ],
+   "Glarelisk": [
+    "573773",
+    "dc88c9",
+    "a7d9e9",
+    "f5f4b7"
+   ],
+   "Glaremonarch": [
+    "503a78",
+    "dc85d7",
+    "98e1e5",
+    "f8efcb"
+   ],
+   "Haulbug": [
+    "5b3670",
+    "dd89c1",
+    "add6ea",
+    "f0f5bb"
+   ],
+   "Haulbeetle": [
+    "513977",
+    "dc86d5",
+    "9be0e6",
+    "f7efc8"
+   ],
+   "Haulbastion": [
+    "60346b",
+    "dd8bb4",
+    "b6d1ed",
+    "eaf7c4"
+   ],
+   "Cistlet": [
+    "5f346c",
+    "dd8bb7",
+    "b4d2ec",
+    "ebf6c3"
+   ],
+   "Cisternox": [
+    "4b3c7c",
+    "d687dc",
+    "95e4df",
+    "f9edd2"
+   ],
+   "Noctolabe": [
+    "5d356e",
+    "dd8aba",
+    "b1d3ec",
+    "edf6c0"
+   ],
+   "Grainspout": [
+    "4b3c7c",
+    "d687dc",
+    "95e4df",
+    "f9edd2"
+   ],
+   "Brumelet": [
+    "553874",
+    "dc87cc",
+    "a3dbe8",
+    "f6f2be"
+   ],
+   "Brumeshade": [
+    "523976",
+    "dc86d3",
+    "9ddfe6",
+    "f7f0c7"
+   ],
+   "Brumarch": [
+    "543874",
+    "dc87ce",
+    "a2dce8",
+    "f6f1c0"
+   ],
+   "Zinclet": [
+    "543874",
+    "dc87ce",
+    "a2dce8",
+    "f6f1c0"
+   ],
+   "Zincrawler": [
+    "60346c",
+    "dd8bb5",
+    "b5d2ec",
+    "ebf7c4"
+   ],
+   "Zincolossus": [
+    "563773",
+    "dc87ca",
+    "a5dae9",
+    "f5f3ba"
+   ],
+   "Serifkit": [
+    "523976",
+    "dc86d2",
+    "9edee7",
+    "f7f0c5"
+   ],
+   "Serifane": [
+    "4e3a79",
+    "db85da",
+    "95e3e5",
+    "f8eecd"
+   ],
+   "Tangbeak": [
+    "513977",
+    "dc86d5",
+    "9be0e6",
+    "f7efc8"
+   ],
+   "Tangharrier": [
+    "483d7e",
+    "d289dd",
+    "96e5da",
+    "f9ecd6"
+   ],
+   "Culmlet": [
+    "563874",
+    "dc87cb",
+    "a4dbe8",
+    "f5f3bc"
+   ],
+   "Culmbough": [
+    "503a78",
+    "dc85d7",
+    "98e1e5",
+    "f8efcb"
+   ],
+   "Culmarch": [
+    "573773",
+    "dc88c9",
+    "a7d9e9",
+    "f5f4b7"
+   ],
+   "Mintlet": [
+    "5d356e",
+    "dd8aba",
+    "b1d3ec",
+    "edf6c0"
+   ],
+   "Mintmarker": [
+    "4c3b7b",
+    "d986dc",
+    "94e4e2",
+    "f8edd0"
+   ],
+   "Mintmajesty": [
+    "463d7f",
+    "cf8add",
+    "97e5d8",
+    "f9ebd7"
+   ],
+   "Cornicet": [
+    "593671",
+    "dd88c3",
+    "abd7ea",
+    "f2f5b9"
+   ],
+   "Corniceroc": [
+    "563773",
+    "dc87ca",
+    "a5dae9",
+    "f5f3ba"
+   ],
+   "Fulmenkit": [
+    "4a3c7c",
+    "d587dc",
+    "95e5de",
+    "f9ecd3"
+   ],
+   "Fulmenhart": [
+    "533975",
+    "dc86d0",
+    "9fdee7",
+    "f6f1c3"
+   ],
+   "Hoistling": [
+    "563773",
+    "dc87ca",
+    "a5dae9",
+    "f5f3ba"
+   ],
+   "Hoistheron": [
+    "5b3670",
+    "dd89c1",
+    "add6ea",
+    "f0f5bb"
+   ],
+   "Hoistgrand": [
+    "483d7e",
+    "d289dd",
+    "96e5da",
+    "f9ecd6"
+   ],
+   "Fibbet": [
+    "483c7d",
+    "d389dd",
+    "96e5db",
+    "f9ecd5"
+   ],
+   "Fibwhisker": [
+    "523976",
+    "dc86d2",
+    "9edee7",
+    "f7f0c5"
+   ],
+   "Fibgrandee": [
+    "593671",
+    "dd88c3",
+    "abd7ea",
+    "f2f5b9"
+   ],
+   "Murmlet": [
+    "543874",
+    "dc87ce",
+    "a2dce8",
+    "f6f1c0"
+   ],
+   "Murmuron": [
+    "503a78",
+    "dc85d6",
+    "9ae1e6",
+    "f7efc9"
+   ],
+   "Tallykit": [
+    "5b366f",
+    "dd89bf",
+    "aed5eb",
+    "f0f5bc"
+   ],
+   "Tallywarden": [
+    "513977",
+    "dc86d5",
+    "9be0e6",
+    "f7efc8"
    ]
   }
  }
