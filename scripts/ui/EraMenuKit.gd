@@ -195,6 +195,10 @@ static func draw_party_row(b: Button, s: Spirling, leader: bool, index: int, lay
 class ClockStrip extends HBoxContainer:
 	var label: Label
 	var _icon: PhaseIcon
+	var _sky: WeatherIcon
+	var _sky_holder: Control
+	var _sky_id: String = ""
+	var _sky_map: MapData
 	var _t: float = 0.0
 
 	func _ready() -> void:
@@ -206,6 +210,14 @@ class ClockStrip extends HBoxContainer:
 		_icon = PhaseIcon.new()
 		holder.add_child(_icon)
 		_icon.position = Vector2(1, 1)
+		# The sky over the Wayfarer's map, next to the time of day (nothing when it is clear).
+		_sky_holder = Control.new()
+		_sky_holder.custom_minimum_size = Vector2(10, 9)
+		add_child(_sky_holder)
+		_sky = WeatherIcon.new()
+		_sky_holder.add_child(_sky)
+		_sky.position = Vector2(0, 1)
+		_sky.ink = UITheme.MID
 		label = Label.new()
 		label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 		label.add_theme_color_override("font_color", UITheme.MID)
@@ -219,6 +231,12 @@ class ClockStrip extends HBoxContainer:
 		label.text = EraMenus.clock_now()
 		_icon.phase = DayCycle.current()
 		_icon.queue_redraw()
+		if GameState.current_map != _sky_id:
+			# The map is read once per place, not every second.
+			_sky_id = GameState.current_map
+			_sky_map = MapData.load_map(_sky_id) if FileAccess.file_exists(MapData.DIR + str(MapData.split_id(_sky_id)[0]) + ".json") else null
+		_sky.show_for(_sky_map)
+		_sky_holder.visible = _sky.visible
 
 	func _process(delta: float) -> void:
 		_t += delta

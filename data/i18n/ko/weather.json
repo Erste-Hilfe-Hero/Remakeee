@@ -1,0 +1,15 @@
+{
+ "_comment": "Translations of the German table weather, written by tools/i18n/locales_weather.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Ash fall": "재비",
+  "Downpour": "폭우",
+  "Drizzle": "이슬비",
+  "Gale": "강풍",
+  "How much rain, snow and fog is drawn. Low is easier on old phones. Off: only the light changes.": "비와 눈, 안개를 얼마나 그릴지 정한다. 적게는 오래된 휴대폰에 부담이 적다. 끔: 빛만 바뀐다.",
+  "Later: %s": "나중: %s",
+  "Low": "적게",
+  "Snow": "눈",
+  "Thick fog": "짙은 안개",
+  "Weather effects: %s": "날씨 효과: %s"
+ }
+}

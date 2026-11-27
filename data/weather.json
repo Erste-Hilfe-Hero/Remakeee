@@ -14,5 +14,38 @@
   "rain": {"field": "high_tide", "intro": "Rain lashes the field. Tide arts surge, Ember arts fizzle, and nothing catches fire."},
   "fog": {"field": "deep_murk", "intro": "Fog swallows the light. Umbra arts deepen, Lumen arts dim."},
   "storm": {"field": "static_veil", "intro": "Thunder rolls overhead. Volt arts snap harder, Stone arts crumble."}
+ },
+ "_grades": "Strength of a weather kind (WeatherCycle.strength, one more roll per region and 6-hour block, so it is the same for everyone). The first row whose upto is not below the strength names the grade; amount scales how much falls or drifts. Grades change the look and the name only: the kind (and so the battle field and the wild boost) stays.",
+ "grades": {
+  "rain": [{"id": "drizzle", "upto": 0.35, "amount": 0.45}, {"id": "rain", "upto": 0.8, "amount": 1.0}, {"id": "downpour", "upto": 1.0, "amount": 1.5}],
+  "fog": [{"id": "fog", "upto": 0.65, "amount": 1.0}, {"id": "thick_fog", "upto": 1.0, "amount": 1.5}],
+  "wind": [{"id": "wind", "upto": 0.7, "amount": 1.0}, {"id": "gale", "upto": 1.0, "amount": 1.5}],
+  "storm": [{"id": "storm", "upto": 1.0, "amount": 1.0}]
+ },
+ "_names": "English names for Loc.t: grades, kinds and the looks of data/era_light.json.",
+ "names": {"clear": "Clear", "drizzle": "Drizzle", "rain": "Rain", "downpour": "Downpour", "fog": "Fog", "thick_fog": "Thick fog", "wind": "Wind", "gale": "Gale", "storm": "Storm", "snow": "Snow", "sandstorm": "Sandstorm", "ash": "Ash fall"},
+ "_fx": "How the weather is drawn (WeatherFx, called by EraLightLayer). fade_seconds: one weather glides into the next. density: share of the drops per 'Weather effects' level (off draws none). Counts are for a 144x256 screen and grow with the screen area up to max_area_scale. puddles: seconds to form in rain and to dry after it, share of path and grass cells that can hold one. rainbow_seconds: how long after rain a rainbow stands by day. thunder: the sound after a lightning flash. looks: rain, storm and snow layers are [count, length or size in px, x speed, y speed] from far to near; fog banks are [count, speed, alpha] from far to near; veil is the alpha of the flat cloud veil. eras: the colours of each era (rrggbbaa); Era I takes the four inks of the region instead and moves in steps.",
+ "fx": {
+  "fade_seconds": 5.0,
+  "density": {"full": 1.0, "low": 0.5, "off": 0.0},
+  "base_area": 36864,
+  "max_area_scale": 2.6,
+  "puddles": {"form_seconds": 45, "dry_seconds": 600, "path_share": 0.1, "grass_share": 0.03},
+  "rainbow_seconds": 600,
+  "thunder": {"sfx": "rumble", "delay_min": 0.35, "delay_max": 1.4, "db": -5.0, "pitch_min": 0.85, "pitch_max": 1.1},
+  "looks": {
+   "rain": {"layers": [[60, 5, -50, 150], [30, 8, -72, 215], [10, 11, -96, 290]], "splashes": 26, "veil": 0.07, "clouds": 0.09},
+   "storm": {"layers": [[84, 5, -96, 190], [44, 9, -136, 270], [16, 13, -180, 360]], "splashes": 36, "veil": 0.15, "clouds": 0.13},
+   "snow": {"layers": [[40, 1, -5, 16], [26, 1, -8, 26], [12, 2, -12, 38]], "sway": 4, "veil": 0.1},
+   "fog": {"banks": [[4, 3.0, 0.55], [4, 6.0, 0.75], [3, 10.0, 0.95]], "veil": 0.14},
+   "wind": {"streaks": 12, "leaves": 12, "speed": 150}
+  },
+  "eras": {
+   "1": {"inks": true, "step_fps": 12, "depths": 2, "soft": false},
+   "2": {"depths": 2, "soft": false, "rain": ["7c98dcff", "c8dcffff", "ffffffff"], "splash": "e8f0ffff", "ripple": "d8e8ffff", "fog": "f2f4f8", "fog_alpha": 0.5, "veil": "24345c", "puddle": "4868a8c0", "puddle_rim": "2c4478c0", "shine": "d8e8ffff", "snow": ["c8d4ecff", "f0f4ffff", "ffffffff"], "streak": "ffffffc0", "leaf": ["d0782c", "8a5a2a", "b8a03c"], "gust": "e8ffc8b0", "cloud": "10183c"},
+   "3": {"depths": 3, "soft": true, "rain": ["a8bceca0", "ccdcfcd0", "f0f6fff4"], "splash": "e4eeffe0", "ripple": "d6e6ffc0", "fog": "eef0f6", "fog_alpha": 0.36, "veil": "1c2850", "puddle": "34507e90", "puddle_rim": "1c2c4c90", "shine": "c8dcffc0", "snow": ["c8d4ec90", "eef2ffd0", "fffffff2"], "streak": "ffffff80", "leaf": ["c8742c", "86582a", "b09a3c"], "gust": "dcf8b890", "cloud": "0c1434"},
+   "4": {"depths": 3, "soft": true, "rain": ["aac0eea0", "d0e0fcd0", "f2f8fff4"], "splash": "e6f0ffe0", "ripple": "d8e8ffc0", "fog": "f0f2f8", "fog_alpha": 0.36, "veil": "1c2850", "puddle": "36548490", "puddle_rim": "1e304e90", "shine": "cce0ffc8", "snow": ["d4def4b0", "f4f7ffe6", "ffffffff"], "streak": "ffffff80", "leaf": ["d0782c", "8a5a2a", "b8a03c"], "gust": "e0fac090", "cloud": "0c1434"},
+   "5": {"depths": 3, "soft": true, "rain": ["aec4f098", "d2e2fcc8", "f4f9fff0"], "splash": "e8f2ffe0", "ripple": "dcecffc0", "fog": "f2f4fa", "fog_alpha": 0.34, "veil": "1a264c", "puddle": "38588a88", "puddle_rim": "20325088", "shine": "d0e4ffc8", "snow": ["d4def4b0", "f4f7ffe6", "ffffffff"], "streak": "ffffff78", "leaf": ["d0782c", "8a5a2a", "b8a03c"], "gust": "e4fcc488", "cloud": "0a1230"}
+  }
  }
 }
