@@ -115,7 +115,7 @@ func mode_line() -> String:
 	var names: PackedStringArray = []
 	for e: Variant in loan.get("team", []):
 		names.append(str((e as Dictionary).get("species", "")))
-	return Loc.t("Loan-team week: everyone fights with %s at ring %d.") % [", ".join(names), int(loan.get("ring", level))]
+	return Loc.f("Loan-team week: everyone fights with %s at ring %d.", [", ".join(names), int(loan.get("ring", level))])
 
 ## The echo team for round [param i]; the same for everyone in the same week.
 func team(i: int) -> Array[Spirling]:

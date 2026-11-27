@@ -1,0 +1,38 @@
+{
+ "name": "Freight Office",
+ "region": "ashmere",
+ "biome": "town",
+ "backdrop": "ember",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCCCCCCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCCffffCCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 8,
+   "to": "ashmere_station",
+   "tx": 7,
+   "ty": 11,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "odo_freight",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "map_pass/station_freight_odo_freight",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

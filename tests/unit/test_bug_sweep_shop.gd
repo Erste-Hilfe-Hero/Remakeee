@@ -63,6 +63,10 @@ func _given(o: Dictionary, choice: String) -> Dictionary:
 	var out: Dictionary = {}
 	if shop.balance_of(uid) != balance:
 		_add(out, "rg", shop.balance_of(uid) - balance)
+	# Monthly Card (step 7): the Riftglass a day it pays, once per card bought.
+	for k: String in shop._cards(uid):
+		_add(out, "card:" + k, int(shop._cards(uid)[k].daily))
+	shop._cards(uid).clear()
 	for k: String in st.unlocks:
 		if int(st.unlocks[k]) != int(unlocks.get(k, 0)):
 			_add(out, "unlock:" + k, int(st.unlocks[k]) - int(unlocks.get(k, 0)))
@@ -96,6 +100,9 @@ func test_every_offer_hands_over_exactly_what_it_shows() -> void:
 		var options: Array = o.get("choice", []) if o.get("choice") is Array else []
 		var choice: String = str(options[0]) if not options.is_empty() else ""
 		var shown: Dictionary = _shown(o)
+		# The first purchase of a Riftglass tier adds its base once more (step 7, named in its text).
+		if ShopCatalog.first_buy_extra(o) > 0:
+			_add(shown, "rg", ShopCatalog.first_buy_extra(o))
 		assert_eq(_given(o, choice), shown, "%s: handed over = shown" % o.id)
 		if str(o.get("store_type", "")) != "subscription":
 			assert_false(shown.is_empty(), "%s shows something" % o.id)

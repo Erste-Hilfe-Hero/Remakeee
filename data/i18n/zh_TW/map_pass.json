@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table map_pass, written by tools/i18n/locales_map_pass.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Clerk Odo: Crates go up the mountain full of plates and come down full of soot.": "文書歐多：箱子裝滿版子上山，裝滿煤灰下山。",
+  "Clerk Odo: I weigh both. The soot is heavier. Nobody believes me.": "文書歐多：兩樣我都秤過。煤灰更重。沒人信我。",
+  "Engraver Mira: A plate takes a year to cut and a second to drop. I have not dropped one. Yet.": "雕版師米拉：刻一塊版要一年，摔掉只要一秒。我還沒摔過一塊。暫時。",
+  "Engraver Mira: Halvard says my lines are too soft. Halvard says that to everyone.": "雕版師米拉：哈爾瓦德說我的線條太軟。哈爾瓦德對誰都這麼說。",
+  "Engraver's Workshop": "雕版師工坊",
+  "Freight Office": "貨運處",
+  "Lamp Room": "燈房",
+  "Lampwright Ines: A train in fog finds the station by my wicks. Trim them and you trim the timetable.": "製燈匠伊內絲：霧裡的火車靠我的燈芯找到車站。剪短燈芯，就剪短了時刻表。",
+  "Lampwright Ines: Every lamp on the platform is mine. The smoke is the stack's.": "製燈匠伊內絲：月台上每一盞燈都是我做的。煙是煙囪的。",
+  "Pointsman Ulf: Porridge works best. Do not tell the guild.": "扳道工烏爾夫：粥最管用。別告訴公會。",
+  "Pointsman Ulf: The points freeze every winter. I thaw them with my breakfast.": "扳道工烏爾夫：道岔每年冬天都會凍住。我用早飯把它們化開。",
+  "Pointsman's House": "扳道工之家"
+ }
+}

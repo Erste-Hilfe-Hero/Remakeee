@@ -10,6 +10,9 @@ Reads tools/art/lines/<region>.py (the same specs tools/art/gen_lines.py draws f
   - adds the sprites to docs/ASSET_LOG.md.
 Run: python3 tools/build_lines.py <region>
 A spec may set ERA, RINGS, ACT and ART_TOOL (the Era III post-game region Quillmarch does).
+An add-on batch (tools/art/lines/<region>_more.py, release 1.3.2) names its REGION: its kinds keep
+the Spirlog numbers they already have and new ones go after the last number, so the kinds of every
+other region keep theirs; its German texts go to tools/i18n/de_lines_<module>.py.
 """
 import hashlib
 import importlib
@@ -157,7 +160,7 @@ def build_species(region, line, pools):
             "role": line["role"],
             "line_id": line["id"],
             "era": line["_era"],
-            "base": stats(line["role"], round((TOTALS[n][i] + (seed % 11) - 5) * line.get("power", 1.0)), seed),
+            "base": stats(line["role"], line.get("_set", {}).get(name) or round((TOTALS[n][i] + (seed % 11) - 5) * line.get("power", 1.0)), seed),
             "trait": line["_trait"],
             "learnset": learnset(line, stage, n, pools, name),
             "bond_rate": round(lo + (hi - lo) * ((seed >> 8) % 5) / 4, 2),
@@ -236,8 +239,9 @@ def sync_slots(mod, enc):
     path = os.path.join(ROOT, mod.SLOTS)
     text = open(path, encoding="utf-8").read()
     sheet = json.loads(text)
+    tables = set(getattr(mod, "ENCOUNTERS", {})) | set(getattr(mod, "ENCOUNTERS_ADD", {}))
     for r in sheet["routes"]:
-        if r["id"] not in mod.ENCOUNTERS:
+        if r["id"] not in tables:
             continue
         spawns = enc[r["id"]]["spawns"]
         for s in spawns:
@@ -255,9 +259,15 @@ def sync_slots(mod, enc):
         f.write(text)
 
 
+# Lowest encounter weight of each rarity (test_spirling_data: common 25-45, uncommon 10-24, shy 2-9).
+WEIGHT_MIN = {"common": 25, "uncommon": 10, "shy": 2}
+
+
 def main():
-    region = sys.argv[1]
-    mod = importlib.import_module(region)
+    modname = sys.argv[1]
+    mod = importlib.import_module(modname)
+    region = getattr(mod, "REGION", modname)
+    addon = hasattr(mod, "REGION")
     species = load("data/spirlings.json")
     moves = load("data/moves.json")
     names = {n for line in mod.LINES for n in line["names"]}
@@ -268,25 +278,34 @@ def main():
             sys.exit("name %s is already used" % n)
     kept = [s for s in species if s["name"] not in names and not (s.get("line_id") in ids and s.get("region") == region)]
     kept.sort(key=lambda s: s["dex_id"])
-    for i, s in enumerate(kept):
-        s["dex_id"] = i + 1
+    old_ids = {s["name"]: s["dex_id"] for s in species}
+    if not addon:
+        for i, s in enumerate(kept):
+            s["dex_id"] = i + 1
     pools = move_pools(kept, moves, getattr(mod, "ERA", 1))
     pick_traits(region, mod.LINES, kept)
-    nxt = len(kept) + 1
+    nxt = (max(s["dex_id"] for s in kept) if addon else len(kept)) + 1
     for line in mod.LINES:
         line["_texts"] = mod.TEXTS
         line["_habitat"] = mod.HABITAT[line["id"]]
         # Post-game era regions set their own era, rings and art tool (tools/art/lines/quillmarch.py).
         line["_era"] = getattr(mod, "ERA", 1)
+        # TOTALS_SET pins a kind's stat total (placed by type_sim so older kinds stay in the gate); the tuner skips it.
+        line["_set"] = getattr(mod, "TOTALS_SET", {})
         line["_rings"] = getattr(mod, "RINGS", None) or RINGS[region]
         for sp in build_species(region, line, pools):
+            if addon and sp["name"] in old_ids:
+                kept.append(dict({"dex_id": old_ids[sp["name"]]}, **sp))
+                continue
             kept.append(dict({"dex_id": nxt}, **sp))
             nxt += 1
+    kept.sort(key=lambda s: s["dex_id"])
     if "--no-tune" not in sys.argv:
         # Lines with a hand-set "power" were placed by the full Godot sim and keep their totals.
         # A spec may set its own window (TUNE_BAND: a pair, or {stage: pair, "default": pair}) so its
         # kinds do not push older ones out of the 40-60 % gate.
-        tune(region, kept, [n for line in mod.LINES if "power" not in line for n in line["names"]],
+        pinned = getattr(mod, "TOTALS_SET", {})
+        tune(region, kept, [n for line in mod.LINES if "power" not in line for n in line["names"] if n not in pinned],
              band=getattr(mod, "TUNE_BAND", (0.45, 0.55)))
     with open(os.path.join(ROOT, "data/spirlings.json"), "w", encoding="utf-8") as f:
         json.dump(kept, f, ensure_ascii=False, indent=1)
@@ -316,7 +335,13 @@ def main():
         lo = min(int(s["min"]) for s in old)
         hi = max(int(s["max"]) for s in old)
         used = {"common": 1, "uncommon": 1, "shy": 1}
-        enc[table]["spawns"] = old + [spawn(n, g, k, lo, hi, used) for k, (n, g) in enumerate(rows)]
+        add = [spawn(n, g, k, lo, hi, used) for k, (n, g) in enumerate(rows)]
+        # Newcomers take the lowest weight of their rarity band, so a table's own kinds stay the ones
+        # a player meets and bonds first; the route sim (scripts/core/ActSim.gd) bonds by weight and
+        # would otherwise build its reference team from the add-on kinds.
+        for s in add:
+            s["weight"] = WEIGHT_MIN[rarity[s["species"]]]
+        enc[table]["spawns"] = old + add
     if getattr(mod, "SLOTS", None):
         sync_slots(mod, enc)
     with open(os.path.join(ROOT, "data/encounters.json"), "w", encoding="utf-8") as f:
@@ -330,9 +355,9 @@ def main():
         for n in line["names"]:
             le, oe, ld, od = mod.TEXTS[n]
             T[le], T[oe] = ld, od
-    with open(os.path.join(ROOT, "tools/i18n/de_lines_%s.py" % region), "w", encoding="utf-8") as f:
+    with open(os.path.join(ROOT, "tools/i18n/de_lines_%s.py" % modname), "w", encoding="utf-8") as f:
         f.write("# German texts for the %s lines (tools/art/lines/%s.py). Written by tools/build_lines.py.\n"
-                % (region.capitalize(), region))
+                % (region.capitalize(), modname))
         f.write("T = {\n")
         for k, v in T.items():
             f.write("%s: %s,\n" % (json.dumps(k, ensure_ascii=False), json.dumps(v, ensure_ascii=False)))
@@ -349,7 +374,8 @@ def main():
             p = "art/era%d/spirlings/%s_%s.png" % (era, n.lower(), side)
             if p not in log:
                 add.append("| %s | Claude (AI) for Ali | Generated by %s (original Spirling line, %s) "
-                           "| Owned by the project, no third-party input | 2026-11-12 |" % (p, tool, region.capitalize()))
+                           "| Owned by the project, no third-party input | %s |" % (p, tool, region.capitalize(),
+                                                                                    getattr(mod, "LOGGED", "2026-11-12")))
     if add:
         with open(log_path, "a", encoding="utf-8") as f:
             if not log.endswith("\n"):
@@ -358,9 +384,10 @@ def main():
     doc_path = os.path.join(ROOT, "docs/SPIRLINGS.md")
     doc = open(doc_path, encoding="utf-8").read()
     acts = {"veydal": "Act I", "corvane": "Act II", "ashmere": "Act III", "solenne": "Act IV"}
-    rows = ["<!-- lines:%s -->" % region,
-            "## %s lines (%s, tools/art/lines/%s.py)" % (region.capitalize(), getattr(mod, "ACT", None) or acts[region], region), "",
-            "Owner rule: every story act has 70 own Spirlings. Drawn by %s from one base form "
+    rows = ["<!-- lines:%s -->" % modname,
+            "## %s lines%s (%s, tools/art/lines/%s.py)" % (region.capitalize(), getattr(mod, "BATCH", ""),
+                                                          getattr(mod, "ACT", None) or acts[region], modname), "",
+            getattr(mod, "NOTE", "Owner rule: every story act has 70 own Spirlings.") + " Drawn by %s from one base form "
             "per line, data by tools/build_lines.py." % tool, "",
             "| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |", "| --- | --- | --- | --- | --- | --- | --- | --- |"]
     for sp in kept:
@@ -369,9 +396,9 @@ def main():
             rows.append("| %d | %s | %s | %s | %s | %s | %d | %s |" % (
                 sp["dex_id"], sp["name"], "/".join(e.capitalize() for e in sp["elements"]), sp["rarity"], sp["role"],
                 sp["trait"], sum(sp["base"].values()), "%s (ring %d)" % (u[0]["to"], u[0]["value"]) if u else "-"))
-    rows.append("<!-- /lines:%s -->" % region)
+    rows.append("<!-- /lines:%s -->" % modname)
     block = "\n".join(rows) + "\n"
-    start, end = "<!-- lines:%s -->" % region, "<!-- /lines:%s -->\n" % region
+    start, end = "<!-- lines:%s -->" % modname, "<!-- /lines:%s -->\n" % modname
     if start in doc:
         doc = doc[:doc.index(start)] + block + doc[doc.index(end) + len(end):]
     else:

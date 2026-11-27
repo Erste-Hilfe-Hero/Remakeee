@@ -528,6 +528,12 @@ static func single_layout(era: int, field: Vector2, foe_sprite: Rect2, player_sp
 		out["player_team"] = Rect2(MARGIN, h - MARGIN - ppad[3] - ph - ppad[1] - 3 - row.y, row.x, row.y)
 		var gy: float = foe_sprite.end.y + 2
 		out["goal"] = Rect2(MARGIN, gy, player_sprite.position.x - MARGIN - 2, maxf(float(out.player_team.position.y) - 2 - gy, 0.0))
+		if out.goal.size.y < line_h(era):
+			# A field too short for a line between the foe and the player's team row (finger-sized
+			# commands on a 16:9 phone, update 1.3.2): the turn count stands right of the foe, left
+			# of the small buttons.
+			var gx: float = foe_sprite.end.x + 2
+			out["goal"] = Rect2(gx, by, maxf(buttons[0].position.x - 2 - gx, 0.0), b.y)
 	out["foe_sprite"] = foe_sprite
 	out["player_sprite"] = player_sprite
 	out["buttons"] = buttons

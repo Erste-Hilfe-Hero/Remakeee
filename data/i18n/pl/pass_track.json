@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table pass_track, written by tools/i18n/locales_pass_track.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d of %d pass points": "%d z %d punktów karnetu",
+  "%d premium rewards reached and waiting.": "Osiągnięte nagrody premium czekają: %d.",
+  "Free:": "Za darmo:",
+  "Free: %s": "Za darmo: %s",
+  "Locked: needs the Wayfarer Pass.": "Zablokowana: wymaga Karnetu Wędrowca.",
+  "Opens the premium row of every step.": "Otwiera rząd premium każdego etapu.",
+  "Pass track": "Ścieżka karnetu",
+  "Premium (Wayfarer Pass):": "Premium (Karnet Wędrowca):",
+  "Premium row: Wayfarer Pass": "Rząd premium: Karnet Wędrowca",
+  "Premium: %s": "Premium: %s",
+  "Reached at %d pass points.": "Osiągana przy %d punktach karnetu.",
+  "Ready to take.": "Gotowa do odebrania.",
+  "Something went wrong. Try again in a moment.": "Coś poszło nie tak. Spróbuj za chwilę.",
+  "Step %d": "Etap %d",
+  "Step %d of %d": "Etap %d z %d",
+  "Step %d: %s": "Etap %d: %s",
+  "Take all rewards (%d)": "Weź wszystkie nagrody (%d)",
+  "Take the free reward": "Weź darmową nagrodę",
+  "Take the premium reward": "Weź nagrodę premium",
+  "Taken.": "Odebrana.",
+  "The premium row needs the Wayfarer Pass.": "Rząd premium wymaga Karnetu Wędrowca.",
+  "Top row: free for everyone. Bottom row: with the Wayfarer Pass. Pass points come from battles won (%d), bonds (%d) and daily tasks (%d), up to %d a day.": "Górny rząd: za darmo dla wszystkich. Dolny rząd: z Karnetem Wędrowca. Punkty karnetu dają wygrane walki (%d), więzi (%d) i zadania dnia (%d), do %d dziennie.",
+  "You got:": "Otrzymano:",
+  "ends in %s": "koniec za %s"
+ }
+}

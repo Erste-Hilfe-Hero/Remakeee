@@ -162,6 +162,10 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	# The era's list layout (EraMenus): plain lists take the era's base, screens their own.
 	var lay: Dictionary = _next_layout if not _next_layout.is_empty() else EraMenus.layout(EraManager.active_era())
 	_next_layout = {}
+	if min_row > 0:
+		lay = lay.duplicate()
+		lay["row_h"] = maxi(int(lay.get("row_h", ListPicker.ROW_HEIGHT)), min_row)
+		lay["back_size"] = maxi(ListPicker.BACK_SIZE, min_row)
 	picker.layout = lay
 	last_layout = lay
 	var r: int = await picker.pick(title, entries, cancellable, focus, guard_ms, tabs, tab)
@@ -169,6 +173,9 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	return r
 
 var _next_layout: Dictionary = {}
+## Smallest list row and Back button in pixels (0 = the era's own). The shop, the pass track and
+## the Riftglass questions raise it to a finger's size (ShopZoom).
+var min_row: int = 0
 ## The layout of the list shown last (tests).
 var last_layout: Dictionary = {}
 ## Screens opened through pick_screen so far, newest last (tests).
@@ -204,8 +211,9 @@ func title_lines(title: String) -> int:
 	# A list not laid out yet has a stale, narrow title; a status line then counted as many
 	# lines and popped up first (Chimora 100, item 51).
 	if w < 8.0 or not picker.is_visible_in_tree():
-		w = get_viewport_rect().size.x - PANEL_MARGIN * 2.0 - ListPicker.BACK_SIZE - 12.0
-	var f: Font = UITheme.font()
+		w = get_viewport_rect().size.x - PANEL_MARGIN * 2.0 - maxi(ListPicker.BACK_SIZE, min_row) - 12.0
+	# The font this host draws with (a zoomed shop view has its own, ShopZoom).
+	var f: Font = get_theme_default_font()
 	var line_h: float = f.get_height(UITheme.FONT_SIZE)
 	var h: float = f.get_multiline_string_size(Loc.t(title), HORIZONTAL_ALIGNMENT_LEFT, w, UITheme.FONT_SIZE).y
 	return int(ceil(h / maxf(line_h, 1.0) - 0.01))
@@ -447,6 +455,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"language": "English or Deutsch.",
 	"day_night": "The light changes with the time of day.",
 	"weather": "Rain, fog and wind in the world. Off: always clear.",
+	"weather_fx": "How much rain, snow and fog is drawn. Low is easier on old phones. Off: only the light changes.",
 	"minimap": "Small map in the top corner. Outside only: hidden in houses and caves.",
 	"pad_size": "How big the touch pad and buttons are.",
 	"pad_opacity": "How see-through the touch pad is.",
@@ -786,6 +795,9 @@ func run_display() -> void:
 				GameState.day_night = not GameState.day_night
 			"weather":
 				GameState.weather = not GameState.weather
+			"weather_fx":
+				var levels: Array[String] = WeatherCycle.FX_LEVELS
+				GameState.weather_fx = levels[(levels.find(GameState.weather_fx) + 1) % levels.size()]
 			"minimap":
 				var modes: Array[String] = Survey.MINIMAP_MODES
 				GameState.minimap = modes[(modes.find(GameState.minimap) + 1) % modes.size()]
@@ -820,6 +832,7 @@ static func display_rows() -> Array[Array]:
 		["language", "Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()]],
 		["day_night", "Day and night: %s" % shop_or("day_night", "On" if GameState.day_night else "Off")],
 		["weather", "Weather: %s" % shop_or("weather", "On" if GameState.weather else "Off")],
+		["weather_fx", "Weather effects: %s" % WeatherCycle.FX_LEVEL_NAMES[GameState.weather_fx]],
 		["minimap", "Minimap: %s" % shop_or("minimap", MINIMAP_NAMES[GameState.minimap])],
 		["retro", "Retro filter: %s" % shop_or("retro", retro)],
 		["screen_shake", "Screen shake: %s" % Juice.LEVEL_NAMES[GameState.screen_shake]],
@@ -1030,6 +1043,8 @@ static func summary_pages(s: Spirling) -> Array[String]:
 	for e: int in s.elements():
 		els.append(Elements.element_name(e))
 	var head: String = "%s  (%s)\n%s   %s" % [s.display_name(), s.data.species_name, "/".join(els), Loc.t("Ring %d" % s.level)]
+	if s.gleam:
+		head += "\n" + GleamRules.label(GleamRules.kind_of(s))
 	var values: PackedStringArray = [head, "",
 		Loc.t("Vigor %d/%d" % [s.hp, s.max_hp()]) + ("  " + Loc.t("worn out") if s.is_fainted() else ""),
 		Loc.glue_last(Loc.t("Growth to next ring %d" % s.xp_to_next())),

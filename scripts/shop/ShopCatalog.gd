@@ -6,6 +6,9 @@ extends RefCounted
 ## Offer fields: id, kind (advantage | cosmetic | comfort | currency), tab, name, desc, rg_price
 ## (Riftglass, 0 = not for Riftglass), eur_cents (direct store price tier), store_type,
 ## product_id, grants, league_scope (open | none | look), duration, limit, requires, min_band, ready.
+## Optional (pay-to-win step 7): badge (BADGES), discount_pct (true against single prices), featured,
+## icon (res:// path), ends_at (ISO date), bonus_pct and first_buy_double (Riftglass tiers), rotation
+## (daily and weekly deals, see deal_active).
 
 const PATH: String = "res://data/shop.json"
 const KINDS: Array[String] = ["advantage", "cosmetic", "comfort", "currency"]
@@ -16,7 +19,12 @@ const TAB_NAMES: Dictionary = {"advantages": "Advantages", "packs": "Packs", "pa
 const STORE_TYPES: Array[String] = ["consumable", "non_consumable", "subscription"]
 const LEAGUE_SCOPES: Array[String] = ["open", "none", "look"]
 ## "spirling" hands over one Spirling with fixed values (pay-to-win plan points 61-80, ShopEffects.bought_spirling).
-const GRANT_TYPES: Array[String] = ["rg", "item", "unlock", "coins", "pass", "choice", "spirling"]
+## "card" is the Monthly Card: {"t": "card", "id": "monthly_card", "n": Riftglass per day, "days": 30}, paid by
+## the server function shop_card_daily (step 7).
+const GRANT_TYPES: Array[String] = ["rg", "item", "unlock", "coins", "pass", "choice", "spirling", "card"]
+## Badges a shop row may carry. "hot" marks the rotating daily and weekly deals; "bestseller" needs real
+## purchase counts, which the game does not collect, so no offer carries it yet.
+const BADGES: Array[String] = ["bestseller", "best_value", "new", "limited", "hot"]
 ## Fields that would mean a random or chance-based content. No offer may have one (item 4021).
 const RANDOM_FIELDS: Array[String] = ["chance", "chances", "odds", "random", "roll", "rolls", "weight", "weights", "draw",
 	"draws", "pool", "gacha", "lootbox", "rarity_table", "w"]
@@ -142,6 +150,9 @@ static func contents(o: Dictionary) -> Array[Dictionary]:
 			continue
 		var t: String = str(g.get("t", ""))
 		var n: int = int(g.get("days", 0)) if t == "pass" else (1 if t == "unlock" or t == "spirling" else int(g.get("n", 1)))
+		if t == "card":
+			out.append({"t": t, "id": str(g.get("id", "")), "n": n, "days": int(g.get("days", 0)), "offer": str(o.get("id", ""))})
+			continue
 		var key: String = t + ":" + str(g.get("id", g.get("species", "")))
 		if at.has(key) and t != "spirling":
 			out[at[key]].n = int(out[at[key]].n) + n
@@ -197,12 +208,15 @@ static func entry_name(e: Dictionary) -> String:
 		"pass":
 			return Loc.t("Wayfarer Pass for %d days") % int(e.n)
 		"spirling":
-			return Loc.t("%s at Ring %d with the highest Spark in every value") % [Loc.t(str(e.species)), int(e.level)]
+			# Filled in first, then translated as a whole: ja, ko, tr and zh write it with {0} and {1}.
+			return Loc.t("%s at Ring %d with the highest Spark in every value" % [str(e.species), int(e.level)])
+		"card":
+			return Loc.t("Monthly Card")
 	return ""
 
 ## How many of an entry the player gets: tiered unlocks and the pass count as one.
 static func entry_amount(e: Dictionary) -> int:
-	if str(e.t) == "pass" or (str(e.t) == "unlock" and unlock_tiers(str(e.id)).size() > 1):
+	if str(e.t) in ["pass", "card"] or (str(e.t) == "unlock" and unlock_tiers(str(e.id)).size() > 1):
 		return 1
 	return int(e.n)
 
@@ -213,6 +227,8 @@ static func entry_line(e: Dictionary) -> String:
 			return Loc.t("%d Riftglass") % int(e.n)
 		"coins":
 			return Loc.t("%d coins") % int(e.n)
+		"card":
+			return Loc.t("%d Riftglass every day for %d days") % [int(e.n), int(e.days)]
 	return "%dx %s" % [entry_amount(e), entry_name(e)]
 
 ## Every contents entry as a line for the detail view, generated from the grants.
@@ -237,6 +253,8 @@ static func entry_effect(e: Dictionary, o: Dictionary) -> String:
 			return Loc.t("Shop currency to pay for offers.")
 		"coins":
 			return Loc.t("Money for the merchants in the world.")
+		"card":
+			return Loc.t("Collected in the shop once a day. Missed days wait for you.")
 		"item":
 			var it: Dictionary = Database.item(str(e.id))
 			return Loc.t(str(it.get("description", offer(str(e.id)).get("desc", ""))))
@@ -257,6 +275,8 @@ static func entry_duration(e: Dictionary, o: Dictionary) -> String:
 			return Loc.t("yours until you spend it")
 		"unlock", "spirling":
 			return Loc.t("permanent")
+		"card":
+			return Loc.t("%d days") % int(e.days)
 		"pass":
 			return Loc.t("while the pass runs")
 		"choice":
@@ -329,6 +349,7 @@ static func _unlock_price(key: String) -> int:
 
 static func single_value(o: Dictionary) -> int:
 	var v: int = 0
+	var seen: Dictionary = {}
 	for g: Variant in o.get("grants", []):
 		if not g is Dictionary:
 			continue
@@ -338,12 +359,108 @@ static func single_value(o: Dictionary) -> int:
 			"item":
 				v += int(g.get("n", 1)) * int(offer(str(g.id)).get("rg_price", 0))
 			"unlock":
-				v += _unlock_price(str(g.get("id", "")))
+				# Repeated unlocks of a tier row (the Seal Set) are worth the tiers they reach, one by one.
+				var key: String = str(g.get("id", ""))
+				var tiers: Array[Dictionary] = unlock_tiers(key)
+				var k: int = int(seen.get(key, 0))
+				seen[key] = k + 1
+				v += int(tiers[k].get("rg_price", 0)) if k < tiers.size() else _unlock_price(key)
+			"card":
+				v += int(g.get("n", 0)) * int(g.get("days", 0))
 			"choice":
 				var opts: Variant = o.get("choice", [])
 				if opts is Array and not (opts as Array).is_empty():
 					v += int(g.get("n", 1)) * int(offer(str(opts[0])).get("rg_price", 0))
 	return v
+
+## --- Pay-to-win step 7 (27 Nov 2026): Riftglass bonus, first purchase double, deals. ---
+
+## What the offer costs in Riftglass terms: its Riftglass price, or for a store-only offer its euro tier
+## at 100 Riftglass per 0,99 EUR (a 4,99 EUR offer = 500).
+static func price_value(o: Dictionary) -> int:
+	var rg: int = int(o.get("rg_price", 0))
+	return rg if rg > 0 else int(o.get("eur_cents", 0)) + 1
+
+## The true discount in whole percent against the single prices (rounded down), 0 when none.
+static func true_discount(o: Dictionary) -> int:
+	var single: int = single_value(o)
+	var price: int = price_value(o)
+	if single <= price or single <= 0:
+		return 0
+	return (single - price) * 100 / single
+
+## Base amount of a Riftglass tier: 100 per 0,99 EUR (rg_glass_1000 = 1000).
+static func rg_base(o: Dictionary) -> int:
+	return int(o.get("eur_cents", 0)) + 1
+
+## Riftglass a tier gives on a normal purchase: base plus bonus_pct.
+static func rg_total(o: Dictionary) -> int:
+	var base: int = rg_base(o)
+	return base + base * int(o.get("bonus_pct", 0)) / 100
+
+## Extra Riftglass on the first purchase of a first_buy_double tier per account (the base once more).
+static func first_buy_extra(o: Dictionary) -> int:
+	return rg_base(o) if bool(o.get("first_buy_double", false)) else 0
+
+## Offset of Berlin time from UTC at [param unix]: summer time from the last Sunday of March 01:00 UTC
+## to the last Sunday of October 01:00 UTC (EU rule). The server counts shop days in Berlin time.
+static func berlin_offset(unix: int) -> int:
+	var y: int = int(Time.get_datetime_dict_from_unix_time(unix).year)
+	var starts: int = _last_sunday_utc(y, 3) + 3600
+	var ends: int = _last_sunday_utc(y, 10) + 3600
+	return 7200 if unix >= starts and unix < ends else 3600
+
+static func _last_sunday_utc(year: int, month: int) -> int:
+	var t: int = int(Time.get_unix_time_from_datetime_dict({"year": year, "month": month + 1, "day": 1})) - 86400
+	var wd: int = int(Time.get_datetime_dict_from_unix_time(t).weekday)
+	return t - wd * 86400
+
+## Shop day number (days since 1 Jan 1970 in Berlin time).
+static func shop_day(unix: int) -> int:
+	return floori(float(unix + berlin_offset(unix)) / 86400.0)
+
+## Weekday of a shop day, Monday = 0 (1 Jan 1970 was a Thursday).
+static func weekday_of(day: int) -> int:
+	return posmod(day + 3, 7)
+
+## Week number of a shop day, weeks start on Monday.
+static func week_of(day: int) -> int:
+	return floori(float(day + 3) / 7.0)
+
+## Whether a rotating deal is on sale at [param unix]. Deals carry "rotation": {"per": "day", "weekday": 0..6}
+## (sold on that weekday) or {"per": "week", "index": i, "cycle": n} (sold in weeks where week % n == i).
+## Fixed by the date, no chance. Offers without rotation are always on sale. Same rule on the server
+## (_shop_deal_on, migration 20261127100100_shop_p2w_step7.sql).
+static func deal_active(o: Dictionary, unix: int) -> bool:
+	var r: Variant = o.get("rotation")
+	if not r is Dictionary:
+		return true
+	var day: int = shop_day(unix)
+	if str(r.get("per", "")) == "day":
+		return weekday_of(day) == int(r.get("weekday", -1))
+	return posmod(week_of(day), maxi(1, int(r.get("cycle", 1)))) == int(r.get("index", -1))
+
+## Unix time the current sale of a rotating deal ends (Berlin midnight), 0 without rotation. The shop shows
+## it as a plain time ("until Monday 0:00"), never as a running countdown (MONETIZATION.md rule 5).
+static func deal_ends_at(o: Dictionary, unix: int) -> int:
+	var r: Variant = o.get("rotation")
+	if not r is Dictionary:
+		return 0
+	var day: int = shop_day(unix)
+	var end_day: int = day + 1 if str(r.get("per", "")) == "day" else day + 7 - weekday_of(day)
+	var guess: int = end_day * 86400 - 3600
+	return end_day * 86400 - berlin_offset(guess)
+
+const WEEKDAYS: Array[String] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+## When a rotating deal is sold, in plain words ("" without rotation).
+static func rotation_line(o: Dictionary) -> String:
+	var r: Variant = o.get("rotation")
+	if not r is Dictionary:
+		return ""
+	if str(r.get("per", "")) == "day":
+		return Loc.t("On sale every %s.") % Loc.t(WEEKDAYS[clampi(int(r.get("weekday", 0)), 0, 6)])
+	return Loc.t("On sale every %d weeks, Monday to Sunday.") % int(r.get("cycle", 1))
 
 ## Problems in the catalog (empty = fine). Used by tests and tools/validate_data.gd.
 static func validate() -> Array[String]:

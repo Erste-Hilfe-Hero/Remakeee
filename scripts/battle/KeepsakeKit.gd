@@ -121,7 +121,7 @@ static func wear_team_set(team: Array, n: int) -> Array[String]:
 		if want.is_empty() or (s as Spirling).held == want:
 			continue
 		if not GameState.set_held(s, want):
-			out.append(Loc.t("No %s left in the bag for %s.") % [Loc.t(str(Database.item(want).get("name", want))), (s as Spirling).display_name()])
+			out.append(Loc.f("No %s left in the bag for %s.", [Loc.t(str(Database.item(want).get("name", want))), (s as Spirling).display_name()]))
 	return out
 
 # --- 318, 319: the keepsake cue -----------------------------------------------------------

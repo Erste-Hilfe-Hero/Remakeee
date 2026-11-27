@@ -248,7 +248,11 @@ static func detail_text(place: String) -> String:
 	var f: Array[int] = finds(place)
 	lines.append(Loc.t("Finds: %d/%d") % [f[0], f[1]])
 	if m != null:
-		lines.append(Loc.t("Weather: %s") % Loc.t(WeatherCycle.current(m).capitalize()))
+		lines.append(Loc.t("Weather: %s") % Loc.t(EraLight.weather_name(m)))
+		# The forecast: what the sky rolls for the next 6-hour block.
+		var soon: String = WeatherCycle.forecast(m, 1)[0]
+		if soon != WeatherCycle.current(m):
+			lines.append(Loc.t("Later: %s") % Loc.t(WeatherCycle.name_of(soon)))
 	lines.append(Loc.t("Time of day: %s") % Loc.t(DayCycle.phase_name(DayCycle.current()).capitalize()))
 	var sp: Array[String] = species(place)
 	if not sp.is_empty():

@@ -1,5 +1,5 @@
-Gagne la confiance de 497 monstres, plonge dans une histoire sombre pleine d'humour noir et prévois chaque tour. Chimora est un RPG de monstres en pixel art rétro, un peu plus sombre qu'il n'en a l'air.
-- 497 Spirlings à rallier par l'appel écho, dont de rares formes Reflet
+Gagne la confiance de 567 monstres, plonge dans une histoire sombre pleine d'humour noir et prévois chaque tour. Chimora est un RPG de monstres en pixel art rétro, un peu plus sombre qu'il n'en a l'air.
+- 567 Spirlings à rallier par l'appel écho, dont de rares formes Reflet
 - Combats tactiques au tour par tour: huit éléments, Gardiens à plusieurs phases
 - Un pixel art qui grandit sur cinq ères, du monochrome à la pleine couleur
 - Jeu en ligne: Chimora nécessite une connexion Internet
@@ -24,7 +24,7 @@ UNE HISTOIRE QUI MORD
 - Des quêtes pour six légendaires et des histoires secondaires dans chaque acte, de quoi jouer des dizaines d'heures
 
 UN MONDE QUI CHANGE
-- 497 Spirlings, 70 propres à chaque acte et à chaque région d'après l'histoire, et de rares formes Reflet sauvages
+- 567 Spirlings, 80 propres à chaque acte et à chaque région d'après l'histoire, et de rares formes Reflet sauvages
 - Ton Spirling de tête marche derrière toi et se souvient de la façon dont tu le traites
 - Le jour et la nuit, des fêtes, des chemins cachés, un équipement de voyageur qui ouvre de nouveaux lieux et un parc animalier tenu par des contrebandiers
 - Un terrier à réclamer, un spectacle funèbre quotidien et un informateur du marché noir qui vend des dons cachés
@@ -51,6 +51,6 @@ JOUER À TA FAÇON
 - Jouable au tactile, au clavier ou à la manette
 
 ÉQUITABLE
-Jeu gratuit. Achats facultatifs dans le jeu, certains avec des avantages. Aucun contenu aléatoire. Pas de publicité, pas de minuteur d'énergie, pas de pistage.
+Jeu gratuit. Achats facultatifs dans le jeu, dont beaucoup donnent des avantages. Ils ne comptent pas en Ligue équitable. Aucun contenu aléatoire. Pas de publicité, pas de minuteur d'énergie, pas de pistage.
 
 Remarque: Chimora nécessite une connexion Internet.

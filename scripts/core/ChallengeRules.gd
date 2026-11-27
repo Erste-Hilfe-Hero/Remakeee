@@ -233,6 +233,7 @@ static func reroll_wild(wild: Spirling, table_id: String, rng: RandomNumberGener
 	var out := Spirling.new(Database.species(name), wild.level, rng)
 	out.prism = wild.prism
 	out.gleam = wild.gleam
+	out.gleam_kind = wild.gleam_kind
 	return out
 
 ## Shuffled Arts: [param s] forgets its arts and knows up to four drawn by the seed from every

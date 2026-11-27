@@ -24,6 +24,7 @@ var player: Player
 var busy: bool = false
 
 var _ground: TileMapLayer
+var _surround: MapSurround
 ## Terrain look of the map's era over the ground tiles (EraTerrainLook, docs/ERA_FEEL_TILES.md).
 var _terrain_look: EraTerrainLook
 ## Shade over dark gear cells (thick without the gear, a faint dusk with it).
@@ -48,6 +49,8 @@ var _on_trip: bool = false
 var _banner: Label
 ## Time-of-day symbol beside the place banner (area 3 item 1169).
 var _phase_icon: PhaseIcon
+## The sky over the map as a small symbol at the right end of the banner (hidden when clear).
+var _weather_icon: WeatherIcon
 ## Plain weather dots and veil (area 3 item 1144).
 var weather_layer: WeatherLayer
 var minimap: Minimap
@@ -182,6 +185,11 @@ func _ready() -> void:
 		if lamp != "":
 			GameState.notices.append(lamp)
 			hint = lamp
+		# Dated easter eggs (HiddenMechanics): a quiet line once a year.
+		var dated: String = HiddenMechanics.start_note(GameState.records, Online.unix_now())
+		if dated != "":
+			GameState.notices.append(dated)
+			hint = dated
 		# Weekend boost (200 list item 141): a note on Friday and on the weekend, never a push.
 		var weekend: String = GrowthRules.weekend_line(GrowthRules.local_weekday())
 		if weekend != "":
@@ -195,6 +203,9 @@ func _ready() -> void:
 			_resume_open_battle.call_deferred()
 
 func _build() -> void:
+	# The land around an outdoor map on screens larger than the map (update 1.3.2).
+	_surround = MapSurround.new()
+	add_child(_surround)
 	_ground = TileMapLayer.new()
 	_ground.name = "Ground"
 	add_child(_ground)
@@ -302,9 +313,18 @@ func _build() -> void:
 	ui_root.add_child(_banner)
 	_phase_icon = PhaseIcon.new()
 	_banner.add_child(_phase_icon)
+	_weather_icon = WeatherIcon.new()
+	_weather_icon.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	_weather_icon.position = Vector2(-13, 3)
+	_banner.add_child(_weather_icon)
+	_weather_icon.show_kind("clear")
 	toast = Toast.new()
 	add_child(toast)
 	Billing.pass_paid.connect(_on_pass_paid)
+	Billing.card_paid.connect(_on_card_paid)
+	# The free Riftglass of the day (RiftglassSinks.claim_daily), once online.
+	Online.state_changed.connect(_on_online_daily_rg)
+	_on_online_daily_rg(Online.state)
 	_text = TextBox.new()
 	_text.keep_log = true
 	_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
@@ -344,6 +364,9 @@ func _process(delta: float) -> void:
 	# A chimora://event link opens the Goals screen once the player is free (DeepLink.gd).
 	if DeepLink.route in ["event", "friend"] and GameState.has_flag("got_starter") and not busy and not scene_running and _photo == null and not player.moving:
 		open_menu("Goals" if DeepLink.take() == "event" else "Invite")
+	# The Starter Pack note once the tutorial act is over (adults only, never in a battle).
+	elif not busy and not scene_running and _photo == null and not player.moving and ShopScreen.starter_popup_now():
+		open_menu(ShopScreen.STARTER_OPEN)
 	if reset_button != null:
 		reset_button.visible = _world.reset_wanted and not busy and not scene_running and _photo == null
 	_walk_clock += delta
@@ -450,6 +473,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	GameState.note_place(WorldAtlas.place_of(map_id))
 	_world.prepare(map, cell)
 	map.paint(_ground)
+	_surround.show_map(map)
 	_terrain_look.show_map(map, _ground, _camera, _entities)
 	_era_depth.show_map(map, _ground)
 	refresh_shade()
@@ -566,6 +590,7 @@ func refresh_daylight(fade: bool = false) -> void:
 	if weather_layer != null:
 		weather_layer.show_kind(w)
 	DayCycle.poll()
+	_era_light.full_screen = _era_depth != null and _era_depth.has_fill()
 	_era_light.refresh(map, w, _daylight, _glow, weather_layer)
 	_fade_daylight(before, fade)
 
@@ -743,6 +768,12 @@ func _spawn_npcs() -> void:
 		n.setup(def)
 		_entities.add_child(n)
 		_npcs.append(n)
+	# Riddle stones and riddlers (data/puzzle_spots.json, PuzzleSpots).
+	for def: Dictionary in PuzzleSpots.npc_defs(map.id):
+		var p: NPC = PuzzleTablet.new() if bool(def.tablet) else NPC.new()
+		p.setup(def)
+		_entities.add_child(p)
+		_npcs.append(p)
 
 ## The time of day moved on: light, people, doors and the banner symbol follow (item 1167).
 func _on_phase_changed(_phase: int) -> void:
@@ -786,12 +817,15 @@ func refresh_goal_marks() -> void:
 		minimap.queue_redraw()
 
 func _show_banner(text: String) -> void:
-	_banner.text = "    %s " % text
+	_weather_icon.show_kind(_era_light.look if _era_light != null and map != null and map.outdoor else "clear")
+	_banner.text = ("    %s    " if _weather_icon.visible else "    %s ") % text
 	_phase_icon.phase = DayCycle.current()
 	_phase_icon.queue_redraw()
 	# The banner takes the era's place-name style (TownPopup, data/era_feel.json "town_popup").
 	var style: String = str(EraManager.feel("town_popup"))
 	TownPopup.dress(_banner, style)
+	_weather_icon.ink = _banner.get_theme_color("font_color")
+	_weather_icon.queue_redraw()
 	_banner.visible = true
 	await TownPopup.slide(_banner, style, true)
 	await get_tree().create_timer(BANNER_TIME).timeout
@@ -898,6 +932,20 @@ func _on_player_stepped(cell: Vector2i) -> void:
 			else:
 				# The pass holder's rare Spirling of the day (pay-to-win step 6, plan point 38).
 				wild = ShopEffects.pass_rare(map.encounter_table, GameState.flags, GameState.rng)
+			# A rare visitor woken by a solved riddle stone (PuzzleSpots "meet" rewards).
+			if wild == null:
+				wild = PuzzleSpots.rare_wild(map.id, GameState.flags, GameState.rng)
+				if wild != null:
+					Sound.sfx("sparkle")
+					await _locked_say(["Something stirs. The rare visitor from the riddle stone!"] as Array[String])
+			if wild == null:
+				# Hidden rare spawns: a certain sky, moon, weekday or chain (HiddenMechanics).
+				var rare: Dictionary = HiddenMechanics.maybe_spawn(map.id, map.encounter_table, HiddenMechanics.context(map), GameState.rng)
+				if not rare.is_empty():
+					wild = rare.wild
+					HiddenMechanics.note_found(str(rare.id), GameState.records)
+					Sound.sfx("sparkle")
+					await _locked_say([str(rare.line)] as Array[String])
 			if wild == null:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
 				for e: int in WildRules.weather_boost(WeatherCycle.current(map)):
@@ -950,6 +998,10 @@ func _on_interact(cell: Vector2i) -> void:
 		return
 	if await _world.interact(cell):
 		return
+	var spot: Dictionary = PuzzleSpots.at(map.id, cell)
+	if not spot.is_empty():
+		await run_puzzle_spot(spot)
+		return
 	var n: NPC = npc_at(cell)
 	if n != null:
 		await n.turn_toward(player.cell)
@@ -964,6 +1016,7 @@ func _on_interact(cell: Vector2i) -> void:
 		await run_dialogue(str(s.dialogue))
 		if icons != null:
 			icons.queue_free()
+		await hidden_spot(cell, "sign")
 		return
 	var landmark: Array[String] = Landmarks.lines_at(map.id, cell)
 	if not landmark.is_empty():
@@ -975,6 +1028,7 @@ func _on_interact(cell: Vector2i) -> void:
 			await ElementSeals.run(_ui, map.id)
 			player.frozen = false
 			busy = false
+		await hidden_spot(cell, "landmark")
 		return
 	# Talk across counters.
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
@@ -983,7 +1037,64 @@ func _on_interact(cell: Vector2i) -> void:
 			await beyond.turn_toward(player.cell)
 			await run_dialogue(beyond.dialogue_ref, beyond)
 			return
+	if await hidden_spot(cell, "tile"):
+		return
 	survey_look(cell - player.cell)
+
+## Hidden things on a cell (HiddenMechanics, docs/HIDDEN_MECHANICS.md): a tree knocked on three
+## times, something behind a statue, a word written at a sign, the Star Well's reading. True when
+## the cell answered.
+func hidden_spot(cell: Vector2i, at: String) -> bool:
+	var p: Dictionary = HiddenMechanics.spot_at(map.id, cell, at)
+	if p.is_empty():
+		return false
+	var res: Dictionary = HiddenMechanics.tap(p, HiddenMechanics.context(map), GameState.records, GameState.flags)
+	if res.is_empty():
+		return false
+	busy = true
+	player.frozen = true
+	var lines: Array[String] = res.lines
+	if str(p.get("action", "")) == "knack" and not str(res.flag).is_empty():
+		lines = lines + HiddenMechanics.knack_lines(GameState.party)
+	await say(lines)
+	if bool(res.code):
+		var d: Dictionary = HiddenMechanics.data()
+		var menu := MenuHost.new()
+		_ui.add_child(menu)
+		var pick: int = await menu.pick_strings("", [Loc.t(str(d.code_write)), Loc.t(str(d.code_leave))] as Array[String])
+		menu.queue_free()
+		if pick == 0:
+			var word: String = await TextPrompt.ask(_ui, Loc.t(str(d.code_prompt)), false, 12)
+			if HiddenMechanics.code_ok(p, word):
+				res = HiddenMechanics.code_result(p)
+				Sound.sfx("sparkle")
+				await say(res.lines as Array[String])
+			else:
+				await say([str(d.code_wrong)] as Array[String])
+	if HiddenMechanics.grant(p, res, GameState.flags, GameState.records):
+		if not str(res.item).is_empty() and int(res.count) > 0:
+			Sound.sfx("confirm")
+			await _action_give_item([str(res.item), str(res.count)] as PackedStringArray, null)
+		await announce_achievements()
+	player.frozen = false
+	busy = false
+	return true
+
+## A riddle stone or riddler (PuzzleSpots): the puzzle screen, then any achievements.
+func run_puzzle_spot(spot: Dictionary) -> void:
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	var n: NPC = npc_at(PuzzleSpots.cell_of(spot))
+	if n != null and not n is PuzzleTablet:
+		await n.turn_toward(player.cell)
+	await PuzzleBoard.run(_ui, spot)
+	for p: NPC in _npcs:
+		p.queue_redraw()
+	await announce_achievements()
+	VirtualPad.set_wanted(true)
+	player.frozen = false
+	busy = false
 
 ## Survey Glass (area 3 items 1052, 1053): A on open ground looks ahead; finds up to 6 steps
 ## away show on the minimap. Says so in the ticker, so it never stops the walk.
@@ -1413,6 +1524,10 @@ func _action_lamp_watch(_args: PackedStringArray, _speaker: NPC) -> void:
 		elif LampWatch.visitor_waiting(GameState.records, day):
 			rows.append("Answer the call")
 			keys.append("answer")
+		elif RiftglassSinks.visible():
+			# Riftglass lights the lamp once more today (RiftglassSinks "lamp_relight").
+			rows.append("Light it again")
+			keys.append("relight")
 		rows.append("Lamp Watch")
 		keys.append("card")
 		if not LampWatch.log_pages(GameState.records).is_empty():
@@ -1424,6 +1539,11 @@ func _action_lamp_watch(_args: PackedStringArray, _speaker: NPC) -> void:
 		match keys[pick]:
 			"light":
 				await _lamp_light(day, menu)
+			"relight":
+				if await RiftglassSinks.pay_in_menu(menu, "lamp_relight", "", RiftglassSinks.price("lamp_relight"),
+						Loc.t("Light the lamp again tonight? Another visitor may follow the light.")):
+					RiftglassSinks.apply_lamp_relight(GameState.records)
+					await _lamp_light(day, menu)
 			"answer":
 				await _lamp_answer(LampWatch.night(LampWatch.nights_lit(GameState.records), GameState.starter, day), day)
 			"card":
@@ -3561,6 +3681,8 @@ func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
 		var options: Array[String] = []
 		if Expeditions.can_send():
 			options.append("Send a Spirling")
+		if RiftglassSinks.visible() and Expeditions.trips().any(func(t: Dictionary) -> bool: return Expeditions.seconds_left(t) > 0):
+			options.append("Bring one home now")
 		if not Expeditions.diary().is_empty():
 			options.append("Trip diary")
 		options.append("Done")
@@ -3569,6 +3691,9 @@ func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
 			break
 		if options[pick] == "Trip diary":
 			await menu.info("\n".join(Expeditions.diary()))
+			continue
+		if options[pick] == "Bring one home now":
+			await _rg_trip_skip(menu)
 			continue
 		var ready: Array[Spirling] = Expeditions.ready_to_go()
 		var names: Array[String] = []
@@ -3601,6 +3726,31 @@ func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
 			# The one opt-in question for phone notes (plan Chimora 100, item 76), only where they exist.
 			await LocalNotify.offer(menu)
 	menu.queue_free()
+
+## Riftglass trip skip (RiftglassSinks "trip_skip"): one trip comes home now, priced per
+## started hour left, and is paid out at once.
+func _rg_trip_skip(menu: MenuHost) -> void:
+	var away: Array[Dictionary] = []
+	for t: Dictionary in Expeditions.trips():
+		if Expeditions.seconds_left(t) > 0:
+			away.append(t)
+	var rows: Array[String] = []
+	for t: Dictionary in away:
+		var hours: int = RiftglassSinks.hours_left(Expeditions.seconds_left(t))
+		var s: Spirling = Expeditions._spirling(str(t.uid))
+		rows.append(Loc.t("%s: %d Riftglass") % [s.display_name() if s != null else "?", RiftglassSinks.price("trip_skip", 0, hours)])
+	var i: int = await menu.pick_strings("Bring one home now", rows)
+	if i < 0:
+		return
+	var h: int = RiftglassSinks.hours_left(Expeditions.seconds_left(away[i]))
+	if not await RiftglassSinks.pay_in_menu(menu, "trip_skip", str(h), RiftglassSinks.price("trip_skip", 0, h),
+			Loc.t("Bring this Spirling home now? %d h left.") % h):
+		return
+	RiftglassSinks.apply_trip_skip(away[i])
+	var back: Array[String] = Expeditions.collect()
+	if not back.is_empty():
+		await say(back)
+	SaveManager.save_game()
 
 ## Seasonal festival (item 89): the crier names the festival and hands out its gift once a year.
 func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -3984,6 +4134,19 @@ func _on_pass_paid(added: int) -> void:
 	if is_instance_valid(toast):
 		toast.show_note(Loc.t("Wayfarer Pass: +%d Riftglass") % added)
 
+## The Monthly Card paid its due daily Riftglass (pay-to-win step 7).
+func _on_card_paid(added: int) -> void:
+	if is_instance_valid(toast):
+		toast.show_note(Loc.t("Monthly Card: +%d Riftglass") % added)
+
+## Claims the free Riftglass of the day when the game is online; a toast says what came.
+func _on_online_daily_rg(s: int) -> void:
+	if s != Online.State.ONLINE:
+		return
+	var added: int = await RiftglassSinks.claim_daily()
+	if added > 0 and is_instance_valid(toast):
+		toast.show_note(Loc.t("Daily gift: +%d Riftglass") % added)
+
 ## Bonus goal of the battle just fought (items 755-757): pays out once when it was met.
 func _pay_bonus_goal(goal_key: String) -> void:
 	if last_model == null or not last_model.has_meta("goal_tracker"):
@@ -4007,7 +4170,8 @@ func after_tamer_win(n: NPC) -> void:
 	_mark_rematch(def)
 	# Weekly Rift board (online step 1): the won Warden battle goes to the referee; its rounds
 	# count once the referee replayed it.
-	if def.has("warden") and Online.flag_on("rift_board"):
+	# A win with a Riftglass Continue never goes to the board.
+	if def.has("warden") and Online.flag_on("rift_board") and (last_model == null or last_model.continues_used == 0):
 		Online.call_fn("battle_submit", {"p_kind": "rift", "p_ref": str(def.warden),
 			"p_replay": BattleReplay.shareable(GameState.records.get("last_battle", {})), "p_claim": last_claim})
 	if def.has("defeat"):
@@ -4202,6 +4366,26 @@ func _use_rift_anchor() -> bool:
 		await _fade_to(1.0)
 		return false
 	await say(["The Rift Anchor holds you in place. Your team is rested again."] as Array[String])
+	return true
+
+## Riftglass instead of a Rift Anchor (RiftglassSinks "warden_retry"): offered after a lost Warden
+## battle only when the player has no anchor and enough Riftglass, never on Rift-Born. No shop
+## pointer after a defeat (docs/MONETIZATION.md rule 5).
+func _rg_warden_retry_offered() -> bool:
+	return ShopEffects.warden_help_allowed(1, GameState.difficulty) and not ShopEffects.can_anchor(GameState.difficulty) \
+		and RiftglassSinks.visible() and RiftglassSinks.why_not(RiftglassSinks.price("warden_retry")).is_empty()
+
+func _rg_warden_retry() -> bool:
+	await _fade_to(0.0)
+	var ask := MenuHost.new()
+	_ui.add_child(ask)
+	var paid: bool = await RiftglassSinks.pay_in_menu(ask, "warden_retry", "", RiftglassSinks.price("warden_retry"),
+		Loc.t("Stay right before the Warden? Your team is rested."), false)
+	ask.queue_free()
+	if not paid:
+		await _fade_to(1.0)
+		return false
+	await say(["Riftglass holds you in place. Your team is rested again."] as Array[String])
 	return true
 
 ## Lost tries against the Warden of [param def] (records "warden_losses").
@@ -4549,6 +4733,11 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	# A league battle comes ready-made from the server's seed and teams (plan area 7).
 	var preset: Variant = trainer.get("model")
 	var model: BattleModel = preset if preset is BattleModel else _new_model(foes, wild, trainer)
+	# Riftglass in story battles: Continue after a loss and the bond boost (RiftglassSinks).
+	if RiftglassSinks.continue_allowed(trainer, wild, GameState.difficulty, model.items_allowed):
+		model.set_meta(RiftglassSinks.STORY_META, true)
+		if RiftglassSinks.visible():
+			model.continue_offer = RiftglassSinks.continue_max()
 	# Friendly and server-checked battles cannot be given up (KAMPF_PLAN_1000 item 8).
 	if bool(trainer.get("friendly", false)):
 		model.set_meta(TurnFlow.NO_FORFEIT_META, true)
@@ -4713,6 +4902,9 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
 	model.seals = [ShopEffects.seals_for("story" if world else "echo"), [0, 0, 0]]
 	model.amulets = [ShopEffects.amulets_for("story" if world else "echo"), [0, 0, 0]]
+	# Hidden combos, sky synergies and keen hits (HiddenBattle): world battles only. Warden battles
+	# keep them off, because the weekly Rift board sends those to the server's referee.
+	model.hidden_rules = world and not trainer.has("warden")
 	# Story foes start with less Energy, Rift-Born foes gain more in turn 1 (item 749); echo duels stay even.
 	var d: int = GameState.difficulty if world else -1
 	model.start_energy_cut = [0, int(trainer.get("foe_energy_cut", 0)) + BattleRules.foe_start_cut(d)]
@@ -4780,6 +4972,9 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	if not grown.is_empty():
 		toast.show_note(grown, null, "")
 	Kinship.after_battle(GameState.party, model.participants, outcome == BattleModel.Outcome.WIN)
+	# A Spirling's favourite sky (its hidden knack): a little more Kinship after a win under it.
+	if model.hidden_rules:
+		HiddenMechanics.after_battle(model.participants, WeatherCycle.current(map), outcome == BattleModel.Outcome.WIN)
 	# "Refill fruit" puts a used-up held fruit back from the bag (KAMPF_PLAN_1000 item 297).
 	for line: String in TraitKit.refill_held(model):
 		toast.show_note(line, null, "")
@@ -4837,6 +5032,10 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 		GameState.heal_party()
 		ChallengeRules.after_rest(GameState.party)
 		if _warden_battle and ShopEffects.can_anchor(GameState.difficulty) and await _use_rift_anchor():
+			if not oath.is_empty():
+				await say(oath)
+			return
+		if _warden_battle and _rg_warden_retry_offered() and await _rg_warden_retry():
 			if not oath.is_empty():
 				await say(oath)
 			return

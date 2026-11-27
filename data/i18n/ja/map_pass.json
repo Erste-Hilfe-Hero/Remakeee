@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table map_pass, written by tools/i18n/locales_map_pass.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Clerk Odo: Crates go up the mountain full of plates and come down full of soot.": "事務員オド: 木箱は版を満載して山を登り、すすを満載して下りてくる。",
+  "Clerk Odo: I weigh both. The soot is heavier. Nobody believes me.": "事務員オド: どっちも量っている。すすの方が重い。誰も信じてくれないがね。",
+  "Engraver Mira: A plate takes a year to cut and a second to drop. I have not dropped one. Yet.": "彫版師ミラ: 版を彫るのに一年、落とすのは一秒。まだ一枚も落としてない。まだね。",
+  "Engraver Mira: Halvard says my lines are too soft. Halvard says that to everyone.": "彫版師ミラ: ハルヴァルドはわたしの線がやわらかすぎるって言う。誰にでもそう言うのよ。",
+  "Engraver's Workshop": "彫版師の工房",
+  "Freight Office": "貨物事務所",
+  "Lamp Room": "ランプ室",
+  "Lampwright Ines: A train in fog finds the station by my wicks. Trim them and you trim the timetable.": "ランプ職人イネス: 霧の中の汽車は、わたしの灯芯で駅を見つけるの。芯を切れば時刻表も切れるわ。",
+  "Lampwright Ines: Every lamp on the platform is mine. The smoke is the stack's.": "ランプ職人イネス: ホームのランプは全部わたしの作。煙は煙突のせいよ。",
+  "Pointsman Ulf: Porridge works best. Do not tell the guild.": "転てつ手ウルフ: 一番効くのはおかゆだ。ギルドには言うなよ。",
+  "Pointsman Ulf: The points freeze every winter. I thaw them with my breakfast.": "転てつ手ウルフ: ポイントは毎冬凍りつく。わしは朝飯で溶かしとる。",
+  "Pointsman's House": "転てつ手の家"
+ }
+}

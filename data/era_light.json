@@ -1,5 +1,5 @@
 {
- "_doc": "Overworld light, weather look, screen effects and map transitions per era (EraLight, EraLightLayer). A map uses the era of its own region, never a newer one than the active era, so old regions keep their origin look. Era I: no day tint, weather as one text line only (weather_style none: no pattern over the map since 25.11.2026), cut or plain fade between maps, caves one ink darker with a small light circle. Era II: three tints (morning, day, night), lit windows, plain rain lines. Era III: four tints, rain with splashes and puddles, sandstorm, ash fall, fog bands, lightning, door and stairs wipes. Era IV: light shafts under trees, lamp glow, snow that keeps prints, cloud shadows. Era V: smooth light over the hours with a golden hour, long shadows, season tint per region, leaves, pollen and embers, a camera sweep into big places. Booleans only ever switch on in later eras (GUT test). flash: lightning is capped in code at 3 flashes per second whatever this file says and is off under reduced motion.",
+ "_doc": "Overworld light, weather look, screen effects and map transitions per era (EraLight, EraLightLayer). A map uses the era of its own region, never a newer one than the active era, so old regions keep their origin look. Era I: no day tint, weather in the inks of the region plus one text line (weather_style ink since 27.11.2026, drawn by WeatherFx), cut or plain fade between maps, caves one ink darker with a small light circle. Era II: three tints (morning, day, night), lit windows, plain rain lines. Era III: four tints, rain with splashes and puddles, sandstorm, ash fall, fog bands, lightning, door and stairs wipes. Era IV: light shafts under trees, lamp glow, snow that keeps prints, cloud shadows. Era V: smooth light over the hours with a golden hour, long shadows, season tint per region, leaves, pollen and embers, a camera sweep into big places. Booleans only ever switch on in later eras (GUT test). flash: lightning is capped in code at 3 flashes per second whatever this file says and is off under reduced motion.",
  "flash": {"max_per_second": 2, "min_gap": 0.35, "length": 0.07, "alpha": 0.55, "strike_every": 7.0, "double_share": 0.5},
  "weather_text": {
   "rain": "Rain falls.",
@@ -11,7 +11,8 @@
   {"region": "quillmarch", "maps": ["mordant_row", "mordant_steps", "platewick"], "from": ["wind", "fog"], "to": "ash"},
   {"region": "quillmarch", "biome": "route", "from": ["wind"], "to": "sandstorm"},
   {"region": "halcyra", "maps": ["white_stair", "long_stair", "whitecairn", "orrery_ridge"], "from": ["rain", "storm", "fog"], "to": "snow"},
-  {"region": "quivermoor", "biome": "town", "from": ["wind"], "to": "ash"}
+  {"region": "quivermoor", "biome": "town", "from": ["wind"], "to": "ash"},
+  {"biome": "scree", "months": [11, 12, 1, 2, 3], "from": ["rain", "storm"], "to": "snow"}
  ],
  "seasons": {
   "months": {"spring": [3, 4, 5], "summer": [6, 7, 8], "autumn": [9, 10, 11], "winter": [12, 1, 2]},
@@ -27,7 +28,7 @@
    "tint_style": "none",
    "tints": {},
    "weather_tints": {},
-   "weather_style": "none",
+   "weather_style": "ink",
    "looks": ["rain", "storm", "fog", "wind"],
    "weather_text": true,
    "lit_windows": false,

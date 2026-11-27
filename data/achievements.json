@@ -1106,6 +1106,26 @@
    "reward": 25,
    "stat": "boss_wins:mist_heart",
    "n": 1
+  },
+  {
+   "id": "hidden_keeper",
+   "title": "Keeper of Quiet Things",
+   "text": "Find ten hidden things across the regions.",
+   "cat": "explore",
+   "reward": 50,
+   "stat": "record:hidden_found_n",
+   "n": 10,
+   "secret": true
+  },
+  {
+   "id": "hidden_echo",
+   "title": "Someone Answered",
+   "text": "Call into the old well of Ochrewell until it calls back.",
+   "cat": "explore",
+   "reward": 10,
+   "stat": "flag:hm_echo_name",
+   "n": 1,
+   "secret": true
   }
  ]
 }

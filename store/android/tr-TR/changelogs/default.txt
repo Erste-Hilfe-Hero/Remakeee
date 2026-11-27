@@ -1,7 +1,9 @@
-Chimora 1.3.1
+Chimora 1.3.2
 
-- Spirling'lerin için 7 yeni yetenek, ayrıca birkaç kez vuran ya da bir takım arkadaşını sahaya çıkaran yeni sanatlar.
-- "Hangisi sana uygun?" ortağını seçmene yardım eder, Fikir düğmesi isim önerir.
-- Hafta sonu bonusu: cumartesi ve pazar çift deneyim.
-- Chromebook'lar dahil daha çok cihazda çalışır, tabletlerde ve katlanabilir telefonlarda daha iyi.
-- Birçok küçük düzeltme.
+- Yeni dükkân: Yarık Camı paketleri, Aylık Kart, Şampiyon Spirling'ler, setler, günlük ve haftalık teklifler.
+- Yarık Camı oyunda: yenilgiden sonra devam, iyileştirme, gelişim ya da bağ desteği, yolculuğu kısaltma. Çevrimiçiyken her gün 20 hediye.
+- 30 kademeli yeni paso.
+- 70 yeni Spirling ve 5 çeşit Işıltı.
+- Hava durumu: yağmur, sis, rüzgâr, fırtına ve kar.
+- 35 bulmaca ve bir sürü gizli sır.
+- Daha iyi bağlanan haritalar, tabletlerde daha iyi görünüm, birçok düzeltme.

@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table pass_track, written by tools/i18n/locales_pass_track.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d of %d pass points": "%d di %d punti pass",
+  "%d premium rewards reached and waiting.": "%d ricompense premium raggiunte ti aspettano.",
+  "Free:": "Gratis:",
+  "Free: %s": "Gratis: %s",
+  "Locked: needs the Wayfarer Pass.": "Bloccata: richiede il Lasciapassare Viandante.",
+  "Opens the premium row of every step.": "Apre la riga premium di ogni tappa.",
+  "Pass track": "Percorso del pass",
+  "Premium (Wayfarer Pass):": "Premium (Lasciapassare Viandante):",
+  "Premium row: Wayfarer Pass": "Riga premium: Lasciapassare Viandante",
+  "Premium: %s": "Premium: %s",
+  "Reached at %d pass points.": "Raggiunta a %d punti pass.",
+  "Ready to take.": "Pronta da prendere.",
+  "Something went wrong. Try again in a moment.": "Qualcosa è andato storto. Riprova tra un attimo.",
+  "Step %d": "Tappa %d",
+  "Step %d of %d": "Tappa %d di %d",
+  "Step %d: %s": "Tappa %d: %s",
+  "Take all rewards (%d)": "Prendi tutte le ricompense (%d)",
+  "Take the free reward": "Prendi la ricompensa gratis",
+  "Take the premium reward": "Prendi la ricompensa premium",
+  "Taken.": "Presa.",
+  "The premium row needs the Wayfarer Pass.": "La riga premium richiede il Lasciapassare Viandante.",
+  "Top row: free for everyone. Bottom row: with the Wayfarer Pass. Pass points come from battles won (%d), bonds (%d) and daily tasks (%d), up to %d a day.": "Riga in alto: gratis per tutti. Riga in basso: con il Lasciapassare Viandante. I punti pass arrivano dalle lotte vinte (%d), dai legami (%d) e dai compiti del giorno (%d), fino a %d al giorno.",
+  "You got:": "Hai ricevuto:",
+  "ends in %s": "finisce tra %s"
+ }
+}

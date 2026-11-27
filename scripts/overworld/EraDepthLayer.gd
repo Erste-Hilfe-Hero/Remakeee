@@ -153,6 +153,10 @@ func _paint_fill() -> void:
 		var from: Vector2i = cells[c]
 		_fill.set_cell(c, ground.get_cell_source_id(from), ground.get_cell_atlas_coords(from))
 
+## True when land is drawn around the map (the weather then covers the whole screen).
+func has_fill() -> bool:
+	return map != null and ground != null and map.outdoor and str(screen_cfg.get("fill", "")) == "edge"
+
 func _kind(c: Vector2i) -> int:
 	return map.kind_at(c) if c.x >= 0 and c.y >= 0 and c.x < map.width and c.y < map.height else -1
 

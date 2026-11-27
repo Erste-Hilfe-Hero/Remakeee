@@ -2,32 +2,18 @@
 T = {
 "100 Riftglass":
 	"100 Rissglas",
-"Exactly 100 Riftglass for the shop. No bonus, no chance.":
-	"Genau 100 Rissglas für den Shop. Kein Bonus, kein Zufall.",
 "200 Riftglass":
 	"200 Rissglas",
-"Exactly 200 Riftglass for the shop. No bonus, no chance.":
-	"Genau 200 Rissglas für den Shop. Kein Bonus, kein Zufall.",
 "500 Riftglass":
 	"500 Rissglas",
-"Exactly 500 Riftglass for the shop. No bonus, no chance.":
-	"Genau 500 Rissglas für den Shop. Kein Bonus, kein Zufall.",
 "1000 Riftglass":
 	"1000 Rissglas",
-"Exactly 1000 Riftglass for the shop. No bonus, no chance.":
-	"Genau 1000 Rissglas für den Shop. Kein Bonus, kein Zufall.",
 "2000 Riftglass":
 	"2000 Rissglas",
-"Exactly 2000 Riftglass for the shop. No bonus, no chance.":
-	"Genau 2000 Rissglas für den Shop. Kein Bonus, kein Zufall.",
 "5000 Riftglass":
 	"5000 Rissglas",
-"Exactly 5000 Riftglass for the shop. No bonus, no chance.":
-	"Genau 5000 Rissglas für den Shop. Kein Bonus, kein Zufall.",
 "10000 Riftglass":
 	"10000 Rissglas",
-"Exactly 10000 Riftglass for the shop. No bonus, no chance.":
-	"Genau 10000 Rissglas für den Shop. Kein Bonus, kein Zufall.",
 "Ring Tonic":
 	"Ring-Trank",
 "A Spirling gains 1 Ring at once. Never above the Ring cap.":
@@ -204,8 +190,6 @@ T = {
 	"Ein Lager-Fach mehr mit 30 Plätzen. Höchstens 12 zusätzliche Fächer.",
 "Wayfarer Pass":
 	"Wanderer-Pass",
-"+50% growth, 30 Riftglass every day, +1 starting energy, 1 extra Rift Breath per Warden battle, +1 bond try per battle. 4,99 EUR per month, renews automatically, cancel any time in the store.":
-	"+50 % Wachstum, jeden Tag 30 Rissglas, +1 Startenergie, 1 zusätzlicher Rissatem pro Wächterkampf, +1 Bond-Versuch pro Kampf. 4,99 € pro Monat, verlängert sich automatisch, jederzeit im Store kündbar.",
 "Starter Pack":
 	"Starterpaket",
 "300 Riftglass, 5 Ring Tonics, 1 Growth Crystal, 3 Rift Breaths, 3 Echo Scents. Once per account.":
@@ -1018,6 +1002,141 @@ T = {
 "Price: %d coins (you have %d)": "Preis: %d Münzen (du hast %d)",
 "What it does:": "Was es bewirkt:",
 "Buy for %d coins?": "Für %d Münzen kaufen?",
+# Pay-to-win step 7 (27 Nov 2026): Riftglass bonus, Monthly Card, seals VIII to X, Champions, deals.
+"100 Riftglass. First purchase of this pack per account: 100 more, 200 in total. Fixed amounts, no chance.":
+	"100 Rissglas. Erster Kauf dieses Pakets je Konto: 100 mehr, 200 Rissglas insgesamt. Feste Mengen, kein Zufall.",
+"220 Riftglass":
+	"220 Rissglas",
+"200 Riftglass + 20 bonus (+10%) = 220 Riftglass. First purchase of this pack per account: 200 more, 420 in total. Fixed amounts, no chance.":
+	"200 Rissglas + 20 Bonus (+10 %) = 220 Rissglas. Erster Kauf dieses Pakets je Konto: 200 mehr, 420 Rissglas insgesamt. Feste Mengen, kein Zufall.",
+"600 Riftglass":
+	"600 Rissglas",
+"500 Riftglass + 100 bonus (+20%) = 600 Riftglass. First purchase of this pack per account: 500 more, 1100 in total. Fixed amounts, no chance.":
+	"500 Rissglas + 100 Bonus (+20 %) = 600 Rissglas. Erster Kauf dieses Pakets je Konto: 500 mehr, 1100 Rissglas insgesamt. Feste Mengen, kein Zufall.",
+"1300 Riftglass":
+	"1300 Rissglas",
+"1000 Riftglass + 300 bonus (+30%) = 1300 Riftglass. First purchase of this pack per account: 1000 more, 2300 in total. Fixed amounts, no chance.":
+	"1000 Rissglas + 300 Bonus (+30 %) = 1300 Rissglas. Erster Kauf dieses Pakets je Konto: 1000 mehr, 2300 Rissglas insgesamt. Feste Mengen, kein Zufall.",
+"2800 Riftglass":
+	"2800 Rissglas",
+"2000 Riftglass + 800 bonus (+40%) = 2800 Riftglass. First purchase of this pack per account: 2000 more, 4800 in total. Fixed amounts, no chance.":
+	"2000 Rissglas + 800 Bonus (+40 %) = 2800 Rissglas. Erster Kauf dieses Pakets je Konto: 2000 mehr, 4800 Rissglas insgesamt. Feste Mengen, kein Zufall.",
+"7500 Riftglass":
+	"7500 Rissglas",
+"5000 Riftglass + 2500 bonus (+50%) = 7500 Riftglass. First purchase of this pack per account: 5000 more, 12500 in total. Fixed amounts, no chance.":
+	"5000 Rissglas + 2500 Bonus (+50 %) = 7500 Rissglas. Erster Kauf dieses Pakets je Konto: 5000 mehr, 12500 Rissglas insgesamt. Feste Mengen, kein Zufall.",
+"16000 Riftglass":
+	"16000 Rissglas",
+"10000 Riftglass + 6000 bonus (+60%) = 16000 Riftglass. First purchase of this pack per account: 10000 more, 26000 in total. Fixed amounts, no chance.":
+	"10000 Rissglas + 6000 Bonus (+60 %) = 16000 Rissglas. Erster Kauf dieses Pakets je Konto: 10000 mehr, 26000 Rissglas insgesamt. Feste Mengen, kein Zufall.",
+"Premium row of the 30-tier Pass. +50% growth, 30 Riftglass a day, +1 start energy, +1 Rift Breath per Warden battle, +1 bond try per battle. 4,99 EUR a month, renews, cancel any time in the store.":
+	"Premium-Reihe des Passes mit 30 Stufen. +50 % Wachstum, 30 Rissglas am Tag, +1 Startenergie, +1 Rissatem je Wächterkampf, +1 Bindungsversuch je Kampf. 4,99 € im Monat, verlängert sich, jederzeit im Store kündbar.",
+"Monthly Card":
+	"Monatskarte",
+"300 Riftglass at once and 100 Riftglass every day for 30 days: 3300 Riftglass in total. Collect them in the shop; missed days wait for you. No subscription, it never renews. Buying again adds 30 days.":
+	"300 Rissglas sofort und 30 Tage lang jeden Tag 100 Rissglas: 3300 Rissglas insgesamt. Abholen im Shop, verpasste Tage warten auf dich. Kein Abo, verlängert sich nie. Ein neuer Kauf hängt 30 Tage an.",
+"Power Seal VIII":
+	"Macht-Siegel VIII",
+"Your Spirlings deal 40% more damage. Replaces Power Seal VII (35%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.":
+	"Deine Spirlings richten 40 % mehr Schaden an. Ersetzt Macht-Siegel VII (35 %): du zahlst nur die Differenz. Wirkt in der Geschichte, in Raid-Rissen und in der Offenen Liga, nie in der Gleichstand-Liga. Dauerhaft.",
+"Power Seal IX":
+	"Macht-Siegel IX",
+"Your Spirlings deal 45% more damage. Replaces Power Seal VIII (40%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.":
+	"Deine Spirlings richten 45 % mehr Schaden an. Ersetzt Macht-Siegel VIII (40 %): du zahlst nur die Differenz. Wirkt in der Geschichte, in Raid-Rissen und in der Offenen Liga, nie in der Gleichstand-Liga. Dauerhaft.",
+"Power Seal X":
+	"Macht-Siegel X",
+"Your Spirlings deal 50% more damage. Replaces Power Seal IX (45%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.":
+	"Deine Spirlings richten 50 % mehr Schaden an. Ersetzt Macht-Siegel IX (45 %): du zahlst nur die Differenz. Wirkt in der Geschichte, in Raid-Rissen und in der Offenen Liga, nie in der Gleichstand-Liga. Dauerhaft.",
+"Guard Seal VIII":
+	"Schutz-Siegel VIII",
+"Your Spirlings take 40% less damage. Replaces Guard Seal VII (35%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.":
+	"Deine Spirlings erleiden 40 % weniger Schaden. Ersetzt Schutz-Siegel VII (35 %): du zahlst nur die Differenz. Wirkt in der Geschichte, in Raid-Rissen und in der Offenen Liga, nie in der Gleichstand-Liga. Dauerhaft.",
+"Guard Seal IX":
+	"Schutz-Siegel IX",
+"Your Spirlings take 45% less damage. Replaces Guard Seal VIII (40%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.":
+	"Deine Spirlings erleiden 45 % weniger Schaden. Ersetzt Schutz-Siegel VIII (40 %): du zahlst nur die Differenz. Wirkt in der Geschichte, in Raid-Rissen und in der Offenen Liga, nie in der Gleichstand-Liga. Dauerhaft.",
+"Guard Seal X":
+	"Schutz-Siegel X",
+"Your Spirlings take 50% less damage. Replaces Guard Seal IX (45%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.":
+	"Deine Spirlings erleiden 50 % weniger Schaden. Ersetzt Schutz-Siegel IX (45 %): du zahlst nur die Differenz. Wirkt in der Geschichte, in Raid-Rissen und in der Offenen Liga, nie in der Gleichstand-Liga. Dauerhaft.",
+"Pace Seal VI":
+	"Tempo-Siegel VI",
+"Your Spirlings are 30% faster. Replaces Pace Seal V (25%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.":
+	"Deine Spirlings sind 30 % schneller. Ersetzt Tempo-Siegel V (25 %): du zahlst nur die Differenz. Wirkt in der Geschichte, in Raid-Rissen und in der Offenen Liga, nie in der Gleichstand-Liga. Dauerhaft.",
+"Pace Seal VII":
+	"Tempo-Siegel VII",
+"Your Spirlings are 35% faster. Replaces Pace Seal VI (30%): you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.":
+	"Deine Spirlings sind 35 % schneller. Ersetzt Tempo-Siegel VI (30 %): du zahlst nur die Differenz. Wirkt in der Geschichte, in Raid-Rissen und in der Offenen Liga, nie in der Gleichstand-Liga. Dauerhaft.",
+"Champion Fulgorath at Ring 50":
+	"Champion Fulgorath auf Ring 50",
+"Fulgorath joins your team at Ring 50 with the highest Spark in every value. Fierce temperament: hits harder. Fixed values, no chance. Never traded or lent. The top Spark counts in the story; leagues and Raid Rifts build their teams from species, Ring and techniques. Once per account.":
+	"Fulgorath kommt auf Ring 50 mit dem höchsten Funken in jedem Wert in dein Team. Wesen Wild: trifft härter. Feste Werte, kein Zufall. Nie getauscht oder verliehen. Der höchste Funke zählt in der Geschichte; Ligen und Raid-Risse bauen ihre Teams aus Art, Ring und Techniken. Einmal je Konto.",
+"Champion Ardenthal at Ring 50":
+	"Champion Ardenthal auf Ring 50",
+"Ardenthal joins your team at Ring 50 with the highest Spark in every value. Keen temperament: focuses sharper. Fixed values, no chance. Never traded or lent. The top Spark counts in the story; leagues and Raid Rifts build their teams from species, Ring and techniques. Once per account.":
+	"Ardenthal kommt auf Ring 50 mit dem höchsten Funken in jedem Wert in dein Team. Wesen Wach: konzentriert sich schärfer. Feste Werte, kein Zufall. Nie getauscht oder verliehen. Der höchste Funke zählt in der Geschichte; Ligen und Raid-Risse bauen ihre Teams aus Art, Ring und Techniken. Einmal je Konto.",
+"Champion Obelordan at Ring 50":
+	"Champion Obelordan auf Ring 50",
+"Obelordan joins your team at Ring 50 with the highest Spark in every value. Stalwart temperament: takes blows better. Fixed values, no chance. Never traded or lent. The top Spark counts in the story; leagues and Raid Rifts build their teams from species, Ring and techniques. Once per account.":
+	"Obelordan kommt auf Ring 50 mit dem höchsten Funken in jedem Wert in dein Team. Wesen Standhaft: steckt Treffer besser weg. Feste Werte, kein Zufall. Nie getauscht oder verliehen. Der höchste Funke zählt in der Geschichte; Ligen und Raid-Risse bauen ihre Teams aus Art, Ring und Techniken. Einmal je Konto.",
+"Champion Bundle":
+	"Champion-Paket",
+"3000 Riftglass, 10x Great Ring Tonic, 5x Great Growth Crystal, 10x Grand Tonic, 5x Bond Seal, 1x Ring Crown. One by one worth 16500 Riftglass. Once per account.":
+	"3000 Rissglas, 10x Großer Ring-Trank, 5x Großer Wachstumskristall, 10x Großer Heiltrank, 5x Bondsiegel, 1x Ring-Krone. Einzeln 16500 Rissglas wert. Einmal je Konto.",
+"Monday Deal":
+	"Angebot am Montag",
+"5x Great Ring Tonic. One by one 2000 Riftglass. On sale every Monday, once a week.":
+	"5x Großer Ring-Trank. Einzeln 2000 Rissglas. Jeden Montag im Angebot, einmal pro Woche.",
+"Tuesday Deal":
+	"Angebot am Dienstag",
+"3x Mighty Growth Crystal. One by one 2100 Riftglass. On sale every Tuesday, once a week.":
+	"3x Mächtiger Wachstumskristall. Einzeln 2100 Rissglas. Jeden Dienstag im Angebot, einmal pro Woche.",
+"Wednesday Deal":
+	"Angebot am Mittwoch",
+"10x Grand Tonic. One by one 3000 Riftglass. On sale every Wednesday, once a week.":
+	"10x Großer Heiltrank. Einzeln 3000 Rissglas. Jeden Mittwoch im Angebot, einmal pro Woche.",
+"Thursday Deal":
+	"Angebot am Donnerstag",
+"3x Stat Crystal +10. One by one 2100 Riftglass. On sale every Thursday, once a week.":
+	"3x Wertkristall +10. Einzeln 2100 Rissglas. Jeden Donnerstag im Angebot, einmal pro Woche.",
+"Friday Deal":
+	"Angebot am Freitag",
+"5x Bond Lure IV. One by one 2500 Riftglass. On sale every Friday, once a week.":
+	"5x Bindungs-Köder IV. Einzeln 2500 Rissglas. Jeden Freitag im Angebot, einmal pro Woche.",
+"Saturday Deal":
+	"Angebot am Samstag",
+"3x Wish Charm. One by one 3000 Riftglass. On sale every Saturday, once a week.":
+	"3x Wunschtalisman. Einzeln 3000 Rissglas. Jeden Samstag im Angebot, einmal pro Woche.",
+"Sunday Deal":
+	"Angebot am Sonntag",
+"2x Ring Crown. One by one 4000 Riftglass. On sale every Sunday, once a week.":
+	"2x Ring-Krone. Einzeln 4000 Rissglas. Jeden Sonntag im Angebot, einmal pro Woche.",
+"Power Week":
+	"Kraft-Woche",
+"1x Ring Elixir, 5x Stat Crystal +10. One by one 5000 Riftglass. On sale every 4 weeks, Monday to Sunday, once that week.":
+	"1x Ring-Elixier, 5x Wertkristall +10. Einzeln 5000 Rissglas. Alle 4 Wochen im Angebot, Montag bis Sonntag, einmal in dieser Woche.",
+"Bond Week":
+	"Bindungs-Woche",
+"10x Bond Seal. One by one 5000 Riftglass. On sale every 4 weeks, Monday to Sunday, once that week.":
+	"10x Bondsiegel. Einzeln 5000 Rissglas. Alle 4 Wochen im Angebot, Montag bis Sonntag, einmal in dieser Woche.",
+"Battle Week":
+	"Kampf-Woche",
+"10x Deep Rift Breath, 10x Grand Tonic. One by one 6000 Riftglass. On sale every 4 weeks, Monday to Sunday, once that week.":
+	"10x Tiefer Rissatem, 10x Großer Heiltrank. Einzeln 6000 Rissglas. Alle 4 Wochen im Angebot, Montag bis Sonntag, einmal in dieser Woche.",
+"Growth Week":
+	"Wachstums-Woche",
+"5x Mighty Growth Crystal, 5x Great Coin Gleam. One by one 5500 Riftglass. On sale every 4 weeks, Monday to Sunday, once that week.":
+	"5x Mächtiger Wachstumskristall, 5x Großer Münzglanz. Einzeln 5500 Rissglas. Alle 4 Wochen im Angebot, Montag bis Sonntag, einmal in dieser Woche.",
+"%d Riftglass every day for %d days":
+	"%d Rissglas jeden Tag, %d Tage lang",
+"Collected in the shop once a day. Missed days wait for you.":
+	"Wird einmal am Tag im Shop abgeholt. Verpasste Tage warten auf dich.",
+"%d days":
+	"%d Tage",
+"On sale every %s.":
+	"Jeden %s im Angebot.",
+"On sale every %d weeks, Monday to Sunday.":
+	"Alle %d Wochen im Angebot, Montag bis Sonntag.",
 }
 
 # Format strings that read the same in every language ("5x Ring Tonic").

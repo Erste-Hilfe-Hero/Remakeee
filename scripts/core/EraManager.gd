@@ -56,6 +56,8 @@ func _process(_delta: float) -> void:
 		return
 	var first: bool = _screen_seen.is_empty()
 	_screen_seen = seen
+	# Upright on a phone, free on a large screen, again after every fold or unfold (1.3.2).
+	ScreenFit.apply_orientation()
 	if first:
 		return
 	var vp_before: Vector2 = w.get_visible_rect().size

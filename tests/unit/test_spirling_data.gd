@@ -89,25 +89,25 @@ func _lines_in(region: String) -> Dictionary:
 func test_corvane_ashmere_and_solenne_lines_wait_in_the_data() -> void:
 	Database.load_all()
 	# Includes the legendaries Zephyrel (Corvane), Monolurk and Vorlucent (Ashmere), Lumivane (Solenne).
-	assert_eq(_lines_in("corvane").size(), 31, "9 lines before and 22 Act II lines (tools/art/lines/corvane.py)")
+	assert_eq(_lines_in("corvane").size(), 36, "9 lines before, 22 Act II lines (tools/art/lines/corvane.py) and 5 more in 1.3.2 (corvane_more.py)")
 	var corvane: int = 0
 	for sd: SpirlingData in Database.spirlings.values():
 		corvane += 1 if sd.region == "corvane" and sd.rarity != "ancient" else 0
-	assert_eq(corvane, 70, "every story act has 70 own Spirlings (legendaries not counted)")
-	assert_eq(_lines_in("ashmere").size(), 32, "8 lines before and 24 Act III lines (tools/art/lines/ashmere.py)")
+	assert_eq(corvane, 80, "every story act has 70 own Spirlings plus 10 from 1.3.2 (legendaries not counted)")
+	assert_eq(_lines_in("ashmere").size(), 36, "8 lines before, 24 Act III lines (tools/art/lines/ashmere.py) and 4 more in 1.3.2 (ashmere_more.py)")
 	var ashmere: int = 0
 	for sd: SpirlingData in Database.spirlings.values():
 		ashmere += 1 if sd.region == "ashmere" and sd.rarity != "ancient" else 0
-	assert_eq(ashmere, 70, "every story act has 70 own Spirlings (legendaries not counted)")
-	assert_eq(_lines_in("solenne").size(), 31, "7 lines before and 24 Act IV lines (tools/art/lines/solenne.py)")
+	assert_eq(ashmere, 80, "every story act has 70 own Spirlings plus 10 from 1.3.2 (legendaries not counted)")
+	assert_eq(_lines_in("solenne").size(), 36, "7 lines before, 24 Act IV lines (tools/art/lines/solenne.py) and 5 more in 1.3.2 (solenne_more.py)")
 	var solenne: int = 0
 	for sd: SpirlingData in Database.spirlings.values():
 		solenne += 1 if sd.region == "solenne" and sd.rarity != "ancient" else 0
-	assert_eq(solenne, 70, "every story act has 70 own Spirlings (legendaries not counted)")
+	assert_eq(solenne, 80, "every story act has 70 own Spirlings plus 10 from 1.3.2 (legendaries not counted)")
 	var veydal: int = 0
 	for sd: SpirlingData in Database.spirlings.values():
 		veydal += 1 if sd.region == "veydal" and sd.rarity != "ancient" else 0
-	assert_eq(veydal, 70, "every story act has 70 own Spirlings (legendaries not counted, 14 Act I lines in tools/art/lines/veydal.py)")
+	assert_eq(veydal, 80, "every story act has 70 own Spirlings plus 10 from 1.3.2 (legendaries not counted, 14 Act I lines in tools/art/lines/veydal.py, 5 in veydal_more.py)")
 
 	for sd: SpirlingData in Database.spirlings.values():
 		if sd.region != "veydal":
@@ -128,7 +128,7 @@ func test_closed_regions_stay_out_of_the_spirlog_and_the_wild() -> void:
 			var own: String = Database.species(str(s.species)).region
 			assert_gte(WorldValidator.REGIONS.find(region), 0, "%s has a known region" % area)
 			assert_lte(WorldValidator.REGIONS.find(own), WorldValidator.REGIONS.find(region), "%s in %s" % [s.species, area])
-	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 71)
+	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 81, "Corvane: 70 Act II kinds, 10 from 1.3.2 and its legendary")
 	assert_true(SpirlogBook.region_open("solenne", {"rift_shade_sealed": true}), "the sand road opens the chapter")
 	assert_false(SpirlogBook.region_open("solenne", {}))
 

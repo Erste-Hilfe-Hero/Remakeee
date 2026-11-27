@@ -257,11 +257,17 @@ var large_text: bool = false
 ## Day and night tint and encounters on outdoor maps (item 43).
 var day_night: bool = true
 ## Weather in the world (area 3 item 1145); off means always clear.
-## Weather on the map and in battle. Off by default since 1.3.1 (owner 25.11.2026); Settings
-## switch it back on.
-var weather: bool = false
-## Settings files from before 1.3.1 lack this mark: their "weather" is turned off once.
-const WEATHER_MARK: String = "weather_131"
+## Weather on the map and in battle. On by default since 1.3.2 (owner 27.11.2026, replaces the
+## 1.3.1 default of off); Settings switch it off.
+var weather: bool = true
+## Settings files written by 1.3.2 or later carry this mark: their "weather" is the player's choice.
+const WEATHER_MARK: String = "weather_132"
+## 1.3.1 turned the weather off for everyone and wrote this mark. Off in such a file may be that
+## forced default, not a choice, so it is turned on once.
+const WEATHER_MARK_131: String = "weather_131"
+## How much of the weather is drawn (WeatherCycle.FX_LEVELS): "full", "low" (half the drops, no
+## splashes) or "off" (the tint only). The weather and its rules are the same at every level.
+var weather_fx: String = "full"
 ## Minimap (area 3 item 1272): "on", "off" or "outdoor" (only outside).
 var minimap: String = "on"
 ## Night mode (200 list item 127): 0 off, 1 dim, 2 warm. A tint over the whole screen for dark rooms.
@@ -432,7 +438,8 @@ func shift_temper(s: Spirling, temper_id: String, item_id: String = "rg_temper_s
 func use_gleam_prism(s: Spirling, item_id: String = "rg_gleam_prism") -> bool:
 	if item_count(item_id) <= 0 or s.gleam_boost:
 		return false
-	s.gleam = true
+	# A wild Gleam keeps its kind; any other Spirling takes the classic kind (no kind is sold).
+	GleamRules.apply(s, GleamRules.kind_of(s) if s.gleam else GleamRules.CLASSIC)
 	s.gleam_boost = true
 	note_gleam_bonded(s)
 	return take_item(item_id)
@@ -927,7 +934,7 @@ func settings_to_dict() -> Dictionary:
 		"one_hand": one_hand, "bag_sort": bag_sort, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice, "auto_text": auto_text,
 		"tips": tips_enabled, "play_reminder": play_reminder, "goal_line": goal_line, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, WEATHER_MARK: true, "minimap": minimap, "night_mode": night_mode, "language": language,
+		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, WEATHER_MARK: true, "weather_fx": weather_fx, "minimap": minimap, "night_mode": night_mode, "language": language,
 		"terms_version": terms_version}
 
 func settings_from_dict(d: Dictionary) -> void:
@@ -978,7 +985,10 @@ func settings_from_dict(d: Dictionary) -> void:
 	large_text = bool(d.get("large_text", false))
 	day_night = bool(d.get("day_night", true))
 	# Off for everyone with 1.3.1 (owner 25.11.2026); a later choice in Settings is kept.
-	weather = bool(d.get("weather", false)) if d.has(WEATHER_MARK) else false
+	# No mark at all: a file from before 1.3.1, where the weather was on unless the player
+	# switched it off, so its "weather" is kept.
+	weather = true if d.has(WEATHER_MARK_131) and not d.has(WEATHER_MARK) else bool(d.get("weather", true))
+	weather_fx = str(d.get("weather_fx", "full")) if str(d.get("weather_fx", "full")) in WeatherCycle.FX_LEVELS else "full"
 	minimap = str(d.get("minimap", "on")) if str(d.get("minimap", "on")) in Survey.MINIMAP_MODES else "on"
 	night_mode = clampi(int(d.get("night_mode", 0)), 0, NIGHT_MODE_NAMES.size() - 1)
 	language = str(d.get("language", ""))
@@ -1200,7 +1210,8 @@ func receive_spirling(s: Spirling) -> bool:
 ## regional imprints, Prism colours and temperaments met so far (plan area 1, item 7).
 static func new_spirlog_entry() -> Dictionary:
 	return {"seen": false, "bonded": false, "first_map": "", "first_day": 0,
-		"variants": [], "prism_seen": false, "gleam_seen": false, "gleam_bonded": false, "tempers": [], "maps": [], "battles": 0, "event": ""}
+		"variants": [], "prism_seen": false, "gleam_seen": false, "gleam_bonded": false,
+		"gleam_kinds_seen": [], "gleam_kinds_bonded": [], "tempers": [], "maps": [], "battles": 0, "event": ""}
 
 ## Fills missing fields of an older Spirlog entry ({"seen", "bonded"} only) with defaults.
 static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
@@ -1217,6 +1228,21 @@ static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
 	out["prism_seen"] = out.prism_seen is bool and out.prism_seen
 	out["gleam_bonded"] = out.gleam_bonded is bool and out.gleam_bonded
 	out["gleam_seen"] = out.gleam_seen is bool and out.gleam_seen or out.gleam_bonded
+	# Gleam kinds (1.3.2): which kinds were seen and bonded. Entries from before the kinds only
+	# knew the classic Gleam.
+	for k: String in ["gleam_kinds_seen", "gleam_kinds_bonded"]:
+		var ids: Array = []
+		for id: Variant in (out[k] if out[k] is Array else []):
+			if GleamRules.is_kind(str(id)) and not ids.has(str(id)):
+				ids.append(str(id))
+		out[k] = ids
+	if bool(out.gleam_bonded) and (out.gleam_kinds_bonded as Array).is_empty():
+		out["gleam_kinds_bonded"] = [GleamRules.CLASSIC]
+	for id: Variant in out.gleam_kinds_bonded:
+		if not (out.gleam_kinds_seen as Array).has(id):
+			(out.gleam_kinds_seen as Array).append(id)
+	if bool(out.gleam_seen) and (out.gleam_kinds_seen as Array).is_empty():
+		out["gleam_kinds_seen"] = [GleamRules.CLASSIC]
 	out["event"] = out.event if out.event is String else ""
 	for k: String in ["variants", "tempers", "maps"]:
 		if not out[k] is Array:
@@ -1313,6 +1339,10 @@ func note_gleam_bonded(s: Spirling) -> void:
 	var e: Dictionary = upgrade_spirlog_entry(spirlog.get(s.data.species_name, {}))
 	e["gleam_seen"] = true
 	e["gleam_bonded"] = true
+	var id: String = GleamRules.kind_of(s)
+	for k: String in ["gleam_kinds_seen", "gleam_kinds_bonded"]:
+		if not (e[k] as Array).has(id):
+			(e[k] as Array).append(id)
 	spirlog[s.data.species_name] = e
 
 ## Records what [param s] shows the Spirlog: its Prism colour, imprint and temperament.
@@ -1322,6 +1352,8 @@ func note_spirlog(s: Spirling, show_temper: bool = true) -> void:
 		e["prism_seen"] = true
 	if s.gleam:
 		e["gleam_seen"] = true
+		if not (e.gleam_kinds_seen as Array).has(GleamRules.kind_of(s)):
+			(e.gleam_kinds_seen as Array).append(GleamRules.kind_of(s))
 	if not s.variant.is_empty() and not (e.variants as Array).has(s.variant):
 		(e.variants as Array).append(s.variant)
 	var t: String = str(s.temperament().id)

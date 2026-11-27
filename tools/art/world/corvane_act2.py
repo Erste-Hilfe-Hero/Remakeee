@@ -270,7 +270,7 @@ def stillwater(world):
          "blocks": [gate(10, 13, "beat_story_kestra_2"), gate(10, 14, "beat_story_kestra_2")],
          "secrets": [secret(0, 20, "tonic", "find_still_west", 2), secret(11, 22, "remedy", "find_still_east"),
                      secret(0, 4, "strong_tonic", "find_still_terrace")],
-         "spots": {"kestra": [7, 4], "page_8": [10, 9]}}
+         "spots": {"kestra": [10, 4], "page_8": [10, 9]}}
     finish(world, mid, m)
 
 

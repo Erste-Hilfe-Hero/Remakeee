@@ -1,0 +1,38 @@
+{
+ "name": "Engraver's Workshop",
+ "region": "ashmere",
+ "biome": "town",
+ "backdrop": "ember",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCffffCCW",
+  "WffffffffW",
+  "WfCCffCCfW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 8,
+   "to": "cinderfold",
+   "tx": 2,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "mira",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "map_pass/cinderfold_workshop_mira",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

@@ -19,8 +19,8 @@ func _fronts() -> Array[String]:
 func _load(path: String) -> Image:
 	return Image.load_from_file(ProjectSettings.globalize_path(path))
 
-func test_vellmarch_has_seventy_kinds() -> void:
-	assert_gte(_fronts().size(), 70, "70 own Era II Spirlings for Vellmarch")
+func test_vellmarch_has_eighty_kinds() -> void:
+	assert_gte(_fronts().size(), 80, "80 own Era II Spirlings for Vellmarch (70 plus 10 from 1.3.2)")
 
 func test_every_front_has_a_back() -> void:
 	for f: String in _fronts():

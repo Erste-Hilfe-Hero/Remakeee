@@ -53,11 +53,13 @@ func test_validator_finds_bad_prices() -> void:
 	assert_false(ShopValidator.check([bad] as Array[Dictionary]).is_empty(), "never under 13")
 
 func test_riftglass_packs_have_fixed_rate() -> void:
+	# Base 100 Riftglass per 0,99 EUR (item 4218); since step 7 (Ali, 27 Nov 2026) a fixed bonus on top.
 	var packs: Dictionary = {}
 	for o: Dictionary in ShopCatalog.offers():
-		if o.kind == "currency":
-			packs[int(o.grants[0].n)] = int(o.eur_cents)
-	assert_eq(packs, {100: 99, 200: 199, 500: 499, 1000: 999, 2000: 1999, 5000: 4999, 10000: 9999}, "no bonus amounts (item 4218)")
+		if str(o.id).begins_with("rg_glass_") and o.kind == "currency":
+			packs[ShopCatalog.rg_base(o)] = [int(o.eur_cents), int(o.grants[0].n)]
+	assert_eq(packs, {100: [99, 100], 200: [199, 220], 500: [499, 600], 1000: [999, 1300], 2000: [1999, 2800],
+		5000: [4999, 7500], 10000: [9999, 16000]}, "fixed base rate, fixed bonus amounts")
 
 func test_euro_hint_rounds_down() -> void:
 	assert_eq(ShopCatalog.euro_cents(100), 99)

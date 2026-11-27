@@ -31,7 +31,7 @@ Instructions for coding agents (Codex, Claude, etc.) working in this repo. Read 
 | Language | GDScript with static typing everywhere (`var x: int`, typed arrays and dictionaries) |
 | Renderer | `gl_compatibility` |
 | Internal resolution | 144×256 portrait (Era I/II). Later eras raise it via `EraManager`. |
-| Stretch | mode `viewport`, aspect `expand`, scale_mode `integer` |
+| Stretch | mode `viewport`, aspect `expand`, scale_mode `fractional`; `ScreenFit` sets the view to window / whole pixel scale, so it fills every screen with no bars (1.3.2) |
 | Pixel snapping | `rendering/2d/snap/snap_2d_transforms_to_pixel=true`, default texture filter Nearest |
 | Maps | Tiled 1.12 + YATI importer → **TileMapLayer** nodes (never the deprecated `TileMap`) |
 | Android | target SDK 36, min SDK 24, arm64-v8a + armeabi-v7a + x86_64, AAB via Gradle build, Play App Signing |

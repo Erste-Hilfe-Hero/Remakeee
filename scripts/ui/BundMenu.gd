@@ -66,7 +66,7 @@ static func run(menu: MenuHost) -> void:
 static func _run_none(menu: MenuHost, invites: Array) -> bool:
 	var labels: Array[String] = []
 	for i: Dictionary in invites:
-		labels.append(Loc.t("Invitation: %s (%d) from %s") % [BundWords.name_of(int(i.name[0]), int(i.name[1])), int(i.size), str(i.by)])
+		labels.append(Loc.f("Invitation: %s (%d) from %s", [BundWords.name_of(int(i.name[0]), int(i.name[1])), int(i.size), str(i.by)]))
 	labels.append_array(["Found a bund...", "Ask to join a bund...", "Find a bund..."] as Array[String])
 	var idx: int = await menu.pick_strings("You are not in a bund yet.", labels)
 	if idx < 0:

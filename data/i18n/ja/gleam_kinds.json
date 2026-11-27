@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table gleam_kinds, written by tools/i18n/locales_gleam_kinds.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  " Frost glitters on its hide: a Rime Gleam!": " 体に霜がきらめく。霜の輝きだ！",
+  " It glows like the last of the sun: a Duskgold Gleam!": " 沈む夕日のように輝いている。夕金の輝きだ！",
+  " It is washed in deep ink: an Inkwash Gleam!": " 深い墨に染まっている。墨染めの輝きだ！",
+  " Its colours never hold still: an Opaline Gleam!": " 色がひとときも定まらない。乳白の輝きだ！",
+  "%d seen, %d bonded": "%d 回目撃、%d 回絆",
+  "Duskgold Gleam": "夕金の輝き",
+  "Gleams bonded: %s": "絆を結んだ輝き: %s",
+  "Gleams seen: %s": "目撃した輝き: %s",
+  "Inkwash Gleam": "墨染めの輝き",
+  "Opaline Gleam": "乳白の輝き",
+  "Rarer Gleams show their own mark:": "より珍しい輝きには専用の印がある:",
+  "Rime Gleam": "霜の輝き"
+ }
+}

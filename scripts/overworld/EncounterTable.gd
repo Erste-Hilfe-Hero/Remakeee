@@ -128,7 +128,7 @@ static func roll(id: String, rng: RandomNumberGenerator, boost: Array[int] = [],
 			# Meeting the same kind again and again raises the Prism chance too (WildRules).
 			wild.prism = rng.randf() < WildRules.prism_chance(GleamRules.chain_for(chain, sd.species_name))
 			WildRules.roll_held(wild, rng)
-			wild.gleam = GleamRules.roll(rng, GleamRules.chain_for(chain, sd.species_name), ShopEffects.gleam_mult())
+			GleamRules.apply(wild, GleamRules.roll_kind(rng, GleamRules.chain_for(chain, sd.species_name), 1.0, ShopEffects.gleam_mult()))
 			return wild
 	return null
 

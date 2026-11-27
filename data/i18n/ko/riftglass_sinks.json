@@ -1,0 +1,31 @@
+{
+ "_comment": "Translations of the German table riftglass_sinks, written by tools/i18n/locales_riftglass_sinks.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s: %d Riftglass": "%s: 균열유리 %d",
+  "Bond boost %s? You have %d Riftglass.": "유대 부스트 %s? 균열유리 %d개가 있다.",
+  "Boost: %d Riftglass": "부스트: 균열유리 %d",
+  "Bring one home now": "지금 데려오기",
+  "Bring this Spirling home now? %d h left.": "이 Spirling을 지금 데려올까? %d시간 남았다.",
+  "Continue for %s? Your whole team stands up with full Vigor.": "%s 사용해서 계속할까? 팀 전원이 기력을 가득 채우고 일어선다.",
+  "Daily gift: +%d Riftglass": "일일 선물: 균열유리 +%d",
+  "Growth x2 for the next %d battles?": "다음 배틀 %d번 동안 성장 x2로 할까?",
+  "Growth x2: %d": "성장 x2: %d",
+  "Heal team: %d": "팀 회복: %d",
+  "Heal the whole team now? Full Vigor, Energy, no states.": "지금 팀 전원을 회복할까? 기력과 에너지 가득, 상태 이상 없음.",
+  "Light it again": "다시 켜기",
+  "Light the lamp again tonight? Another visitor may follow the light.": "오늘 밤 등불을 다시 켤까? 다른 손님이 빛을 따라올지도 모른다.",
+  "No boost": "부스트 없이",
+  "No connection right now. Riftglass needs the server.": "지금은 연결이 없다. 균열유리는 서버가 필요하다.",
+  "Not enough Riftglass: this costs %d, you have %d.": "균열유리가 부족하다. 필요 %d, 보유 %d.",
+  "Riftglass flares! Your whole team stands up again with full Vigor.": "균열유리가 빛난다! 팀 전원이 기력을 가득 채우고 다시 일어선다.",
+  "Riftglass holds you in place. Your team is rested again.": "균열유리가 너를 그 자리에 붙잡아 둔다. 팀이 다시 회복했다.",
+  "Riftglass is locked for now. Look in the shop under My purchases.": "균열유리가 지금은 잠겨 있다. 상점의 구매 내역을 확인하자.",
+  "Riftglass is not available on this account.": "이 계정에서는 균열유리를 쓸 수 없다.",
+  "Riftglass shop": "균열유리 상점",
+  "Stay right before the Warden? Your team is rested.": "수호자 바로 앞에 머물까? 팀은 회복된 상태다.",
+  "That did not work. No Riftglass was taken.": "잘되지 않았다. 균열유리는 쓰이지 않았다.",
+  "That was a lot in a short time. Please wait a while.": "짧은 시간에 너무 많았다. 잠시 기다려 줘.",
+  "That was the last one here.": "여기서는 그게 마지막이었다.",
+  "You have %d Riftglass.": "균열유리가 %d개 있다."
+ }
+}

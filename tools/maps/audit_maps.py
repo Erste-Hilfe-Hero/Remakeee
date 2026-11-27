@@ -9,6 +9,10 @@ The baseline lists the findings still open (or accepted on purpose, with a "why"
 its line from the baseline (--write-baseline keeps the "why" of lines that stay); a new map must
 not add findings. CI runs --check, and also fails when a baseline line is already fixed so the
 list never goes stale.
+This audit looks at single maps and warp pairs. The whole world as one travel graph (every map
+reached from the start, no one-way traps, story regions in order, ferries, lines and story warps)
+is checked by scripts/core/WorldGraph.gd: tests/unit/test_world_graph.gd, or the report
+godot --headless --path . -s res://tools/maps/world_graph.gd
 
 Reads data/maps/*.json (and their floors) with the same tile rules as TilesetFactory and
 tools/art/preview_map.py. Kinds of finding:

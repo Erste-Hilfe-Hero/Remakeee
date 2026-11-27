@@ -1,0 +1,22 @@
+# German texts for the new shop screen (pay-to-win shop rebuild, Ali 27.11.2026): tabs, tags,
+# buy buttons and the Starter Pack note (scripts/shop/ShopScreen.gd).
+T = {
+"Featured": "Empfohlen",
+"Bestseller": "Bestseller",
+"Best value": "Bester Wert",
+"Popular": "Beliebt",
+"Limited": "Begrenzt",
+"All advantages": "Alle Vorteile",
+"Show the pass": "Pass ansehen",
+"Use it": "Benutzen",
+"Pay %d Riftglass": "%d Rissglas zahlen",
+"After the tier before it": "Nach der Stufe davor",
+"Later in the journey": "Später auf der Reise",
+"Owned": "Deins",
+"Show": "Ansehen",
+"+%d %% bonus": "+%d %% Bonus",
+"First buy x2": "1. Kauf x2",
+"Until %s": "Bis %s",
+"A one-time pack for your journey": "Ein einmaliges Paket für deine Reise",
+"Show offer": "Angebot ansehen",
+}

@@ -34,9 +34,14 @@ Diese Regeln gelten für jedes Angebot. Tests und `tools/ip_check.sh` prüfen si
    Spirlings und Shop-Gegenstände sind nicht tauschbar und nicht ausleihbar.
 8. **Faire Liga.** Die Gleichstand-Liga (Standard, unter 16 voreingestellt) schaltet gekaufte Vorteile ab.
    Jedes Vorteils-Angebot sagt, ob es in der Offenen Liga wirkt.
-9. **Rissglas** (EN "Riftglass") ist die einzige Premium-Währung: 100 Rissglas = 0,99 €, feste Pakete
-   ohne Bonusmengen, alle Rissglas-Preise sind Vielfache von 100. Rissglas gibt es nur im Shop (und
-   täglich mit dem Wanderer-Pass), nie in der Spielwelt. Händler in der Welt nehmen nur Münzen.
+9. **Rissglas** (EN "Riftglass") ist die einzige Premium-Währung: 100 Rissglas = 0,99 € Grundmenge, alle
+   Rissglas-Preise sind Vielfache von 100. Seit Schritt 7 (27. 11. 2026, Ali) haben die Rissglas-Pakete feste
+   Bonusmengen (+10 % bis +60 %, die Gesamtmenge steht im Namen) und der erste Kauf jedes Pakets je Konto gibt
+   die Grundmenge doppelt. Rissglas kommt aus dem Shop (Pakete, Monatskarte), aus der Pass-Bahn mit 30 Stufen
+   (freie Reihe 380, Premium-Reihe 1500 je Saison, PR #622; dazu täglich 30 mit dem Wanderer-Pass) und aus dem
+   täglichen Geschenk von 20 Rissglas (`rg_daily_claim`, PR #624: einmal je Berliner Tag, nur online, nicht in
+   Altersstufe 0). Händler in der Welt nehmen nur Münzen. Ausgeben kann man Rissglas im Shop und im Spiel
+   (Abschnitt "Rissglas im Spiel" unter Schritt 7).
 10. **Guthaben liegt nur auf dem Server** (`wallets`, Buchungen in `ledger`), nie im Spielstand.
 
 ## Was nie verkauft wird
@@ -220,6 +225,94 @@ Abschnitt 3 die Punkte 50, 51, 57, 58 und 60.
 - Alle 30 neuen Angebote nur für Rissglas (`rg_only`), feste Inhalte, Euro-Gegenwert am Angebot, ab Altersstufe 13.
   **Keine neuen Store-Produkte** (`store/products.json` hat keine neue ID).
 
+## Pay-to-win, Schritt 7 (27.11.2026)
+
+Ali: "Stell das Spiel auf Pay to Win um und mach 'ne gute Arbeit beim Shop, dass die Leute auch wirklich was
+kaufen" und "diese Währung ... dass man auch wirklich was davon hat, wenn man es kauft". Katalog v39.
+
+**Rissglas-Pakete** (alte Kennungen und Produkt-IDs bleiben, nur Menge, Name und Text sind neu). Die Gesamtmenge
+steht im Grant (`{"t": "rg", "n": ...}`), `bonus_pct` ist nur die Anzeige. `first_buy_double`: der erste Kauf
+dieses Pakets je Konto gibt die Grundmenge noch einmal dazu (Server, Buchung `first_double`). Gezählt werden alle
+Käufe des Pakets, auch erstattete: Erstatten und neu kaufen verdoppelt nie zweimal, eine Erstattung nimmt das
+Doppelte mit zurück.
+
+| Paket | Preis | Bonus | Normal | Erster Kauf |
+| --- | --- | --- | --- | --- |
+| `rg_glass_100` | 0,99 € | - | 100 | 200 |
+| `rg_glass_200` | 1,99 € | +10 % | 220 | 420 |
+| `rg_glass_500` | 4,99 € | +20 % | 600 | 1100 |
+| `rg_glass_1000` | 9,99 € | +30 % | 1300 | 2300 |
+| `rg_glass_2000` | 19,99 € | +40 % | 2800 | 4800 |
+| `rg_glass_5000` | 49,99 € | +50 % | 7500 | 12500 |
+| `rg_glass_10000` | 99,99 € | +60 % | 16000 | 26000 |
+
+**Neue Angebote**
+
+| Angebot | Inhalt | Preis | Store |
+| --- | --- | --- | --- |
+| Monatskarte (`rg_monthly_card`) | 300 Rissglas sofort, 30 Tage lang 100 am Tag, zusammen 3300. Kein Abo: ein Kauf, verlängert sich nie, ein neuer Kauf hängt 30 Tage an. Verpasste Tage bleiben abholbar. | 4,99 € | neu, Verbrauchsartikel |
+| Macht-Siegel VIII bis X (`rg_power_seal_8..10`) | +40 / 45 / 50 % Schaden, Stufen in Reihenfolge (`tier:power_seal:7` ...) | 3500, 4000, 5000 Rissglas | nur Rissglas |
+| Schutz-Siegel VIII bis X (`rg_guard_seal_8..10`) | 40 / 45 / 50 % weniger Schaden | 3500, 4000, 5000 Rissglas | nur Rissglas |
+| Tempo-Siegel VI und VII (`rg_speed_seal_6..7`) | +30 / 35 % Tempo | 2500, 3000 Rissglas | nur Rissglas |
+| Champion Fulgorath / Ardenthal / Obelordan (`rg_champion_<art>`) | die Art auf Ring 50, Funken 12 in jedem Wert, festes Wesen (Wild / Wach / Standhaft), einmal je Konto, nicht tauschbar | 24,99 € oder 2500 Rissglas | neu, Non-Consumable |
+| Champion-Paket (`rg_champion_bundle`) | 3000 Rissglas, 10 Große Ring-Tränke, 5 Große Wachstumskristalle, 10 Große Heiltränke, 5 Bondsiegel, 1 Ring-Krone (einzeln 16500), einmal je Konto | 49,99 € oder 5000 Rissglas (-69 %) | neu, Verbrauchsartikel |
+| Tagesangebote (`rg_deal_mon` .. `rg_deal_sun`) | je Wochentag ein festes Paket, 40 bis 50 % unter den Einzelpreisen, einmal pro Woche | 1200 bis 2000 Rissglas | nur Rissglas |
+| Wochenangebote (`rg_week_power`, `_bond`, `_battle`, `_growth`) | im Wechsel alle 4 Wochen, Montag bis Sonntag, 49 bis 50 % unter den Einzelpreisen, einmal in der Woche | 2500 bis 3000 Rissglas | nur Rissglas |
+
+- **Angebote im Wechsel, ohne Zufall:** Feld `"rotation"`: `{"per": "day", "weekday": 0..6}` (Montag = 0) oder
+  `{"per": "week", "index": i, "cycle": 4}`. Tag = Berliner Kalendertag seit 1. 1. 1970, Woche ab Montag
+  (`ShopCatalog.deal_active`, `deal_ends_at`, `rotation_line`; Server `_shop_deal_on`, Sperrgrund `not_now`).
+  Kein `ends_at` an den Angeboten: das Ende rechnet das Spiel aus der Rotation. Das Spiel zeigt es als feste
+  Uhrzeit ("bis Montag 0:00"), **nie als laufenden Countdown** (Regel 5, im Shop sind auch 13- bis 17-Jährige).
+- **Neue Felder** (geprüft in `ShopValidator._check_step7`): `badge` (`bestseller`, `best_value`, `new`, `limited`,
+  `hot`), `discount_pct` (muss genau dem echten Abschlag gegen die Einzelpreise entsprechen, abgerundet,
+  `ShopCatalog.true_discount`), `featured` (Seite "Empfohlen": Starter-Paket, Siegel-Satz, Monatskarte, Champion
+  Fulgorath, Champion-Paket), `icon`, `ends_at`, `bonus_pct`, `first_buy_double`, `rotation`.
+- **Abzeichen nur, wenn sie stimmen:** `best_value` am 10000er-Paket, an der Monatskarte und am Siegel-Satz, `limited`
+  an Angeboten einmal je Konto, `new` an neuen Angeboten, `hot` an den Tages- und Wochenangeboten. `bestseller`
+  trägt kein Angebot: das Spiel zählt keine Verkäufe (keine Analytics), die Angabe wäre nicht belegt.
+- **Einzelwert des Siegel-Satzes** zählt jetzt die Stufen I bis VII je Siegel (27500 statt vorher fälschlich 9500).
+- **Wanderer-Pass** (`rg_pass`, gleiche Kennung und Produkt-ID) ist die Premium-Reihe des neuen Passes mit 30 Stufen
+  (Bahn von W4, `data/pass_track.json`) und behält alle bisherigen Vorteile; seit v39 `ready: true`.
+- **Server:** Migration `20261127100100_shop_p2w_step7.sql` (Tabelle `shop_cards`, `_shop_grant` mit `card` und
+  erstem Kauf doppelt, `_shop_refund`, `_shop_offer_block` mit Rotation, `_shop_seals` bis X/X/VII, Spielerfunktionen
+  `shop_card_daily()` und `shop_extras()`), Angebote in `20261127100000_shop_offers_v039.sql` (ab v39 mit neuem
+  Zeitstempel, `tools/shop/build_offers_sql.py`). Der lokale Testserver (`LocalShop.gd`) hat dieselben Regeln.
+  `Billing.refresh_state` holt `shop_extras`, schreibt die Käufe der Pakete in `state.bought`, die Monatskarte in
+  `state.card` und holt fällige Kartentage sofort ab (Signal `card_paid`).
+- Tests: `tests/unit/test_shop_p2w_step7.gd`, `tools/online/sql_test/test_shop_p2w_step7.sql`.
+
+### Rissglas im Spiel (Ausgaben ausserhalb des Shops, PR #624)
+
+Damit gekauftes Rissglas auch im Spiel etwas bringt (Ali: "dass man auch wirklich was davon hat"), gibt es 7 feste
+Ausgaben. Preise in `data/riftglass_sinks.json`, vom Server geprüft (`server_config` `rg_sinks`, Migration
+`20261127120000_rg_sinks.sql`), höchstens 60 Ausgaben in der Stunde, feste Werte, kein Zufall:
+
+| Ausgabe | Wirkung | Rissglas |
+| --- | --- | --- |
+| Weiterkämpfen (`continue`) | nach einer Niederlage weiter, höchstens 3-mal je Kampf | 200, 400, 800 |
+| Team heilen (`heal`) | das ganze Team sofort voll | 100 |
+| Bindungs-Schub (`bond_boost`) | +30 % auf eine Bindung, höchstens 5-mal je Kampf | 200 |
+| Reise abkürzen (`trip_skip`) | Wartezeit einer Reise, je Stunde, höchstens 12 Stunden | 100 je Stunde |
+| Laterne neu entzünden (`lamp_relight`) | höchstens 3-mal am Tag | 200 |
+| Wächter-Revanche (`warden_retry`) | einen Wächterkampf sofort noch einmal | 100 |
+| Wachstum x2 (`growth_x2`) | doppelte Erfahrung für 5 Kämpfe | 100 |
+
+Die Ausgaben zahlen nur mit Rissglas, das schon da ist. Reicht es nicht, öffnet sich weder der Shop noch ein Store-Kauf (Regel 5: keine Kauffenster im Kampf oder nach Niederlagen).
+
+### Neue Store-Produkte aus Schritt 7 (in App Store Connect und Play Console anlegen)
+
+| Produkt-ID | Angebot | Typ | Preis |
+| --- | --- | --- | --- |
+| `de.chimora.game.card.monthly` | Monatskarte | Consumable | 4,99 € |
+| `de.chimora.game.spirling.champion_fulgorath` | Champion Fulgorath auf Ring 50 | Non-Consumable | 24,99 € |
+| `de.chimora.game.spirling.champion_ardenthal` | Champion Ardenthal auf Ring 50 | Non-Consumable | 24,99 € |
+| `de.chimora.game.spirling.champion_obelordan` | Champion Obelordan auf Ring 50 | Non-Consumable | 24,99 € |
+| `de.chimora.game.consumable.champion_bundle` | Champion-Paket | Consumable | 49,99 € |
+
+Die Texte der 7 Rissglas-Pakete und des Passes ändern sich in beiden Stores (Namen mit Gesamtmenge), die Produkt-IDs
+nicht.
+
 ## Pay-to-win, Schritt 2 (Ali, 11. 11. 2026)
 
 Nächster Block des 200-Punkte-Plans: Siegel-Satz (Punkt 7), Bindungs-Köder in 4 Stufen (Punkt 22) und
@@ -298,17 +391,17 @@ Die Tabelle zeigt alle Angebote, auch nicht verkaufte (`ready: false`). `rg_fast
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-207 Angebote (Katalog v38): 165 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
+231 Angebote (Katalog v39): 188 Vorteil, 2 Komfort, 33 Kosmetik, 8 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
 | `rg_glass_100` | 100 Riftglass | 0,99 € | - | Rissglas | keine Liga-Wirkung |
-| `rg_glass_200` | 200 Riftglass | 1,99 € | - | Rissglas | keine Liga-Wirkung |
-| `rg_glass_500` | 500 Riftglass | 4,99 € | - | Rissglas | keine Liga-Wirkung |
-| `rg_glass_1000` | 1000 Riftglass | 9,99 € | - | Rissglas | keine Liga-Wirkung |
-| `rg_glass_2000` | 2000 Riftglass | 19,99 € | - | Rissglas | keine Liga-Wirkung |
-| `rg_glass_5000` | 5000 Riftglass | 49,99 € | - | Rissglas | keine Liga-Wirkung |
-| `rg_glass_10000` | 10000 Riftglass | 99,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_glass_200` | 220 Riftglass | 1,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_glass_500` | 600 Riftglass | 4,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_glass_1000` | 1300 Riftglass | 9,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_glass_2000` | 2800 Riftglass | 19,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_glass_5000` | 7500 Riftglass | 49,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_glass_10000` | 16000 Riftglass | 99,99 € | - | Rissglas | keine Liga-Wirkung |
 | `rg_ring_tonic` | Ring Tonic | 0,99 € | 100 | Vorteil | nur Offene Liga |
 | `rg_ring_tonic_5` | Great Ring Tonic | 3,99 € | 400 | Vorteil | nur Offene Liga |
 | `rg_ring_elixir` | Ring Elixir | 14,99 € | 1500 | Vorteil | nur Offene Liga |
@@ -509,5 +602,29 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_rest_anywhere` | Pocket Rest | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
 | `rg_script_pack` | Rift Script Pack | 31,99 € | 3200 | Vorteil | nur Offene Liga |
 | `rg_starter_trio` | Journey Start Trio | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
+| `rg_monthly_card` | Monthly Card | 4,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_power_seal_8` | Power Seal VIII | 34,99 € | 3500 | Vorteil | nur Offene Liga |
+| `rg_power_seal_9` | Power Seal IX | 39,99 € | 4000 | Vorteil | nur Offene Liga |
+| `rg_power_seal_10` | Power Seal X | 49,99 € | 5000 | Vorteil | nur Offene Liga |
+| `rg_guard_seal_8` | Guard Seal VIII | 34,99 € | 3500 | Vorteil | nur Offene Liga |
+| `rg_guard_seal_9` | Guard Seal IX | 39,99 € | 4000 | Vorteil | nur Offene Liga |
+| `rg_guard_seal_10` | Guard Seal X | 49,99 € | 5000 | Vorteil | nur Offene Liga |
+| `rg_speed_seal_6` | Pace Seal VI | 24,99 € | 2500 | Vorteil | nur Offene Liga |
+| `rg_speed_seal_7` | Pace Seal VII | 29,99 € | 3000 | Vorteil | nur Offene Liga |
+| `rg_champion_fulgorath` | Champion Fulgorath at Ring 50 | 24,99 € | 2500 | Vorteil | keine Liga-Wirkung |
+| `rg_champion_ardenthal` | Champion Ardenthal at Ring 50 | 24,99 € | 2500 | Vorteil | keine Liga-Wirkung |
+| `rg_champion_obelordan` | Champion Obelordan at Ring 50 | 24,99 € | 2500 | Vorteil | keine Liga-Wirkung |
+| `rg_champion_bundle` | Champion Bundle | 49,99 € | 5000 | Vorteil | nur Offene Liga |
+| `rg_deal_mon` | Monday Deal | 11,99 € | 1200 | Vorteil | nur Offene Liga |
+| `rg_deal_tue` | Tuesday Deal | 11,99 € | 1200 | Vorteil | nur Offene Liga |
+| `rg_deal_wed` | Wednesday Deal | 14,99 € | 1500 | Vorteil | nur Offene Liga |
+| `rg_deal_thu` | Thursday Deal | 11,99 € | 1200 | Vorteil | nur Offene Liga |
+| `rg_deal_fri` | Friday Deal | 12,99 € | 1300 | Vorteil | nur Offene Liga |
+| `rg_deal_sat` | Saturday Deal | 14,99 € | 1500 | Vorteil | nur Offene Liga |
+| `rg_deal_sun` | Sunday Deal | 19,99 € | 2000 | Vorteil | nur Offene Liga |
+| `rg_week_power` | Power Week | 24,99 € | 2500 | Vorteil | nur Offene Liga |
+| `rg_week_bond` | Bond Week | 24,99 € | 2500 | Vorteil | nur Offene Liga |
+| `rg_week_battle` | Battle Week | 29,99 € | 3000 | Vorteil | nur Offene Liga |
+| `rg_week_growth` | Growth Week | 27,99 € | 2800 | Vorteil | nur Offene Liga |
 
 <!-- shop-table:end -->

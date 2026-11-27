@@ -666,6 +666,13 @@
     "max": 9,
     "weight": 18,
     "ground": "cave"
+   },
+   {
+    "species": "Tinglet",
+    "min": 6,
+    "max": 8,
+    "weight": 25,
+    "ground": "cave"
    }
   ]
  },
@@ -712,6 +719,13 @@
     "min": 14,
     "max": 16,
     "weight": 14,
+    "ground": "cave"
+   },
+   {
+    "species": "Saltwhistle",
+    "min": 13,
+    "max": 15,
+    "weight": 10,
     "ground": "cave"
    }
   ]
@@ -767,6 +781,20 @@
     "max": 17,
     "weight": 14,
     "ground": "cave"
+   },
+   {
+    "species": "Tinglet",
+    "min": 14,
+    "max": 16,
+    "weight": 25,
+    "ground": "cave"
+   },
+   {
+    "species": "Keepling",
+    "min": 15,
+    "max": 17,
+    "weight": 10,
+    "ground": "cave"
    }
   ]
  },
@@ -814,6 +842,13 @@
     "max": 14,
     "weight": 18,
     "ground": "cave"
+   },
+   {
+    "species": "Heathpip",
+    "min": 11,
+    "max": 13,
+    "weight": 25,
+    "ground": "cave"
    }
   ]
  },
@@ -843,6 +878,18 @@
     "min": 8,
     "max": 10,
     "weight": 18
+   },
+   {
+    "species": "Heathpip",
+    "min": 8,
+    "max": 10,
+    "weight": 25
+   },
+   {
+    "species": "Brackenram",
+    "min": 9,
+    "max": 11,
+    "weight": 10
    }
   ]
  },
@@ -1486,6 +1533,20 @@
     "min": 32,
     "max": 34,
     "weight": 34,
+    "ground": "scree"
+   },
+   {
+    "species": "Sumplet",
+    "min": 32,
+    "max": 34,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Flintkit",
+    "min": 33,
+    "max": 34,
+    "weight": 10,
     "ground": "scree"
    }
   ]
@@ -2413,6 +2474,34 @@
     "max": 54,
     "weight": 14,
     "ground": "reeds"
+   },
+   {
+    "species": "Hoistling",
+    "min": 52,
+    "max": 54,
+    "weight": 25,
+    "ground": "fern"
+   },
+   {
+    "species": "Fibbet",
+    "min": 53,
+    "max": 55,
+    "weight": 25,
+    "ground": "reeds"
+   },
+   {
+    "species": "Glarelet",
+    "min": 52,
+    "max": 54,
+    "weight": 25,
+    "ground": "fern"
+   },
+   {
+    "species": "Cistlet",
+    "min": 53,
+    "max": 55,
+    "weight": 10,
+    "ground": "reeds"
    }
   ]
  },
@@ -2453,6 +2542,27 @@
     "max": 55,
     "weight": 14,
     "ground": "scree"
+   },
+   {
+    "species": "Murmlet",
+    "min": 53,
+    "max": 55,
+    "weight": 10,
+    "ground": "scree"
+   },
+   {
+    "species": "Haulbug",
+    "min": 53,
+    "max": 55,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Grainspout",
+    "min": 54,
+    "max": 56,
+    "weight": 10,
+    "ground": "fern"
    }
   ]
  },
@@ -2492,6 +2602,20 @@
     "min": 54,
     "max": 56,
     "weight": 14,
+    "ground": "fern"
+   },
+   {
+    "species": "Fibbet",
+    "min": 54,
+    "max": 56,
+    "weight": 25,
+    "ground": "reeds"
+   },
+   {
+    "species": "Noctolabe",
+    "min": 54,
+    "max": 56,
+    "weight": 10,
     "ground": "fern"
    }
   ]
@@ -2533,6 +2657,20 @@
     "max": 57,
     "weight": 14,
     "ground": "fern"
+   },
+   {
+    "species": "Hoistling",
+    "min": 55,
+    "max": 57,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Tallykit",
+    "min": 56,
+    "max": 58,
+    "weight": 10,
+    "ground": "fern"
    }
   ]
  },
@@ -2573,6 +2711,13 @@
     "max": 58,
     "weight": 14,
     "ground": "scree"
+   },
+   {
+    "species": "Tallykit",
+    "min": 56,
+    "max": 58,
+    "weight": 10,
+    "ground": "scree"
    }
   ]
  },
@@ -2612,6 +2757,13 @@
     "min": 57,
     "max": 59,
     "weight": 14,
+    "ground": "fern"
+   },
+   {
+    "species": "Murmlet",
+    "min": 57,
+    "max": 59,
+    "weight": 10,
     "ground": "fern"
    }
   ]
@@ -3301,6 +3453,20 @@
     "max": 36,
     "weight": 3,
     "ground": "scree"
+   },
+   {
+    "species": "Turfkin",
+    "min": 33,
+    "max": 35,
+    "weight": 10,
+    "ground": "fern"
+   },
+   {
+    "species": "Flintkit",
+    "min": 34,
+    "max": 36,
+    "weight": 10,
+    "ground": "scree"
    }
   ]
  },
@@ -3390,6 +3556,20 @@
     "max": 39,
     "weight": 3,
     "ground": "scree"
+   },
+   {
+    "species": "Annealet",
+    "min": 35,
+    "max": 37,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Sumplet",
+    "min": 36,
+    "max": 38,
+    "weight": 25,
+    "ground": "scree"
    }
   ]
  },
@@ -3458,6 +3638,13 @@
     "max": 73,
     "weight": 4,
     "ground": "scree"
+   },
+   {
+    "species": "Serifkit",
+    "min": 70,
+    "max": 72,
+    "weight": 10,
+    "ground": "fern"
    }
   ]
  },
@@ -3547,6 +3734,27 @@
     "max": 75,
     "weight": 4,
     "ground": "scree"
+   },
+   {
+    "species": "Zinclet",
+    "min": 72,
+    "max": 74,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Tangbeak",
+    "min": 73,
+    "max": 75,
+    "weight": 10,
+    "ground": "scree"
+   },
+   {
+    "species": "Zincrawler",
+    "min": 72,
+    "max": 74,
+    "weight": 10,
+    "ground": "scree"
    }
   ]
  },
@@ -3607,6 +3815,20 @@
     "min": 74,
     "max": 77,
     "weight": 4,
+    "ground": "fern"
+   },
+   {
+    "species": "Brumelet",
+    "min": 74,
+    "max": 76,
+    "weight": 25,
+    "ground": "fern"
+   },
+   {
+    "species": "Brumeshade",
+    "min": 75,
+    "max": 77,
+    "weight": 10,
     "ground": "fern"
    }
   ]
@@ -3697,6 +3919,13 @@
     "max": 80,
     "weight": 4,
     "ground": "fern"
+   },
+   {
+    "species": "Serifane",
+    "min": 79,
+    "max": 80,
+    "weight": 2,
+    "ground": "scree"
    }
   ]
  },
@@ -3779,6 +4008,20 @@
     "max": 83,
     "weight": 4,
     "ground": "fern"
+   },
+   {
+    "species": "Brumelet",
+    "min": 79,
+    "max": 81,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Brumarch",
+    "min": 82,
+    "max": 83,
+    "weight": 2,
+    "ground": "scree"
    }
   ]
  },
@@ -3889,6 +4132,27 @@
     "max": 86,
     "weight": 4,
     "ground": "reeds"
+   },
+   {
+    "species": "Zinclet",
+    "min": 82,
+    "max": 84,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Serifkit",
+    "min": 83,
+    "max": 85,
+    "weight": 10,
+    "ground": "reeds"
+   },
+   {
+    "species": "Zincolossus",
+    "min": 85,
+    "max": 86,
+    "weight": 2,
+    "ground": "scree"
    }
   ]
  },
@@ -3964,6 +4228,20 @@
     "max": 88,
     "weight": 4,
     "ground": "fern"
+   },
+   {
+    "species": "Tangbeak",
+    "min": 85,
+    "max": 87,
+    "weight": 10,
+    "ground": "reeds"
+   },
+   {
+    "species": "Tangharrier",
+    "min": 87,
+    "max": 88,
+    "weight": 2,
+    "ground": "reeds"
    }
   ]
  },
@@ -4011,6 +4289,36 @@
     "min": 24,
     "max": 26,
     "weight": 5
+   },
+   {
+    "species": "Flaxlet",
+    "min": 22,
+    "max": 24,
+    "weight": 25
+   },
+   {
+    "species": "Simmerkit",
+    "min": 23,
+    "max": 25,
+    "weight": 25
+   },
+   {
+    "species": "Lockgill",
+    "min": 22,
+    "max": 24,
+    "weight": 10
+   },
+   {
+    "species": "Pondchime",
+    "min": 23,
+    "max": 25,
+    "weight": 10
+   },
+   {
+    "species": "Stookhulk",
+    "min": 22,
+    "max": 24,
+    "weight": 10
    }
   ]
  },
@@ -4079,6 +4387,20 @@
     "max": 89,
     "weight": 14,
     "ground": "fern"
+   },
+   {
+    "species": "Culmlet",
+    "min": 86,
+    "max": 88,
+    "weight": 25,
+    "ground": "fern"
+   },
+   {
+    "species": "Cornicet",
+    "min": 87,
+    "max": 89,
+    "weight": 10,
+    "ground": "scree"
    }
   ]
  },
@@ -4140,6 +4462,20 @@
     "max": 87,
     "weight": 40,
     "ground": "reeds"
+   },
+   {
+    "species": "Mintlet",
+    "min": 84,
+    "max": 86,
+    "weight": 25,
+    "ground": "reeds"
+   },
+   {
+    "species": "Fulmenkit",
+    "min": 85,
+    "max": 87,
+    "weight": 10,
+    "ground": "scree"
    }
   ]
  }

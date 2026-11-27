@@ -60,6 +60,8 @@ func test_listed_amounts_match_the_grants() -> void:
 					assert_eq(line, "%d Riftglass" % int(e.n), str(o.id))
 				"coins":
 					assert_eq(line, "%d coins" % int(e.n), str(o.id))
+				"card":
+					assert_eq(line, "%d Riftglass every day for %d days" % [int(e.n), int(e.days)], str(o.id))
 				_:
 					assert_true(line.begins_with("%dx " % ShopCatalog.entry_amount(e)), "%s: %s" % [o.id, line])
 		assert_eq(got, raw, "%s: contents add up to the grants" % o.id)

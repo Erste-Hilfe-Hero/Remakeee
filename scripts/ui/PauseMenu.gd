@@ -88,11 +88,19 @@ func run() -> void:
 	elif open_on == "Invite":
 		open_on = ""
 		await run_invite_link()
+	elif open_on == ShopScreen.STARTER_OPEN:
+		# The Starter Pack note after the tutorial act (ShopScreen.starter_popup_due), then back to the world.
+		open_on = ""
+		await ShopScreen.run_starter_popup(self)
+		return
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
 			not Trust.ledger_rows(GameState.flags).is_empty())
 		place_shop(labels, "Shop (locked)" if Billing.kids_locked() else "Shop", not GameState.rifts_sealed.is_empty())
+		# Riftglass in play (RiftglassSinks): heal anywhere, Growth x2, next to the shop. Never for children.
+		if RiftglassSinks.visible() and "Shop" in labels:
+			labels.insert(labels.find("Shop") + 1, "Riftglass")
 		# Pocket Rest (shop, pay-to-win step 6, plan point 51): rest anywhere outside battle.
 		if ShopEffects.can_rest_anywhere():
 			labels.insert(labels.find("Team") + 1, "Rest")
@@ -149,6 +157,7 @@ func run() -> void:
 			"Satchel": await run_bag()
 			"Shop": await ShopMenu.run(self)
 			"Shop (locked)": await info(ShopMenu.LOCKED_TEXT)
+			"Riftglass": await RiftglassSinks.run_menu(self)
 			"Storage": await run_storage()
 			"Save":
 				if await run_save():
@@ -180,6 +189,7 @@ static func spirlog_legend() -> String:
 		Collection.STAR + "  " + Loc.t("bonded and grown to Ring 30"),
 		"~  " + Loc.t("a Gleam of this kind was seen"),
 		GleamRules.STAR + "  " + Loc.t("a Gleam of this kind was bonded"),
+		Loc.t("Rarer Gleams show their own mark:") + " " + "  ".join(PackedStringArray(GleamRules.kind_ids().slice(1).map(func(id: String) -> String: return GleamRules.label(id)))),
 		Loc.t("Lantern at the right: it joined you at an event, such as the Lamp Watch"),
 		"",
 		Loc.t("On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.")]
@@ -594,7 +604,7 @@ func run_boss_replays() -> bool:
 	var kept: Array[Dictionary] = BossRules.replays(GameState.records)
 	var labels: Array[String] = []
 	for r: Dictionary in kept:
-		labels.append(Loc.t("%s, won in %d turns") % [Loc.t(str(r.label)), int(r.turns)])
+		labels.append(Loc.f("%s, won in %d turns", [Loc.t(str(r.label)), int(r.turns)]))
 	var i: int = await pick_strings(Loc.t("Boss replays"), labels)
 	if i < 0:
 		return false
@@ -1636,7 +1646,7 @@ func _use_spark_wash(id: String) -> void:
 		await info(Loc.t("That spark is already dark."))
 		return
 	GameState.take_item(id)
-	await info(Loc.t("%s's %s spark is washed out.") % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()])
+	await info(Loc.t("%s's %s spark is washed out." % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()]))
 
 ## Stat Crystal from the shop: adds its points to one stat of one Spirling, up to twice the
 ## free Spark cap per stat.
@@ -1661,7 +1671,7 @@ func _use_stat_crystal(id: String) -> void:
 		return
 	GameState.take_item(id)
 	Sound.sfx("level_up")
-	await info(Loc.t("%s's %s rose by %d.") % [s.display_name(), key.to_upper(), added])
+	await info(Loc.f("%s's %s rose by %d.", [s.display_name(), key.to_upper(), added]))
 
 ## Spirlog filters (item 249), kept while the menu is open.
 var _log_search: String = ""
@@ -1803,7 +1813,7 @@ func run_spirlog() -> void:
 				await info(_tracker_text())
 			"gleam":
 				var names: PackedStringArray = SpirlogBook.gleam_bonded_kinds(GameState.spirlog)
-				await info(SpirlogBook.gleam_line(GameState.spirlog) + "\n\n" + (", ".join(names) if not names.is_empty() else Loc.t("No Gleam has joined you yet.")))
+				await info(SpirlogBook.gleam_line(GameState.spirlog) + "\n" + "\n".join(SpirlogBook.gleam_kind_lines(GameState.spirlog)) + "\n\n" + (", ".join(names) if not names.is_empty() else Loc.t("No Gleam has joined you yet.")))
 			"arts":
 				await info("\n".join(Collection.art_book_lines()))
 			"prism":

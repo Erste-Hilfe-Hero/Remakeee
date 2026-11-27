@@ -1,0 +1,31 @@
+{
+ "_comment": "German texts from tools/i18n/de_lines_veydal_more.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "A Heathpip that slept a whole autumn under a juniper bush.": "Ein Heathpip, das einen ganzen Herbst unter einem Wacholderbusch schlief.",
+  "A Keepling that guided a lost boat home and was never quite the same afterwards.": "Ein Keepling, das ein verirrtes Boot nach Hause lotste und danach nie mehr ganz dasselbe war.",
+  "A Tinglet that was struck by lightning and liked it.": "Ein Tinglet, das vom Blitz getroffen wurde und es mochte.",
+  "Bracken thickets in Gloamwood": "Adlerfarndickicht im Gloamwood",
+  "Brooks after a thunderstorm": "Bäche nach einem Gewitter",
+  "Coiled around the old mill wheel for so long that the wheel began to spin by itself.": "So lange um das alte Mühlrad gewickelt, dass sich das Rad von selbst zu drehen begann.",
+  "Fell into a brook with the first drop of a summer storm.": "Mit dem ersten Tropfen eines Sommergewitters in einen Bach gefallen.",
+  "Found inside a lantern that was left on the steps for a whole winter.": "Gefunden in einer Laterne, die einen ganzen Winter auf den Stufen stand.",
+  "Grew out of a boulder that a ram had headbutted every day for a hundred years.": "Aus einem Felsbrocken gewachsen, den ein Widder hundert Jahre lang jeden Tag mit dem Kopf stieß.",
+  "Grew up on the hill where the beacon fires were lit in the old wars.": "Aufgewachsen auf dem Hügel, auf dem in den alten Kriegen die Signalfeuer brannten.",
+  "Hatched from an egg that the wind rolled along the dike for three days.": "Aus einem Ei geschlüpft, das der Wind drei Tage lang den Deich entlangrollte.",
+  "Hatched in the ashes of a shepherd's fire that nobody put out.": "Geschlüpft in der Asche eines Hirtenfeuers, das niemand gelöscht hat.",
+  "Heather slopes above Crowcrest": "Heidehänge über Crowcrest",
+  "It carries a small light in its shell and sits where people tend to trip.": "Es trägt ein kleines Licht in seinem Panzer und sitzt dort, wo Leute gern stolpern.",
+  "It lies still under the water until a fish swims past, then the whole brook hums.": "Es liegt reglos unter Wasser, bis ein Fisch vorbeischwimmt, dann summt der ganze Bach.",
+  "It patrols the heather and stamps out every fire except its own.": "Es bewacht die Heide und tritt jedes Feuer aus, nur nicht sein eigenes.",
+  "It wears a coat of fern on its back and charges anyone who walks off the path. Gardeners consider it an ally.": "Es trägt einen Mantel aus Farn auf dem Rücken und rammt jeden, der vom Weg abgeht. Gärtner halten es für einen Verbündeten.",
+  "It whistles before a storm. The marsh folk listen to it more than to the weather almanac.": "Es pfeift vor einem Sturm. Die Marschleute hören mehr darauf als auf den Wetterkalender.",
+  "Its quills smoulder like heather in a dry summer. It rolls into a ball when it is embarrassed, which singes the grass.": "Seine Stacheln glimmen wie Heide in einem trockenen Sommer. Ist es verlegen, rollt es sich ein und versengt das Gras.",
+  "Lantern steps and lake rocks": "Laternenstufen und Seefelsen",
+  "Millers along the brooks pay it in bread to keep their wheels turning on calm days.": "Müller an den Bächen bezahlen es mit Brot, damit sich ihre Räder an windstillen Tagen drehen.",
+  "Saltmarsh dikes in the wind": "Salzmarschdeiche im Wind",
+  "Shepherds burn old heather so new shoots can grow. They ask a Heathbrand first, and it always says yes.": "Hirten brennen alte Heide ab, damit neue Triebe wachsen. Sie fragen vorher ein Heathbrand, und es sagt immer ja.",
+  "Touching it feels like a foot that has gone to sleep. Children dare each other to try.": "Es zu berühren fühlt sich an wie ein eingeschlafener Fuß. Kinder fordern sich gegenseitig heraus.",
+  "When the lighthouse lamp went out one stormy night, three Keepwardens climbed the tower and lit their shells.": "Als in einer Sturmnacht die Leuchtturmlampe erlosch, kletterten drei Keepwardens den Turm hinauf und ließen ihre Panzer leuchten."
+ }
+}

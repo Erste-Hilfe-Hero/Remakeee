@@ -78,7 +78,59 @@ static func check(offers: Array[Dictionary]) -> Array[String]:
 				errs.append(where + ": Riftglass is not sold for Riftglass")
 		_check_was_price(o, where, errs)
 		_check_wording(o, where, errs)
+		_check_step7(o, where, errs)
 	return errs
+
+static func _is_int(v: Variant) -> bool:
+	return v is int or (v is float and float(v) == floorf(float(v)))
+
+## Pay-to-win step 7 fields (docs/MONETIZATION.md): types, badge names, a discount that is true against
+## the single prices, Riftglass bonus amounts in the grant, rotation of the deals, Monthly Card grants.
+static func _check_step7(o: Dictionary, where: String, errs: Array[String]) -> void:
+	if o.has("badge") and not str(o.badge) in ShopCatalog.BADGES:
+		errs.append(where + ": badge must be one of " + ", ".join(ShopCatalog.BADGES))
+	if o.has("featured") and not o.featured is bool:
+		errs.append(where + ": featured must be true or false")
+	if o.has("first_buy_double") and not o.first_buy_double is bool:
+		errs.append(where + ": first_buy_double must be true or false")
+	if o.has("icon") and not (o.icon is String and str(o.icon).begins_with("res://")):
+		errs.append(where + ": icon must be a res:// path")
+	if o.has("ends_at") and Time.get_unix_time_from_datetime_string(str(o.ends_at)) <= 0:
+		errs.append(where + ": ends_at must be an ISO date like 2026-12-31")
+	if o.has("discount_pct"):
+		if not _is_int(o.discount_pct) or int(o.discount_pct) <= 0 or int(o.discount_pct) >= 100:
+			errs.append(where + ": discount_pct must be a whole number from 1 to 99")
+		elif int(o.discount_pct) != ShopCatalog.true_discount(o):
+			errs.append(where + ": discount_pct %d is not true, the single prices give %d" % [int(o.discount_pct), ShopCatalog.true_discount(o)])
+	var tier: bool = o.has("bonus_pct") or bool(o.get("first_buy_double", false))
+	if tier:
+		var g: Array = o.get("grants", [])
+		if str(o.get("kind", "")) != "currency" or g.size() != 1 or not g[0] is Dictionary or str(g[0].get("t", "")) != "rg":
+			errs.append(where + ": bonus_pct and first_buy_double are only for Riftglass tiers with one rg grant")
+		elif o.has("bonus_pct") and (not _is_int(o.bonus_pct) or int(o.bonus_pct) < 1 or int(o.bonus_pct) > 100):
+			errs.append(where + ": bonus_pct must be a whole number from 1 to 100")
+		elif int(g[0].get("n", 0)) != ShopCatalog.rg_total(o):
+			errs.append(where + ": the rg grant must be the base plus bonus, %d" % ShopCatalog.rg_total(o))
+	if o.has("rotation"):
+		var r: Variant = o.rotation
+		var ok: bool = r is Dictionary
+		if ok and str(r.get("per", "")) == "day":
+			ok = _is_int(r.get("weekday")) and int(r.weekday) >= 0 and int(r.weekday) <= 6
+		elif ok and str(r.get("per", "")) == "week":
+			ok = _is_int(r.get("cycle")) and _is_int(r.get("index")) and int(r.cycle) >= 1 and int(r.index) >= 0 and int(r.index) < int(r.cycle)
+		else:
+			ok = false
+		if not ok:
+			errs.append(where + ": rotation is {per: day, weekday: 0-6} or {per: week, index, cycle}")
+		var lim: Variant = o.get("limit")
+		if not lim is Dictionary or str(lim.get("per", "")) != "week":
+			errs.append(where + ": a rotating deal has a weekly limit")
+	for g: Variant in o.get("grants", []):
+		if g is Dictionary and str(g.get("t", "")) == "card":
+			if int(g.get("n", 0)) <= 0 or int(g.get("days", 0)) <= 0 or str(g.get("id", "")).is_empty():
+				errs.append(where + ": a card grant needs id, n (Riftglass a day) and days")
+			if str(o.get("store_type", "")) != "consumable":
+				errs.append(where + ": a card offer is consumable (it can be bought again, no subscription)")
 
 ## A struck-through old price (item 4037, PAngV § 11) needs the dates of the higher price:
 ## was_since and was_until ("YYYY-MM-DD"), at least 30 days apart, and the old price must be higher.

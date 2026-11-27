@@ -220,6 +220,8 @@ static func matches(t: Dictionary, event: String, info: Dictionary) -> bool:
 static func record(event: String, info: Dictionary = {}, amount: int = 1) -> Array[String]:
 	# Lifetime counters for achievements: count_win, count_win_wild, count_step, ...
 	var counters: Array[String] = ["count_" + event]
+	# Battles won and bonds fill the Wayfarer Pass track (server-counted, PassTrack).
+	PassTrack.note(event)
 	if event == "win":
 		counters.append("count_win_wild" if bool(info.get("wild", false)) else "count_win_tamer")
 		if bool(info.get("night", false)):
@@ -250,6 +252,7 @@ static func record(event: String, info: Dictionary = {}, amount: int = 1) -> Arr
 			lines.append(Loc.t("Daily task done: %s") % Loc.t(str(t.text)))
 			lines.append_array(Waymarks.reward_lines(Waymarks.earn(reward_for(t), "daily_task")))
 			GameState.records["daily_tasks_done"] = int(GameState.records.get("daily_tasks_done", 0)) + 1
+			PassTrack.note("daily_task")
 			lines.append_array(SeasonPath.add("daily_task"))
 			lines.append_array(Album.record("daily"))
 	if not bool(state.get("bonus", false)) and all_done():

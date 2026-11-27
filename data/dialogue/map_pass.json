@@ -1,0 +1,26 @@
+{
+ "station_pointsman_ulf": {
+  "lines": [
+   "Pointsman Ulf: The points freeze every winter. I thaw them with my breakfast.",
+   "Pointsman Ulf: Porridge works best. Do not tell the guild."
+  ]
+ },
+ "station_lamproom_ines": {
+  "lines": [
+   "Lampwright Ines: Every lamp on the platform is mine. The smoke is the stack's.",
+   "Lampwright Ines: A train in fog finds the station by my wicks. Trim them and you trim the timetable."
+  ]
+ },
+ "station_freight_odo_freight": {
+  "lines": [
+   "Clerk Odo: Crates go up the mountain full of plates and come down full of soot.",
+   "Clerk Odo: I weigh both. The soot is heavier. Nobody believes me."
+  ]
+ },
+ "cinderfold_workshop_mira": {
+  "lines": [
+   "Engraver Mira: A plate takes a year to cut and a second to drop. I have not dropped one. Yet.",
+   "Engraver Mira: Halvard says my lines are too soft. Halvard says that to everyone."
+  ]
+ }
+}

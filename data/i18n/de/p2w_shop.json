@@ -1,0 +1,24 @@
+{
+ "_comment": "German texts from tools/i18n/de_p2w_shop.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "+%d %% bonus": "+%d %% Bonus",
+  "A one-time pack for your journey": "Ein einmaliges Paket für deine Reise",
+  "After the tier before it": "Nach der Stufe davor",
+  "All advantages": "Alle Vorteile",
+  "Best value": "Bester Wert",
+  "Bestseller": "Bestseller",
+  "Featured": "Empfohlen",
+  "First buy x2": "1. Kauf x2",
+  "Later in the journey": "Später auf der Reise",
+  "Limited": "Begrenzt",
+  "Owned": "Deins",
+  "Pay %d Riftglass": "%d Rissglas zahlen",
+  "Popular": "Beliebt",
+  "Show": "Ansehen",
+  "Show offer": "Angebot ansehen",
+  "Show the pass": "Pass ansehen",
+  "Until %s": "Bis %s",
+  "Use it": "Benutzen"
+ }
+}

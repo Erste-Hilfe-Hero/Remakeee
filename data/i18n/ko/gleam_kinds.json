@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table gleam_kinds, written by tools/i18n/locales_gleam_kinds.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  " Frost glitters on its hide: a Rime Gleam!": " 몸에 서리가 반짝인다. 서리 광채형이다!",
+  " It glows like the last of the sun: a Duskgold Gleam!": " 저무는 해처럼 빛난다. 노을금 광채형이다!",
+  " It is washed in deep ink: an Inkwash Gleam!": " 짙은 먹에 물들어 있다. 먹빛 광채형이다!",
+  " Its colours never hold still: an Opaline Gleam!": " 색이 잠시도 가만있지 않는다. 오팔 광채형이다!",
+  "%d seen, %d bonded": "%d 목격, %d 유대",
+  "Duskgold Gleam": "노을금 광채형",
+  "Gleams bonded: %s": "유대를 맺은 광채형: %s",
+  "Gleams seen: %s": "목격한 광채형: %s",
+  "Inkwash Gleam": "먹빛 광채형",
+  "Opaline Gleam": "오팔 광채형",
+  "Rarer Gleams show their own mark:": "더 희귀한 광채형은 고유한 표시가 있다:",
+  "Rime Gleam": "서리 광채형"
+ }
+}

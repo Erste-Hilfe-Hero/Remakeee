@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table gleam_kinds, written by tools/i18n/locales_gleam_kinds.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  " Frost glitters on its hide: a Rime Gleam!": " Rijp glinstert op zijn huid: een Rijpglansvorm!",
+  " It glows like the last of the sun: a Duskgold Gleam!": " Het gloeit als de laatste zon: een Avondgoud-glansvorm!",
+  " It is washed in deep ink: an Inkwash Gleam!": " Het is gedrenkt in diepe inkt: een Inktglansvorm!",
+  " Its colours never hold still: an Opaline Gleam!": " Zijn kleuren staan nooit stil: een Opaalglansvorm!",
+  "%d seen, %d bonded": "%d gezien, %d verbonden",
+  "Duskgold Gleam": "Avondgoud-glansvorm",
+  "Gleams bonded: %s": "Verbonden glansvormen: %s",
+  "Gleams seen: %s": "Geziene glansvormen: %s",
+  "Inkwash Gleam": "Inktglansvorm",
+  "Opaline Gleam": "Opaalglansvorm",
+  "Rarer Gleams show their own mark:": "Zeldzamere glansvormen hebben hun eigen teken:",
+  "Rime Gleam": "Rijpglansvorm"
+ }
+}

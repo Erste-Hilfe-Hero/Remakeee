@@ -2,7 +2,7 @@
 """Builds the server copy of the shop offers and the store product list from data/shop.json.
 
 Writes:
-  supabase/migrations/20261110000021_shop_offers_vNNN.sql  (offers for shop_buy / _shop_credit)
+  supabase/migrations/20261110000021_shop_offers_vNNN.sql  (offers for shop_buy / _shop_credit; from v039 20261127100000_...)
   store/products.json                                 (products for App Store Connect and Play Console)
 Usage: python3 tools/shop/build_offers_sql.py [--check]   (--check fails if the files are out of date)
 
@@ -16,6 +16,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 SRC = os.path.join(ROOT, "data/shop.json")
 
 def sql_path(version):
+    # From version 39 (pay-to-win step 7) the file sorts after every older migration, so a fresh database
+    # replays the newest catalog last; older versions keep their committed names.
+    if version >= 39:
+        return os.path.join(ROOT, "supabase/migrations", "20261127100000_shop_offers_v%03d.sql" % version)
     name = "20261110000021_shop_offers.sql" if version <= 1 else "20261110000021_shop_offers_v%03d.sql" % version
     return os.path.join(ROOT, "supabase/migrations", name)
 

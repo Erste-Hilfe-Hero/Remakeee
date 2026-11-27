@@ -17,7 +17,7 @@ static func run(menu: MenuHost) -> int:
 	var mi: int = await menu.pick_strings("Month of birth", months)
 	if mi < 0:
 		return -1
-	if not await menu.confirm(Loc.t("Born in %s %s?") % [Loc.t(months[mi]), years[yi]]):
+	if not await menu.confirm(Loc.f("Born in %s %s?", [Loc.t(months[mi]), years[yi]])):
 		return -1
 	var r: Dictionary = await Online.call_fn("shop_set_age", {"p_year": int(years[yi]), "p_month": mi + 1})
 	if not r.ok or not r.data is Dictionary:

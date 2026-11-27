@@ -1,5 +1,5 @@
 extends GutTest
-## Vellmarch's own 70 Spirlings (tools/art/lines/vellmarch.py, drawn in Era II by
+## Vellmarch's own 80 Spirlings (tools/art/lines/vellmarch.py and vellmarch_more.py, drawn in Era II by
 ## tools/art/gen_era2.py): data, art, wild slots, Warden aces and the Rust and Mask arts.
 
 var _kinds: Array[SpirlingData] = []
@@ -10,8 +10,8 @@ func before_all() -> void:
 		if sd.region == "vellmarch":
 			_kinds.append(sd)
 
-func test_seventy_era_two_kinds_with_their_own_art() -> void:
-	assert_eq(_kinds.size(), 70, "every era region has 70 own Spirlings")
+func test_eighty_era_two_kinds_with_their_own_art() -> void:
+	assert_eq(_kinds.size(), 80, "every era region has 70 own Spirlings plus 10 from 1.3.2")
 	for sd: SpirlingData in _kinds:
 		assert_eq(sd.era, 2, sd.species_name)
 		assert_eq(EraManager.sprite_path(sd.species_name), "res://art/era2/spirlings/%s_front.png" % sd.species_name.to_lower())

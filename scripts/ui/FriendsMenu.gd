@@ -518,7 +518,7 @@ static func run_mail(menu: MenuHost, mail: Array) -> void:
 				if where.is_empty():
 					await menu.info(on_card(m, Loc.t("%s sent you %s!") % [str(m.name), item_name(item)]))
 				else:
-					await menu.info(on_card(m, Loc.t("%s sent you %s from %s!") % [str(m.name), item_name(item), where]))
+					await menu.info(on_card(m, Loc.f("%s sent you %s from %s!", [str(m.name), item_name(item), where])))
 			else:
 				await menu.info(error_text(r))
 			continue
@@ -542,7 +542,7 @@ static func share_notes(menu: MenuHost, code: String, name: String) -> void:
 	if notes.is_empty():
 		await menu.info("Your notes are empty. Land a few hits first, then share what you learned.")
 		return
-	if not await menu.confirm(Loc.t("Send %d matchup notes to %s? You both get %d friendship points.") % [notes.size(), name, MatchupNotes.cfg("points")]):
+	if not await menu.confirm(Loc.f("Send %d matchup notes to %s? You both get %d friendship points.", [notes.size(), name, MatchupNotes.cfg("points")])):
 		return
 	var r: Dictionary = await Online.call_fn("notes_send", {"p_code": code, "p_notes": notes})
 	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
@@ -570,7 +570,7 @@ static func open_notes(menu: MenuHost, m: Dictionary) -> void:
 	var n: int = MatchupNotes.learn(GameState.known_matchups, notes if notes is Dictionary else {})
 	if n > 0:
 		SaveManager.save_game()
-		await menu.info(Loc.t("%s's notes: %d matchups you did not know yet. The move list shows them now.") % [str(m.name), n])
+		await menu.info(Loc.f("%s's notes: %d matchups you did not know yet. The move list shows them now.", [str(m.name), n]))
 	else:
 		await menu.info(Loc.t("%s's notes: nothing you did not know already. Flattering, in a way.") % str(m.name))
 

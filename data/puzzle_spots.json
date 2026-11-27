@@ -1,0 +1,1711 @@
+{
+ "_doc": "Riddle stones and riddlers (PuzzleSpots.gd, docs/PUZZLES.md). Placed here, never in the map files. at: tablet (a carved stone, PuzzleTablet) or npc (a riddler, sprite). kind: pick, type, order, listen, lights, slide, push, steps. Texts are English keys translated through tools/i18n (table puzzle_spots); typed answers list the accepted words per language. chain parts give a clue line; needs lists the parts a chain's last stone waits for. reward: item/count, coins, look (lantern flame in lantern_colors.json, unlocked by flag pz_<id>), meet (rare wild Spirling on map, default the spot's map).",
+ "spots": [
+  {
+   "id": "vey_keeper_1",
+   "region": "veydal",
+   "map": "quillbrook",
+   "x": 2,
+   "y": 8,
+   "at": "tablet",
+   "kind": "pick",
+   "chain": "keeper",
+   "title": "Keeper's Stone I",
+   "text": "A riddle is cut into the stone: I have a round face but never smile, and two hands but never wave. I tell you when it is time to go home. What am I?",
+   "options": [
+    "A clock",
+    "A mirror",
+    "A map",
+    "A bell"
+   ],
+   "correct": 0,
+   "hint_1": "Think of something that keeps time.",
+   "hint_2": "Its hands go round and round.",
+   "clue": "I am kept on a hill, but I watch the sea.",
+   "reward": [
+    {
+     "coins": 300
+    }
+   ]
+  },
+  {
+   "id": "vey_keeper_2",
+   "region": "veydal",
+   "map": "fernstair",
+   "x": 4,
+   "y": 7,
+   "at": "tablet",
+   "kind": "listen",
+   "chain": "keeper",
+   "title": "Keeper's Stone II",
+   "text": "Four small bells hang over the stone. They ring a short song. Ring it back to them.",
+   "buttons": [
+    "gold",
+    "blue",
+    "green",
+    "red"
+   ],
+   "solution": [
+    0,
+    2,
+    1,
+    3
+   ],
+   "hint_1": "Watch which bell lights up, not only the sound.",
+   "hint_2": "The song starts with the gold bell and ends with the red one.",
+   "clue": "I sleep all day and work all night.",
+   "reward": [
+    {
+     "item": "tonic",
+     "count": 3
+    }
+   ]
+  },
+  {
+   "id": "vey_keeper_3",
+   "region": "veydal",
+   "map": "reedhaven",
+   "x": 3,
+   "y": 7,
+   "at": "tablet",
+   "kind": "lights",
+   "chain": "keeper",
+   "title": "Keeper's Stone III",
+   "text": "Nine lamp stones are set in the wall. Light all nine. Each tap also flips the stones next to it.",
+   "start": [
+    ".xx",
+    "x.x",
+    "xx."
+   ],
+   "solution": [
+    [
+     0,
+     0
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     1
+    ]
+   ],
+   "hint_1": "Each stone needs one tap at most, and the order does not matter.",
+   "hint_2": "Tap the top left corner, the bottom right corner and the middle stone.",
+   "clue": "Ships thank me, but they never come to visit.",
+   "reward": [
+    {
+     "item": "spark_drop",
+     "count": 2
+    }
+   ]
+  },
+  {
+   "id": "vey_keeper_final",
+   "region": "veydal",
+   "map": "crowcrest",
+   "x": 10,
+   "y": 18,
+   "at": "tablet",
+   "kind": "type",
+   "needs": [
+    "vey_keeper_1",
+    "vey_keeper_2",
+    "vey_keeper_3"
+   ],
+   "title": "The Keeper's Answer",
+   "text": "Three stones in Veydal each gave you a line. This stone asks: what one thing do all three lines describe?",
+   "answers": {
+    "en": [
+     "lighthouse",
+     "light house",
+     "lighthouses"
+    ],
+    "de": [
+     "Leuchtturm",
+     "Leuchtturme",
+     "Leuchttürme"
+    ],
+    "fr": [
+     "phare",
+     "phares"
+    ],
+    "es": [
+     "faro",
+     "faros"
+    ],
+    "it": [
+     "faro",
+     "fari"
+    ],
+    "pt_BR": [
+     "farol",
+     "faróis"
+    ],
+    "nl": [
+     "vuurtoren",
+     "vuurtorens"
+    ],
+    "pl": [
+     "latarnia morska",
+     "latarnia"
+    ],
+    "tr": [
+     "deniz feneri",
+     "fener"
+    ],
+    "ru": [
+     "маяк",
+     "маяки"
+    ],
+    "ja": [
+     "灯台",
+     "とうだい"
+    ],
+    "ko": [
+     "등대"
+    ],
+    "zh_CN": [
+     "灯塔"
+    ],
+    "zh_TW": [
+     "燈塔"
+    ]
+   },
+   "options": [
+    "A lighthouse",
+    "An owl",
+    "The moon",
+    "A harbour"
+   ],
+   "correct": 0,
+   "hint_1": "It stands on a hill by the sea and shines at night.",
+   "hint_2": "Ships steer by its light, but never sail to it.",
+   "reward": [
+    {
+     "look": "keeper_white"
+    },
+    {
+     "meet": "Lanternel",
+     "ring": 9
+    },
+    {
+     "item": "kin_charm",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "vey_tracks",
+   "region": "veydal",
+   "map": "gloamwood",
+   "x": 3,
+   "y": 5,
+   "at": "tablet",
+   "kind": "steps",
+   "ground": "mud",
+   "title": "Tracks in the Mud",
+   "text": "Fresh round paw prints lead off between the trees, crossed by sharp claw marks. Follow only the round prints to whoever made them.",
+   "grid": [
+    "Soo..x..",
+    "..o.xx..",
+    ".ooo.x..",
+    ".o.oooo.",
+    ".o..x.o.",
+    ".ooxx.o.",
+    "...x..oo",
+    "...x...E"
+   ],
+   "hint_1": "Claw marks and bare mud both lose the trail.",
+   "hint_2": "Where the trail splits, the left branch is a dead end. Keep going right.",
+   "reward": [
+    {
+     "meet": "Hushkin",
+     "ring": 8
+    },
+    {
+     "coins": 200
+    }
+   ]
+  },
+  {
+   "id": "vey_lanterns",
+   "region": "veydal",
+   "map": "lantern_steps",
+   "x": 5,
+   "y": 9,
+   "at": "tablet",
+   "kind": "order",
+   "title": "The Four Lanterns",
+   "text": "Four lanterns: red, blue, green and gold. The plaque reads: The sun goes down first. Then the sea goes dark. Then the moss falls asleep. The fire rests last.",
+   "buttons": [
+    "red",
+    "blue",
+    "green",
+    "gold"
+   ],
+   "solution": [
+    3,
+    1,
+    2,
+    0
+   ],
+   "hint_1": "The sun is gold and the sea is blue.",
+   "hint_2": "Gold, then blue, then green, then red.",
+   "reward": [
+    {
+     "coins": 250
+    },
+    {
+     "item": "remedy",
+     "count": 2
+    }
+   ]
+  },
+  {
+   "id": "ash_glass_1",
+   "region": "ashmere",
+   "map": "gravers_hall",
+   "x": 3,
+   "y": 6,
+   "at": "tablet",
+   "kind": "push",
+   "chain": "glass",
+   "title": "The Glassblower's Floor",
+   "text": "Chalk marks on the floor and two heavy slag blocks. A note beside them: Cover both marks, and my first line is yours.",
+   "rows": [
+    "WWWWWWW",
+    "WfffffW",
+    "WfBfPfW",
+    "WfffBfW",
+    "WPffffW",
+    "WWWWWWW"
+   ],
+   "start": [
+    1,
+    1
+   ],
+   "hint_1": "A block pushed against a wall can only slide along it.",
+   "hint_2": "Push the left block down twice, then push it left along the bottom.",
+   "clue": "I am made of sand, yet you can see right through me.",
+   "reward": [
+    {
+     "item": "strong_tonic",
+     "count": 2
+    }
+   ],
+   "solution": [
+    "right",
+    "down",
+    "down",
+    "right",
+    "down",
+    "left",
+    "right",
+    "right",
+    "up"
+   ]
+  },
+  {
+   "id": "ash_glass_2",
+   "region": "ashmere",
+   "map": "saltglass",
+   "x": 10,
+   "y": 21,
+   "at": "tablet",
+   "kind": "type",
+   "chain": "glass",
+   "title": "The Glassblower's Riddle",
+   "text": "Scratched into a cooled slab: What is left when fire has eaten everything? I am grey and light as a feather, and the wind carries me away.",
+   "answers": {
+    "en": [
+     "ash",
+     "ashes"
+    ],
+    "de": [
+     "Asche"
+    ],
+    "fr": [
+     "cendre",
+     "cendres"
+    ],
+    "es": [
+     "ceniza",
+     "cenizas"
+    ],
+    "it": [
+     "cenere",
+     "ceneri"
+    ],
+    "pt_BR": [
+     "cinza",
+     "cinzas"
+    ],
+    "nl": [
+     "as"
+    ],
+    "pl": [
+     "popiół",
+     "popiol"
+    ],
+    "tr": [
+     "kül",
+     "kul"
+    ],
+    "ru": [
+     "пепел",
+     "зола"
+    ],
+    "ja": [
+     "灰",
+     "はい"
+    ],
+    "ko": [
+     "재"
+    ],
+    "zh_CN": [
+     "灰",
+     "灰烬"
+    ],
+    "zh_TW": [
+     "灰",
+     "灰燼"
+    ]
+   },
+   "options": [
+    "Ash",
+    "Smoke",
+    "Sand",
+    "Snow"
+   ],
+   "correct": 0,
+   "hint_1": "Look in any cold fireplace.",
+   "hint_2": "It is grey and soft, and it is left over after burning.",
+   "clue": "Heat me hot enough and I glow and run like honey.",
+   "reward": [
+    {
+     "coins": 500
+    }
+   ]
+  },
+  {
+   "id": "ash_glass_final",
+   "region": "ashmere",
+   "map": "clinker_heath",
+   "x": 4,
+   "y": 11,
+   "at": "tablet",
+   "kind": "type",
+   "needs": [
+    "ash_glass_1",
+    "ash_glass_2"
+   ],
+   "title": "The Glassblower's Will",
+   "text": "The glassblower's last stone. Two lines lead here, one about sand and one about heat. Name what the glassblower made.",
+   "answers": {
+    "en": [
+     "glass"
+    ],
+    "de": [
+     "Glas"
+    ],
+    "fr": [
+     "verre"
+    ],
+    "es": [
+     "vidrio",
+     "cristal"
+    ],
+    "it": [
+     "vetro"
+    ],
+    "pt_BR": [
+     "vidro"
+    ],
+    "nl": [
+     "glas"
+    ],
+    "pl": [
+     "szkło",
+     "szklo"
+    ],
+    "tr": [
+     "cam"
+    ],
+    "ru": [
+     "стекло"
+    ],
+    "ja": [
+     "ガラス",
+     "がらす"
+    ],
+    "ko": [
+     "유리"
+    ],
+    "zh_CN": [
+     "玻璃"
+    ],
+    "zh_TW": [
+     "玻璃"
+    ]
+   },
+   "options": [
+    "Glass",
+    "Iron",
+    "Clay",
+    "Salt"
+   ],
+   "correct": 0,
+   "hint_1": "You look through it every day, in every window.",
+   "hint_2": "It is clear and breaks if you drop it.",
+   "reward": [
+    {
+     "look": "glass_green"
+    },
+    {
+     "meet": "Puffglass",
+     "ring": 36
+    },
+    {
+     "item": "echo_shell",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "ash_kiln",
+   "region": "ashmere",
+   "map": "cinderfold",
+   "x": 10,
+   "y": 7,
+   "at": "tablet",
+   "kind": "lights",
+   "title": "The Kiln Vents",
+   "text": "Sixteen vents in an old kiln wall. Open every vent to warm the stone. Each tap also flips the vents beside it.",
+   "start": [
+    "..x.",
+    "....",
+    "..xx",
+    "xxxx"
+   ],
+   "solution": [
+    [
+     0,
+     0
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ]
+   ],
+   "hint_1": "Tapping a vent twice undoes it, so each vent needs one tap at most.",
+   "hint_2": "Start with the top left corner and the bottom right corner.",
+   "reward": [
+    {
+     "item": "kit_cinder_stone",
+     "count": 1
+    },
+    {
+     "coins": 300
+    }
+   ]
+  },
+  {
+   "id": "ash_station",
+   "region": "ashmere",
+   "map": "ashmere_station",
+   "x": 5,
+   "y": 8,
+   "at": "npc",
+   "sprite": "elder",
+   "kind": "pick",
+   "title": "The Stationmaster's Riddle",
+   "text": "The stationmaster grins: I hold every road in Ashmere, yet I weigh less than a sparrow. Fold me, and the mountains bend. What am I?",
+   "options": [
+    "A map",
+    "A ticket",
+    "A kite",
+    "A letter"
+   ],
+   "correct": 0,
+   "hint_1": "Travellers unfold it to find their way.",
+   "hint_2": "Roads and mountains are drawn on it.",
+   "reward": [
+    {
+     "coins": 400
+    },
+    {
+     "item": "remedy",
+     "count": 2
+    }
+   ]
+  },
+  {
+   "id": "cor_dye",
+   "region": "corvane",
+   "map": "madderby",
+   "x": 3,
+   "y": 9,
+   "at": "tablet",
+   "kind": "order",
+   "title": "The Dyers' Rhyme",
+   "text": "Four dye vats: red, blue, yellow and black. A rhyme is painted on the wall: Yellow starts the day. Blue comes before red. Black always comes last.",
+   "buttons": [
+    "red",
+    "blue",
+    "yellow",
+    "black"
+   ],
+   "solution": [
+    2,
+    1,
+    0,
+    3
+   ],
+   "hint_1": "Yellow is first and black is last.",
+   "hint_2": "Yellow, blue, red, black.",
+   "reward": [
+    {
+     "look": "woad_teal"
+    },
+    {
+     "coins": 300
+    }
+   ]
+  },
+  {
+   "id": "cor_rain",
+   "region": "corvane",
+   "map": "stillwater",
+   "x": 3,
+   "y": 5,
+   "at": "tablet",
+   "kind": "type",
+   "title": "The Pond Stone",
+   "text": "A mossy stone by the pond: I fall all day but never break a bone. I drum on every roof but have no hands. The ponds drink me and grow fat. What am I?",
+   "answers": {
+    "en": [
+     "rain",
+     "rainwater",
+     "raindrops"
+    ],
+    "de": [
+     "Regen",
+     "Regentropfen"
+    ],
+    "fr": [
+     "pluie"
+    ],
+    "es": [
+     "lluvia"
+    ],
+    "it": [
+     "pioggia"
+    ],
+    "pt_BR": [
+     "chuva"
+    ],
+    "nl": [
+     "regen"
+    ],
+    "pl": [
+     "deszcz"
+    ],
+    "tr": [
+     "yağmur",
+     "yagmur"
+    ],
+    "ru": [
+     "дождь"
+    ],
+    "ja": [
+     "雨",
+     "あめ"
+    ],
+    "ko": [
+     "비"
+    ],
+    "zh_CN": [
+     "雨",
+     "雨水"
+    ],
+    "zh_TW": [
+     "雨",
+     "雨水"
+    ]
+   },
+   "options": [
+    "Rain",
+    "Leaves",
+    "Snow",
+    "A bird"
+   ],
+   "correct": 0,
+   "hint_1": "Look up on a grey day.",
+   "hint_2": "It comes from the clouds and fills the ponds.",
+   "reward": [
+    {
+     "item": "dry_towel",
+     "count": 3
+    },
+    {
+     "coins": 300
+    }
+   ]
+  },
+  {
+   "id": "cor_rooks",
+   "region": "corvane",
+   "map": "greyreach",
+   "x": 4,
+   "y": 6,
+   "at": "tablet",
+   "kind": "listen",
+   "title": "The Rooks' Call",
+   "text": "Four rooks sit on the wall and call in turn. Call back the same song, and they will show you a shy friend of theirs.",
+   "buttons": [
+    "black",
+    "grey",
+    "blue",
+    "white"
+   ],
+   "solution": [
+    1,
+    3,
+    0,
+    2,
+    1
+   ],
+   "hint_1": "The song is five calls long.",
+   "hint_2": "It starts and ends with the grey rook.",
+   "reward": [
+    {
+     "meet": "Belfrit",
+     "ring": 25
+    },
+    {
+     "item": "smelling_salts",
+     "count": 2
+    }
+   ]
+  },
+  {
+   "id": "cor_quay",
+   "region": "corvane",
+   "map": "corvane_quay",
+   "x": 6,
+   "y": 15,
+   "at": "tablet",
+   "kind": "slide",
+   "title": "The Harbour Picture",
+   "text": "A tile picture of the harbour, all mixed up. Slide the tiles until the numbers run from 1 to 8.",
+   "scramble": [
+    "up",
+    "left",
+    "down",
+    "left",
+    "up",
+    "up",
+    "right",
+    "down",
+    "right",
+    "down",
+    "left",
+    "up"
+   ],
+   "hint_1": "Tap a tile next to the gap to slide it.",
+   "hint_2": "Finish the top row first, then the rest.",
+   "reward": [
+    {
+     "item": "tide_charm",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "cor_barrels",
+   "region": "corvane",
+   "map": "woadfen",
+   "x": 9,
+   "y": 11,
+   "at": "tablet",
+   "kind": "push",
+   "title": "The Woad Barrels",
+   "text": "Two dye barrels and two drain plates on an old jetty. Roll each barrel onto a plate.",
+   "rows": [
+    "WWWWWWWW",
+    "WffWfffW",
+    "WfBffBfW",
+    "WffWffPW",
+    "WPfWfffW",
+    "WffffffW",
+    "WWWWWWWW"
+   ],
+   "start": [
+    1,
+    1
+   ],
+   "hint_1": "Never push a barrel into a corner, it will not come out again.",
+   "hint_2": "Walk down the left side and along the bottom, then push the right barrel one step right.",
+   "reward": [
+    {
+     "item": "kit_tide_stone",
+     "count": 1
+    },
+    {
+     "coins": 200
+    }
+   ],
+   "solution": [
+    "down",
+    "down",
+    "down",
+    "down",
+    "right",
+    "right",
+    "right",
+    "up",
+    "up",
+    "up",
+    "right",
+    "up",
+    "right",
+    "down",
+    "left",
+    "left",
+    "left",
+    "left",
+    "up",
+    "left",
+    "down",
+    "down"
+   ]
+  },
+  {
+   "id": "sol_shadow",
+   "region": "solenne",
+   "map": "ochrewell",
+   "x": 3,
+   "y": 13,
+   "at": "tablet",
+   "kind": "pick",
+   "title": "The Sun Tablet",
+   "text": "In the morning I am long. At noon I am almost gone. In the evening I am long again, and I always lie on the side away from the sun. What am I?",
+   "options": [
+    "A shadow",
+    "A river",
+    "A camel",
+    "A road"
+   ],
+   "correct": 0,
+   "hint_1": "You take it with you wherever you walk in the sun.",
+   "hint_2": "It is dark, and it has your shape.",
+   "reward": [
+    {
+     "item": "focus_brew",
+     "count": 2
+    },
+    {
+     "coins": 400
+    }
+   ]
+  },
+  {
+   "id": "sol_tracks",
+   "region": "solenne",
+   "map": "glasswind_flats",
+   "x": 7,
+   "y": 17,
+   "at": "tablet",
+   "kind": "steps",
+   "ground": "sand",
+   "title": "Tracks in the Sand",
+   "text": "Small hoof prints cross the sand, and lizard tracks wind all around them. Follow only the hoof prints.",
+   "grid": [
+    ".......E",
+    ".ooooo.o",
+    ".o...o.o",
+    ".o.x.ooo",
+    "So.x....",
+    ".x.xxx..",
+    ".xxx....",
+    "........"
+   ],
+   "hint_1": "The hoof prints never touch the lizard tracks.",
+   "hint_2": "Step right once, then follow the prints up and along the top.",
+   "reward": [
+    {
+     "meet": "Highhare",
+     "ring": 45
+    },
+    {
+     "coins": 400
+    }
+   ]
+  },
+  {
+   "id": "sol_mirrors",
+   "region": "solenne",
+   "map": "ochrewell_dome",
+   "x": 2,
+   "y": 3,
+   "at": "tablet",
+   "kind": "lights",
+   "title": "The Dome Mirrors",
+   "text": "Nine mirrors under the dome. Turn every one of them to the sun. Each tap also turns the mirrors beside it.",
+   "start": [
+    "..x",
+    ".x.",
+    "..."
+   ],
+   "solution": [
+    [
+     1,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "hint_1": "Each mirror needs one tap at most.",
+   "hint_2": "One tap belongs in the middle of the top row.",
+   "reward": [
+    {
+     "look": "dune_amber"
+    },
+    {
+     "item": "lumen_charm",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "sol_caravan",
+   "region": "solenne",
+   "map": "caravanserai",
+   "x": 6,
+   "y": 6,
+   "at": "npc",
+   "sprite": "ranger",
+   "kind": "type",
+   "title": "The Caravan Master's Riddle",
+   "text": "The caravan master says: In the desert people pay gold for me. In the rain they grumble about me. I have no colour and no taste, yet a whole caravan stops for me. What am I?",
+   "answers": {
+    "en": [
+     "water"
+    ],
+    "de": [
+     "Wasser"
+    ],
+    "fr": [
+     "eau"
+    ],
+    "es": [
+     "agua"
+    ],
+    "it": [
+     "acqua"
+    ],
+    "pt_BR": [
+     "água",
+     "agua"
+    ],
+    "nl": [
+     "water"
+    ],
+    "pl": [
+     "woda"
+    ],
+    "tr": [
+     "su"
+    ],
+    "ru": [
+     "вода"
+    ],
+    "ja": [
+     "水",
+     "みず"
+    ],
+    "ko": [
+     "물"
+    ],
+    "zh_CN": [
+     "水"
+    ],
+    "zh_TW": [
+     "水"
+    ]
+   },
+   "options": [
+    "Water",
+    "Shade",
+    "Salt",
+    "A song"
+   ],
+   "correct": 0,
+   "hint_1": "Every well is full of it.",
+   "hint_2": "You drink it when you are thirsty.",
+   "reward": [
+    {
+     "item": "max_tonic",
+     "count": 1
+    },
+    {
+     "coins": 300
+    }
+   ]
+  },
+  {
+   "id": "quill_ledger_1",
+   "region": "quillmarch",
+   "map": "ledgerholm",
+   "x": 4,
+   "y": 13,
+   "at": "tablet",
+   "kind": "pick",
+   "chain": "ledger",
+   "title": "Ledger Stone I",
+   "text": "A clerk's riddle: Each day a clerk writes twice as many names as the day before. On the tenth day the page is full. On which day was it half full?",
+   "options": [
+    "On the ninth day",
+    "On the fifth day",
+    "On the eighth day",
+    "On the first day"
+   ],
+   "correct": 0,
+   "hint_1": "Work backwards from the full page.",
+   "hint_2": "One day before it was full, it held half as many names.",
+   "clue": "What you seek keeps every name, yet never says one aloud.",
+   "reward": [
+    {
+     "coins": 600
+    }
+   ]
+  },
+  {
+   "id": "quill_ledger_2",
+   "region": "quillmarch",
+   "map": "platewick",
+   "x": 10,
+   "y": 1,
+   "at": "tablet",
+   "kind": "slide",
+   "chain": "ledger",
+   "title": "Ledger Stone II",
+   "text": "A printer's plate cut into nine squares, one of them missing. Slide the squares back so the numbers run from 1 to 8.",
+   "scramble": [
+    "left",
+    "left",
+    "up",
+    "right",
+    "up",
+    "left",
+    "down",
+    "right",
+    "right",
+    "down",
+    "left",
+    "up",
+    "up",
+    "right",
+    "down",
+    "down"
+   ],
+   "hint_1": "Tap a square next to the gap to slide it.",
+   "hint_2": "Put 1, 2 and 3 in the top row first.",
+   "clue": "It sleeps on a shelf, with a hard back and many leaves.",
+   "reward": [
+    {
+     "item": "spark_wash",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "quill_icicles",
+   "region": "quillmarch",
+   "map": "rimeholt",
+   "x": 1,
+   "y": 7,
+   "at": "tablet",
+   "kind": "listen",
+   "title": "The Icicle Chimes",
+   "text": "Four icicles hang from the eaves and chime in the cold wind. Chime the same tune back, and something on the moor will hear it.",
+   "buttons": [
+    "white",
+    "blue",
+    "violet",
+    "grey"
+   ],
+   "solution": [
+    0,
+    2,
+    1,
+    3,
+    2
+   ],
+   "hint_1": "Watch the icicles light up as they ring.",
+   "hint_2": "The tune starts on the white icicle and has five notes.",
+   "reward": [
+    {
+     "meet": "Glacilet",
+     "ring": 70,
+     "map": "hoarfrost_moor"
+    },
+    {
+     "item": "kit_pace_feather",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "quill_press",
+   "region": "quillmarch",
+   "map": "proofgate",
+   "x": 7,
+   "y": 13,
+   "at": "tablet",
+   "kind": "push",
+   "title": "The Press Bed",
+   "text": "Three type blocks lie on the press bed, and three marks show where they belong. Push each block onto a mark.",
+   "rows": [
+    "WWWWWWWW",
+    "WPffffPW",
+    "WfBWWBfW",
+    "WfffffBW",
+    "WWfPfffW",
+    "WWffffWW",
+    "WWWWWWWW"
+   ],
+   "start": [
+    3,
+    3
+   ],
+   "hint_1": "A block in a corner is stuck for good. Use Reset if that happens.",
+   "hint_2": "Walk right twice, then push the block above you up.",
+   "reward": [
+    {
+     "item": "kit_ward_talisman",
+     "count": 1
+    },
+    {
+     "coins": 400
+    }
+   ],
+   "solution": [
+    "right",
+    "right",
+    "up",
+    "right",
+    "up",
+    "left",
+    "left",
+    "left",
+    "left",
+    "down",
+    "left",
+    "down",
+    "right",
+    "right",
+    "right",
+    "down",
+    "right",
+    "right",
+    "up",
+    "up",
+    "left",
+    "down",
+    "right",
+    "down",
+    "left",
+    "left"
+   ]
+  },
+  {
+   "id": "quill_post",
+   "region": "quillmarch",
+   "map": "burin_landing",
+   "x": 8,
+   "y": 10,
+   "at": "npc",
+   "sprite": "villager",
+   "kind": "type",
+   "title": "The Postmaster's Riddle",
+   "text": "The postmaster taps the counter: I ride on every letter to the far shore, but I stay in one corner the whole way. Lick me once and I hold on for life. What am I?",
+   "answers": {
+    "en": [
+     "stamp",
+     "postage stamp",
+     "stamps"
+    ],
+    "de": [
+     "Briefmarke",
+     "Marke",
+     "Briefmarken"
+    ],
+    "fr": [
+     "timbre",
+     "timbre-poste"
+    ],
+    "es": [
+     "sello",
+     "estampilla"
+    ],
+    "it": [
+     "francobollo"
+    ],
+    "pt_BR": [
+     "selo"
+    ],
+    "nl": [
+     "postzegel",
+     "zegel"
+    ],
+    "pl": [
+     "znaczek",
+     "znaczek pocztowy"
+    ],
+    "tr": [
+     "pul",
+     "posta pulu"
+    ],
+    "ru": [
+     "марка",
+     "почтовая марка"
+    ],
+    "ja": [
+     "切手",
+     "きって"
+    ],
+    "ko": [
+     "우표"
+    ],
+    "zh_CN": [
+     "邮票"
+    ],
+    "zh_TW": [
+     "郵票"
+    ]
+   },
+   "options": [
+    "A stamp",
+    "A seal",
+    "A coin",
+    "A ribbon"
+   ],
+   "correct": 0,
+   "hint_1": "You buy it at the post office.",
+   "hint_2": "It is a small paper square stuck on a letter.",
+   "reward": [
+    {
+     "coins": 500
+    },
+    {
+     "item": "wake_bell",
+     "count": 2
+    }
+   ]
+  },
+  {
+   "id": "vell_ledger_3",
+   "region": "vellmarch",
+   "map": "tallowmarket",
+   "x": 2,
+   "y": 15,
+   "at": "tablet",
+   "kind": "lights",
+   "chain": "ledger",
+   "title": "Ledger Stone III",
+   "text": "Nine candles stand in a niche of the wall. Light all nine. Each tap also flips the candles beside it.",
+   "start": [
+    "...",
+    ".xx",
+    "xxx"
+   ],
+   "solution": [
+    [
+     0,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "hint_1": "Each candle needs one tap at most.",
+   "hint_2": "Two of the taps are in the bottom row.",
+   "clue": "Open it, and it speaks to you without a sound.",
+   "reward": [
+    {
+     "item": "kit_rest_candle",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "vell_ledger_final",
+   "region": "vellmarch",
+   "map": "lastlamp_name_room",
+   "x": 6,
+   "y": 3,
+   "at": "tablet",
+   "kind": "type",
+   "needs": [
+    "quill_ledger_1",
+    "quill_ledger_2",
+    "vell_ledger_3"
+   ],
+   "title": "The Ledger's Answer",
+   "text": "Two lines came from Quillmarch and one from Tallowmarket. What keeps every name, sleeps on a shelf and speaks without a sound?",
+   "answers": {
+    "en": [
+     "book",
+     "books",
+     "a ledger",
+     "ledger"
+    ],
+    "de": [
+     "Buch",
+     "Bücher",
+     "Buecher"
+    ],
+    "fr": [
+     "livre"
+    ],
+    "es": [
+     "libro"
+    ],
+    "it": [
+     "libro"
+    ],
+    "pt_BR": [
+     "livro"
+    ],
+    "nl": [
+     "boek"
+    ],
+    "pl": [
+     "książka",
+     "ksiazka",
+     "księga",
+     "ksiega"
+    ],
+    "tr": [
+     "kitap"
+    ],
+    "ru": [
+     "книга"
+    ],
+    "ja": [
+     "本",
+     "ほん"
+    ],
+    "ko": [
+     "책"
+    ],
+    "zh_CN": [
+     "书",
+     "书本"
+    ],
+    "zh_TW": [
+     "書",
+     "書本"
+    ]
+   },
+   "options": [
+    "A book",
+    "A ghost",
+    "A clerk",
+    "A box"
+   ],
+   "correct": 0,
+   "hint_1": "It has pages.",
+   "hint_2": "A library is full of them.",
+   "reward": [
+    {
+     "look": "ledger_ink"
+    },
+    {
+     "meet": "Fauxscript",
+     "ring": 59,
+     "map": "tithe_road"
+    },
+    {
+     "item": "growth_charm",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "vell_locks",
+   "region": "vellmarch",
+   "map": "weeping_locks",
+   "x": 9,
+   "y": 4,
+   "at": "tablet",
+   "kind": "order",
+   "title": "The Lock Gates",
+   "text": "Four gate wheels: white, red, green and grey. The keeper's song: Green holds back the sea, so green turns first. Grey sits just above green. White is the top gate. Red sits between grey and white.",
+   "buttons": [
+    "white",
+    "red",
+    "green",
+    "grey"
+   ],
+   "solution": [
+    2,
+    3,
+    1,
+    0
+   ],
+   "hint_1": "Green turns first and white turns last.",
+   "hint_2": "Green, grey, red, white.",
+   "reward": [
+    {
+     "item": "kit_murk_stone",
+     "count": 1
+    },
+    {
+     "coins": 500
+    }
+   ]
+  },
+  {
+   "id": "vell_masks",
+   "region": "vellmarch",
+   "map": "larkspur_heights",
+   "x": 3,
+   "y": 12,
+   "at": "npc",
+   "sprite": "villager",
+   "kind": "pick",
+   "title": "The Mask Maker's Riddle",
+   "text": "The mask maker smiles: I go to every ball and show a face, but there is no head behind me. I smile all night and never get tired. What am I?",
+   "options": [
+    "A mask",
+    "A clock",
+    "A candle",
+    "A mirror"
+   ],
+   "correct": 0,
+   "hint_1": "Look at what this person makes.",
+   "hint_2": "You wear it over your face.",
+   "reward": [
+    {
+     "item": "mask_charm",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "vell_tracks",
+   "region": "vellmarch",
+   "map": "bellrope_marsh",
+   "x": 8,
+   "y": 6,
+   "at": "tablet",
+   "kind": "steps",
+   "ground": "mud",
+   "title": "Tracks in the Reeds",
+   "text": "Webbed prints lead into the marsh, and eel trails wind across them. Follow only the webbed prints.",
+   "grid": [
+    "S.x.....",
+    "o.x.ooo.",
+    "o.x.o.o.",
+    "ooo.o.oE",
+    "..oxo...",
+    "..ooo.x.",
+    "..x...x.",
+    "..xxxxx."
+   ],
+   "hint_1": "Eel trails and bare mud both lose the trail.",
+   "hint_2": "Go down the left edge first.",
+   "reward": [
+    {
+     "meet": "Hushbeak",
+     "ring": 60
+    },
+    {
+     "coins": 500
+    }
+   ]
+  },
+  {
+   "id": "hal_orrery",
+   "region": "halcyra",
+   "map": "orrery_ridge",
+   "x": 5,
+   "y": 9,
+   "at": "tablet",
+   "kind": "order",
+   "title": "The Ridge Orrery",
+   "text": "A small orrery with four worlds: blue, white, gold and red. The plaque: The small red world is closest to the sun. The gold one comes next. Blue follows gold. The pale white one keeps farthest out. Set them from the sun outward.",
+   "buttons": [
+    "blue",
+    "white",
+    "gold",
+    "red"
+   ],
+   "solution": [
+    3,
+    2,
+    0,
+    1
+   ],
+   "hint_1": "Red is closest to the sun.",
+   "hint_2": "Red, gold, blue, white.",
+   "reward": [
+    {
+     "look": "star_silver"
+    },
+    {
+     "item": "zenith_charm",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "hal_star",
+   "region": "halcyra",
+   "map": "starwell",
+   "x": 6,
+   "y": 6,
+   "at": "tablet",
+   "kind": "type",
+   "title": "The Starwell Tablet",
+   "text": "At night I am everywhere you look up. By day I hide, though I never leave. Sailors steer by me. What am I?",
+   "answers": {
+    "en": [
+     "star",
+     "stars"
+    ],
+    "de": [
+     "Stern",
+     "Sterne"
+    ],
+    "fr": [
+     "étoile",
+     "etoile",
+     "étoiles"
+    ],
+    "es": [
+     "estrella",
+     "estrellas"
+    ],
+    "it": [
+     "stella",
+     "stelle"
+    ],
+    "pt_BR": [
+     "estrela",
+     "estrelas"
+    ],
+    "nl": [
+     "ster",
+     "sterren"
+    ],
+    "pl": [
+     "gwiazda",
+     "gwiazdy"
+    ],
+    "tr": [
+     "yıldız",
+     "yildiz"
+    ],
+    "ru": [
+     "звезда",
+     "звёзды",
+     "звезды"
+    ],
+    "ja": [
+     "星",
+     "ほし"
+    ],
+    "ko": [
+     "별"
+    ],
+    "zh_CN": [
+     "星星",
+     "星"
+    ],
+    "zh_TW": [
+     "星星",
+     "星"
+    ]
+   },
+   "options": [
+    "A star",
+    "A cloud",
+    "A bird",
+    "The sun"
+   ],
+   "correct": 0,
+   "hint_1": "Look up on a clear night.",
+   "hint_2": "This town is named after them.",
+   "reward": [
+    {
+     "item": "kit_lantern_glass",
+     "count": 1
+    },
+    {
+     "coins": 600
+    }
+   ]
+  },
+  {
+   "id": "hal_mirrors",
+   "region": "halcyra",
+   "map": "mirror_flats",
+   "x": 5,
+   "y": 10,
+   "at": "tablet",
+   "kind": "lights",
+   "title": "The Flat Mirrors",
+   "text": "Sixteen mirrors lie in the salt. Turn them all to face the sky. Each tap also turns the mirrors beside it.",
+   "start": [
+    "..xx",
+    ".x.x",
+    ".x..",
+    "xxxx"
+   ],
+   "solution": [
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ]
+   ],
+   "hint_1": "Each mirror needs one tap at most.",
+   "hint_2": "Two of the taps are in the bottom row, side by side.",
+   "reward": [
+    {
+     "item": "gilt_charm",
+     "count": 1
+    },
+    {
+     "coins": 500
+    }
+   ]
+  },
+  {
+   "id": "hal_chimes",
+   "region": "halcyra",
+   "map": "cloudshadow_meadow",
+   "x": 7,
+   "y": 11,
+   "at": "tablet",
+   "kind": "listen",
+   "title": "The Wind Chimes",
+   "text": "Five chimes hang from a bent tree, and the wind plays a tune on them. Play it back, and something shy might come to listen.",
+   "buttons": [
+    "white",
+    "gold",
+    "blue",
+    "violet",
+    "green"
+   ],
+   "solution": [
+    4,
+    1,
+    0,
+    3,
+    2,
+    1
+   ],
+   "hint_1": "The tune is six notes long.",
+   "hint_2": "It starts on the green chime.",
+   "reward": [
+    {
+     "meet": "Eavekit",
+     "ring": 83
+    },
+    {
+     "coins": 500
+    }
+   ]
+  },
+  {
+   "id": "hal_tiles",
+   "region": "halcyra",
+   "map": "gildcrest",
+   "x": 2,
+   "y": 13,
+   "at": "tablet",
+   "kind": "slide",
+   "title": "The Gilt Tiles",
+   "text": "Nine gilt tiles in a frame, and one of them is missing. Slide them until the numbers run from 1 to 8.",
+   "scramble": [
+    "up",
+    "up",
+    "left",
+    "down",
+    "left",
+    "down",
+    "right",
+    "up",
+    "right",
+    "down",
+    "left",
+    "left",
+    "up",
+    "right",
+    "up",
+    "right",
+    "down",
+    "down"
+   ],
+   "hint_1": "Tap a tile next to the gap to slide it.",
+   "hint_2": "Finish the top row first, then the left column.",
+   "reward": [
+    {
+     "coins": 800
+    }
+   ]
+  }
+ ]
+}

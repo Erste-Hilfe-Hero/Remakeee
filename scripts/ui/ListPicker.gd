@@ -23,6 +23,8 @@ var _box: VBoxContainer
 var _title: Label
 var _scroll: ScrollContainer
 var _buttons: Array[Button] = []
+## The touch floor the rows were last sized for (ScreenFit.touch_px, update 1.3.2).
+var _touch_floor: int = 0
 var _cancellable: bool = true
 var _opened_ms: int = 0
 var _guard_ms: int = TAP_GUARD_MS
@@ -128,6 +130,8 @@ func _ready() -> void:
 	head.add_child(_title)
 	_back = Button.new()
 	_back.custom_minimum_size = Vector2(BACK_SIZE, BACK_SIZE)
+	# Rows and Back stay finger sized when the screen changes while a list is open (1.3.2).
+	get_viewport().size_changed.connect(_apply_touch, CONNECT_DEFERRED)
 	_back.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	_back.focus_mode = Control.FOCUS_NONE
 	_back.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
@@ -238,6 +242,9 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	# The player's tap guard (KAMPF_PLAN_1000 item 908) lengthens it, never shortens it.
 	_guard_ms = BattleCalm.guard_ms(guard_ms)
 	_back.visible = cancellable
+	# A layout may ask for a larger Back button (the shop's lists, ShopZoom); back_px() adds
+	# the screen's touch floor.
+	_back.custom_minimum_size = Vector2.ONE * back_px()
 	_foot.visible = one_hand and cancellable
 	# A list with no title and no Back button in its head gives that line to the rows (plan
 	# Chimora 100, item 66: the title list needed a scroll to reach Settings at 9:16).
@@ -257,7 +264,8 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	if cancellable:
 		rows.append({"text": "Back", "cancel": true})
 	var columns: int = maxi(1, int(layout.get("columns", 1)))
-	var row_h: int = int(layout.get("row_h", ROW_HEIGHT))
+	var row_h: int = row_height()
+	_touch_floor = ScreenFit.touch_px(get_window())
 	_grid.columns = columns
 	_grid.visible = columns > 1
 	_backdrop.visible = bool(layout.get("backdrop", false))
@@ -288,6 +296,7 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		b.set_meta("animate", bool(rows[i].get("animate", false)))
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.custom_minimum_size = Vector2(0, row_h)
+		b.set_meta("touch_row", true)
 		b.clip_text = true
 		# "ellipsis": a long row ends in "..." instead of being cut mid-word (Chimora 100 item 54).
 		# A row with a "detail" (a goal) is a preview of the text a tap opens: it ends in "..." too.
@@ -502,7 +511,7 @@ func _restore_scroll_step(key: String, target_id: int, frames_left: int) -> void
 	if not visible or _title_key != key or target == null or not is_instance_valid(target):
 		return
 	_scroll.scroll_vertical = _remembered_scroll[key]
-	_scroll.ensure_control_visible(target)
+	_show_whole_rows(target)
 
 ## Starts the 80 ms fade-in; with Reduce motion the list is there at once.
 func fade_in() -> void:
@@ -553,11 +562,39 @@ func _focus_row(want: int) -> void:
 				break
 	if target != null and is_instance_valid(target):
 		target.grab_focus()
-		_scroll.ensure_control_visible.call_deferred(target)
+		_show_whole_rows.call_deferred(target)
 		if _remembered_scroll.has(_title_key):
 			_restore_scroll(_title_key, target)
 	_back.accessibility_name = Loc.t("Back")
 	_arrows.queue_redraw.call_deferred()
+
+## Scrolls [param target] into view so the list starts on a whole row: a scroll of a few pixels
+## to show the focused row cut the first row's text off at the top (pass track, "Premium row" on
+## three lines in Russian, 1.3.2 store shots). The list scrolls on to the next row's top while
+## [param target] stays in view.
+func _show_whole_rows(target: Button) -> void:
+	if not is_instance_valid(target) or target.get_parent() != _box:
+		_scroll.ensure_control_visible(target)
+		return
+	_scroll.ensure_control_visible(target)
+	var top: int = _scroll.scroll_vertical
+	if top <= 0:
+		return
+	for b: Button in _buttons:
+		if b.get_parent() != _box or b.position.y + b.size.y <= top:
+			continue
+		if b.position.y >= top:
+			return
+		# On to the next row's top, or back to this row's top when the list cannot scroll that
+		# far (its end) and the focused row still shows whole.
+		var next: float = b.position.y + b.size.y + _box.get_theme_constant("separation")
+		if next <= target.position.y:
+			_scroll.scroll_vertical = ceili(next)
+			if _scroll.scroll_vertical >= ceili(next):
+				return
+		if target.position.y + target.size.y <= b.position.y + _scroll.size.y:
+			_scroll.scroll_vertical = floori(b.position.y)
+		return
 
 func _on_row(result: int, dir: int = 0, b: Button = null) -> void:
 	if not visible or not _tap_allowed():
@@ -711,6 +748,29 @@ static func row_gap(room: float, step: float, space: float) -> float:
 	var shown: int = maxi(1, floori((room + space) / step))
 	return maxf(0.0, room - (shown * step - space))
 
+## The layout's row height, raised to a finger-sized touch target on a low-scale screen
+## (ScreenFit.touch_px, update 1.3.2).
+func row_height() -> int:
+	var h: int = int(layout.get("row_h", ROW_HEIGHT))
+	return maxi(h, ScreenFit.touch_px(get_window())) if is_inside_tree() else h
+
+## Size of the Back button: the layout's (back_size, ShopZoom), never below the touch floor.
+func back_px() -> int:
+	var back: int = int(layout.get("back_size", BACK_SIZE))
+	return maxi(back, ScreenFit.touch_px(get_window())) if is_inside_tree() else back
+
+## Re-applies the touch floor to the rows and Back after a screen change (fold, unfold, turn).
+func _apply_touch() -> void:
+	if not is_inside_tree() or ScreenFit.touch_px(get_window()) == _touch_floor:
+		return
+	_touch_floor = ScreenFit.touch_px(get_window())
+	var row_h: int = row_height()
+	_back.custom_minimum_size = Vector2.ONE * back_px()
+	for b: Button in _buttons:
+		if is_instance_valid(b) and b.get_meta("touch_row", false):
+			b.custom_minimum_size.y = row_h
+	_snap_rows()
+
 ## Shrinks the list so its last shown row is whole while the description is under it. The gap
 ## costs the column's spacing too when it shows, so a leftover smaller than that is left alone
 ## (it would cut into the next row, and switching back and forth never settles).
@@ -722,7 +782,7 @@ func _snap_rows() -> void:
 	var cut: float = 0.0
 	if _hint.visible and not _grid.visible:
 		var space: float = float(_box.get_theme_constant("separation"))
-		cut = row_gap(room, float(int(layout.get("row_h", ROW_HEIGHT))) + space, space)
+		cut = row_gap(room, float(row_height()) + space, space)
 	var show: bool = cut >= space_col and cut > 0.0
 	var h: float = cut - space_col if show else 0.0
 	if show == _hint_gap.visible and is_equal_approx(h, _hint_gap.custom_minimum_size.y):
@@ -777,11 +837,12 @@ func _link_grid(columns: int) -> void:
 		b.focus_neighbor_bottom = b.get_path_to(_buttons[i + columns if i + columns < n else (n - 1 if i < n - 1 else 0)])
 
 ## A header above the rows or a picture above the list (world map) changes the list's height
-## after the first layout: the focused row is brought back into view once the layout settled.
+## after the first layout: the focused row is brought back into view once the layout settled,
+## with the list starting on a whole row.
 func _keep_focus_shown() -> void:
 	var f: Control = get_viewport().gui_get_focus_owner()
-	if f is Button and f in _buttons and not row_fully_shown(f):
-		_scroll.ensure_control_visible(f)
+	if f is Button and f in _buttons:
+		_show_whole_rows(f)
 
 ## Era V: the rows slide in from the right one after another. Still under reduced motion.
 func _slide_in() -> void:

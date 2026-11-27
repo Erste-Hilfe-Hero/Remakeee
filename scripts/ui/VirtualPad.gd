@@ -36,6 +36,9 @@ var _dir: String = ""
 var _dpad_origin: Vector2 = Vector2.ZERO
 var _dpad: int = DPAD_SIZES[1]
 var _ab: int = AB_SIZES[1]
+## Menu button size and the touch floor the sizes were built for (they follow the screen).
+var _menu_px: int = MENU_BUTTON
+var _touch: int = 0
 
 func _ready() -> void:
 	layer = LAYER
@@ -66,8 +69,11 @@ func apply_settings() -> void:
 			Input.action_release(b.action)
 		b.queue_free()
 	_buttons.clear()
-	_dpad = DPAD_SIZES[clampi(GameState.pad_size, 0, DPAD_SIZES.size() - 1)]
-	_ab = AB_SIZES[clampi(GameState.pad_size, 0, AB_SIZES.size() - 1)]
+	# Never smaller than a finger on this screen (ScreenFit.touch_px, update 1.3.2).
+	_touch = ScreenFit.touch_px(get_window()) if is_inside_tree() else 0
+	_dpad = maxi(DPAD_SIZES[clampi(GameState.pad_size, 0, DPAD_SIZES.size() - 1)], _touch)
+	_ab = maxi(AB_SIZES[clampi(GameState.pad_size, 0, AB_SIZES.size() - 1)], _touch)
+	_menu_px = maxi(MENU_BUTTON, _touch)
 	_root.modulate.a = GameState.PAD_ALPHAS[clampi(GameState.pad_opacity, 0, GameState.PAD_ALPHAS.size() - 1)]
 	_add_button("ui_up", Vector2(_dpad, 0), _dpad, false, "^")
 	_add_button("ui_down", Vector2(_dpad, _dpad * 2), _dpad, false, "v")
@@ -75,7 +81,7 @@ func apply_settings() -> void:
 	_add_button("ui_right", Vector2(_dpad * 2, _dpad), _dpad, false, ">")
 	_add_button("ui_accept", Vector2.ZERO, _ab, true, "A")
 	_add_button("ui_cancel", Vector2.ZERO, _ab, true, "B")
-	_add_button("menu", Vector2.ZERO, MENU_BUTTON, false, "=")
+	_add_button("menu", Vector2.ZERO, _menu_px, false, "=")
 	_layout()
 	_refresh()
 
@@ -210,6 +216,9 @@ func _draw_glyph(img: Image, glyph: String, col: Color) -> void:
 				img.fill_rect(Rect2i(ox + x * scale, oy + y * scale, scale, scale), col)
 
 func _layout() -> void:
+	if is_inside_tree() and ScreenFit.touch_px(get_window()) != _touch:
+		apply_settings()
+		return
 	var vp: Vector2 = get_viewport().get_visible_rect().size
 	var safe: Rect2 = _safe_rect_in_viewport(vp)
 	var left: bool = GameState.left_handed
@@ -250,7 +259,7 @@ func _layout_two_hands(safe: Rect2, left: bool, dpad_origin: Vector2) -> void:
 			"menu":
 				# Sits above B, clear of the D-pad at every size and handedness.
 				var bx2: float = safe.position.x + EDGE if left else safe.end.x - EDGE - _ab * 2 - 4
-				b.position = Vector2(bx2 + (_ab - MENU_BUTTON) / 2.0, safe.end.y - EDGE - _ab - MENU_BUTTON - MENU_GAP)
+				b.position = Vector2(bx2 + (_ab - _menu_px) / 2.0, safe.end.y - EDGE - _ab - _menu_px - MENU_GAP)
 			_:
 				b.position = dpad_origin + off
 
@@ -271,7 +280,7 @@ func _layout_one_hand(safe: Rect2, left: bool) -> void:
 			"ui_cancel":
 				b.position = Vector2(b_x, row_y)
 			"menu":
-				b.position = Vector2(b_x + (_ab - MENU_BUTTON) / 2.0, row_y - MENU_BUTTON - MENU_GAP)
+				b.position = Vector2(b_x + (_ab - _menu_px) / 2.0, row_y - _menu_px - MENU_GAP)
 			_:
 				b.position = dpad_origin + (b.get_meta("offset") as Vector2)
 
@@ -372,7 +381,7 @@ func _process(delta: float) -> void:
 		var framed: bool = hint and GameState.reduce_motion
 		if bool(b.get_meta("framed", false)) != framed:
 			b.set_meta("framed", framed)
-			b.texture_normal = _make_texture(MENU_BUTTON, false, "=", false, framed)
+			b.texture_normal = _make_texture(_menu_px, false, "=", false, framed)
 		if hint and not GameState.reduce_motion:
 			var t: float = fmod(Time.get_ticks_msec() / 1000.0, PULSE_SECONDS) / PULSE_SECONDS
 			b.modulate = Color(1, 1, 1, 0.55 + 0.45 * (0.5 + 0.5 * cos(t * TAU)))

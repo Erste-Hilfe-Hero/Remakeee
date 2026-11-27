@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table pass_track, written by tools/i18n/locales_pass_track.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d of %d pass points": "%d sur %d points de pass",
+  "%d premium rewards reached and waiting.": "%d récompenses premium atteintes vous attendent.",
+  "Free:": "Gratuit :",
+  "Free: %s": "Gratuit : %s",
+  "Locked: needs the Wayfarer Pass.": "Verrouillée : demande le Pass de voyage.",
+  "Opens the premium row of every step.": "Ouvre la rangée premium de chaque étape.",
+  "Pass track": "Parcours du pass",
+  "Premium (Wayfarer Pass):": "Premium (Pass de voyage) :",
+  "Premium row: Wayfarer Pass": "Rangée premium : Pass de voyage",
+  "Premium: %s": "Premium : %s",
+  "Reached at %d pass points.": "Atteinte à %d points de pass.",
+  "Ready to take.": "Prête à prendre.",
+  "Something went wrong. Try again in a moment.": "Un problème est survenu. Réessayez dans un instant.",
+  "Step %d": "Étape %d",
+  "Step %d of %d": "Étape %d sur %d",
+  "Step %d: %s": "Étape %d : %s",
+  "Take all rewards (%d)": "Prendre toutes les récompenses (%d)",
+  "Take the free reward": "Prendre la récompense gratuite",
+  "Take the premium reward": "Prendre la récompense premium",
+  "Taken.": "Prise.",
+  "The premium row needs the Wayfarer Pass.": "La rangée premium demande le Pass de voyage.",
+  "Top row: free for everyone. Bottom row: with the Wayfarer Pass. Pass points come from battles won (%d), bonds (%d) and daily tasks (%d), up to %d a day.": "Rangée du haut : gratuite pour tous. Rangée du bas : avec le Pass de voyage. Les points de pass viennent des combats gagnés (%d), des liens (%d) et des tâches du jour (%d), jusqu'à %d par jour.",
+  "You got:": "Vous avez reçu :",
+  "ends in %s": "fin dans %s"
+ }
+}

@@ -26,6 +26,9 @@ static func spawn(parent: Node, text: String, at: Vector2, stack: int = 0) -> Fl
 	parent.add_child(f)
 	f.reset_size()
 	var vp: Vector2 = parent.get_viewport().get_visible_rect().size if parent.get_viewport() != null else Vector2(WIDTH, 0)
+	# Inside a battle column narrower than the screen (update 1.3.2) the text stays in the column.
+	if parent is Control and (parent as Control).size.x > 0.0:
+		vp.x = minf(vp.x, (parent as Control).size.x)
 	var x: float = clampf(at.x - f.size.x / 2.0, 2.0, maxf(2.0, vp.x - f.size.x - 2.0))
 	f.position = Vector2(x, at.y - f.size.y - stack * (f.size.y + 2)).round()
 	f._run()

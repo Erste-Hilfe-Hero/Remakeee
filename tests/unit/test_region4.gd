@@ -149,7 +149,7 @@ func test_landmarks_span_several_screens() -> void:
 		assert_gt(int(l.screens[0]) * int(l.screens[1]), 1, "%s spans screens" % l.id)
 	assert_eq(Region4.landmarks_at("starwell").size(), 1)
 
-func test_seventy_own_era_four_spirlings() -> void:
+func test_eighty_own_era_four_spirlings() -> void:
 	var kinds: Array[SpirlingData] = []
 	var own: Dictionary = {}
 	for sd: SpirlingData in Database.spirlings.values():
@@ -157,7 +157,7 @@ func test_seventy_own_era_four_spirlings() -> void:
 			kinds.append(sd)
 			for e: int in sd.elements:
 				own[Elements.E.find_key(e)] = true
-	assert_eq(kinds.size(), 70, "70 own kinds (tools/art/lines/halcyra.py, gen_era4.py --lines)")
+	assert_eq(kinds.size(), 80, "80 own kinds (tools/art/lines/halcyra.py and halcyra_more.py, gen_era4.py --lines)")
 	for sd: SpirlingData in kinds:
 		assert_eq(sd.era, 4, sd.species_name)
 		assert_eq(EraManager.sprite_path(sd.species_name), "res://art/era4/spirlings/%s_front.png" % sd.species_name.to_lower())

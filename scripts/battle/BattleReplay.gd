@@ -24,6 +24,9 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		snap["bond_block"] = model.bond_block
 	if not model.blocked_items.is_empty():
 		snap["blocked_items"] = model.blocked_items.duplicate()
+	# Riftglass Continue in a story battle, also only when offered.
+	if model.continue_offer > 0:
+		snap["continue_offer"] = model.continue_offer
 	# Story Rest and the tall-grass ambush (KAMPF_PLAN items 16, 52), also only when on.
 	if model.rest_heal_share > 0.0:
 		snap["rest_heal"] = model.rest_heal_share
@@ -39,6 +42,9 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		snap["shift_offer"] = true
 	if model.foe_announce:
 		snap["foe_announce"] = true
+	# Hidden battle touches (HiddenBattle): only when on, so older replays stay the same.
+	if model.hidden_rules:
+		snap["hidden"] = true
 	return snap
 
 static func _snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
@@ -201,6 +207,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	var blocked: Variant = snap.get("blocked_items", [])
 	if blocked is Array:
 		m.blocked_items.assign((blocked as Array).map(func(x: Variant) -> String: return str(x)))
+	m.continue_offer = clampi(int(snap.get("continue_offer", 0)), 0, RiftglassSinks.continue_max())
 	m.energy_bonus = [clampi(int(snap.get("energy_bonus", 0)), 0, ShopEffects.MAX_ENERGY_BONUS), 0]
 	m.seals = [seal_row(snap.get("seals", [])), [0, 0, 0]]
 	m.amulets = [ShopEffects.amulet_row(snap.get("amulets", [])), [0, 0, 0]]
@@ -223,6 +230,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.initiative = bool(snap.get("initiative", false)) and not m.is_wild
 	m.shift_offer = bool(snap.get("shift_offer", false)) and not m.is_wild
 	m.foe_announce = bool(snap.get("foe_announce", false)) and not m.is_wild
+	m.hidden_rules = bool(snap.get("hidden", false))
 	if not partner.is_empty():
 		var ally: Array[Spirling] = _rebuild(partner.get("team", []))
 		if ally.size() != (partner.get("team", []) as Array).size():
@@ -231,8 +239,12 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	return m
 
 static func action_to_dict(a: BattleAction) -> Dictionary:
-	return {"t": "turn", "k": int(a.kind), "m": a.move_index, "s": a.swap_index, "i": a.item_id,
+	var d: Dictionary = {"t": "turn", "k": int(a.kind), "m": a.move_index, "s": a.swap_index, "i": a.item_id,
 		"g": a.item_target, "b": a.timing_score, "sl": a.slot, "tg": a.target_slot}
+	# A Riftglass bond boost only when paid, so older replays stay the same.
+	if a.rg_boost > 0.0:
+		d["rb"] = a.rg_boost
+	return d
 
 ## One turn of a battle with several player slots: every action the player picked.
 static func actions_to_dict(actions: Array[BattleAction]) -> Dictionary:
@@ -258,6 +270,7 @@ static func action_from_dict(d: Dictionary) -> BattleAction:
 	a.timing_score = float(d.get("b", 0.0))
 	a.slot = int(d.get("sl", 0))
 	a.target_slot = int(d.get("tg", -1))
+	a.rg_boost = clampf(float(d.get("rb", 0.0)), 0.0, RiftglassSinks.BOND_BOOST_MAX)
 	return a
 
 static func switch_to_dict(index: int) -> Dictionary:
@@ -280,7 +293,15 @@ static func play_extra(m: BattleModel, d: Dictionary) -> Variant:
 			if not m.needs_shift_choice():
 				return [] as Array[BattleEvent]
 			return m.submit_shift(int(d.get("i", -1)))
+		"continue":
+			if not m.needs_continue_choice():
+				return [] as Array[BattleEvent]
+			return m.submit_continue(bool(d.get("ok", false)))
 	return null
+
+## The answer to the Riftglass Continue offer.
+static func continue_to_dict(accept: bool) -> Dictionary:
+	return {"t": "continue", "ok": accept}
 
 ## Plays [param snap] to the end without a screen. Returns the outcome (used by tests).
 static func simulate(snap: Dictionary) -> BattleModel.Outcome:

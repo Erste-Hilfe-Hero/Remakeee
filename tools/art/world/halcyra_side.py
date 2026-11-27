@@ -196,7 +196,7 @@ GOALS = [
                   None,
                   ("Konrad: I'm moving out. Downstairs. Well away from any stairs.", "Konrad: Ich ziehe aus. Nach unten. Weit weg von jeder Treppe.")),
      "twist": {"npc": "hs_sabeth", "role": "lantern engraver who books two falls at once", "trust": 25, "use": 65, "road": "lantern_span",
-               "clue": ("gilt_span", 8, 2, "down", "elder", "yorick",
+               "clue": ("gilt_span", 8, 1, "down", "elder", "yorick",
                         [("Plate Polisher Yorick: Two blank plates came in last week, paid together. One for a husband. One for 'the courier'. The order slip is in the engraver's own hand.", "Plattenpolierer Yorick: Letzte Woche kamen zwei leere Platten rein, zusammen bezahlt. Eine für einen Ehemann. Eine für 'den Boten'. Der Bestellzettel ist in der Handschrift der Graveurin."),
                          ("Yorick: I polish. I don't read. Except slips. Slips are short.", "Yorick: Ich poliere. Ich lese nicht. Außer Zettel. Zettel sind kurz.")],
                         ("Yorick: Shiny plates, short lives. Business is steady.", "Yorick: Glänzende Platten, kurze Leben. Das Geschäft läuft stetig.")),

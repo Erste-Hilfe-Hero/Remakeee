@@ -1,0 +1,16 @@
+{
+ "_comment": "German texts from tools/i18n/de_weather.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Ash fall": "Ascheregen",
+  "Downpour": "Wolkenbruch",
+  "Drizzle": "Nieselregen",
+  "Gale": "Starker Wind",
+  "How much rain, snow and fog is drawn. Low is easier on old phones. Off: only the light changes.": "Wie viel Regen, Schnee und Nebel gezeichnet wird. Wenig schont ältere Handys. Aus: Nur das Licht ändert sich.",
+  "Later: %s": "Später: %s",
+  "Low": "Wenig",
+  "Snow": "Schnee",
+  "Thick fog": "Dichter Nebel",
+  "Weather effects: %s": "Wettereffekte: %s"
+ }
+}

@@ -1,7 +1,7 @@
 class_name LocalShop
 extends RefCounted
 ## The shop part of the local stand-in server: the same rules as
-## supabase/migrations/20261110000020_shop.sql, kept in each player's row ("shop"), so moving to a
+## supabase/migrations/20261110000020_shop.sql (and the later shop migrations up to step 7), kept in each player's row ("shop"), so moving to a
 ## new phone and deleting the account work like on the server. Used by tests and by builds
 ## without a server address. tests/unit/test_shop_server.gd checks the rules.
 
@@ -23,7 +23,7 @@ static func install(backend: LocalBackend) -> LocalShop:
 	var s := LocalShop.new()
 	s._bref = weakref(backend)
 	for fn: String in ["shop_state", "shop_set_age", "shop_withdrawal_ok", "shop_set_limit", "shop_buy", "shop_claim",
-			"shop_history", "shop_pass_daily", "shop_verify"]:
+			"shop_history", "shop_pass_daily", "shop_verify", "shop_card_daily", "shop_extras"]:
 		backend._fns[fn] = Callable(s, "_fn_" + fn)
 	backend.set_meta("shop", s)
 	return s
@@ -152,6 +152,8 @@ func offer_block(uid: String, o: Dictionary, choice: Variant) -> String:
 		return "age"
 	if not bool(o.get("ready", false)):
 		return "not_available"
+	if not ShopCatalog.deal_active(o, b.now()):
+		return "not_now"
 	if o.has("limit") and bought(uid, str(o.id), str(o.limit.get("per", "account"))) >= int(o.limit.n):
 		return "offer_limit"
 	var req: String = str(o.get("requires", ""))
@@ -187,8 +189,80 @@ func _grant(uid: String, purchase_id: int, o: Dictionary, choice: Variant) -> vo
 				bag.append(g.duplicate())
 			"choice":
 				bag.append({"t": "item", "id": str(choice), "n": int(g.get("n", 1))})
+			"card":
+				_card_add(uid, g)
 	if not bag.is_empty():
 		s.deliveries.append({"id": _next_id(s), "purchase": purchase_id, "grants": bag, "claimed": false})
+	var extra: int = ShopCatalog.first_buy_extra(o)
+	if extra > 0 and str(o.get("kind", "")) == "currency":
+		for p: Dictionary in s.purchases:
+			if str(p.offer) == str(o.id) and int(p.id) != purchase_id:
+				return
+		_ledger_add(uid, extra, "first_double", "purchase:%d" % purchase_id)
+
+# --- Pay-to-win step 7: Monthly Card (same rules as migration 20261127100100_shop_p2w_step7.sql) ---
+
+func _cards(uid: String) -> Dictionary:
+	var s: Dictionary = _shop(uid)
+	if not s.has("cards"):
+		s["cards"] = {}
+	return s.cards
+
+func _card_add(uid: String, g: Dictionary) -> void:
+	var cards: Dictionary = _cards(uid)
+	var today: int = ShopCatalog.shop_day(b.now())
+	var id: String = str(g.get("id", ""))
+	if not cards.has(id):
+		cards[id] = {"started": today, "total": int(g.days), "paid": 0, "daily": int(g.n)}
+		return
+	var c: Dictionary = cards[id]
+	if today - int(c.started) + 1 > int(c.total):
+		c.started = today - int(c.total)
+	c.total = int(c.total) + int(g.days)
+	c.daily = int(g.n)
+
+static func card_due(c: Dictionary, today: int) -> int:
+	return maxi(mini(today - int(c.started) + 1, int(c.total)) - int(c.paid), 0)
+
+func _fn_shop_card_daily(_a: Dictionary) -> Dictionary:
+	var uid: String = b.me()
+	var cards: Dictionary = _cards(uid)
+	if cards.is_empty():
+		return {"ok": false, "error": "no_card"}
+	var today: int = ShopCatalog.shop_day(b.now())
+	var added: int = 0
+	var left: int = 0
+	for id: String in cards:
+		var c: Dictionary = cards[id]
+		var due: int = card_due(c, today)
+		if due > 0:
+			c.paid = int(c.paid) + due
+			_ledger_add(uid, due * int(c.daily), "card_daily", "%s:%d" % [id, today])
+			added += due * int(c.daily)
+		left += maxi(int(c.total) - int(c.paid), 0)
+	return {"ok": true, "added": added, "days_left": left, "balance": balance_of(uid)}
+
+func _fn_shop_extras(_a: Dictionary) -> Dictionary:
+	var uid: String = b.me()
+	var today: int = ShopCatalog.shop_day(b.now())
+	var firsts: Dictionary = {}
+	var deals: Array = []
+	for o: Dictionary in ShopCatalog.offers():
+		if bool(o.get("first_buy_double", false)):
+			var n: int = 0
+			for p: Dictionary in _shop(uid).purchases:
+				if str(p.offer) == str(o.id):
+					n += 1
+			firsts[str(o.id)] = n
+		if o.has("rotation") and ShopCatalog.deal_active(o, b.now()):
+			deals.append(str(o.id))
+	deals.sort()
+	var card: Dictionary = {}
+	for id: String in _cards(uid):
+		var c: Dictionary = _cards(uid)[id]
+		var due: int = card_due(c, today)
+		card[id] = {"daily": int(c.daily), "due": due, "days_left": maxi(int(c.total) - int(c.paid) - due, 0)}
+	return {"firsts": firsts, "card": card, "deals": deals, "shop_day": today}
 
 # --- Player functions ------------------------------------------------------------------------
 
@@ -394,6 +468,12 @@ func refund(store: String, txn: String) -> Dictionary:
 				s.unlocks[str(g.id)] = n
 			else:
 				s.unlocks.erase(str(g.id))
+		elif str(g.t) == "card" and _cards(uid).has(str(g.id)):
+			var c: Dictionary = _cards(uid)[str(g.id)]
+			c.total = maxi(int(c.total) - int(g.days), int(c.paid))
+	for row: Dictionary in (s.ledger as Array).duplicate():
+		if str(row.reason) == "first_double" and str(row.ref) == "purchase:%d" % int(p.id):
+			_ledger_add(uid, -int(row.amount), "refund", "purchase:%d" % int(p.id))
 	s.deliveries = (s.deliveries as Array).filter(func(d: Dictionary) -> bool: return int(d.purchase) != int(p.id) or bool(d.claimed))
 	for sub: Dictionary in s.subs:
 		if str(sub.txn) == txn:

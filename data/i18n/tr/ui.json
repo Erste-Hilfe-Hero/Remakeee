@@ -209,7 +209,7 @@
   "Lantern Nights": "Fener Geceleri",
   "Large": "Büyük",
   "Last Stand": "Son Direniş",
-  "Lays %s for %d turns.": "%d tur boyunca %s bırakır.",
+  "Lays %s for %d turns.": "{1} tur boyunca {0} bırakır.",
   "Lead the team": "Takımın başına",
   "Leave": "Ayrıl",
   "Left-handed: %s": "Solak düzen: %s",

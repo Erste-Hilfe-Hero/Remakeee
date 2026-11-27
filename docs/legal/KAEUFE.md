@@ -16,12 +16,18 @@ Rissglas ist die Währung im Shop. Du kaufst es über Apple oder Google und gibs
 | Paket | Preis |
 |---|---|
 | 100 Rissglas | 0,99 € |
-| 200 Rissglas | 1,99 € |
-| 500 Rissglas | 4,99 € |
-| 1000 Rissglas | 9,99 € |
-| 2000 Rissglas | 19,99 € |
-| 5000 Rissglas | 49,99 € |
-| 10000 Rissglas | 99,99 € |
+| 220 Rissglas | 1,99 € |
+| 600 Rissglas | 4,99 € |
+| 1300 Rissglas | 9,99 € |
+| 2800 Rissglas | 19,99 € |
+| 7500 Rissglas | 49,99 € |
+| 16000 Rissglas | 99,99 € |
+| Monatskarte: 300 Rissglas sofort, dann 30 Tage lang 100 am Tag | 4,99 € |
+
+- Ab 200 Rissglas enthält jedes Paket Bonus-Rissglas (+10 % bis +60 %), die Mengen oben sind schon mit Bonus.
+- Der erste Kauf jedes Pakets pro Konto gibt die Grundmenge noch einmal dazu (zum Beispiel 100 + 100).
+- Die Monatskarte ist kein Abo und verlängert sich nicht. Das tägliche Rissglas holst du im Shop ab; verpasste
+  Tage warten auf dich.
 
 - Jedes Angebot zeigt vorher den Preis in Rissglas und den Gegenwert in Euro.
 - Rissglas verfällt nicht, solange dein Konto besteht.
@@ -85,12 +91,18 @@ Riftglass is the shop's currency. You buy it through Apple or Google and spend i
 | Pack | Price |
 |---|---|
 | 100 Riftglass | 0.99 EUR |
-| 200 Riftglass | 1.99 EUR |
-| 500 Riftglass | 4.99 EUR |
-| 1000 Riftglass | 9.99 EUR |
-| 2000 Riftglass | 19.99 EUR |
-| 5000 Riftglass | 49.99 EUR |
-| 10000 Riftglass | 99.99 EUR |
+| 220 Riftglass | 1.99 EUR |
+| 600 Riftglass | 4.99 EUR |
+| 1300 Riftglass | 9.99 EUR |
+| 2800 Riftglass | 19.99 EUR |
+| 7500 Riftglass | 49.99 EUR |
+| 16000 Riftglass | 99.99 EUR |
+| Monthly Card: 300 Riftglass at once, then 100 a day for 30 days | 4.99 EUR |
+
+- From 200 Riftglass on, every pack has bonus Riftglass (+10 % to +60 %); the amounts above include it.
+- The first purchase of each pack per account adds the base amount once more (for example 100 + 100).
+- The Monthly Card is no subscription and never renews. Collect the daily Riftglass in the shop; missed days
+  wait for you.
 
 - Every offer shows its price in Riftglass and the euro equivalent first.
 - Riftglass does not expire while your account exists.

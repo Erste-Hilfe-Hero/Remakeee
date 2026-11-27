@@ -599,6 +599,139 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era2.py
 | 497 | Mirefane | Umbra/Tide | uncommon | kindler | kindling | 394 | - |
 <!-- /lines:vellmarch -->
 
+<!-- lines:veydal_more -->
+## Veydal lines, 1.3.2 batch (Act I, tools/art/lines/veydal_more.py)
+
+Owner request for 1.3.2: ten more Spirlings in every region. Drawn by tools/art/gen_lines.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 498 | Heathpip | Ember/Bloom | common | vanguard | calm_mind | 302 | Heathbristle (ring 12) |
+| 499 | Heathbristle | Ember/Bloom | uncommon | vanguard | calm_mind | 356 | Heathbrand (ring 31) |
+| 500 | Heathbrand | Ember/Bloom | shy | vanguard | calm_mind | 407 | - |
+| 501 | Tinglet | Volt/Tide | common | striker | static_fur | 281 | Tinglash (ring 16) |
+| 502 | Tinglash | Volt/Tide | uncommon | striker | static_fur | 424 | Tinglewyrm (ring 29) |
+| 503 | Tinglewyrm | Volt/Tide | shy | striker | static_fur | 514 | - |
+| 504 | Keepling | Stone/Lumen | uncommon | bulwark | steady | 347 | Keepwarden (ring 22) |
+| 505 | Keepwarden | Stone/Lumen | shy | bulwark | steady | 465 | - |
+| 506 | Brackenram | Bloom/Stone | uncommon | vanguard | dry_coat | 422 | - |
+| 507 | Saltwhistle | Gale/Tide | uncommon | weaver | calm_mind | 348 | - |
+<!-- /lines:veydal_more -->
+
+<!-- lines:corvane_more -->
+## Corvane lines, 1.3.2 batch (Act II, tools/art/lines/corvane_more.py)
+
+Owner request for 1.3.2: ten more Spirlings in every region. Drawn by tools/art/gen_lines.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 508 | Flaxlet | Bloom/Gale | common | weaver | echo_soul | 307 | Flaxreel (ring 16) |
+| 509 | Flaxreel | Bloom/Gale | uncommon | weaver | echo_soul | 383 | Flaxdowager (ring 34) |
+| 510 | Flaxdowager | Bloom/Gale | shy | weaver | echo_soul | 496 | - |
+| 511 | Simmerkit | Ember/Tide | common | kindler | field_strider | 309 | Simmerhound (ring 19) |
+| 512 | Simmerhound | Ember/Tide | uncommon | kindler | field_strider | 390 | Simmerbaron (ring 32) |
+| 513 | Simmerbaron | Ember/Tide | shy | kindler | field_strider | 452 | - |
+| 514 | Lockgill | Stone/Tide | uncommon | bulwark | unruffled | 318 | Lockreeve (ring 24) |
+| 515 | Lockreeve | Stone/Tide | shy | bulwark | unruffled | 429 | - |
+| 516 | Pondchime | Echo/Tide | uncommon | weaver | echo_soul | 430 | - |
+| 517 | Stookhulk | Bloom/Stone | uncommon | bulwark | thick_hide | 344 | - |
+<!-- /lines:corvane_more -->
+
+<!-- lines:ashmere_more -->
+## Ashmere lines, 1.3.2 batch (Act III, tools/art/lines/ashmere_more.py)
+
+Owner request for 1.3.2: ten more Spirlings in every region. Drawn by tools/art/gen_lines.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 518 | Annealet | Lumen/Volt | common | weaver | static_fur | 303 | Annealix (ring 18) |
+| 519 | Annealix | Lumen/Volt | uncommon | weaver | static_fur | 385 | Annealord (ring 36) |
+| 520 | Annealord | Lumen/Volt | shy | weaver | static_fur | 392 | - |
+| 521 | Sumplet | Stone/Tide | common | bulwark | static_fur | 313 | Sumpdelver (ring 22) |
+| 522 | Sumpdelver | Stone/Tide | uncommon | bulwark | static_fur | 450 | Sumpthane (ring 38) |
+| 523 | Sumpthane | Stone/Tide | shy | bulwark | static_fur | 455 | - |
+| 524 | Turfkin | Bloom/Stone | uncommon | kindler | thorn_coat | 312 | Turfhulk (ring 28) |
+| 525 | Turfhulk | Bloom/Stone | shy | kindler | thorn_coat | 378 | - |
+| 526 | Flintkit | Stone/Ember | uncommon | striker | glimmer_skin | 324 | Flintlancer (ring 26) |
+| 527 | Flintlancer | Stone/Ember | shy | striker | glimmer_skin | 479 | - |
+<!-- /lines:ashmere_more -->
+
+<!-- lines:solenne_more -->
+## Solenne lines, 1.3.2 batch (Act IV, tools/art/lines/solenne_more.py)
+
+Owner request for 1.3.2: ten more Spirlings in every region. Drawn by tools/art/gen_lines.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 528 | Glarelet | Lumen/Ember | common | striker | thick_hide | 325 | Glarelisk (ring 18) |
+| 529 | Glarelisk | Lumen/Ember | uncommon | striker | thick_hide | 443 | Glaremonarch (ring 34) |
+| 530 | Glaremonarch | Lumen/Ember | shy | striker | thick_hide | 520 | - |
+| 531 | Haulbug | Stone/Gale | common | bulwark | thick_hide | 306 | Haulbeetle (ring 18) |
+| 532 | Haulbeetle | Stone/Gale | uncommon | bulwark | thick_hide | 448 | Haulbastion (ring 33) |
+| 533 | Haulbastion | Stone/Gale | shy | bulwark | thick_hide | 466 | - |
+| 534 | Cistlet | Tide/Umbra | uncommon | vanguard | surge | 306 | Cisternox (ring 30) |
+| 535 | Cisternox | Tide/Umbra | shy | vanguard | surge | 383 | - |
+| 536 | Noctolabe | Umbra/Lumen | uncommon | weaver | light_sleeper | 410 | - |
+| 537 | Grainspout | Gale/Stone | uncommon | striker | slick | 407 | - |
+<!-- /lines:solenne_more -->
+
+<!-- lines:quillmarch_more -->
+## Quillmarch lines, 1.3.2 batch (Era III post-game, tools/art/lines/quillmarch_more.py)
+
+Owner request for 1.3.2: ten more Spirlings in every region. Drawn by tools/art/gen_era3.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 538 | Brumelet | Frost/Umbra | common | striker | slick | 308 | Brumeshade (ring 23) |
+| 539 | Brumeshade | Frost/Umbra | uncommon | striker | slick | 348 | Brumarch (ring 39) |
+| 540 | Brumarch | Frost/Umbra | shy | striker | slick | 515 | - |
+| 541 | Zinclet | Acid/Volt | common | vanguard | glimmer_skin | 296 | Zincrawler (ring 25) |
+| 542 | Zincrawler | Acid/Volt | uncommon | vanguard | glimmer_skin | 370 | Zincolossus (ring 39) |
+| 543 | Zincolossus | Acid/Volt | shy | vanguard | glimmer_skin | 476 | - |
+| 544 | Serifkit | Stone/Lumen | uncommon | weaver | low_flame | 322 | Serifane (ring 34) |
+| 545 | Serifane | Stone/Lumen | shy | weaver | low_flame | 429 | - |
+| 546 | Tangbeak | Acid/Gale | uncommon | striker | overflow | 321 | Tangharrier (ring 32) |
+| 547 | Tangharrier | Acid/Gale | shy | striker | overflow | 435 | - |
+<!-- /lines:quillmarch_more -->
+
+<!-- lines:halcyra_more -->
+## Halcyra lines, 1.3.2 batch (Era IV post-game, tools/art/lines/halcyra_more.py)
+
+Owner request for 1.3.2: ten more Spirlings in every region. Drawn by tools/art/gen_era4.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 548 | Culmlet | Zenith/Bloom | common | kindler | dry_coat | 299 | Culmbough (ring 82) |
+| 549 | Culmbough | Zenith/Bloom | uncommon | kindler | dry_coat | 399 | Culmarch (ring 87) |
+| 550 | Culmarch | Zenith/Bloom | shy | kindler | dry_coat | 458 | - |
+| 551 | Mintlet | Gilt/Tide | common | weaver | steady | 314 | Mintmarker (ring 80) |
+| 552 | Mintmarker | Gilt/Tide | uncommon | weaver | steady | 420 | Mintmajesty (ring 90) |
+| 553 | Mintmajesty | Gilt/Tide | shy | weaver | steady | 480 | - |
+| 554 | Cornicet | Stone/Gale | uncommon | vanguard | fireproof | 316 | Corniceroc (ring 82) |
+| 555 | Corniceroc | Stone/Gale | shy | vanguard | fireproof | 432 | - |
+| 556 | Fulmenkit | Volt/Zenith | uncommon | striker | grounded | 322 | Fulmenhart (ring 86) |
+| 557 | Fulmenhart | Volt/Zenith | shy | striker | grounded | 434 | - |
+<!-- /lines:halcyra_more -->
+
+<!-- lines:vellmarch_more -->
+## Vellmarch lines, 1.3.2 batch (Era II post-game, tools/art/lines/vellmarch_more.py)
+
+Owner request for 1.3.2: ten more Spirlings in every region. Drawn by tools/art/gen_era2.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 558 | Hoistling | Rust/Gale | common | striker | dry_coat | 270 | Hoistheron (ring 24) |
+| 559 | Hoistheron | Rust/Gale | uncommon | striker | dry_coat | 410 | Hoistgrand (ring 41) |
+| 560 | Hoistgrand | Rust/Gale | shy | striker | dry_coat | 495 | - |
+| 561 | Fibbet | Mask/Tide | common | weaver | fireproof | 310 | Fibwhisker (ring 23) |
+| 562 | Fibwhisker | Mask/Tide | uncommon | weaver | fireproof | 451 | Fibgrandee (ring 40) |
+| 563 | Fibgrandee | Mask/Tide | shy | weaver | fireproof | 504 | - |
+| 564 | Murmlet | Echo/Umbra | uncommon | kindler | grounded | 309 | Murmuron (ring 33) |
+| 565 | Murmuron | Echo/Umbra | shy | kindler | grounded | 425 | - |
+| 566 | Tallykit | Ink/Rust | uncommon | bulwark | low_flame | 270 | Tallywarden (ring 32) |
+| 567 | Tallywarden | Ink/Rust | shy | bulwark | low_flame | 387 | - |
+<!-- /lines:vellmarch_more -->
+
 ## Regional imprints (Ortsprägung, items 218-219)
 
 A Veydal kind that lives long in another region shows a regional form there: other elements, a new palette, its own lore line, without a new Spirlog number. The forms are listed in `variants` per kind in data/spirlings.json; `Spirling.apply_imprint(region)` stores the region id in `Spirling.variant`, and `Spirling.elements()` then uses the imprint's elements. What counts as "living long" in a region is decided once those regions are playable.

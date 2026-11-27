@@ -1,10 +1,14 @@
-Chimora 1.3.1
+Chimora 1.3.2
 
-- 7 neue Gaben für deine Spirlings und neue Künste, die mehrmals treffen oder einen Gefährten eintreten lassen.
-- "Wer passt zu dir?" hilft bei der Partnerwahl, und ein Ideen-Knopf schlägt Namen vor.
-- Weltkarte: wo du zuletzt warst, der Weg zum nächsten Rastpunkt und ein Stern, wo du dich mit jeder Art verbunden hast.
-- Gesprächsverlauf, Nachtmodus und "Auf Standard zurücksetzen" auf jeder Einstellungsseite.
-- Wochenend-Bonus: doppelte Erfahrung am Samstag und Sonntag.
-- Jetzt auch auf dem iPad, und besser auf Tablets und Falt-Handys.
-- Lange Menütexte brechen um, statt abgeschnitten zu werden.
-- Viele kleine Korrekturen.
+- Ein ganz neuer Shop: Rissglas-Pakete, die Monatskarte, Champion-Spirlings, Bündel sowie Tages- und Wochenangebote. Jedes Angebot zeigt genau, was drin ist, nichts ist Zufall.
+- Rissglas wirkt jetzt auch im Spiel: nach einer Niederlage weiterkämpfen, das Team heilen, Wachstum oder eine Bindung stärken, die Wartezeit einer Reise abkürzen, einen Wächter sofort noch einmal herausfordern und mehr.
+- Jeden Tag 20 Rissglas als Geschenk, wenn du online bist.
+- Ein neuer Pass mit 30 Stufen und einer freien Reihe für alle.
+- 70 neue Spirlings, 10 in jeder Region.
+- Glanzformen gibt es jetzt in 5 Arten, von der klassischen Glanzform bis zur sehr seltenen Opal-Glanzform.
+- Neues Wetter: Regen, Nebel, Wind, Gewitter und Schnee verändern die Welt und manche Kämpfe. Es ist gleich eingeschaltet und lässt sich in den Einstellungen anpassen.
+- 35 Rätselsteine und Rätseltafeln in allen Regionen.
+- Viele versteckte Geheimnisse, die du beim Spielen entdeckst.
+- Die Karten hängen besser zusammen: keine Sackgassen mehr und neue Häuser in den Städten.
+- Bessere Darstellung auf großen Bildschirmen und Tablets.
+- Viele Fehlerkorrekturen.

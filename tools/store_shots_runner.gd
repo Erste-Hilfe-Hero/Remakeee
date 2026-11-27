@@ -14,6 +14,14 @@ extends Node
 ##                        instead; start_duel() stays for tools/store_video_runner.gd
 ##   m1_spirlog           a Spirlog page (Era V menus)
 ##   m2_shop_looks        the shop's Looks list (Era V menus): Riftglass prices, no money prices
+## The 1.3.2 pictures (window 440x956, see tools/store/make_store_images.py):
+##   n1_shop_featured     the shop's Featured page (Era V, ShopZoom) without store prices and with
+##                        the euro hints taken out: no money prices in any store picture
+##   n2_pass_track        the pass track (PassScreen) in step 5 without the pass
+##   n3_gleam_battle      a wild Rime Gleam in an Era V battle, its opening line in the text box;
+##   n3_gleam_menu        instead, where that line takes two pages: the command menu after it
+##   n4_weather_rain      Era V Mossgate in the rain (WeatherCycle, data/weather.json)
+##   n5_puzzle            a puzzle board (data/puzzle_spots.json, Tracks in the Mud), Era V
 
 const SCALE: int = 3
 const OVERWORLD_CELL: Vector2i = Vector2i(5, 8)
@@ -31,16 +39,28 @@ const UNFURL: Array[String] = ["Glintwader", "Glintheron"]
 ## Act I line (data/dialogue/clans.json, Wren at the Crooked Kettle): trust and dark humour, no spoiler flag.
 const STORY_LINE: String = "Wren: My advice? Trust nobody who pays on time. That's a joke. Mostly."
 const FRIEND: String = "Mara"
+## The Gleam picture: an Era IV foe, so its art takes the kind's colours.
+const GLEAM_FOE: String = "Lumothane"
+const GLEAM_KIND: String = "rime"
+## [name, era, map, weather, hour, month, extra] as tools/weather_shots_runner.gd SHOTS.
+const WEATHER: Array = ["rain", 5, "mossgate", "rain", 12.0, 6, ""]
+## [spot id, moves played] of the puzzle picture.
+const PUZZLE: Array = ["vey_tracks", ["right", "right", "down"]]
 var out: String = "user://store_shots"
 var lang: String = "en"
-## "all", or a comma list of: title, hero, battle, unfurl, eras, story, league, menus.
+## "all", or a comma list of: title, hero, battle, unfurl, eras, story, league, menus, and the
+## 1.3.2 groups shop, pass, gleam, weather, puzzle ("all" leaves those out: they need the tall window).
 var only: String = "all"
 
 func _ready() -> void:
 	_run.call_deferred()
 
+const TALL: Array[String] = ["shop", "pass", "gleam", "weather", "puzzle"]
+
 func _want(group: String) -> bool:
-	return only == "all" or group in only.split(",")
+	if only == "all":
+		return not group in TALL
+	return group in only.split(",")
 
 ## A node running one of the era tools' scripts with its own full run switched off.
 func _helper(path: String) -> Node:
@@ -61,6 +81,8 @@ func _run() -> void:
 	DirAccess.make_dir_recursive_absolute(out)
 	SaveManager.settings_path = "user://store_shots_settings.json"
 	Database.load_all()
+	# The weekend note depends on the day the pictures are made: never in a store picture.
+	GrowthRules.data()["weekend_mult"] = 1.0
 	_language()
 	var em: Node = get_tree().root.get_node("/root/EraManager")
 	# Title (Era I, the first thing a player sees).
@@ -108,6 +130,16 @@ func _run() -> void:
 		await _league(em)
 	if _want("menus"):
 		await _menus(em)
+	if _want("shop"):
+		await _shop(em)
+	if _want("pass"):
+		await _pass(em)
+	if _want("gleam"):
+		await _gleam(em)
+	if _want("weather"):
+		await _weather(em)
+	if _want("puzzle"):
+		await _puzzle(em)
 	get_tree().quit()
 
 func _place(map: String, hour: int, ow: Node) -> void:
@@ -324,6 +356,145 @@ func _menus(em: Node) -> void:
 	await mn.call("_shoot", pm, "m2_shop_looks", func() -> void:
 		await pm.pick_screen("shop", Loc.t(ShopCatalog.TAB_NAMES["looks"]), looks, {}), [])
 	pm.queue_free()
+
+## Takes the euro hints "(≈ 18,81 €)" out of every label under [param n] (store pictures carry no
+## money prices; the store's own prices are not loaded, so the buttons say "Show").
+static func no_money(n: Node) -> void:
+	if n is Label:
+		var l := n as Label
+		var t: String = RegEx.create_from_string("\\s*\\(≈[^)]*\\)").sub(l.text, "", true)
+		if t != l.text:
+			l.text = t
+			l.visible = not t.strip_edges().is_empty()
+	for c: Node in n.get_children():
+		no_money(c)
+
+func _menu_state(em: Node) -> void:
+	var mn: Node = _helper("res://tools/era_menu_shots_runner.gd")
+	mn.call("setup_state")
+	_language()
+	em.set("unlocked_era", 5)
+	em.call("set_retro_filter", 0)
+	# The shots set the shop state themselves; a server answer must not replace it.
+	if Online.state_changed.is_connected(Billing._on_online_state):
+		Online.state_changed.disconnect(Billing._on_online_state)
+	await get_tree().process_frame
+
+func _shop(em: Node) -> void:
+	await _menu_state(em)
+	var p2w: Node = _helper("res://tools/p2w_shop_shots_runner.gd")
+	var m := PauseMenu.new()
+	add_child(m)
+	await get_tree().process_frame
+	p2w.call("_state", 18)
+	Billing.prices.clear()
+	var h: MenuHost = ShopZoom.enter(m)
+	var s := ShopScreen.new()
+	s.menu = h
+	h.add_child(s)
+	s.select_tab("featured")
+	for i: int in 12:
+		await get_tree().process_frame
+	no_money(get_tree().root)
+	await _save_root("n1_shop_featured", 1)
+	s.queue_free()
+	ShopZoom.leave(h)
+	m.queue_free()
+	await get_tree().process_frame
+
+func _pass(em: Node) -> void:
+	await _menu_state(em)
+	var p2w: Node = _helper("res://tools/p2w_shop_shots_runner.gd")
+	await p2w.call("_server", 0)
+	var be: LocalBackend = p2w.get("_backend")
+	var row: Dictionary = LocalPassTrack.of(be).row(be.me())
+	row.points = PassTrack.per_tier() * 5 + PassTrack.per_tier() / 2
+	row.claimed_free = 3
+	var m := PauseMenu.new()
+	add_child(m)
+	await get_tree().process_frame
+	PassScreen.run(m)
+	await p2w.call("_wait_dialog", m, 0, 0)
+	for i: int in 12:
+		await get_tree().process_frame
+	await _save_root("n2_pass_track", 1)
+	m.close_all = true
+	m.queue_free()
+	await get_tree().process_frame
+
+## A wild Rime Gleam meets the player's lead. When the opening line, with the kind's own sentence
+## and name, fits one page of the text box, the picture shows it (n3_gleam_battle); in languages
+## where it takes two pages, the picture is the command menu after it, with the Gleam mark on the
+## foe's strip (n3_gleam_menu).
+func _gleam(em: Node) -> void:
+	_language()
+	em.set("unlocked_era", 5)
+	em.call("set_retro_filter", 5)
+	Era45Look.biome_override = "route"
+	DirAccess.remove_absolute("%s/n3_gleam_battle.png" % out)
+	DirAccess.remove_absolute("%s/n3_gleam_menu.png" % out)
+	var inst: BattleScene = _gleam_battle(GLEAM_KIND)
+	var name: String = Loc.t(str(GleamRules.kind(GLEAM_KIND).get("name", "")))
+	var fits: bool = false
+	for i: int in 1800:
+		await get_tree().process_frame
+		if inst._text != null and inst._text._waiting and not inst._text._label.text.is_empty():
+			fits = name in inst._text._label.text.replace("\n", " ")
+			break
+	if not fits:
+		for i: int in 1800:
+			if inst._menu != null and inst._menu._content != null and inst._menu._content.visible:
+				break
+			inst._text.advance_now()
+			await get_tree().process_frame
+	for i: int in 40:
+		await get_tree().process_frame
+	await _save_root("n3_gleam_battle" if fits else "n3_gleam_menu", 1)
+	inst.queue_free()
+	Juice.calm()
+	await get_tree().process_frame
+	Era45Look.biome_override = ""
+
+func _gleam_battle(kind: String) -> BattleScene:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 4321
+	var mine: Array[Spirling] = BattleScene._demo_team(rng, [TEAM_MINE[0]] as Array[String], 40)
+	var theirs: Array[Spirling] = BattleScene._demo_team(rng, [GLEAM_FOE] as Array[String], 38)
+	GleamRules.apply(theirs[0], kind)
+	var model := BattleModel.new(mine, theirs, true, 4321, 0)
+	var inst: BattleScene = load("res://scenes/battle/Battle.tscn").instantiate()
+	inst.backdrop = "field"
+	inst.setup(model)
+	get_tree().root.add_child(inst)
+	return inst
+
+func _weather(em: Node) -> void:
+	_language()
+	em.set("unlocked_era", 5)
+	GameState.weather = true
+	GameState.day_night = true
+	var w: Node = _helper("res://tools/weather_shots_runner.gd")
+	w.set("prefix", "raw")
+	# A first overworld takes the start-up notices and settles the window; it is not shot.
+	var warm: Node = load("res://scenes/overworld/Overworld.tscn").instantiate()
+	get_tree().root.add_child(warm)
+	for i: int in 20:
+		await get_tree().process_frame
+	warm.queue_free()
+	await get_tree().process_frame
+	GameState.notices.clear()
+	await w.call("_shot", WEATHER)
+	DirAccess.rename_absolute("%s/raw_%s.png" % [out, WEATHER[0]], "%s/n4_weather_rain.png" % out)
+	GameState.weather = false
+	EraLight.debug_weather = ""
+
+func _puzzle(em: Node) -> void:
+	_language()
+	em.set("unlocked_era", 5)
+	em.call("set_retro_filter", 5)
+	GameState.weather = false
+	var pz: Node = _helper("res://tools/puzzle_shots_runner.gd")
+	await pz.call("_shot", "n5_puzzle", PuzzleSpots.by_id(str(PUZZLE[0])), "board", PUZZLE[1])
 
 func _save_root(name: String, scale: int) -> void:
 	await RenderingServer.frame_post_draw

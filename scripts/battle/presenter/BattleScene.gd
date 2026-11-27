@@ -58,6 +58,8 @@ var _fx: ElementFx
 ## Rain, fog or a storm over the field when the region's sky laid the field (Era III on).
 var _weather: BattleWeather
 var _backdrop: BattleBackdrop
+## The scenery to the left and right of the battle column on a wide screen (update 1.3.2).
+var _wide_backdrop: BattleBackdrop
 ## Era IV 2.5D stage; null before Panorama.
 var _stage: Era4Stage
 var _foe_sprite: SpirlingSprite
@@ -66,10 +68,17 @@ var _foe_strip: InfoStrip
 var _player_strip: InfoStrip
 var _text: TextBox
 var _menu: CommandMenu
+## The field, text box and (on a tall enough view) the command panel, top to bottom.
+var _col: VBoxContainer
+## Beside the field on a landscape or short view: the command panel, so its rows reach 44 pt
+## without making the field shorter (update 1.3.2).
+var _side: VBoxContainer
 var _picker: ListPicker
 var _bond_game: BondMinigame
 ## Echo call plan per wild Spirling (uid): a second try in this battle hears the same call.
 var _bond_plans: Dictionary[String, Dictionary] = {}
+## Riftglass bond boosts paid in this battle (the server allows max_per_ref).
+var _rg_boosts: int = 0
 var _ff_button: Button
 var _auto_button: Button
 var _goal_label: Label
@@ -149,6 +158,8 @@ func _ready() -> void:
 	if model == null:
 		model = _demo_model()
 		quit_on_finish = false
+	_fit_menu()
+	get_viewport().size_changed.connect(_fit_menu, CONNECT_DEFERRED)
 	_multi = model.is_multi()
 	_text.chars_per_second *= MultiRules.text_speed(model)
 	_run.call_deferred()
@@ -223,11 +234,26 @@ func _build() -> void:
 	bg.color = UITheme.BG
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
+	# On a wide screen the panels stay in the middle column and the scenery runs on to both
+	# edges (update 1.3.2): a second backdrop behind the column, as wide as the screen.
+	_wide_backdrop = BattleBackdrop.new()
+	_wide_backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_wide_backdrop.visible = false
+	add_child(_wide_backdrop)
+	resized.connect(_sync_wide_backdrop)
 	var col := VBoxContainer.new()
+	_col = col
 	col.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	col.add_theme_constant_override("separation", 0)
 	add_child(col)
 	SafeArea.apply(col)
+	_side = VBoxContainer.new()
+	_side.name = "side"
+	_side.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_side.alignment = BoxContainer.ALIGNMENT_END
+	_side.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_side.visible = false
+	add_child(_side)
 	_field = Control.new()
 	_field.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_field.clip_contents = true
@@ -446,6 +472,60 @@ func _place_field_badge() -> void:
 			room = minf(room, sp.position.x - MARGIN - 2)
 	_field_badge.place(Vector2(MARGIN, below + 2), room)
 
+## Lines the wide backdrop up with the column's own: same scene, height and horizon, its banks
+## under the sprites, so the column's backdrop continues seamlessly to both screen edges.
+func _sync_wide_backdrop() -> void:
+	if _wide_backdrop == null or _field == null or not _field.is_inside_tree():
+		return
+	var f := Rect2(_field.global_position - global_position, _field.size)
+	_wide_backdrop.visible = _backdrop.visible and size.x > f.size.x + 0.5 and f.size.y > 0.0
+	if not _wide_backdrop.visible:
+		return
+	_wide_backdrop.position = Vector2(0.0, f.position.y)
+	_wide_backdrop.size = Vector2(size.x, f.size.y)
+	var shift := Vector2(f.position.x, 0.0)
+	_wide_backdrop.hat = _backdrop.hat
+	_wide_backdrop.hill_shift = -f.position.x
+	_wide_backdrop.set_scene(_backdrop.kind, Rect2(_backdrop.foe_rect.position + shift, _backdrop.foe_rect.size),
+		Rect2(_backdrop.player_rect.position + shift, _backdrop.player_rect.size))
+	_wide_backdrop.modulate = _backdrop.modulate
+
+## Gap between the field column and the command panel beside it.
+const SIDE_GAP: float = 2.0
+
+## Puts the command panel under the text box, or beside the field when the safe area has too
+## little height above the era's base screen for finger-sized rows (ScreenFit.touch_px) and room
+## for the panel at the base screen's width next to a field at least as wide; the field and the
+## panel then stand centred in the safe area. Under the field on a short view, Era I's commands
+## stand in one row of four where they fit, and the field gives up the rest (update 1.3.2).
+func _fit_menu() -> void:
+	if _menu == null or not is_inside_tree():
+		return
+	var vp: Vector2 = get_viewport_rect().size
+	var era: int = EraManager.active_era()
+	var base: Vector2 = Vector2(EraManager.RESOLUTION[era])
+	var touch: int = ScreenFit.touch_px(get_window())
+	var safe: Rect2 = SafeArea.rect(vp)
+	var short: bool = CommandMenu.touch_need(era, touch) > safe.size.y - base.y
+	var cw: float = minf(SafeArea.column(vp).size.x, safe.size.x - base.x - SIDE_GAP)
+	var beside: bool = short and cw >= base.x
+	var home: Control = _side if beside else _col
+	if _menu.get_parent() != home:
+		_menu.reparent(home, false)
+	_side.visible = beside
+	_menu.set_one_row(short and not beside, SafeArea.column(vp).size.x, model)
+	if not beside:
+		SafeArea.apply(_col)
+		return
+	var x: float = roundf(safe.position.x + (safe.size.x - cw - SIDE_GAP - base.x) / 2.0)
+	for c: Control in [_col, _side]:
+		c.offset_top = safe.position.y
+		c.offset_bottom = safe.end.y - vp.y
+	_col.offset_left = x
+	_col.offset_right = x + cw - vp.x
+	_side.offset_left = x + cw + SIDE_GAP
+	_side.offset_right = x + cw + SIDE_GAP + base.x - vp.x
+
 func _layout_field() -> void:
 	if _multi and not _slot_sprites[BattleModel.Side.FOE].is_empty():
 		_layout_formation()
@@ -485,6 +565,7 @@ func _layout_field() -> void:
 		_hud.layout_single()
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade) * BattleShow.night_tint(DayCycle.current(), GameState.day_night, outdoor, backdrop)
+	_sync_wide_backdrop()
 
 ## Width of the art [param sp] draws (Era IV/V size it in whole multiples), [param fallback] before setup.
 static func _art_px(sp: SpirlingSprite, fallback: float) -> float:
@@ -567,6 +648,7 @@ func _layout_formation() -> void:
 			r = q if r.size == Vector2.ZERO else r.merge(q)
 		rects[side] = r
 	_backdrop.set_scene(backdrop, rects[BattleModel.Side.FOE], rects[BattleModel.Side.PLAYER])
+	_sync_wide_backdrop()
 	if _stage != null:
 		_stage.fit_formation(rects[BattleModel.Side.FOE], rects[BattleModel.Side.PLAYER])
 
@@ -825,6 +907,9 @@ func _run() -> void:
 			else:
 				await _play(model.submit_turn(BattleReplay.action_from_dict(rec)))
 			continue
+		if model.needs_continue_choice():
+			await _offer_continue()
+			continue
 		if model.needs_shift_choice():
 			await _offer_shift()
 			continue
@@ -950,6 +1035,39 @@ func _offer_shift() -> void:
 			idx = await _pick_party("Swap to?", true, 0)
 	inputs.append(BattleReplay.shift_to_dict(idx))
 	await _play(model.submit_shift(idx))
+
+## The player's side is beaten in a story battle: continue for Riftglass (RiftglassSinks
+## "continue"), the price rising with each continue in this battle. Without enough Riftglass one
+## line says so; no shop window in battle (docs/MONETIZATION.md rule 5), nothing for children.
+func _offer_continue() -> void:
+	var cost: int = RiftglassSinks.price("continue", model.continues_used)
+	var why: String = RiftglassSinks.why_not(cost)
+	var ok: bool = false
+	if why.is_empty():
+		await _text.show_text(Loc.t("Continue for %s? Your whole team stands up with full Vigor.") % RiftglassSinks.cost_text(cost))
+		if await ShopZoom.ask(self, _picker, continue_title(cost), [{"text": "Continue"}, {"text": "Give up"}] as Array[Dictionary], false) == 0:
+			var d: Dictionary = await RiftglassSinks.spend("continue", continue_ref(model), cost)
+			ok = bool(d.get("ok", false))
+			if not ok:
+				await _text.show_text(RiftglassSinks.error_text(str(d.get("error", "")), cost))
+	elif why in ["not_enough", "offline"]:
+		await _text.show_text(RiftglassSinks.error_text(why, cost))
+	inputs.append(BattleReplay.continue_to_dict(ok))
+	await _play(model.submit_continue(ok))
+
+## The title of the continue choice: the balance, then the price with its euro value, which
+## stays in sight while the player decides (docs/MONETIZATION.md rule 3), also when a narrow
+## screen shows the title as a page first and keeps only its last line for the list.
+static func continue_title(cost: int) -> String:
+	return RiftglassSinks.balance_line() + "\n" + RiftglassSinks.cost_text(cost)
+
+## The bond boost answer: "Boost: 100 Riftglass (≈ 0,99 €)".
+static func bond_boost_row(cost: int) -> String:
+	return Loc.t("Boost: %d Riftglass") % cost + " (" + ShopCatalog.euro_hint(cost) + ")"
+
+## The battle's key for per-battle Riftglass limits on the server (continue, bond boost).
+static func continue_ref(m: BattleModel) -> String:
+	return "b%d" % m.battle_seed
 
 ## Auto picks who steps out after a faint (item 21): the AI's best matchup, after the usual
 ## pause so the tab can still be tapped. -1 when Auto is off (the player picks).
@@ -1278,6 +1396,9 @@ func _bond(slot: int = 0) -> BattleAction:
 			return null
 		if use < charms.size():
 			charm = charms[use]
+	var boost: float = await _bond_boost(charm)
+	if boost < 0.0:
+		return null
 	var aim: int = await _pick_target("Reach out to which one?")
 	if aim == -2:
 		return null
@@ -1305,7 +1426,33 @@ func _bond(slot: int = 0) -> BattleAction:
 		DailyTasks.record("melody", {"map": GameState.current_map})
 	if score >= 1.0:
 		GameState.records["melody_perfect"] = 1
-	return BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm, slot, aim)
+	var bond: BattleAction = BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm, slot, aim)
+	bond.rg_boost = boost
+	return bond
+
+## Asks before the Echo call whether to boost this bond try with Riftglass (RiftglassSinks
+## "bond_boost", a fixed value). Only in story battles, only with enough Riftglass, never for
+## children. Returns the boost, 0 for none, -1 when the player backed out.
+func _bond_boost(charm: String) -> float:
+	var cost: int = RiftglassSinks.price("bond_boost")
+	if not model.has_meta(RiftglassSinks.STORY_META) or not RiftglassSinks.why_not(cost).is_empty():
+		return 0.0
+	if bool(Database.item(charm).get("bond_sure", false)) or _rg_boosts >= int(RiftglassSinks.sink("bond_boost").get("max_per_ref", 0)):
+		return 0.0
+	var pct: String = "+%d %%" % roundi(RiftglassSinks.bond_boost() * 100.0)
+	# The price with its euro value (docs/MONETIZATION.md rule 3).
+	var use: int = await ShopZoom.ask(self, _picker, Loc.t("Bond boost %s? You have %d Riftglass." % [pct, Billing.balance()]),
+		[{"text": bond_boost_row(cost)}, {"text": "No boost"}] as Array[Dictionary])
+	if use < 0:
+		return -1.0
+	if use != 0:
+		return 0.0
+	var d: Dictionary = await RiftglassSinks.spend("bond_boost", continue_ref(model), cost)
+	if not bool(d.get("ok", false)):
+		await _text.show_text(RiftglassSinks.error_text(str(d.get("error", "")), cost))
+		return 0.0
+	_rg_boosts += 1
+	return RiftglassSinks.bond_boost()
 
 # --- Event playback -----------------------------------------------------------------
 
@@ -1474,9 +1621,9 @@ func _fill_log() -> void:
 	_log_label.text = variant_list(model) + (elem + "\n\n" if not elem.is_empty() else "") + BattleInfo.facts(model, _seen_arts) + "\n\n" + Loc.t("Battle log") + "\n\n" \
 		+ ("\n".join(lines) if not lines.is_empty() else Loc.t("Nothing yet.")) + "\n\n" + Loc.t("(tap to close)")
 
-## A Gleam steps out: the sound cue and the sparkle (data/gleam.json).
+## A Gleam steps out: the sound cue and the sparkle of its kind (data/gleam.json).
 func _gleam_entrance(sprite: SpirlingSprite) -> void:
-	var cfg: Dictionary = GleamRules.config()
+	var cfg: Dictionary = GleamRules.sparkle(GleamRules.kind_of(sprite.spirling))
 	Sound.sfx(str(cfg.get("sfx", "sparkle")), 0.0, float(cfg.get("sfx_pitch", 1.0)))
 	await sprite.gleam_sparkle()
 
@@ -2106,3 +2253,4 @@ func _battle_settings() -> void:
 		SaveManager.save_settings()
 		_apply_speed()
 		_menu.apply_size()
+		_fit_menu()

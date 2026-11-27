@@ -1,0 +1,32 @@
+{
+ "_comment": "German texts from tools/i18n/de_riftglass_sinks.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%s: %d Riftglass": "%s: %d Rissglas",
+  "Bond boost %s? You have %d Riftglass.": "Bindungs-Schub {0}? Du hast {1} Rissglas.",
+  "Boost: %d Riftglass": "Schub: %d Rissglas",
+  "Bring one home now": "Jetzt heimholen",
+  "Bring this Spirling home now? %d h left.": "Diesen Spirling jetzt heimholen? Noch %d Std.",
+  "Continue for %s? Your whole team stands up with full Vigor.": "Für %s weitermachen? Dein ganzes Team steht mit voller Kraft wieder auf.",
+  "Daily gift: +%d Riftglass": "Tagesgeschenk: +%d Rissglas",
+  "Growth x2 for the next %d battles?": "Wachstum x2 für die nächsten %d Kämpfe?",
+  "Growth x2: %d": "Wachstum x2: %d",
+  "Heal team: %d": "Team heilen: %d",
+  "Heal the whole team now? Full Vigor, Energy, no states.": "Das ganze Team jetzt heilen? Volle Kraft, Energie, keine Zustände.",
+  "Light it again": "Nochmal anzünden",
+  "Light the lamp again tonight? Another visitor may follow the light.": "Die Lampe heute nochmal anzünden? Vielleicht folgt noch ein Besucher dem Licht.",
+  "No boost": "Ohne Schub",
+  "No connection right now. Riftglass needs the server.": "Gerade keine Verbindung. Rissglas braucht den Server.",
+  "Not enough Riftglass: this costs %d, you have %d.": "Nicht genug Rissglas: Das kostet {0}, du hast {1}.",
+  "Riftglass flares! Your whole team stands up again with full Vigor.": "Rissglas leuchtet auf! Dein ganzes Team steht mit voller Kraft wieder auf.",
+  "Riftglass holds you in place. Your team is rested again.": "Das Rissglas hält dich an Ort und Stelle. Dein Team ist wieder erholt.",
+  "Riftglass is locked for now. Look in the shop under My purchases.": "Rissglas ist gerade gesperrt. Schau im Shop unter Meine Käufe.",
+  "Riftglass is not available on this account.": "Rissglas gibt es auf diesem Konto nicht.",
+  "Riftglass shop": "Rissglas-Shop",
+  "Stay right before the Warden? Your team is rested.": "Direkt vor dem Hüter bleiben? Dein Team ist erholt.",
+  "That did not work. No Riftglass was taken.": "Das hat nicht geklappt. Es wurde kein Rissglas abgezogen.",
+  "That was a lot in a short time. Please wait a while.": "Das war viel in kurzer Zeit. Bitte warte eine Weile.",
+  "That was the last one here.": "Das war hier das letzte Mal.",
+  "You have %d Riftglass.": "Du hast %d Rissglas."
+ }
+}
