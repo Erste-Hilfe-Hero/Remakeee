@@ -257,11 +257,14 @@ var large_text: bool = false
 ## Day and night tint and encounters on outdoor maps (item 43).
 var day_night: bool = true
 ## Weather in the world (area 3 item 1145); off means always clear.
-## Weather on the map and in battle. Off by default since 1.3.1 (owner 25.11.2026); Settings
-## switch it back on.
-var weather: bool = false
-## Settings files from before 1.3.1 lack this mark: their "weather" is turned off once.
-const WEATHER_MARK: String = "weather_131"
+## Weather on the map and in battle. On by default since 1.3.2 (owner 27.11.2026, replaces the
+## 1.3.1 default of off); Settings switch it off.
+var weather: bool = true
+## Settings files written by 1.3.2 or later carry this mark: their "weather" is the player's choice.
+const WEATHER_MARK: String = "weather_132"
+## 1.3.1 turned the weather off for everyone and wrote this mark. Off in such a file may be that
+## forced default, not a choice, so it is turned on once.
+const WEATHER_MARK_131: String = "weather_131"
 ## How much of the weather is drawn (WeatherCycle.FX_LEVELS): "full", "low" (half the drops, no
 ## splashes) or "off" (the tint only). The weather and its rules are the same at every level.
 var weather_fx: String = "full"
@@ -982,7 +985,9 @@ func settings_from_dict(d: Dictionary) -> void:
 	large_text = bool(d.get("large_text", false))
 	day_night = bool(d.get("day_night", true))
 	# Off for everyone with 1.3.1 (owner 25.11.2026); a later choice in Settings is kept.
-	weather = bool(d.get("weather", false)) if d.has(WEATHER_MARK) else false
+	# No mark at all: a file from before 1.3.1, where the weather was on unless the player
+	# switched it off, so its "weather" is kept.
+	weather = true if d.has(WEATHER_MARK_131) and not d.has(WEATHER_MARK) else bool(d.get("weather", true))
 	weather_fx = str(d.get("weather_fx", "full")) if str(d.get("weather_fx", "full")) in WeatherCycle.FX_LEVELS else "full"
 	minimap = str(d.get("minimap", "on")) if str(d.get("minimap", "on")) in Survey.MINIMAP_MODES else "on"
 	night_mode = clampi(int(d.get("night_mode", 0)), 0, NIGHT_MODE_NAMES.size() - 1)

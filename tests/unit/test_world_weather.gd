@@ -54,16 +54,35 @@ func test_weather_switch_in_display_menu() -> void:
 	assert_false(GameState.weather, "the switch is saved")
 	GameState.weather = true
 
-func test_weather_is_off_for_everyone_from_1_3_1_and_a_later_choice_is_kept() -> void:
+func test_weather_is_on_for_everyone_from_1_3_2_and_a_later_choice_is_kept() -> void:
+	# Owner 27.11.2026: the new weather is on by default. This replaces the 1.3.1 default of off.
 	var keep: bool = GameState.weather
-	GameState.settings_from_dict({"weather": true})
-	assert_false(GameState.weather, "a settings file from before 1.3.1 turns the weather off once")
+	var fresh: Node = (load("res://scripts/core/GameState.gd") as GDScript).new()
+	assert_true(bool(fresh.get("weather")), "the default is on")
+	fresh.free()
 	GameState.settings_from_dict({})
-	assert_false(GameState.weather, "a new player starts without weather")
-	GameState.weather = true
+	assert_true(GameState.weather, "a new player starts with weather")
+	GameState.settings_from_dict({"weather": false, GameState.WEATHER_MARK_131: true})
+	assert_true(GameState.weather, "a 1.3.1 file was off by force, not by choice: on once")
+	GameState.settings_from_dict({"weather": true, GameState.WEATHER_MARK_131: true})
+	assert_true(GameState.weather, "switched on in 1.3.1, it stays on")
+	GameState.settings_from_dict({"weather": true})
+	assert_true(GameState.weather, "a file from before 1.3.1 with weather on stays on")
+	GameState.settings_from_dict({"weather": false})
+	assert_false(GameState.weather, "before 1.3.1 the default was on: off there was the player's choice")
+	GameState.weather = false
 	var d: Dictionary = GameState.settings_to_dict()
+	assert_true(d.has(GameState.WEATHER_MARK), "a 1.3.2 file carries the mark")
+	GameState.weather = true
 	GameState.settings_from_dict(d)
-	assert_true(GameState.weather, "switched on again in Settings, it stays on")
+	assert_false(GameState.weather, "switched off in Settings from 1.3.2 on, it stays off")
+	d[GameState.WEATHER_MARK_131] = true
+	GameState.weather = true
+	GameState.settings_from_dict(d)
+	assert_false(GameState.weather, "the 1.3.2 mark wins over a left-over 1.3.1 mark")
+	GameState.weather = true
+	GameState.settings_from_dict(GameState.settings_to_dict())
+	assert_true(GameState.weather, "on is saved too")
 	GameState.weather = keep
 
 func test_weather_layer_dots() -> void:
