@@ -311,6 +311,22 @@ func test_materials_per_kind() -> void:
 			assert_almost_eq(float(mat.get_shader_parameter("cycle")), want_cycle, 1e-6, "%s %s cycle" % [name, id])
 	assert_gt(float(GleamRules.kind("opaline").get("cycle", 0.0)), 0.0, "the prismatic kind shimmers")
 
+func test_opaline_stands_still_under_reduced_motion() -> void:
+	var was: bool = GameState.reduce_motion
+	GameState.reduce_motion = true
+	for name: String in ["Kindlop", "Zippit"]:
+		var still: ShaderMaterial = GleamRules.material(name, "opaline")
+		assert_eq(float(still.get_shader_parameter("cycle")), 0.0, name + ": no hue cycle")
+		assert_almost_eq(float(still.get_shader_parameter("phase")), float(GleamRules.kind("opaline").still_phase), 1e-6, name + ": fixed mid phase")
+		assert_almost_eq(float(GleamRules.kind("opaline").still_phase), 0.5, 1e-6)
+		# Kinds that never cycle look the same either way.
+		assert_eq(float(GleamRules.material(name, "rime").get_shader_parameter("phase")), 0.0)
+	GameState.reduce_motion = false
+	var moving: ShaderMaterial = GleamRules.material("Kindlop", "opaline")
+	assert_gt(float(moving.get_shader_parameter("cycle")), 0.0, "cycles again with motion on")
+	assert_eq(float(moving.get_shader_parameter("phase")), 0.0)
+	GameState.reduce_motion = was
+
 func test_sparkle_settings_per_kind() -> void:
 	var base: Dictionary = GleamRules.sparkle(GleamRules.CLASSIC)
 	assert_eq(int(base.sparkles), int(GleamRules.config().sparkles), "classic sparkle unchanged")

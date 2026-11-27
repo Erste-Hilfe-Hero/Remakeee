@@ -1,5 +1,5 @@
 {
- "_comment": "Gleam form tuning (scripts/core/GleamRules.gd). Wild chance of a kind = (1 + min(chain, chain_max) * chain_step) * mult / one_in; the classic kind uses wild_one_in. One draw decides the kind: classic first, then the rarer kinds in this order. The shop's Shimmer Scent only scales the classic kind, so no rare kind can be bought. Palettes: data/gleam_palettes.json (tools/art/gen_gleam_palettes.py reads \"palette\"); \"tier\" recolours art of tiers II to V (shaders/gleam_hue.gdshader); \"cycle\" turns the hues in turns per second.",
+ "_comment": "Gleam form tuning (scripts/core/GleamRules.gd). Wild chance of a kind = (1 + min(chain, chain_max) * chain_step) * mult / one_in; the classic kind uses wild_one_in. One draw decides the kind: classic first, then the rarer kinds in this order. The shop's Shimmer Scent only scales the classic kind, so no rare kind can be bought. Palettes: data/gleam_palettes.json (tools/art/gen_gleam_palettes.py reads \"palette\"); \"tier\" recolours art of tiers II to V (shaders/gleam_hue.gdshader); \"cycle\" turns the hues in turns per second; under reduced motion they stand still at \"still_phase\" (turns).",
  "wild_one_in": 1024,
  "chain_step": 0.5,
  "chain_max": 10,
@@ -26,7 +26,7 @@
    "tier": {"dark": "4a1424", "light": "ffe08a", "mix": 0.75}},
   {"id": "opaline", "name": "Opaline Gleam", "one_in": 65536, "line": " Its colours never hold still: an Opaline Gleam!",
    "glyph": "e00a", "color": "f0a0e8",
-   "sparkles": 12, "sparkle_time": 0.9, "sfx_pitch": 1.75, "sparkle_color": "ffffff", "cycle": 0.25,
+   "sparkles": 12, "sparkle_time": 0.9, "sfx_pitch": 1.75, "sparkle_color": "ffffff", "cycle": 0.25, "still_phase": 0.5,
    "palette": {"hue": 300, "jitter": 60, "sat": [0.55, 0.7], "bands": [0.2, 0.55, 0.75, 0.92]},
    "tier": {"dark": "3a2a5a", "light": "fff0fa", "mix": 0.35}}
  ]

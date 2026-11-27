@@ -12,6 +12,8 @@ uniform vec4 dst1 : source_color = vec4(0.416, 0.259, 0.337, 1.0);
 uniform vec4 dst2 : source_color = vec4(0.769, 0.541, 0.369, 1.0);
 uniform vec4 dst3 : source_color = vec4(0.949, 0.890, 0.761, 1.0);
 uniform float cycle = 0.0;
+// Fixed hue turn (turns) for a cycling kind under reduced motion, which then has cycle 0.
+uniform float phase = 0.0;
 
 bool same(vec3 a, vec3 b) {
 	return distance(a, b) < 0.03;
@@ -28,8 +30,8 @@ void fragment() {
 	} else if (same(c.rgb, src3.rgb)) {
 		c.rgb = dst3.rgb;
 	}
-	if (cycle != 0.0) {
-		float a = fract(TIME * cycle) * 6.28318530718;
+	if (cycle != 0.0 || phase != 0.0) {
+		float a = (fract(TIME * cycle) + phase) * 6.28318530718;
 		vec3 k = vec3(0.57735026919);
 		c.rgb = clamp(c.rgb * cos(a) + cross(k, c.rgb) * sin(a) + k * dot(k, c.rgb) * (1.0 - cos(a)), 0.0, 1.0);
 	}

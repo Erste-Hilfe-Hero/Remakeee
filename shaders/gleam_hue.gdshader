@@ -11,6 +11,8 @@ uniform vec4 ramp_dark : source_color = vec4(0.0, 0.0, 0.0, 1.0);
 uniform vec4 ramp_light : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 uniform float ramp_mix = 0.0;
 uniform float cycle = 0.0;
+// Fixed hue turn (turns) for a cycling kind under reduced motion, which then has cycle 0.
+uniform float phase = 0.0;
 
 void fragment() {
 	vec4 c = texture(TEXTURE, UV);
@@ -18,6 +20,7 @@ void fragment() {
 	if (cycle != 0.0) {
 		a += fract(TIME * cycle) * 6.28318530718;
 	}
+	a += phase * 6.28318530718;
 	vec3 k = vec3(0.57735026919);
 	c.rgb = clamp(c.rgb * cos(a) + cross(k, c.rgb) * sin(a) + k * dot(k, c.rgb) * (1.0 - cos(a)), 0.0, 1.0);
 	if (ramp_mix > 0.0) {

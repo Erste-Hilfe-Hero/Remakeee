@@ -231,12 +231,16 @@ static func material(species: String, id: String = CLASSIC) -> ShaderMaterial:
 
 ## A rarer kind: Era I ink art takes the kind's palette, later tiers are pulled toward the kind's
 ## dark-to-light ramp ("tier" in data/gleam.json); "cycle" turns the hues over time (Opaline).
+## Under reduced motion a cycling kind stands still at its "still_phase" (turns) instead.
 static func _kind_material(species: String, id: String) -> ShaderMaterial:
-	var key: String = species + "|" + id
+	var k: Dictionary = kind(id)
+	var still: bool = k.has("cycle") and Juice.reduced()
+	var key: String = species + "|" + id + ("|still" if still else "")
 	if _materials.has(key):
 		return _materials[key]
 	var pal: Array[Color] = palette(species, id)
-	var k: Dictionary = kind(id)
+	var cycle: float = 0.0 if still else float(k.get("cycle", 0.0))
+	var phase: float = float(k.get("still_phase", 0.5)) if still else 0.0
 	var mat: ShaderMaterial = null
 	var sprite: String = EraManager.sprite_path(species)
 	if pal.size() == 4 and SpriteTiers.tier_of_path(sprite) > 1:
@@ -249,14 +253,16 @@ static func _kind_material(species: String, id: String) -> ShaderMaterial:
 		mat.set_shader_parameter("ramp_dark", Color(str(t.get("dark", "000000"))))
 		mat.set_shader_parameter("ramp_light", Color(str(t.get("light", "ffffff"))))
 		mat.set_shader_parameter("ramp_mix", float(t.get("mix", 0.0)))
-		mat.set_shader_parameter("cycle", float(k.get("cycle", 0.0)))
+		mat.set_shader_parameter("cycle", cycle)
+		mat.set_shader_parameter("phase", phase)
 	elif pal.size() == 4:
 		mat = ShaderMaterial.new()
 		mat.shader = SHADER
 		for i: int in 4:
 			mat.set_shader_parameter("src%d" % i, EraManager.INK_PALETTE[i])
 			mat.set_shader_parameter("dst%d" % i, pal[i])
-		mat.set_shader_parameter("cycle", float(k.get("cycle", 0.0)))
+		mat.set_shader_parameter("cycle", cycle)
+		mat.set_shader_parameter("phase", phase)
 	_materials[key] = mat
 	return mat
 
