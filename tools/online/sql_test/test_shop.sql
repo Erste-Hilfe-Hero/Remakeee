@@ -14,7 +14,7 @@ insert into public.shop_offers (id, product_id, data) values
    '{"id": "rg_test_tonic", "kind": "advantage", "rg_price": 300, "eur_cents": 299, "ready": true, "min_band": 13,
      "grants": [{"t": "item", "id": "rg_ring_tonic", "n": 2}, {"t": "coins", "n": 50}]}'),
   ('rg_test_slot', 'de.chimora.game.unlock.test_slot',
-   '{"id": "rg_test_slot", "kind": "advantage", "rg_price": 1500, "eur_cents": 1499, "ready": true, "min_band": 13,
+   '{"id": "rg_test_slot", "kind": "advantage", "rg_price": 2500, "eur_cents": 2499, "ready": true, "min_band": 13,
      "limit": {"per": "account", "n": 1}, "grants": [{"t": "unlock", "id": "team_slot_6"}]}'),
   ('rg_test_pack', 'de.chimora.game.consumable.test_pack',
    '{"id": "rg_test_pack", "kind": "advantage", "rg_price": 0, "eur_cents": 499, "ready": true, "min_band": 13,
@@ -100,10 +100,11 @@ end $$;
 reset role;
 do $$ declare r jsonb; u uuid := '20000000-0000-0000-0000-00000000000a'; begin
   r := public._shop_credit(u, 'apple', 'A-1', 'de.chimora.game.glass.1000', 999);
-  assert (r->>'ok')::boolean and (r->>'balance')::int = 1000, 'credited: ' || r::text;
+  -- 1000 + 300 bonus, plus 1000 for the first purchase of this tier (step 7).
+  assert (r->>'ok')::boolean and (r->>'balance')::int = 2300, 'credited: ' || r::text;
   r := public._shop_credit(u, 'apple', 'A-1', 'de.chimora.game.glass.1000', 999);
   assert (r->>'duplicate')::boolean, 'the same receipt counts once';
-  assert public._shop_balance(u) = 1000;
+  assert public._shop_balance(u) = 2300;
   assert public._shop_credit(u, 'google', 'G-x', 'de.chimora.game.nothing', 99)->>'error' = 'unknown_product';
   -- A child's store purchase is refused (the billing service refunds it in the store).
   assert public._shop_credit('20000000-0000-0000-0000-00000000000c', 'google', 'G-kid', 'de.chimora.game.glass.100', 99)->>'error' = 'age';
@@ -131,28 +132,30 @@ do $$ declare r jsonb; c jsonb; begin
   -- The client must send the price it showed; a changed price is refused.
   assert public.shop_buy('rg_test_tonic', 200)->>'error' = 'price_changed';
   r := public.shop_buy('rg_test_tonic', 300);
-  assert (r->>'ok')::boolean and (r->>'balance')::int = 700, 'bought with Riftglass: ' || r::text;
+  assert (r->>'ok')::boolean and (r->>'balance')::int = 2000, 'bought with Riftglass: ' || r::text;
   assert (public.shop_state()->>'pending')::int = 1;
   c := public.shop_claim();
   assert jsonb_array_length(c) = 1 and jsonb_array_length(c->0->'grants') = 2, 'items delivered once: ' || c::text;
   assert jsonb_array_length(public.shop_claim()) = 0, 'never twice';
   -- Once-per-account offer.
-  assert public.shop_buy('rg_test_slot', 1500)->>'error' = 'not_enough';
+  assert public.shop_buy('rg_test_slot', 2500)->>'error' = 'not_enough';
 end $$;
 
 reset role;
 select public._shop_credit('20000000-0000-0000-0000-00000000000a', 'google', 'G-2', 'de.chimora.game.glass.1000', 999);
+-- The second purchase of the tier has no first purchase double: 2000 + 1300.
+do $$ begin assert public._shop_balance('20000000-0000-0000-0000-00000000000a') = 3300; end $$;
 set role authenticated;
 select pg_temp.as_user('20000000-0000-0000-0000-00000000000a');
 do $$ declare r jsonb; begin
-  assert (public.shop_buy('rg_test_slot', 1500)->>'ok')::boolean;
+  assert (public.shop_buy('rg_test_slot', 2500)->>'ok')::boolean;
   assert public.shop_state()->'unlocks'->>'team_slot_6' = '1';
-  assert public.shop_buy('rg_test_slot', 1500)->>'error' = 'offer_limit';
+  assert public.shop_buy('rg_test_slot', 2500)->>'error' = 'offer_limit';
   assert (public.shop_state()->'bought'->>'rg_test_slot')::int = 1, 'offer limits are counted';
   -- History: newest first, store and Riftglass purchases.
   r := public.shop_history();
   assert jsonb_array_length(r) = 4, 'history: ' || r::text;
-  assert r->0->>'offer' = 'rg_test_slot' and (r->0->>'rg')::int = 1500;
+  assert r->0->>'offer' = 'rg_test_slot' and (r->0->>'rg')::int = 2500;
 end $$;
 reset role;
 do $$ begin
@@ -215,7 +218,7 @@ reset role;
 do $$ declare u uuid := '20000000-0000-0000-0000-00000000000a'; b int; begin
   b := public._shop_balance(u);
   assert (public._shop_refund('apple', 'A-1', 'test')->>'ok')::boolean;
-  assert public._shop_balance(u) = b - 1000;
+  assert public._shop_balance(u) = b - 2300, 'the refund takes the first purchase double back too';
   assert (public._shop_refund('apple', 'A-1')->>'duplicate')::boolean;
   assert (select status from public.purchases where store_transaction_id = 'A-1') = 'refunded';
   assert exists (select 1 from public.refunds where store_transaction_id = 'A-1');

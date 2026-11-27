@@ -113,13 +113,13 @@ func test_store_purchase_flow() -> void:
 	assert_eq(Billing.price_text(o), "4,99 €", "price text from the store")
 	var r: Dictionary = await Billing.buy_in_store(o)
 	assert_true(r.get("ok", false), str(r))
-	assert_eq(Billing.balance(), 500)
+	assert_eq(Billing.balance(), 1100, "500 + 100 bonus + 500 for the first purchase of the tier (step 7)")
 	assert_eq(store.finished.size(), 1, "finished in the store after the server credited it")
 	assert_eq(Billing.step, Billing.Step.CREDITED)
 	# The same receipt again counts once.
 	var again: Dictionary = shop.credit(s.me(), "local", store.finished[0], "de.chimora.game.glass.500", 499)
 	assert_true(again.get("duplicate", false))
-	assert_eq(_call("shop_state").balance, 500)
+	assert_eq(_call("shop_state").balance, 1100)
 
 func test_cancelled_and_failed_purchases() -> void:
 	_call("shop_set_age", {"p_year": 1990, "p_month": 3})
@@ -139,7 +139,7 @@ func test_cancelled_and_failed_purchases() -> void:
 	Online.state = Online.State.ONLINE
 	assert_eq(await Billing.resume_pending(), 1)
 	assert_eq(store.unfinished().size(), 0)
-	assert_eq(_call("shop_state").balance, 100)
+	assert_eq(_call("shop_state").balance, 200, "100 and the first purchase double")
 
 func test_second_tap_starts_nothing() -> void:
 	_call("shop_set_age", {"p_year": 1990, "p_month": 3})
@@ -177,7 +177,7 @@ func test_riftglass_purchase_delivers_items() -> void:
 	var o: Dictionary = ShopCatalog.offer("rg_ring_tonic")
 	var r: Dictionary = await Billing.buy_with_riftglass(o)
 	assert_true(r.get("ok", false), str(r))
-	assert_eq(Billing.balance(), 100)
+	assert_eq(Billing.balance(), 320, "220 + 200 first purchase double - 100")
 	assert_eq(GameState.item_count("rg_ring_tonic"), 1, "delivered into the bag by the server")
 	assert_eq(_call("shop_claim"), [], "only once")
 	assert_eq(_call("shop_buy", {"p_offer": "rg_ring_tonic", "p_expected_price": 50}).error, "price_changed")
@@ -256,7 +256,7 @@ func test_transfer_keeps_purchases() -> void:
 	s.switch_user("ann_new_phone")
 	s.call_fn("hello", {"p_version": 1})
 	assert_true(_call("transfer_claim", {"p_code": code}).ok)
-	assert_eq(_call("shop_state").balance, 500)
+	assert_eq(_call("shop_state").balance, 1100)
 	assert_eq(_call("shop_state").band, 18)
 
 func test_shop_menu_texts() -> void:

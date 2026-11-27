@@ -65,9 +65,11 @@ func test_seal_set_is_every_top_tier_for_less() -> void:
 	for g: Dictionary in o.grants:
 		counts[str(g.id)] = int(counts.get(str(g.id), 0)) + 1
 	var single: int = 0
+	# The set reaches the step 2 top tiers (VII, VII, V); step 7 added tiers above them, bought one by one.
+	var top: Dictionary = {"power_seal": 7, "guard_seal": 7, "speed_seal": 5}
 	for kind: String in ShopEffects.SEAL_KINDS:
-		assert_eq(counts.get(kind, 0), ShopEffects.seal_max(kind), kind)
-		for t: int in range(1, ShopEffects.seal_max(kind) + 1):
+		assert_eq(counts.get(kind, 0), top[kind], kind)
+		for t: int in range(1, int(top[kind]) + 1):
 			single += int(ShopCatalog.offer("rg_%s_%d" % [kind, t]).rg_price)
 	assert_lt(int(o.rg_price), single, "a discount on the tiers one by one")
 

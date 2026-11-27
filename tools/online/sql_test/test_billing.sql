@@ -10,7 +10,8 @@ declare r jsonb; u uuid := '20000000-0000-0000-0000-0000000000b1';
 begin
   r := public._billing_credit(u, 'google', 'tok-b1', 'de.chimora.game.glass.500');
   assert (r->>'ok')::boolean, r::text;
-  assert (r->>'balance')::int = 500, r::text;
+  -- 500 + 100 bonus, and the first purchase of the tier adds the 500 once more (step 7).
+  assert (r->>'balance')::int = 1100, r::text;
   r := public._billing_credit(u, 'google', 'tok-b1', 'de.chimora.game.glass.500');
   assert (r->>'duplicate')::boolean, 'the same receipt counts once';
   assert public._billing_credit(u, 'local', 'x', 'de.chimora.game.glass.500')->>'error' = 'bad_receipt', 'only real stores';

@@ -20,12 +20,12 @@ begin
   assert public._shop_offer_block(u, t2, null) is null, 'tier II after tier I';
   assert public._shop_seals(u) = '[1, 0, 0]'::jsonb;
   update public.entitlements set count = 99 where user_id = u and key = 'power_seal';
-  assert public._shop_seals(u) = '[7, 0, 0]'::jsonb, 'clamped to the top tier';
+  assert public._shop_seals(u) = '[10, 0, 0]'::jsonb, 'clamped to the top tier (X since step 7)';
   assert public._league_expect(jsonb_populate_record(null::public.league_matches,
     jsonb_build_object('league', 'fair', 'user_id', u, 'seed', 1, 'teams', '[]'::jsonb)))->'seals' = '[0, 0, 0]'::jsonb,
     'never in the Fair League';
   assert public._league_expect(jsonb_populate_record(null::public.league_matches,
-    jsonb_build_object('league', 'open', 'user_id', u, 'seed', 1, 'teams', '[]'::jsonb)))->'seals' = '[7, 0, 0]'::jsonb;
+    jsonb_build_object('league', 'open', 'user_id', u, 'seed', 1, 'teams', '[]'::jsonb)))->'seals' = '[10, 0, 0]'::jsonb;
   assert public._raid_expect(jsonb_populate_record(null::public.raid_attempts,
-    jsonb_build_object('user_id', u, 'seed', 1, 'teams', '[]'::jsonb)))->'seals' = '[7, 0, 0]'::jsonb;
+    jsonb_build_object('user_id', u, 'seed', 1, 'teams', '[]'::jsonb)))->'seals' = '[10, 0, 0]'::jsonb;
 end $$;

@@ -15,6 +15,8 @@ signal step_changed(step: Step)
 signal delivered(grants: Array)
 ## The Wayfarer Pass paid its daily Riftglass ([param added] includes missed days, item 4631).
 signal pass_paid(added: int)
+## Monthly Card Riftglass paid by the server (pay-to-win step 7).
+signal card_paid(added: int)
 
 var step: Step = Step.READY
 ## The store in use, or null when this build cannot buy (web, release builds without a plugin).
@@ -86,7 +88,43 @@ func refresh_state() -> Dictionary:
 		ShopEffects.apply_unlocks()
 		if pass_active():
 			await claim_pass_daily()
+		await refresh_extras()
 	return r
+
+## Step 7 state on top of shop_state: purchases of each first_buy_double tier go into state.bought
+## (so the "first purchase double" tag hides after the first one), state.card (Monthly Card, days left)
+## and state.deals (deal ids on sale today). Due card days are collected at once.
+func refresh_extras() -> void:
+	var r: Dictionary = await Online.call_fn("shop_extras")
+	if not r.ok or not r.data is Dictionary:
+		return
+	var bought: Dictionary = state.get("bought", {}) if state.get("bought") is Dictionary else {}
+	var firsts: Variant = r.data.get("firsts", {})
+	if firsts is Dictionary:
+		bought.merge(firsts, true)
+	state["bought"] = bought
+	state["card"] = r.data.get("card", {})
+	state["deals"] = r.data.get("deals", [])
+	for c: Variant in (state.card as Dictionary).values() if state.card is Dictionary else []:
+		if c is Dictionary and int(c.get("due", 0)) > 0:
+			await claim_card_daily()
+			return
+
+## The Monthly Card's daily Riftglass, every due day at once. Returns the Riftglass added.
+func claim_card_daily() -> int:
+	var r: Dictionary = await Online.call_fn("shop_card_daily")
+	if not r.ok or not r.data is Dictionary or not bool(r.data.get("ok", false)):
+		return 0
+	var added: int = int(r.data.get("added", 0))
+	if r.data.has("balance"):
+		state["balance"] = int(r.data.balance)
+	var cards: Variant = state.get("card", {})
+	for c: Variant in (cards as Dictionary).values() if cards is Dictionary else []:
+		if c is Dictionary:
+			c["due"] = 0
+	if added > 0:
+		card_paid.emit(added)
+	return added
 
 ## The pass's 30 Riftglass a day, paid by the server once per Berlin calendar day and up to 7
 ## missed days later (items 4631, 4637, 4659). Returns the Riftglass added (0 = already paid).
@@ -132,6 +170,8 @@ func block_reason(o: Dictionary, with_riftglass: bool) -> String:
 		return "age"
 	if not bool(o.get("ready", false)):
 		return "not_available"
+	if not ShopCatalog.deal_active(o, int(state.get("server_time", Time.get_unix_time_from_system()))):
+		return "not_now"
 	if bool(state.get("locked", false)):
 		return "limit_reached"
 	if o.has("limit") and int(state.get("bought", {}).get(str(o.id), 0)) >= int(o.limit.n):

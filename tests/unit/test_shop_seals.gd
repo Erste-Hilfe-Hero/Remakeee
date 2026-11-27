@@ -15,11 +15,12 @@ func after_each() -> void:
 
 func test_seal_values_come_from_data() -> void:
 	var v: Dictionary = ShopCatalog.data().advantage_values
-	assert_eq(v.power_seal, [5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0], "JSON numbers are floats")
-	assert_eq(v.guard_seal, [5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0])
-	assert_eq(v.speed_seal, [5.0, 10.0, 15.0, 20.0, 25.0])
-	assert_eq(ShopEffects.seal_max("power_seal"), 7)
-	assert_eq(ShopEffects.seal_max("speed_seal"), 5)
+	# Tiers VIII to X and Pace VI and VII since step 7.
+	assert_eq(v.power_seal, [5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0], "JSON numbers are floats")
+	assert_eq(v.guard_seal, [5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0])
+	assert_eq(v.speed_seal, [5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0])
+	assert_eq(ShopEffects.seal_max("power_seal"), 10)
+	assert_eq(ShopEffects.seal_max("speed_seal"), 7)
 	assert_eq(ShopEffects.crystal_cap(), Spirling.SPARK_MAX * 2, "twice the free Spark cap")
 
 func test_seal_math() -> void:
@@ -28,8 +29,8 @@ func test_seal_math() -> void:
 	assert_almost_eq(ShopEffects.seal_damage_mult(0, 7), 0.65, 0.0001)
 	assert_almost_eq(ShopEffects.seal_damage_mult(3, 2), 1.15 * 0.9, 0.0001)
 	assert_almost_eq(ShopEffects.seal_speed_mult(5), 1.25, 0.0001)
-	assert_almost_eq(ShopEffects.seal_speed_mult(9), 1.25, 0.0001, "never above the top tier")
-	assert_eq(ShopEffects.clamp_tier("guard_seal", 12), 7)
+	assert_almost_eq(ShopEffects.seal_speed_mult(9), 1.35, 0.0001, "never above the top tier (VII)")
+	assert_eq(ShopEffects.clamp_tier("guard_seal", 12), 10)
 	assert_eq(ShopEffects.clamp_tier("speed_seal", -1), 0)
 
 func test_tiers_pay_only_the_difference() -> void:
@@ -88,7 +89,7 @@ func test_replay_keeps_and_clamps_seals() -> void:
 	var snap: Dictionary = BattleReplay.snapshot(m, "", "")
 	assert_eq(BattleReplay.build_model(snap).seals[0], [3, 2, 1])
 	snap["seals"] = [99, 99, 99]
-	assert_eq(BattleReplay.build_model(snap).seals[0], [7, 7, 5], "a tampered replay is clamped")
+	assert_eq(BattleReplay.build_model(snap).seals[0], [10, 10, 7], "a tampered replay is clamped to the top tiers (step 7)")
 	assert_eq(BattleReferee.from_expect({"seed": 1, "teams": [], "seals": [1, 0, 0]}).seals, [1, 0, 0])
 
 func test_stat_crystals_cap_and_save() -> void:
