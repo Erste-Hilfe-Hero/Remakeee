@@ -294,7 +294,7 @@ func _process(delta: float) -> void:
 	_sweep(delta)
 	if fx.is_empty() and wipe_style.is_empty() and _flash_left <= 0.0 and not moving and wet <= 0.0:
 		return
-	# The weather line is a Label of its own: alone it needs no repaint (Era I, style "none").
+	# The weather line is a Label of its own: alone it needs no repaint (weather effects "off" in Era I).
 	if fx.size() == 1 and fx[0] == "weather_text" and wipe_style.is_empty() and _flash_left <= 0.0 and not moving and (wet <= 0.0 or not _draws_weather()):
 		return
 	if _weather_clip != null:
@@ -334,7 +334,7 @@ func _thunder() -> void:
 	var th: Dictionary = WeatherFx.cfg().get("thunder", {})
 	Sound.sfx(str(th.get("sfx", "rumble")), float(th.get("db", -5.0)), randf_range(float(th.get("pitch_min", 0.85)), float(th.get("pitch_max", 1.1))))
 
-## True when this era draws weather over the map at all (Era I shows a line of text only).
+## True when this era draws weather over the map at all (style "none" or weather effects "off" leave the line of text only).
 func _draws_weather() -> bool:
 	return str(cfg.get("weather_style", "pattern")) != "none" and _level != "off"
 

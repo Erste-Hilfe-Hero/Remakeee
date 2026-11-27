@@ -95,13 +95,17 @@ func test_old_regions_keep_their_origin_look() -> void:
 	EraManager.retro_filter = 2
 	assert_eq(EraLight.era_for("quivermoor"), 2, "never newer than the active era")
 
-func test_era_one_has_no_day_tint_and_plain_weather() -> void:
+func test_era_one_has_no_day_tint_and_ink_weather() -> void:
 	var white := Color(1, 1, 1)
 	assert_eq(EraLight.day_tint(1, NIGHT, true), white)
 	assert_eq(EraLight.world_tint(1, _town("veydal"), "storm", NIGHT, 10, true), white)
 	var fx: Array[String] = EraLight.effects(1, _ctx("rain", NIGHT))
-	# No pattern over the map (owner 25.11.2026: the dotted rain looked smeared), only the line.
-	assert_eq(fx, ["weather_text"] as Array[String], "only the weather line, no pattern over the map")
+	# Owner 27.11.2026: Era I draws the ink weather look and keeps the line. No dotted pattern.
+	assert_eq(str(EraLight.for_era(1).weather_style), "ink")
+	assert_eq(fx, ["weather_ink", "weather_text"] as Array[String], "the ink look and the weather line")
+	var off: Dictionary = _ctx("rain", NIGHT)
+	off["weather_fx"] = "off"
+	assert_eq(EraLight.effects(1, off), ["weather_text"] as Array[String], "weather effects off: the line only")
 	assert_eq(EraLight.effects(1, _ctx("clear", NIGHT)), [] as Array[String], "no lit windows, no glow")
 	assert_eq(EraLight.transition(1, "door"), "cut")
 	assert_eq(EraLight.transition(1, "stairs"), "cut")

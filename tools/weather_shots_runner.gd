@@ -9,8 +9,6 @@ const SHOTS: Array = [
 	["era1_storm", 1, "saltmarsh", "storm", 12.0, 6, ""],
 	["era1_fog", 1, "brindlewick", "fog", 12.0, 6, ""],
 	["era1_wind", 1, "brindlewick", "wind", 12.0, 6, ""],
-	["era1_rain_ink_proposal", 1, "brindlewick", "rain", 12.0, 6, "ink"],
-	["era1_fog_ink_proposal", 1, "brindlewick", "fog", 12.0, 6, "ink"],
 	["era2_rain", 2, "hookwick", "rain", 12.0, 6, ""],
 	["era2_drizzle", 2, "hookwick", "rain", 12.0, 6, "light"],
 	["era2_storm", 2, "hookwick", "storm", 12.0, 6, ""],
@@ -53,6 +51,9 @@ func _run() -> void:
 	Database.load_all()
 	GameState.new_game(1, "Rowan", 0, "Kindlop")
 	GameState.set_flag("got_starter")
+	# First-time tips open a text box over the map: none in a weather shot.
+	for id: String in Tips.TOPICS:
+		GameState.set_flag(Tips.flag(id))
 	# The settings file of this machine must not decide what the shots show.
 	GameState.reduce_motion = false
 	GameState.day_night = true
@@ -113,8 +114,7 @@ func _shot(s: Array) -> void:
 		cycle.set("debug_strength", 0.2 if extra == "light" else (0.95 if extra == "heavy" else 0.6))
 		cycle.set("debug_wet", 0.3 if extra == "wet30" else (0.8 if extra == "rainbow" else -1.0))
 		GameState.set("weather_fx", extra if extra in ["low", "off"] else "full")
-		EraLight.data()["eras"]["1"]["weather_style"] = "lines" if extra == "ink" else "none"
-	elif extra in ["ink", "light", "heavy", "low", "off", "fade", "rainbow", "wet30", "indoor", "banner"]:
+	elif extra in ["light", "heavy", "low", "off", "fade", "rainbow", "wet30", "indoor", "banner"]:
 		return
 	var id: String = _indoor_map() if extra == "indoor" else str(s[2])
 	var m: MapData = MapData.load_map(id)

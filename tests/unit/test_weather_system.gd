@@ -447,11 +447,16 @@ func test_low_draws_half_and_no_splashes() -> void:
 	assert_false(full.low)
 	assert_eq(WeatherFx.density_of("low"), 0.5)
 
-func test_era_one_still_shows_the_line_only() -> void:
-	# Owner 25.11.2026: no weather over the Era I map. The ink look is in the code, not switched on.
+func test_era_one_draws_the_ink_look_and_the_line() -> void:
+	# Owner 27.11.2026: Era I draws its weather in the inks of the region.
 	var layer: EraLightLayer = _layer(_town("veydal"), 1, "rain")
-	assert_eq(layer.fx, ["weather_text"] as Array[String])
-	assert_false(layer._draws_weather())
+	assert_eq(layer.fx, ["weather_ink", "weather_text"] as Array[String])
+	assert_true(layer._draws_weather())
+	assert_gt(layer.wx.step_fps, 0.0, "the Era I painter moves in steps")
+	var inks: Array[Color] = EraManager.inks_for(layer.map.region)
+	assert_eq(layer.wx.rain[0], inks[1], "rain in the inks of the region")
+	assert_eq(layer.wx.fog, inks[3])
+	assert_gt(layer.wx.sheet_count(layer.wx.look_of("rain"), 0, 1.0), 0, "drops are drawn")
 
 # --- The painter ----------------------------------------------------------------------------
 
