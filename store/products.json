@@ -100,8 +100,8 @@
    "eur": "0.99",
    "name_en": "Ring Tonic",
    "name_de": "Ring-Trank",
-   "desc_en": "A Spirling gains 1 Ring at once. Never above the Ring cap.",
-   "desc_de": "Ein Spirling steigt sofort um 1 Ring. Nie über die Ring-Obergrenze.",
+   "desc_en": "A Spirling gains 1 Ring at once.",
+   "desc_de": "Ein Spirling steigt sofort um 1 Ring.",
    "family_shareable": false,
    "ready": true
   },
@@ -113,8 +113,8 @@
    "eur": "3.99",
    "name_en": "Great Ring Tonic",
    "name_de": "Großer Ring-Trank",
-   "desc_en": "A Spirling gains 5 Rings at once. Never above the Ring cap.",
-   "desc_de": "Ein Spirling steigt sofort um 5 Ringe. Nie über die Ring-Obergrenze.",
+   "desc_en": "A Spirling gains 5 Rings at once.",
+   "desc_de": "Ein Spirling steigt sofort um 5 Ringe.",
    "family_shareable": false,
    "ready": true
   },
@@ -126,8 +126,8 @@
    "eur": "14.99",
    "name_en": "Ring Elixir",
    "name_de": "Ring-Elixier",
-   "desc_en": "A Spirling rises to the current Ring cap.",
-   "desc_de": "Ein Spirling steigt bis zur aktuellen Ring-Obergrenze.",
+   "desc_en": "A Spirling rises to Ring 60.",
+   "desc_de": "Ein Spirling steigt bis Ring 60.",
    "family_shareable": false,
    "ready": true
   },
@@ -997,8 +997,8 @@
    "eur": "2.99",
    "name_en": "Warden Weakener",
    "name_de": "Wächterschwächer",
-   "desc_en": "The Warden starts with 15% less Vigor. At most 1 per Warden battle, not in Rift-Born.",
-   "desc_de": "Der Wächter startet mit 15 % weniger Kraft. Höchstens 1 pro Wächterkampf, nicht in Rift-Born.",
+   "desc_en": "The Warden starts with 15% less Vigor. At most 1 per Warden battle.",
+   "desc_de": "Der Wächter startet mit 15 % weniger Kraft. Höchstens 1 pro Wächterkampf.",
    "family_shareable": false,
    "ready": true
   },

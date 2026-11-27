@@ -62,7 +62,7 @@ static func check(offers: Array[Dictionary]) -> Array[String]:
 					if Database.species(str(g.get("species", ""))) == null:
 						errs.append(where + ": spirling grant names no species in spirlings.json")
 					if int(g.get("level", 0)) < 1 or int(g.get("level", 0)) > Spirling.STORY_RING:
-						errs.append(where + ": spirling grant needs a level from 1 to the Ring cap")
+						errs.append(where + ": spirling grant needs a level from 1 to the story ring")
 					if str(o.get("store_type", "")) != "non_consumable" or int((o.get("limit", {}) as Dictionary).get("n", 0)) != 1:
 						errs.append(where + ": a Spirling offer is non_consumable and once per account")
 				elif bool(o.get("ready", false)) and g is Dictionary and str(g.t) == "item" and Database.item(gid).is_empty():

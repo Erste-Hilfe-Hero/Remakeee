@@ -296,12 +296,14 @@ static func crystal_cap() -> int:
 static func growth_plus() -> float:
 	return float(_values().get("growth_plus", 0.0)) if Billing.unlocked("growth_plus") > 0 else 0.0
 
-## Extra Rings over the Veteran Ring cap from the Ring Cap Seal (pay-to-win step 3, plan point 47).
+## Extra Rings of the Ring Cap Seal (pay-to-win step 3, plan point 47). Off sale since 2026-11-27:
+## there is no Ring cap any more, so nothing in play reads it. Owners keep the unlock; it still
+## counts toward account_power, so nobody loses the points they paid for.
 static func ring_cap_bonus() -> int:
 	return int(_values().get("ring_cap_plus", 0)) if Billing.unlocked("ring_cap_plus") > 0 else 0
 
 ## Account power (shown in the team view): the sum of every active bought advantage in points,
-## seal, amulet and Bond Head Start percents plus the permanent growth percent, 10 per extra Ring of the Ring Cap Seal, plus
+## seal, amulet and Bond Head Start percents plus the permanent growth percent, 10 per extra Ring of the (retired) Ring Cap Seal, plus
 ## the crystal points in the team.
 static func account_power() -> int:
 	var tiers: Array[int] = seal_tiers()

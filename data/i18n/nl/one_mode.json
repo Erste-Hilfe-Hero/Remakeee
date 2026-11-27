@@ -1,0 +1,12 @@
+{
+ "_comment": "Translations of the German table one_mode, written by tools/i18n/locales_one_mode.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s with %s, %d:%02d": "%s met %s, %d:%02d",
+  "Rift bosses": "Kloofbazen",
+  "Scorch, Root and Jolt stay on after the battle until an item, an art or a rest cures them.": "Brand, Wortels en Schok blijven na het gevecht tot een voorwerp, een techniek of een rust ze geneest.",
+  "Text speed and battle options.": "Tekstsnelheid en gevechtsopties.",
+  "Text, battles and tips.": "Tekst, gevechten en tips.",
+  "Wayfarers think at tier %d, Wardens at tier %d.": "Reizigers denken op niveau %d, Hoeders op niveau %d.",
+  "Wayfarers' Spirlings stay close to your strongest one.": "De Spirlings van Reizigers blijven dicht bij je sterkste."
+ }
+}

@@ -12,7 +12,7 @@
   "%s, slot %d of %d: %s, Vigor %d of %d": "%s, место %d из %d: %s, Сила %d из %d",
   "%s: %d damage": "%s: урон %d",
   "%s: %d damage, %d knocked out": "%s: урон %d, побеждено %d",
-  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns on every difficulty; then the place's own field comes back. A new field pushes the old one out at once.": "Поле Разлома усиливает один элемент до x1.2 и ослабляет другой до x0.85. Приём-призыв раскладывает своё поле на 5 ходов на любой сложности; потом возвращается собственное поле места. Новое поле сразу вытесняет старое.",
+  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns; then the place's own field comes back. A new field pushes the old one out at once.": "Поле Разлома усиливает один элемент до x1.2 и ослабляет другой до x0.85. Приём-призыв раскладывает своё поле на 5 ходов; потом возвращается собственное поле места. Новое поле сразу вытесняет старое.",
   "A Rift field never weakens its arts.": "Поле Разлома никогда не ослабляет его приёмы.",
   "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.": "Тихое кольцо внутри кружащего ветра. Приёмы Gale бьют сильнее, приёмы Bloom вянут, и никто не может впасть в Дремоту.",
   "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.": "Бледный утренний свет. Приёмы Lumen бьют сильнее, приёмы Umbra рассеиваются, а зов Echo удаётся чуть легче. На рассвете и днём держится на ход дольше.",

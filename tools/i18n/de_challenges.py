@@ -53,8 +53,6 @@ T = {
 "Challenge rules: %d": "Herausforderungs-Regeln: %d",
 "Challenge rules": "Herausforderungs-Regeln",
 "Extra rules for a harder journey: One per Place, First Meeting, Spring Water Only, Shuffled Wilds and Arts, Stand Your Ground, Half Rested, Ace Up Front, Night Bonds, One Colour, Empty Pockets, Off the Books and Trust No One. Any of them combine. They are taken before the first mended Rift and can be dropped at any time; the record remembers. The shuffles follow a seed code you can share with friends.": "Zusatzregeln für eine härtere Reise: Einer pro Ort, Erste Begegnung, Nur Quellwasser, Gemischte Wildnis und Techniken, Halte die Stellung, Halb erholt, Ass voran, Nachtbande, Eine Farbe, Leere Taschen, Schwarz gebucht und Trau niemandem. Alle lassen sich kombinieren. Man wählt sie vor dem ersten geheilten Riss und kann sie jederzeit aufgeben; die Bilanz merkt es sich. Das Mischen folgt einem Seed-Code, den du mit Freunden teilen kannst.",
-"Ring caps": "Ring-Grenzen",
-"On Veteran and Rift-Born your Spirlings grow only to the ring cap until the end of Act I: R12 at the start, then R15, R18, R23, R28, R32, R36, R40, R44, R50, R54, R57 and R60 as Rifts are mended. Rest springs name the cap of the moment. After Act I there is no cap.": "Auf Veteran und Rissgeboren wachsen deine Spirlings bis zum Ende von Akt I nur bis zur Ring-Grenze: R12 am Anfang, dann R15, R18, R23, R28, R32, R36, R40, R44, R50, R54, R57 und R60, während Risse geheilt werden. Rastquellen nennen die aktuelle Grenze. Nach Akt I gibt es keine Grenze.",
 "%s: %d won, %d lost": "%s: %d gewonnen, %d verloren",
 "best in %d turns": "beste Zeit %d Runden",
 "Most battled:": "Am häufigsten gekämpft:",

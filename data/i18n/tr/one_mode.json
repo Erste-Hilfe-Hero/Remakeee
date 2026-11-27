@@ -1,0 +1,12 @@
+{
+ "_comment": "Translations of the German table one_mode, written by tools/i18n/locales_one_mode.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s with %s, %d:%02d": "%s ile %s, %d:%02d",
+  "Rift bosses": "Yarık bossları",
+  "Scorch, Root and Jolt stay on after the battle until an item, an art or a rest cures them.": "Yanık, Köklenme ve Şok savaştan sonra da sürer; bir eşya, bir hüner ya da dinlenme iyileştirene kadar.",
+  "Text speed and battle options.": "Metin hızı ve savaş seçenekleri.",
+  "Text, battles and tips.": "Metin, savaşlar ve ipuçları.",
+  "Wayfarers think at tier %d, Wardens at tier %d.": "Gezginler %d. seviyede, Muhafızlar %d. seviyede düşünür.",
+  "Wayfarers' Spirlings stay close to your strongest one.": "Gezginlerin Spirling'leri en güçlü Spirling'ine yakın kalır."
+ }
+}

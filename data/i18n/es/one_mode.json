@@ -1,0 +1,12 @@
+{
+ "_comment": "Translations of the German table one_mode, written by tools/i18n/locales_one_mode.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s with %s, %d:%02d": "%s con %s, %d:%02d",
+  "Rift bosses": "Jefes de Grieta",
+  "Scorch, Root and Jolt stay on after the battle until an item, an art or a rest cures them.": "Quemadura, Raíces y Calambre siguen tras el combate hasta que un objeto, un arte o un descanso los cura.",
+  "Text speed and battle options.": "Velocidad del texto y opciones de combate.",
+  "Text, battles and tips.": "Texto, combates y consejos.",
+  "Wayfarers think at tier %d, Wardens at tier %d.": "Los Caminantes piensan en el nivel %d, los Custodios en el nivel %d.",
+  "Wayfarers' Spirlings stay close to your strongest one.": "Los Spirlings de los Caminantes se quedan cerca de tu más fuerte."
+ }
+}

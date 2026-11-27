@@ -686,7 +686,7 @@
  {
   "id": "rg_ring_tonic",
   "name": "Ring Tonic",
-  "description": "A Spirling gains 1 Ring at once. Never above the Ring cap.",
+  "description": "A Spirling gains 1 Ring at once.",
   "battle": false,
   "shop": true,
   "rings": 1
@@ -694,7 +694,7 @@
  {
   "id": "rg_ring_tonic_5",
   "name": "Great Ring Tonic",
-  "description": "A Spirling gains 5 Rings at once. Never above the Ring cap.",
+  "description": "A Spirling gains 5 Rings at once.",
   "battle": false,
   "shop": true,
   "rings": 5
@@ -702,7 +702,7 @@
  {
   "id": "rg_ring_elixir",
   "name": "Ring Elixir",
-  "description": "A Spirling rises to the current Ring cap.",
+  "description": "A Spirling rises to Ring 60.",
   "battle": false,
   "shop": true,
   "rings": 99
@@ -772,14 +772,14 @@
  {
   "id": "rg_warden_weaken",
   "name": "Warden Weakener",
-  "description": "Offered before a Rift Warden battle you lost once before: the Warden's team starts with 15% less Vigor. One per battle, not in Rift-Born. Used up.",
+  "description": "Offered before a Rift Warden battle you lost once before: the Warden's team starts with 15% less Vigor. One per battle. Used up.",
   "battle": false,
   "shop": true
  },
  {
   "id": "rg_rift_anchor",
   "name": "Rift Anchor",
-  "description": "Offered after you lose to a Rift Warden: you stay right before it with a rested team instead of going back to the spring. Not in Rift-Born. Used up.",
+  "description": "Offered after you lose to a Rift Warden: you stay right before it with a rested team instead of going back to the spring. Used up.",
   "battle": false,
   "shop": true
  },
@@ -1004,7 +1004,7 @@
  {
   "id": "rg_ring_tonic_10",
   "name": "Grand Ring Tonic",
-  "description": "A Spirling gains 10 Rings at once. Never above the Ring cap.",
+  "description": "A Spirling gains 10 Rings at once.",
   "battle": false,
   "shop": true,
   "rings": 10
@@ -1012,7 +1012,7 @@
  {
   "id": "rg_ring_crown",
   "name": "Ring Crown",
-  "description": "A Spirling jumps to Ring 50 at once. Never above the Ring cap.",
+  "description": "A Spirling jumps to Ring 50 at once.",
   "battle": false,
   "shop": true,
   "rings_to": 50
