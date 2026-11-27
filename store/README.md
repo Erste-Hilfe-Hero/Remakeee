@@ -45,10 +45,13 @@ Upload: Google Play by `play_store.mjs`, App Store Connect by `app_store.mjs` an
 lifekit workflow `chimora-store.yml` (commits `run:chimora-store-play`, `run:chimora-store-asc+iap`).
 
 Rebuild the images after the art or the UI changes: see the top of `tools/store/make_store_images.py`
-(raw screens from `tools/store_shots.gd`, all from the running game). The set, in this order: monster
-hero (Era IV Spirlings, one Gleam), 3v3 battle, unfurl before/after, one town in Eras I to IV, a story
-line, the Fair league screen (live duels are off live), a Spirlog page, the shop's Looks list (Riftglass prices only). No money prices and no
-Discord note in any picture. The app preview video (15-30 s, 1080 x 1920, 30 fps, H.264) is recorded by
+(raw screens from `tools/store_shots.gd`, all from the running game; the 1.3.2 screens in a second run
+with the tall window `--resolution 440x956`). The set (1.3.2), in this order: monster hero (Era IV
+Spirlings, one Gleam), 3v3 battle, a wild Rime Gleam in battle (its opening line, or the command menu
+where that line takes two pages), Era V town in the rain, a puzzle board (Tracks in the Mud), one town
+in Eras I to IV, the shop's Featured page, the pass track. No money prices and no Discord note in any
+picture: the Featured page is shot without store prices (the buttons say "Show", as before the store
+answers) and with the euro hints "(≈ ...)" taken out. The weekend Growth note is switched off for the shots. The app preview video (15-30 s, 1080 x 1920, 30 fps, H.264) is recorded by
 `tools/store_video.gd` and encoded by `tools/store/make_store_video.py`; it is kept outside the repo.
 The folders with pictures carry a `.gdignore`, so Godot does not import them.
 Rules for every text and image: no other game's or brand's names, no comparisons (docs/IP_HYGIENE.md,
