@@ -1,9 +1,9 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 39,
+ "catalog_version": 40,
  "advantage_values": {
-  "_comment": "Pay-to-win step 1 (Ali, 10 Nov 2026). Seal tiers in percent (ShopEffects.seal_percent), crystal_cap = most crystal points per stat (twice Spirling.SPARK_MAX), growth_plus = extra growth of the Growth Seal. Step 3: ring_cap_plus = extra Rings over the Ring cap with the Ring Cap Seal. Step 4: crit_seal = extra crit chance in percentage points per tier, status_ward = percent chance a foe's status fails on your side, start_shield = percent less damage on the first hit your lead takes in each battle. Step 5: bond_edge = percentage points added to the bond timing score per Bond Head Start tier. Step 6: storage_wing = extra storage boxes owned after each Storage Wing step (each box holds 30). Step 7 (27 Nov 2026): power and guard seal tiers VIII to X, pace seal tiers VI and VII.",
+  "_comment": "Pay-to-win step 1 (Ali, 10 Nov 2026). Seal tiers in percent (ShopEffects.seal_percent), crystal_cap = most crystal points per stat (twice Spirling.SPARK_MAX), growth_plus = extra growth of the Growth Seal. Step 3: ring_cap_plus = extra Rings over the Ring cap with the Ring Cap Seal. Step 4: crit_seal = extra crit chance in percentage points per tier, status_ward = percent chance a foe's status fails on your side, start_shield = percent less damage on the first hit your lead takes in each battle. Step 5: bond_edge = percentage points added to the bond timing score per Bond Head Start tier. Step 6: storage_wing = extra storage boxes owned after each Storage Wing step (each box holds 30). Step 7 (27 Nov 2026): power and guard seal tiers VIII to X, pace seal tiers VI and VII. Step 8 (1.3.2, 27 Nov 2026): crit_seal IV-V and bond_edge IV-V; victory_mend = percent of max Vigor each standing Spirling regains after a won story battle per tier; coin_seal = percent more coins from won story trainer battles per tier; wild_purse = coins per Ring of the highest foe after a won wild battle; gleam_lens, rare_compass, spark_seal = factors on the wild Gleam chance, on rarer wild kinds and on the battle Spark chance; kinship_bell = factor on the Kinship of a won battle; merchant_discount_2 = merchant price factor; growth_plus_2 = extra growth of Growth Seal II.",
   "power_seal": [
    5,
    10,
@@ -43,7 +43,9 @@
   "crit_seal": [
    5,
    10,
-   15
+   15,
+   20,
+   25
   ],
   "status_ward": [
    50
@@ -54,7 +56,9 @@
   "bond_edge": [
    10,
    20,
-   30
+   30,
+   40,
+   50
   ],
   "storage_wing": [
    2,
@@ -62,7 +66,24 @@
    6,
    9,
    12
-  ]
+  ],
+  "victory_mend": [
+   10,
+   20,
+   30
+  ],
+  "coin_seal": [
+   25,
+   50,
+   100
+  ],
+  "wild_purse": 20,
+  "gleam_lens": 2.0,
+  "rare_compass": 1.5,
+  "spark_seal": 2.0,
+  "kinship_bell": 2,
+  "merchant_discount_2": 0.6,
+  "growth_plus_2": 1.0
  },
  "offers": [
   {
@@ -2290,6 +2311,34 @@
    "explain": "Everything in the merchant shops of the world costs 20% fewer coins."
   },
   {
+   "id": "rg_merchant_discount_2",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Merchant Discount II",
+   "desc": "40% lower coin prices in all merchant shops instead of 20%. Replaces Merchant Discount: you pay only the difference. Permanent.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.merchant_discount_2",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "merchant_discount_2"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:merchant_discount:1",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
    "id": "rg_jacket_moss",
    "kind": "cosmetic",
    "tab": "looks",
@@ -3878,6 +3927,34 @@
    "explain": "Your whole team gets +50% growth in every battle. It adds up with Growth Crystals and the pass."
   },
   {
+   "id": "rg_growth_plus_2",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Growth Seal II",
+   "desc": "+100% growth for the whole team in every battle instead of +50%, together with every Growth Crystal and the pass. Replaces the Growth Seal: you pay only the difference. Does not work in leagues. Permanent.",
+   "rg_price": 2500,
+   "eur_cents": 2499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.growth_plus_2",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "growth_plus_2"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:growth_plus:1",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
    "id": "rg_coin_boost_x3",
    "kind": "advantage",
    "tab": "advantages",
@@ -4471,6 +4548,62 @@
    "explain": "All your Spirlings land critical hits 15 percentage points more often. It replaces the tier before it: you only pay the difference."
   },
   {
+   "id": "rg_crit_seal_4",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Crit Seal IV",
+   "desc": "Your Spirlings land critical hits 20 percentage points more often. Replaces Crit Seal III: you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.crit_seal_4",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "crit_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:crit_seal:3",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
+   "id": "rg_crit_seal_5",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Crit Seal V",
+   "desc": "Your Spirlings land critical hits 25 percentage points more often. Replaces Crit Seal IV: you pay only the difference. Works in the story, in Raid Rifts and in the Open League, never in the Fair League. Permanent.",
+   "rg_price": 2500,
+   "eur_cents": 2499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.crit_seal_5",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "crit_seal"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:crit_seal:4",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
    "id": "rg_status_ward",
    "kind": "advantage",
    "tab": "advantages",
@@ -4703,6 +4836,62 @@
    "min_band": 13,
    "ready": true,
    "explain": "Every bond counts as 30 percentage points better timed: the bond bar starts ahead. It replaces the tier before it: you only pay the difference."
+  },
+  {
+   "id": "rg_bond_edge_4",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Bond Head Start IV",
+   "desc": "Every bond counts as 40 percentage points better timed (the bond bar starts ahead). Replaces Bond Head Start III: you pay only the difference. Story only, not in leagues. Permanent.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.bond_edge_4",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "bond_edge"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:bond_edge:3",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
+   "id": "rg_bond_edge_5",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Bond Head Start V",
+   "desc": "Every bond counts as 50 percentage points better timed (the bond bar starts ahead). Replaces Bond Head Start IV: you pay only the difference. Story only, not in leagues. Permanent.",
+   "rg_price": 2500,
+   "eur_cents": 2499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.bond_edge_5",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "bond_edge"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:bond_edge:4",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
   },
   {
    "id": "rg_bond_retry",
@@ -6413,6 +6602,309 @@
    "ready": true,
    "discount_pct": 49,
    "explain": "The items listed above for fewer Riftglass than one by one. This deal comes back every 4 weeks for a whole week, Monday to Sunday; you can buy it once that week."
+  },
+  {
+   "id": "rg_victory_mend_1",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Victory Mend I",
+   "desc": "After every won battle in the story, each Spirling of your team that is still standing regains 10% of its maximum Vigor. Story only, not in leagues. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.victory_mend_1",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "victory_mend"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:victory_mend:0",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
+   "id": "rg_victory_mend_2",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Victory Mend II",
+   "desc": "After every won battle in the story, each Spirling of your team that is still standing regains 20% of its maximum Vigor. Replaces Victory Mend I: you pay only the difference. Story only, not in leagues. Permanent.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.victory_mend_2",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "victory_mend"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:victory_mend:1",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
+   "id": "rg_victory_mend_3",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Victory Mend III",
+   "desc": "After every won battle in the story, each Spirling of your team that is still standing regains 30% of its maximum Vigor. Replaces Victory Mend II: you pay only the difference. Story only, not in leagues. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.victory_mend_3",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "victory_mend"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:victory_mend:2",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
+   "id": "rg_coin_seal_1",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Coin Seal I",
+   "desc": "+25% coins from every won trainer battle in the story, on top of a Coin Gleam. Story only, not in leagues. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.coin_seal_1",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "coin_seal"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:coin_seal:0",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
+   "id": "rg_coin_seal_2",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Coin Seal II",
+   "desc": "+50% coins from every won trainer battle in the story, on top of a Coin Gleam. Replaces Coin Seal I: you pay only the difference. Story only, not in leagues. Permanent.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.coin_seal_2",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "coin_seal"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:coin_seal:1",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
+   "id": "rg_coin_seal_3",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Coin Seal III",
+   "desc": "+100% coins from every won trainer battle in the story, on top of a Coin Gleam. Replaces Coin Seal II: you pay only the difference. Story only, not in leagues. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.coin_seal_3",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "coin_seal"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:coin_seal:2",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
+   "id": "rg_wild_purse",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Wild Purse",
+   "desc": "Every won battle against wild Spirlings in the story pays coins: 20 for each Ring of the highest foe (Ring 30 pays 600). Story only, not in leagues. Permanent.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.wild_purse",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "wild_purse"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
+   "id": "rg_gleam_lens",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Gleam Lens",
+   "desc": "Wild Gleam Spirlings show up twice as often in the story, and twice as often again on top of a Shimmer Scent. Story only, not in leagues. Permanent.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.gleam_lens",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "gleam_lens"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
+   "id": "rg_rare_compass",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Rarity Compass",
+   "desc": "Uncommon, shy and ancient wild Spirlings step out 1.5 times as often, on top of a Lure Scent. Story only, not in leagues. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.rare_compass",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "rare_compass"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
+   "id": "rg_spark_seal",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Training Seal",
+   "desc": "Twice the chance that a story battle trains a Spark value. Not in Warden battles. Story only, not in leagues. Permanent.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.spark_seal",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "spark_seal"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
+  },
+  {
+   "id": "rg_kinship_bell",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Kinship Bell",
+   "desc": "Spirlings that fought in a won battle in the story gain double Kinship: 4 instead of 2. Story only, not in leagues. Permanent.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.kinship_bell",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "kinship_bell"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "badge": "new"
   }
  ]
 }
