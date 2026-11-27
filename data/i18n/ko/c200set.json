@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table c200set, written by tools/i18n/locales_c200set.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Dim": "어둡게",
+  "Dims the whole screen for dark rooms. Warm also takes out the cold blue light.": "어두운 방을 위해 화면 전체를 어둡게 한다. 따뜻하게는 차가운 푸른빛도 줄인다.",
+  "Night mode: %s": "야간 모드: %s",
+  "Reset to default": "초기화",
+  "Set every setting on this page back to how it was at the start?": "이 페이지의 설정을 모두 처음 상태로 되돌릴까요?",
+  "Sets every setting on this page back to how it was at the start.": "이 페이지의 설정을 모두 처음 상태로 되돌린다.",
+  "Sets every setting on this page back to how it was at the start. The language stays.": "이 페이지의 설정을 모두 처음 상태로 되돌린다. 언어는 그대로.",
+  "This weekend, battles give double Growth on Saturday and Sunday.": "이번 주말 토요일과 일요일에는 배틀에서 성장이 두 배다.",
+  "This weekend, battles give more Growth on Saturday and Sunday.": "이번 주말 토요일과 일요일에는 배틀에서 성장이 늘어난다.",
+  "Warm": "따뜻하게",
+  "Weekend: battles give double Growth today.": "주말: 오늘은 배틀에서 성장이 두 배다.",
+  "Weekend: battles give more Growth today.": "주말: 오늘은 배틀에서 성장이 늘어난다.",
+  "Your journey is %d years old today! A birthday gift: a Growth Charm and %d coins.": "오늘로 여행이 %d년이 되었다! 생일 선물: 성장 부적과 %d코인.",
+  "Your journey is one year old today! A birthday gift: a Growth Charm and %d coins.": "오늘로 여행이 1년이 되었다! 생일 선물: 성장 부적과 %d코인."
+ }
+}

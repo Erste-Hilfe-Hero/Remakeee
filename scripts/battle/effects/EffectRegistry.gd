@@ -46,6 +46,7 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	# KAMPF_PLAN_1000, "Elemente und Matchups" and "Techniken" (TechniqueRules).
 	&"brace": preload("res://scripts/battle/effects/BraceEffect.gd"),
 	&"force_out": preload("res://scripts/battle/effects/ForceOutEffect.gd"),
+	&"pivot": preload("res://scripts/battle/effects/PivotEffect.gd"),
 	&"counter": preload("res://scripts/battle/effects/CounterEffect.gd"),
 	&"team_stage": preload("res://scripts/battle/effects/TeamStageEffect.gd"),
 	&"clear_drops": preload("res://scripts/battle/effects/ClearDropsEffect.gd"),

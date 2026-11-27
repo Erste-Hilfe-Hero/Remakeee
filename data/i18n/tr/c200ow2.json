@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table c200ow2, written by tools/i18n/locales_c200ow2.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Nearest rest point: %s, to the %s.": "En yakın dinlenme yeri: %s, yön: %s.",
+  "No rest point found yet. Rest points show as a small cross on the map.": "Henüz dinlenme yeri bulunmadı. Dinlenme yerleri haritada küçük bir artı olarak görünür.",
+  "Reset": "Sıfırla",
+  "Rest point": "Dinlenme yeri",
+  "There is a rest point right here, in %s.": "Tam burada, %s içinde bir dinlenme yeri var.",
+  "You were here last.": "En son burada bulundun.",
+  "east": "doğu",
+  "north": "kuzey",
+  "north-east": "kuzeydoğu",
+  "north-west": "kuzeybatı",
+  "south": "güney",
+  "south-east": "güneydoğu",
+  "south-west": "güneybatı",
+  "west": "batı"
+ }
+}

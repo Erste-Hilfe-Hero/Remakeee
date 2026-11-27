@@ -5,6 +5,11 @@ extends Label
 
 var target: LineEdit
 var max_len: int = 10
+## The question above the box: it asks for another name while the typed one would not be shown
+## online (200 list item 7, same rules as the server: LocalBackend.clean_name).
+var ask_label: Label
+var ask_text: String = ""
+const ASK_AGAIN: String = "Please pick another name."
 
 static func make(edit: LineEdit, limit: int) -> CharCounter:
 	var c := CharCounter.new()
@@ -26,3 +31,10 @@ func _process(_delta: float) -> void:
 		var t: String = text_for(target.text, max_len)
 		if t != text:
 			text = t
+			if ask_label != null:
+				ask_label.text = ASK_AGAIN if name_refused(target.text) else ask_text
+
+## True when the server would replace [param n] by a stand-in name (bad word, web address,
+## phone number). An empty box is not refused yet.
+static func name_refused(n: String) -> bool:
+	return not n.strip_edges().is_empty() and LocalBackend.clean_name(n, "0000") != " ".join(n.strip_edges().split(" ", false))

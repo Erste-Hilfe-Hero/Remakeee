@@ -134,10 +134,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _enter_tree() -> void:
 	Juice.in_battle = true
+	CrashReport.set_battle(true)
 
 func _exit_tree() -> void:
 	Juice.in_battle = false
 	Juice.set_shake_root(null)
+	CrashReport.set_battle(false)
 
 func _ready() -> void:
 	theme = EraBattleHud.theme(EraManager.active_era())
@@ -796,6 +798,10 @@ func _run() -> void:
 	for line: String in Tips.take(Tips.battle_start_tip(model.is_wild, _multi)):
 		await _text.show_text(line)
 	_replaying = not replay_inputs.is_empty()
+	# The very first battle: an arrow at the first art when nothing is tapped (200 list item 11).
+	if not _replaying and not model.has_meta("quick") and FirstArtArrow.is_first_battle(GameState.spirlog):
+		_first_arrow = FirstArtArrow.new()
+		add_child(_first_arrow)
 	if resume:
 		_apply_speed()
 	while not model.is_finished() and not BattlePuzzle.out_of_turns(model):
@@ -905,6 +911,8 @@ func _choose_actions() -> Array[BattleAction]:
 	return out
 
 var _undo_asked: bool = false
+## The first battle's arrow at the first art (200 list item 11); null in every later battle.
+var _first_arrow: FirstArtArrow
 var _rest_others: bool = false
 
 # --- Turn clock, giving up, swap offer, All rest (KAMPF_PLAN_1000 items 6, 8, 9, 12) ---------
@@ -990,6 +998,10 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 	# In a multi battle the acting order by Pace stands under the orders (KAMPF_PLAN_1000 389).
 	var pace: String = MultiRules.pace_line(model) if _multi else ""
 	var pace_tail: String = "\n" + pace if not pace.is_empty() else ""
+	# Wild battles: how leaving looks, in words only (200 list item 59).
+	var escape: String = BattleInfo.escape_words(model, slot)
+	if not escape.is_empty():
+		pace_tail += "\n" + escape
 	if _turn_deadline > 0:
 		_text.show_prompt("Orders for %s? (%d Energy, %d s)" % [me.display_name(), me.energy, _clock_left()] + pace_tail)
 	else:
@@ -1004,8 +1016,12 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 	_back_button.visible = _menu.undo_ok
 	_rest_all_button.visible = TurnFlow.all_rest_shown(model)
 	_waiting_orders = true
+	if _first_arrow != null:
+		_first_arrow.wait_for(_menu.first_art_button())
 	var choice: Array = await _menu.chosen
 	_waiting_orders = false
+	if _first_arrow != null:
+		_first_arrow.stop()
 	_back_button.visible = false
 	_rest_all_button.visible = false
 	_menu.set_enabled(false)
@@ -1140,18 +1156,41 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 	# The command words must not show under the list's lower edge (plan Chimora 100 item 57).
 	_menu.modulate.a = 0.0
 	var idx: int = -1
+	# After a faint the cursor starts on the best matchup (200 list item 70); the player still picks.
+	var focus: int = BattleAI.new(1).choose_replacement(model, BattleModel.Side.PLAYER, slot) if not cancellable else -1
 	while true:
-		idx = await _picker.pick(title, entries, cancellable)
+		idx = await _picker.pick(title, entries, cancellable, focus if focus in candidates else -1)
 		if idx < 0 or idx in candidates:
 			break
 	_menu.modulate.a = 1.0
 	return idx
 
+## Battle items by what they do (200 list item 79): healing and revives, then cures, then Energy,
+## then the rest; by name inside each group.
+static func sort_battle_items(ids: Array[String]) -> Array[String]:
+	var out: Array[String] = ids.duplicate()
+	out.sort_custom(func(a: String, b: String) -> bool:
+		var ga: int = item_group(Database.item(a))
+		var gb: int = item_group(Database.item(b))
+		if ga != gb:
+			return ga < gb
+		return str(Database.item(a).get("name", a)) < str(Database.item(b).get("name", b)))
+	return out
+
+static func item_group(it: Dictionary) -> int:
+	if it.has("heal") or it.has("heal_frac") or it.has("battle_revive"):
+		return 0
+	if it.has("cure"):
+		return 1
+	if it.has("energy") or it.has("energy_bench") or it.has("energy_surge") or it.has("revive_energy"):
+		return 2
+	return 3
+
 ## [param preset] (the item shortcut, Era IV on) uses that item on the active Spirling at once.
 func _pick_item(slot: int = 0, preset: String = "") -> BattleAction:
 	var ids: Array[String] = []
 	var entries: Array[Dictionary] = []
-	for id: String in model.bag_ids(BattleModel.Side.PLAYER):
+	for id: String in sort_battle_items(model.bag_ids(BattleModel.Side.PLAYER)):
 		var it: Dictionary = Database.item(id)
 		if bool(it.get("battle", false)) and model.item_left_this_battle(BattleModel.Side.PLAYER, id):
 			ids.append(id)
@@ -1513,7 +1552,9 @@ func _play_event(e: BattleEvent) -> void:
 				await _foe_sprite.step_out(true)
 				if foe.gleam:
 					await _gleam_entrance(_foe_sprite)
-			await _text.show_text(BattleOpening.start_line(e, GameState.battle_speed_scale()))
+			# One box: the opening line, then whether its kind is in the Spirlog yet (200 list 23, 24).
+			var note: String = BattleOpening.spirlog_note(model, foe, GameState.spirlog)
+			await _text.show_text(Loc.t(BattleOpening.start_line(e, GameState.battle_speed_scale())) + ("\n" + Loc.t(note) if not note.is_empty() else ""))
 		BattleEvent.Type.SEND_OUT, BattleEvent.Type.SWAP_IN:
 			var s: Spirling = model.party(side)[int(e.data.get("index", 0))]
 			_sprite(side, slot).setup(s, "back" if side == BattleModel.Side.PLAYER else "front")
@@ -1693,6 +1734,10 @@ func _play_event(e: BattleEvent) -> void:
 				await _text.show_text("You received %d coins." % money)
 			elif int(e.data.outcome) == BattleModel.Outcome.LOSS:
 				await _text.show_text("Your team is worn out...")
+				var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
+				var tip: String = BattleGuide.loss_tip(model.active_spirling(BattleModel.Side.FOE, foes[0])) if not foes.is_empty() else ""
+				if not tip.is_empty():
+					await _text.show_text(tip)
 			# The end report for Wayfarer and boss battles (KAMPF_PLAN items 20, 76).
 			if model.has_meta("summary") and not model.is_wild and not model.has_meta("quick"):
 				var rep_lines: Array[String] = (model.get_meta("summary") as BattleSummary).lines()
@@ -1809,6 +1854,7 @@ func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
 	var second: int = ElementFx.second_for(me.elements(), element) if me != null else -1
 	_fx.user_sprite = user
 	_fx.feel = EraBattleFeel.move_anim(mv, EraManager.active_era()) if mv != null else {}
+	_fx.repeat_speed = RepeatShort.speed("art:" + str(e.data.get("move", "")))
 	if str(_fx.feel.get("style", "")) == "quake" and int(_fx.feel.get("tier", 1)) >= 4 and kind != MoveData.Kind.STATUS:
 		Juice.add_trauma(era_trauma(0.1), element)
 	if kind != MoveData.Kind.PHYSICAL and target != user:

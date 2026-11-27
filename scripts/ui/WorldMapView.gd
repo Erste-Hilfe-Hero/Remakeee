@@ -4,7 +4,8 @@ extends Control
 ## data/world_layout.json as a cell, roads between neighbours, boat and coach lines dotted.
 ## Unknown places stay empty parchment, sighted ones are an outline, visited ones are filled.
 ## Fixed symbols: the player (ink square), rest points (cross), stops (small square), Rifts (x)
-## and the player's own marks (mid dot). A tap on a place emits place_tapped; dragging pans
+## and the player's own marks (mid dot), the place the player was in last (hollow square, 200
+## list item 31) and, after "Rest point", a ring round the nearest rest point (item 32). A tap on a place emits place_tapped; dragging pans
 ## at 2x zoom. The time-of-day symbol sits in the corner. UITheme colours only.
 
 signal place_tapped(place: String)
@@ -16,6 +17,10 @@ var zoom: int = 1
 var pan: Vector2 = Vector2.ZERO
 var current: String = ""
 var known: Dictionary = {}
+## Place the player was in before this one ("" for none), drawn as a hollow square.
+var last_here: String = ""
+## Place ringed on the map (the nearest rest point), or "".
+var highlight: String = ""
 var _press: Vector2 = Vector2(NAN, NAN)
 var _dragged: bool = false
 var _phase_icon: PhaseIcon
@@ -42,7 +47,7 @@ var _on_size: String = "fit"
 
 ## Zoom and pan to carry over to the next list (the menu rebuilds the view for each list).
 func state() -> Dictionary:
-	return {"zoom": zoom, "pan": pan}
+	return {"zoom": zoom, "pan": pan, "highlight": highlight}
 
 ## Takes [param keep] from state(); "here": true centres on the player once laid out.
 func restore(keep: Dictionary) -> void:
@@ -50,13 +55,17 @@ func restore(keep: Dictionary) -> void:
 		return
 	zoom = int(keep.get("zoom", 1))
 	pan = keep.get("pan", Vector2.ZERO)
+	highlight = str(keep.get("highlight", ""))
 	_on_size = "here" if bool(keep.get("here", false)) else ""
+	if bool(keep.get("show_highlight", false)) and not highlight.is_empty():
+		_on_size = "highlight"
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_RESIZED and size.x > 0.0 and size.y > 0.0:
 		match _on_size:
 			"fit": fit_known()
 			"here": center_on_here()
+			"highlight": center_on(highlight)
 			_: _clamp_pan()
 		_on_size = ""
 
@@ -90,6 +99,7 @@ func fit_known() -> void:
 func refresh(here: String = current) -> void:
 	current = here
 	known = WorldAtlas.known(current)
+	last_here = WorldAtlas.last_here(current)
 	if _phase_icon != null:
 		_phase_icon.phase = DayCycle.current()
 		_phase_icon.queue_redraw()
@@ -105,7 +115,10 @@ func toggle_zoom() -> void:
 
 ## "Here": pans so the player's place sits in the middle.
 func center_on_here() -> void:
-	var place: String = WorldAtlas.place_of(current)
+	center_on(WorldAtlas.place_of(current))
+
+## Pans so [param place] sits in the middle (the top left for "").
+func center_on(place: String) -> void:
 	if place.is_empty():
 		pan = Vector2.ZERO
 	else:
@@ -189,6 +202,12 @@ func _draw() -> void:
 				_draw_symbols(id, r)
 			WorldAtlas.Known.SIGHTED:
 				draw_rect(r, UITheme.MID, false, 1.0)
+	var s_last: float = maxf(3.0, p / 3.0)
+	if not last_here.is_empty() and int(known.get(last_here, 0)) == WorldAtlas.Known.VISITED:
+		var lr: Rect2 = cell_rect(last_here)
+		draw_rect(Rect2(lr.get_center() - Vector2(s_last, s_last) / 2.0, Vector2(s_last, s_last)), UITheme.INK, false, 1.0)
+	if not highlight.is_empty():
+		draw_arc(cell_rect(highlight).get_center(), p * 0.75, 0.0, TAU, 16, UITheme.INK, 1.0)
 	var here: String = WorldAtlas.place_of(current)
 	if not here.is_empty():
 		var hr: Rect2 = cell_rect(here)

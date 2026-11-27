@@ -48,3 +48,29 @@ static func texture(item_id: String, color: Color = UITheme.INK) -> ImageTexture
 static func for_era(item_id: String) -> ImageTexture:
 	var era: int = EraManager.active_era()
 	return texture(item_id, colour(item_id, era))
+
+## The mark for a held keepsake on the team picture (200 list item 103): its own icon in the era's
+## colour, or the charm shape for a keepsake without one. [param ink] (the row's text colour) is
+## used where the era draws in plain ink, so the mark stays visible on a focused row. null when
+## nothing is held.
+static func held_mark(item_id: String, ink: Color = UITheme.INK) -> ImageTexture:
+	if item_id.is_empty():
+		return null
+	var plain: bool = not BattleUiStyle.colour_on(EraManager.active_era())
+	var tex: ImageTexture = texture(item_id, ink) if plain else for_era(item_id)
+	if tex != null:
+		return tex
+	var r: Array = rows("charm")
+	if r.is_empty():
+		return null
+	var c: Color = ink if plain else UITheme.INK
+	var key: String = "held:" + c.to_html()
+	if not _cache.has(key):
+		var img := Image.create(SIZE, SIZE, false, Image.FORMAT_RGBA8)
+		for y: int in mini(r.size(), SIZE):
+			var row: String = r[y]
+			for x: int in mini(row.length(), SIZE):
+				if row[x] == "#":
+					img.set_pixel(x, y, c)
+		_cache[key] = ImageTexture.create_from_image(img)
+	return _cache[key]

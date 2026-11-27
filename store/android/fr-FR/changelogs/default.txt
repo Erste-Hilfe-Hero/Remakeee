@@ -1,1 +1,7 @@
-Acte IV : Solenne, trois nouvelles Failles et un désert qui te ment. Après le final : Vellmarch, puis Quillmarch, Halcyra et Quivermoor, au style des ères suivantes. 497 Spirlings, six légendaires avec quêtes, formes Reflet. Les clans notent à qui tu t'es fié. En ligne : ligues et duels écho. Sauvegarde dès le choix du nom, pliables ajustés, et ton Voyageur ne marche plus seul après un combat.
+Chimora 1.3.1
+
+- 7 nouveaux dons pour tes Spirlings, et de nouveaux arts qui frappent plusieurs fois ou font entrer un équipier.
+- « Lequel te correspond ? » t'aide à choisir ton partenaire, et un bouton Idée propose des noms.
+- Bonus du week-end : expérience doublée le samedi et le dimanche.
+- Fonctionne sur plus d'appareils, Chromebooks compris, et mieux sur tablettes et téléphones pliables.
+- Nombreuses petites corrections.

@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table c200start, written by tools/i18n/locales_c200start.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s might suit you. But choose whoever you like!": "%s może do ciebie pasować. Ale wybierz, kogo chcesz!",
+  "A free afternoon. You...": "Wolne popołudnie. Ty...",
+  "Two short questions. You still choose freely.": "Dwa krótkie pytania. I tak wybierasz swobodnie.",
+  "Which one suits you?": "Który do ciebie pasuje?",
+  "Your partner should be...": "Twój partner powinien być...",
+  "calm and bright": "spokojny i jasny",
+  "explore a dark cave": "badasz ciemną jaskinię",
+  "loyal and warm": "wierny i ciepły",
+  "quick and lively": "szybki i żywy",
+  "race to the lake": "ścigasz się do jeziora",
+  "sit by a warm fire": "siedzisz przy ciepłym ogniu"
+ }
+}

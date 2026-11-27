@@ -402,6 +402,9 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 	else:
 		lines.append(Loc.t("%s, %s") % [Loc.t(mv.element_label()), kind])
 	lines.append(Loc.t("Accuracy %d%%, %d Energy") % [roundi(mv.accuracy * 100.0), mv.energy_cost])
+	# The art's own line from moves.json (200 list item 46), translated in data/i18n/<code>/moves.json.
+	if not mv.description.is_empty():
+		lines.append(Loc.t(mv.description))
 	if mv.priority > 0:
 		# The "^" in front of the art's name (item 595) is explained where it applies (plan item 50).
 		lines.append("^ " + Loc.t("Acts before other arts."))
@@ -693,6 +696,10 @@ static func status_chance(model: BattleModel, foe: Spirling, mv: MoveData) -> Di
 
 ## Fills the buttons from the model's current legal actions for the Spirling in [param slot].
 ## The matchup tag shows only when one foe stands (with several, the target is picked after).
+## The first art button (the first battle's arrow points at it, 200 list item 11).
+func first_art_button() -> Button:
+	return _move_buttons[0] if not _move_buttons.is_empty() else null
+
 func refresh(model: BattleModel, slot: int = 0) -> void:
 	_model = model
 	_slot = slot

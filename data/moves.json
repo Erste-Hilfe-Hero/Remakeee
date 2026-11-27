@@ -5530,5 +5530,160 @@
   "spent_scale": true,
   "era": 1,
   "desc": "It has paid too much to stop now. Every Energy it spent on arts this battle makes it hit harder."
+ },
+ {
+  "name": "Cinder Flurry",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 55,
+  "accuracy": 0.9,
+  "energy": 3,
+  "effect": "multi_hit",
+  "era": 1,
+  "desc": "A spray of sparks: two to four small burns."
+ },
+ {
+  "name": "Ripple Jab",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 55,
+  "accuracy": 0.9,
+  "energy": 3,
+  "effect": "multi_hit",
+  "era": 1,
+  "desc": "Quick jabs that ride the ripples: two to four hits."
+ },
+ {
+  "name": "Burr Volley",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 55,
+  "accuracy": 0.9,
+  "energy": 3,
+  "effect": "multi_hit",
+  "era": 1,
+  "desc": "A volley of sticky burrs: two to four hits."
+ },
+ {
+  "name": "Static Patter",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 55,
+  "accuracy": 0.9,
+  "energy": 3,
+  "effect": "multi_hit",
+  "era": 1,
+  "desc": "Little crackles in a row: two to four hits."
+ },
+ {
+  "name": "Gust Flicks",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 55,
+  "accuracy": 0.9,
+  "energy": 3,
+  "effect": "multi_hit",
+  "era": 1,
+  "desc": "Sharp flicks of wind: two to four hits."
+ },
+ {
+  "name": "Glint Volley",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 55,
+  "accuracy": 0.9,
+  "energy": 3,
+  "effect": "multi_hit",
+  "era": 1,
+  "desc": "Light glints off it again and again: two to four hits."
+ },
+ {
+  "name": "Shadow Pecks",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 55,
+  "accuracy": 0.9,
+  "energy": 3,
+  "effect": "multi_hit",
+  "era": 1,
+  "desc": "Pecks from where the light does not reach: two to four hits."
+ },
+ {
+  "name": "Knuckle Patter",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 0.9,
+  "energy": 2,
+  "effect": "multi_hit",
+  "neutral": true,
+  "era": 1,
+  "desc": "Plain little blows with no element: two to four hits."
+ },
+ {
+  "name": "Ember Feint",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "pivot",
+  "era": 1,
+  "desc": "A flare in the foe's face, and it is already gone. The best-suited teammate steps in."
+ },
+ {
+  "name": "Ebb Strike",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "pivot",
+  "era": 1,
+  "desc": "Hits like a wave, then draws back like the tide. The best-suited teammate steps in."
+ },
+ {
+  "name": "Petal Dodge",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "pivot",
+  "era": 1,
+  "desc": "A slap of petals, then it slips behind its friends. The best-suited teammate steps in."
+ },
+ {
+  "name": "Spark and Dash",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "pivot",
+  "era": 1,
+  "desc": "A quick jolt, then a dash back to the bench. The best-suited teammate steps in."
+ },
+ {
+  "name": "Gust Retreat",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "pivot",
+  "era": 1,
+  "desc": "A buffet of wind that carries it back to the bench. The best-suited teammate steps in."
+ },
+ {
+  "name": "Fade Swipe",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "pivot",
+  "era": 1,
+  "desc": "A swipe out of the dark, and it fades away again. The best-suited teammate steps in."
  }
 ]

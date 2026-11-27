@@ -461,6 +461,11 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"swap_ab_pad": "The gamepad's A goes back and B confirms.",
 	"pad_help": "Which gamepad button does what.",
 	"keys_help": "Which key does what in the browser.",
+	"night_mode": "Dims the whole screen for dark rooms. Warm also takes out the cold blue light.",
+	"reset_game": "Sets every setting on this page back to how it was at the start.",
+	"reset_sound": "Sets every setting on this page back to how it was at the start.",
+	"reset_controls": "Sets every setting on this page back to how it was at the start.",
+	"reset_display": "Sets every setting on this page back to how it was at the start. The language stays.",
 }
 
 func run_settings() -> void:
@@ -522,6 +527,7 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 					rows.append(["shift_offer", "Swap offer: %s" % ("On" if TurnFlow.shift_on() else "Off")])
 				rows.append(["foe_announce", "Foe announces: %s" % ("On" if TurnFlow.announce_on() else "Off")])
 				rows.append(["challenges", "Challenges..."])
+			rows.append(["reset_game", SettingsReset.ROW_TEXT])
 		"sound":
 			rows = [
 				["volume", "Volume: %d%%" % int(round(GameState.volume * 100.0))],
@@ -533,6 +539,7 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["text_voice", "Text voice: %s" % ("On" if GameState.text_voice else "Off")],
 				["sound_captions", "Sound captions: %s" % ("On" if GameState.sound_captions else "Off")],
 				["sound_test", "Sound test..."],
+				["reset_sound", SettingsReset.ROW_TEXT],
 			]
 	return rows
 
@@ -657,6 +664,17 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			await _iron_oath()
 		"challenges":
 			await ChallengeMenu.run(self)
+		"reset_game":
+			await reset_settings_group("game")
+		"reset_sound":
+			await reset_settings_group("sound")
+
+## Asks first, then sets the settings of [param group] back to their defaults (200 list item 126).
+func reset_settings_group(group: String) -> void:
+	if await confirm(SettingsReset.QUESTION, SettingsReset.ROW_TEXT, "Not now"):
+		SettingsReset.reset(group)
+		refresh_all_themes(get_tree())
+		VirtualPad.apply_settings()
 
 ## Short names for the list rows; the line under the list explains each (items 2185, 2067).
 const DIFFICULTY_TEXT: Array[String] = ["Story", "Wayfarer", "Veteran", "Rift-Born"]
@@ -779,6 +797,10 @@ func run_display() -> void:
 				EraManager.replay_upgrade()
 			"screen_shake":
 				GameState.screen_shake = (GameState.screen_shake + 1) % Juice.LEVEL_NAMES.size()
+			"night_mode":
+				GameState.night_mode = (GameState.night_mode + 1) % GameState.NIGHT_MODE_NAMES.size()
+			"reset_display":
+				await reset_settings_group("display")
 		GameState.apply_display()
 		# High contrast shows at once on every open menu (item 2065).
 		refresh_all_themes(get_tree())
@@ -801,8 +823,10 @@ static func display_rows() -> Array[Array]:
 		["minimap", "Minimap: %s" % shop_or("minimap", MINIMAP_NAMES[GameState.minimap])],
 		["retro", "Retro filter: %s" % shop_or("retro", retro)],
 		["screen_shake", "Screen shake: %s" % Juice.LEVEL_NAMES[GameState.screen_shake]],
+		["night_mode", "Night mode: %s" % GameState.NIGHT_MODE_NAMES[GameState.night_mode]],
 	]
 	rows.append_array(era_replay_rows())
+	rows.append(["reset_display", SettingsReset.ROW_TEXT])
 	return rows
 
 ## "Replay era change" (docs/ERA_FEEL_UI.md): only once an era past Era I is on screen.
@@ -899,6 +923,8 @@ func run_controls() -> void:
 				await info(pad_help())
 			"keys_help":
 				await info(KEYS_HELP)
+			"reset_controls":
+				await reset_settings_group("controls")
 		VirtualPad.apply_settings()
 		SaveManager.save_settings()
 
@@ -926,6 +952,7 @@ static func controls_rows() -> Array[Array]:
 		["tap_vibration", "Tap buzz: %s" % ("On" if GameState.tap_vibration else "Off")],
 		["pad_help", "Gamepad buttons..."],
 		["keys_help", "Keyboard keys..."],
+		["reset_controls", SettingsReset.ROW_TEXT],
 	]
 
 ## Multi-line summary of a Spirling.
@@ -1113,7 +1140,7 @@ func open_discord() -> void:
 
 func run_legal() -> void:
 	while true:
-		var idx: int = await pick_strings("Legal", ["Imprint & privacy", "Licences", "Join our Discord"] as Array[String])
+		var idx: int = await pick_strings("Legal", ["Imprint & privacy", "Licences", "Join our Discord", "About this app"] as Array[String])
 		match idx:
 			-1:
 				return
@@ -1125,6 +1152,8 @@ func run_legal() -> void:
 			2:
 				open_url.call(DISCORD_URL)
 				toast(DISCORD_URL)
+			3:
+				await info(LegalInfo.about_text())
 
 ## "What's new" (docs/LIVE_CONTENT.md): patch notes and news from the live content, newest
 ## first, and the Discord invite. An entry with a link offers to open it after its text.

@@ -1,26 +1,10 @@
-Chimora 1.3.0
+Chimora 1.3.1
 
-NIEUW: DE LAMPWACHT
-- Steek één keer per dag de lamp in de vuurtoren van Brindlewick aan. Elke nacht volgt een verdwaalde Spirling het licht. Beantwoord hem met je Echo-roep en hij sluit zich bij je aan.
-- In nacht 7 komt een zeldzame Gleam-Spirling, en je krijgt een nieuw aandenken: de Lamplens.
-
-BETER LEESBAAR
-- Gesprekken en gevechtstekst zijn groter, gecentreerd en staan boven de knoppen.
-- Er loopt geen Spirling meer achter je aan.
-- Voor je eerste spel accepteer je in één korte stap de Gebruiksvoorwaarden.
-
-MAKKELIJKER BEGIN
-- Kies de moeilijkheid als je aan een nieuwe reis begint.
-- Een kortere proloog brengt je sneller bij je eerste Spirling.
-- Akte I is zachter terwijl je de basis leert.
-
-GEVECHT
-- De Auto-knop zit nu aan de zijkant van het gevechtsscherm. Alleen wilde gevechten of elk verhaalgevecht. Wachters en rivalen vragen het eerst.
-
-DE WEG VINDEN
-- De doelregel en de minikaart zijn gratis in Akte I.
-
-UITERLIJK EN GEMAK
-- Dag en nacht, weer en het retrofilter zijn nu gratis. Zet ze aan of uit wanneer je wilt.
-- Meldingen als je wilt: een korte melding als een zwerftocht klaar is of er een nieuwe Vondst van de Dag wacht. Uit tot je ze zelf aanzet.
-- Veel verbeteringen in de interface in alle 14 talen.
+- 7 nieuwe gaven voor je Spirlings, en nieuwe kunsten die meerdere keren raken of een teamgenoot laten invallen.
+- "Welke past bij jou?" helpt je een partner te kiezen, en een Idee-knop stelt namen voor.
+- Wereldkaart: waar je het laatst was, de weg naar het dichtstbijzijnde rustpunt en een ster waar je met elke soort een band hebt.
+- Gesprekslog, nachtmodus en "Standaard herstellen" op elke instellingenpagina.
+- Weekendbonus: dubbele ervaring op zaterdag en zondag.
+- Nu ook op iPad, en beter op tablets en vouwtelefoons.
+- Lange menuteksten lopen door op een nieuwe regel in plaats van afgekapt te worden.
+- Veel kleine verbeteringen.

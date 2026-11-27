@@ -68,3 +68,14 @@ func test_info_names_the_live_element_and_landing_turn() -> void:
 	m.set_field("static_veil")
 	assert_string_contains(CommandMenu.move_info(fe, m), "Right now: Volt.")
 	assert_string_contains(CommandMenu.move_info(Database.move("Kindle Up")), "By 2 at full Vigor.")
+
+# --- 200 list item 46: the info card shows the art's own line, translated ---------------------
+
+func test_info_card_shows_the_art_description() -> void:
+	var mv: MoveData = Database.move("Cinder Nip")
+	Loc.set_language("en")
+	assert_string_contains(CommandMenu.move_info(mv), "Small, but it remembers.")
+	Loc.set_language("de")
+	assert_false(CommandMenu.move_info(mv).contains("Small, but it remembers."), "German line")
+	assert_string_contains(CommandMenu.move_info(mv), Loc.t(mv.description))
+	Loc.set_language("en")

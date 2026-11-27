@@ -42,6 +42,26 @@ static func battle_mult(difficulty: int, trainer: Dictionary, records: Dictionar
 		m *= float(TrainingGround.data().get("growth_mult", 1.0))
 	return m
 
+## Weekend boost (200 list item 141): the growth factor on [param weekday] (0 Sunday .. 6
+## Saturday). "weekend_mult" in data/growth_rules.json; 1.0 switches the boost and its notes off.
+static func weekend_mult(weekday: int) -> float:
+	return maxf(1.0, num("weekend_mult", 1.0)) if weekday == 0 or weekday == 6 else 1.0
+
+## Day of the week by the device's own clock and time zone (0 Sunday .. 6 Saturday).
+static func local_weekday() -> int:
+	return int(Time.get_date_dict_from_system(false).weekday)
+
+## In-game note about the weekend boost: on Friday for the days ahead, on Saturday and Sunday for
+## today, else "" (no push notification, no countdown).
+static func weekend_line(weekday: int) -> String:
+	var m: float = weekend_mult(6)
+	if m <= 1.0 or (weekday >= 1 and weekday <= 4):
+		return ""
+	var double: bool = is_equal_approx(m, 2.0)
+	if weekday == 5:
+		return Loc.t("This weekend, battles give double Growth on Saturday and Sunday." if double else "This weekend, battles give more Growth on Saturday and Sunday.")
+	return Loc.t("Weekend: battles give double Growth today." if double else "Weekend: battles give more Growth today.")
+
 ## Growth factor of one Spirling: its keepsake ("held": {"growth_mult"}) and its kinship.
 static func spirling_mult(s: Spirling) -> float:
 	var m: float = 1.0

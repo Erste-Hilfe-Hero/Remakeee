@@ -118,3 +118,32 @@ static func badge(e: int) -> ImageTexture:
 	return _badges[e]
 
 static var _badges: Dictionary[int, ImageTexture] = {}
+
+## Size of the team lead's picture on the Continue row (200 list item 2).
+const LEAD_SIZE: int = 14
+
+## Species of the first Spirling in the team of save [param d], or "" without one.
+static func lead_species(d: Dictionary) -> String:
+	var party: Variant = d.get("party", [])
+	if party is Array and not (party as Array).is_empty() and (party as Array)[0] is Dictionary:
+		return str(((party as Array)[0] as Dictionary).get("species", ""))
+	return ""
+
+## The Continue row's icon (200 list item 2): the era badge of [param e] and, beside it, the
+## team lead [param species] as a small picture. Only the badge when there is no picture.
+static func continue_icon(e: int, species: String) -> Texture2D:
+	var pic: Texture2D = MiniSprite.of(species, LEAD_SIZE) if not species.is_empty() and Database.species(species) != null else null
+	if pic == null:
+		return badge(e)
+	var lead: Image = pic.get_image()
+	if lead == null:
+		return badge(e)
+	lead = lead.duplicate()
+	if lead.is_compressed():
+		lead.decompress()
+	lead.convert(Image.FORMAT_RGBA8)
+	var b: Image = badge(e).get_image()
+	var img: Image = Image.create(b.get_width() + 2 + LEAD_SIZE, LEAD_SIZE, false, Image.FORMAT_RGBA8)
+	img.blit_rect(b, Rect2i(Vector2i.ZERO, b.get_size()), Vector2i(0, (LEAD_SIZE - b.get_height()) / 2))
+	img.blit_rect(lead, Rect2i(Vector2i.ZERO, lead.get_size()), Vector2i(b.get_width() + 2, 0))
+	return ImageTexture.create_from_image(img)

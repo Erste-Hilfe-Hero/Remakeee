@@ -54,6 +54,8 @@ var second_element: int = -1
 ## The era's take on this art (EraBattleFeel.move_anim): style, tier, colour, tint, trail,
 ## dust. Empty = the Era I look. Set by BattleScene before play().
 var feel: Dictionary = {}
+## Extra speed for an art already seen this session (RepeatShort, 200 list item 55).
+var repeat_speed: float = 1.0
 
 ## The 8x8 shape that stands for each element (heal motes, drain motes, field wave).
 const ELEMENT_SHAPES: Array[String] = ["spark", "drop", "leaf", "zag", "rock", "streak", "glint", "shade", "shade", "glint"]
@@ -194,7 +196,7 @@ func play(p_element: int, kind: int, from: Rect2, to: Rect2, miss: bool = false,
 		t = 0.0
 		if p == Phase.IMPACT and element == Elements.E.STONE and symbol.is_empty():
 			Juice.add_trauma(0.12, Elements.E.STONE)
-		await _run_phase(phase_time(p, reduced) / Juice.speed())
+		await _run_phase(phase_time(p, reduced) / (Juice.speed() * repeat_speed))
 		if user_sprite != null:
 			user_sprite.position = home
 	phase = Phase.NONE

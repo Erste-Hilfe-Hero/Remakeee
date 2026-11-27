@@ -1,0 +1,8 @@
+{
+ "_comment": "Translations of the German table c200team, written by tools/i18n/locales_c200team.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Era %s: %d%% seen, %d%% bonded": "時代%s：已見%d%%，已結緣%d%%",
+  "Event Spirling: %s": "活動Spirling：%s",
+  "Lantern at the right: it joined you at an event, such as the Lamp Watch": "右側的燈籠：它在守燈等活動中加入了你"
+ }
+}
