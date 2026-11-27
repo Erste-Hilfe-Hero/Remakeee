@@ -42,7 +42,7 @@
   "npcs": [
    {
     "id": "clan_vash",
-    "x": 9,
+    "x": 10,
     "y": 4,
     "facing": "down",
     "dialogue": "clans/vash",
@@ -1808,8 +1808,8 @@
    },
    {
     "id": "clan_grell_3",
-    "x": 7,
-    "y": 9,
+    "x": 5,
+    "y": 10,
     "facing": "down",
     "dialogue": "clans/grell_3",
     "sprite": "elder",
@@ -2400,7 +2400,7 @@
    {
     "id": "clan_wren_4",
     "x": 1,
-    "y": 6,
+    "y": 5,
     "facing": "down",
     "dialogue": "clans/wren_4",
     "sprite": "villager",
@@ -2480,7 +2480,7 @@
    {
     "id": "bex",
     "x": 1,
-    "y": 16,
+    "y": 15,
     "facing": "right",
     "dialogue": "solenne_side/bex",
     "sprite": "elder",

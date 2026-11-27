@@ -1,0 +1,15 @@
+# German texts for the houses added by the map pass (1.3.2): data/dialogue/map_pass.json and the room names.
+T = {
+"Clerk Odo: Crates go up the mountain full of plates and come down full of soot.": "Schreiber Odo: Kisten fahren voller Platten den Berg hinauf und kommen voller Ruß herunter.",
+"Clerk Odo: I weigh both. The soot is heavier. Nobody believes me.": "Schreiber Odo: Ich wiege beides. Der Ruß ist schwerer. Keiner glaubt mir.",
+"Engraver Mira: A plate takes a year to cut and a second to drop. I have not dropped one. Yet.": "Graveurin Mira: Eine Platte braucht ein Jahr zum Stechen und eine Sekunde zum Fallenlassen. Ich habe noch keine fallen lassen. Noch nicht.",
+"Engraver Mira: Halvard says my lines are too soft. Halvard says that to everyone.": "Graveurin Mira: Halvard sagt, meine Linien sind zu weich. Halvard sagt das zu allen.",
+"Engraver's Workshop": "Graveurwerkstatt",
+"Freight Office": "Frachtbüro",
+"Lamp Room": "Lampenstube",
+"Lampwright Ines: A train in fog finds the station by my wicks. Trim them and you trim the timetable.": "Lampenmacherin Ines: Ein Zug im Nebel findet den Bahnhof an meinen Dochten. Wer sie stutzt, stutzt den Fahrplan.",
+"Lampwright Ines: Every lamp on the platform is mine. The smoke is the stack's.": "Lampenmacherin Ines: Jede Lampe am Bahnsteig ist von mir. Der Rauch gehört dem Schlot.",
+"Pointsman Ulf: Porridge works best. Do not tell the guild.": "Weichensteller Ulf: Haferbrei wirkt am besten. Sag es nicht der Gilde.",
+"Pointsman Ulf: The points freeze every winter. I thaw them with my breakfast.": "Weichensteller Ulf: Die Weichen frieren jeden Winter fest. Ich taue sie mit meinem Frühstück auf.",
+"Pointsman's House": "Haus des Weichenstellers",
+}

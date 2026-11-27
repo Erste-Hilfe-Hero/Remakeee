@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table map_pass, written by tools/i18n/locales_map_pass.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Clerk Odo: Crates go up the mountain full of plates and come down full of soot.": "Impiegato Odo: Le casse salgono piene di lastre e scendono piene di fuliggine.",
+  "Clerk Odo: I weigh both. The soot is heavier. Nobody believes me.": "Impiegato Odo: Le peso entrambe. La fuliggine pesa di più. Nessuno mi crede.",
+  "Engraver Mira: A plate takes a year to cut and a second to drop. I have not dropped one. Yet.": "Incisora Mira: Una lastra richiede un anno per incidere e un secondo per cadere. Non ne ho mai fatta cadere una. Per ora.",
+  "Engraver Mira: Halvard says my lines are too soft. Halvard says that to everyone.": "Incisora Mira: Halvard dice che le mie linee sono troppo morbide. Halvard lo dice a tutti.",
+  "Engraver's Workshop": "Bottega dell'incisora",
+  "Freight Office": "Ufficio merci",
+  "Lamp Room": "Stanza delle lampade",
+  "Lampwright Ines: A train in fog finds the station by my wicks. Trim them and you trim the timetable.": "Lampionaia Ines: Nella nebbia il treno trova la stazione grazie ai miei stoppini. Accorciali e accorci l'orario.",
+  "Lampwright Ines: Every lamp on the platform is mine. The smoke is the stack's.": "Lampionaia Ines: Ogni lampada sul binario è mia. Il fumo è del camino.",
+  "Pointsman Ulf: Porridge works best. Do not tell the guild.": "Deviatore Ulf: Il porridge funziona meglio. Non dirlo alla gilda.",
+  "Pointsman Ulf: The points freeze every winter. I thaw them with my breakfast.": "Deviatore Ulf: Gli scambi gelano ogni inverno. Li sgelo con la mia colazione.",
+  "Pointsman's House": "Casa del deviatore"
+ }
+}
