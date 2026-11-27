@@ -160,6 +160,14 @@ def strings():
             found += [c["text"] for c in h.get("battle", {}).get(k, []) if c.get("text")]
         found += list(h.get("knack", {}).get("words", {}).values())
         found += [d["line"] for d in h.get("dates", []) if d.get("line")]
+    # Riddle stones and puzzle boards (scripts/overworld/PuzzleSpots.gd, docs/PUZZLES.md).
+    ps = os.path.join(ROOT, "data/puzzle_spots.json")
+    if os.path.exists(ps):
+        for s in json.load(open(ps, encoding="utf-8")).get("spots", []):
+            for k in ("title", "text", "hint_1", "hint_2", "clue"):
+                if isinstance(s.get(k), str):
+                    found.append(s[k])
+            found += [o for o in s.get("options", []) if isinstance(o, str)]
     for sd in SCRIPT_DIRS:
         for dp, _, fs in os.walk(os.path.join(ROOT, sd)):
             for f in sorted(fs):
