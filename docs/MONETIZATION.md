@@ -391,7 +391,7 @@ Die Tabelle zeigt alle Angebote, auch nicht verkaufte (`ready: false`). `rg_fast
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-231 Angebote (Katalog v39): 188 Vorteil, 2 Komfort, 33 Kosmetik, 8 Rissglas.
+231 Angebote (Katalog v40): 188 Vorteil, 2 Komfort, 33 Kosmetik, 8 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
