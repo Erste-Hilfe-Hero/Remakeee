@@ -16,7 +16,7 @@ R = {
 "All advantages": ["すべての有利", "Tous les avantages", "Tutti i vantaggi", "Todas las ventajas", "모든 이점", "全部优势", "全部優勢", "Todas as vantagens", "Все преимущества", "Wszystkie korzyści", "Tüm avantajlar", "Alle voordelen"],
 "Show the pass": ["パスを見る", "Voir le pass", "Vedi il pass", "Ver el pase", "패스 보기", "查看通行证", "查看通行證", "Ver o passe", "Открыть пропуск", "Pokaż karnet", "Pasoyu göster", "Pas bekijken"],
 "Use it": ["使う", "Utiliser", "Usa", "Usar", "사용하기", "使用", "使用", "Usar", "Использовать", "Użyj", "Kullan", "Gebruiken"],
-"Pay %d Riftglass": ["裂け目ガラス%dで支払う", "Payer %d Verre de Faille", "Paga %d Vetrosquarcio", "Pagar %d Vidrio Grieta", "균열유리 %d 지불", "支付%d裂隙晶", "支付%d裂晶", "Pagar %d Vidrofenda", "Оплатить %d Стекла Разлома", "Zapłać %d Szczelinitu", "%d Yarık Camı öde", "%d Kloofglas betalen"],
+"Pay %d Riftglass": ["裂け目ガラス%dで支払う", "Payer %d Verre de Faille", "Paga %d Vetro-squarcio", "Pagar %d Vidrio Grieta", "균열유리 %d 지불", "支付%d裂隙晶", "支付%d裂晶", "Pagar %d Vidrofenda", "Оплатить %d Стекла Разлома", "Zapłać %d Szczelinitu", "%d Yarık Camı öde", "%d Kloofglas betalen"],
 "After the tier before it": ["前の段階のあとで", "Après le palier d'avant", "Dopo il livello prima", "Tras el nivel anterior", "이전 단계 다음에", "先完成上一档", "先完成上一檔", "Após o nível anterior", "После прошлой ступени", "Po poprzednim progu", "Önceki kademeden sonra", "Na de vorige trap"],
 "Later in the journey": ["旅の先で", "Plus tard dans le voyage", "Più avanti nel viaggio", "Más adelante en el viaje", "여행 후반에", "旅途后段开放", "旅途後段開放", "Mais adiante na jornada", "Позже в пути", "Później w podróży", "Yolculukta daha sonra", "Later op de reis"],
 "Owned": ["入手済み", "Possédé", "Già tuo", "Ya es tuyo", "보유 중", "已拥有", "已擁有", "Já é seu", "Уже есть", "Masz", "Sende var", "In bezit"],
