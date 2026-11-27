@@ -12,6 +12,8 @@ extends PanelContainer
 
 signal chosen(kind: BattleAction.Kind, index: int)
 
+## Command rows under the arts counted when sharing out extra height (Era I: two rows of two).
+const TOUCH_COMMAND_ROWS: int = 2
 const MOVE_BUTTON_HEIGHT: int = 13
 ## Room on the left of a move row for its element symbol.
 const ICON_PAD: int = 11
@@ -239,17 +241,38 @@ func _ready() -> void:
 	_info_panel.offset_bottom = FRAME_OUT
 	holder.add_child(_info_panel)
 	apply_size()
+	get_viewport().size_changed.connect(apply_size, CONNECT_DEFERRED)
 
 ## Big buttons (KAMPF_PLAN items 623, 896): every art row and command grows to BattleComfort.art_h /
 ## command_h,
 ## the panel with them. Called again when the setting changes in the battle's More list.
+## Art and command row heights for a touch floor of [param touch] px with [param spare] px of
+## height above the era's base screen: both reach the floor when the spare height covers it,
+## else they share the spare height out (never below [param art] / [param cmd]).
+static func touch_rows(art: int, cmd: int, touch: int, spare: float) -> Vector2i:
+	var need_art: int = maxi(0, touch - art)
+	var need_cmd: int = maxi(0, touch - cmd)
+	var need: int = Spirling.MAX_MOVES * need_art + TOUCH_COMMAND_ROWS * need_cmd
+	if need == 0 or spare >= need:
+		return Vector2i(art + need_art, cmd + need_cmd)
+	var share: float = maxf(spare, 0.0) / need
+	return Vector2i(art + floori(need_art * share), cmd + floori(need_cmd * share))
+
+## On a view taller than the era's base height the rows grow toward a finger-sized target
+## (ScreenFit.touch_px, update 1.3.2) out of that extra height only, so the battle field never
+## gets shorter than on the base screen; they follow the screen when it changes mid-battle.
 func apply_size() -> void:
+	var touch: int = ScreenFit.touch_px(get_window()) if is_inside_tree() else 0
+	var spare: float = get_viewport_rect().size.y - EraManager.RESOLUTION[era].y if is_inside_tree() else 0.0
 	custom_minimum_size = Vector2(0, BattleComfort.menu_height(era))
+	var art: int = BattleComfort.art_h(era)
+	var cmd: int = BattleComfort.command_h(era)
+	var sizes: Vector2i = touch_rows(art, cmd, touch, spare)
 	for b: Button in _move_buttons:
-		b.custom_minimum_size.y = BattleComfort.art_h(era)
+		b.custom_minimum_size.y = sizes.x
 	for b: Button in [_swap, _item, _bond, _run]:
 		if b != null:
-			b.custom_minimum_size.y = BattleComfort.command_h(era)
+			b.custom_minimum_size.y = sizes.y
 
 ## Fill of the command panel: plain paper in Era I, the era's light colour washed into paper
 ## later (the shared accent once the menu skin frames the panel).

@@ -58,6 +58,8 @@ var _fx: ElementFx
 ## Rain, fog or a storm over the field when the region's sky laid the field (Era III on).
 var _weather: BattleWeather
 var _backdrop: BattleBackdrop
+## The scenery to the left and right of the battle column on a wide screen (update 1.3.2).
+var _wide_backdrop: BattleBackdrop
 ## Era IV 2.5D stage; null before Panorama.
 var _stage: Era4Stage
 var _foe_sprite: SpirlingSprite
@@ -225,6 +227,13 @@ func _build() -> void:
 	bg.color = UITheme.BG
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
+	# On a wide screen the panels stay in the middle column and the scenery runs on to both
+	# edges (update 1.3.2): a second backdrop behind the column, as wide as the screen.
+	_wide_backdrop = BattleBackdrop.new()
+	_wide_backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_wide_backdrop.visible = false
+	add_child(_wide_backdrop)
+	resized.connect(_sync_wide_backdrop)
 	var col := VBoxContainer.new()
 	col.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	col.add_theme_constant_override("separation", 0)
@@ -448,6 +457,23 @@ func _place_field_badge() -> void:
 			room = minf(room, sp.position.x - MARGIN - 2)
 	_field_badge.place(Vector2(MARGIN, below + 2), room)
 
+## Lines the wide backdrop up with the column's own: same scene, height and horizon, its banks
+## under the sprites, so the column's backdrop continues seamlessly to both screen edges.
+func _sync_wide_backdrop() -> void:
+	if _wide_backdrop == null or _field == null or not _field.is_inside_tree():
+		return
+	var f := Rect2(_field.global_position - global_position, _field.size)
+	_wide_backdrop.visible = _backdrop.visible and size.x > f.size.x + 0.5 and f.size.y > 0.0
+	if not _wide_backdrop.visible:
+		return
+	_wide_backdrop.position = Vector2(0.0, f.position.y)
+	_wide_backdrop.size = Vector2(size.x, f.size.y)
+	var shift := Vector2(f.position.x, 0.0)
+	_wide_backdrop.hat = _backdrop.hat
+	_wide_backdrop.set_scene(_backdrop.kind, Rect2(_backdrop.foe_rect.position + shift, _backdrop.foe_rect.size),
+		Rect2(_backdrop.player_rect.position + shift, _backdrop.player_rect.size))
+	_wide_backdrop.modulate = _backdrop.modulate
+
 func _layout_field() -> void:
 	if _multi and not _slot_sprites[BattleModel.Side.FOE].is_empty():
 		_layout_formation()
@@ -487,6 +513,7 @@ func _layout_field() -> void:
 		_hud.layout_single()
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade) * BattleShow.night_tint(DayCycle.current(), GameState.day_night, outdoor, backdrop)
+	_sync_wide_backdrop()
 
 ## Width of the art [param sp] draws (Era IV/V size it in whole multiples), [param fallback] before setup.
 static func _art_px(sp: SpirlingSprite, fallback: float) -> float:
@@ -569,6 +596,7 @@ func _layout_formation() -> void:
 			r = q if r.size == Vector2.ZERO else r.merge(q)
 		rects[side] = r
 	_backdrop.set_scene(backdrop, rects[BattleModel.Side.FOE], rects[BattleModel.Side.PLAYER])
+	_sync_wide_backdrop()
 	if _stage != null:
 		_stage.fit_formation(rects[BattleModel.Side.FOE], rects[BattleModel.Side.PLAYER])
 
