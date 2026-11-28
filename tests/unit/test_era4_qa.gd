@@ -98,8 +98,8 @@ func test_signs_and_labels_are_no_speakers() -> void:
 	assert_eq(Dialogue.split_speaker("Warden Isaura: I read your stars.")[0], "Warden Isaura")
 	assert_eq(Dialogue.split_speaker("Customs man: Routine search.")[0], "Customs man")
 
-## Japanese and Chinese lines have no spaces, so a whole paragraph stayed one "line" and one page
-## and the box showed up to seven lines in a three-line window.
+## The Era IV frame font pages Japanese and Chinese inside the three-line box (the character
+## wrapping of TextBox.split_lines, checked in Era I by test_era_text): no line wider than the box.
 func test_cjk_lines_page_inside_the_box() -> void:
 	EraManager.unlocked_era = 4
 	EraManager.set_retro_filter(0)
