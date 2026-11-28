@@ -381,6 +381,23 @@ func test_note_under_reduced_motion() -> void:
 	assert_eq(t._panel.offset_top, 4.0)
 	assert_eq(t._panel.modulate.a, 1.0)
 
+## The viewport changing (a rotation) while a note still slides in refits it; the note keeps
+## the pixels it has left to go and lands on its place, top and bottom.
+func test_note_refit_while_sliding_in_lands_on_its_place() -> void:
+	var t := Toast.new()
+	add_child_autofree(t)
+	var top: float = t._panel.offset_top
+	var bottom: float = t._panel.offset_bottom
+	t.show_note("Badge earned", null, "")
+	var left: float = Juice.shift_of(t._panel).y
+	assert_ne(left, 0.0, "still on its way")
+	t._fit_column()
+	assert_eq(t._panel.offset_top, top + left, "keeps the pixels left to go")
+	await wait_seconds(Juice.CURVES["open"].time + 0.1)
+	assert_false(Juice.flowing(t._panel))
+	assert_eq(t._panel.offset_top, top, "lands on its place")
+	assert_eq(t._panel.offset_bottom, bottom)
+
 # --- Place banner and battle orders ------------------------------------------------------
 
 func test_plain_banner_fades_in_steps_and_is_instant_under_reduced_motion() -> void:
