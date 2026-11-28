@@ -112,7 +112,9 @@ func test_phone_views() -> void:
 	assert_eq(ShopZoom.device_pt_per_px(), 0.0, "no phone here: the iPhone SE model counts")
 
 func test_factor_and_touch_per_era() -> void:
-	var want: Dictionary = {1: [1, 18], 2: [1, 18], 3: [1, 22], 4: [2, 22], 5: [2, 22]}
+	# Era III: the iPhone SE draws its 188 px view at 3.99, not 4 (ScreenFit rounds the view to
+	# whole pixels), so 22 px would be 43.9 pt; 23 px reach 44 pt (1.3.2).
+	var want: Dictionary = {1: [1, 18], 2: [1, 18], 3: [1, 23], 4: [2, 22], 5: [2, 22]}
 	for e: int in want:
 		_era(e)
 		assert_eq([ShopZoom.factor(), ShopZoom.touch_px()], want[e], "era %d" % e)

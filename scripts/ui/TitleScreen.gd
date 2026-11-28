@@ -90,7 +90,10 @@ func _ready() -> void:
 	# listing carries that notice, the shop's About page says the game is free.
 	_build_name_box()
 	# The version sits under the list frame, not on it (Chimora 100 item 54).
-	add_child(version_label())
+	var version: Label = version_label()
+	add_child(version)
+	place_version(version, get_viewport_rect().size)
+	get_viewport().size_changed.connect(func() -> void: place_version(version, get_viewport_rect().size))
 	_menu.offset_bottom = -VERSION_ROOM
 	Loc.events.language_changed.connect(_on_language_changed)
 	VirtualPad.set_wanted(false)
@@ -116,6 +119,17 @@ static func version_label() -> Label:
 	v.add_theme_color_override("font_color", UITheme.MID)
 	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return v
+
+## Keeps the version label [param v] above the gesture bar and clear of a side cut-out in a
+## view of [param vp] (Apple and Play pre-check: nothing sits under the home indicator).
+static func place_version(v: Label, vp: Vector2) -> void:
+	var safe: Rect2 = SafeArea.rect(vp)
+	var bottom: float = vp.y - safe.end.y
+	var right: float = vp.x - safe.end.x
+	v.offset_right = -2 - right
+	v.offset_left = v.offset_right - 58
+	v.offset_bottom = -bottom
+	v.offset_top = v.offset_bottom - 12
 
 ## Height kept free under the title list for the version label.
 const VERSION_ROOM: int = 5
@@ -311,8 +325,13 @@ func _resolve_conflicts() -> void:
 		else:
 			await Online.resolve_conflict_take_server(slot)
 
-## The "Welcome back" card after Continue (plan Chimora 100, item 44): where the Wayfarer
-## stands, the current goal and what today brings. One tap closes it.
+## The greeting Continue shows as a Ticker notice while the world opens.
+static func welcome_line() -> String:
+	return Loc.t("Welcome back, %s!") % GameState.tamer_name
+
+## The full "Welcome back" text (plan Chimora 100, item 44): where the Wayfarer stands, the
+## current goal and what today brings. Since 28 Nov Continue no longer stops on it (owner: Weiter
+## goes straight into the game); welcome_line greets instead and the goal review shots use this.
 static func welcome_text(flags: Dictionary) -> String:
 	var lines: PackedStringArray = [Loc.t("Welcome back, %s!") % GameState.tamer_name, ""]
 	lines.append(Loc.t("You are in %s.") % Loc.t(Spirling.place_name(GameState.current_map)))
@@ -396,7 +415,9 @@ func _run() -> void:
 				SaveManager.set_slot(latest)
 				if SaveManager.load_game():
 					await _say_if_recovered()
-					await _menu.info(welcome_text(GameState.flags), EraSaveCard.badge(maxi(EraMoments.slot_era(latest), 1)))
+					# Weiter goes straight into the world (owner, 28 Nov): no card to tap away first.
+					# The greeting is a notice that slides by; the goal stands on the HUD.
+					Ticker.show_text(welcome_line())
 					SaveManager.save_settings()
 					_enter_game()
 					return

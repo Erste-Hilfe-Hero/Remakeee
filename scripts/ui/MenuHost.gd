@@ -132,7 +132,8 @@ func apply_hand_layout() -> void:
 			if pad_top > 0.0:
 				low = minf(low, pad_top - ONE_HAND_MIN_H)
 			top = maxf(top, low - global_position.y)
-		c.offset_top = top
+		# A box still rising (Juice.enter) keeps the pixels it has left to go.
+		c.offset_top = top + Juice.shift_of(c).y
 	picker.set_one_hand(GameState.one_hand, GameState.left_handed)
 
 ## Shows a list; returns the index or -1 (Back / cancel).
@@ -280,11 +281,37 @@ func info(text: String, picture: Texture2D = null) -> void:
 	_info_label.text = Loc.t(text) + "\n\n" + Loc.t(continue_hint())
 	_info_scroll.scroll_vertical = 0
 	_info_press = Vector2(NAN, NAN)
-	_info_panel.visible = true
+	_show_info_panel()
 	_info_wait = true
 	infos += 1
 	await _info_closed
-	_info_panel.visible = false
+	_hide_info_panel()
+
+## The info box rises 4 px into place while it fades in (docs/FLOW.md). A page that follows
+## another one in the same frame (info_pages, a team summary) keeps the box and only lets the
+## new text fade in. Input is taken from the first frame.
+const INFO_RISE: float = 4.0
+## A following page starts its fade at this share, so the box never looks empty.
+const PAGE_FADE_FROM: float = 0.34
+var _info_left_frame: int = -1
+
+func _show_info_panel() -> void:
+	var turning: bool = _info_left_frame == Engine.get_process_frames()
+	Juice.finish(_info_panel)
+	_info_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	_info_panel.visible = true
+	if turning:
+		Juice.enter(_info_scroll, Vector2.ZERO, "fade", PAGE_FADE_FROM)
+	else:
+		Juice.enter(_info_panel, Vector2(0, INFO_RISE), "open")
+
+## The box fades out behind whatever comes next and takes no more input meanwhile, so the
+## next list or page answers at once.
+func _hide_info_panel() -> void:
+	_info_left_frame = Engine.get_process_frames()
+	Juice.finish(_info_scroll)
+	_info_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	Juice.leave(_info_panel)
 
 ## Several pages of one thing (a Spirling's summary, item 1890): left and right or a tap on
 ## the left or right third turn the page, a tap elsewhere or A goes on, B closes.
@@ -318,16 +345,25 @@ func toast(text: String, seconds: float = TOAST_SECONDS) -> void:
 	var gen: int = _toast_gen
 	_toast_source = text
 	_toast.text = Loc.t(text)
+	Juice.finish(_toast)
 	_toast.visible = true
+	_toast_on = true
 	if not is_inside_tree():
 		return
+	# Drops in from the top edge and fades out again (docs/FLOW.md).
+	Juice.enter(_toast, Vector2(0, -TOAST_DROP), "open")
 	await get_tree().create_timer(seconds, true).timeout
 	if gen == _toast_gen and is_instance_valid(_toast):
-		_toast.visible = false
+		_toast_on = false
+		Juice.leave(_toast)
+
+const TOAST_DROP: float = 4.0
+## False once the toast's time is up, while it still fades out.
+var _toast_on: bool = false
 
 ## The toast text while it shows ("" when hidden).
 func toast_text() -> String:
-	return _toast.text if _toast.visible else ""
+	return _toast.text if _toast.visible and _toast_on else ""
 
 ## A long text turns one page per tap; only the tap at the end closes it (item 1838).
 func _page_or_close() -> void:

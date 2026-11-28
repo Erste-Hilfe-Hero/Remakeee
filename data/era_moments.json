@@ -45,7 +45,7 @@
    },
    "boot": {
     "kind": "ink_drop",
-    "time": 2.4,
+    "time": 2.0,
     "sound": "confirm"
    },
    "finale": {
@@ -206,7 +206,7 @@
    },
    "boot": {
     "kind": "fold_card",
-    "time": 2.2,
+    "time": 2.0,
     "sound": "confirm"
    },
    "finale": {
@@ -259,7 +259,7 @@
    },
    "boot": {
     "kind": "living_card",
-    "time": 2.4,
+    "time": 2.0,
     "sound": "confirm"
    },
    "finale": {
