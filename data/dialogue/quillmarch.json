@@ -66,7 +66,7 @@
   "lines": [
    "Pier Clerk Hollis: Tonics, ink and stamps. The stamps are real. The ink is mostly real."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew kin_charm charm_inkquill charm_kindred charm_moonwick charm_stormbell charm_mender"
  },
  "dead_letter_office_sign_1": [
   "Shelf label: 'Returned to sender. Sender returned to sender.'"

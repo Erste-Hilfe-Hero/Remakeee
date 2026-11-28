@@ -51,6 +51,18 @@ const GRIDS: Dictionary[String, Array] = {
 		"kawwwwwwwwak", "kawkkkkwwwak", "kawwwwwwwwak", "kaaaaaaaaaak", "kkkkkkkkkkkk", "............"],
 	"card": ["............", "............", "kkkkkkkkkkkk", "kwkwwwwwwkwk", "kwwkwwwwkwwk", "kwwwkwwkwwwk",
 		"kwwwwkkwwwwk", "kwwwwwwwwwwk", "kwwwwwwwrrwk", "kkkkkkkkkkkk", "............", "............"],
+	# Bond charms (1.3.2): one look per charm of the family, held out before Mine!, never thrown.
+	"charm_kin": ["....kkkk....", "...k....k...", "...k....k...", "....k..k....", ".....kk.....", "....kaak....", "...kaawak...", "..kaawwaak..", "...kaaaak...", "....kaak....", ".....kk.....", "............"],
+	"charm_quill": ["..........kk", ".........kpk", "........kppk", ".......kppk.", "......kppk..", ".....kppk...", "....kppk....", "...kwpk.....", "..kwk.......", ".kk.........", "kk..........", "k..kkk......"],
+	"charm_thread": ["............", ".rrr....rrr.", "r...r..r...r", "r....rr....r", "r....rr....r", "r...r..r...r", ".rrr....rrr.", "......r.....", ".....r......", "......r.....", ".....r......", "............"],
+	"charm_wick": [".....s...gg.", "....sws..g..", "....sws..gg.", ".....s......", ".....k......", "...kkkkk....", "...kwwmk....", "...kwwmk....", "...kwwmk....", "...kwwmk....", ".kkkkkkkkk..", "............"],
+	"charm_bell": [".....kk.....", "....kggk....", "...kgwggk...", "...kgwggk...", "..kgwgggok..", "..kggggggk..", ".kgggggggok.", "kkkkkkkkkkkk", ".....kk.....", "............", "..c.....c...", ".c.....c...."],
+	"charm_ribbon": [".kk......kk.", ".kGk....kGk.", ".kGGk..kGGk.", ".kGGGkkGGGk.", ".kGGGkkGGGk.", ".kGGk..kGGk.", ".kGk.kk.kGk.", ".kk.kGGk.kk.", "...kGk.kGk..", "..kGk...kGk.", "..kk.....kk.", "............"],
+	"charm_feather": [".........kk.", "........kwck", ".......kwwck", "......kwwck.", ".....kwwcck.", "....kwwcck..", "...kwwcck...", "..kwwcck....", "..kwcck.....", ".kkkk.......", ".k..........", "k..........."],
+	"charm_leaf": ["............", ".......kkk..", "......kGGGk.", ".....kGGGDk.", "....kGGGDGk.", "...kGGGDGGk.", "..kGGDGGGk..", "..kGDGGGk...", "..kDkkkk....", ".kk.........", "k.....m.m.m.", "............"],
+	"charm_lantern": [".....kk.....", "....k..k....", "..kkkkkkkk..", "..kwccccdk..", "..kcwccdck..", "..kccwdcck..", "..kccdwcck..", "..kcdccwck..", "..kdccccwk..", "..kkkkkkkk..", "...knnnnk...", "....kkkk...."],
+	"charm_crest": [".g...gg...g.", "..g..gg..g..", "kkkkkkkkkkkk", "kppppggppppk", "kpppggggpppk", "kppgwggggppk", "kpgwggggggpk", ".kppppppppk.", "..kppppppk..", "...kppppk...", "....kppk....", ".....kk....."],
+	"charm_tag": [".....kk.....", "....k..k....", ".....kk.....", "...kkkkkk...", "...kmmmmk...", "...kmwwmk...", "...kmmmmk...", "...kmwwmk...", "...kmmmmk...", "....kmmk....", ".....kk.....", "............"],
 }
 
 ## Icon of each shop tab, in ShopScreen.TABS order.
@@ -110,6 +122,10 @@ static func icon(key: String, scale: int = 1, offer_color: Color = Color("3a5a9a
 static func icon_key(o: Dictionary) -> String:
 	var id: String = str(o.get("id", ""))
 	var tab: String = str(o.get("tab", ""))
+	# Charm offers show the charm they hold (the first charm among the grants).
+	for g: Dictionary in ShopCatalog.contents(o):
+		if str(g.get("t", "")) == "item" and Database.item(str(g.get("id", ""))).has("charm"):
+			return charm_icon_key(str(g.id))
 	if tab == "riftglass" or str(o.get("kind", "")) == "currency":
 		var n: int = 0
 		for e: Dictionary in ShopCatalog.contents(o):
@@ -140,6 +156,14 @@ static func icon_key(o: Dictionary) -> String:
 		if id.contains(str(pair[0])):
 			return str(pair[1])
 	return "star"
+
+## Grid key of the bond charm [param item_id]: its own look from items.json "charm.icon", or the
+## plain tag for the other bond items (lures, seals, Echo Shell).
+static func charm_icon_key(item_id: String) -> String:
+	var c: Variant = Database.item(item_id).get("charm")
+	if c is Dictionary and GRIDS.has(str((c as Dictionary).get("icon", ""))):
+		return str(c.icon)
+	return "charm_tag"
 
 ## The picture of an offer: the file named in "icon" when it exists, else the drawn icon.
 static func offer_icon(o: Dictionary, scale: int = 1) -> Texture2D:

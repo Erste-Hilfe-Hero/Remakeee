@@ -275,8 +275,11 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	_grid.visible = columns > 1
 	_backdrop.visible = bool(layout.get("backdrop", false))
 	_style_panel()
+	var padded: Dictionary[String, StyleBox] = padded_styles(_grid if columns > 1 else _box)
 	for i: int in rows.size():
 		var b := Button.new()
+		# Styles before the row joins the tree: no theme update per style.
+		_pointer_room(b, padded)
 		var text: String = str(rows[i].get("text", ""))
 		# Irreversible answers carry a warning mark (item 1837).
 		if bool(rows[i].get("danger", false)):
@@ -353,7 +356,6 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		else:
 			_box.add_child(b)
 		_buttons.append(b)
-		_pointer_room(b)
 	_link_wrap()
 	if columns > 1:
 		_link_grid(columns)
@@ -1053,16 +1055,24 @@ func refresh_theme() -> void:
 	_hint.add_theme_color_override("font_color", UITheme.MID)
 	_style_panel()
 	for b: Button in _buttons:
-		_pointer_room(b)
+		_pointer_room(b, padded_styles(b.get_parent() as Control))
 
-## Room on the left of a row for the focus pointer. Call once the row is in the tree, so the
-## styles come from the game theme.
-func _pointer_room(b: Button) -> void:
-	for state: String in ["normal", "hover", "pressed", "focus", "disabled"]:
+## Room on the left of a row for the focus pointer: the row takes [param styles] (padded_styles).
+func _pointer_room(b: Button, styles: Dictionary[String, StyleBox]) -> void:
+	for state: String in styles:
 		b.remove_theme_stylebox_override(state)
-		var sb := b.get_theme_stylebox(state, "Button").duplicate() as StyleBox
+		b.add_theme_stylebox_override(state, styles[state])
+
+## The game theme's row styles with room on the left for the focus pointer, by state, as a row
+## inside [param holder] would get them. One set serves every row of a list (1.3.2 perf pass:
+## five copies per row, set on rows already in the tree, were most of a 500-kind Spirlog's build).
+static func padded_styles(holder: Control) -> Dictionary[String, StyleBox]:
+	var out: Dictionary[String, StyleBox] = {}
+	for state: String in ["normal", "hover", "pressed", "focus", "disabled"]:
+		var sb := holder.get_theme_stylebox(state, "Button").duplicate() as StyleBox
 		sb.content_margin_left = POINTER_SPACE
-		b.add_theme_stylebox_override(state, sb)
+		out[state] = sb
+	return out
 
 ## A press from a finger or mouse must be a calm tap that started after the guard time.
 ## Keyboard and gamepad presses (no pointer release this frame) always count.

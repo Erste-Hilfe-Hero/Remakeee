@@ -90,6 +90,27 @@ func test_buy_options_keep_both_ways() -> void:
 	assert_true(str(opts[0][0]).contains("("), "with its euro value")
 	assert_false(bool(opts[1][1]))
 
+## 1.3.2 security review: a once-per-account pack bought again in the store is only plain
+## Riftglass, so both buy buttons of an offer at its limit stay disabled.
+func test_buy_options_disabled_at_limit() -> void:
+	Billing.state["rifts"] = 99
+	for o: Dictionary in ShopCatalog.offers():
+		if not o.has("limit"):
+			continue
+		Billing.prices = {str(o.get("product_id", "")): "4,99 €"}
+		Billing.state["bought"] = {str(o.id): int(o.limit.n)}
+		for line: Array in ShopScreen.buy_options(o):
+			if Billing.block_reason(o, bool(line[1])) == "offer_limit":
+				assert_eq(str(line[2]), "offer_limit", "%s: no buy button at the limit" % o.id)
+	for id: String in ["rg_champion_bundle", "rg_starter", "rg_wayfarer_pack", "rg_rift_pack_1", "rg_comeback"]:
+		var o: Dictionary = ShopCatalog.offer(id)
+		Billing.prices = {str(o.product_id): "4,99 €"}
+		Billing.state["bought"] = {id: int(o.limit.n)}
+		var opts: Array[Array] = ShopScreen.buy_options(o)
+		assert_gt(opts.size(), 0, id)
+		for line: Array in opts:
+			assert_false(str(line[2]).is_empty(), "%s bought: no buy button" % id)
+
 func test_starter_note_rules() -> void:
 	var f: Dictionary = {GameState.ACT1_END_FLAG: true}
 	assert_true(ShopScreen.starter_popup_due(f, 18, "", false))

@@ -31,3 +31,16 @@ do $$ begin
 end $$;
 delete from public.crash_reports;
 delete from public.rate_events where kind = 'crash_report';
+
+-- One account keeps at most 5 reports a day (20261128070200_crash_report_cap.sql), so a few
+-- accounts cannot fill the daily cap.
+insert into public.rate_events (user_id, kind, at)
+  select '20000000-0000-0000-0000-000000000184', 'crash_report', now() - interval '2 hours' from generate_series(1, 5);
+set role authenticated;
+insert into cr values ('sixth', public.crash_report('1.3.1', 'iOS', 'battle'));
+reset role;
+do $$ begin
+  assert (select v->>'kept' from cr where k = 'sixth') = 'false', 'five a day per account';
+  assert (select count(*) from public.crash_reports) = 0, 'sixth not stored';
+end $$;
+delete from public.rate_events where kind = 'crash_report';
