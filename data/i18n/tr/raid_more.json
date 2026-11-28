@@ -1,0 +1,12 @@
+{
+ "_comment": "tr translation of the raid_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s (%s, %d Wayfarers) %d min": "%d. %s (%s, %d Gezgin) %d dk",
+  "A legendary guardian waits in this Rift: %s": "Bu Yarık'ta efsanevi bir bekçi bekliyor: %s",
+  "Easy": "Kolay",
+  "Fastest Rifts": "En hızlı Yarıklar",
+  "Hard": "Zor",
+  "How hard?": "Ne kadar zor?",
+  "No Rift was won yet.": "Henüz hiçbir Yarık kazanılmadı."
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table c200ow2, written by tools/i18n/locales_c200ow2.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Nearest rest point: %s, to the %s.": "Dichtstbijzijnde rustplek: %s, richting %s.",
+  "No rest point found yet. Rest points show as a small cross on the map.": "Nog geen rustplek gevonden. Rustplekken staan als klein kruisje op de kaart.",
+  "Reset": "Resetten",
+  "Rest point": "Rustplek",
+  "There is a rest point right here, in %s.": "Er is hier een rustplek, in %s.",
+  "You were here last.": "Hier was je het laatst.",
+  "east": "oost",
+  "north": "noord",
+  "north-east": "noordoost",
+  "north-west": "noordwest",
+  "south": "zuid",
+  "south-east": "zuidoost",
+  "south-west": "zuidwest",
+  "west": "west"
+ }
+}

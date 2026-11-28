@@ -1,0 +1,37 @@
+{
+ "name": "Wrenhollow Store",
+ "region": "veydal",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCffCCCW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "wrenhollow",
+   "tx": 8,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "maren",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/wrenhollow_shop_maren",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

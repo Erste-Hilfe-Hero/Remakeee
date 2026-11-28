@@ -1,0 +1,16 @@
+{
+ "_comment": "ru translation of the kampf_k22 table, keyed by the English text.",
+ "strings": {
+  "%d still to come": "ещё %d впереди",
+  "%s rises!": "%s поднимается!",
+  "A hushed %s!": "Безмолвный %s!",
+  "A swarm of %d!": "Рой из %d!",
+  "Battle paused": "Бой на паузе",
+  "Duel with %s!": "Дуэль с %s!",
+  "Everything goes dark... and then, somehow, it doesn't. Your team stirs right where it fell, bruised but breathing.": "Всё темнеет... а потом почему-то нет. Твоя команда шевелится там же, где упала, побитая, но живая.",
+  "Resume": "Продолжить",
+  "Soft Defeat: %s": "Мягкое поражение: %s",
+  "Story only: after a lost battle your team wakes where it fell, with half its Vigor.": "Только Сюжет: после поражения команда приходит в себя там, где упала, с половиной Бодрости.",
+  "You caught %s from behind! Your side moves first.": "Ты застал %s со спины! Твоя сторона ходит первой."
+ }
+}

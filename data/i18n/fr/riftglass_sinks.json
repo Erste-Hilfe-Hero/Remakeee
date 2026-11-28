@@ -1,0 +1,31 @@
+{
+ "_comment": "Translations of the German table riftglass_sinks, written by tools/i18n/locales_riftglass_sinks.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s: %d Riftglass": "%s : %d Verre de Faille",
+  "Bond boost %s? You have %d Riftglass.": "Bonus de lien %s ? Tu as %d Verre de Faille.",
+  "Boost: %d Riftglass": "Bonus : %d Verre de Faille",
+  "Bring one home now": "En ramener un maintenant",
+  "Bring this Spirling home now? %d h left.": "Ramener ce Spirling maintenant ? Encore %d h.",
+  "Continue for %s? Your whole team stands up with full Vigor.": "Continuer pour %s ? Toute ton équipe se relève avec toute sa Vigueur.",
+  "Daily gift: +%d Riftglass": "Cadeau du jour : +%d Verre de Faille",
+  "Growth x2 for the next %d battles?": "Croissance x2 pour les %d prochains combats ?",
+  "Growth x2: %d": "Croissance x2 : %d",
+  "Heal team: %d": "Soigner l'équipe : %d",
+  "Heal the whole team now? Full Vigor, Energy, no states.": "Soigner toute l'équipe maintenant ? Vigueur et Énergie pleines, plus aucun état.",
+  "Light it again": "La rallumer",
+  "Light the lamp again tonight? Another visitor may follow the light.": "Rallumer la lampe ce soir ? Un autre visiteur suivra peut-être la lumière.",
+  "No boost": "Sans bonus",
+  "No connection right now. Riftglass needs the server.": "Pas de connexion pour l'instant. Le Verre de Faille a besoin du serveur.",
+  "Not enough Riftglass: this costs %d, you have %d.": "Pas assez de Verre de Faille : il en faut %d, tu en as %d.",
+  "Riftglass flares! Your whole team stands up again with full Vigor.": "Le Verre de Faille flamboie ! Toute ton équipe se relève avec toute sa Vigueur.",
+  "Riftglass holds you in place. Your team is rested again.": "Le Verre de Faille te retient sur place. Ton équipe est de nouveau reposée.",
+  "Riftglass is locked for now. Look in the shop under My purchases.": "Le Verre de Faille est bloqué pour l'instant. Regarde dans la boutique, sous Mes achats.",
+  "Riftglass is not available on this account.": "Le Verre de Faille n'est pas disponible sur ce compte.",
+  "Riftglass shop": "Boutique Verre de Faille",
+  "Stay right before the Warden? Your team is rested.": "Rester juste avant le Gardien ? Ton équipe est reposée.",
+  "That did not work. No Riftglass was taken.": "Ça n'a pas marché. Aucun Verre de Faille n'a été pris.",
+  "That was a lot in a short time. Please wait a while.": "C'était beaucoup en peu de temps. Patiente un peu.",
+  "That was the last one here.": "C'était le dernier ici.",
+  "You have %d Riftglass.": "Tu as %d Verre de Faille."
+ }
+}

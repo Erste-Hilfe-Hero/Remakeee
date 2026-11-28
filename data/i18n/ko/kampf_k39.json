@@ -1,0 +1,12 @@
+{
+ "_comment": "Korean texts for the German table kampf_k39. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "Diamond": "마름모",
+  "Square": "네모",
+  "Triangle": "세모",
+  "Moon": "달",
+  "The call: %s.": "부름: %s.",
+  "Echo with the keys: left %s, up %s, right %s.": "키로 따라 하기: 왼쪽 %s, 위 %s, 오른쪽 %s.",
+  "Any tap or the accept key counts.": "아무 곳이나 탭하거나 확인 키를 눌러도 됨."
+ }
+}

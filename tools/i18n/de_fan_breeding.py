@@ -1,0 +1,21 @@
+# German texts for the family business: Echo Core inheritance and the matchmaker (data/breeding.json, scripts/core/Breeding.gd).
+T = {
+"Auntie Grisela": "Tante Grisela",
+"Auntie Grisela: Two good families, one sweet song. I arrange the rest.": "Tante Grisela: Zwei gute Familien, ein süßes Lied. Den Rest regle ich.",
+"Auntie Grisela: Bring me an Echo Core and I put the dowry in writing.": "Tante Grisela: Bring mir einen Hallkern, und ich setze die Mitgift schriftlich auf.",
+"Auntie Grisela: A good match is a merger with feathers.": "Tante Grisela: Eine gute Partie ist eine Firmenfusion mit Federn.",
+"Auntie Grisela: I put the dowry in writing. Nobody reads it, but it is written.": "Tante Grisela: Ich schreibe die Mitgift auf. Keiner liest es, aber es steht da.",
+"Auntie Grisela: No Echo Core, no wedding. Sing at a spring first, then we talk business.": "Tante Grisela: Kein Hallkern, keine Hochzeit. Erst an einer Quelle singen, dann reden wir übers Geschäft.",
+"Auntie Grisela: A contract costs %d coins. Love is free, paperwork is not.": "Tante Grisela: Ein Vertrag kostet %d Münzen. Liebe ist gratis, Papierkram nicht.",
+"Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably.": "Tante Grisela: Unterschrieben, versiegelt, und sonst erfährt es keiner. Wahrscheinlich.",
+"Seal a match contract for the core of %s for %d coins?": "Einen Heiratsvertrag für den Kern von %s für %d Münzen besiegeln?",
+"Seal": "Besiegeln",
+"Auntie Grisela's contract holds. The young one carries the best of both houses.": "Tante Griselas Vertrag hält. Das Junge trägt das Beste beider Häuser.",
+"Turns out Auntie Grisela sold the same match to %s. The contract is void, but the song still wakes.": "Wie sich zeigt, hat Tante Grisela dieselbe Partie an %s verkauft. Der Vertrag ist nichtig, aber das Lied erwacht trotzdem.",
+"the Moldwick family": "die Familie Moldwick",
+"the Pellgraves": "die Pellgraves",
+"the Second Cousins": "die Cousins zweiten Grades",
+"a family she calls 'the other one'": "eine Familie, die sie nur 'die anderen' nennt",
+"It already knows %s, an heirloom art of the family.": "Es kann schon %s, eine Erbtechnik der Familie.",
+"It carries the family's best Spark in %d values.": "Es trägt den besten Funken der Familie in %d Werten.",
+}

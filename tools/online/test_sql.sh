@@ -20,8 +20,17 @@ done
 for f in supabase/migrations/*.sql; do
 	psql_ -f "$f"
 done
+# Game data the server reads (species, learnsets), as setup.sh loads it at deploy.
+python3 tools/online/game_data_sql.py data/spirlings.json | psql_
 for t in tools/online/sql_test/test_*.sql; do
 	echo "== $t"
 	psql_ -f "$t"
 done
+# The billing service's own calls, as its database user (server/billing, plan area 10).
+if python3 -c "import cryptography" 2>/dev/null; then
+	psql_ -c "insert into auth.users (id) values ('20000000-0000-0000-0000-0000000000b2') on conflict do nothing;
+		select set_config('request.jwt.claim.sub', '20000000-0000-0000-0000-0000000000b2', false);
+		select public.shop_set_age(1990, 3); alter role chimora_billing login;" >/dev/null
+	PGHOST="$dir/sock" PGUSER=chimora_billing PGDATABASE=postgres python3 server/billing/tests/db_check.py
+fi
 echo "SQL tests OK"

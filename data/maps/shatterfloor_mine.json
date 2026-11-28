@@ -1,0 +1,167 @@
+{
+ "name": "Shatterfloor Mine",
+ "region": "veydal",
+ "biome": "dungeon",
+ "backdrop": "ridge",
+ "field": "deep_murk",
+ "encounters": "shatterfloor_mine",
+ "rows": [
+  "@@@@@@@@@@@@",
+  "@.....kkk..@",
+  "@.kkk.k.k..@",
+  "@.k.kkk.k..@",
+  "@.k.....kk.@",
+  "@.kkkkk..k.@",
+  "@:....k..kS@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 7,
+   "to": "copperfold",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 7,
+   "to": "copperfold",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "signs": [
+  {
+   "x": 10,
+   "y": 6,
+   "dialogue": "shatterfloor_mine/hint_board"
+  },
+  {
+   "x": 0,
+   "y": 3,
+   "dialogue": "legend_quests/scriptorax_lore",
+   "show_flag": "lq_scriptorax_met",
+   "hide_flag": "lq_scriptorax_ready"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 10,
+   "y": 1,
+   "item": "max_tonic",
+   "count": 2,
+   "flag": "find_shatter_far"
+  }
+ ],
+ "floors": [
+  {
+   "name": "Shatterfloor Mine, lower gallery",
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@::........@",
+    "@..::......@",
+    "@......::..@",
+    "@...::.....@",
+    "@..........@",
+    "@=.........@",
+    "@@@@@@@@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 1,
+     "y": 6,
+     "to": "shatterfloor_mine",
+     "tx": 5,
+     "ty": 6,
+     "facing": "up"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 10,
+     "y": 6,
+     "item": "spark_drop",
+     "count": 1,
+     "flag": "find_shatter_low"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "vm_dory",
+     "x": 9,
+     "y": 1,
+     "facing": "down",
+     "dialogue": "veydal_more/dory",
+     "sprite": "villager"
+    },
+    {
+     "id": "vm_striker_dunk",
+     "x": 3,
+     "y": 4,
+     "facing": "right",
+     "dialogue": "veydal_more/striker_dunk",
+     "sprite": "villager",
+     "trainer": "Striker Dunk",
+     "intro": "veydal_more/striker_dunk_intro",
+     "defeat": "veydal_more/striker_dunk_defeat",
+     "money": 260,
+     "team": [
+      {
+       "species": "Mirkmole",
+       "level": 13
+      },
+      {
+       "species": "Lichub",
+       "level": 13
+      }
+     ]
+    },
+    {
+     "id": "vm_striker_gwen",
+     "x": 7,
+     "y": 2,
+     "facing": "down",
+     "dialogue": "veydal_more/striker_gwen",
+     "sprite": "villager",
+     "trainer": "Striker Gwen",
+     "intro": "veydal_more/striker_gwen_intro",
+     "defeat": "veydal_more/striker_gwen_defeat",
+     "money": 240,
+     "team": [
+      {
+       "species": "Shalebat",
+       "level": 14
+      }
+     ]
+    },
+    {
+     "id": "vm_striker_wendle",
+     "x": 8,
+     "y": 5,
+     "facing": "left",
+     "dialogue": "veydal_more/striker_wendle",
+     "sprite": "villager",
+     "trainer": "Striker Wendle",
+     "intro": "veydal_more/striker_wendle_intro",
+     "defeat": "veydal_more/striker_wendle_defeat",
+     "money": 280,
+     "team": [
+      {
+       "species": "Talusk",
+       "level": 13
+      },
+      {
+       "species": "Glasstarn",
+       "level": 14
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "drop_to": "shatterfloor_mine@1",
+ "goal": "Goal: cross the cracked floor without breaking through."
+}

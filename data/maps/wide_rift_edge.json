@@ -1,0 +1,83 @@
+{
+ "name": "Edge of the Wide Rift",
+ "region": "corvane",
+ "biome": "rift",
+ "backdrop": "voice",
+ "rows": [
+  "XXXXXXXXXXXX",
+  "XXXXXXXXXXXX",
+  "^XXX....XXX^",
+  "^^........^^",
+  "^..........^",
+  "^.RRR......^",
+  "^.HDH...::.^",
+  "^.......::.^",
+  "^::........^",
+  "^::....@...^",
+  "^..........^",
+  "^^^^.....S.^",
+  "^....__....^",
+  "^....__....^",
+  "^....__....^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 15,
+   "to": "greyreach",
+   "tx": 5,
+   "ty": 2,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 15,
+   "to": "greyreach",
+   "tx": 6,
+   "ty": 2,
+   "facing": "down"
+  },
+  {
+   "x": 3,
+   "y": 6,
+   "to": "edge_watch_hut",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "zephyrel",
+   "x": 6,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "wide_rift_edge/zephyrel",
+   "sprite": "first_voice",
+   "show_flag": "lq_zephyrel_ready",
+   "hide_flag": "first_voice_zephyrel_away"
+  }
+ ],
+ "signs": [
+  {
+   "x": 9,
+   "y": 11,
+   "dialogue": "wide_rift_edge/sign"
+  }
+ ],
+ "spots": {
+  "burned_words": [
+   7,
+   9
+  ],
+  "letter_c1": [
+   1,
+   10
+  ],
+  "veit_diary": [
+   3,
+   6
+  ]
+ }
+}

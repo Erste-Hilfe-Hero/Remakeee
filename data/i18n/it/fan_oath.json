@@ -1,0 +1,8 @@
+{
+ "_comment": "it translation of the fan_oath table, keyed by the English text.",
+ "strings": {
+  "%s swears the Ink Oath. Ink runs down its paws like a signature: family first!": "%s presta il Giuramento d'inchiostro. L'inchiostro gli cola sulle zampe come una firma: prima la famiglia!",
+  "Oath": "Giuramento",
+  "The Ink Oath comes due. The family collects from %s.": "Il Giuramento d'inchiostro scade. La famiglia riscuote da %s."
+ }
+}

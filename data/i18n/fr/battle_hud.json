@@ -1,0 +1,12 @@
+{
+ "_comment": "fr translation of the battle_hud table, keyed by the English text.",
+ "strings": {
+  "%s: %d of %d can fight": "%s: %d sur %d peuvent combattre",
+  "Again: %s x%d": "Encore: %s x%d",
+  "Again: -": "Encore: -",
+  "Foe's team": "Équipe adverse",
+  "No effect": "Aucun effet",
+  "Strong": "Fort",
+  "Your team": "Ton équipe"
+ }
+}

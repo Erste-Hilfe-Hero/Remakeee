@@ -1,0 +1,12 @@
+{
+ "_comment": "it translation of the raid_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s (%s, %d Wayfarers) %d min": "%d. %s (%s, %d Viandanti) %d min",
+  "A legendary guardian waits in this Rift: %s": "In questo Squarcio aspetta un guardiano leggendario: %s",
+  "Easy": "Facile",
+  "Fastest Rifts": "Squarci più veloci",
+  "Hard": "Difficile",
+  "How hard?": "Che difficoltà?",
+  "No Rift was won yet.": "Nessuno Squarcio è stato ancora vinto."
+ }
+}

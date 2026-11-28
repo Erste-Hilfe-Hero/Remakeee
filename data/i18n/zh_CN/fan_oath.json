@@ -1,0 +1,8 @@
+{
+ "_comment": "zh_CN translation of the fan_oath table, keyed by the English text.",
+ "strings": {
+  "%s swears the Ink Oath. Ink runs down its paws like a signature: family first!": "%s立下墨之誓约。墨水像签名一样顺着爪子流下：家族第一！",
+  "Oath": "誓约",
+  "The Ink Oath comes due. The family collects from %s.": "墨之誓约到期了。家族向%s讨债。"
+ }
+}

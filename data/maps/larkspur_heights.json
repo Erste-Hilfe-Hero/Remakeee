@@ -1,0 +1,302 @@
+{
+ "name": "Larkspur Heights",
+ "region": "vellmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "outdoor": true,
+ "heal_point": [
+  5,
+  9
+ ],
+ "rows": [
+  "TTTTT__TTTTT",
+  "T.RRR__RRR.T",
+  "T.RRR__RRR.T",
+  "T.HDH__HDH.T",
+  "T*._.__._.*T",
+  "T..______..T",
+  "T^^^^==^^^^T",
+  "T.L..__..S.T",
+  "____________",
+  "____________",
+  "T.__.o..__.T",
+  "T^==^^^^==^T",
+  "T.__....__.T",
+  "T.__*@*.__.T",
+  "T.________.T",
+  "T.RR.__.RR.T",
+  "T.DH.__.HD.T",
+  "T._..__.._.T",
+  "T.________.T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 3,
+   "to": "larkspur_heights_mask_atelier",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  },
+  {
+   "x": 8,
+   "y": 3,
+   "to": "larkspur_heights_counting_house",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 16,
+   "to": "larkspur_heights_servants_hall",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 16,
+   "to": "larkspur_heights_salon",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  },
+  {
+   "x": 0,
+   "y": 8,
+   "to": "weeping_locks",
+   "tx": 5,
+   "ty": 24,
+   "facing": "up"
+  },
+  {
+   "x": 0,
+   "y": 9,
+   "to": "weeping_locks",
+   "tx": 6,
+   "ty": 24,
+   "facing": "up"
+  },
+  {
+   "x": 5,
+   "y": 19,
+   "to": "smelters_drift",
+   "tx": 5,
+   "ty": 24,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 19,
+   "to": "smelters_drift",
+   "tx": 6,
+   "ty": 24,
+   "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 8,
+   "to": "tithe_road",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 11,
+   "y": 9,
+   "to": "tithe_road",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "masque_rift",
+   "tx": 5,
+   "ty": 20,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "masque_rift",
+   "tx": 6,
+   "ty": 20,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "keeper",
+   "x": 4,
+   "y": 10,
+   "facing": "down",
+   "dialogue": "vellmarch/larkspur_heights_keeper",
+   "sprite": "elder"
+  },
+  {
+   "id": "trader",
+   "x": 7,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "vellmarch/larkspur_heights_trader",
+   "sprite": "villager"
+  },
+  {
+   "id": "folk_1",
+   "x": 1,
+   "y": 5,
+   "facing": "right",
+   "dialogue": "vellmarch/larkspur_heights_folk_1",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 7,
+     "y": 10,
+     "facing": "left"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "folk_2",
+   "x": 10,
+   "y": 12,
+   "facing": "left",
+   "dialogue": "vellmarch/larkspur_heights_folk_2",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 4,
+     "y": 9,
+     "facing": "down"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "folk_3",
+   "x": 4,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "vellmarch/larkspur_heights_folk_3",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 6,
+     "y": 9,
+     "facing": "down"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "q2_second_face_petra_lady",
+   "x": 7,
+   "y": 17,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_second_face_petra_lady",
+   "sprite": "villager",
+   "trainer": "Lady Petra",
+   "show_flag": "q2_second_face_reveal",
+   "intro": "vellmarch/q2_second_face_petra_lady_intro",
+   "defeat": "vellmarch/q2_second_face_petra_lady_defeat",
+   "money": 3000,
+   "team": [
+    {
+     "species": "Shivlet",
+     "level": 58
+    },
+    {
+     "species": "Tithshell",
+     "level": 59
+    },
+    {
+     "species": "Tithel",
+     "level": 60
+    }
+   ],
+   "win_flags": [
+    "q2_second_face_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "q2_bought_boos_alban",
+   "x": 7,
+   "y": 13,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_bought_boos",
+   "sprite": "villager"
+  }
+ ],
+ "signs": [
+  {
+   "x": 9,
+   "y": 7,
+   "dialogue": "vellmarch/larkspur_heights_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 0,
+   "open_flag": "v2_rift_foundry_sealed",
+   "closed": "#"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "open_flag": "v2_rift_foundry_sealed",
+   "closed": "#"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 13,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_larkspur_heights_1"
+  },
+  {
+   "x": 11,
+   "y": 16,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_larkspur_heights_2"
+  },
+  {
+   "x": 11,
+   "y": 4,
+   "item": "strong_tonic",
+   "count": 2,
+   "flag": "find_larkspur_heights_3"
+  }
+ ],
+ "square": [
+  5,
+  10
+ ]
+}

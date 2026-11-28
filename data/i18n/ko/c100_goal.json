@@ -1,0 +1,28 @@
+{
+ "_comment": "Korean texts for the German table c100_goal. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "+ seen  * bonded": "+ 봄  * 유대",
+  "A reward waits under Goals.": "목표에서 보상이 기다려요.",
+  "Daily tasks: %d of %d done.": "일일 과제: %d/%d 완료",
+  "Find Mirela's pages": "Mirela의 쪽 찾기",
+  "Go to the Map House": "지도의 집으로",
+  "Goal line: %s": "목표 줄: %s",
+  "Goal: %s": "목표: %s",
+  "Meet Kestra at the dock": "선착장의 Kestra",
+  "Mend the Rifts": "균열 메우기",
+  "Not yet visited.": "아직 가 보지 않음.",
+  "On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.": "페이지의 \"본 곳\"은 나그네 전투를 포함해 그 종을 만난 모든 장소입니다. \"야생 서식지\"는 야생에서 사는 곳입니다: 장소 뒤의 +는 거기서 만났다는 뜻이고, ???는 아직 찾지 못한 곳입니다.",
+  "Photo, our Discord and your shortcuts.": "사진, Discord, 바로가기.",
+  "See Aldo downstairs": "아래층 Aldo 만나기",
+  "Seen at: %s": "본 곳: %s",
+  "Tap for every mark.": "누르면 모든 표시.",
+  "Tell Aldo at home": "Aldo에게 전하기",
+  "Welcome back, %s!": "다시 왔네요, %s!",
+  "Wild at: %s (%d of %d found)": "야생 서식지: %s (%d/%d 발견)",
+  "You are in %s.": "지금 위치: %s",
+  "Your next goal at the top and a mark on the way there. Tap the line to open Goals.": "다음 목표를 위에 보여주고 가는 길에 표시를 합니다. 줄을 누르면 목표가 열립니다.",
+  "a Gleam of this kind was bonded": "이 종의 광채형과 유대를 맺음",
+  "a Gleam of this kind was seen": "이 종의 광채형을 봄",
+  "bonded and grown to Ring 30": "유대를 맺고 링 30까지 성장"
+ }
+}

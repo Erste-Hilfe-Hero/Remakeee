@@ -1,0 +1,17 @@
+{
+ "_comment": "German texts from tools/i18n/de_c200start.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%s might suit you. But choose whoever you like!": "%s könnte zu dir passen. Aber wähl, wen du magst!",
+  "A free afternoon. You...": "Ein freier Nachmittag. Du...",
+  "Two short questions. You still choose freely.": "Zwei kurze Fragen. Du wählst trotzdem frei.",
+  "Which one suits you?": "Wer passt zu dir?",
+  "Your partner should be...": "Dein Partner soll sein...",
+  "calm and bright": "ruhig und hell",
+  "explore a dark cave": "erkundest eine Höhle",
+  "loyal and warm": "treu und warm",
+  "quick and lively": "flink und munter",
+  "race to the lake": "rennst zum See",
+  "sit by a warm fire": "sitzt am warmen Feuer"
+ }
+}

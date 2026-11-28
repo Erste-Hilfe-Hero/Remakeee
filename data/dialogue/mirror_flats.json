@@ -1,0 +1,15 @@
+{
+ "sign": [
+  "MIRROR FLATS",
+  "The salt reflects the sky. Look down and you will see the sky. Look down too long and you will join it."
+ ],
+ "salt_scout": [
+  "Hendrik: I mark where the salt is thin. Then I sell the map to the people who want someone to fall through."
+ ],
+ "salt_scout_intro": [
+  "Hendrik: You've got a thin look about you. Let's test it."
+ ],
+ "salt_scout_defeat": [
+  "Hendrik: Solid. Annoying."
+ ]
+}

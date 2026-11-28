@@ -1,0 +1,6 @@
+{
+ "_doc": "KAMPF_PLAN_1000 items 15, 22 and 29. Read by scripts/battle/BattleOpening.gd and scripts/battle/SoftDefeat.gd. initiative_turns: turns in which the player's side acts first after walking up to a Wayfarer from behind (never a Warden or a Rift boss). short_start_speed: from this battle speed on the opening line is the short one. soft_defeat_share: share of max Vigor the team wakes with after a Soft Defeat (Story only, off by default).",
+ "initiative_turns": 1,
+ "short_start_speed": 2,
+ "soft_defeat_share": 0.5
+}

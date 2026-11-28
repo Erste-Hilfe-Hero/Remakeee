@@ -1,0 +1,26 @@
+{
+ "_comment": "Russian texts for the German table fan_burrow. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "A crack in the rock opens into a dry hollow.": "Трещина в скале ведёт в сухую нишу.",
+  "A dry hollow in the rock. Nobody seems to live here. Claim it as your Burrow?": "Сухая ниша в скале. Похоже, здесь никто не живёт. Занять как свою Нору?",
+  "A jar of names. Your Spirlings wrote them. Some are yours.": "Банка с именами. Их написали твои Spirlings. Некоторые - твои.",
+  "A map of Veydal with every Rift crossed out in red ink.": "Карта Veydal, где каждый Разлом перечёркнут красными чернилами.",
+  "A scorched seal from the Cinder Rift. Still warm. Still angry.": "Обугленная печать из Тлеющего Разлома. Ещё тёплая. Ещё злая.",
+  "A seal from the Mist Rift. Half of it is missing, or hiding.": "Печать из Туманного Разлома. Половины нет, или она прячется.",
+  "A seal from the Tidewater Rift. It drips on the carpet.": "Печать из Приливного Разлома. Капает на ковёр.",
+  "Black Veil": "Чёрная вуаль",
+  "Cinder Seal": "Тлеющая печать",
+  "Claim": "Занять",
+  "Grudge Jar": "Банка обид",
+  "Mended Veydal": "Заштопанный Veydal",
+  "Mist Seal": "Туманная печать",
+  "Someone slept here. %s is gone from the wall; a pawn ticket hangs in its place.": "Здесь кто-то спал. Со стены пропало: %s; на его месте висит залоговая квитанция.",
+  "The wall is full. Take something down first.": "Стена заполнена. Сначала что-нибудь сними.",
+  "Tide Seal": "Приливная печать",
+  "Won at a Wake. Nobody cried harder than your Spirling.": "Выиграно на Поминках. Никто не рыдал громче твоего Spirling.",
+  "You hang it on the wall.": "Ты вешаешь это на стену.",
+  "You take it down.": "Ты снимаешь это.",
+  "Your Burrow (%d/%d on the wall)": "Твоя Нора (%d/%d на стене)",
+  "Your Burrow. The walls are bare. Earn something worth hanging.": "Твоя Нора. Стены голые. Заслужи что-нибудь, что стоит повесить."
+ }
+}

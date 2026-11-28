@@ -1,0 +1,12 @@
+{
+ "_comment": "pl translation of the battle_hud table, keyed by the English text.",
+ "strings": {
+  "%s: %d of %d can fight": "%s: %d z %d zdolnych do walki",
+  "Again: %s x%d": "Znowu: %s x%d",
+  "Again: -": "Znowu: -",
+  "Foe's team": "Drużyna przeciwnika",
+  "No effect": "Bez efektu",
+  "Strong": "Silne",
+  "Your team": "Twoja drużyna"
+ }
+}

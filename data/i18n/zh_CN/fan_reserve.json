@@ -1,0 +1,24 @@
+{
+ "_comment": "zh_CN translation of the fan_reserve table, keyed by the English text.",
+ "strings": {
+  "%s answers your call and pads over to you. Dorran pretends not to notice.": "%s回应了你的呼唤，轻轻走到你身边。Dorran装作没看见。",
+  "%s slips through a hole in the fence. The ring will patch that hole. Someday.": "%s从围栏的洞里溜走了。那个洞会有人补的。总有一天。",
+  "%s tilts its head at your call, but stays put.": "%s听到呼唤歪了歪头，但没有动。",
+  "A whistle from the lookout tower. A rival crew bursts out of the reeds and %s bolts. Somebody got paid tonight.": "瞭望塔上传来一声口哨。一伙对头从芦苇丛里冲出来，%s撒腿就跑。今晚有人收了钱。",
+  "A wild %s, Ring %d. Sightings left: %d": "野生%s，环%d。剩余遭遇次数：%d",
+  "A woman in a velvet coat leans on a fence that is not on any map.": "一个穿天鹅绒外套的女人靠在一道任何地图上都没有的围栏上。",
+  "Echo call (%d left)": "回声呼唤（剩余%d次）",
+  "Move on": "继续走",
+  "Pay %d coins to slip into the reserve?": "支付%d金币溜进保护区？",
+  "Rattle the fence": "摇晃围栏",
+  "Set bait": "放下诱饵",
+  "Velvet Dorran": "天鹅绒Dorran",
+  "Velvet Dorran: No coins? Then you were never here.": "天鹅绒Dorran：没金币？那你就从没来过这儿。",
+  "Velvet Dorran: No fighting in my yard. You set bait, you rattle the fence, you call. Then you leave and forget my face.": "天鹅绒Dorran：我的院子里不许打架。放诱饵，摇围栏，呼唤。然后走人，忘了我这张脸。",
+  "Velvet Dorran: Time's up. Out you go, and the gate never saw you.": "天鹅绒Dorran：时间到了。出去吧，大门从没见过你。",
+  "Velvet Dorran: Welcome to Hollowgate Reserve. Totally legal. The fence is to keep the paperwork in.": "天鹅绒Dorran：欢迎来到Hollowgate保护区。完全合法。围栏是为了不让文件跑出去。",
+  "You rattle the fence. %s's ears shoot up: curious, and very jumpy.": "你摇了摇围栏。%s的耳朵一下竖了起来：很好奇，也很容易受惊。",
+  "You set down a twist of dried bait. %s sniffs it and calms down.": "你放下一小撮干诱饵。%s闻了闻，平静了下来。",
+  "the Quiet Hands": "无声之手"
+ }
+}

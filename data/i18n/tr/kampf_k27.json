@@ -1,0 +1,11 @@
+{
+ "_comment": "Texts for tr from tools/i18n/locales_kampf_k27.py (KAMPF_PLAN_1000 items 138, 179).",
+ "strings": {
+  "%s is cured.": "%s iyileşti.",
+  "Hesper: %d coins. Forgetting is free, remembering is not.": "Hesper: %d sikke. Unutmak bedava, hatırlamak değil.",
+  "Hesper: %s remembers everything it can. Lucky thing.": "Hesper: %s yapabildiği her şeyi hatırlıyor. Şanslı şey.",
+  "Hesper: And if one of yours forgot an art it once knew, I can dig it back up. For a fee. Memory is cheap; mine isn't.": "Hesper: Seninkilerden biri bir zamanlar bildiği bir tekniği unuttuysa, onu geri kazıp çıkarırım. Ücreti karşılığında. Hafıza ucuzdur; benimki değil.",
+  "On Story every status ends with the battle. On the other difficulties Scorch, Root and Jolt stay on until an item, an art or a rest cures them.": "Hikâye'de her durum savaşla biter. Diğer zorluklarda Yanık, Köklenme ve Şok bir eşya, bir teknik ya da dinlenme iyileştirene kadar kalır.",
+  "Who forgot an art? %d coins each.": "Kim bir teknik unuttu? Tanesi %d sikke."
+ }
+}

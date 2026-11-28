@@ -62,6 +62,37 @@ func test_tileset_has_every_kind_and_variant() -> void:
 	var src: TileSetAtlasSource = ts.get_source(0)
 	assert_eq(src.get_tiles_count(), TilesetFactory.Kind.size() * TilesetFactory.VARIANT_ROWS)
 
+func test_every_act_has_its_own_town_atlas() -> void:
+	var keep: int = EraManager.retro_filter
+	EraManager.set_retro_filter(EraManager.Era.INK)
+	TilesetFactory.clear_cache()
+	for region: String in ["corvane", "ashmere", "solenne"]:
+		assert_eq(TilesetFactory.atlas_path(region), "res://art/era1/tiles/overworld_%s.png" % region)
+	EraManager.set_retro_filter(keep)
+	TilesetFactory.clear_cache()
+
+func test_shadow_and_door_rows() -> void:
+	TilesetFactory.get_tileset()
+	var walls: Callable = func(_c: Vector2i) -> int: return TilesetFactory.Kind.WALL
+	var g: int = TilesetFactory.Kind.GRASS
+	assert_true(TilesetFactory.atlas_coords(g, Vector2i.ZERO, walls).y >= TilesetFactory.SHADOW_ROW, "grass next to a wall is shaded")
+	var d: int = TilesetFactory.Kind.DOOR
+	assert_eq(TilesetFactory.atlas_coords(d, Vector2i.ZERO, walls, TilesetFactory.DoorRole.SHOP), Vector2i(d, 2))
+
+func test_doors_show_what_they_lead_into() -> void:
+	var m := MapData.new()
+	m.rows = PackedStringArray(["RRRRRRRRR", "HDHHDHHDH", "........."])
+	m.height = 3
+	m.width = 9
+	m.outdoor = true
+	m.biome = "town"
+	m.heal_point = Vector2i(7, 2)
+	m.warps.append({"x": 1, "y": 1, "to": "cinder_rift"})
+	var roles: Dictionary = m.door_roles()
+	assert_eq(int(roles[Vector2i(1, 1)]), TilesetFactory.DoorRole.RIFT_GATE)
+	assert_eq(int(roles[Vector2i(7, 1)]), TilesetFactory.DoorRole.HEAL, "door nearest the heal point")
+	assert_eq(int(roles[Vector2i(4, 1)]), TilesetFactory.DoorRole.SHOP)
+
 func test_masked_tiles_pick_edges_from_neighbours() -> void:
 	TilesetFactory.get_tileset()
 	var all_water: Callable = func(_c: Vector2i) -> int: return TilesetFactory.Kind.WATER
@@ -69,3 +100,27 @@ func test_masked_tiles_pick_edges_from_neighbours() -> void:
 	var w: int = TilesetFactory.Kind.WATER
 	assert_eq(TilesetFactory.atlas_coords(w, Vector2i.ZERO, all_water), Vector2i(w, 15), "open water")
 	assert_eq(TilesetFactory.atlas_coords(w, Vector2i.ZERO, all_grass), Vector2i(w, 0), "pond with shore all round")
+
+func test_veydal_has_own_atlas() -> void:
+	var keep: int = EraManager.retro_filter
+	EraManager.set_retro_filter(EraManager.Era.INK)
+	TilesetFactory.clear_cache()
+	assert_eq(TilesetFactory.atlas_path("veydal"), "res://art/era1/tiles/overworld_veydal.png")
+	assert_eq(TilesetFactory.atlas_path("no_such_region"), "res://art/era1/tiles/overworld.png")
+	assert_eq(TilesetFactory.atlas_path("corvane"), "res://art/era1/tiles/overworld_corvane.png")
+	assert_ne(TilesetFactory.get_tileset("veydal"), TilesetFactory.get_tileset("corvane"), "own tileset per act")
+	EraManager.set_retro_filter(keep)
+	TilesetFactory.clear_cache()
+
+func test_veydal_atlas_is_four_tone() -> void:
+	var img: Image = Image.load_from_file(ProjectSettings.globalize_path("res://art/era1/tiles/overworld_veydal.png"))
+	var inks: Array[String] = []
+	for c: Color in EraManager.INK_PALETTE:
+		inks.append(c.to_html(false))
+	for y: int in range(0, img.get_height(), 3):
+		for x: int in range(0, img.get_width(), 3):
+			var p: Color = img.get_pixel(x, y)
+			if p.a > 0.5:
+				assert_true(p.to_html(false) in inks, "pixel %d,%d is an Era I ink" % [x, y])
+				if not p.to_html(false) in inks:
+					return

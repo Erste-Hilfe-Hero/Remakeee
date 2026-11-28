@@ -1,0 +1,19 @@
+{
+ "_comment": "Korean texts for the German table bond. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A big Mine! button appears.": "유대 2단계: 유대를 고른다. 큰 내 거야! 버튼이 나온다.",
+  "Bonding step 3: Press A as fast as you can. The fuller the bar, the better the bond.": "유대 3단계: A를 최대한 빨리 연타. 막대가 찰수록 유대가 강해진다.",
+  "Bonding step 3: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "유대 3단계: 내 거야!를 최대한 빨리 연타. 막대가 찰수록 유대가 강해진다.",
+  "Bonding: %s": "유대 맺는 중: %s",
+  "Echo": "메아리",
+  "Hint": "힌트",
+  "Mine": "내 거",
+  "Mine!": "내 거야!",
+  "Mine: tap one button fast. Echo: repeat the call.": "내 거: 버튼 하나를 빠르게 연타. 메아리: 부름을 따라 한다.",
+  "Note": "메모",
+  "Reach out to %s... Tap Mine! fast!": "%s에게 손을 뻗는다... 내 거야!를 연타!",
+  "Tap Mine! fast!": "내 거야!를 연타!",
+  "Tip": "팁",
+  "Tips": "팁 모음"
+ }
+}

@@ -1,0 +1,606 @@
+{
+ "_comment": "Warden rematches after the finale (WardenRematch.gd): one per Warden, own team, lines and reward. Unlocks with needs_flag; won once per Warden.",
+ "needs_flag": "story_complete",
+ "wardens": [
+  {
+   "warden": "cinder",
+   "map": "cinder_rift",
+   "npc": "warden_orrin",
+   "name": "Warden Orrin",
+   "money": 6000,
+   "reward": {
+    "item": "echo_furnace_heart",
+    "count": 1
+   },
+   "profile": "tactician",
+   "team": [
+    {
+     "species": "Smoldrake",
+     "level": 54
+    },
+    {
+     "species": "Calderox",
+     "level": 54
+    },
+    {
+     "species": "Obsidroth",
+     "level": 55
+    },
+    {
+     "species": "Kindlop",
+     "level": 55
+    },
+    {
+     "species": "Shalebat",
+     "level": 56
+    },
+    {
+     "species": "Duskdigger",
+     "level": 56
+    }
+   ],
+   "intro": [
+    "Orrin: Look who's back. The hero. Funny, the Rift stayed quiet without you.",
+    "Orrin: I kept the coals warm. Not for you. For whoever buys me out next.",
+    "Orrin: Six on six, no favours. Let's see if you still burn."
+   ],
+   "win": [
+    "Orrin: Ash in my mouth again. Classic.",
+    "Orrin: Take the ember. Don't tell anyone I gave it freely. I have a reputation."
+   ],
+   "lose": [
+    "Orrin: Cold. You came back soft. Go warm up somewhere else."
+   ]
+  },
+  {
+   "warden": "tide",
+   "map": "tide_rift",
+   "npc": "warden_maelis",
+   "name": "Warden Maelis",
+   "money": 6500,
+   "reward": {
+    "item": "echo_fathom_crush",
+    "count": 1
+   },
+   "profile": "tactician",
+   "team": [
+    {
+     "species": "Riptail",
+     "level": 54
+    },
+    {
+     "species": "Leviarch",
+     "level": 54
+    },
+    {
+     "species": "Kelphound",
+     "level": 55
+    },
+    {
+     "species": "Delthorn",
+     "level": 55
+    },
+    {
+     "species": "Zippit",
+     "level": 56
+    },
+    {
+     "species": "Saltcrown",
+     "level": 56
+    }
+   ],
+   "intro": [
+    "Maelis: The tide always comes back. So do debts.",
+    "Maelis: Everyone on the quay sold you out at least once. I counted. Twice for some.",
+    "Maelis: Now pay what you owe me: one honest fight."
+   ],
+   "win": [
+    "Maelis: Washed out. Fine. The sea keeps no grudges. I do, but quietly.",
+    "Maelis: Here. Don't drown with it."
+   ],
+   "lose": [
+    "Maelis: Sunk. The water doesn't care who saved the world."
+   ]
+  },
+  {
+   "warden": "mist",
+   "map": "mist_rift",
+   "npc": "warden_brisa",
+   "name": "Warden Brisa",
+   "money": 7000,
+   "reward": {
+    "item": "echo_scatter_gale",
+    "count": 1
+   },
+   "profile": "tactician",
+   "team": [
+    {
+     "species": "Tempestrel",
+     "level": 55
+    },
+    {
+     "species": "Zephlet",
+     "level": 55
+    },
+    {
+     "species": "Millwhit",
+     "level": 56
+    },
+    {
+     "species": "Mirassil",
+     "level": 56
+    },
+    {
+     "species": "Glimmerax",
+     "level": 57
+    },
+    {
+     "species": "Zenithare",
+     "level": 57
+    }
+   ],
+   "intro": [
+    "Brisa: You again. I got lost in my own fog for a year. Nobody came looking. Noted.",
+    "Brisa: The ones who smiled at you at the finale? Half of them were taking bets.",
+    "Brisa: Let's clear the air. Hard."
+   ],
+   "win": [
+    "Brisa: Blown away. Respect, for real.",
+    "Brisa: Take the gale. And watch who's standing behind you."
+   ],
+   "lose": [
+    "Brisa: Lost in the fog. Happens to the best of us. Mostly to you, apparently."
+   ]
+  },
+  {
+   "warden": "rain",
+   "map": "rain_rift",
+   "npc": "warden_senna",
+   "name": "Warden Senna",
+   "money": 7500,
+   "reward": {
+    "item": "echo_squall",
+    "count": 1
+   },
+   "profile": "tactician",
+   "team": [
+    {
+     "species": "Riptail",
+     "level": 55
+    },
+    {
+     "species": "Tempestrel",
+     "level": 55
+    },
+    {
+     "species": "Kelphound",
+     "level": 56
+    },
+    {
+     "species": "Leviarch",
+     "level": 56
+    },
+    {
+     "species": "Marshfife",
+     "level": 57
+    },
+    {
+     "species": "Saltspire",
+     "level": 57
+    }
+   ],
+   "intro": [
+    "Senna: Rain doesn't stop because you won something.",
+    "Senna: I've been drenched, robbed and lied to since the finale. Good week, honestly.",
+    "Senna: Let's see if your crew still holds when it pours."
+   ],
+   "win": [
+    "Senna: Soaked through. Fair.",
+    "Senna: Take the squall. Umbrellas are for people who trust the sky."
+   ],
+   "lose": [
+    "Senna: Wash out. Dry off, try again."
+   ]
+  },
+  {
+   "warden": "mirror",
+   "map": "mirror_rift",
+   "npc": "warden_joral",
+   "name": "Warden Joral",
+   "money": 8000,
+   "reward": {
+    "item": "echo_radiant_lance",
+    "count": 1
+   },
+   "profile": "tactician",
+   "team": [
+    {
+     "species": "Lumenewt",
+     "level": 56
+    },
+    {
+     "species": "Glimmerax",
+     "level": 56
+    },
+    {
+     "species": "Verdantusk",
+     "level": 57
+    },
+    {
+     "species": "Mirassil",
+     "level": 57
+    },
+    {
+     "species": "Orrerine",
+     "level": 58
+    },
+    {
+     "species": "Leviarch",
+     "level": 58
+    }
+   ],
+   "intro": [
+    "Joral: Every mirror lies. I just tell you which way.",
+    "Joral: Your reflection asked me to beat you. Weird kid.",
+    "Joral: Look sharp. Literally."
+   ],
+   "win": [
+    "Joral: Cracked. Seven years of bad luck. For me. Lovely.",
+    "Joral: Take the lance. It only points one way: forward."
+   ],
+   "lose": [
+    "Joral: You looked away. That's the whole trick."
+   ]
+  },
+  {
+   "warden": "root",
+   "map": "root_rift",
+   "npc": "warden_darrow",
+   "name": "Warden Darrow",
+   "money": 8500,
+   "reward": {
+    "item": "echo_graft",
+    "count": 1
+   },
+   "profile": "tactician",
+   "team": [
+    {
+     "species": "Thornback",
+     "level": 56
+    },
+    {
+     "species": "Frondmere",
+     "level": 56
+    },
+    {
+     "species": "Reedwarden",
+     "level": 57
+    },
+    {
+     "species": "Marshfife",
+     "level": 57
+    },
+    {
+     "species": "Verdantusk",
+     "level": 58
+    },
+    {
+     "species": "Fenwarden",
+     "level": 58
+    }
+   ],
+   "intro": [
+    "Darrow: Roots remember who stepped on them.",
+    "Darrow: The moor buried three liars since the finale. It's always hungry.",
+    "Darrow: Dig in. You'll need to."
+   ],
+   "win": [
+    "Darrow: Pulled up by the roots. Humbling.",
+    "Darrow: Take the grip. Hold on to what's yours. Nobody else will."
+   ],
+   "lose": [
+    "Darrow: Rooted to the spot. Shame. Go grow a bit."
+   ]
+  },
+  {
+   "warden": "kiln",
+   "map": "kiln_rift",
+   "npc": "warden_tovan",
+   "name": "Warden Tovan",
+   "money": 9000,
+   "reward": {
+    "item": "rg_ring_elixir",
+    "count": 1
+   },
+   "profile": "tactician",
+   "team": [
+    {
+     "species": "Calderox",
+     "level": 57
+    },
+    {
+     "species": "Obsidroth",
+     "level": 57
+    },
+    {
+     "species": "Smoldrake",
+     "level": 58
+    },
+    {
+     "species": "Duskdigger",
+     "level": 58
+    },
+    {
+     "species": "Cairnhold",
+     "level": 59
+    },
+    {
+     "species": "Saltspire",
+     "level": 59
+    }
+   ],
+   "intro": [
+    "Tovan: The kiln cracks what isn't fired right. People too.",
+    "Tovan: My apprentice sold my glazes to the Sluice crowd. I wished him luck. He'll need it.",
+    "Tovan: Let's test your temper."
+   ],
+   "win": [
+    "Tovan: Fired solid. Good work, for a change.",
+    "Tovan: Take this elixir. Don't ask where it was before."
+   ],
+   "lose": [
+    "Tovan: Cracked in the heat. Back on the wheel with you."
+   ]
+  },
+  {
+   "warden": "glass",
+   "map": "glass_rift",
+   "npc": "warden_ilse",
+   "name": "Warden Ilse",
+   "money": 9500,
+   "reward": {
+    "item": "rg_glass_shield",
+    "count": 1
+   },
+   "profile": "tactician",
+   "team": [
+    {
+     "species": "Leviarch",
+     "level": 57
+    },
+    {
+     "species": "Lumenewt",
+     "level": 57
+    },
+    {
+     "species": "Glimmerax",
+     "level": 58
+    },
+    {
+     "species": "Tempestrel",
+     "level": 58
+    },
+    {
+     "species": "Glasstarn",
+     "level": 59
+    },
+    {
+     "species": "Mirassil",
+     "level": 59
+    }
+   ],
+   "intro": [
+    "Ilse: Glass shows everything. That's why nobody likes it.",
+    "Ilse: I saw who whispered behind you at the finale. I'm not saying. Yet.",
+    "Ilse: Let's see if you shatter."
+   ],
+   "win": [
+    "Ilse: Clean cut. No splinters. Nice.",
+    "Ilse: A shield. Clear as day, and twice as honest as your friends."
+   ],
+   "lose": [
+    "Ilse: Shattered. Sweep up on your way out."
+   ]
+  },
+  {
+   "warden": "shade",
+   "map": "shade_rift",
+   "npc": "warden_odalys",
+   "name": "Warden Odalys",
+   "money": 10000,
+   "reward": {
+    "item": "echo_umbra",
+    "count": 1
+   },
+   "profile": "tactician",
+   "team": [
+    {
+     "species": "Silentra",
+     "level": 58
+    },
+    {
+     "species": "Fenwarden",
+     "level": 58
+    },
+    {
+     "species": "Burinox",
+     "level": 59
+    },
+    {
+     "species": "Mendlace",
+     "level": 59
+    },
+    {
+     "species": "Scrivane",
+     "level": 60
+    },
+    {
+     "species": "Obsidroth",
+     "level": 60
+    }
+   ],
+   "intro": [
+    "Odalys: In the dark, everyone's a stranger. Even you.",
+    "Odalys: You think the finale ended things. It just turned the lights off.",
+    "Odalys: Shh. Fight."
+   ],
+   "win": [
+    "Odalys: The shadows like you. Don't let it go to your head.",
+    "Odalys: Take the veil. Use it before someone uses it on you."
+   ],
+   "lose": [
+    "Odalys: Lights out. Sleep tight."
+   ]
+  },
+  {
+   "warden": "oasis",
+   "map": "oasis_rift",
+   "npc": "warden_kaia",
+   "name": "Warden Kaia",
+   "money": 10500,
+   "reward": {
+    "item": "rg_stat_crystal_5",
+    "count": 1
+   },
+   "profile": "tactician",
+   "team": [
+    {
+     "species": "Saltcrown",
+     "level": 58
+    },
+    {
+     "species": "Leviarch",
+     "level": 58
+    },
+    {
+     "species": "Ferrowyn",
+     "level": 59
+    },
+    {
+     "species": "Glasstarn",
+     "level": 59
+    },
+    {
+     "species": "Saltspire",
+     "level": 60
+    },
+    {
+     "species": "Dunebastion",
+     "level": 60
+    }
+   ],
+   "intro": [
+    "Kaia: Water in the desert is worth more than gold. And more than friends, usually.",
+    "Kaia: Three people tried to buy my well since the finale. One tried a shovel.",
+    "Kaia: Drink up. You'll sweat."
+   ],
+   "win": [
+    "Kaia: Dried out. Respect.",
+    "Kaia: Crystals. Fresh off a caravan that won't be missing them. Probably."
+   ],
+   "lose": [
+    "Kaia: Mirage. You were never really here."
+   ]
+  },
+  {
+   "warden": "sun",
+   "map": "sun_rift",
+   "npc": "warden_emrys",
+   "name": "Warden Emrys",
+   "money": 11000,
+   "reward": {
+    "item": "echo_dawn_mend",
+    "count": 1
+   },
+   "profile": "tactician",
+   "team": [
+    {
+     "species": "Solmantle",
+     "level": 59
+    },
+    {
+     "species": "Orrerine",
+     "level": 59
+    },
+    {
+     "species": "Glimmerax",
+     "level": 60
+    },
+    {
+     "species": "Cairnhold",
+     "level": 60
+    },
+    {
+     "species": "Zenithare",
+     "level": 60
+    },
+    {
+     "species": "Mirassil",
+     "level": 60
+    }
+   ],
+   "intro": [
+    "Emrys: The sun rises for everyone. Even people who don't deserve it.",
+    "Emrys: They're printing your face on mugs now. Cheap mugs.",
+    "Emrys: Let's see if you burn bright or just burn."
+   ],
+   "win": [
+    "Emrys: Eclipsed. Fine. Even suns set.",
+    "Emrys: Take the dawn. Tomorrow comes whether you trust it or not."
+   ],
+   "lose": [
+    "Emrys: Sunburnt. Find some shade, legend."
+   ]
+  },
+  {
+   "warden": "tower",
+   "map": "tower_rift",
+   "npc": "warden_aurelio",
+   "name": "Warden Aurelio",
+   "money": 11500,
+   "reward": {
+    "item": "rg_ring_crown",
+    "count": 1
+   },
+   "profile": "tactician",
+   "team": [
+    {
+     "species": "Tempestrel",
+     "level": 59
+    },
+    {
+     "species": "Zenithare",
+     "level": 59
+    },
+    {
+     "species": "Mirassil",
+     "level": 60
+    },
+    {
+     "species": "Dunebastion",
+     "level": 60
+    },
+    {
+     "species": "Orrerine",
+     "level": 60
+    },
+    {
+     "species": "Leviarch",
+     "level": 60
+    }
+   ],
+   "intro": [
+    "Aurelio: From up here, everyone looks small. You look the same, which is worse.",
+    "Aurelio: The council that cheered you? They signed a deal against you the next morning.",
+    "Aurelio: Last climb. Make it count."
+   ],
+   "win": [
+    "Aurelio: Toppled. The view's yours now. Enjoy the wind.",
+    "Aurelio: The crown. Heavy, right? That's the point."
+   ],
+   "lose": [
+    "Aurelio: Long way down. Take the stairs next time."
+   ]
+  }
+ ]
+}

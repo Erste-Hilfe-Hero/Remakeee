@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table c200ow2, written by tools/i18n/locales_c200ow2.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Nearest rest point: %s, to the %s.": "いちばん近い休けい所: %s(%s)。",
+  "No rest point found yet. Rest points show as a small cross on the map.": "まだ休けい所が見つかっていない。休けい所は地図に小さな十字で出る。",
+  "Reset": "リセット",
+  "Rest point": "休けい所",
+  "There is a rest point right here, in %s.": "ここ、%sに休けい所がある。",
+  "You were here last.": "さいごにいた場所。",
+  "east": "東",
+  "north": "北",
+  "north-east": "北東",
+  "north-west": "北西",
+  "south": "南",
+  "south-east": "南東",
+  "south-west": "南西",
+  "west": "西"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "_comment": "ko translation of the corvane_stones table, keyed by the English text.",
+ "strings": {
+  "A cartographer's stone at the edge of the Wide Rift. The rose has a fifth point, towards the dark.": "Wide 균열 가장자리의 지도 제작자의 돌. 방위표에 어둠 쪽을 가리키는 다섯 번째 끝이 있다.",
+  "A cartographer's stone at the water's edge. In the pond its rose turns the other way.": "물가의 지도 제작자의 돌. 연못에 비친 방위표는 반대쪽으로 돈다.",
+  "A cartographer's stone half sunk in the boards. The rose points at the harbour office. Of course it does.": "널빤지에 반쯤 가라앉은 지도 제작자의 돌. 방위표가 항구 사무소를 가리킨다. 당연하다.",
+  "A cartographer's stone in a flower bed. Its rose has been painted over grey, then scraped clean.": "꽃밭 속 지도 제작자의 돌. 방위표를 회색으로 덧칠했다가 다시 긁어냈다.",
+  "A cartographer's stone on the cliff. Rooks have used it as a table for years.": "절벽 위 지도 제작자의 돌. 떼까마귀들이 몇 년째 식탁으로 쓰고 있다.",
+  "A cartographer's stone sinking into the moor. The rose still points north. The stone has given up on the rest.": "늪으로 가라앉는 지도 제작자의 돌. 방위표는 아직 북쪽을 가리킨다. 나머지는 돌도 포기했다.",
+  "A cartographer's stone under the reeds. Somebody scratched 'not this way' under the rose.": "갈대 밑 지도 제작자의 돌. 누군가 방위표 밑에 '이쪽 아님'이라고 긁어 놓았다.",
+  "A cartographer's stone with a betting slip tucked under it. The slip lost.": "내기 전표가 끼워진 지도 제작자의 돌. 그 전표는 졌다.",
+  "A cartographer's stone wrapped in roots. The rose glows faintly when you touch it.": "뿌리에 감긴 지도 제작자의 돌. 만지면 방위표가 희미하게 빛난다.",
+  "A cartographer's stone, cracked down the middle. Both halves still point north. Stubborn.": "한가운데가 갈라진 지도 제작자의 돌. 두 조각 모두 아직 북쪽을 가리킨다. 고집도 세다.",
+  "A cartographer's stone, stained red, gold and green by a hundred years of dye.": "백 년 치 염료로 빨강, 금색, 초록으로 물든 지도 제작자의 돌.",
+  "An old cartographer's stone by the quay wall. Someone has chalked a price on it.": "부두 벽 옆의 오래된 지도 제작자의 돌. 누군가 분필로 값을 적어 놓았다.",
+  "Cartographer's stones: %d/%d": "지도 제작자의 돌: %d/%d"
+ }
+}

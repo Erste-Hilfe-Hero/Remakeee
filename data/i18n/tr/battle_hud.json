@@ -1,0 +1,12 @@
+{
+ "_comment": "Turkish texts for the German table battle_hud. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "%s: %d of %d can fight": "%s: %d / %d dövüşebilir",
+  "Again: %s x%d": "Yine: %s x%d",
+  "Again: -": "Yine: -",
+  "Foe's team": "Rakip takım",
+  "No effect": "Etkisiz",
+  "Strong": "Etkili",
+  "Your team": "Senin takımın"
+ }
+}

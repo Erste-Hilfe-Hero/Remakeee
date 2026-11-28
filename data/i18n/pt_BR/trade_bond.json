@@ -1,0 +1,32 @@
+{
+ "_comment": "Translations of the German table trade_bond, written by tools/i18n/locales_trade_bond.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s comes back to you. It has bonded with a new Wayfarer.": "%s volta para você. Ele criou laço com um novo Viajante.",
+  "%s feels the bond with its new Wayfarer. Unfurl it into %s now? You can furl it back later.": "%s sente o laço com seu novo Viajante. Desdobrá-lo em %s agora? Você pode recolhê-lo depois.",
+  "Boatwoman Mabry: In Hookwick every boat has two owners. Some Spirlings like that too.": "Barqueira Mabry: Em Hookwick todo barco tem dois donos. Alguns Spirlings também gostam disso.",
+  "Boatwoman Mabry: Let me own yours for a moment, then it's yours again. Once, mind you.": "Barqueira Mabry: Deixe ele ser meu por um momento, depois volta a ser seu. Só uma vez, hein.",
+  "Boatwoman Mabry: Two owners is plenty. Three is a quarrel. Trade with your friends now.": "Barqueira Mabry: Dois donos já bastam. Três é briga. Agora troque com seus amigos.",
+  "Courier Pell: A new Wayfarer's hand does that. Trade with me once and I'll hand yours right back.": "Mensageiro Pell: É a mão de um novo Viajante que faz isso. Troque uma vez comigo e eu devolvo o seu na hora.",
+  "Courier Pell: I carry letters and, now and then, a Spirling. Some of them come back changed.": "Mensageiro Pell: Eu levo cartas e, de vez em quando, um Spirling. Alguns voltam mudados.",
+  "Courier Pell: My route is full. Trade with your friends now, they carry farther than I do.": "Mensageiro Pell: Minha rota está cheia. Agora troque com seus amigos, eles levam mais longe que eu.",
+  "Ferrywoman Oona: One trade is all I keep in me. For the next one, find a friend who travels.": "Balseira Oona: Só tenho uma troca em mim. Para a próxima, encontre um amigo que viaje.",
+  "Ferrywoman Oona: Some Spirlings only unfurl when they bond with a new Wayfarer. A ferry teaches you that.": "Balseira Oona: Alguns Spirlings só se desdobram quando criam laço com um novo Viajante. Uma balsa ensina isso.",
+  "Ferrywoman Oona: Trade me one of yours. I'll trade it straight back, and it will have known two of us.": "Balseira Oona: Troque um dos seus comigo. Eu destroco na hora, e ele terá conhecido nós dois.",
+  "It has to hold %s during the trade.": "Ele precisa segurar %s durante a troca.",
+  "Needs: a bond with a new Wayfarer (a trade)": "Precisa: um laço com um novo Viajante (uma troca)",
+  "Needs: a bond with a new Wayfarer (a trade) while holding %s": "Precisa: um laço com um novo Viajante (uma troca) segurando %s",
+  "None of your Spirlings would unfurl from a trade. Come back with one that would.": "Nenhum dos seus Spirlings se desdobraria com uma troca. Volte com um que se desdobre.",
+  "Smith Hesketh: A blade changes in the quench. Some Spirlings change when they change hands.": "Ferreiro Hesketh: Uma lâmina muda na têmpera. Alguns Spirlings mudam quando trocam de mãos.",
+  "Smith Hesketh: Hand me one, and I'll hand it back. One trade, then I go back to my anvil.": "Ferreiro Hesketh: Me passe um, e eu devolvo. Uma troca, depois volto para minha bigorna.",
+  "Smith Hesketh: We traded once. The anvil is waiting, and so are your friends.": "Ferreiro Hesketh: Já trocamos uma vez. A bigorna está esperando, e seus amigos também.",
+  "Some Spirlings unfurl when they bond with a new Wayfarer. A few of them must hold a certain Keepsake during the trade; that Keepsake may stay on and goes with them. Town Wayfarers in Brindlewick, Corvane Quay, Cinderfold and Hookwick trade once each, too.": "Alguns Spirlings se desdobram quando criam laço com um novo Viajante. Alguns precisam segurar uma certa Lembrança durante a troca; essa Lembrança pode ficar e vai junto. Os Viajantes de Brindlewick, Corvane Quay, Cinderfold e Hookwick também trocam uma vez cada.",
+  "Trade %s and take it back? This Wayfarer trades only once.": "Trocar %s e pegá-lo de volta? Este Viajante troca só uma vez.",
+  "Trade which Spirling? You get it back at once.": "Trocar qual Spirling? Você o recebe de volta na hora.",
+  "Trade with Hesketh": "Trocar com Hesketh",
+  "Trade with Mabry": "Trocar com Mabry",
+  "Trade with Oona": "Trocar com Oona",
+  "Trade with Pell": "Trocar com Pell",
+  "Unfurls when it bonds with a new Wayfarer while holding %s.": "Desdobra-se quando cria laço com um novo Viajante segurando %s.",
+  "Unfurls when it bonds with a new Wayfarer.": "Desdobra-se quando cria laço com um novo Viajante."
+ }
+}

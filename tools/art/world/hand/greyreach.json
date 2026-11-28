@@ -1,0 +1,42 @@
+{
+ "add": {
+  "npcs": [
+   {
+    "id": "reserve_gate",
+    "x": 8,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "greyreach/reserve_gate",
+    "sprite": "villager"
+   },
+   {
+    "id": "lq_dessa",
+    "x": 9,
+    "y": 1,
+    "facing": "down",
+    "dialogue": "legend_quests/zephyrel_guide",
+    "sprite": "villager",
+    "show_flag": "story_complete",
+    "hide_flag": "lq_zephyrel_ready"
+   }
+  ],
+  "warps": [
+   {
+    "x": 11,
+    "y": 13,
+    "to": "rook_vault",
+    "tx": 5,
+    "ty": 7,
+    "facing": "up"
+   },
+   {
+    "x": 3,
+    "y": 6,
+    "to": "greyreach_hut",
+    "tx": 3,
+    "ty": 4,
+    "facing": "up"
+   }
+  ]
+ }
+}

@@ -1,0 +1,608 @@
+{
+ "plate_1": {
+  "lines": [
+   "A wage plate wedged in the cliff: 'Ruskweber pays. Ruskweber collects.'",
+   "You take a rubbing of the plate.",
+   "A tonic was stuck behind it. Finders keepers."
+  ],
+  "action": "give_item strong_tonic 1",
+  "flag": "plate_1",
+  "once": true,
+  "after_flag": {
+   "flag": "plate_1",
+   "lines": [
+    "Just a bare patch where a plate used to be."
+   ]
+  }
+ },
+ "plate_2": {
+  "lines": [
+   "A wage plate under the platform: 'Late is a cost. Sorry is a cost.'",
+   "You take a rubbing of the plate.",
+   "A tonic was stuck behind it. Finders keepers."
+  ],
+  "action": "give_item strong_tonic 1",
+  "flag": "plate_2",
+  "once": true,
+  "after_flag": {
+   "flag": "plate_2",
+   "lines": [
+    "Just a bare patch where a plate used to be."
+   ]
+  }
+ },
+ "plate_3": {
+  "lines": [
+   "A wage plate nailed behind the archive shelves: 'Paid in full. Signed, nobody.'",
+   "You take a rubbing of the plate.",
+   "A tonic was stuck behind it. Finders keepers."
+  ],
+  "action": "give_item strong_tonic 1",
+  "flag": "plate_3",
+  "once": true,
+  "after_flag": {
+   "flag": "plate_3",
+   "lines": [
+    "Just a bare patch where a plate used to be."
+   ]
+  }
+ },
+ "press_part_1": {
+  "lines": [
+   "A press platen behind the station stove, still in Gorse's wrapping paper."
+  ],
+  "action": "give_item remedy 1",
+  "flag": "press_part_1",
+  "once": true,
+  "after_flag": {
+   "flag": "press_part_1",
+   "lines": [
+    "Only soot left back here."
+   ]
+  }
+ },
+ "brisk": {
+  "if": {
+   "flag": [
+    "plate_1",
+    "plate_2",
+    "plate_3",
+    "plate_4",
+    "plate_5",
+    "plate_6",
+    "plate_7",
+    "plate_8"
+   ]
+  },
+  "lines": [
+   "Archivist Brisk: All eight wage plates. Fifty years of the clan's payroll, and every week a little crueller.",
+   "Archivist Brisk: I'll hang them in the hall. Nothing frightens a clan like its own receipts."
+  ],
+  "action": "give_item max_tonic 2",
+  "flag": "plates_handed",
+  "once": true,
+  "else": "brisk_ask",
+  "after_flag": {
+   "flag": "plates_handed",
+   "lines": [
+    "Archivist Brisk: The plates are up. Three clan men came to look. One cried. Good."
+   ]
+  }
+ },
+ "brisk_ask": [
+  "Archivist Brisk: The Ruskweber clan stamped its wages on brass plates, then hid them. Eight of them.",
+  "Archivist Brisk: Two are up here somewhere, six down in the Soot Vaults. Bring me rubbings of all of them."
+ ],
+ "mott": {
+  "if": {
+   "not_flag": "q_census_asked"
+  },
+  "lines": [
+   "Census Man Mott: I count Spirlings for the clan tax. Six kinds live down in the Vaults, and nobody's paid on them in years.",
+   "Census Man Mott: Bring each one past me. Don't worry, I only tax the ones that can't run."
+  ],
+  "flag": "q_census_asked",
+  "else": "mott_done"
+ },
+ "mott_done": {
+  "if": {
+   "flag": "census_done"
+  },
+  "lines": [
+   "Census Man Mott: You're all counted. I put you down as a dependant. Of the clan."
+  ],
+  "else": "mott_c0"
+ },
+ "mott_c0": {
+  "if": {
+   "has_species": "Hushkin",
+   "not_flag": "census_hushkin"
+  },
+  "lines": [
+   "Census Man Mott: A Hushkin. Counted. Taxed. Welcome to the books."
+  ],
+  "flag": "census_hushkin",
+  "next": "mott_c1",
+  "else": "mott_c1"
+ },
+ "mott_c1": {
+  "if": {
+   "has_species": "Blotling",
+   "not_flag": "census_blotling"
+  },
+  "lines": [
+   "Census Man Mott: A Blotling. Counted. Taxed. Welcome to the books."
+  ],
+  "flag": "census_blotling",
+  "next": "mott_c2",
+  "else": "mott_c2"
+ },
+ "mott_c2": {
+  "if": {
+   "has_species": "Duskdigger",
+   "not_flag": "census_duskdigger"
+  },
+  "lines": [
+   "Census Man Mott: A Duskdigger. Counted. Taxed. Welcome to the books."
+  ],
+  "flag": "census_duskdigger",
+  "next": "mott_c3",
+  "else": "mott_c3"
+ },
+ "mott_c3": {
+  "if": {
+   "has_species": "Calderox",
+   "not_flag": "census_calderox"
+  },
+  "lines": [
+   "Census Man Mott: A Calderox. Counted. Taxed. Welcome to the books."
+  ],
+  "flag": "census_calderox",
+  "next": "mott_c4",
+  "else": "mott_c4"
+ },
+ "mott_c4": {
+  "if": {
+   "has_species": "Cairnhold",
+   "not_flag": "census_cairnhold"
+  },
+  "lines": [
+   "Census Man Mott: A Cairnhold. Counted. Taxed. Welcome to the books."
+  ],
+  "flag": "census_cairnhold",
+  "next": "mott_c5",
+  "else": "mott_c5"
+ },
+ "mott_c5": {
+  "if": {
+   "has_species": "Talusgard",
+   "not_flag": "census_talusgard"
+  },
+  "lines": [
+   "Census Man Mott: A Talusgard. Counted. Taxed. Welcome to the books."
+  ],
+  "flag": "census_talusgard",
+  "next": "mott_end",
+  "else": "mott_end"
+ },
+ "mott_end": {
+  "if": {
+   "flag": [
+    "census_hushkin",
+    "census_blotling",
+    "census_duskdigger",
+    "census_calderox",
+    "census_cairnhold",
+    "census_talusgard"
+   ]
+  },
+  "lines": [
+   "Census Man Mott: That's all six. The clan owes you a receipt. Here's mine instead."
+  ],
+  "action": "give_item keen_lens 1",
+  "flag": "census_done",
+  "once": true,
+  "else": "mott_more"
+ },
+ "mott_more": [
+  "Census Man Mott: Still missing some. The Vaults are full of them. Mind the guards, they bill by the hour."
+ ],
+ "gorse": {
+  "if": {
+   "not_flag": "q_press_asked"
+  },
+  "lines": [
+   "Foreman Gorse: Halvard's old hand press is missing three parts. Thieves, the lot of 'em.",
+   "Foreman Gorse: One by the station, the rest down in the Vaults, I'd bet. Find 'em and I'll put in a good word."
+  ],
+  "flag": "q_press_asked",
+  "else": "gorse_wait"
+ },
+ "gorse_wait": {
+  "if": {
+   "not_flag": "press_done"
+  },
+  "lines": [
+   "Foreman Gorse: Any luck with them parts?"
+  ],
+  "next": "gorse_check",
+  "else": "gorse_after"
+ },
+ "gorse_check": {
+  "if": {
+   "flag": [
+    "press_part_1",
+    "press_part_2",
+    "press_part_3"
+   ]
+  },
+  "lines": [
+   "Every part came wrapped in a pawn ticket with Gorse's name on it.",
+   "Foreman Gorse: Ah. Well. A man's got debts. Halvard's got a press. It was simple maths.",
+   "Foreman Gorse: Tell you what. You forget the tickets, I forget your face. No? Then let's do this the loud way."
+  ],
+  "action": "battle gorse",
+  "else": "gorse_more"
+ },
+ "gorse_more": [
+  "Foreman Gorse: Keep looking. And if anyone asks, I was never here."
+ ],
+ "gorse_after": [
+  "Foreman Gorse: Halvard put me on sweeping duty. For life. It's very clean down here now."
+ ],
+ "gorse_defeat": {
+  "lines": [
+   "Foreman Gorse: Fine! Take the parts to Halvard. I'll tell him I found them. He won't believe me either."
+  ],
+  "action": "give_item iron_burr 1",
+  "flag": "press_done",
+  "once": true
+ },
+ "tovan": {
+  "if": {
+   "not_flag": "q_tovan_done"
+  },
+  "lines": [
+   "Kiln-Keeper Tovan: The old town kiln went cold the day the clan stopped paying for coal."
+  ],
+  "flag": "q_tovan_asked",
+  "next": "tovan_check",
+  "else": "tovan_after"
+ },
+ "tovan_check": {
+  "if": {
+   "has_element": "EMBER"
+  },
+  "lines": [
+   "Your Ember Spirling breathes on the grate. The kiln coughs, then roars.",
+   "Kiln-Keeper Tovan: Ha! Free heat. Don't tell the clan, they'll send a bill for the warmth."
+  ],
+  "action": "give_item power_brew 2",
+  "flag": "q_tovan_done",
+  "once": true,
+  "else": "tovan_need"
+ },
+ "tovan_need": [
+  "Kiln-Keeper Tovan: Got an Ember Spirling? Bring one in your team. A spark's all it needs."
+ ],
+ "tovan_after": [
+  "Kiln-Keeper Tovan: She's burning lovely. The clan already sent a man to ask about it. I said 'what kiln'."
+ ],
+ "pell": {
+  "if": {
+   "not_flag": "q_ash_asked"
+  },
+  "lines": [
+   "Engraver Pell: I'm cutting a plate for the old Wardens. The guild says it needs ash from three places in the Vaults.",
+   "Engraver Pell: Superstition, mostly. But the last plate without it fell on a man. A clan man. So, mixed results."
+  ],
+  "flag": "q_ash_asked",
+  "else": "pell_wait"
+ },
+ "pell_wait": {
+  "if": {
+   "flag": [
+    "ash_1",
+    "ash_2",
+    "ash_3"
+   ]
+  },
+  "lines": [
+   "Engraver Pell: Three ashes. Lovely. The Wardens get their plate, the clan gets nothing. My favourite kind of job."
+  ],
+  "action": "give_item revival_leaf 2",
+  "flag": "ash_done",
+  "once": true,
+  "after_flag": {
+   "flag": "ash_done",
+   "lines": [
+    "Engraver Pell: The plate's up. Every name spelled right, for once."
+   ]
+  },
+  "else": "pell_more"
+ },
+ "pell_more": [
+  "Engraver Pell: Still need ash. Wage cellar, kiln drains and the strongroom, if you dare."
+ ],
+ "tibb": {
+  "if": {
+   "not_flag": "q_tibb_asked"
+  },
+  "lines": [
+   "Tibb: My Mirkmole ran into the Vaults under Cinderfold. Get him back? Please? I'm only small."
+  ],
+  "flag": "q_tibb_asked",
+  "else": "tibb_wait"
+ },
+ "tibb_wait": {
+  "if": {
+   "flag": "tibb_mole_found",
+   "not_flag": "q_tibb_done"
+  },
+  "lines": [
+   "Tibb: Mole! You found him! ...Oh. And you didn't open the chest he was sleeping in? Shame.",
+   "Tibb: My brother Dace said a mug would carry the chest out too. Dace! The mug's back!"
+  ],
+  "action": "battle dace",
+  "else": "tibb_idle"
+ },
+ "tibb_idle": {
+  "lines": [
+   "Tibb: Mole's in the Vaults. Deep. Probably asleep on something shiny."
+  ],
+  "after_flag": {
+   "flag": "q_tibb_done",
+   "lines": [
+    "Tibb: No hard feelings. Uncle Fitch says you're alright now. That's rare."
+   ]
+  }
+ },
+ "dace_defeat": {
+  "lines": [
+   "Dace: Ugh. Fine. Kid keeps the mole, you keep your teeth. Fair trade in Ashmere.",
+   "Tibb: I'll tell Uncle Fitch you're family-ish. He runs the toll in the Vaults."
+  ],
+  "action": "trust fitch 40; give_item dash_brew 2",
+  "flag": "q_tibb_done",
+  "once": true
+ },
+ "harl": {
+  "if": {
+   "not_flag": "q_harl_asked"
+  },
+  "lines": [
+   "Warden Harl: Bring an old man coal from the Vaults and he'll tell you how Ashmere really works. One sack, one story."
+  ],
+  "flag": "q_harl_asked",
+  "else": "harl_s1"
+ },
+ "harl_s1": {
+  "if": {
+   "flag": "harl_1",
+   "not_flag": "harl_told_1"
+  },
+  "lines": [
+   "Warden Harl: Story one. The first Paymaster paid in bread. People liked him. So the clan replaced him."
+  ],
+  "flag": "harl_told_1",
+  "else": "harl_s2"
+ },
+ "harl_s2": {
+  "if": {
+   "flag": "harl_2",
+   "not_flag": "harl_told_2"
+  },
+  "lines": [
+   "Warden Harl: Story two. I kept the Kiln Rift for thirty years. The clan sent me a medal. Then a bill for the medal."
+  ],
+  "flag": "harl_told_2",
+  "else": "harl_s3"
+ },
+ "harl_s3": {
+  "if": {
+   "flag": "harl_3",
+   "not_flag": "harl_told_3"
+  },
+  "lines": [
+   "Warden Harl: Story three. My best friend sold my post to the Ruskwebers. I'd have done the same. That's the sad part."
+  ],
+  "flag": "harl_told_3",
+  "else": "harl_end"
+ },
+ "harl_end": {
+  "if": {
+   "flag": [
+    "harl_told_1",
+    "harl_told_2",
+    "harl_told_3"
+   ]
+  },
+  "lines": [
+   "Warden Harl: That's all my stories. The moral is: count your fingers after every handshake."
+  ],
+  "action": "give_item kin_charm 1",
+  "flag": "harl_done",
+  "once": true,
+  "else": "harl_more"
+ },
+ "harl_more": [
+  "Warden Harl: No coal, no story. I'm old, not charitable."
+ ],
+ "bram": {
+  "if": {
+   "not_flag": "q_bram_asked"
+  },
+  "lines": [
+   "Bram: Came all the way from Crowcrest. My Shalebats flew off over the ash. Three of them.",
+   "Bram: My cousin Rook lives here. He said he'd keep an eye out. Good lad, Rook."
+  ],
+  "flag": "q_bram_asked",
+  "else": "bram_wait"
+ },
+ "bram_wait": {
+  "if": {
+   "flag": "bram_bats_found",
+   "not_flag": "q_bram_done"
+  },
+  "lines": [
+   "Bram: My bats! Where were they? ...A cage in the Vaults? With Rook's name on the tag?",
+   "Rook: Cousin! Funny story. Actually it's not funny. Your friend here is about to have a bad day."
+  ],
+  "action": "battle rook",
+  "else": "bram_idle"
+ },
+ "bram_idle": {
+  "lines": [
+   "Bram: Rook hasn't seen them. Says the Vaults are no place for bats. Odd thing to say."
+  ],
+  "after_flag": {
+   "flag": "q_bram_done",
+   "lines": [
+    "Bram: Family. You can't choose 'em, but you can stop lending 'em money."
+   ]
+  }
+ },
+ "rook_defeat": {
+  "lines": [
+   "Rook: The Paymaster paid good money for bats! Times are hard, cousin!",
+   "Bram: Then get a job, Rook. Here, this is for you. Not you, Rook."
+  ],
+  "action": "give_item swift_feather 1",
+  "flag": "q_bram_done",
+  "once": true
+ },
+ "marn": {
+  "if": {
+   "not_flag": "q_marn_asked"
+  },
+  "lines": [
+   "Widow Marn: The clan wrote IOUs to half this town and hid them in the Vaults. Five of them. Bring them up and I'll burn them, free folk at last."
+  ],
+  "flag": "q_marn_asked",
+  "else": "marn_wait"
+ },
+ "marn_wait": {
+  "if": {
+   "flag": [
+    "iou_1",
+    "iou_2",
+    "iou_3",
+    "iou_4",
+    "iou_5"
+   ]
+  },
+  "lines": [
+   "Widow Marn: All five. You didn't read the names on them, did you? 'Owed to Marn.' Every one.",
+   "Widow Marn: Burn them? Darling, I'm going to frame them. Here's your cut. Don't spend it on trust."
+  ],
+  "action": "give_item spark_drop 2",
+  "flag": "ious_done",
+  "once": true,
+  "after_flag": {
+   "flag": "ious_done",
+   "lines": [
+    "Widow Marn: Collections are up this week. Thank you for your service."
+   ]
+  },
+  "else": "marn_more"
+ },
+ "marn_more": [
+  "Widow Marn: Five IOUs, darling. Every room of the Vaults has one tucked somewhere."
+ ],
+ "verse_1": {
+  "lines": [
+   "The verse scratched here reads: 'Salt keeps the dead and the debts the same.'"
+  ],
+  "action": "give_item focus_brew 1",
+  "flag": "verse_1",
+  "once": true,
+  "after_flag": {
+   "flag": "verse_1",
+   "lines": [
+    "You know this verse by heart now."
+   ]
+  }
+ },
+ "verse_2": {
+  "lines": [
+   "The verse scratched here reads: 'Glass remembers every face that lied to it.'"
+  ],
+  "action": "give_item focus_brew 1",
+  "flag": "verse_2",
+  "once": true,
+  "after_flag": {
+   "flag": "verse_2",
+   "lines": [
+    "You know this verse by heart now."
+   ]
+  }
+ },
+ "verse_3": {
+  "lines": [
+   "The verse scratched here reads: 'Sing it once for free. Twice costs extra.'"
+  ],
+  "action": "give_item focus_brew 1",
+  "flag": "verse_3",
+  "once": true,
+  "after_flag": {
+   "flag": "verse_3",
+   "lines": [
+    "You know this verse by heart now."
+   ]
+  }
+ },
+ "wenna": {
+  "if": {
+   "not_flag": "q_wenna_asked"
+  },
+  "lines": [
+   "Busker Wenna: The salt flats had a song once. Three verses, scratched into the Vault walls so the clan couldn't tax the paper."
+  ],
+  "flag": "q_wenna_asked",
+  "else": "wenna_wait"
+ },
+ "wenna_wait": {
+  "if": {
+   "flag": [
+    "verse_1",
+    "verse_2",
+    "verse_3"
+   ]
+  },
+  "lines": [
+   "Busker Wenna: That's the whole song! Listen.",
+   "Busker Wenna: ...Yeah, it's worse sung. Most true things are. Have this, I can't afford to keep it."
+  ],
+  "action": "give_item spark_charm 1",
+  "flag": "song_done",
+  "once": true,
+  "after_flag": {
+   "flag": "song_done",
+   "lines": [
+    "Busker Wenna: The clan fined me for singing it. Worth every coin you didn't give me."
+   ]
+  },
+  "else": "wenna_more"
+ },
+ "wenna_more": [
+  "Busker Wenna: Three verses on three walls down in the Soot Vaults. Look closely."
+ ],
+ "juno_1_intro": [
+  "Juno: You're after the wage plates too? Cute. I'm Juno Sallow. I collect things. Mostly other people's."
+ ],
+ "juno_1_defeat": [
+  "Juno: Alright, you've got hands. Saltglass next. Don't be late, I hate waiting for losers."
+ ],
+ "juno_1": [
+  "Juno: Alright, you've got hands. Saltglass next. Don't be late, I hate waiting for losers."
+ ],
+ "juno_2_intro": [
+  "Juno: Second round. I've been training. Also lying. Mostly training."
+ ],
+ "juno_2_defeat": [
+  "Juno: Again? Fine. Last plate's in the Vaults strongroom. See you at the bottom, rookie."
+ ],
+ "juno_2": [
+  "Juno: Again? Fine. Last plate's in the Vaults strongroom. See you at the bottom, rookie."
+ ]
+}

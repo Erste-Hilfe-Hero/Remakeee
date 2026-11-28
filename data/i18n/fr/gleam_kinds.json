@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table gleam_kinds, written by tools/i18n/locales_gleam_kinds.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  " Frost glitters on its hide: a Rime Gleam!": " Du givre scintille sur sa peau : un Reflet de givre !",
+  " It glows like the last of the sun: a Duskgold Gleam!": " Il luit comme les derniers rayons du soleil : un Reflet d'or du soir !",
+  " It is washed in deep ink: an Inkwash Gleam!": " Il est baigné d'encre profonde : un Reflet d'encre !",
+  " Its colours never hold still: an Opaline Gleam!": " Ses couleurs ne tiennent jamais en place : un Reflet opalin !",
+  "%d seen, %d bonded": "%d vus, %d liés",
+  "Duskgold Gleam": "Reflet d'or du soir",
+  "Gleams bonded: %s": "Reflets liés : %s",
+  "Gleams seen: %s": "Reflets vus : %s",
+  "Inkwash Gleam": "Reflet d'encre",
+  "Opaline Gleam": "Reflet opalin",
+  "Rarer Gleams show their own mark:": "Les reflets plus rares ont leur propre marque :",
+  "Rime Gleam": "Reflet de givre"
+ }
+}

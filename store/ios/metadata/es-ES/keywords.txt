@@ -1,0 +1,1 @@
+criaturas,coleccionar,domar,entrenador,pixel,retro,estrategia,evolución,equipo,jefes,historia,rol

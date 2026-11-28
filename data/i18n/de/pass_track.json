@@ -1,0 +1,30 @@
+{
+ "_comment": "German texts from tools/i18n/de_pass_track.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%d of %d pass points": "%d von %d Pass-Punkten",
+  "%d premium rewards reached and waiting.": "%d erreichte Premium-Belohnungen warten.",
+  "Free:": "Kostenlos:",
+  "Free: %s": "Kostenlos: %s",
+  "Locked: needs the Wayfarer Pass.": "Gesperrt: braucht den Wanderer-Pass.",
+  "Opens the premium row of every step.": "Öffnet die Premium-Reihe jeder Stufe.",
+  "Pass track": "Pass-Pfad",
+  "Premium (Wayfarer Pass):": "Premium (Wanderer-Pass):",
+  "Premium row: Wayfarer Pass": "Premium-Reihe: Wanderer-Pass",
+  "Premium: %s": "Premium: %s",
+  "Reached at %d pass points.": "Erreicht bei %d Pass-Punkten.",
+  "Ready to take.": "Bereit zum Abholen.",
+  "Something went wrong. Try again in a moment.": "Etwas ist schiefgegangen. Versuch es gleich noch einmal.",
+  "Step %d": "Stufe %d",
+  "Step %d of %d": "Stufe %d von %d",
+  "Step %d: %s": "Stufe %d: %s",
+  "Take all rewards (%d)": "Alle Belohnungen nehmen (%d)",
+  "Take the free reward": "Kostenlose Belohnung nehmen",
+  "Take the premium reward": "Premium-Belohnung nehmen",
+  "Taken.": "Genommen.",
+  "The premium row needs the Wayfarer Pass.": "Die Premium-Reihe braucht den Wanderer-Pass.",
+  "Top row: free for everyone. Bottom row: with the Wayfarer Pass. Pass points come from battles won (%d), bonds (%d) and daily tasks (%d), up to %d a day.": "Obere Reihe: kostenlos für alle. Untere Reihe: mit dem Wanderer-Pass. Pass-Punkte gibt es für gewonnene Kämpfe (%d), Bindungen (%d) und Tagesaufträge (%d), bis zu %d am Tag.",
+  "You got:": "Du hast bekommen:",
+  "ends in %s": "endet in %s"
+ }
+}

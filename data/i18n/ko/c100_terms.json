@@ -1,0 +1,12 @@
+{
+ "_comment": "Korean texts for the German table c100_terms. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "Before you play": "플레이하기 전에",
+  "I have read and accept the Terms of Use and the Privacy Policy.": "이용약관과 개인정보 처리방침을 읽었으며 이에 동의합니다.",
+  "Read the Terms of Use": "이용약관 읽기",
+  "Read the Privacy Policy": "개인정보 처리방침 읽기",
+  "Ticked": "선택됨",
+  "Not ticked": "선택 안 됨",
+  "Tick the box above to continue.": "계속하려면 위의 상자를 선택하세요."
+ }
+}

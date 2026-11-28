@@ -1,0 +1,79 @@
+{
+ "sign": [
+  "BRACKWATER FEN",
+  "Moor, rings 12 to 15.",
+  "Stay on the boardwalks. The pale water is shallow, the dark is not."
+ ],
+ "smooth": [
+  "A boulder sits in the reeds, smoothed by hands, not water."
+ ],
+ "marit": [
+  "Marit: The reeds grow back twice as fast since the storm. Good for my trade."
+ ],
+ "marit_intro": [
+  "Marit: Mind the boardwalk! Now, a duel."
+ ],
+ "marit_defeat": [
+  "Marit: Cut down to size."
+ ],
+ "jory": [
+  "Jory: On a misty day you can't see your own boots out here."
+ ],
+ "jory_intro": [
+  "Jory: Lost? No? Then let's battle."
+ ],
+ "jory_defeat": [
+  "Jory: I'm the one who's lost now."
+ ],
+ "hesk": [
+  "Hesk: Reedhaven's down the boardwalk. Houses on stilts. Mind the gaps."
+ ],
+ "hesk_intro": [
+  "Hesk: Out this far? You must be good."
+ ],
+ "hesk_defeat": [
+  "Hesk: You are good."
+ ],
+ "sablecove_sign": [
+  "SABLECOVE",
+  "Inside: Wading Boots. The inner chamber opens at low tide."
+ ],
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 11"
+ },
+ "lake_bench": {
+  "lines": [
+   "A bench with a view over the lake. Sit and listen for a while?"
+  ],
+  "choices": [
+   {
+    "text": "Sit and listen",
+    "action": "lake_bench Puddlet brackwater_fen/lake_hint"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "lake_hint": [
+  "You remember a saying: \"In Quillbrook, the stone too smooth to be natural is a door.\""
+ ],
+ "tidewatcher": {
+  "lines": [
+   "Tidewatcher Oda: Sablecove only lets you in when the water's low. I've charted it for forty years.",
+   "Tidewatcher Oda: Take a copy of my chart. Look at it in your satchel before you set out."
+  ],
+  "action": "give_item tide_chart 1",
+  "flag": "got_tide_chart",
+  "once": true,
+  "after_flag": {
+   "flag": "got_tide_chart",
+   "lines": [
+    "Tidewatcher Oda: Low water twice a day, as sure as breakfast and supper."
+   ]
+  }
+ }
+}

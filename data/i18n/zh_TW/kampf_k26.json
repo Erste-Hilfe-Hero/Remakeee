@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_k26, written by tools/i18n/locales_kampf_k26.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s sent you matchup notes.": "%s給你寄來了屬性相性筆記。",
+  "%s's notes: %d matchups you did not know yet. The move list shows them now.": "%s的筆記：%d條你還不知道的屬性相性。招式列表現在會顯示它們。",
+  "%s's notes: nothing you did not know already. Flattering, in a way.": "%s的筆記：全是你已經知道的。某種意義上算是恭維。",
+  "A seal is cut into the base: %s. Which element breaks it?": "基座上刻著一道封印：%s。哪種元素能破開它？",
+  "Rift theme: %s": "裂隙主題：%s",
+  "Send %d matchup notes to %s? You both get %d friendship points.": "要把%d條屬性相性筆記寄給%s嗎？你們都會獲得%d點友情值。",
+  "Share matchup notes": "分享屬性相性筆記",
+  "The seal cracks. Someone hid %s behind it and never came back for it.": "封印裂開了。有人把%s藏在後面，再也沒回來取。",
+  "The seal hums, smug and whole. It has met your kind before.": "封印嗡嗡作響，完好無損，一臉得意。它早見過你這種人。",
+  "Those notes are smudged. Try again after your next battle.": "這些筆記糊掉了。下次戰鬥後再試試。",
+  "You already sent notes to this friend today. Tomorrow again!": "今天已經給這位好友寄過筆記了。明天再來！",
+  "Your notes are empty. Land a few hits first, then share what you learned.": "你的筆記還是空的。先打中幾次，再分享你學到的。",
+  "Your notes are on their way to %s. Knowledge shared is knowledge you can't sell. Oh well.": "你的筆記正寄往%s。分享出去的知識就賣不掉了。算了。"
+ }
+}

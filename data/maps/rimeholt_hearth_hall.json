@@ -1,0 +1,35 @@
+{
+ "name": "Hearth Hall",
+ "region": "quillmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "rimeholt",
+   "tx": 8,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "elder",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/rimeholt_hearth_hall_elder",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

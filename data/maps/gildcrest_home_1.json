@@ -1,0 +1,37 @@
+{
+ "name": "Servants' Wing",
+ "region": "halcyra",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCffffCCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "gildcrest",
+   "tx": 3,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "bertrand",
+   "x": 2,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "gildcrest/bertrand",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

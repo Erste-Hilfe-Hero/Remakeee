@@ -1,0 +1,11 @@
+{
+ "_comment": "Texts for ja from tools/i18n/locales_kampf_k27.py (KAMPF_PLAN_1000 items 138, 179).",
+ "strings": {
+  "%s is cured.": "%sは治った。",
+  "Hesper: %d coins. Forgetting is free, remembering is not.": "ヘスパー: %dコインだ。忘れるのはタダ、思い出すのはタダじゃない。",
+  "Hesper: %s remembers everything it can. Lucky thing.": "ヘスパー: %sは覚えられることを全部覚えてる。運のいい子だ。",
+  "Hesper: And if one of yours forgot an art it once knew, I can dig it back up. For a fee. Memory is cheap; mine isn't.": "ヘスパー: それと、あんたの子が昔覚えたわざを忘れたなら、掘り起こしてやるよ。もちろん有料だ。記憶は安い。あたしのは安くないがね。",
+  "On Story every status ends with the battle. On the other difficulties Scorch, Root and Jolt stay on until an item, an art or a rest cures them.": "物語では状態はすべて戦いと一緒に終わる。ほかの難易度では焦げ、根づき、しびれは道具、わざ、休息で治るまで残る。",
+  "Who forgot an art? %d coins each.": "わざを忘れたのは誰? 1つ%dコイン。"
+ }
+}

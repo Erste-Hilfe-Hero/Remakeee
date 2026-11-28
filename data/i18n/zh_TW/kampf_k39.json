@@ -1,0 +1,12 @@
+{
+ "_comment": "Traditional Chinese texts for the German table kampf_k39. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "Diamond": "菱形",
+  "Square": "方形",
+  "Triangle": "三角形",
+  "Moon": "月亮",
+  "The call: %s.": "呼喚：%s。",
+  "Echo with the keys: left %s, up %s, right %s.": "用按鍵回應：左 %s，上 %s，右 %s。",
+  "Any tap or the accept key counts.": "點哪裡都算，確認鍵也算。"
+ }
+}

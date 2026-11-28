@@ -1,0 +1,11 @@
+{
+  "dirs": [
+    "res://tests/slow"
+  ],
+  "include_subdirs": true,
+  "prefix": "test_slow_",
+  "suffix": ".gd",
+  "log_level": 1,
+  "should_exit": true,
+  "should_exit_on_success": true
+}

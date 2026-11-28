@@ -1,0 +1,14 @@
+- Neuer Shop, 70 Spirlings, 5 Glanzarten
+- Wetter, 35 Rätsel, Geheimnisse
+- Bessere Karten, steigender Grad
+- Natürlicher Start, Intro, Filmszenen
+- Storys nach dem Ende, Quivermoor-Duelle
+- Questbuch, Wohin jetzt?
+- Offline spielbar
+- Bindungstalismane, Erster-Fang-Paket
+- Meins! vibriert, zeigt den Spirling
+- Tagesgeschenk, Aufgaben, Tages-Spirling
+- Spirlog-Preise, Freunde einladen
+- Tauschen, Entfalten per Tausch
+- Größere Texte, flüssiger
+- Fixes: Era I-V, Sicherheit, Tempo

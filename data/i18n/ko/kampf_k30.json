@@ -1,0 +1,10 @@
+{
+ "_comment": "Korean texts for the German table kampf_k30. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "Acting order %s": "행동 순서 %s",
+  "Auto aim: %s": "자동 조준: %s",
+  "Fight two on two, with another friend's echo beside you?": "다른 친구의 에코와 함께 2대2로 싸울까?",
+  "That field cannot be picked.": "그 필드는 고를 수 없다.",
+  "foe %s": "상대 %s"
+ }
+}

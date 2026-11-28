@@ -1,0 +1,94 @@
+{
+ "_comment": "Hidden mechanics of 1.3.2 (docs/HIDDEN_MECHANICS.md). Nothing here is ever shown as a list in game, sold or rolled for money. 'unfolds': extra, secret unfold paths read by HiddenMechanics.unfold_targets (Spirling.unfurl_targets); 'to' must already be a normal unfold target of 'from', so Furl back keeps working. 'spawns': rare wild Spirlings of one map that only step out while 'when' holds (HiddenMechanics.maybe_spawn, called by the encounter code); without min/max the map table's rings are used. 'spots': hidden things on a map cell: 'at' tile (a solid cell nothing else answers), landmark or sign (after the normal text). 'times': presses needed; 'code': a word written at the sign; 'action' knack or echo. 'battle': deterministic damage and crit touches, only in world battles (BattleModel.hidden_rules), never in league, live duel, raid or echo battles. 'knack': each Spirling's favourite sky, worked out from its uid (no save field). 'when' keys: phase (dawn/day/dusk/night), weather (clear/rain/fog/wind/storm), moon (full/new, Berlin calendar day), weekday (0 Sunday .. 6), date (MM-DD, Berlin), chain (Gleam chain at least), ring, held, kinship, knows (art name), map, lead_element.",
+ "found_record": "hidden_found",
+ "count_record": "hidden_found_n",
+ "taps_record": "hidden_taps",
+ "unfolds": [
+  {"id": "u_kindlop_night", "region": "veydal", "from": "Kindlop", "to": "Smoldrake", "when": {"ring": 10, "held": "bark_wrap", "phase": "night"}},
+  {"id": "u_drizzlet_rain", "region": "corvane", "from": "Drizzlet", "to": "Rainmantle", "when": {"weather": "rain"}},
+  {"id": "u_ashwren_pulse", "region": "ashmere", "from": "Ashwren", "to": "Ashcrest", "when": {"knows": "Brazier Pulse", "map": "cinderfold"}},
+  {"id": "u_solkit_moon", "region": "solenne", "from": "Solkit", "to": "Solmantle", "when": {"moon": "full", "phase": "night"}},
+  {"id": "u_glimmoth_candles", "region": "quivermoor", "from": "Glimmoth", "to": "Wickmoth", "when": {"kinship": 40, "map": "candle_causeway"}},
+  {"id": "u_vesk_storm", "region": "quillmarch", "from": "Vesk", "to": "Veskara", "when": {"ring": 18, "weather": "storm"}},
+  {"id": "u_tollpip_lock", "region": "vellmarch", "from": "Tollpip", "to": "Tollgull", "when": {"ring": 18, "held": "iron_burr", "map": "hookwick"}}
+ ],
+ "spawns": [
+  {"id": "s_moon_hush", "region": "veydal", "map": "fernstair", "species": "Hushkin", "min": 6, "max": 9, "chance": 0.3, "when": {"phase": "night", "moon": "full"}, "line": "Moonlight pools in the ferns. Something quiet steps out..."},
+  {"id": "s_rain_prism", "region": "corvane", "map": "stillwater", "species": "Prismist", "chance": 0.2, "when": {"weather": "rain"}, "line": "Rain hammers the canal. A shimmer rises out of the spray..."},
+  {"id": "s_fog_wraith", "region": "ashmere", "map": "saltglass", "species": "Fumewraith", "chance": 0.25, "when": {"weather": "fog", "phase": "dusk"}, "line": "The dusk fog thickens into a shape..."},
+  {"id": "s_chain_gull", "region": "vellmarch", "map": "weeping_locks", "species": "Tollgull", "chance": 0.2, "when": {"chain": 5}, "line": "Your long search stirred the locks. Something new surfaces..."},
+  {"id": "s_night_orrlet", "region": "halcyra", "map": "orrery_ridge", "species": "Orrlet", "chance": 0.25, "when": {"phase": "night"}, "line": "The stars turn above the ridge. A small orbit drifts down..."},
+  {"id": "s_moon_moth", "region": "quivermoor", "map": "hymnmarsh", "species": "Glimmoth", "chance": 0.3, "when": {"phase": "night", "moon": "full"}, "line": "Under the full moon the marsh hums. A moth of light lands..."},
+  {"id": "s_sunday_owl", "region": "quillmarch", "map": "hoarfrost_moor", "species": "Sleetowl", "chance": 0.3, "when": {"weekday": 0, "phase": "dawn"}, "line": "Sunday dawn, frost on everything. An owl calls once..."},
+  {"id": "s_wind_hare", "region": "solenne", "map": "glasswind_flats", "species": "Highhare", "chance": 0.25, "when": {"weather": "wind"}, "line": "The wind lifts the sand. Something leaps through the gusts..."}
+ ],
+ "spots": [
+  {"id": "p_lone_oak", "region": "veydal", "map": "gloamwood", "x": 4, "y": 4, "at": "tile", "times": 3,
+   "taps": ["A lone tree. Old marks are scratched into the bark.", "You knock on the trunk. Something rattles inside."],
+   "lines": ["You knock a third time. A hollow opens, and something drops out!"], "item": "kin_charm", "count": 1,
+   "after": ["Just a tree now. It seems a little lighter."]},
+  {"id": "p_cairn_back", "region": "veydal", "map": "crowcrest", "x": 3, "y": 8, "at": "tile",
+   "lines": ["Between the Crowcrest Cairn and the cliff, one stone is loose. Something is wedged under it!"], "item": "spark_drop", "count": 1,
+   "after": ["Only moss behind the cairn now."]},
+  {"id": "p_beacon_blink", "region": "veydal", "map": "brindlewick", "x": 1, "y": 11, "at": "landmark", "when": {"phase": "night"}, "repeat": true,
+   "lines": ["In the dark, the old beacon blinks: slow, slow, quick.", "A keeper's note is nailed below: 'If the quay ever asks, answer LANTERN.'"]},
+  {"id": "p_quay_word", "region": "corvane", "map": "corvane_quay", "x": 10, "y": 13, "at": "sign", "code": "LANTERN",
+   "taps": ["Under the sign, someone scratched a row of empty boxes."],
+   "lines": ["The boards click. A drawer slides out of the post!"], "item": "spark_charm", "count": 1},
+  {"id": "p_heron_back", "region": "corvane", "map": "corvane_quay", "x": 11, "y": 7, "at": "tile",
+   "lines": ["Tucked behind the Quay Heron: a fisher's lost lens."], "item": "keen_lens", "count": 1,
+   "after": ["Gull feathers behind the heron. Nothing else."]},
+  {"id": "p_needle_fog", "region": "ashmere", "map": "saltglass", "x": 10, "y": 21, "at": "landmark", "when": {"weather": "fog"},
+   "lines": ["In the fog, the salt behind the Needle glows. You brush it away and find something."], "item": "swift_feather", "count": 1},
+  {"id": "p_founder_mask", "region": "vellmarch", "map": "larkspur_heights", "x": 5, "y": 13, "at": "landmark", "times": 3,
+   "taps": ["The founder's mask sits a little crooked."],
+   "lines": ["You push the mask straight. Behind it, a word is cut into the stone: TALLOW."]},
+  {"id": "p_last_word", "region": "vellmarch", "map": "lastlamp", "x": 5, "y": 17, "at": "sign", "code": "TALLOW",
+   "taps": ["Under the sign, someone scratched a row of empty boxes."],
+   "lines": ["The lamp above flares once. Candles roll out of a hidden shelf!"], "item": "rest_candle", "count": 3},
+  {"id": "p_star_well", "region": "halcyra", "map": "starwell", "x": 5, "y": 8, "at": "tile", "action": "knack", "repeat": true,
+   "lines": ["You look into the Star Well. Your team's reflections ripple."]},
+  {"id": "p_echo_well", "region": "solenne", "map": "ochrewell", "x": 6, "y": 8, "at": "tile", "action": "echo", "times": 7, "flag": "hm_echo_name",
+   "taps": ["You call into the well. Only silence."],
+   "lines": ["You call once more... and the well answers: '{name}... {name}... {name}...'"],
+   "after": ["The well hums your name, very softly."]},
+  {"id": "p_chapel_lamp", "region": "quivermoor", "map": "rootchapel", "x": 8, "y": 17, "at": "tile", "times": 3, "when": {"phase": "night"},
+   "taps": ["The chapel lamp gutters. Something glints in the wax."],
+   "lines": ["The wax gives way. A leaf, still green, was sealed inside!"], "item": "revival_leaf", "count": 1},
+  {"id": "p_frost_fence", "region": "quillmarch", "map": "proofgate", "x": 2, "y": 5, "at": "tile", "when": {"lead_element": "FROST"},
+   "lines": ["Your Spirling breathes on the old fence. Frost draws a stamp, and a charm drops from a crack!"], "item": "frost_charm", "count": 1}
+ ],
+ "code_prompt": "Write in the boxes",
+ "code_wrong": "Nothing happens. The boxes stay empty.",
+ "code_leave": "Leave it",
+ "code_write": "Write something",
+ "battle": {
+  "combos": [
+   {"id": "b_kindled_breath", "first": "Kindle Up", "then": "Cinder Breath", "mult": 1.3, "text": "%s's kindled breath roars!"},
+   {"id": "b_misted_shot", "first": "Chill Mist", "then": "Spindrift Shot", "mult": 1.25, "text": "%s's shot freezes in the mist!"}
+  ],
+  "skies": [
+   {"id": "b_rainbow", "field": "high_tide", "element": "LUMEN", "mult": 1.2, "text": "%s's light breaks through the rain!"},
+   {"id": "b_fog_cutter", "field": "deep_murk", "element": "GALE", "mult": 1.15, "text": "%s's wind tears the fog apart!"}
+  ],
+  "keen": [
+   {"id": "b_last_spark", "rule": "low_vigor", "below": 0.25, "crit_mult": 2.0},
+   {"id": "b_underdog", "rule": "underdog", "rings": 10, "crit_mult": 2.0}
+  ]
+ },
+ "knack": {
+  "skies": ["clear", "rain", "fog", "wind", "storm"],
+  "kinship": 1,
+  "words": {
+   "clear": "%s: its reflection is brightest under a wide, open sky.",
+   "rain": "%s: its reflection is brightest when rain drums on the roofs.",
+   "fog": "%s: its reflection is brightest when the world goes soft and grey.",
+   "wind": "%s: its reflection is brightest when the wind pulls at the grass.",
+   "storm": "%s: its reflection is brightest when thunder walks the hills."
+  }
+ },
+ "dates": [
+  {"id": "d_long_night", "date": "12-21", "line": "The longest night of the year. Somewhere, every lamp in Veydal burns a little longer."},
+  {"id": "d_first_thaw", "date": "03-20", "line": "First day of spring. The ferns of Fernstair seem to lean toward you."}
+ ]
+}

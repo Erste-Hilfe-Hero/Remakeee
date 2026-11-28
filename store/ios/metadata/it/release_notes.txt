@@ -1,0 +1,31 @@
+Chimora 1.3.2
+
+- Un negozio rifatto con testi più chiari: ogni pacchetto e ogni offerta dice con parole semplici cosa contiene e a cosa serve. Niente è casuale.
+- 70 nuovi Spirling, 10 in ogni regione.
+- Gli Splendori ora sono di 5 tipi, dallo Splendore classico al rarissimo Splendore opalino.
+- Nuovo meteo: pioggia, nebbia, vento, tempeste e neve cambiano il mondo e alcuni combattimenti. È attivo fin dall'inizio e si può regolare nelle impostazioni.
+- 35 pietre enigma e tavole rompicapo in tutte le regioni.
+- Tanti segreti nascosti da scoprire giocando.
+- Le mappe sono collegate meglio: niente più vicoli ciechi e nuove case da visitare nei paesi.
+- Un'unica difficoltà per tutti che cresce atto dopo atto. Niente più scelta della difficoltà né limite di Rango.
+- Tante correzioni di errori.
+- I tocchi su Mio! ora vibrano leggermente (solo se la vibrazione è attiva nelle impostazioni).
+- Un'introduzione più bella all'inizio del gioco.
+- Un inizio naturale: parti da un cespuglio, giochi subito e la storia comincia quando incontri il tuo primo Spirling selvatico.
+- Scene della storia in ogni atto.
+- Le quattro regioni dopo la storia principale hanno ognuna una propria storia, con duelli a Quivermoor.
+- Un libro delle missioni con i tuoi obiettivi, e "Dove ora?" indica la strada sulla mappa.
+- Gioco offline automatico: senza internet il gioco va semplicemente avanti, e i progressi si sincronizzano appena torni online.
+- Nuovi talismani del legame per Mio!: talismani singoli in cambio di Vetro-squarcio e 3 pacchetti di talismani nel negozio, ognuno a prezzo fisso e con il contenuto mostrato prima dell'acquisto.
+- Il Pacchetto Prima Cattura al nostro prezzo più basso: un piccolo pacchetto dal contenuto fisso, mostrato prima dell'acquisto. Niente è casuale.
+- Durante Mio! ora vedi lo Spirling con cui stai creando il legame.
+- Un regalo di accesso per 7 giorni, compiti del giorno e uno Spirling del giorno.
+- Meteo del weekend: il sabato e la domenica un cielo speciale copre alcune zone, e lì gli Spirling timidi si fanno vedere più spesso.
+- Il tuo Spirlog ora mostra in percentuale quanti Spirling hai legato, con ricompense al 25, 50 e 100 % e per i traguardi Splendore: oggetti e un titolo.
+- I codici amico diventano inviti: quando un nuovo giocatore entra con il tuo codice e gioca per un giorno, ricevete entrambi una ricompensa.
+- Scambia con le persone che incontri nel mondo, e alcuni Spirling ora si schiudono con uno scambio.
+- Animazioni più fluide.
+- Un layout pensato per iPad.
+- Testi e pulsanti più grandi, più facili da toccare.
+- Correzioni grafiche in ogni era, dall'Era I all'Era V.
+- Correzioni di sicurezza e velocità.

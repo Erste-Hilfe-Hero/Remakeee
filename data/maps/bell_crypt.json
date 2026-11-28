@@ -1,0 +1,193 @@
+{
+ "name": "Bell Crypt",
+ "region": "vellmarch",
+ "biome": "dungeon",
+ "backdrop": "ridge",
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^....||....^",
+  "^..........^",
+  "^.^^....^^.^",
+  "^.^^....^^.^",
+  "^..........^",
+  "^^^^^..^^^^^",
+  "^~~......~~^",
+  "^~~.^^^^.~~^",
+  "^...^^^^...^",
+  "^..........^",
+  "^.|..^^..|.^",
+  "^....^^....^",
+  "^..........^",
+  "^.^^^..^^^.^",
+  "^^^^^..^^^^^",
+  "^....=...S.^",
+  "^^^^^^^^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 16,
+   "to": "bellrope_marsh",
+   "tx": 2,
+   "ty": 4,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "rope_warden",
+   "x": 2,
+   "y": 2,
+   "facing": "right",
+   "dialogue": "vellmarch/bell_crypt_rope_warden",
+   "sprite": "elder",
+   "trainer": "Rope Warden Hilde",
+   "intro": "vellmarch/bell_crypt_rope_warden_intro",
+   "defeat": "vellmarch/bell_crypt_rope_warden_defeat",
+   "money": 2400,
+   "team": [
+    {
+     "species": "Sedgel",
+     "level": 59
+    },
+    {
+     "species": "Moldcap",
+     "level": 60
+    },
+    {
+     "species": "Mirefane",
+     "level": 60
+    }
+   ]
+  },
+  {
+   "id": "candle_thief",
+   "x": 9,
+   "y": 5,
+   "facing": "left",
+   "dialogue": "vellmarch/bell_crypt_candle_thief",
+   "sprite": "villager",
+   "trainer": "Candle Thief Jost",
+   "intro": "vellmarch/bell_crypt_candle_thief_intro",
+   "defeat": "vellmarch/bell_crypt_candle_thief_defeat",
+   "money": 2400,
+   "team": [
+    {
+     "species": "Moldcap",
+     "level": 59
+    },
+    {
+     "species": "Mirefane",
+     "level": 60
+    },
+    {
+     "species": "Sedgel",
+     "level": 60
+    }
+   ]
+  },
+  {
+   "id": "marsh_guide",
+   "x": 2,
+   "y": 13,
+   "facing": "right",
+   "dialogue": "vellmarch/bell_crypt_marsh_guide",
+   "sprite": "ranger",
+   "trainer": "Marsh Guide Runhild",
+   "intro": "vellmarch/bell_crypt_marsh_guide_intro",
+   "defeat": "vellmarch/bell_crypt_marsh_guide_defeat",
+   "money": 2400,
+   "team": [
+    {
+     "species": "Moldcap",
+     "level": 59
+    },
+    {
+     "species": "Mirefane",
+     "level": 60
+    },
+    {
+     "species": "Sedgel",
+     "level": 60
+    }
+   ]
+  },
+  {
+   "id": "q2_marsh_bell_tobin",
+   "x": 3,
+   "y": 10,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_marsh_bell_tobin",
+   "sprite": "villager",
+   "show_flag": "q2_marsh_bell_s1"
+  },
+  {
+   "id": "q2_marsh_bell_collector",
+   "x": 5,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_marsh_bell_collector",
+   "sprite": "warden",
+   "trainer": "Guild Collector Asmus",
+   "show_flag": "q2_marsh_bell_reveal",
+   "intro": "vellmarch/q2_marsh_bell_collector_intro",
+   "defeat": "vellmarch/q2_marsh_bell_collector_defeat",
+   "money": 3050,
+   "team": [
+    {
+     "species": "Mirefane",
+     "level": 59
+    },
+    {
+     "species": "Sedgel",
+     "level": 60
+    },
+    {
+     "species": "Moldcap",
+     "level": 61
+    }
+   ],
+   "win_flags": [
+    "q2_marsh_bell_done"
+   ],
+   "no_rematch": true
+  }
+ ],
+ "signs": [
+  {
+   "x": 9,
+   "y": 16,
+   "dialogue": "vellmarch/bell_crypt_sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 2,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_bell_crypt_1"
+  },
+  {
+   "x": 11,
+   "y": 5,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_bell_crypt_2"
+  },
+  {
+   "x": 0,
+   "y": 13,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_bell_crypt_3"
+  },
+  {
+   "x": 11,
+   "y": 10,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_bell_crypt_4"
+  }
+ ]
+}

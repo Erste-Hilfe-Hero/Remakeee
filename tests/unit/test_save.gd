@@ -31,7 +31,7 @@ func test_round_trip_restores_state() -> void:
 	assert_true(SaveManager.load_game())
 	var after: Dictionary = GameState.to_dict()
 	assert_eq(JSON.stringify(after), JSON.stringify(before))
-	assert_eq(GameState.difficulty, GameState.Difficulty.VETERAN)
+	assert_eq(GameState.difficulty, GameState.Difficulty.TAMER, "one mode: new_game always plays TAMER")
 	assert_eq(GameState.party[0].data.species_name, "Puddlet")
 
 func test_save_has_version_and_no_temp_file_left() -> void:
@@ -59,7 +59,7 @@ func test_migrates_scaffold_v0_save() -> void:
 	assert_eq(int(d.save_version), SaveManager.SAVE_VERSION)
 	assert_true(bool(d.flags.rift_1_sealed))
 	SaveManager.apply_save(d)
-	assert_eq(GameState.difficulty, GameState.Difficulty.RIFT_BORN)
+	assert_eq(GameState.difficulty, GameState.Difficulty.TAMER, "an old Rift-Born save loads as TAMER")
 
 func test_migrates_v1_save_to_the_rebuilt_world() -> void:
 	var v1: Dictionary = {"save_version": 1, "map": "route_2", "cell": [3, 3], "heal_map": "home",
@@ -90,7 +90,7 @@ func test_items_outside_battle_and_storage_rules() -> void:
 	assert_eq(GameState.party.size(), 2)
 
 func test_party_overflow_goes_to_storage_and_spirlog_tracks() -> void:
-	for i: int in 6:
+	for i: int in GameState.MAX_PARTY:
 		GameState.receive_spirling(Spirling.new(Database.species("Zippit"), 2))
 	assert_eq(GameState.party.size(), GameState.MAX_PARTY)
 	assert_eq(GameState.storage.size(), 1)

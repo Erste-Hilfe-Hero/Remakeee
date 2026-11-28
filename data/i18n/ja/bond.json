@@ -1,0 +1,19 @@
+{
+ "_comment": "Japanese texts for the German table bond. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A big Mine! button appears.": "絆を結ぶ その2：絆を選ぶ。大きな「おれの！」ボタンが出る。",
+  "Bonding step 3: Press A as fast as you can. The fuller the bar, the better the bond.": "絆を結ぶ その3：Aをできるだけ速く連打。バーが満ちるほど絆は強くなる。",
+  "Bonding step 3: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "絆を結ぶ その3：「おれの！」をできるだけ速く連打。バーが満ちるほど絆は強くなる。",
+  "Bonding: %s": "絆を結ぶ：%s",
+  "Echo": "エコー",
+  "Hint": "ヒント",
+  "Mine": "おれの",
+  "Mine!": "おれの！",
+  "Mine: tap one button fast. Echo: repeat the call.": "おれの：ボタンひとつを連打。エコー：呼び声をくり返す。",
+  "Note": "メモ",
+  "Reach out to %s... Tap Mine! fast!": "%sに手をのばす…「おれの！」を連打！",
+  "Tap Mine! fast!": "「おれの！」を連打！",
+  "Tip": "コツ",
+  "Tips": "コツ集"
+ }
+}

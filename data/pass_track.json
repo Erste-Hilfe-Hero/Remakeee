@@ -1,0 +1,521 @@
+{
+ "_comment": "Wayfarer Pass track (Chimora pay2win rebuild, 27 Nov 2026). 30 steps, each with a free reward and a premium reward (premium = an active Wayfarer Pass, offer rg_pass). Rewards are fixed grants of data/shop.json kinds (rg, coins, item, unlock, spirling); nothing is random. Pass points come from play: points per event below, at most day_cap a day (server: 20261127140040_pass_track.sql keeps a copy of this file in server_config pass_track; tests/unit/test_pass_track.gd checks they match). A season lasts season_days days, counted from season_epoch (Berlin date).",
+ "season_days": 30,
+ "season_epoch": "2026-01-01",
+ "points_per_tier": 100,
+ "day_cap": 400,
+ "hour_calls": 120,
+ "points": {
+  "win": 10,
+  "bond": 25,
+  "daily_task": 40
+ },
+ "tiers": [
+  {
+   "tier": 1,
+   "free": [
+    {
+     "t": "coins",
+     "n": 500
+    }
+   ],
+   "premium": [
+    {
+     "t": "rg",
+     "n": 50
+    }
+   ]
+  },
+  {
+   "tier": 2,
+   "free": [
+    {
+     "t": "item",
+     "id": "tonic",
+     "n": 3
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic",
+     "n": 2
+    }
+   ]
+  },
+  {
+   "tier": 3,
+   "free": [
+    {
+     "t": "rg",
+     "n": 20
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_growth_x2",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 4,
+   "free": [
+    {
+     "t": "item",
+     "id": "rg_echo_scent",
+     "n": 1
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_rift_breath",
+     "n": 3
+    }
+   ]
+  },
+  {
+   "tier": 5,
+   "free": [
+    {
+     "t": "coins",
+     "n": 1000
+    }
+   ],
+   "premium": [
+    {
+     "t": "rg",
+     "n": 100
+    }
+   ]
+  },
+  {
+   "tier": 6,
+   "free": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic",
+     "n": 1
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_spark_shard",
+     "n": 2
+    }
+   ]
+  },
+  {
+   "tier": 7,
+   "free": [
+    {
+     "t": "item",
+     "id": "strong_tonic",
+     "n": 3
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_glass_tonic",
+     "n": 2
+    }
+   ]
+  },
+  {
+   "tier": 8,
+   "free": [
+    {
+     "t": "rg",
+     "n": 30
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic_5",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 9,
+   "free": [
+    {
+     "t": "item",
+     "id": "rg_rift_breath",
+     "n": 1
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_bond_seal",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 10,
+   "free": [
+    {
+     "t": "coins",
+     "n": 2000
+    }
+   ],
+   "premium": [
+    {
+     "t": "rg",
+     "n": 150
+    }
+   ]
+  },
+  {
+   "tier": 11,
+   "free": [
+    {
+     "t": "item",
+     "id": "rg_growth_x2",
+     "n": 1
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_riftheart",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 12,
+   "free": [
+    {
+     "t": "item",
+     "id": "remedy",
+     "n": 3
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_coin_boost",
+     "n": 2
+    }
+   ]
+  },
+  {
+   "tier": 13,
+   "free": [
+    {
+     "t": "rg",
+     "n": 40
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_glass_shield",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 14,
+   "free": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic",
+     "n": 2
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_overcharge",
+     "n": 2
+    }
+   ]
+  },
+  {
+   "tier": 15,
+   "free": [
+    {
+     "t": "unlock",
+     "id": "frame_lantern"
+    }
+   ],
+   "premium": [
+    {
+     "t": "unlock",
+     "id": "jacket_ink"
+    },
+    {
+     "t": "rg",
+     "n": 150
+    }
+   ]
+  },
+  {
+   "tier": 16,
+   "free": [
+    {
+     "t": "coins",
+     "n": 3000
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_spark_forge",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 17,
+   "free": [
+    {
+     "t": "item",
+     "id": "rg_echo_scent",
+     "n": 2
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_rift_breath_full",
+     "n": 2
+    }
+   ]
+  },
+  {
+   "tier": 18,
+   "free": [
+    {
+     "t": "rg",
+     "n": 50
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_growth_x3",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 19,
+   "free": [
+    {
+     "t": "item",
+     "id": "max_tonic",
+     "n": 2
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_whirl_glass",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 20,
+   "free": [
+    {
+     "t": "coins",
+     "n": 4000
+    }
+   ],
+   "premium": [
+    {
+     "t": "rg",
+     "n": 250
+    }
+   ]
+  },
+  {
+   "tier": 21,
+   "free": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic",
+     "n": 3
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic_10",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 22,
+   "free": [
+    {
+     "t": "item",
+     "id": "rg_rift_breath",
+     "n": 2
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_last_stand",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 23,
+   "free": [
+    {
+     "t": "rg",
+     "n": 60
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_vigor_glass",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 24,
+   "free": [
+    {
+     "t": "item",
+     "id": "rg_growth_x2",
+     "n": 2
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_overcharge",
+     "n": 3
+    }
+   ]
+  },
+  {
+   "tier": 25,
+   "free": [
+    {
+     "t": "coins",
+     "n": 5000
+    }
+   ],
+   "premium": [
+    {
+     "t": "rg",
+     "n": 300
+    }
+   ]
+  },
+  {
+   "tier": 26,
+   "free": [
+    {
+     "t": "item",
+     "id": "rg_bond_seal",
+     "n": 1
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_clear_shard",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 27,
+   "free": [
+    {
+     "t": "rg",
+     "n": 80
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_ring_elixir",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 28,
+   "free": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic_5",
+     "n": 1
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_grand_tonic",
+     "n": 3
+    }
+   ]
+  },
+  {
+   "tier": 29,
+   "free": [
+    {
+     "t": "item",
+     "id": "rg_glass_tonic",
+     "n": 1
+    }
+   ],
+   "premium": [
+    {
+     "t": "item",
+     "id": "rg_growth_x5",
+     "n": 1
+    }
+   ]
+  },
+  {
+   "tier": 30,
+   "free": [
+    {
+     "t": "unlock",
+     "id": "backdrop_star_meadow"
+    },
+    {
+     "t": "rg",
+     "n": 100
+    }
+   ],
+   "premium": [
+    {
+     "t": "spirling",
+     "species": "Vorlucent",
+     "level": 40
+    },
+    {
+     "t": "unlock",
+     "id": "hat_tricorn"
+    },
+    {
+     "t": "rg",
+     "n": 500
+    }
+   ]
+  }
+ ]
+}

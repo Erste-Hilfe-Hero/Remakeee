@@ -1,0 +1,31 @@
+{
+ "_comment": "Texts for the German table c100_start in this language. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py fr.",
+ "strings": {
+  "%s curls up at your feet. Let it stay?": "%s se blottit à tes pieds. Il peut rester ?",
+  "%s stays with you! The other two slip off to the lake.": "%s reste avec toi ! Les deux autres filent vers le lac.",
+  "'Our cartographers have drawn and redrawn Veydal for a hundred years. Now the Hush: Spirlings near a Rift go quiet and forget their Wayfarers.'": "'Nos cartographes dessinent et redessinent Veydal depuis cent ans. Maintenant le Silence : les Spirlings près d'une Faille se taisent et oublient leurs voyageurs.'",
+  "Aldo: Good. The Rifts bring the Hush: Spirlings there go quiet.": "Aldo : Bien. Les Failles apportent le Silence : les Spirlings s'y taisent.",
+  "Aldo: Take this, and go see Kestra at the map house.": "Aldo : Prends ceci, et va voir Kestra à la maison des cartes.",
+  "Aldo: The storm scattered Mirela's map book. Bring her pages home.": "Aldo : L'orage a dispersé le carnet de cartes de Mirela. Rapporte ses pages.",
+  "Aldo: Three Spirlings came in from the storm. Go say hello!": "Aldo : Trois Spirlings sont entrés pour fuir l'orage. Va leur dire bonjour !",
+  "Coat: %s": "Manteau : %s",
+  "Gentle battles, more Growth.": "Combats doux, plus de Croissance.",
+  "Hair: %s": "Cheveux : %s",
+  "I have a code": "J'ai un code",
+  "In the margin, in Aldo's hand: 'Your grandmother went in to map that Rift before you were born. She never came back.'": "Dans la marge, de la main d'Aldo : 'Ta grand-mère est entrée dans cette Faille pour la cartographier avant ta naissance. Elle n'est jamais revenue.'",
+  "Keyboard": "Clavier",
+  "Last night a storm tore the sky. Rifts opened over Veydal.": "Cette nuit, un orage a déchiré le ciel. Des Failles se sont ouvertes sur Veydal.",
+  "OK": "OK",
+  "Random": "Au hasard",
+  "Relaxed": "Détente",
+  "Ring limits, smarter foes.": "Rang max, adversaires plus malins.",
+  "Skin: %s": "Peau : %s",
+  "The journey as it is meant to be.": "Le voyage tel qu'il est pensé.",
+  "Three small lights crossed the lake to the lighthouse lamp.": "Trois petites lumières ont traversé le lac vers la lampe du phare.",
+  "Tough": "Difficile",
+  "Watch the marks light up, then press them in the same order.": "Regarde quels signes s'allument, puis appuie-les dans le même ordre.",
+  "Watch the marks light up, then tap them in the same order.": "Regarde quels signes s'allument, puis touche-les dans le même ordre.",
+  "Wayfarer: %s": "Voyageur : %s",
+  "You can change it later in Settings.": "Tu peux le changer plus tard dans Réglages."
+ }
+}

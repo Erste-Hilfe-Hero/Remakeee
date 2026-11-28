@@ -1,0 +1,14 @@
+{
+  "_comment": "Promo codes (scripts/ui/PromoMenu.gd), keys of tools/i18n/de_promo.py.",
+  "strings": {
+    "Code redeemed! You got: %s": "Kod kullanıldı! Aldıkların: %s",
+    "Promo code": "Promosyon kodu",
+    "Promo codes are closed right now.": "Promosyon kodları şu anda kapalı.",
+    "Redeem a promo code...": "Promosyon kodu kullan...",
+    "That code does not exist. Check the letters and try again.": "Böyle bir kod yok. Karakterleri kontrol edip tekrar dene.",
+    "This code has been used up.": "Bu kodun kullanım hakkı bitti.",
+    "This code has expired.": "Bu kodun süresi doldu.",
+    "Too many tries. Wait an hour, then try again.": "Çok fazla deneme. Bir saat bekle, sonra tekrar dene.",
+    "You already redeemed this code.": "Bu kodu zaten kullandın."
+  }
+}

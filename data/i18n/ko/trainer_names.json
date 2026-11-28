@@ -1,0 +1,27 @@
+{
+ "_comment": "ko translation of the trainer_names table, keyed by the English text.",
+ "strings": {
+  "Angler Brisa": "낚시꾼 Brisa",
+  "Angler Teo": "낚시꾼 Teo",
+  "Bog Walker Hesk": "늪 나그네 Hesk",
+  "Delver Ros": "굴착꾼 Ros",
+  "Diver Neve": "잠수부 Neve",
+  "Glassblower Ines": "유리공 Ines",
+  "Hushed swarm": "고요한 떼",
+  "Lamplighter Tova": "점등원 Tova",
+  "Miller's Kid Pim": "방앗간 아이 Pim",
+  "Miner Garr": "광부 Garr",
+  "Mushroom Picker Olek": "버섯 채집꾼 Olek",
+  "Peat Cutter Orla": "이탄 캐는 Orla",
+  "Reed Cutter Fenn": "갈대 베는 Fenn",
+  "Reed Cutter Marit": "갈대 베는 Marit",
+  "Ridgewalker Bram": "능선 나그네 Bram",
+  "Ridgewalker Brann": "능선 나그네 Brann",
+  "Rift Acolyte Suri": "균열 수행자 Suri",
+  "Salt Raker Nils": "소금 긁는 Nils",
+  "Surveyor Kaja": "측량사 Kaja",
+  "Terrace Farmer Runa": "계단밭 농부 Runa",
+  "Warden Maelis": "수호자 Maelis",
+  "Warden Orrin": "수호자 Orrin"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "_comment": "The family business: Echo Core offspring inherit Spark and heirloom arts from the two singers (scripts/core/Breeding.gd). The matchmaker at the Rest Spring seals a match contract on a carried core for a fee: more Spark and arts are passed on. Sometimes she sold the same match twice (betray_chance); then only the contract bonus is lost, the young Spirling still wakes with the plain inheritance.",
+ "spark_stats": 2,
+ "contract_spark_stats": 4,
+ "heirloom_arts": 1,
+ "contract_heirloom_arts": 2,
+ "contract_fee": 400,
+ "betray_chance": 0.25,
+ "matchmaker": "Auntie Grisela",
+ "rival_families": ["the Moldwick family", "the Pellgraves", "the Second Cousins", "a family she calls 'the other one'"],
+ "contract_lines": [
+  "Auntie Grisela: A good match is a merger with feathers.",
+  "Auntie Grisela: I put the dowry in writing. Nobody reads it, but it is written."
+ ],
+ "honoured_line": "Auntie Grisela's contract holds. The young one carries the best of both houses.",
+ "betrayed_line": "Turns out Auntie Grisela sold the same match to %s. The contract is void, but the song still wakes."
+}

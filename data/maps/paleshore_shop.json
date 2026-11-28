@@ -1,0 +1,37 @@
+{
+ "name": "Salt Exchange",
+ "region": "halcyra",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCffCCCW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "paleshore",
+   "tx": 8,
+   "ty": 13,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "runa",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "paleshore/runa",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

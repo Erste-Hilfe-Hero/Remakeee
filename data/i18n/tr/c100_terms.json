@@ -1,0 +1,12 @@
+{
+ "_comment": "Turkish texts for the German table c100_terms. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "Before you play": "Oynamadan önce",
+  "I have read and accept the Terms of Use and the Privacy Policy.": "Kullanım Koşulları'nı ve Gizlilik Politikası'nı okudum ve kabul ediyorum.",
+  "Read the Terms of Use": "Kullanım Koşulları'nı oku",
+  "Read the Privacy Policy": "Gizlilik Politikası'nı oku",
+  "Ticked": "İşaretli",
+  "Not ticked": "İşaretsiz",
+  "Tick the box above to continue.": "Devam etmek için yukarıdaki kutuyu işaretle."
+ }
+}

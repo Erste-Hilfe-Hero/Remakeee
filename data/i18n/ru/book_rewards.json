@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table book_rewards, written by tools/i18n/locales_book_rewards.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d Gleam bonded": "Сияний связано: %d",
+  "%d%% bonded": "%d%% связано",
+  "(%d ready)": "(готово: %d)",
+  "Bonded: %d%%": "Связано: %d%%",
+  "Bonded: %d%% (%d/%d)": "Связано: %d%% (%d/%d)",
+  "Book rewards: %d%% bonded, Gleam %d%%": "Награды книги: связано %d%%, Сияние %d%%",
+  "Gleam: %d%%": "Сияние: %d%%",
+  "Gleam: %d%% (%d/%d)": "Сияние: %d%% (%d/%d)",
+  "Invite of friend code %s:": "Приглашение по коду друга %s:",
+  "Keeper of Every Page": "Хранитель всех страниц",
+  "No connection right now. The invite is kept and sent once you are online.": "Сейчас нет связи. Приглашение сохранено и уйдёт, как только ты будешь в сети.",
+  "Nothing to take yet. Rewards come once you are friends and the new player has played for a day.": "Пока нечего забрать. Награды будут, когда вы станете друзьями и новый игрок поиграет один день.",
+  "Of every kind in the game.": "Из всех видов в игре.",
+  "Request sent. Once you are friends and you have played for a day, you both take the invite reward under Friends, Invite a friend.": "Запрос отправлен. Когда вы станете друзьями и ты поиграешь один день, вы оба заберёте награду за приглашение в разделе Друзья, Пригласить друга.",
+  "Rewards for the share of kinds bonded and for Gleam kinds.": "Награды за долю связанных видов и за Сияния.",
+  "Seen: %d%%": "Увидено: %d%%",
+  "Seen: %d%% (%d/%d)": "Увидено: %d%% (%d/%d)",
+  "Spirlog book": "Книга Spirlog",
+  "Spirlog reward: %s!": "Награда Spirlog: %s!",
+  "Take a reward once its step is reached.": "Забери награду, как только достигнешь её ступени.",
+  "You received %s x%d.": "Ты получаешь: %s x%d.",
+  "ready!": "готово!",
+  "taken": "получено"
+ }
+}

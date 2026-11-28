@@ -1,0 +1,28 @@
+{
+ "_comment": "Spanish texts for the German table c100_goal. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py es.",
+ "strings": {
+  "+ seen  * bonded": "+ visto  * vinculado",
+  "A reward waits under Goals.": "Te espera una recompensa en Objetivos.",
+  "Daily tasks: %d of %d done.": "Tareas diarias: %d de %d hechas.",
+  "Find Mirela's pages": "Páginas de Mirela",
+  "Go to the Map House": "Ir a los mapas",
+  "Goal line: %s": "Línea de objetivo: %s",
+  "Goal: %s": "Objetivo: %s",
+  "Meet Kestra at the dock": "Kestra, embarcadero",
+  "Mend the Rifts": "Remendar Grietas",
+  "Not yet visited.": "Aún sin visitar.",
+  "On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.": "En una página, \"Visto en\" lista cada lugar donde viste la especie, combates de Caminantes incluidos. \"Salvaje en\" lista dónde vive en libertad: un + tras un lugar significa que la viste allí, ??? un lugar aún sin encontrar.",
+  "Photo, our Discord and your shortcuts.": "Foto, nuestro Discord y tus atajos.",
+  "See Aldo downstairs": "Ver a Aldo abajo",
+  "Seen at: %s": "Visto en: %s",
+  "Tap for every mark.": "Toca para ver cada marca.",
+  "Tell Aldo at home": "Contárselo a Aldo",
+  "Welcome back, %s!": "¡Hola de nuevo, %s!",
+  "Wild at: %s (%d of %d found)": "Salvaje en: %s (%d de %d hallados)",
+  "You are in %s.": "Estás en %s.",
+  "Your next goal at the top and a mark on the way there. Tap the line to open Goals.": "Tu próximo objetivo arriba y una marca en el camino. Toca la línea para abrir Objetivos.",
+  "a Gleam of this kind was bonded": "se vinculó un Fulgor de esta especie",
+  "a Gleam of this kind was seen": "se vio un Fulgor de esta especie",
+  "bonded and grown to Ring 30": "vinculado y crecido hasta rango 30"
+ }
+}

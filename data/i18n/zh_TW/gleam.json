@@ -1,0 +1,7 @@
+{
+ "_comment": "Traditional Chinese texts for the German table gleam. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "Gleam: %d seen, %d bonded": "光澤：已見 %d，已結緣 %d",
+  "No Gleam has joined you yet.": "還沒有光澤形態加入你。"
+ }
+}

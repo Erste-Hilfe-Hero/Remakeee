@@ -1,0 +1,12 @@
+{
+ "_comment": "Translations of the German table one_mode, written by tools/i18n/locales_one_mode.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s with %s, %d:%02d": "%s com %s, %d:%02d",
+  "Rift bosses": "Chefes da Fenda",
+  "Scorch, Root and Jolt stay on after the battle until an item, an art or a rest cures them.": "Chamusco, Raízes e Choque continuam após a batalha até que um item, uma arte ou um descanso os cure.",
+  "Text speed and battle options.": "Velocidade do texto e opções de batalha.",
+  "Text, battles and tips.": "Texto, batalhas e dicas.",
+  "Wayfarers think at tier %d, Wardens at tier %d.": "Viajantes pensam no nível %d, Sentinelas no nível %d.",
+  "Wayfarers' Spirlings stay close to your strongest one.": "Os Spirlings dos Viajantes ficam perto do seu mais forte."
+ }
+}

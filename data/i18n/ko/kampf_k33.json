@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table kampf_k33, written by tools/i18n/locales_kampf_k33.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s picks %s (%d) over %s (%d).": "{0}은(는) {3}({4}) 대신 {1}({2})을(를) 골랐다.",
+  "%s picks %s (%d): nothing else is in reach.": "{0}은(는) {1}({2})을(를) 골랐다. 다른 수는 없다.",
+  "%s picks %s at random, as wild ones do.": "{0}은(는) 야생답게 아무렇게나 {1}을(를) 골랐다.",
+  "%s rests: nothing it can pay is worth it now.": "{0}은(는) 휴식했다. 지금 쓸 수 있는 기술은 쓸모가 없다.",
+  "%s swaps to %s: it doesn't like its odds.": "{0}은(는) {1}(으)로 교대했다. 승산이 없다고 본 모양이다.",
+  "%s uses %s: it is running low.": "{0}은(는) {1}을(를) 사용했다. 이제 여유가 없다.",
+  "%s, won in %d turns": "{0}, {1}턴 만에 승리",
+  "Banked Embers": "이자 붙은 불씨",
+  "Beat the Ashen Heart. The smiths still want their cut.": "잿빛 심장을 쓰러뜨린다. 대장장이들은 그래도 몫을 원한다.",
+  "Beat the Drowned Heart. Nobody reads the passenger list twice.": "익사한 심장을 쓰러뜨린다. 승객 명단을 두 번 읽는 사람은 없다.",
+  "Beat the Mist Heart. What it hid is everyone's problem now.": "안개 심장을 쓰러뜨린다. 그것이 숨기던 것은 이제 모두의 문제다.",
+  "Boss replays": "보스전 다시보기",
+  "Clear Weather": "맑은 하늘",
+  "Crier: An echo of the %s has crashed the festival in the shape of a %s. Nobody invited it. Will you see it out?": "전령: {0}의 메아리가 {1}의 모습으로 축제에 쳐들어왔소. 아무도 부르지 않았는데. 내보내 주겠소?",
+  "Crier: Something from the Rifts keeps trying to get in. Seal a Rift heart first, then we'll talk.": "전령: 균열에서 뭔가가 자꾸 들어오려 하오. 먼저 균열의 심장을 봉인하고 오시오. 얘기는 그다음이오.",
+  "Crier: You saw the echo out already. It sulks somewhere behind the stands until next year.": "전령: 그 메아리는 이미 내보냈잖소. 내년까지 노점 뒤에서 토라져 있을 거요.",
+  "It lies open and stops building up.": "빈틈이 드러나 힘을 모으는 것을 그만두었다.",
+  "It wants that field gone, so it can wake.": "깨어나기 위해 저 필드를 없애고 싶어 한다.",
+  "Kept in your boss replays (Records).": "보스전 다시보기에 저장했다 (기록).",
+  "Last Passenger": "마지막 승객",
+  "Last phase: it holds nothing back.": "마지막 단계: 더는 아무것도 아끼지 않는다.",
+  "The echo comes apart like old bunting. The crowd claps as if it had helped.": "메아리가 낡은 깃발 장식처럼 풀려 버렸다. 구경꾼들은 자기들이 도운 양 박수를 친다.",
+  "The echo keeps dancing. The crowd decides it is part of the show.": "메아리는 계속 춤춘다. 구경꾼들은 그것도 공연의 일부라고 여기기로 했다."
+ }
+}

@@ -1,0 +1,10 @@
+{
+ "_comment": "Polish texts for the German table live. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "A new version of Chimora is out.": "Wyszła nowa wersja Chimory.",
+  "Later": "Później",
+  "Open the link?": "Otworzyć link?",
+  "Update": "Aktualizuj",
+  "What's new": "Co nowego"
+ }
+}

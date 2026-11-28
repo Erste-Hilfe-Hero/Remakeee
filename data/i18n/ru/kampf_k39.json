@@ -1,0 +1,12 @@
+{
+ "_comment": "Russian texts for the German table kampf_k39. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "Diamond": "Ромб",
+  "Square": "Квадрат",
+  "Triangle": "Треугольник",
+  "Moon": "Луна",
+  "The call: %s.": "Зов: %s.",
+  "Echo with the keys: left %s, up %s, right %s.": "Повтори клавишами: влево %s, вверх %s, вправо %s.",
+  "Any tap or the accept key counts.": "Считается любое касание и клавиша подтверждения."
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "_comment": "pt_BR translation of the era_light table, keyed by the English text.",
+ "strings": {
+  "A storm rages.": "Uma tempestade ruge.",
+  "Fog hangs low.": "A névoa paira baixa.",
+  "Rain falls.": "Chove.",
+  "Wind blows.": "O vento sopra."
+ }
+}

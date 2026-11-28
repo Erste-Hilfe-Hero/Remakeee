@@ -1,0 +1,8 @@
+{
+ "_comment": "ko translation of the fan_oath table, keyed by the English text.",
+ "strings": {
+  "%s swears the Ink Oath. Ink runs down its paws like a signature: family first!": "%s이(가) 잉크의 맹세를 한다. 잉크가 서명처럼 발을 타고 흐른다: 가족이 먼저!",
+  "Oath": "맹세",
+  "The Ink Oath comes due. The family collects from %s.": "잉크의 맹세 기한이 됐다. 가문이 %s에게서 받아 간다."
+ }
+}

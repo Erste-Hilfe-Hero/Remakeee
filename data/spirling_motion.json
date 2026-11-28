@@ -1,0 +1,15 @@
+{
+ "_comment": "How each Spirling moves when it steps out (plan area 6, item 2329): hop, creep, sway, stomp or slide (sliding along the ground). Kept apart from spirlings.json so area 1 can grow that file freely; species not listed fall back to their first element.",
+ "by_element": {"EMBER": "hop", "TIDE": "sway", "BLOOM": "creep", "VOLT": "hop", "STONE": "stomp", "GALE": "slide", "LUMEN": "slide", "UMBRA": "creep"},
+ "species": {
+  "Kindlop": "hop", "Smoldrake": "stomp", "Calderox": "stomp",
+  "Puddlet": "hop", "Riptail": "sway", "Leviarch": "sway",
+  "Mossling": "creep", "Thornback": "stomp", "Verdantusk": "stomp",
+  "Zippit": "hop", "Glimmerax": "slide",
+  "Shalebat": "creep", "Obsidroth": "stomp",
+  "Zephlet": "hop", "Tempestrel": "slide",
+  "Wickit": "hop", "Lumenewt": "slide",
+  "Mirkmole": "creep", "Duskdigger": "stomp",
+  "Kelpup": "hop", "Kelphound": "sway"
+ }
+}

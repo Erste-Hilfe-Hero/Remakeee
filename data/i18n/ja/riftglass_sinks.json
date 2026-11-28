@@ -1,0 +1,31 @@
+{
+ "_comment": "Translations of the German table riftglass_sinks, written by tools/i18n/locales_riftglass_sinks.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s: %d Riftglass": "%s: 裂け目ガラス%d",
+  "Bond boost %s? You have %d Riftglass.": "絆ブースト%s？手持ちの裂け目ガラス: %d",
+  "Boost: %d Riftglass": "ブースト: 裂け目ガラス%d",
+  "Bring one home now": "今すぐ連れて帰る",
+  "Bring this Spirling home now? %d h left.": "このSpirlingを今すぐ連れて帰る？残り%d時間。",
+  "Continue for %s? Your whole team stands up with full Vigor.": "%sでつづける？チーム全員が活力満タンで立ち上がる。",
+  "Daily gift: +%d Riftglass": "毎日のおくりもの: 裂け目ガラス+%d",
+  "Growth x2 for the next %d battles?": "次の%d回のバトルで成長x2にする？",
+  "Growth x2: %d": "成長x2: %d",
+  "Heal team: %d": "チームを回復: %d",
+  "Heal the whole team now? Full Vigor, Energy, no states.": "今すぐチーム全員を回復する？活力と気力が満タン、状態異常なし。",
+  "Light it again": "もう一度灯す",
+  "Light the lamp again tonight? Another visitor may follow the light.": "今夜もう一度ランプを灯す？ほかの訪問者が光について来るかもしれない。",
+  "No boost": "ブーストなし",
+  "No connection right now. Riftglass needs the server.": "今は接続がない。裂け目ガラスにはサーバーが必要だ。",
+  "Not enough Riftglass: this costs %d, you have %d.": "裂け目ガラスが足りない。必要: %d、手持ち: %d。",
+  "Riftglass flares! Your whole team stands up again with full Vigor.": "裂け目ガラスが光った！チーム全員が活力満タンで立ち上がる。",
+  "Riftglass holds you in place. Your team is rested again.": "裂け目ガラスがその場にとどめてくれた。チームはまた元気になった。",
+  "Riftglass is locked for now. Look in the shop under My purchases.": "裂け目ガラスは今ロック中。店の「購入の記録」を確かめよう。",
+  "Riftglass is not available on this account.": "このアカウントでは裂け目ガラスを使えない。",
+  "Riftglass shop": "裂け目ガラスの店",
+  "Stay right before the Warden? Your team is rested.": "守り人の直前にとどまる？チームは回復している。",
+  "That did not work. No Riftglass was taken.": "うまくいかなかった。裂け目ガラスは使われていない。",
+  "That was a lot in a short time. Please wait a while.": "短い時間にたくさん使った。少し待ってほしい。",
+  "That was the last one here.": "ここではこれが最後だった。",
+  "You have %d Riftglass.": "裂け目ガラスを%d持っている。"
+ }
+}

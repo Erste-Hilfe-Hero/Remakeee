@@ -1,0 +1,20 @@
+{
+ "_note": "Act I, Brindlewick after Aldo heard about the dock: Vash asks for the crossing hour (trust choice a1_hour), Fenrick's lantern (main-story betrayals, docs/STORY.md).",
+ "steps": [
+  {
+   "say": [
+    "Ilo Vash waits by the well with a clipboard and a smile he clearly paid for."
+   ]
+  },
+  {
+   "dialogue": "betrayal/a1_hour"
+  },
+  {
+   "say": [
+    "Fenrick Kael pushes through the crowd and presses a brass lantern into your hands.",
+    "Fenrick: For the crossing. Haus Marrovel looks after its little cartographers.",
+    "Fenrick: The way one looks after a good investment. With a lamp on it at all times."
+   ]
+  }
+ ]
+}

@@ -1,0 +1,16 @@
+{
+ "_comment": "tr translation of the kampf_k22 table, keyed by the English text.",
+ "strings": {
+  "%d still to come": "%d tane daha geliyor",
+  "%s rises!": "%s yükseliyor!",
+  "A hushed %s!": "Susmuş bir %s!",
+  "A swarm of %d!": "%d kişilik bir sürü!",
+  "Battle paused": "Savaş duraklatıldı",
+  "Duel with %s!": "%s ile düello!",
+  "Everything goes dark... and then, somehow, it doesn't. Your team stirs right where it fell, bruised but breathing.": "Her şey kararıyor... sonra nedense kararmıyor. Takımın düştüğü yerde kıpırdıyor, hırpalanmış ama nefes alıyor.",
+  "Resume": "Devam et",
+  "Soft Defeat: %s": "Yumuşak yenilgi: %s",
+  "Story only: after a lost battle your team wakes where it fell, with half its Vigor.": "Yalnızca Hikâye: kaybedilen bir savaştan sonra takımın düştüğü yerde, Dinçliğinin yarısıyla uyanır.",
+  "You caught %s from behind! Your side moves first.": "%s adlı rakibi arkadan yakaladın! Senin tarafın önce davranıyor."
+ }
+}

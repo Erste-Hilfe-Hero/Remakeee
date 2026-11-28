@@ -1,0 +1,252 @@
+{
+ "name": "Reedhaven",
+ "region": "veydal",
+ "biome": "town",
+ "backdrop": "lake",
+ "outdoor": true,
+ "heal_point": [
+  9,
+  4
+ ],
+ "rows": [
+  "~~~~~++~~~~~",
+  "~~~+.++.+~~~",
+  "~RRR++++RRR~",
+  "~HDH+~~+HDH~",
+  "~+++++++++o~",
+  "~S++L~~++~~~",
+  "~RRR+~~+~~S~",
+  "~HDH+~~+S%%~",
+  "~++++++++%%~",
+  "~~~~~~~~~~~~"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "brackwater_fen",
+   "tx": 5,
+   "ty": 22,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "brackwater_fen",
+   "tx": 6,
+   "ty": 22,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 3,
+   "to": "reedhaven_spring",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 3,
+   "to": "reedhaven_shop",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 7,
+   "to": "reedhaven_house",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "tender",
+   "x": 8,
+   "y": 5,
+   "facing": "up",
+   "dialogue": "reedhaven/tender",
+   "sprite": "elder"
+  },
+  {
+   "id": "trader",
+   "x": 4,
+   "y": 7,
+   "facing": "right",
+   "dialogue": "reedhaven/trader",
+   "sprite": "villager"
+  },
+  {
+   "id": "boatman",
+   "x": 1,
+   "y": 8,
+   "facing": "right",
+   "dialogue": "reedhaven/boatman",
+   "sprite": "villager"
+  },
+  {
+   "id": "gunn",
+   "x": 2,
+   "y": 5,
+   "facing": "up",
+   "dialogue": "reedhaven/gunn",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 3,
+     "y": 5,
+     "facing": "up"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "aart",
+   "x": 3,
+   "y": 1,
+   "facing": "right",
+   "dialogue": "reedhaven/aart",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 2,
+     "y": 5,
+     "facing": "up"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "wenna",
+   "x": 8,
+   "y": 1,
+   "facing": "left",
+   "dialogue": "reedhaven/wenna",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": [
+      "dusk",
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "pip",
+   "x": 3,
+   "y": 1,
+   "facing": "right",
+   "dialogue": "reedhaven/pip",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": [
+      "dawn",
+      "day"
+     ],
+     "away": true
+    },
+    {
+     "phase": "dusk",
+     "x": 5,
+     "y": 4,
+     "facing": "left"
+    }
+   ]
+  },
+  {
+   "id": "hanne",
+   "x": 6,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "reedhaven/hanne",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 9,
+     "y": 10,
+     "facing": "left",
+     "map": "brindlewick"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 8,
+   "y": 7,
+   "dialogue": "reedhaven/sign"
+  },
+  {
+   "x": 10,
+   "y": 6,
+   "dialogue": "reedhaven/marker_stone"
+  },
+  {
+   "x": 1,
+   "y": 5,
+   "dialogue": "reedhaven/lake_bench"
+  },
+  {
+   "x": 9,
+   "y": 5,
+   "dialogue": "reedhaven/reed_trap_a"
+  },
+  {
+   "x": 8,
+   "y": 6,
+   "dialogue": "reedhaven/reed_trap_b"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 8,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_reed_end"
+  },
+  {
+   "x": 10,
+   "y": 7,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_reed_reeds"
+  },
+  {
+   "x": 0,
+   "y": 4,
+   "item": "kin_charm",
+   "count": 1,
+   "flag": "find_reed_west"
+  }
+ ],
+ "square": [
+  4,
+  5
+ ]
+}

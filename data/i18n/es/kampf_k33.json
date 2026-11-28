@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table kampf_k33, written by tools/i18n/locales_kampf_k33.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s picks %s (%d) over %s (%d).": "%s elige %s (%d) en vez de %s (%d).",
+  "%s picks %s (%d): nothing else is in reach.": "%s elige %s (%d): no tiene nada más a su alcance.",
+  "%s picks %s at random, as wild ones do.": "%s elige %s al azar, como hacen los salvajes.",
+  "%s rests: nothing it can pay is worth it now.": "%s descansa: nada de lo que puede pagar merece la pena ahora.",
+  "%s swaps to %s: it doesn't like its odds.": "%s cambia a %s: no le gustan sus posibilidades.",
+  "%s uses %s: it is running low.": "%s usa %s: está en las últimas.",
+  "%s, won in %d turns": "%s, ganado en %d turnos",
+  "Banked Embers": "Brasas con intereses",
+  "Beat the Ashen Heart. The smiths still want their cut.": "Vence al Corazón Ceniciento. Los herreros siguen queriendo su parte.",
+  "Beat the Drowned Heart. Nobody reads the passenger list twice.": "Vence al Corazón Ahogado. Nadie lee dos veces la lista de pasajeros.",
+  "Beat the Mist Heart. What it hid is everyone's problem now.": "Vence al Corazón de Niebla. Lo que ocultaba ahora es problema de todos.",
+  "Boss replays": "Repeticiones de jefes",
+  "Clear Weather": "Cielo despejado",
+  "Crier: An echo of the %s has crashed the festival in the shape of a %s. Nobody invited it. Will you see it out?": "Pregonero: Un eco del %s se ha colado en la fiesta con la forma de un %s. Nadie lo invitó. ¿Lo acompañas a la salida?",
+  "Crier: Something from the Rifts keeps trying to get in. Seal a Rift heart first, then we'll talk.": "Pregonero: Algo de las Grietas no deja de intentar entrar. Sella primero un corazón de Grieta y luego hablamos.",
+  "Crier: You saw the echo out already. It sulks somewhere behind the stands until next year.": "Pregonero: Ya sacaste al eco. Se queda enfurruñado detrás de los puestos hasta el año que viene.",
+  "It lies open and stops building up.": "Está al descubierto y deja de reforzarse.",
+  "It wants that field gone, so it can wake.": "Quiere deshacerse de ese campo para poder despertar.",
+  "Kept in your boss replays (Records).": "Guardado en tus repeticiones de jefes (Marcas).",
+  "Last Passenger": "Último pasajero",
+  "Last phase: it holds nothing back.": "Última fase: ya no se guarda nada.",
+  "The echo comes apart like old bunting. The crowd claps as if it had helped.": "El eco se deshace como banderines viejos. El público aplaude como si hubiera ayudado.",
+  "The echo keeps dancing. The crowd decides it is part of the show.": "El eco sigue bailando. El público decide que es parte del espectáculo."
+ }
+}

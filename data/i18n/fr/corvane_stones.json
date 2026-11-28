@@ -1,0 +1,18 @@
+{
+ "_comment": "fr translation of the corvane_stones table, keyed by the English text.",
+ "strings": {
+  "A cartographer's stone at the edge of the Wide Rift. The rose has a fifth point, towards the dark.": "Une pierre de cartographe au bord de la Grande Faille. La rose a une cinquième pointe, tournée vers le noir.",
+  "A cartographer's stone at the water's edge. In the pond its rose turns the other way.": "Une pierre de cartographe au bord de l'eau. Dans l'étang, sa rose tourne dans l'autre sens.",
+  "A cartographer's stone half sunk in the boards. The rose points at the harbour office. Of course it does.": "Une pierre de cartographe à moitié enfoncée dans les planches. La rose pointe vers le bureau du port. Évidemment.",
+  "A cartographer's stone in a flower bed. Its rose has been painted over grey, then scraped clean.": "Une pierre de cartographe dans un parterre de fleurs. Sa rose a été repeinte en gris, puis grattée.",
+  "A cartographer's stone on the cliff. Rooks have used it as a table for years.": "Une pierre de cartographe sur la falaise. Les freux s'en servent de table depuis des années.",
+  "A cartographer's stone sinking into the moor. The rose still points north. The stone has given up on the rest.": "Une pierre de cartographe qui s'enfonce dans la lande. La rose pointe toujours vers le nord. La pierre a renoncé au reste.",
+  "A cartographer's stone under the reeds. Somebody scratched 'not this way' under the rose.": "Une pierre de cartographe sous les roseaux. Quelqu'un a gratté 'pas par là' sous la rose.",
+  "A cartographer's stone with a betting slip tucked under it. The slip lost.": "Une pierre de cartographe avec un ticket de pari glissé dessous. Le ticket a perdu.",
+  "A cartographer's stone wrapped in roots. The rose glows faintly when you touch it.": "Une pierre de cartographe enlacée par des racines. La rose luit faiblement quand tu la touches.",
+  "A cartographer's stone, cracked down the middle. Both halves still point north. Stubborn.": "Une pierre de cartographe fendue par le milieu. Les deux moitiés pointent encore vers le nord. Têtues.",
+  "A cartographer's stone, stained red, gold and green by a hundred years of dye.": "Une pierre de cartographe, teinte en rouge, or et vert par cent ans de teinture.",
+  "An old cartographer's stone by the quay wall. Someone has chalked a price on it.": "Une vieille pierre de cartographe près du mur du quai. Quelqu'un y a marqué un prix à la craie.",
+  "Cartographer's stones: %d/%d": "Pierres de cartographe: %d/%d"
+ }
+}

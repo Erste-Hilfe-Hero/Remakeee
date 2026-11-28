@@ -1,0 +1,22 @@
+# German texts for Hollowgate Reserve, the smugglers' wildlife park (data/reserve.json, scripts/core/Reserve.gd).
+T = {
+"Velvet Dorran": "Samt-Dorran",
+"the Quiet Hands": "die Stillen Hände",
+"A woman in a velvet coat leans on a fence that is not on any map.": "Eine Frau im Samtmantel lehnt an einem Zaun, der auf keiner Karte steht.",
+"Velvet Dorran: Welcome to Hollowgate Reserve. Totally legal. The fence is to keep the paperwork in.": "Samt-Dorran: Willkommen im Reservat Hohltor. Völlig legal. Der Zaun ist nur da, damit der Papierkram drinbleibt.",
+"Velvet Dorran: No fighting in my yard. You set bait, you rattle the fence, you call. Then you leave and forget my face.": "Samt-Dorran: In meinem Hof wird nicht gekämpft. Du legst Köder, du rüttelst am Zaun, du rufst. Dann gehst du und vergisst mein Gesicht.",
+"Velvet Dorran: No coins? Then you were never here.": "Samt-Dorran: Keine Münzen? Dann warst du nie hier.",
+"Velvet Dorran: Time's up. Out you go, and the gate never saw you.": "Samt-Dorran: Die Zeit ist um. Raus mit dir, und das Tor hat dich nie gesehen.",
+"Pay %d coins to slip into the reserve?": "%d Münzen zahlen und ins Reservat schlüpfen?",
+"Echo call (%d left)": "Echoruf (noch %d)",
+"Set bait": "Köder legen",
+"Rattle the fence": "Am Zaun rütteln",
+"Move on": "Weitergehen",
+"A wild %s, Ring %d. Sightings left: %d": "Ein wilder %s, Ring %d. Sichtungen übrig: %d",
+"You set down a twist of dried bait. %s sniffs it and calms down.": "Du legst ein Bündel Trockenköder hin. %s schnuppert daran und wird ruhiger.",
+"You rattle the fence. %s's ears shoot up: curious, and very jumpy.": "Du rüttelst am Zaun. %s stellt die Ohren auf: neugierig und sehr schreckhaft.",
+"%s slips through a hole in the fence. The ring will patch that hole. Someday.": "%s schlüpft durch ein Loch im Zaun. Die Bande flickt das Loch. Irgendwann.",
+"A whistle from the lookout tower. A rival crew bursts out of the reeds and %s bolts. Somebody got paid tonight.": "Ein Pfiff vom Wachturm. Eine fremde Bande bricht aus dem Schilf, und %s rennt davon. Heute Nacht wurde jemand bezahlt.",
+"%s answers your call and pads over to you. Dorran pretends not to notice.": "%s antwortet auf deinen Ruf und tappt zu dir herüber. Dorran tut so, als sähe sie nichts.",
+"%s tilts its head at your call, but stays put.": "%s legt bei deinem Ruf den Kopf schief, bleibt aber, wo es ist.",
+}

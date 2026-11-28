@@ -1,0 +1,5 @@
+{
+ "_comment": "Direct purchase prompts that the shop texts must never use (UWG annex no. 28, item 4022). Checked by tools/ip_check.sh against data/shop.json, tools/i18n/de_shop.py and scripts/shop. Case-insensitive.",
+ "de": ["kauf jetzt", "kaufe jetzt", "jetzt kaufen", "hol dir", "holt euch", "sichere dir", "sichert euch", "greif zu", "schnapp dir", "nur heute", "nur noch heute", "letzte chance", "zugreifen", "verpasse nicht", "verpass nicht", "bevor es weg ist", "nur für kurze zeit", "jetzt zuschlagen"],
+ "en": ["buy now", "buy it now", "get it now", "get yours", "grab it", "grab yours", "don't miss", "dont miss", "last chance", "only today", "today only", "limited time", "before it's gone", "act now", "hurry", "secure yours"]
+}

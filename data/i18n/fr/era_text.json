@@ -1,0 +1,6 @@
+{
+ "_comment": "fr translation of the era_text table, keyed by the English text.",
+ "strings": {
+  "Portrait of %s": "Portrait de %s"
+ }
+}

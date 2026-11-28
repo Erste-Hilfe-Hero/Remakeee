@@ -1,0 +1,56 @@
+name: Live content
+
+# docs/LIVE_CONTENT.md. Pull requests: live/content.json and the bundled data/live_content.json
+# follow the data-only rules. Manual run: signs live/content.json with LIVE_CONTENT_KEY and adds
+# it to the server (insert only; older versions stay). dry_run signs and verifies only.
+on:
+  pull_request:
+    paths: ["live/**", "data/live_content.json", "tools/live/**", ".github/workflows/live-content.yml"]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only sign and verify, do not publish"
+        type: boolean
+        default: true
+
+concurrency:
+  group: live-content-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - run: python3 tools/live/publish.py check live/content.json data/live_content.json
+
+  publish:
+    if: github.event_name == 'workflow_dispatch'
+    needs: check
+    runs-on: ubuntu-latest
+    env:
+      LIVE_CONTENT_KEY: ${{ secrets.LIVE_CONTENT_KEY }}
+      IP: ${{ secrets.CHIMORA_SERVER_IP }}
+      SSHPASS: ${{ secrets.CHIMORA_SERVER_PASSWORD }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Sign and verify against the game's public key
+        run: |
+          if [ -z "$LIVE_CONTENT_KEY" ]; then
+            echo "::error::LIVE_CONTENT_KEY is not set (docs/LIVE_CONTENT.md, Key)."
+            exit 1
+          fi
+          python3 tools/live/publish.py sign live/content.json --out "$RUNNER_TEMP/signed.json"
+          python3 tools/live/publish.py verify "$RUNNER_TEMP/signed.json"
+      - name: Publish (insert only)
+        if: ${{ !inputs.dry_run }}
+        run: |
+          if [ -z "$IP" ] || [ -z "$SSHPASS" ]; then
+            echo "::error::CHIMORA_SERVER_IP / CHIMORA_SERVER_PASSWORD not set."
+            exit 1
+          fi
+          sudo apt-get install -yq sshpass >/dev/null
+          opts="-o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=$RUNNER_TEMP/known_hosts"
+          python3 tools/live/publish.py sql "$RUNNER_TEMP/signed.json" | sshpass -e ssh $opts root@"$IP" \
+            "cd /opt/chimora/server && docker compose exec -T db psql -U postgres -h localhost -d postgres -v ON_ERROR_STOP=1 -q"
+          echo "Published live content version $(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["version"])' "$RUNNER_TEMP/signed.json")"

@@ -1,0 +1,21 @@
+{
+ "_comment": "fr translation of the kampf_boss table, keyed by the English text.",
+ "strings": {
+  "%s grows restless: the longer the fight, the harder it strikes!": "%s s'impatiente: plus le combat dure, plus il frappe fort!",
+  "%s lies open: its Guard is down for a turn!": "%s est à découvert: sa Garde tombe pendant un tour!",
+  "Before the Hush, the Cinder Rift fed a village's forges. The smiths sold the last of its heat to the highest bidder, and what was left curled up and learned to hate. It still keeps time like a bellows: hold it under High Tide and it can't stoke its next phase.": "Avant le Silence, la Faille des Braises nourrissait les forges d'un village. Les forgerons ont vendu le reste de sa chaleur au plus offrant, et ce qui restait s'est recroquevillé et a appris la haine. Elle bat encore la mesure comme un soufflet: maintiens-la sous Grande marée et elle ne pourra pas attiser sa phase suivante.",
+  "Ebb": "Reflux",
+  "It acts %d times each turn.": "Il agit %d fois à chaque tour.",
+  "Mist hides things, and the people nearby paid it well to hide one thing in particular. When the payments stopped, it hid them too. Dawn Glow burns its fog thin; while the light lies, it can't pull itself into a new shape.": "La brume cache des choses, et les gens du coin la payaient bien pour en cacher une en particulier. Quand les paiements ont cessé, elle les a cachés eux aussi. La Lueur d'aube amincit son brouillard; tant que la lumière dure, elle ne peut pas se ramasser en une nouvelle forme.",
+  "Not a breath of wind: no stat stage rises or falls on either side.": "Pas un souffle de vent: aucune statistique ne monte ni ne baisse, d'un côté comme de l'autre.",
+  "Still Air": "Air immobile",
+  "The Ashen Heart splits open. Its core burns white!": "Le Cœur de Cendre se fend! Son noyau brûle à blanc!",
+  "The Drowned Heart sinks its weight into one last surge!": "Le Cœur Noyé jette tout son poids dans une dernière vague!",
+  "The Mist Heart pulls the fog tight around its core!": "Le Cœur de Brume resserre le brouillard autour de son noyau!",
+  "The Tide Rift sank a ferry once, and the ferryman swore he had warned everyone. He had not. The heart at the bottom remembers every name on the passenger list. Static Veil sets its water humming, and while it hums the heart can't gather its next surge.": "La Faille des Marées a un jour coulé un bac, et le passeur a juré qu'il avait prévenu tout le monde. C'était faux. Le cœur au fond se souvient de chaque nom de la liste des passagers. Le Voile statique fait vibrer son eau, et tant qu'elle vibre, le cœur ne peut pas rassembler sa prochaine vague.",
+  "The water has run out: resting gives 1 Energy less on both sides.": "L'eau s'est tarie: se reposer rend 1 Énergie de moins des deux côtés.",
+  "What the Ashen Heart was": "Ce qu'était le Cœur de Cendre",
+  "What the Drowned Heart was": "Ce qu'était le Cœur Noyé",
+  "What the Mist Heart was": "Ce qu'était le Cœur de Brume"
+ }
+}

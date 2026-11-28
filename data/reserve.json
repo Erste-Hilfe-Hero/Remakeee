@@ -1,0 +1,36 @@
+{
+ "_comment": "Hollowgate Reserve: a fenced wildlife park behind Greyreach, run by a smuggling ring (scripts/core/Reserve.gd). The entry fee buys a run of 'sightings' and a limited number of Echo 'calls'. No fighting inside: per sighting you may set bait (calmer, harder to reach), rattle the fence (keener, but jumpier), make an Echo call (the usual Echo minigame, no odds shown) or move on. A Spirling may slip away after each action. The ring's lookout sometimes tips off a rival crew, which spooks one sighting (snitch_chance): only that sighting is lost.",
+ "entry_fee": 300,
+ "sightings": 6,
+ "calls": 5,
+ "flee_base": 0.15,
+ "bait_calm": 0.4,
+ "bait_dull": 0.25,
+ "rattle_keen": 0.5,
+ "rattle_jumpy": 0.6,
+ "max_stacks": 3,
+ "max_bond": 0.9,
+ "snitch_chance": 0.12,
+ "boss": "Velvet Dorran",
+ "ring": "the Quiet Hands",
+ "table": [
+  {"species": "Mirkmole", "weight": 5, "ring": [16, 20]},
+  {"species": "Duneshrew", "weight": 5, "ring": [16, 20]},
+  {"species": "Shimmerlet", "weight": 4, "ring": [17, 21]},
+  {"species": "Puddock", "weight": 4, "ring": [17, 21]},
+  {"species": "Hushkin", "weight": 2, "ring": [18, 22]},
+  {"species": "Highhare", "weight": 2, "ring": [18, 22]},
+  {"species": "Glimmoth", "weight": 1, "ring": [20, 24]}
+ ],
+ "welcome": [
+  "Velvet Dorran: Welcome to Hollowgate Reserve. Totally legal. The fence is to keep the paperwork in.",
+  "Velvet Dorran: No fighting in my yard. You set bait, you rattle the fence, you call. Then you leave and forget my face."
+ ],
+ "bait_line": "You set down a twist of dried bait. %s sniffs it and calms down.",
+ "rattle_line": "You rattle the fence. %s's ears shoot up: curious, and very jumpy.",
+ "fled_line": "%s slips through a hole in the fence. The ring will patch that hole. Someday.",
+ "snitch_line": "A whistle from the lookout tower. A rival crew bursts out of the reeds and %s bolts. Somebody got paid tonight.",
+ "bonded_line": "%s answers your call and pads over to you. Dorran pretends not to notice.",
+ "missed_line": "%s tilts its head at your call, but stays put.",
+ "done_line": "Velvet Dorran: Time's up. Out you go, and the gate never saw you."
+}

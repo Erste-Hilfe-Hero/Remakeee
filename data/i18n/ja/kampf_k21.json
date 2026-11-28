@@ -1,0 +1,18 @@
+{
+ "_comment": "Japanese texts for the German table kampf_k21. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "%d s left, then everyone without orders rests.": "あと%d秒。指示がないと休みます。",
+  "%s is about to step out. Swap first?": "次は%s。先に交代する？",
+  "%s, you're up. Last longer than the last one.": "%s、出番だ。前のよりは長くもてよ。",
+  "A Wayfarer names its next Spirling before it steps out.": "旅人が次に出すSpirlingを先に言います。",
+  "All rest": "全員休む",
+  "Fight on": "戦い続ける",
+  "Foe announces: %s": "予告：%s",
+  "Give up? It counts as a loss.": "降参する？負けになります。",
+  "Orders for %s? (%d Energy, %d s)": "%sに指示は？（気力%d、%d秒）",
+  "Swap offer: %s": "交代の機会：%s",
+  "The foe": "相手",
+  "When a Wayfarer's Spirling is beaten, you may swap before the next one steps out.": "旅人のSpirlingを倒したら、次が出る前に交代できます。",
+  "You give up. %s doesn't even pretend to be surprised.": "降参した。%sは驚いたふりすらしない。"
+ }
+}

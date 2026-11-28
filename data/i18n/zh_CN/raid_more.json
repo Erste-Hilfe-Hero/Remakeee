@@ -1,0 +1,12 @@
+{
+ "_comment": "zh_CN translation of the raid_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s (%s, %d Wayfarers) %d min": "%d. %s（%s，旅人%d名）%d分钟",
+  "A legendary guardian waits in this Rift: %s": "这道裂隙里有一位传说守护者在等候：%s",
+  "Easy": "简单",
+  "Fastest Rifts": "最快通关的裂隙",
+  "Hard": "困难",
+  "How hard?": "多难？",
+  "No Rift was won yet.": "还没有打赢过任何裂隙。"
+ }
+}

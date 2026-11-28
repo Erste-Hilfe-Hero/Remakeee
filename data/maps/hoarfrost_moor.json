@@ -1,0 +1,193 @@
+{
+ "name": "Hoarfrost Moor",
+ "region": "quillmarch",
+ "biome": "route",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "encounters": "hoarfrost_moor",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T@@..__.,,,T",
+  "T@@...__,,,T",
+  "T.....__...T",
+  "T::@@@@_@@.T",
+  "T::@@@@_@@.T",
+  "T....____..T",
+  "T@@@._..,,,T",
+  "T@@@._..,,,T",
+  "T...._.....T",
+  "T,,.._@@@@@T",
+  "T,,..____..T",
+  "T@@@...._..T",
+  "T@@@.::._..T",
+  "T....::.__.T",
+  "T,,,....._.T",
+  "T,,,@@@@._.T",
+  "T...@@@@._.T",
+  "T..______..T",
+  "T.._..,,,..T",
+  "T@@_..,,,@@T",
+  "T@@_.....@@T",
+  "T..__......T",
+  "T....__.::.T",
+  "T.....__::.T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "mordant_row",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "rimeholt",
+   "tx": 1,
+   "ty": 8,
+   "facing": "right"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "mordant_row",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "rimeholt",
+   "tx": 1,
+   "ty": 9,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "sledger",
+   "x": 10,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "quillmarch/hoarfrost_moor_sledger",
+   "sprite": "ranger",
+   "trainer": "Sledger Runa",
+   "intro": "quillmarch/hoarfrost_moor_sledger_intro",
+   "defeat": "quillmarch/hoarfrost_moor_sledger_defeat",
+   "money": 3080,
+   "team": [
+    {
+     "species": "Rimekit",
+     "level": 76
+    },
+    {
+     "species": "Hoarling",
+     "level": 77
+    }
+   ]
+  },
+  {
+   "id": "hoarwatch",
+   "x": 2,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "quillmarch/hoarfrost_moor_hoarwatch",
+   "sprite": "villager",
+   "trainer": "Moor Watcher Eskil",
+   "intro": "quillmarch/hoarfrost_moor_hoarwatch_intro",
+   "defeat": "quillmarch/hoarfrost_moor_hoarwatch_defeat",
+   "money": 3080,
+   "team": [
+    {
+     "species": "Vesk",
+     "level": 76
+    },
+    {
+     "species": "Rimelynx",
+     "level": 77
+    },
+    {
+     "species": "Filigrin",
+     "level": 77
+    }
+   ]
+  },
+  {
+   "id": "q3_reader",
+   "x": 10,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_hoarfrost_moor_reader",
+   "sprite": "villager",
+   "trainer": "Frost Reader Yrsa",
+   "intro": "quillmarch/q3_hoarfrost_moor_reader_intro",
+   "defeat": "quillmarch/q3_hoarfrost_moor_reader_defeat",
+   "money": 3080,
+   "team": [
+    {
+     "species": "Hoarstag",
+     "level": 75
+    },
+    {
+     "species": "Rimesovereign",
+     "level": 76
+    },
+    {
+     "species": "Hoarmonarch",
+     "level": 77
+    }
+   ]
+  },
+  {
+   "id": "q3_frozen_deed_odd",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_frozen_deed_odd",
+   "sprite": "villager",
+   "show_flag": "q3_frozen_deed_asked"
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_hoarfrost_moor_1"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_hoarfrost_moor_2"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_hoarfrost_moor_3"
+  },
+  {
+   "x": 11,
+   "y": 23,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_hoarfrost_moor_4"
+  },
+  {
+   "x": 0,
+   "y": 3,
+   "item": "dash_brew",
+   "count": 1,
+   "flag": "find_hoarfrost_moor_q3_0_3"
+  }
+ ]
+}

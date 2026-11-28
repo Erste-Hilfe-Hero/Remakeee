@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table gleam_kinds, written by tools/i18n/locales_gleam_kinds.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  " Frost glitters on its hide: a Rime Gleam!": " A geada cintila em sua pele: um Reluzente de geada!",
+  " It glows like the last of the sun: a Duskgold Gleam!": " Brilha como o último sol do dia: um Reluzente de ouro do ocaso!",
+  " It is washed in deep ink: an Inkwash Gleam!": " Está banhado em tinta profunda: um Reluzente de tinta!",
+  " Its colours never hold still: an Opaline Gleam!": " Suas cores nunca ficam paradas: um Reluzente opalino!",
+  "%d seen, %d bonded": "%d vistos, %d vinculados",
+  "Duskgold Gleam": "Reluzente de ouro do ocaso",
+  "Gleams bonded: %s": "Reluzentes vinculados: %s",
+  "Gleams seen: %s": "Reluzentes vistos: %s",
+  "Inkwash Gleam": "Reluzente de tinta",
+  "Opaline Gleam": "Reluzente opalino",
+  "Rarer Gleams show their own mark:": "Reluzentes mais raros têm sua própria marca:",
+  "Rime Gleam": "Reluzente de geada"
+ }
+}

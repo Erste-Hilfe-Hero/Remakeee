@@ -1,0 +1,18 @@
+{
+ "_comment": "German texts from tools/i18n/de_gleam_kinds.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  " Frost glitters on its hide: a Rime Gleam!": " Reif glitzert auf seinem Fell: eine Reif-Glanzform!",
+  " It glows like the last of the sun: a Duskgold Gleam!": " Es glüht wie die letzte Sonne des Tages: eine Abendgold-Glanzform!",
+  " It is washed in deep ink: an Inkwash Gleam!": " Es ist in tiefe Tusche getaucht: eine Tusche-Glanzform!",
+  " Its colours never hold still: an Opaline Gleam!": " Seine Farben stehen nie still: eine Opal-Glanzform!",
+  "%d seen, %d bonded": "%d gesehen, %d gebunden",
+  "Duskgold Gleam": "Abendgold-Glanzform",
+  "Gleams bonded: %s": "Gebundene Glanzformen: %s",
+  "Gleams seen: %s": "Gesehene Glanzformen: %s",
+  "Inkwash Gleam": "Tusche-Glanzform",
+  "Opaline Gleam": "Opal-Glanzform",
+  "Rarer Gleams show their own mark:": "Seltenere Glanzformen tragen ein eigenes Zeichen:",
+  "Rime Gleam": "Reif-Glanzform"
+ }
+}

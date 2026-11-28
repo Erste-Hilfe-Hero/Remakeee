@@ -1,0 +1,26 @@
+{
+  "_doc": "Era IV (Panorama) battle stage: a 2.5D floor seen at a slant, flat-topped slabs (no ovals, LEGAL.md layout rule) and 3 parallax layers. Depth 0 = horizon, 1 = bottom of the field. Read by Era4Stage.gd.",
+  "horizon": 0.34,
+  "vanish_x": 0.5,
+  "near_scale": 1.0,
+  "far_scale": 0.62,
+  "floor_lines": 9,
+  "floor_rows": 6,
+  "slab_thickness": 6,
+  "shadow_alpha": 0.35,
+  "slabs": {
+    "foe":    {"x": 0.70, "depth": 0.30, "width": 0.40, "length": 0.14},
+    "player": {"x": 0.30, "depth": 0.86, "width": 0.56, "length": 0.18}
+  },
+  "layers": [
+    {"name": "far",  "height": 0.16, "drift": 2.0, "amp": 3.0},
+    {"name": "mid",  "height": 0.10, "drift": 5.0, "amp": 5.0},
+    {"name": "near", "height": 0.05, "drift": 9.0, "amp": 4.0}
+  ],
+  "colors": {
+    "sky_top": "6f9ccf", "sky_low": "f2dcae",
+    "far": "8e98b8", "mid": "6f8a74", "near": "4f6b4a",
+    "floor_near": "9bb06a", "floor_far": "c9cf98", "grid": "7f9256",
+    "slab_top": "d8c79a", "slab_side": "8a7454", "shadow": "1c1a24"
+  }
+}

@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table book_rewards, written by tools/i18n/locales_book_rewards.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d Gleam bonded": "%d Reflets liés",
+  "%d%% bonded": "%d%% liés",
+  "(%d ready)": "(%d prêtes)",
+  "Bonded: %d%%": "Liés : %d%%",
+  "Bonded: %d%% (%d/%d)": "Liés : %d%% (%d/%d)",
+  "Book rewards: %d%% bonded, Gleam %d%%": "Récompenses du livre : %d%% liés, Reflet %d%%",
+  "Gleam: %d%%": "Reflet : %d%%",
+  "Gleam: %d%% (%d/%d)": "Reflet : %d%% (%d/%d)",
+  "Invite of friend code %s:": "Invitation du code ami %s :",
+  "Keeper of Every Page": "Garde de toutes les pages",
+  "No connection right now. The invite is kept and sent once you are online.": "Pas de connexion pour le moment. L'invitation est gardée et envoyée dès que tu es en ligne.",
+  "Nothing to take yet. Rewards come once you are friends and the new player has played for a day.": "Rien à prendre pour l'instant. Les récompenses arrivent quand vous êtes amis et que le nouveau joueur a joué pendant un jour.",
+  "Of every kind in the game.": "Sur toutes les espèces du jeu.",
+  "Request sent. Once you are friends and you have played for a day, you both take the invite reward under Friends, Invite a friend.": "Demande envoyée. Quand vous serez amis et que tu auras joué pendant un jour, vous prendrez tous les deux la récompense d'invitation sous Amis, Inviter un ami.",
+  "Rewards for the share of kinds bonded and for Gleam kinds.": "Des récompenses pour la part d'espèces liées et pour les Reflets.",
+  "Seen: %d%%": "Vus : %d%%",
+  "Seen: %d%% (%d/%d)": "Vus : %d%% (%d/%d)",
+  "Spirlog book": "Livre du Spirlog",
+  "Spirlog reward: %s!": "Récompense du Spirlog : %s !",
+  "Take a reward once its step is reached.": "Prends une récompense dès que son palier est atteint.",
+  "You received %s x%d.": "Tu reçois %s x%d.",
+  "ready!": "prête !",
+  "taken": "prise"
+ }
+}

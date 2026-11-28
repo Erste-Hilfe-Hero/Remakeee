@@ -1,0 +1,13 @@
+{
+ "_comment": "Translations of the German table kampf_k35, written by tools/i18n/locales_kampf_k35.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Brute force": "Грубая сила",
+  "Field tricks": "Уловки с полем",
+  "Give me three turns. You won't get a fourth.": "Дай мне три хода. Четвёртого у тебя не будет.",
+  "I don't win duels. I make you lose them slowly.": "Я не выигрываю поединки. Я заставляю тебя медленно их проигрывать.",
+  "No tricks. Just teeth. Some of them used to be someone else's.": "Никаких уловок. Только зубы. Некоторые раньше были чужими.",
+  "Stage tricks": "Уловки со ступенями",
+  "Status tricks": "Уловки с состояниями",
+  "The ground here owes me money. Watch it pay up.": "Эта земля должна мне денег. Смотри, как она платит."
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "_comment": "German texts from tools/i18n/de_kampf_a11y.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Calm": "Ruhig",
+  "Echo it back, no hurry.": "Spiel es nach, ganz ohne Eile.",
+  "Mine: tap one button fast. Echo: repeat the call. Calm: echo with no time limit.": "Meins: einen Knopf schnell tippen. Echo: den Ruf nachspielen. Ruhig: Echo ohne Zeitlimit.",
+  "This replay comes from a newer version of the game.": "Diese Wiederholung stammt aus einer neueren Version des Spiels.",
+  "[%s cries out]": "[%s ruft]"
+ }
+}

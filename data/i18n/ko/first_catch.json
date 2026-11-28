@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table first_catch, written by tools/i18n/locales_first_catch.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "'Day one. The sky over the lake split like old paper. Aldo says I'm mad to map it. Aldo is usually right.'": "'첫째 날. 호수 위 하늘이 낡은 종이처럼 찢어졌다. Aldo는 그걸 지도로 그리겠다니 내가 미쳤다고 한다. Aldo 말은 대개 맞다.'",
+  "Aldo: I saw that from the path! That one chose you.": "Aldo: 길에서 다 봤단다! 저 녀석이 너를 골랐구나.",
+  "First bond! A gift for the road: %s.": "첫 유대! 길을 위한 선물: %s.",
+  "Kestra: Aldo's apprentice? Good. The storm tore Rifts open, past Thornridge and under the Saltmarsh.": "Kestra: Aldo의 제자? 잘됐다. 폭풍이 균열을 열었어. Thornridge 너머랑 Saltmarsh 밑에.",
+  "Kestra: And this blew in through my window. Mirela's compass rose. Yours, I think.": "Kestra: 그리고 이게 창문으로 날아들어 왔어. Mirela의 나침반 장미야. 네 거 같아.",
+  "Kestra: Everyone wants them closed. I'm not so sure: new Spirlings came through. But start north in Fernstair.": "Kestra: 다들 닫고 싶어 해. 난 잘 모르겠어. 새로운 Spirling들이 건너왔거든. 그래도 북쪽 Fernstair부터 가.",
+  "Three small lights peek out of the ferns: Spirlings from the storm!": "고사리 사이로 작은 빛 세 개가 엿보인다. 폭풍이 데려온 Spirling들이야!",
+  "Tip: A wild Spirling that trusts you can join your team.": "팁: 너를 믿는 야생 Spirling은 팀에 들어올 수 있다.",
+  "Tip: Goals shows how many map pages are still out there.": "팁: 목표에서 남은 지도 페이지 수를 볼 수 있다.",
+  "Tip: The game saves itself when you change places. Save any time in the menu.": "팁: 장소를 옮기면 게임이 자동 저장된다. 메뉴에서 언제든 저장할 수 있다.",
+  "Your first bond! A one-time pack": "첫 유대! 한 번뿐인 묶음"
+ }
+}

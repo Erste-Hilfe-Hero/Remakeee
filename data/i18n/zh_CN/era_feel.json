@@ -1,0 +1,16 @@
+{
+ "_comment": "Simplified Chinese (Mainland China) texts for the German table era_feel. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "A map drawn in four inks.": "一张用四种墨水画成的地图。",
+  "Era I - Ink": "纪元I - 墨",
+  "Era II - Wash": "纪元II - 淡彩",
+  "Era III - Etching": "纪元III - 蚀刻",
+  "Era IV - Panorama": "纪元IV - 全景",
+  "Era V - Living": "纪元V - 鲜活",
+  "Replay era change": "重播纪元变换",
+  "The air grows clearer. Every leaf shows more detail!": "空气变得更清澈了。每片叶子都更有细节了！",
+  "The ink runs. The world fills with colour!": "墨水晕开了。世界染满了色彩！",
+  "The map breathes. The world is alive!": "地图在呼吸。世界活过来了！",
+  "The map unrolls wider than ever before!": "地图展开得前所未有地宽广！"
+ }
+}

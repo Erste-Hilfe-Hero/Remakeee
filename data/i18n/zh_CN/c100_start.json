@@ -1,0 +1,31 @@
+{
+ "_comment": "Texts for the German table c100_start in this language. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "%s curls up at your feet. Let it stay?": "%s蜷缩在你脚边。让它留下吗？",
+  "%s stays with you! The other two slip off to the lake.": "%s决定留在你身边！另外两只溜向了湖边。",
+  "'Our cartographers have drawn and redrawn Veydal for a hundred years. Now the Hush: Spirlings near a Rift go quiet and forget their Wayfarers.'": "“我们的制图师百年来一遍遍描绘Veydal。如今是沉寂：裂隙附近的Spirling变得沉默，忘记自己的旅人。”",
+  "Aldo: Good. The Rifts bring the Hush: Spirlings there go quiet.": "Aldo：好。裂隙带来沉寂：那里的Spirling会变得沉默。",
+  "Aldo: Take this, and go see Kestra at the map house.": "Aldo：拿着这个，去地图馆找Kestra吧。",
+  "Aldo: The storm scattered Mirela's map book. Bring her pages home.": "Aldo：暴风雨吹散了Mirela的地图册。把她的书页带回家。",
+  "Aldo: Three Spirlings came in from the storm. Go say hello!": "Aldo：三只Spirling躲进来避暴风雨。去打个招呼吧！",
+  "Coat: %s": "外套：%s",
+  "Gentle battles, more Growth.": "温和的战斗，更多成长。",
+  "Hair: %s": "头发：%s",
+  "I have a code": "我有转移代码",
+  "In the margin, in Aldo's hand: 'Your grandmother went in to map that Rift before you were born. She never came back.'": "页边是Aldo的字迹：“你出生前，你的祖母进入那道裂隙去绘制地图。她再也没有回来。”",
+  "Keyboard": "键盘",
+  "Last night a storm tore the sky. Rifts opened over Veydal.": "昨夜，暴风雨撕裂了天空。Veydal上空裂隙打开了。",
+  "OK": "好的",
+  "Random": "随机",
+  "Relaxed": "轻松",
+  "Ring limits, smarter foes.": "环上限，更聪明的对手。",
+  "Skin: %s": "肤色：%s",
+  "The journey as it is meant to be.": "原本设计的旅程。",
+  "Three small lights crossed the lake to the lighthouse lamp.": "三点小小的光渡过湖面，来到灯塔的灯下。",
+  "Tough": "困难",
+  "Watch the marks light up, then press them in the same order.": "看哪些标记亮起，然后按同样的顺序按下。",
+  "Watch the marks light up, then tap them in the same order.": "看哪些标记亮起，然后按同样的顺序点击。",
+  "Wayfarer: %s": "旅人：%s",
+  "You can change it later in Settings.": "之后可以在设置里更改。"
+ }
+}

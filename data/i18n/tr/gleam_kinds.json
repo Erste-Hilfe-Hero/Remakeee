@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table gleam_kinds, written by tools/i18n/locales_gleam_kinds.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  " Frost glitters on its hide: a Rime Gleam!": " Üzerinde kırağı parıldıyor: bir Kırağı Işıltısı!",
+  " It glows like the last of the sun: a Duskgold Gleam!": " Batan güneş gibi parlıyor: bir Akşam Altını Işıltısı!",
+  " It is washed in deep ink: an Inkwash Gleam!": " Koyu mürekkebe bulanmış: bir Mürekkep Işıltısı!",
+  " Its colours never hold still: an Opaline Gleam!": " Renkleri hiç durmuyor: bir Opal Işıltısı!",
+  "%d seen, %d bonded": "%d görüldü, %d bağ kuruldu",
+  "Duskgold Gleam": "Akşam Altını Işıltısı",
+  "Gleams bonded: %s": "Bağ kurulan Işıltılar: %s",
+  "Gleams seen: %s": "Görülen Işıltılar: %s",
+  "Inkwash Gleam": "Mürekkep Işıltısı",
+  "Opaline Gleam": "Opal Işıltısı",
+  "Rarer Gleams show their own mark:": "Daha nadir Işıltıların kendi işareti vardır:",
+  "Rime Gleam": "Kırağı Işıltısı"
+ }
+}

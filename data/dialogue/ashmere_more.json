@@ -1,0 +1,604 @@
+{
+ "greaves": {
+  "if": {
+   "not_flag": "ah_assize_asked"
+  },
+  "else": "greaves_votes",
+  "lines": [
+   "Magistrate Greaves: Order. Order! Thank you. The Ash Assize is in session. It is always in session. Sessions are billed by the hour.",
+   "Magistrate Greaves: You want a verdict on the Ruskweber wage plates? Then you need the jury. Five jurors, out walking the heath. Win each one over.",
+   "Magistrate Greaves: By 'win over' I mean beat in a duel. This is Ashmere. Persuasion is a contact sport."
+  ],
+  "action": "set_flag ah_assize_asked"
+ },
+ "greaves_votes": {
+  "if": {
+   "flag": [
+    "ah_juror_1",
+    "ah_juror_2",
+    "ah_juror_3",
+    "ah_juror_4",
+    "ah_juror_5"
+   ],
+   "not_flag": "betrayal_greaves_verdict"
+  },
+  "else": "greaves_more",
+  "lines": [
+   "Magistrate Greaves: Five votes for you. Unanimous! The court is moved. Deeply. Financially, even.",
+   "Magistrate Greaves: And now the verdict, which I wrote last Tuesday."
+  ],
+  "action": "betrayal greaves_verdict"
+ },
+ "greaves_more": {
+  "if": {
+   "not_flag": "betrayal_greaves_verdict"
+  },
+  "else": "greaves_after",
+  "lines": [
+   "Magistrate Greaves: Not all five votes yet? The jury walks the heath. Like the dead, but with lunch breaks."
+  ]
+ },
+ "greaves_after": [
+  "Magistrate Greaves: Court is adjourned. Court is always adjourned for you now. Permanently. Mind the step."
+ ],
+ "verdict_caught": [
+  "You lay Clerk Tansy's docket on the bench: 'Verdict: for the clan (prepaid). Jury: advisory.' Dated last Tuesday.",
+  "Magistrate Greaves: ...Advisory means they advise and I ignore. It's a very old tradition. Fine. Take the clan's bribe, then. Somebody should enjoy it."
+ ],
+ "verdict_struck": [
+  "Magistrate Greaves: Guilty! Of wasting the court's time. And of trespass, loitering, and having the wrong friends. Bailiffs?",
+  "Magistrate Greaves: The jury? Advisory, dear. They advise. I decide. Read the docket next time. Nobody reads the docket."
+ ],
+ "bailiffs_defeat": [
+  "Bailiff: Sentence served, I suppose. Here, court costs. Refunded. Don't tell the magistrate."
+ ],
+ "bailiffs_lose": [
+  "The bailiffs throw you out onto the heath. The heath does not catch you."
+ ],
+ "ledger_verdict": [
+  "The advisory jury",
+  "Greaves let you win all five jurors of the Ash Assize, then read out a verdict the clan had paid for the week before."
+ ],
+ "tansy": {
+  "if": {
+   "flag": "ah_assize_asked",
+   "not_flag": "ah_docket_read"
+  },
+  "else": "tansy_plain",
+  "lines": [
+   "Clerk Tansy: The docket is on my desk. Page two. I'm not telling you to read it. I'm telling you where it is. Those are different crimes."
+  ]
+ },
+ "tansy_plain": {
+  "lines": [
+   "Clerk Tansy: I write down what the court says. Sometimes before it says it. Saves ink."
+  ],
+  "after_flag": {
+   "flag": "betrayal_greaves_verdict",
+   "lines": [
+    "Clerk Tansy: I've started a second docket. The true one. It's very short and very rude."
+   ]
+  }
+ },
+ "briony": {
+  "if": {
+   "not_flag": "ah_briony_done"
+  },
+  "else": "briony_after",
+  "lines": [
+   "Briony Cask: They say I stole a wage plate from the gravers' hall. Me! I can't even lift a wage plate. I've tried. Often.",
+   "Briony Cask: Tell the magistrate I was with you on the heath that night. One little oath. Friends swear for friends. We're friends now. Aren't we?"
+  ],
+  "action": "set_flag ah_briony_met",
+  "choices": [
+   {
+    "text": "Swear for her",
+    "action": "favor briony_alibi",
+    "flag": "ah_briony_done"
+   },
+   {
+    "text": "I wasn't there"
+   }
+  ]
+ },
+ "briony_after": [
+  "Briony Cask: No hard feelings. Feelings are for people who own things. I own a lot of things now. Some of them were yours."
+ ],
+ "briony_betray": [
+  "Your oath gets Briony off. Outside, she hands the wage plate to two Ruskweber fences, then points at you.",
+  "Briony Cask: That one swore in court they were with me. Under oath. Which makes them my accomplice. Get them."
+ ],
+ "briony_reward": [
+  "Briony walks free and keeps her word, which surprises both of you. She slips you a tonic from the evidence locker."
+ ],
+ "briony_kept": [
+  "Your oath is not needed. The magistrate loses the file. Briony thanks you anyway, and counts her fingers after the handshake. Yours too."
+ ],
+ "fence_defeat": [
+  "Ruskweber Fence: Accomplice, she said. Accomplice my foot. You're a witness, and witnesses get paid to forget."
+ ],
+ "fence_lose": [
+  "The fences take your coins as 'evidence'. Evidence is never returned."
+ ],
+ "ledger_alibi": [
+  "The alibi",
+  "Briony Cask asked you to swear she was with you on the heath, then used the oath to call you her accomplice."
+ ],
+ "mercer": {
+  "if": {
+   "not_flag": "ah_mourner_asked"
+  },
+  "else": "mercer_pins",
+  "lines": [
+   "Mourner Mercer: Professional grief. Weeping by the hour, wailing by arrangement, fainting on request. I do a lovely faint.",
+   "Mourner Mercer: Business is booming. Three funerals tomorrow. Pin these notices on the three boards of the heath, would you? My knees are in mourning."
+  ],
+  "action": "set_flag ah_mourner_asked"
+ },
+ "mercer_pins": {
+  "if": {
+   "var_min": {
+    "q_ah_mourner_stage": 0
+   },
+   "var_max": {
+    "q_ah_mourner_stage": 0
+   },
+   "flag": [
+    "ah_notice_1",
+    "ah_notice_2",
+    "ah_notice_3"
+   ]
+  },
+  "else": "mercer_wait",
+  "lines": [
+   "Mourner Mercer: All three pinned. Wonderful. Old Abner Tull, the widow Grice and young Pell the slag-picker. Tragic. Sudden. Tomorrow.",
+   "Mourner Mercer: Don't visit the departed, by the way. It upsets them."
+  ],
+  "action": "quest_stage ah_mourner 1"
+ },
+ "mercer_wait": {
+  "if": {
+   "var_min": {
+    "q_ah_mourner_stage": 0
+   },
+   "var_max": {
+    "q_ah_mourner_stage": 0
+   }
+  },
+  "else": "mercer_mid",
+  "lines": [
+   "Mourner Mercer: Three boards, three notices. Pin them straight. Nobody trusts a crooked funeral."
+  ]
+ },
+ "mercer_mid": {
+  "if": {
+   "var_min": {
+    "q_ah_mourner_stage": 1
+   },
+   "var_max": {
+    "q_ah_mourner_stage": 2
+   }
+  },
+  "else": "mercer_confront",
+  "lines": [
+   "Mourner Mercer: I'm rehearsing. Sob, sob, wail. Sob, wail, faint. The faint goes last. Always leave them wanting more."
+  ]
+ },
+ "mercer_confront": {
+  "if": {
+   "var_min": {
+    "q_ah_mourner_stage": 3
+   },
+   "var_max": {
+    "q_ah_mourner_stage": 3
+   },
+   "not_flag": "ah_mourner_done"
+  },
+  "else": "mercer_after",
+  "lines": [
+   "Mourner Mercer: You found the auction book. Rude. Yes, I bury them first and sell the house after. The families get a lovely service. And the bill.",
+   "Mourner Mercer: Old Tull would have died eventually. I just got the paperwork in early. Now, shall I mourn you? I'll give you the family rate."
+  ],
+  "action": "battle mercer_wake"
+ },
+ "mercer_defeat": [
+  "Mourner Mercer: Beaten by the guest of honour. Fine. I'll cancel the funerals. Do you know what a refund does to a mourner's soul?"
+ ],
+ "mercer_lose": [
+  "Mourner Mercer: There, there. Sob. That one was free."
+ ],
+ "mercer_after": [
+  "Mourner Mercer: I do weddings now. Same tears, better cake, and the bride only wishes she were dead."
+ ],
+ "tull": {
+  "if": {
+   "var_min": {
+    "q_ah_mourner_stage": 1
+   },
+   "var_max": {
+    "q_ah_mourner_stage": 1
+   }
+  },
+  "else": "tull_plain",
+  "lines": [
+   "Old Abner Tull: My funeral? Tomorrow? I've not even finished my soup.",
+   "Old Abner Tull: Mercer did the widow Grice last spring. She was out picking berries. Came home to a buyer measuring her curtains.",
+   "Old Abner Tull: He keeps an auction book in the Bellows Deep, where nobody looks. Go and look."
+  ],
+  "action": "quest_stage ah_mourner 2"
+ },
+ "tull_plain": {
+  "lines": [
+   "Old Abner Tull: I walk the heath every day to show the clan I'm still breathing. It's the only exercise that pays."
+  ],
+  "after_flag": {
+   "flag": "ah_mourner_done",
+   "lines": [
+    "Old Abner Tull: Still alive! I've ordered a cake to celebrate. Mercer's baking it. I'm having it tasted first."
+   ]
+  }
+ },
+ "orla": {
+  "if": {
+   "not_flag": "ah_tags_asked"
+  },
+  "else": "orla_count",
+  "lines": [
+   "Tally Keeper Orla: I kept the tag board of the Bellows Deep. You hang your tag when you go down, you take it back when you come up.",
+   "Tally Keeper Orla: The clan shut the Deep eleven years ago. Eight tags never came back to my board. Find them for me. A board with holes in it looks careless."
+  ],
+  "action": "set_flag ah_tags_asked"
+ },
+ "orla_count": {
+  "if": {
+   "not_flag": "ah_tags_done"
+  },
+  "else": "orla_shift",
+  "lines": [
+   "Tally Keeper Orla: Four tags lie out on the heath, they say. The other four went down with the shift."
+  ],
+  "next": "orla_all"
+ },
+ "orla_all": {
+  "if": {
+   "flag": [
+    "ah_tag_1",
+    "ah_tag_2",
+    "ah_tag_3",
+    "ah_tag_4",
+    "ah_tag_5",
+    "ah_tag_6",
+    "ah_tag_7",
+    "ah_tag_8"
+   ]
+  },
+  "lines": [
+   "Tally Keeper Orla: All eight. Hamm, Odo, Gage, Bert, Tuck, Rosa, Molly, Penn. That's the whole last shift.",
+   "Tally Keeper Orla: Strange. The tags from the Deep are new brass. Somebody has been stamping fresh ones. You don't stamp tags for the dead. Take these, I don't need leaves."
+  ],
+  "action": "set_flag ah_tags_done; give_item revival_leaf 2"
+ },
+ "orla_shift": {
+  "if": {
+   "var_min": {
+    "q_ah_last_shift_stage": 0
+   },
+   "var_max": {
+    "q_ah_last_shift_stage": 0
+   }
+  },
+  "else": "orla_told",
+  "lines": [
+   "Tally Keeper Orla: Fresh tags means a live shift. Go down to the bottom gallery of the Deep. If I'm wrong, bring back nothing. Nothing is easy to carry."
+  ]
+ },
+ "orla_told": {
+  "if": {
+   "var_min": {
+    "q_ah_last_shift_stage": 1
+   },
+   "var_max": {
+    "q_ah_last_shift_stage": 1
+   }
+  },
+  "else": "orla_after",
+  "lines": [
+   "Tally Keeper Orla: Alive? Digging? For eleven years? And Slagg signs for their wages every month?",
+   "Tally Keeper Orla: I stamped those tags myself, you know. I'll stamp one for Slagg too. For when he goes down and doesn't come up."
+  ],
+  "action": "quest_stage ah_last_shift 2"
+ },
+ "orla_after": {
+  "lines": [
+   "Tally Keeper Orla: Slagg's at the bottom of his Deep. Fitting. Go and give him the news."
+  ],
+  "after_flag": {
+   "flag": "ah_slagg_beaten",
+   "lines": [
+    "Tally Keeper Orla: Eight tags on the board. Eight. First time in eleven years my board's been full. I cried. Don't tell the clan, they'd charge for it."
+   ]
+  }
+ },
+ "corwin": {
+  "if": {
+   "not_flag": "ah_portraits_asked"
+  },
+  "else": "corwin_done",
+  "lines": [
+   "Painter Corwin: I paint the wild Spirlings of the heath. Portraits. Very lifelike. Some of them have complained.",
+   "Painter Corwin: Bring me eight kinds in your team to sit for me. Four from the heath, four from the Deep. A wealthy patron has ordered the whole set."
+  ],
+  "flag": "ah_portraits_asked"
+ },
+ "corwin_done": {
+  "if": {
+   "flag": "ah_portraits_done"
+  },
+  "else": "corwin_c0",
+  "lines": [
+   "Painter Corwin: The set is sold! To Magistrate Greaves, for the court archive. Art in a courthouse. Isn't that hopeful?"
+  ],
+  "next": "corwin_deeds"
+ },
+ "corwin_c0": {
+  "if": {
+   "has_species": "Brickwarden",
+   "not_flag": "ah_sketch_brickwarden"
+  },
+  "lines": [
+   "Painter Corwin: A Brickwarden! Chin up. No, its other chin."
+  ],
+  "flag": "ah_sketch_brickwarden",
+  "next": "corwin_c1",
+  "else": "corwin_c1"
+ },
+ "corwin_c1": {
+  "if": {
+   "has_species": "Peatbloom",
+   "not_flag": "ah_sketch_peatbloom"
+  },
+  "lines": [
+   "Painter Corwin: A Peatbloom! Chin up. No, its other chin."
+  ],
+  "flag": "ah_sketch_peatbloom",
+  "next": "corwin_c2",
+  "else": "corwin_c2"
+ },
+ "corwin_c2": {
+  "if": {
+   "has_species": "Bellowroc",
+   "not_flag": "ah_sketch_bellowroc"
+  },
+  "lines": [
+   "Painter Corwin: A Bellowroc! Chin up. No, its other chin."
+  ],
+  "flag": "ah_sketch_bellowroc",
+  "next": "corwin_c3",
+  "else": "corwin_c3"
+ },
+ "corwin_c3": {
+  "if": {
+   "has_species": "Charsylvan",
+   "not_flag": "ah_sketch_charsylvan"
+  },
+  "lines": [
+   "Painter Corwin: A Charsylvan! Chin up. No, its other chin."
+  ],
+  "flag": "ah_sketch_charsylvan",
+  "next": "corwin_c4",
+  "else": "corwin_c4"
+ },
+ "corwin_c4": {
+  "if": {
+   "has_species": "Fumeregent",
+   "not_flag": "ah_sketch_fumeregent"
+  },
+  "lines": [
+   "Painter Corwin: A Fumeregent! Chin up. No, its other chin."
+  ],
+  "flag": "ah_sketch_fumeregent",
+  "next": "corwin_c5",
+  "else": "corwin_c5"
+ },
+ "corwin_c5": {
+  "if": {
+   "has_species": "Lodemarshal",
+   "not_flag": "ah_sketch_lodemarshal"
+  },
+  "lines": [
+   "Painter Corwin: A Lodemarshal! Chin up. No, its other chin."
+  ],
+  "flag": "ah_sketch_lodemarshal",
+  "next": "corwin_c6",
+  "else": "corwin_c6"
+ },
+ "corwin_c6": {
+  "if": {
+   "has_species": "Vitrillaxe",
+   "not_flag": "ah_sketch_vitrillaxe"
+  },
+  "lines": [
+   "Painter Corwin: A Vitrillaxe! Chin up. No, its other chin."
+  ],
+  "flag": "ah_sketch_vitrillaxe",
+  "next": "corwin_c7",
+  "else": "corwin_c7"
+ },
+ "corwin_c7": {
+  "if": {
+   "has_species": "Clinkerdome",
+   "not_flag": "ah_sketch_clinkerdome"
+  },
+  "lines": [
+   "Painter Corwin: A Clinkerdome! Chin up. No, its other chin."
+  ],
+  "flag": "ah_sketch_clinkerdome",
+  "next": "corwin_end",
+  "else": "corwin_end"
+ },
+ "corwin_end": {
+  "if": {
+   "flag": [
+    "ah_sketch_brickwarden",
+    "ah_sketch_peatbloom",
+    "ah_sketch_bellowroc",
+    "ah_sketch_charsylvan",
+    "ah_sketch_fumeregent",
+    "ah_sketch_lodemarshal",
+    "ah_sketch_vitrillaxe",
+    "ah_sketch_clinkerdome"
+   ]
+  },
+  "lines": [
+   "Painter Corwin: Eight! The set is done. Every kind, every scale, and where it nests, down to the stone. My patron insisted on the stones. Here, for your trouble."
+  ],
+  "action": "set_flag ah_portraits_done; give_item swift_feather 1",
+  "once": true,
+  "else": "corwin_more"
+ },
+ "corwin_more": [
+  "Painter Corwin: Still missing some. The heath kinds are shy, the Deep kinds are shy and bite. Art is suffering. Mostly yours."
+ ],
+ "corwin_deeds": {
+  "if": {
+   "var_min": {
+    "q_ah_deeds_stage": 1
+   },
+   "var_max": {
+    "q_ah_deeds_stage": 1
+   }
+  },
+  "else": "corwin_after",
+  "lines": [
+   "Painter Corwin: Deeds? My portraits are deeds? Greaves stamps each one and the clan owns the kind? And catching one is theft?",
+   "Painter Corwin: ...I may have known. A little. Here are my sketches, the originals. Without them the court can't prove a thing. What do we do with them?"
+  ],
+  "choices": [
+   {
+    "text": "Burn them",
+    "action": "quest_stage ah_deeds 2; set_flag ah_deeds_burned; give_item kin_charm 1",
+    "flag": "ah_deeds_done",
+    "next": "deeds_burned"
+   },
+   {
+    "text": "Sell them to Greaves",
+    "action": "quest_stage ah_deeds 2; set_flag ah_deeds_sold; give_item tide_pearl 1; battle deed_hunters",
+    "flag": "ah_deeds_done",
+    "next": "deeds_sold"
+   }
+  ]
+ },
+ "deeds_burned": [
+  "The sketches curl up in the spring fire. Corwin watches his best work go up and paints you instead, badly, as thanks."
+ ],
+ "deeds_sold": [
+  "Greaves pays in a confiscated pearl and stamps the deeds on the spot. Your own Spirlings are now Ruskweber property, and the catch tax collectors were waiting outside."
+ ],
+ "corwin_after": {
+  "lines": [
+   "Painter Corwin: I've gone back to landscapes. Nobody can own a landscape. Well. The clan owns this one. But it doesn't know."
+  ],
+  "after_flag": {
+   "flag": "ah_deeds_sold",
+   "lines": [
+    "Painter Corwin: My portrait of you sells well. Under WANTED. I'm sorry. I'm also very well paid."
+   ]
+  }
+ },
+ "hunters_defeat": [
+  "Catch Tax Collector: Tax paid in full. In bruises. We'll accept that, this once."
+ ],
+ "hunters_lose": [
+  "The collectors stamp your hand with the Ruskweber mark. It washes off. The shame doesn't."
+ ],
+ "keeper": {
+  "lines": [
+   "Usher Pim: The court keeps a bench for witnesses to rest on. Witnesses rest a lot here. Some of them permanently.",
+   "Usher Pim: Your Spirlings look tired. Let them rest. No charge. The charge comes later."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Supplier Rook-Hale: Tonics and brews, sold at the court's fixed prices. Fixed as in arranged."
+  ],
+  "action": "shop strong_tonic max_tonic remedy revival_leaf cooling_gel dash_brew guard_brew power_brew"
+ },
+ "juno_offer": {
+  "if": {
+   "not_flag": "betrayal_juno_split"
+  },
+  "lines": [
+   "Juno: Rookie! Fancy meeting you down here. Slagg's payroll chest is at the bottom. Big enough for two.",
+   "Juno: Partners. I take the left gallery, you take the right. Meet at the chest. Trust me, I've changed. Rivals are so last act."
+  ],
+  "action": "betrayal juno_split"
+ },
+ "split_caught": [
+  "You remember the note from the first gallery: 'J. - right gallery, bring the net. S.' You take the left gallery.",
+  "Juno: ...You read my mail? That's low. That's beautiful. Fine. No net, no partners. Just you and me, the old way."
+ ],
+ "split_struck": [
+  "The right gallery ends in a net and three of Slagg's pit hands. Juno's voice drifts down from the left: 'Sorry, rookie! Slagg pays per head!'"
+ ],
+ "net_defeat": [
+  "Pit Hand: Out of the net? Juno said you'd be easy. Juno says a lot of things. Juno owes us money."
+ ],
+ "net_lose": [
+  "The pit hands haul you up in the net and dump you on the heath. Juno waves from a safe distance."
+ ],
+ "ledger_split": [
+  "The partnership",
+  "Juno Sallow offered to split Slagg's payroll with you in the Bellows Deep and sent you down the gallery where his net was waiting."
+ ],
+ "slagg": {
+  "if": {
+   "not_flag": "ah_slagg_beaten"
+  },
+  "else": "slagg_after",
+  "lines": [
+   "Overman Slagg: Visitors! In a closed mine! Officially, you're not here. Officially, nobody is. Officially, I'm a widower with a small pension.",
+   "Overman Slagg: The shift digs, the clan pays their wages, I collect the wages. Everyone gets something. The shift gets exercise."
+  ],
+  "action": "battle deep_slagg"
+ },
+ "slagg_defeat": [
+  "Overman Slagg: All right, all right! I'll tell them the mine closed. I'll even say sorry. In writing. Unsigned.",
+  "Overman Slagg: Take the payroll key. Eleven years of wages. Some of it is even still there."
+ ],
+ "slagg_lose": [
+  "Overman Slagg: Clocked out. Come back when you've learned to dig."
+ ],
+ "slagg_after": [
+  "Overman Slagg: I'm digging now. Eleven years of my shift to make up. The shift says I'm doing it wrong. The shift is enjoying this."
+ ],
+ "hamm": {
+  "if": {
+   "var_min": {
+    "q_ah_last_shift_stage": 0
+   },
+   "var_max": {
+    "q_ah_last_shift_stage": 0
+   },
+   "flag": "ah_tags_done"
+  },
+  "else": "hamm_plain",
+  "lines": [
+   "Shift Boss Hamm: Closed? The Deep? Nobody told us. We've been digging for eleven years.",
+   "Shift Boss Hamm: Slagg brings bread on Sundays and takes our wage slips on Mondays. Says the clan pays in arrears. Very long arrears.",
+   "Shift Boss Hamm: Tell Orla we're alive. She'll want her tags back. She was always strict about tags."
+  ],
+  "action": "quest_stage ah_last_shift 1; set_flag ah_shift_found"
+ },
+ "hamm_plain": {
+  "lines": [
+   "Shift Boss Hamm: Mind the props. They're older than you and less forgiving."
+  ],
+  "after_flag": {
+   "flag": "ah_slagg_beaten",
+   "lines": [
+    "Shift Boss Hamm: Eleven years of back pay! We're going up tomorrow. First thing I'll do is look at the sky. Second thing, sue."
+   ]
+  }
+ }
+}

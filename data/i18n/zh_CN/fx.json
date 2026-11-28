@@ -1,0 +1,30 @@
+{
+ "_comment": "Simplified Chinese (Mainland China) texts for the German table fx. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "Ambience": "环境音",
+  "Ambience: %d%%": "环境音：%d%%",
+  "Both ears hear the same sound, for hearing on one side.": "双耳听到相同的声音，方便单侧听力的玩家。",
+  "Coins: %d": "金币：%d",
+  "Full": "完整",
+  "How much the screen shakes on big hits.": "重击时画面晃动的程度。",
+  "How strongly the phone or gamepad vibrates.": "手机或手柄振动的强度。",
+  "Important sounds also show as a short text at the top.": "重要的声音也会在画面顶部显示简短文字。",
+  "Mono sound: %s": "单声道：%s",
+  "Places": "地点",
+  "Screen shake: %s": "画面晃动：%s",
+  "Short blips while a line types out.": "文字逐行出现时的短促提示音。",
+  "Sound captions: %s": "声音字幕：%s",
+  "Text voice and Spirling cries. Left and right change it in steps of 10.": "文字语音与Spirling的叫声。按左右键以10为单位调整。",
+  "Text voice: %s": "文字语音：%s",
+  "Vibration: %s": "振动：%s",
+  "Voice": "语音",
+  "Voices: %d%%": "语音：%d%%",
+  "Waiting for the server": "正在等待服务器",
+  "Weak": "轻微",
+  "Wind, water and other sounds of a place. Left and right change it in steps of 10.": "风声、水声等地点的环境声音。按左右键以10为单位调整。",
+  "[A deep rumble]": "[一阵低沉的轰鸣]",
+  "[Footsteps stop short]": "[脚步声戛然而止]",
+  "[Item picked up]": "[拾取了物品]",
+  "[Rustling in the grass]": "[草丛沙沙作响]"
+ }
+}

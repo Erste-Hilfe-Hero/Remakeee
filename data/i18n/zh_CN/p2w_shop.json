@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table p2w_shop, written by tools/i18n/locales_p2w_shop.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "+%d %% bonus": "额外+%d %%",
+  "A one-time pack for your journey": "为旅途准备的一次性礼包",
+  "After the tier before it": "先完成上一档",
+  "All advantages": "全部优势",
+  "Best value": "最超值",
+  "Bestseller": "畅销",
+  "Featured": "精选",
+  "First buy x2": "首购x2",
+  "Later in the journey": "旅途后段开放",
+  "Limited": "限定",
+  "Owned": "已拥有",
+  "Pay %d Riftglass": "支付%d裂隙晶",
+  "Popular": "热门",
+  "Show": "查看",
+  "Show offer": "查看内容",
+  "Show the pass": "查看通行证",
+  "Until %s": "截至%s",
+  "Use it": "使用"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "ladder": [
+  "A ladder leads back up to the mine entrance."
+ ],
+ "hint_board": {
+  "lines": [
+   "A board for travellers' notes. Nothing useful is pinned on it yet."
+  ],
+  "after_flag": {
+   "flag": "hint_shatterfloor_mine",
+   "lines": [
+    "Tip: cracked floor holds you once. Plan a path that never steps on the same crack twice."
+   ]
+  }
+ }
+}

@@ -1,6 +1,7 @@
 {
  "name": "Map House",
  "region": "veydal",
+ "biome": "town",
  "backdrop": "field",
  "rows": [
   "WWWWWWWWWW",
@@ -30,6 +31,15 @@
    "facing": "down",
    "dialogue": "map_house/kestra",
    "sprite": "ranger"
+  },
+  {
+   "id": "hollis",
+   "x": 2,
+   "y": 5,
+   "facing": "right",
+   "dialogue": "map_house/hollis",
+   "sprite": "villager",
+   "show_flag": "story_complete"
   }
  ],
  "signs": [

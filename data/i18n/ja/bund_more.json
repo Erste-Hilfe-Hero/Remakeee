@@ -1,0 +1,29 @@
+{
+ "_comment": "ja translation of the bund_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s  Rank %d%s": "%d. %s  ランク%d%s",
+  "%s  Rank %d  %d/30, %d active%s": "%s  ランク%d  %d/30、活動中%d人%s",
+  "Any language": "どの言語でも",
+  "Anyone, at once": "だれでも、すぐに",
+  "Bund board": "旅団ランキング",
+  "Bund rank %d (%d renown)": "旅団ランク%d（名声%d）",
+  "Bund rank and week goal": "旅団ランクと週の目標",
+  "Donate items...": "アイテムを寄付...",
+  "Donated today: %d / %d": "今日の寄付：%d / %d",
+  "Find a bund...": "旅団を探す...",
+  "How many?": "いくつ？",
+  "Language and joining...": "言語と加入...",
+  "Language of the bund": "旅団の言語",
+  "No bund found. Found your own!": "旅団が見つからない。自分で作ろう！",
+  "No bunds yet.": "まだ旅団がない。",
+  "Only after a request": "申請があったときだけ",
+  "Take the week reward": "週の報酬を受けとる",
+  "Thank you! The bund has %d renown now.": "ありがとう！旅団の名声は%dになった。",
+  "The week goal is not reached yet.": "週の目標はまだ達成されていない。",
+  "Week goal: %d / %d items donated": "週の目標：アイテム寄付 %d / %d",
+  "Who may join?": "だれが加入できる？",
+  "You already took this week's reward.": "今週の報酬はもう受けとった。",
+  "You donated all you can today. More tomorrow.": "今日はこれ以上寄付できない。続きは明日。",
+  "open": "受付中"
+ }
+}

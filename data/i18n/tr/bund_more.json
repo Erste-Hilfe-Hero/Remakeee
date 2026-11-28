@@ -1,0 +1,29 @@
+{
+ "_comment": "tr translation of the bund_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s  Rank %d%s": "%d. %s  Rütbe %d%s",
+  "%s  Rank %d  %d/30, %d active%s": "%s  Rütbe %d  %d/30, %d aktif%s",
+  "Any language": "Herhangi bir dil",
+  "Anyone, at once": "Herkes, hemen",
+  "Bund board": "Birlik sıralaması",
+  "Bund rank %d (%d renown)": "Birlik rütbesi %d (%d şan)",
+  "Bund rank and week goal": "Birlik rütbesi ve hafta hedefi",
+  "Donate items...": "Eşya bağışla...",
+  "Donated today: %d / %d": "Bugün bağışlanan: %d / %d",
+  "Find a bund...": "Birlik bul...",
+  "How many?": "Kaç tane?",
+  "Language and joining...": "Dil ve katılım...",
+  "Language of the bund": "Birliğin dili",
+  "No bund found. Found your own!": "Birlik bulunamadı. Kendininkini kur!",
+  "No bunds yet.": "Henüz Birlik yok.",
+  "Only after a request": "Sadece başvuruyla",
+  "Take the week reward": "Hafta ödülünü al",
+  "Thank you! The bund has %d renown now.": "Teşekkürler! Birliğin artık %d şanı var.",
+  "The week goal is not reached yet.": "Hafta hedefine henüz ulaşılmadı.",
+  "Week goal: %d / %d items donated": "Hafta hedefi: %d / %d eşya bağışlandı",
+  "Who may join?": "Kimler katılabilir?",
+  "You already took this week's reward.": "Bu haftanın ödülünü zaten aldın.",
+  "You donated all you can today. More tomorrow.": "Bugün bağışlayabileceğin her şeyi bağışladın. Devamı yarın.",
+  "open": "açık"
+ }
+}

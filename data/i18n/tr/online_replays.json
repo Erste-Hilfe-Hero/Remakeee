@@ -1,0 +1,24 @@
+{
+ "_comment": "tr translation of the online_replays table, keyed by the English text.",
+ "strings": {
+  "%s: %d%% won (%d of %d)": "%s: %%%d galibiyet (%d / %d)",
+  "%s: met %d times": "%s: %d kez karşılaşıldı",
+  "Copy share code": "Paylaşım kodunu kopyala",
+  "Lost": "Kaybedildi",
+  "Met most often": "En sık karşılaşılanlar",
+  "No online battles yet.": "Henüz çevrimiçi savaş yok.",
+  "Online battle": "Çevrimiçi savaş",
+  "Online replays": "Çevrimiçi tekrarlar",
+  "Online replays (%d)": "Çevrimiçi tekrarlar (%d)",
+  "Open league": "Açık Lig",
+  "Planned maintenance in %d h. The game is offline for a short while then.": "%d saat sonra planlı bakım var. Oyun o sırada kısa süre çevrimdışı olacak.",
+  "Raid": "Akın",
+  "Rift board": "Yarık sıralaması",
+  "The clipboard holds no replay code.": "Panoda tekrar kodu yok.",
+  "The code is on the clipboard. A friend can watch it under Records, Online replays.": "Kod panoya kopyalandı. Bir arkadaşın onu Rekorlar, Çevrimiçi tekrarlar altından izleyebilir.",
+  "Watch": "İzle",
+  "Watch a code from the clipboard": "Panodaki kodu izle",
+  "Win rate per Spirling": "Spirling başına galibiyet oranı",
+  "Won": "Kazanıldı"
+ }
+}

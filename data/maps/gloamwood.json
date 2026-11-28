@@ -1,0 +1,270 @@
+{
+ "name": "Gloamwood",
+ "region": "veydal",
+ "biome": "forest",
+ "backdrop": "field",
+ "outdoor": true,
+ "encounters": "gloamwood",
+ "heal_point": [
+  1,
+  22
+ ],
+ "rows": [
+  "TTTT_TTTTTTT",
+  "T,,T.,,..,,T",
+  "T,,,.,,_____",
+  "TT,,..,_,,TT",
+  "TT,,T,._.,,T",
+  "T..^,,._.S,T",
+  "TT^DT.._..,T",
+  "T.S.T,,_,,,T",
+  "T,,,,,,_,TTT",
+  "TT,,_____,,T",
+  "T,,,_,,,,,,T",
+  "T,,T_TT,,T,T",
+  "T,,,_,,,,,,T",
+  "T.._____..,T",
+  "T=^^^^^^^^vT",
+  "T_,,,,,,,,.T",
+  "T_,,T,,TT,.T",
+  "T_____,,,,.T",
+  "T,,,,_,,,,.T",
+  "TT,,,_,TT,.T",
+  "T,,T,_,,,,.T",
+  "T,,,,____,.T",
+  "T*..,,,,_,.T",
+  "To.T,,,,_..T",
+  "T.S.,,,,____",
+  "TS.,,,TT,,,T",
+  "T,,,,,,,,,,T",
+  "TT,,,TT,,,TT",
+  "T,,,,,,,,,,T",
+  "TTTTTTTTTTTT"
+ ],
+ "warps": [
+  {
+   "x": 11,
+   "y": 24,
+   "to": "fernstair",
+   "tx": 1,
+   "ty": 12,
+   "facing": "right"
+  },
+  {
+   "x": 11,
+   "y": 2,
+   "to": "crowcrest",
+   "tx": 1,
+   "ty": 4,
+   "facing": "right"
+  },
+  {
+   "x": 3,
+   "y": 6,
+   "to": "mossmere_grotto",
+   "tx": 5,
+   "ty": 9,
+   "facing": "up"
+  },
+  {
+   "x": 4,
+   "y": 0,
+   "to": "bellstone_ruins",
+   "tx": 5,
+   "ty": 5,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "forester",
+   "x": 2,
+   "y": 22,
+   "facing": "right",
+   "dialogue": "gloamwood/forester",
+   "sprite": "ranger"
+  },
+  {
+   "id": "wren",
+   "x": 3,
+   "y": 18,
+   "facing": "right",
+   "dialogue": "gloamwood/wren",
+   "sprite": "villager",
+   "trainer": "Wanderer Wren",
+   "intro": "gloamwood/wren_intro",
+   "defeat": "gloamwood/wren_defeat",
+   "money": 160,
+   "team": [
+    {
+     "species": "Mossling",
+     "level": 5
+    },
+    {
+     "species": "Zippit",
+     "level": 6
+    }
+   ],
+   "lessons": "listener"
+  },
+  {
+   "id": "olek",
+   "x": 3,
+   "y": 9,
+   "facing": "right",
+   "dialogue": "gloamwood/olek",
+   "sprite": "villager",
+   "trainer": "Mushroom Picker Olek",
+   "intro": "gloamwood/olek_intro",
+   "defeat": "gloamwood/olek_defeat",
+   "money": 180,
+   "team": [
+    {
+     "species": "Mirkmole",
+     "level": 6
+    },
+    {
+     "species": "Wickit",
+     "level": 6
+    }
+   ]
+  },
+  {
+   "id": "sorrel",
+   "x": 9,
+   "y": 7,
+   "facing": "left",
+   "dialogue": "gloamwood/sorrel",
+   "sprite": "villager",
+   "trainer": "Wanderer Sorrel",
+   "intro": "gloamwood/sorrel_intro",
+   "defeat": "gloamwood/sorrel_defeat",
+   "money": 220,
+   "team": [
+    {
+     "species": "Zephlet",
+     "level": 7
+    },
+    {
+     "species": "Mossling",
+     "level": 6
+    },
+    {
+     "species": "Kindlop",
+     "level": 6
+    }
+   ]
+  },
+  {
+   "id": "charcoaler",
+   "x": 8,
+   "y": 1,
+   "facing": "down",
+   "dialogue": "gloamwood/charcoaler",
+   "sprite": "villager"
+  },
+  {
+   "id": "lq_ambrel",
+   "x": 8,
+   "y": 13,
+   "facing": "down",
+   "dialogue": "legend_quests/hallowmur_guide",
+   "sprite": "elder",
+   "show_flag": "story_complete",
+   "hide_flag": "lq_hallowmur_ready"
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 24,
+   "dialogue": "gloamwood/sign"
+  },
+  {
+   "x": 9,
+   "y": 5,
+   "dialogue": "gloamwood/sign_top"
+  },
+  {
+   "x": 2,
+   "y": 6,
+   "dialogue": "gloamwood/smooth"
+  },
+  {
+   "x": 1,
+   "y": 23,
+   "dialogue": "gloamwood/spring"
+  },
+  {
+   "x": 2,
+   "y": 7,
+   "dialogue": "gloamwood/mossmere_grotto_sign",
+   "gear": [
+    "wading_boots",
+    "plank_bundle"
+   ]
+  },
+  {
+   "x": 1,
+   "y": 25,
+   "dialogue": "gloamwood/marker_stone"
+  },
+  {
+   "x": 10,
+   "y": 26,
+   "dialogue": "veydal_more/poster_3",
+   "hide_flag": "poster_3"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 1,
+   "y": 5,
+   "open_flag": "pass_gloamwood"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 10,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_gloam_west"
+  },
+  {
+   "x": 11,
+   "y": 18,
+   "item": "kin_charm",
+   "count": 1,
+   "flag": "find_gloam_east"
+  },
+  {
+   "x": 5,
+   "y": 27,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_gloam_south"
+  },
+  {
+   "x": 9,
+   "y": 8,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_gloam_north"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_gloam_pocket"
+  }
+ ],
+ "passages": [
+  {
+   "x": 1,
+   "y": 5,
+   "flag": "pass_gloamwood"
+  }
+ ]
+}

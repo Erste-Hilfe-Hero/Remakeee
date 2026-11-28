@@ -1,0 +1,8 @@
+{
+ "_comment": "ja translation of the fan_oath table, keyed by the English text.",
+ "strings": {
+  "%s swears the Ink Oath. Ink runs down its paws like a signature: family first!": "%sがインクの誓いを立てた。インクがサインのように足を伝う：家族が一番！",
+  "Oath": "誓い",
+  "The Ink Oath comes due. The family collects from %s.": "インクの誓いの期限だ。一族が%sから取り立てる。"
+ }
+}

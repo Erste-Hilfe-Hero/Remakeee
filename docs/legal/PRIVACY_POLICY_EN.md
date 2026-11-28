@@ -9,22 +9,26 @@ Last updated: November 2026
 
 ## 1. Controller
 
-[NAME], [ADDRESS], Germany. Email: [EMAIL]
+Ali Amuri Alnasag, Im Vogelgesang 9, 60488 Frankfurt am Main, Germany. Email: aa.amuri@icloud.com
 
 ## 2. Summary
 
-Chimora is an online game for iOS and Android. Your save game is stored on our server in Germany so you can
+Chimora is an online game for iOS, Android and Samsung Smart TV. Your save game is stored on our server in the EU (data centre Lauterbourg, France) so you can
 play and keep your progress. We collect only what the game needs. **No ads, no sale of data, no tracking or
 analytics, no third-party sign-in, no email address required.**
+
+On **Samsung Smart TV** the app works exactly like the phone apps: the same random player ID and save game, nothing more. It does not read TV identifiers (no DUID, no advertising ID / TIFA), viewing data or the Samsung account, and there are no purchases on the TV.
 
 ## 3. What we process, why, and on what legal basis
 
 | Data | Purpose | Legal basis (GDPR) | Retention |
 | --- | --- | --- | --- |
-| Random player ID created on first launch, sign-in token, transfer code for changing devices, your Tamer name, save game (progress, Spirlings, items, settings), last sync time, app version, device model, OS version | Provide the game, store and restore your progress, also on a new device. Your Tamer name is shown only to players you are friends with | Art. 6(1)(b) (contract) | While your account exists; deleted within 30 days of account deletion, backups overwritten within 30 more days. Accounts unused for 24 months are deleted after notice in the game |
-| Friends and Lantern Mail: friend code, friend list and requests, blocks, greetings (set phrases stored as a number, no free text), gifts, Tamer card (numbers such as Rifts sealed and play time, favourite Spirling), current place in the game (never a real location), echo team (species and level, no nicknames), world goal contribution, weekly board score, reports you send | Playing together, protection against abuse. Only confirmed friends see your name, card, place and echo team; strangers see board scores without names. Parents can switch these features off under Settings, Account | Art. 6(1)(b); reports also (c) (Art. 16 DSA) and (f) | Greetings and gifts 30 days, weekly values until the end of the following week, reports until handled and at most 6 months, friends and blocks while your account exists |
-| Server logs: IP address, date and time, endpoint, status code, app version | Operation, security, preventing attacks and save-game tampering | Art. 6(1)(f) (legitimate interest in secure, fair play) | 7 days, longer only while a specific security incident is investigated |
-| Purchase confirmations from Apple/Google (transaction ID, product, time), if you buy something. We never receive payment details | Unlock purchased content; statutory record keeping | Art. 6(1)(b) and (c) | Up to 10 years (German commercial and tax law) |
+| Random player ID created on first launch, sign-in token, transfer code for changing devices, your Wayfarer name, save game (progress, Spirlings, items, settings) with its last 5 earlier versions per slot to bring one back, last sync time, app version, device model, OS version | Provide the game, store and restore your progress, also on a new device. Your Wayfarer name is shown only to players you are friends with | Art. 6(1)(b) (contract) | While your account exists; deleted within 30 days of account deletion, backups overwritten within 30 more days. Accounts unused for 24 months are marked and deleted automatically 30 days later unless you play again. The browser test version at https://[DOMAIN]/play/ uses the same accounts and saves; accounts last used in the browser are deleted automatically after 30 days without use (moving one to the app with a transfer code gives it the app's periods) |
+| Friends and Lantern Mail: friend code, friend list and requests, blocks, greetings (set phrases stored as a number, no free text), gifts, Wayfarer card (numbers such as Rifts sealed and play time, favourite Spirling), current place in the game (never a real location), echo team (species and level, no nicknames), world goal contribution, weekly board score, reports you send, messages from the team about decisions and objections; reports sent through the web form [DOMAIN]/melden (friend code, reason, explanation, name and e-mail if you give them, no account); bunds: membership and role (other members see your Wayfarer name, friend code, role and whether you are online; bund names are two words from a fixed list); Raid Rifts: your damage to the guardian and your attempts (the others in the Rift see your Wayfarer name and damage); trades: the items each side put in and whether it confirmed | Playing together, protection against abuse. Only confirmed friends see your name, card, place and echo team; strangers see board scores without names. Parents can switch these features off under Settings, Account | Art. 6(1)(b); reports also (c) (Art. 16 DSA) and (f) | Greetings and gifts 30 days, weekly values until the end of the following week, reports until handled and at most 6 months, friends and blocks while your account exists, Raid Rifts 7 days after they close, trades until both sides collected and at most 90 days |
+| Anonymous counts of game progress, taken from the stored saves: per sign-up day, how many new players reached each step of the game, after how many seconds of play they reached the first steps (median) and where they stopped. No player ID, no name, no extra data collected | Improve the game | Art. 6(1)(f) (legitimate interest in a game that is easy to follow) | Only counts are produced, nothing is stored about you beyond your save |
+| Server logs: IP address, date and time, endpoint, status code, app version | Operation, security, preventing attacks and save-game tampering | Art. 6(1)(f) (legitimate interest in secure, fair play) | 7 days, also for the sign-in service's audit log (it holds IP addresses; a daily run deletes older entries). Longer only while a specific security incident is investigated |
+| Shop: purchase confirmations from Apple/Google (transaction ID, product, price, time, store, subscription end, refund status), Riftglass balance and bookings, unlocked content, refunds, spending limit and your **age group** (under 13, 13-15, 16-17, 18+; never the birth date). We never receive payment details | Check and credit purchases, refunds, spending limits and youth protection, "My purchases" | Art. 6(1)(b) and (c); age group and limits also (f) | Until you delete your account, then purchases are deleted too. Apple and Google are the sellers: they issue the invoices and keep them up to 10 years under commercial and tax law. Our bookkeeping uses only the stores' payout reports, which hold no player data |
+| Leagues, battle check and save check: your league team (species, Ring and moves of the chosen Spirlings), rating and tier per league and season, battles and wins, the recording of rated battles (seed, teams, your inputs, result) and the referee's verdict. When you save, the server compares money, play time and game content with the save before and notes refused saves with the reason | Fair leagues, protection against cheating and tampered saves. The referee replays battles without the account id; a person (Ali) decides about notes, not an automated system alone | Art. 6(1)(b) and (f) (legitimate interest in fair play) | League values until the end of the following season, battle recordings 30 days, notes 6 months; everything ends with account deletion at the latest |
 | Support emails | Answer your request | Art. 6(1)(b) or (f) | Until resolved, at most 2 years |
 
 ## 4. Storage on your device
@@ -33,26 +37,37 @@ The game stores a copy of your save, your settings and the sign-in token on your
 necessary for the service you request (Sec. 25(2) no. 2 German TDDDG) and needs no consent. We do not read
 advertising identifiers (IDFA / Android Advertising ID).
 
+Notifications on your phone (optional, off by default): if you turn them on in the game and your device allows
+them, the game plans short notes on your device when a roaming trip is over or a new Find of the Day is waiting
+(at most one of each kind a day, never between 21:00 and 09:00). They are planned and shown on the device only
+(local notifications). There is no push service and no device token, and nothing about them is sent to us or
+anyone else. You can turn them off any time under Settings > Game or in your device settings.
+
 ## 5. Recipients
 
-- Hosting and database: Supabase Inc., [SUPABASE ADDRESS as in the data processing agreement]; servers in
-  Frankfurt am Main, Germany (region eu-central-1); processing on our behalf under an Art. 28 GDPR agreement.
-  Supabase is a US company, so access from the US (for example by support staff) cannot be fully ruled out.
-  The EU Standard Contractual Clauses (Art. 46(2)(c) GDPR) in that agreement cover this.
+- Hosting: Contabo GmbH, Munich, Germany (processor, Art. 28 GDPR); server location: data centre Lauterbourg, France (EU).
+  Address: Contabo GmbH, Aschauer Straße 32a, 81549 Munich. <!-- check against the DPA --> Contabo only provides the machine; we run the database on it
+  ourselves. Other services of the same controller run on the same machine; they are kept apart from
+  Chimora and have no access to its database. Contabo processes the data on our behalf under an Art. 28 GDPR agreement. No data is transferred
+  outside the EU.
 - Apple and Google process data as independent controllers when you download the app or buy something.
 - Authorities only where required by law.
 
-Apart from this we do not transfer data outside the EU/EEA. The game data itself is stored only in Frankfurt.
+Apart from this we do not transfer data outside the EU/EEA. The game data itself is stored only in the EU (data centre Lauterbourg, France).
 
 ## 6. Children
 
 Chimora is suitable for all ages. We process only what the game needs, show no ads, do no profiling and offer
-no free chat (greetings between friends are fixed, translated phrases). Purchases can be controlled with the stores' parental controls.
+no free chat (greetings between friends are fixed, translated phrases). Before the shop opens we ask for the
+birth year and month and keep only the age group: **the shop is closed under 13**, 13-15 have a fixed limit of
+15 EUR a month, 16-17 of 30 EUR. Purchases can also be controlled with the stores' parental controls.
 
 ## 7. Your rights
 
 You have the rights of access, rectification, erasure, restriction, data portability and objection
-(Art. 15–18, 20, 21 GDPR). Email [EMAIL] and include your player ID (shown in the game's settings).
+(Art. 15–18, 20, 21 GDPR). Email aa.amuri@icloud.com and include your player ID (shown in the game's settings).
+**Download your data:** in the game under Settings → Account → "Download my data" you get everything the
+server keeps about your account as a JSON file (Art. 15 and 20 GDPR). Other players appear only as "another player".
 **Delete your account:** in the game under Settings → Account → "Delete account", or at
 https://[DOMAIN]/delete-account. Your account and save game are deleted permanently.
 You may lodge a complaint with a data protection supervisory authority (Art. 77 GDPR), in particular in the
@@ -65,3 +80,169 @@ App–server traffic is encrypted with TLS. Only the controller has access to th
 ## 9. Changes
 
 We will update this policy if the game or the law changes and tell you in the game about significant changes.
+
+## 10. Players in other countries
+
+Chimora is offered through the App Store and Google Play in many countries. We apply the GDPR standard
+described above to every player, wherever they live. Where the law of your country gives you additional
+rights, you have those as well. Contact for every request in this section: Ali Amuri Alnasag (the controller
+from section 1), aa.amuri@icloud.com. We answer within one month, or within the shorter period your law sets.
+Please add your player ID (shown in the game's settings) so that we can check that the account is yours.
+You can always download or delete your data yourself in the game (section 7).
+
+**What is the same everywhere:** your data is stored on our own server, which Contabo GmbH (Munich, Germany)
+hosts for us in its data centre in Lauterbourg, France (EU). We do not sell your data, do not share it for
+advertising, show no ads, do not track you across apps or websites and use no analytics, advertising or
+crash-report SDKs. From version 1.3.1, after the last game ended unexpectedly, the app sends one short anonymous
+crash report: only the game version, the device system (for example "Android") and the game scene that was
+open last. We store it without a player ID, name or save game and delete
+it after 30 days; the sign-in is only used to accept at most three reports an hour. The only evaluation is the anonymous count of game progress from section 3: it is
+computed from the save games stored with your account (that is why the store privacy labels list game
+progress as linked to you), but the result contains only numbers per sign-up day, no player ID and no name.
+Notifications are local only and send nothing (section 4).
+
+### 10.1 United States
+
+- **Categories collected in the last 12 months:** identifiers (random player ID, friend code, Wayfarer name,
+  IP address in server logs for 7 days); commercial information (purchase confirmations from Apple or Google,
+  Riftglass bookings, refunds); activity in our own game only (save game, progress, friends, Lantern Mail,
+  leagues, battles); your age group from the shop's age question (never the birth date); content you send
+  us (reports, support emails). Sources: you and your device; Apple and Google for purchase confirmations.
+  Purposes and retention: section 3. We disclose personal information for business purposes only to our
+  hosting provider (a service provider bound by contract) and to authorities where the law requires it.
+- **No sale, no sharing, no targeted advertising:** we do not sell personal information, do not share it
+  for cross-context behavioural advertising, do not use it for targeted advertising or for profiling with
+  legal or similarly significant effects, and have not done so in the last 12 months. We do not use
+  sensitive personal information to infer characteristics about you. There is nothing to opt out of, so a
+  Global Privacy Control or Do Not Track signal changes nothing.
+- **Your rights:** under the California Consumer Privacy Act and the privacy laws of Virginia, Colorado,
+  Connecticut, Utah, Texas, Oregon and other states you can ask to know and access your data, to correct
+  it, to delete it and to receive it in a portable format (section 7: "Download my data" gives you a JSON
+  file). The rights to opt out of sale, sharing or targeted advertising and to limit sensitive data have
+  nothing to act on, because we do none of that. We offer these rights to every player in the United States,
+  whether or not a state law applies to us. An authorised agent can make a request for you with your written
+  permission. We will not discriminate against you for using your rights.
+- **Appeal:** if we refuse a request in whole or in part, you can appeal by replying to our answer or by
+  writing to aa.amuri@icloud.com with the subject "Appeal". We decide within 45 days and explain why. If we
+  deny the appeal, you can contact the Attorney General of your state.
+- **Children (COPPA):** Chimora is a game for a general audience and is not directed at children under 13;
+  its App Store age rating is 9+. The game does not ask for the age when you start. It creates a random
+  player ID and stores the Wayfarer name you type in at a new game and a friend code; confirmed friends
+  and the other members of a bund or Raid Rift see the Wayfarer name, and friends add each other with the
+  friend code. We do not ask for a real name, email address, phone number, postal address, photo, voice
+  recording or location, and there is no free-text chat (greetings are fixed phrases). The age is asked
+  only before the shop opens first, as birth year and month, and we keep only the age group. If the answer
+  is under 13, the shop stays closed, the answer cannot later be changed to an older age group, and the
+  open league, bunds and suggestions from league battles are switched off by default (as for everyone
+  under 16). Friends, greetings and gifts stay on unless a parent switches them off under Settings,
+  Account; live duels, Raid Rifts, bunds, leagues and suggestions can be switched off under Settings,
+  Account, For parents. If you are a parent and believe your child under 13 has given us personal
+  information, write to aa.amuri@icloud.com with the child's player ID if you have it: we delete the
+  account and its data. You can also review the data ("Download my data") or delete the account
+  ("Delete account") in the game on the child's device.
+- **California minors:** if you are under 18, you can have content you posted that other players can see
+  (your Wayfarer name, your bund membership) removed: write to us, and we reset the name or remove the
+  entry, or delete your account. The removal cannot cover copies other people made.
+
+### 10.2 United Kingdom and Switzerland
+
+- **United Kingdom:** the UK GDPR and the Data Protection Act 2018 apply, with the same rights as in
+  section 7. Storage in the EU is covered by the UK's adequacy regulations for the EEA. You can complain to
+  the Information Commissioner's Office (ico.org.uk).
+- **Switzerland:** the Federal Act on Data Protection (FADP) applies. Switzerland recognises the EU as
+  providing adequate protection, so storage in France needs no further safeguards. You can complain to the
+  Federal Data Protection and Information Commissioner (edoeb.admin.ch).
+
+### 10.3 Brazil (LGPD)
+
+The Lei Geral de Proteção de Dados applies. The legal bases correspond to section 3: performance of the
+contract (Art. 7 V), legal obligation (Art. 7 II) and legitimate interest (Art. 7 IX); children's data is
+processed only in their best interest (Art. 14). The transfer to the EU is needed to perform the contract
+with you (Art. 33 IX). Your rights under Art. 18 LGPD: confirmation and access, correction, anonymisation,
+blocking or deletion of unnecessary data, portability, deletion, information about with whom data is shared,
+and review of decisions. Controller and contact person (encarregado): Ali Amuri Alnasag, aa.amuri@icloud.com.
+You can complain to the ANPD (gov.br/anpd).
+
+### 10.4 Japan (APPI)
+
+The business operator handling your personal information is the controller in section 1 (name and address
+there). Your data is stored in France (EU); the Personal Information Protection Commission has designated
+the EU as a region with a personal information protection system equivalent to Japan's. Contabo stores the
+data on our behalf (entrustment); we do not provide personal data to third parties except as described in
+section 5. Security control measures: section 8 and the retention and deletion periods in section 3. You can
+request disclosure (also electronically), correction, addition or deletion, suspension of use or of
+third-party provision, and disclosure of records of third-party provision, at the address above.
+
+### 10.5 Republic of Korea (PIPA): transfer of personal information overseas
+
+- **Items transferred** (everything sections 3.1 to 3.6 say is stored on the server): random player ID,
+  sign-in token, transfer code (stored only as a hash), Wayfarer name, friend code, save game with its last
+  5 earlier versions, last sync time, app version, device model and OS version; friend list, friend
+  requests, favourite friends and blocks; greetings (phrase numbers) and gifts; Wayfarer card, current place
+  in the game and echo team; world goal contribution and weekly board scores; reports, decisions,
+  notices and appeals, and reports from the web form (with name and email if given); bund membership, role
+  and online status, bund invitations; Raid Rift damage, attempts and queue entries; trades (items put in,
+  confirmations); league teams, ratings, matches, battle recordings and the referee's results; notes on
+  refused saves; parent switches; purchase confirmations, Riftglass balance and bookings, unlocked content,
+  refunds, spending limit and age group; IP address, time, endpoint, status code and app version in
+  server logs (7 days).
+- **Country:** France (EU), data centre Lauterbourg.
+- **Time and method:** each time the app connects to our server, over a TLS-encrypted connection.
+- **Recipient:** Contabo GmbH (server hosting on our behalf), Aschauer Straße 32a, 81549 Munich, Germany,
+  contabo.com.
+- **Purpose:** storing your game and running the online services. **Retention:** section 3.
+- **Refusal:** the game cannot run without this transfer, so you can refuse it only by not using the game
+  or by deleting your account; deleting ends the transfer and removes your data (section 7).
+- **Destruction:** data is deleted electronically so that it cannot be restored; backups are overwritten
+  within the periods in section 3.
+- **Privacy officer:** Ali Amuri Alnasag, aa.amuri@icloud.com. For remedies you can apply to the Personal
+  Information Dispute Mediation Committee (kopico.go.kr) or the KISA Privacy Call Center (privacy.kisa.or.kr,
+  phone 118).
+
+### 10.6 Türkiye (KVKK)
+
+Under the Law on the Protection of Personal Data No. 6698 the data controller is the person named in
+section 1. We process your data to perform the contract (Art. 5(2)(c)), to meet legal obligations
+(Art. 5(2)(ç)) and for our legitimate interest in a secure, fair game (Art. 5(2)(f)), for the purposes in
+section 3. We collect the data directly from you through the app and store it in France (EU). You have the
+rights under Art. 11 KVKK (to learn whether and how your data is processed, correction, deletion, objection
+and compensation). Please apply to us first; we answer within 30 days. You can then complain to the
+Personal Data Protection Authority (kvkk.gov.tr).
+
+### 10.7 Canada and Quebec
+
+PIPEDA and the provincial privacy laws apply, in Quebec the Act respecting the protection of personal
+information in the private sector (Law 25). Your data is stored outside Canada, in France (EU), and may be
+accessible to courts and authorities there. You can access and correct your data, receive it in a portable
+format ("Download my data") and withdraw your consent by deleting your account. We make no decisions based
+solely on automated processing (section 3: a person decides about notes on saves). Person in charge of the
+protection of personal information: Ali Amuri Alnasag, aa.amuri@icloud.com. You can complain to the Office of
+the Privacy Commissioner of Canada (priv.gc.ca) and, in Quebec, to the Commission d'accès à l'information
+(cai.gouv.qc.ca). If you live in Quebec and are under 14, play only with your parent's or tutor's agreement.
+
+### 10.8 Australia and New Zealand
+
+We handle personal information in line with the Australian Privacy Principles and the New Zealand Privacy
+Act 2020. Your data is held in France (EU) by us and our hosting provider under the safeguards of this
+policy. You can request access and correction. Please complain to us first; if we do not resolve it, you
+can contact the OAIC (oaic.gov.au) or the New Zealand Privacy Commissioner (privacy.org.nz).
+
+### 10.9 India (DPDP Act)
+
+We process your personal data only for the purposes in section 3. You give us the data yourself by
+playing, for the purpose of playing; we do not ask for a separate consent. Before the first connection the
+game shows a short privacy note with the main points and asks you to confirm that you have read the terms
+and this policy (this only confirms that you know them); both are linked there and under Settings, Legal. You can stop the processing at any time by deleting your account. Under the Digital
+Personal Data Protection Act 2023 you can get a summary of your data ("Download my data"), have it corrected
+or erased, use our grievance redressal and nominate a person to exercise your rights if you die or cannot
+act. Grievance contact: Ali Amuri Alnasag, aa.amuri@icloud.com; we respond within 30 days. If you are not
+satisfied, you can complain to the Data Protection Board of India. Players under 18 should play only with the
+agreement of a parent or lawful guardian; we do not track children, show them advertising or profile them.
+
+### 10.10 Other countries
+
+Wherever you live, you can access, correct and delete your data and complain to us at the address above
+and to your national data protection authority.
+
+**Language:** this policy exists in German and English. If the two differ, the German version applies,
+unless the law of your country requires otherwise; the English version is a convenience translation.

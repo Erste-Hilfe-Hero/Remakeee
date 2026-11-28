@@ -1,0 +1,30 @@
+{
+ "add": {
+  "warps": [
+   {
+    "x": 9,
+    "y": 3,
+    "to": "reedhaven_spring",
+    "tx": 4,
+    "ty": 6,
+    "facing": "up"
+   },
+   {
+    "x": 2,
+    "y": 3,
+    "to": "reedhaven_shop",
+    "tx": 4,
+    "ty": 6,
+    "facing": "up"
+   },
+   {
+    "x": 2,
+    "y": 7,
+    "to": "reedhaven_house",
+    "tx": 4,
+    "ty": 6,
+    "facing": "up"
+   }
+  ]
+ }
+}

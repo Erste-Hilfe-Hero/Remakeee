@@ -6,11 +6,7 @@ func before_all() -> void:
 	Database.load_all()
 
 func _ids() -> PackedStringArray:
-	var out: PackedStringArray = []
-	for f: String in DirAccess.get_files_at(MapData.DIR):
-		if f.ends_with(".json"):
-			out.append(f.get_basename())
-	return out
+	return MapData.all_ids()
 
 func test_world_is_fully_reachable() -> void:
 	var errors: PackedStringArray = []

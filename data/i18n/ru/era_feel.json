@@ -1,0 +1,16 @@
+{
+ "_comment": "Russian texts for the German table era_feel. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "A map drawn in four inks.": "Карта, нарисованная четырьмя чернилами.",
+  "Era I - Ink": "Эпоха I - Чернила",
+  "Era II - Wash": "Эпоха II - Отмывка",
+  "Era III - Etching": "Эпоха III - Офорт",
+  "Era IV - Panorama": "Эпоха IV - Панорама",
+  "Era V - Living": "Эпоха V - Жизнь",
+  "Replay era change": "Повторить смену эпохи",
+  "The air grows clearer. Every leaf shows more detail!": "Воздух становится прозрачнее. В каждом листе больше деталей!",
+  "The ink runs. The world fills with colour!": "Чернила растекаются. Мир наполняется цветом!",
+  "The map breathes. The world is alive!": "Карта дышит. Мир живой!",
+  "The map unrolls wider than ever before!": "Карта разворачивается шире, чем когда-либо!"
+ }
+}

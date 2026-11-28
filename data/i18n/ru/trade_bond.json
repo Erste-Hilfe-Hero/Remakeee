@@ -1,0 +1,32 @@
+{
+ "_comment": "Translations of the German table trade_bond, written by tools/i18n/locales_trade_bond.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s comes back to you. It has bonded with a new Wayfarer.": "%s возвращается к тебе. Он связался с новым Странником.",
+  "%s feels the bond with its new Wayfarer. Unfurl it into %s now? You can furl it back later.": "%s чувствует связь с новым Странником. Раскрыть его в %s сейчас? Позже можно свернуть обратно.",
+  "Boatwoman Mabry: In Hookwick every boat has two owners. Some Spirlings like that too.": "Лодочница Mabry: В Hookwick у каждой лодки два хозяина. Некоторым Spirlings это тоже нравится.",
+  "Boatwoman Mabry: Let me own yours for a moment, then it's yours again. Once, mind you.": "Лодочница Mabry: Пусть он побудет моим минутку, а потом снова станет твоим. Только один раз, учти.",
+  "Boatwoman Mabry: Two owners is plenty. Three is a quarrel. Trade with your friends now.": "Лодочница Mabry: Двух хозяев хватит. Три уже ссора. Теперь меняйся с друзьями.",
+  "Courier Pell: A new Wayfarer's hand does that. Trade with me once and I'll hand yours right back.": "Посыльный Pell: Это делает рука нового Странника. Обменяйся со мной один раз, и я сразу верну твоего.",
+  "Courier Pell: I carry letters and, now and then, a Spirling. Some of them come back changed.": "Посыльный Pell: Я ношу письма, а иногда и Spirling. Некоторые возвращаются изменившимися.",
+  "Courier Pell: My route is full. Trade with your friends now, they carry farther than I do.": "Посыльный Pell: Мой маршрут заполнен. Теперь меняйся с друзьями, они доносят дальше, чем я.",
+  "Ferrywoman Oona: One trade is all I keep in me. For the next one, find a friend who travels.": "Паромщица Oona: Во мне только один обмен. Для следующего найди друга, который путешествует.",
+  "Ferrywoman Oona: Some Spirlings only unfurl when they bond with a new Wayfarer. A ferry teaches you that.": "Паромщица Oona: Некоторые Spirlings раскрываются, только когда связываются с новым Странником. Паром этому учит.",
+  "Ferrywoman Oona: Trade me one of yours. I'll trade it straight back, and it will have known two of us.": "Паромщица Oona: Обменяй мне одного из своих. Я сразу обменяю его обратно, и он узнает нас обоих.",
+  "It has to hold %s during the trade.": "Во время обмена он должен держать %s.",
+  "Needs: a bond with a new Wayfarer (a trade)": "Нужно: связь с новым Странником (обмен)",
+  "Needs: a bond with a new Wayfarer (a trade) while holding %s": "Нужно: связь с новым Странником (обмен), держа %s",
+  "None of your Spirlings would unfurl from a trade. Come back with one that would.": "Ни один из твоих Spirlings не раскроется от обмена. Возвращайся с тем, кто раскроется.",
+  "Smith Hesketh: A blade changes in the quench. Some Spirlings change when they change hands.": "Кузнец Hesketh: Клинок меняется при закалке. Некоторые Spirlings меняются, переходя из рук в руки.",
+  "Smith Hesketh: Hand me one, and I'll hand it back. One trade, then I go back to my anvil.": "Кузнец Hesketh: Дай мне одного, и я верну его. Один обмен, потом я вернусь к наковальне.",
+  "Smith Hesketh: We traded once. The anvil is waiting, and so are your friends.": "Кузнец Hesketh: Мы уже обменялись. Наковальня ждёт, и твои друзья тоже.",
+  "Some Spirlings unfurl when they bond with a new Wayfarer. A few of them must hold a certain Keepsake during the trade; that Keepsake may stay on and goes with them. Town Wayfarers in Brindlewick, Corvane Quay, Cinderfold and Hookwick trade once each, too.": "Некоторые Spirlings раскрываются, когда связываются с новым Странником. Некоторым из них нужно держать определённый Оберег во время обмена; этот Оберег можно не снимать, он уходит вместе с ними. Странники в Brindlewick, Corvane Quay, Cinderfold и Hookwick тоже меняются по одному разу.",
+  "Trade %s and take it back? This Wayfarer trades only once.": "Обменять %s и забрать обратно? Этот Странник меняется только один раз.",
+  "Trade which Spirling? You get it back at once.": "Какого Spirling обменять? Он сразу вернётся к тебе.",
+  "Trade with Hesketh": "Обменяться с Hesketh",
+  "Trade with Mabry": "Обменяться с Mabry",
+  "Trade with Oona": "Обменяться с Oona",
+  "Trade with Pell": "Обменяться с Pell",
+  "Unfurls when it bonds with a new Wayfarer while holding %s.": "Раскрывается, когда связывается с новым Странником, держа %s.",
+  "Unfurls when it bonds with a new Wayfarer.": "Раскрывается, когда связывается с новым Странником."
+ }
+}

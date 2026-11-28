@@ -1,0 +1,10 @@
+{
+ "_note": "Prologue, the storm night over Brindlewick (plan item 1410). Since 1.3.2 it plays when the Wayfarer first reaches Brindlewick after the opening in the ferns (Opening, Overworld.village_story). One text box (the three small lights of the storm are met in the ferns, Opening.MEET_LINE): the lore that was cut here (the cartographers, the Hush, Mirela's lost Rift) is told by Aldo and on Mirela's first map page.",
+ "steps": [
+  {"music": "title"},
+  {"say": ["Last night a storm tore the sky. Rifts opened over Veydal."]},
+  {"flash": 0.12}, {"sfx": "hit_volt"}, {"shake": 0.4},
+  {"flash": 0.08}, {"wait": 0.15}, {"flash": 0.12}, {"sfx": "hit_volt"}, {"shake": 0.3},
+  {"card": "Prologue: The Storm Night"}
+ ]
+}

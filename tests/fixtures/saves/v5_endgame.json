@@ -1,0 +1,187 @@
+{
+ "save_version": 5,
+ "tamer": {
+  "name": "Liora",
+  "color": 1,
+  "look": 1
+ },
+ "starter": "Zippit",
+ "difficulty": 1,
+ "region": "veydal",
+ "rifts": [
+  "cinder"
+ ],
+ "party": [
+  {
+   "species": "Glimmerax",
+   "nickname": "",
+   "level": 26,
+   "xp": 6000,
+   "spark": {
+    "hp": 5,
+    "atk": 9,
+    "def": 2,
+    "foc": 12,
+    "spd": 7
+   },
+   "hp": 70,
+   "moves": [
+    "Bowl Over"
+   ],
+   "uid": "00000000000000b1",
+   "held": "",
+   "prism": false,
+   "temper": "curious",
+   "variant": "",
+   "origin_map": "lighthouse",
+   "met_ring": 5,
+   "met_day": 20700,
+   "lineage": [],
+   "echo_streak": 3
+  },
+  {
+   "species": "Mirkmole",
+   "level": 14,
+   "hp": 30,
+   "moves": [],
+   "uid": "00000000000000b2",
+   "temper": "gentle",
+   "origin_map": "murk_hollow",
+   "met_ring": 12,
+   "met_day": 20750
+  }
+ ],
+ "storage": [
+  {
+   "species": "Zephlet",
+   "level": 12,
+   "hp": 30,
+   "moves": [
+    "Drift Step"
+   ],
+   "uid": "00000000000000b3",
+   "temper": "brisk",
+   "origin_map": "fernstair",
+   "met_ring": 3,
+   "met_day": 20701
+  }
+ ],
+ "spirlog": {
+  "Zippit": {
+   "seen": true,
+   "bonded": true,
+   "first_map": "lighthouse",
+   "first_day": 20700,
+   "variants": [],
+   "prism_seen": false,
+   "tempers": [
+    "curious"
+   ]
+  },
+  "Mirkmole": {
+   "seen": true,
+   "bonded": true,
+   "first_map": "crowcrest",
+   "first_day": 20740,
+   "variants": [],
+   "prism_seen": true,
+   "tempers": [
+    "gentle"
+   ]
+  },
+  "Shalebat": {
+   "seen": true,
+   "bonded": false,
+   "first_map": "fernstair",
+   "first_day": 20701,
+   "variants": [],
+   "prism_seen": false,
+   "tempers": []
+  }
+ },
+ "inventory": {
+  "tonic": 2
+ },
+ "money": 900,
+ "map": "crowcrest",
+ "cell": [
+  5,
+  21
+ ],
+ "facing": "up",
+ "heal_map": "brindlewick",
+ "heal_cell": [
+  5,
+  5
+ ],
+ "flags": {
+  "got_starter": true,
+  "page_1": true,
+  "page_2": true,
+  "rift_cinder_sealed": true
+ },
+ "play_time": 5400.0,
+ "waymarks": 345,
+ "iron_oath": false,
+ "daily_tasks": {},
+ "festival_ribbons": {
+  "lantern_2026": {
+   "ribbons": 12,
+   "earned": 40,
+   "stages": 2,
+   "task": ""
+  }
+ },
+ "records": {
+  "album": {
+   "month": "2026-11",
+   "tasks": [
+    {
+     "id": "alb_win_20",
+     "n": 7
+    }
+   ],
+   "full": false
+  },
+  "album_stickers": [
+   "2026-10"
+  ],
+  "echo_path": {
+   "week": "2026-11-02",
+   "done": [
+    1,
+    2,
+    3
+   ],
+   "chest": false
+  },
+  "expeditions": [
+   {
+    "uid": "00000000000000b3",
+    "hours": 8,
+    "start": 1793000000
+   }
+  ],
+  "masters": {
+   "brannoc": {
+    "first": "2026-11-03",
+    "week": "2026-11-02"
+   }
+  },
+  "season_path": {
+   "season": "2026-Q4",
+   "points": 420,
+   "claimed": 4
+  },
+  "memorial": [],
+  "waymark_log": [
+   {
+    "src": "daily_task",
+    "n": 10,
+    "lost": 0,
+    "date": "2026-11-05"
+   }
+  ],
+  "echo_path_clears": 2
+ }
+}

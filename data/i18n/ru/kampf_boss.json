@@ -1,0 +1,21 @@
+{
+ "_comment": "ru translation of the kampf_boss table, keyed by the English text.",
+ "strings": {
+  "%s grows restless: the longer the fight, the harder it strikes!": "%s теряет терпение: чем дольше бой, тем сильнее удары!",
+  "%s lies open: its Guard is down for a turn!": "%s раскрылся: его Стойкость падает на один ход!",
+  "Before the Hush, the Cinder Rift fed a village's forges. The smiths sold the last of its heat to the highest bidder, and what was left curled up and learned to hate. It still keeps time like a bellows: hold it under High Tide and it can't stoke its next phase.": "До Безмолвия Тлеющий Разлом питал кузницы одной деревни. Кузнецы продали остатки его жара тому, кто дал больше, а то, что осталось, свернулось клубком и научилось ненавидеть. Он и сейчас держит ритм, как мехи: удерживай его под Большим приливом, и он не сможет раздуть следующую фазу.",
+  "Ebb": "Отлив",
+  "It acts %d times each turn.": "Действует %d раз за ход.",
+  "Mist hides things, and the people nearby paid it well to hide one thing in particular. When the payments stopped, it hid them too. Dawn Glow burns its fog thin; while the light lies, it can't pull itself into a new shape.": "Туман прячет вещи, и местные хорошо платили ему, чтобы он спрятал одну вещь в особенности. Когда платежи прекратились, он спрятал и их. Рассветное сияние истончает его туман; пока держится свет, он не может собраться в новую форму.",
+  "Not a breath of wind: no stat stage rises or falls on either side.": "Ни дуновения: ни у одной стороны характеристики не растут и не падают.",
+  "Still Air": "Штиль",
+  "The Ashen Heart splits open. Its core burns white!": "Пепельное Сердце раскалывается! Его ядро горит добела!",
+  "The Drowned Heart sinks its weight into one last surge!": "Утонувшее Сердце обрушивает весь свой вес в последнюю волну!",
+  "The Mist Heart pulls the fog tight around its core!": "Туманное Сердце стягивает туман вокруг своего ядра!",
+  "The Tide Rift sank a ferry once, and the ferryman swore he had warned everyone. He had not. The heart at the bottom remembers every name on the passenger list. Static Veil sets its water humming, and while it hums the heart can't gather its next surge.": "Приливный Разлом однажды потопил паром, и паромщик клялся, что всех предупредил. Не предупредил. Сердце на дне помнит каждое имя из списка пассажиров. Статическая завеса заставляет его воду гудеть, и пока она гудит, сердце не может собрать следующую волну.",
+  "The water has run out: resting gives 1 Energy less on both sides.": "Вода кончилась: отдых даёт на 1 Энергию меньше обеим сторонам.",
+  "What the Ashen Heart was": "Чем было Пепельное Сердце",
+  "What the Drowned Heart was": "Чем было Утонувшее Сердце",
+  "What the Mist Heart was": "Чем было Туманное Сердце"
+ }
+}

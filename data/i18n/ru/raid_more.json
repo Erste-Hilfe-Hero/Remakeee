@@ -1,0 +1,12 @@
+{
+ "_comment": "ru translation of the raid_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s (%s, %d Wayfarers) %d min": "%d. %s (%s, странников: %d) %d мин",
+  "A legendary guardian waits in this Rift: %s": "В этом Разломе ждёт легендарный хранитель: %s",
+  "Easy": "Легко",
+  "Fastest Rifts": "Самые быстрые Разломы",
+  "Hard": "Трудно",
+  "How hard?": "Насколько трудно?",
+  "No Rift was won yet.": "Ни один Разлом ещё не пройден."
+ }
+}

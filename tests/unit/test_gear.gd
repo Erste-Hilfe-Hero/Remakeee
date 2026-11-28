@@ -1,5 +1,5 @@
 extends GutTest
-## Tamer Gear: data is consistent, and spots are found from the right cell only.
+## Wayfarer Gear: data is consistent, and spots are found from the right cell only.
 
 func before_all() -> void:
 	Database.load_all()

@@ -1,0 +1,6 @@
+{
+ "_comment": "ko translation of the battleui table, keyed by the English text.",
+ "strings": {
+  "Colour-blind: %s": "색맹 모드: %s"
+ }
+}

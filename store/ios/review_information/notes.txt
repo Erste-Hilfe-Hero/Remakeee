@@ -1,0 +1,28 @@
+What the app is: Chimora, a turn-based monster-taming RPG in pixel art for ages 9+ (mild fantasy violence: creatures faint, no blood). Single-player story, optional online play with friends. Free with optional IAPs.
+
+How to start: no sign-in. Choose a language, tick the box to accept the Terms of Use and Privacy Policy (links on the same screen), then New Game. Play starts at once; the story begins when you meet your first Spirling. An anonymous account is created on our own server (EU). No email, no third-party login, no chat.
+
+Offline: the story plays offline with no setting (test: airplane mode); progress syncs once online. Shop, trades, duels and leagues need internet and say so; purchases are blocked offline.
+
+Daily: once a day in the world a Today card shows the welcome gift (7 steps, a missed day costs nothing, no streak, no timer), the Spirling of the day and the daily tasks. "Take the gift" collects it; free, no purchase. Daily tasks: Menu > Goals ("Swap a daily task" once a day, free).
+
+Quest Book: Menu > Goals > Quest Book; in a quest, "Where next?" marks the target on the world map. Free.
+
+Spirling book: Menu > Spirlog shows the share of Spirlings bonded; rewards at 25, 50 and 100 % and for Gleam steps (items and a title only).
+
+Friends: Menu > Friends shows your friend code; "Copy my code" or "Add a friend..." on a second device or install. Invite: a new player enters your code under Friends > Invite ("I was invited..."); once they have played a day, both get a one-time reward. Friends swap greetings, mail, gifts and echo duels. Trades: Menu > Friends > Trades: friends of level 3 for 7+ days, tradeable items (never shop items) and up to 3 Spirlings; no money involved.
+
+In-app purchases: Menu > Shop (end of the menu; next to Satchel once the first Rift is sealed). On first open the shop asks for the age; under 13 the shop is closed and no offer or offer note is ever shown (enter an adult age to test). Tabs: Featured, Advantages, Packs, Pass, Looks, Riftglass, More. Every offer lists exact contents, effect and price; nothing is random. Use the sandbox account.
+- Bond charms work only while bonding (Mine!) in story battles. Single charms: Shop > Advantages, paid with Riftglass. Charm packs (consumable IAPs): Shop > Packs: Swiftleaf x3 1.99 EUR, Rift Lantern x3 4.99 EUR, Charm Satchel 9.99 EUR.
+- First Catch Pack (consumable, 0.99 EUR, once per account: 80 Riftglass, 2 Echo Scents, 1 Rift Breath): after the first bond, back in the world, adult accounts see one note (Show offer / Not now) once, never in battle, never again, never for under-13 accounts. Also in Shop > Packs.
+- Monthly Card (consumable, 4.99 EUR, not a subscription), Champions (non-consumable, a fixed Spirling at ring 50), Champion Bundle.
+- Wayfarer Pass (auto-renewable subscription, 4.99 EUR a month): Shop > Pass lists benefits, price, renewal and how to cancel.
+Restore: Shop > More > Restore purchases brings back unlocks and the Pass (3.1.1).
+
+Account: Menu > Settings > Account: transfer code, rules and privacy note, "Download my data", and "Delete account..." (deletes the account and all server data at once, 5.1.1(v)). "Enter a code..." and "I have a code" on the title screen only take a transfer code to move your own account; they unlock no content. No promo or redeem codes on iOS.
+
+Services: only our own server (Contabo GmbH, processor under Art. 28 GDPR, EU data centre) for game data, saves, friends and trades, and Apple (StoreKit, App Store update lookup). Reminders are local notifications, no push. HTTPS only (ITSAppUsesNonExemptEncryption = NO). Anonymous progress counts and crash reports stay on our server. No tracking, no ads, no third-party SDKs.
+
+Regions: same content worldwide; only language (14) and local prices differ.
+
+Regulated content: none. No gambling, no loot boxes or paid random items, no real-money prizes, no user content besides the filtered Wayfarer name, no free chat.

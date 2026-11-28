@@ -1,0 +1,24 @@
+{
+ "_comment": "ko translation of the fan_reserve table, keyed by the English text.",
+ "strings": {
+  "%s answers your call and pads over to you. Dorran pretends not to notice.": "%s이(가) 부름에 답하고 살금살금 다가온다. Dorran은 못 본 척한다.",
+  "%s slips through a hole in the fence. The ring will patch that hole. Someday.": "%s이(가) 울타리 구멍으로 빠져나간다. 그 구멍은 메워질 것이다. 언젠가는.",
+  "%s tilts its head at your call, but stays put.": "%s이(가) 부름에 고개를 갸웃하지만 그 자리에 머문다.",
+  "A whistle from the lookout tower. A rival crew bursts out of the reeds and %s bolts. Somebody got paid tonight.": "망루에서 휘파람 소리. 경쟁 패거리가 갈대밭에서 튀어나오고 %s이(가) 달아난다. 오늘 밤 누군가 돈을 받았다.",
+  "A wild %s, Ring %d. Sightings left: %d": "야생 %s, 링 %d. 남은 조우: %d",
+  "A woman in a velvet coat leans on a fence that is not on any map.": "벨벳 코트를 입은 여자가 어느 지도에도 없는 울타리에 기대 있다.",
+  "Echo call (%d left)": "메아리 부름 (%d회 남음)",
+  "Move on": "지나간다",
+  "Pay %d coins to slip into the reserve?": "%d코인을 내고 보호 구역에 몰래 들어갈까요?",
+  "Rattle the fence": "울타리를 흔든다",
+  "Set bait": "미끼를 놓는다",
+  "Velvet Dorran": "벨벳 Dorran",
+  "Velvet Dorran: No coins? Then you were never here.": "벨벳 Dorran: 코인이 없어? 그럼 넌 여기 온 적 없는 거야.",
+  "Velvet Dorran: No fighting in my yard. You set bait, you rattle the fence, you call. Then you leave and forget my face.": "벨벳 Dorran: 내 마당에서 싸움은 안 돼. 미끼를 놓고, 울타리를 흔들고, 부르는 거야. 그러고 나가서 내 얼굴을 잊어.",
+  "Velvet Dorran: Time's up. Out you go, and the gate never saw you.": "벨벳 Dorran: 시간 다 됐어. 나가. 문은 널 본 적 없어.",
+  "Velvet Dorran: Welcome to Hollowgate Reserve. Totally legal. The fence is to keep the paperwork in.": "벨벳 Dorran: Hollowgate 보호 구역에 온 걸 환영해. 완전히 합법이야. 울타리는 서류가 못 나가게 막는 거고.",
+  "You rattle the fence. %s's ears shoot up: curious, and very jumpy.": "울타리를 흔든다. %s의 귀가 쫑긋 선다. 호기심이 일지만 몹시 예민하다.",
+  "You set down a twist of dried bait. %s sniffs it and calms down.": "말린 미끼 한 줌을 내려놓는다. %s이(가) 냄새를 맡고 차분해진다.",
+  "the Quiet Hands": "조용한 손"
+ }
+}

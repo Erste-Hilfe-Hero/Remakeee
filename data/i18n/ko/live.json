@@ -1,0 +1,10 @@
+{
+ "_comment": "Korean texts for the German table live. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "A new version of Chimora is out.": "Chimora 새 버전이 나왔다.",
+  "Later": "나중에",
+  "Open the link?": "링크를 열까?",
+  "Update": "업데이트",
+  "What's new": "새로운 점"
+ }
+}

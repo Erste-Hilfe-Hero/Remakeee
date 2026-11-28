@@ -1,0 +1,9 @@
+{
+	"_comment": "KAMPF_PLAN_1000 item 531: a small gift on the first win against a Wayfarer, picked from the tier of the Wayfarer's highest ring. The same Wayfarer always gives the same item (hash of map and id). Wardens, Rift bosses and wild hordes give none.",
+	"tiers": [
+		{"max_ring": 12, "items": ["tonic", "remedy", "cooling_gel", "dry_towel", "wake_bell"]},
+		{"max_ring": 25, "items": ["strong_tonic", "remedy", "spark_drop", "power_brew", "guard_brew"]},
+		{"max_ring": 40, "items": ["strong_tonic", "spark_drop", "focus_brew", "dash_brew", "revival_leaf"]},
+		{"max_ring": 999, "items": ["max_tonic", "revival_leaf", "spark_drop", "power_brew", "focus_brew"]}
+	]
+}

@@ -1,0 +1,31 @@
+Chimora 1.3.2
+
+- Przebudowany sklep z jaśniejszymi opisami: każdy pakiet i każda oferta mówi prostymi słowami, co zawiera i do czego służy. Nic nie jest losowe.
+- 70 nowych Spirlingów, po 10 w każdym regionie.
+- Połysk ma teraz 5 rodzajów, od klasycznego Połysku po bardzo rzadki Opalowy połysk.
+- Nowa pogoda: deszcz, mgła, wiatr, burze i śnieg zmieniają świat i niektóre walki. Jest włączona od początku i można ją dostosować w ustawieniach.
+- 35 kamieni zagadek i plansz z łamigłówkami we wszystkich regionach.
+- Mnóstwo ukrytych sekretów do odkrycia podczas gry.
+- Mapy lepiej się łączą: koniec ze ślepymi zaułkami, a w miastach są nowe domy.
+- Jeden poziom trudności dla wszystkich, który rośnie z aktu na akt. Bez wyboru trudności i bez limitu Rangi.
+- Wiele poprawek błędów.
+- Stuknięcia w Mój! lekko wibrują (tylko gdy wibracje są włączone w ustawieniach).
+- Ładniejsze intro na początku gry.
+- Naturalny początek: zaczynasz w krzakach, grasz od razu, a historia zaczyna się, gdy spotkasz swojego pierwszego dzikiego Spirlinga.
+- Przerywniki fabularne w każdym akcie.
+- Cztery regiony po głównej historii mają każdy własną fabułę, z pojedynkami w Quivermoor.
+- Księga zadań z twoimi celami, a "Dokąd teraz?" wskazuje drogę na mapie.
+- Automatyczna gra offline: bez internetu gra po prostu toczy się dalej, a postęp synchronizuje się, gdy znów jesteś online.
+- Nowe amulety więzi do Mój!: pojedyncze amulety za Szczelinit i 3 pakiety amuletów w sklepie, każdy ze stałą ceną i zawartością widoczną przed zakupem.
+- Pakiet Pierwszej Zdobyczy w naszej najniższej cenie: mały pakiet o stałej zawartości, widocznej przed zakupem. Nic nie jest losowe.
+- Podczas Mój! widzisz teraz Spirlinga, z którym tworzysz więź.
+- Prezent za logowanie przez 7 dni, zadania dnia i Spirling dnia.
+- Pogoda weekendowa: w sobotę i niedzielę nad kilkoma obszarami rozciąga się wyjątkowe niebo, a nieśmiałe Spirlingi pojawiają się tam częściej.
+- Spirlog pokazuje teraz w procentach, ile Spirlingów związano, z nagrodami przy 25, 50 i 100 % oraz za etapy Połysku: przedmiotami i tytułem.
+- Kody znajomych działają jak zaproszenia: gdy nowy gracz dołączy z twoim kodem i zagra przez dzień, oboje dostajecie nagrodę.
+- Wymieniaj się z ludźmi spotkanymi w świecie, a niektóre Spirlingi rozwijają się teraz po wymianie.
+- Płynniejsze animacje.
+- Układ stworzony dla iPada.
+- Większy tekst i większe przyciski, łatwiejsze do stuknięcia.
+- Poprawki grafiki w każdej erze, od Era I do Era V.
+- Poprawki bezpieczeństwa i szybkości.

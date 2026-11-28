@@ -1,0 +1,205 @@
+{
+ "lens_1_1": {
+  "lines": [
+   "A lens marked DAWN."
+  ],
+  "action": "bell kiln_lens_1 2 3 lens"
+ },
+ "lens_1_2": {
+  "lines": [
+   "A lens marked NOON."
+  ],
+  "action": "bell kiln_lens_1 3 3 lens"
+ },
+ "lens_1_3": {
+  "lines": [
+   "A lens marked DUSK."
+  ],
+  "action": "bell kiln_lens_1 1 3 lens"
+ },
+ "hint_1": [
+  "Scratched on the kiln wall: The crew works backwards. Start at the end of the day."
+ ],
+ "lens_2_1": {
+  "lines": [
+   "A lens marked NORTH."
+  ],
+  "action": "bell kiln_lens_2 3 4 lens"
+ },
+ "lens_2_2": {
+  "lines": [
+   "A lens marked EAST."
+  ],
+  "action": "bell kiln_lens_2 1 4 lens"
+ },
+ "lens_2_3": {
+  "lines": [
+   "A lens marked SOUTH."
+  ],
+  "action": "bell kiln_lens_2 4 4 lens"
+ },
+ "lens_2_4": {
+  "lines": [
+   "A lens marked WEST."
+  ],
+  "action": "bell kiln_lens_2 2 4 lens"
+ },
+ "hint_2": [
+  "A crew note: Never the way the caravan wants. East, west, north, south. Then laugh."
+ ],
+ "bell_6": {
+  "if": {
+   "not_flag": "bell_6"
+  },
+  "else": "bell_empty",
+  "lines": [
+   "A caravan bell in a crate marked GLASS. It is not glass. Nothing in this crate is glass.",
+   "You take the bell. It keeps quiet, for now."
+  ],
+  "action": "set_flag bell_6"
+ },
+ "bell_7": {
+  "if": {
+   "not_flag": "bell_7"
+  },
+  "else": "bell_empty",
+  "lines": [
+   "A caravan bell melted halfway into a glass bottle. Art, says the label. Evidence, says your gut.",
+   "You take the bell. It keeps quiet, for now."
+  ],
+  "action": "set_flag bell_7"
+ },
+ "bell_8": {
+  "if": {
+   "not_flag": "bell_8"
+  },
+  "else": "bell_empty",
+  "lines": [
+   "A caravan bell hung over a furnace door. It rings when the door opens. Crew alarm, very homely.",
+   "You take the bell. It keeps quiet, for now."
+  ],
+  "action": "set_flag bell_8"
+ },
+ "bell_9": {
+  "if": {
+   "not_flag": "bell_9"
+  },
+  "else": "bell_empty",
+  "lines": [
+   "A caravan bell on Venn's desk, used as a paperweight on a stack of maps. Every map is wrong.",
+   "You take the bell. It keeps quiet, for now."
+  ],
+  "action": "set_flag bell_9"
+ },
+ "bell_empty": [
+  "Nothing left here but a ring in the dust."
+ ],
+ "scarf": {
+  "if": {
+   "var_min": {
+    "q_s4_twin_stage": 0
+   },
+   "var_max": {
+    "q_s4_twin_stage": 0
+   },
+   "flag": "s4_twin_asked"
+  },
+  "else": "scarf_plain",
+  "lines": [
+   "A child's scarf on a nail, tied with a terrible knot. Stitched in the corner: a sand-glass, the crew's mark.",
+   "You take it to show Tamsin."
+  ],
+  "action": "quest_stage s4_twin 1"
+ },
+ "scarf_plain": [
+  "A row of nails with crew coats on them. One coat is child-sized."
+ ],
+ "ledger_book": {
+  "if": {
+   "var_min": {
+    "q_s4_bell_line_stage": 1
+   },
+   "var_max": {
+    "q_s4_bell_line_stage": 1
+   }
+  },
+  "else": "ledger_book_plain",
+  "lines": [
+   "A ledger in neat handwriting: 'Bell Line, new posts. Caravans led in: 14. Paid by V.: half. H.'",
+   "H. for Hesper. V. takes half. Someone should tell Hesper you know."
+  ],
+  "action": "quest_stage s4_bell_line 2; set_flag c4_ledger_read"
+ },
+ "ledger_book_plain": {
+  "lines": [
+   "A ledger of caravans 'found' on the flats. At the bottom: 'V. takes half.' Underlined twice."
+  ],
+  "action": "set_flag c4_ledger_read"
+ },
+ "sign": [
+  "MIRAGE KILN - STAFF ONLY. Staff: everyone who doesn't leave."
+ ],
+ "aske": [
+  "Aske: I cut glass into gems. Sell them as gems. Buyers cut themselves on the truth."
+ ],
+ "aske_intro": [
+  "Aske: A visitor. Sharp. Let's see if you shatter."
+ ],
+ "aske_defeat": [
+  "Aske: Chipped. Don't tell the buyers."
+ ],
+ "bree": [
+  "Bree: I watch the door. Nobody's come in who wasn't supposed to. You're the first. Congratulations."
+ ],
+ "bree_intro": [
+  "Bree: Lookouts don't lose. We just see it coming."
+ ],
+ "bree_defeat": [
+  "Bree: Saw that coming. Didn't help."
+ ],
+ "hob": [
+  "Hob: Hot work. Pays in glass beads. Glass beads don't buy water. I've checked."
+ ],
+ "hob_intro": [
+  "Hob: You're letting the heat out. That's a fight."
+ ],
+ "hob_defeat": [
+  "Hob: Cooled off. First time in years."
+ ],
+ "lark": [
+  "Lark: I sell what caravans lose. Caravans lose a lot round here. Funny, that."
+ ],
+ "lark_intro": [
+  "Lark: Everything's for sale. Your Spirlings first."
+ ],
+ "lark_defeat": [
+  "Lark: No sale. Hate that."
+ ],
+ "odo": [
+  "Odo: I blow the bottles for the fake oasis water. Same water, fancier bottle, triple price."
+ ],
+ "odo_intro": [
+  "Odo: Hold your breath. I always do."
+ ],
+ "odo_defeat": [
+  "Odo: Out of breath. Occupational hazard."
+ ],
+ "rusk": [
+  "Rusk: Lovely field guide, this. Every den, every rock. The naturalist sold it to me herself. Very proud of her work."
+ ],
+ "rusk_intro": [
+  "Rusk: You're in the book too. Under 'nuisance'."
+ ],
+ "rusk_defeat": [
+  "Rusk: Take the guide. I've memorised the good pages anyway. Joking. Mostly."
+ ],
+ "garr": [
+  "Garr: I stand by the door and look big. Some days I also am big."
+ ],
+ "garr_intro": [
+  "Garr: Boss is busy. Being chained up. Don't ask."
+ ],
+ "garr_defeat": [
+  "Garr: Smaller than I looked. Noted."
+ ]
+}

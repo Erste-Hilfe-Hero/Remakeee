@@ -1,0 +1,159 @@
+{
+ "feather_11": {
+  "lines": [
+   "A grey rook feather in the roost. The rooks pretend not to see you take it.",
+   "You got a grey feather."
+  ],
+  "flag": "feather_11"
+ },
+ "feather_12": {
+  "lines": [
+   "A grey rook feather on top of the hoard. The only thing here nobody stole.",
+   "You got a grey feather."
+  ],
+  "flag": "feather_12"
+ },
+ "hint_board": {
+  "lines": [
+   "A board at the gate, covered in scratched notes: 'Turn back.' 'No really.' 'Dimsy owes me money.'"
+  ],
+  "after_flag": [
+   {
+    "flag": "hint_rook_vault",
+    "lines": [
+     "Tip: the wall in each room lists the feathers in order. Read it top to bottom, and ignore Dimsy."
+    ]
+   }
+  ]
+ },
+ "r0_feather_0": {
+  "lines": [
+   "A long rook feather is pinned to the wall."
+  ],
+  "action": "bell vault_room_0 2 3 feather"
+ },
+ "r0_feather_1": {
+  "lines": [
+   "A short rook feather is pinned to the wall."
+  ],
+  "action": "bell vault_room_0 3 3 feather"
+ },
+ "r0_feather_2": {
+  "lines": [
+   "A bent rook feather is pinned to the wall."
+  ],
+  "action": "bell vault_room_0 1 3 feather"
+ },
+ "r0_wall": [
+  "Scratched into the stone: the bent feather, then the long feather, then the short feather."
+ ],
+ "r1_feather_0": {
+  "lines": [
+   "A long rook feather is pinned to the wall."
+  ],
+  "action": "bell vault_room_1 3 4 feather"
+ },
+ "r1_feather_1": {
+  "lines": [
+   "A short rook feather is pinned to the wall."
+  ],
+  "action": "bell vault_room_1 1 4 feather"
+ },
+ "r1_feather_2": {
+  "lines": [
+   "A bent rook feather is pinned to the wall."
+  ],
+  "action": "bell vault_room_1 2 4 feather"
+ },
+ "r1_feather_3": {
+  "lines": [
+   "A white-tipped rook feather is pinned to the wall."
+  ],
+  "action": "bell vault_room_1 4 4 feather"
+ },
+ "r1_wall": [
+  "Scratched into the stone: the short feather, then the bent feather, then the long feather, then the white-tipped feather."
+ ],
+ "r2_feather_0": {
+  "lines": [
+   "A long rook feather is pinned to the wall."
+  ],
+  "action": "bell vault_room_2 1 5 feather"
+ },
+ "r2_feather_1": {
+  "lines": [
+   "A short rook feather is pinned to the wall."
+  ],
+  "action": "bell vault_room_2 3 5 feather"
+ },
+ "r2_feather_2": {
+  "lines": [
+   "A bent rook feather is pinned to the wall."
+  ],
+  "action": "bell vault_room_2 4 5 feather"
+ },
+ "r2_feather_3": {
+  "lines": [
+   "A white-tipped rook feather is pinned to the wall."
+  ],
+  "action": "bell vault_room_2 2 5 feather"
+ },
+ "r2_feather_4": {
+  "lines": [
+   "A broken rook feather is pinned to the wall."
+  ],
+  "action": "bell vault_room_2 5 5 feather"
+ },
+ "r2_wall": [
+  "Scratched into the stone: the long feather, then the white-tipped feather, then the short feather, then the bent feather, then the broken feather."
+ ],
+ "keeper_intro": {
+  "lines": [
+   "Keeper: Who counts my coins? Nobody counts my coins. I count my coins.",
+   "Keeper: Every rook in Corvane brings me something shiny. You're shiny. Hold still."
+  ]
+ },
+ "keeper_defeat": {
+  "lines": [
+   "Keeper: Fine. Take a handful. The rooks will just steal it back from you on the way home."
+  ]
+ },
+ "keeper": {
+  "lines": [
+   "Keeper: Forty years I've guarded this hoard. Know what's in it? Buttons. Mostly buttons. And one spoon."
+  ]
+ },
+ "robber_kip_intro": {
+  "lines": [
+   "Kip: You're not Dimsy. Dimsy said he'd bring a mark. Are you the mark?"
+  ]
+ },
+ "robber_kip_defeat": {
+  "lines": [
+   "Kip: Right. You're not the mark. I'm the mark. Story of my life."
+  ]
+ },
+ "robber_kip": {
+  "lines": [
+   "Kip: If you see Dimsy, tell him I want my half. He'll know which half."
+  ]
+ },
+ "robber_nance_intro": {
+  "lines": [
+   "Nance: Counting room's closed. Unless you're counting bruises."
+  ]
+ },
+ "robber_nance_defeat": {
+  "lines": [
+   "Nance: Lovely. Now I've got bruises to count."
+  ]
+ },
+ "robber_nance": {
+  "lines": [
+   "Nance: Three floors of feathers just to steal buttons. I need a new career."
+  ]
+ },
+ "gate_sign": [
+  "The Rook Vault. Feathers open the doors. Rooks open your pockets."
+ ]
+}

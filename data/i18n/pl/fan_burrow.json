@@ -1,0 +1,26 @@
+{
+ "_comment": "Polish texts for the German table fan_burrow. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "A crack in the rock opens into a dry hollow.": "Szczelina w skale otwiera się na suchą jamę.",
+  "A dry hollow in the rock. Nobody seems to live here. Claim it as your Burrow?": "Sucha jama w skale. Chyba nikt tu nie mieszka. Zająć ją jako swoją Norę?",
+  "A jar of names. Your Spirlings wrote them. Some are yours.": "Słoik z imionami. Napisały je twoje Spirlingi. Niektóre są twoje.",
+  "A map of Veydal with every Rift crossed out in red ink.": "Mapa Veydal z każdą Szczeliną przekreśloną czerwonym atramentem.",
+  "A scorched seal from the Cinder Rift. Still warm. Still angry.": "Osmalona pieczęć z Cinder Rift. Wciąż ciepła. Wciąż wkurzona.",
+  "A seal from the Mist Rift. Half of it is missing, or hiding.": "Pieczęć z Mist Rift. Połowy brakuje albo się chowa.",
+  "A seal from the Tidewater Rift. It drips on the carpet.": "Pieczęć z Tidewater Rift. Kapie na dywan.",
+  "Black Veil": "Czarny welon",
+  "Cinder Seal": "Pieczęć Żaru",
+  "Claim": "Zajmij",
+  "Grudge Jar": "Słoik uraz",
+  "Mended Veydal": "Pozszywane Veydal",
+  "Mist Seal": "Pieczęć Mgły",
+  "Someone slept here. %s is gone from the wall; a pawn ticket hangs in its place.": "Ktoś tu spał. Ze ściany zniknęło: %s; w jego miejscu wisi kwit z lombardu.",
+  "The wall is full. Take something down first.": "Ściana jest pełna. Najpierw coś zdejmij.",
+  "Tide Seal": "Pieczęć Pływów",
+  "Won at a Wake. Nobody cried harder than your Spirling.": "Wygrane na Stypie. Nikt nie płakał głośniej niż twój Spirling.",
+  "You hang it on the wall.": "Wieszasz to na ścianie.",
+  "You take it down.": "Zdejmujesz to.",
+  "Your Burrow (%d/%d on the wall)": "Twoja Nora (%d/%d na ścianie)",
+  "Your Burrow. The walls are bare. Earn something worth hanging.": "Twoja Nora. Ściany są gołe. Zdobądź coś, co warto powiesić."
+ }
+}

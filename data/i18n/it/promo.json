@@ -1,0 +1,14 @@
+{
+  "_comment": "Promo codes (scripts/ui/PromoMenu.gd), keys of tools/i18n/de_promo.py.",
+  "strings": {
+    "Code redeemed! You got: %s": "Codice riscattato! Ricevi: %s",
+    "Promo code": "Codice promo",
+    "Promo codes are closed right now.": "I codici promo sono chiusi al momento.",
+    "Redeem a promo code...": "Riscatta un codice promo...",
+    "That code does not exist. Check the letters and try again.": "Questo codice non esiste. Controlla i caratteri e riprova.",
+    "This code has been used up.": "Questo codice è esaurito.",
+    "This code has expired.": "Questo codice è scaduto.",
+    "Too many tries. Wait an hour, then try again.": "Troppi tentativi. Aspetta un'ora, poi riprova.",
+    "You already redeemed this code.": "Hai già riscattato questo codice."
+  }
+}

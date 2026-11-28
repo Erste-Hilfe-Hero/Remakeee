@@ -1,0 +1,405 @@
+extends Node
+## Autoload "Billing": one interface for Google Play Billing, Apple StoreKit 2 and the local test
+## store (items 4093-4099). Rules (docs/MONETIZATION.md):
+## - Prices on screen only come from the store (item 4095).
+## - Every store purchase goes to the server first; only after the server credited it the store is
+##   told it is done (items 4096, 4097). Bag items and coins come from the server (shop_claim).
+## - Open purchases are sent again on start and after every reconnect (item 4098).
+## - The monthly limit is checked before a store purchase starts (item 4252).
+
+## The purchase flow (item 4099).
+enum Step { READY, QUERY, PURCHASING, VERIFYING, CREDITED, FAILED, CANCELLED }
+
+signal step_changed(step: Step)
+## Bag items and coins arrived from the server and went into the journey.
+signal delivered(grants: Array)
+## The Wayfarer Pass paid its daily Riftglass ([param added] includes missed days, item 4631).
+signal pass_paid(added: int)
+## Monthly Card Riftglass paid by the server (pay-to-win step 7).
+signal card_paid(added: int)
+
+var step: Step = Step.READY
+## The store in use, or null when this build cannot buy (web, release builds without a plugin).
+var store: BillingStore
+## Last shop_state from the server ({} until the shop was opened).
+var state: Dictionary = {}
+## Store price texts by product id.
+var prices: Dictionary = {}
+var last_error: String = ""
+var _buying: bool = false
+
+func _ready() -> void:
+	# Bought unlocks, the pass and the age band from the last connection, so they keep working
+	# offline (docs/OFFLINE.md). The real server only; the local test server starts empty.
+	if not Online.is_local():
+		load_cache()
+	store = make_store()
+	if Online.has_signal("state_changed"):
+		Online.state_changed.connect(_on_online_state)
+
+## Picks the store for this build: Google Play on Android (plugins/chimora_billing), the App Store
+## with StoreKit 2 on iOS (plugins/chimora_storekit), the local test store in debug builds against
+## the local server.
+func make_store() -> BillingStore:
+	if GoogleBillingStore.available_here():
+		var g := GoogleBillingStore.new()
+		_connect_store(g)
+		return g
+	if AppleBillingStore.available_here():
+		var a := AppleBillingStore.new()
+		a.purchase_updated.connect(_on_store_update)
+		_connect_store(a)
+		return a
+	if Online.is_local() and OS.is_debug_build():
+		return LocalBilling.new()
+	return null
+
+## Connects to the store in the background; open purchases go to the server once it is up.
+func _connect_store(g: BillingStore) -> void:
+	if await g.connect_store() and Online.is_online():
+		resume_pending()
+
+## A purchase the store finished outside the sheet (Ask to Buy approved, bought on another device):
+## the server checks and credits it like any other.
+func _on_store_update(receipt: Dictionary) -> void:
+	if _buying or not Online.is_online():
+		return
+	if (await _verify(receipt)).get("ok", false):
+		await claim()
+		await refresh_state()
+	_set_step(Step.READY)
+
+func available() -> bool:
+	return store != null and store.is_ready()
+
+func _set_step(s: Step) -> void:
+	step = s
+	step_changed.emit(s)
+
+func _on_online_state(s: int) -> void:
+	if s != Online.State.ONLINE:
+		return
+	if available():
+		resume_pending()
+	await refresh_state()
+
+# --- Server state ------------------------------------------------------------------------------
+
+func refresh_state() -> Dictionary:
+	var r: Dictionary = await Online.call_fn("shop_state")
+	if r.ok and r.data is Dictionary:
+		state = r.data
+		if not Online.is_local():
+			save_cache()
+		ShopEffects.apply_unlocks()
+		if pass_active():
+			await claim_pass_daily()
+		await refresh_extras()
+	return r
+
+## Step 7 state on top of shop_state: purchases of each first_buy_double tier go into state.bought
+## (so the "first purchase double" tag hides after the first one), state.card (Monthly Card, days left)
+## and state.deals (deal ids on sale today). Due card days are collected at once.
+func refresh_extras() -> void:
+	var r: Dictionary = await Online.call_fn("shop_extras")
+	if not r.ok or not r.data is Dictionary:
+		return
+	var bought: Dictionary = state.get("bought", {}) if state.get("bought") is Dictionary else {}
+	var firsts: Variant = r.data.get("firsts", {})
+	if firsts is Dictionary:
+		bought.merge(firsts, true)
+	state["bought"] = bought
+	state["card"] = r.data.get("card", {})
+	state["deals"] = r.data.get("deals", [])
+	for c: Variant in (state.card as Dictionary).values() if state.card is Dictionary else []:
+		if c is Dictionary and int(c.get("due", 0)) > 0:
+			await claim_card_daily()
+			return
+
+## The Monthly Card's daily Riftglass, every due day at once. Returns the Riftglass added.
+func claim_card_daily() -> int:
+	var r: Dictionary = await Online.call_fn("shop_card_daily")
+	if not r.ok or not r.data is Dictionary or not bool(r.data.get("ok", false)):
+		return 0
+	var added: int = int(r.data.get("added", 0))
+	if r.data.has("balance"):
+		state["balance"] = int(r.data.balance)
+	var cards: Variant = state.get("card", {})
+	for c: Variant in (cards as Dictionary).values() if cards is Dictionary else []:
+		if c is Dictionary:
+			c["due"] = 0
+	if added > 0:
+		card_paid.emit(added)
+	return added
+
+## The pass's 30 Riftglass a day, paid by the server once per Berlin calendar day and up to 7
+## missed days later (items 4631, 4637, 4659). Returns the Riftglass added (0 = already paid).
+func claim_pass_daily() -> int:
+	var r: Dictionary = await Online.call_fn("shop_pass_daily")
+	if not r.ok or not r.data is Dictionary or not bool(r.data.get("ok", false)):
+		return 0
+	var added: int = int(r.data.get("added", 0))
+	if r.data.has("balance"):
+		state["balance"] = int(r.data.balance)
+	if added > 0:
+		pass_paid.emit(added)
+	return added
+
+func band() -> Variant:
+	return state.get("band")
+
+## True when the server said the player is under 13 (the pause menu then shows "Shop (locked)").
+func kids_locked() -> bool:
+	var b: Variant = state.get("band")
+	return b != null and int(b) < 13
+
+func balance() -> int:
+	return int(state.get("balance", 0))
+
+func unlocked(key: String) -> int:
+	var u: Variant = state.get("unlocks", {})
+	return int(u.get(key, 0)) if u is Dictionary else 0
+
+func pass_active() -> bool:
+	return bool(state.get("pass_active", false))
+
+## Why an offer cannot be bought now ("" = it can). Mirrors the server, so the menu can say it
+## before anything starts.
+func block_reason(o: Dictionary, with_riftglass: bool) -> String:
+	if state.is_empty():
+		return "offline"
+	if not bool(state.get("open", true)):
+		return "shop_closed"
+	if state.get("band") == null:
+		return "age_needed"
+	if int(state.band) < maxi(13, int(o.get("min_band", 13))):
+		return "age"
+	if not bool(o.get("ready", false)) or not ShopCatalog.in_save_window(o):
+		return "not_available"
+	if not ShopCatalog.deal_active(o, int(state.get("server_time", Time.get_unix_time_from_system()))):
+		return "not_now"
+	if bool(state.get("locked", false)):
+		return "limit_reached"
+	if o.has("limit") and int(state.get("bought", {}).get(str(o.id), 0)) >= int(o.limit.n):
+		return "offer_limit"
+	var req: String = str(o.get("requires", ""))
+	if req.begins_with("rifts:") and int(state.get("rifts", 0)) < int(req.get_slice(":", 1)):
+		return "not_yet"
+	if req.begins_with("tier:") and not ShopEffects.tier_ok(req, unlocked(req.get_slice(":", 1))):
+		return "tier_order"
+	if req.begins_with("none:") and not ShopEffects.none_ok(req, func(k: String) -> int: return unlocked(k)):
+		return "not_yet"
+	if req.begins_with("max:") and not ShopEffects.max_ok(req, unlocked(req.get_slice(":", 1))):
+		return "offer_limit"
+	if with_riftglass:
+		if int(o.get("rg_price", 0)) <= 0:
+			return "not_for_riftglass"
+		if balance() < int(o.rg_price):
+			return "not_enough"
+	else:
+		if not available():
+			return "no_store"
+		if int(state.get("spent_cents", 0)) + int(o.get("eur_cents", 0)) > int(state.get("cap_cents", 0)):
+			return "limit"
+	return ""
+
+# --- Store prices --------------------------------------------------------------------------------
+
+func query_products(product_ids: Array[String]) -> Dictionary:
+	if not available():
+		return {}
+	_set_step(Step.QUERY)
+	var got: Dictionary = await store.query(product_ids)
+	prices.merge(got, true)
+	_set_step(Step.READY)
+	return got
+
+func price_text(o: Dictionary) -> String:
+	return str(prices.get(str(o.get("product_id", "")), ""))
+
+# --- Buying --------------------------------------------------------------------------------------
+
+## Buys [param o] with Riftglass on the server (no store involved).
+func buy_with_riftglass(o: Dictionary, choice: Variant = null) -> Dictionary:
+	# The wallet lives on the server; offline nothing is spent or granted.
+	if not Online.is_online():
+		return {"ok": false, "error": "offline"}
+	var why: String = block_reason(o, true)
+	if not why.is_empty():
+		return {"ok": false, "error": why}
+	var args: Dictionary = {"p_offer": str(o.id), "p_expected_price": int(o.rg_price)}
+	if choice != null:
+		args["p_choice"] = str(choice)
+	var r: Dictionary = await Online.call_fn("shop_buy", args)
+	if not r.ok:
+		return {"ok": false, "error": "offline" if r.net else str(r.error)}
+	var d: Dictionary = r.data if r.data is Dictionary else {}
+	if bool(d.get("ok", false)):
+		state["balance"] = int(d.get("balance", balance()))
+		await claim()
+		await refresh_state()
+	return d
+
+## Buys [param o] directly in the store, then lets the server check and credit the receipt.
+func buy_in_store(o: Dictionary, choice: Variant = null) -> Dictionary:
+	# A second tap while a purchase runs starts nothing (item 4106).
+	if _buying:
+		return {"ok": false, "error": "busy"}
+	_buying = true
+	var r: Dictionary = await _buy_in_store(o, choice)
+	_buying = false
+	return r
+
+func busy() -> bool:
+	return _buying
+
+func _buy_in_store(o: Dictionary, choice: Variant) -> Dictionary:
+	await refresh_state()
+	# Never a store sheet without the server: it checks and credits every purchase (docs/OFFLINE.md).
+	if not Online.is_online() or bool(state.get("cached", false)):
+		return {"ok": false, "error": "offline"}
+	var why: String = block_reason(o, false)
+	if not why.is_empty():
+		return {"ok": false, "error": why}
+	_set_step(Step.PURCHASING)
+	var p: Dictionary = await store.purchase(str(o.product_id), str(state.get("account_token", "")), str(state.get("account_hash", "")))
+	if not bool(p.get("ok", false)):
+		_set_step(Step.CANCELLED if bool(p.get("cancelled", false)) else Step.FAILED)
+		var err: String = "cancelled" if bool(p.get("cancelled", false)) else str(p.get("error", "store_error"))
+		if err == "already_owned":
+			# Paid before but never credited: send it to the server now.
+			await resume_pending()
+		return {"ok": false, "error": err}
+	var r: Dictionary = await _verify(p.receipt, choice)
+	if r.get("ok", false):
+		await claim()
+		await refresh_state()
+	return r
+
+## Sends a receipt to the server; finishes it in the store only once it is credited.
+func _verify(receipt: Dictionary, choice: Variant = null) -> Dictionary:
+	_set_step(Step.VERIFYING)
+	var args: Dictionary = {"p_store": str(receipt.get("store", "")), "p_receipt": receipt}
+	if choice != null:
+		args["p_choice"] = str(choice)
+	var r: Dictionary = await Online.call_fn("shop_verify", args)
+	var d: Dictionary = r.data if r.ok and r.data is Dictionary else {}
+	if not bool(d.get("ok", false)):
+		# The purchase stays open in the store and is sent again later (item 4098).
+		last_error = "offline" if r.get("net", false) else str(d.get("error", r.get("error", "verify_failed")))
+		_set_step(Step.FAILED)
+		return {"ok": false, "error": last_error}
+	var o: Dictionary = ShopCatalog.by_product(str(receipt.get("product_id", "")))
+	store.finish(receipt, str(o.get("store_type", "consumable")) == "consumable")
+	_set_step(Step.CREDITED)
+	return d
+
+## Sends purchases the store still has open to the server (start, reconnect).
+func resume_pending() -> int:
+	if not available() or not Online.is_online():
+		return 0
+	var n: int = 0
+	for receipt: Dictionary in await store.unfinished():
+		var r: Dictionary = await _verify(receipt)
+		if r.get("ok", false):
+			n += 1
+	if n > 0:
+		await claim()
+	_set_step(Step.READY)
+	return n
+
+## "Restore purchases": unlocks and the pass come back from the store. Returns how many purchases
+## the server credited now (receipts it already had do not count), or -1 without a connection, so
+## the menu never says "nothing to restore" when it could not ask (bug plan 1354). Bag items and
+## coins of a restored purchase are picked up at once.
+func restore() -> int:
+	if not available():
+		return 0
+	if not Online.is_online():
+		last_error = "offline"
+		return -1
+	var n: int = 0
+	for receipt: Dictionary in await store.restore():
+		var r: Dictionary = await _verify(receipt)
+		if r.get("ok", false) and not bool(r.get("duplicate", false)):
+			n += 1
+	if n > 0:
+		await claim()
+	await refresh_state()
+	_set_step(Step.READY)
+	return n
+
+## Picks up bag items and coins from the server and puts them into the journey (item 4344).
+func claim() -> Array:
+	var r: Dictionary = await Online.call_fn("shop_claim")
+	if not r.ok or not r.data is Array:
+		return []
+	var all: Array = []
+	for d: Variant in r.data:
+		for g: Variant in d.get("grants", []):
+			apply_grant(g)
+			all.append(g)
+	if not all.is_empty():
+		delivered.emit(all)
+		if GameState.in_game:
+			SaveManager.save_game()
+	return all
+
+static func apply_grant(g: Dictionary) -> void:
+	match str(g.get("t", "")):
+		"item":
+			GameState.add_item(str(g.id), int(g.get("n", 1)))
+		"coins":
+			GameState.money = mini(GameState.money + int(g.get("n", 0)), 9999999)
+		"spirling":
+			var s: Spirling = ShopEffects.bought_spirling(g)
+			if s != null:
+				GameState.receive_spirling(s)
+
+# --- Offline copy of the entitlements (docs/OFFLINE.md) ---------------------------------------
+
+## What stays usable offline: bought unlocks, the pass and its end, the age band (kids lock).
+## Never the Riftglass balance, prices, limits or tokens: buying and spending need the server.
+const CACHE_PATH: String = "user://shop_entitlements.json"
+const CACHE_KEYS: Array[String] = ["band", "unlocks", "pass_active", "pass_until"]
+## Mixed into the check value, so a hand-edited file is ignored (a deterrent, not a lock: the
+## server stays the authority and replaces this copy at the next connection).
+const CACHE_SALT: String = "chimora-entitlements-1"
+
+## The entitlement part of [param s] with the time it was taken.
+static func entitlements(s: Dictionary, now: int) -> Dictionary:
+	var out: Dictionary = {"cached_at": now}
+	for k: String in CACHE_KEYS:
+		if s.has(k):
+			out[k] = s[k]
+	return out
+
+static func cache_sign(ent: Dictionary) -> String:
+	return (CACHE_SALT + "|" + OS.get_unique_id() + "|" + JSON.stringify(ent, "", true)).sha256_text()
+
+## Writes the entitlements of [member state] (after every shop_state from the server).
+func save_cache(path: String = CACHE_PATH) -> void:
+	# Signed as it will read back (JSON turns whole numbers into floats).
+	var ent: Variant = JSON.parse_string(JSON.stringify(entitlements(state, int(Time.get_unix_time_from_system()))))
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	if f != null:
+		f.store_string(JSON.stringify({"ent": ent, "sig": cache_sign(ent)}))
+
+## Reads the cached entitlements into [member state] when nothing came from the server yet.
+## A file whose check value does not match, or a clock set back before it was written, is
+## ignored; a pass whose end passed counts as ended. Returns true when the copy was taken.
+func load_cache(path: String = CACHE_PATH, now: int = -1) -> bool:
+	if not state.is_empty() or not FileAccess.file_exists(path):
+		return false
+	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	if not raw is Dictionary or not raw.get("ent") is Dictionary or str(raw.get("sig", "")) != cache_sign(raw.ent):
+		return false
+	var ent: Dictionary = raw.ent
+	var t: int = int(Time.get_unix_time_from_system()) if now < 0 else now
+	if t < int(ent.get("cached_at", 0)):
+		return false
+	var until: Variant = ent.get("pass_until")
+	ent["pass_active"] = bool(ent.get("pass_active", false)) and (until is float or until is int) and t < int(until)
+	ent["cached"] = true
+	state = ent
+	return true

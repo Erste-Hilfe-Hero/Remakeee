@@ -1,0 +1,20 @@
+{
+ "_comment": "Texts for the in-game update panel (tools/i18n/de_app_update.py is the German reference).",
+ "strings": {
+  "%.1f / %.1f MB": "%.1f / %.1f MB",
+  "%.1f MB": "%.1f MB",
+  "Cancel": "Anuluj",
+  "Download complete. Tap Install and confirm it. If Android asks, allow Chimora to install apps.": "Pobieranie zakończone. Dotknij Zainstaluj i potwierdź. Jeśli Android zapyta, zezwól Chimorze na instalowanie aplikacji.",
+  "Downloading the new version of Chimora.": "Pobieranie nowej wersji Chimory.",
+  "Downloading the update. Chimora restarts when it is ready.": "Pobieranie aktualizacji. Chimora uruchomi się ponownie, gdy będzie gotowa.",
+  "Downloading the update. You can keep playing.": "Pobieranie aktualizacji. Możesz grać dalej.",
+  "Google Play is updating Chimora.": "Google Play aktualizuje Chimorę.",
+  "Install": "Zainstaluj",
+  "Keep playing": "Graj dalej",
+  "Restart now": "Uruchom ponownie",
+  "The download failed. Check your connection and try again.": "Pobieranie nie powiodło się. Sprawdź połączenie i spróbuj ponownie.",
+  "The update did not finish. Please try again.": "Aktualizacja się nie powiodła. Spróbuj ponownie.",
+  "The update is ready. Restart Chimora to finish it.": "Aktualizacja jest gotowa. Uruchom Chimorę ponownie, by ją dokończyć.",
+  "Update available": "Dostępna aktualizacja"
+ }
+}

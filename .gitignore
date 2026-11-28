@@ -1,7 +1,7 @@
 # Godot
 .godot/
 build/
-android/
+/android/
 # Export presets are committed (they hold no secrets); signing comes from env vars in CI.
 # Secrets: never commit these
 *.keystore

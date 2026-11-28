@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_keepsake, written by tools/i18n/locales_kampf_keepsake.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s drops its %s for the %s. That was its whole turn.": "{0}, {1} eşyasını bırakıp {2} alıyor. Bütün turu buna gitti.",
+  "%s takes up the %s. That was its whole turn.": "{0}, {1} eşyasını takıyor. Bütün turu buna gitti.",
+  "Keepsake sets": "Hatıra setleri",
+  "Keepsake sets of %s": "%s hatıra setleri",
+  "Keepsake: putting it on takes the whole turn.": "Hatıra: takmak bütün turu alır.",
+  "No %s left in the bag for %s.": "Çantada {1} için {0} kalmadı.",
+  "Put this set on": "Bu seti tak",
+  "Save what it holds now": "Şu an taşıdığını kaydet",
+  "Save what it holds, or put a saved set back on.": "Taşıdığını kaydet ya da kayıtlı bir seti yeniden tak.",
+  "Set %d: %s": "Set %d: %s",
+  "Whole team: put on set %d": "Bütün takım: set %d tak",
+  "empty": "boş",
+  "holds %s": "%s taşıyor"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "_comment": "nl translation of the league_ranks table, keyed by the English text.",
+ "strings": {
+  "Apprentice": "Leerling",
+  "Boss": "Baas",
+  "Broker": "Makelaar",
+  "Captain": "Kapitein",
+  "Fixer": "Regelaar",
+  "Map Master": "Kaartmeester",
+  "No season reward is waiting.": "Er wacht geen seizoensbeloning.",
+  "Placement": "Plaatsing",
+  "Placement battles left: %d": "Plaatsingsgevechten over: %d",
+  "Rank: %s": "Rang: %s",
+  "Runner": "Loopjongen",
+  "Season reward": "Seizoensbeloning",
+  "Season reward: %d x %s": "Seizoensbeloning: %d x %s",
+  "Shield: %d battles without losing the rank": "Schild: %d gevechten zonder rang te verliezen",
+  "You left too many battles. Search again in %d seconds.": "Je hebt te veel gevechten verlaten. Zoek opnieuw over %d seconden."
+ }
+}

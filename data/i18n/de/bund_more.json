@@ -1,0 +1,41 @@
+{
+ "_comment": "German texts from tools/i18n/de_bund_more.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [
+  "Deutsch",
+  "English",
+  "Español",
+  "Français",
+  "Italiano",
+  "Nederlands",
+  "Polski",
+  "Türkçe"
+ ],
+ "strings": {
+  "%d. %s  Rank %d%s": "%d. %s  Rang %d%s",
+  "%s  Rank %d  %d/30, %d active%s": "%s  Rang %d  %d/30, %d aktiv%s",
+  "Any language": "Jede Sprache",
+  "Anyone, at once": "Alle, sofort",
+  "Bund board": "Bund-Rangliste",
+  "Bund rank %d (%d renown)": "Bund-Rang %d (%d Ruf)",
+  "Bund rank and week goal": "Bund-Rang und Wochenziel",
+  "Donate items...": "Gegenstände spenden...",
+  "Donated today: %d / %d": "Heute gespendet: %d / %d",
+  "Find a bund...": "Bund suchen...",
+  "How many?": "Wie viele?",
+  "Language and joining...": "Sprache und Beitritt...",
+  "Language of the bund": "Sprache des Bundes",
+  "No bund found. Found your own!": "Kein Bund gefunden. Gründe deinen eigenen!",
+  "No bunds yet.": "Noch keine Bünde.",
+  "Only after a request": "Nur nach Anfrage",
+  "Saved.": "Gespeichert.",
+  "Take the week reward": "Wochenbelohnung abholen",
+  "Thank you! The bund has %d renown now.": "Danke! Der Bund hat jetzt %d Ruf.",
+  "The week goal is not reached yet.": "Das Wochenziel ist noch nicht erreicht.",
+  "Week goal: %d / %d items donated": "Wochenziel: %d / %d Gegenstände gespendet",
+  "Who may join?": "Wer darf beitreten?",
+  "You already took this week's reward.": "Du hast die Belohnung dieser Woche schon abgeholt.",
+  "You do not have that many.": "So viele hast du nicht.",
+  "You donated all you can today. More tomorrow.": "Du hast heute alles gespendet, was geht. Morgen wieder.",
+  "open": "offen"
+ }
+}

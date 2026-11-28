@@ -1,0 +1,9 @@
+{
+ "_comment": "Spanish texts for the German table easy_start. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py es.",
+ "strings": {
+  "Lookout Corra: Quillbrook's Wayfarers would beat a fresh team before breakfast.": "Vigía Corra: Los Caminantes de Quillbrook vencerían a un equipo novato antes del desayuno.",
+  "Lookout Corra: Take the north road to Fernstair first, and let Kestra test you on the Crowcrest path. Then this road is yours.": "Vigía Corra: Toma primero el camino del norte hacia Fernstair y deja que Kestra te ponga a prueba en la senda de Crowcrest. Después, este camino es tuyo.",
+  "Lookout Halde: Go north through Fernstair first. Kestra tests new Wayfarers on the Crowcrest path. Come back once she has seen you fight.": "Vigía Halde: Ve primero al norte por Fernstair. Kestra pone a prueba a los Caminantes nuevos en la senda de Crowcrest. Vuelve cuando te haya visto luchar.",
+  "Lookout Halde: The Saltmarsh road? The Spirlings out there bite harder than anything near the village.": "Vigía Halde: ¿El camino a Saltmarsh? Los Spirlings de allí muerden más fuerte que cualquiera cerca del pueblo."
+ }
+}

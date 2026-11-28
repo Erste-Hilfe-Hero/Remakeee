@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table map_pass, written by tools/i18n/locales_map_pass.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Clerk Odo: Crates go up the mountain full of plates and come down full of soot.": "서기 오도: 상자는 판을 가득 싣고 산을 올라가서 그을음을 가득 싣고 내려와.",
+  "Clerk Odo: I weigh both. The soot is heavier. Nobody believes me.": "서기 오도: 둘 다 달아 봐. 그을음이 더 무거워. 아무도 안 믿지만.",
+  "Engraver Mira: A plate takes a year to cut and a second to drop. I have not dropped one. Yet.": "판화공 미라: 판 하나 새기는 데 일 년, 떨어뜨리는 데 일 초. 아직 하나도 안 떨어뜨렸어. 아직은.",
+  "Engraver Mira: Halvard says my lines are too soft. Halvard says that to everyone.": "판화공 미라: 할바르드는 내 선이 너무 무르대. 할바르드는 누구한테나 그래.",
+  "Engraver's Workshop": "판화공의 작업장",
+  "Freight Office": "화물 사무소",
+  "Lamp Room": "등불방",
+  "Lampwright Ines: A train in fog finds the station by my wicks. Trim them and you trim the timetable.": "등불장이 이네스: 안개 속 기차는 내 심지를 보고 역을 찾아. 심지를 자르면 시간표도 잘리지.",
+  "Lampwright Ines: Every lamp on the platform is mine. The smoke is the stack's.": "등불장이 이네스: 승강장의 등불은 전부 내 거야. 연기는 굴뚝 탓이고.",
+  "Pointsman Ulf: Porridge works best. Do not tell the guild.": "전철수 울프: 죽이 제일 잘 들어. 길드엔 말하지 마.",
+  "Pointsman Ulf: The points freeze every winter. I thaw them with my breakfast.": "전철수 울프: 선로 전환기는 겨울마다 얼어붙지. 난 아침밥으로 녹인다네.",
+  "Pointsman's House": "전철수의 집"
+ }
+}

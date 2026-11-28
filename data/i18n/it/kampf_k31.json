@@ -1,0 +1,14 @@
+{
+ "_comment": "Translations of the German table kampf_k31, written by tools/i18n/locales_kampf_k31.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s (won %d times)": "%s (sconfitto %d volte)",
+  "%s calls %s to its side. Nobody asked the guard.": "%s chiama %s al suo fianco. Nessuno ha chiesto alla guardia.",
+  "Every mended heart, one after another. No rest in between: your team keeps its wounds. Begin?": "Ogni cuore rammendato, uno dopo l'altro. Nessuna pausa: la tua squadra si tiene le ferite. Si comincia?",
+  "Heart %d of %d is next. It heard the last one stop.": "Tocca al cuore %d su %d. Ha sentito l'ultimo fermarsi.",
+  "Heart rush (best %d of %d)": "Corsa dei cuori (record %d su %d)",
+  "Heart rush: %d of %d hearts.": "Corsa dei cuori: %d cuori su %d.",
+  "Rift hearts": "Cuori del Varco",
+  "The mended heart still beats in the Rift's echo. It remembers you, and it is not grateful.": "Il cuore rammendato batte ancora nell'eco del Varco. Si ricorda di te, e non è grato.",
+  "Which heart?": "Quale cuore?"
+ }
+}

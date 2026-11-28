@@ -1,0 +1,29 @@
+{
+ "_comment": "Dutch texts for the German table solenne. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "Act IV: The Sun of Solenne": "Akte IV: De Zon van Solenne",
+  "Brass Veil Factor Lusk": "Messingsluier-factor Lusk",
+  "Dry Well": "Droge put",
+  "Echo Crystal: Dawn Mend": "Echokristal: Dawn Mend",
+  "Echo Crystal: Radiant Lance": "Echokristal: Radiant Lance",
+  "Echo Crystal: Squall": "Echokristal: Squall",
+  "High Noon": "Hoogmiddag",
+  "Interlude: Ochrewell": "Tussenspel: Ochrewell",
+  "Ochrewell": "Ochrewell",
+  "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.": "Zand giert door de windtorens: elke Spirling vooraan die geen Steen is verliest elke ronde een beetje Kracht.",
+  "Sandstorm": "Zandstorm",
+  "Take the sand road south from the Saltglass flats to Ochrewell and mend the three Rifts of Solenne.": "Neem de zandweg zuidwaarts van de Saltglass-vlakte naar Ochrewell en herstel de drie Kloven van Solenne.",
+  "Teaches Dawn Mend to a Lumen Spirling. Never used up.": "Leert Dawn Mend aan een Lumen-Spirling. Raakt nooit op.",
+  "Teaches Radiant Lance to a Lumen Spirling. Never used up.": "Leert Radiant Lance aan een Lumen-Spirling. Raakt nooit op.",
+  "Teaches Squall to a Gale Spirling. Never used up.": "Leert Squall aan een Gale-Spirling. Raakt nooit op.",
+  "The last shutter opens, the tower breathes, and the stair is clear!": "Het laatste luik gaat open, de toren ademt, en de trap is vrij!",
+  "The oasis east of Ochrewell has run dry: the Oasis Rift. Warden Kaia says nobody is to blame.": "De oase ten oosten van Ochrewell is drooggevallen: de Oasekloof. Hoeder Kaia zegt dat niemand de schuld heeft.",
+  "The oasis has been sold dry: every heal on both sides is halved.": "De oase is drooggekocht: elke genezing aan beide kanten wordt gehalveerd.",
+  "The shutter bangs, and the wind drops dead. Every shutter swings shut again.": "Het luik klapt dicht en de wind valt doodstil. Alle luiken zwaaien weer dicht.",
+  "The shutter swings open. Sand hisses through the slats.": "Het luik zwaait open. Zand sist door de latten.",
+  "The shutters hum in the wind. The stair stays open.": "De luiken zoemen in de wind. De trap blijft open.",
+  "The sun stands straight overhead: Lumen arts on both sides hit harder.": "De zon staat recht boven je: Lumen-technieken aan beide kanten raken harder.",
+  "The sundial under the sun palace has stopped: the Sun Rift. Warden Emrys is waiting, slowly.": "De zonnewijzer onder het zonnepaleis staat stil: de Zonnekloof. Hoeder Emrys wacht, langzaam.",
+  "The wind towers of Ochrewell have stopped breathing: the Tower Rift. Warden Aurelio grieves in style.": "De windtorens van Ochrewell zijn gestopt met ademen: de Torenkloof. Hoeder Aurelio rouwt in stijl."
+ }
+}

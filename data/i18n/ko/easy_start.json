@@ -1,0 +1,9 @@
+{
+ "_comment": "Korean texts for the German table easy_start. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "Lookout Corra: Quillbrook's Wayfarers would beat a fresh team before breakfast.": "파수꾼 Corra: Quillbrook 나그네들은 새내기 팀쯤은 아침 먹기 전에 이겨 버려.",
+  "Lookout Corra: Take the north road to Fernstair first, and let Kestra test you on the Crowcrest path. Then this road is yours.": "파수꾼 Corra: 먼저 북쪽 길로 Fernstair에 가서 Crowcrest 길에서 Kestra의 시험을 받아. 그러면 이 길도 네 거야.",
+  "Lookout Halde: Go north through Fernstair first. Kestra tests new Wayfarers on the Crowcrest path. Come back once she has seen you fight.": "파수꾼 Halde: 먼저 북쪽 Fernstair를 지나가. Kestra가 Crowcrest 길에서 새 나그네를 시험해. 네 싸움을 보여 준 다음에 다시 와.",
+  "Lookout Halde: The Saltmarsh road? The Spirlings out there bite harder than anything near the village.": "파수꾼 Halde: Saltmarsh 길? 저쪽 Spirling은 마을 근처 어떤 녀석보다 세게 물어."
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "_comment": "pl translation of the era_feel table, keyed by the English text.",
+ "strings": {
+  "A map drawn in four inks.": "Mapa narysowana czterema atramentami.",
+  "Era I - Ink": "Era I - Atrament",
+  "Era II - Wash": "Era II - Lawowanie",
+  "Era III - Etching": "Era III - Akwaforta",
+  "Era IV - Panorama": "Era IV - Panorama",
+  "Era V - Living": "Era V - Żywa",
+  "Replay era change": "Odtwórz zmianę ery",
+  "The air grows clearer. Every leaf shows more detail!": "Powietrze staje się czystsze. Każdy liść ma więcej szczegółów!",
+  "The ink runs. The world fills with colour!": "Atrament się rozlewa. Świat wypełnia się kolorem!",
+  "The map breathes. The world is alive!": "Mapa oddycha. Świat żyje!",
+  "The map unrolls wider than ever before!": "Mapa rozwija się szerzej niż kiedykolwiek!"
+ }
+}

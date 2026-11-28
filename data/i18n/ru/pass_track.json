@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table pass_track, written by tools/i18n/locales_pass_track.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d of %d pass points": "%d из %d очков пропуска",
+  "%d premium rewards reached and waiting.": "Ждут премиум-награды: %d.",
+  "Free:": "Бесплатно:",
+  "Free: %s": "Бесплатно: %s",
+  "Locked: needs the Wayfarer Pass.": "Закрыто: нужен Пропуск странника.",
+  "Opens the premium row of every step.": "Открывает премиум-ряд каждой ступени.",
+  "Pass track": "Путь пропуска",
+  "Premium (Wayfarer Pass):": "Премиум (Пропуск странника):",
+  "Premium row: Wayfarer Pass": "Премиум-ряд: Пропуск странника",
+  "Premium: %s": "Премиум: %s",
+  "Reached at %d pass points.": "Открывается при %d очках пропуска.",
+  "Ready to take.": "Можно забрать.",
+  "Something went wrong. Try again in a moment.": "Что-то пошло не так. Попробуй чуть позже.",
+  "Step %d": "Ступень %d",
+  "Step %d of %d": "Ступень %d из %d",
+  "Step %d: %s": "Ступень %d: %s",
+  "Take all rewards (%d)": "Забрать все награды (%d)",
+  "Take the free reward": "Забрать бесплатную награду",
+  "Take the premium reward": "Забрать премиум-награду",
+  "Taken.": "Получено.",
+  "The premium row needs the Wayfarer Pass.": "Для премиум-ряда нужен Пропуск странника.",
+  "Top row: free for everyone. Bottom row: with the Wayfarer Pass. Pass points come from battles won (%d), bonds (%d) and daily tasks (%d), up to %d a day.": "Верхний ряд: бесплатно для всех. Нижний ряд: с Пропуском странника. Очки пропуска дают выигранные бои (%d), узы (%d) и задания дня (%d), до %d в день.",
+  "You got:": "Ты получаешь:",
+  "ends in %s": "конец через %s"
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "spring": {
+  "lines": [
+   "Warm water seeps up through the sand. It tastes of copper and old promises.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "sign": [
+  "THE OASIS RIFT",
+  "Once the greenest place in Solenne. Now under new management."
+ ],
+ "oasis_sluice_a": {
+  "lines": [
+   "A bronze sluice wheel. A brass plate on it reads: PROPERTY OF THE BRASS VEIL."
+  ],
+  "action": "toggle oasis_sluice_a"
+ },
+ "oasis_sluice_b": {
+  "lines": [
+   "A bronze sluice wheel. A brass plate on it reads: PROPERTY OF THE BRASS VEIL."
+  ],
+  "action": "toggle oasis_sluice_b"
+ },
+ "oasis_sluice_c": {
+  "lines": [
+   "A bronze sluice wheel. A brass plate on it reads: PROPERTY OF THE BRASS VEIL."
+  ],
+  "action": "toggle oasis_sluice_c"
+ },
+ "hint": [
+  "Carved by the old well-diggers: Below, open one, never two, or the low gate drowns. Above, the high gate wants two."
+ ],
+ "noor": [
+  "Noor: Kaia says the water left on its own. Water doesn't sign receipts, though."
+ ],
+ "noor_intro": [
+  "Noor: You want Kaia? She's busy being adored. Duel first."
+ ],
+ "noor_defeat": [
+  "Noor: Fine. Ask her where the water went. Watch her smile."
+ ],
+ "hollis": [
+  "Hollis: I count every drop that leaves the oasis. Lately I count the people who ask about it."
+ ],
+ "hollis_intro": [
+  "Hollis: Your name isn't on my list. Let's fix that."
+ ],
+ "hollis_defeat": [
+  "Hollis: Struck off. In ink, sadly."
+ ],
+ "suni": [
+  "Suni: The palms are thirsty. So am I. Only one of us gets paid for it."
+ ],
+ "suni_intro": [
+  "Suni: I pick dates. Today I'm picking a fight."
+ ],
+ "suni_defeat": [
+  "Suni: Bitter harvest. Go on, Kaia's waiting. She's always waiting for someone."
+ ],
+ "kaia": {
+  "lines": [
+   "Kaia: Welcome to the oasis! Mind the cracks. They used to be the lake."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_oasis_sealed",
+    "lines": [
+     "Kaia: The water's back. The Veil will want it back too. I'd leave town before they send their regards.",
+     "Kaia: Here, Dawn Mend. A healing art, from me. Yes, I see the irony. I charge extra for it."
+    ]
+   },
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Kaia: The Veil fired me. Then the town hired me back. Turns out they needed someone who knows how thieves think."
+    ]
+   }
+  ]
+ },
+ "kaia_intro": [
+  "Kaia: The Rift drank the water. Terrible. Tragic. Nothing anyone could have done, least of all me.",
+  "Kaia: Still, a Warden must guard her Rift. Even from people who ask too many questions."
+ ],
+ "kaia_defeat": [
+  "Kaia: ...Oh, fine. You'd find the contract anyway. Everyone does, eventually.",
+  "Kaia: I sold the water rights to the Brass Veil. The Rift opened the night they started pumping. Bad timing. Good price.",
+  "Kaia: I've worked for the Veil for six years. Ochrewell paid me in thanks. The Veil paid me in gold. Guess which buys bread.",
+  "Kaia: Mend it, then. The contract has a clause for acts of heroism. You'll find it tedious."
+ ]
+}

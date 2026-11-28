@@ -1,0 +1,22 @@
+{
+ "_comment": "German texts from tools/i18n/de_league_ranks.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Apprentice": "Lehrling",
+  "Boss": "Boss",
+  "Broker": "Makler",
+  "Captain": "Hauptmann",
+  "Fixer": "Fixer",
+  "Map Master": "Kartenmeister",
+  "New title: %s": "Neuer Titel: %s",
+  "No season reward is waiting.": "Es wartet keine Saison-Belohnung.",
+  "Placement": "Platzierung",
+  "Placement battles left: %d": "Platzierungskämpfe übrig: %d",
+  "Rank: %s": "Rang: %s",
+  "Runner": "Laufbursche",
+  "Season reward": "Saison-Belohnung",
+  "Season reward: %d x %s": "Saison-Belohnung: %d x %s",
+  "Shield: %d battles without losing the rank": "Schutz: %d Kämpfe ohne Rangverlust",
+  "You left too many battles. Search again in %d seconds.": "Du hast zu viele Kämpfe verlassen. Such in %d Sekunden wieder."
+ }
+}

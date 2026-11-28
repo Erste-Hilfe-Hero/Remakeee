@@ -1,0 +1,11 @@
+{
+ "_comment": "Texts for zh_TW from tools/i18n/locales_kampf_k27.py (KAMPF_PLAN_1000 items 138, 179).",
+ "strings": {
+  "%s is cured.": "%s治好了。",
+  "Hesper: %d coins. Forgetting is free, remembering is not.": "海佩爾：%d枚硬幣。遺忘是免費的，記起來可不是。",
+  "Hesper: %s remembers everything it can. Lucky thing.": "海佩爾：%s能記住的全都記得。真走運。",
+  "Hesper: And if one of yours forgot an art it once knew, I can dig it back up. For a fee. Memory is cheap; mine isn't.": "海佩爾：要是你的夥伴忘了曾經會的招式，我能把它挖回來。當然要收費。記憶很便宜，我的可不便宜。",
+  "On Story every status ends with the battle. On the other difficulties Scorch, Root and Jolt stay on until an item, an art or a rest cures them.": "在故事難度下，所有狀態都會隨戰鬥結束。其他難度下，焦灼、纏根和觸電會一直留著，直到用道具、招式或休息治好。",
+  "Who forgot an art? %d coins each.": "誰忘了招式？每個%d枚硬幣。"
+ }
+}

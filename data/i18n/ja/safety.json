@@ -1,0 +1,18 @@
+{
+ "_comment": "ja translation of the safety table, keyed by the English text.",
+ "strings": {
+  "Battle over": "バトル終了",
+  "Bunds": "旅団",
+  "For parents...": "保護者の方へ...",
+  "For parents: switch off what your child should not use. Friends and saves stay.": "保護者の方へ：お子さまに使わせたくない機能をオフにできます。フレンドとセーブデータは残ります。",
+  "Open league": "オープンリーグ",
+  "Report the rival...": "相手を通報...",
+  "Suggestions from league battles": "リーグ戦からのおすすめ",
+  "These switches are for parents. Continue?": "このスイッチは保護者用です。続けますか？",
+  "This battle was against your own echo, so there is nobody to report.": "このバトルは自分のエコーが相手だったので、通報する相手がいない。",
+  "This is switched off under Settings, Account, For parents.": "これは「設定」の「アカウント」の「保護者の方へ」でオフになっている。",
+  "Under 16: open league, bunds and suggestions start switched off.": "16歳未満：オープンリーグ、旅団、おすすめは最初はオフ。",
+  "Why do you report the rival?": "なぜ相手を通報する？",
+  "You met this rival 3 times today, so this battle does not count.": "今日この相手とは3回対戦したので、このバトルは数に入らない。"
+ }
+}

@@ -1,0 +1,85 @@
+class_name Toast
+extends CanvasLayer
+## Short notes at the top of the screen (plan area 8): unlocked badges and finished daily tasks.
+## They never stop the game: input passes through and each note fades after SHOW_TIME.
+
+const SHOW_TIME: float = 2.4
+const LAYER: int = 90
+## How far a note slides in from above, in pixels.
+const SLIDE_PX: float = 8.0
+
+var _panel: PanelContainer
+var _icon: TextureRect
+var _label: Label
+var _queue: Array[Dictionary] = []
+var _busy: bool = false
+
+func _ready() -> void:
+	layer = LAYER
+	_panel = PanelContainer.new()
+	_panel.theme = UITheme.get_theme()
+	_panel.add_theme_stylebox_override("panel", UITheme.panel_style())
+	_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+	_panel.offset_left = 4
+	_panel.offset_right = -4
+	_panel.offset_top = 4
+	_panel.visible = false
+	add_child(_panel)
+	_fit_column()
+	get_viewport().size_changed.connect(_fit_column)
+	var row := HBoxContainer.new()
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.add_child(row)
+	_icon = TextureRect.new()
+	_icon.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(_icon)
+	_label = Label.new()
+	_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_label.custom_minimum_size = Vector2(1, 0)
+	_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(_label)
+
+## Keeps the note in the UI column on a wide screen (update 1.3.2); full width on a portrait one.
+## Its top sits under the notch / status bar, its sides clear of a side cut-out.
+func _fit_column() -> void:
+	if not is_inside_tree():
+		return
+	var vp: Vector2 = get_viewport().get_visible_rect().size
+	var col: Rect2 = SafeArea.column(vp)
+	_panel.offset_left = col.position.x + 4.0
+	_panel.offset_right = -(vp.x - col.end.x) - 4.0
+	# A note still sliding in (Juice.enter) keeps the pixels it has left to go.
+	_panel.offset_top = col.position.y + 4.0 + Juice.shift_of(_panel).y
+
+## Queues a note; [param icon] may be null. Each note rings [param sound] as it shows, a quiet
+## two-note chime by default (item 2512); "" for none.
+func show_note(text: String, icon: Texture2D = null, sound: String = "toast") -> void:
+	_queue.append({"text": text, "icon": icon, "sound": sound})
+	if not _busy:
+		_run()
+
+func pending() -> int:
+	return _queue.size() + (1 if _busy else 0)
+
+func _run() -> void:
+	_busy = true
+	while not _queue.is_empty():
+		var n: Dictionary = _queue.pop_front()
+		_label.text = Loc.t(str(n.text))
+		_icon.texture = n.icon
+		_icon.visible = n.icon != null
+		Juice.finish(_panel)
+		_panel.visible = true
+		# Slides down from the top edge and leaves the same way (docs/FLOW.md); there at once
+		# and gone at once under reduced motion.
+		Juice.enter(_panel, Vector2(0, -SLIDE_PX), "open")
+		if not str(n.sound).is_empty():
+			Sound.sfx(str(n.sound))
+		await get_tree().create_timer(SHOW_TIME).timeout
+		var out: Tween = Juice.leave(_panel, Vector2(0, -SLIDE_PX))
+		if out != null:
+			await out.finished
+	_busy = false

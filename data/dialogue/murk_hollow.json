@@ -7,16 +7,30 @@
   "action": "give_item storm_lantern 1",
   "flag": "got_lantern",
   "once": true,
-  "after_flag": {
-   "flag": "got_lantern",
-   "lines": [
-    "Tamsin: Mirkmoles dug half these tunnels. They like the quiet, not the dark."
-   ]
-  }
+  "after_flag": [
+   {
+    "flag": "got_lantern",
+    "lines": [
+     "Tamsin: Mirkmoles dug half these tunnels. They like the quiet, not the dark."
+    ]
+   },
+   {
+    "flag": "hollow_lamps",
+    "lines": [
+     "Tamsin: You lit them in the right order. Just like the woman with the compass, years back.",
+     "Tamsin: Mirela, she was called. Bought a whole jug of my lamp oil and said she was heading north."
+    ]
+   }
+  ]
  },
- "delve": [
-  "Ros: The Mirkmoles here hate bright light. Keep that lantern low."
- ],
+ "delve": {
+  "lines": [
+   "Ros: The Mirkmoles here hate bright light. Keep that lantern low."
+  ],
+  "night_lines": [
+   "Ros: Night shift, eh? Down here it's always night. The Mirkmoles like you better for it."
+  ]
+ },
  "delve_intro": [
   "Ros: A cartographer in my mine? Show me what you've got!"
  ],
@@ -49,7 +63,7 @@
  },
  "nook_find": {
   "lines": [
-   "In the miners' store: an Echo Crystal (Gloom Pulse)!"
+   "In the miners' store: an Echo Crystal (Gloom Ripple)!"
   ],
   "action": "give_item echo_umbra 1",
   "flag": "hollow_nook_find",
@@ -85,5 +99,32 @@
  "swarm_defeat": [
   "The swarm scatters into the dark galleries.",
   "The corner is quiet now. The Hush has let go of them."
- ]
+ ],
+ "echo_rope": {
+  "lines": [
+   "A coiled rope hangs on a hook by a lever."
+  ],
+  "action": "lever echo_rope"
+ },
+ "fenn": [
+  "Fenn: A Rift field lifts one element and dims another. Change it when it helps you."
+ ],
+ "fenn_intro": [
+  "Fenn: My lantern bends the light down here. Let's see who it favors!"
+ ],
+ "fenn_defeat": [
+  "Fenn: The light turned on me. Well played."
+ ],
+ "campfire": {
+  "lines": [
+   "A ring of stones with a small fire. Someone keeps it going for travellers."
+  ],
+  "action": "camp"
+ },
+ "burrow": {
+  "lines": [
+   "A crack in the rock opens into a dry hollow."
+  ],
+  "action": "burrow"
+ }
 }

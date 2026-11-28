@@ -1,0 +1,13 @@
+{
+ "_comment": "Translations of the German table kampf_k35, written by tools/i18n/locales_kampf_k35.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Brute force": "力押し",
+  "Field tricks": "フィールド戦術",
+  "Give me three turns. You won't get a fourth.": "3ターンくれ。4ターン目はおまえにはない。",
+  "I don't win duels. I make you lose them slowly.": "おれは勝負に勝たない。おまえをゆっくり負けさせるだけだ。",
+  "No tricks. Just teeth. Some of them used to be someone else's.": "小細工はなし。歯だけだ。何本かは、もとは他人のものだったがな。",
+  "Stage tricks": "能力段階戦術",
+  "Status tricks": "状態異常戦術",
+  "The ground here owes me money. Watch it pay up.": "この土地はおれに借りがある。払うところを見ていろ。"
+ }
+}

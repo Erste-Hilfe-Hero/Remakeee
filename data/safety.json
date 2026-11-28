@@ -1,0 +1,10 @@
+{
+ "_comment": "Safety and fairness (Online 100, area 9: points 83, 85, 86, 88). parent_keys are the features parents can switch off; young_off is the default under young_band (age band from the shop's age question). The server reads the same object as server_config.safety (tools/online/game_data_sql.py).",
+ "parent_keys": ["live_duel", "raid", "bund", "league_open", "league_fair", "suggest"],
+ "young_band": 16,
+ "young_off": ["league_open", "bund", "suggest"],
+ "pair_rated_daily": 3,
+ "sandbag_limit": 3,
+ "sandbag_days": 7,
+ "reports_per_hour": 10
+}

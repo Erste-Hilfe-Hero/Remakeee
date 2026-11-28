@@ -1,0 +1,10 @@
+{
+ "_comment": "Japanese texts for the German table kampf_a11y. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "[%s cries out]": "[%sが鳴いた]",
+  "Echo it back, no hurry.": "あわてずに、くり返そう。",
+  "Mine: tap one button fast. Echo: repeat the call. Calm: echo with no time limit.": "おれの：ボタンひとつを連打。エコー：呼び声をくり返す。ゆったり：時間制限なしのエコー。",
+  "Calm": "ゆったり",
+  "This replay comes from a newer version of the game.": "このリプレイは新しいバージョンのものです。"
+ }
+}

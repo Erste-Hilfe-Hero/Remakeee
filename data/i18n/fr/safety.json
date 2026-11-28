@@ -1,0 +1,18 @@
+{
+ "_comment": "fr translation of the safety table, keyed by the English text.",
+ "strings": {
+  "Battle over": "Combat terminé",
+  "Bunds": "Clans",
+  "For parents...": "Pour les parents...",
+  "For parents: switch off what your child should not use. Friends and saves stay.": "Pour les parents: désactivez ce que votre enfant ne doit pas utiliser. Les amis et les sauvegardes restent.",
+  "Open league": "Ligue ouverte",
+  "Report the rival...": "Signaler le rival...",
+  "Suggestions from league battles": "Suggestions issues des combats de ligue",
+  "These switches are for parents. Continue?": "Ces réglages sont pour les parents. Continuer?",
+  "This battle was against your own echo, so there is nobody to report.": "Ce combat était contre ton propre écho, il n'y a donc personne à signaler.",
+  "This is switched off under Settings, Account, For parents.": "C'est désactivé dans Options, Compte, Pour les parents.",
+  "Under 16: open league, bunds and suggestions start switched off.": "Moins de 16 ans: la ligue ouverte, les clans et les suggestions sont désactivés au départ.",
+  "Why do you report the rival?": "Pourquoi signales-tu ce rival?",
+  "You met this rival 3 times today, so this battle does not count.": "Tu as croisé ce rival 3 fois aujourd'hui, ce combat ne compte donc pas."
+ }
+}

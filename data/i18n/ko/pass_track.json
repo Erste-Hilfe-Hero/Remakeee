@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table pass_track, written by tools/i18n/locales_pass_track.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d of %d pass points": "패스 포인트 %d / %d",
+  "%d premium rewards reached and waiting.": "도달한 프리미엄 보상 %d개가 기다린다.",
+  "Free:": "무료:",
+  "Free: %s": "무료: %s",
+  "Locked: needs the Wayfarer Pass.": "잠김: 나그네 패스가 필요하다.",
+  "Opens the premium row of every step.": "모든 단계의 프리미엄 줄이 열린다.",
+  "Pass track": "패스 길",
+  "Premium (Wayfarer Pass):": "프리미엄 (나그네 패스):",
+  "Premium row: Wayfarer Pass": "프리미엄 줄: 나그네 패스",
+  "Premium: %s": "프리미엄: %s",
+  "Reached at %d pass points.": "패스 포인트 %d에 도달.",
+  "Ready to take.": "받을 수 있다.",
+  "Something went wrong. Try again in a moment.": "문제가 생겼다. 잠시 후 다시 해 보자.",
+  "Step %d": "단계 %d",
+  "Step %d of %d": "단계 %d / %d",
+  "Step %d: %s": "단계 %d: %s",
+  "Take all rewards (%d)": "보상 모두 받기 (%d)",
+  "Take the free reward": "무료 보상 받기",
+  "Take the premium reward": "프리미엄 보상 받기",
+  "Taken.": "받았다.",
+  "The premium row needs the Wayfarer Pass.": "프리미엄 줄에는 나그네 패스가 필요하다.",
+  "Top row: free for everyone. Bottom row: with the Wayfarer Pass. Pass points come from battles won (%d), bonds (%d) and daily tasks (%d), up to %d a day.": "윗줄: 누구나 무료. 아랫줄: 나그네 패스로. 패스 포인트는 이긴 배틀(%d), 유대(%d), 일일 과제(%d)로 얻고, 하루 %d까지.",
+  "You got:": "받은 것:",
+  "ends in %s": "%s 후 종료"
+ }
+}

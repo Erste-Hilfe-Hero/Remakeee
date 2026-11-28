@@ -1,0 +1,37 @@
+{
+ "name": "Stonecutter's House",
+ "region": "halcyra",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCffffCCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "whitecairn",
+   "tx": 9,
+   "ty": 3,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "gerwin",
+   "x": 2,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "whitecairn/gerwin",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

@@ -1,0 +1,21 @@
+{
+ "_note": "Act III, Saltglass flats after Veit's plate: Grell's copper and Ottilie's bought route are cashed in (betrayals grell_copper, ottilie_route).",
+ "steps": [
+  {
+   "say": [
+    "The salt flats crunch underfoot. At the silent lighthouse two carts are waiting. Neither looks friendly."
+   ]
+  },
+  {
+   "action": "betrayal grell_copper"
+  },
+  {
+   "say": [
+    "A Marrovel coach waits by the lighthouse door. Ottilie Kael lowers the window an inch. Exactly an inch."
+   ]
+  },
+  {
+   "action": "betrayal ottilie_route"
+  }
+ ]
+}

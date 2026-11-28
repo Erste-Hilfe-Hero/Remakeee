@@ -1,0 +1,9 @@
+{
+ "_comment": "ja translation of the kampf_k09b table, keyed by the English text.",
+ "strings": {
+  "Damage numbers: %s": "ダメージ数値：%s",
+  "Shows the damage of each hit as a number over the Spirling.": "当たるたびにダメージを数字でSpirlingの上に出します。",
+  "Star of the battle: %s": "この戦いのスター：%s",
+  "Take a photo": "写真をとる"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "_doc": "Training ring in the lighthouse (docs/KAMPF_PLAN_1000.md, area 'Fortschritt, XP und Training'). Read by scripts/core/TrainingGround.gd. dummies: carved stand-ins, a Spirling kind under a wooden name at the team's top ring plus ring_offset (at least 2). Bouts are friendly: no coins, nothing lost, the team is rested afterwards. growth_mult: growth of a bout against wild-battle growth. goals: met once each, by wins in total or against one dummy; the reward lands in the satchel.",
+ "growth_mult": 0.5,
+ "dummies": [
+  {"id": "straw", "name": "Straw Dummy", "species": "Croziel", "ring_offset": -3},
+  {"id": "oak", "name": "Oak Dummy", "species": "Talusk", "ring_offset": 0},
+  {"id": "ironwood", "name": "Ironwood Dummy", "species": "Shalebat", "ring_offset": 3}
+ ],
+ "goals": [
+  {"id": "first_bout", "text": "Win one bout.", "wins": 1, "reward": "tonic"},
+  {"id": "five_bouts", "text": "Win five bouts.", "wins": 5, "reward": "spark_drop"},
+  {"id": "oak_three", "text": "Beat the Oak Dummy three times.", "dummy": "oak", "wins": 3, "reward": "spark_charm"},
+  {"id": "ironwood", "text": "Beat the Ironwood Dummy.", "dummy": "ironwood", "wins": 1, "reward": "growth_charm"},
+  {"id": "twenty_bouts", "text": "Win twenty bouts.", "wins": 20, "reward": "spark_charm"}
+ ]
+}

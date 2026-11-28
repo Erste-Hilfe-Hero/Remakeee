@@ -1,0 +1,9 @@
+{
+ "_doc": "Battle budgets for older phones (KAMPF_PLAN_1000 items 978, 980), checked by tests/unit/test_kampf_budget.gd on every PR. The reference is the oldest phone we support (Android 7, 2 GB RAM, four slow ARM cores; docs/plan5000/09_technik.md item 3557). cpu_factor is how much slower that phone runs the battle code than a CI runner; the test divides every phone budget by it. Times are per battle turn including the AI choice for both sides, and for loading all battle data once. memory_mb is the most the battle model may add while a battle runs, leak_kb what may stay behind after twenty battles.",
+ "cpu_factor": 8,
+ "turn_ms": 150,
+ "data_load_ms": 3000,
+ "memory_mb": 16,
+ "leak_kb": 512,
+ "battles": 12
+}

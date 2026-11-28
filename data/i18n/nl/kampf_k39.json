@@ -1,0 +1,12 @@
+{
+ "_comment": "Dutch texts for the German table kampf_k39. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "Diamond": "Ruit",
+  "Square": "Vierkant",
+  "Triangle": "Driehoek",
+  "Moon": "Maan",
+  "The call: %s.": "De roep: %s.",
+  "Echo with the keys: left %s, up %s, right %s.": "Speel na met de toetsen: links %s, omhoog %s, rechts %s.",
+  "Any tap or the accept key counts.": "Elke tik en de bevestigtoets tellen."
+ }
+}

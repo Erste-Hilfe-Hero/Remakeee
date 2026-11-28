@@ -1,0 +1,11 @@
+{
+ "_comment": "Texts for ru from tools/i18n/locales_kampf_k27.py (KAMPF_PLAN_1000 items 138, 179).",
+ "strings": {
+  "%s is cured.": "%s исцелён.",
+  "Hesper: %d coins. Forgetting is free, remembering is not.": "Геспер: %d монет. Забывать - бесплатно, вспоминать - нет.",
+  "Hesper: %s remembers everything it can. Lucky thing.": "Геспер: %s помнит всё, что может. Везунчик.",
+  "Hesper: And if one of yours forgot an art it once knew, I can dig it back up. For a fee. Memory is cheap; mine isn't.": "Геспер: А если кто-то из твоих забыл приём, который когда-то знал, я могу его откопать. За плату. Память дешёвая, моя - нет.",
+  "On Story every status ends with the battle. On the other difficulties Scorch, Root and Jolt stay on until an item, an art or a rest cures them.": "На уровне «Сюжет» любое состояние кончается вместе с боем. На других уровнях Ожог, Корни и Разряд остаются, пока их не вылечит предмет, приём или отдых.",
+  "Who forgot an art? %d coins each.": "Кто забыл приём? %d монет за каждый."
+ }
+}

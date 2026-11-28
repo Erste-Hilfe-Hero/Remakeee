@@ -1,0 +1,35 @@
+{
+ "name": "Post Office",
+ "region": "quillmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "burin_landing",
+   "tx": 3,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "postmaster",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/burin_landing_post_office_postmaster",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

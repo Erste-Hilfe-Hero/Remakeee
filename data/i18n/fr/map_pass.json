@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table map_pass, written by tools/i18n/locales_map_pass.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Clerk Odo: Crates go up the mountain full of plates and come down full of soot.": "Commis Odo : Les caisses montent pleines de plaques et redescendent pleines de suie.",
+  "Clerk Odo: I weigh both. The soot is heavier. Nobody believes me.": "Commis Odo : Je pèse les deux. La suie est plus lourde. Personne ne me croit.",
+  "Engraver Mira: A plate takes a year to cut and a second to drop. I have not dropped one. Yet.": "Graveuse Mira : Une plaque prend un an à graver et une seconde à tomber. Je n'en ai jamais fait tomber. Pas encore.",
+  "Engraver Mira: Halvard says my lines are too soft. Halvard says that to everyone.": "Graveuse Mira : Halvard dit que mes traits sont trop doux. Halvard dit ça à tout le monde.",
+  "Engraver's Workshop": "Atelier de la graveuse",
+  "Freight Office": "Bureau du fret",
+  "Lamp Room": "Salle des lampes",
+  "Lampwright Ines: A train in fog finds the station by my wicks. Trim them and you trim the timetable.": "Lampiste Ines : Dans le brouillard, le train trouve la gare grâce à mes mèches. Coupe-les, et tu coupes l'horaire.",
+  "Lampwright Ines: Every lamp on the platform is mine. The smoke is the stack's.": "Lampiste Ines : Chaque lampe du quai est de moi. La fumée, c'est la cheminée.",
+  "Pointsman Ulf: Porridge works best. Do not tell the guild.": "Aiguilleur Ulf : C'est le porridge qui marche le mieux. Ne le dites pas à la guilde.",
+  "Pointsman Ulf: The points freeze every winter. I thaw them with my breakfast.": "Aiguilleur Ulf : Les aiguillages gèlent chaque hiver. Je les dégèle avec mon petit-déjeuner.",
+  "Pointsman's House": "Maison de l'aiguilleur"
+ }
+}

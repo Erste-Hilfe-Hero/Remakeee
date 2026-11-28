@@ -1,0 +1,19 @@
+{
+ "_comment": "Brazilian Portuguese texts for the German table bond. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A big Mine! button appears.": "Vínculo, passo 2: escolha Vínculo. Aparece um botão grande É meu!.",
+  "Bonding step 3: Press A as fast as you can. The fuller the bar, the better the bond.": "Vínculo, passo 3: aperte A o mais rápido que puder. Quanto mais cheia a barra, melhor o vínculo.",
+  "Bonding step 3: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "Vínculo, passo 3: toque em É meu! o mais rápido que puder. Quanto mais cheia a barra, melhor o vínculo.",
+  "Bonding: %s": "Vínculo: %s",
+  "Echo": "Eco",
+  "Hint": "Pista",
+  "Mine": "Meu",
+  "Mine!": "É meu!",
+  "Mine: tap one button fast. Echo: repeat the call.": "Meu: toque um botão rápido. Eco: repita o chamado.",
+  "Note": "Nota",
+  "Reach out to %s... Tap Mine! fast!": "Estenda a mão para %s... Toque em É meu! rápido!",
+  "Tap Mine! fast!": "Toque em É meu! rápido!",
+  "Tip": "Dica",
+  "Tips": "Dicas"
+ }
+}

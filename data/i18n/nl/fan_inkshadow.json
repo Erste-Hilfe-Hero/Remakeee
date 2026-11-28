@@ -1,0 +1,30 @@
+{
+ "_comment": "Dutch texts for the German table fan_inkshadow. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "%s counts the fence posts. Twice. One is missing.": "%s telt de hekpalen. Twee keer. Er mist er een.",
+  "%s digs up a few coins and drops them at your feet. %d coins!": "%s graaft een paar munten op en laat ze voor je voeten vallen. %d munten!",
+  "%s eats something off the path. It seems fine. Probably.": "%s eet iets van het pad. Het lijkt goed te gaan. Waarschijnlijk.",
+  "%s glares at a bush as if it owes money.": "%s kijkt een struik woedend aan alsof die geld schuldig is.",
+  "%s hides behind your boot from a leaf.": "%s verstopt zich achter je laars voor een blaadje.",
+  "%s hums a cheerful dirge.": "%s neuriet een vrolijke klaagzang.",
+  "%s keeps pace, calm as a closed coffin.": "%s houdt het tempo bij, kalm als een gesloten kist.",
+  "%s leans against your leg for a moment.": "%s leunt even tegen je been.",
+  "%s mutters the names of everyone you let fall. Yours is on the list too.": "%s mompelt de namen van iedereen die je liet vallen. Jouw naam staat er ook op.",
+  "%s nods at strangers as if they owe it a bow.": "%s knikt naar vreemden alsof ze een buiging verschuldigd zijn.",
+  "%s plants its feet. Nothing is attacking. It plants them anyway.": "%s zet zijn poten schrap. Niets valt aan. Hij zet ze toch schrap.",
+  "%s practises a farewell speech. It is about you.": "%s oefent een afscheidsspeech. Over jou.",
+  "%s practises biting the air. The air loses.": "%s oefent in de lucht bijten. De lucht verliest.",
+  "%s prods a puddle. The puddle prods back.": "%s port in een plas. De plas port terug.",
+  "%s runs ahead, runs back, and pretends it never left.": "%s rent vooruit, rent terug en doet alsof hij nooit weg was.",
+  "%s sighs at your walking pace.": "%s zucht om je wandeltempo.",
+  "%s sniffs a grave marker and looks very interested.": "%s snuffelt aan een grafsteen en kijkt heel geïnteresseerd.",
+  "%s stares at the map ink until it smudges.": "%s staart naar de kaartinkt tot die uitloopt.",
+  "%s steers a beetle off the path.": "%s leidt een kever van het pad.",
+  "%s steps on your heel. Twice. On purpose.": "%s trapt op je hiel. Twee keer. Expres.",
+  "%s steps on your shadow so nobody sees it.": "%s stapt op je schaduw zodat niemand hem ziet.",
+  "%s struts like it won the last battle alone.": "%s paradeert alsof hij het laatste gevecht in z'n eentje won.",
+  "%s walks a little too close behind you. Like a knife does.": "%s loopt net iets te dicht achter je. Zoals een mes dat doet.",
+  "%s walks exactly in your footprints, just in case.": "%s loopt precies in je voetsporen, voor de zekerheid.",
+  "%s watches the clouds drift and judges none of them.": "%s kijkt de wolken na en veroordeelt er geen enkele."
+ }
+}

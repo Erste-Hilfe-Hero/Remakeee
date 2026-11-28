@@ -1,0 +1,15 @@
+{
+ "_comment": "Translations of the German table weather, written by tools/i18n/locales_weather.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Ash fall": "Pluie de cendres",
+  "Downpour": "Averse",
+  "Drizzle": "Bruine",
+  "Gale": "Vent fort",
+  "How much rain, snow and fog is drawn. Low is easier on old phones. Off: only the light changes.": "Quantité de pluie, de neige et de brouillard affichée. Faible ménage les vieux téléphones. Non : seule la lumière change.",
+  "Later: %s": "Plus tard : %s",
+  "Low": "Faible",
+  "Snow": "Neige",
+  "Thick fog": "Brouillard épais",
+  "Weather effects: %s": "Effets météo : %s"
+ }
+}

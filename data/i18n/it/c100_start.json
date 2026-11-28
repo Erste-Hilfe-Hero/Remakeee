@@ -1,0 +1,31 @@
+{
+ "_comment": "Texts for the German table c100_start in this language. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py it.",
+ "strings": {
+  "%s curls up at your feet. Let it stay?": "%s si accoccola ai tuoi piedi. Lo fai restare?",
+  "%s stays with you! The other two slip off to the lake.": "%s resta con te! Gli altri due sgusciano verso il lago.",
+  "'Our cartographers have drawn and redrawn Veydal for a hundred years. Now the Hush: Spirlings near a Rift go quiet and forget their Wayfarers.'": "'I nostri cartografi disegnano e ridisegnano Veydal da cent'anni. Ora il Silenzio: gli Spirling vicino a uno Squarcio ammutoliscono e dimenticano i loro Viandanti.'",
+  "Aldo: Good. The Rifts bring the Hush: Spirlings there go quiet.": "Aldo: Bene. Gli Squarci portano il Silenzio: lì gli Spirling ammutoliscono.",
+  "Aldo: Take this, and go see Kestra at the map house.": "Aldo: Prendi questo e va' da Kestra alla Casa delle Mappe.",
+  "Aldo: The storm scattered Mirela's map book. Bring her pages home.": "Aldo: La tempesta ha sparso il libro delle mappe di Mirela. Riporta le pagine.",
+  "Aldo: Three Spirlings came in from the storm. Go say hello!": "Aldo: Tre Spirling sono entrati per sfuggire alla tempesta. Va' a salutarli!",
+  "Coat: %s": "Cappotto: %s",
+  "Gentle battles, more Growth.": "Lotte gentili, più Crescita.",
+  "Hair: %s": "Capelli: %s",
+  "I have a code": "Ho un codice",
+  "In the margin, in Aldo's hand: 'Your grandmother went in to map that Rift before you were born. She never came back.'": "A margine, con la grafia di Aldo: 'Tua nonna entrò in quello Squarcio per mapparlo prima che tu nascessi. Non è mai tornata.'",
+  "Keyboard": "Tastiera",
+  "Last night a storm tore the sky. Rifts opened over Veydal.": "Stanotte una tempesta ha squarciato il cielo. Su Veydal si sono aperti Squarci.",
+  "OK": "OK",
+  "Random": "A caso",
+  "Relaxed": "Rilassata",
+  "Ring limits, smarter foes.": "Limiti di Rango, rivali più furbi.",
+  "Skin: %s": "Pelle: %s",
+  "The journey as it is meant to be.": "Il viaggio come è pensato.",
+  "Three small lights crossed the lake to the lighthouse lamp.": "Tre piccole luci hanno attraversato il lago verso la lampada del faro.",
+  "Tough": "Dura",
+  "Watch the marks light up, then press them in the same order.": "Guarda quali segni si accendono, poi premili nello stesso ordine.",
+  "Watch the marks light up, then tap them in the same order.": "Guarda quali segni si accendono, poi toccali nello stesso ordine.",
+  "Wayfarer: %s": "Viandante: %s",
+  "You can change it later in Settings.": "Puoi cambiarla dopo nelle Impostazioni."
+ }
+}

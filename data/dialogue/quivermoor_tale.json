@@ -1,0 +1,269 @@
+{
+ "alvhild": {
+  "if": {
+   "not_flag": "v5t_alvhild"
+  },
+  "else": "quivermoor_tale/alvhild_after",
+  "lines": [
+   "Alvhild: A lantern was on my step this morning. Again.",
+   "Alvhild: A name is scratched in the tin. A Spirling's name.",
+   "Alvhild: Six of us walkers got one. We walk them. Custom.",
+   "Alvhild: Walk with us? Custom says: beat the walker first."
+  ],
+  "action": "battle tale_alvhild"
+ },
+ "alvhild_after": [
+  "Alvhild: Who leaves them? Nobody sees. The tin smells of peat."
+ ],
+ "alvhild_defeat": [
+  "Alvhild: Good. Carry my lantern to Lastbloom.",
+  "Alvhild: Gisle's in Tallowmere. Hjordis in Rootchapel."
+ ],
+ "alvhild_lose": [
+  "Alvhild: The bog keeps those who hurry. Rest, then again."
+ ],
+ "aslak": {
+  "if": {
+   "flag": [
+    "v5t_oddny",
+    "rift_v5_raft_sealed"
+   ],
+   "not_flag": "v5t_aslak"
+  },
+  "else": "quivermoor_tale/aslak_wait",
+  "lines": [
+   "Aslak: Six lanterns. So the walkers caught me.",
+   "Aslak: At night the moor breathes out. I listen.",
+   "Aslak: Every breath carries a name. A lost Spirling's.",
+   "Aslak: Their calls all go into the Echo. A grieving choir.",
+   "Aslak: I scratch each name in tin, so someone carries it.",
+   "Aslak: Oddny's is my Tussock's. I could never finish it.",
+   "Aslak: When the bloom is mended, walk the last mile with me."
+  ],
+  "action": "set_flag v5t_aslak"
+ },
+ "aslak_after": [
+  "Aslak: I still listen at night. Now the walkers do too."
+ ],
+ "aslak_bloom": {
+  "if": {
+   "not_flag": "v5t_done"
+  },
+  "else": "quivermoor_tale/aslak_after",
+  "lines": [
+   "Aslak: Mend the bloom. Then the last mile."
+  ]
+ },
+ "aslak_defeat": [
+  "Aslak: Well walked. Light them, all seven. Mine too.",
+  "Seven lanterns drift out on the black water of Lastbloom.",
+  "The moor breathes out. This time the calls are soft.",
+  "Far off, the Echo goes still. A choir, listening.",
+  "Aslak scratches the last name: Tussock. His hand is steady.",
+  "Aslak: Fifty years I listened. Tonight they heard me."
+ ],
+ "aslak_lose": [
+  "Aslak: Rest. The water waits. So do I."
+ ],
+ "aslak_mile": {
+  "if": {
+   "flag": [
+    "v5t_aslak",
+    "quivermoor_done"
+   ],
+   "not_flag": "v5t_done"
+  },
+  "else": "quivermoor_tale/aslak_bloom",
+  "lines": [
+   "Aslak: The bloom is mended. The last mile, then.",
+   "Aslak: Custom says the elder walks last. And fights last."
+  ],
+  "action": "battle tale_aslak"
+ },
+ "aslak_wait": {
+  "if": {
+   "not_flag": "v5t_aslak"
+  },
+  "else": "quivermoor_tale/aslak_mile",
+  "lines": [
+   "Aslak: Not now, Wayfarer. The moor is still too loud."
+  ]
+ },
+ "gisle": {
+  "if": {
+   "flag": [
+    "v5t_alvhild",
+    "v5_ch1_done"
+   ],
+   "not_flag": "v5t_gisle"
+  },
+  "else": "quivermoor_tale/gisle_wait",
+  "lines": [
+   "Gisle: My lantern says 'Plink'. A Puddock, I'd guess.",
+   "Gisle: The choir lights candles for people. Not Spirlings.",
+   "Gisle: Somebody out here remembers them. Prove you do too."
+  ],
+  "action": "battle tale_gisle"
+ },
+ "gisle_after": [
+  "Gisle: Peat on the tin. Only old cutters burn peat now."
+ ],
+ "gisle_defeat": [
+  "Gisle: Take it. Plink's name should see Lastbloom."
+ ],
+ "gisle_lose": [
+  "Gisle: Not yet. Plink waited this long. It can wait more."
+ ],
+ "gisle_wait": {
+  "if": {
+   "not_flag": "v5t_gisle"
+  },
+  "else": "quivermoor_tale/gisle_after",
+  "lines": [
+   "Gisle: The rope's still swinging. Talk to the pier first."
+  ]
+ },
+ "hjordis": {
+  "if": {
+   "flag": [
+    "v5t_alvhild",
+    "v5_ch1_done"
+   ],
+   "not_flag": "v5t_hjordis"
+  },
+  "else": "quivermoor_tale/hjordis_wait",
+  "lines": [
+   "Hjordis: Mine says 'Mire'. Scratched very carefully.",
+   "Hjordis: The roots go quiet when I hold it. Odd, that.",
+   "Hjordis: Custom first. Then the lantern."
+  ],
+  "action": "battle tale_hjordis"
+ },
+ "hjordis_after": [
+  "Hjordis: Ossian says feed the moor. I say listen to it."
+ ],
+ "hjordis_defeat": [
+  "Hjordis: Fair. Mire is yours to carry now."
+ ],
+ "hjordis_lose": [
+  "Hjordis: The roots liked that. I didn't."
+ ],
+ "hjordis_wait": {
+  "if": {
+   "not_flag": "v5t_hjordis"
+  },
+  "else": "quivermoor_tale/hjordis_after",
+  "lines": [
+   "Hjordis: The rope's still swinging. Talk to the pier first."
+  ]
+ },
+ "ingrun": {
+  "if": {
+   "flag": [
+    "v5t_gisle",
+    "v5t_hjordis",
+    "rift_v5_wick_sealed"
+   ],
+   "not_flag": "v5t_ingrun"
+  },
+  "else": "quivermoor_tale/ingrun_wait",
+  "lines": [
+   "Ingrun: Driftwick moves each night. The lanterns find us.",
+   "Ingrun: Whoever brings them walks the boards in the dark.",
+   "Ingrun: I've seen a lamp out there. An old man's lamp.",
+   "Ingrun: Beat me and I'll tell you whose. Custom."
+  ],
+  "action": "battle tale_ingrun"
+ },
+ "ingrun_after": [
+  "Ingrun: Don't rush Aslak. Finish the walk first."
+ ],
+ "ingrun_defeat": [
+  "Ingrun: Aslak Marr's lamp. He lost a Spirling to the bog.",
+  "Ingrun: Fifty years ago. He lives in Lastbloom now."
+ ],
+ "ingrun_lose": [
+  "Ingrun: Driftwick won't wait for you. I will. Once."
+ ],
+ "ingrun_wait": {
+  "if": {
+   "not_flag": "v5t_ingrun"
+  },
+  "else": "quivermoor_tale/ingrun_after",
+  "lines": [
+   "Ingrun: Wick Rift first. Its light drowns the lanterns."
+  ]
+ },
+ "ketil": {
+  "if": {
+   "flag": [
+    "v5t_gisle",
+    "v5t_hjordis",
+    "rift_v5_wick_sealed"
+   ],
+   "not_flag": "v5t_ketil"
+  },
+  "else": "quivermoor_tale/ketil_wait",
+  "lines": [
+   "Ketil: The fields heave when the moor breathes out.",
+   "Ketil: Every breath is full of calls. Lost ones. Hear them?",
+   "Ketil: The Long Breath, we say. My lantern hums with it.",
+   "Ketil: Show me you can stand in it. Then walk on."
+  ],
+  "action": "battle tale_ketil"
+ },
+ "ketil_after": [
+  "Ketil: One walker left. Oddny, on the Gloamwater."
+ ],
+ "ketil_defeat": [
+  "Ketil: Take it. It hums louder near Lastbloom. Mind that."
+ ],
+ "ketil_lose": [
+  "Ketil: The ground threw you. It does that. Up you get."
+ ],
+ "ketil_wait": {
+  "if": {
+   "not_flag": "v5t_ketil"
+  },
+  "else": "quivermoor_tale/ketil_after",
+  "lines": [
+   "Ketil: The fields are too loud yet. Mend the Wick first."
+  ]
+ },
+ "oddny": {
+  "if": {
+   "flag": [
+    "v5t_ingrun",
+    "v5t_ketil",
+    "rift_v5_taproot_sealed"
+   ],
+   "not_flag": "v5t_oddny"
+  },
+  "else": "quivermoor_tale/oddny_wait",
+  "lines": [
+   "Oddny: Last lantern, last walker. Hardest custom.",
+   "Oddny: Mine has no name yet. Just a scratch, half done.",
+   "Oddny: Whoever writes them stopped mid-name. That worries me.",
+   "Oddny: Win, and you carry it to him yourself."
+  ],
+  "action": "battle tale_oddny"
+ },
+ "oddny_after": [
+  "Oddny: Aslak writes them. I'm sure of it now. Go."
+ ],
+ "oddny_defeat": [
+  "Oddny: Six lanterns now. Take them to Aslak in Lastbloom."
+ ],
+ "oddny_lose": [
+  "Oddny: The water's dark. Come back with a steadier hand."
+ ],
+ "oddny_wait": {
+  "if": {
+   "not_flag": "v5t_oddny"
+  },
+  "else": "quivermoor_tale/oddny_after",
+  "lines": [
+   "Oddny: The roots still hold the chapel. Mend them first."
+  ]
+ }
+}

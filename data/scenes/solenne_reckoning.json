@@ -1,0 +1,43 @@
+{
+ "_note": "Act IV reckoning in the Sun Palace (story34): both throne offers are cashed in, the guests arrive and the player decides what happens to the pact deeds.",
+ "skippable": false,
+ "steps": [
+  {
+   "fade": 1.0
+  },
+  {
+   "say": [
+    "The Sun Palace at dusk. One long table, too many knives, and every chair placed with intent."
+   ]
+  },
+  {
+   "fade": 0.0
+  },
+  {
+   "dialogue": "clans/reckon_toast"
+  },
+  {
+   "dialogue": "clans/reckon_deeds"
+  },
+  {
+   "dialogue": "clans/reckon_guests"
+  },
+  {
+   "dialogue": "clans/reckon_marlo"
+  },
+  {
+   "dialogue": "clans/reckon_pick"
+  },
+  {
+   "dialogue": "clans/reckon_wren"
+  },
+  {
+   "say": [
+    "Far to the north the sky over the Wide Rift tears a little wider. Nobody at the table notices. They're busy."
+   ]
+  },
+  {
+   "flag": "c4_reckoning_done"
+  }
+ ]
+}

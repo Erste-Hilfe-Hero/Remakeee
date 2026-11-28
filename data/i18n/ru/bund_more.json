@@ -1,0 +1,29 @@
+{
+ "_comment": "ru translation of the bund_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s  Rank %d%s": "%d. %s  Ранг %d%s",
+  "%s  Rank %d  %d/30, %d active%s": "%s  Ранг %d  %d/30, активных: %d%s",
+  "Any language": "Любой язык",
+  "Anyone, at once": "Все, сразу",
+  "Bund board": "Рейтинг союзов",
+  "Bund rank %d (%d renown)": "Ранг союза %d (славы: %d)",
+  "Bund rank and week goal": "Ранг союза и цель недели",
+  "Donate items...": "Пожертвовать предметы...",
+  "Donated today: %d / %d": "Пожертвовано сегодня: %d / %d",
+  "Find a bund...": "Найти союз...",
+  "How many?": "Сколько?",
+  "Language and joining...": "Язык и вступление...",
+  "Language of the bund": "Язык союза",
+  "No bund found. Found your own!": "Союз не найден. Создай свой!",
+  "No bunds yet.": "Союзов пока нет.",
+  "Only after a request": "Только по заявке",
+  "Take the week reward": "Забрать награду недели",
+  "Thank you! The bund has %d renown now.": "Спасибо! Теперь у союза %d славы.",
+  "The week goal is not reached yet.": "Цель недели ещё не достигнута.",
+  "Week goal: %d / %d items donated": "Цель недели: пожертвовано предметов %d / %d",
+  "Who may join?": "Кто может вступить?",
+  "You already took this week's reward.": "Награда за эту неделю уже получена.",
+  "You donated all you can today. More tomorrow.": "На сегодня лимит пожертвований исчерпан. Завтра можно ещё.",
+  "open": "открыто"
+ }
+}

@@ -1,0 +1,10 @@
+{
+ "_comment": "Dutch texts for the German table kampf_a11y. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "[%s cries out]": "[%s roept]",
+  "Echo it back, no hurry.": "Herhaal het, zonder haast.",
+  "Mine: tap one button fast. Echo: repeat the call. Calm: echo with no time limit.": "Van mij: tik snel op één knop. Echo: herhaal de roep. Rustig: echo zonder tijdslimiet.",
+  "Calm": "Rustig",
+  "This replay comes from a newer version of the game.": "Deze herhaling komt uit een nieuwere versie van het spel."
+ }
+}

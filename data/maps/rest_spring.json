@@ -1,6 +1,7 @@
 {
  "name": "Rest Spring",
  "region": "veydal",
+ "biome": "town",
  "backdrop": "field",
  "heal_point": [
   4,
@@ -42,7 +43,25 @@
    "facing": "left",
    "dialogue": "rest_spring/archivist",
    "sprite": "villager"
+  },
+  {
+   "id": "matchmaker",
+   "x": 2,
+   "y": 5,
+   "facing": "right",
+   "dialogue": "rest_spring/matchmaker",
+   "sprite": "villager"
   }
  ],
- "signs": []
+ "signs": [],
+ "secrets": [
+  {
+   "x": 8,
+   "y": 1,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "hush_coin_8",
+   "dialogue": "veydal_side/coin_8"
+  }
+ ]
 }

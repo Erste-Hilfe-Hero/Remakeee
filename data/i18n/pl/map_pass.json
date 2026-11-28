@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table map_pass, written by tools/i18n/locales_map_pass.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Clerk Odo: Crates go up the mountain full of plates and come down full of soot.": "Urzędnik Odo: Skrzynie jadą pod górę pełne płyt, a wracają pełne sadzy.",
+  "Clerk Odo: I weigh both. The soot is heavier. Nobody believes me.": "Urzędnik Odo: Ważę jedno i drugie. Sadza jest cięższa. Nikt mi nie wierzy.",
+  "Engraver Mira: A plate takes a year to cut and a second to drop. I have not dropped one. Yet.": "Grawerka Mira: Płytę ryje się rok, a upuszcza w sekundę. Jeszcze żadnej nie upuściłam. Jeszcze.",
+  "Engraver Mira: Halvard says my lines are too soft. Halvard says that to everyone.": "Grawerka Mira: Halvard mówi, że moje linie są za miękkie. Halvard mówi tak wszystkim.",
+  "Engraver's Workshop": "Pracownia grawerki",
+  "Freight Office": "Biuro towarowe",
+  "Lamp Room": "Lampiarnia",
+  "Lampwright Ines: A train in fog finds the station by my wicks. Trim them and you trim the timetable.": "Lampiarka Ines: Pociąg we mgle znajduje stację po moich knotach. Przytnij je, a przytniesz rozkład jazdy.",
+  "Lampwright Ines: Every lamp on the platform is mine. The smoke is the stack's.": "Lampiarka Ines: Każda lampa na peronie jest moja. Dym jest od komina.",
+  "Pointsman Ulf: Porridge works best. Do not tell the guild.": "Zwrotniczy Ulf: Najlepiej działa owsianka. Nie mów cechowi.",
+  "Pointsman Ulf: The points freeze every winter. I thaw them with my breakfast.": "Zwrotniczy Ulf: Zwrotnice zamarzają co zimę. Rozmrażam je swoim śniadaniem.",
+  "Pointsman's House": "Dom zwrotniczego"
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "_comment": "Portuguese (Brazil) texts for the German table kampf_k39. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "Diamond": "Losango",
+  "Square": "Quadrado",
+  "Triangle": "Triângulo",
+  "Moon": "Lua",
+  "The call: %s.": "O chamado: %s.",
+  "Echo with the keys: left %s, up %s, right %s.": "Repita com as teclas: esquerda %s, cima %s, direita %s.",
+  "Any tap or the accept key counts.": "Qualquer toque e a tecla de confirmar contam."
+ }
+}

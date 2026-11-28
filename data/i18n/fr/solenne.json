@@ -1,0 +1,29 @@
+{
+ "_comment": "French texts for the German table solenne. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py fr.",
+ "strings": {
+  "Act IV: The Sun of Solenne": "Acte IV: Le Soleil de Solenne",
+  "Brass Veil Factor Lusk": "Facteur Lusk du Voile de Laiton",
+  "Dry Well": "Puits à sec",
+  "Echo Crystal: Dawn Mend": "Cristal d'écho: Dawn Mend",
+  "Echo Crystal: Radiant Lance": "Cristal d'écho: Radiant Lance",
+  "Echo Crystal: Squall": "Cristal d'écho: Squall",
+  "High Noon": "Plein midi",
+  "Interlude: Ochrewell": "Interlude: Ochrewell",
+  "Ochrewell": "Ochrewell",
+  "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.": "Le sable hurle dans les tours à vent: chaque Spirling en première ligne qui n'est pas Pierre perd un peu de Vigueur à chaque manche.",
+  "Sandstorm": "Tempête de sable",
+  "Take the sand road south from the Saltglass flats to Ochrewell and mend the three Rifts of Solenne.": "Prends la route de sable au sud des plaines de Saltglass jusqu'à Ochrewell et répare les trois Failles de Solenne.",
+  "Teaches Dawn Mend to a Lumen Spirling. Never used up.": "Apprend Dawn Mend à un Spirling Lumen. Jamais épuisé.",
+  "Teaches Radiant Lance to a Lumen Spirling. Never used up.": "Apprend Radiant Lance à un Spirling Lumen. Jamais épuisé.",
+  "Teaches Squall to a Gale Spirling. Never used up.": "Apprend Squall à un Spirling Gale. Jamais épuisé.",
+  "The last shutter opens, the tower breathes, and the stair is clear!": "Le dernier volet s'ouvre, la tour respire, et l'escalier est libre!",
+  "The oasis east of Ochrewell has run dry: the Oasis Rift. Warden Kaia says nobody is to blame.": "L'oasis à l'est d'Ochrewell est à sec: la Faille de l'Oasis. La Gardienne Kaia dit que personne n'est fautif.",
+  "The oasis has been sold dry: every heal on both sides is halved.": "L'oasis a été vendue à sec: chaque soin des deux côtés est réduit de moitié.",
+  "The shutter bangs, and the wind drops dead. Every shutter swings shut again.": "Le volet claque, et le vent tombe net. Tous les volets se referment.",
+  "The shutter swings open. Sand hisses through the slats.": "Le volet s'ouvre. Le sable siffle entre les lattes.",
+  "The shutters hum in the wind. The stair stays open.": "Les volets bourdonnent dans le vent. L'escalier reste ouvert.",
+  "The sun stands straight overhead: Lumen arts on both sides hit harder.": "Le soleil est pile au zénith: les techniques Lumen des deux côtés frappent plus fort.",
+  "The sundial under the sun palace has stopped: the Sun Rift. Warden Emrys is waiting, slowly.": "Le cadran solaire sous le palais du soleil s'est arrêté: la Faille du Soleil. Le Gardien Emrys attend, lentement.",
+  "The wind towers of Ochrewell have stopped breathing: the Tower Rift. Warden Aurelio grieves in style.": "Les tours à vent d'Ochrewell ont cessé de respirer: la Faille de la Tour. Le Gardien Aurelio porte le deuil avec style."
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "_comment": "Era V (handheld generation 5): animated battle sprites and the battle camera. Frame strips are built at runtime from each species' base sprite; only active when the active era is 5 or higher.",
+ "min_era": 5,
+ "strips": {
+  "idle":   {"fps": 6,  "loop": true,  "dy": [0, -1, -2, -1]},
+  "attack": {"fps": 16, "loop": false, "dx": [0, -2, 3, 7, 9, 5, 1]},
+  "hit":    {"fps": 20, "loop": false, "dx": [0, 1, -1, 1, 0, 0], "flash": [true, false, true, false, true, false]}
+ },
+ "flash_color": "f8f4ec",
+ "camera": {"zoom": 1.18, "pan_share": 0.35, "in_time": 0.18, "hold_time": 0.12, "out_time": 0.22}
+}

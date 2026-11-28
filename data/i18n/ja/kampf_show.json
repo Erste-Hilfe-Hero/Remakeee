@@ -1,0 +1,11 @@
+{
+ "_comment": "ja translation of the kampf_show table, keyed by the English text.",
+ "strings": {
+  "%s awakens": "%sが目覚めた",
+  "Bonded": "絆を結んだ",
+  "Side by side: %s": "共に戦う: %s",
+  "Slipped away": "逃げ切った",
+  "Victory": "勝利",
+  "Worn out": "力尽きた"
+ }
+}

@@ -1,0 +1,15 @@
+{
+ "_comment": "Translations of the German table weather, written by tools/i18n/locales_weather.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Ash fall": "Kül yağışı",
+  "Downpour": "Sağanak",
+  "Drizzle": "Çisenti",
+  "Gale": "Sert rüzgâr",
+  "How much rain, snow and fog is drawn. Low is easier on old phones. Off: only the light changes.": "Ne kadar yağmur, kar ve sis çizileceği. Az, eski telefonları yormaz. Kapalı: yalnızca ışık değişir.",
+  "Later: %s": "Sonra: %s",
+  "Low": "Az",
+  "Snow": "Kar",
+  "Thick fog": "Yoğun sis",
+  "Weather effects: %s": "Hava efektleri: %s"
+ }
+}

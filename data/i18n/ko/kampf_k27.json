@@ -1,0 +1,11 @@
+{
+ "_comment": "Texts for ko from tools/i18n/locales_kampf_k27.py (KAMPF_PLAN_1000 items 138, 179).",
+ "strings": {
+  "%s is cured.": "%s은(는) 나았다.",
+  "Hesper: %d coins. Forgetting is free, remembering is not.": "헤스퍼: %d코인. 잊는 건 공짜지만 기억하는 건 아니야.",
+  "Hesper: %s remembers everything it can. Lucky thing.": "헤스퍼: %s은(는) 배울 수 있는 건 다 기억하고 있어. 운 좋은 녀석.",
+  "Hesper: And if one of yours forgot an art it once knew, I can dig it back up. For a fee. Memory is cheap; mine isn't.": "헤스퍼: 그리고 네 아이 중에 예전에 알던 기술을 잊은 녀석이 있으면 다시 파내 줄 수 있지. 대가는 받고. 기억은 싸. 내 기억은 안 싸지만.",
+  "On Story every status ends with the battle. On the other difficulties Scorch, Root and Jolt stay on until an item, an art or a rest cures them.": "이야기 난이도에서는 모든 상태가 전투와 함께 끝난다. 다른 난이도에서는 화상, 뿌리 묶임, 찌릿이 도구나 기술, 휴식으로 나을 때까지 남는다.",
+  "Who forgot an art? %d coins each.": "누가 기술을 잊었지? 하나에 %d코인."
+ }
+}

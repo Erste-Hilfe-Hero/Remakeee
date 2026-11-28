@@ -3,11 +3,12 @@ extends RefCounted
 ## One combatant's choice for a turn. In battles with several Spirlings per side, [member slot]
 ## says which field slot acts and [member target_slot] which foe slot a single-target move aims at.
 
-enum Kind { MOVE, SWAP, ITEM, BOND, RUN, REST }
+## OATH (the Ink Oath, data/ink_oath.json) is last so saved replays keep their numbers.
+enum Kind { MOVE, SWAP, ITEM, BOND, RUN, REST, OATH }
 
 ## Turn-order class: lower acts first (swap/item/bond/run before moves).
 const CLASS_ORDER: Dictionary[Kind, int] = {
-	Kind.RUN: 0, Kind.SWAP: 1, Kind.ITEM: 1, Kind.BOND: 1, Kind.MOVE: 2, Kind.REST: 2,
+	Kind.RUN: 0, Kind.SWAP: 1, Kind.ITEM: 1, Kind.BOND: 1, Kind.MOVE: 2, Kind.REST: 2, Kind.OATH: 1,
 }
 
 var kind: Kind = Kind.REST
@@ -18,6 +19,8 @@ var item_id: String = ""
 var item_target: int = -1
 ## Bond minigame score 0..1 (BOND only).
 var timing_score: float = 0.0
+## Riftglass bond boost paid for this bond try (BOND only, RiftglassSinks "bond_boost").
+var rg_boost: float = 0.0
 ## Set by the model when queued: the Spirling that chose this action.
 var actor: Spirling = null
 ## True for the bonus action a wild Spirling gets after a failed bond.
@@ -70,6 +73,13 @@ static func make_bond(p_side: int, score: float, charm_id: String = "", p_slot: 
 static func make_run(p_side: int, p_slot: int = 0) -> BattleAction:
 	var a := BattleAction.new()
 	a.kind = Kind.RUN
+	a.side = p_side
+	a.slot = p_slot
+	return a
+
+static func make_oath(p_side: int, p_slot: int = 0) -> BattleAction:
+	var a := BattleAction.new()
+	a.kind = Kind.OATH
 	a.side = p_side
 	a.slot = p_slot
 	return a

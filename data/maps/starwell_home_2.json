@@ -1,0 +1,37 @@
+{
+ "name": "Copyists' Room",
+ "region": "halcyra",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCffffCCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "starwell",
+   "tx": 2,
+   "ty": 13,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "lorenz",
+   "x": 2,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "starwell/lorenz",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

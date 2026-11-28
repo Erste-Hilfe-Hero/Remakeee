@@ -1,0 +1,29 @@
+{
+ "_comment": "Italian texts for the German table solenne. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py it.",
+ "strings": {
+  "Act IV: The Sun of Solenne": "Atto IV: Il Sole di Solenne",
+  "Brass Veil Factor Lusk": "Fattore Lusk del Velo d'Ottone",
+  "Dry Well": "Pozzo secco",
+  "Echo Crystal: Dawn Mend": "Cristallo Eco: Dawn Mend",
+  "Echo Crystal: Radiant Lance": "Cristallo Eco: Radiant Lance",
+  "Echo Crystal: Squall": "Cristallo Eco: Squall",
+  "High Noon": "Mezzogiorno pieno",
+  "Interlude: Ochrewell": "Interludio: Ochrewell",
+  "Ochrewell": "Ochrewell",
+  "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.": "La sabbia ulula tra le torri del vento: ogni Spirling in prima fila che non è Pietra perde un po' di Vigore a ogni round.",
+  "Sandstorm": "Tempesta di sabbia",
+  "Take the sand road south from the Saltglass flats to Ochrewell and mend the three Rifts of Solenne.": "Prendi la strada di sabbia a sud dalle piane di Saltglass fino a Ochrewell e ripara i tre Squarci di Solenne.",
+  "Teaches Dawn Mend to a Lumen Spirling. Never used up.": "Insegna Dawn Mend a uno Spirling Lumen. Non si consuma mai.",
+  "Teaches Radiant Lance to a Lumen Spirling. Never used up.": "Insegna Radiant Lance a uno Spirling Lumen. Non si consuma mai.",
+  "Teaches Squall to a Gale Spirling. Never used up.": "Insegna Squall a uno Spirling Gale. Non si consuma mai.",
+  "The last shutter opens, the tower breathes, and the stair is clear!": "L'ultima imposta si apre, la torre respira e la scala è libera!",
+  "The oasis east of Ochrewell has run dry: the Oasis Rift. Warden Kaia says nobody is to blame.": "L'oasi a est di Ochrewell si è prosciugata: lo Squarcio dell'Oasi. La Custode Kaia dice che nessuno ha colpa.",
+  "The oasis has been sold dry: every heal on both sides is halved.": "L'oasi è stata venduta fino all'ultima goccia: ogni cura di entrambi i lati è dimezzata.",
+  "The shutter bangs, and the wind drops dead. Every shutter swings shut again.": "L'imposta sbatte e il vento muore di colpo. Tutte le imposte si richiudono.",
+  "The shutter swings open. Sand hisses through the slats.": "L'imposta si spalanca. La sabbia sibila tra le stecche.",
+  "The shutters hum in the wind. The stair stays open.": "Le imposte ronzano nel vento. La scala resta aperta.",
+  "The sun stands straight overhead: Lumen arts on both sides hit harder.": "Il sole è proprio a picco: le tecniche Lumen di entrambi i lati colpiscono più forte.",
+  "The sundial under the sun palace has stopped: the Sun Rift. Warden Emrys is waiting, slowly.": "La meridiana sotto il palazzo del sole si è fermata: lo Squarcio del Sole. Il Custode Emrys aspetta, lentamente.",
+  "The wind towers of Ochrewell have stopped breathing: the Tower Rift. Warden Aurelio grieves in style.": "Le torri del vento di Ochrewell hanno smesso di respirare: lo Squarcio della Torre. Il Custode Aurelio è in lutto con stile."
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "_comment": "German texts from tools/i18n/de_c200team.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Era %s: %d%% seen, %d%% bonded": "Ära %s: %d %% gesehen, %d %% gebunden",
+  "Event Spirling: %s": "Event-Spirling: %s",
+  "Lantern at the right: it joined you at an event, such as the Lamp Watch": "Laterne rechts: Es kam bei einem Event zu dir, etwa bei der Lampenwache"
+ }
+}

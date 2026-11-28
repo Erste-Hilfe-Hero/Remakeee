@@ -1,0 +1,11 @@
+box 1: Nachts zerriss ein Sturm den Himmel. Über Veydal klafften Risse.
+box 2: Drei kleine Lichter zogen über den See, dem Leuchtturm nach.
+box 3: Liora! Wach auf!
+box 4: Drei Spirlings kamen aus dem Sturm herein. Sag Hallo!
+box 5: Zippit bleibt bei dir! Die zwei anderen huschen zum See.
+box 6: Gut. Die Risse bringen die Stille: Spirlings dort verstummen.
+box 7: Der Sturm hat Mirelas Kartenbuch verstreut. Bring ihre Seiten heim.
+box 8: Nimm das und geh zu Kestra ins Kartenhaus.
+box 9: Du hast Tonikum x2 bekommen!
+box 10: Besuche Kestra im Kartenhaus von Brindlewick.
+boxes before control: 10

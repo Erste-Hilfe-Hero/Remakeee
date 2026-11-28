@@ -1,0 +1,640 @@
+{
+ "ai": 2,
+ "avg_turns": 18.0826666666667,
+ "battles": 3000,
+ "draws": 0,
+ "elements": {
+  "Bloom": 10771,
+  "Ember": 4241,
+  "Gale": 12528,
+  "Lumen": 12119,
+  "Stone": 12492,
+  "Tide": 12215,
+  "Umbra": 11333,
+  "Volt": 3865
+ },
+ "level": 36,
+ "mode": "team",
+ "moves": {
+  "All-In Crash": {
+   "kos": 0,
+   "used": 374,
+   "win_uses": 186
+  },
+  "Arc Bolt": {
+   "kos": 0,
+   "used": 202,
+   "win_uses": 106
+  },
+  "Bloom Burst": {
+   "kos": 0,
+   "used": 579,
+   "win_uses": 336
+  },
+  "Bloom Call": {
+   "kos": 0,
+   "used": 712,
+   "win_uses": 365
+  },
+  "Breaker Plunge": {
+   "kos": 0,
+   "used": 502,
+   "win_uses": 214
+  },
+  "Breeze Slice": {
+   "kos": 0,
+   "used": 3318,
+   "win_uses": 1707
+  },
+  "Cairn Crash": {
+   "kos": 0,
+   "used": 104,
+   "win_uses": 51
+  },
+  "Candle Ward": {
+   "kos": 0,
+   "used": 1450,
+   "win_uses": 662
+  },
+  "Charged Mist": {
+   "kos": 0,
+   "used": 329,
+   "win_uses": 78
+  },
+  "Cinder Breath": {
+   "kos": 0,
+   "used": 986,
+   "win_uses": 465
+  },
+  "Cinder Nip": {
+   "kos": 0,
+   "used": 1879,
+   "win_uses": 828
+  },
+  "Crackle Bite": {
+   "kos": 0,
+   "used": 1715,
+   "win_uses": 812
+  },
+  "Dawn Call": {
+   "kos": 0,
+   "used": 236,
+   "win_uses": 108
+  },
+  "Dawn Mend": {
+   "kos": 0,
+   "used": 267,
+   "win_uses": 88
+  },
+  "Drench": {
+   "kos": 0,
+   "used": 679,
+   "win_uses": 220
+  },
+  "Drift Step": {
+   "kos": 0,
+   "used": 1133,
+   "win_uses": 377
+  },
+  "Dusk Gnaw": {
+   "kos": 0,
+   "used": 640,
+   "win_uses": 291
+  },
+  "Fault Line": {
+   "kos": 0,
+   "used": 436,
+   "win_uses": 219
+  },
+  "Fizz Pop": {
+   "kos": 0,
+   "used": 720,
+   "win_uses": 497
+  },
+  "Gale Scythe": {
+   "kos": 0,
+   "used": 6036,
+   "win_uses": 3164
+  },
+  "Glint": {
+   "kos": 0,
+   "used": 1501,
+   "win_uses": 827
+  },
+  "Gloom Ripple": {
+   "kos": 0,
+   "used": 4037,
+   "win_uses": 2008
+  },
+  "Grit Jab": {
+   "kos": 0,
+   "used": 578,
+   "win_uses": 216
+  },
+  "Heat Haze": {
+   "kos": 0,
+   "used": 413,
+   "win_uses": 108
+  },
+  "Hunker Down": {
+   "kos": 0,
+   "used": 1031,
+   "win_uses": 304
+  },
+  "Kelp Lash": {
+   "kos": 0,
+   "used": 932,
+   "win_uses": 500
+  },
+  "Kiln Strike": {
+   "kos": 0,
+   "used": 963,
+   "win_uses": 408
+  },
+  "Landslip": {
+   "kos": 0,
+   "used": 340,
+   "win_uses": 195
+  },
+  "Lichen Lash": {
+   "kos": 0,
+   "used": 1444,
+   "win_uses": 1042
+  },
+  "Mirk Nip": {
+   "kos": 0,
+   "used": 1172,
+   "win_uses": 533
+  },
+  "Monolith Drop": {
+   "kos": 0,
+   "used": 427,
+   "win_uses": 152
+  },
+  "Murk Call": {
+   "kos": 0,
+   "used": 881,
+   "win_uses": 347
+  },
+  "Murk Veil": {
+   "kos": 0,
+   "used": 927,
+   "win_uses": 264
+  },
+  "Murmur Bite": {
+   "kos": 0,
+   "used": 964,
+   "win_uses": 517
+  },
+  "Night Siphon": {
+   "kos": 0,
+   "used": 1781,
+   "win_uses": 1037
+  },
+  "Omen Bell": {
+   "kos": 0,
+   "used": 1210,
+   "win_uses": 705
+  },
+  "Pebble Toss": {
+   "kos": 0,
+   "used": 1980,
+   "win_uses": 1218
+  },
+  "Prism Burst": {
+   "kos": 0,
+   "used": 467,
+   "win_uses": 152
+  },
+  "Prism Ray": {
+   "kos": 0,
+   "used": 3989,
+   "win_uses": 1885
+  },
+  "Puffcap Haze": {
+   "kos": 0,
+   "used": 1208,
+   "win_uses": 593
+  },
+  "Quarry Wall": {
+   "kos": 0,
+   "used": 134,
+   "win_uses": 39
+  },
+  "Radiant Lance": {
+   "kos": 0,
+   "used": 115,
+   "win_uses": 53
+  },
+  "Root Mend": {
+   "kos": 0,
+   "used": 46,
+   "win_uses": 15
+  },
+  "Salt Snap": {
+   "kos": 0,
+   "used": 1444,
+   "win_uses": 808
+  },
+  "Sap Draw": {
+   "kos": 0,
+   "used": 4229,
+   "win_uses": 2924
+  },
+  "Shade Pounce": {
+   "kos": 0,
+   "used": 931,
+   "win_uses": 323
+  },
+  "Short Circuit": {
+   "kos": 0,
+   "used": 371,
+   "win_uses": 176
+  },
+  "Spark Call": {
+   "kos": 0,
+   "used": 1027,
+   "win_uses": 308
+  },
+  "Spindrift Shot": {
+   "kos": 0,
+   "used": 6652,
+   "win_uses": 3880
+  },
+  "Squall": {
+   "kos": 0,
+   "used": 566,
+   "win_uses": 272
+  },
+  "Squall Line": {
+   "kos": 0,
+   "used": 930,
+   "win_uses": 377
+  },
+  "Still Thought": {
+   "kos": 0,
+   "used": 163,
+   "win_uses": 71
+  },
+  "Storm Gnash": {
+   "kos": 0,
+   "used": 221,
+   "win_uses": 125
+  },
+  "Sunwell Sip": {
+   "kos": 0,
+   "used": 452,
+   "win_uses": 234
+  },
+  "Thorn Volley": {
+   "kos": 0,
+   "used": 1621,
+   "win_uses": 837
+  },
+  "Tide Call": {
+   "kos": 0,
+   "used": 882,
+   "win_uses": 374
+  },
+  "Tremor Thud": {
+   "kos": 0,
+   "used": 2863,
+   "win_uses": 1319
+  },
+  "Tunnel Strike": {
+   "kos": 0,
+   "used": 4225,
+   "win_uses": 1832
+  },
+  "Undertow": {
+   "kos": 0,
+   "used": 1336,
+   "win_uses": 743
+  },
+  "Updraft": {
+   "kos": 0,
+   "used": 545,
+   "win_uses": 303
+  },
+  "Wick Flicker": {
+   "kos": 0,
+   "used": 2269,
+   "win_uses": 996
+  }
+ },
+ "rest_share": 0.183490004515414,
+ "species": {
+  "Ashcrest": {
+   "draws": 0,
+   "losses": 298,
+   "stage": 2,
+   "turns": 11259,
+   "win_rate": 0.522,
+   "wins": 326
+  },
+  "Burinox": {
+   "draws": 0,
+   "losses": 240,
+   "stage": 2,
+   "turns": 11047,
+   "win_rate": 0.593,
+   "wins": 349
+  },
+  "Calderox": {
+   "draws": 0,
+   "losses": 320,
+   "stage": 3,
+   "turns": 11622,
+   "win_rate": 0.494,
+   "wins": 312
+  },
+  "Cogwright": {
+   "draws": 0,
+   "losses": 332,
+   "stage": 2,
+   "turns": 12277,
+   "win_rate": 0.466,
+   "wins": 290
+  },
+  "Cullhorn": {
+   "draws": 0,
+   "losses": 380,
+   "stage": 2,
+   "turns": 13264,
+   "win_rate": 0.412,
+   "wins": 266
+  },
+  "Delthorn": {
+   "draws": 0,
+   "losses": 334,
+   "stage": 2,
+   "turns": 13397,
+   "win_rate": 0.494,
+   "wins": 326
+  },
+  "Dunebastion": {
+   "draws": 0,
+   "losses": 344,
+   "stage": 2,
+   "turns": 12324,
+   "win_rate": 0.41,
+   "wins": 239
+  },
+  "Duskdigger": {
+   "draws": 0,
+   "losses": 327,
+   "stage": 2,
+   "turns": 11583,
+   "win_rate": 0.426,
+   "wins": 243
+  },
+  "Fenwarden": {
+   "draws": 0,
+   "losses": 322,
+   "stage": 2,
+   "turns": 11732,
+   "win_rate": 0.481,
+   "wins": 299
+  },
+  "Ferrowyn": {
+   "draws": 0,
+   "losses": 265,
+   "stage": 2,
+   "turns": 10513,
+   "win_rate": 0.542,
+   "wins": 314
+  },
+  "Floursprite": {
+   "draws": 0,
+   "losses": 312,
+   "stage": 2,
+   "turns": 11337,
+   "win_rate": 0.49,
+   "wins": 300
+  },
+  "Frondmere": {
+   "draws": 0,
+   "losses": 299,
+   "stage": 2,
+   "turns": 11948,
+   "win_rate": 0.502,
+   "wins": 301
+  },
+  "Glassfell": {
+   "draws": 0,
+   "losses": 379,
+   "stage": 2,
+   "turns": 11936,
+   "win_rate": 0.42,
+   "wins": 275
+  },
+  "Glasstarn": {
+   "draws": 0,
+   "losses": 301,
+   "stage": 2,
+   "turns": 12343,
+   "win_rate": 0.527,
+   "wins": 336
+  },
+  "Glimmerax": {
+   "draws": 0,
+   "losses": 353,
+   "stage": 2,
+   "turns": 11438,
+   "win_rate": 0.418,
+   "wins": 254
+  },
+  "Kelphound": {
+   "draws": 0,
+   "losses": 309,
+   "stage": 2,
+   "turns": 11825,
+   "win_rate": 0.507,
+   "wins": 318
+  },
+  "Lanternel": {
+   "draws": 0,
+   "losses": 285,
+   "stage": 2,
+   "turns": 10813,
+   "win_rate": 0.521,
+   "wins": 310
+  },
+  "Leviarch": {
+   "draws": 0,
+   "losses": 227,
+   "stage": 3,
+   "turns": 12313,
+   "win_rate": 0.626,
+   "wins": 380
+  },
+  "Lumenewt": {
+   "draws": 0,
+   "losses": 306,
+   "stage": 2,
+   "turns": 12382,
+   "win_rate": 0.502,
+   "wins": 308
+  },
+  "Marshfife": {
+   "draws": 0,
+   "losses": 275,
+   "stage": 2,
+   "turns": 11689,
+   "win_rate": 0.54,
+   "wins": 323
+  },
+  "Mendlace": {
+   "draws": 0,
+   "losses": 297,
+   "stage": 2,
+   "turns": 10910,
+   "win_rate": 0.505,
+   "wins": 303
+  },
+  "Millvane": {
+   "draws": 0,
+   "losses": 292,
+   "stage": 2,
+   "turns": 11156,
+   "win_rate": 0.521,
+   "wins": 317
+  },
+  "Mirassil": {
+   "draws": 0,
+   "losses": 289,
+   "stage": 2,
+   "turns": 11053,
+   "win_rate": 0.535,
+   "wins": 333
+  },
+  "Obsidroth": {
+   "draws": 0,
+   "losses": 281,
+   "stage": 2,
+   "turns": 12139,
+   "win_rate": 0.532,
+   "wins": 319
+  },
+  "Orrerine": {
+   "draws": 0,
+   "losses": 320,
+   "stage": 2,
+   "turns": 11803,
+   "win_rate": 0.493,
+   "wins": 311
+  },
+  "Rainmantle": {
+   "draws": 0,
+   "losses": 285,
+   "stage": 2,
+   "turns": 11462,
+   "win_rate": 0.516,
+   "wins": 304
+  },
+  "Reedwarden": {
+   "draws": 0,
+   "losses": 280,
+   "stage": 2,
+   "turns": 10831,
+   "win_rate": 0.529,
+   "wins": 315
+  },
+  "Saltcrown": {
+   "draws": 0,
+   "losses": 312,
+   "stage": 2,
+   "turns": 13328,
+   "win_rate": 0.54,
+   "wins": 366
+  },
+  "Saltspire": {
+   "draws": 0,
+   "losses": 342,
+   "stage": 2,
+   "turns": 11292,
+   "win_rate": 0.442,
+   "wins": 271
+  },
+  "Scrivane": {
+   "draws": 0,
+   "losses": 259,
+   "stage": 2,
+   "turns": 11962,
+   "win_rate": 0.578,
+   "wins": 355
+  },
+  "Silentra": {
+   "draws": 0,
+   "losses": 331,
+   "stage": 2,
+   "turns": 13185,
+   "win_rate": 0.473,
+   "wins": 297
+  },
+  "Siltgrove": {
+   "draws": 0,
+   "losses": 364,
+   "stage": 2,
+   "turns": 12162,
+   "win_rate": 0.424,
+   "wins": 268
+  },
+  "Smeltmaw": {
+   "draws": 0,
+   "losses": 339,
+   "stage": 2,
+   "turns": 10521,
+   "win_rate": 0.427,
+   "wins": 253
+  },
+  "Solmantle": {
+   "draws": 0,
+   "losses": 297,
+   "stage": 2,
+   "turns": 13417,
+   "win_rate": 0.526,
+   "wins": 330
+  },
+  "Talusgard": {
+   "draws": 0,
+   "losses": 376,
+   "stage": 2,
+   "turns": 12496,
+   "win_rate": 0.414,
+   "wins": 266
+  },
+  "Tempestrel": {
+   "draws": 0,
+   "losses": 327,
+   "stage": 2,
+   "turns": 11197,
+   "win_rate": 0.452,
+   "wins": 270
+  },
+  "Verdantusk": {
+   "draws": 0,
+   "losses": 203,
+   "stage": 3,
+   "turns": 14165,
+   "win_rate": 0.671,
+   "wins": 414
+  },
+  "Wickmoth": {
+   "draws": 0,
+   "losses": 323,
+   "stage": 2,
+   "turns": 11593,
+   "win_rate": 0.483,
+   "wins": 302
+  },
+  "Zenithare": {
+   "draws": 0,
+   "losses": 275,
+   "stage": 2,
+   "turns": 11282,
+   "win_rate": 0.551,
+   "wins": 337
+  }
+ }
+}

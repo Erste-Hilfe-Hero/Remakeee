@@ -1,0 +1,23 @@
+{
+ "_comment": "Spanish texts for the German table fan_breeding. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py es.",
+ "strings": {
+  "Auntie Grisela": "Tía Grisela",
+  "Auntie Grisela's contract holds. The young one carries the best of both houses.": "El contrato de Tía Grisela se cumple. La cría lleva lo mejor de ambas casas.",
+  "Auntie Grisela: A contract costs %d coins. Love is free, paperwork is not.": "Tía Grisela: Un contrato cuesta %d monedas. El amor es gratis, el papeleo no.",
+  "Auntie Grisela: A good match is a merger with feathers.": "Tía Grisela: Un buen emparejamiento es una fusión con plumas.",
+  "Auntie Grisela: Bring me an Echo Core and I put the dowry in writing.": "Tía Grisela: Tráeme un Núcleo Eco y pongo la dote por escrito.",
+  "Auntie Grisela: I put the dowry in writing. Nobody reads it, but it is written.": "Tía Grisela: Pongo la dote por escrito. Nadie la lee, pero está escrita.",
+  "Auntie Grisela: No Echo Core, no wedding. Sing at a spring first, then we talk business.": "Tía Grisela: Sin Núcleo Eco no hay boda. Canta primero en un manantial, luego hablamos de negocios.",
+  "Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably.": "Tía Grisela: Firmado, sellado, y nadie más se enterará. Seguramente.",
+  "Auntie Grisela: Two good families, one sweet song. I arrange the rest.": "Tía Grisela: Dos buenas familias, una dulce canción. Yo arreglo el resto.",
+  "It already knows %s, an heirloom art of the family.": "Ya conoce %s, una técnica de herencia familiar.",
+  "It carries the family's best Spark in %d values.": "Lleva la mejor Chispa de la familia en %d valores.",
+  "Seal": "Sellar",
+  "Seal a match contract for the core of %s for %d coins?": "¿Sellar un contrato de emparejamiento para el núcleo de %s por %d monedas?",
+  "Turns out Auntie Grisela sold the same match to %s. The contract is void, but the song still wakes.": "Resulta que Tía Grisela vendió el mismo emparejamiento a %s. El contrato es nulo, pero la canción despierta igual.",
+  "a family she calls 'the other one'": "una familia a la que llama 'la otra'",
+  "the Moldwick family": "la familia Moldwick",
+  "the Pellgraves": "los Pellgrave",
+  "the Second Cousins": "los Primos Segundos"
+ }
+}

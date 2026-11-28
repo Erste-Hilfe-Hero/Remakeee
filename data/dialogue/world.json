@@ -1,0 +1,16 @@
+{
+  "merchant": {
+    "lines": [
+      "Pell: I'm Pell. I walk the valley and stop somewhere new each day.",
+      "Pell: Three wares today. Coins only, and tomorrow I'm off again."
+    ],
+    "after_flag": {
+      "flag": "merchant_met",
+      "lines": [
+        "Pell: Back again? Here's what's in the pack today."
+      ]
+    },
+    "action": "merchant",
+    "flag": "merchant_met"
+  }
+}

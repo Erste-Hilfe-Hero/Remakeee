@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_k26, written by tools/i18n/locales_kampf_k26.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s sent you matchup notes.": "%s прислал(а) тебе заметки о матчапах.",
+  "%s's notes: %d matchups you did not know yet. The move list shows them now.": "Заметки %s: %d матчапов, которых ты ещё не знал(а). Теперь они видны в списке приёмов.",
+  "%s's notes: nothing you did not know already. Flattering, in a way.": "Заметки %s: ничего нового. В каком-то смысле лестно.",
+  "A seal is cut into the base: %s. Which element breaks it?": "В основании вырезана печать: %s. Какая стихия её сломает?",
+  "Rift theme: %s": "Тема Разлома: %s",
+  "Send %d matchup notes to %s? You both get %d friendship points.": "Отправить %d заметок о матчапах игроку %s? Вы оба получите %d очков дружбы.",
+  "Share matchup notes": "Поделиться заметками о матчапах",
+  "The seal cracks. Someone hid %s behind it and never came back for it.": "Печать трескается. Кто-то спрятал за ней %s и так и не вернулся.",
+  "The seal hums, smug and whole. It has met your kind before.": "Печать гудит, целая и самодовольная. Таких, как ты, она уже видела.",
+  "Those notes are smudged. Try again after your next battle.": "Заметки размазаны. Попробуй после следующего боя.",
+  "You already sent notes to this friend today. Tomorrow again!": "Сегодня ты уже отправлял(а) заметки этому другу. Завтра снова!",
+  "Your notes are empty. Land a few hits first, then share what you learned.": "Твои заметки пусты. Сначала нанеси пару ударов, потом делись знаниями.",
+  "Your notes are on their way to %s. Knowledge shared is knowledge you can't sell. Oh well.": "Заметки уже летят к %s. Знание, которым поделился, уже не продашь. Ну и ладно."
+ }
+}

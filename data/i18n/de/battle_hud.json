@@ -1,0 +1,13 @@
+{
+ "_comment": "German texts from tools/i18n/de_battle_hud.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%s: %d of %d can fight": "%s: %d von %d kampfbereit",
+  "Again: %s x%d": "Nochmal: %s x%d",
+  "Again: -": "Nochmal: -",
+  "Foe's team": "Team des Gegners",
+  "No effect": "Wirkungslos",
+  "Strong": "Stark",
+  "Your team": "Dein Team"
+ }
+}

@@ -1,0 +1,44 @@
+{
+ "name": "Seed Store",
+ "region": "quivermoor",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "lastbloom",
+   "tx": 8,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "seedkeeper",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/lastbloom_seed_store_seedkeeper",
+   "sprite": "villager"
+  },
+  {
+   "id": "q5_pressed_diary_jory",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/q5_pressed_diary_jory",
+   "sprite": "villager",
+   "show_flag": "q5_pressed_diary_s1"
+  }
+ ],
+ "signs": []
+}

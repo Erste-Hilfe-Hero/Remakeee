@@ -1,0 +1,32 @@
+{
+ "_comment": "German texts from tools/i18n/de_kampf_k33.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [
+  "%s > %s: %d",
+  "AI tier %d, %s"
+ ],
+ "strings": {
+  "%s picks %s (%d) over %s (%d).": "%s wählt %s (%d) statt %s (%d).",
+  "%s picks %s (%d): nothing else is in reach.": "%s wählt %s (%d): etwas anderes ist nicht drin.",
+  "%s picks %s at random, as wild ones do.": "%s wählt %s zufällig, wie Wilde es eben tun.",
+  "%s rests: nothing it can pay is worth it now.": "%s rastet: nichts Bezahlbares lohnt sich gerade.",
+  "%s swaps to %s: it doesn't like its odds.": "%s wechselt zu %s: die Chancen gefallen ihm nicht.",
+  "%s uses %s: it is running low.": "%s benutzt %s: es pfeift aus dem letzten Loch.",
+  "%s, won in %d turns": "%s, in %d Runden besiegt",
+  "Banked Embers": "Glut auf Zinsen",
+  "Beat the Ashen Heart. The smiths still want their cut.": "Besiege das Aschenherz. Die Schmiede wollen trotzdem ihren Anteil.",
+  "Beat the Drowned Heart. Nobody reads the passenger list twice.": "Besiege das Ertrunkene Herz. Niemand liest die Fahrgastliste zweimal.",
+  "Beat the Mist Heart. What it hid is everyone's problem now.": "Besiege das Nebelherz. Was es verbarg, ist jetzt das Problem aller.",
+  "Boss replays": "Boss-Wiederholungen",
+  "Clear Weather": "Klare Sicht",
+  "Crier: An echo of the %s has crashed the festival in the shape of a %s. Nobody invited it. Will you see it out?": "Ausrufer: Ein Echo des %s ist in Gestalt eines %s aufs Fest geplatzt. Niemand hat es eingeladen. Bringst du es hinaus?",
+  "Crier: Something from the Rifts keeps trying to get in. Seal a Rift heart first, then we'll talk.": "Ausrufer: Irgendetwas aus den Rissen will ständig herein. Versiegle erst ein Rissherz, dann reden wir.",
+  "Crier: You saw the echo out already. It sulks somewhere behind the stands until next year.": "Ausrufer: Das Echo hast du schon hinausgebracht. Es schmollt bis nächstes Jahr irgendwo hinter den Ständen.",
+  "It lies open and stops building up.": "Es liegt offen und baut nichts mehr auf.",
+  "It wants that field gone, so it can wake.": "Es will das Feld loswerden, um erwachen zu können.",
+  "Kept in your boss replays (Records).": "In deinen Boss-Wiederholungen gespeichert (Rekorde).",
+  "Last Passenger": "Letzter Fahrgast",
+  "Last phase: it holds nothing back.": "Letzte Phase: es hält nichts mehr zurück.",
+  "The echo comes apart like old bunting. The crowd claps as if it had helped.": "Das Echo zerfällt wie alte Wimpelketten. Die Menge klatscht, als hätte sie geholfen.",
+  "The echo keeps dancing. The crowd decides it is part of the show.": "Das Echo tanzt weiter. Die Menge beschließt, dass es zur Vorstellung gehört."
+ }
+}

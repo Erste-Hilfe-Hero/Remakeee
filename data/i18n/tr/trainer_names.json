@@ -1,0 +1,27 @@
+{
+ "_comment": "tr translation of the trainer_names table, keyed by the English text.",
+ "strings": {
+  "Angler Brisa": "Olta Balıkçısı Brisa",
+  "Angler Teo": "Olta Balıkçısı Teo",
+  "Bog Walker Hesk": "Bataklık Yürüyücüsü Hesk",
+  "Delver Ros": "Mağaracı Ros",
+  "Diver Neve": "Dalgıç Neve",
+  "Glassblower Ines": "Cam Üfleyici Ines",
+  "Hushed swarm": "Susturulmuş sürü",
+  "Lamplighter Tova": "Fenerci Tova",
+  "Miller's Kid Pim": "Değirmencinin Çocuğu Pim",
+  "Miner Garr": "Madenci Garr",
+  "Mushroom Picker Olek": "Mantar Toplayıcı Olek",
+  "Peat Cutter Orla": "Turbacı Orla",
+  "Reed Cutter Fenn": "Saz Kesici Fenn",
+  "Reed Cutter Marit": "Saz Kesici Marit",
+  "Ridgewalker Bram": "Sırt Yürüyücüsü Bram",
+  "Ridgewalker Brann": "Sırt Yürüyücüsü Brann",
+  "Rift Acolyte Suri": "Yarık Ruhbanı Suri",
+  "Salt Raker Nils": "Tuzcu Nils",
+  "Surveyor Kaja": "Ölçümcü Kaja",
+  "Terrace Farmer Runa": "Teras Çiftçisi Runa",
+  "Warden Maelis": "Muhafız Maelis",
+  "Warden Orrin": "Muhafız Orrin"
+ }
+}

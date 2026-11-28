@@ -1,0 +1,29 @@
+{
+ "_comment": "Japanese texts for the German table solenne. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "Act IV: The Sun of Solenne": "第IV幕：Solenneの太陽",
+  "Brass Veil Factor Lusk": "真鍮のベールの代理人Lusk",
+  "Dry Well": "枯れ井戸",
+  "Echo Crystal: Dawn Mend": "エコー結晶：Dawn Mend",
+  "Echo Crystal: Radiant Lance": "エコー結晶：Radiant Lance",
+  "Echo Crystal: Squall": "エコー結晶：Squall",
+  "High Noon": "真昼",
+  "Interlude: Ochrewell": "幕間：Ochrewell",
+  "Ochrewell": "Ochrewell",
+  "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.": "風の塔を砂がうなる：前にいる石タイプ以外のSpirlingは毎ラウンド少し活力を失う。",
+  "Sandstorm": "砂あらし",
+  "Take the sand road south from the Saltglass flats to Ochrewell and mend the three Rifts of Solenne.": "Saltglass平原から南へ砂の道をOchrewellまで進み、Solenneの3つの裂け目を直そう。",
+  "Teaches Dawn Mend to a Lumen Spirling. Never used up.": "LumenのSpirlingにDawn Mendを教える。何度でも使える。",
+  "Teaches Radiant Lance to a Lumen Spirling. Never used up.": "LumenのSpirlingにRadiant Lanceを教える。何度でも使える。",
+  "Teaches Squall to a Gale Spirling. Never used up.": "GaleのSpirlingにSquallを教える。何度でも使える。",
+  "The last shutter opens, the tower breathes, and the stair is clear!": "最後のよろい戸が開き、塔が息をして、階段が通れるようになった！",
+  "The oasis east of Ochrewell has run dry: the Oasis Rift. Warden Kaia says nobody is to blame.": "Ochrewellの東のオアシスが干上がった：Oasis Rift。守り人Kaiaは誰のせいでもないと言う。",
+  "The oasis has been sold dry: every heal on both sides is halved.": "オアシスは売られて干上がった：両軍の回復がすべて半分になる。",
+  "The shutter bangs, and the wind drops dead. Every shutter swings shut again.": "よろい戸がバタンと閉まり、風がぴたりとやむ。よろい戸がまた全部閉じた。",
+  "The shutter swings open. Sand hisses through the slats.": "よろい戸が開く。すきまから砂がシューッと入る。",
+  "The shutters hum in the wind. The stair stays open.": "よろい戸が風にうなる。階段は開いたまま。",
+  "The sun stands straight overhead: Lumen arts on both sides hit harder.": "太陽が真上にある：両軍のLumenの技が強くなる。",
+  "The sundial under the sun palace has stopped: the Sun Rift. Warden Emrys is waiting, slowly.": "太陽の宮殿の下の日時計が止まった：Sun Rift。守り人Emrysが、ゆっくりと待っている。",
+  "The wind towers of Ochrewell have stopped breathing: the Tower Rift. Warden Aurelio grieves in style.": "Ochrewellの風の塔が息を止めた：Tower Rift。守り人Aurelioは優雅に喪に服している。"
+ }
+}

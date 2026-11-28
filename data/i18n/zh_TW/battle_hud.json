@@ -1,0 +1,12 @@
+{
+ "_comment": "Traditional Chinese (Taiwan) texts for the German table battle_hud. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "%s: %d of %d can fight": "%s：%d/%d可戰鬥",
+  "Again: %s x%d": "再次：%s x%d",
+  "Again: -": "再次：-",
+  "Foe's team": "對手隊伍",
+  "No effect": "無效",
+  "Strong": "效果絕佳",
+  "Your team": "你的隊伍"
+ }
+}

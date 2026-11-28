@@ -1,0 +1,8 @@
+{
+ "_comment": "pl translation of the fan_oath table, keyed by the English text.",
+ "strings": {
+  "%s swears the Ink Oath. Ink runs down its paws like a signature: family first!": "%s składa Przysięgę Atramentu. Atrament spływa mu po łapach jak podpis: rodzina przede wszystkim!",
+  "Oath": "Przysięga",
+  "The Ink Oath comes due. The family collects from %s.": "Przysięga Atramentu staje się wymagalna. Rodzina ściąga dług z %s."
+ }
+}

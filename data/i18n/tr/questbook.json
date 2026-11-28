@@ -1,0 +1,14 @@
+{
+ "_comment": "Translations of the German table questbook, written by tools/i18n/locales_questbook.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Goal line follows this.": "Hedef satırı bu görevi izliyor.",
+  "Main": "Ana",
+  "Main, side and done quests, and where to go next.": "Ana, yan ve biten görevler ve sırada nereye gidileceği.",
+  "No quests here yet.": "Burada henüz görev yok.",
+  "Quest Book": "Görev Defteri",
+  "Quest goal: %s": "Görev hedefi: {0}",
+  "Side": "Yan",
+  "To %s": "{0} yönüne",
+  "Where next?": "Sırada neresi?"
+ }
+}

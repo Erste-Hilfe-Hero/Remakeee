@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table c200start, written by tools/i18n/locales_c200start.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s might suit you. But choose whoever you like!": "%s可能适合你。不过选你喜欢的就好！",
+  "A free afternoon. You...": "空闲的下午。你会...",
+  "Two short questions. You still choose freely.": "两个小问题。你依然可以自由选择。",
+  "Which one suits you?": "哪一只适合你？",
+  "Your partner should be...": "你的伙伴应该...",
+  "calm and bright": "沉稳又明亮",
+  "explore a dark cave": "探索黑暗的洞穴",
+  "loyal and warm": "忠诚又温暖",
+  "quick and lively": "敏捷又活泼",
+  "race to the lake": "比赛跑到湖边",
+  "sit by a warm fire": "坐在温暖的火堆旁"
+ }
+}

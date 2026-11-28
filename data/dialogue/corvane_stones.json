@@ -1,0 +1,74 @@
+{
+ "stone_1": {
+  "lines": [
+   "An old cartographer's stone by the quay wall. Someone has chalked a price on it."
+  ],
+  "action": "marker_stone 1 corvane"
+ },
+ "stone_2": {
+  "lines": [
+   "A cartographer's stone half sunk in the boards. The rose points at the harbour office. Of course it does."
+  ],
+  "action": "marker_stone 2 corvane"
+ },
+ "stone_3": {
+  "lines": [
+   "A cartographer's stone, stained red, gold and green by a hundred years of dye."
+  ],
+  "action": "marker_stone 3 corvane"
+ },
+ "stone_4": {
+  "lines": [
+   "A cartographer's stone in a flower bed. Its rose has been painted over grey, then scraped clean."
+  ],
+  "action": "marker_stone 4 corvane"
+ },
+ "stone_5": {
+  "lines": [
+   "A cartographer's stone sinking into the moor. The rose still points north. The stone has given up on the rest."
+  ],
+  "action": "marker_stone 5 corvane"
+ },
+ "stone_6": {
+  "lines": [
+   "A cartographer's stone under the reeds. Somebody scratched 'not this way' under the rose."
+  ],
+  "action": "marker_stone 6 corvane"
+ },
+ "stone_7": {
+  "lines": [
+   "A cartographer's stone at the water's edge. In the pond its rose turns the other way."
+  ],
+  "action": "marker_stone 7 corvane"
+ },
+ "stone_8": {
+  "lines": [
+   "A cartographer's stone with a betting slip tucked under it. The slip lost."
+  ],
+  "action": "marker_stone 8 corvane"
+ },
+ "stone_9": {
+  "lines": [
+   "A cartographer's stone on the cliff. Rooks have used it as a table for years."
+  ],
+  "action": "marker_stone 9 corvane"
+ },
+ "stone_10": {
+  "lines": [
+   "A cartographer's stone, cracked down the middle. Both halves still point north. Stubborn."
+  ],
+  "action": "marker_stone 10 corvane"
+ },
+ "stone_11": {
+  "lines": [
+   "A cartographer's stone wrapped in roots. The rose glows faintly when you touch it."
+  ],
+  "action": "marker_stone 11 corvane"
+ },
+ "stone_12": {
+  "lines": [
+   "A cartographer's stone at the edge of the Wide Rift. The rose has a fifth point, towards the dark."
+  ],
+  "action": "marker_stone 12 corvane"
+ }
+}

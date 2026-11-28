@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table p2w_shop, written by tools/i18n/locales_p2w_shop.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "+%d %% bonus": "+%d %%ボーナス",
+  "A one-time pack for your journey": "旅のための一度きりのパック",
+  "After the tier before it": "前の段階のあとで",
+  "All advantages": "すべての特典",
+  "Best value": "お得",
+  "Bestseller": "売れ筋",
+  "Featured": "おすすめ",
+  "First buy x2": "初回x2",
+  "Later in the journey": "旅の先で",
+  "Limited": "限定",
+  "Owned": "入手済み",
+  "Pay %d Riftglass": "裂け目ガラス%dで支払う",
+  "Popular": "人気",
+  "Show": "見る",
+  "Show offer": "内容を見る",
+  "Show the pass": "パスを見る",
+  "Until %s": "%sまで",
+  "Use it": "使う"
+ }
+}

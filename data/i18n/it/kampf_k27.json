@@ -1,0 +1,11 @@
+{
+ "_comment": "Texts for it from tools/i18n/locales_kampf_k27.py (KAMPF_PLAN_1000 items 138, 179).",
+ "strings": {
+  "%s is cured.": "%s è guarito.",
+  "Hesper: %d coins. Forgetting is free, remembering is not.": "Hesper: %d monete. Dimenticare è gratis, ricordare no.",
+  "Hesper: %s remembers everything it can. Lucky thing.": "Hesper: %s ricorda tutto quello che può. Fortunato.",
+  "Hesper: And if one of yours forgot an art it once knew, I can dig it back up. For a fee. Memory is cheap; mine isn't.": "Hesper: E se uno dei tuoi ha dimenticato una tecnica che sapeva, posso dissotterrarla. A pagamento. La memoria costa poco; la mia no.",
+  "On Story every status ends with the battle. On the other difficulties Scorch, Root and Jolt stay on until an item, an art or a rest cures them.": "In Storia ogni stato finisce con la battaglia. Nelle altre difficoltà Arsura, Radici e Scossa restano finché un oggetto, una tecnica o una sosta non li cura.",
+  "Who forgot an art? %d coins each.": "Chi ha dimenticato una tecnica? %d monete l'una."
+ }
+}

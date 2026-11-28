@@ -1,0 +1,45 @@
+{
+ "_note": "Finale 1, the edge of the Undrawn: the land stops like a page left blank, and someone draws at its edge (inside finale_1).",
+ "once": true,
+ "era": 5,
+ "steps": [
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "edge"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 4.4
+  },
+  {
+   "say": [
+    "Past the last hill, the land just stops.",
+    "At the edge, a flame. Someone is drawing."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  },
+  {
+   "emote": "mirela",
+   "icon": "note"
+  }
+ ]
+}

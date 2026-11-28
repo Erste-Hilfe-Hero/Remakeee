@@ -1,0 +1,13 @@
+{
+ "_comment": "Translations of the German table kampf_k35, written by tools/i18n/locales_kampf_k35.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Brute force": "Kaba kuvvet",
+  "Field tricks": "Alan hileleri",
+  "Give me three turns. You won't get a fourth.": "Bana üç tur ver. Dördüncüsü sana kalmayacak.",
+  "I don't win duels. I make you lose them slowly.": "Ben düello kazanmam. Senin yavaşça kaybetmeni sağlarım.",
+  "No tricks. Just teeth. Some of them used to be someone else's.": "Hile yok. Sadece dişler. Bazıları eskiden başkasınındı.",
+  "Stage tricks": "Kademe hileleri",
+  "Status tricks": "Durum hileleri",
+  "The ground here owes me money. Watch it pay up.": "Buradaki toprak bana borçlu. Nasıl ödediğini izle."
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "spring": {
+  "lines": [
+   "Clear water wells up through white stone. It tastes of nothing at all, which up here is a luxury.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "sign": [
+  "SPAN RIFT",
+  "Below the Gilt Span the air tears. Nobody who looked down has said what they saw."
+ ],
+ "toll_clerk": [
+  "Emerich: Veronne keeps a ledger of every crossing. The red column is for people who didn't make it."
+ ],
+ "toll_clerk_intro": [
+  "Emerich: Your name isn't in the ledger yet. Let me fix that."
+ ],
+ "toll_clerk_defeat": [
+  "Emerich: Black column. For now."
+ ],
+ "veronne": {
+  "lines": [
+   "I collect the toll on the Span. Cash, Spirlings or a little push. Your choice."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_v4_span_sealed",
+    "lines": [
+     "Veronne: The Span holds. My toll doesn't. Fine. I'll find another bridge. There's always another bridge.",
+     "Veronne: Aurek's feast is tonight. I'm not going. I know who's cooking."
+    ]
+   }
+  ]
+ },
+ "veronne_intro": [
+  "I collect the toll on the Span. Cash, Spirlings or a little push. Your choice."
+ ],
+ "veronne_defeat": [
+  "You crossed. Lovely. The toll for coming back is double, and I keep the bridge."
+ ]
+}

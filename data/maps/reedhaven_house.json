@@ -1,0 +1,45 @@
+{
+ "name": "Grete's House",
+ "region": "veydal",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCffffCCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "reedhaven",
+   "tx": 2,
+   "ty": 8,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "grete",
+   "x": 2,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/reedhaven_house_grete",
+   "sprite": "villager"
+  },
+  {
+   "id": "vm_odette",
+   "x": 7,
+   "y": 5,
+   "facing": "left",
+   "dialogue": "veydal_more/odette",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

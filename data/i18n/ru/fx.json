@@ -1,0 +1,30 @@
+{
+ "_comment": "Russian texts for the German table fx. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "Ambience": "Окружение",
+  "Ambience: %d%%": "Окружение: %d%%",
+  "Both ears hear the same sound, for hearing on one side.": "Оба уха слышат одинаковый звук, для слуха на одну сторону.",
+  "Coins: %d": "Монеты: %d",
+  "Full": "Полная",
+  "How much the screen shakes on big hits.": "Насколько сильно трясётся экран при мощных ударах.",
+  "How strongly the phone or gamepad vibrates.": "Насколько сильно вибрирует телефон или геймпад.",
+  "Important sounds also show as a short text at the top.": "Важные звуки также показываются коротким текстом вверху.",
+  "Mono sound: %s": "Моно-звук: %s",
+  "Places": "Места",
+  "Screen shake: %s": "Тряска: %s",
+  "Short blips while a line types out.": "Короткие сигналы, пока печатается строка.",
+  "Sound captions: %s": "Субтитры: %s",
+  "Text voice and Spirling cries. Left and right change it in steps of 10.": "Голос текста и крики Spirlings. Влево и вправо меняют шагами по 10.",
+  "Text voice: %s": "Голос текста: %s",
+  "Vibration: %s": "Вибрация: %s",
+  "Voice": "Голос",
+  "Voices: %d%%": "Голоса: %d%%",
+  "Waiting for the server": "Ждём сервер",
+  "Weak": "Слабая",
+  "Wind, water and other sounds of a place. Left and right change it in steps of 10.": "Ветер, вода и другие звуки места. Влево и вправо меняют шагами по 10.",
+  "[A deep rumble]": "[Глухой гул]",
+  "[Footsteps stop short]": "[Шаги резко стихают]",
+  "[Item picked up]": "[Предмет подобран]",
+  "[Rustling in the grass]": "[Шорох в траве]"
+ }
+}

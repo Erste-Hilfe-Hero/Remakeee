@@ -1,0 +1,9 @@
+{
+ "_comment": "es translation of the move_effects table, keyed by the English text.",
+ "strings": {
+  "Costs %d%% of its own Vigor, never the last point.": "Cuesta un %d%% de su propio Vigor, nunca el último punto.",
+  "Cures the status of its whole team.": "Cura el estado de todo su equipo.",
+  "Gains %d Energy.": "Gana %d de Energía.",
+  "Sets every stage on both sides back to 0.": "Devuelve a 0 todas las etapas de ambos bandos."
+ }
+}

@@ -1,0 +1,110 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "toll_clerk",
+    "x": 7,
+    "y": 17,
+    "facing": "left",
+    "dialogue": "span_rift/toll_clerk",
+    "sprite": "warden",
+    "trainer": "Toll Clerk Emerich",
+    "intro": "span_rift/toll_clerk_intro",
+    "defeat": "span_rift/toll_clerk_defeat",
+    "money": 4900,
+    "team": [
+     {
+      "species": "Velverain",
+      "level": 92
+     },
+     {
+      "species": "Siroclaw",
+      "level": 92
+     },
+     {
+      "species": "Gyrevult",
+      "level": 93
+     }
+    ]
+   },
+   {
+    "id": "warden_veronne",
+    "x": 5,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "span_rift/veronne",
+    "sprite": "warden",
+    "trainer": "Warden Veronne",
+    "warden": "v4_span",
+    "team": [
+     {
+      "species": "Velverain",
+      "level": 91
+     },
+     {
+      "species": "Siroclaw",
+      "level": 91
+     },
+     {
+      "species": "Gyrevult",
+      "level": 92
+     },
+     {
+      "species": "Spanwarden",
+      "level": 92
+     }
+    ],
+    "intro": "span_rift/veronne_intro",
+    "defeat": "span_rift/veronne_defeat",
+    "ai": 2,
+    "money": 9800,
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Coronarch",
+       "level": 83
+      },
+      {
+       "species": "Siroclaw",
+       "level": 83
+      },
+      {
+       "species": "Gyrevult",
+       "level": 84
+      },
+      {
+       "species": "Habobrax",
+       "level": 84
+      },
+      {
+       "species": "Fulgorath",
+       "level": 84
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Velverain",
+       "level": 93
+      },
+      {
+       "species": "Siroclaw",
+       "level": 93
+      },
+      {
+       "species": "Gyrevult",
+       "level": 94
+      },
+      {
+       "species": "Spanwarden",
+       "level": 94
+      },
+      {
+       "species": "Velverain",
+       "level": 89
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

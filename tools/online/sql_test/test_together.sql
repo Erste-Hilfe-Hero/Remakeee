@@ -94,7 +94,7 @@ do $$
 declare t jsonb; a text := (select code from codes where who = 'a');
 begin
   t := public.team_set('[{"species":"Puddlet","level":250,"moves":["Brine Jet","<b>x</b>","a","b","c"],"nickname":"Bad Word"},{},{},{},{},{},{"species":"Seventh"}]');
-  assert (t->>'size')::int = 6;
+  assert (t->>'size')::int = 5, 'team limited to 5';
   assert (public.echo_report(a, 'echo', true)->>'points')::int = 3;
   assert (public.echo_report(a, 'echo', true)->>'points')::int = 0, 'once per day';
   assert (public.echo_report(a, 'duel', false)->>'points')::int = 2;
@@ -105,7 +105,7 @@ do $$
 declare t jsonb := public.friend_team((select code from codes where who = 'b'));
 begin
   assert t->>'name' = 'Ben';
-  assert (t->'team'->0->>'level')::int = 100, 'level clamped';
+  assert (t->'team'->0->>'level')::int = 60, 'level clamped to Ring 60';
   assert jsonb_array_length(t->'team'->0->'moves') = 4;
   assert t->'team'->0->'moves'->>1 = 'bxb', 'move names cleaned';
   assert not (t->'team'->0 ? 'nickname'), 'no nicknames go online';

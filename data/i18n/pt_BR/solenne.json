@@ -1,0 +1,29 @@
+{
+ "_comment": "Brazilian Portuguese texts for the German table solenne. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "Act IV: The Sun of Solenne": "Ato IV: O Sol de Solenne",
+  "Brass Veil Factor Lusk": "Feitor Lusk do Véu de Latão",
+  "Dry Well": "Poço seco",
+  "Echo Crystal: Dawn Mend": "Cristal Eco: Dawn Mend",
+  "Echo Crystal: Radiant Lance": "Cristal Eco: Radiant Lance",
+  "Echo Crystal: Squall": "Cristal Eco: Squall",
+  "High Noon": "Meio-dia em ponto",
+  "Interlude: Ochrewell": "Interlúdio: Ochrewell",
+  "Ochrewell": "Ochrewell",
+  "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.": "A areia uiva pelas torres de vento: todo Spirling na frente que não é Pedra perde um pouco de Vigor a cada rodada.",
+  "Sandstorm": "Tempestade de areia",
+  "Take the sand road south from the Saltglass flats to Ochrewell and mend the three Rifts of Solenne.": "Pegue a estrada de areia ao sul das planícies de Saltglass até Ochrewell e conserte as três Fendas de Solenne.",
+  "Teaches Dawn Mend to a Lumen Spirling. Never used up.": "Ensina Dawn Mend a um Spirling Lumen. Nunca se gasta.",
+  "Teaches Radiant Lance to a Lumen Spirling. Never used up.": "Ensina Radiant Lance a um Spirling Lumen. Nunca se gasta.",
+  "Teaches Squall to a Gale Spirling. Never used up.": "Ensina Squall a um Spirling Gale. Nunca se gasta.",
+  "The last shutter opens, the tower breathes, and the stair is clear!": "A última veneziana abre, a torre respira e a escada está livre!",
+  "The oasis east of Ochrewell has run dry: the Oasis Rift. Warden Kaia says nobody is to blame.": "O oásis a leste de Ochrewell secou: a Fenda do Oásis. A Sentinela Kaia diz que ninguém tem culpa.",
+  "The oasis has been sold dry: every heal on both sides is halved.": "O oásis foi vendido até secar: toda cura dos dois lados cai pela metade.",
+  "The shutter bangs, and the wind drops dead. Every shutter swings shut again.": "A veneziana bate e o vento morre na hora. Todas as venezianas se fecham de novo.",
+  "The shutter swings open. Sand hisses through the slats.": "A veneziana se abre. A areia chia pelas frestas.",
+  "The shutters hum in the wind. The stair stays open.": "As venezianas zumbem no vento. A escada fica aberta.",
+  "The sun stands straight overhead: Lumen arts on both sides hit harder.": "O sol está bem no alto: técnicas Lumen dos dois lados batem mais forte.",
+  "The sundial under the sun palace has stopped: the Sun Rift. Warden Emrys is waiting, slowly.": "O relógio de sol sob o palácio do sol parou: a Fenda do Sol. O Sentinela Emrys espera, devagar.",
+  "The wind towers of Ochrewell have stopped breathing: the Tower Rift. Warden Aurelio grieves in style.": "As torres de vento de Ochrewell pararam de respirar: a Fenda da Torre. O Sentinela Aurelio está de luto com estilo."
+ }
+}

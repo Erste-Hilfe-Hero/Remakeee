@@ -1,0 +1,14 @@
+{
+ "_comment": "German texts from tools/i18n/de_raid_more.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%d. %s (%s, %d Wayfarers) %d min": "%d. %s (%s, %d Wanderer) %d Min.",
+  "A legendary guardian waits in this Rift: %s": "In diesem Riss wartet ein legendärer Wächter: %s",
+  "Easy": "Leicht",
+  "Fastest Rifts": "Schnellste Risse",
+  "Hard": "Schwer",
+  "How hard?": "Wie schwer?",
+  "No Rift was won yet.": "Noch wurde kein Riss gewonnen.",
+  "Normal": "Normal"
+ }
+}

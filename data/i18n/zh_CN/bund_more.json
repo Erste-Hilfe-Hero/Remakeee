@@ -1,0 +1,29 @@
+{
+ "_comment": "zh_CN translation of the bund_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s  Rank %d%s": "%d. %s  段位%d%s",
+  "%s  Rank %d  %d/30, %d active%s": "%s  段位%d  %d/30，活跃%d人%s",
+  "Any language": "任何语言",
+  "Anyone, at once": "任何人，立即加入",
+  "Bund board": "盟会排行",
+  "Bund rank %d (%d renown)": "盟会段位%d（声望%d）",
+  "Bund rank and week goal": "盟会段位与本周目标",
+  "Donate items...": "捐赠物品...",
+  "Donated today: %d / %d": "今日已捐：%d / %d",
+  "Find a bund...": "寻找盟会...",
+  "How many?": "多少个？",
+  "Language and joining...": "语言与加入方式...",
+  "Language of the bund": "盟会语言",
+  "No bund found. Found your own!": "没有找到盟会。自己创建一个吧！",
+  "No bunds yet.": "还没有盟会。",
+  "Only after a request": "需先申请",
+  "Take the week reward": "领取本周奖励",
+  "Thank you! The bund has %d renown now.": "谢谢！盟会现在有%d点声望。",
+  "The week goal is not reached yet.": "本周目标尚未达成。",
+  "Week goal: %d / %d items donated": "本周目标：已捐赠物品 %d / %d",
+  "Who may join?": "谁可以加入？",
+  "You already took this week's reward.": "本周奖励已经领过了。",
+  "You donated all you can today. More tomorrow.": "今天能捐的都捐了。明天再来。",
+  "open": "开放"
+ }
+}

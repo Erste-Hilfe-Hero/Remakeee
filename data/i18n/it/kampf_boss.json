@@ -1,0 +1,21 @@
+{
+ "_comment": "it translation of the kampf_boss table, keyed by the English text.",
+ "strings": {
+  "%s grows restless: the longer the fight, the harder it strikes!": "%s si spazientisce: più dura la lotta, più colpisce forte!",
+  "%s lies open: its Guard is down for a turn!": "%s è scoperto: abbassa la Guardia per un turno!",
+  "Before the Hush, the Cinder Rift fed a village's forges. The smiths sold the last of its heat to the highest bidder, and what was left curled up and learned to hate. It still keeps time like a bellows: hold it under High Tide and it can't stoke its next phase.": "Prima del Silenzio, lo Squarcio di Brace alimentava le fucine di un villaggio. I fabbri vendettero il resto del suo calore al miglior offerente, e quel che rimase si raggomitolò e imparò a odiare. Batte ancora il tempo come un mantice: tienilo sotto Alta marea e non potrà attizzare la fase successiva.",
+  "Ebb": "Riflusso",
+  "It acts %d times each turn.": "Agisce %d volte a ogni turno.",
+  "Mist hides things, and the people nearby paid it well to hide one thing in particular. When the payments stopped, it hid them too. Dawn Glow burns its fog thin; while the light lies, it can't pull itself into a new shape.": "La nebbia nasconde le cose, e la gente dei dintorni la pagava bene per nasconderne una in particolare. Quando i pagamenti sono finiti, ha nascosto anche loro. Il Bagliore d'alba assottiglia la sua foschia; finché dura la luce, non riesce a ricomporsi in una forma nuova.",
+  "Not a breath of wind: no stat stage rises or falls on either side.": "Neanche un filo di vento: nessuna statistica sale o scende, da nessuna delle due parti.",
+  "Still Air": "Aria ferma",
+  "The Ashen Heart splits open. Its core burns white!": "Il Cuore di Cenere si spacca! Il suo nucleo arde bianco!",
+  "The Drowned Heart sinks its weight into one last surge!": "Il Cuore Annegato getta tutto il suo peso in un'ultima ondata!",
+  "The Mist Heart pulls the fog tight around its core!": "Il Cuore di Nebbia stringe la foschia attorno al suo nucleo!",
+  "The Tide Rift sank a ferry once, and the ferryman swore he had warned everyone. He had not. The heart at the bottom remembers every name on the passenger list. Static Veil sets its water humming, and while it hums the heart can't gather its next surge.": "Lo Squarcio della Marea una volta affondò un traghetto, e il traghettatore giurò di aver avvisato tutti. Non era vero. Il cuore sul fondo ricorda ogni nome della lista passeggeri. Il Velo statico fa ronzare la sua acqua, e finché ronza il cuore non riesce a raccogliere l'ondata successiva.",
+  "The water has run out: resting gives 1 Energy less on both sides.": "L'acqua è finita: riposare dà 1 Energia in meno a entrambe le parti.",
+  "What the Ashen Heart was": "Ciò che era il Cuore di Cenere",
+  "What the Drowned Heart was": "Ciò che era il Cuore Annegato",
+  "What the Mist Heart was": "Ciò che era il Cuore di Nebbia"
+ }
+}

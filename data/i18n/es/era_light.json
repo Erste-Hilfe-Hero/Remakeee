@@ -1,0 +1,9 @@
+{
+ "_comment": "es translation of the era_light table, keyed by the English text.",
+ "strings": {
+  "A storm rages.": "Ruge una tormenta.",
+  "Fog hangs low.": "La niebla cuelga baja.",
+  "Rain falls.": "Llueve.",
+  "Wind blows.": "Sopla el viento."
+ }
+}

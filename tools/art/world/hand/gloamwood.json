@@ -1,0 +1,85 @@
+{
+ "add": {
+  "npcs": [
+   {
+    "id": "lq_ambrel",
+    "x": 8,
+    "y": 13,
+    "facing": "down",
+    "dialogue": "legend_quests/hallowmur_guide",
+    "sprite": "elder",
+    "show_flag": "story_complete",
+    "hide_flag": "lq_hallowmur_ready"
+   }
+  ],
+  "signs": [
+   {
+    "x": 10,
+    "y": 26,
+    "dialogue": "veydal_more/poster_3",
+    "hide_flag": "poster_3"
+   }
+  ]
+ },
+ "replace": {
+  "npcs": [
+   {
+    "id": "wren",
+    "x": 3,
+    "y": 18,
+    "facing": "right",
+    "dialogue": "gloamwood/wren",
+    "sprite": "villager",
+    "trainer": "Wanderer Wren",
+    "intro": "gloamwood/wren_intro",
+    "defeat": "gloamwood/wren_defeat",
+    "money": 160,
+    "team": [
+     {
+      "species": "Mossling",
+      "level": 5
+     },
+     {
+      "species": "Zippit",
+      "level": 6
+     }
+    ],
+    "lessons": "listener"
+   }
+  ]
+ },
+ "set": {
+  "rows": [
+   "TTTT_TTTTTTT",
+   "T,,T.,,..,,T",
+   "T,,,.,,_____",
+   "TT,,..,_,,TT",
+   "TT,,T,._.,,T",
+   "T..^,,._.S,T",
+   "TT^DT.._..,T",
+   "T.S.T,,_,,,T",
+   "T,,,,,,_,TTT",
+   "TT,,_____,,T",
+   "T,,,_,,,,,,T",
+   "T,,T_TT,,T,T",
+   "T,,,_,,,,,,T",
+   "T.._____..,T",
+   "T=^^^^^^^^vT",
+   "T_,,,,,,,,.T",
+   "T_,,T,,TT,.T",
+   "T_____,,,,.T",
+   "T,,,,_,,,,.T",
+   "TT,,,_,TT,.T",
+   "T,,T,_,,,,.T",
+   "T,,,,____,.T",
+   "T*..,,,,_,.T",
+   "To.T,,,,_..T",
+   "T.S.,,,,____",
+   "TS.,,,TT,,,T",
+   "T,,,,,,,,,,T",
+   "TT,,,TT,,,TT",
+   "T,,,,,,,,,,T",
+   "TTTTTTTTTTTT"
+  ]
+ }
+}

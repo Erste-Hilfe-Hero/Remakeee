@@ -1,0 +1,44 @@
+{
+ "name": "Net Shed",
+ "region": "quivermoor",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "driftwick",
+   "tx": 8,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "netter",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/driftwick_net_shed_netter",
+   "sprite": "villager"
+  },
+  {
+   "id": "q5_named_seed_kell",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/q5_named_seed_kell",
+   "sprite": "villager",
+   "show_flag": "q5_named_seed_asked"
+  }
+ ],
+ "signs": []
+}

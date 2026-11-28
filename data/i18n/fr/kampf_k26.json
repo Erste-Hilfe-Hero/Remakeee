@@ -1,0 +1,18 @@
+{
+ "_comment": "Translations of the German table kampf_k26, written by tools/i18n/locales_kampf_k26.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s sent you matchup notes.": "%s t'a envoyé des notes d'affinités.",
+  "%s's notes: %d matchups you did not know yet. The move list shows them now.": "Notes de %s: %d affinités que tu ne connaissais pas. La liste des techniques les affiche maintenant.",
+  "%s's notes: nothing you did not know already. Flattering, in a way.": "Notes de %s: rien que tu ne savais déjà. Flatteur, d'une certaine façon.",
+  "A seal is cut into the base: %s. Which element breaks it?": "Un sceau est gravé dans le socle: %s. Quel élément le brise?",
+  "Rift theme: %s": "Thème de la Faille: %s",
+  "Send %d matchup notes to %s? You both get %d friendship points.": "Envoyer %d notes d'affinités à %s? Vous recevez tous deux %d points d'amitié.",
+  "Share matchup notes": "Partager les notes d'affinités",
+  "The seal cracks. Someone hid %s behind it and never came back for it.": "Le sceau se fend. Quelqu'un a caché %s derrière et n'est jamais revenu le chercher.",
+  "The seal hums, smug and whole. It has met your kind before.": "Le sceau bourdonne, intact et suffisant. Il a déjà vu des gens comme toi.",
+  "Those notes are smudged. Try again after your next battle.": "Ces notes sont tachées. Réessaie après ton prochain combat.",
+  "You already sent notes to this friend today. Tomorrow again!": "Tu as déjà envoyé des notes à cet ami aujourd'hui. Demain de nouveau!",
+  "Your notes are empty. Land a few hits first, then share what you learned.": "Tes notes sont vides. Place d'abord quelques coups, puis partage ce que tu as appris.",
+  "Your notes are on their way to %s. Knowledge shared is knowledge you can't sell. Oh well.": "Tes notes sont en route vers %s. Un savoir partagé ne se vend plus. Tant pis."
+ }
+}

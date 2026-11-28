@@ -1,0 +1,31 @@
+Chimora 1.3.2
+
+- Ein neu gebauter Shop mit klareren Texten: Jedes Paket und Angebot sagt in einfachen Worten, was drin ist und was es bewirkt. Nichts ist Zufall.
+- 70 neue Spirlings, 10 in jeder Region.
+- Glanzformen gibt es jetzt in 5 Arten, von der klassischen Glanzform bis zur sehr seltenen Opal-Glanzform.
+- Neues Wetter: Regen, Nebel, Wind, Gewitter und Schnee verändern die Welt und manche Kämpfe. Es ist gleich eingeschaltet und lässt sich in den Einstellungen anpassen.
+- 35 Rätselsteine und Rätseltafeln in allen Regionen.
+- Viele versteckte Geheimnisse, die du beim Spielen entdeckst.
+- Die Karten hängen besser zusammen: keine Sackgassen mehr und neue Häuser in den Städten.
+- Ein Schwierigkeitsgrad für alle, der von Akt zu Akt steigt. Keine Wahl des Schwierigkeitsgrads und keine Ring-Grenze mehr.
+- Viele Fehlerkorrekturen.
+- Meins!-Tipper vibrieren jetzt leicht (nur wenn Vibration in den Einstellungen an ist).
+- Ein schöneres Intro zum Spielstart.
+- Ein natürlicher Spielstart: Du beginnst in einem Busch, spielst sofort los, und die Geschichte beginnt, wenn du deinem ersten wilden Spirling begegnest.
+- Story-Zwischensequenzen in jedem Akt.
+- Die vier Regionen nach der Hauptgeschichte bekommen je eine eigene Geschichte, mit Duellen in Quivermoor.
+- Ein Questbuch mit deinen Zielen, und "Wohin jetzt?" zeigt dir den Weg auf der Karte.
+- Automatisch offline spielen: Ohne Internet geht das Spiel einfach weiter, dein Fortschritt wird abgeglichen, sobald du wieder online bist.
+- Neue Bindungstalismane für Meins!: einzelne Talismane für Rissglas und 3 Talisman-Pakete im Shop, jedes mit festem Preis und Inhalt, der vor dem Kauf angezeigt wird.
+- Das Erster-Fang-Paket zu unserem kleinsten Preis: ein kleines Paket mit festem Inhalt, der vor dem Kauf angezeigt wird. Nichts ist zufällig.
+- Bei Meins! siehst du jetzt den Spirling, mit dem du dich verbindest.
+- Ein 7-Tage-Login-Geschenk, Tagesaufgaben und ein Spirling des Tages.
+- Wochenendwetter: Am Samstag und Sonntag liegt ein besonderer Himmel über einigen Gebieten, und scheue Spirlinge zeigen sich dort öfter.
+- Dein Spirlog zeigt jetzt in Prozent, wie viele Spirlings du gebunden hast, mit Belohnungen bei 25, 50 und 100 % und für Glanz-Meilensteine: Gegenstände und ein Titel.
+- Freundescodes als Einladung: Tritt ein neuer Spieler mit deinem Code bei und spielt einen Tag, bekommt ihr beide eine Belohnung.
+- Tausche mit Leuten in der Welt, und manche Spirlings entfalten sich jetzt durch einen Tausch.
+- Flüssigere Animationen.
+- Ein eigenes Layout fürs iPad.
+- Größere Texte und größere Schaltflächen, die sich leichter tippen lassen.
+- Grafikkorrekturen in jeder Era, von Era I bis Era V.
+- Fehlerbehebungen für Sicherheit und Tempo.

@@ -1,0 +1,20 @@
+{
+ "_comment": "Friends and the shared world (Online 100, area 6: points 53, 55, 56, 57, 59, 60). levels are the point floors of friendship levels 1-10. The server reads the same object as server_config.friends_more (tools/online/game_data_sql.py).",
+ "levels": [0, 10, 30, 60, 100, 150, 220, 300, 400, 520],
+ "level_rewards": {
+  "6": {"item": "strong_tonic", "count": 3},
+  "7": {"item": "max_tonic", "count": 2},
+  "8": {"item": "revival_leaf", "count": 2},
+  "9": {"item": "spark_charm", "count": 1},
+  "10": {"item": "keen_lens", "count": 1}
+ },
+ "favorites_max": 10,
+ "pair_tasks": ["wave", "phrase", "gift"],
+ "pair_reward": {"item": "tonic", "count": 2},
+ "pair_points": 3,
+ "suggest_days": 14,
+ "suggest_max": 5,
+ "invite_days": 7,
+ "invite_max": 10,
+ "invite_reward": {"item": "strong_tonic", "count": 2}
+}

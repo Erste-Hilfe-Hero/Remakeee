@@ -1,0 +1,9 @@
+# German texts for playing offline (docs/OFFLINE.md): the needs-internet line, the title's offline
+# status and the privacy texts that say Chimora plays offline too.
+T = {
+"This needs internet. The rest of your journey plays on offline.": "Dafür brauchst du Internet. Der Rest deiner Reise geht offline weiter.",
+"Offline. Your journey is saved on this phone.": "Offline. Deine Reise wird auf diesem Handy gespeichert.",
+"Online, a copy of your journeys is kept on our server. No ads, no tracking.": "Online liegt eine Kopie deiner Reisen auf unserem Server. Keine Werbung, kein Tracking.",
+"Chimora plays offline too. When you are online, your journeys are also stored on our server in the EU, so they are safe if your phone breaks. Hosting: Contabo GmbH, Munich, Germany (processor, Art. 28 GDPR); server location: data centre Lauterbourg, France (EU). We store your Wayfarer name, friend code, saves, friends, Lantern Mail and league standings, nothing else. No ads, no tracking. We count anonymously how far players get in the game, to make it better. You can download or delete everything under Settings, Account.":
+	"Chimora läuft auch offline. Bist du online, liegen deine Reisen zusätzlich auf unserem Server in der EU, damit sie sicher sind, wenn dein Handy kaputtgeht. Hosting: Contabo GmbH, München, Deutschland (Auftragsverarbeiter, Art. 28 DSGVO); Serverstandort: Rechenzentrum Lauterbourg, Frankreich (EU). Gespeichert werden nur Wanderer-Name, Freundescode, Spielstände, Freunde, Leuchtpost und Ligastand. Keine Werbung, kein Tracking. Wir zählen anonym, wie weit Spieler im Spiel kommen, um es besser zu machen. Unter Einstellungen, Konto kannst du alles herunterladen oder löschen.",
+}

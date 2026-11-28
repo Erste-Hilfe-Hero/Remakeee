@@ -1,0 +1,180 @@
+{
+ "_comment": "Era I landmarks (map design plan item 509): every outdoor place of Acts I-III has one thing you know it by, drawn in its act's own set (tools/art/gen_landmarks.py, art/era1/landmarks/<kind>.png). x, y = the solid map cell it stands on; the 16x32 sprite also covers the cell above. Talking to it shows name and line. Checked by WorldValidator.check_landmarks. Solenne (Act IV) gets its own set with its look. Vellmarch (Era II) has one landmark per town from its own set, so no two of its towns look alike (tools/maps/audit_maps.py town_twin).",
+ "maps": {
+  "brindlewick": {
+   "kind": "veydal_beacon",
+   "x": 1,
+   "y": 11,
+   "name": "Old Lake Beacon",
+   "line": "Lit every night for ninety years. Nobody knows who pays for the oil, so nobody dares to stop."
+  },
+  "brackwater_fen": {
+   "kind": "veydal_tide_post",
+   "x": 3,
+   "y": 6,
+   "name": "Brackwater Tide Post",
+   "line": "The marks go up to a line labelled 'last mayor'. Nobody explains the line."
+  },
+  "copperfold": {
+   "kind": "veydal_cairn",
+   "x": 5,
+   "y": 9,
+   "name": "Miners' Cairn",
+   "line": "One stone for every miner who found copper. Two for the ones who found the bill."
+  },
+  "crowcrest": {
+   "kind": "veydal_cairn",
+   "x": 4,
+   "y": 8,
+   "name": "Crowcrest Cairn",
+   "line": "Walkers add a stone for luck. The crows take one back as rent."
+  },
+  "fernstair": {
+   "kind": "veydal_standing_stone",
+   "x": 1,
+   "y": 11,
+   "name": "Fernstair Stone",
+   "line": "A carved spiral that is said to point home. It points at the tavern."
+  },
+  "gloamwood": {
+   "kind": "veydal_standing_stone",
+   "x": 3,
+   "y": 11,
+   "name": "The Leaning Stone",
+   "line": "It has leaned like this for a thousand years and still has not fallen on anyone who deserved it."
+  },
+  "lantern_steps": {
+   "kind": "veydal_beacon",
+   "x": 4,
+   "y": 9,
+   "name": "Step Beacon",
+   "line": "A beacon for lost walkers. Its keeper got lost years ago. The beacon was not asked."
+  },
+  "quillbrook": {
+   "kind": "veydal_cairn",
+   "x": 2,
+   "y": 22,
+   "name": "Quill Cairn",
+   "line": "Scratched into the top stone: 'I was here first.' Under it: 'No.'"
+  },
+  "reedhaven": {
+   "kind": "veydal_tide_post",
+   "x": 5,
+   "y": 3,
+   "name": "Reedhaven Bell Post",
+   "line": "The bell rings at high water. It also rings when someone owes the harbourmaster."
+  },
+  "saltmarsh": {
+   "kind": "veydal_tide_post",
+   "x": 4,
+   "y": 6,
+   "name": "Saltmarsh Marker",
+   "line": "A post to show where the path was. The marsh disagreed."
+  },
+  "thornridge": {
+   "kind": "veydal_beacon",
+   "x": 4,
+   "y": 6,
+   "name": "Thornridge Watchfire",
+   "line": "Once lit to warn of raiders. Now lit to warn of the mayor's speeches."
+  },
+  "wrenhollow": {
+   "kind": "veydal_standing_stone",
+   "x": 4,
+   "y": 10,
+   "name": "Wren Stone",
+   "line": "Children touch it for courage. Adults touch it to check it is still worth nothing."
+  },
+  "corvane_quay": {
+   "kind": "corvane_heron_post",
+   "x": 11,
+   "y": 8,
+   "name": "Quay Heron",
+   "line": "A carved heron watches the ferry. It has seen things and is not telling."
+  },
+  "madderby": {
+   "kind": "corvane_drying_rack",
+   "x": 11,
+   "y": 7,
+   "name": "Madderby Racks",
+   "line": "Cloth hung here to take the dye. Since the colour left, it just hangs here and judges you."
+  },
+  "stillwater": {
+   "kind": "corvane_sluice_wheel",
+   "x": 11,
+   "y": 12,
+   "name": "Stillwater Wheel",
+   "line": "The wheel turns though no water moves. The miller says it is magic. The miller's nephew looks very tired."
+  },
+  "woadfen": {
+   "kind": "corvane_dye_mill",
+   "x": 9,
+   "y": 11,
+   "name": "Woad Mill",
+   "line": "Its last owner sold it twice, to two brothers. Only one brother still comes to visit."
+  },
+  "greyreach": {
+   "kind": "corvane_heron_post",
+   "x": 4,
+   "y": 11,
+   "name": "Greyreach Heron",
+   "line": "Corvane carves herons to watch its roads. Nobody carves anyone to watch the herons."
+  },
+  "ashmere_station": {
+   "kind": "ashmere_smelter_stack",
+   "x": 7,
+   "y": 3,
+   "name": "Station Stack",
+   "line": "The smelter closed years ago. The stack still smokes. Nobody asks what it burns."
+  },
+  "cinderfold": {
+   "kind": "ashmere_bell_frame",
+   "x": 7,
+   "y": 2,
+   "name": "Cinder Bell",
+   "line": "It rang for the great fire, an hour late. Its ringer has rung it as a punishment ever since."
+  },
+  "saltglass": {
+   "kind": "ashmere_salt_obelisk",
+   "x": 10,
+   "y": 21,
+   "name": "Salt Needle",
+   "line": "A sign says: lick it for luck. A second sign says: never trust the first sign."
+  },
+  "cindergate_quay": {
+   "kind": "vellmarch_customs_crane",
+   "x": 5,
+   "y": 5,
+   "name": "Customs Crane",
+   "line": "It lifts cargo off the barges and onto the House's ledger. Twice it has lifted a clerk. Nobody wrote that down."
+  },
+  "tallowmarket": {
+   "kind": "vellmarch_great_candle",
+   "x": 6,
+   "y": 8,
+   "name": "The Great Candle",
+   "line": "Lit the day the foundry opened. It was meant to last a hundred years. The foundry workers were not."
+  },
+  "hookwick": {
+   "kind": "vellmarch_lock_wheel",
+   "x": 7,
+   "y": 10,
+   "name": "Hookwick Lock Wheel",
+   "line": "One turn opens the lock. Odile charges per turn and counts in halves."
+  },
+  "larkspur_heights": {
+   "kind": "vellmarch_masked_statue",
+   "x": 5,
+   "y": 13,
+   "name": "The Masked Founder",
+   "line": "Nobody remembers the face under the mask. The family paid extra for that."
+  },
+  "lastlamp": {
+   "kind": "vellmarch_last_lamp",
+   "x": 9,
+   "y": 13,
+   "name": "The Last Lamp",
+   "line": "Past this light the marsh keeps what it finds. The lamp is refilled every day. So is the marsh."
+  }
+ }
+}

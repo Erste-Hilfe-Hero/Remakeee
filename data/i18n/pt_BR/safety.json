@@ -1,0 +1,18 @@
+{
+ "_comment": "pt_BR translation of the safety table, keyed by the English text.",
+ "strings": {
+  "Battle over": "Batalha encerrada",
+  "Bunds": "Trupes",
+  "For parents...": "Para os pais...",
+  "For parents: switch off what your child should not use. Friends and saves stay.": "Para os pais: desativem o que a criança não deve usar. Amigos e jogos salvos permanecem.",
+  "Open league": "Liga Aberta",
+  "Report the rival...": "Denunciar o rival...",
+  "Suggestions from league battles": "Sugestões das batalhas de liga",
+  "These switches are for parents. Continue?": "Estas opções são para os pais. Continuar?",
+  "This battle was against your own echo, so there is nobody to report.": "Esta batalha foi contra o seu próprio eco, então não há ninguém para denunciar.",
+  "This is switched off under Settings, Account, For parents.": "Isto está desativado em Configurações, Conta, Para os pais.",
+  "Under 16: open league, bunds and suggestions start switched off.": "Menores de 16: Liga Aberta, Trupes e sugestões começam desativadas.",
+  "Why do you report the rival?": "Por que você está denunciando o rival?",
+  "You met this rival 3 times today, so this battle does not count.": "Você encontrou este rival 3 vezes hoje, então esta batalha não conta."
+ }
+}

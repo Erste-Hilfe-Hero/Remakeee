@@ -1,0 +1,106 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "star_clerk",
+    "x": 7,
+    "y": 17,
+    "facing": "left",
+    "dialogue": "orrery_rift/star_clerk",
+    "sprite": "warden",
+    "trainer": "Star Clerk Benedikt",
+    "intro": "orrery_rift/star_clerk_intro",
+    "defeat": "orrery_rift/star_clerk_defeat",
+    "money": 4100,
+    "team": [
+     {
+      "species": "Solmantle",
+      "level": 85
+     },
+     {
+      "species": "Orrerine",
+      "level": 85
+     },
+     {
+      "species": "Noonwhist",
+      "level": 86
+     }
+    ]
+   },
+   {
+    "id": "warden_isaura",
+    "x": 5,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "orrery_rift/isaura",
+    "sprite": "warden",
+    "trainer": "Warden Isaura",
+    "warden": "v4_orrery",
+    "team": [
+     {
+      "species": "Orrerine",
+      "level": 83
+     },
+     {
+      "species": "Solmantle",
+      "level": 83
+     },
+     {
+      "species": "Hazejellith",
+      "level": 84
+     },
+     {
+      "species": "Orremarch",
+      "level": 84
+     }
+    ],
+    "intro": "orrery_rift/isaura_intro",
+    "defeat": "orrery_rift/isaura_defeat",
+    "ai": 2,
+    "money": 8200,
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Fulgorath",
+       "level": 100
+      },
+      {
+       "species": "Solmantle",
+       "level": 100
+      },
+      {
+       "species": "Hazejellith",
+       "level": 101
+      },
+      {
+       "species": "Noonsoral",
+       "level": 101
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Orrerine",
+       "level": 85
+      },
+      {
+       "species": "Solmantle",
+       "level": 85
+      },
+      {
+       "species": "Hazejellith",
+       "level": 86
+      },
+      {
+       "species": "Orremarch",
+       "level": 86
+      },
+      {
+       "species": "Orrerine",
+       "level": 81
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

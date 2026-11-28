@@ -1,0 +1,683 @@
+{
+ "name": "Drowned Dyeworks",
+ "region": "corvane",
+ "biome": "dungeon",
+ "backdrop": "lake",
+ "field": "deep_murk",
+ "encounters": "dyeworks",
+ "goal": "Goal: turn the valves in the order on the brass plate.",
+ "rows": [
+  "@@@@@==@@@@@",
+  "@..........@",
+  "@.S..S..S..@",
+  "@..........@",
+  "@S~~....~~S@",
+  "@.~~....~~.@",
+  "@..........@",
+  "@%%......%%@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 8,
+   "to": "stillwater",
+   "tx": 5,
+   "ty": 10,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 8,
+   "to": "stillwater",
+   "tx": 6,
+   "ty": 10,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "dyeworks@1",
+   "tx": 5,
+   "ty": 7,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "dyeworks@1",
+   "tx": 6,
+   "ty": 7,
+   "facing": "up"
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 2,
+   "dialogue": "dyeworks/r0_valve_0"
+  },
+  {
+   "x": 5,
+   "y": 2,
+   "dialogue": "dyeworks/r0_valve_1"
+  },
+  {
+   "x": 8,
+   "y": 2,
+   "dialogue": "dyeworks/r0_valve_2"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "dialogue": "dyeworks/r0_plate"
+  },
+  {
+   "x": 10,
+   "y": 4,
+   "dialogue": "dyeworks/hint_board"
+  },
+  {
+   "x": 1,
+   "y": 5,
+   "dialogue": "dyeworks/seal_1",
+   "hide_flag": "seal_1"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 0,
+   "open_flag": "dye_room_0"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "open_flag": "dye_room_0"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "sim",
+   "x": 3,
+   "y": 3,
+   "facing": "right",
+   "dialogue": "dyeworks/sim",
+   "sprite": "villager",
+   "trainer": "Mudlark Sim",
+   "intro": "dyeworks/sim_intro",
+   "defeat": "dyeworks/sim_defeat",
+   "money": 950,
+   "team": [
+    {
+     "species": "Weirrunner",
+     "level": 22
+    },
+    {
+     "species": "Puddock",
+     "level": 22
+    }
+   ]
+  }
+ ],
+ "secrets": [
+  {
+   "x": 10,
+   "y": 5,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_dye_hatch"
+  }
+ ],
+ "floors": [
+  {
+   "name": "Drowned Dyeworks, vat hall",
+   "goal": "Goal: turn the valves in the order on the brass plate.",
+   "rows": [
+    "@@@@@==@@@@@",
+    "@..~~..~~..@",
+    "@S.~~S.~~.S@",
+    "@..........@",
+    "@S......S..@",
+    "@.~~....~~S@",
+    "@..........@",
+    "@::......::@",
+    "@@@@@__@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 8,
+     "to": "dyeworks",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 8,
+     "to": "dyeworks",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "dyeworks@2",
+     "tx": 5,
+     "ty": 7,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "dyeworks@2",
+     "tx": 6,
+     "ty": 7,
+     "facing": "up"
+    }
+   ],
+   "signs": [
+    {
+     "x": 1,
+     "y": 2,
+     "dialogue": "dyeworks/r1_valve_0"
+    },
+    {
+     "x": 5,
+     "y": 2,
+     "dialogue": "dyeworks/r1_valve_1"
+    },
+    {
+     "x": 10,
+     "y": 2,
+     "dialogue": "dyeworks/r1_valve_2"
+    },
+    {
+     "x": 8,
+     "y": 4,
+     "dialogue": "dyeworks/r1_valve_3"
+    },
+    {
+     "x": 1,
+     "y": 4,
+     "dialogue": "dyeworks/r1_plate"
+    },
+    {
+     "x": 10,
+     "y": 5,
+     "dialogue": "dyeworks/shift_bell_1"
+    },
+    {
+     "x": 6,
+     "y": 1,
+     "dialogue": "dyeworks/seal_2",
+     "hide_flag": "seal_2"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "dye_room_1"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "dye_room_1"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "rufus",
+     "x": 2,
+     "y": 6,
+     "facing": "right",
+     "dialogue": "dyeworks/rufus",
+     "sprite": "villager",
+     "trainer": "Larkin Vat Guard Rufus",
+     "intro": "dyeworks/rufus_intro",
+     "defeat": "dyeworks/rufus_defeat",
+     "money": 1000,
+     "team": [
+      {
+       "species": "Rubricorn",
+       "level": 23
+      },
+      {
+       "species": "Sluicer",
+       "level": 23
+      }
+     ],
+     "color": "b04a4a"
+    },
+    {
+     "id": "isolde",
+     "x": 9,
+     "y": 6,
+     "facing": "left",
+     "dialogue": "dyeworks/isolde",
+     "sprite": "villager",
+     "trainer": "Fennimore Vat Guard Isolde",
+     "intro": "dyeworks/isolde_intro",
+     "defeat": "dyeworks/isolde_defeat",
+     "money": 1000,
+     "team": [
+      {
+       "species": "Woadwhorl",
+       "level": 23
+      },
+      {
+       "species": "Padlet",
+       "level": 24
+      }
+     ],
+     "color": "3a5a9a"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 4,
+     "y": 6,
+     "item": "remedy",
+     "count": 2,
+     "flag": "find_dye_vats"
+    }
+   ]
+  },
+  {
+   "name": "Drowned Dyeworks, drying lofts",
+   "goal": "Goal: turn the valves in the order on the brass plate.",
+   "rows": [
+    "@@@@@==@@@@@",
+    "@..........@",
+    "@S.S....S.S@",
+    "@..........@",
+    "@S..####...@",
+    "@...####..S@",
+    "@..........@",
+    "@::......::@",
+    "@@@@@__@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 8,
+     "to": "dyeworks@1",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 8,
+     "to": "dyeworks@1",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "dyeworks@3",
+     "tx": 5,
+     "ty": 7,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "dyeworks@3",
+     "tx": 6,
+     "ty": 7,
+     "facing": "up"
+    }
+   ],
+   "signs": [
+    {
+     "x": 1,
+     "y": 2,
+     "dialogue": "dyeworks/r2_valve_0"
+    },
+    {
+     "x": 3,
+     "y": 2,
+     "dialogue": "dyeworks/r2_valve_1"
+    },
+    {
+     "x": 8,
+     "y": 2,
+     "dialogue": "dyeworks/r2_valve_2"
+    },
+    {
+     "x": 10,
+     "y": 2,
+     "dialogue": "dyeworks/r2_valve_3"
+    },
+    {
+     "x": 1,
+     "y": 4,
+     "dialogue": "dyeworks/r2_plate"
+    },
+    {
+     "x": 10,
+     "y": 5,
+     "dialogue": "dyeworks/shift_bell_2"
+    },
+    {
+     "x": 6,
+     "y": 1,
+     "dialogue": "dyeworks/seal_3",
+     "hide_flag": "seal_3"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "dye_room_2"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "dye_room_2"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "hatch",
+     "x": 9,
+     "y": 4,
+     "facing": "left",
+     "dialogue": "dyeworks/hatch",
+     "sprite": "elder",
+     "color": "5a6a5a",
+     "hide_flag": "hatch_done"
+    },
+    {
+     "id": "moll",
+     "x": 3,
+     "y": 3,
+     "facing": "right",
+     "dialogue": "dyeworks/moll",
+     "sprite": "villager",
+     "trainer": "Dye Thief Moll",
+     "intro": "dyeworks/moll_intro",
+     "defeat": "dyeworks/moll_defeat",
+     "money": 1050,
+     "team": [
+      {
+       "species": "Rushprowl",
+       "level": 24
+      },
+      {
+       "species": "Woadwhorl",
+       "level": 24
+      },
+      {
+       "species": "Padlet",
+       "level": 24
+      }
+     ]
+    },
+    {
+     "id": "tansy_2",
+     "x": 8,
+     "y": 6,
+     "facing": "left",
+     "dialogue": "dyeworks/tansy_2",
+     "sprite": "ranger",
+     "color": "8a4a6a",
+     "show_flag": "beat_story_tansy_1",
+     "hide_flag": "beat_story_tansy_2"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 10,
+     "y": 1,
+     "item": "strong_tonic",
+     "count": 1,
+     "flag": "find_dye_lofts"
+    }
+   ]
+  },
+  {
+   "name": "Drowned Dyeworks, dye pits",
+   "goal": "Goal: turn the valves in the order on the brass plate.",
+   "rows": [
+    "@@@@@==@@@@@",
+    "@..........@",
+    "@S.S.S.S.S.@",
+    "@..........@",
+    "@S~~~..~~~.@",
+    "@.~~~..~~~S@",
+    "@..........@",
+    "@ww......ww@",
+    "@@@@@__@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 8,
+     "to": "dyeworks@2",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 8,
+     "to": "dyeworks@2",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "dyeworks@4",
+     "tx": 5,
+     "ty": 7,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "dyeworks@4",
+     "tx": 6,
+     "ty": 7,
+     "facing": "up"
+    }
+   ],
+   "signs": [
+    {
+     "x": 1,
+     "y": 2,
+     "dialogue": "dyeworks/r3_valve_0"
+    },
+    {
+     "x": 3,
+     "y": 2,
+     "dialogue": "dyeworks/r3_valve_1"
+    },
+    {
+     "x": 5,
+     "y": 2,
+     "dialogue": "dyeworks/r3_valve_2"
+    },
+    {
+     "x": 7,
+     "y": 2,
+     "dialogue": "dyeworks/r3_valve_3"
+    },
+    {
+     "x": 9,
+     "y": 2,
+     "dialogue": "dyeworks/r3_valve_4"
+    },
+    {
+     "x": 1,
+     "y": 4,
+     "dialogue": "dyeworks/r3_plate"
+    },
+    {
+     "x": 10,
+     "y": 5,
+     "dialogue": "dyeworks/shift_bell_3"
+    },
+    {
+     "x": 10,
+     "y": 1,
+     "dialogue": "dyeworks/seal_4",
+     "hide_flag": "seal_4"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "dye_room_3"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "dye_room_3"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "agnes",
+     "x": 8,
+     "y": 3,
+     "facing": "left",
+     "dialogue": "dyeworks/agnes",
+     "sprite": "villager",
+     "trainer": "Pit Diver Agnes",
+     "intro": "dyeworks/agnes_intro",
+     "defeat": "dyeworks/agnes_defeat",
+     "money": 1100,
+     "team": [
+      {
+       "species": "Ripjolter",
+       "level": 24
+      },
+      {
+       "species": "Delthorn",
+       "level": 25
+      },
+      {
+       "species": "Weirrunner",
+       "level": 25
+      }
+     ]
+    }
+   ],
+   "secrets": [
+    {
+     "x": 1,
+     "y": 1,
+     "item": "revival_leaf",
+     "count": 1,
+     "flag": "find_dye_pits"
+    }
+   ]
+  },
+  {
+   "name": "Drowned Dyeworks, counting room",
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@..........@",
+    "@.S........@",
+    "@..........@",
+    "@..........@",
+    "@::......::@",
+    "@::......::@",
+    "@::......::@",
+    "@@@@@__@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 8,
+     "to": "dyeworks@3",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 8,
+     "to": "dyeworks@3",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    }
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 2,
+     "dialogue": "dyeworks/ledger_desk"
+    },
+    {
+     "x": 10,
+     "y": 4,
+     "dialogue": "dyeworks/seal_5",
+     "hide_flag": "seal_5"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "cardew",
+     "x": 6,
+     "y": 2,
+     "facing": "down",
+     "dialogue": "dyeworks/cardew",
+     "sprite": "stranger_hat",
+     "trainer": "Cardew the Loss Adjuster",
+     "intro": "dyeworks/cardew_intro",
+     "defeat": "dyeworks/cardew_defeat",
+     "money": 2100,
+     "team": [
+      {
+       "species": "Cogwright",
+       "level": 26
+      },
+      {
+       "species": "Reedwarden",
+       "level": 26
+      },
+      {
+       "species": "Rubricorn",
+       "level": 27
+      },
+      {
+       "species": "Woadwhorl",
+       "level": 27
+      }
+     ],
+     "ai": 3,
+     "beaten_flag": "beat_cardew"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 1,
+     "y": 1,
+     "item": "max_tonic",
+     "count": 1,
+     "flag": "find_dye_count_1"
+    },
+    {
+     "x": 10,
+     "y": 1,
+     "item": "spark_drop",
+     "count": 1,
+     "flag": "find_dye_count_2"
+    }
+   ]
+  }
+ ]
+}

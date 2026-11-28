@@ -1,0 +1,98 @@
+{
+ "name": "Gravers' Hall",
+ "region": "ashmere",
+ "biome": "town",
+ "backdrop": "ember",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCffCCCW",
+  "WffffffffW",
+  "WfCCffCCfW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 8,
+   "to": "cinderfold",
+   "tx": 4,
+   "ty": 6,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "undertaker",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "gravers_hall/undertaker",
+   "sprite": "elder"
+  },
+  {
+   "id": "brisk",
+   "x": 6,
+   "y": 5,
+   "facing": "down",
+   "dialogue": "ashmere_side/brisk",
+   "sprite": "villager"
+  },
+  {
+   "id": "pell",
+   "x": 2,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "ashmere_side/pell",
+   "sprite": "villager"
+  },
+  {
+   "id": "fixer",
+   "x": 1,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "gravers_hall/fixer",
+   "sprite": "villager"
+  },
+  {
+   "id": "coach",
+   "x": 8,
+   "y": 4,
+   "facing": "left",
+   "dialogue": "gravers_hall/coach",
+   "sprite": "villager"
+  },
+  {
+   "id": "lq_moll",
+   "x": 6,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "legend_quests/monolurk_witness",
+   "sprite": "elder",
+   "show_flag": "lq_monolurk_met",
+   "hide_flag": "lq_monolurk_ready"
+  }
+ ],
+ "signs": [],
+ "spots": {
+  "halvard": [
+   4,
+   2
+  ],
+  "veit_plate": [
+   7,
+   3
+  ],
+  "page_14": [
+   1,
+   6
+  ],
+  "letter_a2": [
+   8,
+   6
+  ]
+ }
+}

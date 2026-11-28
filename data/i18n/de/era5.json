@@ -1,0 +1,7 @@
+{
+ "_comment": "German texts from tools/i18n/de_era5.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "The world comes alive. Every Spirling moves on its own now, and the battle follows every strike!": "Die Welt erwacht. Jeder Spirling bewegt sich jetzt von selbst, und der Kampf folgt jedem Schlag!"
+ }
+}

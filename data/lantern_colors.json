@@ -1,0 +1,17 @@
+{
+ "_doc": "Flame colours of the Wayfarer's lantern (KAMPF_PLAN_1000 item 837): cosmetic endgame rewards, nothing else changes. The colour tints the light circle in caves from Era III on (soft edge); Era I and II keep their ink look. unlock: {} (always), {flag}, {record, at} (GameState.records value at least at) or {hall_clears} (BattleHalls.total_clears). Scripts: LanternColors.gd, PauseMenu Storm Lantern, EraLightLayer.",
+ "default": "lamp_gold",
+ "colors": [
+  {"id": "lamp_gold", "name": "Lamp Gold", "color": "f2c14e", "hint": "Always lit.", "unlock": {}},
+  {"id": "ember_red", "name": "Ember Red", "color": "e0563a", "hint": "Climb the whole lighthouse stair.", "unlock": {"flag": "gauntlet_clear"}},
+  {"id": "drowned_blue", "name": "Drowned Blue", "color": "4f8fe0", "hint": "Reach floor 20 of the endless stretch.", "unlock": {"record": "endless_best", "at": 20}},
+  {"id": "hall_violet", "name": "Hall Violet", "color": "a46ee0", "hint": "Clear the Battle Halls 10 times.", "unlock": {"hall_clears": 10}},
+  {"id": "wardens_ash", "name": "Wardens' Ash", "color": "d8d4e8", "hint": "Beat every Warden in one master tour.", "unlock": {"flag": "master_tour_clear"}},
+  {"id": "keeper_white", "name": "Keeper White", "color": "f4f1e6", "hint": "Answer the Keeper's Stones in Veydal.", "unlock": {"flag": "pz_vey_keeper_final"}},
+  {"id": "glass_green", "name": "Glassblower Green", "color": "6ec890", "hint": "Read the glassblower's will in Ashmere.", "unlock": {"flag": "pz_ash_glass_final"}},
+  {"id": "woad_teal", "name": "Woad Teal", "color": "3a9a9a", "hint": "Dye the vats in the dyers' order in Madderby.", "unlock": {"flag": "pz_cor_dye"}},
+  {"id": "dune_amber", "name": "Dune Amber", "color": "e0a050", "hint": "Turn the dome mirrors of Ochrewell to the sun.", "unlock": {"flag": "pz_sol_mirrors"}},
+  {"id": "ledger_ink", "name": "Ledger Ink", "color": "5a5ad0", "hint": "Answer the Ledger Stones of Quillmarch and Vellmarch.", "unlock": {"flag": "pz_vell_ledger_final"}},
+  {"id": "star_silver", "name": "Star Silver", "color": "c8d4e8", "hint": "Set the orrery on Orrery Ridge.", "unlock": {"flag": "pz_hal_orrery"}}
+ ]
+}

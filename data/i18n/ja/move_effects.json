@@ -1,0 +1,9 @@
+{
+ "_comment": "ja translation of the move_effects table, keyed by the English text.",
+ "strings": {
+  "Costs %d%% of its own Vigor, never the last point.": "自分の活力の%d%%を消費する。最後の1は残る。",
+  "Cures the status of its whole team.": "味方チーム全体の状態を治す。",
+  "Gains %d Energy.": "気力を%d得る。",
+  "Sets every stage on both sides back to 0.": "両陣営のすべての段階を0にもどす。"
+ }
+}

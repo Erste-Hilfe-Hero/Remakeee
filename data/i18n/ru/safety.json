@@ -1,0 +1,18 @@
+{
+ "_comment": "ru translation of the safety table, keyed by the English text.",
+ "strings": {
+  "Battle over": "Бой окончен",
+  "Bunds": "Союзы",
+  "For parents...": "Для родителей...",
+  "For parents: switch off what your child should not use. Friends and saves stay.": "Для родителей: отключите то, чем ребёнку пользоваться не стоит. Друзья и сохранения останутся.",
+  "Open league": "Открытая лига",
+  "Report the rival...": "Пожаловаться на соперника...",
+  "Suggestions from league battles": "Предложения из боёв лиги",
+  "These switches are for parents. Continue?": "Эти переключатели для родителей. Продолжить?",
+  "This battle was against your own echo, so there is nobody to report.": "Этот бой был против твоего собственного эха, так что жаловаться не на кого.",
+  "This is switched off under Settings, Account, For parents.": "Это отключено в разделе Настройки, Аккаунт, Для родителей.",
+  "Under 16: open league, bunds and suggestions start switched off.": "До 16 лет: открытая лига, союзы и предложения изначально отключены.",
+  "Why do you report the rival?": "Почему жалоба на соперника?",
+  "You met this rival 3 times today, so this battle does not count.": "Сегодня это уже третья встреча с этим соперником, поэтому бой не засчитан."
+ }
+}

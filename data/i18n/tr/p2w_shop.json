@@ -1,0 +1,23 @@
+{
+ "_comment": "Translations of the German table p2w_shop, written by tools/i18n/locales_p2w_shop.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "+%d %% bonus": "+%d %% bonus",
+  "A one-time pack for your journey": "Yolculuğun için tek seferlik paket",
+  "After the tier before it": "Önceki kademeden sonra",
+  "All advantages": "Tüm avantajlar",
+  "Best value": "En avantajlı",
+  "Bestseller": "Çok satan",
+  "Featured": "Öne çıkan",
+  "First buy x2": "İlk alım x2",
+  "Later in the journey": "Yolculukta daha sonra",
+  "Limited": "Sınırlı",
+  "Owned": "Sende var",
+  "Pay %d Riftglass": "%d Yarık Camı öde",
+  "Popular": "Popüler",
+  "Show": "Göster",
+  "Show offer": "Teklifi gör",
+  "Show the pass": "Pasoyu göster",
+  "Until %s": "Bitiş: %s",
+  "Use it": "Kullan"
+ }
+}

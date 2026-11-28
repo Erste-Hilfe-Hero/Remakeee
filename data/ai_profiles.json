@@ -1,0 +1,123 @@
+{
+ "_doc": "Wayfarer personalities (docs/plan5000/02_kampf.md, items 611-619). Weights scale parts of BattleAI.score_move; swap_below -1 means never swap by choice, null keeps the default rule; heal_below is a share of Vigor, rest_below an Energy count (-1 keeps the default rule). setup_stats limits setup_w to those own stats. field_renew 1 renews its own field at 1 turn left; plan_energy 1 rests for a much better art next turn; second_best is the chance to take the runner-up art (not on ai level 3); drain_w weighs draining arts. Mottos and battle lines: data/dialogue/battle_lines.json. spread_w scales arts that hit every foe (sweeper, KAMPF_PLAN_1000 item 526); charge_w above 1 counts the full Overcharge hit even without a knock-out (surger, item 558).",
+ "balanced": {
+  "damage_w": 1.0,
+  "status_w": 1.0,
+  "setup_w": 1.0,
+  "field_w": 1.0,
+  "swap_below": null,
+  "heal_below": 0.3,
+  "rest_below": -1,
+  "focus_fire": 0,
+  "status_first": 0
+ },
+ "hothead": {
+  "damage_w": 1.4,
+  "status_w": 0.4,
+  "setup_w": 0.3,
+  "field_w": 1.0,
+  "swap_below": -1,
+  "heal_below": 0.3,
+  "rest_below": 1,
+  "focus_fire": 0,
+  "status_first": 0
+ },
+ "wall": {
+  "damage_w": 0.8,
+  "status_w": 1.0,
+  "setup_w": 1.5,
+  "field_w": 1.0,
+  "swap_below": 0.5,
+  "heal_below": 0.45,
+  "rest_below": -1,
+  "focus_fire": 0,
+  "status_first": 0,
+  "setup_stats": [
+   "def",
+   "foc"
+  ]
+ },
+ "spoiler": {
+  "damage_w": 1.0,
+  "status_w": 1.6,
+  "setup_w": 1.0,
+  "field_w": 1.0,
+  "swap_below": null,
+  "heal_below": 0.3,
+  "rest_below": -1,
+  "focus_fire": 0,
+  "status_first": 1
+ },
+ "field_keeper": {
+  "damage_w": 1.0,
+  "status_w": 1.0,
+  "setup_w": 1.0,
+  "field_w": 2.0,
+  "swap_below": null,
+  "heal_below": 0.3,
+  "rest_below": -1,
+  "focus_fire": 0,
+  "status_first": 0,
+  "field_renew": 1
+ },
+ "tactician": {
+  "damage_w": 1.0,
+  "status_w": 1.0,
+  "setup_w": 1.0,
+  "field_w": 1.0,
+  "swap_below": 0.7,
+  "heal_below": 0.3,
+  "rest_below": -1,
+  "focus_fire": 1,
+  "status_first": 0,
+  "plan_energy": 1
+ },
+ "apprentice": {
+  "damage_w": 1.0,
+  "status_w": 1.0,
+  "setup_w": 1.0,
+  "field_w": 1.0,
+  "swap_below": null,
+  "heal_below": 0.3,
+  "rest_below": -1,
+  "focus_fire": 0,
+  "status_first": 0,
+  "second_best": 0.3
+ },
+ "enduring": {
+  "damage_w": 1.0,
+  "status_w": 1.0,
+  "setup_w": 1.0,
+  "field_w": 1.0,
+  "swap_below": null,
+  "heal_below": 0.6,
+  "rest_below": 4,
+  "focus_fire": 0,
+  "status_first": 0,
+  "drain_w": 1.5
+ },
+ "sweeper": {
+  "damage_w": 1.0,
+  "status_w": 1.0,
+  "setup_w": 1.0,
+  "field_w": 1.0,
+  "swap_below": null,
+  "heal_below": 0.3,
+  "rest_below": -1,
+  "focus_fire": 1,
+  "status_first": 0,
+  "spread_w": 1.5
+ },
+ "surger": {
+  "damage_w": 1.0,
+  "status_w": 1.0,
+  "setup_w": 1.0,
+  "field_w": 1.0,
+  "swap_below": null,
+  "heal_below": 0.3,
+  "rest_below": 2,
+  "focus_fire": 0,
+  "status_first": 0,
+  "charge_w": 1.3
+ }
+}

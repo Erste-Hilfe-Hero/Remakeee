@@ -1,0 +1,35 @@
+{
+ "name": "Net Loft",
+ "region": "vellmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCCffCCW",
+  "WffffffW",
+  "WffffffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "cindergate_quay",
+   "tx": 9,
+   "ty": 7,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "mender",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/cindergate_quay_net_loft_mender",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

@@ -1,0 +1,11 @@
+{
+ "_comment": "Texts for nl from tools/i18n/locales_kampf_k27.py (KAMPF_PLAN_1000 items 138, 179).",
+ "strings": {
+  "%s is cured.": "%s is genezen.",
+  "Hesper: %d coins. Forgetting is free, remembering is not.": "Hesper: %d munten. Vergeten is gratis, herinneren niet.",
+  "Hesper: %s remembers everything it can. Lucky thing.": "Hesper: %s weet nog alles wat het kan. Geluksvogel.",
+  "Hesper: And if one of yours forgot an art it once knew, I can dig it back up. For a fee. Memory is cheap; mine isn't.": "Hesper: En als een van de jouwe een techniek vergat die hij ooit kende, graaf ik die weer op. Tegen betaling. Geheugen is goedkoop; het mijne niet.",
+  "On Story every status ends with the battle. On the other difficulties Scorch, Root and Jolt stay on until an item, an art or a rest cures them.": "Op Verhaal eindigt elke status met het gevecht. Op de andere niveaus blijven Brand, Wortels en Schok tot een voorwerp, een techniek of rust ze geneest.",
+  "Who forgot an art? %d coins each.": "Wie vergat een techniek? %d munten per stuk."
+ }
+}

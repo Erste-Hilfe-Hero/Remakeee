@@ -1,0 +1,103 @@
+{
+ "name": "Ash Assize",
+ "region": "ashmere",
+ "biome": "town",
+ "backdrop": "ember",
+ "rows": [
+  "WWWWWWWWWWWW",
+  "WCCCffffCCCW",
+  "WffffffffffW",
+  "WffCCffCCffW",
+  "WSffffffffSW",
+  "WffffffffffW",
+  "WCffffffffCW",
+  "WffffffffffW",
+  "WffffffffffW",
+  "WWWWWDWWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 9,
+   "to": "clinker_heath",
+   "tx": 5,
+   "ty": 12,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "greaves",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "ashmere_more/greaves",
+   "sprite": "elder",
+   "color": "5a3a3a"
+  },
+  {
+   "id": "tansy",
+   "x": 8,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "ashmere_more/tansy",
+   "sprite": "villager",
+   "color": "7a7a9a"
+  },
+  {
+   "id": "briony",
+   "x": 3,
+   "y": 5,
+   "facing": "right",
+   "dialogue": "ashmere_more/briony",
+   "sprite": "villager",
+   "color": "9a6a3a"
+  },
+  {
+   "id": "orla",
+   "x": 9,
+   "y": 7,
+   "facing": "left",
+   "dialogue": "ashmere_more/orla",
+   "sprite": "elder",
+   "color": "8a8a5a"
+  },
+  {
+   "id": "keeper",
+   "x": 2,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "ashmere_more/keeper",
+   "sprite": "elder"
+  },
+  {
+   "id": "trader",
+   "x": 2,
+   "y": 7,
+   "facing": "right",
+   "dialogue": "ashmere_more/trader",
+   "sprite": "villager"
+  }
+ ],
+ "signs": [
+  {
+   "x": 10,
+   "y": 4,
+   "dialogue": "ash_assize/docket"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "dialogue": "ash_assize/archive"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 5,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_assize_evidence"
+  }
+ ]
+}

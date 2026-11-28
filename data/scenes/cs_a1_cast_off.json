@@ -1,0 +1,79 @@
+{
+ "_note": "Act I to II on the Brindlewick pier: the village waves the ferry off before the Act II card (inside ferry_crossing).",
+ "once": true,
+ "era": 1,
+ "steps": [
+  {
+   "spawn": "cs_wave_1",
+   "near": "player",
+   "dx": -2,
+   "dy": 0,
+   "sprite": "villager",
+   "facing": "right"
+  },
+  {
+   "spawn": "cs_wave_2",
+   "near": "player",
+   "dx": -3,
+   "dy": 1,
+   "sprite": "elder",
+   "facing": "right",
+   "color": "4a6ab0"
+  },
+  {
+   "spawn": "cs_wave_3",
+   "near": "player",
+   "dx": -4,
+   "dy": 0,
+   "sprite": "villager",
+   "facing": "right",
+   "color": "6a8a3a"
+  },
+  {
+   "move": "cs_wave_1",
+   "path": [
+    "right"
+   ]
+  },
+  {
+   "emote": "cs_wave_1",
+   "icon": "heart"
+  },
+  {
+   "emote": "cs_wave_2",
+   "icon": "note"
+  },
+  {
+   "say": [
+    "Aldo: Wave, then. They came to watch an old man row."
+   ]
+  },
+  {
+   "face": "player",
+   "dir": "left"
+  },
+  {
+   "emote": "player",
+   "icon": "note"
+  },
+  {
+   "pan": [
+    0,
+    3
+   ],
+   "time": 1.2
+  },
+  {
+   "wait": 2.4
+  },
+  {
+   "say": [
+    "Someone hums the Echo melody. All join in."
+   ]
+  },
+  {
+   "pan": "back",
+   "time": 0.6
+  }
+ ]
+}

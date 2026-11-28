@@ -1,0 +1,549 @@
+{
+ "sabine": {
+  "if": {
+   "not_flag": "s4_ladder_asked"
+  },
+  "else": "sabine_climb",
+  "lines": [
+   "Ladder Master Sabine: Welcome to the Glasswind Ladder. Eight Wayfarers, one rung each, no skipping, no crying on the rungs.",
+   "Ladder Master Sabine: Six rungs stand out on the flats. Seven and eight wait in here. Climb all eight and the purse is yours.",
+   "Ladder Master Sabine: Three thousand coins. Nobody has ever collected. That's not a warning, that's a statistic."
+  ],
+  "action": "set_flag s4_ladder_asked"
+ },
+ "sabine_climb": {
+  "if": {
+   "not_flag": "ladder_rung_8"
+  },
+  "else": "sabine_purse",
+  "lines": [
+   "Ladder Master Sabine: Still climbing? Good. Falling is free, climbing is the part with dignity."
+  ]
+ },
+ "sabine_purse": {
+  "if": {
+   "not_flag": "betrayal_sabine_purse"
+  },
+  "else": "sabine_after",
+  "lines": [
+   "Ladder Master Sabine: You beat Dario. My own son. I'm so proud I could cry. On the purse, mostly.",
+   "Ladder Master Sabine: Here it is. Do read rule nine on the back, dear. Everybody skips rule nine."
+  ],
+  "action": "betrayal sabine_purse"
+ },
+ "sabine_after": [
+  "Ladder Master Sabine: The ladder's open again. Same rules. Fewer, after you."
+ ],
+ "purse_caught": [
+  "You hold up the promise Old Pell made her write on the ladder board. In chalk, signed, witnessed by a goat.",
+  "Sabine: Rule nine says the purse goes to the house. Rule ten, apparently, says the goat outranks me. Fine. Take it."
+ ],
+ "purse_struck": [
+  "Rule nine, in very small letters: 'The purse remains property of the house. The winner may keep the feeling.'",
+  "Sabine: And the bouncers would like a word about your attitude. Several words. With Spirlings."
+ ],
+ "bouncers_defeat": [
+  "Bouncer: We'll put you down as 'left voluntarily'. Here's the consolation purse. It's mostly buttons."
+ ],
+ "bouncers_lose": [
+  "The bouncers walk you to the door, then a bit further. The desert is very big when you're carried."
+ ],
+ "ledger_purse": [
+  "The ladder purse",
+  "Sabine promised three thousand coins to whoever climbed her ladder, then pointed at rule nine on the back of the purse."
+ ],
+ "board": {
+  "lines": [
+   "THE GLASSWIND LADDER - eight rungs, one purse. Rule one: no biting. Rules two to eight: see rule one."
+  ],
+  "after_flag": {
+   "flag": "c4_pell_warned",
+   "lines": [
+    "THE GLASSWIND LADDER. Under it, in fresh chalk: 'The purse goes to the winner. S.' And a hoof print."
+   ]
+  }
+ },
+ "hesper": {
+  "if": {
+   "not_flag": "s4_bells_asked"
+  },
+  "else": "hesper_count",
+  "lines": [
+   "Bell-Mender Hesper: Caravans used to follow the Bell Line across the flats. One bell per post, one post per mile, nobody lost.",
+   "Bell-Mender Hesper: Then the bells went missing. Nine of them. Bring them back and I'll hang them again. Safe roads for everyone."
+  ],
+  "action": "set_flag s4_bells_asked"
+ },
+ "hesper_count": {
+  "if": {
+   "not_flag": "s4_bells_done"
+  },
+  "else": "hesper_line",
+  "lines": [
+   "Bell-Mender Hesper: Any bells? Five lie out on the flats. The rest, they say, went into the Mirage Kiln. Bells don't walk, so somebody carried them."
+  ],
+  "next": "hesper_all"
+ },
+ "hesper_all": {
+  "if": {
+   "flag": [
+    "bell_1",
+    "bell_2",
+    "bell_3",
+    "bell_4",
+    "bell_5",
+    "bell_6",
+    "bell_7",
+    "bell_8",
+    "bell_9"
+   ]
+  },
+  "lines": [
+   "Bell-Mender Hesper: All nine! Listen to them. Like nine little liars clearing their throats. I mean choirboys. Choirboys.",
+   "Bell-Mender Hesper: I'll hang them on the posts tonight. Take this for your trouble."
+  ],
+  "action": "set_flag s4_bells_done; give_item swift_feather 1"
+ },
+ "hesper_line": {
+  "if": {
+   "var_min": {
+    "q_s4_bell_line_stage": 0
+   },
+   "var_max": {
+    "q_s4_bell_line_stage": 1
+   }
+  },
+  "else": "hesper_confront",
+  "lines": [
+   "Bell-Mender Hesper: Hear that? The Bell Line rings again. Driver Ott will tell you how much the caravans love it."
+  ]
+ },
+ "hesper_confront": {
+  "if": {
+   "var_min": {
+    "q_s4_bell_line_stage": 2
+   },
+   "var_max": {
+    "q_s4_bell_line_stage": 2
+   }
+  },
+  "else": "hesper_after",
+  "lines": [
+   "Bell-Mender Hesper: You read my ledger. Rude. I only moved the posts a little. A mile here, a mile there, into the kiln.",
+   "Bell-Mender Hesper: Venn pays per caravan. Safe roads were never the business. Lost ones are."
+  ],
+  "action": "battle hesper_line"
+ },
+ "hesper_defeat": [
+  "Bell-Mender Hesper: Fine. I'll move the posts back. Do you know how heavy a post is? Neither do I, I always had the crew carry them."
+ ],
+ "hesper_lose": [
+  "Bell-Mender Hesper: Ring, ring. That's the sound of you going the wrong way."
+ ],
+ "hesper_after": {
+  "lines": [
+   "Bell-Mender Hesper: The bells ring true now. Terrible for business. Mine, I mean."
+  ],
+  "action": "quest_stage s4_bell_line 3"
+ },
+ "ott": {
+  "if": {
+   "var_min": {
+    "q_s4_bell_line_stage": 0
+   },
+   "var_max": {
+    "q_s4_bell_line_stage": 0
+   }
+  },
+  "else": "ott_twin",
+  "lines": [
+   "Driver Ott: Twenty years on the flats. Lost four camels, two wives and one very good hat."
+  ],
+  "next": "ott_bells"
+ },
+ "ott_bells": {
+  "if": {
+   "flag": "s4_bells_done"
+  },
+  "else": "ott_twin",
+  "lines": [
+   "Driver Ott: The new bells? They ring at the wrong posts. Follow them and you end up at the Mirage Kiln, every time.",
+   "Driver Ott: Nobody follows a bell into a kiln by accident twice. Go see what's in there."
+  ],
+  "action": "quest_stage s4_bell_line 1",
+  "next": "ott_twin"
+ },
+ "ott_twin": {
+  "if": {
+   "flag": "s4_twin_asked"
+  },
+  "else": "ott_plain",
+  "lines": [
+   "Driver Ott: That little girl with the twin? Funny. No child crosses the flats alone. Not with a clean dress and all her teeth."
+  ],
+  "action": "set_flag c4_ott_warned"
+ },
+ "ott_plain": [
+  "Driver Ott: Water, shade, and never trust a shortcut. That's the whole desert, kid."
+ ],
+ "tamsin": {
+  "if": {
+   "var_min": {
+    "q_s4_twin_stage": 0
+   },
+   "var_max": {
+    "q_s4_twin_stage": 0
+   }
+  },
+  "else": "tamsin_scarf",
+  "lines": [
+   "Tamsin: My twin brother Tavi walked into the Mirage Kiln to look at the shiny glass. He didn't come out.",
+   "Tamsin: Could you find him? He's easy to spot. He looks exactly like me, but worse."
+  ],
+  "action": "set_flag s4_twin_asked"
+ },
+ "tamsin_scarf": {
+  "if": {
+   "var_min": {
+    "q_s4_twin_stage": 1
+   },
+   "var_max": {
+    "q_s4_twin_stage": 1
+   }
+  },
+  "else": "tamsin_wait",
+  "lines": [
+   "Tamsin: His scarf! So he's alive. Probably. Mostly. Let me take you to him myself, I know the way.",
+   "Tamsin: Meet me at the kiln door. Come alone. Tavi's shy."
+  ],
+  "action": "quest_stage s4_twin 2; set_flag s4_twin_meet"
+ },
+ "tamsin_wait": [
+  "Tamsin: Tavi's somewhere in the kiln. Look for something with a bad knot in it. He never learned knots."
+ ],
+ "tamsin_door": {
+  "if": {
+   "not_flag": "betrayal_tamsin_twin"
+  },
+  "else": "tamsin_after",
+  "lines": [
+   "Tamsin: You came! And alone. That's the important part. Tavi's just round the back. Close your eyes, it's a surprise."
+  ],
+  "action": "betrayal tamsin_twin; quest_stage s4_twin 3"
+ },
+ "tamsin_after": [
+  "Tamsin: Dad says lookouts get a tenth. I get a tenth of nothing now. Thanks a lot."
+ ],
+ "twin_caught": [
+  "You keep your eyes open. Round the back: three Sandglass Crew with a net and no twin.",
+  "Tamsin: ...Ott told you, didn't he. Fine. There's no Tavi. The scarf's from the crew's lost and found. Here, have my cut. It's small."
+ ],
+ "twin_struck": [
+  "You close your eyes. A net drops. Tamsin's voice: 'Sorry! There's no Tavi. There's a finder's fee.'"
+ ],
+ "crew_defeat": [
+  "Crew Uncle Brask: Out-fought by the mark. Venn will dock us. Tamsin, you're grounded."
+ ],
+ "crew_lose": [
+  "The crew empties your pockets and leaves you a receipt shaped like a glass bead."
+ ],
+ "ledger_twin": [
+  "The twin who never was",
+  "Little Tamsin sent you into the kiln for a twin brother, then led you round the back to the Sandglass Crew's net."
+ ],
+ "ilse": {
+  "if": {
+   "not_flag": "s4_census_asked"
+  },
+  "else": "ilse_done",
+  "lines": [
+   "Naturalist Ilse: I'm writing the first honest field guide of the Glasswind. Where every kind lives, to the rock.",
+   "Naturalist Ilse: Bring me eight kinds in your team so I can sketch them. They don't have to smile. Most don't."
+  ],
+  "flag": "s4_census_asked"
+ },
+ "ilse_done": {
+  "if": {
+   "flag": "s4_census_done"
+  },
+  "else": "ilse_c0",
+  "lines": [
+   "Naturalist Ilse: The guide sold out before it was printed. One buyer. Paid in advance. Very keen on the maps."
+  ],
+  "after_flag": [
+   {
+    "flag": "kiln_rusk_beaten",
+    "lines": [
+     "Naturalist Ilse: You took my notes off a poacher? I sold them to a 'collector'. Same thing, it turns out, with fewer cages.",
+     "Naturalist Ilse: I'll write a second edition. With the wrong rocks in it."
+    ]
+   }
+  ]
+ },
+ "ilse_c0": {
+  "if": {
+   "has_species": "Rollibex",
+   "not_flag": "census4_rollibex"
+  },
+  "lines": [
+   "Naturalist Ilse: A Rollibex! Hold still. No, the other still."
+  ],
+  "flag": "census4_rollibex",
+  "next": "ilse_c1",
+  "else": "ilse_c1"
+ },
+ "ilse_c1": {
+  "if": {
+   "has_species": "Sirocat",
+   "not_flag": "census4_sirocat"
+  },
+  "lines": [
+   "Naturalist Ilse: A Sirocat! Hold still. No, the other still."
+  ],
+  "flag": "census4_sirocat",
+  "next": "ilse_c2",
+  "else": "ilse_c2"
+ },
+ "ilse_c2": {
+  "if": {
+   "has_species": "Noonwhist",
+   "not_flag": "census4_noonwhist"
+  },
+  "lines": [
+   "Naturalist Ilse: A Noonwhist! Hold still. No, the other still."
+  ],
+  "flag": "census4_noonwhist",
+  "next": "ilse_c3",
+  "else": "ilse_c3"
+ },
+ "ilse_c3": {
+  "if": {
+   "has_species": "Velvessa",
+   "not_flag": "census4_velvessa"
+  },
+  "lines": [
+   "Naturalist Ilse: A Velvessa! Hold still. No, the other still."
+  ],
+  "flag": "census4_velvessa",
+  "next": "ilse_c4",
+  "else": "ilse_c4"
+ },
+ "ilse_c4": {
+  "if": {
+   "has_species": "Caravant",
+   "not_flag": "census4_caravant"
+  },
+  "lines": [
+   "Naturalist Ilse: A Caravant! Hold still. No, the other still."
+  ],
+  "flag": "census4_caravant",
+  "next": "ilse_c5",
+  "else": "ilse_c5"
+ },
+ "ilse_c5": {
+  "if": {
+   "has_species": "Obelith",
+   "not_flag": "census4_obelith"
+  },
+  "lines": [
+   "Naturalist Ilse: A Obelith! Hold still. No, the other still."
+  ],
+  "flag": "census4_obelith",
+  "next": "ilse_c6",
+  "else": "ilse_c6"
+ },
+ "ilse_c6": {
+  "if": {
+   "has_species": "Fulgorin",
+   "not_flag": "census4_fulgorin"
+  },
+  "lines": [
+   "Naturalist Ilse: A Fulgorin! Hold still. No, the other still."
+  ],
+  "flag": "census4_fulgorin",
+  "next": "ilse_c7",
+  "else": "ilse_c7"
+ },
+ "ilse_c7": {
+  "if": {
+   "has_species": "Wadishell",
+   "not_flag": "census4_wadishell"
+  },
+  "lines": [
+   "Naturalist Ilse: A Wadishell! Hold still. No, the other still."
+  ],
+  "flag": "census4_wadishell",
+  "next": "ilse_end",
+  "else": "ilse_end"
+ },
+ "ilse_end": {
+  "if": {
+   "flag": [
+    "census4_rollibex",
+    "census4_sirocat",
+    "census4_noonwhist",
+    "census4_velvessa",
+    "census4_caravant",
+    "census4_obelith",
+    "census4_fulgorin",
+    "census4_wadishell"
+   ]
+  },
+  "lines": [
+   "Naturalist Ilse: Eight! The guide is done. Every kind, every den, every rock. Here, a lens for your trouble."
+  ],
+  "action": "set_flag s4_census_done; give_item keen_lens 1",
+  "once": true,
+  "else": "ilse_more"
+ },
+ "ilse_more": [
+  "Naturalist Ilse: Still missing some. Four live out on the flats, four in the kiln. The kiln ones bite more."
+ ],
+ "keeper": {
+  "lines": [
+   "Innkeeper Zohra: Beds, water, shade. The shade is free. The rest is also free, if you don't look at the bill.",
+   "Innkeeper Zohra: Your Spirlings look baked. Let them rest."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Supplier Kasim: Tonics, brews, sand out of your boots for free. Everything else, list price."
+  ],
+  "action": "shop strong_tonic max_tonic remedy revival_leaf dash_brew guard_brew power_brew focus_brew"
+ },
+ "varro": {
+  "if": {
+   "not_flag": "varro_done"
+  },
+  "else": "varro_after",
+  "lines": [
+   "Guide Varro: Varro. Best guide on the Glasswind. Ask anyone. Well, ask anyone who came back.",
+   "Guide Varro: I know a shortcut through the mirage, straight to the kiln. Half the walk. Trust me?"
+  ],
+  "action": "set_flag varro_met",
+  "choices": [
+   {
+    "text": "Show me the way",
+    "action": "favor varro_shortcut",
+    "flag": "varro_done"
+   },
+   {
+    "text": "I'll walk, thanks"
+   }
+  ]
+ },
+ "varro_after": [
+  "Guide Varro: No hard feelings. The desert does what it wants. I just help it along."
+ ],
+ "varro_betray": [
+  "Varro's shortcut ends in a dune bowl. Three Sand Bandits wait at the bottom with a picnic and a price list.",
+  "Guide Varro: Half the walk, I said. I never said which half."
+ ],
+ "varro_reward": [
+  "The shortcut is real. Halfway down it Varro digs up a crate of old crew loot and splits it with you. Mostly fairly."
+ ],
+ "varro_kept": [
+  "The shortcut is a long cut. Varro swears the dunes moved. They may have."
+ ],
+ "bandits_defeat": [
+  "Sand Bandit: We'll tell Varro you were a bad investment. He'll understand. He's one too."
+ ],
+ "bandits_lose": [
+  "The bandits take your snacks and leave you the map. The map is of somewhere else."
+ ],
+ "oren": {
+  "if": {
+   "not_flag": "s4_mirrors_asked"
+  },
+  "else": "oren_count",
+  "lines": [
+   "Signalman Oren: Three heliographs warn the caravans of sandstorms. Flash, flash, run. Simple.",
+   "Signalman Oren: But they've drifted. Turn each one to face the sun again, would you? My knees don't do posts anymore."
+  ],
+  "action": "set_flag s4_mirrors_asked"
+ },
+ "oren_count": {
+  "if": {
+   "flag": [
+    "helio_1",
+    "helio_2",
+    "helio_3"
+   ],
+   "not_flag": "oren_signal_beaten"
+  },
+  "else": "oren_wait",
+  "lines": [
+   "Signalman Oren: All three! Flash, flash, flash. That's not 'storm', by the way. That's 'fat caravan, two guards, come now'.",
+   "Signalman Oren: Venn thanks you. I'd thank you too, but you'd only try to stop me. So let's skip to that."
+  ],
+  "action": "battle oren_signal"
+ },
+ "oren_wait": {
+  "if": {
+   "not_flag": "oren_signal_beaten"
+  },
+  "else": "oren_after",
+  "lines": [
+   "Signalman Oren: Two more posts to go. Mind the sun, it's out to get you. Like everyone."
+  ]
+ },
+ "oren_defeat": [
+  "Signalman Oren: Fine. I'll flash 'storm' for real. Caravans will hide, the crew will starve. Everyone's unhappy. Balance."
+ ],
+ "oren_lose": [
+  "Signalman Oren: Flash, flash. That one means 'idiot'."
+ ],
+ "oren_after": [
+  "Signalman Oren: Storm warnings only now. I even mean some of them."
+ ],
+ "venn": {
+  "if": {
+   "not_flag": "betrayal_venn_chains"
+  },
+  "else": "venn_duel",
+  "lines": [
+   "A man in glass-dust chains: 'Thank the sun. I'm Venn, the glassmaster. The crew keeps me here to make their fakes.'",
+   "Glassmaster Venn: The key hangs by the door. Unlock me, quick, before they come back."
+  ],
+  "action": "betrayal venn_chains"
+ },
+ "venn_duel": {
+  "if": {
+   "not_flag": "kiln_venn_beaten"
+  },
+  "else": "venn_after",
+  "lines": [
+   "Glassmaster Venn: Well. The chains were glass too. Everything in here is. Shall we see what you're made of?"
+  ],
+  "action": "battle kiln_venn"
+ },
+ "venn_defeat": [
+  "Glassmaster Venn: Cracked. All of it. The bells, the mirrors, the girl, the guide. Do you know how long it takes to build a good lie in this heat?",
+  "Glassmaster Venn: Take the gallery key. Sell the glass. Everyone else did."
+ ],
+ "venn_lose": [
+  "Glassmaster Venn: Shattered. Sweep yourself up on the way out."
+ ],
+ "venn_after": [
+  "Glassmaster Venn: I'm going into honest glass. Windows. Nobody ever lied through a window. Well. Rarely."
+ ],
+ "chains_caught": [
+  "You remember Hesper's ledger: 'V. takes half.' You leave the key where it is.",
+  "Glassmaster Venn shrugs out of the chains himself. 'Worth a try. Most people are kinder than you.'"
+ ],
+ "chains_struck": [
+  "The key turns. The chains fall away, and so does the gallery door behind you, locked from outside.",
+  "Glassmaster Venn: Thank you! Crew, the kind one's in. Bill them for the rescue."
+ ],
+ "trap_defeat": [
+  "Crew Muscle: That's three of us down for one rescuer. Venn's maths never adds up."
+ ],
+ "trap_lose": [
+  "The crew carries you out and leaves you by the bell posts. Ring if you need anything."
+ ],
+ "ledger_chains": [
+  "The glassmaster's chains",
+  "Venn played the crew's prisoner in his own gallery and asked you to unlock chains he could slip any time."
+ ]
+}

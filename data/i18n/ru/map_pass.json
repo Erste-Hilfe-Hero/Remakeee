@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table map_pass, written by tools/i18n/locales_map_pass.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Clerk Odo: Crates go up the mountain full of plates and come down full of soot.": "Писарь Одо: Ящики едут в гору полные пластин, а спускаются полные сажи.",
+  "Clerk Odo: I weigh both. The soot is heavier. Nobody believes me.": "Писарь Одо: Я взвешиваю и то и другое. Сажа тяжелее. Никто мне не верит.",
+  "Engraver Mira: A plate takes a year to cut and a second to drop. I have not dropped one. Yet.": "Гравёр Мира: Пластину режешь год, а роняешь за секунду. Я ещё ни одной не уронила. Пока.",
+  "Engraver Mira: Halvard says my lines are too soft. Halvard says that to everyone.": "Гравёр Мира: Хальвард говорит, что мои линии слишком мягкие. Хальвард всем так говорит.",
+  "Engraver's Workshop": "Мастерская гравёра",
+  "Freight Office": "Грузовая контора",
+  "Lamp Room": "Ламповая",
+  "Lampwright Ines: A train in fog finds the station by my wicks. Trim them and you trim the timetable.": "Ламповщица Инес: В тумане поезд находит станцию по моим фитилям. Подрежь их, и подрежешь расписание.",
+  "Lampwright Ines: Every lamp on the platform is mine. The smoke is the stack's.": "Ламповщица Инес: Каждая лампа на перроне моя. А дым от трубы.",
+  "Pointsman Ulf: Porridge works best. Do not tell the guild.": "Стрелочник Ульф: Лучше всего помогает каша. Гильдии не говори.",
+  "Pointsman Ulf: The points freeze every winter. I thaw them with my breakfast.": "Стрелочник Ульф: Стрелки замерзают каждую зиму. Я оттаиваю их своим завтраком.",
+  "Pointsman's House": "Дом стрелочника"
+ }
+}

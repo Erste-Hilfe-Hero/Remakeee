@@ -1,0 +1,38 @@
+{
+ "name": "Quay Store",
+ "region": "corvane",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCffCCCW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 8,
+   "to": "corvane_quay",
+   "tx": 9,
+   "ty": 5,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "anselm",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/corvane_quay_shop_anselm",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

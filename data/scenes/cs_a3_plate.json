@@ -1,0 +1,54 @@
+{
+ "_note": "Act III, gravers' hall: Veit's plate cracks (inside ashmere/veit_plate_self and veit_plate_player, either way).",
+ "once": true,
+ "era": 3,
+ "steps": [
+  {
+   "sfx": "hit_stone"
+  },
+  {
+   "shake": 0.3
+  },
+  {
+   "flash": 0.1
+  },
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "plate"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 4.6
+  },
+  {
+   "say": [
+    "The crack runs through the copper.",
+    "What lies behind the Rift stays unfinished."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  },
+  {
+   "emote": "player",
+   "icon": "..."
+  }
+ ]
+}

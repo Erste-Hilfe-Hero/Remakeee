@@ -1,0 +1,39 @@
+name: Store products
+
+# Plan item 4067: puts the ready shop products from store/products.json into the Play Console
+# (one-time products and the Wayfarer Pass). Started by hand; "apply" off = dry run only.
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Send to the Play Console (off = dry run)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: store-products
+  cancel-in-progress: false
+
+jobs:
+  play:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Billing helpers (service account sign-in)
+        run: python3 -m pip install -q --user --break-system-packages -r server/billing/requirements.txt
+      - name: Check the list
+        run: python3 tools/store/push_products.py --check
+      - name: Push to Google Play
+        env:
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          APPLY: ${{ inputs.apply }}
+        run: |
+          if [ "$APPLY" = "true" ]; then
+            python3 tools/store/push_products.py --apply
+          else
+            python3 tools/store/push_products.py
+          fi

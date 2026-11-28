@@ -1,0 +1,19 @@
+{
+ "_comment": "Translations of the German table c200set, written by tools/i18n/locales_c200set.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Dim": "Loş",
+  "Dims the whole screen for dark rooms. Warm also takes out the cold blue light.": "Karanlık odalar için tüm ekranı karartır. Sıcak, soğuk mavi ışığı da azaltır.",
+  "Night mode: %s": "Gece modu: %s",
+  "Reset to default": "Sıfırla",
+  "Set every setting on this page back to how it was at the start?": "Bu sayfadaki tüm ayarlar başlangıçtaki hâline dönsün mü?",
+  "Sets every setting on this page back to how it was at the start.": "Bu sayfadaki tüm ayarları başlangıçtaki hâline döndürür.",
+  "Sets every setting on this page back to how it was at the start. The language stays.": "Bu sayfadaki tüm ayarları başlangıçtaki hâline döndürür. Dil aynı kalır.",
+  "This weekend, battles give double Growth on Saturday and Sunday.": "Bu hafta sonu cumartesi ve pazar günü savaşlar iki kat Gelişim verir.",
+  "This weekend, battles give more Growth on Saturday and Sunday.": "Bu hafta sonu cumartesi ve pazar günü savaşlar daha çok Gelişim verir.",
+  "Warm": "Sıcak",
+  "Weekend: battles give double Growth today.": "Hafta sonu: bugün savaşlar iki kat Gelişim verir.",
+  "Weekend: battles give more Growth today.": "Hafta sonu: bugün savaşlar daha çok Gelişim verir.",
+  "Your journey is %d years old today! A birthday gift: a Growth Charm and %d coins.": "Yolculuğun bugün %d yaşında! Doğum günü hediyesi: bir Gelişim Tılsımı ve %d sikke.",
+  "Your journey is one year old today! A birthday gift: a Growth Charm and %d coins.": "Yolculuğun bugün bir yaşında! Doğum günü hediyesi: bir Gelişim Tılsımı ve %d sikke."
+ }
+}

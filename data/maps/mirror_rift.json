@@ -1,0 +1,55 @@
+{
+ "name": "Mirror Rift",
+ "region": "corvane",
+ "biome": "rift",
+ "backdrop": "voice",
+ "field": "dawn_glow",
+ "encounters": "mirror_rift",
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^........^^",
+  "^.::.||.::.^",
+  "^.::....::.^",
+  "^^^^....^^^^",
+  "^.::.||.::.^",
+  "^.::....::.^",
+  "^.........S^",
+  "^..^^..^^..^",
+  "^.::....::.^",
+  "^..........^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 12,
+   "to": "stillwater",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 12,
+   "to": "stillwater",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "npcs": [],
+ "signs": [
+  {
+   "x": 10,
+   "y": 8,
+   "dialogue": "mirror_rift/sign"
+  }
+ ],
+ "spots": {
+  "joral": [
+   5,
+   2
+  ]
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "_comment": "Korean texts for the German table solenne. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "Act IV: The Sun of Solenne": "4막: Solenne의 태양",
+  "Brass Veil Factor Lusk": "놋쇠 장막 대리인 Lusk",
+  "Dry Well": "마른 우물",
+  "Echo Crystal: Dawn Mend": "메아리 수정: Dawn Mend",
+  "Echo Crystal: Radiant Lance": "메아리 수정: Radiant Lance",
+  "Echo Crystal: Squall": "메아리 수정: Squall",
+  "High Noon": "한낮",
+  "Interlude: Ochrewell": "막간: Ochrewell",
+  "Ochrewell": "Ochrewell",
+  "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.": "바람탑 사이로 모래가 울부짖는다: 앞에 선 Stone이 아닌 Spirling은 매 라운드 기력을 조금 잃는다.",
+  "Sandstorm": "모래폭풍",
+  "Take the sand road south from the Saltglass flats to Ochrewell and mend the three Rifts of Solenne.": "Saltglass 평원에서 남쪽 모랫길을 따라 Ochrewell로 가서 Solenne의 세 균열을 메워라.",
+  "Teaches Dawn Mend to a Lumen Spirling. Never used up.": "Lumen Spirling에게 Dawn Mend를 가르친다. 써도 없어지지 않는다.",
+  "Teaches Radiant Lance to a Lumen Spirling. Never used up.": "Lumen Spirling에게 Radiant Lance를 가르친다. 써도 없어지지 않는다.",
+  "Teaches Squall to a Gale Spirling. Never used up.": "Gale Spirling에게 Squall을 가르친다. 써도 없어지지 않는다.",
+  "The last shutter opens, the tower breathes, and the stair is clear!": "마지막 덧문이 열리고, 탑이 숨을 쉬고, 계단이 트인다!",
+  "The oasis east of Ochrewell has run dry: the Oasis Rift. Warden Kaia says nobody is to blame.": "Ochrewell 동쪽 오아시스가 말라 버렸다: Oasis 균열. 수호자 Kaia는 아무 잘못도 없다고 한다.",
+  "The oasis has been sold dry: every heal on both sides is halved.": "오아시스가 바닥까지 팔려 나갔다: 양쪽 모든 회복량이 절반이 된다.",
+  "The shutter bangs, and the wind drops dead. Every shutter swings shut again.": "덧문이 쾅 닫히고, 바람이 뚝 멎는다. 모든 덧문이 다시 닫힌다.",
+  "The shutter swings open. Sand hisses through the slats.": "덧문이 활짝 열린다. 살 틈으로 모래가 쉭쉭 들어온다.",
+  "The shutters hum in the wind. The stair stays open.": "덧문들이 바람에 웅웅 운다. 계단은 열린 채로 있다.",
+  "The sun stands straight overhead: Lumen arts on both sides hit harder.": "해가 바로 머리 위에 있다: 양쪽 Lumen 기예가 더 세게 맞는다.",
+  "The sundial under the sun palace has stopped: the Sun Rift. Warden Emrys is waiting, slowly.": "태양 궁전 아래 해시계가 멈췄다: Sun 균열. 수호자 Emrys가 기다리고 있다. 느긋하게.",
+  "The wind towers of Ochrewell have stopped breathing: the Tower Rift. Warden Aurelio grieves in style.": "Ochrewell의 바람탑이 숨을 멈췄다: Tower 균열. 수호자 Aurelio가 멋지게 슬퍼하고 있다."
+ }
+}

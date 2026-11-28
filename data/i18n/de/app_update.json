@@ -1,0 +1,23 @@
+{
+ "_comment": "German texts from tools/i18n/de_app_update.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [
+  "ChimoraAppUpdate"
+ ],
+ "strings": {
+  "%.1f / %.1f MB": "%.1f / %.1f MB",
+  "%.1f MB": "%.1f MB",
+  "Cancel": "Abbrechen",
+  "Download complete. Tap Install and confirm it. If Android asks, allow Chimora to install apps.": "Download fertig. Tippe auf Installieren und bestätige. Wenn Android fragt, erlaube Chimora, Apps zu installieren.",
+  "Downloading the new version of Chimora.": "Die neue Version von Chimora wird geladen.",
+  "Downloading the update. Chimora restarts when it is ready.": "Das Update wird geladen. Chimora startet neu, sobald es fertig ist.",
+  "Downloading the update. You can keep playing.": "Das Update wird geladen. Du kannst weiterspielen.",
+  "Google Play is updating Chimora.": "Google Play aktualisiert Chimora.",
+  "Install": "Installieren",
+  "Keep playing": "Weiterspielen",
+  "Restart now": "Jetzt neu starten",
+  "The download failed. Check your connection and try again.": "Der Download ist fehlgeschlagen. Prüfe deine Verbindung und versuche es erneut.",
+  "The update did not finish. Please try again.": "Das Update wurde nicht abgeschlossen. Bitte versuche es erneut.",
+  "The update is ready. Restart Chimora to finish it.": "Das Update ist bereit. Starte Chimora neu, um es abzuschließen.",
+  "Update available": "Update verfügbar"
+ }
+}

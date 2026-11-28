@@ -1,0 +1,23 @@
+{
+ "_comment": "French texts for the German table fan_breeding. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py fr.",
+ "strings": {
+  "Auntie Grisela": "Tatie Grisela",
+  "Auntie Grisela's contract holds. The young one carries the best of both houses.": "Le contrat de Tatie Grisela tient. Le petit porte le meilleur des deux maisons.",
+  "Auntie Grisela: A contract costs %d coins. Love is free, paperwork is not.": "Tatie Grisela: Un contrat coûte %d pièces. L'amour est gratuit, la paperasse non.",
+  "Auntie Grisela: A good match is a merger with feathers.": "Tatie Grisela: Un bon mariage, c'est une fusion avec des plumes.",
+  "Auntie Grisela: Bring me an Echo Core and I put the dowry in writing.": "Tatie Grisela: Apporte-moi un Noyau d'écho et je mets la dot par écrit.",
+  "Auntie Grisela: I put the dowry in writing. Nobody reads it, but it is written.": "Tatie Grisela: Je mets la dot par écrit. Personne ne la lit, mais c'est écrit.",
+  "Auntie Grisela: No Echo Core, no wedding. Sing at a spring first, then we talk business.": "Tatie Grisela: Pas de Noyau d'écho, pas de mariage. Chante d'abord à une source, puis on parle affaires.",
+  "Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably.": "Tatie Grisela: Signé, scellé, et personne d'autre n'en saura rien. Sans doute.",
+  "Auntie Grisela: Two good families, one sweet song. I arrange the rest.": "Tatie Grisela: Deux bonnes familles, une douce chanson. Je m'occupe du reste.",
+  "It already knows %s, an heirloom art of the family.": "Il connaît déjà %s, une technique de famille.",
+  "It carries the family's best Spark in %d values.": "Il porte la meilleure Étincelle de la famille dans %d valeurs.",
+  "Seal": "Sceller",
+  "Seal a match contract for the core of %s for %d coins?": "Sceller un contrat d'union pour le noyau de %s pour %d pièces?",
+  "Turns out Auntie Grisela sold the same match to %s. The contract is void, but the song still wakes.": "En fait, Tatie Grisela a vendu la même union à %s. Le contrat est nul, mais la chanson réveille quand même.",
+  "a family she calls 'the other one'": "une famille qu'elle appelle 'l'autre'",
+  "the Moldwick family": "la famille Moldwick",
+  "the Pellgraves": "les Pellgrave",
+  "the Second Cousins": "les Cousins au second degré"
+ }
+}

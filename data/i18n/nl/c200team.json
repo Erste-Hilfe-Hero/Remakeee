@@ -1,0 +1,8 @@
+{
+ "_comment": "Translations of the German table c200team, written by tools/i18n/locales_c200team.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Era %s: %d%% seen, %d%% bonded": "Tijdperk %s: %d%% gezien, %d%% verbonden",
+  "Event Spirling: %s": "Evenement-Spirling: %s",
+  "Lantern at the right: it joined you at an event, such as the Lamp Watch": "Lantaarn rechts: hij kwam bij je tijdens een evenement, zoals de Lampwacht"
+ }
+}

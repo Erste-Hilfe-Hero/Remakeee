@@ -1,0 +1,14 @@
+{
+ "_comment": "it translation of the solenne_rooms table, keyed by the English text.",
+ "strings": {
+  "Ama's Dome": "Cupola di Ama",
+  "Apprentice Wenna: Domes by day, urns by night. I glaze both. Only the urns get compliments.": "Apprendista Wenna: Cupole di giorno, urne di notte. Smalto tutte e due. I complimenti li ricevono solo le urne.",
+  "Apprentice Wenna: Hadi says every urn is made to measure. I've stopped asking whose.": "Apprendista Wenna: Hadi dice che ogni urna è fatta su misura. Ho smesso di chiedere per chi.",
+  "Hadi's Pottery": "Bottega di Hadi",
+  "Oskin's Storeroom": "Magazzino di Oskin",
+  "Stock Boy Jem: I paint GENUINE on every crate. Very genuine paint. Oskin checks.": "Garzone Jem: Dipingo AUTENTICO su ogni cassa. Vernice molto autentica. Oskin controlla.",
+  "Stock Boy Jem: The last stock boy asked where the goods come from. He left with the next caravan. In a crate.": "Garzone Jem: L'ultimo garzone ha chiesto da dove viene la merce. È partito con la carovana successiva. In una cassa.",
+  "Widow Ama: My husband signed one little paper for the Brass Veil. Now they own the house, the goats and, on paper, me.": "Vedova Ama: Mio marito ha firmato un foglietto per il Velo d'Ottone. Ora possiedono la casa, le capre e, sulla carta, me.",
+  "Widow Ama: The goats took it worst. They read the small print.": "Vedova Ama: Le capre l'hanno presa peggio di tutti. Hanno letto le clausole in piccolo."
+ }
+}

@@ -1,0 +1,110 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "raker",
+    "x": 7,
+    "y": 17,
+    "facing": "left",
+    "dialogue": "salt_rift/raker",
+    "sprite": "warden",
+    "trainer": "Salt Foreman Gunda",
+    "intro": "salt_rift/raker_intro",
+    "defeat": "salt_rift/raker_defeat",
+    "money": 4500,
+    "team": [
+     {
+      "species": "Saltcrown",
+      "level": 88
+     },
+     {
+      "species": "Stiltregent",
+      "level": 88
+     },
+     {
+      "species": "Wadishell",
+      "level": 89
+     }
+    ]
+   },
+   {
+    "id": "warden_halloran",
+    "x": 5,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "salt_rift/halloran",
+    "sprite": "warden",
+    "trainer": "Warden Halloran",
+    "warden": "v4_salt",
+    "team": [
+     {
+      "species": "Saltcrown",
+      "level": 87
+     },
+     {
+      "species": "Stiltregent",
+      "level": 87
+     },
+     {
+      "species": "Wadibastion",
+      "level": 88
+     },
+     {
+      "species": "Flatsovereign",
+      "level": 88
+     }
+    ],
+    "intro": "salt_rift/halloran_intro",
+    "defeat": "salt_rift/halloran_defeat",
+    "ai": 2,
+    "money": 9000,
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Saltcrown",
+       "level": 106
+      },
+      {
+       "species": "Stiltregent",
+       "level": 106
+      },
+      {
+       "species": "Wadibastion",
+       "level": 107
+      },
+      {
+       "species": "Ergrava",
+       "level": 107
+      },
+      {
+       "species": "Fulgorath",
+       "level": 107
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Saltcrown",
+       "level": 92
+      },
+      {
+       "species": "Stiltregent",
+       "level": 92
+      },
+      {
+       "species": "Wadibastion",
+       "level": 93
+      },
+      {
+       "species": "Flatsovereign",
+       "level": 93
+      },
+      {
+       "species": "Saltcrown",
+       "level": 88
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "_comment": "Turkish texts for the German table live_referee. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "%s Ring %d (from %s)": "%s Halka %d (%s'den)",
+  "%s beats %s": "%s, %s'i yener",
+  "(borrowed)": "(ödünç)",
+  "Close": "Kapat",
+  "Could not save the picture.": "Resim kaydedilemedi.",
+  "Draw": "Berabere",
+  "Enter the duel": "Düelloya gir",
+  "It joins this one duel. After that the loan is used up.": "Sadece bu düelloya katılır. Sonra ödünç sona erer.",
+  "Leave (the duel goes on)": "Ayrıl (düello sürer)",
+  "Live duel": "Canlı düello",
+  "Menu": "Menü",
+  "No friend has lent you a Spirling right now.": "Şu an hiçbir arkadaşın sana Spirling ödünç vermedi.",
+  "No winner": "Kazanan yok",
+  "Result picture saved with your photos.": "Sonuç resmi fotoğraflarına kaydedildi.",
+  "Rounds: %d": "Turlar: %d",
+  "Save a result picture": "Sonuç resmini kaydet",
+  "Stop watching": "İzlemeyi bırak",
+  "Take a borrowed Spirling along": "Ödünç bir Spirling'i yanına al",
+  "Take a borrowed Spirling along? It joins this one attempt, then the loan is used up.": "Ödünç bir Spirling'i yanına alır mısın? Bu denemeye katılır, sonra ödünç sona erer.",
+  "That loan has ended.": "Bu ödünç sona erdi.",
+  "The duel is not over yet.": "Düello henüz bitmedi.",
+  "The referee checks the duel.": "Hakem düelloyu kontrol ediyor.",
+  "The result picture is in your downloads.": "Sonuç resmi indirilenler klasöründe.",
+  "This battle cannot be shown any more.": "Bu savaş artık gösterilemez.",
+  "Top: %s  Bottom: %s": "Üst: %s  Alt: %s",
+  "Without a borrowed Spirling": "Ödünç Spirling olmadan",
+  "You already used a borrowed Spirling here.": "Burada zaten ödünç bir Spirling kullandın.",
+  "Your last duel": "Son düellon"
+ }
+}

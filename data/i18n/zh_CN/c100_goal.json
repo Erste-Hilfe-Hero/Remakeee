@@ -1,0 +1,28 @@
+{
+ "_comment": "Simplified Chinese texts for the German table c100_goal. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "+ seen  * bonded": "+ 见过  * 已结缘",
+  "A reward waits under Goals.": "目标里有奖励在等你。",
+  "Daily tasks: %d of %d done.": "每日任务：完成 %d/%d。",
+  "Find Mirela's pages": "寻找Mirela的书页",
+  "Go to the Map House": "去地图馆",
+  "Goal line: %s": "目标栏：%s",
+  "Goal: %s": "目标：%s",
+  "Meet Kestra at the dock": "码头找Kestra",
+  "Mend the Rifts": "修复裂隙",
+  "Not yet visited.": "还没去过。",
+  "On a page, \"Seen at\" lists every place you met the kind, Wayfarer battles included. \"Wild at\" lists where it lives in the wild: a + after a place means you met it there, ??? a place not found yet.": "在图鉴页上，\"见过的地点\"列出你遇到这一种的所有地方，包括旅人对战。\"野生地点\"列出它在野外生活的地方：地点后的 + 表示你在那里遇到过，??? 表示还没找到的地方。",
+  "Photo, our Discord and your shortcuts.": "照片、我们的 Discord 和快捷方式。",
+  "See Aldo downstairs": "去楼下找Aldo",
+  "Seen at: %s": "见过的地点：%s",
+  "Tap for every mark.": "点击查看所有标记。",
+  "Tell Aldo at home": "告诉Aldo",
+  "Welcome back, %s!": "欢迎回来，%s！",
+  "Wild at: %s (%d of %d found)": "野生地点：%s（找到 %d/%d）",
+  "You are in %s.": "你在%s。",
+  "Your next goal at the top and a mark on the way there. Tap the line to open Goals.": "在上方显示下一个目标，并在路上做标记。点击这一栏打开目标。",
+  "a Gleam of this kind was bonded": "与这一种的光泽形态结缘",
+  "a Gleam of this kind was seen": "见过这一种的光泽形态",
+  "bonded and grown to Ring 30": "已结缘并成长到第30环"
+ }
+}

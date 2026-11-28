@@ -1,0 +1,20 @@
+{
+ "_comment": "tr translation of the league_ranks table, keyed by the English text.",
+ "strings": {
+  "Apprentice": "Çırak",
+  "Boss": "Patron",
+  "Broker": "Simsar",
+  "Captain": "Kaptan",
+  "Fixer": "Ayarcı",
+  "Map Master": "Harita Ustası",
+  "No season reward is waiting.": "Bekleyen sezon ödülü yok.",
+  "Placement": "Yerleştirme",
+  "Placement battles left: %d": "Kalan yerleştirme savaşı: %d",
+  "Rank: %s": "Rütbe: %s",
+  "Runner": "Ulak",
+  "Season reward": "Sezon ödülü",
+  "Season reward: %d x %s": "Sezon ödülü: %d x %s",
+  "Shield: %d battles without losing the rank": "Kalkan: rütbe kaybetmeden %d savaş",
+  "You left too many battles. Search again in %d seconds.": "Çok fazla savaştan çıktın. %d saniye sonra yeniden ara."
+ }
+}
