@@ -118,6 +118,10 @@ static func choices_for(entry: Dictionary, flags: Dictionary) -> Array[Dictionar
 ## Splits a legacy line "Aldo: text" into ["Aldo", "text"]; lines without a short name
 ## before ": " come back as ["", line].
 const NOT_SPEAKERS: Array[String] = ["Tip", "Tips", "Hint", "Note"]
+## First words of a sign or description, never of a name ("East: Ochrewell", "On the counter: ...").
+const NOT_SPEAKER_FIRST: Array[String] = ["North", "South", "East", "West", "Up", "Down", "A", "An", "On", "Under", "Behind", "Chalked", "Upper"]
+## Last words of a thing that is read, never of a name ("A crew note: ...", "Shelf label: ...").
+const NOT_SPEAKER_LAST: Array[String] = ["note", "notice", "label", "stencil", "poster", "plate", "book", "sign", "door", "terrace"]
 
 static func split_speaker(line: String) -> PackedStringArray:
 	var i: int = line.find(": ")
@@ -131,7 +135,38 @@ static func split_speaker(line: String) -> PackedStringArray:
 	for word: String in NOT_SPEAKERS:
 		if who == word or who == Loc.t(word):
 			return PackedStringArray(["", line])
+	# Signs and things read aloud: "North: the Orrery Rift", "A notice: ...", "Palace notice: ...".
+	var words: PackedStringArray = who.split(" ")
+	if words[0].split("-")[0] in NOT_SPEAKER_FIRST or words[words.size() - 1] in NOT_SPEAKER_LAST:
+		return PackedStringArray(["", line])
 	return PackedStringArray([who, line.substr(i + 2)])
+
+## Separators a translation may put after the speaker's name: ": " and the full-width colon of
+## Japanese and Chinese.
+const SPEAKER_SEPS: Array[String] = [": ", "："]
+## A translated name longer than this many characters is not cut off as a speaker.
+const SPEAKER_MAX_CUT: int = 40
+
+## Splits translated [param shown] by its English [param source]: the source decides whether
+## the line names a speaker, and the translation is cut at its first separator (SPEAKER_SEPS),
+## so "女仆Lisette：..." gets a name tag like "Maid Lisette: ..." while "...的地图：湖" stays one
+## line. Returns [name shown, rest, English name]; ["", shown, ""] when no one is named.
+static func split_translated(source: String, shown: String) -> PackedStringArray:
+	var en: PackedStringArray = split_speaker(source)
+	if source == shown:
+		return PackedStringArray([en[0], en[1], en[0]])
+	if en[0].is_empty():
+		return PackedStringArray(["", shown, ""])
+	var cut: int = -1
+	var sep: String = ""
+	for s: String in SPEAKER_SEPS:
+		var i: int = shown.find(s)
+		if i > 0 and (cut < 0 or i < cut):
+			cut = i
+			sep = s
+	if cut < 0 or cut > SPEAKER_MAX_CUT:
+		return PackedStringArray(["", shown, ""])
+	return PackedStringArray([shown.substr(0, cut).strip_edges(), shown.substr(cut + sep.length()).strip_edges(true, false), en[0]])
 
 static func _as_list(v: Variant) -> Array:
 	return v if v is Array else [v]
