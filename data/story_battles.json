@@ -2918,5 +2918,277 @@
   "win_flags": [
    "q3_debtors_icehouse_won"
   ]
+ },
+ "tale_merrit": {
+  "trainer": "Prompter Merrit",
+  "team": [
+   {
+    "species": "Lanternel",
+    "level": 56
+   },
+   {
+    "species": "Veilmote",
+    "level": 56
+   },
+   {
+    "species": "Smogpup",
+    "level": 57
+   },
+   {
+    "species": "Guisdame",
+    "level": 57
+   }
+  ],
+  "ai": 2,
+  "money": 3600,
+  "defeat": "vellmarch_tale/merrit_defeat",
+  "lose": "vellmarch_tale/merrit_lose",
+  "win_flags": [
+   "v2t_book"
+  ]
+ },
+ "tale_linnet": {
+  "trainer": "Apprentice Linnet",
+  "team": [
+   {
+    "species": "Nibravure",
+    "level": 80
+   },
+   {
+    "species": "Filigravure",
+    "level": 81
+   },
+   {
+    "species": "Siltaroth",
+    "level": 81
+   },
+   {
+    "species": "Glacilisk",
+    "level": 82
+   }
+  ],
+  "ai": 2,
+  "money": 4800,
+  "defeat": "quillmarch_tale/linnet_defeat",
+  "lose": "quillmarch_tale/linnet_lose",
+  "win_flags": [
+   "v3t_linnet"
+  ]
+ },
+ "tale_wilf": {
+  "trainer": "Racer Wilf",
+  "team": [
+   {
+    "species": "Kitewhip",
+    "level": 88
+   },
+   {
+    "species": "Gildwing",
+    "level": 89
+   },
+   {
+    "species": "Siroclaw",
+    "level": 89
+   },
+   {
+    "species": "Zenwhirl",
+    "level": 90
+   }
+  ],
+  "ai": 2,
+  "money": 5400,
+  "defeat": "halcyra_tale/wilf_defeat",
+  "lose": "halcyra_tale/wilf_lose",
+  "win_flags": [
+   "v4t_wilf"
+  ]
+ },
+ "tale_alvhild": {
+  "trainer": "Lantern Walker Alvhild",
+  "team": [
+   {
+    "species": "Gloomgillith",
+    "level": 92
+   },
+   {
+    "species": "Rushstalker",
+    "level": 93
+   },
+   {
+    "species": "Glimmoth",
+    "level": 93
+   }
+  ],
+  "ai": 2,
+  "money": 5200,
+  "defeat": "quivermoor_tale/alvhild_defeat",
+  "lose": "quivermoor_tale/alvhild_lose",
+  "win_flags": [
+   "v5t_alvhild"
+  ]
+ },
+ "tale_gisle": {
+  "trainer": "Lantern Walker Gisle",
+  "team": [
+   {
+    "species": "Weirmarshal",
+    "level": 93
+   },
+   {
+    "species": "Dipmonarch",
+    "level": 93
+   },
+   {
+    "species": "Ardenthal",
+    "level": 94
+   }
+  ],
+  "ai": 2,
+  "money": 5300,
+  "defeat": "quivermoor_tale/gisle_defeat",
+  "lose": "quivermoor_tale/gisle_lose",
+  "win_flags": [
+   "v5t_gisle"
+  ]
+ },
+ "tale_hjordis": {
+  "trainer": "Lantern Walker Hjordis",
+  "team": [
+   {
+    "species": "Woadcastle",
+    "level": 93
+   },
+   {
+    "species": "Fenwarden",
+    "level": 94
+   },
+   {
+    "species": "Rookwarden",
+    "level": 94
+   }
+  ],
+  "ai": 2,
+  "money": 5300,
+  "defeat": "quivermoor_tale/hjordis_defeat",
+  "lose": "quivermoor_tale/hjordis_lose",
+  "win_flags": [
+   "v5t_hjordis"
+  ]
+ },
+ "tale_ingrun": {
+  "trainer": "Lantern Walker Ingrun",
+  "team": [
+   {
+    "species": "Ripjoltane",
+    "level": 94
+   },
+   {
+    "species": "Dusktern",
+    "level": 95
+   },
+   {
+    "species": "Peatmonarch",
+    "level": 95
+   },
+   {
+    "species": "Silthop",
+    "level": 95
+   }
+  ],
+  "ai": 2,
+  "money": 5600,
+  "defeat": "quivermoor_tale/ingrun_defeat",
+  "lose": "quivermoor_tale/ingrun_lose",
+  "win_flags": [
+   "v5t_ingrun"
+  ]
+ },
+ "tale_ketil": {
+  "trainer": "Lantern Walker Ketil",
+  "team": [
+   {
+    "species": "Fumeregent",
+    "level": 95
+   },
+   {
+    "species": "Nimbub",
+    "level": 95
+   },
+   {
+    "species": "Glazeldrake",
+    "level": 96
+   },
+   {
+    "species": "Rushprowl",
+    "level": 96
+   }
+  ],
+  "ai": 2,
+  "money": 5700,
+  "defeat": "quivermoor_tale/ketil_defeat",
+  "lose": "quivermoor_tale/ketil_lose",
+  "win_flags": [
+   "v5t_ketil"
+  ]
+ },
+ "tale_oddny": {
+  "trainer": "Lantern Walker Oddny",
+  "team": [
+   {
+    "species": "Sablarch",
+    "level": 96
+   },
+   {
+    "species": "Duskmirrah",
+    "level": 96
+   },
+   {
+    "species": "Gloomgillith",
+    "level": 97
+   },
+   {
+    "species": "Sootharrow",
+    "level": 97
+   }
+  ],
+  "ai": 2,
+  "money": 6000,
+  "defeat": "quivermoor_tale/oddny_defeat",
+  "lose": "quivermoor_tale/oddny_lose",
+  "win_flags": [
+   "v5t_oddny"
+  ]
+ },
+ "tale_aslak": {
+  "trainer": "Lantern Elder Aslak",
+  "team": [
+   {
+    "species": "Peatmonarch",
+    "level": 97
+   },
+   {
+    "species": "Woadcastle",
+    "level": 98
+   },
+   {
+    "species": "Weirmarshal",
+    "level": 98
+   },
+   {
+    "species": "Rookwarden",
+    "level": 99
+   },
+   {
+    "species": "Fenwarden",
+    "level": 99
+   }
+  ],
+  "ai": 3,
+  "money": 9000,
+  "defeat": "quivermoor_tale/aslak_defeat",
+  "lose": "quivermoor_tale/aslak_lose",
+  "win_flags": [
+   "v5t_done"
+  ]
  }
 }

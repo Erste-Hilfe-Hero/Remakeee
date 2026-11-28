@@ -1,5 +1,5 @@
 {
- "_comment": "Minutes per piece of content for tools/act_hours.py, a rough first-play estimate per act (owner rule: at least 20 h per act). An act is a region, and so is each post-game era region under 'regions' (its story chapters come from its 'sheet'); inside maps count for the region of the place they sit in. Side goals count when their 'where' names a map of the region or one of 'places'. Tune here, not in the script. Dialogue counts every file the region's maps talk to; a 'battle' action counts as a story duel.",
+ "_comment": "Minutes per piece of content for tools/act_hours.py, a rough first-play estimate per act (owner rule: at least 20 h per act). An act is a region, and so is each post-game era region under 'regions' (its story chapters come from its 'sheet'); inside maps count for the region of the place they sit in. Side goals count when their 'where' names a map of the region or one of 'places'. Tune here, not in the script. Dialogue counts every file the region's maps talk to; a 'battle' action counts as a story duel. A region's 'dialogue' lists extra dialogue files its story figures talk to (the region tale), and its tale goals (quests.json 'post') count as main goals.",
  "acts": {
   "1": {
    "region": "veydal",
@@ -41,6 +41,9 @@
    "sheet": "data/region2.json",
    "places": [
     "Vellmarch"
+   ],
+   "dialogue": [
+    "vellmarch_tale"
    ]
   },
   "quillmarch": {
@@ -50,6 +53,9 @@
    "sheet": "data/region3.json",
    "places": [
     "Quillmarch"
+   ],
+   "dialogue": [
+    "quillmarch_tale"
    ]
   },
   "halcyra": {
@@ -59,6 +65,9 @@
    "sheet": "data/region4.json",
    "places": [
     "Halcyra"
+   ],
+   "dialogue": [
+    "halcyra_tale"
    ]
   },
   "quivermoor": {
@@ -68,6 +77,9 @@
    "sheet": "data/region5.json",
    "places": [
     "Quivermoor"
+   ],
+   "dialogue": [
+    "quivermoor_tale"
    ]
   }
  },
