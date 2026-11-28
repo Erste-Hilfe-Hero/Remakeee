@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table daily, written by tools/i18n/locales_daily.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Cloud gale": "云之疾风",
+  "Ember storm": "余烬雷暴",
+  "Glass gale": "琉璃风",
+  "Glimmer rain": "微光雨",
+  "Rime storm": "霜之雷暴",
+  "Silver fog": "银雾",
+  "Spirling of the day: %s": "今日的灵宠：%s",
+  "Spirling of the day: %s. It steps out more often today in %s.": "今日的灵宠：%s。今天在%s更常出现。",
+  "Take the gift": "收下礼物",
+  "This weekend: %s over %s.": "本周末：%s笼罩%s。",
+  "Weekend weather: %s over %s. Shy Spirlings step out more often there.": "周末天气：%s笼罩%s。害羞的灵宠在那里更常出现。",
+  "Welcome gift, day %d of 7: %s": "欢迎礼物，第%d天/共7天：%s"
+ }
+}
