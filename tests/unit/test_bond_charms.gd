@@ -1,10 +1,11 @@
 extends GutTest
-## The bond charm family (1.3.2, owner 28 Nov 2026): ten charms held out before the Mine! bar.
+## The bond charm family (1.3.2, owner 28 Nov 2026): the Kin Charm and ten new charms, held out
+## before the Mine! bar.
 ## Bonus and situations (BondCalc.charm_bonus), fewer Mine! taps, the 0.95 cap, the picker rows,
 ## and where each charm is sold (merchants for coins, the shop for Riftglass and real money).
 
 const FAMILY: Array[String] = ["kin_charm", "charm_inkquill", "charm_kindred", "charm_moonwick", "charm_stormbell",
-	"charm_mender", "rg_charm_hush", "rg_charm_swiftleaf", "rg_charm_lantern", "rg_charm_firstlight"]
+	"charm_mender", "rg_charm_hush", "rg_charm_swiftleaf", "rg_charm_lantern", "rg_charm_firstlight", "charm_pagebound"]
 const COIN: Array[String] = ["kin_charm", "charm_inkquill", "charm_kindred", "charm_moonwick", "charm_stormbell", "charm_mender"]
 const PACKS: Array[String] = ["rg_charm_swiftleaf_x3", "rg_charm_lantern_x3", "rg_charm_satchel"]
 
@@ -30,7 +31,7 @@ func _stranger(sd: SpirlingData) -> SpirlingData:
 			return o
 	return null
 
-func test_family_is_ten_charms_in_rank_order_with_own_icons() -> void:
+func test_family_is_eleven_charms_in_rank_order_with_own_icons() -> void:
 	assert_eq(ShopScreen.charm_family(), FAMILY)
 	var icons: Dictionary = {}
 	for i: int in FAMILY.size():
@@ -41,7 +42,7 @@ func test_family_is_ten_charms_in_rank_order_with_own_icons() -> void:
 		assert_ne(key, "charm_tag", "own look: " + FAMILY[i])
 		icons[key] = true
 		assert_false(str(it.charm.effect).is_empty(), "one-line effect: " + FAMILY[i])
-	assert_eq(icons.size(), 10, "ten different looks")
+	assert_eq(icons.size(), 11, "eleven different looks")
 	assert_eq(ShopArt.problems(), [] as Array[String])
 
 func test_no_charm_is_sure_or_thrown_and_the_seal_stays_the_only_sure_bond() -> void:
@@ -165,3 +166,40 @@ func test_balance_sims_hold_no_charms() -> void:
 		var src: String = FileAccess.get_file_as_string(path)
 		for id: String in FAMILY:
 			assert_false(src.contains(id), "%s uses %s" % [path, id])
+
+func test_pagebound_charm_helps_with_kinds_not_bonded_yet() -> void:
+	var sd: SpirlingData = _species("common")
+	var foe := Spirling.new(sd, 10)
+	var page: Dictionary = Database.item("charm_pagebound")
+	assert_almost_eq(BondCalc.charm_bonus(page, foe, null, {"bonded": [sd.species_name]}), 0.06, 0.0001, "kind already bonded")
+	assert_almost_eq(BondCalc.charm_bonus(page, foe, null, {"bonded": []}), 0.36, 0.0001, "new kind")
+	assert_almost_eq(BondCalc.charm_bonus(page, foe), 0.36, 0.0001, "nothing bonded yet")
+	assert_eq(BondCalc.taps_off(page), 0)
+	var keep: Dictionary = GameState.spirlog
+	GameState.spirlog = {sd.species_name: {"seen": true, "bonded": true}, "Nobody": {"seen": true, "bonded": false}}
+	var m := BattleModel.new([Spirling.new(sd, 10)] as Array[Spirling], [foe] as Array[Spirling], true, 1, 0)
+	assert_eq(BattleScene.bond_context(m).bonded, [sd.species_name], "the battle hands the Spirlog's bonded kinds over")
+	GameState.spirlog = keep
+
+func test_pagebound_charm_is_earned_from_the_spirlog_and_never_sold_or_traded() -> void:
+	var it: Dictionary = Database.item("charm_pagebound")
+	assert_eq(int(it.get("price", 0)), 0, "no merchant price")
+	assert_false(bool(it.get("tradeable", false)))
+	assert_true(ShopCatalog.offer("charm_pagebound").is_empty(), "no shop offer")
+	var shop: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/shop.json"))
+	for o: Dictionary in shop.offers:
+		for g: Dictionary in o.get("grants", []):
+			assert_ne(str(g.get("id", "")), "charm_pagebound", "no shop offer grants it: " + str(o.id))
+	var dir := DirAccess.open("res://data/dialogue")
+	for f: String in dir.get_files():
+		if f.ends_with(".json"):
+			assert_false(FileAccess.get_file_as_string("res://data/dialogue/" + f).contains("charm_pagebound"), "no merchant sells it: " + f)
+	var goal: Dictionary = {}
+	for g: Dictionary in Collection.GOALS:
+		if str(g.get("item", "")) == "charm_pagebound":
+			goal = g
+	assert_eq(str(goal.get("id", "")), "kinds_25")
+	assert_eq(int(goal.count), 3)
+	assert_eq(int(goal.money), 2500, "the coins stay")
+	assert_eq(ShopScreen.charm_where("charm_pagebound"), "Spirlog gift: 25 kinds bonded")
+	assert_eq(ShopScreen.charm_where("kin_charm"), "Merchants: 400 coins", "a Spirlog goal also gives Kin Charms, but merchants sell them")

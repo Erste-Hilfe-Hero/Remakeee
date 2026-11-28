@@ -268,8 +268,12 @@ static func charm_family() -> Array[String]:
 	out.sort_custom(func(a: String, b: String) -> bool: return BattleScene.charm_rank(a) < BattleScene.charm_rank(b))
 	return out
 
-## Where charm [param id] is sold: at merchants for coins, or here for Riftglass.
+## Where charm [param id] comes from: a Spirlog goal (never sold), merchants for coins, or here
+## for Riftglass.
 static func charm_where(id: String) -> String:
+	for g: Dictionary in Collection.GOALS:
+		if str(g.get("item", "")) == id and int(Database.item(id).get("price", 0)) == 0:
+			return Loc.t("Spirlog gift: %d kinds bonded") % int(g.bonded)
 	var o: Dictionary = ShopCatalog.offer(id)
 	if not o.is_empty():
 		return Loc.t("Here: %d Riftglass") % int(o.get("rg_price", 0))

@@ -32,7 +32,8 @@ const WEATHER_KINDS: Array[String] = ["rain", "fog", "wind", "storm"]
 const WORN_DOWN: float = 0.5
 
 ## Bonus of charm [param item] (an items.json entry) on [param target]. [param lead] is the
-## player's Spirling in front, [param ctx] holds "night" (bool) and "weather" (String).
+## player's Spirling in front, [param ctx] holds "night" (bool), "weather" (String) and "bonded"
+## (the kinds already bonded in the Spirlog, Array of species names).
 static func charm_bonus(item: Dictionary, target: Spirling, lead: Spirling = null, ctx: Dictionary = {}) -> float:
 	var b: float = float(item.get("bond_bonus", 0.0))
 	var cond: Variant = item.get("bond_if")
@@ -60,6 +61,8 @@ static func charm_applies(when: String, target: Spirling, lead: Spirling, ctx: D
 			return target.hp_fraction() <= WORN_DOWN or not target.status.is_empty()
 		"shy":
 			return target.data.rarity in SHY_RARITIES
+		"new_kind":
+			return not target.data.species_name in (ctx.get("bonded", []) as Array)
 	return false
 
 ## Taps charm [param item] takes off the Mine! bar.

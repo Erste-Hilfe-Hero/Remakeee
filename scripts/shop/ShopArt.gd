@@ -62,6 +62,7 @@ const GRIDS: Dictionary[String, Array] = {
 	"charm_leaf": ["............", ".......kkk..", "......kGGGk.", ".....kGGGDk.", "....kGGGDGk.", "...kGGGDGGk.", "..kGGDGGGk..", "..kGDGGGk...", "..kDkkkk....", ".kk.........", "k.....m.m.m.", "............"],
 	"charm_lantern": [".....kk.....", "....k..k....", "..kkkkkkkk..", "..kwccccdk..", "..kcwccdck..", "..kccwdcck..", "..kccdwcck..", "..kcdccwck..", "..kdccccwk..", "..kkkkkkkk..", "...knnnnk...", "....kkkk...."],
 	"charm_crest": [".g...gg...g.", "..g..gg..g..", "kkkkkkkkkkkk", "kppppggppppk", "kpppggggpppk", "kppgwggggppk", "kpgwggggggpk", ".kppppppppk.", "..kppppppk..", "...kppppk...", "....kppk....", ".....kk....."],
+	"charm_page": ["............", ".kkkkk.kkkkk", "kwwwwwkwwwwk", "kwmmmwkwmmwk", "kwwwwwkwwwwk", "kwmmmwkwmmmk", "kwwwwwkwwwwk", "kwmmwwkwmmwk", "kkkkkkkkkkkk", ".....kr.....", ".....rr.....", "....r..r...."],
 	"charm_tag": [".....kk.....", "....k..k....", ".....kk.....", "...kkkkkk...", "...kmmmmk...", "...kmwwmk...", "...kmmmmk...", "...kmwwmk...", "...kmmmmk...", "....kmmk....", ".....kk.....", "............"],
 }
 
