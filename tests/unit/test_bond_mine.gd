@@ -37,5 +37,22 @@ func test_half_the_taps_give_half_a_bar() -> void:
 	assert_eq(g._phase, BondMinigame.Phase.RESULT, "time is up")
 	assert_almost_eq(g._score, 0.5, 0.001)
 
+func test_each_tap_buzzes_and_a_full_bar_buzzes_hard() -> void:
+	var g: BondMinigame = _game()
+	var before: int = GameState.vibration
+	var motion: bool = GameState.reduce_motion
+	GameState.vibration = Juice.LEVEL_SCALES.size() - 1
+	GameState.reduce_motion = false
+	g.run_mine({"phases": [[0, 1, 2, 0]], "state": "none"})
+	g.mine_tap()
+	var tap: Array = Haptics.sent.back()
+	assert_eq(int(tap[0]), int(Haptics.PATTERNS.tap.pulses[0][0]), "a tap buzzes short")
+	for i: int in 17:
+		g.mine_tap()
+	var full: Array = Haptics.sent.back()
+	assert_eq(int(full[0]), int(Haptics.PATTERNS.heavy.pulses[0][0]), "the full bar buzzes hard")
+	GameState.vibration = before
+	GameState.reduce_motion = motion
+
 func test_mine_is_the_default_style() -> void:
 	assert_eq(GameState.bond_style, "mine")
