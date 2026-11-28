@@ -39,7 +39,10 @@ Fixed truths. Later text may reveal them slowly, but never contradict them.
    edge. **Rings** are marks on a Spirling's skin, like tree rings; Ring 60 is what Mirela
    called "the edge of drawing".
 7. Each region names the Hush in its own way: Veydal "the Hush", Corvane "the Fading" (it
-   drains colour), Ashmere "the Stilling" (it freezes movement).
+   drains colour), Ashmere "the Stilling" (it freezes movement). After the story: Vellmarch "the
+   Tarnish" (a dull ring under the water), Quillmarch "the Blot" (it smears what is printed),
+   Halcyra "the Thin Air" (calls that fade with height), Quivermoor "the Long Breath" (the moor
+   breathes the calls out at night).
 8. **Rift-born** Spirlings came through a Rift and have no home side. They need an **anchor
    bond** with one person to stay well; an open Rift is not what they need.
 
@@ -480,6 +483,48 @@ mended): both throne betrayals are cashed in, Grell arrives with Brannoc (and Ke
 or his empty chair, and the player decides what happens to the pact deeds: burn them, give them to
 the Warden guild, or keep them and betray both clans (`c4_end_burn`, `c4_end_guild`, `c4_end_keep`).
 `clans/finale_coda` closes that thread in `finale_5` before the credits.
+
+## Region tales (owner Ali, 1.3.2)
+
+Each post-game region has, beside its five chapters (the sheet's `story`), one small tale of its
+own: 5 or 6 main goals with named figures, a reason from the lore, a small mystery and a closing
+moment. Nobody in a tale is a villain; whoever stands in the way has a reason and is won over.
+Goals: `post` in `data/quests.json` (one tale at a time shows on the Goals screen, under the main
+goal), text: `data/dialogue/<region>_tale.json`, figures (ids `tale_*`) in `data/story_npcs.json`,
+duels (ids `tale_*`) in `data/story_battles.json`; all of it is written by
+`tools/art/world/post_tales.py`, German in `tools/i18n/de_post_tales.py`, the other languages in
+`tools/i18n/locales_post_tales.py`. Later goals wait on the region's Rift flags, the closing moment
+on the region's done flag. Tests: `tests/unit/test_post_tales.gd`.
+
+| Region | Tale | Mystery | Closing moment |
+| --- | --- | --- | --- |
+| Vellmarch | The Drowned Quarter | who chalks compass roses on the Hookwick locks | Ada draws the last street at the Lastlamp lamp; the left-behind calls go still |
+| Quillmarch | The Blank Street | why Lampblack Lane always prints blank | Linnet becomes Dab's anchor bond; the first full print in Proofgate |
+| Halcyra | The Stringless Kite | the kite with no string over the cliffs | Wisp lands on Edrin's reel at the Gildcrest feast and takes Rhosyn as its person |
+| Quivermoor | The Lantern Walk | who leaves lanterns with Spirling names on the walkers' doorsteps | seven lanterns on the water of Lastbloom; the Echo listens |
+
+| Name | Place | Role | Team (Ring) | Flags |
+| --- | --- | --- | --- | --- |
+| Nico Quarle | Hookwick | lock boy, Ada's grandson | - | `v2t_nico` |
+| Ada Quarle | Tallowmarket, then Lastlamp | old canal surveyor; chalks the drowned Old Quarter back onto the map | - | `v2t_ada`, `v2t_drawn`, `v2t_done` |
+| Merrit | Larkspur Heights opera | prompter who cut masks from Ada's survey book without knowing | Lanternel 56, Veilmote 56, Smogpup 57, Guisdame 57 | `v2t_book` |
+| Elva Pryce | Platewick print shop, then Proofgate | compositor | - | `v3t_elva`, `v3t_done` |
+| Pennick | Rimeholt | old typesetter who set Lampblack Lane by hand | - | `v3t_pennick` |
+| Linnet | Ledgerholm, then Lampblack Lane | apprentice who feeds Dab | Nibravure 80, Filigravure 81, Siltaroth 81, Glacilisk 82 | `v3t_linnet`, `v3t_anchor` |
+| Dab | Lampblack Lane | a Rift-born Nibbet that licks the lane's ink to keep its thin place open | - | |
+| Rhosyn | Brightledge, Whitecairn, Gildcrest | kite-maker | - | `v4t_rhosyn`, `v4t_reel`, `v4t_done` |
+| Edrin | (gone) | Rhosyn's brother, fell from the Gilt Span nine years ago | - | |
+| Wisp | over the cliffs | Edrin's Kitelet, calling ever since | - | |
+| Selma | Paleshore | salt widow | - | `v4t_selma` |
+| Wilf | Whitecairn | kite racer who wants the cliff prize for his mother's roof | Kitewhip 88, Gildwing 89, Siroclaw 89, Zenwhirl 90 | `v4t_wilf` |
+| Alvhild, Gisle, Hjordis, Ingrun, Ketil, Oddny | Mossgate, Tallowmere, Rootchapel, Driftwick, the Heaving Fields, Gloamwater | the six lantern walkers; each duel is the old custom of the walk | Ring 92-93, 93-94, 93-94, 94-95, 95-96, 96-97 | `v5t_<name>` |
+| Aslak Marr | Lastbloom | lantern elder; listens to the Long Breath and scratches each lost Spirling's name in tin | Peatmonarch 97, Woadcastle 98, Weirmarshal 98, Rookwarden 99, Fenwarden 99 | `v5t_aslak`, `v5t_done` |
+| Tussock | (lost) | Aslak's Peatlet, lost to the bog fifty years ago | - | |
+
+Places: **the Old Quarter** (Vellmarch, drowned forty years ago for a reservoir of the Houses,
+never redrawn, so the Lock Rift opened under it), **Lampblack Lane** (Platewick), **the old salt
+road** (Paleshore to the Gilt Span). The lanterns of the walk carry the names Plink, Mire and,
+half scratched, Tussock.
 
 ## Spoiler flags (for store texts and screenshots)
 

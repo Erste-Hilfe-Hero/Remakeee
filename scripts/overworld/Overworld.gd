@@ -92,6 +92,7 @@ var _entry_cell: Vector2i = Vector2i.ZERO
 
 func _ready() -> void:
 	Database.load_all()
+	_tale_goal = str(QuestLog.tale_current(GameState.flags).get("id", ""))
 	_actions = {
 		"storage": _action_storage,
 		"heal": _action_heal,
@@ -202,6 +203,9 @@ func _ready() -> void:
 			show_notices.call_deferred()
 		elif BattleCheckpoint.is_open(GameState.records):
 			_resume_open_battle.call_deferred()
+			return
+		# The daily card (DailyBoard), once a day; a battle left open comes first.
+		show_daily_card.call_deferred()
 
 func _build() -> void:
 	# The land around an outdoor map on screens larger than the map (update 1.3.2).
@@ -956,7 +960,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				# The region's dominant elements (KAMPF_PLAN_1000 item 102).
 				boost.append_array(ElementDominance.boost(map.region))
 				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain,
-					WildRules.event_mults(map.encounter_table, DailyFind.today_key()))
+					DailyBoard.encounter_mults(map.encounter_table, DailyFind.today_key(), DailyBoard.featured()))
 				wild = ChallengeRules.reroll_wild(wild, map.encounter_table, GameState.rng)
 				WildRules.roll_elder(wild, GameState.has_flag(GameState.ACT1_END_FLAG), GameState.rng)
 				if wild != null:
@@ -981,6 +985,7 @@ func _warp(warp: Dictionary) -> void:
 	await _fade_to(0.0)
 	player.frozen = false
 	busy = false
+	await show_daily_card()
 
 ## Sounds for leaving through a warp on tile [param kind] and for arriving: a wooden door
 ## opens and shuts behind (item 2507), stairs climb or descend by the way the Wayfarer faces
@@ -1249,9 +1254,23 @@ func take_notices() -> Array[String]:
 	GameState.notices.clear()
 	return lines
 
+## The region tale goal last shown ("" for none), so a talk that moves the tale on says so.
+var _tale_goal: String = ""
+
+## Shows "New goal: ..." when the region tale's goal changed since the last look.
+func _announce_tale_goal() -> void:
+	var g: Dictionary = QuestLog.tale_current(GameState.flags)
+	var id: String = str(g.get("id", ""))
+	if id == _tale_goal:
+		return
+	_tale_goal = id
+	if not id.is_empty():
+		await say(["New goal: " + QuestLog.goal_text(g, GameState.flags)] as Array[String])
+
 ## Shows "New goal: ..." when the story goal moved on since [param before]. A new chapter
 ## first gets its chapter card (plan item 1413), with the act name when the act changes.
 func announce_goal_if_changed(before: int) -> void:
+	await _announce_tale_goal()
 	var now: int = QuestLog.current_index(GameState.flags)
 	if now == before:
 		return
@@ -4169,13 +4188,41 @@ func _on_card_paid(added: int) -> void:
 	if is_instance_valid(toast):
 		toast.show_note(Loc.t("Monthly Card: +%d Riftglass") % added)
 
-## Claims the free Riftglass of the day when the game is online; a toast says what came.
+## Claims the free Riftglass of the day when the game is online and today's welcome gift was
+## taken (on the daily card, maybe offline before); a toast says what came. The server counts
+## its own gift steps, so day 7 brings more there too.
 func _on_online_daily_rg(s: int) -> void:
-	if s != Online.State.ONLINE:
+	if s != Online.State.ONLINE or not DailyBoard.gift_taken_on(DailyBoard.today()):
 		return
 	var added: int = await RiftglassSinks.claim_daily()
-	if added > 0 and is_instance_valid(toast):
+	if added > 0 and is_instance_valid(toast) and not Billing.kids_locked():
 		toast.show_note(Loc.t("Daily gift: +%d Riftglass") % added)
+
+## Seconds between two looks whether the daily card may show.
+const DAILY_CARD_POLL: float = 0.5
+var _daily_waiting: bool = false
+
+## The daily card (DailyBoard): once a day in the world, after the starter, never in battle or
+## during a scene. Taking the gift queues its line and, online, the Riftglass of the day.
+func show_daily_card() -> void:
+	if _daily_waiting or not is_inside_tree() or not DailyBoard.card_due():
+		return
+	# Wait until the Wayfarer stands free: no talk, tip, note, scene or battle on screen.
+	_daily_waiting = true
+	while busy or player.frozen or _text.visible or toast.pending() > 0:
+		await get_tree().create_timer(DAILY_CARD_POLL).timeout
+		if not is_inside_tree():
+			return
+	_daily_waiting = false
+	if not DailyBoard.card_due():
+		return
+	busy = true
+	player.frozen = true
+	GameState.notices.append_array(await DailyCard.play(self))
+	show_notices()
+	player.frozen = false
+	busy = false
+	_on_online_daily_rg(Online.state)
 
 ## Bonus goal of the battle just fought (items 755-757): pays out once when it was met.
 func _pay_bonus_goal(goal_key: String) -> void:

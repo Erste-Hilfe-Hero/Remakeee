@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table daily, written by tools/i18n/locales_daily.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Cloud gale": "Bulut fırtınası",
+  "Ember storm": "Kor fırtınası",
+  "Glass gale": "Cam rüzgârı",
+  "Glimmer rain": "Işıltı yağmuru",
+  "Rime storm": "Kırağı fırtınası",
+  "Silver fog": "Gümüş sis",
+  "Spirling of the day: %s": "Günün Spirling'i: %s",
+  "Spirling of the day: %s. It steps out more often today in %s.": "Günün Spirling'i: %s. Bugün %s yöresinde daha sık çıkıyor.",
+  "Take the gift": "Hediyeyi al",
+  "This weekend: %s over %s.": "Bu hafta sonu: %s, %s üzerinde.",
+  "Weekend weather: %s over %s. Shy Spirlings step out more often there.": "Hafta sonu havası: %s, %s üzerinde. Çekingen Spirling'ler orada daha sık çıkıyor.",
+  "Welcome gift, day %d of 7: %s": "Hoş geldin hediyesi, 7 günün %d. günü: %s"
+ }
+}

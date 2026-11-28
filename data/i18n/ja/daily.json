@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table daily, written by tools/i18n/locales_daily.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Cloud gale": "くものかぜ",
+  "Ember storm": "ほのおのあらし",
+  "Glass gale": "ガラスのかぜ",
+  "Glimmer rain": "きらめきの雨",
+  "Rime storm": "しものあらし",
+  "Silver fog": "ぎんのきり",
+  "Spirling of the day: %s": "きょうのスピリング: %s",
+  "Spirling of the day: %s. It steps out more often today in %s.": "きょうのスピリング: %s。きょうは %s でよく出てくる。",
+  "Take the gift": "うけとる",
+  "This weekend: %s over %s.": "こんどのしゅうまつ: %s が %s に。",
+  "Weekend weather: %s over %s. Shy Spirlings step out more often there.": "しゅうまつの天気: %s が %s に。そこではめずらしいスピリングがよく出てくる。",
+  "Welcome gift, day %d of 7: %s": "ようこそのおくりもの 7日中%d日目: %s"
+ }
+}

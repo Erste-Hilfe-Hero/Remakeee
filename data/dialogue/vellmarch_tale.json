@@ -1,0 +1,120 @@
+{
+ "ada": {
+  "if": {
+   "flag": "v2t_nico",
+   "not_flag": "v2t_ada"
+  },
+  "else": "vellmarch_tale/ada_book",
+  "lines": [
+   "Ada: Roses? Fine. Forty years ago they drowned my quarter.",
+   "Ada: A reservoir for the Houses. Nobody redrew the streets.",
+   "Ada: Water nobody maps grows thin. Then it tears.",
+   "Ada: The Lock Rift opened that winter. Under my street.",
+   "Ada: The families moved away. Their Spirlings stayed.",
+   "Ada: Hear that dull ring under the water? That's them.",
+   "Ada: We call it the Tarnish. It is only calling.",
+   "Ada: So I chalk the streets back. One rose a night.",
+   "Ada: But my survey book was sold. It's at the opera now."
+  ],
+  "action": "set_flag v2t_ada"
+ },
+ "ada_book": {
+  "if": {
+   "flag": "v2t_book",
+   "not_flag": "v2t_drawn"
+  },
+  "else": "vellmarch_tale/ada_wait",
+  "lines": [
+   "Ada: My book. Look: the water stairs, the old bakery.",
+   "Ada: With this I can draw it all again. Every street.",
+   "Ada: The last line belongs at the great lamp of Lastlamp.",
+   "Ada: Once the vault under it is mended. Not before."
+  ],
+  "action": "set_flag v2t_drawn"
+ },
+ "ada_wait": [
+  "Ada: The opera on Larkspur Heights. Ask the prompter."
+ ],
+ "lamp": {
+  "if": {
+   "flag": "vellmarch_done",
+   "not_flag": "v2t_done"
+  },
+  "else": "vellmarch_tale/lamp_wait",
+  "lines": [
+   "Ada: The vault is mended. Now, the last street.",
+   "Ada draws one thin line: the water stair, up to the lamp.",
+   "Under the canal the dull ringing stops. It listens.",
+   "Ada: Hum the Echo melody, {name}. They still know it.",
+   "One by one the left-behind calls go soft. Then still.",
+   "Ada: Not gone. Heard. That was all they wanted.",
+   "Ada: The Old Quarter is on the map again. Thank you."
+  ],
+  "action": "set_flag v2t_done"
+ },
+ "lamp_after": [
+  "Ada: Nico chalks the roses now. His are crooked."
+ ],
+ "lamp_wait": {
+  "if": {
+   "not_flag": "v2t_done"
+  },
+  "else": "vellmarch_tale/lamp_after",
+  "lines": [
+   "Ada: The vault first. Then we draw the last line."
+  ]
+ },
+ "merrit": {
+  "if": {
+   "flag": [
+    "v2t_ada",
+    "v2_rift_lock_sealed"
+   ],
+   "not_flag": "v2t_book"
+  },
+  "else": "vellmarch_tale/merrit_wait",
+  "lines": [
+   "Merrit: A survey book? Ah. My cue book.",
+   "Merrit: I cut masks from its pages. Streets make fine eyes.",
+   "Merrit: I didn't know they were anyone's streets.",
+   "Merrit: Still, a prompter gives nothing without a scene.",
+   "Merrit: Win, and the book goes home."
+  ],
+  "action": "battle tale_merrit"
+ },
+ "merrit_after": [
+  "Merrit: Tell Ada the masks are back in their box."
+ ],
+ "merrit_defeat": [
+  "Merrit: Bravo. Take it. Most pages are still there.",
+  "Merrit: Tell Ada I'm sorry. I'll come and say it myself."
+ ],
+ "merrit_lose": [
+  "Merrit: Curtain. Try again after the interval."
+ ],
+ "merrit_wait": {
+  "if": {
+   "not_flag": "v2t_book"
+  },
+  "else": "vellmarch_tale/merrit_after",
+  "lines": [
+   "Merrit: Rehearsal. Come back once the locks are quiet."
+  ]
+ },
+ "nico": {
+  "if": {
+   "not_flag": "v2t_nico"
+  },
+  "else": "vellmarch_tale/nico_after",
+  "lines": [
+   "Nico: Every morning there's a chalk rose on the lock gate.",
+   "Nico: A compass rose. Like on the old guild maps.",
+   "Nico: Gran says it's nothing. Gran lies badly.",
+   "Nico: Ada Quarle. Tallowmarket. Ask her, not me."
+  ],
+  "action": "set_flag v2t_nico"
+ },
+ "nico_after": [
+  "Nico: Gran's at the Tallowmarket. Mind her temper."
+ ]
+}
