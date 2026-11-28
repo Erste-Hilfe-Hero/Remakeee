@@ -3,8 +3,6 @@
 T = {
 "Spirlog reward: %s!": "Spirlog-Belohnung: %s!",
 "You received %s x%d.": "Du hast %s x%d erhalten.",
-"+%d Riftglass, it comes once you are online.": "+%d Rissglas, es kommt, sobald du online bist.",
-"+%d Riftglass": "+%d Rissglas",
 "%d Gleam bonded": "%d Glanzformen gebunden",
 "%d%% bonded": "%d%% gebunden",
 "Seen: %d%% (%d/%d)": "Gesehen: %d%% (%d/%d)",
@@ -20,7 +18,6 @@ T = {
 "Rewards for the share of kinds bonded and for Gleam kinds.": "Belohnungen für den Anteil gebundener Arten und für Glanzformen.",
 "No connection right now. The invite is kept and sent once you are online.": "Gerade keine Verbindung. Die Einladung wird aufgehoben und gesendet, sobald du online bist.",
 "Invite of friend code %s:": "Einladung von Freundes-Code %s:",
-"Spirlog reward: +%d Riftglass": "Spirlog-Belohnung: +%d Rissglas",
 "Of every kind in the game.": "Von allen Arten im Spiel.",
 "Seen: %d%%": "Gesehen: %d%%",
 "Bonded: %d%%": "Gebunden: %d%%",

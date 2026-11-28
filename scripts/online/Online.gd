@@ -37,8 +37,6 @@ var net_retry_seconds: float = 2.0
 signal state_changed(state: State)
 ## Another device saved this slot after this one last synced it.
 signal save_conflict(slot: int)
-## The server confirmed an upload of [param slot] (book rewards wait for this, SpirlogRewards).
-signal save_synced(slot: int)
 
 var backend: OnlineBackend
 var state: State = State.OFFLINE
@@ -504,7 +502,6 @@ func _push_once(slot: int, force: bool) -> bool:
 			dirty.erase(slot)
 		conflicts.erase(slot)
 		_save_session()
-		save_synced.emit(slot)
 		return true
 	if bool(r.data.get("conflict", false)):
 		if not conflicts.has(slot):

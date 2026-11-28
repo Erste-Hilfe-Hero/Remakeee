@@ -1,11 +1,11 @@
 {
- "_comment": "Spirlog book rewards (Chimora 1.3.2, Ali): steps for the share of every kind in the game bonded (pct) and for Gleam kinds bonded (n), each taken once in the book. Items and the title come at once, also offline (saved in the save); the Riftglass comes from the server once per account (public.spirlog_reward_claim, 20261128061000_spirlog_rewards.sql has the same steps, tests/unit/test_spirlog_rewards.gd compares them). Children's accounts get the items and the title, no Riftglass.",
+ "_comment": "Spirlog book rewards (Chimora 1.3.2, Ali): steps for the share of every kind in the game bonded (pct) and for Gleam kinds bonded (n), each taken once in the book (SpirlogRewards.gd). Items and a cosmetic title only, from the save alone (works offline). No Riftglass: the server keeps no bond record of its own and cannot check a save, so a currency reward here could be forged (security review 1.3.2).",
  "steps": [
-  {"id": "bonded_25", "kind": "bonded", "pct": 25, "riftglass": 100, "item": "max_tonic", "count": 3},
-  {"id": "bonded_50", "kind": "bonded", "pct": 50, "riftglass": 200, "item": "spark_charm", "count": 2},
-  {"id": "bonded_100", "kind": "bonded", "pct": 100, "riftglass": 500, "item": "echo_lumen", "count": 1, "title": "Keeper of Every Page"},
-  {"id": "gleam_10", "kind": "gleam", "n": 10, "riftglass": 50, "item": "kin_charm", "count": 2},
-  {"id": "gleam_25", "kind": "gleam", "n": 25, "riftglass": 100, "item": "revival_leaf", "count": 3},
-  {"id": "gleam_50", "kind": "gleam", "n": 50, "riftglass": 250, "item": "keen_lens", "count": 1}
+  {"id": "bonded_25", "kind": "bonded", "pct": 25, "item": "max_tonic", "count": 3},
+  {"id": "bonded_50", "kind": "bonded", "pct": 50, "item": "spark_charm", "count": 2},
+  {"id": "bonded_100", "kind": "bonded", "pct": 100, "item": "echo_lumen", "count": 1, "title": "Keeper of Every Page"},
+  {"id": "gleam_10", "kind": "gleam", "n": 10, "item": "kin_charm", "count": 2},
+  {"id": "gleam_25", "kind": "gleam", "n": 25, "item": "revival_leaf", "count": 3},
+  {"id": "gleam_50", "kind": "gleam", "n": 50, "item": "keen_lens", "count": 1}
  ]
 }

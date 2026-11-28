@@ -3,10 +3,6 @@ extends RefCounted
 ## Spirlog > Book rewards (Chimora 1.3.2): the book in percent (seen, bonded, Gleam) and the
 ## reward steps of SpirlogRewards; a reached step is taken here once.
 
-## Riftglass is named and paid only where it may be: never on a child's account.
-static func glass_ok() -> bool:
-	return not Billing.kids_locked()
-
 ## Rows above the steps: seen, bonded and Gleam in percent of the whole book, with a bar each.
 const SHARE_ROWS: int = 3
 
@@ -33,7 +29,7 @@ static func rows(spirlog: Dictionary, records: Dictionary) -> Array[Dictionary]:
 		else:
 			status = "%d/%d" % [have, int(p.need)]
 		out.append({"text": "%s: %s" % [SpirlogRewards.step_name(s), status],
-			"hint": SpirlogRewards.reward_text(s, glass_ok())})
+			"hint": SpirlogRewards.reward_text(s)})
 	return out
 
 static func title() -> String:
@@ -50,17 +46,13 @@ static func run(menu: MenuHost) -> void:
 		if idx < SHARE_ROWS:
 			continue
 		var s: Dictionary = SpirlogRewards.steps()[idx - SHARE_ROWS]
-		var lines: Array[String] = SpirlogRewards.claim(str(s.id), GameState.spirlog, GameState.records, glass_ok())
+		var lines: Array[String] = SpirlogRewards.claim(str(s.id), GameState.spirlog, GameState.records)
 		if lines.is_empty():
 			var what: String = Loc.t("Already taken.") if SpirlogRewards.is_claimed(GameState.records, str(s.id)) \
 				else Loc.t("Not reached yet.")
-			await menu.info(what + "\n" + SpirlogRewards.reward_text(s, glass_ok()))
+			await menu.info(what + "\n" + SpirlogRewards.reward_text(s))
 			continue
 		Sound.sfx("coin")
-		# Saved at once, so the reward is kept and the server sees the book for the Riftglass.
-		if SaveManager.save_game() and Online.is_online():
-			await Online.wait_synced(SaveManager.slot)
-			var added: int = await SpirlogRewards.sync(SaveManager.slot)
-			if added > 0:
-				SaveManager.save_game()
+		# Saved at once, so the reward is kept (and goes online with the save).
+		SaveManager.save_game()
 		await menu.info("\n".join(lines))
