@@ -42,6 +42,14 @@
     "sprite": "villager",
     "show_flag": "lq_vorlucent_met",
     "hide_flag": "lq_vorlucent_ready"
+   },
+   {
+    "id": "bond_trader",
+    "x": 10,
+    "y": 10,
+    "facing": "left",
+    "dialogue": "trade_bond/cinderfold",
+    "sprite": "elder"
    }
   ],
   "secrets": [

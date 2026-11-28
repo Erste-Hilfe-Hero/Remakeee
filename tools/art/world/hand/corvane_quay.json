@@ -8,6 +8,14 @@
     "facing": "right",
     "dialogue": "corvane_quay/informant",
     "sprite": "villager"
+   },
+   {
+    "id": "bond_trader",
+    "x": 10,
+    "y": 2,
+    "facing": "left",
+    "dialogue": "trade_bond/corvane_quay",
+    "sprite": "villager"
    }
   ],
   "warps": [
