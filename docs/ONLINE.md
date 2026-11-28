@@ -1,6 +1,7 @@
-# Online (Chimora is online only)
+# Online
 
-Chimora only runs with an internet connection. The server keeps every journey, the phone keeps a cache copy.
+Chimora plays offline and goes online by itself when it can (docs/OFFLINE.md). The phone keeps every
+journey; the server keeps a copy of each slot and runs everything players share.
 The server is our own machine at **Contabo** (Contabo GmbH, Munich, Germany, processor under Art. 28 GDPR; server location: data centre Lauterbourg, France, EU; Cloud VPS), running the same open-source programs
 as Supabase (Postgres, GoTrue for sign-in, PostgREST for the API) behind Caddy for HTTPS. Everything for it
 is in `server/`. The game would also work with a Supabase Cloud project, see the end of this page. The
@@ -15,11 +16,12 @@ ideas list behind this is the "Chimora online: 200 ideas" artifact in the projec
   with the revision it last saw. If another device saved in between, the server refuses and the title screen
   asks which journey to keep. The server also refuses impossible saves (level over 100, more than 6 in the
   party, negative money).
-- **Connection lost while playing:** the game pauses behind a "Reconnecting" screen and retries every 4 seconds.
-  Unsent saves go up as soon as it is back. A battle that is running goes on with only the small mark (`Online.in_battle`); the
-  big screen comes when it is over, and its result is sent once the connection is back.
-- **Server clock:** the daily find, the weekly challenge and the festivals use the server's time, so changing
-  the phone's clock does nothing.
+- **Connection lost while playing:** nothing pauses. A small mark (`OfflineMark`) shows at the top and
+  Online retries quietly in the background (4, 8, 16, 30 s). Unsent saves go up as soon as it is back.
+  Parts that need the server show one line, "This needs internet. The rest of your journey plays on
+  offline." (docs/OFFLINE.md).
+- **Server clock:** while online the daily find, the weekly challenge and the festivals use the server's time;
+  offline the phone's clock stands in (none of them pays Riftglass or real-money goods).
 - **Old builds:** `server_config.min_version` sends older builds to the store. `Online.CLIENT_VERSION` is
   stamped by CI together with the version code.
 - **Notice:** `server_config.motd` shows a short text on the title screen (for example planned maintenance).
@@ -234,8 +236,8 @@ outside (its two test accounts are deleted again). Builds read address and publi
    nightly backups (kept 14 days in `/opt/chimora/server/backups`) and automatic security updates.
 
 From then on every CI build reads the address and the public anon key from `<CHIMORA_SERVER>/chimora.json`
-and talks to the real server. Store builds (release AAB, iOS) fail without it, because an online-only game
-cannot ship without its server. Every push to `main` that changes `server/` or `supabase/` updates the
+and talks to the real server. Store builds (release AAB, iOS) fail without it, because the online parts
+(account, backup, shop, friends, leagues) cannot ship without their server. Every push to `main` that changes `server/` or `supabase/` updates the
 machine again; data and keys stay.
 
 No domain is needed: `sslip.io` turns the IP into a name, so Let's Encrypt can issue the certificate. With an
@@ -552,8 +554,9 @@ token, stored in `profiles.session_token`; a device that sends its old token kee
 another device claimed the account meanwhile (`other_device`). Every call carries the token in
 the header `x-chimora-session`. The trigger `saves_device` refuses changed saves from a device
 whose token is not the newest one (saving, trades, restores), and `presence` returns
-`other_device`. The old device then goes to the title, which says "Signed in on another device"
-and only takes the account back when the player picks "Play on this device". Calls without the
+`other_device`. The old device then stops syncing and plays on offline (its saves stay on the phone);
+the next title says "Signed in on another device" and only takes the account back when the player
+picks "Play on this device". The sync after that finds both journeys and asks which to keep. Calls without the
 header (older builds) are not checked; moving the account with a transfer code claims anew.
 
 ## Small actions while the connection is weak

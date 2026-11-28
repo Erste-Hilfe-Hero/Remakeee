@@ -23,7 +23,7 @@ const ERRORS: Dictionary = {
 
 static func run(menu: PauseMenu) -> void:
 	if not Online.is_online():
-		await menu.info(Online.error_text())
+		await OnlineErrors.say_offline(menu)
 		return
 	while true:
 		var leagues: Array[String] = shown_leagues()

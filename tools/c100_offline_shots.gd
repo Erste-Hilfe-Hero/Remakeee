@@ -1,7 +1,7 @@
 extends SceneTree
-## Airplane-mode sequence for plan Chimora 100, item 77: title without a connection, the offline
-## start, the prologue playing on, and the reconnect screen after the prologue's save point.
-##   xvfb-run -a godot --path . --rendering-driver opengl3 --resolution 440x956 -s res://tools/c100_offline_shots.gd -- out_dir [lang]
+## Airplane-mode sequence (docs/OFFLINE.md): the title without a connection, the journey playing
+## on with the small offline mark, and the needs-internet line of the shop and the leagues.
+##   xvfb-run -a godot --path . --rendering-driver opengl3 --resolution 390x844 -s res://tools/c100_offline_shots.gd -- out_dir [lang]
 ## Run it with its own XDG_DATA_HOME: it wipes the save slots of user://.
 
 var _out: String = "user://c100_offline_shots"

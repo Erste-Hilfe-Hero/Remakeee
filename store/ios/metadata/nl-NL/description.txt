@@ -2,7 +2,7 @@ Sluit een band met 567 pixelmonsters, zoek zeldzame Glansvormen en plan elke zet
 - 567 Spirlings om te binden: tik snel op de grote knop Van mij! en vul de balk
 - Tactische beurtgevechten met acht elementen en Hoeders met meerdere fasen
 - Pixelkunst die in vijf tijdperken volwassen wordt, van zwart-wit tot volle kleur
-- Online game: Chimora heeft een internetverbinding nodig
+- Het verhaal werkt offline; vrienden, competities en winkel hebben internet nodig
 
 NIEUW IN 1.3.2
 - 70 nieuwe Spirlings, 10 in elke regio
@@ -53,5 +53,3 @@ SPEEL ZOALS JIJ WILT
 
 WINKEL EN EERLIJKE COMPETITIE
 Gratis te spelen, met optionele in-app-aankopen. Veel ervan geven voordelen in gevechten of versnellen je voortgang; in de Eerlijke competitie tellen ze niet mee. Elk aanbod laat precies zien wat erin zit, niets is willekeurig. Elke regio, elke Hoeder en elke soort Spirling is te bereiken zonder te betalen. De winkel is dicht voor spelers onder de 13 en heeft maandlimieten per leeftijd. Geen reclame, geen tracking.
-
-Let op: Chimora heeft een internetverbinding nodig.

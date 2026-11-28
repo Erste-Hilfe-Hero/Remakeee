@@ -571,7 +571,9 @@ func save_and_quit() -> bool:
 	var on_server: bool = await Online.wait_synced(SaveManager.slot)
 	if not is_inside_tree():
 		return false
-	if not on_server and not await confirm(Loc.t(SAVED_LOCAL_TEXT) + "\n" + Loc.t("Go to the title anyway?"), "To title", "Stay"):
+	# Offline the save on this phone is the journey (docs/OFFLINE.md): no question. Online, an
+	# upload that did not go through (a conflict, a refusal) is worth one.
+	if not on_server and Online.is_online() and not await confirm(Loc.t(SAVED_LOCAL_TEXT) + "\n" + Loc.t("Go to the title anyway?"), "To title", "Stay"):
 		return false
 	to_title = true
 	return true
