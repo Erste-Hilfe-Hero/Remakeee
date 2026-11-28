@@ -166,8 +166,12 @@ func mine_tap() -> void:
 		return
 	mine_fill = minf(mine_fill + 1.0 / _mine_needed, 1.0)
 	_tone(rng.randi_range(0, BondEcho.MARKS - 1))
+	# Every tap buzzes; the tap that fills the bar buzzes hard (owner, 28 Nov).
 	if mine_fill >= 0.999:
+		Haptics.play("heavy")
 		_mine_end()
+	else:
+		Haptics.play("tap")
 
 func _mine_end() -> void:
 	_score = mine_fill
