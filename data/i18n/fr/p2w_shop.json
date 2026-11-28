@@ -2,7 +2,7 @@
  "_comment": "Translations of the German table p2w_shop, written by tools/i18n/locales_p2w_shop.py. Keys are the English text; keys with %s or %d are patterns.",
  "strings": {
   "+%d %% bonus": "+%d %% bonus",
-  "A one-time pack for your journey": "Un lot unique pour votre voyage",
+  "A one-time pack for your journey": "Un lot unique pour ton voyage",
   "After the tier before it": "Après le palier d'avant",
   "All advantages": "Tous les avantages",
   "Best value": "Avantageux",

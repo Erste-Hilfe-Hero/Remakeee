@@ -48,7 +48,7 @@
   "It cannot be jolted.": "Nie może zostać porażony.",
   "It cannot be scorched.": "Nie może zostać poparzony.",
   "It cannot be soaked.": "Nie może zostać przemoczony.",
-  "It takes 15% less damage from Focus arts.": "Otrzymuje o 15% mniej obrażeń od sztuk Skupienia.",
+  "It takes 15% less damage from Focus arts.": "Otrzymuje o 15% mniej obrażeń od technik Skupienia.",
   "Joss": "Joss",
   "Kasimir": "Kasimir",
   "Knuckle Patter": "Grad Kuksów",
@@ -82,10 +82,10 @@
   "Talk log": "Dziennik rozmów",
   "Taren": "Taren",
   "Thorn Coat": "Cierniowy Płaszcz",
-  "Tip: %s and %s arts hit %s hard.": "Wskazówka: sztuki %s i %s mocno trafiają %s.",
-  "Tip: %s arts hit %s hard.": "Wskazówka: sztuki %s mocno trafiają %s.",
+  "Tip: %s and %s arts hit %s hard.": "Wskazówka: techniki %s i %s mocno trafiają %s.",
+  "Tip: %s arts hit %s hard.": "Wskazówka: techniki %s mocno trafiają %s.",
   "Tova": "Tova",
-  "Welcome back! A small gift: %d Tonics and %d coins.": "Witaj z powrotem! Mały prezent: %d toników i %d monet.",
+  "Welcome back! A small gift: %d Tonics and %d coins.": "Witaj z powrotem! Mały prezent: toniki (%d) i monety (%d).",
   "Ysa": "Ysa"
  }
 }
