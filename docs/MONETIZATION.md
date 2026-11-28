@@ -422,7 +422,7 @@ Die Tabelle zeigt alle Angebote, auch nicht verkaufte (`ready: false`). `rg_fast
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-249 Angebote (Katalog v43): 206 Vorteil, 2 Komfort, 33 Kosmetik, 8 Rissglas.
+256 Angebote (Katalog v43): 213 Vorteil, 2 Komfort, 33 Kosmetik, 8 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
@@ -675,5 +675,12 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_rare_compass` | Rarity Compass | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
 | `rg_spark_seal` | Training Seal | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
 | `rg_kinship_bell` | Kinship Bell | 7,99 € | 800 | Vorteil | keine Liga-Wirkung |
+| `rg_charm_swiftleaf` | Swiftleaf | 0,99 € | 100 | Vorteil | keine Liga-Wirkung |
+| `rg_charm_hush` | Hush Feather | 1,99 € | 200 | Vorteil | keine Liga-Wirkung |
+| `rg_charm_lantern` | Rift Lantern | 1,99 € | 200 | Vorteil | keine Liga-Wirkung |
+| `rg_charm_firstlight` | Firstlight Crest | 3,99 € | 400 | Vorteil | keine Liga-Wirkung |
+| `rg_charm_swiftleaf_x3` | Swiftleaf x3 | 1,99 € | 200 | Vorteil | keine Liga-Wirkung |
+| `rg_charm_lantern_x3` | Rift Lantern x3 | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
+| `rg_charm_satchel` | Charm Satchel | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
 
 <!-- shop-table:end -->

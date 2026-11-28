@@ -2,7 +2,7 @@
 """Builds the server copy of the shop offers and the store product list from data/shop.json.
 
 Writes:
-  supabase/migrations/20261110000021_shop_offers_vNNN.sql  (offers for shop_buy / _shop_credit; from v039 20261127100000_..., from v040 20261127205900_..., from v041 20261128010000_..., from v043 20261128150000_...)
+  supabase/migrations/20261110000021_shop_offers_vNNN.sql  (offers for shop_buy / _shop_credit; from v039 20261127100000_..., from v040 20261127205900_..., from v041 20261128010000_..., from v042 20261128060000_..., from v043 20261128150000_...)
   store/products.json                                 (products for App Store Connect and Play Console)
 Usage: python3 tools/shop/build_offers_sql.py [--check]   (--check fails if the files are out of date)
 
@@ -22,9 +22,13 @@ def sql_path(version):
     # (up to 20261127160000_gleam_kinds.sql); a server applies a file named before those never.
     # From version 41 (Ring Cap Seal off sale) the file sorts after 20261127210000_shop_p2w_step8.sql.
     # From version 43 (First Catch Pack, 1.3.2) the file sorts after every migration up to
-    # 20261128050000; version 42 belongs to the bond-charm work and must merge first.
+    # 20261128050000, after version 42.
     if version >= 43:
         return os.path.join(ROOT, "supabase/migrations", "20261128150000_shop_offers_v%03d.sql" % version)
+    # From version 42 (bond charms, 1.3.2) the file sorts after 20261128050000, the last migration
+    # deployed with catalog v41.
+    if version >= 42:
+        return os.path.join(ROOT, "supabase/migrations", "20261128060000_shop_offers_v%03d.sql" % version)
     if version >= 41:
         return os.path.join(ROOT, "supabase/migrations", "20261128010000_shop_offers_v%03d.sql" % version)
     if version >= 40:

@@ -6957,6 +6957,186 @@
    "ready": true,
    "badge": "new",
    "explain": "Spirlings that fought in a won battle in the story gain double Kinship: 4 instead of 2."
+  },
+  {
+   "id": "rg_charm_swiftleaf",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Swiftleaf",
+   "desc": "Hold it out during a bond: +8%, and Mine! needs 6 taps fewer for a full bar. 1 piece, used up. Story only, not in leagues.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.charm_swiftleaf",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_charm_swiftleaf",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "explain": "Hold it out on one bond try: bonding is 8% easier for that try. In the Mine! game you need 6 taps fewer for a full bar."
+  },
+  {
+   "id": "rg_charm_hush",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Hush Feather",
+   "desc": "Hold it out during a bond: +8%, and +35% more with shy and ancient Spirlings. 1 piece, used up. Story only, not in leagues.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.charm_hush",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_charm_hush",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "explain": "Hold it out on one bond try: bonding is 8% easier for that try. With shy and ancient Spirlings it is 35% easier on top."
+  },
+  {
+   "id": "rg_charm_lantern",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Rift Lantern",
+   "desc": "Hold it out during a bond: +30%, and Mine! needs 4 taps fewer. 1 piece, used up. Story only, not in leagues.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.charm_lantern",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_charm_lantern",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "explain": "Hold it out on one bond try: bonding is 30% easier for that try. In the Mine! game you need 4 taps fewer for a full bar."
+  },
+  {
+   "id": "rg_charm_firstlight",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Firstlight Crest",
+   "desc": "The top bond charm. Hold it out during a bond: +45%, and Mine! needs 6 taps fewer. 1 piece, used up. Story only, not in leagues.",
+   "rg_price": 400,
+   "eur_cents": 399,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.charm_firstlight",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_charm_firstlight",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true,
+   "explain": "Hold it out on one bond try: bonding is 45% easier for that try. In the Mine! game you need 6 taps fewer for a full bar."
+  },
+  {
+   "id": "rg_charm_swiftleaf_x3",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Swiftleaf x3",
+   "desc": "3 Swiftleaves: each makes one bond 8% easier and Mine! 6 taps shorter. Single price 300 Riftglass. Story only, not in leagues.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.charm_swiftleaf_x3",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_charm_swiftleaf",
+     "n": 3
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "min_band": 13,
+   "ready": true,
+   "explain": "3 pieces of the item listed above, in one pack."
+  },
+  {
+   "id": "rg_charm_lantern_x3",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Rift Lantern x3",
+   "desc": "3 Rift Lanterns: each makes one bond 30% easier and Mine! 4 taps shorter. Single price 600 Riftglass. Story only, not in leagues.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.charm_lantern_x3",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_charm_lantern",
+     "n": 3
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "min_band": 13,
+   "ready": true,
+   "explain": "3 pieces of the item listed above, in one pack."
+  },
+  {
+   "id": "rg_charm_satchel",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Charm Satchel",
+   "desc": "2 Hush Feathers, 2 Swiftleaves, 2 Rift Lanterns, 2 Firstlight Crests. Single price 1800 Riftglass. Story only, not in leagues.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.charm_satchel",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_charm_hush",
+     "n": 2
+    },
+    {
+     "t": "item",
+     "id": "rg_charm_swiftleaf",
+     "n": 2
+    },
+    {
+     "t": "item",
+     "id": "rg_charm_lantern",
+     "n": 2
+    },
+    {
+     "t": "item",
+     "id": "rg_charm_firstlight",
+     "n": 2
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "min_band": 13,
+   "ready": true,
+   "explain": "Two of each of the four Riftglass bond charms. Hold one out before Mine! and the bond comes easier."
   }
  ]
 }

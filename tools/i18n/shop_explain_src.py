@@ -20,9 +20,10 @@ NO_SPACE = {"ja", "zh_CN", "zh_TW"}
 from shop_explain_t1 import T1
 from shop_explain_t2 import T2
 from shop_explain_t3 import T3
+from shop_explain_t4 import T4
 
 T = {}
-for part in (T1, T2, T3):
+for part in (T1, T2, T3, T4):
     for k, row in part.items():
         assert k not in T, k
         assert len(row) == len(LANGS), (k, len(row))
@@ -132,6 +133,13 @@ for t, p in enumerate([25, 50, 100], 1):
     add("rg_coin_seal_%d" % t, *([("coin_seal", {"p": p})] + ([("upgrade", {})] if t > 1 else [])))
 for k in ["wild_purse", "gleam_lens", "rare_compass", "spark_seal", "kinship_bell"]:
     add("rg_" + k, (k, {}))
+# Bond charms (1.3.2): the Riftglass ones and their packs.
+add("rg_charm_swiftleaf", ("bond_easier", {"p": 8}), ("charm_taps", {"n": 6}))
+add("rg_charm_hush", ("bond_easier", {"p": 8}), ("charm_shy", {"p": 35}))
+add("rg_charm_lantern", ("bond_easier", {"p": 30}), ("charm_taps", {"n": 4}))
+add("rg_charm_firstlight", ("bond_easier", {"p": 45}), ("charm_taps", {"n": 6}))
+add(["rg_charm_swiftleaf_x3", "rg_charm_lantern_x3"], ("pack_of", {"n": 3}))
+add("rg_charm_satchel", ("charm_satchel", {}))
 add("rg_merchant_discount_2", ("merchant_discount_2", {}), ("upgrade", {}))
 add("rg_growth_plus_2", ("growth_plus_2", {}), ("upgrade", {}))
 

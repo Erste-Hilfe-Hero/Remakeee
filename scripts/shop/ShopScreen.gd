@@ -11,7 +11,7 @@ signal closed
 
 const TABS: Array[String] = ["featured", "advantages", "packs", "pass", "looks", "riftglass", "more"]
 const TAB_TITLES: Dictionary[String, String] = {"featured": "Featured", "advantages": "Advantages", "packs": "Packs",
-	"pass": "Pass", "looks": "Looks", "riftglass": "Riftglass", "more": "More"}
+	"pass": "Pass", "looks": "Looks", "riftglass": "Riftglass", "more": "More", "charms": "Bond charms"}
 const BADGES: Dictionary[String, String] = {"bestseller": "Bestseller", "best_value": "Best value", "hot": "Popular",
 	"new": "New", "limited": "Limited"}
 ## Fallback when no offer is marked "featured" yet: these, in this order, then the best Riftglass tier.
@@ -184,7 +184,8 @@ func select_tab(t: String) -> void:
 	_tabs_row.visible = true
 	for k: String in _tab_buttons:
 		var b: Button = _tab_buttons[k]
-		var on: bool = k == t
+		# The Bond charms page sits under Advantages (it has no tab of its own).
+		var on: bool = k == t or (t == "charms" and k == "advantages")
 		var sb: StyleBoxFlat = UITheme.flat_style(UITheme.ACCENT if on else UITheme.BG, UITheme.INK if on else UITheme.MID)
 		# The open tab has a double-thick ink edge, so it shows in every era palette.
 		sb.set_border_width_all(2 if on else 1)
@@ -196,6 +197,7 @@ func select_tab(t: String) -> void:
 		"featured": _fill_featured()
 		"more": _fill_more()
 		"pass": _fill_pass()
+		"charms": _fill_charms()
 		_: _fill_tab(t)
 	_scroll.scroll_vertical = 0
 
@@ -213,12 +215,14 @@ func _fill_featured() -> void:
 	for i: int in range(1, list.size()):
 		_list.add_child(offer_card(list[i]))
 	_list.add_child(_link_button(Loc.t("All advantages"), func() -> void: select_tab("advantages")))
+	_list.add_child(_charms_link())
 
 func _fill_tab(t: String) -> void:
 	if t == "advantages":
 		var power: String = ShopEffects.next_power_line()
 		if not power.is_empty():
 			_list.add_child(_note(Loc.t(power)))
+		_list.add_child(_charms_link())
 	var list: Array[Dictionary] = shown_offers(t)
 	if list.is_empty():
 		_list.add_child(_note(Loc.t("Nothing here yet. New offers come with updates.")))
@@ -226,6 +230,70 @@ func _fill_tab(t: String) -> void:
 		_list.add_child(offer_card(o))
 	if t == "riftglass":
 		_list.add_child(_note(Loc.t(ShopMenu.RG_NO_VALUE)))
+
+## The link to the Bond charms page, with the top charm's icon.
+func _charms_link() -> Button:
+	var b := _link_button(Loc.t("Bond charms"), func() -> void: select_tab("charms"))
+	b.icon = ShopArt.icon("charm_crest")
+	b.name = "charms_link"
+	return b
+
+## The Bond charms page: all ten charms with their icon, effect and where they are sold, then the
+## Riftglass charms and the charm packs on sale here. Coin charms are only sold by merchants.
+func _fill_charms() -> void:
+	_list.add_child(_note(Loc.t("Hold a charm out before Mine! and the bond comes easier. Merchants in the towns sell the coin charms.")))
+	for id: String in charm_family():
+		_list.add_child(_charm_row(id))
+	for o: Dictionary in charm_offers():
+		_list.add_child(offer_card(o))
+
+func _charm_row(id: String) -> Control:
+	var it: Dictionary = Database.item(id)
+	var p := _panel(UITheme.BG, UITheme.MID)
+	p.name = "charm_" + id
+	var h := HBoxContainer.new()
+	h.add_theme_constant_override("separation", 3)
+	var ic := _icon_rect(ShopArt.icon(ShopArt.charm_icon_key(id), 2))
+	ic.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	h.add_child(ic)
+	var v := VBoxContainer.new()
+	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	v.add_theme_constant_override("separation", 0)
+	v.add_child(_label(Loc.t(str(it.get("name", id))), UITheme.INK, true))
+	v.add_child(_label(BattleScene.charm_effect(id), UITheme.INK, true))
+	v.add_child(_label(charm_where(id), UITheme.MID, true))
+	h.add_child(v)
+	p.add_child(h)
+	return p
+
+## The ten bond charms of the family in rank order (items.json "charm").
+static func charm_family() -> Array[String]:
+	Database.load_all()
+	var out: Array[String] = []
+	for id: String in Database.items:
+		if Database.items[id].get("charm") is Dictionary:
+			out.append(id)
+	out.sort_custom(func(a: String, b: String) -> bool: return BattleScene.charm_rank(a) < BattleScene.charm_rank(b))
+	return out
+
+## Where charm [param id] is sold: at merchants for coins, or here for Riftglass.
+static func charm_where(id: String) -> String:
+	var o: Dictionary = ShopCatalog.offer(id)
+	if not o.is_empty():
+		return Loc.t("Here: %d Riftglass") % int(o.get("rg_price", 0))
+	return Loc.t("Merchants: %d coins") % int(Database.item(id).get("price", 0))
+
+## Offers on sale now that hold a bond charm (singles and packs), cheapest first.
+static func charm_offers(now: int = -1) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for t: String in ["advantages", "packs"]:
+		for o: Dictionary in shown_offers(t, now):
+			for g: Dictionary in ShopCatalog.contents(o):
+				if str(g.get("t", "")) == "item" and Database.item(str(g.get("id", ""))).get("charm") is Dictionary:
+					out.append(o)
+					break
+	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a.eur_cents) < int(b.eur_cents))
+	return out
 
 func _fill_pass() -> void:
 	var box := _panel(UITheme.ACCENT, UITheme.INK)

@@ -46,7 +46,7 @@ const DEFAULT_FLAGS: Dictionary = {
 	"bund": {"enabled": false, "min_version": 1}, "raid": {"enabled": false, "min_version": 1},
 	"trade_spirling": {"enabled": false, "min_version": 1}, "rift_board": {"enabled": false, "min_version": 1},
 	"league_board": {"enabled": false, "min_version": 1}, "daily_gift": {"enabled": false, "min_version": 1},
-	"lend": {"enabled": false, "min_version": 1}, "invite": {"enabled": false, "min_version": 1},
+	"lend": {"enabled": false, "min_version": 1}, "invite": {"enabled": true, "min_version": 1},
 	"climb_board": {"enabled": false, "min_version": 1},
 	"boss_board": {"enabled": false, "min_version": 1},
 	"promo": {"enabled": true, "min_version": 1},

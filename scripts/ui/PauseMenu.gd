@@ -308,7 +308,15 @@ func run_save() -> bool:
 func run_invite_link() -> void:
 	var code: String = DeepLink.friend_code
 	DeepLink.friend_code = ""
-	if code.is_empty() or not Online.is_online() or not Online.flag_on("invite"):
+	if code.is_empty():
+		return
+	# Without a connection the code waits in the save and goes out on the next start online.
+	if not Online.is_online():
+		if await confirm(Loc.t("Accept the invite of friend code %s? It sends a friend request.") % Online.pretty_code(code)):
+			FriendsMoreMenu.keep_for_later(code)
+			await info("No connection right now. The invite is kept and sent once you are online.")
+		return
+	if not Online.flag_on("invite"):
 		return
 	if await confirm(Loc.t("Accept the invite of friend code %s? It sends a friend request.") % Online.pretty_code(code)):
 		await FriendsMoreMenu.redeem(self, code)
@@ -341,7 +349,8 @@ func tip(id: String) -> void:
 ## goals and today's rare visitor. A row opens its full text.
 func run_goals() -> void:
 	while true:
-		var rows: Array[Dictionary] = goal_rows(GameState.flags)
+		var rows: Array[Dictionary] = [{"text": QUEST_BOOK, "hint": Loc.t(QUEST_BOOK_HINT)}]
+		rows.append_array(goal_rows(GameState.flags))
 		rows.append_array(goal_tab_rows())
 		var swap: int = -1
 		if DailyTasks.can_swap():
@@ -366,6 +375,11 @@ func run_goals() -> void:
 		var idx: int = await pick("Goals", rows)
 		if idx < 0:
 			return
+		if idx == 0:
+			await run_quest_book()
+			if close_all:
+				return
+			continue
 		if idx == swap:
 			await _swap_daily_task()
 			continue
@@ -379,6 +393,73 @@ func run_goals() -> void:
 			await run_guide()
 			continue
 		await info(str(rows[idx].get("detail", rows[idx].text)))
+
+const QUEST_BOOK: String = "Quest Book"
+const QUEST_BOOK_HINT: String = "Main, side and done quests, and where to go next."
+const WHERE_NEXT: String = "Where next?"
+const NO_QUESTS: String = "No quests here yet."
+
+## The Quest Book (1.3.2): tabs Main, Side and Done from QuestLog.book. A quest opens its
+## full text; an open one offers "Where next?", which rings its target on the world map and
+## turns the goal line and the goal doors toward it.
+func run_quest_book() -> void:
+	var tab: int = 0
+	while true:
+		var rows: Array[Dictionary] = quest_book_rows(QuestLog.BOOK_TABS[tab], GameState.flags)
+		var idx: int = await pick_screen("quests", QUEST_BOOK, rows, {"tabs": QuestLog.BOOK_TABS, "tab": tab})
+		if ListPicker.tab_of(idx) >= 0:
+			tab = ListPicker.tab_of(idx)
+			continue
+		if idx < 0 or idx >= rows.size() or close_all:
+			return
+		var g: Dictionary = QuestLog.find(str(rows[idx].get("quest", "")))
+		if g.is_empty():
+			continue
+		if QuestLog.state(g, GameState.flags) == QuestLog.DONE or QuestLog.target_place(g, GameState.flags).is_empty():
+			await info(str(rows[idx].detail))
+		elif await confirm(str(rows[idx].detail), WHERE_NEXT, "Back"):
+			await where_next(g)
+			if close_all:
+				return
+
+## "Where next?": follows [param g] and opens the world map ringed on its target.
+func where_next(g: Dictionary) -> void:
+	QuestLog.tracked = str(g.get("id", ""))
+	var place: String = QuestLog.target_place(g, GameState.flags)
+	toast(Loc.f("Quest goal: %s", QuestLog.place_name(place)), 2.0)
+	await WorldMapMenu.run(self, current_map, place)
+
+## Rows of one Quest Book tab: "3/6" and the quest text, "Where: ..." under it (with a
+## note on the quest the goal line follows), the flag on the main goal.
+static func quest_book_rows(tab: String, flags: Dictionary) -> Array[Dictionary]:
+	var rows: Array[Dictionary] = []
+	var follow: Dictionary = QuestLog.tracked_goal(flags)
+	for g: Dictionary in QuestLog.book(tab, flags):
+		var step: Dictionary = QuestLog.side_step(g) if g.has("show") else {}
+		var text: String = Loc.t(str(step.get("text", g.get("text", ""))))
+		# Progress in front, so a long text cut at the row's end never hides it.
+		var pr: Vector2i = QuestLog.progress(g, flags)
+		if pr.y > 0:
+			text = "%d/%d  %s" % [pr.x, pr.y, text]
+		var where: String = QuestLog.where_of(g)
+		var hint: String = Loc.f("Where: %s", Loc.t(where)) if not where.is_empty() else ""
+		if not follow.is_empty() and follow == g:
+			hint = Loc.t("Goal line follows this.") + " " + hint
+		var lines: PackedStringArray = []
+		if QuestLog.is_main(g) and not str(g.get("chapter", "")).is_empty():
+			lines.append(Loc.t(str(g.chapter)))
+		elif QuestLog.is_tale(g):
+			lines.append(Loc.t(str(g.get("act", ""))))
+		lines.append(text)
+		if not where.is_empty():
+			lines.append(Loc.f("Where: %s", Loc.t(where)))
+		var row: Dictionary = {"text": text, "hint": hint, "quest": str(g.get("id", "")), "detail": "\n".join(lines)}
+		if tab == QuestLog.MAIN and (QuestLog.is_main(g) or QuestLog.is_tale(g)):
+			row["icon"] = goal_mark()
+		rows.append(row)
+	if rows.is_empty():
+		rows.append({"text": NO_QUESTS, "disabled": true})
+	return rows
 
 ## The wider goal tabs (plan area 8, item 3526) after the list: Today, Week and Collection.
 ## Story is the list itself.
@@ -1729,6 +1810,10 @@ func run_spirlog() -> void:
 			actions.append("chapter")
 		entries.append({"text": SpirlogBook.gleam_line(GameState.spirlog)})
 		actions.append("gleam")
+		# The book in percent and its reward steps (1.3.2), taken here once.
+		entries.append({"text": SpirlogRewards.book_row_text(GameState.spirlog, GameState.records),
+			"hint": "Rewards for the share of kinds bonded and for Gleam kinds."})
+		actions.append("book")
 		if not region_tabs:
 			entries.append({"text": "Chapter: %s" % (region.capitalize() if not region.is_empty() else "all")})
 			actions.append("region")
@@ -1817,6 +1902,8 @@ func run_spirlog() -> void:
 				_log_status = (_log_status + 1) % SpirlogBook.STATUS_NAMES.size()
 			"legend":
 				await info(spirlog_legend())
+			"book":
+				await SpirlogRewardsMenu.run(self)
 			"tracker":
 				await info(_tracker_text())
 			"gleam":

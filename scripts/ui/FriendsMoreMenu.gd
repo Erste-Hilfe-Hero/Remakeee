@@ -10,7 +10,7 @@ const ERRORS: Dictionary = {
 	"friend_level": "Your friendship is not at that level yet.",
 	"already": "You already took that.",
 	"not_done": "You both have to do the task first.",
-	"nothing": "Nothing to take yet. Rewards come once your invited friend is your friend.",
+	"nothing": "Nothing to take yet. Rewards come once you are friends and the new player has played for a day.",
 	"too_late": "Invite links only work in the first 7 days of a new journey.",
 	"feature_off": "This is closed right now.",
 	"no_save": "Save your journey first, then try again.",
@@ -202,8 +202,35 @@ static func redeem(menu: MenuHost, code: String) -> void:
 	var r: Dictionary = await Online.call_fn("invite_redeem", {"p_code": code})
 	if _ok(r):
 		Sound.sfx("friend")
-		await menu.info("Request sent. Once you are friends, you both take the invite reward under Friends, Invite a friend.")
-	elif r.ok and r.data is Dictionary and str(r.data.get("error", "")) == "already":
-		await menu.info("You already used an invite link.")
-	else:
-		await menu.info(error_text(r))
+	await menu.info(redeem_text(r))
+
+## What the server's answer to invite_redeem means for the player.
+static func redeem_text(r: Dictionary) -> String:
+	if _ok(r):
+		return Loc.t("Request sent. Once you are friends and you have played for a day, you both take the invite reward under Friends, Invite a friend.")
+	if r.ok and r.data is Dictionary and str(r.data.get("error", "")) == "already":
+		return Loc.t("You already used an invite link.")
+	return Loc.t(error_text(r))
+
+## Save key of an invite code that waits for the connection (GameState.records).
+const PENDING_KEY: String = "invite_pending"
+
+## A chimora://friend link opened without a connection: the code waits in the save and goes out
+## on the next start online (redeem_pending). The server's rules still decide then.
+static func keep_for_later(code: String) -> void:
+	GameState.records[PENDING_KEY] = code
+
+static func pending() -> String:
+	return str(GameState.records.get(PENDING_KEY, ""))
+
+## Sends a waiting invite code once online. Returns a line for a toast, "" when nothing went out
+## (nothing waits, invites are closed right now, or no connection: the code keeps waiting).
+static func redeem_pending() -> String:
+	var code: String = pending()
+	if code.is_empty() or not Online.is_online() or not Online.flag_on("invite"):
+		return ""
+	var r: Dictionary = await Online.call_fn("invite_redeem", {"p_code": code})
+	if not r.ok:
+		return ""
+	GameState.records.erase(PENDING_KEY)
+	return Loc.t("Invite of friend code %s:") % Online.pretty_code(code) + " " + redeem_text(r)

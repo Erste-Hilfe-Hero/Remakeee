@@ -231,13 +231,17 @@ func show_text(text: String, speaker: String = "") -> void:
 	var shown: String = Loc.t(text).replace("{name}", GameState.tamer_name)
 	# Old lines carry the speaker as "Aldo: ..."; it moves to the name tag. A name in the
 	# line wins over the one passed in (the NPC's role, item 2011).
-	var parts: PackedStringArray = Dialogue.split_speaker(shown)
+	# The English line decides whether someone is named, so Japanese and Chinese "名前：" lines
+	# get the name tag (and the Era IV/V portrait) too.
+	var parts: PackedStringArray = Dialogue.split_translated(text.replace("{name}", GameState.tamer_name), shown)
+	var key: String = speaker
 	if not parts[0].is_empty():
 		speaker = parts[0]
 		shown = parts[1]
+		key = parts[2]
 	else:
 		speaker = Loc.t(speaker).replace("{name}", GameState.tamer_name)
-	set_speaker(speaker)
+	set_speaker(speaker, key)
 	if keep_log:
 		log_line((speaker + ": " if not speaker.is_empty() else "") + shown)
 	_line_voice = voice_for_line(speaker + ": " if not speaker.is_empty() else shown, voice)
@@ -314,11 +318,13 @@ static func voice_for_line(line: String, fallback: String) -> String:
 func show_prompt(text: String, speaker: String = "") -> void:
 	apply_era_frame()
 	var shown: String = Loc.t(text).replace("{name}", GameState.tamer_name)
+	var key: String = speaker
 	if speaker.is_empty():
-		var parts: PackedStringArray = Dialogue.split_speaker(shown)
+		var parts: PackedStringArray = Dialogue.split_translated(text.replace("{name}", GameState.tamer_name), shown)
 		speaker = parts[0]
 		shown = parts[1]
-	set_speaker(speaker)
+		key = parts[2]
+	set_speaker(speaker, key)
 	# A prompt does not page: in battle one longer than MAX_LINES in the larger font (the order
 	# line of a formation battle) keeps the screen's own font, so the box leaves the field room.
 	if fit_prompt and split_lines(shown, _text_width(), _label.get_theme_font("font"), _label.get_theme_font_size("font_size"), MAX_LINES).size() > 1:
@@ -330,12 +336,13 @@ func show_prompt(text: String, speaker: String = "") -> void:
 	_waiting = false
 	_arrow.visible = false
 
-## Shows [param who] on the name tag over the box ("" hides it).
-func set_speaker(who: String) -> void:
+## Shows [param who] on the name tag over the box ("" hides it). [param key] is the English
+## name the later eras look the portrait up by (the shown name when empty).
+func set_speaker(who: String, key: String = "") -> void:
 	_tag.text = who
 	_tag.visible = not who.is_empty()
 	if _portrait != null:
-		_portrait.show_for(who, _tag)
+		_portrait.show_for(key if not key.is_empty() and not who.is_empty() else who, _tag)
 	_place_tag()
 
 func speaker() -> String:

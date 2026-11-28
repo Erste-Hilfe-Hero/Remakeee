@@ -1,0 +1,20 @@
+{
+ "_comment": "German texts from tools/i18n/de_questbook.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [
+  " / ",
+  " and ",
+  " and the ",
+  "the "
+ ],
+ "strings": {
+  "Goal line follows this.": "Die Zielzeile folgt diesem Auftrag.",
+  "Main": "Haupt",
+  "Main, side and done quests, and where to go next.": "Haupt-, Neben- und erledigte Aufträge, und wohin es als Nächstes geht.",
+  "No quests here yet.": "Hier gibt es noch keine Aufträge.",
+  "Quest Book": "Auftragsbuch",
+  "Quest goal: %s": "Auftragsziel: %s",
+  "Side": "Neben",
+  "To %s": "Nach %s",
+  "Where next?": "Wohin jetzt?"
+ }
+}

@@ -1141,6 +1141,19 @@ T = {
 	"Jeden %s im Angebot.",
 "On sale every %d weeks, Monday to Sunday.":
 	"Alle %d Wochen im Angebot, Montag bis Sonntag.",
+# Bond charm packs (1.3.2), also in tools/i18n/locales_bond_charms.py SHOP.
+"Swiftleaf x3":
+	"Flinkblatt x3",
+"Rift Lantern x3":
+	"Risslaterne x3",
+"Charm Satchel":
+	"Amulett-Tasche",
+"3 Swiftleaves: each makes one bond 8% easier and Mine! 6 taps shorter. Single price 300 Riftglass. Story only, not in leagues.":
+	"3 Flinkblätter: jedes macht eine Bindung 8 % leichter und Meins! 6 Tipper kürzer. Einzelpreis 300 Rissglas. Nur Geschichte, nicht in Ligen.",
+"3 Rift Lanterns: each makes one bond 30% easier and Mine! 4 taps shorter. Single price 600 Riftglass. Story only, not in leagues.":
+	"3 Risslaternen: jede macht eine Bindung 30 % leichter und Meins! 4 Tipper kürzer. Einzelpreis 600 Rissglas. Nur Geschichte, nicht in Ligen.",
+"2 Hush Feathers, 2 Swiftleaves, 2 Rift Lanterns, 2 Firstlight Crests. Single price 1800 Riftglass. Story only, not in leagues.":
+	"2 Stillfedern, 2 Flinkblätter, 2 Risslaternen, 2 Erstlicht-Wappen. Einzelpreis 1800 Rissglas. Nur Geschichte, nicht in Ligen.",
 }
 
 # Format strings that read the same in every language ("5x Ring Tonic").

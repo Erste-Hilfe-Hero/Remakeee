@@ -327,6 +327,9 @@ func _build() -> void:
 	# The free Riftglass of the day (RiftglassSinks.claim_daily), once online.
 	Online.state_changed.connect(_on_online_daily_rg)
 	_on_online_daily_rg(Online.state)
+	# An invite code that waited for the connection (1.3.2).
+	Online.state_changed.connect(_on_online_waiting)
+	_on_online_waiting(Online.state)
 	_text = TextBox.new()
 	_text.keep_log = true
 	_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
@@ -4306,6 +4309,14 @@ func _on_online_daily_rg(s: int) -> void:
 		GameState.notices.append(Loc.t("Daily gift: +%d Riftglass") % added)
 	else:
 		toast.show_note(Loc.t("Daily gift: +%d Riftglass") % added)
+
+## Once online: an invite code that waited for the connection goes out.
+func _on_online_waiting(s: int) -> void:
+	if s != Online.State.ONLINE:
+		return
+	var line: String = await FriendsMoreMenu.redeem_pending()
+	if not line.is_empty() and is_instance_valid(toast):
+		toast.show_note(line)
 
 ## Seconds between two looks whether the daily card may show.
 const DAILY_CARD_POLL: float = 0.5
