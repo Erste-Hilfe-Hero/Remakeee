@@ -10,7 +10,7 @@ const ERRORS: Dictionary = {
 	"friend_level": "Your friendship is not at that level yet.",
 	"already": "You already took that.",
 	"not_done": "You both have to do the task first.",
-	"nothing": "Nothing to take yet. Rewards come once your invited friend is your friend.",
+	"nothing": "Nothing to take yet. Rewards come once you are friends and the new player has played for a day.",
 	"too_late": "Invite links only work in the first 7 days of a new journey.",
 	"feature_off": "This is closed right now.",
 	"no_save": "Save your journey first, then try again.",
@@ -207,7 +207,7 @@ static func redeem(menu: MenuHost, code: String) -> void:
 ## What the server's answer to invite_redeem means for the player.
 static func redeem_text(r: Dictionary) -> String:
 	if _ok(r):
-		return Loc.t("Request sent. Once you are friends, you both take the invite reward under Friends, Invite a friend.")
+		return Loc.t("Request sent. Once you are friends and you have played for a day, you both take the invite reward under Friends, Invite a friend.")
 	if r.ok and r.data is Dictionary and str(r.data.get("error", "")) == "already":
 		return Loc.t("You already used an invite link.")
 	return Loc.t(error_text(r))

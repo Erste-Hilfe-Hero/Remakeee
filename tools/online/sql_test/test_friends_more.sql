@@ -152,6 +152,16 @@ insert into fr values ('i2', public.invite_redeem((select code from fc where who
 insert into fr values ('ic0', public.invite_claim(1, 1));
 select pg_temp.as_user('61');
 select public.friend_respond((select code from fc where who = '65'), true);
+insert into fr values ('ist0', public.invite_state());
+insert into fr values ('ic61_0', public.invite_claim(1, 6));
+select pg_temp.as_user('65');
+insert into fr values ('ic65_0', public.invite_claim(1, 1));
+reset role;
+-- A save the server took a day after the new account was made counts as played.
+update public.profiles set created_at = now() - interval '2 days' where id = '20000000-0000-0000-0000-000000000065';
+update public.saves set saved_at = now() where user_id = '20000000-0000-0000-0000-000000000065';
+set role authenticated;
+select pg_temp.as_user('61');
 insert into fr values ('ist', public.invite_state());
 insert into fr values ('ic61', public.invite_claim(1, 6));
 insert into fr values ('ic61b', public.invite_claim(1, 7));
@@ -165,6 +175,8 @@ do $$ begin
   assert (select v->>'status' from fr where k = 'i1') = 'pending', 'a request goes out';
   assert (select v->>'error' from fr where k = 'i2') = 'already', 'once per account';
   assert (select v->>'error' from fr where k = 'ic0') = 'nothing', 'not before the friendship is accepted';
+  assert (select (v->>'ready')::int from fr where k = 'ist0') = 0, 'not before the new player has played a day';
+  assert (select v->>'error' from fr where k = 'ic61_0') = 'nothing' and (select v->>'error' from fr where k = 'ic65_0') = 'nothing';
   assert (select (v->>'ready')::int from fr where k = 'ist') = 1 and (select (v->>'invited')::int from fr where k = 'ist') = 1;
   assert (select v->>'item' from fr where k = 'ic61') = 'strong_tonic' and (select v->>'times' from fr where k = 'ic61') = '1';
   assert (select v->>'error' from fr where k = 'ic61b') = 'nothing', 'paid once';

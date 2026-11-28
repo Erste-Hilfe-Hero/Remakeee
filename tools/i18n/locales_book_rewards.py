@@ -97,6 +97,32 @@ R = {
 "Seen: %d%%": ["目撃: %d%%", "Vus : %d%%", "Visti: %d%%", "Vistos: %d%%", "목격: %d%%", "已见：%d%%", "已見：%d%%", "Vistos: %d%%", "Увидено: %d%%", "Widziane: %d%%", "Görüldü: %%%d", "Gezien: %d%%"],
 "Bonded: %d%%": ["絆: %d%%", "Liés : %d%%", "Legati: %d%%", "Vinculados: %d%%", "유대: %d%%", "已结缘：%d%%", "已結緣：%d%%", "Vinculados: %d%%", "Связано: %d%%", "Związane: %d%%", "Bağ: %%%d", "Verbonden: %d%%"],
 "Gleam: %d%%": ["輝き: %d%%", "Reflet : %d%%", "Splendore: %d%%", "Fulgor: %d%%", "광채형: %d%%", "光泽：%d%%", "光澤：%d%%", "Reluzente: %d%%", "Сияние: %d%%", "Połysk: %d%%", "Işıltı: %%%d", "Glansvorm: %d%%"],
+"Nothing to take yet. Rewards come once you are friends and the new player has played for a day.": [
+ "まだ受け取れるものはない。フレンドになり、新しいプレイヤーが1日遊んだらごほうびがもらえる。",
+ "Rien à prendre pour l'instant. Les récompenses arrivent quand vous êtes amis et que le nouveau joueur a joué pendant un jour.",
+ "Ancora niente da prendere. I premi arrivano quando siete amici e il nuovo giocatore ha giocato per un giorno.",
+ "Aún no hay nada que recoger. Los premios llegan cuando seáis amigos y el nuevo jugador haya jugado un día.",
+ "아직 받을 것이 없다. 친구가 되고 새 플레이어가 하루 동안 플레이하면 보상을 받는다.",
+ "还没有可领取的东西。你们成为好友且新玩家玩满一天后即可获得奖励。",
+ "還沒有可領取的東西。你們成為好友且新玩家玩滿一天後即可獲得獎勵。",
+ "Ainda não há nada para pegar. Os prêmios vêm quando vocês forem amigos e o novo jogador tiver jogado por um dia.",
+ "Пока нечего забрать. Награды будут, когда вы станете друзьями и новый игрок поиграет один день.",
+ "Na razie nie ma nic do odebrania. Nagrody pojawią się, gdy będziecie znajomymi, a nowy gracz zagra przez jeden dzień.",
+ "Henüz alınacak bir şey yok. Arkadaş olduğunuzda ve yeni oyuncu bir gün oynadığında ödüller gelir.",
+ "Nog niets op te halen. Beloningen komen zodra jullie vrienden zijn en de nieuwe speler een dag heeft gespeeld."],
+"Request sent. Once you are friends and you have played for a day, you both take the invite reward under Friends, Invite a friend.": [
+ "リクエストを送った。フレンドになり、きみが1日遊んだら、フレンド > フレンドを招待 で2人とも招待のごほうびを受け取れる。",
+ "Demande envoyée. Quand vous serez amis et que tu auras joué pendant un jour, vous prendrez tous les deux la récompense d'invitation sous Amis, Inviter un ami.",
+ "Richiesta inviata. Quando sarete amici e avrai giocato per un giorno, prenderete entrambi il premio d'invito in Amici, Invita un amico.",
+ "Solicitud enviada. Cuando seáis amigos y hayas jugado un día, los dos recogeréis el premio de invitación en Amigos, Invitar a un amigo.",
+ "요청을 보냈다. 친구가 되고 네가 하루 동안 플레이하면 친구 > 친구 초대에서 둘 다 초대 보상을 받는다.",
+ "请求已发送。你们成为好友且你玩满一天后，两人都可以在 好友 > 邀请好友 中领取邀请奖励。",
+ "請求已送出。你們成為好友且你玩滿一天後，兩人都可以在 好友 > 邀請好友 中領取邀請獎勵。",
+ "Pedido enviado. Quando vocês forem amigos e você tiver jogado por um dia, os dois pegam o prêmio de convite em Amigos, Convidar um amigo.",
+ "Запрос отправлен. Когда вы станете друзьями и ты поиграешь один день, вы оба заберёте награду за приглашение в разделе Друзья, Пригласить друга.",
+ "Prośba wysłana. Gdy będziecie znajomymi, a ty zagrasz przez jeden dzień, oboje odbierzecie nagrodę za zaproszenie w Znajomi, Zaproś znajomego.",
+ "İstek gönderildi. Arkadaş olduğunuzda ve sen bir gün oynadığında, ikiniz de davet ödülünü Arkadaşlar, Arkadaş davet et bölümünden alırsınız.",
+ "Verzoek verstuurd. Zodra jullie vrienden zijn en jij een dag hebt gespeeld, halen jullie allebei de uitnodigingsbeloning op onder Vrienden, Een vriend uitnodigen."],
 }
 
 

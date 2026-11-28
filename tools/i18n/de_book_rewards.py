@@ -22,4 +22,6 @@ T = {
 "Seen: %d%%": "Gesehen: %d%%",
 "Bonded: %d%%": "Gebunden: %d%%",
 "Gleam: %d%%": "Glanzform: %d%%",
+"Nothing to take yet. Rewards come once you are friends and the new player has played for a day.": "Noch nichts zu holen. Belohnungen gibt es, sobald ihr befreundet seid und der neue Spieler einen Tag lang gespielt hat.",
+"Request sent. Once you are friends and you have played for a day, you both take the invite reward under Friends, Invite a friend.": "Anfrage gesendet. Sobald ihr befreundet seid und du einen Tag lang gespielt hast, holt ihr beide die Einladungs-Belohnung unter Freunde, Freund einladen.",
 }
