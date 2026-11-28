@@ -1,10 +1,10 @@
 {
  "_comment": "Translations of the German table shop_explain, written by tools/i18n/shop_explain_src.py. Keys are the English text.",
  "strings": {
-  "+100% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference.": "스토리에서 이긴 모든 여행자와의 배틀의 코인 +100%. 코인 광채와 함께 적용. 이전 단계를 대신합니다: 차액만 냅니다.",
+  "+100% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference.": "스토리에서 이긴 모든 나그네와의 배틀의 코인 +100%. 코인 광채와 함께 적용. 이전 단계를 대신합니다: 차액만 냅니다.",
   "+100% growth for the whole team in every battle instead of +50%, together with every Growth Crystal and the pass. It replaces the tier before it: you only pay the difference.": "모든 전투에서 팀 전체 성장 +50% 대신 +100%. 모든 성장 수정 및 패스와 함께 적용된다. 이전 단계를 대신합니다: 차액만 냅니다.",
-  "+25% coins from every won Wayfarer battle in the story, on top of a Coin Gleam.": "스토리에서 이긴 모든 여행자와의 배틀의 코인 +25%. 코인 광채와 함께 적용.",
-  "+50% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference.": "스토리에서 이긴 모든 여행자와의 배틀의 코인 +50%. 코인 광채와 함께 적용. 이전 단계를 대신합니다: 차액만 냅니다.",
+  "+25% coins from every won Wayfarer battle in the story, on top of a Coin Gleam.": "스토리에서 이긴 모든 나그네와의 배틀의 코인 +25%. 코인 광채와 함께 적용.",
+  "+50% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference.": "스토리에서 이긴 모든 나그네와의 배틀의 코인 +50%. 코인 광채와 함께 적용. 이전 단계를 대신합니다: 차액만 냅니다.",
   "10 pieces of the item listed above, in one pack.": "위 아이템 10개를 한 묶음으로.",
   "40% lower coin prices in all merchant shops instead of 20%. It replaces the tier before it: you only pay the difference.": "모든 상인 가게의 코인 가격 20% 대신 40% 할인. 이전 단계를 대신합니다: 차액만 냅니다.",
   "5 pieces of the item listed above, in one pack.": "위 아이템 5개를 한 묶음으로.",

@@ -1,10 +1,10 @@
 {
  "_comment": "Translations of the German table shop_explain, written by tools/i18n/shop_explain_src.py. Keys are the English text.",
  "strings": {
-  "+100% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference.": "+100% de monedas en cada combate contra Viajeros ganado en la historia, además de un Brillo de monedas. Sustituye al nivel anterior: solo pagas la diferencia.",
+  "+100% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference.": "+100% de monedas en cada combate contra Caminantes ganado en la historia, además de un Brillo de monedas. Sustituye al nivel anterior: solo pagas la diferencia.",
   "+100% growth for the whole team in every battle instead of +50%, together with every Growth Crystal and the pass. It replaces the tier before it: you only pay the difference.": "+100% de crecimiento en lugar de +50% para todo el equipo en cada combate, junto con cada Cristal de crecimiento y el pase. Sustituye al nivel anterior: solo pagas la diferencia.",
-  "+25% coins from every won Wayfarer battle in the story, on top of a Coin Gleam.": "+25% de monedas en cada combate contra Viajeros ganado en la historia, además de un Brillo de monedas.",
-  "+50% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference.": "+50% de monedas en cada combate contra Viajeros ganado en la historia, además de un Brillo de monedas. Sustituye al nivel anterior: solo pagas la diferencia.",
+  "+25% coins from every won Wayfarer battle in the story, on top of a Coin Gleam.": "+25% de monedas en cada combate contra Caminantes ganado en la historia, además de un Brillo de monedas.",
+  "+50% coins from every won Wayfarer battle in the story, on top of a Coin Gleam. It replaces the tier before it: you only pay the difference.": "+50% de monedas en cada combate contra Caminantes ganado en la historia, además de un Brillo de monedas. Sustituye al nivel anterior: solo pagas la diferencia.",
   "10 pieces of the item listed above, in one pack.": "10 unidades del objeto de arriba, en un solo lote.",
   "40% lower coin prices in all merchant shops instead of 20%. It replaces the tier before it: you only pay the difference.": "Precios en monedas un 40% más bajos en lugar de un 20% en todas las tiendas de mercaderes. Sustituye al nivel anterior: solo pagas la diferencia.",
   "5 pieces of the item listed above, in one pack.": "5 unidades del objeto de arriba, en un solo lote.",
