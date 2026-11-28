@@ -12,7 +12,7 @@
   "%s, slot %d of %d: %s, Vigor %d of %d": "%s, miejsce %d z %d: %s, Wigor %d z %d",
   "%s: %d damage": "%s: %d obrażeń",
   "%s: %d damage, %d knocked out": "%s: %d obrażeń, pokonanych: %d",
-  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns; then the place's own field comes back. A new field pushes the old one out at once.": "Pole Szczeliny sprawia, że jeden żywioł trafia x1.2, a inny x0.85. Technika wezwania rozkłada swoje pole na 5 tur; potem wraca pole danego miejsca. Nowe pole od razu wypiera stare.",
+  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns; then the place's own field comes back. A new field pushes the old one out at once.": "Pole Szczeliny sprawia, że jeden żywioł trafia x1,2, a inny x0,85. Technika wezwania rozkłada swoje pole na 5 tur; potem wraca pole danego miejsca. Nowe pole od razu wypiera stare.",
   "A Rift field never weakens its arts.": "Pole Szczeliny nigdy nie osłabia jego technik.",
   "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.": "Spokojny krąg wewnątrz wirującego wiatru. Techniki Gale trafiają mocniej, techniki Bloom więdną i nikt nie może popaść w Senność.",
   "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.": "Blade poranne światło. Techniki Lumen trafiają mocniej, techniki Umbra słabną, a wezwanie Echo udaje się nieco łatwiej. O świcie i za dnia trwa turę dłużej.",

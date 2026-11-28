@@ -27,7 +27,7 @@ T = {
 # Lexicon
 "Rift fields": "Rift-Felder",
 "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns; then the place's own field comes back. A new field pushes the old one out at once.":
-    "Ein Riss-Feld lässt ein Element x1.2 treffen und ein anderes x0.85. Eine Ruf-Technik legt ihr Feld für 5 Runden; danach kehrt das Feld des Ortes zurück. Ein neues Feld verdrängt das alte sofort.",
+    "Ein Riss-Feld lässt ein Element x1,2 treffen und ein anderes x0,85. Eine Ruf-Technik legt ihr Feld für 5 Runden; danach kehrt das Feld des Ortes zurück. Ein neues Feld verdrängt das alte sofort.",
 "Ash hangs in the air. Ember arts hit harder, Tide arts sputter.": "Asche hängt in der Luft. Ember-Techniken treffen härter, Tide-Techniken stottern.",
 "The water stands knee-deep. Tide arts hit harder, Ember arts fizzle, and nothing can catch Scorch.":
     "Das Wasser steht knietief. Tide-Techniken treffen härter, Ember-Techniken zischen aus, und nichts fängt Brand.",

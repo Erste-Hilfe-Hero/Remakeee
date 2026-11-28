@@ -12,7 +12,7 @@
   "%s, slot %d of %d: %s, Vigor %d of %d": "%s, yer %d / %d: %s, Can %d / %d",
   "%s: %d damage": "%s: %d hasar",
   "%s: %d damage, %d knocked out": "%s: %d hasar, %d yenildi",
-  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns; then the place's own field comes back. A new field pushes the old one out at once.": "Bir Yarık alanı bir elementi x1.2, bir başkasını x0.85 vurdurur. Bir çağrı hüneri alanını 5 tur serer; sonra yerin kendi alanı geri gelir. Yeni bir alan eskisini hemen iter.",
+  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns; then the place's own field comes back. A new field pushes the old one out at once.": "Bir Yarık alanı bir elementi x1,2, bir başkasını x0,85 vurdurur. Bir çağrı hüneri alanını 5 tur serer; sonra yerin kendi alanı geri gelir. Yeni bir alan eskisini hemen iter.",
   "A Rift field never weakens its arts.": "Bir Yarık alanı hünerlerini asla zayıflatmaz.",
   "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.": "Dönen bir rüzgârın içinde sakin bir halka. Gale hünerleri daha sert vurur, Bloom hünerleri solar ve kimse Uyuşukluğa düşemez.",
   "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.": "Solgun bir sabah ışığı. Lumen hünerleri daha sert vurur, Umbra hünerleri incelir ve bir Echo çağrısı biraz daha kolay tutar. Şafakta ve gündüz bir tur daha uzun sürer.",

@@ -13,7 +13,7 @@
   "%s, slot %d of %d: %s, Vigor %d of %d": "%s, Platz %d von %d: %s, Kraft %d von %d",
   "%s: %d damage": "%s: %d Schaden",
   "%s: %d damage, %d knocked out": "%s: %d Schaden, %d besiegt",
-  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns; then the place's own field comes back. A new field pushes the old one out at once.": "Ein Riss-Feld lässt ein Element x1.2 treffen und ein anderes x0.85. Eine Ruf-Technik legt ihr Feld für 5 Runden; danach kehrt das Feld des Ortes zurück. Ein neues Feld verdrängt das alte sofort.",
+  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns; then the place's own field comes back. A new field pushes the old one out at once.": "Ein Riss-Feld lässt ein Element x1,2 treffen und ein anderes x0,85. Eine Ruf-Technik legt ihr Feld für 5 Runden; danach kehrt das Feld des Ortes zurück. Ein neues Feld verdrängt das alte sofort.",
   "A Rift field never weakens its arts.": "Ein Riss-Feld schwächt seine Techniken nie.",
   "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.": "Ein stiller Ring in kreisendem Wind. Gale-Techniken treffen härter, Bloom-Techniken welken, und niemand verfällt in Schläfrigkeit.",
   "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.": "Ein blasses Morgenlicht. Lumen-Techniken treffen härter, Umbra-Techniken verblassen, und ein Echo-Ruf gelingt etwas leichter. Im Morgengrauen und tagsüber hält es eine Runde länger.",

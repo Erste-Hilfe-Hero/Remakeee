@@ -499,7 +499,7 @@ T1 = {
 ],
 "last_stand": [
  "Works by itself: if your whole team is defeated, your last Spirling comes back once with 30% Vigor. Not against Rift Wardens.",
- "Wirkt von selbst: wird dein ganzes Team besiegt, kommt dein letzter Spirling einmal mit 30 % Kraft zurück. Nicht gegen Wächter.",
+ "Wirkt von selbst: wird dein ganzes Team besiegt, kommt dein letzter Spirling einmal mit 30 % Kraft zurück. Nicht gegen Hüter.",
  "自動で働く：チーム全員が倒れると、最後のSpirlingが1回だけ活力30%で戻ってくる。守り人戦では無効。",
  "Agit tout seul: si toute ton équipe est vaincue, ton dernier Spirling revient une fois avec 30% de Vigueur. Pas contre les Gardiens.",
  "Funziona da solo: se tutta la squadra viene sconfitta, il tuo ultimo Spirling torna una volta con il 30% di Vigore. Non contro i Custodi.",
