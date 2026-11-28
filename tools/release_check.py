@@ -297,6 +297,21 @@ def check_products() -> None:
                 errors.append("docs/legal/KAEUFE.md: row '%s' is missing or has another price" % row)
 
 
+def check_migrations() -> None:
+    # The Supabase CLI keys schema_migrations by the version prefix before the first "_", so two files
+    # with the same prefix make a deploy fail or skip one of them. server/migrate.sh keys by the whole
+    # name, which is why the shipped files with these two shared prefixes deployed; they keep their names.
+    shipped_shared = {"20261110000021", "20261112000050"}
+    seen: dict[str, str] = {}
+    for f in sorted(os.listdir("supabase/migrations")):
+        if not f.endswith(".sql"):
+            continue
+        v = f.split("_", 1)[0]
+        if v in seen and v not in shipped_shared:
+            errors.append("supabase/migrations: %s and %s share the version %s" % (seen[v], f, v))
+        seen[v] = f
+
+
 def main() -> None:
     check_keys()
     check_texts()
@@ -306,6 +321,7 @@ def main() -> None:
     check_sdks()
     check_legal()
     check_products()
+    check_migrations()
     for e in errors:
         print("ERROR:", e)
     for t in todo:
