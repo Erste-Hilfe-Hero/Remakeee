@@ -521,7 +521,7 @@ const PHASE_WORDS: Dictionary[String, String] = {"dawn": "Dawn", "day": "Daytime
 static func place_name(map_id: String) -> String:
 	if map_id.is_empty() or not MapData.exists(map_id):
 		return map_id.replace("_", " ").capitalize()
-	return MapData.load_map(map_id).display_name
+	return MapData.name_of(map_id)
 
 ## The earlier form this one can furl back into, or null.
 func earlier_form() -> SpirlingData:

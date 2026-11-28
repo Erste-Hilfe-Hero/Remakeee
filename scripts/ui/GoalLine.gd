@@ -4,7 +4,8 @@ extends Button
 ## Chimora 100, item 37): the goal flag, then the short "hud" text of data/quests.json. It
 ## hides while a text box, the place banner, a menu or a scene is up, so it never covers talk or
 ## the touch pad, and a tap opens the Goals page. Settings > Game > "Goal line" switches it off
-## together with the goal door marks (GoalMarks, the minimap ring).
+## together with the goal door marks (GoalMarks, the minimap ring). After "Where next?" in the
+## Quest Book it names that quest's place in any act, like the world map ring (QuestLog.tracked).
 
 ## Seconds between two looks at the story flags (goals change in talk, never mid-step).
 const POLL: float = 0.25

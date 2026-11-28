@@ -303,12 +303,13 @@ func from_dict(d: Dictionary) -> void:
 
 func _apply() -> void:
 	var era: int = active_era()
-	if is_inside_tree():
-		ScreenFit.apply(get_window(), RESOLUTION[era])
 	if _filter_rect != null:
 		_filter_rect.visible = era == Era.INK
 	EraText.set_era(era)
 	UITheme.set_era_skin(EraFeel.palette(era), str(EraFeel.value(era, "frame")), str(EraFeel.value(era, "font")) == "large")
+	# After the skin: the era's font decides the scale its text needs (ScreenFit.view_scale).
+	if is_inside_tree():
+		ScreenFit.apply(get_window(), RESOLUTION[era])
 	GridWalker.walk_frames = int(EraFeel.value(era, "walk_frames"))
 	GridWalker.breathe = bool(EraFeel.value(era, "idle_breathe"))
 	if is_inside_tree():

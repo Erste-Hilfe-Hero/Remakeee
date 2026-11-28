@@ -32,10 +32,11 @@ static func pt_per_px(era: int = -1) -> float:
 			return d
 	return model_pt_per_px(era)
 
-## Points per pixel of era [param era] on the iPhone SE.
+## Points per pixel of era [param era] on the iPhone SE: the scale its view is really drawn at
+## (ScreenFit rounds the view to whole pixels, so 4 is 3.99 in Era III).
 static func model_pt_per_px(era: int = -1) -> float:
-	var base: Vector2i = EraManager.RESOLUTION[_era(era)]
-	return floorf(minf(PHONE_PX.x / base.x, PHONE_PX.y / base.y)) / PHONE_PX_PER_PT
+	var c: Vector2i = ScreenFit.content_size(PHONE_PX, EraManager.RESOLUTION[_era(era)])
+	return minf(PHONE_PX.x / c.x, PHONE_PX.y / c.y) / PHONE_PX_PER_PT
 
 ## The view size of era [param era] on the iPhone SE: the era's base size, grown to the
 ## phone's shape (stretch mode "viewport", aspect "expand"; the whole-number scale adds borders).

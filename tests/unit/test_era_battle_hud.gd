@@ -30,8 +30,8 @@ func _era(e: int) -> void:
 	EraManager.unlocked_era = EraManager.NEWEST
 	EraManager.retro_filter = e
 
-func _field(era: int) -> Vector2:
-	var s: Vector2 = SCREENS[era]
+func _field(era: int, screen: Vector2 = Vector2.ZERO) -> Vector2:
+	var s: Vector2 = screen if screen != Vector2.ZERO else SCREENS[era]
 	return Vector2(s.x, s.y - EraBattleHud.text_box_height(era) - EraBattleHud.menu_height(era))
 
 ## Sprite rects as BattleScene hands them in: the stage's in Era IV/V, the plain ones before.
@@ -85,12 +85,14 @@ func test_nothing_overlaps_on_any_era_screen() -> void:
 		for era: int in range(1, 6):
 			_check_single(era, big, 0.0 if not big else EraBattleHud.side_button(era).x * 3.0)
 
-func _check_single(era: int, big: bool, log_text_w: float) -> void:
-	var f: Vector2 = _field(era)
+func _check_single(era: int, big: bool, log_text_w: float, touch: float = 0.0, view: Vector2 = Vector2.ZERO) -> void:
+	var f: Vector2 = _field(era, view)
 	f.y -= BattleComfort.menu_height(era, big) - EraBattleHud.menu_height(era)
 	assert_gt(f.y, 100.0, "era %d keeps a field" % era)
 	var sp: Array[Rect2] = _sprites(era, f)
-	var l: Dictionary = EraBattleHud.single_layout(era, f, sp[0], sp[1], 7, big, EraBattleHud.log_width(era, log_text_w))
+	var l: Dictionary = EraBattleHud.single_layout(era, f, sp[0], sp[1], 7, big, EraBattleHud.log_width(era, log_text_w), touch)
+	for r: Rect2 in (l.buttons as Array) + [l.auto]:
+		assert_gte(minf(r.size.x, r.size.y), touch, "era %d: %s at least %d px (touch)" % [era, r, touch])
 	var rects: Dictionary = _named_rects(era, l)
 	assert_eq((l.auto as Rect2).end, f, "era %d: the Auto tab stands in the corner on the text box" % era)
 	if big:
@@ -109,7 +111,50 @@ func _check_single(era: int, big: bool, log_text_w: float) -> void:
 			# The two Spirlings are the stage's business; everything else is the HUD's.
 			if str(names[i]).ends_with("sprite") and str(names[j]).ends_with("sprite"):
 				continue
+			# A finger-sized Auto tab on the 16:9 Era I/II field may cover the player's feet, as
+			# Big buttons do (above); it stays clear of every plate, team row and button.
+			if touch > 0.0 and era <= 2 and [names[i], names[j]].has("auto") and [names[i], names[j]].has("player sprite"):
+				continue
 			assert_false(a.intersects(rects[names[j]]), "era %d: %s %s and %s %s overlap" % [era, names[i], a, names[j], rects[names[j]]])
+
+## View size and the view pixels a 44 pt finger asks for (ScreenFit.touch_px) on the phones of
+## test_apple_sizes_phones.gd: era, view, touch.
+const PHONE_VIEWS: Array = [
+	[1, Vector2(144, 256), 18.0], [1, Vector2(150, 267), 18.0], [1, Vector2(180, 320), 22.0],
+	[2, Vector2(144, 256), 18.0], [2, Vector2(180, 320), 22.0],
+	[3, Vector2(180, 320), 22.0], [3, Vector2(188, 334), 22.0],
+	[4, Vector2(270, 480), 36.0], [4, Vector2(300, 534), 36.0], [5, Vector2(270, 480), 36.0],
+]
+
+func test_finger_sized_buttons_overlap_nothing() -> void:
+	for v: Array in PHONE_VIEWS:
+		var era: int = v[0]
+		_check_single(era, false, 0.0, v[2], v[1])
+		var w: float = (v[1] as Vector2).x
+		for band: bool in [true, false]:
+			var t: float = v[2]
+			var l: Dictionary = EraBattleHud.formation_layout(era, w, 7, 0.0 if band else 400.0, 1, false, 0.0, t)
+			assert_eq(bool(l.auto_band), band)
+			var rects: Dictionary = {"ledger": EraBattleHud.plate_outer(era, l.ledger, false), "player team": l.player_team,
+				"foe team": l.foe_team, "goal": l.goal}
+			if band:
+				rects["auto"] = l.auto
+			for i: int in (l.buttons as Array).size():
+				rects["button %d" % i] = l.buttons[i]
+				assert_gte(minf((l.buttons[i] as Rect2).size.x, (l.buttons[i] as Rect2).size.y), t, "era %d: button %d" % [era, i])
+			assert_gte(minf((l.auto as Rect2).size.x, (l.auto as Rect2).size.y), t, "era %d: Auto" % era)
+			var names: Array = rects.keys()
+			for i: int in names.size():
+				var a: Rect2 = rects[names[i]]
+				assert_true(a.position.x >= 0.0 and a.end.x <= w, "era %d: %s inside the screen" % [era, names[i]])
+				assert_lte(a.end.y, float(l.top), "era %d: %s ends above the foes' rank" % [era, names[i]])
+				for j: int in range(i + 1, names.size()):
+					assert_false(a.intersects(rects[names[j]]), "era %d: %s and %s overlap" % [era, names[i], names[j]])
+			# The foes' rank starts under the taller band.
+			var fit: Dictionary = BattleScene.formation_fit(era, 2, 2, Vector2(w, 200), 8, 8, float(l.top))
+			assert_gte(float(fit.foe_top), float(l.top), "era %d: foes under the band" % era)
+	assert_eq(EraBattleHud.side_button(1, 0.0), EraBattleHud.SIDE_BUTTON, "no floor: as before")
+	assert_eq(float(EraBattleHud.formation_layout(1, 144, 7).top), float(EraBattleHud.FORMATION_TOP), "no floor: as before")
 
 func test_formation_band_stays_above_the_foes() -> void:
 	for era: int in range(1, 6):

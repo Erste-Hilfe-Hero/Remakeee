@@ -135,14 +135,46 @@ func _draw_cast(r: Rect2) -> void:
 		var h: float = px * stretch
 		draw_texture_rect(_cast[i], Rect2(roundf(cx - px / 2.0), roundf(feet - h + bob), px, h), false)
 
+## Row of the base picture (BASE_ART_H high) the wordmark and its subtitle end above: the
+## title's online line sits there, in the sky (TitleScreen).
+const SKY_LINE: float = 64.0
+
+## The wordmark's scale on a picture [param width] x [param height] px in era [param e]: it
+## keeps its size, but never runs off the screen and stays above the sky line. On a wide, low
+## view (an iPad or a phone held sideways) the width alone would grow it over the picture.
+static func fitted_logo_scale(font: Font, e: int, width: float, height: float) -> int:
+	var k: int = logo_scale(width)
+	while k > 1 and (font.get_string_size(LOGO, HORIZONTAL_ALIGNMENT_LEFT, -1, PixelFont.BASE_SIZE * k).x + 6.0 * k / 3.0 > width - 4.0
+			or _bottom_at(font, e, width, k) > SKY_LINE * height / BASE_ART_H - 1.0):
+		k -= 1
+	return k
+
+## The era's subtitle under the wordmark, in the player's language.
+static func subtitle(e: int) -> String:
+	return Loc.t(str(EraMoments.era(e).get("subtitle", "")))
+
+## Font size of era [param e]'s subtitle on a picture [param width] px wide.
+static func subtitle_size(font: Font, e: int, width: float) -> int:
+	return PixelFont.BASE_SIZE * EraMomentLayer.fit_scale(font, subtitle(e), EraMoments.font_scale(e), width - 4.0)
+
+## Lowest pixel row of the wordmark and its subtitle (shadow included) on a picture
+## [param width] x [param height] px in era [param e] (from Era II).
+static func logo_bottom(e: int, width: float, height: float) -> float:
+	var font: Font = UITheme.font()
+	return _bottom_at(font, e, width, fitted_logo_scale(font, e, width, height))
+
+static func _bottom_at(font: Font, e: int, width: float, k: int) -> float:
+	var d: float = maxf(k / 3.0, 1.0)
+	var sfs: int = subtitle_size(font, e, width)
+	var base: float = 6.0 * width / BASE_W + PixelFont.ASCENT * k
+	var sub_y: float = base + PixelFont.DESCENT * k + 3.0 * d + PixelFont.ASCENT * sfs / PixelFont.BASE_SIZE + 2
+	return sub_y + PixelFont.DESCENT * sfs / PixelFont.BASE_SIZE + 1.0
+
 ## The same wordmark as TitleArt._draw_logo (ink outline, drop shadow, paper letters), scaled
 ## to the era's screen and in the era's inks. From Era III a light runs over the letters.
 func _draw_era_logo(center: Vector2) -> void:
 	var font: Font = get_theme_default_font()
-	# The wordmark keeps its size, but never runs off the screen.
-	var k: int = logo_scale(size.x)
-	while k > 1 and font.get_string_size(LOGO, HORIZONTAL_ALIGNMENT_LEFT, -1, PixelFont.BASE_SIZE * k).x + 6.0 * k / 3.0 > size.x - 4.0:
-		k -= 1
+	var k: int = fitted_logo_scale(font, era, size.x, size.y)
 	var fs: int = PixelFont.BASE_SIZE * k
 	var ink: Color = EraMoments.col(era, "ink")
 	var paper: Color = EraMoments.col(era, "paper")
@@ -163,8 +195,8 @@ func _draw_era_logo(center: Vector2) -> void:
 	draw_string(font, pos, LOGO, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, paper)
 	if bool(EraMoments.title(era).get("shine", false)) and not still:
 		_draw_shine(font, pos, fs, width)
-	var sub: String = Loc.t(str(EraMoments.era(era).get("subtitle", "")))
-	var sfs: int = PixelFont.BASE_SIZE * EraMomentLayer.fit_scale(font, sub, EraMoments.font_scale(era), size.x - 4.0)
+	var sub: String = subtitle(era)
+	var sfs: int = subtitle_size(font, era, size.x)
 	var sw: float = font.get_string_size(sub, HORIZONTAL_ALIGNMENT_LEFT, -1, sfs).x
 	var sub_pos := Vector2(roundf(center.x - sw / 2.0), pos.y + PixelFont.DESCENT * k + 3.0 * d + PixelFont.ASCENT * sfs / PixelFont.BASE_SIZE + 2)
 	# Dense CJK glyphs blur into their own one-pixel shadow (plan Chimora 100, item 53).

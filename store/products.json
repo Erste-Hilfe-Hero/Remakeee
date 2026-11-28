@@ -1729,6 +1729,45 @@
    "desc_de": "3000 Rissglas, 10x Großer Ring-Trank, 5x Großer Wachstumskristall, 10x Großer Heiltrank, 5x Bondsiegel, 1x Ring-Krone. Einzeln 16500 Rissglas wert. Einmal je Konto.",
    "family_shareable": false,
    "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.consumable.charm_swiftleaf_x3",
+   "offer": "rg_charm_swiftleaf_x3",
+   "apple_type": "CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "1.99",
+   "name_en": "Swiftleaf x3",
+   "name_de": "Flinkblatt x3",
+   "desc_en": "3 Swiftleaves: each makes one bond 8% easier and Mine! 6 taps shorter. Single price 300 Riftglass. Story only, not in leagues.",
+   "desc_de": "3 Flinkblätter: jedes macht eine Bindung 8 % leichter und Meins! 6 Tipper kürzer. Einzelpreis 300 Rissglas. Nur Geschichte, nicht in Ligen.",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.consumable.charm_lantern_x3",
+   "offer": "rg_charm_lantern_x3",
+   "apple_type": "CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "4.99",
+   "name_en": "Rift Lantern x3",
+   "name_de": "Risslaterne x3",
+   "desc_en": "3 Rift Lanterns: each makes one bond 30% easier and Mine! 4 taps shorter. Single price 600 Riftglass. Story only, not in leagues.",
+   "desc_de": "3 Risslaternen: jede macht eine Bindung 30 % leichter und Meins! 4 Tipper kürzer. Einzelpreis 600 Rissglas. Nur Geschichte, nicht in Ligen.",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.consumable.charm_satchel",
+   "offer": "rg_charm_satchel",
+   "apple_type": "CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "9.99",
+   "name_en": "Charm Satchel",
+   "name_de": "Amulett-Tasche",
+   "desc_en": "2 Hush Feathers, 2 Swiftleaves, 2 Rift Lanterns, 2 Firstlight Crests. Single price 1800 Riftglass. Story only, not in leagues.",
+   "desc_de": "2 Stillfedern, 2 Flinkblätter, 2 Risslaternen, 2 Erstlicht-Wappen. Einzelpreis 1800 Rissglas. Nur Geschichte, nicht in Ligen.",
+   "family_shareable": false,
+   "ready": true
   }
  ]
 }

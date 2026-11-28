@@ -1,0 +1,14 @@
+{
+ "_comment": "Translations of the German table questbook, written by tools/i18n/locales_questbook.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Goal line follows this.": "目标栏正在追踪此任务。",
+  "Main": "主线",
+  "Main, side and done quests, and where to go next.": "主线、支线和已完成的任务，以及下一步去哪里。",
+  "No quests here yet.": "这里还没有任务。",
+  "Quest Book": "任务簿",
+  "Quest goal: %s": "任务目的地：{0}",
+  "Side": "支线",
+  "To %s": "前往{0}",
+  "Where next?": "下一步去哪？"
+ }
+}

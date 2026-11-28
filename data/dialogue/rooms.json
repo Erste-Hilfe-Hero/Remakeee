@@ -29,7 +29,7 @@
   "lines": [
    "Clerk Dirk: Towels, tonics, tide tables. The tables are free. They are also wrong."
   ],
-  "action": "shop tonic strong_tonic max_tonic remedy dry_towel wake_bell revival_leaf kin_charm pruning_shears grounding_rod smelling_salts"
+  "action": "shop tonic strong_tonic max_tonic remedy dry_towel wake_bell revival_leaf kin_charm charm_inkquill charm_mender pruning_shears grounding_rod smelling_salts"
  },
  "reedhaven_house_grete": {
   "lines": [
@@ -47,7 +47,7 @@
   "lines": [
    "Clerk Maren: Ebbe keeps the cold stock outside. In here it is the same stock, only warmer."
   ],
-  "action": "shop tonic strong_tonic remedy dry_towel cooling_gel kin_charm revival_leaf pruning_shears grounding_rod smelling_salts"
+  "action": "shop tonic strong_tonic remedy dry_towel cooling_gel kin_charm charm_inkquill charm_mender revival_leaf pruning_shears grounding_rod smelling_salts"
  },
  "corvane_quay_spring_liesl": {
   "lines": [
