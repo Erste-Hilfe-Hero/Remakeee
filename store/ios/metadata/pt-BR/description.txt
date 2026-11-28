@@ -2,7 +2,7 @@ Crie vínculo com 567 monstros pixel, cace raras formas Reluzentes e planeje cad
 - 567 Spirlings para criar vínculo: toque rápido no grande botão É meu! e encha a barra
 - Batalhas táticas por turnos com oito elementos e Sentinelas com várias fases
 - Pixel art que amadurece ao longo de cinco eras, do monocromático às cores plenas
-- Jogo online: Chimora precisa de conexão com a internet
+- A história funciona offline; amigos, ligas e loja precisam de internet
 
 NOVIDADES DA 1.3.2
 - 70 Spirlings novos, 10 em cada região
@@ -53,5 +53,3 @@ JOGUE DO SEU JEITO
 
 LOJA E LIGA JUSTA
 Grátis para jogar, com compras opcionais no app. Muitas dão vantagens na batalha ou aceleram o progresso; na Liga justa elas não contam. Cada oferta mostra exatamente o que vem dentro, nada é aleatório. Todas as regiões, Sentinelas e espécies de Spirlings podem ser alcançadas sem pagar. A loja fica bloqueada para menores de 13 anos e tem limites mensais por idade. Sem anúncios, sem rastreamento.
-
-Aviso: Chimora precisa de conexão com a internet.

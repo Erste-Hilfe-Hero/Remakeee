@@ -2,7 +2,7 @@ Bond with 567 pixel monsters, hunt rare Gleam forms and plan every turn. Chimora
 • 567 Spirlings to bond: tap the big Mine! button fast to fill the bar
 • Tactical turn-based battles with eight elements and Wardens with several phases
 • Pixel art that grows up across five eras, from monochrome to full colour
-• Online game: Chimora needs an internet connection
+• Story plays offline; friends, leagues and shop need internet
 
 NEW IN 1.3.2
 • 70 new Spirlings, 10 in every region
@@ -57,5 +57,3 @@ PLAYABLE YOUR WAY
 
 SHOP AND FAIR LEAGUE
 Free to play with optional in-app purchases. Many of them give advantages in battle or speed up progress; in the Fair League they do not count. Every offer shows exactly what is inside, nothing is random. Every region, Warden and kind of Spirling can be reached without paying. The shop is locked for players under 13 and has monthly limits by age. No ads, no tracking.
-
-Note: Chimora needs an internet connection.

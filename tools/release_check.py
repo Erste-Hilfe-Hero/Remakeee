@@ -70,9 +70,6 @@ def check_texts() -> None:
         for desc in ("store/android/%s/full_description.txt" % play, "store/ios/metadata/%s/description.txt" % ios):
             if os.path.exists(desc) and A11Y_HEADINGS[play] not in read(desc):
                 errors.append(desc + ": the accessibility block is missing (heading %s)" % A11Y_HEADINGS[play])
-        kw = "store/ios/metadata/%s/keywords.txt" % ios
-        if os.path.exists(kw) and "offline" in read(kw):
-            errors.append(kw + ": the game is online only")
 
 
 def check_images() -> None:

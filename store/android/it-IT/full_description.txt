@@ -2,7 +2,7 @@ Stringi un legame con 567 mostri in pixel art, cerca le rare forme Splendore e p
 - 567 Spirling da legare: tocca veloce il grande pulsante Mio! e riempi la barra
 - Combattimenti tattici a turni con otto elementi e Custodi con più fasi
 - Una pixel art che cresce attraverso cinque ere, dal bianco e nero ai colori pieni
-- Gioco online: Chimora richiede una connessione a Internet
+- La storia funziona offline; amici, leghe e negozio richiedono Internet
 
 NOVITÀ DELLA 1.3.2
 - 70 nuovi Spirling, 10 in ogni regione
@@ -53,5 +53,3 @@ GIOCA A MODO TUO
 
 NEGOZIO E LEGA ALLA PARI
 Gratuito, con acquisti in-app facoltativi. Molti danno vantaggi in battaglia o accelerano i progressi; nella Lega alla pari non contano. Ogni offerta mostra esattamente cosa contiene, niente è casuale. Ogni regione, ogni Custode e ogni specie di Spirling si raggiunge senza pagare. Il negozio è bloccato sotto i 13 anni e ha limiti mensili in base all'età. Niente pubblicità, nessun tracciamento.
-
-Nota: Chimora richiede una connessione a Internet.

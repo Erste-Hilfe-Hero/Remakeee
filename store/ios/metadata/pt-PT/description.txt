@@ -2,7 +2,7 @@ Cria laços com 567 monstros pixel, procura raras formas Reluzentes e planeia ca
 - 567 Spirlings para criar laços: toca depressa no grande botão É meu! e enche a barra
 - Batalhas táticas por turnos com oito elementos e Sentinelas com várias fases
 - Pixel art que amadurece ao longo de cinco eras, do monocromático às cores plenas
-- Jogo online: Chimora precisa de ligação à internet
+- A história funciona offline; amigos, ligas e loja precisam de internet
 - Os textos do jogo estão em português do Brasil
 
 NOVIDADES DA 1.3.2
@@ -54,5 +54,3 @@ JOGA À TUA MANEIRA
 
 LOJA E LIGA JUSTA
 Gratuito, com compras opcionais na app. Muitas dão vantagens em batalha ou aceleram o progresso; na Liga justa não contam. Cada oferta mostra exatamente o que inclui, nada é aleatório. Todas as regiões, Sentinelas e espécies de Spirlings se alcançam sem pagar. A loja está bloqueada para menores de 13 anos e tem limites mensais por idade. Sem anúncios, sem rastreio.
-
-Aviso: Chimora precisa de ligação à internet.
