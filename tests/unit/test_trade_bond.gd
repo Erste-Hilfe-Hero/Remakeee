@@ -3,7 +3,7 @@ extends GutTest
 ## finished trade (server data, here the LocalBackend stand-in) or in a town Wayfarer's one-time
 ## trade. The same cases as tools/online/sql_test/test_trade_bond.sql.
 
-const MIGRATION: String = "res://supabase/migrations/20261128060000_trade_bond.sql"
+const MIGRATION: String = "res://supabase/migrations/20261128060700_trade_bond.sql"
 ## The chosen steps: form -> [next form, Keepsake it must hold during the trade or ""].
 const LINES: Dictionary = {
 	"Paddlewisp": ["Ferrowyn", ""], "Talusgard": ["Cairnhold", ""], "Vanecrow": ["Vanecrest", "swift_feather"],

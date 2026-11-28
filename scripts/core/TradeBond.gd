@@ -7,7 +7,7 @@ extends RefCounted
 ## that trade; only that Keepsake may stay on a Spirling while it is traded.
 ## The server stamps a Spirling it hands over in a finished trade with "bond_form" (its species at
 ## that moment) and "bond_item" (the Keepsake it held), see public._trade_mon_bond in
-## supabase/migrations/20261128060000_trade_bond.sql; LocalBackend does the same with stamp().
+## supabase/migrations/20261128060700_trade_bond.sql; LocalBackend does the same with stamp().
 ## The bond path stays ready while the Spirling is in that form, so it can furl back and unfurl
 ## again. Its Ring path stays too, so no player is ever locked out.
 
