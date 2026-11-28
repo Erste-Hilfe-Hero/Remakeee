@@ -1,15 +1,18 @@
-# REMOVE; WIP bullets 6-14
-- Negozio rifatto, testi più chiari
-- 70 nuovi Spirling, 5 tipi di Splendore
+# DEL; WIP 6-17
+- Negozio rifatto, testi chiari
+- 70 Spirling, 5 Splendori
 - Meteo, 35 enigmi, segreti
-- Mappe più collegate, correzioni
-- Una difficoltà che cresce atto dopo atto, senza limite di Rango
-- Mio! vibra
-- Intro più bella
-- Offline automatico, sincronizza dopo
+- Mappe migliori, difficoltà che sale
+- Mio! vibra, correzioni
+- Giochi subito, storia dal 1° Spirling
+- Scene per atto
+- Storie nelle 4 regioni finali, duelli a Quivermoor
+- Libro missioni, Dove ora?
+- Offline, sincronizza dopo
 - Talismani del legame
-- Ricompense, compiti e Spirling del giorno
-- Eventi meteo nel weekend
-- Premi del Spirlog
-- Codici amico più facili
-- Menu più fluidi
+- Pacchetto Prima Cattura
+- Premi, compiti, Spirling del giorno
+- Meteo del weekend
+- Premi Spirlog
+- Codici amico facili
+- Menu fluidi

@@ -1,4 +1,4 @@
-# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 10 Mine! vibration, 11 intro, 12 offline play, 13 bond charms, 14 daily rewards/tasks/Spirling of the day, 15 weekend weather events, 16 Spirlog rewards, 17 friend codes, 18 smoother menus.
+# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 11 natural start, 12 cutscenes, 13 post-story storylines and Quivermoor duels, 14 quest book, 15 offline play, 16 bond charms, 17 First Catch Pack, 18 daily rewards/tasks/Spirling of the day, 19 weekend weather events, 20 Spirlog rewards, 21 friend codes, 22 smoother menus.
 Chimora 1.3.2
 
 - Een vernieuwde winkel met duidelijkere teksten: elk pakket en elke aanbieding zegt in gewone woorden wat erin zit en wat het doet. Niets is toeval.
@@ -11,9 +11,13 @@ Chimora 1.3.2
 - Eén moeilijkheid voor iedereen, die per akte stijgt. Geen moeilijkheidskeuze en geen Ring-limiet meer.
 - Veel foutoplossingen.
 - Tikken op Van mij! trilt nu licht (alleen als trillen aanstaat in de instellingen).
-- Een mooiere intro aan het begin van het spel.
+- Een natuurlijke start: je speelt meteen, en het verhaal begint als je je eerste Spirling ontmoet.
+- Verhaalfilmpjes in elke akte.
+- De vier regio's na het hoofdverhaal krijgen elk een eigen verhaal, met duels in Quivermoor.
+- Een questboek met je doelen, en "Waarheen nu?" wijst de weg op de kaart.
 - Automatisch offline spelen: zonder internet gaat het spel gewoon door, en je voortgang wordt bijgewerkt zodra je weer online bent.
 - Bandamuletten voor het binden met Van mij!, elk met een vaste prijs en het precieze effect dat je vóór het kopen ziet.
+- Het Eerste Vangst-pakket voor onze laagste prijs: een klein pakket met vaste inhoud, getoond voordat je koopt. Niets is willekeurig.
 - Dagbeloningen, dagtaken en een Spirling van de dag.
 - Weerevenementen in het weekend.
 - Beloningen voor het vullen van je Spirlog.

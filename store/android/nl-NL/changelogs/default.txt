@@ -1,15 +1,18 @@
-# REMOVE; WIP bullets 6-14
-- Vernieuwde winkel, duidelijkere teksten
-- 70 nieuwe Spirlings, 5 soorten glansvormen
+# DEL; WIP 6-17
+- Nieuwe winkel, duidelijke teksten
+- 70 Spirlings, 5 glansvormen
 - Weer, 35 puzzels, geheimen
-- Beter verbonden kaarten, verbeteringen
-- Eén moeilijkheid die per akte stijgt, geen Ring-limiet
-- Van mij! trilt
-- Mooiere intro
-- Automatisch offline, synct later
+- Betere kaarten, stijgende moeilijkheid
+- Van mij! trilt, fixes
+- Meteen spelen, verhaal bij 1e Spirling
+- Filmpjes per akte
+- Verhalen in 4 late regio's, duels in Quivermoor
+- Questboek, Waarheen nu?
+- Offline spelen, synct later
 - Bandamuletten
-- Dagbeloning, dagtaken, Spirling van de dag
-- Weerevenementen in het weekend
+- Eerste Vangst-pakket
+- Dagbeloning, taken, Spirling van de dag
+- Weekendweer
 - Spirlog-beloningen
-- Makkelijkere vriendcodes
-- Soepelere menu's
+- Makkelijke vriendcodes
+- Soepele menu's

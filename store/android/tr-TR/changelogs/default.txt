@@ -1,15 +1,18 @@
-# REMOVE; WIP bullets 6-14
-- Yeni dükkân, daha net paket metinleri
-- 70 yeni Spirling, 5 çeşit Işıltı
-- Hava durumu, 35 bulmaca, sırlar
-- Daha iyi bağlanan haritalar, düzeltmeler
-- Perde perde artan tek zorluk, Halka sınırı yok
-- Benim! titreşir
-- Daha güzel giriş
-- Kendiliğinden çevrimdışı, sonra eşitler
+# DEL; WIP 6-17
+- Yeni dükkân, net metinler
+- 70 Spirling, 5 çeşit Işıltı
+- Hava, 35 bulmaca, sırlar
+- Daha iyi haritalar, artan tek zorluk
+- Benim! titreşir, düzeltmeler
+- Hemen oyna, hikâye ilk Spirling'le
+- Her perdede ara sahne
+- 4 son bölgeye hikâye, Quivermoor'da düello
+- Görev kitabı, Şimdi nereye?
+- Çevrimdışı oyna, sonra eşitler
 - Bağ tılsımları
+- İlk Buluş Paketi
 - Günlük ödül, görevler, günün Spirling'i
-- Hafta sonu hava etkinlikleri
+- Hafta sonu havası
 - Spirlog ödülleri
-- Daha kolay arkadaş kodları
-- Daha akıcı menüler
+- Kolay arkadaş kodları
+- Akıcı menüler

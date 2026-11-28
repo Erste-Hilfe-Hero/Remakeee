@@ -1,4 +1,4 @@
-# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 10 Mine! vibration, 11 intro, 12 offline play, 13 bond charms, 14 daily rewards/tasks/Spirling of the day, 15 weekend weather events, 16 Spirlog rewards, 17 friend codes, 18 smoother menus.
+# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 11 natural start, 12 cutscenes, 13 post-story storylines and Quivermoor duels, 14 quest book, 15 offline play, 16 bond charms, 17 First Catch Pack, 18 daily rewards/tasks/Spirling of the day, 19 weekend weather events, 20 Spirlog rewards, 21 friend codes, 22 smoother menus.
 Chimora 1.3.2
 
 - Обновлённый магазин с понятными текстами: каждый набор и каждое предложение простыми словами говорит, что внутри и что оно даёт. Ничего случайного.
@@ -11,9 +11,13 @@ Chimora 1.3.2
 - Одна сложность для всех, которая растёт от акта к акту. Больше нет выбора сложности и предела Круга.
 - Много исправлений ошибок.
 - Нажатия на «Мой!» теперь слегка вибрируют (только если вибрация включена в настройках).
-- Более красивое вступление в начале игры.
+- Естественное начало: ты сразу играешь, а история начинается, когда ты встречаешь своего первого Spirling.
+- Сюжетные сценки в каждом акте.
+- У каждого из четырёх регионов после основной истории теперь своя история, а в Quivermoor есть дуэли.
+- Книга заданий с твоими целями, а "Куда дальше?" показывает путь на карте.
 - Автоматическая игра офлайн: без интернета игра просто продолжается, а прогресс синхронизируется, как только ты снова онлайн.
 - Амулеты связи для приручения через «Мой!»: у каждого фиксированная цена, а точный эффект виден до покупки.
+- Набор "Первая находка" по нашей самой низкой цене: небольшой набор с фиксированным содержимым, видным до покупки. Ничего случайного.
 - Награды дня, задания дня и Spirling дня.
 - Погодные события по выходным.
 - Награды за заполнение Spirlog.

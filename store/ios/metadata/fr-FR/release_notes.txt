@@ -1,4 +1,4 @@
-# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 10 Mine! vibration, 11 intro, 12 offline play, 13 bond charms, 14 daily rewards/tasks/Spirling of the day, 15 weekend weather events, 16 Spirlog rewards, 17 friend codes, 18 smoother menus.
+# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 11 natural start, 12 cutscenes, 13 post-story storylines and Quivermoor duels, 14 quest book, 15 offline play, 16 bond charms, 17 First Catch Pack, 18 daily rewards/tasks/Spirling of the day, 19 weekend weather events, 20 Spirlog rewards, 21 friend codes, 22 smoother menus.
 Chimora 1.3.2
 
 - Une boutique refaite avec des textes plus clairs : chaque pack et chaque offre dit simplement ce qu'il contient et ce qu'il fait. Rien n'est aléatoire.
@@ -11,9 +11,13 @@ Chimora 1.3.2
 - Une seule difficulté pour tous, qui monte d'acte en acte. Plus de choix de difficulté ni de limite de Rang.
 - Nombreuses corrections de bugs.
 - Les appuis sur C'est à moi! vibrent légèrement (seulement si la vibration est activée dans les paramètres).
-- Une plus belle introduction au début du jeu.
+- Un début naturel : tu joues tout de suite, et l'histoire commence quand tu rencontres ton premier Spirling.
+- Des cinématiques d'histoire dans chaque acte.
+- Les quatre régions d'après l'histoire principale ont chacune leur propre histoire, avec des duels à Quivermoor.
+- Un carnet de quêtes avec tes objectifs, et "Où aller ?" montre le chemin sur la carte.
 - Jeu hors ligne automatique : sans internet, le jeu continue tout simplement, et ta progression se synchronise dès que tu es de nouveau en ligne.
 - Des talismans de lien pour lier avec C'est à moi!, chacun à prix fixe, avec son effet exact affiché avant l'achat.
+- Le Lot Première Prise à notre prix le plus bas : un petit lot au contenu fixe, affiché avant l'achat. Rien n'est aléatoire.
 - Récompenses du jour, tâches du jour et un Spirling du jour.
 - Événements météo le week-end.
 - Des récompenses pour remplir ton Spirlog.

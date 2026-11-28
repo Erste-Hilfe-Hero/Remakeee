@@ -1,24 +1,27 @@
-# REMOVE BEFORE UPLOAD. Delete each "New in 1.3.2" line not in the build. No Offline: add "Chimora is online only." to line 1.
+# REMOVE BEFORE UPLOAD. Delete each "New in 1.3.2" line not in the build. No offline play: add "Chimora is online only." to line 1.
 What the app is: a turn-based monster-taming RPG in pixel art for ages 9+ (mild fantasy violence: creatures faint, no blood). Single-player story, optional online play with friends.
 
 How to start: no sign-in. On first launch the game creates an anonymous account on our own server (EU) and starts at once: choose a language, tick the box to accept the Terms of Use and Privacy Policy (links on the same screen), then New Game. No email, no third-party login, no chat.
 
 Online features: Menu > Friends shows your friend code; a second device or install can add it. Friends swap greetings, Lantern Mail, gifts and echo duels. Menu > Account: transfer code, online rules, privacy note and "Delete account..." (deletes the account and all server data at once, 5.1.1(v)). "Enter a code..." there and "I have a code" on the title screen only take a transfer code to move your own account to a new phone; they unlock no content. No promo or redeem codes.
 
-In-app purchases (the game is free): Menu > Shop (end of the menu; next to Satchel once the first Rift is sealed). On first open the shop asks for the age (closed under 13; enter an adult age). Tabs: Featured, Advantages, Packs, Pass, Looks, Riftglass, More. Every offer lists exact contents, effect and price; nothing is random. Riftglass prices show the euro value. Monthly Card (consumable, 4.99 EUR): 300 Riftglass plus 100 a day for 30 days, collected in the shop; not a subscription. Champions (non-consumable): one fixed Spirling at ring 50, once per account. Bundles, daily and weekly offers: fixed contents, end shown as a fixed time, no countdown. Wayfarer Pass (auto-renewable subscription, 4.99 EUR a month): premium row of the 30-tier pass in Shop > Pass; its page lists benefits, price, renewal and how to cancel. The free row needs no purchase. Test with the sandbox account. Shop > More: My purchases, Restore purchases (3.1.1), Spending limit, Help. After the first act adult accounts see one Starter Pack note (Show offer / Not now), never in battle.
+In-app purchases (the game is free): Menu > Shop (end of the menu; next to Satchel once the first Rift is sealed). On first open the shop asks for the age (closed under 13; enter an adult age). Tabs: Featured, Advantages, Packs, Pass, Looks, Riftglass, More. Every offer lists exact contents, effect and price; nothing random. Monthly Card (consumable, 4.99 EUR): 300 Riftglass plus 100 a day for 30 days, collected in the shop; not a subscription. Champions (non-consumable): one fixed Spirling at ring 50. Bundles, daily and weekly offers: fixed contents, end shown as a fixed time, no countdown. Wayfarer Pass (auto-renewable subscription, 4.99 EUR a month): premium row of the 30-tier pass in Shop > Pass; the page lists benefits, price, renewal, how to cancel. The free row needs no purchase. Use the sandbox account. Shop > More: My purchases, Restore purchases (3.1.1), Spending limit, Help. After the first act adult accounts see one Starter Pack note (Show offer / Not now), never in battle.
 
 Riftglass in play: owned Riftglass is spent at fixed prices: continue a lost story battle, heal or Growth x2 (Menu > Riftglass), a bond boost, ending a trip early, relighting the Lamp Watch lamp, retrying a Warden. With too little nothing opens: no purchase is offered in battle, after a defeat or while bonding. 20 Riftglass arrive as a gift once a day online. Hidden under 13.
 
 New in 1.3.2:
-Offline play: with no connection (e.g. airplane mode) the game goes on; progress syncs to our server when it is back. Friends and purchases need a connection.
-Bond charms (consumable IAPs, Shop > Advantages, e.g. Second Try Charm, Wish Charm): fixed price, exact effect on the offer, used only while bonding (Mine! button) in story battles. Hidden under 13.
-Daily reward: one free reward a day, no purchase. Daily tasks and the Spirling of the day: Menu > Goals.
-Friend codes (Menu > Friends): easier to share and enter. A code only adds a friend, it unlocks no content.
+New game: play starts at once, the story begins at the first Spirling.
+Offline play: with no connection (e.g. airplane mode) the game goes on and syncs to our server when back. Friends and purchases need a connection.
+Bond charms (consumable IAPs, real money, Shop > Advantages, e.g. Wish Charm): fixed price and exact effect on the offer, used only while bonding (Mine! button) in story battles.
+First Catch Pack (IAP, 0.99 EUR, in the Shop): fixed contents on the offer, nothing random.
+Daily reward: one free reward a day, no purchase. Daily tasks, Spirling of the day: Menu > Goals.
+Friend codes: easier to share; a code only adds a friend.
+Quest book: lists the current goals; "Where next?" marks the next stop on the map. Free.
 
-External services: only our own server (Contabo GmbH, Munich, processor under Art. 28 GDPR; data centre Lauterbourg, France, EU) for game data, saves and friends, and Apple (StoreKit, App Store update lookup). Reminders are local notifications, no push. Only standard HTTPS (ITSAppUsesNonExemptEncryption = NO). Anonymous progress counts stay on our server. No tracking, no ads, no third-party SDKs.
+External services: only our own server (Contabo GmbH, processor under Art. 28 GDPR, EU data centre) for game data, saves and friends, and Apple (StoreKit, App Store update lookup). Reminders are local notifications, no push. Only HTTPS (ITSAppUsesNonExemptEncryption = NO). Anonymous progress counts stay on our server. No tracking, no ads, no third-party SDKs.
 
-Lamp Watch (1.3.0): in the Brindlewick lighthouse, light the lamp once a day (free); a lost Spirling visits and joins through the battle bonding minigame (Mine! button).
+Lamp Watch (1.3.0): in the Brindlewick lighthouse, light the lamp once a day (free); a lost Spirling visits and joins via Mine!.
 
-Regional differences: none; only the language (14) and store prices differ.
+Regional differences: none besides language (14) and prices.
 
 Regulated content: none. No gambling, no loot boxes or paid random items, no real-money prizes, no user-generated content besides the Wayfarer name (filtered, reportable), no free chat, no health, medical or financial features.

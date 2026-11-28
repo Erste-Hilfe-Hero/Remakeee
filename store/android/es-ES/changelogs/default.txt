@@ -1,15 +1,18 @@
-# REMOVE; WIP bullets 6-14
-- Tienda renovada, textos más claros
-- 70 Spirlings nuevos, 5 tipos de Fulgor
+# DEL; WIP 6-17
+- Tienda nueva, textos claros
+- 70 Spirlings, 5 Fulgores
 - Clima, 35 acertijos, secretos
-- Mapas mejor conectados, correcciones
-- Una dificultad que sube acto a acto, sin límite de Rango
-- ¡Mío! vibra
-- Intro más bonita
-- Sin conexión automático, sincroniza luego
+- Mejores mapas, dificultad que sube
+- ¡Mío! vibra, arreglos
+- Juega ya, historia al 1er Spirling
+- Escenas por acto
+- Historias en 4 regiones finales, duelos en Quivermoor
+- Libro de misiones, ¿Adónde ahora?
+- Offline, sincroniza luego
 - Amuletos de vínculo
-- Recompensas, tareas y Spirling del día
-- Eventos de clima en fin de semana
-- Premios del Spirlog
-- Códigos de amistad más fáciles
-- Menús más fluidos
+- Lote Primera Captura
+- Premios, tareas, Spirling del día
+- Clima de finde
+- Premios Spirlog
+- Códigos de amigo fáciles
+- Menús fluidos

@@ -1,15 +1,18 @@
-# REMOVE; WIP bullets 6-14
-- Boutique refaite, textes plus clairs
-- 70 nouveaux Spirlings, 5 sortes de Reflets
+# DEL; WIP 6-17
+- Boutique refaite, textes clairs
+- 70 Spirlings, 5 Reflets
 - Météo, 35 énigmes, secrets
-- Cartes mieux reliées, corrections
-- Une difficulté qui monte d'acte en acte, sans limite de Rang
-- C'est à moi! vibre
-- Plus belle intro
-- Hors ligne auto, synchro ensuite
+- Cartes reliées, difficulté montante
+- C'est à moi! vibre, corrections
+- Jeu direct, histoire au 1er Spirling
+- Cinématiques par acte
+- Récits de 4 régions finales, duels à Quivermoor
+- Carnet de quêtes, Où aller ?
+- Hors ligne, synchro après
 - Talismans de lien
-- Récompenses, tâches et Spirling du jour
-- Météo spéciale le week-end
-- Récompenses du Spirlog
-- Codes ami plus simples
-- Menus plus fluides
+- Lot Première Prise
+- Récompenses, tâches, Spirling du jour
+- Météo week-end
+- Prix Spirlog
+- Codes ami simples
+- Menus fluides

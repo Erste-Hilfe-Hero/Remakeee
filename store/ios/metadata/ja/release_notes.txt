@@ -1,4 +1,4 @@
-# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 10 Mine! vibration, 11 intro, 12 offline play, 13 bond charms, 14 daily rewards/tasks/Spirling of the day, 15 weekend weather events, 16 Spirlog rewards, 17 friend codes, 18 smoother menus.
+# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 11 natural start, 12 cutscenes, 13 post-story storylines and Quivermoor duels, 14 quest book, 15 offline play, 16 bond charms, 17 First Catch Pack, 18 daily rewards/tasks/Spirling of the day, 19 weekend weather events, 20 Spirlog rewards, 21 friend codes, 22 smoother menus.
 Chimora 1.3.2
 
 - お店を作り直し、説明もわかりやすく：どのパックや品も、中身と効果をかんたんな言葉で表示。ランダムなものはありません。
@@ -11,9 +11,13 @@ Chimora 1.3.2
 - 難易度はひとつだけ。幕が進むごとに少しずつ上がります。難易度の選択とリングの上限はなくなりました。
 - 不具合を多数修正。
 - 「おれの！」をタップすると軽く振動するように（設定で振動がオンのときだけ）。
-- ゲーム開始時のイントロがより美しく。
+- 自然なはじまり：すぐに遊べて、物語は最初のSpirlingと出会ったときに始まります。
+- 各幕にストーリーのムービー。
+- 本編のあとの4つの地方に、それぞれ独自の物語。Quivermoorではデュエルも。
+- 目標がわかるクエストブック。「次はどこ？」でマップに道を表示します。
 - 自動オフラインプレイ：インターネットがなくてもそのまま遊べて、オンラインに戻ると進み具合が同期されます。
 - 「おれの！」できずなを結ぶための、きずなのお守り。どれも値段は固定で、効果は買う前にはっきり表示されます。
+- いちばん安い価格の「はじめての出会いパック」：中身は固定で、購入前に表示されます。ランダムなものはありません。
 - 毎日のごほうび、毎日の課題、今日のSpirling。
 - 週末の天気イベント。
 - Spirlogを埋めるとごほうび。

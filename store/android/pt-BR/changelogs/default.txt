@@ -1,15 +1,18 @@
-# REMOVE; WIP bullets 6-14
-- Loja refeita, textos mais claros
-- 70 Spirlings novos, 5 tipos de Reluzente
+# DEL; WIP 6-17
+- Loja nova, textos claros
+- 70 Spirlings, 5 Reluzentes
 - Clima, 35 enigmas, segredos
-- Mapas mais conectados, correções
-- Uma dificuldade que sobe ato a ato, sem limite de Anel
-- É meu! vibra
-- Intro mais bonita
-- Offline automático, sincroniza depois
+- Mapas ligados, dificuldade que sobe
+- É meu! vibra, ajustes
+- Jogue já, história no 1º Spirling
+- Cenas por ato
+- Enredos de 4 regiões finais, duelos em Quivermoor
+- Livro de missões, Para onde agora?
+- Offline, sincroniza após
 - Amuletos de vínculo
-- Recompensas, tarefas e Spirling do dia
-- Eventos de clima no fim de semana
-- Prêmios do Spirlog
-- Códigos de amigo mais fáceis
-- Menus mais fluidos
+- Pacote Primeira Captura
+- Prêmios, tarefas, Spirling do dia
+- Clima de fim de semana
+- Prêmios Spirlog
+- Códigos de amigo fáceis
+- Menus fluidos

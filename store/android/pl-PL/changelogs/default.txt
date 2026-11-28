@@ -1,15 +1,18 @@
-# REMOVE; WIP bullets 6-14
-- Nowy sklep, jaśniejsze opisy
-- 70 nowych Spirlingów, 5 rodzajów Połysku
+# DEL; WIP 6-17
+- Nowy sklep, jasne opisy
+- 70 Spirlingów, 5 Połysków
 - Pogoda, 35 zagadek, sekrety
-- Lepiej połączone mapy, poprawki
-- Jedna trudność rosnąca z aktu na akt, bez limitu Rangi
-- Mój! wibruje
-- Ładniejsze intro
-- Sam gra offline, synchronizuje potem
+- Lepsze mapy, rosnąca trudność
+- Mój! wibruje, poprawki
+- Grasz od razu, fabuła od 1. Spirlinga
+- Przerywniki w aktach
+- Fabuły 4 późnych regionów, pojedynki w Quivermoor
+- Księga zadań, Dokąd teraz?
+- Gra offline, synchronizuje potem
 - Amulety więzi
-- Nagrody, zadania i Spirling dnia
-- Pogodowe wydarzenia w weekend
+- Pakiet Pierwszej Zdobyczy
+- Nagrody, zadania, Spirling dnia
+- Pogoda w weekend
 - Nagrody za Spirlog
 - Prostsze kody znajomych
 - Płynniejsze menu

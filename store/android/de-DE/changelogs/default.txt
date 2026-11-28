@@ -1,15 +1,18 @@
-# REMOVE; WIP bullets 6-14
-- Neuer Shop, klarere Pakettexte
-- 70 neue Spirlings, 5 Arten Glanzformen
+# DEL; WIP 6-17
+- Neuer Shop, klare Texte
+- 70 neue Spirlings, 5 Glanzarten
 - Wetter, 35 Rätsel, Geheimnisse
-- Besser verbundene Karten, viele Korrekturen
-- Ein Schwierigkeitsgrad, steigt je Akt, keine Ring-Grenze
-- Meins! vibriert
-- Schöneres Intro
-- Offline automatisch, gleicht später ab
+- Bessere Karten, ein steigender Grad
+- Meins! vibriert, Korrekturen
+- Sofort los, Story ab 1. Spirling
+- Filmszenen je Akt
+- 4 späte Regionen mit Story, Quivermoor-Duelle
+- Questbuch mit Wohin jetzt?
+- Offline, synct später
 - Bindungstalismane
-- Tagesbelohnung, Tagesaufgaben, Spirling des Tages
-- Wetter-Events am Wochenende
+- Erster-Fang-Paket
+- Tagesbonus, Aufgaben, Spirling des Tages
+- Wochenend-Wetter
 - Spirlog-Belohnungen
-- Einfachere Freundescodes
-- Flüssigere Menüs
+- Einfache Freundescodes
+- Flüssige Menüs

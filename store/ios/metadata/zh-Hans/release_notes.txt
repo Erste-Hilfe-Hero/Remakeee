@@ -1,4 +1,4 @@
-# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 10 Mine! vibration, 11 intro, 12 offline play, 13 bond charms, 14 daily rewards/tasks/Spirling of the day, 15 weekend weather events, 16 Spirlog rewards, 17 friend codes, 18 smoother menus.
+# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 11 natural start, 12 cutscenes, 13 post-story storylines and Quivermoor duels, 14 quest book, 15 offline play, 16 bond charms, 17 First Catch Pack, 18 daily rewards/tasks/Spirling of the day, 19 weekend weather events, 20 Spirlog rewards, 21 friend codes, 22 smoother menus.
 Chimora 1.3.2
 
 - 商店全面重做，说明更清楚：每个礼包和商品都用简单的话写明内容和作用。没有任何随机内容。
@@ -11,9 +11,13 @@ Chimora 1.3.2
 - 所有人只有一种难度，随着每一幕逐步提升。不再选择难度，也不再有环的上限。
 - 多项错误修复。
 - 点击“归我！”时会轻轻振动（仅在设置中开启振动时）。
-- 游戏开头的序章更精美。
+- 自然的开局：马上就能玩，故事从你遇见第一只Spirling时开始。
+- 每一幕都有剧情过场。
+- 主线之后的四个地区各有自己的故事，在Quivermoor还有对决。
+- 任务簿列出你的目标，"下一步去哪？"会在地图上标出路线。
 - 自动离线游玩：没有网络时游戏照常继续，重新联网后进度会自动同步。
 - 用于“归我！”结缘的羁绊护符，每个都是固定价格，购买前会显示确切效果。
+- 最低价的初遇礼包：内容固定，购买前就会显示。没有随机内容。
 - 每日奖励、每日任务和今日Spirling。
 - 周末天气活动。
 - 填写Spirlog可获得奖励。

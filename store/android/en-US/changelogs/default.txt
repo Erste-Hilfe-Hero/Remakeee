@@ -1,15 +1,18 @@
-# REMOVE; WIP bullets 6-14
-- Rebuilt shop, clearer pack texts
-- 70 new Spirlings, 5 kinds of Gleam
-- Weather, 35 puzzles, hidden secrets
-- Better connected maps, many fixes
-- One difficulty, rising act by act, no Ring cap
-- Mine! taps vibrate
-- Nicer intro
-- Plays offline on its own, syncs later
+# DEL; WIP 6-17
+- New shop, clear pack texts
+- 70 new Spirlings, 5 Gleam kinds
+- Weather, 35 puzzles, secrets
+- Better maps, one rising difficulty
+- Mine! vibrates, many fixes
+- Play at once, story from 1st Spirling
+- Cutscenes each act
+- 4 late regions get stories, Quivermoor duels
+- Quest book with Where next?
+- Plays offline, syncs later
 - Bond charms
+- First Catch Pack
 - Daily rewards, tasks, Spirling of the day
-- Weekend weather events
+- Weekend weather
 - Spirlog rewards
 - Easier friend codes
 - Smoother menus
