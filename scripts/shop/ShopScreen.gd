@@ -773,7 +773,8 @@ static func starter_popup_due(flags: Dictionary, band: Variant, reason: String, 
 
 ## The check for the world, with the live state (cheap checks first, it runs every frame).
 static func starter_popup_now() -> bool:
-	if not GameState.has_flag(GameState.ACT1_END_FLAG) or GameState.has_flag(STARTER_SEEN_FLAG) or Billing.state.is_empty():
+	# Never offline: the note leads to a purchase, which needs the server (docs/OFFLINE.md).
+	if not GameState.has_flag(GameState.ACT1_END_FLAG) or GameState.has_flag(STARTER_SEEN_FLAG) or Billing.state.is_empty() or not Online.is_online():
 		return false
 	var o: Dictionary = ShopCatalog.offer(STARTER_ID)
 	if o.is_empty():

@@ -14,7 +14,7 @@ const GOAL_TEXT: Dictionary = {
 
 static func run(menu: PauseMenu) -> void:
 	if not Online.is_online():
-		await menu.info(Online.error_text())
+		await OnlineErrors.say_offline(menu)
 		return
 	if not Online.social_on():
 		await menu.info("Friends and greetings are switched off. You can switch them on under Settings, Account.")

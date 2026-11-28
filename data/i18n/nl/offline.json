@@ -1,0 +1,9 @@
+{
+ "_comment": "Translations of the German table offline, written by tools/i18n/locales_offline.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Chimora plays offline too. When you are online, your journeys are also stored on our server in the EU, so they are safe if your phone breaks. Hosting: Contabo GmbH, Munich, Germany (processor, Art. 28 GDPR); server location: data centre Lauterbourg, France (EU). We store your Wayfarer name, friend code, saves, friends, Lantern Mail and league standings, nothing else. No ads, no tracking. We count anonymously how far players get in the game, to make it better. You can download or delete everything under Settings, Account.": "Chimora werkt ook offline. Als je online bent, staan je reizen ook op onze server in de EU, dus ze zijn veilig als je telefoon kapotgaat. Hosting: Contabo GmbH, München, Duitsland (verwerker, art. 28 AVG); serverlocatie: datacenter Lauterbourg, Frankrijk (EU). We bewaren je Reizigersnaam, vriendcode, spellen, vrienden, Lantaarnpost en competitiestand, verder niets. Geen reclame, geen tracking. We tellen anoniem hoe ver spelers in het spel komen, om het beter te maken. Onder Instellingen, Account kun je alles downloaden of wissen.",
+  "Offline. Your journey is saved on this phone.": "Offline. Je reis wordt op deze telefoon bewaard.",
+  "Online, a copy of your journeys is kept on our server. No ads, no tracking.": "Online staat een kopie van je reizen op onze server. Geen reclame, geen tracking.",
+  "This needs internet. The rest of your journey plays on offline.": "Hiervoor heb je internet nodig. De rest van je reis gaat offline door."
+ }
+}

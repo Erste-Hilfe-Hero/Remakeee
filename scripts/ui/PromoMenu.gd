@@ -22,7 +22,7 @@ static func error_text(r: Dictionary) -> String:
 
 static func run(menu: MenuHost) -> void:
 	if not Online.is_online():
-		await menu.info(Online.error_text())
+		await OnlineErrors.say_offline(menu)
 		return
 	var code: String = await CodePrompt.ask(menu, Loc.t("Promo code"), CODE_LENGTH)
 	if code.is_empty():

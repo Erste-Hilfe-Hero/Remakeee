@@ -168,33 +168,29 @@ func _build_name_box() -> void:
 	v.add_child(_name_keys)
 	v.add_child(_name_keys.make_extra_row())
 
-## Chimora is online only: nothing past the title works without the server (item 1).
+## Connects if it can, and never waits long for it (docs/OFFLINE.md): Chimora plays offline.
+## Online: privacy note, sync (conflicts asked here), notice. A required update only stops the
+## game while there is a connection. Without one the title just says it is offline; Online keeps
+## trying in the background once a journey runs.
 func _go_online() -> void:
 	# The update panel at load (docs/LIVE_CONTENT.md): Play's in-app update, the itch.io download
 	# or the App Store page, before the server is even asked.
 	await _offer_update()
+	# The short privacy note comes before the first journey, with or without a connection.
+	if not Online.privacy_seen:
+		await privacy_note(_menu, _set_art_note)
+		_hide_art_note()
+		Online.mark_privacy_seen()
 	while true:
 		# Another device took the account (plan item 3010): only play here when the player says so.
 		if Online.kicked:
 			_status.text = ""
 			await _menu.pick_strings(Online.error_text("other_device"), ["Play on this device"] as Array[String], false)
 			Online.kicked = false
-		_connect_started = Time.get_ticks_msec()
-		_connecting = true
-		var st: Online.State = await Online.connect_now()
-		_connecting = false
+		var st: Online.State = await _connect_capped()
 		if st == Online.State.ONLINE:
-			_status.text = ""
-			if not Online.privacy_seen:
-				await privacy_note(_menu, _set_art_note)
-				_hide_art_note()
-				Online.mark_privacy_seen()
-			if await Online.sync_down():
-				await _resolve_conflicts()
-				await _offer_update()
-				_show_status()
-				return
-			continue
+			await _after_connect()
+			return
 		if st == Online.State.UPDATE_REQUIRED:
 			_status.text = ""
 			# The update panel updates in the game where it can, otherwise opens the store page (item 2148).
@@ -204,31 +200,44 @@ func _go_online() -> void:
 				if u == 0:
 					MenuHost.open_url.call(Online.store_url())
 			continue
-		_status.text = "No connection"
-		var offline_ok: bool = Online.offline_start_allowed(_used_slots(), Online.revs.size(), Online.kicked, st)
-		var options: Array[String] = ["Try again", "Settings"]
-		if offline_ok:
-			options.append(OFFLINE_START)
-		var idx: int = await _menu.pick_strings(Online.error_text() + "\n" + Loc.t(OFFLINE_NOTE if offline_ok else "Your journeys are safe on the server."),
-			options, false)
-		if idx == 1:
-			await _menu.run_settings()
-		elif idx == 2:
-			await _start_offline()
-			return
+		if Online.kicked:
+			continue
+		_show_offline()
+		return
 
-## New Game without a connection (plan Chimora 100, item 77): only the prologue, up to its save
-## point; then the account is created and the save goes up like any other (Online.offline_save_point).
-const OFFLINE_START: String = "Start offline"
-const OFFLINE_NOTE: String = "A new journey can start offline. The prologue goes online at its save point."
-const OFFLINE_STATUS: String = "Offline: prologue only"
+## Online.connect_now, but the title goes on after CONNECT_WAIT seconds: a slow or captive
+## network must not hold the player at the title. The try finishes in the background; the root
+## list syncs when it is done (_after_connect).
+const CONNECT_WAIT: float = 4.0
+func _connect_capped() -> Online.State:
+	var done: Array[bool] = [false]
+	var run := func() -> void:
+		await Online.connect_now()
+		done[0] = true
+	_connect_started = Time.get_ticks_msec()
+	_connecting = true
+	run.call()
+	while not done[0] and Time.get_ticks_msec() - _connect_started < int(CONNECT_WAIT * 1000.0) and is_inside_tree():
+		await get_tree().process_frame
+	_connecting = false
+	return Online.state if done[0] else Online.State.OFFLINE
 
-func _start_offline() -> void:
-	if not Online.privacy_seen:
-		await privacy_note(_menu, _set_art_note)
-		_hide_art_note()
-		Online.mark_privacy_seen()
-	Online.begin_offline_start()
+## Once online at the title: saves both ways (a slot changed here and on another device is a
+## conflict the player decides), then the server's notice.
+var _synced: bool = false
+func _after_connect() -> void:
+	_status.text = ""
+	if await Online.sync_down():
+		_synced = true
+		await _resolve_conflicts()
+		await _offer_update()
+		_show_status()
+	else:
+		_show_offline()
+
+## The title without a connection: one quiet line, the journey starts or goes on as always.
+const OFFLINE_STATUS: String = "Offline. Your journey is saved on this phone."
+func _show_offline() -> void:
 	_status.text = OFFLINE_STATUS
 
 ## At load and once more after connecting, once per app start each: a newer build is out (Play's
@@ -338,16 +347,15 @@ func _run() -> void:
 		_menu.offset_top = roundf(TERMS_TOP * get_viewport_rect().size.x / EraTitleArt.BASE_W)
 		await terms_step(_menu)
 		_menu.offset_top = top
-	# An offline start ends when the title shows again; Continue is online only (item 77).
-	Online.offline_play = false
 	await _go_online()
 	if first_start:
 		# Item 2000: once, where the comfort settings live, without a tap to dismiss. Over the
 		# title art, never over the list (Chimora 100 item 33).
 		_show_art_note(FIRST_START_HINT, FIRST_START_HINT_SECONDS)
 	while true:
-		if not Online.is_online() and not Online.offline_play:
-			await _go_online()
+		# A connection that came after the title went on offline: sync before the list.
+		if Online.is_online() and not _synced:
+			await _after_connect()
 		var items: Array[String] = []
 		# "Continue" is always the newest save, one tap from launch.
 		var latest: int = SaveManager.latest_slot()
@@ -357,7 +365,7 @@ func _run() -> void:
 		items.append("New Game")
 		# Played on another phone: a row of its own instead of a question before the game
 		# starts (Chimora 100 item 29). With a save here it lives under Settings, Account.
-		if _used_slots() == 0 and not Online.offline_play:
+		if _used_slots() == 0:
 			items.append(HAVE_CODE)
 		if _used_slots() > 1:
 			items.append("Load...")
@@ -488,7 +496,7 @@ func art_note() -> Label:
 	return _art_note if _art_note != null and _art_note.visible else null
 
 ## First connect (Chimora 100 item 28): one short sentence, "More" opens the whole note.
-const PRIVACY_SHORT: String = "Online only: your journeys are safe on our server. No ads, no tracking."
+const PRIVACY_SHORT: String = "Online, a copy of your journeys is kept on our server. No ads, no tracking."
 const PRIVACY_TITLE: String = "Privacy"
 const PRIVACY_ROWS: Array[String] = ["OK", "More"]
 

@@ -1,7 +1,6 @@
 # Chimora 100 items 25-36: a faster start (difficulty, look screen, short prologue, privacy note).
 T = {
 "I have a code": "Ich habe einen Code",
-"Online only: your journeys are safe on our server. No ads, no tracking.": "Nur online: Deine Reisen sind auf unserem Server sicher. Keine Werbung, kein Tracking.",
 "OK": "OK",
 "Relaxed": "Entspannt",
 "Tough": "Hart",

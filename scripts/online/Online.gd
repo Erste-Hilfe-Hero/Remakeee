@@ -1,11 +1,15 @@
 extends Node
-## Autoload "Online": Chimora is online only (items 1-20).
-## - Signs in on start (a fresh account without email, or the stored session).
-## - Keeps the saves on the server; the files in user:// are only a cache of them.
-## - While playing it sends a heartbeat. If the server cannot be reached, the game pauses
-##   behind a "Reconnecting" screen and carries on by itself once the connection is back.
+## Autoload "Online": Chimora plays offline and goes online by itself (docs/OFFLINE.md).
+## - Signs in when there is a connection (a fresh account without email, or the stored session).
+##   Without one the game starts and plays anyway; there is no setting for it.
+## - The save in user:// is the journey; the server keeps a copy of every slot. Saves made
+##   offline wait as "dirty" and go up through the normal save_put once the connection is back.
+## - While playing it sends a heartbeat. If the server cannot be reached, the game goes on and
+##   only a small mark (OfflineMark) says so; Online tries again quietly in the background.
+## - Parts that need the server (shop, Riftglass, leagues, friends, raids, trades, events,
+##   account) say so with one short line (OnlineErrors.NEEDS_INTERNET) and work again online.
 ## - Gives the server's clock to everything that depends on the date (daily find, weekly
-##   challenge, festivals), so changing the phone's clock does nothing.
+##   challenge, festivals) while online; offline the phone's clock stands in.
 
 enum State { OFFLINE, CONNECTING, ONLINE, UPDATE_REQUIRED }
 
@@ -74,7 +78,8 @@ var _retry_count: int = 0
 var _retry_wait: float = 4.0
 var _rng := RandomNumberGenerator.new()
 var _busy: bool = false
-var _overlay: ReconnectOverlay
+## The small mark while playing offline; it never pauses the game.
+var offline_mark: OfflineMark
 ## Hopping dots while a server call is slow (plan item 2290).
 var wait_dots: WaitDots
 ## Slots with an upload on its way, slots saved again meanwhile (value: force), and a counter
@@ -82,18 +87,12 @@ var wait_dots: WaitDots
 var _pushing: Dictionary = {}
 var _push_again: Dictionary = {}
 var _save_gen: Dictionary = {}
-## Seconds without connection while playing, and reconnect tries so far (reconnect screen).
 var _store_url: String = ""
 ## In-game updates: Play in-app update, itch.io APK download, App Store page (AppUpdater.gd).
 var updater: AppUpdater
+## Seconds without connection while playing, and reconnect tries so far.
 var _offline_for: float = 0.0
 var _tries: int = 0
-## A new journey started without a connection (plan Chimora 100, item 77): true until the first
-## connection; the account is then created and the saves go up through the normal save_put.
-var offline_start: bool = false
-## While true the prologue plays on without the reconnect screen; it ends at the prologue's save
-## point (offline_save_point), after which a missing connection pauses the game as always.
-var offline_play: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -104,10 +103,8 @@ func _ready() -> void:
 	LocalNotify.app_opened()
 	backend = make_backend()
 	_load_session()
-	_overlay = ReconnectOverlay.new()
-	add_child(_overlay)
-	_overlay.try_now.connect(retry_now)
-	_overlay.to_title.connect(_to_title)
+	offline_mark = OfflineMark.new()
+	add_child(offline_mark)
 	wait_dots = WaitDots.new()
 	updater = AppUpdater.new()
 	add_child(updater)
@@ -221,14 +218,14 @@ func _claim(hello: Dictionary) -> Dictionary:
 		return OnlineBackend.fail("other_device")
 	return hello
 
-## Another device has the account now: stop here and go to the title, which says so.
+## Another device has the account now: this phone stops syncing and plays on offline (its saves
+## stay here, marked dirty). The title asks before this device takes the account back, and the
+## sync after that finds both journeys and lets the player pick (conflicts).
 func _other_device() -> void:
 	kicked = true
 	backend.device_token = ""
 	last_error = "other_device"
 	_set_state(State.OFFLINE)
-	if GameState.in_game:
-		_to_title()
 
 ## "web" for the browser test build, "app" for the phone apps (and desktop test runs).
 static func platform_name() -> String:
@@ -318,8 +315,11 @@ func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
 		_other_device()
 	return r
 
-## A sentence and the next step for an online problem (item 2146). Empty: the last error.
+## A sentence and the next step for an online problem (item 2146). Empty: offline, the short
+## needs-internet line (docs/OFFLINE.md); online, the last error.
 func error_text(code: String = "") -> String:
+	if code.is_empty() and state == State.OFFLINE and not kicked:
+		return OnlineErrors.NEEDS_INTERNET
 	return OnlineErrors.text(code if not code.is_empty() else last_error)
 
 ## Where "Open the store" goes when an update is needed (item 2148): the address the server
@@ -660,7 +660,7 @@ var in_battle: bool = false
 
 func _process(delta: float) -> void:
 	if state == State.ONLINE:
-		_overlay.hide_overlay()
+		offline_mark.hide_mark()
 		_offline_for = 0.0
 		_tries = 0
 		if GameState.in_game:
@@ -669,45 +669,41 @@ func _process(delta: float) -> void:
 				_beat = 0.0
 				_heartbeat()
 		return
-	if not GameState.in_game or state == State.UPDATE_REQUIRED:
-		_overlay.hide_overlay()
+	if not GameState.in_game:
+		offline_mark.hide_mark()
 		_offline_for = 0.0
 		return
-	if offline_play:
-		# The offline prologue (item 77) plays on and goes online by itself once it can.
-		_overlay.hide_overlay()
-		if state == State.OFFLINE and not _busy:
-			_retry += delta
-			if _retry >= _retry_wait:
-				_retry = 0.0
-				_reconnect()
-		return
-	# Playing without a connection is not possible: pause and keep trying (item 7).
-	_overlay.show_overlay()
+	# Offline while playing (docs/OFFLINE.md): the game goes on, battles included, nothing
+	# pauses. A small mark says so and the connection is tried again in the background.
 	_offline_for += delta
-	# The first try comes quickly, so a short drop is over before the big screen shows.
+	offline_mark.update_view(_offline_for)
+	# A required update is asked on the title; another device's account is taken back there too.
+	if state != State.OFFLINE or _busy or kicked:
+		return
+	# The first try comes quickly, so a short drop is over before the mark shows.
 	var wait: float = 1.0 if _tries == 0 else _retry_wait
-	if state == State.OFFLINE and not _busy:
-		_retry += delta
-		if _retry >= wait:
-			_retry = 0.0
-			_reconnect()
-	var next_in: float = 0.0 if _busy else maxf(0.0, wait - _retry)
-	_overlay.update_view(_tries + 1, next_in, _offline_for)
-
-## "Try now" on the reconnect screen.
-func retry_now() -> void:
-	if state == State.OFFLINE and not _busy:
+	_retry += delta
+	if _retry >= wait:
 		_retry = 0.0
 		_reconnect()
 
-## "To title" on the reconnect screen after a minute without connection.
+## Tries to connect now (a save point, a menu), without waiting for the next background try.
+func retry_now() -> void:
+	if state == State.OFFLINE and not _busy and not kicked:
+		_retry = 0.0
+		_reconnect()
+
+## Back to the title (a required update after the app comes back from the background).
 func _to_title() -> void:
 	GameState.in_game = false
-	_overlay.hide_overlay()
+	offline_mark.hide_mark()
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/ui/Title.tscn")
 
+## One background try. Once online: the saves made offline go up (save_put with its server
+## checks; a slot another device changed meanwhile becomes a conflict the title asks about),
+## the small actions waiting go out and the profile and team follow (a first connection after
+## an offline start makes the account here).
 func _reconnect() -> void:
 	_tries += 1
 	if await connect_now() == State.ONLINE:
@@ -715,33 +711,16 @@ func _reconnect() -> void:
 		_retry_wait = retry_wait(0, 0.0)
 		await push_dirty()
 		await send_actions()
-		if offline_start:
-			offline_start = false
-			offline_play = false
+		if GameState.in_game:
 			await push_profile()
 	else:
 		_retry_count += 1
 		_retry_wait = retry_wait(_retry_count, _rng.randf_range(-1.0, 1.0))
 
-## New Game without a connection (item 77) only on a phone with no journey of this account yet:
-## nothing in the local cache and no slot this device ever synced, so the first upload cannot
-## meet a server save. Continue and Load stay online only.
-static func offline_start_allowed(used_slots: int, known_revs: int, was_kicked: bool, st: State) -> bool:
-	return used_slots == 0 and known_revs == 0 and not was_kicked and st == State.OFFLINE
-
-## The title chose New Game offline.
-func begin_offline_start() -> void:
-	offline_start = true
-	offline_play = true
-
-## The prologue's save point: from here the game needs the server like any other journey. The
-## first try to connect starts now (account, save_put of the local save, profile).
+## The prologue's save point (Overworld): a good moment to try the connection at once, so a
+## journey started offline gets its account and backup early. Nothing waits for it.
 func offline_save_point() -> void:
-	if not offline_play:
-		return
-	offline_play = false
-	if state == State.OFFLINE:
-		retry_now()
+	retry_now()
 
 ## Seconds before reconnect try number [param failed] + 1; [param spread] from -1 to 1 is the
 ## random part (scaled to RETRY_JITTER).

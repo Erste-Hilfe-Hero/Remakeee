@@ -14,9 +14,12 @@ const GENERIC: String = "No connection right now. Check your internet and try ag
 const OTHER_DEVICE: String = "Signed in on another device. Your journey is saved there."
 ## A parent switched this part off (Online 100 point 85).
 const PARENT_OFF: String = "This is switched off under Settings, Account, For parents."
+## A part that needs the server, opened without a connection (docs/OFFLINE.md). It opens again
+## by itself once the phone is online; the story never needs it.
+const NEEDS_INTERNET: String = "This needs internet. The rest of your journey plays on offline."
 
 ## Every sentence error_text can return (tests check each has a German text).
-const ALL: Array[String] = [NO_INTERNET, UNREACHABLE, MAINTENANCE, TIMEOUT, SIGNED_OUT, TOO_MANY, GENERIC, OTHER_DEVICE, PARENT_OFF]
+const ALL: Array[String] = [NO_INTERNET, UNREACHABLE, MAINTENANCE, TIMEOUT, SIGNED_OUT, TOO_MANY, GENERIC, OTHER_DEVICE, PARENT_OFF, NEEDS_INTERNET]
 
 ## Kind of problem for an error code from OnlineBackend.
 static func kind(code: String) -> String:
@@ -37,6 +40,8 @@ static func kind(code: String) -> String:
 			return "other_device"
 		"parent_off":
 			return "parent_off"
+		"offline":
+			return "offline"
 	if code.begins_with("server_"):
 		return "unreachable"
 	return "generic"
@@ -51,6 +56,7 @@ static func text(code: String) -> String:
 		"too_many": return TOO_MANY
 		"other_device": return OTHER_DEVICE
 		"parent_off": return PARENT_OFF
+		"offline": return NEEDS_INTERNET
 	return GENERIC
 
 ## Error code for a failed HTTPRequest result (SupabaseBackend).
@@ -63,3 +69,10 @@ static func code_for_result(result: int) -> String:
 		HTTPRequest.RESULT_TIMEOUT:
 			return "timeout"
 	return "network"
+
+## Shows why a server part cannot open now on [param menu] (offline: the needs-internet line),
+## at reading size in every era (13 pt, ShopZoom).
+static func say_offline(menu: MenuHost) -> void:
+	var h: MenuHost = ShopZoom.enter(menu)
+	await h.info(Online.error_text())
+	ShopZoom.leave(h)

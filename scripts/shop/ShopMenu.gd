@@ -26,9 +26,17 @@ static func _run(menu: MenuHost, open_offer: String) -> void:
 	if OS.has_feature("web"):
 		await menu.info(WEB_TEXT)
 		return
+	# A child's account never sees a purchase prompt, offline too (age band from the last connection).
+	if Billing.kids_locked():
+		await menu.info(LOCKED_TEXT)
+		return
+	# Buying goes through the server (docs/OFFLINE.md): offline one short line, nothing else.
+	if not Online.is_online():
+		await menu.info(OnlineErrors.NEEDS_INTERNET)
+		return
 	var r: Dictionary = await Billing.refresh_state()
 	if not r.ok:
-		await menu.info("No connection right now. Try again in a moment.")
+		await menu.info(OnlineErrors.NEEDS_INTERNET if not Online.is_online() else "No connection right now. Try again in a moment.")
 		return
 	if not bool(Billing.state.get("open", true)):
 		await menu.info("The shop is closed for a moment. Please look again later.")
