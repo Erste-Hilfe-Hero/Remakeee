@@ -6,11 +6,12 @@ extends GutTest
 
 const SETTINGS: String = "user://test_offline_title_settings.json"
 
-## A server that never answers the sign-in in time (a captive or very slow network).
+## A server that answers the sign-in only after the title stopped waiting (a captive or very
+## slow network).
 class SlowBackend:
 	extends LocalBackend
 	func sign_in_anonymous() -> Dictionary:
-		await (Engine.get_main_loop() as SceneTree).create_timer(30.0).timeout
+		await (Engine.get_main_loop() as SceneTree).create_timer(TitleScreen.CONNECT_WAIT + 2.0).timeout
 		return OnlineBackend.fail("timeout", true)
 
 var _settings_path: String
@@ -91,7 +92,10 @@ func test_first_start_offline_goes_straight_to_new_game() -> void:
 
 func test_a_server_that_does_not_answer_cannot_hold_the_title() -> void:
 	Online.privacy_seen = true
-	Online.backend = SlowBackend.new()
+	# Held here, so the try still running when the title goes on can finish: a backend freed
+	# mid-call would leave Online busy and block the next connect_now.
+	var slow := SlowBackend.new()
+	Online.backend = slow
 	Online.state = Online.State.OFFLINE
 	var started: int = Time.get_ticks_msec()
 	var title: TitleScreen = load("res://scenes/ui/Title.tscn").instantiate()
@@ -100,3 +104,7 @@ func test_a_server_that_does_not_answer_cannot_hold_the_title() -> void:
 	assert_has(rows, Loc.t("New Game"))
 	assert_lt(Time.get_ticks_msec() - started, int((TitleScreen.CONNECT_WAIT + 3.0) * 1000.0), "at most CONNECT_WAIT")
 	assert_eq(title._status.text, TitleScreen.OFFLINE_STATUS)
+	# The background try ends on its own (offline); nothing is left running for the next test.
+	while Online._busy:
+		await wait_process_frames(1)
+	assert_eq(Online.state, Online.State.OFFLINE)
