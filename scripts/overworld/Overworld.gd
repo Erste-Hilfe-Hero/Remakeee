@@ -92,6 +92,7 @@ var _entry_cell: Vector2i = Vector2i.ZERO
 
 func _ready() -> void:
 	Database.load_all()
+	_tale_goal = str(QuestLog.tale_current(GameState.flags).get("id", ""))
 	_actions = {
 		"storage": _action_storage,
 		"heal": _action_heal,
@@ -1284,12 +1285,26 @@ func take_notices() -> Array[String]:
 	GameState.notices.clear()
 	return lines
 
+## The region tale goal last shown ("" for none), so a talk that moves the tale on says so.
+var _tale_goal: String = ""
+
+## Shows "New goal: ..." when the region tale's goal changed since the last look.
+func _announce_tale_goal() -> void:
+	var g: Dictionary = QuestLog.tale_current(GameState.flags)
+	var id: String = str(g.get("id", ""))
+	if id == _tale_goal:
+		return
+	_tale_goal = id
+	if not id.is_empty():
+		await say(["New goal: " + QuestLog.goal_text(g, GameState.flags)] as Array[String])
+
 ## Shows "New goal: ..." when the story goal moved on since [param before]. A new chapter
 ## first gets its chapter card (plan item 1413), with the act name when the act changes.
 func announce_goal_if_changed(before: int) -> void:
 	# Goals open in the village (Opening): the goal moved on there is announced then.
 	if Opening.active(GameState.flags):
 		return
+	await _announce_tale_goal()
 	var now: int = QuestLog.current_index(GameState.flags)
 	if now == before:
 		return

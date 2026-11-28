@@ -1,9 +1,18 @@
-Chimora 1.3.2
-
-- Nowy sklep: pakiety Szczelinitu, Karta miesięczna, Spirlingi Mistrzowie, zestawy oraz oferty dnia i tygodnia.
-- Szczelinit w grze: walka dalej po porażce, leczenie, szybszy rozwój i silniejsze więzi, krótsze podróże. Online codziennie 20 w prezencie.
-- Nowy karnet z 30 poziomami.
-- 70 nowych Spirlingów i 5 rodzajów Połysku.
-- Pogoda: deszcz, mgła, wiatr, burze i śnieg.
-- 35 zagadek i mnóstwo ukrytych sekretów.
-- Lepiej połączone mapy, lepiej na tabletach, wiele poprawek.
+# DEL; WIP 6-17
+- Nowy sklep, jasne opisy
+- 70 Spirlingów, 5 Połysków
+- Pogoda, 35 zagadek, sekrety
+- Lepsze mapy, rosnąca trudność
+- Mój! wibruje, nowe intro, poprawki
+- Grasz od razu, fabuła od 1. Spirlinga
+- Przerywniki w aktach
+- Fabuły 4 późnych regionów, pojedynki w Quivermoor
+- Księga zadań, Dokąd teraz?
+- Offline, synchronizacja potem
+- Amulety więzi
+- Pakiet Pierwszej Zdobyczy
+- Nagrody, zadania, Spirling dnia
+- Pogoda w weekend
+- Nagrody Spirlog
+- Prostsze kody znajomych
+- Płynne menu

@@ -84,7 +84,10 @@ func _ready() -> void:
 	# No "Free, in-app purchases" banner on the title art (Chimora 100, item 69): the store
 	# listing carries that notice, the shop's About page says the game is free.
 	# The version sits under the list frame, not on it (Chimora 100 item 54).
-	add_child(version_label())
+	var version: Label = version_label()
+	add_child(version)
+	place_version(version, get_viewport_rect().size)
+	get_viewport().size_changed.connect(func() -> void: place_version(version, get_viewport_rect().size))
 	_menu.offset_bottom = -VERSION_ROOM
 	Loc.events.language_changed.connect(_on_language_changed)
 	VirtualPad.set_wanted(false)
@@ -110,6 +113,17 @@ static func version_label() -> Label:
 	v.add_theme_color_override("font_color", UITheme.MID)
 	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return v
+
+## Keeps the version label [param v] above the gesture bar and clear of a side cut-out in a
+## view of [param vp] (Apple and Play pre-check: nothing sits under the home indicator).
+static func place_version(v: Label, vp: Vector2) -> void:
+	var safe: Rect2 = SafeArea.rect(vp)
+	var bottom: float = vp.y - safe.end.y
+	var right: float = vp.x - safe.end.x
+	v.offset_right = -2 - right
+	v.offset_left = v.offset_right - 58
+	v.offset_bottom = -bottom
+	v.offset_top = v.offset_bottom - 12
 
 ## Height kept free under the title list for the version label.
 const VERSION_ROOM: int = 5

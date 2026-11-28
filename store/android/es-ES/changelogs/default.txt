@@ -1,9 +1,18 @@
-Chimora 1.3.2
-
-- Tienda nueva con packs de Vidrio Grieta, Tarjeta mensual, Spirlings Campeones, lotes y ofertas diarias y semanales.
-- Vidrio Grieta en el juego: seguir tras una derrota, curar, impulsar crecimiento o vínculos, acortar viajes. 20 de regalo al día en línea.
-- Nuevo pase con 30 niveles.
-- 70 Spirlings nuevos y 5 tipos de Fulgor.
-- Clima: lluvia, niebla, viento, tormentas y nieve.
-- 35 acertijos y muchos secretos ocultos.
-- Mapas mejor conectados, mejor en tabletas, correcciones.
+# DEL; WIP 6-17
+- Tienda nueva, textos claros
+- 70 Spirlings, 5 Fulgores
+- Clima, 35 acertijos, secretos
+- Mejores mapas, dificultad gradual
+- ¡Mío! vibra, mejor intro
+- Juega ya, historia al 1er Spirling
+- Escenas por acto
+- Historia en 4 regiones finales, duelos en Quivermoor
+- Libro de misiones, ¿Adónde ahora?
+- Offline, sincroniza luego
+- Amuletos de vínculo
+- Lote Primera Captura
+- Premios, tareas, Spirling del día
+- Clima de finde
+- Premios Spirlog
+- Códigos de amigo fáciles
+- Menús ágiles

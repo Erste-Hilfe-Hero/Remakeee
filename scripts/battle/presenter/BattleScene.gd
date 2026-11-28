@@ -616,7 +616,9 @@ func _layout_formation() -> void:
 	_back_button.position = Vector2(MARGIN, MARGIN + STRIP_HEIGHT + 10)
 	_back_button.size = Vector2(26, 12)
 	_rest_all_button.position = Vector2(MARGIN, MARGIN + STRIP_HEIGHT + 24)
-	_rest_all_button.size = Vector2(0, 12)
+	_rest_all_button.size = Vector2(0, maxi(12, ScreenFit.touch_px(get_window()) if is_inside_tree() else 0))
+	# Finger-sized HUD buttons may need a taller band; the foes' rank starts under it.
+	var band_end: float = _hud.formation_top() if _hud != null else 0.0
 	var rects: Array[Rect2] = [Rect2(), Rect2()]
 	var tag_hs: Array[float] = [0.0, 0.0]
 	for side: int in 2:
@@ -626,7 +628,7 @@ func _layout_formation() -> void:
 		var n: int = _slot_sprites[side].size()
 		var other: int = BattleModel.other(side)
 		var tag_h: float = tag_hs[side]
-		var slots: Array[Rect2] = formation_slots(EraManager.active_era(), side, n, Vector2(w, h), tag_h, _slot_sprites[other].size(), tag_hs[other])
+		var slots: Array[Rect2] = formation_slots(EraManager.active_era(), side, n, Vector2(w, h), tag_h, _slot_sprites[other].size(), tag_hs[other], band_end)
 		if _stage != null and side == BattleModel.Side.FOE and n > 0:
 			var feet: float = Era4Stage.sprite_rect(EraManager.stage_config(), "foe", Vector2(w, h), slots[0].size.x).end.y
 			slots = drop_to_floor(slots, feet, rects[BattleModel.Side.PLAYER].position.y - tag_h - 6)
@@ -657,17 +659,18 @@ func _layout_formation() -> void:
 ## sprites with every second one a step further back so the rank has depth (Era V triple battles
 ## stand in a shallow arc). Sprites shrink when the rank would not fit the field. With
 ## [param other_n] Spirlings on the other side (tags [param other_tag_h] high) the two ranks also
-## never run into each other on a short field (formation_fit).
-static func formation_slots(era: int, side: int, n: int, field: Vector2, tag_h: float, other_n: int = 0, other_tag_h: float = 0.0) -> Array[Rect2]:
+## never run into each other on a short field (formation_fit). The foe rank never starts above
+## [param band_end], the end of the HUD band (EraBattleHud.formation_layout "top", 0: no limit).
+static func formation_slots(era: int, side: int, n: int, field: Vector2, tag_h: float, other_n: int = 0, other_tag_h: float = 0.0, band_end: float = 0.0) -> Array[Rect2]:
 	var out: Array[Rect2] = []
 	if n <= 0:
 		return out
 	var foe: bool = side == BattleModel.Side.FOE
 	var gap: float = EraBattleFeel.num(era, "formation_gap", SLOT_GAP)
 	var stagger: float = EraBattleFeel.num(era, "formation_stagger", 0.0)
-	var fit: Dictionary = formation_fit(era, n if foe else other_n, other_n if foe else n, field, tag_h if foe else other_tag_h, other_tag_h if foe else tag_h)
+	var fit: Dictionary = formation_fit(era, n if foe else other_n, other_n if foe else n, field, tag_h if foe else other_tag_h, other_tag_h if foe else tag_h, band_end)
 	var px: float = float(fit.px) if other_n > 0 else floorf(minf(EraBattleFeel.num(era, "formation_slot", SLOT_SPRITE), (field.x - MARGIN * 2 - 4 - (n - 1) * gap) / n))
-	var top: float = float(fit.foe_top) if other_n > 0 else float(MARGIN + FOE_RANK_TOP)
+	var top: float = float(fit.foe_top) if other_n > 0 else maxf(MARGIN + FOE_RANK_TOP, band_end)
 	var step: float = formation_step(px, gap)
 	# A shrunken rank ends with its last tag, which is wider than its sprite.
 	var total: float = formation_width(n, px, gap)
@@ -701,8 +704,9 @@ static func formation_step(px: float, gap: float) -> float:
 ## apart on [param field]: {"px", "foe_top"}. The era's size stays when both ranks fit under
 ## each other or stand clear side by side. On a short field (the command menu is open on the
 ## small Era I/II screen) the foe rank moves up under the strip and both ranks shrink just
-## enough: to stand under each other, or beside each other, whichever keeps them bigger.
-static func formation_fit(era: int, n_foe: int, n_player: int, field: Vector2, foe_tag_h: float, player_tag_h: float) -> Dictionary:
+## enough: to stand under each other, or beside each other, whichever keeps them bigger. The
+## foe rank never starts above [param band_end] (finger-sized HUD buttons, update 1.3.2).
+static func formation_fit(era: int, n_foe: int, n_player: int, field: Vector2, foe_tag_h: float, player_tag_h: float, band_end: float = 0.0) -> Dictionary:
 	var gap: float = EraBattleFeel.num(era, "formation_gap", SLOT_GAP)
 	var stagger: float = EraBattleFeel.num(era, "formation_stagger", 0.0)
 	var room: float = field.x - MARGIN * 2 - 4
@@ -710,7 +714,7 @@ static func formation_fit(era: int, n_foe: int, n_player: int, field: Vector2, f
 	for n: int in [n_foe, n_player]:
 		if n > 0:
 			px = floorf(minf(px, (room - (n - 1) * gap) / n))
-	var top: float = MARGIN + FOE_RANK_TOP
+	var top: float = maxf(MARGIN + FOE_RANK_TOP, band_end)
 	if n_foe <= 0 or n_player <= 0:
 		return {"px": px, "foe_top": top}
 	# Height both ranks need besides the two sprites: tags, the 2 px above each tag, a 2 px
@@ -721,7 +725,7 @@ static func formation_fit(era: int, n_foe: int, n_player: int, field: Vector2, f
 		beside -= 1.0
 	if top + px * 2.0 + extra <= field.y or px <= beside:
 		return {"px": px, "foe_top": top}
-	var tight: float = MARGIN + FOE_RANK_TOP_TIGHT + stagger
+	var tight: float = maxf(MARGIN + FOE_RANK_TOP_TIGHT + stagger, band_end)
 	var under: float = floorf((field.y - tight - extra) / 2.0)
 	if under >= beside:
 		return {"px": maxf(minf(px, under), SLOT_MIN), "foe_top": tight}
@@ -1201,8 +1205,10 @@ func _pick_target(title: String, me: Spirling = null, mv: MoveData = null, from_
 		b.flat = true
 		# The map pin marks the target; the theme's dark focus box would hide the Spirling.
 		b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
-		b.position = sp.position - Vector2(2, 2)
-		b.size = sp.size + Vector2(4, 14)
+		# Never below a finger on this screen (44 pt, ScreenFit.touch_px, 1.3.2), centred on the foe.
+		var tap: Vector2 = (sp.size + Vector2(4, 14)).max(Vector2.ONE * ScreenFit.touch_px(get_window()))
+		b.position = (sp.position + Vector2(sp.size.x / 2.0, (sp.size.y + 10) / 2.0) - tap / 2.0).round()
+		b.size = tap
 		b.accessibility_name = MultiRules.slot_spoken(model, BattleModel.Side.FOE, slot)
 		var picked: int = slot
 		b.pressed.connect(func() -> void:
