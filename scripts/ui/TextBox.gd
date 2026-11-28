@@ -370,22 +370,25 @@ func _text_width() -> float:
 
 ## Marks that never start a line (Japanese and Chinese line breaking).
 const NO_LINE_START: String = "。、，．！？：；）」』】〕〉》’”ー…・,.!?:;)]"
+## Opening brackets that never end a line: they move to the next line with what they open.
+const NO_LINE_END: String = "「『（【〔〈《‘“(["
 
 ## Wraps [param text] word by word to [param width] and groups the lines into windows of
-## [param max_lines]. A line break in the text starts a new line. A word wider than the box
-## (Japanese and Chinese have no spaces) breaks between its characters.
+## [param max_lines]. A line break in the text starts a new line. Japanese and Chinese text, which
+## has no spaces, may break between any two characters; a word wider than the box breaks between
+## its characters.
 static func split_lines(text: String, width: float, font: Font, font_size: int, max_lines: int) -> Array[String]:
 	var lines: Array[String] = []
 	for para: String in text.split("\n"):
 		var line: String = ""
-		for word: String in para.split(" ", false):
-			var tried: String = word if line.is_empty() else line + " " + word
+		for piece: Array in _break_pieces(para):
+			var tried: String = piece[0] if line.is_empty() else line + piece[1] + piece[0]
 			if font.get_string_size(tried, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x <= width:
 				line = tried
 				continue
-			if not line.is_empty() and font.get_string_size(word, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x <= width:
+			if not line.is_empty() and font.get_string_size(piece[0], HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x <= width:
 				lines.append(line)
-				line = word
+				line = piece[0]
 				continue
 			line = _break_word(tried, width, font, font_size, lines)
 		lines.append(line)
@@ -393,6 +396,25 @@ static func split_lines(text: String, width: float, font: Font, font_size: int, 
 	for i: int in range(0, lines.size(), maxi(1, max_lines)):
 		pages.append("\n".join(lines.slice(i, i + max_lines)))
 	return pages
+
+## [param para] cut into [text, separator before it] pieces a line may break between: words, and
+## single characters inside a run of CJK text, with closing marks kept on the character before and
+## opening brackets on the character after.
+static func _break_pieces(para: String) -> Array[Array]:
+	var pieces: Array[Array] = []
+	for word: String in para.split(" ", false):
+		var sep: String = " "
+		var glue: bool = false
+		for i: int in word.length():
+			var c: String = word[i]
+			var cjk: bool = c.unicode_at(0) >= 0x2E80 or (i > 0 and word[i - 1].unicode_at(0) >= 0x2E80)
+			if i > 0 and (glue or not cjk or NO_LINE_START.contains(c)):
+				pieces[-1][0] += c
+			else:
+				pieces.append([c, sep])
+				sep = ""
+			glue = NO_LINE_END.contains(c)
+	return pieces
 
 ## Fills lines of [param width] with the characters of [param text], appends the full ones to
 ## [param lines] and returns the rest. A closing mark pulls the character before it down with it.
