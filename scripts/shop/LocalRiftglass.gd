@@ -84,7 +84,10 @@ func _fn_rg_daily_claim(_a: Dictionary) -> Dictionary:
 	var today: int = _day()
 	if today in _row(uid).rg_daily:
 		return {"ok": true, "added": 0, "balance": _shop().balance_of(uid)}
+	# The welcome gift cycle (20261128060000_daily_gift_cycle.sql): the step is the count of days
+	# claimed so far, so missed days reset nothing.
+	var taken: int = _row(uid).rg_daily.size()
 	_row(uid).rg_daily.append(today)
-	var n: int = RiftglassSinks.daily_rg()
+	var n: int = DailyBoard.gift_rg(taken) if not DailyBoard.gifts().is_empty() else RiftglassSinks.daily_rg()
 	var bal: int = _shop()._ledger_add(uid, n, "daily", str(today))
-	return {"ok": true, "added": n, "balance": bal}
+	return {"ok": true, "added": n, "balance": bal, "step": taken % maxi(1, DailyBoard.gifts().size()) + 1}

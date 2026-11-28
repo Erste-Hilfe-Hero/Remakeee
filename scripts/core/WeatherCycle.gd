@@ -67,6 +67,10 @@ static func current(m: MapData, unix: int = -1, enabled: bool = GameState.weathe
 		return "clear"
 	if unix < 0:
 		unix = Online.unix_now()
+	# Weekend weather (DailyBoard): a special sky over a few maps on Saturday and Sunday.
+	var weekend: String = DailyBoard.weekend_kind(m.id, DailyBoard.local_day(unix))
+	if weekend != "":
+		return weekend
 	return roll(m.region, m.biome if m.biome != "" else "default", unix)
 
 ## Strength of the weather in [param region] at [param unix], 0 to 1: one more roll per block.

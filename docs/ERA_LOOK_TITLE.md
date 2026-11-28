@@ -10,7 +10,7 @@ Described generically, from general knowledge of the genre's history; no product
 
 | Era | Hardware step | Title | Boot card | Finale card |
 | --- | --- | --- | --- | --- |
-| I Ink | 4 shades, nothing scrolls | the ink title held still, a 2-frame blink (beam, stars, glints) | power on: a drop of ink falls in 4 px steps, lands with a chime, spreads into a blot in 3 frames; clears in 4 hard steps | lines typed letter by letter, 2-frame cursor |
+| I Ink | 4 shades, nothing scrolls | the ink title held still, a 2-frame blink (beam, stars, glints) | power on (2 s): a drop of ink falls in 4 px steps, lands with a chime, a light haptic tap and a splash crown, spreads into a blot in 3 frames and then into a brush stroke; the CHIMORA wordmark is stamped into it from the middle out, the studio line follows; clears in 4 hard steps | lines typed letter by letter, 2-frame cursor |
 | II Wash | limited colour, one scrolling layer | flat colour dawn, clouds and far shore scroll in whole pixels, the beam has two positions | colour stripes slide in 3 px a step, 2-frame twinkle | the block scrolls up in whole pixels |
 | III Etching | rich palette, gradients | banded sky, shaded hills, a light runs over the logo, a silhouette flies past | bevelled plate on the scene, a light runs over the line | line after line fades in |
 | IV Panorama | two screens, bigger sprites, 2.5D | four parallax layers under a low sun, lake in perspective, big figures with shadows, swaying grass | two shutters, one per half screen, open on the scene | the frame slides in from the side |
@@ -48,4 +48,5 @@ The title wears the newest era any save has reached (`EraMoments.title_era`). Th
 
 - Era V uses Quivermoor's own art (#488): Moorbreath as the legend shape, Driftadmiral and Lichenthrone as the figures. Era IV still shows Quillmarch figures; swap the names in the data file when Halcyra's own front art is in art/era4.
 - No own jingle per boot card or change step; they use the era's existing sounds.
+- Every boot card lasts at most 2 s and one tap skips it at any second. There is no engine splash before it: `application/boot_splash` shows no image on the Era I paper colour, and the iOS launch screen uses the same colour (`export_presets.cfg` storyboard). The studio line breaks into two rows where one does not fit (a 390 pt iPhone shows 146 px, German needs 149); `tools/boot_shots.gd` renders the card at real phone sizes.
 - The finale card is not reachable from a menu after it was shown.

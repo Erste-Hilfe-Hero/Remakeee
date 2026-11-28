@@ -192,6 +192,29 @@ func test_dialogue_box_pages_japanese_without_spaces() -> void:
 			joined += line
 	assert_eq(joined.replace(" ", ""), text.replace(" ", ""), "no text is lost")
 
+## Japanese has no spaces: a long line used to stay one wide "word" and ran out of the box.
+func test_dialogue_box_wraps_japanese_between_characters() -> void:
+	Loc.set_language("ja")
+	_era(1)
+	var f: Font = UITheme.font()
+	var text: String = "ヒント：どの広間も、順番は階段のそばの壁に刻まれている。そのとおりに鐘を鳴らそう。まちがえても、最初からやり直せる。"
+	var pages: Array[String] = TextBox.split_lines(text, 120.0, f, UITheme.FONT_SIZE, TextBox.MAX_LINES)
+	var joined: String = ""
+	for page: String in pages:
+		for line: String in page.split("\n"):
+			assert_lte(f.get_string_size(line, HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x, 120.0, line)
+			assert_false(line.left(1) in TextBox.NO_LINE_START, "no line starts with a closing mark: " + line)
+			joined += line
+	assert_eq(joined, text, "no character is lost")
+
+func test_spaced_text_still_breaks_at_spaces() -> void:
+	var f: Font = UITheme.font()
+	var pages: Array[String] = TextBox.split_lines("one two three four five six seven eight nine ten", 60.0, f, UITheme.FONT_SIZE, 99)
+	for line: String in pages[0].split("\n"):
+		assert_false(line.begins_with(" ") or line.ends_with(" "), line)
+		for w: String in line.split(" "):
+			assert_true(w in "one two three four five six seven eight nine ten".split(" "), "whole words only: " + line)
+
 # --- Speakers ---
 
 func test_speaker_ids() -> void:

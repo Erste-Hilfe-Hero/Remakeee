@@ -94,10 +94,47 @@ static func side_goals_done(flags: Dictionary) -> bool:
 			return false
 	return true
 
+## Region tales after the story ("post", docs/STORY.md "Region tales"): the goals of
+## [param region] in order, or every tale goal for "".
+static func tale_goals(region: String = "") -> Array:
+	return (data().get("post", []) as Array).filter(func(g: Dictionary) -> bool: return region.is_empty() or str(g.get("region", "")) == region)
+
+## The regions with a tale, in play order.
+static func tale_regions() -> Array[String]:
+	var out: Array[String] = []
+	for g: Dictionary in tale_goals():
+		if not str(g.region) in out:
+			out.append(str(g.region))
+	return out
+
+## True once the last goal of [param region]'s tale is done.
+static func tale_done(region: String, flags: Dictionary) -> bool:
+	var goals: Array = tale_goals(region)
+	return not goals.is_empty() and _own_done(goals[-1], flags)
+
+## The current goal of [param region]'s tale (same rule as the main story: done when its own
+## flags are set or a later goal is done), {} while the region is shut or once the tale is done.
+static func tale_goal(region: String, flags: Dictionary) -> Dictionary:
+	var goals: Array = tale_goals(region)
+	if goals.is_empty() or tale_done(region, flags) or not bool(flags.get(str(goals[0].get("opens", "")), false)):
+		return {}
+	for i: int in range(goals.size() - 1, -1, -1):
+		if _own_done(goals[i], flags):
+			return goals[i + 1]
+	return goals[0]
+
+## The tale goal to show: the first open region whose tale is not done yet, or {}.
+static func tale_current(flags: Dictionary) -> Dictionary:
+	for r: String in tale_regions():
+		var g: Dictionary = tale_goal(r, flags)
+		if not g.is_empty():
+			return g
+	return {}
+
 ## Every flag the quest file depends on (the data test checks each one can be set in game).
 static func all_flags() -> Array[String]:
 	var out: Array[String] = []
-	for g: Variant in main_goals():
+	for g: Variant in main_goals() + tale_goals():
 		for f: Variant in (g as Dictionary).get("done", []):
 			out.append(str(f))
 	for g: Variant in data().get("side", []):
@@ -140,6 +177,12 @@ static func summary(flags: Dictionary) -> String:
 	lines.append(goal_text(g, flags))
 	if not str(g.get("where", "")).is_empty():
 		lines.append("Where: %s" % g.where)
+	var tale: Dictionary = tale_current(flags)
+	if not tale.is_empty():
+		lines.append("")
+		lines.append(str(tale.act))
+		lines.append(goal_text(tale, flags))
+		lines.append("Where: %s" % tale.where)
 	var side: Array[Dictionary] = open_side_goals(flags)
 	if not side.is_empty():
 		lines.append("")
