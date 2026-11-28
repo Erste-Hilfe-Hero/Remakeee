@@ -11,6 +11,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCRIPT_DIRS = ["scripts/ui", "scripts/overworld", "scripts/battle", "scripts/core", "scripts/online", "scripts/shop"]
 SKIP_SCRIPTS = {"BalanceSim.gd", "ActSim.gd", "ArtsSim.gd", "BalanceGroups.gd", "KampfChecks.gd", "BalanceDoc.gd", "EndgameSim.gd", "BattleTest.gd", "DataValidator.gd", "StoryValidator.gd", "WorldValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd",
                 "BattlePacks.gd",  # developer messages for pack makers, no player text
+                "TvRemote.gd",  # Samsung TV glue: JavaScript only, no player text
                 "BundWords.gd",  # carries its own German word lists
                 "EraActorLook.gd", "EraActors.gd",  # table checks for the test log, no player text
                 "EraTerrainLook.gd",  # only developer validation messages (problems())

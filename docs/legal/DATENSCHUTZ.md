@@ -21,9 +21,11 @@ Bei Fragen zum Datenschutz schreib an die oben genannte E-Mail-Adresse.
 
 ## 2. Kurz gesagt
 
-Chimora ist ein Online-Spiel für iOS und Android. Damit du spielen kannst, wird dein Spielstand auf unserem
+Chimora ist ein Online-Spiel für iOS, Android und Samsung Smart TV. Damit du spielen kannst, wird dein Spielstand auf unserem
 Server in der EU (Rechenzentrum Lauterbourg, Frankreich) gespeichert. Wir erheben nur, was dafür nötig ist. **Keine Werbung, kein Verkauf von
 Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, keine E-Mail-Adresse nötig.**
+
+Auf **Samsung Smart TV** funktioniert die App genau wie die Handy-Apps: dieselbe zufällige Spieler-ID und derselbe Spielstand, nichts darüber hinaus. Sie liest keine TV-Kennungen (keine DUID, keine Werbe-ID / TIFA), keine Sehdaten und kein Samsung-Konto aus, und auf dem Fernseher gibt es keine Käufe.
 
 ## 3. Welche Daten wir verarbeiten, wofür und auf welcher Rechtsgrundlage
 
