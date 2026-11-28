@@ -175,6 +175,23 @@ func test_dialogue_box_wraps_with_the_era_font() -> void:
 		for line: String in page.split("\n"):
 			assert_lte(f.get_string_size(line, HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x, 120.0, line)
 
+## Japanese has no spaces: a long line used to stay one "word" and wrap to 5 lines inside a
+## 3-line box (Ysolde's Corvane line). It must page into windows of at most MAX_LINES.
+func test_dialogue_box_pages_japanese_without_spaces() -> void:
+	Loc.set_language("ja")
+	var f: Font = UITheme.font()
+	var text: String = "Corvaneを2つの裂け目が引きさいています。WoadfenのRain RiftとStillwaterのMirror Rift。ふさげば、色がもどってくるわ。"
+	var pages: Array[String] = TextBox.split_lines(text, 173.0, f, UITheme.FONT_SIZE, TextBox.MAX_LINES)
+	assert_gt(pages.size(), 1, "the line pages")
+	var joined: String = ""
+	for page: String in pages:
+		var lines: PackedStringArray = page.split("\n")
+		assert_lte(lines.size(), TextBox.MAX_LINES, page)
+		for line: String in lines:
+			assert_lte(f.get_string_size(line, HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x, 173.0, line)
+			joined += line
+	assert_eq(joined.replace(" ", ""), text.replace(" ", ""), "no text is lost")
+
 ## Japanese has no spaces: a long line used to stay one wide "word" and ran out of the box.
 func test_dialogue_box_wraps_japanese_between_characters() -> void:
 	Loc.set_language("ja")
