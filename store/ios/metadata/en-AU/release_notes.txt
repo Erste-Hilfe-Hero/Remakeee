@@ -1,4 +1,3 @@
-# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 12 natural start, 13 cutscenes, 14 post-story storylines and Quivermoor duels, 15 quest book, 16 offline play, 17 bond charms, 18 First Catch Pack, 19 daily rewards/tasks/Spirling of the day, 20 weekend weather events, 21 Spirlog rewards, 22 friend codes, 23 smoother menus.
 Chimora 1.3.2
 
 - A rebuilt shop with clearer texts: every pack and offer says in plain words what is inside and what it does. Nothing is random.
@@ -12,15 +11,21 @@ Chimora 1.3.2
 - Many bug fixes.
 - Mine! taps now give a light vibration (only when vibration is on in the settings).
 - A nicer intro at the start of the game.
-- A natural start: you play at once, and the story begins when you meet your first Spirling.
+- A natural start: you start out in a bush, play at once, and the story begins when you meet your first wild Spirling.
 - Story cutscenes in every act.
 - The four regions after the main story each get their own storyline, with duels in Quivermoor.
 - A quest book that lists your goals, and "Where next?" shows the way on the map.
 - Automatic offline play: without internet the game simply carries on, and your progress syncs once you are back online.
-- Bond charms for bonding with Mine!, each with a fixed price and its exact effect shown before you buy.
+- New bond charms to use with Mine!: single charms for Riftglass, and 3 charm packs in the shop, each with a fixed price and its contents shown before you buy.
 - The First Catch Pack at our lowest price: a small pack with fixed contents, shown before you buy. Nothing is random.
-- Daily rewards, daily tasks and a Spirling of the day.
-- Weekend weather events.
-- Rewards for filling your Spirlog.
-- Friend codes: adding friends is easier.
-- Smoother menus.
+- During Mine! you now see the Spirling you are bonding with.
+- A 7-day login gift, daily tasks and a Spirling of the day.
+- Weekend weather: on Saturday and Sunday a special sky lies over a few areas, and shy Spirlings show up more often there.
+- Your Spirlog now shows in percent how many Spirlings you have bonded, with rewards at 25, 50 and 100 % and for Gleam milestones: items and a title.
+- Friend codes now work as invites: when a new player joins with your code and plays for a day, you both get a reward.
+- Trade with people you meet in the world, and some Spirlings now unfurl through a trade.
+- Smoother animations.
+- A layout made for iPad.
+- Bigger text and bigger buttons that are easier to tap.
+- Graphics fixes in every era, from Era I to Era V.
+- Security and speed fixes.

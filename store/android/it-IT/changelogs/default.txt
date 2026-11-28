@@ -1,18 +1,14 @@
-# DEL; WIP 6-17
-- Negozio rifatto, testi chiari
-- 70 Spirling, 5 Splendori
+- Negozio rifatto, 70 Spirling, 5 Splendori
 - Meteo, 35 enigmi, segreti
 - Mappe migliori, difficoltà che sale
-- Mio! vibra, intro nuova, correzioni
-- Giochi subito, storia dal 1° Spirling
-- Scene per atto
-- Storie nelle 4 regioni finali, duelli a Quivermoor
+- Inizio naturale, intro, scene
+- Storie post-trama, duelli a Quivermoor
 - Libro missioni, Dove ora?
-- Offline, sincronizza dopo
-- Talismani del legame
-- Pacchetto Prima Cattura
-- Premi, compiti, Spirling del giorno
-- Meteo weekend
-- Premi Spirlog
-- Codici amico facili
-- Menu fluidi
+- Gioco offline
+- Talismani del legame, Pacchetto Prima Cattura
+- Mio! vibra e mostra lo Spirling
+- Regalo, compiti, Spirling del giorno
+- Premi Spirlog, inviti
+- Scambi, schiusa con scambio
+- Testi più grandi, più fluido
+- Fix Era I-V, sicurezza, velocità

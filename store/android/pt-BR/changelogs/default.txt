@@ -1,18 +1,14 @@
-# DEL; WIP 6-17
-- Loja nova, textos claros
-- 70 Spirlings, 5 Reluzentes
+- Loja nova, 70 Spirlings, 5 Reluzentes
 - Clima, 35 enigmas, segredos
 - Mapas ligados, dificuldade cresce
-- É meu! vibra, intro nova
-- Jogue já, história no 1º Spirling
-- Cenas por ato
-- Enredo nas 4 regiões finais, duelos em Quivermoor
+- Começo natural, intro, cenas
+- Enredos pós-história, duelos em Quivermoor
 - Livro de missões, Para onde agora?
-- Offline, sincroniza após
-- Amuletos de vínculo
-- Pacote Primeira Captura
-- Prêmios, tarefas, Spirling do dia
-- Clima no fim de semana
-- Prêmios Spirlog
-- Códigos de amigo simples
-- Menus ágeis
+- Jogo offline
+- Amuletos de vínculo, Pacote Primeira Captura
+- É meu! vibra, mostra o Spirling
+- Presente, tarefas, Spirling do dia
+- Prêmios Spirlog, convites
+- Trocas, desdobrar por troca
+- Textos maiores, fluidez
+- Ajustes Era I-V, segurança, velocidade

@@ -1,18 +1,14 @@
-# DEL; WIP 6-17
-- Nieuwe winkel, duidelijke teksten
-- 70 Spirlings, 5 glansvormen
+- Nieuwe winkel, 70 Spirlings, 5 glansvormen
 - Weer, 35 puzzels, geheimen
 - Betere kaarten, stijgend niveau
-- Van mij! trilt, nieuwe intro
-- Meteen spelen, verhaal bij 1e Spirling
-- Filmpjes per akte
-- Verhalen in 4 late regio's, duels in Quivermoor
+- Natuurlijke start, intro, filmpjes
+- Verhalen na het einde, duels in Quivermoor
 - Questboek, Waarheen nu?
-- Offline spelen, synct later
-- Bandamuletten
-- Eerste Vangst-pakket
-- Dagbeloning, taken, Spirling van de dag
-- Weekendweer
-- Spirlog-beloningen
-- Makkelijke vriendcodes
-- Soepele menu's
+- Offline spelen
+- Bandamuletten, Eerste Vangst-pakket
+- Van mij! trilt, toont je Spirling
+- Inlogcadeau, dagtaken, Spirling van de dag
+- Spirlog-beloningen, uitnodigen
+- Ruilen, ontvouwen via ruil
+- Grotere tekst, soepeler
+- Fixes Era I-V, veiligheid, snelheid
