@@ -64,15 +64,15 @@
    "team": [
     {
      "species": "Sablarch",
-     "level": 95
+     "level": 98
     },
     {
      "species": "Fumeregent",
-     "level": 95
+     "level": 98
     },
     {
      "species": "Rookwarden",
-     "level": 95
+     "level": 98
     }
    ],
    "wheel": true
@@ -89,23 +89,23 @@
    "team": [
     {
      "species": "Sablarch",
-     "level": 95
+     "level": 90
     },
     {
      "species": "Fumeregent",
-     "level": 95
+     "level": 90
     },
     {
      "species": "Rookwarden",
-     "level": 95
+     "level": 90
     },
     {
      "species": "Woadcastle",
-     "level": 96
+     "level": 91
     },
     {
      "species": "Velverain",
-     "level": 96,
+     "level": 91,
      "held": "pith_mend"
     }
    ],
@@ -122,46 +122,46 @@
     "tamer": [
      {
       "species": "Sablarch",
-      "level": 117
+      "level": 112
      },
      {
       "species": "Fumeregent",
-      "level": 117
+      "level": 112
      },
      {
       "species": "Rookwarden",
-      "level": 117
+      "level": 112
      },
      {
       "species": "Woadcastle",
-      "level": 118
+      "level": 113
      },
      {
       "species": "Velverain",
-      "level": 118,
+      "level": 113,
       "held": "pith_mend"
      }
     ],
     "rift_born": [
      {
       "species": "Sablarch",
-      "level": 97
+      "level": 92
      },
      {
       "species": "Fumeregent",
-      "level": 97
+      "level": 92
      },
      {
       "species": "Rookwarden",
-      "level": 97
+      "level": 92
      },
      {
       "species": "Woadcastle",
-      "level": 98
+      "level": 93
      },
      {
       "species": "Velverain",
-      "level": 98,
+      "level": 93,
       "held": "pith_mend"
      }
     ]
@@ -191,15 +191,15 @@
    "team": [
     {
      "species": "Rushprowl",
-     "level": 95
+     "level": 98
     },
     {
      "species": "Thrashkin",
-     "level": 96
+     "level": 99
     },
     {
      "species": "Silthop",
-     "level": 97
+     "level": 100
     }
    ],
    "win_flags": [

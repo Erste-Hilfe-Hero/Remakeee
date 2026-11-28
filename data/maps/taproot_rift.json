@@ -64,15 +64,15 @@
    "team": [
     {
      "species": "Peatmonarch",
-     "level": 93
+     "level": 96
     },
     {
      "species": "Fenwarden",
-     "level": 93
+     "level": 96
     },
     {
      "species": "Woadcastle",
-     "level": 93
+     "level": 96
     }
    ],
    "wheel": true
@@ -89,19 +89,19 @@
    "team": [
     {
      "species": "Peatmonarch",
-     "level": 93
+     "level": 90
     },
     {
      "species": "Fenwarden",
-     "level": 93
+     "level": 90
     },
     {
      "species": "Woadcastle",
-     "level": 94
+     "level": 91
     },
     {
      "species": "Rushstalker",
-     "level": 94,
+     "level": 91,
      "held": "pith_mend"
     }
    ],
@@ -117,47 +117,47 @@
     "tamer": [
      {
       "species": "Peatmonarch",
-      "level": 128
+      "level": 125
      },
      {
       "species": "Fenwarden",
-      "level": 128
+      "level": 125
      },
      {
       "species": "Woadcastle",
-      "level": 129
+      "level": 126
      },
      {
       "species": "Rushstalker",
-      "level": 129,
+      "level": 126,
       "held": "pith_mend"
      },
      {
       "species": "Rookwarden",
-      "level": 129
+      "level": 126
      }
     ],
     "rift_born": [
      {
       "species": "Peatmonarch",
-      "level": 95
+      "level": 92
      },
      {
       "species": "Fenwarden",
-      "level": 95
+      "level": 92
      },
      {
       "species": "Woadcastle",
-      "level": 96
+      "level": 93
      },
      {
       "species": "Rushstalker",
-      "level": 96,
+      "level": 93,
       "held": "pith_mend"
      },
      {
       "species": "Peatmonarch",
-      "level": 91,
+      "level": 88,
       "held": "pith_mend"
      }
     ]

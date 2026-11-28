@@ -64,15 +64,15 @@
    "team": [
     {
      "species": "Saltcrown",
-     "level": 86
+     "level": 88
     },
     {
      "species": "Stiltregent",
-     "level": 86
+     "level": 88
     },
     {
      "species": "Wadishell",
-     "level": 87
+     "level": 89
     }
    ]
   },
@@ -88,19 +88,19 @@
    "team": [
     {
      "species": "Saltcrown",
-     "level": 87
+     "level": 90
     },
     {
      "species": "Stiltregent",
-     "level": 87
+     "level": 90
     },
     {
      "species": "Wadibastion",
-     "level": 88
+     "level": 91
     },
     {
      "species": "Flatsovereign",
-     "level": 88
+     "level": 91
     }
    ],
    "intro": "salt_rift/halloran_intro",
@@ -111,45 +111,45 @@
     "tamer": [
      {
       "species": "Saltcrown",
-      "level": 103
+      "level": 106
      },
      {
       "species": "Stiltregent",
-      "level": 103
+      "level": 106
      },
      {
       "species": "Wadibastion",
-      "level": 104
+      "level": 107
      },
      {
       "species": "Ergrava",
-      "level": 104
+      "level": 107
      },
      {
       "species": "Fulgorath",
-      "level": 104
+      "level": 107
      }
     ],
     "rift_born": [
      {
       "species": "Saltcrown",
-      "level": 89
+      "level": 92
      },
      {
       "species": "Stiltregent",
-      "level": 89
+      "level": 92
      },
      {
       "species": "Wadibastion",
-      "level": 90
+      "level": 93
      },
      {
       "species": "Flatsovereign",
-      "level": 90
+      "level": 93
      },
      {
       "species": "Saltcrown",
-      "level": 85
+      "level": 88
      }
     ]
    }

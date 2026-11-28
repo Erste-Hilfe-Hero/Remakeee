@@ -2773,57 +2773,57 @@
   "spawns": [
    {
     "species": "Ledgepup",
-    "min": 78,
-    "max": 81,
+    "min": 83,
+    "max": 86,
     "weight": 40,
     "ground": "scree"
    },
    {
     "species": "Vinestep",
-    "min": 78,
-    "max": 81,
+    "min": 83,
+    "max": 86,
     "weight": 34,
     "ground": "fern"
    },
    {
     "species": "Chalkid",
-    "min": 78,
-    "max": 81,
+    "min": 83,
+    "max": 86,
     "weight": 22,
     "ground": "scree"
    },
    {
     "species": "Haloon",
-    "min": 78,
-    "max": 81,
+    "min": 83,
+    "max": 86,
     "weight": 30,
     "ground": "fern"
    },
    {
     "species": "Spanling",
-    "min": 78,
-    "max": 81,
+    "min": 83,
+    "max": 86,
     "weight": 26,
     "ground": "scree"
    },
    {
     "species": "Gildmite",
-    "min": 78,
-    "max": 81,
+    "min": 83,
+    "max": 86,
     "weight": 40,
     "ground": "scree"
    },
    {
     "species": "Ledgehound",
-    "min": 78,
-    "max": 81,
+    "min": 83,
+    "max": 86,
     "weight": 18,
     "ground": "scree"
    },
    {
     "species": "Gnomonk",
-    "min": 78,
-    "max": 81,
+    "min": 83,
+    "max": 86,
     "weight": 14,
     "ground": "scree"
    }
@@ -2834,57 +2834,57 @@
   "spawns": [
    {
     "species": "Cloudmop",
-    "min": 80,
-    "max": 83,
+    "min": 84,
+    "max": 87,
     "weight": 40,
     "ground": "fern"
    },
    {
     "species": "Dewfawn",
-    "min": 80,
-    "max": 83,
+    "min": 84,
+    "max": 87,
     "weight": 22,
     "ground": "fern"
    },
    {
     "species": "Kitelet",
-    "min": 80,
-    "max": 83,
+    "min": 84,
+    "max": 87,
     "weight": 34,
     "ground": "fern"
    },
    {
     "species": "Zenkit",
-    "min": 80,
-    "max": 83,
+    "min": 84,
+    "max": 87,
     "weight": 30,
     "ground": "fern"
    },
    {
     "species": "Cloudram",
-    "min": 80,
-    "max": 83,
+    "min": 84,
+    "max": 87,
     "weight": 18,
     "ground": "fern"
    },
    {
     "species": "Rillsnail",
-    "min": 80,
-    "max": 83,
+    "min": 84,
+    "max": 87,
     "weight": 26,
     "ground": "fern"
    },
    {
     "species": "Dewstag",
-    "min": 80,
-    "max": 83,
+    "min": 84,
+    "max": 87,
     "weight": 6,
     "ground": "fern"
    },
    {
     "species": "Gildbloom",
-    "min": 80,
-    "max": 83,
+    "min": 84,
+    "max": 87,
     "weight": 14,
     "ground": "fern"
    }
@@ -2895,50 +2895,50 @@
   "spawns": [
    {
     "species": "Flatskip",
-    "min": 82,
-    "max": 85,
+    "min": 85,
+    "max": 88,
     "weight": 40,
     "ground": "water"
    },
    {
     "species": "Glintwader",
-    "min": 82,
-    "max": 85,
+    "min": 85,
+    "max": 88,
     "weight": 22,
     "ground": "reeds"
    },
    {
     "species": "Spumlet",
-    "min": 82,
-    "max": 85,
+    "min": 85,
+    "max": 88,
     "weight": 18,
     "ground": "water"
    },
    {
     "species": "Arcfin",
-    "min": 82,
-    "max": 85,
+    "min": 85,
+    "max": 88,
     "weight": 14,
     "ground": "water"
    },
    {
     "species": "Flatskimmer",
-    "min": 82,
-    "max": 85,
+    "min": 85,
+    "max": 88,
     "weight": 12,
     "ground": "water"
    },
    {
     "species": "Plinthlet",
-    "min": 82,
-    "max": 85,
+    "min": 85,
+    "max": 88,
     "weight": 34,
     "ground": "scree"
    },
    {
     "species": "Glintheron",
-    "min": 82,
-    "max": 85,
+    "min": 85,
+    "max": 88,
     "weight": 6,
     "ground": "reeds"
    }
@@ -2949,57 +2949,57 @@
   "spawns": [
    {
     "species": "Orrebit",
-    "min": 85,
-    "max": 88,
+    "min": 87,
+    "max": 90,
     "weight": 40,
     "ground": "scree"
    },
    {
     "species": "Brasshop",
-    "min": 85,
-    "max": 88,
+    "min": 87,
+    "max": 90,
     "weight": 34,
     "ground": "scree"
    },
    {
     "species": "Kitewhip",
-    "min": 85,
-    "max": 88,
+    "min": 87,
+    "max": 90,
     "weight": 22,
     "ground": "scree"
    },
    {
     "species": "Wellet",
-    "min": 85,
-    "max": 88,
+    "min": 87,
+    "max": 90,
     "weight": 18,
     "ground": "scree"
    },
    {
     "species": "Zenlynx",
-    "min": 85,
-    "max": 88,
+    "min": 87,
+    "max": 90,
     "weight": 14,
     "ground": "scree"
    },
    {
     "species": "Orrewheel",
-    "min": 85,
-    "max": 88,
+    "min": 87,
+    "max": 90,
     "weight": 12,
     "ground": "scree"
    },
    {
     "species": "Brassjack",
-    "min": 85,
-    "max": 88,
+    "min": 87,
+    "max": 90,
     "weight": 10,
     "ground": "scree"
    },
    {
     "species": "Zenwhirl",
-    "min": 85,
-    "max": 88,
+    "min": 87,
+    "max": 90,
     "weight": 22,
     "ground": "scree"
    }
@@ -3010,57 +3010,57 @@
   "spawns": [
    {
     "species": "Noonfox",
-    "min": 87,
-    "max": 90,
+    "min": 89,
+    "max": 92,
     "weight": 40,
     "ground": "fern"
    },
    {
     "species": "Brazlet",
-    "min": 87,
-    "max": 90,
+    "min": 89,
+    "max": 92,
     "weight": 22,
     "ground": "scree"
    },
    {
     "species": "Gildfinch",
-    "min": 87,
-    "max": 90,
+    "min": 89,
+    "max": 92,
     "weight": 34,
     "ground": "fern"
    },
    {
     "species": "Vinestair",
-    "min": 87,
-    "max": 90,
+    "min": 89,
+    "max": 92,
     "weight": 18,
     "ground": "fern"
    },
    {
     "species": "Noonvixen",
-    "min": 87,
-    "max": 90,
+    "min": 89,
+    "max": 92,
     "weight": 14,
     "ground": "fern"
    },
    {
     "species": "Rillshell",
-    "min": 87,
-    "max": 90,
+    "min": 89,
+    "max": 92,
     "weight": 12,
     "ground": "fern"
    },
    {
     "species": "Gildwing",
-    "min": 87,
-    "max": 90,
+    "min": 89,
+    "max": 92,
     "weight": 10,
     "ground": "fern"
    },
    {
     "species": "Brazierbrute",
-    "min": 87,
-    "max": 90,
+    "min": 89,
+    "max": 92,
     "weight": 6,
     "ground": "scree"
    }
@@ -3071,57 +3071,57 @@
   "spawns": [
    {
     "species": "Lumoth",
-    "min": 89,
-    "max": 92,
+    "min": 91,
+    "max": 94,
     "weight": 40,
     "ground": "scree"
    },
    {
     "species": "Eavekit",
-    "min": 89,
-    "max": 92,
+    "min": 91,
+    "max": 94,
     "weight": 22,
     "ground": "scree"
    },
    {
     "species": "Coffrel",
-    "min": 89,
-    "max": 92,
+    "min": 91,
+    "max": 94,
     "weight": 34,
     "ground": "scree"
    },
    {
     "species": "Spanbrute",
-    "min": 89,
-    "max": 92,
+    "min": 91,
+    "max": 94,
     "weight": 18,
     "ground": "scree"
    },
    {
     "species": "Lumothra",
-    "min": 89,
-    "max": 92,
+    "min": 91,
+    "max": 94,
     "weight": 14,
     "ground": "scree"
    },
    {
     "species": "Halonel",
-    "min": 89,
-    "max": 92,
+    "min": 91,
+    "max": 94,
     "weight": 12,
     "ground": "scree"
    },
    {
     "species": "Eaveprowl",
-    "min": 89,
-    "max": 92,
+    "min": 91,
+    "max": 94,
     "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Gildrelic",
-    "min": 89,
-    "max": 92,
+    "min": 91,
+    "max": 94,
     "weight": 10,
     "ground": "scree"
    }
@@ -3132,36 +3132,36 @@
   "spawns": [
    {
     "species": "Peatlet",
-    "min": 89,
-    "max": 92,
+    "min": 92,
+    "max": 95,
     "weight": 45,
     "ground": "fern"
    },
    {
     "species": "Gloomgill",
-    "min": 89,
-    "max": 92,
+    "min": 92,
+    "max": 95,
     "weight": 35,
     "ground": "fern"
    },
    {
     "species": "Bogwick",
-    "min": 89,
-    "max": 92,
+    "min": 92,
+    "max": 95,
     "weight": 20,
     "ground": "reeds"
    },
    {
     "species": "Peatbloom",
-    "min": 89,
-    "max": 91,
+    "min": 92,
+    "max": 94,
     "weight": 14,
     "ground": "fern"
    },
    {
     "species": "Gloomgillar",
-    "min": 89,
-    "max": 91,
+    "min": 92,
+    "max": 94,
     "weight": 12,
     "ground": "reeds"
    }
@@ -3172,36 +3172,36 @@
   "spawns": [
    {
     "species": "Morelit",
-    "min": 90,
-    "max": 93,
+    "min": 93,
+    "max": 96,
     "weight": 45,
     "ground": "fern"
    },
    {
     "species": "Rushkit",
-    "min": 90,
-    "max": 93,
+    "min": 93,
+    "max": 96,
     "weight": 35,
     "ground": "fern"
    },
    {
     "species": "Rookit",
-    "min": 90,
-    "max": 93,
+    "min": 93,
+    "max": 96,
     "weight": 20,
     "ground": "fern"
    },
    {
     "species": "Morelamp",
-    "min": 90,
-    "max": 92,
+    "min": 93,
+    "max": 95,
     "weight": 14,
     "ground": "fern"
    },
    {
     "species": "Woadwhorl",
-    "min": 90,
-    "max": 92,
+    "min": 93,
+    "max": 95,
     "weight": 12,
     "ground": "fern"
    }
@@ -3212,36 +3212,36 @@
   "spawns": [
    {
     "species": "Velvit",
-    "min": 91,
-    "max": 94,
+    "min": 94,
+    "max": 97,
     "weight": 45,
     "ground": "reeds"
    },
    {
     "species": "Puddock",
-    "min": 91,
-    "max": 94,
+    "min": 94,
+    "max": 97,
     "weight": 35,
     "ground": "fern"
    },
    {
     "species": "Glimmoth",
-    "min": 91,
-    "max": 94,
+    "min": 94,
+    "max": 97,
     "weight": 20,
     "ground": "reeds"
    },
    {
     "species": "Sootlurk",
-    "min": 91,
-    "max": 93,
+    "min": 94,
+    "max": 96,
     "weight": 14,
     "ground": "reeds"
    },
    {
     "species": "Glowflitter",
-    "min": 91,
-    "max": 93,
+    "min": 94,
+    "max": 96,
     "weight": 12,
     "ground": "reeds"
    }
@@ -3252,36 +3252,36 @@
   "spawns": [
    {
     "species": "Woadlet",
-    "min": 92,
-    "max": 95,
+    "min": 95,
+    "max": 98,
     "weight": 45,
     "ground": "reeds"
    },
    {
     "species": "Drizzlet",
-    "min": 92,
-    "max": 95,
+    "min": 95,
+    "max": 98,
     "weight": 35,
     "ground": "fern"
    },
    {
     "species": "Padlet",
-    "min": 92,
-    "max": 95,
+    "min": 95,
+    "max": 98,
     "weight": 20,
     "ground": "fern"
    },
    {
     "species": "Skimmit",
-    "min": 92,
-    "max": 94,
+    "min": 95,
+    "max": 97,
     "weight": 14,
     "ground": "reeds"
    },
    {
     "species": "Prismist",
-    "min": 92,
-    "max": 94,
+    "min": 95,
+    "max": 97,
     "weight": 12,
     "ground": "fern"
    }
@@ -3292,36 +3292,36 @@
   "spawns": [
    {
     "species": "Silthop",
-    "min": 93,
-    "max": 96,
+    "min": 96,
+    "max": 99,
     "weight": 45,
     "ground": "fern"
    },
    {
     "species": "Nimbub",
-    "min": 93,
-    "max": 96,
+    "min": 96,
+    "max": 99,
     "weight": 35,
     "ground": "fern"
    },
    {
     "species": "Rushprowl",
-    "min": 93,
-    "max": 96,
+    "min": 96,
+    "max": 99,
     "weight": 20,
     "ground": "reeds"
    },
    {
     "species": "Thrashkin",
-    "min": 93,
-    "max": 95,
+    "min": 96,
+    "max": 98,
     "weight": 14,
     "ground": "fern"
    },
    {
     "species": "Nimbuck",
-    "min": 93,
-    "max": 95,
+    "min": 96,
+    "max": 98,
     "weight": 12,
     "ground": "reeds"
    }
@@ -3332,36 +3332,36 @@
   "spawns": [
    {
     "species": "Sablet",
-    "min": 93,
-    "max": 96,
+    "min": 97,
+    "max": 100,
     "weight": 45,
     "ground": "fern"
    },
    {
     "species": "Diplit",
-    "min": 93,
-    "max": 96,
+    "min": 97,
+    "max": 100,
     "weight": 35,
     "ground": "reeds"
    },
    {
     "species": "Dusktern",
-    "min": 93,
-    "max": 96,
+    "min": 97,
+    "max": 100,
     "weight": 20,
     "ground": "fern"
    },
    {
     "species": "Sablowl",
-    "min": 93,
-    "max": 95,
+    "min": 97,
+    "max": 99,
     "weight": 14,
     "ground": "fern"
    },
    {
     "species": "Fumewraith",
-    "min": 93,
-    "max": 95,
+    "min": 97,
+    "max": 99,
     "weight": 12,
     "ground": "fern"
    }
@@ -4030,127 +4030,127 @@
   "spawns": [
    {
     "species": "Siltarra",
-    "min": 82,
-    "max": 86,
+    "min": 80,
+    "max": 84,
     "weight": 24,
     "ground": "reeds"
    },
    {
     "species": "Nibquill",
-    "min": 82,
-    "max": 86,
+    "min": 80,
+    "max": 84,
     "weight": 18,
     "ground": "scree"
    },
    {
     "species": "Vatrat",
-    "min": 82,
-    "max": 86,
-    "weight": 25,
-    "ground": "scree"
-   },
-   {
-    "species": "Stampet",
-    "min": 82,
-    "max": 86,
-    "weight": 25,
-    "ground": "scree"
-   },
-   {
-    "species": "Quilmoth",
-    "min": 82,
-    "max": 86,
-    "weight": 25,
-    "ground": "scree"
-   },
-   {
-    "species": "Stamphorn",
-    "min": 82,
-    "max": 86,
-    "weight": 12,
-    "ground": "scree"
-   },
-   {
-    "species": "Pressbug",
-    "min": 82,
-    "max": 86,
-    "weight": 12,
-    "ground": "scree"
-   },
-   {
-    "species": "Platewing",
-    "min": 82,
-    "max": 86,
-    "weight": 12,
-    "ground": "scree"
-   },
-   {
-    "species": "Blotkin",
-    "min": 82,
-    "max": 86,
-    "weight": 12,
-    "ground": "reeds"
-   },
-   {
-    "species": "Quilmothra",
-    "min": 82,
-    "max": 86,
-    "weight": 12,
-    "ground": "scree"
-   },
-   {
-    "species": "Stampcolossus",
-    "min": 82,
-    "max": 86,
-    "weight": 4,
-    "ground": "scree"
-   },
-   {
-    "species": "Pressbeetle",
-    "min": 82,
-    "max": 86,
-    "weight": 4,
-    "ground": "scree"
-   },
-   {
-    "species": "Blotgrimm",
-    "min": 82,
-    "max": 86,
-    "weight": 4,
-    "ground": "reeds"
-   },
-   {
-    "species": "Quilmothane",
-    "min": 82,
-    "max": 86,
-    "weight": 4,
-    "ground": "scree"
-   },
-   {
-    "species": "Fizzgrove",
-    "min": 82,
-    "max": 86,
-    "weight": 4,
-    "ground": "reeds"
-   },
-   {
-    "species": "Zinclet",
-    "min": 82,
+    "min": 80,
     "max": 84,
     "weight": 25,
     "ground": "scree"
    },
    {
+    "species": "Stampet",
+    "min": 80,
+    "max": 84,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Quilmoth",
+    "min": 80,
+    "max": 84,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Stamphorn",
+    "min": 80,
+    "max": 84,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Pressbug",
+    "min": 80,
+    "max": 84,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Platewing",
+    "min": 80,
+    "max": 84,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Blotkin",
+    "min": 80,
+    "max": 84,
+    "weight": 12,
+    "ground": "reeds"
+   },
+   {
+    "species": "Quilmothra",
+    "min": 80,
+    "max": 84,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Stampcolossus",
+    "min": 80,
+    "max": 84,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Pressbeetle",
+    "min": 80,
+    "max": 84,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Blotgrimm",
+    "min": 80,
+    "max": 84,
+    "weight": 4,
+    "ground": "reeds"
+   },
+   {
+    "species": "Quilmothane",
+    "min": 80,
+    "max": 84,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Fizzgrove",
+    "min": 80,
+    "max": 84,
+    "weight": 4,
+    "ground": "reeds"
+   },
+   {
+    "species": "Zinclet",
+    "min": 80,
+    "max": 82,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
     "species": "Serifkit",
-    "min": 83,
-    "max": 85,
+    "min": 81,
+    "max": 83,
     "weight": 10,
     "ground": "reeds"
    },
    {
     "species": "Zincolossus",
-    "min": 85,
-    "max": 86,
+    "min": 83,
+    "max": 84,
     "weight": 2,
     "ground": "scree"
    }
@@ -4161,85 +4161,85 @@
   "spawns": [
    {
     "species": "Siltby",
-    "min": 85,
-    "max": 88,
+    "min": 82,
+    "max": 85,
     "weight": 45,
     "ground": "reeds"
    },
    {
     "species": "Filigrace",
-    "min": 85,
-    "max": 88,
+    "min": 82,
+    "max": 85,
     "weight": 24,
     "ground": "reeds"
    },
    {
     "species": "Cindrel",
-    "min": 85,
-    "max": 88,
+    "min": 82,
+    "max": 85,
     "weight": 18,
     "ground": "fern"
    },
    {
     "species": "Smudgel",
-    "min": 85,
-    "max": 88,
+    "min": 82,
+    "max": 85,
     "weight": 25,
     "ground": "reeds"
    },
    {
     "species": "Smudgeworm",
-    "min": 85,
-    "max": 88,
+    "min": 82,
+    "max": 85,
     "weight": 12,
     "ground": "reeds"
    },
    {
     "species": "Forgefly",
-    "min": 85,
-    "max": 88,
+    "min": 82,
+    "max": 85,
     "weight": 12,
     "ground": "fern"
    },
    {
     "species": "Frostfoil",
-    "min": 85,
-    "max": 88,
+    "min": 82,
+    "max": 85,
     "weight": 12,
     "ground": "fern"
    },
    {
     "species": "Smudgewyrm",
-    "min": 85,
-    "max": 88,
+    "min": 82,
+    "max": 85,
     "weight": 4,
     "ground": "reeds"
    },
    {
     "species": "Canalurker",
-    "min": 85,
-    "max": 88,
+    "min": 82,
+    "max": 85,
     "weight": 4,
     "ground": "reeds"
    },
    {
     "species": "Forgeflare",
-    "min": 85,
-    "max": 88,
+    "min": 82,
+    "max": 85,
     "weight": 4,
     "ground": "fern"
    },
    {
     "species": "Tangbeak",
-    "min": 85,
-    "max": 87,
+    "min": 82,
+    "max": 84,
     "weight": 10,
     "ground": "reeds"
    },
    {
     "species": "Tangharrier",
-    "min": 87,
-    "max": 88,
+    "min": 84,
+    "max": 85,
     "weight": 2,
     "ground": "reeds"
    }
@@ -4327,78 +4327,78 @@
   "spawns": [
    {
     "species": "Solmantle",
-    "min": 86,
-    "max": 89,
+    "min": 88,
+    "max": 91,
     "weight": 6,
     "ground": "fern"
    },
    {
     "species": "Hazejellith",
-    "min": 86,
-    "max": 89,
+    "min": 88,
+    "max": 91,
     "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Noonsoral",
-    "min": 86,
-    "max": 89,
+    "min": 88,
+    "max": 91,
     "weight": 6,
     "ground": "fern"
    },
    {
     "species": "Siroclaw",
-    "min": 86,
-    "max": 89,
+    "min": 88,
+    "max": 91,
     "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Habobrax",
-    "min": 86,
-    "max": 89,
+    "min": 88,
+    "max": 91,
     "weight": 6,
     "ground": "fern"
    },
    {
     "species": "Obelordan",
-    "min": 86,
-    "max": 89,
+    "min": 88,
+    "max": 91,
     "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Coronarch",
-    "min": 86,
-    "max": 89,
+    "min": 88,
+    "max": 91,
     "weight": 6,
     "ground": "fern"
    },
    {
     "species": "Helirollax",
-    "min": 86,
-    "max": 89,
+    "min": 88,
+    "max": 91,
     "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Rollibex",
-    "min": 86,
-    "max": 89,
+    "min": 88,
+    "max": 91,
     "weight": 14,
     "ground": "fern"
    },
    {
     "species": "Culmlet",
-    "min": 86,
-    "max": 88,
+    "min": 88,
+    "max": 90,
     "weight": 25,
     "ground": "fern"
    },
    {
     "species": "Cornicet",
-    "min": 87,
-    "max": 89,
+    "min": 89,
+    "max": 91,
     "weight": 10,
     "ground": "scree"
    }
@@ -4409,71 +4409,71 @@
   "spawns": [
    {
     "species": "Saltcrown",
-    "min": 84,
-    "max": 87,
+    "min": 86,
+    "max": 89,
     "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Stiltregent",
-    "min": 84,
-    "max": 87,
+    "min": 86,
+    "max": 89,
     "weight": 6,
     "ground": "reeds"
    },
    {
     "species": "Wadibastion",
-    "min": 84,
-    "max": 87,
+    "min": 86,
+    "max": 89,
     "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Ergrava",
-    "min": 84,
-    "max": 87,
+    "min": 86,
+    "max": 89,
     "weight": 6,
     "ground": "reeds"
    },
    {
     "species": "Velverain",
-    "min": 84,
-    "max": 87,
+    "min": 86,
+    "max": 89,
     "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Caravault",
-    "min": 84,
-    "max": 87,
+    "min": 86,
+    "max": 89,
     "weight": 6,
     "ground": "reeds"
    },
    {
     "species": "Claspreign",
-    "min": 84,
-    "max": 87,
+    "min": 86,
+    "max": 89,
     "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Stiltwade",
-    "min": 84,
-    "max": 87,
+    "min": 86,
+    "max": 89,
     "weight": 40,
     "ground": "reeds"
    },
    {
     "species": "Mintlet",
-    "min": 84,
-    "max": 86,
+    "min": 86,
+    "max": 88,
     "weight": 25,
     "ground": "reeds"
    },
    {
     "species": "Fulmenkit",
-    "min": 85,
-    "max": 87,
+    "min": 87,
+    "max": 89,
     "weight": 10,
     "ground": "scree"
    }

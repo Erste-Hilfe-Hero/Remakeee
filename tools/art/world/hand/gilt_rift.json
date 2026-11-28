@@ -2,6 +2,32 @@
  "replace": {
   "npcs": [
    {
+    "id": "heir",
+    "x": 7,
+    "y": 17,
+    "facing": "left",
+    "dialogue": "gilt_rift/heir",
+    "sprite": "warden",
+    "trainer": "Gilt Heir Leopold",
+    "intro": "gilt_rift/heir_intro",
+    "defeat": "gilt_rift/heir_defeat",
+    "money": 6000,
+    "team": [
+     {
+      "species": "Obelith",
+      "level": 96
+     },
+     {
+      "species": "Coronarch",
+      "level": 97
+     },
+     {
+      "species": "Rollibex",
+      "level": 97
+     }
+    ]
+   },
+   {
     "id": "warden_aurek",
     "x": 5,
     "y": 2,

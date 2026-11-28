@@ -80,15 +80,15 @@
    "team": [
     {
      "species": "Chirrik",
-     "level": 81
+     "level": 85
     },
     {
      "species": "Palmop",
-     "level": 81
+     "level": 85
     },
     {
      "species": "Hazejel",
-     "level": 82
+     "level": 86
     }
    ]
   },
@@ -133,15 +133,15 @@
    "team": [
     {
      "species": "Dewstag",
-     "level": 82
+     "level": 86
     },
     {
      "species": "Gildbloom",
-     "level": 83
+     "level": 87
     },
     {
      "species": "Dewfawn",
-     "level": 84
+     "level": 88
     }
    ],
    "win_flags": [
@@ -172,15 +172,15 @@
    "team": [
     {
      "species": "Kitelet",
-     "level": 81
+     "level": 85
     },
     {
      "species": "Zenkit",
-     "level": 82
+     "level": 86
     },
     {
      "species": "Orrebit",
-     "level": 83
+     "level": 87
     }
    ]
   }

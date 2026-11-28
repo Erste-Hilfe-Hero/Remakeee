@@ -64,15 +64,15 @@
    "team": [
     {
      "species": "Gloomgillith",
-     "level": 94
+     "level": 97
     },
     {
      "species": "Dipmonarch",
-     "level": 94
+     "level": 97
     },
     {
      "species": "Ripjoltane",
-     "level": 94
+     "level": 97
     }
    ],
    "wheel": true
@@ -89,19 +89,19 @@
    "team": [
     {
      "species": "Gloomgillith",
-     "level": 94
+     "level": 102
     },
     {
      "species": "Dipmonarch",
-     "level": 94
+     "level": 102
     },
     {
      "species": "Ripjoltane",
-     "level": 95
+     "level": 103
     },
     {
      "species": "Weirmarshal",
-     "level": 95,
+     "level": 103,
      "held": "pith_mend"
     }
    ],
@@ -117,47 +117,47 @@
     "tamer": [
      {
       "species": "Peatmonarch",
-      "level": 106
+      "level": 114
      },
      {
       "species": "Dipmonarch",
-      "level": 106
+      "level": 114
      },
      {
       "species": "Ripjoltane",
-      "level": 107
+      "level": 115
      },
      {
       "species": "Weirmarshal",
-      "level": 107,
+      "level": 115,
       "held": "pith_mend"
      },
      {
       "species": "Glazeldrake",
-      "level": 107
+      "level": 115
      }
     ],
     "rift_born": [
      {
       "species": "Gloomgillith",
-      "level": 96
+      "level": 104
      },
      {
       "species": "Dipmonarch",
-      "level": 96
+      "level": 104
      },
      {
       "species": "Ripjoltane",
-      "level": 97
+      "level": 105
      },
      {
       "species": "Weirmarshal",
-      "level": 97,
+      "level": 105,
       "held": "pith_mend"
      },
      {
       "species": "Gloomgillith",
-      "level": 92,
+      "level": 100,
       "held": "pith_mend"
      }
     ]

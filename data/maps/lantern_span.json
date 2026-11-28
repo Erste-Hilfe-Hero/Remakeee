@@ -88,15 +88,15 @@
    "team": [
     {
      "species": "Gyrevult",
-     "level": 91
+     "level": 93
     },
     {
      "species": "Velvessa",
-     "level": 91
+     "level": 93
     },
     {
      "species": "Ergskim",
-     "level": 91
+     "level": 93
     }
    ]
   },
@@ -124,15 +124,15 @@
    "team": [
     {
      "species": "Spanbrute",
-     "level": 91
+     "level": 93
     },
     {
      "species": "Eaveprowl",
-     "level": 92
+     "level": 94
     },
     {
      "species": "Eavekit",
-     "level": 93
+     "level": 95
     }
    ],
    "win_flags": [
@@ -180,15 +180,15 @@
    "team": [
     {
      "species": "Eaveprowl",
-     "level": 90
+     "level": 92
     },
     {
      "species": "Eavekit",
-     "level": 91
+     "level": 93
     },
     {
      "species": "Coffrel",
-     "level": 92
+     "level": 94
     }
    ]
   }

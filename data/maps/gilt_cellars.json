@@ -85,15 +85,15 @@
    "team": [
     {
      "species": "Noonfox",
-     "level": 89
+     "level": 91
     },
     {
      "species": "Brazlet",
-     "level": 90
+     "level": 92
     },
     {
      "species": "Noonvixen",
-     "level": 91
+     "level": 93
     }
    ]
   }
@@ -201,15 +201,15 @@
      "team": [
       {
        "species": "Brazlet",
-       "level": 89
+       "level": 91
       },
       {
        "species": "Vinestair",
-       "level": 90
+       "level": 92
       },
       {
        "species": "Brazierbrute",
-       "level": 91
+       "level": 93
       }
      ]
     }

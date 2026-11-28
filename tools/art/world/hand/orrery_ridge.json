@@ -1,0 +1,89 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "climber",
+    "x": 6,
+    "y": 12,
+    "facing": "left",
+    "dialogue": "orrery_ridge/climber",
+    "sprite": "villager",
+    "trainer": "Ridge Climber Agathe",
+    "intro": "orrery_ridge/climber_intro",
+    "defeat": "orrery_ridge/climber_defeat",
+    "money": 3600,
+    "team": [
+     {
+      "species": "Orrerine",
+      "level": 88
+     },
+     {
+      "species": "Obelith",
+      "level": 88
+     },
+     {
+      "species": "Highhare",
+      "level": 89
+     }
+    ]
+   },
+   {
+    "id": "q4_own_cairn_ewald_stone",
+    "x": 7,
+    "y": 4,
+    "facing": "left",
+    "dialogue": "halcyra_side/own_cairn_ewald_stone_loot",
+    "sprite": "elder",
+    "trainer": "Cairn Builder Ewald",
+    "show_flag": "q4_own_cairn_reveal",
+    "intro": "halcyra_side/own_cairn_ewald_stone_intro",
+    "defeat": "halcyra_side/own_cairn_ewald_stone_defeat",
+    "money": 4450,
+    "team": [
+     {
+      "species": "Zenwhirl",
+      "level": 89
+     },
+     {
+      "species": "Orrebit",
+      "level": 90
+     },
+     {
+      "species": "Kitewhip",
+      "level": 91
+     }
+    ],
+    "win_flags": [
+     "q4_own_cairn_done"
+    ],
+    "no_rematch": true
+   },
+   {
+    "id": "hs_oswin",
+    "x": 4,
+    "y": 16,
+    "facing": "right",
+    "dialogue": "halcyra_side/oswin",
+    "sprite": "villager",
+    "trainer": "Brass Hunter Oswin",
+    "intro": "halcyra_side/oswin_intro",
+    "defeat": "halcyra_side/oswin_defeat",
+    "money": 3520,
+    "team": [
+     {
+      "species": "Zenlynx",
+      "level": 88
+     },
+     {
+      "species": "Orrewheel",
+      "level": 89
+     },
+     {
+      "species": "Brassjack",
+      "level": 90
+     }
+    ]
+   }
+  ]
+ }
+}

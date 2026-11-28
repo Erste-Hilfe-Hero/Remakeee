@@ -82,11 +82,11 @@
    "team": [
     {
      "species": "Quilmoth",
-     "level": 85
+     "level": 83
     },
     {
      "species": "Blotkin",
-     "level": 86
+     "level": 84
     }
    ]
   },
@@ -104,15 +104,15 @@
    "team": [
     {
      "species": "Vatrat",
-     "level": 85
+     "level": 83
     },
     {
      "species": "Stampet",
-     "level": 86
+     "level": 84
     },
     {
      "species": "Stamphorn",
-     "level": 86
+     "level": 84
     }
    ]
   },
@@ -130,15 +130,15 @@
    "team": [
     {
      "species": "Blotkin",
-     "level": 83
+     "level": 81
     },
     {
      "species": "Quilmothra",
-     "level": 84
+     "level": 82
     },
     {
      "species": "Blotgrimm",
-     "level": 86
+     "level": 84
     }
    ]
   },
@@ -175,15 +175,15 @@
    "team": [
     {
      "species": "Platewing",
-     "level": 85
+     "level": 83
     },
     {
      "species": "Stampcolossus",
-     "level": 86
+     "level": 84
     },
     {
      "species": "Pressbeetle",
-     "level": 87
+     "level": 85
     }
    ],
    "win_flags": [
