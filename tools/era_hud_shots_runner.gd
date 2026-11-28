@@ -127,7 +127,7 @@ func _state(era: int, tag: String) -> void:
 			inst._bond_game.target = inst._foe_sprite.texture()
 			inst._bond_game.target_name = foe.display_name()
 			if kind == "mine":
-				inst._bond_game.run_mine(BondEcho.make_plan(rng, foe.data, ""))
+				inst._bond_game.run_mine(BondEcho.make_plan(rng, foe.data, ""), foe)
 				for i: int in 7:
 					inst._bond_game.mine_tap()
 			else:

@@ -1424,7 +1424,7 @@ func _bond(slot: int = 0) -> BattleAction:
 	var score: float = 0.0
 	_bond_game.calm = BattleCalm.bond_style() == "calm"
 	if mine:
-		score = await _bond_game.run_mine(_bond_plans[key])
+		score = await _bond_game.run_mine(_bond_plans[key], foe)
 	else:
 		score = await _bond_game.run(_bond_plans[key])
 	GameState.note_echo(score)

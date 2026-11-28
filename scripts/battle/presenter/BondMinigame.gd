@@ -129,6 +129,18 @@ const MINE_TIME: float = 3.5
 const MINE_SIZE: float = 44.0
 var mine_fill: float = 0.0
 var _mine_needed: int = 0
+## The wild Spirling being bonded (owner, 28 Nov: "show it above the bar"): the battle field's own
+## SpirlingSprite, so the era art, Gleam palette and Prism tint match the field. Set by run_mine().
+var foe: Spirling
+var _mine_sprite: SpirlingSprite
+## Space between the hint, the Spirling, its plate and the bar.
+const MINE_GAP: float = 4.0
+## As the bar fills the Spirling is pulled this far toward the player (down), whole pixels.
+const MINE_PULL_PX: float = 3.0
+## Each tap lifts it this far for MINE_HOP_TIME; a full bar stops it dead.
+const MINE_HOP_PX: float = 2.0
+const MINE_HOP_TIME: float = 0.1
+var _hop_left: float = 0.0
 
 ## Taps for a full bar: 18 for a common Spirling (about 5 a second, as hard as a clean echo),
 ## up to 24 for rarer ones (longer calls), two fewer near a mended Rift, two more near a muted one.
@@ -144,8 +156,9 @@ static func mine_taps(plan: Dictionary) -> int:
 			n += 2
 	return n
 
-## Plays the "Mine!" tug for [param plan]; returns a score 0..1 like run().
-func run_mine(plan: Dictionary = {}) -> float:
+## Plays the "Mine!" tug for [param plan]; returns a score 0..1 like run(). [param wild] is the
+## Spirling being bonded, drawn above the bar; without one the plain [member target] is drawn.
+func run_mine(plan: Dictionary = {}, wild: Spirling = null) -> float:
 	if rng == null:
 		rng = RandomNumberGenerator.new()
 		rng.randomize()
@@ -153,9 +166,11 @@ func run_mine(plan: Dictionary = {}) -> float:
 	_mine_needed = mine_taps(_plan)
 	mine_fill = 0.0
 	_time = 0.0
+	_hop_left = 0.0
 	_phase = Phase.MINE
 	_say("Tap Mine! fast!", Loc.t("Any tap or the accept key counts."))
 	visible = true
+	_show_foe(wild)
 	var result: float = await finished
 	visible = false
 	return result
@@ -165,6 +180,7 @@ func mine_tap() -> void:
 	if _phase != Phase.MINE:
 		return
 	mine_fill = minf(mine_fill + 1.0 / _mine_needed, 1.0)
+	_hop_left = MINE_HOP_TIME
 	_tone(rng.randi_range(0, BondEcho.MARKS - 1))
 	# Every tap buzzes; the tap that fills the bar buzzes hard (owner, 28 Nov).
 	if mine_fill >= 0.999:
@@ -175,6 +191,11 @@ func mine_tap() -> void:
 
 func _mine_end() -> void:
 	_score = mine_fill
+	# Hard stop: no hop, no idle bob, the Spirling stays where the pull left it.
+	_hop_left = 0.0
+	if _mine_sprite != null:
+		_place_foe()
+		_mine_sprite.set_process(false)
 	_say(BondEcho.result_words(_score))
 	_phase = Phase.RESULT
 	_time = 0.0
@@ -188,6 +209,7 @@ func run(plan: Dictionary = {}) -> float:
 	_all_taps.clear()
 	_afterglow_tap = -1
 	_mine_needed = 0
+	_show_foe(null)
 	_start_phase(0)
 	visible = true
 	var result: float = await finished
@@ -227,8 +249,11 @@ func _process(delta: float) -> void:
 		_tone(lit)
 	_last_lit = lit
 	if _phase == Phase.MINE:
+		_hop_left = maxf(_hop_left - delta, 0.0)
 		if _time >= MINE_TIME:
 			_mine_end()
+		elif _mine_sprite != null:
+			_place_foe()
 		queue_redraw()
 		return
 	if _phase == Phase.CALL and _time >= BondEcho.call_duration(_sequence.size()) + BondEcho.GAP_TIME:
@@ -365,7 +390,10 @@ func _draw() -> void:
 		var pulse: float = 0.6 + 0.4 * sin(Time.get_ticks_msec() / 260.0)
 		for k: int in 3:
 			draw_rect(Rect2(Vector2(2 + k * 2, 2 + k * 2), size - Vector2(4 + k * 4, 4 + k * 4)), Color(UITheme.ACCENT, pulse * (1.0 - k * 0.3)), false, 1.0)
-	if target != null:
+	var mine: bool = _phase == Phase.MINE or (_phase == Phase.RESULT and _plan.has("phases") and _mine_needed > 0)
+	if mine and _mine_sprite != null and _mine_sprite.visible:
+		_draw_foe_plate()
+	elif target != null:
 		var half := Vector2(target_size(), target_size()) / 2.0
 		var at := Vector2(size.x / 2.0, size.y * 0.3)
 		var box := Rect2((at - half).round(), half * 2.0)
@@ -383,7 +411,7 @@ func _draw() -> void:
 			EraBattleHud.draw_plate(self, plate, era, true, lh + 4)
 			draw_string(font, Vector2(plate.position.x + 9.0, plate.position.y + 2.0 + EraBattleHud.ascent(era)), target_name,
 				HORIZONTAL_ALIGNMENT_LEFT, -1, fs, c.paper)
-	if _phase == Phase.MINE or (_phase == Phase.RESULT and _plan.has("phases") and _mine_needed > 0):
+	if mine:
 		_draw_mine()
 		return
 	var lit: int = _lit_mark()
@@ -444,14 +472,96 @@ func _draw_mark(i: int, c: Vector2, lit: bool, muted: bool = false) -> void:
 	outline.append(pts[0])
 	draw_polyline(outline, Color(UITheme.INK, 0.5) if muted else UITheme.INK, 2.0 if lit and EraBattleHud.rank(era, "bond") >= 3 else 1.0)
 
-## The bar (how close the bond is, a picture not odds) and the big "Mine!" button.
-func _draw_mine() -> void:
+## The Mine! bar: how close the bond is, a picture, not odds.
+func mine_bar_rect() -> Rect2:
 	var w: float = size.x * 0.6
-	var bar := Rect2(Vector2((size.x - w) / 2.0, size.y * 0.47), Vector2(w, 6)).abs()
+	return Rect2(Vector2((size.x - w) / 2.0, size.y * 0.47), Vector2(w, 6)).abs()
+
+## Square around the big "Mine!" button.
+func mine_button_rect() -> Rect2:
+	var c := Vector2(size.x / 2.0, size.y * 0.72).round()
+	return Rect2(c - Vector2.ONE * MINE_SIZE / 2.0, Vector2.ONE * MINE_SIZE)
+
+## Lowest point of the hint text ("Tap Mine! fast!").
+func hint_bottom() -> float:
+	return _hint.position.y + maxf(_hint.size.y, _hint.get_minimum_size().y)
+
+## Height kept under the Spirling for its name plate (Era III on), 0 without one.
+func _plate_room() -> float:
+	if EraBattleHud.rank(era, "bond") < 2 or foe == null:
+		return 0.0
+	return EraBattleHud.line_h(era) + 4 + MINE_GAP
+
+## Where the wild Spirling stands before the pull: centred above the bar, under the hint, with
+## room left for the pull and the plate so it never touches the bar, the text or the button.
+## Its battle size when that fits, else half (still whole pixels), else whatever space is left.
+func mine_sprite_rect() -> Rect2:
+	var bottom: float = mine_bar_rect().position.y - MINE_GAP - _plate_room() - MINE_PULL_PX
+	var room: float = floorf(bottom - hint_bottom() - MINE_GAP)
+	var s: float = float(EraManager.battle_sprite_size())
+	if s > room:
+		s = floorf(s / 2.0)
+	s = clampf(minf(s, room), 0.0, s)
+	return Rect2(Vector2(roundf((size.x - s) / 2.0), roundf(bottom - s)), Vector2(s, s))
+
+## Drawn offset of the Spirling: pulled down with the fill, lifted while a tap hops; none under
+## reduced motion.
+func mine_sprite_offset() -> Vector2:
+	if Juice.reduced():
+		return Vector2.ZERO
+	var y: float = roundf(mine_fill * MINE_PULL_PX)
+	if _hop_left > 0.0 and _phase == Phase.MINE:
+		y -= MINE_HOP_PX
+	return Vector2(0, y)
+
+## Shows [param wild] above the bar (or hides the sprite for null).
+func _show_foe(wild: Spirling) -> void:
+	foe = wild
+	if wild == null:
+		if _mine_sprite != null:
+			_mine_sprite.visible = false
+		return
+	if _mine_sprite == null:
+		_mine_sprite = SpirlingSprite.new()
+		_mine_sprite.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(_mine_sprite)
+	era = EraManager.active_era()
+	_fit_hint()
+	# Mirrored like the foe on the battle field.
+	_mine_sprite.mirrored = true
+	_mine_sprite.setup(wild, "front")
+	_mine_sprite.set_process(true)
+	_mine_sprite.visible = true
+	_place_foe()
+
+func _place_foe() -> void:
+	var r: Rect2 = mine_sprite_rect()
+	_mine_sprite.size = r.size
+	_mine_sprite.position = r.position + mine_sprite_offset()
+
+## Era III on: the name plate between the Spirling and the bar.
+func _draw_foe_plate() -> void:
+	if _plate_room() <= 0.0:
+		return
+	var name_text: String = foe.display_name()
+	var c: Dictionary = EraBattleHud.colours(era)
+	var font: Font = get_theme_default_font()
+	var fs: int = get_theme_default_font_size()
+	var nw: float = font.get_string_size(name_text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+	var lh: int = EraBattleHud.line_h(era)
+	var plate := Rect2(roundf(size.x / 2.0 - nw / 2.0 - 8.0), mine_bar_rect().position.y - MINE_GAP - lh - 4, roundf(nw + 16.0), lh + 4)
+	EraBattleHud.draw_plate(self, plate, era, true, lh + 4)
+	draw_string(font, Vector2(plate.position.x + 9.0, plate.position.y + 2.0 + EraBattleHud.ascent(era)), name_text,
+		HORIZONTAL_ALIGNMENT_LEFT, -1, fs, c.paper)
+
+## The bar and the big "Mine!" button.
+func _draw_mine() -> void:
+	var bar: Rect2 = mine_bar_rect()
+	var w: float = bar.size.x
 	draw_rect(bar, UITheme.DISABLED, true)
 	draw_rect(Rect2(bar.position, Vector2(w * mine_fill, bar.size.y)), UITheme.INK, true)
 	draw_rect(bar, UITheme.INK, false, 1.0)
-	var c := Vector2(size.x / 2.0, size.y * 0.72).round()
+	var c: Vector2 = mine_button_rect().get_center()
 	var r: float = MINE_SIZE / 2.0
 	draw_circle(c, r, UITheme.ACCENT)
 	draw_arc(c, r, 0.0, TAU, 32, UITheme.INK, 1.0)
