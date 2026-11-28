@@ -40,7 +40,8 @@ static func place_rows(known: Dictionary, last_here: String = "") -> Array[Dicti
 static func _name(id: String) -> String:
 	return Loc.t(MapData.load_map(id).display_name) if MapData.exists(id) else id
 
-static func run(host: MenuHost, here: String) -> void:
+## [param target] rings that place and centres on it first ("Where next?" in the Quest Book).
+static func run(host: MenuHost, here: String, target: String = "") -> void:
 	# The map in the era's layout (EraMenus): the picture over a list in Era I to III, a
 	# picture that takes the upper part of the phone with Zoom, Here and Marks as a button bar
 	# and an info panel for the focused place in Era IV, a pulsing "you are here" in Era V.
@@ -52,7 +53,8 @@ static func run(host: MenuHost, here: String) -> void:
 	var bar: bool = str(lay.get("actions", "row")) == "bar"
 	var panel: bool = str(lay.get("panel", "none")) != "none"
 	var rows_now: Array[Dictionary] = []
-	var keep: Dictionary = {}
+	var keep: Dictionary = {"highlight": target, "show_highlight": true} if not target.is_empty() else {}
+	var hint: String = Loc.f("Quest goal: %s", QuestLog.place_name(target)) if not target.is_empty() else Loc.t("Tap a place on the map or in the list.")
 	while true:
 		var view := WorldMapView.new()
 		view.current = here
@@ -82,7 +84,7 @@ static func run(host: MenuHost, here: String) -> void:
 			rows_now.append(r)
 		var idx: int = await host.pick_screen("map", "World map", rows_now, {"tabs": acts if bar else ([] as Array[String]), "tab": -1,
 			"tab_icons": [null, null, EraMenuKit.icon_for("Shortcuts", lay), EraMenuKit.icon_for("Travel", lay)], "header": view,
-			"panel_text": "Tap a place on the map or in the list."})
+			"panel_text": hint})
 		keep = view.state() if is_instance_valid(view) else keep
 		var act: int = ListPicker.tab_of(idx) if bar else (idx if idx >= 0 and idx < first_place else -1)
 		if idx < 0 and act < 0:
