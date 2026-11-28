@@ -89,19 +89,19 @@
    "team": [
     {
      "species": "Peatmonarch",
-     "level": 90
+     "level": 93
     },
     {
      "species": "Fenwarden",
-     "level": 90
+     "level": 93
     },
     {
      "species": "Woadcastle",
-     "level": 91
+     "level": 94
     },
     {
      "species": "Rushstalker",
-     "level": 91,
+     "level": 94,
      "held": "pith_mend"
     }
    ],

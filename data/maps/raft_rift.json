@@ -89,19 +89,19 @@
    "team": [
     {
      "species": "Gloomgillith",
-     "level": 102
+     "level": 94
     },
     {
      "species": "Dipmonarch",
-     "level": 102
+     "level": 94
     },
     {
      "species": "Ripjoltane",
-     "level": 103
+     "level": 95
     },
     {
      "species": "Weirmarshal",
-     "level": 103,
+     "level": 95,
      "held": "pith_mend"
     }
    ],

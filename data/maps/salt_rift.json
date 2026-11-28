@@ -88,19 +88,19 @@
    "team": [
     {
      "species": "Saltcrown",
-     "level": 90
+     "level": 87
     },
     {
      "species": "Stiltregent",
-     "level": 90
+     "level": 87
     },
     {
      "species": "Wadibastion",
-     "level": 91
+     "level": 88
     },
     {
      "species": "Flatsovereign",
-     "level": 91
+     "level": 88
     }
    ],
    "intro": "salt_rift/halloran_intro",

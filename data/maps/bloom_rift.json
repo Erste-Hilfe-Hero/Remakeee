@@ -89,23 +89,23 @@
    "team": [
     {
      "species": "Sablarch",
-     "level": 90
+     "level": 95
     },
     {
      "species": "Fumeregent",
-     "level": 90
+     "level": 95
     },
     {
      "species": "Rookwarden",
-     "level": 90
+     "level": 95
     },
     {
      "species": "Woadcastle",
-     "level": 91
+     "level": 96
     },
     {
      "species": "Velverain",
-     "level": 91,
+     "level": 96,
      "held": "pith_mend"
     }
    ],
