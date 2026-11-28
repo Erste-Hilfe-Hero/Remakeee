@@ -1,0 +1,49 @@
+{
+ "_note": "Act IV end on the Saltglass flats: the strangers' caravan walks north (inside a4_north, after the caravan talk).",
+ "once": true,
+ "era": 4,
+ "steps": [
+  {
+   "face": "player",
+   "dir": "up"
+  },
+  {
+   "emote": "player",
+   "icon": "..."
+  },
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "caravan"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 2.4
+  },
+  {
+   "say": [
+    "Eleven hand carts creak north across the flats.",
+    "Elma does not look back. Lipka does, twice."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  }
+ ]
+}

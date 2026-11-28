@@ -1,0 +1,41 @@
+{
+ "_note": "Act III, the mountain railway climbs into the ash highlands (inside ashmere_arrival).",
+ "once": true,
+ "era": 3,
+ "steps": [
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "train"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 2.0
+  },
+  {
+   "say": [
+    "The mountain railway climbs the last bend into Ashmere.",
+    "Outside, nothing moves. Not the trees, not the birds."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  }
+ ]
+}

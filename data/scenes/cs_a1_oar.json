@@ -1,0 +1,53 @@
+{
+ "_note": "Act I finale in the lighthouse: Aldo looks out at the ferry he has not rowed for forty years (inside act1_finale).",
+ "once": true,
+ "era": 1,
+ "steps": [
+  {
+   "emote": "aldo",
+   "icon": "..."
+  },
+  {
+   "face": "player",
+   "dir": "up"
+  },
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "ferry"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 2.2
+  },
+  {
+   "say": [
+    "Aldo: Forty years that boat waited at the pier.",
+    "Aldo: It still knows the way across. So do I."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  },
+  {
+   "emote": "player",
+   "icon": "heart"
+  }
+ ]
+}

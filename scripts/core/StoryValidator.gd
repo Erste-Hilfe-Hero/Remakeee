@@ -155,6 +155,15 @@ static func _check_scene(id: String, errors: PackedStringArray) -> void:
 			"move":
 				if not step.has("path") and not step.has("to"):
 					errors.append("%s: move needs 'path' or 'to'" % where)
+			"panel":
+				if str(step.panel) != "off" and not CutscenePanel.known(str(step.panel)):
+					errors.append("%s: panel '%s' is no motif" % [where, step.panel])
+			"iris":
+				if not str(step.iris) in ["out", "in"]:
+					errors.append("%s: iris must be 'out' or 'in'" % where)
+			"pan":
+				if not (step.pan is Array and (step.pan as Array).size() == 2) and str(step.pan) != "back":
+					errors.append("%s: pan needs [dx, dy] or 'back'" % where)
 
 ## data/story_npcs.json: dialogue refs exist, and on maps that exist the cells are inside
 ## the map and no figure stands on a warp.

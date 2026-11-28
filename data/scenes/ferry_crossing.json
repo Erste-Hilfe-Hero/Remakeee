@@ -5,6 +5,7 @@
   {"action": "betrayal juna_post"},
   {"action": "betrayal vash_hour"},
   {"action": "betrayal fenrick_lantern"},
+  {"action": "scene cs_a1_cast_off"},
   {"fade": "out", "time": 0.4},
   {"card": "Act II: The Colours of Corvane"},
   {"fade": "out", "time": 0.01},

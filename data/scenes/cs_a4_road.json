@@ -1,0 +1,52 @@
+{
+ "_note": "Act IV, the sand road ends at Ochrewell (inside a4_ochrewell).",
+ "once": true,
+ "era": 4,
+ "steps": [
+  {
+   "face": "player",
+   "dir": "down"
+  },
+  {
+   "pan": [
+    0,
+    2
+   ],
+   "time": 1.0
+  },
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "dunes"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 2.0
+  },
+  {
+   "say": [
+    "The sand road runs south until the heat bends the air.",
+    "At its end: clay domes around one deep well. Ochrewell."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  }
+ ]
+}

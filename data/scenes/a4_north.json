@@ -32,6 +32,9 @@
    "dialogue": "solenne_main/north_caravan_2"
   },
   {
+   "action": "scene cs_a4_caravan"
+  },
+  {
    "flag": "a4_north_done"
   }
  ]

@@ -11,12 +11,18 @@ extends Node
 ##   {"fade": "out" | "in", "color": "1b1b2a", "time": 0.4}
 ##   {"wait": 0.5}                              seconds
 ##   {"spawn": id, "x": 3, "y": 4, "sprite": "elder", "facing": "down", "color": "b04a4a"}
+##   (or "near": "player", "dx": 2, "dy": 0 for a place next to a figure)
 ##   {"despawn": id}                            figures that only exist for the scene
 ##   {"card": "Chapter 1", "title": "The Map House"}   a chapter card over ink
 ##   {"flash": 0.2}, {"shake": 0.3}, {"sfx": "warp"}, {"music": "title"}
 ##   {"flag": "x"}, {"give_item": "tonic", "count": 2}, {"battle": "id"}, {"action": "..."}
-## "Skip" (top right) jumps to the end but still runs every flag, item, battle and action step.
-## Every scene sets "scene_<id>_seen" at the end.
+##   {"pan": [dx, dy], "time": 0.8} or {"pan": "back"}   moves the camera by tiles and back
+##   {"iris": "out" | "in", "at": "player", "time": 0.6}   circle wipe around a figure
+##   {"panel": "pages", "era": 1} or {"panel": "off"}     a picture drawn in code (CutscenePanel)
+## "Skip" (top right) or holding a press jumps to the end but still runs every flag, item, battle
+## and action step. A tap moves the text on and cuts a wait, pan or iris short.
+## Every scene sets "scene_<id>_seen" at the end. A scene with "once": true plays only while
+## that flag is unset; "era" (1-5) is the look of its panels and iris (docs/STORY.md "Cut-scenes").
 
 signal _skip_pressed
 
@@ -26,12 +32,26 @@ const EFFECT_STEPS: Array[String] = ["flag", "give_item", "battle", "action", "s
 const EMOTE_TIME: float = 0.6
 const LETTER_SPEED: float = 20.0
 const MOVE_TIMEOUT: float = 3.0
+## A press held this long skips the whole scene (the text box fast-forwards from 600 ms).
+const HOLD_SKIP_MS: int = 700
+const PAN_TIME: float = 0.8
+const IRIS_TIME: float = 0.6
+## Era I moves the camera in this many hard steps.
+const ERA1_PAN_STEPS: float = 4.0
+
+## The innermost scene that is playing; only it answers a held press.
+static var current: ScenePlayer = null
 
 var overworld: Overworld
 var skipping: bool = false
 var _spawned: Dictionary[String, NPC] = {}
 var _skip_button: Button
 var _emote: Label
+var _panel: CutscenePanel
+var _iris: SceneIris
+var _era: int = 0
+var _hold_ms: int = -1
+var _tap_cut: bool = false
 
 static func load_scene(id: String) -> Dictionary:
 	var path: String = DIR + id + ".json"
@@ -48,7 +68,7 @@ static func seen_flag(id: String) -> String:
 
 const KINDS: Array[String] = ["say", "dialogue", "letter", "move", "face", "emote", "fade", "wait",
 	"spawn", "despawn", "card", "flash", "shake", "sfx", "music", "flag", "give_item", "battle",
-	"action", "set_var", "add_var"]
+	"action", "set_var", "add_var", "pan", "iris", "panel"]
 
 ## The kind of a step: the first known key it has ("" if none).
 static func step_kind(step: Dictionary) -> String:
@@ -67,9 +87,16 @@ static func runs_when_skipped(kind: String, step: Dictionary) -> bool:
 ## [param data] replaces the file (tests).
 func play(id: String, data: Dictionary = {}) -> void:
 	var scene: Dictionary = data if not data.is_empty() else load_scene(id)
+	if bool(scene.get("once", false)) and GameState.has_flag(seen_flag(id)):
+		return
 	var steps: Array = scene.get("steps", [])
+	_era = clampi(int(scene.get("era", EraManager.active_era())), 1, 5)
 	var was_busy: bool = overworld.busy
 	var outer: bool = not overworld.scene_running
+	# A nested scene skipped on its own leaves the scene around it playing on.
+	var skipping_before: bool = overworld.scene_skipping
+	var inner_of: ScenePlayer = current
+	current = self
 	# A scene started inside a skipped scene is skipped too.
 	if overworld.scene_skipping:
 		skipping = true
@@ -102,6 +129,9 @@ func play(id: String, data: Dictionary = {}) -> void:
 	if outer:
 		overworld.scene_running = false
 		overworld.scene_skipping = false
+	else:
+		overworld.scene_skipping = skipping_before
+	current = inner_of
 	overworld.busy = was_busy
 	if not was_busy:
 		overworld.player.frozen = false
@@ -147,6 +177,19 @@ func place_skip_button() -> void:
 func _process(_delta: float) -> void:
 	if _skip_button != null and _skip_button.visible:
 		place_skip_button()
+		if _hold_ms >= 0 and Time.get_ticks_msec() - _hold_ms >= HOLD_SKIP_MS:
+			_hold_ms = -1
+			skip()
+
+## A press cuts the running wait short; a press held for HOLD_SKIP_MS skips the scene.
+func _input(event: InputEvent) -> void:
+	if current != self or skipping:
+		return
+	if TapInput.is_press(event) or event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_cancel"):
+		_tap_cut = true
+		_hold_ms = Time.get_ticks_msec()
+	elif TapInput.is_release(event) or event.is_action_released("ui_accept") or event.is_action_released("ui_cancel"):
+		_hold_ms = -1
 
 ## The Skip button while a skippable scene runs (tests), else null.
 func skip_button() -> Button:
@@ -172,6 +215,14 @@ func _cleanup() -> void:
 		_skip_button.queue_free()
 	if _emote != null:
 		_emote.queue_free()
+	if _panel != null:
+		_panel.queue_free()
+		_panel = null
+	if _iris != null:
+		_iris.queue_free()
+		_iris = null
+	overworld.scene_panel_on = false
+	overworld.scene_pan = Vector2.ZERO
 	# A skipped scene never leaves the screen faded out.
 	if skipping:
 		overworld.fade_rect().color.a = 0.0
@@ -226,7 +277,11 @@ func _run(kind: String, step: Dictionary) -> void:
 			await _wait(float(step.wait))
 		"spawn":
 			var n := NPC.new()
-			n.setup({"id": str(step.spawn), "x": int(step.get("x", 0)), "y": int(step.get("y", 0)),
+			var at := Vector2i(int(step.get("x", 0)), int(step.get("y", 0)))
+			var near: GridWalker = figure(str(step.near)) if step.has("near") else null
+			if near != null:
+				at = near.cell + Vector2i(int(step.get("dx", 0)), int(step.get("dy", 0)))
+			n.setup({"id": str(step.spawn), "x": at.x, "y": at.y,
 				"facing": str(step.get("facing", "down")), "sprite": str(step.get("sprite", "villager")),
 				"color": str(step.get("color", "b04a4a"))})
 			overworld.entities().add_child(n)
@@ -275,12 +330,84 @@ func _run(kind: String, step: Dictionary) -> void:
 			overworld.player.frozen = true
 		"action":
 			await overworld.run_action(str(step.action))
+		"pan":
+			await _pan(step)
+		"iris":
+			await _iris_step(step)
+		"panel":
+			_panel_step(step)
 
 func _wait(seconds: float) -> void:
 	if seconds <= 0.0 or skipping:
 		return
-	var t: SceneTreeTimer = get_tree().create_timer(seconds)
-	await t.timeout
+	await _animate(seconds, func(_k: float) -> void: pass)
+
+## Calls [param f] with 0..1 every frame for [param seconds]; Skip or a tap ends it at 1.
+func _animate(seconds: float, f: Callable) -> void:
+	_tap_cut = false
+	var t: float = 0.0
+	while t < seconds and not skipping and not _tap_cut and is_inside_tree():
+		f.call(t / seconds)
+		await get_tree().process_frame
+		t += get_process_delta_time()
+	f.call(1.0)
+
+## Eased 0..1; Era I moves in ERA1_PAN_STEPS hard steps.
+func _ease(k: float) -> float:
+	var e: float = k * k * (3.0 - 2.0 * k)
+	return floorf(e * ERA1_PAN_STEPS) / ERA1_PAN_STEPS if _era <= 1 and k < 1.0 else e
+
+## "pan": moves the camera by whole tiles (or "back" to the player); instant with reduced motion.
+func _pan(step: Dictionary) -> void:
+	var from: Vector2 = overworld.scene_pan
+	var to := Vector2.ZERO
+	if step.pan is Array and (step.pan as Array).size() == 2:
+		to = from + Vector2(float(step.pan[0]), float(step.pan[1])) * GridWalker.TILE
+	if skipping or Juice.reduced():
+		overworld.scene_pan = to
+		return
+	await _animate(float(step.get("time", PAN_TIME)), func(k: float) -> void:
+		overworld.scene_pan = from.lerp(to, _ease(k)).round())
+
+## "iris": closes ("out") or opens ("in") a circle around a figure, in the scene's era.
+func _iris_step(step: Dictionary) -> void:
+	if _iris == null:
+		_iris = SceneIris.new()
+		_iris.era = _era
+		var fade: ColorRect = overworld.fade_rect()
+		fade.get_parent().add_child(_iris)
+		fade.get_parent().move_child(_iris, fade.get_index() + 1)
+	var f: GridWalker = figure(str(step.get("at", "player")))
+	_iris.center = (f.get_global_transform_with_canvas().origin + Vector2(GridWalker.TILE, GridWalker.TILE) / 2.0) if f != null else _iris.size / 2.0
+	var from: float = _iris.open
+	var to: float = 0.0 if str(step.iris) == "out" else 1.0
+	if skipping:
+		_iris.open = to
+		return
+	await _animate(float(step.get("time", IRIS_TIME)), func(k: float) -> void: _iris.open = lerpf(from, to, k))
+
+## "panel": shows a picture drawn in code under the fade and the text box, or takes it away.
+func _panel_step(step: Dictionary) -> void:
+	if _panel != null:
+		_panel.queue_free()
+		_panel = null
+	overworld.scene_panel_on = false
+	var motif: String = str(step.panel)
+	if motif == "off" or skipping or not CutscenePanel.known(motif):
+		return
+	_panel = CutscenePanel.new(int(step.get("era", _era)), motif)
+	var fade: ColorRect = overworld.fade_rect()
+	fade.get_parent().add_child(_panel)
+	fade.get_parent().move_child(_panel, fade.get_index())
+	overworld.scene_panel_on = true
+
+## The panel on screen (tests, shots), else null.
+func panel() -> CutscenePanel:
+	return _panel
+
+## The iris on screen (tests, shots), else null.
+func iris() -> SceneIris:
+	return _iris
 
 ## Walks a figure along "path" (directions) or to "to" ([x, y]) with PathFinder.
 func _move(f: GridWalker, step: Dictionary) -> void:

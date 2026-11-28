@@ -1,0 +1,41 @@
+{
+ "_note": "Finale 5, after the song: the hushed Spirlings lift their heads and the Echo listens. Sorrow, never menace (inside finale_5).",
+ "once": true,
+ "era": 5,
+ "steps": [
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "choir"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 2.6
+  },
+  {
+   "say": [
+    "One by one, the hushed Spirlings lift their heads.",
+    "The Echo is not angry. It has waited so long to be heard."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  }
+ ]
+}

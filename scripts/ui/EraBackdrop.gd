@@ -16,8 +16,9 @@ const FRAME_BORDER: int = 2
 static var _legend_tex: Dictionary[String, Texture2D] = {}
 
 ## Paints the scene of era [param e] at second [param t] into [param r] of [param ci].
-## [param still]: nothing moves (reduced motion, thumbnails).
-static func paint(ci: CanvasItem, r: Rect2, e: int, t: float, still: bool = false) -> void:
+## [param still]: nothing moves (reduced motion, thumbnails). [param tower]: false leaves out the
+## Brindlewick lighthouse (cut-scene panels of other places, CutscenePanel).
+static func paint(ci: CanvasItem, r: Rect2, e: int, t: float, still: bool = false, tower: bool = true) -> void:
 	e = clampi(e, 1, 5)
 	var cfg: Dictionary = EraMoments.title(e)
 	if still:
@@ -32,7 +33,8 @@ static func paint(ci: CanvasItem, r: Rect2, e: int, t: float, still: bool = fals
 	_sky(ci, r, e, lake_y, t, u)
 	_hills(ci, r, e, lake_y, t, u, cfg)
 	_lake(ci, r, e, lake_y, t, u)
-	_lighthouse(ci, r, e, lake_y, t, u)
+	if tower:
+		_lighthouse(ci, r, e, lake_y, t, u)
 	if bool(cfg.get("flyer", false)):
 		_flyers(ci, r, e, t, u)
 	_shore(ci, r, e, t, u)

@@ -1,0 +1,41 @@
+{
+ "_note": "Epilogue 2, the lighthouse at dusk (after lighthouse/mirela_home or mirela_gate_letter, every ending).",
+ "once": true,
+ "era": 5,
+ "steps": [
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "home"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 2.0
+  },
+  {
+   "say": [
+    "That evening the lamp burns as always. Nobody needs it to.",
+    "On the dock, Aldo hums an old lullaby, a little off key."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  }
+ ]
+}

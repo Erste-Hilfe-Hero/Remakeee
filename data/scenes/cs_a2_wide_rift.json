@@ -1,0 +1,59 @@
+{
+ "_note": "Act II, chapter 10: the Wide Rift seen for the first time, and the burned marks under it (inside wide_rift_reveal).",
+ "once": true,
+ "era": 2,
+ "steps": [
+  {
+   "face": "player",
+   "dir": "up"
+  },
+  {
+   "pan": [
+    0,
+    -4
+   ],
+   "time": 1.4
+  },
+  {
+   "shake": 0.3
+  },
+  {
+   "emote": "player",
+   "icon": "!"
+  },
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "rift"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 1.8
+  },
+  {
+   "say": [
+    "The sky is torn from hill to hill. It hums, low and sad.",
+    "Under it, on a flat rock, three marks glow like embers."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  }
+ ]
+}

@@ -1,0 +1,45 @@
+{
+ "_note": "Act III end, the guild seal opens the way into the Undrawn (inside undrawn_enter).",
+ "once": true,
+ "era": 3,
+ "steps": [
+  {
+   "emote": "player",
+   "icon": "!"
+  },
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "seal"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 2.6
+  },
+  {
+   "say": [
+    "Behind the curtain of light, the lines simply stop.",
+    "Here a path exists only where someone draws it."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  }
+ ]
+}

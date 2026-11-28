@@ -1,0 +1,41 @@
+{
+ "_note": "Epilogue 3, the map book one last time (after lighthouse/epi_open, sets nothing itself).",
+ "once": true,
+ "era": 5,
+ "steps": [
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "book"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 2.4
+  },
+  {
+   "say": [
+    "You turn the pages: Veydal, Corvane, Ashmere, Solenne.",
+    "On every page, a small compass rose in the corner."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  }
+ ]
+}

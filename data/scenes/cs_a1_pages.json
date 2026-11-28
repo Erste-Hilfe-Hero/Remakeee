@@ -1,0 +1,53 @@
+{
+ "_note": "Act I, chapter 5, the lamp room: the beam crosses Mirela's six pages and the lines join into one map (inside mirela_lamp).",
+ "once": true,
+ "era": 1,
+ "steps": [
+  {
+   "face": "player",
+   "dir": "up"
+  },
+  {
+   "emote": "player",
+   "icon": "!"
+  },
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "pages"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 1.6
+  },
+  {
+   "say": [
+    "The lamp turns. Its beam crosses the paper, once, twice.",
+    "Line meets line. A dotted path runs north, past Crowcrest."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  },
+  {
+   "emote": "aldo",
+   "icon": "..."
+  }
+ ]
+}

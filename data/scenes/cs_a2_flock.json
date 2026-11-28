@@ -1,0 +1,52 @@
+{
+ "_note": "Act II, Corvane Landing: wings lift off the quay roof, every feather grey (inside corvane_arrival, before the Fading is named).",
+ "once": true,
+ "era": 2,
+ "steps": [
+  {
+   "emote": "player",
+   "icon": "?"
+  },
+  {
+   "pan": [
+    0,
+    -2
+   ],
+   "time": 0.8
+  },
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "flock"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 2.2
+  },
+  {
+   "say": [
+    "Above the quay roof, a hundred wings beat all at once.",
+    "Not one of them makes a sound."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  }
+ ]
+}

@@ -6,6 +6,7 @@
   {"sfx": "bump"}, {"wait": 0.4}, {"sfx": "bump"},
   {"fade": "in", "time": 0.3},
   {"say": ["He comes back down with a long oar, grey with dust.", "Aldo: My old oar. Nobody else rows my ferry. Not in a storm, not after one."]},
+  {"action": "scene cs_a1_oar"},
   {"say": ["Aldo: The lake has calmed since you mended the Rifts. I'll take you across to Corvane myself.", "Aldo: One last crossing. Then the lake can have the old man back."]},
   {"flag": "ferry_corvane_open"},
   {"say": ["Aldo: Meet me at the ferry on the Brindlewick pier when you're ready."]}

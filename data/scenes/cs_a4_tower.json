@@ -1,0 +1,55 @@
+{
+ "_note": "Act IV, the foot of the Tower Rift in the sandstorm (inside a4_tower_gate).",
+ "once": true,
+ "era": 4,
+ "steps": [
+  {
+   "face": "player",
+   "dir": "up"
+  },
+  {
+   "pan": [
+    0,
+    -3
+   ],
+   "time": 1.2
+  },
+  {
+   "shake": 0.3
+  },
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "tower"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 2.0
+  },
+  {
+   "say": [
+    "Sand hisses against the Tower Rift. The wind never rests.",
+    "High above, a shutter bangs open, then shut again."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  }
+ ]
+}
