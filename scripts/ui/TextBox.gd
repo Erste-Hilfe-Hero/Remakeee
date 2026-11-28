@@ -381,11 +381,30 @@ static func split_lines(text: String, width: float, font: Font, font_size: int, 
 			else:
 				lines.append(line)
 				line = word
+			if font.get_string_size(line, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x > width:
+				var parts: Array[String] = break_long(line, width, font, font_size)
+				lines.append_array(parts.slice(0, parts.size() - 1))
+				line = parts[parts.size() - 1]
 		lines.append(line)
 	var pages: Array[String] = []
 	for i: int in range(0, lines.size(), maxi(1, max_lines)):
 		pages.append("\n".join(lines.slice(i, i + max_lines)))
 	return pages
+
+## Breaks [param text] wider than [param width] where the label's own word-smart wrap would:
+## Japanese and Chinese lines have no spaces, so without this they never paged.
+static func break_long(text: String, width: float, font: Font, font_size: int) -> Array[String]:
+	var p := TextParagraph.new()
+	p.add_string(text, font, font_size)
+	p.width = width
+	p.break_flags = TextServer.BREAK_MANDATORY | TextServer.BREAK_WORD_BOUND | TextServer.BREAK_ADAPTIVE
+	var out: Array[String] = []
+	for i: int in p.get_line_count():
+		var r: Vector2i = p.get_line_range(i)
+		out.append(text.substr(r.x, r.y - r.x).strip_edges())
+	if out.is_empty():
+		out.append(text)
+	return out
 
 ## Starts fast-forward: the current line ends, the next ones run without waiting.
 func start_fast_forward() -> void:
