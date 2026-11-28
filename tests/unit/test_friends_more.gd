@@ -131,6 +131,12 @@ func test_invite_reward_for_both() -> void:
 	assert_eq(_as("eve", "invite_redeem", {"p_code": codes.ann}).error, "already", "once per account")
 	assert_eq(_as("eve", "invite_claim", {"p_slot": 1, "p_rev": 1}).error, "nothing", "not before the friendship")
 	_as("ann", "friend_respond", {"p_code": codes.eve, "p_accept": true})
+	assert_eq(int(_as("ann", "invite_state").ready), 0, "not before the new player has played a day")
+	assert_eq(_as("ann", "invite_claim", {"p_slot": 1, "p_rev": 4}).error, "nothing")
+	assert_eq(_as("eve", "invite_claim", {"p_slot": 1, "p_rev": 1}).error, "nothing")
+	# A save the server took a day after the new account was made counts as played.
+	s.profile_of("eve").created_at = s.now() - 2 * 86400
+	s.db.users["eve"].saves["1"].saved_at = s.now()
 	var st: Dictionary = _as("ann", "invite_state")
 	assert_eq(int(st.ready), 1)
 	assert_eq(int(st.invited), 1)

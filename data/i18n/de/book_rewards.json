@@ -1,0 +1,29 @@
+{
+ "_comment": "German texts from tools/i18n/de_book_rewards.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%d Gleam bonded": "%d Glanzformen gebunden",
+  "%d%% bonded": "%d%% gebunden",
+  "(%d ready)": "(%d bereit)",
+  "Bonded: %d%%": "Gebunden: %d%%",
+  "Bonded: %d%% (%d/%d)": "Gebunden: %d%% (%d/%d)",
+  "Book rewards: %d%% bonded, Gleam %d%%": "Buch-Belohnungen: %d%% gebunden, Glanzform %d%%",
+  "Gleam: %d%%": "Glanzform: %d%%",
+  "Gleam: %d%% (%d/%d)": "Glanzform: %d%% (%d/%d)",
+  "Invite of friend code %s:": "Einladung von Freundes-Code %s:",
+  "Keeper of Every Page": "Hüter aller Seiten",
+  "No connection right now. The invite is kept and sent once you are online.": "Gerade keine Verbindung. Die Einladung wird aufgehoben und gesendet, sobald du online bist.",
+  "Nothing to take yet. Rewards come once you are friends and the new player has played for a day.": "Noch nichts zu holen. Belohnungen gibt es, sobald ihr befreundet seid und der neue Spieler einen Tag lang gespielt hat.",
+  "Of every kind in the game.": "Von allen Arten im Spiel.",
+  "Request sent. Once you are friends and you have played for a day, you both take the invite reward under Friends, Invite a friend.": "Anfrage gesendet. Sobald ihr befreundet seid und du einen Tag lang gespielt hast, holt ihr beide die Einladungs-Belohnung unter Freunde, Freund einladen.",
+  "Rewards for the share of kinds bonded and for Gleam kinds.": "Belohnungen für den Anteil gebundener Arten und für Glanzformen.",
+  "Seen: %d%%": "Gesehen: %d%%",
+  "Seen: %d%% (%d/%d)": "Gesehen: %d%% (%d/%d)",
+  "Spirlog book": "Spirlog-Buch",
+  "Spirlog reward: %s!": "Spirlog-Belohnung: %s!",
+  "Take a reward once its step is reached.": "Nimm eine Belohnung, sobald ihre Stufe erreicht ist.",
+  "You received %s x%d.": "Du hast %s x%d erhalten.",
+  "ready!": "bereit!",
+  "taken": "genommen"
+ }
+}
