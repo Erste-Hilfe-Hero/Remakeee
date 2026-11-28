@@ -32,8 +32,9 @@ func before_each() -> void:
 func test_hello_lists_the_switched_on_features() -> void:
 	_server.switch_user("ann")
 	var r: Dictionary = await Online.backend.call_fn("hello", {"p_version": 1})
-	# Promo codes are on from their migration on (20261115100000_promo_codes.sql).
-	assert_eq(r.data.flags, ["league_fair", "league_open", "promo"])
+	# Promo codes are on from their migration on (20261115100000_promo_codes.sql), friend codes
+	# from 20261128061100_invite_on.sql.
+	assert_eq(r.data.flags, ["invite", "league_fair", "league_open", "promo"])
 	_server.db.flags.trade = {"enabled": true, "min_version": 3}
 	assert_false((_server.active_flags(2) as Array).has("trade"))
 	assert_true((_server.active_flags(3) as Array).has("trade"))
