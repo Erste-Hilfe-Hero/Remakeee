@@ -7,8 +7,11 @@ extends RefCounted
 ## Coin prices at world merchants with the Merchant's Seal (item 4970).
 const MERCHANT_DISCOUNT: float = 0.8
 
-## Merchant price multiplier: 0.8 with rg_merchant_discount, else 1.0 (item 4971).
+## Merchant price multiplier: 0.6 with Merchant Discount II (step 8), 0.8 with rg_merchant_discount,
+## else 1.0 (item 4971).
 static func merchant_mult() -> float:
+	if Billing.unlocked("merchant_discount_2") > 0:
+		return float(_values().get("merchant_discount_2", MERCHANT_DISCOUNT))
 	return MERCHANT_DISCOUNT if Billing.unlocked("merchant_discount") > 0 else 1.0
 
 ## A merchant's coin price after the discount, never below 1.
@@ -292,8 +295,10 @@ static func seal_speed_mult(speed_tier: int) -> float:
 static func crystal_cap() -> int:
 	return int(_values().get("crystal_cap", Spirling.SPARK_MAX * 2))
 
-## Extra growth from the permanent Growth Seal (+50 %).
+## Extra growth from the permanent Growth Seal (+50 %) or Growth Seal II (+100 %, step 8).
 static func growth_plus() -> float:
+	if Billing.unlocked("growth_plus_2") > 0:
+		return float(_values().get("growth_plus_2", 0.0))
 	return float(_values().get("growth_plus", 0.0)) if Billing.unlocked("growth_plus") > 0 else 0.0
 
 ## Extra Rings of the Ring Cap Seal (pay-to-win step 3, plan point 47). Off sale since 2026-11-27:
@@ -423,13 +428,16 @@ static func edge_line(seal_tier_row: Array, amulet_tier_row: Array) -> String:
 
 ## --- Pay-to-win step 5 (plan points 15, 25, 26, 28, 29, 32): bonding and collecting. ---
 
-## How much more often uncommon, shy and ancient wild Spirlings step out while a Lure Scent runs.
+## How much more often uncommon, shy and ancient wild Spirlings step out: a running Lure Scent times
+## the permanent Rarity Compass (step 8).
 static func rare_mult() -> float:
-	return float(GameState.shop_boosts.get("rare", {}).get("mult", 1.0)) if boost_left("rare") > 0 else 1.0
+	var m: float = float(GameState.shop_boosts.get("rare", {}).get("mult", 1.0)) if boost_left("rare") > 0 else 1.0
+	return m * _flat("rare_compass", 1.0)
 
-## Factor on the wild Gleam chance while a Shimmer Scent runs.
+## Factor on the wild Gleam chance: a running Shimmer Scent times the permanent Gleam Lens (step 8).
 static func gleam_mult() -> float:
-	return float(GameState.shop_boosts.get("gleam", {}).get("mult", 1.0)) if boost_left("gleam") > 0 else 1.0
+	var m: float = float(GameState.shop_boosts.get("gleam", {}).get("mult", 1.0)) if boost_left("gleam") > 0 else 1.0
+	return m * _flat("gleam_lens", 1.0)
 
 ## The account's Bond Head Start tier (0 to 3).
 static func bond_edge_tier() -> int:
@@ -588,6 +596,9 @@ static func pass_rare(table_id: String, flags: Dictionary, rng: RandomNumberGene
 	wild.restore()
 	return wild
 
+## Tier kinds account_power counts: the seals, the amulets and Bond Head Start.
+const POWER_TIER_KINDS: Array[String] = ["power_seal", "guard_seal", "speed_seal", "crit_seal", "status_ward", "start_shield", "bond_edge"]
+
 ## Progress line for the team view (plan point 60, adults only, no button): what the best next
 ## tier offer would add to Power right now, e.g. "Shop: Power Seal II adds 5 Power". Empty when
 ## nothing is left or the player is under 18.
@@ -603,7 +614,8 @@ static func next_power_line() -> String:
 			continue
 		var kind: String = req.get_slice(":", 1)
 		var owned: int = Billing.unlocked(kind)
-		if seal_max(kind) <= 0 or not tier_ok(req, owned):
+		# Only tiers that account_power counts; Victory Mend and the Coin Seal are no battle power.
+		if not kind in POWER_TIER_KINDS or seal_max(kind) <= 0 or not tier_ok(req, owned):
 			continue
 		var gain: int = seal_percent(kind, owned + 1) - seal_percent(kind, owned)
 		if gain <= 0:
@@ -616,3 +628,56 @@ static func next_power_line() -> String:
 	if best.is_empty():
 		return ""
 	return Loc.t("Shop: %s adds %d Power") % [Loc.t(str(best.name)), best_gain]
+
+## --- Pay-to-win step 8 (release 1.3.2, Ali 27 Nov 2026: "Noch weitere pay2win Aspekte"). ---
+## All story only (world battles and the map); none of them reaches the Fair League, Raid Rifts,
+## leagues or echo duels, except Crit Seal IV and V, which are amulet tiers like I to III.
+
+## Model meta set on story battles built by the overworld (Overworld._new_model). League, raid and
+## echo battles never carry it, so Victory Mend, Wild Purse and the Kinship Bell stay out of them.
+const STORY_BATTLE_META: StringName = &"shop_story_battle"
+
+## The value of the one-step unlock [param kind] from advantage_values when it is owned, else [param plain].
+static func _flat(kind: String, plain: float) -> float:
+	return float(_values().get(kind, plain)) if Billing.unlocked(kind) > 0 else plain
+
+## The account's Victory Mend tier (0 to 3).
+static func victory_mend_tier() -> int:
+	return clamp_tier("victory_mend", Billing.unlocked("victory_mend"))
+
+## After a won story battle: every Spirling of [param party] that is still standing regains the
+## Victory Mend share of its maximum Vigor (at least 1). Returns that percent, 0 without the unlock.
+static func victory_mend(party: Array) -> int:
+	var p: int = seal_percent("victory_mend", victory_mend_tier())
+	if p <= 0:
+		return 0
+	for s: Spirling in party:
+		if not s.is_fainted():
+			s.hp = mini(s.max_hp(), s.hp + maxi(1, s.max_hp() * p / 100))
+	return p
+
+## The account's Coin Seal tier (0 to 3).
+static func coin_seal_tier() -> int:
+	return clamp_tier("coin_seal", Billing.unlocked("coin_seal"))
+
+## Coin factor of the Coin Seal on won story trainer battles (1.0 without it).
+static func coin_seal_mult() -> float:
+	return 1.0 + seal_percent("coin_seal", coin_seal_tier()) / 100.0
+
+## Coins the Wild Purse pays after a won wild battle against [param foes]: wild_purse coins per Ring of
+## the highest foe. 0 without the unlock.
+static func wild_purse_coins(foes: Array) -> int:
+	if Billing.unlocked("wild_purse") <= 0:
+		return 0
+	var top: int = 0
+	for f: Spirling in foes:
+		top = maxi(top, f.level)
+	return int(_values().get("wild_purse", 0)) * top
+
+## Factor on the Spark chance of a story battle (2 with the Training Seal).
+static func spark_seal_mult() -> float:
+	return _flat("spark_seal", 1.0)
+
+## Factor on the Kinship a won battle gives (2 with the Kinship Bell).
+static func kinship_win_mult() -> int:
+	return int(_flat("kinship_bell", 1.0))

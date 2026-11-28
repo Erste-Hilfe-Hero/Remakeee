@@ -19,14 +19,15 @@ static func add(s: Spirling, delta: int) -> void:
 	s.kinship = clampi(s.kinship + delta, 0, max_value())
 
 ## After a battle: every own Spirling that fought gains on a win, every knocked-out one loses.
-static func after_battle(party: Array, fought: Array, won: bool, era: int = -1) -> void:
+## [param win_mult] multiplies the win gain (2 with the shop's Kinship Bell, ShopEffects.kinship_win_mult).
+static func after_battle(party: Array, fought: Array, won: bool, era: int = -1, win_mult: int = 1) -> void:
 	if not EraFeatures.is_unlocked(FEATURE, era):
 		return
 	for s: Spirling in party:
 		if s.is_fainted():
 			add(s, -int(data().get("faint", 5)))
 		elif won and s in fought:
-			add(s, int(data().get("win", 2)))
+			add(s, int(data().get("win", 2)) * maxi(1, win_mult))
 
 ## One step on the road: every "steps" steps the whole team gains "step_gain".
 ## [param records] holds the step counter. Returns true on a step that gave kinship.

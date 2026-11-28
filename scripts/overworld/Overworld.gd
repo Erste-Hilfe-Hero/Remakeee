@@ -4893,6 +4893,13 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	# Spark training from battle, elders and fog (GrowthRules, WildRules).
 	if world and not bool(trainer.get("practice", false)):
 		model.battle_spark_chance = GrowthRules.num("battle_spark_chance", 0.0)
+		# Training Seal (pay-to-win step 8): not in Warden battles, the server's referee checks those.
+		if not trainer.has("warden"):
+			model.battle_spark_chance *= ShopEffects.spark_seal_mult()
+	# Coin Seal (pay-to-win step 8): story battles only, never echo duels.
+	if world:
+		model.set_meta(ShopEffects.STORY_BATTLE_META, true)
+		model.prize_money = int(model.prize_money * ShopEffects.coin_seal_mult())
 	if wild and world:
 		model.sight_mult = WildRules.sight_mult(WeatherCycle.current(map)) if map.outdoor else 1.0
 		model.xp_mult *= WildRules.elder_growth(foes)
@@ -4968,7 +4975,21 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	var grown: String = GrowthRules.distribution_line(model.parties[0], model.growth_by)
 	if not grown.is_empty():
 		toast.show_note(grown, null, "")
-	Kinship.after_battle(GameState.party, model.participants, outcome == BattleModel.Outcome.WIN)
+	var won: bool = outcome == BattleModel.Outcome.WIN
+	# Only story battles built here carry the mark: league, raid and echo battles never get these.
+	var world: bool = bool(model.get_meta(ShopEffects.STORY_BATTLE_META, false))
+	Kinship.after_battle(GameState.party, model.participants, won, -1, ShopEffects.kinship_win_mult() if world else 1)
+	# Victory Mend and Wild Purse (pay-to-win step 8), after won story battles only.
+	if won and world:
+		var mend: int = ShopEffects.victory_mend(GameState.party)
+		if mend > 0:
+			toast.show_note(Loc.t("Victory Mend: your team regains %d%% Vigor.") % mend, null, "")
+		var purse: int = ShopEffects.wild_purse_coins(model.parties[1]) if model.is_wild else 0
+		if purse > 0:
+			var before_purse: int = GameState.money
+			GameState.money += purse
+			Ticker.coins(before_purse, GameState.money)
+			toast.show_note(Loc.t("Wild Purse: +%d coins") % purse, null, "")
 	# A Spirling's favourite sky (its hidden knack): a little more Kinship after a win under it.
 	if model.hidden_rules:
 		HiddenMechanics.after_battle(model.participants, WeatherCycle.current(map), outcome == BattleModel.Outcome.WIN)
