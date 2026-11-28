@@ -146,7 +146,13 @@ func test_sold_at_merchants_for_coins_and_in_the_shop() -> void:
 		assert_between(int(o.eur_cents), 99, 999)
 		assert_eq(int(o.min_band), 13)
 		assert_false(o.has("rotation") or o.has("ends_at"), "no countdown")
+		assert_false(o.has("limit"), "a consumable pack can be bought again: " + id)
 		assert_false(str(o.get("explain", "")).is_empty())
+	var products: Array = JSON.parse_string(FileAccess.get_file_as_string("res://store/products.json")).products
+	for p: Dictionary in products:
+		if str(p.offer) in PACKS:
+			assert_eq(str(p.apple_type), "CONSUMABLE", str(p.offer))
+			assert_false(str(p.desc_en).to_lower().contains("once"), "no once-only text on a consumable: " + str(p.offer))
 	assert_eq(ShopScreen.charm_offers(0).size(), 7)
 	assert_eq(ShopScreen.charm_where("charm_moonwick"), "Merchants: 1000 coins")
 	assert_eq(ShopScreen.charm_where("rg_charm_lantern"), "Here: 200 Riftglass")
