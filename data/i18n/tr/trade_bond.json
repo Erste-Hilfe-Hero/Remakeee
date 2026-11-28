@@ -1,0 +1,32 @@
+{
+ "_comment": "Translations of the German table trade_bond, written by tools/i18n/locales_trade_bond.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s comes back to you. It has bonded with a new Wayfarer.": "%s sana geri döndü. Yeni bir Gezginle bağ kurdu.",
+  "%s feels the bond with its new Wayfarer. Unfurl it into %s now? You can furl it back later.": "%s yeni Gezginiyle bağını hissediyor. Şimdi açılıp %s olsun mu? Sonra geri kapatabilirsin.",
+  "Boatwoman Mabry: In Hookwick every boat has two owners. Some Spirlings like that too.": "Kayıkçı Mabry: Hookwick'te her teknenin iki sahibi vardır. Bazı Spirlingler de bunu sever.",
+  "Boatwoman Mabry: Let me own yours for a moment, then it's yours again. Once, mind you.": "Kayıkçı Mabry: Bir anlığına benim olsun, sonra yine senin. Yalnızca bir kez, aklında olsun.",
+  "Boatwoman Mabry: Two owners is plenty. Three is a quarrel. Trade with your friends now.": "Kayıkçı Mabry: İki sahip yeter. Üçü kavga demektir. Artık arkadaşlarınla takas et.",
+  "Courier Pell: A new Wayfarer's hand does that. Trade with me once and I'll hand yours right back.": "Ulak Pell: Bunu yeni bir Gezginin eli yapar. Benimle bir kez takas et, seninkini hemen geri veririm.",
+  "Courier Pell: I carry letters and, now and then, a Spirling. Some of them come back changed.": "Ulak Pell: Mektup taşırım, arada bir de Spirling. Bazıları değişmiş olarak döner.",
+  "Courier Pell: My route is full. Trade with your friends now, they carry farther than I do.": "Ulak Pell: Güzergâhım doldu. Artık arkadaşlarınla takas et, benden daha uzağa taşırlar.",
+  "Ferrywoman Oona: One trade is all I keep in me. For the next one, find a friend who travels.": "Kayıkçı Oona: Bende tek bir takas vardı. Bir sonraki için yolculuk eden bir arkadaş bul.",
+  "Ferrywoman Oona: Some Spirlings only unfurl when they bond with a new Wayfarer. A ferry teaches you that.": "Kayıkçı Oona: Bazı Spirlingler ancak yeni bir Gezginle bağ kurunca açılır. Bunu insana bir feribot öğretir.",
+  "Ferrywoman Oona: Trade me one of yours. I'll trade it straight back, and it will have known two of us.": "Kayıkçı Oona: Seninkilerden birini benimle takas et. Hemen geri takas ederim, ikimizi de tanımış olur.",
+  "It has to hold %s during the trade.": "Takas sırasında %s taşıması gerekir.",
+  "Needs: a bond with a new Wayfarer (a trade)": "Gerekli: yeni bir Gezginle bağ (takas)",
+  "Needs: a bond with a new Wayfarer (a trade) while holding %s": "Gerekli: %s taşırken yeni bir Gezginle bağ (takas)",
+  "None of your Spirlings would unfurl from a trade. Come back with one that would.": "Spirlinglerinden hiçbiri takasla açılmaz. Açılacak biriyle yine gel.",
+  "Smith Hesketh: A blade changes in the quench. Some Spirlings change when they change hands.": "Demirci Hesketh: Bir bıçak suverme sırasında değişir. Bazı Spirlingler el değiştirince değişir.",
+  "Smith Hesketh: Hand me one, and I'll hand it back. One trade, then I go back to my anvil.": "Demirci Hesketh: Birini bana ver, geri vereyim. Tek bir takas, sonra örsüme dönerim.",
+  "Smith Hesketh: We traded once. The anvil is waiting, and so are your friends.": "Demirci Hesketh: Bir kez takas ettik. Örs bekliyor, arkadaşların da.",
+  "Some Spirlings unfurl when they bond with a new Wayfarer. A few of them must hold a certain Keepsake during the trade; that Keepsake may stay on and goes with them. Town Wayfarers in Brindlewick, Corvane Quay, Cinderfold and Hookwick trade once each, too.": "Bazı Spirlingler yeni bir Gezginle bağ kurunca açılır. Birkaçının takas sırasında belirli bir Hatıra taşıması gerekir; o Hatıra üzerinde kalabilir ve onlarla gider. Brindlewick, Corvane Quay, Cinderfold ve Hookwick'teki Gezginler de birer kez takas eder.",
+  "Trade %s and take it back? This Wayfarer trades only once.": "%s takas edilip geri alınsın mı? Bu Gezgin yalnızca bir kez takas eder.",
+  "Trade which Spirling? You get it back at once.": "Hangi Spirling takas edilsin? Hemen geri gelir.",
+  "Trade with Hesketh": "Hesketh ile takas et",
+  "Trade with Mabry": "Mabry ile takas et",
+  "Trade with Oona": "Oona ile takas et",
+  "Trade with Pell": "Pell ile takas et",
+  "Unfurls when it bonds with a new Wayfarer while holding %s.": "%s taşırken yeni bir Gezginle bağ kurunca açılır.",
+  "Unfurls when it bonds with a new Wayfarer.": "Yeni bir Gezginle bağ kurunca açılır."
+ }
+}

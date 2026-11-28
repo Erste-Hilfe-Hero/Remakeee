@@ -73,6 +73,7 @@
  {"id": "rg_charm_swiftleaf", "name": "Swiftleaf", "description": "Hold it out during a bond: +8%, and Mine! needs 6 taps fewer for a full bar. 1 piece, used up. Story only, not in leagues.", "battle": false, "shop": true, "bond_bonus": 0.08, "mine_taps_off": 6, "charm": {"rank": 8, "icon": "charm_leaf", "effect": "+8% bond, 6 taps fewer"}},
  {"id": "rg_charm_lantern", "name": "Rift Lantern", "description": "Hold it out during a bond: +30%, and Mine! needs 4 taps fewer. 1 piece, used up. Story only, not in leagues.", "battle": false, "shop": true, "bond_bonus": 0.3, "mine_taps_off": 4, "charm": {"rank": 9, "icon": "charm_lantern", "effect": "+30% bond, 4 taps fewer"}},
  {"id": "rg_charm_firstlight", "name": "Firstlight Crest", "description": "The top bond charm. Hold it out during a bond: +45%, and Mine! needs 6 taps fewer. 1 piece, used up. Story only, not in leagues.", "battle": false, "shop": true, "bond_bonus": 0.45, "mine_taps_off": 6, "charm": {"rank": 10, "icon": "charm_crest", "effect": "+45% bond, 6 taps fewer"}},
+ {"id": "charm_pagebound", "name": "Pagebound Charm", "description": "A ribbon from the Spirlog's own spine, a gift for bonding 25 kinds; never sold. Hold it out during a bond: +6%, and +30% more when this kind is not bonded in your Spirlog yet.", "battle": false, "bond_bonus": 0.06, "bond_if": {"when": "new_kind", "bonus": 0.3}, "charm": {"rank": 11, "icon": "charm_page", "effect": "+6%, new kind +36%"}, "tradeable": false},
  {
   "id": "grapple_line",
   "name": "Grapple Line",

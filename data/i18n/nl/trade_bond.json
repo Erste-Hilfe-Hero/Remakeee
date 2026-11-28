@@ -1,0 +1,32 @@
+{
+ "_comment": "Translations of the German table trade_bond, written by tools/i18n/locales_trade_bond.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s comes back to you. It has bonded with a new Wayfarer.": "%s komt bij je terug. Hij heeft zich aan een nieuwe Reiziger gebonden.",
+  "%s feels the bond with its new Wayfarer. Unfurl it into %s now? You can furl it back later.": "%s voelt de band met zijn nieuwe Reiziger. Nu ontvouwen tot %s? Je kunt het later terugvouwen.",
+  "Boatwoman Mabry: In Hookwick every boat has two owners. Some Spirlings like that too.": "Schippersvrouw Mabry: In Hookwick heeft elke boot twee eigenaren. Sommige Spirlings houden daar ook van.",
+  "Boatwoman Mabry: Let me own yours for a moment, then it's yours again. Once, mind you.": "Schippersvrouw Mabry: Laat hem even van mij zijn, dan is hij weer van jou. Eén keer, let wel.",
+  "Boatwoman Mabry: Two owners is plenty. Three is a quarrel. Trade with your friends now.": "Schippersvrouw Mabry: Twee eigenaren is genoeg. Drie is ruzie. Ruil nu met je vrienden.",
+  "Courier Pell: A new Wayfarer's hand does that. Trade with me once and I'll hand yours right back.": "Koerier Pell: Dat doet de hand van een nieuwe Reiziger. Ruil één keer met mij en je krijgt de jouwe meteen terug.",
+  "Courier Pell: I carry letters and, now and then, a Spirling. Some of them come back changed.": "Koerier Pell: Ik breng brieven en af en toe een Spirling. Sommige komen veranderd terug.",
+  "Courier Pell: My route is full. Trade with your friends now, they carry farther than I do.": "Koerier Pell: Mijn route zit vol. Ruil nu met je vrienden, die brengen verder dan ik.",
+  "Ferrywoman Oona: One trade is all I keep in me. For the next one, find a friend who travels.": "Veervrouw Oona: Ik heb maar één ruil in me. Zoek voor de volgende een vriend die reist.",
+  "Ferrywoman Oona: Some Spirlings only unfurl when they bond with a new Wayfarer. A ferry teaches you that.": "Veervrouw Oona: Sommige Spirlings ontvouwen pas als ze zich aan een nieuwe Reiziger binden. Een veerpont leert je dat.",
+  "Ferrywoman Oona: Trade me one of yours. I'll trade it straight back, and it will have known two of us.": "Veervrouw Oona: Ruil er een van jou met mij. Ik ruil hem meteen terug, dan heeft hij ons allebei gekend.",
+  "It has to hold %s during the trade.": "Hij moet tijdens de ruil %s dragen.",
+  "Needs: a bond with a new Wayfarer (a trade)": "Nodig: een band met een nieuwe Reiziger (een ruil)",
+  "Needs: a bond with a new Wayfarer (a trade) while holding %s": "Nodig: een band met een nieuwe Reiziger (een ruil) terwijl hij %s draagt",
+  "None of your Spirlings would unfurl from a trade. Come back with one that would.": "Geen van je Spirlings zou door een ruil ontvouwen. Kom terug met een die dat wel doet.",
+  "Smith Hesketh: A blade changes in the quench. Some Spirlings change when they change hands.": "Smid Hesketh: Een kling verandert bij het afschrikken. Sommige Spirlings veranderen als ze van hand wisselen.",
+  "Smith Hesketh: Hand me one, and I'll hand it back. One trade, then I go back to my anvil.": "Smid Hesketh: Geef me er een, dan geef ik hem terug. Eén ruil, dan ga ik terug naar mijn aambeeld.",
+  "Smith Hesketh: We traded once. The anvil is waiting, and so are your friends.": "Smid Hesketh: We hebben één keer geruild. Het aambeeld wacht, en je vrienden ook.",
+  "Some Spirlings unfurl when they bond with a new Wayfarer. A few of them must hold a certain Keepsake during the trade; that Keepsake may stay on and goes with them. Town Wayfarers in Brindlewick, Corvane Quay, Cinderfold and Hookwick trade once each, too.": "Sommige Spirlings ontvouwen als ze zich aan een nieuwe Reiziger binden. Een paar moeten tijdens de ruil een bepaald Aandenken dragen; dat Aandenken mag blijven zitten en gaat mee. Reizigers in Brindlewick, Corvane Quay, Cinderfold en Hookwick ruilen ook elk één keer.",
+  "Trade %s and take it back? This Wayfarer trades only once.": "%s ruilen en terugnemen? Deze Reiziger ruilt maar één keer.",
+  "Trade which Spirling? You get it back at once.": "Welke Spirling ruilen? Je krijgt hem meteen terug.",
+  "Trade with Hesketh": "Ruilen met Hesketh",
+  "Trade with Mabry": "Ruilen met Mabry",
+  "Trade with Oona": "Ruilen met Oona",
+  "Trade with Pell": "Ruilen met Pell",
+  "Unfurls when it bonds with a new Wayfarer while holding %s.": "Ontvouwt als hij zich aan een nieuwe Reiziger bindt terwijl hij %s draagt.",
+  "Unfurls when it bonds with a new Wayfarer.": "Ontvouwt als hij zich aan een nieuwe Reiziger bindt."
+ }
+}

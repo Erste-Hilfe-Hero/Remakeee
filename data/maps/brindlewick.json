@@ -204,6 +204,14 @@
    "hide_flag": "kestra_spar"
   },
   {
+   "id": "bond_trader",
+   "x": 4,
+   "y": 7,
+   "facing": "up",
+   "dialogue": "trade_bond/brindlewick",
+   "sprite": "villager"
+  },
+  {
    "id": "brin",
    "x": 3,
    "y": 1,

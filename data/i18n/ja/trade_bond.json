@@ -1,0 +1,32 @@
+{
+ "_comment": "Translations of the German table trade_bond, written by tools/i18n/locales_trade_bond.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s comes back to you. It has bonded with a new Wayfarer.": "%sが戻ってきた。新しい旅人と絆を結んだ。",
+  "%s feels the bond with its new Wayfarer. Unfurl it into %s now? You can furl it back later.": "%sは新しい旅人との絆を感じている。今すぐ開花させて%sにする？あとでつぼみに戻せる。",
+  "Boatwoman Mabry: In Hookwick every boat has two owners. Some Spirlings like that too.": "船乗りMabry: Hookwickじゃどの船にも持ち主が2人いる。それが好きなSpirlingもいるのさ。",
+  "Boatwoman Mabry: Let me own yours for a moment, then it's yours again. Once, mind you.": "船乗りMabry: ちょっとの間だけその子をわたしのものにさせて。そしたらまた君のものだ。1回だけだよ。",
+  "Boatwoman Mabry: Two owners is plenty. Three is a quarrel. Trade with your friends now.": "船乗りMabry: 持ち主は2人で十分。3人じゃケンカになる。これからはフレンドと交換しな。",
+  "Courier Pell: A new Wayfarer's hand does that. Trade with me once and I'll hand yours right back.": "配達人Pell: 新しい旅人の手がそうさせるんだ。1回交換してくれたら、すぐ返すよ。",
+  "Courier Pell: I carry letters and, now and then, a Spirling. Some of them come back changed.": "配達人Pell: 手紙を運んで、たまにSpirlingも運ぶ。中には姿を変えて戻ってくる子もいる。",
+  "Courier Pell: My route is full. Trade with your friends now, they carry farther than I do.": "配達人Pell: 僕の配達はもういっぱいだ。これからはフレンドと交換しな。僕より遠くまで届けてくれる。",
+  "Ferrywoman Oona: One trade is all I keep in me. For the next one, find a friend who travels.": "渡し守Oona: 交換は1回きりって決めてるんだ。次は旅するフレンドを見つけな。",
+  "Ferrywoman Oona: Some Spirlings only unfurl when they bond with a new Wayfarer. A ferry teaches you that.": "渡し守Oona: 新しい旅人と絆を結んで初めて開花するSpirlingもいる。渡し船に乗ってるとわかるのさ。",
+  "Ferrywoman Oona: Trade me one of yours. I'll trade it straight back, and it will have known two of us.": "渡し守Oona: 1匹わたしと交換しな。すぐ交換し返すよ。そうすればその子は旅人を2人知ることになる。",
+  "It has to hold %s during the trade.": "交換のあいだ%sを持たせておく必要がある。",
+  "Needs: a bond with a new Wayfarer (a trade)": "必要: 新しい旅人との絆（交換）",
+  "Needs: a bond with a new Wayfarer (a trade) while holding %s": "必要: %sを持ったまま新しい旅人との絆（交換）",
+  "None of your Spirlings would unfurl from a trade. Come back with one that would.": "交換で開花するSpirlingを連れていない。そういう子を連れてまた来て。",
+  "Smith Hesketh: A blade changes in the quench. Some Spirlings change when they change hands.": "鍛冶屋Hesketh: 刃は焼き入れで変わる。手から手へ渡って変わるSpirlingもいる。",
+  "Smith Hesketh: Hand me one, and I'll hand it back. One trade, then I go back to my anvil.": "鍛冶屋Hesketh: 1匹渡してくれ、すぐ返す。交換は1回だけ、それが済んだら金床に戻る。",
+  "Smith Hesketh: We traded once. The anvil is waiting, and so are your friends.": "鍛冶屋Hesketh: 交換はもう済んだ。金床が待ってる。君のフレンドたちもな。",
+  "Some Spirlings unfurl when they bond with a new Wayfarer. A few of them must hold a certain Keepsake during the trade; that Keepsake may stay on and goes with them. Town Wayfarers in Brindlewick, Corvane Quay, Cinderfold and Hookwick trade once each, too.": "新しい旅人と絆を結ぶと開花するSpirlingがいる。その中には、交換のあいだ決まった愛用品を持たせる必要がある子もいる。その愛用品は外さなくてよく、一緒に渡る。Brindlewick、Corvane Quay、Cinderfold、Hookwickの町の旅人も、それぞれ1回だけ交換してくれる。",
+  "Trade %s and take it back? This Wayfarer trades only once.": "%sを交換して、また受け取る？この旅人が交換してくれるのは1回だけ。",
+  "Trade which Spirling? You get it back at once.": "どのSpirlingを交換する？すぐに戻ってくる。",
+  "Trade with Hesketh": "Heskethと交換する",
+  "Trade with Mabry": "Mabryと交換する",
+  "Trade with Oona": "Oonaと交換する",
+  "Trade with Pell": "Pellと交換する",
+  "Unfurls when it bonds with a new Wayfarer while holding %s.": "%sを持ったまま新しい旅人と絆を結ぶと開花する。",
+  "Unfurls when it bonds with a new Wayfarer.": "新しい旅人と絆を結ぶと開花する。"
+ }
+}

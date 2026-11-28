@@ -12,7 +12,7 @@
   "%s, slot %d of %d: %s, Vigor %d of %d": "%s, puesto %d de %d: %s, Vigor %d de %d",
   "%s: %d damage": "%s: %d de daño",
   "%s: %d damage, %d knocked out": "%s: %d de daño, %d derrotados",
-  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns; then the place's own field comes back. A new field pushes the old one out at once.": "Un campo de la Grieta hace que un elemento golpee x1.2 y otro x0.85. Un arte de llamada tiende su campo 5 turnos; luego vuelve el campo propio del lugar. Un campo nuevo expulsa al anterior al instante.",
+  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns; then the place's own field comes back. A new field pushes the old one out at once.": "Un campo de la Grieta hace que un elemento golpee x1,2 y otro x0,85. Un arte de llamada tiende su campo 5 turnos; luego vuelve el campo propio del lugar. Un campo nuevo expulsa al anterior al instante.",
   "A Rift field never weakens its arts.": "Un campo de la Grieta nunca debilita sus artes.",
   "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.": "Un anillo en calma dentro de un viento que gira. Las artes Gale golpean más fuerte, las Bloom se marchitan y nadie puede caer en Modorra.",
   "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.": "Una pálida luz de mañana. Las artes Lumen golpean más fuerte, las Umbra se diluyen y una llamada Echo sale algo más fácil. Al alba y de día dura un turno más.",
