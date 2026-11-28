@@ -136,7 +136,7 @@ static func icon_key(o: Dictionary) -> String:
 			["vault", "coin"], ["storage", "box"], ["team_slot", "box"], ["box", "box"], ["script", "book"],
 			["memory", "book"], ["lore", "book"], ["atlas", "book"], ["tonic", "potion"], ["elixir", "potion"],
 			["breath", "potion"], ["crystal", "crystal"], ["growth", "crystal"], ["prism", "crystal"], ["spark", "crystal"],
-			["gleam", "crystal"], ["seal", "shield"]]:
+			["gleam", "crystal"], ["mend", "potion"], ["purse", "coin"], ["compass", "book"], ["seal", "shield"]]:
 		if id.contains(str(pair[0])):
 			return str(pair[1])
 	return "star"

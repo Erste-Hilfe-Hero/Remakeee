@@ -104,7 +104,7 @@ for s, tiers in SEAL.items():
         if t > 1:
             parts.append(("upgrade", {}))
         add("rg_%s_%d" % (s, t), *parts)
-for t in range(1, 4):
+for t in range(1, 6):
     add("rg_crit_seal_%d" % t, *([("crit_seal", {"p": 5 * t})] + ([("upgrade", {})] if t > 1 else [])))
     add("rg_bond_edge_%d" % t, *([("bond_edge", {"p": 10 * t})] + ([("upgrade", {})] if t > 1 else [])))
 for t, m in enumerate([2, 3, 5]):
@@ -122,6 +122,17 @@ for w in ["power", "bond", "battle", "growth"]:
 WINGS = [(2, 300, 0), (2, 360, 2), (2, 420, 4), (3, 510, 6), (3, 600, 9)]
 for i, (b, total, need) in enumerate(WINGS):
     add("rg_storage_wing_%d" % (i + 1), ("storage_wing", {"s": i + 1, "b": b, "t": total, "need": need}))
+
+
+# Pay-to-win step 8 (release 1.3.2).
+for t, p in enumerate([10, 20, 30], 1):
+    add("rg_victory_mend_%d" % t, *([("victory_mend", {"p": p})] + ([("upgrade", {})] if t > 1 else [])))
+for t, p in enumerate([25, 50, 100], 1):
+    add("rg_coin_seal_%d" % t, *([("coin_seal", {"p": p})] + ([("upgrade", {})] if t > 1 else [])))
+for k in ["wild_purse", "gleam_lens", "rare_compass", "spark_seal", "kinship_bell"]:
+    add("rg_" + k, (k, {}))
+add("rg_merchant_discount_2", ("merchant_discount_2", {}), ("upgrade", {}))
+add("rg_growth_plus_2", ("growth_plus_2", {}), ("upgrade", {}))
 
 
 def text(offer_id, li):

@@ -74,14 +74,14 @@ func test_shimmer_scent_gives_ten_times_the_gleam_chance() -> void:
 	assert_eq(ShopEffects.boost_left("gleam"), 100, "battles do not use up steps")
 
 func test_bond_head_start_tiers_come_from_data() -> void:
-	assert_eq(ShopEffects.seal_max("bond_edge"), 3)
+	assert_eq(ShopEffects.seal_max("bond_edge"), 5, "Bond Head Start I to V (step 8)")
 	Billing.state = {"unlocks": {}}
 	assert_eq(ShopEffects.bond_edge(), 0.0)
 	var before: int = ShopEffects.account_power()
 	Billing.state = {"unlocks": {"bond_edge": 9}}
-	assert_eq(ShopEffects.bond_edge_tier(), 3, "clamped to the top tier")
-	assert_almost_eq(ShopEffects.bond_edge(), 0.3, 0.0001)
-	assert_eq(ShopEffects.account_power(), before + 30)
+	assert_eq(ShopEffects.bond_edge_tier(), 5, "clamped to the top tier")
+	assert_almost_eq(ShopEffects.bond_edge(), 0.5, 0.0001)
+	assert_eq(ShopEffects.account_power(), before + 50)
 
 func _bond_once(seed_value: int, timing: float, edge: float, item: String = "") -> bool:
 	var foe := BattleFixtures.make("Zephlet", 5)
@@ -102,7 +102,7 @@ func test_bond_head_start_counts_as_better_timing() -> void:
 	assert_almost_eq(float(snap.bond_edge), 0.2, 0.0001, "replays carry it")
 	assert_almost_eq(BattleReplay.build_model(snap).bond_edge, 0.2, 0.0001)
 	snap.bond_edge = 5.0
-	assert_almost_eq(BattleReplay.build_model(snap).bond_edge, 0.3, 0.0001, "clamped to the top tier")
+	assert_almost_eq(BattleReplay.build_model(snap).bond_edge, 0.5, 0.0001, "clamped to the top tier")
 
 func test_second_try_charm_only_adds_bonds() -> void:
 	var extra: int = 0

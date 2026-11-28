@@ -282,6 +282,37 @@ Doppelte mit zurück.
   `state.card` und holt fällige Kartentage sofort ab (Signal `card_paid`).
 - Tests: `tests/unit/test_shop_p2w_step7.gd`, `tools/online/sql_test/test_shop_p2w_step7.sql`.
 
+## Pay-to-win, Schritt 8 (Release 1.3.2, 27.11.2026)
+
+Ali: "Noch weitere pay2win Aspekte". Katalog v40, 17 neue Angebote, alle nur für Rissglas (`rg_only`, kein neues
+Store-Produkt), Euro-Gegenwert angezeigt, feste Inhalte, kein Zufall, kein Countdown, ab 13, nie in der
+Gleichstand-Liga (`league_fair_blocked_sources` zählt jedes Vorteil-Angebot) und nie in Echo-Duellen. Werte in
+`data/shop.json` `advantage_values`, Wirkung in `ShopEffects.gd` (Abschnitt "Pay-to-win step 8").
+
+| Angebot | Wirkung | Rissglas (Euro-Gegenwert) |
+| --- | --- | --- |
+| Siegesheilung I / II / III (`rg_victory_mend_1..3`) | nach jedem gewonnenen Kampf in der Geschichte erhält jeder Spirling, der noch steht, 10 / 20 / 30 % seiner maximalen Kraft zurück | 500 / 1000 / 1500 (4,99 / 9,99 / 14,99 €) |
+| Münz-Siegel I / II / III (`rg_coin_seal_1..3`) | +25 / 50 / 100 % Münzen aus gewonnenen Trainerkämpfen der Geschichte, zusätzlich zum Münzglanz | 500 / 1000 / 1500 |
+| Wildbeutel (`rg_wild_purse`) | gewonnene Wildkämpfe der Geschichte bringen 20 Münzen je Ring des höchsten Gegners | 800 (7,99 €) |
+| Glanzlinse (`rg_gleam_lens`) | Glanz-Chance wilder Spirlings x2, mal Schimmerduft | 2000 (19,99 €) |
+| Seltenheitskompass (`rg_rare_compass`) | seltene, scheue und uralte wilde Spirlings x1,5, mal Lockduft | 1500 (14,99 €) |
+| Trainings-Siegel (`rg_spark_seal`) | Funken-Chance aus Kämpfen der Geschichte x2, nicht in Wächterkämpfen | 1000 (9,99 €) |
+| Verbundenheitsglocke (`rg_kinship_bell`) | doppelte Verbundenheit nach gewonnenen Kämpfen der Geschichte (4 statt 2) | 800 (7,99 €) |
+| Bindungs-Vorsprung IV / V (`rg_bond_edge_4..5`) | +40 / 50 Prozentpunkte Bindungs-Timing | 2000 / 2500 |
+| Krit-Siegel IV / V (`rg_crit_seal_4..5`) | +20 / 25 Prozentpunkte Krit-Chance; Geschichte, Raid-Risse, Offene Liga | 2000 / 2500 |
+| Händlerrabatt II (`rg_merchant_discount_2`) | 40 % statt 20 % niedrigere Händlerpreise, nach dem Händlerrabatt | 1000 (9,99 €) |
+| Wachstums-Siegel II (`rg_growth_plus_2`) | +100 % statt +50 % Wachstum, nach dem Wachstums-Siegel | 2500 (24,99 €) |
+
+- Nur Geschichte heißt: Kämpfe, die die Oberwelt selbst baut (Modell-Markierung `ShopEffects.STORY_BATTLE_META`).
+  Liga-, Raid- und Echo-Kämpfe kommen fertig vom Server oder mit eigenem Team und tragen sie nie. Das
+  Trainings-Siegel wirkt nicht in Wächterkämpfen, weil der Schiedsrichter des Servers die nachrechnet.
+- Kontomacht zählt nur Kampfkraft (Siegel, Amulette, Bindungs-Vorsprung, Wachstum): Siegesheilung und Münz-Siegel
+  erscheinen nicht im Hinweis "fügt Macht hinzu" (`ShopEffects.POWER_TIER_KINDS`).
+- ActSim und BalanceSim kennen keine Käufe: ohne Freischaltungen sind alle Faktoren 1 (Test).
+- **Server:** Angebote in `20261127205900_shop_offers_v040.sql`, Migration `20261127210000_shop_p2w_step8.sql`
+  (`_shop_amulets` bis Krit-Siegel V). Tests: `tests/unit/test_shop_p2w_step8.gd`,
+  `tools/online/sql_test/test_shop_p2w_step8.sql`.
+
 ### Rissglas im Spiel (Ausgaben ausserhalb des Shops, PR #624)
 
 Damit gekauftes Rissglas auch im Spiel etwas bringt (Ali: "dass man auch wirklich was davon hat"), gibt es 7 feste
@@ -391,7 +422,7 @@ Die Tabelle zeigt alle Angebote, auch nicht verkaufte (`ready: false`). `rg_fast
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-231 Angebote (Katalog v39): 188 Vorteil, 2 Komfort, 33 Kosmetik, 8 Rissglas.
+248 Angebote (Katalog v40): 205 Vorteil, 2 Komfort, 33 Kosmetik, 8 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
@@ -478,6 +509,7 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_coins_5000` | Coin Purse | 2,99 € | 300 | Vorteil | keine Liga-Wirkung |
 | `rg_coins_20000` | Great Coin Purse | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
 | `rg_merchant_discount` | Merchant Discount | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
+| `rg_merchant_discount_2` | Merchant Discount II | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
 | `rg_jacket_moss` | Moss Jacket | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
 | `rg_jacket_plum` | Plum Jacket | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
 | `rg_jacket_slate` | Slate Jacket | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
@@ -540,6 +572,7 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_stat_crystal_10` | Stat Crystal +10 | 6,99 € | 700 | Vorteil | keine Liga-Wirkung |
 | `rg_growth_x5` | Mighty Growth Crystal | 6,99 € | 700 | Vorteil | keine Liga-Wirkung |
 | `rg_growth_plus` | Growth Seal | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
+| `rg_growth_plus_2` | Growth Seal II | 24,99 € | 2500 | Vorteil | keine Liga-Wirkung |
 | `rg_coin_boost_x3` | Great Coin Gleam | 3,99 € | 400 | Vorteil | keine Liga-Wirkung |
 | `rg_ring_tonic_10` | Grand Ring Tonic | 6,99 € | 700 | Vorteil | keine Liga-Wirkung |
 | `rg_ring_crown` | Ring Crown | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
@@ -560,6 +593,8 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_crit_seal_1` | Crit Seal I | 4,99 € | 500 | Vorteil | nur Offene Liga |
 | `rg_crit_seal_2` | Crit Seal II | 9,99 € | 1000 | Vorteil | nur Offene Liga |
 | `rg_crit_seal_3` | Crit Seal III | 14,99 € | 1500 | Vorteil | nur Offene Liga |
+| `rg_crit_seal_4` | Crit Seal IV | 19,99 € | 2000 | Vorteil | nur Offene Liga |
+| `rg_crit_seal_5` | Crit Seal V | 24,99 € | 2500 | Vorteil | nur Offene Liga |
 | `rg_status_ward` | Status Ward | 14,99 € | 1500 | Vorteil | nur Offene Liga |
 | `rg_start_shield` | Opening Shield | 14,99 € | 1500 | Vorteil | nur Offene Liga |
 | `rg_lure_scent_1` | Lure Scent I | 1,99 € | 200 | Vorteil | keine Liga-Wirkung |
@@ -569,6 +604,8 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_bond_edge_1` | Bond Head Start I | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
 | `rg_bond_edge_2` | Bond Head Start II | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
 | `rg_bond_edge_3` | Bond Head Start III | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
+| `rg_bond_edge_4` | Bond Head Start IV | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
+| `rg_bond_edge_5` | Bond Head Start V | 24,99 € | 2500 | Vorteil | keine Liga-Wirkung |
 | `rg_bond_retry` | Second Try Charm | 2,99 € | 300 | Vorteil | keine Liga-Wirkung |
 | `rg_unfurl_spark` | Unfurl Spark | 7,99 € | 800 | Vorteil | keine Liga-Wirkung |
 | `rg_grand_tonic` | Grand Tonic | 2,99 € | 300 | Vorteil | nur Offene Liga |
@@ -626,5 +663,16 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_week_bond` | Bond Week | 24,99 € | 2500 | Vorteil | nur Offene Liga |
 | `rg_week_battle` | Battle Week | 29,99 € | 3000 | Vorteil | nur Offene Liga |
 | `rg_week_growth` | Growth Week | 27,99 € | 2800 | Vorteil | nur Offene Liga |
+| `rg_victory_mend_1` | Victory Mend I | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
+| `rg_victory_mend_2` | Victory Mend II | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
+| `rg_victory_mend_3` | Victory Mend III | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
+| `rg_coin_seal_1` | Coin Seal I | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
+| `rg_coin_seal_2` | Coin Seal II | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
+| `rg_coin_seal_3` | Coin Seal III | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
+| `rg_wild_purse` | Wild Purse | 7,99 € | 800 | Vorteil | keine Liga-Wirkung |
+| `rg_gleam_lens` | Gleam Lens | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
+| `rg_rare_compass` | Rarity Compass | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
+| `rg_spark_seal` | Training Seal | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
+| `rg_kinship_bell` | Kinship Bell | 7,99 € | 800 | Vorteil | keine Liga-Wirkung |
 
 <!-- shop-table:end -->
