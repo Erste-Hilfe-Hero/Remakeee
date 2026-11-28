@@ -119,7 +119,8 @@ static func choices_for(entry: Dictionary, flags: Dictionary) -> Array[Dictionar
 ## before ": " come back as ["", line].
 const NOT_SPEAKERS: Array[String] = ["Tip", "Tips", "Hint", "Note"]
 ## First words of a sign or description, never of a name ("East: Ochrewell", "On the counter: ...").
-const NOT_SPEAKER_FIRST: Array[String] = ["North", "South", "East", "West", "Up", "Down", "A", "An", "On", "Under", "Behind", "Chalked", "Upper"]
+## Lower case: they are matched, never shown, so they are no text to translate.
+const NOT_SPEAKER_FIRST: Array[String] = ["north", "south", "east", "west", "up", "down", "a", "an", "on", "under", "behind", "chalked", "upper"]
 ## Last words of a thing that is read, never of a name ("A crew note: ...", "Shelf label: ...").
 const NOT_SPEAKER_LAST: Array[String] = ["note", "notice", "label", "stencil", "poster", "plate", "book", "sign", "door", "terrace"]
 
@@ -137,7 +138,7 @@ static func split_speaker(line: String) -> PackedStringArray:
 			return PackedStringArray(["", line])
 	# Signs and things read aloud: "North: the Orrery Rift", "A notice: ...", "Palace notice: ...".
 	var words: PackedStringArray = who.split(" ")
-	if words[0].split("-")[0] in NOT_SPEAKER_FIRST or words[words.size() - 1] in NOT_SPEAKER_LAST:
+	if words[0].split("-")[0].to_lower() in NOT_SPEAKER_FIRST or words[words.size() - 1] in NOT_SPEAKER_LAST:
 		return PackedStringArray(["", line])
 	return PackedStringArray([who, line.substr(i + 2)])
 
