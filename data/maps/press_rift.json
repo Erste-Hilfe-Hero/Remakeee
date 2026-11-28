@@ -116,45 +116,45 @@
     "tamer": [
      {
       "species": "Filigrace",
-      "level": 79
+      "level": 81
      },
      {
       "species": "Cindravax",
-      "level": 79
+      "level": 81
      },
      {
       "species": "Siltaroth",
-      "level": 79
+      "level": 81
      },
      {
       "species": "Veskarion",
-      "level": 80
+      "level": 82
      },
      {
       "species": "Corrodrake",
-      "level": 80
+      "level": 82
      }
     ],
     "rift_born": [
      {
       "species": "Nibravure",
-      "level": 89
+      "level": 91
      },
      {
       "species": "Cindravax",
-      "level": 89
+      "level": 91
      },
      {
       "species": "Siltaroth",
-      "level": 89
+      "level": 91
      },
      {
       "species": "Veskarion",
-      "level": 90
+      "level": 92
      },
      {
       "species": "Corrodrake",
-      "level": 90
+      "level": 92
      }
     ]
    }
