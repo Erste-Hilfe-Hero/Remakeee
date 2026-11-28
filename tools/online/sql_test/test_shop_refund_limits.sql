@@ -2,8 +2,8 @@
 -- back the Riftglass the Monthly Card and the Wayfarer Pass paid out over time; a store purchase
 -- over the offer limit is credited as plain Riftglass for its price, not as the pack again.
 insert into auth.users (id) values
-  ('2d000000-0000-0000-0000-000000000001'), ('2d000000-0000-0000-0000-000000000002'),
-  ('2d000000-0000-0000-0000-000000000003'), ('2d000000-0000-0000-0000-000000000004')
+  ('5f000000-0000-0000-0000-000000000001'), ('5f000000-0000-0000-0000-000000000002'),
+  ('5f000000-0000-0000-0000-000000000003'), ('5f000000-0000-0000-0000-000000000004')
 on conflict do nothing;
 
 do $$ begin
@@ -15,7 +15,7 @@ do $$ begin
 end $$;
 
 -- Monthly Card: all 30 days paid, then refunded: the paid days come back too.
-do $$ declare u uuid := '2d000000-0000-0000-0000-000000000001'; r jsonb; begin
+do $$ declare u uuid := '5f000000-0000-0000-0000-000000000001'; r jsonb; begin
   perform set_config('request.jwt.claim.sub', u::text, true);
   perform public.shop_set_age(1990, 3);
   perform public._shop_credit(u, 'apple', 'RL-card-1', 'de.chimora.game.card.monthly', 499);
@@ -29,7 +29,7 @@ end $$;
 
 -- Two cards, 10 days paid, the second refunded: its 30 unpaid days go, nothing paid comes back.
 -- Then the first is refunded too: its 10 paid days come back.
-do $$ declare u uuid := '2d000000-0000-0000-0000-000000000002'; r jsonb; begin
+do $$ declare u uuid := '5f000000-0000-0000-0000-000000000002'; r jsonb; begin
   perform set_config('request.jwt.claim.sub', u::text, true);
   perform public.shop_set_age(1990, 3);
   perform public._shop_credit(u, 'apple', 'RL-card-2', 'de.chimora.game.card.monthly', 499);
@@ -45,7 +45,7 @@ end $$;
 
 -- Wayfarer Pass: daily Riftglass and premium track Riftglass go back; free track and Riftglass
 -- from elsewhere stay.
-do $$ declare u uuid := '2d000000-0000-0000-0000-000000000003'; r jsonb; begin
+do $$ declare u uuid := '5f000000-0000-0000-0000-000000000003'; r jsonb; begin
   perform set_config('request.jwt.claim.sub', u::text, true);
   perform public.shop_set_age(1990, 3);
   perform public._shop_ledger_add(u, 100, 'store', 'rl-other');
@@ -62,7 +62,7 @@ do $$ declare u uuid := '2d000000-0000-0000-0000-000000000003'; r jsonb; begin
 end $$;
 
 -- Once-per-account packs bought again in the store: plain Riftglass, no second bag.
-do $$ declare u uuid := '2d000000-0000-0000-0000-000000000004'; r jsonb; begin
+do $$ declare u uuid := '5f000000-0000-0000-0000-000000000004'; r jsonb; begin
   perform set_config('request.jwt.claim.sub', u::text, true);
   perform public.shop_set_age(1990, 3);
   r := public._shop_credit(u, 'apple', 'RL-b1', 'de.chimora.game.consumable.champion_bundle', 4999);

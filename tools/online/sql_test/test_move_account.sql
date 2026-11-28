@@ -31,16 +31,16 @@ begin
 end $$;
 
 insert into auth.users (id) values
-  ('2c000000-0000-0000-0000-000000000001'), ('2c000000-0000-0000-0000-000000000002'),
-  ('2c000000-0000-0000-0000-000000000003')
+  ('5e000000-0000-0000-0000-000000000001'), ('5e000000-0000-0000-0000-000000000002'),
+  ('5e000000-0000-0000-0000-000000000003')
 on conflict do nothing;
 
 -- A claims the day, a pass tier and has an invite and a moderation flag; B (fresh, the new phone)
 -- claims its own day first, then takes A over.
 do $$
 declare
-  a uuid := '2c000000-0000-0000-0000-000000000001';
-  b uuid := '2c000000-0000-0000-0000-000000000002';
+  a uuid := '5e000000-0000-0000-0000-000000000001';
+  b uuid := '5e000000-0000-0000-0000-000000000002';
   code text;
   r jsonb;
   bal int;
@@ -53,7 +53,7 @@ begin
   assert (public.pass_claim(1, 'free')->>'ok')::boolean, 'A pass tier 1';
   perform public._shop_ledger_add(a, 1000, 'store', 'mv-test');
   assert (public.rg_spend('continue', 'mv-battle', 200)->>'ok')::boolean, 'A sink';
-  insert into public.invites (invitee, inviter) values (a, '2c000000-0000-0000-0000-000000000003');
+  insert into public.invites (invitee, inviter) values (a, '5e000000-0000-0000-0000-000000000003');
   insert into public.cheat_flags (user_id, reason) values (a, 'mv_test');
   bal := public._shop_balance(a);
   code := public.transfer_create()->>'code';
