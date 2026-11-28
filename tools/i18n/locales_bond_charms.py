@@ -165,6 +165,8 @@ R = {
 "Top Spark if it works": ["Höchster Funke, wenn es klappt", "成功すれば最高のスパーク", "Étincelle max si ça marche", "Scintilla massima se riesce", "Chispa máxima si sale", "성공하면 최고 스파크", "成功时满火花", "成功時滿火花", "Faísca máxima se der certo", "Максимальная Искра при успехе", "Najwyższa Iskra, gdy się uda", "Tutarsa en yüksek Kıvılcım", "Hoogste Vonk als het lukt"],
 "No charm": ["Kein Amulett", "お守りなし", "Sans charme", "Nessun amuleto", "Sin amuleto", "부적 없음", "不用护符", "不用護符", "Sem amuleto", "Без амулета", "Bez amuletu", "Tılsımsız", "Geen amulet"],
 # Shop page
+"Here: %d Riftglass": ["Hier: %d Rissglas", "ここで：裂け目ガラス%d", "Ici: %d Verre de Faille", "Qui: %d Vetro-squarcio", "Aquí: %d Vidrio Grieta", "여기서: 균열유리 %d", "本店：%d裂隙晶", "本店：%d裂晶", "Aqui: %d de Vidrofenda", "Здесь: %d Стекла Разлома", "Tutaj: %d Szczelinitu", "Burada: %d Yarık Camı", "Hier: %d Kloofglas"],
+"Merchants: %d coins": ["Händler: %d Münzen", "商人：%dコイン", "Marchands: %d pièces", "Mercanti: %d monete", "Mercaderes: %d monedas", "상인: %d코인", "商人：%d金币", "商人：%d金幣", "Mercadores: %d moedas", "Торговцы: %d монет", "Kupcy: %d monet", "Tüccarlar: %d para", "Handelaars: %d munten"],
 "Bond charms": ["Bindungsamulette", "絆のお守り", "Charmes de lien", "Amuleti di legame", "Amuletos de vínculo", "유대 부적", "结缘护符", "羈絆護符", "Amuletos de vínculo", "Амулеты связи", "Amulety więzi", "Bağ tılsımları", "Bindamuletten"],
 "Hold a charm out before Mine! and the bond comes easier. Merchants in the towns sell the coin charms.": [
  "Halte vor Meins! ein Amulett hin, dann gelingt die Bindung leichter. Die Münz-Amulette verkaufen Händler in den Städten.",
@@ -178,7 +180,7 @@ R = {
  "Mostre um amuleto antes de É meu! e o vínculo fica mais fácil. Os mercadores das cidades vendem os amuletos por moedas.",
  "Покажи амулет перед Мой!, и связь даётся легче. Амулеты за монеты продают торговцы в городах.",
  "Pokaż amulet przed Mój!, a więź przyjdzie łatwiej. Amulety za monety sprzedają kupcy w miastach.",
- "Benim!'den önce bir tılsım uzat, bağ daha kolay kurulur. Jetonlu tılsımları kasabalardaki tüccarlar satar.",
+ "Benim!'den önce bir tılsım uzat, bağ daha kolay kurulur. Paralı tılsımları kasabalardaki tüccarlar satar.",
  "Houd vóór Van mij! een amulet voor en de binding gaat makkelijker. Handelaars in de steden verkopen de muntamuletten."],
 }
 
