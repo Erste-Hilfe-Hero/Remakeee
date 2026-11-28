@@ -1,9 +1,15 @@
-Chimora 1.3.2
-
-- Loja nova com pacotes de Vidrofenda, Cartão mensal, Spirlings Campeões, kits e ofertas diárias e semanais.
-- Vidrofenda no jogo: continuar depois de uma derrota, curar, acelerar crescimento ou vínculos, encurtar viagens. 20 de presente por dia online.
-- Novo passe com 30 níveis.
-- 70 Spirlings novos e 5 tipos de Reluzente.
-- Clima: chuva, neblina, vento, tempestades e neve.
-- 35 enigmas e muitos segredos escondidos.
-- Mapas mais bem conectados, melhor em tablets, correções.
+# REMOVE; WIP bullets 6-14
+- Loja refeita, textos mais claros
+- 70 Spirlings novos, 5 tipos de Reluzente
+- Clima, 35 enigmas, segredos
+- Mapas mais conectados, correções
+- Uma dificuldade que sobe ato a ato, sem limite de Anel
+- É meu! vibra
+- Intro mais bonita
+- Offline automático, sincroniza depois
+- Amuletos de vínculo
+- Recompensas, tarefas e Spirling do dia
+- Eventos de clima no fim de semana
+- Prêmios do Spirlog
+- Códigos de amigo mais fáceis
+- Menus mais fluidos

@@ -1,14 +1,21 @@
+# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 10 Mine! vibration, 11 intro, 12 offline play, 13 bond charms, 14 daily rewards/tasks/Spirling of the day, 15 weekend weather events, 16 Spirlog rewards, 17 friend codes, 18 smoother menus.
 Chimora 1.3.2
 
-- Una tienda totalmente nueva: packs de Vidrio Grieta, la Tarjeta mensual, Spirlings Campeones, lotes y ofertas diarias y semanales. Cada oferta muestra exactamente lo que trae, nada es al azar.
-- El Vidrio Grieta ahora también sirve en el juego: seguir luchando tras una derrota, curar a tu equipo, impulsar el crecimiento o un vínculo, acortar la espera de un viaje, volver a enfrentarte a un Custodio al momento y más.
-- 20 de Vidrio Grieta de regalo cada día si estás en línea.
-- Un pase nuevo con 30 niveles y una fila gratis para todos.
+- Una tienda renovada con textos más claros: cada pack y cada oferta explica con palabras sencillas qué trae y para qué sirve. Nada es aleatorio.
 - 70 Spirlings nuevos, 10 en cada región.
 - El Fulgor ahora tiene 5 tipos, desde el Fulgor clásico hasta el rarísimo Fulgor opalino.
 - Clima nuevo: lluvia, niebla, viento, tormentas y nieve cambian el mundo y algunos combates. Viene activado y se puede regular en Ajustes.
 - 35 piedras enigma y tableros de acertijos en todas las regiones.
 - Muchos secretos ocultos que descubrirás jugando.
 - Los mapas están mejor conectados: sin callejones sin salida y con casas nuevas en los pueblos.
-- Mejor adaptado a pantallas grandes y tabletas.
+- Una sola dificultad para todos que sube acto a acto. Ya no hay que elegir dificultad ni hay límite de Rango.
 - Muchas correcciones de errores.
+- Los toques de ¡Mío! vibran suavemente (solo si la vibración está activada en Ajustes).
+- Una introducción más bonita al empezar el juego.
+- Juego sin conexión automático: sin internet el juego sigue sin más, y tu progreso se sincroniza en cuanto vuelves a estar en línea.
+- Amuletos de vínculo para vincularte con ¡Mío!, cada uno con precio fijo y su efecto exacto a la vista antes de comprar.
+- Recompensas diarias, tareas diarias y un Spirling del día.
+- Eventos de clima los fines de semana.
+- Recompensas por completar tu Spirlog.
+- Códigos de amistad: añadir amistades es más fácil.
+- Menús más fluidos.

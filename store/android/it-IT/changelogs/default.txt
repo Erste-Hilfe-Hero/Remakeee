@@ -1,9 +1,15 @@
-Chimora 1.3.2
-
-- Nuovo negozio: pacchetti di Vetro-squarcio, Carta mensile, Spirling Campioni, set e offerte del giorno e della settimana.
-- Vetro-squarcio nel gioco: continuare dopo una sconfitta, curare, potenziare crescita o legami, accorciare viaggi. 20 in regalo al giorno online.
-- Nuovo lasciapassare con 30 livelli.
-- 70 nuovi Spirling e 5 tipi di Splendore.
-- Meteo: pioggia, nebbia, vento, tempesta e neve.
-- 35 enigmi e tanti segreti.
-- Mappe più collegate, meglio sui tablet, correzioni.
+# REMOVE; WIP bullets 6-14
+- Negozio rifatto, testi più chiari
+- 70 nuovi Spirling, 5 tipi di Splendore
+- Meteo, 35 enigmi, segreti
+- Mappe più collegate, correzioni
+- Una difficoltà che cresce atto dopo atto, senza limite di Rango
+- Mio! vibra
+- Intro più bella
+- Offline automatico, sincronizza dopo
+- Talismani del legame
+- Ricompense, compiti e Spirling del giorno
+- Eventi meteo nel weekend
+- Premi del Spirlog
+- Codici amico più facili
+- Menu più fluidi

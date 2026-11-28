@@ -1,14 +1,21 @@
+# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 10 Mine! vibration, 11 intro, 12 offline play, 13 bond charms, 14 daily rewards/tasks/Spirling of the day, 15 weekend weather events, 16 Spirlog rewards, 17 friend codes, 18 smoother menus.
 Chimora 1.3.2
 
-- Un negozio tutto nuovo: pacchetti di Vetro-squarcio, la Carta mensile, Spirling Campioni, set e offerte del giorno e della settimana. Ogni offerta mostra esattamente cosa contiene, niente è casuale.
-- Il Vetro-squarcio ora serve anche nel gioco: continuare a combattere dopo una sconfitta, curare la squadra, potenziare la crescita o un legame, accorciare l'attesa di un viaggio, riaffrontare subito un Custode e altro ancora.
-- 20 Vetro-squarcio in regalo ogni giorno, quando sei online.
-- Un nuovo lasciapassare con 30 livelli e una fila gratuita per tutti.
+- Un negozio rifatto con testi più chiari: ogni pacchetto e ogni offerta dice con parole semplici cosa contiene e a cosa serve. Niente è casuale.
 - 70 nuovi Spirling, 10 in ogni regione.
 - Gli Splendori ora sono di 5 tipi, dallo Splendore classico al rarissimo Splendore opalino.
 - Nuovo meteo: pioggia, nebbia, vento, tempeste e neve cambiano il mondo e alcuni combattimenti. È attivo fin dall'inizio e si può regolare nelle impostazioni.
 - 35 pietre enigma e tavole rompicapo in tutte le regioni.
 - Tanti segreti nascosti da scoprire giocando.
 - Le mappe sono collegate meglio: niente più vicoli ciechi e nuove case da visitare nei paesi.
-- Si adatta meglio a schermi grandi e tablet.
+- Un'unica difficoltà per tutti che cresce atto dopo atto. Niente più scelta della difficoltà né limite di Rango.
 - Tante correzioni di errori.
+- I tocchi su Mio! ora vibrano leggermente (solo se la vibrazione è attiva nelle impostazioni).
+- Un'introduzione più bella all'inizio del gioco.
+- Gioco offline automatico: senza internet il gioco va semplicemente avanti, e i progressi si sincronizzano appena torni online.
+- Talismani del legame per legarti con Mio!, ognuno a prezzo fisso e con l'effetto esatto mostrato prima dell'acquisto.
+- Ricompense del giorno, compiti del giorno e uno Spirling del giorno.
+- Eventi meteo nel fine settimana.
+- Ricompense per completare il tuo Spirlog.
+- Codici amico: aggiungere amici è più facile.
+- Menu più fluidi.
