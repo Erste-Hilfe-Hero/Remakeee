@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table first_catch, written by tools/i18n/locales_first_catch.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "'Day one. The sky over the lake split like old paper. Aldo says I'm mad to map it. Aldo is usually right.'": "「第一天。湖面上的天空像旧纸一样裂开了。Aldo说我要去画它的地图是疯了。Aldo通常都是对的。」",
+  "Aldo: I saw that from the path! That one chose you.": "Aldo：我在小路上都看见了！是它选了你。",
+  "First bond! A gift for the road: %s.": "初次结缘！路上的礼物：%s。",
+  "Kestra: Aldo's apprentice? Good. The storm tore Rifts open, past Thornridge and under the Saltmarsh.": "Kestra：Aldo的学徒？很好。暴风雨撕开了裂隙，在Thornridge过去和Saltmarsh底下。",
+  "Kestra: And this blew in through my window. Mirela's compass rose. Yours, I think.": "Kestra：还有，这个从我窗户飘进来了。Mirela的罗盘玫瑰。我想是你的。",
+  "Kestra: Everyone wants them closed. I'm not so sure: new Spirlings came through. But start north in Fernstair.": "Kestra：大家都想把它们关上。我可不确定：有新的Spirling过来了。不过先往北去Fernstair。",
+  "Three small lights peek out of the ferns: Spirlings from the storm!": "三点小小的光从蕨丛里探出头来：是暴风雨带来的Spirling！",
+  "Tip: A wild Spirling that trusts you can join your team.": "提示：信任你的野生Spirling可以加入你的队伍。",
+  "Tip: Goals shows how many map pages are still out there.": "提示：「目标」里会显示还剩多少页地图。",
+  "Tip: The game saves itself when you change places. Save any time in the menu.": "提示：切换地点时游戏会自动保存。也可以随时在菜单中保存。",
+  "Your first bond! A one-time pack": "你的初次结缘！一次性礼包"
+ }
+}

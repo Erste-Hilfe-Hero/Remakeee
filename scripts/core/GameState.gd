@@ -632,7 +632,7 @@ func reset() -> void:
 	play_time = 0.0
 
 ## Starts a new game with the choices from the new-game flow. With an empty [param p_starter]
-## the partner is picked later, in the prologue at the lighthouse (see choose_starter).
+## the partner is picked later, in the opening in the ferns (Opening, see choose_starter).
 ## The Wayfarer's jacket colour: a worn shop jacket while it is owned, else the free colour.
 func body_color() -> Color:
 	var c: String = ShopCatalog.jacket_color(jacket)
@@ -705,7 +705,11 @@ func new_game(_p_difficulty: Difficulty, p_name: String, p_color: int, p_starter
 	# Easier start (Ali, 7 Nov): 20 free Kin Charms for the first bonds.
 	add_item("kin_charm", START_KIN_CHARMS)
 	in_game = true
-	if not p_starter.is_empty():
+	Funnel.start(records)
+	# Without a partner the journey starts with the opening in the ferns (Opening, 1.3.2).
+	if p_starter.is_empty():
+		Opening.begin()
+	else:
 		choose_starter(p_starter)
 
 ## The partner Spirling joins at level 5 (prologue, or straight from new_game in tests).

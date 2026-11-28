@@ -691,6 +691,19 @@
    "ready": true
   },
   {
+   "product_id": "de.chimora.game.consumable.firstcatch",
+   "offer": "rg_first_catch",
+   "apple_type": "CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "0.99",
+   "name_en": "First Catch Pack",
+   "name_de": "Erste-Bindung-Paket",
+   "desc_en": "80 Riftglass, 2 Echo Scents, 1 Rift Breath. Once per account.",
+   "desc_de": "80 Rissglas, 2 Echo-Düfte, 1 Rissatem. Einmal pro Konto.",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
    "product_id": "de.chimora.game.consumable.wayfarer_pack",
    "offer": "rg_wayfarer_pack",
    "apple_type": "CONSUMABLE",

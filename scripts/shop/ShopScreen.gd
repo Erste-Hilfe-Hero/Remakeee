@@ -32,6 +32,14 @@ const STARTER_SEEN_FLAG: String = "shop_starter_note_seen"
 const STARTER_OPEN: String = "starter_offer"
 ## Under 18 no shop note opens by itself (docs/MONETIZATION.md rule 5, UWG annex no. 28).
 const STARTER_POPUP_MIN_BAND: int = 18
+## The First Catch Pack note (1.3.2): once, back in the world after the first wild bond
+## (FirstCatch sets the due flag), before the tutorial act ends; same adult and kids rules.
+const FIRST_CATCH_ID: String = "rg_first_catch"
+const FIRST_CATCH_DUE_FLAG: String = "shop_first_catch_due"
+const FIRST_CATCH_SEEN_FLAG: String = "shop_first_catch_note_seen"
+const FIRST_CATCH_OPEN: String = "first_catch_offer"
+const STARTER_HEAD: String = "A one-time pack for your journey"
+const FIRST_CATCH_HEAD: String = "Your first bond! A one-time pack"
 
 var menu: MenuHost
 var tab: String = "featured"
@@ -856,24 +864,59 @@ static func starter_popup_now() -> bool:
 ## The Starter Pack note: the banner card with "Show offer" and "Not now". Marks itself seen at
 ## once, so it never comes twice. "Show offer" opens the shop on the pack.
 static func run_starter_popup(host: MenuHost) -> void:
-	GameState.set_flag(STARTER_SEEN_FLAG)
-	var o: Dictionary = ShopCatalog.offer(STARTER_ID)
+	await run_offer_note(host, STARTER_ID, STARTER_SEEN_FLAG, STARTER_HEAD)
+
+# --- First Catch Pack note -----------------------------------------------------------------------
+
+## True when the First Catch Pack note should open now: the first wild bond set the due flag,
+## the tutorial act is not over yet (the Starter Pack note follows it), it never opened before,
+## the player is an adult by the server's age band (so never for kids_locked accounts), not in
+## a battle, and the pack can be bought ([param reason] as in starter_popup_due).
+static func first_catch_popup_due(flags: Dictionary, band: Variant, reason: String, in_battle: bool) -> bool:
+	if in_battle or not bool(flags.get(FIRST_CATCH_DUE_FLAG, false)) or bool(flags.get(FIRST_CATCH_SEEN_FLAG, false)):
+		return false
+	if bool(flags.get(GameState.ACT1_END_FLAG, false)):
+		return false
+	if band == null or int(band) < STARTER_POPUP_MIN_BAND:
+		return false
+	return reason.is_empty()
+
+## The check for the world, with the live state (cheap checks first, it runs every frame).
+static func first_catch_popup_now() -> bool:
+	if not GameState.has_flag(FIRST_CATCH_DUE_FLAG) or GameState.has_flag(FIRST_CATCH_SEEN_FLAG) or Billing.state.is_empty():
+		return false
+	var o: Dictionary = ShopCatalog.offer(FIRST_CATCH_ID)
+	if o.is_empty():
+		return false
+	return first_catch_popup_due(GameState.flags, Billing.state.get("band"), Billing.block_reason(o, false), Online.in_battle)
+
+## The First Catch Pack note, like the Starter Pack note.
+static func run_first_catch_popup(host: MenuHost) -> void:
+	await run_offer_note(host, FIRST_CATCH_ID, FIRST_CATCH_SEEN_FLAG, FIRST_CATCH_HEAD)
+
+## One offer note: marks [param seen_flag] at once, shows the banner card of [param offer_id]
+## under [param head], and opens the shop on it for "Show offer".
+static func run_offer_note(host: MenuHost, offer_id: String, seen_flag: String, head: String) -> void:
+	GameState.set_flag(seen_flag)
+	var o: Dictionary = ShopCatalog.offer(offer_id)
 	if o.is_empty() or Billing.kids_locked():
 		return
 	var h: MenuHost = ShopZoom.enter(host)
 	var pop := StarterPopup.new()
 	pop.offer = o
+	pop.head = head
 	h.add_child(pop)
 	var want: bool = await pop.chosen
 	pop.queue_free()
 	if want:
-		await ShopMenu.run(h, STARTER_ID)
+		await ShopMenu.run(h, offer_id)
 	ShopZoom.leave(h)
 
 ## The note itself: a dimmed screen with the banner card and two buttons.
 class StarterPopup extends Control:
 	signal chosen(want: bool)
 	var offer: Dictionary = {}
+	var head: String = ShopScreen.STARTER_HEAD
 
 	func _ready() -> void:
 		set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -893,9 +936,9 @@ class StarterPopup extends Control:
 		v.add_theme_constant_override("separation", 3)
 		v.custom_minimum_size = Vector2(get_viewport_rect().size.x - 2 * (ShopScreen.MARGIN + 2) - 4, 0)
 		center.add_child(v)
-		var head: Label = maker._label(Loc.t("A one-time pack for your journey"), UITheme.BG, true, "head")
-		head.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		v.add_child(head)
+		var title: Label = maker._label(Loc.t(head), UITheme.BG, true, "head")
+		title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		v.add_child(title)
 		var card: Control = maker.banner_card(offer, get_viewport_rect().size.x - 10.0)
 		for c: Node in card.get_children():
 			if c is Button:

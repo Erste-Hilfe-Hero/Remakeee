@@ -1,0 +1,16 @@
+{
+ "_comment": "Translations of the German table first_catch, written by tools/i18n/locales_first_catch.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "'Day one. The sky over the lake split like old paper. Aldo says I'm mad to map it. Aldo is usually right.'": "'День первый. Небо над озером треснуло, как старая бумага. Aldo говорит, что я сошла с ума, раз хочу нанести его на карту. Aldo обычно прав.'",
+  "Aldo: I saw that from the path! That one chose you.": "Aldo: Я всё видел с тропы! Он сам тебя выбрал.",
+  "First bond! A gift for the road: %s.": "Первая связь! Подарок в дорогу: %s.",
+  "Kestra: Aldo's apprentice? Good. The storm tore Rifts open, past Thornridge and under the Saltmarsh.": "Kestra: Ученик Aldo? Хорошо. Шторм открыл Разломы: за Thornridge и под Saltmarsh.",
+  "Kestra: And this blew in through my window. Mirela's compass rose. Yours, I think.": "Kestra: А это влетело ко мне в окно. Роза ветров Mirela. Кажется, твоё.",
+  "Kestra: Everyone wants them closed. I'm not so sure: new Spirlings came through. But start north in Fernstair.": "Kestra: Все хотят их закрыть. А я не уверена: пришли новые Spirlings. Но начни с севера, с Fernstair.",
+  "Three small lights peek out of the ferns: Spirlings from the storm!": "Из папоротника выглядывают три огонька: Spirlings из шторма!",
+  "Tip: A wild Spirling that trusts you can join your team.": "Подсказка: дикий Spirling, который тебе доверяет, может вступить в команду.",
+  "Tip: Goals shows how many map pages are still out there.": "Совет: в Целях видно, сколько страниц карты ещё осталось найти.",
+  "Tip: The game saves itself when you change places. Save any time in the menu.": "Совет: игра сохраняется сама при смене места. Сохраниться можно в меню в любой момент.",
+  "Your first bond! A one-time pack": "Твоя первая связь! Разовый набор"
+ }
+}

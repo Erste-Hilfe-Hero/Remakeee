@@ -422,7 +422,7 @@ Die Tabelle zeigt alle Angebote, auch nicht verkaufte (`ready: false`). `rg_fast
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-255 Angebote (Katalog v42): 212 Vorteil, 2 Komfort, 33 Kosmetik, 8 Rissglas.
+256 Angebote (Katalog v43): 213 Vorteil, 2 Komfort, 33 Kosmetik, 8 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
@@ -479,6 +479,7 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_storage_box` | Storage Box +1 | 2,99 € | 300 | Vorteil | nur Offene Liga |
 | `rg_pass` | Wayfarer Pass | 4,99 € | - | Vorteil | nur Offene Liga |
 | `rg_starter` | Starter Pack | 2,99 € | - | Vorteil | nur Offene Liga |
+| `rg_first_catch` | First Catch Pack | 0,99 € | - | Vorteil | nur Offene Liga |
 | `rg_wayfarer_pack` | Wayfarer Pack | 9,99 € | - | Vorteil | nur Offene Liga |
 | `rg_rift_pack_1` | Rift Pack 1 | 4,99 € | - | Vorteil | nur Offene Liga |
 | `rg_rift_pack_2` | Rift Pack 2 | 4,99 € | - | Vorteil | nur Offene Liga |

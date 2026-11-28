@@ -7,6 +7,7 @@ const DAY: int = 86400
 
 var _old_state: Dictionary
 var _old_loaded: bool
+var _old_billing: Dictionary
 
 class FakeStore extends Object:
 	var asked: int = 0
@@ -16,11 +17,13 @@ class FakeStore extends Object:
 func before_each() -> void:
 	_old_state = ReviewAsk.state.duplicate(true)
 	_old_loaded = ReviewAsk._loaded
+	_old_billing = Billing.state.duplicate(true)
 
 func after_each() -> void:
 	ReviewAsk.state = _old_state
 	ReviewAsk._loaded = _old_loaded
 	Online.in_battle = false
+	Billing.state = _old_billing
 
 func _fresh(now: int) -> Dictionary:
 	var st: Dictionary = {}
@@ -89,6 +92,25 @@ func test_no_plugin_means_nothing_is_counted() -> void:
 	assert_false(ReviewAsk.after_win(true, bare))
 	assert_false(ReviewAsk.state.has("asked_version"), "a build without the plugin keeps its one ask")
 	bare.free()
+
+## Kids rule: an account under 13 (kids_locked) never sees the rating sheet, also not after a
+## Warden win or a great bond (both go through after_win).
+func test_never_for_a_kids_locked_account() -> void:
+	var st: Dictionary = {"sessions": 2, "session_start": 0}
+	assert_true(ReviewAsk.may_ask(st, T0, "1.2.0", false, false))
+	assert_false(ReviewAsk.may_ask(st, T0, "1.2.0", false, true), "kids_locked")
+	var store := FakeStore.new()
+	ReviewAsk._loaded = true
+	ReviewAsk.state = {"sessions": 2, "session_start": 0}
+	Billing.state["band"] = 10
+	assert_true(Billing.kids_locked())
+	assert_false(ReviewAsk.after_win(true, store), "a highlight win of a kids_locked account")
+	assert_eq(store.asked, 0)
+	assert_false(ReviewAsk.state.has("asked_version"), "nothing counted")
+	Billing.state["band"] = 18
+	assert_true(ReviewAsk.after_win(true, store), "an adult account is asked")
+	assert_eq(store.asked, 1)
+	store.free()
 
 ## Apple 5.6.1 and Play policy: no own question in front of the store sheet, nothing paid for it.
 func test_no_pre_prompt_and_no_reward() -> void:

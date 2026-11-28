@@ -1,7 +1,7 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 42,
+ "catalog_version": 43,
  "advantage_values": {
   "_comment": "Pay-to-win step 1 (Ali, 10 Nov 2026). Seal tiers in percent (ShopEffects.seal_percent), crystal_cap = most crystal points per stat (twice Spirling.SPARK_MAX), growth_plus = extra growth of the Growth Seal. Step 3: ring_cap_plus = extra Rings of the Ring Cap Seal (off sale since 2026-11-27, there is no Ring cap any more; owners keep the unlock, it changes nothing in play). Step 4: crit_seal = extra crit chance in percentage points per tier, status_ward = percent chance a foe's status fails on your side, start_shield = percent less damage on the first hit your lead takes in each battle. Step 5: bond_edge = percentage points added to the bond timing score per Bond Head Start tier. Step 6: storage_wing = extra storage boxes owned after each Storage Wing step (each box holds 30). Step 7 (27 Nov 2026): power and guard seal tiers VIII to X, pace seal tiers VI and VII. Step 8 (1.3.2, 27 Nov 2026): crit_seal IV-V and bond_edge IV-V; victory_mend = percent of max Vigor each standing Spirling regains after a won story battle per tier; coin_seal = percent more coins from won story trainer battles per tier; wild_purse = coins per Ring of the highest foe after a won wild battle; gleam_lens, rare_compass, spark_seal = factors on the wild Gleam chance, on rarer wild kinds and on the battle Spark chance; kinship_bell = factor on the Kinship of a won battle; merchant_discount_2 = merchant price factor; growth_plus_2 = extra growth of Growth Seal II.",
   "power_seal": [
@@ -1403,6 +1403,42 @@
    "ready": true,
    "featured": true,
    "badge": "limited"
+  },
+  {
+   "id": "rg_first_catch",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "First Catch Pack",
+   "desc": "80 Riftglass, 2 Echo Scents, 1 Rift Breath. Once per account.",
+   "rg_price": 0,
+   "eur_cents": 99,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.firstcatch",
+   "grants": [
+    {
+     "t": "rg",
+     "n": 80
+    },
+    {
+     "t": "item",
+     "id": "rg_echo_scent",
+     "n": 2
+    },
+    {
+     "t": "item",
+     "id": "rg_rift_breath",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "min_band": 13,
+   "ready": true,
+   "explain": "A small pack for your first bonds: Riftglass, two tries at easier bonding and one revive in battle."
   },
   {
    "id": "rg_wayfarer_pack",

@@ -245,7 +245,8 @@ static func encounter_mults(table: String, day: String, featured_kind: String) -
 static func card_due(day: String = "") -> bool:
 	if day.is_empty():
 		day = today()
-	if not GameState.has_flag("got_starter"):
+	# Not before the partner, and not in the opening: the first minutes have no popups (Opening).
+	if not GameState.has_flag("got_starter") or Opening.active(GameState.flags):
 		return false
 	var st: Dictionary = _card_state()
 	return not (str(st.get("day", "")) == day and bool(st.get("shown", false))) and not GameState.time_went_back(str(st.get("day", "")), day)

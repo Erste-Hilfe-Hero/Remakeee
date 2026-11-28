@@ -1,7 +1,6 @@
 {
  "_comment": "Turkish texts for the German table easy_start. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
  "strings": {
-  "Kestra: Go and see for yourself, but start north in Fernstair. The Saltmarsh and Quillbrook roads are rough for a new Wayfarer.": "Kestra: Git kendi gözünle gör, ama kuzeyden, Fernstair'den başla. Saltmarsh ve Quillbrook yolları yeni bir Gezgin için zorludur.",
   "Lookout Corra: Quillbrook's Wayfarers would beat a fresh team before breakfast.": "Gözcü Corra: Quillbrook'un Gezginleri yeni bir takımı kahvaltıdan önce yener.",
   "Lookout Corra: Take the north road to Fernstair first, and let Kestra test you on the Crowcrest path. Then this road is yours.": "Gözcü Corra: Önce kuzey yolundan Fernstair'e git ve Kestra seni Crowcrest yolunda sınasın. Ondan sonra bu yol senin.",
   "Lookout Halde: Go north through Fernstair first. Kestra tests new Wayfarers on the Crowcrest path. Come back once she has seen you fight.": "Gözcü Halde: Önce kuzeye, Fernstair'den geç. Kestra yeni Gezginleri Crowcrest yolunda sınıyor. Seni dövüşürken gördükten sonra geri gel.",

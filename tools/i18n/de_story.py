@@ -36,7 +36,6 @@ T = {
 "Aldo: Her map book was up in the lamp room. The storm tore it apart and blew the pages across the valley.": "Aldo: Ihr Kartenbuch lag oben im Lampenraum. Der Sturm hat es zerrissen und die Seiten übers ganze Tal geweht.",
 "Aldo: And {name}... if you find any of Mirela's pages out there, bring them home.": "Aldo: Und {name}... wenn du da draußen Seiten von Mirela findest, bring sie nach Hause.",
 # Mirela's map book
-"Kestra: Oh, and this blew in through my window last night. It has Mirela's compass rose in the corner. Yours, I think.": "Kestra: Ach, und das hier ist letzte Nacht durch mein Fenster geweht. In der Ecke ist Mirelas Windrose. Gehört wohl dir.",
 "A page from Mirela's map book! (%d/%d)": "Eine Seite aus Mirelas Kartenbuch! (%d/%d)",
 "That's all six pages. Aldo should see them.": "Das sind alle sechs Seiten. Aldo sollte sie sehen.",
 "Pinned under the mossy rock: a sheet of old paper!": "Unter dem moosigen Stein klemmt ein altes Blatt Papier!",
@@ -44,8 +43,6 @@ T = {
 "A torn page is caught in the fence.": "Eine zerrissene Seite hängt im Zaun fest.",
 "A page drifts by the bank. The ink is still readable.": "Am Ufer treibt eine Seite. Die Tinte ist noch lesbar.",
 "Deep in the gallery, a page lies dry under a ledge.": "Tief im Stollen liegt eine Seite trocken unter einem Felsvorsprung.",
-"'Day one. The sky over the lake split like old paper. I'm going in to map it.'": "'Tag eins. Der Himmel über dem See ist gerissen wie altes Papier. Ich gehe hinein und kartiere ihn.'",
-"'Aldo says I'm mad. Aldo is usually right.'": "'Aldo sagt, ich bin verrückt. Aldo hat meistens recht.'",
 "'The ferns all lean toward the Rift, as if they were listening.'": "'Alle Farne neigen sich zum Riss, als würden sie lauschen.'",
 "'The Spirlings here have stopped calling. I'll name it the Hush.'": "'Die Spirlings hier rufen nicht mehr. Ich nenne es die Stille.'",
 "'A Warden holds a Rift shut only while their bond holds.'": "'Ein Hüter hält einen Riss nur so lange geschlossen, wie seine Bindung hält.'",

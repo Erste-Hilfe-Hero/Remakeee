@@ -1,7 +1,6 @@
 {
  "_comment": "French texts for the German table easy_start. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py fr.",
  "strings": {
-  "Kestra: Go and see for yourself, but start north in Fernstair. The Saltmarsh and Quillbrook roads are rough for a new Wayfarer.": "Kestra: Va voir par toi-même, mais commence au nord, à Fernstair. Les routes du Saltmarsh et de Quillbrook sont rudes pour un Voyageur débutant.",
   "Lookout Corra: Quillbrook's Wayfarers would beat a fresh team before breakfast.": "Guetteuse Corra: Les Voyageurs de Quillbrook battraient une équipe toute neuve avant le petit-déjeuner.",
   "Lookout Corra: Take the north road to Fernstair first, and let Kestra test you on the Crowcrest path. Then this road is yours.": "Guetteuse Corra: Prends d'abord la route du nord vers Fernstair, et laisse Kestra te mettre à l'épreuve sur le chemin du Crowcrest. Ensuite, cette route est à toi.",
   "Lookout Halde: Go north through Fernstair first. Kestra tests new Wayfarers on the Crowcrest path. Come back once she has seen you fight.": "Guetteuse Halde: Va d'abord au nord par Fernstair. Kestra met les nouveaux Voyageurs à l'épreuve sur le chemin du Crowcrest. Reviens quand elle t'aura vu combattre.",

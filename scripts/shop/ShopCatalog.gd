@@ -93,7 +93,7 @@ static func in_tab(tab: String, include_unready: bool = false) -> Array[Dictiona
 
 ## Offers that show only in the first days of a journey (200 list item 180), by offer id. Kept in
 ## the client, not in data/shop.json, because the server catalog does not know a save's start day.
-const SAVE_DAYS: Dictionary = {"rg_starter": 7}
+const SAVE_DAYS: Dictionary = {"rg_starter": 7, "rg_first_catch": 7}
 
 ## True while [param o] may show: offers in [constant SAVE_DAYS] only in that many first days of the
 ## journey (GameState.start_day), checked on [param day] (today when -1). No days left are ever shown

@@ -206,6 +206,9 @@ static func in_act_one(flags: Dictionary) -> bool:
 ## current goal has no "hud" text (after Act I). A quest picked with "Where next?" shows as
 ## "To <place>" instead, in every act (tracked_line).
 static func hud_text(flags: Dictionary) -> String:
+	# Goals open in Brindlewick, once the opening is over (Opening, 1.3.2).
+	if Opening.active(flags):
+		return ""
 	var t: Dictionary = tracked_goal(flags)
 	if not t.is_empty() and (not is_main(t) or str(t.get("hud", "")).is_empty()):
 		return tracked_line(t, flags)
@@ -225,6 +228,8 @@ static func hud_text(flags: Dictionary) -> String:
 ## Maps the current goal still leads to: its "goto" entries whose "done" flag is not set yet
 ## (a single "goto" entry stands for every flag).
 static func goal_maps(flags: Dictionary) -> Array[String]:
+	if Opening.active(flags):
+		return []
 	# A quest picked with "Where next?" leads the goal doors to its target (a main goal with
 	# "goto" keeps its own list, which starts with the same map).
 	var t: Dictionary = tracked_goal(flags)

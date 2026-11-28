@@ -881,7 +881,7 @@ func _run() -> void:
 		await _text.show_text(Loc.t(model.bond_block))
 	_refresh_goal()
 	# One tip per battle start, the Energy tip first (Chimora 100 item 31).
-	for line: String in Tips.take(Tips.battle_start_tip(model.is_wild, _multi)):
+	for line: String in Tips.take(Tips.battle_start_tip(model.is_wild, _multi, model.has_meta(FirstCatch.META))):
 		await _text.show_text(line)
 	_replaying = not replay_inputs.is_empty()
 	# The very first battle: an arrow at the first art when nothing is tapped (200 list item 11).

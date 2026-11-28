@@ -22,3 +22,8 @@ select sum(accounts) as accounts, sum(with_save) as with_save,
   round(100.0 * sum(back_7d) / nullif(sum(accounts), 0), 1) as back_7d_pct,
   sum(stopped) as stopped
 from public.admin_funnel(:'from'::date, :'to'::date);
+
+-- The first minutes of journeys started in 1.3.2 or later (20261128160000_funnel_start.sql):
+-- per sign-up day the journeys that reached control, the first wild Spirling, the first bond,
+-- the story in Brindlewick and the first save, with the median seconds of play to each.
+select * from public.admin_funnel_start(:'from'::date, :'to'::date);

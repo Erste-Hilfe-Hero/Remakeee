@@ -194,6 +194,10 @@ T = {
 	"Starterpaket",
 "300 Riftglass, 5 Ring Tonics, 1 Growth Crystal, 3 Rift Breaths, 3 Echo Scents. Once per account.":
 	"300 Rissglas, 5 Ring-Tränke, 1 Wachstumskristall, 3 Rissatem, 3 Echo-Düfte. Einmal pro Konto.",
+"First Catch Pack":
+	"Erste-Bindung-Paket",
+"80 Riftglass, 2 Echo Scents, 1 Rift Breath. Once per account.":
+	"80 Rissglas, 2 Echo-Düfte, 1 Rissatem. Einmal pro Konto.",
 "Wayfarer Pack":
 	"Wanderer-Paket",
 "1000 Riftglass, Riftheart, Glass Shield, 2 Great Ring Tonics, 1 Bond Seal. Once per account.":
