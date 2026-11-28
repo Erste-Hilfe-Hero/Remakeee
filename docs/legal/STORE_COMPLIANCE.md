@@ -70,7 +70,8 @@ Konto zuordnet und speichert, wird „Purchase History“ angegeben.
   greift erst, wenn z. B. Google-Login angeboten wird).
 - **Exportkontrolle Verschlüsselung:** Nur Standard-HTTPS → `ITSAppUsesNonExemptEncryption = NO` in der
   Info.plist, dann entfällt die Frage bei jedem Upload.
-- **Online-only:** In der Beschreibung klar sagen, dass eine Internetverbindung nötig ist. Apple-Prüfer
+- **Offline und online:** In der Beschreibung klar sagen, dass die Geschichte offline läuft und nur Freunde, Ligen
+  und der Shop Internet brauchen (docs/OFFLINE.md; `tools/store/listing_check.py` prüft das). Apple-Prüfer
   brauchen einen funktionierenden Server und ggf. einen Demo-Zugang.
 
 ## 3. Altersfreigabe

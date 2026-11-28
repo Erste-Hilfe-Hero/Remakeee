@@ -2,7 +2,7 @@
 - Bağ kurulacak 567 Spirling: büyük Benim! düğmesine hızlı dokun, çubuğu doldur
 - Sekiz element ve birkaç evreli Muhafızlarla taktik, sıra tabanlı savaşlar
 - Beş çağ boyunca büyüyen piksel sanatı: tek renkten tam renge
-- Çevrimiçi oyun: Chimora internet bağlantısı gerektirir
+- Hikâye çevrim dışı oynanır; arkadaşlar, ligler ve mağaza için internet gerekir
 
 1.3.2 İLE GELENLER
 - 70 yeni Spirling, her bölgede 10 tane
@@ -54,5 +54,3 @@ FİNALDEN SONRA
 
 MAĞAZA VE ADİL LİG
 Ücretsiz oynanır, isteğe bağlı uygulama içi satın alımlar vardır. Birçoğu savaşta avantaj sağlar ya da ilerlemeyi hızlandırır; Adil ligde geçerli değildir. Her teklif içinde tam olarak ne olduğunu gösterir, hiçbir şey rastgele değildir. Her bölgeye, her Muhafız'a ve her Spirling türüne ödeme yapmadan ulaşılabilir. Mağaza 13 yaş altı oyunculara kapalıdır ve yaşa göre aylık sınırları vardır. Reklam yok, takip yok.
-
-Not: Chimora için internet bağlantısı gerekir.

@@ -56,22 +56,21 @@ func test_call_fn_tries_once_more_after_a_drop() -> void:
 	assert_true(Online.is_online())
 	DirAccess.remove_absolute("user://test_ux_online.json")
 
-func test_reconnect_screen_counts_tries_and_offers_title_after_a_minute() -> void:
-	var o := ReconnectOverlay.new()
+## docs/OFFLINE.md: no reconnect screen any more. A short drop shows nothing, a longer one only
+## the small mark; nothing pauses, there is no button to press and no way back to the title.
+func test_offline_shows_only_the_small_mark_and_never_pauses() -> void:
+	var o := OfflineMark.new()
 	add_child_autofree(o)
-	o.show_overlay()
-	o.update_view(1, 4.2, 1.0)
-	assert_false(o.is_big(), "a short drop only shows the small mark")
+	o.update_view(1.0)
+	assert_false(o.visible, "a short drop shows nothing")
 	assert_false(get_tree().paused)
-	o.update_view(3, 4.2, ReconnectOverlay.SHORT_DROP)
-	assert_true(o.is_big())
-	assert_true(get_tree().paused)
-	assert_string_contains(o._label.text, "Try 3. Next try in 5 s.")
-	assert_true(o._try_button.visible)
-	assert_false(o._title_button.visible)
-	o.update_view(9, 1.0, ReconnectOverlay.TITLE_AFTER)
-	assert_true(o._title_button.visible)
-	o.hide_overlay()
+	o.update_view(OfflineMark.SHOW_AFTER)
+	assert_true(o.visible)
+	assert_false(get_tree().paused)
+	o.update_view(3600.0)
+	assert_false(get_tree().paused, "an hour offline still plays")
+	assert_eq(o.get_children().filter(func(c: Node) -> bool: return c is Button).size(), 0, "nothing to tap")
+	o.hide_mark()
 	assert_false(get_tree().paused)
 
 func test_toast_goes_away_by_itself() -> void:

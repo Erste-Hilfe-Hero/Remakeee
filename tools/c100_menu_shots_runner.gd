@@ -49,12 +49,11 @@ func _screens(lang: String) -> void:
 	await _shoot(m, t + "_10_account_offline", func() -> void: await AccountMenu.run(m))
 	Online.profile = {"code": "GPRG38FP"}
 	Billing.state = {"balance": 120, "band": 18, "open": true}
-	# The short-drop mark over the pause menu.
-	var o := ReconnectOverlay.new()
+	# The offline mark over the pause menu (docs/OFFLINE.md).
+	var o := OfflineMark.new()
 	add_child(o)
-	o.show_overlay()
-	o.update_view(1, 2.0, 1.0)
-	await _shoot(m, t + "_12_reconnect_mark", m.run)
+	o.update_view(OfflineMark.SHOW_AFTER)
+	await _shoot(m, t + "_12_offline_mark", m.run)
 	o.queue_free()
 	m.queue_free()
 	await get_tree().process_frame

@@ -2,7 +2,7 @@ Lie-toi à 567 monstres en pixel art, traque les rares formes Reflet et prévois
 - 567 Spirlings à lier: tape vite sur le gros bouton C'est à moi! pour remplir la barre
 - Combats tactiques au tour par tour: huit éléments, Gardiens à plusieurs phases
 - Un pixel art qui grandit sur cinq ères, du monochrome à la pleine couleur
-- Jeu en ligne: Chimora nécessite une connexion Internet
+- L'histoire se joue hors ligne; amis, ligues et boutique demandent Internet
 
 NOUVEAU DANS LA 1.3.2
 - 70 nouveaux Spirlings, 10 dans chaque région
@@ -52,5 +52,3 @@ JOUER À TA FAÇON
 
 BOUTIQUE ET LIGUE ÉQUITABLE
 Jeu gratuit avec achats intégrés facultatifs. Beaucoup donnent des avantages en combat ou accélèrent la progression; en Ligue équitable, ils ne comptent pas. Chaque offre montre exactement son contenu, rien n'est aléatoire. Régions, Gardiens, espèces de Spirlings: tout est accessible sans payer. La boutique est fermée aux moins de 13 ans, avec des plafonds mensuels selon l'âge. Pas de pub, pas de pistage.
-
-Remarque: Chimora nécessite une connexion Internet.

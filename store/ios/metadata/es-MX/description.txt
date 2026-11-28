@@ -2,7 +2,7 @@ Vincúlate con 567 monstruos pixel, busca raras formas Fulgor y planea cada turn
 - 567 Spirlings para vincular: toca rápido el gran botón ¡Mío! y llena la barra
 - Combates tácticos por turnos con ocho elementos y Custodios con varias fases
 - Un pixel art que madura a lo largo de cinco eras, del monocromo al color pleno
-- Juego online: Chimora necesita conexión a internet
+- La historia funciona sin conexión; amigos, ligas y tienda necesitan internet
 
 NOVEDADES DE LA 1.3.2
 - 70 Spirlings nuevos, 10 en cada región
@@ -53,5 +53,3 @@ JUEGA A TU MANERA
 
 TIENDA Y LIGA IGUALADA
 Gratis para jugar, con compras opcionales dentro de la app. Muchas dan ventajas en combate o aceleran el progreso; en la Liga igualada no cuentan. Cada oferta muestra exactamente lo que incluye, nada es aleatorio. Todas las regiones, Custodios y especies de Spirlings se alcanzan sin pagar. La tienda está bloqueada para menores de 13 años y tiene límites mensuales por edad. Sin anuncios, sin rastreo.
-
-Nota: Chimora necesita conexión a internet.

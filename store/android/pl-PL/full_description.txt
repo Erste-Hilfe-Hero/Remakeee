@@ -2,7 +2,7 @@ Zawiąż więź z 567 pikselowymi potworami, szukaj rzadkiego Połysku i planuj 
 • 567 Spirlingów do zjednania: stukaj szybko w duży przycisk Mój! i napełnij pasek
 • Taktyczne walki turowe z ośmioma żywiołami i Strażnikami o kilku fazach
 • Pikselowa grafika, która dojrzewa przez pięć epok: od monochromu do pełnego koloru
-• Gra online: Chimora wymaga połączenia z internetem
+• Fabuła działa offline; znajomi, ligi i sklep wymagają internetu
 
 NOWOŚCI W 1.3.2
 • 70 nowych Spirlingów, po 10 w każdej krainie
@@ -54,5 +54,3 @@ GRAJ PO SWOJEMU
 
 SKLEP I LIGA RÓWNYCH SZANS
 Gra jest darmowa i ma opcjonalne zakupy w aplikacji. Wiele z nich daje przewagę w walce lub przyspiesza postępy; w Lidze równych szans nie działają. Każda oferta pokazuje dokładnie, co zawiera, nic nie jest losowe. Każda kraina, każdy Strażnik i każdy gatunek Spirlinga są dostępne bez płacenia. Sklep jest zablokowany dla graczy poniżej 13 lat i ma miesięczne limity zależne od wieku. Bez reklam, bez śledzenia.
-
-Uwaga: Chimora wymaga połączenia z internetem.

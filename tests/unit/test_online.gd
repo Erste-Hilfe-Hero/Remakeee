@@ -232,23 +232,23 @@ func test_deleting_the_account_removes_everything() -> void:
 	assert_false(FileAccess.file_exists(SaveManager.path_for_slot(1)), "local copy gone too")
 	assert_eq(Online.state, Online.State.OFFLINE)
 
-func test_losing_the_connection_while_playing_pauses_and_recovers() -> void:
+func test_losing_the_connection_while_playing_goes_on_and_recovers() -> void:
 	await Online.connect_now()
 	GameState.in_game = true
 	_server.offline = true
 	await Online.call_fn("presence", {"p_place": "x"})
-	# Drops shorter than 3 s only show a small mark (plan item 2150).
-	Online._offline_for = ReconnectOverlay.SHORT_DROP
+	# Drops shorter than 3 s show nothing (plan item 2150); longer ones the small mark only.
+	Online._offline_for = OfflineMark.SHOW_AFTER
 	await wait_process_frames(2)
-	assert_true(Online._overlay.visible, "reconnect screen shows")
-	assert_true(get_tree().paused)
+	assert_true(Online.offline_mark.visible, "the offline mark shows")
+	assert_false(get_tree().paused, "the game goes on (docs/OFFLINE.md)")
 	_server.offline = false
 	await wait_seconds(Online.RETRY_SECONDS + 0.5)
 	await wait_process_frames(3)
-	assert_eq(Online.state, Online.State.ONLINE)
-	# The screen fades out in 0.2 s (plan item 2291).
-	await wait_seconds(ReconnectOverlay.FADE_TIME + 0.1)
-	assert_false(Online._overlay.visible)
+	assert_eq(Online.state, Online.State.ONLINE, "back online by itself")
+	# The mark fades out in 0.2 s (plan item 2291).
+	await wait_seconds(OfflineMark.FADE_TIME + 0.1)
+	assert_false(Online.offline_mark.visible)
 	assert_false(get_tree().paused)
 	GameState.in_game = false
 

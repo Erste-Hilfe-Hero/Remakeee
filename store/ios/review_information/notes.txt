@@ -1,7 +1,7 @@
-# REMOVE BEFORE UPLOAD. Delete each "New in 1.3.2" line not in the build. No offline play: add "Chimora is online only." to line 1.
-What the app is: a turn-based monster-taming RPG in pixel art for ages 9+ (mild fantasy violence: creatures faint, no blood). Single-player story, optional online play with friends.
+# REMOVE BEFORE UPLOAD. Delete each "New in 1.3.2" line not in the build.
+What the app is: a turn-based monster-taming RPG in pixel art for ages 9+ (mild fantasy violence: creatures faint, no blood). Single-player story, optional online play with friends. The story plays offline (test: airplane mode).
 
-How to start: no sign-in. On first launch the game creates an anonymous account on our own server (EU) and starts at once: choose a language, tick the box to accept the Terms of Use and Privacy Policy (links on the same screen), then New Game. No email, no third-party login, no chat.
+How to start: no sign-in. Once online, the game creates an anonymous account on our own server (EU) and starts at once: choose a language, tick the box to accept the Terms of Use and Privacy Policy (links on the same screen), then New Game. No email, no third-party login, no chat.
 
 Online features: Menu > Friends shows your friend code; a second device or install can add it. Friends swap greetings, Lantern Mail, gifts and echo duels. Menu > Account: transfer code, online rules, privacy note and "Delete account..." (deletes the account and all server data at once, 5.1.1(v)). "Enter a code..." there and "I have a code" on the title screen only take a transfer code to move your own account to a new phone; they unlock no content. No promo or redeem codes.
 

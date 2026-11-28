@@ -13,6 +13,8 @@ Screenshot captions, store/ios/screenshot_captions/<locale>.txt (tools/store/mak
   (plan Chimora 100, items 86, 87, 97; Play uses the captions of its language's main locale).
 Google Play, store/android/<lang>/ for the 14 game languages: title 30, short 80, full 4000, changelog 500.
 Every text: no franchise term (the pattern of tools/ip_check.sh) and no other game's name (OTHER_GAMES).
+The game plays offline (docs/OFFLINE.md): no store text, review note or app access text may say it is online
+only or needs internet as a whole (ONLINE_ONLY, the sentences the listings carried before).
 """
 from __future__ import annotations
 
@@ -43,7 +45,45 @@ SHARED_INDEX = [("en-US", "es-MX"), ("en-CA", "fr-CA"), ("en-GB", "en-AU")]
 OTHER_GAMES = re.compile(r"evocreo|neo ?monsters|aniimo|voidpet|nexomon|coromon|temtem|cassette ?beasts|siralim"
                          r"|monster super league|bulu monster|wild tamer|monster masters|dragonvale|negamon|nevomove"
                          r"|digimon|yo-?kai|palworld|monster ?hunter|dragon ?quest|monster ?sanctuary|ooblets", re.I)
+# What the listings said while Chimora was online only, in every language. The story plays offline now;
+# only the online parts need internet, and the texts say exactly that.
+ONLINE_ONLY = [
+    'Online game: Chimora needs an internet connection',
+    'Note: Chimora needs an internet connection.',
+    'Online-Spiel: Chimora braucht eine Internetverbindung',
+    'Hinweis: Chimora benötigt eine Internetverbindung.',
+    'Juego online: Chimora necesita conexión a internet',
+    'Nota: Chimora necesita conexión a internet.',
+    'Jeu en ligne: Chimora nécessite une connexion Internet',
+    'Remarque: Chimora nécessite une connexion Internet.',
+    'Gioco online: Chimora richiede una connessione a Internet',
+    'Nota: Chimora richiede una connessione a Internet.',
+    'オンラインゲーム：プレイにはインターネット接続が必要です',
+    'ご注意：Chimoraのプレイにはインターネット接続が必要です。',
+    '온라인 게임: Chimora는 인터넷 연결이 필요합니다',
+    '참고: Chimora는 인터넷 연결이 필요합니다.',
+    'Online game: Chimora heeft een internetverbinding nodig',
+    'Let op: Chimora heeft een internetverbinding nodig.',
+    'Gra online: Chimora wymaga połączenia z internetem',
+    'Uwaga: Chimora wymaga połączenia z internetem.',
+    'Jogo online: Chimora precisa de conexão com a internet',
+    'Aviso: Chimora precisa de conexão com a internet.',
+    'Jogo online: Chimora precisa de ligação à internet',
+    'Aviso: Chimora precisa de ligação à internet.',
+    'Онлайн-игра: для Chimora нужно подключение к интернету',
+    'Примечание: для Chimora нужно подключение к интернету.',
+    'Çevrimiçi oyun: Chimora internet bağlantısı gerektirir',
+    'Not: Chimora için internet bağlantısı gerekir.',
+    '联网游戏：Chimora需要网络连接',
+    '注意：Chimora需要联网。',
+    '連線遊戲：Chimora需要網路連線',
+    '注意：Chimora需要網路連線。',
+    'Chimora is online only',
+    'Chimora ist nur online spielbar',
+]
 CJK = re.compile(r"[぀-ヿ㐀-鿿가-힯]")
+# App Store Connect review notes (store/ios/review_information/notes.txt).
+NOTES_MAX = 3999
 CAPTION_LINES = 8
 CAPTION_MAX = 60
 NOT_IN_CAPTIONS = re.compile(r"discord|[€$£¥₩₽]", re.I)
@@ -100,8 +140,6 @@ def check_keywords(loc: str, kw: str, name: str, subtitle: str, errors: list[str
             errors.append("%s: %r repeats a word of the name or subtitle" % (where, k))
     if "chimora" in kw.lower():
         errors.append(where + ": the brand is in the name already")
-    if "offline" in kw.lower():
-        errors.append(where + ": the game is online only")
 
 
 def check(root: str = ROOT) -> list[str]:
@@ -151,6 +189,16 @@ def check(root: str = ROOT) -> list[str]:
         files += [os.path.join(base, n) for n in t]
         if t.get("title.txt") and not t["title.txt"].startswith("Chimora"):
             errors.append("store/android/%s/title.txt must start with Chimora" % lang)
+    for extra in ("store/ios/review_information/notes.txt", "store/android/app_access_de.txt"):
+        if os.path.exists(os.path.join(root, extra)):
+            files.append(os.path.join(root, extra))
+    notes = os.path.join(root, "store/ios/review_information/notes.txt")
+    if os.path.exists(notes) and len(read(notes)) > NOTES_MAX:
+        errors.append("store/ios/review_information/notes.txt has %d characters (App Review allows %d)" % (len(read(notes)), NOTES_MAX))
+    for p in files:
+        for claim in ONLINE_ONLY:
+            if claim in read(p):
+                errors.append("%s says %r: the story plays offline (docs/OFFLINE.md)" % (os.path.relpath(p, root), claim))
     banned = franchise_pattern()
     for p in files:
         text = read(p)

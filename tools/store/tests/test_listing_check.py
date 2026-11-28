@@ -27,7 +27,8 @@ class ListingCheck(unittest.TestCase):
         self.assertTrue(kw_errors("retro,monster"))  # already in the name
         self.assertTrue(kw_errors("retro,pixel"))  # already in the subtitle
         self.assertTrue(kw_errors("retro,chimora"))
-        self.assertTrue(kw_errors("retro,offline"))
+        # The story plays offline (docs/OFFLINE.md), so "offline" is a fair search word now.
+        self.assertEqual(kw_errors("retro,offline"), [])
 
     def test_cjk_keywords(self):
         errors = []
@@ -55,7 +56,10 @@ class ListingCheck(unittest.TestCase):
             with open(caps + "pl.txt", "w", encoding="utf-8") as f:
                 f.write("\n".join(["ok"] * 6))
             os.remove(caps + "tr.txt")
+            with open(os.path.join(tmp, "store/android/en-US/full_description.txt"), "a", encoding="utf-8") as f:
+                f.write("\nNote: Chimora needs an internet connection.")
             text = "\n".join(lc.check(tmp))
+            self.assertIn("en-US/full_description.txt says 'Note: Chimora needs an internet connection.'", text)
             self.assertIn("ja.txt: 'Join our Discord': no prices and no Discord", text)
             self.assertIn("pl.txt needs 8 non-empty lines", text)
             self.assertIn("missing store/ios/screenshot_captions/tr.txt", text)

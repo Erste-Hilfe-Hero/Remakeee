@@ -23,7 +23,6 @@ func _run() -> void:
 	server.offline = true
 	Online.backend = server
 	Online.state = Online.State.OFFLINE
-	Online.offline_play = true
 	GameState.new_game(GameState.Difficulty.TAMER, "Rowan", 0, "Kindlop")
 	SaveManager.start_fresh_slot()
 	for f: String in ["got_starter", "aldo_gift", Overworld.FIRST_WALK_FLAG]:

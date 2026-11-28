@@ -1,11 +1,11 @@
 extends GutTest
 ## Owner report 13 Nov (iPhone, 1.1.0): after a battle the Wayfarer walks on by itself.
 ## A won battle sends its online steps (world goal, bonds, rift board); on a weak connection
-## that call fails, Online goes OFFLINE and three seconds later the reconnect screen pauses the
-## tree. A paused VirtualPad gets no _input, so the finger lifted from the D-pad meanwhile was
-## never seen: the direction stayed pressed and the Wayfarer walked off when the game went on.
+## that call fails and Online goes OFFLINE. The old reconnect screen then paused the tree, so the
+## finger lifted from the D-pad meanwhile was never seen. Since docs/OFFLINE.md a drop pauses
+## nothing: the pad sees every touch and walking simply goes on.
 
-var _overlay: ReconnectOverlay
+var _mark: OfflineMark
 
 func before_all() -> void:
 	Database.load_all()
@@ -14,8 +14,8 @@ func before_each() -> void:
 	VirtualPad.force_visible = true
 	VirtualPad.apply_settings()
 	VirtualPad.set_wanted(true)
-	_overlay = ReconnectOverlay.new()
-	add_child_autofree(_overlay)
+	_mark = OfflineMark.new()
+	add_child_autofree(_mark)
 
 func after_each() -> void:
 	get_tree().paused = false
@@ -34,24 +34,23 @@ func _touch(pos: Vector2, pressed: bool) -> void:
 func _down_cell() -> Vector2:
 	return VirtualPad.dpad_rect().get_center() + Vector2(0, VirtualPad._dpad)
 
-## The reconnect screen comes up (pausing the tree) and goes again once the connection is back.
+## The connection is gone for a while (the offline mark shows) and comes back.
 func _connection_drop_while(lift: Callable) -> void:
 	Online.in_battle = false
-	_overlay.show_overlay()
-	_overlay.update_view(1, 0.0, ReconnectOverlay.SHORT_DROP + 1.0)
-	assert_true(get_tree().paused, "the big reconnect screen pauses the game")
+	_mark.update_view(OfflineMark.SHOW_AFTER + 1.0)
+	assert_false(get_tree().paused, "offline pauses nothing")
 	await wait_process_frames(2)
 	lift.call()
 	await wait_process_frames(2)
-	_overlay.hide_overlay()
+	_mark.hide_mark()
 	assert_false(get_tree().paused)
 
-func test_finger_lifted_under_the_reconnect_screen_lets_go_of_the_direction() -> void:
+func test_finger_lifted_while_offline_lets_go_of_the_direction() -> void:
 	_touch(_down_cell(), true)
 	assert_eq(VirtualPad.held_dir(), "ui_down")
 	assert_true(Input.is_action_pressed("ui_down"))
 	await _connection_drop_while(func() -> void: _touch(_down_cell(), false))
-	assert_eq(VirtualPad.held_dir(), "", "the pad holds no direction after the reconnect")
+	assert_eq(VirtualPad.held_dir(), "", "the pad holds no direction after the drop")
 	assert_false(Input.is_action_pressed("ui_down"), "nothing presses down any more")
 
 func _overworld() -> Overworld:
@@ -75,9 +74,12 @@ func test_wayfarer_stands_still_after_the_reconnect() -> void:
 	await wait_seconds(1.0)
 	assert_eq(ow.player.cell, at, "the Wayfarer does not walk on by itself")
 
-func test_tap_walk_does_not_go_on_after_the_reconnect() -> void:
+func test_tap_walk_goes_on_through_a_drop() -> void:
 	var ow: Overworld = await _overworld()
 	ow.player.follow([Vector2i(5, 2), Vector2i(5, 3), Vector2i(5, 4)] as Array[Vector2i])
 	await _connection_drop_while(func() -> void: pass)
-	await wait_process_frames(2)
-	assert_true(ow.player.path.is_empty(), "the tap walk is dropped like on leaving the app")
+	for i: int in 180:
+		if ow.player.path.is_empty() and not ow.player.moving:
+			break
+		await wait_process_frames(1)
+	assert_eq(ow.player.cell, Vector2i(5, 4), "the tap walk reached its end, nothing stopped it")

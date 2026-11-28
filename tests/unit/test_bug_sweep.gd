@@ -97,7 +97,7 @@ func test_info_text_is_translated() -> void:
 	add_child_autofree(host)
 	host.info(AccountMenu.PRIVACY_NOTE)
 	await wait_process_frames(1)
-	assert_true(host._info_label.text.begins_with("Chimora läuft nur online"), host._info_label.text.left(40))
+	assert_true(host._info_label.text.begins_with("Chimora läuft auch offline"), host._info_label.text.left(40))
 	assert_true(host._info_label.text.ends_with(Loc.t("(tap to continue)")))
 	host._close_info()
 	Loc.set_language(before)

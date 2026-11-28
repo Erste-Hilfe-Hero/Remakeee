@@ -29,6 +29,10 @@ var last_error: String = ""
 var _buying: bool = false
 
 func _ready() -> void:
+	# Bought unlocks, the pass and the age band from the last connection, so they keep working
+	# offline (docs/OFFLINE.md). The real server only; the local test server starts empty.
+	if not Online.is_local():
+		load_cache()
 	store = make_store()
 	if Online.has_signal("state_changed"):
 		Online.state_changed.connect(_on_online_state)
@@ -85,6 +89,8 @@ func refresh_state() -> Dictionary:
 	var r: Dictionary = await Online.call_fn("shop_state")
 	if r.ok and r.data is Dictionary:
 		state = r.data
+		if not Online.is_local():
+			save_cache()
 		ShopEffects.apply_unlocks()
 		if pass_active():
 			await claim_pass_daily()
@@ -215,6 +221,9 @@ func price_text(o: Dictionary) -> String:
 
 ## Buys [param o] with Riftglass on the server (no store involved).
 func buy_with_riftglass(o: Dictionary, choice: Variant = null) -> Dictionary:
+	# The wallet lives on the server; offline nothing is spent or granted.
+	if not Online.is_online():
+		return {"ok": false, "error": "offline"}
 	var why: String = block_reason(o, true)
 	if not why.is_empty():
 		return {"ok": false, "error": why}
@@ -246,6 +255,9 @@ func busy() -> bool:
 
 func _buy_in_store(o: Dictionary, choice: Variant) -> Dictionary:
 	await refresh_state()
+	# Never a store sheet without the server: it checks and credits every purchase (docs/OFFLINE.md).
+	if not Online.is_online() or bool(state.get("cached", false)):
+		return {"ok": false, "error": "offline"}
 	var why: String = block_reason(o, false)
 	if not why.is_empty():
 		return {"ok": false, "error": why}
@@ -343,3 +355,51 @@ static func apply_grant(g: Dictionary) -> void:
 			var s: Spirling = ShopEffects.bought_spirling(g)
 			if s != null:
 				GameState.receive_spirling(s)
+
+# --- Offline copy of the entitlements (docs/OFFLINE.md) ---------------------------------------
+
+## What stays usable offline: bought unlocks, the pass and its end, the age band (kids lock).
+## Never the Riftglass balance, prices, limits or tokens: buying and spending need the server.
+const CACHE_PATH: String = "user://shop_entitlements.json"
+const CACHE_KEYS: Array[String] = ["band", "unlocks", "pass_active", "pass_until"]
+## Mixed into the check value, so a hand-edited file is ignored (a deterrent, not a lock: the
+## server stays the authority and replaces this copy at the next connection).
+const CACHE_SALT: String = "chimora-entitlements-1"
+
+## The entitlement part of [param s] with the time it was taken.
+static func entitlements(s: Dictionary, now: int) -> Dictionary:
+	var out: Dictionary = {"cached_at": now}
+	for k: String in CACHE_KEYS:
+		if s.has(k):
+			out[k] = s[k]
+	return out
+
+static func cache_sign(ent: Dictionary) -> String:
+	return (CACHE_SALT + "|" + OS.get_unique_id() + "|" + JSON.stringify(ent, "", true)).sha256_text()
+
+## Writes the entitlements of [member state] (after every shop_state from the server).
+func save_cache(path: String = CACHE_PATH) -> void:
+	# Signed as it will read back (JSON turns whole numbers into floats).
+	var ent: Variant = JSON.parse_string(JSON.stringify(entitlements(state, int(Time.get_unix_time_from_system()))))
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	if f != null:
+		f.store_string(JSON.stringify({"ent": ent, "sig": cache_sign(ent)}))
+
+## Reads the cached entitlements into [member state] when nothing came from the server yet.
+## A file whose check value does not match, or a clock set back before it was written, is
+## ignored; a pass whose end passed counts as ended. Returns true when the copy was taken.
+func load_cache(path: String = CACHE_PATH, now: int = -1) -> bool:
+	if not state.is_empty() or not FileAccess.file_exists(path):
+		return false
+	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	if not raw is Dictionary or not raw.get("ent") is Dictionary or str(raw.get("sig", "")) != cache_sign(raw.ent):
+		return false
+	var ent: Dictionary = raw.ent
+	var t: int = int(Time.get_unix_time_from_system()) if now < 0 else now
+	if t < int(ent.get("cached_at", 0)):
+		return false
+	var until: Variant = ent.get("pass_until")
+	ent["pass_active"] = bool(ent.get("pass_active", false)) and (until is float or until is int) and t < int(until)
+	ent["cached"] = true
+	state = ent
+	return true

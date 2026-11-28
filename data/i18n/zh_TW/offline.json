@@ -1,0 +1,9 @@
+{
+ "_comment": "Translations of the German table offline, written by tools/i18n/locales_offline.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Chimora plays offline too. When you are online, your journeys are also stored on our server in the EU, so they are safe if your phone breaks. Hosting: Contabo GmbH, Munich, Germany (processor, Art. 28 GDPR); server location: data centre Lauterbourg, France (EU). We store your Wayfarer name, friend code, saves, friends, Lantern Mail and league standings, nothing else. No ads, no tracking. We count anonymously how far players get in the game, to make it better. You can download or delete everything under Settings, Account.": "Chimora也可以離線遊玩。連線時，你的旅程也會存放在我們位於歐盟的伺服器上，即使手機壞了也很安全。託管方：Contabo GmbH，德國慕尼黑（處理者，GDPR第28條）；伺服器位置：法國洛泰爾堡資料中心（歐盟）。我們只儲存你的旅人名稱、好友代碼、存檔、好友、燈信和聯賽排名，其他一概不存。沒有廣告，沒有追蹤。為了改進遊戲，我們會匿名統計玩家的遊戲進度。你可以在「設定」的「帳號」中下載或刪除所有資料。",
+  "Offline. Your journey is saved on this phone.": "離線中。你的旅程存放在這支手機上。",
+  "Online, a copy of your journeys is kept on our server. No ads, no tracking.": "連線時，你的旅程會在我們的伺服器上存一份副本。沒有廣告，沒有追蹤。",
+  "This needs internet. The rest of your journey plays on offline.": "這需要連線。你的其餘旅程可以離線繼續。"
+ }
+}

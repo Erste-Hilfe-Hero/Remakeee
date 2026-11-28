@@ -2,7 +2,7 @@ Binde 567 Pixel-Monster an dich, jage seltene Glanzformen und plane jeden Zug. C
 • 567 Spirlings zum Binden: Tippe schnell auf den großen Meins!-Knopf und füll den Balken
 • Taktische Rundenkämpfe mit acht Elementen und Wächtern mit mehreren Phasen
 • Pixelgrafik, die über fünf Ären erwachsen wird: von Schwarz-Weiß bis zur vollen Farbe
-• Online-Spiel: Chimora braucht eine Internetverbindung
+• Die Geschichte läuft offline; Freunde, Ligen und Shop brauchen Internet
 
 NEU IN 1.3.2
 • 70 neue Spirlings, 10 in jeder Region
@@ -52,5 +52,3 @@ SPIELBAR, WIE DU WILLST
 
 SHOP UND GLEICHSTAND-LIGA
 Kostenlos spielbar, mit optionalen In-App-Käufen. Viele davon geben Vorteile im Kampf oder beschleunigen den Fortschritt; in der Gleichstand-Liga zählen sie nicht. Jedes Angebot zeigt genau, was drin ist, nichts ist zufällig. Jede Region, jeder Wächter und jede Spirling-Art ist ohne Kauf erreichbar. Unter 13 ist der Shop gesperrt, dazu gibt es Monatslimits nach Alter. Keine Werbung, kein Tracking.
-
-Hinweis: Chimora benötigt eine Internetverbindung.
