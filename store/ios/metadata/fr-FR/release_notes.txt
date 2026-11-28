@@ -1,14 +1,26 @@
+# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 12 natural start, 13 cutscenes, 14 post-story storylines and Quivermoor duels, 15 quest book, 16 offline play, 17 bond charms, 18 First Catch Pack, 19 daily rewards/tasks/Spirling of the day, 20 weekend weather events, 21 Spirlog rewards, 22 friend codes, 23 smoother menus.
 Chimora 1.3.2
 
-- Une toute nouvelle boutique : packs de Verre de Faille, Carte mensuelle, Spirlings Champions, lots, et offres du jour et de la semaine. Chaque offre montre exactement son contenu, rien n'est laissé au hasard.
-- Le Verre de Faille sert maintenant aussi en jeu : continuer le combat après une défaite, soigner ton équipe, booster la croissance ou un lien, écourter l'attente d'un voyage, affronter à nouveau un Gardien tout de suite, et plus encore.
-- 20 Verre de Faille offerts chaque jour quand tu es en ligne.
-- Un nouveau pass à 30 paliers, avec une rangée gratuite pour tout le monde.
+- Une boutique refaite avec des textes plus clairs : chaque pack et chaque offre dit simplement ce qu'il contient et ce qu'il fait. Rien n'est aléatoire.
 - 70 nouveaux Spirlings, 10 dans chaque région.
 - Les Reflets existent maintenant en 5 sortes, du Reflet classique au très rare Reflet opalin.
 - Nouvelle météo : pluie, brouillard, vent, orages et neige changent le monde et certains combats. Elle est activée d'emblée et se règle dans les paramètres.
 - 35 pierres à énigmes et plateaux de casse-tête dans toutes les régions.
 - Plein de secrets cachés à découvrir en jouant.
 - Les cartes sont mieux reliées : plus de culs-de-sac, et de nouvelles maisons à visiter en ville.
-- Meilleur affichage sur grands écrans et tablettes.
+- Une seule difficulté pour tous, qui monte d'acte en acte. Plus de choix de difficulté ni de limite de Rang.
 - Nombreuses corrections de bugs.
+- Les appuis sur C'est à moi! vibrent légèrement (seulement si la vibration est activée dans les paramètres).
+- Une plus belle introduction au début du jeu.
+- Un début naturel : tu joues tout de suite, et l'histoire commence quand tu rencontres ton premier Spirling.
+- Des cinématiques d'histoire dans chaque acte.
+- Les quatre régions d'après l'histoire principale ont chacune leur propre histoire, avec des duels à Quivermoor.
+- Un carnet de quêtes avec tes objectifs, et "Où aller ?" montre le chemin sur la carte.
+- Jeu hors ligne automatique : sans internet, le jeu continue tout simplement, et ta progression se synchronise dès que tu es de nouveau en ligne.
+- Des talismans de lien pour lier avec C'est à moi!, chacun à prix fixe, avec son effet exact affiché avant l'achat.
+- Le Lot Première Prise à notre prix le plus bas : un petit lot au contenu fixe, affiché avant l'achat. Rien n'est aléatoire.
+- Récompenses du jour, tâches du jour et un Spirling du jour.
+- Événements météo le week-end.
+- Des récompenses pour remplir ton Spirlog.
+- Codes ami : ajouter des amis est plus simple.
+- Des menus plus fluides.

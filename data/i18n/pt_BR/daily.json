@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table daily, written by tools/i18n/locales_daily.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Cloud gale": "Rajada das nuvens",
+  "Ember storm": "Tempestade de brasas",
+  "Glass gale": "Vento de vidro",
+  "Glimmer rain": "Chuva cintilante",
+  "Rime storm": "Tempestade de geada",
+  "Silver fog": "Névoa prateada",
+  "Spirling of the day: %s": "Spirling do dia: %s",
+  "Spirling of the day: %s. It steps out more often today in %s.": "Spirling do dia: %s. Hoje aparece mais vezes em %s.",
+  "Take the gift": "Pegar o presente",
+  "This weekend: %s over %s.": "Neste fim de semana: %s sobre %s.",
+  "Weekend weather: %s over %s. Shy Spirlings step out more often there.": "Clima do fim de semana: %s sobre %s. Spirlings tímidos aparecem mais lá.",
+  "Welcome gift, day %d of 7: %s": "Presente de boas-vindas, dia %d de 7: %s"
+ }
+}
