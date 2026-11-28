@@ -29,7 +29,7 @@ fragt das Spiel erneut. Diese Bedingungen stehen außerdem im Spiel unter Einste
 Nutzungsvertrag zu diesen Bedingungen kommt zustande, wenn du sie so akzeptierst. Das Häkchen bei der
 Datenschutzerklärung bestätigt nur, dass du sie kennst; es ist keine Einwilligung in die Datenverarbeitung
 (Rechtsgrundlagen siehe Datenschutzerklärung).
-2.2 Das Spiel ist **nur online spielbar**. Du brauchst eine Internetverbindung; Kosten dafür trägst du.
+2.2 Die Geschichte ist auch **offline spielbar**. Für die Online-Funktionen (Freunde, Ligen, Events, Käufe, Rissglas, Sicherung deiner Spielstände auf unserem Server) brauchst du eine Internetverbindung; Kosten dafür trägst du.
 2.3 Pro Person ist ein Konto vorgesehen. Halte deinen Übertragungscode geheim; wer ihn kennt, kann deinen
 Spielstand auf ein anderes Gerät holen. Der Übertragungscode ist nur dafür da, dein eigenes Konto auf ein
 neues Gerät mitzunehmen; Käufe, Rissglas und der Pass wandern dabei mit. Konten sind nicht an andere

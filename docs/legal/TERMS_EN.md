@@ -19,7 +19,7 @@ Last updated: November 2026
    this step once on their next start; after a change of these terms (section 11) the game asks again.
    These terms are also available in the game under Settings, Legal. The contract under these terms is
    made when you accept them this way. Ticking the box for the Privacy Policy only confirms that you know
-   it; it is not a consent to the processing of data (for the legal bases see the Privacy Policy). The game is **online only** and needs an internet connection. Keep your transfer code secret.
+   it; it is not a consent to the processing of data (for the legal bases see the Privacy Policy). The story can also be played **offline**; the online features (friends, leagues, events, purchases, Riftglass, the backup of your saves on our server) need an internet connection. Keep your transfer code secret.
    It only moves your own account to a new device; purchases, Riftglass and the pass move with it.
    One account per person; accounts are not transferable to others, and selling, buying, swapping or
    lending accounts or transfer codes is not allowed. Minors need a parent's consent for purchases.

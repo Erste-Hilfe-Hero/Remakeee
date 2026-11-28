@@ -82,6 +82,8 @@ ONLINE_ONLY = [
     'Chimora ist nur online spielbar',
 ]
 CJK = re.compile(r"[぀-ヿ㐀-鿿가-힯]")
+# App Store Connect review notes (store/ios/review_information/notes.txt).
+NOTES_MAX = 3999
 CAPTION_LINES = 8
 CAPTION_MAX = 60
 NOT_IN_CAPTIONS = re.compile(r"discord|[€$£¥₩₽]", re.I)
@@ -190,6 +192,9 @@ def check(root: str = ROOT) -> list[str]:
     for extra in ("store/ios/review_information/notes.txt", "store/android/app_access_de.txt"):
         if os.path.exists(os.path.join(root, extra)):
             files.append(os.path.join(root, extra))
+    notes = os.path.join(root, "store/ios/review_information/notes.txt")
+    if os.path.exists(notes) and len(read(notes)) > NOTES_MAX:
+        errors.append("store/ios/review_information/notes.txt has %d characters (App Review allows %d)" % (len(read(notes)), NOTES_MAX))
     for p in files:
         for claim in ONLINE_ONLY:
             if claim in read(p):
