@@ -673,7 +673,7 @@
    "name_en": "Wayfarer Pass",
    "name_de": "Wanderer-Pass",
    "desc_en": "Premium row of the 30-tier Pass. +50% growth, 30 Riftglass a day, +1 start energy, +1 Rift Breath per Warden battle, +1 bond try per battle. 4,99 EUR a month, renews, cancel any time in the store.",
-   "desc_de": "Premium-Reihe des Passes mit 30 Stufen. +50 % Wachstum, 30 Rissglas am Tag, +1 Startenergie, +1 Rissatem je Wächterkampf, +1 Bindungsversuch je Kampf.",
+   "desc_de": "Premium-Reihe des Passes mit 30 Stufen. +50 % Wachstum, 30 Rissglas am Tag, +1 Startenergie, +1 Rissatem je Hüterkampf, +1 Bindungsversuch je Kampf.",
    "family_shareable": false,
    "ready": true
   },
@@ -998,7 +998,7 @@
    "name_en": "Warden Weakener",
    "name_de": "Wächterschwächer",
    "desc_en": "The Warden starts with 15% less Vigor. At most 1 per Warden battle.",
-   "desc_de": "Der Wächter startet mit 15 % weniger Kraft. Höchstens 1 pro Wächterkampf.",
+   "desc_de": "Der Hüter startet mit 15 % weniger Kraft. Höchstens 1 pro Hüterkampf.",
    "family_shareable": false,
    "ready": true
   },
