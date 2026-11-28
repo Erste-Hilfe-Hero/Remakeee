@@ -368,25 +368,29 @@ func _text_width() -> float:
 		w -= sb.get_margin(SIDE_LEFT) + sb.get_margin(SIDE_RIGHT)
 	return w - _arrow_space * (2 if big_text else 1)
 
-## Characters a line may not start with (Japanese kinsoku): they stay on the line before.
-const NO_LINE_START: String = "。、！？」』）】〕〉》・ー…：；,.!?)"
-## Opening brackets a line may not end with: they move to the next line.
-const NO_LINE_END: String = "「『（【〔〈《("
+## Marks that never start a line (Japanese and Chinese line breaking).
+const NO_LINE_START: String = "。、，．！？：；）」』】〕〉》’”ー…・,.!?:;)]"
+## Opening brackets that never end a line: they move to the next line with what they open.
+const NO_LINE_END: String = "「『（【〔〈《‘“(["
 
 ## Wraps [param text] word by word to [param width] and groups the lines into windows of
 ## [param max_lines]. A line break in the text starts a new line. Japanese and Chinese text, which
-## has no spaces, may break between any two characters.
+## has no spaces, may break between any two characters; a word wider than the box breaks between
+## its characters.
 static func split_lines(text: String, width: float, font: Font, font_size: int, max_lines: int) -> Array[String]:
 	var lines: Array[String] = []
 	for para: String in text.split("\n"):
 		var line: String = ""
 		for piece: Array in _break_pieces(para):
 			var tried: String = piece[0] if line.is_empty() else line + piece[1] + piece[0]
-			if line.is_empty() or font.get_string_size(tried, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x <= width:
+			if font.get_string_size(tried, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x <= width:
 				line = tried
-			else:
+				continue
+			if not line.is_empty() and font.get_string_size(piece[0], HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x <= width:
 				lines.append(line)
 				line = piece[0]
+				continue
+			line = _break_word(tried, width, font, font_size, lines)
 		lines.append(line)
 	var pages: Array[String] = []
 	for i: int in range(0, lines.size(), maxi(1, max_lines)):
@@ -394,7 +398,8 @@ static func split_lines(text: String, width: float, font: Font, font_size: int, 
 	return pages
 
 ## [param para] cut into [text, separator before it] pieces a line may break between: words, and
-## single characters inside a run of CJK text, with kinsoku punctuation kept on its neighbour.
+## single characters inside a run of CJK text, with closing marks kept on the character before and
+## opening brackets on the character after.
 static func _break_pieces(para: String) -> Array[Array]:
 	var pieces: Array[Array] = []
 	for word: String in para.split(" ", false):
@@ -410,6 +415,22 @@ static func _break_pieces(para: String) -> Array[Array]:
 				sep = ""
 			glue = NO_LINE_END.contains(c)
 	return pieces
+
+## Fills lines of [param width] with the characters of [param text], appends the full ones to
+## [param lines] and returns the rest. A closing mark pulls the character before it down with it.
+static func _break_word(text: String, width: float, font: Font, font_size: int, lines: Array[String]) -> String:
+	var line: String = ""
+	for ch: String in text:
+		if line.is_empty() or font.get_string_size(line + ch, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x <= width:
+			line += ch
+			continue
+		var carry: String = ""
+		if ch in NO_LINE_START and line.length() > 1:
+			carry = line.right(1)
+			line = line.left(-1)
+		lines.append(line.strip_edges(false, true))
+		line = (carry + ch).strip_edges(true, false)
+	return line
 
 ## Starts fast-forward: the current line ends, the next ones run without waiting.
 func start_fast_forward() -> void:
