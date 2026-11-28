@@ -354,8 +354,18 @@ static func needed(goal: Dictionary, total: int) -> int:
 ## Goals reached but not yet claimed, in order.
 static func ready(spirlog: Dictionary, claimed: Dictionary, total: int) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
+	# Counts per region, once per call (1.3.2 perf pass): goal_have and goal_need each walk
+	# every kind, and the goals share four regions.
+	var have: Dictionary[String, int] = {}
+	var pool: Dictionary[String, int] = {}
 	for g: Dictionary in GOALS:
-		if not claimed.has(g.id) and goal_have(g, spirlog) >= needed(g, total):
+		if claimed.has(g.id):
+			continue
+		var region: String = str(g.get("region", ""))
+		if not have.has(region):
+			have[region] = bonded_in(spirlog, region)
+			pool[region] = total if region.is_empty() else region_total(region)
+		if have[region] >= (pool[region] if int(g.bonded) < 0 else int(g.bonded)):
 			out.append(g)
 	return out
 
@@ -376,8 +386,15 @@ static func unclaimed() -> int:
 	for g: Dictionary in SEEN_GOALS:
 		if not claimed.has(g.id) and seen >= (total if int(g.seen) < 0 else int(g.seen)):
 			n += 1
+	# Each set kind counted once, though several goals share it (1.3.2 perf pass).
+	var counts: Dictionary[String, int] = {}
 	for g: Dictionary in SET_GOALS:
-		if not claimed.has(g.id) and set_count(str(g.kind)) >= set_need(g):
+		if claimed.has(g.id):
+			continue
+		var kind: String = str(g.kind)
+		if not counts.has(kind):
+			counts[kind] = set_count(kind)
+		if counts[kind] >= set_need(g):
 			n += 1
 	return n
 

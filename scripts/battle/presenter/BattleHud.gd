@@ -89,6 +89,21 @@ func _log_w() -> float:
 	var b: Button = scene._log_button
 	return EraBattleHud.log_width(era, b.get_theme_font("font").get_string_size(b.text, HORIZONTAL_ALIGNMENT_LEFT, -1, b.get_theme_font_size("font_size")).x)
 
+## The touch floor of the small buttons: ScreenFit.touch_px, 0 outside the tree.
+func _touch() -> float:
+	return float(ScreenFit.touch_px(scene.get_window())) if scene.is_inside_tree() else 0.0
+
+func _formation() -> Dictionary:
+	var f: Vector2 = scene._field.size
+	var ours: int = scene.model.slot_count(BattleModel.Side.PLAYER) if scene.model != null else 4
+	return EraBattleHud.formation_layout(era, f.x, _team_size(), f.y, ours, GameState.big_buttons, _log_w(), _touch())
+
+## Where the foes' rank may start under the formation band: 0 while the band keeps its usual
+## FORMATION_TOP, else the lower end finger-sized buttons need (update 1.3.2).
+func formation_top() -> float:
+	var top: float = float(_formation().get("top", EraBattleHud.FORMATION_TOP))
+	return top if top > EraBattleHud.FORMATION_TOP else 0.0
+
 func _place(n: Control, r: Rect2) -> void:
 	n.position = r.position
 	n.size = r.size
@@ -112,7 +127,7 @@ func _team_size() -> int:
 func layout_single() -> void:
 	var f: Vector2 = scene._field.size
 	var l: Dictionary = EraBattleHud.single_layout(era, f, Rect2(scene._foe_sprite.position, scene._foe_sprite.size),
-		Rect2(scene._player_sprite.position, scene._player_sprite.size), _team_size(), GameState.big_buttons, _log_w())
+		Rect2(scene._player_sprite.position, scene._player_sprite.size), _team_size(), GameState.big_buttons, _log_w(), _touch())
 	scene._foe_sprite.position = (l.foe_sprite as Rect2).position
 	scene._player_sprite.position = (l.player_sprite as Rect2).position
 	scene._foe_strip.slant_left = bool(l.foe_slant_left)
@@ -143,16 +158,14 @@ func layout_single() -> void:
 
 ## Formation layout (several Spirlings per side): called after BattleScene._layout_formation.
 func layout_formation() -> void:
-	var f: Vector2 = scene._field.size
-	var ours: int = scene.model.slot_count(BattleModel.Side.PLAYER) if scene.model != null else 4
-	var l: Dictionary = EraBattleHud.formation_layout(era, f.x, _team_size(), f.y, ours, GameState.big_buttons, _log_w())
+	var l: Dictionary = _formation()
 	scene._foe_strip.slant_left = false
 	scene._foe_strip.single = false
 	_place(scene._foe_strip, l.ledger)
 	var buttons: Array = l.buttons
 	_place(scene._ff_button, buttons[0])
 	_place(scene._log_button, buttons[1])
-	_place(scene._back_button, Rect2((buttons[1] as Rect2).position, EraBattleHud.side_button(era)))
+	_place(scene._back_button, Rect2((buttons[1] as Rect2).position, EraBattleHud.side_button(era, _touch())))
 	_place(scene._auto_button, l.auto)
 	# Only in the band (a full rank of four on a small screen) is Auto a small button.
 	auto_small = bool(l.get("auto_band", false))

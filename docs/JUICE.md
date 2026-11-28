@@ -26,10 +26,21 @@ var tw := Juice.blink_safe(hint)                         # brightness 100 % <-> 
 Juice.stop_blink(hint)
 await Juice.wobble(gift_icon, 4.0, 0.5)                  # rocks up to 4 degrees, then rests
 await Juice.count_to(coin_label, 120, 170)               # counting number with soft ticks
-Juice.press_feedback(button)                             # pop on release
+Juice.press_feedback(button)                             # squash while held, pop on release
+Juice.enter(panel, Vector2(0, 4))                        # arrives: fades in, slides the last pixels
+Juice.leave(panel)                                       # fades out, then hides; nobody waits
+Juice.finish(panel)                                      # ends either at once, in its end state
 Juice.add_trauma(Juice.TRAUMA_HIT, Elements.E.STONE)     # screen shake, shaped by element
 await Juice.hitstop(0.4)                                 # short freeze for a hit taking 40 % HP
 ```
+
+## Arriving and leaving
+
+`enter` and `leave` are fire and forget (docs/FLOW.md): the node takes input from its first
+frame, nothing awaits the tween, and `finish` (or a second call) ends it in its end state.
+Under reduced motion they return null and the node is simply there or gone. In Eras I and II
+(`Juice.stepped()`) every fade runs in four hard levels and slides move 2 px at a time; this
+also applies to alpha tweens made with `Juice.tween`.
 
 ## Screen shake
 

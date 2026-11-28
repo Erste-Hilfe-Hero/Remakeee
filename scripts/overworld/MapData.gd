@@ -84,12 +84,36 @@ var _base_rows: PackedStringArray = []
 
 static func exists(map_id: String) -> bool:
 	var parts: Array = split_id(map_id)
-	if not FileAccess.file_exists(DIR + str(parts[0]) + ".json"):
+	var floors: int = floors_in(str(parts[0]))
+	if floors < 0:
 		return false
-	if int(parts[1]) == 0:
-		return true
-	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(DIR + str(parts[0]) + ".json"))
-	return raw is Dictionary and int(parts[1]) <= (raw.get("floors", []) as Array).size()
+	return int(parts[1]) == 0 or int(parts[1]) <= floors
+
+## Floors of each map file and names of map ids, read once (1.3.2 perf pass): menus asked for
+## them by parsing the whole file each time (about 0.8 ms a file). Map files do not change
+## while the game runs.
+static var _floors: Dictionary[String, int] = {}
+static var _names: Dictionary[String, String] = {}
+
+## Floors after the ground floor in map file [param file]; -1 when there is no such file.
+static func floors_in(file: String) -> int:
+	if not _floors.has(file):
+		var path: String = DIR + file + ".json"
+		var n: int = -1
+		if FileAccess.file_exists(path):
+			var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+			n = (raw.get("floors", []) as Array).size() if raw is Dictionary else 0
+		_floors[file] = n
+	return _floors[file]
+
+## The display name of [param map_id] (load_map(map_id).display_name), kept after the first ask.
+static func name_of(map_id: String) -> String:
+	if not _names.has(map_id):
+		var m: MapData = load_map(map_id)
+		if m == null:
+			return map_id
+		_names[map_id] = m.display_name
+	return _names[map_id]
 
 ## ["file", floor] for a map id; "cave" is ["cave", 0], "cave@2" is ["cave", 2].
 static func split_id(map_id: String) -> Array:
@@ -102,8 +126,12 @@ static func split_id(map_id: String) -> Array:
 static func floor_id(file: String, level: int) -> String:
 	return file if level == 0 else "%s%s%d" % [file, FLOOR_SEP, level]
 
+static var _ids: PackedStringArray = []
+
 ## Every map id in data/maps, floors included ("cave", "cave@1", ...), sorted.
 static func all_ids() -> PackedStringArray:
+	if not _ids.is_empty():
+		return _ids
 	var out: PackedStringArray = []
 	var files: PackedStringArray = DirAccess.get_files_at(DIR)
 	files.sort()
@@ -112,10 +140,9 @@ static func all_ids() -> PackedStringArray:
 			continue
 		var id: String = f.get_basename()
 		out.append(id)
-		var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(DIR + f))
-		if raw is Dictionary:
-			for i: int in (raw.get("floors", []) as Array).size():
-				out.append(floor_id(id, i + 1))
+		for i: int in floors_in(id):
+			out.append(floor_id(id, i + 1))
+	_ids = out
 	return out
 
 static func load_map(map_id: String) -> MapData:

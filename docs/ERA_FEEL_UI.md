@@ -28,7 +28,7 @@ Described generically, from general knowledge of the genre's history; no product
 | Text box frame | notched double-rule ink frame, shop frames | frame kind "ink" in the table | |
 | Font and typing | 8 px pixel font, typing blips | blip "blip", speed x1.0 | |
 | Menus, Vigor bar | ink theme, ink line bar | bar style "ink" | |
-| Warp | door rectangle, edge slide | warp "door" | stepped 4-shade fade |
+| Warp | door rectangle, edge slide; screen fades in four hard levels (1.3.2, docs/FLOW.md) | warp "door" | |
 | Place banner | plain panel | style "plain" | |
 | Overworld | dust, weather dots, day tint | | |
 

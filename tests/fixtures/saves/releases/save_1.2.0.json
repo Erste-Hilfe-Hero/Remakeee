@@ -1,0 +1,575 @@
+{
+	"_sha256": "d59e1136ab4f575b16b719d34f20b5874fe3cb81043806d0995c824a487873dd",
+	"battle_open": false,
+	"cell": [
+		5,
+		5
+	],
+	"daily_tasks": {},
+	"difficulty": 2,
+	"echo_cores": [],
+	"era": {
+		"retro_filter": 0,
+		"unlocked_era": 1
+	},
+	"facing": "left",
+	"festival_ribbons": {},
+	"flags": {
+		"aldo_gift": true,
+		"got_starter": true,
+		"kestra_spar": true,
+		"rift_cinder_sealed": true,
+		"rift_tide_sealed": true,
+		"storage_remote": true
+	},
+	"gleam_chain": {
+		"count": 0,
+		"species": ""
+	},
+	"heal_cell": [
+		5,
+		5
+	],
+	"heal_map": "brindlewick",
+	"inventory": {
+		"kin_charm": 25,
+		"tonic": 7
+	},
+	"iron_oath": false,
+	"map": "brindlewick",
+	"map_cells": {},
+	"map_marks": [],
+	"maps_entered": {},
+	"matchups": {},
+	"menu_seen": {},
+	"money": 12345,
+	"new_items": [
+		"kin_charm",
+		"tonic"
+	],
+	"party": [
+		{
+			"box": 0,
+			"core": false,
+			"crystal": {},
+			"echo_streak": 0,
+			"fav_art": "",
+			"favorite": false,
+			"gift_slot": false,
+			"gleam": false,
+			"gleam_boost": false,
+			"held": "",
+			"hidden_gift": false,
+			"hp": 196,
+			"kinship": 0,
+			"level": 42,
+			"lineage": [],
+			"met_day": 0,
+			"met_ring": 0,
+			"moves": [
+				"Dusk Rake",
+				"Glow Knuckle",
+				"Cinder Breath",
+				"Kiln Strike"
+			],
+			"nickname": "Funke",
+			"origin_era": 1,
+			"origin_map": "",
+			"prism": false,
+			"shop": false,
+			"spark": {
+				"atk": 2,
+				"def": 10,
+				"foc": 1,
+				"hp": 7,
+				"spd": 10
+			},
+			"species": "Kindlop",
+			"temper": "even",
+			"uid": "89919f9e85fa1c8f",
+			"variant": "",
+			"xp": 19935
+		},
+		{
+			"box": 0,
+			"core": false,
+			"crystal": {},
+			"echo_streak": 0,
+			"fav_art": "",
+			"favorite": false,
+			"gift_slot": false,
+			"gleam": false,
+			"gleam_boost": false,
+			"held": "",
+			"hidden_gift": false,
+			"hp": 132,
+			"kinship": 0,
+			"level": 31,
+			"lineage": [],
+			"met_day": 20785,
+			"met_ring": 31,
+			"moves": [
+				"Overcharge",
+				"Grid Lock",
+				"Storm Gnash",
+				"Spark Call"
+			],
+			"nickname": "",
+			"origin_era": 1,
+			"origin_map": "lighthouse",
+			"prism": false,
+			"shop": false,
+			"spark": {
+				"atk": 2,
+				"def": 10,
+				"foc": 10,
+				"hp": 12,
+				"spd": 12
+			},
+			"species": "Zippit",
+			"temper": "proud",
+			"uid": "5588a10db9397b61",
+			"variant": "",
+			"xp": 9051
+		},
+		{
+			"box": 0,
+			"core": false,
+			"crystal": {},
+			"echo_streak": 0,
+			"fav_art": "",
+			"favorite": false,
+			"gift_slot": false,
+			"gleam": false,
+			"gleam_boost": false,
+			"held": "",
+			"hidden_gift": false,
+			"hp": 109,
+			"kinship": 0,
+			"level": 19,
+			"lineage": [],
+			"met_day": 20785,
+			"met_ring": 19,
+			"moves": [
+				"Beacon Ping",
+				"Candle Ward",
+				"Dawn Call",
+				"Prism Ray"
+			],
+			"nickname": "",
+			"origin_era": 1,
+			"origin_map": "lighthouse",
+			"prism": false,
+			"shop": false,
+			"spark": {
+				"atk": 3,
+				"def": 11,
+				"foc": 4,
+				"hp": 12,
+				"spd": 10
+			},
+			"species": "Wickit",
+			"temper": "fierce",
+			"uid": "8a98c4c43a65098e",
+			"variant": "",
+			"xp": 2534
+		},
+		{
+			"box": 0,
+			"core": false,
+			"crystal": {},
+			"echo_streak": 0,
+			"fav_art": "",
+			"favorite": false,
+			"gift_slot": false,
+			"gleam": false,
+			"gleam_boost": false,
+			"held": "",
+			"hidden_gift": false,
+			"hp": 106,
+			"kinship": 0,
+			"level": 12,
+			"lineage": [],
+			"met_day": 20785,
+			"met_ring": 12,
+			"moves": [
+				"Spout Jab",
+				"Glint",
+				"Chill Mist",
+				"Salt Spray"
+			],
+			"nickname": "",
+			"origin_era": 1,
+			"origin_map": "lighthouse",
+			"prism": false,
+			"shop": false,
+			"spark": {
+				"atk": 5,
+				"def": 12,
+				"foc": 4,
+				"hp": 10,
+				"spd": 11
+			},
+			"species": "Puddlet",
+			"temper": "keen",
+			"uid": "2130e545d3cc16b2",
+			"variant": "",
+			"xp": 767
+		},
+		{
+			"box": 0,
+			"core": false,
+			"crystal": {},
+			"echo_streak": 0,
+			"fav_art": "",
+			"favorite": false,
+			"gift_slot": false,
+			"gleam": false,
+			"gleam_boost": false,
+			"held": "",
+			"hidden_gift": false,
+			"hp": 80,
+			"kinship": 0,
+			"level": 8,
+			"lineage": [],
+			"met_day": 20785,
+			"met_ring": 8,
+			"moves": [
+				"Bowl Over",
+				"Mirk Nip",
+				"Pebble Toss",
+				"Veil Step"
+			],
+			"nickname": "",
+			"origin_era": 1,
+			"origin_map": "lighthouse",
+			"prism": false,
+			"shop": false,
+			"spark": {
+				"atk": 11,
+				"def": 3,
+				"foc": 2,
+				"hp": 0,
+				"spd": 12
+			},
+			"species": "Mirkmole",
+			"temper": "gentle",
+			"uid": "362fe3917f2e0283",
+			"variant": "",
+			"xp": 267
+		}
+	],
+	"play_time": 7384.0,
+	"records": {
+		"achievements": {},
+		"achievements_paid": {},
+		"album": {},
+		"album_stickers": [],
+		"collection": {},
+		"echo_path": {},
+		"exchange": {},
+		"expeditions": [],
+		"masters": {},
+		"memorial": [],
+		"season_path": {},
+		"waymark_log": [],
+		"weekly": {},
+		"world_events": {}
+	},
+	"region": "veydal",
+	"rests": {
+		"brindlewick": [
+			5,
+			5
+		]
+	},
+	"rifts": [
+		"cinder",
+		"tide"
+	],
+	"sanctuary": [],
+	"save_version": 5,
+	"saved_at": "2026-11-20T10:00:00",
+	"shop_boosts": {},
+	"spirlog": {
+		"Fizzlet": {
+			"battles": 0,
+			"bonded": false,
+			"first_day": 20785,
+			"first_map": "lighthouse",
+			"gleam_bonded": false,
+			"gleam_seen": false,
+			"maps": [
+				"lighthouse"
+			],
+			"prism_seen": false,
+			"seen": true,
+			"tempers": [],
+			"variants": []
+		},
+		"Kindlop": {
+			"battles": 0,
+			"bonded": true,
+			"first_day": 20785,
+			"first_map": "lighthouse",
+			"gleam_bonded": false,
+			"gleam_seen": false,
+			"maps": [
+				"lighthouse"
+			],
+			"prism_seen": false,
+			"seen": true,
+			"tempers": [],
+			"variants": []
+		},
+		"Mirkmole": {
+			"battles": 0,
+			"bonded": true,
+			"first_day": 20785,
+			"first_map": "lighthouse",
+			"gleam_bonded": false,
+			"gleam_seen": false,
+			"maps": [
+				"lighthouse"
+			],
+			"prism_seen": false,
+			"seen": true,
+			"tempers": [
+				"gentle"
+			],
+			"variants": []
+		},
+		"Puddlet": {
+			"battles": 0,
+			"bonded": true,
+			"first_day": 20785,
+			"first_map": "lighthouse",
+			"gleam_bonded": false,
+			"gleam_seen": false,
+			"maps": [
+				"lighthouse"
+			],
+			"prism_seen": false,
+			"seen": true,
+			"tempers": [
+				"keen"
+			],
+			"variants": []
+		},
+		"Wickit": {
+			"battles": 0,
+			"bonded": true,
+			"first_day": 20785,
+			"first_map": "lighthouse",
+			"gleam_bonded": false,
+			"gleam_seen": false,
+			"maps": [
+				"lighthouse"
+			],
+			"prism_seen": false,
+			"seen": true,
+			"tempers": [
+				"fierce"
+			],
+			"variants": []
+		},
+		"Zippit": {
+			"battles": 0,
+			"bonded": true,
+			"first_day": 20785,
+			"first_map": "lighthouse",
+			"gleam_bonded": false,
+			"gleam_seen": false,
+			"maps": [
+				"lighthouse"
+			],
+			"prism_seen": false,
+			"seen": true,
+			"tempers": [
+				"proud"
+			],
+			"variants": []
+		}
+	},
+	"starter": "Kindlop",
+	"storage": [
+		{
+			"box": 0,
+			"core": false,
+			"crystal": {},
+			"echo_streak": 0,
+			"fav_art": "",
+			"favorite": false,
+			"gift_slot": false,
+			"gleam": false,
+			"gleam_boost": false,
+			"held": "",
+			"hidden_gift": false,
+			"hp": 309,
+			"kinship": 0,
+			"level": 75,
+			"lineage": [],
+			"met_day": 0,
+			"met_ring": 0,
+			"moves": [
+				"Undertow",
+				"Fog Bank",
+				"Drowned Bell",
+				"Searchlight"
+			],
+			"nickname": "",
+			"origin_era": 1,
+			"origin_map": "",
+			"prism": false,
+			"shop": false,
+			"spark": {
+				"atk": 5,
+				"def": 8,
+				"foc": 5,
+				"hp": 1,
+				"spd": 5
+			},
+			"species": "Puddlet",
+			"temper": "proud",
+			"uid": "231d6324e02efb7e",
+			"variant": "",
+			"xp": 90020
+		},
+		{
+			"box": 0,
+			"core": false,
+			"crystal": {},
+			"echo_streak": 0,
+			"fav_art": "",
+			"favorite": false,
+			"gift_slot": false,
+			"gleam": true,
+			"gleam_boost": false,
+			"held": "",
+			"hidden_gift": false,
+			"hp": 55,
+			"kinship": 0,
+			"level": 3,
+			"lineage": [],
+			"met_day": 0,
+			"met_ring": 0,
+			"moves": [
+				"Bowl Over",
+				"Crackle Bite"
+			],
+			"nickname": "",
+			"origin_era": 1,
+			"origin_map": "",
+			"prism": false,
+			"shop": false,
+			"spark": {
+				"atk": 0,
+				"def": 4,
+				"foc": 12,
+				"hp": 9,
+				"spd": 6
+			},
+			"species": "Zippit",
+			"temper": "curious",
+			"uid": "8045f990fa2a90be",
+			"variant": "",
+			"xp": 20
+		},
+		{
+			"box": 0,
+			"core": false,
+			"crystal": {},
+			"echo_streak": 0,
+			"fav_art": "",
+			"favorite": false,
+			"gift_slot": false,
+			"gleam": false,
+			"gleam_boost": false,
+			"held": "",
+			"hidden_gift": false,
+			"hp": 223,
+			"kinship": 0,
+			"level": 61,
+			"lineage": [],
+			"met_day": 0,
+			"met_ring": 0,
+			"moves": [
+				"Prism Ray",
+				"Clear Glass",
+				"Prism Burst",
+				"Riptide Coil"
+			],
+			"nickname": "",
+			"origin_era": 1,
+			"origin_map": "",
+			"prism": false,
+			"shop": false,
+			"spark": {
+				"atk": 9,
+				"def": 4,
+				"foc": 3,
+				"hp": 7,
+				"spd": 2
+			},
+			"species": "Wickit",
+			"temper": "brisk",
+			"uid": "cf713ca40dcafdec",
+			"variant": "",
+			"xp": 52606
+		}
+	],
+	"storage_box_bonus": 0,
+	"storage_boxes": [
+		{
+			"color": "ink",
+			"name": "Box 1"
+		},
+		{
+			"color": "moss",
+			"name": "Box 2"
+		},
+		{
+			"color": "tide",
+			"name": "Box 3"
+		},
+		{
+			"color": "ember",
+			"name": "Box 4"
+		},
+		{
+			"color": "sun",
+			"name": "Box 5"
+		},
+		{
+			"color": "dusk",
+			"name": "Box 6"
+		},
+		{
+			"color": "stone",
+			"name": "Box 7"
+		},
+		{
+			"color": "rose",
+			"name": "Box 8"
+		}
+	],
+	"story_choices": {},
+	"story_vars": {},
+	"switches": {},
+	"tamer": {
+		"backdrop": "",
+		"card_frame": "",
+		"color": 2,
+		"frame": "",
+		"gift_card": "",
+		"hair": 3,
+		"hat": "",
+		"jacket": "",
+		"look": 1,
+		"name": "Ali",
+		"skin": 2
+	},
+	"team_presets": [],
+	"waymarks": 0,
+	"world": {}
+}

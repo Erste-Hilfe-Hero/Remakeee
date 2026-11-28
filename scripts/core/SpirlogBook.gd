@@ -58,8 +58,21 @@ static func visible_kinds(flags: Dictionary) -> Array[SpirlingData]:
 	out.sort_custom(func(a: SpirlingData, b: SpirlingData) -> bool: return a.dex_id < b.dex_id)
 	return out
 
+## Upgraded entries by species as [hash of the saved entry, upgraded entry] (1.3.2 perf pass):
+## one Spirlog page reads each kind's entry many times and an upgrade costs about 40 us.
+static var _entries: Dictionary = {}
+
+## The upgraded entry of [param species] (GameState.upgrade_spirlog_entry). Read only: the same
+## Dictionary comes back until the saved entry changes.
 static func entry(spirlog: Dictionary, species: String) -> Dictionary:
-	return GameState.upgrade_spirlog_entry(spirlog.get(species, {}))
+	var raw: Variant = spirlog.get(species, {})
+	var h: int = hash(raw)
+	var hit: Array = _entries.get(species, [])
+	if not hit.is_empty() and int(hit[0]) == h:
+		return hit[1]
+	var e: Dictionary = GameState.upgrade_spirlog_entry(raw)
+	_entries[species] = [h, e]
+	return e
 
 static func is_seen(spirlog: Dictionary, species: String) -> bool:
 	return bool(entry(spirlog, species).seen)

@@ -51,10 +51,15 @@ func refresh() -> void:
 	if ring <= 0:
 		return
 	tile_set = TilesetFactory.get_tileset(map.region)
-	var outside := func(c: Vector2i) -> int: return kind_outside(map, c)
+	# Each cell's kind once, though atlas_coords asks for every neighbour (1.3.2 perf pass).
+	var kinds: Dictionary[Vector2i, int] = {}
+	var outside := func(c: Vector2i) -> int:
+		if not kinds.has(c):
+			kinds[c] = kind_outside(map, c)
+		return kinds[c]
 	for y: int in range(-ring, map.height + ring):
 		for x: int in range(-ring, map.width + ring):
 			var c := Vector2i(x, y)
 			if map.in_bounds(c):
 				continue
-			set_cell(c, 0, TilesetFactory.atlas_coords(kind_outside(map, c), c, outside))
+			set_cell(c, 0, TilesetFactory.atlas_coords(outside.call(c), c, outside))
