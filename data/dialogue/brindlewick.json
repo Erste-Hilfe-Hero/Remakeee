@@ -404,7 +404,7 @@
   "lines": [
    "Tinker Rasmus: Wednesday and Saturday, rain or shine. Charms and leaves, fair prices."
   ],
-  "action": "shop kin_charm revival_leaf strong_tonic"
+  "action": "shop kin_charm charm_inkquill charm_mender revival_leaf strong_tonic"
  },
  "wim_pays": {
   "lines": [

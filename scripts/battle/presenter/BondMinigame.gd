@@ -129,10 +129,14 @@ const MINE_TIME: float = 3.5
 const MINE_SIZE: float = 44.0
 var mine_fill: float = 0.0
 var _mine_needed: int = 0
+## Taps the held-out charm takes off the next Mine! bar (set by BattleScene before run_mine).
+var taps_off: int = 0
 
 ## Taps for a full bar: 18 for a common Spirling (about 5 a second, as hard as a clean echo),
 ## up to 24 for rarer ones (longer calls), two fewer near a mended Rift, two more near a muted one.
-static func mine_taps(plan: Dictionary) -> int:
+## A held-out bond charm takes [param off] taps away (BondCalc.taps_off), never below
+## BondCalc.MIN_MINE_TAPS.
+static func mine_taps(plan: Dictionary, off: int = 0) -> int:
 	var marks: int = 0
 	for p: Variant in plan.get("phases", []):
 		marks += (p as Array).size()
@@ -142,6 +146,8 @@ static func mine_taps(plan: Dictionary) -> int:
 			n -= 2
 		"muted":
 			n += 2
+	if off > 0:
+		n = maxi(n - off, BondCalc.MIN_MINE_TAPS)
 	return n
 
 ## Plays the "Mine!" tug for [param plan]; returns a score 0..1 like run().
@@ -150,7 +156,7 @@ func run_mine(plan: Dictionary = {}) -> float:
 		rng = RandomNumberGenerator.new()
 		rng.randomize()
 	_plan = plan if not plan.is_empty() else BondEcho.make_plan(rng, null)
-	_mine_needed = mine_taps(_plan)
+	_mine_needed = mine_taps(_plan, taps_off)
 	mine_fill = 0.0
 	_time = 0.0
 	_phase = Phase.MINE
