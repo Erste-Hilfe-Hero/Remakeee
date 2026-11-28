@@ -45,8 +45,8 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
   löschen wir automatisch, wenn sie 30 Tage nicht genutzt wurden. Wer ein Browser-Konto per
   Übertragungscode in die App mitnimmt, hat danach die Fristen der App.
 - **Anonyme Zählung des Spielfortschritts:** Aus den gespeicherten Spielständen zählen wir anonym, wie viele
-  neue Spieler pro Anmeldetag welchen Schritt im Spiel erreichen und wo sie aufhören, um das Spiel zu
-  verbessern. Die Auswertung enthält nur Zahlen, keine Spieler-ID und keinen Namen, und es werden dafür keine
+  neue Spieler pro Anmeldetag welchen Schritt im Spiel erreichen, nach wie vielen Sekunden Spielzeit sie die
+  ersten Schritte erreichen (Median) und wo sie aufhören, um das Spiel zu verbessern. Die Auswertung enthält nur Zahlen, keine Spieler-ID und keinen Namen, und es werden dafür keine
   zusätzlichen Daten erhoben (Art. 6 Abs. 1 lit. f DSGVO, berechtigtes Interesse an einem verständlichen Spiel).
 
 ### 3.2 Freunde, Leuchtpost und Meldungen

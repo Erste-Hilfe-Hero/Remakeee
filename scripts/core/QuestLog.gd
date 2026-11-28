@@ -162,6 +162,9 @@ static func in_act_one(flags: Dictionary) -> bool:
 ## The short goal line for the overworld (translated, with "(k/n)" progress), or "" when the
 ## current goal has no "hud" text (after Act I).
 static func hud_text(flags: Dictionary) -> String:
+	# Goals open in Brindlewick, once the opening is over (Opening, 1.3.2).
+	if Opening.active(flags):
+		return ""
 	var g: Dictionary = current(flags)
 	var text: String = str(g.get("hud", ""))
 	if text.is_empty():
@@ -178,6 +181,8 @@ static func hud_text(flags: Dictionary) -> String:
 ## Maps the current goal still leads to: its "goto" entries whose "done" flag is not set yet
 ## (a single "goto" entry stands for every flag).
 static func goal_maps(flags: Dictionary) -> Array[String]:
+	if Opening.active(flags):
+		return []
 	var g: Dictionary = current(flags)
 	var go: Array = g.get("goto", [])
 	var need: Array = g.get("done", [])

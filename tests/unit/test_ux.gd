@@ -602,17 +602,16 @@ func test_walk_hint_points_at_the_pad() -> void:
 	VirtualPad.force_visible = false
 
 func test_new_game_to_first_step_is_short() -> void:
-	# Fast text: every line types at TEXT_CPS[FAST], plus about 1 s to read and tap, plus the
-	# partner pick and the fades. Must stay under 90 s (item 1986).
-	var cps: float = GameState.TEXT_CPS[GameState.TextSpeed.FAST]
-	var seconds: float = 0.6 + 12.0
-	var flags: Dictionary = {}
-	for ref: String in ["story/prologue", "lighthouse/morning", "lighthouse/aldo"]:
-		for l: String in Dialogue.lines_for(Dialogue.get_entry(ref), flags):
-			seconds += l.length() / cps + 1.0
-		flags["got_starter"] = true
-	seconds += Tips.lines_of("save").size() * 2.0
-	assert_lt(seconds, 90.0, "about %d s from new game to walking" % int(seconds))
+	# Item 1986, 1.3.2 (Opening): New Game asks nothing and no text comes before the first step,
+	# only the short fade-in (the Wayfarer can walk during it); the first step into the ferns
+	# meets the storm Spirlings. Before 1.3.2 the same estimate (fast text, partner pick and fades
+	# as 12 s) gave about 24 s to control, after the look and name screens, and the first wild
+	# Spirling came at random after the walk to Fernstair.
+	var to_control: float = Overworld.FADE_TIME
+	assert_eq(Overworld.START_TEXT_BOXES, 0)
+	assert_lt(to_control, 1.0, "about %.1f s from New Game to walking" % to_control)
+	var to_wild: float = to_control + Opening.MEET_STEPS * GridWalker.WALK_TIME
+	assert_lt(to_wild, 2.0, "at most %.1f s to the storm Spirlings" % to_wild)
 
 func _key(code: Key, uni: int = 0) -> InputEventKey:
 	var k := InputEventKey.new()

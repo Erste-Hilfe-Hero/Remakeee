@@ -1,9 +1,8 @@
 class_name TitleScreen
 extends Control
-## Title and new-game flow: boy or girl -> name -> the prologue starts in the overworld.
+## Title and new-game flow: New Game goes straight into the ferns (Opening, 1.3.2).
 
 const OVERWORLD: String = "res://scenes/overworld/Overworld.tscn"
-const NAME_MAX: int = 10
 const ART_HEIGHT: int = 148
 ## Era of the title (the newest era any save reached), its art height and the save card.
 var _era: int = 1
@@ -17,10 +16,6 @@ var _card_band: bool = false
 var _menu: MenuHost
 ## Connection state, server notice and how many Wanderers are online.
 var _status: Label
-var _name_box: PanelContainer
-var _name_edit: LineEdit
-var _name_keys: NameKeyboard
-signal _name_done(text: String)
 ## While Online.connect_now runs (animated status line).
 var _connecting: bool = false
 var _connect_started: int = 0
@@ -88,7 +83,6 @@ func _ready() -> void:
 	add_child(_status)
 	# No "Free, in-app purchases" banner on the title art (Chimora 100, item 69): the store
 	# listing carries that notice, the shop's About page says the game is free.
-	_build_name_box()
 	# The version sits under the list frame, not on it (Chimora 100 item 54).
 	add_child(version_label())
 	_menu.offset_bottom = -VERSION_ROOM
@@ -122,51 +116,6 @@ const VERSION_ROOM: int = 5
 
 static func version_text() -> String:
 	return "v" + Online.CLIENT_VERSION_NAME
-
-func _build_name_box() -> void:
-	_name_box = PanelContainer.new()
-	_name_box.add_theme_stylebox_override("panel", UITheme.panel_style())
-	_name_box.set_anchors_preset(Control.PRESET_CENTER)
-	_name_box.custom_minimum_size = Vector2(136, 128)
-	_name_box.offset_left = -68
-	_name_box.offset_right = 68
-	_name_box.offset_top = -64
-	_name_box.offset_bottom = 64
-	_name_box.visible = false
-	add_child(_name_box)
-	var v := VBoxContainer.new()
-	_name_box.add_child(v)
-	var head := HBoxContainer.new()
-	v.add_child(head)
-	var l := Label.new()
-	l.text = "Your name?"
-	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	# "Please pick another name." wraps instead of widening the box (200 list item 7).
-	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	head.add_child(l)
-	_name_edit = LineEdit.new()
-	_name_edit.max_length = NAME_MAX
-	# Characters left, "4/10" (item 1966).
-	var counter: CharCounter = CharCounter.make(_name_edit, NAME_MAX)
-	counter.ask_label = l
-	counter.ask_text = l.text
-	head.add_child(counter)
-	_name_edit.add_theme_stylebox_override("normal", UITheme.flat_style(UITheme.ACCENT, UITheme.INK))
-	_name_edit.add_theme_color_override("font_color", UITheme.INK)
-	_name_edit.text_submitted.connect(func(t: String) -> void: _name_done.emit(t))
-	# Gamepad / virtual pad confirm also submits the name.
-	_name_edit.gui_input.connect(func(ev: InputEvent) -> void:
-		if ev.is_action_pressed("ui_accept") and not (ev is InputEventKey):
-			_name_done.emit(_name_edit.text))
-	v.add_child(_name_edit)
-	# Own letter keys: the phone keyboard does not always open (iPhone browser, item from Ali 2026-11-04).
-	_name_keys = NameKeyboard.new()
-	_name_keys.target = _name_edit
-	_name_keys.confirmed.connect(func() -> void: _name_done.emit(_name_edit.text))
-	# Back to the boy or girl choice (item 1962).
-	_name_keys.cancelled.connect(func() -> void: _name_done.emit(NAME_BACK))
-	v.add_child(_name_keys)
-	v.add_child(_name_keys.make_extra_row())
 
 ## Chimora is online only: nothing past the title works without the server (item 1).
 func _go_online() -> void:
@@ -594,38 +543,8 @@ func _notification(what: int) -> void:
 		return
 	if _at_root and _menu.picker.visible:
 		_menu.picker.picked.emit(QUIT_ASKED)
-	elif _name_box != null and _name_box.visible:
-		_name_done.emit(NAME_BACK)
 	else:
 		BackButton.press_cancel()
-
-## What the name box returns when Back was pressed.
-const NAME_BACK: String = "\n"
-
-## The name box until a real name comes (item 1961: empty or only spaces is refused and the
-## suggestion comes back), or NAME_BACK.
-func _ask_name(suggestion: String) -> String:
-	_name_edit.text = suggestion
-	_hide_art_note()
-	_name_box.visible = true
-	_name_keys.fresh = true
-	# Phones open their own keyboard (any script), gamepads use the letter keys (item 36).
-	if NameKeyboard.system_keyboard_first():
-		_name_keys.open_system_keyboard.call_deferred()
-	else:
-		_name_keys.focus_first()
-	var name: String = ""
-	while true:
-		name = await _name_done
-		if name == NAME_BACK or NameKeyboard.valid_name(name):
-			break
-		Sound.sfx("cancel")
-		_name_edit.text = suggestion
-		_name_keys.fresh = true
-	_name_box.visible = false
-	if DisplayServer.has_feature(DisplayServer.FEATURE_VIRTUAL_KEYBOARD):
-		DisplayServer.virtual_keyboard_hide()
-	return name
 
 func _enter_game() -> void:
 	Online.push_profile()
@@ -664,25 +583,14 @@ func _pick_slot(title: String, allow_empty: bool) -> int:
 	_slot_list = false
 	return picked
 
-## New game (Chimora 100 items 25, 27): one look screen with a live picture of the Wayfarer,
-## then a name, and the journey starts. There is no difficulty question: the game has one mode
-## and gets harder act by act (owner decision 2026-11-27). The partner Spirling is picked in the
-## story (prologue at the lighthouse). Challenge rules and the Iron Oath are optional rows under
-## Settings during the journey, until the first Rift is mended.
+## New game (Chimora 1.3.2, Ali's final order): no questions before the first step. The
+## Wayfarer starts in the ferns with the default look and name (Opening); look and name are
+## asked in Brindlewick when the story goes on (Overworld.village_story). There is no difficulty
+## question: the game has one mode and gets harder act by act (owner decision 2026-11-27).
+## Challenge rules and the Iron Oath are optional rows under Settings during the journey, until
+## the first Rift is mended.
 func _new_game() -> bool:
-	var look: Array[int] = [0, 0, 0, 0]
-	var name: String = ""
-	var step: int = 0
-	while step < 2:
-		match step:
-			0:
-				step = 1 if await look_screen(_menu, look, _look_stage()) else -1
-			1:
-				name = await _ask_name(GameState.DEFAULT_NAMES[look[LOOK_BODY]])
-				step = 2 if name != NAME_BACK else 0
-		if step < 0:
-			return false
-	GameState.new_game(GameState.Difficulty.TAMER, name.strip_edges(), look[LOOK_COAT], "", look[LOOK_BODY], look[LOOK_SKIN], look[LOOK_HAIR])
+	GameState.new_game(GameState.Difficulty.TAMER, "", 0, "")
 	GameState.iron_oath = false
 	EraManager.from_dict({})
 	return true
@@ -755,21 +663,6 @@ static func look_screen(menu: MenuHost, look: Array[int], stage: Control = null)
 		elif idx == LOOK_DONE:
 			return true
 	return false
-
-## The panel over the title art that holds the look picture (built once).
-var _look_panel: PanelContainer
-
-func _look_stage() -> Control:
-	if _look_panel == null:
-		_look_panel = PanelContainer.new()
-		_look_panel.name = "look_stage"
-		_look_panel.add_theme_stylebox_override("panel", UITheme.panel_style())
-		_look_panel.set_anchors_preset(Control.PRESET_CENTER_TOP)
-		_look_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
-		_look_panel.offset_top = maxf(4.0, (_art_h - LOOK_FRAME * LOOK_SCALE) / 2.0 - 4.0)
-		_look_panel.visible = false
-		add_child(_look_panel)
-	return _look_panel
 
 ## Size of one Wayfarer frame and how much bigger the preview draws it.
 const LOOK_FRAME: int = 16

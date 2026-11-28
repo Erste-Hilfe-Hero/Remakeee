@@ -1,8 +1,9 @@
 class_name FirstCatch
 extends RefCounted
-## The first five minutes (Chimora 1.3.2, Ali): a new Wayfarer bonds soon. The first step into
-## ferns, reeds or scree on a map with wild Spirlings always meets one, picked so the partner
-## can wear it down without knocking it out at once; that battle opens with the bonding tip.
+## The first five minutes (Chimora 1.3.2, Ali): after the opening (the storm partner, Opening)
+## the first step into ferns, reeds or scree on a map with wild Spirlings always meets one,
+## picked so the partner can wear it down without knocking it out at once; that battle opens
+## with the bonding tip.
 ## The first wild bond gives a small gift with a toast and lets the First Catch Pack note open
 ## once back in the world (ShopScreen.first_catch_popup_now). The bond chance is not touched.
 
@@ -17,20 +18,20 @@ const RARITY: String = "common"
 ## The gift after the first bond: item id -> count.
 const GIFT: Dictionary[String, int] = {"kin_charm": 5, "tonic": 2}
 const GIFT_LINE: String = "First bond! A gift for the road: %s."
-## Limits from the first free step (tests/unit/test_first_catch.gd measures the real route and
-## texts in en, de, ru and ja). Steps: lighthouse, Brindlewick, Kestra in the Map House, north to
-## the first fern of Fernstair; 34 in 1.3.2, plus 2 for a villager who wanders onto the shortest
-## way (about 10 s of walking). Text boxes: the most of the four languages in 1.3.2 (German),
-## 18 before the first wild battle and 29 until the bond is tried (before 1.3.2: 36 and a random
-## encounter). With the 10 boxes before the first step (Overworld.START_TEXT_BOXES) and one short
-## battle the first bond lands inside the first five minutes.
-const STEPS: int = 36
-const WILD_TEXT_BOXES: int = 18
-const TEXT_BOXES: int = 29
+## Limits since the opening (Opening, 1.3.2): the very first bond is the storm partner in the
+## ferns, one text box after the first step. This guaranteed wild battle is the second bond:
+## measured from the arrival in Brindlewick (tests/unit/test_first_catch.gd, en, de, ru, ja).
+## Steps: Kestra in the Map House, north to the first fern of Fernstair; 26 in 1.3.2, plus 2 for
+## a villager who wanders onto the shortest way. Text boxes: the most of the four languages
+## (German), 20 before the battle and 31 until the bond is tried. These now hold the storm night
+## and the first goal, which came before control until 1.3.2 (10 boxes then, none now).
+const STEPS: int = 28
+const WILD_TEXT_BOXES: int = 20
+const TEXT_BOXES: int = 31
 
 ## True when this step should meet the guaranteed first wild Spirling.
 static func due(flags: Dictionary) -> bool:
-	return not bool(flags.get(MET_FLAG, false)) and not bool(flags.get(BOND_FLAG, false))
+	return not Opening.active(flags) and not bool(flags.get(MET_FLAG, false)) and not bool(flags.get(BOND_FLAG, false))
 
 ## Weakest multiplier between [param a] and [param b] both ways: 1.0 means neither hits the
 ## other extra hard.

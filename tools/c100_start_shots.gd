@@ -1,10 +1,11 @@
 extends SceneTree
-## Chimora 100 items 25-36, 45, 52, 54: the new start, screen by screen (terms step with the privacy note, title,
-## difficulty, look, name, prologue, card, partner pick, the first free step, the echo call).
+## Chimora 100 items 25-36, 45, 52, 54 and the 1.3.2 opening: the new start, screen by screen (terms
+## step with the privacy note, title, the first walk in the ferns, the storm Spirlings, partner
+## pick, Mine!, Aldo, then in Brindlewick the storm card, look and name, the first goal).
 ## Runs the real Title and Overworld scenes on the local test server, in a fresh user folder:
 ##   XDG_DATA_HOME=$(mktemp -d) xvfb-run -a godot --path . --rendering-driver opengl3 --resolution 440x956 \
 ##     -s res://tools/c100_start_shots.gd -- out_dir lang tag
-## Prints "boxes before control: N" (text boxes the player taps through before walking).
+## Prints the text boxes the player taps through until the walk to the village and the first goal.
 
 var _out: String = "user://c100_start_shots"
 var _lang: String = "en"

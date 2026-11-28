@@ -169,10 +169,8 @@ func _ready() -> void:
 	VirtualPad.set_wanted(true)
 	DeepLink.poll()
 	if not GameState.has_flag("got_starter"):
-		busy = true
-		player.frozen = true
 		_fade.color.a = 1.0
-		prologue.call_deferred()
+		opening_start.call_deferred()
 	else:
 		# Coming from the title screen: the world brightens in underneath it (item 2280).
 		_fade.color.a = 1.0
@@ -416,8 +414,8 @@ func _era_line_after_load(line: String, era_before: int = EraManager.unlocked_er
 		lines.append_array(EraFeatures.new_in_lines(e))
 	await _locked_say(lines)
 
-## The first free walk after the prologue (item 1982): a note with an arrow to the D-pad that
-## goes away after three steps; then the menu tip.
+## The first free walk (item 1982): a note with an arrow to the D-pad that goes away after
+## three steps, or when something happens on the way; then the menu tip.
 func show_walk_hint() -> void:
 	var lines: Array[String] = Tips.take("walk")
 	if lines.is_empty():
@@ -427,7 +425,14 @@ func show_walk_hint() -> void:
 	_ui.add_child(hint)
 	for i: int in WalkHint.STEPS:
 		await player.stepped
-	hint.queue_free()
+		# The storm Spirlings show up on the first step of the opening: the hint goes with it.
+		if not is_instance_valid(hint) or busy:
+			break
+	if is_instance_valid(hint):
+		hint.queue_free()
+	# In the opening the menu tip waits for the village (village_story).
+	if Opening.active(GameState.flags):
+		return
 	while busy:
 		await get_tree().process_frame
 	await show_tip("menu")
@@ -540,8 +545,13 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	if not _day_noted:
 		_day_noted = true
 		Comeback.note_day(int(Online.unix_now() / 86400.0))
+	# In Brindlewick after the opening the story goes on; tips wait until then.
+	if Opening.village_due(GameState.flags, map.id):
+		village_story.call_deferred()
+	elif Opening.quiet(GameState.flags):
+		pass
 	# The first step into the wild meets a Spirling anyway (FirstCatch), so this tip waits until then.
-	if not map.encounter_table.is_empty() and Tips.pending("wild_area") and not FirstCatch.due(GameState.flags):
+	elif not map.encounter_table.is_empty() and Tips.pending("wild_area") and not FirstCatch.due(GameState.flags):
 		_tip_after_load.call_deferred("wild_area")
 	elif not waiting_tips.is_empty():
 		_waiting_tip_after_load.call_deferred()
@@ -894,6 +904,13 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	survey_step(cell)
 	if scene_running:
 		return
+	# The opening: the first step into the ferns meets the storm Spirlings.
+	if Opening.meet_due(GameState.flags):
+		_opening_steps += 1
+		if Opening.meet_now(GameState.flags, map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS, _opening_steps):
+			_grass_rustle(map.kind_at(cell))
+			await opening_meet()
+			return
 	_grass_rustle(map.kind_at(cell))
 	DailyTasks.record("step", {"map": map.id})
 	Kinship.on_step(GameState.party, GameState.records)
@@ -904,6 +921,9 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	var warp: Dictionary = map.warp_at(cell)
 	if not warp.is_empty():
 		await _warp(warp)
+		return
+	# The walk from the ferns to the village stays a walk (Opening).
+	if Opening.quiet(GameState.flags):
 		return
 	var spotter: NPC = _spotting_trainer()
 	if spotter != null:
@@ -1263,6 +1283,9 @@ func take_notices() -> Array[String]:
 ## Shows "New goal: ..." when the story goal moved on since [param before]. A new chapter
 ## first gets its chapter card (plan item 1413), with the act name when the act changes.
 func announce_goal_if_changed(before: int) -> void:
+	# Goals open in the village (Opening): the goal moved on there is announced then.
+	if Opening.active(GameState.flags):
+		return
 	var now: int = QuestLog.current_index(GameState.flags)
 	if now == before:
 		return
@@ -2422,41 +2445,109 @@ func _action_gift_spirling(args: PackedStringArray, _speaker: NPC) -> void:
 
 # --- Story: prologue and Mirela's map book ---------------------------------------------------
 
-## The opening of a new journey (Ali, 2026-11-04): a short narration over black, then the
-## morning after the storm in the lighthouse, where the partner Spirling is picked in the story.
-func prologue() -> void:
-	busy = true
-	player.frozen = true
-	VirtualPad.set_wanted(false)
-	_fade.color.a = 1.0
-	# The storm night is a real scene with lightning and thunder (plan item 1410).
-	await play_scene("prologue")
-	busy = true
-	player.frozen = true
-	_fade.color.a = 1.0
-	Sound.enter_map(map.id)
-	var tw: Tween = create_tween()
-	Juice.shaped(tw.tween_property(_fade, "color:a", 0.0, 0.6), "fade")
-	await tw.finished
+## The opening of a new journey (Opening, Chimora 1.3.2): the world brightens in and the
+## Wayfarer walks at once, nothing to read first. The first step into the ferns meets the storm
+## Spirlings (opening_meet).
+func opening_start() -> void:
 	busy = false
-	# The prologue dialogue picks the partner ("choose_starter"); Aldo then hands over the map book.
-	while not GameState.has_flag("got_starter"):
-		await run_dialogue("lighthouse/morning")
-	await run_dialogue("lighthouse/aldo")
+	player.frozen = false
+	VirtualPad.set_wanted(true)
 	GameState.set_flag(FIRST_WALK_FLAG)
-	# Saved right after the prologue (1988). The tip that saving also works in the menu waits
-	# for the next map change, so the Wayfarer walks at once (Chimora 100 item 26).
+	Funnel.mark("first_control")
+	_fade_to(0.0)
+	show_walk_hint()
+
+## Steps taken in the opening before the storm Spirlings showed up.
+var _opening_steps: int = 0
+
+## The storm Spirlings in the ferns: one is picked and bonded with Mine! (the bonding tutorial),
+## then Aldo walks over, hands over the map book and the game saves.
+func opening_meet() -> void:
+	busy = true
+	player.frozen = true
+	Funnel.mark("first_wild")
+	Sound.sfx("sparkle")
+	await say([Opening.MEET_LINE] as Array[String])
+	await _action_choose_starter([] as PackedStringArray, null)
+	Funnel.mark("first_catch")
+	var sp := ScenePlayer.new()
+	sp.overworld = self
+	add_child(sp)
+	await sp.play(Opening.ALDO_ID, opening_aldo_scene(player.cell))
+	sp.queue_free()
+	busy = true
+	player.frozen = true
+	# Saved right after the bond (1988); a journey started offline goes online here (item 77).
 	SaveManager.save_game()
-	# A prologue started offline goes online here: account and first sync (plan Chimora 100, item 77).
 	Online.offline_save_point()
 	if Tips.pending("save") and not "save" in waiting_tips:
 		waiting_tips.append("save")
-	show_walk_hint()
+	VirtualPad.set_wanted(true)
+	player.frozen = false
+	busy = false
 
-## Set when the prologue hands over the controls (the start may show at most
-## START_TEXT_BOXES text boxes before it, tests/unit/test_start_flow.gd).
+## Aldo comes up the path below [param at], says he saw it, talks (lighthouse/aldo: the map
+## book, two Tonics, "go see Kestra") and walks back toward the village.
+static func opening_aldo_scene(at: Vector2i) -> Dictionary:
+	var id: String = Opening.ALDO_ID
+	return {"skippable": true, "steps": [
+		{"spawn": id, "x": at.x, "y": maxi(Opening.ALDO_FROM_Y, at.y + 2), "sprite": Opening.ALDO_SPRITE, "facing": "up"},
+		{"move": id, "to": [at.x, at.y + 1]},
+		{"face": "player", "dir": "down"},
+		{"emote": id, "icon": "!"},
+		{"say": [Opening.ALDO_LINE]},
+		{"dialogue": "lighthouse/aldo"},
+		{"move": id, "to": [at.x, maxi(Opening.ALDO_FROM_Y, at.y + 2)]},
+		{"despawn": id},
+	]}
+
+## In Brindlewick the story goes on (Opening): the storm night, look and name, the first goal
+## (goals open now) and the menu tip.
+func village_story() -> void:
+	busy = true
+	player.frozen = true
+	Funnel.mark("story_start")
+	await play_scene("prologue")
+	Sound.enter_map(map.id)
+	busy = true
+	player.frozen = true
+	await ask_look_and_name()
+	GameState.set_flag(Opening.VILLAGE_FLAG)
+	refresh_goal_marks()
+	await announce_goal_if_changed(-1)
+	SaveManager.save_game()
+	VirtualPad.set_wanted(true)
+	player.frozen = false
+	busy = false
+	await show_tip("menu")
+
+## The look screen and the name box, now that the town can see the Wayfarer. Back on the look
+## keeps the old look, Back on the name keeps the old name.
+func ask_look_and_name() -> void:
+	var look: Array[int] = [GameState.tamer_look, GameState.skin_tone, GameState.hair_color, GameState.tamer_color]
+	var host := MenuHost.new()
+	_ui.add_child(host)
+	var default_name: bool = GameState.tamer_name == GameState.DEFAULT_NAMES[GameState.tamer_look]
+	if await TitleScreen.look_screen(host, look):
+		GameState.tamer_look = look[TitleScreen.LOOK_BODY]
+		GameState.skin_tone = look[TitleScreen.LOOK_SKIN]
+		GameState.hair_color = look[TitleScreen.LOOK_HAIR]
+		GameState.tamer_color = look[TitleScreen.LOOK_COAT]
+		if default_name:
+			GameState.tamer_name = GameState.DEFAULT_NAMES[GameState.tamer_look]
+		player.body_color = GameState.body_color()
+		player.material = GameState.tamer_material()
+		player.sprite_style = GameState.tamer_sprite()
+	var name: String = await NameBox.ask(host, GameState.tamer_name)
+	if name != NameBox.BACK:
+		GameState.tamer_name = name.strip_edges()
+	host.queue_free()
+	Online.push_profile()
+
+## Set when the opening hands over the controls: at once, START_TEXT_BOXES text boxes before
+## it (tests/unit/test_start_flow.gd; 10 before 1.3.2).
 const FIRST_WALK_FLAG: String = "first_walk"
-const START_TEXT_BOXES: int = 10
+const START_TEXT_BOXES: int = 0
 
 ## One line per starter under the partner list, so the choice is not made blind (onboarding).
 const STARTER_HINTS: Dictionary[String, String] = {
@@ -2493,9 +2584,30 @@ static func starter_header() -> Control:
 		box.add_child(r)
 	return box
 
-## The question after a pick: short, so it stays the list title in every language (a longer
-## one opened a tap-to-read text first).
-const STARTER_ASK: String = "%s curls up at your feet. Let it stay?"
+## Size of the partner drawn over the Mine! bar.
+const PARTNER_BOND_SIZE: int = 40
+
+## Mine! (or the Echo call, as set under Settings) with the picked partner of the storm, over
+## the world. Only the words after it, no odds (LEGAL.md).
+func partner_bond(sd: SpirlingData) -> void:
+	var game := BondMinigame.new()
+	game.theme = UITheme.get_theme()
+	game.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	game.target = MiniSprite.of(sd.species_name, PARTNER_BOND_SIZE)
+	game.target_name = sd.species_name
+	game.era = EraManager.active_era()
+	# Above the toasts, so a note at the top never hides the small hint.
+	var layer := CanvasLayer.new()
+	layer.layer = Toast.LAYER + 1
+	add_child(layer)
+	layer.add_child(game)
+	var rng := RandomNumberGenerator.new()
+	rng.randomize()
+	var plan: Dictionary = BondEcho.make_plan(rng, sd)
+	game.calm = BattleCalm.bond_style() == "calm"
+	var score: float = await game.run_mine(plan) if BattleCalm.bond_style() == "mine" else await game.run(plan)
+	GameState.note_echo(score)
+	layer.queue_free()
 
 ## Said once the partner stays: one text box (Chimora 100 item 26).
 const STARTER_STAY_LINE: String = "%s stays with you! The other two slip off to the lake."
@@ -2560,12 +2672,15 @@ func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
 				await menu.info(Loc.t(SUIT_RESULT) % Database.STARTERS[hint], MiniSprite.of(Database.STARTERS[hint], STARTER_SPRITE))
 				focus = hint
 			continue
+		if pick < 0:
+			continue
 		var sd: SpirlingData = Database.species(Database.STARTERS[pick])
-		# Yes or No only: a Back row would say the same as No (Chimora 100 item 32).
-		if await menu.pick_strings(STARTER_ASK % sd.species_name, ["Yes", "No"] as Array[String], false) == 0:
-			GameState.choose_starter(sd.species_name)
-			break
-	menu.queue_free()
+		menu.queue_free()
+		# The bond is the bonding tutorial (Opening, 1.3.2): Mine! with only its small hint. A
+		# partner of the storm always stays, whatever the bar shows.
+		await partner_bond(sd)
+		GameState.choose_starter(sd.species_name)
+		break
 	Sound.sfx("level_up")
 	# The partner greets the player with its own call (200 list item 4).
 	Sound.cry(Database.species(GameState.starter))
@@ -4156,7 +4271,12 @@ func _on_online_daily_rg(s: int) -> void:
 	if s != Online.State.ONLINE:
 		return
 	var added: int = await RiftglassSinks.claim_daily()
-	if added > 0 and is_instance_valid(toast):
+	if added <= 0 or not is_instance_valid(toast):
+		return
+	# In the opening the note waits for a step on the walk, so it never covers the first lines.
+	if Opening.active(GameState.flags):
+		GameState.notices.append(Loc.t("Daily gift: +%d Riftglass") % added)
+	else:
 		toast.show_note(Loc.t("Daily gift: +%d Riftglass") % added)
 
 ## Bonus goal of the battle just fought (items 755-757): pays out once when it was met.

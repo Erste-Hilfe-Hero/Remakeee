@@ -96,12 +96,6 @@
    }
   ]
  },
- "morning": {
-  "lines": [
-   "Aldo: Three Spirlings came in from the storm. Go say hello!"
-  ],
-  "action": "choose_starter"
- },
  "aldo_dock": {
   "lines": [
    "Aldo: Kestra thinks something lives behind the Rifts?",

@@ -1,5 +1,5 @@
 # German texts for the first five minutes (Chimora 1.3.2): Kestra and page 1 tightened, shorter
-# save and map-page tips, the first-bond gift and the First Catch Pack note.
+# save and map-page tips, the first-bond gift, the First Catch Pack note and the opening in the ferns.
 T = {
 "Kestra: Aldo's apprentice? Good. The storm tore Rifts open, past Thornridge and under the Saltmarsh.":
 	"Kestra: Aldos Lehrling? Gut. Der Sturm hat Risse aufgerissen, hinter Thornridge und unter der Saltmarsh.",
@@ -19,4 +19,8 @@ T = {
 	"Erste Bindung! Ein Geschenk für unterwegs: %s.",
 "Your first bond! A one-time pack":
 	"Deine erste Bindung! Ein einmaliges Paket",
+"Three small lights peek out of the ferns: Spirlings from the storm!":
+	"Drei kleine Lichter lugen aus den Farnen: Spirlings aus dem Sturm!",
+"Aldo: I saw that from the path! That one chose you.":
+	"Aldo: Das hab ich vom Weg aus gesehen! Der da hat dich gewählt.",
 }

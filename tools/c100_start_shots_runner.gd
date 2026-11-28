@@ -21,7 +21,7 @@ func _run() -> void:
 	GameState.terms_version = ""
 	GameState.language = ""
 	await _title()
-	await _prologue()
+	await _opening()
 	await _bond()
 	get_tree().quit()
 
@@ -66,68 +66,89 @@ func _title() -> void:
 	menu.picker.picked.emit(TitleScreen.TermsRow.GO)
 	await _menu_open(menu, "")
 	await _shot("03_title")
+	# New Game goes straight into the ferns since 1.3.2 (Opening): no look or name screen here.
 	menu.picker.picked.emit(0)
-	# No difficulty step since 2026-11-27 (one mode): the look screen comes next.
-	await _menu_open(menu, TitleScreen.LOOK_TITLE)
-	await _shot("05_look")
-	menu.picker.last_dir = 1
-	menu.picker.picked.emit(TitleScreen.LOOK_BODY)
-	await _frames(2)
-	menu.picker.picked.emit(TitleScreen.LOOK_RANDOM)
-	await _frames(4)
-	await _menu_open(menu, TitleScreen.LOOK_TITLE)
-	await _shot("06_look_random")
-	menu.picker.picked.emit(TitleScreen.LOOK_DONE)
-	await _until(func() -> bool: return title._name_box.visible)
-	await _shot("07_name")
-	title.queue_free()
+	await _until(func() -> bool: return get_tree().current_scene is Overworld)
 	await _frames(2)
 
-func _prologue() -> void:
-	GameState.new_game(GameState.Difficulty.TAMER, "Liora", 1, "", 1, 2, 4)
-	var ow: Overworld = load("res://scenes/overworld/Overworld.tscn").instantiate()
-	get_tree().root.add_child(ow)
-	get_tree().current_scene = ow
+## The opening (1.3.2): walking at once, the storm Spirlings, Mine!, Aldo; then the village.
+func _opening() -> void:
+	var ow: Overworld = get_tree().current_scene as Overworld
+	if ow == null:
+		GameState.new_game(GameState.Difficulty.TAMER, "", 0, "")
+		ow = load("res://scenes/overworld/Overworld.tscn").instantiate()
+		get_tree().root.add_child(ow)
+		get_tree().current_scene = ow
+	await _frames(20)
+	await _shot("04_first_walk")
+	ow.player.cell = Opening.CELL + Vector2i.DOWN
+	ow._on_player_stepped(ow.player.cell)
+	await _play(ow, func() -> bool: return GameState.has_flag("aldo_gift") and not ow.busy)
+	print("boxes until the walk to the village: %d" % _boxes)
+	ow.load_map(Opening.VILLAGE_MAP, Vector2i(5, 1), "down")
+	await _play(ow, func() -> bool: return GameState.has_flag(Opening.VILLAGE_FLAG) and not ow.busy)
+	print("boxes until the first goal: %d" % _boxes)
+	await _frames(10)
+	await _shot("14_village_goal")
+	ow.queue_free()
+	await _frames(2)
+
+## Plays on until [param done], taking one picture of each new screen.
+func _play(ow: Overworld, done: Callable) -> void:
 	var box: TextBox = ow.text_box()
-	var shots: Dictionary[int, String] = {1: "08_prologue_text", 3: "10_wake_up"}
-	var card_shot: bool = false
-	var partner_shot: bool = false
-	for i: int in 4000:
-		if GameState.has_flag(Overworld.FIRST_WALK_FLAG) and not ow.busy:
-			break
-		if not card_shot and ow.scene_running and ow.fade_rect().color.a > 0.99 and _card_label(ow) != null:
-			card_shot = true
-			await _shot("09_card")
-		for c: Node in ow._ui.get_children():
-			if c is MenuHost and (c as MenuHost)._info_panel.visible:
-				print("info: ", (c as MenuHost)._info_label.text.replace("\n", " "))
-				(c as MenuHost)._close_info()
+	var seen: Dictionary = {}
+	for i: int in 6000:
+		if done.call():
+			return
 		var menu: MenuHost = _open_menu(ow)
 		if menu != null:
-			if menu.last_title == Overworld.STARTER_TITLE:
-				if not partner_shot:
-					partner_shot = true
-					await _shot("11_partner")
-				menu.picker.picked.emit(1)
-			else:
-				await _shot("12_partner_confirm")
-				menu.picker.picked.emit(0)
+			if not seen.has(menu.last_title):
+				seen[menu.last_title] = true
+				await _shot("07_partner" if menu.last_title == Overworld.STARTER_TITLE else "11_look")
+			menu.picker.picked.emit(TitleScreen.LOOK_DONE if menu.last_title == TitleScreen.LOOK_TITLE else 1)
 			await _frames(4)
 			continue
+		var game: BondMinigame = _find(ow, BondMinigame) as BondMinigame
+		if game != null and game.visible:
+			if not seen.has("mine"):
+				seen["mine"] = true
+				for t: int in 6:
+					game.mine_tap()
+				await _shot("08_mine")
+			game.mine_tap()
+			await _frames(3)
+			continue
+		var name_box: NameBox = _find(ow._ui, NameBox) as NameBox
+		if name_box != null:
+			await _shot("12_name")
+			name_box._done.emit("Liora")
+			await _frames(4)
+			continue
+		if not seen.has("card") and _card_label(ow) != null:
+			seen["card"] = true
+			await _shot("10_storm_card")
 		if box._waiting:
 			_boxes += 1
-			if shots.has(_boxes):
-				await _shot(shots[_boxes])
-			print("box %d: %s" % [_boxes, box._label.text.replace("\n", " ")])
+			var line: String = box._label.text.replace("\n", " ")
+			if _boxes == 1:
+				await _shot("06_meet")
+			elif line.contains("Aldo") and not seen.has("aldo"):
+				seen["aldo"] = true
+				await _shot("09_aldo")
+			print("box %d: %s" % [_boxes, line])
 			box.advance_now()
 			await _frames(2)
 			continue
 		await get_tree().process_frame
-	print("boxes before control: %d" % _boxes)
-	await _frames(10)
-	await _shot("13_first_walk")
-	ow.queue_free()
-	await _frames(2)
+
+func _find(root: Node, type: Variant) -> Node:
+	for c: Node in root.get_children():
+		if is_instance_of(c, type):
+			return c
+		var deep: Node = _find(c, type)
+		if deep != null:
+			return deep
+	return null
 
 func _card_label(ow: Overworld) -> Label:
 	for c: Node in ow.ui_root().get_children():

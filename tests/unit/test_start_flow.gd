@@ -23,20 +23,20 @@ func after_each() -> void:
 	GameState.tips_enabled = _tips_on
 	Loc.set_language("en")
 
-# --- Item 26: at most ten text boxes before control ---------------------------------------
+# --- Item 26, 1.3.2: no text box before control ----------------------------------------
 
-## Every line the player taps through from New Game until the first free step, in order.
+## Every line the player taps through from New Game until the first free step: none since the
+## opening in the ferns (Opening). The storm night now plays in Brindlewick.
 func _start_lines() -> Array[String]:
+	return [] as Array[String]
+
+## The storm night, now the first thing in Brindlewick (Overworld.village_story).
+func _storm_lines() -> Array[String]:
 	var out: Array[String] = []
 	for step: Variant in ScenePlayer.load_scene("prologue").get("steps", []):
 		if step is Dictionary and (step as Dictionary).has("say"):
 			for l: Variant in step.say:
 				out.append(str(l))
-	out.append_array(Dialogue.lines_for(Dialogue.get_entry("lighthouse/morning"), {}))
-	out.append(Overworld.STARTER_STAY_LINE % "Kindlop")
-	out.append_array(Dialogue.lines_for(Dialogue.get_entry("lighthouse/aldo"), {"got_starter": true}))
-	out.append("You got %s x%d!" % [str(Database.item("tonic").get("name", "tonic")), 2])
-	out.append("New goal: " + QuestLog.goal_text(QuestLog.main_goals()[1], {}))
 	return out
 
 func _pages(box: TextBox, line: String) -> int:
@@ -58,6 +58,19 @@ func test_at_most_ten_text_boxes_before_the_player_walks() -> void:
 		for line: String in _start_lines():
 			n += _pages(ow.text_box(), line)
 		assert_lte(n, Overworld.START_TEXT_BOXES, "%s: %d text boxes before the first step" % [lang, n])
+
+func test_the_new_journey_walks_at_once() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "", 0, "")
+	var ow: Overworld = load("res://scenes/overworld/Overworld.tscn").instantiate()
+	add_child_autofree(ow)
+	await wait_frames(3)
+	assert_eq(ow.map.id, Opening.MAP)
+	assert_false(ow.busy, "nothing to read first")
+	assert_false(ow.player.frozen)
+	assert_false(ow.text_box().visible)
+	assert_true(GameState.has_flag(Overworld.FIRST_WALK_FLAG))
+	assert_lte(Funnel.at(GameState.records, "first_control"), 1, "control within the first second of play")
+	GameState.flags.clear()
 
 func test_save_and_goal_tips_wait_until_the_player_walks() -> void:
 	var src: String = FileAccess.get_file_as_string("res://scripts/overworld/Overworld.gd")
@@ -227,8 +240,9 @@ func test_partner_pick_shows_the_three_partners() -> void:
 		assert_not_null((c as TextureRect).texture)
 	for r: Dictionary in Overworld.starter_rows():
 		assert_true(r.get("icon") is Texture2D, str(r.text))
+	# Since 1.3.2 the pick is bonded with Mine! (the bonding tutorial) instead of Yes or No.
 	var src: String = FileAccess.get_file_as_string("res://scripts/overworld/Overworld.gd")
-	assert_string_contains(src, "[\"Yes\", \"No\"] as Array[String], false)", "no Back row next to No")
+	assert_string_contains(src, "await partner_bond(sd)")
 
 func test_fast_text_is_free() -> void:
 	Billing.state = {"unlocks": {}}
@@ -245,7 +259,7 @@ func test_name_takes_letters_of_every_script() -> void:
 	for ch: String in ["_", "1", "-", " ", "!", "@"]:
 		assert_false(NameKeyboard.name_letter(ch), ch)
 	var edit := LineEdit.new()
-	edit.max_length = TitleScreen.NAME_MAX
+	edit.max_length = NameBox.MAX
 	add_child_autofree(edit)
 	var keys := NameKeyboard.new()
 	keys.target = edit
@@ -260,10 +274,10 @@ func test_name_takes_letters_of_every_script() -> void:
 
 func test_new_texts_are_translated() -> void:
 	var texts: Array[String] = [TitleScreen.HAVE_CODE, TitleScreen.PRIVACY_SHORT,
-		Overworld.STARTER_STAY_LINE, Overworld.STARTER_ASK, NameKeyboard.SYSTEM_KEYS, "Random"]
+		Overworld.STARTER_STAY_LINE, Opening.MEET_LINE, Opening.ALDO_LINE, NameBox.TITLE, NameKeyboard.SYSTEM_KEYS, "Random"]
 	texts.append_array(TitleScreen.LOOK_ROWS)
 	texts.append_array(BondMinigame.FIRST_CALL_HINT.values())
-	texts.append_array(_start_lines().slice(0, 3))
+	texts.append_array(_storm_lines())
 	for lang: String in Loc.LANGUAGES:
 		if lang == "en":
 			continue

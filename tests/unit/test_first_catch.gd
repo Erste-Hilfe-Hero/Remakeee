@@ -8,9 +8,10 @@ extends GutTest
 const LANGS: Array[String] = ["en", "de", "ru", "ja"]
 ## The route a new Wayfarer walks: [map, from, to]. "to" is a warp cell, or the cell next to
 ## Kestra, or (on the last map) the first fern cell.
+## Since 1.3.2 the route starts where the opening walk arrives in Brindlewick (Opening): the
+## storm Spirlings and Aldo come before it, in the ferns.
 const ROUTE: Array[Array] = [
-	["lighthouse", Vector2i(4, 4), Vector2i(4, 7)],
-	["brindlewick", Vector2i(3, 12), Vector2i(2, 4)],
+	["brindlewick", Vector2i(5, 1), Vector2i(2, 4)],
 	["map_house", Vector2i(4, 6), Vector2i(5, 4)],
 	["map_house", Vector2i(5, 4), Vector2i(4, 7)],
 	["brindlewick", Vector2i(2, 5), Vector2i(5, 0)],
@@ -88,7 +89,7 @@ func _steps_to_wild(flags: Dictionary) -> int:
 	return best
 
 func _route_steps() -> int:
-	var flags: Dictionary = {"got_starter": true, "first_walk": true, "aldo_gift": true}
+	var flags: Dictionary = {"got_starter": true, "first_walk": true, "aldo_gift": true, Opening.ON_FLAG: true, Opening.VILLAGE_FLAG: true}
 	var n: int = 0
 	for leg: Array in ROUTE:
 		if leg[0] == "map_house" and leg[1] == Vector2i(5, 4):
@@ -98,14 +99,15 @@ func _route_steps() -> int:
 	return n
 
 func test_route_legs_match_the_maps() -> void:
-	assert_eq(str(MapData.load_map("lighthouse").warp_at(Vector2i(4, 7)).get("to", "")), "brindlewick")
+	assert_eq(str(MapData.load_map(Opening.MAP).warp_at(Vector2i(5, 25)).get("to", "")), "brindlewick")
+	assert_eq(Vector2i(int(MapData.load_map(Opening.MAP).warp_at(Vector2i(5, 25)).tx), int(MapData.load_map(Opening.MAP).warp_at(Vector2i(5, 25)).ty)), ROUTE[0][1])
 	assert_eq(str(MapData.load_map("brindlewick").warp_at(Vector2i(2, 4)).get("to", "")), "map_house")
 	assert_eq(str(MapData.load_map("map_house").warp_at(Vector2i(4, 7)).get("to", "")), "brindlewick")
 	assert_eq(str(MapData.load_map("brindlewick").warp_at(Vector2i(5, 0)).get("to", "")), WILD_MAP)
 
 func test_steps_to_the_first_wild_spirling() -> void:
 	var n: int = _route_steps()
-	gut.p("steps from the first free step to the first fern: %d" % n)
+	gut.p("steps from Brindlewick to the first fern: %d" % n)
 	assert_lte(n, FirstCatch.STEPS)
 
 # --- Text boxes -----------------------------------------------------------------------------
@@ -118,9 +120,15 @@ func _pages(box: TextBox, line: String) -> int:
 	var lab: Label = box._label
 	return TextBox.split_lines(shown, box._text_width(), lab.get_theme_font("font"), lab.get_theme_font_size("font_size"), TextBox.MAX_LINES).size()
 
-## Every line the player taps through from the first free step until the first wild battle.
+## Every line the player taps through from the arrival in Brindlewick until the first wild
+## battle: the storm night and the first goal there (Overworld.village_story), then Kestra.
 func _lines_before_wild() -> Array[String]:
 	var out: Array[String] = []
+	for step: Variant in ScenePlayer.load_scene("prologue").get("steps", []):
+		if step is Dictionary and (step as Dictionary).has("say"):
+			for l: Variant in step.say:
+				out.append(str(l))
+	out.append("New goal: " + QuestLog.goal_text(QuestLog.main_goals()[1], {}))
 	# The menu tip after the walk hint, the save and goals tips on the next map changes.
 	for id: String in ["menu", "save", "goals"]:
 		out.append_array(Tips.lines_of(id, true))
@@ -148,8 +156,9 @@ func _count(ow: Overworld, lines: Array[String]) -> int:
 		n += _pages(ow.text_box(), line)
 	return n
 
-## Before 1.3.2 (measured on the same route): 36 boxes in German and 27 in English to the bond,
-## plus the wild-area tip; the wild Spirling itself came at random (12% a fern step).
+## Before 1.3.2: 10 boxes before control, then 36 in German and 27 in English to the bond plus
+## the wild-area tip, and the wild Spirling came at random (12% a fern step). Since the opening
+## this battle is the second bond and the count starts in Brindlewick (FirstCatch.TEXT_BOXES).
 func test_text_boxes_to_the_first_bond() -> void:
 	var ow: Overworld = load("res://scenes/overworld/Overworld.tscn").instantiate()
 	GameState.set_flag("got_starter")

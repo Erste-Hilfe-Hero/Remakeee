@@ -2,10 +2,12 @@
  "_comment": "Translations of the German table first_catch, written by tools/i18n/locales_first_catch.py. Keys are the English text; keys with %s or %d are patterns.",
  "strings": {
   "'Day one. The sky over the lake split like old paper. Aldo says I'm mad to map it. Aldo is usually right.'": "'Día uno. El cielo sobre el lago se rasgó como papel viejo. Aldo dice que estoy loca por cartografiarlo. Aldo suele tener razón.'",
+  "Aldo: I saw that from the path! That one chose you.": "Aldo: ¡Lo vi desde el camino! Ese te eligió a ti.",
   "First bond! A gift for the road: %s.": "¡Primer vínculo! Un regalo para el camino: %s.",
   "Kestra: Aldo's apprentice? Good. The storm tore Rifts open, past Thornridge and under the Saltmarsh.": "Kestra: ¿Aprendiz de Aldo? Bien. La tormenta abrió Grietas, pasado Thornridge y bajo Saltmarsh.",
   "Kestra: And this blew in through my window. Mirela's compass rose. Yours, I think.": "Kestra: Y esto entró volando por mi ventana. La rosa de los vientos de Mirela. Es tuyo, creo.",
   "Kestra: Everyone wants them closed. I'm not so sure: new Spirlings came through. But start north in Fernstair.": "Kestra: Todos quieren cerrarlas. Yo no lo tengo claro: llegaron Spirlings nuevos. Pero empieza al norte, en Fernstair.",
+  "Three small lights peek out of the ferns: Spirlings from the storm!": "¡Tres lucecitas asoman entre los helechos: Spirlings de la tormenta!",
   "Tip: A wild Spirling that trusts you can join your team.": "Consejo: un Spirling salvaje que confía en ti puede unirse a tu equipo.",
   "Tip: Goals shows how many map pages are still out there.": "Consejo: en Objetivos verás cuántas páginas del mapa quedan por ahí.",
   "Tip: The game saves itself when you change places. Save any time in the menu.": "Consejo: el juego se guarda solo al cambiar de lugar. Guarda cuando quieras en el menú.",

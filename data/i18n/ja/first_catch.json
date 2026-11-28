@@ -2,10 +2,12 @@
  "_comment": "Translations of the German table first_catch, written by tools/i18n/locales_first_catch.py. Keys are the English text; keys with %s or %d are patterns.",
  "strings": {
   "'Day one. The sky over the lake split like old paper. Aldo says I'm mad to map it. Aldo is usually right.'": "「1日目。湖の上の空が、古い紙のように裂けた。地図にするなんてどうかしてるとAldoは言う。たいていAldoの言うとおり。」",
+  "Aldo: I saw that from the path! That one chose you.": "Aldo: 道から見ていたぞ！ あの子がきみを選んだんだ。",
   "First bond! A gift for the road: %s.": "はじめての絆！旅のおくりもの：%s。",
   "Kestra: Aldo's apprentice? Good. The storm tore Rifts open, past Thornridge and under the Saltmarsh.": "Kestra: Aldoの弟子？よかった。嵐で裂け目が開いたの。Thornridgeの先と、Saltmarshの地下に。",
   "Kestra: And this blew in through my window. Mirela's compass rose. Yours, I think.": "Kestra: それと、これが窓から飛びこんできたの。Mirelaのコンパスローズ。あなたのね。",
   "Kestra: Everyone wants them closed. I'm not so sure: new Spirlings came through. But start north in Fernstair.": "Kestra: みんな閉じたがってる。わたしはそうは思わない。新しいSpirlingが来たもの。でも、まずは北のFernstairから。",
+  "Three small lights peek out of the ferns: Spirlings from the storm!": "シダの間から小さな光が三つのぞいている。嵐のSpirlingだ！",
   "Tip: A wild Spirling that trusts you can join your team.": "ヒント：きみを信じた野生のSpirlingは、チームに入ってくれる。",
   "Tip: Goals shows how many map pages are still out there.": "ヒント：残りの地図のページの数は「目標」でわかる。",
   "Tip: The game saves itself when you change places. Save any time in the menu.": "ヒント：場所を移るとゲームが自動で記録する。メニューでいつでも記録できる。",

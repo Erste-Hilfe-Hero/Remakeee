@@ -125,6 +125,32 @@ R = {
  "Twoja pierwsza Więź! Jednorazowy pakiet",
  "İlk bağın! Tek seferlik paket",
  "Je eerste band! Een eenmalig pakket"],
+"Three small lights peek out of the ferns: Spirlings from the storm!": [
+ "シダの間から小さな光が三つのぞいている。嵐のSpirlingだ！",
+ "Trois petites lumières pointent entre les fougères: des Spirlings venus de la tempête!",
+ "Tre piccole luci spuntano dalle felci: Spirling della tempesta!",
+ "¡Tres lucecitas asoman entre los helechos: Spirlings de la tormenta!",
+ "고사리 사이로 작은 빛 세 개가 엿보인다. 폭풍이 데려온 Spirling들이야!",
+ "三点小小的光从蕨丛里探出头来：是暴风雨带来的Spirling！",
+ "三點小小的光從蕨叢裡探出頭來：是暴風雨帶來的Spirling！",
+ "Três luzinhas espiam entre as samambaias: Spirlings da tempestade!",
+ "Из папоротника выглядывают три огонька: Spirlings из шторма!",
+ "Spomiędzy paproci wyglądają trzy małe światełka: Spirlingi z burzy!",
+ "Eğreltiotlarının arasından üç küçük ışık bakıyor: fırtınanın Spirling'leri!",
+ "Drie lichtjes gluren tussen de varens door: Spirlings uit de storm!"],
+"Aldo: I saw that from the path! That one chose you.": [
+ "Aldo: 道から見ていたぞ！ あの子がきみを選んだんだ。",
+ "Aldo: J'ai tout vu depuis le chemin! Celui-là t'a choisi.",
+ "Aldo: Ho visto tutto dal sentiero! Quello ha scelto te.",
+ "Aldo: ¡Lo vi desde el camino! Ese te eligió a ti.",
+ "Aldo: 길에서 다 봤단다! 저 녀석이 너를 골랐구나.",
+ "Aldo：我在小路上都看见了！是它选了你。",
+ "Aldo：我在小路上都看見了！是牠選了你。",
+ "Aldo: Eu vi do caminho! Esse aí escolheu você.",
+ "Aldo: Я всё видел с тропы! Он сам тебя выбрал.",
+ "Aldo: Widziałem to ze ścieżki! On sam cię wybrał.",
+ "Aldo: Patikadan gördüm! O seni seçti.",
+ "Aldo: Ik zag het vanaf het pad! Die heeft jou gekozen."],
 }
 
 
