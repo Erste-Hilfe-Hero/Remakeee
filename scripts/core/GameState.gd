@@ -496,6 +496,7 @@ func _ready() -> void:
 	rng.randomize()
 	_register_actions()
 	apply_pad_swap(swap_ab_pad)
+	TvRemote.install(get_tree())
 
 func _exit_tree() -> void:
 	Loc.uninstall()

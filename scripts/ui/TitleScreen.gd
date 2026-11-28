@@ -348,7 +348,7 @@ func _run() -> void:
 		if idx == QUIT_ASKED:
 			if await _menu.confirm("Quit Chimora?"):
 				CrashReport.app_left()
-				get_tree().quit()
+				TvRemote.quit(get_tree())
 			continue
 		var choice: String = "Continue" if items[idx].begins_with("Continue") else items[idx]
 		match choice:

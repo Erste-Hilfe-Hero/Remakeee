@@ -7,7 +7,7 @@ var eras: Array[int] = [1, 4]
 var _problems: int = 0
 
 const BAG: Dictionary = {"kin_charm": 3, "charm_inkquill": 2, "charm_kindred": 1, "charm_moonwick": 2, "charm_stormbell": 1,
-	"charm_mender": 1, "rg_charm_hush": 1, "rg_charm_swiftleaf": 3, "rg_charm_lantern": 1, "rg_charm_firstlight": 1, "rg_bond_seal": 1}
+	"charm_mender": 1, "rg_charm_hush": 1, "rg_charm_swiftleaf": 3, "rg_charm_lantern": 1, "rg_charm_firstlight": 1, "charm_pagebound": 3, "rg_bond_seal": 1}
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -88,6 +88,10 @@ func _shop_shots(t: String) -> void:
 	await _picture(t + "_05_shop_charms_mid", s)
 	s._scroll.scroll_vertical = 100000
 	await _picture(t + "_06_shop_charms_end", s)
+	s._scroll.scroll_vertical = 0
+	await get_tree().process_frame
+	s._scroll.ensure_control_visible(s.find_child("charm_charm_pagebound", true, false))
+	await _picture(t + "_08_shop_pagebound", s)
 	s.show_detail(ShopCatalog.offer("rg_charm_satchel"))
 	await _picture(t + "_07_detail_satchel", s)
 	s.queue_free()

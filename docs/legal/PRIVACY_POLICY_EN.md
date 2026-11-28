@@ -13,9 +13,11 @@ Ali Amuri Alnasag, Im Vogelgesang 9, 60488 Frankfurt am Main, Germany. Email: aa
 
 ## 2. Summary
 
-Chimora is an online game for iOS and Android. Your save game is stored on our server in the EU (data centre Lauterbourg, France) so you can
+Chimora is an online game for iOS, Android and Samsung Smart TV. Your save game is stored on our server in the EU (data centre Lauterbourg, France) so you can
 play and keep your progress. We collect only what the game needs. **No ads, no sale of data, no tracking or
 analytics, no third-party sign-in, no email address required.**
+
+On **Samsung Smart TV** the app works exactly like the phone apps: the same random player ID and save game, nothing more. It does not read TV identifiers (no DUID, no advertising ID / TIFA), viewing data or the Samsung account, and there are no purchases on the TV.
 
 ## 3. What we process, why, and on what legal basis
 

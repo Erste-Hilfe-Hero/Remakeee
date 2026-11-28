@@ -10,9 +10,27 @@ LANGS = ["ja", "fr", "it", "es", "ko", "zh_CN", "zh_TW", "pt_BR", "ru", "pl", "t
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 R = {
+# The Pagebound Charm (1.3.2 follow-up): the one charm earned in play, a Spirlog goal gift, never sold.
+"Pagebound Charm": ["Seitenband-Amulett", "しおり紐のお守り", "Charme du signet", "Amuleto del segnalibro", "Amuleto del marcapáginas", "책갈피 부적", "书签护符", "書籤護符", "Amuleto do marcador", "Амулет закладки", "Amulet zakładki", "Ayraç Tılsımı", "Bladwijzeramulet"],
+"A ribbon from the Spirlog's own spine, a gift for bonding 25 kinds; never sold. Hold it out during a bond: +6%, and +30% more when this kind is not bonded in your Spirlog yet.": [
+ "Ein Band aus dem Rücken des Spirlogs, ein Geschenk für 25 gebundene Arten; nie zu kaufen. Halte es bei einer Bindung hin: +6 %, und +30 % mehr, wenn diese Art noch nicht in deinem Spirlog gebunden ist.",
+ "Spirlogの背から取ったしおり紐。25種類と絆を結んだ贈り物で、売られていない。絆を結ぶときにかかげると+6%。その種類とまだSpirlogで絆を結んでいなければ、さらに+30%。",
+ "Un ruban tiré du dos du Spirlog, cadeau pour 25 sortes liées; jamais vendu. Tends-le pendant un lien: +6%, et +30% de plus si cette sorte n'est pas encore liée dans ton Spirlog.",
+ "Un nastro dal dorso dello Spirlog, regalo per 25 specie legate; mai in vendita. Mostralo durante un legame: +6%, e +30% in più se questa specie non è ancora legata nel tuo Spirlog.",
+ "Una cinta del lomo del Spirlog, regalo por 25 tipos vinculados; nunca se vende. Ofrécelo durante un vínculo: +6%, y +30% más si este tipo aún no está vinculado en tu Spirlog.",
+ "Spirlog의 등에서 뽑은 리본. 25종과 유대를 맺은 선물이며 팔지 않습니다. 유대 중에 내밀면 +6%. 이 종과 아직 Spirlog에서 유대를 맺지 않았다면 추가로 +30%.",
+ "取自Spirlog书脊的丝带，结缘25种的礼物，从不出售。结缘时举起它：+6%；这种还没在你的Spirlog中结缘时再+30%。",
+ "取自Spirlog書脊的絲帶，與25種結下羈絆的禮物，從不出售。羈絆時舉起它：+6%；這種還沒在你的Spirlog中結下羈絆時再+30%。",
+ "Uma fita da lombada do Spirlog, presente por vínculo com 25 espécies; nunca é vendida. Mostre-a durante um vínculo: +6%, e +30% a mais quando esta espécie ainda não tem vínculo no seu Spirlog.",
+ "Лента с корешка Spirlog, подарок за связь с 25 видами; не продаётся. Покажи её при связи: +6%, и ещё +30%, если с этим видом в твоём Spirlog ещё нет связи.",
+ "Wstążka z grzbietu Spirloga, nagroda za 25 gatunków w Więzi; nigdy nie na sprzedaż. Pokaż ją podczas więzi: +6%, i o 30% więcej, gdy ten gatunek nie jest jeszcze w Więzi w twoim Spirlogu.",
+ "Spirlog'un sırtından bir kurdele, 25 türle bağ kurmanın hediyesi; asla satılmaz. Bağ kurarken uzat: +%6, bu türle Spirlog'unda henüz bağ kurmadıysan +%30 daha.",
+ "Een lint uit de rug van de Spirlog, een cadeau voor 25 gebonden soorten; nooit te koop. Houd het voor tijdens een binding: +6%, en +30% meer als deze soort nog niet gebonden is in je Spirlog."],
+"+6%, new kind +36%": ["+6 %, neu +36 %", "+6%、未登録の種類なら+36%", "+6%, nouvelle sorte +36%", "+6%, nuova specie +36%", "+6%, tipo nuevo +36%", "+6%, 새로운 종 +36%", "+6%，新种类+36%", "+6%，新種類+36%", "+6%, espécie nova +36%", "+6%, новый вид +36%", "+6%, nowy gatunek +36%", "+%6, yeni tür +%36", "+6%, nieuwe soort +36%"],
+"Spirlog gift: %d kinds bonded": ["Spirlog-Geschenk: %d Arten gebunden", "Spirlogの贈り物：%d種類と絆", "Cadeau du Spirlog: %d sortes liées", "Regalo dello Spirlog: %d specie legate", "Regalo del Spirlog: %d tipos vinculados", "Spirlog 선물: %d종과 유대", "Spirlog礼物：结缘%d种", "Spirlog禮物：與%d種結下羈絆", "Presente do Spirlog: vínculo com %d espécies", "Подарок Spirlog: связь с видами: %d", "Nagroda Spirloga: %d gatunków w Więzi", "Spirlog hediyesi: %d türle bağ", "Spirlog-cadeau: %d soorten gebonden"],
 # Names
 "Inkquill Charm": ["Tintenkiel-Amulett", "インク羽ペンのお守り", "Charme plume-d'encre", "Amuleto penna d'inchiostro", "Amuleto pluma de tinta", "잉크깃 부적", "墨羽护符", "墨羽護符", "Amuleto pena de tinta", "Амулет чернильного пера", "Amulet atramentowego pióra", "Mürekkep Tüyü Tılsımı", "Inktveeramulet"],
-"Kindred Thread": ["Verwandtschaftsfaden", "縁の糸", "Fil de parenté", "Filo di affinità", "Hilo afín", "인연의 실", "同源丝线", "同源絲線", "Fio de afinidade", "Нить родства", "Nić pokrewieństwa", "Akrabalık İpi", "Verwantschapsdraad"],
+"Kindred Thread": ["Sippenfaden", "縁の糸", "Fil de parenté", "Filo di affinità", "Hilo afín", "인연의 실", "同源丝线", "同源絲線", "Fio de afinidade", "Нить родства", "Nić pokrewieństwa", "Akrabalık İpi", "Verwantschapsdraad"],
 "Moonwick": ["Monddocht", "月灯芯", "Mèche de lune", "Stoppino lunare", "Mecha lunar", "달심지", "月芯烛", "月芯燭", "Pavio lunar", "Лунный фитиль", "Księżycowy knot", "Ay Fitili", "Maanlont"],
 "Stormbell": ["Sturmglocke", "嵐の鈴", "Cloche d'orage", "Campana di tempesta", "Campana de tormenta", "폭풍 종", "风暴铃", "風暴鈴", "Sino da tempestade", "Грозовой колокольчик", "Burzowy dzwonek", "Fırtına Çanı", "Stormbel"],
 "Mender's Ribbon": ["Heilerband", "癒し手のリボン", "Ruban du soigneur", "Nastro del guaritore", "Cinta del sanador", "치유사의 리본", "疗愈者丝带", "療癒者絲帶", "Fita do curandeiro", "Лента целителя", "Wstążka uzdrowiciela", "Şifacı Kurdelesi", "Helerslint"],

@@ -1164,7 +1164,7 @@ static func _draw_party_row(b: Button, s: Spirling, leader: bool = false, ready:
 ## The community server, opened from Settings > Legal on the title screen and in the pause menu.
 const DISCORD_URL: String = "https://discord.gg/Ya2qyDpcaB"
 ## Opens a link outside the game; tests replace it so no browser starts.
-static var open_url: Callable = func(url: String) -> void: OS.shell_open(url)
+static var open_url: Callable = func(url: String) -> void: TvRemote.open_url(url)
 
 ## Opens the community server and shows the link in case no browser opens.
 func open_discord() -> void:

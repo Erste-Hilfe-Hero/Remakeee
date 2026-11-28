@@ -1380,7 +1380,7 @@ static func bond_charms(bag: Dictionary) -> Array[String]:
 		return ra < rb if ra != rb else a < b)
 	return out
 
-## Rank of [param id] in the bond charm family (1 = Kin Charm .. 10 = Firstlight Crest); other
+## Rank of [param id] in the bond charm family (1 = Kin Charm .. 11 = Pagebound Charm); other
 ## bond items come after them.
 static func charm_rank(id: String) -> int:
 	var c: Variant = Database.item(id).get("charm")
@@ -1468,11 +1468,16 @@ func _bond(slot: int = 0) -> BattleAction:
 	return bond
 
 ## What situational bond charms need from the world (BattleModel.bond_context): dusk or night
-## on the clock (with the day cycle on) and the battle's weather.
+## on the clock (with the day cycle on), the battle's weather and the kinds bonded in the Spirlog.
 static func bond_context(m: BattleModel) -> Dictionary:
 	var phase: int = DayCycle.current()
+	var bonded: Array = []
+	for k: Variant in GameState.spirlog:
+		var e: Variant = GameState.spirlog[k]
+		if e is Dictionary and bool((e as Dictionary).get("bonded", false)):
+			bonded.append(str(k))
 	return {"night": GameState.day_night and phase in [DayCycle.Phase.DUSK, DayCycle.Phase.NIGHT],
-		"weather": BattleWeather.weather_of(m)}
+		"weather": BattleWeather.weather_of(m), "bonded": bonded}
 
 ## Asks before the Echo call whether to boost this bond try with Riftglass (RiftglassSinks
 ## "bond_boost", a fixed value). Only in story battles, only with enough Riftglass, never for

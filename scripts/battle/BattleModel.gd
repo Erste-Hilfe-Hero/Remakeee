@@ -128,7 +128,8 @@ var bond_grace: int = 0
 ## Added to every bond's timing score in wild battles (the shop's Bond Head Start, 0.1 per tier).
 var bond_edge: float = 0.0
 ## What the battle screen knows about the world for situational bond charms: "night" (bool, dusk
-## or night on the clock) and "weather" (BattleWeather.weather_of). Empty in sims and tests.
+## or night on the clock), "weather" (BattleWeather.weather_of) and "bonded" (kinds in the
+## Spirlog). Empty in sims and tests.
 var bond_context: Dictionary = {}
 ## Items used this battle per side, for the per-battle limits of shop items ("per_battle" in items.json).
 var items_used: Array[Dictionary] = [{}, {}]

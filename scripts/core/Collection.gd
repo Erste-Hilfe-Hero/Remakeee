@@ -17,7 +17,8 @@ const GOALS: Array[Dictionary] = [
 	{"id": "kinds_12", "bonded": 12, "item": "tide_pearl", "count": 1, "waymarks": 60},
 	{"id": "kinds_16", "bonded": 16, "item": "max_tonic", "count": 2, "waymarks": 70},
 	{"id": "kinds_20", "bonded": 20, "item": "kin_charm", "count": 3, "waymarks": 80},
-	{"id": "kinds_25", "bonded": 25, "item": "", "count": 0, "money": 2500, "waymarks": 90},
+	# The Pagebound Charm (1.3.2) is the one bond charm earned only here, never sold.
+	{"id": "kinds_25", "bonded": 25, "item": "charm_pagebound", "count": 3, "money": 2500, "waymarks": 90},
 	{"id": "kinds_30", "bonded": 30, "item": "echo_lumen", "count": 1, "waymarks": 100},
 	{"id": "kinds_all", "bonded": -1, "item": "", "count": 0, "money": 5000, "waymarks": 200},
 	{"id": "veydal_10", "region": "veydal", "bonded": 10, "item": "", "count": 0, "title": "Veydal Wanderer", "waymarks": 40},
