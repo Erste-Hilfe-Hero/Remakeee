@@ -160,8 +160,12 @@ static func in_act_one(flags: Dictionary) -> bool:
 	return not goals.is_empty() and str(current(flags).get("act", "")) == str((goals[0] as Dictionary).get("act", ""))
 
 ## The short goal line for the overworld (translated, with "(k/n)" progress), or "" when the
-## current goal has no "hud" text (after Act I).
+## current goal has no "hud" text (after Act I). A quest picked with "Where next?" shows as
+## "To <place>" instead, in every act (tracked_line).
 static func hud_text(flags: Dictionary) -> String:
+	var t: Dictionary = tracked_goal(flags)
+	if not t.is_empty() and (not is_main(t) or str(t.get("hud", "")).is_empty()):
+		return tracked_line(t, flags)
 	var g: Dictionary = current(flags)
 	var text: String = str(g.get("hud", ""))
 	if text.is_empty():
@@ -178,6 +182,12 @@ static func hud_text(flags: Dictionary) -> String:
 ## Maps the current goal still leads to: its "goto" entries whose "done" flag is not set yet
 ## (a single "goto" entry stands for every flag).
 static func goal_maps(flags: Dictionary) -> Array[String]:
+	# A quest picked with "Where next?" leads the goal doors to its target (a main goal with
+	# "goto" keeps its own list, which starts with the same map).
+	var t: Dictionary = tracked_goal(flags)
+	if not t.is_empty() and (not is_main(t) or not t.has("goto")):
+		var to: String = target_map(t, flags)
+		return [to] if not to.is_empty() else ([] as Array[String])
 	var g: Dictionary = current(flags)
 	var go: Array = g.get("goto", [])
 	var need: Array = g.get("done", [])
@@ -226,3 +236,163 @@ static func goal_warps(m: MapData, targets: Array[String]) -> Array[Vector2i]:
 		if str(w.get("to", "")) == str(first[found]):
 			out.append(Vector2i(int(w.x), int(w.y)))
 	return out
+
+# --- Quest Book and "Where next?" (Chimora 1.3.2) -----------------------------------------------
+
+const MAIN: String = "Main"
+const SIDE: String = "Side"
+const DONE: String = "Done"
+const BOOK_TABS: Array[String] = [MAIN, SIDE, DONE]
+
+## The quest the player picked with "Where next?" ("" follows the main goal). Kept for the
+## session only: nothing new is saved, and a quest that is no longer open is ignored.
+static var tracked: String = ""
+
+static func side_goals() -> Array:
+	return data().get("side", [])
+
+static func is_main(goal: Dictionary) -> bool:
+	return main_goals().has(goal)
+
+## The quest with [param id], main or side ({} when there is none).
+static func find(id: String) -> Dictionary:
+	for g: Variant in main_goals() + side_goals():
+		if str((g as Dictionary).get("id", "")) == id:
+			return g
+	return {}
+
+## "open", "done" or "hidden" (a main goal not reached yet, a side goal not shown yet).
+static func state(goal: Dictionary, flags: Dictionary) -> String:
+	if is_main(goal):
+		var i: int = main_goals().find(goal)
+		var now: int = current_index(flags)
+		if i < now or (i == now and _own_done(goal, flags)):
+			return DONE
+		return "open" if i == now else "hidden"
+	if bool(flags.get(str(goal.get("done", "")), false)):
+		return DONE
+	return "open" if bool(flags.get(str(goal.get("show", "")), false)) else "hidden"
+
+## Steps done and steps in all, e.g. (3, 6); (0, 0) for a quest with a single step.
+static func progress(goal: Dictionary, flags: Dictionary) -> Vector2i:
+	var steps: Array = goal.get("done", []) if is_main(goal) else goal.get("progress", [])
+	var stages: Array = [] if is_main(goal) else goal.get("stages", [])
+	var all: int = steps.size() if steps.size() > 1 or stages.is_empty() else stages.size()
+	if all <= 1:
+		return Vector2i.ZERO
+	if state(goal, flags) == DONE:
+		return Vector2i(all, all)
+	var have: int = 0
+	if steps.size() == all:
+		for f: Variant in steps:
+			have += 1 if bool(flags.get(str(f), false)) else 0
+	else:
+		have = clampi(GameState.story_var(stage_var(goal)), 0, all - 1)
+	return Vector2i(have, all)
+
+## Quests of one Quest Book tab: Main is the current main goal, Side the open side goals,
+## Done every finished quest, the latest main goal first. New entries of data/quests.json
+## (daily, post-story) land in their tab by their flags alone.
+static func book(tab: String, flags: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	match tab:
+		MAIN:
+			var g: Dictionary = current(flags)
+			if not g.is_empty() and state(g, flags) == "open":
+				out.append(g)
+		SIDE:
+			out = open_side_goals(flags)
+		DONE:
+			var mains: Array = main_goals().duplicate()
+			mains.reverse()
+			for g: Variant in mains + side_goals():
+				if state(g, flags) == DONE:
+					out.append(g)
+	return out
+
+## The quest picked with "Where next?" while it is open, else {}.
+static func tracked_goal(flags: Dictionary) -> Dictionary:
+	if tracked.is_empty():
+		return {}
+	var g: Dictionary = find(tracked)
+	return g if not g.is_empty() and state(g, flags) == "open" else {}
+
+## The current place text of a quest (the current step's first).
+static func where_of(goal: Dictionary) -> String:
+	return str(goal.get("where", "")) if is_main(goal) else side_where(goal)
+
+static var _names: Dictionary = {}
+
+## Map ids by lower-case display name; a place wins over a house of the same name.
+static func _name_index() -> Dictionary:
+	if _names.is_empty():
+		var maps: Dictionary = WorldAtlas.layout().get("maps", {})
+		var ids: Array = maps.keys()
+		ids.sort()
+		for id: Variant in ids:
+			var path: String = MapData.DIR + str(id) + ".json"
+			var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(path)) if FileAccess.file_exists(path) else null
+			if not raw is Dictionary:
+				continue
+			var key: String = str((raw as Dictionary).get("name", id)).to_lower()
+			if not _names.has(key) or (maps[_names[key]] as Dictionary).has("inside") and not (maps[id] as Dictionary).has("inside"):
+				_names[key] = str(id)
+	return _names
+
+## The map a "where" text points to: the "places" table of data/quests.json, then the first
+## part ("A / B", "A and B", "A, far end") that names a map. "" when nothing matches.
+static func map_for_where(where: String) -> String:
+	var alias: Dictionary = data().get("places", {})
+	if alias.has(where):
+		return str(alias[where])
+	var parts: PackedStringArray = where.replace(" and the ", " / ").replace(" and ", " / ").split(" / ", false)
+	for part: String in parts:
+		var p: String = part.get_slice(",", 0).strip_edges()
+		if alias.has(p):
+			return str(alias[p])
+		var k: String = p.to_lower()
+		for key: String in [k, "the " + k, k.trim_prefix("the ")]:
+			if _name_index().has(key):
+				return str(_name_index()[key])
+	return ""
+
+## The map a quest leads to now: its own "map", a main goal's next "goto", else its "where".
+static func target_map(goal: Dictionary, flags: Dictionary) -> String:
+	var step: Dictionary = {} if is_main(goal) else side_step(goal)
+	if step.has("map"):
+		return str(step.map)
+	if goal.has("map") and step.is_empty():
+		return str(goal.map)
+	if is_main(goal) and goal.has("goto"):
+		var go: Array = goal.goto
+		var need: Array = goal.get("done", [])
+		for i: int in go.size():
+			if go.size() != need.size() or not bool(flags.get(str(need[i]), false)):
+				return str(go[i])
+	return map_for_where(where_of(goal))
+
+## The world map place of a quest's target ("" when it has none).
+static func target_place(goal: Dictionary, flags: Dictionary) -> String:
+	var m: String = target_map(goal, flags)
+	return WorldAtlas.place_of(m) if not m.is_empty() else ""
+
+## Places of the open quests (main goal first) the player has reached or sighted, for the
+## small quest marks on the world map.
+static func open_places(flags: Dictionary, known: Dictionary) -> Array[String]:
+	var out: Array[String] = []
+	for g: Dictionary in book(MAIN, flags) + book(SIDE, flags):
+		var p: String = target_place(g, flags)
+		if not p.is_empty() and not p in out and int(known.get(p, WorldAtlas.Known.UNKNOWN)) != WorldAtlas.Known.UNKNOWN:
+			out.append(p)
+	return out
+
+## Translated name of a world map place.
+static func place_name(place: String) -> String:
+	return Loc.t(MapData.load_map(place).display_name) if MapData.exists(place) else place
+
+## The goal line for a picked quest: "To Mossgate (2/4)".
+static func tracked_line(goal: Dictionary, flags: Dictionary) -> String:
+	var p: String = target_place(goal, flags)
+	var text: String = Loc.f("To %s", place_name(p)) if not p.is_empty() else Loc.t(str(goal.get("hud", goal.get("text", ""))))
+	var pr: Vector2i = progress(goal, flags)
+	return text + (" (%d/%d)" % [pr.x, pr.y] if pr.y > 0 else "")

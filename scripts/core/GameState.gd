@@ -619,6 +619,7 @@ func reset() -> void:
 	visited_maps = {}
 	map_cells = {}
 	map_marks = []
+	QuestLog.tracked = ""
 	here_place = ""
 	last_place = ""
 	records = endgame_defaults({})
