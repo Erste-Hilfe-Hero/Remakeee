@@ -90,7 +90,7 @@
   "lines": [
    "Raft Trader Mott: Buy now. By noon my stall is in another town and so is your change."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear pruning_shears grounding_rod smelling_salts echo_last_ember echo_grid_collapse echo_solar_choir echo_bloodied_quill echo_iron_lung echo_permafrost"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear pruning_shears grounding_rod smelling_salts echo_last_ember echo_grid_collapse echo_solar_choir echo_bloodied_quill echo_iron_lung echo_permafrost kin_charm charm_inkquill charm_kindred charm_moonwick charm_stormbell charm_mender"
  },
  "gloamwater_bloomthief": [
   "Rasmus: I steal blooms from Lastbloom and sell them back to Lastbloom. Sabeline takes a cut. Of me."

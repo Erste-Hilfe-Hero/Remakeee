@@ -5,7 +5,9 @@ extends Control
 ## Unknown places stay empty parchment, sighted ones are an outline, visited ones are filled.
 ## Fixed symbols: the player (ink square), rest points (cross), stops (small square), Rifts (x)
 ## and the player's own marks (mid dot), the place the player was in last (hollow square, 200
-## list item 31) and, after "Rest point", a ring round the nearest rest point (item 32). A tap on a place emits place_tapped; dragging pans
+## list item 31) and, after "Rest point", a ring round the nearest rest point (item 32) or, after
+## "Where next?" in the Quest Book, round the quest's target; a small flag in the lower left
+## corner marks places with an open quest (1.3.2). A tap on a place emits place_tapped; dragging pans
 ## at 2x zoom. The time-of-day symbol sits in the corner. UITheme colours only.
 
 signal place_tapped(place: String)
@@ -19,8 +21,10 @@ var current: String = ""
 var known: Dictionary = {}
 ## Place the player was in before this one ("" for none), drawn as a hollow square.
 var last_here: String = ""
-## Place ringed on the map (the nearest rest point), or "".
+## Place ringed on the map (the nearest rest point or a quest target), or "".
 var highlight: String = ""
+## Known places with an open quest (QuestLog.open_places), drawn as small flags.
+var quests: Array[String] = []
 var _press: Vector2 = Vector2(NAN, NAN)
 var _dragged: bool = false
 var _phase_icon: PhaseIcon
@@ -100,6 +104,7 @@ func refresh(here: String = current) -> void:
 	current = here
 	known = WorldAtlas.known(current)
 	last_here = WorldAtlas.last_here(current)
+	quests = QuestLog.open_places(GameState.flags, known)
 	if _phase_icon != null:
 		_phase_icon.phase = DayCycle.current()
 		_phase_icon.queue_redraw()
@@ -202,6 +207,8 @@ func _draw() -> void:
 				_draw_symbols(id, r)
 			WorldAtlas.Known.SIGHTED:
 				draw_rect(r, UITheme.MID, false, 1.0)
+		if id in quests:
+			_draw_quest_flag(r)
 	var s_last: float = maxf(3.0, p / 3.0)
 	if not last_here.is_empty() and int(known.get(last_here, 0)) == WorldAtlas.Known.VISITED:
 		var lr: Rect2 = cell_rect(last_here)
@@ -235,3 +242,9 @@ func _draw_symbols(id: String, r: Rect2) -> void:
 		marked = marked or not Survey.marks_on(mid).is_empty()
 	if marked:
 		draw_rect(Rect2(Vector2(r.end.x - 4, r.position.y + 2), Vector2(2, 2)), UITheme.MID)
+
+## The small quest flag in the lower left corner of a place: a pole and a pennant.
+func _draw_quest_flag(r: Rect2) -> void:
+	var foot: Vector2 = Vector2(r.position.x + 2.0, r.end.y - 1.0)
+	draw_rect(Rect2(foot - Vector2(0, 5), Vector2(1, 5)), UITheme.INK)
+	draw_rect(Rect2(foot - Vector2(-1, 5), Vector2(2, 2)), UITheme.INK)

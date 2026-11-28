@@ -127,6 +127,9 @@ var gift_items: Dictionary = {}
 var bond_grace: int = 0
 ## Added to every bond's timing score in wild battles (the shop's Bond Head Start, 0.1 per tier).
 var bond_edge: float = 0.0
+## What the battle screen knows about the world for situational bond charms: "night" (bool, dusk
+## or night on the clock) and "weather" (BattleWeather.weather_of). Empty in sims and tests.
+var bond_context: Dictionary = {}
 ## Items used this battle per side, for the per-battle limits of shop items ("per_battle" in items.json).
 var items_used: Array[Dictionary] = [{}, {}]
 ## Extra energy above the normal maximum per side, set before start() (the shop's Overcharge
@@ -1909,7 +1912,8 @@ func _do_bond(a: BattleAction) -> void:
 	var wish: bool = false
 	if not a.item_id.is_empty() and int(inventory.get(a.item_id, 0)) > 0:
 		inventory[a.item_id] = int(inventory[a.item_id]) - 1
-		bonus = float(Database.item(a.item_id).get("bond_bonus", 0.0))
+		# Bond charms (BondCalc.charm_bonus): the base bonus plus a bonus in the charm's situation.
+		bonus = BondCalc.charm_bonus(Database.item(a.item_id), target, active_spirling(Side.PLAYER, a.slot), bond_context)
 		# The shop's Bond Seal (plan area 10) makes this one bond certain.
 		sure = bool(Database.item(a.item_id).get("bond_sure", false))
 		# The shop's Second Try Charm: a failed bond is tried once more at once.
