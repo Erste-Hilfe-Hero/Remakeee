@@ -1,0 +1,17 @@
+{
+ "_comment": "Translations of the German table daily, written by tools/i18n/locales_daily.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "Cloud gale": "구름 돌풍",
+  "Ember storm": "불씨 폭풍",
+  "Glass gale": "유리 바람",
+  "Glimmer rain": "반짝이 비",
+  "Rime storm": "서리 폭풍",
+  "Silver fog": "은빛 안개",
+  "Spirling of the day: %s": "오늘의 스피를링: %s",
+  "Spirling of the day: %s. It steps out more often today in %s.": "오늘의 스피를링: %s. 오늘은 %s에서 더 자주 나타난다.",
+  "Take the gift": "선물 받기",
+  "This weekend: %s over %s.": "이번 주말: %s, %s 위에.",
+  "Weekend weather: %s over %s. Shy Spirlings step out more often there.": "주말 날씨: %s, %s 위에. 그곳에서는 수줍은 스피를링이 더 자주 나타난다.",
+  "Welcome gift, day %d of 7: %s": "환영 선물, 7일 중 %d일째: %s"
+ }
+}
