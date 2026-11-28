@@ -368,24 +368,48 @@ func _text_width() -> float:
 		w -= sb.get_margin(SIDE_LEFT) + sb.get_margin(SIDE_RIGHT)
 	return w - _arrow_space * (2 if big_text else 1)
 
+## Characters a line may not start with (Japanese kinsoku): they stay on the line before.
+const NO_LINE_START: String = "。、！？」』）】〕〉》・ー…：；,.!?)"
+## Opening brackets a line may not end with: they move to the next line.
+const NO_LINE_END: String = "「『（【〔〈《("
+
 ## Wraps [param text] word by word to [param width] and groups the lines into windows of
-## [param max_lines]. A line break in the text starts a new line.
+## [param max_lines]. A line break in the text starts a new line. Japanese and Chinese text, which
+## has no spaces, may break between any two characters.
 static func split_lines(text: String, width: float, font: Font, font_size: int, max_lines: int) -> Array[String]:
 	var lines: Array[String] = []
 	for para: String in text.split("\n"):
 		var line: String = ""
-		for word: String in para.split(" ", false):
-			var tried: String = word if line.is_empty() else line + " " + word
+		for piece: Array in _break_pieces(para):
+			var tried: String = piece[0] if line.is_empty() else line + piece[1] + piece[0]
 			if line.is_empty() or font.get_string_size(tried, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x <= width:
 				line = tried
 			else:
 				lines.append(line)
-				line = word
+				line = piece[0]
 		lines.append(line)
 	var pages: Array[String] = []
 	for i: int in range(0, lines.size(), maxi(1, max_lines)):
 		pages.append("\n".join(lines.slice(i, i + max_lines)))
 	return pages
+
+## [param para] cut into [text, separator before it] pieces a line may break between: words, and
+## single characters inside a run of CJK text, with kinsoku punctuation kept on its neighbour.
+static func _break_pieces(para: String) -> Array[Array]:
+	var pieces: Array[Array] = []
+	for word: String in para.split(" ", false):
+		var sep: String = " "
+		var glue: bool = false
+		for i: int in word.length():
+			var c: String = word[i]
+			var cjk: bool = c.unicode_at(0) >= 0x2E80 or (i > 0 and word[i - 1].unicode_at(0) >= 0x2E80)
+			if i > 0 and (glue or not cjk or NO_LINE_START.contains(c)):
+				pieces[-1][0] += c
+			else:
+				pieces.append([c, sep])
+				sep = ""
+			glue = NO_LINE_END.contains(c)
+	return pieces
 
 ## Starts fast-forward: the current line ends, the next ones run without waiting.
 func start_fast_forward() -> void:
