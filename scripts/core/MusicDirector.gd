@@ -80,6 +80,12 @@ func update_world(moving: bool, running: bool, delta: float) -> void:
 	elif _still >= IDLE_AFTER:
 		motion = Motion.IDLE
 
+## The world is left (title, a closed journey): the next world starts with all layers and a
+## fresh idle timer instead of the stillness of the last one.
+func leave_world() -> void:
+	_still = 0.0
+	motion = Motion.FULL
+
 func set_intensity(level: int) -> void:
 	intensity = clampi(level, 0, FULL_INTENSITY)
 

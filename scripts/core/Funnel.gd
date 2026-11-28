@@ -13,7 +13,7 @@ const STEPS: Array[String] = ["new_game", "first_control", "first_wild", "first_
 
 ## Starts the record of a new journey at 0 s ([param records] is the fresh journey's records).
 static func start(records: Dictionary) -> void:
-	records[RECORD] = {"new_game": 0}
+	records[RECORD] = {"new_game": 0.0}
 
 ## Notes [param step] at [param seconds] of play, once. Journeys started before 1.3.2 have no
 ## record and get none, so their late "first" steps never count.
@@ -21,7 +21,8 @@ static func note(records: Dictionary, step: String, seconds: float) -> void:
 	var f: Variant = records.get(RECORD)
 	if not f is Dictionary or not step in STEPS or (f as Dictionary).has(step):
 		return
-	(f as Dictionary)[step] = maxi(int(seconds), 0)
+	# Whole seconds kept as floats: a save read back from JSON has floats, so it round-trips.
+	(f as Dictionary)[step] = float(maxi(int(seconds), 0))
 
 ## Notes [param step] for the journey being played.
 static func mark(step: String) -> void:

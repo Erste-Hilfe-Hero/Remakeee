@@ -2262,6 +2262,13 @@ func photo_mode() -> void:
 	_photo.queue_free()
 	_photo = null
 
+## Leaving the world in the middle of a battle (To title on the reconnect screen, a closed
+## journey) ends the battle for Online too, or the reconnect screen and the store rating would
+## wait for a battle that is gone. The saved battle (GameState.battle_open) stays for a resume.
+func _exit_tree() -> void:
+	Online.in_battle = false
+	MusicDirector.leave_world()
+
 ## Android back: opens the pause menu in the world, works like B everywhere else (item 1787).
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_RESUMED:

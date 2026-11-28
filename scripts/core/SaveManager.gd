@@ -132,10 +132,13 @@ func build_save() -> Dictionary:
 
 ## Saves the active slot to the local cache and sends it to the server (Online).
 func save_game() -> bool:
-	Funnel.mark("first_save")
+	# Only the real slot files go online (tests point slot_path somewhere else), and only they
+	# count as the journey's first save for the funnel.
+	var real: bool = slot_path == path_for_slot(slot)
+	if real:
+		Funnel.mark("first_save")
 	var ok: bool = write_save(slot_path, build_save())
-	# Only the real slot files go online (tests point slot_path somewhere else).
-	if ok and slot_path == path_for_slot(slot):
+	if ok and real:
 		Online.note_saved(slot)
 	return ok
 

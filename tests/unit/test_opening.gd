@@ -118,7 +118,7 @@ func test_funnel_notes_each_step_once() -> void:
 	Funnel.note(r, "first_control", 9.0)
 	Funnel.note(r, "first_wild", 4.2)
 	Funnel.note(r, "not_a_step", 5.0)
-	assert_eq(r[Funnel.RECORD], {"new_game": 0, "first_control": 1, "first_wild": 4})
+	assert_eq(JSON.stringify(r[Funnel.RECORD]), JSON.stringify({"new_game": 0.0, "first_control": 1.0, "first_wild": 4.0}), "whole seconds")
 	assert_eq(Funnel.at(r, "first_catch"), -1)
 	assert_eq(Funnel.STEPS, ["new_game", "first_control", "first_wild", "first_catch", "story_start", "first_save"] as Array[String])
 
@@ -128,7 +128,9 @@ func test_funnel_goes_up_in_the_save_only() -> void:
 	var d: Dictionary = GameState.to_dict()
 	assert_true((d.records as Dictionary).has(Funnel.RECORD))
 	assert_eq((d.records[Funnel.RECORD] as Dictionary).keys(), ["new_game", "first_control"], "only step names and seconds")
-	GameState.from_dict(d)
+	var text: String = JSON.stringify(d.records[Funnel.RECORD])
+	GameState.from_dict(JSON.parse_string(JSON.stringify(d)))
+	assert_eq(JSON.stringify(GameState.records[Funnel.RECORD]), text, "round-trips through JSON unchanged")
 	assert_eq(Funnel.at(GameState.records, "first_control"), 0)
 	var src: String = FileAccess.get_file_as_string("res://scripts/core/Funnel.gd")
 	for word: String in ["HTTPRequest", "OS.get_unique_id", "Online."]:
@@ -182,7 +184,8 @@ func test_the_opening_plays_through_and_keeps_every_story_flag() -> void:
 	assert_true(GameState.starter in Database.STARTERS)
 	assert_eq(GameState.item_count("tonic"), 2, "Aldo's two Tonics")
 	assert_true(FileAccess.file_exists(TEST_SLOT), "saved after the bond")
-	for step: String in ["new_game", "first_control", "first_wild", "first_catch", "first_save"]:
+	# first_save counts only on the real slot files (SaveManager.save_game); this test saves elsewhere.
+	for step: String in ["new_game", "first_control", "first_wild", "first_catch"]:
 		assert_gte(Funnel.at(GameState.records, step), 0, step)
 	assert_lte(Funnel.at(GameState.records, "first_wild") - Funnel.at(GameState.records, "first_control"), 1, "the first step meets them")
 	assert_true(Opening.quiet(GameState.flags))
