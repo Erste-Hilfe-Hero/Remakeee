@@ -1,4 +1,3 @@
-# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 12 natural start, 13 cutscenes, 14 post-story storylines and Quivermoor duels, 15 quest book, 16 offline play, 17 bond charms, 18 First Catch Pack, 19 daily rewards/tasks/Spirling of the day, 20 weekend weather events, 21 Spirlog rewards, 22 friend codes, 23 smoother menus.
 Chimora 1.3.2
 
 - Daha anlaşılır metinlerle yeniden kurulan dükkân: her paket ve teklif, içinde ne olduğunu ve ne işe yaradığını sade sözlerle anlatır. Hiçbir şey rastgele değil.
@@ -12,15 +11,21 @@ Chimora 1.3.2
 - Birçok hata düzeltmesi.
 - Benim! dokunuşları artık hafifçe titreşir (yalnızca ayarlarda titreşim açıksa).
 - Oyunun başında daha güzel bir giriş.
-- Doğal bir başlangıç: hemen oynarsın, hikâye ilk Spirling'inle tanıştığında başlar.
+- Doğal bir başlangıç: bir çalılıkta başlarsın, hemen oynarsın ve hikâye ilk vahşi Spirling'inle karşılaştığında başlar.
 - Her perdede hikâye ara sahneleri.
 - Ana hikâyeden sonraki dört bölgenin her birinin kendi hikâyesi var, Quivermoor'da düellolarla.
 - Hedeflerini gösteren bir görev kitabı, "Şimdi nereye?" de haritada yolu gösterir.
 - Otomatik çevrimdışı oyun: internet yokken oyun kaldığı yerden devam eder, ilerlemen yeniden çevrimiçi olunca eşitlenir.
-- Benim! ile bağ kurmak için bağ tılsımları; her birinin sabit bir fiyatı var ve tam etkisi satın almadan önce gösterilir.
+- Benim! için yeni bağ tılsımları: Yarık Camı ile tek tek tılsımlar ve dükkânda 3 tılsım paketi; her birinin sabit fiyatı var ve içeriği satın almadan önce gösterilir.
 - En düşük fiyatımızla İlk Buluş Paketi: içeriği sabit, satın almadan önce gösterilen küçük bir paket. Hiçbir şey rastgele değil.
-- Günlük ödüller, günlük görevler ve günün Spirling'i.
-- Hafta sonu hava durumu etkinlikleri.
-- Spirlog'unu doldurdukça ödüller.
-- Arkadaş kodları: arkadaş eklemek daha kolay.
-- Daha akıcı menüler.
+- Benim! sırasında artık bağ kurduğun Spirling'i görürsün.
+- 7 günlük giriş hediyesi, günlük görevler ve günün Spirling'i.
+- Hafta sonu havası: cumartesi ve pazar günleri bazı bölgelerin üzerinde özel bir gökyüzü olur ve utangaç Spirling'ler orada daha sık görünür.
+- Spirlog'un artık kaç Spirling'le bağ kurduğunu yüzde olarak gösterir; %25, %50 ve %100'de ve Işıltı aşamalarında ödüller: eşyalar ve bir unvan.
+- Arkadaş kodları artık davet: yeni bir oyuncu senin kodunla katılıp bir gün oynadığında ikiniz de ödül alırsınız.
+- Dünyada karşılaştığın kişilerle takas yap; bazı Spirling'ler artık takasla açılır.
+- Daha akıcı animasyonlar.
+- iPad için hazırlanmış bir düzen.
+- Daha büyük yazılar ve dokunması daha kolay, daha büyük düğmeler.
+- Her çağda grafik düzeltmeleri, Era I'den Era V'e.
+- Güvenlik ve hız düzeltmeleri.

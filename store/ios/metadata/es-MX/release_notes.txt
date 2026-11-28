@@ -1,4 +1,3 @@
-# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 12 natural start, 13 cutscenes, 14 post-story storylines and Quivermoor duels, 15 quest book, 16 offline play, 17 bond charms, 18 First Catch Pack, 19 daily rewards/tasks/Spirling of the day, 20 weekend weather events, 21 Spirlog rewards, 22 friend codes, 23 smoother menus.
 Chimora 1.3.2
 
 - Una tienda renovada con textos más claros: cada pack y cada oferta explica con palabras sencillas qué trae y para qué sirve. Nada es aleatorio.
@@ -12,15 +11,21 @@ Chimora 1.3.2
 - Muchas correcciones de errores.
 - Los toques de ¡Mío! vibran suavemente (solo si la vibración está activada en Ajustes).
 - Una introducción más bonita al empezar el juego.
-- Un comienzo natural: juegas al instante y la historia empieza cuando conoces a tu primer Spirling.
+- Un comienzo natural: empiezas en un arbusto, juegas al instante y la historia empieza cuando conoces a tu primer Spirling salvaje.
 - Escenas de historia en cada acto.
 - Las cuatro regiones tras la historia principal tienen cada una su propia historia, con duelos en Quivermoor.
 - Un libro de misiones con tus objetivos, y "¿Adónde ahora?" marca el camino en el mapa.
 - Juego sin conexión automático: sin internet el juego sigue sin más, y tu progreso se sincroniza en cuanto vuelves a estar en línea.
-- Amuletos de vínculo para vincularte con ¡Mío!, cada uno con precio fijo y su efecto exacto a la vista antes de comprar.
+- Nuevos amuletos de vínculo para ¡Mío!: amuletos sueltos por Vidrio Grieta y 3 packs de amuletos en la tienda, cada uno con precio fijo y su contenido a la vista antes de comprar.
 - El Lote Primera Captura a nuestro precio más bajo: un lote pequeño con contenido fijo, visible antes de comprar. Nada es aleatorio.
-- Recompensas diarias, tareas diarias y un Spirling del día.
-- Eventos de clima los fines de semana.
-- Recompensas por completar tu Spirlog.
-- Códigos de amistad: añadir amistades es más fácil.
-- Menús más fluidos.
+- Durante ¡Mío! ahora ves al Spirling con el que te vinculas.
+- Un regalo de conexión de 7 días, tareas diarias y un Spirling del día.
+- Clima de fin de semana: el sábado y el domingo un cielo especial cubre algunas zonas, y los Spirlings tímidos aparecen allí más a menudo.
+- Tu Spirlog ahora muestra en porcentaje cuántos Spirlings has vinculado, con recompensas al 25, 50 y 100 % y por hitos de Fulgor: objetos y un título.
+- Los códigos de amistad sirven de invitación: si alguien nuevo entra con tu código y juega un día, cada uno recibe una recompensa.
+- Intercambia con la gente que encuentras, y algunos Spirlings ahora se despliegan con un intercambio.
+- Animaciones más fluidas.
+- Un diseño pensado para iPad.
+- Textos y botones más grandes, más fáciles de tocar.
+- Correcciones gráficas en cada era, de la Era I a la Era V.
+- Correcciones de seguridad y velocidad.

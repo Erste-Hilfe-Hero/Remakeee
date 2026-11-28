@@ -1,18 +1,14 @@
-# DEL; WIP 6-17
-- Yeni dükkân, net metinler
-- 70 Spirling, 5 çeşit Işıltı
+- Yeni dükkân, 70 Spirling, 5 Işıltı
 - Hava, 35 bulmaca, sırlar
-- İyi haritalar, artan tek zorluk
-- Benim! titreşir, yeni giriş, düzeltme
-- Hemen oyna, hikâye ilk Spirling'le
-- Her perdede ara sahne
-- 4 son bölgeye hikâye, Quivermoor'da düello
+- İyi haritalar, artan zorluk
+- Doğal başlangıç, giriş, ara sahneler
+- Son hikâyeler, Quivermoor'da düello
 - Görev kitabı, Şimdi nereye?
-- Çevrimdışı oyna, sonra eşitler
-- Bağ tılsımları
-- İlk Buluş Paketi
-- Günlük ödül, görevler, günün Spirling'i
-- Hafta sonu havası
-- Spirlog ödülleri
-- Kolay arkadaş kodları
-- Akıcı menüler
+- Çevrimdışı oyun
+- Bağ tılsımları, İlk Buluş Paketi
+- Benim! titreşir, Spirling'i gösterir
+- Giriş hediyesi, görevler, günün Spirling'i
+- Spirlog ödülleri, davetler
+- Takaslar, takasla açılma
+- Büyük yazı, akıcı animasyon
+- Era I-V, güvenlik, hız düzeltmeleri

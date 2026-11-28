@@ -1,4 +1,3 @@
-# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 12 natural start, 13 cutscenes, 14 post-story storylines and Quivermoor duels, 15 quest book, 16 offline play, 17 bond charms, 18 First Catch Pack, 19 daily rewards/tasks/Spirling of the day, 20 weekend weather events, 21 Spirlog rewards, 22 friend codes, 23 smoother menus.
 Chimora 1.3.2
 
 - 商店全面重做，說明更清楚：每個禮包和商品都用簡單的話寫明內容和作用。沒有任何隨機內容。
@@ -12,15 +11,21 @@ Chimora 1.3.2
 - 多項錯誤修正。
 - 點擊「歸我！」時會輕輕震動（僅在設定中開啟震動時）。
 - 遊戲開頭的序章更精美。
-- 自然的開局：馬上就能玩，故事從你遇見第一隻Spirling時開始。
+- 自然的開局：從草叢中出發，馬上就能玩，故事從你遇見第一隻野生Spirling時開始。
 - 每一幕都有劇情過場。
 - 主線之後的四個地區各有自己的故事，在Quivermoor還有對決。
 - 任務簿列出你的目標，"下一步去哪？"會在地圖上標出路線。
 - 自動離線遊玩：沒有網路時遊戲照常繼續，重新連線後進度會自動同步。
-- 用於「歸我！」結緣的羈絆護符，每個都是固定價格，購買前會顯示確切效果。
+- 用於「歸我！」的新羈絆護符：單個護符用裂晶兌換，商店裡還有3種護符禮包。每個都是固定價格，購買前會顯示內容。
 - 最低價的初遇禮包：內容固定，購買前就會顯示。沒有隨機內容。
-- 每日獎勵、每日任務和今日Spirling。
-- 週末天氣活動。
-- 填寫Spirlog可獲得獎勵。
-- 好友碼：新增好友更簡單。
-- 選單更流暢。
+- 進行「歸我！」時，現在能看到正在結緣的Spirling。
+- 7天登入禮物、每日任務和今日Spirling。
+- 週末天氣：週六和週日，部分區域會出現特別的天空，害羞的Spirling在那裡更常現身。
+- Spirlog現在以百分比顯示你已結緣的Spirling，達到25%、50%、100%和輝光里程碑時可獲得獎勵：道具和稱號。
+- 好友碼可用於邀請：新玩家用你的好友碼加入並玩滿一天後，你們雙方都能獲得獎勵。
+- 可以和世界中遇到的人交換，部分Spirling現在會在交換後舒展。
+- 動畫更流暢。
+- 專為iPad設計的版面。
+- 文字和按鈕更大，更容易點按。
+- 修正從Era I到Era V每個時代的畫面問題。
+- 安全和速度修正。
