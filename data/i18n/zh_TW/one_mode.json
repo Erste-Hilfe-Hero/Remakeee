@@ -1,0 +1,12 @@
+{
+ "_comment": "Translations of the German table one_mode, written by tools/i18n/locales_one_mode.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s with %s, %d:%02d": "%s與%s，%d:%02d",
+  "Rift bosses": "裂隙首領",
+  "Scorch, Root and Jolt stay on after the battle until an item, an art or a rest cures them.": "焦灼、纏根和觸電在戰鬥後仍會保留，直到道具、技藝或休息將其治好。",
+  "Text speed and battle options.": "文字速度和戰鬥選項。",
+  "Text, battles and tips.": "文字、戰鬥和提示。",
+  "Wayfarers think at tier %d, Wardens at tier %d.": "旅人按第%d級思考，守境者按第%d級。",
+  "Wayfarers' Spirlings stay close to your strongest one.": "旅人的Spirling會貼近你最強的那隻。"
+ }
+}

@@ -82,11 +82,11 @@
    "team": [
     {
      "species": "Velvit",
-     "level": 93
+     "level": 96
     },
     {
      "species": "Sootlurk",
-     "level": 94
+     "level": 97
     }
    ]
   },
@@ -104,15 +104,15 @@
    "team": [
     {
      "species": "Puddock",
-     "level": 94
+     "level": 97
     },
     {
      "species": "Glowflitter",
-     "level": 94
+     "level": 97
     },
     {
      "species": "Puddock",
-     "level": 93
+     "level": 96
     }
    ],
    "front": [
@@ -147,15 +147,15 @@
    "team": [
     {
      "species": "Sootlurk",
-     "level": 93
+     "level": 96
     },
     {
      "species": "Glowflitter",
-     "level": 94
+     "level": 97
     },
     {
      "species": "Velvit",
-     "level": 95
+     "level": 98
     }
    ],
    "win_flags": [

@@ -72,7 +72,9 @@ func test_gauntlet_teams_scale_and_are_seeded() -> void:
 	assert_eq(a.level_for(0), 31)
 	assert_false(Database.item(a.reward_item()).is_empty())
 
-func test_menu_title_shows_cap_only_when_capped() -> void:
-	assert_false(PauseMenu.menu_title().contains("Cap"))
-	GameState.difficulty = GameState.Difficulty.VETERAN
-	assert_true(PauseMenu.menu_title().contains("Ring limit"))
+## No ring cap (owner decision 2026-11-27): the menu title never shows one, on any tier.
+func test_menu_title_shows_no_ring_limit() -> void:
+	for d: int in GameState.Difficulty.size():
+		GameState.difficulty = d as GameState.Difficulty
+		assert_false(PauseMenu.menu_title().contains("Ring limit"))
+	GameState.difficulty = GameState.Difficulty.TAMER

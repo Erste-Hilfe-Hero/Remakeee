@@ -1,0 +1,13 @@
+{
+ "_comment": "German texts from tools/i18n/de_one_mode.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%s with %s, %d:%02d": "%s mit %s, %d:%02d",
+  "Rift bosses": "Riss-Bosse",
+  "Scorch, Root and Jolt stay on after the battle until an item, an art or a rest cures them.": "Brand, Wurzeln und Schock bleiben nach dem Kampf, bis ein Item, eine Technik oder eine Rast sie heilt.",
+  "Text speed and battle options.": "Textgeschwindigkeit und Kampfoptionen.",
+  "Text, battles and tips.": "Text, Kämpfe und Tipps.",
+  "Wayfarers think at tier %d, Wardens at tier %d.": "Wanderer denken auf Stufe %d, Hüter auf Stufe %d.",
+  "Wayfarers' Spirlings stay close to your strongest one.": "Die Spirlings der Wanderer bleiben nah an deinem stärksten."
+ }
+}

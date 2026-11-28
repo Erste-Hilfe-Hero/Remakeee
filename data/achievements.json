@@ -1,5 +1,5 @@
 {
- "_comment": "Achievements (plan area 8). stat = what is counted (Achievements.stat), n = goal, reward = Waymarks, group/tier = bronze/silver/gold steps.",
+ "_comment": "Achievements (plan area 8). stat = what is counted (Achievements.stat), n = goal, reward = Waymarks, group/tier = bronze/silver/gold steps. retired = no longer listed or counted (the Veteran and Rift-Born badges since the game has one mode, owner decision 2026-11-27); earned records stay in the save.",
  "achievements": [
   {
    "id": "first_bond",
@@ -326,6 +326,7 @@
   },
   {
    "id": "oath_veteran",
+   "retired": true,
    "title": "Oathkeeper II",
    "text": "Mend both Rifts under the Iron Oath on Veteran.",
    "cat": "challenge",
@@ -337,6 +338,7 @@
   },
   {
    "id": "oath_riftborn",
+   "retired": true,
    "title": "Oathkeeper III",
    "text": "Mend both Rifts under the Iron Oath on Rift-Born.",
    "cat": "challenge",
@@ -848,6 +850,7 @@
   },
   {
    "id": "veteran_rifts",
+   "retired": true,
    "title": "Veteran Mender",
    "text": "Mend both Rifts on Veteran or Rift-Born.",
    "cat": "challenge",
@@ -857,6 +860,7 @@
   },
   {
    "id": "riftborn_rifts",
+   "retired": true,
    "title": "Rift-Born Mender",
    "text": "Mend both Rifts on Rift-Born.",
    "cat": "challenge",

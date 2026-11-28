@@ -31,7 +31,7 @@ func test_round_trip_restores_state() -> void:
 	assert_true(SaveManager.load_game())
 	var after: Dictionary = GameState.to_dict()
 	assert_eq(JSON.stringify(after), JSON.stringify(before))
-	assert_eq(GameState.difficulty, GameState.Difficulty.VETERAN)
+	assert_eq(GameState.difficulty, GameState.Difficulty.TAMER, "one mode: new_game always plays TAMER")
 	assert_eq(GameState.party[0].data.species_name, "Puddlet")
 
 func test_save_has_version_and_no_temp_file_left() -> void:
@@ -59,7 +59,7 @@ func test_migrates_scaffold_v0_save() -> void:
 	assert_eq(int(d.save_version), SaveManager.SAVE_VERSION)
 	assert_true(bool(d.flags.rift_1_sealed))
 	SaveManager.apply_save(d)
-	assert_eq(GameState.difficulty, GameState.Difficulty.RIFT_BORN)
+	assert_eq(GameState.difficulty, GameState.Difficulty.TAMER, "an old Rift-Born save loads as TAMER")
 
 func test_migrates_v1_save_to_the_rebuilt_world() -> void:
 	var v1: Dictionary = {"save_version": 1, "map": "route_2", "cell": [3, 3], "heal_map": "home",

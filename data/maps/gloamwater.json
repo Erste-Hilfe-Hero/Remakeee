@@ -82,11 +82,11 @@
    "team": [
     {
      "species": "Sablet",
-     "level": 95
+     "level": 99
     },
     {
      "species": "Dusktern",
-     "level": 96
+     "level": 100
     }
    ]
   },
@@ -104,15 +104,15 @@
    "team": [
     {
      "species": "Diplit",
-     "level": 96
+     "level": 100
     },
     {
      "species": "Dusktern",
-     "level": 96
+     "level": 100
     },
     {
      "species": "Ripjolt",
-     "level": 95
+     "level": 99
     }
    ],
    "front": [
@@ -144,15 +144,15 @@
    "team": [
     {
      "species": "Fumewraith",
-     "level": 95
+     "level": 99
     },
     {
      "species": "Sablet",
-     "level": 96
+     "level": 100
     },
     {
      "species": "Dusktern",
-     "level": 97
+     "level": 101
     }
    ],
    "win_flags": [

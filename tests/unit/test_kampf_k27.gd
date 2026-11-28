@@ -101,7 +101,7 @@ func test_rest_still_cures_and_the_guide_says_so() -> void:
 	s.status = "root"
 	s.restore()
 	assert_eq(s.status, "")
-	assert_string_contains("\n".join(BattleGuide.status_lines()), "On Story every status ends with the battle.")
+	assert_string_contains("\n".join(BattleGuide.status_lines()), "until an item, an art or a rest cures them.")
 
 # --- 138: Hesper relearns forgotten arts ---
 

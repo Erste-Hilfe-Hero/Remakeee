@@ -116,7 +116,6 @@ var items_allowed: bool = true
 ## The player may put a keepsake from the bag on in battle (KeepsakeKit, KAMPF_PLAN_1000 298).
 ## Only the overworld turns it on, and only when the real team fights (never with echo copies).
 var held_swap: bool = false
-var level_cap: int = Spirling.LEVEL_SANITY
 ## Player bag, item id -> count. Shared by reference with GameState so use is persisted.
 var inventory: Dictionary = {}
 ## Battle-only player items that are not in the bag, item id -> count. The Wayfarer Pass puts a
@@ -2299,7 +2298,7 @@ static func growth_scale(foe_ring: int, own_ring: int) -> float:
 	var f: float = pow((2.0 * foe_ring + 10.0) / float(foe_ring + own_ring + 10), GROWTH_SCALE_POW)
 	return clampf(f, GROWTH_SCALE_MIN, GROWTH_SCALE_MAX)
 
-## Adds XP up to the level cap and plays out level-ups and new moves.
+## Adds XP (no ring cap; Spirling.LEVEL_SANITY only guards broken data) and plays out level-ups and new moves.
 func _give_xp(s: Spirling, amount: int, bench: bool = false) -> void:
 	var index: int = parties[Side.PLAYER].find(s)
 	# Growth Charm keepsake and high kinship (GrowthRules, data/growth_rules.json).
@@ -2307,17 +2306,14 @@ func _give_xp(s: Spirling, amount: int, bench: bool = false) -> void:
 	if own_mult != 1.0:
 		amount = maxi(1, roundi(amount * own_mult))
 	var from_ring: int = s.level
-	var cap_xp: int = Spirling.xp_for_level(mini(level_cap, Spirling.LEVEL_SANITY))
-	var gained: int = clampi(amount, 0, maxi(0, cap_xp - s.xp)) if s.level < level_cap else 0
+	var cap_xp: int = Spirling.xp_for_level(Spirling.LEVEL_SANITY)
+	var gained: int = clampi(amount, 0, maxi(0, cap_xp - s.xp)) if s.level < Spirling.LEVEL_SANITY else 0
 	if bench and gained <= 0:
 		return
 	s.xp += gained
 	var xd: Dictionary = {"side": Side.PLAYER, "index": index, "name": s.display_name(), "amount": gained, "bench": bench}
-	# Item 252: growth lost to the ring limit says so.
-	if gained < amount and level_cap < Spirling.LEVEL_SANITY:
-		xd["cap"] = level_cap
 	emit_event(BattleEvent.Type.XP_GAINED, xd)
-	while s.level < mini(level_cap, Spirling.LEVEL_SANITY) and s.xp >= Spirling.xp_for_level(s.level + 1):
+	while s.level < Spirling.LEVEL_SANITY and s.xp >= Spirling.xp_for_level(s.level + 1):
 		var learned: Array[MoveData] = s.level_up()
 		emit_event(BattleEvent.Type.LEVEL_UP, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "level": s.level, "hp": s.hp, "max_hp": s.max_hp()})
 		for mv: MoveData in learned:

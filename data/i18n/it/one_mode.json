@@ -1,0 +1,12 @@
+{
+ "_comment": "Translations of the German table one_mode, written by tools/i18n/locales_one_mode.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s with %s, %d:%02d": "%s con %s, %d:%02d",
+  "Rift bosses": "Boss dello Squarcio",
+  "Scorch, Root and Jolt stay on after the battle until an item, an art or a rest cures them.": "Arsura, Radici e Scossa restano dopo la lotta finché un oggetto, un'Arte o un riposo non le cura.",
+  "Text speed and battle options.": "Velocità del testo e opzioni di lotta.",
+  "Text, battles and tips.": "Testo, lotte e consigli.",
+  "Wayfarers think at tier %d, Wardens at tier %d.": "I Viandanti pensano al livello %d, i Custodi al livello %d.",
+  "Wayfarers' Spirlings stay close to your strongest one.": "Gli Spirling dei Viandanti restano vicini al tuo più forte."
+ }
+}

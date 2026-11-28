@@ -70,28 +70,18 @@ func test_cut_lore_lives_on_the_first_page() -> void:
 	for word: String in ["cartographers", "Hush", "grandmother", "never came back"]:
 		assert_string_contains(page, word)
 
-# --- Item 25: difficulty first ----------------------------------------------------------
+# --- Item 25, changed 2026-11-27: no difficulty question (one mode, harder act by act) -----
 
-func test_new_game_asks_relaxed_normal_tough() -> void:
-	assert_eq(TitleScreen.DIFFICULTY_CHOICES, [GameState.Difficulty.STORY, GameState.Difficulty.TAMER, GameState.Difficulty.VETERAN] as Array[GameState.Difficulty])
-	var rows: Array[Dictionary] = TitleScreen.difficulty_rows()
-	assert_eq(rows.size(), 3)
-	for r: Dictionary in rows:
-		assert_false(str(r.hint).is_empty(), str(r.text))
-	assert_string_contains(TitleScreen.difficulty_note(0), TitleScreen.DIFFICULTY_LATER)
-	var host := MenuHost.new()
-	add_child_autofree(host)
-	await wait_frames(1)
-	var res: Array = []
-	var run := func() -> void: res.append(await TitleScreen.ask_difficulty(host))
-	run.call()
-	await wait_frames(2)
-	assert_eq(host.picker.focused_index(), 1, "Normal is the default")
-	host.picker.picked.emit(0)
-	await wait_frames(2)
-	assert_eq(res, [GameState.Difficulty.STORY])
-	assert_false(FileAccess.get_file_as_string("res://scripts/ui/TitleScreen.gd").contains("How do you want to travel?"),
-		"challenge rules are no longer the first question")
+func test_new_game_asks_no_difficulty() -> void:
+	var consts: Dictionary = (TitleScreen as Script).get_script_constant_map()
+	for k: String in ["DIFFICULTY_TITLE", "DIFFICULTY_CHOICES", "DIFFICULTY_ROWS", "DIFFICULTY_LINES", "DIFFICULTY_LATER"]:
+		assert_false(consts.has(k), k)
+	var src: String = FileAccess.get_file_as_string("res://scripts/ui/TitleScreen.gd")
+	assert_false(src.contains("ask_difficulty"), "the new game flow asks no difficulty")
+	assert_string_contains(src, "GameState.new_game(GameState.Difficulty.TAMER,")
+	assert_false(src.contains("How do you want to travel?"), "challenge rules are not the first question")
+	GameState.new_game(GameState.Difficulty.VETERAN, "Tess", 0, "")
+	assert_eq(GameState.difficulty, GameState.Difficulty.TAMER, "every journey plays the one mode")
 
 # --- Item 27: one look screen -------------------------------------------------------------
 
@@ -269,9 +259,8 @@ func test_name_takes_letters_of_every_script() -> void:
 	assert_not_null(keys.make_extra_row().get_child(0), "a key opens the phone's own keyboard")
 
 func test_new_texts_are_translated() -> void:
-	var texts: Array[String] = [TitleScreen.HAVE_CODE, TitleScreen.PRIVACY_SHORT, TitleScreen.DIFFICULTY_LATER,
-		Overworld.STARTER_STAY_LINE, Overworld.STARTER_ASK, NameKeyboard.SYSTEM_KEYS, "Random", "Relaxed", "Tough"]
-	texts.append_array(TitleScreen.DIFFICULTY_LINES)
+	var texts: Array[String] = [TitleScreen.HAVE_CODE, TitleScreen.PRIVACY_SHORT,
+		Overworld.STARTER_STAY_LINE, Overworld.STARTER_ASK, NameKeyboard.SYSTEM_KEYS, "Random"]
 	texts.append_array(TitleScreen.LOOK_ROWS)
 	texts.append_array(BondMinigame.FIRST_CALL_HINT.values())
 	texts.append_array(_start_lines().slice(0, 3))

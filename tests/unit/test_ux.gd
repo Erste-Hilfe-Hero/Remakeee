@@ -37,7 +37,8 @@ func test_every_settings_row_has_its_own_action() -> void:
 		seen[key] = true
 		assert_eq(body.count("\"%s\":" % key), 1, "exactly one action for " + key)
 		assert_true(MenuHost.SETTING_HINTS.has(key), "explanation line for " + key)
-	assert_true(seen.has("difficulty") and seen.has("iron_oath"), "Difficulty and Iron Oath are reachable")
+	assert_true(seen.has("iron_oath"), "the Iron Oath is reachable")
+	assert_false(seen.has("difficulty"), "no difficulty row: the game has one mode")
 	var groups: Array[String] = []
 	for g: Array in MenuHost.SETTINGS_GROUPS:
 		groups.append(str(g[0]))
@@ -48,7 +49,7 @@ func test_every_settings_row_has_its_own_action() -> void:
 	for g: String in groups:
 		assert_true(run.contains("\"%s\": " % g), "group %s has an action" % g)
 
-func test_difficulty_and_iron_oath_only_during_a_journey() -> void:
+func test_no_difficulty_and_iron_oath_only_during_a_journey() -> void:
 	var keys: Array[String] = _settings_keys(false)
 	assert_false("difficulty" in keys)
 	assert_false("iron_oath" in keys)

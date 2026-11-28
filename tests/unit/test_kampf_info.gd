@@ -77,10 +77,9 @@ func test_field_status_cap_and_bench_lines() -> void:
 	me.status = "scorch"
 	me.status_turns = 2
 	assert_string_contains(BattleInfo.status_line(me), "2 turns left")
-	m.level_cap = 20
 	m.bench_share = 0.5
 	var facts: String = BattleInfo.facts(m, {})
-	assert_string_contains(facts, "Ring limit 20")
+	assert_false(facts.contains("Ring limit"), "no ring cap to show")
 	assert_string_contains(facts, "learns 50% as much")
 	assert_string_contains(facts, "Field: ")
 

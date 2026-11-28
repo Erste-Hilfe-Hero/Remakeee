@@ -117,12 +117,12 @@ func test_wardens_level_past_odalys_and_caps_continue() -> void:
 		var top: int = _top(team)
 		assert_gt(top, odalys, mid + " is above Odalys")
 		assert_gte(top, last, mid)
-		assert_lte(top, GameState.LEVEL_CAPS[sealed], mid + " fits the ring cap")
+		assert_lte(top, GameState.PROGRESS_RINGS[sealed], mid + " fits the ring cap")
 		last = top
 		sealed += 1
 	assert_lte(last, _top(StoryBattles.get_def("echo_1").team), "the finale still tops Solenne")
-	assert_eq(GameState.LEVEL_CAPS.size(), GameState.STORY_RIFTS.size() + 1)
-	assert_eq(GameState.LEVEL_CAPS[-1], Spirling.STORY_RING)
+	assert_eq(GameState.PROGRESS_RINGS.size(), GameState.STORY_RIFTS.size() + 1)
+	assert_eq(GameState.PROGRESS_RINGS[-1], Spirling.STORY_RING)
 
 func test_kaia_is_revealed_after_the_fight() -> void:
 	var kaia: Dictionary = _npc("oasis_rift", "warden_kaia")

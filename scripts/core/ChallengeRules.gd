@@ -23,11 +23,11 @@ const FLOOR_KEY: String = "difficulty_floor"
 const CODE_LETTERS: String = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"
 const CODE_LENGTH: int = 7
 ## Story difficulty (item 497): foes land critical hits half as often, battles give 20% more Growth
-## on top of GrowthRules difficulty_mult (x1.25), 50% in all (MenuHost.DIFFICULTY_HINTS).
+## on top of GrowthRules difficulty_mult (x1.25), 50% in all.
 const FOE_CRIT: Array[float] = [0.5, 1.0, 1.0, 1.0]
 const GROWTH: Array[float] = [1.2, 1.0, 1.0, 1.0]
 ## Foe scaling (item 496, an option per journey): Wayfarer Spirlings stand at least this many
-## rings below the party's strongest, never above the ring cap plus GameState.FOE_OVER_CAP.
+## rings below the party's strongest, never above the story ring (GameState.progress_cap) plus GameState.FOE_OVER_CAP.
 const SCALING_KEY: String = "foe_scaling"
 const SCALING_GAP: int = 2
 ## Rift-Born foes (item 500) know arts up to this many rings ahead to fill all four slots.
@@ -310,12 +310,9 @@ static func after_rest(party: Array[Spirling]) -> void:
 	for s: Spirling in party:
 		s.hp = mini(s.hp, ceili(s.max_hp() / 2.0))
 
-## The lines a rest spring adds: the ring cap while one holds (item 503).
+## The lines a rest spring adds (there is no ring cap to name since 2026-11-27).
 static func rest_lines() -> Array[String]:
 	var out: Array[String] = []
-	if GameState.has_ring_limit():
-		out.append(Loc.t("Ring cap now: R%d. Each mended Rift raises it.") % GameState.level_cap())
-		Lexicon.add(GameState.records, "ring_caps")
 	if active("half_rested"):
 		out.append(Loc.t("Half Rested: the spring mends only half."))
 	# Lantern post (item 529): beaten Wayfarers who would battle again today.
@@ -371,12 +368,10 @@ static func scale_foes(foes: Array, party: Array[Spirling]) -> void:
 			s.level = to
 			s.hp = s.max_hp()
 
-## "Veteran. Rules: Night Bonds" - the line a battle shows at its start (item 495).
-static func battle_line(difficulty: int) -> String:
-	var line: String = Loc.t("Difficulty: %s") % RunChronicle.difficulty_name(difficulty)
-	if any_active():
-		line += "\n" + Loc.t("Challenges: %s") % names()
-	return line
+## "Challenges: Night Bonds" - the line a battle shows at its start (item 495). It names no
+## difficulty: the game has one mode (owner decision 2026-11-27).
+static func battle_line(_difficulty: int) -> String:
+	return Loc.t("Challenges: %s") % names() if any_active() else ""
 
 ## Sets the challenge rules and difficulty touches on a world battle. Echo duels (a fixed
 ## [code]player_team[/code]) stay even and are left alone.
@@ -401,8 +396,8 @@ static func apply_to_model(model: BattleModel, trainer: Dictionary, map_id: Stri
 	if d == GameState.Difficulty.RIFT_BORN:
 		for s: Variant in model.parties[1]:
 			fill_arts(s)
-	# Warden battles name the difficulty when it is not the normal one; rules always show.
-	if any_active() or (bool(trainer.get("warden", false)) and d != GameState.Difficulty.TAMER):
+	# Active challenge rules always show; there is no difficulty to name.
+	if any_active():
 		model.set_meta("challenge_line", battle_line(d))
 
 ## Books a finished world battle in the challenge stats (only while a rule is on).

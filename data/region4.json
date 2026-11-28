@@ -20,7 +20,7 @@
    "text": "The last town before the edge. The cairns are graves of people who said no to the Gilt House."}
  ],
  "routes": [
-  {"id": "long_stair", "name": "The Long Stair", "pos": [1, 3], "links": ["brightledge", "gildcrest"], "ring": [78, 81], "height": "stairs",
+  {"id": "long_stair", "name": "The Long Stair", "pos": [1, 3], "links": ["brightledge", "gildcrest"], "ring": [83, 86], "height": "stairs",
    "slots": [
    {"slot": "stair_a", "ground": "scree", "weight": 40, "species": "Ledgepup"},
    {"slot": "stair_b", "ground": "fern", "weight": 34, "species": "Vinestep"},
@@ -30,7 +30,7 @@
    {"slot": "stair_f", "ground": "scree", "weight": 40, "species": "Gildmite"},
    {"slot": "stair_g", "ground": "scree", "weight": 18, "species": "Ledgehound"},
    {"slot": "stair_h", "ground": "scree", "weight": 14, "species": "Gnomonk"}]},
-  {"id": "cloudshadow_meadow", "name": "Cloudshadow Meadow", "pos": [3, 1], "links": ["gildcrest", "starwell"], "ring": [80, 83], "height": "terraces",
+  {"id": "cloudshadow_meadow", "name": "Cloudshadow Meadow", "pos": [3, 1], "links": ["gildcrest", "starwell"], "ring": [84, 87], "height": "terraces",
    "slots": [
    {"slot": "meadow_a", "ground": "fern", "weight": 40, "species": "Cloudmop"},
    {"slot": "meadow_b", "ground": "fern", "weight": 22, "species": "Dewfawn"},
@@ -40,7 +40,7 @@
    {"slot": "meadow_f", "ground": "fern", "weight": 26, "species": "Rillsnail"},
    {"slot": "meadow_g", "ground": "fern", "weight": 6, "species": "Dewstag"},
    {"slot": "meadow_h", "ground": "fern", "weight": 14, "species": "Gildbloom"}]},
-  {"id": "mirror_flats", "name": "Mirror Flats", "pos": [3, 4], "links": ["brightledge", "paleshore"], "ring": [82, 85], "height": "flat",
+  {"id": "mirror_flats", "name": "Mirror Flats", "pos": [3, 4], "links": ["brightledge", "paleshore"], "ring": [85, 88], "height": "flat",
    "slots": [
    {"slot": "mirror_a", "ground": "water", "weight": 40, "species": "Flatskip"},
    {"slot": "mirror_b", "ground": "reeds", "weight": 22, "species": "Glintwader"},
@@ -49,7 +49,7 @@
    {"slot": "mirror_e", "ground": "water", "weight": 12, "species": "Flatskimmer"},
    {"slot": "mirror_f", "ground": "scree", "weight": 34, "species": "Plinthlet"},
    {"slot": "mirror_g", "ground": "reeds", "weight": 6, "species": "Glintheron"}]},
-  {"id": "orrery_ridge", "name": "Orrery Ridge", "pos": [5, 1], "links": ["starwell", "whitecairn"], "ring": [85, 88], "height": "cliffs",
+  {"id": "orrery_ridge", "name": "Orrery Ridge", "pos": [5, 1], "links": ["starwell", "whitecairn"], "ring": [87, 90], "height": "cliffs",
    "slots": [
    {"slot": "ridge_a", "ground": "scree", "weight": 40, "species": "Orrebit"},
    {"slot": "ridge_b", "ground": "scree", "weight": 34, "species": "Brasshop"},
@@ -59,7 +59,7 @@
    {"slot": "ridge_f", "ground": "scree", "weight": 12, "species": "Orrewheel"},
    {"slot": "ridge_g", "ground": "scree", "weight": 10, "species": "Brassjack"},
    {"slot": "ridge_h", "ground": "scree", "weight": 22, "species": "Zenwhirl"}]},
-  {"id": "sunfall_terraces", "name": "Sunfall Terraces", "pos": [4, 3], "links": ["gildcrest", "paleshore"], "ring": [87, 90], "height": "terraces",
+  {"id": "sunfall_terraces", "name": "Sunfall Terraces", "pos": [4, 3], "links": ["gildcrest", "paleshore"], "ring": [89, 92], "height": "terraces",
    "slots": [
    {"slot": "sunfall_a", "ground": "fern", "weight": 40, "species": "Noonfox"},
    {"slot": "sunfall_b", "ground": "scree", "weight": 22, "species": "Brazlet"},
@@ -69,7 +69,7 @@
    {"slot": "sunfall_f", "ground": "fern", "weight": 12, "species": "Rillshell"},
    {"slot": "sunfall_g", "ground": "fern", "weight": 10, "species": "Gildwing"},
    {"slot": "sunfall_h", "ground": "scree", "weight": 6, "species": "Brazierbrute"}]},
-  {"id": "lantern_span", "name": "Lantern Span", "pos": [5, 3], "links": ["paleshore", "whitecairn"], "ring": [89, 92], "height": "bridge",
+  {"id": "lantern_span", "name": "Lantern Span", "pos": [5, 3], "links": ["paleshore", "whitecairn"], "ring": [91, 94], "height": "bridge",
    "slots": [
    {"slot": "span_a", "ground": "scree", "weight": 40, "species": "Lumoth"},
    {"slot": "span_b", "ground": "scree", "weight": 22, "species": "Eavekit"},

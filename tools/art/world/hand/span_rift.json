@@ -2,6 +2,32 @@
  "replace": {
   "npcs": [
    {
+    "id": "toll_clerk",
+    "x": 7,
+    "y": 17,
+    "facing": "left",
+    "dialogue": "span_rift/toll_clerk",
+    "sprite": "warden",
+    "trainer": "Toll Clerk Emerich",
+    "intro": "span_rift/toll_clerk_intro",
+    "defeat": "span_rift/toll_clerk_defeat",
+    "money": 4900,
+    "team": [
+     {
+      "species": "Velverain",
+      "level": 92
+     },
+     {
+      "species": "Siroclaw",
+      "level": 92
+     },
+     {
+      "species": "Gyrevult",
+      "level": 93
+     }
+    ]
+   },
+   {
     "id": "warden_veronne",
     "x": 5,
     "y": 2,

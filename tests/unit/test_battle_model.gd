@@ -184,15 +184,15 @@ func test_trainer_switches_in_next_spirling() -> void:
 	assert_eq(m.active[Side.FOE], 1)
 	assert_false(m.is_finished())
 
-func test_level_cap_stops_xp() -> void:
+## No ring cap (owner decision 2026-11-27): a win always gives growth.
+func test_no_ring_cap_stops_xp() -> void:
 	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 12, ["Bowl Over"])]
 	var m := BattleModel.new(mine, [BattleFixtures.make("Zippit", 3)] as Array[Spirling], true, 3)
-	m.level_cap = 12
+	assert_false("level_cap" in m, "the battle model has no ring cap")
 	m.start()
 	var xp_before: int = mine[0].xp
 	m.submit_turn(BattleAction.make_move(Side.PLAYER, 0), BattleAction.make_rest(Side.FOE))
-	assert_eq(mine[0].level, 12)
-	assert_eq(mine[0].xp, xp_before)
+	assert_gt(mine[0].xp, xp_before)
 
 func test_loss_when_party_wiped() -> void:
 	var mine: Array[Spirling] = [BattleFixtures.make("Mossling", 3)]

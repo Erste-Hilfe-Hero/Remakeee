@@ -12,7 +12,7 @@
   "%s, slot %d of %d: %s, Vigor %d of %d": "%s，第 %d 位（共 %d 位）：%s，體力 %d/%d",
   "%s: %d damage": "%s：傷害 %d",
   "%s: %d damage, %d knocked out": "%s：傷害 %d，擊倒 %d",
-  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns on every difficulty; then the place's own field comes back. A new field pushes the old one out at once.": "裂隙場地讓一種屬性的傷害變為 x1.2，另一種變為 x0.85。召喚技藝在任何難度下都會鋪開場地 5 回合，之後恢復該地原本的場地。新場地會立刻擠走舊場地。",
+  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns; then the place's own field comes back. A new field pushes the old one out at once.": "裂隙場地讓一種屬性的傷害變為 x1.2，另一種變為 x0.85。召喚技藝會鋪開場地 5 回合，之後恢復該地原本的場地。新場地會立刻擠走舊場地。",
   "A Rift field never weakens its arts.": "裂隙場地永遠不會削弱它的技藝。",
   "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.": "盤旋的風中有一圈寧靜。Gale技藝打得更重，Bloom技藝枯萎，誰也不會陷入睏倦。",
   "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.": "淡淡的晨光。Lumen技藝打得更重，Umbra技藝變淡，Echo呼喚也更容易成功一些。黎明和白天會多持續 1 回合。",

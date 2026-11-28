@@ -20,27 +20,27 @@
    "text": "Once a year the moor flowers here over whatever it swallowed. The town sells the flowers. Do not ask what they grew from."}
  ],
  "routes": [
-  {"id": "breathing_bog", "name": "The Breathing Bog", "pos": [1, 1], "links": ["mossgate", "tallowmere"], "ring": [89, 92], "height": "bog", "slots": [
+  {"id": "breathing_bog", "name": "The Breathing Bog", "pos": [1, 1], "links": ["mossgate", "tallowmere"], "ring": [92, 95], "height": "bog", "slots": [
    {"slot": "bog_a", "ground": "bog", "weight": 45, "species": null, "stand_in": "Peatlet"},
    {"slot": "bog_b", "ground": "bog", "weight": 35, "species": null, "stand_in": "Gloomgill"},
    {"slot": "bog_c", "ground": "reed", "weight": 20, "species": null, "stand_in": "Bogwick"}]},
-  {"id": "wandering_wood", "name": "Wandering Wood", "pos": [1, 3], "links": ["mossgate", "rootchapel"], "ring": [90, 93], "height": "forest", "slots": [
+  {"id": "wandering_wood", "name": "Wandering Wood", "pos": [1, 3], "links": ["mossgate", "rootchapel"], "ring": [93, 96], "height": "forest", "slots": [
    {"slot": "wood_a", "ground": "moss", "weight": 45, "species": null, "stand_in": "Morelit"},
    {"slot": "wood_b", "ground": "moss", "weight": 35, "species": null, "stand_in": "Rushkit"},
    {"slot": "wood_c", "ground": "moss", "weight": 20, "species": null, "stand_in": "Rookit"}]},
-  {"id": "candle_causeway", "name": "Candle Causeway", "pos": [3, 1], "links": ["tallowmere", "driftwick"], "ring": [91, 94], "height": "causeway", "slots": [
+  {"id": "candle_causeway", "name": "Candle Causeway", "pos": [3, 1], "links": ["tallowmere", "driftwick"], "ring": [94, 97], "height": "causeway", "slots": [
    {"slot": "causeway_a", "ground": "reed", "weight": 45, "species": null, "stand_in": "Velvit"},
    {"slot": "causeway_b", "ground": "bog", "weight": 35, "species": null, "stand_in": "Puddock"},
    {"slot": "causeway_c", "ground": "reed", "weight": 20, "species": null, "stand_in": "Glimmoth"}]},
-  {"id": "hymnmarsh", "name": "Hymnmarsh", "pos": [3, 3], "links": ["rootchapel", "driftwick"], "ring": [92, 95], "height": "marsh", "slots": [
+  {"id": "hymnmarsh", "name": "Hymnmarsh", "pos": [3, 3], "links": ["rootchapel", "driftwick"], "ring": [95, 98], "height": "marsh", "slots": [
    {"slot": "hymn_a", "ground": "reed", "weight": 45, "species": null, "stand_in": "Woadlet"},
    {"slot": "hymn_b", "ground": "bog", "weight": 35, "species": null, "stand_in": "Drizzlet"},
    {"slot": "hymn_c", "ground": "bog", "weight": 20, "species": null, "stand_in": "Padlet"}]},
-  {"id": "heaving_fields", "name": "The Heaving Fields", "pos": [5, 1], "links": ["driftwick", "lastbloom"], "ring": [93, 96], "height": "heave", "slots": [
+  {"id": "heaving_fields", "name": "The Heaving Fields", "pos": [5, 1], "links": ["driftwick", "lastbloom"], "ring": [96, 99], "height": "heave", "slots": [
    {"slot": "heave_a", "ground": "moss", "weight": 45, "species": null, "stand_in": "Silthop"},
    {"slot": "heave_b", "ground": "moss", "weight": 35, "species": null, "stand_in": "Nimbub"},
    {"slot": "heave_c", "ground": "reed", "weight": 20, "species": null, "stand_in": "Rushprowl"}]},
-  {"id": "gloamwater", "name": "Gloamwater", "pos": [5, 3], "links": ["rootchapel", "lastbloom"], "ring": [93, 96], "height": "marsh", "slots": [
+  {"id": "gloamwater", "name": "Gloamwater", "pos": [5, 3], "links": ["rootchapel", "lastbloom"], "ring": [97, 100], "height": "marsh", "slots": [
    {"slot": "gloam_a", "ground": "bog", "weight": 45, "species": null, "stand_in": "Sablet"},
    {"slot": "gloam_b", "ground": "reed", "weight": 35, "species": null, "stand_in": "Diplit"},
    {"slot": "gloam_c", "ground": "bog", "weight": 20, "species": null, "stand_in": "Dusktern"}]}

@@ -61,17 +61,16 @@ func test_several_rings_at_once_get_one_summary_line() -> void:
 	m._give_xp(s, 1)
 	assert_null(BattleFixtures.first_of(m._events, BattleEvent.Type.SHOP_EDGE), "no line for one ring or less")
 
-func test_there_is_no_top_ring_but_a_cap_still_blocks() -> void:
+## No top ring and no ring cap (owner decision 2026-11-27).
+func test_there_is_no_top_ring_and_no_cap() -> void:
 	var s: Spirling = BattleFixtures.make("Kindlop", Spirling.STORY_RING)
 	var m: BattleModel = _model([s] as Array[Spirling])
-	m.level_cap = Spirling.LEVEL_SANITY
 	m._give_xp(s, Spirling.xp_for_level(Spirling.STORY_RING + 5) - s.xp)
 	assert_eq(s.level, Spirling.STORY_RING + 5, "growth goes on past the story ring")
-	var capped: Spirling = BattleFixtures.make("Kindlop", 12)
-	var m2: BattleModel = _model([capped] as Array[Spirling])
-	m2.level_cap = 12
-	m2._give_xp(capped, 5000)
-	assert_eq(capped.level, 12, "a Veteran ring cap blocks growth")
+	var low: Spirling = BattleFixtures.make("Kindlop", 12)
+	var m2: BattleModel = _model([low] as Array[Spirling])
+	m2._give_xp(low, 5000)
+	assert_gt(low.level, 12, "no ring cap blocks growth")
 
 func test_bench_growth_is_counted_apart() -> void:
 	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 10), BattleFixtures.make("Puddlet", 5)]
@@ -107,7 +106,7 @@ func test_no_grind_between_warden_caps() -> void:
 	var low: int = yields[yields.size() / 2]
 	var budget: int = int(GrowthRules.num("no_grind_battles", 0))
 	assert_gt(budget, 0)
-	var caps: Array[int] = GameState.LEVEL_CAPS
+	var caps: Array[int] = GameState.PROGRESS_RINGS
 	for i: int in caps.size() - 1:
 		var n: int = GrowthRules.battles_between(caps[i], caps[i + 1], low, GameState.Difficulty.TAMER)
 		assert_lte(n, budget, "ring %d to %d takes %d battles" % [caps[i], caps[i + 1], n])

@@ -4067,7 +4067,7 @@ func challenge(n: NPC, spotted: bool) -> void:
 	if def.has("warden"):
 		# Warden fights are long; never lose progress to a crash or the OS closing the app.
 		SaveManager.save_game()
-	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty, GameState.level_cap())
+	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty)
 	if team.is_empty():
 		push_warning("Overworld: Wayfarer '%s' has no valid team" % n.npc_id)
 		busy = false
@@ -4186,8 +4186,6 @@ func after_tamer_win(n: NPC) -> void:
 		var lines: Array[String] = ["The Warden's bond wakes again.", "Together you mend the Rift. The Hush lifts!"]
 		if GameState.has_flag("storage_remote"):
 			lines.append("Your resting Spirlings can now be called from the menu, wherever you are.")
-		if GameState.has_ring_limit():
-			lines.append("Your Spirlings can now grow to ring %d." % GameState.level_cap())
 		await say(lines)
 		# The Warden's thanks for the mend (the Rifts of 2026-11): an Echo Crystal with its art.
 		for it: Variant in def.get("mend_items", []):
@@ -4395,7 +4393,7 @@ func _warden_losses(def: Dictionary) -> int:
 func warden_card(def: Dictionary, team: Array[Spirling], question: String) -> bool:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	var card: String = WardenCard.text(def, team, GameState.difficulty, GameState.level_cap())
+	var card: String = WardenCard.text(def, team, GameState.difficulty)
 	if ShopEffects.has_warden_lore(_warden_losses(def), GameState.difficulty):
 		card += "\n" + WardenCard.lore(def, team)
 	await menu.info(card, WardenCard.picture(team))
@@ -4415,7 +4413,7 @@ func offer_warden_rematch(n: NPC) -> bool:
 	VirtualPad.set_wanted(false)
 	await say(WardenRematch.lines(entry, "intro"))
 	var def: Dictionary = WardenRematch.rematch_def(base, entry)
-	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty, GameState.level_cap())
+	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty)
 	var who: String = str(base.get("trainer", base.get("id", "")))
 	var go: bool = await warden_card(def, team, Loc.t("%s wants the rematch. Battle?") % who)
 	if not go:
@@ -4455,7 +4453,7 @@ func offer_second_trial(n: NPC) -> bool:
 	VirtualPad.set_wanted(false)
 	var who: String = str(base.get("trainer", base.get("id", "")))
 	var def: Dictionary = TrainerData.second_trial_def(base, map.id)
-	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty, GameState.level_cap())
+	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty)
 	var go: bool = await warden_card(def, team, Loc.t("%s offers the Second Trial: two rules at once, a full team. Battle?") % who)
 	if not go:
 		VirtualPad.set_wanted(true)
@@ -4508,7 +4506,7 @@ func offer_rematch(n: NPC) -> bool:
 	var top: int = 1
 	for s: Spirling in GameState.party:
 		top = maxi(top, s.level)
-	var team: Array[Spirling] = TrainerData.rematch_team(def, GameState.starter, GameState.rng, top, GameState.level_cap(), GameState.difficulty)
+	var team: Array[Spirling] = TrainerData.rematch_team(def, GameState.starter, GameState.rng, top, Spirling.LEVEL_SANITY, GameState.difficulty)
 	if team.is_empty():
 		VirtualPad.set_wanted(true)
 		player.frozen = false
@@ -4561,7 +4559,7 @@ func pick_echo_partner(question: String, skip_code: String = "") -> Dictionary:
 		if idx >= 0:
 			var t: Dictionary = await Online.call_fn("friend_team", {"p_code": with_team[idx].code})
 			if t.ok and t.data is Dictionary and bool(t.data.get("ok", false)):
-				var team: Array[Spirling] = EchoTeam.build(t.data.team, GameState.level_cap())
+				var team: Array[Spirling] = EchoTeam.build(t.data.team, Spirling.STORY_RING)
 				if not team.is_empty():
 					var label: String = "%s's echo" % str(t.data.name)
 					out = {"code": str(with_team[idx].code), "name": str(t.data.name),
@@ -4856,7 +4854,6 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.items_allowed = GameState.items_allowed_in_battle()
 	# Keepsakes go on in battle only with the real team (KAMPF_PLAN_1000 298).
 	model.held_swap = mine == GameState.party
-	model.level_cap = GameState.level_cap()
 	model.bench_share = GameState.bench_share()
 	model.trainer_name = str(trainer.get("name", ""))
 	model.foe_theme_line = str(trainer.get("theme_line", ""))

@@ -46,7 +46,7 @@ func test_offers_are_valid_riftglass_only_and_new() -> void:
 		assert_false(str(o.get("explain", "")).is_empty(), id + " has an explanation")
 	assert_eq(ShopValidator.check(mine), [] as Array[String])
 	assert_eq(ShopCatalog.validate(), [] as Array[String])
-	assert_eq(int(ShopCatalog.data().catalog_version), 40)
+	assert_eq(int(ShopCatalog.data().catalog_version), 41, "v41 takes the Ring Cap Seal off sale")
 	var products: Array = JSON.parse_string(FileAccess.get_file_as_string("res://store/products.json")).products
 	for p: Dictionary in products:
 		assert_false(str(p.offer) in IDS, "no store product for " + str(p.offer))

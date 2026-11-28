@@ -1,0 +1,58 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "vintner",
+    "x": 6,
+    "y": 10,
+    "facing": "left",
+    "dialogue": "sunfall_terraces/vintner",
+    "sprite": "villager",
+    "trainer": "Vintner Ottavio",
+    "intro": "sunfall_terraces/vintner_intro",
+    "defeat": "sunfall_terraces/vintner_defeat",
+    "money": 3800,
+    "team": [
+     {
+      "species": "Corocub",
+      "level": 90
+     },
+     {
+      "species": "Obelith",
+      "level": 91
+     },
+     {
+      "species": "Bakedil",
+      "level": 91
+     }
+    ]
+   },
+   {
+    "id": "hs_bruna",
+    "x": 9,
+    "y": 9,
+    "facing": "left",
+    "dialogue": "halcyra_side/bruna",
+    "sprite": "villager",
+    "trainer": "Grape Treader Bruna",
+    "intro": "halcyra_side/bruna_intro",
+    "defeat": "halcyra_side/bruna_defeat",
+    "money": 3600,
+    "team": [
+     {
+      "species": "Rillshell",
+      "level": 90
+     },
+     {
+      "species": "Vinestair",
+      "level": 91
+     },
+     {
+      "species": "Vinestep",
+      "level": 92
+     }
+    ]
+   }
+  ]
+ }
+}

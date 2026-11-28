@@ -16,16 +16,16 @@ T = {
 	"10000 Rissglas",
 "Ring Tonic":
 	"Ring-Trank",
-"A Spirling gains 1 Ring at once. Never above the Ring cap.":
-	"Ein Spirling steigt sofort um 1 Ring. Nie über die Ring-Obergrenze.",
+"A Spirling gains 1 Ring at once.":
+	"Ein Spirling steigt sofort um 1 Ring.",
 "Great Ring Tonic":
 	"Großer Ring-Trank",
-"A Spirling gains 5 Rings at once. Never above the Ring cap.":
-	"Ein Spirling steigt sofort um 5 Ringe. Nie über die Ring-Obergrenze.",
+"A Spirling gains 5 Rings at once.":
+	"Ein Spirling steigt sofort um 5 Ringe.",
 "Ring Elixir":
 	"Ring-Elixier",
-"A Spirling rises to the current Ring cap.":
-	"Ein Spirling steigt bis zur aktuellen Ring-Obergrenze.",
+"A Spirling rises to Ring 60.":
+	"Ein Spirling steigt bis Ring 60.",
 "Growth Crystal":
 	"Wachstumskristall",
 "Double growth for the whole team for the next 20 battles.":
@@ -288,8 +288,8 @@ T = {
 	"Nach einer Niederlage gegen einen Wächter startet der nächste Versuch direkt vor ihm mit geheiltem Team.",
 "Warden Weakener":
 	"Wächterschwächer",
-"The Warden starts with 15% less Vigor. At most 1 per Warden battle, not in Rift-Born.":
-	"Der Wächter startet mit 15 % weniger Kraft. Höchstens 1 pro Wächterkampf, nicht in Rift-Born.",
+"The Warden starts with 15% less Vigor. At most 1 per Warden battle.":
+	"Der Wächter startet mit 15 % weniger Kraft. Höchstens 1 pro Wächterkampf.",
 "Warden Bundle":
 	"Wächter-Bündel",
 "Warden Lore, 3 Warden Weakeners and 5 Rift Anchors in one pack.":
@@ -635,14 +635,14 @@ T = {
 "Talk to a beaten Wayfarer who already battled you today: one more rematch. Used up.": "Sprich einen besiegten Wanderer an, der heute schon gegen dich gekämpft hat: eine Revanche mehr. Wird verbraucht.",
 "%s already battled you today. Use a Rematch Key (%d left)?": "%s hat heute schon gegen dich gekämpft. Revanche-Schlüssel nutzen (noch %d)?",
 "Warden Weakener": "Wächterschwächer",
-"Offered before a Rift Warden battle you lost once before: the Warden's team starts with 15% less Vigor. One per battle, not in Rift-Born. Used up.": "Wird vor einem Rift-Wächterkampf angeboten, den du schon einmal verloren hast: Das Team des Wächters startet mit 15 % weniger Kraft. Einer pro Kampf, nicht in Rift-Born. Wird verbraucht.",
+"Offered before a Rift Warden battle you lost once before: the Warden's team starts with 15% less Vigor. One per battle. Used up.": "Wird vor einem Rift-Wächterkampf angeboten, den du schon einmal verloren hast: Das Team des Wächters startet mit 15 % weniger Kraft. Einer pro Kampf. Wird verbraucht.",
 "Use a Warden Weakener? The Warden's team starts with 15%% less Vigor (%d left).": "Wächterschwächer nutzen? Das Team des Wächters startet mit 15 %% weniger Kraft (noch %d).",
 "A Warden Weakener dims %s's team: they start with 15%% less Vigor.": "Ein Wächterschwächer dämpft das Team von %s: Es startet mit 15 %% weniger Kraft.",
 "Warden Lore:": "Wächterkunde:",
 "(holds %s)": "(trägt %s)",
 "Items: %s": "Gegenstände: %s", "Items: none": "Gegenstände: keine",
 "Rift Anchor": "Rissanker",
-"Offered after you lose to a Rift Warden: you stay right before it with a rested team instead of going back to the spring. Not in Rift-Born. Used up.": "Wird angeboten, wenn du gegen einen Rift-Wächter verlierst: Du bleibst direkt vor ihm, mit erholtem Team, statt zur Quelle zurückzugehen. Nicht in Rift-Born. Wird verbraucht.",
+"Offered after you lose to a Rift Warden: you stay right before it with a rested team instead of going back to the spring. Used up.": "Wird angeboten, wenn du gegen einen Rift-Wächter verlierst: Du bleibst direkt vor ihm, mit erholtem Team, statt zur Quelle zurückzugehen. Wird verbraucht.",
 "Use a Rift Anchor? You stay right before the Warden and your team is rested (%d left).": "Rissanker nutzen? Du bleibst direkt vor dem Wächter und dein Team ist erholt (noch %d).",
 "Go back": "Zurückgehen",
 "The Rift Anchor holds you in place. Your team is rested again.": "Der Rissanker hält dich an Ort und Stelle. Dein Team ist wieder erholt.",
@@ -787,7 +787,7 @@ T = {
 "Great Coin Gleam": "Großer Münzglanz",
 "Triple coins from battles for 20 battles.": "Dreifache Münzen aus Kämpfen für 20 Kämpfe.",
 "Grand Ring Tonic": "Riesiger Ring-Trank",
-"A Spirling gains 10 Rings at once. Never above the Ring cap.": "Ein Spirling steigt sofort um 10 Ringe. Nie über die Ring-Grenze.",
+"A Spirling gains 10 Rings at once.": "Ein Spirling steigt sofort um 10 Ringe.",
 "Power %d": "Macht %d",
 "Use the Stat Crystal on?": "Wertkristall für wen?",
 "Which value?": "Welcher Wert?",
@@ -795,9 +795,9 @@ T = {
 "%s's %s rose by %d.": "%s: %s steigt um %d.",
 "Each tier follows the one before it: you pay only the difference.": "Jede Stufe folgt auf die davor: du zahlst nur die Differenz.",
 "Ring Crown": "Ring-Krone",
-"A Spirling jumps to Ring 50 at once. Never above the Ring cap.": "Ein Spirling springt sofort auf Ring 50. Nie über die Ring-Grenze.",
+"A Spirling jumps to Ring 50 at once.": "Ein Spirling springt sofort auf Ring 50.",
 "Ring Cap Seal": "Ring-Grenzen-Siegel",
-"Your Ring cap is 5 Rings higher on Veteran and above. Does not work in leagues. Permanent.": "Deine Ring-Grenze liegt ab Veteran 5 Ringe höher. Wirkt nicht in Ligen. Dauerhaft.",
+"No longer sold: there is no Ring cap any more. Kept as a record of your purchase.": "Nicht mehr im Angebot: Es gibt keine Ring-Grenze mehr. Bleibt als Nachweis deines Kaufs.",
 "Vault of Coins": "Münz-Tresor",
 "Exactly 100000 coins for world merchants.": "Genau 100000 Münzen für die Händler der Welt.",
 "Bond Lure I": "Bindungs-Köder I",

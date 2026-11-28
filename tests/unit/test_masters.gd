@@ -70,13 +70,14 @@ func test_first_win_pays_80_then_20_once_a_week() -> void:
 	assert_eq(GameState.waymarks, Masters.FIRST_WAYMARKS + Masters.WEEKLY_WAYMARKS)
 	assert_string_contains(Masters.profile(Masters.find(id)), "3 wins")
 
+## The story ring (foes only) opens to the whole story range after Act I.
 func test_cap_opens_after_act_one() -> void:
 	GameState.seal_rift("cinder")
 	GameState.seal_rift("tide")
-	assert_lt(GameState.level_cap(), Masters.MIN_RING)
+	assert_lt(GameState.progress_cap(), Masters.MIN_RING)
 	GameState.set_flag(GameState.ACT1_END_FLAG)
 	assert_eq(GameState.progress_cap(), Spirling.STORY_RING)
-	assert_eq(GameState.level_cap(), Spirling.LEVEL_SANITY, "no top ring after Act I")
+	assert_false(GameState.has_method("level_cap"), "no ring cap on the player's Spirlings")
 
 func test_postgame_list_after_act_one() -> void:
 	assert_eq(Postgame.lines(), [] as Array[String])

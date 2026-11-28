@@ -14,13 +14,13 @@ func test_five_rounds_and_board_stays_within_server_limit() -> void:
 
 func test_level_uses_story_cap_not_the_strongest_spirling() -> void:
 	GameState.party[0].level = 55
-	assert_eq(GameState.progress_cap(), GameState.LEVEL_CAPS[0])
+	assert_eq(GameState.progress_cap(), GameState.PROGRESS_RINGS[0])
 	var a := WeeklyChallenge.new("2026-W45", GameState.progress_cap())
 	GameState.party[0].level = 6
 	var b := WeeklyChallenge.new("2026-W45", GameState.progress_cap())
 	assert_eq(a.level, b.level, "raising one Spirling changes nothing")
 	GameState.seal_rift("cinder")
-	assert_eq(GameState.progress_cap(), GameState.LEVEL_CAPS[1])
+	assert_eq(GameState.progress_cap(), GameState.PROGRESS_RINGS[1])
 
 func test_interim_prizes_once_a_week() -> void:
 	var rec: Dictionary = {"week": "2026-W45", "best": 0, "claimed": false}

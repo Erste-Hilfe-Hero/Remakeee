@@ -221,7 +221,8 @@ func test_rift_born_foes_know_four_arts() -> void:
 		if low.data.learnset_levels[i] <= low.level + ChallengeRules.RIFT_BORN_ART_REACH and low.moves.size() < Spirling.MAX_MOVES:
 			assert_has(low.moves, low.data.learnset_moves[i])
 
-func test_battle_line_names_difficulty_and_rules() -> void:
+## One mode (owner decision 2026-11-27): the line names the rules, never a difficulty.
+func test_battle_line_names_the_rules_and_no_difficulty() -> void:
 	var m: BattleModel = _model(false)
 	ChallengeRules.apply_to_model(m, {"name": "Wayfarer"}, "route_a")
 	assert_false(m.has_meta("challenge_line"), "a normal Wayfarer battle shows nothing extra")
@@ -229,7 +230,7 @@ func test_battle_line_names_difficulty_and_rules() -> void:
 	m = _model(false)
 	ChallengeRules.apply_to_model(m, {"name": "Wayfarer"}, "route_a")
 	var line: String = str(m.get_meta("challenge_line"))
-	assert_string_contains(line, Loc.t("Wayfarer"))
+	assert_false(line.contains("Difficulty"), line)
 	assert_string_contains(line, Loc.t("Ace Up Front"))
 
 func test_challenge_record() -> void:
@@ -254,17 +255,17 @@ func test_ranked_difficulty_never_rises_after_a_lowering() -> void:
 	assert_eq(ChallengeRules.ranked_difficulty(), int(GameState.Difficulty.STORY))
 	assert_eq(int(RunChronicle.entry().difficulty), int(GameState.Difficulty.STORY))
 
-func test_rest_names_the_ring_cap_on_veteran() -> void:
-	assert_true(ChallengeRules.rest_lines().is_empty(), "no cap on Wayfarer")
-	GameState.difficulty = GameState.Difficulty.VETERAN
-	var lines: Array[String] = ChallengeRules.rest_lines()
-	assert_eq(lines.size(), 1)
-	assert_string_contains(lines[0], "R%d" % GameState.level_cap())
-	assert_true("ring_caps" in Lexicon.collected(GameState.records))
+## No ring cap (owner decision 2026-11-27): a rest spring never names one, on any tier.
+func test_rest_names_no_ring_cap() -> void:
+	for d: int in GameState.Difficulty.size():
+		GameState.difficulty = d as GameState.Difficulty
+		for l: String in ChallengeRules.rest_lines():
+			assert_false(l.contains("Ring cap"), l)
+	assert_false("ring_caps" in Lexicon.collected(GameState.records))
 
 func test_lexicon_and_no_paid_rules() -> void:
 	assert_true(Lexicon.has_entry("challenges"))
-	assert_true(Lexicon.has_entry("ring_caps"))
+	assert_false(Lexicon.has_entry("ring_caps"), "the ring cap page is gone")
 	var shop: String = FileAccess.get_file_as_string("res://data/shop.json")
 	for id: String in ChallengeRules.ids():
 		assert_false("\"%s\"" % id in shop, "challenge %s is never sold" % id)

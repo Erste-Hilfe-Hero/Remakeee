@@ -184,4 +184,4 @@ func test_new_duels_use_known_spirlings_inside_act_one() -> void:
 		assert_true(StoryBattles.has(id), id)
 		for e: Variant in StoryBattles.get_def(id).team:
 			assert_not_null(Database.species(str(e.species)), "%s: %s" % [id, e.species])
-			assert_lte(int(e.level), GameState.LEVEL_CAPS[2], id)
+			assert_lte(int(e.level), GameState.PROGRESS_RINGS[2], id)

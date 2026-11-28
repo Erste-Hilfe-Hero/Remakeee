@@ -129,6 +129,6 @@ func test_story_duels_climb_toward_venn() -> void:
 			assert_not_null(Database.species(str(e.species)), "%s: %s" % [id, e.species])
 			top = maxi(top, int(e.level))
 		assert_gte(top, last, id)
-		assert_lte(top, GameState.LEVEL_CAPS[GameState.LEVEL_CAPS.size() - 1], id)
+		assert_lte(top, GameState.PROGRESS_RINGS[GameState.PROGRESS_RINGS.size() - 1], id)
 		last = top
 	assert_has(StoryBattles.get_def("kiln_venn").get("win_flags", []), "kiln_venn_beaten")

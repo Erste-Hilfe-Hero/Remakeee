@@ -2,6 +2,32 @@
  "replace": {
   "npcs": [
    {
+    "id": "heir",
+    "x": 7,
+    "y": 17,
+    "facing": "left",
+    "dialogue": "gilt_rift/heir",
+    "sprite": "warden",
+    "trainer": "Gilt Heir Leopold",
+    "intro": "gilt_rift/heir_intro",
+    "defeat": "gilt_rift/heir_defeat",
+    "money": 6000,
+    "team": [
+     {
+      "species": "Obelith",
+      "level": 96
+     },
+     {
+      "species": "Coronarch",
+      "level": 97
+     },
+     {
+      "species": "Rollibex",
+      "level": 97
+     }
+    ]
+   },
+   {
     "id": "warden_aurek",
     "x": 5,
     "y": 2,
@@ -40,45 +66,45 @@
      "tamer": [
       {
        "species": "Hazejellith",
-       "level": 89
+       "level": 91
       },
       {
        "species": "Coronarch",
-       "level": 89
+       "level": 91
       },
       {
        "species": "Caravault",
-       "level": 89
+       "level": 91
       },
       {
        "species": "Helirollax",
-       "level": 90
+       "level": 92
       },
       {
        "species": "Claspreign",
-       "level": 90
+       "level": 92
       }
      ],
      "rift_born": [
       {
        "species": "Obelordan",
-       "level": 97
+       "level": 99
       },
       {
        "species": "Coronarch",
-       "level": 97
+       "level": 99
       },
       {
        "species": "Caravault",
-       "level": 97
+       "level": 99
       },
       {
        "species": "Helirollax",
-       "level": 98
+       "level": 100
       },
       {
        "species": "Coffrendrake",
-       "level": 98
+       "level": 100
       }
      ]
     }

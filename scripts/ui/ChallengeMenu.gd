@@ -20,7 +20,7 @@ static func entries() -> Array[Dictionary]:
 	out.append({"text": "%s: %s" % [Loc.t("Run timer"), Loc.t("On") if RunTimer.is_on() else Loc.t("Off")],
 		"hint": Loc.t("Shows the journey's play time in the corner, for speed runs.")})
 	out.append({"text": "%s: %s" % [Loc.t("Foe scaling"), Loc.t("On") if ChallengeRules.scaling_on() else Loc.t("Off")],
-		"hint": Loc.t("Wayfarers' Spirlings stay close to your strongest one, within the ring cap.")})
+		"hint": Loc.t("Wayfarers' Spirlings stay close to your strongest one.")})
 	return out
 
 static func run(menu: MenuHost) -> void:

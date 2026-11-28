@@ -180,8 +180,8 @@ func test_lexicon_explains_the_ai_tiers() -> void:
 	var text: String = "\n".join(RulesBook.page(i))
 	for tier: int in 4:
 		assert_string_contains(text, "Tier %d " % tier)
-	for d: int in GameState.AI_LEVELS.size():
-		assert_string_contains(text, "%s: Wayfarers think at tier %d." % [MenuHost.DIFFICULTY_TEXT[d], GameState.AI_LEVELS[d]])
+	# One mode (owner decision 2026-11-27): one line with the tiers of Wayfarers and Wardens.
+	assert_string_contains(text, "Wayfarers think at tier %d, Wardens at tier " % TrainerData.TAMER_AI)
 	assert_string_contains(text, "up to %d turns ahead" % int(BattleAI.rules_data().plan_turns))
 
 # --- 476: one damage formula ----------------------------------------------------------------

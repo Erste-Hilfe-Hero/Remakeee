@@ -2,6 +2,32 @@
  "replace": {
   "npcs": [
    {
+    "id": "star_clerk",
+    "x": 7,
+    "y": 17,
+    "facing": "left",
+    "dialogue": "orrery_rift/star_clerk",
+    "sprite": "warden",
+    "trainer": "Star Clerk Benedikt",
+    "intro": "orrery_rift/star_clerk_intro",
+    "defeat": "orrery_rift/star_clerk_defeat",
+    "money": 4100,
+    "team": [
+     {
+      "species": "Solmantle",
+      "level": 85
+     },
+     {
+      "species": "Orrerine",
+      "level": 85
+     },
+     {
+      "species": "Noonwhist",
+      "level": 86
+     }
+    ]
+   },
+   {
     "id": "warden_isaura",
     "x": 5,
     "y": 2,
