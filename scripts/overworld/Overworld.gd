@@ -85,6 +85,10 @@ var scene_running: bool = false
 var scene_abort: bool = false
 ## True while the running scene (and any scene inside it) is being skipped.
 var scene_skipping: bool = false
+## Camera offset of a cut-scene "pan" step, in pixels (ScenePlayer).
+var scene_pan: Vector2 = Vector2.ZERO
+## True while a cut-scene panel covers the upper screen; the text box then stays at the bottom.
+var scene_panel_on: bool = false
 ## Area 3 puzzles and gear on the map (boulders, plates, cracked floor, planks, ladders).
 var _world: WorldMechanics
 ## Cell the player arrived on in this map ("Reset room" puts them back here).
@@ -363,6 +367,7 @@ func _process(delta: float) -> void:
 	if _photo != null:
 		_camera.global_position += _photo.pan
 	_camera.global_position += _era_feel.camera_offset()
+	_camera.global_position += scene_pan
 	# Music layers follow walking, running and open text boxes (items 2477, 2478).
 	MusicDirector.update_world(player.moving, player.running, delta)
 	MusicDirector.dialogue = _text.visible
@@ -1319,7 +1324,7 @@ static func text_lift(pad_top: float, bottom: float) -> int:
 func _place_text_box() -> void:
 	var top: bool = false
 	var view_h: float = get_viewport().get_visible_rect().size.y
-	if player != null and is_instance_valid(player) and player.is_inside_tree():
+	if player != null and is_instance_valid(player) and player.is_inside_tree() and not scene_panel_on:
 		var y: float = player.get_global_transform_with_canvas().origin.y + TilesetFactory.TILE / 2.0
 		top = text_on_top(y, view_h)
 	if top:

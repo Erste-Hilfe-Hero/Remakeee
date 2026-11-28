@@ -484,6 +484,48 @@ or his empty chair, and the player decides what happens to the pact deeds: burn 
 the Warden guild, or keep them and betray both clans (`c4_end_burn`, `c4_end_guild`, `c4_end_keep`).
 `clans/finale_coda` closes that thread in `finale_5` before the credits.
 
+## Cut-scenes (1.3.2)
+
+Short staged moments at the big beats, two or three per act, 15 to 40 seconds each
+(`data/scenes/cs_*.json`, `tests/unit/test_cutscenes.gd`). Each one is started by a host
+scene or dialogue entry with `"action": "scene cs_..."`, plays once per save (`"once": true`)
+and sets no flag, item, battle or story number of its own, so no outcome changes. A tap moves
+the text on and cuts a wait, pan or iris short; Skip or a held press (`HOLD_SKIP_MS`) ends
+the whole cut-scene and the host scene goes on. With reduced motion the camera jumps instead of
+panning, the iris is a plain fade and the panel stands finished.
+
+The test measures every box in the map's own 144 px text box: at most two rows in English and
+German (about 44 characters with the larger talk font, less than the 60 of the style rule above),
+one page with no page break in the other languages.
+
+| Act | Cut-scene | Host | Panel |
+| --- | --- | --- | --- |
+| I | `cs_a1_pages` | `mirela_lamp` | the pages join under the beam |
+| I | `cs_a1_oar` | `act1_finale` | Aldo's ferry |
+| I | `cs_a1_cast_off` | `ferry_crossing` | (on the pier: the village waves, the camera pans to the lake) |
+| II | `cs_a2_flock` | `corvane_arrival` | grey wings over the quay |
+| II | `cs_a2_wide_rift` | `wide_rift_reveal` | the torn sky, three burned marks |
+| III | `cs_a3_ash` | `ashmere_arrival` | the railway in falling ash |
+| III | `cs_a3_plate` | `ashmere/veit_plate_self`, `veit_plate_player` | the plate cracks |
+| III | `cs_a3_seal` | `undrawn_enter` | the curtain of light parts |
+| IV | `cs_a4_road` | `a4_ochrewell` | the sand road and the domes |
+| IV | `cs_a4_tower` | `a4_tower_gate` | the Tower Rift in the sandstorm |
+| IV | `cs_a4_caravan` | `a4_north` | eleven figures walk north |
+| Finale | `cs_f_edge` | `finale_1` | the land stops; a flame at the edge |
+| Finale | `cs_f_choir` | `finale_5` | the hushed Spirlings lift their heads (sorrow, never menace) |
+| Epilogue | `cs_e_guild` | `corvane/ysolde_epilogue` | the wall map's finished edge |
+| Epilogue | `cs_e_home` | `ashmere/mirela_home`, `mirela_gate_letter` | the lamp, two figures on the dock |
+| Epilogue | `cs_e_open` | `ashmere/epi_open` | the map book |
+
+The steps `pan`, `iris` and `panel` (ScenePlayer) carry them. A panel (`CutscenePanel`) is drawn
+in code in the look of the scene's `"era"` (Act I Era I, II Era II, III Era III, IV Era IV,
+finale and epilogue Era V; docs/ERA_LOOK_TITLE.md): the era's landscape or a plain sheet, the
+motif, the era's frame, and the era's cadence (Era I redraws twice a second, Era II four
+times). The story regions themselves run in Era I, so during the story the Era I ink filter
+shows every panel in the region's four inks. The cut-scenes start after the opening (from
+chapter 5 on), so a new opening order does not touch them. Frames:
+`xvfb-run -a godot --path . --rendering-driver opengl3 --resolution 440x956 -s res://tools/cutscene_shots.gd -- out_dir [lang]`.
+
 ## Region tales (owner Ali, 1.3.2)
 
 Each post-game region has, beside its five chapters (the sheet's `story`), one small tale of its

@@ -1,6 +1,7 @@
 {
  "_note": "Chapter 10, edge of the Wide Rift: Mirela's burned words; she is the Warden from the inside (plan items 1442, 1443, 1463).",
  "steps": [
+  {"action": "scene cs_a2_wide_rift"},
   {"sfx": "warp"},
   {"shake": 0.5},
   {"say": ["The Wide Rift hangs over the plain like a torn sky. No Warden stands here. Nobody holds it from this side."]},

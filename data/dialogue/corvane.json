@@ -492,6 +492,7 @@
    "Ysolde: She's alive. Mirela is alive, and you found her. Give me a moment, apprentice.",
    "Ysolde: ...There. The guild names you cartographer. Not apprentice. Never again."
   ],
+  "action": "scene cs_e_guild",
   "flag": "epilogue_guild"
  },
  "kestra_still": {

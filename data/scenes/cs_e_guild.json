@@ -1,0 +1,45 @@
+{
+ "_note": "Epilogue 1, the guild house in Madderby: the wall map gets its finished edge (after ysolde_epilogue).",
+ "once": true,
+ "era": 5,
+ "steps": [
+  {
+   "emote": "ysolde",
+   "icon": "heart"
+  },
+  {
+   "iris": "out",
+   "time": 0.6
+  },
+  {
+   "panel": "guild"
+  },
+  {
+   "iris": "in",
+   "time": 0.6
+  },
+  {
+   "wait": 4.4
+  },
+  {
+   "say": [
+    "Pim pins a new sheet to the wall map.",
+    "In the corner, neatly written: your name."
+   ]
+  },
+  {
+   "fade": "out",
+   "time": 0.3
+  },
+  {
+   "panel": "off"
+  },
+  {
+   "pan": "back"
+  },
+  {
+   "fade": "in",
+   "time": 0.3
+  }
+ ]
+}

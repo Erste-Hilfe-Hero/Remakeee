@@ -312,6 +312,7 @@
    "Veit looks at the hammer a long time. Then he brings it down.",
    "Veit: ...Ash would have hated it anyway. Too shiny."
   ],
+  "action": "scene cs_a3_plate",
   "flag": "veit_plate_done",
   "next": "veit_plate_after"
  },
@@ -320,6 +321,7 @@
    "You bring the hammer down. The plate cracks clean through the middle.",
    "Veit: ...So that's it. Twenty years, in one blow."
   ],
+  "action": "scene cs_a3_plate",
   "flag": "veit_plate_done",
   "next": "veit_plate_after"
  },
@@ -656,6 +658,7 @@
   "lines": [
    "Mirela: Forty years, and the kettle is in the same place. Aldo never moves anything."
   ],
+  "action": "scene cs_e_home",
   "flag": "epilogue_home",
   "next": "epi_open",
   "after_flag": [
@@ -672,6 +675,7 @@
    "A letter on the table, the ink still fresh. It came through the gate.",
    "'Every week, as promised. The Echo hums now. I hum back. Come visit. M.'"
   ],
+  "action": "scene cs_e_home",
   "flag": "epilogue_home",
   "next": "epi_open"
  },
@@ -687,6 +691,7 @@
    "The map book lies open on the table. Every page is full, but the last one has a wide margin.",
    "There is room left to draw. There always will be."
   ],
+  "action": "scene cs_e_open",
   "flag": "postgame_done"
  },
  "undrawn_gate_wait": [
