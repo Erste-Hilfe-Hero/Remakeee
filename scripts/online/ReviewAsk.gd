@@ -2,7 +2,8 @@ class_name ReviewAsk
 extends RefCounted
 ## The store's own rating sheet (plan Chimora 100, items 74-75): iOS AppStore.requestReview through
 ## ChimoraStoreKit, Android Play In-App Review through ChimoraReview (plugins/chimora_review).
-## Asked straight after a won Warden, rival or boss battle or a sealed Rift, never in battle, never
+## Asked straight after a won Warden, rival or boss battle, a sealed Rift or a great bond (a first
+## legend, Gleam or ancient kind, 1.3.2), never in battle, never
 ## in the first 10 minutes of the first session, once per app version, at most 3 times in 365 days.
 ## No own question before it and nothing given for a rating (App Review Guideline 5.6.1, Play policy):
 ## the store sheet itself is all the player sees, and the store may still decide not to show it.
@@ -22,6 +23,39 @@ static var _loaded: bool = false
 ## or the Rift sealed by it.
 static func is_highlight(def: Dictionary, sealed: bool) -> bool:
 	return sealed or def.has("warden") or def.has("boss") or def.has("team_by_starter")
+
+## Journey record of the great bonds already made: kind -> true.
+const GREAT_KEY: String = "great_bonds"
+## The rarest tier of wild Spirlings (SpirlingData.rarity).
+const RAREST: String = "ancient"
+
+## What makes [param s] a great bond (1.3.2): "legend" (a First Voice or legend), "gleam", "ancient"
+## (the rarest tier), or "".
+static func great_bond_kind(s: Spirling) -> String:
+	if s == null or s.data == null:
+		return ""
+	if not FirstVoices.entry(s.data.species_name).is_empty():
+		return "legend"
+	if s.gleam:
+		return "gleam"
+	if s.data.rarity == RAREST:
+		return "ancient"
+	return ""
+
+## True when [param s] is the journey's first great bond of its kind; marks the kind in
+## [param records], so only the first legend, the first Gleam and the first ancient count.
+static func note_great_bond(s: Spirling, records: Dictionary) -> bool:
+	var kind: String = great_bond_kind(s)
+	if kind.is_empty():
+		return false
+	var seen: Variant = records.get(GREAT_KEY, {})
+	if not seen is Dictionary:
+		seen = {}
+	if bool((seen as Dictionary).get(kind, false)):
+		return false
+	(seen as Dictionary)[kind] = true
+	records[GREAT_KEY] = seen
+	return true
 
 ## Counts one start of the app at [param now] (unix seconds).
 static func note_session(st: Dictionary, now: int) -> void:

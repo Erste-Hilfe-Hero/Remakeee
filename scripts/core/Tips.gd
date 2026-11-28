@@ -15,7 +15,7 @@ const LINES: Dictionary[String, Array] = {
 	"energy_rest": ["Tip: Watch the pips fill back up. Resting is how Energy comes home."],
 	# Paced (onboarding pass): only steps 1 and 2 at the start of the first wild battle, the
 	# rest when Bond is first picked, in the words of the bonding style in use.
-	"bond": ["Tip: A wild Spirling can join your team, if it trusts you. Trust is easier when it is tired.",
+	"bond": ["Tip: A wild Spirling that trusts you can join your team.",
 		"Bonding step 1: Hit it with a few arts until its Vigor bar is low. Don't knock it out.",
 		"Bonding step 2: Pick Bond. A statused Spirling gives in more easily. Nobody said this was noble."],
 	"bond_mine": ["Bonding step 3: Hold out a Kin Charm when asked. You start with 20. Friendship is cheaper in bulk.",
@@ -37,7 +37,7 @@ const LINES: Dictionary[String, Array] = {
 	"walk": [{"touch": "Walk: D-pad or tap a tile", "buttons": "Walk: D-pad or left stick"}],
 	"menu": [{"touch": "Tip: Tap = to open the menu: team, satchel, goals and saving.",
 		"buttons": "Tip: Press Start to open the menu: team, satchel, goals and saving."}],
-	"save": ["Tip: The game saved itself. It saves when you change places, and you can save any time under Save in the menu."],
+	"save": ["Tip: The game saves itself when you change places. Save any time in the menu."],
 	"team_order": ["Tip: The first Spirling in Team goes out first.",
 		"Pick one and choose Lead the team or Move to slot."],
 	"rest_spot": ["Tip: Rest spots heal your whole team for free.",
@@ -51,7 +51,7 @@ const LINES: Dictionary[String, Array] = {
 		"You can furl it back later, nothing is lost."],
 	"friends": ["Tip: Share your friend code so friends can send gifts and meet your echo."],
 	"storage": ["Tip: Spirlings who aren't travelling with you rest in storage. Swap them any time here."],
-	"map_page": ["Tip: You found a page of Mirela's map book. Goals shows how many are still out there."],
+	"map_page": ["Tip: Goals shows how many map pages are still out there."],
 	# Battle plan items 585 and 631: new battle parts explain themselves once, comfort after the first fight.
 	"resonance": ["Tip: A Rift field changes which arts hit hard. The Log shows how many turns it has left."],
 	"boss_phase": ["Tip: Hurt a Rift boss enough and it changes its ways. Watch what it does next."],
@@ -123,8 +123,13 @@ static func pending(id: String) -> bool:
 ## The one tip a battle starts with (Chimora 100 item 31): the first battle shows only the
 ## Energy tip; bonding and battles with several Spirlings explain themselves in a later battle
 ## (or when Bond is picked), one tip per battle start. "" when none is pending.
-static func battle_start_tip(wild: bool, multi: bool) -> String:
-	var ids: Array[String] = ["battle"]
+## [param first_wild]: the guaranteed first wild battle (FirstCatch) is there to bond, so it opens
+## with the bonding tip and the Energy tip waits for the next battle.
+static func battle_start_tip(wild: bool, multi: bool, first_wild: bool = false) -> String:
+	var ids: Array[String] = []
+	if first_wild:
+		ids.append("bond")
+	ids.append("battle")
 	if multi:
 		ids.append("multi")
 	if wild:

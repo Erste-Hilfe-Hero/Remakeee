@@ -1,7 +1,6 @@
 {
  "_comment": "Dutch texts for the German table easy_start. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
  "strings": {
-  "Kestra: Go and see for yourself, but start north in Fernstair. The Saltmarsh and Quillbrook roads are rough for a new Wayfarer.": "Kestra: Ga zelf maar kijken, maar begin in het noorden, in Fernstair. De wegen naar de Saltmarsh en Quillbrook zijn zwaar voor een nieuwe Reiziger.",
   "Lookout Corra: Quillbrook's Wayfarers would beat a fresh team before breakfast.": "Uitkijk Corra: De Reizigers van Quillbrook verslaan een vers team nog voor het ontbijt.",
   "Lookout Corra: Take the north road to Fernstair first, and let Kestra test you on the Crowcrest path. Then this road is yours.": "Uitkijk Corra: Neem eerst de noordweg naar Fernstair en laat Kestra je testen op het pad naar Crowcrest. Daarna is deze weg van jou.",
   "Lookout Halde: Go north through Fernstair first. Kestra tests new Wayfarers on the Crowcrest path. Come back once she has seen you fight.": "Uitkijk Halde: Ga eerst naar het noorden door Fernstair. Kestra test nieuwe Reizigers op het pad naar Crowcrest. Kom terug als ze je heeft zien vechten.",

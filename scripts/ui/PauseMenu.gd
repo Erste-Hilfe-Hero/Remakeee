@@ -93,6 +93,11 @@ func run() -> void:
 		open_on = ""
 		await ShopScreen.run_starter_popup(self)
 		return
+	elif open_on == ShopScreen.FIRST_CATCH_OPEN:
+		# The First Catch Pack note after the first wild bond (ShopScreen.first_catch_popup_due).
+		open_on = ""
+		await ShopScreen.run_first_catch_popup(self)
+		return
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),

@@ -1,0 +1,14 @@
+{
+ "_comment": "Translations of the German table first_catch, written by tools/i18n/locales_first_catch.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "'Day one. The sky over the lake split like old paper. Aldo says I'm mad to map it. Aldo is usually right.'": "'Dag een. De hemel boven het meer scheurde als oud papier. Aldo zegt dat ik gek ben om hem in kaart te brengen. Aldo heeft meestal gelijk.'",
+  "First bond! A gift for the road: %s.": "Eerste Band! Een cadeau voor onderweg: %s.",
+  "Kestra: Aldo's apprentice? Good. The storm tore Rifts open, past Thornridge and under the Saltmarsh.": "Kestra: Aldo's leerling? Mooi. De storm scheurde Kloven open, voorbij Thornridge en onder de Saltmarsh.",
+  "Kestra: And this blew in through my window. Mirela's compass rose. Yours, I think.": "Kestra: En dit waaide door mijn raam naar binnen. Mirela's kompasroos. Van jou, denk ik.",
+  "Kestra: Everyone wants them closed. I'm not so sure: new Spirlings came through. But start north in Fernstair.": "Kestra: Iedereen wil ze dicht. Ik weet het niet: er kwamen nieuwe Spirlings door. Maar begin in het noorden, in Fernstair.",
+  "Tip: A wild Spirling that trusts you can join your team.": "Tip: een wilde Spirling die je vertrouwt, kan zich bij je team aansluiten.",
+  "Tip: Goals shows how many map pages are still out there.": "Tip: Bij Doelen zie je hoeveel kaartpagina's er nog te vinden zijn.",
+  "Tip: The game saves itself when you change places. Save any time in the menu.": "Tip: Het spel slaat zichzelf op als je van plek wisselt. Opslaan kan altijd via het menu.",
+  "Your first bond! A one-time pack": "Je eerste band! Een eenmalig pakket"
+ }
+}

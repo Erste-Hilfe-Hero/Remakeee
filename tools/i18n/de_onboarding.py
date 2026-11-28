@@ -1,8 +1,6 @@
 # German texts for the onboarding pass (first 15 minutes): paced bonding tutorial, first
 # steps in Goals, partner hints, tips reset. Own file so parallel threads do not collide.
 T = {
-"Tip: A wild Spirling can join your team, if it trusts you. Trust is easier when it is tired.":
-    "Tipp: Ein wilder Spirling kann deinem Team beitreten, wenn er dir vertraut. Müde vertraut er leichter.",
 "Bonding step 2: Pick Bond. A statused Spirling gives in more easily. Nobody said this was noble.":
     "Binden, Schritt 2: Wähle Binden. Ein Spirling mit Zustand gibt leichter nach. Niemand hat gesagt, dass das edel ist.",
 "Bonding step 3: Hold out a Kin Charm when asked. You start with 20. Friendship is cheaper in bulk.":

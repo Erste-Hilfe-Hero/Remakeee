@@ -1,7 +1,6 @@
 {
  "_comment": "Japanese texts for the German table easy_start. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
  "strings": {
-  "Kestra: Go and see for yourself, but start north in Fernstair. The Saltmarsh and Quillbrook roads are rough for a new Wayfarer.": "Kestra: 自分の目で確かめてきて。でも、まずは北のFernstairから。SaltmarshとQuillbrookへの道は、新米の旅人にはきついわ。",
   "Lookout Corra: Quillbrook's Wayfarers would beat a fresh team before breakfast.": "見張りCorra: Quillbrookの旅人なら、新米のチームなんて朝飯前に負かしちまうよ。",
   "Lookout Corra: Take the north road to Fernstair first, and let Kestra test you on the Crowcrest path. Then this road is yours.": "見張りCorra: まずは北の道でFernstairへ行って、Crowcrestへの道でKestraに試してもらいな。そのあとなら、この道はあんたのものさ。",
   "Lookout Halde: Go north through Fernstair first. Kestra tests new Wayfarers on the Crowcrest path. Come back once she has seen you fight.": "見張りHalde: まずは北のFernstairを抜けていきな。KestraがCrowcrestへの道で新しい旅人を試してる。戦いぶりを見てもらってから戻っておいで。",

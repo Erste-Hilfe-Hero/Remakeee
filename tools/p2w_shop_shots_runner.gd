@@ -124,6 +124,13 @@ func _screens(lang: String) -> void:
 	h.add_child(pop)
 	await _picture(t + "_15_starter_note", pop)
 	pop.queue_free()
+	# The First Catch Pack note after the first wild bond (1.3.2).
+	var first := ShopScreen.StarterPopup.new()
+	first.offer = ShopCatalog.offer(ShopScreen.FIRST_CATCH_ID)
+	first.head = ShopScreen.FIRST_CATCH_HEAD
+	h.add_child(first)
+	await _picture(t + "_15_first_catch_note", first)
+	first.queue_free()
 	# A child account: the menu row says locked and the shop says why.
 	_state(10)
 	h.info(ShopMenu.LOCKED_TEXT)

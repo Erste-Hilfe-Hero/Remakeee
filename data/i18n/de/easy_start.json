@@ -2,7 +2,6 @@
  "_comment": "German texts from tools/i18n/de_easy_start.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
  "keep": [],
  "strings": {
-  "Kestra: Go and see for yourself, but start north in Fernstair. The Saltmarsh and Quillbrook roads are rough for a new Wayfarer.": "Kestra: Sieh es dir selbst an, aber fang im Norden in Fernstair an. Die Wege zur Saltmarsh und nach Quillbrook sind hart für neue Wanderer.",
   "Lookout Corra: Quillbrook's Wayfarers would beat a fresh team before breakfast.": "Späherin Corra: Die Wanderer von Quillbrook schlagen ein frisches Team noch vor dem Frühstück.",
   "Lookout Corra: Take the north road to Fernstair first, and let Kestra test you on the Crowcrest path. Then this road is yours.": "Späherin Corra: Nimm zuerst den Nordweg nach Fernstair und lass dich von Kestra auf dem Pfad nach Crowcrest prüfen. Dann gehört dir auch dieser Weg.",
   "Lookout Halde: Go north through Fernstair first. Kestra tests new Wayfarers on the Crowcrest path. Come back once she has seen you fight.": "Späherin Halde: Geh zuerst nach Norden durch Fernstair. Kestra prüft neue Wanderer auf dem Pfad nach Crowcrest. Komm wieder, wenn sie dich kämpfen gesehen hat.",

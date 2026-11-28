@@ -1,0 +1,14 @@
+{
+ "_comment": "Translations of the German table first_catch, written by tools/i18n/locales_first_catch.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "'Day one. The sky over the lake split like old paper. Aldo says I'm mad to map it. Aldo is usually right.'": "'Giorno uno. Il cielo sopra il lago si è strappato come carta vecchia. Aldo dice che sono matta a mapparlo. Di solito Aldo ha ragione.'",
+  "First bond! A gift for the road: %s.": "Primo Legame! Un regalo per il viaggio: %s.",
+  "Kestra: Aldo's apprentice? Good. The storm tore Rifts open, past Thornridge and under the Saltmarsh.": "Kestra: L'apprendista di Aldo? Bene. La tempesta ha aperto degli Squarci, oltre Thornridge e sotto Saltmarsh.",
+  "Kestra: And this blew in through my window. Mirela's compass rose. Yours, I think.": "Kestra: E questo è entrato dalla mia finestra. La rosa dei venti di Mirela. È tuo, credo.",
+  "Kestra: Everyone wants them closed. I'm not so sure: new Spirlings came through. But start north in Fernstair.": "Kestra: Tutti li vogliono chiusi. Io non ne sono sicura: sono arrivati nuovi Spirling. Ma comincia a nord, a Fernstair.",
+  "Tip: A wild Spirling that trusts you can join your team.": "Consiglio: uno Spirling selvatico che si fida di te può unirsi alla tua squadra.",
+  "Tip: Goals shows how many map pages are still out there.": "Consiglio: in Obiettivi vedi quante pagine di mappa mancano ancora.",
+  "Tip: The game saves itself when you change places. Save any time in the menu.": "Consiglio: il gioco salva da sé quando cambi luogo. Salva quando vuoi dal menu.",
+  "Your first bond! A one-time pack": "Il tuo primo Legame! Un pacchetto unico"
+ }
+}

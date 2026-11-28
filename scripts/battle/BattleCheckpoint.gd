@@ -9,7 +9,7 @@ extends RefCounted
 const OPEN_KEY: String = "open_battle"
 ## Trainer keys a wild battle may carry and still be picked up. Any other key means a caller waits
 ## for the result (a fixed meeting, a hall run, an echo duel) and that caller is gone after a restart.
-const RESUMABLE_KEYS: Array[String] = ["ambush", "model", "resume"]
+const RESUMABLE_KEYS: Array[String] = ["ambush", "model", "resume", "first_wild"]
 
 # --- Boss save point (30, 416) ------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 extends SceneTree
 ## Screens of the new shop (pay-to-win shop rebuild, 27.11.2026) in any languages, at the window
-## size given to Godot: Featured home, every tab, two detail pages, the Starter Pack note and the
+## size given to Godot: Featured home, every tab, two detail pages, the Starter Pack and First Catch Pack notes and the
 ## locked shop of a child account.
 ##   xvfb-run -a godot --path . --rendering-driver opengl3 --resolution 440x956 \
 ##     -s res://tools/p2w_shop_shots.gd -- out_dir de,en [era: 1, 1,4 or all]

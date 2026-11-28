@@ -367,6 +367,9 @@ func _process(delta: float) -> void:
 	# The Starter Pack note once the tutorial act is over (adults only, never in a battle).
 	elif not busy and not scene_running and _photo == null and not player.moving and ShopScreen.starter_popup_now():
 		open_menu(ShopScreen.STARTER_OPEN)
+	# The First Catch Pack note once back in the world after the first wild bond (same rules).
+	elif not busy and not scene_running and _photo == null and not player.moving and ShopScreen.first_catch_popup_now():
+		open_menu(ShopScreen.FIRST_CATCH_OPEN)
 	if reset_button != null:
 		reset_button.visible = _world.reset_wanted and not busy and not scene_running and _photo == null
 	_walk_clock += delta
@@ -537,7 +540,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	if not _day_noted:
 		_day_noted = true
 		Comeback.note_day(int(Online.unix_now() / 86400.0))
-	if not map.encounter_table.is_empty() and Tips.pending("wild_area"):
+	# The first step into the wild meets a Spirling anyway (FirstCatch), so this tip waits until then.
+	if not map.encounter_table.is_empty() and Tips.pending("wild_area") and not FirstCatch.due(GameState.flags):
 		_tip_after_load.call_deferred("wild_area")
 	elif not waiting_tips.is_empty():
 		_waiting_tip_after_load.call_deferred()
@@ -922,6 +926,14 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	var guard_over: bool = EncounterTable.tick_guard()
 	# Wild Ward (shop, pay-to-win step 6): switched on, no wild Spirling steps out.
 	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty() and guard_over and not ShopEffects.wild_ward_on():
+		# The first step into the wild always meets a Spirling that can be bonded (FirstCatch).
+		if FirstCatch.due(GameState.flags) and GameState.first_healthy_index() >= 0:
+			var first: Spirling = FirstCatch.make_wild(map.encounter_table, EncounterTable.ground_at(map, cell),
+				GameState.party[GameState.first_healthy_index()], GameState.rng)
+			if first != null:
+				GameState.set_flag(FirstCatch.MET_FLAG)
+				await start_battle([first] as Array[Spirling], true, {FirstCatch.META: true})
+				return
 		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < minf(1.0, EncounterTable.rate(map.encounter_table) * call_mult * WildRules.rate_mult(DayCycle.current(), map.outdoor, GameState.day_night)
 				* WildRules.lantern_mult(GameState.records, GameState.has_gear(WildRules.LANTERN_ITEM))):
 			var wild: Spirling = DailyFind.maybe_spawn(map.encounter_table, GameState.flags, GameState.rng)
@@ -4739,6 +4751,8 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	# Friendly and server-checked battles cannot be given up (KAMPF_PLAN_1000 item 8).
 	if bool(trainer.get("friendly", false)):
 		model.set_meta(TurnFlow.NO_FORFEIT_META, true)
+	if bool(trainer.get(FirstCatch.META, false)):
+		model.set_meta(FirstCatch.META, true)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
 	# The Auto tab (plan Chimora 100, items 15-20): wild, Wayfarer, boss or none at all.
@@ -5026,7 +5040,16 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	# In a horde the bond can land before the rest of the swarm is beaten (outcome WIN or FLED).
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		ChallengeRules.note_bonded(model.bonded, map.id)
+		var first_bond: bool = FirstCatch.is_first_bond(GameState.flags, GameState.party + GameState.storage + GameState.sanctuary, GameState.starter)
+		var great: bool = ReviewAsk.note_great_bond(model.bonded, GameState.records)
 		GameState.receive_spirling(model.bonded)
+		# The first wild bond: a small gift, then the First Catch Pack note once back in the world.
+		if first_bond:
+			Sound.sfx("pickup")
+			toast.show_note(FirstCatch.on_bond(), null, "")
+			GameState.set_flag(ShopScreen.FIRST_CATCH_DUE_FLAG)
+		# A first legend, Gleam or ancient kind is a rating moment like a Warden win.
+		ReviewAsk.after_win(great)
 		# Wild Spirlings keep their temperament to themselves until they bond (item 315).
 		var tm: Dictionary = model.bonded.temperament()
 		await say(["%s seems %s." % [model.bonded.display_name(), Loc.t(str(tm.label)).to_lower()]] as Array[String])
