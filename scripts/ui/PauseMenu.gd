@@ -427,6 +427,11 @@ static func goal_rows(flags: Dictionary, daily: Variant = null, newcomer: Varian
 		rows.append({"text": QuestLog.goal_text(g, flags), "icon": goal_mark(),
 			"hint": Loc.t("Where: %s" % where) if not where.is_empty() else "",
 			"detail": "\n".join(lines)})
+	# The region tale in play after the story (docs/STORY.md "Region tales").
+	var tale: Dictionary = QuestLog.tale_current(flags)
+	if not tale.is_empty():
+		rows.append({"text": QuestLog.goal_text(tale, flags), "icon": goal_mark(), "hint": Loc.t("Where: %s" % tale.where),
+			"detail": "\n".join([str(tale.act), QuestLog.goal_text(tale, flags), "Where: %s" % tale.where])})
 	# New players get a self-ticking "First steps" list right under the main goal (item 1995).
 	if FirstSteps.shows(flags, GameState.is_newcomer() if newcomer == null else bool(newcomer)):
 		rows.append(FirstSteps.row(flags))

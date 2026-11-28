@@ -1,0 +1,144 @@
+{
+ "feast": {
+  "if": {
+   "flag": "halcyra_done",
+   "not_flag": "v4t_done"
+  },
+  "else": "halcyra_tale/feast_wait",
+  "lines": [
+   "Rhosyn: There. Over the golden roofs. Wisp.",
+   "Rhosyn lifts Edrin's reel. The grey Kitelet circles lower.",
+   "Its call is so thin. Hum the Echo melody, {name}.",
+   "Wisp drops onto the reel. Then onto Rhosyn's arm.",
+   "Rhosyn: Hello, you. I'm his sister. I'm your person now.",
+   "The Thin Air over Gildcrest fills with ordinary wind."
+  ],
+  "action": "set_flag v4t_done"
+ },
+ "feast_after": [
+  "Rhosyn: Wisp pulls left. Edrin's kites always did."
+ ],
+ "feast_wait": {
+  "if": {
+   "not_flag": "v4t_done"
+  },
+  "else": "halcyra_tale/feast_after",
+  "lines": [
+   "Rhosyn: After the feast. When the Gilt Rift is mended."
+  ]
+ },
+ "reel": {
+  "if": {
+   "flag": [
+    "v4t_wilf",
+    "rift_v4_span_sealed"
+   ],
+   "not_flag": "v4t_reel"
+  },
+  "else": "halcyra_tale/reel_wait",
+  "lines": [
+   "Rhosyn: Wilf told me. You stopped him. Thank you.",
+   "Rhosyn: The Span is mended. Edrin would have liked that.",
+   "Rhosyn: I brought his old reel. The string's still on it.",
+   "Rhosyn: Come to the feast in Gildcrest. Wisp circles there."
+  ],
+  "action": "set_flag v4t_reel"
+ },
+ "reel_after": [
+  "Rhosyn: Gildcrest, at the feast. Wisp circles there."
+ ],
+ "reel_wait": {
+  "if": {
+   "not_flag": "v4t_reel"
+  },
+  "else": "halcyra_tale/reel_after",
+  "lines": [
+   "Rhosyn: The Span's still torn. Wisp won't come lower."
+  ]
+ },
+ "rhosyn": {
+  "if": {
+   "not_flag": "v4t_rhosyn"
+  },
+  "else": "halcyra_tale/rhosyn_after",
+  "lines": [
+   "Rhosyn: See it? Over the cliffs. No string at all.",
+   "Rhosyn: Every dusk it comes. It never lands.",
+   "Rhosyn: My brother Edrin flew a Kitelet called Wisp.",
+   "Rhosyn: Edrin fell from the Gilt Span. Wisp flew off.",
+   "Rhosyn: Nine years ago. Kites don't last nine years.",
+   "Rhosyn: Ask the salt widows at Paleshore. They see far."
+  ],
+  "action": "set_flag v4t_rhosyn"
+ },
+ "rhosyn_after": [
+  "Rhosyn: Paleshore. The widows watch the sky for a living."
+ ],
+ "selma": {
+  "if": {
+   "flag": [
+    "v4t_rhosyn",
+    "rift_v4_orrery_sealed"
+   ],
+   "not_flag": "v4t_selma"
+  },
+  "else": "halcyra_tale/selma_wait",
+  "lines": [
+   "Selma: That's no kite, love. It's a Kitelet. Gone grey.",
+   "Selma: It follows the old salt road to the Span. Daily.",
+   "Selma: Up here we call it the Thin Air. Calls that fade.",
+   "Selma: A Spirling that lost its person calls and calls.",
+   "Selma: Every lost call goes somewhere. To the Echo.",
+   "Selma: A choir of them. Grieving. Not angry. Just sad.",
+   "Selma: Racer Wilf wants to net it. For the cliff prize."
+  ],
+  "action": "set_flag v4t_selma"
+ },
+ "selma_after": [
+  "Selma: Wilf's at Whitecairn with a net. Hurry."
+ ],
+ "selma_wait": {
+  "if": {
+   "not_flag": "v4t_selma"
+  },
+  "else": "halcyra_tale/selma_after",
+  "lines": [
+   "Selma: The flats lie while the Orrery's broken. Later."
+  ]
+ },
+ "wilf": {
+  "if": {
+   "flag": [
+    "v4t_selma",
+    "rift_v4_salt_sealed"
+   ],
+   "not_flag": "v4t_wilf"
+  },
+  "else": "halcyra_tale/wilf_wait",
+  "lines": [
+   "Wilf: The grey kite? Five hundred coins, the cliff prize.",
+   "Wilf: Mum's roof leaks. Nets are cheap. Roofs aren't.",
+   "Wilf: You want it left alone? Then earn it."
+  ],
+  "action": "battle tale_wilf"
+ },
+ "wilf_after": [
+  "Wilf: The grey one flies to the Span's middle. Every night."
+ ],
+ "wilf_defeat": [
+  "Wilf: All right. No net. I'll fix the roof another way.",
+  "Wilf: Tell the kite-maker I'm sorry. I didn't know."
+ ],
+ "wilf_lose": [
+  "Wilf: My net's ready. Come back if you're sure."
+ ],
+ "wilf_wait": {
+  "if": {
+   "not_flag": "v4t_wilf"
+  },
+  "else": "halcyra_tale/wilf_after",
+  "lines": [
+   "Wilf: Wind's wrong. Come back once the salt flats calm."
+  ]
+ }
+}
