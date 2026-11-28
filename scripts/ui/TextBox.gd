@@ -369,19 +369,22 @@ func _text_width() -> float:
 	return w - _arrow_space * (2 if big_text else 1)
 
 ## Wraps [param text] word by word to [param width] and groups the lines into windows of
-## [param max_lines]. A line break in the text starts a new line.
+## [param max_lines]. A line break in the text starts a new line. Lines break where the label's
+## own wrap (AUTOWRAP_WORD_SMART) breaks them, so text without spaces (Japanese, Chinese) pages
+## too instead of wrapping past MAX_LINES inside one window.
 static func split_lines(text: String, width: float, font: Font, font_size: int, max_lines: int) -> Array[String]:
 	var lines: Array[String] = []
+	var wrap: TextParagraph = TextParagraph.new()
+	wrap.break_flags = TextServer.BREAK_MANDATORY | TextServer.BREAK_WORD_BOUND | TextServer.BREAK_ADAPTIVE
+	wrap.width = width
 	for para: String in text.split("\n"):
-		var line: String = ""
-		for word: String in para.split(" ", false):
-			var tried: String = word if line.is_empty() else line + " " + word
-			if line.is_empty() or font.get_string_size(tried, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x <= width:
-				line = tried
-			else:
-				lines.append(line)
-				line = word
-		lines.append(line)
+		wrap.clear()
+		wrap.add_string(para, font, font_size)
+		if wrap.get_line_count() == 0:
+			lines.append("")
+		for i: int in wrap.get_line_count():
+			var r: Vector2i = wrap.get_line_range(i)
+			lines.append(para.substr(r.x, r.y - r.x).strip_edges())
 	var pages: Array[String] = []
 	for i: int in range(0, lines.size(), maxi(1, max_lines)):
 		pages.append("\n".join(lines.slice(i, i + max_lines)))
