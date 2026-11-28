@@ -1359,16 +1359,52 @@ func _pick_defeated() -> int:
 	var k: int = await _picker.pick("Bring back whom?", entries)
 	return idx[k] if k >= 0 else -1
 
-## Items in [param bag] that help a bond (a "bond_bonus" in items.json), Kin Charm first.
+## Items in [param bag] that help a bond (a "bond_bonus" in items.json, or a sure, second-try or
+## wish bond): the bond charm family by rank first (Kin Charm is rank 1), then the others by id.
 static func bond_charms(bag: Dictionary) -> Array[String]:
 	var out: Array[String] = []
 	for id: Variant in bag:
 		var it: Dictionary = Database.item(str(id))
 		if int(bag[id]) > 0 and (float(it.get("bond_bonus", 0.0)) > 0.0 or bool(it.get("bond_sure", false)) or bool(it.get("bond_retry", false))
-				or bool(it.get("bond_wish", false))):
+				or bool(it.get("bond_wish", false)) or BondCalc.taps_off(it) > 0):
 			out.append(str(id))
-	out.sort_custom(func(a: String, b: String) -> bool: return a == "kin_charm" or (b != "kin_charm" and a < b))
+	out.sort_custom(func(a: String, b: String) -> bool:
+		var ra: int = charm_rank(a)
+		var rb: int = charm_rank(b)
+		return ra < rb if ra != rb else a < b)
 	return out
+
+## Rank of [param id] in the bond charm family (1 = Kin Charm .. 10 = Firstlight Crest); other
+## bond items come after them.
+static func charm_rank(id: String) -> int:
+	var c: Variant = Database.item(id).get("charm")
+	return int((c as Dictionary).get("rank", 99)) if c is Dictionary else 99
+
+## The one-line effect of bond item [param id] in the charm picker (English, a Loc key).
+static func charm_effect(id: String) -> String:
+	var it: Dictionary = Database.item(id)
+	var c: Variant = it.get("charm")
+	if c is Dictionary and not str((c as Dictionary).get("effect", "")).is_empty():
+		return Loc.t(str(c.effect))
+	if bool(it.get("bond_sure", false)):
+		return Loc.t("Sure bond")
+	if bool(it.get("bond_retry", false)):
+		return Loc.t("A second try if it fails")
+	if bool(it.get("bond_wish", false)):
+		return Loc.t("Top Spark if it works")
+	return Loc.t("+%d%% bond") % roundi(float(it.get("bond_bonus", 0.0)) * 100.0)
+
+## Rows of the "Hold out a charm?" picker for [param charms] in [param bag]: the charm's own
+## icon, its name and count, and its effect on a second line; the full text is the row's hint.
+static func charm_rows(charms: Array[String], bag: Dictionary, era: int = 1) -> Array[Dictionary]:
+	var rows: Array[Dictionary] = []
+	var scale: int = 2 if era >= 3 else 1
+	for id: String in charms:
+		var it: Dictionary = Database.item(id)
+		rows.append({"text": "%s  x%d\n%s" % [Loc.t(str(it.get("name", id))), int(bag.get(id, 0)), charm_effect(id)],
+			"icon": ShopArt.icon(ShopArt.charm_icon_key(id), scale), "hint": Loc.t(str(it.get("description", "")))})
+	rows.append({"text": Loc.t("No charm")})
+	return rows
 
 func _bond(slot: int = 0) -> BattleAction:
 	# The bonding tutorial comes when it is needed: steps 1 and 2 if no battle start showed them
@@ -1379,23 +1415,14 @@ func _bond(slot: int = 0) -> BattleAction:
 		await _text.show_text(line)
 	var charm: String = ""
 	var charms: Array[String] = bond_charms(model.inventory)
-	if charms.size() == 1 and charms[0] == "kin_charm":
-		var use: int = await _picker.pick("Hold out a Kin Charm?", [{"text": "Yes (x%d)" % model.inventory.kin_charm}, {"text": "No"}] as Array[Dictionary])
-		if use < 0:
-			return null
-		if use == 0:
-			charm = "kin_charm"
-	elif not charms.is_empty():
-		# Shop charms (Echo Scent, Bond Seal) next to the Kin Charm: pick one or none.
-		var opts: Array[Dictionary] = []
-		for id: String in charms:
-			opts.append({"text": "%s x%d" % [Database.item(id).get("name", id), model.inventory[id]]})
-		opts.append({"text": "No"})
-		var use: int = await _picker.pick("Hold out a charm?", opts)
+	if not charms.is_empty():
+		# Bond charms are held out, never thrown (LEGAL.md); the picker shows what each one does.
+		var use: int = await _picker.pick("Hold out a charm?", charm_rows(charms, model.inventory, EraManager.active_era()))
 		if use < 0:
 			return null
 		if use < charms.size():
 			charm = charms[use]
+	model.bond_context = bond_context(model)
 	var boost: float = await _bond_boost(charm)
 	if boost < 0.0:
 		return null
@@ -1417,6 +1444,7 @@ func _bond(slot: int = 0) -> BattleAction:
 		_bond_plans[key] = BondEcho.make_plan(rng, foe.data, state)
 	var score: float = 0.0
 	_bond_game.calm = BattleCalm.bond_style() == "calm"
+	_bond_game.taps_off = BondCalc.taps_off(Database.item(charm))
 	if mine:
 		score = await _bond_game.run_mine(_bond_plans[key])
 	else:
@@ -1426,9 +1454,19 @@ func _bond(slot: int = 0) -> BattleAction:
 		DailyTasks.record("melody", {"map": GameState.current_map})
 	if score >= 1.0:
 		GameState.records["melody_perfect"] = 1
+	# Without the Mine! bar a tap-saving charm gives the same head start on the Echo call.
+	if not mine:
+		score = minf(1.0, score + BondCalc.echo_head_start(Database.item(charm)))
 	var bond: BattleAction = BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm, slot, aim)
 	bond.rg_boost = boost
 	return bond
+
+## What situational bond charms need from the world (BattleModel.bond_context): dusk or night
+## on the clock (with the day cycle on) and the battle's weather.
+static func bond_context(m: BattleModel) -> Dictionary:
+	var phase: int = DayCycle.current()
+	return {"night": GameState.day_night and phase in [DayCycle.Phase.DUSK, DayCycle.Phase.NIGHT],
+		"weather": BattleWeather.weather_of(m)}
 
 ## Asks before the Echo call whether to boost this bond try with Riftglass (RiftglassSinks
 ## "bond_boost", a fixed value). Only in story battles, only with enough Riftglass, never for
