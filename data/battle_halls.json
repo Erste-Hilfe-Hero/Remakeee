@@ -8,7 +8,7 @@
  "fame_max": 30,
  "_card_titles": "Every title a player can earn (hall clears, Spirlog goals, bonus goals) and so wear on the Wanderer card. tools/online/game_data_sql.py loads them as known_ids kind 'title'; the server keeps no other title (no free text). tests/unit/test_battle_halls.gd checks the list is complete.",
  "card_titles": ["Lottery Winner", "First Pick", "Still Standing", "Two-Handed", "Swarm Breaker", "Heartbreaker", "Prism Hunter", "Cup Bearer",
-  "Veydal Wanderer", "Veydal Chronicler", "Keeper of the Veydal Pages", "Ember Trial Taker", "Current Reader"],
+  "Veydal Wanderer", "Veydal Chronicler", "Keeper of the Veydal Pages", "Ember Trial Taker", "Current Reader", "Keeper of Every Page"],
  "halls": [
   {"id": "lottery", "kind": "random", "rounds": 5, "waymarks": 25,
    "label": "Lottery Hall",

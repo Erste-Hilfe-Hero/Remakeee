@@ -303,7 +303,15 @@ func run_save() -> bool:
 func run_invite_link() -> void:
 	var code: String = DeepLink.friend_code
 	DeepLink.friend_code = ""
-	if code.is_empty() or not Online.is_online() or not Online.flag_on("invite"):
+	if code.is_empty():
+		return
+	# Without a connection the code waits in the save and goes out on the next start online.
+	if not Online.is_online():
+		if await confirm(Loc.t("Accept the invite of friend code %s? It sends a friend request.") % Online.pretty_code(code)):
+			FriendsMoreMenu.keep_for_later(code)
+			await info("No connection right now. The invite is kept and sent once you are online.")
+		return
+	if not Online.flag_on("invite"):
 		return
 	if await confirm(Loc.t("Accept the invite of friend code %s? It sends a friend request.") % Online.pretty_code(code)):
 		await FriendsMoreMenu.redeem(self, code)
@@ -1719,6 +1727,10 @@ func run_spirlog() -> void:
 			actions.append("chapter")
 		entries.append({"text": SpirlogBook.gleam_line(GameState.spirlog)})
 		actions.append("gleam")
+		# The book in percent and its reward steps (1.3.2), taken here once.
+		entries.append({"text": SpirlogRewards.book_row_text(GameState.spirlog, GameState.records),
+			"hint": "Rewards for the share of kinds bonded and for Gleam kinds."})
+		actions.append("book")
 		if not region_tabs:
 			entries.append({"text": "Chapter: %s" % (region.capitalize() if not region.is_empty() else "all")})
 			actions.append("region")
@@ -1807,6 +1819,8 @@ func run_spirlog() -> void:
 				_log_status = (_log_status + 1) % SpirlogBook.STATUS_NAMES.size()
 			"legend":
 				await info(spirlog_legend())
+			"book":
+				await SpirlogRewardsMenu.run(self)
 			"tracker":
 				await info(_tracker_text())
 			"gleam":

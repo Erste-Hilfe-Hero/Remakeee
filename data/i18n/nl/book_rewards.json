@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table book_rewards, written by tools/i18n/locales_book_rewards.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d Gleam bonded": "%d glansvormen verbonden",
+  "%d%% bonded": "%d%% verbonden",
+  "(%d ready)": "(%d klaar)",
+  "+%d Riftglass": "+%d Kloofglas",
+  "+%d Riftglass, it comes once you are online.": "+%d Kloofglas, het komt zodra je online bent.",
+  "Bonded: %d%%": "Verbonden: %d%%",
+  "Bonded: %d%% (%d/%d)": "Verbonden: %d%% (%d/%d)",
+  "Book rewards: %d%% bonded, Gleam %d%%": "Boekbeloningen: %d%% verbonden, glansvorm %d%%",
+  "Gleam: %d%%": "Glansvorm: %d%%",
+  "Gleam: %d%% (%d/%d)": "Glansvorm: %d%% (%d/%d)",
+  "Invite of friend code %s:": "Uitnodiging van vriendcode %s:",
+  "Keeper of Every Page": "Bewaarder van elke pagina",
+  "No connection right now. The invite is kept and sent once you are online.": "Nu geen verbinding. De uitnodiging wordt bewaard en verstuurd zodra je online bent.",
+  "Of every kind in the game.": "Van alle soorten in het spel.",
+  "Rewards for the share of kinds bonded and for Gleam kinds.": "Beloningen voor het deel verbonden soorten en voor glansvormen.",
+  "Seen: %d%%": "Gezien: %d%%",
+  "Seen: %d%% (%d/%d)": "Gezien: %d%% (%d/%d)",
+  "Spirlog book": "Spirlog-boek",
+  "Spirlog reward: %s!": "Spirlog-beloning: %s!",
+  "Spirlog reward: +%d Riftglass": "Spirlog-beloning: +%d Kloofglas",
+  "Take a reward once its step is reached.": "Neem een beloning zodra de stap bereikt is.",
+  "You received %s x%d.": "Je krijgt %s x%d.",
+  "ready!": "klaar!",
+  "taken": "genomen"
+ }
+}

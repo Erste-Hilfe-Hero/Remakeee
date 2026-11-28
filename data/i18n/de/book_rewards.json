@@ -1,0 +1,30 @@
+{
+ "_comment": "German texts from tools/i18n/de_book_rewards.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%d Gleam bonded": "%d Glanzformen gebunden",
+  "%d%% bonded": "%d%% gebunden",
+  "(%d ready)": "(%d bereit)",
+  "+%d Riftglass": "+%d Rissglas",
+  "+%d Riftglass, it comes once you are online.": "+%d Rissglas, es kommt, sobald du online bist.",
+  "Bonded: %d%%": "Gebunden: %d%%",
+  "Bonded: %d%% (%d/%d)": "Gebunden: %d%% (%d/%d)",
+  "Book rewards: %d%% bonded, Gleam %d%%": "Buch-Belohnungen: %d%% gebunden, Glanzform %d%%",
+  "Gleam: %d%%": "Glanzform: %d%%",
+  "Gleam: %d%% (%d/%d)": "Glanzform: %d%% (%d/%d)",
+  "Invite of friend code %s:": "Einladung von Freundes-Code %s:",
+  "Keeper of Every Page": "Hüter aller Seiten",
+  "No connection right now. The invite is kept and sent once you are online.": "Gerade keine Verbindung. Die Einladung wird aufgehoben und gesendet, sobald du online bist.",
+  "Of every kind in the game.": "Von allen Arten im Spiel.",
+  "Rewards for the share of kinds bonded and for Gleam kinds.": "Belohnungen für den Anteil gebundener Arten und für Glanzformen.",
+  "Seen: %d%%": "Gesehen: %d%%",
+  "Seen: %d%% (%d/%d)": "Gesehen: %d%% (%d/%d)",
+  "Spirlog book": "Spirlog-Buch",
+  "Spirlog reward: %s!": "Spirlog-Belohnung: %s!",
+  "Spirlog reward: +%d Riftglass": "Spirlog-Belohnung: +%d Rissglas",
+  "Take a reward once its step is reached.": "Nimm eine Belohnung, sobald ihre Stufe erreicht ist.",
+  "You received %s x%d.": "Du hast %s x%d erhalten.",
+  "ready!": "bereit!",
+  "taken": "genommen"
+ }
+}

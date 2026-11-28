@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table book_rewards, written by tools/i18n/locales_book_rewards.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d Gleam bonded": "已结缘%d种光泽",
+  "%d%% bonded": "已结缘%d%%",
+  "(%d ready)": "（%d个可领取）",
+  "+%d Riftglass": "+%d裂隙晶",
+  "+%d Riftglass, it comes once you are online.": "+%d裂隙晶，联网后到账。",
+  "Bonded: %d%%": "已结缘：%d%%",
+  "Bonded: %d%% (%d/%d)": "已结缘：%d%%（%d/%d）",
+  "Book rewards: %d%% bonded, Gleam %d%%": "图册奖励：已结缘%d%%，光泽%d%%",
+  "Gleam: %d%%": "光泽：%d%%",
+  "Gleam: %d%% (%d/%d)": "光泽：%d%%（%d/%d）",
+  "Invite of friend code %s:": "好友码%s的邀请：",
+  "Keeper of Every Page": "全书页守护者",
+  "No connection right now. The invite is kept and sent once you are online.": "现在没有网络。邀请会先保存，联网后发送。",
+  "Of every kind in the game.": "占游戏中所有种类。",
+  "Rewards for the share of kinds bonded and for Gleam kinds.": "按已结缘种类的比例和光泽种类发放的奖励。",
+  "Seen: %d%%": "已见：%d%%",
+  "Seen: %d%% (%d/%d)": "已见：%d%%（%d/%d）",
+  "Spirlog book": "Spirlog图册",
+  "Spirlog reward: %s!": "Spirlog奖励：%s！",
+  "Spirlog reward: +%d Riftglass": "Spirlog奖励：+%d裂隙晶",
+  "Take a reward once its step is reached.": "达到阶段后即可领取奖励。",
+  "You received %s x%d.": "你获得了%s x%d。",
+  "ready!": "可领取！",
+  "taken": "已领取"
+ }
+}

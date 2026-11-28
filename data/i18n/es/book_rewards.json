@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table book_rewards, written by tools/i18n/locales_book_rewards.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d Gleam bonded": "%d Fulgores vinculados",
+  "%d%% bonded": "%d%% vinculados",
+  "(%d ready)": "(%d listos)",
+  "+%d Riftglass": "+%d Vidrio Grieta",
+  "+%d Riftglass, it comes once you are online.": "+%d Vidrio Grieta, llega en cuanto estés en línea.",
+  "Bonded: %d%%": "Vinculados: %d%%",
+  "Bonded: %d%% (%d/%d)": "Vinculados: %d%% (%d/%d)",
+  "Book rewards: %d%% bonded, Gleam %d%%": "Premios del libro: %d%% vinculados, Fulgor %d%%",
+  "Gleam: %d%%": "Fulgor: %d%%",
+  "Gleam: %d%% (%d/%d)": "Fulgor: %d%% (%d/%d)",
+  "Invite of friend code %s:": "Invitación del código de amigo %s:",
+  "Keeper of Every Page": "Guarda de todas las páginas",
+  "No connection right now. The invite is kept and sent once you are online.": "Ahora no hay conexión. La invitación se guarda y se envía en cuanto estés en línea.",
+  "Of every kind in the game.": "De todas las especies del juego.",
+  "Rewards for the share of kinds bonded and for Gleam kinds.": "Premios por la parte de especies vinculadas y por los Fulgores.",
+  "Seen: %d%%": "Vistos: %d%%",
+  "Seen: %d%% (%d/%d)": "Vistos: %d%% (%d/%d)",
+  "Spirlog book": "Libro del Spirlog",
+  "Spirlog reward: %s!": "¡Premio del Spirlog: %s!",
+  "Spirlog reward: +%d Riftglass": "Premio del Spirlog: +%d Vidrio Grieta",
+  "Take a reward once its step is reached.": "Recoge un premio en cuanto alcances su etapa.",
+  "You received %s x%d.": "Recibes %s x%d.",
+  "ready!": "¡listo!",
+  "taken": "recogido"
+ }
+}

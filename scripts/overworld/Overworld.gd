@@ -325,6 +325,10 @@ func _build() -> void:
 	# The free Riftglass of the day (RiftglassSinks.claim_daily), once online.
 	Online.state_changed.connect(_on_online_daily_rg)
 	_on_online_daily_rg(Online.state)
+	# Book rewards and an invite that waited for the connection (1.3.2).
+	Online.state_changed.connect(_on_online_waiting)
+	Online.save_synced.connect(_on_save_synced)
+	_on_online_waiting(Online.state)
 	_text = TextBox.new()
 	_text.keep_log = true
 	_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
@@ -4146,6 +4150,27 @@ func _on_online_daily_rg(s: int) -> void:
 	var added: int = await RiftglassSinks.claim_daily()
 	if added > 0 and is_instance_valid(toast):
 		toast.show_note(Loc.t("Daily gift: +%d Riftglass") % added)
+
+## Once online: the Riftglass of book rewards taken offline, and an invite code that waited.
+func _on_online_waiting(s: int) -> void:
+	if s != Online.State.ONLINE:
+		return
+	var line: String = await FriendsMoreMenu.redeem_pending()
+	if not line.is_empty() and is_instance_valid(toast):
+		toast.show_note(line)
+	await _sync_book()
+
+## A save reached the server: book rewards that waited for it can be paid now.
+func _on_save_synced(slot: int) -> void:
+	if slot == SaveManager.slot:
+		await _sync_book()
+
+func _sync_book() -> void:
+	if SpirlogRewards.waiting(GameState.records).is_empty():
+		return
+	var added: int = await SpirlogRewards.sync(SaveManager.slot)
+	if added > 0 and is_instance_valid(toast):
+		toast.show_note(Loc.t("Spirlog reward: +%d Riftglass") % added)
 
 ## Bonus goal of the battle just fought (items 755-757): pays out once when it was met.
 func _pay_bonus_goal(goal_key: String) -> void:

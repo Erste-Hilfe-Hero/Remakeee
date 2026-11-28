@@ -15,6 +15,7 @@ static func install(backend: LocalBackend) -> LocalRiftglass:
 	s._bref = weakref(backend)
 	backend._fns["rg_spend"] = Callable(s, "_fn_rg_spend")
 	backend._fns["rg_daily_claim"] = Callable(s, "_fn_rg_daily_claim")
+	backend._fns["spirlog_reward_claim"] = Callable(s, "_fn_spirlog_reward_claim")
 	backend.set_meta("riftglass", s)
 	return s
 
@@ -87,4 +88,31 @@ func _fn_rg_daily_claim(_a: Dictionary) -> Dictionary:
 	_row(uid).rg_daily.append(today)
 	var n: int = RiftglassSinks.daily_rg()
 	var bal: int = _shop()._ledger_add(uid, n, "daily", str(today))
+	return {"ok": true, "added": n, "balance": bal}
+
+## Riftglass of a Spirlog book step (SpirlogRewards), as public.spirlog_reward_claim: once per
+## account and step, only when the uploaded save of [code]p_slot[/code] reached the step, never
+## for a child's account.
+func _fn_spirlog_reward_claim(a: Dictionary) -> Dictionary:
+	var uid: String = b.me()
+	var id: String = str(a.get("p_id", ""))
+	var st: Dictionary = SpirlogRewards.step(id)
+	if st.is_empty():
+		return {"ok": false, "error": "unknown_reward"}
+	var band: Variant = _shop().band_of(uid)
+	if band != null and int(band) < 13:
+		return {"ok": false, "error": "age"}
+	var paid: Array = _row(uid).get_or_add("spirlog_paid", [])
+	if paid.has(id):
+		return {"ok": false, "error": "already"}
+	var save: Variant = b._saves().get(str(int(a.get("p_slot", 0))))
+	if not save is Dictionary or not (save as Dictionary).get("data") is Dictionary:
+		return {"ok": false, "error": "no_save"}
+	var data: Dictionary = save.data
+	var spirlog: Dictionary = data.get("spirlog", {}) if data.get("spirlog") is Dictionary else {}
+	if not SpirlogRewards.reached(st, SpirlogRewards.counts(spirlog)):
+		return {"ok": false, "error": "not_reached"}
+	paid.append(id)
+	var n: int = int(st.get("riftglass", 0))
+	var bal: int = _shop()._ledger_add(uid, n, "spirlog", id)
 	return {"ok": true, "added": n, "balance": bal}

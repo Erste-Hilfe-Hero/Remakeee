@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table book_rewards, written by tools/i18n/locales_book_rewards.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d Gleam bonded": "Сияний связано: %d",
+  "%d%% bonded": "%d%% связано",
+  "(%d ready)": "(готово: %d)",
+  "+%d Riftglass": "+%d Стекла Разлома",
+  "+%d Riftglass, it comes once you are online.": "+%d Стекла Разлома, придёт, как только ты будешь в сети.",
+  "Bonded: %d%%": "Связано: %d%%",
+  "Bonded: %d%% (%d/%d)": "Связано: %d%% (%d/%d)",
+  "Book rewards: %d%% bonded, Gleam %d%%": "Награды книги: связано %d%%, Сияние %d%%",
+  "Gleam: %d%%": "Сияние: %d%%",
+  "Gleam: %d%% (%d/%d)": "Сияние: %d%% (%d/%d)",
+  "Invite of friend code %s:": "Приглашение по коду друга %s:",
+  "Keeper of Every Page": "Хранитель всех страниц",
+  "No connection right now. The invite is kept and sent once you are online.": "Сейчас нет связи. Приглашение сохранено и уйдёт, как только ты будешь в сети.",
+  "Of every kind in the game.": "Из всех видов в игре.",
+  "Rewards for the share of kinds bonded and for Gleam kinds.": "Награды за долю связанных видов и за Сияния.",
+  "Seen: %d%%": "Увидено: %d%%",
+  "Seen: %d%% (%d/%d)": "Увидено: %d%% (%d/%d)",
+  "Spirlog book": "Книга Spirlog",
+  "Spirlog reward: %s!": "Награда Spirlog: %s!",
+  "Spirlog reward: +%d Riftglass": "Награда Spirlog: +%d Стекла Разлома",
+  "Take a reward once its step is reached.": "Забери награду, как только достигнешь её ступени.",
+  "You received %s x%d.": "Ты получаешь: %s x%d.",
+  "ready!": "готово!",
+  "taken": "получено"
+ }
+}

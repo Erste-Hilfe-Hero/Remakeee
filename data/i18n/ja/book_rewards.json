@@ -1,0 +1,29 @@
+{
+ "_comment": "Translations of the German table book_rewards, written by tools/i18n/locales_book_rewards.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d Gleam bonded": "輝き %d 種と絆",
+  "%d%% bonded": "%d%% 絆",
+  "(%d ready)": "(%d 件受け取れる)",
+  "+%d Riftglass": "裂け目ガラス+%d",
+  "+%d Riftglass, it comes once you are online.": "裂け目ガラス+%d。オンラインになったら届く。",
+  "Bonded: %d%%": "絆: %d%%",
+  "Bonded: %d%% (%d/%d)": "絆: %d%% (%d/%d)",
+  "Book rewards: %d%% bonded, Gleam %d%%": "図鑑のごほうび: 絆 %d%%、輝き %d%%",
+  "Gleam: %d%%": "輝き: %d%%",
+  "Gleam: %d%% (%d/%d)": "輝き: %d%% (%d/%d)",
+  "Invite of friend code %s:": "フレンドコード%sの招待:",
+  "Keeper of Every Page": "すべてのページの守り手",
+  "No connection right now. The invite is kept and sent once you are online.": "いまは接続がない。招待は保存され、オンラインになったら送られる。",
+  "Of every kind in the game.": "ゲームのすべての種類のうち。",
+  "Rewards for the share of kinds bonded and for Gleam kinds.": "絆を結んだ種類の割合と、輝きの種類でもらえるごほうび。",
+  "Seen: %d%%": "目撃: %d%%",
+  "Seen: %d%% (%d/%d)": "目撃: %d%% (%d/%d)",
+  "Spirlog book": "Spirlogの本",
+  "Spirlog reward: %s!": "Spirlogのごほうび: %s！",
+  "Spirlog reward: +%d Riftglass": "Spirlogのごほうび: 裂け目ガラス+%d",
+  "Take a reward once its step is reached.": "段階に届いたら、ごほうびを受け取ろう。",
+  "You received %s x%d.": "%s x%dを受け取った。",
+  "ready!": "受け取れる！",
+  "taken": "受け取り済み"
+ }
+}
