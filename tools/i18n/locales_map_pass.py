@@ -53,7 +53,7 @@ R = {
     "Lampenmaakster Ines: Elke lamp op het perron is van mij. De rook is van de schoorsteen."],
 "Lampwright Ines: A train in fog finds the station by my wicks. Trim them and you trim the timetable.": [
     "ランプ職人イネス: 霧の中の汽車は、わたしの灯芯で駅を見つけるの。芯を切れば時刻表も切れるわ。",
-    "Lampiste Ines : Dans le brouillard, le train trouve la gare grâce à mes mèches. Coupez-les, et vous coupez l'horaire.",
+    "Lampiste Ines : Dans le brouillard, le train trouve la gare grâce à mes mèches. Coupe-les, et tu coupes l'horaire.",
     "Lampionaia Ines: Nella nebbia il treno trova la stazione grazie ai miei stoppini. Accorciali e accorci l'orario.",
     "Lamparera Ines: Un tren en la niebla encuentra la estación por mis mechas. Recórtalas y recortas el horario.",
     "등불장이 이네스: 안개 속 기차는 내 심지를 보고 역을 찾아. 심지를 자르면 시간표도 잘리지.",

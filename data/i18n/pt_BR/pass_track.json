@@ -2,7 +2,7 @@
  "_comment": "Translations of the German table pass_track, written by tools/i18n/locales_pass_track.py. Keys are the English text; keys with %s or %d are patterns.",
  "strings": {
   "%d of %d pass points": "%d de %d pontos de passe",
-  "%d premium rewards reached and waiting.": "%d recompensas premium alcançadas esperando.",
+  "%d premium rewards reached and waiting.": "%d recompensas premium alcançadas esperam por você.",
   "Free:": "Grátis:",
   "Free: %s": "Grátis: %s",
   "Locked: needs the Wayfarer Pass.": "Bloqueada: precisa do Passe de Viajante.",

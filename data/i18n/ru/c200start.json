@@ -2,7 +2,7 @@
  "_comment": "Translations of the German table c200start, written by tools/i18n/locales_c200start.py. Keys are the English text; keys with %s or %d are patterns.",
  "strings": {
   "%s might suit you. But choose whoever you like!": "Тебе может подойти %s. Но выбирай, кого хочешь!",
-  "A free afternoon. You...": "Свободный день. Ты...",
+  "A free afternoon. You...": "Свободное время после обеда. Ты...",
   "Two short questions. You still choose freely.": "Два коротких вопроса. Выбираешь всё равно ты.",
   "Which one suits you?": "Кто тебе подходит?",
   "Your partner should be...": "Твой партнёр должен быть...",

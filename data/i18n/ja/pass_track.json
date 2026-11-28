@@ -2,7 +2,7 @@
  "_comment": "Translations of the German table pass_track, written by tools/i18n/locales_pass_track.py. Keys are the English text; keys with %s or %d are patterns.",
  "strings": {
   "%d of %d pass points": "パスポイント %d / %d",
-  "%d premium rewards reached and waiting.": "プレミアムのほうび%d個が到達済みで待っている。",
+  "%d premium rewards reached and waiting.": "受け取れるプレミアムのほうび: %d個",
   "Free:": "無料:",
   "Free: %s": "無料: %s",
   "Locked: needs the Wayfarer Pass.": "ロック中: 旅人パスが必要。",

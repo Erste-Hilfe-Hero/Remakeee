@@ -241,6 +241,8 @@ static func _check_species_fields(s: Dictionary, sname: String, species_names: D
 			errors.append("spirling '%s': unfold rule '%s' needs a positive value" % [sname, rule])
 		elif rule in ["item", "mended", "time"] and str(p.get("value", "")).is_empty():
 			errors.append("spirling '%s': unfold rule '%s' needs a value" % [sname, rule])
+		elif rule == "bond" and not str(p.get("value", "")).is_empty() and not BattleRules.is_holdable(str(p.value)):
+			errors.append("spirling '%s': unfold rule 'bond' names '%s', which is no keepsake" % [sname, p.value])
 
 ## Item 8 and 133: every kind can be met somewhere (an encounter table, as a starting partner,
 ## by unfolding, or a fixed meeting named in "met"), and ancient kinds never in random tables.

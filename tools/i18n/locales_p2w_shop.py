@@ -13,7 +13,7 @@ R = {
 "Best value": ["お得", "Avantageux", "Conveniente", "Más rentable", "최고 가성비", "最超值", "最超值", "Melhor custo", "Выгодно", "Najlepsza cena", "En avantajlı", "Beste waarde"],
 "Popular": ["人気", "Populaire", "Popolare", "Popular", "인기", "热门", "熱門", "Popular", "Популярное", "Popularne", "Popüler", "Populair"],
 "Limited": ["限定", "Limité", "Limitato", "Limitado", "한정", "限定", "限定", "Limitado", "Ограничено", "Limitowane", "Sınırlı", "Beperkt"],
-"All advantages": ["すべての有利", "Tous les avantages", "Tutti i vantaggi", "Todas las ventajas", "모든 이점", "全部优势", "全部優勢", "Todas as vantagens", "Все преимущества", "Wszystkie korzyści", "Tüm avantajlar", "Alle voordelen"],
+"All advantages": ["すべての特典", "Tous les avantages", "Tutti i vantaggi", "Todas las ventajas", "모든 이점", "全部优势", "全部優勢", "Todas as vantagens", "Все преимущества", "Wszystkie korzyści", "Tüm avantajlar", "Alle voordelen"],
 "Show the pass": ["パスを見る", "Voir le pass", "Vedi il pass", "Ver el pase", "패스 보기", "查看通行证", "查看通行證", "Ver o passe", "Открыть пропуск", "Pokaż karnet", "Pasoyu göster", "Pas bekijken"],
 "Use it": ["使う", "Utiliser", "Usa", "Usar", "사용하기", "使用", "使用", "Usar", "Использовать", "Użyj", "Kullan", "Gebruiken"],
 "Pay %d Riftglass": ["裂け目ガラス%dで支払う", "Payer %d Verre de Faille", "Paga %d Vetro-squarcio", "Pagar %d Vidrio Grieta", "균열유리 %d 지불", "支付%d裂隙晶", "支付%d裂晶", "Pagar %d Vidrofenda", "Оплатить %d Стекла Разлома", "Zapłać %d Szczelinitu", "%d Yarık Camı öde", "%d Kloofglas betalen"],
@@ -24,7 +24,7 @@ R = {
 "+%d %% bonus": ["+%d %%ボーナス", "+%d %% bonus", "+%d %% bonus", "+%d %% extra", "+%d %% 보너스", "额外+%d %%", "額外+%d %%", "+%d %% bônus", "+%d %% бонус", "+%d %% bonus", "+%d %% bonus", "+%d %% bonus"],
 "First buy x2": ["初回x2", "1er achat x2", "1° acquisto x2", "1.ª compra x2", "첫 구매 x2", "首购x2", "首購x2", "1ª compra x2", "1-я покупка x2", "1. zakup x2", "İlk alım x2", "1e aankoop x2"],
 "Until %s": ["%sまで", "Jusqu'au %s", "Fino al %s", "Hasta el %s", "%s까지", "截至%s", "截至%s", "Até %s", "До %s", "Do %s", "Bitiş: %s", "Tot %s"],
-"A one-time pack for your journey": ["旅のための一度きりのパック", "Un lot unique pour votre voyage", "Un pacchetto unico per il tuo viaggio", "Un lote único para tu viaje", "여행을 위한 한 번뿐인 묶음", "为旅途准备的一次性礼包", "為旅途準備的一次性組合", "Um pacote único para sua jornada", "Разовый набор для вашего пути", "Jednorazowy pakiet na twoją podróż", "Yolculuğun için tek seferlik paket", "Een eenmalig pakket voor je reis"],
+"A one-time pack for your journey": ["旅のための一度きりのパック", "Un lot unique pour ton voyage", "Un pacchetto unico per il tuo viaggio", "Un lote único para tu viaje", "여행을 위한 한 번뿐인 묶음", "为旅途准备的一次性礼包", "為旅途準備的一次性組合", "Um pacote único para sua jornada", "Разовый набор для твоего пути", "Jednorazowy pakiet na twoją podróż", "Yolculuğun için tek seferlik paket", "Een eenmalig pakket voor je reis"],
 "Show offer": ["内容を見る", "Voir l'offre", "Vedi l'offerta", "Ver oferta", "상품 보기", "查看内容", "查看內容", "Ver oferta", "Посмотреть", "Zobacz ofertę", "Teklifi gör", "Aanbod bekijken"],
 }
 

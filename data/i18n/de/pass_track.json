@@ -3,7 +3,7 @@
  "keep": [],
  "strings": {
   "%d of %d pass points": "%d von %d Pass-Punkten",
-  "%d premium rewards reached and waiting.": "%d Premium-Belohnungen erreicht und warten.",
+  "%d premium rewards reached and waiting.": "%d erreichte Premium-Belohnungen warten.",
   "Free:": "Kostenlos:",
   "Free: %s": "Kostenlos: %s",
   "Locked: needs the Wayfarer Pass.": "Gesperrt: braucht den Wanderer-Pass.",
@@ -13,7 +13,7 @@
   "Premium row: Wayfarer Pass": "Premium-Reihe: Wanderer-Pass",
   "Premium: %s": "Premium: %s",
   "Reached at %d pass points.": "Erreicht bei %d Pass-Punkten.",
-  "Ready to take.": "Bereit zum Nehmen.",
+  "Ready to take.": "Bereit zum Abholen.",
   "Something went wrong. Try again in a moment.": "Etwas ist schiefgegangen. Versuch es gleich noch einmal.",
   "Step %d": "Stufe %d",
   "Step %d of %d": "Stufe %d von %d",

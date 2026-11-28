@@ -293,7 +293,7 @@ T = {
 "Warden Weakener":
 	"Wächterschwächer",
 "The Warden starts with 15% less Vigor. At most 1 per Warden battle.":
-	"Der Wächter startet mit 15 % weniger Kraft. Höchstens 1 pro Wächterkampf.",
+	"Der Hüter startet mit 15 % weniger Kraft. Höchstens 1 pro Hüterkampf.",
 "Warden Bundle":
 	"Wächter-Bündel",
 "Warden Lore, 3 Warden Weakeners and 5 Rift Anchors in one pack.":
@@ -639,14 +639,14 @@ T = {
 "Talk to a beaten Wayfarer who already battled you today: one more rematch. Used up.": "Sprich einen besiegten Wanderer an, der heute schon gegen dich gekämpft hat: eine Revanche mehr. Wird verbraucht.",
 "%s already battled you today. Use a Rematch Key (%d left)?": "%s hat heute schon gegen dich gekämpft. Revanche-Schlüssel nutzen (noch %d)?",
 "Warden Weakener": "Wächterschwächer",
-"Offered before a Rift Warden battle you lost once before: the Warden's team starts with 15% less Vigor. One per battle. Used up.": "Wird vor einem Rift-Wächterkampf angeboten, den du schon einmal verloren hast: Das Team des Wächters startet mit 15 % weniger Kraft. Einer pro Kampf. Wird verbraucht.",
+"Offered before a Rift Warden battle you lost once before: the Warden's team starts with 15% less Vigor. One per battle. Used up.": "Wird vor einem Hüterkampf angeboten, den du schon einmal verloren hast: Das Team des Hüters startet mit 15 % weniger Kraft. Einer pro Kampf. Wird verbraucht.",
 "Use a Warden Weakener? The Warden's team starts with 15%% less Vigor (%d left).": "Wächterschwächer nutzen? Das Team des Wächters startet mit 15 %% weniger Kraft (noch %d).",
 "A Warden Weakener dims %s's team: they start with 15%% less Vigor.": "Ein Wächterschwächer dämpft das Team von %s: Es startet mit 15 %% weniger Kraft.",
 "Warden Lore:": "Wächterkunde:",
 "(holds %s)": "(trägt %s)",
 "Items: %s": "Gegenstände: %s", "Items: none": "Gegenstände: keine",
 "Rift Anchor": "Rissanker",
-"Offered after you lose to a Rift Warden: you stay right before it with a rested team instead of going back to the spring. Used up.": "Wird angeboten, wenn du gegen einen Rift-Wächter verlierst: Du bleibst direkt vor ihm, mit erholtem Team, statt zur Quelle zurückzugehen. Wird verbraucht.",
+"Offered after you lose to a Rift Warden: you stay right before it with a rested team instead of going back to the spring. Used up.": "Wird angeboten, wenn du gegen einen Hüter verlierst: Du bleibst direkt vor ihm, mit erholtem Team, statt zur Quelle zurückzugehen. Wird verbraucht.",
 "Use a Rift Anchor? You stay right before the Warden and your team is rested (%d left).": "Rissanker nutzen? Du bleibst direkt vor dem Wächter und dein Team ist erholt (noch %d).",
 "Go back": "Zurückgehen",
 "The Rift Anchor holds you in place. Your team is rested again.": "Der Rissanker hält dich an Ort und Stelle. Dein Team ist wieder erholt.",
@@ -1035,7 +1035,7 @@ T = {
 "10000 Riftglass + 6000 bonus (+60%) = 16000 Riftglass. First purchase of this pack per account: 10000 more, 26000 in total. Fixed amounts, no chance.":
 	"10000 Rissglas + 6000 Bonus (+60 %) = 16000 Rissglas. Erster Kauf dieses Pakets je Konto: 10000 mehr, 26000 Rissglas insgesamt. Feste Mengen, kein Zufall.",
 "Premium row of the 30-tier Pass. +50% growth, 30 Riftglass a day, +1 start energy, +1 Rift Breath per Warden battle, +1 bond try per battle. 4,99 EUR a month, renews, cancel any time in the store.":
-	"Premium-Reihe des Passes mit 30 Stufen. +50 % Wachstum, 30 Rissglas am Tag, +1 Startenergie, +1 Rissatem je Wächterkampf, +1 Bindungsversuch je Kampf. 4,99 € im Monat, verlängert sich, jederzeit im Store kündbar.",
+	"Premium-Reihe des Passes mit 30 Stufen. +50 % Wachstum, 30 Rissglas am Tag, +1 Startenergie, +1 Rissatem je Hüterkampf, +1 Bindungsversuch je Kampf. 4,99 € im Monat, verlängert sich, jederzeit im Store kündbar.",
 "Monthly Card":
 	"Monatskarte",
 "300 Riftglass at once and 100 Riftglass every day for 30 days: 3300 Riftglass in total. Collect them in the shop; missed days wait for you. No subscription, it never renews. Buying again adds 30 days.":

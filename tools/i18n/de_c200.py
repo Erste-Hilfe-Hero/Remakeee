@@ -1,7 +1,7 @@
 # German texts for the Chimora 200 list (Ali, 2026-11-25), shipped with 1.3.1.
 T = {
-"Tip: %s arts hit %s hard.": "Tipp: %s-Künste treffen %s hart.",
-"Tip: %s and %s arts hit %s hard.": "Tipp: %s- und %s-Künste treffen %s hart.",
+"Tip: %s arts hit %s hard.": "Tipp: %s-Techniken treffen %s hart.",
+"Tip: %s and %s arts hit %s hard.": "Tipp: %s- und %s-Techniken treffen %s hart.",
 "Cinder Flurry": "Funkenwirbel",
 "Ripple Jab": "Wellenstoß",
 "Burr Volley": "Kletten-Salve",
@@ -64,7 +64,7 @@ T = {
 "Damp Skin": "Feuchthaut",
 "A physical hit on it may soak the one that hit it.": "Ein physischer Treffer kann beim Angreifer Nässe auslösen.",
 "Calm Mind": "Ruhiger Geist",
-"It takes 15% less damage from Focus arts.": "Es nimmt 15% weniger Schaden durch Fokus-Künste.",
+"It takes 15% less damage from Focus arts.": "Es nimmt 15 % weniger Schaden durch Fokus-Techniken.",
 # Name ideas for the Idea key, 200 list item 6: names stay as they are.
 "Taren": "Taren",
 "Mira": "Mira",

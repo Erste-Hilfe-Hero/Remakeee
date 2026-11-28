@@ -27,7 +27,7 @@ T = {
 "Rarity Compass": "Seltenheitskompass",
 "Spirlings that fought in a won battle in the story gain double Kinship: 4 instead of 2. Story only, not in leagues. Permanent.": "Spirlings, die in einem gewonnenen Kampf in der Geschichte gekämpft haben, bekommen doppelte Verbundenheit: 4 statt 2. Nur Geschichte, nicht in Ligen. Dauerhaft.",
 "Training Seal": "Trainings-Siegel",
-"Twice the chance that a story battle trains a Spark value. Not in Warden battles. Story only, not in leagues. Permanent.": "Doppelte Chance, dass ein Kampf in der Geschichte einen Funken-Wert trainiert. Nicht in Wächterkämpfen. Nur Geschichte, nicht in Ligen. Dauerhaft.",
+"Twice the chance that a story battle trains a Spark value. Not in Warden battles. Story only, not in leagues. Permanent.": "Doppelte Chance, dass ein Kampf in der Geschichte einen Funkenwert trainiert. Nicht in Hüterkämpfen. Nur Geschichte, nicht in Ligen. Dauerhaft.",
 "Uncommon, shy and ancient wild Spirlings step out 1.5 times as often, on top of a Lure Scent. Story only, not in leagues. Permanent.": "Seltene, scheue und uralte wilde Spirlings zeigen sich 1,5-mal so oft, zusätzlich zu einem Lockduft. Nur Geschichte, nicht in Ligen. Dauerhaft.",
 "Victory Mend I": "Siegesheilung I",
 "Victory Mend II": "Siegesheilung II",

@@ -1,0 +1,32 @@
+{
+ "_comment": "Translations of the German table trade_bond, written by tools/i18n/locales_trade_bond.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s comes back to you. It has bonded with a new Wayfarer.": "%s vuelve contigo. Se ha vinculado a un Caminante nuevo.",
+  "%s feels the bond with its new Wayfarer. Unfurl it into %s now? You can furl it back later.": "%s siente el vínculo con su Caminante nuevo. ¿Desplegarlo en %s ahora? Podrás replegarlo más tarde.",
+  "Boatwoman Mabry: In Hookwick every boat has two owners. Some Spirlings like that too.": "Barquera Mabry: En Hookwick cada barca tiene dos dueños. A algunos Spirlings también les gusta.",
+  "Boatwoman Mabry: Let me own yours for a moment, then it's yours again. Once, mind you.": "Barquera Mabry: Déjame que sea mío un momento, y luego vuelve a ser tuyo. Solo una vez, ojo.",
+  "Boatwoman Mabry: Two owners is plenty. Three is a quarrel. Trade with your friends now.": "Barquera Mabry: Dos dueños bastan. Tres son una pelea. Ahora intercambia con tus amistades.",
+  "Courier Pell: A new Wayfarer's hand does that. Trade with me once and I'll hand yours right back.": "Mensajero Pell: Es la mano de un Caminante nuevo. Intercambia una vez conmigo y te devuelvo el tuyo enseguida.",
+  "Courier Pell: I carry letters and, now and then, a Spirling. Some of them come back changed.": "Mensajero Pell: Llevo cartas y, de vez en cuando, un Spirling. Algunos vuelven cambiados.",
+  "Courier Pell: My route is full. Trade with your friends now, they carry farther than I do.": "Mensajero Pell: Mi ruta está llena. Ahora intercambia con tus amistades, llegan más lejos que yo.",
+  "Ferrywoman Oona: One trade is all I keep in me. For the next one, find a friend who travels.": "Barquera Oona: Solo llevo un intercambio dentro. Para el siguiente, busca una amistad que viaje.",
+  "Ferrywoman Oona: Some Spirlings only unfurl when they bond with a new Wayfarer. A ferry teaches you that.": "Barquera Oona: Algunos Spirlings solo se despliegan cuando se vinculan a un Caminante nuevo. Un transbordador te lo enseña.",
+  "Ferrywoman Oona: Trade me one of yours. I'll trade it straight back, and it will have known two of us.": "Barquera Oona: Cámbiame uno de los tuyos. Te lo devuelvo enseguida, y habrá conocido a dos de nosotros.",
+  "It has to hold %s during the trade.": "Tiene que llevar %s durante el intercambio.",
+  "Needs: a bond with a new Wayfarer (a trade)": "Necesita: un vínculo con un Caminante nuevo (un intercambio)",
+  "Needs: a bond with a new Wayfarer (a trade) while holding %s": "Necesita: un vínculo con un Caminante nuevo (un intercambio) llevando %s",
+  "None of your Spirlings would unfurl from a trade. Come back with one that would.": "Ninguno de tus Spirlings se desplegaría con un intercambio. Vuelve con uno que sí.",
+  "Smith Hesketh: A blade changes in the quench. Some Spirlings change when they change hands.": "Herrero Hesketh: Una hoja cambia en el temple. Algunos Spirlings cambian cuando cambian de manos.",
+  "Smith Hesketh: Hand me one, and I'll hand it back. One trade, then I go back to my anvil.": "Herrero Hesketh: Pásame uno y te lo devuelvo. Un intercambio, y luego vuelvo a mi yunque.",
+  "Smith Hesketh: We traded once. The anvil is waiting, and so are your friends.": "Herrero Hesketh: Ya intercambiamos una vez. El yunque espera, y tus amistades también.",
+  "Some Spirlings unfurl when they bond with a new Wayfarer. A few of them must hold a certain Keepsake during the trade; that Keepsake may stay on and goes with them. Town Wayfarers in Brindlewick, Corvane Quay, Cinderfold and Hookwick trade once each, too.": "Algunos Spirlings se despliegan cuando se vinculan a un Caminante nuevo. Unos pocos deben llevar un Recuerdo concreto durante el intercambio; ese Recuerdo puede quedarse y va con ellos. Los Caminantes de Brindlewick, Corvane Quay, Cinderfold y Hookwick también intercambian una vez cada uno.",
+  "Trade %s and take it back? This Wayfarer trades only once.": "¿Intercambiar a %s y recuperarlo? Este Caminante solo intercambia una vez.",
+  "Trade which Spirling? You get it back at once.": "¿Qué Spirling intercambias? Te lo devuelven enseguida.",
+  "Trade with Hesketh": "Intercambiar con Hesketh",
+  "Trade with Mabry": "Intercambiar con Mabry",
+  "Trade with Oona": "Intercambiar con Oona",
+  "Trade with Pell": "Intercambiar con Pell",
+  "Unfurls when it bonds with a new Wayfarer while holding %s.": "Se despliega cuando se vincula a un Caminante nuevo llevando %s.",
+  "Unfurls when it bonds with a new Wayfarer.": "Se despliega cuando se vincula a un Caminante nuevo."
+ }
+}

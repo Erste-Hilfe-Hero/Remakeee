@@ -5,7 +5,7 @@
   " It glows like the last of the sun: a Duskgold Gleam!": " Lśni jak ostatnie promienie słońca: połysk zmierzchowego złota!",
   " It is washed in deep ink: an Inkwash Gleam!": " Jest skąpany w głębokim atramencie: atramentowy połysk!",
   " Its colours never hold still: an Opaline Gleam!": " Jego barwy nigdy nie stoją w miejscu: opalowy połysk!",
-  "%d seen, %d bonded": "%d widziane, %d związane",
+  "%d seen, %d bonded": "widziane: %d, związane: %d",
   "Duskgold Gleam": "Połysk zmierzchowego złota",
   "Gleams bonded: %s": "Związane połyski: %s",
   "Gleams seen: %s": "Widziane połyski: %s",
