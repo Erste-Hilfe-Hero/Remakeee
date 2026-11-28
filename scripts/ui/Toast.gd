@@ -5,6 +5,8 @@ extends CanvasLayer
 
 const SHOW_TIME: float = 2.4
 const LAYER: int = 90
+## How far a note slides in from above, in pixels.
+const SLIDE_PX: float = 8.0
 
 var _panel: PanelContainer
 var _icon: TextureRect
@@ -41,14 +43,15 @@ func _ready() -> void:
 	row.add_child(_label)
 
 ## Keeps the note in the UI column on a wide screen (update 1.3.2); full width on a portrait one.
+## Its top sits under the notch / status bar, its sides clear of a side cut-out.
 func _fit_column() -> void:
 	if not is_inside_tree():
 		return
 	var vp: Vector2 = get_viewport().get_visible_rect().size
 	var col: Rect2 = SafeArea.column(vp)
-	var narrower: bool = col.size.x < vp.x - 0.5
-	_panel.offset_left = (col.position.x if narrower else 0.0) + 4.0
-	_panel.offset_right = -((vp.x - col.end.x) if narrower else 0.0) - 4.0
+	_panel.offset_left = col.position.x + 4.0
+	_panel.offset_right = -(vp.x - col.end.x) - 4.0
+	_panel.offset_top = col.position.y + 4.0
 
 ## Queues a note; [param icon] may be null. Each note rings [param sound] as it shows, a quiet
 ## two-note chime by default (item 2512); "" for none.
@@ -67,14 +70,15 @@ func _run() -> void:
 		_label.text = Loc.t(str(n.text))
 		_icon.texture = n.icon
 		_icon.visible = n.icon != null
-		_panel.modulate.a = 1.0
+		Juice.finish(_panel)
 		_panel.visible = true
+		# Slides down from the top edge and leaves the same way (docs/FLOW.md); there at once
+		# and gone at once under reduced motion.
+		Juice.enter(_panel, Vector2(0, -SLIDE_PX), "open")
 		if not str(n.sound).is_empty():
 			Sound.sfx(str(n.sound))
 		await get_tree().create_timer(SHOW_TIME).timeout
-		if not GameState.reduce_motion:
-			var tw: Tween = create_tween()
-			tw.tween_property(_panel, "modulate:a", 0.0, 0.25)
-			await tw.finished
-		_panel.visible = false
+		var out: Tween = Juice.leave(_panel, Vector2(0, -SLIDE_PX))
+		if out != null:
+			await out.finished
 	_busy = false

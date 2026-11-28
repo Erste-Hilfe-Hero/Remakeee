@@ -47,7 +47,8 @@ def act_hours(act):
     parts["species"] = k["encounter_species"] * len(species)
     lines = 0
     battles = 0
-    files = set(maps)
+    # A region tale's dialogue (playtime.json "dialogue") is talked to by figures from data/story_npcs.json.
+    files = set(maps) | set(a.get("dialogue", []))
     for m in maps.values():
         for lv in [m] + m.get("floors", []):
             for n in lv.get("npcs", []) + lv.get("signs", []) + lv.get("secrets", []):
@@ -76,6 +77,8 @@ def act_hours(act):
         # An era region's story chapters live in its sheet (data/region<N>.json "story").
         sheet = a.get("sheet", "")
         main = len(load(sheet).get("story", [])) if sheet and os.path.exists(os.path.join(ROOT, sheet)) else 0
+        # Plus the region's own tale (data/quests.json "post", docs/STORY.md "Region tales").
+        main += sum(1 for g in q.get("post", []) if g.get("region") == key)
     parts["main"] = k["main_goal"] * main
     side = 0.0
     for g in q["side"]:

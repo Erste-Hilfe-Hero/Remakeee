@@ -1,14 +1,26 @@
+# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 12 natural start, 13 cutscenes, 14 post-story storylines and Quivermoor duels, 15 quest book, 16 offline play, 17 bond charms, 18 First Catch Pack, 19 daily rewards/tasks/Spirling of the day, 20 weekend weather events, 21 Spirlog rewards, 22 friend codes, 23 smoother menus.
 Chimora 1.3.2
 
-- Uma loja totalmente nova: pacotes de Vidrofenda, o Cartão mensal, Spirlings Campeões, kits e ofertas diárias e semanais. Cada oferta mostra exatamente o que vem nela, nada é aleatório.
-- A Vidrofenda agora também vale dentro do jogo: continuar a batalha depois de uma derrota, curar sua equipe, acelerar o crescimento ou um vínculo, encurtar a espera de uma viagem, enfrentar uma Sentinela de novo na hora e mais.
-- 20 de Vidrofenda de presente todo dia, quando você estiver online.
-- Um passe novo com 30 níveis e uma fileira grátis para todos.
+- Uma loja refeita com textos mais claros: cada pacote e cada oferta diz em palavras simples o que vem nela e para que serve. Nada é aleatório.
 - 70 Spirlings novos, 10 em cada região.
 - As formas Reluzentes agora têm 5 tipos, do Reluzente clássico ao raríssimo Reluzente opalino.
 - Clima novo: chuva, neblina, vento, tempestades e neve mudam o mundo e algumas batalhas. Já vem ligado e pode ser ajustado nas configurações.
 - 35 pedras-enigma e tabuleiros de quebra-cabeça em todas as regiões.
 - Muitos segredos escondidos para descobrir jogando.
 - Os mapas estão mais bem conectados: sem becos sem saída e com casas novas nas cidades.
-- Melhor em telas grandes e tablets.
+- Uma só dificuldade para todos, que sobe ato a ato. Sem escolha de dificuldade e sem limite de Anel.
 - Muitas correções de bugs.
+- Os toques em É meu! agora vibram de leve (só se a vibração estiver ligada nas configurações).
+- Uma introdução mais bonita no começo do jogo.
+- Um começo natural: você joga na hora, e a história começa quando você conhece seu primeiro Spirling.
+- Cenas da história em cada ato.
+- As quatro regiões depois da história principal ganham cada uma sua própria história, com duelos em Quivermoor.
+- Um livro de missões com seus objetivos, e "Para onde agora?" mostra o caminho no mapa.
+- Jogo offline automático: sem internet o jogo simplesmente continua, e seu progresso sincroniza assim que você voltar a ficar online.
+- Amuletos de vínculo para criar vínculo com É meu!, cada um com preço fixo e o efeito exato mostrado antes da compra.
+- O Pacote Primeira Captura pelo nosso menor preço: um pacote pequeno com conteúdo fixo, mostrado antes da compra. Nada é aleatório.
+- Recompensas do dia, tarefas do dia e um Spirling do dia.
+- Eventos de clima nos fins de semana.
+- Recompensas por completar seu Spirlog.
+- Códigos de amigo: adicionar amigos ficou mais fácil.
+- Menus mais fluidos.
