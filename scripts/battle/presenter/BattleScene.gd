@@ -1452,7 +1452,7 @@ func _bond(slot: int = 0) -> BattleAction:
 	_bond_game.calm = BattleCalm.bond_style() == "calm"
 	_bond_game.taps_off = BondCalc.taps_off(Database.item(charm))
 	if mine:
-		score = await _bond_game.run_mine(_bond_plans[key])
+		score = await _bond_game.run_mine(_bond_plans[key], foe)
 	else:
 		score = await _bond_game.run(_bond_plans[key])
 	GameState.note_echo(score)
