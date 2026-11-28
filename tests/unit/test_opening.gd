@@ -69,6 +69,10 @@ func test_opening_rules() -> void:
 	assert_eq(QuestLog.hud_text(f), "", "goals open in the village")
 	assert_true(QuestLog.goal_maps(f).is_empty())
 	assert_false(FirstCatch.due(f), "no guaranteed wild battle during the opening")
+	var keep: Dictionary = GameState.flags
+	GameState.flags = f
+	assert_false(DailyBoard.card_due(), "no daily card in the opening")
+	GameState.flags = keep
 	f[Opening.VILLAGE_FLAG] = true
 	assert_false(Opening.active(f))
 	assert_false(Opening.village_due(f, Opening.VILLAGE_MAP))
