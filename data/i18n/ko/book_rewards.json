@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table book_rewards, written by tools/i18n/locales_book_rewards.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d Gleam bonded": "광채형 %d종 유대",
+  "%d%% bonded": "%d%% 유대",
+  "(%d ready)": "(%d개 받을 수 있음)",
+  "Bonded: %d%%": "유대: %d%%",
+  "Bonded: %d%% (%d/%d)": "유대: %d%% (%d/%d)",
+  "Book rewards: %d%% bonded, Gleam %d%%": "도감 보상: 유대 %d%%, 광채형 %d%%",
+  "Gleam: %d%%": "광채형: %d%%",
+  "Gleam: %d%% (%d/%d)": "광채형: %d%% (%d/%d)",
+  "Invite of friend code %s:": "친구 코드 %s의 초대:",
+  "Keeper of Every Page": "모든 기록의 파수꾼",
+  "No connection right now. The invite is kept and sent once you are online.": "지금은 연결이 없다. 초대는 보관되었다가 온라인이 되면 보내진다.",
+  "Nothing to take yet. Rewards come once you are friends and the new player has played for a day.": "아직 받을 것이 없다. 친구가 되고 새 플레이어가 하루 동안 플레이하면 보상을 받는다.",
+  "Of every kind in the game.": "게임의 모든 종 중에서.",
+  "Request sent. Once you are friends and you have played for a day, you both take the invite reward under Friends, Invite a friend.": "요청을 보냈다. 친구가 되고 네가 하루 동안 플레이하면 친구 > 친구 초대에서 둘 다 초대 보상을 받는다.",
+  "Rewards for the share of kinds bonded and for Gleam kinds.": "유대한 종의 비율과 광채형으로 받는 보상.",
+  "Seen: %d%%": "목격: %d%%",
+  "Seen: %d%% (%d/%d)": "목격: %d%% (%d/%d)",
+  "Spirlog book": "Spirlog 책",
+  "Spirlog reward: %s!": "Spirlog 보상: %s!",
+  "Take a reward once its step is reached.": "단계에 도달하면 보상을 받자.",
+  "You received %s x%d.": "%s x%d을(를) 받았다.",
+  "ready!": "받을 수 있다!",
+  "taken": "받음"
+ }
+}

@@ -385,10 +385,15 @@ func test_finale_card_can_be_skipped() -> void:
 		watch_signals(c)
 		c.advance(0.2)
 		c.press()
-		assert_false(c.is_closed(), "the first press shows every line")
-		assert_gte(c.t, EraFinaleCard.full_time(e))
-		c.press()
+		assert_false(c.is_closed(), "the first press shows every line of the page")
+		assert_gte(c.t, c.page_time())
+		# Then one press turns each page (and shows it), the last page's press closes.
+		var presses: int = 0
+		while not c.is_closed() and presses < 40:
+			c.press()
+			presses += 1
 		assert_true(c.is_closed())
+		assert_eq(presses, 2 * c.pages.size() - 1, "era %d: %d pages" % [e, c.pages.size()])
 		assert_signal_emit_count(c, "finished", 1)
 
 func test_finale_card_with_reduced_motion_closes_at_once() -> void:
@@ -398,6 +403,9 @@ func test_finale_card_with_reduced_motion_closes_at_once() -> void:
 	c.manual = true
 	add_child(c)
 	assert_true(c._art.still)
+	for i: int in c.pages.size() - 1:
+		c.press()
+		assert_false(c.is_closed(), "a press turns the page at once")
 	c.press()
 	assert_true(c.is_closed(), "everything was on screen already")
 

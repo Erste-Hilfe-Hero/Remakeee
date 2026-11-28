@@ -11,6 +11,7 @@ const RG_NO_VALUE: String = "Riftglass has no money value and cannot be changed 
 const LOCKED_TEXT: String = "The shop is closed for your age. Ask a grown-up."
 const ABOUT_TEXT: String = "About purchases:\n- Chimora is free. Everything in the shop is optional.\n- Each offer gives exactly what it lists. Nothing is random.\n- \"+\" marks an advantage in the game. In the Fair League bought advantages do not count.\n- Riftglass is a right to use, it has no money value and cannot be changed back.\n- Payment and refunds go through Apple or Google.\n- Monthly limits protect you: 15 EUR (13-15), 30 EUR (16-17), adults choose up to 300 EUR."
 const WEB_TEXT: String = "The shop is only in the phone app. The browser test version cannot buy anything."
+const TV_TEXT: String = "The shop is only in the phone app. On the TV you play without purchases."
 const WITHDRAWAL_TEXT: String = "Before your first purchase: digital goods are delivered at once. You agree that the right of withdrawal ends when the delivery starts. Refunds go through Apple or Google."
 
 ## Opens the shop: the full-screen ShopScreen after the connection, age and kids checks.
@@ -24,7 +25,7 @@ static func run(menu: MenuHost, open_offer: String = "") -> void:
 static func _run(menu: MenuHost, open_offer: String) -> void:
 	# Item 4111: the browser test version cannot buy; the shop lives in the apps only.
 	if OS.has_feature("web"):
-		await menu.info(WEB_TEXT)
+		await menu.info(TV_TEXT if TvRemote.is_tv() else WEB_TEXT)
 		return
 	var r: Dictionary = await Billing.refresh_state()
 	if not r.ok:

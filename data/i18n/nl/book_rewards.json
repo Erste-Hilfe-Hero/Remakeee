@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table book_rewards, written by tools/i18n/locales_book_rewards.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d Gleam bonded": "%d glansvormen verbonden",
+  "%d%% bonded": "%d%% verbonden",
+  "(%d ready)": "(%d klaar)",
+  "Bonded: %d%%": "Verbonden: %d%%",
+  "Bonded: %d%% (%d/%d)": "Verbonden: %d%% (%d/%d)",
+  "Book rewards: %d%% bonded, Gleam %d%%": "Boekbeloningen: %d%% verbonden, glansvorm %d%%",
+  "Gleam: %d%%": "Glansvorm: %d%%",
+  "Gleam: %d%% (%d/%d)": "Glansvorm: %d%% (%d/%d)",
+  "Invite of friend code %s:": "Uitnodiging van vriendcode %s:",
+  "Keeper of Every Page": "Bewaarder van elke pagina",
+  "No connection right now. The invite is kept and sent once you are online.": "Nu geen verbinding. De uitnodiging wordt bewaard en verstuurd zodra je online bent.",
+  "Nothing to take yet. Rewards come once you are friends and the new player has played for a day.": "Nog niets op te halen. Beloningen komen zodra jullie vrienden zijn en de nieuwe speler een dag heeft gespeeld.",
+  "Of every kind in the game.": "Van alle soorten in het spel.",
+  "Request sent. Once you are friends and you have played for a day, you both take the invite reward under Friends, Invite a friend.": "Verzoek verstuurd. Zodra jullie vrienden zijn en jij een dag hebt gespeeld, halen jullie allebei de uitnodigingsbeloning op onder Vrienden, Een vriend uitnodigen.",
+  "Rewards for the share of kinds bonded and for Gleam kinds.": "Beloningen voor het deel verbonden soorten en voor glansvormen.",
+  "Seen: %d%%": "Gezien: %d%%",
+  "Seen: %d%% (%d/%d)": "Gezien: %d%% (%d/%d)",
+  "Spirlog book": "Spirlog-boek",
+  "Spirlog reward: %s!": "Spirlog-beloning: %s!",
+  "Take a reward once its step is reached.": "Neem een beloning zodra de stap bereikt is.",
+  "You received %s x%d.": "Je krijgt %s x%d.",
+  "ready!": "klaar!",
+  "taken": "genomen"
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "_comment": "Translations of the German table book_rewards, written by tools/i18n/locales_book_rewards.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%d Gleam bonded": "%d Splendori legati",
+  "%d%% bonded": "%d%% legati",
+  "(%d ready)": "(%d pronti)",
+  "Bonded: %d%%": "Legati: %d%%",
+  "Bonded: %d%% (%d/%d)": "Legati: %d%% (%d/%d)",
+  "Book rewards: %d%% bonded, Gleam %d%%": "Premi del libro: %d%% legati, Splendore %d%%",
+  "Gleam: %d%%": "Splendore: %d%%",
+  "Gleam: %d%% (%d/%d)": "Splendore: %d%% (%d/%d)",
+  "Invite of friend code %s:": "Invito del codice amico %s:",
+  "Keeper of Every Page": "Custode di Ogni Pagina",
+  "No connection right now. The invite is kept and sent once you are online.": "Al momento non c'è connessione. L'invito viene conservato e inviato appena sei online.",
+  "Nothing to take yet. Rewards come once you are friends and the new player has played for a day.": "Ancora niente da prendere. I premi arrivano quando siete amici e il nuovo giocatore ha giocato per un giorno.",
+  "Of every kind in the game.": "Su tutte le specie del gioco.",
+  "Request sent. Once you are friends and you have played for a day, you both take the invite reward under Friends, Invite a friend.": "Richiesta inviata. Quando sarete amici e avrai giocato per un giorno, prenderete entrambi il premio d'invito in Amici, Invita un amico.",
+  "Rewards for the share of kinds bonded and for Gleam kinds.": "Premi per la quota di specie legate e per gli Splendori.",
+  "Seen: %d%%": "Visti: %d%%",
+  "Seen: %d%% (%d/%d)": "Visti: %d%% (%d/%d)",
+  "Spirlog book": "Libro dello Spirlog",
+  "Spirlog reward: %s!": "Premio dello Spirlog: %s!",
+  "Take a reward once its step is reached.": "Prendi un premio appena raggiungi il suo traguardo.",
+  "You received %s x%d.": "Hai ricevuto %s x%d.",
+  "ready!": "pronto!",
+  "taken": "preso"
+ }
+}

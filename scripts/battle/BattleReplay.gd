@@ -45,7 +45,29 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 	# Hidden battle touches (HiddenBattle): only when on, so older replays stay the same.
 	if model.hidden_rules:
 		snap["hidden"] = true
+	_snapshot_world(model, snap)
 	return snap
+
+## The world's touches on a battle that change how it plays out: fog, the time of day, spark
+## training and growth (a level-up mid-battle changes stats). Each key only when it is not the
+## default, so older replays stay the same. The RNG state goes along only when something already
+## drew from it, so a snapshot taken late still plays back the same rolls.
+static func _snapshot_world(model: BattleModel, snap: Dictionary) -> void:
+	if model.sight_mult != 1.0:
+		snap["sight"] = model.sight_mult
+	if model.day_phase >= 0:
+		snap["day"] = model.day_phase
+	if model.battle_spark_chance > 0.0:
+		snap["spark"] = model.battle_spark_chance
+	if model.xp_mult != 1.0:
+		snap["xp_mult"] = model.xp_mult
+	if model.ring_scaled_growth:
+		snap["ring_growth"] = true
+	var fresh := RandomNumberGenerator.new()
+	fresh.seed = model.battle_seed
+	if model.rng.state != fresh.state:
+		# A string, because JSON numbers lose the low bits of a 64-bit state.
+		snap["rng_state"] = str(model.rng.state)
 
 static func _snapshot(model: BattleModel, music: String, backdrop: String) -> Dictionary:
 	return {
@@ -229,6 +251,13 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.shift_offer = bool(snap.get("shift_offer", false)) and not m.is_wild
 	m.foe_announce = bool(snap.get("foe_announce", false)) and not m.is_wild
 	m.hidden_rules = bool(snap.get("hidden", false))
+	m.sight_mult = clampf(float(snap.get("sight", 1.0)), 0.0, 1.0)
+	m.day_phase = clampi(int(snap.get("day", -1)), -1, DayCycle.Phase.size() - 1)
+	m.battle_spark_chance = clampf(float(snap.get("spark", 0.0)), 0.0, 1.0)
+	m.xp_mult = maxf(0.0, float(snap.get("xp_mult", 1.0)))
+	m.ring_scaled_growth = bool(snap.get("ring_growth", false))
+	if snap.get("rng_state") is String and (snap.rng_state as String).is_valid_int():
+		m.rng.state = (snap.rng_state as String).to_int()
 	if not partner.is_empty():
 		var ally: Array[Spirling] = _rebuild(partner.get("team", []))
 		if ally.size() != (partner.get("team", []) as Array).size():

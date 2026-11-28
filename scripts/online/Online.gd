@@ -230,9 +230,10 @@ func _other_device() -> void:
 	if GameState.in_game:
 		_to_title()
 
-## "web" for the browser test build, "app" for the phone apps (and desktop test runs).
+## "web" for the browser test build, "app" for the phone apps, the Samsung TV app (keeps its
+## account like a phone, not the browser's 30 days) and desktop test runs.
 static func platform_name() -> String:
-	return "web" if OS.has_feature("web") else "app"
+	return "web" if OS.has_feature("web") and not TvRemote.is_tv() else "app"
 
 func _take_hello(d: Variant) -> void:
 	if not d is Dictionary:

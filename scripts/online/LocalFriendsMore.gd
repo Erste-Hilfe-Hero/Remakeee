@@ -212,6 +212,15 @@ func _fn_friend_suggest_request(a: Dictionary) -> Dictionary:
 func _invites() -> Dictionary:
 	return b._table("invites", {})
 
+## The invited account has really played: a save uploaded a day or more after it was made
+## (20261128061200_invite_played.sql). Throwaway accounts cannot fill the inviter's cap at once.
+func _invite_played(u: String) -> bool:
+	var since: int = int(b.profile_of(u).get("created_at", 0)) + 86400
+	for sv: Dictionary in (b.db.users[u].get("saves", {}) as Dictionary).values():
+		if int(sv.get("saved_at", 0)) >= since:
+			return true
+	return false
+
 func _invite_due(u: String) -> Dictionary:
 	var c: Dictionary = cfg()
 	var own: Variant = _invites().get(u)
@@ -223,9 +232,9 @@ func _invite_due(u: String) -> Dictionary:
 			continue
 		if bool(i.inviter_paid):
 			paid += 1
-		elif b.is_friend(u, k):
+		elif b.is_friend(u, k) and _invite_played(k):
 			open += 1
-	return {"self": own != null and not bool(own.invitee_paid) and b.is_friend(u, str(own.inviter)),
+	return {"self": own != null and not bool(own.invitee_paid) and b.is_friend(u, str(own.inviter)) and _invite_played(u),
 		"others": mini(open, maxi(0, int(c.get("invite_max", 10)) - paid))}
 
 func _can_redeem(u: String) -> bool:
@@ -282,7 +291,7 @@ func _fn_invite_claim(a: Dictionary) -> Dictionary:
 	var mine: Array = []
 	for k: String in _invites():
 		var i: Dictionary = _invites()[k]
-		if str(i.inviter) == u and not bool(i.inviter_paid) and b.is_friend(u, k):
+		if str(i.inviter) == u and not bool(i.inviter_paid) and b.is_friend(u, k) and _invite_played(k):
 			mine.append(k)
 	mine.sort_custom(func(x: String, y: String) -> bool: return int(_invites()[x].at) < int(_invites()[y].at))
 	for k: String in mine.slice(0, left):
