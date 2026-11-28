@@ -154,6 +154,11 @@ var echo_streak: int = 0
 ## Kinship 0..Kinship.max_value() (era function "kinship", Era II): grows in battle and on the
 ## road (Kinship.gd); unfold rule "kinship" waits for it.
 var kinship: int = 0
+## The form it was in when it bonded with a new Wayfarer (a finished trade or a town Wayfarer's
+## trade, TradeBond), else "". Unfold rule "bond" waits for it. Saved as "bond_form" when set.
+var bond_form: String = ""
+## The Keepsake it held at that bond, else "" (unfold rule "bond" with an item). Saved as "bond_item".
+var bond_item: String = ""
 
 ## [param rng] rolls the hidden Spark values; pass the battle or game RNG for reproducibility.
 func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = null) -> void:
@@ -461,6 +466,9 @@ func unfold_ready(p: Dictionary, ctx: Dictionary) -> bool:
 			return echo_streak >= int(v)
 		"kinship":
 			return int(v) > 0 and kinship >= int(v)
+		"bond":
+			var need: String = str(v) if v is String else ""
+			return not bond_form.is_empty() and bond_form == data.species_name and (need.is_empty() or bond_item == need)
 	return false
 
 ## The Rift a "mended" rule waits for. "origin" means the Rift nearest to where it was bonded.
@@ -512,6 +520,11 @@ func unfold_hint(p: Dictionary) -> String:
 			return "Needs: %d perfect Echo calls in the team" % int(p.value)
 		"kinship":
 			return "Needs: Kinship %d (now %d)" % [int(p.value), kinship]
+		"bond":
+			var item: String = str(p.value) if p.value is String else ""
+			if item.is_empty():
+				return "Needs: a bond with a new Wayfarer (a trade)"
+			return "Needs: a bond with a new Wayfarer (a trade) while holding %s" % str(Database.item(item).get("name", item))
 	return ""
 
 ## DayCycle.Phase index -> rule value, and the word shown in hints.
@@ -592,6 +605,10 @@ func to_dict() -> Dictionary:
 		out["bonus_trait"] = bonus_trait
 	if not held_sets.is_empty():
 		out["held_sets"] = held_sets.duplicate()
+	if not bond_form.is_empty():
+		out["bond_form"] = bond_form
+	if not bond_item.is_empty():
+		out["bond_item"] = bond_item
 	return out
 
 ## Rebuilds a Spirling from to_dict() output. Returns null if the species is unknown.
@@ -646,6 +663,8 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.lineage.assign((lin as Array).map(func(x: Variant) -> String: return str(x)) if lin is Array else [])
 	s.echo_streak = maxi(0, _num(d.get("echo_streak"), 0))
 	s.kinship = clampi(_num(d.get("kinship"), 0), 0, 1000)
+	s.bond_form = str(d.get("bond_form", "")) if Database.species(str(d.get("bond_form", ""))) != null else ""
+	s.bond_item = str(d.get("bond_item", "")) if not s.bond_form.is_empty() else ""
 	s.box = maxi(0, _num(d.get("box"), 0))
 	s.favorite = d.get("favorite") is bool and d.get("favorite")
 	s.fav_art = str(d.get("fav_art", ""))

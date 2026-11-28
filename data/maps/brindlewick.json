@@ -401,6 +401,14 @@
     3,
     6
    ]
+  },
+  {
+   "id": "bond_trader",
+   "x": 3,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "trade_bond/brindlewick",
+   "sprite": "villager"
   }
  ],
  "signs": [

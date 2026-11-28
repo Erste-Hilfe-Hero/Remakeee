@@ -121,6 +121,7 @@ func _ready() -> void:
 		"showcase": _action_showcase,
 		"dig": _action_dig,
 		"exchange": _action_exchange,
+		"bond_trade": _action_bond_trade,
 		"festival_shop": _action_festival_shop,
 		"spark_read": _action_spark_read,
 		"quest_show": _action_quest_show,
@@ -4011,6 +4012,35 @@ func _action_exchange(_args: PackedStringArray, _speaker: NPC) -> void:
 	menu.queue_free()
 	if not Exchange.full_unlocked():
 		await say(["Marla: Once the valley is fully quiet I'll bring out the good crates."] as Array[String])
+
+## "bond_trade <town>": the one-time trade of a town Wayfarer (TradeBond, 1.3.2). They take one
+## of the player's Spirlings and trade it straight back, so it bonded with a new Wayfarer and a
+## line with a bond path may unfurl. Works offline; each town Wayfarer trades once.
+func _action_bond_trade(args: PackedStringArray, _speaker: NPC) -> void:
+	var town: String = args[0] if not args.is_empty() else ""
+	if TradeBond.npc_done(town, GameState.flags):
+		return
+	var list: Array[Spirling] = TradeBond.npc_candidates(GameState.party, GameState.storage)
+	if list.is_empty():
+		await say(["None of your Spirlings would unfurl from a trade. Come back with one that would."] as Array[String])
+		return
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var entries: Array[Dictionary] = []
+	for sp: Spirling in list:
+		var why: String = TradeBond.npc_why(sp)
+		entries.append({"text": "%s R%d" % [sp.display_name(), sp.level], "icon": MiniSprite.of(sp.data.species_name, 14),
+			"disabled": not why.is_empty(), "why": why, "hint": TradeBond.spirlog_line(sp.data)})
+	var idx: int = await menu.pick(Loc.t("Trade which Spirling? You get it back at once."), entries)
+	if idx >= 0 and TradeBond.npc_why(list[idx]).is_empty():
+		var sp: Spirling = list[idx]
+		if await menu.confirm(Loc.t("Trade %s and take it back? This Wayfarer trades only once.") % sp.display_name()):
+			TradeBond.npc_trade(sp, town, GameState.flags)
+			Sound.sfx("confirm")
+			await menu.info(Loc.t("%s comes back to you. It has bonded with a new Wayfarer.") % sp.display_name())
+			await TradeBond.offer_unfurl(menu, [sp] as Array[Spirling])
+			SaveManager.save_game()
+	menu.queue_free()
 
 # --- Wayfarers --------------------------------------------------------------------------
 

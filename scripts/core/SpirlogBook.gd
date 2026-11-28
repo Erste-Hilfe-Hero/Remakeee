@@ -307,6 +307,10 @@ static func page_text(sd: SpirlingData, spirlog: Dictionary) -> String:
 	lines.append("#%02d %s" % [sd.dex_id, sd.species_name])
 	# The kind's rarity (KAMPF_PLAN "Wild-Seltenheit sichtbar im Spirlog").
 	lines.append("/".join(els) + "   " + WildRules.rarity_line(sd))
+	# Seen kinds that unfurl through a trade say so (TradeBond, 1.3.2).
+	var bond: String = TradeBond.spirlog_line(sd)
+	if not bond.is_empty():
+		lines.append(bond)
 	if not sd.height.is_empty():
 		lines.append("Height %s" % sd.height)
 	if not sd.habitat.is_empty():

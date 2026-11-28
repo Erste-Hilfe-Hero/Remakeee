@@ -1,0 +1,32 @@
+{
+ "_comment": "Translations of the German table trade_bond, written by tools/i18n/locales_trade_bond.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s comes back to you. It has bonded with a new Wayfarer.": "%s이(가) 돌아왔다. 새 나그네와 유대를 맺었다.",
+  "%s feels the bond with its new Wayfarer. Unfurl it into %s now? You can furl it back later.": "%s이(가) 새 나그네와의 유대를 느끼고 있다. 지금 %s(으)로 개화할까? 나중에 다시 접을 수 있다.",
+  "Boatwoman Mabry: In Hookwick every boat has two owners. Some Spirlings like that too.": "뱃사람 Mabry: Hookwick에선 배마다 주인이 둘이야. 그걸 좋아하는 Spirling도 있지.",
+  "Boatwoman Mabry: Let me own yours for a moment, then it's yours again. Once, mind you.": "뱃사람 Mabry: 잠깐만 내 것이 되게 해 줘. 그다음엔 다시 네 거야. 단, 한 번뿐이야.",
+  "Boatwoman Mabry: Two owners is plenty. Three is a quarrel. Trade with your friends now.": "뱃사람 Mabry: 주인은 둘이면 충분해. 셋이면 싸움이 나. 이제 친구들이랑 교환해.",
+  "Courier Pell: A new Wayfarer's hand does that. Trade with me once and I'll hand yours right back.": "배달꾼 Pell: 새 나그네의 손길이 그렇게 만들어. 나랑 한 번 교환하면 바로 돌려줄게.",
+  "Courier Pell: I carry letters and, now and then, a Spirling. Some of them come back changed.": "배달꾼 Pell: 편지를 나르고, 가끔은 Spirling도 날라. 그중엔 달라져서 돌아오는 애도 있지.",
+  "Courier Pell: My route is full. Trade with your friends now, they carry farther than I do.": "배달꾼 Pell: 내 배달은 꽉 찼어. 이제 친구들이랑 교환해. 나보다 멀리 날라 줄 거야.",
+  "Ferrywoman Oona: One trade is all I keep in me. For the next one, find a friend who travels.": "뱃사공 Oona: 교환은 한 번이면 충분해. 다음엔 여행하는 친구를 찾아봐.",
+  "Ferrywoman Oona: Some Spirlings only unfurl when they bond with a new Wayfarer. A ferry teaches you that.": "뱃사공 Oona: 어떤 Spirling은 새 나그네와 유대를 맺어야만 개화해. 나룻배를 몰다 보면 알게 되지.",
+  "Ferrywoman Oona: Trade me one of yours. I'll trade it straight back, and it will have known two of us.": "뱃사공 Oona: 네 Spirling 하나를 나랑 교환해. 바로 다시 돌려줄게. 그럼 그 애는 나그네를 둘이나 알게 되는 거야.",
+  "It has to hold %s during the trade.": "교환하는 동안 %s을(를) 지니고 있어야 한다.",
+  "Needs: a bond with a new Wayfarer (a trade)": "필요: 새 나그네와의 유대 (교환)",
+  "Needs: a bond with a new Wayfarer (a trade) while holding %s": "필요: %s을(를) 지닌 채 새 나그네와의 유대 (교환)",
+  "None of your Spirlings would unfurl from a trade. Come back with one that would.": "교환으로 개화할 Spirling이 없다. 그런 Spirling을 데리고 다시 와.",
+  "Smith Hesketh: A blade changes in the quench. Some Spirlings change when they change hands.": "대장장이 Hesketh: 칼날은 담금질에서 변해. 손이 바뀌면 변하는 Spirling도 있지.",
+  "Smith Hesketh: Hand me one, and I'll hand it back. One trade, then I go back to my anvil.": "대장장이 Hesketh: 하나 건네주면 다시 돌려주지. 교환은 한 번, 그다음엔 모루로 돌아간다.",
+  "Smith Hesketh: We traded once. The anvil is waiting, and so are your friends.": "대장장이 Hesketh: 우린 이미 한 번 교환했지. 모루가 기다리고, 네 친구들도 기다려.",
+  "Some Spirlings unfurl when they bond with a new Wayfarer. A few of them must hold a certain Keepsake during the trade; that Keepsake may stay on and goes with them. Town Wayfarers in Brindlewick, Corvane Quay, Cinderfold and Hookwick trade once each, too.": "어떤 Spirling은 새 나그네와 유대를 맺으면 개화한다. 그중 몇몇은 교환하는 동안 특정 애장품을 지니고 있어야 한다. 그 애장품은 빼지 않아도 되고 함께 건너간다. Brindlewick, Corvane Quay, Cinderfold, Hookwick의 마을 나그네도 각각 한 번씩 교환해 준다.",
+  "Trade %s and take it back? This Wayfarer trades only once.": "%s을(를) 교환하고 다시 받을까? 이 나그네는 한 번만 교환해 준다.",
+  "Trade which Spirling? You get it back at once.": "어떤 Spirling을 교환할까? 바로 돌아온다.",
+  "Trade with Hesketh": "Hesketh와 교환",
+  "Trade with Mabry": "Mabry와 교환",
+  "Trade with Oona": "Oona와 교환",
+  "Trade with Pell": "Pell과 교환",
+  "Unfurls when it bonds with a new Wayfarer while holding %s.": "%s을(를) 지닌 채 새 나그네와 유대를 맺으면 개화한다.",
+  "Unfurls when it bonds with a new Wayfarer.": "새 나그네와 유대를 맺으면 개화한다."
+ }
+}

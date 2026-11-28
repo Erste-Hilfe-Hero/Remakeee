@@ -1,0 +1,59 @@
+{
+ "_comment": "Town Wayfarers who trade once with the player (TradeBond, Overworld action bond_trade, 1.3.2). Their trade counts as a bond with a new Wayfarer, so lines with a bond path can unfurl offline too.",
+ "brindlewick": {
+  "lines": [
+   "Ferrywoman Oona: Some Spirlings only unfurl when they bond with a new Wayfarer. A ferry teaches you that.",
+   "Ferrywoman Oona: Trade me one of yours. I'll trade it straight back, and it will have known two of us."
+  ],
+  "choices": [
+   {"text": "Trade with Oona", "action": "bond_trade brindlewick", "if": {"not_flag": "bond_trade_brindlewick"}},
+   {"text": "Not now", "if": {"not_flag": "bond_trade_brindlewick"}}
+  ],
+  "after_flag": {
+   "flag": "bond_trade_brindlewick",
+   "lines": ["Ferrywoman Oona: One trade is all I keep in me. For the next one, find a friend who travels."]
+  }
+ },
+ "corvane_quay": {
+  "lines": [
+   "Courier Pell: I carry letters and, now and then, a Spirling. Some of them come back changed.",
+   "Courier Pell: A new Wayfarer's hand does that. Trade with me once and I'll hand yours right back."
+  ],
+  "choices": [
+   {"text": "Trade with Pell", "action": "bond_trade corvane_quay", "if": {"not_flag": "bond_trade_corvane_quay"}},
+   {"text": "Not now", "if": {"not_flag": "bond_trade_corvane_quay"}}
+  ],
+  "after_flag": {
+   "flag": "bond_trade_corvane_quay",
+   "lines": ["Courier Pell: My route is full. Trade with your friends now, they carry farther than I do."]
+  }
+ },
+ "cinderfold": {
+  "lines": [
+   "Smith Hesketh: A blade changes in the quench. Some Spirlings change when they change hands.",
+   "Smith Hesketh: Hand me one, and I'll hand it back. One trade, then I go back to my anvil."
+  ],
+  "choices": [
+   {"text": "Trade with Hesketh", "action": "bond_trade cinderfold", "if": {"not_flag": "bond_trade_cinderfold"}},
+   {"text": "Not now", "if": {"not_flag": "bond_trade_cinderfold"}}
+  ],
+  "after_flag": {
+   "flag": "bond_trade_cinderfold",
+   "lines": ["Smith Hesketh: We traded once. The anvil is waiting, and so are your friends."]
+  }
+ },
+ "hookwick": {
+  "lines": [
+   "Boatwoman Mabry: In Hookwick every boat has two owners. Some Spirlings like that too.",
+   "Boatwoman Mabry: Let me own yours for a moment, then it's yours again. Once, mind you."
+  ],
+  "choices": [
+   {"text": "Trade with Mabry", "action": "bond_trade hookwick", "if": {"not_flag": "bond_trade_hookwick"}},
+   {"text": "Not now", "if": {"not_flag": "bond_trade_hookwick"}}
+  ],
+  "after_flag": {
+   "flag": "bond_trade_hookwick",
+   "lines": ["Boatwoman Mabry: Two owners is plenty. Three is a quarrel. Trade with your friends now."]
+  }
+ }
+}

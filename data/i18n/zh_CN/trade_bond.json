@@ -1,0 +1,32 @@
+{
+ "_comment": "Translations of the German table trade_bond, written by tools/i18n/locales_trade_bond.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s comes back to you. It has bonded with a new Wayfarer.": "%s回到了你身边。它和新的旅人结下了羁绊。",
+  "%s feels the bond with its new Wayfarer. Unfurl it into %s now? You can furl it back later.": "%s感受到了与新旅人的羁绊。现在就舒展成%s吗？之后还可以收拢。",
+  "Boatwoman Mabry: In Hookwick every boat has two owners. Some Spirlings like that too.": "船娘Mabry：在Hookwick，每条船都有两个主人。有些Spirling也喜欢这样。",
+  "Boatwoman Mabry: Let me own yours for a moment, then it's yours again. Once, mind you.": "船娘Mabry：让它归我一会儿，然后它又是你的了。只此一次，记住了。",
+  "Boatwoman Mabry: Two owners is plenty. Three is a quarrel. Trade with your friends now.": "船娘Mabry：两个主人就够了，三个就要吵架了。现在和你的好友交换吧。",
+  "Courier Pell: A new Wayfarer's hand does that. Trade with me once and I'll hand yours right back.": "信差Pell：是新旅人的手让它们变的。和我交换一次，我马上把你的还给你。",
+  "Courier Pell: I carry letters and, now and then, a Spirling. Some of them come back changed.": "信差Pell：我送信，偶尔也送Spirling。有些回来时变了样。",
+  "Courier Pell: My route is full. Trade with your friends now, they carry farther than I do.": "信差Pell：我的路线排满了。现在和你的好友交换吧，他们能送得比我更远。",
+  "Ferrywoman Oona: One trade is all I keep in me. For the next one, find a friend who travels.": "摆渡人Oona：我只换这一次。下一次，去找个也在旅行的好友吧。",
+  "Ferrywoman Oona: Some Spirlings only unfurl when they bond with a new Wayfarer. A ferry teaches you that.": "摆渡人Oona：有些Spirling只有和新的旅人结下羁绊才会舒展。在渡船上待久了就懂了。",
+  "Ferrywoman Oona: Trade me one of yours. I'll trade it straight back, and it will have known two of us.": "摆渡人Oona：拿一只和我交换吧。我马上换回给你，这样它就认识我们两个人了。",
+  "It has to hold %s during the trade.": "交换时它必须带着%s。",
+  "Needs: a bond with a new Wayfarer (a trade)": "需要：与新旅人的羁绊（交换）",
+  "Needs: a bond with a new Wayfarer (a trade) while holding %s": "需要：带着%s与新旅人结下羁绊（交换）",
+  "None of your Spirlings would unfurl from a trade. Come back with one that would.": "你的Spirling里没有能靠交换舒展的。带上一只再来吧。",
+  "Smith Hesketh: A blade changes in the quench. Some Spirlings change when they change hands.": "铁匠Hesketh：刀刃在淬火中变化。有些Spirling换了主人的手也会变化。",
+  "Smith Hesketh: Hand me one, and I'll hand it back. One trade, then I go back to my anvil.": "铁匠Hesketh：递给我一只，我再还给你。只换一次，然后我回我的铁砧去。",
+  "Smith Hesketh: We traded once. The anvil is waiting, and so are your friends.": "铁匠Hesketh：我们已经换过一次了。铁砧在等着，你的好友们也在等。",
+  "Some Spirlings unfurl when they bond with a new Wayfarer. A few of them must hold a certain Keepsake during the trade; that Keepsake may stay on and goes with them. Town Wayfarers in Brindlewick, Corvane Quay, Cinderfold and Hookwick trade once each, too.": "有些Spirling和新的旅人结下羁绊时会舒展。其中几只在交换时必须带着特定的信物；那件信物可以留在身上，随它一起过去。Brindlewick、Corvane Quay、Cinderfold和Hookwick的镇上旅人也各会交换一次。",
+  "Trade %s and take it back? This Wayfarer trades only once.": "要交换%s再换回来吗？这位旅人只交换一次。",
+  "Trade which Spirling? You get it back at once.": "要交换哪只Spirling？它会马上回到你身边。",
+  "Trade with Hesketh": "和Hesketh交换",
+  "Trade with Mabry": "和Mabry交换",
+  "Trade with Oona": "和Oona交换",
+  "Trade with Pell": "和Pell交换",
+  "Unfurls when it bonds with a new Wayfarer while holding %s.": "带着%s和新的旅人结下羁绊时会舒展。",
+  "Unfurls when it bonds with a new Wayfarer.": "和新的旅人结下羁绊时会舒展。"
+ }
+}
