@@ -3,7 +3,7 @@ extends RefCounted
 ## The store's own rating sheet (plan Chimora 100, items 74-75): iOS AppStore.requestReview through
 ## ChimoraStoreKit, Android Play In-App Review through ChimoraReview (plugins/chimora_review).
 ## Asked straight after a won Warden, rival or boss battle, a sealed Rift or a great bond (a first
-## legend, Gleam or ancient kind, 1.3.2), never in battle, never
+## legend, Gleam or ancient kind, 1.3.2), never in battle, never for a kids_locked account, never
 ## in the first 10 minutes of the first session, once per app version, at most 3 times in 365 days.
 ## No own question before it and nothing given for a rating (App Review Guideline 5.6.1, Play policy):
 ## the store sheet itself is all the player sees, and the store may still decide not to show it.
@@ -62,9 +62,10 @@ static func note_session(st: Dictionary, now: int) -> void:
 	st["sessions"] = int(st.get("sessions", 0)) + 1
 	st["session_start"] = now
 
-## Whether the store sheet may be asked for now.
-static func may_ask(st: Dictionary, now: int, version: String, in_battle: bool) -> bool:
-	if in_battle:
+## Whether the store sheet may be asked for now. [param kids_locked]: an account under 13
+## (Billing.kids_locked) is never asked.
+static func may_ask(st: Dictionary, now: int, version: String, in_battle: bool, kids_locked: bool = false) -> bool:
+	if in_battle or kids_locked:
 		return false
 	if int(st.get("sessions", 0)) <= 1 and now - int(st.get("session_start", now)) < FIRST_SESSION_SECONDS:
 		return false
@@ -101,7 +102,7 @@ static func after_win(highlight: bool, plugin: Object = null) -> bool:
 		return false
 	_load()
 	var now: int = int(Time.get_unix_time_from_system())
-	if not may_ask(state, now, Online.CLIENT_VERSION_NAME, Online.in_battle):
+	if not may_ask(state, now, Online.CLIENT_VERSION_NAME, Online.in_battle, Billing.kids_locked()):
 		return false
 	var p: Object = plugin if plugin != null else store_plugin()
 	if p == null or not p.has_method("request_review"):
