@@ -7,7 +7,7 @@ func after_each() -> void:
 	Loc.set_language("en")
 
 func _all_quests() -> Array:
-	return QuestLog.main_goals() + QuestLog.side_goals()
+	return QuestLog.main_goals() + QuestLog.tale_goals() + QuestLog.side_goals()
 
 func test_every_quest_where_maps_to_a_world_map_place() -> void:
 	var places: Dictionary = WorldAtlas.places()
@@ -137,3 +137,30 @@ func test_book_rows_are_translated_with_progress() -> void:
 	var row: Dictionary = PauseMenu.quest_book_rows(QuestLog.MAIN, f)[0]
 	assert_eq(str(row.text), "1/3  " + Loc.t(str(QuestLog.find("rifts").text)))
 	assert_ne(Loc.t(str(QuestLog.find("rifts").text)), str(QuestLog.find("rifts").text))
+
+func test_region_tales_sit_under_the_main_goal_and_move_to_done() -> void:
+	var first: Dictionary = QuestLog.tale_goals("vellmarch")[0]
+	var second: Dictionary = QuestLog.tale_goals("vellmarch")[1]
+	var f: Dictionary = {}
+	assert_eq(QuestLog.state(first, f), "hidden", "shut before the region opens")
+	f[str(first.opens)] = true
+	var main: Array[Dictionary] = QuestLog.book(QuestLog.MAIN, f)
+	assert_eq(main[0], QuestLog.current(f), "the main goal stays on top")
+	assert_true(main.has(first))
+	for flag: Variant in first.done:
+		f[str(flag)] = true
+	assert_eq(QuestLog.state(first, f), QuestLog.DONE)
+	assert_true(QuestLog.book(QuestLog.DONE, f).has(first))
+	assert_true(QuestLog.book(QuestLog.MAIN, f).has(second))
+	var rows: Array[Dictionary] = PauseMenu.quest_book_rows(QuestLog.MAIN, f)
+	assert_true(rows.any(func(r: Dictionary) -> bool: return r.get("quest") == second.id and r.get("icon") != null))
+
+func test_where_next_on_a_tale_leads_line_doors_and_map_alike() -> void:
+	var g: Dictionary = QuestLog.tale_goals("vellmarch")[0]
+	var f: Dictionary = {str(g.opens): true}
+	QuestLog.tracked = str(g.id)
+	var place: String = QuestLog.target_place(g, f)
+	assert_false(place.is_empty())
+	assert_eq(QuestLog.goal_maps(f), [QuestLog.target_map(g, f)] as Array[String])
+	assert_string_contains(QuestLog.hud_text(f), QuestLog.place_name(place))
+	assert_true(place in QuestLog.open_places(f, {place: WorldAtlas.Known.VISITED}))

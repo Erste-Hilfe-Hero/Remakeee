@@ -94,10 +94,47 @@ static func side_goals_done(flags: Dictionary) -> bool:
 			return false
 	return true
 
+## Region tales after the story ("post", docs/STORY.md "Region tales"): the goals of
+## [param region] in order, or every tale goal for "".
+static func tale_goals(region: String = "") -> Array:
+	return (data().get("post", []) as Array).filter(func(g: Dictionary) -> bool: return region.is_empty() or str(g.get("region", "")) == region)
+
+## The regions with a tale, in play order.
+static func tale_regions() -> Array[String]:
+	var out: Array[String] = []
+	for g: Dictionary in tale_goals():
+		if not str(g.region) in out:
+			out.append(str(g.region))
+	return out
+
+## True once the last goal of [param region]'s tale is done.
+static func tale_done(region: String, flags: Dictionary) -> bool:
+	var goals: Array = tale_goals(region)
+	return not goals.is_empty() and _own_done(goals[-1], flags)
+
+## The current goal of [param region]'s tale (same rule as the main story: done when its own
+## flags are set or a later goal is done), {} while the region is shut or once the tale is done.
+static func tale_goal(region: String, flags: Dictionary) -> Dictionary:
+	var goals: Array = tale_goals(region)
+	if goals.is_empty() or tale_done(region, flags) or not bool(flags.get(str(goals[0].get("opens", "")), false)):
+		return {}
+	for i: int in range(goals.size() - 1, -1, -1):
+		if _own_done(goals[i], flags):
+			return goals[i + 1]
+	return goals[0]
+
+## The tale goal to show: the first open region whose tale is not done yet, or {}.
+static func tale_current(flags: Dictionary) -> Dictionary:
+	for r: String in tale_regions():
+		var g: Dictionary = tale_goal(r, flags)
+		if not g.is_empty():
+			return g
+	return {}
+
 ## Every flag the quest file depends on (the data test checks each one can be set in game).
 static func all_flags() -> Array[String]:
 	var out: Array[String] = []
-	for g: Variant in main_goals():
+	for g: Variant in main_goals() + tale_goals():
 		for f: Variant in (g as Dictionary).get("done", []):
 			out.append(str(f))
 	for g: Variant in data().get("side", []):
@@ -140,6 +177,12 @@ static func summary(flags: Dictionary) -> String:
 	lines.append(goal_text(g, flags))
 	if not str(g.get("where", "")).is_empty():
 		lines.append("Where: %s" % g.where)
+	var tale: Dictionary = tale_current(flags)
+	if not tale.is_empty():
+		lines.append("")
+		lines.append(str(tale.act))
+		lines.append(goal_text(tale, flags))
+		lines.append("Where: %s" % tale.where)
 	var side: Array[Dictionary] = open_side_goals(flags)
 	if not side.is_empty():
 		lines.append("")
@@ -254,15 +297,29 @@ static func side_goals() -> Array:
 static func is_main(goal: Dictionary) -> bool:
 	return main_goals().has(goal)
 
-## The quest with [param id], main or side ({} when there is none).
+## True for a goal of a region tale after the story ("post").
+static func is_tale(goal: Dictionary) -> bool:
+	return tale_goals().has(goal)
+
+## The quest with [param id], main, tale or side ({} when there is none).
 static func find(id: String) -> Dictionary:
-	for g: Variant in main_goals() + side_goals():
+	for g: Variant in main_goals() + tale_goals() + side_goals():
 		if str((g as Dictionary).get("id", "")) == id:
 			return g
 	return {}
 
-## "open", "done" or "hidden" (a main goal not reached yet, a side goal not shown yet).
+## "open", "done" or "hidden" (a main or tale goal not reached yet, a side goal not shown yet).
 static func state(goal: Dictionary, flags: Dictionary) -> String:
+	if is_tale(goal):
+		var region: String = str(goal.get("region", ""))
+		var goals: Array = tale_goals(region)
+		if tale_done(region, flags):
+			return DONE
+		var now: Dictionary = tale_goal(region, flags)
+		if now.is_empty():
+			return "hidden"
+		var i: int = goals.find(goal)
+		return DONE if i < goals.find(now) else ("open" if goal == now else "hidden")
 	if is_main(goal):
 		var i: int = main_goals().find(goal)
 		var now: int = current_index(flags)
@@ -275,8 +332,9 @@ static func state(goal: Dictionary, flags: Dictionary) -> String:
 
 ## Steps done and steps in all, e.g. (3, 6); (0, 0) for a quest with a single step.
 static func progress(goal: Dictionary, flags: Dictionary) -> Vector2i:
-	var steps: Array = goal.get("done", []) if is_main(goal) else goal.get("progress", [])
-	var stages: Array = [] if is_main(goal) else goal.get("stages", [])
+	var story: bool = is_main(goal) or is_tale(goal)
+	var steps: Array = goal.get("done", []) if story else goal.get("progress", [])
+	var stages: Array = [] if story else goal.get("stages", [])
 	var all: int = steps.size() if steps.size() > 1 or stages.is_empty() else stages.size()
 	if all <= 1:
 		return Vector2i.ZERO
@@ -290,8 +348,8 @@ static func progress(goal: Dictionary, flags: Dictionary) -> Vector2i:
 		have = clampi(GameState.story_var(stage_var(goal)), 0, all - 1)
 	return Vector2i(have, all)
 
-## Quests of one Quest Book tab: Main is the current main goal, Side the open side goals,
-## Done every finished quest, the latest main goal first. New entries of data/quests.json
+## Quests of one Quest Book tab: Main is the current main goal and then the goal of each open
+## region tale, Side the open side goals, Done every finished quest, the latest main goal first. New entries of data/quests.json
 ## (daily, post-story) land in their tab by their flags alone.
 static func book(tab: String, flags: Dictionary) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
@@ -300,12 +358,18 @@ static func book(tab: String, flags: Dictionary) -> Array[Dictionary]:
 			var g: Dictionary = current(flags)
 			if not g.is_empty() and state(g, flags) == "open":
 				out.append(g)
+			for r: String in tale_regions():
+				var t: Dictionary = tale_goal(r, flags)
+				if not t.is_empty():
+					out.append(t)
 		SIDE:
 			out = open_side_goals(flags)
 		DONE:
 			var mains: Array = main_goals().duplicate()
 			mains.reverse()
-			for g: Variant in mains + side_goals():
+			var tales: Array = tale_goals().duplicate()
+			tales.reverse()
+			for g: Variant in mains + tales + side_goals():
 				if state(g, flags) == DONE:
 					out.append(g)
 	return out
@@ -319,7 +383,7 @@ static func tracked_goal(flags: Dictionary) -> Dictionary:
 
 ## The current place text of a quest (the current step's first).
 static func where_of(goal: Dictionary) -> String:
-	return str(goal.get("where", "")) if is_main(goal) else side_where(goal)
+	return side_where(goal) if goal.has("show") else str(goal.get("where", ""))
 
 static var _names: Dictionary = {}
 
@@ -358,12 +422,12 @@ static func map_for_where(where: String) -> String:
 
 ## The map a quest leads to now: its own "map", a main goal's next "goto", else its "where".
 static func target_map(goal: Dictionary, flags: Dictionary) -> String:
-	var step: Dictionary = {} if is_main(goal) else side_step(goal)
+	var step: Dictionary = side_step(goal) if goal.has("show") else {}
 	if step.has("map"):
 		return str(step.map)
 	if goal.has("map") and step.is_empty():
 		return str(goal.map)
-	if is_main(goal) and goal.has("goto"):
+	if goal.has("goto"):
 		var go: Array = goal.goto
 		var need: Array = goal.get("done", [])
 		for i: int in go.size():

@@ -8,10 +8,10 @@ LANGS = ["ja", "fr", "it", "es", "ko", "zh_CN", "zh_TW", "pt_BR", "ru", "pl", "t
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 R = {
-"Quest Book": ["依頼の書", "Carnet de quêtes", "Libro delle missioni", "Libro de misiones", "의뢰 수첩", "任务簿", "任務簿",
+"Quest Book": ["目標の書", "Carnet de quêtes", "Libro delle missioni", "Libro de misiones", "의뢰 수첩", "任务簿", "任務簿",
     "Livro de missões", "Книга заданий", "Księga zadań", "Görev Defteri", "Opdrachtenboek"],
 "Main, side and done quests, and where to go next.": [
-    "メイン、寄り道、達成した依頼と、次の行き先。",
+    "メイン、寄り道、達成した目標と、次の行き先。",
     "Quêtes principales, annexes et terminées, et où aller ensuite.",
     "Missioni principali, secondarie e completate, e dove andare dopo.",
     "Misiones principales, secundarias y completadas, y adónde ir después.",
@@ -25,16 +25,16 @@ R = {
     "Hoofd-, zij- en voltooide opdrachten, en waar je nu heen moet."],
 "Where next?": ["次はどこへ?", "Et ensuite ?", "E adesso dove?", "¿Adónde ahora?", "다음은 어디로?", "下一步去哪？", "下一步去哪？",
     "Para onde agora?", "Куда дальше?", "Dokąd teraz?", "Sırada neresi?", "Waar nu heen?"],
-"No quests here yet.": ["ここにはまだ依頼がない。", "Aucune quête ici pour l'instant.", "Ancora nessuna missione qui.",
+"No quests here yet.": ["ここにはまだ目標がない。", "Aucune quête ici pour l'instant.", "Ancora nessuna missione qui.",
     "Aún no hay misiones aquí.", "아직 여기엔 의뢰가 없다.", "这里还没有任务。", "這裡還沒有任務。", "Ainda não há missões aqui.",
     "Здесь пока нет заданий.", "Na razie brak zadań.", "Burada henüz görev yok.", "Hier zijn nog geen opdrachten."],
 "Main": ["メイン", "Principales", "Principali", "Principales", "메인", "主线", "主線", "Principais", "Основные", "Główne", "Ana", "Hoofd"],
 "Side": ["寄り道", "Annexes", "Secondarie", "Secundarias", "서브", "支线", "支線", "Secundárias", "Побочные", "Poboczne", "Yan", "Zij"],
 "To %s": ["{0}へ", "Vers %s", "Verso %s", "Hacia %s", "{0}(으)로", "前往{0}", "前往{0}", "Para %s", "В %s", "Do %s", "{0} yönüne", "Naar %s"],
-"Quest goal: %s": ["依頼の目的地: {0}", "But de la quête : %s", "Meta della missione: %s", "Destino de la misión: %s",
+"Quest goal: %s": ["目標の行き先: {0}", "But de la quête : %s", "Meta della missione: %s", "Destino de la misión: %s",
     "의뢰 목적지: {0}", "任务目的地：{0}", "任務目的地：{0}", "Destino da missão: %s", "Цель задания: %s",
     "Cel zadania: %s", "Görev hedefi: {0}", "Doel van de opdracht: %s"],
-"Goal line follows this.": ["目標の行はこの依頼を示す。", "La ligne d'objectif suit cette quête.", "La riga obiettivo segue questa missione.",
+"Goal line follows this.": ["目標の行はこれを示す。", "La ligne d'objectif suit cette quête.", "La riga obiettivo segue questa missione.",
     "La línea de objetivo sigue esta misión.", "목표 줄이 이 의뢰를 따른다.", "目标栏正在追踪此任务。", "目標欄正在追蹤此任務。",
     "A linha de objetivo segue esta missão.", "Строка цели следит за этим заданием.", "Linia celu śledzi to zadanie.",
     "Hedef satırı bu görevi izliyor.", "De doelregel volgt deze opdracht."],

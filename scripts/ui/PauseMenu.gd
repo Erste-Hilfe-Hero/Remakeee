@@ -422,7 +422,7 @@ static func quest_book_rows(tab: String, flags: Dictionary) -> Array[Dictionary]
 	var rows: Array[Dictionary] = []
 	var follow: Dictionary = QuestLog.tracked_goal(flags)
 	for g: Dictionary in QuestLog.book(tab, flags):
-		var step: Dictionary = {} if QuestLog.is_main(g) else QuestLog.side_step(g)
+		var step: Dictionary = QuestLog.side_step(g) if g.has("show") else {}
 		var text: String = Loc.t(str(step.get("text", g.get("text", ""))))
 		# Progress in front, so a long text cut at the row's end never hides it.
 		var pr: Vector2i = QuestLog.progress(g, flags)
@@ -435,11 +435,13 @@ static func quest_book_rows(tab: String, flags: Dictionary) -> Array[Dictionary]
 		var lines: PackedStringArray = []
 		if QuestLog.is_main(g) and not str(g.get("chapter", "")).is_empty():
 			lines.append(Loc.t(str(g.chapter)))
+		elif QuestLog.is_tale(g):
+			lines.append(Loc.t(str(g.get("act", ""))))
 		lines.append(text)
 		if not where.is_empty():
 			lines.append(Loc.f("Where: %s", Loc.t(where)))
 		var row: Dictionary = {"text": text, "hint": hint, "quest": str(g.get("id", "")), "detail": "\n".join(lines)}
-		if QuestLog.is_main(g) and tab == QuestLog.MAIN:
+		if tab == QuestLog.MAIN and (QuestLog.is_main(g) or QuestLog.is_tale(g)):
 			row["icon"] = goal_mark()
 		rows.append(row)
 	if rows.is_empty():
@@ -498,6 +500,11 @@ static func goal_rows(flags: Dictionary, daily: Variant = null, newcomer: Varian
 		rows.append({"text": QuestLog.goal_text(g, flags), "icon": goal_mark(),
 			"hint": Loc.t("Where: %s" % where) if not where.is_empty() else "",
 			"detail": "\n".join(lines)})
+	# The region tale in play after the story (docs/STORY.md "Region tales").
+	var tale: Dictionary = QuestLog.tale_current(flags)
+	if not tale.is_empty():
+		rows.append({"text": QuestLog.goal_text(tale, flags), "icon": goal_mark(), "hint": Loc.t("Where: %s" % tale.where),
+			"detail": "\n".join([str(tale.act), QuestLog.goal_text(tale, flags), "Where: %s" % tale.where])})
 	# New players get a self-ticking "First steps" list right under the main goal (item 1995).
 	if FirstSteps.shows(flags, GameState.is_newcomer() if newcomer == null else bool(newcomer)):
 		rows.append(FirstSteps.row(flags))
