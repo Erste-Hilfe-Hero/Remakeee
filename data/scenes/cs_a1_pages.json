@@ -23,12 +23,12 @@
    "time": 0.6
   },
   {
-   "wait": 1.6
+   "wait": 3.6
   },
   {
    "say": [
-    "The lamp turns. Its beam crosses the paper, once, twice.",
-    "Line meets line. A dotted path runs north, past Crowcrest."
+    "The lamp turns. Its beam sweeps the paper.",
+    "Line meets line. A path runs north."
    ]
   },
   {

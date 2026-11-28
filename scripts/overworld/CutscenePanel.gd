@@ -22,6 +22,8 @@ const CADENCE: Dictionary[int, float] = {1: 2.0, 2: 4.0, 3: 12.0}
 ## Share of the screen height the picture takes, from the top of the safe area.
 const PICTURE_SHARE: float = 0.56
 const MARGIN: float = 6.0
+## Room above the picture for the Skip button and the corner icons (times the UI scale).
+const TOP_CLEAR: float = 14.0
 
 var era: int = 1
 var motif: String = "pages"
@@ -63,7 +65,7 @@ func progress() -> float:
 func picture_rect() -> Rect2:
 	var vp: Vector2 = size
 	var safe: Rect2 = SafeArea.rect(vp) if is_inside_tree() else Rect2(Vector2.ZERO, vp)
-	var top: float = safe.position.y + MARGIN
+	var top: float = safe.position.y + MARGIN + TOP_CLEAR * EraMomentLayer.ui_scale(vp.x)
 	return Rect2(Vector2(safe.position.x + MARGIN, top), Vector2(safe.size.x - MARGIN * 2.0, floorf(safe.size.y * PICTURE_SHARE)))
 
 func _draw() -> void:
@@ -83,6 +85,12 @@ func _draw() -> void:
 	var call: Callable = Callable(self, "_m_" + motif)
 	if call.is_valid():
 		call.call(r, u, c, progress())
+	# Landscapes may reach past their rect (clouds, beams): the frame is the edge of the picture.
+	var ink: Color = col("ink")
+	draw_rect(Rect2(0, 0, size.x, outer.position.y), ink)
+	draw_rect(Rect2(0, outer.end.y, size.x, size.y - outer.end.y), ink)
+	draw_rect(Rect2(0, outer.position.y, outer.position.x, outer.size.y), ink)
+	draw_rect(Rect2(outer.end.x, outer.position.y, size.x - outer.end.x, outer.size.y), ink)
 
 func col(key: String) -> Color:
 	return EraMoments.col(era, key)
@@ -205,10 +213,9 @@ func _m_seal(r: Rect2, u: float, c: float, p: float) -> void:
 	draw_arc(mid, ring, 0.0, TAU, 24, col("accent"), maxf(2.0 * u, 1.0))
 	draw_circle(mid, 4.0 * u, col("sun"))
 
-## Desert of Solenne: low sun over the dunes, the clay domes of Ochrewell.
+## Desert of Solenne: sand over the lake, dunes under the era's sky.
 func _dunes(r: Rect2, u: float) -> float:
 	var ground: float = _ground(r)
-	draw_circle(Vector2(r.position.x + r.size.x * 0.75, ground - 8.0 * u), 12.0 * u, col("sun"))
 	draw_rect(Rect2(r.position.x, ground, r.size.x, r.end.y - ground), col("shore"))
 	var pts := PackedVector2Array([Vector2(r.position.x, ground + 4.0 * u)])
 	for i: int in 9:
@@ -217,6 +224,7 @@ func _dunes(r: Rect2, u: float) -> float:
 	draw_colored_polygon(pts, col("accent"))
 	return ground
 
+## Ochrewell: clay domes on the sand, a Wayfarer on the road.
 func _m_dunes(r: Rect2, u: float, c: float, p: float) -> void:
 	var ground: float = _dunes(r, u)
 	for i: int in 3:

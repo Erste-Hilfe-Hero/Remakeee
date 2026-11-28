@@ -50,6 +50,8 @@ var _emote: Label
 var _panel: CutscenePanel
 var _iris: SceneIris
 var _era: int = 0
+## The minimap's visibility before a panel hid it.
+var _minimap_was: bool = false
 var _hold_ms: int = -1
 var _tap_cut: bool = false
 
@@ -215,13 +217,10 @@ func _cleanup() -> void:
 		_skip_button.queue_free()
 	if _emote != null:
 		_emote.queue_free()
-	if _panel != null:
-		_panel.queue_free()
-		_panel = null
+	_take_panel()
 	if _iris != null:
 		_iris.queue_free()
 		_iris = null
-	overworld.scene_panel_on = false
 	overworld.scene_pan = Vector2.ZERO
 	# A skipped scene never leaves the screen faded out.
 	if skipping:
@@ -388,10 +387,7 @@ func _iris_step(step: Dictionary) -> void:
 
 ## "panel": shows a picture drawn in code under the fade and the text box, or takes it away.
 func _panel_step(step: Dictionary) -> void:
-	if _panel != null:
-		_panel.queue_free()
-		_panel = null
-	overworld.scene_panel_on = false
+	_take_panel()
 	var motif: String = str(step.panel)
 	if motif == "off" or skipping or not CutscenePanel.known(motif):
 		return
@@ -400,6 +396,18 @@ func _panel_step(step: Dictionary) -> void:
 	fade.get_parent().add_child(_panel)
 	fade.get_parent().move_child(_panel, fade.get_index())
 	overworld.scene_panel_on = true
+	# The minimap sits in the panel's corner; it comes back with the map.
+	_minimap_was = overworld.minimap.visible
+	overworld.minimap.visible = false
+
+## Removes the panel and gives the map its minimap back.
+func _take_panel() -> void:
+	if _panel == null:
+		return
+	_panel.queue_free()
+	_panel = null
+	overworld.scene_panel_on = false
+	overworld.minimap.visible = _minimap_was
 
 ## The panel on screen (tests, shots), else null.
 func panel() -> CutscenePanel:

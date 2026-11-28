@@ -15,12 +15,12 @@
    "time": 0.6
   },
   {
-   "wait": 2.4
+   "wait": 4.4
   },
   {
    "say": [
-    "You turn the pages: Veydal, Corvane, Ashmere, Solenne.",
-    "On every page, a small compass rose in the corner."
+    "You turn the pages, one land at a time.",
+    "Each page has a small compass rose."
    ]
   },
   {

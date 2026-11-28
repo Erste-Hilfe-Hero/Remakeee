@@ -15,12 +15,12 @@
    "time": 0.6
   },
   {
-   "wait": 2.0
+   "wait": 5.0
   },
   {
    "say": [
-    "That evening the lamp burns as always. Nobody needs it to.",
-    "On the dock, Aldo hums an old lullaby, a little off key."
+    "The lamp burns that evening, as always.",
+    "Aldo hums an old lullaby, off key."
    ]
   },
   {

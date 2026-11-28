@@ -26,12 +26,12 @@
    "time": 0.6
   },
   {
-   "wait": 2.0
+   "wait": 4.0
   },
   {
    "say": [
-    "The sand road runs south until the heat bends the air.",
-    "At its end: clay domes around one deep well. Ochrewell."
+    "The sand road runs south into the heat.",
+    "Clay domes around one deep well. Ochrewell."
    ]
   },
   {

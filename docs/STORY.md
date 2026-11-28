@@ -491,6 +491,10 @@ the text on and cuts a wait, pan or iris short; Skip or a held press (`HOLD_SKIP
 the whole cut-scene and the host scene goes on. With reduced motion the camera jumps instead of
 panning, the iris is a plain fade and the panel stands finished.
 
+The test measures every box in the map's own 144 px text box: at most two rows in English and
+German (about 44 characters with the larger talk font, less than the 60 of the style rule above),
+one page with no page break in the other languages.
+
 | Act | Cut-scene | Host | Panel |
 | --- | --- | --- | --- |
 | I | `cs_a1_pages` | `mirela_lamp` | the pages join under the beam |

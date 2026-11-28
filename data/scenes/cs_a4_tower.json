@@ -29,12 +29,12 @@
    "time": 0.6
   },
   {
-   "wait": 2.0
+   "wait": 4.0
   },
   {
    "say": [
-    "Sand hisses against the Tower Rift. The wind never rests.",
-    "High above, a shutter bangs open, then shut again."
+    "Sand hisses on the Tower Rift.",
+    "High above, a shutter bangs open and shut."
    ]
   },
   {

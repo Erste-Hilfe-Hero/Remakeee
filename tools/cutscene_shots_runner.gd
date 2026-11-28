@@ -65,6 +65,7 @@ func _scene(id: String, map_id: String) -> void:
 		if done[0]:
 			break
 		if box._waiting:
+			print("rows %d: %s" % [box._label.get_line_count(), box._label.text.replace("\n", " ")])
 			# The panel's first box (or the second box of a scene without a panel).
 			if not shot and (sp.panel() != null or (id == "cs_a1_cast_off" and ow.scene_pan != Vector2.ZERO)):
 				await _frames(20)

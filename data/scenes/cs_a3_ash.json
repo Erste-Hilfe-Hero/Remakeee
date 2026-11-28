@@ -15,12 +15,12 @@
    "time": 0.6
   },
   {
-   "wait": 2.0
+   "wait": 5.0
   },
   {
    "say": [
-    "The mountain railway climbs the last bend into Ashmere.",
-    "Outside, nothing moves. Not the trees, not the birds."
+    "The railway climbs into Ashmere.",
+    "Nothing moves. Not trees, not birds."
    ]
   },
   {

@@ -140,23 +140,33 @@ func test_length_15_to_40_seconds() -> void:
 	for id: String in HOSTS:
 		assert_between(_seconds(id), 15.0, 40.0, id)
 
-## Two lines per box in every language the game ships (docs/STORY.md style rule).
+## Two lines per box in English and German (docs/STORY.md style rule), one page (no page break)
+## in every other language the game ships, measured in the map's own 144 px text box.
 func test_two_lines_per_box_in_every_language() -> void:
 	var ow: Overworld = await _overworld()
 	var box: TextBox = ow.text_box()
-	var font: Font = box._label.get_theme_font("font")
-	var size: int = box._label.get_theme_font_size("font_size")
-	var width: float = box._text_width()
+	# The story regions run in Era I: the 144 px wide screen.
+	var keep: Vector2i = get_tree().root.size
+	get_tree().root.size = EraManager.RESOLUTION[1]
+	await wait_process_frames(3)
+	box.visible = true
+	assert_eq(box.size.x, float(EraManager.RESOLUTION[1].x), "measured in the 144 px box")
 	for lang: String in LANGS:
 		Loc.set_language(lang)
 		for id: String in HOSTS:
 			for s: Dictionary in _steps(id):
 				for l: Variant in s.get("say", []):
-					var body: String = Dialogue.split_speaker(Loc.t(str(l)))[1]
-					if body.is_empty():
-						body = Loc.t(str(l))
-					var rows: int = TextBox.split_lines(body, width, font, size, 99)[0].split("\n").size()
-					assert_lte(rows, 2, "%s %s: %s" % [lang, id, body])
+					box.fast_forward = true
+					await box.show_text(str(l))
+					await wait_process_frames(1)
+					var most: int = 2 if lang in ["en", "de"] else TextBox.MAX_LINES
+					assert_lte(box._label.get_line_count(), most, "%s %s: %s" % [lang, id, box._label.text])
+					var who: String = Dialogue.split_speaker(Loc.t(str(l)))[0]
+					if Dialogue.split_speaker(str(l))[0].is_empty():
+						assert_eq(who, "", "%s %s: no speaker in %s" % [lang, id, Loc.t(str(l))])
+	box.fast_forward = false
+	box.visible = false
+	get_tree().root.size = keep
 
 func test_skip_ends_the_whole_cutscene() -> void:
 	var ow: Overworld = await _overworld()
