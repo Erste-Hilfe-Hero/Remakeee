@@ -51,7 +51,8 @@ func _fit_column() -> void:
 	var col: Rect2 = SafeArea.column(vp)
 	_panel.offset_left = col.position.x + 4.0
 	_panel.offset_right = -(vp.x - col.end.x) - 4.0
-	_panel.offset_top = col.position.y + 4.0
+	# A note still sliding in (Juice.enter) keeps the pixels it has left to go.
+	_panel.offset_top = col.position.y + 4.0 + Juice.shift_of(_panel).y
 
 ## Queues a note; [param icon] may be null. Each note rings [param sound] as it shows, a quiet
 ## two-note chime by default (item 2512); "" for none.
