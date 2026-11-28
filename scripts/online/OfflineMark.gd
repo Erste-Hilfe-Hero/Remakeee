@@ -56,6 +56,8 @@ func update_view(offline_for: float) -> void:
 		return
 	_closing = false
 	visible = true
+	# Drawn when it shows: hidden at start it has nothing drawn yet, and the era's inks may change.
+	mark.queue_redraw()
 	mark.modulate.a = 0.0
 	Juice.tween(mark, "modulate:a", MARK_ALPHA, "fade", FADE_TIME)
 

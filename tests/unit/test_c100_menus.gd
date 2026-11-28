@@ -170,14 +170,13 @@ func test_connection_mark_keeps_off_the_back_button() -> void:
 	add_child_autofree(m)
 	await wait_process_frames(1)
 	m.pick_strings("List", ["One", "Two"] as Array[String])
-	var o := ReconnectOverlay.new()
+	var o := OfflineMark.new()
 	add_child_autofree(o)
-	o.show_overlay()
-	o.update_view(1, 2.0, 1.0)
+	o.update_view(OfflineMark.SHOW_AFTER)
 	await wait_process_frames(4)
-	assert_true(o._mark.visible)
+	assert_true(o.mark.is_visible_in_tree())
 	var back: Rect2 = m.picker.back_button().get_global_rect()
-	assert_false(o._mark.get_global_rect().intersects(back), "the mark does not cover Back")
+	assert_false(o.mark.get_global_rect().intersects(back), "the mark does not cover Back")
 	m.picker.picked.emit(-1)
 
 func test_offline_shows_no_false_zeros() -> void:

@@ -24,44 +24,53 @@ func _run() -> void:
 	Online.state = Online.State.OFFLINE
 	Online.revs = {}
 	Online.dirty = {}
-	Online.privacy_seen = false
-	# Terms accepted before (an older start), so the privacy note of the offline start shows.
+	Online.privacy_seen = true
 	GameState.terms_version = LegalInfo.TERMS_VERSION
-	# Title without a connection: the list offers Start offline.
-	var title: Node = load("res://scenes/ui/Title.tscn").instantiate()
+	# Title without a connection: no question, the list and one quiet line.
+	var title: TitleScreen = load("res://scenes/ui/Title.tscn").instantiate()
 	get_tree().root.add_child(title)
 	get_tree().current_scene = title
-	var menu: MenuHost = title.get("_menu")
-	await _until(func() -> bool: return menu._info_panel.visible or menu.picker.visible)
-	if menu._info_panel.visible:
-		await _shot("no_connection_text")
-		menu._close_info()
-		await _until(func() -> bool: return menu.picker.visible)
-	await _shot("no_connection")
-	menu.picker.picked.emit(2)
-	# The short privacy note comes before the journey, as online.
-	await _until(func() -> bool: return menu._info_panel.visible)
-	await _shot("privacy_note")
-	menu._close_info()
-	await _until(func() -> bool: return menu.picker.visible and Online.offline_play)
+	await _until(func() -> bool: return title._at_root and title._menu.picker.visible)
 	await _shot("title_offline")
 	title.queue_free()
 	await _frames(2)
-	# New Game offline: the prologue runs without the reconnect screen.
-	GameState.new_game(GameState.Difficulty.TAMER, "Rowan", 0, "")
+	# A journey without a connection: the world plays, the small mark sits at the top.
+	GameState.new_game(GameState.Difficulty.TAMER, "Rowan", 0, "Kindlop")
 	SaveManager.start_fresh_slot()
+	for f: String in ["got_starter", "aldo_gift", Overworld.FIRST_WALK_FLAG]:
+		GameState.set_flag(f)
+	GameState.current_map = "brindlewick"
+	GameState.player_cell = Vector2i(5, 4)
 	GameState.in_game = true
-	var ow: Node = load("res://scenes/overworld/Overworld.tscn").instantiate()
+	var ow: Overworld = load("res://scenes/overworld/Overworld.tscn").instantiate()
 	get_tree().root.add_child(ow)
 	get_tree().current_scene = ow
-	await _frames(240)
-	await _shot("prologue_offline")
-	# The prologue's save point: from here a missing connection pauses as always.
-	Online.offline_save_point()
-	Online._offline_for = ReconnectOverlay.SHORT_DROP
-	await _frames(40)
-	await _shot("after_save_point")
+	await _frames(600)
+	await _shot("world_offline_mark")
+	# The parts that need the server: one short line each.
+	var menu := PauseMenu.new()
+	(ow.get("_ui") as Node).add_child(menu)
+	await _frames(2)
+	ShopMenu.run(menu)
+	await _until(func() -> bool: return _info_open(menu))
+	await _shot("shop_needs_internet")
+	_close(menu)
+	await _frames(10)
+	LeagueMenu.run(menu)
+	await _until(func() -> bool: return _info_open(menu))
+	await _shot("league_needs_internet")
+	_close(menu)
 	get_tree().quit()
+
+func _live(m: MenuHost) -> MenuHost:
+	var v: Node = m.get_node_or_null("shop_zoom")
+	return v.get_child(0).get_child(0) as MenuHost if v != null else m
+
+func _info_open(m: MenuHost) -> bool:
+	return _live(m)._info_panel.visible
+
+func _close(m: MenuHost) -> void:
+	_live(m)._close_info()
 
 func _until(cond: Callable, max_frames: int = 1200) -> void:
 	for i: int in max_frames:
@@ -79,6 +88,9 @@ func _shot(name: String) -> void:
 	await RenderingServer.frame_post_draw
 	var img: Image = get_tree().root.get_texture().get_image()
 	var size: Vector2i = DisplayServer.window_get_size()
+	# The pixel view at the phone's size, as it shows on screen.
+	if img.get_size() != size:
+		img.resize(size.x, size.y, Image.INTERPOLATE_NEAREST)
 	var path: String = "%s/%02d_%s_%s_%dx%d.png" % [out, _n, name, lang, size.x, size.y]
 	img.save_png(path)
 	print("saved ", path)

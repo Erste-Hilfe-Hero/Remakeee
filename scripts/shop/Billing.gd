@@ -379,7 +379,8 @@ static func cache_sign(ent: Dictionary) -> String:
 
 ## Writes the entitlements of [member state] (after every shop_state from the server).
 func save_cache(path: String = CACHE_PATH) -> void:
-	var ent: Dictionary = entitlements(state, int(Time.get_unix_time_from_system()))
+	# Signed as it will read back (JSON turns whole numbers into floats).
+	var ent: Variant = JSON.parse_string(JSON.stringify(entitlements(state, int(Time.get_unix_time_from_system()))))
 	var f := FileAccess.open(path, FileAccess.WRITE)
 	if f != null:
 		f.store_string(JSON.stringify({"ent": ent, "sig": cache_sign(ent)}))
