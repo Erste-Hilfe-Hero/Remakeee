@@ -5,6 +5,8 @@ extends CanvasLayer
 
 const SHOW_TIME: float = 2.4
 const LAYER: int = 90
+## How far a note slides in from above, in pixels.
+const SLIDE_PX: float = 8.0
 
 var _panel: PanelContainer
 var _icon: TextureRect
@@ -68,14 +70,15 @@ func _run() -> void:
 		_label.text = Loc.t(str(n.text))
 		_icon.texture = n.icon
 		_icon.visible = n.icon != null
-		_panel.modulate.a = 1.0
+		Juice.finish(_panel)
 		_panel.visible = true
+		# Slides down from the top edge and leaves the same way (docs/FLOW.md); there at once
+		# and gone at once under reduced motion.
+		Juice.enter(_panel, Vector2(0, -SLIDE_PX), "open")
 		if not str(n.sound).is_empty():
 			Sound.sfx(str(n.sound))
 		await get_tree().create_timer(SHOW_TIME).timeout
-		if not GameState.reduce_motion:
-			var tw: Tween = create_tween()
-			tw.tween_property(_panel, "modulate:a", 0.0, 0.25)
-			await tw.finished
-		_panel.visible = false
+		var out: Tween = Juice.leave(_panel, Vector2(0, -SLIDE_PX))
+		if out != null:
+			await out.finished
 	_busy = false

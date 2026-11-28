@@ -1066,3 +1066,7 @@ func set_enabled(on: bool) -> void:
 		rows.append_array(_move_buttons)
 		rows.append_array([_swap, _item, _bond, _run])
 		Juice.stagger(rows, 0.02)
+	elif not was:
+		# Eras I to IV: the orders fade in (four hard steps in Eras I and II) instead of
+		# popping in; they take a press from the first frame (docs/FLOW.md).
+		Juice.enter(_content, Vector2.ZERO, "fade")
