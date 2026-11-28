@@ -4,7 +4,10 @@ extends Node
 ##   Juice.pop(node)                              1.0 -> 1.15 -> 1.0 confirm bounce
 ##   Juice.add_trauma(Juice.TRAUMA_HIT)           screen shake on the registered ShakeRoot
 ##   await Juice.hitstop(0.4)                     short freeze after a hit (share of HP lost)
+##   Juice.enter(panel, Vector2(0, 4))            arrives: fades in over the last few pixels
+##   Juice.leave(panel)                           fades out without making anyone wait
 ## Every helper respects reduced motion through Juice.reduced(), the only place that reads it.
+## Eras I and II move in steps (Juice.stepped()): fades in four hard levels, slides in 2 px.
 
 ## Fixed curves: transition, easing and duration in seconds (item 2226).
 const CURVES: Dictionary = {
@@ -18,6 +21,16 @@ const CURVES: Dictionary = {
 }
 ## Under reduced motion no movement tween runs longer than this (item 2655).
 const REDUCED_MAX_TIME: float = 0.15
+
+## Eras up to this one show motion in steps, like their look (docs/FLOW.md).
+const STEPPED_ERA_MAX: int = 2
+## A stepped fade has this many levels above zero: 1/3, 2/3, full.
+const STEP_LEVELS: int = 3
+## A stepped slide moves this many pixels at a time.
+const STEP_PX: int = 2
+## Press squash (docs/FLOW.md): a held button is this much smaller, reached in SQUASH_TIME.
+const SQUASH_SCALE: Vector2 = Vector2(0.97, 0.9)
+const SQUASH_TIME: float = 0.05
 
 ## Pop: scale up in POP_UP_TIME, then settle back (item 2228).
 const POP_SCALE: float = 1.15
@@ -86,6 +99,18 @@ func _ready() -> void:
 func reduced() -> bool:
 	return GameState.reduce_motion
 
+## True while the active era shows motion in steps (Eras I and II) instead of smooth easing.
+func stepped() -> bool:
+	return EraManager.active_era() <= STEPPED_ERA_MAX
+
+## [param a] on the nearest of the four fade levels of a stepped era.
+static func step_alpha(a: float) -> float:
+	return roundf(clampf(a, 0.0, 1.0) * STEP_LEVELS) / STEP_LEVELS
+
+## [param v] on the 2 px grid of a stepped era.
+static func step_px(v: Vector2) -> Vector2:
+	return (v / STEP_PX).round() * STEP_PX
+
 ## Playback speed: the battle speed inside a battle, 1 everywhere else (item 2230).
 func speed() -> float:
 	return GameState.battle_speed_scale() if in_battle else 1.0
@@ -119,7 +144,12 @@ func tween(node: Node, prop: String, value: Variant, curve: String = "move", tim
 	_running[key] = tw
 	tw.finished.connect(func() -> void: _running.erase(key))
 	var from: Variant = node.get_indexed(prop)
-	if value is Vector2 and (prop.begins_with("position") or prop == "offset"):
+	if value is float and prop.ends_with(":a") and stepped():
+		# Eras I and II fade in four hard levels; the last step lands on the exact value.
+		tw.tween_method(func(v: float) -> void: node.set_indexed(prop, step_alpha(v)), from, value, dur) \
+			.set_trans(c.trans).set_ease(c.ease)
+		tw.tween_callback(func() -> void: node.set_indexed(prop, value))
+	elif value is Vector2 and (prop.begins_with("position") or prop == "offset"):
 		tw.tween_method(func(v: Vector2) -> void: node.set_indexed(prop, v.round()), from, value, dur) \
 			.set_trans(c.trans).set_ease(c.ease)
 	else:
@@ -131,6 +161,113 @@ func tween(node: Node, prop: String, value: Variant, curve: String = "move", tim
 func shaped(tweener: Variant, curve: String = "move") -> Variant:
 	var c: Dictionary = CURVES.get(curve, CURVES["move"])
 	return tweener.set_trans(c.trans).set_ease(c.ease)
+
+## Lets [param node] arrive (docs/FLOW.md): it fades in from [param from_alpha] and, with
+## [param from], slides the last pixels to where it stands now. Fire and forget: the node takes
+## input from the first frame and nothing waits for the tween. Returns null under reduced
+## motion or outside the tree, where the node is simply there. A second call, [method leave]
+## or [method finish] ends a running arrival first.
+func enter(node: CanvasItem, from: Vector2 = Vector2.ZERO, curve: String = "open", from_alpha: float = 0.0) -> Tween:
+	if node == null:
+		return null
+	finish(node)
+	node.modulate.a = 1.0
+	if reduced() or not node.is_inside_tree():
+		return null
+	var slides: bool = from != Vector2.ZERO and not node.get_parent() is Container
+	var hard: bool = stepped()
+	var step := func(k: float) -> void:
+		var a: float = lerpf(from_alpha, 1.0, clampf(k, 0.0, 1.0))
+		node.modulate.a = step_alpha(a) if hard else a
+		if slides:
+			var off: Vector2 = from * (1.0 - k)
+			_shift(node, step_px(off) if hard else off.round())
+	step.call(0.0)
+	return _flow(node, step, curve, {"hide": false, "free": false})
+
+## Lets [param node] go: it fades out with "close" (sliding by [param to] if given), then is
+## hidden, or freed with [param free]. Nobody waits for it; the node should already ignore
+## input. Under reduced motion it is hidden or freed at once.
+func leave(node: CanvasItem, to: Vector2 = Vector2.ZERO, free: bool = false) -> Tween:
+	if node == null:
+		return null
+	finish(node)
+	var end: Dictionary = {"hide": true, "free": free}
+	if reduced() or not node.is_inside_tree() or not node.visible:
+		_flow_end(node, end)
+		return null
+	var slides: bool = to != Vector2.ZERO and not node.get_parent() is Container
+	var hard: bool = stepped()
+	var a0: float = node.modulate.a
+	var step := func(k: float) -> void:
+		var a: float = a0 * (1.0 - k)
+		node.modulate.a = step_alpha(a) if hard else a
+		if slides:
+			_shift(node, step_px(to * k) if hard else (to * k).round())
+	return _flow(node, step, "close", end)
+
+## Ends a running [method enter] or [method leave] of [param node] at once, in its end state
+## (a press during a transition finishes it). Safe to call at any time.
+func finish(node: CanvasItem) -> void:
+	if node == null or not node.has_meta("flow_tween"):
+		return
+	var tw: Variant = node.get_meta("flow_tween")
+	if tw is Tween and (tw as Tween).is_valid():
+		(tw as Tween).kill()
+	_flow_done(node)
+
+## How far [param node] stands from its place right now while it slides (zero at rest), for
+## code that sets its offsets absolutely in the meantime.
+func shift_of(node: CanvasItem) -> Vector2:
+	return node.get_meta("flow_shift", Vector2.ZERO) if node != null else Vector2.ZERO
+
+## True while [param node] is arriving or leaving.
+func flowing(node: CanvasItem) -> bool:
+	return node != null and node.has_meta("flow_tween")
+
+func _flow(node: CanvasItem, step: Callable, curve: String, end: Dictionary) -> Tween:
+	var c: Dictionary = CURVES.get(curve, CURVES["open"])
+	var tw: Tween = node.create_tween()
+	tw.tween_method(step, 0.0, 1.0, duration(curve)).set_trans(c.trans).set_ease(c.ease)
+	tw.tween_callback(func() -> void: _flow_done(node))
+	node.set_meta("flow_tween", tw)
+	node.set_meta("flow_end", end)
+	return tw
+
+## Moves [param node] so that it stands [param off] pixels from its place, whatever it was
+## shifted by before. A Control is moved through its four offsets, so its size and anchors
+## stay as the layout set them; anything else through its position.
+func _shift(node: CanvasItem, off: Vector2) -> void:
+	var d: Vector2 = off - (node.get_meta("flow_shift", Vector2.ZERO) as Vector2)
+	if d == Vector2.ZERO:
+		return
+	node.set_meta("flow_shift", off)
+	if node is Control:
+		var c: Control = node
+		c.offset_left += d.x
+		c.offset_right += d.x
+		c.offset_top += d.y
+		c.offset_bottom += d.y
+	else:
+		node.set("position", (node.get("position") as Vector2) + d)
+
+func _flow_done(node: CanvasItem) -> void:
+	if not is_instance_valid(node) or not node.has_meta("flow_end"):
+		return
+	var end: Dictionary = node.get_meta("flow_end")
+	node.remove_meta("flow_tween")
+	node.remove_meta("flow_end")
+	_flow_end(node, end)
+
+func _flow_end(node: CanvasItem, end: Dictionary) -> void:
+	_shift(node, Vector2.ZERO)
+	node.remove_meta("flow_shift")
+	if bool(end.free):
+		node.queue_free()
+		return
+	if bool(end.hide):
+		node.visible = false
+	node.modulate.a = 1.0
 
 ## Confirm bounce: scale 1.0 -> 1.15 in 0.06 s, then back with "settle". Awaitable.
 func pop(node: Control) -> void:
@@ -160,13 +297,25 @@ func count_to(label: Label, from: int, to: int, time: float = 0.5, fmt: String =
 		label.text = fmt % n, float(from), float(to), time / speed()).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	await tw.finished
 
-## Buttons pop when released (item 2415); the 1 px sink while held comes from the theme's
-## "pressed" style (UITheme). Safe to call more than once.
+## Buttons squash a little while held and pop when released (item 2415, docs/FLOW.md); the
+## 1 px sink while held comes from the theme's "pressed" style (UITheme). Eras I and II keep
+## the sink alone while held, their buttons do not bend. Safe to call more than once.
 func press_feedback(b: Control) -> void:
 	if b == null or not b is BaseButton or b.has_meta("juice_press"):
 		return
 	b.set_meta("juice_press", true)
+	(b as BaseButton).button_down.connect(func() -> void: squash(b))
+	# A button hidden while held gets no release; it must not stay squashed.
+	b.hidden.connect(func() -> void: b.scale = Vector2.ONE)
 	(b as BaseButton).button_up.connect(func() -> void: pop(b))
+
+## The held half of the press: [param node] shrinks to SQUASH_SCALE in 0.05 s. [method pop]
+## springs it back. Nothing under reduced motion or in a stepped era.
+func squash(node: Control) -> void:
+	if node == null or reduced() or stepped():
+		return
+	node.pivot_offset = node.size / 2.0
+	tween(node, "scale", SQUASH_SCALE, "impact", SQUASH_TIME)
 
 ## Short push of [param px] (1 to 3) pixels towards [param dir], springing back in 0.1 s
 ## (item 2235). Does nothing under reduced motion. Awaitable.
@@ -198,8 +347,11 @@ func stagger(nodes: Array, gap: float = STAGGER_GAP) -> void:
 		n.modulate.a = 0.0
 		last = n.create_tween()
 		last.tween_interval(i * gap / speed())
-		last.tween_property(n, "modulate:a", 1.0, STAGGER_FADE / speed()) \
-			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		if stepped():
+			last.tween_method(func(v: float) -> void: n.modulate.a = step_alpha(v), 0.0, 1.0, STAGGER_FADE / speed())
+		else:
+			last.tween_property(n, "modulate:a", 1.0, STAGGER_FADE / speed()) \
+				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	if last != null:
 		await last.finished
 

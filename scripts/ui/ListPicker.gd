@@ -138,6 +138,7 @@ func _ready() -> void:
 	_back.accessibility_name = "Back"
 	_back.draw.connect(_draw_back_arrow)
 	_back.pressed.connect(func() -> void: _on_row(-1))
+	Juice.press_feedback(_back)
 	head.add_child(_back)
 	_tab_row = HBoxContainer.new()
 	_tab_row.add_theme_constant_override("separation", 1)
@@ -237,6 +238,7 @@ func back_button() -> Button:
 func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, focus: int = -1,
 		guard_ms: int = TAP_GUARD_MS, tabs: Array[String] = [], tab: int = 0) -> int:
 	_title.text = title
+	var tab_turn: bool = visible == false and not tabs.is_empty() and tabs == _tabs and tab != _tab and _same_frame()
 	_set_tabs(tabs, tab)
 	_cancellable = cancellable
 	# The player's tap guard (KAMPF_PLAN_1000 item 908) lengthens it, never shortens it.
@@ -258,6 +260,9 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	_sliders.clear()
 	_hint.visible = false
 	for b: Button in _buttons:
+		# Hidden at once: until they are freed at the end of the frame the old rows would
+		# still count in the layout and the new list would start scrolled past them.
+		b.visible = false
 		b.queue_free()
 	_buttons.clear()
 	var rows: Array[Dictionary] = entries.duplicate()
@@ -358,8 +363,14 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	_opened_ms = Time.get_ticks_msec()
 	_press_pos = Vector2(NAN, NAN)
 	_press_ms = -1
-	if not visible:
-		fade_in()
+	# A changed value shows the same list again in the same frame: no fade, or every tap on
+	# a setting would flash the whole list (docs/FLOW.md).
+	var dir: int = flow_dir(title)
+	if not visible and not (dir == 0 and _same_frame()):
+		fade_in(dir)
+	elif tab_turn:
+		# Another tab of the same list: the frame and the tabs stay, the rows fade in.
+		Juice.enter(_scroll, Vector2.ZERO, "fade", TAB_FADE_FROM)
 	visible = true
 	_title_key = title
 	var want: int = focus
@@ -371,6 +382,7 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	var index: int = await picked
 	_remembered_scroll[title] = _scroll.scroll_vertical
 	visible = false
+	_leave_ghost()
 	if index >= 0:
 		_remembered[title] = index
 	return index
@@ -513,16 +525,75 @@ func _restore_scroll_step(key: String, target_id: int, frames_left: int) -> void
 	_scroll.scroll_vertical = _remembered_scroll[key]
 	_show_whole_rows(target)
 
-## Starts the 80 ms fade-in; with Reduce motion the list is there at once.
-func fade_in() -> void:
+## Starts the 80 ms fade-in; with Reduce motion the list is there at once. A list that follows
+## another one (docs/FLOW.md) also slides the last pixels in: from the right going deeper, from
+## the left going back ([param dir] 1 or -1). Eras I and II do both in hard steps (Juice).
+func fade_in(dir: int = 0) -> void:
 	if _fade != null and _fade.is_valid():
 		_fade.kill()
-	if GameState.reduce_motion or not is_inside_tree():
-		modulate.a = 1.0
+	_fade = Juice.enter(self, Vector2(dir * (FLOW_PX_STEPPED if Juice.stepped() else FLOW_PX), 0), "fade")
+	# The fade keeps its own 80 ms; "fade" only names the easing.
+	if _fade != null:
+		_fade.set_speed_scale(Juice.duration("fade") / FADE_IN)
+
+## How far a following list slides in, in pixels (4 in the stepped eras: two 2 px steps).
+## Rows of a newly picked tab start their fade at this share.
+const TAB_FADE_FROM: float = 0.34
+const FLOW_PX: float = 8.0
+const FLOW_PX_STEPPED: float = 4.0
+## Titles of the lists open above each other, oldest first: a title already in it means the
+## player came back to that list.
+var _trail: Array[String] = []
+## Frame and time the list was last hidden in; -1 before the first list.
+var _hidden_frame: int = -1
+var _hidden_ms: int = -1
+## A list that opens this soon after the last one closed belongs to the same menu.
+const FLOW_FOLLOW_MS: int = 250
+var _ghost: Panel
+
+## Where the list titled [param title] lies from the one shown before: 1 deeper, -1 back,
+## 0 the same list again (a changed value) or a fresh menu. Keeps the trail.
+func flow_dir(title: String) -> int:
+	var follows: bool = _hidden_ms >= 0 and Time.get_ticks_msec() - _hidden_ms <= FLOW_FOLLOW_MS
+	if not follows:
+		_trail = [title]
+		return 0
+	var at: int = _trail.rfind(title)
+	if at == _trail.size() - 1 and at >= 0:
+		return 0
+	if at >= 0:
+		_trail.resize(at + 1)
+		return -1
+	_trail.append(title)
+	return 1
+
+## True when this list was hidden earlier in the same frame: the same menu goes on.
+func _same_frame() -> bool:
+	return _hidden_frame == Engine.get_process_frames()
+
+## The list is hidden the moment a row is picked, so nothing waits. Its empty frame stays
+## behind for 0.12 s and fades (docs/FLOW.md): a following list fades in over it instead of
+## over the world, and a closing menu does not cut to nothing. Not under reduced motion.
+func _leave_ghost() -> void:
+	_hidden_frame = Engine.get_process_frames()
+	_hidden_ms = Time.get_ticks_msec()
+	Juice.finish(self)
+	if Juice.reduced() or not is_inside_tree() or get_parent() is Container or not get_parent() is Control:
 		return
-	modulate.a = 0.0
-	_fade = create_tween()
-	Juice.shaped(_fade.tween_property(self, "modulate:a", 1.0, FADE_IN), "fade")
+	if is_instance_valid(_ghost):
+		_ghost.queue_free()
+	_ghost = Panel.new()
+	_ghost.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_ghost.add_theme_stylebox_override("panel", get_theme_stylebox("panel"))
+	_ghost.position = position
+	_ghost.size = size
+	get_parent().add_child(_ghost)
+	get_parent().move_child(_ghost, get_index())
+	Juice.leave(_ghost, Vector2.ZERO, true)
+
+## The fading frame of the list closed last, or null (tests).
+func ghost() -> Panel:
+	return _ghost if is_instance_valid(_ghost) and not _ghost.is_queued_for_deletion() else null
 
 ## [param full] cut short with ".." so it ends before [param right] (and [param pad] pixels)
 ## at the right end of row [param b]. Bug sweep 2: shop rows of Eras I and II wrote the price
@@ -627,6 +698,8 @@ func _set_tabs(tabs: Array[String], tab: int) -> void:
 	_tabs = tabs
 	_tab = tab
 	for c: Node in _tab_row.get_children():
+		# Hidden at once, so old and new tabs never share the row for a frame.
+		(c as Control).visible = false
 		c.queue_free()
 	_tab_row.visible = not tabs.is_empty()
 	for i: int in tabs.size():
@@ -648,6 +721,7 @@ func _set_tabs(tabs: Array[String], tab: int) -> void:
 		if str(layout.get("cursor", "arrow")) != "arrow":
 			t.custom_minimum_size.y = int(layout.get("row_h", ROW_HEIGHT)) - 4
 		t.pressed.connect(func() -> void: _switch_tab(i))
+		Juice.press_feedback(t)
 		_tab_row.add_child(t)
 
 func _switch_tab(i: int) -> void:
@@ -1003,6 +1077,8 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 	if TapInput.is_press(event):
+		# A press while the list still arrives finishes the arrival (docs/FLOW.md).
+		Juice.finish(self)
 		_press_pos = TapInput.position(event)
 		_press_ms = Time.get_ticks_msec()
 	elif TapInput.is_release(event):
