@@ -134,6 +134,7 @@ func test_sold_at_merchants_for_coins_and_in_the_shop() -> void:
 		assert_gt(int(Database.item(id).get("price", 0)), 0, id)
 		assert_true(shops.contains(" " + id), "a merchant sells " + id)
 		assert_true(ShopCatalog.offer(id).is_empty(), "coin charms are no shop offers")
+		assert_eq(bool(Database.item(id).get("tradeable", false)), id == "kin_charm", "only the Kin Charm is tradeable (server trade_items seed): " + id)
 	for id: String in ["rg_charm_hush", "rg_charm_swiftleaf", "rg_charm_lantern", "rg_charm_firstlight"]:
 		var o: Dictionary = ShopCatalog.offer(id)
 		assert_true(bool(o.get("rg_only", false)), "single charms for Riftglass: " + id)
