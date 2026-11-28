@@ -1,4 +1,4 @@
-# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 11 natural start, 12 cutscenes, 13 post-story storylines and Quivermoor duels, 14 quest book, 15 offline play, 16 bond charms, 17 First Catch Pack, 18 daily rewards/tasks/Spirling of the day, 19 weekend weather events, 20 Spirlog rewards, 21 friend codes, 22 smoother menus.
+# REMOVE THIS LINE BEFORE UPLOAD. Still in progress, delete each bullet that misses 1.3.2: 12 natural start, 13 cutscenes, 14 post-story storylines and Quivermoor duels, 15 quest book, 16 offline play, 17 bond charms, 18 First Catch Pack, 19 daily rewards/tasks/Spirling of the day, 20 weekend weather events, 21 Spirlog rewards, 22 friend codes, 23 smoother menus.
 Chimora 1.3.2
 
 - Un negozio rifatto con testi più chiari: ogni pacchetto e ogni offerta dice con parole semplici cosa contiene e a cosa serve. Niente è casuale.
@@ -11,6 +11,7 @@ Chimora 1.3.2
 - Un'unica difficoltà per tutti che cresce atto dopo atto. Niente più scelta della difficoltà né limite di Rango.
 - Tante correzioni di errori.
 - I tocchi su Mio! ora vibrano leggermente (solo se la vibrazione è attiva nelle impostazioni).
+- Un'introduzione più bella all'inizio del gioco.
 - Un inizio naturale: giochi subito e la storia comincia quando incontri il tuo primo Spirling.
 - Scene della storia in ogni atto.
 - Le quattro regioni dopo la storia principale hanno ognuna una propria storia, con duelli a Quivermoor.

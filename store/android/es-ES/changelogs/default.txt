@@ -2,11 +2,11 @@
 - Tienda nueva, textos claros
 - 70 Spirlings, 5 Fulgores
 - Clima, 35 acertijos, secretos
-- Mejores mapas, dificultad que sube
-- ¡Mío! vibra, arreglos
+- Mejores mapas, dificultad gradual
+- ¡Mío! vibra, mejor intro
 - Juega ya, historia al 1er Spirling
 - Escenas por acto
-- Historias en 4 regiones finales, duelos en Quivermoor
+- Historia en 4 regiones finales, duelos en Quivermoor
 - Libro de misiones, ¿Adónde ahora?
 - Offline, sincroniza luego
 - Amuletos de vínculo
@@ -15,4 +15,4 @@
 - Clima de finde
 - Premios Spirlog
 - Códigos de amigo fáciles
-- Menús fluidos
+- Menús ágiles

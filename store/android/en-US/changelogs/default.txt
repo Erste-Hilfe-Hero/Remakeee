@@ -2,8 +2,8 @@
 - New shop, clear pack texts
 - 70 new Spirlings, 5 Gleam kinds
 - Weather, 35 puzzles, secrets
-- Better maps, one rising difficulty
-- Mine! vibrates, many fixes
+- Better maps, rising difficulty
+- Mine! vibrates, nicer intro, fixes
 - Play at once, story from 1st Spirling
 - Cutscenes each act
 - 4 late regions get stories, Quivermoor duels

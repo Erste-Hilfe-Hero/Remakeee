@@ -3,7 +3,7 @@
 - 70 Spirling, 5 Splendori
 - Meteo, 35 enigmi, segreti
 - Mappe migliori, difficoltà che sale
-- Mio! vibra, correzioni
+- Mio! vibra, intro nuova, correzioni
 - Giochi subito, storia dal 1° Spirling
 - Scene per atto
 - Storie nelle 4 regioni finali, duelli a Quivermoor
@@ -12,7 +12,7 @@
 - Talismani del legame
 - Pacchetto Prima Cattura
 - Premi, compiti, Spirling del giorno
-- Meteo del weekend
+- Meteo weekend
 - Premi Spirlog
 - Codici amico facili
 - Menu fluidi

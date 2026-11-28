@@ -2,8 +2,8 @@
 - Nieuwe winkel, duidelijke teksten
 - 70 Spirlings, 5 glansvormen
 - Weer, 35 puzzels, geheimen
-- Betere kaarten, stijgende moeilijkheid
-- Van mij! trilt, fixes
+- Betere kaarten, stijgend niveau
+- Van mij! trilt, nieuwe intro
 - Meteen spelen, verhaal bij 1e Spirling
 - Filmpjes per akte
 - Verhalen in 4 late regio's, duels in Quivermoor

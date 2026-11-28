@@ -2,8 +2,8 @@
 - Neuer Shop, klare Texte
 - 70 neue Spirlings, 5 Glanzarten
 - Wetter, 35 Rätsel, Geheimnisse
-- Bessere Karten, ein steigender Grad
-- Meins! vibriert, Korrekturen
+- Bessere Karten, steigender Grad
+- Meins! vibriert, neues Intro, Fixes
 - Sofort los, Story ab 1. Spirling
 - Filmszenen je Akt
 - 4 späte Regionen mit Story, Quivermoor-Duelle
@@ -13,6 +13,6 @@
 - Erster-Fang-Paket
 - Tagesbonus, Aufgaben, Spirling des Tages
 - Wochenend-Wetter
-- Spirlog-Belohnungen
+- Spirlog-Preise
 - Einfache Freundescodes
 - Flüssige Menüs

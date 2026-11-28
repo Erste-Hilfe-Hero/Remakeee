@@ -3,16 +3,16 @@
 - 70 Spirlingów, 5 Połysków
 - Pogoda, 35 zagadek, sekrety
 - Lepsze mapy, rosnąca trudność
-- Mój! wibruje, poprawki
+- Mój! wibruje, nowe intro, poprawki
 - Grasz od razu, fabuła od 1. Spirlinga
 - Przerywniki w aktach
 - Fabuły 4 późnych regionów, pojedynki w Quivermoor
 - Księga zadań, Dokąd teraz?
-- Gra offline, synchronizuje potem
+- Offline, synchronizacja potem
 - Amulety więzi
 - Pakiet Pierwszej Zdobyczy
 - Nagrody, zadania, Spirling dnia
 - Pogoda w weekend
-- Nagrody za Spirlog
+- Nagrody Spirlog
 - Prostsze kody znajomych
-- Płynniejsze menu
+- Płynne menu

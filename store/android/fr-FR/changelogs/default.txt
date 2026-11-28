@@ -1,17 +1,17 @@
 # DEL; WIP 6-17
-- Boutique refaite, textes clairs
+- Boutique neuve, textes clairs
 - 70 Spirlings, 5 Reflets
 - Météo, 35 énigmes, secrets
 - Cartes reliées, difficulté montante
-- C'est à moi! vibre, corrections
-- Jeu direct, histoire au 1er Spirling
+- C'est à moi! vibre, belle intro, correctifs
+- Jeu direct, récit au 1er Spirling
 - Cinématiques par acte
 - Récits de 4 régions finales, duels à Quivermoor
 - Carnet de quêtes, Où aller ?
 - Hors ligne, synchro après
 - Talismans de lien
 - Lot Première Prise
-- Récompenses, tâches, Spirling du jour
+- Cadeaux, tâches, Spirling du jour
 - Météo week-end
 - Prix Spirlog
 - Codes ami simples
