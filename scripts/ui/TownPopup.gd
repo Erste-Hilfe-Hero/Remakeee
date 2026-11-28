@@ -42,7 +42,15 @@ static func slide(banner: Label, style: String, show_it: bool) -> void:
 	banner.offset_top = TOP
 	banner.position.x = 0.0
 	banner.modulate = Color.WHITE
-	if style == "plain" or Juice.reduced() or not banner.is_inside_tree():
+	if Juice.reduced() or not banner.is_inside_tree():
+		return
+	if style == "plain":
+		# Era I: the plain panel does not move, it fades in and out in the era's hard steps
+		# instead of popping (docs/FLOW.md).
+		banner.modulate.a = 0.0 if show_it else 1.0
+		var fade: Tween = Juice.tween(banner, "modulate:a", 1.0 if show_it else 0.0, "fade" if show_it else "close")
+		banner.set_meta("popup_tween", fade)
+		await fade.finished
 		return
 	var tw: Tween = banner.create_tween()
 	banner.set_meta("popup_tween", tw)

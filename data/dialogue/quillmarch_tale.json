@@ -1,0 +1,145 @@
+{
+ "elva": {
+  "if": {
+   "not_flag": "v3t_elva"
+  },
+  "else": "quillmarch_tale/elva_after",
+  "lines": [
+   "Elva: Every map we print has one blank street.",
+   "Elva: Lampblack Lane. Same plate, same ink. Always white.",
+   "Elva: The press is fine. I took it apart twice.",
+   "Elva: Old Pennick set that lane by hand. He's in Rimeholt."
+  ],
+  "action": "set_flag v3t_elva"
+ },
+ "elva_after": [
+  "Elva: Pennick's in Rimeholt. Bring him a scarf."
+ ],
+ "lane": {
+  "if": {
+   "flag": [
+    "v3t_linnet",
+    "rift_v3_ledger_sealed"
+   ],
+   "not_flag": "v3t_anchor"
+  },
+  "else": "quillmarch_tale/lane_wait",
+  "lines": [
+   "Linnet: This is it. Lampblack Lane. Dab? It's all right.",
+   "A small Nibbet peers out of a gutter. Its mouth is all ink.",
+   "Its call is thin and smeared, like the Blot all over town.",
+   "Rift-born ones need an anchor bond. One person. Not a door.",
+   "Linnet: Then I'll be its person. Dab? Will you have me?",
+   "Dab licks Linnet's thumb instead of the street.",
+   "Behind them, the lane's cobbles turn dark with fresh ink."
+  ],
+  "action": "set_flag v3t_anchor"
+ },
+ "lane_after": [
+  "Linnet: Dab doesn't eat streets now. Only my lunch."
+ ],
+ "lane_wait": {
+  "if": {
+   "not_flag": "v3t_anchor"
+  },
+  "else": "quillmarch_tale/lane_after",
+  "lines": [
+   "Linnet: Dab won't come out. The ledgers are too loud."
+  ]
+ },
+ "linnet": {
+  "if": {
+   "flag": [
+    "v3t_pennick",
+    "rift_v3_rime_sealed"
+   ],
+   "not_flag": "v3t_linnet"
+  },
+  "else": "quillmarch_tale/linnet_wait",
+  "lines": [
+   "Linnet: You've come to seal Dab out. Like a Rift.",
+   "Linnet: Dab hides in the lane. It has no one but me.",
+   "Linnet: Mavet would bottle it. The Guild would bill it.",
+   "Linnet: Beat me first. Then maybe I'll listen."
+  ],
+  "action": "battle tale_linnet"
+ },
+ "linnet_after": [
+  "Linnet: Lampblack Lane. Come when the town is quiet."
+ ],
+ "linnet_defeat": [
+  "Linnet: Fine. You fight like you mean well.",
+  "Linnet: Pennick says Dab needs a person, not a door."
+ ],
+ "linnet_lose": [
+  "Linnet: Dab stays hidden. Go away."
+ ],
+ "linnet_wait": {
+  "if": {
+   "not_flag": "v3t_linnet"
+  },
+  "else": "quillmarch_tale/linnet_after",
+  "lines": [
+   "Linnet: Go away. I'm busy. Not hiding anything."
+  ]
+ },
+ "pennick": {
+  "if": {
+   "flag": [
+    "v3t_elva",
+    "rift_v3_bath_sealed"
+   ],
+   "not_flag": "v3t_pennick"
+  },
+  "else": "quillmarch_tale/pennick_wait",
+  "lines": [
+   "Pennick: Lampblack Lane? I set it fifty years back.",
+   "Pennick: The ink isn't fading. Something licks it off.",
+   "Pennick: A small Nibbet. No home side. Came through a Rift.",
+   "Pennick: It eats the lane so the thin place stays open.",
+   "Pennick: It wants to go back. It can't. It just smudges.",
+   "Pennick: Here we call that the Blot. It spreads from there.",
+   "Pennick: Young Linnet feeds it. Ledgerholm. Go gently."
+  ],
+  "action": "set_flag v3t_pennick"
+ },
+ "pennick_after": [
+  "Pennick: Linnet's in Ledgerholm. She bites. Nicely."
+ ],
+ "pennick_wait": {
+  "if": {
+   "not_flag": "v3t_pennick"
+  },
+  "else": "quillmarch_tale/pennick_after",
+  "lines": [
+   "Pennick: Too cold to talk. The bath fumes get in my bones."
+  ]
+ },
+ "print": {
+  "if": {
+   "flag": "quillmarch_done",
+   "not_flag": "v3t_done"
+  },
+  "else": "quillmarch_tale/print_wait",
+  "lines": [
+   "Elva: First full print in years. Lampblack Lane. Black.",
+   "Linnet brought Dab. It sits on the plate, good as gold.",
+   "Pennick: Fifty years. My lane's on the map again.",
+   "Under the press the Blot goes quiet. Nothing smudges.",
+   "Elva: Take this copy. Your name's in the corner, {name}."
+  ],
+  "action": "set_flag v3t_done"
+ },
+ "print_after": [
+  "Elva: Lampblack Lane, every print. I check every one."
+ ],
+ "print_wait": {
+  "if": {
+   "not_flag": "v3t_done"
+  },
+  "else": "quillmarch_tale/print_after",
+  "lines": [
+   "Elva: Not until the great press is mended. Then we print."
+  ]
+ }
+}

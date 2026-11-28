@@ -2619,6 +2619,27 @@
     "dialogue": "quivermoor/winchman_top",
     "sprite": "elder",
     "show_flag": "era4_finale_done"
+   },
+   {
+    "id": "tale_wilf",
+    "x": 5,
+    "y": 8,
+    "facing": "down",
+    "dialogue": "halcyra_tale/wilf",
+    "sprite": "ranger",
+    "color": "4a6a3a",
+    "show_flag": "v4t_selma"
+   },
+   {
+    "id": "tale_rhosyn_span",
+    "x": 7,
+    "y": 9,
+    "facing": "down",
+    "dialogue": "halcyra_tale/reel",
+    "sprite": "villager",
+    "color": "a06a3a",
+    "show_flag": "v4t_wilf",
+    "hide_flag": "v4t_reel"
    }
   ]
  },
@@ -2632,6 +2653,16 @@
     "dialogue": "quillmarch/boatman_top",
     "sprite": "elder",
     "show_flag": "era2_finale_done"
+   },
+   {
+    "id": "tale_ada_lamp",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "vellmarch_tale/lamp",
+    "sprite": "elder",
+    "color": "7a5a4a",
+    "show_flag": "v2t_drawn"
    }
   ]
  },
@@ -2643,5 +2674,256 @@
     "not_flag": "rift_tower_sealed"
    }
   }
+ },
+ "hookwick": {
+  "npcs": [
+   {
+    "id": "tale_nico",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "vellmarch_tale/nico",
+    "sprite": "villager",
+    "color": "5a7a9a",
+    "show_flag": "story_complete"
+   }
+  ]
+ },
+ "tallowmarket": {
+  "npcs": [
+   {
+    "id": "tale_ada",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "vellmarch_tale/ada",
+    "sprite": "elder",
+    "color": "7a5a4a",
+    "show_flag": "v2t_nico",
+    "hide_flag": "v2t_drawn"
+   }
+  ]
+ },
+ "larkspur_heights": {
+  "npcs": [
+   {
+    "id": "tale_merrit",
+    "x": 6,
+    "y": 8,
+    "facing": "down",
+    "dialogue": "vellmarch_tale/merrit",
+    "sprite": "ranger",
+    "color": "6a3a6a",
+    "show_flag": "v2t_ada"
+   }
+  ]
+ },
+ "platewick": {
+  "npcs": [
+   {
+    "id": "tale_elva",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "quillmarch_tale/elva",
+    "sprite": "villager",
+    "color": "3a4a6a",
+    "show_flag": "era2_finale_done"
+   },
+   {
+    "id": "tale_linnet_lane",
+    "x": 4,
+    "y": 14,
+    "facing": "right",
+    "dialogue": "quillmarch_tale/lane",
+    "sprite": "villager",
+    "color": "8a4a3a",
+    "show_flag": "v3t_linnet"
+   }
+  ]
+ },
+ "rimeholt": {
+  "npcs": [
+   {
+    "id": "tale_pennick",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "quillmarch_tale/pennick",
+    "sprite": "elder",
+    "color": "5a5a5a",
+    "show_flag": "v3t_elva"
+   }
+  ]
+ },
+ "ledgerholm": {
+  "npcs": [
+   {
+    "id": "tale_linnet",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "quillmarch_tale/linnet",
+    "sprite": "villager",
+    "color": "8a4a3a",
+    "show_flag": "v3t_pennick",
+    "hide_flag": "v3t_linnet"
+   }
+  ]
+ },
+ "proofgate": {
+  "npcs": [
+   {
+    "id": "tale_elva_print",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "quillmarch_tale/print",
+    "sprite": "villager",
+    "color": "3a4a6a",
+    "show_flag": "v3t_anchor"
+   }
+  ]
+ },
+ "brightledge": {
+  "npcs": [
+   {
+    "id": "tale_rhosyn",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "halcyra_tale/rhosyn",
+    "sprite": "villager",
+    "color": "a06a3a",
+    "show_flag": "era3_finale_done",
+    "hide_flag": "v4t_wilf"
+   }
+  ]
+ },
+ "paleshore": {
+  "npcs": [
+   {
+    "id": "tale_selma",
+    "x": 6,
+    "y": 9,
+    "facing": "down",
+    "dialogue": "halcyra_tale/selma",
+    "sprite": "elder",
+    "color": "8a8a7a",
+    "show_flag": "v4t_rhosyn"
+   }
+  ]
+ },
+ "gildcrest": {
+  "npcs": [
+   {
+    "id": "tale_rhosyn_feast",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "halcyra_tale/feast",
+    "sprite": "villager",
+    "color": "a06a3a",
+    "show_flag": "v4t_reel"
+   }
+  ]
+ },
+ "mossgate": {
+  "npcs": [
+   {
+    "id": "tale_alvhild",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "quivermoor_tale/alvhild",
+    "sprite": "ranger",
+    "color": "8a6a2a",
+    "show_flag": "era4_finale_done"
+   }
+  ]
+ },
+ "tallowmere": {
+  "npcs": [
+   {
+    "id": "tale_gisle",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "quivermoor_tale/gisle",
+    "sprite": "ranger",
+    "color": "6a4a2a",
+    "show_flag": "v5t_alvhild"
+   }
+  ]
+ },
+ "rootchapel": {
+  "npcs": [
+   {
+    "id": "tale_hjordis",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "quivermoor_tale/hjordis",
+    "sprite": "ranger",
+    "color": "4a6a4a",
+    "show_flag": "v5t_alvhild"
+   }
+  ]
+ },
+ "driftwick": {
+  "npcs": [
+   {
+    "id": "tale_ingrun",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "quivermoor_tale/ingrun",
+    "sprite": "ranger",
+    "color": "3a5a7a",
+    "show_flag": "v5t_alvhild"
+   }
+  ]
+ },
+ "heaving_fields": {
+  "npcs": [
+   {
+    "id": "tale_ketil",
+    "x": 6,
+    "y": 12,
+    "facing": "down",
+    "dialogue": "quivermoor_tale/ketil",
+    "sprite": "ranger",
+    "color": "6a5a3a",
+    "show_flag": "v5t_alvhild"
+   }
+  ]
+ },
+ "gloamwater": {
+  "npcs": [
+   {
+    "id": "tale_oddny",
+    "x": 6,
+    "y": 12,
+    "facing": "down",
+    "dialogue": "quivermoor_tale/oddny",
+    "sprite": "ranger",
+    "color": "4a3a5a",
+    "show_flag": "v5t_alvhild"
+   }
+  ]
+ },
+ "lastbloom": {
+  "npcs": [
+   {
+    "id": "tale_aslak",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "quivermoor_tale/aslak",
+    "sprite": "elder",
+    "color": "5a4a3a",
+    "show_flag": "v5t_oddny"
+   }
+  ]
  }
 }
