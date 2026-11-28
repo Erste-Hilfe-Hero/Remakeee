@@ -61,7 +61,8 @@ func _build() -> void:
 	# Tools of the era (EraMenus "dex"): the area map from Era II, the cry button and the size
 	# compare from Era III. Earlier eras say the same in the page text and by a tap on the sprite.
 	_lay = EraMenus.layout(EraManager.active_era(), "dex")
-	var row_h: int = int(_lay.get("row_h", ListPicker.ROW_HEIGHT))
+	# Never below a finger on this screen (44 pt, ScreenFit.touch_px, 1.3.2).
+	var row_h: int = maxi(int(_lay.get("row_h", ListPicker.ROW_HEIGHT)), ScreenFit.touch_px(get_window()) if is_inside_tree() else 0)
 	var tools: Array = _lay.get("tools", [])
 	if not tools.is_empty():
 		_tools = HBoxContainer.new()

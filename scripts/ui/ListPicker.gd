@@ -647,6 +647,8 @@ func _set_tabs(tabs: Array[String], tab: int) -> void:
 			t.accessibility_name = tabs[i]
 		if str(layout.get("cursor", "arrow")) != "arrow":
 			t.custom_minimum_size.y = int(layout.get("row_h", ROW_HEIGHT)) - 4
+		# Never below a finger on this screen (44 pt, ScreenFit.touch_px, 1.3.2).
+		t.custom_minimum_size.y = maxf(t.custom_minimum_size.y, _tab_floor())
 		t.pressed.connect(func() -> void: _switch_tab(i))
 		_tab_row.add_child(t)
 
@@ -769,7 +771,13 @@ func _apply_touch() -> void:
 	for b: Button in _buttons:
 		if is_instance_valid(b) and b.get_meta("touch_row", false):
 			b.custom_minimum_size.y = row_h
+	for t: Node in _tab_row.get_children():
+		(t as Control).custom_minimum_size.y = maxf((t as Control).custom_minimum_size.y, _tab_floor())
 	_snap_rows()
+
+## The touch floor of a tab: ScreenFit.touch_px, 0 outside the tree.
+func _tab_floor() -> float:
+	return float(ScreenFit.touch_px(get_window())) if is_inside_tree() else 0.0
 
 ## Shrinks the list so its last shown row is whole while the description is under it. The gap
 ## costs the column's spacing too when it shows, so a leftover smaller than that is left alone
