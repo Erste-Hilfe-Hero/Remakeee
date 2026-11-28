@@ -15,14 +15,14 @@
     "team": [
      {
       "species": "Helirollax",
-      "level": 87,
+      "level": 89,
       "moves": [
        "All-In Crash"
       ]
      },
      {
       "species": "Rollibex",
-      "level": 88,
+      "level": 90,
       "moves": [
        "All-In Crash"
       ],
@@ -30,7 +30,7 @@
      },
      {
       "species": "Solmantle",
-      "level": 89
+      "level": 91
      }
     ],
     "strategy": "overcharge",
@@ -50,11 +50,11 @@
     "team": [
      {
       "species": "Rollibex",
-      "level": 88
+      "level": 90
      },
      {
       "species": "Solmantle",
-      "level": 89
+      "level": 91
      }
     ]
    }

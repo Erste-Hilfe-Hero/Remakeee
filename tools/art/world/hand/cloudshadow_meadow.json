@@ -1,0 +1,89 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "goatherd",
+    "x": 6,
+    "y": 9,
+    "facing": "left",
+    "dialogue": "cloudshadow_meadow/goatherd",
+    "sprite": "villager",
+    "trainer": "Goatherd Sabina",
+    "intro": "cloudshadow_meadow/goatherd_intro",
+    "defeat": "cloudshadow_meadow/goatherd_defeat",
+    "money": 3200,
+    "team": [
+     {
+      "species": "Chirrik",
+      "level": 85
+     },
+     {
+      "species": "Palmop",
+      "level": 85
+     },
+     {
+      "species": "Hazejel",
+      "level": 86
+     }
+    ]
+   },
+   {
+    "id": "q4_true_stars_wanda",
+    "x": 2,
+    "y": 7,
+    "facing": "right",
+    "dialogue": "halcyra_side/true_stars_wanda_after",
+    "sprite": "tamer_f",
+    "trainer": "Star Shawl Wanda",
+    "show_flag": "q4_true_stars_reveal",
+    "intro": "halcyra_side/true_stars_wanda_intro",
+    "defeat": "halcyra_side/true_stars_wanda_defeat",
+    "money": 4200,
+    "team": [
+     {
+      "species": "Dewstag",
+      "level": 86
+     },
+     {
+      "species": "Gildbloom",
+      "level": 87
+     },
+     {
+      "species": "Dewfawn",
+      "level": 88
+     }
+    ],
+    "win_flags": [
+     "q4_true_stars_done"
+    ],
+    "no_rematch": true
+   },
+   {
+    "id": "hs_lenz",
+    "x": 2,
+    "y": 15,
+    "facing": "right",
+    "dialogue": "halcyra_side/lenz",
+    "sprite": "villager",
+    "trainer": "Shadow Painter Lenz",
+    "intro": "halcyra_side/lenz_intro",
+    "defeat": "halcyra_side/lenz_defeat",
+    "money": 3320,
+    "team": [
+     {
+      "species": "Kitelet",
+      "level": 85
+     },
+     {
+      "species": "Zenkit",
+      "level": 86
+     },
+     {
+      "species": "Orrebit",
+      "level": 87
+     }
+    ]
+   }
+  ]
+ }
+}

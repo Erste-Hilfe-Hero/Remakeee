@@ -32,7 +32,7 @@ const PAUSE_HINTS: Dictionary[String, String] = {
 	"More": "Photo, our Discord and your shortcuts.",
 }
 const SETTING_GROUP_HINTS: Dictionary[String, String] = {
-	"game": "Difficulty, text speed and battle options.",
+	"game": "Text speed and battle options.",
 	"sound": "Volume of music, sounds, voices and ambience.",
 	"controls": "Touch pad, gamepad and keys.",
 	"display": "Language, contrast, text size, motion and the Retro filter.",

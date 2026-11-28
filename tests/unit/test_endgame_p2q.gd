@@ -19,7 +19,7 @@ func after_all() -> void:
 	RunChronicle.path = RunChronicle.DEFAULT_PATH
 
 func _finish(starter: String, oath: bool = false) -> void:
-	GameState.new_game(GameState.Difficulty.VETERAN, "Tess", 0, starter)
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, starter)
 	GameState.iron_oath = oath
 	GameState.play_time = 3725.0
 	GameState.set_flag(GameState.ACT1_END_FLAG)
@@ -32,9 +32,11 @@ func test_a_run_is_booked_once_at_the_end_of_act_one() -> void:
 	var runs: Array[Dictionary] = RunChronicle.runs()
 	assert_eq(runs.size(), 1)
 	assert_eq(str(runs[0].starter), "Kindlop")
-	assert_eq(int(runs[0].difficulty), int(GameState.Difficulty.VETERAN))
+	assert_eq(int(runs[0].difficulty), int(GameState.Difficulty.TAMER), "one mode")
 	assert_eq(int(runs[0].play_time), 3725)
 	assert_string_contains(RunChronicle.line(runs[0]), "1:02")
+	for word: String in ["Story", "Veteran", "Rift-Born"]:
+		assert_false(RunChronicle.line(runs[0]).contains(word), "the chronicle names no difficulty")
 
 func test_chronicle_outlives_a_deleted_slot() -> void:
 	_finish("Zippit")

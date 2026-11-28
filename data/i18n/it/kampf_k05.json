@@ -12,7 +12,7 @@
   "%s, slot %d of %d: %s, Vigor %d of %d": "%s, posto %d di %d: %s, Vigore %d di %d",
   "%s: %d damage": "%s: %d danni",
   "%s: %d damage, %d knocked out": "%s: %d danni, %d sconfitti",
-  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns on every difficulty; then the place's own field comes back. A new field pushes the old one out at once.": "Un campo dello Squarcio fa colpire un elemento x1.2 e un altro x0.85. Un'Arte di richiamo stende il suo campo per 5 turni a ogni difficoltà; poi torna il campo del luogo. Un campo nuovo scaccia subito quello vecchio.",
+  "A Rift field makes one element hit x1.2 and another x0.85. A Call art lays its field for 5 turns; then the place's own field comes back. A new field pushes the old one out at once.": "Un campo dello Squarcio fa colpire un elemento x1.2 e un altro x0.85. Un'Arte di richiamo stende il suo campo per 5 turni; poi torna il campo del luogo. Un campo nuovo scaccia subito quello vecchio.",
   "A Rift field never weakens its arts.": "Un campo dello Squarcio non indebolisce mai le sue Arti.",
   "A calm ring inside a circling wind. Gale arts hit harder, Bloom arts wilt, and nobody can be Drowsed.": "Un anello calmo dentro un vento che gira. Le Arti Gale colpiscono più forte, quelle Bloom appassiscono e nessuno può cadere in Sopore.",
   "A pale morning light. Lumen arts hit harder, Umbra arts thin out, and an Echo call lands a little easier. At dawn and by day it holds a turn longer.": "Una pallida luce del mattino. Le Arti Lumen colpiscono più forte, quelle Umbra si affievoliscono e un richiamo Echo riesce un po' meglio. All'alba e di giorno dura un turno in più.",

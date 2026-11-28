@@ -4,7 +4,7 @@ extends RefCounted
 ## rule the battle model follows, with its numbers read from the constants that the model uses,
 ## so the page can never drift from the game. Always open, nothing has to be collected first.
 
-const PAGES: Array[String] = ["Turn order", "End of a turn", "Energy", "Fields", "Fleeing", "Warden rules", "Story and bosses", "How foes think"]
+const PAGES: Array[String] = ["Turn order", "End of a turn", "Energy", "Fields", "Fleeing", "Warden rules", "Rift bosses", "How foes think"]
 
 static func titles() -> Array[String]:
 	var out: Array[String] = []
@@ -62,7 +62,6 @@ static func energy() -> Array[String]:
 		Loc.t("Overcharge arts spend up to %d spare Energy, each point +%d%% power.") % [BattleRules.OVERCHARGE_MAX_EXTRA, roundi(BattleRules.OVERCHARGE_PER_ENERGY * 100.0)],
 		Loc.t("Two Overcharge arts in two turns in a row chain for +%d%% more.") % roundi(BattleRules.OVERCHARGE_CHAIN_BONUS * 100.0),
 		Loc.t("The foe's Energy shows as pips in its info strip."),
-		Loc.t("On Story the foe's Spirlings start with %d Energy less.") % BattleRules.foe_start_cut(GameState.Difficulty.STORY),
 		Loc.t("Live duels and leagues use the very same Energy rules."),
 	]
 	# KAMPF_PLAN_1000 items 50 and 67: the most Energy per role, the bench catching its breath.
@@ -112,13 +111,11 @@ static func warden_rules() -> Array[String]:
 
 static func story_and_bosses() -> Array[String]:
 	return [
-		Loc.t("On Story the foes land half as many keen hits."),
-		Loc.t("On Story Rest also mends %d%% of a Spirling's Vigor.") % roundi(BattleModel.STORY_REST_HEAL * 100.0),
 		Loc.t("A Rift boss fight ends after %d turns: the Rift closes again and you can come back.") % BattleModel.BOSS_ROUND_LIMIT,
 	]
 
-## The four AI tiers (KAMPF_PLAN_1000 item 472), which tier each difficulty uses, and the fairness
-## rules every tier keeps (items 453, 476, 477).
+## The four AI tiers (KAMPF_PLAN_1000 item 472), the tiers Wayfarers and Wardens use in the one
+## mode of the game, and the fairness rules every tier keeps (items 453, 476, 477).
 static func foe_minds() -> Array[String]:
 	var out: Array[String] = [
 		Loc.t("Wild Spirlings always pick at random."),
@@ -127,8 +124,9 @@ static func foe_minds() -> Array[String]:
 		Loc.t("Tier 2 also weighs your best answer, heals when low and swaps out of a bad matchup."),
 		Loc.t("Tier 3 never wastes a status, sets up only when it is safe, finishes the weak, leaves a field that weakens all its arts, guesses your swap and saves Energy up to %d turns ahead.") % int(BattleAI.rule_num("plan_turns", 1.0)),
 	]
-	for d: int in GameState.AI_LEVELS.size():
-		out.append(Loc.t("%s: Wayfarers think at tier %d.") % [Loc.t(MenuHost.DIFFICULTY_TEXT[d]), GameState.AI_LEVELS[d]])
+	var d: int = GameState.Difficulty.TAMER
+	out.append(Loc.t("Wayfarers think at tier %d, Wardens at tier %d.") % [TrainerData.TAMER_AI,
+		TrainerData.ai_tier({"warden": "x"}, GameState.AI_LEVELS[d], d)])
 	out.append_array([
 		Loc.t("Some Wayfarers have a temper of their own: a hothead never swaps, a tactician saves up."),
 		Loc.t("Foes never see your order or the next roll, and guess swaps only among Spirlings you have shown."),

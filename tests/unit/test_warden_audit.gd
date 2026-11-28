@@ -92,7 +92,7 @@ func test_era_one_teams_follow_the_level_curve() -> void:
 		var team: Array = TrainerData.team_entries(_npc(str(w[1]), str(w[2])), "", -1)
 		var top: int = _top(team)
 		assert_gte(top, last_top, "%s (ring %d) after ring %d" % [w[2], top, last_top])
-		assert_lte(top, GameState.LEVEL_CAPS[i], "%s fits the ring cap with %d Rifts mended" % [w[2], i])
+		assert_lte(top, GameState.PROGRESS_RINGS[i], "%s fits the ring cap with %d Rifts mended" % [w[2], i])
 		assert_gte(team.size(), last_size, "%s fields no fewer Spirlings than the Warden before" % w[2])
 		for e: Variant in team:
 			assert_not_null(Database.species(str((e as Dictionary).species)), "%s: %s" % [w[2], (e as Dictionary).species])

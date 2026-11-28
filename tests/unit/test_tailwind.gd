@@ -31,16 +31,16 @@ func test_warden_teams_fit_the_ring_cap() -> void:
 	# Orrin guards the first Rift (no Rift sealed yet), Brisa the second, Maelis the third.
 	var wardens: Array = [["cinder_rift", "warden_orrin", 0], ["mist_rift", "warden_brisa", 1], ["tide_rift", "warden_maelis", 2]]
 	for w: Array in wardens:
-		var cap: int = GameState.LEVEL_CAPS[int(w[2])]
+		var cap: int = GameState.PROGRESS_RINGS[int(w[2])]
 		for d: int in [GameState.Difficulty.VETERAN, GameState.Difficulty.RIFT_BORN]:
 			for s: Spirling in TrainerData.build_team(_npc(w[0], w[1]), "", RandomNumberGenerator.new(), d, cap):
 				assert_lte(s.level, cap, "%s %s R%d on %d" % [w[1], s.data.species_name, s.level, d])
 
-func test_warden_card_names_the_cap() -> void:
+## No ring cap (owner decision 2026-11-27): the Warden card never names one.
+func test_warden_card_names_no_cap() -> void:
 	var orrin: Dictionary = _npc("cinder_rift", "warden_orrin")
-	var team: Array[Spirling] = TrainerData.build_team(orrin, "", RandomNumberGenerator.new(), GameState.Difficulty.VETERAN, 12)
-	assert_true(WardenCard.text(orrin, team, GameState.Difficulty.VETERAN, 12).contains("R12"))
-	assert_false(WardenCard.text(orrin, team, GameState.Difficulty.TAMER, Spirling.STORY_RING).contains("R12."))
+	var team: Array[Spirling] = TrainerData.build_team(orrin, "", RandomNumberGenerator.new(), GameState.Difficulty.TAMER)
+	assert_false(WardenCard.text(orrin, team, GameState.Difficulty.TAMER).contains("Ring cap"))
 
 func test_tailwind_offer_rules() -> void:
 	var story: int = GameState.Difficulty.STORY

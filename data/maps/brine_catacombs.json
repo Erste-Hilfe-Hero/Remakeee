@@ -88,15 +88,15 @@
    "team": [
     {
      "species": "Stiltregent",
-     "level": 85
+     "level": 87
     },
     {
      "species": "Wadibastion",
-     "level": 86
+     "level": 88
     },
     {
      "species": "Ergrava",
-     "level": 87
+     "level": 89
     }
    ]
   }
@@ -207,15 +207,15 @@
      "team": [
       {
        "species": "Wadibastion",
-       "level": 85
+       "level": 87
       },
       {
        "species": "Ergrava",
-       "level": 86
+       "level": 88
       },
       {
        "species": "Caravault",
-       "level": 87
+       "level": 89
       }
      ]
     }

@@ -149,18 +149,15 @@ func test_swap_hint_compares_with_the_one_in_front() -> void:
 	assert_string_contains(line, str(b.temperament().label))
 	assert_false(BattleGuide.compare_line(a, a).contains("("), "no difference against itself")
 
-func test_growth_lost_to_the_ring_limit_says_so() -> void:
+## No ring cap (owner decision 2026-11-27): all growth lands and no line names a ring limit.
+func test_growth_is_never_held_by_a_ring_limit() -> void:
 	var s: Spirling = BattleFixtures.make("Kindlop", 20)
 	var m: BattleModel = BattleFixtures.model([s] as Array[Spirling], _one("Mossling"))
-	m.level_cap = 20
 	m._events = []
 	m._give_xp(s, 500)
 	var e: BattleEvent = BattleFixtures.first_of(m._events, T.XP_GAINED)
-	assert_string_contains(e.describe(), "ring limit holds it at ring 20")
-	m.level_cap = Spirling.LEVEL_SANITY
-	m._events = []
-	m._give_xp(s, 5)
-	assert_false(BattleFixtures.first_of(m._events, T.XP_GAINED).describe().contains("ring limit"))
+	assert_eq(int(e.data.amount), 500)
+	assert_false(e.describe().contains("ring limit"))
 
 func test_spark_flux_rolls_every_spark_anew() -> void:
 	var s: Spirling = BattleFixtures.make("Kindlop", 20)

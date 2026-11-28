@@ -86,5 +86,5 @@ func test_rival_and_boss_levels_climb() -> void:
 			assert_not_null(Database.species(str(e.species)), "%s: %s" % [id, e.species])
 			top = maxi(top, int(e.level))
 		assert_gt(top, last, id)
-		assert_lte(top, GameState.LEVEL_CAPS[GameState.LEVEL_CAPS.size() - 1], id)
+		assert_lte(top, GameState.PROGRESS_RINGS[GameState.PROGRESS_RINGS.size() - 1], id)
 		last = top

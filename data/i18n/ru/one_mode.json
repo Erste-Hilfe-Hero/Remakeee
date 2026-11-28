@@ -1,0 +1,12 @@
+{
+ "_comment": "Translations of the German table one_mode, written by tools/i18n/locales_one_mode.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s with %s, %d:%02d": "%s с %s, %d:%02d",
+  "Rift bosses": "Боссы Разлома",
+  "Scorch, Root and Jolt stay on after the battle until an item, an art or a rest cures them.": "Ожог, Корни и Разряд остаются после боя, пока их не вылечит предмет, приём или отдых.",
+  "Text speed and battle options.": "Скорость текста и настройки боя.",
+  "Text, battles and tips.": "Текст, бои и подсказки.",
+  "Wayfarers think at tier %d, Wardens at tier %d.": "Странники думают на уровне %d, Стражи на уровне %d.",
+  "Wayfarers' Spirlings stay close to your strongest one.": "Спирлинги Странников держатся близко к твоему сильнейшему."
+ }
+}

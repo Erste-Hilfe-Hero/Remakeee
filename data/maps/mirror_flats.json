@@ -88,15 +88,15 @@
    "team": [
     {
      "species": "Saltsprig",
-     "level": 83
+     "level": 86
     },
     {
      "species": "Stiltwade",
-     "level": 83
+     "level": 86
     },
     {
      "species": "Wadishell",
-     "level": 84
+     "level": 87
     }
    ]
   },
@@ -124,15 +124,15 @@
    "team": [
     {
      "species": "Spumlet",
-     "level": 84
+     "level": 87
     },
     {
      "species": "Arcfin",
-     "level": 85
+     "level": 88
     },
     {
      "species": "Kitelet",
-     "level": 86
+     "level": 89
     }
    ],
    "win_flags": [
@@ -164,15 +164,15 @@
    "team": [
     {
      "species": "Arcfin",
-     "level": 84
+     "level": 87
     },
     {
      "species": "Flatskimmer",
-     "level": 85
+     "level": 88
     },
     {
      "species": "Flatskip",
-     "level": 86
+     "level": 89
     }
    ],
    "win_flags": [
@@ -194,15 +194,15 @@
    "team": [
     {
      "species": "Arcfin",
-     "level": 83
+     "level": 86
     },
     {
      "species": "Flatskimmer",
-     "level": 84
+     "level": 87
     },
     {
      "species": "Flatskip",
-     "level": 85
+     "level": 88
     }
    ]
   }

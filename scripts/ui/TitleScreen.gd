@@ -664,69 +664,28 @@ func _pick_slot(title: String, allow_empty: bool) -> int:
 	_slot_list = false
 	return picked
 
-## New game (Chimora 100 items 25, 27): how hard battles should be, then one look screen with a
-## live picture of the Wayfarer, then a name, and the journey starts. The partner Spirling is
-## picked in the story (prologue at the lighthouse). Challenge rules and the Iron Oath are
-## optional rows under Settings during the journey, until the first Rift is mended.
+## New game (Chimora 100 items 25, 27): one look screen with a live picture of the Wayfarer,
+## then a name, and the journey starts. There is no difficulty question: the game has one mode
+## and gets harder act by act (owner decision 2026-11-27). The partner Spirling is picked in the
+## story (prologue at the lighthouse). Challenge rules and the Iron Oath are optional rows under
+## Settings during the journey, until the first Rift is mended.
 func _new_game() -> bool:
-	var diff: int = -1
 	var look: Array[int] = [0, 0, 0, 0]
 	var name: String = ""
 	var step: int = 0
-	while step < 3:
+	while step < 2:
 		match step:
 			0:
-				diff = await ask_difficulty(_menu, _set_art_note)
-				_hide_art_note()
-				step = 1 if diff >= 0 else -1
+				step = 1 if await look_screen(_menu, look, _look_stage()) else -1
 			1:
-				step = 2 if await look_screen(_menu, look, _look_stage()) else 0
-			2:
 				name = await _ask_name(GameState.DEFAULT_NAMES[look[LOOK_BODY]])
-				step = 3 if name != NAME_BACK else 1
+				step = 2 if name != NAME_BACK else 0
 		if step < 0:
 			return false
-	GameState.new_game(diff as GameState.Difficulty, name.strip_edges(), look[LOOK_COAT], "", look[LOOK_BODY], look[LOOK_SKIN], look[LOOK_HAIR])
+	GameState.new_game(GameState.Difficulty.TAMER, name.strip_edges(), look[LOOK_COAT], "", look[LOOK_BODY], look[LOOK_SKIN], look[LOOK_HAIR])
 	GameState.iron_oath = false
 	EraManager.from_dict({})
 	return true
-
-## The three difficulties asked at new game, easiest first, with one line each. The fourth,
-## Rift-Born, stays in Settings (Challenge) for players who know the game.
-const DIFFICULTY_TITLE: String = "Difficulty"
-const DIFFICULTY_CHOICES: Array[GameState.Difficulty] = [GameState.Difficulty.STORY, GameState.Difficulty.TAMER, GameState.Difficulty.VETERAN]
-const DIFFICULTY_ROWS: Array[String] = ["Relaxed", "Normal", "Tough"]
-const DIFFICULTY_LINES: Array[String] = [
-	"Gentle battles, more Growth.",
-	"The journey as it is meant to be.",
-	"Ring limits, smarter foes.",
-]
-## Said over the title art while the choice is open: nothing is locked in.
-const DIFFICULTY_LATER: String = "You can change it later in Settings."
-
-static func difficulty_rows(hint: bool = true) -> Array[Dictionary]:
-	var rows: Array[Dictionary] = []
-	for i: int in DIFFICULTY_ROWS.size():
-		rows.append({"text": DIFFICULTY_ROWS[i], "hint": Loc.t(DIFFICULTY_LINES[i]) if hint else ""})
-	return rows
-
-## The line said for difficulty row [param i] over the title art.
-static func difficulty_note(i: int) -> String:
-	return Loc.t(DIFFICULTY_LINES[clampi(i, 0, DIFFICULTY_LINES.size() - 1)]) + "\n" + Loc.t(DIFFICULTY_LATER)
-
-## Returns the picked GameState.Difficulty, or -1 for Back. Normal has the focus. With
-## [param note] (the title screen) the focused row's line goes over the art, not under the list.
-static func ask_difficulty(menu: MenuHost, note: Callable = Callable()) -> int:
-	var follow: Callable = func(i: int) -> void:
-		if i < DIFFICULTY_LINES.size():
-			note.call(difficulty_note(i))
-	if note.is_valid():
-		note.call(difficulty_note(1))
-		menu.picker.row_focused.connect(follow)
-	var idx: int = await menu.pick(DIFFICULTY_TITLE, difficulty_rows(not note.is_valid()), true, 1)
-	if note.is_valid() and menu.picker.row_focused.is_connected(follow):
-		menu.picker.row_focused.disconnect(follow)
-	return DIFFICULTY_CHOICES[idx] if idx >= 0 and idx < DIFFICULTY_CHOICES.size() else -1
 
 ## The look screen: body, skin, hair and coat in one list over a live picture, plus Random.
 ## A tap (or right) moves a row to the next choice, left to the one before.

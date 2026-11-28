@@ -53,9 +53,10 @@ static func note() -> Array[String]:
 	_write(list)
 	var e: Dictionary = list[-1]
 	var rules: String = ChallengeRules.names()
-	# The victory note names the difficulty and the rules kept (KAMPF plan item 505).
-	return [Loc.t("This journey is now in the run chronicle: %s.") % (difficulty_name(int(e.difficulty))
-		+ (", " + rules if not rules.is_empty() else ""))]
+	# The victory note names the rules kept (KAMPF plan item 505); there is no difficulty to name.
+	if rules.is_empty():
+		return [Loc.t("This journey is now in the run chronicle.")]
+	return [Loc.t("This journey is now in the run chronicle: %s.") % rules]
 
 ## Starters with a finished run, over every slot.
 static func starters_done() -> int:
@@ -66,10 +67,7 @@ static func starters_done() -> int:
 			seen[sp] = true
 	return seen.size()
 
-static func difficulty_name(d: int) -> String:
-	return Loc.t(MenuHost.DIFFICULTY_TEXT[d]) if d >= 0 and d < MenuHost.DIFFICULTY_TEXT.size() else "?"
-
-## One line per run, newest first: glyphs, name, starter, difficulty, time.
+## One line per run, newest first: glyphs, name, starter, time (no difficulty: one mode).
 static func line(r: Dictionary) -> String:
 	var mark: String = ""
 	if bool(r.get("oath", false)):
@@ -78,8 +76,8 @@ static func line(r: Dictionary) -> String:
 		mark += VOW_GLYPH
 	var sd: SpirlingData = Database.species(str(r.get("starter", "")))
 	var secs: int = int(r.get("play_time", 0))
-	var text: String = Loc.t("%s with %s, %s, %d:%02d") % [str(r.get("name", "")),
-		sd.species_name if sd != null else "?", difficulty_name(int(r.get("difficulty", 0))) + (" " + Loc.t("(lowered)") if bool(r.get("lowered", false)) else ""), secs / 3600, (secs / 60) % 60]
+	var text: String = Loc.t("%s with %s, %d:%02d") % [str(r.get("name", "")),
+		sd.species_name if sd != null else "?", secs / 3600, (secs / 60) % 60]
 	if r.get("vows") is Array and not (r.vows as Array).is_empty():
 		text += "  " + Loc.t("Vows kept: %d") % (r.vows as Array).size()
 	if r.get("challenges") is Array and not (r.challenges as Array).is_empty():

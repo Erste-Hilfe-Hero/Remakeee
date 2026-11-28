@@ -98,25 +98,21 @@ func test_xp_bar_is_not_full_past_old_caps() -> void:
 	var s: Spirling = BattleFixtures.make("Mossling", 500)
 	assert_almost_eq(InfoStrip.xp_fraction(s), 0.0, 0.001)
 
-func test_no_ring_limit_except_veteran_act_one() -> void:
-	GameState.difficulty = GameState.Difficulty.TAMER
-	assert_false(GameState.has_ring_limit())
-	assert_eq(GameState.level_cap(), Spirling.LEVEL_SANITY)
-	GameState.flags = {"story_complete": true, "era2_finale_done": true, "era3_finale_done": true}
-	assert_eq(GameState.level_cap(), Spirling.LEVEL_SANITY, "eras add no cap")
-	GameState.difficulty = GameState.Difficulty.VETERAN
-	GameState.flags = {}
-	assert_true(GameState.has_ring_limit())
-	assert_lt(GameState.level_cap(), Spirling.LEVEL_SANITY)
-	GameState.flags = {GameState.ACT1_END_FLAG: true}
-	assert_false(GameState.has_ring_limit())
-	assert_eq(GameState.level_cap(), Spirling.LEVEL_SANITY)
+## No ring limit at all (owner decision 2026-11-27): not on any tier, not in any act.
+func test_no_ring_limit_anywhere() -> void:
+	assert_false(GameState.has_method("has_ring_limit"))
+	assert_false(GameState.has_method("level_cap"))
+	assert_false((GameState.get_script() as Script).get_script_constant_map().has("LEVEL_CAPS"), "no ring cap table")
+	var s: Spirling = BattleFixtures.make("Mossling", 12)
+	var m := BattleModel.new([s] as Array[Spirling], [BattleFixtures.make("Mossling", 5)] as Array[Spirling], false, 7, 0)
+	m._give_xp(s, Spirling.xp_for_level(40) - s.xp)
+	assert_eq(s.level, 40, "Act I rings do not cap growth")
 
 func test_battle_xp_grows_a_ring_500_spirling() -> void:
 	var s: Spirling = BattleFixtures.make("Mossling", 500)
 	var foe: Spirling = BattleFixtures.make("Mossling", 500)
 	var m := BattleModel.new([s] as Array[Spirling], [foe] as Array[Spirling], false, 7, 0)
-	assert_eq(m.level_cap, Spirling.LEVEL_SANITY, "no ring limit by default")
+	assert_false("level_cap" in m, "no ring limit in the battle model")
 	m._give_xp(s, Spirling.xp_for_level(502) - s.xp)
 	assert_eq(s.level, 502)
 	assert_eq(s.xp, Spirling.xp_for_level(502))

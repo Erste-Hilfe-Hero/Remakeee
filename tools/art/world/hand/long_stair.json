@@ -1,0 +1,81 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "step_counter",
+    "x": 6,
+    "y": 15,
+    "facing": "left",
+    "dialogue": "long_stair/step_counter",
+    "sprite": "villager",
+    "trainer": "Step Counter Wendel",
+    "intro": "long_stair/step_counter_intro",
+    "defeat": "long_stair/step_counter_defeat",
+    "money": 3000,
+    "team": [
+     {
+      "species": "Highhare",
+      "level": 84
+     },
+     {
+      "species": "Noonwhist",
+      "level": 85
+     }
+    ]
+   },
+   {
+    "id": "q4_antidote_benno_fork",
+    "x": 2,
+    "y": 19,
+    "facing": "right",
+    "dialogue": "halcyra_side/antidote_benno_fork_loot",
+    "sprite": "villager",
+    "trainer": "Food Taster Benno",
+    "show_flag": "q4_antidote_reveal",
+    "intro": "halcyra_side/antidote_benno_fork_intro",
+    "defeat": "halcyra_side/antidote_benno_fork_defeat",
+    "money": 4100,
+    "team": [
+     {
+      "species": "Ledgepup",
+      "level": 85
+     },
+     {
+      "species": "Vinestep",
+      "level": 86
+     },
+     {
+      "species": "Gildmite",
+      "level": 87
+     }
+    ],
+    "win_flags": [
+     "q4_antidote_done"
+    ],
+    "no_rematch": true
+   },
+   {
+    "id": "hs_agnes",
+    "x": 1,
+    "y": 7,
+    "facing": "right",
+    "dialogue": "halcyra_side/agnes",
+    "sprite": "villager",
+    "trainer": "Stair Sweeper Agnes",
+    "intro": "halcyra_side/agnes_intro",
+    "defeat": "halcyra_side/agnes_defeat",
+    "money": 3240,
+    "team": [
+     {
+      "species": "Vinestep",
+      "level": 85
+     },
+     {
+      "species": "Chalkid",
+      "level": 86
+     }
+    ]
+   }
+  ]
+ }
+}

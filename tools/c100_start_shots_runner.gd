@@ -67,9 +67,7 @@ func _title() -> void:
 	await _menu_open(menu, "")
 	await _shot("03_title")
 	menu.picker.picked.emit(0)
-	await _menu_open(menu, TitleScreen.DIFFICULTY_TITLE)
-	await _shot("04_difficulty")
-	menu.picker.picked.emit(1)
+	# No difficulty step since 2026-11-27 (one mode): the look screen comes next.
 	await _menu_open(menu, TitleScreen.LOOK_TITLE)
 	await _shot("05_look")
 	menu.picker.last_dir = 1

@@ -425,7 +425,6 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"play_reminder": "A short note after 90 minutes of play.",
 	"goal_line": "Your next goal at the top and a mark on the way there. Tap the line to open Goals.",
 	"notify": "A note on this phone when a trip is over or a new Find of the Day waits. If the phone blocks it, allow it in the phone settings.",
-	"difficulty": "How strong your opponents are. You can change it any time.",
 	"iron_oath": "Spirlings that faint retire for good. Only before your first Rift.",
 	"challenges": "Extra rules for a harder journey. Taken before your first Rift, dropped any time.",
 	"volume": "All sound. Left and right change it in steps of 10.",
@@ -444,7 +443,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"retro": "Old-style colours for each era you reached.",
 	"account": "Friend code, moving to a new phone, deleting your account.",
 	"legal": "Imprint, privacy and licences.",
-	"game": "Text, battles, tips and difficulty.",
+	"game": "Text, battles and tips.",
 	"sound": "Volume, music and sound effects.",
 	"controls": "Pad, tap to walk and gamepad.",
 	"display": "Contrast, motion, language and battery.",
@@ -523,10 +522,9 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 			# Opt-in phone notes (plan Chimora 100, item 76) only where the phone can show them.
 			if LocalNotify.available():
 				rows.append(["notify", "Notifications: %s" % ("On" if LocalNotify.is_enabled() else "Off")])
-			# Difficulty and the Iron Oath only during a journey.
+			# The Iron Oath and challenges only during a journey. No difficulty row: the game has
+			# one mode and gets harder act by act (owner decision 2026-11-27).
 			if GameState.in_game:
-				# A lowered challenge stays visible (item 746).
-				rows.append(["difficulty", "Challenge: %s" % DIFFICULTY_TEXT[GameState.difficulty] + (" " + Loc.t("(lowered)") if GameState.difficulty_lowered() else "")])
 				rows.append(["iron_oath", "Iron Oath: %s" % ("Sworn" if GameState.iron_oath else "Off")])
 				rows.append(["refill_fruit", "Refill fruit: %s" % ("On" if TraitKit.refill_on() else "Off")])
 				if GameState.difficulty == GameState.Difficulty.STORY:
@@ -662,13 +660,6 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.sound_captions = not GameState.sound_captions
 		"sound_test":
 			await run_sound_test()
-		"difficulty":
-			var opts: Array[Dictionary] = []
-			for i: int in DIFFICULTY_TEXT.size():
-				opts.append({"text": DIFFICULTY_TEXT[i], "hint": DifficultyTable.hint(i, DIFFICULTY_HINTS[i])})
-			var d: int = await pick("Difficulty", opts, true, GameState.difficulty)
-			if d >= 0:
-				GameState.set_difficulty(d)
 		"iron_oath":
 			await _iron_oath()
 		"challenges":
@@ -684,15 +675,6 @@ func reset_settings_group(group: String) -> void:
 		SettingsReset.reset(group)
 		refresh_all_themes(get_tree())
 		VirtualPad.apply_settings()
-
-## Short names for the list rows; the line under the list explains each (items 2185, 2067).
-const DIFFICULTY_TEXT: Array[String] = ["Story", "Wayfarer", "Veteran", "Rift-Born"]
-const DIFFICULTY_HINTS: Array[String] = [
-	"Relaxed battles for enjoying the story. Foes deal 90% damage, land fewer critical hits, and battles give 50% more Growth.",
-	"The normal journey.",
-	"Ring limits and smarter opponents.",
-	"No items in battle.",
-]
 
 ## The Iron Oath (item 15) can only be sworn before the first Rift is mended, and never undone.
 func _iron_oath() -> void:

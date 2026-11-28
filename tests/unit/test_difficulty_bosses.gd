@@ -60,10 +60,11 @@ func test_shared_team_copy_has_no_keepsake() -> void:
 	assert_eq(team[2].data.species_name, "Zippit", "the lowest ring is copied")
 	assert_eq(team[2].held, "")
 
-func test_difficulty_table_has_six_lines() -> void:
-	for d: int in 4:
-		var lines: Array[String] = DifficultyTable.lines(d)
-		assert_eq(lines.size(), 6)
-		assert_true(DifficultyTable.hint(d, "x").contains(lines[5]))
-	assert_true(DifficultyTable.lines(GameState.Difficulty.TAMER)[2].contains("2"), "Tamer Wardens play tier 2")
-	assert_true(DifficultyTable.lines(GameState.Difficulty.RIFT_BORN)[4].contains("no"))
+## One mode (owner decision 2026-11-27): the difficulty page is gone and the rules book names
+## the tiers of the one mode only.
+func test_no_difficulty_page() -> void:
+	assert_false(FileAccess.file_exists("res://scripts/battle/DifficultyTable.gd"))
+	var minds: String = "\n".join(RulesBook.foe_minds())
+	assert_string_contains(minds, "Wardens at tier 2")
+	for word: String in ["Story:", "Veteran", "Rift-Born"]:
+		assert_false(minds.contains(word), word)

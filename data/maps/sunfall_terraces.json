@@ -88,15 +88,15 @@
    "team": [
     {
      "species": "Corocub",
-     "level": 88
+     "level": 90
     },
     {
      "species": "Obelith",
-     "level": 89
+     "level": 91
     },
     {
      "species": "Bakedil",
-     "level": 89
+     "level": 91
     }
    ]
   },
@@ -157,15 +157,15 @@
    "team": [
     {
      "species": "Rillshell",
-     "level": 88
+     "level": 90
     },
     {
      "species": "Vinestair",
-     "level": 89
+     "level": 91
     },
     {
      "species": "Vinestep",
-     "level": 90
+     "level": 92
     }
    ]
   }

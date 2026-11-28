@@ -1,0 +1,12 @@
+{
+ "_comment": "Translations of the German table one_mode, written by tools/i18n/locales_one_mode.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s with %s, %d:%02d": "%s：%s、%d:%02d",
+  "Rift bosses": "裂け目のボス",
+  "Scorch, Root and Jolt stay on after the battle until an item, an art or a rest cures them.": "焦げ、根づき、しびれはバトルのあとも残り、道具か術か休息で治るまで続く。",
+  "Text speed and battle options.": "文字の速さとバトルの設定。",
+  "Text, battles and tips.": "文字、バトル、ヒント。",
+  "Wayfarers think at tier %d, Wardens at tier %d.": "旅人は段階%d、守り人は段階%dで考える。",
+  "Wayfarers' Spirlings stay close to your strongest one.": "旅人のSpirlingは、きみのいちばん強いSpirlingに近い強さになる。"
+ }
+}

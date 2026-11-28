@@ -52,11 +52,11 @@ func test_tamer_grows_faster_in_act_one_only() -> void:
 	assert_almost_eq(GrowthRules.battle_mult(tamer, {}, {}, false), 1.0, 0.001, "later acts keep their growth")
 	assert_almost_eq(GrowthRules.battle_mult(GameState.Difficulty.VETERAN, {}, {}, true), 1.0, 0.001)
 
-## The Story hint names the real growth bonus: GrowthRules difficulty_mult and ChallengeRules.GROWTH.
-func test_story_hint_names_the_real_growth_bonus() -> void:
-	var per: Array = GrowthRules.data().difficulty_mult
-	var bonus: int = roundi((float(per[0]) * ChallengeRules.GROWTH[0] - 1.0) * 100.0)
-	assert_string_contains(MenuHost.DIFFICULTY_HINTS[0], "%d%% more Growth" % bonus)
+## One mode (owner decision 2026-11-27): the settings no longer list difficulties or their hints.
+func test_settings_offer_no_difficulty() -> void:
+	var consts: Dictionary = load("res://scripts/ui/MenuHost.gd").get_script_constant_map()
+	assert_false(consts.has("DIFFICULTY_HINTS") or consts.has("DIFFICULTY_TEXT"), "no difficulty list in the settings")
+	assert_false(MenuHost.SETTING_HINTS.has("difficulty"))
 
 ## Item 13: Kestra sends the player to Fernstair first, and two lookouts stand at the rough exits
 ## of Brindlewick until Kestra's spar is done.

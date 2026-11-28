@@ -1,0 +1,12 @@
+{
+ "_comment": "Translations of the German table one_mode, written by tools/i18n/locales_one_mode.py. Keys are the English text; keys with %s or %d are patterns.",
+ "strings": {
+  "%s with %s, %d:%02d": "%s와 %s, %d:%02d",
+  "Rift bosses": "균열 보스",
+  "Scorch, Root and Jolt stay on after the battle until an item, an art or a rest cures them.": "화상, 뿌리 묶임, 찌릿은 전투 뒤에도 남아 도구, 기예, 휴식으로 나을 때까지 계속된다.",
+  "Text speed and battle options.": "텍스트 속도와 전투 옵션.",
+  "Text, battles and tips.": "텍스트, 전투, 팁.",
+  "Wayfarers think at tier %d, Wardens at tier %d.": "나그네는 %d단계, 수호자는 %d단계로 생각한다.",
+  "Wayfarers' Spirlings stay close to your strongest one.": "나그네의 Spirling은 너의 가장 강한 Spirling과 비슷하게 맞춰진다."
+ }
+}

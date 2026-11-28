@@ -82,11 +82,11 @@
    "team": [
     {
      "species": "Woadlet",
-     "level": 94
+     "level": 97
     },
     {
      "species": "Padlet",
-     "level": 95
+     "level": 98
     }
    ]
   },
@@ -104,15 +104,15 @@
    "team": [
     {
      "species": "Drizzlet",
-     "level": 95
+     "level": 98
     },
     {
      "species": "Prismist",
-     "level": 95
+     "level": 98
     },
     {
      "species": "Padlet",
-     "level": 95
+     "level": 98
     }
    ],
    "front": [
@@ -144,15 +144,15 @@
    "team": [
     {
      "species": "Woadlet",
-     "level": 94
+     "level": 97
     },
     {
      "species": "Drizzlet",
-     "level": 95
+     "level": 98
     },
     {
      "species": "Padlet",
-     "level": 96
+     "level": 99
     }
    ],
    "win_flags": [
