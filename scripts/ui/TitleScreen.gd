@@ -302,8 +302,13 @@ func _resolve_conflicts() -> void:
 		else:
 			await Online.resolve_conflict_take_server(slot)
 
-## The "Welcome back" card after Continue (plan Chimora 100, item 44): where the Wayfarer
-## stands, the current goal and what today brings. One tap closes it.
+## The greeting Continue shows as a Ticker notice while the world opens.
+static func welcome_line() -> String:
+	return Loc.t("Welcome back, %s!") % GameState.tamer_name
+
+## The full "Welcome back" text (plan Chimora 100, item 44): where the Wayfarer stands, the
+## current goal and what today brings. Since 28 Nov Continue no longer stops on it (owner: Weiter
+## goes straight into the game); welcome_line greets instead and the goal review shots use this.
 static func welcome_text(flags: Dictionary) -> String:
 	var lines: PackedStringArray = [Loc.t("Welcome back, %s!") % GameState.tamer_name, ""]
 	lines.append(Loc.t("You are in %s.") % Loc.t(Spirling.place_name(GameState.current_map)))
@@ -388,7 +393,9 @@ func _run() -> void:
 				SaveManager.set_slot(latest)
 				if SaveManager.load_game():
 					await _say_if_recovered()
-					await _menu.info(welcome_text(GameState.flags), EraSaveCard.badge(maxi(EraMoments.slot_era(latest), 1)))
+					# Weiter goes straight into the world (owner, 28 Nov): no card to tap away first.
+					# The greeting is a notice that slides by; the goal stands on the HUD.
+					Ticker.show_text(welcome_line())
 					SaveManager.save_settings()
 					_enter_game()
 					return
