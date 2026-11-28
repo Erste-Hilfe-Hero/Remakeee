@@ -1870,6 +1870,10 @@
     "to": "Ferrowyn",
     "rule": "ring",
     "value": 25
+   },
+   {
+    "to": "Ferrowyn",
+    "rule": "bond"
    }
   ],
   "origin": "Lives under Aldo's ferry and was born in its wake.",
@@ -2074,6 +2078,10 @@
     "to": "Cairnhold",
     "rule": "ring",
     "value": 37
+   },
+   {
+    "to": "Cairnhold",
+    "rule": "bond"
    }
   ],
   "origin": "A Talusk that carried its first waymark up the Crowcrest.",
@@ -7638,6 +7646,10 @@
     "to": "Caravant",
     "rule": "ring",
     "value": 17
+   },
+   {
+    "to": "Caravant",
+    "rule": "bond"
    }
   ]
  },
@@ -10522,6 +10534,11 @@
     "to": "Quenchwyrm",
     "rule": "ring",
     "value": 38
+   },
+   {
+    "to": "Quenchwyrm",
+    "rule": "bond",
+    "value": "keen_lens"
    }
   ]
  },
@@ -15408,6 +15425,11 @@
     "to": "Vanecrest",
     "rule": "ring",
     "value": 33
+   },
+   {
+    "to": "Vanecrest",
+    "rule": "bond",
+    "value": "swift_feather"
    }
   ]
  },
@@ -16461,6 +16483,10 @@
     "to": "Morelord",
     "rule": "ring",
     "value": 32
+   },
+   {
+    "to": "Morelord",
+    "rule": "bond"
    }
   ]
  },
@@ -22899,6 +22925,10 @@
     "to": "Quilmothane",
     "rule": "ring",
     "value": 39
+   },
+   {
+    "to": "Quilmothane",
+    "rule": "bond"
    }
   ]
  },
@@ -26232,6 +26262,10 @@
     "to": "Lumothane",
     "rule": "ring",
     "value": 90
+   },
+   {
+    "to": "Lumothane",
+    "rule": "bond"
    }
   ]
  },
@@ -26790,6 +26824,11 @@
     "to": "Brassgrand",
     "rule": "ring",
     "value": 90
+   },
+   {
+    "to": "Brassgrand",
+    "rule": "bond",
+    "value": "spark_coil"
    }
   ]
  },
@@ -30684,6 +30723,10 @@
     "to": "Guisdame",
     "rule": "ring",
     "value": 40
+   },
+   {
+    "to": "Guisdame",
+    "rule": "bond"
    }
   ]
  },
@@ -31237,6 +31280,11 @@
     "to": "Snaggrave",
     "rule": "ring",
     "value": 39
+   },
+   {
+    "to": "Snaggrave",
+    "rule": "bond",
+    "value": "iron_burr"
    }
   ]
  },

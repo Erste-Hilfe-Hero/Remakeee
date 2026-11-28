@@ -2263,7 +2263,8 @@ static func _mon_index(list: Array, uid: String) -> int:
 static func trade_mon_why(m: Variant) -> String:
 	if not m is Dictionary or str(m.get("uid", "")).is_empty() or str(m.get("species", "")).is_empty():
 		return "no_spirling"
-	if not str(m.get("held", "")).is_empty():
+	# Only the Keepsake its own bond path asks for may stay on (TradeBond, 1.3.2).
+	if not str(m.get("held", "")).is_empty() and not TradeBond.may_hold(m):
 		return "holds_item"
 	if gleam_boosted(m) or bool(m.get("core", false)) or bool(m.get("shop", false)) or bool(m.get("gift_slot", false)) \
 			or (m.get("crystal") is Dictionary and not (m.crystal as Dictionary).is_empty()):
@@ -2279,10 +2280,10 @@ static func gleam_boosted(m: Dictionary) -> bool:
 
 ## Like public._trade_mon_clean: the origin era stays (1 for older saves), no nickname, box or mark.
 ## A Gleam keeps its kind (an unknown or missing one travels as the classic kind); a Spirling that
-## does not gleam carries none.
+## does not gleam carries none. A bond with an earlier Wayfarer does not travel (TradeBond).
 static func trade_mon_clean(m: Dictionary) -> Dictionary:
 	var out: Dictionary = m.duplicate(true)
-	for k: String in ["nickname", "box", "favorite", "gleam_kind"]:
+	for k: String in ["nickname", "box", "favorite", "gleam_kind", "bond_form", "bond_item"]:
 		out.erase(k)
 	var era: Variant = m.get("origin_era")
 	out["origin_era"] = int(era) if (era is int or era is float) and int(era) >= 1 and int(era) <= Spirling.MAX_ERA else 1
@@ -2480,6 +2481,10 @@ func _fn_trade_collect(a: Dictionary) -> Dictionary:
 		return _fail("already")
 	var got: Dictionary = (m.receive as Dictionary).duplicate() if m.receive is Dictionary else {}
 	var mons: Array = (m.get("receive_mons") as Array).duplicate(true) if m.get("receive_mons") is Array else []
+	# Like public.trade_collect: Spirlings of a finished trade bonded with a new Wayfarer; the own
+	# ones back from an ended trade did not.
+	if t.state == "done":
+		mons = mons.map(func(x: Variant) -> Variant: return TradeBond.stamp(x) if x is Dictionary else x)
 	var r: Dictionary = _trade_save(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), got, [], mons)
 	if not bool(r.ok):
 		return r

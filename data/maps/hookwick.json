@@ -234,6 +234,14 @@
     "q2_eel_rent_done"
    ],
    "no_rematch": true
+  },
+  {
+   "id": "bond_trader",
+   "x": 2,
+   "y": 13,
+   "facing": "right",
+   "dialogue": "trade_bond/hookwick",
+   "sprite": "villager"
   }
  ],
  "signs": [

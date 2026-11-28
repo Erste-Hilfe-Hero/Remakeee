@@ -33,6 +33,9 @@ const ERRORS: Dictionary = {
 	"their_day_limit": "Your friend finished all trades they can today. Confirm again tomorrow.",
 }
 
+## Trading help on bond unfurling (TradeBond).
+const BOND_HELP: String = "Some Spirlings unfurl when they bond with a new Wayfarer. A few of them must hold a certain Keepsake during the trade; that Keepsake may stay on and goes with them. Town Wayfarers in Brindlewick, Corvane Quay, Cinderfold and Hookwick trade once each, too."
+
 const ERA_NAMES: Array[String] = ["Era I", "Era II", "Era III", "Era IV", "Era V"]
 
 static func error_text(r: Dictionary) -> String:
@@ -96,6 +99,15 @@ static func apply_mons(took: Variant, add: Variant) -> void:
 				GameState.storage.append(sp)
 				GameState.mark_seen(sp.data.species_name, true)
 				GameState.note_gleam_bonded(sp)
+
+## The Spirlings in storage that arrived with [param mons] (server data of trade_collect).
+static func received(mons: Variant) -> Array[Spirling]:
+	var out: Array[Spirling] = []
+	var ids: Array[String] = uids(mons)
+	for sp: Spirling in GameState.storage:
+		if ids.has(sp.uid):
+			out.append(sp)
+	return out
 
 static func trade_line(t: Dictionary) -> String:
 	var who: String = str(t.name) if t.get("name") != null else Loc.t("a former friend")
@@ -168,6 +180,7 @@ static func run(menu: PauseMenu) -> void:
 		else:
 			if bool(r.data.get("spirlings", false)):
 				await menu.info("Friends from friendship level 3 who have been friends for 7 days can trade items and up to 3 Spirlings. Shop items are never traded, and neither are Spirlings with a Keepsake, a shop boost or a favourite mark. A traded Spirling keeps its era and everything it learned, only the nickname stays with you. What you put in waits safely on the server. When you both confirm, you both get the other's offer. If one of you changes the offer, both have to confirm again.")
+				await menu.info(BOND_HELP)
 			else:
 				await menu.info("Friends from friendship level 3 who have been friends for 7 days can trade items. Spirlings and shop items are never traded. What you put in waits safely on the server. When you both confirm, you both get the other's items. If one of you changes the offer, both have to confirm again.")
 
@@ -236,6 +249,8 @@ static func _run_trade(menu: PauseMenu, t: Dictionary, tradeable: Array, spirlin
 			if _ok(r):
 				Sound.sfx("coin")
 				await menu.info(Loc.t("You got: %s") % side_text(r.data.get("bag", {}), r.data.get("mons", [])))
+				await TradeBond.offer_unfurl(menu, received(r.data.get("mons", [])))
+				SaveManager.save_game()
 				return
 		"Change my offer":
 			var offer: Variant = await pick_offer(menu, t.mine, tradeable)
@@ -349,7 +364,7 @@ static func pick_spirlings(menu: PauseMenu, current: Array[String]) -> Variant:
 
 ## Same rule as public._trade_mon_why, checked here first so the player gets the reason at once.
 static func mon_why(sp: Spirling) -> String:
-	if not sp.held.is_empty():
+	if not sp.held.is_empty() and TradeBond.key_item(sp.data) != sp.held:
 		return "holds_item"
 	if sp.gleam_boost or sp.temper_core or sp.shop_bought or sp.gift_slot or not sp.crystal.is_empty():
 		return "shop_boosted"
